@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Policies
+        PUBLIC "-//OpenSSO Policy Administration DTD//EN"
+        "jar://com/sun/identity/policy/policyAdmin.dtd">
+
+<!-- extracted from realm, / -->
+<Policies>
+    <Policy name="soknadbilstonad_001" referralPolicy="false" active="true" >
+
+        <Rule name="rule_soknadbilstonad__001_02">
+            <ServiceName name="iPlanetAMWebAgentService" />
+            <ResourceName name="https://${DomainName}/soknadbilstonad/*?*" />
+            <AttributeValuePair>
+                <Attribute name="POST" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="GET" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="PUT" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="DELETE" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+        </Rule>
+
+        <Rule name="rule_soknadbilstonad_001_01">
+            <ServiceName name="iPlanetAMWebAgentService" />
+            <ResourceName name="https://${DomainName}/soknadbilstonad/*" />
+            <AttributeValuePair>
+                <Attribute name="POST" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="GET" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="PUT" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="DELETE" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+        </Rule>
+
+        <Rule name="rule_soknadbilstonad_001_04">
+            <ServiceName name="iPlanetAMWebAgentService" />
+            <ResourceName name="https://${DomainName}/soknadbilstonad/" />
+            <AttributeValuePair>
+                <Attribute name="POST" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="GET" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="PUT" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="DELETE" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+        </Rule>
+
+        <Rule name="rule_soknadbilstonad_001_03">
+            <ServiceName name="iPlanetAMWebAgentService" />
+            <ResourceName name="https://${DomainName}/soknadbilstonad" />
+            <AttributeValuePair>
+                <Attribute name="POST" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="GET" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="PUT" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="DELETE" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+        </Rule>
+
+        <Subjects>
+            <Subject name="subject_soknadbilstonad_001_01" type="AuthenticatedUsers" includeType="inclusive">
+            </Subject>
+        </Subjects>
+
+        <Conditions>
+            <Condition name="condition_soknadbilstonad_001_AuthenticationLevel" type="AuthLevelCondition">
+                <AttributeValuePair>
+                    <Attribute name="AuthLevel"/>
+                    <Value>4</Value>
+                </AttributeValuePair>
+            </Condition>
+        </Conditions>
+
+    </Policy>
+</Policies>

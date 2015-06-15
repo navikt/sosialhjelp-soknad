@@ -1,0 +1,6 @@
+https://${DomainName}/soknadbilstonad/internal/selftest*
+https://${DomainName}/soknadbilstonad/internal/isAlive*
+https://${DomainName}/soknadbilstonad/css/*
+https://${DomainName}/soknadbilstonad/img/*
+https://${DomainName}/soknadbilstonad/js/*
+https://${DomainName}/soknadbilstonad/font/*

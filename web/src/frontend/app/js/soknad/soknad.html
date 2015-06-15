@@ -1,0 +1,35 @@
+<div data-nav-tittel="bilstonad.tittel"></div>
+
+<div data-stegindikator data-steg-liste="veiledning, skjema, vedlegg, sendInn" data-aktiv-index="1"></div>
+<div class="bilstonad" data-ng-form="bilstonadForm" data-ng-cloak data-tab-autoscroll>
+
+    <div data-skjemavaliderer>
+        <div data-fokus-lukket-modalside data-apne-bolker>
+            <div data-sticky-feilmelding></div>
+            <div data-sidetittel="global.tittel">
+                <div data-accordion data-close-others="false">
+                    <div data-ng-repeat="bolk in bolker" data-ng-class="{validert: bolk.validert == 'true'}"
+                         data-bolkvaliderer data-bolk="bolk" class="spm-blokk bolk" data-ng-form="{{bolk.id}}Form">
+                        <div data-accordion-group id="{{bolk.id}}" data-is-open="bolk.apen" data-heading="{{ bolk.tittel | cmstekst}}">
+                            <div data-ng-if="bolk.apen || bolk.validering || bolk.skalIkkeFjernesFraDom || kjorerValidering">
+                                <sett-opp-bolk-template data-template="{{bolk.template}}" data-templateurl="{{bolk.templateUrl}}"></sett-opp-bolk-template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rad ferdig-skjema">
+                <div class="begrensning">
+                    <div class="sak-hel">
+                        <a href="javascript:void(0)" class="knapp hoved" role="button" data-fremdriftsindikator="grå" data-ng-click="validerOgFinnFeilmeldinger(gaTilVedleggHvisValidert)" data-ng-bind-html="'skjema.ferdig' | cmstekst"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-sticky>
+    <div data-sist-lagret data-navtilbakelenke="ingenlenke"></div>
+</div>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <display-name>soknadbilstonad</display-name>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <name>BILSTONAD_JSESSIONID</name>
+            <http-only>true</http-only>
+            <secure>true</secure>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
+    <filter>
+        <filter-name>decoratorFilter</filter-name>
+        <filter-class>no.nav.sbl.soknadbilstonad.BilstonadDekorator</filter-class>
+    </filter>
+
+    <welcome-file-list>
+        <welcome-file>bilstonad.html</welcome-file>
+    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>routingBilstonad</servlet-name>
+        <servlet-class>no.nav.sbl.soknadbilstonad.Routing</servlet-class>
+        <init-param>
+            <param-name>applicationFile</param-name>
+            <param-value>bilstonad.html</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>routingBilstonad</servlet-name>
+        <url-pattern>/app/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>selftest</servlet-name>
+        <servlet-class>no.nav.sbl.soknadbilstonad.selftest.SelftestServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>selftest</servlet-name>
+        <url-pattern>/internal/selftest</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>selftest-json</servlet-name>
+        <servlet-class>no.nav.sbl.soknadbilstonad.selftest.SelftestJsonServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>selftest-json</servlet-name>
+        <url-pattern>/internal/selftest.json</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>isAlive</servlet-name>
+        <servlet-class>no.nav.sbl.soknadbilstonad.IsAliveServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>isAlive</servlet-name>
+        <url-pattern>/internal/isAlive</url-pattern>
+    </servlet-mapping>
+
+</web-app>

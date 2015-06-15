@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://appconfig.aura.nav.no"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://appconfig.aura.nav.no
+             http://maven.adeo.no/xsd/appconfig.xsd ">
+
+    <name>soknadbilstonad</name>
+
+    <selftestPagePath>soknadbilstonad/internal/selftest</selftestPagePath>
+
+    <artifacts>
+        <ear groupId="no.nav.sbl.soknadbilstonad" artifactId="bilstonad-ear"/>
+    </artifacts>
+
+    <resources>
+        <baseUrl mapToProperty="dialogarena.cms" alias="appres.cms"/>
+        <baseUrl mapToProperty="soknadsapi" alias="soknadsapi"/>
+    </resources>
+
+    <loadBalancer>
+        <contextRoot>soknadbilstonad</contextRoot>
+        <lbHealthMonitor type="HTTPS" isAliveUrl="internal/isAlive" interval="5" timeout="16"/>
+        <lbPool slowRampTime="30" loadBalancingMethod="LEAST_CONNECTIONS" connectionLimit="500"/>
+    </loadBalancer>
+
+    <security>
+        <logins>
+            <openAm>
+                <contextRoot>soknadbilstonad</contextRoot>
+            </openAm>
+        </logins>
+    </security>
+</application>
