@@ -1,8 +1,4 @@
-require('./feilsiderRoutes');
-require('angular-cms');
-require('angular-soknad-routeredirect');
-
-angular.module('nav.bilstonad.routes', ['ngRoute', 'nav.feilsider.routes', 'nav.redirectTilDiagloginnsending.routes'])
+angular.module('nav.bilstonad.routes')
     .config(function ($routeProvider) {
         $routeProvider
             .when('/soknad', {

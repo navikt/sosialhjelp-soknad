@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.soknad.directive', ['nav.miljovariabler', 'nav.bilstonad.soknad.service'])
+angular.module('nav.bilstonad.soknad')
     .directive('soknad', function ($scope, miljovariabler, skjemaService) {
         var soknadstype = 'bilstonad_spesialutstyr';
 

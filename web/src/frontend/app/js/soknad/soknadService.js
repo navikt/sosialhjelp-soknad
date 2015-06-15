@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.soknad.service', [])
+angular.module('nav.bilstonad.soknad')
     .factory('soknadService', function () {
         var dummyBolk = {
             id: 'dummybolk',

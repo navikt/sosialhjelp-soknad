@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.dummybolk', [])
+angular.module('nav.bilstonad.soknad.dummybolk')
     .directive('dummybolk', function () {
         return {
             restrict: 'A',
