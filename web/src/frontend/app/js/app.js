@@ -2,11 +2,11 @@ var Globals = window.Globals || {};
 Globals.utils = require("angular-common-utils").utils;
 window.Globals = Globals;
 
-angular.module('boilerplate', [
-    'nav.boilerplate.felles',
-    'nav.boilerplate.informasjonsside',
-    'nav.boilerplate.soknad',
-    'nav.boilerplate.vendors'
+angular.module('kravdialogbp', [
+    'nav.kravdialogbp.felles',
+    'nav.kravdialogbp.informasjonsside',
+    'nav.kravdialogbp.soknad',
+    'nav.kravdialogbp.vendors'
 ]);
 
 require('./felles/fellesModule');

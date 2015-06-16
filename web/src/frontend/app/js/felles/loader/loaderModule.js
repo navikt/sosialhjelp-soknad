@@ -1,4 +1,4 @@
-angular.module('nav.boilerplate.loader', [
+angular.module('nav.kravdialogbp.loader', [
 ]);
 
 require('./loaderInit');

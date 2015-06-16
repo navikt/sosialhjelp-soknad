@@ -17,7 +17,7 @@ window.Globals = Globals;
 
 NavLogger({url: window.Globals.apiUrl + '/informasjon/actions/logg'});
 
-angular.module('nav.boilerplate.vendors', [
+angular.module('nav.kravdialogbp.vendors', [
     'nav.defaultresolvers',
     'nav.defaultservices',
     'ngAnimate',

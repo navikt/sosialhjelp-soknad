@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{fragment.styles}}
-    <link rel="stylesheet" href="/soknadboilerplate/css/kravdialog-main{{timestamp}}.css"/>
+    <link rel="stylesheet" href="/{{contextroot}}/css/kravdialog-main{{timestamp}}.css"/>
 
     {{fragment.webstats-ga-notrack}}
-    <script type="text/javascript" src="/soknadboilerplate/js/vendors{{timestamp}}.js"></script>
-    <script type="text/javascript" src="/soknadboilerplate/js/kravdialog{{timestamp}}.js"></script>
-    <script type="text/javascript" src="/soknadboilerplate/js/templates{{timestamp}}.js"></script>
-    <script type="text/javascript" src="/soknadboilerplate/js/felles-templates{{timestamp}}.js"></script>
+    <script type="text/javascript" src="/{{contextroot}}/js/vendors{{timestamp}}.js"></script>
+    <script type="text/javascript" src="/{{contextroot}}/js/kravdialog{{timestamp}}.js"></script>
+    <script type="text/javascript" src="/{{contextroot}}/js/templates{{timestamp}}.js"></script>
+    <script type="text/javascript" src="/{{contextroot}}/js/felles-templates{{timestamp}}.js"></script>
     {{fragment.scripts}}
 </head>
 <body>
 <div class="pagewrapper">
     {{fragment.header}}
-    <div data-ng-app="boilerplate">
+    <div data-ng-app="{{appname}}">
         <div class="initial-loader" data-ng-if="app.laster">
-            <img src="/soknadboilerplate/img/roed_128.gif" alt="Loading content/Laster innhold">
+            <img src="/{{appname}}/img/roed_128.gif" alt="Loading content/Laster innhold">
         </div>
 
         <div id="app-content" data-ng-view data-avbryt-helper data-styling-helper data-ng-hide="app.laster"></div>

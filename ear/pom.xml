@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>no.nav.sbl.boilerplate</groupId>
-        <artifactId>boilerplate</artifactId>
+        <groupId>no.nav.sbl.kravdialogbp</groupId>
+        <artifactId>kravdialogbp</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>boilerplate-ear</artifactId>
+    <artifactId>kravdialogbp-ear</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <packaging>ear</packaging>
@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>boilerplate-web</artifactId>
+            <artifactId>kravdialogbp-web</artifactId>
             <version>${project.version}</version>
             <type>war</type>
             <scope>runtime</scope>
@@ -32,12 +32,12 @@
                     <modules>
                         <webModule>
                             <groupId>${project.groupId}</groupId>
-                            <artifactId>boilerplate-web</artifactId>
-                            <contextRoot>/soknadboilerplate</contextRoot>
-                            <bundleFileName>boilerplate-web.war</bundleFileName>
+                            <artifactId>kravdialogbp-web</artifactId>
+                            <contextRoot>/soknadkravdialogbp</contextRoot>
+                            <bundleFileName>kravdialogbp-web.war</bundleFileName>
                         </webModule>
                     </modules>
-                    <displayName>boilerplate</displayName>
+                    <displayName>kravdialogbp</displayName>
                 </configuration>
             </plugin>
         </plugins>

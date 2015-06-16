@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>no.nav.sbl.boilerplate</groupId>
-        <artifactId>boilerplate</artifactId>
+        <groupId>no.nav.sbl.kravdialogbp</groupId>
+        <artifactId>kravdialogbp</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>boilerplate-appconfig</artifactId>
+    <artifactId>kravdialogbp-appconfig</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
 

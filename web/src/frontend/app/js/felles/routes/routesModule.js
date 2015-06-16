@@ -1,4 +1,4 @@
-angular.module('nav.boilerplate.routes', [
+angular.module('nav.kravdialogbp.routes', [
     'nav.miljovariabler',
     'nav.redirectTilDiagloginnsending.routes',
     'nav.cms',

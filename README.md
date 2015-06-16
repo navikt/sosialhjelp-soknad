@@ -5,7 +5,7 @@ Boilerplatekode for kravdialoger
 
 1. Fork dette prosjektet til eget repository
 
-2. Endre navn på kravdialogen i de ulike filene (Pro-tip: CTRL+SHIFT+F og søk etter "boilerplate" i prosjektet)
+2. Endre navn på kravdialogen i de ulike filene (Pro-tip: CTRL+SHIFT+F og søk etter "kravdialogbp" i prosjektet)
 
 3. Endre GIT-url i hoved-pom til å gå mot det nye repoet
 

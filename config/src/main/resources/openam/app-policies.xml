@@ -5,11 +5,11 @@
 
 <!-- extracted from realm, / -->
 <Policies>
-    <Policy name="soknaboilerplate_001" referralPolicy="false" active="true" >
+    <Policy name="soknadkravdialogbp_001" referralPolicy="false" active="true" >
 
-        <Rule name="rule_soknadboilerplate__001_02">
+        <Rule name="rule_soknadkravdialogbp__001_02">
             <ServiceName name="iPlanetAMWebAgentService" />
-            <ResourceName name="https://${DomainName}/soknadboilerplate/*?*" />
+            <ResourceName name="https://${DomainName}/soknadkravdialogbp/*?*" />
             <AttributeValuePair>
                 <Attribute name="POST" />
                 <Value>allow</Value>
@@ -28,9 +28,9 @@
             </AttributeValuePair>
         </Rule>
 
-        <Rule name="rule_soknadboilerplate_001_01">
+        <Rule name="rule_soknadkravdialogbp_001_01">
             <ServiceName name="iPlanetAMWebAgentService" />
-            <ResourceName name="https://${DomainName}/soknadboilerplate/*" />
+            <ResourceName name="https://${DomainName}/soknadkravdialogbp/*" />
             <AttributeValuePair>
                 <Attribute name="POST" />
                 <Value>allow</Value>
@@ -49,9 +49,9 @@
             </AttributeValuePair>
         </Rule>
 
-        <Rule name="rule_soknadboilerplate_001_04">
+        <Rule name="rule_soknadkravdialogbp_001_04">
             <ServiceName name="iPlanetAMWebAgentService" />
-            <ResourceName name="https://${DomainName}/soknadboilerplate/" />
+            <ResourceName name="https://${DomainName}/soknadkravdialogbp/" />
             <AttributeValuePair>
                 <Attribute name="POST" />
                 <Value>allow</Value>
@@ -70,9 +70,9 @@
             </AttributeValuePair>
         </Rule>
 
-        <Rule name="rule_soknadboilerplate_001_03">
+        <Rule name="rule_soknadkravdialogbp_001_03">
             <ServiceName name="iPlanetAMWebAgentService" />
-            <ResourceName name="https://${DomainName}/soknadboilerplate" />
+            <ResourceName name="https://${DomainName}/soknadkravdialogbp" />
             <AttributeValuePair>
                 <Attribute name="POST" />
                 <Value>allow</Value>
@@ -92,12 +92,12 @@
         </Rule>
 
         <Subjects>
-            <Subject name="subject_soknadboilerplate_001_01" type="AuthenticatedUsers" includeType="inclusive">
+            <Subject name="subject_soknadkravdialogbp_001_01" type="AuthenticatedUsers" includeType="inclusive">
             </Subject>
         </Subjects>
 
         <Conditions>
-            <Condition name="condition_soknadboilerplate_001_AuthenticationLevel" type="AuthLevelCondition">
+            <Condition name="condition_soknadkravdialogbp_001_AuthenticationLevel" type="AuthLevelCondition">
                 <AttributeValuePair>
                     <Attribute name="AuthLevel"/>
                     <Value>4</Value>

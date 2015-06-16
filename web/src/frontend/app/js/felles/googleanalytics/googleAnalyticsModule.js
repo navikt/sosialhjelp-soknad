@@ -1,4 +1,4 @@
-angular.module('nav.boilerplate.googleanalytics', [
+angular.module('nav.kravdialogbp.googleanalytics', [
 ]);
 
 require('./googleAnalyticsInit');

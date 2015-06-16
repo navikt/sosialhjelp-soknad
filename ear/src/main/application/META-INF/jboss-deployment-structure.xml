@@ -9,7 +9,7 @@
             <module name="org.slf4j"/>
         </exclusions>
     </deployment>
-    <sub-deployment name="boilerplate-web.war">
+    <sub-deployment name="kravdialogbp-web.war">
         <dependencies>
             <module name="sun.jdk"/>
             <system>

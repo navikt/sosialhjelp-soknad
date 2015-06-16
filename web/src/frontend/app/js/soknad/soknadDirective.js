@@ -1,4 +1,4 @@
-angular.module('nav.boilerplate.soknad')
+angular.module('nav.kravdialogbp.soknad')
     .directive('soknad', function ($scope, miljovariabler, skjemaService) {
         var soknadstype = 'boilerplatedummysoknadstype';
 

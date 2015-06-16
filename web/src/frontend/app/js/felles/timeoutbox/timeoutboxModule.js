@@ -1,4 +1,4 @@
-angular.module('nav.boilerplate.timeoutbox', [
+angular.module('nav.kravdialogbp.timeoutbox', [
     'nav.timeoutbox.service'
 ]);
 

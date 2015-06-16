@@ -21,7 +21,10 @@ var OUTPUT_DIRECTORY = '../main/webapp/';
 
 var isDevelopment = !!gutil.env.dev;
 var isProduction = !isDevelopment;
+
 var uniqueName = isProduction ? Math.floor(Date.now() / 1000) : "";
+var applikasjonsnavn = "kravdialogbp";
+var contextroot = "soknadkravdialogbp";
 
 var onError = function(err) {
     gutil.beep();
@@ -79,6 +82,8 @@ gulp.task('build-templates', function() {
 gulp.task('build-kravdialog-html', function() {
     return gulp.src('./app/kravdialog.html')
         .pipe(replace('{{timestamp}}', uniqueName))
+        .pipe(replace('{{appname}}', applikasjonsnavn))
+        .pipe(replace('{{contextroot}}', contextroot))
         .pipe(gulp.dest(OUTPUT_DIRECTORY));
 });
 

@@ -1,4 +1,4 @@
-angular.module('nav.boilerplate.routes')
+angular.module('nav.kravdialogbp.routes')
     .config(function ($routeProvider) {
         $routeProvider
             .when('/informasjonsside', {

@@ -1,4 +1,4 @@
-angular.module('nav.boilerplate.httpProvider', [
+angular.module('nav.kravdialogbp.httpProvider', [
     'nav.interceptors'
 ]);
 

@@ -1,6 +1,6 @@
 {
-  "name": "boilerplate",
-  "description": "Boilerplate-prosjekt for kravdialoger",
+  "name": "kravdialogbp",
+  "description": "kravdialogbp-prosjekt for kravdialoger",
   "version": "0.1.0",
   "private": false,
   "repository": {

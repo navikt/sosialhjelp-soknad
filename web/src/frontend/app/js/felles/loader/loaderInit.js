@@ -1,4 +1,4 @@
-angular.module('nav.boilerplate.loader')
+angular.module('nav.kravdialogbp.loader')
     .run(function ($rootScope) {
         $rootScope.app = {laster: false};
 

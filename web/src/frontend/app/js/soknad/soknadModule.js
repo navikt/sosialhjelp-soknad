@@ -1,5 +1,5 @@
-angular.module('nav.boilerplate.soknad', [
-    'nav.boilerplate.soknad.dummybolk',
+angular.module('nav.kravdialogbp.soknad', [
+    'nav.kravdialogbp.soknad.dummybolk',
     'nav.bolker',
     'nav.cms',
     'nav.fremdriftsindikator',

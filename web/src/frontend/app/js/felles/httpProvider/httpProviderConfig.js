@@ -1,4 +1,4 @@
-angular.module('nav.boilerplate.httpProvider')
+angular.module('nav.kravdialogbp.httpProvider')
     .config(['$httpProvider', function ($httpProvider) {
         $httpProvider.defaults.xsrfCookieName = 'XSRF-TOKEN-SOKNAD-API';
 

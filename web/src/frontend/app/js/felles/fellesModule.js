@@ -1,11 +1,11 @@
-angular.module('nav.boilerplate.felles', [
+angular.module('nav.kravdialogbp.felles', [
     'nav.constant',
     'nav.data',
-    'nav.boilerplate.googleanalytics',
-    'nav.boilerplate.httpProvider',
-    'nav.boilerplate.loader',
-    'nav.boilerplate.routes',
-    'nav.boilerplate.timeoutbox'
+    'nav.kravdialogbp.googleanalytics',
+    'nav.kravdialogbp.httpProvider',
+    'nav.kravdialogbp.loader',
+    'nav.kravdialogbp.routes',
+    'nav.kravdialogbp.timeoutbox'
 ]);
 
 require('./constants/constantsModule');
