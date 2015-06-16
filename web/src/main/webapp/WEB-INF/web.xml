@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
-    <display-name>soknadboilerplate</display-name>
+    <display-name>soknadkravdialogbp</display-name>
 
     <session-config>
         <session-timeout>30</session-timeout>
@@ -18,7 +18,7 @@
 
     <filter>
         <filter-name>decoratorFilter</filter-name>
-        <filter-class>no.nav.sbl.soknadboilerplate.SoknadDekorator</filter-class>
+        <filter-class>no.nav.sbl.soknadkravdialogbp.SoknadDekorator</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>decoratorFilter</filter-name>
@@ -31,7 +31,7 @@
 
     <servlet>
         <servlet-name>routingBoilerplate</servlet-name>
-        <servlet-class>no.nav.sbl.soknadboilerplate.Routing</servlet-class>
+        <servlet-class>no.nav.sbl.soknadkravdialogbp.Routing</servlet-class>
         <init-param>
             <param-name>applicationFile</param-name>
             <param-value>kravdialog.html</param-value>
@@ -45,7 +45,7 @@
 
     <servlet>
         <servlet-name>selftest</servlet-name>
-        <servlet-class>no.nav.sbl.soknadboilerplate.selftest.SelftestServlet</servlet-class>
+        <servlet-class>no.nav.sbl.soknadkravdialogbp.selftest.SelftestServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -55,7 +55,7 @@
 
     <servlet>
         <servlet-name>selftest-json</servlet-name>
-        <servlet-class>no.nav.sbl.soknadboilerplate.selftest.SelftestJsonServlet</servlet-class>
+        <servlet-class>no.nav.sbl.soknadkravdialogbp.selftest.SelftestJsonServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -65,7 +65,7 @@
 
     <servlet>
         <servlet-name>isAlive</servlet-name>
-        <servlet-class>no.nav.sbl.soknadboilerplate.IsAliveServlet</servlet-class>
+        <servlet-class>no.nav.sbl.soknadkravdialogbp.IsAliveServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

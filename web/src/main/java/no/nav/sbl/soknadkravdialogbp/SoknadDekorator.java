@@ -1,4 +1,4 @@
-package no.nav.sbl.soknadboilerplate;
+package no.nav.sbl.soknadkravdialogbp;
 
 import no.nav.innholdshenter.common.EnonicContentRetriever;
 import no.nav.innholdshenter.filter.DecoratorFilter;

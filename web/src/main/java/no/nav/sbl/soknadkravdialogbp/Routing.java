@@ -1,4 +1,4 @@
-package no.nav.sbl.soknadboilerplate;
+package no.nav.sbl.soknadkravdialogbp;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
