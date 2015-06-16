@@ -23,6 +23,10 @@
         <lbPool slowRampTime="30" loadBalancingMethod="LEAST_CONNECTIONS" connectionLimit="500"/>
     </loadBalancer>
 
+    <serverOptions>
+        <memoryParameters resourceAlias="brukerdialog-memparams"/>
+    </serverOptions>
+
     <security>
         <logins>
             <openAm>
