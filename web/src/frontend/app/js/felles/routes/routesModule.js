@@ -9,3 +9,5 @@ angular.module('nav.bilstonad.routes', [
     'nav.cms',
     'ngRoute'
 ]);
+
+require('./routesConfig');
