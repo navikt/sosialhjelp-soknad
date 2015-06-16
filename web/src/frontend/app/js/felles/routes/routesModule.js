@@ -1,8 +1,3 @@
-require('angular-cms');
-require('angular-miljovariabler');
-require('angular-route');
-require('angular-soknad-routeredirect');
-
 angular.module('nav.bilstonad.routes', [
     'nav.miljovariabler',
     'nav.redirectTilDiagloginnsending.routes',
@@ -10,4 +5,8 @@ angular.module('nav.bilstonad.routes', [
     'ngRoute'
 ]);
 
+require('angular-cms');
+require('angular-miljovariabler');
+require('angular-route');
+require('angular-soknad-routeredirect');
 require('./routesConfig');

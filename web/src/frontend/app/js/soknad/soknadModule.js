@@ -1,13 +1,3 @@
-require('angular-cms');
-require('angular-miljovariabler');
-require('angular-modal');
-require('angular-modalsideskall');
-require('angular-resource');
-require('angular-soknad-bolker');
-require('angular-soknad-fremdriftsindikator');
-require('angular-soknad-tittel');
-require('angular-soknad-validering');
-
 angular.module('nav.bilstonad.soknad', [
     'nav.bilstonad.soknad.dummybolk',
     'nav.bolker',
@@ -22,6 +12,15 @@ angular.module('nav.bilstonad.soknad', [
     'ngResource'
 ]);
 
+require('angular-cms');
+require('angular-miljovariabler');
+require('angular-modal');
+require('angular-modalsideskall');
+require('angular-resource');
+require('angular-soknad-bolker');
+require('angular-soknad-fremdriftsindikator');
+require('angular-soknad-tittel');
+require('angular-soknad-validering');
 require('./soknadDirective');
 require('./soknadService');
 require('./dummybolk/dummybolkModule');
