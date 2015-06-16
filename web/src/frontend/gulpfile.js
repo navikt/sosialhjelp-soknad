@@ -150,7 +150,9 @@ gulp.task('clean', function(callback) {
     ], {'force' : true}, callback);
 });
 
-gulp.task('build', ['build-vendors', 'build-kravdialog-js', 'build-templates', 'build-felles-templates', 'build-less', 'copy-img', 'build-kravdialog-html']);
+gulp.task('build', ['clean'], function() {
+    gulp.start(['build-vendors', 'build-kravdialog-js', 'build-templates', 'build-felles-templates', 'build-less', 'copy-img', 'build-kravdialog-html']);
+});
 
 gulp.task('watch', function() {
     isProduction = false;
