@@ -18,6 +18,8 @@ require('angular-resource');
 require('angular-soknad-bolker');
 require('angular-soknad-fremdriftsindikator');
 require('angular-soknad-tittel');
+require('angular-modal');
+require('angular-modalsideskall');
 require('angular-soknad-validering');
 require('./soknadDirective');
 require('./soknadService');
