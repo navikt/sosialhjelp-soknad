@@ -2,7 +2,7 @@ angular.module('nav.bilstonad.routes')
     .config(function ($routeProvider) {
         $routeProvider
             .when('/informasjonsside', {
-                template: '<div data-informasjonsside>',
+                template: '<div data-informasjonsside></div>',
                 resolve: {
                     cms: function (CmsResolver) {
                         return CmsResolver;
@@ -10,7 +10,7 @@ angular.module('nav.bilstonad.routes')
                 }
             })
             .when('/soknad', {
-                template: '<div data-soknad>',
+                template: '<div data-soknad></div>',
                 resolve: {
                     cms: function (CmsResolver) {
                         return CmsResolver;
