@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.routes', [
+angular.module('nav.boilerplate.routes', [
     'nav.miljovariabler',
     'nav.redirectTilDiagloginnsending.routes',
     'nav.cms',

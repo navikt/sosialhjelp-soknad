@@ -1,4 +1,4 @@
-package no.nav.sbl.soknadbilstonad;
+package no.nav.sbl.soknadboilerplate;
 
 import no.nav.sbl.dialogarena.common.jetty.Jetty;
 import org.slf4j.Logger;
@@ -17,10 +17,10 @@ public class StartJetty {
     public static void main(String[] args) throws Exception {
         configureLocalConfig();
         Jetty jetty = usingWar(WEBAPP_SOURCE)
-                .at("/soknadbilstonad")
+                .at("/soknadboilerplate")
                 .port(PORT)
                 .buildJetty();
-        logger.info("http://127.0.0.1:" + PORT + "/soknadbilstonad/app/start");
+        logger.info("http://127.0.0.1:" + PORT + "/soknadboilerplate/app/start");
         jetty.startAnd(first(waitFor(gotKeypress())).then(jetty.stop));
     }
 

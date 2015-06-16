@@ -2,11 +2,11 @@ var Globals = window.Globals || {};
 Globals.utils = require("angular-common-utils").utils;
 window.Globals = Globals;
 
-angular.module('bilstonad', [
-    'nav.bilstonad.felles',
-    'nav.bilstonad.informasjonsside',
-    'nav.bilstonad.soknad',
-    'nav.bilstonad.vendors'
+angular.module('boilerplate', [
+    'nav.boilerplate.felles',
+    'nav.boilerplate.informasjonsside',
+    'nav.boilerplate.soknad',
+    'nav.boilerplate.vendors'
 ]);
 
 require('./felles/fellesModule');

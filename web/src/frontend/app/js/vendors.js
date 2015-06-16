@@ -2,6 +2,7 @@ window.$ = require('jquery');
 window.angular = require('angular');
 require('angular-animate');
 require('angular-cookies');
+require('angular-cms');
 require('angular-sanitize');
 require('jquery-ui-browserify');
 require('../../node_modules/bootstrap/js/transition');
@@ -16,7 +17,7 @@ window.Globals = Globals;
 
 NavLogger({url: window.Globals.apiUrl + '/informasjon/actions/logg'});
 
-angular.module('nav.bilstonad.vendors', [
+angular.module('nav.boilerplate.vendors', [
     'nav.defaultresolvers',
     'nav.defaultservices',
     'ngAnimate',

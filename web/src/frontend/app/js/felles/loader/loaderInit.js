@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.loader')
+angular.module('nav.boilerplate.loader')
     .run(function ($rootScope) {
         $rootScope.app = {laster: false};
 

@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.httpProvider')
+angular.module('nav.boilerplate.httpProvider')
     .config(['$httpProvider', function ($httpProvider) {
         $httpProvider.defaults.xsrfCookieName = 'XSRF-TOKEN-SOKNAD-API';
 

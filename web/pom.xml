@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>no.nav.sbl.soknadbilstonad</groupId>
-        <artifactId>soknadbilstonad</artifactId>
+        <groupId>no.nav.sbl.boilerplate</groupId>
+        <artifactId>boilerplate</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>bilstonad-web</artifactId>
+    <artifactId>boilerplate-web</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <packaging>war</packaging>

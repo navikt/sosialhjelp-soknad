@@ -1,15 +1,13 @@
-angular.module('nav.bilstonad.felles', [
-    'nav.bilstonad.cms',
+angular.module('nav.boilerplate.felles', [
     'nav.constant',
     'nav.data',
-    'nav.bilstonad.googleanalytics',
-    'nav.bilstonad.httpProvider',
-    'nav.bilstonad.loader',
-    'nav.bilstonad.routes',
-    'nav.bilstonad.timeoutbox'
+    'nav.boilerplate.googleanalytics',
+    'nav.boilerplate.httpProvider',
+    'nav.boilerplate.loader',
+    'nav.boilerplate.routes',
+    'nav.boilerplate.timeoutbox'
 ]);
 
-require('./cms/cmsModule');
 require('./constants/constantsModule');
 require('./data/dataModule');
 require('./googleanalytics/googleAnalyticsModule');

@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.loader', [
+angular.module('nav.boilerplate.loader', [
 ]);
 
 require('./loaderInit');

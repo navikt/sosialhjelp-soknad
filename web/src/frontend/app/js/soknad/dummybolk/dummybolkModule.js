@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.soknad.dummybolk', [
+angular.module('nav.boilerplate.soknad.dummybolk', [
 
 ]);
 

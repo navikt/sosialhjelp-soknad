@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.informasjonsside')
+angular.module('nav.boilerplate.informasjonsside')
     .directive('informasjonsside', function () {
         return {
             scope: true,

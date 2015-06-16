@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.googleanalytics', [
+angular.module('nav.boilerplate.googleanalytics', [
 ]);
 
 require('./googleAnalyticsInit');

@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.soknad')
+angular.module('nav.boilerplate.soknad')
     .factory('soknadService', function () {
         var dummyBolk = {
             id: 'dummybolk',
@@ -10,7 +10,7 @@ angular.module('nav.bilstonad.soknad')
         };
 
         var bolkliste = {
-            bilstonad_spesialutstyr: [dummyBolk]
+            boilerplatedummysoknadstype: [dummyBolk]
         };
 
         return {

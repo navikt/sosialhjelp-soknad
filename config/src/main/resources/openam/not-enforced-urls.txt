@@ -1,6 +1,6 @@
-https://${DomainName}/soknadbilstonad/internal/selftest*
-https://${DomainName}/soknadbilstonad/internal/isAlive*
-https://${DomainName}/soknadbilstonad/css/*
-https://${DomainName}/soknadbilstonad/img/*
-https://${DomainName}/soknadbilstonad/js/*
-https://${DomainName}/soknadbilstonad/font/*
+https://${DomainName}/soknadboilerplate/internal/selftest*
+https://${DomainName}/soknadboilerplate/internal/isAlive*
+https://${DomainName}/soknadboilerplate/css/*
+https://${DomainName}/soknadboilerplate/img/*
+https://${DomainName}/soknadboilerplate/js/*
+https://${DomainName}/soknadboilerplate/font/*

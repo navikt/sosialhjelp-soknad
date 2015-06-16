@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.routes')
+angular.module('nav.boilerplate.routes')
     .config(function ($routeProvider) {
         $routeProvider
             .when('/informasjonsside', {

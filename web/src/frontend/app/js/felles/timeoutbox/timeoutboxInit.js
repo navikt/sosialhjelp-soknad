@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.timeoutbox')
+angular.module('nav.boilerplate.timeoutbox')
     .run(function (TimeoutboxService) {
         TimeoutboxService.init();
     });

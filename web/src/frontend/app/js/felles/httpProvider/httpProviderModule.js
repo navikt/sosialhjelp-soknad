@@ -1,4 +1,4 @@
-angular.module('nav.bilstonad.httpProvider', [
+angular.module('nav.boilerplate.httpProvider', [
     'nav.interceptors'
 ]);
 

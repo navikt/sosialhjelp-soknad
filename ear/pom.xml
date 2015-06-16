@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>no.nav.sbl.soknadbilstonad</groupId>
-        <artifactId>soknadbilstonad</artifactId>
+        <groupId>no.nav.sbl.boilerplate</groupId>
+        <artifactId>boilerplate</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>bilstonad-ear</artifactId>
+    <artifactId>boilerplate-ear</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <packaging>ear</packaging>
@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>bilstonad-web</artifactId>
+            <artifactId>boilerplate-web</artifactId>
             <version>${project.version}</version>
             <type>war</type>
             <scope>runtime</scope>
@@ -32,12 +32,12 @@
                     <modules>
                         <webModule>
                             <groupId>${project.groupId}</groupId>
-                            <artifactId>bilstonad-web</artifactId>
-                            <contextRoot>/soknadbilstonad</contextRoot>
-                            <bundleFileName>bilstonad-web.war</bundleFileName>
+                            <artifactId>boilerplate-web</artifactId>
+                            <contextRoot>/soknadboilerplate</contextRoot>
+                            <bundleFileName>boilerplate-web.war</bundleFileName>
                         </webModule>
                     </modules>
-                    <displayName>soknadbilstonad</displayName>
+                    <displayName>boilerplate</displayName>
                 </configuration>
             </plugin>
         </plugins>

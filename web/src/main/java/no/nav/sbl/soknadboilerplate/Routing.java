@@ -1,4 +1,4 @@
-package no.nav.sbl.soknadbilstonad;
+package no.nav.sbl.soknadboilerplate;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

@@ -9,10 +9,10 @@
         <version>2</version>
     </parent>
 
-    <name>Søknadsdialoger - bilstønad</name>
-    <description>Innsending av elektronisk søknad om bilstønad</description>
-    <groupId>no.nav.sbl.soknadbilstonad</groupId>
-    <artifactId>soknadbilstonad</artifactId>
+    <name>Søknadsdialoger - kravdialog</name>
+    <description>Boilerplatekode for kravdialoger</description>
+    <groupId>no.nav.sbl.boilerplate</groupId>
+    <artifactId>boilerplate</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -93,8 +93,8 @@
     </dependencyManagement>
 
     <scm>
-        <developerConnection>scm:git:http://stash.devillo.no/scm/sokd/soknadbilstonad.git</developerConnection>
-        <url>http://stash.devillo.no:7990/projects/sokd/repos/soknadbilstonad/browse</url>
+        <developerConnection>scm:git:http://stash.devillo.no/scm/sokd/soknadboilerplate.git</developerConnection>
+        <url>http://stash.devillo.no:7990/projects/sokd/repos/soknadboilerplate/browse</url>
         <tag>HEAD</tag>
     </scm>
 

@@ -15,16 +15,22 @@ var del = require('del');
 var less = require('gulp-less');
 var replace = require('gulp-replace');
 var recess = require('gulp-recess');
+var rename = require('gulp-rename');
 
 var OUTPUT_DIRECTORY = '../main/webapp/';
 
 var isDevelopment = !!gutil.env.dev;
 var isProduction = !isDevelopment;
+var uniqueName = isProduction ? Math.floor(Date.now() / 1000) : "";
 
 var onError = function(err) {
     gutil.beep();
-    gutil.log(err.message);
+    gutil.log("Error:", err.message);
 };
+
+function getFilename(basename, extension) {
+    return basename + uniqueName + "." + extension;
+}
 
 gulp.task('jshint', function() {
     // Run JSHint on everything but tredjeparts-JS
@@ -42,20 +48,22 @@ gulp.task('build-vendors', function() {
         .pipe(gulpif(isDevelopment, replace("/sendsoknad", "http://127.0.0.1:8181/sendsoknad")))
         .pipe(gulpif(isProduction, ngAnnotate()))
         .pipe(gulpif(isProduction, uglify()))
+        .pipe(rename(getFilename('vendors', 'js')))
         .pipe(gulp.dest(OUTPUT_DIRECTORY + 'js/'));
 });
 
-gulp.task('build-bilstonad-js', function() {
+gulp.task('build-kravdialog-js', function() {
     return browserify('./app/js/app.js', { debug: isDevelopment })
         .bundle()
         .on('error', function(err) {
             onError(err);
-            this.end();
+            this.emit('end');
         })
-        .pipe(source('bilstonad.js'))
+        .pipe(source('kravdialog.js'))
         .pipe(buffer())
         .pipe(gulpif(isProduction, ngAnnotate()))
         .pipe(gulpif(isProduction, uglify()))
+        .pipe(rename(getFilename('kravdialog', 'js')))
         .pipe(gulp.dest(OUTPUT_DIRECTORY + 'js/'));
 });
 
@@ -64,7 +72,14 @@ gulp.task('build-templates', function() {
         .pipe(templateCache({
             standalone: true
         }))
+        .pipe(rename(getFilename('templates', 'js')))
         .pipe(gulp.dest(OUTPUT_DIRECTORY + 'js/'));
+});
+
+gulp.task('build-kravdialog-html', function() {
+    return gulp.src('./app/kravdialog.html')
+        .pipe(replace('{{timestamp}}', uniqueName))
+        .pipe(gulp.dest(OUTPUT_DIRECTORY));
 });
 
 gulp.task('build-felles-templates', function() {
@@ -72,17 +87,19 @@ gulp.task('build-felles-templates', function() {
         .pipe(templateCache({
             filename: 'felles-templates.js'
         }))
+        .pipe(rename(getFilename('felles-templates', 'js')))
         .pipe(gulp.dest(OUTPUT_DIRECTORY+ 'js/'));
 });
 
 gulp.task('build-less', function() {
-    return gulp.src('./app/css/bilstonad-main.less')
+    return gulp.src('./app/css/kravdialog-main.less')
         .pipe(less())
+        .pipe(rename(getFilename('kravdialog-main', 'css')))
         .pipe(gulp.dest(OUTPUT_DIRECTORY + 'css/'));
 });
 
 gulp.task('recess', ['build-less'], function() {
-    return gulp.src(OUTPUT_DIRECTORY + 'css/bilstonad-main.css')
+    return gulp.src(OUTPUT_DIRECTORY + 'css/' + getFilename('kravdialog-main', 'css'))
         .pipe(recess())
         .on('error', function(err) {
             onError(err);
@@ -123,17 +140,18 @@ gulp.task('clean', function(callback) {
         // Delete all copied images and built .js- and .css-files in outputDirectory
         OUTPUT_DIRECTORY + 'js/',
         OUTPUT_DIRECTORY + 'css/',
-        OUTPUT_DIRECTORY + 'img/'
+        OUTPUT_DIRECTORY + 'img/',
+        OUTPUT_DIRECTORY + 'kravdialog.html'
     ], {'force' : true}, callback);
 });
 
-gulp.task('build', ['build-vendors', 'build-bilstonad-js', 'build-templates', 'build-felles-templates', 'build-less', 'copy-img']);
+gulp.task('build', ['build-vendors', 'build-kravdialog-js', 'build-templates', 'build-felles-templates', 'build-less', 'copy-img', 'build-kravdialog-html']);
 
 gulp.task('watch', function() {
     isProduction = false;
     isDevelopment = true;
     gulp.start('build');
-    gulp.watch('./app/js/**/*.js', ['build-bilstonad-js']);
+    gulp.watch('./app/js/**/*.js', ['build-kravdialog-js']);
     gulp.watch('./app/**/*.html', ['build-templates']);
     gulp.watch('./app/css/*.less', ['build-less']);
 });

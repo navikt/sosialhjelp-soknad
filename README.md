@@ -1,5 +1,13 @@
-Søknad om bilstønad
+Boilerplatekode for kravdialoger
 ================
+
+## Oppsett for ny kravdialog
+
+1. Fork dette prosjektet til eget repository
+
+2. Endre navn på kravdialogen i de ulike filene (Pro-tip: CTRL+SHIFT+F og søk etter "boilerplate" i prosjektet)
+
+3. Endre GIT-url i hoved-pom til å gå mot det nye repoet
 
 ## Forberedelser for å kjøre
 
@@ -23,9 +31,9 @@ npm config set registry "http://registry.npmjs.org/"
 
 * Start opp *sendsoknad* ved å starte Jetty i dette prosjektet.
 
-* Start Jetty, finnes i *bilstonad-web/src/test/java/no/nav/sbl/soknadbilstonad/StartJetty.java*
+* Start Jetty, finnes i *boilerplate-web/src/test/java/no/nav/sbl/soknadboilerplate/StartJetty.java*
 
-* URL med dekoratør er *soknadbilstonad/app/start*
+* URL med dekoratør er *soknadboilerplate/app/start*
 
 * Huk av profilen **dev-watch** og kjør `maven clean compile`. Dette vil starte *gulp watch*, som ligger og overvåker om endringer skjer i JS-, HTML-, og Less-filer og automatisk bygger om når de skjer.
 

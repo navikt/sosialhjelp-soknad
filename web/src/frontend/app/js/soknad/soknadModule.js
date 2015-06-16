@@ -1,5 +1,5 @@
-angular.module('nav.bilstonad.soknad', [
-    'nav.bilstonad.soknad.dummybolk',
+angular.module('nav.boilerplate.soknad', [
+    'nav.boilerplate.soknad.dummybolk',
     'nav.bolker',
     'nav.cms',
     'nav.fremdriftsindikator',
@@ -14,8 +14,6 @@ angular.module('nav.bilstonad.soknad', [
 
 require('angular-cms');
 require('angular-miljovariabler');
-require('angular-modal');
-require('angular-modalsideskall');
 require('angular-resource');
 require('angular-soknad-bolker');
 require('angular-soknad-fremdriftsindikator');

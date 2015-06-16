@@ -1,4 +1,4 @@
-package no.nav.sbl.soknadbilstonad.selftest;
+package no.nav.sbl.soknadboilerplate.selftest;
 
 import no.nav.sbl.dialogarena.common.web.selftest.SelfTestBaseServlet;
 import no.nav.sbl.dialogarena.types.Pingable;

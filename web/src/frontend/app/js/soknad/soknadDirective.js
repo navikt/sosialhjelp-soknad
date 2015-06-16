@@ -1,6 +1,6 @@
-angular.module('nav.bilstonad.soknad')
+angular.module('nav.boilerplate.soknad')
     .directive('soknad', function ($scope, miljovariabler, skjemaService) {
-        var soknadstype = 'bilstonad_spesialutstyr';
+        var soknadstype = 'boilerplatedummysoknadstype';
 
         $scope.fremdriftsindikator = {laster: false};
         $scope.saksoversiktUrl = miljovariabler["saksoversikt.link.url"];

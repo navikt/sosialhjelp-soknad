@@ -1,4 +1,4 @@
-package no.nav.sbl.soknadbilstonad;
+package no.nav.sbl.soknadboilerplate;
 
 import no.nav.innholdshenter.common.EnonicContentRetriever;
 import no.nav.innholdshenter.filter.DecoratorFilter;
@@ -8,14 +8,14 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 
-public class BilstonadDekorator extends DecoratorFilter {
+public class soknadDekorator extends DecoratorFilter {
 
     private static final String FRAMENTS_URL = "common-html/v2/navno";
-    private static final String APPLICATION_NAME = "Bilstonad";
+    private static final String APPLICATION_NAME = "Boilerplate";
     private static final List<String> NO_DECORATOR_PATTERNS = new ArrayList<>(asList(".*/img/.*", ".*/css/.*", ".*/js/.*", ".*/font/.*", ".*selftest.*"));
     private static final List<String> FRAGMENT_NAMES= new ArrayList<>(asList("webstats-ga-notrack", "header", "footer", "styles", "scripts"));
 
-    public BilstonadDekorator() {
+    public soknadDekorator() {
         super();
         setFragmentsUrl(FRAMENTS_URL);
         setContentRetriever(setUpContentRetriever());
