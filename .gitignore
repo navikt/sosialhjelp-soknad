@@ -19,3 +19,4 @@ node_modules/
 **/webapp/css/**/*
 **/webapp/img/**/*
 **/webapp/js/**/*
+**/webapp/*.html
