@@ -20,6 +20,10 @@
         <filter-name>decoratorFilter</filter-name>
         <filter-class>no.nav.sbl.soknadbilstonad.BilstonadDekorator</filter-class>
     </filter>
+    <filter-mapping>
+        <filter-name>decoratorFilter</filter-name>
+        <url-pattern>/app/*</url-pattern>
+    </filter-mapping>
 
     <welcome-file-list>
         <welcome-file>bilstonad.html</welcome-file>

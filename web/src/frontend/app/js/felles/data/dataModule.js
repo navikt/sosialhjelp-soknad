@@ -1,4 +1,4 @@
-require('./dataValue');
-
-angular.module('nav.bilstonad.data', [
+angular.module('nav.data', [
 ]);
+
+require('./dataValue');

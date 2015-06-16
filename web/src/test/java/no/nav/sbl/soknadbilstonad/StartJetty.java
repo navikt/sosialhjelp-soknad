@@ -11,7 +11,7 @@ import static no.nav.sbl.dialogarena.common.jetty.Jetty.usingWar;
 import static no.nav.sbl.dialogarena.test.path.FilesAndDirs.WEBAPP_SOURCE;
 
 public class StartJetty {
-    public static final int PORT = 8184;
+    public static final int PORT = 8185;
     private static final Logger logger = LoggerFactory.getLogger(StartJetty.class);
 
     public static void main(String[] args) throws Exception {

@@ -1,8 +1,16 @@
 angular.module('nav.bilstonad.routes')
     .config(function ($routeProvider) {
         $routeProvider
+            .when('/informasjonsside', {
+                template: '<div data-informasjonsside>',
+                resolve: {
+                    cms: function (CmsResolver) {
+                        return CmsResolver;
+                    }
+                }
+            })
             .when('/soknad', {
-                template: '<div data-skjema>',
+                template: '<div data-soknad>',
                 resolve: {
                     cms: function (CmsResolver) {
                         return CmsResolver;
@@ -12,14 +20,11 @@ angular.module('nav.bilstonad.routes')
                     },
                     miljovariabler: function (MiljovariablerResolver) {
                         return MiljovariablerResolver;
-                    },
-                    land: function (LandResolver) {
-                        return LandResolver;
                     }
                 }
             })
             .when('/', {
-                redirectTo: '/soknad'
+                redirectTo: '/informasjonsside'
             })
             .otherwise({redirectTo: '/404'});
     });

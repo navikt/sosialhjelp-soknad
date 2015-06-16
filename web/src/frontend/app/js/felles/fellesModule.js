@@ -1,4 +1,5 @@
 require('./cms/cmsModule');
+require('./constants/constantsModule');
 require('./data/dataModule');
 require('./googleanalytics/googleAnalyticsModule');
 require('./httpprovider/httpProviderModule');
@@ -8,7 +9,8 @@ require('./timeoutbox/timeoutboxModule');
 
 angular.module('nav.bilstonad.felles', [
     'nav.bilstonad.cms',
-    'nav.bilstonad.data',
+    'nav.constant',
+    'nav.data',
     'nav.bilstonad.googleanalytics',
     'nav.bilstonad.httpProvider',
     'nav.bilstonad.loader',

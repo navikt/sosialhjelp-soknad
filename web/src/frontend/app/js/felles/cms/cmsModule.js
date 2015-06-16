@@ -1,4 +1,3 @@
-require('./cmsValue');
+angular.module('nav.bilstonad.cms', []);
 
-angular.module('nav.bilstonad.cms', [
-]);
+require('./cmsValue');

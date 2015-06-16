@@ -1,2 +1,2 @@
-angular.module('nav.bilstonad.data')
+angular.module('nav.data')
     .value('data', {});
