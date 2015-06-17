@@ -1,5 +1,5 @@
-angular.module('nav.kravdialogbp.skjema')
-    .factory('skjemaService', function () {
+angular.module('nav.kravdialogbp.soknad')
+    .factory('soknadBolkService', function () {
         var dummyBolk = {
             id: 'dummybolk',
             tittel: 'dummybolk.tittel',

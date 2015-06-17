@@ -5,10 +5,10 @@ window.Globals = Globals;
 angular.module('kravdialogbp', [
     'nav.kravdialogbp.felles',
     'nav.kravdialogbp.informasjonsside',
-    'nav.kravdialogbp.skjema',
+    'nav.kravdialogbp.soknad',
     'nav.kravdialogbp.vendors'
 ]);
 
 require('./felles/fellesModule');
 require('./informasjonsside/informasjonssideModule');
-require('./skjema/skjemaModule');
+require('./soknad/soknadModule');

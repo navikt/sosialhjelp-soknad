@@ -1,5 +1,5 @@
-angular.module('nav.kravdialogbp.skjema')
-    .directive('skjema', function ($scope, miljovariabler, skjemaService) {
+angular.module('nav.kravdialogbp.soknad')
+    .directive('soknad', function ($scope, miljovariabler, skjemaService) {
         var soknadstype = 'boilerplatedummysoknadstype';
 
         $scope.fremdriftsindikator = {laster: false};

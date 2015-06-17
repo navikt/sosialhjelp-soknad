@@ -1,5 +1,5 @@
-angular.module('nav.kravdialogbp.skjema', [
-    'nav.kravdialogbp.skjema.dummybolk',
+angular.module('nav.kravdialogbp.soknad', [
+    'nav.kravdialogbp.soknad.dummybolk',
     'nav.bolker',
     'nav.cms',
     'nav.fremdriftsindikator',
@@ -20,6 +20,6 @@ require('angular-soknad-tittel');
 require('angular-modal');
 require('angular-modalsideskall');
 require('angular-soknad-validering');
-require('./skjemaDirective');
-require('./skjemaService');
+require('./soknadDirective');
+require('./soknadBolkService');
 require('./dummybolk/dummybolkModule');
