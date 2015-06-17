@@ -1,7 +1,6 @@
 angular.module('nav.kravdialogbp.felles', [
     'nav.constant',
     'nav.data',
-    'nav.feilside',
     'nav.kravdialogbp.googleanalytics',
     'nav.kravdialogbp.httpProvider',
     'nav.kravdialogbp.loader',
@@ -9,7 +8,6 @@ angular.module('nav.kravdialogbp.felles', [
     'nav.kravdialogbp.timeoutbox'
 ]);
 
-require('./feilsider/feilsideController');
 require('./constants/constantsModule');
 require('./data/dataModule');
 require('./googleanalytics/googleAnalyticsModule');

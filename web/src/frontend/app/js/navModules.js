@@ -4,6 +4,7 @@ require('angular-cms');
 require('angular-loggingfiks');
 require('angular-markup');
 require('angular-soknad-tittel');
+require('angular-soknad-feilsider');
 
 var Globals = window.Globals || {};
 Globals.apiUrl = "/sendsoknad";
@@ -15,5 +16,6 @@ angular.module('nav.kravdialogbp.navmodules', [
     'nav.defaultresolvers',
     'nav.defaultservices',
     'nav.common.markup',
+    'nav.feilside',
     'nav.tittel'
 ]);

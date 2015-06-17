@@ -56,6 +56,7 @@
     "angular-miljovariabler": "git+http://stash.devillo.no/scm/npmm/angular-miljovariabler.git#v0.0.2",
     "angular-modal": "git+http://stash.devillo.no/scm/npmm/angular-modal.git#v0.0.4",
     "angular-modalsideskall": "git+http://stash.devillo.no/scm/npmm/angular-modalsideskall.git#v0.0.14",
+    "angular-soknad-feilsider": "git+http://stash.devillo.no/scm/npmm/angular-soknad-feilsider.git#v0.0.2",
     "angular-markup": "git+http://stash.devillo.no/scm/npmm/angular-markup.git#v0.0.24",
     "angular-soknad-bolker": "git+http://stash.devillo.no/scm/npmm/angular-soknad-bolker.git#v0.0.13",
     "angular-soknad-defaultresolvers": "git+http://stash.devillo.no/scm/npmm/angular-soknad-defaultresolvers.git#v0.1.16",
