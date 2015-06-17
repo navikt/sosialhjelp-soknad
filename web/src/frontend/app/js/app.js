@@ -6,9 +6,11 @@ angular.module('kravdialogbp', [
     'nav.kravdialogbp.felles',
     'nav.kravdialogbp.informasjonsside',
     'nav.kravdialogbp.soknad',
+    'nav.kravdialogbp.opprett',
     'nav.kravdialogbp.vendors'
 ]);
 
 require('./felles/fellesModule');
 require('./informasjonsside/informasjonssideModule');
 require('./soknad/soknadModule');
+require('./opprett/opprettModule');

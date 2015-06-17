@@ -48,7 +48,7 @@
     "angular-mocks": "1.3.12",
     "angular-i18n": "1.3.14",
     "angular-cms": "git+http://stash.devillo.no/scm/npmm/angular-cms.git#v0.0.26",
-    "angular-common-utils": "git+http://stash.devillo.no/scm/npmm/angular-common-utils.git#v0.0.14",
+    "angular-common-utils": "git+http://stash.devillo.no/scm/npmm/angular-common-utils.git#v0.0.16",
     "angular-soknad-fremdriftsindikator": "git+http://stash.devillo.no/scm/npmm/angular-soknad-fremdriftsindikator.git#v0.0.1",
     "angular-interceptors": "git+http://stash.devillo.no/scm/npmm/angular-interceptors.git#v0.0.13",
     "angular-land": "git+http://stash.devillo.no/scm/npmm/angular-land.git#v0.0.1",

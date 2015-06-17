@@ -1,8 +1,19 @@
 angular.module('nav.kravdialogbp.routes')
     .config(function ($routeProvider) {
         $routeProvider
+            .when('/opprett', {
+                template: '<opprett></opprett>',
+                resolve: {
+                    cms: function (CmsResolver) {
+                        return CmsResolver;
+                    },
+                    miljovariabler: function (MiljovariablerResolver) {
+                        return MiljovariablerResolver;
+                    }
+                }
+            })
             .when('/informasjonsside', {
-                template: '<div data-informasjonsside></div>',
+                template: '<informasjonsside></informasjonsside>',
                 resolve: {
                     cms: function (CmsResolver) {
                         return CmsResolver;
@@ -13,7 +24,7 @@ angular.module('nav.kravdialogbp.routes')
                 }
             })
             .when('/soknad', {
-                template: '<div data-soknad></div>',
+                template: '<soknad></soknad>',
                 resolve: {
                     cms: function (CmsResolver) {
                         return CmsResolver;
@@ -27,7 +38,7 @@ angular.module('nav.kravdialogbp.routes')
                 }
             })
             .when('/', {
-                redirectTo: '/informasjonsside'
+                redirectTo: '/opprett'
             })
             .otherwise({redirectTo: '/404'});
     });

@@ -1,18 +1,18 @@
-angular.module('nav.kravdialogbp.informasjonsside')
-    .directive('startSoknadButton', function (soknadService) {
+angular.module('nav.kravdialogbp.opprett')
+    .directive('startSoknadButton', function (soknadService, UtilService) {
         return {
             replace: true,
-            templateUrl: 'js/informasjonsside/templates/startSoknadButtonTemplate.html',
+            templateUrl: 'js/opprett/startSoknadButtonTemplate.html',
             link: function (scope) {
                 scope.startSoknad = function () {
                     scope.fremdriftsindikator = {
                         laster: true
                     };
 
-                    var skjemanummer = "NAV 04-16.01";
+                    var skjemanummer = "NAV 04-01.03";
 
                     soknadService.create({soknadType: skjemanummer}).$promise.then(function (soknad) {
-                            console.log("STARTET SØKNAD!", soknad);
+                            UtilService.redirectTilUnderside("/app/" + soknad.brukerBehandlingId + '#/informasjonsside');
                         })
                         .catch(function () {
                             scope.fremdriftsindikator.laster = false;
