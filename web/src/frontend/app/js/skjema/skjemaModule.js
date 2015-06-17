@@ -14,7 +14,6 @@ angular.module('nav.kravdialogbp.skjema', [
 
 require('angular-cms');
 require('angular-miljovariabler');
-require('angular-resource');
 require('angular-soknad-bolker');
 require('angular-soknad-fremdriftsindikator');
 require('angular-soknad-tittel');

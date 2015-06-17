@@ -6,10 +6,9 @@ angular.module('kravdialogbp', [
     'nav.kravdialogbp.felles',
     'nav.kravdialogbp.informasjonsside',
     'nav.kravdialogbp.skjema',
-    'nav.kravdialogbp.vendors',
+    'nav.kravdialogbp.vendors'
 ]);
 
 require('./felles/fellesModule');
 require('./informasjonsside/informasjonssideModule');
-require('./skjema/skjemaModule');
-require('./vendors');
+require('./soknad/soknadModule');
