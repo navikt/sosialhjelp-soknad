@@ -14,7 +14,7 @@ angular.module('nav.kravdialogbp.informasjonsside')
                     }).catch(function () {
                         scope.fremdriftsindikator.laster = false;
                     });
-                }
+                };
             }
         };
     });

@@ -51,6 +51,8 @@
     "angular-common-utils": "git+http://stash.devillo.no/scm/npmm/angular-common-utils.git#v0.0.16",
     "angular-soknad-fremdriftsindikator": "git+http://stash.devillo.no/scm/npmm/angular-soknad-fremdriftsindikator.git#v0.0.1",
     "angular-accordion": "git+http://stash.devillo.no/scm/npmm/angular-accordion.git#v0.0.10",
+    "angular-soknad-sistlagret": "git+http://stash.devillo.no/scm/npmm/angular-soknad-sistlagret.git#v0.0.6",
+    "angular-soknad-stickybunn": "git+http://stash.devillo.no/scm/npmm/angular-soknad-stickybunn.git#v0.0.1",
     "angular-interceptors": "git+http://stash.devillo.no/scm/npmm/angular-interceptors.git#v0.0.13",
     "angular-land": "git+http://stash.devillo.no/scm/npmm/angular-land.git#v0.0.1",
     "angular-loggingfiks": "git+http://stash.devillo.no/scm/npmm/angular-loggingfiks.git#v0.0.1",

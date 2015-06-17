@@ -1,8 +1,17 @@
 angular.module('nav.kravdialogbp.soknad')
     .factory('soknadBolkService', function () {
-        var dummyBolk = {
-            id: 'dummybolk',
-            tittel: 'dummybolk.tittel',
+        var dummyBolk1 = {
+            id: 'dummybolk1',
+            tittel: 'arbeidsforhold.tittel',
+            template: '<div data-dummybolk></div>',
+            apen: false,
+            skalSettesTilValidVedForsteApning: false,
+            validering: false
+        };
+
+        var dummyBolk2 = {
+            id: 'dummybolk2',
+            tittel: 'arbeidsforhold.tittel',
             template: '<div data-dummybolk></div>',
             apen: false,
             skalSettesTilValidVedForsteApning: false,
@@ -10,7 +19,7 @@ angular.module('nav.kravdialogbp.soknad')
         };
 
         var bolkliste = {
-            boilerplatedummysoknadstype: [dummyBolk]
+            boilerplatedummysoknadstype: [dummyBolk1, dummyBolk2]
         };
 
         return {

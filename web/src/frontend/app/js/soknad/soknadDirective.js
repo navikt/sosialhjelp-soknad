@@ -36,10 +36,10 @@ angular.module('nav.kravdialogbp.soknad')
                 function settVisningAvGruppe(gruppe, state) {
                     clearTimeout(gruppe.timer);
                     if (state === true) {
-                        gruppe.skalVises = true;
+                        gruppe.skalIkkeFjernesFraDom = true;
                     } else {
                         gruppe.timer = setTimeout(function () {
-                            gruppe.skalVises = false;
+                            gruppe.skalIkkeFjernesFraDom = false;
                         }, 300);
                     }
                 }

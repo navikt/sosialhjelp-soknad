@@ -23,4 +23,4 @@ require('angular-modalsideskall');
 require('angular-soknad-validering');
 require('./soknadDirective');
 require('./soknadBolkService');
-require('./dummybolk/dummybolkModule');
+require('./bolker/dummybolk/dummybolkModule');
