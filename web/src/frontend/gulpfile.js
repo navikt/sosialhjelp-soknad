@@ -16,6 +16,7 @@ var less = require('gulp-less');
 var replace = require('gulp-replace');
 var recess = require('gulp-recess');
 var rename = require('gulp-rename');
+var babelify = require('babelify');
 
 var OUTPUT_DIRECTORY = '../main/webapp/';
 
@@ -38,7 +39,9 @@ function getFilename(basename, extension) {
 gulp.task('jshint', function() {
     // Run JSHint on everything but tredjeparts-JS
     return gulp.src(['./app/js/*/*.js', './app/js/*/!(tredjeparts)/**/*.js'])
-        .pipe(jshint())
+        .pipe(jshint({
+            esnext: true
+        }))
         .pipe(jshint.reporter());
 });
 
@@ -57,6 +60,7 @@ gulp.task('build-vendors', function() {
 
 gulp.task('build-kravdialog-js', function() {
     return browserify('./app/js/app.js', { debug: isDevelopment })
+        .transform(babelify)
         .bundle()
         .on('error', function(err) {
             onError(err);

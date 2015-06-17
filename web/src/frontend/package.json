@@ -66,7 +66,8 @@
     "angular-stegindikator": "git+http://stash.devillo.no/scm/npmm/angular-stegindikator.git#v0.0.2",
     "modig-frontend": "git+http://stash.devillo.no/scm/felles/modig-frontend.git#v2.0.23",
     "nav-logger": "git+http://stash.devillo.no/scm/npmm/nav-logger.git#v0.0.2",
-    "nav-timeoutbox": "git+http://stash.devillo.no/scm/npmm/nav-timeoutbox#v0.0.8"
+    "nav-timeoutbox": "git+http://stash.devillo.no/scm/npmm/nav-timeoutbox#v0.0.8",
+    "babelify": "^6.1.2"
   },
   "devDependencies": {
     "gulp": "3.8.11",

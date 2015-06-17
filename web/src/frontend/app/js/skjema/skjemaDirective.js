@@ -43,9 +43,7 @@ angular.module('nav.kravdialogbp.skjema')
 
         function settApenStatusForAccordion(apen, ider) {
             if (ider instanceof Array) {
-                angular.forEach(ider, function (id) {
-                    settApenForId(apen, id);
-                });
+                ider.forEach( id => settApenForId(apen, id) );
             } else {
                 settApenForId(apen, ider);
             }
