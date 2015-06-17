@@ -11,4 +11,4 @@ angular.module('kravdialogbp', [
 
 require('./felles/fellesModule');
 require('./informasjonsside/informasjonssideModule');
-require('./soknad/soknadModule');
+require('./soknad/skjemaModule');

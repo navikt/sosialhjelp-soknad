@@ -1,0 +1,76 @@
+@media (min-width: 20em) {
+  // 320px
+  .rad.nettotopp {
+    padding: 30px;
+  }
+}
+
+@media (min-width: 30em) {
+  // 480px
+  .begrensning {
+    max-width: 620px;
+  }
+}
+
+@media (min-width: 38.75em) {
+  // 620px
+}
+
+@media (min-width: 48em) {
+  // 768px
+    .begrensning {
+      width: 64%;
+      margin: 0 auto;
+      h1.text-center {
+        font-size: @rem-as-38px;
+        margin: 1.2rem 0 1.8rem;
+      }
+  }
+
+  .panel.standard {
+    &.fyllut {
+      .aktivitet {
+        h2 {
+          width: 50%;
+        }
+        ul.celler {
+          width: 50%;
+          li {
+            display: inline-block;
+            width: 14.28%;
+            margin-left: -1.5px;
+          }
+        }
+      }
+    }
+    .panelheading {
+      font-size: @rem-as-30px;
+      font-weight: normal;
+      background-position: center 20px;
+      padding-top: 60px;
+      .sub {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .knapperad {
+    margin: 40px 0;
+  }
+
+  .stor {
+    font-size: 2.1rem;
+  }
+
+}
+
+@media (min-width: 62em) {
+  // 992px
+  .rad.nettotopp {
+    .begrensning {
+      width: 960px;
+      max-width: 960px;
+    }
+  }
+}
+
