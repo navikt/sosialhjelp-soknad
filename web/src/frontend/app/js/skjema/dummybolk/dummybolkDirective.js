@@ -1,4 +1,4 @@
-angular.module('nav.kravdialogbp.soknad.dummybolk')
+angular.module('nav.kravdialogbp.skjema.dummybolk')
     .directive('dummybolk', function () {
         return {
             scope: true,

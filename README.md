@@ -7,9 +7,11 @@ Boilerplatekode for kravdialoger
 
 2. Endre navn på kravdialogen i de ulike filene (Pro-tip: CTRL+SHIFT+F og søk etter "kravdialogbp" i prosjektet)
 
-3. Rename package i `web\src\frontend\main\`
+3. Rename package i `web/src/frontend/main/`
 
 4. Endre GIT-url i hoved-pom til å gå mot det nye repoet
+
+5. Endre konstentene i `web/src/frontend/app/js/felles/constants`
 
 ## Forberedelser for å kjøre
 

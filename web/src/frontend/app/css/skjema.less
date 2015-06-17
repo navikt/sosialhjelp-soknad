@@ -1,0 +1,146 @@
+span.labeltekst {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+}
+
+.svar-oppsummering-hake {
+  &:before {
+    content: url('/@{appPrefixUrl}/img/hake.svg');
+    position: relative;
+    top: 1px;
+    margin-right: 10px;
+  }
+}
+
+.skillestrek {
+  border-top: 4px solid #d1d1d1;
+  padding-top: 30px;
+  margin-top: 30px;
+}
+
+.bred {
+  width: 100%;
+}
+
+.stort-mellomrom {
+  margin-top: 60px;
+}
+
+.radio-knapp, .nav-radio-knapp {
+  border-bottom: none;
+}
+
+.land select {
+  display: block;
+  width: 300px;
+  max-width: 100%; 
+}
+
+.henter-personalia {
+  text-align: center;
+  margin-top: 2.925rem;
+}
+
+.ferdig-skjema {
+  border-bottom: none;
+  padding-bottom: 0;
+  padding-top: 60px;
+
+  a[class*="knapp-"] {
+    margin-bottom: 40px;
+  }
+}
+
+.egen-linje {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.timer {
+  padding-top: 6px;
+  text-transform: lowercase;
+}
+
+.spm {
+
+  margin-bottom: 16px;
+
+  .ekstra-info {
+    margin-left: 17px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding-top: 0;
+
+    .spm-sporsmal {
+      font-size: 1.0rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+  }
+
+  .nav-checkbox, .nav-radio-knapp, .valg {
+    &.hjelpetekst-parent label {
+      margin-right: 0;
+    }
+  }
+}
+
+.liste-vannrett {
+  display: block;
+  list-style: none;
+  margin: .6rem 0;
+  padding: 0;
+
+  li {
+    display: inline; 
+
+    &:not(:first-child):before {
+        color: @gray-dark;
+        content: "\2022";
+        list-style-type: none;
+        padding: 0 0.4rem;
+    }
+
+    a {
+      padding-left: .5rem;
+      padding-right: .5rem;
+      text-decoration: none; 
+    }
+
+    a:hover {
+      text-decoration: underline; 
+    }
+  }
+}
+
+.panel {
+  box-shadow: none;
+}
+
+
+
+@media (max-width: 1024px) {
+  label, input, select, textarea {
+    font-size: 1rem; 
+  }
+
+  .knapp.knapp-antallvelger {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+::-ms-clear {
+  width: 0; 
+  height: 0; 
+  // Fjerner X som dukker opp i input-felter i IE10 og IE11. 
+}
+
+input, textarea, select {
+  &:invalid, &:required {
+    -moz-box-shadow: none; 
+    box-shadow: none;   
+  }
+}

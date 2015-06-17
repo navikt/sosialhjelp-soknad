@@ -1,0 +1,11 @@
+<div id="feilside" data-ng-controller="FeilSideCtrl">
+    <section class="feil-panel">
+        <h1 class="stor-ikon-feil-gra" data-ng-bind-html=" 'feilside.soknadikkefunnet.tittel' | cmstekst"></h1>
+        <p data-ng-bind-html=" 'feilside.soknadikkefunnet.informasjon' | cmstekst"></p>
+        <p>
+            <a type="button" class="knapp-link-liten" href="{{ dittnavUrl }}">
+                {{ 'feilmelding.lenketekst' | cmstekst }}
+            </a>
+        </p>
+    </section>
+</div>

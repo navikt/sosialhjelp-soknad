@@ -6,6 +6,9 @@ angular.module('nav.kravdialogbp.routes')
                 resolve: {
                     cms: function (CmsResolver) {
                         return CmsResolver;
+                    },
+                    miljovariabler: function (MiljovariablerResolver) {
+                        return MiljovariablerResolver;
                     }
                 }
             })

@@ -1,0 +1,38 @@
+<div id="feilside" data-ng-controller="FeilSideCtrl">
+    <section class="feil-panel" data-ng-form="epostForm" data-ng-controller="FortsettSenereCtrl" data-novalidate>
+        <h1 class="stor-ikon-feil-gra" data-ng-bind-html=" 'feilmelding' | cmstekst"></h1>
+
+        <p data-ng-bind-html=" 'feilmelding.innsending.1' | cmstekst"></p>
+
+        <div class="form-linje">
+            <label>
+                <span class="labeltekst" data-ng-bind-html=" 'dagpenger.fortsettSenere.epost.label' | cmstekst"></span>
+                <input type="email"
+                       role="textbox"
+                       data-ng-model="epost.value"
+                       data-error-messages="{required: 'dagpenger.fortsettSenere.epost.required.feilmelding', pattern: 'dagpenger.fortsettSenere.epost.pattern.feilmelding' }"
+                       data-ng-required="true"
+                       data-ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/"
+                       data-blur-validate/>
+            </label>
+            <input type="submit"
+                   class="knapp hoved liten"
+                   value="{{ 'dagpenger.fortsettSenere.epost.send' | cmstekst }}"
+                   role="button"
+                   data-ng-click="fortsettSenere(epostForm)">
+            <span class="melding"></span>
+        </div>
+
+        <p class="normal-strek">
+            <span data-ng-bind-html=" 'feilmelding.innsending.2' | cmstekst"></span>
+            <a href="{{mineInnsendinger}}" data-ng-bind-html=" 'feilmelding.mineinnsedinger.lenketekst' | cmstekst"></a>
+        </p>
+
+        <p>
+            <a type="button" class="knapp-link-liten" href="{{ dittnavUrl }}">
+                {{ 'feilmelding.lenketekst' | cmstekst }}
+            </a>
+        </p>
+
+    </section>
+</div>
