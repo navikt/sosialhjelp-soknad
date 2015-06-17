@@ -2,7 +2,7 @@ angular.module('nav.feilside', [])
     .run([function() {
         // Preload ikon for feilside
         var img = new Image();
-        img.src = "/soknadforeldrepenger/img/utropstegn-sirkel-gra.svg";
+        img.src = "./img/utropstegn-sirkel-gra.svg";
     }])
     .controller('FeilSideCtrl', function ($scope, data) {
         $scope.mineInnsendinger = data.miljovariabler["saksoversikt.link.url"];

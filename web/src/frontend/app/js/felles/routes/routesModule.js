@@ -9,3 +9,4 @@ require('angular-cms');
 require('angular-miljovariabler');
 require('angular-soknad-routeredirect');
 require('./routesConfig');
+require('./routesFeilsiderConfig');

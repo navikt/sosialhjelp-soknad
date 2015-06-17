@@ -19,7 +19,7 @@
     {{fragment.header}}
     <div data-ng-app="{{appname}}">
         <div class="initial-loader" data-ng-if="app.laster">
-            <img src="/{{appname}}/img/roed_128.gif" alt="Loading content/Laster innhold">
+            <img src="/{{contextroot}}/img/roed_128.gif" alt="Loading content/Laster innhold">
         </div>
 
         <div id="app-content" data-ng-view data-avbryt-helper data-styling-helper data-ng-hide="app.laster"></div>
