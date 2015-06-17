@@ -6,6 +6,7 @@ require('angular-markup');
 require('angular-soknad-tittel');
 require('angular-soknad-feilsider');
 require('angular-stegindikator');
+require('angular-accordion');
 
 var Globals = window.Globals || {};
 Globals.apiUrl = "/sendsoknad";
@@ -18,6 +19,7 @@ angular.module('nav.kravdialogbp.navmodules', [
     'nav.defaultservices',
     'nav.common.markup',
     'nav.feilside',
+    'nav.accordion',
     'nav.stegindikator',
     'nav.tittel'
 ]);

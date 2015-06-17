@@ -18,6 +18,9 @@ angular.module('nav.kravdialogbp.routes')
                     cms: function (CmsResolver) {
                         return CmsResolver;
                     },
+                    soknad: function(SoknadMedFaktaResolver) {
+                        return SoknadMedFaktaResolver.get();
+                    },
                     miljovariabler: function (MiljovariablerResolver) {
                         return MiljovariablerResolver;
                     }

@@ -2,6 +2,7 @@ angular.module('nav.kravdialogbp.soknad', [
     'nav.kravdialogbp.soknad.dummybolk',
     'nav.bolker',
     'nav.cms',
+    'nav.data',
     'nav.fremdriftsindikator',
     'nav.miljovariabler',
     'nav.modal',
