@@ -1,0 +1,126 @@
+h4, .h4 {
+  text-transform: none;
+  font-family: arial, Helvetica, sans-serif;
+  margin-top: 0;
+  margin-bottom: 16px;  
+}
+
+form label span, [ng-form] label span, [data-ng-form] label span {
+  margin-bottom: 8px;
+}
+
+.strek.ikon.info-orange {
+  padding-bottom: 30px;
+  margin-bottom: 30px !important;
+  background-image: url('/@{appPrefixUrl}/img/under-dark.png'), url('/@{appPrefixUrl}/img/info-orange.svg');
+  background-position: bottom center, center 0;
+  text-align: center;
+}
+
+.strek.ikon.vedlegg {
+  background-image: url('/@{appPrefixUrl}/img/under-dark.png'),url('/@{appPrefixUrl}/img/vedlegg_graa.svg');
+  background-position: bottom center, center 0;
+  padding-bottom: 15px;
+  margin-bottom: 15px !important;
+}
+
+.utrop-sirkel-ikon {
+  background-image: url('/@{appPrefixUrl}/img/info_26.svg');
+  background-position: center top;
+  background-repeat: no-repeat;
+  padding-top: 46px;
+  text-align: center;
+}
+
+[class*="ikon-"], .ikon {
+  background-repeat: no-repeat;
+  text-align: center;
+  padding-top: 48px;
+}
+
+.strek:not([class*="ikon"]) {
+  background-image: url(../img/under-dark.png);
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  padding-bottom: 15px;
+  margin-bottom: 15px !important;
+  text-align: center;
+}
+
+.normal {
+  font-weight: normal;
+}
+
+.spm-sporsmal {
+  font-size: @14px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 8px;
+  text-transform: none;
+  line-height: 1.4;
+
+  p {
+    font-size: inherit;
+  }
+}
+
+span.spm-sporsmal {
+  display: block; 
+}
+
+.meta-tittel {
+  margin-bottom: 0; 
+}
+
+.meta-info:empty {
+  display: none; 
+}
+
+.bold-label .labeltekst {
+  font-weight: bold; 
+}
+
+.informasjonstekst {
+
+  // font-size to ganger pga buggy uthenting av tekster
+  //(feil output pga fjerning av første paragraf-start og siste paragraf-slutt)
+
+  font-size: 1rem;
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  ul {
+    margin-top:0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    li {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 47.9375em) {
+  
+  .meta-tittel {
+    font-size: @15px;
+  }
+
+  .informasjonstekst {
+    font-size: @15px; 
+
+    p {
+      font-size: @15px; 
+    }
+
+  }
+
+}
