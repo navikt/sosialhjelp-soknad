@@ -7,6 +7,5 @@ angular.module('nav.kravdialogbp.routes', [
 
 require('angular-cms');
 require('angular-miljovariabler');
-require('angular-route');
 require('angular-soknad-routeredirect');
 require('./routesConfig');

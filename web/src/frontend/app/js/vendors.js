@@ -4,6 +4,9 @@ require('angular-animate');
 require('angular-cookies');
 require('angular-cms');
 require('angular-sanitize');
+require('angular-resource');
+require('angular-route');
+require('angular-sanitize');
 require('jquery-ui-browserify');
 require('../../node_modules/bootstrap/js/transition');
 require('nav-logger');
@@ -23,6 +26,8 @@ angular.module('nav.kravdialogbp.vendors', [
     'ngAnimate',
     'ngCookies',
     'ngLocale',
+    'ngRoute',
+    'ngResource',
     'ngSanitize',
     'source-map-exception-handler',
     'templates'
