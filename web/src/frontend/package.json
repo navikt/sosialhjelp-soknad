@@ -61,7 +61,7 @@
     "angular-modalsideskall": "git+http://stash.devillo.no/scm/npmm/angular-modalsideskall.git#v0.0.14",
     "angular-soknad-feilsider": "git+http://stash.devillo.no/scm/npmm/angular-soknad-feilsider.git#v0.0.2",
     "angular-markup": "git+http://stash.devillo.no/scm/npmm/angular-markup.git#v0.0.24",
-    "angular-soknad-bolker": "git+http://stash.devillo.no/scm/npmm/angular-soknad-bolker.git#v0.0.13",
+    "angular-soknad-bolker": "git+http://stash.devillo.no/scm/npmm/angular-soknad-bolker.git#v0.0.15",
     "angular-soknad-defaultresolvers": "git+http://stash.devillo.no/scm/npmm/angular-soknad-defaultresolvers.git#v0.1.16",
     "angular-soknad-fremdriftsindikator": "git+http://stash.devillo.no/scm/npmm/angular-soknad-fremdriftsindikator.git#v0.0.1",
     "angular-soknad-routeredirect": "git+http://stash.devillo.no/scm/npmm/angular-soknad-routeredirect.git#1.0.0",
