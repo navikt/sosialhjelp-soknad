@@ -1,0 +1,30 @@
+<div class="skjemaramme">
+    <div class="skjemainnhold" data-novalidate>
+        <feilliste></feilliste>
+        <p>Dette er en annen dummybolk. For at det skal være lettere å få med seg hvordan ting fungerer
+        har vi delt det opp i 2 ulike bolker. I denne bolken må du være på spørsmålet for å komme videre.</p>
+
+        <div class="spm form-linje boolean"
+             data-radioinput-validering
+             data-feilmelding="infofar.aleneomsorg.feilmelding"
+             data-nav-faktum="rettigheter.omsorg">
+
+            <h3 class="spm-sporsmal"
+                data-ng-bind-html="'infofar.aleneomsorg.sporsmal' | cmstekst"></h3>
+
+            <div data-navradio
+                 data-value='morfarborsammen'
+                 data-navlabel='infofar.aleneomsorg.alternativ.1'>
+            </div>
+
+            <div data-navradio
+                 data-value='aleneomsorg'
+                 data-navlabel='infofar.aleneomsorg.alternativ.2'>
+            </div>
+
+            <span class='melding' data-ng-bind-html="'infofar.aleneomsorg.feilmelding' | cmstekst"></span>
+        </div>
+
+        <div data-nesteknapp-bolk></div>
+    </div>
+</div>

@@ -11,8 +11,8 @@ angular.module('nav.kravdialogbp.soknad')
 
         var dummyBolk2 = {
             id: 'dummybolk2',
-            tittel: 'arbeidsforhold.tittel',
-            template: '<div data-dummybolk></div>',
+            tittel: 'infofar.tittel',
+            template: '<div data-dummybolk2></div>',
             apen: false,
             skalSettesTilValidVedForsteApning: false,
             validering: false
@@ -59,7 +59,6 @@ angular.module('nav.kravdialogbp.soknad')
         function settValidert(bolknavn) {
             getBolkMedNavn(bolknavn).validering = false;
         }
-
 
         return {
             getBolkliste: getBolkliste,
