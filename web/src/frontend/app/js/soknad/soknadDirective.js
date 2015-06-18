@@ -1,5 +1,5 @@
 angular.module('nav.kravdialogbp.soknad')
-    .directive('soknad', function (soknadBolkService, data, soknadService, $location) {
+    .directive('soknad', function (soknadBolkService, data, soknadService, $location, $timeout) {
         return {
             templateUrl: "js/soknad/soknad.html",
             link: function(scope) {
@@ -14,24 +14,13 @@ angular.module('nav.kravdialogbp.soknad')
                         if (nyverdi === gammelverdi) {
                             return true;
                         }
-                        settVisningAvGruppe(scope.bolker[index], nyverdi);
+                        settVisningAvGruppeIDOM(scope.bolker[index], nyverdi);
                     });
                 });
 
-                scope.apneTab = function (ider) {
-                    settApenStatusForAccordion(true, ider);
-                };
-
-                scope.lukkTab = function (ider) {
-                    setTimeout(function () {
-                        settApenStatusForAccordion(false, ider);
-                    }, 150);
-                };
-
-                scope.settValidert = function (id) {
-                    var idx = scope.bolker.indexByValue(id);
-                    scope.bolker[idx].validering = false;
-                };
+                scope.apneTab = soknadBolkService.apneTab;
+                scope.lukkTab = soknadBolkService.lukkTab;
+                scope.settValidert = soknadBolkService.settValidert;
 
                 scope.gaTilVedleggHvisValidert = function (feilliste){
                     if (feilliste.length === 0) {
@@ -41,29 +30,14 @@ angular.module('nav.kravdialogbp.soknad')
                     }
                 };
 
-                function settVisningAvGruppe(gruppe, state) {
-                    clearTimeout(gruppe.timer);
-                    if (state === true) {
+                function settVisningAvGruppeIDOM(gruppe, state) {
+                    $timeout.cancel(gruppe.timer);
+                    if(state === true) {
                         gruppe.skalIkkeFjernesFraDom = true;
                     } else {
-                        gruppe.timer = setTimeout(function () {
+                        gruppe.timer = $timeout(function(){
                             gruppe.skalIkkeFjernesFraDom = false;
                         }, 300);
-                    }
-                }
-
-                function settApenStatusForAccordion(apen, ider) {
-                    if (ider instanceof Array) {
-                        ider.forEach( id => settApenForId(apen, id) );
-                    } else {
-                        settApenForId(apen, ider);
-                    }
-                }
-
-                function settApenForId(apen, id) {
-                    var idx = scope.bolker.indexByValue(id);
-                    if (idx > -1) {
-                        scope.bolker[idx].apen = apen;
                     }
                 }
             }

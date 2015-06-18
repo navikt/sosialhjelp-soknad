@@ -18,13 +18,54 @@ angular.module('nav.kravdialogbp.soknad')
             validering: false
         };
 
-        var bolkliste = {
+        var alleBolker = [dummyBolk1, dummyBolk2];
+
+        var bolklister = {
             boilerplatedummysoknadstype: [dummyBolk1, dummyBolk2]
         };
 
-        return {
-            getBolkliste: function (soknadstype) {
-                return bolkliste[soknadstype];
+        function apneTab (ider) {
+            settApenStatusForAccordion(true, ider);
+        }
+
+        function lukkTab (ider) {
+            settApenStatusForAccordion(false, ider);
+        }
+
+        function getBolkliste (soknadstype) {
+            return bolklister[soknadstype];
+        }
+
+        function getBolkMedNavn(bolknavn) {
+            return alleBolker.filter(function(bolk){
+               return bolk.id === bolknavn;
+            })[0];
+        }
+
+        function settApenStatusForAccordion(apen, ider) {
+            if (ider instanceof Array) {
+                angular.forEach(ider, function (id) {
+                    settApenForId(apen, id);
+                });
+            } else if (ider !== undefined) {
+                settApenForId(apen, ider);
             }
+        }
+
+        function settApenForId(apen, id) {
+            getBolkMedNavn(id).apen = apen;
+        }
+
+        function settValidert(bolknavn) {
+            getBolkMedNavn(bolknavn).validering = false;
+        }
+
+
+        return {
+            getBolkliste: getBolkliste,
+            getBolkMedNavn: getBolkMedNavn,
+            settValider: settValidert,
+            apneTab: apneTab,
+            lukkTab: lukkTab
         };
     });
