@@ -1,5 +1,5 @@
 angular.module('nav.kravdialogbp.soknad')
-    .directive('soknad', function (soknadBolkService, data) {
+    .directive('soknad', function (soknadBolkService, data, soknadService, $location) {
         return {
             templateUrl: "js/soknad/soknad.html",
             link: function(scope) {
@@ -31,6 +31,14 @@ angular.module('nav.kravdialogbp.soknad')
                 scope.settValidert = function (id) {
                     var idx = scope.bolker.indexByValue(id);
                     scope.bolker[idx].validering = false;
+                };
+
+                scope.gaTilVedleggHvisValidert = function (feilliste){
+                    if (feilliste.length === 0) {
+                        soknadService.delsteg({delsteg: 'vedlegg', behandlingsId: data.soknad.brukerBehandlingId}).$promise.then(function () {
+                            $location.path('/vedlegg');
+                        });
+                    }
                 };
 
                 function settVisningAvGruppe(gruppe, state) {
