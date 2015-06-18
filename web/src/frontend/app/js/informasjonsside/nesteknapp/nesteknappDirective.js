@@ -2,7 +2,7 @@ angular.module('nav.kravdialogbp.informasjonsside')
     .directive('informasjonssideNesteknapp', function (soknadService, data, $location) {
         return {
             scope: true,
-            templateUrl: 'js/informasjonsside/nesteknapp.html',
+            templateUrl: 'js/informasjonsside/nesteknapp/nesteknapp.html',
             link: function(scope) {
                 scope.nesteSide = function() {
                     scope.fremdriftsindikator = {

@@ -2,7 +2,7 @@ angular.module('nav.kravdialogbp.opprett')
     .directive('startSoknadButton', function (soknadService, UtilService) {
         return {
             replace: true,
-            templateUrl: 'js/opprett/startSoknadButtonTemplate.html',
+            templateUrl: 'js/opprett/startSoknadButton/startSoknadButtonTemplate.html',
             link: function (scope) {
                 scope.startSoknad = function () {
                     scope.fremdriftsindikator = {

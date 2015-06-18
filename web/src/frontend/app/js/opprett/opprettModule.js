@@ -1,9 +1,9 @@
 angular.module('nav.kravdialogbp.opprett', [
     'nav.data',
-    'nav.services.soknad',
     'nav.redirect.delsteg',
+    'nav.kravdialogbp.opprett.startsoknadbutton',
     'nav.utils.service'
 ]);
 
 require('./opprettDirective');
-require('./startSoknadButtonDirective');
+require('./startSoknadButton/startSoknadButtonModule');

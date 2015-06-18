@@ -5,10 +5,7 @@ require('angular-loggingfiks');
 require('angular-markup');
 require('angular-soknad-tittel');
 require('angular-soknad-feilsider');
-require('angular-stegindikator');
-require('angular-accordion');
-require('angular-soknad-sistlagret');
-require('angular-soknad-stickybunn');
+
 
 var Globals = window.Globals || {};
 Globals.apiUrl = "/sendsoknad";
@@ -21,9 +18,5 @@ angular.module('nav.kravdialogbp.navmodules', [
     'nav.defaultservices',
     'nav.common.markup',
     'nav.feilside',
-    'nav.accordion',
-    'nav.stegindikator',
-    'nav.sistLagret',
-    'nav.stickybunn',
     'nav.tittel'
 ]);

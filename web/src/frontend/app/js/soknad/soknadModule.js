@@ -1,4 +1,5 @@
 angular.module('nav.kravdialogbp.soknad', [
+    'nav.accordion',
     'nav.kravdialogbp.soknad.dummybolk',
     'nav.bolker',
     'nav.cms',
@@ -10,6 +11,9 @@ angular.module('nav.kravdialogbp.soknad', [
     'nav.modalsideskall',
     'nav.sidetittel',
     'nav.stickyFeilmelding',
+    'nav.stegindikator',
+    'nav.sistLagret',
+    'nav.stickybunn',
     'nav.validering',
     'ngResource'
 ]);
@@ -25,3 +29,7 @@ require('angular-soknad-validering');
 require('./soknadDirective');
 require('./soknadBolkService');
 require('./bolker/dummybolk/dummybolkModule');
+require('angular-stegindikator');
+require('angular-accordion');
+require('angular-soknad-sistlagret');
+require('angular-soknad-stickybunn');

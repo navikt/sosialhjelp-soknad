@@ -1,7 +1,6 @@
 angular.module('nav.kravdialogbp.informasjonsside', [
-    'nav.data',
-    'nav.services.soknad'
+    'nav.kravdialogbp.informasjonsside.nesteknapp'
 ]);
 
 require('./informasjonssideDirective');
-require('./nesteknappDirective');
+require('./nesteknapp/nesteknappModule');
