@@ -20,6 +20,7 @@ module.exports = function (config) {
         files: [
             'app/js/vendors.js',
             'node_modules/angular-mocks/angular-mocks.js',
+            'test/karma/helpers/**/*.js',
             'app/js/app.js',
             'app/js/**/*.js',
             'app/**/*.html',
