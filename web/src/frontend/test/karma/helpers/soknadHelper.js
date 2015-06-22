@@ -2,27 +2,6 @@ angular.module('nav.soknad.test.helper', ['nav.services.faktum'])
     .factory('SoknadTestGenerator', function (Faktum) {
         var faktumIdTeller = 0;
 
-        var faktaMedTommeFaktum = [
-            {   key:   'soknadsvalg.stonadstype',
-                value: '' },
-            {   key:   'soknadsvalg.fodselelleradopsjon',
-                value: '' },
-            {   key:   'rettigheter.omsorg',
-                value: ''},
-            {   key:   'infofar.opplysninger.personinfo',
-                value: '',
-                properties: {}},
-            {   key:   'personalia',
-                value: '',
-                properties: {}},
-            {   key:   'vedlegg.hjelpefaktum',
-                value: '',
-                properties: {}},
-            {   key:   'infomor.opplysninger.personinfo',
-                value: '',
-                properties: {}}
-        ];
-
         // Konverterer en liste av objekter til riktige Faktumobjekter
         function konverterFaktaTilRiktigeFaktumobjekter(fakta) {
             for (var i = 0; i < fakta.length; i++) {
@@ -94,8 +73,7 @@ angular.module('nav.soknad.test.helper', ['nav.services.faktum'])
     };
 
     var genererSoknadMedTommeFaktum = function (arg) {
-        arg.fakta = faktaMedTommeFaktum;
-
+        arg.fakta = [];
         return genererSoknad(arg);
     };
 
