@@ -1,14 +1,13 @@
-<div class="neste-bolk-knapper" data-ng-class="skalViseFeilmelding">
-   <div>
-        <button class="knapp hoved"
+<div  class="knapperad knapperad-adskilt">
+    <div class="blokk-s">
+        <button class="knapp knapp-hoved"
                 type="button"
                 data-ng-click="startSoknad()"
                 data-ng-bind-html="'start' | cmstekst"
-                data-fremdriftsindikator></button>
-   </div>
+                data-fremdriftsindikator-knapp></button>
+    </div>
 
-    <ul class="liste-vannrett frittstaende-lenke">
-        <li><a href="{{ dittnavUrl }}" data-ng-bind-html=" 'avbryt.lenketekst' | cmstekst"></a></li>
-    </ul>
-
+    <p>
+        <a href="{{ dittnavUrl }}" data-ng-bind-html=" 'avbryt' | cmstekst"></a>
+    </p>
 </div>
