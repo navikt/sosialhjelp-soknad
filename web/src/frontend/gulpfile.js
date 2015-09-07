@@ -183,13 +183,13 @@ gulp.task("watch-dep", function() {
     console.log("watching module: " + module + " in folder: " + GIT_ROOT + module);
 
     gulp.start('build');
-    gulp.watch('./app/js/**/*.js', ['build-bilstonad-js']);
+    gulp.watch('./app/js/**/*.js', ['build-kravdialog-js']);
     gulp.watch('./app/**/*.html', ['build-templates']);
     gulp.watch('./app/css/*.less', ['build-less']);
 
     gulp.watch(GIT_ROOT + module +  '/**/*.less', ['build-less']);
     gulp.watch(GIT_ROOT + module +  '/**/*.html', ['build-templates', 'build-felles-templates']);
-    gulp.watch(GIT_ROOT + module +  '/**/*.js', ['build-bilstonad-js']);
+    gulp.watch(GIT_ROOT + module +  '/**/*.js', ['build-kravdialog-js']);
 });
 
 gulp.task('default', ['clean'], function() {

@@ -9,7 +9,7 @@ angular.module('nav.kravdialogbp.informasjonsside')
                         laster: true
                     };
 
-                    soknadService.delsteg({behandlingsId: data.soknad.brukerBehandlingId, delsteg: 'utfylling'}).$promise.then(function() {
+                    soknadService.delsteg({behandlingsId: data.soknad.brukerBehandlingId, delsteg: 'utfylling'}).then(function() {
                         $location.path("/soknad");
                     }).catch(function () {
                         scope.fremdriftsindikator.laster = false;

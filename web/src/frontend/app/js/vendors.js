@@ -10,6 +10,7 @@ require('jquery-ui-browserify');
 require('../../node_modules/bootstrap/js/transition');
 require('angular-i18n/nb-no');
 require('./navModules');
+require('babelify/polyfill');
 
 var Globals = window.Globals || {};
 Globals.apiUrl = "/sendsoknad";

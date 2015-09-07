@@ -10,7 +10,7 @@ angular.module('kravdialogbp', [
     'nav.kravdialogbp.vendors'
 ]);
 
-require('./felles/fellesModule');
+require('fellesModule');
 require('./informasjonsside/informasjonssideModule');
 require('./soknad/soknadModule');
 require('./opprett/opprettModule');

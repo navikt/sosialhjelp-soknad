@@ -11,7 +11,7 @@ angular.module('nav.kravdialogbp.opprett')
 
                     var skjemanummer = "NAV 04-01.03";
 
-                    soknadService.create({soknadType: skjemanummer}).$promise.then(function (soknad) {
+                    soknadService.create({soknadType: skjemanummer}).then(function (soknad) {
                             UtilService.redirectTilUnderside("/app/" + soknad.brukerBehandlingId + '#/informasjonsside');
                         })
                         .catch(function () {
