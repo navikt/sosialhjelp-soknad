@@ -3,17 +3,22 @@
  * Eksempel: @import "./node_modules/angular-markup/modules/markup/angular-markup.less";
 */
 
-@import "./node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/less/nav_frontend/includes/variables.less";
-@import "./node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/less/nav_frontend/includes/mixins.less";
-@import "./node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/less/nav_extra/dropdown.less";
-@import "./node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/less/nav_extra/skjema.less";
-@import "./node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/less/nav_extra/tooltip.less";
-@import "./node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/less/nav_extra/eksternflate.less";
-@import "./node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/less/nav_extra/modig-grid.less";
-@import "./node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/less/nav_extra/knapper.less";
-@import "./node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/less/nav_extra/stegindikator";
-@import "./node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/less/nav_extra/modal.less";
+@import "@{modig-frontend-root-url}/less/includes/variables";
+@import "@{modig-frontend-root-url}/less/includes/ikoner";
+@import "@{modig-frontend-root-url}/less/includes/mixins";
+
+@import "@{modig-frontend-root-url}/less/nav_extra/hjelpetekst";
+@import "@{modig-frontend-root-url}/less/nav_extra/hoder";
+@import "@{modig-frontend-root-url}/less/nav_extra/knapperader";
+@import "@{modig-frontend-root-url}/less/nav_extra/lister";
+@import "@{modig-frontend-root-url}/less/nav_extra/paneler";
+@import "@{modig-frontend-root-url}/less/nav_extra/skjema";
+@import "@{modig-frontend-root-url}/less/nav_extra/typografi";
+@import "@{modig-frontend-root-url}/less/nav_extra/stegindikator";
+@import "@{modig-frontend-root-url}/less/nav_extra/validering";
+@import "@{modig-frontend-root-url}/less/nav_extra/modaler";
+@import "@{modig-frontend-root-url}/less/nav_extra/utilities";
+
 @import "./node_modules/angular-markup/modules/markup/angular-markup.less";
-@import "./node_modules/angular-soknad-bolker/modules/nesteknapp/nesteknappBolk.less";
 @import "./node_modules/angular-soknad-feilsider/module/feilside.less";
-@import "./node_modules/angular-accordion/modules/accordion/accordion.less";
+@import "./node_modules/angular-accordion/modules/accordion/angular-accordion.less";
