@@ -5,6 +5,7 @@ require('angular-loggingfiks');
 require('angular-markup');
 require('angular-soknad-tittel');
 require('angular-soknad-feilsider');
+require('nav-timeoutbox');
 
 var Globals = window.Globals || {};
 Globals.apiUrl = "/sendsoknad";
@@ -18,4 +19,6 @@ angular.module('nav.kravdialogbp.navmodules', [
     'nav.common.markup',
     'nav.feilside',
     'nav.tittel'
-]);
+]).run(function(TimeoutboxService){
+    TimeoutboxService.init();
+});
