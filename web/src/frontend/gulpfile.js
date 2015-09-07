@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
-var karma = require('gulp-karma');
 var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
 var ngAnnotate = require('gulp-ng-annotate');
@@ -17,6 +16,7 @@ var replace = require('gulp-replace');
 var recess = require('gulp-recess');
 var rename = require('gulp-rename');
 var babelify = require('babelify');
+var argv = require("yargs").argv;
 
 var OUTPUT_DIRECTORY = '../main/webapp/';
 
@@ -29,7 +29,7 @@ var contextroot = "soknadkravdialogbp";
 
 var onError = function(err) {
     gutil.beep();
-    gutil.log("Error:", err.message);
+    gutil.log("Error(" + err.plugin + "): [line " + err.lineNumber + "] " + err.message );
 };
 
 function getFilename(basename, extension) {
@@ -40,7 +40,8 @@ gulp.task('jshint', function() {
     // Run JSHint on everything but tredjeparts-JS
     return gulp.src(['./app/js/*/*.js', './app/js/*/!(tredjeparts)/**/*.js'])
         .pipe(jshint({
-            esnext: true
+            esnext: true,
+            eqnull: true
         }))
         .pipe(jshint.reporter());
 });
@@ -53,13 +54,19 @@ gulp.task('build-vendors', function() {
         .pipe(buffer())
         .pipe(gulpif(isDevelopment, replace("/sendsoknad", "http://127.0.0.1:8181/sendsoknad")))
         .pipe(gulpif(isProduction, ngAnnotate()))
-        .pipe(gulpif(isProduction, uglify()))
+        .pipe(gulpif(isProduction, uglify())).on('error', function(error){
+            onError(error);
+            process.exit(1);
+        })
         .pipe(rename(getFilename('vendors', 'js')))
         .pipe(gulp.dest(OUTPUT_DIRECTORY + 'js/'));
 });
 
 gulp.task('build-kravdialog-js', function() {
-    return browserify('./app/js/app.js', { debug: isDevelopment })
+    return browserify('./app/js/app.js', {
+        debug: isDevelopment,
+        paths: ['./app/js/felles/']
+    })
         .transform(babelify)
         .bundle()
         .on('error', function(err) {
@@ -69,7 +76,10 @@ gulp.task('build-kravdialog-js', function() {
         .pipe(source('kravdialog.js'))
         .pipe(buffer())
         .pipe(gulpif(isProduction, ngAnnotate()))
-        .pipe(gulpif(isProduction, uglify()))
+        .pipe(gulpif(isProduction, uglify())).on('error', function(error){
+            onError(error);
+            process.exit(1);
+        })
         .pipe(rename(getFilename('kravdialog', 'js')))
         .pipe(gulp.dest(OUTPUT_DIRECTORY + 'js/'));
 });
@@ -126,18 +136,14 @@ gulp.task('copy-img', function() {
 gulp.task('test', function() {
     var browsers = ['PhantomJS'];
     if (isDevelopment) {
-        browsers.push('Chrome')
+        browsers.push('Chrome');
     }
 
-    return gulp.src('./foobar')
-        .pipe(karma({
-            configFile: './test/karma/karma.conf.js',
-            browsers: browsers,
-            action: 'run'
-        }))
-        .on('error', function(err) {
-            throw err;
-        });
+    return karmaServer.start({
+        configFile: __dirname + '/test/karma/karma.conf.js',
+        browsers: browsers,
+        singleRun: true
+    });
 });
 
 gulp.task('tdd', function(done){
@@ -164,7 +170,26 @@ gulp.task('watch', function() {
     gulp.start('build');
     gulp.watch('./app/js/**/*.js', ['build-kravdialog-js']);
     gulp.watch('./app/**/*.html', ['build-templates']);
+    gulp.watch('./app/**/*.less', ['build-less']);
+});
+
+gulp.task("watch-dep", function() {
+    isProduction = false;
+    isDevelopment = true;
+
+    var GIT_ROOT = "../../../../";
+    var module = argv.module;
+
+    console.log("watching module: " + module + " in folder: " + GIT_ROOT + module);
+
+    gulp.start('build');
+    gulp.watch('./app/js/**/*.js', ['build-bilstonad-js']);
+    gulp.watch('./app/**/*.html', ['build-templates']);
     gulp.watch('./app/css/*.less', ['build-less']);
+
+    gulp.watch(GIT_ROOT + module +  '/**/*.less', ['build-less']);
+    gulp.watch(GIT_ROOT + module +  '/**/*.html', ['build-templates', 'build-felles-templates']);
+    gulp.watch(GIT_ROOT + module +  '/**/*.js', ['build-bilstonad-js']);
 });
 
 gulp.task('default', ['clean'], function() {
