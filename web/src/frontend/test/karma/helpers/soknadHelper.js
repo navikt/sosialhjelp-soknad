@@ -1,14 +1,16 @@
 angular.module('nav.soknad.test.helper', ['nav.services.faktum'])
-    .factory('SoknadTestGenerator', function (Faktum) {
+    .factory('SoknadTestGenerator', function (Faktum, FaktaService) {
+        // TODO: Slett filen når vi går vekk fra dataobjektet
+
         var faktumIdTeller = 0;
 
         // Konverterer en liste av objekter til riktige Faktumobjekter
-        function konverterFaktaTilRiktigeFaktumobjekter(fakta) {
+        function leggTilFaktaPaaService(fakta) {
             for (var i = 0; i < fakta.length; i++) {
                 if (!(fakta[i] instanceof Faktum)) {
-                    faktum = new Faktum(fakta[i]);
+                    var faktum = new Faktum(fakta[i]);
                     faktum.faktumId = faktumIdTeller++;
-                    fakta[i] = faktum;
+                    FaktaService.leggTilFaktum(faktum);
                 }
             }
         }
@@ -16,69 +18,33 @@ angular.module('nav.soknad.test.helper', ['nav.services.faktum'])
         var genererSoknad = function (arg) {
             var fakta = arg.fakta || [];
 
-            konverterFaktaTilRiktigeFaktumobjekter(fakta);
+            leggTilFaktaPaaService(fakta);
             return {
                 soknadId: 1,
                 brukerBehandlingId: '1A',
-                fakta: fakta,
-                finnFaktum: function (key) {
-                    var res = null;
-                    fakta.forEach(function (item) {
-                        if (item.key == key) {
-                            res = item;
-                        }
-                    });
-                    return res;
-                },
-                finnFakta: function (key) {
-                    var res = [];
-                    fakta.forEach(function (item) {
-                        if (item.key === key) {
-                            res.push(item);
-                        }
-                    });
-                    return res;
-                },
-                finnBarnFakta: function(parentId) {
-                    return this.fakta.filter(function(item) {
-                        return item.parrentFaktum === parentId;
-                    });
-                },
-                leggTilFaktum: function (faktum) {
+                fakta: FaktaService.getFakta(),
+                finnFaktum: FaktaService.finnFaktum,
+                finnBarnFakta: FaktaService.finnBarnFakta,
+                finnFaktumMedId: FaktaService.finnFaktumMedId,
+                finnFakta: FaktaService.finnFakta,
+                finnAlleFaktumMedVerdi: FaktaService.finnAlleFaktumMedVerdi,
+                slettFaktum: FaktaService.slettFaktum,
+                leggTilFaktum: function(faktum) {
                     if(!faktum.faktumId) {
                         faktum.faktumId = faktumIdTeller++;
                     }
-                    fakta.push(new Faktum(faktum));
-                },
-                slettFaktum: function (faktum, successHandler) {
-                    Faktum.delete({faktumId: faktum.faktumId}).$promise.then(successHandler);
-
-                    var that = this;
-                    this.fakta.forEach(function (item, index) {
-                        if (item.faktumId === faktum.faktumId) {
-                            that.fakta.splice(index, 1);
-                        }
-                    });
-                },
-                finnFaktumMedId: function (faktumId) {
-                    var res = null;
-                    fakta.forEach(function (item) {
-                        if (item.faktumId === faktumId) {
-                            res = item;
-                        }
-                    });
-                    return res;
+                    FaktaService.leggTilFaktum(new Faktum(faktum));
                 }
-        }
-    };
+            };
+        };
 
-    var genererSoknadMedTommeFaktum = function (arg) {
-        arg.fakta = [];
-        return genererSoknad(arg);
-    };
+        var genererSoknadMedTommeFaktum = function (arg) {
+            arg.fakta = [];
+            return genererSoknad(arg);
+        };
 
-    return {
-        genererSoknad: genererSoknad,
-        genererSoknadMedTommeFaktum: genererSoknadMedTommeFaktum
-    };
-});
+        return {
+            genererSoknad: genererSoknad,
+            genererSoknadMedTommeFaktum: genererSoknadMedTommeFaktum
+        };
+    });
