@@ -11,7 +11,9 @@ Boilerplatekode for kravdialoger
 
 4. Endre GIT-url i hoved-pom til å gå mot det nye repoet
 
-5. Endre konstentene i `web/src/frontend/app/js/felles/constants`
+5. Endre konstantene i `web/src/frontend/app/js/felles/constants`
+
+6. Søk etter "boilerplate" og endre dette alle steder til navnet på ny kravdialog, i blant annet kravdialog-main.less hvor appPrefixUrl må settes
 
 ## Forberedelser for å kjøre
 
