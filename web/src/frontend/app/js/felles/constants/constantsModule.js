@@ -1,4 +1,4 @@
 angular.module('nav.constant', [])
-    .constant('cmsprefix', 'kravdialog.')
-    .constant('CmsBundleName', 'kravdialog')
+    .constant('cmsprefix', 'foreldresoknad.')
+    .constant('CmsBundleName', 'foreldrepenger')
     .constant("ApiBaseUrl", window.Globals.apiUrl);
