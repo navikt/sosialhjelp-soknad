@@ -13,18 +13,21 @@ module.exports = function (config) {
 
         preprocessors: {
             'app/**/!(*Spec).js': ['browserify'],
-            'app/**/*.html': 'ng-html2js'
+            'app/**/*.html': 'ng-html2js',
+            'node_modules/**/*Template.html': 'ng-html2js'
         },
 
         // list of files / patterns to load in the browser
         files: [
             'app/js/vendors.js',
             'node_modules/angular-mocks/angular-mocks.js',
+            'test/karma/matchers/*.js',
             'test/karma/helpers/**/*.js',
             'app/js/app.js',
-            'app/js/**/*.js',
+            'test/karma/lib/**/*.js',
+            'node_modules/**/*Template.html',
             'app/**/*.html',
-            'test/karma/lib/**/*.js'
+            'app/js/**/*.js'
         ],
 
         // list of files to exclude
@@ -45,7 +48,7 @@ module.exports = function (config) {
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_DISABLE,
 
 
         // enable / disable watching file and executing tests whenever any file changes
@@ -85,10 +88,14 @@ module.exports = function (config) {
             moduleName: 'templates-main',
             cacheIdFromPath: function(filepath) {
                 var filepathBeginsWithApp = filepath.substr(0,4) == 'app/';
+                var filepathBeginsWithNodeModules = filepath.substr(0,13) == 'node_modules/';
 
                 if (filepathBeginsWithApp) {
-                    // Remove app/ from filepath
                     filepath = filepath.substring(4);
+                }
+
+                if (filepathBeginsWithNodeModules) {
+                    filepath = filepath.substring(13);
                 }
 
                 return filepath;
@@ -97,7 +104,8 @@ module.exports = function (config) {
 
         "browserify": {
             "debug": true,
-            "transform": ["browserify-shim", "browserify-istanbul"]
+            "paths": ['./app/js/felles/'],
+            "transform": ["babelify", "browserify-shim", "browserify-istanbul"]
         },
 
         coverageReporter: {
