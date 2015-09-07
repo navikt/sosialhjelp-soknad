@@ -13,8 +13,6 @@ Boilerplatekode for kravdialoger
 
 5. Endre konstantene i `web/src/frontend/app/js/felles/constants`
 
-6. Søk etter "boilerplate" og endre dette alle steder til navnet på ny kravdialog, i blant annet kravdialog-main.less hvor appPrefixUrl må settes
-
 ## Forberedelser for å kjøre
 
 * Git må legges inn i PATH under system variables. Stien må gå til *bin*-mappen og ser typisk slik ut: *C:\Program Files (x86)\Git\bin*
