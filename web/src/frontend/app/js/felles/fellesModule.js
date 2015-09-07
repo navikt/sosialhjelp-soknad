@@ -8,7 +8,7 @@ angular.module('nav.kravdialogbp.felles', [
 ]);
 
 require('./constants/constantsModule');
-require('./lodash/lodahs-module');
+require('./lodash/lodash-module');
 require('./googleanalytics/googleAnalyticsModule');
 require('./httpprovider/httpProviderModule');
 require('./loader/loaderModule');

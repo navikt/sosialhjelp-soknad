@@ -5,7 +5,6 @@ angular.module('nav.kravdialogbp.soknad', [
     'nav.bolker',
     'nav.cms',
     'nav.data',
-    'nav.input',
     'nav.services.soknad',
     'nav.fremdriftsindikator',
     'nav.miljovariabler',
@@ -27,8 +26,8 @@ require('angular-soknad-bolker');
 require('angular-soknad-fremdriftsindikator');
 require('angular-soknad-tittel');
 require('angular-modal');
+require('angular-soknad-data');
 require('angular-modalsideskall');
-require('angular-navinput');
 require('angular-navfaktum');
 require('angular-soknad-validering');
 require('angular-stegindikator');
