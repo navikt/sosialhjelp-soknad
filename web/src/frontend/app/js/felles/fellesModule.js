@@ -10,6 +10,6 @@ angular.module('nav.kravdialogbp.felles', [
 require('./constants/constantsModule');
 require('./lodash/lodash-module');
 require('./googleanalytics/googleAnalyticsModule');
-require('./httpprovider/httpProviderModule');
+require('./httpProvider/httpProviderModule');
 require('./loader/loaderModule');
 require('./routes/routesModule');
