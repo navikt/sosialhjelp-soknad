@@ -16,7 +16,8 @@
 
 
     <properties>
-        <skip.js-tests>true</skip.js-tests>
+        <skip.js-tests>false</skip.js-tests>
+        <gulp.extra.test.parameter>--DUMMY</gulp.extra.test.parameter>
     </properties>
 
     <dependencies>
@@ -178,7 +179,7 @@
                 <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
                 <sonar.sources>src/frontend/app</sonar.sources>
                 <sonar.javascript.jstest.reportsPath>target/surefire-reports</sonar.javascript.jstest.reportsPath>
-                <sonar.javascript.lcov.reportPath>target/karma-coverage/PhantomJS 1.9.7 (Linux)/lcov.info</sonar.javascript.lcov.reportPath>
+                <sonar.javascript.lcov.reportPath>target/karma-coverage/PhantomJS 1.9.7 (Linux 0.0.0)/lcov.info</sonar.javascript.lcov.reportPath>
                 <skip.js-tests>false</skip.js-tests>
                 <gulp.extra.test.parameter>--DUMMY</gulp.extra.test.parameter>
             </properties>
