@@ -1,10 +1,10 @@
 angular.module('nav.kravdialogbp.opprett')
-    .directive('opprett', function (data, UtilService, RedirectRiktigDelsteg) {
+    .directive('opprett', function (UtilService, RedirectRiktigDelsteg, Miljovariabler) {
         return {
             scope: true,
             templateUrl: 'js/opprett/opprett.html',
             link: function(scope) {
-                scope.dittnavUrl = data.miljovariabler['dittnav.link.url'];
+                Miljovariabler.get().then((result) => scope.dittnavUrl = result.data['dittnav.link.url']);
 
                 if(UtilService.getBehandlingIdFromUrl()) {
                     RedirectRiktigDelsteg.gaaTilRiktigDelsteg();
@@ -12,3 +12,4 @@ angular.module('nav.kravdialogbp.opprett')
             }
         };
     });
+

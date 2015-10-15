@@ -17,6 +17,7 @@ var recess = require('gulp-recess');
 var rename = require('gulp-rename');
 var babelify = require('babelify');
 var argv = require("yargs").argv;
+var watchify = require('watchify');
 
 var OUTPUT_DIRECTORY = '../main/webapp/';
 
@@ -38,8 +39,10 @@ function getFilename(basename, extension) {
 
 gulp.task('jshint', function() {
     // Run JSHint on everything but tredjeparts-JS
-    return gulp.src(['./app/js/*/*.js', './app/js/*/!(tredjeparts)/**/*.js'])
+    return gulp.src(['./app/js/**/*.js'])
         .pipe(jshint({
+            curly: true,
+            eqeqeq: true,
             esnext: true,
             eqnull: true
         }))
@@ -63,11 +66,38 @@ gulp.task('build-vendors', function() {
 });
 
 gulp.task('build-kravdialog-js', function() {
-    return browserify('./app/js/app.js', {
+    var bundle =  browserify('./app/js/app.js', {
         debug: isDevelopment,
         paths: ['./app/js/felles/']
-    })
-        .transform(babelify)
+    });
+
+    return bundleJs(bundle);
+});
+
+gulp.task('build-kravdialog-js-watchify', function() {
+
+    var bundle = watchify(browserify('./app/js/app.js', {
+        debug: isDevelopment,
+        paths: ['./app/js/felles/'],
+        cache: {},
+        packageCache: {}
+    }));
+
+    bundle.on('update', function() {
+        gutil.log('Starting', gutil.colors.cyan("'watchify rebundle'"), '...');
+        var start = new Date();
+
+        bundleJs(bundle).on('end', function() {
+            var time = parseFloat((new Date() - start)/1000).toFixed(2);
+            gutil.log('Finished', gutil.colors.cyan("'watchify rebundle'"), 'after', gutil.colors.magenta(time + ' s'));
+        });
+    });
+
+    return bundleJs(bundle);
+});
+
+function bundleJs(bundle) {
+    return bundle.transform(babelify)
         .bundle()
         .on('error', function(err) {
             onError(err);
@@ -82,7 +112,7 @@ gulp.task('build-kravdialog-js', function() {
         })
         .pipe(rename(getFilename('kravdialog', 'js')))
         .pipe(gulp.dest(OUTPUT_DIRECTORY + 'js/'));
-});
+}
 
 gulp.task('build-templates', function() {
     return gulp.src('./app/**/*.html')
@@ -164,32 +194,34 @@ gulp.task('build', ['clean'], function() {
     gulp.start(['build-vendors', 'build-kravdialog-js', 'build-templates', 'build-felles-templates', 'build-less', 'copy-img', 'build-kravdialog-html']);
 });
 
-gulp.task('watch', function() {
+
+// Midlertidig lagt her, om den fungerer bra kan den erstatte gulp watch
+gulp.task('watch', ['clean'], function() {
     isProduction = false;
     isDevelopment = true;
-    gulp.start('build');
-    gulp.watch('./app/js/**/*.js', ['build-kravdialog-js']);
+
+    gulp.start(['build-vendors', 'build-templates', 'build-felles-templates', 'build-less', 'copy-img', 'build-kravdialog-html']);
+
+    gulp.start('build-kravdialog-js-watchify');
+
     gulp.watch('./app/**/*.html', ['build-templates']);
     gulp.watch('./app/**/*.less', ['build-less']);
+    gulp.watch('./node_modules/**/*Template.html', ['build-felles-templates']);
 });
 
 gulp.task("watch-dep", function() {
     isProduction = false;
     isDevelopment = true;
 
-    var GIT_ROOT = "../../../../";
+    var GIT_ROOT = "./node_modules/";
     var module = argv.module;
 
     console.log("watching module: " + module + " in folder: " + GIT_ROOT + module);
-
-    gulp.start('build');
-    gulp.watch('./app/js/**/*.js', ['build-kravdialog-js']);
-    gulp.watch('./app/**/*.html', ['build-templates']);
-    gulp.watch('./app/css/*.less', ['build-less']);
+    gulp.start('watch');
 
     gulp.watch(GIT_ROOT + module +  '/**/*.less', ['build-less']);
     gulp.watch(GIT_ROOT + module +  '/**/*.html', ['build-templates', 'build-felles-templates']);
-    gulp.watch(GIT_ROOT + module +  '/**/*.js', ['build-kravdialog-js']);
+    gulp.watch(GIT_ROOT + module +  '/**/*.js', ['build-bilstonad-js']);
 });
 
 gulp.task('default', ['clean'], function() {

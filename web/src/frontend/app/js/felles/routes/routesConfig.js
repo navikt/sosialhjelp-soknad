@@ -7,8 +7,8 @@ angular.module('nav.kravdialogbp.routes')
                     cms: function (CmsResolver) {
                         return CmsResolver;
                     },
-                    miljovariabler: function (MiljovariablerResolver) {
-                        return MiljovariablerResolver;
+                    miljovariabler: function (Miljovariabler) {
+                        return Miljovariabler.get();
                     }
                 }
             })
@@ -21,8 +21,8 @@ angular.module('nav.kravdialogbp.routes')
                     soknad: function(SoknadMedFaktaResolver) {
                         return SoknadMedFaktaResolver.get();
                     },
-                    miljovariabler: function (MiljovariablerResolver) {
-                        return MiljovariablerResolver;
+                    miljovariabler: function (Miljovariabler) {
+                        return Miljovariabler.get();
                     }
                 }
             })
@@ -35,8 +35,8 @@ angular.module('nav.kravdialogbp.routes')
                     soknad: function (SoknadMedFaktaResolver) {
                         return SoknadMedFaktaResolver.get();
                     },
-                    miljovariabler: function (MiljovariablerResolver) {
-                        return MiljovariablerResolver;
+                    miljovariabler: function (Miljovariabler) {
+                        return Miljovariabler.get();
                     }
                 }
             })

@@ -1,12 +1,12 @@
 angular.module('nav.kravdialogbp.soknad')
-    .directive('soknad', function (soknadBolkService, data, soknadService, $location, $timeout) {
+    .directive('soknad', function (soknadBolkService, Miljovariabler, soknadService, $location, $timeout) {
         return {
             templateUrl: "js/soknad/soknad.html",
             link: function(scope) {
                 var soknadstype = 'boilerplatedummysoknadstype';
+                Miljovariabler.get().then((result) => scope.saksoversiktUrl = result.data["saksoversikt.link.url"]);
 
                 scope.fremdriftsindikator = {laster: false};
-                scope.saksoversiktUrl = data.miljovariabler["saksoversikt.link.url"];
                 scope.bolker = soknadBolkService.getBolkliste(soknadstype);
 
                 angular.forEach(scope.bolker, function (gruppe, index) {
