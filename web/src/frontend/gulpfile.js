@@ -209,21 +209,6 @@ gulp.task('watch', ['clean'], function() {
     gulp.watch('./node_modules/**/*Template.html', ['build-felles-templates']);
 });
 
-gulp.task("watch-dep", function() {
-    isProduction = false;
-    isDevelopment = true;
-
-    var GIT_ROOT = "./node_modules/";
-    var module = argv.module;
-
-    console.log("watching module: " + module + " in folder: " + GIT_ROOT + module);
-    gulp.start('watch');
-
-    gulp.watch(GIT_ROOT + module +  '/**/*.less', ['build-less']);
-    gulp.watch(GIT_ROOT + module +  '/**/*.html', ['build-templates', 'build-felles-templates']);
-    gulp.watch(GIT_ROOT + module +  '/**/*.js', ['build-bilstonad-js']);
-});
-
 gulp.task('default', ['clean'], function() {
     gutil.log("-------- Start building for " + (isProduction ? "production" : "development"));
     gulp.start('jshint', 'build');
