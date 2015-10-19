@@ -194,8 +194,6 @@ gulp.task('build', ['clean'], function() {
     gulp.start(['build-vendors', 'build-kravdialog-js', 'build-templates', 'build-felles-templates', 'build-less', 'copy-img', 'build-kravdialog-html']);
 });
 
-
-// Midlertidig lagt her, om den fungerer bra kan den erstatte gulp watch
 gulp.task('watch', ['clean'], function() {
     isProduction = false;
     isDevelopment = true;

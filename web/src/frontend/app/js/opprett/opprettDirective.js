@@ -1,11 +1,9 @@
 angular.module('nav.kravdialogbp.opprett')
-    .directive('opprett', function (UtilService, RedirectRiktigDelsteg, Miljovariabler) {
+    .directive('opprett', function (UtilService, RedirectRiktigDelsteg) {
         return {
             scope: true,
             templateUrl: 'js/opprett/opprett.html',
-            link: function(scope) {
-                Miljovariabler.get().then((result) => scope.dittnavUrl = result.data['dittnav.link.url']);
-
+            link: function() {
                 if(UtilService.getBehandlingIdFromUrl()) {
                     RedirectRiktigDelsteg.gaaTilRiktigDelsteg();
                 }
