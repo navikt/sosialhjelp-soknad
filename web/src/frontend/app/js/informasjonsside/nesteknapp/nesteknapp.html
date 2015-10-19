@@ -1,3 +1,10 @@
-<div class="knapperad">
-    <input type="button" class="knapp knapp-hoved" value="{{ 'neste.lenketekst' | cmstekst }}" data-ng-click="nesteSide()" />
+<div>
+    <div class="blokk-xs">
+        <button type="button" class="knapp knapp-liten knapp-hoved"
+                data-ng-click="nesteSide()"
+                data-ng-bind-html="'informasjonsside.nesteknapp' | cmstekst"
+                data-fremdriftsindikator-knapp>
+        </button>
+    </div>
+    <a href="{{ dittnavUrl }}" data-ng-bind-html=" 'opprett.avbryt' | cmstekst"></a>
 </div>
