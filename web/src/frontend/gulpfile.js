@@ -128,6 +128,8 @@ gulp.task('build-kravdialog-html', function() {
         .pipe(replace('{{timestamp}}', uniqueName))
         .pipe(replace('{{appname}}', applikasjonsnavn))
         .pipe(replace('{{contextroot}}', contextroot))
+        .pipe(gulpif(isDevelopment, replace('{{bodyKlasser}}', 'js-debug')))
+        .pipe(gulpif(isProduction, replace('{{bodyKlasser}}', '')))
         .pipe(gulp.dest(OUTPUT_DIRECTORY));
 });
 

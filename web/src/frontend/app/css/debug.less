@@ -1,0 +1,33 @@
+// Ekstra CSS-klasser for lettere å se struktur o.l. under utvikling
+.js-debug {
+
+  // H-tagss viser hva de er, fanger opp UU-feil
+  h1::before {
+	content: '(H1) ';
+  }
+  h2::before {
+	content: '(H2) ';
+  }
+  h3::before {
+	content: '(H3) ';
+  }
+  h4::before {
+	content: '(H4) ';
+  }
+  h5::before {
+	content: '(H5) ';
+  }
+  h6::before {
+	content: '(H6) ';
+  }
+
+  // Håndterer bolk-overskrifter, da de ellers knekker
+  h2.accordion-header {
+	&::before {
+	  content: '';
+	}
+	.accordion-label::before {
+	  content: '(H2)';
+	}
+  }
+}
