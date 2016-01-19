@@ -24,9 +24,10 @@ angular.module('nav.kravdialogbp.soknad')
 
                 scope.gaTilVedleggHvisValidert = function (feilliste){
                     if (feilliste.length === 0) {
-                        soknadService.delsteg({delsteg: 'vedlegg', behandlingsId: data.soknad.brukerBehandlingId}).$promise.then(function () {
-                            $location.path('/vedlegg');
-                        });
+                        soknadService.delsteg({delsteg: 'vedlegg', behandlingsId: soknadService.soknad.brukerBehandlingId})
+                            .then(function () {
+                                $location.path('/vedlegg');
+                            });
                     }
                 };
 
