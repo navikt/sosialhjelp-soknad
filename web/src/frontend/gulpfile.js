@@ -42,10 +42,10 @@ gulp.task('jshint', function() {
     return gulp.src(['./app/js/**/*.js'])
         .pipe(jshint({
             //varstmt:true tillatter ikke var, må bruke let eller const i stedet. Bør vurderes å dra inn gitt at man får skrevet all kode i es2016
-            curly: true,
-            eqeqeq: true,
             esnext: true,
             eqnull: true,
+            curly: true,
+            eqeqeq: true,
             unused: "strict", //sjekker om variabler og funksjoner blir brukt
             undef: true, //sjekker om variabler er definert
             withstmt: true, //sjekker om man bruker with
