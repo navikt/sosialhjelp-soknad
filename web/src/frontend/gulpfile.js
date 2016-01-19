@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
-var jshint = require('gulp-jshint');
+var eslint = require('gulp-eslint');
 var ngAnnotate = require('gulp-ng-annotate');
 var templateCache = require('gulp-angular-templatecache');
 var buffer = require('vinyl-buffer');
@@ -37,34 +37,41 @@ function getFilename(basename, extension) {
     return basename + uniqueName + "." + extension;
 }
 
-gulp.task('jshint', function() {
-    // Run JSHint on everything but tredjeparts-JS
+gulp.task('eslint', function () {
+    // Run eslint on everything but tredjeparts-JS
+    // eslint:recommended inneholder mange standardregler som kan finnes i eslint.json
     return gulp.src(['./app/js/**/*.js'])
-        .pipe(jshint({
-            //varstmt:true tillatter ikke var, må bruke let eller const i stedet. Bør vurderes å dra inn gitt at man får skrevet all kode i es2016
-            esnext: true,
-            eqnull: true,
-            curly: true,
-            eqeqeq: true,
-            unused: "strict", //sjekker om variabler og funksjoner blir brukt
-            undef: true, //sjekker om variabler er definert
-            withstmt: true, //sjekker om man bruker with
-            futurehostile: true, //warning hvis man bruker indetifiers som kommer i fremtiden
-            noarg: true,
-            nonew: true,
-            strict: "implied", //impliserer strict mode uten å måtte skrive det i filene
-            jasmine: true, //de resterende tillatter globale variabler som kommer med de forskjellige rammeverkene
-            jquery: true,
-            browserify: true,
-            browser: true,
-            predef: ["angular", "inject", "ga"]
+        .pipe(eslint({
+            extends: ['eslint:recommended', 'angular'],
+            plugins: ['jasmine'],
+            rules: {
+                "no-extra-parens": 2, // - disallow unnecessary parentheses
+                "no-unexpected-multiline": 2, // - Avoid code that looks like two expressions but is actually one
+                "block-scoped-var":2, // - treat var statements as if they were block scoped
+                "no-caller": 2, //- disallow use of arguments.caller or arguments.callee
+                "no-eval": 2, //- disallow use of eval()
+                "no-with":2, //disallow use of the with statement
+                "curly":2, //specify curly brace conventions for all control statements
+                "eqeqeq":2, // equire the use of === and !==
+                "semi": [2, "always"], //require use of semicolons instead of ASI
+                "no-eq-null": 2 //- disallow comparisons to null without a type-checking operator
+            },
+            "global": {
+                "ga": true
+            },
+            env: {
+                browser: true,
+                jasmine: true,
+                es6: true,
+                commonjs: true
+            }
 
         }))
-        .pipe(jshint.reporter());
+        .pipe(eslint.format());
 });
 
 gulp.task('build-vendors', function() {
-    return browserify('./app/js/vendors.js', { debug: isDevelopment })
+    return browserify('./app/js/vendors.js', {debug: isDevelopment})
         .transform({global: false}, browserifyShim)
         .bundle()
         .pipe(source('vendors.js'))
@@ -80,7 +87,7 @@ gulp.task('build-vendors', function() {
 });
 
 gulp.task('build-kravdialog-js', function() {
-    var bundle =  browserify('./app/js/app.js', {
+    var bundle = browserify('./app/js/app.js', {
         debug: isDevelopment,
         paths: ['./app/js/felles/']
     });
@@ -153,7 +160,7 @@ gulp.task('build-felles-templates', function() {
             filename: 'felles-templates.js'
         }))
         .pipe(rename(getFilename('felles-templates', 'js')))
-        .pipe(gulp.dest(OUTPUT_DIRECTORY+ 'js/'));
+        .pipe(gulp.dest(OUTPUT_DIRECTORY + 'js/'));
 });
 
 gulp.task('build-less', function() {
@@ -203,7 +210,7 @@ gulp.task('clean', function(callback) {
         OUTPUT_DIRECTORY + 'css/',
         OUTPUT_DIRECTORY + 'img/',
         OUTPUT_DIRECTORY + 'kravdialog.html'
-    ], {'force' : true}, callback);
+    ], {'force': true}, callback);
 });
 
 gulp.task('build', ['clean'], function() {
@@ -225,5 +232,5 @@ gulp.task('watch', ['clean'], function() {
 
 gulp.task('default', ['clean'], function() {
     gutil.log("-------- Start building for " + (isProduction ? "production" : "development"));
-    gulp.start('jshint', 'build');
+    gulp.start('eslint', 'build');
 });
