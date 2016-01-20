@@ -54,10 +54,13 @@ gulp.task('eslint', function () {
                 "curly":2, //specify curly brace conventions for all control statements
                 "eqeqeq":2, // equire the use of === and !==
                 "semi": [2, "always"], //require use of semicolons instead of ASI
-                "no-eq-null": 2 //- disallow comparisons to null without a type-checking operator
+                "no-eq-null": 2, //- disallow comparisons to null without a type-checking operator
+                "angular/window-service": 0, //slår av warning ved bruk av window i stedet for angular-window-servicen
+                "angular/no-private-call":0 //slår av warning ved bruk av $$-prefix (gjelder route)
             },
             "global": {
-                "ga": true
+                "ga": true,
+                "inject": true
             },
             env: {
                 browser: true,
