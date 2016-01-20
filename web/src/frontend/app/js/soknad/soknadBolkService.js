@@ -39,7 +39,7 @@ angular.module('nav.kravdialogbp.soknad')
                 angular.forEach(ider, function (id) {
                     settApenForId(apen, id);
                 });
-            } else if (ider !== undefined) {
+            } else if (angular.isDefined(ider)) {
                 settApenForId(apen, ider);
             }
         };
