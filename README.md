@@ -19,13 +19,7 @@ Boilerplatekode for kravdialoger
 
 * Installer node.js, finnes på *F:\F2990\Felles Filer\3 Forvaltningsseksjonen\3.4 Kontor for brukerdialog\Portaler og SBL forvaltning\7. Teknisk\Programmer\nodejs*. Bruk nyeste versjon.
 
-* Kjør følgende kommandoer i en terminal:
-
-```
-npm config set https-proxy "https://155.55.60.117:8088"
-npm config set proxy "http://155.55.60.117:8088/"
-npm config set registry "http://registry.npmjs.org/"
-```
+* Sett opp npm og git. Følg guiden på http://confluence.adeo.no/display/navnofor/npm
 
 * Kjør `maven clean install` for å laste ned alle JS-avhengigheter og bygge JS-modulene (hvis du starter Maven i en terminal, må den ha støtte for Git).
 
