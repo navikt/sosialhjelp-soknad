@@ -9,7 +9,7 @@
             <module name="org.slf4j"/>
         </exclusions>
     </deployment>
-    <sub-deployment name="kravdialogbp-web.war">
+    <sub-deployment name="soknadsosialhjelp-web.war">
         <dependencies>
             <module name="sun.jdk"/>
             <system>

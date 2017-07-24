@@ -1,6 +1,6 @@
-https://${DomainName}/soknadkravdialogbp/internal/selftest*
-https://${DomainName}/soknadkravdialogbp/internal/isAlive*
-https://${DomainName}/soknadkravdialogbp/css/*
-https://${DomainName}/soknadkravdialogbp/img/*
-https://${DomainName}/soknadkravdialogbp/js/*
-https://${DomainName}/soknadkravdialogbp/font/*
+https://${DomainName}/soknadsosialhjelp/internal/selftest*
+https://${DomainName}/soknadsosialhjelp/internal/isAlive*
+https://${DomainName}/soknadsosialhjelp/css/*
+https://${DomainName}/soknadsosialhjelp/img/*
+https://${DomainName}/soknadsosialhjelp/js/*
+https://${DomainName}/soknadsosialhjelp/font/*

@@ -1,4 +1,4 @@
-angular.module('nav.kravdialogbp.opprett')
+angular.module('nav.soknadsosialhjelp.opprett')
     .directive('opprett', function (UtilService, RedirectRiktigDelsteg) {
         return {
             scope: true,

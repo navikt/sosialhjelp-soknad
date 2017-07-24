@@ -1,10 +1,10 @@
-angular.module('nav.kravdialogbp.felles', [
+angular.module('nav.soknadsosialhjelp.felles', [
     'nav.constant',
     'lodash',
-    'nav.kravdialogbp.googleanalytics',
-    'nav.kravdialogbp.httpProvider',
-    'nav.kravdialogbp.loader',
-    'nav.kravdialogbp.routes'
+    'nav.soknadsosialhjelp.googleanalytics',
+    'nav.soknadsosialhjelp.httpProvider',
+    'nav.soknadsosialhjelp.loader',
+    'nav.soknadsosialhjelp.routes'
 ]);
 
 require('./constants/constantsModule');

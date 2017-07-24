@@ -1,4 +1,4 @@
-angular.module('nav.kravdialogbp.opprett')
+angular.module('nav.soknadsosialhjelp.opprett')
     .directive('startSoknadButton', function (soknadService, UtilService, Miljovariabler) {
         return {
             replace: true,

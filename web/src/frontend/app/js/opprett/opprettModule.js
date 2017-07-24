@@ -1,6 +1,6 @@
-angular.module('nav.kravdialogbp.opprett', [
+angular.module('nav.soknadsosialhjelp.opprett', [
     'nav.redirect.delsteg',
-    'nav.kravdialogbp.opprett.startsoknadbutton',
+    'nav.soknadsosialhjelp.opprett.startsoknadbutton',
     'nav.utils.service'
 ]);
 

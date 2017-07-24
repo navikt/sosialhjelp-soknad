@@ -1,4 +1,4 @@
-angular.module('nav.kravdialogbp.routes', [
+angular.module('nav.soknadsosialhjelp.routes', [
     'nav.miljovariabler',
     'nav.redirectTilDiagloginnsending.routes',
     'nav.cms',

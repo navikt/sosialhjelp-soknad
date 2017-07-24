@@ -7,9 +7,9 @@ const uniqueName = require('./unike-filnavn').uniqueName;
 
 function buildHtml(gulp) {
     return () => {
-        return gulp.src(OUTPUT_DIRECTORY + 'kravdialog.html')
+        return gulp.src(OUTPUT_DIRECTORY + 'soknadsosialhjelp.html')
             .pipe(replace('{{timestamp}}', uniqueName))
-            .pipe(rename('kravdialogBuilt.html'))
+            .pipe(rename('soknadsosialhjelpBuilt.html'))
             .pipe(gulp.dest(OUTPUT_DIRECTORY));
     };
 }

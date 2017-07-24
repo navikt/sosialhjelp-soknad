@@ -1,4 +1,4 @@
-angular.module('nav.kravdialogbp.googleanalytics', [
+angular.module('nav.soknadsosialhjelp.googleanalytics', [
 ]);
 
 require('./googleAnalyticsInit');

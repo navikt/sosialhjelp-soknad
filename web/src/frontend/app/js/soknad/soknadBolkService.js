@@ -1,4 +1,4 @@
-angular.module('nav.kravdialogbp.soknad')
+angular.module('nav.soknadsosialhjelp.soknad')
     .factory('soknadBolkService', function () {
         const dummyBolk1 = {
             id: 'dummybolk1',

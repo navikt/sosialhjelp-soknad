@@ -1,4 +1,4 @@
-angular.module('nav.kravdialogbp.soknad')
+angular.module('nav.soknadsosialhjelp.soknad')
     .directive('soknad', function (soknadBolkService, Miljovariabler, soknadService, $location, $timeout) {
         return {
             templateUrl: "js/soknad/soknad.html",

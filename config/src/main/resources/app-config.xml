@@ -4,12 +4,12 @@
              xsi:schemaLocation="http://appconfig.aura.nav.no
              http://maven.adeo.no/xsd/appconfig.xsd ">
 
-    <name>kravdialogbp</name>
+    <name>soknadsosialhjelp</name>
 
-    <selftestPagePath>kravdialogbp/internal/selftest</selftestPagePath>
+    <selftestPagePath>soknadsosialhjelp/internal/selftest</selftestPagePath>
 
     <artifacts>
-        <ear groupId="no.nav.sbl.kravdialogbp" artifactId="kravdialogbp-ear"/>
+        <ear groupId="no.nav.sbl.soknadsosialhjelp" artifactId="soknadsosialhjelp-ear"/>
     </artifacts>
 
     <resources>
@@ -18,7 +18,7 @@
     </resources>
 
     <loadBalancer>
-        <contextRoot>kravdialogbp</contextRoot>
+        <contextRoot>soknadsosialhjelp</contextRoot>
         <lbHealthMonitor type="HTTPS" isAliveUrl="internal/isAlive" interval="5" timeout="16"/>
         <lbPool slowRampTime="30" loadBalancingMethod="LEAST_CONNECTIONS" connectionLimit="500"/>
     </loadBalancer>
@@ -30,7 +30,7 @@
     <security>
         <logins>
             <openAm>
-                <contextRoot>kravdialogbp</contextRoot>
+                <contextRoot>soknadsosialhjelp</contextRoot>
             </openAm>
         </logins>
     </security>

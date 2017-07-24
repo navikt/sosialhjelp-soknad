@@ -6,13 +6,13 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
     {{fragment.styles}}
-    <link rel="stylesheet" href="/soknadkravdialogbp/css/kravdialog.css?ts={{timestamp}}"/>
+    <link rel="stylesheet" href="/soknadsosialhjelp/css/soknadsosialhjelp.css?ts={{timestamp}}"/>
 
     {{fragment.webstats-ga-notrack}}
-    <script type="text/javascript" src="/soknadkravdialogbp/js/vendors.js?ts={{timestamp}}"></script>
-    <script type="text/javascript" src="/soknadkravdialogbp/js/kravdialog.js?ts={{timestamp}}"></script>
-    <script type="text/javascript" src="/soknadkravdialogbp/js/templates.js?ts={{timestamp}}"></script>
-    <script type="text/javascript" src="/soknadkravdialogbp/js/felles-templates.js?ts={{timestamp}}"></script>
+    <script type="text/javascript" src="/soknadsosialhjelp/js/vendors.js?ts={{timestamp}}"></script>
+    <script type="text/javascript" src="/soknadsosialhjelp/js/soknadsosialhjelp.js?ts={{timestamp}}"></script>
+    <script type="text/javascript" src="/soknadsosialhjelp/js/templates.js?ts={{timestamp}}"></script>
+    <script type="text/javascript" src="/soknadsosialhjelp/js/felles-templates.js?ts={{timestamp}}"></script>
 
     {{fragment.scripts}}
 
@@ -21,7 +21,7 @@
 <div class="pagewrapper">
     {{fragment.header}}
 
-    <div data-ng-app="kravdialogbp">
+    <div data-ng-app="soknadsosialhjelp">
         <div class="spinner spinner-xxl spinner-hoved" data-ng-if="app.laster"></div>
         <div id="app-content" data-ng-view data-avbryt-helper data-styling-helper data-ng-hide="app.laster"></div>
     </div>

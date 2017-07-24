@@ -1,5 +1,5 @@
-angular.module('nav.kravdialogbp.informasjonsside', [
-    'nav.kravdialogbp.informasjonsside.nesteknapp'
+angular.module('nav.soknadsosialhjelp.informasjonsside', [
+    'nav.soknadsosialhjelp.informasjonsside.nesteknapp'
 ]);
 
 require('./informasjonssideDirective');

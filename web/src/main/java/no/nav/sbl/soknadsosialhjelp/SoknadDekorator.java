@@ -1,4 +1,4 @@
-package no.nav.sbl.soknadkravdialogbp;
+package no.nav.sbl.soknadsosialhjelp;
 
 import no.nav.innholdshenter.common.EnonicContentRetriever;
 import no.nav.innholdshenter.filter.DecoratorFilter;
@@ -11,7 +11,7 @@ import static java.util.Arrays.asList;
 public class SoknadDekorator extends DecoratorFilter {
 
     private static final String FRAMENTS_URL = "common-html/v3/navno";
-    private static final String APPLICATION_NAME = "kravdialogbp";
+    private static final String APPLICATION_NAME = "soknadsosialhjelp";
     private static final List<String> NO_DECORATOR_PATTERNS = new ArrayList<>(asList(".*/img/.*", ".*/css/.*", ".*/js/.*", ".*/font/.*", ".*selftest.*"));
     private static final List<String> FRAGMENT_NAMES= new ArrayList<>(asList("webstats-ga-notrack", "header", "footer", "styles", "scripts"));
 

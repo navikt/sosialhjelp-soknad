@@ -1,11 +1,11 @@
-Boilerplatekode for kravdialoger
+Boilerplatekode for soknadsosialhjelper
 ================
 
-## Oppsett for ny kravdialog
+## Oppsett for ny soknadsosialhjelp
 
 1. Fork dette prosjektet til eget repository
 
-2. Endre navn på kravdialogen i de ulike filene (Pro-tip: CTRL+SHIFT+F og søk etter "kravdialogbp" i prosjektet)
+2. Endre navn på soknadsosialhjelpen i de ulike filene (Pro-tip: CTRL+SHIFT+F og søk etter "soknadsosialhjelp" i prosjektet)
 
 3. Rename package i `web/src/frontend/main/`
 

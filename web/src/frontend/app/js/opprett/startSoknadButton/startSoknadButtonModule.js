@@ -1,4 +1,4 @@
-angular.module('nav.kravdialogbp.opprett.startsoknadbutton', [
+angular.module('nav.soknadsosialhjelp.opprett.startsoknadbutton', [
     'nav.services.soknad',
     'nav.utils.service',
     'nav.miljovariabler'

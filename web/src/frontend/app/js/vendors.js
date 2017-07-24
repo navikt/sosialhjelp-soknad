@@ -15,14 +15,14 @@ var Globals = window.Globals || {};
 Globals.apiUrl = "/sendsoknad";
 window.Globals = Globals;
 
-angular.module('nav.kravdialogbp.vendors', [
+angular.module('nav.soknadsosialhjelp.vendors', [
     'ngAnimate',
     'ngCookies',
     'ngLocale',
     'ngRoute',
     'ngResource',
     'ngSanitize',
-    'nav.kravdialogbp.navmodules',
+    'nav.soknadsosialhjelp.navmodules',
     'source-map-exception-handler',
     'templates'
 ]);

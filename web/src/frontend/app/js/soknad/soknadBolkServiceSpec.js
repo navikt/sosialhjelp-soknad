@@ -1,5 +1,5 @@
 describe('soknadBolkService', function () {
-    beforeEach(module('nav.kravdialogbp.soknad'));
+    beforeEach(module('nav.soknadsosialhjelp.soknad'));
 
     beforeEach(inject(function (soknadBolkService) {
         this.soknadBolkService = soknadBolkService;

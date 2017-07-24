@@ -1,4 +1,4 @@
-angular.module('nav.kravdialogbp.httpProvider', [
+angular.module('nav.soknadsosialhjelp.httpProvider', [
     'nav.interceptors'
 ]);
 

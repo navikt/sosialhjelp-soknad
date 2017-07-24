@@ -1,4 +1,4 @@
-angular.module('nav.kravdialogbp.informasjonsside')
+angular.module('nav.soknadsosialhjelp.informasjonsside')
     .directive('informasjonssideNesteknapp', function (soknadService, $location, Miljovariabler) {
         return {
             templateUrl: 'js/informasjonsside/nesteknapp/nesteknapp.html',

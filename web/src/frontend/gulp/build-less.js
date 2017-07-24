@@ -8,13 +8,13 @@ function buildLess(gulp) {
         const rename = require('gulp-rename');
         const unikeFilnavn = require('./unike-filnavn');
 
-        return gulp.src('./app/css/kravdialog-main.less')
+        return gulp.src('./app/css/soknadsosialhjelp-main.less')
             .pipe(less().on('error', function(err){
                 gutil.log(`error in less: ${err.message}`);
                 this.emit('end');
             }))
             .pipe(autoprefixer({browsers: ['last 2 versions'], cascade: false}))
-            .pipe(rename(unikeFilnavn.getFilename('kravdialog', 'css')))
+            .pipe(rename(unikeFilnavn.getFilename('soknadsosialhjelp', 'css')))
             .pipe(gulp.dest(OUTPUT_DIRECTORY + 'css/'));
     };
 }

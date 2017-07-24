@@ -1,7 +1,7 @@
-angular.module('nav.kravdialogbp.soknad', [
+angular.module('nav.soknadsosialhjelp.soknad', [
     'nav.accordion',
-    'nav.kravdialogbp.soknad.dummybolk',
-    'nav.kravdialogbp.soknad.dummybolk2',
+    'nav.soknadsosialhjelp.soknad.dummybolk',
+    'nav.soknadsosialhjelp.soknad.dummybolk2',
     'nav.bolker',
     'nav.cms',
     'nav.services.soknad',

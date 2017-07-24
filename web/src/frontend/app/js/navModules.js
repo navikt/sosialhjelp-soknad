@@ -14,7 +14,7 @@ window.Globals = Globals;
 
 NavLogger({url: window.Globals.apiUrl + '/informasjon/actions/logg'});
 
-angular.module('nav.kravdialogbp.navmodules', [
+angular.module('nav.soknadsosialhjelp.navmodules', [
     'nav.defaultresolvers',
     'nav.defaultservices',
     'nav.timeoutbox.service',

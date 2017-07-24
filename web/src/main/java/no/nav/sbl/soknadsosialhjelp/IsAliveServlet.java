@@ -1,4 +1,4 @@
-package no.nav.sbl.soknadkravdialogbp;
+package no.nav.sbl.soknadsosialhjelp;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

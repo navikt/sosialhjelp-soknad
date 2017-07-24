@@ -47,7 +47,7 @@ function buildJs(gulp) {
             debug: isDevelopment(),
             fullPaths: isDevelopment()
         }).transform(babelify, {presets: ['es2015']});
-        return bundle(gulp, bundler, 'kravdialog');
+        return bundle(gulp, bundler, 'soknadsosialhjelp');
     };
 }
 
@@ -86,13 +86,13 @@ function buildJsWatchify(gulp) {
             gutil.log('Starting', gutil.colors.cyan("'watchify rebundle'"), '...');
             var start = new Date();
 
-            return bundle(gulp, bundler, 'kravdialog').on('end', function () {
+            return bundle(gulp, bundler, 'soknadsosialhjelp').on('end', function () {
                 var time = parseFloat((new Date() - start) / 1000).toFixed(2);
                 gutil.log('Finished', gutil.colors.cyan("'watchify rebundle'"), 'after', gutil.colors.magenta(time + ' s'));
             });
         });
 
-        return bundle(gulp, bundler, 'kravdialog');
+        return bundle(gulp, bundler, 'soknadsosialhjelp');
     };
 }
 

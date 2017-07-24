@@ -1,4 +1,4 @@
-angular.module('nav.kravdialogbp.loader', [
+angular.module('nav.soknadsosialhjelp.loader', [
 ]);
 
 require('./loaderInit');
