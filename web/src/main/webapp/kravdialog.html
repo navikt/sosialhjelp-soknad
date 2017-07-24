@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge" />
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    {{fragment.styles}}
+    <link rel="stylesheet" href="/soknadkravdialogbp/css/kravdialog{{timestamp}}.css"/>
+
+    {{fragment.webstats-ga-notrack}}
+    <script type="text/javascript" src="/soknadkravdialogbp/js/vendors{{timestamp}}.js"></script>
+    <script type="text/javascript" src="/soknadkravdialogbp/js/kravdialog{{timestamp}}.js"></script>
+    <script type="text/javascript" src="/soknadkravdialogbp/js/templates{{timestamp}}.js"></script>
+    <script type="text/javascript" src="/soknadkravdialogbp/js/felles-templates{{timestamp}}.js"></script>
+
+    {{fragment.scripts}}
+
+</head>
+<body>
+<div class="pagewrapper">
+    {{fragment.header}}
+
+    <div data-ng-app="kravdialogbp">
+        <div class="spinner spinner-xxl spinner-hoved" data-ng-if="app.laster"></div>
+        <div id="app-content" data-ng-view data-avbryt-helper data-styling-helper data-ng-hide="app.laster"></div>
+    </div>
+</div>
+{{fragment.footer}}
+</body>
+</html>
