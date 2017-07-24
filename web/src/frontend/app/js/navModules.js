@@ -4,7 +4,7 @@ require('angular-loggingfiks');
 require('angular-markup');
 require('angular-soknad-tittel');
 require('angular-soknad-feilsider');
-require('nav-timeoutbox');
+require('nav-ng-timeoutbox');
 
 var NavLogger = require('nav-logger');
 

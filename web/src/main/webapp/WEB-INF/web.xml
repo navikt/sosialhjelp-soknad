@@ -34,7 +34,7 @@
         <servlet-class>no.nav.sbl.soknadkravdialogbp.Routing</servlet-class>
         <init-param>
             <param-name>applicationFile</param-name>
-            <param-value>kravdialog.html</param-value>
+            <param-value>kravdialogBuilt.html</param-value>
         </init-param>
     </servlet>
 

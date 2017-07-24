@@ -100,7 +100,7 @@
                     </execution>
 
                     <execution>
-                        <id>gulp</id>
+                        <id>gulp build</id>
                         <goals>
                             <goal>exec</goal>
                         </goals>
@@ -109,6 +109,7 @@
                             <executable>node</executable>
                             <arguments>
                                 <argument>./node_modules/gulp/bin/gulp</argument>
+                                <argument>--prod</argument>
                             </arguments>
                             <workingDirectory>src/frontend</workingDirectory>
                         </configuration>
