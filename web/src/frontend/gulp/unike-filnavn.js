@@ -2,7 +2,7 @@ const constants = require('./constants');
 const uniqueName = constants.isProduction() ? Math.floor(Date.now() / 1000) : "";
 
 function getFilename(basename, extension) {
-    return basename + uniqueName + "." + extension;
+    return basename  + "." + extension;
 }
 
 module.exports = {
