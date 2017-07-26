@@ -4,6 +4,7 @@ angular.module('nav.soknadsosialhjelp.soknad', [
     'nav.soknadsosialhjelp.soknad.familiebolk',
     'nav.soknadsosialhjelp.soknad.begrunnelsebolk',
     'nav.soknadsosialhjelp.soknad.bosituasjonbolk',
+    'nav.soknadsosialhjelp.soknad.inntektbolk',
     'nav.soknadsosialhjelp.soknad.dummybolk',
     'nav.soknadsosialhjelp.soknad.dummybolk2',
     'nav.bolker',
@@ -43,5 +44,6 @@ require('./bolker/arbeid/arbeidbolkModule');
 require('./bolker/familie/familiebolkModule');
 require('./bolker/begrunnelse/begrunnelsebolkModule');
 require('./bolker/bosituasjon/bosituasjonbolkModule');
+require('./bolker/inntekt/inntektbolkModule');
 require('./bolker/dummybolk/dummybolkModule');
 require('./bolker/dummybolk2/dummybolk2Module');
