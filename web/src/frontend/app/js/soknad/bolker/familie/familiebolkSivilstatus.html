@@ -1,0 +1,43 @@
+<div class="blokk-s js-valideringsomrade skjema-feilomrade">
+
+    <div>
+        <h3 class="skjema-sporsmal" data-ng-bind-html="'familie.sivilstatus.sporsmal' | cmstekst "></h3>
+        <div data-nav-hjelpetekstelement data-tittel="{{'familie.sivilstatus.hjelpetekst.tittel' | cmstekst}}"
+             data-tekst="{{'familie.sivilstatus.hjelpetekst.tekst' | cmstekst}}"></div>
+    </div>
+
+    <div data-radioinput-validering
+         data-nav-faktum="familie.sivilstatus"
+         data-feilmelding="familie.sivilstatus.feilmelding">
+
+        <div data-navradio
+             data-value="familie.sivilstatus.gift"
+             data-navlabel="familie.sivilstatus.gift">
+        </div>
+
+        <div data-navradio
+             data-value="familie.sivilstatus.ugift"
+             data-navlabel="familie.sivilstatus.ugift">
+        </div>
+
+        <div data-navradio
+             data-value="familie.sivilstatus.samboer"
+             data-navlabel="familie.sivilstatus.samboer">
+        </div>
+
+        <div data-navradio
+             data-value="familie.sivilstatus.enke"
+             data-navlabel="familie.sivilstatus.enke">
+        </div>
+
+        <div data-navradio
+             data-value="familie.sivilstatus.skilt"
+             data-navlabel="familie.sivilstatus.skilt">
+        </div>
+    </div>
+
+    <div role="alert">
+        <p class="js-feilmelding skjema-feilmelding" aria-live="polite"
+           data-ng-bind-html=" 'familie.sivilstatus.feilmelding' | cmstekst"></p>
+    </div>
+</div>

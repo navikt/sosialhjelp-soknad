@@ -1,5 +1,9 @@
 angular.module('nav.soknadsosialhjelp.soknad', [
     'nav.accordion',
+    'nav.soknadsosialhjelp.soknad.arbeidbolk',
+    'nav.soknadsosialhjelp.soknad.familiebolk',
+    'nav.soknadsosialhjelp.soknad.begrunnelsebolk',
+    'nav.soknadsosialhjelp.soknad.bosituasjonbolk',
     'nav.soknadsosialhjelp.soknad.dummybolk',
     'nav.soknadsosialhjelp.soknad.dummybolk2',
     'nav.bolker',
@@ -35,5 +39,9 @@ require('angular-soknad-stickybunn');
 
 require('./soknadDirective');
 require('./soknadBolkService');
+require('./bolker/arbeid/arbeidbolkModule');
+require('./bolker/familie/familiebolkModule');
+require('./bolker/begrunnelse/begrunnelsebolkModule');
+require('./bolker/bosituasjon/bosituasjonbolkModule');
 require('./bolker/dummybolk/dummybolkModule');
 require('./bolker/dummybolk2/dummybolk2Module');

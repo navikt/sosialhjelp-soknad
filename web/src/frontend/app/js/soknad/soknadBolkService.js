@@ -1,5 +1,50 @@
 angular.module('nav.soknadsosialhjelp.soknad')
     .factory('soknadBolkService', function () {
+        const arbeidbolk = {
+            id: 'arbeidbolk',
+            tittel: 'arbeidbolk.tittel',
+            template: '<div data-arbeidbolk></div>',
+            apen: false,
+            skalSettesTilValidVedForsteApning: false,
+            validering: false
+        };
+
+        const familiebolk = {
+            id: 'familiebolk',
+            tittel: 'familiebolk.tittel',
+            template: '<div data-familiebolk></div>',
+            apen: false,
+            skalSettesTilValidVedForsteApning: false,
+            validering: false
+        };
+
+        const begrunnelsebolk = {
+            id: 'begrunnelsebolk',
+            tittel: 'begrunnelsebolk.tittel',
+            template: '<div data-begrunnelsebolk></div>',
+            apen: false,
+            skalSettesTilValidVedForsteApning: false,
+            validering: false
+        };
+
+        const inntektbolk = {
+            id: 'inntektbolk',
+            tittel: 'inntektbolk.tittel',
+            template: '<div data-inntektbolk></div>',
+            apen: false,
+            skalSettesTilValidVedForsteApning: false,
+            validering: false
+        };
+
+        const bosituasjonbolk = {
+            id: 'bosituasjonbolk',
+            tittel: 'bosituasjonbolk.tittel',
+            template: '<div data-bosituasjonbolk></div>',
+            apen: false,
+            skalSettesTilValidVedForsteApning: false,
+            validering: false
+        };
+
         const dummyBolk1 = {
             id: 'dummybolk1',
             tittel: 'arbeidsforhold.tittel',
@@ -18,17 +63,17 @@ angular.module('nav.soknadsosialhjelp.soknad')
             validering: false
         };
 
-        const alleBolker = [dummyBolk1, dummyBolk2];
+        const alleBolker = [arbeidbolk, familiebolk, begrunnelsebolk, bosituasjonbolk, inntektbolk, dummyBolk1, dummyBolk2];
 
         const bolklister = {
-            boilerplatedummysoknadstype: [dummyBolk1, dummyBolk2]
+            boilerplatedummysoknadstype: [arbeidbolk, familiebolk, begrunnelsebolk, bosituasjonbolk, inntektbolk, dummyBolk1, dummyBolk2]
         };
 
         const apneTab = (ider) => settApenStatusForAccordion(true, ider);
 
         const lukkTab = (ider) => settApenStatusForAccordion(false, ider);
 
-        const getBolkliste = (soknadstype) =>  bolklister[soknadstype];
+        const getBolkliste = (soknadstype) => bolklister[soknadstype];
 
         const getBolkMedNavn = (bolknavn) => {
             return alleBolker.filter((bolk) => bolk.id === bolknavn)[0];

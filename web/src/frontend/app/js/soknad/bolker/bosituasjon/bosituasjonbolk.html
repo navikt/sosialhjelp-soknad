@@ -1,0 +1,44 @@
+<div class="skjemainnhold" data-novalidate data-gruppevaliderer>
+    <feilliste></feilliste>
+
+    <div class="blokk-s js-valideringsomrade skjema-feilomrade">
+
+        <div>
+            <h3 class="skjema-sporsmal" data-ng-bind-html="'bosituasjon.sporsmal' | cmstekst "></h3>
+            <div data-nav-hjelpetekstelement data-tittel="{{'bosituasjon.hjelpetekst.tittel' | cmstekst}}"
+                 data-tekst="{{'bosituasjon.hjelpetekst.tekst' | cmstekst}}"></div>
+        </div>
+
+        <div data-radioinput-validering
+             data-nav-faktum="bosituasjon"
+             data-feilmelding="bosituasjon.feilmelding">
+
+            <div data-navradio
+                 data-value="bosituasjon.eier"
+                 data-navlabel="bosituasjon.eier">
+            </div>
+
+            <div data-navradio
+                 data-value="bosituasjon.leierprivat"
+                 data-navlabel="bosituasjon.leierprivat">
+            </div>
+
+            <div data-navradio
+                 data-value="bosituasjon.leierkommunalt"
+                 data-navlabel="bosituasjon.leierkommunalt">
+            </div>
+
+            <div data-navradio
+                 data-value="bosituasjon.annet"
+                 data-navlabel="bosituasjon.annet">
+            </div>
+
+            <div role="alert">
+                <p class="js-feilmelding skjema-feilmelding" aria-live="polite"
+                   data-ng-bind-html=" 'bosituasjon.feilmelding' | cmstekst"></p>
+            </div>
+        </div>
+    </div>
+
+    <div data-nesteknapp-bolk></div>
+</div>
