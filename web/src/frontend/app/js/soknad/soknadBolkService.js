@@ -45,28 +45,10 @@ angular.module('nav.soknadsosialhjelp.soknad')
             validering: false
         };
 
-        const dummyBolk1 = {
-            id: 'dummybolk1',
-            tittel: 'arbeidsforhold.tittel',
-            template: '<div data-dummybolk></div>',
-            apen: false,
-            skalSettesTilValidVedForsteApning: false,
-            validering: false
-        };
-
-        const dummyBolk2 = {
-            id: 'dummybolk2',
-            tittel: 'infofar.tittel',
-            template: '<div data-dummybolk2></div>',
-            apen: false,
-            skalSettesTilValidVedForsteApning: false,
-            validering: false
-        };
-
-        const alleBolker = [arbeidbolk, familiebolk, begrunnelsebolk, bosituasjonbolk, inntektbolk, dummyBolk1, dummyBolk2];
+        const alleBolker = [arbeidbolk, familiebolk, begrunnelsebolk, bosituasjonbolk, inntektbolk];
 
         const bolklister = {
-            boilerplatedummysoknadstype: [arbeidbolk, familiebolk, begrunnelsebolk, bosituasjonbolk, inntektbolk, dummyBolk1, dummyBolk2]
+            boilerplatedummysoknadstype: [arbeidbolk, familiebolk, begrunnelsebolk, bosituasjonbolk, inntektbolk]
         };
 
         const apneTab = (ider) => settApenStatusForAccordion(true, ider);
