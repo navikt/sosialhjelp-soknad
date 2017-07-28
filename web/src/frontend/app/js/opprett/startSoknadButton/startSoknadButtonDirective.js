@@ -11,7 +11,7 @@ angular.module('nav.soknadsosialhjelp.opprett')
                         laster: true
                     };
 
-                    var skjemanummer = "NAV 76-13.45";
+                    var skjemanummer = "NAV DIGISOS";
 
                     soknadService.create({soknadType: skjemanummer}).then(function (soknad) {
                         UtilService.redirectTilUnderside("/app/" + soknad.brukerBehandlingId + '#/informasjonsside');
