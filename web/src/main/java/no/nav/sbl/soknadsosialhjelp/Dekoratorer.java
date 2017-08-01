@@ -8,24 +8,28 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 
-public class SoknadDekorator extends DecoratorFilter {
+public class Dekoratorer extends DecoratorFilter {
 
-    private static final String FRAMENTS_URL = "common-html/v3/navno";
-    private static final String APPLICATION_NAME = "soknadsosialhjelp";
+    private static final String FRAGMENTS_URL = "common-html/v4/navno";
     private static final List<String> NO_DECORATOR_PATTERNS = new ArrayList<>(asList(".*/img/.*", ".*/css/.*", ".*/js/.*", ".*/font/.*", ".*selftest.*"));
-    private static final List<String> FRAGMENT_NAMES= new ArrayList<>(asList("webstats-ga-notrack", "header", "footer", "styles", "scripts"));
 
-    public SoknadDekorator() {
+    public Dekoratorer() {
         super();
-        setFragmentsUrl(FRAMENTS_URL);
-        setContentRetriever(setUpContentRetriever());
-        setApplicationName(APPLICATION_NAME);
+        setFragmentsUrl(FRAGMENTS_URL);
+        setContentRetriever(appresContentRetriever());
+        setApplicationName("Sosialhjelp");
         setNoDecoratePatterns(NO_DECORATOR_PATTERNS);
-        setFragmentNames(FRAGMENT_NAMES);
+        setFragmentNames(asList(
+                "webstats-ga",
+                "header",
+                "footer",
+                "scripts",
+                "styles"
+        ));
     }
 
-    private EnonicContentRetriever setUpContentRetriever() {
-        EnonicContentRetriever contentRetriever = new EnonicContentRetriever(APPLICATION_NAME);
+    private EnonicContentRetriever appresContentRetriever() {
+        EnonicContentRetriever contentRetriever = new EnonicContentRetriever("Sosialhjelp");
         contentRetriever.setBaseUrl(System.getProperty("dialogarena.cms.url"));
         contentRetriever.setRefreshIntervalSeconds(1800);
         contentRetriever.setHttpTimeoutMillis(10000);

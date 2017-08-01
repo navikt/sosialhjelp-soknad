@@ -9,7 +9,7 @@
     <session-config>
         <session-timeout>30</session-timeout>
         <cookie-config>
-            <name>BOILERPLATE_JSESSIONID</name>
+            <name>SOKNADSOSIALHJELP_JSESSIONID</name>
             <http-only>true</http-only>
             <secure>true</secure>
         </cookie-config>
@@ -18,19 +18,15 @@
 
     <filter>
         <filter-name>decoratorFilter</filter-name>
-        <filter-class>no.nav.sbl.soknadsosialhjelp.SoknadDekorator</filter-class>
+        <filter-class>no.nav.sbl.soknadsosialhjelp.Dekoratorer</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>decoratorFilter</filter-name>
         <url-pattern>/app/*</url-pattern>
     </filter-mapping>
 
-    <welcome-file-list>
-        <welcome-file>boilerplate.html</welcome-file>
-    </welcome-file-list>
-
     <servlet>
-        <servlet-name>routingBoilerplate</servlet-name>
+        <servlet-name>routingSoknadsosialhjelp</servlet-name>
         <servlet-class>no.nav.sbl.soknadsosialhjelp.Routing</servlet-class>
         <init-param>
             <param-name>applicationFile</param-name>
@@ -39,7 +35,7 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>routingBoilerplate</servlet-name>
+        <servlet-name>routingSoknadsosialhjelp</servlet-name>
         <url-pattern>/app/*</url-pattern>
     </servlet-mapping>
 
@@ -54,15 +50,14 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>selftest-json</servlet-name>
+        <servlet-name>selftestJson</servlet-name>
         <servlet-class>no.nav.sbl.soknadsosialhjelp.selftest.SelftestJsonServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>selftest-json</servlet-name>
+        <servlet-name>selftestJson</servlet-name>
         <url-pattern>/internal/selftest.json</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>isAlive</servlet-name>
         <servlet-class>no.nav.sbl.soknadsosialhjelp.IsAliveServlet</servlet-class>
