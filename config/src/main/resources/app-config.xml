@@ -7,8 +7,8 @@
     <name>soknadsosialhjelp</name>
 
     <selftest>
-        <path>/soknadsosialhjelp/internal/selftest.json</path>
-        <humanReadablePath>/soknadsosialhjelp/internal/selftest</humanReadablePath>
+        <path>soknadsosialhjelp/internal/selftest.json</path>
+        <humanReadablePath>soknadsosialhjelp/internal/selftest</humanReadablePath>
     </selftest>
 
     <artifacts>

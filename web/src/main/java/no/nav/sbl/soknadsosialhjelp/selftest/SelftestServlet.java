@@ -19,7 +19,7 @@ public class SelftestServlet extends SelfTestBaseServlet {
 
     @Override
     protected String getApplicationName() {
-        return "Bilstønad";
+        return "Soknadsosialhjelp";
     }
 
     @Override
