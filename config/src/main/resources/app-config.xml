@@ -6,7 +6,10 @@
 
     <name>soknadsosialhjelp</name>
 
-    <selftestPagePath>soknadsosialhjelp/internal/selftest</selftestPagePath>
+    <selftest>
+        <path>/soknadsosialhjelp/internal/selftest.json</path>
+        <humanReadablePath>/soknadsosialhjelp/internal/selftest</humanReadablePath>
+    </selftest>
 
     <artifacts>
         <ear groupId="no.nav.sbl.soknadsosialhjelp" artifactId="soknadsosialhjelp-ear"/>
