@@ -20,7 +20,7 @@ public class Dekoratorer extends DecoratorFilter {
         setApplicationName("Sosialhjelp");
         setNoDecoratePatterns(NO_DECORATOR_PATTERNS);
         setFragmentNames(asList(
-                "webstats-ga",
+                "webstats-ga-notrack",
                 "header",
                 "footer",
                 "scripts",
@@ -29,10 +29,9 @@ public class Dekoratorer extends DecoratorFilter {
     }
 
     private EnonicContentRetriever appresContentRetriever() {
-        EnonicContentRetriever contentRetriever = new EnonicContentRetriever("Sosialhjelp");
+        EnonicContentRetriever contentRetriever = new EnonicContentRetriever(10000);
         contentRetriever.setBaseUrl(System.getProperty("dialogarena.cms.url"));
         contentRetriever.setRefreshIntervalSeconds(1800);
-        contentRetriever.setHttpTimeoutMillis(10000);
         return contentRetriever;
     }
 }
