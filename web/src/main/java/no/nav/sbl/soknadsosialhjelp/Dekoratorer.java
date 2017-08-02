@@ -11,13 +11,27 @@ import static java.util.Arrays.asList;
 public class Dekoratorer extends DecoratorFilter {
 
     private static final String FRAGMENTS_URL = "common-html/v4/navno";
-    private static final String APPLICATION_NAME = "Sosialhjelp";
     private static final List<String> NO_DECORATOR_PATTERNS = new ArrayList<>(asList(".*/img/.*", ".*/css/.*", ".*/js/.*", ".*/font/.*", ".*selftest.*"));
-    private static final List<String> FRAGMENT_NAMES= new ArrayList<>(asList("webstats-ga-notrack", "styles", "scripts", "footer", "header"));
-    private static final EnonicContentRetriever ENONIC_CONTENT_RETRIEVER = new EnonicContentRetriever(10000, System.getProperty("dialogarena.cms.url"), 1800);
 
     public Dekoratorer() {
-        super(FRAGMENTS_URL, ENONIC_CONTENT_RETRIEVER, FRAGMENT_NAMES, APPLICATION_NAME);
+        super();
+        setFragmentsUrl(FRAGMENTS_URL);
+        setContentRetriever(appresContentRetriever());
+        setApplicationName("Sosialhjelp");
         setNoDecoratePatterns(NO_DECORATOR_PATTERNS);
+        setFragmentNames(asList(
+                "webstats-ga-notrack",
+                "header",
+                "footer",
+                "scripts",
+                "styles"
+        ));
+    }
+
+    private EnonicContentRetriever appresContentRetriever() {
+        EnonicContentRetriever contentRetriever = new EnonicContentRetriever(10000);
+        contentRetriever.setBaseUrl(System.getProperty("dialogarena.cms.url"));
+        contentRetriever.setRefreshIntervalSeconds(1800);
+        return contentRetriever;
     }
 }
