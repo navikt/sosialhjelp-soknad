@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./App.css";
 import AlertStripe from "nav-frontend-alertstriper";
 import "./styles/app.css";
 
