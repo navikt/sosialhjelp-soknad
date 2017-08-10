@@ -71,7 +71,7 @@
     <build>
         <resources>
             <resource>
-                <directory>src/frontend/</directory>
+                <directory>src/frontend-gammel/</directory>
                 <excludes>
                     <exclude>**/node_modules/**</exclude>
                 </excludes>
@@ -95,7 +95,7 @@
                             <arguments>
                                 <argument>install</argument>
                             </arguments>
-                            <workingDirectory>src/frontend</workingDirectory>
+                            <workingDirectory>src/frontend-gammel</workingDirectory>
                         </configuration>
                     </execution>
 
@@ -111,7 +111,7 @@
                                 <argument>./node_modules/gulp/bin/gulp</argument>
                                 <argument>--prod</argument>
                             </arguments>
-                            <workingDirectory>src/frontend</workingDirectory>
+                            <workingDirectory>src/frontend-gammel</workingDirectory>
                         </configuration>
                     </execution>
 
@@ -129,7 +129,7 @@
                                 <argument>${gulp.extra.test.parameter}</argument>
                             </arguments>
                             <skip>${skip.js-tests}</skip>
-                            <workingDirectory>src/frontend</workingDirectory>
+                            <workingDirectory>src/frontend-gammel</workingDirectory>
                         </configuration>
                     </execution>
                 </executions>
