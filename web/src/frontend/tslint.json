@@ -138,7 +138,7 @@
 		"jsx-no-lambda": false,
 		"jsx-no-multiline-js": false,
 		"jsx-no-string-ref": false,
-		"jsx-curly-spacing": [true, "always"],
+		"jsx-curly-spacing": [true, "arrow-parens"],
 		"jsx-wrap-multiline": false
 	},
 	"jsRules": {
