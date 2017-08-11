@@ -1,0 +1,57 @@
+<div class="skjemainnhold" data-novalidate data-gruppevaliderer>
+    <feilliste></feilliste>
+
+    <div class="blokk-s js-valideringsomrade skjema-feilomrade">
+
+        <h3 class="skjema-sporsmal" data-ng-bind-html="'arbeid.dinsituasjon.sporsmal' | cmstekst "></h3>
+
+        <div data-checkbox-validering
+             data-nav-faktum="arbeid.dinsituasjon"
+             data-feilmelding="arbeid.dinsituasjon.feilmelding">
+
+            <div data-navcheckbox
+                 data-nav-faktum="arbeid.dinsituasjon.arbeidsledig"
+                 data-navlabel="arbeid.dinsituasjon.arbeidsledig">
+            </div>
+
+            <div data-navcheckbox
+                 data-nav-faktum="arbeid.dinsituasjon.jobb"
+                 data-navlabel="arbeid.dinsituasjon.jobb">
+            </div>
+
+            <div data-navcheckbox
+                 data-nav-faktum="arbeid.dinsituasjon.student"
+                 data-navlabel="arbeid.dinsituasjon.student">
+
+                <div class="blokk"
+                     data-booleanradio
+                     data-radioinput-validering
+                     data-nav-faktum="arbeid.dinsituasjon.student.heltid"
+                     data-nokkel="arbeid.dinsituasjon.student.heltid"
+                     data-feilmelding="arbeid.dinsituasjon.student.heltid.feilmelding">
+                </div>
+            </div>
+
+            <div data-navcheckbox
+                 data-nav-faktum="arbeid.dinsituasjon.annensituasjon"
+                 data-navlabel="arbeid.dinsituasjon.annensituasjon">
+
+                <div data-navtextarea
+                     data-modell="faktum"
+                     data-nav-faktum='arbeid.dinsituasjon.annensituasjon.beskrivelse'
+                     data-nokkel='arbeid.dinsituasjon.annensituasjon.beskrivelse'
+                     data-obligatorisk='true'
+                     data-maxlengde='500'
+                     data-navfeilmeldinger="{ required: 'arbeid.dinsituasjon.annensituasjon.beskrivelse.feilmelding', maxlength: 'fritekst.feilmelding' }">
+                </div>
+            </div>
+        </div>
+
+        <div role="alert">
+            <p class="js-feilmelding skjema-feilmelding" aria-live="polite"
+               data-ng-bind-html=" 'arbeid.dinsituasjon.feilmelding' | cmstekst"></p>
+        </div>
+    </div>
+
+    <div data-nesteknapp-bolk></div>
+</div>

@@ -1,0 +1,22 @@
+# /
+/.idea
+*.iml
+*.ipr
+*.iws
+/projectFilesBackup/
+rebel.xml
+target
+
+*.project
+*.settings
+*.classpath
+
+consumer/*.pdf
+test.pdf
+
+node_modules/
+
+**/webapp/css/**/*
+**/webapp/img/**/*
+**/webapp/js/**/*
+web/src/main/webapp/soknadsosialhjelpBuilt.html
