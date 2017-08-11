@@ -1,8 +1,57 @@
 <div class="skjemainnhold" data-novalidate data-gruppevaliderer>
     <feilliste></feilliste>
 
-    <div class="blokk-s" data-ng-include="'js/soknad/bolker/inntekt/inntektbolkMottarYtelser.html'"></div>
-    <div class="blokk-s" data-ng-include="'js/soknad/bolker/inntekt/inntektbolkSoktYtelser.html'"></div>
+    <div class="blokk"
+         data-booleanradio
+         data-radioinput-validering
+         data-nav-faktum="inntekt.mottarytelser"
+         data-nokkel="inntekt.mottarytelser"
+         data-feilmelding="inntekt.mottarytelser.feilmelding">
+    </div>
+
+    <div class="blokk"
+         data-booleanradio
+         data-radioinput-validering
+         data-nav-faktum="inntekt.soktytelser"
+         data-nokkel="inntekt.soktytelser"
+         data-feilmelding="inntekt.soktytelser.feilmelding">
+    </div>
+
+    <div class="blokk"
+         data-booleanradio
+         data-radioinput-validering
+         data-nav-faktum="inntekt.bostotte"
+         data-nokkel="inntekt.bostotte"
+         data-feilmelding="inntekt.bostotte.feilmelding">
+
+        <div class="blokk-s js-valideringsomrade skjema-feilomrade">
+
+            <h3 class="skjema-sporsmal" data-ng-bind-html="'inntekt.bostotte.type.sporsmal' | cmstekst "></h3>
+
+            <div data-checkbox-validering
+                 data-nav-faktum="inntekt.bostotte.type"
+                 data-feilmelding="inntekt.bostotte.type.feilmelding">
+
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.bostotte.type.husbanken"
+                     data-navlabel="inntekt.bostotte.type.husbanken">
+                </div>
+
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.bostotte.type.kommunal"
+                     data-navlabel="inntekt.bostotte.type.kommunal">
+                </div>
+            </div>
+
+            <div role="alert">
+                <p class="js-feilmelding skjema-feilmelding" aria-live="polite"
+                   data-ng-bind-html=" 'inntekt.bostotte.type.feilmelding' | cmstekst"></p>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="blokk-s" data-ng-include="'js/soknad/bolker/inntekt/inntektbolkMottarYtelser.html'"></div>-->
+    <!--<div class="blokk-s" data-ng-include="'js/soknad/bolker/inntekt/inntektbolkSoktYtelser.html'"></div>-->
     <div class="blokk-s" data-ng-include="'js/soknad/bolker/inntekt/inntektbolkStotte.html'"></div>
     <div class="blokk-s" data-ng-include="'js/soknad/bolker/inntekt/inntektbolkFormue.html'"></div>
     <div class="blokk-s" data-ng-include="'js/soknad/bolker/inntekt/inntektbolkInntekter.html'"></div>
