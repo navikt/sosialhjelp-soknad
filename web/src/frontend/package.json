@@ -9,6 +9,7 @@
     "@types/react-dom": "^15.5.2",
     "babel-polyfill": "^6.23.0",
     "classnames": "^2.2.5",
+    "express": "^4.15.4",
     "nav-frontend-alertstriper": "^0.1.6",
     "nav-frontend-alertstriper-style": "^0.2.2",
     "nav-frontend-ikoner-assets": "^0.2.3",
@@ -20,12 +21,17 @@
     "react-dom": "^15.6.1",
     "react-scripts-ts": "2.5.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "body-parser": "^1.17.2",
+    "npm-run-all": "^4.0.2"
+  },
   "scripts": {
+    "mock-backend": "node scripts/mock_backend",
     "build-css": "node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "npm run build-css && node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "start-js": "react-scripts-ts start",
+    "start": "npm-run-all -p watch-css start-js mock-backend",
+    "build": "npm run build-css && react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   }
