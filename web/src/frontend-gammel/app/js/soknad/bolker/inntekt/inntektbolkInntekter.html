@@ -1,0 +1,58 @@
+<div class="blokk-s js-valideringsomrade skjema-feilomrade">
+
+    <div class="blokk"
+         data-booleanradio
+         data-radioinput-validering
+         data-nav-faktum="inntekt.inntekter"
+         data-nokkel="inntekt.inntekter"
+         data-feilmelding="inntekt.inntekter.feilmelding">
+
+        <div class="blokk-s js-valideringsomrade skjema-feilomrade">
+
+            <h4 class="skjema-sporsmal" data-ng-bind-html="'inntekt.inntekter.false.type.sporsmal' | cmstekst "></h4>
+
+            <div data-checkbox-validering
+                 data-nav-faktum="inntekt.inntekter.false.type"
+                 data-feilmelding="inntekt.inntekter.false.type.feilmelding">
+
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.inntekter.false.type.utbytte"
+                     data-navlabel="inntekt.inntekter.false.type.utbytte">
+                </div>
+
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.inntekter.false.type.salg"
+                     data-navlabel="inntekt.inntekter.false.type.salg">
+                </div>
+
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.inntekter.false.type.leieinntekter"
+                     data-navlabel="inntekt.inntekter.false.type.leieinntekter">
+                </div>
+
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.inntekter.false.type.forsikringsutbetalinger"
+                     data-navlabel="inntekt.inntekter.false.type.forsikringsutbetalinger">
+                </div>
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.inntekter.false.type.annet"
+                     data-navlabel="inntekt.inntekter.false.type.annet">
+
+                    <div data-nav-faktum="inntekt.inntekter.false.type.annet.true.beskrivelse">
+                        <div data-navtextarea
+                             data-modell="faktum"
+                             data-nokkel="inntekt.inntekter.false.type.annet.true.beskrivelse"
+                             data-navfeilmeldinger="{maxlength:'feilmelding.maks500tegn', required: 'inntekt.inntekter.false.type.annet.beskrivelse.feilmelding'}"
+                             data-obligatorisk="true"
+                             data-maxlengde="500"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="alert">
+                <p class="js-feilmelding skjema-feilmelding" aria-live="polite"
+                   data-ng-bind-html=" 'inntekt.inntekter.false.type.feilmelding' | cmstekst"></p>
+            </div>
+        </div>
+    </div>
+</div>

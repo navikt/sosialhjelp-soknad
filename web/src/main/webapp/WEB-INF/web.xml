@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <display-name>soknadsosialhjelp</display-name>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <name>SOKNADSOSIALHJELP_JSESSIONID</name>
+            <http-only>true</http-only>
+            <secure>true</secure>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
+    <filter>
+        <filter-name>decoratorFilter</filter-name>
+        <filter-class>no.nav.sbl.soknadsosialhjelp.Dekoratorer</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>decoratorFilter</filter-name>
+        <url-pattern>/app/*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>routingSoknadsosialhjelp</servlet-name>
+        <servlet-class>no.nav.sbl.soknadsosialhjelp.Routing</servlet-class>
+        <init-param>
+            <param-name>applicationFile</param-name>
+            <param-value>soknadsosialhjelpBuilt.html</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>routingSoknadsosialhjelp</servlet-name>
+        <url-pattern>/app/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>selftest</servlet-name>
+        <servlet-class>no.nav.sbl.soknadsosialhjelp.selftest.SelftestServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>selftest</servlet-name>
+        <url-pattern>/internal/selftest</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>selftestJson</servlet-name>
+        <servlet-class>no.nav.sbl.soknadsosialhjelp.selftest.SelftestJsonServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>selftestJson</servlet-name>
+        <url-pattern>/internal/selftest.json</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>isAlive</servlet-name>
+        <servlet-class>no.nav.sbl.soknadsosialhjelp.IsAliveServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>isAlive</servlet-name>
+        <url-pattern>/internal/isAlive</url-pattern>
+    </servlet-mapping>
+
+</web-app>

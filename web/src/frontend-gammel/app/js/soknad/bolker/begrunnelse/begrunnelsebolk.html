@@ -1,0 +1,31 @@
+<div class="skjemainnhold" data-novalidate data-gruppevaliderer>
+    <feilliste></feilliste>
+
+    <div class="blokk-s js-valideringsomrade skjema-feilomrade">
+        <div data-nav-faktum="begrunnelse.hvorfor">
+            <div data-navtextarea
+                 data-modell="faktum"
+                 data-nokkel="begrunnelse.hvorfor"
+                 data-navfeilmeldinger="{maxlength:'feilmelding.maks500tegn'}"
+                 data-obligatorisk="false"
+                 data-maxlengde="500"></div>
+        </div>
+    </div>
+
+    <div class="blokk-s js-valideringsomrade skjema-feilomrade">
+        <div data-nav-faktum="begrunnelse.hva">
+            <div data-navtextarea
+                 data-modell="faktum"
+                 data-nokkel="begrunnelse.hva"
+                 data-navfeilmeldinger="{maxlength:'feilmelding.maks500tegn', required: 'begrunnelse.hva.feilmelding'}"
+                 data-obligatorisk="true"
+                 data-maxlengde="500"></div>
+        </div>
+        <div role="alert">
+            <p class="js-feilmelding skjema-feilmelding" aria-live="polite"
+               data-ng-bind-html=" 'begrunnelse.hva.feilmelding' | cmstekst"></p>
+        </div>
+    </div>
+
+    <div data-nesteknapp-bolk></div>
+</div>

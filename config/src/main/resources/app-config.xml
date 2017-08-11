@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://appconfig.aura.nav.no"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://appconfig.aura.nav.no
+             http://maven.adeo.no/xsd/appconfig.xsd ">
+
+    <name>soknadsosialhjelp</name>
+
+    <selftest>
+        <path>soknadsosialhjelp/internal/selftest.json</path>
+        <humanReadablePath>soknadsosialhjelp/internal/selftest</humanReadablePath>
+    </selftest>
+
+    <artifacts>
+        <ear groupId="no.nav.sbl.soknadsosialhjelp" artifactId="soknadsosialhjelp-ear"/>
+    </artifacts>
+
+    <resources>
+        <baseUrl mapToProperty="dialogarena.cms" alias="appres.cms"/>
+        <baseUrl mapToProperty="soknadsapi" alias="soknadsapi"/>
+    </resources>
+
+    <loadBalancer isAlive="/soknadsosialhjelp/internal/isAlive"/>
+
+    <serverOptions>
+        <memoryParameters resourceAlias="brukerdialog-memparams"/>
+    </serverOptions>
+
+    <security>
+        <logins>
+            <openAm>
+                <contextRoot>soknadsosialhjelp</contextRoot>
+            </openAm>
+        </logins>
+    </security>
+</application>

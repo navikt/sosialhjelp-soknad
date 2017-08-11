@@ -1,0 +1,131 @@
+.begrensning {
+  width: 100%;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.checkbox-undermeny {
+  margin-left: 2rem;
+  margin-top: -0.5rem;
+
+  li:not(:last-child) {
+    padding-right: 0.5rem;
+    margin-right: 0.5rem;
+  }
+}
+
+.bolk-innhold {
+  padding: 2rem 1rem 1rem 1rem;
+}
+
+.bolk-tilleggsinfo {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-top: 1px solid @color-border;
+}
+
+/* -----------------
+	HEADER
+----------------- */
+
+.soknad-header {
+  border-bottom: 1px solid @color-border;
+  background-color: @color-background;
+  padding: 2rem 1rem;
+}
+
+.soknad-header .stegindikator {
+	margin-top: 2rem; 
+}
+
+.soknad-tittel {
+	.mixin-typo-sidetittel(); 
+	margin: 0; 
+	text-align: center; 
+	padding: 0; 
+}
+
+.soknad-accordion .accordion {
+	top: -5px; 
+}
+
+/* -----------------
+	FOOTER
+----------------- */
+
+.sticky-bunn-container {
+	margin-bottom: 2rem; 
+	margin-top: 2rem; 
+}
+
+.sticky-bunn {
+	text-align: center; 
+	padding-top: 1rem;
+	padding-bottom: 1rem; 
+
+	p {
+		margin-bottom: .5rem; 
+	}
+}
+
+/* -----------------
+	SPINNER
+	for appen - vises når siden lastes
+--------------- */
+
+
+.spinner-app {
+  width: 64px;
+  height: 64px;
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 33%;
+  .mixin-transform(translate(-50%, -100%));
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* -----------------
+	MEDIA QUERIES
+----------------- */
+
+@media(min-width: @screen-small) {
+
+	.soknad-header {
+		padding: 3rem 2rem;
+	}
+
+	.soknad-header .stegindikator {
+		margin-top: 3rem; 
+	}
+
+	.spinner-app {
+		width: 128px;
+		height: 128px; 
+		top: 50%; 
+	}
+
+	.soknad-innhold {
+		padding: 2rem; 
+	}
+
+	.bolk-innhold {
+		padding: 3rem 1rem; 
+	}
+
+	.sticky-bunn.stick {
+		width: 100%;
+		position: fixed;
+		bottom: 0;
+		z-index: @zindex-navbar-fixed;
+		background-color: @gray-background;
+		box-shadow: 0 0 .5rem rgba(0, 0, 0, 0.5);
+		.mixin-nav-transition(300ms, box-shadow);
+	}
+
+}

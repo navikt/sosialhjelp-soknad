@@ -1,0 +1,51 @@
+<header class="soknad-header">
+    <h1 data-nav-tittel="skjema.tittel" data-sidetittel="skjema.tittel"></h1>
+
+    <div data-stegindikator data-steg-liste="veiledning, skjema, vedlegg, sendInn" data-aktiv-index="1"></div>
+</header>
+
+<form action="">
+    <div class="soknadsosialhjelp" data-ng-form="soknadsosialhjelpForm" data-ng-cloak data-tab-autoscroll>
+
+        <div data-skjemavaliderer>
+            <div data-fokus-lukket-modalside data-apne-bolker>
+                <div data-sticky-feilmelding></div>
+                <div data-sidetittel="global.tittel">
+                    <div class="soknad-accordion" data-accordion data-close-others="false">
+                        <div data-ng-repeat="bolk in bolker" data-ng-class="{'js-er-validert': bolk.validert == 'true'}"
+                             data-bolkvaliderer data-bolk="bolk" class="bolk js-bolk" data-ng-form="{{bolk.id}}Form">
+
+                            <div data-accordion-group id="{{bolk.id}}" data-is-open="bolk.apen" data-avhuket-tekst="{{'accordion.tittel.avhuket' | cmstekst}}"
+                                data-heading="{{ bolk.tittel | cmstekst}}" data-validert="bolk.validert">
+                                <div data-ng-if="bolk.apen || bolk.validering || bolk.skalIkkeFjernesFraDom || kjorerValidering"
+                                    class="begrensning" data-gruppevaliderer>
+                                    <div class="bolk-innhold side-innhold">
+                                        <sett-opp-bolk-template
+                                            data-template="{{bolk.template}}"
+                                            data-templateurl="{{bolk.templateUrl}}">
+                                        </sett-opp-bolk-template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rad ferdig-skjema">
+                    <div class="begrensning knapperad">
+                        <div class="sak-hel">
+                            <button type="button" class="knapp knapp-hoved knapp-stor" data-fremdriftsindikator-knapp
+                                    data-ng-click="validerOgFinnFeilmeldinger(gaTilVedleggHvisValidert)"
+                                    data-ng-bind-html="'skjema.ferdig' | cmstekst">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div data-sticky>
+    <div data-sist-lagret data-navtilbakelenke="ingenlenke"></div>
+</div>
