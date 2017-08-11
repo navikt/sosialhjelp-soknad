@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/enzyme": "^2.8.5",
     "@types/jest": "^20.0.6",
     "@types/node": "^8.0.20",
     "@types/react": "^16.0.1",
     "@types/react-dom": "^15.5.2",
+    "@types/react-intl": "^2.3.1",
     "babel-polyfill": "^6.23.0",
     "classnames": "^2.2.5",
     "express": "^4.15.4",
@@ -19,10 +21,12 @@
     "node-less-chokidar": "^0.1.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-intl": "^2.3.0",
     "react-scripts-ts": "2.5.0"
   },
   "devDependencies": {
     "body-parser": "^1.17.2",
+    "enzyme": "^2.9.1",
     "npm-run-all": "^4.0.2"
   },
   "scripts": {

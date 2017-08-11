@@ -4,9 +4,12 @@ import registerServiceWorker from "./registerServiceWorker";
 import "./index.css";
 
 import App from "./app/containers/App";
+import IntlProvider from "./intlProvider";
 
 ReactDOM.render(
-	<App />,
+	(<IntlProvider>
+		<App/>
+	</IntlProvider>),
 	document.getElementById("root") as HTMLElement
 );
 registerServiceWorker();
