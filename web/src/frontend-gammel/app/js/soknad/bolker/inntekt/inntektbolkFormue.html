@@ -1,51 +1,60 @@
 <div>
-    <div class="blokk-s js-valideringsomrade skjema-feilomrade">
+    <div class="blokk"
+         data-booleanradio
+         data-radioinput-validering
+         data-nav-faktum="inntekt.eierandeler"
+         data-nokkel="inntekt.eierandeler"
+         data-feilmelding="inntekt.eierandeler.feilmelding">
 
-        <h3 class="skjema-sporsmal" data-ng-bind-html="'inntekt.formue.sporsmal' | cmstekst "></h3>
+        <div class="blokk-s js-valideringsomrade skjema-feilomrade">
 
-        <div data-checkbox-validering
-             data-nav-faktum="inntekt.formue"
-             data-feilmelding="inntekt.formue.feilmelding">
+            <h3 class="skjema-sporsmal" data-ng-bind-html="'inntekt.eierandeler.type.sporsmal' | cmstekst "></h3>
 
-            <div data-navcheckbox
-                 data-nav-faktum="inntekt.formue.bolig"
-                 data-navlabel="inntekt.formue.bolig">
-            </div>
+            <div data-checkbox-validering
+                 data-nav-faktum="inntekt.eierandeler.type"
+                 data-feilmelding="inntekt.eierandeler.type.feilmelding">
 
-            <div data-navcheckbox
-                 data-nav-faktum="inntekt.formue.kjoretoy"
-                 data-navlabel="inntekt.formue.kjoretoy">
-            </div>
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.eierandeler.type.bolig"
+                     data-navlabel="inntekt.eierandeler.type.bolig">
+                </div>
 
-            <div data-navcheckbox
-                 data-nav-faktum="inntekt.formue.campingvogn"
-                 data-navlabel="inntekt.formue.campingvogn">
-            </div>
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.eierandeler.type.kjoretoy"
+                     data-navlabel="inntekt.eierandeler.type.kjoretoy">
+                </div>
 
-            <div data-navcheckbox
-                 data-nav-faktum="inntekt.formue.fritidseiendom"
-                 data-navlabel="inntekt.formue.fritidseiendom">
-            </div>
-            <div data-navcheckbox
-                 data-nav-faktum="inntekt.formue.annet"
-                 data-navlabel="inntekt.formue.annet">
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.eierandeler.type.campingvogn"
+                     data-navlabel="inntekt.eierandeler.type.campingvogn">
+                </div>
 
-                <div data-nav-faktum="inntekt.formue.annet.true.beskrivelse">
-                    <div data-navtextarea
-                         data-modell="faktum"
-                         data-nokkel="inntekt.formue.annet.true.beskrivelse"
-                         data-navfeilmeldinger="{maxlength:'feilmelding.maks500tegn', required: 'inntekt.formue.annet.beskrivelse.feilmelding'}"
-                         data-obligatorisk="true"
-                         data-maxlengde="500"></div>
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.eierandeler.type.fritidseiendom"
+                     data-navlabel="inntekt.eierandeler.type.fritidseiendom">
+                </div>
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.eierandeler.type.annet"
+                     data-navlabel="inntekt.eierandeler.type.annet">
+
+                    <div data-nav-faktum="inntekt.eierandeler.type.annet.true.beskrivelse">
+                        <div data-navtextarea
+                             data-modell="faktum"
+                             data-nokkel="inntekt.eierandeler.type.annet.true.beskrivelse"
+                             data-navfeilmeldinger="{maxlength:'feilmelding.maks500tegn', required: 'inntekt.eierandeler.type.annet.true.beskrivelse.feilmelding'}"
+                             data-obligatorisk="true"
+                             data-maxlengde="500"></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div role="alert">
-            <p class="js-feilmelding skjema-feilmelding" aria-live="polite"
-               data-ng-bind-html=" 'inntekt.formue.feilmelding' | cmstekst"></p>
+            <div role="alert">
+                <p class="js-feilmelding skjema-feilmelding" aria-live="polite"
+                   data-ng-bind-html=" 'inntekt.eierandeler.type.feilmelding' | cmstekst"></p>
+            </div>
         </div>
     </div>
+
 
     <div class="blokk-s js-valideringsomrade skjema-feilomrade">
 
