@@ -1,0 +1,59 @@
+{
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react"
+  ],
+  "plugins": [
+    "react"
+  ],
+  "env": {
+    "jasmine": true
+  },
+  "rules": {
+		"object-curly-spacing": "always",
+		"react/jsx-curly-spacing": { "when": "always" },
+		"react/tsx-curly-spacing": { "when": "always" },
+		"react/prefer-es6-class": 1,
+    "react/sort-comp": 0,
+    "react/jsx-boolean-value": 0,
+    "react/jsx-no-bind": [
+      2,
+      {
+        "allowArrowFunctions": true
+      }
+    ],
+    "react/forbid-prop-types": [
+      1,
+      {
+        "forbid": [
+          "any"
+        ]
+      }
+    ],
+    "func-names": 0,
+    "no-underscore-dangle": 0,
+    "linebreak-style": [
+      2,
+      "windows"
+    ],
+    "import/extensions": 0,
+    "react/jsx-filename-extension": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ],
+        "moduleDirectory": [
+          "node_modules",
+          "js"
+        ]
+      }
+    }
+  }
+}

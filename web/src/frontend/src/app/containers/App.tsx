@@ -1,14 +1,13 @@
 import * as React from "react";
 import "../styles/app.css";
-import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
 
-class App extends React.Component<{}> {
+class App extends React.Component<{}, {}> {
 	render() {
 		return (
 			<div>
-				ReactSkall
-				<br/>
-				<FormattedMessage id="skjema.tittel"/>
+				<Link to="/">Søknad</Link>
+				{this.props.children}
 			</div>
 		);
 	}
