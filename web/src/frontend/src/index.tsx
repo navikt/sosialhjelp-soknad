@@ -12,6 +12,7 @@ import createSagaMiddleware from "redux-saga";
 import AppRouter from "./app/routers";
 import rootSaga from "./app/sagas";
 import AppReducer from "./app/reducers";
+import IntlProvider from "./intlProvider";
 import "./index.css";
 
 const history = createBrowserHistory();
@@ -27,9 +28,11 @@ const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
-	<Provider store={store}>
-		<AppRouter history={history} />
-	</Provider>,
+	<IntlProvider>
+		<Provider store={store}>
+			<AppRouter history={history} />
+		</Provider>
+	</IntlProvider>,
 	document.getElementById("root") as HTMLElement
 );
 
