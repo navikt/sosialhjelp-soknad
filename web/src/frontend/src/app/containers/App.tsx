@@ -10,6 +10,11 @@ class App extends React.Component<{}, {}> {
 				<Link to="/">
 					<FormattedMessage id="skjema.tittel"/>
 				</Link>
+				<br/>
+				<br/>
+				<Link to="/">
+					<FormattedMessage id="arbeidbolk.tittel"/>
+				</Link>
 				{this.props.children}
 			</div>
 		);
