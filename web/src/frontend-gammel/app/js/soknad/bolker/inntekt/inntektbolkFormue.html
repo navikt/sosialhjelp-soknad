@@ -55,52 +55,60 @@
         </div>
     </div>
 
+    <div class="blokk"
+         data-booleanradio
+         data-radioinput-validering
+         data-nav-faktum="inntekt.bankinnskudd"
+         data-nokkel="inntekt.bankinnskudd"
+         data-feilmelding="inntekt.bankinnskudd.feilmelding">
 
-    <div class="blokk-s js-valideringsomrade skjema-feilomrade">
 
-        <h3 class="skjema-sporsmal" data-ng-bind-html="'inntekt.bankinnskudd.sporsmal' | cmstekst "></h3>
+        <div class="blokk-s js-valideringsomrade skjema-feilomrade">
 
-        <div data-checkbox-validering
-             data-nav-faktum="inntekt.bankinnskudd"
-             data-feilmelding="inntekt.bankinnskudd.feilmelding">
+            <h3 class="skjema-sporsmal" data-ng-bind-html="'inntekt.bankinnskudd.false.type.sporsmal' | cmstekst "></h3>
 
-            <div data-navcheckbox
-                 data-nav-faktum="inntekt.bankinnskudd.sparekonto"
-                 data-navlabel="inntekt.bankinnskudd.sparekonto">
-            </div>
+            <div data-checkbox-validering
+                 data-nav-faktum="inntekt.bankinnskudd.false.type"
+                 data-feilmelding="inntekt.bankinnskudd.false.type.feilmelding">
 
-            <div data-navcheckbox
-                 data-nav-faktum="inntekt.bankinnskudd.brukskonto"
-                 data-navlabel="inntekt.bankinnskudd.brukskonto">
-            </div>
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.bankinnskudd.false.type.sparekonto"
+                     data-navlabel="inntekt.bankinnskudd.false.type.sparekonto">
+                </div>
 
-            <div data-navcheckbox
-                 data-nav-faktum="inntekt.bankinnskudd.livsforsikring"
-                 data-navlabel="inntekt.bankinnskudd.livsforsikring">
-            </div>
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.bankinnskudd.false.type.brukskonto"
+                     data-navlabel="inntekt.bankinnskudd.false.type.brukskonto">
+                </div>
 
-            <div data-navcheckbox
-                 data-nav-faktum="inntekt.bankinnskudd.aksjer"
-                 data-navlabel="inntekt.bankinnskudd.aksjer">
-            </div>
-            <div data-navcheckbox
-                 data-nav-faktum="inntekt.bankinnskudd.annet"
-                 data-navlabel="inntekt.bankinnskudd.annet">
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.bankinnskudd.false.type.livsforsikring"
+                     data-navlabel="inntekt.bankinnskudd.false.type.livsforsikring">
+                </div>
 
-                <div data-nav-faktum="inntekt.bankinnskudd.annet.true.beskrivelse">
-                    <div data-navtextarea
-                         data-modell="faktum"
-                         data-nokkel="inntekt.bankinnskudd.annet.true.beskrivelse"
-                         data-navfeilmeldinger="{maxlength:'feilmelding.maks500tegn', required: 'inntekt.bankinnskudd.annet.beskrivelse.feilmelding'}"
-                         data-obligatorisk="true"
-                         data-maxlengde="500"></div>
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.bankinnskudd.false.type.aksjer"
+                     data-navlabel="inntekt.bankinnskudd.false.type.aksjer">
+                </div>
+                <div data-navcheckbox
+                     data-nav-faktum="inntekt.bankinnskudd.false.type.annet"
+                     data-navlabel="inntekt.bankinnskudd.false.type.annet">
+
+                    <div data-nav-faktum="inntekt.bankinnskudd.false.type.annet.true.beskrivelse">
+                        <div data-navtextarea
+                             data-modell="faktum"
+                             data-nokkel="inntekt.bankinnskudd.false.type.annet.true.beskrivelse"
+                             data-navfeilmeldinger="{maxlength:'feilmelding.maks500tegn', required: 'inntekt.bankinnskudd.false.type.annet.beskrivelse.feilmelding'}"
+                             data-obligatorisk="true"
+                             data-maxlengde="500"></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div role="alert">
-            <p class="js-feilmelding skjema-feilmelding" aria-live="polite"
-               data-ng-bind-html=" 'inntekt.bankinnskudd.feilmelding' | cmstekst"></p>
+            <div role="alert">
+                <p class="js-feilmelding skjema-feilmelding" aria-live="polite"
+                   data-ng-bind-html=" 'inntekt.bankinnskudd.false.type.feilmelding' | cmstekst"></p>
+            </div>
         </div>
     </div>
 </div>
