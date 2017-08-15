@@ -18,7 +18,9 @@ const Bolk: React.StatelessComponent<BolkProps> = ({
 						{tittel}
 					</h3>
 				: null}
-			{children}
+			<div className="gui-bolk__innhold">
+				{children}
+			</div>
 		</div>
 	);
 };

@@ -16,6 +16,7 @@ declare module "nav-frontend-skjema" {
 		id?: string;
 		label: string;
 		name: string;
+		checked?: boolean;
 		radioRef?: Function;
 		disabled?: string;
 		onClick?: {};
@@ -38,6 +39,7 @@ declare module "nav-frontend-skjema" {
 		className?: string;
 		label: string;
 		id?: string;
+		checked?: boolean;
 		feil?: {
 			feilmelding: string;
 		};
@@ -46,6 +48,7 @@ declare module "nav-frontend-skjema" {
 		name?: string;
 		defaultChecked?: boolean;
 		onClick?: Function;
+		onChange?: Function;
 	}
 
 	interface Feil {
@@ -59,8 +62,23 @@ declare module "nav-frontend-skjema" {
 		feil?: Feil;
 	}
 
-	export class Checkbox extends React.Component<CheckboxProps, {}> {}
+	interface TextareaProps {
+		label: string | React.ReactNode;
+		value: string;
+		maxLength?: number;
+		textareaClass?: string;
+		id?: string;
+		name?: string;
+		onChange: Function;
+		feil?: Feil;
+		tellerTekst?: Function;
+		textareaRef?: Function;
+		placeholder?: string;
+	}
+
 	export class Radio extends React.Component<RadioProps, {}> {}
+	export class Checkbox extends React.Component<CheckboxProps, {}> {}
 	export class Input extends React.Component<InputProps, {}> {}
 	export class SkjemaGruppe extends React.Component<SkjemaGruppeProps, {}> {}
+	export class Textarea extends React.Component<TextareaProps, {}> {}
 }

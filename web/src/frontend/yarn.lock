@@ -21,6 +21,10 @@
   version "20.0.6"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/jest/-/jest-20.0.6.tgz#7e0ba76ddfacb42ee9bb0d8833e5208cf0680431"
 
+"@types/keymirror@^0.1.1":
+  version "0.1.1"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/keymirror/-/keymirror-0.1.1.tgz#1fe48e6e5e2a969cafecf0f24485ae23c72abd30"
+
 "@types/node@*", "@types/node@^8.0.20":
   version "8.0.20"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/node/-/node-8.0.20.tgz#65c7375255c24b184c215a5d0b63247c32f01c91"
