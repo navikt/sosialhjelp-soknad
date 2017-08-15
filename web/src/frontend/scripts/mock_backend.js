@@ -17,8 +17,33 @@ var port = process.env.PORT || 3001;
 var router = express.Router();
 
 function lesSpraakfil() {
-	return {hei: 'hi', verden: 'world'};
+	var directories = ['C:', 'Temp', 'sendsoknad', 'utave',
+		'soknadsosialhjelp', 'tekster',
+		'soknadsosialhjelp_nb_NO.properties'];
+	var fileName = directories.join(path.sep);
+	try {
+		var fileContent = fs.readFileSync(fileName, "utf8")
+	} catch (err) {
+	}
+
+	if (!fileContent) {
+		console.log("Feil! Savner språkfil: " + fileName);
+		process.exit(1);
+	}
+	var array = fileContent.split("\n");
+	var output = {'nb': {}};
+	for (i in array) {
+		var line = array[i];
+		var splitChar = line.indexOf("=");
+		var key = line.substring(0, splitChar);
+		var val = line.substring(splitChar + 1, line.length);
+		if (val) {
+			output.nb[key] = val.replace('\r', '')
+		}
+	}
+	return output
 }
+
 
 router.get('/tekster', function (req, res) {
 	res.json(lesSpraakfil())
