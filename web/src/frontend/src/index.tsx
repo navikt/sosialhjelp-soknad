@@ -12,13 +12,15 @@ import createSagaMiddleware from "redux-saga";
 import AppRouter from "./app/routers";
 import rootSaga from "./app/sagas";
 import AppReducer from "./app/reducers";
+import SkjemaReducer from "./app/soknadsskjema/reducer";
 import IntlProvider from "./intlProvider";
 import "./index.css";
 
 const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
-	AppReducer
+	app: AppReducer,
+	skjema: SkjemaReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();

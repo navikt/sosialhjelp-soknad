@@ -15,12 +15,14 @@ interface StegProps {
 
 const Steg: React.StatelessComponent<StegProps> = (props: StegProps) => {
 	const className = classNames("stegindikator__steg", {
-		"stegindikator__steg--active": props.aktiv,
-		"stegindikator__steg--inactive": props.inaktiv
+		"stegindikator__steg--aktiv": props.aktiv,
+		"stegindikator__steg--inaktiv": props.inaktiv
 	});
 	return (
 		<li className={className}>
-			{props.steg}
+			<span>
+				{props.steg}
+			</span>
 		</li>
 	);
 };
@@ -37,20 +39,23 @@ const StegIndikator: React.StatelessComponent<Props> = (props: Props) =>
 			<Steg
 				steg={1}
 				tittel="Steg 1"
+				aria-label="Steg 1 - Navn på steg"
 				aktiv={props.aktivtSteg === 1}
-				inaktiv={props.aktivtSteg <= 1}
+				inaktiv={props.aktivtSteg < 1}
 			/>
 			<Steg
 				steg={2}
 				tittel="Steg 2"
+				aria-label="Steg 2 - Navn på steg 2"
 				aktiv={props.aktivtSteg === 2}
-				inaktiv={props.aktivtSteg <= 2}
+				inaktiv={props.aktivtSteg < 2}
 			/>
 			<Steg
 				steg={1}
 				tittel="Steg 3"
+				aria-label="Steg 3 - Navn på steg 3"
 				aktiv={props.aktivtSteg === 3}
-				inaktiv={props.aktivtSteg <= 3}
+				inaktiv={props.aktivtSteg < 3}
 			/>
 		</ul>
 	</div>;
