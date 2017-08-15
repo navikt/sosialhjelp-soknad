@@ -10,6 +10,7 @@ target
 *.project
 *.settings
 *.classpath
+*.DS_Store
 
 consumer/*.pdf
 test.pdf
