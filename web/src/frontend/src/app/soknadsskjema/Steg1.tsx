@@ -21,9 +21,18 @@ class Steg1 extends React.Component<StateProps & DispatchProps, any> {
 				<Bolk hjelpetekst="Hjelpetekst om bosituasjon.">
 					<SkjemaGruppe title="Hva er din situasjon i dag?">
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.arbeidsledig" />
-						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.jobb" />
+						<FaktumCheckbox
+							faktumKey="arbeid.dinsituasjon.jobb"
+							disabled={true}
+						/>
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.student" />
-						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.annensituasjon" />
+						<FaktumCheckbox
+							faktumKey="arbeid.dinsituasjon.annensituasjon"
+							feil={{
+								tittel: "ABCV",
+								feilmelding: "Dette er feilmeldingen"
+							}}
+						/>
 						{faktum.get("arbeid.dinsituasjon.annensituasjon") === "true"
 							? <Textarea
 									label="Beskriv annen situasjon"
@@ -49,7 +58,6 @@ class Steg1 extends React.Component<StateProps & DispatchProps, any> {
 	}
 }
 
-// export default Steg1;
 export default connect((state: { faktum: FaktumState }, props: any) => {
 	return {
 		faktum: state.faktum.faktum

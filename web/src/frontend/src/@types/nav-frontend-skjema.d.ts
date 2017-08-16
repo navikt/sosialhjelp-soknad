@@ -22,11 +22,16 @@ declare module "nav-frontend-skjema" {
 		value: string;
 	}
 
+	export interface Feil {
+		tittel?: string;
+		feilmelding: string;
+	}
+
 	export interface InputProps extends React.HTMLProps<HTMLInputElement> {
 		bredde?: inputBredde;
 		className?: string;
 		inputClassName?: string;
-		feil?: string;
+		feil?: Feil;
 		id?: string;
 		inputRef?: Function;
 		label: string;
@@ -38,16 +43,10 @@ declare module "nav-frontend-skjema" {
 		label: string;
 		id?: string;
 		checked?: boolean;
-		feil?: {
-			feilmelding: string;
-		};
+		feil?: Feil;
 		checboxRef?: Function;
 		value: string;
 		defaultChecked?: boolean;
-	}
-
-	interface Feil {
-		feilmelding: string;
 	}
 
 	interface SkjemaGruppeProps {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Checkbox } from "nav-frontend-skjema";
+import { Checkbox, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../reducer";
 import { setFaktumVerdi } from "../actions";
@@ -13,6 +13,7 @@ interface StateProps {
 interface OwnProps {
 	faktumKey: string;
 	disabled?: boolean;
+	feil?: Feil;
 }
 
 class FaktumCheckbox extends React.Component<
@@ -20,25 +21,24 @@ class FaktumCheckbox extends React.Component<
 	{}
 > {
 	render() {
-		const { faktumKey, faktum, dispatch, intl } = this.props;
-		const label = intl.formatMessage({ id: `${faktumKey}` });
+		const { faktumKey, disabled, feil, faktum, dispatch, intl } = this.props;
 		const checked = faktum.get(faktumKey) === "true";
 		const value = checked ? "true" : "false";
 		return (
 			<Checkbox
-				checked={checked}
-				onChange={(evt: any) =>
-					dispatch(setFaktumVerdi(faktumKey, `${evt.target.checked}`))}
-				label={label}
 				name={faktumKey}
 				value={value}
-				disabled={false}
+				onChange={(evt: any) =>
+					dispatch(setFaktumVerdi(faktumKey, `${evt.target.checked}`))}
+				label={intl.formatMessage({ id: `${faktumKey}` })}
+				checked={checked}
+				disabled={disabled}
+				feil={feil}
 			/>
 		);
 	}
 }
 
-// export default Steg1;
 export default connect((state: { faktum: FaktumState }, props: OwnProps) => {
 	return {
 		faktum: state.faktum.faktum,
