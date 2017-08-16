@@ -18,7 +18,7 @@ class Steg1 extends React.Component<StateProps & DispatchProps, any> {
 		const { faktum, dispatch } = this.props;
 		return (
 			<Steg tittel="Arbeid og utdanning">
-				<Bolk>
+				<Bolk hjelpetekst="Hjelpetekst om bosituasjon.">
 					<SkjemaGruppe title="Hva er din situasjon i dag?">
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.arbeidsledig" />
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.jobb" />

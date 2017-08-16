@@ -21,16 +21,20 @@ function lesSpraakfil() {
 		'soknadsosialhjelp', 'tekster',
 		'soknadsosialhjelp_nb_NO.properties'];
 	var fileName = directories.join(path.sep);
-	try {
-		var fileContent = fs.readFileSync(fileName, "utf8")
-	} catch (err) {
-		fileContent = "{}";
+	if (!fs.existsSync(fileName)) {
+		console.log("Advarsel! Finner ikke språkfil i " + fileName);
+		console.log("Bruker backup språkfil fra ./scripts/mock_data/ i stedet");
+		directories = ['.', 'scripts', 'mock_data',
+			'soknadsosialhjelp_nb_NO.properties'];
+		fileName = directories.join(path.sep);
+		fileContent = fs.readFileSync(fileName, "utf8")
+	} else {
+		try {
+			var fileContent = fs.readFileSync(fileName, "utf8")
+		} catch (err) {
+		}
 	}
 
-	if (!fileContent) {
-		console.log("Feil! Savner språkfil: " + fileName);
-		process.exit(1);
-	}
 	var array = fileContent.split("\n");
 	var output = {'nb': {}};
 	for (i in array) {
