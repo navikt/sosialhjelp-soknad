@@ -24,6 +24,7 @@ function lesSpraakfil() {
 	try {
 		var fileContent = fs.readFileSync(fileName, "utf8")
 	} catch (err) {
+		fileContent = "{}";
 	}
 
 	if (!fileContent) {

@@ -1,11 +1,13 @@
 import * as React from "react";
 import Bolk from "../components/bolk";
 import Steg from "../components/steg";
-import { Checkbox, SkjemaGruppe, Textarea } from "nav-frontend-skjema";
+import { SkjemaGruppe, Textarea } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { SkjemaState, FaktumMap } from "./reducer";
-import { setFaktumVerdi } from "./actions";
+import { FaktumState, FaktumMap } from "../faktum/reducer";
+import { setFaktumVerdi } from "../faktum/actions";
 import { DispatchProps } from "../utils/types";
+
+import FaktumCheckbox from "../faktum/components/FaktumCheckbox";
 
 interface StateProps {
 	faktum: FaktumMap;
@@ -18,58 +20,11 @@ class Steg1 extends React.Component<StateProps & DispatchProps, any> {
 			<Steg tittel="Arbeid og utdanning">
 				<Bolk>
 					<SkjemaGruppe title="Hva er din situasjon i dag?">
-						<Checkbox
-							checked={faktum.get("arbeid.dinsituasjon.arbeidsledig") === true}
-							onChange={(evt: any) =>
-								dispatch(
-									setFaktumVerdi(
-										"arbeid.dinsituasjon.arbeidsledig",
-										evt.target.checked
-									)
-								)}
-							label="Jeg er ikke i jobb"
-							name="arbeid.dinsituasjon.arbeidsledig"
-							value="ikkearbeid"
-						/>
-						<Checkbox
-							checked={faktum.get("arbeid.dinsituasjon.jobb") === true}
-							onChange={(evt: any) =>
-								dispatch(
-									setFaktumVerdi("arbeid.dinsituasjon.jobb", evt.target.checked)
-								)}
-							label="Jeg er i jobb"
-							name="arbeid.dinsituasjon.jobb"
-							value="iarbeid"
-						/>
-						<Checkbox
-							checked={faktum.get("arbeid.dinsituasjon.student") === true}
-							onChange={(evt: any) =>
-								dispatch(
-									setFaktumVerdi(
-										"arbeid.dinsituasjon.student",
-										evt.target.checked
-									)
-								)}
-							label="Jeg er student"
-							name="arbeid.dinsituasjon.student"
-							value="student"
-						/>
-						<Checkbox
-							checked={
-								faktum.get("arbeid.dinsituasjon.annensituasjon") === true
-							}
-							onChange={(evt: any) =>
-								dispatch(
-									setFaktumVerdi(
-										"arbeid.dinsituasjon.annensituasjon",
-										evt.target.checked
-									)
-								)}
-							label="Annen situasjon"
-							name="arbeid.dinsituasjon.annensituasjon"
-							value="annen"
-						/>
-						{faktum.get("arbeid.dinsituasjon.annensituasjon") === true
+						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.arbeidsledig" />
+						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.jobb" />
+						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.student" />
+						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.annensituasjon" />
+						{faktum.get("arbeid.dinsituasjon.annensituasjon") === "true"
 							? <Textarea
 									label="Beskriv annen situasjon"
 									value={
@@ -95,8 +50,8 @@ class Steg1 extends React.Component<StateProps & DispatchProps, any> {
 }
 
 // export default Steg1;
-export default connect((state: { skjema: SkjemaState }, props: any) => {
+export default connect((state: { faktum: FaktumState }, props: any) => {
 	return {
-		faktum: state.skjema.faktum
+		faktum: state.faktum.faktum
 	};
 })(Steg1);
