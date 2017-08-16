@@ -67,7 +67,7 @@ node {
 
         stage('Test') {
             try {
-                sh "npm run test"
+                sh "CI=true && npm run test"
             } catch (Exception e) {
                 notifyFailed("Tester feilet", e)
             }
