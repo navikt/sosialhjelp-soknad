@@ -16,7 +16,7 @@ class Steg1 extends React.Component<StateProps & DispatchProps, any> {
 		const { faktum, dispatch } = this.props;
 		return (
 			<Steg tittel="Arbeid og utdanning">
-				<Bolk>
+				<Bolk hjelpetekst="Hjelpetekst om bosituasjon.">
 					<SkjemaGruppe title="Hva er din situasjon i dag?">
 						<Checkbox
 							checked={faktum.get("arbeid.dinsituasjon.arbeidsledig") === true}
@@ -70,7 +70,8 @@ class Steg1 extends React.Component<StateProps & DispatchProps, any> {
 							value="annen"
 						/>
 						{faktum.get("arbeid.dinsituasjon.annensituasjon") === true
-							? <Textarea
+							?
+							<Textarea
 									label="Beskriv annen situasjon"
 									value={
 										faktum.get(
@@ -85,7 +86,7 @@ class Steg1 extends React.Component<StateProps & DispatchProps, any> {
 												evt.target.value
 											)
 										)}
-								/>
+							/>
 							: null}
 					</SkjemaGruppe>
 				</Bolk>
