@@ -21,3 +21,21 @@ export interface OtherAction {
 }
 
 export type FaktumValueType = string | number | boolean;
+
+export interface Infotekst {
+	tittel?: string;
+	tekst?: string;
+}
+
+export interface FaktumSporsmal {
+	sporsmal: string;
+	infotekst?: Infotekst;
+	hjelpetekst?: Infotekst;
+}
+
+export interface FaktumCheckboksTekst {
+	label: string;
+	infotekst?: Infotekst;
+	hjelpetekst?: Infotekst;
+	feilmelding?: string;
+}
