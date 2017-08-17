@@ -13,21 +13,22 @@ isMasterBuild = (env.BRANCH_NAME == 'master')
 def project = "navikt"
 def repoName = "soknadsosialhjelp"
 
-def notifyFailed(reason, error) {
+def notifyFailed(reason, error, buildNr) {
     currentBuild.result = 'FAILED'
 
     commitHash = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
-    notifyGithub("${project}", "${repoName}", "${commitHash}", 'FAILED', "Build #${env.BUILD_NUMBER} : ${reason}")
+
+    notifyGithub("${project}", "${repoName}", "${commitHash}", 'FAILED', "Build #${buildNr} : ${reason}")
 
     throw error
 }
 
-def returnOk(message) {
+def returnOk(message, buildNr) {
     echo "${message}"
     currentBuild.result = "SUCCESS"
 
     commitHash = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
-    notifyGithub("${project}", "${repoName}", "${commitHash}", 'SUCCESS', "Build #${env.BUILD_NUMBER}")
+    notifyGithub("${project}", "${repoName}", "${commitHash}", 'SUCCESS', "Build #${buildNr}")
 }
 
 node {
@@ -68,7 +69,7 @@ node {
             try {
                 sh "npm install"
             } catch (Exception e) {
-                notifyFailed("Bygg feilet ved npm-install", e)
+                notifyFailed("Bygg feilet ved npm-install", e, env.BUILD_URL)
             }
         }
 
@@ -76,7 +77,7 @@ node {
             try {
                 sh "CI=true npm run test"
             } catch (Exception e) {
-                notifyFailed("Tester feilet", e)
+                notifyFailed("Tester feilet", e, env.BUILD_URL)
             }
         }
 
@@ -84,7 +85,7 @@ node {
             try {
                 sh "npm run build"
             } catch (Exception e) {
-                notifyFailed("Bygging av JS feilet", e)
+                notifyFailed("Bygging av JS feilet", e, env.BUILD_URL)
             }
         }
     }
@@ -101,7 +102,7 @@ node {
                     }
                 }
             } catch (Exception e) {
-                notifyFailed("Deploy av artifakt til nexus feilet", e)
+                notifyFailed("Deploy av artifakt til nexus feilet", e, env.BUILD_URL)
             }
         }
     }
@@ -121,7 +122,7 @@ if (isMasterBuild) {
         } catch (Exception e) {
             msg = "Deploy feilet [" + deploy + "](https://jira.adeo.no/browse/" + deploy + ")"
             node {
-                notifyFailed(msg, e)
+                notifyFailed(msg, e, env.BUILD_URL)
             }
         }
     }
@@ -160,7 +161,7 @@ if (isMasterBuild) {
 //}
 
 node {
-    returnOk('All good')
+    returnOk('All good', env.BUILD_URL)
 }
 
 def notifyGithub(owner, repo, sha, state, description) {
