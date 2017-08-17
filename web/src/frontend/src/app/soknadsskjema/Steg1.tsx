@@ -1,6 +1,7 @@
 import * as React from "react";
 import Bolk from "../components/bolk";
 import Steg from "../components/steg";
+import Underskjema from "../components/underskjema";
 import { SkjemaGruppe, Textarea } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../faktum/reducer";
@@ -26,6 +27,12 @@ class Steg1 extends React.Component<StateProps & DispatchProps, any> {
 							disabled={true}
 						/>
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.student" />
+						<Underskjema visible={faktum.get("arbeid.dinsituasjon.student")}>
+							<SkjemaGruppe title="Underskjema eksempel">
+								<FaktumCheckbox faktumKey="arbeid.dinsituasjon.arbeidsledig" />
+								<FaktumCheckbox faktumKey="arbeid.dinsituasjon.student" />
+							</SkjemaGruppe>
+						</Underskjema>
 						<FaktumCheckbox
 							faktumKey="arbeid.dinsituasjon.annensituasjon"
 							feil={{
@@ -34,7 +41,8 @@ class Steg1 extends React.Component<StateProps & DispatchProps, any> {
 							}}
 						/>
 						{faktum.get("arbeid.dinsituasjon.annensituasjon") === "true"
-							? <Textarea
+							?
+							<Textarea
 									label="Beskriv annen situasjon"
 									value={
 										faktum.get(
@@ -49,7 +57,7 @@ class Steg1 extends React.Component<StateProps & DispatchProps, any> {
 												evt.target.value
 											)
 										)}
-								/>
+							/>
 							: null}
 					</SkjemaGruppe>
 				</Bolk>
