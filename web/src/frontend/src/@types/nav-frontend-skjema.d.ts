@@ -11,48 +11,42 @@ declare module "nav-frontend-skjema" {
 		| "xs"
 		| "xxs";
 
-	export interface RadioProps {
+	interface RadioProps extends React.HTMLProps<Radio> {
 		className?: string;
 		id?: string;
 		label: string;
 		name: string;
 		checked?: boolean;
 		radioRef?: Function;
-		disabled?: string;
-		onClick?: {};
 		defaultChecked?: boolean;
 		value: string;
+	}
+
+	export interface Feil {
+		tittel?: string;
+		feilmelding: string;
 	}
 
 	export interface InputProps extends React.HTMLProps<HTMLInputElement> {
 		bredde?: inputBredde;
 		className?: string;
 		inputClassName?: string;
-		feil?: string;
+		feil?: Feil;
 		id?: string;
 		inputRef?: Function;
 		label: string;
 		name?: string;
 	}
 
-	export interface CheckboxProps {
+	interface CheckboxProps extends React.HTMLProps<Checkbox> {
 		className?: string;
 		label: string;
 		id?: string;
 		checked?: boolean;
-		feil?: {
-			feilmelding: string;
-		};
+		feil?: Feil;
 		checboxRef?: Function;
 		value: string;
-		name?: string;
 		defaultChecked?: boolean;
-		onClick?: Function;
-		onChange?: Function;
-	}
-
-	interface Feil {
-		feilmelding: string;
 	}
 
 	interface SkjemaGruppeProps {
@@ -62,18 +56,15 @@ declare module "nav-frontend-skjema" {
 		feil?: Feil;
 	}
 
-	interface TextareaProps {
-		label: string | React.ReactNode;
+	interface TextareaProps extends React.HTMLProps<Textarea> {
 		value: string;
 		maxLength?: number;
 		textareaClass?: string;
 		id?: string;
 		name?: string;
-		onChange: Function;
 		feil?: Feil;
 		tellerTekst?: Function;
 		textareaRef?: Function;
-		placeholder?: string;
 	}
 
 	export class Radio extends React.Component<RadioProps, {}> {}

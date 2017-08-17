@@ -1,12 +1,7 @@
-export interface Action<T> {
-	type: string;
-	payload: T;
-	meta?: any;
-}
 
-export type Dispatch = (action: Action<any>) => void;
+export type Dispatch = (action: any) => void;
 
-export type Reducer<S> = (state: S, action: Action<any>) => S;
+export type Reducer<S, AT> = (state: S, action: AT) => S;
 
 export interface DispatchProps {
 	dispatch: Dispatch;
