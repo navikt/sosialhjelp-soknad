@@ -16,6 +16,7 @@ def repoName = "soknadsosialhjelp"
 def notifyFailed(reason, error) {
     currentBuild.result = 'FAILED'
 //    step([$class: 'StashNotifier'])
+    notifyGithub("${project}", "${repoName}", "${commitHash}", 'FAILED', "Build #${env.BUILD_NUMBER} : ${reason}")
 
     throw error
 }
@@ -38,8 +39,11 @@ node {
     stage('Checkout') {
         deleteDir()
         checkout scm
+        commitHash = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
 
         author = sh(returnStdout: true, script: 'git --no-pager show -s --format="%an <%ae>" HEAD').trim()
+        notifyGithub("${project}", "${repoName}", "${commitHash}", 'pending', "Build #${env.BUILD_NUMBER} has started")
+
     }
 
     if (!isMasterBuild) {
@@ -118,23 +122,23 @@ if (isMasterBuild) {
             }
         }
     }
-    stage("Deploy app til q1") {
-        callback = "${env.BUILD_URL}input/Deploy/"
-        node {
-            deploy = common.deployApp(application, releaseVersion, "q1", callback, author).key
-        }
-
-        try {
-            timeout(time: 30, unit: 'MINUTES') {
-                input id: 'deploy', message: "deployer ${deploy}, deploy OK?"
-            }
-        } catch (Exception e) {
-            msg = "Deploy feilet [" + deploy + "](https://jira.adeo.no/browse/" + deploy + ")"
-            node {
-                notifyFailed(msg, e)
-            }
-        }
-    }
+//    stage("Deploy app til q1") {
+//        callback = "${env.BUILD_URL}input/Deploy/"
+//        node {
+//            deploy = common.deployApp(application, releaseVersion, "q1", callback, author).key
+//        }
+//
+//        try {
+//            timeout(time: 30, unit: 'MINUTES') {
+//                input id: 'deploy', message: "deployer ${deploy}, deploy OK?"
+//            }
+//        } catch (Exception e) {
+//            msg = "Deploy feilet [" + deploy + "](https://jira.adeo.no/browse/" + deploy + ")"
+//            node {
+//                notifyFailed(msg, e)
+//            }
+//        }
+//    }
 }
 
 if (isMasterBuild) {
@@ -166,7 +170,7 @@ def notifyGithub(owner, repo, sha, state, description) {
     def postBodyString = groovy.json.JsonOutput.toJson(postBody)
 
     withEnv(['HTTPS_PROXY=http://webproxy-utvikler.nav.no:8088']) {
-        withCredentials([string(credentialsId: 'navikt-jenkins-oauthtoken', variable: 'ACCESS_TOKEN')]) {
+        withCredentials([string(credentialsId: 'navikt-jenkins-github', variable: 'ACCESS_TOKEN')]) {
             sh "curl 'https://api.github.com/repos/${owner}/${repo}/statuses/${sha}?access_token=$ACCESS_TOKEN' \
                 -H 'Content-Type: application/json' \
                 -X POST \
