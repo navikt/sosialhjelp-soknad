@@ -4,7 +4,7 @@ import "./underskjema.css";
 
 interface UnderskjemaProps extends React.Props<any> {
 	tittel?: string;
-	visible: string;
+	visible: boolean;
 	children: React.ReactNode;
 }
 
@@ -13,9 +13,8 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
 	visible,
 	children
 }) => {
-	const isVisible = visible === "true";
 	return (
-		<Collapse isOpened={isVisible} className="underskjemaWrapper">
+		<Collapse isOpened={visible} className="underskjemaWrapper">
 			<div className="underskjema" >
 				<div className="underskjema__boks">
 					<div className="underskjema__innhold">

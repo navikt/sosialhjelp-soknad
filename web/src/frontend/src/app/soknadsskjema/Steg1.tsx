@@ -34,7 +34,7 @@ class Steg1 extends React.Component<
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.arbeidsledig" />
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.jobb" />
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.student" />
-						<Underskjema visible={faktum.get("arbeid.dinsituasjon.student")}>
+						<Underskjema visible={faktum.get("arbeid.dinsituasjon.student") === "true"}>
 							<FaktumSkjemagruppe
 								visible={faktum.get("arbeid.dinsituasjon.student") === "true"}
 								title={intl.formatMessage({
