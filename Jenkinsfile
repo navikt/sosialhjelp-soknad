@@ -10,8 +10,8 @@ deploy = "Unknown"
 releaseVersion = "Unknown"
 isMasterBuild = (env.BRANCH_NAME == 'master')
 
-def project = "navikt"
-def repoName = "soknadsosialhjelp"
+project = "navikt"
+repoName = "soknadsosialhjelp"
 
 def notifyFailed(reason, error, buildNr) {
     currentBuild.result = 'FAILED'
