@@ -14,7 +14,7 @@ declare module "nav-frontend-skjema" {
 	interface RadioProps extends React.HTMLProps<Radio> {
 		className?: string;
 		id?: string;
-		label: string;
+		label: React.ReactNode | any;
 		name: string;
 		checked?: boolean;
 		radioRef?: Function;
