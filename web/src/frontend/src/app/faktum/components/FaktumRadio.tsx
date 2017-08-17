@@ -19,7 +19,7 @@ interface OwnProps {
 	feil?: Feil;
 }
 
-class FaktumCheckbox extends React.Component<
+class FaktumRadio extends React.Component<
 	OwnProps & StateProps & DispatchProps & InjectedIntlProps,
 	{}
 > {
@@ -35,7 +35,7 @@ class FaktumCheckbox extends React.Component<
 				onChange={(evt: any) => dispatch(setFaktumVerdi(faktumKey, value))}
 				label={
 					<LabelMedHjelpetekst
-						id={`${faktumKey}.value`}
+						id={`${faktumKey}.${value}`}
 						label={tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>
@@ -50,4 +50,4 @@ export default connect((state: { faktum: FaktumState }, props: OwnProps) => {
 		faktum: state.faktum.faktum,
 		faktumKey: props.faktumKey
 	};
-})(injectIntl(FaktumCheckbox));
+})(injectIntl(FaktumRadio));
