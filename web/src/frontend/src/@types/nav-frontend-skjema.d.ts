@@ -40,7 +40,7 @@ declare module "nav-frontend-skjema" {
 
 	interface CheckboxProps extends React.HTMLProps<Checkbox> {
 		className?: string;
-		label: string;
+		label: React.ReactNode | any;
 		id?: string;
 		checked?: boolean;
 		feil?: Feil;
