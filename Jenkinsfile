@@ -15,7 +15,7 @@ def repoName = "soknadsosialhjelp"
 
 def notifyFailed(reason, error) {
     currentBuild.result = 'FAILED'
-//    step([$class: 'StashNotifier'])
+
     notifyGithub("${project}", "${repoName}", "${commitHash}", 'FAILED', "Build #${env.BUILD_NUMBER} : ${reason}")
 
     throw error
@@ -24,7 +24,7 @@ def notifyFailed(reason, error) {
 def returnOk(message) {
     echo "${message}"
     currentBuild.result = "SUCCESS"
-    step([$class: 'StashNotifier'])
+    notifyGithub("${project}", "${repoName}", "${commitHash}", 'SUCCESS', "Build #${env.BUILD_NUMBER}")
 }
 
 node {
@@ -141,20 +141,20 @@ if (isMasterBuild) {
 //    }
 }
 
-if (isMasterBuild) {
-    stage('Integrasjonstester') {
-        node {
-            try {
-                dir('web/src/frontend') {
-                    sh("node nightwatch.js --env phantomjs --url ${testurl}")
-                }
-            } catch (Exception e) {
-                notifyFailed('Integrasjonstester feilet', e)
-                step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
-            }
-        }
-    }
-}
+//if (isMasterBuild) {
+//    stage('Integrasjonstester') {
+//        node {
+//            try {
+//                dir('web/src/frontend') {
+//                    sh("node nightwatch.js --env phantomjs --url ${testurl}")
+//                }
+//            } catch (Exception e) {
+//                notifyFailed('Integrasjonstester feilet', e)
+//                step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
+//            }
+//        }
+//    }
+//}
 
 node {
     returnOk('All good')
