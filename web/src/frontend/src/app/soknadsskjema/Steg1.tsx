@@ -1,57 +1,79 @@
 import * as React from "react";
 import Bolk from "../components/bolk";
 import Steg from "../components/steg";
-import { SkjemaGruppe, Textarea } from "nav-frontend-skjema";
+import { Textarea } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../faktum/reducer";
 import { setFaktumVerdi } from "../faktum/actions";
 import { DispatchProps } from "../utils/types";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import FaktumCheckbox from "../faktum/components/FaktumCheckbox";
+import FaktumRadio from "../faktum/components/FaktumRadio";
+import FaktumSkjemagruppe from "../faktum/components/FaktumSkjemagruppe";
 
 interface StateProps {
 	faktum: FaktumMap;
 }
 
-class Steg1 extends React.Component<StateProps & DispatchProps, any> {
+class Steg1 extends React.Component<
+	StateProps & DispatchProps & InjectedIntlProps,
+	any
+> {
 	render() {
-		const { faktum, dispatch } = this.props;
+		const { faktum, dispatch, intl } = this.props;
 		return (
 			<Steg tittel="Arbeid og utdanning">
 				<Bolk hjelpetekst="Hjelpetekst om bosituasjon.">
-					<SkjemaGruppe title="Hva er din situasjon i dag?">
+					<FaktumSkjemagruppe
+						title={intl.formatMessage({
+							id: "arbeid.dinsituasjon.sporsmal"
+						})}
+					>
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.arbeidsledig" />
-						<FaktumCheckbox
-							faktumKey="arbeid.dinsituasjon.jobb"
-							disabled={true}
-						/>
+						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.jobb" />
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.student" />
-						<FaktumCheckbox
-							faktumKey="arbeid.dinsituasjon.annensituasjon"
-							feil={{
-								tittel: "ABCV",
-								feilmelding: "Dette er feilmeldingen"
-							}}
-						/>
-						{faktum.get("arbeid.dinsituasjon.annensituasjon") === "true"
-							? <Textarea
-									label="Beskriv annen situasjon"
-									value={
-										faktum.get(
-											"arbeid.dinsituasjon.annensituasjon.beskrivelse"
-										) || ""
-									}
-									name="arbeid.dinsituasjon.annensituasjon.beskrivelse"
-									onChange={(evt: any) =>
-										dispatch(
-											setFaktumVerdi(
-												"arbeid.dinsituasjon.annensituasjon.beskrivelse",
-												evt.target.value
-											)
-										)}
-								/>
-							: null}
-					</SkjemaGruppe>
+						<FaktumSkjemagruppe
+							visible={faktum.get("arbeid.dinsituasjon.student") === "true"}
+							title={intl.formatMessage({
+								id: "arbeid.dinsituasjon.student.true.heltid.sporsmal"
+							})}
+						>
+							<FaktumRadio
+								faktumKey="arbeid.dinsituasjon.student.true.heltid"
+								value="true"
+							/>
+							<FaktumRadio
+								faktumKey="arbeid.dinsituasjon.student.true.heltid"
+								value="false"
+							/>
+						</FaktumSkjemagruppe>
+						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.annensituasjon" />
+						<FaktumSkjemagruppe
+							visible={
+								faktum.get("arbeid.dinsituasjon.annensituasjon") === "true"
+							}
+						>
+							<Textarea
+								label={intl.formatMessage({
+									id: "arbeid.dinsituasjon.annensituasjon.true.sporsmal"
+								})}
+								value={
+									faktum.get(
+										"arbeid.dinsituasjon.annensituasjon.true.beskrivelse"
+									) || ""
+								}
+								name="arbeid.dinsituasjon.annensituasjon.true.beskrivelse"
+								onChange={(evt: any) =>
+									dispatch(
+										setFaktumVerdi(
+											"arbeid.dinsituasjon.annensituasjon.true.beskrivelse",
+											evt.target.value
+										)
+									)}
+							/>{" "}
+						</FaktumSkjemagruppe>
+					</FaktumSkjemagruppe>
 				</Bolk>
 			</Steg>
 		);
@@ -62,4 +84,4 @@ export default connect((state: { faktum: FaktumState }, props: any) => {
 	return {
 		faktum: state.faktum.faktum
 	};
-})(Steg1);
+})(injectIntl(Steg1));

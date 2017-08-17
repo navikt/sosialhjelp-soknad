@@ -1,11 +1,12 @@
 import * as React from "react";
 
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
+import { Infotekst } from "../../faktum/types";
 import "./labelMedHjelpetekst.css";
 
 interface Props {
 	label: React.ReactNode;
-	hjelpetekst?: React.ReactNode;
+	hjelpetekst?: Infotekst;
 }
 
 const LabelMedHjelpetekst: React.StatelessComponent<Props> = (props: Props) => {
@@ -22,8 +23,8 @@ const LabelMedHjelpetekst: React.StatelessComponent<Props> = (props: Props) => {
 				{props.label}
 			</span>
 			<span className="labelMedHjelpetekst__hjelpetekst">
-				<HjelpetekstAuto>
-					{props.hjelpetekst}
+				<HjelpetekstAuto tittel={props.hjelpetekst.tittel}>
+					{props.hjelpetekst.tekst}
 				</HjelpetekstAuto>
 			</span>
 		</span>
