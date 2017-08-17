@@ -40,6 +40,7 @@ class FaktumCheckbox extends React.Component<
 					dispatch(setFaktumVerdi(faktumKey, boolToString(evt.target.checked)))}
 				label={
 					<LabelMedHjelpetekst
+						id={faktumKey}
 						label={tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>

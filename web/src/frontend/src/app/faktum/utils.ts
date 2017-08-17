@@ -48,10 +48,12 @@ export function getFaktumRadioTekst(
 	key: string,
 	value: string
 ): FaktumCheckboksTekst {
-	return {
-		label: getIntlTextOrKey(intl, `${key}.${value}`),
-		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
-		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
-		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`)
+	const valueKey = `${key}.${value}`;
+	const tekster = {
+		label: getIntlTextOrKey(intl, valueKey),
+		feilmelding: getIntlTextOrKey(intl, `${valueKey}.feilmelding`),
+		infotekst: getIntlInfoTekst(intl, `${valueKey}.infotekst`),
+		hjelpetekst: getIntlInfoTekst(intl, `${valueKey}.hjelpetekst`)
 	};
+	return tekster;
 }

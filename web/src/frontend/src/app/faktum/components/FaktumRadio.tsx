@@ -35,6 +35,7 @@ class FaktumCheckbox extends React.Component<
 				onChange={(evt: any) => dispatch(setFaktumVerdi(faktumKey, value))}
 				label={
 					<LabelMedHjelpetekst
+						id={`${faktumKey}.value`}
 						label={tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>
