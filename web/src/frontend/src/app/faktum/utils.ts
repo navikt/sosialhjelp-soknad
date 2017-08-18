@@ -1,5 +1,5 @@
 import { InjectedIntl } from "react-intl";
-import { FaktumCheckboksTekst, Infotekst, FaktumTextareaTekst } from "./types";
+import { FaktumCheckboksTekst, Infotekst, FaktumTextareaTekst, FaktumInputTekst } from "./types";
 
 export function faktumIsSelected(value: string) {
 	return value === "true";
@@ -70,6 +70,20 @@ export function getFaktumTextareaTekst(
 		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
 		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`)
+	};
+	return tekster;
+}
+
+export function getFaktumInputTekst(
+	intl: InjectedIntl,
+	key: string,
+): FaktumInputTekst {
+	const tekster = {
+		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
+		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
+		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`),
+		label: getIntlTextOrKey(intl, key),
+		placeholder: getIntlTextOrKey(intl, `${key}.placeholder`)
 	};
 	return tekster;
 }

@@ -12,7 +12,7 @@ import FaktumRadio from "../faktum/components/FaktumRadio";
 import FaktumTextarea from "../faktum/components/FaktumTextarea";
 import FaktumSkjemagruppe from "../faktum/components/FaktumSkjemagruppe";
 import Underskjema from "../components/underskjema";
-import NivaTreSkjema from "../components/nivaTreSkjema/index";
+import FaktumInput from "../faktum/components/FaktumInput";
 
 interface StateProps {
 	faktum: FaktumMap;
@@ -47,31 +47,17 @@ class Steg1 extends React.Component<
 								})}
 							>
 								<FaktumRadio
-									faktumKey="arbeid.dinsituasjon.student.true.deltid"
-									value="false"
-								/>
-								<FaktumRadio
 									faktumKey="arbeid.dinsituasjon.student.true.heltid"
 									value="true"
 								/>
-								<NivaTreSkjema
-									visible={faktumIsSelected(
-										faktum.get("arbeid.dinsituasjon.student.true.heltid")
-									)}
-								>
-									<FaktumSkjemagruppe
-										visible={faktumIsSelected(
-											faktum.get("arbeid.dinsituasjon.student.true.heltid")
-										)}
-										title={intl.formatMessage({
-											id: "arbeid.dinsituasjon.student.true.heltid.sporsmal"
-										})}
-									>
-										<FaktumCheckbox faktumKey="arbeid.dinsituasjon.student.progresjon" />
-										<FaktumCheckbox faktumKey="arbeid.dinsituasjon.student.laan" />
-									</FaktumSkjemagruppe>
-								</NivaTreSkjema>
-
+								<FaktumRadio
+									faktumKey="arbeid.dinsituasjon.student.true.heltid"
+									value="false"
+								/>
+								<FaktumInput
+									faktumKey="arbeid.dinsituasjon.student.beskrivelse"
+									value="false"
+								/>
 							</FaktumSkjemagruppe>
 						</Underskjema>
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.annensituasjon" />
