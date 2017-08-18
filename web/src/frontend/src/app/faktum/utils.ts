@@ -9,12 +9,15 @@ export function boolToString(flag: boolean) {
 	return flag ? "true" : "false";
 }
 
+export function intlHasKey(intl: InjectedIntl, key: string) {
+	return intl.messages[key] !== undefined;
+}
+
 export function getIntlText(intl: InjectedIntl, key?: string) {
 	if (!key) {
 		return undefined;
 	}
-	const text = intl.formatMessage({ id: key });
-	return text === key ? undefined : text;
+	return intlHasKey(intl, key) ? intl.formatMessage({ id: key }) : undefined;
 }
 
 export function getIntlTextOrKey(intl: InjectedIntl, key: string): string {
