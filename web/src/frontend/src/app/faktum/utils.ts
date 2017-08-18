@@ -64,15 +64,13 @@ export function getFaktumRadioTekst(
 export function getFaktumInputTekst(
 	intl: InjectedIntl,
 	key: string,
-	value: string,
 ): FaktumInputTekst {
-	const valueKey = `${key}.${value}`;
 	const tekster = {
-		feilmelding: getIntlTextOrKey(intl, `${valueKey}.feilmelding`),
-		infotekst: getIntlInfoTekst(intl, `${valueKey}.infotekst`),
-		hjelpetekst: getIntlInfoTekst(intl, `${valueKey}.hjelpetekst`),
-		label: getIntlTextOrKey(intl, valueKey),
-		placeholder: getIntlTextOrKey(intl, `${valueKey}.placeholder`)
+		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
+		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
+		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`),
+		label: getIntlTextOrKey(intl, key),
+		placeholder: getIntlTextOrKey(intl, `${key}.placeholder`)
 	};
 	return tekster;
 }

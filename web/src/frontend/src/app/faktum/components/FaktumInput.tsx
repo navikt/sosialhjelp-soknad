@@ -24,8 +24,8 @@ class FaktumInput extends React.Component<
 	{}
 	> {
 	render() {
-		const { value, faktumKey, disabled, feil, faktum, dispatch, intl } = this.props;
-		const tekster = getFaktumInputTekst(intl, faktumKey, value);
+		const { faktumKey, disabled, feil, faktum, dispatch, intl } = this.props;
+		const tekster = getFaktumInputTekst(intl, faktumKey);
 		return (
 			<Input
 				className="input--xxl faktumInput"
