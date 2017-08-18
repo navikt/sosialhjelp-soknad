@@ -39,3 +39,11 @@ export interface FaktumCheckboksTekst {
 	hjelpetekst?: Infotekst;
 	feilmelding?: string;
 }
+
+export interface FaktumInputTekst {
+	feilmelding?: string;
+	infotekst?: Infotekst;
+	hjelpetekst?: Infotekst;
+	label: string;
+	placeholder?: string;
+}
