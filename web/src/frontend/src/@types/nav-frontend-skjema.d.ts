@@ -49,14 +49,15 @@ declare module "nav-frontend-skjema" {
 		defaultChecked?: boolean;
 	}
 
-	interface SkjemaGruppeProps {
-		title?: string;
+	interface SkjemagruppeProps {
+		title: string;
 		children: React.ReactNode | React.ReactNode[];
 		className?: string;
 		feil?: Feil;
 	}
 
 	interface TextareaProps extends React.HTMLProps<Textarea> {
+		label: string;
 		value: string;
 		maxLength?: number;
 		textareaClass?: string;
@@ -70,6 +71,6 @@ declare module "nav-frontend-skjema" {
 	export class Radio extends React.Component<RadioProps, {}> {}
 	export class Checkbox extends React.Component<CheckboxProps, {}> {}
 	export class Input extends React.Component<InputProps, {}> {}
-	export class SkjemaGruppe extends React.Component<SkjemaGruppeProps, {}> {}
+	export class SkjemaGruppe extends React.Component<SkjemagruppeProps, {}> {}
 	export class Textarea extends React.Component<TextareaProps, {}> {}
 }
