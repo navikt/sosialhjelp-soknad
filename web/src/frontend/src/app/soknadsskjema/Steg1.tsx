@@ -1,15 +1,15 @@
 import * as React from "react";
 import Bolk from "../components/bolk";
 import Steg from "../components/steg";
-import { Textarea } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../faktum/reducer";
-import { setFaktumVerdi } from "../faktum/actions";
+import { faktumIsSelected } from "../faktum/utils";
 import { DispatchProps } from "../utils/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import FaktumCheckbox from "../faktum/components/FaktumCheckbox";
 import FaktumRadio from "../faktum/components/FaktumRadio";
+import FaktumTextarea from "../faktum/components/FaktumTextarea";
 import FaktumSkjemagruppe from "../faktum/components/FaktumSkjemagruppe";
 
 interface StateProps {
@@ -21,7 +21,7 @@ class Steg1 extends React.Component<
 	any
 > {
 	render() {
-		const { faktum, dispatch, intl } = this.props;
+		const { faktum, intl } = this.props;
 		return (
 			<Steg tittel="Arbeid og utdanning">
 				<Bolk hjelpetekst="Hjelpetekst om bosituasjon.">
@@ -34,7 +34,9 @@ class Steg1 extends React.Component<
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.jobb" />
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.student" />
 						<FaktumSkjemagruppe
-							visible={faktum.get("arbeid.dinsituasjon.student") === "true"}
+							visible={faktumIsSelected(
+								faktum.get("arbeid.dinsituasjon.student")
+							)}
 							title={intl.formatMessage({
 								id: "arbeid.dinsituasjon.student.true.heltid.sporsmal"
 							})}
@@ -49,30 +51,9 @@ class Steg1 extends React.Component<
 							/>
 						</FaktumSkjemagruppe>
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.annensituasjon" />
-						<FaktumSkjemagruppe
-							visible={
-								faktum.get("arbeid.dinsituasjon.annensituasjon") === "true"
-							}
-						>
-							<Textarea
-								label={intl.formatMessage({
-									id: "arbeid.dinsituasjon.annensituasjon.true.sporsmal"
-								})}
-								value={
-									faktum.get(
-										"arbeid.dinsituasjon.annensituasjon.true.beskrivelse"
-									) || ""
-								}
-								name="arbeid.dinsituasjon.annensituasjon.true.beskrivelse"
-								onChange={(evt: any) =>
-									dispatch(
-										setFaktumVerdi(
-											"arbeid.dinsituasjon.annensituasjon.true.beskrivelse",
-											evt.target.value
-										)
-									)}
-							/>{" "}
-						</FaktumSkjemagruppe>
+						{faktumIsSelected(faktum.get("arbeid.dinsituasjon.annensituasjon"))
+							? <FaktumTextarea faktumKey="arbeid.dinsituasjon.annensituasjon.true.beskrivelse" />
+							: null}
 					</FaktumSkjemagruppe>
 				</Bolk>
 			</Steg>
