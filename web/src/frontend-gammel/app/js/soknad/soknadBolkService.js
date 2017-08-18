@@ -45,10 +45,19 @@ angular.module('nav.soknadsosialhjelp.soknad')
             validering: false
         };
 
-        const alleBolker = [arbeidbolk, familiebolk, begrunnelsebolk, bosituasjonbolk, inntektbolk];
+        const utgifterbolk = {
+            id: 'utgifterbolk',
+            tittel: 'utgifterbolk.tittel',
+            template: '<div data-utgifterbolk></div>',
+            apen: false,
+            skalSettesTilValidVedForsteApning: false,
+            validering: false
+        };
+
+        const alleBolker = [arbeidbolk, familiebolk, begrunnelsebolk, bosituasjonbolk, inntektbolk, utgifterbolk];
 
         const bolklister = {
-            boilerplatedummysoknadstype: [arbeidbolk, familiebolk, begrunnelsebolk, bosituasjonbolk, inntektbolk]
+            boilerplatedummysoknadstype: [arbeidbolk, familiebolk, begrunnelsebolk, bosituasjonbolk, inntektbolk, utgifterbolk]
         };
 
         const apneTab = (ider) => settApenStatusForAccordion(true, ider);

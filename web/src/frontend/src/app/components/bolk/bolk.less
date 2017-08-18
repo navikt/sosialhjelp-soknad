@@ -1,6 +1,8 @@
+@import "../../styles/app";
+
 .gui-bolk {
 	background: white;
-	padding: 4rem;
+	padding: 0;
 	text-align: left;
 	position: relative;
 
@@ -12,7 +14,14 @@
 	&__innhold {
 		margin: 0 auto;
 		text-align: left;
-		max-width: 40em;
+
+		.skjemaelement {
+			padding-left: @skjemaMarg;
+		}
+
+		.skjemaelement__sporsmal {
+			padding-left: @skjemaMarg;
+		}
 	}
 
 	&__hjelpetekst {
@@ -20,4 +29,13 @@
 		top: 30px;
 		right: 40px;
 	}
+
+	&__skjemagruppe .skjemaelement {
+		padding-left: @skjemaMarg;
+	}
+
+	&__skjemagruppe .skjemaelement__sporsmal {
+		padding-left: @skjemaMarg;
+	}
+
 }
