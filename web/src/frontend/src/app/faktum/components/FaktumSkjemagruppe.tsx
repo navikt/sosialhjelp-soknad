@@ -1,8 +1,8 @@
 import * as React from "react";
-import { SkjemaGruppe, SkjemaGruppeProps } from "nav-frontend-skjema";
+import { SkjemaGruppe, SkjemagruppeProps } from "nav-frontend-skjema";
 import "./faktumSkjemagruppe.css";
 
-interface Props extends SkjemaGruppeProps {
+interface Props extends SkjemagruppeProps {
 	visible?: boolean;
 }
 
