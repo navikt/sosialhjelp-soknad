@@ -5,6 +5,7 @@ angular.module('nav.soknadsosialhjelp.soknad', [
     'nav.soknadsosialhjelp.soknad.begrunnelsebolk',
     'nav.soknadsosialhjelp.soknad.bosituasjonbolk',
     'nav.soknadsosialhjelp.soknad.inntektbolk',
+    'nav.soknadsosialhjelp.soknad.utgifterbolk',
     'nav.bolker',
     'nav.cms',
     'nav.services.soknad',
@@ -43,3 +44,4 @@ require('./bolker/familie/familiebolkModule');
 require('./bolker/begrunnelse/begrunnelsebolkModule');
 require('./bolker/bosituasjon/bosituasjonbolkModule');
 require('./bolker/inntekt/inntektbolkModule');
+require('./bolker/utgifter/utgifterbolkModule');
