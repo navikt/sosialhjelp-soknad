@@ -1,17 +1,17 @@
 import * as React from "react";
-import Bolk from "../components/bolk";
-import Steg from "../components/steg";
+import Bolk from "../../../../skjema/components/bolk";
+import Steg from "../../../../skjema/components/steg";
 import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../faktum/reducer";
-import { faktumIsSelected } from "../faktum/utils";
-import { DispatchProps } from "../utils/types";
+import { FaktumState, FaktumMap } from "../../../../skjema/faktum/reducer";
+import { faktumIsSelected } from "../../../../skjema/faktum/utils";
+import { DispatchProps } from "../../../../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
-import FaktumCheckbox from "../faktum/components/FaktumCheckbox";
-import FaktumRadio from "../faktum/components/FaktumRadio";
-import FaktumTextarea from "../faktum/components/FaktumTextarea";
-import FaktumSkjemagruppe from "../faktum/components/FaktumSkjemagruppe";
-import Underskjema from "../components/underskjema";
+import FaktumCheckbox from "../../../../skjema/faktum/components/FaktumCheckbox";
+import FaktumRadio from "../../../../skjema/faktum/components/FaktumRadio";
+import FaktumTextarea from "../../../../skjema/faktum/components/FaktumTextarea";
+import FaktumSkjemagruppe from "../../../../skjema/faktum/components/FaktumSkjemagruppe";
+import Underskjema from "../../../../skjema/components/underskjema";
 
 interface StateProps {
 	faktum: FaktumMap;

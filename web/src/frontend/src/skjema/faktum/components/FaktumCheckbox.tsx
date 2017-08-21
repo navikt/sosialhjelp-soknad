@@ -1,11 +1,16 @@
 import * as React from "react";
-import { Textarea, Feil } from "nav-frontend-skjema";
+import { Checkbox, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../reducer";
 import { setFaktumVerdi } from "../actions";
-import { DispatchProps } from "../../utils/types";
+import { DispatchProps } from "../types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getFaktumTextareaTekst } from "../utils";
+import LabelMedHjelpetekst from "./LabelMedHjelpetekst";
+import {
+	getFaktumCheckboksTekst,
+	faktumIsSelected,
+	boolToString
+} from "../utils";
 
 interface StateProps {
 	faktum: FaktumMap;
@@ -17,21 +22,29 @@ interface OwnProps {
 	feil?: Feil;
 }
 
-class FaktumTextarea extends React.Component<
+class FaktumCheckbox extends React.Component<
 	OwnProps & StateProps & DispatchProps & InjectedIntlProps,
 	{}
 > {
 	render() {
 		const { faktumKey, disabled, feil, faktum, dispatch, intl } = this.props;
-		const tekster = getFaktumTextareaTekst(intl, faktumKey);
+		const checked = faktumIsSelected(faktum.get(faktumKey));
+		const tekster = getFaktumCheckboksTekst(intl, faktumKey);
 		return (
-			<Textarea
-				label={tekster.label}
-				value={faktum.get(faktumKey) || ""}
+			<Checkbox
 				name={faktumKey}
+				checked={checked}
 				disabled={disabled}
+				value={faktum.get(faktumKey)}
 				onChange={(evt: any) =>
-					dispatch(setFaktumVerdi(faktumKey, evt.target.value))}
+					dispatch(setFaktumVerdi(faktumKey, boolToString(evt.target.checked)))}
+				label={
+					<LabelMedHjelpetekst
+						id={faktumKey}
+						label={tekster.label}
+						hjelpetekst={tekster.hjelpetekst}
+					/>
+				}
 				feil={feil}
 			/>
 		);
@@ -43,4 +56,4 @@ export default connect((state: { faktum: FaktumState }, props: OwnProps) => {
 		faktum: state.faktum.faktum,
 		faktumKey: props.faktumKey
 	};
-})(injectIntl(FaktumTextarea));
+})(injectIntl(FaktumCheckbox));

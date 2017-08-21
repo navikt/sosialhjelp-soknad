@@ -3,9 +3,9 @@ import { Radio, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../reducer";
 import { setFaktumVerdi } from "../actions";
-import { DispatchProps } from "../../utils/types";
+import { DispatchProps } from "../types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import LabelMedHjelpetekst from "../../components/skjema/LabelMedHjelpetekst";
+import LabelMedHjelpetekst from "./LabelMedHjelpetekst";
 import { getFaktumRadioTekst } from "../utils";
 
 interface StateProps {

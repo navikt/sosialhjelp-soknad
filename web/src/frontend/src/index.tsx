@@ -3,24 +3,20 @@ import "babel-polyfill";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import registerServiceWorker from "./registerServiceWorker";
 
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import createBrowserHistory from "history/createBrowserHistory";
 import createSagaMiddleware from "redux-saga";
 
-import AppRouter from "./app/routers";
-import rootSaga from "./app/sagas";
-import AppReducer from "./app/reducers";
-import FaktumReducer from "./app/faktum/reducer";
+import App from "./app";
+import rootSaga from "./sagas";
+import FaktumReducer from "./skjema/faktum/reducer";
 import IntlProvider from "./intlProvider";
 import "./index.css";
 
-const history = createBrowserHistory();
-
 const rootReducer = combineReducers({
-	app: AppReducer,
 	faktum: FaktumReducer
 });
 
@@ -36,12 +32,14 @@ sagaMiddleware.run(rootSaga);
 ReactDOM.render(
 	<IntlProvider>
 		<Provider store={store}>
-			<AppRouter history={history} />
+			<BrowserRouter>
+				<App />
+			</BrowserRouter>
 		</Provider>
 	</IntlProvider>,
 	document.getElementById("root") as HTMLElement
 );
 
-export { store, history };
+export { store };
 
 registerServiceWorker();

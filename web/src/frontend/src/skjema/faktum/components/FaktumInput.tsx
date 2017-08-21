@@ -3,7 +3,7 @@ import { Input, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../reducer";
 import { setFaktumVerdi } from "../actions";
-import { DispatchProps } from "../../utils/types";
+import { DispatchProps } from "../types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getFaktumInputTekst } from "../utils";
 import "./FaktumInput.css";
@@ -22,7 +22,7 @@ interface OwnProps {
 class FaktumInput extends React.Component<
 	OwnProps & StateProps & DispatchProps & InjectedIntlProps,
 	{}
-	> {
+> {
 	render() {
 		const { faktumKey, disabled, feil, faktum, dispatch, intl } = this.props;
 		const tekster = getFaktumInputTekst(intl, faktumKey);

@@ -1,5 +1,5 @@
 export type FaktumMap = Map<string, any>;
-import { Reducer } from "../utils/types";
+import { Reducer } from "./types";
 import { ActionTypeKeys } from "./types";
 import { ActionTypes } from "./actions";
 

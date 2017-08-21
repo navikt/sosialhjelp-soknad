@@ -1,3 +1,5 @@
+export * from "../../redux/types";
+
 export enum ActionTypeKeys {
 	SET_FAKTUM_VERDI = "SET_FAKTUM_VERDI",
 	RESET_FAKTUM_VERDI = "RESET_FAKTUM_VERDI",
