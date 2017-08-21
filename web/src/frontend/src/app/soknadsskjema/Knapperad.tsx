@@ -34,10 +34,10 @@ class SkjemaKnapperad extends React.Component<Props, {}> {
 	render() {
 		return (
 			<div className="skjema-knapperad">
-				<Knapp type="hoved" onClick={this.gaVidere}>
+				<Knapp type="hoved" htmlType="button" onClick={this.gaVidere}>
 					Gå videre
 				</Knapp>
-				<Knapp type="standard" onClick={this.gaTilbake}>
+				<Knapp type="standard" htmlType="button" onClick={this.gaTilbake}>
 					Tilbake
 				</Knapp>
 				<a href="#" onClick={this.avbryt}>
