@@ -8,7 +8,7 @@
 		"express": "^4.15.4",
 		"nav-frontend-alertstriper": "^0.1.6",
 		"nav-frontend-grid": "^0.1.5",
-		"nav-frontend-hjelpetekst": "^0.2.8",
+		"nav-frontend-hjelpetekst": "^0.2.9",
 		"nav-frontend-ikoner-assets": "^0.2.5",
 		"nav-frontend-knapper": "^0.2.6",
 		"nav-frontend-lukknapp": "^0.1.6",
