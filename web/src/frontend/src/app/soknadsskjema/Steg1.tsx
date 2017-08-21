@@ -12,7 +12,6 @@ import FaktumRadio from "../faktum/components/FaktumRadio";
 import FaktumTextarea from "../faktum/components/FaktumTextarea";
 import FaktumSkjemagruppe from "../faktum/components/FaktumSkjemagruppe";
 import Underskjema from "../components/underskjema";
-import FaktumInput from "../faktum/components/FaktumInput";
 
 interface StateProps {
 	faktum: FaktumMap;
@@ -54,16 +53,16 @@ class Steg1 extends React.Component<
 									faktumKey="arbeid.dinsituasjon.student.true.heltid"
 									value="false"
 								/>
-								<FaktumInput
-									faktumKey="arbeid.dinsituasjon.student.beskrivelse"
-									value="false"
-								/>
 							</FaktumSkjemagruppe>
 						</Underskjema>
 						<FaktumCheckbox faktumKey="arbeid.dinsituasjon.annensituasjon" />
-						{faktumIsSelected(faktum.get("arbeid.dinsituasjon.annensituasjon"))
-							? <FaktumTextarea faktumKey="arbeid.dinsituasjon.annensituasjon.true.beskrivelse" />
-							: null}
+						<Underskjema
+							visible={faktumIsSelected(
+								faktum.get("arbeid.dinsituasjon.annensituasjon")
+							)}
+						>
+							<FaktumTextarea faktumKey="arbeid.dinsituasjon.annensituasjon.true.beskrivelse" />
+						</Underskjema>
 					</FaktumSkjemagruppe>
 				</Bolk>
 			</Steg>
