@@ -12,7 +12,7 @@ import createSagaMiddleware from "redux-saga";
 
 import App from "./app";
 import rootSaga from "./sagas";
-import FaktumReducer from "./skjema/faktum/reducer";
+import FaktumReducer from "./skjema/reducer";
 import IntlProvider from "./intlProvider";
 import "./index.css";
 

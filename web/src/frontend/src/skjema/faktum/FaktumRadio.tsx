@@ -1,51 +1,45 @@
 import * as React from "react";
-import { Checkbox, Feil } from "nav-frontend-skjema";
+import { Radio, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../reducer";
 import { setFaktumVerdi } from "../actions";
 import { DispatchProps } from "../types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import LabelMedHjelpetekst from "./LabelMedHjelpetekst";
-import {
-	getFaktumCheckboksTekst,
-	faktumIsSelected,
-	boolToString
-} from "../utils";
+import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
+import { getFaktumRadioTekst } from "../utils";
 
 interface StateProps {
 	faktum: FaktumMap;
 }
 
 interface OwnProps {
+	value: string;
 	faktumKey: string;
 	disabled?: boolean;
 	feil?: Feil;
 }
 
-class FaktumCheckbox extends React.Component<
+class FaktumRadio extends React.Component<
 	OwnProps & StateProps & DispatchProps & InjectedIntlProps,
 	{}
 > {
 	render() {
-		const { faktumKey, disabled, feil, faktum, dispatch, intl } = this.props;
-		const checked = faktumIsSelected(faktum.get(faktumKey));
-		const tekster = getFaktumCheckboksTekst(intl, faktumKey);
+		const { faktumKey, value, disabled, faktum, dispatch, intl } = this.props;
+		const tekster = getFaktumRadioTekst(intl, faktumKey, value);
 		return (
-			<Checkbox
+			<Radio
 				name={faktumKey}
-				checked={checked}
+				checked={faktum.get(faktumKey) === value}
 				disabled={disabled}
-				value={faktum.get(faktumKey)}
-				onChange={(evt: any) =>
-					dispatch(setFaktumVerdi(faktumKey, boolToString(evt.target.checked)))}
+				value={value}
+				onChange={(evt: any) => dispatch(setFaktumVerdi(faktumKey, value))}
 				label={
 					<LabelMedHjelpetekst
-						id={faktumKey}
+						id={`${faktumKey}.${value}`}
 						label={tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>
 				}
-				feil={feil}
 			/>
 		);
 	}
@@ -56,4 +50,4 @@ export default connect((state: { faktum: FaktumState }, props: OwnProps) => {
 		faktum: state.faktum.faktum,
 		faktumKey: props.faktumKey
 	};
-})(injectIntl(FaktumCheckbox));
+})(injectIntl(FaktumRadio));

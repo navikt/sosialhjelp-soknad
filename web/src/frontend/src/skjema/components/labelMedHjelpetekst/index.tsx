@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
-import { Infotekst } from "../../faktum/types";
+import { Infotekst } from "../../types";
 import "./labelMedHjelpetekst.css";
 
 interface Props {
