@@ -1,7 +1,12 @@
 import * as React from "react";
 import Steg1 from "./Steg1";
 import Steg2 from "./Steg2";
-import { Route } from "react-router";
+import Steg3 from "./Steg3";
+import Steg4 from "./Steg4";
+import Steg5 from "./Steg5";
+import Steg6 from "./Steg6";
+import Steg7 from "./Steg7";
+import { Route, Switch } from "react-router";
 import StegIndikator from "../components/stegIndikator";
 import Knapperad from "./Knapperad";
 import { finnStegFraLocation } from "./utils";
@@ -18,7 +23,7 @@ class Skjema extends React.Component<{ match: any; location: Location }, {}> {
 		const aktivtSteg = finnStegFraLocation(this.props.location);
 		const { match } = this.props;
 		return (
-			<form action="#" onSubmit={stopEvent}>
+			<form id="soknadsskjema" onSubmit={stopEvent}>
 				<StegIndikator
 					aktivtSteg={aktivtSteg}
 					steg={[
@@ -31,9 +36,16 @@ class Skjema extends React.Component<{ match: any; location: Location }, {}> {
 						{ tittel: "Vedlegg" }
 					]}
 				/>
-				<Route path={`${match.url}/steg1`} component={Steg1} />
-				<Route path={`${match.url}/steg2`} component={Steg2} />
-				<Knapperad />
+				<Switch>
+					<Route path={`${match.url}/steg1`} component={Steg1} />
+					<Route path={`${match.url}/steg2`} component={Steg2} />
+					<Route path={`${match.url}/steg3`} component={Steg3} />
+					<Route path={`${match.url}/steg4`} component={Steg4} />
+					<Route path={`${match.url}/steg5`} component={Steg5} />
+					<Route path={`${match.url}/steg6`} component={Steg6} />
+					<Route path={`${match.url}/steg7`} component={Steg7} />
+				</Switch>
+				<Knapperad aktivtSteg={aktivtSteg} />
 			</form>
 		);
 	}

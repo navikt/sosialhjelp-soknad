@@ -1,5 +1,5 @@
-import { ActionTypeKeys } from "./types";
 import {
+	ActionTypeKeys,
 	SetFaktumVerdiAction,
 	ResetFaktumVerdiAction,
 	FaktumValueType

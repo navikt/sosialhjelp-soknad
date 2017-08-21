@@ -21,8 +21,10 @@ const Bolk: React.StatelessComponent<BolkProps> = ({
 				: null}
 			{hjelpetekst
 				? <div className="gui-bolk__hjelpetekst">
-					<HjelpetekstAuto>{hjelpetekst}</HjelpetekstAuto>
-				</div>
+						<HjelpetekstAuto>
+							{hjelpetekst}
+						</HjelpetekstAuto>
+					</div>
 				: null}
 			<div className="gui-bolk__innhold">
 				{children}
