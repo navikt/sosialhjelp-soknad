@@ -1,0 +1,36 @@
+@import "../../styles/variables";
+
+@bakgrunn: #efefef;
+@ramme: @navGra20;
+
+.nivaTreSkjema {
+	padding-top: 0.8rem;
+	padding-bottom: 1rem;
+
+	&__boks {
+		// border: 1px solid @ramme;
+		border: none;
+		background-color: @bakgrunn;
+		padding-left: @skjemaMarg / 2;
+		padding-right: 2rem;
+		padding-top: 2rem;
+		padding-bottom: 2rem;
+		position: relative;
+	}
+
+	&__innhold:before {
+		content: '|';
+		height: 1rem;
+		width: 1rem;
+		font-size: 1rem;
+		// background-color: @bakgrunn;
+		// display: block;
+		position: absolute;
+		// transform: rotate(-45deg);
+		// transform-origin: 0 0;
+		border: none;
+		// box-sizing: border-box;
+		top: 0px;
+		left: 70px;
+	}
+}
