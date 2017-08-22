@@ -109,10 +109,10 @@ node {
 }
 
 if (isMasterBuild) {
-    stage("Deploy app til t1") {
+    stage("Deploy app til t6") {
         callback = "${env.BUILD_URL}input/Deploy/"
         node {
-            deploy = common.deployApp(application, releaseVersion, "t1", callback, author).key
+            deploy = common.deployApp(application, releaseVersion, "t6", callback, author).key
         }
 
         try {
@@ -126,10 +126,10 @@ if (isMasterBuild) {
             }
         }
     }
-//    stage("Deploy app til q1") {
+//    stage("Deploy app til q6") {
 //        callback = "${env.BUILD_URL}input/Deploy/"
 //        node {
-//            deploy = common.deployApp(application, releaseVersion, "q1", callback, author).key
+//            deploy = common.deployApp(application, releaseVersion, "q6", callback, author).key
 //        }
 //
 //        try {
