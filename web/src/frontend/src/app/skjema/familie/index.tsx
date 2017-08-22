@@ -1,5 +1,5 @@
 import * as React from "react";
-import Steg from "../../../../skjema/components/steg";
+import Steg from "../../../skjema/components/steg";
 import Sivilstatus from "./Sivilstatus";
 import Barn from "./Barn";
 import AndreBarn from "./AndreBarn";

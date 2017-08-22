@@ -1,13 +1,13 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../../../../skjema/reducer";
-import { DispatchProps } from "../../../../redux/types";
+import { FaktumState, FaktumMap } from "../../../skjema/reducer";
+import { DispatchProps } from "../../../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
-import Steg from "../../../../skjema/components/steg";
-import Bolk from "../../../../skjema/components/bolk";
-import FaktumTextarea from "../../../../skjema/faktum/FaktumTextarea";
-import FaktumSkjemagruppe from "../../../../skjema/faktum/FaktumSkjemagruppe";
+import Steg from "../../../skjema/components/steg";
+import Sporsmal from "../../../skjema/components/sporsmal";
+import FaktumTextarea from "../../../skjema/faktum/FaktumTextarea";
+import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
 
 interface StateProps {
 	faktum: FaktumMap;
@@ -21,7 +21,7 @@ class Begrunnelse extends React.Component<
 		const { intl } = this.props;
 		return (
 			<Steg tittel={intl.formatMessage({ id: "begrunnelsebolk.tittel" })}>
-				<Bolk>
+				<Sporsmal>
 					<FaktumSkjemagruppe
 						title={intl.formatMessage({
 							id: "begrunnelse.hvorfor"
@@ -29,8 +29,8 @@ class Begrunnelse extends React.Component<
 					>
 						<FaktumTextarea faktumKey="begrunnelse.hvorfor" />
 					</FaktumSkjemagruppe>
-				</Bolk>
-				<Bolk>
+				</Sporsmal>
+				<Sporsmal>
 					<FaktumSkjemagruppe
 						title={intl.formatMessage({
 							id: "begrunnelse.hva"
@@ -38,7 +38,7 @@ class Begrunnelse extends React.Component<
 					>
 						<FaktumTextarea faktumKey="begrunnelse.hva" />
 					</FaktumSkjemagruppe>
-				</Bolk>
+				</Sporsmal>
 			</Steg>
 		);
 	}

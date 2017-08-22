@@ -5,7 +5,7 @@ interface StegProps extends React.Props<any> {
 	tittel: string;
 }
 
-const Bolk: React.StatelessComponent<StegProps> = ({ tittel, children }) => {
+const Steg: React.StatelessComponent<StegProps> = ({ tittel, children }) => {
 	return (
 		<div className="gui-steg">
 			<h2 className="gui-steg__tittel">
@@ -16,4 +16,4 @@ const Bolk: React.StatelessComponent<StegProps> = ({ tittel, children }) => {
 	);
 };
 
-export default Bolk;
+export default Steg;

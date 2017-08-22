@@ -1,15 +1,15 @@
 import * as React from "react";
-import Bolk from "../../../../skjema/components/bolk";
-import Steg from "../../../../skjema/components/steg";
+import Sporsmal from "../../../skjema/components/sporsmal";
+import Steg from "../../../skjema/components/steg";
 import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../../../../skjema/reducer";
-import { DispatchProps } from "../../../../redux/types";
+import { FaktumState, FaktumMap } from "../../../skjema/reducer";
+import { DispatchProps } from "../../../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
-import FaktumCheckbox from "../../../../skjema/faktum/FaktumCheckbox";
-import FaktumRadio from "../../../../skjema/faktum/FaktumRadio";
-import FaktumSkjemagruppe from "../../../../skjema/faktum/FaktumSkjemagruppe";
-import Underskjema from "../../../../skjema/components/underskjema";
+import FaktumCheckbox from "../../../skjema/faktum/FaktumCheckbox";
+import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
+import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
+import Underskjema from "../../../skjema/components/underskjema";
 
 interface StateProps {
 	faktum: FaktumMap;
@@ -23,7 +23,7 @@ class Bosituasjon extends React.Component<
 		const { faktum, intl } = this.props;
 		return (
 			<Steg tittel="Bosituasjon">
-				<Bolk>
+				<Sporsmal>
 					<FaktumSkjemagruppe
 						title={intl.formatMessage({
 							id: "bosituasjonbolk.tittel"
@@ -50,7 +50,7 @@ class Bosituasjon extends React.Component<
 							</FaktumSkjemagruppe>
 						</Underskjema>
 					</FaktumSkjemagruppe>
-				</Bolk>
+				</Sporsmal>
 			</Steg>
 		);
 	}
