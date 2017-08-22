@@ -2,31 +2,31 @@ import * as React from "react";
 import "./bolk.css";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
 
-interface BolkProps extends React.Props<any> {
+interface Props extends React.Props<any> {
 	tittel?: string;
 	hjelpetekst?: string;
 }
 
-const Bolk: React.StatelessComponent<BolkProps> = ({
+const Bolk: React.StatelessComponent<Props> = ({
 	tittel,
 	children,
 	hjelpetekst
 }) => {
 	return (
-		<div className="gui-bolk">
+		<div className="gui-sporsmal">
 			{tittel
-				? <h3 className="gui-bolk__tittel">
+				? <h3 className="gui-sporsmal__tittel">
 						{tittel}
 					</h3>
 				: null}
 			{hjelpetekst
-				? <div className="gui-bolk__hjelpetekst">
+				? <div className="gui-sporsmal__hjelpetekst">
 						<HjelpetekstAuto>
 							{hjelpetekst}
 						</HjelpetekstAuto>
 					</div>
 				: null}
-			<div className="gui-bolk__innhold">
+			<div className="gui-sporsmal__innhold">
 				{children}
 			</div>
 		</div>
