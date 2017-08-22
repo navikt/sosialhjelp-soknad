@@ -7,7 +7,6 @@ import Skjema from "./skjema";
 
 class App extends React.Component<{}, {}> {
 	render() {
-		// const { match } = this.props;
 		return (
 			<div className="app-digisos">
 				<h1>
