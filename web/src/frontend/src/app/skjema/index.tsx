@@ -2,7 +2,7 @@ import * as React from "react";
 import Steg1 from "./steg/bostedKontakinfo";
 import Steg2 from "./steg/arbeidUtdanning";
 import Steg3 from "./steg/familie";
-import Steg4 from "./steg/hvorforSoke";
+import Steg4 from "./steg/begrunnelse";
 import Steg5 from "./steg/bosituasjon";
 import Steg6 from "./steg/inntektFormue";
 import Steg7 from "./steg/utgifterGjeld";
