@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./bolk.css";
+import "./sporsmal.css";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
 
 interface Props extends React.Props<any> {
@@ -7,7 +7,7 @@ interface Props extends React.Props<any> {
 	hjelpetekst?: string;
 }
 
-const Bolk: React.StatelessComponent<Props> = ({
+const Sporsmal: React.StatelessComponent<Props> = ({
 	tittel,
 	children,
 	hjelpetekst
@@ -33,4 +33,4 @@ const Bolk: React.StatelessComponent<Props> = ({
 	);
 };
 
-export default Bolk;
+export default Sporsmal;

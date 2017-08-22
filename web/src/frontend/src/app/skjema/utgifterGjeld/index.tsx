@@ -1,17 +1,17 @@
 import * as React from "react";
-import Bolk from "../../../../skjema/components/bolk";
-import Steg from "../../../../skjema/components/steg";
+import Sporsmal from "../../../skjema/components/sporsmal";
+import Steg from "../../../skjema/components/steg";
 import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../../../../skjema/reducer";
-import { DispatchProps } from "../../../../redux/types";
+import { FaktumState, FaktumMap } from "../../../skjema/reducer";
+import { DispatchProps } from "../../../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { faktumIsSelected } from "../../../../skjema/utils";
+import { faktumIsSelected } from "../../../skjema/utils";
 
-import FaktumCheckbox from "../../../../skjema/faktum/FaktumCheckbox";
-import FaktumRadio from "../../../../skjema/faktum/FaktumRadio";
-import FaktumTextarea from "../../../../skjema/faktum/FaktumTextarea";
-import FaktumSkjemagruppe from "../../../../skjema/faktum/FaktumSkjemagruppe";
-import Underskjema from "../../../../skjema/components/underskjema";
+import FaktumCheckbox from "../../../skjema/faktum/FaktumCheckbox";
+import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
+import FaktumTextarea from "../../../skjema/faktum/FaktumTextarea";
+import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
+import Underskjema from "../../../skjema/components/underskjema";
 
 interface StateProps {
 	faktum: FaktumMap;
@@ -25,7 +25,7 @@ class UtgifterGjeld extends React.Component<
 		const { faktum } = this.props;
 		return (
 			<Steg tittel="Utgifter og gjeld">
-				<Bolk>
+				<Sporsmal>
 					<FaktumSkjemagruppe title="Har du boutgifter?">
 						<FaktumRadio faktumKey="utgift.bo" value="false" />
 						<Underskjema visible={faktum.get("utgift.bo") === "false"}>
@@ -43,8 +43,8 @@ class UtgifterGjeld extends React.Component<
 						</Underskjema>
 						<FaktumRadio faktumKey="utgift.bo" value="true" />
 					</FaktumSkjemagruppe>
-				</Bolk>
-				<Bolk>
+				</Sporsmal>
+				<Sporsmal>
 					<FaktumSkjemagruppe title="Har du utgifter til barn?">
 						<FaktumRadio faktumKey="utgift.barn" value="false" />
 						<Underskjema visible={faktum.get("utgift.barn") === "false"}>
@@ -61,13 +61,13 @@ class UtgifterGjeld extends React.Component<
 						</Underskjema>
 						<FaktumRadio faktumKey="utgift.barn" value="true" />
 					</FaktumSkjemagruppe>
-				</Bolk>
-				<Bolk>
+				</Sporsmal>
+				<Sporsmal>
 					<FaktumSkjemagruppe title="Har du ekstrautgifter til helse?">
 						<FaktumRadio faktumKey="utgift.helse" value="false" />
 						<FaktumRadio faktumKey="utgift.helse" value="true" />
 					</FaktumSkjemagruppe>
-				</Bolk>
+				</Sporsmal>
 			</Steg>
 		);
 	}

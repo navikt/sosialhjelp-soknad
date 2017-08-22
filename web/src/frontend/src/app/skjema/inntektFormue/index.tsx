@@ -1,17 +1,17 @@
 import * as React from "react";
-import Bolk from "../../../../skjema/components/bolk";
-import Steg from "../../../../skjema/components/steg";
+import Sporsmal from "../../../skjema/components/sporsmal";
+import Steg from "../../../skjema/components/steg";
 import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../../../../skjema/reducer";
-import { DispatchProps } from "../../../../redux/types";
+import { FaktumState, FaktumMap } from "../../../skjema/reducer";
+import { DispatchProps } from "../../../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { faktumIsSelected } from "../../../../skjema/utils";
+import { faktumIsSelected } from "../../../skjema/utils";
 
-import FaktumCheckbox from "../../../../skjema/faktum/FaktumCheckbox";
-import FaktumRadio from "../../../../skjema/faktum/FaktumRadio";
-import FaktumTextarea from "../../../../skjema/faktum/FaktumTextarea";
-import FaktumSkjemagruppe from "../../../../skjema/faktum/FaktumSkjemagruppe";
-import Underskjema from "../../../../skjema/components/underskjema";
+import FaktumCheckbox from "../../../skjema/faktum/FaktumCheckbox";
+import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
+import FaktumTextarea from "../../../skjema/faktum/FaktumTextarea";
+import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
+import Underskjema from "../../../skjema/components/underskjema";
 
 interface StateProps {
 	faktum: FaktumMap;
@@ -25,13 +25,13 @@ class InntektFormue extends React.Component<
 		const { faktum } = this.props;
 		return (
 			<Steg tittel="Inntekt og formue">
-				<Bolk>
+				<Sporsmal>
 					<FaktumSkjemagruppe title="Mottar du ytelser fra NAV">
 						<FaktumRadio faktumKey="inntekt.ytelserNav" value="false" />
 						<FaktumRadio faktumKey="inntekt.ytelserNav" value="true" />
 					</FaktumSkjemagruppe>
-				</Bolk>
-				<Bolk>
+				</Sporsmal>
+				<Sporsmal>
 					<FaktumSkjemagruppe title="Har du søkt om ytelser i NAV osm ikke er ferdigbehandlet?">
 						<FaktumRadio
 							faktumKey="inntekt.ytelserNavUnderBehandling"
@@ -42,8 +42,8 @@ class InntektFormue extends React.Component<
 							value="true"
 						/>
 					</FaktumSkjemagruppe>
-				</Bolk>
-				<Bolk>
+				</Sporsmal>
+				<Sporsmal>
 					<FaktumSkjemagruppe title="Mottar du bostøtte?">
 						<FaktumRadio faktumKey="inntekt.bostotte" value="false" />
 						<Underskjema visible={faktum.get("inntekt.bostotte") === "false"}>
@@ -54,8 +54,8 @@ class InntektFormue extends React.Component<
 						</Underskjema>
 						<FaktumRadio faktumKey="inntekt.bostotte" value="true" />
 					</FaktumSkjemagruppe>
-				</Bolk>
-				<Bolk>
+				</Sporsmal>
+				<Sporsmal>
 					<FaktumSkjemagruppe title="Hva eier du?">
 						<FaktumRadio faktumKey="inntekt.eierVerdi" value="false" />
 						<Underskjema visible={faktum.get("inntekt.eierVerdi") === "false"}>
@@ -72,8 +72,8 @@ class InntektFormue extends React.Component<
 						</Underskjema>
 						<FaktumRadio faktumKey="inntekt.eierVerdi" value="true" />
 					</FaktumSkjemagruppe>
-				</Bolk>
-				<Bolk>
+				</Sporsmal>
+				<Sporsmal>
 					<FaktumSkjemagruppe title="Har du bankinnskudd eller annen sparing?">
 						<FaktumRadio faktumKey="inntekt.innskudd" value="false" />
 						<Underskjema visible={faktum.get("inntekt.innskudd") === "false"}>
@@ -90,8 +90,8 @@ class InntektFormue extends React.Component<
 						</Underskjema>
 						<FaktumRadio faktumKey="inntekt.innskudd" value="true" />
 					</FaktumSkjemagruppe>
-				</Bolk>
-				<Bolk>
+				</Sporsmal>
+				<Sporsmal>
 					<FaktumSkjemagruppe title="Har du de siste tre måneder mottatt noen form for utbetaling?">
 						<FaktumRadio faktumKey="inntekt.mottattUtbetaling" value="false" />
 						<Underskjema
@@ -111,7 +111,7 @@ class InntektFormue extends React.Component<
 						</Underskjema>
 						<FaktumRadio faktumKey="inntekt.mottattUtbetaling" value="true" />
 					</FaktumSkjemagruppe>
-				</Bolk>
+				</Sporsmal>
 			</Steg>
 		);
 	}

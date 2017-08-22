@@ -1,13 +1,13 @@
 import * as React from "react";
-import Bolk from "../../../../skjema/components/bolk";
+import Sporsmal from "../../../skjema/components/sporsmal";
 import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../../../../skjema/reducer";
-import { DispatchProps } from "../../../../redux/types";
+import { FaktumState, FaktumMap } from "../../../skjema/reducer";
+import { DispatchProps } from "../../../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
-import FaktumRadio from "../../../../skjema/faktum/FaktumRadio";
-import FaktumSkjemagruppe from "../../../../skjema/faktum/FaktumSkjemagruppe";
-import Underskjema from "../../../../skjema/components/underskjema";
+import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
+import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
+import Underskjema from "../../../skjema/components/underskjema";
 
 interface StateProps {
 	faktum: FaktumMap;
@@ -20,13 +20,13 @@ class Steg1 extends React.Component<
 	render() {
 		const { faktum, intl } = this.props;
 		return (
-			<Bolk>
+			<Sporsmal>
 				<FaktumSkjemagruppe
 					title={intl.formatMessage({
-						id: "familie.barn.sporsmal"
+						id: "familie.andrebarn.sporsmal"
 					})}
 				>
-					<FaktumRadio faktumKey="familie.barn" value="true" />
+					<FaktumRadio faktumKey="familie.andrebarn" value="true" />
 					<Underskjema visible={faktum.get("familie.barn") === "true"}>
 						<FaktumSkjemagruppe
 							title={intl.formatMessage({
@@ -36,9 +36,9 @@ class Steg1 extends React.Component<
 							<div className="skjemaelement">what</div>
 						</FaktumSkjemagruppe>
 					</Underskjema>
-					<FaktumRadio faktumKey="familie.barn" value="false" />
+					<FaktumRadio faktumKey="familie.andrebarn" value="false" />
 				</FaktumSkjemagruppe>
-			</Bolk>
+			</Sporsmal>
 		);
 	}
 }

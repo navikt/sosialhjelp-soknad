@@ -1,15 +1,18 @@
 import * as React from "react";
-import Steg1 from "./steg/bostedKontakinfo";
-import Steg2 from "./steg/arbeidUtdanning";
-import Steg3 from "./steg/familie";
-import Steg4 from "./steg/begrunnelse";
-import Steg5 from "./steg/bosituasjon";
-import Steg6 from "./steg/inntektFormue";
-import Steg7 from "./steg/utgifterGjeld";
+import { connect } from "react-redux";
+import { withRouter, RouterProps } from "react-router";
 import { Route, Switch } from "react-router";
+import Steg1 from "./bostedKontakinfo";
+import Steg2 from "./arbeidUtdanning";
+import Steg3 from "./familie";
+import Steg4 from "./begrunnelse";
+import Steg5 from "./bosituasjon";
+import Steg6 from "./inntektFormue";
+import Steg7 from "./utgifterGjeld";
 import StegIndikator from "../../skjema/components/stegIndikator";
-import Knapperad from "./components/knapperad";
+import Knapperad from "../../skjema/components/knapperad";
 import { finnStegFraLocation } from "./utils";
+import { gaTilbake, gaVidere, avbryt } from "./utils";
 
 import { Location } from "history";
 
@@ -18,15 +21,15 @@ const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.preventDefault();
 };
 
-interface SkjemaProps {
+interface Props {
 	match: any;
 	location: Location;
 }
 
-class Skjema extends React.Component<SkjemaProps, {}> {
+class Skjema extends React.Component<Props & RouterProps, {}> {
 	render() {
 		const aktivtSteg = finnStegFraLocation(this.props.location);
-		const { match } = this.props;
+		const { match, history } = this.props;
 		return (
 			<form id="soknadsskjema" onSubmit={stopEvent}>
 				<StegIndikator
@@ -51,10 +54,16 @@ class Skjema extends React.Component<SkjemaProps, {}> {
 					<Route path={`${match.url}/6`} component={Steg6} />
 					<Route path={`${match.url}/7`} component={Steg7} />
 				</Switch>
-				<Knapperad aktivtSteg={aktivtSteg} />
+				<Knapperad
+					gaVidere={() => gaVidere(aktivtSteg, history)}
+					gaTilbake={() => gaTilbake(aktivtSteg, history)}
+					avbryt={() => avbryt()}
+				/>
 			</form>
 		);
 	}
 }
 
-export default Skjema;
+export default connect((state: any, props: Props) => {
+	return props;
+})(withRouter(Skjema));
