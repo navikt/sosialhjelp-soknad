@@ -6,6 +6,12 @@ import {
 	FaktumInputTekst
 } from "./types";
 
+export const radioCheckKeys = (key: string) => ({
+	faktum: `${key}`,
+	sporsmal: `${key}.sporsmal`,
+	hjelpetekst: `${key}.hjelpetekst`
+});
+
 export function faktumIsSelected(value: string) {
 	return value === "true";
 }

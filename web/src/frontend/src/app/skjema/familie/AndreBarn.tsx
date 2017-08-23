@@ -15,15 +15,16 @@ interface StateProps {
 class AndreBarn extends React.Component<StateProps & DispatchProps, any> {
 	render() {
 		const { faktum } = this.props;
+		const FAKTUM = "familie.andrebarn";
 		return (
-			<Sporsmal sporsmalId="familie.andrebarn.sporsmal">
-				<FaktumRadio faktumKey="familie.andrebarn" value="true" />
-				<Underskjema visible={faktum.get("familie.barn") === "true"}>
-					<FaktumSkjemagruppe tittelId="familie.barn">
-						<div className="skjemaelement">what</div>
+			<Sporsmal sporsmalId={`${FAKTUM}.sporsmal`}>
+				<FaktumRadio faktumKey={FAKTUM} value="true" />
+				<Underskjema visible={faktum.get(FAKTUM) === "true"}>
+					<FaktumSkjemagruppe tittelId={`${FAKTUM}.true.sporsmal`}>
+						<div className="skjemaelement">TODO</div>
 					</FaktumSkjemagruppe>
 				</Underskjema>
-				<FaktumRadio faktumKey="familie.andrebarn" value="false" />
+				<FaktumRadio faktumKey={FAKTUM} value="false" />
 			</Sporsmal>
 		);
 	}

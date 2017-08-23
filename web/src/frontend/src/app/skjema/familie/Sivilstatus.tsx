@@ -2,6 +2,7 @@ import * as React from "react";
 import Sporsmal from "../../../skjema/components/sporsmal";
 import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../../../skjema/reducer";
+import { radioCheckKeys } from "../../../skjema/utils";
 import { DispatchProps } from "../../../redux/types";
 
 import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
@@ -15,18 +16,24 @@ interface StateProps {
 class Sivilstatus extends React.Component<StateProps & DispatchProps, any> {
 	render() {
 		const { faktum } = this.props;
+		const KEYS = {
+			...radioCheckKeys("familie.sivilstatus"),
+			gift: {
+				...radioCheckKeys("familie.sivilstatus.gift")
+			}
+		};
 		return (
-			<Sporsmal sporsmalId="familie.sivilstatus.sporsmal">
-				<FaktumRadio faktumKey="familie.sivilstatus" value="gift" />
-				<Underskjema visible={faktum.get("familie.sivilstatus") === "gift"}>
-					<FaktumSkjemagruppe tittelId="arbeid.dinsituasjon.student.true.heltid.sporsmal">
-						<div className="skjemaelement">what</div>
+			<Sporsmal sporsmalId={KEYS.sporsmal}>
+				<FaktumRadio faktumKey={KEYS.faktum} value="gift" />
+				<Underskjema visible={faktum.get(KEYS.faktum) === "gift"}>
+					<FaktumSkjemagruppe tittelId={KEYS.gift.sporsmal}>
+						<div className="skjemaelement">TODO</div>
 					</FaktumSkjemagruppe>
 				</Underskjema>
-				<FaktumRadio faktumKey="familie.sivilstatus" value="ugift" />
-				<FaktumRadio faktumKey="familie.sivilstatus" value="samboer" />
-				<FaktumRadio faktumKey="familie.sivilstatus" value="enke" />
-				<FaktumRadio faktumKey="familie.sivilstatus" value="skilt" />
+				<FaktumRadio faktumKey={KEYS.faktum} value="ugift" />
+				<FaktumRadio faktumKey={KEYS.faktum} value="samboer" />
+				<FaktumRadio faktumKey={KEYS.faktum} value="enke" />
+				<FaktumRadio faktumKey={KEYS.faktum} value="skilt" />
 			</Sporsmal>
 		);
 	}
