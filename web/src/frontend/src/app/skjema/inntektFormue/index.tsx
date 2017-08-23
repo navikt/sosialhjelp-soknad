@@ -22,13 +22,15 @@ class InntektFormue extends React.Component<
 	any
 > {
 	render() {
-		const { faktum } = this.props;
+		const { faktum, intl } = this.props;
 		return (
 			<Steg tittel="Inntekt og formue">
 				<Sporsmal>
-					<FaktumSkjemagruppe title="Mottar du ytelser fra NAV">
-						<FaktumRadio faktumKey="inntekt.ytelserNav" value="false" />
-						<FaktumRadio faktumKey="inntekt.ytelserNav" value="true" />
+					<FaktumSkjemagruppe
+						title={intl.formatMessage({ id: "inntekt.mottarytelser" })}
+					>
+						<FaktumRadio faktumKey="inntekt.mottarytelser" value="false" />
+						<FaktumRadio faktumKey="inntekt.mottarytelser" value="true" />
 					</FaktumSkjemagruppe>
 				</Sporsmal>
 				<Sporsmal>

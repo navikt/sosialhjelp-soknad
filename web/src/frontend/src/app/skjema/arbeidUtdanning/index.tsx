@@ -25,7 +25,7 @@ class Steg1 extends React.Component<
 		const { faktum, intl } = this.props;
 		return (
 			<Steg tittel="Arbeid og utdanning">
-				<Sporsmal hjelpetekst="Hjelpetekst om bosituasjon.">
+				<Sporsmal>
 					<FaktumSkjemagruppe
 						title={intl.formatMessage({
 							id: "arbeid.dinsituasjon.sporsmal"
