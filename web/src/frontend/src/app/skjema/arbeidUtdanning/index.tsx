@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../../../skjema/reducer";
 import { faktumIsSelected } from "../../../skjema/utils";
 import { DispatchProps } from "../../../redux/types";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
 import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
@@ -15,36 +14,29 @@ interface StateProps {
 	faktum: FaktumMap;
 }
 
-class Steg1 extends React.Component<
-	StateProps & DispatchProps & InjectedIntlProps,
-	any
-> {
+class Steg1 extends React.Component<StateProps & DispatchProps, any> {
 	render() {
-		const { faktum, intl } = this.props;
+		const { faktum } = this.props;
 		return (
-			<Steg tittel={intl.messages["arbeidbolk.tittel"]}>
-				<Sporsmal sporsmal={intl.messages["dinsituasjon.jobb.sporsmal"]}>
+			<Steg tittelId="arbeidbolk.tittel">
+				<Sporsmal sporsmalId="dinsituasjon.jobb.sporsmal">
 					<FaktumRadio faktumKey="dinsituasjon.jobb" value="true" />
 					<Underskjema
 						visible={faktumIsSelected(faktum.get("dinsituasjon.jobb"))}
 					>
-						<FaktumSkjemagruppe
-							title={intl.messages["dinsituasjon.jobb.true.sporsmal"]}
-						>
+						<FaktumSkjemagruppe tittelId="dinsituasjon.jobb.true.sporsmal">
 							<FaktumRadio faktumKey="dinsituasjon.jobb.true" value="heltid" />
 							<FaktumRadio faktumKey="dinsituasjon.jobb.true" value="deltid" />
 						</FaktumSkjemagruppe>
 					</Underskjema>
 					<FaktumRadio faktumKey="dinsituasjon.jobb" value="false" />
 				</Sporsmal>
-				<Sporsmal sporsmal={intl.messages["dinsituasjon.studerer.sporsmal"]}>
+				<Sporsmal sporsmalId="dinsituasjon.studerer.sporsmal">
 					<FaktumRadio faktumKey="dinsituasjon.studerer" value="true" />
 					<Underskjema
 						visible={faktumIsSelected(faktum.get("dinsituasjon.studerer"))}
 					>
-						<FaktumSkjemagruppe
-							title={intl.messages["dinsituasjon.studerer.true.sporsmal"]}
-						>
+						<FaktumSkjemagruppe tittelId="dinsituasjon.studerer.true.sporsmal">
 							<FaktumRadio
 								faktumKey="dinsituasjon.studerer.true"
 								value="heltid"
@@ -66,4 +58,4 @@ export default connect((state: { faktum: FaktumState }, props: any) => {
 	return {
 		faktum: state.faktum.faktum
 	};
-})(injectIntl(Steg1));
+})(Steg1);

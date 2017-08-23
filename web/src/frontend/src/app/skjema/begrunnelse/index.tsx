@@ -2,7 +2,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../../../skjema/reducer";
 import { DispatchProps } from "../../../redux/types";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import Steg from "../../../skjema/components/steg";
 import Sporsmal from "../../../skjema/components/sporsmal";
@@ -12,26 +11,14 @@ interface StateProps {
 	faktum: FaktumMap;
 }
 
-class Begrunnelse extends React.Component<
-	StateProps & DispatchProps & InjectedIntlProps,
-	{}
-> {
+class Begrunnelse extends React.Component<StateProps & DispatchProps, {}> {
 	render() {
-		const { intl } = this.props;
 		return (
-			<Steg tittel={intl.formatMessage({ id: "begrunnelsebolk.tittel" })}>
-				<Sporsmal
-					sporsmal={intl.formatMessage({
-						id: "begrunnelse.hvorfor"
-					})}
-				>
+			<Steg tittelId="begrunnelsebolk.tittel">
+				<Sporsmal sporsmalId="begrunnelse.hvorfor">
 					<FaktumTextarea faktumKey="begrunnelse.hvorfor" />
 				</Sporsmal>
-				<Sporsmal
-					sporsmal={intl.formatMessage({
-						id: "begrunnelse.hva"
-					})}
-				>
+				<Sporsmal sporsmalId="begrunnelse.hva">
 					<FaktumTextarea faktumKey="begrunnelse.hva" />
 				</Sporsmal>
 			</Steg>
@@ -43,4 +30,4 @@ export default connect((state: { faktum: FaktumState }, props: any) => {
 	return {
 		faktum: state.faktum.faktum
 	};
-})(injectIntl(Begrunnelse));
+})(Begrunnelse);

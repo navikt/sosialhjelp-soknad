@@ -7,7 +7,7 @@ import AndreBarn from "./AndreBarn";
 class Bosted extends React.Component<{}, {}> {
 	render() {
 		return (
-			<Steg tittel="Familiesituasjon">
+			<Steg tittelId="Familiesituasjon">
 				<Sivilstatus />
 				<Barn />
 				<AndreBarn />

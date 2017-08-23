@@ -24,11 +24,11 @@ class UtgifterGjeld extends React.Component<
 	render() {
 		const { faktum } = this.props;
 		return (
-			<Steg tittel="Utgifter og gjeld">
-				<Sporsmal sporsmal="Har du boutgifter?">
+			<Steg tittelId="Utgifter og gjeld">
+				<Sporsmal sporsmalId="Har du boutgifter?">
 					<FaktumRadio faktumKey="utgift.bo" value="false" />
 					<Underskjema visible={faktum.get("utgift.bo") === "false"}>
-						<FaktumSkjemagruppe title="Hvilken utgifter er det?">
+						<FaktumSkjemagruppe tittelId="Hvilken utgifter er det?">
 							<FaktumCheckbox faktumKey="utgift.bo.false.husleie" />
 							<FaktumCheckbox faktumKey="utgift.bo.false.strom" />
 							<FaktumCheckbox faktumKey="utgift.bo.false.kommunale" />
@@ -42,10 +42,10 @@ class UtgifterGjeld extends React.Component<
 					</Underskjema>
 					<FaktumRadio faktumKey="utgift.bo" value="true" />
 				</Sporsmal>
-				<Sporsmal sporsmal="Har du utgifter til barn?">
+				<Sporsmal sporsmalId="Har du utgifter til barn?">
 					<FaktumRadio faktumKey="utgift.barn" value="false" />
 					<Underskjema visible={faktum.get("utgift.barn") === "false"}>
-						<FaktumSkjemagruppe title="Hvilken utgifter er det?">
+						<FaktumSkjemagruppe tittelId="Hvilken utgifter er det?">
 							<FaktumCheckbox faktumKey="utgift.barn.false.fritidsaktivitet" />
 							<FaktumCheckbox faktumKey="utgift.barn.false.barnehage" />
 							<FaktumCheckbox faktumKey="utgift.barn.false.tannbehandling" />
@@ -58,7 +58,7 @@ class UtgifterGjeld extends React.Component<
 					</Underskjema>
 					<FaktumRadio faktumKey="utgift.barn" value="true" />
 				</Sporsmal>
-				<Sporsmal sporsmal="Har du ekstrautgifter til helse?">
+				<Sporsmal sporsmalId="Har du ekstrautgifter til helse?">
 					<FaktumRadio faktumKey="utgift.helse" value="false" />
 					<FaktumRadio faktumKey="utgift.helse" value="true" />
 				</Sporsmal>

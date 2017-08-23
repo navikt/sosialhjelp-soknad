@@ -1,22 +1,24 @@
 import * as React from "react";
 import "./sporsmal.css";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
+import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 
 interface Props extends React.Props<any> {
-	sporsmal: string;
+	sporsmalId: string;
 	hjelpetekst?: string;
 }
 
-const Sporsmal: React.StatelessComponent<Props> = ({
+const Sporsmal: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	children,
-	sporsmal,
-	hjelpetekst
+	sporsmalId,
+	hjelpetekst,
+	intl
 }) => {
 	return (
 		<div className="skjema-sporsmal">
 			<fieldset>
 				<legend>
-					{sporsmal}
+					<FormattedMessage id={sporsmalId} />
 				</legend>
 				{hjelpetekst
 					? <div className="skjema-sporsmal__hjelpetekst">
@@ -33,4 +35,4 @@ const Sporsmal: React.StatelessComponent<Props> = ({
 	);
 };
 
-export default Sporsmal;
+export default injectIntl(Sporsmal);

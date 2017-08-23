@@ -1,26 +1,29 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { SkjemaGruppe, SkjemagruppeProps } from "nav-frontend-skjema";
+import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
 import "./faktumSkjemagruppe.css";
 
-interface Props extends SkjemagruppeProps {
+interface Props {
+	tittelId: string;
+	feil?: Feil;
 	visible?: boolean;
-	titleKey?: string;
+	children: React.ReactNode;
 }
 
 const FaktumSkjemagruppe: React.StatelessComponent<Props> = (
 	props: Props & InjectedIntlProps
 ) => {
-	const { visible, intl, ...rest } = props;
-	if (props.visible === false) {
+	const { visible, tittelId, intl, feil, children } = props;
+	if (visible === false) {
 		return null;
 	}
+	const tittel = intl.formatMessage({ id: tittelId });
 	return (
 		<fieldset className="faktumSkjemagruppe">
 			<legend className="invisible">
-				{props.title}
+				{tittel}
 			</legend>
-			<SkjemaGruppe {...rest} />
+			<SkjemaGruppe title={tittel} feil={feil} children={children} />
 		</fieldset>
 	);
 };

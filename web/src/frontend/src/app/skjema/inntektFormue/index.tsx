@@ -4,7 +4,6 @@ import Steg from "../../../skjema/components/steg";
 import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../../../skjema/reducer";
 import { DispatchProps } from "../../../redux/types";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 import { faktumIsSelected } from "../../../skjema/utils";
 
 import FaktumCheckbox from "../../../skjema/faktum/FaktumCheckbox";
@@ -17,21 +16,16 @@ interface StateProps {
 	faktum: FaktumMap;
 }
 
-class InntektFormue extends React.Component<
-	StateProps & DispatchProps & InjectedIntlProps,
-	any
-> {
+class InntektFormue extends React.Component<StateProps & DispatchProps, any> {
 	render() {
-		const { faktum, intl } = this.props;
+		const { faktum } = this.props;
 		return (
-			<Steg tittel="Inntekt og formue">
-				<Sporsmal
-					sporsmal={intl.formatMessage({ id: "inntekt.mottarytelser" })}
-				>
+			<Steg tittelId="Inntekt og formue">
+				<Sporsmal sporsmalId="inntekt.mottarytelser">
 					<FaktumRadio faktumKey="inntekt.mottarytelser" value="false" />
 					<FaktumRadio faktumKey="inntekt.mottarytelser" value="true" />
 				</Sporsmal>
-				<Sporsmal sporsmal="Har du søkt om ytelser i NAV osm ikke er ferdigbehandlet?">
+				<Sporsmal sporsmalId="Har du søkt om ytelser i NAV osm ikke er ferdigbehandlet?">
 					<FaktumRadio
 						faktumKey="inntekt.ytelserNavUnderBehandling"
 						value="false"
@@ -41,20 +35,20 @@ class InntektFormue extends React.Component<
 						value="true"
 					/>
 				</Sporsmal>
-				<Sporsmal sporsmal="Mottar du bostøtte?">
+				<Sporsmal sporsmalId="Mottar du bostøtte?">
 					<FaktumRadio faktumKey="inntekt.bostotte" value="false" />
 					<Underskjema visible={faktum.get("inntekt.bostotte") === "false"}>
-						<FaktumSkjemagruppe title="Hvilken støtte mottar du?">
+						<FaktumSkjemagruppe tittelId="Hvilken støtte mottar du?">
 							<FaktumCheckbox faktumKey="inntekt.bostotte.false.husbanken" />
 							<FaktumCheckbox faktumKey="inntekt.bostotte.false.kommunalt" />
 						</FaktumSkjemagruppe>
 					</Underskjema>
 					<FaktumRadio faktumKey="inntekt.bostotte" value="true" />
 				</Sporsmal>
-				<Sporsmal sporsmal="Hva eier du?">
+				<Sporsmal sporsmalId="Hva eier du?">
 					<FaktumRadio faktumKey="inntekt.eierVerdi" value="false" />
 					<Underskjema visible={faktum.get("inntekt.eierVerdi") === "false"}>
-						<FaktumSkjemagruppe title="Hvilken støtte mottar du?">
+						<FaktumSkjemagruppe tittelId="Hvilken støtte mottar du?">
 							<FaktumCheckbox faktumKey="inntekt.eierVerdi.false.bolig" />
 							<FaktumCheckbox faktumKey="inntekt.eierVerdi.false.campingvogn" />
 							<FaktumCheckbox faktumKey="inntekt.eierVerdi.false.kjoretoy" />
@@ -67,10 +61,10 @@ class InntektFormue extends React.Component<
 					</Underskjema>
 					<FaktumRadio faktumKey="inntekt.eierVerdi" value="true" />
 				</Sporsmal>
-				<Sporsmal sporsmal="Har du bankinnskudd eller annen sparing?">
+				<Sporsmal sporsmalId="Har du bankinnskudd eller annen sparing?">
 					<FaktumRadio faktumKey="inntekt.innskudd" value="false" />
 					<Underskjema visible={faktum.get("inntekt.innskudd") === "false"}>
-						<FaktumSkjemagruppe title="Spesifiser">
+						<FaktumSkjemagruppe tittelId="Spesifiser">
 							<FaktumCheckbox faktumKey="inntekt.innskudd.false.brukskonto" />
 							<FaktumCheckbox faktumKey="inntekt.innskudd.false.sparekonto" />
 							<FaktumCheckbox faktumKey="inntekt.innskudd.false.livsforsikring" />
@@ -83,12 +77,12 @@ class InntektFormue extends React.Component<
 					</Underskjema>
 					<FaktumRadio faktumKey="inntekt.innskudd" value="true" />
 				</Sporsmal>
-				<Sporsmal sporsmal="Har du de siste tre måneder mottatt noen form for utbetaling?">
+				<Sporsmal sporsmalId="Har du de siste tre måneder mottatt noen form for utbetaling?">
 					<FaktumRadio faktumKey="inntekt.mottattUtbetaling" value="false" />
 					<Underskjema
 						visible={faktum.get("inntekt.mottattUtbetaling") === "false"}
 					>
-						<FaktumSkjemagruppe title="Spesifiser">
+						<FaktumSkjemagruppe tittelId="Spesifiser">
 							<FaktumCheckbox faktumKey="inntekt.mottattUtbetaling.false.utbytte" />
 							<FaktumCheckbox faktumKey="inntekt.mottattUtbetaling.false.salg" />
 							<FaktumCheckbox faktumKey="inntekt.mottattUtbetaling.false.forsikringsutbetalinger" />
@@ -111,4 +105,4 @@ export default connect((state: { faktum: FaktumState }, props: any) => {
 	return {
 		faktum: state.faktum.faktum
 	};
-})(injectIntl(InntektFormue));
+})(InntektFormue);
