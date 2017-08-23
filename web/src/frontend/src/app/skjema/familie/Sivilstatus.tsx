@@ -3,7 +3,6 @@ import Sporsmal from "../../../skjema/components/sporsmal";
 import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../../../skjema/reducer";
 import { DispatchProps } from "../../../redux/types";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
 import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
@@ -13,34 +12,21 @@ interface StateProps {
 	faktum: FaktumMap;
 }
 
-class Steg1 extends React.Component<
-	StateProps & DispatchProps & InjectedIntlProps,
-	any
-> {
+class Sivilstatus extends React.Component<StateProps & DispatchProps, any> {
 	render() {
-		const { faktum, intl } = this.props;
+		const { faktum } = this.props;
 		return (
-			<Sporsmal>
-				<FaktumSkjemagruppe
-					title={intl.formatMessage({
-						id: "familie.sivilstatus.sporsmal"
-					})}
-				>
-					<FaktumRadio faktumKey="familie.sivilstatus" value="gift" />
-					<Underskjema visible={faktum.get("familie.sivilstatus") === "gift"}>
-						<FaktumSkjemagruppe
-							title={intl.formatMessage({
-								id: "arbeid.dinsituasjon.student.true.heltid.sporsmal"
-							})}
-						>
-							<div className="skjemaelement">what</div>
-						</FaktumSkjemagruppe>
-					</Underskjema>
-					<FaktumRadio faktumKey="familie.sivilstatus" value="ugift" />
-					<FaktumRadio faktumKey="familie.sivilstatus" value="samboer" />
-					<FaktumRadio faktumKey="familie.sivilstatus" value="enke" />
-					<FaktumRadio faktumKey="familie.sivilstatus" value="skilt" />
-				</FaktumSkjemagruppe>
+			<Sporsmal sporsmalId="familie.sivilstatus.sporsmal">
+				<FaktumRadio faktumKey="familie.sivilstatus" value="gift" />
+				<Underskjema visible={faktum.get("familie.sivilstatus") === "gift"}>
+					<FaktumSkjemagruppe tittelId="arbeid.dinsituasjon.student.true.heltid.sporsmal">
+						<div className="skjemaelement">what</div>
+					</FaktumSkjemagruppe>
+				</Underskjema>
+				<FaktumRadio faktumKey="familie.sivilstatus" value="ugift" />
+				<FaktumRadio faktumKey="familie.sivilstatus" value="samboer" />
+				<FaktumRadio faktumKey="familie.sivilstatus" value="enke" />
+				<FaktumRadio faktumKey="familie.sivilstatus" value="skilt" />
 			</Sporsmal>
 		);
 	}
@@ -50,4 +36,4 @@ export default connect((state: { faktum: FaktumState }, props: any) => {
 	return {
 		faktum: state.faktum.faktum
 	};
-})(injectIntl(Steg1));
+})(Sivilstatus);

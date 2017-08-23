@@ -1,19 +1,25 @@
 import * as React from "react";
 import "./steg.css";
+import { injectIntl, InjectedIntlProps } from "react-intl";
+import { getIntlTextOrKey } from "../../utils";
 
 interface StegProps extends React.Props<any> {
-	tittel: string;
+	tittelId: string;
 }
 
-const Steg: React.StatelessComponent<StegProps> = ({ tittel, children }) => {
+const Steg: React.StatelessComponent<StegProps & InjectedIntlProps> = ({
+	tittelId,
+	intl,
+	children
+}) => {
 	return (
-		<div className="gui-steg">
-			<h2 className="gui-steg__tittel">
-				{tittel}
+		<div className="skjema-steg">
+			<h2 className="skjema-steg__tittel">
+				{getIntlTextOrKey(intl, tittelId)}
 			</h2>
 			{children}
 		</div>
 	);
 };
 
-export default Steg;
+export default injectIntl(Steg);
