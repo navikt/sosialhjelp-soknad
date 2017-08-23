@@ -1,19 +1,13 @@
 import * as React from "react";
 import Sporsmal from "../../../skjema/components/sporsmal";
-import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../../../skjema/reducer";
+import { FaktumComponentProps } from "../../../skjema/reducer";
 import { radioCheckKeys } from "../../../skjema/utils";
-import { DispatchProps } from "../../../redux/types";
 
 import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
 import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
 import Underskjema from "../../../skjema/components/underskjema";
 
-interface StateProps {
-	faktum: FaktumMap;
-}
-
-class Barn extends React.Component<StateProps & DispatchProps, any> {
+class Barn extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { faktum } = this.props;
 		const barn = radioCheckKeys("familie.barn");
@@ -32,8 +26,4 @@ class Barn extends React.Component<StateProps & DispatchProps, any> {
 	}
 }
 
-export default connect((state: { faktum: FaktumState }, props: any) => {
-	return {
-		faktum: state.faktum.faktum
-	};
-})(Barn);
+export default Barn;

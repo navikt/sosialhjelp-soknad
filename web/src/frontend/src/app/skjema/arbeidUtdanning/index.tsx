@@ -1,19 +1,11 @@
 import * as React from "react";
 import Steg from "../../../skjema/components/steg";
 import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../../../skjema/reducer";
-import { DispatchProps } from "../../../redux/types";
+import { FaktumComponentProps, FaktumState } from "../../../skjema/reducer";
 import Jobb from "./Jobb";
 import Studie from "./Studie";
 
-interface StateProps {
-	faktum: FaktumMap;
-}
-
-class ArbeidOgUtdanning extends React.Component<
-	StateProps & DispatchProps,
-	any
-> {
+class ArbeidOgUtdanning extends React.Component<FaktumComponentProps, any> {
 	render() {
 		const { faktum } = this.props;
 		return (

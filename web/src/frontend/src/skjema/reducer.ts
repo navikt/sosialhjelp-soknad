@@ -8,6 +8,10 @@ export interface FaktumState {
 	faktumTekst?: any;
 }
 
+export interface FaktumComponentProps {
+	faktum: FaktumMap;
+}
+
 const defaultFaktumMap: FaktumMap = new Map();
 defaultFaktumMap.set("arbeid.dinsituasjon.jobb", true);
 
