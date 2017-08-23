@@ -129,6 +129,7 @@
     "yargs": "^3.13.0"
   },
   "scripts": {
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "gulp-prod": "gulp --prod"
   }
 }

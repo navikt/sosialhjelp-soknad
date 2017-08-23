@@ -109,7 +109,7 @@ node {
 
         stage('Build') {
             try {
-                sh "npm run gulp build"
+                sh "npm run gulp-prod"
             } catch (Exception e) {
                 notifyFailed("Bygging av JS feilet", e, env.BUILD_URL)
             }
