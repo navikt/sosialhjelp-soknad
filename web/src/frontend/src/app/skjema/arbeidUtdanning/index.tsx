@@ -7,9 +7,7 @@ import { faktumIsSelected } from "../../../skjema/utils";
 import { DispatchProps } from "../../../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
-import FaktumCheckbox from "../../../skjema/faktum/FaktumCheckbox";
 import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
-import FaktumTextarea from "../../../skjema/faktum/FaktumTextarea";
 import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
 import Underskjema from "../../../skjema/components/underskjema";
 
@@ -22,46 +20,46 @@ class Steg1 extends React.Component<
 	any
 > {
 	render() {
-		const { faktum, intl } = this.props;
+		const { faktum } = this.props;
 		return (
 			<Steg tittel="Arbeid og utdanning">
-				<Sporsmal
-					sporsmal={intl.formatMessage({
-						id: "arbeid.dinsituasjon.sporsmal"
-					})}
-				>
-					<FaktumCheckbox faktumKey="arbeid.dinsituasjon.arbeidsledig" />
-					<FaktumCheckbox faktumKey="arbeid.dinsituasjon.jobb" />
-					<FaktumCheckbox faktumKey="arbeid.dinsituasjon.student" />
+				<Sporsmal sporsmal="Er du i jobb?">
+					<FaktumRadio faktumKey="arbeid.dinsituasjon.jobb" value="true" />
 					<Underskjema
-						visible={faktumIsSelected(
-							faktum.get("arbeid.dinsituasjon.student")
-						)}
+						visible={faktumIsSelected(faktum.get("arbeid.dinsituasjon.jobb"))}
 					>
-						<FaktumSkjemagruppe
-							visible={faktum.get("arbeid.dinsituasjon.student") === "true"}
-							title={intl.formatMessage({
-								id: "arbeid.dinsituasjon.student.true.heltid.sporsmal"
-							})}
-						>
+						<FaktumSkjemagruppe title="Jobber du heltid eller deltid?">
 							<FaktumRadio
-								faktumKey="arbeid.dinsituasjon.student.true.heltid"
-								value="true"
+								faktumKey="arbeid.dinsituasjon.jobb.true"
+								value="heltid"
 							/>
 							<FaktumRadio
-								faktumKey="arbeid.dinsituasjon.student.true.heltid"
-								value="false"
+								faktumKey="arbeid.dinsituasjon.jobb.true"
+								value="deltid"
 							/>
 						</FaktumSkjemagruppe>
 					</Underskjema>
-					<FaktumCheckbox faktumKey="arbeid.dinsituasjon.annensituasjon" />
+					<FaktumRadio faktumKey="arbeid.dinsituasjon.jobb" value="false" />
+				</Sporsmal>
+				<Sporsmal sporsmal="Studerer du?">
+					<FaktumRadio faktumKey="arbeid.dinsituasjon.studerer" value="true" />
 					<Underskjema
 						visible={faktumIsSelected(
-							faktum.get("arbeid.dinsituasjon.annensituasjon")
+							faktum.get("arbeid.dinsituasjon.studerer")
 						)}
 					>
-						<FaktumTextarea faktumKey="arbeid.dinsituasjon.annensituasjon.true.beskrivelse" />
+						<FaktumSkjemagruppe title="Studerer du heltid eller deltid?">
+							<FaktumRadio
+								faktumKey="arbeid.dinsituasjon.studerer.true"
+								value="heltid"
+							/>
+							<FaktumRadio
+								faktumKey="arbeid.dinsituasjon.studerer.true"
+								value="deltid"
+							/>
+						</FaktumSkjemagruppe>
 					</Underskjema>
+					<FaktumRadio faktumKey="arbeid.dinsituasjon.studerer" value="false" />
 				</Sporsmal>
 			</Steg>
 		);
