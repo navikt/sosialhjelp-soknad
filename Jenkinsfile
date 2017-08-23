@@ -101,7 +101,7 @@ node {
 
         stage('Test') {
             try {
-                sh "gulp test"
+                sh "npm run gulp test"
             } catch (Exception e) {
                 notifyFailed("Tester feilet", e, env.BUILD_URL)
             }
@@ -109,7 +109,7 @@ node {
 
         stage('Build') {
             try {
-                sh "gulp build"
+                sh "npm run gulp build"
             } catch (Exception e) {
                 notifyFailed("Bygging av JS feilet", e, env.BUILD_URL)
             }
