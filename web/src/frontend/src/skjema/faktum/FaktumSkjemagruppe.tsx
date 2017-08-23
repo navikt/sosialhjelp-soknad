@@ -1,6 +1,7 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
+import { getIntlTextOrKey } from "../utils";
 import "./faktumSkjemagruppe.css";
 
 interface Props {
@@ -17,7 +18,7 @@ const FaktumSkjemagruppe: React.StatelessComponent<Props> = (
 	if (visible === false) {
 		return null;
 	}
-	const tittel = intl.formatMessage({ id: tittelId });
+	const tittel = getIntlTextOrKey(intl, tittelId);
 	return (
 		<fieldset className="faktumSkjemagruppe">
 			<legend className="invisible">
