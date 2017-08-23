@@ -16,7 +16,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const bosituasjon = radioCheckKeys("bosituasjon");
 		const annen = radioCheckKeys("bosituasjon.annet.true");
 		return (
-			<Steg tittelId="bosituasjonboll.tittel">
+			<Steg tittelId="bosituasjonbolk.tittel">
 				<Sporsmal sporsmalId={bosituasjon.sporsmal}>
 					<FaktumRadio faktumKey={bosituasjon.faktum} value="eier" />
 					<FaktumRadio faktumKey={bosituasjon.faktum} value="leierprivat" />

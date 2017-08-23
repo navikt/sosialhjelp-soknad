@@ -15,11 +15,17 @@ class Begrunnelse extends React.Component<StateProps & DispatchProps, {}> {
 	render() {
 		return (
 			<Steg tittelId="begrunnelsebolk.tittel">
-				<Sporsmal sporsmalId="begrunnelse.hvorfor">
-					<FaktumTextarea faktumKey="begrunnelse.hvorfor" />
+				<Sporsmal sporsmalId="begrunnelse.hvorfor.sporsmal">
+					<FaktumTextarea
+						faktumKey="begrunnelse.hvorfor"
+						labelId="begrunnelse.hvorfor.info"
+					/>
 				</Sporsmal>
-				<Sporsmal sporsmalId="begrunnelse.hva">
-					<FaktumTextarea faktumKey="begrunnelse.hva" />
+				<Sporsmal sporsmalId="begrunnelse.hva.sporsmal">
+					<FaktumTextarea
+						faktumKey="begrunnelse.hva"
+						labelId="begrunnelse.hva.info"
+					/>
 				</Sporsmal>
 			</Steg>
 		);

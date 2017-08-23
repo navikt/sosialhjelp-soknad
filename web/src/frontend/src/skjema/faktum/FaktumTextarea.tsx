@@ -5,7 +5,7 @@ import { FaktumState, FaktumMap } from "../reducer";
 import { setFaktumVerdi } from "../actions";
 import { DispatchProps } from "../types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getFaktumTextareaTekst } from "../utils";
+import { getFaktumTextareaTekst, getIntlTextOrKey } from "../utils";
 
 interface StateProps {
 	faktum: FaktumMap;
@@ -13,6 +13,7 @@ interface StateProps {
 
 interface OwnProps {
 	faktumKey: string;
+	labelId?: string;
 	disabled?: boolean;
 	feil?: Feil;
 }
@@ -22,11 +23,19 @@ class FaktumTextarea extends React.Component<
 	{}
 > {
 	render() {
-		const { faktumKey, disabled, feil, faktum, dispatch, intl } = this.props;
+		const {
+			faktumKey,
+			labelId,
+			disabled,
+			feil,
+			faktum,
+			dispatch,
+			intl
+		} = this.props;
 		const tekster = getFaktumTextareaTekst(intl, faktumKey);
 		return (
 			<Textarea
-				label={tekster.label}
+				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
 				value={faktum.get(faktumKey) || ""}
 				name={faktumKey}
 				disabled={disabled}
