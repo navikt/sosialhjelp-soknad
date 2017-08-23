@@ -20,46 +20,42 @@ class Steg1 extends React.Component<
 	any
 > {
 	render() {
-		const { faktum } = this.props;
+		const { faktum, intl } = this.props;
 		return (
-			<Steg tittel="Arbeid og utdanning">
-				<Sporsmal sporsmal="Er du i jobb?">
-					<FaktumRadio faktumKey="arbeid.dinsituasjon.jobb" value="true" />
+			<Steg tittel={intl.messages["arbeidbolk.tittel"]}>
+				<Sporsmal sporsmal={intl.messages["dinsituasjon.jobb.sporsmal"]}>
+					<FaktumRadio faktumKey="dinsituasjon.jobb" value="true" />
 					<Underskjema
-						visible={faktumIsSelected(faktum.get("arbeid.dinsituasjon.jobb"))}
+						visible={faktumIsSelected(faktum.get("dinsituasjon.jobb"))}
 					>
-						<FaktumSkjemagruppe title="Jobber du heltid eller deltid?">
-							<FaktumRadio
-								faktumKey="arbeid.dinsituasjon.jobb.true"
-								value="heltid"
-							/>
-							<FaktumRadio
-								faktumKey="arbeid.dinsituasjon.jobb.true"
-								value="deltid"
-							/>
+						<FaktumSkjemagruppe
+							title={intl.messages["dinsituasjon.jobb.true.sporsmal"]}
+						>
+							<FaktumRadio faktumKey="dinsituasjon.jobb.true" value="heltid" />
+							<FaktumRadio faktumKey="dinsituasjon.jobb.true" value="deltid" />
 						</FaktumSkjemagruppe>
 					</Underskjema>
-					<FaktumRadio faktumKey="arbeid.dinsituasjon.jobb" value="false" />
+					<FaktumRadio faktumKey="dinsituasjon.jobb" value="false" />
 				</Sporsmal>
-				<Sporsmal sporsmal="Studerer du?">
-					<FaktumRadio faktumKey="arbeid.dinsituasjon.studerer" value="true" />
+				<Sporsmal sporsmal={intl.messages["dinsituasjon.studerer.sporsmal"]}>
+					<FaktumRadio faktumKey="dinsituasjon.studerer" value="true" />
 					<Underskjema
-						visible={faktumIsSelected(
-							faktum.get("arbeid.dinsituasjon.studerer")
-						)}
+						visible={faktumIsSelected(faktum.get("dinsituasjon.studerer"))}
 					>
-						<FaktumSkjemagruppe title="Studerer du heltid eller deltid?">
+						<FaktumSkjemagruppe
+							title={intl.messages["dinsituasjon.studerer.true.sporsmal"]}
+						>
 							<FaktumRadio
-								faktumKey="arbeid.dinsituasjon.studerer.true"
+								faktumKey="dinsituasjon.studerer.true"
 								value="heltid"
 							/>
 							<FaktumRadio
-								faktumKey="arbeid.dinsituasjon.studerer.true"
+								faktumKey="dinsituasjon.studerer.true"
 								value="deltid"
 							/>
 						</FaktumSkjemagruppe>
 					</Underskjema>
-					<FaktumRadio faktumKey="arbeid.dinsituasjon.studerer" value="false" />
+					<FaktumRadio faktumKey="dinsituasjon.studerer" value="false" />
 				</Sporsmal>
 			</Steg>
 		);
