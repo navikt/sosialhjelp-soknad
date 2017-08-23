@@ -18,6 +18,7 @@ interface StateProps {
 
 interface OwnProps {
 	faktumKey: string;
+	part: string;
 	disabled?: boolean;
 	feil?: Feil;
 }
@@ -27,20 +28,29 @@ class FaktumCheckbox extends React.Component<
 	{}
 > {
 	render() {
-		const { faktumKey, disabled, feil, faktum, dispatch, intl } = this.props;
-		const checked = faktumIsSelected(faktum.get(faktumKey));
-		const tekster = getFaktumCheckboksTekst(intl, faktumKey);
+		const {
+			faktumKey,
+			part,
+			disabled,
+			feil,
+			faktum,
+			dispatch,
+			intl
+		} = this.props;
+		const key = `${faktumKey}.${part}`;
+		const tekster = getFaktumCheckboksTekst(intl, key);
+		const checked = faktumIsSelected(faktum.get(key));
 		return (
 			<Checkbox
-				name={faktumKey}
+				name={key}
 				checked={checked}
 				disabled={disabled}
-				value={faktum.get(faktumKey)}
+				value={faktum.get(key)}
 				onChange={(evt: any) =>
-					dispatch(setFaktumVerdi(faktumKey, boolToString(evt.target.checked)))}
+					dispatch(setFaktumVerdi(key, boolToString(evt.target.checked)))}
 				label={
 					<LabelMedHjelpetekst
-						id={faktumKey}
+						id={key}
 						label={tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>
@@ -53,7 +63,6 @@ class FaktumCheckbox extends React.Component<
 
 export default connect((state: { faktum: FaktumState }, props: OwnProps) => {
 	return {
-		faktum: state.faktum.faktum,
-		faktumKey: props.faktumKey
+		faktum: state.faktum.faktum
 	};
 })(injectIntl(FaktumCheckbox));

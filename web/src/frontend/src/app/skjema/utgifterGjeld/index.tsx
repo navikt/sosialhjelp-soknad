@@ -29,12 +29,12 @@ class UtgifterGjeld extends React.Component<
 					<FaktumRadio faktumKey="utgift.bo" value="false" />
 					<Underskjema visible={faktum.get("utgift.bo") === "false"}>
 						<FaktumSkjemagruppe tittelId="Hvilken utgifter er det?">
-							<FaktumCheckbox faktumKey="utgift.bo.false.husleie" />
-							<FaktumCheckbox faktumKey="utgift.bo.false.strom" />
-							<FaktumCheckbox faktumKey="utgift.bo.false.kommunale" />
-							<FaktumCheckbox faktumKey="utgift.bo.false.oppvarming" />
-							<FaktumCheckbox faktumKey="utgift.bo.false.avdrag" />
-							<FaktumCheckbox faktumKey="utgift.bo.false.andre" />
+							<FaktumCheckbox faktumKey="utgift.bo.false" part="husleie" />
+							<FaktumCheckbox faktumKey="utgift.bo.false" part="strom" />
+							<FaktumCheckbox faktumKey="utgift.bo.false" part="kommunale" />
+							<FaktumCheckbox faktumKey="utgift.bo.false" part="oppvarming" />
+							<FaktumCheckbox faktumKey="utgift.bo.false" part="avdrag" />
+							<FaktumCheckbox faktumKey="utgift.bo.false" part="andre" />
 							{faktumIsSelected(faktum.get("utgift.bo.false.andre"))
 								? <FaktumTextarea faktumKey="utgift.bo.false.andre.true.beskrivelse" />
 								: null}
@@ -46,11 +46,17 @@ class UtgifterGjeld extends React.Component<
 					<FaktumRadio faktumKey="utgift.barn" value="false" />
 					<Underskjema visible={faktum.get("utgift.barn") === "false"}>
 						<FaktumSkjemagruppe tittelId="Hvilken utgifter er det?">
-							<FaktumCheckbox faktumKey="utgift.barn.false.fritidsaktivitet" />
-							<FaktumCheckbox faktumKey="utgift.barn.false.barnehage" />
-							<FaktumCheckbox faktumKey="utgift.barn.false.tannbehandling" />
-							<FaktumCheckbox faktumKey="utgift.barn.false.helse" />
-							<FaktumCheckbox faktumKey="utgift.barn.false.annet" />
+							<FaktumCheckbox
+								faktumKey="utgift.barn.false"
+								part="fritidsaktivitet"
+							/>
+							<FaktumCheckbox faktumKey="utgift.barn.false" part="barnehage" />
+							<FaktumCheckbox
+								faktumKey="utgift.barn.false"
+								part="tannbehandling"
+							/>
+							<FaktumCheckbox faktumKey="utgift.barn.false" part="helse" />
+							<FaktumCheckbox faktumKey="utgift.barn.false" part="annet" />
 							{faktumIsSelected(faktum.get("utgift.barn.false.annet"))
 								? <FaktumTextarea faktumKey="utgift.barn.false.annet.true.beskrivelse" />
 								: null}
