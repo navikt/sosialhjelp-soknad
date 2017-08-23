@@ -7,7 +7,6 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import Steg from "../../../skjema/components/steg";
 import Sporsmal from "../../../skjema/components/sporsmal";
 import FaktumTextarea from "../../../skjema/faktum/FaktumTextarea";
-import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
 
 interface StateProps {
 	faktum: FaktumMap;
@@ -21,23 +20,19 @@ class Begrunnelse extends React.Component<
 		const { intl } = this.props;
 		return (
 			<Steg tittel={intl.formatMessage({ id: "begrunnelsebolk.tittel" })}>
-				<Sporsmal>
-					<FaktumSkjemagruppe
-						title={intl.formatMessage({
-							id: "begrunnelse.hvorfor"
-						})}
-					>
-						<FaktumTextarea faktumKey="begrunnelse.hvorfor" />
-					</FaktumSkjemagruppe>
+				<Sporsmal
+					sporsmal={intl.formatMessage({
+						id: "begrunnelse.hvorfor"
+					})}
+				>
+					<FaktumTextarea faktumKey="begrunnelse.hvorfor" />
 				</Sporsmal>
-				<Sporsmal>
-					<FaktumSkjemagruppe
-						title={intl.formatMessage({
-							id: "begrunnelse.hva"
-						})}
-					>
-						<FaktumTextarea faktumKey="begrunnelse.hva" />
-					</FaktumSkjemagruppe>
+				<Sporsmal
+					sporsmal={intl.formatMessage({
+						id: "begrunnelse.hva"
+					})}
+				>
+					<FaktumTextarea faktumKey="begrunnelse.hva" />
 				</Sporsmal>
 			</Steg>
 		);

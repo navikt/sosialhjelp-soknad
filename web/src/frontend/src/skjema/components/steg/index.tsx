@@ -7,8 +7,8 @@ interface StegProps extends React.Props<any> {
 
 const Steg: React.StatelessComponent<StegProps> = ({ tittel, children }) => {
 	return (
-		<div className="gui-steg">
-			<h2 className="gui-steg__tittel">
+		<div className="skjema-steg">
+			<h2 className="skjema-steg__tittel">
 				{tittel}
 			</h2>
 			{children}

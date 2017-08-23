@@ -23,33 +23,31 @@ class Bosituasjon extends React.Component<
 		const { faktum, intl } = this.props;
 		return (
 			<Steg tittel="Bosituasjon">
-				<Sporsmal>
-					<FaktumSkjemagruppe
-						title={intl.formatMessage({
-							id: "bosituasjonbolk.tittel"
-						})}
-					>
-						<FaktumRadio faktumKey="bosituasjon" value="eier" />
-						<FaktumRadio faktumKey="bosituasjon" value="leierprivat" />
-						<FaktumRadio faktumKey="bosituasjon" value="leierkommunalt" />
-						<FaktumRadio faktumKey="bosituasjon" value="ingen" />
-						<FaktumRadio faktumKey="bosituasjon" value="annet" />
-						<Underskjema visible={faktum.get("bosituasjon") === "annet"}>
-							<FaktumSkjemagruppe
-								visible={faktum.get("bosituasjon") === "annet"}
-								title={intl.formatMessage({
-									id: "bosituasjon.annet"
-								})}
-							>
-								<FaktumCheckbox faktumKey="bosituasjon.annet.true.institusjon" />
-								<FaktumCheckbox faktumKey="bosituasjon.annet.true.krisesenter" />
-								<FaktumCheckbox faktumKey="bosituasjon.annet.true.fengsel" />
-								<FaktumCheckbox faktumKey="bosituasjon.annet.true.venner" />
-								<FaktumCheckbox faktumKey="bosituasjon.annet.true.foreldre" />
-								<FaktumCheckbox faktumKey="bosituasjon.annet.true.familie" />
-							</FaktumSkjemagruppe>
-						</Underskjema>
-					</FaktumSkjemagruppe>
+				<Sporsmal
+					sporsmal={intl.formatMessage({
+						id: "bosituasjonbolk.tittel"
+					})}
+				>
+					<FaktumRadio faktumKey="bosituasjon" value="eier" />
+					<FaktumRadio faktumKey="bosituasjon" value="leierprivat" />
+					<FaktumRadio faktumKey="bosituasjon" value="leierkommunalt" />
+					<FaktumRadio faktumKey="bosituasjon" value="ingen" />
+					<FaktumRadio faktumKey="bosituasjon" value="annet" />
+					<Underskjema visible={faktum.get("bosituasjon") === "annet"}>
+						<FaktumSkjemagruppe
+							visible={faktum.get("bosituasjon") === "annet"}
+							title={intl.formatMessage({
+								id: "bosituasjon.annet"
+							})}
+						>
+							<FaktumCheckbox faktumKey="bosituasjon.annet.true.institusjon" />
+							<FaktumCheckbox faktumKey="bosituasjon.annet.true.krisesenter" />
+							<FaktumCheckbox faktumKey="bosituasjon.annet.true.fengsel" />
+							<FaktumCheckbox faktumKey="bosituasjon.annet.true.venner" />
+							<FaktumCheckbox faktumKey="bosituasjon.annet.true.foreldre" />
+							<FaktumCheckbox faktumKey="bosituasjon.annet.true.familie" />
+						</FaktumSkjemagruppe>
+					</Underskjema>
 				</Sporsmal>
 			</Steg>
 		);

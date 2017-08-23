@@ -3,26 +3,32 @@ import "./sporsmal.css";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
 
 interface Props extends React.Props<any> {
-	sporsmal?: string;
+	sporsmal: string;
 	hjelpetekst?: string;
 }
 
 const Sporsmal: React.StatelessComponent<Props> = ({
 	children,
+	sporsmal,
 	hjelpetekst
 }) => {
 	return (
-		<div className="gui-sporsmal">
-			{hjelpetekst
-				? <div className="gui-sporsmal__hjelpetekst">
-						<HjelpetekstAuto>
-							{hjelpetekst}
-						</HjelpetekstAuto>
-					</div>
-				: null}
-			<div className="gui-sporsmal__innhold">
-				{children}
-			</div>
+		<div className="skjema-sporsmal">
+			<fieldset>
+				<legend>
+					{sporsmal}
+				</legend>
+				{hjelpetekst
+					? <div className="skjema-sporsmal__hjelpetekst">
+							<HjelpetekstAuto>
+								{hjelpetekst}
+							</HjelpetekstAuto>
+						</div>
+					: null}
+				<div className="skjema-sporsmal__innhold">
+					{children}
+				</div>
+			</fieldset>
 		</div>
 	);
 };

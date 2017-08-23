@@ -20,27 +20,25 @@ class Steg1 extends React.Component<
 	render() {
 		const { faktum, intl } = this.props;
 		return (
-			<Sporsmal>
-				<FaktumSkjemagruppe
-					title={intl.formatMessage({
-						id: "familie.sivilstatus.sporsmal"
-					})}
-				>
-					<FaktumRadio faktumKey="familie.sivilstatus" value="gift" />
-					<Underskjema visible={faktum.get("familie.sivilstatus") === "gift"}>
-						<FaktumSkjemagruppe
-							title={intl.formatMessage({
-								id: "arbeid.dinsituasjon.student.true.heltid.sporsmal"
-							})}
-						>
-							<div className="skjemaelement">what</div>
-						</FaktumSkjemagruppe>
-					</Underskjema>
-					<FaktumRadio faktumKey="familie.sivilstatus" value="ugift" />
-					<FaktumRadio faktumKey="familie.sivilstatus" value="samboer" />
-					<FaktumRadio faktumKey="familie.sivilstatus" value="enke" />
-					<FaktumRadio faktumKey="familie.sivilstatus" value="skilt" />
-				</FaktumSkjemagruppe>
+			<Sporsmal
+				sporsmal={intl.formatMessage({
+					id: "familie.sivilstatus.sporsmal"
+				})}
+			>
+				<FaktumRadio faktumKey="familie.sivilstatus" value="gift" />
+				<Underskjema visible={faktum.get("familie.sivilstatus") === "gift"}>
+					<FaktumSkjemagruppe
+						title={intl.formatMessage({
+							id: "arbeid.dinsituasjon.student.true.heltid.sporsmal"
+						})}
+					>
+						<div className="skjemaelement">what</div>
+					</FaktumSkjemagruppe>
+				</Underskjema>
+				<FaktumRadio faktumKey="familie.sivilstatus" value="ugift" />
+				<FaktumRadio faktumKey="familie.sivilstatus" value="samboer" />
+				<FaktumRadio faktumKey="familie.sivilstatus" value="enke" />
+				<FaktumRadio faktumKey="familie.sivilstatus" value="skilt" />
 			</Sporsmal>
 		);
 	}

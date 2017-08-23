@@ -20,24 +20,22 @@ class Steg1 extends React.Component<
 	render() {
 		const { faktum, intl } = this.props;
 		return (
-			<Sporsmal>
-				<FaktumSkjemagruppe
-					title={intl.formatMessage({
-						id: "familie.barn.sporsmal"
-					})}
-				>
-					<FaktumRadio faktumKey="familie.barn" value="true" />
-					<Underskjema visible={faktum.get("familie.barn") === "true"}>
-						<FaktumSkjemagruppe
-							title={intl.formatMessage({
-								id: "familie.barn"
-							})}
-						>
-							<div className="skjemaelement">what</div>
-						</FaktumSkjemagruppe>
-					</Underskjema>
-					<FaktumRadio faktumKey="familie.barn" value="false" />
-				</FaktumSkjemagruppe>
+			<Sporsmal
+				sporsmal={intl.formatMessage({
+					id: "familie.barn.sporsmal"
+				})}
+			>
+				<FaktumRadio faktumKey="familie.barn" value="true" />
+				<Underskjema visible={faktum.get("familie.barn") === "true"}>
+					<FaktumSkjemagruppe
+						title={intl.formatMessage({
+							id: "familie.barn"
+						})}
+					>
+						<div className="skjemaelement">what</div>
+					</FaktumSkjemagruppe>
+				</Underskjema>
+				<FaktumRadio faktumKey="familie.barn" value="false" />
 			</Sporsmal>
 		);
 	}

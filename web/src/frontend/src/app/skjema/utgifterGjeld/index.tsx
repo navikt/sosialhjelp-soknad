@@ -25,48 +25,42 @@ class UtgifterGjeld extends React.Component<
 		const { faktum } = this.props;
 		return (
 			<Steg tittel="Utgifter og gjeld">
-				<Sporsmal>
-					<FaktumSkjemagruppe title="Har du boutgifter?">
-						<FaktumRadio faktumKey="utgift.bo" value="false" />
-						<Underskjema visible={faktum.get("utgift.bo") === "false"}>
-							<FaktumSkjemagruppe title="Hvilken utgifter er det?">
-								<FaktumCheckbox faktumKey="utgift.bo.false.husleie" />
-								<FaktumCheckbox faktumKey="utgift.bo.false.strom" />
-								<FaktumCheckbox faktumKey="utgift.bo.false.kommunale" />
-								<FaktumCheckbox faktumKey="utgift.bo.false.oppvarming" />
-								<FaktumCheckbox faktumKey="utgift.bo.false.avdrag" />
-								<FaktumCheckbox faktumKey="utgift.bo.false.andre" />
-								{faktumIsSelected(faktum.get("utgift.bo.false.andre"))
-									? <FaktumTextarea faktumKey="utgift.bo.false.andre.true.beskrivelse" />
-									: null}
-							</FaktumSkjemagruppe>
-						</Underskjema>
-						<FaktumRadio faktumKey="utgift.bo" value="true" />
-					</FaktumSkjemagruppe>
+				<Sporsmal sporsmal="Har du boutgifter?">
+					<FaktumRadio faktumKey="utgift.bo" value="false" />
+					<Underskjema visible={faktum.get("utgift.bo") === "false"}>
+						<FaktumSkjemagruppe title="Hvilken utgifter er det?">
+							<FaktumCheckbox faktumKey="utgift.bo.false.husleie" />
+							<FaktumCheckbox faktumKey="utgift.bo.false.strom" />
+							<FaktumCheckbox faktumKey="utgift.bo.false.kommunale" />
+							<FaktumCheckbox faktumKey="utgift.bo.false.oppvarming" />
+							<FaktumCheckbox faktumKey="utgift.bo.false.avdrag" />
+							<FaktumCheckbox faktumKey="utgift.bo.false.andre" />
+							{faktumIsSelected(faktum.get("utgift.bo.false.andre"))
+								? <FaktumTextarea faktumKey="utgift.bo.false.andre.true.beskrivelse" />
+								: null}
+						</FaktumSkjemagruppe>
+					</Underskjema>
+					<FaktumRadio faktumKey="utgift.bo" value="true" />
 				</Sporsmal>
-				<Sporsmal>
-					<FaktumSkjemagruppe title="Har du utgifter til barn?">
-						<FaktumRadio faktumKey="utgift.barn" value="false" />
-						<Underskjema visible={faktum.get("utgift.barn") === "false"}>
-							<FaktumSkjemagruppe title="Hvilken utgifter er det?">
-								<FaktumCheckbox faktumKey="utgift.barn.false.fritidsaktivitet" />
-								<FaktumCheckbox faktumKey="utgift.barn.false.barnehage" />
-								<FaktumCheckbox faktumKey="utgift.barn.false.tannbehandling" />
-								<FaktumCheckbox faktumKey="utgift.barn.false.helse" />
-								<FaktumCheckbox faktumKey="utgift.barn.false.annet" />
-								{faktumIsSelected(faktum.get("utgift.barn.false.annet"))
-									? <FaktumTextarea faktumKey="utgift.barn.false.annet.true.beskrivelse" />
-									: null}
-							</FaktumSkjemagruppe>
-						</Underskjema>
-						<FaktumRadio faktumKey="utgift.barn" value="true" />
-					</FaktumSkjemagruppe>
+				<Sporsmal sporsmal="Har du utgifter til barn?">
+					<FaktumRadio faktumKey="utgift.barn" value="false" />
+					<Underskjema visible={faktum.get("utgift.barn") === "false"}>
+						<FaktumSkjemagruppe title="Hvilken utgifter er det?">
+							<FaktumCheckbox faktumKey="utgift.barn.false.fritidsaktivitet" />
+							<FaktumCheckbox faktumKey="utgift.barn.false.barnehage" />
+							<FaktumCheckbox faktumKey="utgift.barn.false.tannbehandling" />
+							<FaktumCheckbox faktumKey="utgift.barn.false.helse" />
+							<FaktumCheckbox faktumKey="utgift.barn.false.annet" />
+							{faktumIsSelected(faktum.get("utgift.barn.false.annet"))
+								? <FaktumTextarea faktumKey="utgift.barn.false.annet.true.beskrivelse" />
+								: null}
+						</FaktumSkjemagruppe>
+					</Underskjema>
+					<FaktumRadio faktumKey="utgift.barn" value="true" />
 				</Sporsmal>
-				<Sporsmal>
-					<FaktumSkjemagruppe title="Har du ekstrautgifter til helse?">
-						<FaktumRadio faktumKey="utgift.helse" value="false" />
-						<FaktumRadio faktumKey="utgift.helse" value="true" />
-					</FaktumSkjemagruppe>
+				<Sporsmal sporsmal="Har du ekstrautgifter til helse?">
+					<FaktumRadio faktumKey="utgift.helse" value="false" />
+					<FaktumRadio faktumKey="utgift.helse" value="true" />
 				</Sporsmal>
 			</Steg>
 		);
