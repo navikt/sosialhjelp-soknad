@@ -42,17 +42,10 @@ export interface FaktumCheckboksTekst {
 	feilmelding: string;
 }
 
-export interface FaktumTextareaTekst {
-	label: string;
-	infotekst?: Infotekst;
-	hjelpetekst?: Infotekst;
-	feilmelding: string;
-}
-
 export interface FaktumInputTekst {
+	label: string;
 	feilmelding?: string;
 	infotekst?: Infotekst;
 	hjelpetekst?: Infotekst;
-	label: string;
 	placeholder?: string;
 }

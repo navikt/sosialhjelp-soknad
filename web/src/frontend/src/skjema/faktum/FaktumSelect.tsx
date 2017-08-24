@@ -1,11 +1,13 @@
 import * as React from "react";
-import { Textarea, Feil } from "nav-frontend-skjema";
+import { Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumState, FaktumMap } from "../reducer";
 import { setFaktumVerdi } from "../actions";
 import { DispatchProps } from "../types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getFaktumInputTekst, getIntlTextOrKey } from "../utils";
+import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
+import { getFaktumInputTekst } from "../utils";
+import { Select, SelectBredde } from "nav-frontend-skjema";
 
 interface StateProps {
 	faktum: FaktumMap;
@@ -13,36 +15,46 @@ interface StateProps {
 
 interface OwnProps {
 	faktumKey: string;
-	labelId?: string;
 	disabled?: boolean;
 	feil?: Feil;
+	bredde?: SelectBredde;
+	labelFunc?: (label: string) => React.ReactNode;
 }
 
-class FaktumTextarea extends React.Component<
+class FaktumSelect extends React.Component<
 	OwnProps & StateProps & DispatchProps & InjectedIntlProps,
 	{}
 > {
 	render() {
 		const {
 			faktumKey,
-			labelId,
 			disabled,
-			feil,
+			bredde,
+			labelFunc,
 			faktum,
+			children,
 			dispatch,
 			intl
 		} = this.props;
 		const tekster = getFaktumInputTekst(intl, faktumKey);
 		return (
-			<Textarea
-				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
-				value={faktum.get(faktumKey) || ""}
+			<Select
 				name={faktumKey}
 				disabled={disabled}
+				value={faktum.get(faktumKey)}
+				bredde={bredde}
 				onChange={(evt: any) =>
 					dispatch(setFaktumVerdi(faktumKey, evt.target.value))}
-				feil={feil}
-			/>
+				label={
+					<LabelMedHjelpetekst
+						id={faktumKey}
+						label={labelFunc ? labelFunc(tekster.label) : tekster.label}
+						hjelpetekst={tekster.hjelpetekst}
+					/>
+				}
+			>
+				{children}
+			</Select>
 		);
 	}
 }
@@ -52,4 +64,4 @@ export default connect((state: { faktum: FaktumState }, props: OwnProps) => {
 		faktum: state.faktum.faktum,
 		faktumKey: props.faktumKey
 	};
-})(injectIntl(FaktumTextarea));
+})(injectIntl(FaktumSelect));

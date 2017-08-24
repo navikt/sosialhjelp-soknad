@@ -1,10 +1,5 @@
 import { InjectedIntl } from "react-intl";
-import {
-	FaktumCheckboksTekst,
-	Infotekst,
-	FaktumTextareaTekst,
-	FaktumInputTekst
-} from "./types";
+import { FaktumCheckboksTekst, Infotekst, FaktumInputTekst } from "./types";
 
 export const radioCheckKeys = (key: string) => ({
 	faktum: `${key}`,
@@ -73,29 +68,15 @@ export function getFaktumRadioTekst(
 	return getFaktumCheckboksTekst(intl, `${key}.${value}`);
 }
 
-export function getFaktumTextareaTekst(
-	intl: InjectedIntl,
-	key: string
-): FaktumTextareaTekst {
-	const tekster = {
-		label: getIntlTextOrKey(intl, `${key}.sporsmal`),
-		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
-		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
-		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`)
-	};
-	return tekster;
-}
-
 export function getFaktumInputTekst(
 	intl: InjectedIntl,
 	key: string
 ): FaktumInputTekst {
-	const tekster = {
-		label: getIntlTextOrKey(intl, key),
+	return {
+		label: getIntlTextOrKey(intl, `${key}.sporsmal`),
+		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
 		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`),
-		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
 		placeholder: getIntlTextOrKey(intl, `${key}.placeholder`)
 	};
-	return tekster;
 }
