@@ -18,14 +18,14 @@ class Jobb extends React.Component<Props, any> {
 		const jobber = radioCheckKeys("dinsituasjon.jobb.true");
 		return (
 			<Sporsmal sporsmalId={jobb.sporsmal}>
-				<FaktumRadio faktumKey={jobb.faktum} value="true" />
+				<FaktumRadio faktumKey={jobb.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(faktum.get(jobb.faktum))}>
 					<FaktumSkjemagruppe tittelId={jobber.sporsmal}>
-						<FaktumRadio faktumKey={jobber.faktum} value="heltid" />
-						<FaktumRadio faktumKey={jobber.faktum} value="deltid" />
+						<FaktumRadio faktumKey={jobber.faktum} option="heltid" />
+						<FaktumRadio faktumKey={jobber.faktum} option="deltid" />
 					</FaktumSkjemagruppe>
 				</Underskjema>
-				<FaktumRadio faktumKey={jobb.faktum} value="false" />
+				<FaktumRadio faktumKey={jobb.faktum} option="false" />
 			</Sporsmal>
 		);
 	}

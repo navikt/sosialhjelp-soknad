@@ -14,8 +14,8 @@ export const radioCheckKeys = (key: string) => ({
 
 export const inputKeys = (key: string) => ({
 	faktum: `${key}`,
-	tittel: `${key}.tittel`,
-	pattern: `${key}.sporsmal`,
+	sporsmal: `${key}.sporsmal`,
+	pattern: `${key}.pattern`,
 	hoyretekst: `${key}.hoyretekst`,
 	venstretekst: `${key}.venstretekst`
 });

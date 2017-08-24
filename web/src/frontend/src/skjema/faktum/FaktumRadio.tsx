@@ -13,7 +13,7 @@ interface StateProps {
 }
 
 interface OwnProps {
-	value: string;
+	option: string;
 	faktumKey: string;
 	disabled?: boolean;
 	feil?: Feil;
@@ -24,18 +24,18 @@ class FaktumRadio extends React.Component<
 	{}
 > {
 	render() {
-		const { faktumKey, value, disabled, faktum, dispatch, intl } = this.props;
-		const tekster = getFaktumRadioTekst(intl, faktumKey, value);
+		const { faktumKey, option, disabled, faktum, dispatch, intl } = this.props;
+		const tekster = getFaktumRadioTekst(intl, faktumKey, option);
 		return (
 			<Radio
 				name={faktumKey}
-				checked={faktum.get(faktumKey) === value}
+				checked={faktum.get(faktumKey) === option}
 				disabled={disabled}
-				value={value}
-				onChange={(evt: any) => dispatch(setFaktumVerdi(faktumKey, value))}
+				value={option}
+				onChange={(evt: any) => dispatch(setFaktumVerdi(faktumKey, option))}
 				label={
 					<LabelMedHjelpetekst
-						id={`${faktumKey}.${value}`}
+						id={`${faktumKey}.${option}`}
 						label={tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>

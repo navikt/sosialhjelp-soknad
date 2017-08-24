@@ -17,24 +17,23 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeEiendelerAnnet = "inntekt.eiendeler.true.annet";
 		return (
 			<Sporsmal sporsmalId={eiendeler.sporsmal}>
-				<FaktumRadio faktumKey={eiendeler.faktum} value="false" />
-				<FaktumRadio faktumKey={eiendeler.faktum} value="true" />
+				<FaktumRadio faktumKey={eiendeler.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(faktum.get(eiendeler.faktum))}>
 					<FaktumSkjemagruppe tittelId={hvilkeEiendeler.sporsmal}>
-						<FaktumCheckbox faktumKey={hvilkeEiendeler.faktum} part="bolig" />
+						<FaktumCheckbox faktumKey={hvilkeEiendeler.faktum} option="bolig" />
 						<FaktumCheckbox
 							faktumKey={hvilkeEiendeler.faktum}
-							part="campingvogn"
+							option="campingvogn"
 						/>
 						<FaktumCheckbox
 							faktumKey={hvilkeEiendeler.faktum}
-							part="kjoretoy"
+							option="kjoretoy"
 						/>
 						<FaktumCheckbox
 							faktumKey={hvilkeEiendeler.faktum}
-							part="fritidseiendom"
+							option="fritidseiendom"
 						/>
-						<FaktumCheckbox faktumKey={hvilkeEiendeler.faktum} part="annet" />
+						<FaktumCheckbox faktumKey={hvilkeEiendeler.faktum} option="annet" />
 						{faktumIsSelected(faktum.get(hvilkeEiendelerAnnet))
 							? <FaktumTextarea
 									faktumKey={`${hvilkeEiendelerAnnet}.beskrivelse`}
@@ -42,6 +41,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 							: null}
 					</FaktumSkjemagruppe>
 				</Underskjema>
+				<FaktumRadio faktumKey={eiendeler.faktum} option="false" />
 			</Sporsmal>
 		);
 	}

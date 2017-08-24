@@ -15,14 +15,20 @@ class Bostotte extends React.Component<FaktumComponentProps, {}> {
 		const hvilkenStotte = radioCheckKeys("inntekt.bostotte.true.type");
 		return (
 			<Sporsmal sporsmalId={bostotte.sporsmal}>
-				<FaktumRadio faktumKey={bostotte.faktum} value="false" />
-				<FaktumRadio faktumKey={bostotte.faktum} value="true" />
+				<FaktumRadio faktumKey={bostotte.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(faktum.get("inntekt.bostotte"))}>
 					<FaktumSkjemagruppe tittelId={hvilkenStotte.sporsmal}>
-						<FaktumCheckbox faktumKey={hvilkenStotte.faktum} part="husbanken" />
-						<FaktumCheckbox faktumKey={hvilkenStotte.faktum} part="kommunal" />
+						<FaktumCheckbox
+							faktumKey={hvilkenStotte.faktum}
+							option="husbanken"
+						/>
+						<FaktumCheckbox
+							faktumKey={hvilkenStotte.faktum}
+							option="kommunal"
+						/>
 					</FaktumSkjemagruppe>
 				</Underskjema>
+				<FaktumRadio faktumKey={bostotte.faktum} option="false" />
 			</Sporsmal>
 		);
 	}

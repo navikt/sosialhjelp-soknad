@@ -18,19 +18,19 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		return (
 			<Steg tittelId="bosituasjonbolk.tittel">
 				<Sporsmal sporsmalId={bosituasjon.sporsmal}>
-					<FaktumRadio faktumKey={bosituasjon.faktum} value="eier" />
-					<FaktumRadio faktumKey={bosituasjon.faktum} value="leierprivat" />
-					<FaktumRadio faktumKey={bosituasjon.faktum} value="leierkommunalt" />
-					<FaktumRadio faktumKey={bosituasjon.faktum} value="ingen" />
-					<FaktumRadio faktumKey={bosituasjon.faktum} value="annet" />
+					<FaktumRadio faktumKey={bosituasjon.faktum} option="eier" />
+					<FaktumRadio faktumKey={bosituasjon.faktum} option="leierprivat" />
+					<FaktumRadio faktumKey={bosituasjon.faktum} option="leierkommunalt" />
+					<FaktumRadio faktumKey={bosituasjon.faktum} option="ingen" />
+					<FaktumRadio faktumKey={bosituasjon.faktum} option="annet" />
 					<Underskjema visible={faktum.get(bosituasjon.faktum) === "annet"}>
 						<FaktumSkjemagruppe tittelId={annen.sporsmal}>
-							<FaktumCheckbox faktumKey={annen.faktum} part="institusjon" />
-							<FaktumCheckbox faktumKey={annen.faktum} part="krisesenter" />
-							<FaktumCheckbox faktumKey={annen.faktum} part="fengsel" />
-							<FaktumCheckbox faktumKey={annen.faktum} part="venner" />
-							<FaktumCheckbox faktumKey={annen.faktum} part="foreldre" />
-							<FaktumCheckbox faktumKey={annen.faktum} part="familie" />
+							<FaktumCheckbox faktumKey={annen.faktum} option="institusjon" />
+							<FaktumCheckbox faktumKey={annen.faktum} option="krisesenter" />
+							<FaktumCheckbox faktumKey={annen.faktum} option="fengsel" />
+							<FaktumCheckbox faktumKey={annen.faktum} option="venner" />
+							<FaktumCheckbox faktumKey={annen.faktum} option="foreldre" />
+							<FaktumCheckbox faktumKey={annen.faktum} option="familie" />
 						</FaktumSkjemagruppe>
 					</Underskjema>
 				</Sporsmal>

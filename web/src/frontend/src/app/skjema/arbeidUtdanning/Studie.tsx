@@ -18,14 +18,14 @@ class Studie extends React.Component<Props, any> {
 		const studerer = radioCheckKeys("dinsituasjon.studerer.true");
 		return (
 			<Sporsmal sporsmalId={studie.sporsmal}>
-				<FaktumRadio faktumKey={studie.faktum} value="true" />
+				<FaktumRadio faktumKey={studie.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(faktum.get(studie.faktum))}>
 					<FaktumSkjemagruppe tittelId={studerer.sporsmal}>
-						<FaktumRadio faktumKey={studerer.faktum} value="heltid" />
-						<FaktumRadio faktumKey={studerer.faktum} value="deltid" />
+						<FaktumRadio faktumKey={studerer.faktum} option="heltid" />
+						<FaktumRadio faktumKey={studerer.faktum} option="deltid" />
 					</FaktumSkjemagruppe>
 				</Underskjema>
-				<FaktumRadio faktumKey={studie.faktum} value="false" />
+				<FaktumRadio faktumKey={studie.faktum} option="false" />
 			</Sporsmal>
 		);
 	}

@@ -14,13 +14,13 @@ class Barn extends React.Component<FaktumComponentProps, {}> {
 		const harBarn = radioCheckKeys("familie.barn.true");
 		return (
 			<Sporsmal sporsmalId={barn.sporsmal}>
-				<FaktumRadio faktumKey={barn.faktum} value="true" />
+				<FaktumRadio faktumKey={barn.faktum} option="true" />
 				<Underskjema visible={faktum.get(barn.faktum) === "true"}>
 					<FaktumSkjemagruppe tittelId={harBarn.sporsmal}>
 						<div className="skjemaelement">what</div>
 					</FaktumSkjemagruppe>
 				</Underskjema>
-				<FaktumRadio faktumKey={barn.faktum} value="false" />
+				<FaktumRadio faktumKey={barn.faktum} option="false" />
 			</Sporsmal>
 		);
 	}

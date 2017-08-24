@@ -18,7 +18,7 @@ interface StateProps {
 
 interface OwnProps {
 	faktumKey: string;
-	part: string;
+	option: string;
 	disabled?: boolean;
 	feil?: Feil;
 }
@@ -30,14 +30,14 @@ class FaktumCheckbox extends React.Component<
 	render() {
 		const {
 			faktumKey,
-			part,
+			option,
 			disabled,
 			feil,
 			faktum,
 			dispatch,
 			intl
 		} = this.props;
-		const key = `${faktumKey}.${part}`;
+		const key = `${faktumKey}.${option}`;
 		const tekster = getFaktumCheckboksTekst(intl, key);
 		const checked = faktumIsSelected(faktum.get(key));
 		return (

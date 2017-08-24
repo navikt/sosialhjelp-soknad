@@ -17,22 +17,24 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeUtbetalingerAnnet = "inntekt.utbetaling.true.annet";
 		return (
 			<Sporsmal sporsmalId={utbetaling.sporsmal}>
-				<FaktumRadio faktumKey={utbetaling.faktum} value="false" />
-				<FaktumRadio faktumKey={utbetaling.faktum} value="true" />
+				<FaktumRadio faktumKey={utbetaling.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(faktum.get(utbetaling.faktum))}>
 					<FaktumSkjemagruppe tittelId={hvilkeUtbetalinger.sporsmal}>
 						<FaktumCheckbox
 							faktumKey={hvilkeUtbetalinger.faktum}
-							part="utbytte"
-						/>
-						<FaktumCheckbox faktumKey={hvilkeUtbetalinger.faktum} part="salg" />
-						<FaktumCheckbox
-							faktumKey={hvilkeUtbetalinger.faktum}
-							part="forsikringsutbetalinger"
+							option="utbytte"
 						/>
 						<FaktumCheckbox
 							faktumKey={hvilkeUtbetalinger.faktum}
-							part="annet"
+							option="salg"
+						/>
+						<FaktumCheckbox
+							faktumKey={hvilkeUtbetalinger.faktum}
+							option="forsikringsutbetalinger"
+						/>
+						<FaktumCheckbox
+							faktumKey={hvilkeUtbetalinger.faktum}
+							option="annet"
 						/>
 						{faktumIsSelected(faktum.get(hvilkeUtbetalingerAnnet))
 							? <FaktumTextarea
@@ -41,6 +43,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 							: null}
 					</FaktumSkjemagruppe>
 				</Underskjema>
+				<FaktumRadio faktumKey={utbetaling.faktum} option="false" />
 			</Sporsmal>
 		);
 	}

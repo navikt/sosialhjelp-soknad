@@ -14,13 +14,13 @@ class AndreBarn extends React.Component<FaktumComponentProps, {}> {
 		const andrebarnJa = radioCheckKeys("familie.andrebarn.true");
 		return (
 			<Sporsmal sporsmalId={andrebarn.sporsmal}>
-				<FaktumRadio faktumKey={andrebarn.faktum} value="true" />
+				<FaktumRadio faktumKey={andrebarn.faktum} option="true" />
 				<Underskjema visible={faktum.get(andrebarn.faktum) === "true"}>
 					<FaktumSkjemagruppe tittelId={andrebarnJa.sporsmal}>
 						<div className="skjemaelement">TODO</div>
 					</FaktumSkjemagruppe>
 				</Underskjema>
-				<FaktumRadio faktumKey={andrebarn.faktum} value="false" />
+				<FaktumRadio faktumKey={andrebarn.faktum} option="false" />
 			</Sporsmal>
 		);
 	}

@@ -14,16 +14,16 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 		const gift = radioCheckKeys("familie.sivilstatus.gift.true");
 		return (
 			<Sporsmal sporsmalId={sivilstatus.sporsmal}>
-				<FaktumRadio faktumKey={sivilstatus.faktum} value="gift" />
+				<FaktumRadio faktumKey={sivilstatus.faktum} option="gift" />
 				<Underskjema visible={faktum.get(sivilstatus.faktum) === "gift"}>
 					<FaktumSkjemagruppe tittelId={gift.sporsmal}>
 						<div className="skjemaelement">TODO</div>
 					</FaktumSkjemagruppe>
 				</Underskjema>
-				<FaktumRadio faktumKey={sivilstatus.faktum} value="ugift" />
-				<FaktumRadio faktumKey={sivilstatus.faktum} value="samboer" />
-				<FaktumRadio faktumKey={sivilstatus.faktum} value="enke" />
-				<FaktumRadio faktumKey={sivilstatus.faktum} value="skilt" />
+				<FaktumRadio faktumKey={sivilstatus.faktum} option="ugift" />
+				<FaktumRadio faktumKey={sivilstatus.faktum} option="samboer" />
+				<FaktumRadio faktumKey={sivilstatus.faktum} option="enke" />
+				<FaktumRadio faktumKey={sivilstatus.faktum} option="skilt" />
 			</Sporsmal>
 		);
 	}
