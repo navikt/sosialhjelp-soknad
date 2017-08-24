@@ -12,6 +12,14 @@ export const radioCheckKeys = (key: string) => ({
 	hjelpetekst: `${key}.hjelpetekst`
 });
 
+export const inputKeys = (key: string) => ({
+	faktum: `${key}`,
+	tittel: `${key}.tittel`,
+	pattern: `${key}.sporsmal`,
+	hoyretekst: `${key}.hoyretekst`,
+	venstretekst: `${key}.venstretekst`
+});
+
 export function faktumIsSelected(value: string) {
 	return value === "true";
 }
@@ -62,14 +70,7 @@ export function getFaktumRadioTekst(
 	key: string,
 	value: string
 ): FaktumCheckboksTekst {
-	const valueKey = `${key}.${value}`;
-	const tekster = {
-		label: getIntlTextOrKey(intl, valueKey),
-		feilmelding: getIntlTextOrKey(intl, `${valueKey}.feilmelding`),
-		infotekst: getIntlInfoTekst(intl, `${valueKey}.infotekst`),
-		hjelpetekst: getIntlInfoTekst(intl, `${valueKey}.hjelpetekst`)
-	};
-	return tekster;
+	return getFaktumCheckboksTekst(intl, `${key}.${value}`);
 }
 
 export function getFaktumTextareaTekst(
@@ -90,10 +91,10 @@ export function getFaktumInputTekst(
 	key: string
 ): FaktumInputTekst {
 	const tekster = {
-		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
+		label: getIntlTextOrKey(intl, key),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
 		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`),
-		label: getIntlTextOrKey(intl, key),
+		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
 		placeholder: getIntlTextOrKey(intl, `${key}.placeholder`)
 	};
 	return tekster;
