@@ -1,12 +1,16 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import Bosted from "./Bosted";
+import "./start.css";
 
 class Start extends React.Component<{}, {}> {
 	render() {
 		return (
-			<div>
-				<h1>StartSteg</h1>
-				<Link to="skjema/steg1">Start</Link>
+			<div className="skjema-start">
+				<p className="blokk-l">
+					For at vi skal kunne sende din søknad til riktig kommune trenger vi å
+					vite hvor du bor og-/eller oppholder deg nå.
+				</p>
+				<Bosted />
 			</div>
 		);
 	}

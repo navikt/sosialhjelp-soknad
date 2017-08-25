@@ -1,7 +1,7 @@
 declare module "nav-frontend-skjema" {
 	import * as React from "react";
 
-	type inputBredde =
+	type InputBredde =
 		| "fullbredde"
 		| "xxl"
 		| "xl"
@@ -10,6 +10,8 @@ declare module "nav-frontend-skjema" {
 		| "s"
 		| "xs"
 		| "xxs";
+
+	type SelectBredde = "fullbredde" | "xxl" | "xl" | "l" | "m" | "s" | "xs";
 
 	interface RadioProps extends React.HTMLProps<Radio> {
 		className?: string;
@@ -28,7 +30,7 @@ declare module "nav-frontend-skjema" {
 	}
 
 	export interface InputProps extends React.HTMLProps<HTMLInputElement> {
-		bredde?: inputBredde;
+		bredde?: InputBredde;
 		className?: string;
 		inputClassName?: string;
 		feil?: Feil;
@@ -39,8 +41,8 @@ declare module "nav-frontend-skjema" {
 	}
 
 	interface CheckboxProps extends React.HTMLProps<Checkbox> {
-		className?: string;
 		label: React.ReactNode | any;
+		className?: string;
 		id?: string;
 		checked?: boolean;
 		feil?: Feil;
@@ -57,7 +59,7 @@ declare module "nav-frontend-skjema" {
 	}
 
 	interface TextareaProps extends React.HTMLProps<Textarea> {
-		label: string;
+		label: React.ReactNode | any;
 		value: string;
 		maxLength?: number;
 		textareaClass?: string;
@@ -68,9 +70,19 @@ declare module "nav-frontend-skjema" {
 		textareaRef?: Function;
 	}
 
+	interface SelectProps extends React.HTMLProps<Select> {
+		label: React.ReactNode | any;
+		bredde?: SelectBredde;
+		id?: string;
+		className?: string;
+		feil?: Feil;
+		selectRef?: () => React.ReactElement<any>;
+	}
+
 	export class Radio extends React.Component<RadioProps, {}> {}
 	export class Checkbox extends React.Component<CheckboxProps, {}> {}
 	export class Input extends React.Component<InputProps, {}> {}
 	export class SkjemaGruppe extends React.Component<SkjemagruppeProps, {}> {}
 	export class Textarea extends React.Component<TextareaProps, {}> {}
+	export class Select extends React.Component<SelectProps, {}> {}
 }

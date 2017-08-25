@@ -1,36 +1,38 @@
 import * as React from "react";
 import "./sporsmal.css";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
+import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 
 interface Props extends React.Props<any> {
-	tittel?: string;
+	sporsmalId: string;
 	hjelpetekst?: string;
 }
 
-const Sporsmal: React.StatelessComponent<Props> = ({
-	tittel,
+const Sporsmal: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	children,
-	hjelpetekst
+	sporsmalId,
+	hjelpetekst,
+	intl
 }) => {
 	return (
-		<div className="gui-sporsmal">
-			{tittel
-				? <h3 className="gui-sporsmal__tittel">
-						{tittel}
-					</h3>
-				: null}
-			{hjelpetekst
-				? <div className="gui-sporsmal__hjelpetekst">
-						<HjelpetekstAuto>
-							{hjelpetekst}
-						</HjelpetekstAuto>
-					</div>
-				: null}
-			<div className="gui-sporsmal__innhold">
-				{children}
-			</div>
+		<div className="skjema-sporsmal">
+			<fieldset>
+				<legend>
+					<FormattedMessage id={sporsmalId} />
+				</legend>
+				{hjelpetekst
+					? <div className="skjema-sporsmal__hjelpetekst">
+							<HjelpetekstAuto>
+								{hjelpetekst}
+							</HjelpetekstAuto>
+						</div>
+					: null}
+				<div className="skjema-sporsmal__innhold">
+					{children}
+				</div>
+			</fieldset>
 		</div>
 	);
 };
 
-export default Sporsmal;
+export default injectIntl(Sporsmal);

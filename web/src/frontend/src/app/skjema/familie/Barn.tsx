@@ -1,50 +1,29 @@
 import * as React from "react";
 import Sporsmal from "../../../skjema/components/sporsmal";
-import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../../../skjema/reducer";
-import { DispatchProps } from "../../../redux/types";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { FaktumComponentProps } from "../../../skjema/reducer";
+import { radioCheckKeys } from "../../../skjema/utils";
 
 import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
 import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
 import Underskjema from "../../../skjema/components/underskjema";
 
-interface StateProps {
-	faktum: FaktumMap;
-}
-
-class Steg1 extends React.Component<
-	StateProps & DispatchProps & InjectedIntlProps,
-	any
-> {
+class Barn extends React.Component<FaktumComponentProps, {}> {
 	render() {
-		const { faktum, intl } = this.props;
+		const { faktum } = this.props;
+		const barn = radioCheckKeys("familie.barn");
+		const harBarn = radioCheckKeys("familie.barn.true");
 		return (
-			<Sporsmal>
-				<FaktumSkjemagruppe
-					title={intl.formatMessage({
-						id: "familie.barn.sporsmal"
-					})}
-				>
-					<FaktumRadio faktumKey="familie.barn" value="true" />
-					<Underskjema visible={faktum.get("familie.barn") === "true"}>
-						<FaktumSkjemagruppe
-							title={intl.formatMessage({
-								id: "familie.barn"
-							})}
-						>
-							<div className="skjemaelement">what</div>
-						</FaktumSkjemagruppe>
-					</Underskjema>
-					<FaktumRadio faktumKey="familie.barn" value="false" />
-				</FaktumSkjemagruppe>
+			<Sporsmal sporsmalId={barn.sporsmal}>
+				<FaktumRadio faktumKey={barn.faktum} option="true" />
+				<Underskjema visible={faktum.get(barn.faktum) === "true"}>
+					<FaktumSkjemagruppe tittelId={harBarn.sporsmal}>
+						<div className="skjemaelement">what</div>
+					</FaktumSkjemagruppe>
+				</Underskjema>
+				<FaktumRadio faktumKey={barn.faktum} option="false" />
 			</Sporsmal>
 		);
 	}
 }
 
-export default connect((state: { faktum: FaktumState }, props: any) => {
-	return {
-		faktum: state.faktum.faktum
-	};
-})(injectIntl(Steg1));
+export default Barn;

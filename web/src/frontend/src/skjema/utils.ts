@@ -1,10 +1,19 @@
 import { InjectedIntl } from "react-intl";
-import {
-	FaktumCheckboksTekst,
-	Infotekst,
-	FaktumTextareaTekst,
-	FaktumInputTekst
-} from "./types";
+import { FaktumCheckboksTekst, Infotekst, FaktumInputTekst } from "./types";
+
+export const radioCheckKeys = (key: string) => ({
+	faktum: `${key}`,
+	sporsmal: `${key}.sporsmal`,
+	hjelpetekst: `${key}.hjelpetekst`
+});
+
+export const inputKeys = (key: string) => ({
+	faktum: `${key}`,
+	sporsmal: `${key}.sporsmal`,
+	pattern: `${key}.pattern`,
+	hoyretekst: `${key}.hoyretekst`,
+	venstretekst: `${key}.venstretekst`
+});
 
 export function faktumIsSelected(value: string) {
 	return value === "true";
@@ -56,39 +65,18 @@ export function getFaktumRadioTekst(
 	key: string,
 	value: string
 ): FaktumCheckboksTekst {
-	const valueKey = `${key}.${value}`;
-	const tekster = {
-		label: getIntlTextOrKey(intl, valueKey),
-		feilmelding: getIntlTextOrKey(intl, `${valueKey}.feilmelding`),
-		infotekst: getIntlInfoTekst(intl, `${valueKey}.infotekst`),
-		hjelpetekst: getIntlInfoTekst(intl, `${valueKey}.hjelpetekst`)
-	};
-	return tekster;
-}
-
-export function getFaktumTextareaTekst(
-	intl: InjectedIntl,
-	key: string
-): FaktumTextareaTekst {
-	const tekster = {
-		label: getIntlTextOrKey(intl, `${key}.sporsmal`),
-		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
-		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
-		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`)
-	};
-	return tekster;
+	return getFaktumCheckboksTekst(intl, `${key}.${value}`);
 }
 
 export function getFaktumInputTekst(
 	intl: InjectedIntl,
 	key: string
 ): FaktumInputTekst {
-	const tekster = {
+	return {
+		label: getIntlTextOrKey(intl, `${key}.sporsmal`),
 		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
 		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`),
-		label: getIntlTextOrKey(intl, key),
 		placeholder: getIntlTextOrKey(intl, `${key}.placeholder`)
 	};
-	return tekster;
 }
