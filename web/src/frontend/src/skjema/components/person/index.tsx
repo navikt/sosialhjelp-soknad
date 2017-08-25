@@ -1,0 +1,35 @@
+import * as React from "react";
+import { Container, Row, Column } from "nav-frontend-grid";
+import FaktumInput from "../../../skjema/faktum/FaktumInput";
+import "./personskjema.css";
+
+interface Props {
+	navnFaktumKey: string;
+	fnrFaktumKey: string;
+	pnrFaktumKey: string;
+}
+
+const Personskjema: React.StatelessComponent<Props> = ({
+	navnFaktumKey,
+	fnrFaktumKey,
+	pnrFaktumKey
+}) =>
+	<div className="personskjema">
+		<Container fluid={true} className="personskjema_no-padding">
+			<Row>
+				<Column xs="12">
+					<FaktumInput faktumKey={navnFaktumKey} />
+				</Column>
+			</Row>
+			<Row>
+				<Column sm="6" xs="3">
+					<FaktumInput faktumKey={fnrFaktumKey} />
+				</Column>
+				<Column sm="6" xs="3">
+					<FaktumInput faktumKey={pnrFaktumKey} />
+				</Column>
+			</Row>
+		</Container>
+	</div>;
+
+export default Personskjema;

@@ -77,6 +77,6 @@ export function getFaktumInputTekst(
 		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
 		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`),
-		placeholder: getIntlTextOrKey(intl, `${key}.placeholder`)
+		placeholder: getIntlText(intl, `${key}.placeholder`)
 	};
 }

@@ -6,6 +6,7 @@ import { radioCheckKeys } from "../../../skjema/utils";
 import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
 import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
 import Underskjema from "../../../skjema/components/underskjema";
+import Ektefelle from "./Ektefelle";
 
 class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -17,7 +18,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 				<FaktumRadio faktumKey={sivilstatus.faktum} option="gift" />
 				<Underskjema visible={faktum.get(sivilstatus.faktum) === "gift"}>
 					<FaktumSkjemagruppe tittelId={gift.sporsmal}>
-						<div className="skjemaelement">TODO</div>
+						<Ektefelle faktum={faktum} />
 					</FaktumSkjemagruppe>
 				</Underskjema>
 				<FaktumRadio faktumKey={sivilstatus.faktum} option="ugift" />
