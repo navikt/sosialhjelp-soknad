@@ -3,6 +3,7 @@ declare module "nav-frontend-grid" {
 
 	export interface ContainerProps {
 		className?: string;
+		fluid?: boolean;
 	}
 
 	export interface RowProps {
@@ -11,9 +12,9 @@ declare module "nav-frontend-grid" {
 
 	export interface ColumnProps {
 		xs: string;
-		sm: string;
-		md: string;
-		lg: string;
+		sm?: string;
+		md?: string;
+		lg?: string;
 		className?: string;
 	}
 

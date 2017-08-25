@@ -1,18 +1,21 @@
-@import "../../styles/variables.less";
+@import "../../styles/variables";
 
 @bakgrunn: #efefef;
 @ramme: @navGra20;
 
 .underskjema {
-	padding-top: 0.8rem;
+	padding-top: .8rem;
 	padding-bottom: 1rem;
 
+	&__wrapper {
+		margin-left: -4rem;
+		margin-right: -4rem;
+	}
+
 	&__boks {
+		padding: 2rem 4rem;
 		border: 1px solid @ramme;
 		background-color: @bakgrunn;
-		padding-right: 2rem;
-		padding-top: 2rem;
-		padding-bottom: 2rem;
 		position: relative;
 	}
 

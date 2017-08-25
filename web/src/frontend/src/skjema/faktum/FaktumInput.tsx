@@ -13,7 +13,6 @@ interface StateProps {
 }
 
 interface OwnProps {
-	value: string;
 	faktumKey: string;
 	disabled?: boolean;
 	feil?: Feil;
