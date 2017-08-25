@@ -152,23 +152,23 @@ if (isMasterBuild) {
             }
         }
     }
-//    stage("Deploy app til q6") {
-//        callback = "${env.BUILD_URL}input/Deploy/"
-//        node {
-//            deploy = common.deployApp(application, releaseVersion, "q6", callback, author).key
-//        }
-//
-//        try {
-//            timeout(time: 30, unit: 'MINUTES') {
-//                input id: 'deploy', message: "deployer ${deploy}, deploy OK?"
-//            }
-//        } catch (Exception e) {
-//            msg = "Deploy feilet [" + deploy + "](https://jira.adeo.no/browse/" + deploy + ")"
-//            node {
-//                notifyFailed(msg, e)
-//            }
-//        }
-//    }
+    stage("Deploy app til q6") {
+        callback = "${env.BUILD_URL}input/Deploy/"
+        node {
+            deploy = common.deployApp(application, releaseVersion, "q6", callback, author).key
+        }
+
+        try {
+            timeout(time: 30, unit: 'MINUTES') {
+                input id: 'deploy', message: "deployer ${deploy}, deploy OK?"
+            }
+        } catch (Exception e) {
+            msg = "Deploy feilet [" + deploy + "](https://jira.adeo.no/browse/" + deploy + ")"
+            node {
+                notifyFailed(msg, e)
+            }
+        }
+    }
 }
 
 //if (isMasterBuild) {
