@@ -1,11 +1,11 @@
 import * as React from "react";
 import Sporsmal from "../../../skjema/components/sporsmal";
 import Steg from "../../../skjema/components/steg";
-import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../../../skjema/reducer";
-import { DispatchProps } from "../../../redux/types";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import { faktumIsSelected } from "../../../skjema/utils";
+import {connect} from "react-redux";
+import {FaktumMap, FaktumState} from "../../../skjema/reducer";
+import {DispatchProps} from "../../../redux/types";
+import {InjectedIntlProps, injectIntl} from "react-intl";
+import {faktumIsSelected, radioCheckKeys} from "../../../skjema/utils";
 
 import FaktumCheckbox from "../../../skjema/faktum/FaktumCheckbox";
 import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
@@ -23,53 +23,50 @@ class UtgifterGjeld extends React.Component<
 > {
 	render() {
 		const { faktum } = this.props;
+
+		const harBoutgifter = radioCheckKeys("utgifter.boutgift");
+		const boUtgifter = radioCheckKeys(`${harBoutgifter.faktum}.true.type`);
+		const andreBoUtgifter = `${boUtgifter.faktum}.andreutgifter.true.beskrivelse`;
+
+		const harUtgifterBarn = radioCheckKeys("utgifter.barn");
+		const barneUtgifter = radioCheckKeys("utgifter.barn.true.utgifter");
+		const andreBarneutgifter = `${barneUtgifter.faktum}.annet.true.beskrivelse`;
+
 		return (
-			<Steg tittelId="Utgifter og gjeld">
-				<Sporsmal sporsmalId="Har du boutgifter?">
-					<FaktumRadio faktumKey="utgift.bo" option="false" />
-					<Underskjema visible={faktum.get("utgift.bo") === "false"}>
-						<FaktumSkjemagruppe tittelId="Hvilken utgifter er det?">
-							<FaktumCheckbox faktumKey="utgift.bo.false" option="husleie" />
-							<FaktumCheckbox faktumKey="utgift.bo.false" option="strom" />
-							<FaktumCheckbox faktumKey="utgift.bo.false" option="kommunale" />
-							<FaktumCheckbox faktumKey="utgift.bo.false" option="oppvarming" />
-							<FaktumCheckbox faktumKey="utgift.bo.false" option="avdrag" />
-							<FaktumCheckbox faktumKey="utgift.bo.false" option="andre" />
-							{faktumIsSelected(faktum.get("utgift.bo.false.andre"))
-								? <FaktumTextarea faktumKey="utgift.bo.false.andre.true.beskrivelse" />
+			<Steg tittelId="utgifterbolk.tittel">
+				<Sporsmal sporsmalId={harBoutgifter.sporsmal}>
+					<FaktumRadio faktumKey={harBoutgifter.faktum} option="true" />
+					<Underskjema visible={faktum.get(harBoutgifter.faktum) === "true"}>
+						<FaktumSkjemagruppe tittelId={boUtgifter.sporsmal}>
+							<FaktumCheckbox faktumKey={boUtgifter.faktum} option="husleie" />
+							<FaktumCheckbox faktumKey={boUtgifter.faktum} option="strom" />
+							<FaktumCheckbox faktumKey={boUtgifter.faktum} option="kommunaleavgifter" />
+							<FaktumCheckbox faktumKey={boUtgifter.faktum} option="oppvarming" />
+							<FaktumCheckbox faktumKey={boUtgifter.faktum} option="avdraglaan" />
+							<FaktumCheckbox faktumKey={boUtgifter.faktum} option="andreutgifter" />
+
+							{faktumIsSelected(faktum.get(`${boUtgifter.faktum}.andreutgifter`))
+								? <FaktumTextarea faktumKey={andreBoUtgifter} />
 								: null}
 						</FaktumSkjemagruppe>
 					</Underskjema>
-					<FaktumRadio faktumKey="utgift.bo" option="true" />
+					<FaktumRadio faktumKey={harBoutgifter.faktum} option="false" />
 				</Sporsmal>
-				<Sporsmal sporsmalId="Har du utgifter til barn?">
-					<FaktumRadio faktumKey="utgift.barn" option="false" />
-					<Underskjema visible={faktum.get("utgift.barn") === "false"}>
-						<FaktumSkjemagruppe tittelId="Hvilken utgifter er det?">
-							<FaktumCheckbox
-								faktumKey="utgift.barn.false"
-								option="fritidsaktivitet"
-							/>
-							<FaktumCheckbox
-								faktumKey="utgift.barn.false"
-								option="barnehage"
-							/>
-							<FaktumCheckbox
-								faktumKey="utgift.barn.false"
-								option="tannbehandling"
-							/>
-							<FaktumCheckbox faktumKey="utgift.barn.false" option="helse" />
-							<FaktumCheckbox faktumKey="utgift.barn.false" option="annet" />
-							{faktumIsSelected(faktum.get("utgift.barn.false.annet"))
-								? <FaktumTextarea faktumKey="utgift.barn.false.annet.true.beskrivelse" />
+				<Sporsmal sporsmalId={harUtgifterBarn.sporsmal}>
+					<FaktumRadio faktumKey={harUtgifterBarn.faktum} option="true" />
+					<Underskjema visible={faktum.get(harUtgifterBarn.faktum) === "true"}>
+						<FaktumSkjemagruppe tittelId={barneUtgifter.sporsmal}>
+							<FaktumCheckbox faktumKey={barneUtgifter.faktum} option="fritidsaktivitet"/>
+							<FaktumCheckbox faktumKey={barneUtgifter.faktum} option="barnehage"/>
+							<FaktumCheckbox faktumKey={barneUtgifter.faktum} option="tannbehandling"/>
+							<FaktumCheckbox faktumKey={barneUtgifter.faktum} option="helse"/>
+							<FaktumCheckbox faktumKey={barneUtgifter.faktum} option="annet"/>
+							{faktumIsSelected(faktum.get(`${barneUtgifter.faktum}.annet`))
+								? <FaktumTextarea faktumKey={andreBarneutgifter} />
 								: null}
 						</FaktumSkjemagruppe>
 					</Underskjema>
-					<FaktumRadio faktumKey="utgift.barn" option="true" />
-				</Sporsmal>
-				<Sporsmal sporsmalId="Har du ekstrautgifter til helse?">
-					<FaktumRadio faktumKey="utgift.helse" option="false" />
-					<FaktumRadio faktumKey="utgift.helse" option="true" />
+					<FaktumRadio faktumKey={harUtgifterBarn.faktum} option="false" />
 				</Sporsmal>
 			</Steg>
 		);
