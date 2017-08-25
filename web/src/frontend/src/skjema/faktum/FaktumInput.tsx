@@ -6,7 +6,6 @@ import { setFaktumVerdi } from "../actions";
 import { DispatchProps } from "../types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getFaktumInputTekst } from "../utils";
-import "./FaktumInput.css";
 
 interface StateProps {
 	faktum: FaktumMap;
