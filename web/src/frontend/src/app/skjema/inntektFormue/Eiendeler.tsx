@@ -34,10 +34,10 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 							option="fritidseiendom"
 						/>
 						<FaktumCheckbox faktumKey={hvilkeEiendeler.faktum} option="annet" />
-						{faktumIsSelected(faktum.get(hvilkeEiendelerAnnet))
-							? <FaktumTextarea
+						{faktumIsSelected(faktum.get(hvilkeEiendelerAnnet)) ?
+							<FaktumTextarea
 									faktumKey={`${hvilkeEiendelerAnnet}.beskrivelse`}
-								/>
+							/>
 							: null}
 					</FaktumSkjemagruppe>
 				</Underskjema>

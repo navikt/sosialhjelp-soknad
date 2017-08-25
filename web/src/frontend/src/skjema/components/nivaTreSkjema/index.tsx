@@ -9,12 +9,14 @@ interface NivaTreSkjemaProps extends React.Props<any> {
 	children: React.ReactNode;
 }
 
+// TODO: Vurder å fjerne useCollapse
 const NivaTreSkjema: React.StatelessComponent<NivaTreSkjemaProps> = ({
 	tittel,
 	useCollapse,
 	visible,
 	children
 }) => {
+	useCollapse = true;
 	const renderContent = () =>
 		<div className="nivaTreSkjema">
 			<div className="nivaTreSkjema__boks">
