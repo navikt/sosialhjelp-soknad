@@ -18,7 +18,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 				<FaktumRadio faktumKey={sivilstatus.faktum} option="gift" />
 				<Underskjema visible={faktum.get(sivilstatus.faktum) === "gift"}>
 					<FaktumSkjemagruppe tittelId={gift.sporsmal}>
-						<Ektefelle />
+						<Ektefelle faktum={faktum} />
 					</FaktumSkjemagruppe>
 				</Underskjema>
 				<FaktumRadio faktumKey={sivilstatus.faktum} option="ugift" />
