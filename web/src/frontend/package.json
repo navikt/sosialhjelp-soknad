@@ -30,7 +30,7 @@
     "react-scripts-ts": "2.5.0",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
-    "redux-saga": "^0.15.6",
+    "redux-saga": "^0.15.6"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.0",
