@@ -22,13 +22,13 @@ class Barn extends React.Component<OwnProps & FaktumComponentProps, {}> {
 				<FaktumPersonskjema faktumKey={faktumKey} />
 				<FaktumSkjemagruppe tittelId={borInfo.sporsmal}>
 					<FaktumRadio faktumKey={borInfo.faktum} option="true" />
-					<FaktumRadio faktumKey={borInfo.faktum} option="false" />
 					<NivaTreSkjema visible={faktumIsSelected(faktum.get(borInfo.faktum))}>
 						<FaktumSkjemagruppe tittelId={hvormye.sporsmal}>
 							<FaktumRadio faktumKey={hvormye.faktum} option="heltid" />
 							<FaktumRadio faktumKey={hvormye.faktum} option="deltid" />
 						</FaktumSkjemagruppe>
 					</NivaTreSkjema>
+					<FaktumRadio faktumKey={borInfo.faktum} option="false" />
 				</FaktumSkjemagruppe>
 			</FaktumSkjemagruppe>
 		);
