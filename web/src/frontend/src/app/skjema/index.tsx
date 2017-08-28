@@ -43,7 +43,6 @@ class Skjema extends React.Component<Props & RouterProps, {}> {
 						{ tittel: "Bosituasjon" },
 						{ tittel: "Inntekt og utdanning" },
 						{ tittel: "Utgifter og gjeld" },
-						{ tittel: "Vedlegg" },
 						{ tittel: "Opplysninger" }
 					]}
 				/>
