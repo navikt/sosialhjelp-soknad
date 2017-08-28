@@ -8,7 +8,9 @@ interface Props {
 const Infoblokk: React.StatelessComponent<Props> = ({ children, tittel }) => {
 	return (
 		<div className="skjema-infoblokk">
-			<Info />
+			<div className="skjema-infoblokk__icon">
+				<Info />
+			</div>
 			{tittel
 				? <h2>
 						{tittel}
