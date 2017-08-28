@@ -4,7 +4,6 @@ import { FaktumState, FaktumMap } from "../../../skjema/reducer";
 import Steg from "../../../skjema/components/steg";
 import Sivilstatus from "./Sivilstatus";
 import Barn from "./Barn";
-import AndreBarn from "./AndreBarn";
 
 interface StateProps {
 	faktum: FaktumMap;
@@ -17,7 +16,6 @@ class Familie extends React.Component<StateProps, {}> {
 			<Steg tittelId="familiebolk.tittel">
 				<Sivilstatus faktum={faktum} />
 				<Barn faktum={faktum} />
-				<AndreBarn faktum={faktum} />
 			</Steg>
 		);
 	}
