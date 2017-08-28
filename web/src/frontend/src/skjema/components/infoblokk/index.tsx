@@ -8,7 +8,11 @@ interface Props {
 const Infoblokk: React.StatelessComponent<Props> = ({ children, tittel }) => {
 	return (
 		<div className="skjema-infoblokk">
-			<h1>Tittel</h1>
+			{tittel
+				? <h1>
+						{tittel}
+					</h1>
+				: null}
 			{children}
 		</div>
 	);
