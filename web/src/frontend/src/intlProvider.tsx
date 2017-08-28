@@ -1,6 +1,7 @@
 import * as React from "react";
 import { addLocaleData, IntlProvider as Provider } from "react-intl";
 import * as nb from "react-intl/locale-data/nb";
+import { getApiBaseUrl } from "./utils";
 
 addLocaleData(nb);
 
@@ -17,7 +18,7 @@ const DATA = "data";
 
 class IntlProvider extends React.Component<IntlProviderProps, IntlProviderState> {
 
-	constructor(props:  IntlProviderProps) {
+	constructor(props: IntlProviderProps) {
 		super(props);
 		this.state = {
 			ledetekster: {status: null, data: {nb: {}}}
@@ -27,7 +28,7 @@ class IntlProvider extends React.Component<IntlProviderProps, IntlProviderState>
 	/* tslint:disable */
 	componentDidMount() {
 		this.setState({ledetekster: {status: 0, data: {nb: {}}}});
-		fetch('http://localhost:3001/api/tekster')
+		fetch(getApiBaseUrl() + "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp")
 			.then(response => response.json())
 			.then(texts => {
 				this.setState({ledetekster: {status: 200, data: texts}});
