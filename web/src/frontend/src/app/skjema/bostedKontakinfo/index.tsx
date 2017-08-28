@@ -1,9 +1,33 @@
 import * as React from "react";
+import Sporsmal from "../../../skjema/components/sporsmal";
 import Steg from "../../../skjema/components/steg";
+import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
+import FaktumInput from "../../../skjema/faktum/FaktumInput";
+import { radioCheckKeys } from "../../../skjema/utils";
 
 class Bosted extends React.Component<{}, {}> {
 	render() {
-		return <Steg tittelId="Bosted, kontaktinfo og statsborgerskap" />;
+		const statsborger = radioCheckKeys("kontakt.statsborger");
+		return (
+			<Steg tittelId="kontak.tittel">
+				<Sporsmal
+					sporsmalId="kontakt.kontonummer.tittel"
+					beskrivelseId="kontakt.kontonummer.beskrivelse"
+				>
+					<FaktumInput faktumKey="kontakt.kontonummer" />
+				</Sporsmal>
+				<Sporsmal
+					sporsmalId="kontakt.telefon.tittel"
+					beskrivelseId="kontakt.telefon.beskrivelse"
+				>
+					<FaktumInput faktumKey="kontakt.telefon" />
+				</Sporsmal>
+				<Sporsmal sporsmalId={statsborger.sporsmal}>
+					<FaktumRadio faktumKey={statsborger.faktum} option="true" />
+					<FaktumRadio faktumKey={statsborger.faktum} option="false" />
+				</Sporsmal>
+			</Steg>
+		);
 	}
 }
 
