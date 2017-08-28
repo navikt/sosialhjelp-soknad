@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter, RouterProps } from "react-router";
 import { Route, Switch } from "react-router";
-import Steg1 from "./bostedKontakinfo";
+import Steg1 from "./kontaktinfo";
 import Steg2 from "./arbeidUtdanning";
 import Steg3 from "./familie";
 import Steg4 from "./begrunnelse";

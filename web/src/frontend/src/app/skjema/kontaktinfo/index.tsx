@@ -5,7 +5,7 @@ import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
 import FaktumInput from "../../../skjema/faktum/FaktumInput";
 import { radioCheckKeys } from "../../../skjema/utils";
 
-class Bosted extends React.Component<{}, {}> {
+class Kontaktinfo extends React.Component<{}, {}> {
 	render() {
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		return (
@@ -31,4 +31,4 @@ class Bosted extends React.Component<{}, {}> {
 	}
 }
 
-export default Bosted;
+export default Kontaktinfo;
