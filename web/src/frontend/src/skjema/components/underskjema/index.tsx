@@ -14,7 +14,7 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
 	children
 }) => {
 	return (
-		<Collapse isOpened={visible} className="underskjema__wrapper">
+		<Collapse isOpened={visible} className="underskjema__wrapper" hasNestedCollapse={true}>
 			<div className="underskjema">
 				<div className="underskjema__boks">
 					<div className="underskjema__innhold">

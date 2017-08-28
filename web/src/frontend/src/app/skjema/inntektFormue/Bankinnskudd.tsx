@@ -34,10 +34,10 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 						/>
 						<FaktumCheckbox faktumKey={hvilkeInnskudd.faktum} option="aksjer" />
 						<FaktumCheckbox faktumKey={hvilkeInnskudd.faktum} option="annet" />
-						{faktumIsSelected(faktum.get(hvilkeInnskuddAnnet))
-							? <FaktumTextarea
+						{faktumIsSelected(faktum.get(hvilkeInnskuddAnnet)) ?
+							<FaktumTextarea
 									faktumKey={`${hvilkeInnskuddAnnet}.beskrivelse`}
-								/>
+							/>
 							: null}
 					</FaktumSkjemagruppe>
 				</Underskjema>

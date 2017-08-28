@@ -36,10 +36,10 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 							faktumKey={hvilkeUtbetalinger.faktum}
 							option="annet"
 						/>
-						{faktumIsSelected(faktum.get(hvilkeUtbetalingerAnnet))
-							? <FaktumTextarea
+						{faktumIsSelected(faktum.get(hvilkeUtbetalingerAnnet)) ?
+							<FaktumTextarea
 									faktumKey={`${hvilkeUtbetalingerAnnet}.beskrivelse`}
-								/>
+							/>
 							: null}
 					</FaktumSkjemagruppe>
 				</Underskjema>
