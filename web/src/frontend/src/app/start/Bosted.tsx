@@ -6,7 +6,7 @@ import { FaktumState, FaktumMap } from "../../skjema/reducer";
 import { Kommuner } from "./kommuner";
 import { Kommune, Bydel } from "./types";
 import { Collapse } from "react-collapse";
-import Arrow from "../components/svg/Arrow";
+import Arrow from "../../skjema/components/svg/Arrow";
 
 interface StateProps {
 	faktum: FaktumMap;
