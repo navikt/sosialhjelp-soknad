@@ -5,12 +5,14 @@ import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 
 interface Props extends React.Props<any> {
 	sporsmalId: string;
+	beskrivelseId?: string;
 	hjelpetekst?: string;
 }
 
 const Sporsmal: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	children,
 	sporsmalId,
+	beskrivelseId,
 	hjelpetekst,
 	intl
 }) => {
@@ -28,6 +30,11 @@ const Sporsmal: React.StatelessComponent<Props & InjectedIntlProps> = ({
 						</div>
 					: null}
 				<div className="skjema-sporsmal__innhold">
+					{beskrivelseId
+						? <p className="skjema-sporsmal__beskrivelse">
+								{intl.formatMessage({ id: beskrivelseId })}
+							</p>
+						: null}
 					{children}
 				</div>
 			</fieldset>
