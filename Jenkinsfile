@@ -16,8 +16,6 @@ repoName = "soknadsosialhjelp"
 def notifyFailed(reason, error, buildNr) {
     currentBuild.result = 'FAILED'
 
-    commitHash = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
-
     notifyGithub("${project}", "${repoName}", "${commitHash}", 'failure', "Build #${buildNr} : ${reason}")
 
     throw error
@@ -27,7 +25,6 @@ def returnOk(message, buildNr) {
     echo "${message}"
     currentBuild.result = "SUCCESS"
 
-    commitHash = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
     notifyGithub("${project}", "${repoName}", "${commitHash}", 'success', "Build #${buildNr}")
 }
 
