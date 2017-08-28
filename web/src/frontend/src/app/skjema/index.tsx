@@ -9,6 +9,7 @@ import Steg4 from "./begrunnelse";
 import Steg5 from "./bosituasjon";
 import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
+import Steg8 from "./ekstrainformasjon";
 import StegIndikator from "../../skjema/components/stegIndikator";
 import Knapperad from "../../skjema/components/knapperad";
 import { finnStegFraLocation } from "./utils";
@@ -42,7 +43,8 @@ class Skjema extends React.Component<Props & RouterProps, {}> {
 						{ tittel: "Bosituasjon" },
 						{ tittel: "Inntekt og utdanning" },
 						{ tittel: "Utgifter og gjeld" },
-						{ tittel: "Vedlegg" }
+						{ tittel: "Vedlegg" },
+						{ tittel: "Opplysninger" }
 					]}
 				/>
 				<Switch>
@@ -53,6 +55,7 @@ class Skjema extends React.Component<Props & RouterProps, {}> {
 					<Route path={`${match.url}/5`} component={Steg5} />
 					<Route path={`${match.url}/6`} component={Steg6} />
 					<Route path={`${match.url}/7`} component={Steg7} />
+					<Route path={`${match.url}/8`} component={Steg8} />
 				</Switch>
 				<Knapperad
 					gaVidere={() => gaVidere(aktivtSteg, history)}
