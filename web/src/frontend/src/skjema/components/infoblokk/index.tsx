@@ -9,7 +9,11 @@ const Infoblokk: React.StatelessComponent<Props> = ({ children, tittel }) => {
 	return (
 		<div className="skjema-infoblokk">
 			<Info />
-			<h1>Tittel</h1>
+			{tittel
+				? <h2>
+						{tittel}
+					</h2>
+				: null}
 			{children}
 		</div>
 	);
