@@ -1,8 +1,6 @@
 import * as React from "react";
 import * as classNames from "classnames";
-
-// eslint-disable-next-line import/no-extraneous-dependencies, import/no-webpack-loader-syntax, import/first
-const hakeIkon = require("./../../../../node_modules/nav-frontend-ikoner-assets/assets/stegindikator__hake.svg");
+import StegindikatorHake from "../svg/StegindikatorHake";
 
 interface Props {
 	aktivtSteg: number;
@@ -45,7 +43,7 @@ export const Steg: React.StatelessComponent<StegProps> = (props: StegProps) => {
 		<li className={className} aria-label={props.tittel}>
 			<StatusTekst {...props} />
 			{passert
-				? <img src={hakeIkon} alt="Hake" />
+				? <StegindikatorHake />
 				: <span>
 						{props.steg}
 					</span>}
@@ -60,8 +58,7 @@ const StegIndikator: React.StatelessComponent<Props> = (props: Props) => {
 			role="progressbar"
 			aria-valuenow={props.aktivtSteg}
 			aria-valuemin={1}
-			aria-valuemax={props.steg.length}
-		>
+			aria-valuemax={props.steg.length}>
 			<ul className="stegindikator">
 				{props.steg.map((steg, idx) =>
 					<Steg
