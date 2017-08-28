@@ -1,8 +1,16 @@
 import * as React from "react";
 import Bosted from "./Bosted";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { opprettSoknad } from "../../redux/soknad/actions";
 import "./start.css";
 
-class Start extends React.Component<{}, {}> {
+class Start extends React.Component<DispatchToProps, {}> {
+
+	componentDidMount() {
+		this.props.action.opprettSoknad();
+	}
+
 	render() {
 		return (
 			<div className="skjema-start">
@@ -16,4 +24,16 @@ class Start extends React.Component<{}, {}> {
 	}
 }
 
-export default Start;
+interface DispatchToProps {
+	action: {
+		opprettSoknad: () => {}
+	};
+}
+const mapStateToProps = (state: any): {} => ({
+});
+
+const mapDispatchToProps = (dispatch: any): DispatchToProps => ({
+	action: bindActionCreators({opprettSoknad}, dispatch)
+});
+
+export default connect<{}, DispatchToProps, {}>(mapStateToProps, mapDispatchToProps)(Start);
