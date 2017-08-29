@@ -39,10 +39,8 @@ class FaktumSelect extends React.Component<
 				disabled={disabled}
 				value={fakta.get(faktumKey)}
 				bredde={bredde}
-				onChange={(evt: any) => {
-						dispatch(setFaktumVerdi(faktumKey, evt.target.value));
-					}
-				}
+				onChange={(evt: any) =>
+					dispatch(setFaktumVerdi(faktumKey, evt.target.value))}
 				label={
 					<LabelMedHjelpetekst
 						id={faktumKey}
