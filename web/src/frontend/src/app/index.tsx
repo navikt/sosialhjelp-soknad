@@ -13,7 +13,7 @@ class App extends React.Component<{}, {}> {
 					<FormattedMessage id="skjema.tittel" />
 				</h1>
 				<Switch>
-					<Route path={`/`} exact={true} component={Start} />
+					<Route path={`/informasjon`} exact={true} component={Start} />
 					<Route path={`/skjema`} component={Skjema} />
 				</Switch>
 				{this.props.children}

@@ -26,7 +26,7 @@ class Bosted extends React.Component<FaktumComponentProps> {
 			(valgtKommune && !valgtKommune.bydeler) || (valgtKommune && valgtBydel);
 
 		return (
-			<form action="/skjema/1">
+			<form action="skjema/1">
 				<Collapse isOpened={true}>
 					<div className="blokk-l">
 						<FaktumSelect
