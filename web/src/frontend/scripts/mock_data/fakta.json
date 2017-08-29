@@ -1,612 +1,612 @@
 [
-  {
-    "faktumId": 5482,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "bolker",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5483,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "personalia",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "SYSTEMREGISTRERT"
-  },
-  {
-    "faktumId": 5484,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "arbeid.dinsituasjon",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5485,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "familie.sivilstatus",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5486,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "familie.barn",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5487,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "familie.andrebarn",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5488,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "begrunnelse.hvorfor",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5489,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "begrunnelse.hva",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5490,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "bosituasjon",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5491,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "inntekt.mottarytelser",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5492,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "inntekt.soktytelser",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5493,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "inntekt.bostotte",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5494,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "inntekt.eierandeler",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5495,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "inntekt.bankinnskudd",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5496,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "inntekt.inntekter",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5497,
-    "soknadId": 88,
-    "parrentFaktum": null,
-    "key": "utgifter.boutgift",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5498,
-    "soknadId": 88,
-    "parrentFaktum": 5484,
-    "key": "arbeid.dinsituasjon.arbeidsledig",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5499,
-    "soknadId": 88,
-    "parrentFaktum": 5484,
-    "key": "arbeid.dinsituasjon.jobb",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5500,
-    "soknadId": 88,
-    "parrentFaktum": 5484,
-    "key": "arbeid.dinsituasjon.student",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5501,
-    "soknadId": 88,
-    "parrentFaktum": 5484,
-    "key": "arbeid.dinsituasjon.annensituasjon",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5502,
-    "soknadId": 88,
-    "parrentFaktum": 5500,
-    "key": "arbeid.dinsituasjon.student.heltid",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5503,
-    "soknadId": 88,
-    "parrentFaktum": 5501,
-    "key": "arbeid.dinsituasjon.annensituasjon.beskrivelse",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5504,
-    "soknadId": 88,
-    "parrentFaktum": 5490,
-    "key": "bosituasjon.annen.botype",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5505,
-    "soknadId": 88,
-    "parrentFaktum": 5504,
-    "key": "bosituasjon.annen.botype.institusjon",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5506,
-    "soknadId": 88,
-    "parrentFaktum": 5504,
-    "key": "bosituasjon.annen.botype.fengsel",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5507,
-    "soknadId": 88,
-    "parrentFaktum": 5504,
-    "key": "bosituasjon.annen.botype.foreldre",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5508,
-    "soknadId": 88,
-    "parrentFaktum": 5504,
-    "key": "bosituasjon.annen.botype.krisesenter",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5509,
-    "soknadId": 88,
-    "parrentFaktum": 5504,
-    "key": "bosituasjon.annen.botype.venner",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5510,
-    "soknadId": 88,
-    "parrentFaktum": 5504,
-    "key": "bosituasjon.annen.botype.familie",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5511,
-    "soknadId": 88,
-    "parrentFaktum": 5493,
-    "key": "inntekt.bostotte.type",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5512,
-    "soknadId": 88,
-    "parrentFaktum": 5511,
-    "key": "inntekt.bostotte.type.husbanken",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5513,
-    "soknadId": 88,
-    "parrentFaktum": 5511,
-    "key": "inntekt.bostotte.type.kommunal",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5514,
-    "soknadId": 88,
-    "parrentFaktum": 5494,
-    "key": "inntekt.eierandeler.false.type",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5515,
-    "soknadId": 88,
-    "parrentFaktum": 5514,
-    "key": "inntekt.eierandeler.false.type.bolig",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5516,
-    "soknadId": 88,
-    "parrentFaktum": 5514,
-    "key": "inntekt.eierandeler.false.type.kjoretoy",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5517,
-    "soknadId": 88,
-    "parrentFaktum": 5514,
-    "key": "inntekt.eierandeler.type.false.campingvogn",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5518,
-    "soknadId": 88,
-    "parrentFaktum": 5514,
-    "key": "inntekt.eierandeler.false.type.fritidseiendom",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5519,
-    "soknadId": 88,
-    "parrentFaktum": 5514,
-    "key": "inntekt.eierandeler.false.type.annet",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5520,
-    "soknadId": 88,
-    "parrentFaktum": 5519,
-    "key": "inntekt.eierandeler.false.type.annet.true.beskrivelse",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5521,
-    "soknadId": 88,
-    "parrentFaktum": 5495,
-    "key": "inntekt.bankinnskudd.false.type",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5522,
-    "soknadId": 88,
-    "parrentFaktum": 5495,
-    "key": "inntekt.bankinnskudd.false.type.sparekonto",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5523,
-    "soknadId": 88,
-    "parrentFaktum": 5495,
-    "key": "inntekt.bankinnskudd.false.type.brukskonto",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5524,
-    "soknadId": 88,
-    "parrentFaktum": 5495,
-    "key": "inntekt.bankinnskudd.false.type.livsforsikring",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5525,
-    "soknadId": 88,
-    "parrentFaktum": 5495,
-    "key": "inntekt.bankinnskudd.false.type.aksjer",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5526,
-    "soknadId": 88,
-    "parrentFaktum": 5495,
-    "key": "inntekt.bankinnskudd.false.type.annet",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5527,
-    "soknadId": 88,
-    "parrentFaktum": 5526,
-    "key": "inntekt.bankinnskudd.false.type.annet.true.beskrivelse",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5528,
-    "soknadId": 88,
-    "parrentFaktum": 5496,
-    "key": "inntekt.inntekter.false.type",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5529,
-    "soknadId": 88,
-    "parrentFaktum": 5528,
-    "key": "inntekt.inntekter.false.type.utbytte",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5530,
-    "soknadId": 88,
-    "parrentFaktum": 5528,
-    "key": "inntekt.inntekter.false.type.salg",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5531,
-    "soknadId": 88,
-    "parrentFaktum": 5528,
-    "key": "inntekt.inntekter.false.type.leieinntekter",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5532,
-    "soknadId": 88,
-    "parrentFaktum": 5528,
-    "key": "inntekt.inntekter.false.type.forsikringsutbetalinger",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5533,
-    "soknadId": 88,
-    "parrentFaktum": 5528,
-    "key": "inntekt.inntekter.false.type.annet",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5534,
-    "soknadId": 88,
-    "parrentFaktum": 5533,
-    "key": "inntekt.inntekter.false.type.annet.true.beskrivelse",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5535,
-    "soknadId": 88,
-    "parrentFaktum": 5497,
-    "key": "utgifter.boutgift.type",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5536,
-    "soknadId": 88,
-    "parrentFaktum": 5535,
-    "key": "utgifter.boutgift.type.husleie",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5537,
-    "soknadId": 88,
-    "parrentFaktum": 5535,
-    "key": "utgifter.boutgift.type.strom",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5538,
-    "soknadId": 88,
-    "parrentFaktum": 5535,
-    "key": "utgifter.boutgift.type.kommunaleavgifter",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5539,
-    "soknadId": 88,
-    "parrentFaktum": 5535,
-    "key": "utgifter.boutgift.type.oppvarming",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5540,
-    "soknadId": 88,
-    "parrentFaktum": 5535,
-    "key": "utgifter.boutgift.type.avdraglaan",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5541,
-    "soknadId": 88,
-    "parrentFaktum": 5535,
-    "key": "utgifter.boutgift.type.andreutgifter",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  },
-  {
-    "faktumId": 5542,
-    "soknadId": 88,
-    "parrentFaktum": 5541,
-    "key": "utgifter.boutgift.type.andreutgifter.true.beskrivelse",
-    "value": null,
-    "faktumEgenskaper": [],
-    "properties": {},
-    "type": "BRUKERREGISTRERT"
-  }
+	{
+		"faktumId": 5482,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "bolker",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5483,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "personalia",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "SYSTEMREGISTRERT"
+	},
+	{
+		"faktumId": 5484,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "arbeid.dinsituasjon",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5485,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "familie.sivilstatus",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5486,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "familie.barn",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5487,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "familie.andrebarn",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5488,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "begrunnelse.hvorfor",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5489,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "begrunnelse.hva",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5490,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "bosituasjon",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5491,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "inntekt.mottarytelser",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5492,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "inntekt.soktytelser",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5493,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "inntekt.bostotte",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5494,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "inntekt.eierandeler",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5495,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "inntekt.bankinnskudd",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5496,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "inntekt.inntekter",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5497,
+		"soknadId": 88,
+		"parrentFaktum": null,
+		"key": "utgifter.boutgift",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5498,
+		"soknadId": 88,
+		"parrentFaktum": 5484,
+		"key": "arbeid.dinsituasjon.arbeidsledig",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5499,
+		"soknadId": 88,
+		"parrentFaktum": 5484,
+		"key": "arbeid.dinsituasjon.jobb",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5500,
+		"soknadId": 88,
+		"parrentFaktum": 5484,
+		"key": "arbeid.dinsituasjon.student",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5501,
+		"soknadId": 88,
+		"parrentFaktum": 5484,
+		"key": "arbeid.dinsituasjon.annensituasjon",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5502,
+		"soknadId": 88,
+		"parrentFaktum": 5500,
+		"key": "arbeid.dinsituasjon.student.heltid",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5503,
+		"soknadId": 88,
+		"parrentFaktum": 5501,
+		"key": "arbeid.dinsituasjon.annensituasjon.beskrivelse",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5504,
+		"soknadId": 88,
+		"parrentFaktum": 5490,
+		"key": "bosituasjon.annen.botype",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5505,
+		"soknadId": 88,
+		"parrentFaktum": 5504,
+		"key": "bosituasjon.annen.botype.institusjon",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5506,
+		"soknadId": 88,
+		"parrentFaktum": 5504,
+		"key": "bosituasjon.annen.botype.fengsel",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5507,
+		"soknadId": 88,
+		"parrentFaktum": 5504,
+		"key": "bosituasjon.annen.botype.foreldre",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5508,
+		"soknadId": 88,
+		"parrentFaktum": 5504,
+		"key": "bosituasjon.annen.botype.krisesenter",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5509,
+		"soknadId": 88,
+		"parrentFaktum": 5504,
+		"key": "bosituasjon.annen.botype.venner",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5510,
+		"soknadId": 88,
+		"parrentFaktum": 5504,
+		"key": "bosituasjon.annen.botype.familie",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5511,
+		"soknadId": 88,
+		"parrentFaktum": 5493,
+		"key": "inntekt.bostotte.type",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5512,
+		"soknadId": 88,
+		"parrentFaktum": 5511,
+		"key": "inntekt.bostotte.type.husbanken",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5513,
+		"soknadId": 88,
+		"parrentFaktum": 5511,
+		"key": "inntekt.bostotte.type.kommunal",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5514,
+		"soknadId": 88,
+		"parrentFaktum": 5494,
+		"key": "inntekt.eierandeler.false.type",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5515,
+		"soknadId": 88,
+		"parrentFaktum": 5514,
+		"key": "inntekt.eierandeler.false.type.bolig",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5516,
+		"soknadId": 88,
+		"parrentFaktum": 5514,
+		"key": "inntekt.eierandeler.false.type.kjoretoy",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5517,
+		"soknadId": 88,
+		"parrentFaktum": 5514,
+		"key": "inntekt.eierandeler.type.false.campingvogn",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5518,
+		"soknadId": 88,
+		"parrentFaktum": 5514,
+		"key": "inntekt.eierandeler.false.type.fritidseiendom",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5519,
+		"soknadId": 88,
+		"parrentFaktum": 5514,
+		"key": "inntekt.eierandeler.false.type.annet",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5520,
+		"soknadId": 88,
+		"parrentFaktum": 5519,
+		"key": "inntekt.eierandeler.false.type.annet.true.beskrivelse",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5521,
+		"soknadId": 88,
+		"parrentFaktum": 5495,
+		"key": "inntekt.bankinnskudd.false.type",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5522,
+		"soknadId": 88,
+		"parrentFaktum": 5495,
+		"key": "inntekt.bankinnskudd.false.type.sparekonto",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5523,
+		"soknadId": 88,
+		"parrentFaktum": 5495,
+		"key": "inntekt.bankinnskudd.false.type.brukskonto",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5524,
+		"soknadId": 88,
+		"parrentFaktum": 5495,
+		"key": "inntekt.bankinnskudd.false.type.livsforsikring",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5525,
+		"soknadId": 88,
+		"parrentFaktum": 5495,
+		"key": "inntekt.bankinnskudd.false.type.aksjer",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5526,
+		"soknadId": 88,
+		"parrentFaktum": 5495,
+		"key": "inntekt.bankinnskudd.false.type.annet",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5527,
+		"soknadId": 88,
+		"parrentFaktum": 5526,
+		"key": "inntekt.bankinnskudd.false.type.annet.true.beskrivelse",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5528,
+		"soknadId": 88,
+		"parrentFaktum": 5496,
+		"key": "inntekt.inntekter.false.type",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5529,
+		"soknadId": 88,
+		"parrentFaktum": 5528,
+		"key": "inntekt.inntekter.false.type.utbytte",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5530,
+		"soknadId": 88,
+		"parrentFaktum": 5528,
+		"key": "inntekt.inntekter.false.type.salg",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5531,
+		"soknadId": 88,
+		"parrentFaktum": 5528,
+		"key": "inntekt.inntekter.false.type.leieinntekter",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5532,
+		"soknadId": 88,
+		"parrentFaktum": 5528,
+		"key": "inntekt.inntekter.false.type.forsikringsutbetalinger",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5533,
+		"soknadId": 88,
+		"parrentFaktum": 5528,
+		"key": "inntekt.inntekter.false.type.annet",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5534,
+		"soknadId": 88,
+		"parrentFaktum": 5533,
+		"key": "inntekt.inntekter.false.type.annet.true.beskrivelse",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5535,
+		"soknadId": 88,
+		"parrentFaktum": 5497,
+		"key": "utgifter.boutgift.type",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5536,
+		"soknadId": 88,
+		"parrentFaktum": 5535,
+		"key": "utgifter.boutgift.type.husleie",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5537,
+		"soknadId": 88,
+		"parrentFaktum": 5535,
+		"key": "utgifter.boutgift.type.strom",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5538,
+		"soknadId": 88,
+		"parrentFaktum": 5535,
+		"key": "utgifter.boutgift.type.kommunaleavgifter",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5539,
+		"soknadId": 88,
+		"parrentFaktum": 5535,
+		"key": "utgifter.boutgift.type.oppvarming",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5540,
+		"soknadId": 88,
+		"parrentFaktum": 5535,
+		"key": "utgifter.boutgift.type.avdraglaan",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5541,
+		"soknadId": 88,
+		"parrentFaktum": 5535,
+		"key": "utgifter.boutgift.type.andreutgifter",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 5542,
+		"soknadId": 88,
+		"parrentFaktum": 5541,
+		"key": "utgifter.boutgift.type.andreutgifter.true.beskrivelse",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	}
 ]

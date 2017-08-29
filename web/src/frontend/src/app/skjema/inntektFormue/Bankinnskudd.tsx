@@ -12,9 +12,9 @@ import Underskjema from "../../../skjema/components/underskjema";
 class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
-		const innskudd = radioCheckKeys("inntekt.innskudd");
-		const hvilkeInnskudd = radioCheckKeys("inntekt.innskudd.true");
-		const hvilkeInnskuddAnnet = "inntekt.innskudd.true.annet";
+		const innskudd = radioCheckKeys("inntekt.bankinnskudd");
+		const hvilkeInnskudd = radioCheckKeys("inntekt.bankinnskudd.true");
+		const hvilkeInnskuddAnnet = "inntekt.bankinnskudd.true.annet";
 		return (
 			<Sporsmal sporsmalId={innskudd.sporsmal}>
 				<FaktumRadio faktumKey={innskudd.faktum} option="true" />
@@ -34,11 +34,11 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 						/>
 						<FaktumCheckbox faktumKey={hvilkeInnskudd.faktum} option="aksjer" />
 						<FaktumCheckbox faktumKey={hvilkeInnskudd.faktum} option="annet" />
-						{faktumIsSelected(fakta.get(hvilkeInnskuddAnnet))
-							? <FaktumTextarea
-									faktumKey={`${hvilkeInnskuddAnnet}.beskrivelse`}
-								/>
-							: null}
+						{faktumIsSelected(fakta.get(hvilkeInnskuddAnnet)) ? (
+							<FaktumTextarea
+								faktumKey={`${hvilkeInnskuddAnnet}.beskrivelse`}
+							/>
+						) : null}
 					</FaktumSkjemagruppe>
 				</Underskjema>
 				<FaktumRadio faktumKey={innskudd.faktum} option="false" />
