@@ -32,7 +32,7 @@ sagaMiddleware.run(rootSaga);
 ReactDOM.render(
 	<IntlProvider>
 		<Provider store={store}>
-			<BrowserRouter>
+			<BrowserRouter basename="soknadsosialhjelp">
 				<App />
 			</BrowserRouter>
 		</Provider>
