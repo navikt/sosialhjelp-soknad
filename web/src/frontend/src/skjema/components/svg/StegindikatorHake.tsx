@@ -1,5 +1,6 @@
 import * as React from "react";
 
+/* tslint:disable */
 const StegindikatorHake: React.StatelessComponent<{}> = () =>
 	<svg
 		width="32"

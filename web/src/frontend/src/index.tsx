@@ -20,11 +20,12 @@ const rootReducer = combineReducers({
 });
 
 function configureStore() {
-	/* tslint:disable-next-line */
+	/* tslint:disable */
 	const devtools: any =
 		window["devToolsExtension"] && erDev()
 			? window["devToolsExtension"]()
 			: (f: any) => f;
+	/* tslint:enable */
 	const middleware = applyMiddleware(thunk);
 	return middleware(devtools(createStore))(rootReducer);
 }

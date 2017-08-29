@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import FaktumSelect from "../../skjema/faktum/FaktumSelect";
 import Knapp from "nav-frontend-knapper";
-import { FaktumStoreState, FaktumComponentProps } from "../../skjema/reducer";
+import { FaktumState, FaktumComponentProps } from "../../skjema/reducer";
 import { Kommuner } from "./kommuner";
 import { Kommune, Bydel } from "./types";
 import { Collapse } from "react-collapse";
@@ -131,7 +131,7 @@ const mapDispatchToProps = (dispatch: any): DispatchToProps => ({
 	action: bindActionCreators({opprettSoknad}, dispatch)
 });
 
-const mapStateToProps = (state: { faktumStore: FaktumStoreState, soknad: SoknadState }): {} => ({
+const mapStateToProps = (state: { faktumStore: FaktumState, soknad: SoknadState }): {} => ({
 	fakta: state.faktumStore.fakta,
 	status: state.soknad.status,
 	brukerBehandlingId: state.soknad.brukerBehandlingId
