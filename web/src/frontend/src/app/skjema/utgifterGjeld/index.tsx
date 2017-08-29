@@ -2,7 +2,10 @@ import * as React from "react";
 import Sporsmal from "../../../skjema/components/sporsmal";
 import Steg from "../../../skjema/components/steg";
 import { connect } from "react-redux";
-import { FaktumMap, FaktumState } from "../../../skjema/reducer";
+import {
+	FaktumComponentProps,
+	FaktumStoreState
+} from "../../../skjema/reducer";
 import { DispatchProps } from "../../../redux/types";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { faktumIsSelected, radioCheckKeys } from "../../../skjema/utils";
@@ -13,16 +16,12 @@ import FaktumTextarea from "../../../skjema/faktum/FaktumTextarea";
 import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
 import Underskjema from "../../../skjema/components/underskjema";
 
-interface StateProps {
-	faktum: FaktumMap;
-}
-
 class UtgifterGjeld extends React.Component<
-	StateProps & DispatchProps & InjectedIntlProps,
+	FaktumComponentProps & DispatchProps & InjectedIntlProps,
 	any
 > {
 	render() {
-		const { faktum } = this.props;
+		const { fakta } = this.props;
 
 		const harBoutgifter = radioCheckKeys("utgifter.boutgift");
 		const boUtgifter = radioCheckKeys(`${harBoutgifter.faktum}.true.type`);
@@ -36,7 +35,7 @@ class UtgifterGjeld extends React.Component<
 			<Steg tittelId="utgifterbolk.tittel">
 				<Sporsmal sporsmalId={harBoutgifter.sporsmal}>
 					<FaktumRadio faktumKey={harBoutgifter.faktum} option="true" />
-					<Underskjema visible={faktum.get(harBoutgifter.faktum) === "true"}>
+					<Underskjema visible={fakta.get(harBoutgifter.faktum) === "true"}>
 						<FaktumSkjemagruppe tittelId={boUtgifter.sporsmal}>
 							<FaktumCheckbox faktumKey={boUtgifter.faktum} option="husleie" />
 							<FaktumCheckbox faktumKey={boUtgifter.faktum} option="strom" />
@@ -57,9 +56,7 @@ class UtgifterGjeld extends React.Component<
 								option="andreutgifter"
 							/>
 
-							{faktumIsSelected(
-								faktum.get(`${boUtgifter.faktum}.andreutgifter`)
-							)
+							{faktumIsSelected(fakta.get(`${boUtgifter.faktum}.andreutgifter`))
 								? <FaktumTextarea faktumKey={andreBoUtgifter} />
 								: null}
 						</FaktumSkjemagruppe>
@@ -68,7 +65,7 @@ class UtgifterGjeld extends React.Component<
 				</Sporsmal>
 				<Sporsmal sporsmalId={harUtgifterBarn.sporsmal}>
 					<FaktumRadio faktumKey={harUtgifterBarn.faktum} option="true" />
-					<Underskjema visible={faktum.get(harUtgifterBarn.faktum) === "true"}>
+					<Underskjema visible={fakta.get(harUtgifterBarn.faktum) === "true"}>
 						<FaktumSkjemagruppe tittelId={barneUtgifter.sporsmal}>
 							<FaktumCheckbox
 								faktumKey={barneUtgifter.faktum}
@@ -84,7 +81,7 @@ class UtgifterGjeld extends React.Component<
 							/>
 							<FaktumCheckbox faktumKey={barneUtgifter.faktum} option="helse" />
 							<FaktumCheckbox faktumKey={barneUtgifter.faktum} option="annet" />
-							{faktumIsSelected(faktum.get(`${barneUtgifter.faktum}.annet`))
+							{faktumIsSelected(fakta.get(`${barneUtgifter.faktum}.annet`))
 								? <FaktumTextarea faktumKey={andreBarneutgifter} />
 								: null}
 						</FaktumSkjemagruppe>
@@ -96,8 +93,8 @@ class UtgifterGjeld extends React.Component<
 	}
 }
 
-export default connect((state: { faktum: FaktumState }, props: any) => {
+export default connect((state: FaktumStoreState, props: any) => {
 	return {
-		faktum: state.faktum.faktum
+		fakta: state.faktumStore.fakta
 	};
 })(injectIntl(UtgifterGjeld));

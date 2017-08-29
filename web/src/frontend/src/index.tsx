@@ -16,12 +16,15 @@ import { erDev } from "./utils";
 
 const rootReducer = combineReducers({
 	soknad: SoknadReducer,
-	faktum: FaktumReducer
+	faktumStore: FaktumReducer
 });
 
 function configureStore() {
 	/* tslint:disable-next-line */
-	const devtools: any = (window['devToolsExtension'] && erDev()) ? window['devToolsExtension']() : (f:any)=>f;
+	const devtools: any =
+		window["devToolsExtension"] && erDev()
+			? window["devToolsExtension"]()
+			: (f: any) => f;
 	const middleware = applyMiddleware(thunk);
 	return middleware(devtools(createStore))(rootReducer);
 }

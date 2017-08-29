@@ -2,7 +2,10 @@ import * as React from "react";
 import Sporsmal from "../../../skjema/components/sporsmal";
 import Steg from "../../../skjema/components/steg";
 import { connect } from "react-redux";
-import { FaktumState, FaktumComponentProps } from "../../../skjema/reducer";
+import {
+	FaktumStoreState,
+	FaktumComponentProps
+} from "../../../skjema/reducer";
 import { radioCheckKeys } from "../../../skjema/utils";
 
 import FaktumCheckbox from "../../../skjema/faktum/FaktumCheckbox";
@@ -12,7 +15,7 @@ import Underskjema from "../../../skjema/components/underskjema";
 
 class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	render() {
-		const { faktum } = this.props;
+		const { fakta } = this.props;
 		const bosituasjon = radioCheckKeys("bosituasjon");
 		const annen = radioCheckKeys("bosituasjon.annet.true");
 		return (
@@ -23,7 +26,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					<FaktumRadio faktumKey={bosituasjon.faktum} option="leierkommunalt" />
 					<FaktumRadio faktumKey={bosituasjon.faktum} option="ingen" />
 					<FaktumRadio faktumKey={bosituasjon.faktum} option="annet" />
-					<Underskjema visible={faktum.get(bosituasjon.faktum) === "annet"}>
+					<Underskjema visible={fakta.get(bosituasjon.faktum) === "annet"}>
 						<FaktumSkjemagruppe tittelId={annen.sporsmal}>
 							<FaktumCheckbox faktumKey={annen.faktum} option="institusjon" />
 							<FaktumCheckbox faktumKey={annen.faktum} option="krisesenter" />
@@ -39,8 +42,8 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	}
 }
 
-export default connect((state: { faktum: FaktumState }, props: any) => {
+export default connect((state: FaktumStoreState, props: any) => {
 	return {
-		faktum: state.faktum.faktum
+		fakta: state.faktumStore.fakta
 	};
 })(Bosituasjon);

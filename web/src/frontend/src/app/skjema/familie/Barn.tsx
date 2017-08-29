@@ -10,13 +10,13 @@ import Barneinfo from "./Barneinfo";
 
 class Barn extends React.Component<FaktumComponentProps, {}> {
 	render() {
-		const { faktum } = this.props;
+		const { fakta } = this.props;
 		const barn = radioCheckKeys("familie.barn");
 		const harBarn = radioCheckKeys("familie.barn.true");
 		return (
 			<Sporsmal sporsmalId={barn.sporsmal}>
 				<FaktumRadio faktumKey={barn.faktum} option="true" />
-				<Underskjema visible={faktum.get(barn.faktum) === "true"}>
+				<Underskjema visible={fakta.get(barn.faktum) === "true"}>
 					<FaktumSkjemagruppe tittelId={harBarn.sporsmal}>
 						<Barneinfo
 							{...this.props}

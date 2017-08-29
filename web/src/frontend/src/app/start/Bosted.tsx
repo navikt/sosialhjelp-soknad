@@ -2,31 +2,26 @@ import * as React from "react";
 import { connect } from "react-redux";
 import FaktumSelect from "../../skjema/faktum/FaktumSelect";
 import Knapp from "nav-frontend-knapper";
-import { FaktumState, FaktumMap } from "../../skjema/reducer";
+import { FaktumStoreState, FaktumComponentProps } from "../../skjema/reducer";
 import { Kommuner } from "./kommuner";
 import { Kommune, Bydel } from "./types";
 import { Collapse } from "react-collapse";
-import Arrow from "../components/svg/Arrow";
-import { opprettSoknad } from "../../redux/soknad/actions";
-import { bindActionCreators } from "redux";
 import { SoknadState, ActionTypeKeys } from "../../redux/soknad/types";
+import Arrow from "../../skjema/components/svg/Arrow";
 import { withRouter, RouterProps } from "react-router";
+import { bindActionCreators } from "redux";
+import { opprettSoknad } from "../../redux/soknad/actions";
+
+// interface StateProps {
+// 	faktum: FaktumMap;
+// }
 
 interface StateProps {
-	faktum: FaktumMap;
 	status?: string;
 	brukerBehandlingId?: string;
 }
 
-class Bosted extends React.Component<StateProps & RouterProps & DispatchToProps> {
-
-	constructor(props: StateProps & RouterProps & DispatchToProps) {
-		super(props);
-		this.state = {
-			kommune: "",
-			bydel: ""
-		};
-	}
+class Bosted extends React.Component<FaktumComponentProps & RouterProps & StateProps & DispatchToProps> {
 
 	componentDidUpdate() {
 		if (this.props.status === ActionTypeKeys.OK) {
@@ -35,11 +30,12 @@ class Bosted extends React.Component<StateProps & RouterProps & DispatchToProps>
 	}
 
 	gaaTilSkjema() {
-		const kommuneKey = "kommune";
-		const bydelKey = "bydel";
-		let search = "?personalia.kommune=" + this.state[kommuneKey];
-		if (this.state[bydelKey]) {
-			search += "&personalia.bydel=" + this.state[bydelKey];
+		const { fakta } = this.props;
+		const kommuneId = fakta.get("personalia.kommune");
+		const bydelId = fakta.get("personalia.bydel");
+		let search = "?personalia.kommune=" + kommuneId;
+		if (bydelId) {
+			search += "&personalia.bydel=" + bydelId;
 		}
 		const pathname = "/skjema/" + this.props.brukerBehandlingId + "/1";
 		this.props.history.push(`${pathname}/${search}`);
@@ -51,9 +47,9 @@ class Bosted extends React.Component<StateProps & RouterProps & DispatchToProps>
 	}
 
 	render() {
-		const { faktum } = this.props;
-		const kommuneId = faktum.get("personalia.kommune");
-		const bydelId = faktum.get("personalia.bydel");
+		const { fakta } = this.props;
+		const kommuneId = fakta.get("personalia.kommune");
+		const bydelId = fakta.get("personalia.bydel");
 
 		const valgtKommune: Kommune | undefined = kommuneId
 			? Kommuner.find(k => k.id === kommuneId)
@@ -73,12 +69,10 @@ class Bosted extends React.Component<StateProps & RouterProps & DispatchToProps>
 						<FaktumSelect
 							faktumKey="personalia.kommune"
 							bredde="m"
-							onChange={(event) => this.setState({kommune: event.target.value})}
-							labelFunc={label =>
+							labelFunc={(label: string) =>
 								<strong>
 									{label}
-								</strong>}
-						>
+								</strong>}>
 							<option value="" />
 							{Kommuner.map(kommune =>
 								<option value={kommune.id} key={kommune.id}>
@@ -94,12 +88,10 @@ class Bosted extends React.Component<StateProps & RouterProps & DispatchToProps>
 								<FaktumSelect
 									faktumKey="personalia.bydel"
 									bredde="m"
-									labelFunc={label =>
+									labelFunc={(label: string) =>
 										<strong>
 											{label}
-										</strong>}
-									onChange={(event) => this.setState({bydel: event.target.value})}
-								>
+										</strong>}>
 									<option value="" />
 									{valgtKommune.bydeler.map(bydel =>
 										<option value={bydel.id} key={bydel.id}>
@@ -139,8 +131,8 @@ const mapDispatchToProps = (dispatch: any): DispatchToProps => ({
 	action: bindActionCreators({opprettSoknad}, dispatch)
 });
 
-const mapStateToProps = (state: { faktum: FaktumState, soknad: SoknadState }): {} => ({
-	faktum: state.faktum.faktum,
+const mapStateToProps = (state: { faktumStore: FaktumStoreState, soknad: SoknadState }): {} => ({
+	fakta: state.faktumStore.fakta,
 	status: state.soknad.status,
 	brukerBehandlingId: state.soknad.brukerBehandlingId
 });

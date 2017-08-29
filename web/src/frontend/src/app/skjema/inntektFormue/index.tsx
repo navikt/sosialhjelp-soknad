@@ -1,7 +1,10 @@
 import * as React from "react";
 import Steg from "../../../skjema/components/steg";
 import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../../../skjema/reducer";
+import {
+	FaktumStoreState,
+	FaktumComponentProps
+} from "../../../skjema/reducer";
 
 import YtelserFraNAV from "./YtelserFraNAV";
 import SoknaderUnderBehandling from "./SoknaderUnderBehandling";
@@ -10,28 +13,24 @@ import Eiendeler from "./Eiendeler";
 import Bankinnskudd from "./Bankinnskudd";
 import Utbetaling from "./Utbetaling";
 
-interface StateProps {
-	faktum: FaktumMap;
-}
-
-class InntektFormue extends React.Component<StateProps, any> {
+class InntektFormue extends React.Component<FaktumComponentProps, any> {
 	render() {
-		const { faktum } = this.props;
+		const { fakta } = this.props;
 		return (
 			<Steg tittelId="Inntekt og formue">
 				<YtelserFraNAV />
 				<SoknaderUnderBehandling />
-				<Bostotte faktum={faktum} />
-				<Eiendeler faktum={faktum} />
-				<Bankinnskudd faktum={faktum} />
-				<Utbetaling faktum={faktum} />
+				<Bostotte fakta={fakta} />
+				<Eiendeler fakta={fakta} />
+				<Bankinnskudd fakta={fakta} />
+				<Utbetaling fakta={fakta} />
 			</Steg>
 		);
 	}
 }
 
-export default connect((state: { faktum: FaktumState }, props: any) => {
+export default connect((state: FaktumStoreState, props: any) => {
 	return {
-		faktum: state.faktum.faktum
+		fakta: state.faktumStore.fakta
 	};
 })(InntektFormue);

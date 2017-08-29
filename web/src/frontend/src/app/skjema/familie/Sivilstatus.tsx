@@ -10,15 +10,15 @@ import Ektefelle from "./Ektefelle";
 
 class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 	render() {
-		const { faktum } = this.props;
+		const { fakta } = this.props;
 		const sivilstatus = radioCheckKeys("familie.sivilstatus");
 		const gift = radioCheckKeys("familie.sivilstatus.gift.true");
 		return (
 			<Sporsmal sporsmalId={sivilstatus.sporsmal}>
 				<FaktumRadio faktumKey={sivilstatus.faktum} option="gift" />
-				<Underskjema visible={faktum.get(sivilstatus.faktum) === "gift"}>
+				<Underskjema visible={fakta.get(sivilstatus.faktum) === "gift"}>
 					<FaktumSkjemagruppe tittelId={gift.sporsmal}>
-						<Ektefelle faktum={faktum} />
+						<Ektefelle fakta={fakta} />
 					</FaktumSkjemagruppe>
 				</Underskjema>
 				<FaktumRadio faktumKey={sivilstatus.faktum} option="ugift" />
