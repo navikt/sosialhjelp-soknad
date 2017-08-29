@@ -42,3 +42,16 @@ exports.lesSpraakfil = function() {
 	}
 	return output
 };
+
+exports.lesMockDataFil = function(filnavn) {
+	var directories = ['.', 'scripts', 'mock_data', filnavn];
+	var fileName = directories.join(path.sep);
+	if (!fs.existsSync(fileName)) {
+		console.log("Advarsel! Finner mockdata fil " + fileName);
+	} else {
+		try {
+			return JSON.parse(fs.readFileSync(fileName, "utf8"));
+		} catch (err) {
+		}
+	}
+};

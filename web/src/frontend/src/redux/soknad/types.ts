@@ -2,7 +2,7 @@ export * from "../types";
 
 export enum ActionTypeKeys {
 	OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
-	SET_BRUKERBEHANDLING_ID = "SET_BRUKERBEHANDLING_ID",
+	SET_BRUKERBEHANDLING_ID = "soknad/SET_BRUKERBEHANDLING_ID",
 	SET_SERVER_FEIL = "SET_SERVER_FEIL",
 	OK = "soknad/OK",
 	FEILET = "soknad/FEILET",

@@ -17,10 +17,11 @@ export function getApiBaseUrl(): string {
 
 export const MED_CREDENTIALS: RequestInit = { credentials: "same-origin" };
 
-/* For å snakke mot sendsoknad app når den kjører lokalt */
-const API_BASE_URL = "http://localhost:8181/sendsoknad";
+export function apiPath() {
+	return erDev() ? "informasjon/" : "sendsoknad/";
+}
 
-export function fetchPost(url: string, body: string) {
+export function fetchPost(urlPath: string, body: string) {
 	const OPTIONS: RequestInit = {
 		headers: {
 			"Content-Type": "application/json"
@@ -28,19 +29,19 @@ export function fetchPost(url: string, body: string) {
 		method: "POST",
 		body
 	};
-	return fetch(API_BASE_URL + url, OPTIONS)
+	return fetch(getApiBaseUrl() + apiPath() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
 		.then(toJson);
 }
 
-export function fetchToJson(url: string ) {
+export function fetchToJson(urlPath: string ) {
 	const OPTIONS: RequestInit = {
 		headers: {
 			"Content-Type": "application/json"
 		},
 		method: "GET"
 	};
-	return fetch(API_BASE_URL + url, OPTIONS)
+	return fetch(getApiBaseUrl() + apiPath() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
 		.then(toJson);
 }
