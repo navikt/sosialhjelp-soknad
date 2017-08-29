@@ -16,3 +16,43 @@ export function getApiBaseUrl(): string {
 }
 
 export const MED_CREDENTIALS: RequestInit = { credentials: "same-origin" };
+
+export function apiPath() {
+	return erDev() ? "informasjon/" : "sendsoknad/";
+}
+
+export function fetchPost(urlPath: string, body: string) {
+	const OPTIONS: RequestInit = {
+		headers: {
+			"Content-Type": "application/json"
+		},
+		method: "POST",
+		body
+	};
+	return fetch(getApiBaseUrl() + apiPath() + urlPath, OPTIONS)
+		.then(sjekkStatuskode)
+		.then(toJson);
+}
+
+export function fetchToJson(urlPath: string ) {
+	const OPTIONS: RequestInit = {
+		headers: {
+			"Content-Type": "application/json"
+		},
+		method: "GET"
+	};
+	return fetch(getApiBaseUrl() + apiPath() + urlPath, OPTIONS)
+		.then(sjekkStatuskode)
+		.then(toJson);
+}
+
+function toJson<T>(response: Response): Promise<T> {
+	return response.json();
+}
+
+function sjekkStatuskode(response: Response) {
+	if (response.status >= 200 && response.status < 300) {
+		return response;
+	}
+	throw new Error(response.statusText);
+}

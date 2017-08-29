@@ -5,30 +5,31 @@ import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import registerServiceWorker from "./registerServiceWorker";
-
-import { composeWithDevTools } from "redux-devtools-extension";
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import createSagaMiddleware from "redux-saga";
-
 import App from "./app";
-import rootSaga from "./sagas";
+import thunk from "redux-thunk";
+import SoknadReducer from "./redux/soknad/reducer";
 import FaktumReducer from "./skjema/reducer";
 import IntlProvider from "./intlProvider";
 import "./index.css";
+import { erDev } from "./utils";
 
 const rootReducer = combineReducers({
+	soknad: SoknadReducer,
 	faktumStore: FaktumReducer
 });
 
-const sagaMiddleware = createSagaMiddleware();
+function configureStore() {
+	/* tslint:disable-next-line */
+	const devtools: any =
+		window["devToolsExtension"] && erDev()
+			? window["devToolsExtension"]()
+			: (f: any) => f;
+	const middleware = applyMiddleware(thunk);
+	return middleware(devtools(createStore))(rootReducer);
+}
 
-const store = createStore(
-	rootReducer,
-	composeWithDevTools(applyMiddleware(sagaMiddleware))
-);
-
-sagaMiddleware.run(rootSaga);
-
+const store = configureStore();
 ReactDOM.render(
 	<IntlProvider>
 		<Provider store={store}>
