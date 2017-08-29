@@ -12,7 +12,7 @@ import SoknadReducer from "./redux/soknad/reducer";
 import FaktumReducer from "./skjema/reducer";
 import IntlProvider from "./intlProvider";
 import "./index.css";
-import { erDev } from "./app/utils";
+import { erDev } from "./utils";
 
 const rootReducer = combineReducers({
 	soknad: SoknadReducer,

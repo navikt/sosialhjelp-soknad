@@ -1,14 +1,11 @@
-import {
-	Action,
-	Dispatch
-} from "redux";
+import { Action, Dispatch } from "redux";
 import {
 	ActionTypeKeys,
 	OpprettSoknadAction,
 	SetBrukerBehandlingIdAction,
 	SetServerFeilAction
 } from "./types";
-import { fetchPost, fetchToJson } from "../../app/utils";
+import { fetchPost, fetchToJson } from "../../utils";
 
 export type ActionTypes = OpprettSoknadAction | SetBrukerBehandlingIdAction | SetServerFeilAction;
 

@@ -13,7 +13,8 @@ import StegIndikator from "../../skjema/components/stegIndikator";
 import Knapperad from "../../skjema/components/knapperad";
 import { finnStegFraLocation } from "./utils";
 import { gaTilbake, gaVidere, avbryt } from "./utils";
-
+import { opprettSoknad } from "../../redux/soknad/actions";
+import { bindActionCreators } from "redux";
 import { Location } from "history";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
@@ -26,7 +27,12 @@ interface Props {
 	location: Location;
 }
 
-class Skjema extends React.Component<Props & RouterProps, {}> {
+class Skjema extends React.Component<Props & RouterProps & DispatchToProps, {}> {
+
+	componentDidMount() {
+		this.props.action.opprettSoknad();
+	}
+
 	render() {
 		const aktivtSteg = finnStegFraLocation(this.props.location);
 		const { match, history } = this.props;
@@ -64,6 +70,17 @@ class Skjema extends React.Component<Props & RouterProps, {}> {
 	}
 }
 
-export default connect((state: any, props: Props) => {
-	return props;
-})(withRouter(Skjema));
+interface DispatchToProps {
+	action: {
+		opprettSoknad: () => {}
+	};
+}
+
+const mapStateToProps = (state: any): {} => ({
+});
+
+const mapDispatchToProps = (dispatch: any): DispatchToProps => ({
+	action: bindActionCreators({opprettSoknad}, dispatch)
+});
+
+export default connect<{}, DispatchToProps, {}>(mapStateToProps, mapDispatchToProps)(withRouter(Skjema));

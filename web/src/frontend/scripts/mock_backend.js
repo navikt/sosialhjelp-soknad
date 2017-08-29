@@ -15,7 +15,7 @@ router.get('/tekster', function (req, res) {
 	res.json(utils.lesSpraakfil())
 });
 
-app.use(allowCrossDomain);
+app.use(utils.allowCrossDomain);
 app.use('/informasjon', router);
 
 app.listen(port);

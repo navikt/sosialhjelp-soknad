@@ -28,7 +28,7 @@ class IntlProvider extends React.Component<IntlProviderProps, IntlProviderState>
 	/* tslint:disable */
 	componentDidMount() {
 		this.setState({ledetekster: {status: 0, data: {nb: {}}}});
-		fetch(getApiBaseUrl() + "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp")
+		fetch(getApiBaseUrl() + "/tekster?sprak=nb_NO&type=soknadsosialhjelp")
 			.then(response => response.json())
 			.then(texts => {
 				this.setState({ledetekster: {status: 200, data: texts}});
