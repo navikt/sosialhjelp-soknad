@@ -26,9 +26,9 @@ export function opprettSoknad() {
 	};
 }
 
-function hentFakta(id: string, dispatch: Dispatch<Action>) {
+function hentFakta(brukerBehandlingId: string, dispatch: Dispatch<Action>) {
 	dispatch({type: ActionTypeKeys.PENDING});
-	fetchToJson("soknader/" + id + "/fakta")
+	fetchToJson("soknader/" + brukerBehandlingId + "/fakta")
 		.then(response => {
 			// TODO Prosesser fakta
 		})
