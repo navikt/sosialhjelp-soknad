@@ -7,12 +7,49 @@ import { Kommuner } from "./kommuner";
 import { Kommune, Bydel } from "./types";
 import { Collapse } from "react-collapse";
 import Arrow from "../components/svg/Arrow";
+import { opprettSoknad } from "../../redux/soknad/actions";
+import { bindActionCreators } from "redux";
+import { SoknadState, ActionTypeKeys } from "../../redux/soknad/types";
+import { withRouter, RouterProps } from "react-router";
 
 interface StateProps {
 	faktum: FaktumMap;
+	status?: string;
+	brukerBehandlingId?: string;
 }
 
-class Bosted extends React.Component<StateProps> {
+class Bosted extends React.Component<StateProps & RouterProps & DispatchToProps> {
+
+	constructor(props: StateProps & RouterProps & DispatchToProps) {
+		super(props);
+		this.state = {
+			kommune: "",
+			bydel: ""
+		};
+	}
+
+	componentDidUpdate() {
+		if (this.props.status === ActionTypeKeys.OK) {
+			this.gaaTilSkjema();
+		}
+	}
+
+	gaaTilSkjema() {
+		const kommuneKey = "kommune";
+		const bydelKey = "bydel";
+		let search = "?personalia.kommune=" + this.state[kommuneKey];
+		if (this.state[bydelKey]) {
+			search += "&personalia.bydel=" + this.state[bydelKey];
+		}
+		const pathname = "/skjema/" + this.props.brukerBehandlingId + "/1";
+		this.props.history.push(`${pathname}/${search}`);
+	}
+
+	opprettSoknad(event: any) {
+		event.preventDefault();
+		this.props.action.opprettSoknad();
+	}
+
 	render() {
 		const { faktum } = this.props;
 		const kommuneId = faktum.get("personalia.kommune");
@@ -30,12 +67,13 @@ class Bosted extends React.Component<StateProps> {
 			(valgtKommune && !valgtKommune.bydeler) || (valgtKommune && valgtBydel);
 
 		return (
-			<form action="/skjema/1">
+			<form onSubmit={(e) => this.opprettSoknad(e)}>
 				<Collapse isOpened={true}>
 					<div className="blokk-l">
 						<FaktumSelect
 							faktumKey="personalia.kommune"
 							bredde="m"
+							onChange={(event) => this.setState({kommune: event.target.value})}
 							labelFunc={label =>
 								<strong>
 									{label}
@@ -60,6 +98,7 @@ class Bosted extends React.Component<StateProps> {
 										<strong>
 											{label}
 										</strong>}
+									onChange={(event) => this.setState({bydel: event.target.value})}
 								>
 									<option value="" />
 									{valgtKommune.bydeler.map(bydel =>
@@ -89,8 +128,21 @@ class Bosted extends React.Component<StateProps> {
 		);
 	}
 }
-export default connect((state: { faktum: FaktumState }, props: any) => {
-	return {
-		faktum: state.faktum.faktum
+
+interface DispatchToProps {
+	action: {
+		opprettSoknad: () => {}
 	};
-})(Bosted);
+}
+
+const mapDispatchToProps = (dispatch: any): DispatchToProps => ({
+	action: bindActionCreators({opprettSoknad}, dispatch)
+});
+
+const mapStateToProps = (state: { faktum: FaktumState, soknad: SoknadState }): {} => ({
+	faktum: state.faktum.faktum,
+	status: state.soknad.status,
+	brukerBehandlingId: state.soknad.brukerBehandlingId
+});
+
+export default connect<{}, DispatchToProps, {}>(mapStateToProps, mapDispatchToProps)(withRouter(Bosted));

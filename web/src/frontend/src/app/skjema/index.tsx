@@ -11,7 +11,7 @@ import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
 import StegIndikator from "../../skjema/components/stegIndikator";
 import Knapperad from "../../skjema/components/knapperad";
-import { finnStegFraLocation } from "./utils";
+import { finnStegFraLocation, finnBrukerBehandlingIdFraLocation } from "./utils";
 import { gaTilbake, gaVidere, avbryt } from "./utils";
 import { opprettSoknad } from "../../redux/soknad/actions";
 import { bindActionCreators } from "redux";
@@ -35,6 +35,8 @@ class Skjema extends React.Component<Props & RouterProps & DispatchToProps, {}> 
 
 	render() {
 		const aktivtSteg = finnStegFraLocation(this.props.location);
+		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(this.props.location);
+
 		const { match, history } = this.props;
 		return (
 			<form id="soknadsskjema" onSubmit={stopEvent}>
@@ -61,8 +63,8 @@ class Skjema extends React.Component<Props & RouterProps & DispatchToProps, {}> 
 					<Route path={`${match.url}/7`} component={Steg7} />
 				</Switch>
 				<Knapperad
-					gaVidere={() => gaVidere(aktivtSteg, history)}
-					gaTilbake={() => gaTilbake(aktivtSteg, history)}
+					gaVidere={() => gaVidere(aktivtSteg, brukerBehandlingId, history)}
+					gaTilbake={() => gaTilbake(aktivtSteg, brukerBehandlingId, history)}
 					avbryt={() => avbryt()}
 				/>
 			</form>

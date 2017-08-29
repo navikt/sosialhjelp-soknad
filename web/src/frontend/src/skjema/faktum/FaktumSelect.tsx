@@ -19,6 +19,7 @@ interface OwnProps {
 	feil?: Feil;
 	bredde?: SelectBredde;
 	labelFunc?: (label: string) => React.ReactNode;
+	onChange?: (event: any) => any;
 }
 
 class FaktumSelect extends React.Component<
@@ -34,7 +35,8 @@ class FaktumSelect extends React.Component<
 			faktum,
 			children,
 			dispatch,
-			intl
+			intl,
+			onChange
 		} = this.props;
 		const tekster = getFaktumInputTekst(intl, faktumKey);
 		return (
@@ -43,8 +45,13 @@ class FaktumSelect extends React.Component<
 				disabled={disabled}
 				value={faktum.get(faktumKey)}
 				bredde={bredde}
-				onChange={(evt: any) =>
-					dispatch(setFaktumVerdi(faktumKey, evt.target.value))}
+				onChange={(evt: any) => {
+						dispatch(setFaktumVerdi(faktumKey, evt.target.value));
+						if (onChange) {
+							onChange(evt);
+						}
+					}
+				}
 				label={
 					<LabelMedHjelpetekst
 						id={faktumKey}

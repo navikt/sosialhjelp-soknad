@@ -14,7 +14,7 @@ class App extends React.Component<{}, {}> {
 				</h1>
 				<Switch>
 					<Route path={`/`} exact={true} component={Start} />
-					<Route path={`/skjema`} component={Skjema} />
+					<Route path={`/skjema/:brukerBehandlingId`} component={Skjema} />
 				</Switch>
 				{this.props.children}
 			</div>
