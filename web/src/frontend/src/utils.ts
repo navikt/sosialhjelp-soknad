@@ -10,10 +10,12 @@ function kjorerJetty(): boolean {
 
 export function getApiBaseUrl(): string {
 	if (erDev()) {
-		return "http://localhost:3001/informasjon";
+		return "http://localhost:3001/";
 	}
 	return kjorerJetty() ? "http://127.0.0.1:8181/sendsoknad/" : "/sendsoknad/";
 }
+
+export const MED_CREDENTIALS: RequestInit = { credentials: "same-origin" };
 
 /* For å snakke mot sendsoknad app når den kjører lokalt */
 const API_BASE_URL = "http://localhost:8181/sendsoknad";
