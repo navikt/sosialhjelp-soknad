@@ -13,7 +13,9 @@ const Familiesituasjon: React.StatelessComponent<
 		<Progresjonsblokk
 			tittel="Familiesituasjonen"
 			content={[
-				<FaktumSkjemagruppe tittelId="ekstrainfo.familie.barnebidrag.tittel">
+				<FaktumSkjemagruppe
+					tittelId="ekstrainfo.familie.barnebidrag.tittel"
+					key="barnebidrag">
 					<Container fluid={true} className="container--noPadding">
 						<Row>
 							<Column sm="6" xs="3">

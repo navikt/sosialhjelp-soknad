@@ -13,7 +13,9 @@ const UtgifterOgGjeld: React.StatelessComponent<
 		<Progresjonsblokk
 			tittel="Utgifter og gjeld"
 			content={[
-				<FaktumSkjemagruppe tittelId="ekstrainfo.utgifter.husleie.tittel">
+				<FaktumSkjemagruppe
+					tittelId="ekstrainfo.utgifter.husleie.tittel"
+					key="husleie">
 					<Container fluid={true} className="container--noPadding">
 						<Row>
 							<Column sm="6" xs="3">
@@ -22,7 +24,9 @@ const UtgifterOgGjeld: React.StatelessComponent<
 						</Row>
 					</Container>
 				</FaktumSkjemagruppe>,
-				<FaktumSkjemagruppe tittelId="ekstrainfo.utgifter.strom.tittel">
+				<FaktumSkjemagruppe
+					tittelId="ekstrainfo.utgifter.strom.tittel"
+					key="strom">
 					<Container fluid={true} className="container--noPadding">
 						<Row>
 							<Column sm="6" xs="3">
@@ -31,7 +35,9 @@ const UtgifterOgGjeld: React.StatelessComponent<
 						</Row>
 					</Container>
 				</FaktumSkjemagruppe>,
-				<FaktumSkjemagruppe tittelId="ekstrainfo.utgifter.barn.tittel">
+				<FaktumSkjemagruppe
+					tittelId="ekstrainfo.utgifter.barn.tittel"
+					key="barn">
 					<Container fluid={true} className="container--noPadding">
 						<Row>
 							<Column sm="6" xs="3">
