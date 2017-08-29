@@ -23,6 +23,7 @@
     <filter-mapping>
         <filter-name>decoratorFilter</filter-name>
         <url-pattern>/app/*</url-pattern>
+        <url-pattern>/skjema/*</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -33,10 +34,22 @@
             <param-value>soknadsosialhjelpBuilt.html</param-value>
         </init-param>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>routingSoknadsosialhjelp</servlet-name>
         <url-pattern>/app/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>routingNySoknadsosialhjelp</servlet-name>
+        <servlet-class>no.nav.sbl.soknadsosialhjelp.Routing</servlet-class>
+        <init-param>
+            <param-name>applicationFile</param-name>
+            <param-value>ny-indexBuilt.html</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>routingNySoknadsosialhjelp</servlet-name>
+        <url-pattern>/skjema/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

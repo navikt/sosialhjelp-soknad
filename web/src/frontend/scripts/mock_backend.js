@@ -15,8 +15,8 @@ router.get('/tekster', function (req, res) {
 	res.json(utils.lesSpraakfil())
 });
 
-app.use(utils.allowCrossDomain);
-app.use('/api', router);
+app.use(allowCrossDomain);
+app.use('/informasjon', router);
 
 app.listen(port);
 console.log('Test API server running on port ' + port);
