@@ -3,12 +3,17 @@ import { Container, Row, Column } from "nav-frontend-grid";
 import FaktumInput from "../../../skjema/faktum/FaktumInput";
 import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
 import Progresjonsblokk from "../../../skjema/components/progresjonsblokk";
-import {} from "../../../skjema/types";
 import { FaktumComponentProps } from "../../../skjema/reducer";
+import { faktumIsSelected } from "../../../skjema/utils";
 
 const Familiesituasjon: React.StatelessComponent<
 	FaktumComponentProps
 > = props => {
+	const { fakta } = props;
+	if (!faktumIsSelected(fakta.get("familie.barn"))) {
+		return null;
+	}
+
 	return (
 		<Progresjonsblokk
 			tittel="Familiesituasjonen"
