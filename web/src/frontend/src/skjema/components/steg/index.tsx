@@ -13,7 +13,7 @@ const Steg: React.StatelessComponent<StegProps & InjectedIntlProps> = ({
 	children
 }) => {
 	return (
-		<div className="skjema-steg">
+		<div className="skjema-steg skjema-content">
 			<h2 className="skjema-steg__tittel">
 				{getIntlTextOrKey(intl, tittelId)}
 			</h2>

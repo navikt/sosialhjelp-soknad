@@ -1,24 +1,27 @@
 import * as React from "react";
 import Steg from "../../../skjema/components/steg";
 import { connect } from "react-redux";
-import { FaktumComponentProps, FaktumState } from "../../../skjema/reducer";
+import {
+	FaktumComponentProps,
+	FaktumStoreState
+} from "../../../skjema/reducer";
 import Jobb from "./Jobb";
 import Studie from "./Studie";
 
 class ArbeidOgUtdanning extends React.Component<FaktumComponentProps, any> {
 	render() {
-		const { faktum } = this.props;
+		const { fakta } = this.props;
 		return (
 			<Steg tittelId="arbeidbolk.tittel">
-				<Jobb faktum={faktum} />
-				<Studie faktum={faktum} />
+				<Jobb fakta={fakta} />
+				<Studie fakta={fakta} />
 			</Steg>
 		);
 	}
 }
 
-export default connect((state: { faktum: FaktumState }, props: any) => {
+export default connect((state: FaktumStoreState, props: any) => {
 	return {
-		faktum: state.faktum.faktum
+		fakta: state.faktumStore.fakta
 	};
 })(ArbeidOgUtdanning);

@@ -1,28 +1,27 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../../../skjema/reducer";
+import {
+	FaktumStoreState,
+	FaktumComponentProps
+} from "../../../skjema/reducer";
 import Steg from "../../../skjema/components/steg";
 import Sivilstatus from "./Sivilstatus";
 import Barn from "./Barn";
 
-interface StateProps {
-	faktum: FaktumMap;
-}
-
-class Familie extends React.Component<StateProps, {}> {
+class Familie extends React.Component<FaktumComponentProps, {}> {
 	render() {
-		const { faktum } = this.props;
+		const { fakta } = this.props;
 		return (
 			<Steg tittelId="familiebolk.tittel">
-				<Sivilstatus faktum={faktum} />
-				<Barn faktum={faktum} />
+				<Sivilstatus fakta={fakta} />
+				<Barn fakta={fakta} />
 			</Steg>
 		);
 	}
 }
 
-export default connect((state: { faktum: FaktumState }, props: any) => {
+export default connect((state: FaktumStoreState, props: any) => {
 	return {
-		faktum: state.faktum.faktum
+		fakta: state.faktumStore.fakta
 	};
 })(Familie);

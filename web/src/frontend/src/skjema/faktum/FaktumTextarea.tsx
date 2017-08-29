@@ -1,15 +1,11 @@
 import * as React from "react";
 import { Textarea, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../reducer";
+import { FaktumStoreState, FaktumComponentProps } from "../reducer";
 import { setFaktumVerdi } from "../actions";
 import { DispatchProps } from "../types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getFaktumInputTekst, getIntlTextOrKey } from "../utils";
-
-interface StateProps {
-	faktum: FaktumMap;
-}
 
 interface OwnProps {
 	faktumKey: string;
@@ -19,7 +15,7 @@ interface OwnProps {
 }
 
 class FaktumTextarea extends React.Component<
-	OwnProps & StateProps & DispatchProps & InjectedIntlProps,
+	OwnProps & FaktumComponentProps & DispatchProps & InjectedIntlProps,
 	{}
 > {
 	render() {
@@ -28,7 +24,7 @@ class FaktumTextarea extends React.Component<
 			labelId,
 			disabled,
 			feil,
-			faktum,
+			fakta,
 			dispatch,
 			intl
 		} = this.props;
@@ -36,7 +32,7 @@ class FaktumTextarea extends React.Component<
 		return (
 			<Textarea
 				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
-				value={faktum.get(faktumKey) || ""}
+				value={fakta.get(faktumKey) || ""}
 				name={faktumKey}
 				disabled={disabled}
 				onChange={(evt: any) =>
@@ -47,9 +43,9 @@ class FaktumTextarea extends React.Component<
 	}
 }
 
-export default connect((state: { faktum: FaktumState }, props: OwnProps) => {
+export default connect((state: FaktumStoreState, props: OwnProps) => {
 	return {
-		faktum: state.faktum.faktum,
+		fakta: state.faktumStore.fakta,
 		faktumKey: props.faktumKey
 	};
 })(injectIntl(FaktumTextarea));

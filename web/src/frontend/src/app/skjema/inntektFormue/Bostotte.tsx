@@ -10,13 +10,13 @@ import Underskjema from "../../../skjema/components/underskjema";
 
 class Bostotte extends React.Component<FaktumComponentProps, {}> {
 	render() {
-		const { faktum } = this.props;
+		const { fakta } = this.props;
 		const bostotte = radioCheckKeys("inntekt.bostotte");
 		const hvilkenStotte = radioCheckKeys("inntekt.bostotte.true.type");
 		return (
 			<Sporsmal sporsmalId={bostotte.sporsmal}>
 				<FaktumRadio faktumKey={bostotte.faktum} option="true" />
-				<Underskjema visible={faktumIsSelected(faktum.get("inntekt.bostotte"))}>
+				<Underskjema visible={faktumIsSelected(fakta.get("inntekt.bostotte"))}>
 					<FaktumSkjemagruppe tittelId={hvilkenStotte.sporsmal}>
 						<FaktumCheckbox
 							faktumKey={hvilkenStotte.faktum}

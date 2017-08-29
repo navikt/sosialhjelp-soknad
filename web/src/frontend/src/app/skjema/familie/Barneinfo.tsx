@@ -14,7 +14,7 @@ interface OwnProps {
 
 class Barn extends React.Component<OwnProps & FaktumComponentProps, {}> {
 	render() {
-		const { faktum, faktumKey } = this.props;
+		const { fakta, faktumKey } = this.props;
 		const borInfo = radioCheckKeys(`${faktumKey}.bor`);
 		const hvormye = radioCheckKeys(`${faktumKey}.bor.hvormye`);
 		return (
@@ -22,7 +22,7 @@ class Barn extends React.Component<OwnProps & FaktumComponentProps, {}> {
 				<FaktumPersonskjema faktumKey={faktumKey} />
 				<FaktumSkjemagruppe tittelId={borInfo.sporsmal}>
 					<FaktumRadio faktumKey={borInfo.faktum} option="true" />
-					<NivaTreSkjema visible={faktumIsSelected(faktum.get(borInfo.faktum))}>
+					<NivaTreSkjema visible={faktumIsSelected(fakta.get(borInfo.faktum))}>
 						<FaktumSkjemagruppe tittelId={hvormye.sporsmal}>
 							<FaktumRadio faktumKey={hvormye.faktum} option="heltid" />
 							<FaktumRadio faktumKey={hvormye.faktum} option="deltid" />

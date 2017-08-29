@@ -1,16 +1,12 @@
 import * as React from "react";
 import { Radio, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../reducer";
+import { FaktumStoreState, FaktumComponentProps } from "../reducer";
 import { setFaktumVerdi } from "../actions";
 import { DispatchProps } from "../types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
 import { getFaktumRadioTekst } from "../utils";
-
-interface StateProps {
-	faktum: FaktumMap;
-}
 
 interface OwnProps {
 	option: string;
@@ -20,16 +16,16 @@ interface OwnProps {
 }
 
 class FaktumRadio extends React.Component<
-	OwnProps & StateProps & DispatchProps & InjectedIntlProps,
+	OwnProps & FaktumComponentProps & DispatchProps & InjectedIntlProps,
 	{}
 > {
 	render() {
-		const { faktumKey, option, disabled, faktum, dispatch, intl } = this.props;
+		const { faktumKey, option, disabled, fakta, dispatch, intl } = this.props;
 		const tekster = getFaktumRadioTekst(intl, faktumKey, option);
 		return (
 			<Radio
 				name={faktumKey}
-				checked={faktum.get(faktumKey) === option}
+				checked={fakta.get(faktumKey) === option}
 				disabled={disabled}
 				value={option}
 				onChange={(evt: any) => dispatch(setFaktumVerdi(faktumKey, option))}
@@ -45,9 +41,9 @@ class FaktumRadio extends React.Component<
 	}
 }
 
-export default connect((state: { faktum: FaktumState }, props: OwnProps) => {
+export default connect((state: FaktumStoreState, props: OwnProps) => {
 	return {
-		faktum: state.faktum.faktum,
+		fakta: state.faktumStore.fakta,
 		faktumKey: props.faktumKey
 	};
 })(injectIntl(FaktumRadio));

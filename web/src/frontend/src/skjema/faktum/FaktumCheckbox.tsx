@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Checkbox, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../reducer";
+import { FaktumStoreState, FaktumComponentProps } from "../reducer";
 import { setFaktumVerdi } from "../actions";
 import { DispatchProps } from "../types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
@@ -12,10 +12,6 @@ import {
 	boolToString
 } from "../utils";
 
-interface StateProps {
-	faktum: FaktumMap;
-}
-
 interface OwnProps {
 	faktumKey: string;
 	option: string;
@@ -24,7 +20,7 @@ interface OwnProps {
 }
 
 class FaktumCheckbox extends React.Component<
-	OwnProps & StateProps & DispatchProps & InjectedIntlProps,
+	OwnProps & FaktumComponentProps & DispatchProps & InjectedIntlProps,
 	{}
 > {
 	render() {
@@ -33,19 +29,19 @@ class FaktumCheckbox extends React.Component<
 			option,
 			disabled,
 			feil,
-			faktum,
+			fakta,
 			dispatch,
 			intl
 		} = this.props;
 		const key = `${faktumKey}.${option}`;
 		const tekster = getFaktumCheckboksTekst(intl, key);
-		const checked = faktumIsSelected(faktum.get(key));
+		const checked = faktumIsSelected(fakta.get(key));
 		return (
 			<Checkbox
 				name={key}
 				checked={checked}
 				disabled={disabled}
-				value={faktum.get(key)}
+				value={fakta.get(key)}
 				onChange={(evt: any) =>
 					dispatch(setFaktumVerdi(key, boolToString(evt.target.checked)))}
 				label={
@@ -61,8 +57,8 @@ class FaktumCheckbox extends React.Component<
 	}
 }
 
-export default connect((state: { faktum: FaktumState }, props: OwnProps) => {
+export default connect((state: FaktumStoreState, props: OwnProps) => {
 	return {
-		faktum: state.faktum.faktum
+		fakta: state.faktumStore.fakta
 	};
 })(injectIntl(FaktumCheckbox));
