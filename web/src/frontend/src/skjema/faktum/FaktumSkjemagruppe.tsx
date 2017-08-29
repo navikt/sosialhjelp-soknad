@@ -20,12 +20,12 @@ const FaktumSkjemagruppe: React.StatelessComponent<Props> = (
 	}
 	const tittel = getIntlTextOrKey(intl, tittelId);
 	return (
-		<fieldset className="faktumSkjemagruppe">
-			<legend className="invisible">
-				{tittel}
-			</legend>
-			<SkjemaGruppe title={tittel} feil={feil} children={children} />
-		</fieldset>
+		<SkjemaGruppe feil={feil}>
+			<fieldset className="faktumSkjemagruppe">
+				<legend>{tittel}</legend>
+				{children}
+			</fieldset>
+		</SkjemaGruppe>
 	);
 };
 
