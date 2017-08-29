@@ -1,3 +1,5 @@
+@import "../../styles/variables";
+
 .skjema-progresjonsblokk {
 	background: white;
 	text-align: left;
@@ -7,5 +9,14 @@
 	}
 	&__sporsmal {
 		margin-bottom: 2px;
+		background-color: @skjemabkg;
+		border: 1px solid @navGra20;
+		padding: 2rem 4rem;
+		&:last-child {
+			margin-bottom: 0;
+		}
+		&--complete {
+			background-color: @navLimeGronnLighten80;
+		}
 	}
 }

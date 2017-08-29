@@ -17,7 +17,11 @@ const Progresjonsblokk: React.StatelessComponent<Props> = ({
 				{tittel}
 			</h3>
 		</div>
-		{children}
+		{React.Children.map(children, (child, idx) =>
+			<div className="skjema-progresjonsblokk__sporsmal" key={idx}>
+				{child}
+			</div>
+		)}
 	</div>;
 
 export default Progresjonsblokk;

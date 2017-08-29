@@ -1,8 +1,9 @@
 import * as React from "react";
 import Steg from "../../../skjema/components/steg";
 import Infoblokk from "../../../skjema/components/infoblokk";
-import Progresjonsblokk from "../../../skjema/components/progresjonsblokk";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+
+import ArbeidOgUtdanning from "./ArbeidOgUtdanning";
 
 class Ekstrainformasjon extends React.Component<InjectedIntlProps, {}> {
 	render() {
@@ -15,7 +16,7 @@ class Ekstrainformasjon extends React.Component<InjectedIntlProps, {}> {
 					</Infoblokk>
 				</div>
 				<Steg tittelId="Opplysninger...">
-					<Progresjonsblokk tittel="Arbeid og utdanning" />
+					<ArbeidOgUtdanning />
 				</Steg>
 			</div>
 		);
