@@ -12,10 +12,6 @@ import { withRouter, RouterProps } from "react-router";
 import { bindActionCreators } from "redux";
 import { opprettSoknad } from "../../redux/soknad/actions";
 
-// interface StateProps {
-// 	faktum: FaktumMap;
-// }
-
 interface StateProps {
 	status?: string;
 	brukerBehandlingId?: string;
