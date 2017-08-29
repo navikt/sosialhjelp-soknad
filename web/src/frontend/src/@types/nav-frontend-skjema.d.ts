@@ -52,8 +52,8 @@ declare module "nav-frontend-skjema" {
 	}
 
 	interface SkjemagruppeProps {
-		title: string;
 		children: React.ReactNode | React.ReactNode[];
+		title?: string;
 		className?: string;
 		feil?: Feil;
 	}
