@@ -1,17 +1,13 @@
 import * as React from "react";
 import { Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { FaktumState, FaktumMap } from "../reducer";
+import { FaktumStoreState, FaktumComponentProps } from "../reducer";
 import { setFaktumVerdi } from "../actions";
 import { DispatchProps } from "../types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
 import { getFaktumInputTekst } from "../utils";
 import { Select, SelectBredde } from "nav-frontend-skjema";
-
-interface StateProps {
-	faktum: FaktumMap;
-}
 
 interface OwnProps {
 	faktumKey: string;
@@ -22,7 +18,7 @@ interface OwnProps {
 }
 
 class FaktumSelect extends React.Component<
-	OwnProps & StateProps & DispatchProps & InjectedIntlProps,
+	OwnProps & FaktumComponentProps & DispatchProps & InjectedIntlProps,
 	{}
 > {
 	render() {
@@ -31,7 +27,7 @@ class FaktumSelect extends React.Component<
 			disabled,
 			bredde,
 			labelFunc,
-			faktum,
+			fakta,
 			children,
 			dispatch,
 			intl
@@ -41,7 +37,7 @@ class FaktumSelect extends React.Component<
 			<Select
 				name={faktumKey}
 				disabled={disabled}
-				value={faktum.get(faktumKey)}
+				value={fakta.get(faktumKey)}
 				bredde={bredde}
 				onChange={(evt: any) =>
 					dispatch(setFaktumVerdi(faktumKey, evt.target.value))}
@@ -51,17 +47,16 @@ class FaktumSelect extends React.Component<
 						label={labelFunc ? labelFunc(tekster.label) : tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>
-				}
-			>
+				}>
 				{children}
 			</Select>
 		);
 	}
 }
 
-export default connect((state: { faktum: FaktumState }, props: OwnProps) => {
+export default connect((state: FaktumStoreState, props: OwnProps) => {
 	return {
-		faktum: state.faktum.faktum,
+		fakta: state.faktumStore.fakta,
 		faktumKey: props.faktumKey
 	};
 })(injectIntl(FaktumSelect));

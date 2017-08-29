@@ -10,7 +10,7 @@ import NivaTreSkjema from "../../../skjema/components/nivaTreSkjema";
 
 class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 	render() {
-		const { faktum } = this.props;
+		const { fakta } = this.props;
 		const borsammen = radioCheckKeys("sivilstatus.ektefelle.borsammen");
 		return (
 			<div>
@@ -18,7 +18,7 @@ class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 				<FaktumSkjemagruppe tittelId={borsammen.sporsmal}>
 					<FaktumRadio faktumKey={borsammen.faktum} option="true" />
 					<FaktumRadio faktumKey={borsammen.faktum} option="false" />
-					<NivaTreSkjema visible={faktum.get(borsammen.faktum) === "false"}>
+					<NivaTreSkjema visible={fakta.get(borsammen.faktum) === "false"}>
 						<FaktumTextarea faktumKey={`${borsammen.faktum}.beskrivelse`} />
 					</NivaTreSkjema>
 				</FaktumSkjemagruppe>

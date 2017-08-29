@@ -2,21 +2,17 @@ import * as React from "react";
 import { connect } from "react-redux";
 import FaktumSelect from "../../skjema/faktum/FaktumSelect";
 import Knapp from "nav-frontend-knapper";
-import { FaktumState, FaktumMap } from "../../skjema/reducer";
+import { FaktumStoreState, FaktumComponentProps } from "../../skjema/reducer";
 import { Kommuner } from "./kommuner";
 import { Kommune, Bydel } from "./types";
 import { Collapse } from "react-collapse";
 import Arrow from "../../skjema/components/svg/Arrow";
 
-interface StateProps {
-	faktum: FaktumMap;
-}
-
-class Bosted extends React.Component<StateProps> {
+class Bosted extends React.Component<FaktumComponentProps> {
 	render() {
-		const { faktum } = this.props;
-		const kommuneId = faktum.get("personalia.kommune");
-		const bydelId = faktum.get("personalia.bydel");
+		const { fakta } = this.props;
+		const kommuneId = fakta.get("personalia.kommune");
+		const bydelId = fakta.get("personalia.bydel");
 
 		const valgtKommune: Kommune | undefined = kommuneId
 			? Kommuner.find(k => k.id === kommuneId)
@@ -36,11 +32,10 @@ class Bosted extends React.Component<StateProps> {
 						<FaktumSelect
 							faktumKey="personalia.kommune"
 							bredde="m"
-							labelFunc={label =>
+							labelFunc={(label: string) =>
 								<strong>
 									{label}
-								</strong>}
-						>
+								</strong>}>
 							<option value="" />
 							{Kommuner.map(kommune =>
 								<option value={kommune.id} key={kommune.id}>
@@ -56,11 +51,10 @@ class Bosted extends React.Component<StateProps> {
 								<FaktumSelect
 									faktumKey="personalia.bydel"
 									bredde="m"
-									labelFunc={label =>
+									labelFunc={(label: string) =>
 										<strong>
 											{label}
-										</strong>}
-								>
+										</strong>}>
 									<option value="" />
 									{valgtKommune.bydeler.map(bydel =>
 										<option value={bydel.id} key={bydel.id}>
@@ -89,8 +83,8 @@ class Bosted extends React.Component<StateProps> {
 		);
 	}
 }
-export default connect((state: { faktum: FaktumState }, props: any) => {
+export default connect((state: FaktumStoreState, props: any) => {
 	return {
-		faktum: state.faktum.faktum
+		fakta: state.faktumStore.fakta
 	};
 })(Bosted);

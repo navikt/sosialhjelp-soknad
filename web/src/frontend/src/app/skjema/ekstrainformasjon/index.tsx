@@ -1,13 +1,21 @@
 import * as React from "react";
+import { connect } from "react-redux";
+import {
+	FaktumStoreState,
+	FaktumComponentProps
+} from "../../../skjema/reducer";
 import Steg from "../../../skjema/components/steg";
 import Infoblokk from "../../../skjema/components/infoblokk";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import ArbeidOgUtdanning from "./ArbeidOgUtdanning";
 
-class Ekstrainformasjon extends React.Component<InjectedIntlProps, {}> {
+class Ekstrainformasjon extends React.Component<
+	InjectedIntlProps & FaktumComponentProps,
+	{}
+> {
 	render() {
-		const { intl } = this.props;
+		const { intl, fakta } = this.props;
 		return (
 			<div>
 				<div className="skjema-content ekstrainfo-melding">
@@ -16,11 +24,15 @@ class Ekstrainformasjon extends React.Component<InjectedIntlProps, {}> {
 					</Infoblokk>
 				</div>
 				<Steg tittelId="Opplysninger...">
-					<ArbeidOgUtdanning />
+					<ArbeidOgUtdanning fakta={fakta} />
 				</Steg>
 			</div>
 		);
 	}
 }
 
-export default injectIntl(Ekstrainformasjon);
+export default connect((state: FaktumStoreState) => {
+	return {
+		fakta: state.faktumStore.fakta
+	};
+})(injectIntl(Ekstrainformasjon));

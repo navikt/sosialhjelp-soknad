@@ -17,7 +17,7 @@ import IntlProvider from "./intlProvider";
 import "./index.css";
 
 const rootReducer = combineReducers({
-	faktum: FaktumReducer
+	faktumStore: FaktumReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();

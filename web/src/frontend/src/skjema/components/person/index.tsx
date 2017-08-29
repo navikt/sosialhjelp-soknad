@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
 import FaktumInput from "../../../skjema/faktum/FaktumInput";
-import "./personskjema.css";
 
 interface Props {
 	navnFaktumKey: string;
@@ -15,7 +14,7 @@ const Personskjema: React.StatelessComponent<Props> = ({
 	pnrFaktumKey
 }) =>
 	<div className="personskjema">
-		<Container fluid={true} className="personskjema_no-padding">
+		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column xs="12">
 					<FaktumInput faktumKey={navnFaktumKey} />
