@@ -22,8 +22,10 @@ const rootReducer = combineReducers({
 function configureStore() {
 	/* tslint:disable-next-line */
 	const devtools: any =
+		/* tslint:disable-next-line */
 		window["devToolsExtension"] && erDev()
-			? window["devToolsExtension"]()
+			? /* tslint:disable-next-line */
+				window["devToolsExtension"]()
 			: (f: any) => f;
 	const middleware = applyMiddleware(thunk);
 	return middleware(devtools(createStore))(rootReducer);

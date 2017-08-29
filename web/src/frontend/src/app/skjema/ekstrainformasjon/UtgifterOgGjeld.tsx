@@ -6,7 +6,7 @@ import Progresjonsblokk from "../../../skjema/components/progresjonsblokk";
 import { faktumIsSelected } from "../../../skjema/utils";
 import { FaktumComponentProps } from "../../../skjema/reducer";
 
-const StromSkjema: React.StatelessComponent<{}> = () =>
+const StromSkjema: React.StatelessComponent<{}> = () => (
 	<FaktumSkjemagruppe tittelId="ekstrainfo.utgifter.strom.tittel" key="strom">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
@@ -15,9 +15,10 @@ const StromSkjema: React.StatelessComponent<{}> = () =>
 				</Column>
 			</Row>
 		</Container>
-	</FaktumSkjemagruppe>;
+	</FaktumSkjemagruppe>
+);
 
-const HusleieSkjema: React.StatelessComponent<{}> = () =>
+const HusleieSkjema: React.StatelessComponent<{}> = () => (
 	<FaktumSkjemagruppe
 		tittelId="ekstrainfo.utgifter.husleie.tittel"
 		key="husleie">
@@ -28,9 +29,10 @@ const HusleieSkjema: React.StatelessComponent<{}> = () =>
 				</Column>
 			</Row>
 		</Container>
-	</FaktumSkjemagruppe>;
+	</FaktumSkjemagruppe>
+);
 
-const BarneSkjema: React.StatelessComponent<{}> = () =>
+const BarneSkjema: React.StatelessComponent<{}> = () => (
 	<FaktumSkjemagruppe tittelId="ekstrainfo.utgifter.barn.tittel" key="barn">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
@@ -42,7 +44,8 @@ const BarneSkjema: React.StatelessComponent<{}> = () =>
 				</Column>
 			</Row>
 		</Container>
-	</FaktumSkjemagruppe>;
+	</FaktumSkjemagruppe>
+);
 
 const UtgifterOgGjeld: React.StatelessComponent<
 	FaktumComponentProps
@@ -56,9 +59,9 @@ const UtgifterOgGjeld: React.StatelessComponent<
 		return null;
 	}
 	const content = [
-		...(visHusleie ? [<HusleieSkjema />] : []),
-		...(visStrom ? [<StromSkjema />] : []),
-		...(visBarn ? [<BarneSkjema />] : [])
+		...(visHusleie ? [<HusleieSkjema key="husleie" />] : []),
+		...(visStrom ? [<StromSkjema key="strom" />] : []),
+		...(visBarn ? [<BarneSkjema key="barn" />] : [])
 	];
 
 	return <Progresjonsblokk tittel="Utgifter og gjeld" content={content} />;
