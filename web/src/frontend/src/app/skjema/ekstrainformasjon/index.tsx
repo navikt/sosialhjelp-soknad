@@ -7,8 +7,11 @@ import {
 import Steg from "../../../skjema/components/steg";
 import Infoblokk from "../../../skjema/components/infoblokk";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+import "./ekstrainfo.css";
 
 import ArbeidOgUtdanning from "./ArbeidOgUtdanning";
+import Familiesituasjon from "./Familiesituasjon";
+import UtgifterOgGjeld from "./UtgifterOgGjeld";
 
 class Ekstrainformasjon extends React.Component<
 	InjectedIntlProps & FaktumComponentProps,
@@ -17,7 +20,7 @@ class Ekstrainformasjon extends React.Component<
 	render() {
 		const { intl, fakta } = this.props;
 		return (
-			<div>
+			<div className="steg-ekstrainformasjon">
 				<div className="skjema-content ekstrainfo-melding">
 					<Infoblokk>
 						{intl.formatHTMLMessage({ id: "ekstrainfo.informasjon" })}
@@ -25,6 +28,8 @@ class Ekstrainformasjon extends React.Component<
 				</div>
 				<Steg tittelId="Opplysninger...">
 					<ArbeidOgUtdanning fakta={fakta} />
+					<Familiesituasjon fakta={fakta} />
+					<UtgifterOgGjeld fakta={fakta} />
 				</Steg>
 			</div>
 		);
