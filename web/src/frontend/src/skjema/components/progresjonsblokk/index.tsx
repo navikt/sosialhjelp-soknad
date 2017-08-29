@@ -20,7 +20,6 @@ const Progresjonsblokk: React.StatelessComponent<Props> = ({
 		</div>
 		{content.map((child, idx) =>
 			<div className="skjema-progresjonsblokk__sporsmal" key={idx}>
-				{idx}
 				{child}
 			</div>
 		)}
