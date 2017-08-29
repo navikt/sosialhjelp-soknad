@@ -21,13 +21,13 @@ class IntlProvider extends React.Component<IntlProviderProps, IntlProviderState>
 	constructor(props: IntlProviderProps) {
 		super(props);
 		this.state = {
-			ledetekster: {status: null, data: {nb: {}}}
+			ledetekster: {status: null, data: {}}
 		};
 	}
 
 	/* tslint:disable */
 	componentDidMount() {
-		this.setState({ledetekster: {status: 0, data: {nb: {}}}});
+		this.setState({ledetekster: {status: 0, data: {}}});
 		fetch(getApiBaseUrl() + "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp", MED_CREDENTIALS)
 			.then(response => response.json())
 			.then(texts => {
@@ -44,7 +44,7 @@ class IntlProvider extends React.Component<IntlProviderProps, IntlProviderState>
 		const locale = "nb";
 		const children = this.state.ledetekster[STATUS] === 200 ? this.props.children : <span>Spinner</span>;
 		return (
-			<Provider messages={ ledetekster[DATA][locale] } defaultLocale="nb" locale={ locale }>
+			<Provider messages={ ledetekster[DATA] } defaultLocale="nb" locale={ locale }>
 				{ children }
 			</Provider>
 		);

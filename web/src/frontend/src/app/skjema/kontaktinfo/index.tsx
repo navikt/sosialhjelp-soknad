@@ -9,7 +9,7 @@ class Kontaktinfo extends React.Component<{}, {}> {
 	render() {
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		return (
-			<Steg tittelId="kontak.tittel">
+			<Steg tittelId="kontakt.tittel">
 				<Sporsmal
 					sporsmalId="kontakt.kontonummer.tittel"
 					beskrivelseId="kontakt.kontonummer.beskrivelse"

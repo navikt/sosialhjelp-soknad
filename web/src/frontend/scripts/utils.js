@@ -30,14 +30,14 @@ exports.lesSpraakfil = function() {
 	}
 
 	var array = fileContent.split("\n");
-	var output = {'nb': {}};
+	var output = {};
 	for (i in array) {
 		var line = array[i];
 		var splitChar = line.indexOf("=");
 		var key = line.substring(0, splitChar);
 		var val = line.substring(splitChar + 1, line.length);
 		if (val) {
-			output.nb[key] = val.replace('\r', '')
+			output[key] = val.replace('\r', '')
 		}
 	}
 	return output
