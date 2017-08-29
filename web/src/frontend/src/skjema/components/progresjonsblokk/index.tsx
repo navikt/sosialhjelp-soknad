@@ -4,12 +4,13 @@ import "./progresjonsblokk.css";
 interface Props {
 	progresjon?: number;
 	tittel: string;
+	content: React.ReactNode[];
 }
 
 const Progresjonsblokk: React.StatelessComponent<Props> = ({
 	progresjon,
 	tittel,
-	children
+	content
 }) =>
 	<div className="skjema-progresjonsblokk">
 		<div className="skjema-progresjonsblokk__head">
@@ -17,7 +18,7 @@ const Progresjonsblokk: React.StatelessComponent<Props> = ({
 				{tittel}
 			</h3>
 		</div>
-		{React.Children.map(children, (child, idx) =>
+		{content.map((child, idx) =>
 			<div className="skjema-progresjonsblokk__sporsmal" key={idx}>
 				{child}
 			</div>

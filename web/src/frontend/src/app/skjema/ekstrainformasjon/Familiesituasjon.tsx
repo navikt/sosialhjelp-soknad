@@ -10,20 +10,23 @@ const Familiesituasjon: React.StatelessComponent<
 	FaktumComponentProps
 > = props => {
 	return (
-		<Progresjonsblokk tittel="Familiesituasjonen">
-			<FaktumSkjemagruppe tittelId="ekstrainfo.familie.barnebidrag.tittel">
-				<Container fluid={true} className="container--noPadding">
-					<Row>
-						<Column sm="6" xs="3">
-							<FaktumInput faktumKey="ekstrainfo.familie.barnebidrag.betaler" />
-						</Column>
-						<Column sm="6" xs="3">
-							<FaktumInput faktumKey="ekstrainfo.familie.barnebidrag.mottar" />
-						</Column>
-					</Row>
-				</Container>
-			</FaktumSkjemagruppe>
-		</Progresjonsblokk>
+		<Progresjonsblokk
+			tittel="Familiesituasjonen"
+			content={[
+				<FaktumSkjemagruppe tittelId="ekstrainfo.familie.barnebidrag.tittel">
+					<Container fluid={true} className="container--noPadding">
+						<Row>
+							<Column sm="6" xs="3">
+								<FaktumInput faktumKey="ekstrainfo.familie.barnebidrag.betaler" />
+							</Column>
+							<Column sm="6" xs="3">
+								<FaktumInput faktumKey="ekstrainfo.familie.barnebidrag.mottar" />
+							</Column>
+						</Row>
+					</Container>
+				</FaktumSkjemagruppe>
+			]}
+		/>
 	);
 };
 
