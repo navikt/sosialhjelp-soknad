@@ -6,7 +6,7 @@ import Progresjonsblokk from "../../../skjema/components/progresjonsblokk";
 import { FaktumComponentProps } from "../../../skjema/reducer";
 import { faktumIsSelected } from "../../../skjema/utils";
 
-const ArbeidsledigSkjema: React.StatelessComponent<{}> = () =>
+const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
 	<FaktumSkjemagruppe tittelId="ekstrainfo.arbeidsledig.tittel">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
@@ -18,9 +18,10 @@ const ArbeidsledigSkjema: React.StatelessComponent<{}> = () =>
 				</Column>
 			</Row>
 		</Container>
-	</FaktumSkjemagruppe>;
+	</FaktumSkjemagruppe>
+);
 
-const JobbSkjema: React.StatelessComponent<{}> = () =>
+const JobbSkjema: React.StatelessComponent<{}> = () => (
 	<FaktumSkjemagruppe tittelId="ekstrainfo.jobb.tittel">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
@@ -32,9 +33,10 @@ const JobbSkjema: React.StatelessComponent<{}> = () =>
 				</Column>
 			</Row>
 		</Container>
-	</FaktumSkjemagruppe>;
+	</FaktumSkjemagruppe>
+);
 
-const StudentSkjema: React.StatelessComponent<{}> = () =>
+const StudentSkjema: React.StatelessComponent<{}> = () => (
 	<FaktumSkjemagruppe tittelId="ekstrainfo.student.tittel">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
@@ -46,7 +48,8 @@ const StudentSkjema: React.StatelessComponent<{}> = () =>
 				</Column>
 			</Row>
 		</Container>
-	</FaktumSkjemagruppe>;
+	</FaktumSkjemagruppe>
+);
 
 const ArbeidOgUtdanning: React.StatelessComponent<
 	FaktumComponentProps
@@ -60,9 +63,9 @@ const ArbeidOgUtdanning: React.StatelessComponent<
 		return null;
 	}
 	const content = [
-		...(visArbeidsledig ? [<ArbeidsledigSkjema />] : []),
-		...(visJobb ? [<JobbSkjema />] : []),
-		...(visStudent ? [<StudentSkjema />] : [])
+		...(visArbeidsledig ? [<ArbeidsledigSkjema key="arbeidsledig" />] : []),
+		...(visJobb ? [<JobbSkjema key="jobb" />] : []),
+		...(visStudent ? [<StudentSkjema key="student" />] : [])
 	];
 
 	return <Progresjonsblokk tittel="Arbeid og utdanning" content={content} />;

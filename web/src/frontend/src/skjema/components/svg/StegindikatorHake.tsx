@@ -1,6 +1,8 @@
+/* tslint:disable */
+
 import * as React from "react";
 
-const StegindikatorHake: React.StatelessComponent<{}> = () =>
+const StegindikatorHake: React.StatelessComponent<{}> = () => (
 	<svg
 		width="32"
 		height="32"
@@ -17,6 +19,7 @@ const StegindikatorHake: React.StatelessComponent<{}> = () =>
 				fill="#3E3832"
 			/>
 		</g>
-	</svg>;
+	</svg>
+);
 
 export default StegindikatorHake;
