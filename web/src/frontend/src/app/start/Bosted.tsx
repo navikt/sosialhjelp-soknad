@@ -1,20 +1,23 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import FaktumSelect from "../../skjema/faktum/FaktumSelect";
 import Knapp from "nav-frontend-knapper";
-import { FaktumState, FaktumComponentProps } from "../../skjema/reducer";
+import { FaktumComponentProps } from "../../skjema/reducer";
 import { Kommuner } from "./kommuner";
 import { Kommune, Bydel } from "./types";
 import { Collapse } from "react-collapse";
-import { SoknadState, ActionTypeKeys } from "../../redux/soknad/types";
+import { ActionTypeKeys } from "../../redux/soknad/types";
 import Arrow from "../../skjema/components/svg/Arrow";
 import { withRouter, RouterProps } from "react-router";
-import { bindActionCreators } from "redux";
-import { opprettSoknad } from "../../redux/soknad/actions";
 
 interface StateProps {
 	status?: string;
 	brukerBehandlingId?: string;
+}
+
+export interface DispatchToProps {
+	action: {
+		opprettSoknad: () => {}
+	};
 }
 
 class Bosted extends React.Component<FaktumComponentProps & RouterProps & StateProps & DispatchToProps> {
@@ -117,20 +120,4 @@ class Bosted extends React.Component<FaktumComponentProps & RouterProps & StateP
 	}
 }
 
-interface DispatchToProps {
-	action: {
-		opprettSoknad: () => {}
-	};
-}
-
-const mapDispatchToProps = (dispatch: any): DispatchToProps => ({
-	action: bindActionCreators({opprettSoknad}, dispatch)
-});
-
-const mapStateToProps = (state: { faktumStore: FaktumState, soknad: SoknadState }): {} => ({
-	fakta: state.faktumStore.fakta,
-	status: state.soknad.status,
-	brukerBehandlingId: state.soknad.brukerBehandlingId
-});
-
-export default connect<{}, DispatchToProps, {}>(mapStateToProps, mapDispatchToProps)(withRouter(Bosted));
+export default (withRouter(Bosted));
