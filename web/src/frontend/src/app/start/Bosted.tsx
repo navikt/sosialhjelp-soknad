@@ -9,15 +9,15 @@ import { Collapse } from "react-collapse";
 import { SoknadState, ActionTypeKeys } from "../../redux/soknad/types";
 import Arrow from "../../skjema/components/svg/Arrow";
 import { withRouter, RouterProps } from "react-router";
-import { bindActionCreators } from "redux";
 import { opprettSoknad } from "../../redux/soknad/actions";
+import { DispatchProps } from "../../redux/types";
 
 interface StateProps {
 	status?: string;
 	brukerBehandlingId?: string;
 }
 
-class Bosted extends React.Component<FaktumComponentProps & RouterProps & StateProps & DispatchToProps> {
+class Bosted extends React.Component<FaktumComponentProps & RouterProps & StateProps & DispatchProps > {
 
 	componentDidUpdate() {
 		if (this.props.status === ActionTypeKeys.OK) {
@@ -39,7 +39,7 @@ class Bosted extends React.Component<FaktumComponentProps & RouterProps & StateP
 
 	opprettSoknad(event: any) {
 		event.preventDefault();
-		this.props.action.opprettSoknad();
+		this.props.dispatch(opprettSoknad());
 	}
 
 	render() {
@@ -117,20 +117,10 @@ class Bosted extends React.Component<FaktumComponentProps & RouterProps & StateP
 	}
 }
 
-interface DispatchToProps {
-	action: {
-		opprettSoknad: () => {}
+export default connect((state: { faktumStore: FaktumState, soknad: SoknadState }, props: any) => {
+	return {
+		fakta: state.faktumStore.fakta,
+		status: state.soknad.status,
+		brukerBehandlingId: state.soknad.brukerBehandlingId
 	};
-}
-
-const mapDispatchToProps = (dispatch: any): DispatchToProps => ({
-	action: bindActionCreators({opprettSoknad}, dispatch)
-});
-
-const mapStateToProps = (state: { faktumStore: FaktumState, soknad: SoknadState }): {} => ({
-	fakta: state.faktumStore.fakta,
-	status: state.soknad.status,
-	brukerBehandlingId: state.soknad.brukerBehandlingId
-});
-
-export default connect<{}, DispatchToProps, {}>(mapStateToProps, mapDispatchToProps)(withRouter(Bosted));
+})(withRouter(Bosted));
