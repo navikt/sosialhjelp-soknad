@@ -2,13 +2,46 @@ import * as React from "react";
 import { connect } from "react-redux";
 import FaktumSelect from "../../skjema/faktum/FaktumSelect";
 import Knapp from "nav-frontend-knapper";
-import { FaktumStoreState, FaktumComponentProps } from "../../skjema/reducer";
+import { FaktumState, FaktumComponentProps } from "../../skjema/reducer";
 import { Kommuner } from "./kommuner";
 import { Kommune, Bydel } from "./types";
 import { Collapse } from "react-collapse";
+import { SoknadState, ActionTypeKeys } from "../../redux/soknad/types";
 import Arrow from "../../skjema/components/svg/Arrow";
+import { withRouter, RouterProps } from "react-router";
+import { opprettSoknad } from "../../redux/soknad/actions";
+import { DispatchProps } from "../../redux/types";
 
-class Bosted extends React.Component<FaktumComponentProps> {
+interface StateProps {
+	status?: string;
+	brukerBehandlingId?: string;
+}
+
+class Bosted extends React.Component<FaktumComponentProps & RouterProps & StateProps & DispatchProps > {
+
+	componentDidUpdate() {
+		if (this.props.status === ActionTypeKeys.OK) {
+			this.gaaTilSkjema();
+		}
+	}
+
+	gaaTilSkjema() {
+		const { fakta } = this.props;
+		const kommuneId = fakta.get("personalia.kommune");
+		const bydelId = fakta.get("personalia.bydel");
+		let search = "?personalia.kommune=" + kommuneId;
+		if (bydelId) {
+			search += "&personalia.bydel=" + bydelId;
+		}
+		const pathname = "/skjema/" + this.props.brukerBehandlingId + "/1";
+		this.props.history.push(`${pathname}/${search}`);
+	}
+
+	opprettSoknad(event: any) {
+		event.preventDefault();
+		this.props.dispatch(opprettSoknad());
+	}
+
 	render() {
 		const { fakta } = this.props;
 		const kommuneId = fakta.get("personalia.kommune");
@@ -26,7 +59,7 @@ class Bosted extends React.Component<FaktumComponentProps> {
 			(valgtKommune && !valgtKommune.bydeler) || (valgtKommune && valgtBydel);
 
 		return (
-			<form action="skjema/1">
+			<form onSubmit={(e) => this.opprettSoknad(e)}>
 				<Collapse isOpened={true}>
 					<div className="blokk-l">
 						<FaktumSelect
@@ -83,8 +116,11 @@ class Bosted extends React.Component<FaktumComponentProps> {
 		);
 	}
 }
-export default connect((state: FaktumStoreState, props: any) => {
+
+export default connect((state: { faktumStore: FaktumState, soknad: SoknadState }, props: any) => {
 	return {
-		fakta: state.faktumStore.fakta
+		fakta: state.faktumStore.fakta,
+		status: state.soknad.status,
+		brukerBehandlingId: state.soknad.brukerBehandlingId
 	};
-})(Bosted);
+})(withRouter(Bosted));
