@@ -23,7 +23,7 @@
     <loadBalancer isAlive="/soknadsosialhjelp/internal/isAlive"/>
 
     <serverOptions>
-        <memoryParameters resourceAlias="brukerdialog-memparams"/>
+        <memoryParameters resourceAlias="soknadsdialoger-memparams"/>
     </serverOptions>
 
     <security>
