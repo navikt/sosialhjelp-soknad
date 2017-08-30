@@ -5,6 +5,8 @@ const utils = require('./utils.js');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(utils.delayAllResponses(2000));
+
 var port = process.env.PORT || 3001;
 var router = express.Router();
 
