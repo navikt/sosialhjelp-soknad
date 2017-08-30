@@ -1,5 +1,5 @@
 import * as React from "react";
-import Bosted from "./BostedContainer";
+import Bosted from "./Bosted";
 import "./start.css";
 
 class Start extends React.Component<{}, {}> {
