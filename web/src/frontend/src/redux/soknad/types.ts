@@ -27,3 +27,10 @@ export interface SetServerFeilAction {
 export interface OtherAction {
 	type: ActionTypeKeys.OTHER_ACTION;
 }
+
+export interface SoknadState {
+	status: string;
+	soknadType: string;
+	brukerBehandlingId: string;
+	feilmelding: string;
+}

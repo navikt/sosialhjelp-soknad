@@ -1,5 +1,4 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import { withRouter, RouterProps } from "react-router";
 import { Route, Switch } from "react-router";
 import Steg1 from "./kontaktinfo";
@@ -12,10 +11,8 @@ import Steg7 from "./utgifterGjeld";
 import Steg8 from "./ekstrainformasjon";
 import StegIndikator from "../../skjema/components/stegIndikator";
 import Knapperad from "../../skjema/components/knapperad";
-import { finnStegFraLocation } from "./utils";
+import { finnStegFraLocation, finnBrukerBehandlingIdFraLocation } from "./utils";
 import { gaTilbake, gaVidere, avbryt } from "./utils";
-import { opprettSoknad } from "../../redux/soknad/actions";
-import { bindActionCreators } from "redux";
 import { Location } from "history";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
@@ -28,14 +25,12 @@ interface Props {
 	location: Location;
 }
 
-class Skjema extends React.Component<Props & RouterProps & DispatchToProps, {}> {
-
-	componentDidMount() {
-		this.props.action.opprettSoknad();
-	}
+class Skjema extends React.Component<Props & RouterProps, {}> {
 
 	render() {
 		const aktivtSteg = finnStegFraLocation(this.props.location);
+		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(this.props.location);
+
 		const { match, history } = this.props;
 		return (
 			<form id="soknadsskjema" onSubmit={stopEvent}>
@@ -63,8 +58,8 @@ class Skjema extends React.Component<Props & RouterProps & DispatchToProps, {}> 
 					<Route path={`${match.url}/8`} component={Steg8} />
 				</Switch>
 				<Knapperad
-					gaVidere={() => gaVidere(aktivtSteg, history)}
-					gaTilbake={() => gaTilbake(aktivtSteg, history)}
+					gaVidere={() => gaVidere(aktivtSteg, brukerBehandlingId, history)}
+					gaTilbake={() => gaTilbake(aktivtSteg, brukerBehandlingId, history)}
 					avbryt={() => avbryt()}
 				/>
 			</form>
@@ -72,17 +67,4 @@ class Skjema extends React.Component<Props & RouterProps & DispatchToProps, {}> 
 	}
 }
 
-interface DispatchToProps {
-	action: {
-		opprettSoknad: () => {}
-	};
-}
-
-const mapStateToProps = (state: any): {} => ({
-});
-
-const mapDispatchToProps = (dispatch: any): DispatchToProps => ({
-	action: bindActionCreators({opprettSoknad}, dispatch)
-});
-
-export default connect<{}, DispatchToProps, {}>(mapStateToProps, mapDispatchToProps)(withRouter(Skjema));
+export default (withRouter(Skjema));
