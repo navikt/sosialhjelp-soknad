@@ -11,6 +11,8 @@ interface OwnProps {
 	faktumKey: string;
 	labelId?: string;
 	disabled?: boolean;
+	textareaClass?: string;
+	maxLength?: number;
 	feil?: Feil;
 }
 
@@ -25,6 +27,8 @@ class FaktumTextarea extends React.Component<
 			disabled,
 			feil,
 			fakta,
+			textareaClass,
+			maxLength,
 			dispatch,
 			intl
 		} = this.props;
@@ -38,6 +42,8 @@ class FaktumTextarea extends React.Component<
 				onChange={(evt: any) =>
 					dispatch(setFaktumVerdi(faktumKey, evt.target.value))}
 				feil={feil}
+				maxLength={maxLength || 400}
+				textareaClass={textareaClass || "skjema-texarea--normal"}
 			/>
 		);
 	}
