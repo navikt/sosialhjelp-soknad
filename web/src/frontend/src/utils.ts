@@ -49,7 +49,7 @@ export function fetchHtml(urlPath: string) {
 		},
 		method: "GET"
 	};
-	return fetch(getApiBaseUrl() + apiPath() + urlPath, OPTIONS)
+	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
 		.then((response: Response) => {
 			return response.text();
