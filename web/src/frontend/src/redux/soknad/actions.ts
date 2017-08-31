@@ -27,9 +27,9 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 	};
 }
 
-function hentFakta(id: string, kommuneId: string, bydelId: string, dispatch: Dispatch<Action>) {
+function hentFakta(brukerBehandlingId: string, kommuneId: string, bydelId: string, dispatch: Dispatch<Action>) {
 	dispatch({type: ActionTypeKeys.PENDING});
-	fetchToJson("soknader/" + id + "/fakta")
+	fetchToJson("soknader/" + brukerBehandlingId + "/fakta")
 		.then(response => {
 			dispatch(setFaktum(response));
 			dispatch(setFaktumVerdi("personalia.kommune", kommuneId));

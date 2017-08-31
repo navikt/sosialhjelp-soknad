@@ -17,10 +17,6 @@ export function getApiBaseUrl(): string {
 
 export const MED_CREDENTIALS: RequestInit = { credentials: "same-origin" };
 
-export function apiPath() {
-	return erDev() ? "informasjon/" : "sendsoknad/";
-}
-
 export function fetchPost(urlPath: string, body: string) {
 	const OPTIONS: RequestInit = {
 		headers: {
@@ -29,7 +25,7 @@ export function fetchPost(urlPath: string, body: string) {
 		method: "POST",
 		body
 	};
-	return fetch(getApiBaseUrl() + apiPath() + urlPath, OPTIONS)
+	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
 		.then(toJson);
 }
@@ -41,7 +37,7 @@ export function fetchToJson(urlPath: string ) {
 		},
 		method: "GET"
 	};
-	return fetch(getApiBaseUrl() + apiPath() + urlPath, OPTIONS)
+	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
 		.then(toJson);
 }
