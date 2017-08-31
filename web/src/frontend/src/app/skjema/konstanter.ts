@@ -1,1 +1,1 @@
-export const ANTALL_STEG = 8;
+export const ANTALL_STEG = 9;
