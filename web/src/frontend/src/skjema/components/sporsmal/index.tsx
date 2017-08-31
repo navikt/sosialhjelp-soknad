@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./sporsmal.css";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
+import Skjemapanel from "../skjemapanel";
 import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 
 interface Props extends React.Props<any> {
@@ -18,26 +19,26 @@ const Sporsmal: React.StatelessComponent<Props & InjectedIntlProps> = ({
 }) => {
 	return (
 		<div className="skjema-sporsmal">
-			<fieldset>
-				<legend>
-					<FormattedMessage id={sporsmalId} />
-				</legend>
-				{hjelpetekst
-					? <div className="skjema-sporsmal__hjelpetekst">
-							<HjelpetekstAuto>
-								{hjelpetekst}
-							</HjelpetekstAuto>
+			<Skjemapanel>
+				<fieldset className="skjema-sporsmal__fieldset">
+					<legend>
+						<FormattedMessage id={sporsmalId} />
+					</legend>
+					{hjelpetekst ? (
+						<div className="skjema-sporsmal__hjelpetekst">
+							<HjelpetekstAuto>{hjelpetekst}</HjelpetekstAuto>
 						</div>
-					: null}
-				<div className="skjema-sporsmal__innhold">
-					{beskrivelseId
-						? <p className="skjema-sporsmal__beskrivelse">
+					) : null}
+					<div className="skjema-sporsmal__innhold">
+						{beskrivelseId ? (
+							<p className="skjema-sporsmal__beskrivelse">
 								{intl.formatMessage({ id: beskrivelseId })}
 							</p>
-						: null}
-					{children}
-				</div>
-			</fieldset>
+						) : null}
+						{children}
+					</div>
+				</fieldset>
+			</Skjemapanel>
 		</div>
 	);
 };
