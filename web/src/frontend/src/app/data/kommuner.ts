@@ -1,4 +1,13 @@
-import { Kommune, Bydel } from "./types";
+export interface Bydel {
+	id: string;
+	navn: string;
+}
+
+export interface Kommune {
+	id: string;
+	navn: string;
+	bydeler?: Bydel[];
+}
 
 export const OsloBydeler: Bydel[] = [
 	{ id: "alna", navn: "Bydel Alna" },
@@ -41,3 +50,13 @@ export const Kommuner: Kommune[] = [
 		navn: "Trondheim"
 	}
 ];
+
+export function getBosted(kommuneId: string, bydelId?: string): string {
+	const kommune = Kommuner.find(k => k.id === kommuneId);
+	if (!kommune) {
+		return "N/A";
+	}
+	const bydel =
+		kommuneId === "oslo" ? OsloBydeler.find(b => b.id === bydelId) : undefined;
+	return `${kommune.navn}${bydel ? `, ${bydel.navn}` : ""}`;
+}

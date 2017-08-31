@@ -68,7 +68,10 @@ class Skjema extends React.Component<Props & RouterProps, {}> {
 				</Switch>
 				<Knapperad
 					gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
-					gaVidere={() => gaVidere(aktivtSteg, brukerBehandlingId, history)}
+					gaVidere={() =>
+						erOppsummering
+							? history.push("/kvittering")
+							: gaVidere(aktivtSteg, brukerBehandlingId, history)}
 					gaTilbake={() => gaTilbake(aktivtSteg, brukerBehandlingId, history)}
 					avbryt={() => avbryt()}
 				/>
