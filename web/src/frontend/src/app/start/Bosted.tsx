@@ -11,7 +11,6 @@ import { withRouter, RouterProps } from "react-router";
 import { opprettSoknad } from "../../redux/soknad/actions";
 import { DispatchProps } from "../../redux/types";
 import { Select } from "nav-frontend-skjema";
-// import { getIntlTextOrKey } from "../../skjema/utils";
 import { InjectedIntlProps, FormattedMessage } from "react-intl";
 
 interface StateProps {
@@ -39,15 +38,7 @@ class Bosted extends React.Component<
 	}
 
 	gaaTilSkjema() {
-		const { fakta } = this.props;
-		const kommuneId = fakta.get("personalia.kommune");
-		const bydelId = fakta.get("personalia.bydel");
-		let search = "?personalia.kommune=" + kommuneId;
-		if (bydelId) {
-			search += "&personalia.bydel=" + bydelId;
-		}
-		const pathname = "/skjema/" + this.props.brukerBehandlingId + "/1";
-		this.props.history.push(`${pathname}/${search}`);
+		this.props.history.push(`/skjema/${this.props.brukerBehandlingId}/1`);
 	}
 
 	opprettSoknad(event: any) {
@@ -57,24 +48,7 @@ class Bosted extends React.Component<
 	}
 
 	render() {
-		// const { fakta } = this.props;
-		// const kommuneId = fakta.get("personalia.kommune");
-		// const bydelId = fakta.get("personalia.bydel");
-
-		// const { kommuneId, bydelId } = this.state;
-		// const kommuneId = this.state.kommuneId;
-		const { kommuneId, bydelId } = this.state;
-
-		const valgtKommune: Kommune | undefined = kommuneId
-			? Kommuner.find(k => k.id === kommuneId)
-			: undefined;
-		const valgtBydel: Bydel | undefined =
-			valgtKommune && valgtKommune.bydeler
-				? valgtKommune.bydeler.find(b => b.id === bydelId)
-				: undefined;
-
-		const ferdig =
-			(valgtKommune && !valgtKommune.bydeler) || (valgtKommune && valgtBydel);
+		const {valgtKommune, valgtBydel, ferdig} = this.hentSkjemaVerdier();
 
 		return (
 			<form onSubmit={(e) => this.opprettSoknad(e)}>
@@ -135,6 +109,21 @@ class Bosted extends React.Component<
 			</form>
 		);
 	}
+
+	private hentSkjemaVerdier() {
+		const {kommuneId, bydelId} = this.state;
+		const valgtKommune: Kommune | undefined = kommuneId
+			? Kommuner.find(k => k.id === kommuneId)
+			: undefined;
+		const valgtBydel: Bydel | undefined =
+			valgtKommune && valgtKommune.bydeler
+				? valgtKommune.bydeler.find(b => b.id === bydelId)
+				: undefined;
+		const ferdig =
+			(valgtKommune && !valgtKommune.bydeler) || (valgtKommune && valgtBydel);
+		return {valgtKommune, valgtBydel, ferdig};
+	}
+
 }
 
 export default connect((state: { faktumStore: FaktumState, soknad: SoknadState }, props: any) => {
