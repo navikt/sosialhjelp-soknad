@@ -8,10 +8,14 @@
 
 	> fieldset {
 		legend {
-			padding-left: @skjemaMarg;
-			padding-right: @skjemaMarg;
+			padding-left: 0;
+			padding-right: 0;
 			margin-bottom: 1rem;
 			font-weight: 600;
+		}
+		> legend {
+			padding-left: @skjemaMarg;
+			padding-right: @skjemaMarg;
 		}
 		border: none;
 		padding: 0;
@@ -19,7 +23,7 @@
 	}
 
 	&__innhold {
-		padding: 0 4rem;
+		padding: 0 @skjemaMarg;
 	}
 
 	&__tittel {

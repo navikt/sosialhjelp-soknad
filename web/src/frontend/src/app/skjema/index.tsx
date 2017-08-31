@@ -36,9 +36,10 @@ class Skjema extends React.Component<Props & RouterProps, {}> {
 			this.props.location
 		);
 		const { match, history } = this.props;
+		const erOppsummering = aktivtSteg === 9;
 		return (
 			<form id="soknadsskjema" onSubmit={stopEvent}>
-				{aktivtSteg <= 8 ? (
+				{!erOppsummering ? (
 					<StegIndikator
 						aktivtSteg={aktivtSteg}
 						steg={[
@@ -66,6 +67,7 @@ class Skjema extends React.Component<Props & RouterProps, {}> {
 					<Route path={`${match.url}/9`} component={Steg9} />
 				</Switch>
 				<Knapperad
+					gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
 					gaVidere={() => gaVidere(aktivtSteg, brukerBehandlingId, history)}
 					gaTilbake={() => gaTilbake(aktivtSteg, brukerBehandlingId, history)}
 					avbryt={() => avbryt()}

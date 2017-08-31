@@ -3,14 +3,16 @@ import {
 	ActionTypeKeys,
 	OpprettSoknadAction,
 	SetBrukerBehandlingIdAction,
-	SetServerFeilAction
+	SetServerFeilAction,
+	SetOppsummering
 } from "./types";
 import { fetchPost, fetchToJson, fetchHtml } from "../../utils";
 
 export type ActionTypes =
 	| OpprettSoknadAction
 	| SetBrukerBehandlingIdAction
-	| SetServerFeilAction;
+	| SetServerFeilAction
+	| SetOppsummering;
 
 export function opprettSoknad() {
 	return (dispatch: Dispatch<Action>) => {
@@ -50,7 +52,7 @@ export function hentOppsummering(id: string) {
 			.then(response => {
 				dispatch({
 					type: ActionTypeKeys.SET_OPPSUMMERING,
-					response
+					oppsummering: response
 				});
 			})
 			.catch(reason => {

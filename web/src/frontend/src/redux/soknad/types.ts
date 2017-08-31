@@ -26,7 +26,7 @@ export interface SetServerFeilAction {
 }
 export interface SetOppsummering {
 	type: ActionTypeKeys.SET_OPPSUMMERING;
-	html: string;
+	oppsummering: string;
 }
 
 export interface OtherAction {
