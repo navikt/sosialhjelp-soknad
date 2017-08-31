@@ -11,8 +11,8 @@ var port = process.env.PORT || 3001;
 var router = express.Router();
 
 // Språkdata tjeneste /api/tekster
-router.get("/tekster", function(req, res) {
-	res.json(utils.lesSpraakfil());
+router.get('/informasjon/tekster', function (req, res) {
+	res.json(utils.lesSpraakfil())
 });
 
 const brukerBehandlingId = "1000B8FNi";
@@ -32,7 +32,7 @@ router.get("/soknader/:brukerBehandlingId/oppsummering", function(req, res) {
 });
 
 app.use(utils.allowCrossDomain);
-app.use("/informasjon", router);
+app.use('/', router);
 
 app.listen(port);
 console.log("Test API server running on port " + port);
