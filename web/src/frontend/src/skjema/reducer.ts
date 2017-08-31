@@ -29,6 +29,7 @@ export const deleteFaktumFromMap = (faktumMap: FaktumMap, key: string) => {
 	return copyMap;
 };
 
+/* tslint:disable */
 const faktumReducer: Reducer<FaktumState, ActionTypes> = (
 	state = defaultState,
 	action
@@ -43,6 +44,11 @@ const faktumReducer: Reducer<FaktumState, ActionTypes> = (
 			return {
 				...state,
 				fakta: deleteFaktumFromMap(state.fakta, action.faktumKey)
+			};
+		case ActionTypeKeys.SET_FAKTUM:
+			return {
+				...state,
+				fakta: action.faktum.map((faktum: any) => ({key: faktum["key"], value: faktum["value"]}))
 			};
 		default:
 			return state;

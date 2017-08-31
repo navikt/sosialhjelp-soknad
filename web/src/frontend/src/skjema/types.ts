@@ -2,6 +2,7 @@ export * from "../redux/types";
 
 export enum ActionTypeKeys {
 	SET_FAKTUM_VERDI = "SET_FAKTUM_VERDI",
+	SET_FAKTUM = "SET_FAKTUM",
 	RESET_FAKTUM_VERDI = "RESET_FAKTUM_VERDI",
 	OTHER_ACTION = "__any_other_action_type__"
 }
@@ -11,6 +12,16 @@ export interface SetFaktumVerdiAction {
 	faktumKey: string;
 	value: FaktumValueType;
 	properties?: any;
+}
+
+export interface Faktum {
+	key: string;
+	value: string;
+}
+
+export interface SetFaktumAction {
+	type: ActionTypeKeys.SET_FAKTUM;
+	faktum: any;
 }
 
 export interface ResetFaktumVerdiAction {

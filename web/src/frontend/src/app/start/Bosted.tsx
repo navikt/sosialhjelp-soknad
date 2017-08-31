@@ -1,6 +1,5 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import FaktumSelect from "../../skjema/faktum/FaktumSelect";
 import Knapp from "nav-frontend-knapper";
 import { FaktumState, FaktumComponentProps } from "../../skjema/reducer";
 import { Kommuner } from "./kommuner";
@@ -11,13 +10,27 @@ import Arrow from "../../skjema/components/svg/Arrow";
 import { withRouter, RouterProps } from "react-router";
 import { opprettSoknad } from "../../redux/soknad/actions";
 import { DispatchProps } from "../../redux/types";
+import { Select } from "nav-frontend-skjema";
+// import { getIntlTextOrKey } from "../../skjema/utils";
+import { InjectedIntlProps, FormattedMessage } from "react-intl";
 
 interface StateProps {
 	status?: string;
 	brukerBehandlingId?: string;
+	kommuneId: string;
+	bydelId: string;
 }
 
-class Bosted extends React.Component<FaktumComponentProps & RouterProps & StateProps & DispatchProps > {
+class Bosted extends React.Component<
+	FaktumComponentProps & RouterProps & StateProps & DispatchProps & InjectedIntlProps, StateProps > {
+
+	constructor(props: any) {
+		super(props);
+		this.state = {
+			kommuneId: "",
+			bydelId: ""
+		};
+	}
 
 	componentDidUpdate() {
 		if (this.props.status === ActionTypeKeys.OK) {
@@ -39,13 +52,18 @@ class Bosted extends React.Component<FaktumComponentProps & RouterProps & StateP
 
 	opprettSoknad(event: any) {
 		event.preventDefault();
-		this.props.dispatch(opprettSoknad());
+		const { kommuneId, bydelId } = this.state;
+		this.props.dispatch(opprettSoknad(kommuneId, bydelId));
 	}
 
 	render() {
-		const { fakta } = this.props;
-		const kommuneId = fakta.get("personalia.kommune");
-		const bydelId = fakta.get("personalia.bydel");
+		// const { fakta } = this.props;
+		// const kommuneId = fakta.get("personalia.kommune");
+		// const bydelId = fakta.get("personalia.bydel");
+
+		// const { kommuneId, bydelId } = this.state;
+		// const kommuneId = this.state.kommuneId;
+		const { kommuneId, bydelId } = this.state;
 
 		const valgtKommune: Kommune | undefined = kommuneId
 			? Kommuner.find(k => k.id === kommuneId)
@@ -62,39 +80,41 @@ class Bosted extends React.Component<FaktumComponentProps & RouterProps & StateP
 			<form onSubmit={(e) => this.opprettSoknad(e)}>
 				<Collapse isOpened={true}>
 					<div className="blokk-l">
-						<FaktumSelect
-							faktumKey="personalia.kommune"
+						<Select
 							bredde="m"
-							labelFunc={(label: string) =>
+							onChange={(evt: any) => this.setState({kommuneId: evt.target.value})}
+							label={(
 								<strong>
-									{label}
-								</strong>}>
+									<FormattedMessage id="personalia.kommune.sporsmal"/>
+								</strong>
+							)}>
 							<option value="" />
 							{Kommuner.map(kommune =>
 								<option value={kommune.id} key={kommune.id}>
 									{kommune.navn}
 								</option>
 							)}
-						</FaktumSelect>
+						</Select>
 					</div>
 
 					{valgtKommune && valgtKommune.bydeler
 						? <div className="blokk-l">
 								<Arrow />
-								<FaktumSelect
-									faktumKey="personalia.bydel"
+								<Select
 									bredde="m"
-									labelFunc={(label: string) =>
+									onChange={(evt: any) => this.setState({bydelId: evt.target.value})}
+									label={(
 										<strong>
-											{label}
-										</strong>}>
+											<FormattedMessage id="personalia.bydel.sporsmal"/>
+										</strong>
+									)}>
 									<option value="" />
 									{valgtKommune.bydeler.map(bydel =>
 										<option value={bydel.id} key={bydel.id}>
 											{bydel.navn}
 										</option>
 									)}
-								</FaktumSelect>
+								</Select>
 							</div>
 						: null}
 					{ferdig
