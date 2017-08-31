@@ -11,7 +11,7 @@ class Studie extends React.Component<FaktumComponentProps, any> {
 	render() {
 		const { fakta } = this.props;
 		const studie = radioCheckKeys("dinsituasjon.studerer");
-		const studerer = radioCheckKeys("dinsituasjon.studerer.true");
+		const studerer = radioCheckKeys("dinsituasjon.studerer.true.grad");
 		return (
 			<Sporsmal sporsmalId={studie.sporsmal}>
 				<FaktumRadio faktumKey={studie.faktum} option="true" />
