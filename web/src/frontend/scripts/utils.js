@@ -55,3 +55,7 @@ exports.lesMockDataFil = function(filnavn) {
 		}
 	}
 };
+
+exports.delayAllResponses = function (millis) {
+	return function(req, res, next){setTimeout(next,millis)};
+};
