@@ -7,13 +7,15 @@ export interface SoknadState {
 	soknadType?: string;
 	brukerBehandlingId?: string;
 	feilmelding?: string;
+	oppsummering?: string;
 }
 
 const defaultState: SoknadState = {
 	status: "",
 	soknadType: "NAV DIGISOS",
 	brukerBehandlingId: "",
-	feilmelding: ""
+	feilmelding: "",
+	oppsummering: undefined
 };
 
 const soknadReducer: Reducer<SoknadState, ActionTypes> = (
@@ -21,7 +23,6 @@ const soknadReducer: Reducer<SoknadState, ActionTypes> = (
 	action
 ): SoknadState => {
 	switch (action.type) {
-
 		case ActionTypeKeys.OPPRETT_SOKNAD:
 			return {
 				...state,
@@ -42,6 +43,11 @@ const soknadReducer: Reducer<SoknadState, ActionTypes> = (
 				...state,
 				brukerBehandlingId: action.brukerBehandlingId,
 				status: ActionTypeKeys.OK
+			};
+		case ActionTypeKeys.SET_OPPSUMMERING:
+			return {
+				...state,
+				oppsummering: action.oppsummering
 			};
 		default:
 			return state;

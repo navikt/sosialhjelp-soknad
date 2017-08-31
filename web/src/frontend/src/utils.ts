@@ -53,9 +53,11 @@ export function fetchHtml(urlPath: string) {
 		},
 		method: "GET"
 	};
-	return fetch(getApiBaseUrl() + apiPath() + urlPath, OPTIONS).then(
-		sjekkStatuskode
-	);
+	return fetch(getApiBaseUrl() + apiPath() + urlPath, OPTIONS)
+		.then(sjekkStatuskode)
+		.then((response: Response) => {
+			return response.text();
+		});
 }
 
 function toJson<T>(response: Response): Promise<T> {

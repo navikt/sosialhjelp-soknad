@@ -4,23 +4,23 @@
 @ramme: @navGra20;
 
 .underskjema {
-	padding-top: .8rem;
+	padding-top: 0.8rem;
 	padding-bottom: 1rem;
 
 	&__wrapper {
-		margin-left: -4rem;
-		margin-right: -4rem;
+		margin-left: -1 * @skjemaMarg;
+		margin-right: -1 * @skjemaMarg;
 	}
 
 	&__boks {
-		padding: 2rem 4rem;
+		padding: 2rem @skjemaMarg;
 		border: 1px solid @ramme;
 		background-color: @bakgrunn;
 		position: relative;
 	}
 
 	&__innhold:before {
-		content: '';
+		content: "";
 		height: 1rem;
 		width: 1rem;
 		background-color: @bakgrunn;
