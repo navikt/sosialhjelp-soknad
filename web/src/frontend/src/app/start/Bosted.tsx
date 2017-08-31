@@ -95,7 +95,12 @@ class Bosted extends React.Component<
 						<div>
 							<p>
 								Når du har fylt ut blir søknaden sendt til{" "}
-								<strong>{getBosted(valgtKommune.id, valgtBydel.id)}</strong>
+								<strong>
+									{getBosted(
+										valgtKommune.id,
+										valgtBydel ? valgtBydel.id : null
+									)}
+								</strong>
 							</p>
 							<Knapp type="hoved" htmlType="submit">
 								Start søknad
