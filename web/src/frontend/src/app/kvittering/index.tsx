@@ -22,10 +22,9 @@ class Kvittering extends React.Component<
 	{}
 > {
 	render() {
-		const { fakta, soknad } = this.props;
+		const { fakta } = this.props;
 		const kommune = fakta.get("personalia.kommune");
 		const bydel = fakta.get("personalia.bydel");
-		console.log(fakta, soknad);
 		return (
 			<div className="kvittering">
 				<Panel>
