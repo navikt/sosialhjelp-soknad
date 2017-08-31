@@ -1,5 +1,5 @@
-@nodeModulesPath: './../../';
-@coreModulePath: './../../';
+@nodeModulesPath: "./../../";
+@coreModulePath: "./../../";
 
 @import "./node_modules/nav-frontend-core/less/core";
 @import "./node_modules/nav-frontend-alertstriper-style/src/index.less";
@@ -8,6 +8,7 @@
 @import "./node_modules/nav-frontend-knapper-style/src/index.less";
 @import "./node_modules/nav-frontend-lenker-style/src/lenker-style.less";
 @import "./node_modules/nav-frontend-lukknapp-style/src/lukknapp-style.less";
+@import "./node_modules/nav-frontend-paneler-style/src/index.less";
 @import "./node_modules/nav-frontend-skjema-style/src/index.less";
 @import "./node_modules/nav-frontend-spinner-style/src/spinner-style.less";
 @import "./node_modules/nav-frontend-stegindikator-style/src/index.less";
@@ -28,4 +29,11 @@ body {
 .container--noPadding {
 	padding-left: 0 !important;
 	padding-right: 0 !important;
+}
+
+.skjema-texarea--normal {
+	min-height: 6em;
+}
+.skjema-textarea--large {
+	min-height: 12em;
 }

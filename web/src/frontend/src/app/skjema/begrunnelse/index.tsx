@@ -19,14 +19,18 @@ class Begrunnelse extends React.Component<
 			<Steg tittelId="begrunnelsebolk.tittel">
 				<Sporsmal sporsmalId="begrunnelse.hvorfor.sporsmal">
 					<FaktumTextarea
+						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hvorfor"
 						labelId="begrunnelse.hvorfor.info"
+						maxLength={800}
 					/>
 				</Sporsmal>
 				<Sporsmal sporsmalId="begrunnelse.hva.sporsmal">
 					<FaktumTextarea
+						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hva"
 						labelId="begrunnelse.hva.info"
+						maxLength={800}
 					/>
 				</Sporsmal>
 			</Steg>

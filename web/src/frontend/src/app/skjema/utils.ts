@@ -20,14 +20,26 @@ interface RouterHistoryType {
 	push: (url: string) => void;
 }
 
-export function gaTilSteg(steg: number, brukerBehandlingId: string, history: RouterHistoryType) {
+export function gaTilSteg(
+	steg: number,
+	brukerBehandlingId: string,
+	history: RouterHistoryType
+) {
 	history.push(`/skjema/${brukerBehandlingId}/${steg}`);
 }
-export function gaVidere(aktivtSteg: number, brukerBehandlingId: string, history: RouterHistoryType) {
+export function gaVidere(
+	aktivtSteg: number,
+	brukerBehandlingId: string,
+	history: RouterHistoryType
+) {
 	const steg = Math.min(ANTALL_STEG, aktivtSteg + 1);
 	gaTilSteg(steg, brukerBehandlingId, history);
 }
-export function gaTilbake(aktivtSteg: number, brukerBehandlingId: string, history: RouterHistoryType) {
+export function gaTilbake(
+	aktivtSteg: number,
+	brukerBehandlingId: string,
+	history: RouterHistoryType
+) {
 	gaTilSteg(Math.max(1, aktivtSteg - 1), brukerBehandlingId, history);
 }
 

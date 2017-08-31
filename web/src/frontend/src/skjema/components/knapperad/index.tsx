@@ -3,6 +3,7 @@ import { Knapp } from "nav-frontend-knapper";
 import "./knapperad.css";
 
 interface Props {
+	gaVidereLabel?: string;
 	gaVidere?: () => void;
 	gaTilbake?: () => void;
 	avbryt?: () => void;
@@ -10,11 +11,11 @@ interface Props {
 
 class SkjemaKnapperad extends React.Component<Props, {}> {
 	render() {
-		const { gaVidere, gaTilbake, avbryt } = this.props;
+		const { gaVidere, gaTilbake, avbryt, gaVidereLabel } = this.props;
 		return (
 			<div className="skjema-knapperad">
 				<Knapp type="hoved" htmlType="button" onClick={gaVidere}>
-					Gå videre
+					{gaVidereLabel ? gaVidereLabel : "Gå videre"}
 				</Knapp>
 				<Knapp type="standard" htmlType="button" onClick={gaTilbake}>
 					Tilbake
