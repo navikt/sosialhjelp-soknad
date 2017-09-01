@@ -14,7 +14,7 @@
 @import "./node_modules/nav-frontend-stegindikator-style/src/index.less";
 @import "./node_modules/nav-frontend-typografi-style/src/index.less";
 
-@import "./skjema/styles/variables";
+@import "./skjema/styles/skjema.less";
 
 body {
 	overflow-y: scroll;
@@ -44,24 +44,4 @@ body {
 	width: 100%;
 	text-align: center;
 	padding-top: 100px;
-}
-
-.skjema-fieldset {
-	border: none;
-	padding: 0;
-	margin: 0;
-	legend {
-		padding-left: 0;
-		padding-right: 0;
-		margin-bottom: 1rem;
-		font-weight: 600;
-	}
-	> legend {
-		padding-left: @skjemaMarg;
-		padding-right: @skjemaMarg;
-	}
-	.skjema-fieldset > legend {
-		padding-left: 0;
-		padding-right: 0;
-	}
 }

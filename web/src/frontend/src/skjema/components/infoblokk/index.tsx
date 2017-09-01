@@ -1,7 +1,9 @@
 import * as React from "react";
-import "./infoblokk.css";
 import Info from "../svg/Info";
 import { Panel } from "nav-frontend-paneler";
+
+import "./infoblokk.css";
+
 interface Props {
 	tittel?: string;
 }
