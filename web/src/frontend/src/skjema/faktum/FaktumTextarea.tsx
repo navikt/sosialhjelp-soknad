@@ -16,31 +16,58 @@ interface OwnProps {
 	feil?: Feil;
 }
 
-class FaktumTextarea extends React.Component<
-	OwnProps & FaktumComponentProps & DispatchProps & InjectedIntlProps,
-	{}
-> {
+interface State {
+	value: string;
+}
+
+type Props = OwnProps &
+	FaktumComponentProps &
+	DispatchProps &
+	InjectedIntlProps;
+
+const getStateFromProps = (props: Props): State => ({
+	value: props.fakta.get(props.faktumKey) || ""
+});
+
+class FaktumTextarea extends React.Component<Props, State> {
+	constructor(props: Props) {
+		super(props);
+		this.handleOnBlur = this.handleOnBlur.bind(this);
+		this.handleOnChange = this.handleOnChange.bind(this);
+		this.state = getStateFromProps(props);
+	}
+
+	componentWillReceiveProps(nextProps: Props) {
+		this.setState(getStateFromProps(nextProps));
+	}
+
+	handleOnChange(evt: any) {
+		this.setState({ value: evt.target.value });
+	}
+
+	handleOnBlur() {
+		this.props.dispatch(setFaktumVerdi(this.props.faktumKey, this.state.value));
+	}
+
 	render() {
 		const {
 			faktumKey,
 			labelId,
 			disabled,
 			feil,
-			fakta,
 			textareaClass,
 			maxLength,
-			dispatch,
 			intl
 		} = this.props;
 		const tekster = getFaktumInputTekst(intl, faktumKey);
 		return (
 			<Textarea
 				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
-				value={fakta.get(faktumKey) || ""}
+				value={this.state.value}
 				name={faktumKey}
 				disabled={disabled}
-				onChange={(evt: any) =>
-					dispatch(setFaktumVerdi(faktumKey, evt.target.value))}
+				onChange={this.handleOnChange}
+				onBlur={this.handleOnBlur}
 				feil={feil}
 				maxLength={maxLength || 400}
 				textareaClass={textareaClass || "skjema-texarea--normal"}
