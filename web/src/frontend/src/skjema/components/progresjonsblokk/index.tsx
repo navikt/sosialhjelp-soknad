@@ -1,4 +1,5 @@
 import * as React from "react";
+import Skjemapanel from "../skjemapanel";
 import "./progresjonsblokk.css";
 
 interface Props {
@@ -11,18 +12,17 @@ const Progresjonsblokk: React.StatelessComponent<Props> = ({
 	progresjon,
 	tittel,
 	content
-}) =>
-	<div className="skjema-progresjonsblokk">
+}) => (
+	<Skjemapanel className="skjema-progresjonsblokk">
 		<div className="skjema-progresjonsblokk__head">
-			<h3>
-				{tittel}
-			</h3>
+			<h3>{tittel}</h3>
 		</div>
-		{content.map((child, idx) =>
+		{content.map((child, idx) => (
 			<div className="skjema-progresjonsblokk__sporsmal" key={idx}>
 				{child}
 			</div>
-		)}
-	</div>;
+		))}
+	</Skjemapanel>
+);
 
 export default Progresjonsblokk;
