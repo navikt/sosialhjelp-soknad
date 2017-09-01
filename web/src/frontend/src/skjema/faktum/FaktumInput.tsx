@@ -7,27 +7,55 @@ import { DispatchProps } from "../types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getFaktumInputTekst } from "../utils";
 
+interface State {
+	value: string;
+}
+
 interface OwnProps {
 	faktumKey: string;
 	disabled?: boolean;
 	feil?: Feil;
 }
 
-class FaktumInput extends React.Component<
-	OwnProps & FaktumComponentProps & DispatchProps & InjectedIntlProps,
-	{}
-> {
+type Props = OwnProps &
+	FaktumComponentProps &
+	DispatchProps &
+	InjectedIntlProps;
+
+const getStateFromProps = (props: Props): State => ({
+	value: props.fakta.get(props.faktumKey) || ""
+});
+
+class FaktumInput extends React.Component<Props, State> {
+	constructor(props: Props) {
+		super(props);
+		this.handleOnBlur = this.handleOnBlur.bind(this);
+		this.handleOnChange = this.handleOnChange.bind(this);
+		this.state = getStateFromProps(props);
+	}
+	componentWillReceiveProps(nextProps: Props) {
+		this.setState(getStateFromProps(nextProps));
+	}
+
+	handleOnChange(evt: any) {
+		this.setState({ value: evt.target.value });
+	}
+
+	handleOnBlur() {
+		this.props.dispatch(setFaktumVerdi(this.props.faktumKey, this.state.value));
+	}
+
 	render() {
-		const { faktumKey, disabled, feil, fakta, dispatch, intl } = this.props;
+		const { faktumKey, disabled, feil, intl } = this.props;
 		const tekster = getFaktumInputTekst(intl, faktumKey);
 		return (
 			<Input
 				className="input--xxl faktumInput"
 				name={faktumKey}
 				disabled={disabled}
-				value={fakta.get(faktumKey)}
-				onChange={(evt: any) =>
-					dispatch(setFaktumVerdi(faktumKey, evt.target.value))}
+				value={this.state.value}
+				onChange={this.handleOnChange}
+				onBlur={this.handleOnBlur}
 				label={tekster.label}
 				placeholder={tekster.placeholder}
 				feil={feil}
