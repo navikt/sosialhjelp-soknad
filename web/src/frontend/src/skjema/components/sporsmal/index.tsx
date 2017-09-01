@@ -20,7 +20,7 @@ const Sporsmal: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	return (
 		<div className="skjema-sporsmal">
 			<Skjemapanel>
-				<fieldset className="skjema-sporsmal__fieldset">
+				<fieldset className="skjema-fieldset">
 					<legend>
 						<FormattedMessage id={sporsmalId} />
 					</legend>

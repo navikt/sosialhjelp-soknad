@@ -2,7 +2,6 @@ import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
 import { getIntlTextOrKey } from "../utils";
-import "./faktumSkjemagruppe.css";
 
 interface Props {
 	tittelId: string;
@@ -21,7 +20,7 @@ const FaktumSkjemagruppe: React.StatelessComponent<Props> = (
 	const tittel = getIntlTextOrKey(intl, tittelId);
 	return (
 		<SkjemaGruppe feil={feil}>
-			<fieldset className="faktumSkjemagruppe">
+			<fieldset className="skjema-fieldset">
 				<legend>{tittel}</legend>
 				{children}
 			</fieldset>
