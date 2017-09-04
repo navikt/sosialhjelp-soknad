@@ -6,13 +6,13 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import registerServiceWorker from "./registerServiceWorker";
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import App from "./app";
+import App from "./digisos";
 import thunk from "redux-thunk";
-import SoknadReducer from "./redux/soknad/reducer";
-import FaktumReducer from "./skjema/reducer";
+import SoknadReducer from "./digisos/redux/soknad/reducer";
+import { erDev } from "./digisos/redux/rest-utils";
+import FaktumReducer from "./nav-skjema/redux/reducer";
 import IntlProvider from "./intlProvider";
 import "./index.css";
-import { erDev } from "./utils";
 
 const rootReducer = combineReducers({
 	soknad: SoknadReducer,
