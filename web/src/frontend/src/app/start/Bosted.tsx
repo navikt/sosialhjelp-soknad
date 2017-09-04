@@ -20,9 +20,13 @@ interface StateProps {
 }
 
 class Bosted extends React.Component<
-	FaktumComponentProps & StateProps  & RouterProps & DispatchProps & InjectedIntlProps, StateProps
+	FaktumComponentProps &
+		StateProps &
+		RouterProps &
+		DispatchProps &
+		InjectedIntlProps,
+	StateProps
 > {
-
 	constructor(props: any) {
 		super(props);
 		this.state = {
@@ -43,12 +47,12 @@ class Bosted extends React.Component<
 
 	opprettSoknad(event: any) {
 		event.preventDefault();
-		const {kommuneId, bydelId} = this.state;
+		const { kommuneId, bydelId } = this.state;
 		this.props.dispatch(opprettSoknad(kommuneId, bydelId));
 	}
 
 	render() {
-		const {valgtKommune, valgtBydel, ferdig} = this.hentSkjemaVerdier();
+		const { valgtKommune, valgtBydel, ferdig } = this.hentSkjemaVerdier();
 
 		return (
 			<form onSubmit={e => this.opprettSoknad(e)}>
@@ -56,38 +60,42 @@ class Bosted extends React.Component<
 					<div className="blokk-l">
 						<Select
 							bredde="m"
-							onChange={(evt: any) => this.setState({kommuneId: evt.target.value})}
-							label={(
+							onChange={(evt: any) =>
+								this.setState({ kommuneId: evt.target.value })}
+							label={
 								<strong>
-									<FormattedMessage id="personalia.kommune.sporsmal"/>
+									<FormattedMessage id="personalia.kommune.sporsmal" />
 								</strong>
-							)}>
-							<option value=""/>
-							{Kommuner.map(kommune =>
+							}>
+							<option value="" />
+							{Kommuner.map(kommune => (
 								<option value={kommune.id} key={kommune.id}>
 									{kommune.navn}
 								</option>
-							)}
+							))}
 						</Select>
 					</div>
 
 					{valgtKommune && valgtKommune.bydeler ? (
 						<div className="blokk-l">
-							<Arrow/>
+							<Arrow />
 							<Select
 								bredde="m"
-								onChange={(evt: any) => this.setState({bydelId: evt.target.value})}
-								label={(
+								onChange={(evt: any) =>
+									this.setState({
+										bydelId: evt.target.value
+									})}
+								label={
 									<strong>
-										<FormattedMessage id="personalia.bydel.sporsmal"/>
+										<FormattedMessage id="personalia.bydel.sporsmal" />
 									</strong>
-								)}>
-								<option value=""/>
-								{valgtKommune.bydeler.map(bydel =>
+								}>
+								<option value="" />
+								{valgtKommune.bydeler.map(bydel => (
 									<option value={bydel.id} key={bydel.id}>
 										{bydel.navn}
 									</option>
-								)}
+								))}
 							</Select>
 						</div>
 					) : null}
@@ -113,7 +121,7 @@ class Bosted extends React.Component<
 	}
 
 	private hentSkjemaVerdier() {
-		const {kommuneId, bydelId} = this.state;
+		const { kommuneId, bydelId } = this.state;
 		const valgtKommune: Kommune | undefined = kommuneId
 			? Kommuner.find(k => k.id === kommuneId)
 			: undefined;
@@ -123,9 +131,8 @@ class Bosted extends React.Component<
 				: undefined;
 		const ferdig =
 			(valgtKommune && !valgtKommune.bydeler) || (valgtKommune && valgtBydel);
-		return {valgtKommune, valgtBydel, ferdig};
+		return { valgtKommune, valgtBydel, ferdig };
 	}
-
 }
 
 export default connect(
