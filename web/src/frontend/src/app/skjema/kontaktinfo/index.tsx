@@ -10,14 +10,23 @@ class Kontaktinfo extends React.Component<{}, {}> {
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		return (
 			<Steg tittelId="kontakt.tittel">
-				<Sporsmal sporsmalId="kontakt.kontonummer.tittel">
+				<Sporsmal
+					sporsmalId="kontakt.kontonummer.tittel"
+					hjelpetekstId="kontakt.kontonummer.hjelpetekst"
+				>
 					<FaktumInput faktumKey="kontakt.kontonummer" maxLength={11} />
 				</Sporsmal>
-				<Sporsmal sporsmalId="kontakt.telefon.tittel">
+				<Sporsmal
+					sporsmalId="kontakt.telefon.tittel"
+					hjelpetekstId="kontakt.telefon.hjelpetekst"
+				>
 					<FaktumInput faktumKey="kontakt.telefon" />
 				</Sporsmal>
 
-				<Sporsmal sporsmalId={statsborger.sporsmal}>
+				<Sporsmal
+					sporsmalId={statsborger.sporsmal}
+					hjelpetekstId={statsborger.hjelpetekst}
+				>
 					<FaktumRadio faktumKey={statsborger.faktum} option="true" />
 					<FaktumRadio faktumKey={statsborger.faktum} option="false" />
 				</Sporsmal>
