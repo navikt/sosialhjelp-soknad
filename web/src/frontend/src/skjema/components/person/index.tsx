@@ -12,7 +12,7 @@ const Personskjema: React.StatelessComponent<Props> = ({
 	navnFaktumKey,
 	fnrFaktumKey,
 	pnrFaktumKey
-}) =>
+}) => (
 	<div className="personskjema">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
@@ -22,13 +22,14 @@ const Personskjema: React.StatelessComponent<Props> = ({
 			</Row>
 			<Row>
 				<Column sm="6" xs="3">
-					<FaktumInput faktumKey={fnrFaktumKey} />
+					<FaktumInput faktumKey={fnrFaktumKey} maxLength={6} />
 				</Column>
 				<Column sm="6" xs="3">
-					<FaktumInput faktumKey={pnrFaktumKey} />
+					<FaktumInput faktumKey={pnrFaktumKey} maxLength={5} />
 				</Column>
 			</Row>
 		</Container>
-	</div>;
+	</div>
+);
 
 export default Personskjema;

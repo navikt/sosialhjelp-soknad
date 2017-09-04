@@ -20,7 +20,7 @@ class SkjemaKnapperad extends React.Component<Props, {}> {
 				<Knapp type="standard" htmlType="button" onClick={gaTilbake}>
 					Tilbake
 				</Knapp>
-				<a href="#" onClick={avbryt}>
+				<a href="#" className="lenke" onClick={avbryt}>
 					Avbryt
 				</a>
 			</div>
