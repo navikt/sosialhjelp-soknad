@@ -20,7 +20,7 @@ interface StateProps {
 }
 
 class Bosted extends React.Component<
-	FaktumComponentProps & RouterProps & StateProps & DispatchProps & InjectedIntlProps, StateProps
+	FaktumComponentProps & StateProps  & RouterProps & DispatchProps & InjectedIntlProps, StateProps
 > {
 
 	constructor(props: any) {
@@ -94,7 +94,7 @@ class Bosted extends React.Component<
 					{ferdig ? (
 						<div>
 							<p>
-								Når du har fylt ut blir søknaden sendt til{" "}
+								Når du har fylt ut blir søknaden sendt til{' '}
 								<strong>
 									{getBosted(
 										valgtKommune.id,

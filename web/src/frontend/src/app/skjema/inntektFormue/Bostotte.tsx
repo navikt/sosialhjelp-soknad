@@ -18,6 +18,7 @@ class Bostotte extends React.Component<FaktumComponentProps, {}> {
 				<FaktumRadio faktumKey={bostotte.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get("inntekt.bostotte"))}>
 					<FaktumSkjemagruppe tittelId={hvilkenStotte.sporsmal}>
+						{/*TODO legge til checkboxgroup-faktum*/}
 						<FaktumCheckbox
 							faktumKey={hvilkenStotte.faktum}
 							option="husbanken"
