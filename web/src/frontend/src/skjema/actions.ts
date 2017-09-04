@@ -1,11 +1,12 @@
 import {
 	ActionTypeKeys,
 	SetFaktumVerdiAction,
+	SetFaktaAction,
 	ResetFaktumVerdiAction,
 	FaktumValueType
 } from "./types";
 
-export type ActionTypes = SetFaktumVerdiAction | ResetFaktumVerdiAction;
+export type ActionTypes = SetFaktumVerdiAction | ResetFaktumVerdiAction | SetFaktaAction;
 
 export function setFaktumVerdi(
 	faktumKey: string,
@@ -17,5 +18,12 @@ export function setFaktumVerdi(
 		faktumKey,
 		value,
 		properties
+	};
+}
+
+export function setFakta(fakta: any ) {
+	return {
+		type: ActionTypeKeys.SET_FAKTA,
+		fakta
 	};
 }

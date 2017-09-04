@@ -7,6 +7,7 @@ import {
 	SetOppsummering
 } from "./types";
 import { fetchPost, fetchToJson, fetchHtml } from "../../utils";
+import { setFaktumVerdi, setFakta } from "../../skjema/actions";
 
 export type ActionTypes =
 	| OpprettSoknadAction
@@ -14,7 +15,7 @@ export type ActionTypes =
 	| SetServerFeilAction
 	| SetOppsummering;
 
-export function opprettSoknad() {
+export function opprettSoknad(kommuneId: string, bydelId: string) {
 	return (dispatch: Dispatch<Action>) => {
 		dispatch({ type: ActionTypeKeys.PENDING });
 		const payload = JSON.stringify({ soknadType: "NAV DIGISOS" });
@@ -26,7 +27,14 @@ export function opprettSoknad() {
 					type: ActionTypeKeys.SET_BRUKERBEHANDLING_ID,
 					brukerBehandlingId
 				});
-				hentFakta(brukerBehandlingId, dispatch);
+				hentFakta(brukerBehandlingId, dispatch)
+					.then(fakta => {
+						dispatch(setFakta(fakta));
+						dispatch(setFaktumVerdi("personalia.kommune", kommuneId));
+						if (bydelId !== "") {
+							dispatch(setFaktumVerdi("personalia.bydel", bydelId));
+						}
+					});
 			})
 			.catch(reason => {
 				dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
@@ -35,11 +43,8 @@ export function opprettSoknad() {
 }
 
 function hentFakta(brukerBehandlingId: string, dispatch: Dispatch<Action>) {
-	dispatch({ type: ActionTypeKeys.PENDING });
-	fetchToJson("soknader/" + brukerBehandlingId + "/fakta")
-		.then(response => {
-			// TODO Prosesser fakta
-		})
+	dispatch({type: ActionTypeKeys.PENDING});
+	return fetchToJson("soknader/" + brukerBehandlingId + "/fakta")
 		.catch(reason => {
 			dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
 		});

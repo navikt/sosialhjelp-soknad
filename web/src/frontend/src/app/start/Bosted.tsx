@@ -1,24 +1,40 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import FaktumSelect from "../../skjema/faktum/FaktumSelect";
 import Knapp from "nav-frontend-knapper";
-import { FaktumComponentProps, FaktumState } from "../../skjema/reducer";
-import { Bydel, getBosted, Kommune, Kommuner } from "../data/kommuner";
+import { FaktumState, FaktumComponentProps } from "../../skjema/reducer";
+import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 import { Collapse } from "react-collapse";
-import { ActionTypeKeys, SoknadState } from "../../redux/soknad/types";
+import { SoknadState, ActionTypeKeys } from "../../redux/soknad/types";
 import Arrow from "../../skjema/components/svg/Arrow";
-import { RouterProps } from "react-router";
+import { withRouter, RouterProps } from "react-router";
 import { opprettSoknad } from "../../redux/soknad/actions";
 import { DispatchProps } from "../../redux/types";
+import { Select } from "nav-frontend-skjema";
+import { InjectedIntlProps, FormattedMessage } from "react-intl";
 
 interface StateProps {
 	status?: string;
 	brukerBehandlingId?: string;
+	kommuneId: string;
+	bydelId: string;
 }
 
 class Bosted extends React.Component<
-	FaktumComponentProps & RouterProps & StateProps & DispatchProps
+	FaktumComponentProps &
+		StateProps &
+		RouterProps &
+		DispatchProps &
+		InjectedIntlProps,
+	StateProps
 > {
+	constructor(props: any) {
+		super(props);
+		this.state = {
+			kommuneId: "",
+			bydelId: ""
+		};
+	}
+
 	componentDidUpdate() {
 		if (this.props.status === ActionTypeKeys.OK) {
 			this.gaaTilSkjema();
@@ -26,49 +42,31 @@ class Bosted extends React.Component<
 	}
 
 	gaaTilSkjema() {
-		const { fakta } = this.props;
-		const kommuneId = fakta.get("personalia.kommune");
-		const bydelId = fakta.get("personalia.bydel");
-		let search = "?personalia.kommune=" + kommuneId;
-		if (bydelId) {
-			search += "&personalia.bydel=" + bydelId;
-		}
-		const pathname = "/skjema/" + this.props.brukerBehandlingId + "/1";
-		this.props.history.push(`${pathname}/${search}`);
+		this.props.history.push(`/skjema/${this.props.brukerBehandlingId}/1`);
 	}
 
 	opprettSoknad(event: any) {
 		event.preventDefault();
-		this.props.dispatch(opprettSoknad());
+		const { kommuneId, bydelId } = this.state;
+		this.props.dispatch(opprettSoknad(kommuneId, bydelId));
 	}
 
 	render() {
-		const { fakta } = this.props;
-		const kommuneId = fakta.get("personalia.kommune");
-		const bydelId = fakta.get("personalia.bydel");
-
-		const valgtKommune: Kommune | undefined = kommuneId
-			? Kommuner.find(k => k.id === kommuneId)
-			: undefined;
-		const valgtBydel: Bydel | undefined =
-			valgtKommune && valgtKommune.bydeler
-				? valgtKommune.bydeler.find(b => b.id === bydelId)
-				: undefined;
-
-		const ferdig =
-			(valgtKommune && !valgtKommune.bydeler) || (valgtKommune && valgtBydel);
+		const { valgtKommune, valgtBydel, ferdig } = this.hentSkjemaVerdier();
 
 		return (
 			<form onSubmit={e => this.opprettSoknad(e)}>
 				<Collapse isOpened={true}>
 					<div className="blokk-l">
-						<FaktumSelect
-							faktumKey="personalia.kommune"
+						<Select
 							bredde="m"
-							labelFunc={(label: string) =>
+							onChange={(evt: any) =>
+								this.setState({ kommuneId: evt.target.value })}
+							label={
 								<strong>
-									{label}
-								</strong>}
+									<FormattedMessage id="personalia.kommune.sporsmal" />
+								</strong>
+							}
 						>
 							<option value="" />
 							{Kommuner.map(kommune =>
@@ -76,19 +74,21 @@ class Bosted extends React.Component<
 									{kommune.navn}
 								</option>
 							)}
-						</FaktumSelect>
+						</Select>
 					</div>
 
 					{valgtKommune && valgtKommune.bydeler
 						? <div className="blokk-l">
 								<Arrow />
-								<FaktumSelect
-									faktumKey="personalia.bydel"
+								<Select
 									bredde="m"
-									labelFunc={(label: string) =>
+									onChange={(evt: any) =>
+										this.setState({ bydelId: evt.target.value })}
+									label={
 										<strong>
-											{label}
-										</strong>}
+											<FormattedMessage id="personalia.bydel.sporsmal" />
+										</strong>
+									}
 								>
 									<option value="" />
 									{valgtKommune.bydeler.map(bydel =>
@@ -96,7 +96,7 @@ class Bosted extends React.Component<
 											{bydel.navn}
 										</option>
 									)}
-								</FaktumSelect>
+								</Select>
 							</div>
 						: null}
 					{ferdig
@@ -119,6 +119,20 @@ class Bosted extends React.Component<
 			</form>
 		);
 	}
+
+	private hentSkjemaVerdier() {
+		const { kommuneId, bydelId } = this.state;
+		const valgtKommune: Kommune | undefined = kommuneId
+			? Kommuner.find(k => k.id === kommuneId)
+			: undefined;
+		const valgtBydel: Bydel | undefined =
+			valgtKommune && valgtKommune.bydeler
+				? valgtKommune.bydeler.find(b => b.id === bydelId)
+				: undefined;
+		const ferdig =
+			(valgtKommune && !valgtKommune.bydeler) || (valgtKommune && valgtBydel);
+		return { valgtKommune, valgtBydel, ferdig };
+	}
 }
 
 export default connect(
@@ -129,4 +143,4 @@ export default connect(
 			brukerBehandlingId: state.soknad.brukerBehandlingId
 		};
 	}
-)(Bosted);
+)(withRouter(Bosted));
