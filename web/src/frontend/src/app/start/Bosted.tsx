@@ -94,7 +94,7 @@ class Bosted extends React.Component<
 					{ferdig ? (
 						<div>
 							<p>
-								Når du har fylt ut blir søknaden sendt til{' '}
+								Når du har fylt ut blir søknaden sendt til{" "}
 								<strong>
 									{getBosted(
 										valgtKommune.id,

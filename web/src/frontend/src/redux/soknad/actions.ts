@@ -7,7 +7,7 @@ import {
 	SetOppsummering
 } from "./types";
 import { fetchPost, fetchToJson, fetchHtml } from "../../utils";
-import { setFaktumVerdi, setFaktum } from "../../skjema/actions";
+import { setFaktumVerdi, setFakta } from "../../skjema/actions";
 
 export type ActionTypes =
 	| OpprettSoknadAction
@@ -28,8 +28,8 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 					brukerBehandlingId
 				});
 				hentFakta(brukerBehandlingId, dispatch)
-					.then(faktumResponse => {
-						dispatch(setFaktum(faktumResponse));
+					.then(fakta => {
+						dispatch(setFakta(fakta));
 						dispatch(setFaktumVerdi("personalia.kommune", kommuneId));
 						if (bydelId !== "") {
 							dispatch(setFaktumVerdi("personalia.bydel", bydelId));

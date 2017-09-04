@@ -44,11 +44,11 @@ const faktumReducer: Reducer<FaktumState, ActionTypes> = (
 				...state,
 				fakta: deleteFaktumFromMap(state.fakta, action.faktumKey)
 			};
-		case ActionTypeKeys.SET_FAKTUM:
+		case ActionTypeKeys.SET_FAKTA:
 			return {
 				...state,
-				fakta: new Map(action.faktum.map((faktum: any) =>
-					([faktum.key, (faktum.value === null ? false : faktum.value) ])
+				fakta: new Map(action.fakta.map((faktum: any) =>
+					([faktum.key, faktum.value])
 				))
 			};
 		default:
