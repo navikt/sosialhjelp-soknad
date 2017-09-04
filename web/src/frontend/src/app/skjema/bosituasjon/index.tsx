@@ -22,7 +22,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	render() {
 		const { fakta } = this.props;
 		const bosituasjon = radioCheckKeys("bosituasjon");
-		const annen = radioCheckKeys("bosituasjon.annet.botype");
+		const annen = radioCheckKeys("bosituasjon.annet.true.botype");
 		const barnUnder18 = radioCheckKeys("bosituasjon.barnunder18");
 		const barnUnder18True = inputKeys("bosituasjon.barnunder18.true");
 		const over18 = radioCheckKeys("bosituasjon.personerover18");
