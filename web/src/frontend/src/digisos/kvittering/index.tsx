@@ -26,7 +26,7 @@ class Kvittering extends React.Component<
 		const kommune = fakta.get("personalia.kommune");
 		const bydel = fakta.get("personalia.bydel");
 		return (
-			<div className="kvittering">
+			<div className="kvittering skjema-content">
 				<Panel>
 					<Icon kind="stegindikator__hake" className="kvittering__ikon" />
 					<Undertittel className="kvittering__tittel">
