@@ -21,10 +21,12 @@ class Ekstrainformasjon extends React.Component<
 		const { intl, fakta } = this.props;
 		return (
 			<div className="steg-ekstrainformasjon">
-				<div className="skjema-content ekstrainfo-melding">
-					<Infoblokk>
-						{intl.formatHTMLMessage({ id: "ekstrainfo.informasjon" })}
-					</Infoblokk>
+				<div className="skjema-content">
+					<div className="ekstrainfo-melding">
+						<Infoblokk>
+							{intl.formatHTMLMessage({ id: "ekstrainfo.informasjon" })}
+						</Infoblokk>
+					</div>
 				</div>
 				<Steg tittelId="Opplysninger...">
 					<ArbeidOgUtdanning fakta={fakta} />

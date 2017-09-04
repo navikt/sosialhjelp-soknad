@@ -40,20 +40,22 @@ class Skjema extends React.Component<Props & RouterProps, {}> {
 		return (
 			<form id="soknadsskjema" onSubmit={stopEvent}>
 				{!erOppsummering ? (
-					<StegIndikator
-						aktivtSteg={aktivtSteg}
-						steg={[
-							{ tittel: "Bosted, kontaktinfo og statsborgerskap" },
-							{ tittel: "Arbeid og utdanning" },
-							{ tittel: "Familiesituasjon" },
-							{ tittel: "Hvorfor og hva du søker om" },
-							{ tittel: "Bosituasjon" },
-							{ tittel: "Inntekt og utdanning" },
-							{ tittel: "Utgifter og gjeld" },
-							{ tittel: "Opplysninger" },
-							{ tittel: "Oppsummering" }
-						]}
-					/>
+					<div className="skjema__stegindikator">
+						<StegIndikator
+							aktivtSteg={aktivtSteg}
+							steg={[
+								{ tittel: "Bosted, kontaktinfo og statsborgerskap" },
+								{ tittel: "Arbeid og utdanning" },
+								{ tittel: "Familiesituasjon" },
+								{ tittel: "Hvorfor og hva du søker om" },
+								{ tittel: "Bosituasjon" },
+								{ tittel: "Inntekt og utdanning" },
+								{ tittel: "Utgifter og gjeld" },
+								{ tittel: "Opplysninger" },
+								{ tittel: "Oppsummering" }
+							]}
+						/>
+					</div>
 				) : null}
 				<Switch>
 					<Route path={`${match.url}/1`} component={Steg1} />
