@@ -6,14 +6,14 @@ import {
 	FaktumComponentProps,
 	FaktumStoreState
 } from "../../../nav-skjema/redux/reducer";
-import { DispatchProps } from "../../../redux/types";
+import { DispatchProps } from "../../redux/types";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { faktumIsSelected, radioCheckKeys } from "../../../nav-skjema/utils";
 
-import FaktumCheckbox from "../../../nav-skjema/faktum/FaktumCheckbox";
-import FaktumRadio from "../../../nav-skjema/faktum/FaktumRadio";
-import FaktumTextarea from "../../../nav-skjema/faktum/FaktumTextarea";
-import FaktumSkjemagruppe from "../../../nav-skjema/faktum/FaktumSkjemagruppe";
+import CheckboxFaktum from "../../../nav-skjema/faktum/CheckboxFaktum";
+import RadioFaktum from "../../../nav-skjema/faktum/RadioFaktum";
+import TextareaFaktum from "../../../nav-skjema/faktum/TextareaFaktum";
+import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
 import Underskjema from "../../../nav-skjema/components/underskjema";
 
 class UtgifterGjeld extends React.Component<
@@ -34,25 +34,25 @@ class UtgifterGjeld extends React.Component<
 		return (
 			<Steg tittelId="utgifterbolk.tittel">
 				<Sporsmal sporsmalId={harBoutgifter.sporsmal}>
-					<FaktumRadio faktumKey={harBoutgifter.faktum} option="true" />
+					<RadioFaktum faktumKey={harBoutgifter.faktum} option="true" />
 					<Underskjema visible={fakta.get(harBoutgifter.faktum) === "true"}>
-						<FaktumSkjemagruppe tittelId={boUtgifter.sporsmal}>
+						<SkjemagruppeFaktum tittelId={boUtgifter.sporsmal}>
 							{/*TODO checkboxgruppefaktum*/}
-							<FaktumCheckbox faktumKey={boUtgifter.faktum} option="husleie" />
-							<FaktumCheckbox faktumKey={boUtgifter.faktum} option="strom" />
-							<FaktumCheckbox
+							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="husleie" />
+							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="strom" />
+							<CheckboxFaktum
 								faktumKey={boUtgifter.faktum}
 								option="kommunaleavgifter"
 							/>
-							<FaktumCheckbox
+							<CheckboxFaktum
 								faktumKey={boUtgifter.faktum}
 								option="oppvarming"
 							/>
-							<FaktumCheckbox
+							<CheckboxFaktum
 								faktumKey={boUtgifter.faktum}
 								option="avdraglaan"
 							/>
-							<FaktumCheckbox
+							<CheckboxFaktum
 								faktumKey={boUtgifter.faktum}
 								option="andreutgifter"
 							/>
@@ -60,38 +60,38 @@ class UtgifterGjeld extends React.Component<
 							{faktumIsSelected(
 								fakta.get(`${boUtgifter.faktum}.andreutgifter`)
 							) ? (
-								<FaktumTextarea faktumKey={andreBoUtgifter} />
+								<TextareaFaktum faktumKey={andreBoUtgifter} />
 							) : null}
-						</FaktumSkjemagruppe>
+						</SkjemagruppeFaktum>
 					</Underskjema>
-					<FaktumRadio faktumKey={harBoutgifter.faktum} option="false" />
+					<RadioFaktum faktumKey={harBoutgifter.faktum} option="false" />
 				</Sporsmal>
 				<Sporsmal sporsmalId={harUtgifterBarn.sporsmal}>
-					<FaktumRadio faktumKey={harUtgifterBarn.faktum} option="true" />
+					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="true" />
 					<Underskjema visible={fakta.get(harUtgifterBarn.faktum) === "true"}>
 						{/*TODO checkboxgruppefaktum*/}
 
-						<FaktumSkjemagruppe tittelId={barneUtgifter.sporsmal}>
-							<FaktumCheckbox
+						<SkjemagruppeFaktum tittelId={barneUtgifter.sporsmal}>
+							<CheckboxFaktum
 								faktumKey={barneUtgifter.faktum}
 								option="fritidsaktivitet"
 							/>
-							<FaktumCheckbox
+							<CheckboxFaktum
 								faktumKey={barneUtgifter.faktum}
 								option="barnehage"
 							/>
-							<FaktumCheckbox
+							<CheckboxFaktum
 								faktumKey={barneUtgifter.faktum}
 								option="tannbehandling"
 							/>
-							<FaktumCheckbox faktumKey={barneUtgifter.faktum} option="helse" />
-							<FaktumCheckbox faktumKey={barneUtgifter.faktum} option="annet" />
+							<CheckboxFaktum faktumKey={barneUtgifter.faktum} option="helse" />
+							<CheckboxFaktum faktumKey={barneUtgifter.faktum} option="annet" />
 							{faktumIsSelected(fakta.get(`${barneUtgifter.faktum}.annet`)) ? (
-								<FaktumTextarea faktumKey={andreBarneutgifter} />
+								<TextareaFaktum faktumKey={andreBarneutgifter} />
 							) : null}
-						</FaktumSkjemagruppe>
+						</SkjemagruppeFaktum>
 					</Underskjema>
-					<FaktumRadio faktumKey={harUtgifterBarn.faktum} option="false" />
+					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="false" />
 				</Sporsmal>
 			</Steg>
 		);

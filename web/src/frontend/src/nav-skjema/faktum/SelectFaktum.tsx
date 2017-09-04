@@ -1,42 +1,55 @@
 import * as React from "react";
-import { Radio, Feil } from "nav-frontend-skjema";
+import { Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumStoreState, FaktumComponentProps } from "../redux/reducer";
 import { setFaktumVerdi } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
-import { getFaktumRadioTekst } from "../utils";
+import { getInputFaktumTekst } from "../utils";
+import { Select, SelectBredde } from "nav-frontend-skjema";
 
 interface OwnProps {
-	option: string;
 	faktumKey: string;
 	disabled?: boolean;
 	feil?: Feil;
+	bredde?: SelectBredde;
+	labelFunc?: (label: string) => React.ReactNode;
 }
 
-class FaktumRadio extends React.Component<
+class FaktumSelect extends React.Component<
 	OwnProps & FaktumComponentProps & DispatchProps & InjectedIntlProps,
 	{}
 > {
 	render() {
-		const { faktumKey, option, disabled, fakta, dispatch, intl } = this.props;
-		const tekster = getFaktumRadioTekst(intl, faktumKey, option);
+		const {
+			faktumKey,
+			disabled,
+			bredde,
+			labelFunc,
+			fakta,
+			children,
+			dispatch,
+			intl
+		} = this.props;
+		const tekster = getInputFaktumTekst(intl, faktumKey);
 		return (
-			<Radio
+			<Select
 				name={faktumKey}
-				checked={fakta.get(faktumKey) === option}
 				disabled={disabled}
-				value={option}
-				onChange={(evt: any) => dispatch(setFaktumVerdi(faktumKey, option))}
+				value={fakta.get(faktumKey)}
+				bredde={bredde}
+				onChange={(evt: any) =>
+					dispatch(setFaktumVerdi(faktumKey, evt.target.value))}
 				label={
 					<LabelMedHjelpetekst
-						id={`${faktumKey}.${option}`}
-						label={tekster.label}
+						id={faktumKey}
+						label={labelFunc ? labelFunc(tekster.label) : tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>
-				}
-			/>
+				}>
+				{children}
+			</Select>
 		);
 	}
 }
@@ -46,4 +59,4 @@ export default connect((state: FaktumStoreState, props: OwnProps) => {
 		fakta: state.faktumStore.fakta,
 		faktumKey: props.faktumKey
 	};
-})(injectIntl(FaktumRadio));
+})(injectIntl(FaktumSelect));

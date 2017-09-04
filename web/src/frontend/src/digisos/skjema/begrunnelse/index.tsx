@@ -4,11 +4,11 @@ import {
 	FaktumStoreState,
 	FaktumComponentProps
 } from "../../../nav-skjema/redux/reducer";
-import { DispatchProps } from "../../../redux/types";
+import { DispatchProps } from "../../redux/types";
 
 import Steg from "../../../nav-skjema/components/steg";
 import Sporsmal from "../../../nav-skjema/components/sporsmal";
-import FaktumTextarea from "../../../nav-skjema/faktum/FaktumTextarea";
+import TextareaFaktum from "../../../nav-skjema/faktum/TextareaFaktum";
 
 class Begrunnelse extends React.Component<
 	FaktumComponentProps & DispatchProps,
@@ -18,7 +18,7 @@ class Begrunnelse extends React.Component<
 		return (
 			<Steg tittelId="begrunnelsebolk.tittel">
 				<Sporsmal sporsmalId="begrunnelse.hvorfor.sporsmal">
-					<FaktumTextarea
+					<TextareaFaktum
 						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hvorfor"
 						labelId="begrunnelse.hvorfor.label"
@@ -26,7 +26,7 @@ class Begrunnelse extends React.Component<
 					/>
 				</Sporsmal>
 				<Sporsmal sporsmalId="begrunnelse.hva.sporsmal">
-					<FaktumTextarea
+					<TextareaFaktum
 						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hva"
 						labelId="begrunnelse.hva.label"

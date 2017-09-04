@@ -3,8 +3,8 @@ import Sporsmal from "../../../nav-skjema/components/sporsmal";
 import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
 import { radioCheckKeys } from "../../../nav-skjema/utils";
 
-import FaktumRadio from "../../../nav-skjema/faktum/FaktumRadio";
-import FaktumSkjemagruppe from "../../../nav-skjema/faktum/FaktumSkjemagruppe";
+import RadioFaktum from "../../../nav-skjema/faktum/RadioFaktum";
+import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
 import Underskjema from "../../../nav-skjema/components/underskjema";
 import Ektefelle from "./Ektefelle";
 
@@ -14,16 +14,16 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 		const sivilstatus = radioCheckKeys("familie.sivilstatus");
 		return (
 			<Sporsmal sporsmalId={sivilstatus.sporsmal}>
-				<FaktumRadio faktumKey={sivilstatus.faktum} option="gift" />
+				<RadioFaktum faktumKey={sivilstatus.faktum} option="gift" />
 				<Underskjema visible={fakta.get(sivilstatus.faktum) === "gift"}>
-					<FaktumSkjemagruppe tittelId="familie.sivilstatus.gift.tittel">
+					<SkjemagruppeFaktum tittelId="familie.sivilstatus.gift.tittel">
 						<Ektefelle fakta={fakta} />
-					</FaktumSkjemagruppe>
+					</SkjemagruppeFaktum>
 				</Underskjema>
-				<FaktumRadio faktumKey={sivilstatus.faktum} option="ugift" />
-				<FaktumRadio faktumKey={sivilstatus.faktum} option="samboer" />
-				<FaktumRadio faktumKey={sivilstatus.faktum} option="enke" />
-				<FaktumRadio faktumKey={sivilstatus.faktum} option="skilt" />
+				<RadioFaktum faktumKey={sivilstatus.faktum} option="ugift" />
+				<RadioFaktum faktumKey={sivilstatus.faktum} option="samboer" />
+				<RadioFaktum faktumKey={sivilstatus.faktum} option="enke" />
+				<RadioFaktum faktumKey={sivilstatus.faktum} option="skilt" />
 			</Sporsmal>
 		);
 	}

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { addLocaleData, IntlProvider as Provider } from "react-intl";
 import * as nb from "react-intl/locale-data/nb";
-import { getApiBaseUrl, MED_CREDENTIALS } from "./redux/rest-utils";
+import { getApiBaseUrl, MED_CREDENTIALS } from "./digisos/redux/rest-utils";
 import NavFrontendSpinner from "nav-frontend-spinner";
 
 addLocaleData(nb);

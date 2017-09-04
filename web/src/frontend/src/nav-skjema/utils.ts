@@ -2,7 +2,7 @@ import { InjectedIntl } from "react-intl";
 import {
 	FaktumCheckboksTekst,
 	Infotekst,
-	FaktumInputTekst
+	InputFaktumTekst
 } from "./redux/types";
 
 export const radioCheckKeys = (key: string) => ({
@@ -64,7 +64,7 @@ export function getFaktumCheckboksTekst(
 	};
 }
 
-export function getFaktumRadioTekst(
+export function getRadioFaktumTekst(
 	intl: InjectedIntl,
 	key: string,
 	value: string
@@ -72,10 +72,10 @@ export function getFaktumRadioTekst(
 	return getFaktumCheckboksTekst(intl, `${key}.${value}`);
 }
 
-export function getFaktumInputTekst(
+export function getInputFaktumTekst(
 	intl: InjectedIntl,
 	key: string
-): FaktumInputTekst {
+): InputFaktumTekst {
 	return {
 		label: getIntlTextOrKey(intl, `${key}.sporsmal`),
 		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),

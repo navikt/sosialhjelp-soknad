@@ -1,62 +1,64 @@
 import * as React from "react";
-import { Feil } from "nav-frontend-skjema";
+import { Checkbox, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumStoreState, FaktumComponentProps } from "../redux/reducer";
 import { setFaktumVerdi } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
-import { getFaktumInputTekst } from "../utils";
-import { Select, SelectBredde } from "nav-frontend-skjema";
+import {
+	getFaktumCheckboksTekst,
+	faktumIsSelected,
+	boolToString
+} from "../utils";
 
 interface OwnProps {
 	faktumKey: string;
+	option: string;
 	disabled?: boolean;
 	feil?: Feil;
-	bredde?: SelectBredde;
-	labelFunc?: (label: string) => React.ReactNode;
 }
 
-class FaktumSelect extends React.Component<
+class CheckboxFaktum extends React.Component<
 	OwnProps & FaktumComponentProps & DispatchProps & InjectedIntlProps,
 	{}
 > {
 	render() {
 		const {
 			faktumKey,
+			option,
 			disabled,
-			bredde,
-			labelFunc,
+			feil,
 			fakta,
-			children,
 			dispatch,
 			intl
 		} = this.props;
-		const tekster = getFaktumInputTekst(intl, faktumKey);
+		const key = `${faktumKey}.${option}`;
+		const tekster = getFaktumCheckboksTekst(intl, key);
+		const checked = faktumIsSelected(fakta.get(key));
 		return (
-			<Select
-				name={faktumKey}
+			<Checkbox
+				name={key}
+				checked={checked}
 				disabled={disabled}
-				value={fakta.get(faktumKey)}
-				bredde={bredde}
+				value={fakta.get(key)}
 				onChange={(evt: any) =>
-					dispatch(setFaktumVerdi(faktumKey, evt.target.value))}
+					dispatch(setFaktumVerdi(key, boolToString(evt.target.checked)))}
 				label={
 					<LabelMedHjelpetekst
-						id={faktumKey}
-						label={labelFunc ? labelFunc(tekster.label) : tekster.label}
+						id={key}
+						label={tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>
-				}>
-				{children}
-			</Select>
+				}
+				feil={feil}
+			/>
 		);
 	}
 }
 
 export default connect((state: FaktumStoreState, props: OwnProps) => {
 	return {
-		fakta: state.faktumStore.fakta,
-		faktumKey: props.faktumKey
+		fakta: state.faktumStore.fakta
 	};
-})(injectIntl(FaktumSelect));
+})(injectIntl(CheckboxFaktum));

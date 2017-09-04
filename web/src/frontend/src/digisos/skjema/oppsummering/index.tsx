@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import Steg from "../../../nav-skjema/components/steg";
 import { DispatchProps } from "../../../nav-skjema/redux/types";
 import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
-import { hentOppsummering } from "../../../redux/soknad/actions";
-import { SoknadState } from "../../../redux/soknad/types";
-import FaktumCheckbox from "../../../nav-skjema/faktum/FaktumCheckbox";
+import CheckboxFaktum from "../../../nav-skjema/faktum/CheckboxFaktum";
+import { hentOppsummering } from "../../redux/soknad/actions";
+import { SoknadState } from "../../redux/soknad/types";
 import "./oppsummering.css";
 
 interface StateProps {
@@ -37,7 +37,7 @@ class Oppsummering extends React.Component<Props> {
 					}
 				/>
 				<div className="skjema-oppsummering__bekreft">
-					<FaktumCheckbox faktumKey="oppsummering.bekreft" option="true" />
+					<CheckboxFaktum faktumKey="oppsummering.bekreft" option="true" />
 				</div>
 			</Steg>
 		);

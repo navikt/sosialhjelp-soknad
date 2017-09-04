@@ -1,54 +1,54 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
-import FaktumInput from "../../../nav-skjema/faktum/FaktumInput";
-import FaktumSkjemagruppe from "../../../nav-skjema/faktum/FaktumSkjemagruppe";
+import InputFaktum from "../../../nav-skjema/faktum/InputFaktum";
+import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
 import Progresjonsblokk from "../../../nav-skjema/components/progresjonsblokk";
 import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
 import { faktumIsSelected } from "../../../nav-skjema/utils";
 
 const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
-	<FaktumSkjemagruppe tittelId="ekstrainfo.arbeidsledig.tittel">
+	<SkjemagruppeFaktum tittelId="ekstrainfo.arbeidsledig.tittel">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
-					<FaktumInput faktumKey="ekstrainfo.arbeidsledig.feriepenger" />
+					<InputFaktum faktumKey="ekstrainfo.arbeidsledig.feriepenger" />
 				</Column>
 				<Column sm="6" xs="3">
-					<FaktumInput faktumKey="ekstrainfo.arbeidsledig.sluttoppgjor" />
+					<InputFaktum faktumKey="ekstrainfo.arbeidsledig.sluttoppgjor" />
 				</Column>
 			</Row>
 		</Container>
-	</FaktumSkjemagruppe>
+	</SkjemagruppeFaktum>
 );
 
 const JobbSkjema: React.StatelessComponent<{}> = () => (
-	<FaktumSkjemagruppe tittelId="ekstrainfo.jobb.tittel">
+	<SkjemagruppeFaktum tittelId="ekstrainfo.jobb.tittel">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
-					<FaktumInput faktumKey="ekstrainfo.jobb.bruttolonn" />
+					<InputFaktum faktumKey="ekstrainfo.jobb.bruttolonn" />
 				</Column>
 				<Column sm="6" xs="3">
-					<FaktumInput faktumKey="ekstrainfo.jobb.nettolonn" />
+					<InputFaktum faktumKey="ekstrainfo.jobb.nettolonn" />
 				</Column>
 			</Row>
 		</Container>
-	</FaktumSkjemagruppe>
+	</SkjemagruppeFaktum>
 );
 
 const StudentSkjema: React.StatelessComponent<{}> = () => (
-	<FaktumSkjemagruppe tittelId="ekstrainfo.student.tittel">
+	<SkjemagruppeFaktum tittelId="ekstrainfo.student.tittel">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
-					<FaktumInput faktumKey="ekstrainfo.student.utbetaling" />
+					<InputFaktum faktumKey="ekstrainfo.student.utbetaling" />
 				</Column>
 				<Column sm="6" xs="3">
-					<FaktumInput faktumKey="ekstrainfo.student.totalt" />
+					<InputFaktum faktumKey="ekstrainfo.student.totalt" />
 				</Column>
 			</Row>
 		</Container>
-	</FaktumSkjemagruppe>
+	</SkjemagruppeFaktum>
 );
 
 const ArbeidOgUtdanning: React.StatelessComponent<

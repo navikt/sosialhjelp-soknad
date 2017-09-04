@@ -3,10 +3,10 @@ import Sporsmal from "../../../nav-skjema/components/sporsmal";
 import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
 import { radioCheckKeys, faktumIsSelected } from "../../../nav-skjema/utils";
 
-import FaktumRadio from "../../../nav-skjema/faktum/FaktumRadio";
-import FaktumCheckbox from "../../../nav-skjema/faktum/FaktumCheckbox";
-import FaktumTextarea from "../../../nav-skjema/faktum/FaktumTextarea";
-import FaktumSkjemagruppe from "../../../nav-skjema/faktum/FaktumSkjemagruppe";
+import RadioFaktum from "../../../nav-skjema/faktum/RadioFaktum";
+import CheckboxFaktum from "../../../nav-skjema/faktum/CheckboxFaktum";
+import TextareaFaktum from "../../../nav-skjema/faktum/TextareaFaktum";
+import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
 import Underskjema from "../../../nav-skjema/components/underskjema";
 
 class Eiendeler extends React.Component<FaktumComponentProps, {}> {
@@ -17,31 +17,31 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeEiendelerAnnet = "inntekt.eierandeler.true.type.annet";
 		return (
 			<Sporsmal sporsmalId={eiendeler.sporsmal}>
-				<FaktumRadio faktumKey={eiendeler.faktum} option="true" />
+				<RadioFaktum faktumKey={eiendeler.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get(eiendeler.faktum))}>
-					<FaktumSkjemagruppe tittelId={hvilkeEiendeler.sporsmal}>
-						<FaktumCheckbox faktumKey={hvilkeEiendeler.faktum} option="bolig" />
-						<FaktumCheckbox
+					<SkjemagruppeFaktum tittelId={hvilkeEiendeler.sporsmal}>
+						<CheckboxFaktum faktumKey={hvilkeEiendeler.faktum} option="bolig" />
+						<CheckboxFaktum
 							faktumKey={hvilkeEiendeler.faktum}
 							option="campingvogn"
 						/>
-						<FaktumCheckbox
+						<CheckboxFaktum
 							faktumKey={hvilkeEiendeler.faktum}
 							option="kjoretoy"
 						/>
-						<FaktumCheckbox
+						<CheckboxFaktum
 							faktumKey={hvilkeEiendeler.faktum}
 							option="fritidseiendom"
 						/>
-						<FaktumCheckbox faktumKey={hvilkeEiendeler.faktum} option="annet" />
+						<CheckboxFaktum faktumKey={hvilkeEiendeler.faktum} option="annet" />
 						{faktumIsSelected(fakta.get(hvilkeEiendelerAnnet)) ? (
-							<FaktumTextarea
+							<TextareaFaktum
 								faktumKey={`${hvilkeEiendelerAnnet}.true.beskrivelse`}
 							/>
 						) : null}
-					</FaktumSkjemagruppe>
+					</SkjemagruppeFaktum>
 				</Underskjema>
-				<FaktumRadio faktumKey={eiendeler.faktum} option="false" />
+				<RadioFaktum faktumKey={eiendeler.faktum} option="false" />
 			</Sporsmal>
 		);
 	}

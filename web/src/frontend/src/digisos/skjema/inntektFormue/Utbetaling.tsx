@@ -3,10 +3,10 @@ import Sporsmal from "../../../nav-skjema/components/sporsmal";
 import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
 import { radioCheckKeys, faktumIsSelected } from "../../../nav-skjema/utils";
 
-import FaktumRadio from "../../../nav-skjema/faktum/FaktumRadio";
-import FaktumCheckbox from "../../../nav-skjema/faktum/FaktumCheckbox";
-import FaktumTextarea from "../../../nav-skjema/faktum/FaktumTextarea";
-import FaktumSkjemagruppe from "../../../nav-skjema/faktum/FaktumSkjemagruppe";
+import RadioFaktum from "../../../nav-skjema/faktum/RadioFaktum";
+import CheckboxFaktum from "../../../nav-skjema/faktum/CheckboxFaktum";
+import TextareaFaktum from "../../../nav-skjema/faktum/TextareaFaktum";
+import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
 import Underskjema from "../../../nav-skjema/components/underskjema";
 
 class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
@@ -17,34 +17,34 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeUtbetalingerAnnet = "inntekt.inntekter.true.type.annet";
 		return (
 			<Sporsmal sporsmalId={utbetaling.sporsmal}>
-				<FaktumRadio faktumKey={utbetaling.faktum} option="true" />
+				<RadioFaktum faktumKey={utbetaling.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get(utbetaling.faktum))}>
-					<FaktumSkjemagruppe tittelId={hvilkeUtbetalinger.sporsmal}>
+					<SkjemagruppeFaktum tittelId={hvilkeUtbetalinger.sporsmal}>
 						{/*TODO legg til checkboxgruppefaktum*/}
-						<FaktumCheckbox
+						<CheckboxFaktum
 							faktumKey={hvilkeUtbetalinger.faktum}
 							option="utbytte"
 						/>
-						<FaktumCheckbox
+						<CheckboxFaktum
 							faktumKey={hvilkeUtbetalinger.faktum}
 							option="salg"
 						/>
-						<FaktumCheckbox
+						<CheckboxFaktum
 							faktumKey={hvilkeUtbetalinger.faktum}
 							option="forsikringsutbetalinger"
 						/>
-						<FaktumCheckbox
+						<CheckboxFaktum
 							faktumKey={hvilkeUtbetalinger.faktum}
 							option="annet"
 						/>
 						{faktumIsSelected(fakta.get(hvilkeUtbetalingerAnnet)) ? (
-							<FaktumTextarea
+							<TextareaFaktum
 								faktumKey={`${hvilkeUtbetalingerAnnet}.true.beskrivelse`}
 							/>
 						) : null}
-					</FaktumSkjemagruppe>
+					</SkjemagruppeFaktum>
 				</Underskjema>
-				<FaktumRadio faktumKey={utbetaling.faktum} option="false" />
+				<RadioFaktum faktumKey={utbetaling.faktum} option="false" />
 			</Sporsmal>
 		);
 	}

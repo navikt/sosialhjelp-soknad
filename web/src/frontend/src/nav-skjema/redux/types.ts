@@ -1,4 +1,10 @@
-export * from "../../redux/types";
+export type Dispatch = (action: any) => void;
+
+export type Reducer<S, AT> = (state: S, action: AT) => S;
+
+export interface DispatchProps {
+	dispatch: Dispatch;
+}
 
 export enum ActionTypeKeys {
 	SET_FAKTUM_VERDI = "SET_FAKTUM_VERDI",
@@ -57,7 +63,7 @@ export interface FaktumCheckboksTekst {
 	feilmelding: string;
 }
 
-export interface FaktumInputTekst {
+export interface InputFaktumTekst {
 	label: string;
 	feilmelding?: string;
 	infotekst?: Infotekst;

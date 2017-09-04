@@ -1,21 +1,23 @@
 import * as React from "react";
-import { Input, Feil } from "nav-frontend-skjema";
+import { Textarea, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumStoreState, FaktumComponentProps } from "../redux/reducer";
 import { setFaktumVerdi } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getFaktumInputTekst } from "../utils";
-
-interface State {
-	value: string;
-}
+import { getInputFaktumTekst, getIntlTextOrKey } from "../utils";
 
 interface OwnProps {
 	faktumKey: string;
+	labelId?: string;
 	disabled?: boolean;
-	feil?: Feil;
+	textareaClass?: string;
 	maxLength?: number;
+	feil?: Feil;
+}
+
+interface State {
+	value: string;
 }
 
 type Props = OwnProps &
@@ -27,13 +29,14 @@ const getStateFromProps = (props: Props): State => ({
 	value: props.fakta.get(props.faktumKey) || ""
 });
 
-class FaktumInput extends React.Component<Props, State> {
+class TextareaFaktum extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.handleOnBlur = this.handleOnBlur.bind(this);
 		this.handleOnChange = this.handleOnChange.bind(this);
 		this.state = getStateFromProps(props);
 	}
+
 	componentWillReceiveProps(nextProps: Props) {
 		this.setState(getStateFromProps(nextProps));
 	}
@@ -47,20 +50,27 @@ class FaktumInput extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { faktumKey, disabled, feil, intl, maxLength } = this.props;
-		const tekster = getFaktumInputTekst(intl, faktumKey);
+		const {
+			faktumKey,
+			labelId,
+			disabled,
+			feil,
+			textareaClass,
+			maxLength,
+			intl
+		} = this.props;
+		const tekster = getInputFaktumTekst(intl, faktumKey);
 		return (
-			<Input
-				className="input--xxl faktumInput"
+			<Textarea
+				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
+				value={this.state.value}
 				name={faktumKey}
 				disabled={disabled}
-				value={this.state.value}
 				onChange={this.handleOnChange}
 				onBlur={this.handleOnBlur}
-				label={tekster.label}
-				placeholder={tekster.placeholder}
 				feil={feil}
-				maxLength={maxLength}
+				maxLength={maxLength || 400}
+				textareaClass={textareaClass || "skjema-texarea--normal"}
 			/>
 		);
 	}
@@ -71,4 +81,4 @@ export default connect((state: FaktumStoreState, props: OwnProps) => {
 		fakta: state.faktumStore.fakta,
 		faktumKey: props.faktumKey
 	};
-})(injectIntl(FaktumInput));
+})(injectIntl(TextareaFaktum));

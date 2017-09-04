@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
-import FaktumInput from "../../../nav-skjema/faktum/FaktumInput";
-import FaktumSkjemagruppe from "../../../nav-skjema/faktum/FaktumSkjemagruppe";
+import InputFaktum from "../../../nav-skjema/faktum/InputFaktum";
+import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
 import Progresjonsblokk from "../../../nav-skjema/components/progresjonsblokk";
 import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
 import { faktumIsSelected } from "../../../nav-skjema/utils";
@@ -18,20 +18,20 @@ const Familiesituasjon: React.StatelessComponent<
 		<Progresjonsblokk
 			tittel="Familiesituasjonen"
 			content={[
-				<FaktumSkjemagruppe
+				<SkjemagruppeFaktum
 					tittelId="ekstrainfo.familie.barnebidrag.tittel"
 					key="barnebidrag">
 					<Container fluid={true} className="container--noPadding">
 						<Row>
 							<Column sm="6" xs="3">
-								<FaktumInput faktumKey="ekstrainfo.familie.barnebidrag.betaler" />
+								<InputFaktum faktumKey="ekstrainfo.familie.barnebidrag.betaler" />
 							</Column>
 							<Column sm="6" xs="3">
-								<FaktumInput faktumKey="ekstrainfo.familie.barnebidrag.mottar" />
+								<InputFaktum faktumKey="ekstrainfo.familie.barnebidrag.mottar" />
 							</Column>
 						</Row>
 					</Container>
-				</FaktumSkjemagruppe>
+				</SkjemagruppeFaktum>
 			]}
 		/>
 	);

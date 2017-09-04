@@ -5,7 +5,7 @@ interface OwnProps {
 	faktumKey: string;
 }
 
-class FaktumPersonskjema extends React.Component<OwnProps, {}> {
+class PersonFaktum extends React.Component<OwnProps, {}> {
 	render() {
 		const { faktumKey } = this.props;
 		return (
@@ -18,4 +18,4 @@ class FaktumPersonskjema extends React.Component<OwnProps, {}> {
 	}
 }
 
-export default FaktumPersonskjema;
+export default PersonFaktum;

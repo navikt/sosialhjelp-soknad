@@ -1,8 +1,8 @@
 import * as React from "react";
 import Sporsmal from "../../../nav-skjema/components/sporsmal";
 import Steg from "../../../nav-skjema/components/steg";
-import FaktumRadio from "../../../nav-skjema/faktum/FaktumRadio";
-import FaktumInput from "../../../nav-skjema/faktum/FaktumInput";
+import RadioFaktum from "../../../nav-skjema/faktum/RadioFaktum";
+import InputFaktum from "../../../nav-skjema/faktum/InputFaktum";
 import { radioCheckKeys } from "../../../nav-skjema/utils";
 
 class Kontaktinfo extends React.Component<{}, {}> {
@@ -13,16 +13,16 @@ class Kontaktinfo extends React.Component<{}, {}> {
 				<Sporsmal
 					sporsmalId="kontakt.kontonummer.tittel"
 					beskrivelseId="kontakt.kontonummer.beskrivelse">
-					<FaktumInput faktumKey="kontakt.kontonummer" maxLength={11} />
+					<InputFaktum faktumKey="kontakt.kontonummer" maxLength={11} />
 				</Sporsmal>
 				<Sporsmal
 					sporsmalId="kontakt.telefon.tittel"
 					beskrivelseId="kontakt.telefon.beskrivelse">
-					<FaktumInput faktumKey="kontakt.telefon" />
+					<InputFaktum faktumKey="kontakt.telefon" />
 				</Sporsmal>
 				<Sporsmal sporsmalId={statsborger.sporsmal}>
-					<FaktumRadio faktumKey={statsborger.faktum} option="true" />
-					<FaktumRadio faktumKey={statsborger.faktum} option="false" />
+					<RadioFaktum faktumKey={statsborger.faktum} option="true" />
+					<RadioFaktum faktumKey={statsborger.faktum} option="false" />
 				</Sporsmal>
 			</Steg>
 		);

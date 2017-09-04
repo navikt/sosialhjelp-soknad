@@ -10,7 +10,7 @@ interface Props {
 	children: React.ReactNode;
 }
 
-const FaktumSkjemagruppe: React.StatelessComponent<Props> = (
+const SkjemagruppeFaktum: React.StatelessComponent<Props> = (
 	props: Props & InjectedIntlProps
 ) => {
 	const { visible, tittelId, intl, feil, children } = props;
@@ -28,4 +28,4 @@ const FaktumSkjemagruppe: React.StatelessComponent<Props> = (
 	);
 };
 
-export default injectIntl(FaktumSkjemagruppe);
+export default injectIntl(SkjemagruppeFaktum);

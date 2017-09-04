@@ -1,50 +1,50 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
-import FaktumInput from "../../../nav-skjema/faktum/FaktumInput";
-import FaktumSkjemagruppe from "../../../nav-skjema/faktum/FaktumSkjemagruppe";
+import InputFaktum from "../../../nav-skjema/faktum/InputFaktum";
+import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
 import Progresjonsblokk from "../../../nav-skjema/components/progresjonsblokk";
 import { faktumIsSelected } from "../../../nav-skjema/utils";
 import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
 
 const StromSkjema: React.StatelessComponent<{}> = () => (
-	<FaktumSkjemagruppe tittelId="ekstrainfo.utgifter.strom.tittel" key="strom">
+	<SkjemagruppeFaktum tittelId="ekstrainfo.utgifter.strom.tittel" key="strom">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
-					<FaktumInput faktumKey="ekstrainfo.utgifter.strom" />
+					<InputFaktum faktumKey="ekstrainfo.utgifter.strom" />
 				</Column>
 			</Row>
 		</Container>
-	</FaktumSkjemagruppe>
+	</SkjemagruppeFaktum>
 );
 
 const HusleieSkjema: React.StatelessComponent<{}> = () => (
-	<FaktumSkjemagruppe
+	<SkjemagruppeFaktum
 		tittelId="ekstrainfo.utgifter.husleie.tittel"
 		key="husleie">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
-					<FaktumInput faktumKey="ekstrainfo.utgifter.husleie" />
+					<InputFaktum faktumKey="ekstrainfo.utgifter.husleie" />
 				</Column>
 			</Row>
 		</Container>
-	</FaktumSkjemagruppe>
+	</SkjemagruppeFaktum>
 );
 
 const BarneSkjema: React.StatelessComponent<{}> = () => (
-	<FaktumSkjemagruppe tittelId="ekstrainfo.utgifter.barn.tittel" key="barn">
+	<SkjemagruppeFaktum tittelId="ekstrainfo.utgifter.barn.tittel" key="barn">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
-					<FaktumInput faktumKey="ekstrainfo.utgifter.barn.hva" />
+					<InputFaktum faktumKey="ekstrainfo.utgifter.barn.hva" />
 				</Column>
 				<Column sm="6" xs="3">
-					<FaktumInput faktumKey="ekstrainfo.utgifter.barn.sum" />
+					<InputFaktum faktumKey="ekstrainfo.utgifter.barn.sum" />
 				</Column>
 			</Row>
 		</Container>
-	</FaktumSkjemagruppe>
+	</SkjemagruppeFaktum>
 );
 
 const UtgifterOgGjeld: React.StatelessComponent<

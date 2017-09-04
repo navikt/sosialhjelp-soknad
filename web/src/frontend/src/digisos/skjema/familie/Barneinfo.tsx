@@ -1,10 +1,10 @@
 import * as React from "react";
 import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
 import { radioCheckKeys, faktumIsSelected } from "../../../nav-skjema/utils";
-import FaktumPersonskjema from "../../../nav-skjema/faktum/FaktumPersonskjema";
+import PersonFaktum from "../../../nav-skjema/faktum/PersonFaktum";
 
-import FaktumRadio from "../../../nav-skjema/faktum/FaktumRadio";
-import FaktumSkjemagruppe from "../../../nav-skjema/faktum/FaktumSkjemagruppe";
+import RadioFaktum from "../../../nav-skjema/faktum/RadioFaktum";
+import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
 import NivaTreSkjema from "../../../nav-skjema/components/nivaTreSkjema";
 
 interface OwnProps {
@@ -18,19 +18,19 @@ class Barn extends React.Component<OwnProps & FaktumComponentProps, {}> {
 		const borInfo = radioCheckKeys(`${faktumKey}.borsammen`);
 		const hvormye = radioCheckKeys(`${faktumKey}.borsammen.true.grad`);
 		return (
-			<FaktumSkjemagruppe tittelId="familie.barn.true.tittel">
-				<FaktumPersonskjema faktumKey={faktumKey} />
-				<FaktumSkjemagruppe tittelId={borInfo.sporsmal}>
-					<FaktumRadio faktumKey={borInfo.faktum} option="true" />
+			<SkjemagruppeFaktum tittelId="familie.barn.true.tittel">
+				<PersonFaktum faktumKey={faktumKey} />
+				<SkjemagruppeFaktum tittelId={borInfo.sporsmal}>
+					<RadioFaktum faktumKey={borInfo.faktum} option="true" />
 					<NivaTreSkjema visible={faktumIsSelected(fakta.get(borInfo.faktum))}>
-						<FaktumSkjemagruppe tittelId={hvormye.sporsmal}>
-							<FaktumRadio faktumKey={hvormye.faktum} option="heltid" />
-							<FaktumRadio faktumKey={hvormye.faktum} option="deltid" />
-						</FaktumSkjemagruppe>
+						<SkjemagruppeFaktum tittelId={hvormye.sporsmal}>
+							<RadioFaktum faktumKey={hvormye.faktum} option="heltid" />
+							<RadioFaktum faktumKey={hvormye.faktum} option="deltid" />
+						</SkjemagruppeFaktum>
 					</NivaTreSkjema>
-					<FaktumRadio faktumKey={borInfo.faktum} option="false" />
-				</FaktumSkjemagruppe>
-			</FaktumSkjemagruppe>
+					<RadioFaktum faktumKey={borInfo.faktum} option="false" />
+				</SkjemagruppeFaktum>
+			</SkjemagruppeFaktum>
 		);
 	}
 }

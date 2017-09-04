@@ -8,10 +8,10 @@ import {
 import Arrow from "../../nav-skjema/components/svg/Arrow";
 import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 import { Collapse } from "react-collapse";
-import { SoknadState, ActionTypeKeys } from "../../redux/soknad/types";
+import { SoknadState, ActionTypeKeys } from "../redux/soknad/types";
 import { withRouter, RouterProps } from "react-router";
-import { opprettSoknad } from "../../redux/soknad/actions";
-import { DispatchProps } from "../../redux/types";
+import { opprettSoknad } from "../redux/soknad/actions";
+import { DispatchProps } from "../redux/types";
 import { Select } from "nav-frontend-skjema";
 import { InjectedIntlProps, FormattedMessage } from "react-intl";
 
