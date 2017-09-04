@@ -43,7 +43,7 @@ class Bosted extends React.Component<
 
 	opprettSoknad(event: any) {
 		event.preventDefault();
-		const { kommuneId, bydelId } = this.state;
+		const {kommuneId, bydelId} = this.state;
 		this.props.dispatch(opprettSoknad(kommuneId, bydelId));
 	}
 
@@ -62,8 +62,8 @@ class Bosted extends React.Component<
 									<FormattedMessage id="personalia.kommune.sporsmal"/>
 								</strong>
 							)}>
-							<option value="" />
-							{Kommuner.map(kommune => (
+							<option value=""/>
+							{Kommuner.map(kommune =>
 								<option value={kommune.id} key={kommune.id}>
 									{kommune.navn}
 								</option>
@@ -73,39 +73,39 @@ class Bosted extends React.Component<
 
 					{valgtKommune && valgtKommune.bydeler ? (
 						<div className="blokk-l">
-                            <Arrow />
-                            <Select
-                                bredde="m"
-                                onChange={(evt: any) => this.setState({bydelId: evt.target.value})}
-                                label={(
-                                    <strong>
-                                        <FormattedMessage id="personalia.bydel.sporsmal"/>
-                                    </strong>
-                                )}>
-                                <option value="" />
-                                {valgtKommune.bydeler.map(bydel =>
-                                    <option value={bydel.id} key={bydel.id}>
-                                        {bydel.navn}
-                                    </option>
-                                )}
-                            </Select>
+							<Arrow/>
+							<Select
+								bredde="m"
+								onChange={(evt: any) => this.setState({bydelId: evt.target.value})}
+								label={(
+									<strong>
+										<FormattedMessage id="personalia.bydel.sporsmal"/>
+									</strong>
+								)}>
+								<option value=""/>
+								{valgtKommune.bydeler.map(bydel =>
+									<option value={bydel.id} key={bydel.id}>
+										{bydel.navn}
+									</option>
+								)}
+							</Select>
 						</div>
-					): null}
+					) : null}
 					{ferdig ? (
 						<div>
-                            <p>
-                                Når du har fylt ut blir søknaden sendt til{" "}
-                                <strong>
-                                    {getBosted(
-                                        valgtKommune.id,
-                                        valgtBydel ? valgtBydel.id : null
-                                    )}
-                                </strong>
-                            </p>
-                            <Knapp type="hoved" htmlType="submit">
-                                Start søknad
-                            </Knapp>
-                        </div>
+							<p>
+								Når du har fylt ut blir søknaden sendt til{" "}
+								<strong>
+									{getBosted(
+										valgtKommune.id,
+										valgtBydel ? valgtBydel.id : null
+									)}
+								</strong>
+							</p>
+							<Knapp type="hoved" htmlType="submit">
+								Start søknad
+							</Knapp>
+						</div>
 					) : null}
 				</Collapse>
 			</form>

@@ -27,7 +27,14 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 					type: ActionTypeKeys.SET_BRUKERBEHANDLING_ID,
 					brukerBehandlingId
 				});
-				hentFakta(brukerBehandlingId, kommuneId, bydelId, dispatch);
+				hentFakta(brukerBehandlingId, dispatch)
+					.then(faktumResponse => {
+						dispatch(setFaktum(faktumResponse));
+						dispatch(setFaktumVerdi("personalia.kommune", kommuneId));
+						if (bydelId !== "") {
+							dispatch(setFaktumVerdi("personalia.bydel", bydelId));
+						}
+					});
 			})
 			.catch(reason => {
 				dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
@@ -35,16 +42,9 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 	};
 }
 
-function hentFakta(brukerBehandlingId: string, kommuneId: string, bydelId: string, dispatch: Dispatch<Action>) {
+function hentFakta(brukerBehandlingId: string, dispatch: Dispatch<Action>) {
 	dispatch({type: ActionTypeKeys.PENDING});
-	fetchToJson("soknader/" + brukerBehandlingId + "/fakta")
-		.then(response => {
-			dispatch(setFaktum(response));
-			dispatch(setFaktumVerdi("personalia.kommune", kommuneId));
-			if (bydelId !== "") {
-				dispatch(setFaktumVerdi("personalia.bydel", bydelId));
-			}
-		})
+	return fetchToJson("soknader/" + brukerBehandlingId + "/fakta")
 		.catch(reason => {
 			dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
 		});

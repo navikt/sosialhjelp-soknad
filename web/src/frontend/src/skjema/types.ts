@@ -19,6 +19,10 @@ export interface Faktum {
 	value: string;
 }
 
+export interface Fakta {
+	faktum: Faktum[];
+}
+
 export interface SetFaktumAction {
 	type: ActionTypeKeys.SET_FAKTUM;
 	faktum: any;
