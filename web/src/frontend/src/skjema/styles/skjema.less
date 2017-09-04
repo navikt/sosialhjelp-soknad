@@ -1,0 +1,26 @@
+@import "./variables";
+
+.skjema-content {
+	margin: 0 auto;
+	max-width: 640px;
+}
+
+.skjema-fieldset {
+	border: none;
+	padding: 0;
+	margin: 0;
+	legend {
+		padding-left: 0;
+		padding-right: 0;
+		margin-bottom: 1rem;
+		font-weight: 600;
+	}
+	> legend {
+		padding-left: @skjemaMarg;
+		padding-right: @skjemaMarg;
+	}
+	.skjema-fieldset > legend {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}

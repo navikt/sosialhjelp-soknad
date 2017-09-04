@@ -10,7 +10,7 @@ class App extends React.Component<{}, {}> {
 	render() {
 		return (
 			<div className="app-digisos">
-				<h1>
+				<h1 className="app-digisos__title">
 					<FormattedMessage id="skjema.tittel" />
 				</h1>
 				<Switch>

@@ -2,6 +2,7 @@ import * as React from "react";
 import { addLocaleData, IntlProvider as Provider } from "react-intl";
 import * as nb from "react-intl/locale-data/nb";
 import { getApiBaseUrl, MED_CREDENTIALS } from "./utils";
+import NavFrontendSpinner from "nav-frontend-spinner";
 
 addLocaleData(nb);
 
@@ -16,22 +17,28 @@ interface IntlProviderProps {
 const STATUS = "status";
 const DATA = "data";
 
-class IntlProvider extends React.Component<IntlProviderProps, IntlProviderState> {
-
+class IntlProvider extends React.Component<
+	IntlProviderProps,
+	IntlProviderState
+> {
 	constructor(props: IntlProviderProps) {
 		super(props);
 		this.state = {
-			ledetekster: {status: null, data: {}}
+			ledetekster: { status: null, data: {} }
 		};
 	}
 
 	/* tslint:disable */
 	componentDidMount() {
-		this.setState({ledetekster: {status: 0, data: {}}});
-		fetch(getApiBaseUrl() + "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp", MED_CREDENTIALS)
+		this.setState({ ledetekster: { status: 0, data: {} } });
+		fetch(
+			getApiBaseUrl() +
+				"informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp",
+			MED_CREDENTIALS
+		)
 			.then(response => response.json())
 			.then(texts => {
-				this.setState({ledetekster: {status: 200, data: texts}});
+				this.setState({ ledetekster: { status: 200, data: texts } });
 			})
 			.catch(error => {
 				console.log(`request failed ${error}`);
@@ -42,10 +49,17 @@ class IntlProvider extends React.Component<IntlProviderProps, IntlProviderState>
 	render() {
 		const ledetekster = this.state.ledetekster;
 		const locale = "nb";
-		const children = this.state.ledetekster[STATUS] === 200 ? this.props.children : <span>Spinner</span>;
+		const children =
+			this.state.ledetekster[STATUS] === 200 ? (
+				this.props.children
+			) : (
+				<div className="application-spinner">
+					<NavFrontendSpinner storrelse="xxl" />
+				</div>
+			);
 		return (
-			<Provider messages={ ledetekster[DATA] } defaultLocale="nb" locale={ locale }>
-				{ children }
+			<Provider messages={ledetekster[DATA]} defaultLocale="nb" locale={locale}>
+				{children}
 			</Provider>
 		);
 	}
