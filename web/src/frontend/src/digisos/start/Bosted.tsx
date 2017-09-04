@@ -85,9 +85,7 @@ class Bosted extends React.Component<
 							<Select
 								bredde="m"
 								onChange={(evt: any) =>
-									this.setState({
-										bydelId: evt.target.value
-									})}
+									this.setState({ bydelId: evt.target.value })}
 								label={
 									<strong>
 										<FormattedMessage id="personalia.bydel.sporsmal" />

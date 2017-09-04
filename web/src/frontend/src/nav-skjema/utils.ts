@@ -35,7 +35,9 @@ export function getIntlText(intl: InjectedIntl, key?: string) {
 	if (!key) {
 		return undefined;
 	}
-	return intlHasKey(intl, key) ? intl.formatMessage({ id: key }) : undefined;
+	return intlHasKey(intl, key)
+		? intl.formatHTMLMessage({ id: key })
+		: undefined;
 }
 
 export function getIntlTextOrKey(intl: InjectedIntl, key: string): string {

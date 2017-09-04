@@ -1,7 +1,7 @@
 declare module "nav-frontend-skjema" {
 	import * as React from "react";
 
-	type InputBredde =
+	export type InputBredde =
 		| "fullbredde"
 		| "xxl"
 		| "xl"

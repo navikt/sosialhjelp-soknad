@@ -1,22 +1,25 @@
 import * as React from "react";
 import "./sporsmal.css";
-import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
 import Skjemapanel from "../skjemapanel";
+import HjelpetekstFaktum from "../../faktum/HjelpetekstFaktum";
+import { getIntlInfoTekst } from "../../utils";
 import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 
 interface Props extends React.Props<any> {
 	sporsmalId: string;
 	beskrivelseId?: string;
-	hjelpetekst?: string;
+	hjelpetekstId?: string;
 }
 
 const Sporsmal: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	children,
 	sporsmalId,
 	beskrivelseId,
-	hjelpetekst,
+	hjelpetekstId,
 	intl
 }) => {
+	const beskrivelse = getIntlInfoTekst(intl, beskrivelseId);
+	const hjelpetekst = getIntlInfoTekst(intl, hjelpetekstId);
 	return (
 		<div className="skjema-sporsmal">
 			<Skjemapanel>
@@ -26,13 +29,13 @@ const Sporsmal: React.StatelessComponent<Props & InjectedIntlProps> = ({
 					</legend>
 					{hjelpetekst ? (
 						<div className="skjema-sporsmal__hjelpetekst">
-							<HjelpetekstAuto>{hjelpetekst}</HjelpetekstAuto>
+							<HjelpetekstFaktum hjelpetekstId={hjelpetekstId} />
 						</div>
 					) : null}
 					<div className="skjema-sporsmal__innhold">
-						{beskrivelseId ? (
+						{beskrivelse ? (
 							<p className="skjema-sporsmal__beskrivelse">
-								{intl.formatMessage({ id: beskrivelseId })}
+								{intl.formatHTMLMessage({ id: beskrivelseId })}
 							</p>
 						) : null}
 						{children}
