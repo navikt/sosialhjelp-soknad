@@ -17,7 +17,10 @@ class Begrunnelse extends React.Component<
 	render() {
 		return (
 			<Steg tittelId="begrunnelsebolk.tittel">
-				<Sporsmal sporsmalId="begrunnelse.hvorfor.sporsmal">
+				<Sporsmal
+					sporsmalId="begrunnelse.hvorfor.sporsmal"
+					hjelpetekstId="begrunnelse.hvorfor.hjelpetekst"
+				>
 					<FaktumTextarea
 						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hvorfor"
@@ -25,7 +28,10 @@ class Begrunnelse extends React.Component<
 						maxLength={800}
 					/>
 				</Sporsmal>
-				<Sporsmal sporsmalId="begrunnelse.hva.sporsmal">
+				<Sporsmal
+					sporsmalId="begrunnelse.hva.sporsmal"
+					hjelpetekstId="begrunnelse.hva.hjelpetekst"
+				>
 					<FaktumTextarea
 						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hva"

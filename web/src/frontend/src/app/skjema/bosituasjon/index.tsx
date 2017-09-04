@@ -6,18 +6,27 @@ import {
 	FaktumStoreState,
 	FaktumComponentProps
 } from "../../../skjema/reducer";
-import { radioCheckKeys } from "../../../skjema/utils";
+import {
+	radioCheckKeys,
+	inputKeys,
+	faktumIsSelected
+} from "../../../skjema/utils";
 
 import FaktumCheckbox from "../../../skjema/faktum/FaktumCheckbox";
 import FaktumRadio from "../../../skjema/faktum/FaktumRadio";
 import FaktumSkjemagruppe from "../../../skjema/faktum/FaktumSkjemagruppe";
 import Underskjema from "../../../skjema/components/underskjema";
+import FaktumInput from "../../../skjema/faktum/FaktumInput";
 
 class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	render() {
 		const { fakta } = this.props;
 		const bosituasjon = radioCheckKeys("bosituasjon");
 		const annen = radioCheckKeys("bosituasjon.annet.true");
+		const barnUnder18 = radioCheckKeys("bosituasjon.barnunder18");
+		const barnUnder18True = inputKeys("bosituasjon.barnunder18.true");
+		const over18 = radioCheckKeys("bosituasjon.personerover18");
+		const over18True = inputKeys("bosituasjon.personerover18.true");
 		return (
 			<Steg tittelId="bosituasjonbolk.tittel">
 				<Sporsmal sporsmalId={bosituasjon.sporsmal}>
@@ -36,6 +45,32 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 							<FaktumCheckbox faktumKey={annen.faktum} option="familie" />
 						</FaktumSkjemagruppe>
 					</Underskjema>
+				</Sporsmal>
+
+				<Sporsmal sporsmalId={barnUnder18.sporsmal}>
+					<FaktumRadio faktumKey={barnUnder18.faktum} option="true" />
+					<Underskjema
+						visible={faktumIsSelected(fakta.get(barnUnder18.faktum))}
+					>
+						<FaktumInput
+							faktumKey={barnUnder18True.faktum}
+							maxLength={3}
+							bredde="xs"
+						/>
+					</Underskjema>
+					<FaktumRadio faktumKey={barnUnder18.faktum} option="false" />
+				</Sporsmal>
+
+				<Sporsmal sporsmalId={over18.sporsmal}>
+					<FaktumRadio faktumKey={over18.faktum} option="true" />
+					<Underskjema visible={faktumIsSelected(fakta.get(over18.faktum))}>
+						<FaktumInput
+							faktumKey={over18True.faktum}
+							maxLength={3}
+							bredde="xs"
+						/>
+					</Underskjema>
+					<FaktumRadio faktumKey={over18.faktum} option="false" />
 				</Sporsmal>
 			</Steg>
 		);
