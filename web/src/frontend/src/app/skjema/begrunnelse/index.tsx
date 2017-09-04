@@ -24,7 +24,7 @@ class Begrunnelse extends React.Component<
 					<FaktumTextarea
 						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hvorfor"
-						labelId="begrunnelse.hvorfor.info"
+						labelId="begrunnelse.hvorfor.label"
 						maxLength={800}
 					/>
 				</Sporsmal>
@@ -35,7 +35,7 @@ class Begrunnelse extends React.Component<
 					<FaktumTextarea
 						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hva"
-						labelId="begrunnelse.hva.info"
+						labelId="begrunnelse.hva.label"
 						maxLength={800}
 					/>
 				</Sporsmal>

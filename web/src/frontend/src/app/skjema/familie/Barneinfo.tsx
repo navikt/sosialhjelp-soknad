@@ -15,12 +15,12 @@ interface OwnProps {
 class Barn extends React.Component<OwnProps & FaktumComponentProps, {}> {
 	render() {
 		const { fakta, faktumKey } = this.props;
-		const borInfo = radioCheckKeys(`${faktumKey}.bor`);
-		const hvormye = radioCheckKeys(`${faktumKey}.bor.hvormye`);
+		const borInfo = radioCheckKeys(`${faktumKey}.borsammen`);
+		const hvormye = radioCheckKeys(`${faktumKey}.borsammen.true.grad`);
 		return (
 			<FaktumSkjemagruppe
-				tittelId="familie.barneinfo.tittel"
-				hjelpetekstId={"familie.barneinfo.hjelpetekst"}
+				tittelId="familie.barn.true.tittel"
+				hjelpetekstId={"familie.barn.true.hjelpetekst"}
 			>
 				<FaktumPersonskjema faktumKey={faktumKey} />
 				<FaktumSkjemagruppe tittelId={borInfo.sporsmal}>

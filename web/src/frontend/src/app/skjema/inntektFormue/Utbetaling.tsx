@@ -13,13 +13,14 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
 		const utbetaling = radioCheckKeys("inntekt.inntekter");
-		const hvilkeUtbetalinger = radioCheckKeys("inntekt.inntekter.true");
-		const hvilkeUtbetalingerAnnet = "inntekt.inntekter.true.annet";
+		const hvilkeUtbetalinger = radioCheckKeys("inntekt.inntekter.true.type");
+		const hvilkeUtbetalingerAnnet = "inntekt.inntekter.true.type.annet";
 		return (
 			<Sporsmal sporsmalId={utbetaling.sporsmal}>
 				<FaktumRadio faktumKey={utbetaling.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get(utbetaling.faktum))}>
 					<FaktumSkjemagruppe tittelId={hvilkeUtbetalinger.sporsmal}>
+						{/*TODO legg til checkboxgruppefaktum*/}
 						<FaktumCheckbox
 							faktumKey={hvilkeUtbetalinger.faktum}
 							option="utbytte"
@@ -38,7 +39,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 						/>
 						{faktumIsSelected(fakta.get(hvilkeUtbetalingerAnnet)) ? (
 							<FaktumTextarea
-								faktumKey={`${hvilkeUtbetalingerAnnet}.beskrivelse`}
+								faktumKey={`${hvilkeUtbetalingerAnnet}.true.beskrivelse`}
 							/>
 						) : null}
 					</FaktumSkjemagruppe>

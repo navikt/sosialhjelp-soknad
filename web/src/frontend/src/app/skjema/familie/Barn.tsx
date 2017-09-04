@@ -12,15 +12,15 @@ class Barn extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
 		const barn = radioCheckKeys("familie.barn");
-		const harBarn = radioCheckKeys("familie.barn.true");
+
 		return (
 			<Sporsmal sporsmalId={barn.sporsmal} hjelpetekstId={barn.hjelpetekst}>
 				<FaktumRadio faktumKey={barn.faktum} option="true" />
 				<Underskjema visible={fakta.get(barn.faktum) === "true"}>
-					<FaktumSkjemagruppe tittelId={harBarn.sporsmal}>
+					<FaktumSkjemagruppe tittelId="familie.barn.true.tittel">
 						<Barneinfo
 							{...this.props}
-							faktumKey="familie.barneinfo"
+							faktumKey="familie.barn.true"
 							nummer={1}
 						/>
 					</FaktumSkjemagruppe>

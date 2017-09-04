@@ -13,8 +13,8 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
 		const eiendeler = radioCheckKeys("inntekt.eierandeler");
-		const hvilkeEiendeler = radioCheckKeys("inntekt.eierandeler.true");
-		const hvilkeEiendelerAnnet = "inntekt.eierandeler.true.annet";
+		const hvilkeEiendeler = radioCheckKeys("inntekt.eierandeler.true.type");
+		const hvilkeEiendelerAnnet = "inntekt.eierandeler.true.type.annet";
 		return (
 			<Sporsmal sporsmalId={eiendeler.sporsmal}>
 				<FaktumRadio faktumKey={eiendeler.faktum} option="true" />
@@ -36,7 +36,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 						<FaktumCheckbox faktumKey={hvilkeEiendeler.faktum} option="annet" />
 						{faktumIsSelected(fakta.get(hvilkeEiendelerAnnet)) ? (
 							<FaktumTextarea
-								faktumKey={`${hvilkeEiendelerAnnet}.beskrivelse`}
+								faktumKey={`${hvilkeEiendelerAnnet}.true.beskrivelse`}
 							/>
 						) : null}
 					</FaktumSkjemagruppe>

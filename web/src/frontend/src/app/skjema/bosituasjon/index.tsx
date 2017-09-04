@@ -22,7 +22,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	render() {
 		const { fakta } = this.props;
 		const bosituasjon = radioCheckKeys("bosituasjon");
-		const annen = radioCheckKeys("bosituasjon.annet.true");
+		const annen = radioCheckKeys("bosituasjon.annet.botype");
 		const barnUnder18 = radioCheckKeys("bosituasjon.barnunder18");
 		const barnUnder18True = inputKeys("bosituasjon.barnunder18.true");
 		const over18 = radioCheckKeys("bosituasjon.personerover18");
@@ -37,6 +37,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					<FaktumRadio faktumKey={bosituasjon.faktum} option="annet" />
 					<Underskjema visible={fakta.get(bosituasjon.faktum) === "annet"}>
 						<FaktumSkjemagruppe tittelId={annen.sporsmal}>
+							{/*TODO opprette checkboxgruppefaktumet*/}
 							<FaktumCheckbox faktumKey={annen.faktum} option="institusjon" />
 							<FaktumCheckbox faktumKey={annen.faktum} option="krisesenter" />
 							<FaktumCheckbox faktumKey={annen.faktum} option="fengsel" />
