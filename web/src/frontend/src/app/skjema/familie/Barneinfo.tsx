@@ -18,7 +18,10 @@ class Barn extends React.Component<OwnProps & FaktumComponentProps, {}> {
 		const borInfo = radioCheckKeys(`${faktumKey}.bor`);
 		const hvormye = radioCheckKeys(`${faktumKey}.bor.hvormye`);
 		return (
-			<FaktumSkjemagruppe tittelId="familie.barneinfo.tittel">
+			<FaktumSkjemagruppe
+				tittelId="familie.barneinfo.tittel"
+				hjelpetekstId={"familie.barneinfo.hjelpetekst"}
+			>
 				<FaktumPersonskjema faktumKey={faktumKey} />
 				<FaktumSkjemagruppe tittelId={borInfo.sporsmal}>
 					<FaktumRadio faktumKey={borInfo.faktum} option="true" />
