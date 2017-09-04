@@ -1,24 +1,22 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import FaktumSelect from "../../skjema/faktum/FaktumSelect";
-import Knapp from "nav-frontend-knapper";
-import { FaktumState, FaktumComponentProps } from "../../skjema/reducer";
-import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
-import { Collapse } from "react-collapse";
-import { SoknadState, ActionTypeKeys } from "../../redux/soknad/types";
-import Arrow from "../../skjema/components/svg/Arrow";
-import { withRouter, RouterProps } from "react-router";
-import { opprettSoknad } from "../../redux/soknad/actions";
-import { DispatchProps } from "../../redux/types";
+import * as React from 'react';
+import {connect} from 'react-redux';
+import FaktumSelect from '../../skjema/faktum/FaktumSelect';
+import Knapp from 'nav-frontend-knapper';
+import {FaktumComponentProps, FaktumState} from '../../skjema/reducer';
+import {Bydel, getBosted, Kommune, Kommuner} from '../data/kommuner';
+import {Collapse} from 'react-collapse';
+import {ActionTypeKeys, SoknadState} from '../../redux/soknad/types';
+import Arrow from '../../skjema/components/svg/Arrow';
+import {RouterProps} from 'react-router';
+import {opprettSoknad} from '../../redux/soknad/actions';
+import {DispatchProps} from '../../redux/types';
 
 interface StateProps {
 	status?: string;
 	brukerBehandlingId?: string;
 }
 
-class Bosted extends React.Component<
-	FaktumComponentProps & RouterProps & StateProps & DispatchProps
-> {
+class Bosted extends React.Component<FaktumComponentProps & RouterProps & StateProps & DispatchProps> {
 	componentDidUpdate() {
 		if (this.props.status === ActionTypeKeys.OK) {
 			this.gaaTilSkjema();
@@ -26,14 +24,14 @@ class Bosted extends React.Component<
 	}
 
 	gaaTilSkjema() {
-		const { fakta } = this.props;
-		const kommuneId = fakta.get("personalia.kommune");
-		const bydelId = fakta.get("personalia.bydel");
-		let search = "?personalia.kommune=" + kommuneId;
+		const {fakta} = this.props;
+		const kommuneId = fakta.get('personalia.kommune');
+		const bydelId = fakta.get('personalia.bydel');
+		let search = '?personalia.kommune=' + kommuneId;
 		if (bydelId) {
-			search += "&personalia.bydel=" + bydelId;
+			search += '&personalia.bydel=' + bydelId;
 		}
-		const pathname = "/skjema/" + this.props.brukerBehandlingId + "/1";
+		const pathname = '/skjema/' + this.props.brukerBehandlingId + '/1';
 		this.props.history.push(`${pathname}/${search}`);
 	}
 
@@ -43,9 +41,9 @@ class Bosted extends React.Component<
 	}
 
 	render() {
-		const { fakta } = this.props;
-		const kommuneId = fakta.get("personalia.kommune");
-		const bydelId = fakta.get("personalia.bydel");
+		const {fakta} = this.props;
+		const kommuneId = fakta.get('personalia.kommune');
+		const bydelId = fakta.get('personalia.bydel');
 
 		const valgtKommune: Kommune | undefined = kommuneId
 			? Kommuner.find(k => k.id === kommuneId)
@@ -66,7 +64,7 @@ class Bosted extends React.Component<
 							faktumKey="personalia.kommune"
 							bredde="m"
 							labelFunc={(label: string) => <strong>{label}</strong>}>
-							<option value="" />
+							<option value=""/>
 							{Kommuner.map(kommune => (
 								<option value={kommune.id} key={kommune.id}>
 									{kommune.navn}
@@ -77,12 +75,12 @@ class Bosted extends React.Component<
 
 					{valgtKommune && valgtKommune.bydeler ? (
 						<div className="blokk-l">
-							<Arrow />
+							<Arrow/>
 							<FaktumSelect
 								faktumKey="personalia.bydel"
 								bredde="m"
 								labelFunc={(label: string) => <strong>{label}</strong>}>
-								<option value="" />
+								<option value=""/>
 								{valgtKommune.bydeler.map(bydel => (
 									<option value={bydel.id} key={bydel.id}>
 										{bydel.navn}
@@ -94,7 +92,7 @@ class Bosted extends React.Component<
 					{ferdig ? (
 						<div>
 							<p>
-								Når du har fylt ut blir søknaden sendt til{" "}
+								Når du har fylt ut blir søknaden sendt til{' '}
 								<strong>
 									{getBosted(
 										valgtKommune.id,
@@ -121,4 +119,4 @@ export default connect(
 			brukerBehandlingId: state.soknad.brukerBehandlingId
 		};
 	}
-)(withRouter(Bosted));
+)(Bosted);

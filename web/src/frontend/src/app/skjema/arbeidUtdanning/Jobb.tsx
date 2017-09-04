@@ -11,7 +11,7 @@ class Jobb extends React.Component<FaktumComponentProps, any> {
 	render() {
 		const { fakta } = this.props;
 		const jobb = radioCheckKeys("dinsituasjon.jobb");
-		const jobber = radioCheckKeys("dinsituasjon.jobb.true");
+		const jobber = radioCheckKeys("dinsituasjon.jobb.true.grad");
 		return (
 			<Sporsmal sporsmalId={jobb.sporsmal}>
 				<FaktumRadio faktumKey={jobb.faktum} option="true" />
