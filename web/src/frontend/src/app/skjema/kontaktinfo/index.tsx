@@ -12,14 +12,12 @@ class Kontaktinfo extends React.Component<{}, {}> {
 			<Steg tittelId="kontakt.tittel">
 				<Sporsmal
 					sporsmalId="kontakt.kontonummer.tittel"
-					beskrivelseId="kontakt.kontonummer.beskrivelse"
-				>
-					<FaktumInput faktumKey="kontakt.kontonummer" />
+					beskrivelseId="kontakt.kontonummer.beskrivelse">
+					<FaktumInput faktumKey="kontakt.kontonummer" maxLength={11} />
 				</Sporsmal>
 				<Sporsmal
 					sporsmalId="kontakt.telefon.tittel"
-					beskrivelseId="kontakt.telefon.beskrivelse"
-				>
+					beskrivelseId="kontakt.telefon.beskrivelse">
 					<FaktumInput faktumKey="kontakt.telefon" />
 				</Sporsmal>
 				<Sporsmal sporsmalId={statsborger.sporsmal}>
