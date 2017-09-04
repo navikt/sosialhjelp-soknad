@@ -30,7 +30,7 @@ export function fetchPost(urlPath: string, body: string) {
 		.then(toJson);
 }
 
-export function fetchToJson(urlPath: string ) {
+export function fetchToJson(urlPath: string) {
 	const OPTIONS: RequestInit = {
 		headers: {
 			"Content-Type": "application/json"
@@ -40,6 +40,20 @@ export function fetchToJson(urlPath: string ) {
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
 		.then(toJson);
+}
+
+export function fetchHtml(urlPath: string) {
+	const OPTIONS: RequestInit = {
+		headers: {
+			"Content-Type": "text/html"
+		},
+		method: "GET"
+	};
+	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
+		.then(sjekkStatuskode)
+		.then((response: Response) => {
+			return response.text();
+		});
 }
 
 function toJson<T>(response: Response): Promise<T> {

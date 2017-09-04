@@ -7,6 +7,7 @@ export enum ActionTypeKeys {
 	OK = "soknad/OK",
 	FEILET = "soknad/FEILET",
 	PENDING = "soknad/PENDING",
+	SET_OPPSUMMERING = "soknad/SET_OPPSUMMERING",
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
@@ -23,6 +24,10 @@ export interface SetServerFeilAction {
 	type: ActionTypeKeys.SET_SERVER_FEIL;
 	feilmelding: string;
 }
+export interface SetOppsummering {
+	type: ActionTypeKeys.SET_OPPSUMMERING;
+	oppsummering: string;
+}
 
 export interface OtherAction {
 	type: ActionTypeKeys.OTHER_ACTION;
@@ -33,4 +38,5 @@ export interface SoknadState {
 	soknadType: string;
 	brukerBehandlingId: string;
 	feilmelding: string;
+	oppsummering: string;
 }

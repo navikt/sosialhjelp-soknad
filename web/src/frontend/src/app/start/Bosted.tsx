@@ -2,8 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import Knapp from "nav-frontend-knapper";
 import { FaktumState, FaktumComponentProps } from "../../skjema/reducer";
-import { Kommuner } from "./kommuner";
-import { Kommune, Bydel } from "./types";
+import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 import { Collapse } from "react-collapse";
 import { SoknadState, ActionTypeKeys } from "../../redux/soknad/types";
 import Arrow from "../../skjema/components/svg/Arrow";
@@ -21,7 +20,8 @@ interface StateProps {
 }
 
 class Bosted extends React.Component<
-	FaktumComponentProps & RouterProps & StateProps & DispatchProps & InjectedIntlProps, StateProps > {
+	FaktumComponentProps & RouterProps & StateProps & DispatchProps & InjectedIntlProps, StateProps
+> {
 
 	constructor(props: any) {
 		super(props);
@@ -51,7 +51,7 @@ class Bosted extends React.Component<
 		const {valgtKommune, valgtBydel, ferdig} = this.hentSkjemaVerdier();
 
 		return (
-			<form onSubmit={(e) => this.opprettSoknad(e)}>
+			<form onSubmit={e => this.opprettSoknad(e)}>
 				<Collapse isOpened={true}>
 					<div className="blokk-l">
 						<Select
@@ -63,7 +63,7 @@ class Bosted extends React.Component<
 								</strong>
 							)}>
 							<option value="" />
-							{Kommuner.map(kommune =>
+							{Kommuner.map(kommune => (
 								<option value={kommune.id} key={kommune.id}>
 									{kommune.navn}
 								</option>
@@ -71,40 +71,42 @@ class Bosted extends React.Component<
 						</Select>
 					</div>
 
-					{valgtKommune && valgtKommune.bydeler
-						? <div className="blokk-l">
-								<Arrow />
-								<Select
-									bredde="m"
-									onChange={(evt: any) => this.setState({bydelId: evt.target.value})}
-									label={(
-										<strong>
-											<FormattedMessage id="personalia.bydel.sporsmal"/>
-										</strong>
-									)}>
-									<option value="" />
-									{valgtKommune.bydeler.map(bydel =>
-										<option value={bydel.id} key={bydel.id}>
-											{bydel.navn}
-										</option>
-									)}
-								</Select>
-							</div>
-						: null}
-					{ferdig
-						? <div>
-								<p>
-									Når du har fylt ut blir søknaden sendt til{" "}
-									<strong>
-										{valgtKommune!.navn}
-										{valgtBydel ? `, ${valgtBydel.navn}` : null}
-									</strong>
-								</p>
-								<Knapp type="hoved" htmlType="submit">
-									Start søknad
-								</Knapp>
-							</div>
-						: null}
+					{valgtKommune && valgtKommune.bydeler ? (
+						<div className="blokk-l">
+                            <Arrow />
+                            <Select
+                                bredde="m"
+                                onChange={(evt: any) => this.setState({bydelId: evt.target.value})}
+                                label={(
+                                    <strong>
+                                        <FormattedMessage id="personalia.bydel.sporsmal"/>
+                                    </strong>
+                                )}>
+                                <option value="" />
+                                {valgtKommune.bydeler.map(bydel =>
+                                    <option value={bydel.id} key={bydel.id}>
+                                        {bydel.navn}
+                                    </option>
+                                )}
+                            </Select>
+						</div>
+					): null}
+					{ferdig ? (
+						<div>
+                            <p>
+                                Når du har fylt ut blir søknaden sendt til{" "}
+                                <strong>
+                                    {getBosted(
+                                        valgtKommune.id,
+                                        valgtBydel ? valgtBydel.id : null
+                                    )}
+                                </strong>
+                            </p>
+                            <Knapp type="hoved" htmlType="submit">
+                                Start søknad
+                            </Knapp>
+                        </div>
+					) : null}
 				</Collapse>
 			</form>
 		);
@@ -126,10 +128,12 @@ class Bosted extends React.Component<
 
 }
 
-export default connect((state: { faktumStore: FaktumState, soknad: SoknadState }, props: any) => {
-	return {
-		fakta: state.faktumStore.fakta,
-		status: state.soknad.status,
-		brukerBehandlingId: state.soknad.brukerBehandlingId
-	};
-})(withRouter(Bosted));
+export default connect(
+	(state: { faktumStore: FaktumState; soknad: SoknadState }, props: any) => {
+		return {
+			fakta: state.faktumStore.fakta,
+			status: state.soknad.status,
+			brukerBehandlingId: state.soknad.brukerBehandlingId
+		};
+	}
+)(withRouter(Bosted));

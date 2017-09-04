@@ -3,26 +3,34 @@ import {
 	ActionTypeKeys,
 	OpprettSoknadAction,
 	SetBrukerBehandlingIdAction,
-	SetServerFeilAction
+	SetServerFeilAction,
+	SetOppsummering
 } from "./types";
-import { fetchPost, fetchToJson } from "../../utils";
+import { fetchPost, fetchToJson, fetchHtml } from "../../utils";
 import { setFaktumVerdi, setFaktum } from "../../skjema/actions";
 
-export type ActionTypes = OpprettSoknadAction | SetBrukerBehandlingIdAction | SetServerFeilAction;
+export type ActionTypes =
+	| OpprettSoknadAction
+	| SetBrukerBehandlingIdAction
+	| SetServerFeilAction
+	| SetOppsummering;
 
 export function opprettSoknad(kommuneId: string, bydelId: string) {
 	return (dispatch: Dispatch<Action>) => {
-		dispatch({type: ActionTypeKeys.PENDING});
-		const payload = JSON.stringify({soknadType: "NAV DIGISOS"});
+		dispatch({ type: ActionTypeKeys.PENDING });
+		const payload = JSON.stringify({ soknadType: "NAV DIGISOS" });
 		fetchPost("soknader", payload)
 			.then(response => {
 				const key = "brukerBehandlingId";
 				const brukerBehandlingId = response[key];
-				dispatch({type: ActionTypeKeys.SET_BRUKERBEHANDLING_ID, brukerBehandlingId});
+				dispatch({
+					type: ActionTypeKeys.SET_BRUKERBEHANDLING_ID,
+					brukerBehandlingId
+				});
 				hentFakta(brukerBehandlingId, kommuneId, bydelId, dispatch);
 			})
 			.catch(reason => {
-				dispatch({type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason});
+				dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
 			});
 	};
 }
@@ -38,6 +46,22 @@ function hentFakta(brukerBehandlingId: string, kommuneId: string, bydelId: strin
 			}
 		})
 		.catch(reason => {
-			dispatch({type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason});
+			dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
 		});
+}
+
+export function hentOppsummering(id: string) {
+	return (dispatch: Dispatch<Action>) => {
+		dispatch({ type: ActionTypeKeys.PENDING });
+		fetchHtml("soknader/" + id + "/oppsummering")
+			.then(response => {
+				dispatch({
+					type: ActionTypeKeys.SET_OPPSUMMERING,
+					oppsummering: response
+				});
+			})
+			.catch(reason => {
+				dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
+			});
+	};
 }

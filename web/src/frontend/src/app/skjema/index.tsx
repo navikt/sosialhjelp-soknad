@@ -9,9 +9,14 @@ import Steg5 from "./bosituasjon";
 import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
 import Steg8 from "./ekstrainformasjon";
+import Steg9 from "./oppsummering";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import StegIndikator from "../../skjema/components/stegIndikator";
 import Knapperad from "../../skjema/components/knapperad";
-import { finnStegFraLocation, finnBrukerBehandlingIdFraLocation } from "./utils";
+import {
+	finnStegFraLocation,
+	finnBrukerBehandlingIdFraLocation
+} from "./utils";
 import { gaTilbake, gaVidere, avbryt } from "./utils";
 import { Location } from "history";
 
@@ -25,28 +30,43 @@ interface Props {
 	location: Location;
 }
 
-class Skjema extends React.Component<Props & RouterProps, {}> {
-
+class Skjema extends React.Component<
+	Props & RouterProps & InjectedIntlProps,
+	{}
+> {
 	render() {
 		const aktivtSteg = finnStegFraLocation(this.props.location);
-		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(this.props.location);
-
-		const { match, history } = this.props;
+		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(
+			this.props.location
+		);
+		const { match, intl, history } = this.props;
+		const erOppsummering = aktivtSteg === 9;
 		return (
 			<form id="soknadsskjema" onSubmit={stopEvent}>
-				<StegIndikator
-					aktivtSteg={aktivtSteg}
-					steg={[
-						{ tittel: "Bosted, kontaktinfo og statsborgerskap" },
-						{ tittel: "Arbeid og utdanning" },
-						{ tittel: "Familiesituasjon" },
-						{ tittel: "Hvorfor og hva du søker om" },
-						{ tittel: "Bosituasjon" },
-						{ tittel: "Inntekt og utdanning" },
-						{ tittel: "Utgifter og gjeld" },
-						{ tittel: "Opplysninger" }
-					]}
-				/>
+				{!erOppsummering ? (
+					<div className="skjema__stegindikator">
+						<StegIndikator
+							aktivtSteg={aktivtSteg}
+							steg={[
+								{ tittel: intl.formatMessage({ id: "personaliabolk.tittel" }) },
+								{ tittel: intl.formatMessage({ id: "arbeidbolk.tittel" }) },
+								{ tittel: intl.formatMessage({ id: "familiebolk.tittel" }) },
+								{
+									tittel: intl.formatMessage({ id: "begrunnelsebolk.tittel" })
+								},
+								{
+									tittel: intl.formatMessage({ id: "bosituasjonbolk.tittel" })
+								},
+								{ tittel: intl.formatMessage({ id: "inntektbolk.tittel" }) },
+								{ tittel: intl.formatMessage({ id: "utgifterbolk.tittel" }) },
+								{
+									tittel: intl.formatMessage({ id: "opplysningerbolk.tittel" })
+								},
+								{ tittel: intl.formatMessage({ id: "oppsummering.tittel" }) }
+							]}
+						/>
+					</div>
+				) : null}
 				<Switch>
 					<Route path={`${match.url}/1`} component={Steg1} />
 					<Route path={`${match.url}/2`} component={Steg2} />
@@ -56,9 +76,14 @@ class Skjema extends React.Component<Props & RouterProps, {}> {
 					<Route path={`${match.url}/6`} component={Steg6} />
 					<Route path={`${match.url}/7`} component={Steg7} />
 					<Route path={`${match.url}/8`} component={Steg8} />
+					<Route path={`${match.url}/9`} component={Steg9} />
 				</Switch>
 				<Knapperad
-					gaVidere={() => gaVidere(aktivtSteg, brukerBehandlingId, history)}
+					gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
+					gaVidere={() =>
+						erOppsummering
+							? history.push("/kvittering")
+							: gaVidere(aktivtSteg, brukerBehandlingId, history)}
 					gaTilbake={() => gaTilbake(aktivtSteg, brukerBehandlingId, history)}
 					avbryt={() => avbryt()}
 				/>
@@ -67,4 +92,4 @@ class Skjema extends React.Component<Props & RouterProps, {}> {
 	}
 }
 
-export default (withRouter(Skjema));
+export default injectIntl(withRouter(Skjema));

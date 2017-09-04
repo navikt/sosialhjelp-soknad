@@ -66,7 +66,7 @@ declare module "nav-frontend-skjema" {
 		id?: string;
 		name?: string;
 		feil?: Feil;
-		tellerTekst?: Function;
+		tellerTekst?: (antallTegn: number, maxLength: number) => string;
 		textareaRef?: Function;
 	}
 
