@@ -6,7 +6,7 @@ import { setFaktumVerdi } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
-import { getRadioFaktumTekst } from "../utils";
+import { getRadioFaktumTekst, getFaktumVerdi } from "../utils";
 
 interface OwnProps {
 	option: string;
@@ -25,7 +25,7 @@ class RadioFaktum extends React.Component<
 		return (
 			<Radio
 				name={faktumKey}
-				checked={(fakta.get(faktumKey) && fakta.get(faktumKey).value) === option}
+				checked={getFaktumVerdi(fakta, faktumKey) === option}
 				disabled={disabled}
 				value={option}
 				onChange={(evt: any) => dispatch(setFaktumVerdi(faktumKey, option))}

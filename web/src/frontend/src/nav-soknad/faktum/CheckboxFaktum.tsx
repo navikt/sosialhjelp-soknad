@@ -9,7 +9,8 @@ import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
 import {
 	getFaktumCheckboksTekst,
 	faktumIsSelected,
-	boolToString
+	boolToString,
+    getFaktumVerdi
 } from "../utils";
 
 interface OwnProps {
@@ -35,7 +36,7 @@ class CheckboxFaktum extends React.Component<
 		} = this.props;
 		const key = `${faktumKey}.${option}`;
 		const tekster = getFaktumCheckboksTekst(intl, key);
-		const checked = faktumIsSelected(fakta.get(key) && fakta.get(key).value);
+		const checked = faktumIsSelected(getFaktumVerdi(fakta, key));
 		return (
 			<Checkbox
 				name={key}

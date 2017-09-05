@@ -86,3 +86,7 @@ export function getInputFaktumTekst(
 		placeholder: getIntlText(intl, `${key}.placeholder`)
 	};
 }
+
+export function getFaktumVerdi(fakta: any, key: string) {
+    return fakta.get(key) && fakta.get(key).value;
+};
