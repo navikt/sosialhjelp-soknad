@@ -1,5 +1,5 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { faktumIsSelected, radioCheckKeys } from "../../../nav-soknad/utils";
 
@@ -13,7 +13,7 @@ class Jobb extends React.Component<FaktumComponentProps, any> {
 		const jobb = radioCheckKeys("dinsituasjon.jobb");
 		const jobber = radioCheckKeys("dinsituasjon.jobb.true.grad");
 		return (
-			<Sporsmal sporsmalId={jobb.sporsmal}>
+			<SporsmalFaktum faktumId={jobb.sporsmal}>
 				<RadioFaktum faktumKey={jobb.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get(jobb.faktum))}>
 					<SkjemagruppeFaktum tittelId={jobber.sporsmal}>
@@ -22,7 +22,7 @@ class Jobb extends React.Component<FaktumComponentProps, any> {
 					</SkjemagruppeFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={jobb.faktum} option="false" />
-			</Sporsmal>
+			</SporsmalFaktum>
 		);
 	}
 }

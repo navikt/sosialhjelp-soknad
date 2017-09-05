@@ -1,6 +1,7 @@
 import { InjectedIntl } from "react-intl";
 import {
 	FaktumCheckboksTekst,
+	FaktumSporsmalTekst,
 	Infotekst,
 	InputFaktumTekst
 } from "./redux/types";
@@ -54,6 +55,17 @@ export function getIntlInfoTekst(
 	return tittel || tekst ? { tittel, tekst } : undefined;
 }
 
+export function getFaktumSporsmalTekst(
+	intl: InjectedIntl,
+	key: string
+): FaktumSporsmalTekst {
+	return {
+		sporsmal: getIntlTextOrKey(intl, key),
+		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
+		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
+		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`)
+	};
+}
 export function getFaktumCheckboksTekst(
 	intl: InjectedIntl,
 	key: string

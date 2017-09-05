@@ -1,5 +1,5 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { radioCheckKeys, faktumIsSelected } from "../../../nav-soknad/utils";
 
@@ -16,10 +16,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeEiendeler = radioCheckKeys("inntekt.eierandeler.true.type");
 		const hvilkeEiendelerAnnet = "inntekt.eierandeler.true.type.annet";
 		return (
-			<Sporsmal
-				sporsmalId={eiendeler.sporsmal}
-				hjelpetekstId={eiendeler.hjelpetekst}
-			>
+			<SporsmalFaktum faktumId={eiendeler.sporsmal}>
 				<RadioFaktum faktumKey={eiendeler.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get(eiendeler.faktum))}>
 					<SkjemagruppeFaktum tittelId={hvilkeEiendeler.sporsmal}>
@@ -45,7 +42,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 					</SkjemagruppeFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={eiendeler.faktum} option="false" />
-			</Sporsmal>
+			</SporsmalFaktum>
 		);
 	}
 }

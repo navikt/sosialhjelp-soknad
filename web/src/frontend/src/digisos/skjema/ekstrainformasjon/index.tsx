@@ -25,7 +25,7 @@ class Ekstrainformasjon extends React.Component<FaktumComponentProps, {}> {
 						</Infoblokk>
 					</div>
 				</div>
-				<Steg tittelId="opplysningerbolk.tittel">
+				<Steg tittelId="ekstrainfo.tittel">
 					<ArbeidOgUtdanning fakta={fakta} />
 					<Familiesituasjon fakta={fakta} />
 					<UtgifterOgGjeld fakta={fakta} />

@@ -50,10 +50,11 @@ export interface Infotekst {
 	tekst?: string;
 }
 
-export interface FaktumSporsmal {
+export interface FaktumSporsmalTekst {
 	sporsmal: string;
 	infotekst?: Infotekst;
 	hjelpetekst?: Infotekst;
+	feilmelding?: string;
 }
 
 export interface FaktumCheckboksTekst {

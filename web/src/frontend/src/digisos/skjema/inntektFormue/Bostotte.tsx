@@ -1,5 +1,5 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { radioCheckKeys, faktumIsSelected } from "../../../nav-soknad/utils";
 
@@ -14,7 +14,7 @@ class Bostotte extends React.Component<FaktumComponentProps, {}> {
 		const bostotte = radioCheckKeys("inntekt.bostotte");
 		const hvilkenStotte = radioCheckKeys("inntekt.bostotte.true.type");
 		return (
-			<Sporsmal sporsmalId={bostotte.sporsmal}>
+			<SporsmalFaktum faktumId={bostotte.sporsmal}>
 				<RadioFaktum faktumKey={bostotte.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get("inntekt.bostotte"))}>
 					<SkjemagruppeFaktum tittelId={hvilkenStotte.sporsmal}>
@@ -30,7 +30,7 @@ class Bostotte extends React.Component<FaktumComponentProps, {}> {
 					</SkjemagruppeFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={bostotte.faktum} option="false" />
-			</Sporsmal>
+			</SporsmalFaktum>
 		);
 	}
 }

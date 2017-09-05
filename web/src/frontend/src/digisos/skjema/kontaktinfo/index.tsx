@@ -1,5 +1,5 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Steg from "../../../nav-soknad/components/steg";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
@@ -10,23 +10,17 @@ class Kontaktinfo extends React.Component<{}, {}> {
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		return (
 			<Steg tittelId="kontakt.tittel">
-				<Sporsmal
-					sporsmalId="kontakt.kontonummer.tittel"
-					hjelpetekstId="kontakt.kontonummer.hjelpetekst">
+				<SporsmalFaktum faktumId="kontakt.kontonummer.tittel">
 					<InputFaktum faktumKey="kontakt.kontonummer" maxLength={11} />
-				</Sporsmal>
-				<Sporsmal
-					sporsmalId="kontakt.telefon.tittel"
-					hjelpetekstId="kontakt.telefon.hjelpetekst">
+				</SporsmalFaktum>
+				<SporsmalFaktum faktumId="kontakt.telefon.tittel">
 					<InputFaktum faktumKey="kontakt.telefon" />
-				</Sporsmal>
+				</SporsmalFaktum>
 
-				<Sporsmal
-					sporsmalId={statsborger.sporsmal}
-					hjelpetekstId={statsborger.hjelpetekst}>
+				<SporsmalFaktum faktumId={statsborger.sporsmal}>
 					<RadioFaktum faktumKey={statsborger.faktum} option="true" />
 					<RadioFaktum faktumKey={statsborger.faktum} option="false" />
-				</Sporsmal>
+				</SporsmalFaktum>
 			</Steg>
 		);
 	}

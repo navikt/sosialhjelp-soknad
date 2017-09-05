@@ -1,5 +1,5 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Steg from "../../../nav-soknad/components/steg";
 import { connect } from "react-redux";
 import {
@@ -33,7 +33,7 @@ class UtgifterGjeld extends React.Component<
 
 		return (
 			<Steg tittelId="utgifterbolk.tittel">
-				<Sporsmal sporsmalId={harBoutgifter.sporsmal}>
+				<SporsmalFaktum faktumId={harBoutgifter.faktum}>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="true" />
 					<Underskjema visible={fakta.get(harBoutgifter.faktum) === "true"}>
 						<SkjemagruppeFaktum tittelId={boUtgifter.sporsmal}>
@@ -65,8 +65,8 @@ class UtgifterGjeld extends React.Component<
 						</SkjemagruppeFaktum>
 					</Underskjema>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="false" />
-				</Sporsmal>
-				<Sporsmal sporsmalId={harUtgifterBarn.sporsmal}>
+				</SporsmalFaktum>
+				<SporsmalFaktum faktumId={harUtgifterBarn.faktum}>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="true" />
 					<Underskjema visible={fakta.get(harUtgifterBarn.faktum) === "true"}>
 						{/*TODO checkboxgruppefaktum*/}
@@ -92,7 +92,7 @@ class UtgifterGjeld extends React.Component<
 						</SkjemagruppeFaktum>
 					</Underskjema>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="false" />
-				</Sporsmal>
+				</SporsmalFaktum>
 			</Steg>
 		);
 	}

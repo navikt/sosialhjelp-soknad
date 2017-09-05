@@ -1,5 +1,5 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Steg from "../../../nav-soknad/components/steg";
 import { connect } from "react-redux";
 import {
@@ -24,12 +24,12 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const bosituasjon = radioCheckKeys("bosituasjon");
 		const annen = radioCheckKeys("bosituasjon.annet.true.botype");
 		const barnUnder18 = radioCheckKeys("bosituasjon.barnunder18");
-		const barnUnder18True = inputKeys("bosituasjon.barnunder18.true");
+		const barnUnder18True = inputKeys("bosituasjon.barnunder18.true.antall");
 		const over18 = radioCheckKeys("bosituasjon.personerover18");
-		const over18True = inputKeys("bosituasjon.personerover18.true");
+		const over18True = inputKeys("bosituasjon.personerover18.true.antall");
 		return (
 			<Steg tittelId="bosituasjonbolk.tittel">
-				<Sporsmal sporsmalId={bosituasjon.sporsmal}>
+				<SporsmalFaktum faktumId={bosituasjon.sporsmal}>
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="eier" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="leierprivat" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="leierkommunalt" />
@@ -46,11 +46,8 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 							<CheckboxFaktum faktumKey={annen.faktum} option="familie" />
 						</SkjemagruppeFaktum>
 					</Underskjema>
-				</Sporsmal>
-				<Sporsmal
-					sporsmalId={barnUnder18.sporsmal}
-					hjelpetekstId={barnUnder18.hjelpetekst}
-				>
+				</SporsmalFaktum>
+				<SporsmalFaktum faktumId={barnUnder18.sporsmal}>
 					<RadioFaktum faktumKey={barnUnder18.faktum} option="true" />
 					<Underskjema
 						visible={faktumIsSelected(fakta.get(barnUnder18.faktum))}
@@ -62,11 +59,8 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						/>
 					</Underskjema>
 					<RadioFaktum faktumKey={barnUnder18.faktum} option="false" />
-				</Sporsmal>
-				<Sporsmal
-					sporsmalId={over18.sporsmal}
-					hjelpetekstId={over18.hjelpetekst}
-				>
+				</SporsmalFaktum>
+				<SporsmalFaktum faktumId={over18.sporsmal}>
 					<RadioFaktum faktumKey={over18.faktum} option="true" />
 					<Underskjema visible={faktumIsSelected(fakta.get(over18.faktum))}>
 						<InputFaktum
@@ -76,7 +70,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						/>
 					</Underskjema>
 					<RadioFaktum faktumKey={over18.faktum} option="false" />
-				</Sporsmal>{" "}
+				</SporsmalFaktum>{" "}
 			</Steg>
 		);
 	}
