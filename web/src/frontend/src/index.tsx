@@ -4,7 +4,6 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import registerServiceWorker from "./registerServiceWorker";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import App from "./digisos";
 import thunk from "redux-thunk";
@@ -45,5 +44,3 @@ ReactDOM.render(
 );
 
 export { store };
-
-registerServiceWorker();
