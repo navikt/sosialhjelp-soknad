@@ -6,25 +6,22 @@ import {
 } from "../../../nav-soknad/redux/reducer";
 import Steg from "../../../nav-soknad/components/steg";
 import Infoblokk from "../../../nav-soknad/components/infoblokk";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { FormattedHTMLMessage } from "react-intl";
 import "./ekstrainfo.css";
 
 import ArbeidOgUtdanning from "./ArbeidOgUtdanning";
 import Familiesituasjon from "./Familiesituasjon";
 import UtgifterOgGjeld from "./UtgifterOgGjeld";
 
-class Ekstrainformasjon extends React.Component<
-	InjectedIntlProps & FaktumComponentProps,
-	{}
-> {
+class Ekstrainformasjon extends React.Component<FaktumComponentProps, {}> {
 	render() {
-		const { intl, fakta } = this.props;
+		const { fakta } = this.props;
 		return (
 			<div className="steg-ekstrainformasjon">
 				<div className="skjema-content">
 					<div className="ekstrainfo-melding">
 						<Infoblokk>
-							{intl.formatHTMLMessage({ id: "ekstrainfo.informasjon" })}
+							<FormattedHTMLMessage id="ekstrainfo.informasjon" />
 						</Infoblokk>
 					</div>
 				</div>
@@ -42,4 +39,4 @@ export default connect((state: FaktumStoreState) => {
 	return {
 		fakta: state.faktumStore.fakta
 	};
-})(injectIntl(Ekstrainformasjon));
+})(Ekstrainformasjon);

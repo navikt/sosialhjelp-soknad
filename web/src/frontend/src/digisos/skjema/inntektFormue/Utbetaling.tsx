@@ -16,7 +16,10 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeUtbetalinger = radioCheckKeys("inntekt.inntekter.true.type");
 		const hvilkeUtbetalingerAnnet = "inntekt.inntekter.true.type.annet";
 		return (
-			<Sporsmal sporsmalId={utbetaling.sporsmal}>
+			<Sporsmal
+				sporsmalId={utbetaling.sporsmal}
+				hjelpetekstId={utbetaling.hjelpetekst}
+			>
 				<RadioFaktum faktumKey={utbetaling.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get(utbetaling.faktum))}>
 					<SkjemagruppeFaktum tittelId={hvilkeUtbetalinger.sporsmal}>
