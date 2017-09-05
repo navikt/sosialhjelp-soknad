@@ -1,11 +1,11 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-skjema/components/sporsmal";
-import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
-import { faktumIsSelected, radioCheckKeys } from "../../../nav-skjema/utils";
+import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { faktumIsSelected, radioCheckKeys } from "../../../nav-soknad/utils";
 
-import RadioFaktum from "../../../nav-skjema/faktum/RadioFaktum";
-import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
-import Underskjema from "../../../nav-skjema/components/underskjema";
+import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
+import Underskjema from "../../../nav-soknad/components/underskjema";
 
 class Jobb extends React.Component<FaktumComponentProps, any> {
 	render() {

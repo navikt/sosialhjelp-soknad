@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import {
 	FaktumStoreState,
 	FaktumComponentProps
-} from "../../../nav-skjema/redux/reducer";
-import Steg from "../../../nav-skjema/components/steg";
+} from "../../../nav-soknad/redux/reducer";
+import Steg from "../../../nav-soknad/components/steg";
 import Sivilstatus from "./Sivilstatus";
 import Barn from "./Barn";
 

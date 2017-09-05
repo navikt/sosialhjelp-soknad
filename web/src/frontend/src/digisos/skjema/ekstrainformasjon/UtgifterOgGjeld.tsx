@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
-import InputFaktum from "../../../nav-skjema/faktum/InputFaktum";
-import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
-import Progresjonsblokk from "../../../nav-skjema/components/progresjonsblokk";
-import { faktumIsSelected } from "../../../nav-skjema/utils";
-import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
+import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
+import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
+import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
+import { faktumIsSelected } from "../../../nav-soknad/utils";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 
 const StromSkjema: React.StatelessComponent<{}> = () => (
 	<SkjemagruppeFaktum tittelId="ekstrainfo.utgifter.strom.tittel" key="strom">

@@ -1,9 +1,9 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import Steg from "../../../nav-skjema/components/steg";
-import { DispatchProps } from "../../../nav-skjema/redux/types";
-import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
-import CheckboxFaktum from "../../../nav-skjema/faktum/CheckboxFaktum";
+import Steg from "../../../nav-soknad/components/steg";
+import { DispatchProps } from "../../../nav-soknad/redux/types";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
 import { hentOppsummering } from "../../redux/soknad/actions";
 import { SoknadState } from "../../redux/soknad/types";
 import "./oppsummering.css";

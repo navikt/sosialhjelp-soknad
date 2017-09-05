@@ -1,12 +1,12 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-skjema/components/sporsmal";
-import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
-import { radioCheckKeys, faktumIsSelected } from "../../../nav-skjema/utils";
+import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { radioCheckKeys, faktumIsSelected } from "../../../nav-soknad/utils";
 
-import RadioFaktum from "../../../nav-skjema/faktum/RadioFaktum";
-import CheckboxFaktum from "../../../nav-skjema/faktum/CheckboxFaktum";
-import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
-import Underskjema from "../../../nav-skjema/components/underskjema";
+import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
+import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
+import Underskjema from "../../../nav-soknad/components/underskjema";
 
 class Bostotte extends React.Component<FaktumComponentProps, {}> {
 	render() {

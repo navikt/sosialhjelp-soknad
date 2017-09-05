@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import {
 	FaktumStoreState,
 	FaktumComponentProps
-} from "../../../nav-skjema/redux/reducer";
-import Steg from "../../../nav-skjema/components/steg";
-import Infoblokk from "../../../nav-skjema/components/infoblokk";
+} from "../../../nav-soknad/redux/reducer";
+import Steg from "../../../nav-soknad/components/steg";
+import Infoblokk from "../../../nav-soknad/components/infoblokk";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import "./ekstrainfo.css";
 

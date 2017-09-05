@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
-import InputFaktum from "../../../nav-skjema/faktum/InputFaktum";
+import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 
 interface Props {
 	navnFaktumKey: string;

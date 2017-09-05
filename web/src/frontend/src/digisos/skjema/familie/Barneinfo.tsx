@@ -1,11 +1,11 @@
 import * as React from "react";
-import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
-import { radioCheckKeys, faktumIsSelected } from "../../../nav-skjema/utils";
-import FaktumPersonskjema from "../../../nav-skjema/faktum/PersonFaktum";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { radioCheckKeys, faktumIsSelected } from "../../../nav-soknad/utils";
+import FaktumPersonskjema from "../../../nav-soknad/faktum/PersonFaktum";
 
-import FaktumRadio from "../../../nav-skjema/faktum/RadioFaktum";
-import FaktumSkjemagruppe from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
-import NivaTreSkjema from "../../../nav-skjema/components/nivaTreSkjema";
+import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
+import FaktumSkjemagruppe from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
+import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 
 interface OwnProps {
 	faktumKey: string;

@@ -10,7 +10,7 @@ import App from "./digisos";
 import thunk from "redux-thunk";
 import SoknadReducer from "./digisos/redux/soknad/reducer";
 import { erDev } from "./digisos/redux/rest-utils";
-import FaktumReducer from "./nav-skjema/redux/reducer";
+import FaktumReducer from "./nav-soknad/redux/reducer";
 import IntlProvider from "./intlProvider";
 import "./index.css";
 

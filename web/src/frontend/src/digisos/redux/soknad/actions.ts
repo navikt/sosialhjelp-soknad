@@ -7,7 +7,7 @@ import {
 	SetOppsummering
 } from "./types";
 import { fetchPost, fetchToJson, fetchHtml } from "../rest-utils";
-import { setFaktumVerdi, setFakta } from "../../../nav-skjema/redux/actions";
+import { setFaktumVerdi, setFakta } from "../../../nav-soknad/redux/actions";
 
 export type ActionTypes =
 	| OpprettSoknadAction

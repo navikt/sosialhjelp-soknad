@@ -1,10 +1,10 @@
 import * as React from "react";
-import Steg from "../../../nav-skjema/components/steg";
+import Steg from "../../../nav-soknad/components/steg";
 import { connect } from "react-redux";
 import {
 	FaktumStoreState,
 	FaktumComponentProps
-} from "../../../nav-skjema/redux/reducer";
+} from "../../../nav-soknad/redux/reducer";
 
 import YtelserFraNAV from "./YtelserFraNAV";
 import SoknaderUnderBehandling from "./SoknaderUnderBehandling";

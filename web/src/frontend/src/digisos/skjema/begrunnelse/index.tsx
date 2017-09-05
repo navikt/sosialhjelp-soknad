@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import {
 	FaktumStoreState,
 	FaktumComponentProps
-} from "../../../nav-skjema/redux/reducer";
+} from "../../../nav-soknad/redux/reducer";
 import { DispatchProps } from "../../redux/types";
 
-import Steg from "../../../nav-skjema/components/steg";
-import Sporsmal from "../../../nav-skjema/components/sporsmal";
-import TextareaFaktum from "../../../nav-skjema/faktum/TextareaFaktum";
+import Steg from "../../../nav-soknad/components/steg";
+import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 
 class Begrunnelse extends React.Component<
 	FaktumComponentProps & DispatchProps,

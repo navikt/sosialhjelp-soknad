@@ -1,20 +1,20 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-skjema/components/sporsmal";
-import Steg from "../../../nav-skjema/components/steg";
+import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import Steg from "../../../nav-soknad/components/steg";
 import { connect } from "react-redux";
 import {
 	FaktumComponentProps,
 	FaktumStoreState
-} from "../../../nav-skjema/redux/reducer";
+} from "../../../nav-soknad/redux/reducer";
 import { DispatchProps } from "../../redux/types";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { faktumIsSelected, radioCheckKeys } from "../../../nav-skjema/utils";
+import { faktumIsSelected, radioCheckKeys } from "../../../nav-soknad/utils";
 
-import CheckboxFaktum from "../../../nav-skjema/faktum/CheckboxFaktum";
-import RadioFaktum from "../../../nav-skjema/faktum/RadioFaktum";
-import TextareaFaktum from "../../../nav-skjema/faktum/TextareaFaktum";
-import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
-import Underskjema from "../../../nav-skjema/components/underskjema";
+import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
+import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
+import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
+import Underskjema from "../../../nav-soknad/components/underskjema";
 
 class UtgifterGjeld extends React.Component<
 	FaktumComponentProps & DispatchProps & InjectedIntlProps,

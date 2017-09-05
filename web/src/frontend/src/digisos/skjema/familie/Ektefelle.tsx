@@ -1,12 +1,12 @@
 import * as React from "react";
-import PersonFaktum from "../../../nav-skjema/faktum/PersonFaktum";
-import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
-import { radioCheckKeys } from "../../../nav-skjema/utils";
+import PersonFaktum from "../../../nav-soknad/faktum/PersonFaktum";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { radioCheckKeys } from "../../../nav-soknad/utils";
 
-import RadioFaktum from "../../../nav-skjema/faktum/RadioFaktum";
-import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
-import TextareaFaktum from "../../../nav-skjema/faktum/TextareaFaktum";
-import NivaTreSkjema from "../../../nav-skjema/components/nivaTreSkjema";
+import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
+import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
+import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 
 class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 	render() {

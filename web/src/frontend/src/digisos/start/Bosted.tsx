@@ -4,8 +4,8 @@ import Knapp from "nav-frontend-knapper";
 import {
 	FaktumState,
 	FaktumComponentProps
-} from "../../nav-skjema/redux/reducer";
-import Arrow from "../../nav-skjema/components/svg/Arrow";
+} from "../../nav-soknad/redux/reducer";
+import Arrow from "../../nav-soknad/components/svg/Arrow";
 import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 import { Collapse } from "react-collapse";
 import { SoknadState, ActionTypeKeys } from "../redux/soknad/types";

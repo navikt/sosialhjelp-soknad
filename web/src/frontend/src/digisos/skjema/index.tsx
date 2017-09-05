@@ -11,8 +11,8 @@ import Steg7 from "./utgifterGjeld";
 import Steg8 from "./ekstrainformasjon";
 import Steg9 from "./oppsummering";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import StegIndikator from "../../nav-skjema/components/stegIndikator";
-import Knapperad from "../../nav-skjema/components/knapperad";
+import StegIndikator from "../../nav-soknad/components/stegIndikator";
+import Knapperad from "../../nav-soknad/components/knapperad";
 import {
 	finnStegFraLocation,
 	finnBrukerBehandlingIdFraLocation

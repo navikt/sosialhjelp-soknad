@@ -1,10 +1,10 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-skjema/components/sporsmal";
-import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
-import { radioCheckKeys } from "../../../nav-skjema/utils";
+import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { radioCheckKeys } from "../../../nav-soknad/utils";
 
-import FaktumRadio from "../../../nav-skjema/faktum/RadioFaktum";
-import Underskjema from "../../../nav-skjema/components/underskjema";
+import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
+import Underskjema from "../../../nav-soknad/components/underskjema";
 import Barneinfo from "./Barneinfo";
 
 class Barn extends React.Component<FaktumComponentProps, {}> {

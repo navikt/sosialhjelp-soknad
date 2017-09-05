@@ -1,7 +1,7 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-skjema/components/sporsmal";
-import { radioCheckKeys } from "../../../nav-skjema/utils";
-import RadioFaktum from "../../../nav-skjema/faktum/RadioFaktum";
+import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import { radioCheckKeys } from "../../../nav-soknad/utils";
+import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 
 class YtelserFraNAV extends React.Component<{}, {}> {
 	render() {

@@ -1,1 +1,1 @@
-export * from "../../nav-skjema/redux/types";
+export * from "../../nav-soknad/redux/types";

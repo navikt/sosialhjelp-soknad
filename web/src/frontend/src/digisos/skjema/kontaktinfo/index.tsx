@@ -1,9 +1,9 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-skjema/components/sporsmal";
-import Steg from "../../../nav-skjema/components/steg";
-import RadioFaktum from "../../../nav-skjema/faktum/RadioFaktum";
-import InputFaktum from "../../../nav-skjema/faktum/InputFaktum";
-import { radioCheckKeys } from "../../../nav-skjema/utils";
+import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import Steg from "../../../nav-soknad/components/steg";
+import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
+import { radioCheckKeys } from "../../../nav-soknad/utils";
 
 class Kontaktinfo extends React.Component<{}, {}> {
 	render() {

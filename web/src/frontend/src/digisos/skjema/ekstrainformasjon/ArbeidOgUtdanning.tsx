@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
-import InputFaktum from "../../../nav-skjema/faktum/InputFaktum";
-import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
-import Progresjonsblokk from "../../../nav-skjema/components/progresjonsblokk";
-import { FaktumComponentProps } from "../../../nav-skjema/redux/reducer";
-import { faktumIsSelected } from "../../../nav-skjema/utils";
+import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
+import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
+import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { faktumIsSelected } from "../../../nav-soknad/utils";
 
 const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
 	<SkjemagruppeFaktum tittelId="ekstrainfo.arbeidsledig.tittel">

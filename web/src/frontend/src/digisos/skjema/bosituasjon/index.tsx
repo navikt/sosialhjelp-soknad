@@ -1,22 +1,22 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-skjema/components/sporsmal";
-import Steg from "../../../nav-skjema/components/steg";
+import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import Steg from "../../../nav-soknad/components/steg";
 import { connect } from "react-redux";
 import {
 	FaktumStoreState,
 	FaktumComponentProps
-} from "../../../nav-skjema/redux/reducer";
+} from "../../../nav-soknad/redux/reducer";
 import {
 	radioCheckKeys,
 	inputKeys,
 	faktumIsSelected
-} from "../../../nav-skjema/utils";
+} from "../../../nav-soknad/utils";
 
-import CheckboxFaktum from "../../../nav-skjema/faktum/CheckboxFaktum";
-import RadioFaktum from "../../../nav-skjema/faktum/RadioFaktum";
-import SkjemagruppeFaktum from "../../../nav-skjema/faktum/SkjemagruppeFaktum";
-import InputFaktum from "../../../nav-skjema/faktum/InputFaktum";
-import Underskjema from "../../../nav-skjema/components/underskjema";
+import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
+import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
+import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
+import Underskjema from "../../../nav-soknad/components/underskjema";
 
 class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	render() {

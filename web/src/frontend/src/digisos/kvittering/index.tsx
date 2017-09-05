@@ -7,7 +7,7 @@ import {
 	FaktumState,
 	FaktumComponentProps,
 	FaktumMap
-} from "../../nav-skjema/redux/reducer";
+} from "../../nav-soknad/redux/reducer";
 import { SoknadState } from "../redux/soknad/types";
 import "./kvittering.css";
 import { getBosted } from "../data/kommuner";
