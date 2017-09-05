@@ -1,6 +1,6 @@
 import * as React from "react";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import Steg from "../../../nav-soknad/components/steg";
+import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { connect } from "react-redux";
 import {
 	FaktumStoreState,
@@ -28,7 +28,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const over18 = radioCheckKeys("bosituasjon.personerover18");
 		const over18True = inputKeys("bosituasjon.personerover18.true.antall");
 		return (
-			<Steg tittelId="bosituasjonbolk.tittel">
+			<StegFaktum tittelId="bosituasjonbolk.tittel">
 				<SporsmalFaktum faktumId={bosituasjon.faktum}>
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="eier" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="leierprivat" />
@@ -71,7 +71,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					</Underskjema>
 					<RadioFaktum faktumKey={over18.faktum} option="false" />
 				</SporsmalFaktum>{" "}
-			</Steg>
+			</StegFaktum>
 		);
 	}
 }

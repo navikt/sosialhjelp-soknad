@@ -1,5 +1,5 @@
 import * as React from "react";
-import Steg from "../../../nav-soknad/components/steg";
+import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { connect } from "react-redux";
 import {
 	FaktumComponentProps,
@@ -12,10 +12,10 @@ class ArbeidOgUtdanning extends React.Component<FaktumComponentProps, any> {
 	render() {
 		const { fakta } = this.props;
 		return (
-			<Steg tittelId="arbeidbolk.tittel">
+			<StegFaktum tittelId="arbeidbolk.tittel">
 				<Jobb fakta={fakta} />
 				<Studie fakta={fakta} />
-			</Steg>
+			</StegFaktum>
 		);
 	}
 }

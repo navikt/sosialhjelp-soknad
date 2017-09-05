@@ -6,7 +6,7 @@ import {
 } from "../../../nav-soknad/redux/reducer";
 import { DispatchProps } from "../../redux/types";
 
-import Steg from "../../../nav-soknad/components/steg";
+import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 
@@ -16,7 +16,7 @@ class Begrunnelse extends React.Component<
 > {
 	render() {
 		return (
-			<Steg tittelId="begrunnelsebolk.tittel">
+			<StegFaktum tittelId="begrunnelsebolk.tittel">
 				<SporsmalFaktum faktumId="begrunnelse.hvorfor">
 					<TextareaFaktum
 						textareaClass="skjema-textarea--large"
@@ -33,7 +33,7 @@ class Begrunnelse extends React.Component<
 						maxLength={800}
 					/>
 				</SporsmalFaktum>
-			</Steg>
+			</StegFaktum>
 		);
 	}
 }

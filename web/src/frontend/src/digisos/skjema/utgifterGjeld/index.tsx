@@ -1,6 +1,6 @@
 import * as React from "react";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import Steg from "../../../nav-soknad/components/steg";
+import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { connect } from "react-redux";
 import {
 	FaktumComponentProps,
@@ -32,7 +32,7 @@ class UtgifterGjeld extends React.Component<
 		const andreBarneutgifter = `${barneUtgifter.faktum}.annet.true.beskrivelse`;
 
 		return (
-			<Steg tittelId="utgifterbolk.tittel">
+			<StegFaktum tittelId="utgifterbolk.tittel">
 				<SporsmalFaktum faktumId={harBoutgifter.faktum}>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="true" />
 					<Underskjema visible={fakta.get(harBoutgifter.faktum) === "true"}>
@@ -93,7 +93,7 @@ class UtgifterGjeld extends React.Component<
 					</Underskjema>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="false" />
 				</SporsmalFaktum>
-			</Steg>
+			</StegFaktum>
 		);
 	}
 }
