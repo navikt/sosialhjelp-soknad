@@ -60,7 +60,7 @@ export function getFaktumSporsmalTekst(
 	key: string
 ): FaktumSporsmalTekst {
 	return {
-		sporsmal: getIntlTextOrKey(intl, key),
+		sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
 		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
 		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`)

@@ -7,7 +7,7 @@ class SoknaderUnderBehandling extends React.Component<{}, {}> {
 	render() {
 		const soknader = radioCheckKeys("inntekt.soktytelser");
 		return (
-			<SporsmalFaktum faktumId={soknader.sporsmal}>
+			<SporsmalFaktum faktumId={soknader.faktum}>
 				<RadioFaktum faktumKey={soknader.faktum} option="true" />
 				<RadioFaktum faktumKey={soknader.faktum} option="false" />
 			</SporsmalFaktum>
