@@ -36,7 +36,7 @@ class UtgifterGjeld extends React.Component<
 				<SporsmalFaktum faktumId={harBoutgifter.faktum}>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="true" />
 					<Underskjema visible={fakta.get(harBoutgifter.faktum) === "true"}>
-						<SkjemagruppeFaktum tittelId={boUtgifter.sporsmal}>
+						<SkjemagruppeFaktum faktumId={boUtgifter.faktum}>
 							{/*TODO checkboxgruppefaktum*/}
 							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="husleie" />
 							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="strom" />
@@ -71,7 +71,7 @@ class UtgifterGjeld extends React.Component<
 					<Underskjema visible={fakta.get(harUtgifterBarn.faktum) === "true"}>
 						{/*TODO checkboxgruppefaktum*/}
 
-						<SkjemagruppeFaktum tittelId={barneUtgifter.sporsmal}>
+						<SkjemagruppeFaktum faktumId={barneUtgifter.faktum}>
 							<CheckboxFaktum
 								faktumKey={barneUtgifter.faktum}
 								option="fritidsaktivitet"

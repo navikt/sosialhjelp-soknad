@@ -17,7 +17,7 @@ class Bostotte extends React.Component<FaktumComponentProps, {}> {
 			<SporsmalFaktum faktumId={bostotte.faktum}>
 				<RadioFaktum faktumKey={bostotte.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get("inntekt.bostotte"))}>
-					<SkjemagruppeFaktum tittelId={hvilkenStotte.sporsmal}>
+					<SkjemagruppeFaktum faktumId={hvilkenStotte.faktum}>
 						{/*TODO legge til checkboxgroup-faktum*/}
 						<CheckboxFaktum
 							faktumKey={hvilkenStotte.faktum}

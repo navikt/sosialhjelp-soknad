@@ -50,24 +50,31 @@ export interface Infotekst {
 	tekst?: string;
 }
 
-export interface FaktumSporsmalTekst {
+export interface SporsmalFaktumTekst {
 	sporsmal: string;
 	infotekst?: Infotekst;
 	hjelpetekst?: Infotekst;
-	feilmelding?: string;
 }
 
-export interface FaktumCheckboksTekst {
+export interface CheckboxFaktumTekst {
 	label: string;
 	infotekst?: Infotekst;
 	hjelpetekst?: Infotekst;
-	feilmelding: string;
 }
 
 export interface InputFaktumTekst {
+	/** Label som knyttes sammen med inputfelt */
 	label: string;
-	feilmelding?: string;
+	/** Valgfritt spørsmål */
+	sporsmal?: string;
+	/** Utfyllende informasjon */
 	infotekst?: Infotekst;
+	/** Hjelpetekst som plasseres vedsiden av spørsmål */
 	hjelpetekst?: Infotekst;
-	placeholder?: string;
+	/** Tekst som skal stå i bakgrunn for sjekkboksen */
+	pattern?: string;
+	/** Tekst til høyre for inputboks */
+	hoyretekst?: string;
+	/** Tekst til venstre for inputboks */
+	venstretekst?: string;
 }

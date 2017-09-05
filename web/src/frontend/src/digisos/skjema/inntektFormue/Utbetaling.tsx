@@ -19,7 +19,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 			<SporsmalFaktum faktumId={utbetaling.faktum}>
 				<RadioFaktum faktumKey={utbetaling.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get(utbetaling.faktum))}>
-					<SkjemagruppeFaktum tittelId={hvilkeUtbetalinger.sporsmal}>
+					<SkjemagruppeFaktum faktumId={hvilkeUtbetalinger.faktum}>
 						{/*TODO legg til checkboxgruppefaktum*/}
 						<CheckboxFaktum
 							faktumKey={hvilkeUtbetalinger.faktum}

@@ -7,11 +7,11 @@ import { faktumIsSelected } from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 
 const StromSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum tittelId="ekstrainfo.utgifter.strom.tittel" key="strom">
+	<SkjemagruppeFaktum faktumId="ekstrainfo.utgifter.strom" key="strom">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
-				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.utgifter.strom" />
+				<Column xs="12">
+					<InputFaktum faktumKey="ekstrainfo.utgifter.strom" bredde="s" />
 				</Column>
 			</Row>
 		</Container>
@@ -19,13 +19,11 @@ const StromSkjema: React.StatelessComponent<{}> = () => (
 );
 
 const HusleieSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum
-		tittelId="ekstrainfo.utgifter.husleie.tittel"
-		key="husleie">
+	<SkjemagruppeFaktum faktumId="ekstrainfo.utgifter.husleie" key="husleie">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
-				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.utgifter.husleie" />
+				<Column xs="12">
+					<InputFaktum faktumKey="ekstrainfo.utgifter.husleie" bredde="s" />
 				</Column>
 			</Row>
 		</Container>
@@ -33,14 +31,14 @@ const HusleieSkjema: React.StatelessComponent<{}> = () => (
 );
 
 const BarneSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum tittelId="ekstrainfo.utgifter.barn.tittel" key="barn">
+	<SkjemagruppeFaktum faktumId="ekstrainfo.utgifter.barn" key="barn">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
 					<InputFaktum faktumKey="ekstrainfo.utgifter.barn.hva" />
 				</Column>
 				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.utgifter.barn.sum" />
+					<InputFaktum faktumKey="ekstrainfo.utgifter.barn.sum" bredde="s" />
 				</Column>
 			</Row>
 		</Container>

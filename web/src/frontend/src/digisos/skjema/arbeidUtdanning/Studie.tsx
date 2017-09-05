@@ -16,7 +16,7 @@ class Studie extends React.Component<FaktumComponentProps, any> {
 			<SporsmalFaktum faktumId={studie.faktum}>
 				<RadioFaktum faktumKey={studie.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get(studie.faktum))}>
-					<SkjemagruppeFaktum tittelId={studerer.sporsmal}>
+					<SkjemagruppeFaktum faktumId={studerer.faktum}>
 						<RadioFaktum faktumKey={studerer.faktum} option="heltid" />
 						<RadioFaktum faktumKey={studerer.faktum} option="deltid" />
 					</SkjemagruppeFaktum>

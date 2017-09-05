@@ -36,7 +36,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="ingen" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="annet" />
 					<Underskjema visible={fakta.get(bosituasjon.faktum) === "annet"}>
-						<SkjemagruppeFaktum tittelId={annen.sporsmal}>
+						<SkjemagruppeFaktum faktumId={annen.faktum}>
 							{/*TODO opprette checkboxgruppefaktumet*/}
 							<CheckboxFaktum faktumKey={annen.faktum} option="institusjon" />
 							<CheckboxFaktum faktumKey={annen.faktum} option="krisesenter" />

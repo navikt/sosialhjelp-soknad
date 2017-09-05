@@ -19,7 +19,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 			<SporsmalFaktum faktumId={eiendeler.faktum}>
 				<RadioFaktum faktumKey={eiendeler.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get(eiendeler.faktum))}>
-					<SkjemagruppeFaktum tittelId={hvilkeEiendeler.sporsmal}>
+					<SkjemagruppeFaktum faktumId={hvilkeEiendeler.faktum}>
 						<CheckboxFaktum faktumKey={hvilkeEiendeler.faktum} option="bolig" />
 						<CheckboxFaktum
 							faktumKey={hvilkeEiendeler.faktum}
