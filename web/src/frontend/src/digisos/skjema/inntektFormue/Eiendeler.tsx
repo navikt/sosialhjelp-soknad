@@ -16,7 +16,10 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeEiendeler = radioCheckKeys("inntekt.eierandeler.true.type");
 		const hvilkeEiendelerAnnet = "inntekt.eierandeler.true.type.annet";
 		return (
-			<Sporsmal sporsmalId={eiendeler.sporsmal}>
+			<Sporsmal
+				sporsmalId={eiendeler.sporsmal}
+				hjelpetekstId={eiendeler.hjelpetekst}
+			>
 				<RadioFaktum faktumKey={eiendeler.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get(eiendeler.faktum))}>
 					<SkjemagruppeFaktum tittelId={hvilkeEiendeler.sporsmal}>

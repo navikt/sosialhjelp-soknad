@@ -47,10 +47,14 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						</SkjemagruppeFaktum>
 					</Underskjema>
 				</Sporsmal>
-				<Sporsmal sporsmalId={barnUnder18.sporsmal}>
+				<Sporsmal
+					sporsmalId={barnUnder18.sporsmal}
+					hjelpetekstId={barnUnder18.hjelpetekst}
+				>
 					<RadioFaktum faktumKey={barnUnder18.faktum} option="true" />
 					<Underskjema
-						visible={faktumIsSelected(fakta.get(barnUnder18.faktum))}>
+						visible={faktumIsSelected(fakta.get(barnUnder18.faktum))}
+					>
 						<InputFaktum
 							faktumKey={barnUnder18True.faktum}
 							maxLength={3}
@@ -59,7 +63,10 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					</Underskjema>
 					<RadioFaktum faktumKey={barnUnder18.faktum} option="false" />
 				</Sporsmal>
-				<Sporsmal sporsmalId={over18.sporsmal}>
+				<Sporsmal
+					sporsmalId={over18.sporsmal}
+					hjelpetekstId={over18.hjelpetekst}
+				>
 					<RadioFaktum faktumKey={over18.faktum} option="true" />
 					<Underskjema visible={faktumIsSelected(fakta.get(over18.faktum))}>
 						<InputFaktum
