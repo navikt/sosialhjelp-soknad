@@ -46,6 +46,9 @@
 		"@types/react-router-dom": "^4.0.7",
 		"@types/redux-devtools-extension": "^2.13.2",
 		"body-parser": "^1.17.2",
+		"eslint": "^4.6.1",
+		"eslint-config-prettier": "^2.4.0",
+		"eslint-plugin-prettier": "^2.2.0",
 		"fs-extra": "2.1.2",
 		"nav-frontend-alertstriper-style": "^0.2.2",
 		"nav-frontend-grid-style": "^0.2.1",
@@ -60,6 +63,7 @@
 		"nav-frontend-stegindikator-style": "^0.3.2",
 		"nav-frontend-typografi-style": "^1.0.1",
 		"npm-run-all": "^4.0.2",
+		"prettier": "^1.6.1",
 		"replace": "0.3.0"
 	},
 	"scripts": {
