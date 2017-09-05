@@ -22,10 +22,10 @@ const Personskjema: React.StatelessComponent<Props> = ({
 			</Row>
 			<Row>
 				<Column sm="6" xs="3">
-					<InputFaktum faktumKey={fnrFaktumKey} maxLength={6} />
+					<InputFaktum faktumKey={fnrFaktumKey} maxLength={6} bredde="s" />
 				</Column>
 				<Column sm="6" xs="3">
-					<InputFaktum faktumKey={pnrFaktumKey} maxLength={5} />
+					<InputFaktum faktumKey={pnrFaktumKey} maxLength={5} bredde="s" />
 				</Column>
 			</Row>
 		</Container>
