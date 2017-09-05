@@ -1,11 +1,7 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
-<<<<<<< HEAD:web/src/frontend/src/nav-skjema/faktum/SkjemagruppeFaktum.tsx
 import HjelpetekstFaktum from "./HjelpetekstFaktum";
-=======
-import FaktumHjelpetekst from "./FaktumHjelpetekst";
->>>>>>> master:web/src/frontend/src/skjema/faktum/FaktumSkjemagruppe.tsx
 import { getIntlTextOrKey } from "../utils";
 
 interface Props {
