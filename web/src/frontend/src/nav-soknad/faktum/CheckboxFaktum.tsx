@@ -10,7 +10,7 @@ import {
 	getFaktumCheckboksTekst,
 	faktumIsSelected,
 	boolToString,
-    getFaktumVerdi
+	getFaktumVerdi
 } from "../utils";
 
 interface OwnProps {

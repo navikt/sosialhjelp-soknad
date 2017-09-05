@@ -88,5 +88,5 @@ export function getInputFaktumTekst(
 }
 
 export function getFaktumVerdi(fakta: any, key: string) {
-    return fakta.get(key) && fakta.get(key).value;
-};
+	return fakta.get(key) && fakta.get(key).value;
+}
