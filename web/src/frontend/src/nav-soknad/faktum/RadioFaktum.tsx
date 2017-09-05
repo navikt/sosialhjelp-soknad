@@ -25,7 +25,7 @@ class RadioFaktum extends React.Component<
 		return (
 			<Radio
 				name={faktumKey}
-				checked={fakta.get(faktumKey) === option}
+				checked={(fakta.get(faktumKey) && fakta.get(faktumKey).value) === option}
 				disabled={disabled}
 				value={option}
 				onChange={(evt: any) => dispatch(setFaktumVerdi(faktumKey, option))}

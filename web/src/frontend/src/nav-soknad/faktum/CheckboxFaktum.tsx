@@ -35,7 +35,7 @@ class CheckboxFaktum extends React.Component<
 		} = this.props;
 		const key = `${faktumKey}.${option}`;
 		const tekster = getFaktumCheckboksTekst(intl, key);
-		const checked = faktumIsSelected(fakta.get(key));
+		const checked = faktumIsSelected(fakta.get(key) && fakta.get(key).value);
 		return (
 			<Checkbox
 				name={key}

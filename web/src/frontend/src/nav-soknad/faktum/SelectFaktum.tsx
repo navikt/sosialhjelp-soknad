@@ -37,7 +37,7 @@ class FaktumSelect extends React.Component<
 			<Select
 				name={faktumKey}
 				disabled={disabled}
-				value={fakta.get(faktumKey)}
+				value={fakta.get(faktumKey) && fakta.get(faktumKey).value}
 				bredde={bredde}
 				onChange={(evt: any) =>
 					dispatch(setFaktumVerdi(faktumKey, evt.target.value))}

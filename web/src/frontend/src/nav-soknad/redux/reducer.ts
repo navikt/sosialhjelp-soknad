@@ -29,6 +29,12 @@ export const deleteFaktumFromMap = (faktumMap: FaktumMap, key: string) => {
 	return copyMap;
 };
 
+export const setFaktumValue = (faktumMap: FaktumMap, key: string, value: any) => {
+	const fakta = Object.assign({}, faktumMap.get(key));
+	fakta.value = value;
+	return new Map(faktumMap).set(key, fakta);
+};
+
 const faktumReducer: Reducer<FaktumState, ActionTypes> = (
 	state = defaultState,
 	action
@@ -37,7 +43,7 @@ const faktumReducer: Reducer<FaktumState, ActionTypes> = (
 		case ActionTypeKeys.SET_FAKTUM_VERDI:
 			return {
 				...state,
-				fakta: new Map(state.fakta).set(action.faktumKey, action.value)
+				fakta: setFaktumValue(state.fakta, action.faktumKey, action.value)
 			};
 		case ActionTypeKeys.RESET_FAKTUM_VERDI:
 			return {
@@ -47,9 +53,9 @@ const faktumReducer: Reducer<FaktumState, ActionTypes> = (
 		case ActionTypeKeys.SET_FAKTA:
 			return {
 				...state,
-				fakta: new Map(
-					action.fakta.map((faktum: any) => [faktum.key, faktum.value])
-				)
+				fakta: new Map(action.fakta.map((faktum: any) =>
+					([faktum.key, faktum])
+				))
 			};
 		default:
 			return state;

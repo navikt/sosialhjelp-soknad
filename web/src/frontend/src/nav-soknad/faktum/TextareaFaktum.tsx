@@ -26,7 +26,7 @@ type Props = OwnProps &
 	InjectedIntlProps;
 
 const getStateFromProps = (props: Props): State => ({
-	value: props.fakta.get(props.faktumKey) || ""
+	value: (props.fakta.get(props.faktumKey) && props.fakta.get(props.faktumKey).value) || ""
 });
 
 class TextareaFaktum extends React.Component<Props, State> {
