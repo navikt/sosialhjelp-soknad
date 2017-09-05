@@ -4,13 +4,13 @@ import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
-import { faktumIsSelected } from "../../../nav-soknad/utils";
+import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 
 const Familiesituasjon: React.StatelessComponent<
 	FaktumComponentProps
 > = props => {
 	const { fakta } = props;
-	if (!faktumIsSelected(fakta.get("familie.barn"))) {
+	if (!faktumIsSelected(getFaktumVerdi(fakta, "familie.barn"))) {
 		return null;
 	}
 

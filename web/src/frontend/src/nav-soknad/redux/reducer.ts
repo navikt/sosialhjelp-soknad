@@ -8,54 +8,48 @@ export interface FaktumStoreState {
 }
 
 export interface FaktumState {
-	fakta: FaktumMap;
+	fakta: Faktum[];
 	faktumTekst?: any;
 }
 
-export interface FaktumComponentProps {
-	fakta: FaktumMap;
+export interface Faktum {
+	key: string;
+	value: any;
+	type: string;
 }
 
-const defaultFaktumMap: FaktumMap = new Map();
-defaultFaktumMap.set("arbeid.dinsituasjon.jobb", true);
+export interface FaktumComponentProps {
+	fakta: Faktum[];
+}
 
-const defaultState: FaktumState = {
-	fakta: new Map(defaultFaktumMap)
+const initialState: FaktumState = {
+	fakta: [ { key: "arbeid.dinsituasjon.jobb", value: true, type: "" } ]
 };
 
-export const deleteFaktumFromMap = (faktumMap: FaktumMap, key: string) => {
-	const copyMap = new Map(faktumMap);
-	copyMap.delete(key);
-	return copyMap;
-};
-
-export const setFaktumValue = (faktumMap: FaktumMap, key: string, value: any) => {
-	const fakta = Object.assign({}, faktumMap.get(key));
-	fakta.value = value;
-	return new Map(faktumMap).set(key, fakta);
-};
-
-const faktumReducer: Reducer<FaktumState, ActionTypes> = (
-	state = defaultState,
-	action
-): FaktumState => {
+const faktumReducer: Reducer<FaktumState, ActionTypes> =
+	(state = initialState, action): FaktumState => {
 	switch (action.type) {
 		case ActionTypeKeys.SET_FAKTUM_VERDI:
+			const updatedFakta = state.fakta.map(faktum => {
+					if (faktum.key === action.faktumKey) {
+						return { ...faktum, value: action.value };
+					}
+					return faktum;
+				}
+			);
 			return {
 				...state,
-				fakta: setFaktumValue(state.fakta, action.faktumKey, action.value)
+				fakta: updatedFakta
 			};
 		case ActionTypeKeys.RESET_FAKTUM_VERDI:
 			return {
 				...state,
-				fakta: deleteFaktumFromMap(state.fakta, action.faktumKey)
+				fakta: state.fakta.filter(faktum => (faktum.key !== action.faktumKey))
 			};
 		case ActionTypeKeys.SET_FAKTA:
 			return {
 				...state,
-				fakta: new Map(action.fakta.map((faktum: any) =>
-					([faktum.key, faktum])
-				))
+				fakta: action.fakta
 			};
 		default:
 			return state;

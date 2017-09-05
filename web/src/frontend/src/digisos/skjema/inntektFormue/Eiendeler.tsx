@@ -1,7 +1,7 @@
 import * as React from "react";
 import Sporsmal from "../../../nav-soknad/components/sporsmal";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
-import { radioCheckKeys, faktumIsSelected } from "../../../nav-soknad/utils";
+import { radioCheckKeys, faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
@@ -21,7 +21,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 				hjelpetekstId={eiendeler.hjelpetekst}
 			>
 				<RadioFaktum faktumKey={eiendeler.faktum} option="true" />
-				<Underskjema visible={faktumIsSelected(fakta.get(eiendeler.faktum))}>
+				<Underskjema visible={faktumIsSelected(getFaktumVerdi(fakta, eiendeler.faktum))}>
 					<SkjemagruppeFaktum tittelId={hvilkeEiendeler.sporsmal}>
 						<CheckboxFaktum faktumKey={hvilkeEiendeler.faktum} option="bolig" />
 						<CheckboxFaktum
@@ -37,7 +37,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 							option="fritidseiendom"
 						/>
 						<CheckboxFaktum faktumKey={hvilkeEiendeler.faktum} option="annet" />
-						{faktumIsSelected(fakta.get(hvilkeEiendelerAnnet)) ? (
+						{faktumIsSelected(getFaktumVerdi(fakta, hvilkeEiendelerAnnet)) ? (
 							<TextareaFaktum
 								faktumKey={`${hvilkeEiendelerAnnet}.true.beskrivelse`}
 							/>

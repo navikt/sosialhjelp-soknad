@@ -9,7 +9,8 @@ import {
 import {
 	radioCheckKeys,
 	inputKeys,
-	faktumIsSelected
+	faktumIsSelected,
+	getFaktumVerdi
 } from "../../../nav-soknad/utils";
 
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
@@ -30,20 +31,20 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		return (
 			<Steg tittelId="bosituasjonbolk.tittel">
 				<Sporsmal sporsmalId={bosituasjon.sporsmal}>
-					<RadioFaktum faktumKey={bosituasjon.faktum} option="eier" />
-					<RadioFaktum faktumKey={bosituasjon.faktum} option="leierprivat" />
-					<RadioFaktum faktumKey={bosituasjon.faktum} option="leierkommunalt" />
-					<RadioFaktum faktumKey={bosituasjon.faktum} option="ingen" />
-					<RadioFaktum faktumKey={bosituasjon.faktum} option="annet" />
-					<Underskjema visible={fakta.get(bosituasjon.faktum) === "annet"}>
+					<RadioFaktum faktumKey={bosituasjon.faktum} option="eier"/>
+					<RadioFaktum faktumKey={bosituasjon.faktum} option="leierprivat"/>
+					<RadioFaktum faktumKey={bosituasjon.faktum} option="leierkommunalt"/>
+					<RadioFaktum faktumKey={bosituasjon.faktum} option="ingen"/>
+					<RadioFaktum faktumKey={bosituasjon.faktum} option="annet"/>
+					<Underskjema visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}>
 						<SkjemagruppeFaktum tittelId={annen.sporsmal}>
 							{/*TODO opprette checkboxgruppefaktumet*/}
-							<CheckboxFaktum faktumKey={annen.faktum} option="institusjon" />
-							<CheckboxFaktum faktumKey={annen.faktum} option="krisesenter" />
-							<CheckboxFaktum faktumKey={annen.faktum} option="fengsel" />
-							<CheckboxFaktum faktumKey={annen.faktum} option="venner" />
-							<CheckboxFaktum faktumKey={annen.faktum} option="foreldre" />
-							<CheckboxFaktum faktumKey={annen.faktum} option="familie" />
+							<CheckboxFaktum faktumKey={annen.faktum} option="institusjon"/>
+							<CheckboxFaktum faktumKey={annen.faktum} option="krisesenter"/>
+							<CheckboxFaktum faktumKey={annen.faktum} option="fengsel"/>
+							<CheckboxFaktum faktumKey={annen.faktum} option="venner"/>
+							<CheckboxFaktum faktumKey={annen.faktum} option="foreldre"/>
+							<CheckboxFaktum faktumKey={annen.faktum} option="familie"/>
 						</SkjemagruppeFaktum>
 					</Underskjema>
 				</Sporsmal>
@@ -51,9 +52,9 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					sporsmalId={barnUnder18.sporsmal}
 					hjelpetekstId={barnUnder18.hjelpetekst}
 				>
-					<RadioFaktum faktumKey={barnUnder18.faktum} option="true" />
+					<RadioFaktum faktumKey={barnUnder18.faktum} option="true"/>
 					<Underskjema
-						visible={faktumIsSelected(fakta.get(barnUnder18.faktum))}
+						visible={faktumIsSelected(getFaktumVerdi(fakta, barnUnder18.faktum))}
 					>
 						<InputFaktum
 							faktumKey={barnUnder18True.faktum}
@@ -61,21 +62,21 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 							bredde="xs"
 						/>
 					</Underskjema>
-					<RadioFaktum faktumKey={barnUnder18.faktum} option="false" />
+					<RadioFaktum faktumKey={barnUnder18.faktum} option="false"/>
 				</Sporsmal>
 				<Sporsmal
 					sporsmalId={over18.sporsmal}
 					hjelpetekstId={over18.hjelpetekst}
 				>
-					<RadioFaktum faktumKey={over18.faktum} option="true" />
-					<Underskjema visible={faktumIsSelected(fakta.get(over18.faktum))}>
+					<RadioFaktum faktumKey={over18.faktum} option="true"/>
+					<Underskjema visible={faktumIsSelected(getFaktumVerdi(fakta, over18.faktum))}>
 						<InputFaktum
 							faktumKey={over18True.faktum}
 							maxLength={3}
 							bredde="xs"
 						/>
 					</Underskjema>
-					<RadioFaktum faktumKey={over18.faktum} option="false" />
+					<RadioFaktum faktumKey={over18.faktum} option="false"/>
 				</Sporsmal>{" "}
 			</Steg>
 		);

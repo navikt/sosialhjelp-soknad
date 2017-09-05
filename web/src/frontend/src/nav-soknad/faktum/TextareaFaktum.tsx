@@ -5,7 +5,7 @@ import { FaktumStoreState, FaktumComponentProps } from "../redux/reducer";
 import { setFaktumVerdi } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getInputFaktumTekst, getIntlTextOrKey } from "../utils";
+import { getInputFaktumTekst, getIntlTextOrKey, getFaktumVerdi } from "../utils";
 
 interface OwnProps {
 	faktumKey: string;
@@ -26,7 +26,7 @@ type Props = OwnProps &
 	InjectedIntlProps;
 
 const getStateFromProps = (props: Props): State => ({
-	value: (props.fakta.get(props.faktumKey) && props.fakta.get(props.faktumKey).value) || ""
+	value: getFaktumVerdi(props.fakta, props.faktumKey) || ""
 });
 
 class TextareaFaktum extends React.Component<Props, State> {

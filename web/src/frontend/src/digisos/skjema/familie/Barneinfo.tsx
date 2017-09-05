@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
-import { radioCheckKeys, faktumIsSelected } from "../../../nav-soknad/utils";
+import { radioCheckKeys, faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 import FaktumPersonskjema from "../../../nav-soknad/faktum/PersonFaktum";
 
 import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
@@ -24,7 +24,7 @@ class Barn extends React.Component<OwnProps & FaktumComponentProps, {}> {
 				<FaktumPersonskjema faktumKey={faktumKey} />
 				<FaktumSkjemagruppe tittelId={borInfo.sporsmal}>
 					<FaktumRadio faktumKey={borInfo.faktum} option="true" />
-					<NivaTreSkjema visible={faktumIsSelected(fakta.get(borInfo.faktum))}>
+					<NivaTreSkjema visible={faktumIsSelected(getFaktumVerdi(fakta, borInfo.faktum))}>
 						<FaktumSkjemagruppe tittelId={hvormye.sporsmal}>
 							<FaktumRadio faktumKey={hvormye.faktum} option="heltid" />
 							<FaktumRadio faktumKey={hvormye.faktum} option="deltid" />

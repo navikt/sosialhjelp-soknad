@@ -28,7 +28,7 @@ export function boolToString(flag: boolean) {
 }
 
 export function intlHasKey(intl: InjectedIntl, key: string) {
-	return intl.messages[key] !== undefined;
+	return intl.messages[ key ] !== undefined;
 }
 
 export function getIntlText(intl: InjectedIntl, key?: string) {
@@ -45,19 +45,13 @@ export function getIntlTextOrKey(intl: InjectedIntl, key: string): string {
 	return tekst || key;
 }
 
-export function getIntlInfoTekst(
-	intl: InjectedIntl,
-	key: string
-): Infotekst | undefined {
+export function getIntlInfoTekst(intl: InjectedIntl, key: string): Infotekst | undefined {
 	const tittel = getIntlText(intl, `${key}.tittel`);
 	const tekst = getIntlText(intl, `${key}.tekst`);
 	return tittel || tekst ? { tittel, tekst } : undefined;
 }
 
-export function getFaktumCheckboksTekst(
-	intl: InjectedIntl,
-	key: string
-): FaktumCheckboksTekst {
+export function getFaktumCheckboksTekst(intl: InjectedIntl, key: string): FaktumCheckboksTekst {
 	return {
 		label: getIntlTextOrKey(intl, key),
 		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
@@ -66,18 +60,11 @@ export function getFaktumCheckboksTekst(
 	};
 }
 
-export function getRadioFaktumTekst(
-	intl: InjectedIntl,
-	key: string,
-	value: string
-): FaktumCheckboksTekst {
+export function getRadioFaktumTekst(intl: InjectedIntl, key: string, value: string): FaktumCheckboksTekst {
 	return getFaktumCheckboksTekst(intl, `${key}.${value}`);
 }
 
-export function getInputFaktumTekst(
-	intl: InjectedIntl,
-	key: string
-): InputFaktumTekst {
+export function getInputFaktumTekst(intl: InjectedIntl, key: string): InputFaktumTekst {
 	return {
 		label: getIntlTextOrKey(intl, `${key}.sporsmal`),
 		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
@@ -88,5 +75,9 @@ export function getInputFaktumTekst(
 }
 
 export function getFaktumVerdi(fakta: any, key: string) {
-	return fakta.get(key) && fakta.get(key).value;
+	return fakta.map((faktum: any) => {
+		if (faktum.key === key) {
+			return faktum.value;
+		}
+	});
 }
