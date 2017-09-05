@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Input, Feil } from "nav-frontend-skjema";
+import { Input, Feil, InputBredde } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumStoreState, FaktumComponentProps } from "../reducer";
 import { setFaktumVerdi } from "../actions";
@@ -16,6 +16,7 @@ interface OwnProps {
 	disabled?: boolean;
 	feil?: Feil;
 	maxLength?: number;
+	bredde?: InputBredde;
 }
 
 type Props = OwnProps &
@@ -47,7 +48,7 @@ class FaktumInput extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { faktumKey, disabled, feil, intl, maxLength } = this.props;
+		const { faktumKey, disabled, feil, intl, maxLength, bredde } = this.props;
 		const tekster = getFaktumInputTekst(intl, faktumKey);
 		return (
 			<Input
@@ -61,6 +62,7 @@ class FaktumInput extends React.Component<Props, State> {
 				placeholder={tekster.placeholder}
 				feil={feil}
 				maxLength={maxLength}
+				bredde={bredde}
 			/>
 		);
 	}
