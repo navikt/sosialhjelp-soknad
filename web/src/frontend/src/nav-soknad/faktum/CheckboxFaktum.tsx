@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Checkbox, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { FaktumStoreState, FaktumComponentProps } from "../redux/reducer";
+import { FaktumAppState, FaktumComponentProps } from "../redux/reducer";
 import { setFaktumVerdi } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
@@ -57,7 +57,7 @@ class CheckboxFaktum extends React.Component<
 	}
 }
 
-export default connect((state: FaktumStoreState, props: OwnProps) => {
+export default connect((state: FaktumAppState, props: OwnProps) => {
 	return {
 		fakta: state.faktumStore.fakta
 	};

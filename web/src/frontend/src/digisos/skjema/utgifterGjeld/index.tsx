@@ -4,7 +4,7 @@ import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { connect } from "react-redux";
 import {
 	FaktumComponentProps,
-	FaktumStoreState
+	FaktumAppState
 } from "../../../nav-soknad/redux/reducer";
 import { DispatchProps } from "../../redux/types";
 import { InjectedIntlProps, injectIntl } from "react-intl";
@@ -98,7 +98,7 @@ class UtgifterGjeld extends React.Component<
 	}
 }
 
-export default connect((state: FaktumStoreState, props: any) => {
+export default connect((state: FaktumAppState, props: any) => {
 	return {
 		fakta: state.faktumStore.fakta
 	};

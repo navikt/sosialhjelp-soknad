@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import {
-	FaktumStoreState,
+	FaktumAppState,
 	FaktumComponentProps
 } from "../../../nav-soknad/redux/reducer";
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
@@ -35,7 +35,7 @@ class Ekstrainformasjon extends React.Component<FaktumComponentProps, {}> {
 	}
 }
 
-export default connect((state: FaktumStoreState) => {
+export default connect((state: FaktumAppState) => {
 	return {
 		fakta: state.faktumStore.fakta
 	};

@@ -3,7 +3,7 @@ import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { connect } from "react-redux";
 import {
 	FaktumComponentProps,
-	FaktumStoreState
+	FaktumAppState
 } from "../../../nav-soknad/redux/reducer";
 import Jobb from "./Jobb";
 import Studie from "./Studie";
@@ -20,7 +20,7 @@ class ArbeidOgUtdanning extends React.Component<FaktumComponentProps, any> {
 	}
 }
 
-export default connect((state: FaktumStoreState, props: any) => {
+export default connect((state: FaktumAppState, props: any) => {
 	return {
 		fakta: state.faktumStore.fakta
 	};

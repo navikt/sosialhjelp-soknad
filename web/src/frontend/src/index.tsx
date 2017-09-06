@@ -10,12 +10,14 @@ import thunk from "redux-thunk";
 import SoknadReducer from "./digisos/redux/soknad/reducer";
 import { erDev } from "./digisos/redux/rest-utils";
 import FaktumReducer from "./nav-soknad/redux/reducer";
+import ValidationReducer from "./nav-soknad/redux/validation-reducer";
 import IntlProvider from "./intlProvider";
 import "./index.css";
 
 const rootReducer = combineReducers({
 	soknad: SoknadReducer,
-	faktumStore: FaktumReducer
+	faktumStore: FaktumReducer,
+	validation: ValidationReducer
 });
 
 function configureStore() {

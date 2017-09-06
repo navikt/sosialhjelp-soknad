@@ -2,9 +2,11 @@ export type FaktumMap = Map<string, any>;
 import { Reducer } from "./types";
 import { ActionTypeKeys } from "./types";
 import { ActionTypes } from "./actions";
+import { ValidationState } from "./validation-reducer";
 
-export interface FaktumStoreState {
+export interface FaktumAppState {
 	faktumStore: FaktumState;
+	faktumValidation: ValidationState;
 }
 
 export interface FaktumState {

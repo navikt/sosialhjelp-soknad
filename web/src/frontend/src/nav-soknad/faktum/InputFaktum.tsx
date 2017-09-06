@@ -1,8 +1,9 @@
 import * as React from "react";
+import { findDOMNode } from "react-dom";
 import { Input, Feil, InputBredde } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { FaktumStoreState, FaktumComponentProps } from "../redux/reducer";
-import { setFaktumVerdi } from "../redux/actions";
+import { FaktumAppState, FaktumComponentProps } from "../redux/reducer";
+import { setFaktumVerdi, setFaktumValidering } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst } from "../utils";
@@ -17,6 +18,7 @@ interface OwnProps {
 	feil?: Feil;
 	maxLength?: number;
 	bredde?: InputBredde;
+	required?: boolean;
 }
 
 type Props = OwnProps &
@@ -29,6 +31,7 @@ const getStateFromProps = (props: Props): State => ({
 });
 
 class InputFaktum extends React.Component<Props, State> {
+	input: any;
 	constructor(props: Props) {
 		super(props);
 		this.handleOnBlur = this.handleOnBlur.bind(this);
@@ -45,6 +48,13 @@ class InputFaktum extends React.Component<Props, State> {
 
 	handleOnBlur() {
 		this.props.dispatch(setFaktumVerdi(this.props.faktumKey, this.state.value));
+		if (this.state.value === "") {
+			this.props.dispatch(
+				setFaktumValidering(this.props.faktumKey, findDOMNode(this.input), {
+					feilmelding: "mangler"
+				})
+			);
+		}
 	}
 
 	render() {
@@ -52,6 +62,7 @@ class InputFaktum extends React.Component<Props, State> {
 		const tekster = getInputFaktumTekst(intl, faktumKey);
 		return (
 			<Input
+				ref={(c: any) => (this.input = c)}
 				className="input--xxl faktumInput"
 				name={faktumKey}
 				disabled={disabled}
@@ -68,7 +79,7 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 }
 
-export default connect((state: FaktumStoreState, props: OwnProps) => {
+export default connect((state: FaktumAppState, props: OwnProps) => {
 	return {
 		fakta: state.faktumStore.fakta,
 		faktumKey: props.faktumKey

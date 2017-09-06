@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import {
-	FaktumStoreState,
+	FaktumAppState,
 	FaktumComponentProps
 } from "../../../nav-soknad/redux/reducer";
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
@@ -20,8 +20,9 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 	}
 }
 
-export default connect((state: FaktumStoreState, props: any) => {
+export default connect((state: FaktumAppState, props: any) => {
 	return {
-		fakta: state.faktumStore.fakta
+		fakta: state.faktumStore.fakta,
+		feil: state.faktumValidation.feil
 	};
 })(Familie);

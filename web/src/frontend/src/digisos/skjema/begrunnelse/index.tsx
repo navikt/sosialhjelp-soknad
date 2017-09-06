@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import {
-	FaktumStoreState,
+	FaktumAppState,
 	FaktumComponentProps
 } from "../../../nav-soknad/redux/reducer";
 import { DispatchProps } from "../../redux/types";
@@ -38,7 +38,7 @@ class Begrunnelse extends React.Component<
 	}
 }
 
-export default connect((state: FaktumStoreState, props: any) => {
+export default connect((state: FaktumAppState, props: any) => {
 	return {
 		fakta: state.faktumStore.fakta
 	};

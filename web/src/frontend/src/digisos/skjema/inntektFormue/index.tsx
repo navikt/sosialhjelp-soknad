@@ -2,7 +2,7 @@ import * as React from "react";
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { connect } from "react-redux";
 import {
-	FaktumStoreState,
+	FaktumAppState,
 	FaktumComponentProps
 } from "../../../nav-soknad/redux/reducer";
 
@@ -29,7 +29,7 @@ class InntektFormue extends React.Component<FaktumComponentProps, any> {
 	}
 }
 
-export default connect((state: FaktumStoreState, props: any) => {
+export default connect((state: FaktumAppState, props: any) => {
 	return {
 		fakta: state.faktumStore.fakta
 	};

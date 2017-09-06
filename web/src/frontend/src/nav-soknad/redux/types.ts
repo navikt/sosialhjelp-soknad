@@ -1,3 +1,5 @@
+import { Feil } from "nav-frontend-skjema";
+
 export type Dispatch = (action: any) => void;
 
 export type Reducer<S, AT> = (state: S, action: AT) => S;
@@ -10,6 +12,7 @@ export enum ActionTypeKeys {
 	SET_FAKTUM_VERDI = "SET_FAKTUM_VERDI",
 	SET_FAKTA = "SET_FAKTA",
 	RESET_FAKTUM_VERDI = "RESET_FAKTUM_VERDI",
+	SET_FAKTUM_VALIDATION = "SET_FAKTUM_VALIDATION",
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
@@ -37,6 +40,12 @@ export interface SetFaktaAction {
 export interface ResetFaktumVerdiAction {
 	type: ActionTypeKeys.RESET_FAKTUM_VERDI;
 	faktumKey: string;
+}
+export interface SetFaktumValideringAction {
+	type: ActionTypeKeys.SET_FAKTUM_VALIDATION;
+	faktumKey: string;
+	element: HTMLElement;
+	feil: Feil;
 }
 
 export interface OtherAction {
