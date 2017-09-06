@@ -1,6 +1,7 @@
 import { InjectedIntl } from "react-intl";
 import {
-	FaktumCheckboksTekst,
+	CheckboxFaktumTekst,
+	SporsmalFaktumTekst,
 	Infotekst,
 	InputFaktumTekst
 } from "./redux/types";
@@ -54,13 +55,22 @@ export function getIntlInfoTekst(
 	return tittel || tekst ? { tittel, tekst } : undefined;
 }
 
+export function getFaktumSporsmalTekst(
+	intl: InjectedIntl,
+	key: string
+): SporsmalFaktumTekst {
+	return {
+		sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
+		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
+		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`)
+	};
+}
 export function getFaktumCheckboksTekst(
 	intl: InjectedIntl,
 	key: string
-): FaktumCheckboksTekst {
+): CheckboxFaktumTekst {
 	return {
 		label: getIntlTextOrKey(intl, key),
-		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
 		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`)
 	};
@@ -70,7 +80,7 @@ export function getRadioFaktumTekst(
 	intl: InjectedIntl,
 	key: string,
 	value: string
-): FaktumCheckboksTekst {
+): CheckboxFaktumTekst {
 	return getFaktumCheckboksTekst(intl, `${key}.${value}`);
 }
 
@@ -79,10 +89,10 @@ export function getInputFaktumTekst(
 	key: string
 ): InputFaktumTekst {
 	return {
-		label: getIntlTextOrKey(intl, `${key}.sporsmal`),
-		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
+		label: getIntlTextOrKey(intl, `${key}.label`),
+		sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
 		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`),
-		placeholder: getIntlText(intl, `${key}.placeholder`)
+		pattern: getIntlText(intl, `${key}.pattern`)
 	};
 }

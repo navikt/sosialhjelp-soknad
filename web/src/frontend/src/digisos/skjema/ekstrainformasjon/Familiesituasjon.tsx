@@ -19,15 +19,22 @@ const Familiesituasjon: React.StatelessComponent<
 			tittel="Familiesituasjonen"
 			content={[
 				<SkjemagruppeFaktum
-					tittelId="ekstrainfo.familie.barnebidrag.tittel"
-					key="barnebidrag">
+					faktumId="ekstrainfo.familie.barnebidrag"
+					key="barnebidrag"
+				>
 					<Container fluid={true} className="container--noPadding">
 						<Row>
 							<Column sm="6" xs="3">
-								<InputFaktum faktumKey="ekstrainfo.familie.barnebidrag.betaler" />
+								<InputFaktum
+									faktumKey="ekstrainfo.familie.barnebidrag.betaler"
+									bredde="s"
+								/>
 							</Column>
 							<Column sm="6" xs="3">
-								<InputFaktum faktumKey="ekstrainfo.familie.barnebidrag.mottar" />
+								<InputFaktum
+									faktumKey="ekstrainfo.familie.barnebidrag.mottar"
+									bredde="s"
+								/>
 							</Column>
 						</Row>
 					</Container>

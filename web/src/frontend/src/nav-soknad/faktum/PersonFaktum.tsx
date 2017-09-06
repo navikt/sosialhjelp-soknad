@@ -1,5 +1,6 @@
 import * as React from "react";
-import Personskjema from "../components/person";
+import { Container, Row, Column } from "nav-frontend-grid";
+import InputFaktum from "./InputFaktum";
 
 interface OwnProps {
 	faktumKey: string;
@@ -8,12 +9,27 @@ interface OwnProps {
 class PersonFaktum extends React.Component<OwnProps, {}> {
 	render() {
 		const { faktumKey } = this.props;
+		const navnFaktumKey = `${faktumKey}.navn`;
+		const fnrFaktumKey = `${faktumKey}.fnr`;
+		const pnrFaktumKey = `${faktumKey}.pnr`;
 		return (
-			<Personskjema
-				navnFaktumKey={`${faktumKey}.navn`}
-				fnrFaktumKey={`${faktumKey}.fnr`}
-				pnrFaktumKey={`${faktumKey}.pnr`}
-			/>
+			<div className="personskjema">
+				<Container fluid={true} className="container--noPadding">
+					<Row>
+						<Column xs="12">
+							<InputFaktum faktumKey={navnFaktumKey} />
+						</Column>
+					</Row>
+					<Row>
+						<Column sm="6" xs="3">
+							<InputFaktum faktumKey={fnrFaktumKey} maxLength={6} bredde="s" />
+						</Column>
+						<Column sm="6" xs="3">
+							<InputFaktum faktumKey={pnrFaktumKey} maxLength={5} bredde="s" />
+						</Column>
+					</Row>
+				</Container>
+			</div>
 		);
 	}
 }

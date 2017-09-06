@@ -1,5 +1,5 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { radioCheckKeys, faktumIsSelected } from "../../../nav-soknad/utils";
 
@@ -16,13 +16,10 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeInnskudd = radioCheckKeys("inntekt.bankinnskudd.true.type");
 		const hvilkeInnskuddAnnet = "inntekt.bankinnskudd.true.type.annet";
 		return (
-			<Sporsmal
-				sporsmalId={innskudd.sporsmal}
-				hjelpetekstId={innskudd.hjelpetekst}
-			>
+			<SporsmalFaktum faktumId={innskudd.faktum}>
 				<RadioFaktum faktumKey={innskudd.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(fakta.get(innskudd.faktum))}>
-					<SkjemagruppeFaktum tittelId={hvilkeInnskudd.sporsmal}>
+					<SkjemagruppeFaktum faktumId={hvilkeInnskudd.faktum}>
 						{/*TODO checkboxbgroup-faktum*/}
 						<CheckboxFaktum
 							faktumKey={hvilkeInnskudd.faktum}
@@ -46,7 +43,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 					</SkjemagruppeFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={innskudd.faktum} option="false" />
-			</Sporsmal>
+			</SporsmalFaktum>
 		);
 	}
 }

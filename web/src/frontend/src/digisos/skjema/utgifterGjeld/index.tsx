@@ -1,6 +1,6 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-soknad/components/sporsmal";
-import Steg from "../../../nav-soknad/components/steg";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
+import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { connect } from "react-redux";
 import {
 	FaktumComponentProps,
@@ -32,11 +32,11 @@ class UtgifterGjeld extends React.Component<
 		const andreBarneutgifter = `${barneUtgifter.faktum}.annet.true.beskrivelse`;
 
 		return (
-			<Steg tittelId="utgifterbolk.tittel">
-				<Sporsmal sporsmalId={harBoutgifter.sporsmal}>
+			<StegFaktum tittelId="utgifterbolk.tittel">
+				<SporsmalFaktum faktumId={harBoutgifter.faktum}>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="true" />
 					<Underskjema visible={fakta.get(harBoutgifter.faktum) === "true"}>
-						<SkjemagruppeFaktum tittelId={boUtgifter.sporsmal}>
+						<SkjemagruppeFaktum faktumId={boUtgifter.faktum}>
 							{/*TODO checkboxgruppefaktum*/}
 							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="husleie" />
 							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="strom" />
@@ -65,13 +65,13 @@ class UtgifterGjeld extends React.Component<
 						</SkjemagruppeFaktum>
 					</Underskjema>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="false" />
-				</Sporsmal>
-				<Sporsmal sporsmalId={harUtgifterBarn.sporsmal}>
+				</SporsmalFaktum>
+				<SporsmalFaktum faktumId={harUtgifterBarn.faktum}>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="true" />
 					<Underskjema visible={fakta.get(harUtgifterBarn.faktum) === "true"}>
 						{/*TODO checkboxgruppefaktum*/}
 
-						<SkjemagruppeFaktum tittelId={barneUtgifter.sporsmal}>
+						<SkjemagruppeFaktum faktumId={barneUtgifter.faktum}>
 							<CheckboxFaktum
 								faktumKey={barneUtgifter.faktum}
 								option="fritidsaktivitet"
@@ -92,8 +92,8 @@ class UtgifterGjeld extends React.Component<
 						</SkjemagruppeFaktum>
 					</Underskjema>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="false" />
-				</Sporsmal>
-			</Steg>
+				</SporsmalFaktum>
+			</StegFaktum>
 		);
 	}
 }

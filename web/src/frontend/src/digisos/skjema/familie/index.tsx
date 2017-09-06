@@ -4,7 +4,7 @@ import {
 	FaktumStoreState,
 	FaktumComponentProps
 } from "../../../nav-soknad/redux/reducer";
-import Steg from "../../../nav-soknad/components/steg";
+import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import Sivilstatus from "./Sivilstatus";
 import Barn from "./Barn";
 
@@ -12,10 +12,10 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
 		return (
-			<Steg tittelId="familiebolk.tittel">
+			<StegFaktum tittelId="familiebolk.tittel">
 				<Sivilstatus fakta={fakta} />
 				<Barn fakta={fakta} />
-			</Steg>
+			</StegFaktum>
 		);
 	}
 }

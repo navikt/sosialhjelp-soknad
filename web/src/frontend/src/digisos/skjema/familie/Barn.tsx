@@ -1,5 +1,5 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { radioCheckKeys } from "../../../nav-soknad/utils";
 
@@ -13,13 +13,13 @@ class Barn extends React.Component<FaktumComponentProps, {}> {
 		const barn = radioCheckKeys("familie.barn");
 
 		return (
-			<Sporsmal sporsmalId={barn.sporsmal} hjelpetekstId={barn.hjelpetekst}>
+			<SporsmalFaktum faktumId={barn.faktum}>
 				<FaktumRadio faktumKey={barn.faktum} option="true" />
 				<Underskjema visible={fakta.get(barn.faktum) === "true"}>
 					<Barneinfo {...this.props} faktumKey="familie.barn.true" nummer={1} />
 				</Underskjema>
 				<FaktumRadio faktumKey={barn.faktum} option="false" />
-			</Sporsmal>
+			</SporsmalFaktum>
 		);
 	}
 }

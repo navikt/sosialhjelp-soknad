@@ -7,14 +7,20 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { faktumIsSelected } from "../../../nav-soknad/utils";
 
 const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum tittelId="ekstrainfo.arbeidsledig.tittel">
+	<SkjemagruppeFaktum faktumId="ekstrainfo.arbeidsledig">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.arbeidsledig.feriepenger" />
+					<InputFaktum
+						faktumKey="ekstrainfo.arbeidsledig.feriepenger"
+						bredde="s"
+					/>
 				</Column>
 				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.arbeidsledig.sluttoppgjor" />
+					<InputFaktum
+						faktumKey="ekstrainfo.arbeidsledig.sluttoppgjor"
+						bredde="s"
+					/>
 				</Column>
 			</Row>
 		</Container>
@@ -22,14 +28,14 @@ const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
 );
 
 const JobbSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum tittelId="ekstrainfo.jobb.tittel">
+	<SkjemagruppeFaktum faktumId="ekstrainfo.jobb">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.jobb.bruttolonn" />
+					<InputFaktum faktumKey="ekstrainfo.jobb.bruttolonn" bredde="s" />
 				</Column>
 				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.jobb.nettolonn" />
+					<InputFaktum faktumKey="ekstrainfo.jobb.nettolonn" bredde="s" />
 				</Column>
 			</Row>
 		</Container>
@@ -37,14 +43,14 @@ const JobbSkjema: React.StatelessComponent<{}> = () => (
 );
 
 const StudentSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum tittelId="ekstrainfo.student.tittel">
+	<SkjemagruppeFaktum faktumId="ekstrainfo.student">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.student.utbetaling" />
+					<InputFaktum faktumKey="ekstrainfo.student.utbetaling" bredde="s" />
 				</Column>
 				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.student.totalt" />
+					<InputFaktum faktumKey="ekstrainfo.student.totalt" bredde="s" />
 				</Column>
 			</Row>
 		</Container>

@@ -67,9 +67,10 @@ class Bosted extends React.Component<
 								this.setState({ kommuneId: evt.target.value })}
 							label={
 								<strong>
-									<FormattedMessage id="personalia.kommune.sporsmal" />
+									<FormattedMessage id="personalia.kommune.label" />
 								</strong>
-							}>
+							}
+						>
 							<option value="" />
 							{Kommuner.map(kommune => (
 								<option value={kommune.id} key={kommune.id}>
@@ -88,9 +89,10 @@ class Bosted extends React.Component<
 									this.setState({ bydelId: evt.target.value })}
 								label={
 									<strong>
-										<FormattedMessage id="personalia.bydel.sporsmal" />
+										<FormattedMessage id="personalia.bydel.label" />
 									</strong>
-								}>
+								}
+							>
 								<option value="" />
 								{valgtKommune.bydeler.map(bydel => (
 									<option value={bydel.id} key={bydel.id}>

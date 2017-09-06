@@ -60,7 +60,7 @@ class Skjema extends React.Component<
 								{ tittel: intl.formatMessage({ id: "inntektbolk.tittel" }) },
 								{ tittel: intl.formatMessage({ id: "utgifterbolk.tittel" }) },
 								{
-									tittel: intl.formatMessage({ id: "opplysningerbolk.tittel" })
+									tittel: intl.formatMessage({ id: "ekstrainfo.tittel" })
 								},
 								{ tittel: intl.formatMessage({ id: "oppsummering.tittel" }) }
 							]}
