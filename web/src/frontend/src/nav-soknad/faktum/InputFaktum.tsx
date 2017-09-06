@@ -60,7 +60,7 @@ class InputFaktum extends React.Component<Props, State> {
 				onChange={this.handleOnChange}
 				onBlur={this.handleOnBlur}
 				label={tekster.label}
-				placeholder={tekster.placeholder}
+				placeholder={tekster.pattern}
 				feil={feil}
 				maxLength={maxLength}
 				bredde={bredde}

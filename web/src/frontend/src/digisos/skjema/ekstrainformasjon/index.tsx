@@ -4,7 +4,7 @@ import {
 	FaktumStoreState,
 	FaktumComponentProps
 } from "../../../nav-soknad/redux/reducer";
-import Steg from "../../../nav-soknad/components/steg";
+import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import Infoblokk from "../../../nav-soknad/components/infoblokk";
 import { FormattedHTMLMessage } from "react-intl";
 import "./ekstrainfo.css";
@@ -25,11 +25,11 @@ class Ekstrainformasjon extends React.Component<FaktumComponentProps, {}> {
 						</Infoblokk>
 					</div>
 				</div>
-				<Steg tittelId="opplysningerbolk.tittel">
+				<StegFaktum tittelId="ekstrainfo.tittel">
 					<ArbeidOgUtdanning fakta={fakta} />
 					<Familiesituasjon fakta={fakta} />
 					<UtgifterOgGjeld fakta={fakta} />
-				</Steg>
+				</StegFaktum>
 			</div>
 		);
 	}

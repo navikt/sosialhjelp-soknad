@@ -1,5 +1,5 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { faktumIsSelected, getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 
@@ -13,16 +13,16 @@ class Jobb extends React.Component<FaktumComponentProps, any> {
 		const jobb = radioCheckKeys("dinsituasjon.jobb");
 		const jobber = radioCheckKeys("dinsituasjon.jobb.true.grad");
 		return (
-			<Sporsmal sporsmalId={jobb.sporsmal}>
-				<RadioFaktum faktumKey={jobb.faktum} option="true"/>
+			<SporsmalFaktum faktumId={jobb.faktum}>
+				<RadioFaktum faktumKey={jobb.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(getFaktumVerdi(fakta, jobb.faktum))}>
-					<SkjemagruppeFaktum tittelId={jobber.sporsmal}>
-						<RadioFaktum faktumKey={jobber.faktum} option="heltid"/>
-						<RadioFaktum faktumKey={jobber.faktum} option="deltid"/>
+					<SkjemagruppeFaktum faktumId={jobber.faktum}>
+						<RadioFaktum faktumKey={jobber.faktum} option="heltid" />
+						<RadioFaktum faktumKey={jobber.faktum} option="deltid" />
 					</SkjemagruppeFaktum>
 				</Underskjema>
-				<RadioFaktum faktumKey={jobb.faktum} option="false"/>
-			</Sporsmal>
+				<RadioFaktum faktumKey={jobb.faktum} option="false" />
+			</SporsmalFaktum>
 		);
 	}
 }

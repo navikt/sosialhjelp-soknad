@@ -23,6 +23,7 @@ export function fetchPost(urlPath: string, body: string) {
 			"Content-Type": "application/json"
 		},
 		method: "POST",
+        credentials: "same-origin",
 		body
 	};
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
@@ -35,8 +36,9 @@ export function fetchToJson(urlPath: string) {
 		headers: {
 			"Content-Type": "application/json"
 		},
-		method: "GET"
-	};
+		method: "GET",
+        credentials: "same-origin",
+    };
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
 		.then(toJson);
@@ -47,8 +49,9 @@ export function fetchHtml(urlPath: string) {
 		headers: {
 			"Content-Type": "text/html"
 		},
-		method: "GET"
-	};
+		method: "GET",
+        credentials: "same-origin",
+    };
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
 		.then((response: Response) => {

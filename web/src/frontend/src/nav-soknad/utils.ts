@@ -1,6 +1,7 @@
 import { InjectedIntl } from "react-intl";
 import {
-	FaktumCheckboksTekst,
+	CheckboxFaktumTekst,
+	SporsmalFaktumTekst,
 	Infotekst,
 	InputFaktumTekst
 } from "./redux/types";
@@ -28,7 +29,7 @@ export function boolToString(flag: boolean) {
 }
 
 export function intlHasKey(intl: InjectedIntl, key: string) {
-	return intl.messages[ key ] !== undefined;
+	return intl.messages[key] !== undefined;
 }
 
 export function getIntlText(intl: InjectedIntl, key?: string) {
@@ -45,32 +46,54 @@ export function getIntlTextOrKey(intl: InjectedIntl, key: string): string {
 	return tekst || key;
 }
 
-export function getIntlInfoTekst(intl: InjectedIntl, key: string): Infotekst | undefined {
+export function getIntlInfoTekst(
+	intl: InjectedIntl,
+	key: string
+): Infotekst | undefined {
 	const tittel = getIntlText(intl, `${key}.tittel`);
 	const tekst = getIntlText(intl, `${key}.tekst`);
 	return tittel || tekst ? { tittel, tekst } : undefined;
 }
 
-export function getFaktumCheckboksTekst(intl: InjectedIntl, key: string): FaktumCheckboksTekst {
+export function getFaktumSporsmalTekst(
+	intl: InjectedIntl,
+	key: string
+): SporsmalFaktumTekst {
+	return {
+		sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
+		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
+		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`)
+	};
+}
+export function getFaktumCheckboksTekst(
+	intl: InjectedIntl,
+	key: string
+): CheckboxFaktumTekst {
 	return {
 		label: getIntlTextOrKey(intl, key),
-		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
 		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`)
 	};
 }
 
-export function getRadioFaktumTekst(intl: InjectedIntl, key: string, value: string): FaktumCheckboksTekst {
+export function getRadioFaktumTekst(
+	intl: InjectedIntl,
+	key: string,
+	value: string
+): CheckboxFaktumTekst {
 	return getFaktumCheckboksTekst(intl, `${key}.${value}`);
 }
 
-export function getInputFaktumTekst(intl: InjectedIntl, key: string): InputFaktumTekst {
+export function getInputFaktumTekst(
+	intl: InjectedIntl,
+	key: string
+): InputFaktumTekst {
 	return {
-		label: getIntlTextOrKey(intl, `${key}.sporsmal`),
-		feilmelding: getIntlTextOrKey(intl, `${key}.feilmelding`),
+		label: getIntlTextOrKey(intl, `${key}.label`),
+		sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
 		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`),
-		placeholder: getIntlText(intl, `${key}.placeholder`)
+		pattern: getIntlText(intl, `${key}.pattern`)
 	};
 }
 

@@ -1,12 +1,11 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
-import HjelpetekstFaktum from "./HjelpetekstFaktum";
-import { getIntlTextOrKey } from "../utils";
+import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
+import { getFaktumSporsmalTekst } from "../utils";
 
 interface Props {
-	tittelId: string;
-	hjelpetekstId?: string;
+	faktumId: string;
 	feil?: Feil;
 	visible?: boolean;
 	children: React.ReactNode;
@@ -15,18 +14,20 @@ interface Props {
 const SkjemagruppeFaktum: React.StatelessComponent<Props> = (
 	props: Props & InjectedIntlProps
 ) => {
-	const { visible, tittelId, hjelpetekstId, intl, feil, children } = props;
+	const { visible, faktumId, intl, feil, children } = props;
 	if (visible === false) {
 		return null;
 	}
-	const tittel = getIntlTextOrKey(intl, tittelId);
+	const tekster = getFaktumSporsmalTekst(intl, faktumId);
 	return (
 		<SkjemaGruppe feil={feil}>
 			<fieldset className="skjema-fieldset">
-				<legend>{tittel}</legend>
-				{hjelpetekstId ? (
+				<legend>{tekster.sporsmal}</legend>
+				{tekster.hjelpetekst ? (
 					<div className="skjema-sporsmal__hjelpetekst">
-						<HjelpetekstFaktum hjelpetekstId={hjelpetekstId} />
+						<HjelpetekstAuto tittel={tekster.hjelpetekst.tittel}>
+							{tekster.hjelpetekst.tekst}
+						</HjelpetekstAuto>
 					</div>
 				) : null}
 				{children}

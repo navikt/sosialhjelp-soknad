@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import Steg from "../../../nav-soknad/components/steg";
+import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { DispatchProps } from "../../../nav-soknad/redux/types";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
@@ -29,7 +29,7 @@ class Oppsummering extends React.Component<Props> {
 	}
 	render() {
 		return (
-			<Steg tittelId="oppsummering.tittel">
+			<StegFaktum tittelId="oppsummering.tittel">
 				<div
 					className="skjema-oppsummering"
 					dangerouslySetInnerHTML={
@@ -39,7 +39,7 @@ class Oppsummering extends React.Component<Props> {
 				<div className="skjema-oppsummering__bekreft">
 					<CheckboxFaktum faktumKey="oppsummering.bekreft" option="true" />
 				</div>
-			</Steg>
+			</StegFaktum>
 		);
 	}
 }

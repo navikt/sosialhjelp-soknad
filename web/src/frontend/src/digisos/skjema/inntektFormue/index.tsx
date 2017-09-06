@@ -1,5 +1,5 @@
 import * as React from "react";
-import Steg from "../../../nav-soknad/components/steg";
+import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { connect } from "react-redux";
 import {
 	FaktumStoreState,
@@ -17,14 +17,14 @@ class InntektFormue extends React.Component<FaktumComponentProps, any> {
 	render() {
 		const { fakta } = this.props;
 		return (
-			<Steg tittelId="Inntekt og formue">
+			<StegFaktum tittelId="inntektbolk.tittel">
 				<YtelserFraNAV />
 				<SoknaderUnderBehandling />
 				<Bostotte fakta={fakta} />
 				<Eiendeler fakta={fakta} />
 				<Bankinnskudd fakta={fakta} />
 				<Utbetaling fakta={fakta} />
-			</Steg>
+			</StegFaktum>
 		);
 	}
 }

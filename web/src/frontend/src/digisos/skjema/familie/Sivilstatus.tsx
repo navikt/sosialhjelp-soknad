@@ -1,5 +1,5 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 
@@ -13,10 +13,10 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 		const { fakta } = this.props;
 		const sivilstatus = radioCheckKeys("familie.sivilstatus");
 		return (
-			<Sporsmal sporsmalId={sivilstatus.sporsmal}>
+			<SporsmalFaktum faktumId={sivilstatus.faktum}>
 				<RadioFaktum faktumKey={sivilstatus.faktum} option="gift" />
 				<Underskjema visible={getFaktumVerdi(fakta, sivilstatus.faktum) === "gift"}>
-					<SkjemagruppeFaktum tittelId="familie.sivilstatus.gift.tittel">
+					<SkjemagruppeFaktum faktumId="familie.sivilstatus.gift">
 						<Ektefelle fakta={fakta} />
 					</SkjemagruppeFaktum>
 				</Underskjema>
@@ -24,7 +24,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 				<RadioFaktum faktumKey={sivilstatus.faktum} option="samboer" />
 				<RadioFaktum faktumKey={sivilstatus.faktum} option="enke" />
 				<RadioFaktum faktumKey={sivilstatus.faktum} option="skilt" />
-			</Sporsmal>
+			</SporsmalFaktum>
 		);
 	}
 }

@@ -1,43 +1,51 @@
 import * as React from "react";
 import "./sporsmal.css";
 import Skjemapanel from "../skjemapanel";
-import HjelpetekstFaktum from "../../faktum/HjelpetekstFaktum";
-import { getIntlInfoTekst } from "../../utils";
-import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
+import { Infotekst } from "../../redux/types";
+import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
+import { Undertittel } from "nav-frontend-typografi";
 
 interface Props extends React.Props<any> {
-	sporsmalId: string;
-	beskrivelseId?: string;
-	hjelpetekstId?: string;
+	sporsmal: string;
+	info?: Infotekst;
+	hjelpetekst?: Infotekst;
+	feil?: string;
 }
 
-const Sporsmal: React.StatelessComponent<Props & InjectedIntlProps> = ({
-	children,
-	sporsmalId,
-	beskrivelseId,
-	hjelpetekstId,
-	intl
+const SporsmalBeskrivelse: React.StatelessComponent<{ info: Infotekst }> = ({
+	info
 }) => {
-	const beskrivelse = getIntlInfoTekst(intl, beskrivelseId);
-	const hjelpetekst = getIntlInfoTekst(intl, hjelpetekstId);
+	if (!info) {
+		return null;
+	}
+	return (
+		<div className="nav-soknad-sporsmal__beskrivelse">
+			{info.tittel ? <Undertittel>{info.tittel}</Undertittel> : null}
+			<p className="skjema-sporsmal__beskrivelse">{info.tekst}</p>
+		</div>
+	);
+};
+
+const Sporsmal: React.StatelessComponent<Props> = ({
+	children,
+	sporsmal,
+	info,
+	hjelpetekst
+}) => {
 	return (
 		<div className="skjema-sporsmal">
 			<Skjemapanel>
 				<fieldset className="skjema-fieldset">
-					<legend>
-						<FormattedMessage id={sporsmalId} />
-					</legend>
+					<legend>{sporsmal}</legend>
 					{hjelpetekst ? (
 						<div className="skjema-sporsmal__hjelpetekst">
-							<HjelpetekstFaktum hjelpetekstId={hjelpetekstId} />
+							<HjelpetekstAuto tittel={hjelpetekst.tittel}>
+								{hjelpetekst.tekst}
+							</HjelpetekstAuto>
 						</div>
 					) : null}
 					<div className="skjema-sporsmal__innhold">
-						{beskrivelse ? (
-							<p className="skjema-sporsmal__beskrivelse">
-								{intl.formatHTMLMessage({ id: beskrivelseId })}
-							</p>
-						) : null}
+						<SporsmalBeskrivelse info={info} />
 						{children}
 					</div>
 				</fieldset>
@@ -46,4 +54,4 @@ const Sporsmal: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	);
 };
 
-export default injectIntl(Sporsmal);
+export default Sporsmal;
