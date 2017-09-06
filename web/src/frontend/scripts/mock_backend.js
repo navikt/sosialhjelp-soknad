@@ -26,11 +26,17 @@ router.post("/soknader", function (req, res) {
 
 // Hent komplett søknadsinfo
 router.get("/soknader/:brukerBehandlingId", function (req, res) {
-    res.json(utils.lesMockDataFil("soknad.json"));
+    if(req.accepts('application/json') ) {
+        res.json(utils.lesMockDataFil("soknad.json"));
+    } else {
+        res.status(406);
+        res.json({feil: "Forventer Accept: application/json i header"});
+    }
 });
 
 // Bare hent fakta
 router.get("/soknader/:brukerBehandlingId/fakta", function (req, res) {
+    console.log(JSON.stringify(req.accepts(),null, 8));
     res.json(utils.lesMockDataFil("fakta.json"));
 });
 
