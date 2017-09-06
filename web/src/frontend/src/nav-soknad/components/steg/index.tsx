@@ -21,8 +21,6 @@ const Steg: React.StatelessComponent<StegProps> = ({ tittel, children }) => {
 			<div className="skjema-steg__feiloppsummering">
 				<Feiloppsummering
 					skjemanavn="abc"
-					sendSkjemaFeiletHandtert={(x: string) => null}
-					skjemaErGyldig={(x: string) => null}
 					feilmeldinger={feilmeldinger}
 					visFeilliste={true}
 				/>
