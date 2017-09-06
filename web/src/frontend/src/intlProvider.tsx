@@ -2,10 +2,10 @@ import * as React from "react";
 import { addLocaleData, IntlProvider as Provider } from "react-intl";
 import * as nb from "react-intl/locale-data/nb";
 import NavFrontendSpinner from "nav-frontend-spinner";
-import {connect} from 'react-redux';
-import {hentLedetekster} from './redux/informasjon/informasjonActions';
-import {ActionTypeKeys, LedetekstState} from './redux/informasjon/informasjonTypes';
-import {DispatchProps} from './nav-soknad/redux/types';
+import { connect } from "react-redux";
+import { hentLedetekster } from "./redux/informasjon/informasjonActions";
+import { ActionTypeKeys, LedetekstState } from "./redux/informasjon/informasjonTypes";
+import { DispatchProps } from "./nav-soknad/redux/types";
 
 addLocaleData(nb);
 
@@ -20,9 +20,9 @@ class IntlProvider extends React.Component<IntlProviderProps & DispatchProps & L
 	}
 
 	render() {
-		let {children, ledetekster} = this.props;
-
-		const locale = 'nb';
+		let {children} = this.props;
+		const {ledetekster} = this.props;
+		const locale = "nb";
 
 		if (ledetekster.status !== ActionTypeKeys.OK) {
 			children = (
@@ -44,4 +44,3 @@ export default connect((state: LedetekstState) => {
 		ledetekster: state.ledetekster,
 	};
 })(IntlProvider);
-

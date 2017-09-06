@@ -1,4 +1,4 @@
-import {ActionTypeKeys, ActionTypes, LedetekstApiType} from './informasjonTypes';
+import { ActionTypeKeys, ActionTypes, LedetekstApiType } from "./informasjonTypes";
 
 const {OK, PENDING, FEILET, INIT} = ActionTypeKeys;
 

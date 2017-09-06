@@ -10,7 +10,7 @@ import thunk from "redux-thunk";
 import { erDev } from "./digisos/redux/rest-utils";
 import SoknadReducer from "./digisos/redux/soknad/reducer";
 import FaktumReducer from "./nav-soknad/redux/reducer";
-import LedeteksterReducer from './redux/informasjon/informasjonReducer';
+import LedeteksterReducer from "./redux/informasjon/informasjonReducer";
 import IntlProvider from "./intlProvider";
 import "./index.css";
 
@@ -42,7 +42,7 @@ ReactDOM.render(
 			</BrowserRouter>
 		</IntlProvider>
 	</Provider>,
-	document.getElementById('root') as HTMLElement
+	document.getElementById("root") as HTMLElement
 );
 
 export { store };

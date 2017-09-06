@@ -1,7 +1,7 @@
-import {Dispatch} from 'react-redux';
-import {Action} from 'redux';
-import {ActionTypeKeys} from './informasjonTypes';
-import {fetchToJson} from '../../digisos/redux/rest-utils';
+import { Dispatch } from "react-redux";
+import { Action } from "redux";
+import { ActionTypeKeys } from "./informasjonTypes";
+import { fetchToJson } from "../../digisos/redux/rest-utils";
 
 const {OK, PENDING, FEILET} = ActionTypeKeys;
 
@@ -18,9 +18,9 @@ export function hentLedetekster(visNokler: boolean) {
 		if (PENDING) {
 			dispatch({type: PENDING});
 		}
-		return fetchToJson('informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp')
+		return fetchToJson("informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp")
 			.then((response) => {
-				visNokler ? leggNoklerPaaLedetekster(dispatch, response) : dispatch({type: OK, data: response})
+				visNokler ? leggNoklerPaaLedetekster(dispatch, response) : dispatch({type: OK, data: response});
 			})
 			.catch(reason => {
 				dispatch({type: FEILET, feilmelding: reason});
