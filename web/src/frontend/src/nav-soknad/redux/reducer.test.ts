@@ -20,7 +20,7 @@ describe('facts reducer', () => {
         expect(newFaktumState.fakta[0].value).toEqual(123);
     });
 
-	it("should add unknown fact", () => {
+    it("should add unknown fact", () => {
 		let newFaktumState = faktumReducer(defaultState, {
 			type: ActionTypeKeys.SET_FAKTUM_VERDI,
 			faktumKey: "ny-bolk",
@@ -28,10 +28,9 @@ describe('facts reducer', () => {
 		});
 		expect(newFaktumState.fakta.length).toEqual(2);
 		expect(newFaktumState.fakta.slice(-1)[0].key).toEqual("ny-bolk");
-	});
+    });
 
-
-	it("should bulk update all facts", () => {
+    it("should bulk update all facts", () => {
         expect(
             faktumReducer(defaultState, {
                 type: ActionTypeKeys.SET_FAKTA,

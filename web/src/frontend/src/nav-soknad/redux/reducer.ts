@@ -27,14 +27,18 @@ const initialState: FaktumState = {
 };
 
 function updateFaktumVerdi(fakta: Faktum[], key: string, value: any) {
-	for (const faktum of fakta) {
-		if (faktum.key === key) {
-			faktum.value = value;
-			return fakta;
-		}
+	const index: number = fakta.findIndex(faktum => {
+		return faktum.key === key;
+	});
+	if (index === -1) {
+		return [ ...fakta, { key, value, type: "BRUKERREGISTRERT" } ];
+	} else {
+		return [
+			...fakta.slice(0, index),
+			{...fakta[ index ], value},
+			...fakta.slice(index + 1)
+		];
 	}
-	fakta.push({key, value, type: "BRUKERREGISTRERT"});
-	return fakta;
 }
 
 // const faktumReducer: Reducer<FaktumState, ActionTypes> =

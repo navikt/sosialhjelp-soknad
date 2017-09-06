@@ -26,6 +26,17 @@ describe('setFaktumVerdi action creator', () => {
 		expect(newFaktumState.fakta.length).toEqual(2);
 		expect(newFaktumState.fakta[0].value).toEqual(789);
 		expect(newFaktumState.fakta[0].key).toEqual("bolk");
+
+		newFaktumState = faktumReducer(
+			newFaktumState,
+			setFaktumVerdi("bolk", false)
+		);
+		expect(newFaktumState.fakta[0].value).toEqual(false);
+		newFaktumState = faktumReducer(
+			newFaktumState,
+			setFaktumVerdi("bolk", true)
+		);
+		expect(newFaktumState.fakta[0].value).toEqual(true);
 	});
 
 	it("should add fact", () => {
