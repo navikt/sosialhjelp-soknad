@@ -1,7 +1,7 @@
 export type FaktumMap = Map<string, any>;
 import { Reducer } from "./types";
 import { ActionTypeKeys } from "./types";
-import { ActionTypes } from "./actions";
+// import { ActionTypes } from "./actions";
 
 export interface FaktumStoreState {
 	faktumStore: FaktumState;
@@ -26,20 +26,25 @@ const initialState: FaktumState = {
 	fakta: [ { key: "arbeid.dinsituasjon.jobb", value: true, type: "" } ]
 };
 
-const faktumReducer: Reducer<FaktumState, ActionTypes> =
+function updateFaktumVerdi(fakta: Faktum[], key: string, value: any) {
+	for (const faktum of fakta) {
+		if (faktum.key === key) {
+			faktum.value = value;
+			return fakta;
+		}
+	}
+	fakta.push({key, value, type: "BRUKERREGISTRERT"});
+	return fakta;
+}
+
+// const faktumReducer: Reducer<FaktumState, ActionTypes> =
+const faktumReducer: Reducer<FaktumState, any> =
 	(state = initialState, action): FaktumState => {
 	switch (action.type) {
 		case ActionTypeKeys.SET_FAKTUM_VERDI:
-			const updatedFakta = state.fakta.map(faktum => {
-					if (faktum.key === action.faktumKey) {
-						return { ...faktum, value: action.value };
-					}
-					return faktum;
-				}
-			);
 			return {
 				...state,
-				fakta: updatedFakta
+				fakta: updateFaktumVerdi(state.fakta, action.faktumKey, action.value)
 			};
 		case ActionTypeKeys.RESET_FAKTUM_VERDI:
 			return {

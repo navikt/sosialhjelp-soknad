@@ -75,9 +75,10 @@ export function getInputFaktumTekst(intl: InjectedIntl, key: string): InputFaktu
 }
 
 export function getFaktumVerdi(fakta: any, key: string) {
-	return fakta.map((faktum: any) => {
+	for (const faktum of fakta) {
 		if (faktum.key === key) {
 			return faktum.value;
 		}
-	});
+	}
+	return null;
 }

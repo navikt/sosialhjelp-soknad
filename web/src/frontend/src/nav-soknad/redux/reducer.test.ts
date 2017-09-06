@@ -5,39 +5,39 @@ describe('facts reducer', () => {
     const defaultState = {
         fakta: [
             {
-                key: "bolker",
+                key: "bolk",
                 value: "Not updated value",
                 type: "BRUKERREGISTRERT"
             }
         ]
     };
-    it("updates single fact", () => {
-        expect(
-            faktumReducer(defaultState, {
-                type: ActionTypeKeys.SET_FAKTUM_VERDI,
-                faktumKey: "bolker",
-                value: "Updated value"
-            })
-        ).toEqual(
-            {
-                fakta: [
-                    {
-                        key: "bolker",
-                        value: "Updated value",
-                        type: "BRUKERREGISTRERT"
-                    }
-                ]
-            }
-        )
+    it("should updates single fact", () => {
+    	let newFaktumState = faktumReducer(defaultState, {
+		    type: ActionTypeKeys.SET_FAKTUM_VERDI,
+		    faktumKey: "bolk",
+		    value: 123
+	    });
+        expect(newFaktumState.fakta[0].value).toEqual(123);
     });
 
-    it("set all facts", () => {
+	it("should add unknown fact", () => {
+		let newFaktumState = faktumReducer(defaultState, {
+			type: ActionTypeKeys.SET_FAKTUM_VERDI,
+			faktumKey: "ny-bolk",
+			value: 456
+		});
+		expect(newFaktumState.fakta.length).toEqual(2);
+		expect(newFaktumState.fakta.slice(-1)[0].key).toEqual("ny-bolk");
+	});
+
+
+	it("should bulk update all facts", () => {
         expect(
             faktumReducer(defaultState, {
                 type: ActionTypeKeys.SET_FAKTA,
                 fakta: [
                     {
-                        key: "bolker",
+                        key: "bolk",
                         value: null,
                         type: "BRUKERREGISTRERT"
                     },
@@ -57,7 +57,7 @@ describe('facts reducer', () => {
             type: ActionTypeKeys.SET_FAKTA,
             fakta: [
                 {
-                    key: "bolker",
+                    key: "bolk",
                     value: null,
                     type: "BRUKERREGISTRERT"
                 },
