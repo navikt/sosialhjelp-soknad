@@ -37,7 +37,7 @@ export function fetchToJson(urlPath: string) {
 			"Content-Type": "application/json"
 		},
 		method: "GET",
-		credentials: "same-origin",
+		credentials: "same-origin"
 	};
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
@@ -50,7 +50,7 @@ export function fetchHtml(urlPath: string) {
 			"Content-Type": "text/html"
 		},
 		method: "GET",
-		credentials: "same-origin",
+		credentials: "same-origin"
 	};
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
