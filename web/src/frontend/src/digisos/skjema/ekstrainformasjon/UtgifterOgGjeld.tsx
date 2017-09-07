@@ -49,9 +49,13 @@ const UtgifterOgGjeld: React.StatelessComponent<
 	FaktumComponentProps
 > = props => {
 	const { fakta } = props;
-	const visHusleie = faktumIsSelected(getFaktumVerdi(fakta, "dinsituasjon.jobb"));
-	const visStrom = faktumIsSelected(getFaktumVerdi(fakta, "dinsituasjon.jobb"));
-	const visBarn = faktumIsSelected(getFaktumVerdi(fakta, "dinsituasjon.studerer"));
+	const visHusleie = faktumIsSelected(
+		getFaktumVerdi(fakta, "utgifter.boutgift.true.type.husleie")
+	);
+	const visStrom = faktumIsSelected(
+		getFaktumVerdi(fakta, "utgifter.boutgift.true.type.strom")
+	);
+	const visBarn = faktumIsSelected(getFaktumVerdi(fakta, "utgifter.barn"));
 
 	if (!visHusleie && !visStrom && !visBarn) {
 		return null;

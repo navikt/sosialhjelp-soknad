@@ -7,10 +7,9 @@ import {
 } from "../../nav-soknad/redux/reducer";
 import Arrow from "../../nav-soknad/components/svg/Arrow";
 import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
-import { Collapse } from "react-collapse";
 import { SoknadState, ActionTypeKeys } from "../redux/soknad/types";
 import { withRouter, RouterProps } from "react-router";
-import { opprettSoknad } from "../redux/soknad/actions";
+import { opprettSoknad, resetSoknad } from "../redux/soknad/actions";
 import { DispatchProps } from "../redux/types";
 import { Select } from "nav-frontend-skjema";
 import { InjectedIntlProps, FormattedMessage } from "react-intl";
@@ -38,8 +37,16 @@ class Bosted extends React.Component<
 		};
 	}
 
+	componentDidMount() {
+		this.props.dispatch(resetSoknad());
+	}
+
 	componentDidUpdate() {
 		if (this.props.status === ActionTypeKeys.OK) {
+			this.setState({
+				kommuneId: "",
+				bydelId: ""
+			});
 			this.gaaTilSkjema();
 		}
 	}
@@ -59,7 +66,7 @@ class Bosted extends React.Component<
 
 		return (
 			<form onSubmit={e => this.opprettSoknad(e)}>
-				<Collapse isOpened={true}>
+				<div>
 					<div className="blokk-l">
 						<Select
 							bredde="m"
@@ -118,7 +125,7 @@ class Bosted extends React.Component<
 							</Knapp>
 						</div>
 					) : null}
-				</Collapse>
+				</div>
 			</form>
 		);
 	}

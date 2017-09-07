@@ -11,6 +11,7 @@ import {
 import { SoknadState } from "../redux/soknad/types";
 import "./kvittering.css";
 import { getBosted } from "../data/kommuner";
+import { getFaktumVerdi } from "../../nav-soknad/utils";
 
 interface StateProps {
 	fakta: FaktumMap;
@@ -23,8 +24,8 @@ class Kvittering extends React.Component<
 > {
 	render() {
 		const { fakta } = this.props;
-		const kommune = fakta.get("personalia.kommune");
-		const bydel = fakta.get("personalia.bydel");
+		const kommune = getFaktumVerdi(fakta, "personalia.kommune");
+		const bydel = getFaktumVerdi(fakta, "personalia.bydel");
 		return (
 			<div className="kvittering skjema-content">
 				<Panel>

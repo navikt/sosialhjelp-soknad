@@ -6,7 +6,10 @@ import {
 	FaktumValueType
 } from "./types";
 
-export type ActionTypes = SetFaktumVerdiAction | ResetFaktumVerdiAction | SetFaktaAction;
+export type ActionTypes =
+	| SetFaktumVerdiAction
+	| ResetFaktumVerdiAction
+	| SetFaktaAction;
 
 export function setFaktumVerdi(
 	faktumKey: string,
@@ -21,7 +24,7 @@ export function setFaktumVerdi(
 	};
 }
 
-export function setFakta(fakta: any ) {
+export function setFakta(fakta: any) {
 	return {
 		type: ActionTypeKeys.SET_FAKTA,
 		fakta

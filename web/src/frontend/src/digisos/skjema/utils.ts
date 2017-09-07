@@ -35,12 +35,20 @@ export function gaVidere(
 	const steg = Math.min(ANTALL_STEG, aktivtSteg + 1);
 	gaTilSteg(steg, brukerBehandlingId, history);
 }
+
+export function gaTilStart(history: RouterHistoryType) {
+	history.push(`/informasjon`);
+}
 export function gaTilbake(
 	aktivtSteg: number,
 	brukerBehandlingId: string,
 	history: RouterHistoryType
 ) {
-	gaTilSteg(Math.max(1, aktivtSteg - 1), brukerBehandlingId, history);
+	if (aktivtSteg === 1) {
+		gaTilStart(history);
+	} else {
+		gaTilSteg(Math.max(1, aktivtSteg - 1), brukerBehandlingId, history);
+	}
 }
 
 export function avbryt() {
