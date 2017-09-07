@@ -78,7 +78,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 
 export default connect((state: FaktumAppState, props: OwnProps) => {
 	return {
-		fakta: state.faktumStore.fakta,
+		fakta: state.faktum.fakta,
 		faktumKey: props.faktumKey
 	};
 })(injectIntl(TextareaFaktum));

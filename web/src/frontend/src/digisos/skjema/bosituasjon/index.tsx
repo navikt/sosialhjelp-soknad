@@ -2,10 +2,8 @@ import * as React from "react";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { connect } from "react-redux";
-import {
-	FaktumAppState,
-	FaktumComponentProps
-} from "../../../nav-soknad/redux/reducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { State } from "../../redux/reducers";
 import {
 	radioCheckKeys,
 	inputKeys,
@@ -50,8 +48,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 				<SporsmalFaktum faktumId={barnUnder18.faktum}>
 					<RadioFaktum faktumKey={barnUnder18.faktum} option="true" />
 					<Underskjema
-						visible={faktumIsSelected(fakta.get(barnUnder18.faktum))}
-					>
+						visible={faktumIsSelected(fakta.get(barnUnder18.faktum))}>
 						<InputFaktum
 							faktumKey={barnUnder18True.faktum}
 							maxLength={3}
@@ -76,8 +73,8 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	}
 }
 
-export default connect((state: FaktumAppState, props: any) => {
+export default connect((state: State, props: any) => {
 	return {
-		fakta: state.faktumStore.fakta
+		fakta: state.faktum.fakta
 	};
 })(Bosituasjon);

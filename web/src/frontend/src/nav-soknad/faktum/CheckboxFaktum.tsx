@@ -59,6 +59,6 @@ class CheckboxFaktum extends React.Component<
 
 export default connect((state: FaktumAppState, props: OwnProps) => {
 	return {
-		fakta: state.faktumStore.fakta
+		fakta: state.faktum.fakta
 	};
 })(injectIntl(CheckboxFaktum));

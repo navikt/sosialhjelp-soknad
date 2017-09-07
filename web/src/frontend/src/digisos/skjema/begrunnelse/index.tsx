@@ -1,9 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import {
-	FaktumAppState,
-	FaktumComponentProps
-} from "../../../nav-soknad/redux/reducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { State } from "../../redux/reducers";
 import { DispatchProps } from "../../redux/types";
 
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
@@ -38,8 +36,8 @@ class Begrunnelse extends React.Component<
 	}
 }
 
-export default connect((state: FaktumAppState, props: any) => {
+export default connect((state: State, props: any) => {
 	return {
-		fakta: state.faktumStore.fakta
+		fakta: state.faktum.fakta
 	};
 })(Begrunnelse);

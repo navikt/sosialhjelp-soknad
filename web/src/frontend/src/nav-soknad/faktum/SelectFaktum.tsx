@@ -47,8 +47,7 @@ class FaktumSelect extends React.Component<
 						label={labelFunc ? labelFunc(tekster.label) : tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>
-				}
-			>
+				}>
 				{children}
 			</Select>
 		);
@@ -57,7 +56,7 @@ class FaktumSelect extends React.Component<
 
 export default connect((state: FaktumAppState, props: OwnProps) => {
 	return {
-		fakta: state.faktumStore.fakta,
+		fakta: state.faktum.fakta,
 		faktumKey: props.faktumKey
 	};
 })(injectIntl(FaktumSelect));

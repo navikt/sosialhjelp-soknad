@@ -2,16 +2,13 @@ export type FaktumMap = Map<string, any>;
 import { Reducer } from "./types";
 import { ActionTypeKeys } from "./types";
 import { ActionTypes } from "./actions";
-import { ValidationState } from "./validation-reducer";
 
 export interface FaktumAppState {
-	faktumStore: FaktumState;
-	faktumValidation: ValidationState;
+	faktum: FaktumState;
 }
 
 export interface FaktumState {
 	fakta: FaktumMap;
-	faktumTekst?: any;
 }
 
 export interface FaktumComponentProps {
@@ -31,7 +28,7 @@ export const deleteFaktumFromMap = (faktumMap: FaktumMap, key: string) => {
 	return copyMap;
 };
 
-const faktumReducer: Reducer<FaktumState, ActionTypes> = (
+const FaktumReducer: Reducer<FaktumState, ActionTypes> = (
 	state = defaultState,
 	action
 ): FaktumState => {
@@ -58,4 +55,4 @@ const faktumReducer: Reducer<FaktumState, ActionTypes> = (
 	}
 };
 
-export default faktumReducer;
+export default FaktumReducer;

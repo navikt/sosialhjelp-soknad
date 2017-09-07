@@ -1,15 +1,14 @@
 import * as React from "react";
+import { connect } from "react-redux";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+
+import { State } from "../../redux/reducers";
+import { DispatchProps } from "../../redux/types";
+
+import { faktumIsSelected, radioCheckKeys } from "../../../nav-soknad/utils";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
-import { connect } from "react-redux";
-import {
-	FaktumComponentProps,
-	FaktumAppState
-} from "../../../nav-soknad/redux/reducer";
-import { DispatchProps } from "../../redux/types";
-import { InjectedIntlProps, injectIntl } from "react-intl";
-import { faktumIsSelected, radioCheckKeys } from "../../../nav-soknad/utils";
-
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
@@ -98,8 +97,8 @@ class UtgifterGjeld extends React.Component<
 	}
 }
 
-export default connect((state: FaktumAppState, props: any) => {
+export default connect((state: State, props: any) => {
 	return {
-		fakta: state.faktumStore.fakta
+		fakta: state.faktum.fakta
 	};
 })(injectIntl(UtgifterGjeld));

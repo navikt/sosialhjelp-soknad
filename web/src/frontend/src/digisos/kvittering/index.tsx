@@ -3,24 +3,12 @@ import { connect } from "react-redux";
 import { Panel } from "nav-frontend-paneler";
 import Icon from "nav-frontend-ikoner-assets";
 import { Undertittel } from "nav-frontend-typografi";
-import {
-	FaktumState,
-	FaktumComponentProps,
-	FaktumMap
-} from "../../nav-soknad/redux/reducer";
-import { SoknadState } from "../redux/soknad/types";
+import { FaktumComponentProps } from "../../nav-soknad/redux/reducer";
+import { State } from "../redux/reducers";
 import "./kvittering.css";
 import { getBosted } from "../data/kommuner";
 
-interface StateProps {
-	fakta: FaktumMap;
-	soknad: SoknadState;
-}
-
-class Kvittering extends React.Component<
-	StateProps & FaktumComponentProps,
-	{}
-> {
+class Kvittering extends React.Component<State & FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
 		const kommune = fakta.get("personalia.kommune");
@@ -47,11 +35,9 @@ class Kvittering extends React.Component<
 	}
 }
 
-export default connect(
-	(state: { faktumStore: FaktumState; soknad: SoknadState }, props: any) => {
-		return {
-			fakta: state.faktumStore.fakta,
-			soknad: state.soknad
-		};
-	}
-)(Kvittering);
+export default connect((state: State, props: any) => {
+	return {
+		fakta: state.faktum.fakta,
+		soknad: state.soknad
+	};
+})(Kvittering);
