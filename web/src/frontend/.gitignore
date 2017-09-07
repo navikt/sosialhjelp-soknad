@@ -1,7 +1,13 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # built files
+*.css
 *.css.map
+!build/static/css/*.css
+
+build
+!build/index.html
+!build/static/*
 
 # dependencies
 /node_modules
