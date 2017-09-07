@@ -5,7 +5,7 @@ import { Valideringsfeil } from "../../redux/types";
 
 const scrollToElement = (element: HTMLElement) => {
 	if (element && element.scrollIntoView) {
-		element.scrollIntoView();
+		element.focus();
 	}
 };
 

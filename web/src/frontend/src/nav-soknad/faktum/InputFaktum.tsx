@@ -77,10 +77,10 @@ class InputFaktum extends React.Component<Props, State> {
 		const tekster = getInputFaktumTekst(intl, faktumKey);
 		return (
 			<Input
-				ref={(c: any) => (this.input = c)}
 				className="input--xxl faktumInput"
 				name={faktumKey}
 				disabled={disabled}
+				inputRef={(c: any) => (this.input = c)}
 				value={this.state.value}
 				onChange={this.handleOnChange}
 				onBlur={this.handleOnBlur}
