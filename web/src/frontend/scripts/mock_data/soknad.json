@@ -68,7 +68,7 @@
           "faktumId": 2,
           "soknadId": 1,
           "key": "fnr",
-          "value": "03076321565",
+          "value": "03033321212",
           "systemEgenskap": 1
         },
         {
@@ -180,7 +180,7 @@
         "epost": "test@epost.com",
         "sekundarAdresseType": "MIDLERTIDIG_POSTADRESSE_UTLAND",
         "gjeldendeAdresse": "Grepalida 44B, 0560 Oslo, Norge",
-        "fnr": "03076321565",
+        "fnr": "03033321212",
         "alder": "54",
         "sekundarAdresseGyldigTil": "2012-11-12",
         "utenlandskKontoLand": "Norge",
