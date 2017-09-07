@@ -7,12 +7,13 @@ import { FaktumComponentProps } from "../../nav-soknad/redux/reducer";
 import { State } from "../redux/reducers";
 import "./kvittering.css";
 import { getBosted } from "../data/kommuner";
+import { getFaktumVerdi } from "../../nav-soknad/utils";
 
 class Kvittering extends React.Component<State & FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
-		const kommune = fakta.get("personalia.kommune");
-		const bydel = fakta.get("personalia.bydel");
+		const kommune = getFaktumVerdi(fakta, "personalia.kommune");
+		const bydel = getFaktumVerdi(fakta, "personalia.bydel");
 		return (
 			<div className="kvittering skjema-content">
 				<Panel>

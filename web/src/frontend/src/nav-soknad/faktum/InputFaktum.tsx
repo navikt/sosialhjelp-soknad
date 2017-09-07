@@ -6,7 +6,7 @@ import { FaktumAppState, FaktumComponentProps } from "../redux/reducer";
 import { setFaktumVerdi, setFaktumValidering } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getInputFaktumTekst } from "../utils";
+import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
 
 interface State {
 	value: string;
@@ -27,7 +27,7 @@ type Props = OwnProps &
 	InjectedIntlProps;
 
 const getStateFromProps = (props: Props): State => ({
-	value: props.fakta.get(props.faktumKey) || ""
+	value: getFaktumVerdi(props.fakta, props.faktumKey) || ""
 });
 
 class InputFaktum extends React.Component<Props, State> {
@@ -38,6 +38,7 @@ class InputFaktum extends React.Component<Props, State> {
 		this.handleOnChange = this.handleOnChange.bind(this);
 		this.state = getStateFromProps(props);
 	}
+
 	componentWillReceiveProps(nextProps: Props) {
 		this.setState(getStateFromProps(nextProps));
 	}

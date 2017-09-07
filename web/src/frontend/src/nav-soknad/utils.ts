@@ -96,3 +96,12 @@ export function getInputFaktumTekst(
 		pattern: getIntlText(intl, `${key}.pattern`)
 	};
 }
+
+export function getFaktumVerdi(fakta: any, key: string) {
+	for (const faktum of fakta) {
+		if (faktum.key === key) {
+			return faktum.value;
+		}
+	}
+	return null;
+}

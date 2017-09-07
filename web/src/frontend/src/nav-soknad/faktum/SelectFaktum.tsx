@@ -6,7 +6,7 @@ import { setFaktumVerdi } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
-import { getInputFaktumTekst } from "../utils";
+import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
 import { Select, SelectBredde } from "nav-frontend-skjema";
 
 interface OwnProps {
@@ -37,7 +37,7 @@ class FaktumSelect extends React.Component<
 			<Select
 				name={faktumKey}
 				disabled={disabled}
-				value={fakta.get(faktumKey)}
+				value={getFaktumVerdi(fakta, faktumKey)}
 				bredde={bredde}
 				onChange={(evt: any) =>
 					dispatch(setFaktumVerdi(faktumKey, evt.target.value))}

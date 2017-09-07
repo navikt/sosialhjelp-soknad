@@ -4,6 +4,7 @@ import {
 	OpprettSoknadAction,
 	SetBrukerBehandlingIdAction,
 	SetServerFeilAction,
+	ResetSoknadAction,
 	SetOppsummering
 } from "./types";
 import { fetchPost, fetchToJson, fetchHtml } from "../rest-utils";
@@ -13,6 +14,7 @@ export type ActionTypes =
 	| OpprettSoknadAction
 	| SetBrukerBehandlingIdAction
 	| SetServerFeilAction
+	| ResetSoknadAction
 	| SetOppsummering;
 
 export function opprettSoknad(kommuneId: string, bydelId: string) {
@@ -29,6 +31,7 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 				});
 				hentFakta(brukerBehandlingId, dispatch).then(fakta => {
 					dispatch(setFakta(fakta));
+					dispatch(setFaktumVerdi("spikespike", 123));
 					dispatch(setFaktumVerdi("personalia.kommune", kommuneId));
 					if (bydelId !== "") {
 						dispatch(setFaktumVerdi("personalia.bydel", bydelId));
@@ -63,5 +66,11 @@ export function hentOppsummering(id: string) {
 			.catch(reason => {
 				dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
 			});
+	};
+}
+
+export function resetSoknad() {
+	return (dispatch: Dispatch<Action>) => {
+		dispatch({ type: ActionTypeKeys.RESET_SOKNAD });
 	};
 }

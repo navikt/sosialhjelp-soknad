@@ -7,7 +7,8 @@ import { State } from "../../redux/reducers";
 import {
 	radioCheckKeys,
 	inputKeys,
-	faktumIsSelected
+	faktumIsSelected,
+	getFaktumVerdi
 } from "../../../nav-soknad/utils";
 
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
@@ -33,7 +34,8 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="leierkommunalt" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="ingen" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="annet" />
-					<Underskjema visible={fakta.get(bosituasjon.faktum) === "annet"}>
+					<Underskjema
+						visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}>
 						<SkjemagruppeFaktum faktumId={annen.faktum}>
 							{/*TODO opprette checkboxgruppefaktumet*/}
 							<CheckboxFaktum faktumKey={annen.faktum} option="institusjon" />
@@ -48,7 +50,9 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 				<SporsmalFaktum faktumId={barnUnder18.faktum}>
 					<RadioFaktum faktumKey={barnUnder18.faktum} option="true" />
 					<Underskjema
-						visible={faktumIsSelected(fakta.get(barnUnder18.faktum))}>
+						visible={faktumIsSelected(
+							getFaktumVerdi(fakta, barnUnder18.faktum)
+						)}>
 						<InputFaktum
 							faktumKey={barnUnder18True.faktum}
 							maxLength={3}
@@ -59,7 +63,8 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumId={over18.faktum}>
 					<RadioFaktum faktumKey={over18.faktum} option="true" />
-					<Underskjema visible={faktumIsSelected(fakta.get(over18.faktum))}>
+					<Underskjema
+						visible={faktumIsSelected(getFaktumVerdi(fakta, over18.faktum))}>
 						<InputFaktum
 							faktumKey={over18True.faktum}
 							maxLength={3}

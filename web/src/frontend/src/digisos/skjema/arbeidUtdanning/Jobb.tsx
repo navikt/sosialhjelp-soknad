@@ -1,7 +1,7 @@
 import * as React from "react";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
-import { faktumIsSelected, radioCheckKeys } from "../../../nav-soknad/utils";
+import { faktumIsSelected, getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
@@ -15,7 +15,7 @@ class Jobb extends React.Component<FaktumComponentProps, any> {
 		return (
 			<SporsmalFaktum faktumId={jobb.faktum}>
 				<RadioFaktum faktumKey={jobb.faktum} option="true" />
-				<Underskjema visible={faktumIsSelected(fakta.get(jobb.faktum))}>
+				<Underskjema visible={faktumIsSelected(getFaktumVerdi(fakta, jobb.faktum))}>
 					<SkjemagruppeFaktum faktumId={jobber.faktum}>
 						<RadioFaktum faktumKey={jobber.faktum} option="heltid" />
 						<RadioFaktum faktumKey={jobber.faktum} option="deltid" />

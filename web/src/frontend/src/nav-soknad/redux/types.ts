@@ -11,6 +11,7 @@ export interface DispatchProps {
 export enum ActionTypeKeys {
 	SET_FAKTUM_VERDI = "SET_FAKTUM_VERDI",
 	SET_FAKTA = "SET_FAKTA",
+	SOKNAD_OPPRETTET = "SOKNAD_OPPRETTET",
 	RESET_FAKTUM_VERDI = "RESET_FAKTUM_VERDI",
 	SET_FAKTUM_VALIDATION = "SET_FAKTUM_VALIDATION",
 	OTHER_ACTION = "__any_other_action_type__"
@@ -35,6 +36,10 @@ export interface Fakta {
 export interface SetFaktaAction {
 	type: ActionTypeKeys.SET_FAKTA;
 	fakta: any;
+}
+
+export interface SoknadOpprettetAction {
+	type: ActionTypeKeys.SOKNAD_OPPRETTET;
 }
 
 export interface ResetFaktumVerdiAction {

@@ -3,7 +3,7 @@ import { Container, Row, Column } from "nav-frontend-grid";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
-import { faktumIsSelected } from "../../../nav-soknad/utils";
+import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 
 const StromSkjema: React.StatelessComponent<{}> = () => (
@@ -49,9 +49,13 @@ const UtgifterOgGjeld: React.StatelessComponent<
 	FaktumComponentProps
 > = props => {
 	const { fakta } = props;
-	const visHusleie = faktumIsSelected(fakta.get("dinsituasjon.jobb"));
-	const visStrom = faktumIsSelected(fakta.get("dinsituasjon.jobb"));
-	const visBarn = faktumIsSelected(fakta.get("dinsituasjon.studerer"));
+	const visHusleie = faktumIsSelected(
+		getFaktumVerdi(fakta, "utgifter.boutgift.true.type.husleie")
+	);
+	const visStrom = faktumIsSelected(
+		getFaktumVerdi(fakta, "utgifter.boutgift.true.type.strom")
+	);
+	const visBarn = faktumIsSelected(getFaktumVerdi(fakta, "utgifter.barn"));
 
 	if (!visHusleie && !visStrom && !visBarn) {
 		return null;
