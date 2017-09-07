@@ -8,7 +8,7 @@ import {
 } from "../../../nav-soknad/redux/reducer";
 import { DispatchProps } from "../../redux/types";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { faktumIsSelected, radioCheckKeys } from "../../../nav-soknad/utils";
+import { faktumIsSelected, getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
@@ -35,7 +35,7 @@ class UtgifterGjeld extends React.Component<
 			<StegFaktum tittelId="utgifterbolk.tittel">
 				<SporsmalFaktum faktumId={harBoutgifter.faktum}>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="true" />
-					<Underskjema visible={fakta.get(harBoutgifter.faktum) === "true"}>
+					<Underskjema visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}>
 						<SkjemagruppeFaktum faktumId={boUtgifter.faktum}>
 							{/*TODO checkboxgruppefaktum*/}
 							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="husleie" />
@@ -58,7 +58,7 @@ class UtgifterGjeld extends React.Component<
 							/>
 
 							{faktumIsSelected(
-								fakta.get(`${boUtgifter.faktum}.andreutgifter`)
+								getFaktumVerdi(fakta, `${boUtgifter.faktum}.andreutgifter`)
 							) ? (
 								<TextareaFaktum faktumKey={andreBoUtgifter} />
 							) : null}
@@ -68,7 +68,7 @@ class UtgifterGjeld extends React.Component<
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumId={harUtgifterBarn.faktum}>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="true" />
-					<Underskjema visible={fakta.get(harUtgifterBarn.faktum) === "true"}>
+					<Underskjema visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}>
 						{/*TODO checkboxgruppefaktum*/}
 
 						<SkjemagruppeFaktum faktumId={barneUtgifter.faktum}>
@@ -86,7 +86,7 @@ class UtgifterGjeld extends React.Component<
 							/>
 							<CheckboxFaktum faktumKey={barneUtgifter.faktum} option="helse" />
 							<CheckboxFaktum faktumKey={barneUtgifter.faktum} option="annet" />
-							{faktumIsSelected(fakta.get(`${barneUtgifter.faktum}.annet`)) ? (
+							{faktumIsSelected(getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`)) ? (
 								<TextareaFaktum faktumKey={andreBarneutgifter} />
 							) : null}
 						</SkjemagruppeFaktum>

@@ -1,7 +1,7 @@
 import * as React from "react";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
-import { radioCheckKeys, faktumIsSelected } from "../../../nav-soknad/utils";
+import { radioCheckKeys, faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
@@ -18,7 +18,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 		return (
 			<SporsmalFaktum faktumId={utbetaling.faktum}>
 				<RadioFaktum faktumKey={utbetaling.faktum} option="true" />
-				<Underskjema visible={faktumIsSelected(fakta.get(utbetaling.faktum))}>
+				<Underskjema visible={faktumIsSelected(getFaktumVerdi(fakta, utbetaling.faktum))}>
 					<SkjemagruppeFaktum faktumId={hvilkeUtbetalinger.faktum}>
 						{/*TODO legg til checkboxgruppefaktum*/}
 						<CheckboxFaktum
@@ -37,7 +37,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 							faktumKey={hvilkeUtbetalinger.faktum}
 							option="annet"
 						/>
-						{faktumIsSelected(fakta.get(hvilkeUtbetalingerAnnet)) ? (
+						{faktumIsSelected(getFaktumVerdi(fakta, hvilkeUtbetalingerAnnet)) ? (
 							<TextareaFaktum
 								faktumKey={`${hvilkeUtbetalingerAnnet}.true.beskrivelse`}
 							/>

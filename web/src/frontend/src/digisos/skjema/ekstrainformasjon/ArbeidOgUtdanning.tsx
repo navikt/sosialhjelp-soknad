@@ -4,7 +4,7 @@ import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
-import { faktumIsSelected } from "../../../nav-soknad/utils";
+import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 
 const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
 	<SkjemagruppeFaktum faktumId="ekstrainfo.arbeidsledig">
@@ -61,9 +61,9 @@ const ArbeidOgUtdanning: React.StatelessComponent<
 	FaktumComponentProps
 > = props => {
 	const { fakta } = props;
-	const visArbeidsledig = faktumIsSelected(fakta.get("dinsituasjon.jobb"));
+	const visArbeidsledig = faktumIsSelected(getFaktumVerdi(fakta, "dinsituasjon.jobb"));
 	const visJobb = !visArbeidsledig;
-	const visStudent = faktumIsSelected(fakta.get("dinsituasjon.studerer"));
+	const visStudent = faktumIsSelected(getFaktumVerdi(fakta, "dinsituasjon.studerer"));
 
 	if (!visArbeidsledig && !visJobb && !visStudent) {
 		return null;

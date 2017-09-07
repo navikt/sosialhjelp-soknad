@@ -1,7 +1,7 @@
 import * as React from "react";
 import PersonFaktum from "../../../nav-soknad/faktum/PersonFaktum";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
-import { radioCheckKeys } from "../../../nav-soknad/utils";
+import { getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
@@ -18,7 +18,7 @@ class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 				<SkjemagruppeFaktum faktumId={borsammen.faktum}>
 					<RadioFaktum faktumKey={borsammen.faktum} option="true" />
 					<RadioFaktum faktumKey={borsammen.faktum} option="false" />
-					<NivaTreSkjema visible={fakta.get(borsammen.faktum) === "false"}>
+					<NivaTreSkjema visible={getFaktumVerdi(fakta, borsammen.faktum) === "false"}>
 						<TextareaFaktum
 							faktumKey={`${borsammen.faktum}.false.beskrivelse`}
 						/>

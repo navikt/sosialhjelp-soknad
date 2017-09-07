@@ -29,6 +29,7 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 				});
 				hentFakta(brukerBehandlingId, dispatch).then(fakta => {
 					dispatch(setFakta(fakta));
+					dispatch(setFaktumVerdi("spikespike", 123));
 					dispatch(setFaktumVerdi("personalia.kommune", kommuneId));
 					if (bydelId !== "") {
 						dispatch(setFaktumVerdi("personalia.bydel", bydelId));
