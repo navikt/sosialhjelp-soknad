@@ -42,7 +42,7 @@ class CheckboxFaktum extends React.Component<
 				name={key}
 				checked={checked}
 				disabled={disabled}
-				value={getFaktumVerdi(fakta, key)}
+				value={option}
 				onChange={(evt: any) =>
 					dispatch(setFaktumVerdi(key, boolToString(evt.target.checked)))}
 				label={
