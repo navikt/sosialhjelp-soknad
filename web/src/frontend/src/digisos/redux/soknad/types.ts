@@ -8,6 +8,7 @@ export enum ActionTypeKeys {
 	FEILET = "soknad/FEILET",
 	PENDING = "soknad/PENDING",
 	SET_OPPSUMMERING = "soknad/SET_OPPSUMMERING",
+	RESET_SOKNAD = "soknad/RESET_SOKNAD",
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
@@ -27,6 +28,9 @@ export interface SetServerFeilAction {
 export interface SetOppsummering {
 	type: ActionTypeKeys.SET_OPPSUMMERING;
 	oppsummering: string;
+}
+export interface ResetSoknadAction {
+	type: ActionTypeKeys.RESET_SOKNAD;
 }
 
 export interface OtherAction {
