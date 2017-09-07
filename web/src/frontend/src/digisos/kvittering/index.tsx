@@ -12,6 +12,7 @@ import { SoknadState } from "../redux/soknad/types";
 import "./kvittering.css";
 import { getBosted } from "../data/kommuner";
 import { getFaktumVerdi } from "../../nav-soknad/utils";
+import {Link} from "react-router-dom";
 
 interface StateProps {
 	fakta: FaktumMap;
@@ -41,6 +42,7 @@ class Kvittering extends React.Component<
 							er mottatt. Du vil få nærmere beskjed på status når søknaden er
 							behandlet. Normal saksbehanldingstid er X dager.
 						</p>
+						<p><Link to="informasjon">Tilbake til start </Link></p>
 					</div>
 				</Panel>
 			</div>
