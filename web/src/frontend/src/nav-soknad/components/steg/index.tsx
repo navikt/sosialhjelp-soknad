@@ -1,28 +1,27 @@
 import * as React from "react";
 import "./steg.css";
-import Feiloppsummering, {
-	FeillisteMelding
-} from "../validering/Feiloppsummering";
+import Feiloppsummering from "../validering/Feiloppsummering";
+import { Valideringsfeil } from "../../redux/types";
 
 interface StegProps extends React.Props<any> {
 	tittel: string;
+	feilmeldinger?: Valideringsfeil[];
+	visFeilmeldinger?: boolean;
 }
 
-const feilmeldinger: FeillisteMelding[] = [
-	{
-		feltnavn: "abc",
-		feilmelding: "Whooo"
-	}
-];
-
-const Steg: React.StatelessComponent<StegProps> = ({ tittel, children }) => {
+const Steg: React.StatelessComponent<StegProps> = ({
+	tittel,
+	feilmeldinger,
+	visFeilmeldinger,
+	children
+}) => {
 	return (
 		<div className="skjema-steg skjema-content">
 			<div className="skjema-steg__feiloppsummering">
 				<Feiloppsummering
-					skjemanavn="abc"
+					skjemanavn="digisos"
 					feilmeldinger={feilmeldinger}
-					visFeilliste={true}
+					visFeilliste={visFeilmeldinger}
 				/>
 			</div>
 			<h2 className="skjema-steg__tittel">{tittel}</h2>

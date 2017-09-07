@@ -11,7 +11,11 @@ class Kontaktinfo extends React.Component<{}, {}> {
 		return (
 			<StegFaktum tittelId="kontakt.tittel">
 				<SporsmalFaktum faktumId="kontakt.kontonummer">
-					<InputFaktum faktumKey="kontakt.kontonummer" maxLength={11} />
+					<InputFaktum
+						faktumKey="kontakt.kontonummer"
+						maxLength={11}
+						required={true}
+					/>
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumId="kontakt.telefon">
 					<InputFaktum faktumKey="kontakt.telefon" />

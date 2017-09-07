@@ -3,7 +3,11 @@ import { findDOMNode } from "react-dom";
 import { Input, Feil, InputBredde } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumAppState, FaktumComponentProps } from "../redux/reducer";
-import { setFaktumVerdi, setFaktumValidering } from "../redux/actions";
+import {
+	setFaktumVerdi,
+	setFaktumValideringsFeil,
+	setFaktumValideringOk
+} from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
@@ -15,16 +19,20 @@ interface State {
 interface OwnProps {
 	faktumKey: string;
 	disabled?: boolean;
-	feil?: Feil;
 	maxLength?: number;
 	bredde?: InputBredde;
 	required?: boolean;
 }
 
+interface StateProps {
+	feil?: Feil;
+}
+
 type Props = OwnProps &
 	FaktumComponentProps &
 	DispatchProps &
-	InjectedIntlProps;
+	InjectedIntlProps &
+	StateProps;
 
 const getStateFromProps = (props: Props): State => ({
 	value: getFaktumVerdi(props.fakta, props.faktumKey) || ""
@@ -49,12 +57,18 @@ class InputFaktum extends React.Component<Props, State> {
 
 	handleOnBlur() {
 		this.props.dispatch(setFaktumVerdi(this.props.faktumKey, this.state.value));
-		if (this.state.value === "") {
+		if (this.state.value === "" && this.props.required) {
 			this.props.dispatch(
-				setFaktumValidering(this.props.faktumKey, findDOMNode(this.input), {
-					feilmelding: "mangler"
-				})
+				setFaktumValideringsFeil(
+					this.props.faktumKey,
+					findDOMNode(this.input),
+					{
+						feilmelding: "Informasjonen er påkrevd"
+					}
+				)
 			);
+		} else {
+			this.props.dispatch(setFaktumValideringOk(this.props.faktumKey));
 		}
 	}
 
@@ -80,9 +94,15 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 }
 
-export default connect((state: FaktumAppState, props: OwnProps) => {
+export default connect<
+	StateProps,
+	{},
+	OwnProps
+>((state: FaktumAppState, props: OwnProps) => {
+	const feil = state.validering.feil.find(f => f.faktumKey === props.faktumKey);
 	return {
 		fakta: state.faktum.fakta,
-		faktumKey: props.faktumKey
+		faktumKey: props.faktumKey,
+		feil: feil ? feil.feil : null
 	};
 })(injectIntl(InputFaktum));

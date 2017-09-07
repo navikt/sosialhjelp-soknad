@@ -3,7 +3,8 @@ import {
 	SetFaktumVerdiAction,
 	SetFaktaAction,
 	ResetFaktumVerdiAction,
-	SetFaktumValideringAction,
+	SetFaktumValideringFeilAction,
+	SetFaktumValideringOkAction,
 	FaktumValueType
 } from "./types";
 
@@ -13,7 +14,8 @@ export type ActionTypes =
 	| SetFaktumVerdiAction
 	| ResetFaktumVerdiAction
 	| SetFaktaAction
-	| SetFaktumValideringAction;
+	| SetFaktumValideringFeilAction
+	| SetFaktumValideringOkAction;
 
 export function setFaktumVerdi(
 	faktumKey: string,
@@ -35,15 +37,21 @@ export function setFakta(fakta: any) {
 	};
 }
 
-export function setFaktumValidering(
+export function setFaktumValideringsFeil(
 	faktumKey: string,
 	element: HTMLElement,
 	feil: Feil
 ) {
 	return {
-		type: ActionTypeKeys.SET_FAKTUM_VALIDATION,
+		type: ActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL,
 		faktumKey,
 		element,
 		feil
+	};
+}
+export function setFaktumValideringOk(faktumKey: string) {
+	return {
+		type: ActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL,
+		faktumKey
 	};
 }

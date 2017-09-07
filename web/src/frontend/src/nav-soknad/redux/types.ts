@@ -13,15 +13,9 @@ export enum ActionTypeKeys {
 	SET_FAKTA = "SET_FAKTA",
 	SOKNAD_OPPRETTET = "SOKNAD_OPPRETTET",
 	RESET_FAKTUM_VERDI = "RESET_FAKTUM_VERDI",
-	SET_FAKTUM_VALIDATION = "SET_FAKTUM_VALIDATION",
+	SET_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_FEIL",
+	CLEAR_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_OK",
 	OTHER_ACTION = "__any_other_action_type__"
-}
-
-export interface SetFaktumVerdiAction {
-	type: ActionTypeKeys.SET_FAKTUM_VERDI;
-	faktumKey: string;
-	value: FaktumValueType;
-	properties?: any;
 }
 
 export interface Faktum {
@@ -31,6 +25,19 @@ export interface Faktum {
 
 export interface Fakta {
 	faktum: Faktum[];
+}
+
+export interface Valideringsfeil {
+	faktumKey: string;
+	element: HTMLElement;
+	feil: Feil;
+}
+
+export interface SetFaktumVerdiAction {
+	type: ActionTypeKeys.SET_FAKTUM_VERDI;
+	faktumKey: string;
+	value: FaktumValueType;
+	properties?: any;
 }
 
 export interface SetFaktaAction {
@@ -46,11 +53,15 @@ export interface ResetFaktumVerdiAction {
 	type: ActionTypeKeys.RESET_FAKTUM_VERDI;
 	faktumKey: string;
 }
-export interface SetFaktumValideringAction {
-	type: ActionTypeKeys.SET_FAKTUM_VALIDATION;
+export interface SetFaktumValideringFeilAction {
+	type: ActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL;
 	faktumKey: string;
 	element: HTMLElement;
 	feil: Feil;
+}
+export interface SetFaktumValideringOkAction {
+	type: ActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL;
+	faktumKey: string;
 }
 
 export interface OtherAction {

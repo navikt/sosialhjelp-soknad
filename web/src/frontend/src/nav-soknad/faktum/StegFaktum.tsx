@@ -1,18 +1,53 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getIntlTextOrKey } from "../utils";
 import Steg from "../components/steg";
 
-interface StegProps extends React.Props<any> {
+import { FaktumAppState } from "../redux/reducer";
+import { Valideringsfeil } from "../redux/types";
+
+interface OwnProps extends React.Props<any> {
 	tittelId: string;
 }
 
-const StegFaktum: React.StatelessComponent<StegProps & InjectedIntlProps> = ({
-	tittelId,
-	intl,
-	children
-}) => {
-	return <Steg tittel={getIntlTextOrKey(intl, tittelId)}>{children}</Steg>;
-};
+interface StateProps {
+	feilmeldinger?: Valideringsfeil[];
+	visFeilmeldinger?: boolean;
+}
 
-export default injectIntl(StegFaktum);
+class StegFaktum extends React.Component<
+	OwnProps & StateProps & InjectedIntlProps,
+	{}
+> {
+	render() {
+		const {
+			tittelId,
+			feilmeldinger,
+			visFeilmeldinger,
+			intl,
+			children
+		} = this.props;
+		return (
+			<Steg
+				tittel={getIntlTextOrKey(intl, tittelId)}
+				feilmeldinger={feilmeldinger}
+				visFeilmeldinger={visFeilmeldinger}>
+				{children}
+			</Steg>
+		);
+	}
+}
+
+export default injectIntl(
+	connect<
+		StateProps,
+		{},
+		OwnProps & InjectedIntlProps
+	>((state: FaktumAppState, props: OwnProps) => {
+		return {
+			feilmeldinger: state.validering.feil,
+			visFeilmeldinger: true
+		};
+	})(StegFaktum)
+);

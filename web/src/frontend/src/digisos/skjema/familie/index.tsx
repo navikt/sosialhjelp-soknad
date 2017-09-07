@@ -21,6 +21,6 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 export default connect((state: State, props: any) => {
 	return {
 		fakta: state.faktum.fakta,
-		feil: state.validation.feil
+		feil: state.validering.feil
 	};
 })(Familie);

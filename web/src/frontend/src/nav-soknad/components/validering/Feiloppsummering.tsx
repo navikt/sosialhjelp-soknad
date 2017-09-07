@@ -1,18 +1,24 @@
 import * as React from "react";
 import { Undertittel } from "nav-frontend-typografi";
 import "./feiloppsummering.css";
+import { Valideringsfeil } from "../../redux/types";
 
-export interface FeillisteMelding {
-	feltnavn: string;
-	feilmelding: string;
-}
-const FeillisteMelding: React.StatelessComponent<FeillisteMelding> = ({
-	feltnavn,
-	feilmelding
+const scrollToElement = (element: HTMLElement) => {
+	if (element && element.scrollIntoView) {
+		element.scrollIntoView();
+	}
+};
+
+const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
+	element,
+	faktumKey,
+	feil
 }) => {
 	return (
 		<li className="feiloppsummering__feil">
-			<a href={`#${feltnavn}`}>{feilmelding}</a>
+			<a href={`#${element}`} onClick={() => scrollToElement(element)}>
+				{feil.feilmelding}
+			</a>
 		</li>
 	);
 };
@@ -21,7 +27,7 @@ interface Props {
 	skjemanavn: string;
 	settFokus?: boolean;
 	visFeilliste?: boolean;
-	feilmeldinger?: FeillisteMelding[];
+	feilmeldinger?: Valideringsfeil[];
 }
 
 class Feiloppsummering extends React.Component<Props, {}> {
@@ -32,7 +38,7 @@ class Feiloppsummering extends React.Component<Props, {}> {
 		this.getFeilmeldinger = this.getFeilmeldinger.bind(this);
 	}
 
-	getFeilmeldinger(props: Props): FeillisteMelding[] {
+	getFeilmeldinger(props: Props): Valideringsfeil[] {
 		return props.feilmeldinger || [];
 	}
 
@@ -46,8 +52,7 @@ class Feiloppsummering extends React.Component<Props, {}> {
 							<div
 								className="panel panel--feiloppsummering"
 								ref={c => (this.oppsummering = c)}
-								tabIndex={-1}
-							>
+								tabIndex={-1}>
 								<Undertittel className="feiloppsummering__tittel blokk-s">
 									Det er {feilmeldinger.length} feil i skjemaet
 								</Undertittel>
