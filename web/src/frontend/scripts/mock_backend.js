@@ -38,7 +38,7 @@ router.get("/soknader/:brukerBehandlingId/oppsummering", function (req, res) {
     res.send(utils.lesMockHtmlFil("oppsummering.html"));
 });
 
-// Fakta ressurser implementert
+// Faktaressurser
 var fakta = utils.lesMockDataFil("fakta.json");
 
 router.get("/soknader/:brukerBehandlingId/fakta", function (req, res) {
