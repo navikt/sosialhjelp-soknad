@@ -23,7 +23,7 @@ export interface FaktumComponentProps {
 }
 
 const initialState: FaktumState = {
-	fakta: [ { key: "arbeid.dinsituasjon.jobb", value: true, type: "" } ]
+	fakta: [{ key: "arbeid.dinsituasjon.jobb", value: true, type: "" }]
 };
 
 function updateFaktumVerdi(fakta: Faktum[], key: string, value: any) {
@@ -31,19 +31,21 @@ function updateFaktumVerdi(fakta: Faktum[], key: string, value: any) {
 		return faktum.key === key;
 	});
 	if (index === -1) {
-		return [ ...fakta, { key, value, type: "BRUKERREGISTRERT" } ];
+		return [...fakta, { key, value, type: "BRUKERREGISTRERT" }];
 	} else {
 		return [
 			...fakta.slice(0, index),
-			{...fakta[ index ], value},
+			{ ...fakta[index], value },
 			...fakta.slice(index + 1)
 		];
 	}
 }
 
 // const faktumReducer: Reducer<FaktumState, ActionTypes> =
-const faktumReducer: Reducer<FaktumState, any> =
-	(state = initialState, action): FaktumState => {
+const faktumReducer: Reducer<FaktumState, any> = (
+	state = initialState,
+	action
+): FaktumState => {
 	switch (action.type) {
 		case ActionTypeKeys.SET_FAKTUM_VERDI:
 			return {
@@ -53,7 +55,7 @@ const faktumReducer: Reducer<FaktumState, any> =
 		case ActionTypeKeys.RESET_FAKTUM_VERDI:
 			return {
 				...state,
-				fakta: state.fakta.filter(faktum => (faktum.key !== action.faktumKey))
+				fakta: state.fakta.filter(faktum => faktum.key !== action.faktumKey)
 			};
 		case ActionTypeKeys.SET_FAKTA:
 			return {

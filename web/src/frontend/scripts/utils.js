@@ -82,3 +82,18 @@ exports.delayAllResponses = function(millis) {
 		setTimeout(next, millis);
 	};
 };
+
+const finnFaktaIndex = function(faktaId, fakta) {
+    for (var i = 0; i < fakta.length; i++) {
+        if (faktaId.toString() === (fakta[i].faktumId && fakta[i].faktumId.toString())) {
+            return i;
+        }
+    }
+};
+
+exports.finnFaktaIndex = finnFaktaIndex;
+
+exports.hentFaktum = function(faktaId, fakta) {
+	return fakta[finnFaktaIndex(faktaId, fakta)];
+};
+

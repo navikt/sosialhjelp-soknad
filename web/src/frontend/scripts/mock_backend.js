@@ -3,35 +3,62 @@ var app = express();
 var bodyParser = require("body-parser");
 const utils = require("./utils.js");
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 // app.use(utils.delayAllResponses(2000));
+app.use(utils.allowCrossDomain);
 
 var port = process.env.PORT || 3001;
 var router = express.Router();
 
 // Språkdata tjeneste /api/tekster
 router.get('/informasjon/tekster', function (req, res) {
-	res.json(utils.lesSpraakfil())
+    res.json(utils.lesSpraakfil())
 });
 
-const brukerBehandlingId = "1000B8FNi";
+const brukerBehandlingId = "1000B7FGM";
 
-router.post("/soknader", function(req, res) {
-	res.json({
-		brukerBehandlingId: brukerBehandlingId
-	});
+// Søknadsressurser
+router.post("/soknader", function (req, res) {
+    res.json({
+        brukerBehandlingId: brukerBehandlingId
+    });
 });
 
-router.get("/soknader/:brukerBehandlingId/fakta", function(req, res) {
-	res.json(utils.lesMockDataFil("fakta.json"));
+router.get("/soknader/:brukerBehandlingId", function (req, res) {
+    if(req.accepts('application/json') ) {
+        res.json(utils.lesMockDataFil("soknad.json"));
+    } else {
+        res.status(406);
+        res.json({feil: "Forventer Accept: application/json i header"});
+    }
 });
 
-router.get("/soknader/:brukerBehandlingId/oppsummering", function(req, res) {
-	res.send(utils.lesMockHtmlFil("oppsummering.html"));
+router.get("/soknader/:brukerBehandlingId/oppsummering", function (req, res) {
+    res.send(utils.lesMockHtmlFil("oppsummering.html"));
 });
 
-app.use(utils.allowCrossDomain);
+// Faktaressurser
+var fakta = utils.lesMockDataFil("fakta.json");
+
+router.get("/soknader/:brukerBehandlingId/fakta", function (req, res) {
+    res.json(fakta);
+});
+
+router.get("/fakta/:faktumId", function (req, res) {
+    res.json(utils.hentFaktum(req.params.faktumId, fakta));
+});
+
+router.put("/fakta/:faktumId", function (req, res) {
+    fakta[utils.finnFaktaIndex(req.params.faktumId, fakta)] = req.body;
+    res.json(utils.hentFaktum(req.params.faktumId, fakta));
+});
+
+router.post("/fakta/:faktumId", function (req, res) {
+    fakta.push(req.body);
+    res.json(utils.hentFaktum(req.params.faktumId, fakta));
+});
+
 app.use('/', router);
 
 app.listen(port);
