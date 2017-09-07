@@ -1,0 +1,52 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+@import './mixins';
+
+.knapp {
+  .knappbase-mixin();
+  .knappramme-mixin(@navBla, @navDypBla, @white);
+
+  .knappdisabled-mixin();
+
+  .knappspinner-mixin(@navBla, @navBlaLighten60, @white, rgba(255, 255, 255, 0.5));
+}
+
+.knapp--hoved {
+  .knappfylt-mixin(@navBla, @white, @navDypBla, lighten(@navBla, 5%));
+  .knappspinner-mixin(@white, rgba(255, 255, 255, 0.5));
+}
+
+.knapp--fare {
+  .knappfylt-mixin(@redError, @white, darken(@redError, 5%), lighten(@redError, 5%));
+  .knappspinner-mixin(@white, rgba(255, 255, 255, 0.5));
+}
+
+.knapp {
+  .knappmini-mixin();
+}
+
+// SPINNER
+.knapp__spinner {
+  width: 0.8em;
+  height: 0.8em;
+  display: inline-block;
+  border-radius: 100%;
+  animation: knapp__spinner 1s infinite linear;
+  position: relative;
+  margin-left: 0.5em;
+  top: 0.1em;
+}
+
+@keyframes knapp__spinner {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.knapperad {
+  padding-top: 2em;
+  text-align: center;
+}
