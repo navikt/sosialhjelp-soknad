@@ -35,7 +35,7 @@ router.get("/sendsoknad/soknader/:brukerBehandlingId/oppsummering", function(req
 app.use(utils.allowCrossDomain);
 app.use('/', router);
 app.get("/*", function (req, res) {
-    res.sendFile(__dirname + "/public/index.html");
+    res.sendFile(__dirname + "/build/index.html");
 });
 
 app.listen(port);
