@@ -45,16 +45,16 @@ router.get("/soknader/:brukerBehandlingId/fakta", function (req, res) {
     res.json(fakta);
 });
 
-router.get("/soknader/:brukerBehandlingId/fakta/:faktumId", function (req, res) {
+router.get("/fakta/:faktumId", function (req, res) {
     res.json(utils.hentFaktum(req.params.faktumId, fakta));
 });
 
-router.put("/soknader/:brukerBehandlingId/fakta/:faktumId", function (req, res) {
+router.put("/fakta/:faktumId", function (req, res) {
     fakta[utils.finnFaktaIndex(req.params.faktumId, fakta)] = req.body;
     res.json(utils.hentFaktum(req.params.faktumId, fakta));
 });
 
-router.post("/soknader/:brukerBehandlingId/fakta/:faktumId", function (req, res) {
+router.post("/fakta/:faktumId", function (req, res) {
     fakta.push(req.body);
     res.json(utils.hentFaktum(req.params.faktumId, fakta));
 });
