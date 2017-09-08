@@ -49,7 +49,6 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 
 export function lesSoknad(brukerBehandlingId: string) {
 	return (dispatch: Dispatch<Action>) => {
-		// dispatch({ type: ActionTypeKeys.PENDING});
 		hentFakta(brukerBehandlingId, dispatch).then(fakta => {
 			dispatch(setFakta(fakta));
 			dispatch({ type: ActionTypeKeys.OK});
