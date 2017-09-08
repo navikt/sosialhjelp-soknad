@@ -1,13 +1,10 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # built files
-*.css
-*.css.map
-!build/static/css/*.css
-
-build
-!build/index.html
-!build/static/*
+build/asset-manifest.json
+build/favicon.ico
+build/manifest.json
+build/service-worker.js
 
 # dependencies
 /node_modules
