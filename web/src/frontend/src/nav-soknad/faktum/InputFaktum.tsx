@@ -2,7 +2,7 @@ import * as React from "react";
 import { Input, Feil, InputBredde } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumStoreState, FaktumComponentProps } from "../redux/reducer";
-import { setFaktumVerdi } from "../redux/actions";
+import { setFaktumVerdi, lagreFaktum } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
@@ -46,6 +46,7 @@ class InputFaktum extends React.Component<Props, State> {
 
 	handleOnBlur() {
 		this.props.dispatch(setFaktumVerdi(this.props.faktumKey, this.state.value));
+		this.props.dispatch(lagreFaktum(this.props.faktumKey, this.state.value, this.props.fakta));
 	}
 
 	render() {

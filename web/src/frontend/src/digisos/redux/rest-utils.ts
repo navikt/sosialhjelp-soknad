@@ -31,6 +31,20 @@ export function fetchPost(urlPath: string, body: string) {
 		.then(toJson);
 }
 
+export function fetchPut(urlPath: string, body: string) {
+	const OPTIONS: RequestInit = {
+		headers: {
+			"Content-Type": "application/json"
+		},
+		method: "PUT",
+		credentials: "same-origin",
+		body
+	};
+	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
+		.then(sjekkStatuskode)
+		.then(toJson);
+}
+
 export function fetchToJson(urlPath: string) {
 	const OPTIONS: RequestInit = {
 		headers: {
