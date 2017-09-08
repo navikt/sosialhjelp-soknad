@@ -7,7 +7,7 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 
 const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
-	<SporsmalFaktum faktumId="ekstrainfo.arbeidsledig">
+	<SporsmalFaktum faktumKey="ekstrainfo.arbeidsledig">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
@@ -28,7 +28,7 @@ const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
 );
 
 const JobbSkjema: React.StatelessComponent<{}> = () => (
-	<SporsmalFaktum faktumId="ekstrainfo.jobb">
+	<SporsmalFaktum faktumKey="ekstrainfo.jobb">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
@@ -43,7 +43,7 @@ const JobbSkjema: React.StatelessComponent<{}> = () => (
 );
 
 const StudentSkjema: React.StatelessComponent<{}> = () => (
-	<SporsmalFaktum faktumId="ekstrainfo.student">
+	<SporsmalFaktum faktumKey="ekstrainfo.student">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">

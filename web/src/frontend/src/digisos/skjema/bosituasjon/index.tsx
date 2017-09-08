@@ -27,7 +27,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const over18True = inputKeys("bosituasjon.personerover18.true.antall");
 		return (
 			<StegFaktum tittelId="bosituasjonbolk.tittel">
-				<SporsmalFaktum faktumId={bosituasjon.faktum}>
+				<SporsmalFaktum faktumKey={bosituasjon.faktum}>
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="eier" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="leierprivat" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="leierkommunalt" />
@@ -35,7 +35,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="annet" />
 					<Underskjema
 						visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}>
-						<SporsmalFaktum faktumId={annen.faktum}>
+						<SporsmalFaktum faktumKey={annen.faktum}>
 							{/*TODO opprette checkboxgruppefaktumet*/}
 							<CheckboxFaktum faktumKey={annen.faktum} option="institusjon" />
 							<CheckboxFaktum faktumKey={annen.faktum} option="krisesenter" />
@@ -46,7 +46,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						</SporsmalFaktum>
 					</Underskjema>
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumId={barnUnder18.faktum}>
+				<SporsmalFaktum faktumKey={barnUnder18.faktum}>
 					<RadioFaktum faktumKey={barnUnder18.faktum} option="true" />
 					<Underskjema
 						visible={faktumIsSelected(
@@ -60,7 +60,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					</Underskjema>
 					<RadioFaktum faktumKey={barnUnder18.faktum} option="false" />
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumId={over18.faktum}>
+				<SporsmalFaktum faktumKey={over18.faktum}>
 					<RadioFaktum faktumKey={over18.faktum} option="true" />
 					<Underskjema
 						visible={faktumIsSelected(getFaktumVerdi(fakta, over18.faktum))}>

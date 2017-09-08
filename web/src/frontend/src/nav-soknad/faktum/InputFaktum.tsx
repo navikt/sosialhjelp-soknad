@@ -6,7 +6,9 @@ import { FaktumAppState, FaktumComponentProps } from "../redux/reducer";
 import {
 	setFaktumVerdi,
 	setFaktumValideringsFeil,
-	setFaktumValideringOk
+	setFaktumValideringOk,
+	registerFaktumValidering,
+	unregisterFaktumValidering
 } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
@@ -49,6 +51,19 @@ class InputFaktum extends React.Component<Props, State> {
 
 	componentWillReceiveProps(nextProps: Props) {
 		this.setState(getStateFromProps(nextProps));
+	}
+
+	componentDidMount() {
+		this.props.dispatch(
+			registerFaktumValidering({
+				faktumKey: this.props.faktumKey,
+				rules: null
+			})
+		);
+	}
+
+	componentWillUnmount() {
+		this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
 	}
 
 	handleOnChange(evt: any) {

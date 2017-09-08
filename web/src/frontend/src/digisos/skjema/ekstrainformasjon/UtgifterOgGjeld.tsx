@@ -7,7 +7,7 @@ import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 
 const StromSkjema: React.StatelessComponent<{}> = () => (
-	<SporsmalFaktum faktumId="ekstrainfo.utgifter.strom" key="strom">
+	<SporsmalFaktum faktumKey="ekstrainfo.utgifter.strom" key="strom">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column xs="12">
@@ -19,7 +19,7 @@ const StromSkjema: React.StatelessComponent<{}> = () => (
 );
 
 const HusleieSkjema: React.StatelessComponent<{}> = () => (
-	<SporsmalFaktum faktumId="ekstrainfo.utgifter.husleie" key="husleie">
+	<SporsmalFaktum faktumKey="ekstrainfo.utgifter.husleie" key="husleie">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column xs="12">
@@ -31,7 +31,7 @@ const HusleieSkjema: React.StatelessComponent<{}> = () => (
 );
 
 const BarneSkjema: React.StatelessComponent<{}> = () => (
-	<SporsmalFaktum faktumId="ekstrainfo.utgifter.barn" key="barn">
+	<SporsmalFaktum faktumKey="ekstrainfo.utgifter.barn" key="barn">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">

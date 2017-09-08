@@ -19,9 +19,8 @@ const Familiesituasjon: React.StatelessComponent<
 			tittel="Familiesituasjonen"
 			content={[
 				<SporsmalFaktum
-					faktumId="ekstrainfo.familie.barnebidrag"
-					key="barnebidrag"
-				>
+					faktumKey="ekstrainfo.familie.barnebidrag"
+					key="barnebidrag">
 					<Container fluid={true} className="container--noPadding">
 						<Row>
 							<Column sm="6" xs="3">

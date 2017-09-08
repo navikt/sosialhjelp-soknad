@@ -35,11 +35,11 @@ class UtgifterGjeld extends React.Component<
 
 		return (
 			<StegFaktum tittelId="utgifterbolk.tittel">
-				<SporsmalFaktum faktumId={harBoutgifter.faktum}>
+				<SporsmalFaktum faktumKey={harBoutgifter.faktum}>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="true" />
 					<Underskjema
 						visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}>
-						<SporsmalFaktum faktumId={boUtgifter.faktum}>
+						<SporsmalFaktum faktumKey={boUtgifter.faktum}>
 							{/*TODO checkboxgruppefaktum*/}
 							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="husleie" />
 							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="strom" />
@@ -69,13 +69,13 @@ class UtgifterGjeld extends React.Component<
 					</Underskjema>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="false" />
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumId={harUtgifterBarn.faktum}>
+				<SporsmalFaktum faktumKey={harUtgifterBarn.faktum}>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="true" />
 					<Underskjema
 						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}>
 						{/*TODO checkboxgruppefaktum*/}
 
-						<SporsmalFaktum faktumId={barneUtgifter.faktum}>
+						<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
 							<CheckboxFaktum
 								faktumKey={barneUtgifter.faktum}
 								option="fritidsaktivitet"

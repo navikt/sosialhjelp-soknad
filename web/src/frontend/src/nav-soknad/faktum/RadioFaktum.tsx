@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Radio, Feil } from "nav-frontend-skjema";
+import { Radio } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumAppState, FaktumComponentProps } from "../redux/reducer";
 import { setFaktumVerdi } from "../redux/actions";
@@ -12,7 +12,6 @@ interface OwnProps {
 	option: string;
 	faktumKey: string;
 	disabled?: boolean;
-	feil?: Feil;
 }
 
 class RadioFaktum extends React.Component<

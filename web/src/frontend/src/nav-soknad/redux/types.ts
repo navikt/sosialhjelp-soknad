@@ -15,7 +15,18 @@ export enum ActionTypeKeys {
 	RESET_FAKTUM_VERDI = "RESET_FAKTUM_VERDI",
 	SET_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_FEIL",
 	CLEAR_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_OK",
+	REGISTER_FAKTUM_VALIDERING = "REGISTER_FAKTUM_VALIDERING",
+	UNREGISTER_FAKTUM_VALIDERING = "UNREGISTER_FAKTUM_VALIDERING",
 	OTHER_ACTION = "__any_other_action_type__"
+}
+
+export interface FaktumValideringRules {
+	rules: any;
+}
+
+export interface FaktumValidering {
+	faktumKey: string;
+	rules: FaktumValideringRules;
 }
 
 export interface Faktum {
@@ -61,6 +72,16 @@ export interface SetFaktumValideringFeilAction {
 }
 export interface SetFaktumValideringOkAction {
 	type: ActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL;
+	faktumKey: string;
+}
+
+export interface RegisterFaktumValidering {
+	type: ActionTypeKeys.REGISTER_FAKTUM_VALIDERING;
+	faktumValidering: FaktumValidering;
+}
+
+export interface UnregisterFaktumValidering {
+	type: ActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING;
 	faktumKey: string;
 }
 
