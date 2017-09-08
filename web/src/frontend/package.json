@@ -69,11 +69,7 @@
   "scripts": {
     "mock-backend": "node scripts/mock_backend",
     "build-css": "node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
-    "start-js": "react-scripts-ts start",
     "start": "node herokubackend ",
-    "build": "npm run build-css && react-scripts-ts build && node flytt-filer-til-webapp.js & node versjoner-prodfiler.js",
-    "test": "npm run build-css && react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "build": "npm run build-css && react-scripts-ts build && node herokubackend"
   }
 }
