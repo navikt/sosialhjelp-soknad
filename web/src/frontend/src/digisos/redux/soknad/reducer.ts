@@ -23,6 +23,12 @@ const soknadReducer: Reducer<SoknadState, ActionTypes> = (
 	action
 ): SoknadState => {
 	switch (action.type) {
+		case ActionTypeKeys.RESET_SOKNAD:
+			return {
+				...state,
+				...defaultState
+			};
+
 		case ActionTypeKeys.OPPRETT_SOKNAD:
 			return {
 				...state,

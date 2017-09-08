@@ -4,32 +4,17 @@ import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
-import { faktumIsSelected } from "../../../nav-soknad/utils";
-
-const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum tittelId="ekstrainfo.arbeidsledig.tittel">
-		<Container fluid={true} className="container--noPadding">
-			<Row>
-				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.arbeidsledig.feriepenger" />
-				</Column>
-				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.arbeidsledig.sluttoppgjor" />
-				</Column>
-			</Row>
-		</Container>
-	</SkjemagruppeFaktum>
-);
+import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 
 const JobbSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum tittelId="ekstrainfo.jobb.tittel">
+	<SkjemagruppeFaktum faktumId="ekstrainfo.jobb">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.jobb.bruttolonn" />
+					<InputFaktum faktumKey="ekstrainfo.jobb.bruttolonn" bredde="s" />
 				</Column>
 				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.jobb.nettolonn" />
+					<InputFaktum faktumKey="ekstrainfo.jobb.nettolonn" bredde="s" />
 				</Column>
 			</Row>
 		</Container>
@@ -37,14 +22,14 @@ const JobbSkjema: React.StatelessComponent<{}> = () => (
 );
 
 const StudentSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum tittelId="ekstrainfo.student.tittel">
+	<SkjemagruppeFaktum faktumId="ekstrainfo.student">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.student.utbetaling" />
+					<InputFaktum faktumKey="ekstrainfo.student.utbetaling" bredde="s" />
 				</Column>
 				<Column sm="6" xs="3">
-					<InputFaktum faktumKey="ekstrainfo.student.totalt" />
+					<InputFaktum faktumKey="ekstrainfo.student.totalt" bredde="s" />
 				</Column>
 			</Row>
 		</Container>
@@ -55,15 +40,15 @@ const ArbeidOgUtdanning: React.StatelessComponent<
 	FaktumComponentProps
 > = props => {
 	const { fakta } = props;
-	const visArbeidsledig = faktumIsSelected(fakta.get("dinsituasjon.jobb"));
-	const visJobb = !visArbeidsledig;
-	const visStudent = faktumIsSelected(fakta.get("dinsituasjon.studerer"));
+	const visJobb = getFaktumVerdi(fakta, "dinsituasjon.jobb") === "true";
+	const visStudent = faktumIsSelected(
+		getFaktumVerdi(fakta, "dinsituasjon.studerer")
+	);
 
-	if (!visArbeidsledig && !visJobb && !visStudent) {
+	if (!visJobb && !visStudent) {
 		return null;
 	}
 	const content = [
-		...(visArbeidsledig ? [<ArbeidsledigSkjema key="arbeidsledig" />] : []),
 		...(visJobb ? [<JobbSkjema key="jobb" />] : []),
 		...(visStudent ? [<StudentSkjema key="student" />] : [])
 	];

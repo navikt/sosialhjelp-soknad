@@ -4,13 +4,13 @@ import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
-import { faktumIsSelected } from "../../../nav-soknad/utils";
+import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 
 const Familiesituasjon: React.StatelessComponent<
 	FaktumComponentProps
 > = props => {
 	const { fakta } = props;
-	if (!faktumIsSelected(fakta.get("familie.barn"))) {
+	if (!faktumIsSelected(getFaktumVerdi(fakta, "familie.barn"))) {
 		return null;
 	}
 
@@ -19,15 +19,22 @@ const Familiesituasjon: React.StatelessComponent<
 			tittel="Familiesituasjonen"
 			content={[
 				<SkjemagruppeFaktum
-					tittelId="ekstrainfo.familie.barnebidrag.tittel"
-					key="barnebidrag">
+					faktumId="ekstrainfo.familie.barnebidrag"
+					key="barnebidrag"
+				>
 					<Container fluid={true} className="container--noPadding">
 						<Row>
 							<Column sm="6" xs="3">
-								<InputFaktum faktumKey="ekstrainfo.familie.barnebidrag.betaler" />
+								<InputFaktum
+									faktumKey="ekstrainfo.familie.barnebidrag.betaler"
+									bredde="s"
+								/>
 							</Column>
 							<Column sm="6" xs="3">
-								<InputFaktum faktumKey="ekstrainfo.familie.barnebidrag.mottar" />
+								<InputFaktum
+									faktumKey="ekstrainfo.familie.barnebidrag.mottar"
+									bredde="s"
+								/>
 							</Column>
 						</Row>
 					</Container>

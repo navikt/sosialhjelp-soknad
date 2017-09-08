@@ -1,7 +1,7 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
-import { radioCheckKeys, faktumIsSelected } from "../../../nav-soknad/utils";
+import { radioCheckKeys, faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
@@ -16,13 +16,10 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeEiendeler = radioCheckKeys("inntekt.eierandeler.true.type");
 		const hvilkeEiendelerAnnet = "inntekt.eierandeler.true.type.annet";
 		return (
-			<Sporsmal
-				sporsmalId={eiendeler.sporsmal}
-				hjelpetekstId={eiendeler.hjelpetekst}
-			>
+			<SporsmalFaktum faktumId={eiendeler.faktum}>
 				<RadioFaktum faktumKey={eiendeler.faktum} option="true" />
-				<Underskjema visible={faktumIsSelected(fakta.get(eiendeler.faktum))}>
-					<SkjemagruppeFaktum tittelId={hvilkeEiendeler.sporsmal}>
+				<Underskjema visible={faktumIsSelected(getFaktumVerdi(fakta, eiendeler.faktum))}>
+					<SkjemagruppeFaktum faktumId={hvilkeEiendeler.faktum}>
 						<CheckboxFaktum faktumKey={hvilkeEiendeler.faktum} option="bolig" />
 						<CheckboxFaktum
 							faktumKey={hvilkeEiendeler.faktum}
@@ -37,7 +34,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 							option="fritidseiendom"
 						/>
 						<CheckboxFaktum faktumKey={hvilkeEiendeler.faktum} option="annet" />
-						{faktumIsSelected(fakta.get(hvilkeEiendelerAnnet)) ? (
+						{faktumIsSelected(getFaktumVerdi(fakta, hvilkeEiendelerAnnet)) ? (
 							<TextareaFaktum
 								faktumKey={`${hvilkeEiendelerAnnet}.true.beskrivelse`}
 							/>
@@ -45,7 +42,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 					</SkjemagruppeFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={eiendeler.faktum} option="false" />
-			</Sporsmal>
+			</SporsmalFaktum>
 		);
 	}
 }

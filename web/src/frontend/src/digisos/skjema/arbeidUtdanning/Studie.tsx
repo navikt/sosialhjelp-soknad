@@ -1,7 +1,7 @@
 import * as React from "react";
-import Sporsmal from "../../../nav-soknad/components/sporsmal";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
-import { faktumIsSelected, radioCheckKeys } from "../../../nav-soknad/utils";
+import { faktumIsSelected, getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
@@ -13,17 +13,18 @@ class Studie extends React.Component<FaktumComponentProps, any> {
 		const studie = radioCheckKeys("dinsituasjon.studerer");
 		const studerer = radioCheckKeys("dinsituasjon.studerer.true.grad");
 		return (
-			<Sporsmal sporsmalId={studie.sporsmal}>
+			<SporsmalFaktum faktumId={studie.faktum}>
 				<RadioFaktum faktumKey={studie.faktum} option="true" />
-				<Underskjema visible={faktumIsSelected(fakta.get(studie.faktum))}>
-					<SkjemagruppeFaktum tittelId={studerer.sporsmal}>
+				<Underskjema visible={faktumIsSelected(getFaktumVerdi(fakta, studie.faktum))}>
+					<SkjemagruppeFaktum faktumId={studerer.faktum}>
 						<RadioFaktum faktumKey={studerer.faktum} option="heltid" />
 						<RadioFaktum faktumKey={studerer.faktum} option="deltid" />
 					</SkjemagruppeFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={studie.faktum} option="false" />
-			</Sporsmal>
+			</SporsmalFaktum>
 		);
 	}
 }
+
 export default Studie;

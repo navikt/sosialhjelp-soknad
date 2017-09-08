@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
-import { radioCheckKeys, faktumIsSelected } from "../../../nav-soknad/utils";
+import { radioCheckKeys, faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 import FaktumPersonskjema from "../../../nav-soknad/faktum/PersonFaktum";
 
 import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
@@ -18,14 +18,12 @@ class Barn extends React.Component<OwnProps & FaktumComponentProps, {}> {
 		const borInfo = radioCheckKeys(`${faktumKey}.borsammen`);
 		const hvormye = radioCheckKeys(`${faktumKey}.borsammen.true.grad`);
 		return (
-			<FaktumSkjemagruppe
-				tittelId="familie.barn.true.tittel"
-				hjelpetekstId={"familie.barn.true.hjelpetekst"}>
+			<FaktumSkjemagruppe faktumId="familie.barn.true">
 				<FaktumPersonskjema faktumKey={faktumKey} />
-				<FaktumSkjemagruppe tittelId={borInfo.sporsmal}>
+				<FaktumSkjemagruppe faktumId={borInfo.faktum}>
 					<FaktumRadio faktumKey={borInfo.faktum} option="true" />
-					<NivaTreSkjema visible={faktumIsSelected(fakta.get(borInfo.faktum))}>
-						<FaktumSkjemagruppe tittelId={hvormye.sporsmal}>
+					<NivaTreSkjema visible={faktumIsSelected(getFaktumVerdi(fakta, borInfo.faktum))}>
+						<FaktumSkjemagruppe faktumId={hvormye.faktum}>
 							<FaktumRadio faktumKey={hvormye.faktum} option="heltid" />
 							<FaktumRadio faktumKey={hvormye.faktum} option="deltid" />
 						</FaktumSkjemagruppe>
