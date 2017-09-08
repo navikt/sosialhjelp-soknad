@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
-import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
@@ -18,7 +18,7 @@ const Familiesituasjon: React.StatelessComponent<
 		<Progresjonsblokk
 			tittel="Familiesituasjonen"
 			content={[
-				<SkjemagruppeFaktum
+				<SporsmalFaktum
 					faktumId="ekstrainfo.familie.barnebidrag"
 					key="barnebidrag"
 				>
@@ -38,7 +38,7 @@ const Familiesituasjon: React.StatelessComponent<
 							</Column>
 						</Row>
 					</Container>
-				</SkjemagruppeFaktum>
+				</SporsmalFaktum>
 			]}
 		/>
 	);

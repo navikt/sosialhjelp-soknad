@@ -24,3 +24,39 @@
 		padding-right: 0;
 	}
 }
+
+.skjema-sporsmal {
+	position: relative;
+	display: block;
+	padding: 1.5rem 0 1rem 0;
+	border-radius: 4px;
+	background-color: @white;
+
+	&__innhold {
+		padding: 0 @skjemaMarg;
+	}
+
+	.skjema-sporsmal {
+		padding: 0;
+		border-radius: 0;
+		background-color: transparent;
+		.skjema-sporsmal__innhold {
+			padding: 0;
+		}
+	}
+
+	&__tittel {
+		font-size: 1em;
+		font-weight: 600;
+	}
+
+	&__beskrivelse {
+		margin: 0 0 1rem 0;
+	}
+
+	&__hjelpetekst {
+		position: absolute;
+		top: 1.5rem;
+		right: 40px;
+	}
+}

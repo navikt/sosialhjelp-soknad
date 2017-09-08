@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
-import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
 import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 
 const StromSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum faktumId="ekstrainfo.utgifter.strom" key="strom">
+	<SporsmalFaktum faktumId="ekstrainfo.utgifter.strom" key="strom">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column xs="12">
@@ -15,11 +15,11 @@ const StromSkjema: React.StatelessComponent<{}> = () => (
 				</Column>
 			</Row>
 		</Container>
-	</SkjemagruppeFaktum>
+	</SporsmalFaktum>
 );
 
 const HusleieSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum faktumId="ekstrainfo.utgifter.husleie" key="husleie">
+	<SporsmalFaktum faktumId="ekstrainfo.utgifter.husleie" key="husleie">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column xs="12">
@@ -27,11 +27,11 @@ const HusleieSkjema: React.StatelessComponent<{}> = () => (
 				</Column>
 			</Row>
 		</Container>
-	</SkjemagruppeFaktum>
+	</SporsmalFaktum>
 );
 
 const BarneSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum faktumId="ekstrainfo.utgifter.barn" key="barn">
+	<SporsmalFaktum faktumId="ekstrainfo.utgifter.barn" key="barn">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
@@ -42,7 +42,7 @@ const BarneSkjema: React.StatelessComponent<{}> = () => (
 				</Column>
 			</Row>
 		</Container>
-	</SkjemagruppeFaktum>
+	</SporsmalFaktum>
 );
 
 const UtgifterOgGjeld: React.StatelessComponent<

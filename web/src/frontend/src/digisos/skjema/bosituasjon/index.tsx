@@ -13,7 +13,6 @@ import {
 
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 
@@ -36,7 +35,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="annet" />
 					<Underskjema
 						visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}>
-						<SkjemagruppeFaktum faktumId={annen.faktum}>
+						<SporsmalFaktum faktumId={annen.faktum}>
 							{/*TODO opprette checkboxgruppefaktumet*/}
 							<CheckboxFaktum faktumKey={annen.faktum} option="institusjon" />
 							<CheckboxFaktum faktumKey={annen.faktum} option="krisesenter" />
@@ -44,7 +43,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 							<CheckboxFaktum faktumKey={annen.faktum} option="venner" />
 							<CheckboxFaktum faktumKey={annen.faktum} option="foreldre" />
 							<CheckboxFaktum faktumKey={annen.faktum} option="familie" />
-						</SkjemagruppeFaktum>
+						</SporsmalFaktum>
 					</Underskjema>
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumId={barnUnder18.faktum}>

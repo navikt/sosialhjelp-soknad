@@ -4,7 +4,6 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { faktumIsSelected, getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 
 class Studie extends React.Component<FaktumComponentProps, any> {
@@ -16,10 +15,10 @@ class Studie extends React.Component<FaktumComponentProps, any> {
 			<SporsmalFaktum faktumId={studie.faktum}>
 				<RadioFaktum faktumKey={studie.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(getFaktumVerdi(fakta, studie.faktum))}>
-					<SkjemagruppeFaktum faktumId={studerer.faktum}>
+					<SporsmalFaktum faktumId={studerer.faktum}>
 						<RadioFaktum faktumKey={studerer.faktum} option="heltid" />
 						<RadioFaktum faktumKey={studerer.faktum} option="deltid" />
-					</SkjemagruppeFaktum>
+					</SporsmalFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={studie.faktum} option="false" />
 			</SporsmalFaktum>

@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
-import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 
 const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum faktumId="ekstrainfo.arbeidsledig">
+	<SporsmalFaktum faktumId="ekstrainfo.arbeidsledig">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
@@ -24,11 +24,11 @@ const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
 				</Column>
 			</Row>
 		</Container>
-	</SkjemagruppeFaktum>
+	</SporsmalFaktum>
 );
 
 const JobbSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum faktumId="ekstrainfo.jobb">
+	<SporsmalFaktum faktumId="ekstrainfo.jobb">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
@@ -39,11 +39,11 @@ const JobbSkjema: React.StatelessComponent<{}> = () => (
 				</Column>
 			</Row>
 		</Container>
-	</SkjemagruppeFaktum>
+	</SporsmalFaktum>
 );
 
 const StudentSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum faktumId="ekstrainfo.student">
+	<SporsmalFaktum faktumId="ekstrainfo.student">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
@@ -54,7 +54,7 @@ const StudentSkjema: React.StatelessComponent<{}> = () => (
 				</Column>
 			</Row>
 		</Container>
-	</SkjemagruppeFaktum>
+	</SporsmalFaktum>
 );
 
 const ArbeidOgUtdanning: React.StatelessComponent<

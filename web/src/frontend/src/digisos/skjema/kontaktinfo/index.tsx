@@ -18,7 +18,7 @@ class Kontaktinfo extends React.Component<{}, {}> {
 					/>
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumId="kontakt.telefon">
-					<InputFaktum faktumKey="kontakt.telefon" />
+					<InputFaktum faktumKey="kontakt.telefon" required={ true }/>
 				</SporsmalFaktum>
 
 				<SporsmalFaktum faktumId={statsborger.faktum}>

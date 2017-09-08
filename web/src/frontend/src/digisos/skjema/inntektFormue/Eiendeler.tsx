@@ -6,7 +6,6 @@ import { radioCheckKeys, faktumIsSelected, getFaktumVerdi } from "../../../nav-s
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
-import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 
 class Eiendeler extends React.Component<FaktumComponentProps, {}> {
@@ -19,7 +18,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 			<SporsmalFaktum faktumId={eiendeler.faktum}>
 				<RadioFaktum faktumKey={eiendeler.faktum} option="true" />
 				<Underskjema visible={faktumIsSelected(getFaktumVerdi(fakta, eiendeler.faktum))}>
-					<SkjemagruppeFaktum faktumId={hvilkeEiendeler.faktum}>
+					<SporsmalFaktum faktumId={hvilkeEiendeler.faktum}>
 						<CheckboxFaktum faktumKey={hvilkeEiendeler.faktum} option="bolig" />
 						<CheckboxFaktum
 							faktumKey={hvilkeEiendeler.faktum}
@@ -39,7 +38,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 								faktumKey={`${hvilkeEiendelerAnnet}.true.beskrivelse`}
 							/>
 						) : null}
-					</SkjemagruppeFaktum>
+					</SporsmalFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={eiendeler.faktum} option="false" />
 			</SporsmalFaktum>

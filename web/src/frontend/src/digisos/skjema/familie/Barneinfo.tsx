@@ -4,7 +4,7 @@ import { radioCheckKeys, faktumIsSelected, getFaktumVerdi } from "../../../nav-s
 import FaktumPersonskjema from "../../../nav-soknad/faktum/PersonFaktum";
 
 import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
-import FaktumSkjemagruppe from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
+import FaktumSkjemagruppe from "../../../nav-soknad/faktum/SporsmalFaktum";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 
 interface OwnProps {

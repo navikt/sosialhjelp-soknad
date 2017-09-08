@@ -5,10 +5,12 @@ import { ActionTypes } from "./actions";
 
 export interface ValideringState {
 	feil: Valideringsfeil[];
+	visValideringsfeil?: boolean;
 }
 
 const defaultState = {
-	feil: [] as Valideringsfeil[]
+	feil: [] as Valideringsfeil[],
+	visValideringsfeil: false
 };
 
 const setFaktumValidering = (

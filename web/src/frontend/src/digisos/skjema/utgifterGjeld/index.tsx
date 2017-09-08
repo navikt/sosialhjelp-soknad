@@ -16,7 +16,6 @@ import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
-import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 
 class UtgifterGjeld extends React.Component<
@@ -40,7 +39,7 @@ class UtgifterGjeld extends React.Component<
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="true" />
 					<Underskjema
 						visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}>
-						<SkjemagruppeFaktum faktumId={boUtgifter.faktum}>
+						<SporsmalFaktum faktumId={boUtgifter.faktum}>
 							{/*TODO checkboxgruppefaktum*/}
 							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="husleie" />
 							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="strom" />
@@ -66,7 +65,7 @@ class UtgifterGjeld extends React.Component<
 							) ? (
 								<TextareaFaktum faktumKey={andreBoUtgifter} />
 							) : null}
-						</SkjemagruppeFaktum>
+						</SporsmalFaktum>
 					</Underskjema>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="false" />
 				</SporsmalFaktum>
@@ -76,7 +75,7 @@ class UtgifterGjeld extends React.Component<
 						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}>
 						{/*TODO checkboxgruppefaktum*/}
 
-						<SkjemagruppeFaktum faktumId={barneUtgifter.faktum}>
+						<SporsmalFaktum faktumId={barneUtgifter.faktum}>
 							<CheckboxFaktum
 								faktumKey={barneUtgifter.faktum}
 								option="fritidsaktivitet"
@@ -96,7 +95,7 @@ class UtgifterGjeld extends React.Component<
 							) ? (
 								<TextareaFaktum faktumKey={andreBarneutgifter} />
 							) : null}
-						</SkjemagruppeFaktum>
+						</SporsmalFaktum>
 					</Underskjema>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="false" />
 				</SporsmalFaktum>
