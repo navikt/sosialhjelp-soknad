@@ -60,7 +60,7 @@ export function lesSoknad(brukerBehandlingId: string) {
 function hentFakta(brukerBehandlingId: string, dispatch: Dispatch<Action>) {
 	dispatch({ type: ActionTypeKeys.PENDING });
 	return fetchToJson(
-		"soknader/" + brukerBehandlingId + "/fakta?spike=1"
+		"soknader/" + brukerBehandlingId
 	).catch(reason => {
 		dispatch({ type: ActionTypeKeys.FEILET});
 		dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
