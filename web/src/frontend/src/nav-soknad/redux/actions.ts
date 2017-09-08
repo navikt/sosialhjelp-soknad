@@ -31,7 +31,6 @@ export function lagreFaktum(
 	value: FaktumValueType,
 	fakta: any
 ) {
-	debugger;
 	return {
 		type: ActionTypeKeys.SET_FAKTUM_VERDI,
 		faktumKey,
