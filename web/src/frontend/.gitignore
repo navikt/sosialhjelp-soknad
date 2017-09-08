@@ -6,6 +6,9 @@ build/favicon.ico
 build/manifest.json
 build/service-worker.js
 
+*.css
+!build/static/css/*.css
+
 # dependencies
 /node_modules
 
