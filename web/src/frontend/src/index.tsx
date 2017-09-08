@@ -7,15 +7,17 @@ import { BrowserRouter } from "react-router-dom";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import App from "./digisos";
 import thunk from "redux-thunk";
-import SoknadReducer from "./digisos/redux/soknad/reducer";
 import { erDev } from "./digisos/redux/rest-utils";
+import SoknadReducer from "./digisos/redux/soknad/reducer";
 import FaktumReducer from "./nav-soknad/redux/reducer";
+import LedeteksterReducer from "./redux/informasjon/informasjonReducer";
 import IntlProvider from "./intlProvider";
 import "./index.css";
 
 const rootReducer = combineReducers({
 	soknad: SoknadReducer,
-	faktumStore: FaktumReducer
+	faktumStore: FaktumReducer,
+	ledetekster: LedeteksterReducer
 });
 
 function configureStore() {
@@ -33,13 +35,13 @@ function configureStore() {
 
 const store = configureStore();
 ReactDOM.render(
-	<IntlProvider>
-		<Provider store={store}>
+	<Provider store={store}>
+		<IntlProvider>
 			<BrowserRouter basename="soknadsosialhjelp">
 				<App />
 			</BrowserRouter>
-		</Provider>
-	</IntlProvider>,
+		</IntlProvider>
+	</Provider>,
 	document.getElementById("root") as HTMLElement
 );
 
