@@ -6,27 +6,6 @@ import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 
-const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum faktumId="ekstrainfo.arbeidsledig">
-		<Container fluid={true} className="container--noPadding">
-			<Row>
-				<Column sm="6" xs="3">
-					<InputFaktum
-						faktumKey="ekstrainfo.arbeidsledig.feriepenger"
-						bredde="s"
-					/>
-				</Column>
-				<Column sm="6" xs="3">
-					<InputFaktum
-						faktumKey="ekstrainfo.arbeidsledig.sluttoppgjor"
-						bredde="s"
-					/>
-				</Column>
-			</Row>
-		</Container>
-	</SkjemagruppeFaktum>
-);
-
 const JobbSkjema: React.StatelessComponent<{}> = () => (
 	<SkjemagruppeFaktum faktumId="ekstrainfo.jobb">
 		<Container fluid={true} className="container--noPadding">
@@ -62,17 +41,14 @@ const ArbeidOgUtdanning: React.StatelessComponent<
 > = props => {
 	const { fakta } = props;
 	const visJobb = getFaktumVerdi(fakta, "dinsituasjon.jobb") === "true";
-	const visArbeidsledig =
-		getFaktumVerdi(fakta, "dinsituasjon.jobb") === "false";
 	const visStudent = faktumIsSelected(
 		getFaktumVerdi(fakta, "dinsituasjon.studerer")
 	);
 
-	if (!visArbeidsledig && !visJobb && !visStudent) {
+	if (!visJobb && !visStudent) {
 		return null;
 	}
 	const content = [
-		...(visArbeidsledig ? [<ArbeidsledigSkjema key="arbeidsledig" />] : []),
 		...(visJobb ? [<JobbSkjema key="jobb" />] : []),
 		...(visStudent ? [<StudentSkjema key="student" />] : [])
 	];
