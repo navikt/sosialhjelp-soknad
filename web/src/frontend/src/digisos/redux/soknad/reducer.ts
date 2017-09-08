@@ -1,9 +1,9 @@
 import { Reducer } from "./types";
-import { ActionTypeKeys } from "./types";
+import { ActionTypeKeys, REST_STATUS } from "./types";
 import { ActionTypes } from "./actions";
 
 export interface SoknadState {
-	status: string;
+	restStatus: string;
 	soknadType?: string;
 	brukerBehandlingId?: string;
 	feilmelding?: string;
@@ -11,7 +11,7 @@ export interface SoknadState {
 }
 
 const defaultState: SoknadState = {
-	status: "",
+	restStatus: "",
 	soknadType: "NAV DIGISOS",
 	brukerBehandlingId: "",
 	feilmelding: "",
@@ -28,32 +28,39 @@ const soknadReducer: Reducer<SoknadState, ActionTypes> = (
 				...state,
 				...defaultState
 			};
-
 		case ActionTypeKeys.OPPRETT_SOKNAD:
 			return {
 				...state,
 				brukerBehandlingId: "",
-				status: ActionTypeKeys.PENDING
+				restStatus: ActionTypeKeys.PENDING
 			};
-
 		case ActionTypeKeys.SET_SERVER_FEIL:
 			return {
 				...state,
 				brukerBehandlingId: "",
 				feilmelding: action.feilmelding,
-				status: ActionTypeKeys.FEILET
+				restStatus: ActionTypeKeys.FEILET
 			};
-
 		case ActionTypeKeys.SET_BRUKERBEHANDLING_ID:
 			return {
 				...state,
 				brukerBehandlingId: action.brukerBehandlingId,
-				status: ActionTypeKeys.OK
+				restStatus: ActionTypeKeys.OK
 			};
 		case ActionTypeKeys.SET_OPPSUMMERING:
 			return {
 				...state,
 				oppsummering: action.oppsummering
+			};
+		case ActionTypeKeys.PENDING:
+			return {
+				...state,
+				restStatus: REST_STATUS.PENDING
+			};
+		case ActionTypeKeys.OK:
+			return {
+				...state,
+				restStatus: REST_STATUS.OK
 			};
 		default:
 			return state;
