@@ -21,7 +21,7 @@ describe('setFaktumVerdi action creator', () => {
 	it("should update fact", () => {
 		let newFaktumState = faktumReducer(
 			defaultState,
-			setFaktumVerdi("bolk", 789)
+			setFaktumVerdi("bolk", 789, defaultState.fakta)
 		);
 		expect(newFaktumState.fakta.length).toEqual(2);
 		expect(newFaktumState.fakta[0].value).toEqual(789);
@@ -29,23 +29,14 @@ describe('setFaktumVerdi action creator', () => {
 
 		newFaktumState = faktumReducer(
 			newFaktumState,
-			setFaktumVerdi("bolk", false)
+			setFaktumVerdi("bolk", false, defaultState.fakta)
 		);
 		expect(newFaktumState.fakta[0].value).toEqual(false);
 		newFaktumState = faktumReducer(
 			newFaktumState,
-			setFaktumVerdi("bolk", true)
+			setFaktumVerdi("bolk", true, defaultState.fakta)
 		);
 		expect(newFaktumState.fakta[0].value).toEqual(true);
-	});
-
-	it("should add fact", () => {
-		let newFaktumState = faktumReducer(
-			defaultState,
-			setFaktumVerdi("ny_bolk", 789)
-		);
-		expect(newFaktumState.fakta.length).toEqual(3);
-		expect(newFaktumState.fakta.slice(-1)[0].key).toEqual("ny_bolk");
 	});
 
 });

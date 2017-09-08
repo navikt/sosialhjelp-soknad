@@ -11,6 +11,7 @@ export enum ActionTypeKeys {
 	SET_FAKTA = "SET_FAKTA",
 	SOKNAD_OPPRETTET = "SOKNAD_OPPRETTET",
 	RESET_FAKTUM_VERDI = "RESET_FAKTUM_VERDI",
+	SET_SERVER_FEIL = "SET_SERVER_FEIL",
 	OTHER_ACTION = "__any_other_action_type__"
 }
 

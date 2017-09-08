@@ -35,9 +35,9 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 				});
 				hentFakta(brukerBehandlingId, dispatch).then(fakta => {
 					dispatch(setFakta(fakta));
-					dispatch(setFaktumVerdi("personalia.kommune", kommuneId));
+					dispatch(setFaktumVerdi("personalia.kommune", kommuneId, fakta));
 					if (bydelId !== "") {
-						dispatch(setFaktumVerdi("personalia.bydel", bydelId));
+						dispatch(setFaktumVerdi("personalia.bydel", bydelId, fakta));
 					}
 				});
 			})
@@ -59,7 +59,7 @@ export function lesSoknad(brukerBehandlingId: string) {
 function hentFakta(brukerBehandlingId: string, dispatch: Dispatch<Action>) {
 	dispatch({ type: ActionTypeKeys.PENDING });
 	return fetchToJson(
-		"soknader/" + brukerBehandlingId
+		"soknader/" + brukerBehandlingId + "/fakta"
 	).catch(reason => {
 		dispatch({ type: ActionTypeKeys.FEILET});
 		dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
