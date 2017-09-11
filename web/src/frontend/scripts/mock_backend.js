@@ -6,6 +6,7 @@ const utils = require("./utils.js");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 // app.use(utils.delayAllResponses(2000));
+app.use(utils.allowCrossDomain);
 
 var port = process.env.PORT || 3001;
 var router = express.Router();
@@ -17,14 +18,13 @@ router.get('/informasjon/tekster', function (req, res) {
 
 const brukerBehandlingId = "1000B7FGM";
 
-// Opprett søknad
+// Søknadsressurser
 router.post("/soknader", function (req, res) {
     res.json({
         brukerBehandlingId: brukerBehandlingId
     });
 });
 
-// Hent komplett søknadsinfo
 router.get("/soknader/:brukerBehandlingId", function (req, res) {
     if(req.accepts('application/json') ) {
         res.json(utils.lesMockDataFil("soknad.json"));
@@ -34,17 +34,31 @@ router.get("/soknader/:brukerBehandlingId", function (req, res) {
     }
 });
 
-// Bare hent fakta
-router.get("/soknader/:brukerBehandlingId/fakta", function (req, res) {
-    console.log(JSON.stringify(req.accepts(),null, 8));
-    res.json(utils.lesMockDataFil("fakta.json"));
-});
-
 router.get("/soknader/:brukerBehandlingId/oppsummering", function (req, res) {
     res.send(utils.lesMockHtmlFil("oppsummering.html"));
 });
 
-app.use(utils.allowCrossDomain);
+// Faktaressurser
+var fakta = utils.lesMockDataFil("fakta.json");
+
+router.get("/soknader/:brukerBehandlingId/fakta", function (req, res) {
+    res.json(fakta);
+});
+
+router.get("/fakta/:faktumId", function (req, res) {
+    res.json(utils.hentFaktum(req.params.faktumId, fakta));
+});
+
+router.put("/fakta/:faktumId", function (req, res) {
+    fakta[utils.finnFaktaIndex(req.params.faktumId, fakta)] = req.body;
+    res.json(utils.hentFaktum(req.params.faktumId, fakta));
+});
+
+router.post("/fakta/:faktumId", function (req, res) {
+    fakta.push(req.body);
+    res.json(utils.hentFaktum(req.params.faktumId, fakta));
+});
+
 app.use('/', router);
 
 app.listen(port);

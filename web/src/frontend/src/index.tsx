@@ -27,13 +27,13 @@ function configureStore() {
 
 const store = configureStore();
 ReactDOM.render(
-	<IntlProvider>
-		<Provider store={store}>
+	<Provider store={store}>
+		<IntlProvider>
 			<BrowserRouter basename="soknadsosialhjelp">
 				<App />
 			</BrowserRouter>
-		</Provider>
-	</IntlProvider>,
+		</IntlProvider>
+	</Provider>,
 	document.getElementById("root") as HTMLElement
 );
 

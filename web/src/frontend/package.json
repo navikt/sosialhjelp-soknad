@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.0",
+    "@types/enzyme": "^2.8.7",
     "@types/jest": "^20.0.6",
     "@types/node": "^8.0.20",
     "@types/prop-types": "^15.5.1",
@@ -46,12 +47,11 @@
     "@types/react-router-dom": "^4.0.7",
     "@types/redux-devtools-extension": "^2.13.2",
     "body-parser": "^1.17.2",
+    "enzyme": "~2.9.1",
     "eslint": "^4.6.1",
     "eslint-config-prettier": "^2.4.0",
     "eslint-plugin-prettier": "^2.2.0",
     "fs-extra": "2.1.2",
-    "jest": "^21.0.1",
-    "jest-cli": "^21.0.1",
     "nav-frontend-alertstriper-style": "^0.2.2",
     "nav-frontend-grid-style": "^0.2.1",
     "nav-frontend-hjelpetekst-style": "^0.3.1",
@@ -66,15 +66,20 @@
     "nav-frontend-typografi-style": "^1.0.1",
     "npm-run-all": "^4.0.2",
     "prettier": "^1.6.1",
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1",
     "replace": "0.3.0"
   },
   "scripts": {
     "mock-backend": "node scripts/mock_backend",
-    "build-css": "node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+		"build-css":
+			"node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+		"watch-css":
+			"npm run build-css && node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts-ts start",
     "start": "npm-run-all -p watch-css start-js mock-backend",
-    "build": "npm run build-css && react-scripts-ts build && node flytt-filer-til-webapp.js & node versjoner-prodfiler.js",
+    "build":
+			"npm run build-css && react-scripts-ts build && node flytt-filer-til-webapp.js & node versjoner-prodfiler.js",
     "test": "npm run build-css && react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   }
