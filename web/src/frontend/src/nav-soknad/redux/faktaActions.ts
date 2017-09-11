@@ -9,7 +9,7 @@ import {
 	UnregisterFaktumValidering,
 	FaktumValidering,
 	FaktumValueType
-} from "./types";
+} from "./faktaTypes";
 import { Faktum } from "../soknadTypes";
 import { fetchPut } from "../../digisos/redux/rest-utils";
 

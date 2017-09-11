@@ -1,8 +1,7 @@
 import { Faktum } from "../soknadTypes";
 
 export type FaktumMap = Map<string, any>;
-import { Reducer } from "./types";
-import { ActionTypeKeys } from "./types";
+import { ActionTypeKeys, Reducer } from "./faktaTypes";
 import { ValideringState } from "./validering-reducer";
 
 export interface SoknadAppState {

@@ -3,7 +3,7 @@ import { Textarea, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
 import { setFaktumVerdi } from "../redux/faktaActions";
-import { DispatchProps } from "../redux/types";
+import { DispatchProps } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import {
 	getInputFaktumTekst,

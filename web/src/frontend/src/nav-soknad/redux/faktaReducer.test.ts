@@ -1,5 +1,5 @@
 import faktumReducer from "./faktaReducer";
-import { ActionTypeKeys } from "./types";
+import { ActionTypeKeys } from "./faktaTypes";
 
 describe("facts reducer", () => {
 	const defaultState = {
