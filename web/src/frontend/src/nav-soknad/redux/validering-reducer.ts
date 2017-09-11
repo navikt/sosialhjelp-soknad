@@ -35,7 +35,7 @@ const clearFaktumValidering = (
 	return [...feil.slice(0, idx), ...feil.slice(idx + 1)];
 };
 
-const validationReducer: Reducer<ValideringState, ActionTypes> = (
+const valideringReducer: Reducer<ValideringState, ActionTypes> = (
 	state = defaultState,
 	action
 ): ValideringState => {
@@ -55,4 +55,4 @@ const validationReducer: Reducer<ValideringState, ActionTypes> = (
 	}
 };
 
-export default validationReducer;
+export default valideringReducer;
