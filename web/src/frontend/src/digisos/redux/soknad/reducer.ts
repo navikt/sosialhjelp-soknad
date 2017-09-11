@@ -45,6 +45,11 @@ const soknadReducer: Reducer<SoknadState, ActionTypes> = (
 				brukerBehandlingId: action.brukerBehandlingId,
 				restStatus: ActionTypeKeys.OK
 			};
+		case ActionTypeKeys.OK:
+			return {
+				...state,
+				restStatus: REST_STATUS.OK
+			};
 		case ActionTypeKeys.PENDING:
 			return {
 				...state,

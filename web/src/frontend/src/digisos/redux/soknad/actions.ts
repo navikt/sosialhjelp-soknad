@@ -16,7 +16,6 @@ export type ActionTypes =
 	| SetBrukerBehandlingIdAction
 	| SetServerFeilAction
 	| ResetSoknadAction
-	// | SetOppsummering
 	| SettRestStatusPending
 	| SettRestStatusOk;
 
