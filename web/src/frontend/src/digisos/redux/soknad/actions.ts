@@ -34,6 +34,7 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 					brukerBehandlingId
 				});
 				hentFakta(brukerBehandlingId, dispatch).then(fakta => {
+					dispatch({ type: ActionTypeKeys.OK }); // Flytte til hentFakta?
 					dispatch(setFakta(fakta));
 					dispatch(setFaktumVerdi("personalia.kommune", kommuneId, fakta));
 					if (bydelId !== "") {
