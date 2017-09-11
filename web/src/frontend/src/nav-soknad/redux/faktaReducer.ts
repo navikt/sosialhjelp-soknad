@@ -60,11 +60,6 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 				...state,
 				data: updateFaktumVerdi(state.data, action.faktum)
 			};
-		// case ActionTypeKeys.RESET_FAKTUM_VERDI:
-		// 	return {
-		// 		...state,
-		// 		data: state.data.filter(faktum => faktum.key !== action.faktumKey)
-		// 	};
 		case ActionTypeKeys.SET_FAKTA:
 			return {
 				...state,

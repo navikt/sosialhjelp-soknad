@@ -13,7 +13,6 @@ export enum ActionTypeKeys {
 	SET_FAKTUM_VERDI = "SET_FAKTUM_VERDI",
 	SET_FAKTA = "SET_FAKTA",
 	SOKNAD_OPPRETTET = "SOKNAD_OPPRETTET",
-	RESET_FAKTUM_VERDI = "RESET_FAKTUM_VERDI",
 	SET_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_FEIL",
 	CLEAR_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_OK",
 	REGISTER_FAKTUM_VALIDERING = "REGISTER_FAKTUM_VALIDERING",
@@ -62,10 +61,6 @@ export interface SoknadOpprettetAction {
 	type: ActionTypeKeys.SOKNAD_OPPRETTET;
 }
 
-export interface ResetFaktumVerdiAction {
-	type: ActionTypeKeys.RESET_FAKTUM_VERDI;
-	faktumKey: string;
-}
 export interface SetFaktumValideringFeilAction {
 	type: ActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL;
 	faktumKey: string;

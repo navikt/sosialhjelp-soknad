@@ -3,7 +3,6 @@ import {
 	ActionTypeKeys,
 	SetFaktumVerdiAction,
 	SetFaktaAction,
-	ResetFaktumVerdiAction,
 	SetFaktumValideringFeilAction,
 	SetFaktumValideringOkAction,
 	RegisterFaktumValidering,
@@ -18,7 +17,6 @@ import { Feil } from "nav-frontend-skjema";
 
 export type ActionTypes =
 	| SetFaktumVerdiAction
-	| ResetFaktumVerdiAction
 	| SetFaktaAction
 	| SetFaktumValideringFeilAction
 	| SetFaktumValideringOkAction
