@@ -40,10 +40,6 @@ export interface SetServerFeilAction {
 	type: ActionTypeKeys.SET_SERVER_FEIL;
 	feilmelding: string;
 }
-export interface SetOppsummering {
-	type: ActionTypeKeys.SET_OPPSUMMERING;
-	oppsummering: string;
-}
 export interface ResetSoknadAction {
 	type: ActionTypeKeys.RESET_SOKNAD;
 }
@@ -58,5 +54,4 @@ export interface SoknadState {
 	soknadType: string;
 	brukerBehandlingId: string;
 	feilmelding: string;
-	oppsummering: string;
 }
