@@ -17,45 +17,37 @@ export function getApiBaseUrl(): string {
 
 export const MED_CREDENTIALS: RequestInit = { credentials: "same-origin" };
 
-export function fetchPost(urlPath: string, body: string) {
+enum RequestMethod {
+	GET = "GET",
+	POST = "POST",
+	PUT = "PUT",
+	DELETE = "DELETE"
+}
+
+const serverRequest = (method: string, urlPath: string, body: string ) => {
 	const OPTIONS: RequestInit = {
 		headers: {
 			"Content-Type": "application/json"
 		},
-		method: "POST",
+		method,
 		credentials: "same-origin",
 		body
 	};
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
 		.then(toJson);
+};
+
+export function fetchToJson(urlPath: string) {
+	return serverRequest(RequestMethod.GET, urlPath, null);
 }
 
 export function fetchPut(urlPath: string, body: string) {
-	const OPTIONS: RequestInit = {
-		headers: {
-			"Content-Type": "application/json"
-		},
-		method: "PUT",
-		credentials: "same-origin",
-		body
-	};
-	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
-		.then(sjekkStatuskode)
-		.then(toJson);
+	return serverRequest(RequestMethod.PUT, urlPath, body);
 }
 
-export function fetchToJson(urlPath: string) {
-	const OPTIONS: RequestInit = {
-		headers: {
-			"Content-Type": "application/json"
-		},
-		method: "GET",
-		credentials: "same-origin"
-	};
-	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
-		.then(sjekkStatuskode)
-		.then(toJson);
+export function fetchPost(urlPath: string, body: string) {
+	return serverRequest(RequestMethod.POST, urlPath, body);
 }
 
 export function fetchHtml(urlPath: string) {
