@@ -3,11 +3,11 @@ import { addLocaleData, IntlProvider as Provider } from "react-intl";
 import * as nb from "react-intl/locale-data/nb";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { connect } from "react-redux";
-import { hentLedetekster } from "./redux/informasjon/informasjonActions";
+import { hentLedetekster } from "./digisos/redux/informasjon/informasjonActions";
 import {
 	ActionTypeKeys,
 	LedetekstState
-} from "./redux/informasjon/informasjonTypes";
+} from "./digisos/redux/informasjon/informasjonTypes";
 import { DispatchProps } from "./nav-soknad/redux/types";
 
 addLocaleData(nb);
