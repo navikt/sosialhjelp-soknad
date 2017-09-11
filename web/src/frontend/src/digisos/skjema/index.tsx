@@ -20,11 +20,10 @@ import {
 import { gaTilbake, gaVidere, avbryt } from "./utils";
 import { Location } from "history";
 import { connect } from "react-redux";
-import { FaktumState } from "../../nav-soknad/redux/reducer";
-import { SoknadState } from "../redux/soknad/types";
 import { DispatchProps } from "../redux/types";
 import { lesSoknad } from "../redux/soknad/actions";
 import { REST_STATUS } from "../redux/soknad/types";
+import { State } from "../redux/reducers";
 import NavFrontendSpinner from "nav-frontend-spinner";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
