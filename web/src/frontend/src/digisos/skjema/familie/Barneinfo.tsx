@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import {
 	radioCheckKeys,
 	faktumIsSelected,

@@ -2,7 +2,7 @@ import * as React from "react";
 // import { findDOMNode } from "react-dom";
 import { Input, Feil, InputBredde } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { SoknadAppState, FaktumComponentProps } from "../redux/reducer";
+import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
 import {
 	setFaktumVerdi,
 	registerFaktumValidering,

@@ -38,27 +38,17 @@ function updateFaktumVerdi(fakta: Faktum[], faktum: Faktum) {
 	}
 }
 
-export type FaktumActionTypes = SetFaktumVerdi; // HentetTeksterAction | HentTeksterAction | TeksterFeiletAction | OtherAction;
+export type FaktumActionTypes = SetFaktumVerdi | SetFaktaAction;
 
 interface SetFaktumVerdi {
 	type: ActionTypeKeys.SET_FAKTUM_VERDI;
 	faktum: Faktum;
 }
 
-interface HentTeksterAction {
-	type: ActionTypeKeys.PENDING;
-	data: object;
+interface SetFaktaAction {
+	type: ActionTypeKeys.SET_FAKTA;
+	fakta: Faktum[];
 }
-
-interface TeksterFeiletAction {
-	type: ActionTypeKeys.FEILET;
-	data: object;
-}
-
-export interface OtherAction {
-	type: ActionTypeKeys.OTHER_ACTION;
-}
-
 
 const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 	state = initialState,
@@ -70,11 +60,11 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 				...state,
 				data: updateFaktumVerdi(state.data, action.faktum)
 			};
-		case ActionTypeKeys.RESET_FAKTUM_VERDI:
-			return {
-				...state,
-				data: state.data.filter(faktum => faktum.key !== action.faktumKey)
-			};
+		// case ActionTypeKeys.RESET_FAKTUM_VERDI:
+		// 	return {
+		// 		...state,
+		// 		data: state.data.filter(faktum => faktum.key !== action.faktumKey)
+		// 	};
 		case ActionTypeKeys.SET_FAKTA:
 			return {
 				...state,

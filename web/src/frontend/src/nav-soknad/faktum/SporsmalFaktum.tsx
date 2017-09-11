@@ -5,7 +5,7 @@ import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
 import { getFaktumSporsmalTekst } from "../utils";
 
-import { SoknadAppState } from "../redux/reducer";
+import { SoknadAppState } from "../redux/faktaReducer";
 
 export interface OwnProps {
 	faktumKey: string;

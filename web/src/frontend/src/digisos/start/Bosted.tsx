@@ -4,7 +4,7 @@ import { withRouter, RouterProps } from "react-router";
 import Knapp from "nav-frontend-knapper";
 import { Select } from "nav-frontend-skjema";
 import { InjectedIntlProps, FormattedMessage } from "react-intl";
-import { FaktumComponentProps } from "../../nav-soknad/redux/reducer";
+import { FaktumComponentProps } from "../../nav-soknad/redux/faktaReducer";
 import Arrow from "../../nav-soknad/components/svg/Arrow";
 import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 import { ActionTypeKeys } from "../redux/soknad/types";

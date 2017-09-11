@@ -4,7 +4,7 @@ import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
 import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 
 const StromSkjema: React.StatelessComponent<{}> = () => (
 	<SporsmalFaktum faktumKey="ekstrainfo.utgifter.strom" key="strom">

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Radio } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { SoknadAppState, FaktumComponentProps } from "../redux/reducer";
+import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
 import { setFaktumVerdi } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";

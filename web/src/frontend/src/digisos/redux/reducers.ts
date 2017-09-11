@@ -1,6 +1,6 @@
 import SoknadReducer, { SoknadState } from "./soknad/reducer";
 import OppsummeringReducer, { OppsummeringState } from "./oppsummering/reducer";
-import FaktumReducer, { SoknadAppState } from "../../nav-soknad/redux/reducer";
+import FaktumReducer, { SoknadAppState } from "../../nav-soknad/redux/faktaReducer";
 import ValideringReducer from "../../nav-soknad/redux/validering-reducer";
 import LedeteksterReducer from "./informasjon/informasjonReducer";
 import { combineReducers } from "redux";
