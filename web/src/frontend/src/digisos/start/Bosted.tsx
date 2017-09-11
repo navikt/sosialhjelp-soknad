@@ -15,7 +15,7 @@ import { Select } from "nav-frontend-skjema";
 import { InjectedIntlProps, FormattedMessage } from "react-intl";
 
 interface StateProps {
-	status?: string;
+	restStatus?: string;
 	brukerBehandlingId?: string;
 	kommuneId: string;
 	bydelId: string;
@@ -42,7 +42,7 @@ class Bosted extends React.Component<
 	}
 
 	componentDidUpdate() {
-		if (this.props.status === ActionTypeKeys.OK) {
+		if (this.props.restStatus === ActionTypeKeys.OK) {
 			this.setState({
 				kommuneId: "",
 				bydelId: ""
@@ -149,7 +149,7 @@ export default connect(
 	(state: { faktumStore: FaktumState; soknad: SoknadState }, props: any) => {
 		return {
 			fakta: state.faktumStore.fakta,
-			status: state.soknad.status,
+			restStatus: state.soknad.restStatus,
 			brukerBehandlingId: state.soknad.brukerBehandlingId
 		};
 	}
