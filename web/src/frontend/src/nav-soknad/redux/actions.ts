@@ -15,23 +15,19 @@ export type ActionTypes =
 	| SetFaktaAction;
 
 export function setFaktumVerdi(
-	faktumKey: string,
-	value: FaktumValueType,
-	fakta: any
+	faktum: Faktum,
+	value: FaktumValueType
 ) {
-	const index: number = fakta.findIndex((item: Faktum) => {
-		return item.key === faktumKey;
-	});
-	const faktum: Faktum = fakta[index];
-	faktum.value = value;
 	return (dispatch: Dispatch<Action>) => {
+		const nyttFaktum = Object.assign(faktum);
+		nyttFaktum.value = value;
 		dispatch({ type: "faktum/PENDING" });
-		fetchPut("fakta/" + faktum.faktumId, JSON.stringify(faktum))
+		fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
 			.then(response => {
 				dispatch( {
-						type: ActionTypeKeys.SET_FAKTUM_VERDI,
-						faktumKey,
-						value});
+					type: ActionTypeKeys.SET_FAKTUM_VERDI,
+					faktum: nyttFaktum
+				});
 			})
 			.catch(reason => {
 				dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });

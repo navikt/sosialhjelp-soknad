@@ -6,6 +6,7 @@ import { setFaktumVerdi } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getIntlTextOrKey, getFaktumVerdi } from "../utils";
+import { finnFaktum } from "../redux/faktaUtils";
 
 interface OwnProps {
 	faktumKey: string;
@@ -46,7 +47,8 @@ class TextareaFaktum extends React.Component<Props, State> {
 	}
 
 	handleOnBlur() {
-		this.props.dispatch(setFaktumVerdi(this.props.faktumKey, this.state.value, this.props.fakta));
+
+		this.props.dispatch(setFaktumVerdi(finnFaktum(this.props.faktumKey, this.props.fakta), this.state.value));
 	}
 
 	render() {

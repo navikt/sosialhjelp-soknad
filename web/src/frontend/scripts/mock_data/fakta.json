@@ -988,5 +988,25 @@
 		"faktumEgenskaper": [],
 		"properties": {},
 		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 83,
+		"soknadId": 1,
+		"parrentFaktum": null,
+		"key": "personalia.kommune",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	{
+		"faktumId": 84,
+		"soknadId": 1,
+		"parrentFaktum": 83,
+		"key": "personalia.bydel",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
 	}
 ]

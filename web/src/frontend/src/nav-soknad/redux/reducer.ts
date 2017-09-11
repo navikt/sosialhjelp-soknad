@@ -1,3 +1,5 @@
+import { Faktum } from "../soknadTypes";
+
 export type FaktumMap = Map<string, any>;
 import { Reducer } from "./types";
 import { ActionTypeKeys } from "./types";
@@ -12,30 +14,31 @@ export interface FaktumState {
 	faktumTekst?: any;
 }
 
-export interface Faktum {
-	key: string;
-	value: any;
-	type: string;
-}
+// export interface Faktum {
+// 	key: string;
+// 	value: any;
+// 	type: string;
+// }
 
 export interface FaktumComponentProps {
 	fakta: Faktum[];
 }
 
 const initialState: FaktumState = {
-	fakta: [{ key: "arbeid.dinsituasjon.jobb", value: true, type: "" }]
+	fakta: []
 };
 
-function updateFaktumVerdi(fakta: Faktum[], key: string, value: any) {
-	const index: number = fakta.findIndex(faktum => {
-		return faktum.key === key;
+function updateFaktumVerdi(fakta: Faktum[], faktum: Faktum) {
+	const index: number = fakta.findIndex(item => {
+		return item.faktumId === faktum.faktumId;
 	});
 	if (index === -1) {
-		return [...fakta, { key, value, type: "BRUKERREGISTRERT" }];
+		console.error("Manglende faktum " + JSON.stringify(faktum, null, 4));
+		return [...fakta];
 	} else {
 		return [
 			...fakta.slice(0, index),
-			{ ...fakta[index], value },
+			faktum,
 			...fakta.slice(index + 1)
 		];
 	}
@@ -50,7 +53,7 @@ const faktumReducer: Reducer<FaktumState, any> = (
 		case ActionTypeKeys.SET_FAKTUM_VERDI:
 			return {
 				...state,
-				fakta: updateFaktumVerdi(state.fakta, action.faktumKey, action.value)
+				fakta: updateFaktumVerdi(state.fakta, action.faktum)
 			};
 		case ActionTypeKeys.RESET_FAKTUM_VERDI:
 			return {

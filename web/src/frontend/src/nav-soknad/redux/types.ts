@@ -7,6 +7,7 @@ export interface DispatchProps {
 }
 
 export enum ActionTypeKeys {
+	FAKTA_PENDING = "FAKTA_PENDING",
 	SET_FAKTUM_VERDI = "SET_FAKTUM_VERDI",
 	SET_FAKTA = "SET_FAKTA",
 	SOKNAD_OPPRETTET = "SOKNAD_OPPRETTET",

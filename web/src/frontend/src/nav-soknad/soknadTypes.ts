@@ -48,7 +48,7 @@ export interface Faktum {
 	parrentFaktum: null | number;
 	key: string;
 	value: null | boolean | string | number;
-	faktumEgenskaper: FaktumEgenskap[];
+	faktumEgenskaper?: FaktumEgenskap[];
 	properties: FaktumProperties | {};
 	type?: string;
 }

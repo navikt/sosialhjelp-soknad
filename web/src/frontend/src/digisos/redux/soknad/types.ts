@@ -1,6 +1,7 @@
 export * from "../types";
 
 export enum ActionTypeKeys {
+	FAKTA_PENDING = "fakta/PENDING", // TODO: Flytt
 	OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
 	SET_BRUKERBEHANDLING_ID = "soknad/SET_BRUKERBEHANDLING_ID",
 	SET_SERVER_FEIL = "SET_SERVER_FEIL",

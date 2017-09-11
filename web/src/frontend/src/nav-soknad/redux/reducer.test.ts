@@ -7,8 +7,12 @@ describe('facts reducer', () => {
             {
                 key: "bolk",
                 value: "Not updated value",
-                type: "BRUKERREGISTRERT"
-            }
+                type: "BRUKERREGISTRERT",
+	            faktumId: 1,
+        	    soknadId: 1,
+	            parrentFaktum: 1,
+    	        properties: {}
+           }
         ]
     };
     it("should updates single fact", () => {

@@ -6,6 +6,8 @@ import { setFaktumVerdi } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
+import { Faktum } from "../soknadTypes";
+import { finnFaktum } from "../redux/faktaUtils";
 
 interface State {
 	value: string;
@@ -21,6 +23,7 @@ interface OwnProps {
 
 type Props = OwnProps &
 	FaktumComponentProps &
+	Faktum &
 	DispatchProps &
 	InjectedIntlProps;
 
@@ -45,7 +48,7 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 
 	handleOnBlur() {
-		this.props.dispatch(setFaktumVerdi(this.props.faktumKey, this.state.value, this.props.fakta));
+		this.props.dispatch(setFaktumVerdi(finnFaktum(this.props.faktumKey, this.props.fakta), this.state.value));
 	}
 
 	render() {

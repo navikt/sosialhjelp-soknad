@@ -12,6 +12,7 @@ import {
 	boolToString,
 	getFaktumVerdi
 } from "../utils";
+import { finnFaktum } from "../redux/faktaUtils";
 
 interface OwnProps {
 	faktumKey: string;
@@ -44,7 +45,7 @@ class CheckboxFaktum extends React.Component<
 				disabled={disabled}
 				value={option}
 				onChange={(evt: any) =>
-					dispatch(setFaktumVerdi(key, boolToString(evt.target.checked), this.props.fakta))}
+					dispatch(setFaktumVerdi(finnFaktum(key, this.props.fakta ), boolToString(evt.target.checked)))}
 				label={
 					<LabelMedHjelpetekst
 						id={key}
