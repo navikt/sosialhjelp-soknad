@@ -2,7 +2,7 @@ import * as React from "react";
 // import { findDOMNode } from "react-dom";
 import { Input, Feil, InputBredde } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { FaktumAppState, FaktumComponentProps } from "../redux/reducer";
+import { SoknadAppState, FaktumComponentProps } from "../redux/reducer";
 import {
 	setFaktumVerdi,
 	registerFaktumValidering,
@@ -111,10 +111,10 @@ export default connect<
 	StateProps,
 	{},
 	OwnProps
->((state: FaktumAppState, props: OwnProps) => {
+>((state: SoknadAppState, props: OwnProps) => {
 	const feil = state.validering.feil.find(f => f.faktumKey === props.faktumKey);
 	return {
-		fakta: state.faktum.fakta,
+		fakta: state.faktum.data,
 		faktumKey: props.faktumKey,
 		feil: feil ? feil.feil : null
 	};

@@ -3,13 +3,13 @@ import { Reducer } from "./types";
 import { ActionTypeKeys } from "./types";
 import { ValideringState } from "./validering-reducer";
 
-export interface FaktumAppState {
+export interface SoknadAppState {
 	faktum: FaktumState;
 	validering: ValideringState;
 }
 
 export interface FaktumState {
-	fakta: Faktum[];
+	data: Faktum[];
 }
 
 export interface Faktum {
@@ -23,7 +23,7 @@ export interface FaktumComponentProps {
 }
 
 const initialState: FaktumState = {
-	fakta: [{ key: "arbeid.dinsituasjon.jobb", value: true, type: "" }]
+	data: [{ key: "arbeid.dinsituasjon.jobb", value: true, type: "" }]
 };
 
 function updateFaktumVerdi(fakta: Faktum[], key: string, value: any) {
@@ -50,17 +50,17 @@ const FaktumReducer: Reducer<FaktumState, any> = (
 		case ActionTypeKeys.SET_FAKTUM_VERDI:
 			return {
 				...state,
-				fakta: updateFaktumVerdi(state.fakta, action.faktumKey, action.value)
+				data: updateFaktumVerdi(state.data, action.faktumKey, action.value)
 			};
 		case ActionTypeKeys.RESET_FAKTUM_VERDI:
 			return {
 				...state,
-				fakta: state.fakta.filter(faktum => faktum.key !== action.faktumKey)
+				data: state.data.filter(faktum => faktum.key !== action.faktumKey)
 			};
 		case ActionTypeKeys.SET_FAKTA:
 			return {
 				...state,
-				fakta: action.fakta
+				data: action.fakta
 			};
 		default:
 			return state;

@@ -4,7 +4,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getIntlTextOrKey } from "../utils";
 import Steg from "../components/steg";
 
-import { FaktumAppState } from "../redux/reducer";
+import { SoknadAppState } from "../redux/reducer";
 import { Valideringsfeil } from "../redux/types";
 
 interface OwnProps extends React.Props<any> {
@@ -32,7 +32,8 @@ class StegFaktum extends React.Component<
 			<Steg
 				tittel={getIntlTextOrKey(intl, tittelId)}
 				feilmeldinger={feilmeldinger}
-				visFeilmeldinger={visFeilmeldinger}>
+				visFeilmeldinger={visFeilmeldinger}
+			>
 				{children}
 			</Steg>
 		);
@@ -44,7 +45,7 @@ export default injectIntl(
 		StateProps,
 		{},
 		OwnProps & InjectedIntlProps
-	>((state: FaktumAppState, props: OwnProps) => {
+	>((state: SoknadAppState, props: OwnProps) => {
 		return {
 			feilmeldinger: state.validering.feil,
 			visFeilmeldinger: true

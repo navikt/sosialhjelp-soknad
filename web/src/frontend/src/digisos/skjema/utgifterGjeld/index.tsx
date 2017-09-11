@@ -106,6 +106,6 @@ class UtgifterGjeld extends React.Component<
 
 export default connect((state: State, props: any) => {
 	return {
-		fakta: state.faktum.fakta
+		fakta: state.faktum.data
 	};
 })(injectIntl(UtgifterGjeld));

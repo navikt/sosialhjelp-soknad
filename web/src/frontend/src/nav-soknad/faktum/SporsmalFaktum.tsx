@@ -5,7 +5,7 @@ import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
 import { getFaktumSporsmalTekst } from "../utils";
 
-import { FaktumAppState } from "../redux/reducer";
+import { SoknadAppState } from "../redux/reducer";
 
 export interface OwnProps {
 	faktumKey: string;
@@ -48,7 +48,7 @@ export default connect<
 	StateProps,
 	{},
 	OwnProps
->((state: FaktumAppState, props: OwnProps): StateProps => {
+>((state: SoknadAppState, props: OwnProps): StateProps => {
 	const feil = state.validering.feil.find(f => f.faktumKey === props.faktumKey);
 	return {
 		feil: feil ? feil.feil : null

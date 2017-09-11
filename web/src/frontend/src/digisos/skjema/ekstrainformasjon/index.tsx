@@ -35,6 +35,6 @@ class Ekstrainformasjon extends React.Component<FaktumComponentProps, {}> {
 
 export default connect((state: State) => {
 	return {
-		fakta: state.faktum.fakta
+		fakta: state.faktum.data
 	};
 })(Ekstrainformasjon);
