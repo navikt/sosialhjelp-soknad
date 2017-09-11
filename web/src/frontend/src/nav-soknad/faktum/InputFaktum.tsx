@@ -1,12 +1,12 @@
 import * as React from "react";
-import { findDOMNode } from "react-dom";
+// import { findDOMNode } from "react-dom";
 import { Input, Feil, InputBredde } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { FaktumAppState, FaktumComponentProps } from "../redux/reducer";
 import {
-	setFaktumVerdi,
-	setFaktumValideringsFeil,
-	setFaktumValideringOk
+	setFaktumVerdi
+	// setFaktumValideringsFeil,
+	// setFaktumValideringOk
 } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
@@ -57,19 +57,19 @@ class InputFaktum extends React.Component<Props, State> {
 
 	handleOnBlur() {
 		this.props.dispatch(setFaktumVerdi(this.props.faktumKey, this.state.value));
-		if (this.state.value === "" && this.props.required) {
-			this.props.dispatch(
-				setFaktumValideringsFeil(
-					this.props.faktumKey,
-					findDOMNode(this.input),
-					{
-						feilmelding: "Informasjonen er påkrevd"
-					}
-				)
-			);
-		} else {
-			this.props.dispatch(setFaktumValideringOk(this.props.faktumKey));
-		}
+		// if (this.state.value === "" && this.props.required) {
+		// 	this.props.dispatch(
+		// 		setFaktumValideringsFeil(
+		// 			this.props.faktumKey,
+		// 			findDOMNode(this.input),
+		// 			{
+		// 				feilmelding: "Informasjonen er påkrevd"
+		// 			}
+		// 		)
+		// 	);
+		// } else {
+		// 	this.props.dispatch(setFaktumValideringOk(this.props.faktumKey));
+		// }
 	}
 
 	render() {
