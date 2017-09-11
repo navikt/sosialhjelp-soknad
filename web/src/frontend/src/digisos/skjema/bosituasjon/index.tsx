@@ -11,7 +11,6 @@ import {
 	getFaktumVerdi
 } from "../../../nav-soknad/utils";
 
-import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
@@ -37,12 +36,12 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}>
 						<SporsmalFaktum faktumKey={annen.faktum}>
 							{/*TODO opprette checkboxgruppefaktumet*/}
-							<CheckboxFaktum faktumKey={annen.faktum} option="institusjon" />
-							<CheckboxFaktum faktumKey={annen.faktum} option="krisesenter" />
-							<CheckboxFaktum faktumKey={annen.faktum} option="fengsel" />
-							<CheckboxFaktum faktumKey={annen.faktum} option="venner" />
-							<CheckboxFaktum faktumKey={annen.faktum} option="foreldre" />
-							<CheckboxFaktum faktumKey={annen.faktum} option="familie" />
+							<RadioFaktum faktumKey={annen.faktum} option="institusjon" />
+							<RadioFaktum faktumKey={annen.faktum} option="krisesenter" />
+							<RadioFaktum faktumKey={annen.faktum} option="fengsel" />
+							<RadioFaktum faktumKey={annen.faktum} option="venner" />
+							<RadioFaktum faktumKey={annen.faktum} option="foreldre" />
+							<RadioFaktum faktumKey={annen.faktum} option="familie" />
 						</SporsmalFaktum>
 					</Underskjema>
 				</SporsmalFaktum>

@@ -1,68 +1,51 @@
 import * as React from "react";
 import { addLocaleData, IntlProvider as Provider } from "react-intl";
 import * as nb from "react-intl/locale-data/nb";
-import { getApiBaseUrl, MED_CREDENTIALS } from "./digisos/redux/rest-utils";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import { connect } from "react-redux";
+import { hentLedetekster } from "./redux/informasjon/informasjonActions";
+import {
+	ActionTypeKeys,
+	LedetekstState
+} from "./redux/informasjon/informasjonTypes";
+import { DispatchProps } from "./nav-soknad/redux/types";
 
 addLocaleData(nb);
-
-interface IntlProviderState {
-	ledetekster: object;
-}
 
 interface IntlProviderProps {
 	children: React.ReactNode;
 }
 
-const STATUS = "status";
-const DATA = "data";
-
 class IntlProvider extends React.Component<
-	IntlProviderProps,
-	IntlProviderState
+	IntlProviderProps & DispatchProps & LedetekstState
 > {
-	constructor(props: IntlProviderProps) {
-		super(props);
-		this.state = {
-			ledetekster: { status: null, data: {} }
-		};
-	}
-
-	/* tslint:disable */
 	componentDidMount() {
-		this.setState({ ledetekster: { status: 0, data: {} } });
-		fetch(
-			getApiBaseUrl() +
-				"informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp",
-			MED_CREDENTIALS
-		)
-			.then(response => response.json())
-			.then(texts => {
-				this.setState({ ledetekster: { status: 200, data: texts } });
-			})
-			.catch(error => {
-				console.log(`request failed ${error}`);
-			});
+		const visNokler = window.location.search.match(/vistekster=true/) !== null;
+		this.props.dispatch(hentLedetekster(visNokler));
 	}
-	/* tslint:enable */
 
 	render() {
-		const ledetekster = this.state.ledetekster;
+		let { children } = this.props;
+		const { ledetekster } = this.props;
 		const locale = "nb";
-		const children =
-			this.state.ledetekster[STATUS] === 200 ? (
-				this.props.children
-			) : (
+
+		if (ledetekster.status !== ActionTypeKeys.OK) {
+			children = (
 				<div className="application-spinner">
 					<NavFrontendSpinner storrelse="xxl" />
 				</div>
 			);
+		}
 		return (
-			<Provider messages={ledetekster[DATA]} defaultLocale="nb" locale={locale}>
+			<Provider messages={ledetekster.data} defaultLocale="nb" locale={locale}>
 				{children}
 			</Provider>
 		);
 	}
 }
 
-export default IntlProvider;
+export default connect((state: LedetekstState) => {
+	return {
+		ledetekster: state.ledetekster
+	};
+})(IntlProvider);

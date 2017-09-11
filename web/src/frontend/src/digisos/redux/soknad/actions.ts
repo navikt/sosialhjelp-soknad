@@ -5,9 +5,10 @@ import {
 	SetBrukerBehandlingIdAction,
 	SetServerFeilAction,
 	ResetSoknadAction,
-	SetOppsummering
+	SettRestStatusPending,
+	SettRestStatusOk
 } from "./types";
-import { fetchPost, fetchToJson, fetchHtml } from "../rest-utils";
+import { fetchPost, fetchToJson } from "../rest-utils";
 import { setFaktumVerdi, setFakta } from "../../../nav-soknad/redux/actions";
 
 export type ActionTypes =
@@ -15,7 +16,8 @@ export type ActionTypes =
 	| SetBrukerBehandlingIdAction
 	| SetServerFeilAction
 	| ResetSoknadAction
-	| SetOppsummering;
+	| SettRestStatusPending
+	| SettRestStatusOk;
 
 export function opprettSoknad(kommuneId: string, bydelId: string) {
 	return (dispatch: Dispatch<Action>) => {
@@ -30,8 +32,8 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 					brukerBehandlingId
 				});
 				hentFakta(brukerBehandlingId, dispatch).then(fakta => {
+					dispatch({ type: ActionTypeKeys.OK }); // Flytte til hentFakta?
 					dispatch(setFakta(fakta));
-					dispatch(setFaktumVerdi("spikespike", 123));
 					dispatch(setFaktumVerdi("personalia.kommune", kommuneId));
 					if (bydelId !== "") {
 						dispatch(setFaktumVerdi("personalia.bydel", bydelId));
@@ -44,29 +46,23 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 	};
 }
 
+export function lesSoknad(brukerBehandlingId: string) {
+	return (dispatch: Dispatch<Action>) => {
+		hentFakta(brukerBehandlingId, dispatch).then(fakta => {
+			dispatch(setFakta(fakta));
+			dispatch({ type: ActionTypeKeys.OK });
+		});
+	};
+}
+
 function hentFakta(brukerBehandlingId: string, dispatch: Dispatch<Action>) {
 	dispatch({ type: ActionTypeKeys.PENDING });
 	return fetchToJson(
 		"soknader/" + brukerBehandlingId + "/fakta"
 	).catch(reason => {
+		dispatch({ type: ActionTypeKeys.FEILET });
 		dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
 	});
-}
-
-export function hentOppsummering(id: string) {
-	return (dispatch: Dispatch<Action>) => {
-		dispatch({ type: ActionTypeKeys.PENDING });
-		fetchHtml("soknader/" + id + "/oppsummering")
-			.then(response => {
-				dispatch({
-					type: ActionTypeKeys.SET_OPPSUMMERING,
-					oppsummering: response
-				});
-			})
-			.catch(reason => {
-				dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
-			});
-	};
 }
 
 export function resetSoknad() {

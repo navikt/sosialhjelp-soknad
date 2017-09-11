@@ -12,8 +12,23 @@ export enum ActionTypeKeys {
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
+export enum REST_STATUS {
+	OK = "OK",
+	FEILET = "FEILET",
+	PENDING = "PENDING",
+	INITIALISERT = "INITIALISERT"
+}
+
 export interface OpprettSoknadAction {
 	type: ActionTypeKeys.OPPRETT_SOKNAD;
+}
+
+export interface SettRestStatusPending {
+	type: ActionTypeKeys.PENDING;
+}
+
+export interface SettRestStatusOk {
+	type: ActionTypeKeys.OK;
 }
 
 export interface SetBrukerBehandlingIdAction {
@@ -25,10 +40,6 @@ export interface SetServerFeilAction {
 	type: ActionTypeKeys.SET_SERVER_FEIL;
 	feilmelding: string;
 }
-export interface SetOppsummering {
-	type: ActionTypeKeys.SET_OPPSUMMERING;
-	oppsummering: string;
-}
 export interface ResetSoknadAction {
 	type: ActionTypeKeys.RESET_SOKNAD;
 }
@@ -39,8 +50,8 @@ export interface OtherAction {
 
 export interface SoknadState {
 	status: string;
+	restStatus: string;
 	soknadType: string;
 	brukerBehandlingId: string;
 	feilmelding: string;
-	oppsummering: string;
 }

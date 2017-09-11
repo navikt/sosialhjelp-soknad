@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <div
+    className="app-digisos"
+>
+    <h1
+        className="app-digisos__title"
+    >
+        <FormattedMessage
+            id="skjema.tittel"
+            values={Object {}}
+        />
+    </h1>
+    <Switch>
+        <Route
+            component={[Function]}
+            exact={true}
+            path="/informasjon"
+        />
+        <Route
+            component={[Function]}
+            path="/skjema/:brukerBehandlingId"
+        />
+        <Route
+            component={[Function]}
+            path="/kvittering"
+        />
+    </Switch>
+</div>,
+  "nodes": Array [
+    <div
+      className="app-digisos"
+>
+      <h1
+            className="app-digisos__title"
+      >
+            <FormattedMessage
+                  id="skjema.tittel"
+                  values={Object {}}
+            />
+      </h1>
+      <Switch>
+            <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/informasjon"
+            />
+            <Route
+                  component={[Function]}
+                  path="/skjema/:brukerBehandlingId"
+            />
+            <Route
+                  component={[Function]}
+                  path="/kvittering"
+            />
+      </Switch>
+</div>,
+  ],
+  "options": Object {},
+  "renderer": ReactShallowRenderer {
+    "_instance": ShallowComponentWrapper {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 0,
+      "_context": Object {},
+      "_currentElement": <App />,
+      "_debugID": 1,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": App {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "props": Object {},
+        "refs": Object {},
+        "state": null,
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 1,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <div
+          className="app-digisos"
+>
+          <h1
+                    className="app-digisos__title"
+          >
+                    <FormattedMessage
+                              id="skjema.tittel"
+                              values={Object {}}
+                    />
+          </h1>
+          <Switch>
+                    <Route
+                              component={[Function]}
+                              exact={true}
+                              path="/informasjon"
+                    />
+                    <Route
+                              component={[Function]}
+                              path="/skjema/:brukerBehandlingId"
+                    />
+                    <Route
+                              component={[Function]}
+                              path="/kvittering"
+                    />
+          </Switch>
+</div>,
+        "_debugID": 2,
+        "_renderedOutput": <div
+          className="app-digisos"
+>
+          <h1
+                    className="app-digisos__title"
+          >
+                    <FormattedMessage
+                              id="skjema.tittel"
+                              values={Object {}}
+                    />
+          </h1>
+          <Switch>
+                    <Route
+                              component={[Function]}
+                              exact={true}
+                              path="/informasjon"
+                    />
+                    <Route
+                              component={[Function]}
+                              path="/skjema/:brukerBehandlingId"
+                    />
+                    <Route
+                              component={[Function]}
+                              path="/kvittering"
+                    />
+          </Switch>
+</div>,
+      },
+      "_renderedNodeType": 0,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <App />,
+}
+`;

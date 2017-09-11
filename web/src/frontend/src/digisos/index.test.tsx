@@ -1,13 +1,10 @@
+import polyfillObjectEntries from "../objectEntriesPolyfill";
+polyfillObjectEntries();
 import * as React from "react";
-import * as ReactDOM from "react-dom";
-import IntlProvider from "../intlProvider";
+import { shallow } from "enzyme";
+import App from "./index";
 
 it("renders without crashing", () => {
-	const div = document.createElement("div");
-	ReactDOM.render(
-		<IntlProvider>
-			<div />
-		</IntlProvider>,
-		div
-	);
+	const wrapper = shallow(<App />);
+	expect(wrapper).toMatchSnapshot();
 });

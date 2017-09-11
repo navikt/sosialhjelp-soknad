@@ -61,19 +61,19 @@ const ArbeidOgUtdanning: React.StatelessComponent<
 	FaktumComponentProps
 > = props => {
 	const { fakta } = props;
-	const visJobb = getFaktumVerdi(fakta, "dinsituasjon.jobb") === "true";
 	const visArbeidsledig =
-		getFaktumVerdi(fakta, "dinsituasjon.jobb") === "false";
+		getFaktumVerdi(fakta, "dinsituasjon.arbeidsledig") === "true";
+	const visJobb = getFaktumVerdi(fakta, "dinsituasjon.jobb") === "true";
 	const visStudent = faktumIsSelected(
 		getFaktumVerdi(fakta, "dinsituasjon.studerer")
 	);
 
-	if (!visArbeidsledig && !visJobb && !visStudent) {
+	if (!visJobb && !visStudent) {
 		return null;
 	}
 	const content = [
-		...(visArbeidsledig ? [<ArbeidsledigSkjema key="arbeidsledig" />] : []),
 		...(visJobb ? [<JobbSkjema key="jobb" />] : []),
+		...(visArbeidsledig ? [<ArbeidsledigSkjema key="arbeidsledig" />] : []),
 		...(visStudent ? [<StudentSkjema key="student" />] : [])
 	];
 

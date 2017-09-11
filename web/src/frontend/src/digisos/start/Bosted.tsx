@@ -13,7 +13,7 @@ import { DispatchProps } from "../redux/types";
 import { State } from "../redux/reducers";
 
 interface StateProps {
-	status?: string;
+	restStatus?: string;
 	brukerBehandlingId?: string;
 	kommuneId: string;
 	bydelId: string;
@@ -40,7 +40,7 @@ class Bosted extends React.Component<
 	}
 
 	componentDidUpdate() {
-		if (this.props.status === ActionTypeKeys.OK) {
+		if (this.props.restStatus === ActionTypeKeys.OK) {
 			this.setState({
 				kommuneId: "",
 				bydelId: ""
@@ -74,7 +74,8 @@ class Bosted extends React.Component<
 								<strong>
 									<FormattedMessage id="personalia.kommune.label" />
 								</strong>
-							}>
+							}
+						>
 							<option value="" />
 							{Kommuner.map(kommune => (
 								<option value={kommune.id} key={kommune.id}>
@@ -95,7 +96,8 @@ class Bosted extends React.Component<
 									<strong>
 										<FormattedMessage id="personalia.bydel.label" />
 									</strong>
-								}>
+								}
+							>
 								<option value="" />
 								{valgtKommune.bydeler.map(bydel => (
 									<option value={bydel.id} key={bydel.id}>
@@ -144,7 +146,7 @@ class Bosted extends React.Component<
 export default connect((state: State, props: any) => {
 	return {
 		fakta: state.faktum.fakta,
-		status: state.soknad.status,
+		restStatus: state.soknad.restStatus,
 		brukerBehandlingId: state.soknad.brukerBehandlingId
 	};
 })(withRouter(Bosted));
