@@ -1,13 +1,34 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
-import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 
+const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
+	<SporsmalFaktum faktumKey="ekstrainfo.arbeidsledig">
+		<Container fluid={true} className="container--noPadding">
+			<Row>
+				<Column sm="6" xs="3">
+					<InputFaktum
+						faktumKey="ekstrainfo.arbeidsledig.feriepenger"
+						bredde="s"
+					/>
+				</Column>
+				<Column sm="6" xs="3">
+					<InputFaktum
+						faktumKey="ekstrainfo.arbeidsledig.sluttoppgjor"
+						bredde="s"
+					/>
+				</Column>
+			</Row>
+		</Container>
+	</SporsmalFaktum>
+);
+
 const JobbSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum faktumId="ekstrainfo.jobb">
+	<SporsmalFaktum faktumKey="ekstrainfo.jobb">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
@@ -18,11 +39,11 @@ const JobbSkjema: React.StatelessComponent<{}> = () => (
 				</Column>
 			</Row>
 		</Container>
-	</SkjemagruppeFaktum>
+	</SporsmalFaktum>
 );
 
 const StudentSkjema: React.StatelessComponent<{}> = () => (
-	<SkjemagruppeFaktum faktumId="ekstrainfo.student">
+	<SporsmalFaktum faktumKey="ekstrainfo.student">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column sm="6" xs="3">
@@ -33,13 +54,15 @@ const StudentSkjema: React.StatelessComponent<{}> = () => (
 				</Column>
 			</Row>
 		</Container>
-	</SkjemagruppeFaktum>
+	</SporsmalFaktum>
 );
 
 const ArbeidOgUtdanning: React.StatelessComponent<
 	FaktumComponentProps
 > = props => {
 	const { fakta } = props;
+	const visArbeidsledig =
+		getFaktumVerdi(fakta, "dinsituasjon.arbeidsledig") === "true";
 	const visJobb = getFaktumVerdi(fakta, "dinsituasjon.jobb") === "true";
 	const visStudent = faktumIsSelected(
 		getFaktumVerdi(fakta, "dinsituasjon.studerer")
@@ -50,6 +73,7 @@ const ArbeidOgUtdanning: React.StatelessComponent<
 	}
 	const content = [
 		...(visJobb ? [<JobbSkjema key="jobb" />] : []),
+		...(visArbeidsledig ? [<ArbeidsledigSkjema key="arbeidsledig" />] : []),
 		...(visStudent ? [<StudentSkjema key="student" />] : [])
 	];
 

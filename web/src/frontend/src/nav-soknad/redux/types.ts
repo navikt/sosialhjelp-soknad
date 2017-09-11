@@ -1,3 +1,5 @@
+import { Feil } from "nav-frontend-skjema";
+
 export type Dispatch = (action: any) => void;
 
 export type Reducer<S, AT> = (state: S, action: AT) => S;
@@ -12,15 +14,21 @@ export enum ActionTypeKeys {
 	SET_FAKTA = "SET_FAKTA",
 	SOKNAD_OPPRETTET = "SOKNAD_OPPRETTET",
 	RESET_FAKTUM_VERDI = "RESET_FAKTUM_VERDI",
+	SET_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_FEIL",
+	CLEAR_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_OK",
+	REGISTER_FAKTUM_VALIDERING = "REGISTER_FAKTUM_VALIDERING",
+	UNREGISTER_FAKTUM_VALIDERING = "UNREGISTER_FAKTUM_VALIDERING",
 	SET_SERVER_FEIL = "SET_SERVER_FEIL",
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
-export interface SetFaktumVerdiAction {
-	type: ActionTypeKeys.SET_FAKTUM_VERDI;
+export interface FaktumValideringRules {
+	rules: any;
+}
+
+export interface FaktumValidering {
 	faktumKey: string;
-	value: FaktumValueType;
-	properties?: any;
+	rules: FaktumValideringRules;
 }
 
 export interface Faktum {
@@ -30,6 +38,19 @@ export interface Faktum {
 
 export interface Fakta {
 	faktum: Faktum[];
+}
+
+export interface Valideringsfeil {
+	faktumKey: string;
+	element: HTMLElement;
+	feil: Feil;
+}
+
+export interface SetFaktumVerdiAction {
+	type: ActionTypeKeys.SET_FAKTUM_VERDI;
+	faktumKey: string;
+	value: FaktumValueType;
+	properties?: any;
 }
 
 export interface SetFaktaAction {
@@ -43,6 +64,26 @@ export interface SoknadOpprettetAction {
 
 export interface ResetFaktumVerdiAction {
 	type: ActionTypeKeys.RESET_FAKTUM_VERDI;
+	faktumKey: string;
+}
+export interface SetFaktumValideringFeilAction {
+	type: ActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL;
+	faktumKey: string;
+	element: HTMLElement;
+	feil: Feil;
+}
+export interface SetFaktumValideringOkAction {
+	type: ActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL;
+	faktumKey: string;
+}
+
+export interface RegisterFaktumValidering {
+	type: ActionTypeKeys.REGISTER_FAKTUM_VALIDERING;
+	faktumValidering: FaktumValidering;
+}
+
+export interface UnregisterFaktumValidering {
+	type: ActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING;
 	faktumKey: string;
 }
 

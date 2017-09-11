@@ -1,7 +1,7 @@
 // import faktumReducer from "./reducer";
 // import { setFaktumVerdi } from "./actions";
 
-describe('setFaktumVerdi action creator', () => {
+describe("setFaktumVerdi action creator", () => {
 
 	it("should update fact", () => {
 		expect(1).toEqual(1);
@@ -29,26 +29,34 @@ describe('setFaktumVerdi action creator', () => {
 	// 		}
 	// 	]
 	// };
-
 	// it("should update fact", () => {
+	// 	expect(1).toEqual(1);
 	// 	let newFaktumState = faktumReducer(
 	// 		defaultState,
-	// 		setFaktumVerdi("bolk", 789, defaultState.fakta)
+	// 		setFaktumVerdi("bolk", 789)
 	// 	);
-	// 	expect(newFaktumState.fakta.length).toEqual(2);
-	// 	expect(newFaktumState.fakta[0].value).toEqual(789);
-	// 	expect(newFaktumState.fakta[0].key).toEqual("bolk");
+	// 	expect(newFaktumState.data.length).toEqual(2);
+	// 	expect(newFaktumState.data[0].value).toEqual(789);
+	// 	expect(newFaktumState.data[0].key).toEqual("bolk");
 	//
 	// 	newFaktumState = faktumReducer(
 	// 		newFaktumState,
-	// 		setFaktumVerdi("bolk", false, defaultState.fakta)
+	// 		setFaktumVerdi("bolk", false)
 	// 	);
-	// 	expect(newFaktumState.fakta[0].value).toEqual(false);
+	// 	expect(newFaktumState.data[0].value).toEqual(false);
 	// 	newFaktumState = faktumReducer(
 	// 		newFaktumState,
-	// 		setFaktumVerdi("bolk", true, defaultState.fakta)
+	// 		setFaktumVerdi("bolk", true)
 	// 	);
-	// 	expect(newFaktumState.fakta[0].value).toEqual(true);
+	// 	expect(newFaktumState.data[0].value).toEqual(true);
 	// });
-
+	//
+	// it("should add fact", () => {
+	// 	const newFaktumState = faktumReducer(
+	// 		defaultState,
+	// 		setFaktumVerdi("ny_bolk", 789)
+	// 	);
+	// 	expect(newFaktumState.data.length).toEqual(3);
+	// 	expect(newFaktumState.data.slice(-1)[0].key).toEqual("ny_bolk");
+	// });
 });

@@ -1,9 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import {
-	FaktumStoreState,
-	FaktumComponentProps
-} from "../../../nav-soknad/redux/reducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { State } from "../../redux/reducers";
 import { DispatchProps } from "../../redux/types";
 
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
@@ -17,7 +15,7 @@ class Begrunnelse extends React.Component<
 	render() {
 		return (
 			<StegFaktum tittelId="begrunnelsebolk.tittel">
-				<SporsmalFaktum faktumId="begrunnelse.hvorfor">
+				<SporsmalFaktum faktumKey="begrunnelse.hvorfor">
 					<TextareaFaktum
 						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hvorfor"
@@ -25,7 +23,7 @@ class Begrunnelse extends React.Component<
 						maxLength={800}
 					/>
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumId="begrunnelse.hva">
+				<SporsmalFaktum faktumKey="begrunnelse.hva">
 					<TextareaFaktum
 						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hva"
@@ -38,8 +36,8 @@ class Begrunnelse extends React.Component<
 	}
 }
 
-export default connect((state: FaktumStoreState, props: any) => {
+export default connect((state: State, props: any) => {
 	return {
-		fakta: state.faktumStore.fakta
+		fakta: state.faktum.data
 	};
 })(Begrunnelse);

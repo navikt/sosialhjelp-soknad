@@ -4,21 +4,13 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import App from "./digisos";
 import thunk from "redux-thunk";
 import { erDev } from "./digisos/redux/rest-utils";
-import SoknadReducer from "./digisos/redux/soknad/reducer";
-import FaktumReducer from "./nav-soknad/redux/reducer";
-import LedeteksterReducer from "./redux/informasjon/informasjonReducer";
 import IntlProvider from "./intlProvider";
+import reducers from "./digisos/redux/reducers";
 import "./index.css";
-
-const rootReducer = combineReducers({
-	soknad: SoknadReducer,
-	faktumStore: FaktumReducer,
-	ledetekster: LedeteksterReducer
-});
 
 function configureStore() {
 	/* tslint:disable */
@@ -30,7 +22,7 @@ function configureStore() {
 			: (f: any) => f;
 	/* tslint:enable */
 	const middleware = applyMiddleware(thunk);
-	return middleware(devtools(createStore))(rootReducer);
+	return middleware(devtools(createStore))(reducers);
 }
 
 const store = configureStore();

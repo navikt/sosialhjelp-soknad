@@ -4,8 +4,8 @@ import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { DispatchProps } from "../../../nav-soknad/redux/types";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
-import { hentOppsummering } from "../../redux/soknad/actions";
-import { SoknadState } from "../../redux/soknad/types";
+import { hentOppsummering } from "../../redux/oppsummering/actions";
+import { State } from "../../redux/reducers";
 import "./oppsummering.css";
 
 interface StateProps {
@@ -44,8 +44,8 @@ class Oppsummering extends React.Component<Props> {
 	}
 }
 
-export default connect((state: { soknad: SoknadState }, props: any) => {
+export default connect((state: State, props: any) => {
 	return {
-		oppsummering: state.soknad.oppsummering
+		oppsummering: state.oppsummering.oppsummering
 	};
 })(Oppsummering);

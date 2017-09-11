@@ -15,7 +15,7 @@ export function hentOppsummering(id: string) {
 				});
 			})
 			.catch(reason => {
-				dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
+				dispatch({ type: ActionTypeKeys.FEILET, feilmelding: reason });
 			});
 	};
 }

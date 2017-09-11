@@ -4,7 +4,6 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import { getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import Ektefelle from "./Ektefelle";
 
@@ -13,12 +12,13 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 		const { fakta } = this.props;
 		const sivilstatus = radioCheckKeys("familie.sivilstatus");
 		return (
-			<SporsmalFaktum faktumId={sivilstatus.faktum}>
+			<SporsmalFaktum faktumKey={sivilstatus.faktum}>
 				<RadioFaktum faktumKey={sivilstatus.faktum} option="gift" />
-				<Underskjema visible={getFaktumVerdi(fakta, sivilstatus.faktum) === "gift"}>
-					<SkjemagruppeFaktum faktumId="familie.sivilstatus.gift">
+				<Underskjema
+					visible={getFaktumVerdi(fakta, sivilstatus.faktum) === "gift"}>
+					<SporsmalFaktum faktumKey="familie.sivilstatus.gift">
 						<Ektefelle fakta={fakta} />
-					</SkjemagruppeFaktum>
+					</SporsmalFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={sivilstatus.faktum} option="ugift" />
 				<RadioFaktum faktumKey={sivilstatus.faktum} option="samboer" />

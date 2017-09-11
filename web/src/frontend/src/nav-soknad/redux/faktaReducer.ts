@@ -3,29 +3,23 @@ import { Faktum } from "../soknadTypes";
 export type FaktumMap = Map<string, any>;
 import { Reducer } from "./types";
 import { ActionTypeKeys } from "./types";
-// import { ActionTypes } from "./actions";
+import { ValideringState } from "./validering-reducer";
 
-export interface FaktumStoreState {
-	faktumStore: FaktumState;
+export interface SoknadAppState {
+	faktum: FaktumState;
+	validering: ValideringState;
 }
 
 export interface FaktumState {
-	fakta: Faktum[];
-	faktumTekst?: any;
+	data: Faktum[];
 }
-
-// export interface Faktum {
-// 	key: string;
-// 	value: any;
-// 	type: string;
-// }
 
 export interface FaktumComponentProps {
 	fakta: Faktum[];
 }
 
 const initialState: FaktumState = {
-	fakta: []
+	data: []
 };
 
 function updateFaktumVerdi(fakta: Faktum[], faktum: Faktum) {
@@ -44,8 +38,29 @@ function updateFaktumVerdi(fakta: Faktum[], faktum: Faktum) {
 	}
 }
 
-// const faktumReducer: Reducer<FaktumState, ActionTypes> =
-const faktumReducer: Reducer<FaktumState, any> = (
+export type FaktumActionTypes = SetFaktumVerdi; // HentetTeksterAction | HentTeksterAction | TeksterFeiletAction | OtherAction;
+
+interface SetFaktumVerdi {
+	type: ActionTypeKeys.SET_FAKTUM_VERDI;
+	faktum: Faktum;
+}
+
+interface HentTeksterAction {
+	type: ActionTypeKeys.PENDING;
+	data: object;
+}
+
+interface TeksterFeiletAction {
+	type: ActionTypeKeys.FEILET;
+	data: object;
+}
+
+export interface OtherAction {
+	type: ActionTypeKeys.OTHER_ACTION;
+}
+
+
+const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 	state = initialState,
 	action
 ): FaktumState => {
@@ -53,21 +68,21 @@ const faktumReducer: Reducer<FaktumState, any> = (
 		case ActionTypeKeys.SET_FAKTUM_VERDI:
 			return {
 				...state,
-				fakta: updateFaktumVerdi(state.fakta, action.faktum)
+				data: updateFaktumVerdi(state.data, action.faktum)
 			};
 		case ActionTypeKeys.RESET_FAKTUM_VERDI:
 			return {
 				...state,
-				fakta: state.fakta.filter(faktum => faktum.key !== action.faktumKey)
+				data: state.data.filter(faktum => faktum.key !== action.faktumKey)
 			};
 		case ActionTypeKeys.SET_FAKTA:
 			return {
 				...state,
-				fakta: action.fakta
+				data: action.fakta
 			};
 		default:
 			return state;
 	}
 };
 
-export default faktumReducer;
+export default FaktumReducer;

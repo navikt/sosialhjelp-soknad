@@ -1,19 +1,21 @@
 import * as React from "react";
+import { connect } from "react-redux";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import {
+	faktumIsSelected,
+	getFaktumVerdi,
+	radioCheckKeys
+} from "../../../nav-soknad/utils";
+
+import { State } from "../../redux/reducers";
+import { DispatchProps } from "../../redux/types";
+
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
-import { connect } from "react-redux";
-import {
-	FaktumComponentProps,
-	FaktumStoreState
-} from "../../../nav-soknad/redux/reducer";
-import { DispatchProps } from "../../redux/types";
-import { InjectedIntlProps, injectIntl } from "react-intl";
-import { faktumIsSelected, getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
-
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
-import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 
 class UtgifterGjeld extends React.Component<
@@ -33,10 +35,11 @@ class UtgifterGjeld extends React.Component<
 
 		return (
 			<StegFaktum tittelId="utgifterbolk.tittel">
-				<SporsmalFaktum faktumId={harBoutgifter.faktum}>
+				<SporsmalFaktum faktumKey={harBoutgifter.faktum}>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="true" />
-					<Underskjema visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}>
-						<SkjemagruppeFaktum faktumId={boUtgifter.faktum}>
+					<Underskjema
+						visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}>
+						<SporsmalFaktum faktumKey={boUtgifter.faktum}>
 							{/*TODO checkboxgruppefaktum*/}
 							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="husleie" />
 							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="strom" />
@@ -62,16 +65,17 @@ class UtgifterGjeld extends React.Component<
 							) ? (
 								<TextareaFaktum faktumKey={andreBoUtgifter} />
 							) : null}
-						</SkjemagruppeFaktum>
+						</SporsmalFaktum>
 					</Underskjema>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="false" />
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumId={harUtgifterBarn.faktum}>
+				<SporsmalFaktum faktumKey={harUtgifterBarn.faktum}>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="true" />
-					<Underskjema visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}>
+					<Underskjema
+						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}>
 						{/*TODO checkboxgruppefaktum*/}
 
-						<SkjemagruppeFaktum faktumId={barneUtgifter.faktum}>
+						<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
 							<CheckboxFaktum
 								faktumKey={barneUtgifter.faktum}
 								option="fritidsaktivitet"
@@ -86,10 +90,12 @@ class UtgifterGjeld extends React.Component<
 							/>
 							<CheckboxFaktum faktumKey={barneUtgifter.faktum} option="helse" />
 							<CheckboxFaktum faktumKey={barneUtgifter.faktum} option="annet" />
-							{faktumIsSelected(getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`)) ? (
+							{faktumIsSelected(
+								getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`)
+							) ? (
 								<TextareaFaktum faktumKey={andreBarneutgifter} />
 							) : null}
-						</SkjemagruppeFaktum>
+						</SporsmalFaktum>
 					</Underskjema>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="false" />
 				</SporsmalFaktum>
@@ -98,8 +104,8 @@ class UtgifterGjeld extends React.Component<
 	}
 }
 
-export default connect((state: FaktumStoreState, props: any) => {
+export default connect((state: State, props: any) => {
 	return {
-		fakta: state.faktumStore.fakta
+		fakta: state.faktum.data
 	};
 })(injectIntl(UtgifterGjeld));
