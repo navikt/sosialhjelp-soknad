@@ -7,7 +7,7 @@ import {
 	setFaktumVerdi,
 	registerFaktumValidering,
 	unregisterFaktumValidering
-} from "../redux/actions";
+} from "../redux/faktaActions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";

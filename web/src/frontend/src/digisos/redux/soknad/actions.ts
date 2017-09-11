@@ -2,15 +2,15 @@ import { Action, Dispatch } from "redux";
 import {
 	ActionTypeKeys,
 	OpprettSoknadAction,
+	ResetSoknadAction,
 	SetBrukerBehandlingIdAction,
 	SetServerFeilAction,
-	ResetSoknadAction,
-	SettRestStatusPending,
-	SettRestStatusOk
+	SettRestStatusOk,
+	SettRestStatusPending
 } from "./types";
 
 import { fetchPost, fetchToJson } from "../rest-utils";
-import { setFaktumVerdi, setFakta } from "../../../nav-soknad/redux/actions";
+import { setFakta, setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";
 import { finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
 import { Faktum } from "../../../nav-soknad/soknadTypes";
 
