@@ -20,11 +20,10 @@ import {
 import { gaTilbake, gaVidere, avbryt } from "./utils";
 import { Location } from "history";
 import { connect } from "react-redux";
-import { FaktumState } from "../../nav-soknad/redux/reducer";
-import { SoknadState } from "../redux/soknad/types";
 import { DispatchProps } from "../redux/types";
 import { lesSoknad } from "../redux/soknad/actions";
 import { REST_STATUS } from "../redux/soknad/types";
+import { State } from "../redux/reducers";
 import NavFrontendSpinner from "nav-frontend-spinner";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
@@ -43,9 +42,10 @@ class Skjema extends React.Component<
 	Props & RouterProps & InjectedIntlProps & DispatchProps,
 	{}
 > {
-
 	componentDidMount() {
-		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(this.props.location);
+		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(
+			this.props.location
+		);
 		if (brukerBehandlingId && this.props.fakta.length <= 1) {
 			this.props.dispatch(lesSoknad(brukerBehandlingId));
 		}
@@ -61,8 +61,8 @@ class Skjema extends React.Component<
 		if (this.props.restStatus === REST_STATUS.PENDING) {
 			return (
 				<div className="application-spinner">
-				<NavFrontendSpinner storrelse="xxl" />
-			</div>
+					<NavFrontendSpinner storrelse="xxl" />
+				</div>
 			);
 		} else {
 			return (
@@ -72,7 +72,9 @@ class Skjema extends React.Component<
 							<StegIndikator
 								aktivtSteg={aktivtSteg}
 								steg={[
-									{ tittel: intl.formatMessage({ id: "personaliabolk.tittel" }) },
+									{
+										tittel: intl.formatMessage({ id: "personaliabolk.tittel" })
+									},
 									{ tittel: intl.formatMessage({ id: "arbeidbolk.tittel" }) },
 									{ tittel: intl.formatMessage({ id: "familiebolk.tittel" }) },
 									{
@@ -115,15 +117,12 @@ class Skjema extends React.Component<
 			);
 		}
 	}
-
 }
 
-export default connect(
-	(state: { faktumStore: FaktumState; soknad: SoknadState }, props: any) => {
-		return {
-			fakta: state.faktumStore.fakta,
-			restStatus: state.soknad.restStatus,
-			brukerBehandlingId: state.soknad.brukerBehandlingId
-		};
-	}
-)(injectIntl(withRouter(Skjema)));
+export default connect((state: State, props: any) => {
+	return {
+		fakta: state.faktum.data,
+		restStatus: state.soknad.restStatus,
+		brukerBehandlingId: state.soknad.brukerBehandlingId
+	};
+})(injectIntl(withRouter(Skjema)));

@@ -15,7 +15,7 @@ export interface Soknad {
 	soknadPrefix: string;
 	soknadUrl: string;
 	fortsettSoknadUrl: string;
-	stegliste: Steg[],
+	stegliste: Steg[];
 	sprak: string;
 	ikkeInnsendteVedlegg: Vedlegg[];
 	opplastedeVedlegg: Vedlegg[];
@@ -112,5 +112,5 @@ export interface FaktumProperties {
 	diskresjonskode: null | string;
 	navn: string;
 	gjeldendeAdresseGyldigTil: null | string;
-	gjeldendeAdresseGyldigFra: null | string
+	gjeldendeAdresseGyldigFra: null | string;
 }

@@ -1,11 +1,14 @@
 import * as React from "react";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
-import { radioCheckKeys, faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
+import {
+	radioCheckKeys,
+	faktumIsSelected,
+	getFaktumVerdi
+} from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
-import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 
 class Bostotte extends React.Component<FaktumComponentProps, {}> {
@@ -14,10 +17,11 @@ class Bostotte extends React.Component<FaktumComponentProps, {}> {
 		const bostotte = radioCheckKeys("inntekt.bostotte");
 		const hvilkenStotte = radioCheckKeys("inntekt.bostotte.true.type");
 		return (
-			<SporsmalFaktum faktumId={bostotte.faktum}>
+			<SporsmalFaktum faktumKey={bostotte.faktum}>
 				<RadioFaktum faktumKey={bostotte.faktum} option="true" />
-				<Underskjema visible={faktumIsSelected(getFaktumVerdi(fakta, "inntekt.bostotte"))}>
-					<SkjemagruppeFaktum faktumId={hvilkenStotte.faktum}>
+				<Underskjema
+					visible={faktumIsSelected(getFaktumVerdi(fakta, "inntekt.bostotte"))}>
+					<SporsmalFaktum faktumKey={hvilkenStotte.faktum}>
 						{/*TODO legge til checkboxgroup-faktum*/}
 						<CheckboxFaktum
 							faktumKey={hvilkenStotte.faktum}
@@ -27,7 +31,7 @@ class Bostotte extends React.Component<FaktumComponentProps, {}> {
 							faktumKey={hvilkenStotte.faktum}
 							option="kommunal"
 						/>
-					</SkjemagruppeFaktum>
+					</SporsmalFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={bostotte.faktum} option="false" />
 			</SporsmalFaktum>

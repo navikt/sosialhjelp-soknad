@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Radio, Feil } from "nav-frontend-skjema";
+import { Radio } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { FaktumStoreState, FaktumComponentProps } from "../redux/reducer";
+import { SoknadAppState, FaktumComponentProps } from "../redux/reducer";
 import { setFaktumVerdi } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
@@ -12,7 +12,6 @@ interface OwnProps {
 	option: string;
 	faktumKey: string;
 	disabled?: boolean;
-	feil?: Feil;
 }
 
 class RadioFaktum extends React.Component<
@@ -41,9 +40,9 @@ class RadioFaktum extends React.Component<
 	}
 }
 
-export default connect((state: FaktumStoreState, props: OwnProps) => {
+export default connect((state: SoknadAppState, props: OwnProps) => {
 	return {
-		fakta: state.faktumStore.fakta,
+		fakta: state.faktum.data,
 		faktumKey: props.faktumKey
 	};
 })(injectIntl(RadioFaktum));

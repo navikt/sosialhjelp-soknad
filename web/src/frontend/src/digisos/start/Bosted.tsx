@@ -1,18 +1,16 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import Knapp from "nav-frontend-knapper";
-import {
-	FaktumState,
-	FaktumComponentProps
-} from "../../nav-soknad/redux/reducer";
-import Arrow from "../../nav-soknad/components/svg/Arrow";
-import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
-import { SoknadState, ActionTypeKeys } from "../redux/soknad/types";
 import { withRouter, RouterProps } from "react-router";
-import { opprettSoknad, resetSoknad } from "../redux/soknad/actions";
-import { DispatchProps } from "../redux/types";
+import Knapp from "nav-frontend-knapper";
 import { Select } from "nav-frontend-skjema";
 import { InjectedIntlProps, FormattedMessage } from "react-intl";
+import { FaktumComponentProps } from "../../nav-soknad/redux/reducer";
+import Arrow from "../../nav-soknad/components/svg/Arrow";
+import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
+import { ActionTypeKeys } from "../redux/soknad/types";
+import { opprettSoknad, resetSoknad } from "../redux/soknad/actions";
+import { DispatchProps } from "../redux/types";
+import { State } from "../redux/reducers";
 
 interface StateProps {
 	restStatus?: string;
@@ -145,12 +143,10 @@ class Bosted extends React.Component<
 	}
 }
 
-export default connect(
-	(state: { faktumStore: FaktumState; soknad: SoknadState }, props: any) => {
-		return {
-			fakta: state.faktumStore.fakta,
-			restStatus: state.soknad.restStatus,
-			brukerBehandlingId: state.soknad.brukerBehandlingId
-		};
-	}
-)(withRouter(Bosted));
+export default connect((state: State, props: any) => {
+	return {
+		fakta: state.faktum.data,
+		restStatus: state.soknad.restStatus,
+		brukerBehandlingId: state.soknad.brukerBehandlingId
+	};
+})(withRouter(Bosted));

@@ -1,27 +1,56 @@
 import * as React from "react";
-import Sporsmal from "../components/sporsmal";
-import { getFaktumSporsmalTekst } from "../utils";
+import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
+import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
+import { getFaktumSporsmalTekst } from "../utils";
 
-interface Props extends React.Props<any> {
-	faktumId: string;
+import { SoknadAppState } from "../redux/reducer";
+
+export interface OwnProps {
+	faktumKey: string;
+	visible?: boolean;
+	children: React.ReactNode;
 }
 
-const SporsmalFaktum: React.StatelessComponent<Props & InjectedIntlProps> = ({
-	children,
-	faktumId,
-	intl
-}) => {
-	const tekster = getFaktumSporsmalTekst(intl, faktumId);
-	return (
-		<Sporsmal
-			sporsmal={tekster.sporsmal}
-			hjelpetekst={tekster.hjelpetekst}
-			info={tekster.infotekst}
-		>
-			{children}
-		</Sporsmal>
-	);
-};
+interface StateProps {
+	feil?: Feil;
+}
 
-export default injectIntl(SporsmalFaktum);
+type Props = OwnProps & StateProps & InjectedIntlProps;
+
+class SporsmalFaktum extends React.Component<Props, {}> {
+	render() {
+		const { visible, faktumKey, feil, intl, children } = this.props;
+		if (visible === false) {
+			return null;
+		}
+		const tekster = getFaktumSporsmalTekst(intl, faktumKey);
+		return (
+			<SkjemaGruppe className="skjema-sporsmal" feil={feil}>
+				<fieldset className="skjema-fieldset">
+					<legend>{tekster.sporsmal}</legend>
+					{tekster.hjelpetekst ? (
+						<div className="skjema-sporsmal__hjelpetekst">
+							<HjelpetekstAuto tittel={tekster.hjelpetekst.tittel}>
+								{tekster.hjelpetekst.tekst}
+							</HjelpetekstAuto>
+						</div>
+					) : null}
+					<div className="skjema-sporsmal__innhold">{children}</div>
+				</fieldset>
+			</SkjemaGruppe>
+		);
+	}
+}
+
+export default connect<
+	StateProps,
+	{},
+	OwnProps
+>((state: SoknadAppState, props: OwnProps): StateProps => {
+	const feil = state.validering.feil.find(f => f.faktumKey === props.faktumKey);
+	return {
+		feil: feil ? feil.feil : null
+	};
+})(injectIntl(SporsmalFaktum));

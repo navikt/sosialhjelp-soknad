@@ -1,8 +1,13 @@
 import * as React from "react";
+// import { findDOMNode } from "react-dom";
 import { Input, Feil, InputBredde } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { FaktumStoreState, FaktumComponentProps } from "../redux/reducer";
-import { setFaktumVerdi } from "../redux/actions";
+import { SoknadAppState, FaktumComponentProps } from "../redux/reducer";
+import {
+	setFaktumVerdi,
+	registerFaktumValidering,
+	unregisterFaktumValidering
+} from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
@@ -14,21 +19,27 @@ interface State {
 interface OwnProps {
 	faktumKey: string;
 	disabled?: boolean;
-	feil?: Feil;
 	maxLength?: number;
 	bredde?: InputBredde;
+	required?: boolean;
+}
+
+interface StateProps {
+	feil?: Feil;
 }
 
 type Props = OwnProps &
 	FaktumComponentProps &
 	DispatchProps &
-	InjectedIntlProps;
+	InjectedIntlProps &
+	StateProps;
 
 const getStateFromProps = (props: Props): State => ({
 	value: getFaktumVerdi(props.fakta, props.faktumKey) || ""
 });
 
 class InputFaktum extends React.Component<Props, State> {
+	input: any;
 	constructor(props: Props) {
 		super(props);
 		this.handleOnBlur = this.handleOnBlur.bind(this);
@@ -40,12 +51,38 @@ class InputFaktum extends React.Component<Props, State> {
 		this.setState(getStateFromProps(nextProps));
 	}
 
+	componentDidMount() {
+		this.props.dispatch(
+			registerFaktumValidering({
+				faktumKey: this.props.faktumKey,
+				rules: null
+			})
+		);
+	}
+
+	componentWillUnmount() {
+		this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
+	}
+
 	handleOnChange(evt: any) {
 		this.setState({ value: evt.target.value });
 	}
 
 	handleOnBlur() {
 		this.props.dispatch(setFaktumVerdi(this.props.faktumKey, this.state.value));
+		// if (this.state.value === "" && this.props.required) {
+		// 	this.props.dispatch(
+		// 		setFaktumValideringsFeil(
+		// 			this.props.faktumKey,
+		// 			findDOMNode(this.input),
+		// 			{
+		// 				feilmelding: "Informasjonen er påkrevd"
+		// 			}
+		// 		)
+		// 	);
+		// } else {
+		// 	this.props.dispatch(setFaktumValideringOk(this.props.faktumKey));
+		// }
 	}
 
 	render() {
@@ -56,6 +93,7 @@ class InputFaktum extends React.Component<Props, State> {
 				className="input--xxl faktumInput"
 				name={faktumKey}
 				disabled={disabled}
+				inputRef={(c: any) => (this.input = c)}
 				value={this.state.value}
 				onChange={this.handleOnChange}
 				onBlur={this.handleOnBlur}
@@ -69,9 +107,15 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 }
 
-export default connect((state: FaktumStoreState, props: OwnProps) => {
+export default connect<
+	StateProps,
+	{},
+	OwnProps
+>((state: SoknadAppState, props: OwnProps) => {
+	const feil = state.validering.feil.find(f => f.faktumKey === props.faktumKey);
 	return {
-		fakta: state.faktumStore.fakta,
-		faktumKey: props.faktumKey
+		fakta: state.faktum.data,
+		faktumKey: props.faktumKey,
+		feil: feil ? feil.feil : null
 	};
 })(injectIntl(InputFaktum));

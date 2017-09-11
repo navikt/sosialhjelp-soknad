@@ -2,26 +2,18 @@ import { Reducer } from "./types";
 import { ActionTypeKeys } from "./types";
 import { ActionTypes } from "./actions";
 
-export interface SoknadState {
-	status: string;
-	soknadType?: string;
-	brukerBehandlingId?: string;
-	feilmelding?: string;
+export interface OppsummeringState {
 	oppsummering?: string;
 }
 
-const defaultState: SoknadState = {
-	status: "",
-	soknadType: "NAV DIGISOS",
-	brukerBehandlingId: "",
-	feilmelding: "",
+const defaultState: OppsummeringState = {
 	oppsummering: undefined
 };
 
-const soknadReducer: Reducer<SoknadState, ActionTypes> = (
+const OppsummeringReducer: Reducer<OppsummeringState, ActionTypes> = (
 	state = defaultState,
 	action
-): SoknadState => {
+): OppsummeringState => {
 	switch (action.type) {
 		case ActionTypeKeys.SET_OPPSUMMERING:
 			return {
@@ -33,4 +25,4 @@ const soknadReducer: Reducer<SoknadState, ActionTypes> = (
 	}
 };
 
-export default soknadReducer;
+export default OppsummeringReducer;

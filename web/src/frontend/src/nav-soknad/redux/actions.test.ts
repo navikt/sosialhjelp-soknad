@@ -1,10 +1,9 @@
 import faktumReducer from "./reducer";
 import { setFaktumVerdi } from "./actions";
 
-describe('setFaktumVerdi action creator', () => {
-
+describe("setFaktumVerdi action creator", () => {
 	const defaultState = {
-		fakta: [
+		data: [
 			{
 				key: "bolk",
 				value: "Not updated value",
@@ -23,29 +22,28 @@ describe('setFaktumVerdi action creator', () => {
 			defaultState,
 			setFaktumVerdi("bolk", 789)
 		);
-		expect(newFaktumState.fakta.length).toEqual(2);
-		expect(newFaktumState.fakta[0].value).toEqual(789);
-		expect(newFaktumState.fakta[0].key).toEqual("bolk");
+		expect(newFaktumState.data.length).toEqual(2);
+		expect(newFaktumState.data[0].value).toEqual(789);
+		expect(newFaktumState.data[0].key).toEqual("bolk");
 
 		newFaktumState = faktumReducer(
 			newFaktumState,
 			setFaktumVerdi("bolk", false)
 		);
-		expect(newFaktumState.fakta[0].value).toEqual(false);
+		expect(newFaktumState.data[0].value).toEqual(false);
 		newFaktumState = faktumReducer(
 			newFaktumState,
 			setFaktumVerdi("bolk", true)
 		);
-		expect(newFaktumState.fakta[0].value).toEqual(true);
+		expect(newFaktumState.data[0].value).toEqual(true);
 	});
 
 	it("should add fact", () => {
-		let newFaktumState = faktumReducer(
+		const newFaktumState = faktumReducer(
 			defaultState,
 			setFaktumVerdi("ny_bolk", 789)
 		);
-		expect(newFaktumState.fakta.length).toEqual(3);
-		expect(newFaktumState.fakta.slice(-1)[0].key).toEqual("ny_bolk");
+		expect(newFaktumState.data.length).toEqual(3);
+		expect(newFaktumState.data.slice(-1)[0].key).toEqual("ny_bolk");
 	});
-
 });

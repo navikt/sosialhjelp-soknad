@@ -5,11 +5,10 @@ import {
 	SetBrukerBehandlingIdAction,
 	SetServerFeilAction,
 	ResetSoknadAction,
-	SetOppsummering,
 	SettRestStatusPending,
 	SettRestStatusOk
 } from "./types";
-import { fetchPost, fetchToJson, fetchHtml } from "../rest-utils";
+import { fetchPost, fetchToJson } from "../rest-utils";
 import { setFaktumVerdi, setFakta } from "../../../nav-soknad/redux/actions";
 
 export type ActionTypes =
@@ -17,7 +16,6 @@ export type ActionTypes =
 	| SetBrukerBehandlingIdAction
 	| SetServerFeilAction
 	| ResetSoknadAction
-	| SetOppsummering
 	| SettRestStatusPending
 	| SettRestStatusOk;
 
@@ -52,7 +50,7 @@ export function lesSoknad(brukerBehandlingId: string) {
 	return (dispatch: Dispatch<Action>) => {
 		hentFakta(brukerBehandlingId, dispatch).then(fakta => {
 			dispatch(setFakta(fakta));
-			dispatch({ type: ActionTypeKeys.OK});
+			dispatch({ type: ActionTypeKeys.OK });
 		});
 	};
 }
@@ -62,25 +60,9 @@ function hentFakta(brukerBehandlingId: string, dispatch: Dispatch<Action>) {
 	return fetchToJson(
 		"soknader/" + brukerBehandlingId + "/fakta"
 	).catch(reason => {
-		dispatch({ type: ActionTypeKeys.FEILET});
+		dispatch({ type: ActionTypeKeys.FEILET });
 		dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
 	});
-}
-
-export function hentOppsummering(id: string) {
-	return (dispatch: Dispatch<Action>) => {
-		dispatch({ type: ActionTypeKeys.PENDING });
-		fetchHtml("soknader/" + id + "/oppsummering")
-			.then(response => {
-				dispatch({
-					type: ActionTypeKeys.SET_OPPSUMMERING,
-					oppsummering: response
-				});
-			})
-			.catch(reason => {
-				dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
-			});
-	};
 }
 
 export function resetSoknad() {

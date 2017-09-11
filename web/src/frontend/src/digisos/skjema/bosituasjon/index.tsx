@@ -2,10 +2,8 @@ import * as React from "react";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { connect } from "react-redux";
-import {
-	FaktumStoreState,
-	FaktumComponentProps
-} from "../../../nav-soknad/redux/reducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { State } from "../../redux/reducers";
 import {
 	radioCheckKeys,
 	inputKeys,
@@ -14,7 +12,6 @@ import {
 } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import SkjemagruppeFaktum from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 
@@ -29,16 +26,15 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const over18True = inputKeys("bosituasjon.personerover18.true.antall");
 		return (
 			<StegFaktum tittelId="bosituasjonbolk.tittel">
-				<SporsmalFaktum faktumId={bosituasjon.faktum}>
+				<SporsmalFaktum faktumKey={bosituasjon.faktum}>
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="eier" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="leierprivat" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="leierkommunalt" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="ingen" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} option="annet" />
 					<Underskjema
-						visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}
-					>
-						<SkjemagruppeFaktum faktumId={annen.faktum}>
+						visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}>
+						<SporsmalFaktum faktumKey={annen.faktum}>
 							{/*TODO opprette checkboxgruppefaktumet*/}
 							<RadioFaktum faktumKey={annen.faktum} option="institusjon" />
 							<RadioFaktum faktumKey={annen.faktum} option="krisesenter" />
@@ -46,16 +42,15 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 							<RadioFaktum faktumKey={annen.faktum} option="venner" />
 							<RadioFaktum faktumKey={annen.faktum} option="foreldre" />
 							<RadioFaktum faktumKey={annen.faktum} option="familie" />
-						</SkjemagruppeFaktum>
+						</SporsmalFaktum>
 					</Underskjema>
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumId={barnUnder18.faktum}>
+				<SporsmalFaktum faktumKey={barnUnder18.faktum}>
 					<RadioFaktum faktumKey={barnUnder18.faktum} option="true" />
 					<Underskjema
 						visible={faktumIsSelected(
 							getFaktumVerdi(fakta, barnUnder18.faktum)
-						)}
-					>
+						)}>
 						<InputFaktum
 							faktumKey={barnUnder18True.faktum}
 							maxLength={3}
@@ -64,11 +59,10 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					</Underskjema>
 					<RadioFaktum faktumKey={barnUnder18.faktum} option="false" />
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumId={over18.faktum}>
+				<SporsmalFaktum faktumKey={over18.faktum}>
 					<RadioFaktum faktumKey={over18.faktum} option="true" />
 					<Underskjema
-						visible={faktumIsSelected(getFaktumVerdi(fakta, over18.faktum))}
-					>
+						visible={faktumIsSelected(getFaktumVerdi(fakta, over18.faktum))}>
 						<InputFaktum
 							faktumKey={over18True.faktum}
 							maxLength={3}
@@ -82,8 +76,8 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	}
 }
 
-export default connect((state: FaktumStoreState, props: any) => {
+export default connect((state: State, props: any) => {
 	return {
-		fakta: state.faktumStore.fakta
+		fakta: state.faktum.data
 	};
 })(Bosituasjon);

@@ -1,11 +1,15 @@
 import * as React from "react";
 import { Textarea, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { FaktumStoreState, FaktumComponentProps } from "../redux/reducer";
+import { SoknadAppState, FaktumComponentProps } from "../redux/reducer";
 import { setFaktumVerdi } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getInputFaktumTekst, getIntlTextOrKey, getFaktumVerdi } from "../utils";
+import {
+	getInputFaktumTekst,
+	getIntlTextOrKey,
+	getFaktumVerdi
+} from "../utils";
 
 interface OwnProps {
 	faktumKey: string;
@@ -76,9 +80,9 @@ class TextareaFaktum extends React.Component<Props, State> {
 	}
 }
 
-export default connect((state: FaktumStoreState, props: OwnProps) => {
+export default connect((state: SoknadAppState, props: OwnProps) => {
 	return {
-		fakta: state.faktumStore.fakta,
+		fakta: state.faktum.data,
 		faktumKey: props.faktumKey
 	};
 })(injectIntl(TextareaFaktum));
