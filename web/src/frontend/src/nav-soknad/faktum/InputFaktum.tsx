@@ -11,6 +11,7 @@ import {
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
+import { validerRequired } from "../validering/utils";
 
 interface State {
 	value: string;
@@ -40,6 +41,7 @@ const getStateFromProps = (props: Props): State => ({
 
 class InputFaktum extends React.Component<Props, State> {
 	input: any;
+
 	constructor(props: Props) {
 		super(props);
 		this.handleOnBlur = this.handleOnBlur.bind(this);
@@ -51,13 +53,15 @@ class InputFaktum extends React.Component<Props, State> {
 		this.setState(getStateFromProps(nextProps));
 	}
 
-	componentDidMount() {
-		this.props.dispatch(
-			registerFaktumValidering({
-				faktumKey: this.props.faktumKey,
-				rules: null
-			})
-		);
+	componentWillMount() {
+		if (this.props.required) {
+			this.props.dispatch(
+				registerFaktumValidering({
+					faktumKey: this.props.faktumKey,
+					valideringer: [...(this.props.required ? [validerRequired] : [])]
+				})
+			);
+		}
 	}
 
 	componentWillUnmount() {
@@ -70,19 +74,6 @@ class InputFaktum extends React.Component<Props, State> {
 
 	handleOnBlur() {
 		this.props.dispatch(setFaktumVerdi(this.props.faktumKey, this.state.value));
-		// if (this.state.value === "" && this.props.required) {
-		// 	this.props.dispatch(
-		// 		setFaktumValideringsFeil(
-		// 			this.props.faktumKey,
-		// 			findDOMNode(this.input),
-		// 			{
-		// 				feilmelding: "Informasjonen er påkrevd"
-		// 			}
-		// 		)
-		// 	);
-		// } else {
-		// 	this.props.dispatch(setFaktumValideringOk(this.props.faktumKey));
-		// }
 	}
 
 	render() {

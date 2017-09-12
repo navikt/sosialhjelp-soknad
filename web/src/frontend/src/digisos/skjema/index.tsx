@@ -11,6 +11,7 @@ import Steg7 from "./utgifterGjeld";
 import Steg8 from "./ekstrainformasjon";
 import Steg9 from "./oppsummering";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+import NavFrontendSpinner from "nav-frontend-spinner";
 import StegIndikator from "../../nav-soknad/components/stegIndikator";
 import Knapperad from "../../nav-soknad/components/knapperad";
 import {
@@ -24,24 +25,33 @@ import { DispatchProps } from "../redux/types";
 import { lesSoknad } from "../redux/soknad/actions";
 import { REST_STATUS } from "../redux/soknad/types";
 import { State } from "../redux/reducers";
-import NavFrontendSpinner from "nav-frontend-spinner";
+import { setFaktumValideringsfeil } from "../../nav-soknad/redux/actions";
+import { FaktumValideringRules } from "../../nav-soknad/validering/types";
+import { validerAlleFaktum } from "../../nav-soknad/validering/utils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
 	evt.preventDefault();
 };
 
-interface Props {
+interface OwnProps {
 	restStatus: string;
 	match: any;
 	location: Location;
 	fakta: any;
+	valideringer: FaktumValideringRules[];
 }
+type Props = OwnProps & RouterProps & InjectedIntlProps & DispatchProps;
 
 class Skjema extends React.Component<
-	Props & RouterProps & InjectedIntlProps & DispatchProps,
+	OwnProps & RouterProps & InjectedIntlProps & DispatchProps,
 	{}
 > {
+	constructor(props: Props) {
+		super(props);
+		this.handleGaVidere = this.handleGaVidere.bind(this);
+	}
+
 	componentDidMount() {
 		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(
 			this.props.location
@@ -51,13 +61,34 @@ class Skjema extends React.Component<
 		}
 	}
 
+	handleGaVidere(aktivtSteg: number, brukerBehandlingId: string) {
+		if (aktivtSteg === 9) {
+			this.props.history.push("/kvittering");
+			return;
+		}
+
+		const valideringsfeil = validerAlleFaktum(
+			this.props.fakta,
+			this.props.valideringer
+		);
+		if (valideringsfeil.length === 0) {
+			gaVidere(aktivtSteg, brukerBehandlingId, this.props.history);
+		} else {
+			this.props.dispatch(setFaktumValideringsfeil(valideringsfeil));
+		}
+	}
+
+	handleGaTilbake(aktivtSteg: number, brukerBehandlingId: string) {
+		gaTilbake(aktivtSteg, brukerBehandlingId, this.props.history);
+	}
+
 	render() {
 		const aktivtSteg = finnStegFraLocation(this.props.location);
+		const erOppsummering = aktivtSteg === 9;
 		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(
 			this.props.location
 		);
-		const { match, intl, history } = this.props;
-		const erOppsummering = aktivtSteg === 9;
+		const { match, intl } = this.props;
 		if (this.props.restStatus === REST_STATUS.PENDING) {
 			return (
 				<div className="application-spinner">
@@ -106,11 +137,9 @@ class Skjema extends React.Component<
 					</Switch>
 					<Knapperad
 						gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
-						gaVidere={() =>
-							erOppsummering
-								? history.push("/kvittering")
-								: gaVidere(aktivtSteg, brukerBehandlingId, history)}
-						gaTilbake={() => gaTilbake(aktivtSteg, brukerBehandlingId, history)}
+						gaVidere={() => this.handleGaVidere(aktivtSteg, brukerBehandlingId)}
+						gaTilbake={() =>
+							this.handleGaTilbake(aktivtSteg, brukerBehandlingId)}
 						avbryt={() => avbryt()}
 					/>
 				</form>
@@ -122,6 +151,7 @@ class Skjema extends React.Component<
 export default connect((state: State, props: any) => {
 	return {
 		fakta: state.faktum.fakta,
+		valideringer: state.validering.items,
 		restStatus: state.soknad.restStatus,
 		brukerBehandlingId: state.soknad.brukerBehandlingId
 	};

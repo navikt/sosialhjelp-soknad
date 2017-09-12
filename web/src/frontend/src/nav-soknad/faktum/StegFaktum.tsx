@@ -5,7 +5,7 @@ import { getIntlTextOrKey } from "../utils";
 import Steg from "../components/steg";
 
 import { FaktumAppState } from "../redux/reducer";
-import { Valideringsfeil } from "../redux/types";
+import { Valideringsfeil } from "../validering/types";
 
 interface OwnProps extends React.Props<any> {
 	tittelId: string;

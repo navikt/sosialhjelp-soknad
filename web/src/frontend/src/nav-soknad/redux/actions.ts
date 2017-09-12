@@ -3,24 +3,23 @@ import {
 	SetFaktumVerdiAction,
 	SetFaktaAction,
 	ResetFaktumVerdiAction,
-	SetFaktumValideringFeilAction,
-	SetFaktumValideringOkAction,
-	RegisterFaktumValidering,
-	UnregisterFaktumValidering,
-	FaktumValidering,
+	SetFaktumValideringsfeilAction,
+	ClearFaktumValideringsfeilAction,
+	RegisterFaktumValideringAction,
+	UnregisterFaktumValideringAction,
 	FaktumValueType
 } from "./types";
 
-import { Feil } from "nav-frontend-skjema";
+import { FaktumValideringRules, Valideringsfeil } from "../validering/types";
 
 export type ActionTypes =
 	| SetFaktumVerdiAction
 	| ResetFaktumVerdiAction
 	| SetFaktaAction
-	| SetFaktumValideringFeilAction
-	| SetFaktumValideringOkAction
-	| RegisterFaktumValidering
-	| UnregisterFaktumValidering;
+	| SetFaktumValideringsfeilAction
+	| ClearFaktumValideringsfeilAction
+	| RegisterFaktumValideringAction
+	| UnregisterFaktumValideringAction;
 
 export function setFaktumVerdi(
 	faktumKey: string,
@@ -42,26 +41,22 @@ export function setFakta(fakta: any) {
 	};
 }
 
-export function setFaktumValideringsFeil(
-	faktumKey: string,
-	element: HTMLElement,
-	feil: Feil
-) {
+export function setFaktumValideringsfeil(valideringsfeil: Valideringsfeil[]) {
 	return {
 		type: ActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL,
-		faktumKey,
-		element,
-		feil
-	};
-}
-export function setFaktumValideringOk(faktumKey: string) {
-	return {
-		type: ActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL,
-		faktumKey
+		valideringsfeil
 	};
 }
 
-export function registerFaktumValidering(faktumValidering: FaktumValidering) {
+export function clearFaktumValideringsfeil(faktumKey: string) {
+	return {
+		type: ActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL
+	};
+}
+
+export function registerFaktumValidering(
+	faktumValidering: FaktumValideringRules
+) {
 	return {
 		type: ActionTypeKeys.REGISTER_FAKTUM_VALIDERING,
 		faktumValidering

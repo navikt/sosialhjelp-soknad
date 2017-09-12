@@ -4,7 +4,7 @@ import {
 	SporsmalFaktumTekst,
 	Infotekst,
 	InputFaktumTekst
-} from "./redux/types";
+} from "./faktumTextTypes";
 
 export const radioCheckKeys = (key: string) => ({
 	faktum: `${key}`,

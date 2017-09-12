@@ -4,22 +4,48 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
 import { getFaktumSporsmalTekst } from "../utils";
-
+import {
+	registerFaktumValidering,
+	unregisterFaktumValidering
+} from "../redux/actions";
+import { DispatchProps } from "../redux/types";
 import { FaktumAppState } from "../redux/reducer";
+import { validerRequired } from "../validering/utils";
 
 export interface OwnProps {
 	faktumKey: string;
-	visible?: boolean;
 	children: React.ReactNode;
+	visible?: boolean;
+	required?: boolean;
+	renderValideringsfeil?: boolean;
 }
 
 interface StateProps {
 	feil?: Feil;
 }
 
-type Props = OwnProps & StateProps & InjectedIntlProps;
+type Props = OwnProps & StateProps & InjectedIntlProps & DispatchProps;
 
 class SporsmalFaktum extends React.Component<Props, {}> {
+	static defaultProps: any = {
+		renderValideringsfeil: true
+	};
+
+	componentWillMount() {
+		if (this.props.required) {
+			this.props.dispatch(
+				registerFaktumValidering({
+					faktumKey: this.props.faktumKey,
+					valideringer: [...(this.props.required ? [validerRequired] : [])]
+				})
+			);
+		}
+	}
+
+	componentWillUnmount() {
+		this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
+	}
+
 	render() {
 		const { visible, faktumKey, feil, intl, children } = this.props;
 		if (visible === false) {
@@ -51,6 +77,6 @@ export default connect<
 >((state: FaktumAppState, props: OwnProps): StateProps => {
 	const feil = state.validering.feil.find(f => f.faktumKey === props.faktumKey);
 	return {
-		feil: feil ? feil.feil : null
+		feil: props.renderValideringsfeil && feil ? feil.feil : null
 	};
 })(injectIntl(SporsmalFaktum));

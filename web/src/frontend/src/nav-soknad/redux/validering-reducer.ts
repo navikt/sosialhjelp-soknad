@@ -1,12 +1,13 @@
 export type FaktumMap = Map<string, any>;
 import { Reducer } from "./types";
-import { ActionTypeKeys, Valideringsfeil, FaktumValidering } from "./types";
+import { ActionTypeKeys } from "./types";
+import { FaktumValideringRules, Valideringsfeil } from "../validering/types";
 import { ActionTypes } from "./actions";
 
 export interface ValideringState {
 	feil: Valideringsfeil[];
 	visValideringsfeil?: boolean;
-	items?: FaktumValidering[];
+	items?: FaktumValideringRules[];
 }
 
 const defaultState: ValideringState = {
@@ -15,31 +16,9 @@ const defaultState: ValideringState = {
 	items: []
 };
 
-const setFaktumValidering = (
-	feil: Valideringsfeil[],
-	valideringsfeil: Valideringsfeil
-): Valideringsfeil[] => {
-	const idx = feil.findIndex(f => f.faktumKey === valideringsfeil.faktumKey);
-	if (idx === -1) {
-		return [...feil, valideringsfeil];
-	}
-	return [...feil.slice(0, idx), valideringsfeil, ...feil.slice(idx + 1)];
-};
-
-const clearFaktumValidering = (
-	feil: Valideringsfeil[],
-	faktumKey: string
-): Valideringsfeil[] => {
-	const idx = feil.findIndex(f => f.faktumKey === faktumKey);
-	if (idx === -1) {
-		return feil;
-	}
-	return [...feil.slice(0, idx), ...feil.slice(idx + 1)];
-};
-
 const registerFaktumValidering = (
-	items: FaktumValidering[],
-	faktumValidering: FaktumValidering
+	items: FaktumValideringRules[],
+	faktumValidering: FaktumValideringRules
 ) => {
 	const idx = items.findIndex(f => f.faktumKey === faktumValidering.faktumKey);
 	if (idx === -1) {
@@ -49,7 +28,7 @@ const registerFaktumValidering = (
 };
 
 const unregisterFaktumValidering = (
-	items: FaktumValidering[],
+	items: FaktumValideringRules[],
 	faktumKey: string
 ) => {
 	const idx = items.findIndex(f => f.faktumKey === faktumKey);
@@ -77,12 +56,12 @@ const valideringReducer: Reducer<ValideringState, ActionTypes> = (
 		case ActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL:
 			return {
 				...state,
-				feil: setFaktumValidering(state.feil, action)
+				feil: action.valideringsfeil
 			};
 		case ActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL:
 			return {
 				...state,
-				feil: clearFaktumValidering(state.feil, action.faktumKey)
+				feil: []
 			};
 		default:
 			return state;
