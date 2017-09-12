@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Undertittel } from "nav-frontend-typografi";
 import "./feiloppsummering.css";
-import { Valideringsfeil } from "../../redux/types";
+import { Valideringsfeil } from "../../redux/faktaTypes";
 
 const scrollToElement = (element: HTMLElement) => {
 	if (element && element.scrollIntoView) {

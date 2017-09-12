@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./steg.css";
 import Feiloppsummering from "../validering/Feiloppsummering";
-import { Valideringsfeil } from "../../redux/types";
+import { Valideringsfeil } from "../../redux/faktaTypes";
 
 interface StegProps extends React.Props<any> {
 	tittel: string;

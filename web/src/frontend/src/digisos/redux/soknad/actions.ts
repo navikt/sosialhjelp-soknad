@@ -2,14 +2,17 @@ import { Action, Dispatch } from "redux";
 import {
 	ActionTypeKeys,
 	OpprettSoknadAction,
+	ResetSoknadAction,
 	SetBrukerBehandlingIdAction,
 	SetServerFeilAction,
-	ResetSoknadAction,
-	SettRestStatusPending,
-	SettRestStatusOk
+	SettRestStatusOk,
+	SettRestStatusPending
 } from "./types";
+
 import { fetchPost, fetchToJson } from "../rest-utils";
-import { setFaktumVerdi, setFakta } from "../../../nav-soknad/redux/actions";
+import { setFakta, setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";
+import { finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
+import { Faktum, FaktaActionTypeKeys } from "../../../nav-soknad/redux/faktaTypes";
 
 export type ActionTypes =
 	| OpprettSoknadAction
@@ -31,12 +34,13 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 					type: ActionTypeKeys.SET_BRUKERBEHANDLING_ID,
 					brukerBehandlingId
 				});
-				hentFakta(brukerBehandlingId, dispatch).then(fakta => {
-					dispatch({ type: ActionTypeKeys.OK }); // Flytte til hentFakta?
+				dispatch({ type: FaktaActionTypeKeys.PENDING});
+				hentFakta(brukerBehandlingId, dispatch).then((fakta: Faktum[]) => {
+					dispatch({ type: FaktaActionTypeKeys.OK});
 					dispatch(setFakta(fakta));
-					dispatch(setFaktumVerdi("personalia.kommune", kommuneId));
+					dispatch(setFaktumVerdi(finnFaktum("personalia.kommune", fakta ), kommuneId));
 					if (bydelId !== "") {
-						dispatch(setFaktumVerdi("personalia.bydel", bydelId));
+						dispatch(setFaktumVerdi(finnFaktum("personalia.bydel", fakta ), bydelId));
 					}
 				});
 			})
@@ -56,7 +60,7 @@ export function lesSoknad(brukerBehandlingId: string) {
 }
 
 function hentFakta(brukerBehandlingId: string, dispatch: Dispatch<Action>) {
-	dispatch({ type: ActionTypeKeys.PENDING });
+	dispatch({ type: ActionTypeKeys.FAKTA_PENDING });
 	return fetchToJson(
 		"soknader/" + brukerBehandlingId + "/fakta"
 	).catch(reason => {

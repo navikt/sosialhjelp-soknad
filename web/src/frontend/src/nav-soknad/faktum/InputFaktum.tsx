@@ -2,15 +2,16 @@ import * as React from "react";
 // import { findDOMNode } from "react-dom";
 import { Input, Feil, InputBredde } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { SoknadAppState, FaktumComponentProps } from "../redux/reducer";
+import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
 import {
 	setFaktumVerdi,
 	registerFaktumValidering,
 	unregisterFaktumValidering
-} from "../redux/actions";
-import { DispatchProps } from "../redux/types";
+} from "../redux/faktaActions";
+import { DispatchProps, Faktum } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
+import { finnFaktum } from "../redux/faktaUtils";
 
 interface State {
 	value: string;
@@ -30,6 +31,7 @@ interface StateProps {
 
 type Props = OwnProps &
 	FaktumComponentProps &
+	Faktum &
 	DispatchProps &
 	InjectedIntlProps &
 	StateProps;
@@ -69,20 +71,7 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 
 	handleOnBlur() {
-		this.props.dispatch(setFaktumVerdi(this.props.faktumKey, this.state.value));
-		// if (this.state.value === "" && this.props.required) {
-		// 	this.props.dispatch(
-		// 		setFaktumValideringsFeil(
-		// 			this.props.faktumKey,
-		// 			findDOMNode(this.input),
-		// 			{
-		// 				feilmelding: "Informasjonen er påkrevd"
-		// 			}
-		// 		)
-		// 	);
-		// } else {
-		// 	this.props.dispatch(setFaktumValideringOk(this.props.faktumKey));
-		// }
+		this.props.dispatch(setFaktumVerdi(finnFaktum(this.props.faktumKey, this.props.fakta), this.state.value));
 	}
 
 	render() {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import PersonFaktum from "../../../nav-soknad/faktum/PersonFaktum";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";

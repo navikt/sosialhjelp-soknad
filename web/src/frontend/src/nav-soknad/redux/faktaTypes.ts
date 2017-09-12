@@ -8,15 +8,24 @@ export interface DispatchProps {
 	dispatch: Dispatch;
 }
 
-export enum ActionTypeKeys {
-	SET_FAKTUM_VERDI = "SET_FAKTUM_VERDI",
-	SET_FAKTA = "SET_FAKTA",
-	SOKNAD_OPPRETTET = "SOKNAD_OPPRETTET",
-	RESET_FAKTUM_VERDI = "RESET_FAKTUM_VERDI",
+export enum FaktumActionTypeKeys {
+	OK = "faktum/OK",
+	FEILET = "faktum/FEILET",
+	PENDING = "faktum/PENDING",
+	SET_FAKTUM = "faktum/SET_FAKTUM",
+	OTHER_ACTION = "__any_other_action_type__",
 	SET_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_FEIL",
 	CLEAR_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_OK",
 	REGISTER_FAKTUM_VALIDERING = "REGISTER_FAKTUM_VALIDERING",
 	UNREGISTER_FAKTUM_VALIDERING = "UNREGISTER_FAKTUM_VALIDERING",
+}
+
+export enum FaktaActionTypeKeys {
+	PENDING = "fakta/PENDING",
+	OK = "fakta/OK",
+	SET_FAKTA = "SET_FAKTA",
+	SOKNAD_OPPRETTET = "SOKNAD_OPPRETTET",
+	SET_SERVER_FEIL = "fakta/SERVER_FEIL",
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
@@ -30,8 +39,22 @@ export interface FaktumValidering {
 }
 
 export interface Faktum {
+	faktumId: number;
+	soknadId: number;
+	parrentFaktum: null | number;
+	key: string;
+	value: null | boolean | string | number;
+	faktumEgenskaper?: FaktumEgenskap[];
+	properties: object;
+	type?: string;
+}
+
+export interface FaktumEgenskap {
+	faktumId: number;
+	soknadId: number;
 	key: string;
 	value: string;
+	systemEgenskap: number;
 }
 
 export interface Fakta {
@@ -45,48 +68,45 @@ export interface Valideringsfeil {
 }
 
 export interface SetFaktumVerdiAction {
-	type: ActionTypeKeys.SET_FAKTUM_VERDI;
+	type: FaktumActionTypeKeys.SET_FAKTUM;
 	faktumKey: string;
 	value: FaktumValueType;
 	properties?: any;
 }
 
 export interface SetFaktaAction {
-	type: ActionTypeKeys.SET_FAKTA;
+	type: FaktaActionTypeKeys.SET_FAKTA;
 	fakta: any;
 }
 
 export interface SoknadOpprettetAction {
-	type: ActionTypeKeys.SOKNAD_OPPRETTET;
+	type: FaktaActionTypeKeys.SOKNAD_OPPRETTET;
 }
 
-export interface ResetFaktumVerdiAction {
-	type: ActionTypeKeys.RESET_FAKTUM_VERDI;
-	faktumKey: string;
-}
 export interface SetFaktumValideringFeilAction {
-	type: ActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL;
+	type: FaktumActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL;
 	faktumKey: string;
 	element: HTMLElement;
 	feil: Feil;
 }
+
 export interface SetFaktumValideringOkAction {
-	type: ActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL;
+	type: FaktumActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL;
 	faktumKey: string;
 }
 
 export interface RegisterFaktumValidering {
-	type: ActionTypeKeys.REGISTER_FAKTUM_VALIDERING;
+	type: FaktumActionTypeKeys.REGISTER_FAKTUM_VALIDERING;
 	faktumValidering: FaktumValidering;
 }
 
 export interface UnregisterFaktumValidering {
-	type: ActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING;
+	type: FaktumActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING;
 	faktumKey: string;
 }
 
 export interface OtherAction {
-	type: ActionTypeKeys.OTHER_ACTION;
+	type: FaktaActionTypeKeys.OTHER_ACTION;
 }
 
 export type FaktumValueType = string | number | boolean;

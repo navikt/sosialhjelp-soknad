@@ -4,8 +4,8 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getIntlTextOrKey } from "../utils";
 import Steg from "../components/steg";
 
-import { SoknadAppState } from "../redux/reducer";
-import { Valideringsfeil } from "../redux/types";
+import { SoknadAppState } from "../redux/faktaReducer";
+import { Valideringsfeil } from "../redux/faktaTypes";
 
 interface OwnProps extends React.Props<any> {
 	tittelId: string;

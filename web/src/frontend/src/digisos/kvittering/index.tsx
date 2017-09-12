@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Panel } from "nav-frontend-paneler";
 import Icon from "nav-frontend-ikoner-assets";
 import { Undertittel } from "nav-frontend-typografi";
-import { FaktumComponentProps } from "../../nav-soknad/redux/reducer";
+import { FaktumComponentProps } from "../../nav-soknad/redux/faktaReducer";
 import { State } from "../redux/reducers";
 import "./kvittering.css";
 import { getBosted } from "../data/kommuner";
