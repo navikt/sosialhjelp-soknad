@@ -10,59 +10,59 @@ ShallowWrapper {
   "length": 1,
   "node": <div
     className="app-digisos"
-  >
+>
     <h1
-      className="app-digisos__title"
+        className="app-digisos__title"
     >
-      <FormattedMessage
-        id="skjema.tittel"
-        values={Object {}}
-      />
+        <FormattedMessage
+            id="skjema.tittel"
+            values={Object {}}
+        />
     </h1>
     <Switch>
-      <Route
-        component={[Function]}
-        exact={true}
-        path="/informasjon"
-      />
-      <Route
-        component={[Function]}
-        path="/skjema/:brukerBehandlingId"
-      />
-      <Route
-        component={[Function]}
-        path="/kvittering"
-      />
+        <Route
+            component={[Function]}
+            exact={true}
+            path="/informasjon"
+        />
+        <Route
+            component={[Function]}
+            path="/skjema/:brukerBehandlingId"
+        />
+        <Route
+            component={[Function]}
+            path="/kvittering"
+        />
     </Switch>
-  </div>,
+</div>,
   "nodes": Array [
     <div
       className="app-digisos"
-    >
+>
       <h1
-        className="app-digisos__title"
+            className="app-digisos__title"
       >
-        <FormattedMessage
-          id="skjema.tittel"
-          values={Object {}}
-        />
+            <FormattedMessage
+                  id="skjema.tittel"
+                  values={Object {}}
+            />
       </h1>
       <Switch>
-        <Route
-          component={[Function]}
-          exact={true}
-          path="/informasjon"
-        />
-        <Route
-          component={[Function]}
-          path="/skjema/:brukerBehandlingId"
-        />
-        <Route
-          component={[Function]}
-          path="/kvittering"
-        />
+            <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/informasjon"
+            />
+            <Route
+                  component={[Function]}
+                  path="/skjema/:brukerBehandlingId"
+            />
+            <Route
+                  component={[Function]}
+                  path="/kvittering"
+            />
       </Switch>
-    </div>,
+</div>,
   ],
   "options": Object {},
   "renderer": ReactShallowRenderer {
@@ -100,59 +100,59 @@ ShallowWrapper {
       "_renderedComponent": NoopInternalComponent {
         "_currentElement": <div
           className="app-digisos"
-        >
+>
           <h1
-            className="app-digisos__title"
+                    className="app-digisos__title"
           >
-            <FormattedMessage
-              id="skjema.tittel"
-              values={Object {}}
-            />
+                    <FormattedMessage
+                              id="skjema.tittel"
+                              values={Object {}}
+                    />
           </h1>
           <Switch>
-            <Route
-              component={[Function]}
-              exact={true}
-              path="/informasjon"
-            />
-            <Route
-              component={[Function]}
-              path="/skjema/:brukerBehandlingId"
-            />
-            <Route
-              component={[Function]}
-              path="/kvittering"
-            />
+                    <Route
+                              component={[Function]}
+                              exact={true}
+                              path="/informasjon"
+                    />
+                    <Route
+                              component={[Function]}
+                              path="/skjema/:brukerBehandlingId"
+                    />
+                    <Route
+                              component={[Function]}
+                              path="/kvittering"
+                    />
           </Switch>
-        </div>,
+</div>,
         "_debugID": 2,
         "_renderedOutput": <div
           className="app-digisos"
-        >
+>
           <h1
-            className="app-digisos__title"
+                    className="app-digisos__title"
           >
-            <FormattedMessage
-              id="skjema.tittel"
-              values={Object {}}
-            />
+                    <FormattedMessage
+                              id="skjema.tittel"
+                              values={Object {}}
+                    />
           </h1>
           <Switch>
-            <Route
-              component={[Function]}
-              exact={true}
-              path="/informasjon"
-            />
-            <Route
-              component={[Function]}
-              path="/skjema/:brukerBehandlingId"
-            />
-            <Route
-              component={[Function]}
-              path="/kvittering"
-            />
+                    <Route
+                              component={[Function]}
+                              exact={true}
+                              path="/informasjon"
+                    />
+                    <Route
+                              component={[Function]}
+                              path="/skjema/:brukerBehandlingId"
+                    />
+                    <Route
+                              component={[Function]}
+                              path="/kvittering"
+                    />
           </Switch>
-        </div>,
+</div>,
       },
       "_renderedNodeType": 0,
       "_rootNodeID": 0,
