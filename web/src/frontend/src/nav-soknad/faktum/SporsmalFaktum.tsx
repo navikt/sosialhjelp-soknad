@@ -10,7 +10,7 @@ import {
 	unregisterFaktumValidering
 } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
-import { validerRequired } from "../validering/utils";
+import { pakrevd } from "../validering/valideringer";
 import { SoknadAppState } from "../redux/reducer";
 
 export interface OwnProps {
@@ -37,7 +37,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 			this.props.dispatch(
 				registerFaktumValidering({
 					faktumKey: this.props.faktumKey,
-					valideringer: [...(this.props.required ? [validerRequired] : [])]
+					valideringer: [...(this.props.required ? [pakrevd] : [])]
 				})
 			);
 		}

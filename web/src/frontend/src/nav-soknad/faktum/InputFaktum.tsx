@@ -11,7 +11,7 @@ import {
 import { DispatchProps } from "../redux/types";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
-import { validerRequired } from "../validering/utils";
+import { pakrevd } from "../validering/valideringer";
 
 interface State {
 	value: string;
@@ -58,7 +58,7 @@ class InputFaktum extends React.Component<Props, State> {
 			this.props.dispatch(
 				registerFaktumValidering({
 					faktumKey: this.props.faktumKey,
-					valideringer: [...(this.props.required ? [validerRequired] : [])]
+					valideringer: [...(this.props.required ? [pakrevd] : [])]
 				})
 			);
 		}
