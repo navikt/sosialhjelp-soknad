@@ -12,7 +12,7 @@ import {
 import { fetchPost, fetchToJson } from "../rest-utils";
 import { setFakta, setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";
 import { finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
-import { Faktum } from "../../../nav-soknad/redux/faktaTypes";
+import { Faktum, FaktaActionTypeKeys } from "../../../nav-soknad/redux/faktaTypes";
 
 export type ActionTypes =
 	| OpprettSoknadAction
@@ -34,8 +34,9 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 					type: ActionTypeKeys.SET_BRUKERBEHANDLING_ID,
 					brukerBehandlingId
 				});
+				dispatch({ type: FaktaActionTypeKeys.PENDING});
 				hentFakta(brukerBehandlingId, dispatch).then((fakta: Faktum[]) => {
-					dispatch({ type: ActionTypeKeys.OK });
+					dispatch({ type: FaktaActionTypeKeys.OK});
 					dispatch(setFakta(fakta));
 					dispatch(setFaktumVerdi(finnFaktum("personalia.kommune", fakta ), kommuneId));
 					if (bydelId !== "") {

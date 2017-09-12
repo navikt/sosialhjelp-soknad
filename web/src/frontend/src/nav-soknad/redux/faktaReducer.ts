@@ -8,6 +8,7 @@ export interface SoknadAppState {
 }
 
 export interface FaktumState {
+	restStatus: string;
 	data: Faktum[];
 }
 
@@ -16,6 +17,7 @@ export interface FaktumComponentProps {
 }
 
 const initialState: FaktumState = {
+	restStatus: "",
 	data: []
 };
 
@@ -35,7 +37,12 @@ function updateFaktumVerdi(fakta: Faktum[], faktum: Faktum) {
 	}
 }
 
-export type FaktumActionTypes = SetFaktumVerdi | SetFaktaAction;
+export type FaktumActionTypes =
+	SetFaktumVerdi
+	| SetFaktaAction
+	| SetFaktaPendingAction
+	| SetFaktaOkAction
+	| SetFaktaFailedAction;
 
 interface SetFaktumVerdi {
 	type: FaktumActionTypeKeys.SET_FAKTUM;
@@ -45,6 +52,18 @@ interface SetFaktumVerdi {
 interface SetFaktaAction {
 	type: FaktaActionTypeKeys.SET_FAKTA;
 	fakta: Faktum[];
+}
+
+interface SetFaktaPendingAction {
+	type: FaktaActionTypeKeys.PENDING;
+}
+
+interface SetFaktaOkAction {
+	type: FaktaActionTypeKeys.OK;
+}
+
+interface SetFaktaFailedAction {
+	type: FaktaActionTypeKeys.SET_SERVER_FEIL;
 }
 
 const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
@@ -61,6 +80,21 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 			return {
 				...state,
 				data: action.fakta
+			};
+		case FaktaActionTypeKeys.PENDING:
+			return {
+				...state,
+				restStatus: FaktaActionTypeKeys.PENDING
+			};
+		case FaktaActionTypeKeys.OK:
+			return {
+				...state,
+				restStatus: FaktaActionTypeKeys.OK
+			};
+		case FaktaActionTypeKeys.SET_SERVER_FEIL:
+			return {
+				...state,
+				restStatus: FaktaActionTypeKeys.SET_SERVER_FEIL
 			};
 		default:
 			return state;

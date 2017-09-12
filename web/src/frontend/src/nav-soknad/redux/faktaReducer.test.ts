@@ -2,7 +2,9 @@ import faktumReducer from "./faktaReducer";
 import { FaktumActionTypeKeys, FaktaActionTypeKeys } from "./faktaTypes";
 
 describe("facts reducer", () => {
+
 	const defaultState = {
+		restStatus: FaktaActionTypeKeys.OTHER_ACTION,
 		data: [
 			{
 				key: "bolk",
