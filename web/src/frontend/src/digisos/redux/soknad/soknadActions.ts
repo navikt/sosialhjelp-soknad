@@ -7,7 +7,7 @@ import {
 	SetServerFeilAction,
 	SettRestStatusOk,
 	SettRestStatusPending
-} from "./types";
+} from "./soknadTypes";
 
 import { fetchPost, fetchToJson } from "../rest-utils";
 import { setFakta, setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";

@@ -9,7 +9,7 @@ import Arrow from "../../nav-soknad/components/svg/Arrow";
 import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 import { State } from "../redux/reducers";
 import { FaktaActionTypeKeys, DispatchProps } from "../../nav-soknad/redux/faktaTypes";
-import { opprettSoknad, resetSoknad } from "../redux/soknad/actions";
+import { opprettSoknad, resetSoknad } from "../redux/soknad/soknadActions";
 
 interface StateProps {
 	soknadRestStatus?: string;

@@ -1,6 +1,6 @@
-import { Reducer } from "./types";
-import { ActionTypeKeys, REST_STATUS } from "./types";
-import { ActionTypes } from "./actions";
+import { Reducer } from "./soknadTypes";
+import { ActionTypeKeys, REST_STATUS } from "./soknadTypes";
+import { ActionTypes } from "./soknadActions";
 
 export interface SoknadState {
 	restStatus: string;

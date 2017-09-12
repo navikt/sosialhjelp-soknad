@@ -1,6 +1,6 @@
-import { Reducer } from "./types";
-import { ActionTypeKeys } from "./types";
-import { ActionTypes } from "./actions";
+import { Reducer } from "./oppsummeringTypes";
+import { ActionTypeKeys } from "./oppsummeringTypes";
+import { ActionTypes } from "./oppsummeringActions";
 
 export interface OppsummeringState {
 	oppsummering?: string;
