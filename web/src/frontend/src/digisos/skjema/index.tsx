@@ -29,7 +29,7 @@ import {
 	setFaktumValideringsfeil,
 	clearFaktumValideringsfeil
 } from "../../nav-soknad/redux/actions";
-import { FaktumValideringRules } from "../../nav-soknad/validering/types";
+import { FaktumValideringsregler } from "../../nav-soknad/validering/types";
 import { validerAlleFaktum } from "../../nav-soknad/validering/utils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
@@ -42,7 +42,7 @@ interface OwnProps {
 	match: any;
 	location: Location;
 	fakta: any;
-	valideringer: FaktumValideringRules[];
+	valideringer: FaktumValideringsregler[];
 }
 type Props = OwnProps & RouterProps & InjectedIntlProps & DispatchProps;
 
@@ -155,7 +155,7 @@ class Skjema extends React.Component<
 export default connect((state: State, props: any) => {
 	return {
 		fakta: state.faktum.data,
-		valideringer: state.validering.items,
+		valideringer: state.validering.valideringsregler,
 		restStatus: state.soknad.restStatus,
 		brukerBehandlingId: state.soknad.brukerBehandlingId
 	};

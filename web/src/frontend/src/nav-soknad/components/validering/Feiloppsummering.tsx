@@ -24,7 +24,6 @@ const scrollToElement = (evt: React.MouseEvent<any>, faktumKey: string) => {
 };
 
 const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
-	element,
 	faktumKey,
 	feil
 }) => {

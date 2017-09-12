@@ -3,6 +3,7 @@ import {
 	SetFaktumVerdiAction,
 	SetFaktaAction,
 	ResetFaktumVerdiAction,
+	ValiderFaktumAction,
 	SetFaktumValideringsfeilAction,
 	ClearFaktumValideringsfeilAction,
 	RegisterFaktumValideringAction,
@@ -10,13 +11,14 @@ import {
 	FaktumValueType
 } from "./types";
 
-import { FaktumValideringRules, Valideringsfeil } from "../validering/types";
+import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 
 export type ActionTypes =
 	| SetFaktumVerdiAction
 	| ResetFaktumVerdiAction
 	| SetFaktaAction
 	| SetFaktumValideringsfeilAction
+	| ValiderFaktumAction
 	| ClearFaktumValideringsfeilAction
 	| RegisterFaktumValideringAction
 	| UnregisterFaktumValideringAction;
@@ -41,6 +43,13 @@ export function setFakta(fakta: any) {
 	};
 }
 
+export function validerFaktum(faktumKey: string) {
+	return {
+		type: ActionTypeKeys.VALIDER_FAKTUM,
+		faktumKey
+	};
+}
+
 export function setFaktumValideringsfeil(valideringsfeil: Valideringsfeil[]) {
 	return {
 		type: ActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL,
@@ -55,7 +64,7 @@ export function clearFaktumValideringsfeil() {
 }
 
 export function registerFaktumValidering(
-	faktumValidering: FaktumValideringRules
+	faktumValidering: FaktumValideringsregler
 ) {
 	return {
 		type: ActionTypeKeys.REGISTER_FAKTUM_VALIDERING,

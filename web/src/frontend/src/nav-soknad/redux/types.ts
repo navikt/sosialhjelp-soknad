@@ -1,4 +1,4 @@
-import { FaktumValideringRules, Valideringsfeil } from "../validering/types";
+import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 
 export type Dispatch = (action: any) => void;
 
@@ -17,7 +17,7 @@ export enum ActionTypeKeys {
 	CLEAR_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_OK",
 	REGISTER_FAKTUM_VALIDERING = "REGISTER_FAKTUM_VALIDERING",
 	UNREGISTER_FAKTUM_VALIDERING = "UNREGISTER_FAKTUM_VALIDERING",
-	VALIDER_ALLE_FAKTUM = "VALIDER_ALLE_FAKTUM",
+	VALIDER_FAKTUM = "VALIDER_FAKTUM",
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
@@ -64,7 +64,7 @@ export interface ClearFaktumValideringsfeilAction {
 
 export interface RegisterFaktumValideringAction {
 	type: ActionTypeKeys.REGISTER_FAKTUM_VALIDERING;
-	faktumValidering: FaktumValideringRules;
+	faktumValidering: FaktumValideringsregler;
 }
 
 export interface UnregisterFaktumValideringAction {
@@ -72,9 +72,10 @@ export interface UnregisterFaktumValideringAction {
 	faktumKey: string;
 }
 
-// export interface ValiderAlleFaktum {
-// 	type: ActionTypeKeys.VALIDER_ALLE_FAKTUM;
-// }
+export interface ValiderFaktumAction {
+	type: ActionTypeKeys.VALIDER_FAKTUM;
+	faktumKey: string;
+}
 
 export interface OtherAction {
 	type: ActionTypeKeys.OTHER_ACTION;

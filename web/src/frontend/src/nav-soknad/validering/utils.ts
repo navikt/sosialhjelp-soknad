@@ -1,26 +1,47 @@
 import { Faktum } from "../redux/types";
-import { Valideringsfeil, FaktumValideringRules } from "./types";
+import { Valideringsfeil, FaktumValideringsregler } from "./types";
 import { getFaktumVerdi } from "../utils";
 
-export function validerAlleFaktum(
+export function validerFaktum(
 	fakta: Faktum[],
-	valideringer: FaktumValideringRules[]
-): Valideringsfeil[] {
+	valideringsregler: FaktumValideringsregler[],
+	faktumKey: string
+) {
 	const valideringsfeil: Valideringsfeil[] = [];
-	valideringer.forEach(faktum => {
-		const value = getFaktumVerdi(fakta, faktum.faktumKey);
-		faktum.valideringer.forEach(v => {
+	const faktumvalidering = valideringsregler.find(
+		vr => vr.faktumKey === faktumKey
+	);
+	if (faktumvalidering) {
+		const value = getFaktumVerdi(fakta, faktumKey);
+		faktumvalidering.valideringer.forEach(v => {
 			const isValid = v(value);
 			if (!isValid) {
 				valideringsfeil.push({
-					faktumKey: faktum.faktumKey,
-					element: null,
+					faktumKey: faktumvalidering.faktumKey,
 					feil: {
 						feilmelding: "TODO: få inn riktig feilmelding"
 					}
 				});
 			}
 		});
+	}
+	return valideringsfeil;
+}
+
+export function validerAlleFaktum(
+	fakta: Faktum[],
+	valideringsregler: FaktumValideringsregler[]
+): Valideringsfeil[] {
+	let valideringsfeil: Valideringsfeil[] = [];
+	valideringsregler.forEach(faktumvalidering => {
+		const feil = validerFaktum(
+			fakta,
+			valideringsregler,
+			faktumvalidering.faktumKey
+		);
+		if (feil) {
+			valideringsfeil = valideringsfeil.concat(feil);
+		}
 	});
 	return valideringsfeil;
 }

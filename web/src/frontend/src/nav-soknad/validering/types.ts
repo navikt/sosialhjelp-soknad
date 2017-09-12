@@ -2,7 +2,6 @@ import { Feil } from "nav-frontend-skjema";
 
 export interface Valideringsfeil {
 	faktumKey: string;
-	element: HTMLElement;
 	feil: Feil;
 }
 
@@ -26,7 +25,7 @@ export interface CustomValidering extends BaseValidering {
 
 export type FaktumValideringFunc = (value: string) => boolean;
 
-export interface FaktumValideringRules {
+export interface FaktumValideringsregler {
 	faktumKey: string;
 	valideringer: FaktumValideringFunc[];
 }
