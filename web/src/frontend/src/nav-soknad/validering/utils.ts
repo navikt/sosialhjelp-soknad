@@ -16,7 +16,7 @@ export function validerAlleFaktum(
 					faktumKey: faktum.faktumKey,
 					element: null,
 					feil: {
-						feilmelding: "whooo"
+						feilmelding: "TODO: få inn riktig feilmelding"
 					}
 				});
 			}
