@@ -1,4 +1,4 @@
-import {Feil} from "nav-frontend-skjema";
+import { Feil } from "nav-frontend-skjema";
 
 export type Dispatch = (action: any) => void;
 
@@ -39,8 +39,22 @@ export interface FaktumValidering {
 }
 
 export interface Faktum {
+	faktumId: number;
+	soknadId: number;
+	parrentFaktum: null | number;
+	key: string;
+	value: null | boolean | string | number;
+	faktumEgenskaper?: FaktumEgenskap[];
+	properties: object;
+	type?: string;
+}
+
+export interface FaktumEgenskap {
+	faktumId: number;
+	soknadId: number;
 	key: string;
 	value: string;
+	systemEgenskap: number;
 }
 
 export interface Fakta {

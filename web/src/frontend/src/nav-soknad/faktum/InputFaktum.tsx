@@ -8,10 +8,9 @@ import {
 	registerFaktumValidering,
 	unregisterFaktumValidering
 } from "../redux/faktaActions";
-import { DispatchProps } from "../redux/faktaTypes";
+import { DispatchProps, Faktum } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
-import { Faktum } from "../soknadTypes";
 import { finnFaktum } from "../redux/faktaUtils";
 
 interface State {

@@ -12,7 +12,7 @@ import {
 import { fetchPost, fetchToJson } from "../rest-utils";
 import { setFakta, setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";
 import { finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
-import { Faktum } from "../../../nav-soknad/soknadTypes";
+import { Faktum } from "../../../nav-soknad/redux/faktaTypes";
 
 export type ActionTypes =
 	| OpprettSoknadAction

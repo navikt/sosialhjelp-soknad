@@ -8,9 +8,8 @@ import {
 	RegisterFaktumValidering,
 	UnregisterFaktumValidering,
 	FaktumValidering,
-	FaktumValueType, FaktumActionTypeKeys
+	FaktumValueType, FaktumActionTypeKeys, Faktum
 } from "./faktaTypes";
-import { Faktum } from "../soknadTypes";
 import { fetchPut } from "../../digisos/redux/rest-utils";
 import { Feil } from "nav-frontend-skjema";
 
