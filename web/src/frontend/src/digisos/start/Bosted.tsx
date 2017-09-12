@@ -78,7 +78,11 @@ class Bosted extends React.Component<
 									<FormattedMessage id="personalia.kommune.label" />
 								</strong>
 							}>
-							<option value="" />
+							{!this.state.kommuneId && (
+								<option selected={true} disabled={true}>
+									Velg by
+								</option>
+							)}
 							{Kommuner.map(kommune => (
 								<option value={kommune.id} key={kommune.id}>
 									{kommune.navn}
@@ -99,7 +103,11 @@ class Bosted extends React.Component<
 										<FormattedMessage id="personalia.bydel.label" />
 									</strong>
 								}>
-								<option value="" />
+								{!this.state.bydelId && (
+									<option selected={true} disabled={true}>
+										Velg bydel
+									</option>
+								)}
 								{valgtKommune.bydeler.map(bydel => (
 									<option value={bydel.id} key={bydel.id}>
 										{bydel.navn}
