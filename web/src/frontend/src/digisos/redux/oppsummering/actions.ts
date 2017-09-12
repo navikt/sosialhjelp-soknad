@@ -1,5 +1,5 @@
 import { Action, Dispatch } from "redux";
-import { ActionTypeKeys, SetOppsummering } from "./types";
+import { ActionTypeKeys, SetOppsummering} from "./types";
 import { fetchHtml } from "../rest-utils";
 
 export type ActionTypes = SetOppsummering;

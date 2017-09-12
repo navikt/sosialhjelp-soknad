@@ -7,7 +7,7 @@ import { InjectedIntlProps, FormattedMessage } from "react-intl";
 import { FaktumComponentProps } from "../../nav-soknad/redux/faktaReducer";
 import Arrow from "../../nav-soknad/components/svg/Arrow";
 import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
-import { ActionTypeKeys } from "../redux/soknad/types";
+import { FaktaActionTypeKeys } from "../redux/soknad/types";
 import { opprettSoknad, resetSoknad } from "../redux/soknad/actions";
 import { DispatchProps } from "../redux/types";
 import { State } from "../redux/reducers";
@@ -40,7 +40,7 @@ class Bosted extends React.Component<
 	}
 
 	componentDidUpdate() {
-		if (this.props.restStatus === ActionTypeKeys.OK) {
+		if (this.props.restStatus === FaktaActionTypeKeys.OK) {
 			this.setState({
 				kommuneId: "",
 				bydelId: ""

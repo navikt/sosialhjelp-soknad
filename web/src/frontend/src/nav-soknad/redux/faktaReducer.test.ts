@@ -1,5 +1,5 @@
 import faktumReducer from "./faktaReducer";
-import { ActionTypeKeys } from "./faktaTypes";
+import { FaktumActionTypeKeys, FaktaActionTypeKeys } from "./faktaTypes";
 
 describe("facts reducer", () => {
 	const defaultState = {
@@ -28,7 +28,7 @@ describe("facts reducer", () => {
 
 	it("should updates single fact", () => {
 		const newFaktumState = faktumReducer(defaultState, {
-			type: ActionTypeKeys.SET_FAKTUM_VERDI,
+			type: FaktumActionTypeKeys.SET_FAKTUM,
 			faktum: testFaktum
 		});
 		expect(newFaktumState.data[0].value).toEqual(123);
@@ -37,7 +37,7 @@ describe("facts reducer", () => {
 	it("should bulk update all facts", () => {
 		expect(
 			faktumReducer(defaultState, {
-				type: ActionTypeKeys.SET_FAKTA,
+				type: FaktaActionTypeKeys.SET_FAKTA,
 				fakta: [testFaktum, testFaktum]
 			}).data.length
 		).toEqual(2);

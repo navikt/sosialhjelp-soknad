@@ -1,6 +1,6 @@
 import { Action, Dispatch } from "redux";
 import {
-	ActionTypeKeys,
+	FaktaActionTypeKeys,
 	SetFaktumVerdiAction,
 	SetFaktaAction,
 	SetFaktumValideringFeilAction,
@@ -8,11 +8,10 @@ import {
 	RegisterFaktumValidering,
 	UnregisterFaktumValidering,
 	FaktumValidering,
-	FaktumValueType
+	FaktumValueType, FaktumActionTypeKeys
 } from "./faktaTypes";
 import { Faktum } from "../soknadTypes";
 import { fetchPut } from "../../digisos/redux/rest-utils";
-
 import { Feil } from "nav-frontend-skjema";
 
 export type ActionTypes =
@@ -30,23 +29,25 @@ export function setFaktumVerdi(
 	return (dispatch: Dispatch<Action>) => {
 		const nyttFaktum = Object.assign(faktum);
 		nyttFaktum.value = value;
-		dispatch({ type: "faktum/PENDING" });
+		dispatch({ type: FaktaActionTypeKeys.PENDING });
 		fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
 			.then(response => {
+				dispatch({type: FaktaActionTypeKeys.OK});
+				dispatch({type: FaktumActionTypeKeys.PENDING});
 				dispatch( {
-					type: ActionTypeKeys.SET_FAKTUM_VERDI,
+					type: FaktumActionTypeKeys.SET_FAKTUM,
 					faktum: nyttFaktum
 				});
 			})
 			.catch(reason => {
-				dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
+				dispatch({ type: FaktaActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
 			});
 	};
 }
 
 export function setFakta(fakta: any) {
 	return {
-		type: ActionTypeKeys.SET_FAKTA,
+		type: FaktaActionTypeKeys.SET_FAKTA,
 		fakta
 	};
 }
@@ -57,7 +58,7 @@ export function setFaktumValideringsFeil(
 	feil: Feil
 ) {
 	return {
-		type: ActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL,
+		type: FaktumActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL,
 		faktumKey,
 		element,
 		feil
@@ -65,21 +66,21 @@ export function setFaktumValideringsFeil(
 }
 export function setFaktumValideringOk(faktumKey: string) {
 	return {
-		type: ActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL,
+		type: FaktumActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL,
 		faktumKey
 	};
 }
 
 export function registerFaktumValidering(faktumValidering: FaktumValidering) {
 	return {
-		type: ActionTypeKeys.REGISTER_FAKTUM_VALIDERING,
+		type: FaktumActionTypeKeys.REGISTER_FAKTUM_VALIDERING,
 		faktumValidering
 	};
 }
 
 export function unregisterFaktumValidering(faktumKey: string) {
 	return {
-		type: ActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING,
+		type: FaktumActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING,
 		faktumKey
 	};
 }

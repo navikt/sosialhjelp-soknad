@@ -1,7 +1,7 @@
 import { Faktum } from "../soknadTypes";
 
 export type FaktumMap = Map<string, any>;
-import { ActionTypeKeys, Reducer } from "./faktaTypes";
+import { FaktumActionTypeKeys, Reducer, FaktaActionTypeKeys } from "./faktaTypes";
 import { ValideringState } from "./validering-reducer";
 
 export interface SoknadAppState {
@@ -40,12 +40,12 @@ function updateFaktumVerdi(fakta: Faktum[], faktum: Faktum) {
 export type FaktumActionTypes = SetFaktumVerdi | SetFaktaAction;
 
 interface SetFaktumVerdi {
-	type: ActionTypeKeys.SET_FAKTUM_VERDI;
+	type: FaktumActionTypeKeys.SET_FAKTUM;
 	faktum: Faktum;
 }
 
 interface SetFaktaAction {
-	type: ActionTypeKeys.SET_FAKTA;
+	type: FaktaActionTypeKeys.SET_FAKTA;
 	fakta: Faktum[];
 }
 
@@ -54,12 +54,12 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 	action
 ): FaktumState => {
 	switch (action.type) {
-		case ActionTypeKeys.SET_FAKTUM_VERDI:
+		case FaktumActionTypeKeys.SET_FAKTUM:
 			return {
 				...state,
 				data: updateFaktumVerdi(state.data, action.faktum)
 			};
-		case ActionTypeKeys.SET_FAKTA:
+		case FaktaActionTypeKeys.SET_FAKTA:
 			return {
 				...state,
 				data: action.fakta
