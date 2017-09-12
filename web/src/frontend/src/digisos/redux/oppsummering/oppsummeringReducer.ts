@@ -1,6 +1,6 @@
 import { Reducer } from "./oppsummeringTypes";
-import { ActionTypeKeys } from "./oppsummeringTypes";
-import { ActionTypes } from "./oppsummeringActions";
+import { OppsummeringActionTypeKeys } from "./oppsummeringTypes";
+import { OppsummeringActionTypes } from "./oppsummeringActions";
 
 export interface OppsummeringState {
 	oppsummering?: string;
@@ -10,12 +10,12 @@ const defaultState: OppsummeringState = {
 	oppsummering: undefined
 };
 
-const OppsummeringReducer: Reducer<OppsummeringState, ActionTypes> = (
+const OppsummeringReducer: Reducer<OppsummeringState, OppsummeringActionTypes> = (
 	state = defaultState,
 	action
 ): OppsummeringState => {
 	switch (action.type) {
-		case ActionTypeKeys.SET_OPPSUMMERING:
+		case OppsummeringActionTypeKeys.SET_OPPSUMMERING:
 			return {
 				...state,
 				oppsummering: action.oppsummering
