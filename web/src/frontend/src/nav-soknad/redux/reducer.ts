@@ -1,6 +1,6 @@
 export type FaktumMap = Map<string, any>;
-import { Reducer } from "./types";
-import { ActionTypeKeys } from "./types";
+import { ActionTypes } from "./actions";
+import { Reducer, ActionTypeKeys } from "./types";
 import { ValideringState } from "./validering-reducer";
 
 export interface SoknadAppState {
@@ -41,8 +41,7 @@ function updateFaktumVerdi(fakta: Faktum[], key: string, value: any) {
 	}
 }
 
-// const faktumReducer: Reducer<FaktumState, ActionTypes> =
-const FaktumReducer: Reducer<FaktumState, any> = (
+const FaktumReducer: Reducer<FaktumState, ActionTypes> = (
 	state = initialState,
 	action
 ): FaktumState => {

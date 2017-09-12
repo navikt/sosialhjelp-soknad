@@ -1,5 +1,5 @@
 import faktumReducer from "./reducer";
-import { setFaktumVerdi } from "./actions";
+import { setFaktumVerdi, ActionTypes } from "./actions";
 
 describe("setFaktumVerdi action creator", () => {
 	const defaultState = {
@@ -18,31 +18,31 @@ describe("setFaktumVerdi action creator", () => {
 	};
 
 	it("should update fact", () => {
-		let newFaktumState = faktumReducer(
-			defaultState,
-			setFaktumVerdi("bolk", 789)
-		);
+		let newFaktumState = faktumReducer(defaultState, setFaktumVerdi(
+			"bolk",
+			789
+		) as ActionTypes);
 		expect(newFaktumState.data.length).toEqual(2);
 		expect(newFaktumState.data[0].value).toEqual(789);
 		expect(newFaktumState.data[0].key).toEqual("bolk");
 
-		newFaktumState = faktumReducer(
-			newFaktumState,
-			setFaktumVerdi("bolk", false)
-		);
+		newFaktumState = faktumReducer(newFaktumState, setFaktumVerdi(
+			"bolk",
+			false
+		) as ActionTypes);
 		expect(newFaktumState.data[0].value).toEqual(false);
-		newFaktumState = faktumReducer(
-			newFaktumState,
-			setFaktumVerdi("bolk", true)
-		);
+		newFaktumState = faktumReducer(newFaktumState, setFaktumVerdi(
+			"bolk",
+			true
+		) as ActionTypes);
 		expect(newFaktumState.data[0].value).toEqual(true);
 	});
 
 	it("should add fact", () => {
-		const newFaktumState = faktumReducer(
-			defaultState,
-			setFaktumVerdi("ny_bolk", 789)
-		);
+		const newFaktumState = faktumReducer(defaultState, setFaktumVerdi(
+			"ny_bolk",
+			789
+		) as ActionTypes);
 		expect(newFaktumState.data.length).toEqual(3);
 		expect(newFaktumState.data.slice(-1)[0].key).toEqual("ny_bolk");
 	});
