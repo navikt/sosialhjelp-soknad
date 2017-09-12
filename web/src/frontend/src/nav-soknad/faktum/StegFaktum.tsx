@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getIntlTextOrKey } from "../utils";
 import Steg from "../components/steg";
-
-import { FaktumAppState } from "../redux/reducer";
+import { SoknadAppState } from "../redux/reducer";
 import { Valideringsfeil } from "../validering/types";
 
 interface OwnProps extends React.Props<any> {
@@ -44,7 +43,7 @@ export default injectIntl(
 		StateProps,
 		{},
 		OwnProps & InjectedIntlProps
-	>((state: FaktumAppState, props: OwnProps) => {
+	>((state: SoknadAppState, props: OwnProps) => {
 		return {
 			feilmeldinger: state.validering.feil,
 			visFeilmeldinger: true

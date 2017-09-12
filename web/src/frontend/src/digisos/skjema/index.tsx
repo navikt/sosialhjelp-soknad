@@ -154,7 +154,7 @@ class Skjema extends React.Component<
 
 export default connect((state: State, props: any) => {
 	return {
-		fakta: state.faktum.fakta,
+		fakta: state.faktum.data,
 		valideringer: state.validering.items,
 		restStatus: state.soknad.restStatus,
 		brukerBehandlingId: state.soknad.brukerBehandlingId

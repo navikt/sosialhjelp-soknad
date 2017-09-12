@@ -38,7 +38,7 @@ class Kvittering extends React.Component<State & FaktumComponentProps, {}> {
 
 export default connect((state: State, props: any) => {
 	return {
-		fakta: state.faktum.fakta,
+		fakta: state.faktum.data,
 		soknad: state.soknad
 	};
 })(Kvittering);

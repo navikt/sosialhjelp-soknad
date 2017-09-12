@@ -10,8 +10,8 @@ import {
 	unregisterFaktumValidering
 } from "../redux/actions";
 import { DispatchProps } from "../redux/types";
-import { FaktumAppState } from "../redux/reducer";
 import { validerRequired } from "../validering/utils";
+import { SoknadAppState } from "../redux/reducer";
 
 export interface OwnProps {
 	faktumKey: string;
@@ -80,7 +80,7 @@ export default connect<
 	StateProps,
 	{},
 	OwnProps
->((state: FaktumAppState, props: OwnProps): StateProps => {
+>((state: SoknadAppState, props: OwnProps): StateProps => {
 	const feil = state.validering.feil.find(f => f.faktumKey === props.faktumKey);
 	return {
 		feil: props.renderValideringsfeil && feil ? feil.feil : null
