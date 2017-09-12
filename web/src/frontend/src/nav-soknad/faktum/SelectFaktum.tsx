@@ -1,13 +1,14 @@
 import * as React from "react";
 import { Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { SoknadAppState, FaktumComponentProps } from "../redux/reducer";
-import { setFaktumVerdi } from "../redux/actions";
-import { DispatchProps } from "../redux/types";
+import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
+import { setFaktumVerdi } from "../redux/faktaActions";
+import { DispatchProps } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
 import { Select, SelectBredde } from "nav-frontend-skjema";
+import { finnFaktum } from "../redux/faktaUtils";
 
 interface OwnProps {
 	faktumKey: string;
@@ -40,7 +41,7 @@ class FaktumSelect extends React.Component<
 				value={getFaktumVerdi(fakta, faktumKey)}
 				bredde={bredde}
 				onChange={(evt: any) =>
-					dispatch(setFaktumVerdi(faktumKey, evt.target.value))}
+					dispatch(setFaktumVerdi(finnFaktum(faktumKey, this.props.fakta ), evt.target.value))}
 				label={
 					<LabelMedHjelpetekst
 						id={faktumKey}

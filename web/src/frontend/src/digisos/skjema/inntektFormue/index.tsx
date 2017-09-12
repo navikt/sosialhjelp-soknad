@@ -1,7 +1,7 @@
 import * as React from "react";
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { connect } from "react-redux";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { State } from "../../redux/reducers";
 
 import YtelserFraNAV from "./YtelserFraNAV";

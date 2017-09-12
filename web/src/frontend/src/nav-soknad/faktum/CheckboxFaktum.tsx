@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Checkbox, Feil } from "nav-frontend-skjema";
 import { connect } from "react-redux";
-import { SoknadAppState, FaktumComponentProps } from "../redux/reducer";
-import { setFaktumVerdi } from "../redux/actions";
-import { DispatchProps } from "../redux/types";
+import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
+import { setFaktumVerdi } from "../redux/faktaActions";
+import { DispatchProps } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
 import {
@@ -12,6 +12,7 @@ import {
 	boolToString,
 	getFaktumVerdi
 } from "../utils";
+import { finnFaktum } from "../redux/faktaUtils";
 
 interface OwnProps {
 	faktumKey: string;
@@ -44,7 +45,7 @@ class CheckboxFaktum extends React.Component<
 				disabled={disabled}
 				value={option}
 				onChange={(evt: any) =>
-					dispatch(setFaktumVerdi(key, boolToString(evt.target.checked)))}
+					dispatch(setFaktumVerdi(finnFaktum(key, this.props.fakta ), boolToString(evt.target.checked)))}
 				label={
 					<LabelMedHjelpetekst
 						id={key}

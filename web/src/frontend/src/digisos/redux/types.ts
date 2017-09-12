@@ -1,1 +1,1 @@
-export * from "../../nav-soknad/redux/types";
+export * from "../../nav-soknad/redux/faktaTypes";

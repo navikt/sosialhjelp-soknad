@@ -9,9 +9,9 @@ import {
 	registerFaktumValidering,
 	unregisterFaktumValidering
 } from "../redux/actions";
-import { DispatchProps } from "../redux/types";
+import { DispatchProps } from "../redux/faktaTypes";
 import { pakrevd } from "../validering/valideringer";
-import { SoknadAppState } from "../redux/reducer";
+import { SoknadAppState } from "../redux/faktaReducer";
 
 export interface OwnProps {
 	faktumKey: string;

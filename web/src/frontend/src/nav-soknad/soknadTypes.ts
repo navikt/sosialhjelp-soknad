@@ -1,3 +1,5 @@
+import { Faktum } from "./redux/faktaTypes";
+
 export interface Soknad {
 	soknadId: number;
 	skjemaNummer: string;
@@ -42,25 +44,6 @@ export interface Vedlegg {
 	aarsak: string;
 }
 
-export interface Faktum {
-	faktumId: number;
-	soknadId: number;
-	parrentFaktum: null | number;
-	key: string;
-	value: null | boolean | string | number;
-	faktumEgenskaper: FaktumEgenskap[];
-	properties: FaktumProperties | {};
-	type?: string;
-}
-
-export interface FaktumEgenskap {
-	faktumId: number;
-	soknadId: number;
-	key: string;
-	value: string;
-	systemEgenskap: number;
-}
-
 export enum DelstegStatus {
 	OPPRETTET = "OPPRETTET",
 	UTFYLLING = "UTFYLLING",
@@ -91,7 +74,7 @@ export enum SoknadInnsendingStatus {
 	AVBRUTT_AUTOMATISK = "AVBRUTT_AUTOMATISK"
 }
 
-export interface FaktumProperties {
+export interface PersonaliaProperties {
 	statsborgerskapType: string;
 	gjeldendeAdresseLandkode: string;
 	statsborgerskap: string;

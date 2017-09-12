@@ -10,7 +10,7 @@ import {
 import { State } from "../../redux/reducers";
 import { DispatchProps } from "../../redux/types";
 
-import { FaktumComponentProps } from "../../../nav-soknad/redux/reducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
