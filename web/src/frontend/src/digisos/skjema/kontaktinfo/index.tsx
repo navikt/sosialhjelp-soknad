@@ -45,7 +45,13 @@ class Kontaktinfo extends React.Component<{}, {}> {
 
 				<SporsmalFaktum
 					faktumKey={statsborger.faktum}
-					renderValideringsfeil={true}>
+					renderValideringsfeil={true}
+					valideringer={[
+						{
+							validerFunc: pakrevd,
+							feilmelding: "Må fylles ut"
+						}
+					]}>
 					<RadioFaktum faktumKey={statsborger.faktum} option="true" />
 					<RadioFaktum faktumKey={statsborger.faktum} option="false" />
 				</SporsmalFaktum>

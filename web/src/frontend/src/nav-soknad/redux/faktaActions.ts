@@ -3,24 +3,13 @@ import {
 	FaktaActionTypeKeys,
 	SetFaktumVerdiAction,
 	SetFaktaAction,
-	SetFaktumValideringFeilAction,
-	SetFaktumValideringOkAction,
-	RegisterFaktumValidering,
-	UnregisterFaktumValidering,
 	FaktumValueType,
 	FaktumActionTypeKeys,
 	Faktum
 } from "./faktaTypes";
-import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 import { fetchPut } from "../../digisos/redux/rest-utils";
 
-export type ActionTypes =
-	| SetFaktumVerdiAction
-	| SetFaktaAction
-	| SetFaktumValideringFeilAction
-	| SetFaktumValideringOkAction
-	| RegisterFaktumValidering
-	| UnregisterFaktumValidering;
+export type ActionTypes = SetFaktumVerdiAction | SetFaktaAction;
 
 export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType) {
 	return (dispatch: Dispatch<Action>) => {
@@ -45,34 +34,5 @@ export function setFakta(fakta: any) {
 	return {
 		type: FaktaActionTypeKeys.SET_FAKTA,
 		fakta
-	};
-}
-
-export function setFaktumValideringsfeil(valideringsfeil: Valideringsfeil[]) {
-	return {
-		type: FaktumActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL,
-		valideringsfeil
-	};
-}
-
-export function clearFaktumValideringsfeil() {
-	return {
-		type: FaktumActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL
-	};
-}
-
-export function registerFaktumValidering(
-	faktumValidering: FaktumValideringsregler
-) {
-	return {
-		type: FaktumActionTypeKeys.REGISTER_FAKTUM_VALIDERING,
-		faktumValidering
-	};
-}
-
-export function unregisterFaktumValidering(faktumKey: string) {
-	return {
-		type: FaktumActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING,
-		faktumKey
 	};
 }

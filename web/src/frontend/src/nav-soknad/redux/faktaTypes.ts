@@ -14,10 +14,6 @@ export enum FaktumActionTypeKeys {
 	PENDING = "faktum/PENDING",
 	SET_FAKTUM = "faktum/SET_FAKTUM",
 	OTHER_ACTION = "__any_other_action_type__",
-	SET_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_FEIL",
-	CLEAR_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_OK",
-	REGISTER_FAKTUM_VALIDERING = "REGISTER_FAKTUM_VALIDERING",
-	UNREGISTER_FAKTUM_VALIDERING = "UNREGISTER_FAKTUM_VALIDERING",
 	VALIDER_FAKTUM = "VALIDER_FAKTUM"
 }
 
@@ -28,6 +24,15 @@ export enum FaktaActionTypeKeys {
 	SOKNAD_OPPRETTET = "SOKNAD_OPPRETTET",
 	SET_SERVER_FEIL = "fakta/SERVER_FEIL",
 	OTHER_ACTION = "__any_other_action_type__"
+}
+
+export enum ValideringActionTypeKeys {
+	SET_FAKTA_VALIDERINGSFEIL = "validering/SET_FAKTA_VALIDERINGSFEIL",
+	CLEAR_FAKTA_VALIDERINGSFEIL = "validering/CLEAR_FAKTA_VALIDERINGSFEIL",
+	SET_FAKTUM_VALIDERINGSFEIL = "validering/SET_FAKTUM_VALIDERINGSFEIL",
+	CLEAR_FAKTUM_VALIDERINGSFEIL = "validering/CLEAR_FAKTUM_VALIDERINGSFEIL",
+	REGISTER_FAKTUM_VALIDERING = "validering/REGISTER_FAKTUM_VALIDERING",
+	UNREGISTER_FAKTUM_VALIDERING = "validering/UNREGISTER_FAKTUM_VALIDERING"
 }
 
 export type FaktumValueType = string | number | boolean;
@@ -71,26 +76,29 @@ export interface SoknadOpprettetAction {
 	type: FaktaActionTypeKeys.SOKNAD_OPPRETTET;
 }
 
-export interface SetFaktumValideringFeilAction {
-	type: FaktumActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL;
-	faktumKey: string;
-	element: HTMLElement;
+export interface SetFaktaValideringsfeilAction {
+	type: ValideringActionTypeKeys.SET_FAKTA_VALIDERINGSFEIL;
 	valideringsfeil: Valideringsfeil[];
 }
 
-export interface SetFaktumValideringOkAction {
-	type: FaktumActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL;
+export interface ClearFaktaValideringsfeilAction {
+	type: ValideringActionTypeKeys.CLEAR_FAKTA_VALIDERINGSFEIL;
 	faktumKey: string;
 }
-
-export interface RegisterFaktumValidering {
-	type: FaktumActionTypeKeys.REGISTER_FAKTUM_VALIDERING;
+export interface RegisterFaktumValideringAction {
+	type: ValideringActionTypeKeys.REGISTER_FAKTUM_VALIDERING;
 	faktumValidering: FaktumValideringsregler;
 }
 
-export interface UnregisterFaktumValidering {
-	type: FaktumActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING;
+export interface UnregisterFaktumValideringAction {
+	type: ValideringActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING;
 	faktumKey: string;
+}
+
+export interface SetFaktumValideringsfeilAction {
+	type: ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL;
+	faktumKey: string;
+	valideringsfeil: Valideringsfeil[];
 }
 
 export interface OtherAction {

@@ -2,15 +2,17 @@ import * as React from "react";
 import { Input, Feil, InputBredde } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
+import { setFaktumVerdi } from "../redux/faktaActions";
 import {
-	setFaktumVerdi,
+	setFaktumValideringsfeil,
 	registerFaktumValidering,
 	unregisterFaktumValidering
-} from "../redux/faktaActions";
+} from "../redux/valideringActions";
 import { DispatchProps, Faktum } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
-import { FaktumValidering } from "../validering/types";
+import { FaktumValidering, FaktumValideringsregler } from "../validering/types";
+import { validerFaktum } from "../validering/utils";
 import { finnFaktum } from "../redux/faktaUtils";
 
 interface State {
@@ -27,6 +29,7 @@ interface OwnProps {
 
 interface StateProps {
 	feil?: Feil;
+	valideringsregler?: FaktumValideringsregler[];
 }
 
 type Props = OwnProps &
@@ -80,6 +83,16 @@ class InputFaktum extends React.Component<Props, State> {
 				this.state.value
 			)
 		);
+		if (this.props.feil) {
+			const valideringsfeil = validerFaktum(
+				this.props.fakta,
+				this.props.valideringsregler,
+				this.props.faktumKey
+			);
+			this.props.dispatch(
+				setFaktumValideringsfeil(this.props.faktumKey, valideringsfeil)
+			);
+		}
 	}
 
 	render() {
@@ -113,6 +126,7 @@ export default connect<
 	return {
 		fakta: state.fakta.data,
 		faktumKey: props.faktumKey,
-		feil: feil ? feil.feil : null
+		feil: feil ? feil.feil : null,
+		valideringsregler: state.validering.valideringsregler
 	};
 })(injectIntl(InputFaktum));

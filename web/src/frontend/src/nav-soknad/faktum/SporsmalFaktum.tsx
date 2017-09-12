@@ -8,7 +8,7 @@ import { getFaktumSporsmalTekst } from "../utils";
 import {
 	registerFaktumValidering,
 	unregisterFaktumValidering
-} from "../redux/faktaActions";
+} from "../redux/valideringActions";
 import { DispatchProps } from "../redux/faktaTypes";
 import { FaktumValidering } from "../validering/types";
 import { SoknadAppState } from "../redux/faktaReducer";

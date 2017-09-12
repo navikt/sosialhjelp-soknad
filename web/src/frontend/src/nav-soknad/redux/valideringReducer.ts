@@ -1,6 +1,6 @@
 export type FaktumMap = Map<string, any>;
-import { FaktumActionTypeKeys, Reducer } from "./faktaTypes";
-import { ActionTypes } from "./faktaActions";
+import { ValideringActionTypeKeys, Reducer } from "./faktaTypes";
+import { ValideringActionTypes } from "./valideringActions";
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 
 export interface ValideringState {
@@ -46,12 +46,12 @@ const unregisterFaktumValidering = (
 	];
 };
 
-const valideringReducer: Reducer<ValideringState, ActionTypes> = (
+const valideringReducer: Reducer<ValideringState, ValideringActionTypes> = (
 	state = defaultState,
 	action
 ): ValideringState => {
 	switch (action.type) {
-		case FaktumActionTypeKeys.REGISTER_FAKTUM_VALIDERING:
+		case ValideringActionTypeKeys.REGISTER_FAKTUM_VALIDERING:
 			return {
 				...state,
 				valideringsregler: registerFaktumValidering(
@@ -59,7 +59,7 @@ const valideringReducer: Reducer<ValideringState, ActionTypes> = (
 					action.faktumValidering
 				)
 			};
-		case FaktumActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING:
+		case ValideringActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING:
 			return {
 				...state,
 				valideringsregler: unregisterFaktumValidering(
@@ -67,15 +67,22 @@ const valideringReducer: Reducer<ValideringState, ActionTypes> = (
 					action.faktumKey
 				)
 			};
-		case FaktumActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL:
+		case ValideringActionTypeKeys.SET_FAKTA_VALIDERINGSFEIL:
 			return {
 				...state,
 				feil: action.valideringsfeil
 			};
-		case FaktumActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL:
+		case ValideringActionTypeKeys.CLEAR_FAKTA_VALIDERINGSFEIL:
 			return {
 				...state,
 				feil: []
+			};
+		case ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL:
+			return {
+				...state,
+				feil: state.feil
+					.filter(v => v.faktumKey !== action.faktumKey)
+					.concat(action.valideringsfeil)
 			};
 		default:
 			return state;
