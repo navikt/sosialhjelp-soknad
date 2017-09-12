@@ -1,5 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import * as classNames from "classnames";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
@@ -52,20 +53,25 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 			return null;
 		}
 		const tekster = getFaktumSporsmalTekst(intl, faktumKey);
+		const cls = classNames("skjema-fieldset", {
+			"skjema-fieldset--harFeil": feil !== null && feil !== undefined
+		});
 		return (
-			<SkjemaGruppe className="skjema-sporsmal" feil={feil}>
-				<fieldset className="skjema-fieldset">
-					<legend>{tekster.sporsmal}</legend>
-					{tekster.hjelpetekst ? (
-						<div className="skjema-sporsmal__hjelpetekst">
-							<HjelpetekstAuto tittel={tekster.hjelpetekst.tittel}>
-								{tekster.hjelpetekst.tekst}
-							</HjelpetekstAuto>
-						</div>
-					) : null}
-					<div className="skjema-sporsmal__innhold">{children}</div>
-				</fieldset>
-			</SkjemaGruppe>
+			<div className="skjema-sporsmal">
+				<SkjemaGruppe feil={feil}>
+					<fieldset className={cls}>
+						<legend>{tekster.sporsmal}</legend>
+						{tekster.hjelpetekst ? (
+							<div className="skjema-sporsmal__hjelpetekst">
+								<HjelpetekstAuto tittel={tekster.hjelpetekst.tittel}>
+									{tekster.hjelpetekst.tekst}
+								</HjelpetekstAuto>
+							</div>
+						) : null}
+						<div className="skjema-sporsmal__innhold">{children}</div>
+					</fieldset>
+				</SkjemaGruppe>
+			</div>
 		);
 	}
 }
