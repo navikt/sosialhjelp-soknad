@@ -48,7 +48,7 @@ export function setFaktumValideringsfeil(valideringsfeil: Valideringsfeil[]) {
 	};
 }
 
-export function clearFaktumValideringsfeil(faktumKey: string) {
+export function clearFaktumValideringsfeil() {
 	return {
 		type: ActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL
 	};

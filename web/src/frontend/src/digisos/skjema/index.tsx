@@ -25,7 +25,10 @@ import { DispatchProps } from "../redux/types";
 import { lesSoknad } from "../redux/soknad/actions";
 import { REST_STATUS } from "../redux/soknad/types";
 import { State } from "../redux/reducers";
-import { setFaktumValideringsfeil } from "../../nav-soknad/redux/actions";
+import {
+	setFaktumValideringsfeil,
+	clearFaktumValideringsfeil
+} from "../../nav-soknad/redux/actions";
 import { FaktumValideringRules } from "../../nav-soknad/validering/types";
 import { validerAlleFaktum } from "../../nav-soknad/validering/utils";
 
@@ -72,6 +75,7 @@ class Skjema extends React.Component<
 			this.props.valideringer
 		);
 		if (valideringsfeil.length === 0) {
+			this.props.dispatch(clearFaktumValideringsfeil());
 			gaVidere(aktivtSteg, brukerBehandlingId, this.props.history);
 		} else {
 			this.props.dispatch(setFaktumValideringsfeil(valideringsfeil));
