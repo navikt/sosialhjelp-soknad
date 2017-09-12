@@ -28,7 +28,7 @@ import { State } from "../redux/reducers";
 import {
 	setFaktumValideringsfeil,
 	clearFaktumValideringsfeil
-} from "../../nav-soknad/redux/actions";
+} from "../../nav-soknad/redux/faktaActions";
 import { FaktumValideringsregler } from "../../nav-soknad/validering/types";
 import { validerAlleFaktum } from "../../nav-soknad/validering/utils";
 

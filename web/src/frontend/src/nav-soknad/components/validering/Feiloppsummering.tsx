@@ -18,7 +18,7 @@ const scrollToElement = (evt: React.MouseEvent<any>, faktumKey: string) => {
 	evt.stopPropagation();
 	evt.preventDefault();
 	const element = getElementFromFaktumKey(faktumKey);
-	if (element && element.scrollIntoView) {
+	if (element) {
 		element.focus();
 	}
 };

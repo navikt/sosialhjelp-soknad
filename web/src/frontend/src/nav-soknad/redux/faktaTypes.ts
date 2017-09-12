@@ -75,7 +75,7 @@ export interface SetFaktumValideringFeilAction {
 	type: FaktumActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL;
 	faktumKey: string;
 	element: HTMLElement;
-	feil: Valideringsfeil;
+	valideringsfeil: Valideringsfeil[];
 }
 
 export interface SetFaktumValideringOkAction {
