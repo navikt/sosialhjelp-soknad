@@ -14,12 +14,12 @@ export function validerFaktum(
 	if (faktumvalidering) {
 		const value = getFaktumVerdi(fakta, faktumKey);
 		faktumvalidering.valideringer.forEach(v => {
-			const isValid = v(value);
+			const isValid = v.validerFunc(value);
 			if (!isValid) {
 				valideringsfeil.push({
 					faktumKey: faktumvalidering.faktumKey,
 					feil: {
-						feilmelding: "TODO: få inn riktig feilmelding"
+						feilmelding: v.feilmelding
 					}
 				});
 			}

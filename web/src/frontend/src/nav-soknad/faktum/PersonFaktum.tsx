@@ -17,7 +17,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 				<Container fluid={true} className="container--noPadding">
 					<Row>
 						<Column xs="12">
-							<InputFaktum faktumKey={navnFaktumKey} required={true} />
+							<InputFaktum faktumKey={navnFaktumKey} />
 						</Column>
 					</Row>
 					<Row>

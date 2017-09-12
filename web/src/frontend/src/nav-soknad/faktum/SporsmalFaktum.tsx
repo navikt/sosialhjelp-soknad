@@ -10,14 +10,14 @@ import {
 	unregisterFaktumValidering
 } from "../redux/faktaActions";
 import { DispatchProps } from "../redux/faktaTypes";
-import { pakrevd } from "../validering/valideringer";
+import { FaktumValidering } from "../validering/types";
 import { SoknadAppState } from "../redux/faktaReducer";
 
 export interface OwnProps {
 	faktumKey: string;
 	children: React.ReactNode;
 	visible?: boolean;
-	required?: boolean;
+	valideringer?: FaktumValidering[];
 	renderValideringsfeil?: boolean;
 }
 
@@ -33,11 +33,11 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	};
 
 	componentWillMount() {
-		if (this.props.required) {
+		if (this.props.valideringer) {
 			this.props.dispatch(
 				registerFaktumValidering({
 					faktumKey: this.props.faktumKey,
-					valideringer: [...(this.props.required ? [pakrevd] : [])]
+					valideringer: this.props.valideringer
 				})
 			);
 		}

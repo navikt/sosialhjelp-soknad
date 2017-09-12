@@ -10,7 +10,7 @@ import {
 import { DispatchProps, Faktum } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
-import { pakrevd } from "../validering/valideringer";
+import { FaktumValidering } from "../validering/types";
 import { finnFaktum } from "../redux/faktaUtils";
 
 interface State {
@@ -22,7 +22,7 @@ interface OwnProps {
 	disabled?: boolean;
 	maxLength?: number;
 	bredde?: InputBredde;
-	required?: boolean;
+	valideringer?: FaktumValidering[];
 }
 
 interface StateProps {
@@ -55,11 +55,11 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 
 	componentWillMount() {
-		if (this.props.required) {
+		if (this.props.valideringer) {
 			this.props.dispatch(
 				registerFaktumValidering({
 					faktumKey: this.props.faktumKey,
-					valideringer: [...(this.props.required ? [pakrevd] : [])]
+					valideringer: this.props.valideringer
 				})
 			);
 		}
