@@ -29,18 +29,17 @@ export function setFaktumVerdi(
 	return (dispatch: Dispatch<Action>) => {
 		const nyttFaktum = Object.assign(faktum);
 		nyttFaktum.value = value;
-		dispatch({ type: FaktaActionTypeKeys.PENDING });
+		dispatch({ type: FaktumActionTypeKeys.PENDING });
 		fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
 			.then(response => {
-				dispatch({type: FaktaActionTypeKeys.OK});
-				dispatch({type: FaktumActionTypeKeys.PENDING});
 				dispatch( {
 					type: FaktumActionTypeKeys.SET_FAKTUM,
 					faktum: nyttFaktum
 				});
+				dispatch({type: FaktumActionTypeKeys.OK});
 			})
 			.catch(reason => {
-				dispatch({ type: FaktaActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
+				dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
 			});
 	};
 }
