@@ -8,7 +8,10 @@ import { FaktumComponentProps } from "../../nav-soknad/redux/faktaReducer";
 import Arrow from "../../nav-soknad/components/svg/Arrow";
 import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 import { State } from "../redux/reducers";
-import { FaktaActionTypeKeys, DispatchProps } from "../../nav-soknad/redux/faktaTypes";
+import {
+	FaktaActionTypeKeys,
+	DispatchProps
+} from "../../nav-soknad/redux/faktaTypes";
 import { opprettSoknad, resetSoknad } from "../redux/soknad/actions";
 
 interface StateProps {
@@ -74,8 +77,7 @@ class Bosted extends React.Component<
 								<strong>
 									<FormattedMessage id="personalia.kommune.label" />
 								</strong>
-							}
-						>
+							}>
 							<option value="" />
 							{Kommuner.map(kommune => (
 								<option value={kommune.id} key={kommune.id}>
@@ -96,8 +98,7 @@ class Bosted extends React.Component<
 									<strong>
 										<FormattedMessage id="personalia.bydel.label" />
 									</strong>
-								}
-							>
+								}>
 								<option value="" />
 								{valgtKommune.bydeler.map(bydel => (
 									<option value={bydel.id} key={bydel.id}>
@@ -145,9 +146,9 @@ class Bosted extends React.Component<
 
 export default connect((state: State, props: any) => {
 	return {
-		fakta: state.faktum.data,
+		fakta: state.fakta.data,
 		soknadRestStatus: state.soknad.restStatus,
-		faktaRestStatus: state.faktum.restStatus,
+		faktaRestStatus: state.fakta.restStatus,
 		brukerBehandlingId: state.soknad.brukerBehandlingId
 	};
 })(withRouter(Bosted));

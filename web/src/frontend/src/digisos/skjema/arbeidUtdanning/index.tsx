@@ -20,6 +20,6 @@ class ArbeidOgUtdanning extends React.Component<FaktumComponentProps, any> {
 
 export default connect((state: State, props: any) => {
 	return {
-		fakta: state.faktum.data
+		fakta: state.fakta.data
 	};
 })(ArbeidOgUtdanning);

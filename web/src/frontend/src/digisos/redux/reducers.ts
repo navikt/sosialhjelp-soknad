@@ -14,7 +14,7 @@ export interface State extends SoknadAppState {
 
 const reducers = combineReducers({
 	soknad: SoknadReducer,
-	faktum: FaktumReducer,
+	fakta: FaktumReducer,
 	oppsummering: OppsummeringReducer,
 	validering: ValideringReducer,
 	ledetekster: LedeteksterReducer

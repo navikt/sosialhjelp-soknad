@@ -8,7 +8,7 @@ import {
 import { ValideringState } from "./valideringReducer";
 
 export interface SoknadAppState {
-	faktum: FaktumState;
+	fakta: FaktumState;
 	validering: ValideringState;
 }
 

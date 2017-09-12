@@ -45,7 +45,12 @@ class CheckboxFaktum extends React.Component<
 				disabled={disabled}
 				value={option}
 				onChange={(evt: any) =>
-					dispatch(setFaktumVerdi(finnFaktum(key, this.props.fakta ), boolToString(evt.target.checked)))}
+					dispatch(
+						setFaktumVerdi(
+							finnFaktum(key, this.props.fakta),
+							boolToString(evt.target.checked)
+						)
+					)}
 				label={
 					<LabelMedHjelpetekst
 						id={key}
@@ -61,6 +66,6 @@ class CheckboxFaktum extends React.Component<
 
 export default connect((state: SoknadAppState, props: OwnProps) => {
 	return {
-		fakta: state.faktum.data
+		fakta: state.fakta.data
 	};
 })(injectIntl(CheckboxFaktum));

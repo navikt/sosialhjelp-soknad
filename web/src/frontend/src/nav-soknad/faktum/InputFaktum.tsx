@@ -111,7 +111,7 @@ export default connect<
 >((state: SoknadAppState, props: OwnProps) => {
 	const feil = state.validering.feil.find(f => f.faktumKey === props.faktumKey);
 	return {
-		fakta: state.faktum.data,
+		fakta: state.fakta.data,
 		faktumKey: props.faktumKey,
 		feil: feil ? feil.feil : null
 	};
