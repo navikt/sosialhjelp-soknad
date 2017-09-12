@@ -51,7 +51,12 @@ class TextareaFaktum extends React.Component<Props, State> {
 	}
 
 	handleOnBlur() {
-		this.props.dispatch(setFaktumVerdi(finnFaktum(this.props.faktumKey, this.props.fakta), this.state.value));
+		this.props.dispatch(
+			setFaktumVerdi(
+				finnFaktum(this.props.faktumKey, this.props.fakta),
+				this.state.value
+			)
+		);
 	}
 
 	render() {
@@ -83,7 +88,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 
 export default connect((state: SoknadAppState, props: OwnProps) => {
 	return {
-		fakta: state.faktum.data,
+		fakta: state.fakta.data,
 		faktumKey: props.faktumKey
 	};
 })(injectIntl(TextareaFaktum));

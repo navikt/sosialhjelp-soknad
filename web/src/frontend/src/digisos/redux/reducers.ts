@@ -1,7 +1,9 @@
 import SoknadReducer, { SoknadState } from "./soknad/reducer";
 import OppsummeringReducer, { OppsummeringState } from "./oppsummering/reducer";
-import FaktumReducer, { SoknadAppState } from "../../nav-soknad/redux/faktaReducer";
-import ValideringReducer from "../../nav-soknad/redux/validering-reducer";
+import FaktumReducer, {
+	SoknadAppState
+} from "../../nav-soknad/redux/faktaReducer";
+import ValideringReducer from "../../nav-soknad/redux/valideringReducer";
 import LedeteksterReducer from "./informasjon/informasjonReducer";
 import { combineReducers } from "redux";
 
@@ -12,7 +14,7 @@ export interface State extends SoknadAppState {
 
 const reducers = combineReducers({
 	soknad: SoknadReducer,
-	faktum: FaktumReducer,
+	fakta: FaktumReducer,
 	oppsummering: OppsummeringReducer,
 	validering: ValideringReducer,
 	ledetekster: LedeteksterReducer

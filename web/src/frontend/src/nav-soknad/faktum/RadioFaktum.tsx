@@ -28,7 +28,10 @@ class RadioFaktum extends React.Component<
 				checked={getFaktumVerdi(fakta, faktumKey) === option}
 				disabled={disabled}
 				value={option}
-				onChange={(evt: any) => dispatch(setFaktumVerdi(finnFaktum(faktumKey, this.props.fakta ), option))}
+				onChange={(evt: any) =>
+					dispatch(
+						setFaktumVerdi(finnFaktum(faktumKey, this.props.fakta), option)
+					)}
 				label={
 					<LabelMedHjelpetekst
 						id={`${faktumKey}.${option}`}
@@ -43,7 +46,7 @@ class RadioFaktum extends React.Component<
 
 export default connect((state: SoknadAppState, props: OwnProps) => {
 	return {
-		fakta: state.faktum.data,
+		fakta: state.fakta.data,
 		faktumKey: props.faktumKey
 	};
 })(injectIntl(RadioFaktum));

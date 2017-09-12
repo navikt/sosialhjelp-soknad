@@ -1,4 +1,4 @@
-import { Feil } from "nav-frontend-skjema";
+import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 
 export type Dispatch = (action: any) => void;
 
@@ -18,6 +18,7 @@ export enum FaktumActionTypeKeys {
 	CLEAR_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_OK",
 	REGISTER_FAKTUM_VALIDERING = "REGISTER_FAKTUM_VALIDERING",
 	UNREGISTER_FAKTUM_VALIDERING = "UNREGISTER_FAKTUM_VALIDERING",
+	VALIDER_FAKTUM = "VALIDER_FAKTUM"
 }
 
 export enum FaktaActionTypeKeys {
@@ -29,14 +30,7 @@ export enum FaktaActionTypeKeys {
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
-export interface FaktumValideringRules {
-	rules: any;
-}
-
-export interface FaktumValidering {
-	faktumKey: string;
-	rules: FaktumValideringRules;
-}
+export type FaktumValueType = string | number | boolean;
 
 export interface Faktum {
 	faktumId: number;
@@ -61,12 +55,6 @@ export interface Fakta {
 	faktum: Faktum[];
 }
 
-export interface Valideringsfeil {
-	faktumKey: string;
-	element: HTMLElement;
-	feil: Feil;
-}
-
 export interface SetFaktumVerdiAction {
 	type: FaktumActionTypeKeys.SET_FAKTUM;
 	faktumKey: string;
@@ -87,7 +75,7 @@ export interface SetFaktumValideringFeilAction {
 	type: FaktumActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL;
 	faktumKey: string;
 	element: HTMLElement;
-	feil: Feil;
+	valideringsfeil: Valideringsfeil[];
 }
 
 export interface SetFaktumValideringOkAction {
@@ -97,7 +85,7 @@ export interface SetFaktumValideringOkAction {
 
 export interface RegisterFaktumValidering {
 	type: FaktumActionTypeKeys.REGISTER_FAKTUM_VALIDERING;
-	faktumValidering: FaktumValidering;
+	faktumValidering: FaktumValideringsregler;
 }
 
 export interface UnregisterFaktumValidering {
@@ -107,40 +95,4 @@ export interface UnregisterFaktumValidering {
 
 export interface OtherAction {
 	type: FaktaActionTypeKeys.OTHER_ACTION;
-}
-
-export type FaktumValueType = string | number | boolean;
-
-export interface Infotekst {
-	tittel?: string;
-	tekst?: string;
-}
-
-export interface SporsmalFaktumTekst {
-	sporsmal: string;
-	infotekst?: Infotekst;
-	hjelpetekst?: Infotekst;
-}
-
-export interface CheckboxFaktumTekst {
-	label: string;
-	infotekst?: Infotekst;
-	hjelpetekst?: Infotekst;
-}
-
-export interface InputFaktumTekst {
-	/** Label som knyttes sammen med inputfelt */
-	label: string;
-	/** Valgfritt spørsmål */
-	sporsmal?: string;
-	/** Utfyllende informasjon */
-	infotekst?: Infotekst;
-	/** Hjelpetekst som plasseres vedsiden av spørsmål */
-	hjelpetekst?: Infotekst;
-	/** Tekst som skal stå i bakgrunn for sjekkboksen */
-	pattern?: string;
-	/** Tekst til høyre for inputboks */
-	hoyretekst?: string;
-	/** Tekst til venstre for inputboks */
-	venstretekst?: string;
 }

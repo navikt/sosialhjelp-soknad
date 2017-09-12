@@ -1,5 +1,4 @@
 import * as React from "react";
-// import { findDOMNode } from "react-dom";
 import { Input, Feil, InputBredde } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
@@ -11,6 +10,7 @@ import {
 import { DispatchProps, Faktum } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
+import { pakrevd } from "../validering/valideringer";
 import { finnFaktum } from "../redux/faktaUtils";
 
 interface State {
@@ -42,6 +42,7 @@ const getStateFromProps = (props: Props): State => ({
 
 class InputFaktum extends React.Component<Props, State> {
 	input: any;
+
 	constructor(props: Props) {
 		super(props);
 		this.handleOnBlur = this.handleOnBlur.bind(this);
@@ -53,13 +54,15 @@ class InputFaktum extends React.Component<Props, State> {
 		this.setState(getStateFromProps(nextProps));
 	}
 
-	componentDidMount() {
-		this.props.dispatch(
-			registerFaktumValidering({
-				faktumKey: this.props.faktumKey,
-				rules: null
-			})
-		);
+	componentWillMount() {
+		if (this.props.required) {
+			this.props.dispatch(
+				registerFaktumValidering({
+					faktumKey: this.props.faktumKey,
+					valideringer: [...(this.props.required ? [pakrevd] : [])]
+				})
+			);
+		}
 	}
 
 	componentWillUnmount() {
@@ -71,7 +74,12 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 
 	handleOnBlur() {
-		this.props.dispatch(setFaktumVerdi(finnFaktum(this.props.faktumKey, this.props.fakta), this.state.value));
+		this.props.dispatch(
+			setFaktumVerdi(
+				finnFaktum(this.props.faktumKey, this.props.fakta),
+				this.state.value
+			)
+		);
 	}
 
 	render() {
@@ -103,7 +111,7 @@ export default connect<
 >((state: SoknadAppState, props: OwnProps) => {
 	const feil = state.validering.feil.find(f => f.faktumKey === props.faktumKey);
 	return {
-		fakta: state.faktum.data,
+		fakta: state.fakta.data,
 		faktumKey: props.faktumKey,
 		feil: feil ? feil.feil : null
 	};

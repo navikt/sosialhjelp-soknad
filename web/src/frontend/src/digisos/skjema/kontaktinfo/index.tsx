@@ -21,7 +21,10 @@ class Kontaktinfo extends React.Component<{}, {}> {
 					<InputFaktum faktumKey="kontakt.telefon" required={true} />
 				</SporsmalFaktum>
 
-				<SporsmalFaktum faktumKey={statsborger.faktum}>
+				<SporsmalFaktum
+					faktumKey={statsborger.faktum}
+					required={true}
+					renderValideringsfeil={true}>
 					<RadioFaktum faktumKey={statsborger.faktum} option="true" />
 					<RadioFaktum faktumKey={statsborger.faktum} option="false" />
 				</SporsmalFaktum>

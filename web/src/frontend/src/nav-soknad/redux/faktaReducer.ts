@@ -1,9 +1,14 @@
 export type FaktumMap = Map<string, any>;
-import { FaktumActionTypeKeys, Reducer, FaktaActionTypeKeys, Faktum } from "./faktaTypes";
-import { ValideringState } from "./validering-reducer";
+import {
+	FaktumActionTypeKeys,
+	Reducer,
+	FaktaActionTypeKeys,
+	Faktum
+} from "./faktaTypes";
+import { ValideringState } from "./valideringReducer";
 
 export interface SoknadAppState {
-	faktum: FaktumState;
+	fakta: FaktumState;
 	validering: ValideringState;
 }
 
@@ -29,16 +34,12 @@ function updateFaktumVerdi(fakta: Faktum[], faktum: Faktum) {
 		console.error("Manglende faktum " + JSON.stringify(faktum, null, 4));
 		return [...fakta];
 	} else {
-		return [
-			...fakta.slice(0, index),
-			faktum,
-			...fakta.slice(index + 1)
-		];
+		return [...fakta.slice(0, index), faktum, ...fakta.slice(index + 1)];
 	}
 }
 
 export type FaktumActionTypes =
-	SetFaktumVerdi
+	| SetFaktumVerdi
 	| SetFaktaAction
 	| SetFaktaPendingAction
 	| SetFaktaOkAction

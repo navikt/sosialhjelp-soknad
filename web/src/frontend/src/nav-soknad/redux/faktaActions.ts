@@ -7,11 +7,12 @@ import {
 	SetFaktumValideringOkAction,
 	RegisterFaktumValidering,
 	UnregisterFaktumValidering,
-	FaktumValidering,
-	FaktumValueType, FaktumActionTypeKeys, Faktum
+	FaktumValueType,
+	FaktumActionTypeKeys,
+	Faktum
 } from "./faktaTypes";
+import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 import { fetchPut } from "../../digisos/redux/rest-utils";
-import { Feil } from "nav-frontend-skjema";
 
 export type ActionTypes =
 	| SetFaktumVerdiAction
@@ -21,21 +22,18 @@ export type ActionTypes =
 	| RegisterFaktumValidering
 	| UnregisterFaktumValidering;
 
-export function setFaktumVerdi(
-	faktum: Faktum,
-	value: FaktumValueType
-) {
+export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType) {
 	return (dispatch: Dispatch<Action>) => {
 		const nyttFaktum = Object.assign(faktum);
 		nyttFaktum.value = value;
 		dispatch({ type: FaktumActionTypeKeys.PENDING });
 		fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
 			.then(response => {
-				dispatch( {
+				dispatch({
 					type: FaktumActionTypeKeys.SET_FAKTUM,
 					faktum: nyttFaktum
 				});
-				dispatch({type: FaktumActionTypeKeys.OK});
+				dispatch({ type: FaktumActionTypeKeys.OK });
 			})
 			.catch(reason => {
 				dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
@@ -50,26 +48,22 @@ export function setFakta(fakta: any) {
 	};
 }
 
-export function setFaktumValideringsFeil(
-	faktumKey: string,
-	element: HTMLElement,
-	feil: Feil
-) {
+export function setFaktumValideringsfeil(valideringsfeil: Valideringsfeil[]) {
 	return {
 		type: FaktumActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL,
-		faktumKey,
-		element,
-		feil
-	};
-}
-export function setFaktumValideringOk(faktumKey: string) {
-	return {
-		type: FaktumActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL,
-		faktumKey
+		valideringsfeil
 	};
 }
 
-export function registerFaktumValidering(faktumValidering: FaktumValidering) {
+export function clearFaktumValideringsfeil() {
+	return {
+		type: FaktumActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL
+	};
+}
+
+export function registerFaktumValidering(
+	faktumValidering: FaktumValideringsregler
+) {
 	return {
 		type: FaktumActionTypeKeys.REGISTER_FAKTUM_VALIDERING,
 		faktumValidering
