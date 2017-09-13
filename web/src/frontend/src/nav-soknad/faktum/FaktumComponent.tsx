@@ -12,7 +12,7 @@ import {
 	unregisterFaktumValidering
 } from "../redux/valideringActions";
 
-interface FaktumComponentProps {
+interface Props {
 	faktumKey: string;
 	valideringer?: FaktumValidering[];
 }
@@ -24,17 +24,14 @@ interface InjectedProps {
 	getFaktumVerdi: () => string;
 }
 
-export type InjectedFaktumComponentProps = InjectedProps & FaktumComponentProps;
+export type InjectedFaktumComponentProps = InjectedProps & Props;
 
 export const faktumComponent = () => <TOriginalProps extends {}>(
 	Component:
 		| React.ComponentClass<TOriginalProps & InjectedProps>
 		| React.StatelessComponent<TOriginalProps & InjectedProps>
 ) => {
-	type ResultProps = TOriginalProps &
-		InjectedProps &
-		DispatchProps &
-		FaktumComponentProps;
+	type ResultProps = TOriginalProps & InjectedProps & DispatchProps & Props;
 
 	const result = class FaktumComponent extends React.Component<
 		ResultProps,
@@ -91,10 +88,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		feil?: Feil;
 	}
 
-	const mapStateToProps = (
-		state: SoknadAppState,
-		props: FaktumComponentProps
-	) => {
+	const mapStateToProps = (state: SoknadAppState, props: Props) => {
 		const feil = state.validering.feil.find(
 			f => f.faktumKey === props.faktumKey
 		);
@@ -104,7 +98,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		};
 	};
 
-	return connect<StateFromProps, {}, TOriginalProps & FaktumComponentProps>(
-		mapStateToProps
-	)(result);
+	return connect<StateFromProps, {}, TOriginalProps & Props>(mapStateToProps)(
+		result
+	);
 };
