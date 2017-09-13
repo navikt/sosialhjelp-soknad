@@ -3,9 +3,8 @@ import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getIntlTextOrKey } from "../utils";
 import Steg from "../components/steg";
-
 import { SoknadAppState } from "../redux/faktaReducer";
-import { Valideringsfeil } from "../redux/faktaTypes";
+import { Valideringsfeil } from "../validering/types";
 
 interface OwnProps extends React.Props<any> {
 	tittelId: string;
@@ -32,8 +31,7 @@ class StegFaktum extends React.Component<
 			<Steg
 				tittel={getIntlTextOrKey(intl, tittelId)}
 				feilmeldinger={feilmeldinger}
-				visFeilmeldinger={visFeilmeldinger}
-			>
+				visFeilmeldinger={visFeilmeldinger}>
 				{children}
 			</Steg>
 		);

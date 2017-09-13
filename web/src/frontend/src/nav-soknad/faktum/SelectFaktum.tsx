@@ -41,15 +41,19 @@ class FaktumSelect extends React.Component<
 				value={getFaktumVerdi(fakta, faktumKey)}
 				bredde={bredde}
 				onChange={(evt: any) =>
-					dispatch(setFaktumVerdi(finnFaktum(faktumKey, this.props.fakta ), evt.target.value))}
+					dispatch(
+						setFaktumVerdi(
+							finnFaktum(faktumKey, this.props.fakta),
+							evt.target.value
+						)
+					)}
 				label={
 					<LabelMedHjelpetekst
 						id={faktumKey}
 						label={labelFunc ? labelFunc(tekster.label) : tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>
-				}
-			>
+				}>
 				{children}
 			</Select>
 		);
@@ -58,7 +62,7 @@ class FaktumSelect extends React.Component<
 
 export default connect((state: SoknadAppState, props: OwnProps) => {
 	return {
-		fakta: state.faktum.data,
+		fakta: state.fakta.data,
 		faktumKey: props.faktumKey
 	};
 })(injectIntl(FaktumSelect));

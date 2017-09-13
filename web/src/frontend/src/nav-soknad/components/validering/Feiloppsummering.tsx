@@ -1,22 +1,35 @@
 import * as React from "react";
 import { Undertittel } from "nav-frontend-typografi";
 import "./feiloppsummering.css";
-import { Valideringsfeil } from "../../redux/faktaTypes";
+import { Valideringsfeil } from "../../validering/types";
 
-const scrollToElement = (element: HTMLElement) => {
-	if (element && element.scrollIntoView) {
+const getElementFromFaktumKey = (faktumKey: string): HTMLElement => {
+	if (document.getElementById(faktumKey)) {
+		return document.getElementById(faktumKey);
+	}
+	const namedElements = document.getElementsByName(faktumKey);
+	if (namedElements && namedElements.length > 0) {
+		return namedElements[0];
+	}
+	return null;
+};
+
+const scrollToElement = (evt: React.MouseEvent<any>, faktumKey: string) => {
+	evt.stopPropagation();
+	evt.preventDefault();
+	const element = getElementFromFaktumKey(faktumKey);
+	if (element) {
 		element.focus();
 	}
 };
 
 const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
-	element,
 	faktumKey,
 	feil
 }) => {
 	return (
 		<li className="feiloppsummering__feil">
-			<a href={`#${element}`} onClick={() => scrollToElement(element)}>
+			<a href={`#`} onClick={evt => scrollToElement(evt, faktumKey)}>
 				{feil.feilmelding}
 			</a>
 		</li>

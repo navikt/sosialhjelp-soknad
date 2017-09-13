@@ -38,6 +38,6 @@ class Begrunnelse extends React.Component<
 
 export default connect((state: State, props: any) => {
 	return {
-		fakta: state.faktum.data
+		fakta: state.fakta.data
 	};
 })(Begrunnelse);
