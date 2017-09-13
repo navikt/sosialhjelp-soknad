@@ -20,39 +20,20 @@ class Kontaktinfo extends React.Component<{}, {}> {
 					<InputFaktum
 						faktumKey="kontakt.kontonummer"
 						maxLength={11}
-						valideringer={[
-							{
-								feilmelding: "Kontonummer må fylles ut",
-								validerFunc: pakrevd
-							},
-							{
-								feilmelding: "Kontonummer er ugyldig",
-								validerFunc: erKontonummer
-							}
-						]}
+						valideringer={[pakrevd, erKontonummer]}
 					/>
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="kontakt.telefon">
 					<InputFaktum
 						faktumKey="kontakt.telefon"
-						valideringer={[
-							{
-								feilmelding: "Telefonnummeret er ugyldig",
-								validerFunc: erTelefonnummer
-							}
-						]}
+						valideringer={[erTelefonnummer]}
 					/>
 				</SporsmalFaktum>
 
 				<SporsmalFaktum
 					faktumKey={statsborger.faktum}
 					renderValideringsfeil={true}
-					valideringer={[
-						{
-							validerFunc: pakrevd,
-							feilmelding: "Må fylles ut"
-						}
-					]}>
+					valideringer={[pakrevd]}>
 					<RadioFaktum faktumKey={statsborger.faktum} option="true" />
 					<RadioFaktum faktumKey={statsborger.faktum} option="false" />
 				</SporsmalFaktum>

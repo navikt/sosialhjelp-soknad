@@ -6,7 +6,7 @@ import { SoknadAppState } from "../redux/faktaReducer";
 import { setFaktumVerdi as setFaktumVerdiOnState } from "../redux/faktaActions";
 import { finnFaktum } from "../redux/faktaUtils";
 import { getFaktumVerdi } from "../utils";
-import { FaktumValidering } from "../validering/types";
+import { FaktumValideringFunc } from "../validering/types";
 import {
 	registerFaktumValidering,
 	unregisterFaktumValidering
@@ -14,7 +14,7 @@ import {
 
 interface Props {
 	faktumKey: string;
-	valideringer?: FaktumValidering[];
+	valideringer?: FaktumValideringFunc[];
 }
 
 interface InjectedProps {
