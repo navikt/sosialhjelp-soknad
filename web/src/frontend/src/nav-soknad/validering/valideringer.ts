@@ -7,7 +7,7 @@ export function pakrevd(value: string): ValideringKey {
 }
 
 export function minLengde(value: string, min: number): ValideringKey {
-	return typeof (value === "string" && value.length >= min)
+	return typeof value === "string" && value.length >= min
 		? undefined
 		: ValideringKey.MIN_LENGDE;
 }
