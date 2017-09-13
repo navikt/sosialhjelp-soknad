@@ -1,4 +1,4 @@
-import { ActionTypeKeys, ActionTypes, LedetekstApiType } from "./informasjonTypes";
+import { ActionTypeKeys, InformasjonActionTypes, LedetekstApiType } from "./informasjonTypes";
 
 const {OK, PENDING, FEILET, INIT} = ActionTypeKeys;
 
@@ -7,7 +7,7 @@ const initialState = {
 	status: INIT
 };
 
-export default (state: LedetekstApiType = initialState, action: ActionTypes) => {
+export default (state: LedetekstApiType = initialState, action: InformasjonActionTypes) => {
 	switch (action.type) {
 		case OK: {
 			return {...state, status: OK, data: action.data};
