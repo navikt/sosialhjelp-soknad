@@ -33,7 +33,8 @@ export type FaktumActionTypes =
 	| SetFaktaAction
 	| SetFaktaPendingAction
 	| SetFaktaOkAction
-	| SetFaktaFailedAction;
+	| SetFaktaFailedAction
+	| SetFaktumFailedAction;
 
 interface OppdaterFaktumVerdi {
 	type: FaktumActionTypeKeys.OPPDATER_FAKTUM;
@@ -59,6 +60,11 @@ interface SetFaktaOkAction {
 
 interface SetFaktaFailedAction {
 	type: FaktaActionTypeKeys.SET_SERVER_FEIL;
+}
+
+interface SetFaktumFailedAction {
+	type: FaktumActionTypeKeys.FEILET;
+	feilmelding: string;
 }
 
 const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
