@@ -27,13 +27,15 @@ enum RequestMethod {
 const serverRequest = (method: string, urlPath: string, body: string ) => {
 	const OPTIONS: RequestInit = {
 		headers: {
-			"Content-Type": "application/json",
-			"XSRF-TOKEN-SOKNAD-API": getCookie("XSRF-TOKEN-SOKNAD-API")
+			"Content-Type": "application/json"
 		},
 		method,
 		credentials: "same-origin",
 		body
 	};
+	if (method === RequestMethod.PUT) {
+		OPTIONS.headers["XSRF-TOKEN-SOKNAD-API"] = getCookie("XSRF-TOKEN-SOKNAD-API");
+	}
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
 		.then(toJson);
