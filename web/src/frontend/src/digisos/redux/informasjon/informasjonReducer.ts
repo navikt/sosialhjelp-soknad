@@ -15,7 +15,7 @@ export default (state: LedetekstApiType = initialState, action: InformasjonActio
 		case PENDING:
 			return {...state, status: PENDING};
 		case FEILET:
-			return {...state, status: FEILET, data: action.data};
+			return {...state, status: FEILET, felmelding: action.feilmelding};
 		default:
 			return state;
 	}

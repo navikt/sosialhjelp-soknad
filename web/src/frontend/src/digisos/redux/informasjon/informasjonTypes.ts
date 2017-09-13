@@ -15,12 +15,11 @@ interface HentetTeksterAction {
 
 interface HentTeksterAction {
 	type: ActionTypeKeys.PENDING;
-	data: object;
 }
 
 interface TeksterFeiletAction {
 	type: ActionTypeKeys.FEILET;
-	data: object;
+	feilmelding: string;
 }
 
 export interface OtherAction {
