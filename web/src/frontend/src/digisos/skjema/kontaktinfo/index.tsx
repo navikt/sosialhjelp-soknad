@@ -26,7 +26,7 @@ class Kontaktinfo extends React.Component<{}, {}> {
 				<SporsmalFaktum faktumKey="kontakt.telefon">
 					<InputFaktum
 						faktumKey="kontakt.telefon"
-						valideringer={[erTelefonnummer]}
+						valideringer={[pakrevd, erTelefonnummer]}
 					/>
 				</SporsmalFaktum>
 

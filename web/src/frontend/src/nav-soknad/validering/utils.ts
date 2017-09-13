@@ -13,7 +13,7 @@ const getFeilmelding = (
 	faktumKey: string
 ): string => {
 	const intlFeilKey =
-		feilKey === ValideringKey.PAKREVD ? `${faktumKey}.FEIL` : feilKey;
+		feilKey === ValideringKey.PAKREVD ? `${faktumKey}.feilmelding` : feilKey;
 
 	return getIntlTextOrKey(intl, intlFeilKey);
 };
