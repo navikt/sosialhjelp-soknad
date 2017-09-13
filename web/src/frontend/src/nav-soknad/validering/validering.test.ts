@@ -11,10 +11,10 @@ describe("test av valideringsfunksjoner", () => {
 		expect(validate.pakrevd("123")).toBeUndefined();
 	});
 	it("skal validere minimumslengde", () => {
-		// expect(validate.minLengde(null, 2)).toBe(ValideringKey.MIN_LENGDE);
+		expect(validate.minLengde(null, 2)).toBe(ValideringKey.MIN_LENGDE);
 		expect(validate.minLengde("2", 2)).toBe(ValideringKey.MIN_LENGDE);
-		// expect(validate.minLengde("22", 2)).toBeUndefined();
-		// expect(validate.minLengde("223", 2)).toBeUndefined();
+		expect(validate.minLengde("22", 2)).toBeUndefined();
+		expect(validate.minLengde("223", 2)).toBeUndefined();
 	});
 	it("skal validere maksLengde", () => {
 		expect(validate.maksLengde(null, 2)).toBe(ValideringKey.MAX_LENGDE);
