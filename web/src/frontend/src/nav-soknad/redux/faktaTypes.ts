@@ -1,6 +1,7 @@
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 
 export type Dispatch = (action: any) => void;
+export type SoknadDispatch<AT> = (action: AT) => void;
 
 export type Reducer<S, AT> = (state: S, action: AT) => S;
 
