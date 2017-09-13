@@ -5,13 +5,10 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
 import { getFaktumSporsmalTekst } from "../utils";
-import {
-	registerFaktumValidering,
-	unregisterFaktumValidering
-} from "../redux/valideringActions";
 import { DispatchProps } from "../redux/faktaTypes";
 import { FaktumValidering } from "../validering/types";
 import { SoknadAppState } from "../redux/faktaReducer";
+import { withFaktumValidering } from "./FaktumValideringComponent";
 
 export interface OwnProps {
 	faktumKey: string;
@@ -31,21 +28,6 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	static defaultProps: any = {
 		renderValideringsfeil: true
 	};
-
-	componentWillMount() {
-		if (this.props.valideringer) {
-			this.props.dispatch(
-				registerFaktumValidering({
-					faktumKey: this.props.faktumKey,
-					valideringer: this.props.valideringer
-				})
-			);
-		}
-	}
-
-	componentWillUnmount() {
-		this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
-	}
 
 	render() {
 		const { visible, faktumKey, feil, intl, children } = this.props;
@@ -85,4 +67,4 @@ export default connect<
 	return {
 		feil: props.renderValideringsfeil && feil ? feil.feil : null
 	};
-})(injectIntl(SporsmalFaktum));
+})(injectIntl(withFaktumValidering()(SporsmalFaktum)));

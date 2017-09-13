@@ -3,28 +3,26 @@ import { Input, Feil, InputBredde } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
 import { setFaktumVerdi } from "../redux/faktaActions";
-import {
-	setFaktumValideringsfeil,
-	registerFaktumValidering,
-	unregisterFaktumValidering
-} from "../redux/valideringActions";
+import { setFaktumValideringsfeil } from "../redux/valideringActions";
 import { DispatchProps, Faktum } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
-import { FaktumValidering, FaktumValideringsregler } from "../validering/types";
+import { FaktumValideringsregler } from "../validering/types";
 import { validerFaktum } from "../validering/utils";
 import { finnFaktum } from "../redux/faktaUtils";
+import {
+	withFaktumValidering,
+	FaktumValideringProps
+} from "./FaktumValideringComponent";
 
 interface State {
 	value: string;
 }
 
 interface OwnProps {
-	faktumKey: string;
 	disabled?: boolean;
 	maxLength?: number;
 	bredde?: InputBredde;
-	valideringer?: FaktumValidering[];
 }
 
 interface StateProps {
@@ -34,6 +32,7 @@ interface StateProps {
 
 type Props = OwnProps &
 	FaktumComponentProps &
+	FaktumValideringProps &
 	Faktum &
 	DispatchProps &
 	InjectedIntlProps &
@@ -55,21 +54,6 @@ class InputFaktum extends React.Component<Props, State> {
 
 	componentWillReceiveProps(nextProps: Props) {
 		this.setState(getStateFromProps(nextProps));
-	}
-
-	componentWillMount() {
-		if (this.props.valideringer) {
-			this.props.dispatch(
-				registerFaktumValidering({
-					faktumKey: this.props.faktumKey,
-					valideringer: this.props.valideringer
-				})
-			);
-		}
-	}
-
-	componentWillUnmount() {
-		this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
 	}
 
 	handleOnChange(evt: any) {
@@ -120,8 +104,8 @@ class InputFaktum extends React.Component<Props, State> {
 export default connect<
 	StateProps,
 	{},
-	OwnProps
->((state: SoknadAppState, props: OwnProps) => {
+	OwnProps & FaktumValideringProps
+>((state: SoknadAppState, props: OwnProps & FaktumValideringProps) => {
 	const feil = state.validering.feil.find(f => f.faktumKey === props.faktumKey);
 	return {
 		fakta: state.fakta.data,
@@ -129,4 +113,4 @@ export default connect<
 		feil: feil ? feil.feil : null,
 		valideringsregler: state.validering.valideringsregler
 	};
-})(injectIntl(InputFaktum));
+})(injectIntl(withFaktumValidering()(InputFaktum)));
