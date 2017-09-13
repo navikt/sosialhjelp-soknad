@@ -1,16 +1,15 @@
 import * as React from "react";
 import { Textarea, Feil } from "nav-frontend-skjema";
-import { connect } from "react-redux";
-import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
-import { setFaktumVerdi } from "../redux/faktaActions";
-import { DispatchProps } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import {
 	getInputFaktumTekst,
 	getIntlTextOrKey,
 	getFaktumVerdi
 } from "../utils";
-import { finnFaktum } from "../redux/faktaUtils";
+import {
+	InjectedFaktumComponentProps,
+	faktumComponent
+} from "./FaktumComponent";
 
 interface OwnProps {
 	faktumKey: string;
@@ -25,10 +24,7 @@ interface State {
 	value: string;
 }
 
-type Props = OwnProps &
-	FaktumComponentProps &
-	DispatchProps &
-	InjectedIntlProps;
+type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 const getStateFromProps = (props: Props): State => ({
 	value: getFaktumVerdi(props.fakta, props.faktumKey) || ""
@@ -51,12 +47,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 	}
 
 	handleOnBlur() {
-		this.props.dispatch(
-			setFaktumVerdi(
-				finnFaktum(this.props.faktumKey, this.props.fakta),
-				this.state.value
-			)
-		);
+		this.props.setFaktumVerdi(this.state.value);
 	}
 
 	render() {
@@ -86,9 +77,4 @@ class TextareaFaktum extends React.Component<Props, State> {
 	}
 }
 
-export default connect((state: SoknadAppState, props: OwnProps) => {
-	return {
-		fakta: state.fakta.data,
-		faktumKey: props.faktumKey
-	};
-})(injectIntl(TextareaFaktum));
+export default injectIntl(faktumComponent()(TextareaFaktum));
