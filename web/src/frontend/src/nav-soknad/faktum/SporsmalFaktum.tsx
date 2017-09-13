@@ -18,12 +18,15 @@ export interface OwnProps {
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 class SporsmalFaktum extends React.Component<Props, {}> {
-	static defaultProps: any = {
-		renderValideringsfeil: true
-	};
-
 	render() {
-		const { visible, faktumKey, feil, intl, children } = this.props;
+		const {
+			visible,
+			faktumKey,
+			renderValideringsfeil = false,
+			feil,
+			intl,
+			children
+		} = this.props;
 		if (visible === false) {
 			return null;
 		}
@@ -33,7 +36,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 		});
 		return (
 			<div className="skjema-sporsmal">
-				<SkjemaGruppe feil={feil}>
+				<SkjemaGruppe feil={renderValideringsfeil ? feil : null}>
 					<fieldset className={cls}>
 						<legend>{tekster.sporsmal}</legend>
 						{tekster.hjelpetekst ? (
