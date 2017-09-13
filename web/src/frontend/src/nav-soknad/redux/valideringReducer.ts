@@ -1,6 +1,6 @@
 export type FaktumMap = Map<string, any>;
 import { FaktumActionTypeKeys, Reducer } from "./faktaTypes";
-import { ActionTypes } from "./faktaActions";
+import { FaktaActionTypes } from "./faktaActions";
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 
 export interface ValideringState {
@@ -46,7 +46,7 @@ const unregisterFaktumValidering = (
 	];
 };
 
-const valideringReducer: Reducer<ValideringState, ActionTypes> = (
+const valideringReducer: Reducer<ValideringState, FaktaActionTypes> = (
 	state = defaultState,
 	action
 ): ValideringState => {

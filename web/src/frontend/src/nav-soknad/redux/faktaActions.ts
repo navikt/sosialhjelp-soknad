@@ -14,7 +14,7 @@ import {
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 import { fetchPut, fetchToJson } from "../../digisos/redux/rest-utils";
 
-export type ActionTypes =
+export type FaktaActionTypes =
 	| SetFaktumVerdiAction
 	| SetFaktaAction
 	| SetFaktumValideringFeilAction
@@ -50,7 +50,7 @@ export function hentFakta(brukerBehandlingId: string, dispatch: Dispatch<Action>
 	});
 }
 
-export function setFakta(fakta: any): ActionTypes {
+export function setFakta(fakta: any): FaktaActionTypes {
 	return {
 		type: FaktaActionTypeKeys.SET_FAKTA,
 		fakta
