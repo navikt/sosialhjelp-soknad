@@ -149,6 +149,6 @@ export default connect((state: State, props: any) => {
 		fakta: state.fakta.data,
 		soknadRestStatus: state.soknad.restStatus,
 		faktaRestStatus: state.fakta.restStatus,
-		brukerBehandlingId: state.soknad.brukerBehandlingId
+		brukerBehandlingId: state.soknad.data.brukerBehandlingId
 	};
 })(withRouter(Bosted));

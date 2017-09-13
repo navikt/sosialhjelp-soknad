@@ -80,7 +80,8 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 		case FaktaActionTypeKeys.SET_FAKTA:
 			return {
 				...state,
-				data: action.fakta
+				data: action.fakta,
+				restStatus: FaktaActionTypeKeys.OK
 			};
 		case FaktaActionTypeKeys.PENDING:
 			return {

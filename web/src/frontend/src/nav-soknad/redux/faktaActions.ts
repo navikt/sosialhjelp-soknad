@@ -12,7 +12,7 @@ import {
 	Faktum
 } from "./faktaTypes";
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
-import { fetchPut } from "../../digisos/redux/rest-utils";
+import { fetchPut, fetchToJson } from "../../digisos/redux/rest-utils";
 
 export type ActionTypes =
 	| SetFaktumVerdiAction
@@ -41,7 +41,16 @@ export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType) {
 	};
 }
 
-export function setFakta(fakta: any) {
+export function hentFakta(brukerBehandlingId: string, dispatch: Dispatch<Action>) {
+	dispatch({ type: FaktaActionTypeKeys.PENDING });
+	return fetchToJson("soknader/" + brukerBehandlingId + "/fakta")
+		.then((faktaResponse => dispatch({type: FaktaActionTypeKeys.SET_FAKTA, fakta: faktaResponse})))
+		.catch(reason => {
+			dispatch({ type: FaktaActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
+	});
+}
+
+export function setFakta(fakta: any): ActionTypes {
 	return {
 		type: FaktaActionTypeKeys.SET_FAKTA,
 		fakta
