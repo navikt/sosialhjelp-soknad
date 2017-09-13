@@ -1,21 +1,21 @@
 import { Action, Dispatch } from "redux";
-import { ActionTypeKeys, SetOppsummering } from "./types";
+import { OppsummeringActionTypeKeys, SetOppsummering } from "./oppsummeringTypes";
 import { fetchHtml } from "../rest-utils";
 
-export type ActionTypes = SetOppsummering;
+export type OppsummeringActionTypes = SetOppsummering;
 
 export function hentOppsummering(id: string) {
 	return (dispatch: Dispatch<Action>) => {
-		dispatch({ type: ActionTypeKeys.PENDING });
+		dispatch({ type: OppsummeringActionTypeKeys.PENDING });
 		fetchHtml("soknader/" + id + "/oppsummering")
 			.then(response => {
 				dispatch({
-					type: ActionTypeKeys.SET_OPPSUMMERING,
+					type: OppsummeringActionTypeKeys.SET_OPPSUMMERING,
 					oppsummering: response
 				});
 			})
 			.catch(reason => {
-				dispatch({ type: ActionTypeKeys.FEILET, feilmelding: reason });
+				dispatch({ type: OppsummeringActionTypeKeys.FEILET, feilmelding: reason });
 			});
 	};
 }

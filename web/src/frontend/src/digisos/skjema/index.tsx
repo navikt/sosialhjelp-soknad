@@ -22,8 +22,8 @@ import { gaTilbake, gaVidere, avbryt } from "./utils";
 import { Location } from "history";
 import { connect } from "react-redux";
 import { DispatchProps } from "../redux/types";
-import { lesSoknad } from "../redux/soknad/actions";
-import { REST_STATUS } from "../redux/soknad/types";
+import { lesSoknad } from "../redux/soknad/soknadActions";
+import { REST_STATUS } from "../redux/soknad/soknadTypes";
 import { State } from "../redux/reducers";
 import {
 	setFaktumValideringsfeil,

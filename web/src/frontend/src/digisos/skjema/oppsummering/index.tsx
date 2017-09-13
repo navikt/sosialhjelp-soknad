@@ -4,7 +4,7 @@ import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { DispatchProps } from "../../../nav-soknad/redux/faktaTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
-import { hentOppsummering } from "../../redux/oppsummering/actions";
+import { hentOppsummering } from "../../redux/oppsummering/oppsummeringActions";
 import { State } from "../../redux/reducers";
 import "./oppsummering.css";
 
