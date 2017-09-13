@@ -27,7 +27,7 @@ class RadioFaktum extends React.Component<
 				checked={getFaktumVerdi(fakta, faktumKey) === option}
 				disabled={disabled}
 				value={option}
-				onChange={(evt: any) => this.props.setFaktumVerdi(option)}
+				onChange={(evt: any) => this.props.setFaktumVerdi(faktumKey, option)}
 				label={
 					<LabelMedHjelpetekst
 						id={`${faktumKey}.${option}`}

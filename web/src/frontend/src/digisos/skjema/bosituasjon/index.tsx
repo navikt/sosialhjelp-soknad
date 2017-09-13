@@ -19,11 +19,11 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	render() {
 		const { fakta } = this.props;
 		const bosituasjon = radioCheckKeys("bosituasjon");
-		const annen = radioCheckKeys("bosituasjon.annet.true.botype");
+		const annen = radioCheckKeys("bosituasjon.annet.botype");
 		const barnUnder18 = radioCheckKeys("bosituasjon.barnunder18");
 		const barnUnder18True = inputKeys("bosituasjon.barnunder18.true.antall");
-		const over18 = radioCheckKeys("bosituasjon.personerover18");
-		const over18True = inputKeys("bosituasjon.personerover18.true.antall");
+		const over18 = radioCheckKeys("bosituasjon.personover18");
+		const over18True = inputKeys("bosituasjon.personover18.true.antall");
 		return (
 			<StegFaktum tittelId="bosituasjonbolk.tittel">
 				<SporsmalFaktum faktumKey={bosituasjon.faktum}>

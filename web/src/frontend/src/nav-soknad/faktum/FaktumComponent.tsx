@@ -20,7 +20,7 @@ interface Props {
 interface InjectedProps {
 	fakta: Faktum[];
 	feil?: Feil;
-	setFaktumVerdi: (verdi: string) => void;
+	setFaktumVerdi: (faktumKey: string, verdi: string) => void;
 	getFaktumVerdi: () => string;
 }
 
@@ -60,12 +60,10 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
 		}
 
-		setFaktumVerdi(verdi: string) {
+		/** Kan ikke bruke faktumKey fra props, i og med checkbox modifiserer denne med option value */
+		setFaktumVerdi(faktumKey: string, verdi: string) {
 			this.props.dispatch(
-				setFaktumVerdiOnState(
-					finnFaktum(this.props.faktumKey, this.props.fakta),
-					verdi
-				)
+				setFaktumVerdiOnState(finnFaktum(faktumKey, this.props.fakta), verdi)
 			);
 		}
 

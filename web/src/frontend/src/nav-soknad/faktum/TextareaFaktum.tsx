@@ -47,7 +47,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 	}
 
 	handleOnBlur() {
-		this.props.setFaktumVerdi(this.state.value);
+		this.props.setFaktumVerdi(this.props.faktumKey, this.state.value);
 	}
 
 	render() {
