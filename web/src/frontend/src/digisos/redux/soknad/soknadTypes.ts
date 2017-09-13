@@ -1,6 +1,6 @@
 export * from "../types";
 
-export enum ActionTypeKeys {
+export enum SoknadActionTypeKeys {
 	FAKTA_PENDING = "fakta/PENDING", // TODO: Flytt
 	OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
 	SET_BRUKERBEHANDLING_ID = "soknad/SET_BRUKERBEHANDLING_ID",
@@ -21,32 +21,32 @@ export enum REST_STATUS {
 }
 
 export interface OpprettSoknadAction {
-	type: ActionTypeKeys.OPPRETT_SOKNAD;
+	type: SoknadActionTypeKeys.OPPRETT_SOKNAD;
 }
 
 export interface SettRestStatusPending {
-	type: ActionTypeKeys.PENDING;
+	type: SoknadActionTypeKeys.PENDING;
 }
 
 export interface SettRestStatusOk {
-	type: ActionTypeKeys.OK;
+	type: SoknadActionTypeKeys.OK;
 }
 
 export interface SetBrukerBehandlingIdAction {
-	type: ActionTypeKeys.SET_BRUKERBEHANDLING_ID;
+	type: SoknadActionTypeKeys.SET_BRUKERBEHANDLING_ID;
 	brukerBehandlingId: string;
 }
 
 export interface SetServerFeilAction {
-	type: ActionTypeKeys.SET_SERVER_FEIL;
+	type: SoknadActionTypeKeys.SET_SERVER_FEIL;
 	feilmelding: string;
 }
 export interface ResetSoknadAction {
-	type: ActionTypeKeys.RESET_SOKNAD;
+	type: SoknadActionTypeKeys.RESET_SOKNAD;
 }
 
 export interface OtherAction {
-	type: ActionTypeKeys.OTHER_ACTION;
+	type: SoknadActionTypeKeys.OTHER_ACTION;
 }
 
 export interface SoknadState {

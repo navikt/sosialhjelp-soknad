@@ -1,20 +1,20 @@
 import { Action, Dispatch } from "redux";
 import {
-	ActionTypeKeys,
+	SoknadActionTypeKeys,
 	OpprettSoknadAction,
 	ResetSoknadAction,
 	SetBrukerBehandlingIdAction,
 	SetServerFeilAction,
 	SettRestStatusOk,
 	SettRestStatusPending
-} from "./types";
+} from "./soknadTypes";
 
 import { fetchPost, fetchToJson } from "../rest-utils";
 import { setFakta, setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";
 import { finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
 import { Faktum, FaktaActionTypeKeys } from "../../../nav-soknad/redux/faktaTypes";
 
-export type ActionTypes =
+export type SoknadActionTypes =
 	| OpprettSoknadAction
 	| SetBrukerBehandlingIdAction
 	| SetServerFeilAction
@@ -24,14 +24,14 @@ export type ActionTypes =
 
 export function opprettSoknad(kommuneId: string, bydelId: string) {
 	return (dispatch: Dispatch<Action>) => {
-		dispatch({ type: ActionTypeKeys.PENDING });
+		dispatch({ type: SoknadActionTypeKeys.PENDING });
 		const payload = JSON.stringify({ soknadType: "NAV DIGISOS" });
 		fetchPost("soknader", payload)
 			.then(response => {
 				const key = "brukerBehandlingId";
 				const brukerBehandlingId = response[key];
 				dispatch({
-					type: ActionTypeKeys.SET_BRUKERBEHANDLING_ID,
+					type: SoknadActionTypeKeys.SET_BRUKERBEHANDLING_ID,
 					brukerBehandlingId
 				});
 				dispatch({ type: FaktaActionTypeKeys.PENDING});
@@ -45,7 +45,7 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 				});
 			})
 			.catch(reason => {
-				dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
+				dispatch({ type: SoknadActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
 			});
 	};
 }
@@ -54,23 +54,23 @@ export function lesSoknad(brukerBehandlingId: string) {
 	return (dispatch: Dispatch<Action>) => {
 		hentFakta(brukerBehandlingId, dispatch).then(fakta => {
 			dispatch(setFakta(fakta));
-			dispatch({ type: ActionTypeKeys.OK });
+			dispatch({ type: SoknadActionTypeKeys.OK });
 		});
 	};
 }
 
 function hentFakta(brukerBehandlingId: string, dispatch: Dispatch<Action>) {
-	dispatch({ type: ActionTypeKeys.FAKTA_PENDING });
+	dispatch({ type: SoknadActionTypeKeys.FAKTA_PENDING });
 	return fetchToJson(
 		"soknader/" + brukerBehandlingId + "/fakta"
 	).catch(reason => {
-		dispatch({ type: ActionTypeKeys.FEILET });
-		dispatch({ type: ActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
+		dispatch({ type: SoknadActionTypeKeys.FEILET });
+		dispatch({ type: SoknadActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason });
 	});
 }
 
 export function resetSoknad() {
 	return (dispatch: Dispatch<Action>) => {
-		dispatch({ type: ActionTypeKeys.RESET_SOKNAD });
+		dispatch({ type: SoknadActionTypeKeys.RESET_SOKNAD });
 	};
 }
