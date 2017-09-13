@@ -1,6 +1,6 @@
 export * from "../types";
 
-export enum ActionTypeKeys {
+export enum OppsummeringActionTypeKeys {
 	OK = "oppsummering/OK",
 	FEILET = "oppsummering/FEILET",
 	PENDING = "oppsummering/PENDING",
@@ -8,7 +8,7 @@ export enum ActionTypeKeys {
 }
 
 export interface SetOppsummering {
-	type: ActionTypeKeys.SET_OPPSUMMERING;
+	type: OppsummeringActionTypeKeys.SET_OPPSUMMERING;
 	oppsummering: string;
 }
 

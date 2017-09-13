@@ -12,7 +12,7 @@ import {
 	FaktaActionTypeKeys,
 	DispatchProps
 } from "../../nav-soknad/redux/faktaTypes";
-import { opprettSoknad, resetSoknad } from "../redux/soknad/actions";
+import { opprettSoknad, resetSoknad } from "../redux/soknad/soknadActions";
 
 interface StateProps {
 	soknadRestStatus?: string;

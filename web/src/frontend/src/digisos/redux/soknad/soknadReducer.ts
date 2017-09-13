@@ -1,6 +1,6 @@
-import { Reducer } from "./types";
-import { ActionTypeKeys, REST_STATUS } from "./types";
-import { ActionTypes } from "./actions";
+import { Reducer } from "./soknadTypes";
+import { SoknadActionTypeKeys, REST_STATUS } from "./soknadTypes";
+import { SoknadActionTypes } from "./soknadActions";
 
 export interface SoknadState {
 	restStatus: string;
@@ -16,46 +16,46 @@ const defaultState: SoknadState = {
 	feilmelding: ""
 };
 
-const soknadReducer: Reducer<SoknadState, ActionTypes> = (
+const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 	state = defaultState,
 	action
 ): SoknadState => {
 	switch (action.type) {
-		case ActionTypeKeys.RESET_SOKNAD:
+		case SoknadActionTypeKeys.RESET_SOKNAD:
 			return {
 				...state,
 				...defaultState
 			};
-		case ActionTypeKeys.OPPRETT_SOKNAD:
+		case SoknadActionTypeKeys.OPPRETT_SOKNAD:
 			return {
 				...state,
 				brukerBehandlingId: "",
-				restStatus: ActionTypeKeys.PENDING
+				restStatus: SoknadActionTypeKeys.PENDING
 			};
-		case ActionTypeKeys.SET_SERVER_FEIL:
+		case SoknadActionTypeKeys.SET_SERVER_FEIL:
 			return {
 				...state,
 				brukerBehandlingId: "",
 				feilmelding: action.feilmelding,
-				restStatus: ActionTypeKeys.FEILET
+				restStatus: SoknadActionTypeKeys.FEILET
 			};
-		case ActionTypeKeys.SET_BRUKERBEHANDLING_ID:
+		case SoknadActionTypeKeys.SET_BRUKERBEHANDLING_ID:
 			return {
 				...state,
 				brukerBehandlingId: action.brukerBehandlingId,
-				restStatus: ActionTypeKeys.OK
+				restStatus: SoknadActionTypeKeys.OK
 			};
-		case ActionTypeKeys.OK:
+		case SoknadActionTypeKeys.OK:
 			return {
 				...state,
 				restStatus: REST_STATUS.OK
 			};
-		case ActionTypeKeys.PENDING:
+		case SoknadActionTypeKeys.PENDING:
 			return {
 				...state,
 				restStatus: REST_STATUS.PENDING
 			};
-		case ActionTypeKeys.OK:
+		case SoknadActionTypeKeys.OK:
 			return {
 				...state,
 				restStatus: REST_STATUS.OK
