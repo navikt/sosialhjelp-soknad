@@ -6,7 +6,7 @@ var exports = (module.exports = {});
 exports.allowCrossDomain = function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-	res.header("Access-Control-Allow-Headers", "Content-Type,XSRF-TOKEN-SOKNAD-API");
+	res.header("Access-Control-Allow-Headers", "Content-Type,X-XSRF-TOKEN");
 	next();
 };
 

@@ -34,7 +34,7 @@ const serverRequest = (method: string, urlPath: string, body: string ) => {
 		body
 	};
 	if (method === RequestMethod.PUT) {
-		OPTIONS.headers["XSRF-TOKEN-SOKNAD-API"] = getCookie("XSRF-TOKEN-SOKNAD-API");
+		OPTIONS.headers["X-XSRF-TOKEN"] = getCookie("XSRF-TOKEN-SOKNAD-API");
 	}
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
