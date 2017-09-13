@@ -71,6 +71,7 @@ class Bosted extends React.Component<
 					<div className="blokk-l">
 						<Select
 							bredde="m"
+							defaultValue=""
 							onChange={(evt: any) =>
 								this.setState({ kommuneId: evt.target.value })}
 							label={
@@ -79,7 +80,7 @@ class Bosted extends React.Component<
 								</strong>
 							}>
 							{!this.state.kommuneId && (
-								<option selected={true} disabled={true}>
+								<option value="" disabled={true}>
 									Velg by
 								</option>
 							)}
@@ -96,6 +97,7 @@ class Bosted extends React.Component<
 							<Arrow />
 							<Select
 								bredde="m"
+								defaultValue=""
 								onChange={(evt: any) =>
 									this.setState({ bydelId: evt.target.value })}
 								label={
@@ -104,7 +106,7 @@ class Bosted extends React.Component<
 									</strong>
 								}>
 								{!this.state.bydelId && (
-									<option selected={true} disabled={true}>
+									<option value="" disabled={true}>
 										Velg bydel
 									</option>
 								)}
