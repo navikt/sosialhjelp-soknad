@@ -4,6 +4,7 @@ import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import { radioCheckKeys } from "../../../nav-soknad/utils";
+
 import {
 	pakrevd,
 	erKontonummer,

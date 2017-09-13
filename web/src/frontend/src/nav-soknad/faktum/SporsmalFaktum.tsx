@@ -1,28 +1,21 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import * as classNames from "classnames";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
+import { SkjemaGruppe } from "nav-frontend-skjema";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
 import { getFaktumSporsmalTekst } from "../utils";
-import { DispatchProps } from "../redux/faktaTypes";
-import { SoknadAppState } from "../redux/faktaReducer";
 import {
-	withFaktumValidering,
-	FaktumValideringProps
-} from "./FaktumValideringComponent";
+	faktumComponent,
+	InjectedFaktumComponentProps
+} from "./FaktumComponent";
 
-export interface OwnProps extends FaktumValideringProps {
+export interface OwnProps {
 	children: React.ReactNode;
 	visible?: boolean;
 	renderValideringsfeil?: boolean;
 }
 
-interface StateProps {
-	feil?: Feil;
-}
-
-type Props = OwnProps & StateProps & InjectedIntlProps & DispatchProps;
+type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 class SporsmalFaktum extends React.Component<Props, {}> {
 	static defaultProps: any = {
@@ -58,13 +51,4 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	}
 }
 
-export default connect<
-	StateProps,
-	{},
-	OwnProps
->((state: SoknadAppState, props: OwnProps): StateProps => {
-	const feil = state.validering.feil.find(f => f.faktumKey === props.faktumKey);
-	return {
-		feil: props.renderValideringsfeil && feil ? feil.feil : null
-	};
-})(injectIntl(withFaktumValidering()(SporsmalFaktum)));
+export default injectIntl(faktumComponent()(SporsmalFaktum));
