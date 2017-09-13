@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Input, InputBredde } from "nav-frontend-skjema";
-import { getFaktumVerdi, getInputFaktumTekst } from "../utils";
+import { getInputFaktumTekst } from "../utils";
 import {
 	faktumComponent,
 	InjectedFaktumComponentProps
@@ -20,7 +20,7 @@ interface OwnProps {
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 const getStateFromProps = (props: Props): State => ({
-	value: getFaktumVerdi(props.fakta, props.faktumKey) || ""
+	value: props.getFaktumVerdi()
 });
 
 class InputFaktum extends React.Component<Props, State> {
