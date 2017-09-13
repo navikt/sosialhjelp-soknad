@@ -9,7 +9,7 @@ import Steg5 from "./bosituasjon";
 import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
 import Steg8 from "./ekstrainformasjon";
-import Steg9 from "./oppsummering";
+import Oppsummering from "./oppsummering";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import StegIndikator from "../../nav-soknad/components/stegIndikator";
@@ -123,8 +123,7 @@ class Skjema extends React.Component<
 									{ tittel: intl.formatMessage({ id: "utgifterbolk.tittel" }) },
 									{
 										tittel: intl.formatMessage({ id: "ekstrainfo.tittel" })
-									},
-									{ tittel: intl.formatMessage({ id: "oppsummering.tittel" }) }
+									}
 								]}
 							/>
 						</div>
@@ -138,7 +137,7 @@ class Skjema extends React.Component<
 						<Route path={`${match.url}/6`} component={Steg6} />
 						<Route path={`${match.url}/7`} component={Steg7} />
 						<Route path={`${match.url}/8`} component={Steg8} />
-						<Route path={`${match.url}/9`} component={Steg9} />
+						<Route path={`${match.url}/9`} component={Oppsummering} />
 					</Switch>
 					<Knapperad
 						gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
