@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Input, Feil, InputBredde } from "nav-frontend-skjema";
+import { Input, InputBredde } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
 import { setFaktumVerdi } from "../redux/faktaActions";
@@ -7,7 +7,6 @@ import { setFaktumValideringsfeil } from "../redux/valideringActions";
 import { DispatchProps, Faktum } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
-import { FaktumValideringsregler } from "../validering/types";
 import { validerFaktum } from "../validering/utils";
 import { finnFaktum } from "../redux/faktaUtils";
 import {
@@ -19,24 +18,17 @@ interface State {
 	value: string;
 }
 
-interface OwnProps {
+interface OwnProps extends FaktumValideringProps {
 	disabled?: boolean;
 	maxLength?: number;
 	bredde?: InputBredde;
 }
 
-interface StateProps {
-	feil?: Feil;
-	valideringsregler?: FaktumValideringsregler[];
-}
-
 type Props = OwnProps &
 	FaktumComponentProps &
-	FaktumValideringProps &
 	Faktum &
 	DispatchProps &
-	InjectedIntlProps &
-	StateProps;
+	InjectedIntlProps;
 
 const getStateFromProps = (props: Props): State => ({
 	value: getFaktumVerdi(props.fakta, props.faktumKey) || ""
@@ -102,7 +94,7 @@ class InputFaktum extends React.Component<Props, State> {
 }
 
 export default connect<
-	StateProps,
+	{},
 	{},
 	OwnProps & FaktumValideringProps
 >((state: SoknadAppState, props: OwnProps & FaktumValideringProps) => {

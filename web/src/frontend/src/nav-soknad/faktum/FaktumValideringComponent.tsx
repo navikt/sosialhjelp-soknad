@@ -1,14 +1,17 @@
 import * as React from "react";
-import { FaktumValidering } from "../validering/types";
+import { FaktumValidering, FaktumValideringsregler } from "../validering/types";
 import {
 	registerFaktumValidering,
 	unregisterFaktumValidering
 } from "../redux/valideringActions";
 import { DispatchProps } from "../redux/faktaTypes";
+import { Feil } from "nav-frontend-skjema";
 
 export interface FaktumValideringProps {
 	faktumKey: string;
 	valideringer?: FaktumValidering[];
+	valideringsregler?: FaktumValideringsregler[];
+	feil?: Feil;
 }
 
 export const withFaktumValidering = () => <TOriginalProps extends {}>(

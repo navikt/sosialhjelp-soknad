@@ -6,15 +6,15 @@ import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
 import { getFaktumSporsmalTekst } from "../utils";
 import { DispatchProps } from "../redux/faktaTypes";
-import { FaktumValidering } from "../validering/types";
 import { SoknadAppState } from "../redux/faktaReducer";
-import { withFaktumValidering } from "./FaktumValideringComponent";
+import {
+	withFaktumValidering,
+	FaktumValideringProps
+} from "./FaktumValideringComponent";
 
-export interface OwnProps {
-	faktumKey: string;
+export interface OwnProps extends FaktumValideringProps {
 	children: React.ReactNode;
 	visible?: boolean;
-	valideringer?: FaktumValidering[];
 	renderValideringsfeil?: boolean;
 }
 
