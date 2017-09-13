@@ -3,6 +3,20 @@
 	button,
 	a {
 		display: inline-block;
-		margin: 0 10px;
+		margin: 0 6px;
+		&:first-child {
+			margin-left: 0;
+		}
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+}
+@media screen and (max-width: 768px) {
+	.skjema-knapperad {
+		a {
+			display: inline-block;
+			margin-top: 1rem;
+		}
 	}
 }
