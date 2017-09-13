@@ -43,6 +43,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		constructor(props: ResultProps) {
 			super(props);
 			this.setFaktumVerdi = this.setFaktumVerdi.bind(this);
+			this.getFaktumVerdi = this.getFaktumVerdi.bind(this);
 		}
 		componentWillMount() {
 			if (this.props.valideringer) {
