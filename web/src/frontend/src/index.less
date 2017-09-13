@@ -15,6 +15,7 @@
 @import "./node_modules/nav-frontend-typografi-style/src/index.less";
 
 @import "./nav-soknad/styles/skjema.less";
+@import "./nav-soknad/styles/variables.less";
 
 body {
 	overflow-y: scroll;
@@ -44,4 +45,23 @@ body {
 	width: 100%;
 	text-align: center;
 	padding-top: 100px;
+}
+
+@media screen and (max-width: @screen-sm) {
+	.stegindikator {
+		&__steg {
+			&:not(&--aktiv) {
+				zoom: 0.5;
+				vertical-align: middle;
+				transform: translateY(1em);
+			}
+			&--aktiv {
+				line-height: 2em;
+				margin-right: 0.6em;
+				&:after {
+					zoom: 0.5;
+				}
+			}
+		}
+	}
 }
