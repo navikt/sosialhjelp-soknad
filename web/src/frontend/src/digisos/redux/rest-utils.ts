@@ -27,7 +27,8 @@ enum RequestMethod {
 const serverRequest = (method: string, urlPath: string, body: string ) => {
 	const OPTIONS: RequestInit = {
 		headers: {
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
+			"XSRF-TOKEN-SOKNAD-API": getCookie("XSRF-TOKEN-SOKNAD-API")
 		},
 		method,
 		credentials: "same-origin",
@@ -74,4 +75,14 @@ function sjekkStatuskode(response: Response) {
 		return response;
 	}
 	throw new Error(response.statusText);
+}
+
+function getCookie(name: string) {
+	const value = "; " + document.cookie;
+	const parts = value.split("; " + name + "=");
+	if (parts.length === 2) {
+		return parts.pop().split(";").shift();
+	} else {
+		return "null";
+	}
 }
