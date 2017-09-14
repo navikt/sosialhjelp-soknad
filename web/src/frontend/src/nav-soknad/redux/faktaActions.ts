@@ -1,28 +1,24 @@
-import { Action, Dispatch } from "redux";
 import {
 	FaktaActionTypeKeys,
-	SetFaktumVerdiAction,
-	SetFaktaAction,
-	FaktumValueType,
+	FaktaActionTypes,
+	Faktum,
 	FaktumActionTypeKeys,
-	Faktum
+	FaktumValueType,
+	SoknadDispatch
 } from "./faktaTypes";
-import { fetchPut } from "../../digisos/redux/rest-utils";
-
-export type ActionTypes = SetFaktumVerdiAction | SetFaktaAction;
+import { fetchPut, fetchToJson } from "../../digisos/redux/rest-utils";
 
 export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType) {
-	return (dispatch: Dispatch<Action>) => {
+	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
 		const nyttFaktum = Object.assign(faktum);
 		nyttFaktum.value = value;
-		dispatch({ type: FaktumActionTypeKeys.PENDING });
+		dispatch({ type: FaktumActionTypeKeys.OPPDATER_FAKTUM });
 		fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
 			.then(response => {
 				dispatch({
-					type: FaktumActionTypeKeys.SET_FAKTUM,
+					type: FaktumActionTypeKeys.OPPDATERT_FAKTUM,
 					faktum: nyttFaktum
 				});
-				dispatch({ type: FaktumActionTypeKeys.OK });
 			})
 			.catch(reason => {
 				dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
@@ -30,9 +26,19 @@ export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType) {
 	};
 }
 
-export function setFakta(fakta: any) {
-	return {
-		type: FaktaActionTypeKeys.SET_FAKTA,
-		fakta
-	};
+export function hentFakta(
+	brukerBehandlingId: string,
+	dispatch: SoknadDispatch<FaktaActionTypes>
+) {
+	dispatch({ type: FaktaActionTypeKeys.PENDING });
+	return fetchToJson("soknader/" + brukerBehandlingId + "/fakta")
+		.then((faktaResponse: Faktum[]) => {
+			dispatch({ type: FaktaActionTypeKeys.SET_FAKTA, fakta: faktaResponse });
+		})
+		.catch(reason => {
+			dispatch({
+				type: FaktaActionTypeKeys.SET_SERVER_FEIL,
+				feilmelding: reason
+			});
+		});
 }

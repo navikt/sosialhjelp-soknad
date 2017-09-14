@@ -6,7 +6,7 @@ export enum ActionTypeKeys {
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
-export type ActionTypes = HentetTeksterAction | HentTeksterAction | TeksterFeiletAction | OtherAction;
+export type InformasjonActionTypes = HentetTeksterAction | HentTeksterAction | TeksterFeiletAction | OtherAction;
 
 interface HentetTeksterAction {
 	type: ActionTypeKeys.OK;
@@ -15,12 +15,11 @@ interface HentetTeksterAction {
 
 interface HentTeksterAction {
 	type: ActionTypeKeys.PENDING;
-	data: object;
 }
 
 interface TeksterFeiletAction {
 	type: ActionTypeKeys.FEILET;
-	data: object;
+	feilmelding: string;
 }
 
 export interface OtherAction {

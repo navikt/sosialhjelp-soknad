@@ -1,6 +1,7 @@
 export type FaktumMap = Map<string, any>;
-import { ValideringActionTypeKeys, Reducer } from "./faktaTypes";
+import { Reducer } from "./faktaTypes";
 import { ValideringActionTypes } from "./valideringActions";
+import { ValideringActionTypeKeys } from "./valideringTypes";
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 
 export interface ValideringState {

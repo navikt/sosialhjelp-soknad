@@ -22,7 +22,7 @@ import { gaTilbake, gaVidere, avbryt } from "./utils";
 import { Location } from "history";
 import { connect } from "react-redux";
 import { DispatchProps } from "../redux/types";
-import { lesSoknad } from "../redux/soknad/soknadActions";
+import { hentSoknad } from "../redux/soknad/soknadActions";
 import { REST_STATUS } from "../redux/soknad/soknadTypes";
 import { State } from "../redux/reducers";
 import {
@@ -60,7 +60,7 @@ class Skjema extends React.Component<
 			this.props.location
 		);
 		if (brukerBehandlingId && this.props.fakta.length <= 1) {
-			this.props.dispatch(lesSoknad(brukerBehandlingId));
+			this.props.dispatch(hentSoknad(brukerBehandlingId));
 		}
 	}
 
@@ -157,6 +157,6 @@ export default connect((state: State, props: any) => {
 		fakta: state.fakta.data,
 		valideringer: state.validering.valideringsregler,
 		restStatus: state.soknad.restStatus,
-		brukerBehandlingId: state.soknad.brukerBehandlingId
+		brukerBehandlingId: state.soknad.data.brukerBehandlingId
 	};
 })(injectIntl(withRouter(Skjema)));

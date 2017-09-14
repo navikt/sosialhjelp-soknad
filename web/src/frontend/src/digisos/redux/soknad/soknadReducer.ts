@@ -1,25 +1,41 @@
-import { Reducer } from "./soknadTypes";
-import { SoknadActionTypeKeys, REST_STATUS } from "./soknadTypes";
+import { REST_STATUS, SoknadActionTypeKeys } from "./soknadTypes";
 import { SoknadActionTypes } from "./soknadActions";
+import { Soknad } from "../../../nav-soknad/soknadTypes";
+import { Reducer } from "../../../nav-soknad/redux/faktaTypes";
 
 export interface SoknadState {
-	restStatus: string;
-	soknadType?: string;
-	brukerBehandlingId?: string;
-	feilmelding?: string;
+	restStatus: REST_STATUS;
+	data: Soknad;
 }
 
 const defaultState: SoknadState = {
-	restStatus: "",
-	soknadType: "NAV DIGISOS",
-	brukerBehandlingId: "",
-	feilmelding: ""
+	restStatus: REST_STATUS.INITIALISERT,
+	data: {
+		soknadId: null,
+		skjemaNummer: "",
+		uuid: "",
+		brukerBehandlingId: "",
+		behandlingskjedeId: "",
+		fakta: [],
+		status: "",
+		aktoerId: "",
+		opprettetDato: "",
+		sistLagret: "",
+		delstegStatus: "",
+		vedlegg: [],
+		journalforendeEnhet: "",
+		soknadPrefix: "",
+		soknadUrl: "",
+		fortsettSoknadUrl: "",
+		stegliste: [],
+		sprak: "",
+		ikkeInnsendteVedlegg: [],
+		opplastedeVedlegg: [],
+		innsendteVedlegg: []
+	}
 };
 
-const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
-	state = defaultState,
-	action
-): SoknadState => {
+const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultState, action) => {
 	switch (action.type) {
 		case SoknadActionTypeKeys.RESET_SOKNAD:
 			return {
@@ -29,36 +45,32 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 		case SoknadActionTypeKeys.OPPRETT_SOKNAD:
 			return {
 				...state,
-				brukerBehandlingId: "",
-				restStatus: SoknadActionTypeKeys.PENDING
+				restStatus: REST_STATUS.PENDING
 			};
-		case SoknadActionTypeKeys.SET_SERVER_FEIL:
+		case SoknadActionTypeKeys.OPPRETTET_SOKNAD:
 			return {
 				...state,
-				brukerBehandlingId: "",
-				feilmelding: action.feilmelding,
-				restStatus: SoknadActionTypeKeys.FEILET
-			};
-		case SoknadActionTypeKeys.SET_BRUKERBEHANDLING_ID:
-			return {
-				...state,
-				brukerBehandlingId: action.brukerBehandlingId,
-				restStatus: SoknadActionTypeKeys.OK
-			};
-		case SoknadActionTypeKeys.OK:
-			return {
-				...state,
+				data: {
+					...state.data,
+					brukerBehandlingId: action.brukerBehandlingId
+				},
 				restStatus: REST_STATUS.OK
 			};
-		case SoknadActionTypeKeys.PENDING:
+		case SoknadActionTypeKeys.HENT_SOKNAD:
 			return {
 				...state,
 				restStatus: REST_STATUS.PENDING
 			};
-		case SoknadActionTypeKeys.OK:
+		case SoknadActionTypeKeys.HENTET_SOKNAD:
 			return {
 				...state,
+				data: action.data,
 				restStatus: REST_STATUS.OK
+			};
+		case SoknadActionTypeKeys.SET_SERVER_FEIL:
+			return {
+				...state,
+				restStatus: REST_STATUS.FEILET
 			};
 		default:
 			return state;

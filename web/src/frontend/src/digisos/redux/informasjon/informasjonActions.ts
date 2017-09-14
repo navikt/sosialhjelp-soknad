@@ -1,11 +1,10 @@
-import { Dispatch } from "react-redux";
-import { Action } from "redux";
-import { ActionTypeKeys } from "./informasjonTypes";
+import { ActionTypeKeys, InformasjonActionTypes } from "./informasjonTypes";
 import { fetchToJson } from "../rest-utils";
+import { SoknadDispatch } from "../../../nav-soknad/redux/faktaTypes";
 
 const { OK, PENDING, FEILET } = ActionTypeKeys;
 
-function leggNoklerPaaLedetekster(dispatch: Dispatch<Action>, data: object) {
+function leggNoklerPaaLedetekster(dispatch: SoknadDispatch<InformasjonActionTypes>, data: object) {
 	const meldinger = {};
 	Object.keys(data).forEach(key => {
 		meldinger[key] = `${data[key]} [${key}]`;
@@ -14,7 +13,7 @@ function leggNoklerPaaLedetekster(dispatch: Dispatch<Action>, data: object) {
 }
 
 export function hentLedetekster(visNokler: boolean) {
-	return (dispatch: Dispatch<Action>) => {
+	return (dispatch: SoknadDispatch<InformasjonActionTypes>) => {
 		if (PENDING) {
 			dispatch({ type: PENDING });
 		}

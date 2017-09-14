@@ -5,7 +5,7 @@ import {
 	RegisterFaktumValideringAction,
 	UnregisterFaktumValideringAction,
 	SetFaktumValideringsfeilAction
-} from "./faktaTypes";
+} from "./valideringTypes";
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 
 export type ValideringActionTypes =
