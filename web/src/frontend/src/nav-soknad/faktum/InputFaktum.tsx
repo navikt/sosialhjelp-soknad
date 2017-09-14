@@ -20,7 +20,7 @@ interface OwnProps {
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 const getStateFromProps = (props: Props): State => ({
-	value: props.getFaktumVerdi()
+	value: props.getFaktumVerdi(props.faktumKey)
 });
 
 class InputFaktum extends React.Component<Props, State> {

@@ -21,7 +21,7 @@ interface InjectedProps {
 	fakta: Faktum[];
 	feil?: Feil;
 	setFaktumVerdi: (faktumKey: string, verdi: string) => void;
-	getFaktumVerdi: () => string;
+	getFaktumVerdi: (faktumKey: string) => string;
 }
 
 export type InjectedFaktumComponentProps = InjectedProps & Props;
@@ -67,8 +67,9 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			);
 		}
 
-		getFaktumVerdi(): string {
-			return getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
+		/** Kan ikke bruke faktumKey fra props, i og med checkbox modifiserer denne med option value */
+		getFaktumVerdi(faktumKey: string): string {
+			return getFaktumVerdi(this.props.fakta, faktumKey) || "";
 		}
 
 		render(): JSX.Element {
