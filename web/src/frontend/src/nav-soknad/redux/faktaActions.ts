@@ -10,7 +10,7 @@ import { fetchPut, fetchToJson } from "../../digisos/redux/rest-utils";
 
 export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType) {
 	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
-		const nyttFaktum = Object.assign(faktum);
+		const nyttFaktum = { ...faktum };
 		nyttFaktum.value = value;
 		dispatch({ type: FaktumActionTypeKeys.OPPDATER_FAKTUM });
 		fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
