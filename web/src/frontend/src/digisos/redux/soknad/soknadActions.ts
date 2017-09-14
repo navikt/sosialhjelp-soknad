@@ -22,10 +22,12 @@ export type SoknadActionTypes =
 	| SettRestStatusPending
 	| SettRestStatusOk;
 
+const DIGISOS_SOKNADS_TYPE = "NAV 11-13.06";
+
 export function opprettSoknad(kommuneId: string, bydelId: string) {
 	return (dispatch: Dispatch<Action>) => {
 		dispatch({ type: SoknadActionTypeKeys.PENDING });
-		const payload = JSON.stringify({ soknadType: "NAV DIGISOS" });
+		const payload = JSON.stringify({ soknadType: DIGISOS_SOKNADS_TYPE });
 		fetchPost("soknader", payload)
 			.then(response => {
 				const key = "brukerBehandlingId";
