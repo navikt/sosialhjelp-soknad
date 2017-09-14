@@ -1,7 +1,11 @@
 import { Faktum } from "./faktaTypes";
 
 export function finnFaktum(faktumKey: string, fakta: Faktum[]): Faktum {
-	return fakta.filter((faktum: Faktum) => {
-		return faktum.key === faktumKey;
-	})[0];
+	const faktum = fakta.filter((f: Faktum) => {
+		return f.key === faktumKey;
+	});
+	if (faktum.length === 0) {
+		throw new Error("Faktum ikke funnet: " + faktumKey);
+	}
+	return faktum[0];
 }

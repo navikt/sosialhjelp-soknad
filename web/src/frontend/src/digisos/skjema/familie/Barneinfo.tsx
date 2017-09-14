@@ -25,15 +25,15 @@ class Barn extends React.Component<OwnProps & FaktumComponentProps, {}> {
 			<FaktumSkjemagruppe faktumKey="familie.barn.true">
 				<FaktumPersonskjema faktumKey={faktumKey} />
 				<FaktumSkjemagruppe faktumKey={borInfo.faktum}>
-					<FaktumRadio faktumKey={borInfo.faktum} option="true" />
+					<FaktumRadio faktumKey={borInfo.faktum} value="true" />
 					<NivaTreSkjema
 						visible={faktumIsSelected(getFaktumVerdi(fakta, borInfo.faktum))}>
 						<FaktumSkjemagruppe faktumKey={hvormye.faktum}>
-							<FaktumRadio faktumKey={hvormye.faktum} option="heltid" />
-							<FaktumRadio faktumKey={hvormye.faktum} option="deltid" />
+							<FaktumRadio faktumKey={hvormye.faktum} value="heltid" />
+							<FaktumRadio faktumKey={hvormye.faktum} value="deltid" />
 						</FaktumSkjemagruppe>
 					</NivaTreSkjema>
-					<FaktumRadio faktumKey={borInfo.faktum} option="false" />
+					<FaktumRadio faktumKey={borInfo.faktum} value="false" />
 				</FaktumSkjemagruppe>
 			</FaktumSkjemagruppe>
 		);

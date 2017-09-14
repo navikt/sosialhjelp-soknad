@@ -1,4 +1,4 @@
-import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
+import { ValideringActionTypes } from "./valideringActions";
 import { FaktumActionTypes } from "./faktaReducer";
 
 export type Dispatch = (action: any) => void;
@@ -10,22 +10,13 @@ export interface DispatchProps {
 	dispatch: Dispatch;
 }
 
-export type FaktaActionTypes =
-	FaktumActionTypes
-	| SetFaktumValideringFeilAction
-	| SetFaktumValideringOkAction
-	| RegisterFaktumValidering
-	| UnregisterFaktumValidering;
+export type FaktaActionTypes = FaktumActionTypes | ValideringActionTypes;
 
 export enum FaktumActionTypeKeys {
 	OPPDATER_FAKTUM = "faktum/OPPDATER_FAKTUM",
 	OPPDATERT_FAKTUM = "faktum/OPPDATERT_FAKTUM",
 	FEILET = "faktum/FEILET",
 	OTHER_ACTION = "__any_other_action_type__",
-	SET_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_FEIL",
-	CLEAR_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_OK",
-	REGISTER_FAKTUM_VALIDERING = "REGISTER_FAKTUM_VALIDERING",
-	UNREGISTER_FAKTUM_VALIDERING = "UNREGISTER_FAKTUM_VALIDERING",
 	VALIDER_FAKTUM = "VALIDER_FAKTUM"
 }
 
@@ -56,30 +47,4 @@ export interface FaktumEgenskap {
 	key: string;
 	value: string;
 	systemEgenskap: number;
-}
-
-export interface SetFaktumValideringFeilAction {
-	type: FaktumActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL;
-	faktumKey: string;
-	element: HTMLElement;
-	valideringsfeil: Valideringsfeil[];
-}
-
-export interface SetFaktumValideringOkAction {
-	type: FaktumActionTypeKeys.CLEAR_FAKTUM_VALIDERINGSFEIL;
-	faktumKey: string;
-}
-
-export interface RegisterFaktumValidering {
-	type: FaktumActionTypeKeys.REGISTER_FAKTUM_VALIDERING;
-	faktumValidering: FaktumValideringsregler;
-}
-
-export interface UnregisterFaktumValidering {
-	type: FaktumActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING;
-	faktumKey: string;
-}
-
-export interface OtherAction {
-	type: FaktaActionTypeKeys.OTHER_ACTION;
 }

@@ -8,7 +8,9 @@ import {
 } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
+import CheckboxFaktum, {
+	createCheckboxFaktumKey
+} from "../../../nav-soknad/faktum/CheckboxFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 
@@ -20,25 +22,41 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeInnskuddAnnet = "inntekt.bankinnskudd.true.type.annet";
 		return (
 			<SporsmalFaktum faktumKey={innskudd.faktum}>
-				<RadioFaktum faktumKey={innskudd.faktum} option="true" />
+				<RadioFaktum faktumKey={innskudd.faktum} value="true" />
 				<Underskjema
 					visible={faktumIsSelected(getFaktumVerdi(fakta, innskudd.faktum))}>
 					<SporsmalFaktum faktumKey={hvilkeInnskudd.faktum}>
 						{/*TODO checkboxbgroup-faktum*/}
 						<CheckboxFaktum
-							faktumKey={hvilkeInnskudd.faktum}
-							option="brukskonto"
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeInnskudd.faktum,
+								"brukskonto"
+							)}
 						/>
 						<CheckboxFaktum
-							faktumKey={hvilkeInnskudd.faktum}
-							option="sparekonto"
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeInnskudd.faktum,
+								"sparekonto"
+							)}
 						/>
 						<CheckboxFaktum
-							faktumKey={hvilkeInnskudd.faktum}
-							option="livsforsikring"
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeInnskudd.faktum,
+								"livsforsikring"
+							)}
 						/>
-						<CheckboxFaktum faktumKey={hvilkeInnskudd.faktum} option="aksjer" />
-						<CheckboxFaktum faktumKey={hvilkeInnskudd.faktum} option="annet" />
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeInnskudd.faktum,
+								"aksjer"
+							)}
+						/>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeInnskudd.faktum,
+								"annet"
+							)}
+						/>
 						{faktumIsSelected(getFaktumVerdi(fakta, hvilkeInnskuddAnnet)) ? (
 							<TextareaFaktum
 								faktumKey={`${hvilkeInnskuddAnnet}.true.beskrivelse`}
@@ -46,7 +64,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 						) : null}
 					</SporsmalFaktum>
 				</Underskjema>
-				<RadioFaktum faktumKey={innskudd.faktum} option="false" />
+				<RadioFaktum faktumKey={innskudd.faktum} value="false" />
 			</SporsmalFaktum>
 		);
 	}

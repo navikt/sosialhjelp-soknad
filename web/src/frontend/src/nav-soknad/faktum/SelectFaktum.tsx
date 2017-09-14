@@ -1,25 +1,21 @@
 import * as React from "react";
-import { Feil } from "nav-frontend-skjema";
-import { connect } from "react-redux";
-import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
-import { setFaktumVerdi } from "../redux/faktaActions";
-import { DispatchProps } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
-import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
+import { getInputFaktumTekst } from "../utils";
 import { Select, SelectBredde } from "nav-frontend-skjema";
-import { finnFaktum } from "../redux/faktaUtils";
+import {
+	InjectedFaktumComponentProps,
+	faktumComponent
+} from "./FaktumComponent";
 
 interface OwnProps {
-	faktumKey: string;
 	disabled?: boolean;
-	feil?: Feil;
 	bredde?: SelectBredde;
 	labelFunc?: (label: string) => React.ReactNode;
 }
 
 class FaktumSelect extends React.Component<
-	OwnProps & FaktumComponentProps & DispatchProps & InjectedIntlProps,
+	OwnProps & InjectedFaktumComponentProps & InjectedIntlProps,
 	{}
 > {
 	render() {
@@ -28,9 +24,7 @@ class FaktumSelect extends React.Component<
 			disabled,
 			bredde,
 			labelFunc,
-			fakta,
 			children,
-			dispatch,
 			intl
 		} = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey);
@@ -38,15 +32,9 @@ class FaktumSelect extends React.Component<
 			<Select
 				name={faktumKey}
 				disabled={disabled}
-				value={getFaktumVerdi(fakta, faktumKey)}
+				value={this.props.getFaktumVerdi()}
 				bredde={bredde}
-				onChange={(evt: any) =>
-					dispatch(
-						setFaktumVerdi(
-							finnFaktum(faktumKey, this.props.fakta),
-							evt.target.value
-						)
-					)}
+				onChange={(evt: any) => this.props.setFaktumVerdi(evt.target.value)}
 				label={
 					<LabelMedHjelpetekst
 						id={faktumKey}
@@ -60,9 +48,4 @@ class FaktumSelect extends React.Component<
 	}
 }
 
-export default connect((state: SoknadAppState, props: OwnProps) => {
-	return {
-		fakta: state.fakta.data,
-		faktumKey: props.faktumKey
-	};
-})(injectIntl(FaktumSelect));
+export default injectIntl(faktumComponent()(FaktumSelect));

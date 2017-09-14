@@ -34,10 +34,10 @@ const BarneSkjema: React.StatelessComponent<{}> = () => (
 	<SporsmalFaktum faktumKey="ekstrainfo.utgifter.barn" key="barn">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
-				<Column sm="6" xs="3">
+				<Column xs="6">
 					<InputFaktum faktumKey="ekstrainfo.utgifter.barn.hva" />
 				</Column>
-				<Column sm="6" xs="3">
+				<Column xs="6">
 					<InputFaktum faktumKey="ekstrainfo.utgifter.barn.sum" bredde="s" />
 				</Column>
 			</Row>

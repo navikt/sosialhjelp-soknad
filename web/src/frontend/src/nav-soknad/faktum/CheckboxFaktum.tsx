@@ -1,9 +1,5 @@
 import * as React from "react";
 import { Checkbox, Feil } from "nav-frontend-skjema";
-import { connect } from "react-redux";
-import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
-import { setFaktumVerdi } from "../redux/faktaActions";
-import { DispatchProps } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
 import {
@@ -12,48 +8,37 @@ import {
 	boolToString,
 	getFaktumVerdi
 } from "../utils";
-import { finnFaktum } from "../redux/faktaUtils";
+import {
+	faktumComponent,
+	InjectedFaktumComponentProps
+} from "./FaktumComponent";
 
 interface OwnProps {
-	faktumKey: string;
-	option: string;
 	disabled?: boolean;
 	feil?: Feil;
 }
 
+export const createCheckboxFaktumKey = (key: string, option: string) =>
+	`${key}.${option}`;
+
 class CheckboxFaktum extends React.Component<
-	OwnProps & FaktumComponentProps & DispatchProps & InjectedIntlProps,
+	OwnProps & InjectedFaktumComponentProps & InjectedIntlProps,
 	{}
 > {
 	render() {
-		const {
-			faktumKey,
-			option,
-			disabled,
-			feil,
-			fakta,
-			dispatch,
-			intl
-		} = this.props;
-		const key = `${faktumKey}.${option}`;
-		const tekster = getFaktumCheckboksTekst(intl, key);
-		const checked = faktumIsSelected(getFaktumVerdi(fakta, key));
+		const { faktumKey, disabled, feil, fakta, intl } = this.props;
+		const tekster = getFaktumCheckboksTekst(intl, faktumKey);
+		const checked = faktumIsSelected(getFaktumVerdi(fakta, faktumKey));
 		return (
 			<Checkbox
-				name={key}
+				name={faktumKey}
 				checked={checked}
 				disabled={disabled}
-				value={option}
 				onChange={(evt: any) =>
-					dispatch(
-						setFaktumVerdi(
-							finnFaktum(key, this.props.fakta),
-							boolToString(evt.target.checked)
-						)
-					)}
+					this.props.setFaktumVerdi(boolToString(evt.target.checked))}
 				label={
 					<LabelMedHjelpetekst
-						id={key}
+						id={faktumKey}
 						label={tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>
@@ -64,8 +49,4 @@ class CheckboxFaktum extends React.Component<
 	}
 }
 
-export default connect((state: SoknadAppState, props: OwnProps) => {
-	return {
-		fakta: state.fakta.data
-	};
-})(injectIntl(CheckboxFaktum));
+export default injectIntl(faktumComponent()(CheckboxFaktum));

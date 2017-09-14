@@ -8,8 +8,8 @@ class YtelserFraNAV extends React.Component<{}, {}> {
 		const mottarYtelser = radioCheckKeys("inntekt.mottarytelser");
 		return (
 			<SporsmalFaktum faktumKey={mottarYtelser.faktum}>
-				<RadioFaktum faktumKey={mottarYtelser.faktum} option="true" />
-				<RadioFaktum faktumKey={mottarYtelser.faktum} option="false" />
+				<RadioFaktum faktumKey={mottarYtelser.faktum} value="true" />
+				<RadioFaktum faktumKey={mottarYtelser.faktum} value="false" />
 			</SporsmalFaktum>
 		);
 	}

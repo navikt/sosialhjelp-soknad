@@ -1,17 +1,11 @@
 import * as React from "react";
-import { Input, Feil, InputBredde } from "nav-frontend-skjema";
-import { connect } from "react-redux";
-import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
+import { Input, InputBredde } from "nav-frontend-skjema";
+import { getInputFaktumTekst } from "../utils";
 import {
-	setFaktumVerdi,
-	registerFaktumValidering,
-	unregisterFaktumValidering
-} from "../redux/faktaActions";
-import { DispatchProps, Faktum } from "../redux/faktaTypes";
+	faktumComponent,
+	InjectedFaktumComponentProps
+} from "./FaktumComponent";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
-import { pakrevd } from "../validering/valideringer";
-import { finnFaktum } from "../redux/faktaUtils";
 
 interface State {
 	value: string;
@@ -22,22 +16,12 @@ interface OwnProps {
 	disabled?: boolean;
 	maxLength?: number;
 	bredde?: InputBredde;
-	required?: boolean;
 }
 
-interface StateProps {
-	feil?: Feil;
-}
-
-type Props = OwnProps &
-	FaktumComponentProps &
-	Faktum &
-	DispatchProps &
-	InjectedIntlProps &
-	StateProps;
+type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 const getStateFromProps = (props: Props): State => ({
-	value: getFaktumVerdi(props.fakta, props.faktumKey) || ""
+	value: props.getFaktumVerdi()
 });
 
 class InputFaktum extends React.Component<Props, State> {
@@ -54,32 +38,12 @@ class InputFaktum extends React.Component<Props, State> {
 		this.setState(getStateFromProps(nextProps));
 	}
 
-	componentWillMount() {
-		if (this.props.required) {
-			this.props.dispatch(
-				registerFaktumValidering({
-					faktumKey: this.props.faktumKey,
-					valideringer: [...(this.props.required ? [pakrevd] : [])]
-				})
-			);
-		}
-	}
-
-	componentWillUnmount() {
-		this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
-	}
-
 	handleOnChange(evt: any) {
 		this.setState({ value: evt.target.value });
 	}
 
 	handleOnBlur() {
-		this.props.dispatch(
-			setFaktumVerdi(
-				finnFaktum(this.props.faktumKey, this.props.fakta),
-				this.state.value
-			)
-		);
+		this.props.setFaktumVerdi(this.state.value);
 	}
 
 	render() {
@@ -104,15 +68,4 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 }
 
-export default connect<
-	StateProps,
-	{},
-	OwnProps
->((state: SoknadAppState, props: OwnProps) => {
-	const feil = state.validering.feil.find(f => f.faktumKey === props.faktumKey);
-	return {
-		fakta: state.fakta.data,
-		faktumKey: props.faktumKey,
-		feil: feil ? feil.feil : null
-	};
-})(injectIntl(InputFaktum));
+export default injectIntl(faktumComponent()(InputFaktum));
