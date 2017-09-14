@@ -30,7 +30,7 @@ describe("facts reducer", () => {
 
 	it("should updates single fact", () => {
 		const newFaktumState = faktumReducer(defaultState, {
-			type: FaktumActionTypeKeys.SET_FAKTUM,
+			type: FaktumActionTypeKeys.OPPDATERT_FAKTUM,
 			faktum: testFaktum
 		});
 		expect(newFaktumState.data[0].value).toEqual(123);

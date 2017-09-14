@@ -1,4 +1,5 @@
-export type FaktumMap = Map<string, any>;
+import { REST_STATUS } from "../../digisos/redux/soknad/soknadTypes";
+
 import {
 	FaktumActionTypeKeys,
 	Reducer,
@@ -26,27 +27,21 @@ const initialState: FaktumState = {
 	data: []
 };
 
-function updateFaktumVerdi(fakta: Faktum[], faktum: Faktum) {
-	const index: number = fakta.findIndex(item => {
-		return item.faktumId === faktum.faktumId;
-	});
-	if (index === -1) {
-		console.error("Manglende faktum " + JSON.stringify(faktum, null, 4));
-		return [...fakta];
-	} else {
-		return [...fakta.slice(0, index), faktum, ...fakta.slice(index + 1)];
-	}
-}
-
 export type FaktumActionTypes =
-	| SetFaktumVerdi
+	| OppdatertFaktumVerdi
+	| OppdaterFaktumVerdi
 	| SetFaktaAction
 	| SetFaktaPendingAction
 	| SetFaktaOkAction
-	| SetFaktaFailedAction;
+	| SetFaktaFailedAction
+	| SetFaktumFailedAction;
 
-interface SetFaktumVerdi {
-	type: FaktumActionTypeKeys.SET_FAKTUM;
+interface OppdaterFaktumVerdi {
+	type: FaktumActionTypeKeys.OPPDATER_FAKTUM;
+}
+
+interface OppdatertFaktumVerdi {
+	type: FaktumActionTypeKeys.OPPDATERT_FAKTUM;
 	faktum: Faktum;
 }
 
@@ -67,12 +62,19 @@ interface SetFaktaFailedAction {
 	type: FaktaActionTypeKeys.SET_SERVER_FEIL;
 }
 
+interface SetFaktumFailedAction {
+	type: FaktumActionTypeKeys.FEILET;
+	feilmelding: string;
+}
+
 const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 	state = initialState,
 	action
 ): FaktumState => {
 	switch (action.type) {
-		case FaktumActionTypeKeys.SET_FAKTUM:
+		case FaktumActionTypeKeys.OPPDATER_FAKTUM:
+			return { ...state, restStatus: REST_STATUS.OK };
+		case FaktumActionTypeKeys.OPPDATERT_FAKTUM:
 			return {
 				...state,
 				data: updateFaktumVerdi(state.data, action.faktum)
@@ -80,26 +82,30 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 		case FaktaActionTypeKeys.SET_FAKTA:
 			return {
 				...state,
-				data: action.fakta
+				data: action.fakta,
+				restStatus: REST_STATUS.OK
 			};
 		case FaktaActionTypeKeys.PENDING:
-			return {
-				...state,
-				restStatus: FaktaActionTypeKeys.PENDING
-			};
+			return { ...state, 	restStatus: REST_STATUS.PENDING	};
 		case FaktaActionTypeKeys.OK:
-			return {
-				...state,
-				restStatus: FaktaActionTypeKeys.OK
-			};
+			return { ...state, restStatus: REST_STATUS.OK };
 		case FaktaActionTypeKeys.SET_SERVER_FEIL:
-			return {
-				...state,
-				restStatus: FaktaActionTypeKeys.SET_SERVER_FEIL
-			};
+			return { ...state, restStatus: REST_STATUS.FEILET };
 		default:
 			return state;
 	}
 };
+
+function updateFaktumVerdi(fakta: Faktum[], faktum: Faktum) {
+	const index: number = fakta.findIndex(item => {
+		return item.faktumId === faktum.faktumId;
+	});
+	if (index === -1) {
+		console.error("Manglende faktum " + JSON.stringify(faktum, null, 4));
+		return [...fakta];
+	} else {
+		return [...fakta.slice(0, index), faktum, ...fakta.slice(index + 1)];
+	}
+}
 
 export default FaktumReducer;
