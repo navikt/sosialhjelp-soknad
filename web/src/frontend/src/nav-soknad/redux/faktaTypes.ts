@@ -21,7 +21,6 @@ export enum FaktumActionTypeKeys {
 	OPPDATER_FAKTUM = "faktum/OPPDATER_FAKTUM",
 	OPPDATERT_FAKTUM = "faktum/OPPDATERT_FAKTUM",
 	FEILET = "faktum/FEILET",
-	SET_FAKTUM = "faktum/SET_FAKTUM",
 	OTHER_ACTION = "__any_other_action_type__",
 	SET_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_FEIL",
 	CLEAR_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_OK",
@@ -34,7 +33,6 @@ export enum FaktaActionTypeKeys {
 	PENDING = "fakta/PENDING",
 	OK = "fakta/OK",
 	SET_FAKTA = "SET_FAKTA",
-	SOKNAD_OPPRETTET = "SOKNAD_OPPRETTET",
 	SET_SERVER_FEIL = "fakta/SERVER_FEIL",
 	OTHER_ACTION = "__any_other_action_type__"
 }
