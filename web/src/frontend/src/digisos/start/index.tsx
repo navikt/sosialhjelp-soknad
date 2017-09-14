@@ -6,7 +6,7 @@ const DocumentTitle = require("react-document-title");
 class Start extends React.Component<{}, {}> {
 	render() {
 		return (
-			<DocumentTitle title="123Søknad om økonomisk sosialhjelp">
+			<DocumentTitle title="Søknad om økonomisk sosialhjelp">
 				<div className="skjema-content">
 					<p className="blokk-l">
 						For at vi skal kunne sende din søknad til riktig kommune trenger vi å
