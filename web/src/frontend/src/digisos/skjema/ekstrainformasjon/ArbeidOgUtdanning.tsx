@@ -10,13 +10,13 @@ const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
 	<SporsmalFaktum faktumKey="ekstrainfo.arbeidsledig">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
-				<Column sm="6" xs="3">
+				<Column xs="6">
 					<InputFaktum
 						faktumKey="ekstrainfo.arbeidsledig.feriepenger"
 						bredde="s"
 					/>
 				</Column>
-				<Column sm="6" xs="3">
+				<Column xs="6">
 					<InputFaktum
 						faktumKey="ekstrainfo.arbeidsledig.sluttoppgjor"
 						bredde="s"
@@ -31,10 +31,10 @@ const JobbSkjema: React.StatelessComponent<{}> = () => (
 	<SporsmalFaktum faktumKey="ekstrainfo.jobb">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
-				<Column sm="6" xs="3">
+				<Column xs="6">
 					<InputFaktum faktumKey="ekstrainfo.jobb.bruttolonn" bredde="s" />
 				</Column>
-				<Column sm="6" xs="3">
+				<Column xs="6">
 					<InputFaktum faktumKey="ekstrainfo.jobb.nettolonn" bredde="s" />
 				</Column>
 			</Row>
@@ -46,10 +46,10 @@ const StudentSkjema: React.StatelessComponent<{}> = () => (
 	<SporsmalFaktum faktumKey="ekstrainfo.student">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
-				<Column sm="6" xs="3">
+				<Column xs="6">
 					<InputFaktum faktumKey="ekstrainfo.student.utbetaling" bredde="s" />
 				</Column>
-				<Column sm="6" xs="3">
+				<Column xs="6">
 					<InputFaktum faktumKey="ekstrainfo.student.totalt" bredde="s" />
 				</Column>
 			</Row>
@@ -62,7 +62,7 @@ const ArbeidOgUtdanning: React.StatelessComponent<
 > = props => {
 	const { fakta } = props;
 	const visArbeidsledig =
-		getFaktumVerdi(fakta, "dinsituasjon.arbeidsledig") === "true";
+		getFaktumVerdi(fakta, "dinsituasjon.jobb") === "false";
 	const visJobb = getFaktumVerdi(fakta, "dinsituasjon.jobb") === "true";
 	const visStudent = faktumIsSelected(
 		getFaktumVerdi(fakta, "dinsituasjon.studerer")

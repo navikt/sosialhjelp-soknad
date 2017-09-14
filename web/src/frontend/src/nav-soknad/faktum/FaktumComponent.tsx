@@ -6,7 +6,7 @@ import { SoknadAppState } from "../redux/faktaReducer";
 import { setFaktumVerdi as setFaktumVerdiOnState } from "../redux/faktaActions";
 import { finnFaktum } from "../redux/faktaUtils";
 import { getFaktumVerdi } from "../utils";
-import { FaktumValidering } from "../validering/types";
+import { FaktumValideringFunc } from "../validering/types";
 import {
 	registerFaktumValidering,
 	unregisterFaktumValidering
@@ -14,14 +14,14 @@ import {
 
 interface Props {
 	faktumKey: string;
-	valideringer?: FaktumValidering[];
+	valideringer?: FaktumValideringFunc[];
 }
 
 interface InjectedProps {
 	fakta: Faktum[];
 	feil?: Feil;
-	setFaktumVerdi: (verdi: string) => void;
-	getFaktumVerdi: () => string;
+	setFaktumVerdi: (faktumKey: string, verdi: string) => void;
+	getFaktumVerdi: (faktumKey: string) => string;
 }
 
 export type InjectedFaktumComponentProps = InjectedProps & Props;
@@ -60,17 +60,16 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
 		}
 
-		setFaktumVerdi(verdi: string) {
+		/** Kan ikke bruke faktumKey fra props, i og med checkbox modifiserer denne med option value */
+		setFaktumVerdi(faktumKey: string, verdi: string) {
 			this.props.dispatch(
-				setFaktumVerdiOnState(
-					finnFaktum(this.props.faktumKey, this.props.fakta),
-					verdi
-				)
+				setFaktumVerdiOnState(finnFaktum(faktumKey, this.props.fakta), verdi)
 			);
 		}
 
-		getFaktumVerdi(): string {
-			return getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
+		/** Kan ikke bruke faktumKey fra props, i og med checkbox modifiserer denne med option value */
+		getFaktumVerdi(faktumKey: string): string {
+			return getFaktumVerdi(this.props.fakta, faktumKey) || "";
 		}
 
 		render(): JSX.Element {

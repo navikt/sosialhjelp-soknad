@@ -1,11 +1,28 @@
 import { Faktum } from "../redux/faktaTypes";
-import { Valideringsfeil, FaktumValideringsregler } from "./types";
-import { getFaktumVerdi } from "../utils";
+import {
+	Valideringsfeil,
+	FaktumValideringsregler,
+	ValideringKey
+} from "./types";
+import { getFaktumVerdi, getIntlTextOrKey } from "../utils";
+import { InjectedIntl } from "react-intl";
+
+const getFeilmelding = (
+	intl: InjectedIntl,
+	feilKey: string,
+	faktumKey: string
+): string => {
+	const intlFeilKey =
+		feilKey === ValideringKey.PAKREVD ? `${faktumKey}.feilmelding` : feilKey;
+
+	return getIntlTextOrKey(intl, intlFeilKey);
+};
 
 export function validerFaktum(
 	fakta: Faktum[],
+	faktumKey: string,
 	valideringsregler: FaktumValideringsregler[],
-	faktumKey: string
+	intl: InjectedIntl
 ) {
 	const valideringsfeil: Valideringsfeil[] = [];
 	const faktumvalidering = valideringsregler.find(
@@ -14,12 +31,12 @@ export function validerFaktum(
 	if (faktumvalidering) {
 		const value = getFaktumVerdi(fakta, faktumKey);
 		faktumvalidering.valideringer.forEach(v => {
-			const isValid = v.validerFunc(value);
-			if (!isValid) {
+			const feilKey = v(value);
+			if (feilKey) {
 				valideringsfeil.push({
 					faktumKey: faktumvalidering.faktumKey,
 					feil: {
-						feilmelding: v.feilmelding
+						feilmelding: getFeilmelding(intl, feilKey, faktumKey)
 					}
 				});
 			}
@@ -30,14 +47,16 @@ export function validerFaktum(
 
 export function validerAlleFaktum(
 	fakta: Faktum[],
-	valideringsregler: FaktumValideringsregler[]
+	valideringsregler: FaktumValideringsregler[],
+	intl: InjectedIntl
 ): Valideringsfeil[] {
 	let valideringsfeil: Valideringsfeil[] = [];
 	valideringsregler.forEach(faktumvalidering => {
 		const feil = validerFaktum(
 			fakta,
+			faktumvalidering.faktumKey,
 			valideringsregler,
-			faktumvalidering.faktumKey
+			intl
 		);
 		if (feil) {
 			valideringsfeil = valideringsfeil.concat(feil);

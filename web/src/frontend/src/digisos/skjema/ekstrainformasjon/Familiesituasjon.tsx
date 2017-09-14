@@ -23,13 +23,13 @@ const Familiesituasjon: React.StatelessComponent<
 					key="barnebidrag">
 					<Container fluid={true} className="container--noPadding">
 						<Row>
-							<Column sm="6" xs="3">
+							<Column xs="6">
 								<InputFaktum
 									faktumKey="ekstrainfo.familie.barnebidrag.betaler"
 									bredde="s"
 								/>
 							</Column>
-							<Column sm="6" xs="3">
+							<Column xs="6">
 								<InputFaktum
 									faktumKey="ekstrainfo.familie.barnebidrag.mottar"
 									bredde="s"
