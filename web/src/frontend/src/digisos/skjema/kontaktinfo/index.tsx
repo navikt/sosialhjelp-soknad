@@ -34,8 +34,8 @@ class Kontaktinfo extends React.Component<{}, {}> {
 					faktumKey={statsborger.faktum}
 					renderValideringsfeil={true}
 					valideringer={[pakrevd]}>
-					<RadioFaktum faktumKey={statsborger.faktum} option="true" />
-					<RadioFaktum faktumKey={statsborger.faktum} option="false" />
+					<RadioFaktum faktumKey={statsborger.faktum} value="true" />
+					<RadioFaktum faktumKey={statsborger.faktum} value="false" />
 				</SporsmalFaktum>
 			</StegFaktum>
 		);

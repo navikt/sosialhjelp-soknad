@@ -1,7 +1,7 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
-import { getInputFaktumTekst, getFaktumVerdi } from "../utils";
+import { getInputFaktumTekst } from "../utils";
 import { Select, SelectBredde } from "nav-frontend-skjema";
 import {
 	InjectedFaktumComponentProps,
@@ -24,7 +24,6 @@ class FaktumSelect extends React.Component<
 			disabled,
 			bredde,
 			labelFunc,
-			fakta,
 			children,
 			intl
 		} = this.props;
@@ -33,10 +32,9 @@ class FaktumSelect extends React.Component<
 			<Select
 				name={faktumKey}
 				disabled={disabled}
-				value={getFaktumVerdi(fakta, faktumKey)}
+				value={this.props.getFaktumVerdi()}
 				bredde={bredde}
-				onChange={(evt: any) =>
-					this.props.setFaktumVerdi(faktumKey, evt.target.value)}
+				onChange={(evt: any) => this.props.setFaktumVerdi(evt.target.value)}
 				label={
 					<LabelMedHjelpetekst
 						id={faktumKey}

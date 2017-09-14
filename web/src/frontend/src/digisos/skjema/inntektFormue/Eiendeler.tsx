@@ -8,7 +8,9 @@ import {
 } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
+import CheckboxFaktum, {
+	createCheckboxFaktumKey
+} from "../../../nav-soknad/faktum/CheckboxFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 
@@ -20,24 +22,40 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeEiendelerAnnet = "inntekt.eierandeler.true.type.annet";
 		return (
 			<SporsmalFaktum faktumKey={eiendeler.faktum}>
-				<RadioFaktum faktumKey={eiendeler.faktum} option="true" />
+				<RadioFaktum faktumKey={eiendeler.faktum} value="true" />
 				<Underskjema
 					visible={faktumIsSelected(getFaktumVerdi(fakta, eiendeler.faktum))}>
 					<SporsmalFaktum faktumKey={hvilkeEiendeler.faktum}>
-						<CheckboxFaktum faktumKey={hvilkeEiendeler.faktum} option="bolig" />
 						<CheckboxFaktum
-							faktumKey={hvilkeEiendeler.faktum}
-							option="campingvogn"
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeEiendeler.faktum,
+								"bolig"
+							)}
 						/>
 						<CheckboxFaktum
-							faktumKey={hvilkeEiendeler.faktum}
-							option="kjoretoy"
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeEiendeler.faktum,
+								"campingvogn"
+							)}
 						/>
 						<CheckboxFaktum
-							faktumKey={hvilkeEiendeler.faktum}
-							option="fritidseiendom"
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeEiendeler.faktum,
+								"kjoretoy"
+							)}
 						/>
-						<CheckboxFaktum faktumKey={hvilkeEiendeler.faktum} option="annet" />
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeEiendeler.faktum,
+								"fritidseiendom"
+							)}
+						/>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeEiendeler.faktum,
+								"annet"
+							)}
+						/>
 						{faktumIsSelected(getFaktumVerdi(fakta, hvilkeEiendelerAnnet)) ? (
 							<TextareaFaktum
 								faktumKey={`${hvilkeEiendelerAnnet}.true.beskrivelse`}
@@ -45,7 +63,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 						) : null}
 					</SporsmalFaktum>
 				</Underskjema>
-				<RadioFaktum faktumKey={eiendeler.faktum} option="false" />
+				<RadioFaktum faktumKey={eiendeler.faktum} value="false" />
 			</SporsmalFaktum>
 		);
 	}

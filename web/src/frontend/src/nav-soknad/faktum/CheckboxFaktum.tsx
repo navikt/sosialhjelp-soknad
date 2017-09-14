@@ -14,32 +14,31 @@ import {
 } from "./FaktumComponent";
 
 interface OwnProps {
-	faktumKey: string;
-	option: string;
 	disabled?: boolean;
 	feil?: Feil;
 }
+
+export const createCheckboxFaktumKey = (key: string, option: string) =>
+	`${key}.${option}`;
 
 class CheckboxFaktum extends React.Component<
 	OwnProps & InjectedFaktumComponentProps & InjectedIntlProps,
 	{}
 > {
 	render() {
-		const { faktumKey, option, disabled, feil, fakta, intl } = this.props;
-		const key = `${faktumKey}.${option}`;
-		const tekster = getFaktumCheckboksTekst(intl, key);
-		const checked = faktumIsSelected(getFaktumVerdi(fakta, key));
+		const { faktumKey, disabled, feil, fakta, intl } = this.props;
+		const tekster = getFaktumCheckboksTekst(intl, faktumKey);
+		const checked = faktumIsSelected(getFaktumVerdi(fakta, faktumKey));
 		return (
 			<Checkbox
-				name={key}
+				name={faktumKey}
 				checked={checked}
 				disabled={disabled}
-				value={option}
 				onChange={(evt: any) =>
-					this.props.setFaktumVerdi(key, boolToString(evt.target.checked))}
+					this.props.setFaktumVerdi(boolToString(evt.target.checked))}
 				label={
 					<LabelMedHjelpetekst
-						id={key}
+						id={faktumKey}
 						label={tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>

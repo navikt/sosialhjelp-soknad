@@ -14,14 +14,15 @@ import {
 
 interface Props {
 	faktumKey: string;
+	/** Array med valideringsfunksjoner som skal brukes for komponenten */
 	valideringer?: FaktumValideringFunc[];
 }
 
 interface InjectedProps {
 	fakta: Faktum[];
 	feil?: Feil;
-	setFaktumVerdi: (faktumKey: string, verdi: string) => void;
-	getFaktumVerdi: (faktumKey: string) => string;
+	setFaktumVerdi: (verdi: string) => void;
+	getFaktumVerdi: () => string;
 }
 
 export type InjectedFaktumComponentProps = InjectedProps & Props;
@@ -45,6 +46,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.setFaktumVerdi = this.setFaktumVerdi.bind(this);
 			this.getFaktumVerdi = this.getFaktumVerdi.bind(this);
 		}
+
 		componentWillMount() {
 			if (this.props.valideringer) {
 				this.props.dispatch(
@@ -61,15 +63,18 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		/** Kan ikke bruke faktumKey fra props, i og med checkbox modifiserer denne med option value */
-		setFaktumVerdi(faktumKey: string, verdi: string) {
+		setFaktumVerdi(verdi: string) {
 			this.props.dispatch(
-				setFaktumVerdiOnState(finnFaktum(faktumKey, this.props.fakta), verdi)
+				setFaktumVerdiOnState(
+					finnFaktum(this.props.faktumKey, this.props.fakta),
+					verdi
+				)
 			);
 		}
 
 		/** Kan ikke bruke faktumKey fra props, i og med checkbox modifiserer denne med option value */
-		getFaktumVerdi(faktumKey: string): string {
-			return getFaktumVerdi(this.props.fakta, faktumKey) || "";
+		getFaktumVerdi(): string {
+			return getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
 		}
 
 		render(): JSX.Element {

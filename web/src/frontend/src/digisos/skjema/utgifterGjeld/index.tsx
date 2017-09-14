@@ -13,7 +13,9 @@ import { DispatchProps } from "../../redux/types";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
-import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
+import CheckboxFaktum, {
+	createCheckboxFaktumKey
+} from "../../../nav-soknad/faktum/CheckboxFaktum";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
@@ -36,28 +38,43 @@ class UtgifterGjeld extends React.Component<
 		return (
 			<StegFaktum tittelId="utgifterbolk.tittel">
 				<SporsmalFaktum faktumKey={harBoutgifter.faktum}>
-					<RadioFaktum faktumKey={harBoutgifter.faktum} option="true" />
+					<RadioFaktum faktumKey={harBoutgifter.faktum} value="true" />
 					<Underskjema
 						visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}>
 						<SporsmalFaktum faktumKey={boUtgifter.faktum}>
 							{/*TODO checkboxgruppefaktum*/}
-							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="husleie" />
-							<CheckboxFaktum faktumKey={boUtgifter.faktum} option="strom" />
 							<CheckboxFaktum
-								faktumKey={boUtgifter.faktum}
-								option="kommunaleavgifter"
+								faktumKey={createCheckboxFaktumKey(
+									boUtgifter.faktum,
+									"husleie"
+								)}
 							/>
 							<CheckboxFaktum
-								faktumKey={boUtgifter.faktum}
-								option="oppvarming"
+								faktumKey={createCheckboxFaktumKey(boUtgifter.faktum, "strom")}
 							/>
 							<CheckboxFaktum
-								faktumKey={boUtgifter.faktum}
-								option="avdraglaan"
+								faktumKey={createCheckboxFaktumKey(
+									boUtgifter.faktum,
+									"kommunaleavgifter"
+								)}
 							/>
 							<CheckboxFaktum
-								faktumKey={boUtgifter.faktum}
-								option="andreutgifter"
+								faktumKey={createCheckboxFaktumKey(
+									boUtgifter.faktum,
+									"oppvarming"
+								)}
+							/>
+							<CheckboxFaktum
+								faktumKey={createCheckboxFaktumKey(
+									boUtgifter.faktum,
+									"avdraglaan"
+								)}
+							/>
+							<CheckboxFaktum
+								faktumKey={createCheckboxFaktumKey(
+									boUtgifter.faktum,
+									"andreutgifter"
+								)}
 							/>
 
 							{faktumIsSelected(
@@ -67,29 +84,42 @@ class UtgifterGjeld extends React.Component<
 							) : null}
 						</SporsmalFaktum>
 					</Underskjema>
-					<RadioFaktum faktumKey={harBoutgifter.faktum} option="false" />
+					<RadioFaktum faktumKey={harBoutgifter.faktum} value="false" />
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey={harUtgifterBarn.faktum}>
-					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="true" />
+					<RadioFaktum faktumKey={harUtgifterBarn.faktum} value="true" />
 					<Underskjema
 						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}>
 						{/*TODO checkboxgruppefaktum*/}
 
 						<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
 							<CheckboxFaktum
-								faktumKey={barneUtgifter.faktum}
-								option="fritidsaktivitet"
+								faktumKey={`${barneUtgifter.faktum}.fritidsaktivitet"`}
 							/>
 							<CheckboxFaktum
-								faktumKey={barneUtgifter.faktum}
-								option="barnehage"
+								faktumKey={createCheckboxFaktumKey(
+									barneUtgifter.faktum,
+									"barnehage"
+								)}
 							/>
 							<CheckboxFaktum
-								faktumKey={barneUtgifter.faktum}
-								option="tannbehandling"
+								faktumKey={createCheckboxFaktumKey(
+									barneUtgifter.faktum,
+									"tannbehandling"
+								)}
 							/>
-							<CheckboxFaktum faktumKey={barneUtgifter.faktum} option="helse" />
-							<CheckboxFaktum faktumKey={barneUtgifter.faktum} option="annet" />
+							<CheckboxFaktum
+								faktumKey={createCheckboxFaktumKey(
+									barneUtgifter.faktum,
+									"helse"
+								)}
+							/>
+							<CheckboxFaktum
+								faktumKey={createCheckboxFaktumKey(
+									barneUtgifter.faktum,
+									"annet"
+								)}
+							/>
 							{faktumIsSelected(
 								getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`)
 							) ? (
@@ -97,7 +127,7 @@ class UtgifterGjeld extends React.Component<
 							) : null}
 						</SporsmalFaktum>
 					</Underskjema>
-					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="false" />
+					<RadioFaktum faktumKey={harUtgifterBarn.faktum} value="false" />
 				</SporsmalFaktum>
 			</StegFaktum>
 		);

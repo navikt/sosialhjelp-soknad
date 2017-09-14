@@ -12,6 +12,7 @@ interface State {
 }
 
 interface OwnProps {
+	faktumKey: string;
 	disabled?: boolean;
 	maxLength?: number;
 	bredde?: InputBredde;
@@ -20,7 +21,7 @@ interface OwnProps {
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 const getStateFromProps = (props: Props): State => ({
-	value: props.getFaktumVerdi(props.faktumKey)
+	value: props.getFaktumVerdi()
 });
 
 class InputFaktum extends React.Component<Props, State> {
@@ -42,7 +43,7 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 
 	handleOnBlur() {
-		this.props.setFaktumVerdi(this.props.faktumKey, this.state.value);
+		this.props.setFaktumVerdi(this.state.value);
 	}
 
 	render() {

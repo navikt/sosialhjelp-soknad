@@ -17,15 +17,15 @@ class Jobb extends React.Component<FaktumComponentProps, any> {
 		const jobber = radioCheckKeys("dinsituasjon.jobb.true.grad");
 		return (
 			<SporsmalFaktum faktumKey={jobb.faktum}>
-				<RadioFaktum faktumKey={jobb.faktum} option="true" />
+				<RadioFaktum faktumKey={jobb.faktum} value="true" />
 				<Underskjema
 					visible={faktumIsSelected(getFaktumVerdi(fakta, jobb.faktum))}>
 					<SporsmalFaktum faktumKey={jobber.faktum}>
-						<RadioFaktum faktumKey={jobber.faktum} option="heltid" />
-						<RadioFaktum faktumKey={jobber.faktum} option="deltid" />
+						<RadioFaktum faktumKey={jobber.faktum} value="heltid" />
+						<RadioFaktum faktumKey={jobber.faktum} value="deltid" />
 					</SporsmalFaktum>
 				</Underskjema>
-				<RadioFaktum faktumKey={jobb.faktum} option="false" />
+				<RadioFaktum faktumKey={jobb.faktum} value="false" />
 			</SporsmalFaktum>
 		);
 	}

@@ -2,14 +2,14 @@ import * as React from "react";
 import { Radio } from "nav-frontend-skjema";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
-import { getRadioFaktumTekst, getFaktumVerdi } from "../utils";
+import { getRadioFaktumTekst } from "../utils";
 import {
 	faktumComponent,
 	InjectedFaktumComponentProps
 } from "./FaktumComponent";
 
 interface OwnProps {
-	option: string;
+	value: string;
 	faktumKey: string;
 	disabled?: boolean;
 }
@@ -19,18 +19,18 @@ class RadioFaktum extends React.Component<
 	{}
 > {
 	render() {
-		const { faktumKey, option, disabled, fakta, intl } = this.props;
-		const tekster = getRadioFaktumTekst(intl, faktumKey, option);
+		const { faktumKey, value, disabled, intl } = this.props;
+		const tekster = getRadioFaktumTekst(intl, faktumKey, value);
 		return (
 			<Radio
 				name={faktumKey}
-				checked={getFaktumVerdi(fakta, faktumKey) === option}
+				checked={this.props.getFaktumVerdi() === value}
 				disabled={disabled}
-				value={option}
-				onChange={(evt: any) => this.props.setFaktumVerdi(faktumKey, option)}
+				value={value}
+				onChange={(evt: any) => this.props.setFaktumVerdi(value)}
 				label={
 					<LabelMedHjelpetekst
-						id={`${faktumKey}.${option}`}
+						id={`${faktumKey}.${value}`}
 						label={tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>

@@ -10,6 +10,7 @@ import {
 } from "./FaktumComponent";
 
 export interface OwnProps {
+	faktumKey: string;
 	children: React.ReactNode;
 	visible?: boolean;
 	renderValideringsfeil?: boolean;
@@ -21,7 +22,6 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	render() {
 		const {
 			visible,
-			faktumKey,
 			renderValideringsfeil = false,
 			feil,
 			intl,
@@ -30,7 +30,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 		if (visible === false) {
 			return null;
 		}
-		const tekster = getFaktumSporsmalTekst(intl, faktumKey);
+		const tekster = getFaktumSporsmalTekst(intl, this.props.faktumKey);
 		const cls = classNames("skjema-fieldset", {
 			"skjema-fieldset--harFeil": feil !== null && feil !== undefined
 		});
