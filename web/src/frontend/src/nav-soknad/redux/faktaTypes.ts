@@ -1,6 +1,8 @@
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
+import { FaktumActionTypes } from "./faktaReducer";
 
 export type Dispatch = (action: any) => void;
+export type SoknadDispatch<AT> = (action: AT) => void;
 
 export type Reducer<S, AT> = (state: S, action: AT) => S;
 
@@ -8,11 +10,17 @@ export interface DispatchProps {
 	dispatch: Dispatch;
 }
 
+export type FaktaActionTypes =
+	FaktumActionTypes
+	| SetFaktumValideringFeilAction
+	| SetFaktumValideringOkAction
+	| RegisterFaktumValidering
+	| UnregisterFaktumValidering;
+
 export enum FaktumActionTypeKeys {
-	OK = "faktum/OK",
+	OPPDATER_FAKTUM = "faktum/OPPDATER_FAKTUM",
+	OPPDATERT_FAKTUM = "faktum/OPPDATERT_FAKTUM",
 	FEILET = "faktum/FEILET",
-	PENDING = "faktum/PENDING",
-	SET_FAKTUM = "faktum/SET_FAKTUM",
 	OTHER_ACTION = "__any_other_action_type__",
 	SET_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_FEIL",
 	CLEAR_FAKTUM_VALIDERINGSFEIL = "SET_FAKTUM_VALIDATION_OK",
@@ -25,7 +33,6 @@ export enum FaktaActionTypeKeys {
 	PENDING = "fakta/PENDING",
 	OK = "fakta/OK",
 	SET_FAKTA = "SET_FAKTA",
-	SOKNAD_OPPRETTET = "SOKNAD_OPPRETTET",
 	SET_SERVER_FEIL = "fakta/SERVER_FEIL",
 	OTHER_ACTION = "__any_other_action_type__"
 }
@@ -49,26 +56,6 @@ export interface FaktumEgenskap {
 	key: string;
 	value: string;
 	systemEgenskap: number;
-}
-
-export interface Fakta {
-	faktum: Faktum[];
-}
-
-export interface SetFaktumVerdiAction {
-	type: FaktumActionTypeKeys.SET_FAKTUM;
-	faktumKey: string;
-	value: FaktumValueType;
-	properties?: any;
-}
-
-export interface SetFaktaAction {
-	type: FaktaActionTypeKeys.SET_FAKTA;
-	fakta: any;
-}
-
-export interface SoknadOpprettetAction {
-	type: FaktaActionTypeKeys.SOKNAD_OPPRETTET;
 }
 
 export interface SetFaktumValideringFeilAction {
