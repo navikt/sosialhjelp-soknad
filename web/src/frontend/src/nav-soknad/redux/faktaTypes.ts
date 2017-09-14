@@ -1,3 +1,4 @@
+import { ValideringActionTypes } from "./valideringActions";
 import { FaktumActionTypes } from "./faktaReducer";
 
 export type Dispatch = (action: any) => void;
@@ -9,7 +10,7 @@ export interface DispatchProps {
 	dispatch: Dispatch;
 }
 
-export type FaktaActionTypes = FaktumActionTypes;
+export type FaktaActionTypes = FaktumActionTypes | ValideringActionTypes;
 
 export enum FaktumActionTypeKeys {
 	OPPDATER_FAKTUM = "faktum/OPPDATER_FAKTUM",
