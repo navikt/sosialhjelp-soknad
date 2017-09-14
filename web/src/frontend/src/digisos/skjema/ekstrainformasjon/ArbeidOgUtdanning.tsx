@@ -7,18 +7,18 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
 
 const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
-	<SporsmalFaktum faktumKey="ekstrainfo.arbeidsledig">
+	<SporsmalFaktum faktumKey="ekstrainfo.arbeid.arbeidsledig">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column xs="6">
 					<InputFaktum
-						faktumKey="ekstrainfo.arbeidsledig.feriepenger"
+						faktumKey="ekstrainfo.arbeid.arbeidsledig.feriepenger"
 						bredde="s"
 					/>
 				</Column>
 				<Column xs="6">
 					<InputFaktum
-						faktumKey="ekstrainfo.arbeidsledig.sluttoppgjor"
+						faktumKey="ekstrainfo.arbeid.arbeidsledig.sluttoppgjor"
 						bredde="s"
 					/>
 				</Column>
@@ -28,14 +28,20 @@ const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
 );
 
 const JobbSkjema: React.StatelessComponent<{}> = () => (
-	<SporsmalFaktum faktumKey="ekstrainfo.jobb">
+	<SporsmalFaktum faktumKey="ekstrainfo.arbeid.jobb">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column xs="6">
-					<InputFaktum faktumKey="ekstrainfo.jobb.bruttolonn" bredde="s" />
+					<InputFaktum
+						faktumKey="ekstrainfo.arbeid.jobb.bruttolonn"
+						bredde="s"
+					/>
 				</Column>
 				<Column xs="6">
-					<InputFaktum faktumKey="ekstrainfo.jobb.nettolonn" bredde="s" />
+					<InputFaktum
+						faktumKey="ekstrainfo.arbeid.jobb.nettolonn"
+						bredde="s"
+					/>
 				</Column>
 			</Row>
 		</Container>
@@ -43,14 +49,20 @@ const JobbSkjema: React.StatelessComponent<{}> = () => (
 );
 
 const StudentSkjema: React.StatelessComponent<{}> = () => (
-	<SporsmalFaktum faktumKey="ekstrainfo.student">
+	<SporsmalFaktum faktumKey="ekstrainfo.arbeid.student">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column xs="6">
-					<InputFaktum faktumKey="ekstrainfo.student.utbetaling" bredde="s" />
+					<InputFaktum
+						faktumKey="ekstrainfo.arbeid.student.utbetaling"
+						bredde="s"
+					/>
 				</Column>
 				<Column xs="6">
-					<InputFaktum faktumKey="ekstrainfo.student.totalt" bredde="s" />
+					<InputFaktum
+						faktumKey="ekstrainfo.arbeid.student.lantotalt"
+						bredde="s"
+					/>
 				</Column>
 			</Row>
 		</Container>
@@ -68,7 +80,7 @@ const ArbeidOgUtdanning: React.StatelessComponent<
 		getFaktumVerdi(fakta, "dinsituasjon.studerer")
 	);
 
-	if (!visJobb && !visStudent) {
+	if (!visJobb && !visStudent && !visArbeidsledig) {
 		return null;
 	}
 	const content = [
