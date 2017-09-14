@@ -62,4 +62,4 @@ router.post("/fakta/:faktumId", function (req, res) {
 app.use('/', router);
 
 app.listen(port);
-console.log("Test API server running on port " + port);
+console.log("Mock API server running on port " + port);
