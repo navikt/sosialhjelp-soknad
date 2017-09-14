@@ -12,7 +12,7 @@ import { fetchPost, fetchToJson } from "../rest-utils";
 import { hentFakta, setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";
 import { finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
 import { State } from "../reducers";
-import { FaktaActionTypes, Faktum, SoknadDispatch } from "../../../nav-soknad/redux/faktaTypes";
+import { FaktaActionTypeKeys, FaktaActionTypes, Faktum, SoknadDispatch } from "../../../nav-soknad/redux/faktaTypes";
 import { Soknad } from "../../../nav-soknad/soknadTypes";
 
 export type SoknadActionTypes =
@@ -54,11 +54,13 @@ const setBostedFaktum = (faktum: Faktum, verdi: string, dispatch: any) => {
 };
 
 export function hentSoknad(brukerBehandlingsId: string) {
-	return (dispatch: SoknadDispatch<SoknadActionTypes>) => {
+	return (dispatch: SoknadDispatch<SoknadActionTypes | FaktaActionTypes>) => {
 		dispatch({type: SoknadActionTypeKeys.HENT_SOKNAD});
 		fetchToJson("soknader/" + brukerBehandlingsId)
 			.then((soknadsdata: Soknad) => {
+				const fakta = soknadsdata.fakta;
 				dispatch({type: SoknadActionTypeKeys.HENTET_SOKNAD, data: soknadsdata});
+				dispatch({type: FaktaActionTypeKeys.SET_FAKTA, fakta});
 			})
 			.catch(reason => {
 				dispatch({type: SoknadActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason});
