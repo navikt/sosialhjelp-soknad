@@ -1,4 +1,3 @@
-import { Action, Dispatch } from "redux";
 import {
 	HentetSoknadAction,
 	HentSoknadAction,
@@ -13,6 +12,8 @@ import { fetchPost, fetchToJson } from "../rest-utils";
 import { hentFakta, setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";
 import { finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
 import { State } from "../reducers";
+import { FaktaActionTypes, Faktum, SoknadDispatch } from "../../../nav-soknad/redux/faktaTypes";
+import { Soknad } from "../../../nav-soknad/soknadTypes";
 
 export type SoknadActionTypes =
 	| OpprettSoknadAction
@@ -23,7 +24,7 @@ export type SoknadActionTypes =
 	| ResetSoknadAction;
 
 export function opprettSoknad(kommuneId: string, bydelId: string) {
-	return (dispatch: Dispatch<SoknadActionTypes>, getState: () => State) => {
+	return (dispatch: SoknadDispatch<SoknadActionTypes | FaktaActionTypes>, getState: () => State) => {
 		dispatch({type: SoknadActionTypeKeys.OPPRETT_SOKNAD});
 		const payload = JSON.stringify({soknadType: "NAV DIGISOS"});
 		fetchPost("soknader", payload)
@@ -36,9 +37,9 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 
 				hentFakta(brukerBehandlingId, dispatch).then(() => {
 					const fakta = getState().fakta.data;
-					dispatch(setFaktumVerdi(finnFaktum("personalia.kommune", fakta), kommuneId));
+					setBostedFaktum(finnFaktum("personalia.kommune", fakta), kommuneId, dispatch);
 					if (bydelId !== "") {
-						dispatch(setFaktumVerdi(finnFaktum("personalia.bydel", fakta), bydelId));
+						setBostedFaktum(finnFaktum("personalia.bydel", fakta), bydelId, dispatch);
 					}
 				});
 			})
@@ -48,11 +49,15 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 	};
 }
 
+const setBostedFaktum = (faktum: Faktum, verdi: string, dispatch: any) => {
+	dispatch(setFaktumVerdi(faktum, verdi));
+};
+
 export function hentSoknad(brukerBehandlingsId: string) {
-	return (dispatch: Dispatch<Action>) => {
+	return (dispatch: SoknadDispatch<SoknadActionTypes>) => {
 		dispatch({type: SoknadActionTypeKeys.HENT_SOKNAD});
-		fetchToJson("soknader/" + brukerBehandlingsId )
-			.then(soknadsdata => {
+		fetchToJson("soknader/" + brukerBehandlingsId)
+			.then((soknadsdata: Soknad) => {
 				dispatch({type: SoknadActionTypeKeys.HENTET_SOKNAD, data: soknadsdata});
 			})
 			.catch(reason => {
@@ -62,7 +67,7 @@ export function hentSoknad(brukerBehandlingsId: string) {
 }
 
 export function resetSoknad() {
-	return (dispatch: Dispatch<Action>) => {
+	return (dispatch: SoknadDispatch<SoknadActionTypes>) => {
 		dispatch({type: SoknadActionTypeKeys.RESET_SOKNAD});
 	};
 }

@@ -8,11 +8,9 @@ import { FaktumComponentProps } from "../../nav-soknad/redux/faktaReducer";
 import Arrow from "../../nav-soknad/components/svg/Arrow";
 import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 import { State } from "../redux/reducers";
-import {
-	FaktaActionTypeKeys,
-	DispatchProps
-} from "../../nav-soknad/redux/faktaTypes";
+import { DispatchProps } from "../../nav-soknad/redux/faktaTypes";
 import { opprettSoknad, resetSoknad } from "../redux/soknad/soknadActions";
+import { REST_STATUS } from "../redux/soknad/soknadTypes";
 
 interface StateProps {
 	soknadRestStatus?: string;
@@ -43,7 +41,7 @@ class Bosted extends React.Component<
 	}
 
 	componentDidUpdate() {
-		if (this.props.faktaRestStatus === FaktaActionTypeKeys.OK) {
+		if (this.props.faktaRestStatus === REST_STATUS.OK) {
 			this.setState({
 				kommuneId: "",
 				bydelId: ""
