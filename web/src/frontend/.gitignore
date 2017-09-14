@@ -20,7 +20,6 @@
 .env.test.local
 .env.production.local
 
-/scripts/mock_data/fakta.json
 
 npm-debug.log*
 yarn-debug.log*
