@@ -8,7 +8,9 @@ import {
 } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
+import CheckboxFaktum, {
+	createCheckboxFaktumKey
+} from "../../../nav-soknad/faktum/CheckboxFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 
@@ -20,26 +22,34 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeUtbetalingerAnnet = "inntekt.inntekter.true.type.annet";
 		return (
 			<SporsmalFaktum faktumKey={utbetaling.faktum}>
-				<RadioFaktum faktumKey={utbetaling.faktum} option="true" />
+				<RadioFaktum faktumKey={utbetaling.faktum} value="true" />
 				<Underskjema
 					visible={faktumIsSelected(getFaktumVerdi(fakta, utbetaling.faktum))}>
 					<SporsmalFaktum faktumKey={hvilkeUtbetalinger.faktum}>
 						{/*TODO legg til checkboxgruppefaktum*/}
 						<CheckboxFaktum
-							faktumKey={hvilkeUtbetalinger.faktum}
-							option="utbytte"
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeUtbetalinger.faktum,
+								"utbytte"
+							)}
 						/>
 						<CheckboxFaktum
-							faktumKey={hvilkeUtbetalinger.faktum}
-							option="salg"
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeUtbetalinger.faktum,
+								"salg"
+							)}
 						/>
 						<CheckboxFaktum
-							faktumKey={hvilkeUtbetalinger.faktum}
-							option="forsikringsutbetalinger"
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeUtbetalinger.faktum,
+								"forsikringsutbetalinger"
+							)}
 						/>
 						<CheckboxFaktum
-							faktumKey={hvilkeUtbetalinger.faktum}
-							option="annet"
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeUtbetalinger.faktum,
+								"annet"
+							)}
 						/>
 						{faktumIsSelected(
 							getFaktumVerdi(fakta, hvilkeUtbetalingerAnnet)
@@ -50,7 +60,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 						) : null}
 					</SporsmalFaktum>
 				</Underskjema>
-				<RadioFaktum faktumKey={utbetaling.faktum} option="false" />
+				<RadioFaktum faktumKey={utbetaling.faktum} value="false" />
 			</SporsmalFaktum>
 		);
 	}

@@ -16,8 +16,8 @@ class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 			<div>
 				<PersonFaktum faktumKey="familie.sivilstatus.gift" />
 				<SporsmalFaktum faktumKey={borsammen.faktum}>
-					<RadioFaktum faktumKey={borsammen.faktum} option="true" />
-					<RadioFaktum faktumKey={borsammen.faktum} option="false" />
+					<RadioFaktum faktumKey={borsammen.faktum} value="true" />
+					<RadioFaktum faktumKey={borsammen.faktum} value="false" />
 					<NivaTreSkjema
 						visible={getFaktumVerdi(fakta, borsammen.faktum) === "false"}>
 						<TextareaFaktum

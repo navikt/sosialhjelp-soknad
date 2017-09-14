@@ -8,7 +8,9 @@ import {
 } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
+import CheckboxFaktum, {
+	createCheckboxFaktumKey
+} from "../../../nav-soknad/faktum/CheckboxFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 
 class Bostotte extends React.Component<FaktumComponentProps, {}> {
@@ -18,22 +20,26 @@ class Bostotte extends React.Component<FaktumComponentProps, {}> {
 		const hvilkenStotte = radioCheckKeys("inntekt.bostotte.true.type");
 		return (
 			<SporsmalFaktum faktumKey={bostotte.faktum}>
-				<RadioFaktum faktumKey={bostotte.faktum} option="true" />
+				<RadioFaktum faktumKey={bostotte.faktum} value="true" />
 				<Underskjema
 					visible={faktumIsSelected(getFaktumVerdi(fakta, "inntekt.bostotte"))}>
 					<SporsmalFaktum faktumKey={hvilkenStotte.faktum}>
 						{/*TODO legge til checkboxgroup-faktum*/}
 						<CheckboxFaktum
-							faktumKey={hvilkenStotte.faktum}
-							option="husbanken"
+							faktumKey={createCheckboxFaktumKey(
+								hvilkenStotte.faktum,
+								"husbanken"
+							)}
 						/>
 						<CheckboxFaktum
-							faktumKey={hvilkenStotte.faktum}
-							option="kommunal"
+							faktumKey={createCheckboxFaktumKey(
+								hvilkenStotte.faktum,
+								"kommunal"
+							)}
 						/>
 					</SporsmalFaktum>
 				</Underskjema>
-				<RadioFaktum faktumKey={bostotte.faktum} option="false" />
+				<RadioFaktum faktumKey={bostotte.faktum} value="false" />
 			</SporsmalFaktum>
 		);
 	}

@@ -69,6 +69,7 @@ class Bosted extends React.Component<
 					<div className="blokk-l">
 						<Select
 							bredde="m"
+							defaultValue=""
 							onChange={(evt: any) =>
 								this.setState({ kommuneId: evt.target.value })}
 							label={
@@ -76,7 +77,11 @@ class Bosted extends React.Component<
 									<FormattedMessage id="personalia.kommune.label" />
 								</strong>
 							}>
-							<option value="" />
+							{!this.state.kommuneId && (
+								<option value="" disabled={true}>
+									Velg by
+								</option>
+							)}
 							{Kommuner.map(kommune => (
 								<option value={kommune.id} key={kommune.id}>
 									{kommune.navn}
@@ -90,6 +95,7 @@ class Bosted extends React.Component<
 							<Arrow />
 							<Select
 								bredde="m"
+								defaultValue=""
 								onChange={(evt: any) =>
 									this.setState({ bydelId: evt.target.value })}
 								label={
@@ -97,7 +103,11 @@ class Bosted extends React.Component<
 										<FormattedMessage id="personalia.bydel.label" />
 									</strong>
 								}>
-								<option value="" />
+								{!this.state.bydelId && (
+									<option value="" disabled={true}>
+										Velg bydel
+									</option>
+								)}
 								{valgtKommune.bydeler.map(bydel => (
 									<option value={bydel.id} key={bydel.id}>
 										{bydel.navn}

@@ -47,7 +47,6 @@ declare module "nav-frontend-skjema" {
 		checked?: boolean;
 		feil?: Feil;
 		checboxRef?: Function;
-		value: string;
 		defaultChecked?: boolean;
 	}
 

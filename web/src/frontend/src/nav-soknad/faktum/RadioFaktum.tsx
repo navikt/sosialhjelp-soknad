@@ -1,40 +1,36 @@
 import * as React from "react";
 import { Radio } from "nav-frontend-skjema";
-import { connect } from "react-redux";
-import { SoknadAppState, FaktumComponentProps } from "../redux/faktaReducer";
-import { setFaktumVerdi } from "../redux/faktaActions";
-import { DispatchProps } from "../redux/faktaTypes";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
-import { getRadioFaktumTekst, getFaktumVerdi } from "../utils";
-import { finnFaktum } from "../redux/faktaUtils";
+import { getRadioFaktumTekst } from "../utils";
+import {
+	faktumComponent,
+	InjectedFaktumComponentProps
+} from "./FaktumComponent";
 
 interface OwnProps {
-	option: string;
+	value: string;
 	faktumKey: string;
 	disabled?: boolean;
 }
 
 class RadioFaktum extends React.Component<
-	OwnProps & FaktumComponentProps & DispatchProps & InjectedIntlProps,
+	OwnProps & InjectedFaktumComponentProps & InjectedIntlProps,
 	{}
 > {
 	render() {
-		const { faktumKey, option, disabled, fakta, dispatch, intl } = this.props;
-		const tekster = getRadioFaktumTekst(intl, faktumKey, option);
+		const { faktumKey, value, disabled, intl } = this.props;
+		const tekster = getRadioFaktumTekst(intl, faktumKey, value);
 		return (
 			<Radio
 				name={faktumKey}
-				checked={getFaktumVerdi(fakta, faktumKey) === option}
+				checked={this.props.getFaktumVerdi() === value}
 				disabled={disabled}
-				value={option}
-				onChange={(evt: any) =>
-					dispatch(
-						setFaktumVerdi(finnFaktum(faktumKey, this.props.fakta), option)
-					)}
+				value={value}
+				onChange={(evt: any) => this.props.setFaktumVerdi(value)}
 				label={
 					<LabelMedHjelpetekst
-						id={`${faktumKey}.${option}`}
+						id={`${faktumKey}.${value}`}
 						label={tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>
@@ -44,9 +40,4 @@ class RadioFaktum extends React.Component<
 	}
 }
 
-export default connect((state: SoknadAppState, props: OwnProps) => {
-	return {
-		fakta: state.fakta.data,
-		faktumKey: props.faktumKey
-	};
-})(injectIntl(RadioFaktum));
+export default injectIntl(faktumComponent()(RadioFaktum));
