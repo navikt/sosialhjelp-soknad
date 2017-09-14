@@ -19,6 +19,11 @@ class StegFaktum extends React.Component<
 	OwnProps & StateProps & InjectedIntlProps,
 	{}
 > {
+
+	componentDidMount() {
+		document.getElementById("stegTittel").scrollIntoView();
+	}
+
 	render() {
 		const {
 			tittelId,
