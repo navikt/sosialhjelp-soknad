@@ -493,7 +493,7 @@
 		"faktumId": 550493,
 		"soknadId": 19294,
 		"parrentFaktum": 550490,
-		"key": "inntekt.eierandeler.type.true.campingvogn",
+		"key": "inntekt.eierandeler.true.type.campingvogn",
 		"value": null,
 		"faktumEgenskaper": [],
 		"properties": {},

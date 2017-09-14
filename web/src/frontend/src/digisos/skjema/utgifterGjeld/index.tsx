@@ -94,7 +94,10 @@ class UtgifterGjeld extends React.Component<
 
 						<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
 							<CheckboxFaktum
-								faktumKey={`${barneUtgifter.faktum}.fritidsaktivitet"`}
+								faktumKey={createCheckboxFaktumKey(
+									barneUtgifter.faktum,
+									"fritidsaktivitet"
+								)}
 							/>
 							<CheckboxFaktum
 								faktumKey={createCheckboxFaktumKey(
