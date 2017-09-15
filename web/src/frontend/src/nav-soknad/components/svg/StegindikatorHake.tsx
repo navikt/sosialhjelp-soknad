@@ -4,6 +4,7 @@ import * as React from "react";
 
 const StegindikatorHake: React.StatelessComponent<{}> = () => (
 	<svg
+		focusable="false"
 		width="32"
 		height="32"
 		viewBox="0 0 32 32"

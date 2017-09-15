@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getIntlTextOrKey } from "../utils";
-import Steg from "../components/steg";
+import Feiloppsummering from "../components/validering/Feiloppsummering";
 import { SoknadAppState } from "../redux/faktaReducer";
 import { Valideringsfeil } from "../validering/types";
 
@@ -11,34 +11,44 @@ interface OwnProps extends React.Props<any> {
 }
 
 interface StateProps {
-	feilmeldinger?: Valideringsfeil[];
+	valideringsfeil?: Valideringsfeil[];
 	visFeilmeldinger?: boolean;
+	stegValidertCounter?: number;
 }
 
 class StegFaktum extends React.Component<
 	OwnProps & StateProps & InjectedIntlProps,
 	{}
 > {
-
+	tittel: HTMLElement;
 	componentDidMount() {
-		document.getElementById("stegTittel").scrollIntoView();
+		this.tittel.scrollIntoView();
 	}
 
 	render() {
 		const {
 			tittelId,
-			feilmeldinger,
+			valideringsfeil,
 			visFeilmeldinger,
+			stegValidertCounter,
 			intl,
 			children
 		} = this.props;
 		return (
-			<Steg
-				tittel={getIntlTextOrKey(intl, tittelId)}
-				feilmeldinger={feilmeldinger}
-				visFeilmeldinger={visFeilmeldinger}>
+			<div className="skjema-steg skjema-content">
+				<div className="skjema-steg__feiloppsummering">
+					<Feiloppsummering
+						skjemanavn="digisos"
+						valideringsfeil={valideringsfeil}
+						stegValidertCounter={stegValidertCounter}
+						visFeilliste={visFeilmeldinger}
+					/>
+				</div>
+				<h2 className="skjema-steg__tittel" ref={c => (this.tittel = c)}>
+					{getIntlTextOrKey(intl, tittelId)}
+				</h2>
 				{children}
-			</Steg>
+			</div>
 		);
 	}
 }
@@ -48,10 +58,11 @@ export default injectIntl(
 		StateProps,
 		{},
 		OwnProps & InjectedIntlProps
-	>((state: SoknadAppState, props: OwnProps) => {
+	>((state: SoknadAppState, props: OwnProps): StateProps => {
 		return {
-			feilmeldinger: state.validering.feil,
-			visFeilmeldinger: true
+			valideringsfeil: state.validering.feil,
+			visFeilmeldinger: true,
+			stegValidertCounter: state.validering.stegValidertCounter
 		};
 	})(StegFaktum)
 );
