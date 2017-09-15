@@ -17,6 +17,8 @@ router.get('/informasjon/tekster', function (req, res) {
 });
 
 const brukerBehandlingId = "1000B7FGM";
+const soknad = utils.lesMockDataFil("soknad.json");
+const fakta = soknad.fakta;
 
 // Søknadsressurser
 router.post("/soknader", function (req, res) {
@@ -26,6 +28,7 @@ router.post("/soknader", function (req, res) {
 });
 
 router.get("/soknader/:brukerBehandlingId", function (req, res) {
+	console.log("get soknader");
 	if(req.headers['content-type'] === 'text/html') {
 		res.send(utils.lesMockHtmlFil("oppsummering.html"));
 	} else {
@@ -42,25 +45,26 @@ router.get("/soknader/:brukerBehandlingId/oppsummering", function (req, res) {
     res.send(utils.lesMockHtmlFil("oppsummering.html"));
 });
 
-// Faktaressurser
-var fakta = utils.lesMockDataFil("fakta.json");
-
 router.get("/soknader/:brukerBehandlingId/fakta", function (req, res) {
-    res.json(fakta);
+	console.log("get fakta");
+	res.json(fakta);
 });
 
 router.get("/fakta/:faktumId", function (req, res) {
-    res.json(utils.hentFaktum(req.params.faktumId, fakta));
+	console.log("get faktum");
+	res.json(utils.hentFaktum(req.params.faktumId));
 });
 
 router.put("/fakta/:faktumId", function (req, res) {
-    fakta[utils.finnFaktaIndex(req.params.faktumId, fakta)] = req.body;
-    res.json(utils.hentFaktum(req.params.faktumId, fakta));
+	const faktum = req.body;
+	fakta[utils.finnFaktaIndex(faktum.faktumId, fakta)] = faktum;
+	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
 });
 
 router.post("/fakta/:faktumId", function (req, res) {
-    fakta.push(req.body);
-    res.json(utils.hentFaktum(req.params.faktumId, fakta));
+	const faktum = req.body;
+	fakta.push(faktum);
+	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
 });
 
 app.use('/', router);
