@@ -28,8 +28,10 @@ class StegFaktum extends React.Component<
 			intl,
 			children
 		} = this.props;
+		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn") + " - "
+			+ getIntlTextOrKey(intl, tittelId);
 		return (
-			<DocumentTitle title={"Søknad - " + getIntlTextOrKey(intl, tittelId)}>
+			<DocumentTitle title={title}>
 				<Steg
 					tittel={getIntlTextOrKey(intl, tittelId)}
 					feilmeldinger={feilmeldinger}
