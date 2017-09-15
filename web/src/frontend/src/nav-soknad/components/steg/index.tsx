@@ -24,7 +24,7 @@ const Steg: React.StatelessComponent<StegProps> = ({
 					visFeilliste={visFeilmeldinger}
 				/>
 			</div>
-			<h2 className="skjema-steg__tittel">{tittel}</h2>
+			<h2 id="stegTittel" className="skjema-steg__tittel">{tittel}</h2>
 			{children}
 		</div>
 	);
