@@ -7,6 +7,8 @@ import {
 } from "./FaktumComponent";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
+export type InputTypes = "text" | "number" | "email" | "tel";
+
 interface State {
 	value: string;
 }
@@ -16,6 +18,7 @@ interface OwnProps {
 	disabled?: boolean;
 	maxLength?: number;
 	bredde?: InputBredde;
+	type?: InputTypes;
 }
 
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -47,11 +50,20 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { faktumKey, disabled, feil, intl, maxLength, bredde } = this.props;
+		const {
+			faktumKey,
+			disabled,
+			type,
+			feil,
+			intl,
+			maxLength,
+			bredde
+		} = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey);
 		return (
 			<Input
 				className="input--xxl faktumInput"
+				type={type}
 				name={faktumKey}
 				disabled={disabled}
 				inputRef={(c: any) => (this.input = c)}
