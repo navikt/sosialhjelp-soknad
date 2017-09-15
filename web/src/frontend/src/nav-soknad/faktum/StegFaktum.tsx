@@ -20,6 +20,11 @@ class StegFaktum extends React.Component<
 	OwnProps & StateProps & InjectedIntlProps,
 	{}
 > {
+	tittel: HTMLElement;
+	componentDidMount() {
+		this.tittel.focus();
+	}
+
 	render() {
 		const {
 			tittelId,
@@ -39,7 +44,10 @@ class StegFaktum extends React.Component<
 						visFeilliste={visFeilmeldinger}
 					/>
 				</div>
-				<h2 className="skjema-steg__tittel">
+				<h2
+					className="skjema-steg__tittel"
+					ref={c => (this.tittel = c)}
+					tabIndex={-1}>
 					{getIntlTextOrKey(intl, tittelId)}
 				</h2>
 				{children}
