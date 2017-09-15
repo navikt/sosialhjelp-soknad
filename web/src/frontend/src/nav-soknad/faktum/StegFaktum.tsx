@@ -44,10 +44,7 @@ class StegFaktum extends React.Component<
 						visFeilliste={visFeilmeldinger}
 					/>
 				</div>
-				<h2
-					className="skjema-steg__tittel"
-					ref={c => (this.tittel = c)}
-					tabIndex={-1}>
+				<h2 className="skjema-steg__tittel" ref={c => (this.tittel = c)}>
 					{getIntlTextOrKey(intl, tittelId)}
 				</h2>
 				{children}
