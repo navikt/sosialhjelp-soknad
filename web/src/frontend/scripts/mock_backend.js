@@ -26,12 +26,16 @@ router.post("/soknader", function (req, res) {
 });
 
 router.get("/soknader/:brukerBehandlingId", function (req, res) {
-    if(req.accepts('application/json') ) {
-        res.json(utils.lesMockDataFil("soknad.json"));
-    } else {
-        res.status(406);
-        res.json({feil: "Forventer Accept: application/json i header"});
-    }
+	if(req.headers['content-type'] === 'text/html') {
+		res.send(utils.lesMockHtmlFil("oppsummering.html"));
+	} else {
+		if(req.accepts('application/json') ) {
+			res.json(utils.lesMockDataFil("soknad.json"));
+		} else {
+			res.status(406);
+			res.json({feil: "Forventer Accept: application/json i header"});
+		}
+   }
 });
 
 router.get("/soknader/:brukerBehandlingId/oppsummering", function (req, res) {
