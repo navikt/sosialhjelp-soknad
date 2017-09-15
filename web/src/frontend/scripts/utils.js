@@ -52,9 +52,13 @@ exports.lesSpraakfil = function() {
 	return output;
 };
 
-exports.lesMockDataFil = function(filnavn) {
+exports.getFilePath = function(filnavn) {
 	var directories = [".", "scripts", "mock_data", filnavn];
-	var fileName = directories.join(path.sep);
+	return directories.join(path.sep);
+};
+
+exports.lesMockDataFil = function(filnavn) {
+	const fileName = this.getFilePath(filnavn);
 	if (!fs.existsSync(fileName)) {
 		console.log("Advarsel! Finner mockdata fil " + fileName);
 	} else {
@@ -65,8 +69,7 @@ exports.lesMockDataFil = function(filnavn) {
 };
 
 exports.lesMockHtmlFil = function(filnavn) {
-	var directories = [".", "scripts", "mock_data", filnavn];
-	var fileName = directories.join(path.sep);
+	const fileName = this.getFilePath(filnavn);
 	console.log("Leser html mockdatafil");
 	if (!fs.existsSync(fileName)) {
 		console.log("Advarsel! Finner ikke mockdata htmlfil " + fileName);
@@ -83,16 +86,15 @@ exports.delayAllResponses = function(millis) {
 	};
 };
 
-const finnFaktaIndex = function(faktaId, fakta) {
-    for (var i = 0; i < fakta.length; i++) {
+exports.finnFaktaIndex = function(faktaId, fakta) {
+	for (var i = 0; i < fakta.length; i++) {
         if (faktaId.toString() === (fakta[i].faktumId && fakta[i].faktumId.toString())) {
             return i;
         }
     }
 };
 
-exports.finnFaktaIndex = finnFaktaIndex;
 
 exports.hentFaktum = function(faktaId, fakta) {
-	return fakta[finnFaktaIndex(faktaId, fakta)];
+	return fakta[this.finnFaktaIndex(faktaId, fakta)];
 };
