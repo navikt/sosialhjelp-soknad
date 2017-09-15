@@ -22,7 +22,7 @@ class StegFaktum extends React.Component<
 > {
 	tittel: HTMLElement;
 	componentDidMount() {
-		this.tittel.focus();
+		this.tittel.scrollIntoView();
 	}
 
 	render() {
