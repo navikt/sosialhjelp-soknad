@@ -3,8 +3,9 @@ import "./styles/app.css";
 import { FormattedMessage } from "react-intl";
 import { Route, Switch } from "react-router";
 import Start from "./start";
-import Skjema from "./skjema";
+import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
+import UkjentSide from "../nav-soknad/components/feilmeldinger/ukjentSide";
 
 class App extends React.Component<{}, {}> {
 	render() {
@@ -15,8 +16,9 @@ class App extends React.Component<{}, {}> {
 				</h1>
 				<Switch>
 					<Route path={`/informasjon`} exact={true} component={Start}/>
-					<Route path={`/skjema/:brukerBehandlingId`} component={Skjema}/>
+					<Route path={`/skjema/:brukerBehandlingId`} component={SkjemaRouter}/>
 					<Route path={`/kvittering`} component={Kvittering}/>
+					<Route component={UkjentSide} />
 				</Switch>
 				{this.props.children}
 			</div>
