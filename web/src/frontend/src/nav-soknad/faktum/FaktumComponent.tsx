@@ -21,7 +21,8 @@ import { Feil } from "nav-frontend-skjema";
 interface Props {
 	faktumKey: string;
 	/** Array med valideringsfunksjoner som skal brukes for komponenten */
-	valideringer?: FaktumValideringFunc[];
+	validerFunc?: FaktumValideringFunc[];
+	/** Alle registrerte valideringsregler i state */
 	valideringsregler?: FaktumValideringsregler[];
 }
 
@@ -59,11 +60,11 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		componentWillMount() {
-			if (this.props.valideringer) {
+			if (this.props.validerFunc) {
 				this.props.dispatch(
 					registerFaktumValidering({
 						faktumKey: this.props.faktumKey,
-						valideringer: this.props.valideringer
+						valideringer: this.props.validerFunc
 					})
 				);
 			}
@@ -73,7 +74,6 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
 		}
 
-		/** Kan ikke bruke faktumKey fra props, i og med checkbox modifiserer denne med option value */
 		setFaktumVerdi(verdi: string) {
 			this.props.dispatch(
 				setFaktumVerdiOnState(
@@ -83,7 +83,6 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			);
 		}
 
-		/** Kan ikke bruke faktumKey fra props, i og med checkbox modifiserer denne med option value */
 		getFaktumVerdi(): string {
 			return getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
 		}

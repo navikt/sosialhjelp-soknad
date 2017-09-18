@@ -1,6 +1,6 @@
 import { Valideringsfeil } from "../../validering/types";
 
-/** Filtrerer slik at det kun er en feilmelding */
+/** Filtrerer slik at det kun er en feilmelding per faktum */
 export const filtrerFeilmeldinger = (
 	feilmeldinger: Valideringsfeil[]
 ): Valideringsfeil[] => {
