@@ -23,7 +23,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 		const {
 			visible,
 			renderValideringsfeil = false,
-			feil,
+			feilkode,
 			intl,
 			children
 		} = this.props;
@@ -32,11 +32,12 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 		}
 		const tekster = getFaktumSporsmalTekst(intl, this.props.faktumKey);
 		const cls = classNames("skjema-fieldset", {
-			"skjema-fieldset--harFeil": feil !== null && feil !== undefined
+			"skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined
 		});
 		return (
 			<div className="skjema-sporsmal">
-				<SkjemaGruppe feil={renderValideringsfeil ? feil : null}>
+				<SkjemaGruppe
+					feil={renderValideringsfeil ? this.props.getFeil(intl) : null}>
 					<fieldset className={cls}>
 						<legend>{tekster.sporsmal}</legend>
 						{tekster.hjelpetekst ? (

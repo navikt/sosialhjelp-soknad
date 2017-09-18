@@ -19,7 +19,6 @@ class StegFaktum extends React.Component<
 	OwnProps & StateProps & InjectedIntlProps,
 	{}
 > {
-
 	componentDidMount() {
 		document.getElementById("stegTittel").scrollIntoView();
 	}
@@ -51,7 +50,7 @@ export default injectIntl(
 	>((state: SoknadAppState, props: OwnProps) => {
 		return {
 			feilmeldinger: state.validering.feil,
-			visFeilmeldinger: true
+			visFeilmeldinger: state.validering.visValideringsfeil
 		};
 	})(StegFaktum)
 );

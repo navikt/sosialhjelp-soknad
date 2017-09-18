@@ -71,7 +71,8 @@ const valideringReducer: Reducer<ValideringState, ValideringActionTypes> = (
 		case ValideringActionTypeKeys.SET_FAKTA_VALIDERINGSFEIL:
 			return {
 				...state,
-				feil: action.valideringsfeil
+				feil: action.valideringsfeil,
+				visValideringsfeil: true
 			};
 		case ValideringActionTypeKeys.CLEAR_FAKTA_VALIDERINGSFEIL:
 			return {

@@ -1,5 +1,3 @@
-import { Feil } from "nav-frontend-skjema";
-
 export enum ValideringKey {
 	PAKREVD = "validering.pakrevd",
 	MIN_LENGDE = "validering.minLengde",
@@ -11,7 +9,7 @@ export enum ValideringKey {
 
 export interface Valideringsfeil {
 	faktumKey: string;
-	feil: Feil;
+	feilkode: string;
 }
 
 export type FaktumValideringFunc = (value: string) => ValideringKey;

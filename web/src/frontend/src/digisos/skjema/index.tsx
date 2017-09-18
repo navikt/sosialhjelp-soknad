@@ -72,8 +72,7 @@ class Skjema extends React.Component<
 
 		const valideringsfeil = validerAlleFaktum(
 			this.props.fakta,
-			this.props.valideringer,
-			this.props.intl
+			this.props.valideringer
 		);
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());

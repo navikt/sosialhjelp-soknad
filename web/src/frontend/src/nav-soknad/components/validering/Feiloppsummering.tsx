@@ -2,6 +2,8 @@ import * as React from "react";
 import { Undertittel } from "nav-frontend-typografi";
 import "./feiloppsummering.css";
 import { Valideringsfeil } from "../../validering/types";
+import { filtrerFeilmeldinger } from "./feilUtils";
+import { FormattedMessage } from "react-intl";
 
 const getElementFromFaktumKey = (faktumKey: string): HTMLElement => {
 	if (document.getElementById(faktumKey)) {
@@ -25,16 +27,44 @@ const scrollToElement = (evt: React.MouseEvent<any>, faktumKey: string) => {
 
 const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 	faktumKey,
-	feil
+	feilkode
 }) => {
 	return (
 		<li className="feiloppsummering__feil">
 			<a href={`#`} onClick={evt => scrollToElement(evt, faktumKey)}>
-				{feil.feilmelding}
+				<FormattedMessage id={feilkode} />
 			</a>
 		</li>
 	);
 };
+
+class Feilliste extends React.Component<
+	{ feilmeldinger: Valideringsfeil[] },
+	{}
+> {
+	element: HTMLDivElement;
+	componentDidMount() {
+		this.element.focus();
+	}
+	render() {
+		const { feilmeldinger } = this.props;
+		return (
+			<div
+				className="panel panel--feiloppsummering"
+				tabIndex={-1}
+				ref={c => (this.element = c)}>
+				<Undertittel className="feiloppsummering__tittel blokk-s">
+					Det er {feilmeldinger.length} feil i skjemaet
+				</Undertittel>
+				<ul className="feiloppsummering__liste">
+					{feilmeldinger.map((feilmld, index) => {
+						return <FeillisteMelding key={index} {...feilmld} />;
+					})}
+				</ul>
+			</div>
+		);
+	}
+}
 
 interface Props {
 	skjemanavn: string;
@@ -46,46 +76,13 @@ interface Props {
 class Feiloppsummering extends React.Component<Props, {}> {
 	oppsummering: HTMLDivElement;
 
-	constructor(props: Props) {
-		super(props);
-		this.getFeilmeldinger = this.getFeilmeldinger.bind(this);
-	}
-
-	getFeilmeldinger(props: Props): Valideringsfeil[] {
-		if (!props.feilmeldinger) {
-			return [];
-		}
-
-		return props.feilmeldinger.reduce(
-			(arr: Valideringsfeil[], feil: Valideringsfeil) =>
-				arr.findIndex(f => f.faktumKey === feil.faktumKey) >= 0
-					? arr
-					: [...arr, feil],
-			[]
-		);
-	}
-
 	render() {
-		const feilmeldinger = this.getFeilmeldinger(this.props);
+		const feilmeldinger = filtrerFeilmeldinger(this.props.feilmeldinger);
 		return (
 			<div aria-live="polite" role="alert">
 				{(() => {
 					if (feilmeldinger.length > 0 && this.props.visFeilliste) {
-						return (
-							<div
-								className="panel panel--feiloppsummering"
-								ref={c => (this.oppsummering = c)}
-								tabIndex={-1}>
-								<Undertittel className="feiloppsummering__tittel blokk-s">
-									Det er {feilmeldinger.length} feil i skjemaet
-								</Undertittel>
-								<ul className="feiloppsummering__liste">
-									{feilmeldinger.map((feilmld, index) => {
-										return <FeillisteMelding key={index} {...feilmld} />;
-									})}
-								</ul>
-							</div>
-						);
+						return <Feilliste feilmeldinger={feilmeldinger} />;
 					}
 					return null;
 				})()}

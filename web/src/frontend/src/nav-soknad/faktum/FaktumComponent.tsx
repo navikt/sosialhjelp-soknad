@@ -1,28 +1,37 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { DispatchProps, Faktum } from "../redux/faktaTypes";
-import { Feil } from "nav-frontend-skjema";
 import { SoknadAppState } from "../redux/faktaReducer";
 import { setFaktumVerdi as setFaktumVerdiOnState } from "../redux/faktaActions";
 import { finnFaktum } from "../redux/faktaUtils";
 import { getFaktumVerdi } from "../utils";
-import { FaktumValideringFunc } from "../validering/types";
+import { InjectedIntl } from "react-intl";
+import {
+	FaktumValideringFunc,
+	FaktumValideringsregler
+} from "../validering/types";
 import {
 	registerFaktumValidering,
-	unregisterFaktumValidering
+	unregisterFaktumValidering,
+	setFaktumValideringsfeil
 } from "../redux/valideringActions";
+import { validerFaktum } from "../validering/utils";
+import { Feil } from "nav-frontend-skjema";
 
 interface Props {
 	faktumKey: string;
 	/** Array med valideringsfunksjoner som skal brukes for komponenten */
 	valideringer?: FaktumValideringFunc[];
+	valideringsregler?: FaktumValideringsregler[];
 }
 
 interface InjectedProps {
 	fakta: Faktum[];
-	feil?: Feil;
+	feilkode?: string;
 	setFaktumVerdi: (verdi: string) => void;
 	getFaktumVerdi: () => string;
+	validerFaktum: () => string;
+	getFeil: (intl: InjectedIntl) => Feil;
 }
 
 export type InjectedFaktumComponentProps = InjectedProps & Props;
@@ -45,6 +54,8 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			super(props);
 			this.setFaktumVerdi = this.setFaktumVerdi.bind(this);
 			this.getFaktumVerdi = this.getFaktumVerdi.bind(this);
+			this.validerFaktum = this.validerFaktum.bind(this);
+			this.getFeil = this.getFeil.bind(this);
 		}
 
 		componentWillMount() {
@@ -77,12 +88,32 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			return getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
 		}
 
+		validerFaktum() {
+			const feil = validerFaktum(
+				this.props.fakta,
+				this.props.faktumKey,
+				this.props.valideringsregler
+			);
+			this.props.dispatch(setFaktumValideringsfeil(this.props.faktumKey, feil));
+		}
+
+		getFeil(intl: InjectedIntl) {
+			if (!this.props.feilkode) {
+				return null;
+			}
+			return {
+				feilmelding: intl.formatHTMLMessage({ id: this.props.feilkode })
+			};
+		}
+
 		render(): JSX.Element {
 			return (
 				<Component
 					{...this.props}
 					setFaktumVerdi={this.setFaktumVerdi}
 					getFaktumVerdi={this.getFaktumVerdi}
+					validerFaktum={this.validerFaktum}
+					getFeil={this.getFeil}
 				/>
 			);
 		}
@@ -90,16 +121,21 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 
 	interface StateFromProps {
 		fakta: Faktum[];
-		feil?: Feil;
+		feilkode?: string;
+		valideringsregler?: FaktumValideringsregler[];
 	}
 
-	const mapStateToProps = (state: SoknadAppState, props: Props) => {
+	const mapStateToProps = (
+		state: SoknadAppState,
+		props: Props
+	): StateFromProps => {
 		const feil = state.validering.feil.find(
 			f => f.faktumKey === props.faktumKey
 		);
 		return {
 			fakta: state.fakta.data,
-			feil: feil ? feil.feil : null
+			feilkode: feil ? feil.feilkode : null,
+			valideringsregler: state.validering.valideringsregler
 		};
 	};
 
