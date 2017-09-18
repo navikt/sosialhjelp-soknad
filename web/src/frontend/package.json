@@ -53,6 +53,7 @@
 		"eslint-config-prettier": "^2.4.0",
 		"eslint-plugin-prettier": "^2.2.0",
 		"fs-extra": "2.1.2",
+		"jest-cli": "^21.1.0",
 		"nav-frontend-alertstriper-style": "^0.2.2",
 		"nav-frontend-grid-style": "^0.2.1",
 		"nav-frontend-hjelpetekst-style": "^0.3.1",
