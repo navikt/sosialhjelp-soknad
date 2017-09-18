@@ -2,42 +2,60 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getIntlTextOrKey } from "../utils";
-import Steg from "../components/steg";
+import Feiloppsummering from "../components/validering/Feiloppsummering";
 import { SoknadAppState } from "../redux/faktaReducer";
 import { Valideringsfeil } from "../validering/types";
+const DocumentTitle = require("react-document-title");
 
 interface OwnProps extends React.Props<any> {
 	tittelId: string;
 }
 
 interface StateProps {
-	feilmeldinger?: Valideringsfeil[];
+	valideringsfeil?: Valideringsfeil[];
 	visFeilmeldinger?: boolean;
+	stegValidertCounter?: number;
 }
 
 class StegFaktum extends React.Component<
 	OwnProps & StateProps & InjectedIntlProps,
 	{}
 > {
+	tittel: HTMLElement;
 	componentDidMount() {
-		document.getElementById("stegTittel").scrollIntoView();
+		this.tittel.scrollIntoView();
 	}
 
 	render() {
 		const {
 			tittelId,
-			feilmeldinger,
+			valideringsfeil,
 			visFeilmeldinger,
+			stegValidertCounter,
 			intl,
 			children
 		} = this.props;
+		const title =
+			getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn") +
+			" - " +
+			getIntlTextOrKey(intl, tittelId);
 		return (
-			<Steg
-				tittel={getIntlTextOrKey(intl, tittelId)}
-				feilmeldinger={feilmeldinger}
-				visFeilmeldinger={visFeilmeldinger}>
-				{children}
-			</Steg>
+			<DocumentTitle title={title}>
+				<div className="skjema-steg skjema-content">
+					<div className="skjema-steg__feiloppsummering">
+						<Feiloppsummering
+							skjemanavn="digisos"
+							valideringsfeil={valideringsfeil}
+							stegValidertCounter={stegValidertCounter}
+							visFeilliste={visFeilmeldinger}
+						/>
+					</div>
+					<h2 className="skjema-steg__tittel" ref={c => (this.tittel = c)}>
+						{getIntlTextOrKey(intl, tittelId)}
+					</h2>
+					{children}
+				</div>
+			</DocumentTitle>
 		);
 	}
 }
@@ -47,10 +65,11 @@ export default injectIntl(
 		StateProps,
 		{},
 		OwnProps & InjectedIntlProps
-	>((state: SoknadAppState, props: OwnProps) => {
+	>((state: SoknadAppState, props: OwnProps): StateProps => {
 		return {
-			feilmeldinger: state.validering.feil,
-			visFeilmeldinger: state.validering.visValideringsfeil
+			visFeilmeldinger: state.validering.visValideringsfeil,
+			valideringsfeil: state.validering.feil,
+			stegValidertCounter: state.validering.stegValidertCounter
 		};
 	})(StegFaktum)
 );

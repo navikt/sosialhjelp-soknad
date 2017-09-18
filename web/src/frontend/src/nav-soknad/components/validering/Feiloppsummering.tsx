@@ -38,51 +38,47 @@ const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 	);
 };
 
-class Feilliste extends React.Component<
-	{ feilmeldinger: Valideringsfeil[] },
-	{}
-> {
-	element: HTMLDivElement;
-	componentDidMount() {
-		this.element.focus();
-	}
-	render() {
-		const { feilmeldinger } = this.props;
-		return (
-			<div
-				className="panel panel--feiloppsummering"
-				tabIndex={-1}
-				ref={c => (this.element = c)}>
-				<Undertittel className="feiloppsummering__tittel blokk-s">
-					Det er {feilmeldinger.length} feil i skjemaet
-				</Undertittel>
-				<ul className="feiloppsummering__liste">
-					{feilmeldinger.map((feilmld, index) => {
-						return <FeillisteMelding key={index} {...feilmld} />;
-					})}
-				</ul>
-			</div>
-		);
-	}
-}
-
 interface Props {
 	skjemanavn: string;
-	settFokus?: boolean;
 	visFeilliste?: boolean;
-	feilmeldinger?: Valideringsfeil[];
+	stegValidertCounter?: number;
+	valideringsfeil?: Valideringsfeil[];
 }
 
 class Feiloppsummering extends React.Component<Props, {}> {
 	oppsummering: HTMLDivElement;
 
+	componentDidUpdate(prevProps: Props) {
+		if (
+			this.props.visFeilliste &&
+			this.props.valideringsfeil.length > 0 &&
+			this.props.stegValidertCounter > prevProps.stegValidertCounter
+		) {
+			this.oppsummering.focus();
+		}
+	}
+
 	render() {
-		const feilmeldinger = filtrerFeilmeldinger(this.props.feilmeldinger);
+		const feilmeldinger = filtrerFeilmeldinger(this.props.valideringsfeil);
 		return (
 			<div aria-live="polite" role="alert">
 				{(() => {
 					if (feilmeldinger.length > 0 && this.props.visFeilliste) {
-						return <Feilliste feilmeldinger={feilmeldinger} />;
+						return (
+							<div
+								className="panel panel--feiloppsummering"
+								tabIndex={-1}
+								ref={c => (this.oppsummering = c)}>
+								<Undertittel className="feiloppsummering__tittel blokk-s">
+									Det er {feilmeldinger.length} feil i skjemaet
+								</Undertittel>
+								<ul className="feiloppsummering__liste">
+									{feilmeldinger.map((feilmld, index) => {
+										return <FeillisteMelding key={index} {...feilmld} />;
+									})}
+								</ul>
+							</div>
+						);
 					}
 					return null;
 				})()}
