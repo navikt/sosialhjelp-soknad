@@ -47,7 +47,7 @@ class InputFaktum extends React.Component<Props, State> {
 
 	handleOnBlur() {
 		this.props.setFaktumVerdi(this.state.value);
-		this.props.validerFaktum();
+		this.props.validerFaktum(this.state.value);
 	}
 
 	render() {

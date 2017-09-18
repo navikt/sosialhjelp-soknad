@@ -30,7 +30,7 @@ interface InjectedProps {
 	feilkode?: string;
 	setFaktumVerdi: (verdi: string) => void;
 	getFaktumVerdi: () => string;
-	validerFaktum: () => string;
+	validerFaktum: (verdi: string) => string;
 	getFeil: (intl: InjectedIntl) => Feil;
 }
 
@@ -88,10 +88,11 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			return getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
 		}
 
-		validerFaktum() {
+		validerFaktum(verdi: string) {
 			const feil = validerFaktum(
 				this.props.fakta,
 				this.props.faktumKey,
+				verdi,
 				this.props.valideringsregler
 			);
 			this.props.dispatch(setFaktumValideringsfeil(this.props.faktumKey, feil));

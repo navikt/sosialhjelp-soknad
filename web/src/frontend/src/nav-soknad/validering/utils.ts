@@ -9,6 +9,7 @@ import { getFaktumVerdi } from "../utils";
 export function validerFaktum(
 	fakta: Faktum[],
 	faktumKey: string,
+	verdi: string,
 	valideringsregler: FaktumValideringsregler[]
 ) {
 	const valideringsfeil: Valideringsfeil[] = [];
@@ -16,9 +17,8 @@ export function validerFaktum(
 		vr => vr.faktumKey === faktumKey
 	);
 	if (faktumvalidering) {
-		const value = getFaktumVerdi(fakta, faktumKey);
 		faktumvalidering.valideringer.forEach(v => {
-			const feilKey = v(value);
+			const feilKey = v(verdi);
 			if (feilKey) {
 				valideringsfeil.push({
 					faktumKey: faktumvalidering.faktumKey,
@@ -42,6 +42,7 @@ export function validerAlleFaktum(
 		const feil = validerFaktum(
 			fakta,
 			faktumvalidering.faktumKey,
+			getFaktumVerdi(fakta, faktumvalidering.faktumKey),
 			valideringsregler
 		);
 		if (feil) {
