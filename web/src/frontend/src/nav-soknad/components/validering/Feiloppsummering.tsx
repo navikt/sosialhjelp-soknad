@@ -38,9 +38,9 @@ const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 
 interface Props {
 	skjemanavn: string;
-	settFokus?: boolean;
 	visFeilliste?: boolean;
-	feilmeldinger?: Valideringsfeil[];
+	stegValidertCounter?: number;
+	valideringsfeil?: Valideringsfeil[];
 }
 
 class Feiloppsummering extends React.Component<Props, {}> {
@@ -51,12 +51,22 @@ class Feiloppsummering extends React.Component<Props, {}> {
 		this.getFeilmeldinger = this.getFeilmeldinger.bind(this);
 	}
 
+	componentDidUpdate(prevProps: Props) {
+		if (
+			this.props.visFeilliste &&
+			this.props.valideringsfeil.length > 0 &&
+			this.props.stegValidertCounter > prevProps.stegValidertCounter
+		) {
+			this.oppsummering.focus();
+		}
+	}
+
 	getFeilmeldinger(props: Props): Valideringsfeil[] {
-		if (!props.feilmeldinger) {
+		if (!props.valideringsfeil) {
 			return [];
 		}
 
-		return props.feilmeldinger.reduce(
+		return props.valideringsfeil.reduce(
 			(arr: Valideringsfeil[], feil: Valideringsfeil) =>
 				arr.findIndex(f => f.faktumKey === feil.faktumKey) >= 0
 					? arr
