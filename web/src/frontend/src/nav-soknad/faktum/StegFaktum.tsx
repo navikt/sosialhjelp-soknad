@@ -5,6 +5,7 @@ import { getIntlTextOrKey } from "../utils";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import { SoknadAppState } from "../redux/faktaReducer";
 import { Valideringsfeil } from "../validering/types";
+const DocumentTitle = require("react-document-title");
 
 interface OwnProps extends React.Props<any> {
 	tittelId: string;
@@ -34,21 +35,25 @@ class StegFaktum extends React.Component<
 			intl,
 			children
 		} = this.props;
+		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn") + " - "
+			+ getIntlTextOrKey(intl, tittelId);
 		return (
-			<div className="skjema-steg skjema-content">
-				<div className="skjema-steg__feiloppsummering">
-					<Feiloppsummering
-						skjemanavn="digisos"
-						valideringsfeil={valideringsfeil}
-						stegValidertCounter={stegValidertCounter}
-						visFeilliste={visFeilmeldinger}
-					/>
+			<DocumentTitle title={title}>
+				<div className="skjema-steg skjema-content">
+					<div className="skjema-steg__feiloppsummering">
+						<Feiloppsummering
+							skjemanavn="digisos"
+							valideringsfeil={valideringsfeil}
+							stegValidertCounter={stegValidertCounter}
+							visFeilliste={visFeilmeldinger}
+						/>
+					</div>
+					<h2 className="skjema-steg__tittel" ref={c => (this.tittel = c)}>
+						{getIntlTextOrKey(intl, tittelId)}
+					</h2>
+					{children}
 				</div>
-				<h2 className="skjema-steg__tittel" ref={c => (this.tittel = c)}>
-					{getIntlTextOrKey(intl, tittelId)}
-				</h2>
-				{children}
-			</div>
+			</DocumentTitle>
 		);
 	}
 }
