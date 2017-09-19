@@ -66,17 +66,18 @@ class Bosted extends React.Component<
 		return (
 			<form onSubmit={e => this.opprettSoknad(e)}>
 				<div>
-					<div className="blokk-l">
+					<div className="blokk-m">
 						<Select
 							bredde="m"
 							defaultValue=""
 							onChange={(evt: any) =>
 								this.setState({ kommuneId: evt.target.value })}
 							label={
-								<strong>
+								<div className="bosted__selectLabel bosted__tekst--extraPadding">
 									<FormattedMessage id="personalia.kommune.label" />
-								</strong>
-							}>
+								</div>
+							}
+						>
 							{!this.state.kommuneId && (
 								<option value="" disabled={true}>
 									Velg by
@@ -91,18 +92,21 @@ class Bosted extends React.Component<
 					</div>
 
 					{valgtKommune && valgtKommune.bydeler ? (
-						<div className="blokk-l">
-							<Arrow />
+						<div className="blokk-m">
+							<div className="bosted__bydelArrow">
+								<Arrow />
+							</div>
 							<Select
 								bredde="m"
 								defaultValue=""
 								onChange={(evt: any) =>
 									this.setState({ bydelId: evt.target.value })}
 								label={
-									<strong>
+									<div className="bosted__selectLabel bosted__tekst--extraPadding">
 										<FormattedMessage id="personalia.bydel.label" />
-									</strong>
-								}>
+									</div>
+								}
+							>
 								{!this.state.bydelId && (
 									<option value="" disabled={true}>
 										Velg bydel
@@ -118,7 +122,7 @@ class Bosted extends React.Component<
 					) : null}
 					{ferdig ? (
 						<div>
-							<p>
+							<p className="bosted__tekst--extraPadding">
 								Når du har fylt ut blir søknaden sendt til{" "}
 								<strong>
 									{getBosted(

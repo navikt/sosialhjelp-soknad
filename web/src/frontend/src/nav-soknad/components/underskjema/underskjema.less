@@ -10,6 +10,10 @@
 	&__wrapper {
 		margin-left: -1 * @skjemaMarg;
 		margin-right: -1 * @skjemaMarg;
+		@media screen and (max-width: @screen-sm) {
+			margin-left: -1 * @skjemaMargMobil;
+			margin-right: -1 * @skjemaMargMobil;
+		}
 	}
 
 	&__boks {
@@ -17,6 +21,10 @@
 		border: 1px solid @ramme;
 		background-color: @bakgrunn;
 		position: relative;
+		@media screen and (max-width: @screen-sm) {
+			padding: @skjemaMargMobil @skjemaMargMobil @skjemaMargMobil*1.5
+				@skjemaMargMobil;
+		}
 	}
 
 	&__innhold:before {
@@ -33,5 +41,8 @@
 		box-sizing: border-box;
 		top: 0px;
 		left: 60px;
+		@media screen and (max-width: @screen-sm) {
+			left: 38px;
+		}
 	}
 }

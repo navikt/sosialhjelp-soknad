@@ -20,16 +20,28 @@
 .skjema-sporsmal {
 	position: relative;
 	display: block;
-	padding: 1.5rem @skjemaMarg 1rem @skjemaMarg;
+	padding: 1.5rem @skjemaMarg 2rem @skjemaMarg;
 	border-radius: 4px;
 	background-color: @white;
 
+	@media screen and (max-width: @screen-sm) {
+		padding: @skjemaMargMobil;
+	}
+
+	.skjema__feilomrade--harFeil:last-child {
+		margin-bottom: 0;
+	}
+
+	// Underspørsmål
 	.skjema-sporsmal {
 		padding: 0;
 		border-radius: 0;
 		background-color: transparent;
 		.skjema-sporsmal__innhold {
 			padding: 0;
+		}
+		> .skjemaelement:last-child {
+			margin-bottom: 0;
 		}
 	}
 
@@ -46,6 +58,10 @@
 		position: absolute;
 		top: 1.4rem;
 		right: @skjemaMarg;
+		@media screen and (max-width: @screen-sm) {
+			top: @skjemaMargMobil;
+			right: @skjemaMargMobil;
+		}
 	}
 }
 
@@ -62,5 +78,8 @@
 	}
 	.skjema-sporsmal {
 		margin-bottom: 1rem;
+		.skjema-sporsmal {
+			margin-bottom: 0;
+		}
 	}
 }

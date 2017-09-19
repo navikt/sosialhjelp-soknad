@@ -7,6 +7,7 @@ import { SoknadAppState } from "../redux/faktaReducer";
 import { Valideringsfeil } from "../validering/types";
 import StegMedNavigasjon from "../../digisos/skjema/stegMedNavigasjon";
 import AppTittel from "../components/apptittel/appTittel";
+import { Innholdstittel } from "nav-frontend-typografi";
 const DocumentTitle = require("react-document-title");
 
 interface OwnProps extends React.Props<any> {
@@ -23,7 +24,6 @@ class StegFaktum extends React.Component<
 	OwnProps & StateProps & InjectedIntlProps,
 	{}
 > {
-
 	componentDidMount() {
 		document.body.scrollTop = 0;
 	}
@@ -37,8 +37,10 @@ class StegFaktum extends React.Component<
 			intl,
 			children
 		} = this.props;
-		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn") + " - "
-			+ getIntlTextOrKey(intl, tittelId);
+		const title =
+			getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn") +
+			" - " +
+			getIntlTextOrKey(intl, tittelId);
 		return (
 			<DocumentTitle title={title}>
 				<span>
@@ -53,9 +55,9 @@ class StegFaktum extends React.Component<
 									visFeilliste={visFeilmeldinger}
 								/>
 							</div>
-							<h2 className="skjema-steg__tittel">
-								{getIntlTextOrKey(intl, tittelId)}
-							</h2>
+							<div className="skjema-steg__tittel">
+								<Innholdstittel>{getIntlTextOrKey(intl, tittelId)}</Innholdstittel>
+							</div>
 							{children}
 						</div>
 					</StegMedNavigasjon>
@@ -72,8 +74,8 @@ export default injectIntl(
 		OwnProps & InjectedIntlProps
 	>((state: SoknadAppState, props: OwnProps): StateProps => {
 		return {
+			visFeilmeldinger: state.validering.visValideringsfeil,
 			valideringsfeil: state.validering.feil,
-			visFeilmeldinger: true,
 			stegValidertCounter: state.validering.stegValidertCounter
 		};
 	})(StegFaktum)

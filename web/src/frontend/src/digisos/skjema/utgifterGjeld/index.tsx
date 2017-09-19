@@ -19,6 +19,7 @@ import CheckboxFaktum, {
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
+import { pakrevd } from "../../../nav-soknad/validering/valideringer";
 
 class UtgifterGjeld extends React.Component<
 	FaktumComponentProps & DispatchProps & InjectedIntlProps,
@@ -37,7 +38,9 @@ class UtgifterGjeld extends React.Component<
 
 		return (
 			<StegFaktum tittelId="utgifterbolk.tittel">
-				<SporsmalFaktum faktumKey={harBoutgifter.faktum}>
+				<SporsmalFaktum
+					faktumKey={harBoutgifter.faktum}
+					validerFunc={[pakrevd]}>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} value="true" />
 					<Underskjema
 						visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}>
@@ -86,7 +89,9 @@ class UtgifterGjeld extends React.Component<
 					</Underskjema>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} value="false" />
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey={harUtgifterBarn.faktum}>
+				<SporsmalFaktum
+					faktumKey={harUtgifterBarn.faktum}
+					validerFunc={[pakrevd]}>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} value="true" />
 					<Underskjema
 						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}>
