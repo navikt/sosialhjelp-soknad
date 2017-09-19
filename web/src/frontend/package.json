@@ -21,7 +21,7 @@
 		"prop-types": "^15.5.10",
 		"react": "^15.6.1",
 		"react-collapse": "^4.0.3",
-		"react-document-title": "^2.0.3",	    
+		"react-document-title": "^2.0.3",
 		"react-dom": "^15.6.1",
 		"react-intl": "^2.3.0",
 		"react-motion": "^0.5.0",
@@ -68,21 +68,21 @@
 		"nav-frontend-typografi-style": "^1.0.1",
 		"npm-run-all": "^4.0.2",
 		"prettier": "^1.6.1",
+		"prettier-eslint-cli": "^4.3.2",
 		"react-dom": "^15.6.1",
 		"react-test-renderer": "^15.6.1",
 		"replace": "0.3.0"
 	},
 	"scripts": {
 		"mock-backend": "node scripts/mock_backend",
-		"build-css":
-			"node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-		"watch-css":
-			"npm run build-css && node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+		"build-css": "node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+		"watch-css": "npm run build-css && node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
 		"start-js": "react-scripts-ts start",
 		"start": "npm-run-all -p watch-css start-js mock-backend",
-		"build":
-			"npm run build-css && react-scripts-ts build && node flytt-filer-til-webapp.js & node versjoner-prodfiler.js",
+		"build": "npm run build-css && react-scripts-ts build && node flytt-filer-til-webapp.js & node versjoner-prodfiler.js",
 		"test": "npm run build-css && react-scripts-ts test --env=jsdom",
+		"prettier": "prettier-eslint \"src/**/*(*.css|*.tsx|*.ts|*.css)\"",
+		"prettier:update": "prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css)\"",
 		"eject": "react-scripts-ts eject"
 	}
 }
