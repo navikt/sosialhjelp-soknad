@@ -37,9 +37,9 @@ class StegFaktum extends React.Component<
 			children
 		} = this.props;
 		const title =
-			getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn") +
+			getIntlTextOrKey(intl, tittelId)
 			" - " +
-			getIntlTextOrKey(intl, tittelId);
+			getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn") +
 		return (
 			<DocumentTitle title={title}>
 				<div className="skjema-steg skjema-content">
