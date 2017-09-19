@@ -105,3 +105,7 @@ export function getFaktumVerdi(fakta: any, key: string) {
 	}
 	return null;
 }
+
+export function contains(node: Element, child: Element) {
+	return node === child || node.contains(child);
+}
