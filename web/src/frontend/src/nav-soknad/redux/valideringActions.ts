@@ -46,7 +46,7 @@ export function unregisterFaktumValidering(faktumKey: string) {
 
 export function setFaktumValideringsfeil(
 	faktumKey: string,
-	valideringsfeil: Valideringsfeil[] = []
+	valideringsfeil: Valideringsfeil
 ) {
 	return {
 		type: ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL,

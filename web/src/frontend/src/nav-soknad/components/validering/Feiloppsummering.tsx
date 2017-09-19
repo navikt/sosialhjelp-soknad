@@ -2,7 +2,6 @@ import * as React from "react";
 import { Undertittel } from "nav-frontend-typografi";
 import "./feiloppsummering.css";
 import { Valideringsfeil } from "../../validering/types";
-import { filtrerFeilmeldinger } from "./feilUtils";
 import { FormattedMessage } from "react-intl";
 
 const getElementFromFaktumKey = (faktumKey: string): HTMLElement => {
@@ -59,21 +58,21 @@ class Feiloppsummering extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const feilmeldinger = filtrerFeilmeldinger(this.props.valideringsfeil);
+		const { valideringsfeil } = this.props;
 		return (
 			<div aria-live="polite" role="alert">
 				{(() => {
-					if (feilmeldinger.length > 0 && this.props.visFeilliste) {
+					if (valideringsfeil.length > 0 && this.props.visFeilliste) {
 						return (
 							<div
 								className="panel panel--feiloppsummering"
 								tabIndex={-1}
 								ref={c => (this.oppsummering = c)}>
 								<Undertittel className="feiloppsummering__tittel blokk-s">
-									Det er {feilmeldinger.length} feil i skjemaet
+									Det er {valideringsfeil.length} feil i skjemaet
 								</Undertittel>
 								<ul className="feiloppsummering__liste">
-									{feilmeldinger.map((feilmld, index) => {
+									{valideringsfeil.map((feilmld, index) => {
 										return <FeillisteMelding key={index} {...feilmld} />;
 									})}
 								</ul>

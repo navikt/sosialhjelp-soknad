@@ -11,7 +11,7 @@ export function validerFaktum(
 	faktumKey: string,
 	verdi: string,
 	valideringsregler: FaktumValideringsregler[]
-) {
+): Valideringsfeil {
 	const valideringsfeil: Valideringsfeil[] = [];
 	const faktumvalidering = valideringsregler.find(
 		vr => vr.faktumKey === faktumKey
@@ -30,7 +30,7 @@ export function validerFaktum(
 			}
 		});
 	}
-	return valideringsfeil;
+	return valideringsfeil.length > 0 ? valideringsfeil[0] : null;
 }
 
 export function validerAlleFaktum(

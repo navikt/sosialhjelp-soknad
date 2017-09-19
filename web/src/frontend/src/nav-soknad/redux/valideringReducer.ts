@@ -54,9 +54,9 @@ const unregisterFaktumValidering = (
 const setFaktumValideringsfeil = (
 	feil: Valideringsfeil[],
 	faktumKey: string,
-	faktumValideringfeil: Valideringsfeil[]
+	faktumValideringfeil: Valideringsfeil
 ) => {
-	if (faktumValideringfeil.length === 0) {
+	if (faktumValideringfeil) {
 		return feil.filter(v => v.faktumKey !== faktumKey);
 	}
 	const idx = feil.findIndex(v => v.faktumKey === faktumKey);
@@ -64,11 +64,7 @@ const setFaktumValideringsfeil = (
 		return feil.concat(faktumValideringfeil);
 	}
 	// For å ivareta samme rekkefølge på feilmeldingene i oppsummeringen
-	return [
-		...feil.slice(0, idx),
-		faktumValideringfeil[0],
-		...feil.slice(idx + 1)
-	];
+	return [...feil.slice(0, idx), faktumValideringfeil, ...feil.slice(idx + 1)];
 };
 
 const valideringReducer: Reducer<
