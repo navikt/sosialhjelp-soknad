@@ -21,10 +21,10 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 						</Column>
 					</Row>
 					<Row>
-						<Column xs="12">
+						<Column xs="12" md="6">
 							<InputFaktum faktumKey={fnrFaktumKey} maxLength={6} bredde="s" />
 						</Column>
-						<Column xs="12">
+						<Column xs="12" md="6">
 							<InputFaktum faktumKey={pnrFaktumKey} maxLength={5} bredde="s" />
 						</Column>
 					</Row>

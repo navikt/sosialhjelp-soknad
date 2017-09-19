@@ -56,7 +56,7 @@ const setFaktumValideringsfeil = (
 	faktumKey: string,
 	faktumValideringfeil: Valideringsfeil
 ) => {
-	if (faktumValideringfeil) {
+	if (!faktumValideringfeil) {
 		return feil.filter(v => v.faktumKey !== faktumKey);
 	}
 	const idx = feil.findIndex(v => v.faktumKey === faktumKey);
