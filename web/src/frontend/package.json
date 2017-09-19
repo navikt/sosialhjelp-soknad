@@ -81,8 +81,8 @@
 		"start": "npm-run-all -p watch-css start-js mock-backend",
 		"build": "npm run build-css && react-scripts-ts build && node flytt-filer-til-webapp.js & node versjoner-prodfiler.js",
 		"test": "npm run build-css && react-scripts-ts test --env=jsdom",
-		"prettier": "prettier-eslint \"src/**/*(*.css|*.tsx|*.ts|*.css)\"",
-		"prettier:update": "prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css)\"",
+		"prettier": "prettier-eslint \"src/**/*(*.less|*.tsx|*.ts|*.css|*.json)\"",
+		"prettier:update": "prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css|*.json)\"",
 		"eject": "react-scripts-ts eject"
 	}
 }
