@@ -31,7 +31,7 @@ class Oppsummering extends React.Component<Props, LocalState> {
 		};
 	}
 	componentDidMount() {
-		this.props.dispatch(hentOppsummering("1000B8FNi"));
+		this.props.dispatch(hentOppsummering());
 	}
 	getOppsummering() {
 		return {

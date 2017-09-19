@@ -23,9 +23,8 @@ class StegFaktum extends React.Component<
 	OwnProps & StateProps & InjectedIntlProps,
 	{}
 > {
-	tittel: HTMLElement;
 	componentDidMount() {
-		this.tittel.scrollIntoView();
+		document.body.scrollTop = 0;
 	}
 
 	render() {
@@ -52,7 +51,7 @@ class StegFaktum extends React.Component<
 							visFeilliste={visFeilmeldinger}
 						/>
 					</div>
-					<div className="skjema-steg__tittel" ref={c => (this.tittel = c)}>
+					<div className="skjema-steg__tittel">
 						<Innholdstittel>{getIntlTextOrKey(intl, tittelId)}</Innholdstittel>
 					</div>
 					{children}

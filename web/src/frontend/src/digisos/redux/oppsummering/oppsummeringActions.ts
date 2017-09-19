@@ -1,13 +1,14 @@
 import { Action, Dispatch } from "redux";
 import { OppsummeringActionTypeKeys, SetOppsummering } from "./oppsummeringTypes";
 import { fetchHtml } from "../rest-utils";
+import { State } from "../reducers";
 
 export type OppsummeringActionTypes = SetOppsummering;
 
-export function hentOppsummering(id: string) {
-	return (dispatch: Dispatch<Action>) => {
+export function hentOppsummering() {
+	return (dispatch: Dispatch<Action>, getState: () => State) => {
 		dispatch({ type: OppsummeringActionTypeKeys.PENDING });
-		fetchHtml("soknader/" + id + "/oppsummering")
+		fetchHtml("soknader/" + getState().soknad.data.brukerBehandlingId)
 			.then(response => {
 				dispatch({
 					type: OppsummeringActionTypeKeys.SET_OPPSUMMERING,
