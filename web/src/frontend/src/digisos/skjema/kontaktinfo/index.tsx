@@ -20,20 +20,20 @@ class Kontaktinfo extends React.Component<{}, {}> {
 					<InputFaktum
 						faktumKey="kontakt.kontonummer"
 						maxLength={11}
-						valideringer={[pakrevd, erKontonummer]}
+						validerFunc={[pakrevd, erKontonummer]}
 					/>
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="kontakt.telefon">
 					<InputFaktum
 						faktumKey="kontakt.telefon"
-						valideringer={[pakrevd, erTelefonnummer]}
+						validerFunc={[pakrevd, erTelefonnummer]}
 					/>
 				</SporsmalFaktum>
 
 				<SporsmalFaktum
 					faktumKey={statsborger.faktum}
 					renderValideringsfeil={true}
-					valideringer={[pakrevd]}>
+					validerFunc={[pakrevd]}>
 					<RadioFaktum faktumKey={statsborger.faktum} value="true" />
 					<RadioFaktum faktumKey={statsborger.faktum} value="false" />
 				</SporsmalFaktum>

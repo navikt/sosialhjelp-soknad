@@ -31,25 +31,31 @@ import {
 } from "../../nav-soknad/redux/valideringActions";
 import { FaktumValideringsregler } from "../../nav-soknad/validering/types";
 import { validerAlleFaktum } from "../../nav-soknad/validering/utils";
+import { Faktum } from "../../nav-soknad/redux/faktaTypes";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
 	evt.preventDefault();
 };
 
-interface OwnProps {
+interface StateProps {
+	fakta: Faktum[];
+	valideringsregler: FaktumValideringsregler[];
 	restStatus: string;
+	brukerBehandlingId: string;
+}
+
+interface OwnProps {
 	match: any;
 	location: Location;
-	fakta: any;
-	valideringer: FaktumValideringsregler[];
 }
-type Props = OwnProps & RouterProps & InjectedIntlProps & DispatchProps;
+type Props = OwnProps &
+	StateProps &
+	RouterProps &
+	InjectedIntlProps &
+	DispatchProps;
 
-class Skjema extends React.Component<
-	OwnProps & RouterProps & InjectedIntlProps & DispatchProps,
-	{}
-> {
+class Skjema extends React.Component<Props, {}> {
 	constructor(props: Props) {
 		super(props);
 		this.handleGaVidere = this.handleGaVidere.bind(this);
@@ -72,8 +78,7 @@ class Skjema extends React.Component<
 
 		const valideringsfeil = validerAlleFaktum(
 			this.props.fakta,
-			this.props.valideringer,
-			this.props.intl
+			this.props.valideringsregler
 		);
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
@@ -152,10 +157,10 @@ class Skjema extends React.Component<
 	}
 }
 
-export default connect((state: State, props: any) => {
+export default connect((state: State, props: any): StateProps => {
 	return {
 		fakta: state.fakta.data,
-		valideringer: state.validering.valideringsregler,
+		valideringsregler: state.validering.valideringsregler,
 		restStatus: state.soknad.restStatus,
 		brukerBehandlingId: state.soknad.data.brukerBehandlingId
 	};

@@ -35,8 +35,10 @@ class StegFaktum extends React.Component<
 			intl,
 			children
 		} = this.props;
-		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn") + " - "
-			+ getIntlTextOrKey(intl, tittelId);
+		const title =
+			getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn") +
+			" - " +
+			getIntlTextOrKey(intl, tittelId);
 		return (
 			<DocumentTitle title={title}>
 				<div className="skjema-steg skjema-content">
@@ -65,8 +67,8 @@ export default injectIntl(
 		OwnProps & InjectedIntlProps
 	>((state: SoknadAppState, props: OwnProps): StateProps => {
 		return {
+			visFeilmeldinger: state.validering.visValideringsfeil,
 			valideringsfeil: state.validering.feil,
-			visFeilmeldinger: true,
 			stegValidertCounter: state.validering.stegValidertCounter
 		};
 	})(StegFaktum)

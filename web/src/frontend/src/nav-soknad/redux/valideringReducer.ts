@@ -51,6 +51,26 @@ const unregisterFaktumValidering = (
 	];
 };
 
+const setFaktumValideringsfeil = (
+	feil: Valideringsfeil[],
+	faktumKey: string,
+	faktumValideringfeil: Valideringsfeil[]
+) => {
+	if (faktumValideringfeil.length === 0) {
+		return feil.filter(v => v.faktumKey !== faktumKey);
+	}
+	const idx = feil.findIndex(v => v.faktumKey === faktumKey);
+	if (idx === -1) {
+		return feil.concat(faktumValideringfeil);
+	}
+	// For å ivareta samme rekkefølge på feilmeldingene i oppsummeringen
+	return [
+		...feil.slice(0, idx),
+		faktumValideringfeil[0],
+		...feil.slice(idx + 1)
+	];
+};
+
 const valideringReducer: Reducer<
 	ValideringState,
 	ValideringActionTypes | FaktumActionTypes
@@ -79,8 +99,9 @@ const valideringReducer: Reducer<
 		case ValideringActionTypeKeys.SET_FAKTA_VALIDERINGSFEIL:
 			return {
 				...state,
-				stegValidertCounter: state.stegValidertCounter + 1,
-				feil: action.valideringsfeil
+				feil: action.valideringsfeil,
+				visValideringsfeil: true,
+				stegValidertCounter: state.stegValidertCounter + 1
 			};
 		case ValideringActionTypeKeys.CLEAR_FAKTA_VALIDERINGSFEIL:
 			return {
@@ -90,9 +111,11 @@ const valideringReducer: Reducer<
 		case ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL:
 			return {
 				...state,
-				feil: state.feil
-					.filter(v => v.faktumKey !== action.faktumKey)
-					.concat(action.valideringsfeil)
+				feil: setFaktumValideringsfeil(
+					state.feil,
+					action.faktumKey,
+					action.valideringsfeil
+				)
 			};
 		default:
 			return state;
