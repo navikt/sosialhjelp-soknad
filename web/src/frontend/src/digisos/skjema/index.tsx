@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 import { DispatchProps } from "../redux/types";
 import { REST_STATUS } from "../redux/soknad/soknadTypes";
 import { State } from "../redux/reducers";
-import UkjentSide from "../../nav-soknad/components/feilmeldinger/ukjentSide";
+import FeilSide from "../../nav-soknad/components/feilmeldinger/feilSide";
 
 interface OwnProps {
 	restStatus: string;
@@ -49,7 +49,7 @@ class SkjemaRouter extends React.Component<
 					<Route path={`${match.url}/7`} component={Steg7} />
 					<Route path={`${match.url}/8`} component={Steg8} />
 					<Route path={`${match.url}/9`} component={Oppsummering} />
-					<Route component={UkjentSide} />
+					<Route component={FeilSide} />
 				</Switch>
 			);
 		}
