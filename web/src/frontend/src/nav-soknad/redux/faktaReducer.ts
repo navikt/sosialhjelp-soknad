@@ -1,11 +1,6 @@
 import { REST_STATUS } from "../../digisos/redux/soknad/soknadTypes";
 
-import {
-	FaktumActionTypeKeys,
-	Reducer,
-	FaktaActionTypeKeys,
-	Faktum
-} from "./faktaTypes";
+import { FaktaActionTypeKeys, Faktum, FaktumActionTypeKeys, Reducer } from "./faktaTypes";
 import { ValideringState } from "./valideringReducer";
 
 export interface SoknadAppState {
@@ -30,6 +25,8 @@ const initialState: FaktumState = {
 export type FaktumActionTypes =
 	| OppdatertFaktumVerdi
 	| OppdaterFaktumVerdi
+	| OpprettFaktumVerdi
+	| OpprettetFaktumVerdi
 	| SetFaktaAction
 	| SetFaktaPendingAction
 	| SetFaktaOkAction
@@ -42,6 +39,15 @@ interface OppdaterFaktumVerdi {
 
 interface OppdatertFaktumVerdi {
 	type: FaktumActionTypeKeys.OPPDATERT_FAKTUM;
+	faktum: Faktum;
+}
+
+interface OpprettFaktumVerdi {
+	type: FaktumActionTypeKeys.OPPRETT_FAKTUM;
+}
+
+interface OpprettetFaktumVerdi {
+	type: FaktumActionTypeKeys.OPPRETTET_FAKTUM;
 	faktum: Faktum;
 }
 
@@ -73,12 +79,18 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 ): FaktumState => {
 	switch (action.type) {
 		case FaktumActionTypeKeys.OPPDATER_FAKTUM:
-			return { ...state, restStatus: REST_STATUS.OK };
+			return {...state, restStatus: REST_STATUS.OK};
 		case FaktumActionTypeKeys.OPPDATERT_FAKTUM:
 			return {
 				...state,
 				data: updateFaktumVerdi(state.data, action.faktum)
 			};
+		case FaktumActionTypeKeys.OPPRETT_FAKTUM: {
+			return {...state, restStatus: REST_STATUS.PENDING};
+		}
+		case FaktumActionTypeKeys.OPPRETTET_FAKTUM: {
+			return {...state, restStatus: REST_STATUS.OK, data: [...state.data, action.faktum]};
+		}
 		case FaktaActionTypeKeys.SET_FAKTA:
 			return {
 				...state,
@@ -86,11 +98,11 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 				restStatus: REST_STATUS.OK
 			};
 		case FaktaActionTypeKeys.PENDING:
-			return { ...state, 	restStatus: REST_STATUS.PENDING	};
+			return {...state, restStatus: REST_STATUS.PENDING};
 		case FaktaActionTypeKeys.OK:
-			return { ...state, restStatus: REST_STATUS.OK };
+			return {...state, restStatus: REST_STATUS.OK};
 		case FaktaActionTypeKeys.SET_SERVER_FEIL:
-			return { ...state, restStatus: REST_STATUS.FEILET };
+			return {...state, restStatus: REST_STATUS.FEILET};
 		default:
 			return state;
 	}
