@@ -14,7 +14,6 @@ export interface OwnProps {
 	faktumKey: string;
 	children: React.ReactNode;
 	visible?: boolean;
-	renderValideringsfeil?: boolean;
 }
 
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -26,7 +25,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	}
 
 	handleOnBlur(evt: any) {
-		if (this.props.renderValideringsfeil) {
+		if (this.props.validerFunc) {
 			setTimeout(() => {
 				if (!contains(findDOMNode(this), document.activeElement)) {
 					this.props.validerFaktum(this.props.getFaktumVerdi());
@@ -36,13 +35,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const {
-			visible,
-			renderValideringsfeil = false,
-			feilkode,
-			intl,
-			children
-		} = this.props;
+		const { visible, feilkode, validerFunc, intl, children } = this.props;
 		if (visible === false) {
 			return null;
 		}
@@ -52,8 +45,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 		});
 		return (
 			<div className="skjema-sporsmal" onBlur={this.handleOnBlur}>
-				<SkjemaGruppe
-					feil={renderValideringsfeil ? this.props.getFeil(intl) : null}>
+				<SkjemaGruppe feil={validerFunc ? this.props.getFeil(intl) : null}>
 					<fieldset className={cls}>
 						<legend>{tekster.sporsmal}</legend>
 						{tekster.hjelpetekst ? (
