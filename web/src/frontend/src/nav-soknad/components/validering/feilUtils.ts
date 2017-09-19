@@ -8,6 +8,8 @@ export const filtrerFeilmeldinger = (
 		return [];
 	}
 
+	// Går gjennom og sjekker at det er kun en feilmelding per faktum
+	// Litt kryptisk funksjon, men funker
 	return feilmeldinger.reduce(
 		(arr: Valideringsfeil[], feil: Valideringsfeil) =>
 			arr.findIndex(f => f.faktumKey === feil.faktumKey) >= 0
