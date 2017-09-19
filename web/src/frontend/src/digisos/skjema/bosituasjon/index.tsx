@@ -14,6 +14,7 @@ import {
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
+import { pakrevd } from "../../../nav-soknad/validering/valideringer";
 
 class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	render() {
@@ -26,7 +27,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const over18True = inputKeys("bosituasjon.personover18.true.antall");
 		return (
 			<StegFaktum tittelId="bosituasjonbolk.tittel">
-				<SporsmalFaktum faktumKey={bosituasjon.faktum}>
+				<SporsmalFaktum faktumKey={bosituasjon.faktum} validerFunc={[pakrevd]}>
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="eier" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="leierprivat" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="leierkommunalt" />
@@ -45,13 +46,14 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						</SporsmalFaktum>
 					</Underskjema>
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey={barnUnder18.faktum}>
+				<SporsmalFaktum faktumKey={barnUnder18.faktum} validerFunc={[pakrevd]}>
 					<RadioFaktum faktumKey={barnUnder18.faktum} value="true" />
 					<Underskjema
 						visible={faktumIsSelected(
 							getFaktumVerdi(fakta, barnUnder18.faktum)
 						)}>
 						<InputFaktum
+							validerFunc={[pakrevd]}
 							faktumKey={barnUnder18True.faktum}
 							maxLength={3}
 							bredde="xs"
@@ -59,11 +61,12 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					</Underskjema>
 					<RadioFaktum faktumKey={barnUnder18.faktum} value="false" />
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey={over18.faktum}>
+				<SporsmalFaktum faktumKey={over18.faktum} validerFunc={[pakrevd]}>
 					<RadioFaktum faktumKey={over18.faktum} value="true" />
 					<Underskjema
 						visible={faktumIsSelected(getFaktumVerdi(fakta, over18.faktum))}>
 						<InputFaktum
+							validerFunc={[pakrevd]}
 							faktumKey={over18True.faktum}
 							maxLength={3}
 							bredde="xs"
