@@ -66,7 +66,7 @@ class Bosted extends React.Component<
 		return (
 			<form onSubmit={e => this.opprettSoknad(e)}>
 				<div>
-					<div className="blokk-l">
+					<div className="blokk-m">
 						<Select
 							bredde="m"
 							defaultValue=""
@@ -76,7 +76,8 @@ class Bosted extends React.Component<
 								<strong>
 									<FormattedMessage id="personalia.kommune.label" />
 								</strong>
-							}>
+							}
+						>
 							{!this.state.kommuneId && (
 								<option value="" disabled={true}>
 									Velg by
@@ -91,7 +92,7 @@ class Bosted extends React.Component<
 					</div>
 
 					{valgtKommune && valgtKommune.bydeler ? (
-						<div className="blokk-l">
+						<div className="blokk-m">
 							<Arrow />
 							<Select
 								bredde="m"
@@ -102,7 +103,8 @@ class Bosted extends React.Component<
 									<strong>
 										<FormattedMessage id="personalia.bydel.label" />
 									</strong>
-								}>
+								}
+							>
 								{!this.state.bydelId && (
 									<option value="" disabled={true}>
 										Velg bydel
