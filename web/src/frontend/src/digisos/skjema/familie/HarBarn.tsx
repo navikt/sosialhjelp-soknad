@@ -7,7 +7,7 @@ import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import Barneinfo from "./Barneinfo";
 
-class Barn extends React.Component<FaktumComponentProps, {}> {
+class HarBarn extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
 		const barn = radioCheckKeys("familie.barn");
@@ -24,4 +24,4 @@ class Barn extends React.Component<FaktumComponentProps, {}> {
 	}
 }
 
-export default Barn;
+export default HarBarn;
