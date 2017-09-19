@@ -2,7 +2,6 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 const utils = require("./utils.js");
-const fs = require('fs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -29,13 +28,17 @@ router.post("/soknader", function (req, res) {
 });
 
 router.get("/soknader/:brukerBehandlingId", function (req, res) {
-    if(req.accepts('application/json') ) {
-    	console.log("get soknader");
-        res.json(soknad);
-    } else {
-        res.status(406);
-        res.json({feil: "Forventer Accept: application/json i header"});
-    }
+	console.log("get soknader");
+	if(req.headers['content-type'] === 'text/html') {
+		res.send(utils.lesMockHtmlFil("oppsummering.html"));
+	} else {
+		if(req.accepts('application/json') ) {
+			res.json(utils.lesMockDataFil("soknad.json"));
+		} else {
+			res.status(406);
+			res.json({feil: "Forventer Accept: application/json i header"});
+		}
+   }
 });
 
 router.get("/soknader/:brukerBehandlingId/oppsummering", function (req, res) {
