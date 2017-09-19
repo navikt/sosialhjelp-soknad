@@ -63,7 +63,11 @@ class TextareaFaktum extends React.Component<Props, State> {
 				disabled={disabled}
 				onChange={this.handleOnChange}
 				onBlur={this.handleOnBlur}
-				feil={{ feilmelding: intl.formatHTMLMessage({ id: feilkode }) }}
+				feil={
+					feilkode ? (
+						{ feilmelding: intl.formatHTMLMessage({ id: feilkode }) }
+					) : null
+				}
 				maxLength={maxLength || 400}
 				textareaClass={textareaClass || "skjema-texarea--normal"}
 			/>

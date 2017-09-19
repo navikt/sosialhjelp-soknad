@@ -43,7 +43,11 @@ class CheckboxFaktum extends React.Component<
 						hjelpetekst={tekster.hjelpetekst}
 					/>
 				}
-				feil={{ feilmelding: intl.formatHTMLMessage({ id: feilkode }) }}
+				feil={
+					feilkode ? (
+						{ feilmelding: intl.formatHTMLMessage({ id: feilkode }) }
+					) : null
+				}
 			/>
 		);
 	}
