@@ -7,6 +7,7 @@ import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
+import { pakrevd } from "../../../nav-soknad/validering/valideringer";
 
 class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -15,14 +16,19 @@ class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 		return (
 			<div>
 				<div className="blokk-s">
-					<PersonFaktum faktumKey="familie.sivilstatus.gift" />
+					<PersonFaktum
+						faktumKey="familie.sivilstatus.gift"
+						validering={{
+							navn: [pakrevd],
+							fnr: [pakrevd]
+						}}
+					/>
 				</div>
-				<SporsmalFaktum faktumKey={borsammen.faktum}>
+				<SporsmalFaktum faktumKey={borsammen.faktum} validerFunc={[pakrevd]}>
 					<RadioFaktum faktumKey={borsammen.faktum} value="true" />
 					<RadioFaktum faktumKey={borsammen.faktum} value="false" />
 					<NivaTreSkjema
-						visible={getFaktumVerdi(fakta, borsammen.faktum) === "false"}
-					>
+						visible={getFaktumVerdi(fakta, borsammen.faktum) === "false"}>
 						<TextareaFaktum
 							faktumKey={`${borsammen.faktum}.false.beskrivelse`}
 						/>

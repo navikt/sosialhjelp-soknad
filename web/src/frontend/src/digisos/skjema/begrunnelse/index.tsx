@@ -8,6 +8,8 @@ import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 
+import { pakrevd } from "../../../nav-soknad/validering/valideringer";
+
 class Begrunnelse extends React.Component<
 	FaktumComponentProps & DispatchProps,
 	{}
@@ -25,6 +27,7 @@ class Begrunnelse extends React.Component<
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="begrunnelse.hva">
 					<TextareaFaktum
+						validerFunc={[pakrevd]}
 						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hva"
 						labelId="begrunnelse.hva.label"

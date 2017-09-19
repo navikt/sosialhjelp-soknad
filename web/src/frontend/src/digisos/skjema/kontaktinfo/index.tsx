@@ -30,10 +30,7 @@ class Kontaktinfo extends React.Component<{}, {}> {
 					/>
 				</SporsmalFaktum>
 
-				<SporsmalFaktum
-					faktumKey={statsborger.faktum}
-					renderValideringsfeil={true}
-					validerFunc={[pakrevd]}>
+				<SporsmalFaktum faktumKey={statsborger.faktum} validerFunc={[pakrevd]}>
 					<RadioFaktum faktumKey={statsborger.faktum} value="true" />
 					<RadioFaktum faktumKey={statsborger.faktum} value="false" />
 				</SporsmalFaktum>

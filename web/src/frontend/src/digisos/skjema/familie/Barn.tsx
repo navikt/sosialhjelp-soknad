@@ -6,6 +6,7 @@ import { getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import Barneinfo from "./Barneinfo";
+import { pakrevd } from "../../../nav-soknad/validering/valideringer";
 
 class Barn extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -13,7 +14,7 @@ class Barn extends React.Component<FaktumComponentProps, {}> {
 		const barn = radioCheckKeys("familie.barn");
 
 		return (
-			<SporsmalFaktum faktumKey={barn.faktum}>
+			<SporsmalFaktum faktumKey={barn.faktum} validerFunc={[pakrevd]}>
 				<FaktumRadio faktumKey={barn.faktum} value="true" />
 				<Underskjema visible={getFaktumVerdi(fakta, barn.faktum) === "true"}>
 					<Barneinfo {...this.props} faktumKey="familie.barn.true" nummer={1} />

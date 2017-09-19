@@ -81,6 +81,9 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 					verdi
 				)
 			);
+			if (this.props.feilkode) {
+				this.validerFaktum(verdi);
+			}
 		}
 
 		getFaktumVerdi(): string {

@@ -9,6 +9,7 @@ import {
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
+import { pakrevd } from "../../../nav-soknad/validering/valideringer";
 
 class Jobb extends React.Component<FaktumComponentProps, any> {
 	render() {
@@ -16,7 +17,7 @@ class Jobb extends React.Component<FaktumComponentProps, any> {
 		const jobb = radioCheckKeys("dinsituasjon.jobb");
 		const jobber = radioCheckKeys("dinsituasjon.jobb.true.grad");
 		return (
-			<SporsmalFaktum faktumKey={jobb.faktum}>
+			<SporsmalFaktum faktumKey={jobb.faktum} validerFunc={[pakrevd]}>
 				<RadioFaktum faktumKey={jobb.faktum} value="true" />
 				<Underskjema
 					visible={faktumIsSelected(getFaktumVerdi(fakta, jobb.faktum))}>
