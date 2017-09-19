@@ -26,7 +26,7 @@ class CheckboxFaktum extends React.Component<
 	{}
 > {
 	render() {
-		const { faktumKey, disabled, feilkode, fakta, intl } = this.props;
+		const { faktumKey, disabled, fakta, intl } = this.props;
 		const tekster = getFaktumCheckboksTekst(intl, faktumKey);
 		const checked = faktumIsSelected(getFaktumVerdi(fakta, faktumKey));
 		return (
@@ -43,11 +43,7 @@ class CheckboxFaktum extends React.Component<
 						hjelpetekst={tekster.hjelpetekst}
 					/>
 				}
-				feil={
-					feilkode ? (
-						{ feilmelding: intl.formatHTMLMessage({ id: feilkode }) }
-					) : null
-				}
+				feil={this.props.getFeil(intl)}
 			/>
 		);
 	}
