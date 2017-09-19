@@ -20,7 +20,7 @@
 .skjema-sporsmal {
 	position: relative;
 	display: block;
-	padding: 1.5rem @skjemaMarg 1rem @skjemaMarg;
+	padding: 1.5rem @skjemaMarg 2rem @skjemaMarg;
 	border-radius: 4px;
 	background-color: @white;
 
@@ -28,12 +28,16 @@
 		padding: @skjemaMargMobil;
 	}
 
+	// Underspørsmål
 	.skjema-sporsmal {
 		padding: 0;
 		border-radius: 0;
 		background-color: transparent;
 		.skjema-sporsmal__innhold {
 			padding: 0;
+		}
+		> .skjemaelement:last-child {
+			margin-bottom: 0;
 		}
 	}
 

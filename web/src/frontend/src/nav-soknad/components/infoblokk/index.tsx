@@ -1,6 +1,7 @@
 import * as React from "react";
-import Info from "../svg/Info";
+// import Info from "../svg/Info";
 import { Panel } from "nav-frontend-paneler";
+import Icon from "nav-frontend-ikoner-assets";
 
 import "./infoblokk.css";
 
@@ -13,7 +14,7 @@ const Infoblokk: React.StatelessComponent<Props> = ({ children, tittel }) => {
 		<Panel className="skjema-infoblokk">
 			<div className="skjema-infoblokk__content">
 				<div className="skjema-infoblokk__icon">
-					<Info />
+					<Icon kind="info-sirkel" />
 				</div>
 				{tittel ? <h2>{tittel}</h2> : null}
 				{children}
