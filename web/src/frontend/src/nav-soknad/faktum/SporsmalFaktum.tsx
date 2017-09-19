@@ -1,9 +1,10 @@
 import * as React from "react";
+import { findDOMNode } from "react-dom";
 import * as classNames from "classnames";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { SkjemaGruppe } from "nav-frontend-skjema";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
-import { getFaktumSporsmalTekst } from "../utils";
+import { getFaktumSporsmalTekst, contains } from "../utils";
 import {
 	faktumComponent,
 	InjectedFaktumComponentProps
@@ -19,11 +20,26 @@ export interface OwnProps {
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 class SporsmalFaktum extends React.Component<Props, {}> {
+	constructor(props: Props) {
+		super(props);
+		this.handleOnBlur = this.handleOnBlur.bind(this);
+	}
+
+	handleOnBlur(evt: any) {
+		if (this.props.renderValideringsfeil) {
+			setTimeout(() => {
+				if (!contains(findDOMNode(this), document.activeElement)) {
+					this.props.validerFaktum(this.props.getFaktumVerdi());
+				}
+			}, 0);
+		}
+	}
+
 	render() {
 		const {
 			visible,
 			renderValideringsfeil = false,
-			feil,
+			feilkode,
 			intl,
 			children
 		} = this.props;
@@ -32,11 +48,12 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 		}
 		const tekster = getFaktumSporsmalTekst(intl, this.props.faktumKey);
 		const cls = classNames("skjema-fieldset", {
-			"skjema-fieldset--harFeil": feil !== null && feil !== undefined
+			"skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined
 		});
 		return (
-			<div className="skjema-sporsmal">
-				<SkjemaGruppe feil={renderValideringsfeil ? feil : null}>
+			<div className="skjema-sporsmal" onBlur={this.handleOnBlur}>
+				<SkjemaGruppe
+					feil={renderValideringsfeil ? this.props.getFeil(intl) : null}>
 					<fieldset className={cls}>
 						<legend>{tekster.sporsmal}</legend>
 						{tekster.hjelpetekst ? (

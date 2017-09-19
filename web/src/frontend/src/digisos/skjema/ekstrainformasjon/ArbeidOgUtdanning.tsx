@@ -10,13 +10,13 @@ const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
 	<SporsmalFaktum faktumKey="ekstrainfo.arbeid.arbeidsledig">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
-				<Column xs="6">
+				<Column md="6" xs="12">
 					<InputFaktum
 						faktumKey="ekstrainfo.arbeid.arbeidsledig.feriepenger"
 						bredde="s"
 					/>
 				</Column>
-				<Column xs="6">
+				<Column md="6" xs="12">
 					<InputFaktum
 						faktumKey="ekstrainfo.arbeid.arbeidsledig.sluttoppgjor"
 						bredde="s"
@@ -31,13 +31,13 @@ const JobbSkjema: React.StatelessComponent<{}> = () => (
 	<SporsmalFaktum faktumKey="ekstrainfo.arbeid.jobb">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
-				<Column xs="6">
+				<Column md="6" xs="12">
 					<InputFaktum
 						faktumKey="ekstrainfo.arbeid.jobb.bruttolonn"
 						bredde="s"
 					/>
 				</Column>
-				<Column xs="6">
+				<Column md="6" xs="12">
 					<InputFaktum
 						faktumKey="ekstrainfo.arbeid.jobb.nettolonn"
 						bredde="s"
@@ -52,13 +52,13 @@ const StudentSkjema: React.StatelessComponent<{}> = () => (
 	<SporsmalFaktum faktumKey="ekstrainfo.arbeid.student">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
-				<Column xs="6">
+				<Column md="6" xs="12">
 					<InputFaktum
 						faktumKey="ekstrainfo.arbeid.student.utbetaling"
 						bredde="s"
 					/>
 				</Column>
-				<Column xs="6">
+				<Column md="6" xs="12">
 					<InputFaktum
 						faktumKey="ekstrainfo.arbeid.student.lantotalt"
 						bredde="s"

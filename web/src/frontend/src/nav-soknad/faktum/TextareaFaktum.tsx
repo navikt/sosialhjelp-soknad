@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Textarea, Feil } from "nav-frontend-skjema";
+import { Textarea } from "nav-frontend-skjema";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getInputFaktumTekst, getIntlTextOrKey } from "../utils";
 import {
@@ -8,12 +8,10 @@ import {
 } from "./FaktumComponent";
 
 interface OwnProps {
-	faktumKey: string;
 	labelId?: string;
 	disabled?: boolean;
 	textareaClass?: string;
 	maxLength?: number;
-	feil?: Feil;
 }
 
 interface State {
@@ -51,7 +49,6 @@ class TextareaFaktum extends React.Component<Props, State> {
 			faktumKey,
 			labelId,
 			disabled,
-			feil,
 			textareaClass,
 			maxLength,
 			intl
@@ -65,7 +62,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 				disabled={disabled}
 				onChange={this.handleOnChange}
 				onBlur={this.handleOnBlur}
-				feil={feil}
+				feil={this.props.getFeil(intl)}
 				maxLength={maxLength || 400}
 				textareaClass={textareaClass || "skjema-texarea--normal"}
 			/>

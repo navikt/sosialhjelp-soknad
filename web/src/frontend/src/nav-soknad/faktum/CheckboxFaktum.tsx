@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Checkbox, Feil } from "nav-frontend-skjema";
+import { Checkbox } from "nav-frontend-skjema";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
 import {
@@ -15,7 +15,7 @@ import {
 
 interface OwnProps {
 	disabled?: boolean;
-	feil?: Feil;
+	feilkode?: string;
 }
 
 export const createCheckboxFaktumKey = (key: string, option: string) =>
@@ -26,7 +26,7 @@ class CheckboxFaktum extends React.Component<
 	{}
 > {
 	render() {
-		const { faktumKey, disabled, feil, fakta, intl } = this.props;
+		const { faktumKey, disabled, fakta, intl } = this.props;
 		const tekster = getFaktumCheckboksTekst(intl, faktumKey);
 		const checked = faktumIsSelected(getFaktumVerdi(fakta, faktumKey));
 		return (
@@ -43,7 +43,7 @@ class CheckboxFaktum extends React.Component<
 						hjelpetekst={tekster.hjelpetekst}
 					/>
 				}
-				feil={feil}
+				feil={this.props.getFeil(intl)}
 			/>
 		);
 	}

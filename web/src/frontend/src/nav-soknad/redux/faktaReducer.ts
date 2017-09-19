@@ -1,5 +1,4 @@
 import { REST_STATUS } from "../../digisos/redux/soknad/soknadTypes";
-
 import {
 	FaktumActionTypeKeys,
 	Reducer,
@@ -86,7 +85,7 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 				restStatus: REST_STATUS.OK
 			};
 		case FaktaActionTypeKeys.PENDING:
-			return { ...state, 	restStatus: REST_STATUS.PENDING	};
+			return { ...state, restStatus: REST_STATUS.PENDING };
 		case FaktaActionTypeKeys.OK:
 			return { ...state, restStatus: REST_STATUS.OK };
 		case FaktaActionTypeKeys.SET_SERVER_FEIL:

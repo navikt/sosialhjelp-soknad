@@ -20,16 +20,17 @@ const Familiesituasjon: React.StatelessComponent<
 			content={[
 				<SporsmalFaktum
 					faktumKey="ekstrainfo.familie.barnebidrag"
-					key="barnebidrag">
+					key="barnebidrag"
+				>
 					<Container fluid={true} className="container--noPadding">
 						<Row>
-							<Column xs="6">
+							<Column md="6" xs="12">
 								<InputFaktum
 									faktumKey="ekstrainfo.familie.barnebidrag.betaler"
 									bredde="s"
 								/>
 							</Column>
-							<Column xs="6">
+							<Column md="6" xs="12">
 								<InputFaktum
 									faktumKey="ekstrainfo.familie.barnebidrag.mottar"
 									bredde="s"

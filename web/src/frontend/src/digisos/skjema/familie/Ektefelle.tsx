@@ -14,12 +14,15 @@ class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 		const borsammen = radioCheckKeys("familie.sivilstatus.gift.borsammen");
 		return (
 			<div>
-				<PersonFaktum faktumKey="familie.sivilstatus.gift" />
+				<div className="blokk-s">
+					<PersonFaktum faktumKey="familie.sivilstatus.gift" />
+				</div>
 				<SporsmalFaktum faktumKey={borsammen.faktum}>
 					<RadioFaktum faktumKey={borsammen.faktum} value="true" />
 					<RadioFaktum faktumKey={borsammen.faktum} value="false" />
 					<NivaTreSkjema
-						visible={getFaktumVerdi(fakta, borsammen.faktum) === "false"}>
+						visible={getFaktumVerdi(fakta, borsammen.faktum) === "false"}
+					>
 						<TextareaFaktum
 							faktumKey={`${borsammen.faktum}.false.beskrivelse`}
 						/>

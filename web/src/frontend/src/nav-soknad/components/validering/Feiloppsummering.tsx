@@ -2,6 +2,7 @@ import * as React from "react";
 import { Undertittel } from "nav-frontend-typografi";
 import "./feiloppsummering.css";
 import { Valideringsfeil } from "../../validering/types";
+import { FormattedMessage } from "react-intl";
 
 const getElementFromFaktumKey = (faktumKey: string): HTMLElement => {
 	if (document.getElementById(faktumKey)) {
@@ -25,12 +26,12 @@ const scrollToElement = (evt: React.MouseEvent<any>, faktumKey: string) => {
 
 const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 	faktumKey,
-	feil
+	feilkode
 }) => {
 	return (
 		<li className="feiloppsummering__feil">
 			<a href={`#`} onClick={evt => scrollToElement(evt, faktumKey)}>
-				{feil.feilmelding}
+				<FormattedMessage id={feilkode} />
 			</a>
 		</li>
 	);
@@ -46,11 +47,6 @@ interface Props {
 class Feiloppsummering extends React.Component<Props, {}> {
 	oppsummering: HTMLDivElement;
 
-	constructor(props: Props) {
-		super(props);
-		this.getFeilmeldinger = this.getFeilmeldinger.bind(this);
-	}
-
 	componentDidUpdate(prevProps: Props) {
 		if (
 			this.props.visFeilliste &&
@@ -61,36 +57,22 @@ class Feiloppsummering extends React.Component<Props, {}> {
 		}
 	}
 
-	getFeilmeldinger(props: Props): Valideringsfeil[] {
-		if (!props.valideringsfeil) {
-			return [];
-		}
-
-		return props.valideringsfeil.reduce(
-			(arr: Valideringsfeil[], feil: Valideringsfeil) =>
-				arr.findIndex(f => f.faktumKey === feil.faktumKey) >= 0
-					? arr
-					: [...arr, feil],
-			[]
-		);
-	}
-
 	render() {
-		const feilmeldinger = this.getFeilmeldinger(this.props);
+		const { valideringsfeil } = this.props;
 		return (
 			<div aria-live="polite" role="alert">
 				{(() => {
-					if (feilmeldinger.length > 0 && this.props.visFeilliste) {
+					if (valideringsfeil.length > 0 && this.props.visFeilliste) {
 						return (
 							<div
 								className="panel panel--feiloppsummering"
-								ref={c => (this.oppsummering = c)}
-								tabIndex={-1}>
+								tabIndex={-1}
+								ref={c => (this.oppsummering = c)}>
 								<Undertittel className="feiloppsummering__tittel blokk-s">
-									Det er {feilmeldinger.length} feil i skjemaet
+									Det er {valideringsfeil.length} feil i skjemaet
 								</Undertittel>
 								<ul className="feiloppsummering__liste">
-									{feilmeldinger.map((feilmld, index) => {
+									{valideringsfeil.map((feilmld, index) => {
 										return <FeillisteMelding key={index} {...feilmld} />;
 									})}
 								</ul>
