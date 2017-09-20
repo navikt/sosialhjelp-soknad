@@ -10,10 +10,10 @@ import { fetchPost, fetchPut, fetchToJson } from "../../digisos/redux/rest-utils
 import { FaktumActionTypes } from "./faktaReducer";
 import { State } from "../../digisos/redux/reducers";
 
-export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType) {
+export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType, property?: string) {
 	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
 		const nyttFaktum = {...faktum};
-		nyttFaktum.value = value;
+		property ? nyttFaktum.properties[property] = value : nyttFaktum.value = value;
 		dispatch({type: FaktumActionTypeKeys.OPPDATER_FAKTUM});
 		fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
 			.then(response => {
@@ -35,7 +35,7 @@ interface OpprettFaktumType {
 export function opprettFaktum(faktum: OpprettFaktumType | Faktum) {
 	return (dispatch: SoknadDispatch<FaktumActionTypes>, getState: () => State) => {
 		dispatch({type: FaktumActionTypeKeys.OPPRETT_FAKTUM});
-		return fetchPost("fakta/?" + getState().soknad.data.brukerBehandlingId, JSON.stringify(faktum))
+		return fetchPost("fakta?behandlingsId=" + getState().soknad.data.brukerBehandlingId, JSON.stringify(faktum))
 			.then((response: Faktum) => {
 				dispatch({
 					type: FaktumActionTypeKeys.OPPRETTET_FAKTUM,

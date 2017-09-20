@@ -16,7 +16,7 @@ class HarBarn extends React.Component<FaktumComponentProps, {}> {
 			<SporsmalFaktum faktumKey={barn.faktum}>
 				<FaktumRadio faktumKey={barn.faktum} value="true" />
 				<Underskjema visible={getFaktumVerdi(fakta, barn.faktum) === "true"}>
-					<Barneinfo {...this.props} faktumKey="familie.barn.true" nummer={1} />
+					<Barneinfo {...this.props} faktumKey="familie.barn.true.barn" parrentFaktumKey={barn.faktum} nummer={1} />
 				</Underskjema>
 				<FaktumRadio faktumKey={barn.faktum} value="false" />
 			</SporsmalFaktum>

@@ -9,3 +9,7 @@ export function finnFaktum(faktumKey: string, fakta: Faktum[]): Faktum {
 	}
 	return faktum[0];
 }
+
+export function finnFakta(faktumKey: string, fakta: Faktum[]): Faktum[] {
+	return fakta.filter((faktum) => faktum.key === faktumKey);
+}

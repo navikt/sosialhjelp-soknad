@@ -105,3 +105,11 @@ export function getFaktumVerdi(fakta: any, key: string) {
 	}
 	return null;
 }
+export function getPropertyVerdi(fakta: any, key: string, property: string) {
+	for (const faktum of fakta) {
+		if (faktum.key === key) {
+			return faktum[property];
+		}
+	}
+	return null;
+}

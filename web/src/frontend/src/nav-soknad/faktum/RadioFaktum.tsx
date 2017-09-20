@@ -12,6 +12,7 @@ interface OwnProps {
 	value: string;
 	faktumKey: string;
 	disabled?: boolean;
+	property?: string;
 }
 
 class RadioFaktum extends React.Component<
@@ -19,15 +20,15 @@ class RadioFaktum extends React.Component<
 	{}
 > {
 	render() {
-		const { faktumKey, value, disabled, intl } = this.props;
+		const { faktumKey, value, disabled, intl, property } = this.props;
 		const tekster = getRadioFaktumTekst(intl, faktumKey, value);
 		return (
 			<Radio
 				name={faktumKey}
-				checked={this.props.getFaktumVerdi() === value}
+				checked={property ? this.props.getPropertyVerdi() === value : this.props.getFaktumVerdi() === value}
 				disabled={disabled}
 				value={value}
-				onChange={(evt: any) => this.props.setFaktumVerdi(value)}
+				onChange={(evt: any) => this.props.setFaktumVerdi(value, property)}
 				label={
 					<LabelMedHjelpetekst
 						id={`${faktumKey}.${value}`}
