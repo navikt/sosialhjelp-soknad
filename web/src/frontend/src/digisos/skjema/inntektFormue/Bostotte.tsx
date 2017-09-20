@@ -19,7 +19,7 @@ class Bostotte extends React.Component<FaktumComponentProps, {}> {
 		const bostotte = radioCheckKeys("inntekt.bostotte");
 		const hvilkenStotte = radioCheckKeys("inntekt.bostotte.true.type");
 		return (
-			<SporsmalFaktum faktumKey={bostotte.faktum}>
+			<SporsmalFaktum faktumKey={bostotte.faktum} required={true}>
 				<RadioFaktum faktumKey={bostotte.faktum} value="true" />
 				<Underskjema
 					visible={faktumIsSelected(getFaktumVerdi(fakta, "inntekt.bostotte"))}>

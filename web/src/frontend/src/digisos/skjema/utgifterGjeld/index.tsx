@@ -19,6 +19,7 @@ import CheckboxFaktum, {
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
+import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
 class UtgifterGjeld extends React.Component<
 	FaktumComponentProps & DispatchProps & InjectedIntlProps,
@@ -37,7 +38,7 @@ class UtgifterGjeld extends React.Component<
 
 		return (
 			<StegFaktum tittelId="utgifterbolk.tittel">
-				<SporsmalFaktum faktumKey={harBoutgifter.faktum}>
+				<SporsmalFaktum faktumKey={harBoutgifter.faktum} required={true}>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} value="true" />
 					<Underskjema
 						visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}>
@@ -80,13 +81,17 @@ class UtgifterGjeld extends React.Component<
 							{faktumIsSelected(
 								getFaktumVerdi(fakta, `${boUtgifter.faktum}.andreutgifter`)
 							) ? (
-								<TextareaFaktum faktumKey={andreBoUtgifter} />
+								<TextareaFaktum
+									faktumKey={andreBoUtgifter}
+									maxLength={400}
+									validerFunc={[getMaksLengdeFunc(400)]}
+								/>
 							) : null}
 						</SporsmalFaktum>
 					</Underskjema>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} value="false" />
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey={harUtgifterBarn.faktum}>
+				<SporsmalFaktum faktumKey={harUtgifterBarn.faktum} required={true}>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} value="true" />
 					<Underskjema
 						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}>
@@ -126,7 +131,11 @@ class UtgifterGjeld extends React.Component<
 							{faktumIsSelected(
 								getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`)
 							) ? (
-								<TextareaFaktum faktumKey={andreBarneutgifter} />
+								<TextareaFaktum
+									faktumKey={andreBarneutgifter}
+									maxLength={400}
+									validerFunc={[getMaksLengdeFunc(400)]}
+								/>
 							) : null}
 						</SporsmalFaktum>
 					</Underskjema>

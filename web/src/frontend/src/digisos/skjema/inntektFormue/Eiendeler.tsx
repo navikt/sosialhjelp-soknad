@@ -13,6 +13,7 @@ import CheckboxFaktum, {
 } from "../../../nav-soknad/faktum/CheckboxFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
+import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
 class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -21,7 +22,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeEiendeler = radioCheckKeys("inntekt.eierandeler.true.type");
 		const hvilkeEiendelerAnnet = "inntekt.eierandeler.true.type.annet";
 		return (
-			<SporsmalFaktum faktumKey={eiendeler.faktum}>
+			<SporsmalFaktum faktumKey={eiendeler.faktum} required={true}>
 				<RadioFaktum faktumKey={eiendeler.faktum} value="true" />
 				<Underskjema
 					visible={faktumIsSelected(getFaktumVerdi(fakta, eiendeler.faktum))}>
@@ -59,6 +60,8 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 						{faktumIsSelected(getFaktumVerdi(fakta, hvilkeEiendelerAnnet)) ? (
 							<TextareaFaktum
 								faktumKey={`${hvilkeEiendelerAnnet}.true.beskrivelse`}
+								maxLength={400}
+								validerFunc={[getMaksLengdeFunc(400)]}
 							/>
 						) : null}
 					</SporsmalFaktum>

@@ -18,6 +18,10 @@ export function maksLengde(value: string, max: number): ValideringKey {
 		: ValideringKey.MAX_LENGDE;
 }
 
+export function getMaksLengdeFunc(max: number) {
+	return (value: string): ValideringKey => maksLengde(value, max);
+}
+
 export function erTall(value: string): ValideringKey {
 	return value && /^[0-9]$/i.test(value) ? undefined : ValideringKey.ER_TALL;
 }

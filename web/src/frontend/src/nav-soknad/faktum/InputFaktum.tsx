@@ -47,14 +47,15 @@ class InputFaktum extends React.Component<Props, State> {
 
 	handleOnBlur() {
 		this.props.setFaktumVerdi(this.state.value);
+		this.props.validerFaktum(this.state.value);
 	}
 
 	render() {
 		const {
 			faktumKey,
-			disabled,
 			type,
-			feil,
+			disabled,
+			required,
 			intl,
 			maxLength,
 			bredde
@@ -72,9 +73,10 @@ class InputFaktum extends React.Component<Props, State> {
 				onBlur={this.handleOnBlur}
 				label={tekster.label}
 				placeholder={tekster.pattern}
-				feil={feil}
+				feil={this.props.getFeil(intl)}
 				maxLength={maxLength}
 				bredde={bredde}
+				required={required}
 			/>
 		);
 	}
