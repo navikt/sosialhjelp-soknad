@@ -26,7 +26,7 @@ class Begrunnelse extends React.Component<
 						faktumKey="begrunnelse.hvorfor"
 						labelId="begrunnelse.hvorfor.label"
 						maxLength={800}
-						validerFunc={[getMaksLengdeFunc(10)]}
+						validerFunc={[getMaksLengdeFunc(800)]}
 					/>
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="begrunnelse.hva">
