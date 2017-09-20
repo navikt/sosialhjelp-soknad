@@ -5,8 +5,8 @@ import { getIntlTextOrKey } from "../utils";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import { SoknadAppState } from "../redux/faktaReducer";
 import { Valideringsfeil } from "../validering/types";
-import StegMedNavigasjon from "../../digisos/skjema/stegMedNavigasjon";
-import AppTittel from "../components/apptittel/appTittel";
+import StegMedNavigasjon from "../../digisos/skjema/StegMedNavigasjon";
+import AppTittel from "../components/apptittel/AppTittel";
 import { Innholdstittel } from "nav-frontend-typografi";
 const DocumentTitle = require("react-document-title");
 
@@ -38,13 +38,13 @@ class StegFaktum extends React.Component<
 			children
 		} = this.props;
 		const title =
-			getIntlTextOrKey(intl, tittelId)
+			getIntlTextOrKey(intl, tittelId) +
 			" - " +
-			getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn") +
+			getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn");
 		return (
 			<DocumentTitle title={title}>
 				<span>
-					<AppTittel/>
+					<AppTittel />
 					<StegMedNavigasjon>
 						<div className="skjema-steg skjema-content">
 							<div className="skjema-steg__feiloppsummering">
@@ -56,7 +56,9 @@ class StegFaktum extends React.Component<
 								/>
 							</div>
 							<div className="skjema-steg__tittel">
-								<Innholdstittel>{getIntlTextOrKey(intl, tittelId)}</Innholdstittel>
+								<Innholdstittel>
+									{getIntlTextOrKey(intl, tittelId)}
+								</Innholdstittel>
 							</div>
 							{children}
 						</div>

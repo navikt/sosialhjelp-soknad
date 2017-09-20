@@ -4,14 +4,23 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import StegIndikator from "../../nav-soknad/components/stegIndikator";
 import Knapperad from "../../nav-soknad/components/knapperad";
-import { avbryt, finnBrukerBehandlingIdFraLocation, finnStegFraLocation, gaTilbake, gaVidere } from "./utils";
+import {
+	avbryt,
+	finnBrukerBehandlingIdFraLocation,
+	finnStegFraLocation,
+	gaTilbake,
+	gaVidere
+} from "./utils";
 import { Location } from "history";
 import { connect } from "react-redux";
 import { DispatchProps } from "../redux/types";
 import { hentSoknad } from "../redux/soknad/soknadActions";
 import { REST_STATUS } from "../redux/soknad/soknadTypes";
 import { State } from "../redux/reducers";
-import { clearFaktaValideringsfeil, setFaktaValideringsfeil } from "../../nav-soknad/redux/valideringActions";
+import {
+	clearFaktaValideringsfeil,
+	setFaktaValideringsfeil
+} from "../../nav-soknad/redux/valideringActions";
 import { FaktumValideringsregler } from "../../nav-soknad/validering/types";
 import { validerAlleFaktum } from "../../nav-soknad/validering/utils";
 
@@ -32,7 +41,7 @@ type Props = OwnProps & RouterProps & InjectedIntlProps & DispatchProps;
 class StegMedNavigasjon extends React.Component<
 	OwnProps & RouterProps & InjectedIntlProps & DispatchProps,
 	{}
-	> {
+> {
 	constructor(props: Props) {
 		super(props);
 		this.handleGaVidere = this.handleGaVidere.bind(this);
@@ -55,8 +64,7 @@ class StegMedNavigasjon extends React.Component<
 
 		const valideringsfeil = validerAlleFaktum(
 			this.props.fakta,
-			this.props.valideringer,
-			this.props.intl
+			this.props.valideringer
 		);
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());

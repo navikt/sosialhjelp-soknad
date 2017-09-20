@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 import { DispatchProps } from "../redux/types";
 import { REST_STATUS } from "../redux/soknad/soknadTypes";
 import { State } from "../redux/reducers";
-import FeilSide from "../../nav-soknad/components/feilmeldinger/feilSide";
+import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
 
 interface OwnProps {
 	restStatus: string;
@@ -27,10 +27,9 @@ interface OwnProps {
 class SkjemaRouter extends React.Component<
 	OwnProps & RouterProps & InjectedIntlProps & DispatchProps,
 	{}
-	> {
-
+> {
 	render() {
-		const { match} = this.props;
+		const { match } = this.props;
 		if (this.props.restStatus === REST_STATUS.PENDING) {
 			return (
 				<div className="application-spinner">
@@ -49,7 +48,7 @@ class SkjemaRouter extends React.Component<
 					<Route path={`${match.url}/7`} component={Steg7} />
 					<Route path={`${match.url}/8`} component={Steg8} />
 					<Route path={`${match.url}/9`} component={Oppsummering} />
-					<Route component={FeilSide} />
+					<Route component={Feilside} />
 				</Switch>
 			);
 		}
@@ -58,6 +57,6 @@ class SkjemaRouter extends React.Component<
 
 export default connect((state: State, props: any) => {
 	return {
-		restStatus: state.soknad.restStatus,
+		restStatus: state.soknad.restStatus
 	};
 })(injectIntl(withRouter(SkjemaRouter)));
