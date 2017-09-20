@@ -6,14 +6,13 @@ import { getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import Ektefelle from "./Ektefelle";
-import { pakrevd } from "../../../nav-soknad/validering/valideringer";
 
 class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
 		const sivilstatus = radioCheckKeys("familie.sivilstatus");
 		return (
-			<SporsmalFaktum faktumKey={sivilstatus.faktum} validerFunc={[pakrevd]}>
+			<SporsmalFaktum faktumKey={sivilstatus.faktum} required={true}>
 				<RadioFaktum faktumKey={sivilstatus.faktum} value="gift" />
 				<Underskjema
 					visible={getFaktumVerdi(fakta, sivilstatus.faktum) === "gift"}>

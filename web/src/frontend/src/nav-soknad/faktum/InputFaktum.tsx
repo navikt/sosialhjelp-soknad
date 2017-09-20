@@ -51,7 +51,15 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { faktumKey, type, disabled, intl, maxLength, bredde } = this.props;
+		const {
+			faktumKey,
+			type,
+			disabled,
+			required,
+			intl,
+			maxLength,
+			bredde
+		} = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey);
 		return (
 			<Input
@@ -68,6 +76,7 @@ class InputFaktum extends React.Component<Props, State> {
 				feil={this.props.getFeil(intl)}
 				maxLength={maxLength}
 				bredde={bredde}
+				required={required}
 			/>
 		);
 	}

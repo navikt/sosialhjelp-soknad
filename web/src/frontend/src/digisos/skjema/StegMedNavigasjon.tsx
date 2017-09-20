@@ -75,6 +75,7 @@ class StegMedNavigasjon extends React.Component<
 	}
 
 	handleGaTilbake(aktivtSteg: number, brukerBehandlingId: string) {
+		this.props.dispatch(clearFaktaValideringsfeil());
 		gaTilbake(aktivtSteg, brukerBehandlingId, this.props.history);
 	}
 
