@@ -17,6 +17,7 @@ import {
 } from "../redux/valideringActions";
 import { validerFaktum } from "../validering/utils";
 import { Feil } from "nav-frontend-skjema";
+import { pakrevd } from "../validering/valideringer";
 
 interface Props {
 	faktumKey: string;
@@ -24,6 +25,8 @@ interface Props {
 	validerFunc?: FaktumValideringFunc[];
 	/** Alle registrerte valideringsregler i state */
 	valideringsregler?: FaktumValideringsregler[];
+	/** Denne legger til validering for påkrevd dersom true */
+	required?: boolean;
 }
 
 interface InjectedProps {
@@ -36,6 +39,13 @@ interface InjectedProps {
 }
 
 export type InjectedFaktumComponentProps = InjectedProps & Props;
+
+const getValideringer = (
+	required: boolean,
+	validerFunc: FaktumValideringFunc[]
+): FaktumValideringFunc[] => {
+	return [...(required ? [pakrevd] : []), ...(validerFunc ? validerFunc : [])];
+};
 
 export const faktumComponent = () => <TOriginalProps extends {}>(
 	Component:
@@ -60,11 +70,15 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		componentWillMount() {
-			if (this.props.validerFunc) {
+			const valideringer = getValideringer(
+				this.props.required,
+				this.props.validerFunc
+			);
+			if (valideringer.length > 0) {
 				this.props.dispatch(
 					registerFaktumValidering({
 						faktumKey: this.props.faktumKey,
-						valideringer: this.props.validerFunc
+						valideringer
 					})
 				);
 			}
@@ -122,7 +136,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 	};
 
-	interface StateFromProps {
+	interface PropsFromState {
 		fakta: Faktum[];
 		feilkode?: string;
 		valideringsregler?: FaktumValideringsregler[];
@@ -131,7 +145,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 	const mapStateToProps = (
 		state: SoknadAppState,
 		props: Props
-	): StateFromProps => {
+	): PropsFromState => {
 		const feil = state.validering.feil.find(
 			f => f.faktumKey === props.faktumKey
 		);
@@ -142,7 +156,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		};
 	};
 
-	return connect<StateFromProps, {}, TOriginalProps & Props>(mapStateToProps)(
+	return connect<PropsFromState, {}, TOriginalProps & Props>(mapStateToProps)(
 		result
 	);
 };

@@ -12,7 +12,6 @@ import CheckboxFaktum, {
 	createCheckboxFaktumKey
 } from "../../../nav-soknad/faktum/CheckboxFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
-import { pakrevd } from "../../../nav-soknad/validering/valideringer";
 
 class Bostotte extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -20,7 +19,7 @@ class Bostotte extends React.Component<FaktumComponentProps, {}> {
 		const bostotte = radioCheckKeys("inntekt.bostotte");
 		const hvilkenStotte = radioCheckKeys("inntekt.bostotte.true.type");
 		return (
-			<SporsmalFaktum faktumKey={bostotte.faktum} validerFunc={[pakrevd]}>
+			<SporsmalFaktum faktumKey={bostotte.faktum} required={true}>
 				<RadioFaktum faktumKey={bostotte.faktum} value="true" />
 				<Underskjema
 					visible={faktumIsSelected(getFaktumVerdi(fakta, "inntekt.bostotte"))}>

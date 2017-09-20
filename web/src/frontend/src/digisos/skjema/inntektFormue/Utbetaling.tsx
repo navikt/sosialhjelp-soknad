@@ -13,7 +13,7 @@ import CheckboxFaktum, {
 } from "../../../nav-soknad/faktum/CheckboxFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
-import { pakrevd } from "../../../nav-soknad/validering/valideringer";
+import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
 class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -22,7 +22,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeUtbetalinger = radioCheckKeys("inntekt.inntekter.true.type");
 		const hvilkeUtbetalingerAnnet = "inntekt.inntekter.true.type.annet";
 		return (
-			<SporsmalFaktum faktumKey={utbetaling.faktum} validerFunc={[pakrevd]}>
+			<SporsmalFaktum faktumKey={utbetaling.faktum} required={true}>
 				<RadioFaktum faktumKey={utbetaling.faktum} value="true" />
 				<Underskjema
 					visible={faktumIsSelected(getFaktumVerdi(fakta, utbetaling.faktum))}>
@@ -57,6 +57,8 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 						) ? (
 							<TextareaFaktum
 								faktumKey={`${hvilkeUtbetalingerAnnet}.true.beskrivelse`}
+								maxLength={400}
+								validerFunc={[getMaksLengdeFunc(400)]}
 							/>
 						) : null}
 					</SporsmalFaktum>

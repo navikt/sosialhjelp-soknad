@@ -23,6 +23,7 @@ class FaktumSelect extends React.Component<
 			faktumKey,
 			disabled,
 			bredde,
+			required,
 			labelFunc,
 			children,
 			intl
@@ -34,6 +35,7 @@ class FaktumSelect extends React.Component<
 				disabled={disabled}
 				value={this.props.getFaktumVerdi()}
 				bredde={bredde}
+				required={required}
 				onChange={(evt: any) => this.props.setFaktumVerdi(evt.target.value)}
 				label={
 					<LabelMedHjelpetekst
