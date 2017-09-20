@@ -22,10 +22,18 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	constructor(props: Props) {
 		super(props);
 		this.handleOnBlur = this.handleOnBlur.bind(this);
+		this.harValidering = this.harValidering.bind(this);
+	}
+
+	harValidering() {
+		return (
+			this.props.required ||
+			(this.props.validerFunc && this.props.validerFunc.length > 0)
+		);
 	}
 
 	handleOnBlur(evt: any) {
-		if (this.props.validerFunc) {
+		if (this.harValidering()) {
 			setTimeout(() => {
 				if (!contains(findDOMNode(this), document.activeElement)) {
 					this.props.validerFaktum(this.props.getFaktumVerdi());
@@ -35,7 +43,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const { visible, feilkode, validerFunc, intl, children } = this.props;
+		const { visible, feilkode, intl, children } = this.props;
 		if (visible === false) {
 			return null;
 		}
@@ -45,7 +53,8 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 		});
 		return (
 			<div className="skjema-sporsmal" onBlur={this.handleOnBlur}>
-				<SkjemaGruppe feil={validerFunc ? this.props.getFeil(intl) : null}>
+				<SkjemaGruppe
+					feil={this.harValidering() ? this.props.getFeil(intl) : null}>
 					<fieldset className={cls}>
 						<legend>{tekster.sporsmal}</legend>
 						{tekster.hjelpetekst ? (

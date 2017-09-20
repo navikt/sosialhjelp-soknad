@@ -1,14 +1,13 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
 import InputFaktum from "./InputFaktum";
-import { FaktumValideringFunc } from "../validering/types";
 
 interface OwnProps {
 	faktumKey: string;
 	validering?: {
-		navn?: FaktumValideringFunc[];
-		fnr?: FaktumValideringFunc[];
-		pnr?: FaktumValideringFunc[];
+		navnRequired?: boolean;
+		fnrRequired?: boolean;
+		pnrRequired?: boolean;
 	};
 }
 
@@ -25,7 +24,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 						<Column xs="12">
 							<InputFaktum
 								faktumKey={navnFaktumKey}
-								validerFunc={validering.navn}
+								required={validering.navnRequired}
 							/>
 						</Column>
 					</Row>
@@ -35,7 +34,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								faktumKey={fnrFaktumKey}
 								maxLength={6}
 								bredde="s"
-								validerFunc={validering.fnr}
+								required={validering.fnrRequired}
 							/>
 						</Column>
 						<Column xs="12" md="6">
@@ -43,7 +42,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								faktumKey={pnrFaktumKey}
 								maxLength={5}
 								bredde="s"
-								validerFunc={validering.pnr}
+								required={validering.pnrRequired}
 							/>
 						</Column>
 					</Row>

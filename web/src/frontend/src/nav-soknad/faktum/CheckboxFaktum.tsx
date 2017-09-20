@@ -26,7 +26,7 @@ class CheckboxFaktum extends React.Component<
 	{}
 > {
 	render() {
-		const { faktumKey, disabled, fakta, intl } = this.props;
+		const { faktumKey, disabled, fakta, required, intl } = this.props;
 		const tekster = getFaktumCheckboksTekst(intl, faktumKey);
 		const checked = faktumIsSelected(getFaktumVerdi(fakta, faktumKey));
 		return (
@@ -34,6 +34,7 @@ class CheckboxFaktum extends React.Component<
 				name={faktumKey}
 				checked={checked}
 				disabled={disabled}
+				required={required}
 				onChange={(evt: any) =>
 					this.props.setFaktumVerdi(boolToString(evt.target.checked))}
 				label={

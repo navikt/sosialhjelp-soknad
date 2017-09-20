@@ -6,7 +6,6 @@ import {
 	getFaktumVerdi,
 	radioCheckKeys
 } from "../../../nav-soknad/utils";
-import { pakrevd } from "../../../nav-soknad/validering/valideringer";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
@@ -17,7 +16,7 @@ class Studie extends React.Component<FaktumComponentProps, any> {
 		const studie = radioCheckKeys("dinsituasjon.studerer");
 		const studerer = radioCheckKeys("dinsituasjon.studerer.true.grad");
 		return (
-			<SporsmalFaktum faktumKey={studie.faktum} validerFunc={[pakrevd]}>
+			<SporsmalFaktum faktumKey={studie.faktum} required={true}>
 				<RadioFaktum faktumKey={studie.faktum} value="true" />
 				<Underskjema
 					visible={faktumIsSelected(getFaktumVerdi(fakta, studie.faktum))}>

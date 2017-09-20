@@ -6,7 +6,6 @@ import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import { radioCheckKeys } from "../../../nav-soknad/utils";
 
 import {
-	pakrevd,
 	erKontonummer,
 	erTelefonnummer
 } from "../../../nav-soknad/validering/valideringer";
@@ -18,19 +17,21 @@ class Kontaktinfo extends React.Component<{}, {}> {
 			<StegFaktum tittelId="kontakt.tittel">
 				<SporsmalFaktum faktumKey="kontakt.kontonummer">
 					<InputFaktum
+						required={true}
 						faktumKey="kontakt.kontonummer"
 						maxLength={11}
-						validerFunc={[pakrevd, erKontonummer]}
+						validerFunc={[erKontonummer]}
 					/>
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="kontakt.telefon">
 					<InputFaktum
+						required={true}
 						faktumKey="kontakt.telefon"
-						validerFunc={[pakrevd, erTelefonnummer]}
+						validerFunc={[erTelefonnummer]}
 					/>
 				</SporsmalFaktum>
 
-				<SporsmalFaktum faktumKey={statsborger.faktum} validerFunc={[pakrevd]}>
+				<SporsmalFaktum faktumKey={statsborger.faktum} required={true}>
 					<RadioFaktum faktumKey={statsborger.faktum} value="true" />
 					<RadioFaktum faktumKey={statsborger.faktum} value="false" />
 				</SporsmalFaktum>
