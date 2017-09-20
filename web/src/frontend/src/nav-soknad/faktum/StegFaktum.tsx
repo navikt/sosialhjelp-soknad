@@ -5,9 +5,8 @@ import { getIntlTextOrKey } from "../utils";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import { SoknadAppState } from "../redux/faktaReducer";
 import { Valideringsfeil } from "../validering/types";
-import StegMedNavigasjon from "../../digisos/skjema/StegMedNavigasjon";
-import AppTittel from "../components/apptittel/AppTittel";
 import { Innholdstittel } from "nav-frontend-typografi";
+
 const DocumentTitle = require("react-document-title");
 
 interface OwnProps extends React.Props<any> {
@@ -38,32 +37,25 @@ class StegFaktum extends React.Component<
 			children
 		} = this.props;
 		const title =
-			getIntlTextOrKey(intl, tittelId) +
+			getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn") +
 			" - " +
-			getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn");
+			getIntlTextOrKey(intl, tittelId);
 		return (
 			<DocumentTitle title={title}>
-				<span>
-					<AppTittel />
-					<StegMedNavigasjon>
-						<div className="skjema-steg skjema-content">
-							<div className="skjema-steg__feiloppsummering">
-								<Feiloppsummering
-									skjemanavn="digisos"
-									valideringsfeil={valideringsfeil}
-									stegValidertCounter={stegValidertCounter}
-									visFeilliste={visFeilmeldinger}
-								/>
-							</div>
-							<div className="skjema-steg__tittel">
-								<Innholdstittel>
-									{getIntlTextOrKey(intl, tittelId)}
-								</Innholdstittel>
-							</div>
-							{children}
-						</div>
-					</StegMedNavigasjon>
-				</span>
+				<div className="skjema-steg skjema-content">
+					<div className="skjema-steg__feiloppsummering">
+						<Feiloppsummering
+							skjemanavn="digisos"
+							valideringsfeil={valideringsfeil}
+							stegValidertCounter={stegValidertCounter}
+							visFeilliste={visFeilmeldinger}
+						/>
+					</div>
+					<div className="skjema-steg__tittel">
+						<Innholdstittel>{getIntlTextOrKey(intl, tittelId)}</Innholdstittel>
+					</div>
+					{children}
+				</div>
 			</DocumentTitle>
 		);
 	}
