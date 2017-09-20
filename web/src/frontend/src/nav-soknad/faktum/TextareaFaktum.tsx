@@ -29,6 +29,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 		super(props);
 		this.handleOnBlur = this.handleOnBlur.bind(this);
 		this.handleOnChange = this.handleOnChange.bind(this);
+		this.tellerTekst = this.tellerTekst.bind(this);
 		this.state = getStateFromProps(this.props);
 	}
 
@@ -42,6 +43,27 @@ class TextareaFaktum extends React.Component<Props, State> {
 
 	handleOnBlur() {
 		this.props.setFaktumVerdi(this.state.value);
+		this.props.validerFaktum(this.state.value);
+	}
+
+	tellerTekst(antallTegn: number, maxLength: number) {
+		const antallTegnIgjen = maxLength - antallTegn;
+		if (antallTegnIgjen > 25) {
+			return null;
+		} else if (antallTegn > maxLength) {
+			return this.props.intl.formatMessage(
+				{
+					id: "textarea.overmaks"
+				},
+				{ antall: antallTegn - maxLength }
+			);
+		}
+		return this.props.intl.formatMessage(
+			{
+				id: "textarea.undermaks"
+			},
+			{ antall: maxLength - antallTegn }
+		);
 	}
 
 	render() {
@@ -65,6 +87,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 				feil={this.props.getFeil(intl)}
 				maxLength={maxLength || 400}
 				textareaClass={textareaClass || "skjema-texarea--normal"}
+				tellerTekst={this.tellerTekst}
 			/>
 		);
 	}

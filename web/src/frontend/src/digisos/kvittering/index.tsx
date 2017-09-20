@@ -8,7 +8,7 @@ import { State } from "../redux/reducers";
 import "./kvittering.css";
 import { getBosted } from "../data/kommuner";
 import { getFaktumVerdi } from "../../nav-soknad/utils";
-import AppTittel from "../../nav-soknad/components/apptittel/appTittel";
+import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 
 class Kvittering extends React.Component<State & FaktumComponentProps, {}> {
 	render() {
@@ -17,7 +17,7 @@ class Kvittering extends React.Component<State & FaktumComponentProps, {}> {
 		const bydel = getFaktumVerdi(fakta, "personalia.bydel");
 		return (
 			<span>
-				<AppTittel/>
+				<AppTittel />
 				<div className="kvittering skjema-content">
 					<Panel>
 						<Icon kind="stegindikator__hake" className="kvittering__ikon" />
@@ -26,11 +26,11 @@ class Kvittering extends React.Component<State & FaktumComponentProps, {}> {
 						</Undertittel>
 						<div className="kvittering__tekst">
 							<p>
-								Søknaden er sendt til <strong>
-									{getBosted(kommune, bydel)}
-								</strong>, som vil være kontoret som behandler saken din. Søknaden
-								er mottatt. Du vil få nærmere beskjed på status når søknaden er
-								behandlet. Normal saksbehanldingstid er X dager.
+								Søknaden er sendt til{" "}
+								<strong>{getBosted(kommune, bydel)}</strong>, som vil være
+								kontoret som behandler saken din. Søknaden er mottatt. Du vil få
+								nærmere beskjed på status når søknaden er behandlet. Normal
+								saksbehanldingstid er X dager.
 							</p>
 						</div>
 					</Panel>

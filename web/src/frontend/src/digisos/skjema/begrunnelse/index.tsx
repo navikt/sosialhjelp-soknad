@@ -8,7 +8,12 @@ import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 
-import { pakrevd } from "../../../nav-soknad/validering/valideringer";
+import {
+	pakrevd,
+	getMaksLengdeFunc
+} from "../../../nav-soknad/validering/valideringer";
+
+const MAX_CHARS = 800;
 
 class Begrunnelse extends React.Component<
 	FaktumComponentProps & DispatchProps,
@@ -22,16 +27,17 @@ class Begrunnelse extends React.Component<
 						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hvorfor"
 						labelId="begrunnelse.hvorfor.label"
-						maxLength={800}
+						maxLength={MAX_CHARS}
+						validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
 					/>
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="begrunnelse.hva">
 					<TextareaFaktum
-						validerFunc={[pakrevd]}
+						validerFunc={[pakrevd, getMaksLengdeFunc(MAX_CHARS)]}
 						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hva"
 						labelId="begrunnelse.hva.label"
-						maxLength={800}
+						maxLength={MAX_CHARS}
 					/>
 				</SporsmalFaktum>
 			</StegFaktum>

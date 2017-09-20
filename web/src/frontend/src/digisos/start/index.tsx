@@ -3,7 +3,7 @@ import Bosted from "./Bosted";
 import "./start.css";
 import { getIntlTextOrKey } from "../../nav-soknad/utils";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import AppTittel from "../../nav-soknad/components/apptittel/appTittel";
+import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 
 const DocumentTitle = require("react-document-title");
 
@@ -14,11 +14,11 @@ class Start extends React.Component<InjectedIntlProps, {}> {
 		return (
 			<DocumentTitle title={title}>
 				<span>
-					<AppTittel/>
+					<AppTittel />
 					<div className="skjema-content">
 						<p className="blokk-l">
-							For at vi skal kunne sende din søknad til riktig kommune trenger vi å
-							vite hvor du bor og-/eller oppholder deg nå.
+							For at vi skal kunne sende din søknad til riktig kommune trenger
+							vi å vite hvor du bor og-/eller oppholder deg nå.
 						</p>
 						<Bosted />
 					</div>
