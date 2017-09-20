@@ -16,6 +16,7 @@ interface State {
 interface OwnProps {
 	faktumKey: string;
 	disabled?: boolean;
+	pattern?: string;
 	maxLength?: number;
 	bredde?: InputBredde;
 	type?: InputTypes;
@@ -51,7 +52,15 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { faktumKey, type, disabled, intl, maxLength, bredde } = this.props;
+		const {
+			faktumKey,
+			type,
+			disabled,
+			pattern,
+			intl,
+			maxLength,
+			bredde
+		} = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey);
 		return (
 			<Input
@@ -68,6 +77,7 @@ class InputFaktum extends React.Component<Props, State> {
 				feil={this.props.getFeil(intl)}
 				maxLength={maxLength}
 				bredde={bredde}
+				pattern={pattern}
 			/>
 		);
 	}
