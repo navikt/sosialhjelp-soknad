@@ -31,5 +31,5 @@ export interface UnregisterFaktumValideringAction {
 export interface SetFaktumValideringsfeilAction {
 	type: ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL;
 	faktumKey: string;
-	valideringsfeil: Valideringsfeil[];
+	valideringsfeil: Valideringsfeil;
 }
