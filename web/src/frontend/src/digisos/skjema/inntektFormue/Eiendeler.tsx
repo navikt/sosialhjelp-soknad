@@ -13,6 +13,7 @@ import CheckboxFaktum, {
 } from "../../../nav-soknad/faktum/CheckboxFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
+import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
 class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -59,6 +60,8 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 						{faktumIsSelected(getFaktumVerdi(fakta, hvilkeEiendelerAnnet)) ? (
 							<TextareaFaktum
 								faktumKey={`${hvilkeEiendelerAnnet}.true.beskrivelse`}
+								maxLength={400}
+								validerFunc={[getMaksLengdeFunc(400)]}
 							/>
 						) : null}
 					</SporsmalFaktum>

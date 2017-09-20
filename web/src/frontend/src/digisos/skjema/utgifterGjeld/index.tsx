@@ -19,6 +19,7 @@ import CheckboxFaktum, {
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
+import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
 class UtgifterGjeld extends React.Component<
 	FaktumComponentProps & DispatchProps & InjectedIntlProps,
@@ -80,7 +81,11 @@ class UtgifterGjeld extends React.Component<
 							{faktumIsSelected(
 								getFaktumVerdi(fakta, `${boUtgifter.faktum}.andreutgifter`)
 							) ? (
-								<TextareaFaktum faktumKey={andreBoUtgifter} />
+								<TextareaFaktum
+									faktumKey={andreBoUtgifter}
+									maxLength={400}
+									validerFunc={[getMaksLengdeFunc(400)]}
+								/>
 							) : null}
 						</SporsmalFaktum>
 					</Underskjema>
@@ -126,7 +131,11 @@ class UtgifterGjeld extends React.Component<
 							{faktumIsSelected(
 								getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`)
 							) ? (
-								<TextareaFaktum faktumKey={andreBarneutgifter} />
+								<TextareaFaktum
+									faktumKey={andreBarneutgifter}
+									maxLength={400}
+									validerFunc={[getMaksLengdeFunc(400)]}
+								/>
 							) : null}
 						</SporsmalFaktum>
 					</Underskjema>
