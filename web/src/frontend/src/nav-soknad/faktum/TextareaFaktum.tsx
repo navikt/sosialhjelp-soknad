@@ -73,6 +73,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 			disabled,
 			textareaClass,
 			maxLength,
+			required,
 			intl
 		} = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey);
@@ -88,6 +89,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 				maxLength={maxLength || 400}
 				textareaClass={textareaClass || "skjema-texarea--normal"}
 				tellerTekst={this.tellerTekst}
+				required={required}
 			/>
 		);
 	}

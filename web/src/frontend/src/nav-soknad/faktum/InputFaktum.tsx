@@ -57,6 +57,7 @@ class InputFaktum extends React.Component<Props, State> {
 			type,
 			disabled,
 			pattern,
+			required,
 			intl,
 			maxLength,
 			bredde
@@ -78,6 +79,7 @@ class InputFaktum extends React.Component<Props, State> {
 				maxLength={maxLength}
 				bredde={bredde}
 				pattern={pattern}
+				required={required}
 			/>
 		);
 	}
