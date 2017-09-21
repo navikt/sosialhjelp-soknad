@@ -4,7 +4,7 @@
 		"soknadId": 991,
 		"parrentFaktum": null,
 		"key": "progresjon",
-		"value": null,
+		"value": "0",
 		"faktumEgenskaper": [],
 		"properties": {},
 		"type": "SYSTEM"

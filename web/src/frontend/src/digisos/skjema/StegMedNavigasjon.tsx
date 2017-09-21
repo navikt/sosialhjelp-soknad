@@ -38,6 +38,7 @@ interface OwnProps {
 	location: Location;
 	fakta: Faktum[];
 	valideringer: FaktumValideringsregler[];
+	progresjon: number;
 }
 type Props = OwnProps & RouterProps & InjectedIntlProps & DispatchProps;
 
@@ -60,12 +61,23 @@ class StegMedNavigasjon extends React.Component<
 			this.props.fakta,
 			this.props.valideringer
 		);
+
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
-			this.props.dispatch(
-				setFaktumVerdi(getProgresjonFaktum(this.props.fakta), `${aktivtSteg}`)
-			);
-			gaVidere(aktivtSteg, brukerBehandlingId, this.props.history);
+			if (aktivtSteg === this.props.progresjon + 1) {
+				this.props
+					.dispatch(
+						setFaktumVerdi(
+							getProgresjonFaktum(this.props.fakta),
+							`${aktivtSteg + 1}`
+						)
+					)
+					.then(() => {
+						gaVidere(aktivtSteg, brukerBehandlingId, this.props.history);
+					});
+			} else {
+				gaVidere(aktivtSteg, brukerBehandlingId, this.props.history);
+			}
 		} else {
 			this.props.dispatch(setFaktaValideringsfeil(valideringsfeil));
 		}
@@ -132,10 +144,17 @@ class StegMedNavigasjon extends React.Component<
 }
 
 export default connect((state: State, props: any) => {
+	const dataLoaded = state.fakta.restStatus === REST_STATUS.OK;
+	let progresjon = 0;
+	if (dataLoaded) {
+		const faktum = getProgresjonFaktum(state.fakta.data);
+		progresjon = parseInt(faktum.value as string, 10);
+	}
 	return {
 		fakta: state.fakta.data,
 		valideringer: state.validering.valideringsregler,
 		restStatus: state.soknad.restStatus,
-		brukerBehandlingId: state.soknad.data.brukerBehandlingId
+		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
+		progresjon
 	};
 })(injectIntl(withRouter(StegMedNavigasjon)));

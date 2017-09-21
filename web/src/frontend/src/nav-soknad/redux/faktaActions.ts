@@ -9,11 +9,11 @@ import {
 import { fetchPut, fetchToJson } from "../../digisos/redux/rest-utils";
 
 export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType) {
-	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
+	return (dispatch: SoknadDispatch<FaktaActionTypes>): Promise<any> => {
 		const nyttFaktum = { ...faktum };
 		nyttFaktum.value = value;
 		dispatch({ type: FaktumActionTypeKeys.OPPDATER_FAKTUM });
-		fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
+		return fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
 			.then(response => {
 				dispatch({
 					type: FaktumActionTypeKeys.OPPDATERT_FAKTUM,
