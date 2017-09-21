@@ -30,14 +30,14 @@ export enum FaktaActionTypeKeys {
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
-export type FaktumValueType = string | number | boolean;
+export type FaktumValueType = string | null;
 
 export interface Faktum {
 	faktumId: number;
 	soknadId: number;
 	parrentFaktum: null | number;
 	key: string;
-	value: null | boolean | string | number;
+	value: FaktumValueType;
 	faktumEgenskaper?: FaktumEgenskap[];
 	properties: object;
 	type?: string;
