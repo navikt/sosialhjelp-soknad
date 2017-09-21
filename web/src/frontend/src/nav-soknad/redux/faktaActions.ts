@@ -12,8 +12,12 @@ import { State } from "../../digisos/redux/reducers";
 
 export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType, property?: string) {
 	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
-		const nyttFaktum = {...faktum};
-		property ? nyttFaktum.properties[property] = value : nyttFaktum.value = value;
+		let nyttFaktum = {...faktum};
+		if ( property) {
+			nyttFaktum = {...faktum, properties: {...faktum.properties, [property]: value}};
+		} else {
+			nyttFaktum.value = value;
+		}
 		dispatch({type: FaktumActionTypeKeys.OPPDATER_FAKTUM});
 		fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
 			.then(response => {
