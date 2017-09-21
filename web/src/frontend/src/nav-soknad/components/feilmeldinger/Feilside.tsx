@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./feilSide.css";
+import "./feilside.css";
 import { Knapp } from "nav-frontend-knapper";
 import { FormattedMessage } from "react-intl";
 import { Innholdstittel } from "nav-frontend-typografi";
