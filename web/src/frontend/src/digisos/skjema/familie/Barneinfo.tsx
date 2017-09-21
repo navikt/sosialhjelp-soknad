@@ -6,6 +6,7 @@ import { DispatchProps } from "../../../nav-soknad/redux/faktaTypes";
 import { Faktum } from "../../redux/types";
 import { opprettFaktum } from "../../../nav-soknad/redux/faktaActions";
 import Barn from "./Barn";
+import { FormattedMessage } from "react-intl";
 
 interface OwnProps {
 	faktumKey: string;
@@ -17,9 +18,8 @@ class Barneinfo extends React.Component<OwnProps & FaktumComponentProps & Dispat
 	componentDidMount() {
 		const {fakta, faktumKey, parrentFaktumKey} = this.props;
 		const parrentFaktum = finnFaktum(parrentFaktumKey, fakta);
-		try {
-			finnFaktum(faktumKey, fakta);
-		} finally {
+		const faktum = finnFaktum(faktumKey, fakta);
+		if (!faktum) {
 			this.props.dispatch(opprettFaktum({key: faktumKey, parrentFaktum: parrentFaktum.faktumId}));
 		}
 	}
@@ -29,13 +29,16 @@ class Barneinfo extends React.Component<OwnProps & FaktumComponentProps & Dispat
 		const alleBarn = finnFakta(faktumKey, fakta);
 		const parrentFaktum = finnFaktum(parrentFaktumKey, fakta);
 		const leggTilBarn = (): any => this.props.dispatch(opprettFaktum({
-			key: faktumKey,
-			parrentFaktum: parrentFaktum.faktumId
-		}));
+				key: faktumKey,
+				parrentFaktum: parrentFaktum.faktumId
+			}));
 		return (
 			<div>
-				{alleBarn.map((barnFaktum: Faktum, index) => (<Barn fakta={fakta} faktum={barnFaktum} key={"barn-" + index}/>))}
-				<a href="javascript:void(0);" onClick={leggTilBarn()}>Legg til barn </a>
+				{alleBarn.map((barnFaktum: Faktum, index) => (
+					<Barn fakta={fakta} faktum={barnFaktum} key={"barn-" + index}/>))}
+				<a href="javascript:void(0);" onClick={leggTilBarn}>
+					<FormattedMessage id="familie.barn.true.barn.leggtil" />
+				</a>
 			</div>
 		);
 	}

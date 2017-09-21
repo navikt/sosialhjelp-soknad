@@ -4,28 +4,33 @@ import InputFaktum from "./InputFaktum";
 
 interface OwnProps {
 	faktumKey: string;
+	brukProperties?: boolean;
+	faktumId?: number;
 }
 
 class PersonFaktum extends React.Component<OwnProps, {}> {
 	render() {
-		const { faktumKey } = this.props;
-		const navnFaktumKey = `${faktumKey}.navn`;
-		const fnrFaktumKey = `${faktumKey}.fnr`;
-		const pnrFaktumKey = `${faktumKey}.pnr`;
+		const { faktumKey, brukProperties, faktumId } = this.props;
+		const getInputFaktum = (type: string) => {
+			if (brukProperties) {
+				return <InputFaktum faktumKey={faktumKey} property={type} faktumId={faktumId} />;
+			}
+			return <InputFaktum faktumKey={`${faktumKey}.${type}`} faktumId={faktumId} />;
+		};
 		return (
 			<div className="personskjema">
 				<Container fluid={true} className="container--noPadding">
 					<Row>
 						<Column xs="12">
-							<InputFaktum faktumKey={navnFaktumKey} />
+							{getInputFaktum("navn")}
 						</Column>
 					</Row>
 					<Row>
 						<Column xs="6">
-							<InputFaktum faktumKey={fnrFaktumKey} maxLength={6} bredde="s" />
+							{getInputFaktum("fnr")}
 						</Column>
 						<Column xs="3">
-							<InputFaktum faktumKey={pnrFaktumKey} maxLength={5} bredde="s" />
+							{getInputFaktum("pnr")}
 						</Column>
 					</Row>
 				</Container>

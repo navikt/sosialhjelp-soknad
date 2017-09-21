@@ -46,7 +46,7 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 
 	handleOnBlur() {
-		this.props.setFaktumVerdi(this.state.value);
+		this.props.setFaktumVerdi(this.state.value, this.props.property);
 	}
 
 	render() {
@@ -57,9 +57,10 @@ class InputFaktum extends React.Component<Props, State> {
 			feil,
 			intl,
 			maxLength,
-			bredde
+			bredde,
+			property
 		} = this.props;
-		const tekster = getInputFaktumTekst(intl, faktumKey);
+		const tekster = getInputFaktumTekst(intl, faktumKey, property);
 		return (
 			<Input
 				className="input--xxl faktumInput"
