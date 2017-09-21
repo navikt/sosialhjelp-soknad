@@ -14,9 +14,9 @@ import {
 	gaVidere
 } from "./utils";
 import { DispatchProps } from "../redux/types";
-import { hentSoknad } from "../redux/soknad/soknadActions";
 import { REST_STATUS } from "../redux/soknad/soknadTypes";
 import { State } from "../redux/reducers";
+// import { lagreProgresjonOgGaVidere } from "../../nav-soknad/redux/faktaActions";
 import {
 	clearFaktaValideringsfeil,
 	setFaktaValideringsfeil
@@ -25,6 +25,7 @@ import { setFaktumVerdi } from "../../nav-soknad/redux/faktaActions";
 import { getProgresjonFaktum } from "../../nav-soknad/redux/faktaUtils";
 import { FaktumValideringsregler } from "../../nav-soknad/validering/types";
 import { validerAlleFaktum } from "../../nav-soknad/validering/utils";
+import { Faktum } from "../../nav-soknad/redux/faktaTypes";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -35,7 +36,7 @@ interface OwnProps {
 	restStatus: string;
 	match: any;
 	location: Location;
-	fakta: any;
+	fakta: Faktum[];
 	valideringer: FaktumValideringsregler[];
 }
 type Props = OwnProps & RouterProps & InjectedIntlProps & DispatchProps;
@@ -47,15 +48,6 @@ class StegMedNavigasjon extends React.Component<
 	constructor(props: Props) {
 		super(props);
 		this.handleGaVidere = this.handleGaVidere.bind(this);
-	}
-
-	componentDidMount() {
-		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(
-			this.props.location
-		);
-		if (brukerBehandlingId && this.props.fakta.length <= 1) {
-			this.props.dispatch(hentSoknad(brukerBehandlingId));
-		}
 	}
 
 	handleGaVidere(aktivtSteg: number, brukerBehandlingId: string) {
