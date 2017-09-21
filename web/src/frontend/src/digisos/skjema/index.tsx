@@ -94,7 +94,7 @@ class Skjema extends React.Component<
 			this.props.location
 		);
 		const { match, intl } = this.props;
-		if (this.props.restStatus === REST_STATUS.PENDING) {
+		if (this.props.restStatus !== REST_STATUS.OK) {
 			return (
 				<div className="application-spinner">
 					<NavFrontendSpinner storrelse="xxl" />
