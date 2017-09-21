@@ -1,5 +1,15 @@
 [
 	{
+		"faktumId": 991,
+		"soknadId": 991,
+		"parrentFaktum": null,
+		"key": "progresjon",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "SYSTEM"
+	},
+	{
 		"faktumId": 1,
 		"soknadId": 1,
 		"parrentFaktum": null,
