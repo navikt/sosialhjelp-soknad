@@ -76,6 +76,7 @@ router.post("/fakta", function (req, res) {
 	if(req.param("behandlingsId")) {
 		const faktum = req.body;
 		faktum.faktumId = genererFaktumId();
+		faktum.properties = {};
 		fakta.push(faktum);
 		return res.json(faktum);
 	}
