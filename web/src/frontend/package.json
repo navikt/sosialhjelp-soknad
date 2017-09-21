@@ -81,7 +81,7 @@
 		"watch-css": "npm run build-css && node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
 		"start-js": "react-scripts-ts start",
 		"start": "npm-run-all -p watch-css start-js mock-backend stylelint:watch",
-		"build": "npm run build-css && react-scripts-ts build && node flytt-filer-til-webapp.js & node versjoner-prodfiler.js",
+		"build": "npm run build-css && react-scripts-ts build && stylelint:watch && node flytt-filer-til-webapp.js && node versjoner-prodfiler.js",
 		"test": "npm run build-css && react-scripts-ts test --env=jsdom",
 		"prettier": "prettier-eslint \"src/**/*(*.less|*.tsx|*.ts|*.css|*.json)\"",
 		"prettier:update": "prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css|*.json)\"",

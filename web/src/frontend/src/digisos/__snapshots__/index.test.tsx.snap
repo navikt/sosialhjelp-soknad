@@ -11,14 +11,6 @@ ShallowWrapper {
   "node": <div
     className="app-digisos"
   >
-    <h1
-      className="app-digisos__title"
-    >
-      <FormattedMessage
-        id="skjema.tittel"
-        values={Object {}}
-      />
-    </h1>
     <Switch>
       <Route
         component={[Function]}
@@ -42,14 +34,6 @@ ShallowWrapper {
     <div
       className="app-digisos"
     >
-      <h1
-        className="app-digisos__title"
-      >
-        <FormattedMessage
-          id="skjema.tittel"
-          values={Object {}}
-        />
-      </h1>
       <Switch>
         <Route
           component={[Function]}
@@ -107,14 +91,6 @@ ShallowWrapper {
         "_currentElement": <div
           className="app-digisos"
         >
-          <h1
-            className="app-digisos__title"
-          >
-            <FormattedMessage
-              id="skjema.tittel"
-              values={Object {}}
-            />
-          </h1>
           <Switch>
             <Route
               component={[Function]}
@@ -138,14 +114,6 @@ ShallowWrapper {
         "_renderedOutput": <div
           className="app-digisos"
         >
-          <h1
-            className="app-digisos__title"
-          >
-            <FormattedMessage
-              id="skjema.tittel"
-              values={Object {}}
-            />
-          </h1>
           <Switch>
             <Route
               component={[Function]}
