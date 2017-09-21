@@ -1,10 +1,7 @@
 import { InjectedIntl } from "react-intl";
-import {
-	CheckboxFaktumTekst,
-	SporsmalFaktumTekst,
-	Infotekst,
-	InputFaktumTekst
-} from "./faktumTextTypes";
+import { CheckboxFaktumTekst, Infotekst, InputFaktumTekst, SporsmalFaktumTekst } from "./faktumTextTypes";
+import { finnFaktum } from "./redux/faktaUtils";
+import { Faktum } from "./redux/faktaTypes";
 
 export const radioCheckKeys = (key: string) => ({
 	faktum: `${key}`,
@@ -37,7 +34,7 @@ export function getIntlText(intl: InjectedIntl, key?: string) {
 		return undefined;
 	}
 	return intlHasKey(intl, key)
-		? intl.formatHTMLMessage({ id: key })
+		? intl.formatHTMLMessage({id: key})
 		: undefined;
 }
 
@@ -52,7 +49,7 @@ export function getIntlInfoTekst(
 ): Infotekst | undefined {
 	const tittel = getIntlText(intl, `${key}.tittel`);
 	const tekst = getIntlText(intl, `${key}.tekst`);
-	return tittel || tekst ? { tittel, tekst } : undefined;
+	return tittel || tekst ? {tittel, tekst} : undefined;
 }
 
 export function getFaktumSporsmalTekst(
@@ -79,37 +76,36 @@ export function getFaktumCheckboksTekst(
 export function getRadioFaktumTekst(
 	intl: InjectedIntl,
 	key: string,
-	value: string
+	value: string,
+	property?: string
 ): CheckboxFaktumTekst {
-	return getFaktumCheckboksTekst(intl, `${key}.${value}`);
+	return getFaktumCheckboksTekst(intl, `${key}${getPropertyKey(property)}.${value}`);
 }
 
 export function getInputFaktumTekst(
 	intl: InjectedIntl,
-	key: string
+	key: string,
+	property?: string
 ): InputFaktumTekst {
+	const propertyKey = getPropertyKey(property);
 	return {
-		label: getIntlTextOrKey(intl, `${key}.label`),
-		sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
-		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
-		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`),
-		pattern: getIntlText(intl, `${key}.pattern`)
+		label: getIntlTextOrKey(intl, `${key}${propertyKey}.label`),
+		sporsmal: getIntlTextOrKey(intl, `${key}${propertyKey}.sporsmal`),
+		infotekst: getIntlInfoTekst(intl, `${key}${propertyKey}.infotekst`),
+		hjelpetekst: getIntlInfoTekst(intl, `${key}${propertyKey}.hjelpetekst`),
+		pattern: getIntlText(intl, `${key}${propertyKey}.pattern`)
 	};
 }
 
-export function getFaktumVerdi(fakta: any, key: string) {
-	for (const faktum of fakta) {
-		if (faktum.key === key) {
-			return faktum.value;
-		}
-	}
-	return null;
+function getPropertyKey(property?: string) {
+	return property === undefined ? ""  : `.${property}`;
 }
-export function getPropertyVerdi(fakta: any, key: string, property: string) {
-	for (const faktum of fakta) {
-		if (faktum.key === key) {
-			return faktum[property];
-		}
-	}
-	return null;
+export function getFaktumVerdi(fakta: Faktum[], key: string): string {
+	const faktum = finnFaktum(key, fakta);
+	return faktum.value;
+}
+
+export function getPropertyVerdi(fakta: any, key: string, property: string, faktumId?: number) {
+	const faktum = finnFaktum(key, fakta, faktumId);
+	return faktum.properties[property];
 }
