@@ -1,6 +1,8 @@
 import * as React from "react";
 import { RouterProps, withRouter } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+import { Location } from "history";
+import { connect } from "react-redux";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import StegIndikator from "../../nav-soknad/components/stegIndikator";
 import Knapperad from "../../nav-soknad/components/knapperad";
@@ -11,17 +13,16 @@ import {
 	gaTilbake,
 	gaVidere
 } from "./utils";
-import { Location } from "history";
-import { connect } from "react-redux";
 import { DispatchProps } from "../redux/types";
 import { hentSoknad } from "../redux/soknad/soknadActions";
 import { REST_STATUS } from "../redux/soknad/soknadTypes";
 import { State } from "../redux/reducers";
 import {
 	clearFaktaValideringsfeil,
-	setFaktaValideringsfeil,
-	setProgresjon
+	setFaktaValideringsfeil
 } from "../../nav-soknad/redux/valideringActions";
+import { setFaktumVerdi } from "../../nav-soknad/redux/faktaActions";
+import { getProgresjonFaktum } from "../../nav-soknad/redux/faktaUtils";
 import { FaktumValideringsregler } from "../../nav-soknad/validering/types";
 import { validerAlleFaktum } from "../../nav-soknad/validering/utils";
 
@@ -69,7 +70,9 @@ class StegMedNavigasjon extends React.Component<
 		);
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
-			this.props.dispatch(setProgresjon(aktivtSteg));
+			this.props.dispatch(
+				setFaktumVerdi(getProgresjonFaktum(this.props.fakta), `${aktivtSteg}`)
+			);
 			gaVidere(aktivtSteg, brukerBehandlingId, this.props.history);
 		} else {
 			this.props.dispatch(setFaktaValideringsfeil(valideringsfeil));

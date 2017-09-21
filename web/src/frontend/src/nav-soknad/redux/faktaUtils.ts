@@ -9,3 +9,7 @@ export function finnFaktum(faktumKey: string, fakta: Faktum[]): Faktum {
 	}
 	return faktum[0];
 }
+
+export function getProgresjonFaktum(fakta: Faktum[]) {
+	return finnFaktum("progresjon", fakta);
+}

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, RouterProps, Switch, withRouter } from "react-router";
+import { Redirect, Route, RouterProps, Switch, withRouter } from "react-router";
 import Steg1 from "./kontaktinfo";
 import Steg2 from "./arbeidUtdanning";
 import Steg3 from "./familie";
@@ -17,11 +17,14 @@ import { DispatchProps } from "../redux/types";
 import { REST_STATUS } from "../redux/soknad/soknadTypes";
 import { State } from "../redux/reducers";
 import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
+import { finnStegFraLocation } from "./utils";
+import { getProgresjonFaktum } from "../../nav-soknad/redux/faktaUtils";
 
 interface OwnProps {
 	restStatus: string;
 	match: any;
 	location: Location;
+	progresjon: number;
 }
 
 class SkjemaRouter extends React.Component<
@@ -29,13 +32,17 @@ class SkjemaRouter extends React.Component<
 	{}
 > {
 	render() {
-		const { match } = this.props;
+		const { match, progresjon, location } = this.props;
+		const aktivtSteg = finnStegFraLocation(location);
+		const maksSteg = progresjon + 1;
 		if (this.props.restStatus === REST_STATUS.PENDING) {
 			return (
 				<div className="application-spinner">
 					<NavFrontendSpinner storrelse="xxl" />
 				</div>
 			);
+		} else if (aktivtSteg > maksSteg) {
+			return <Redirect to={`${match.url}/${maksSteg}`} />;
 		} else {
 			return (
 				<Switch>
@@ -56,7 +63,11 @@ class SkjemaRouter extends React.Component<
 }
 
 export default connect((state: State, props: any) => {
+	const dataLoaded = state.fakta.restStatus === REST_STATUS.OK;
 	return {
-		restStatus: state.soknad.restStatus
+		restStatus: state.soknad.restStatus,
+		progresjon: dataLoaded
+			? parseInt(getProgresjonFaktum(state.fakta.data).value as string, 10)
+			: 1
 	};
 })(injectIntl(withRouter(SkjemaRouter)));
