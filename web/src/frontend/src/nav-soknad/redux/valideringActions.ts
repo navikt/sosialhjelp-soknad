@@ -4,7 +4,8 @@ import {
 	ClearFaktaValideringsfeilAction,
 	RegisterFaktumValideringAction,
 	UnregisterFaktumValideringAction,
-	SetFaktumValideringsfeilAction
+	SetFaktumValideringsfeilAction,
+	SetProgresjonAction
 } from "./valideringTypes";
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 
@@ -13,7 +14,8 @@ export type ValideringActionTypes =
 	| ClearFaktaValideringsfeilAction
 	| RegisterFaktumValideringAction
 	| UnregisterFaktumValideringAction
-	| SetFaktumValideringsfeilAction;
+	| SetFaktumValideringsfeilAction
+	| SetProgresjonAction;
 
 export function setFaktaValideringsfeil(valideringsfeil: Valideringsfeil[]) {
 	return {
@@ -52,5 +54,12 @@ export function setFaktumValideringsfeil(
 		type: ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL,
 		faktumKey,
 		valideringsfeil
+	};
+}
+
+export function setProgresjon(steg: number) {
+	return {
+		type: ValideringActionTypeKeys.SET_PROGRESJON,
+		steg
 	};
 }

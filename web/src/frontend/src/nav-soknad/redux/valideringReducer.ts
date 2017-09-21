@@ -7,16 +7,23 @@ import { FaktumActionTypeKeys } from "./faktaTypes";
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 
 export interface ValideringState {
+	/** Alle valideringsfeil som finnes for registrerte regler */
 	feil: Valideringsfeil[];
+	/** Alle registrerte valideringsregler */
 	valideringsregler?: FaktumValideringsregler[];
+	/** Om feiloppsummering skal vises */
 	visValideringsfeil?: boolean;
+	/** Økes hver gang hele steget valideres - brukes til å fokusere på oppsummering */
 	stegValidertCounter?: number;
+	/** Steg bruker har gjennomført */
+	progresjon: number;
 }
 
 const defaultState: ValideringState = {
 	feil: [] as Valideringsfeil[],
 	valideringsregler: [],
 	visValideringsfeil: false,
+	progresjon: 1,
 	stegValidertCounter: 0
 };
 
@@ -112,6 +119,11 @@ const valideringReducer: Reducer<
 					action.faktumKey,
 					action.valideringsfeil
 				)
+			};
+		case ValideringActionTypeKeys.SET_PROGRESJON:
+			return {
+				...state,
+				progresjon: action.steg
 			};
 		default:
 			return state;

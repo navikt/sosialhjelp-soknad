@@ -19,7 +19,8 @@ import { REST_STATUS } from "../redux/soknad/soknadTypes";
 import { State } from "../redux/reducers";
 import {
 	clearFaktaValideringsfeil,
-	setFaktaValideringsfeil
+	setFaktaValideringsfeil,
+	setProgresjon
 } from "../../nav-soknad/redux/valideringActions";
 import { FaktumValideringsregler } from "../../nav-soknad/validering/types";
 import { validerAlleFaktum } from "../../nav-soknad/validering/utils";
@@ -68,6 +69,7 @@ class StegMedNavigasjon extends React.Component<
 		);
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
+			this.props.dispatch(setProgresjon(aktivtSteg));
 			gaVidere(aktivtSteg, brukerBehandlingId, this.props.history);
 		} else {
 			this.props.dispatch(setFaktaValideringsfeil(valideringsfeil));
