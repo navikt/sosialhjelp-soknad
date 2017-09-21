@@ -22,6 +22,7 @@ const scrollToFaktum = (evt: React.MouseEvent<any>, faktumKey: string) => {
 	const element = getElementFromFaktumKey(faktumKey);
 	if (element) {
 		scrollToElement(element.id);
+		element.focus();
 	}
 };
 
