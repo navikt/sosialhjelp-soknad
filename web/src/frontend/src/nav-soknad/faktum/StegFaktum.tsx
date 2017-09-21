@@ -1,14 +1,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+import { Innholdstittel } from "nav-frontend-typografi";
+import DocumentTitle from "react-document-title";
 import { getIntlTextOrKey } from "../utils";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import { SoknadAppState } from "../redux/faktaReducer";
 import { Valideringsfeil } from "../validering/types";
 import StegMedNavigasjon from "../../digisos/skjema/StegMedNavigasjon";
 import AppTittel from "../components/apptittel/AppTittel";
-import { Innholdstittel } from "nav-frontend-typografi";
-const DocumentTitle = require("react-document-title");
+import { animateScroll } from "react-scroll";
 
 interface OwnProps extends React.Props<any> {
 	tittelId: string;
@@ -25,7 +26,7 @@ class StegFaktum extends React.Component<
 	{}
 > {
 	componentDidMount() {
-		document.body.scrollTop = 0;
+		animateScroll.scrollToTop({ duration: 500 });
 	}
 
 	render() {
