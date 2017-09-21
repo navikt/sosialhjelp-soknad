@@ -6,6 +6,7 @@
 /projectFilesBackup/
 rebel.xml
 target
+*.idea
 
 *.project
 *.settings
