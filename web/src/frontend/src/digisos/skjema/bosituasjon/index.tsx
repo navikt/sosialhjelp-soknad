@@ -12,7 +12,7 @@ import {
 } from "../../../nav-soknad/utils";
 
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
+import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 
 class Bosituasjon extends React.Component<FaktumComponentProps, any> {
@@ -51,9 +51,10 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						visible={faktumIsSelected(
 							getFaktumVerdi(fakta, barnUnder18.faktum)
 						)}>
-						<InputFaktum
+						<BelopFaktum
 							required={true}
 							faktumKey={barnUnder18True.faktum}
+							kunHeltall={true}
 							maxLength={3}
 							bredde="xs"
 						/>
@@ -64,10 +65,11 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					<RadioFaktum faktumKey={over18.faktum} value="true" />
 					<Underskjema
 						visible={faktumIsSelected(getFaktumVerdi(fakta, over18.faktum))}>
-						<InputFaktum
+						<BelopFaktum
 							required={true}
 							faktumKey={over18True.faktum}
 							maxLength={3}
+							kunHeltall={true}
 							bredde="xs"
 						/>
 					</Underskjema>

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
 import InputFaktum from "./InputFaktum";
+import TallFaktum from "./typedInput/TallFaktum";
 
 interface OwnProps {
 	faktumKey: string;
@@ -30,7 +31,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 					</Row>
 					<Row>
 						<Column xs="12" md="6">
-							<InputFaktum
+							<TallFaktum
 								faktumKey={fnrFaktumKey}
 								maxLength={6}
 								bredde="s"
@@ -38,7 +39,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 							/>
 						</Column>
 						<Column xs="12" md="6">
-							<InputFaktum
+							<TallFaktum
 								faktumKey={pnrFaktumKey}
 								maxLength={5}
 								bredde="s"
