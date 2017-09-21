@@ -1,0 +1,60 @@
+{
+	"src_folders": [
+		"integration/test"
+	],
+	"page_objects_path": [
+		"integration/pages"
+	],
+	"output_folder": "./reports",
+	"custom_assertions_path": "",
+	"globals_path": "./integration/globals.js",
+	"selenium": {
+		"start_process": true,
+		"start_session": true,
+		"server_path": "./selenium/2.48/selenium-server-standalone-2.52.2.jar",
+		"log_path": "",
+		"host": "127.0.0.1",
+		"port": 4444,
+		"cli_args": {
+			"webdriver.chrome.driver": "./selenium/chromedriver.exe",
+			"phantomjs.binary.path": "./selenium/phantomjs.exe",
+			"webdriver.ie.driver": ""
+		}
+	},
+	"test_settings": {
+		"default": {
+			"launch_url": "https://tjenester-q1.nav.no/veivisersosialhjelp",
+			"login": false,
+			"selenium_port": 4444,
+			"timeout": 1000,
+			"selenium_host": "localhost",
+			"silent": true,
+			"screenshots": {
+				"enabled": true,
+				"on_failure": true,
+				"on_error": true,
+				"path": "./screenshots"
+			},
+			"desiredCapabilities": {
+				"browserName": "chrome",
+				"javaScriptEnabled": "true"
+			}
+		},
+		"chrome": {
+			"desiredCapabilities": {
+				"browserName": "chrome",
+				"javascriptEnabled": true,
+				"acceptSslCerts": true,
+				"keepAlive": false
+			}
+		},
+		"phantomjs": {
+			"desiredCapabilities": {
+				"browserName": "phantomjs",
+				"javascriptEnabled": true,
+				"acceptSslCerts": true,
+				"keepAlive": false
+			}
+		}
+	}
+}

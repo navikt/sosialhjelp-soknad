@@ -20,6 +20,7 @@ interface OwnProps {
 	maxLength?: number;
 	bredde?: InputBredde;
 	type?: InputTypes;
+	className?: string;
 }
 
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -60,12 +61,13 @@ class InputFaktum extends React.Component<Props, State> {
 			required,
 			intl,
 			maxLength,
-			bredde
+			bredde,
+			className
 		} = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey);
 		return (
 			<Input
-				className="input--xxl faktumInput"
+				className={"input--xxl faktumInput " + className}
 				type={type}
 				name={faktumKey}
 				disabled={disabled}

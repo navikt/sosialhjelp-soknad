@@ -19,6 +19,7 @@ class Kontaktinfo extends React.Component<{}, {}> {
 					<InputFaktum
 						required={true}
 						faktumKey="kontakt.kontonummer"
+						className="kontakt___kontonummer"
 						maxLength={11}
 						validerFunc={[erKontonummer]}
 					/>
@@ -27,6 +28,7 @@ class Kontaktinfo extends React.Component<{}, {}> {
 					<InputFaktum
 						required={true}
 						faktumKey="kontakt.telefon"
+						className="kontakt___telefon"
 						validerFunc={[erTelefonnummer]}
 					/>
 				</SporsmalFaktum>
