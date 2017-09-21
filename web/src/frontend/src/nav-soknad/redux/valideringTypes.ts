@@ -34,8 +34,3 @@ export interface SetFaktumValideringsfeilAction {
 	faktumKey: string;
 	valideringsfeil: Valideringsfeil;
 }
-
-export interface SetProgresjonAction {
-	type: ValideringActionTypeKeys.SET_PROGRESJON;
-	steg: number;
-}
