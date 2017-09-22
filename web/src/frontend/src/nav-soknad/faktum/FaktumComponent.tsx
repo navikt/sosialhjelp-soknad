@@ -19,12 +19,10 @@ import { validerFaktum } from "../validering/utils";
 import { Feil } from "nav-frontend-skjema";
 import { pakrevd } from "../validering/valideringer";
 
-interface Props {
+export interface Props {
 	faktumKey: string;
 	/** Array med valideringsfunksjoner som skal brukes for komponenten */
 	validerFunc?: FaktumValideringFunc[];
-	/** Alle registrerte valideringsregler i state */
-	valideringsregler?: FaktumValideringsregler[];
 	/** Denne legger til validering for påkrevd dersom true */
 	required?: boolean;
 }
@@ -32,6 +30,8 @@ interface Props {
 interface InjectedProps {
 	fakta: Faktum[];
 	feilkode?: string;
+	/** Alle registrerte valideringsregler i state */
+	valideringsregler?: FaktumValideringsregler[];
 	setFaktumVerdi: (verdi: string) => void;
 	getFaktumVerdi: () => string;
 	validerFaktum: (verdi: string) => string;
