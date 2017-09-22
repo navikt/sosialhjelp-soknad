@@ -2,13 +2,9 @@ import * as React from "react";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
+import TelefonFaktum from "../../../nav-soknad/faktum/typedInput/TelefonFaktum";
+import KontonummerFaktum from "../../../nav-soknad/faktum/typedInput/KontonummerFaktum";
 import { radioCheckKeys } from "../../../nav-soknad/utils";
-
-import {
-	erKontonummer,
-	erTelefonnummer
-} from "../../../nav-soknad/validering/valideringer";
 
 class Kontaktinfo extends React.Component<{}, {}> {
 	render() {
@@ -16,23 +12,11 @@ class Kontaktinfo extends React.Component<{}, {}> {
 		return (
 			<StegFaktum tittelId="kontakt.tittel">
 				<SporsmalFaktum faktumKey="kontakt.kontonummer">
-					<InputFaktum
-						required={true}
-						faktumKey="kontakt.kontonummer"
-						className="kontakt___kontonummer"
-						maxLength={11}
-						validerFunc={[erKontonummer]}
-					/>
+					<KontonummerFaktum required={true} faktumKey="kontakt.kontonummer" />
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="kontakt.telefon">
-					<InputFaktum
-						required={true}
-						faktumKey="kontakt.telefon"
-						className="kontakt___telefon"
-						validerFunc={[erTelefonnummer]}
-					/>
+					<TelefonFaktum required={true} faktumKey="kontakt.telefon" />
 				</SporsmalFaktum>
-
 				<SporsmalFaktum faktumKey={statsborger.faktum} required={true}>
 					<RadioFaktum faktumKey={statsborger.faktum} value="true" />
 					<RadioFaktum faktumKey={statsborger.faktum} value="false" />

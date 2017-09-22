@@ -2,9 +2,9 @@ import { InjectedIntl } from "react-intl";
 import {
 	CheckboxFaktumTekst,
 	SporsmalFaktumTekst,
-	Infotekst,
 	InputFaktumTekst
-} from "./faktumTextTypes";
+} from "../faktumTextTypes";
+import { getIntlTextOrKey, getIntlInfoTekst, getIntlText } from "./intlUtils";
 
 export const radioCheckKeys = (key: string) => ({
 	faktum: `${key}`,
@@ -22,37 +22,6 @@ export const inputKeys = (key: string) => ({
 
 export function faktumIsSelected(value: string) {
 	return value === "true";
-}
-
-export function boolToString(flag: boolean) {
-	return flag ? "true" : "false";
-}
-
-export function intlHasKey(intl: InjectedIntl, key: string) {
-	return intl.messages[key] !== undefined;
-}
-
-export function getIntlText(intl: InjectedIntl, key?: string) {
-	if (!key) {
-		return undefined;
-	}
-	return intlHasKey(intl, key)
-		? intl.formatHTMLMessage({ id: key })
-		: undefined;
-}
-
-export function getIntlTextOrKey(intl: InjectedIntl, key: string): string {
-	const tekst = getIntlText(intl, key);
-	return tekst || key;
-}
-
-export function getIntlInfoTekst(
-	intl: InjectedIntl,
-	key: string
-): Infotekst | undefined {
-	const tittel = getIntlText(intl, `${key}.tittel`);
-	const tekst = getIntlText(intl, `${key}.tekst`);
-	return tittel || tekst ? { tittel, tekst } : undefined;
 }
 
 export function getFaktumSporsmalTekst(
@@ -104,8 +73,4 @@ export function getFaktumVerdi(fakta: any, key: string) {
 		}
 	}
 	return null;
-}
-
-export function contains(node: Element, child: Element) {
-	return node === child || node.contains(child);
 }
