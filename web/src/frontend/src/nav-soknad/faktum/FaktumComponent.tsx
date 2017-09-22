@@ -34,6 +34,7 @@ interface InjectedProps {
 	feilkode?: string;
 	/** Alle registrerte valideringsregler i state */
 	valideringsregler?: FaktumValideringsregler[];
+	getName: () => string;
 	setFaktumVerdi: (verdi: string, property?: string, faktumId?: string) => void;
 	getFaktumVerdi: () => string;
 	getPropertyVerdi: () => string;
@@ -49,6 +50,10 @@ const getValideringer = (
 ): FaktumValideringFunc[] => {
 	return [...(required ? [pakrevd] : []), ...(validerFunc ? validerFunc : [])];
 };
+
+export function getFaktumElementName(faktumKey: string): string {
+	return faktumKey.replace(/\./g, "_");
+}
 
 export const faktumComponent = () => <TOriginalProps extends {}>(
 	Component:
@@ -70,6 +75,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.getFaktumVerdi = this.getFaktumVerdi.bind(this);
 			this.getPropertyVerdi = this.getPropertyVerdi.bind(this);
 			this.validerFaktum = this.validerFaktum.bind(this);
+			this.getName = this.getName.bind(this);
 			this.getFeil = this.getFeil.bind(this);
 		}
 
@@ -150,6 +156,10 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			};
 		}
 
+		getName() {
+			return getFaktumElementName(this.props.faktumKey);
+		}
+
 		render(): JSX.Element {
 			return (
 				<Component
@@ -159,6 +169,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 					getPropertyVerdi={this.getPropertyVerdi}
 					validerFaktum={this.validerFaktum}
 					getFeil={this.getFeil}
+					getName={this.getName}
 				/>
 			);
 		}

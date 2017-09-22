@@ -31,7 +31,7 @@ class CheckboxFaktum extends React.Component<
 		const checked = faktumIsSelected(getFaktumVerdi(fakta, faktumKey));
 		return (
 			<Checkbox
-				name={faktumKey}
+				name={this.props.getName()}
 				checked={checked}
 				disabled={disabled}
 				required={required}
