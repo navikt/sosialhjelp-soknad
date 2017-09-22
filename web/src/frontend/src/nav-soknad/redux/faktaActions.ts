@@ -1,14 +1,7 @@
-import {
-	FaktaActionTypeKeys,
-	FaktaActionTypes,
-	Faktum,
-	FaktumActionTypeKeys,
-	FaktumValueType,
-	SoknadDispatch
-} from "./faktaTypes";
-import { fetchPost, fetchPut, fetchToJson } from "../../digisos/redux/rest-utils";
-import { FaktumActionTypes } from "./faktaReducer";
-import { State } from "../../digisos/redux/reducers";
+import {FaktaActionTypes, Faktum, FaktumActionTypeKeys, FaktumValueType, SoknadDispatch} from "./faktaTypes";
+import {fetchPost, fetchPut} from "../../digisos/redux/rest-utils";
+import {FaktumActionTypes} from "./faktaReducer";
+import {State} from "../../digisos/redux/reducers";
 
 export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType, property?: string) {
 	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
@@ -50,18 +43,4 @@ export function opprettFaktum(faktum: OpprettFaktumType | Faktum) {
 				dispatch({type: FaktumActionTypeKeys.FEILET, feilmelding: reason});
 			});
 	};
-}
-
-export function hentFakta(brukerBehandlingId: string, dispatch: SoknadDispatch<FaktaActionTypes>) {
-	dispatch({type: FaktaActionTypeKeys.PENDING});
-	return fetchToJson("soknader/" + brukerBehandlingId + "/fakta")
-		.then((faktaResponse: Faktum[]) => {
-			dispatch({type: FaktaActionTypeKeys.SET_FAKTA, fakta: faktaResponse});
-		})
-		.catch(reason => {
-			dispatch({
-				type: FaktaActionTypeKeys.SET_SERVER_FEIL,
-				feilmelding: reason
-			});
-		});
 }
