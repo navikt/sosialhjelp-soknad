@@ -1,14 +1,15 @@
-var hovedside, timeout;
+var hovedside, soknadsskjema, timeout;
 
 module.exports = {
 	before: (browser) => {
         timeout = browser.globals.test_settings.timeout;
         const browserInit = browser.init();
         hovedside = browserInit.page.hovedsidepage();
+		soknadsskjema = hovedside.section.soknadsskjema;
         hovedside.navigate();
     },
     after: (browser) => {
-        // browser.end();
+        browser.end();
     },
     "hovedside skal ha minst ett skjemaelement": function () {
         hovedside.expect.element('@input').to.be.present.after(timeout);
@@ -25,10 +26,10 @@ module.exports = {
 		hovedside.click('@fortsett');
 	},
 	"første steg i skjemaet skal inneholde konto- og telefonnummer": function () {
-		const soknadsskjema = hovedside.section.soknadsskjema;
 		soknadsskjema.expect.element('@kontonummer').to.be.present.after(timeout);
 		soknadsskjema.expect.element('@telefon').to.be.present;
-
+	},
+	"skal vise feilmelding hvis man har fylt ut ugyldig konto- eller telefonnummer": function () {
 		soknadsskjema.clearValue('@telefon');
 		soknadsskjema.setValue('@telefon', '007');
 		soknadsskjema.clearValue('@kontonummer');
