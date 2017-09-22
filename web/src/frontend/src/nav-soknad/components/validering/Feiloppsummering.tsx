@@ -3,6 +3,7 @@ import { Undertittel } from "nav-frontend-typografi";
 import "./feiloppsummering.css";
 import { Valideringsfeil } from "../../validering/types";
 import { FormattedMessage } from "react-intl";
+import { scrollToElement } from "../../utils";
 
 const getElementFromFaktumKey = (faktumKey: string): HTMLElement => {
 	if (document.getElementById(faktumKey)) {
@@ -15,11 +16,12 @@ const getElementFromFaktumKey = (faktumKey: string): HTMLElement => {
 	return null;
 };
 
-const scrollToElement = (evt: React.MouseEvent<any>, faktumKey: string) => {
+const scrollToFaktum = (evt: React.MouseEvent<any>, faktumKey: string) => {
 	evt.stopPropagation();
 	evt.preventDefault();
 	const element = getElementFromFaktumKey(faktumKey);
 	if (element) {
+		scrollToElement(element.id);
 		element.focus();
 	}
 };
@@ -30,7 +32,7 @@ const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 }) => {
 	return (
 		<li className="feiloppsummering__feil">
-			<a href={`#`} onClick={evt => scrollToElement(evt, faktumKey)}>
+			<a href={`#`} onClick={evt => scrollToFaktum(evt, faktumKey)}>
 				<FormattedMessage id={feilkode} />
 			</a>
 		</li>
@@ -44,6 +46,8 @@ interface Props {
 	valideringsfeil?: Valideringsfeil[];
 }
 
+const COMP_ID = "skjema-feiloppsummering";
+
 class Feiloppsummering extends React.Component<Props, {}> {
 	oppsummering: HTMLDivElement;
 
@@ -53,6 +57,7 @@ class Feiloppsummering extends React.Component<Props, {}> {
 			this.props.valideringsfeil.length > 0 &&
 			this.props.stegValidertCounter > prevProps.stegValidertCounter
 		) {
+			scrollToElement(COMP_ID);
 			this.oppsummering.focus();
 		}
 	}
@@ -65,6 +70,7 @@ class Feiloppsummering extends React.Component<Props, {}> {
 					if (valideringsfeil.length > 0 && this.props.visFeilliste) {
 						return (
 							<div
+								id={COMP_ID}
 								className="panel panel--feiloppsummering"
 								tabIndex={-1}
 								ref={c => (this.oppsummering = c)}>
