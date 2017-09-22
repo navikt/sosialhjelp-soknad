@@ -12,8 +12,8 @@ module.exports = {
 	    soknadsskjema: {
 		    selector: '.skjema-steg',
 		    elements: {
-			    kontonummer: 'input[id=kontakt_kontonummer]', // '#kontakt_kontonummer', // 'input[id=kontakt\.kontonummer]', // '.kontakt___kontonummer',
-			    telefon: 'input[id=kontakt_telefon]', // '#kontakt_telefon', // 'input[id=kontakt\.telefon]', // '.kontakt___telefon',
+			    kontonummer: 'input[id=kontakt_kontonummer]',
+			    telefon: 'input[id=kontakt_telefon]',
 			    har_feil: '.skjemaelement__input--harFeil',
 			    feiloppsummering: '.panel--feiloppsummering'
 		    }
