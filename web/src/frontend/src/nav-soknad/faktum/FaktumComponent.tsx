@@ -5,8 +5,6 @@ import { SoknadAppState } from "../redux/faktaReducer";
 import { setFaktumVerdi as setFaktumVerdiOnState } from "../redux/faktaActions";
 import { finnFaktum } from "../redux/faktaUtils";
 import { getFaktumVerdi, getPropertyVerdi } from "../utils";
-import { FaktumValideringFunc } from "../validering/types";
-import { getFaktumVerdi } from "../utils";
 import { InjectedIntl } from "react-intl";
 import {
 	FaktumValideringFunc,

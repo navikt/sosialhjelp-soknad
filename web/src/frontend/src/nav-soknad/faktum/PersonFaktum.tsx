@@ -29,7 +29,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								faktumKey={navnFaktumKey}
 								required={validering.navnRequired}
                                 faktumId={faktumId}
-                                { ...brukProperties ? { properties: "navn" } : {}}
+                                { ...brukProperties ? { property: "navn" } : {}}
 							/>
 						</Column>
 					</Row>
@@ -41,7 +41,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								bredde="s"
 								required={validering.fnrRequired}
                                 faktumId={faktumId}
-                                {...brukProperties ? { properties: "fnr" } : {}}
+                                {...brukProperties ? { property: "fnr" } : {}}
                             />
 						</Column>
 						<Column xs="12" md="6">
@@ -51,7 +51,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								bredde="s"
 								required={validering.pnrRequired}
                                 faktumId={faktumId}
-                                {...brukProperties ? { properties: "pnr" } : {}}
+                                {...brukProperties ? { property: "pnr" } : {}}
                             />
 						</Column>
 					</Row>
