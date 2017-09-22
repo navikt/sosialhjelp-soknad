@@ -34,8 +34,8 @@ class Barneinfo extends React.Component<OwnProps & FaktumComponentProps & Dispat
 			}));
 		return (
 			<div>
-				{alleBarn.map((barnFaktum: Faktum, index) => (
-					<Barn fakta={fakta} faktum={barnFaktum} key={"barn-" + index}/>))}
+				{alleBarn.map((barnFaktum: Faktum) => (
+					<Barn fakta={fakta} faktum={barnFaktum} key={barnFaktum.faktumId}/>))}
 				<a href="javascript:void(0);" onClick={leggTilBarn}>
 					<FormattedMessage id="familie.barn.true.barn.leggtil" />
 				</a>
