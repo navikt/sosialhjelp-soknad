@@ -17,8 +17,12 @@ import { DispatchProps } from "../redux/types";
 import { REST_STATUS } from "../redux/soknad/soknadTypes";
 import { State } from "../redux/reducers";
 import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
+import { hentSoknad } from "../redux/soknad/soknadActions";
+import { finnBrukerBehandlingIdFraLocation } from "./utils";
+import { Faktum } from "../../nav-soknad/redux/faktaTypes";
 
 interface OwnProps {
+	fakta: Faktum[];
 	restStatus: string;
 	match: any;
 	location: Location;
@@ -28,6 +32,15 @@ class SkjemaRouter extends React.Component<
 	OwnProps & RouterProps & InjectedIntlProps & DispatchProps,
 	{}
 > {
+	componentDidMount() {
+		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(
+			this.props.location
+		);
+		if (brukerBehandlingId && this.props.fakta.length <= 1) {
+			this.props.dispatch(hentSoknad(brukerBehandlingId));
+		}
+	}
+
 	render() {
 		const { match } = this.props;
 		if (this.props.restStatus !== REST_STATUS.OK) {
@@ -57,6 +70,7 @@ class SkjemaRouter extends React.Component<
 
 export default connect((state: State, props: any) => {
 	return {
+		fakta: state.fakta.data,
 		restStatus: state.soknad.restStatus
 	};
 })(injectIntl(withRouter(SkjemaRouter)));

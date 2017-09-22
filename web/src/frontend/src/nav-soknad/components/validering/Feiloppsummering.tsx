@@ -5,11 +5,14 @@ import { Valideringsfeil } from "../../validering/types";
 import { FormattedMessage } from "react-intl";
 import { scrollToElement } from "../../utils";
 
+import { getFaktumElementName } from "../../faktum/FaktumComponent";
+
 const getElementFromFaktumKey = (faktumKey: string): HTMLElement => {
-	if (document.getElementById(faktumKey)) {
-		return document.getElementById(faktumKey);
+	const id = getFaktumElementName(faktumKey);
+	if (document.getElementById(id)) {
+		return document.getElementById(id);
 	}
-	const namedElements = document.getElementsByName(faktumKey);
+	const namedElements = document.getElementsByName(id);
 	if (namedElements && namedElements.length > 0) {
 		return namedElements[0];
 	}
