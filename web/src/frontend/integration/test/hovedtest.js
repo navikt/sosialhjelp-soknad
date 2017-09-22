@@ -20,16 +20,14 @@ module.exports = {
 	"hovedside skal ikke ha fortsett knapp hvis man ikke har valgt bosted": function () {
 		hovedside.expect.element('@fortsett').to.not.be.present.after(timeout);
 	},
-	"hovedside skal ha en fortsett knapp når man har valgt kommune": function () {
+	"man skal få opprettet en søknad når man har valgt kommune og klikket på Fortsett knappen": function () {
 		hovedside.click('@horten');
 		hovedside.expect.element('@fortsett').to.be.present.after(timeout);
 		hovedside.click('@fortsett');
-	},
-	"første steg i skjemaet skal inneholde konto- og telefonnummer": function () {
 		soknadsskjema.expect.element('@kontonummer').to.be.present.after(timeout);
 		soknadsskjema.expect.element('@telefon').to.be.present;
 	},
-	"skal vise feilmelding hvis man har fylt ut ugyldig konto- eller telefonnummer": function () {
+	"skal vise valideringsfeilmelding hvis man har fylt ut ugyldig konto- eller telefonnummer": function () {
 		soknadsskjema.clearValue('@telefon');
 		soknadsskjema.setValue('@telefon', '007');
 		soknadsskjema.clearValue('@kontonummer');
