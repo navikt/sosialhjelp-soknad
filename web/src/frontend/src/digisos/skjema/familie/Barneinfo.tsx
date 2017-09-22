@@ -11,23 +11,23 @@ import { FormattedMessage } from "react-intl";
 interface OwnProps {
 	faktumKey: string;
 	nummer: number;
-	parrentFaktumKey: string;
+	parentFaktumKey: string;
 }
 
 class Barneinfo extends React.Component<OwnProps & FaktumComponentProps & DispatchProps, {}> {
 	componentDidMount() {
-		const {fakta, faktumKey, parrentFaktumKey} = this.props;
-		const parrentFaktum = finnFaktum(parrentFaktumKey, fakta);
+		const {fakta, faktumKey, parentFaktumKey} = this.props;
+		const parentFaktum = finnFaktum(parentFaktumKey, fakta);
 		const faktum = finnFaktum(faktumKey, fakta);
 		if (!faktum) {
-			this.props.dispatch(opprettFaktum({key: faktumKey, parrentFaktum: parrentFaktum.faktumId}));
+			this.props.dispatch(opprettFaktum({key: faktumKey, parrentFaktum: parentFaktum.faktumId}));
 		}
 	}
 
 	render() {
-		const {fakta, faktumKey, parrentFaktumKey} = this.props;
+		const {fakta, faktumKey, parentFaktumKey} = this.props;
 		const alleBarn = finnFakta(faktumKey, fakta);
-		const parrentFaktum = finnFaktum(parrentFaktumKey, fakta);
+		const parrentFaktum = finnFaktum(parentFaktumKey, fakta);
 		const leggTilBarn = (): any => this.props.dispatch(opprettFaktum({
 				key: faktumKey,
 				parrentFaktum: parrentFaktum.faktumId
