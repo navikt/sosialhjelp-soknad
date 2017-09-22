@@ -28,9 +28,13 @@ module.exports = {
 		const soknadsskjema = hovedside.section.soknadsskjema;
 		soknadsskjema.expect.element('@kontonummer').to.be.present.after(timeout);
 		soknadsskjema.expect.element('@telefon').to.be.present;
-		soknadsskjema.clearValue('.kontakt___telefon').setValue('.kontakt___telefon', '007');
-		soknadsskjema.click('.ga_videre');
-		soknadsskjema.expect.element('.panel--feiloppsummering').to.be.present.after(timeout);
+
+		soknadsskjema.clearValue('@telefon');
+		soknadsskjema.setValue('@telefon', '007');
+		soknadsskjema.clearValue('@kontonummer');
+		soknadsskjema.setValue('@kontonummer', '007007');
+		hovedside.click('@fortsett');
+		soknadsskjema.expect.element('@feiloppsummering').to.be.present.after(timeout);
 	}
 
 };

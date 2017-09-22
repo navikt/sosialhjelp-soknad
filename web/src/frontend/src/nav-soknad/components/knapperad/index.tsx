@@ -14,10 +14,10 @@ class SkjemaKnapperad extends React.Component<Props, {}> {
 		const { gaVidere, gaTilbake, avbryt, gaVidereLabel } = this.props;
 		return (
 			<div className="skjema-knapperad">
-				<Knapp type="hoved" htmlType="button" onClick={gaVidere} id="ga_videre">
+				<Knapp type="hoved" htmlType="button" onClick={gaVidere}>
 					{gaVidereLabel ? gaVidereLabel : "Gå videre"}
 				</Knapp>
-				<Knapp type="standard" htmlType="button" onClick={gaTilbake} id="ga_tilbake">
+				<Knapp type="standard" htmlType="button" onClick={gaTilbake}>
 					Tilbake
 				</Knapp>
 				<a href="#" className="lenke" onClick={avbryt}>

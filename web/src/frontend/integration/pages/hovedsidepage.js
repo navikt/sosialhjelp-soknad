@@ -12,10 +12,10 @@ module.exports = {
 	    soknadsskjema: {
 		    selector: '.skjema-steg',
 		    elements: {
-			    kontonummer: '#kontakt\.kontonummer', // 'input[id=kontakt\.kontonummer]', // '.kontakt___kontonummer',
-			    telefon: '#kontakt\.telefon', // 'input[id=kontakt\.telefon]', // '.kontakt___telefon',
+			    kontonummer: 'input[id=kontakt_kontonummer]', // '#kontakt_kontonummer', // 'input[id=kontakt\.kontonummer]', // '.kontakt___kontonummer',
+			    telefon: 'input[id=kontakt_telefon]', // '#kontakt_telefon', // 'input[id=kontakt\.telefon]', // '.kontakt___telefon',
 			    har_feil: '.skjemaelement__input--harFeil',
-			    videre   : '.ga_videre'
+			    feiloppsummering: '.panel--feiloppsummering'
 		    }
 	    }
     }
