@@ -6,13 +6,19 @@ import {
 	FaktumValueType,
 	SoknadDispatch
 } from "./faktaTypes";
-import { fetchPut, fetchToJson } from "../../digisos/redux/rest-utils";
+import { fetchPost, fetchPut, fetchToJson } from "../../digisos/redux/rest-utils";
+import { FaktumActionTypes } from "./faktaReducer";
+import { State } from "../../digisos/redux/reducers";
 
-export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType) {
+export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType, property?: string) {
 	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
-		const nyttFaktum = { ...faktum };
-		nyttFaktum.value = value;
-		dispatch({ type: FaktumActionTypeKeys.OPPDATER_FAKTUM });
+		let nyttFaktum = {...faktum};
+		if ( property) {
+			nyttFaktum = {...faktum, properties: {...faktum.properties, [property]: value}};
+		} else {
+			nyttFaktum.value = value;
+		}
+		dispatch({type: FaktumActionTypeKeys.OPPDATER_FAKTUM});
 		fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
 			.then(response => {
 				dispatch({
@@ -21,19 +27,36 @@ export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType) {
 				});
 			})
 			.catch(reason => {
-				dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
+				dispatch({type: FaktumActionTypeKeys.FEILET, feilmelding: reason});
 			});
 	};
 }
 
-export function hentFakta(
-	brukerBehandlingId: string,
-	dispatch: SoknadDispatch<FaktaActionTypes>
-) {
-	dispatch({ type: FaktaActionTypeKeys.PENDING });
+interface OpprettFaktumType {
+	key: string;
+	parrentFaktum: number;
+}
+export function opprettFaktum(faktum: OpprettFaktumType | Faktum) {
+	return (dispatch: SoknadDispatch<FaktumActionTypes>, getState: () => State) => {
+		dispatch({type: FaktumActionTypeKeys.OPPRETT_FAKTUM});
+		return fetchPost("fakta?behandlingsId=" + getState().soknad.data.brukerBehandlingId, JSON.stringify(faktum))
+			.then((response: Faktum) => {
+				dispatch({
+					type: FaktumActionTypeKeys.OPPRETTET_FAKTUM,
+					faktum: response
+				});
+			})
+			.catch((reason: string) => {
+				dispatch({type: FaktumActionTypeKeys.FEILET, feilmelding: reason});
+			});
+	};
+}
+
+export function hentFakta(brukerBehandlingId: string, dispatch: SoknadDispatch<FaktaActionTypes>) {
+	dispatch({type: FaktaActionTypeKeys.PENDING});
 	return fetchToJson("soknader/" + brukerBehandlingId + "/fakta")
 		.then((faktaResponse: Faktum[]) => {
-			dispatch({ type: FaktaActionTypeKeys.SET_FAKTA, fakta: faktaResponse });
+			dispatch({type: FaktaActionTypeKeys.SET_FAKTA, fakta: faktaResponse});
 		})
 		.catch(reason => {
 			dispatch({

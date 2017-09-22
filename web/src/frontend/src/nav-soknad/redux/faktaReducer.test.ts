@@ -20,7 +20,7 @@ describe("facts reducer", () => {
 
 	const testFaktum = {
 		key: "bolk",
-		value: 123,
+		value: "123",
 		type: "BRUKERREGISTRERT",
 		faktumId: 1,
 		soknadId: 1,

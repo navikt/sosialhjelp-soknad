@@ -15,6 +15,8 @@ export type FaktaActionTypes = FaktumActionTypes | ValideringActionTypes;
 export enum FaktumActionTypeKeys {
 	OPPDATER_FAKTUM = "faktum/OPPDATER_FAKTUM",
 	OPPDATERT_FAKTUM = "faktum/OPPDATERT_FAKTUM",
+	OPPRETT_FAKTUM = "faktum/OPPRETT_FAKTUM",
+	OPPRETTET_FAKTUM = "faktum/OPPRETTET_FAKTUM",
 	FEILET = "faktum/FEILET",
 	OTHER_ACTION = "__any_other_action_type__",
 	VALIDER_FAKTUM = "VALIDER_FAKTUM"
@@ -28,14 +30,14 @@ export enum FaktaActionTypeKeys {
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
-export type FaktumValueType = string | number | boolean;
+export type FaktumValueType = string | null;
 
 export interface Faktum {
 	faktumId: number;
 	soknadId: number;
 	parrentFaktum: null | number;
 	key: string;
-	value: null | boolean | string | number;
+	value: FaktumValueType;
 	faktumEgenskaper?: FaktumEgenskap[];
 	properties: object;
 	type?: string;

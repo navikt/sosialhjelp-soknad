@@ -59,8 +59,8 @@ export function hentSoknad(brukerBehandlingsId: string) {
 		fetchToJson("soknader/" + brukerBehandlingsId)
 			.then((soknadsdata: Soknad) => {
 				const fakta = soknadsdata.fakta;
-				dispatch({type: SoknadActionTypeKeys.HENTET_SOKNAD, data: soknadsdata});
 				dispatch({type: FaktaActionTypeKeys.SET_FAKTA, fakta});
+				dispatch({type: SoknadActionTypeKeys.HENTET_SOKNAD, data: soknadsdata});
 			})
 			.catch(reason => {
 				dispatch({type: SoknadActionTypeKeys.SET_SERVER_FEIL, feilmelding: reason});

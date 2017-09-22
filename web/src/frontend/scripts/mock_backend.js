@@ -67,6 +67,25 @@ router.post("/fakta/:faktumId", function (req, res) {
 	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
 });
 
+var faktumid = 1000;
+function genererFaktumId() {
+	return faktumid++;
+}
+
+router.post("/fakta", function (req, res) {
+	if(req.param("behandlingsId")) {
+		const faktum = req.body;
+		faktum.faktumId = genererFaktumId();
+		faktum.properties = {};
+		fakta.push(faktum);
+		return res.json(faktum);
+	}
+
+	const faktum = req.body;
+	fakta.push(faktum);
+	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
+});
+
 app.use('/', router);
 
 app.listen(port);

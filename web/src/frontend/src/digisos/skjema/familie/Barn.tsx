@@ -1,27 +1,38 @@
 import * as React from "react";
-import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
+import { Faktum } from "../../../nav-soknad/redux/faktaTypes";
+import { faktumIsSelected, getPropertyVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import { getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
-
 import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
-import Underskjema from "../../../nav-soknad/components/underskjema";
-import Barneinfo from "./Barneinfo";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
+import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema/index";
+import PersonFaktum from "../../../nav-soknad/faktum/PersonFaktum";
 
-class Barn extends React.Component<FaktumComponentProps, {}> {
+interface BarnTypes {
+	faktum: Faktum;
+}
+
+export default class Barn extends React.Component<FaktumComponentProps & BarnTypes, {}> {
 	render() {
-		const { fakta } = this.props;
-		const barn = radioCheckKeys("familie.barn");
-
+		const {fakta, faktum} = this.props;
+		const faktumKey = faktum.key;
+		const borInfo = radioCheckKeys(`${faktumKey}.borsammen`);
+		const hvormye = radioCheckKeys(`${faktumKey}.grad`);
+		const faktumId = faktum.faktumId;
 		return (
-			<SporsmalFaktum faktumKey={barn.faktum} required={true}>
-				<FaktumRadio faktumKey={barn.faktum} value="true" />
-				<Underskjema visible={getFaktumVerdi(fakta, barn.faktum) === "true"}>
-					<Barneinfo {...this.props} faktumKey="familie.barn.true" nummer={1} />
-				</Underskjema>
-				<FaktumRadio faktumKey={barn.faktum} value="false" />
+			<SporsmalFaktum faktumKey={faktumKey}>
+				<PersonFaktum faktumKey={faktumKey} brukProperties={true} faktumId={faktumId} />
+				<SporsmalFaktum faktumKey={borInfo.faktum}>
+					<FaktumRadio faktumKey={faktumKey} value="true" property="borsammen" faktumId={faktumId} />
+					<NivaTreSkjema
+					visible={faktumIsSelected(getPropertyVerdi(fakta, borInfo.faktum, "borsammen", faktumId ))}>
+					<SporsmalFaktum faktumKey={hvormye.faktum}>
+						<FaktumRadio faktumKey={faktumKey} value="heltid" property="grad" faktumId={faktumId}/>
+						<FaktumRadio faktumKey={faktumKey} value="deltid" property="grad" faktumId={faktumId}/>
+					</SporsmalFaktum>
+					</NivaTreSkjema>
+					<FaktumRadio faktumKey={faktumKey} value="false" property="borsammen" faktumId={faktumId} />
+				</SporsmalFaktum>
 			</SporsmalFaktum>
 		);
 	}
 }
-
-export default Barn;

@@ -468,56 +468,6 @@
       "type": "BRUKERREGISTRERT"
     },
     {
-      "faktumId": 44,
-      "soknadId": 1,
-      "parrentFaktum": 11,
-      "key": "familie.barn.true.navn",
-      "value": null,
-      "faktumEgenskaper": [],
-      "properties": {},
-      "type": "BRUKERREGISTRERT"
-    },
-    {
-      "faktumId": 45,
-      "soknadId": 1,
-      "parrentFaktum": 11,
-      "key": "familie.barn.true.fnr",
-      "value": null,
-      "faktumEgenskaper": [],
-      "properties": {},
-      "type": "BRUKERREGISTRERT"
-    },
-    {
-      "faktumId": 46,
-      "soknadId": 1,
-      "parrentFaktum": 11,
-      "key": "familie.barn.true.pnr",
-      "value": null,
-      "faktumEgenskaper": [],
-      "properties": {},
-      "type": "BRUKERREGISTRERT"
-    },
-    {
-      "faktumId": 47,
-      "soknadId": 1,
-      "parrentFaktum": 11,
-      "key": "familie.barn.true.borsammen",
-      "value": null,
-      "faktumEgenskaper": [],
-      "properties": {},
-      "type": "BRUKERREGISTRERT"
-    },
-    {
-      "faktumId": 48,
-      "soknadId": 1,
-      "parrentFaktum": 47,
-      "key": "familie.barn.true.borsammen.true.grad",
-      "value": null,
-      "faktumEgenskaper": [],
-      "properties": {},
-      "type": "BRUKERREGISTRERT"
-    },
-    {
       "faktumId": 49,
       "soknadId": 1,
       "parrentFaktum": 14,
