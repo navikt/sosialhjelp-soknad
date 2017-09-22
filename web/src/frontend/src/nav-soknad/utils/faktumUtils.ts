@@ -6,8 +6,8 @@ import {
 } from "../faktumTextTypes";
 
 import { getIntlTextOrKey, getIntlInfoTekst, getIntlText } from "./intlUtils";
-import {Faktum} from "../redux/faktaTypes";
-import {finnFaktum} from "../redux/faktaUtils";
+import { Faktum } from "../redux/faktaTypes";
+import { finnFaktum } from "../redux/faktaUtils";
 
 export const radioCheckKeys = (key: string) => ({
 	faktum: `${key}`,
@@ -54,7 +54,10 @@ export function getRadioFaktumTekst(
 	value: string,
 	property?: string
 ): CheckboxFaktumTekst {
-	return getFaktumCheckboksTekst(intl, `${key}${getPropertyKey(property)}.${value}`);
+	return getFaktumCheckboksTekst(
+		intl,
+		`${key}${getPropertyKey(property)}.${value}`
+	);
 }
 
 export function getInputFaktumTekst(
@@ -73,14 +76,19 @@ export function getInputFaktumTekst(
 }
 
 function getPropertyKey(property?: string) {
-	return property === undefined ? ""  : `.${property}`;
+	return property === undefined ? "" : `.${property}`;
 }
 export function getFaktumVerdi(fakta: Faktum[], key: string): string {
 	const faktum = finnFaktum(key, fakta);
 	return faktum.value;
 }
 
-export function getPropertyVerdi(fakta: any, key: string, property: string, faktumId?: number) {
+export function getPropertyVerdi(
+	fakta: any,
+	key: string,
+	property: string,
+	faktumId?: number
+) {
 	const faktum = finnFaktum(key, fakta, faktumId);
 	return faktum.properties[property];
 }

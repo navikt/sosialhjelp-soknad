@@ -16,7 +16,7 @@ interface OwnProps {
 
 class PersonFaktum extends React.Component<OwnProps, {}> {
 	render() {
-		const { faktumKey, validering = {}, brukProperties, faktumId  } = this.props;
+		const { faktumKey, validering = {}, brukProperties, faktumId } = this.props;
 		const navnFaktumKey = brukProperties ? faktumKey : `${faktumKey}.navn`;
 		const fnrFaktumKey = brukProperties ? faktumKey : `${faktumKey}.fnr`;
 		const pnrFaktumKey = brukProperties ? faktumKey : `${faktumKey}.pnr`;
@@ -28,8 +28,8 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 							<InputFaktum
 								faktumKey={navnFaktumKey}
 								required={validering.navnRequired}
-                                faktumId={faktumId}
-                                { ...brukProperties ? { property: "navn" } : {}}
+								faktumId={faktumId}
+								{...(brukProperties ? { property: "navn" } : {})}
 							/>
 						</Column>
 					</Row>
@@ -40,9 +40,9 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								maxLength={6}
 								bredde="s"
 								required={validering.fnrRequired}
-                                faktumId={faktumId}
-                                {...brukProperties ? { property: "fnr" } : {}}
-                            />
+								faktumId={faktumId}
+								{...(brukProperties ? { property: "fnr" } : {})}
+							/>
 						</Column>
 						<Column xs="12" md="6">
 							<TallFaktum
@@ -50,9 +50,9 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								maxLength={5}
 								bredde="s"
 								required={validering.pnrRequired}
-                                faktumId={faktumId}
-                                {...brukProperties ? { property: "pnr" } : {}}
-                            />
+								faktumId={faktumId}
+								{...(brukProperties ? { property: "pnr" } : {})}
+							/>
 						</Column>
 					</Row>
 				</Container>
