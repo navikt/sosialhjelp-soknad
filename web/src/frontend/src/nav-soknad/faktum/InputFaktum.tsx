@@ -69,7 +69,7 @@ class InputFaktum extends React.Component<Props, State> {
 			<Input
 				className="input--xxl faktumInput"
 				type={type}
-				name={faktumKey}
+				name={this.props.getName()}
 				disabled={disabled}
 				inputRef={(c: any) => (this.input = c)}
 				value={this.state.value}
