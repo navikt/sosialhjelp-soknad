@@ -19,12 +19,24 @@ class RadioFaktum extends React.Component<
 	{}
 > {
 	render() {
-		const { faktumKey, value, disabled, property, faktumId, required, intl } = this.props;
-        const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
+		const {
+			faktumKey,
+			value,
+			disabled,
+			property,
+			faktumId,
+			required,
+			intl
+		} = this.props;
+		const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
 		return (
 			<Radio
 				name={faktumKey + property + faktumId}
-				checked={property ? this.props.getPropertyVerdi() === value : this.props.getFaktumVerdi() === value}
+				checked={
+					property
+						? this.props.getPropertyVerdi() === value
+						: this.props.getFaktumVerdi() === value
+				}
 				disabled={disabled}
 				value={value}
 				required={required}

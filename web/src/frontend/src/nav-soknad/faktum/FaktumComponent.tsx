@@ -23,23 +23,22 @@ export interface Props {
 	faktumKey: string;
 	property?: string;
 	faktumId?: number;
-    /** Array med valideringsfunksjoner som skal brukes for komponenten */
-    validerFunc?: FaktumValideringFunc[];
-    /** Denne legger til validering for påkrevd dersom true */
-    required?: boolean;
-
+	/** Array med valideringsfunksjoner som skal brukes for komponenten */
+	validerFunc?: FaktumValideringFunc[];
+	/** Denne legger til validering for påkrevd dersom true */
+	required?: boolean;
 }
 
 interface InjectedProps {
 	fakta: Faktum[];
-    feilkode?: string;
-    /** Alle registrerte valideringsregler i state */
-    valideringsregler?: FaktumValideringsregler[];
+	feilkode?: string;
+	/** Alle registrerte valideringsregler i state */
+	valideringsregler?: FaktumValideringsregler[];
 	setFaktumVerdi: (verdi: string, property?: string, faktumId?: string) => void;
 	getFaktumVerdi: () => string;
 	getPropertyVerdi: () => string;
-    validerFaktum: (verdi: string) => string;
-    getFeil: (intl: InjectedIntl) => Feil;
+	validerFaktum: (verdi: string) => string;
+	getFeil: (intl: InjectedIntl) => Feil;
 }
 
 export type InjectedFaktumComponentProps = InjectedProps & Props;
@@ -96,7 +95,11 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		setFaktumVerdi(verdi: string, property?: string) {
 			this.props.dispatch(
 				setFaktumVerdiOnState(
-					finnFaktum(this.props.faktumKey, this.props.fakta, this.props.faktumId),
+					finnFaktum(
+						this.props.faktumKey,
+						this.props.fakta,
+						this.props.faktumId
+					),
 					verdi,
 					property
 				)
@@ -107,13 +110,25 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		getFaktumVerdi(): string {
-			return this.props.property ?
-				getPropertyVerdi(this.props.fakta, this.props.faktumKey, this.props.property, this.props.faktumId) || "" :
-				getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
+			return this.props.property
+				? getPropertyVerdi(
+						this.props.fakta,
+						this.props.faktumKey,
+						this.props.property,
+						this.props.faktumId
+					) || ""
+				: getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
 		}
 
 		getPropertyVerdi(): string {
-			return getPropertyVerdi(this.props.fakta, this.props.faktumKey, this.props.property, this.props.faktumId) || "";
+			return (
+				getPropertyVerdi(
+					this.props.fakta,
+					this.props.faktumKey,
+					this.props.property,
+					this.props.faktumId
+				) || ""
+			);
 		}
 
 		validerFaktum(verdi: string) {
@@ -142,8 +157,8 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 					setFaktumVerdi={this.setFaktumVerdi}
 					getFaktumVerdi={this.getFaktumVerdi}
 					getPropertyVerdi={this.getPropertyVerdi}
-                    validerFaktum={this.validerFaktum}
-                    getFeil={this.getFeil}
+					validerFaktum={this.validerFaktum}
+					getFeil={this.getFeil}
 				/>
 			);
 		}
