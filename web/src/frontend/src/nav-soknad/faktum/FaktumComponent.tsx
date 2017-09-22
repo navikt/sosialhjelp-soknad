@@ -4,7 +4,7 @@ import { DispatchProps, Faktum } from "../redux/faktaTypes";
 import { SoknadAppState } from "../redux/faktaReducer";
 import { setFaktumVerdi as setFaktumVerdiOnState } from "../redux/faktaActions";
 import { finnFaktum } from "../redux/faktaUtils";
-import { getFaktumVerdi } from "../utils";
+import { getFaktumVerdi, getPropertyVerdi } from "../utils";
 import { InjectedIntl } from "react-intl";
 import {
 	FaktumValideringFunc,
@@ -21,6 +21,8 @@ import { pakrevd } from "../validering/valideringer";
 
 export interface Props {
 	faktumKey: string;
+	property?: string;
+	faktumId?: number;
 	/** Array med valideringsfunksjoner som skal brukes for komponenten */
 	validerFunc?: FaktumValideringFunc[];
 	/** Denne legger til validering for påkrevd dersom true */
@@ -33,8 +35,9 @@ interface InjectedProps {
 	/** Alle registrerte valideringsregler i state */
 	valideringsregler?: FaktumValideringsregler[];
 	getName: () => string;
-	setFaktumVerdi: (verdi: string) => void;
+	setFaktumVerdi: (verdi: string, property?: string, faktumId?: string) => void;
 	getFaktumVerdi: () => string;
+	getPropertyVerdi: () => string;
 	validerFaktum: (verdi: string) => string;
 	getFeil: (intl: InjectedIntl) => Feil;
 }
@@ -70,6 +73,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			super(props);
 			this.setFaktumVerdi = this.setFaktumVerdi.bind(this);
 			this.getFaktumVerdi = this.getFaktumVerdi.bind(this);
+			this.getPropertyVerdi = this.getPropertyVerdi.bind(this);
 			this.validerFaktum = this.validerFaktum.bind(this);
 			this.getName = this.getName.bind(this);
 			this.getFeil = this.getFeil.bind(this);
@@ -94,11 +98,16 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
 		}
 
-		setFaktumVerdi(verdi: string) {
+		setFaktumVerdi(verdi: string, property?: string) {
 			this.props.dispatch(
 				setFaktumVerdiOnState(
-					finnFaktum(this.props.faktumKey, this.props.fakta),
-					verdi
+					finnFaktum(
+						this.props.faktumKey,
+						this.props.fakta,
+						this.props.faktumId
+					),
+					verdi,
+					property
 				)
 			);
 			if (this.props.feilkode) {
@@ -107,7 +116,25 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		getFaktumVerdi(): string {
-			return getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
+			return this.props.property
+				? getPropertyVerdi(
+						this.props.fakta,
+						this.props.faktumKey,
+						this.props.property,
+						this.props.faktumId
+					) || ""
+				: getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
+		}
+
+		getPropertyVerdi(): string {
+			return (
+				getPropertyVerdi(
+					this.props.fakta,
+					this.props.faktumKey,
+					this.props.property,
+					this.props.faktumId
+				) || ""
+			);
 		}
 
 		validerFaktum(verdi: string) {
@@ -139,6 +166,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 					{...this.props}
 					setFaktumVerdi={this.setFaktumVerdi}
 					getFaktumVerdi={this.getFaktumVerdi}
+					getPropertyVerdi={this.getPropertyVerdi}
 					validerFaktum={this.validerFaktum}
 					getFeil={this.getFeil}
 					getName={this.getName}

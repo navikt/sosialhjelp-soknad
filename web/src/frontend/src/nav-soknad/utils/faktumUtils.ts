@@ -4,7 +4,10 @@ import {
 	SporsmalFaktumTekst,
 	InputFaktumTekst
 } from "../faktumTextTypes";
+
 import { getIntlTextOrKey, getIntlInfoTekst, getIntlText } from "./intlUtils";
+import { Faktum } from "../redux/faktaTypes";
+import { finnFaktum } from "../redux/faktaUtils";
 
 export const radioCheckKeys = (key: string) => ({
 	faktum: `${key}`,
@@ -48,29 +51,44 @@ export function getFaktumCheckboksTekst(
 export function getRadioFaktumTekst(
 	intl: InjectedIntl,
 	key: string,
-	value: string
+	value: string,
+	property?: string
 ): CheckboxFaktumTekst {
-	return getFaktumCheckboksTekst(intl, `${key}.${value}`);
+	return getFaktumCheckboksTekst(
+		intl,
+		`${key}${getPropertyKey(property)}.${value}`
+	);
 }
 
 export function getInputFaktumTekst(
 	intl: InjectedIntl,
-	key: string
+	key: string,
+	property?: string
 ): InputFaktumTekst {
+	const propertyKey = getPropertyKey(property);
 	return {
-		label: getIntlTextOrKey(intl, `${key}.label`),
-		sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
-		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
-		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`),
-		pattern: getIntlText(intl, `${key}.pattern`)
+		label: getIntlTextOrKey(intl, `${key}${propertyKey}.label`),
+		sporsmal: getIntlTextOrKey(intl, `${key}${propertyKey}.sporsmal`),
+		infotekst: getIntlInfoTekst(intl, `${key}${propertyKey}.infotekst`),
+		hjelpetekst: getIntlInfoTekst(intl, `${key}${propertyKey}.hjelpetekst`),
+		pattern: getIntlText(intl, `${key}${propertyKey}.pattern`)
 	};
 }
 
-export function getFaktumVerdi(fakta: any, key: string) {
-	for (const faktum of fakta) {
-		if (faktum.key === key) {
-			return faktum.value;
-		}
-	}
-	return null;
+function getPropertyKey(property?: string) {
+	return property === undefined ? "" : `.${property}`;
+}
+export function getFaktumVerdi(fakta: Faktum[], key: string): string {
+	const faktum = finnFaktum(key, fakta);
+	return faktum.value;
+}
+
+export function getPropertyVerdi(
+	fakta: any,
+	key: string,
+	property: string,
+	faktumId?: number
+) {
+	const faktum = finnFaktum(key, fakta, faktumId);
+	return faktum.properties[property];
 }

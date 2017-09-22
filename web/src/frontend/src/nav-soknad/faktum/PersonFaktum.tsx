@@ -5,6 +5,8 @@ import TallFaktum from "./typedInput/TallFaktum";
 
 interface OwnProps {
 	faktumKey: string;
+	brukProperties?: boolean;
+	faktumId?: number;
 	validering?: {
 		navnRequired?: boolean;
 		fnrRequired?: boolean;
@@ -14,10 +16,10 @@ interface OwnProps {
 
 class PersonFaktum extends React.Component<OwnProps, {}> {
 	render() {
-		const { faktumKey, validering = {} } = this.props;
-		const navnFaktumKey = `${faktumKey}.navn`;
-		const fnrFaktumKey = `${faktumKey}.fnr`;
-		const pnrFaktumKey = `${faktumKey}.pnr`;
+		const { faktumKey, validering = {}, brukProperties, faktumId } = this.props;
+		const navnFaktumKey = brukProperties ? faktumKey : `${faktumKey}.navn`;
+		const fnrFaktumKey = brukProperties ? faktumKey : `${faktumKey}.fnr`;
+		const pnrFaktumKey = brukProperties ? faktumKey : `${faktumKey}.pnr`;
 		return (
 			<div className="personskjema">
 				<Container fluid={true} className="container--noPadding">
@@ -26,6 +28,8 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 							<InputFaktum
 								faktumKey={navnFaktumKey}
 								required={validering.navnRequired}
+								faktumId={faktumId}
+								{...(brukProperties ? { property: "navn" } : {})}
 							/>
 						</Column>
 					</Row>
@@ -36,6 +40,8 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								maxLength={6}
 								bredde="s"
 								required={validering.fnrRequired}
+								faktumId={faktumId}
+								{...(brukProperties ? { property: "fnr" } : {})}
 							/>
 						</Column>
 						<Column xs="12" md="6">
@@ -44,6 +50,8 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								maxLength={5}
 								bredde="s"
 								required={validering.pnrRequired}
+								faktumId={faktumId}
+								{...(brukProperties ? { property: "pnr" } : {})}
 							/>
 						</Column>
 					</Row>

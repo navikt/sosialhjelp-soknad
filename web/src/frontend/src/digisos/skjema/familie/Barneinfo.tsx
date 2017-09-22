@@ -1,43 +1,71 @@
 import * as React from "react";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import {
-	radioCheckKeys,
-	faktumIsSelected,
-	getFaktumVerdi
-} from "../../../nav-soknad/utils";
-import FaktumPersonskjema from "../../../nav-soknad/faktum/PersonFaktum";
-
-import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
-import FaktumSkjemagruppe from "../../../nav-soknad/faktum/SporsmalFaktum";
-import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
+	FaktumComponentProps,
+	SoknadAppState
+} from "../../../nav-soknad/redux/faktaReducer";
+import { finnFakta, finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
+import { connect } from "react-redux";
+import { DispatchProps } from "../../../nav-soknad/redux/faktaTypes";
+import { Faktum } from "../../redux/types";
+import { opprettFaktum } from "../../../nav-soknad/redux/faktaActions";
+import Barn from "./Barn";
+import { FormattedMessage } from "react-intl";
 
 interface OwnProps {
 	faktumKey: string;
 	nummer: number;
+	parentFaktumKey: string;
 }
 
-class Barn extends React.Component<OwnProps & FaktumComponentProps, {}> {
+class Barneinfo extends React.Component<
+	OwnProps & FaktumComponentProps & DispatchProps,
+	{}
+> {
+	componentDidMount() {
+		const { fakta, faktumKey, parentFaktumKey } = this.props;
+		const parentFaktum = finnFaktum(parentFaktumKey, fakta);
+		const faktum = finnFaktum(faktumKey, fakta);
+		if (!faktum) {
+			this.props.dispatch(
+				opprettFaktum({ key: faktumKey, parrentFaktum: parentFaktum.faktumId })
+			);
+		}
+	}
+
 	render() {
-		const { fakta, faktumKey } = this.props;
-		const borInfo = radioCheckKeys(`${faktumKey}.borsammen`);
-		const hvormye = radioCheckKeys(`${faktumKey}.borsammen.true.grad`);
+		const { fakta, faktumKey, parentFaktumKey } = this.props;
+		const alleBarn = finnFakta(faktumKey, fakta);
+		const parrentFaktum = finnFaktum(parentFaktumKey, fakta);
+		const leggTilBarn = (): any =>
+			this.props.dispatch(
+				opprettFaktum({
+					key: faktumKey,
+					parrentFaktum: parrentFaktum.faktumId
+				})
+			);
 		return (
-			<FaktumSkjemagruppe faktumKey="familie.barn.true">
-				<FaktumPersonskjema faktumKey={faktumKey} />
-				<FaktumSkjemagruppe faktumKey={borInfo.faktum}>
-					<FaktumRadio faktumKey={borInfo.faktum} value="true" />
-					<NivaTreSkjema
-						visible={faktumIsSelected(getFaktumVerdi(fakta, borInfo.faktum))}>
-						<FaktumSkjemagruppe faktumKey={hvormye.faktum}>
-							<FaktumRadio faktumKey={hvormye.faktum} value="heltid" />
-							<FaktumRadio faktumKey={hvormye.faktum} value="deltid" />
-						</FaktumSkjemagruppe>
-					</NivaTreSkjema>
-					<FaktumRadio faktumKey={borInfo.faktum} value="false" />
-				</FaktumSkjemagruppe>
-			</FaktumSkjemagruppe>
+			<div>
+				{alleBarn.map((barnFaktum: Faktum) => (
+					<Barn fakta={fakta} faktum={barnFaktum} key={barnFaktum.faktumId} />
+				))}
+				<a href="javascript:void(0);" onClick={leggTilBarn} role="button">
+					<FormattedMessage id="familie.barn.true.barn.leggtil" />
+				</a>
+			</div>
 		);
 	}
 }
 
-export default Barn;
+interface StateFromProps {
+	fakta: Faktum[];
+}
+
+export default connect<
+	StateFromProps,
+	{},
+	OwnProps
+>((state: SoknadAppState) => {
+	return {
+		fakta: state.fakta.data
+	};
+})(Barneinfo);
