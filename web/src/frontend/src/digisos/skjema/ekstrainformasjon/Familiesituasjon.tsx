@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
-import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
+import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
@@ -23,16 +23,18 @@ const Familiesituasjon: React.StatelessComponent<
 					key="barnebidrag">
 					<Container fluid={true} className="container--noPadding">
 						<Row>
-							<Column xs="6">
-								<InputFaktum
+							<Column md="6" xs="12">
+								<BelopFaktum
 									faktumKey="ekstrainfo.familie.barnebidrag.betaler"
 									bredde="s"
+									kunHeltall={true}
 								/>
 							</Column>
-							<Column xs="6">
-								<InputFaktum
+							<Column md="6" xs="12">
+								<BelopFaktum
 									faktumKey="ekstrainfo.familie.barnebidrag.mottar"
 									bredde="s"
+									kunHeltall={true}
 								/>
 							</Column>
 						</Row>

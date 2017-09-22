@@ -1,10 +1,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+import { Innholdstittel } from "nav-frontend-typografi";
+import DocumentTitle from "react-document-title";
 import { getIntlTextOrKey } from "../utils";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import { SoknadAppState } from "../redux/faktaReducer";
 import { Valideringsfeil } from "../validering/types";
+import StegMedNavigasjon from "../../digisos/skjema/StegMedNavigasjon";
+import AppTittel from "../components/apptittel/AppTittel";
+import { animateScroll } from "react-scroll";
 
 interface OwnProps extends React.Props<any> {
 	tittelId: string;
@@ -20,9 +25,8 @@ class StegFaktum extends React.Component<
 	OwnProps & StateProps & InjectedIntlProps,
 	{}
 > {
-	tittel: HTMLElement;
 	componentDidMount() {
-		this.tittel.scrollIntoView();
+		animateScroll.scrollToTop({ duration: 500 });
 	}
 
 	render() {
@@ -34,21 +38,34 @@ class StegFaktum extends React.Component<
 			intl,
 			children
 		} = this.props;
+		const title =
+			getIntlTextOrKey(intl, tittelId) +
+			" - " +
+			getIntlTextOrKey(intl, "applikasjon.sidetittel.kortnavn");
 		return (
-			<div className="skjema-steg skjema-content">
-				<div className="skjema-steg__feiloppsummering">
-					<Feiloppsummering
-						skjemanavn="digisos"
-						valideringsfeil={valideringsfeil}
-						stegValidertCounter={stegValidertCounter}
-						visFeilliste={visFeilmeldinger}
-					/>
-				</div>
-				<h2 className="skjema-steg__tittel" ref={c => (this.tittel = c)}>
-					{getIntlTextOrKey(intl, tittelId)}
-				</h2>
-				{children}
-			</div>
+			<DocumentTitle title={title}>
+				<span>
+					<AppTittel />
+					<StegMedNavigasjon>
+						<div className="skjema-steg skjema-content">
+							<div className="skjema-steg__feiloppsummering">
+								<Feiloppsummering
+									skjemanavn="digisos"
+									valideringsfeil={valideringsfeil}
+									stegValidertCounter={stegValidertCounter}
+									visFeilliste={visFeilmeldinger}
+								/>
+							</div>
+							<div className="skjema-steg__tittel">
+								<Innholdstittel>
+									{getIntlTextOrKey(intl, tittelId)}
+								</Innholdstittel>
+							</div>
+							{children}
+						</div>
+					</StegMedNavigasjon>
+				</span>
+			</DocumentTitle>
 		);
 	}
 }
@@ -60,8 +77,8 @@ export default injectIntl(
 		OwnProps & InjectedIntlProps
 	>((state: SoknadAppState, props: OwnProps): StateProps => {
 		return {
+			visFeilmeldinger: state.validering.visValideringsfeil,
 			valideringsfeil: state.validering.feil,
-			visFeilmeldinger: true,
 			stegValidertCounter: state.validering.stegValidertCounter
 		};
 	})(StegFaktum)

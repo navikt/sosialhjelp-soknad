@@ -12,7 +12,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 		const { fakta } = this.props;
 		const sivilstatus = radioCheckKeys("familie.sivilstatus");
 		return (
-			<SporsmalFaktum faktumKey={sivilstatus.faktum}>
+			<SporsmalFaktum faktumKey={sivilstatus.faktum} required={true}>
 				<RadioFaktum faktumKey={sivilstatus.faktum} value="gift" />
 				<Underskjema
 					visible={getFaktumVerdi(fakta, sivilstatus.faktum) === "gift"}>

@@ -13,9 +13,16 @@ export function minLengde(value: string, min: number): ValideringKey {
 }
 
 export function maksLengde(value: string, max: number): ValideringKey {
+	if (typeof value !== "string") {
+		return undefined;
+	}
 	return typeof value === "string" && value.length <= max
 		? undefined
 		: ValideringKey.MAX_LENGDE;
+}
+
+export function getMaksLengdeFunc(max: number) {
+	return (value: string): ValideringKey => maksLengde(value, max);
 }
 
 export function erTall(value: string): ValideringKey {

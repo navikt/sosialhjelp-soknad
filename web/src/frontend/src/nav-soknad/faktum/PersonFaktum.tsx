@@ -1,36 +1,58 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
 import InputFaktum from "./InputFaktum";
+import TallFaktum from "./typedInput/TallFaktum";
 
 interface OwnProps {
 	faktumKey: string;
 	brukProperties?: boolean;
 	faktumId?: number;
+	validering?: {
+		navnRequired?: boolean;
+		fnrRequired?: boolean;
+		pnrRequired?: boolean;
+	};
 }
 
 class PersonFaktum extends React.Component<OwnProps, {}> {
 	render() {
-		const { faktumKey, brukProperties, faktumId } = this.props;
-		const getInputFaktum = (type: string) => {
-			if (brukProperties) {
-				return <InputFaktum faktumKey={faktumKey} property={type} faktumId={faktumId} />;
-			}
-			return <InputFaktum faktumKey={`${faktumKey}.${type}`} faktumId={faktumId} />;
-		};
+		const { faktumKey, validering = {}, brukProperties, faktumId  } = this.props;
+		const navnFaktumKey = brukProperties ? faktumKey : `${faktumKey}.navn`;
+		const fnrFaktumKey = brukProperties ? faktumKey : `${faktumKey}.fnr`;
+		const pnrFaktumKey = brukProperties ? faktumKey : `${faktumKey}.pnr`;
 		return (
 			<div className="personskjema">
 				<Container fluid={true} className="container--noPadding">
 					<Row>
 						<Column xs="12">
-							{getInputFaktum("navn")}
+							<InputFaktum
+								faktumKey={navnFaktumKey}
+								required={validering.navnRequired}
+                                faktumId={faktumId}
+                                { ...brukProperties ? { properties: "navn" } : {}}
+							/>
 						</Column>
 					</Row>
 					<Row>
-						<Column xs="6">
-							{getInputFaktum("fnr")}
+						<Column xs="12" md="6">
+							<TallFaktum
+								faktumKey={fnrFaktumKey}
+								maxLength={6}
+								bredde="s"
+								required={validering.fnrRequired}
+                                faktumId={faktumId}
+                                {...brukProperties ? { properties: "fnr" } : {}}
+                            />
 						</Column>
-						<Column xs="3">
-							{getInputFaktum("pnr")}
+						<Column xs="12" md="6">
+							<TallFaktum
+								faktumKey={pnrFaktumKey}
+								maxLength={5}
+								bredde="s"
+								required={validering.pnrRequired}
+                                faktumId={faktumId}
+                                {...brukProperties ? { properties: "pnr" } : {}}
+                            />
 						</Column>
 					</Row>
 				</Container>

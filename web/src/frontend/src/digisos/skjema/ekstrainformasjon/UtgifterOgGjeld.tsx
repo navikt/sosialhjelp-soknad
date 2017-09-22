@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
+import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
 import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
@@ -11,7 +12,7 @@ const StromSkjema: React.StatelessComponent<{}> = () => (
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column xs="12">
-					<InputFaktum faktumKey="ekstrainfo.utgifter.strom" bredde="s" />
+					<BelopFaktum faktumKey="ekstrainfo.utgifter.strom" bredde="s" />
 				</Column>
 			</Row>
 		</Container>
@@ -23,7 +24,7 @@ const HusleieSkjema: React.StatelessComponent<{}> = () => (
 		<Container fluid={true} className="container--noPadding">
 			<Row>
 				<Column xs="12">
-					<InputFaktum faktumKey="ekstrainfo.utgifter.husleie" bredde="s" />
+					<BelopFaktum faktumKey="ekstrainfo.utgifter.husleie" bredde="s" />
 				</Column>
 			</Row>
 		</Container>
@@ -34,11 +35,11 @@ const BarneSkjema: React.StatelessComponent<{}> = () => (
 	<SporsmalFaktum faktumKey="ekstrainfo.utgifter.barn" key="barn">
 		<Container fluid={true} className="container--noPadding">
 			<Row>
-				<Column xs="6">
+				<Column md="6" xs="12">
 					<InputFaktum faktumKey="ekstrainfo.utgifter.barn.hva" />
 				</Column>
-				<Column xs="6">
-					<InputFaktum faktumKey="ekstrainfo.utgifter.barn.sum" bredde="s" />
+				<Column md="6" xs="12">
+					<BelopFaktum faktumKey="ekstrainfo.utgifter.barn.sum" bredde="s" />
 				</Column>
 			</Row>
 		</Container>
