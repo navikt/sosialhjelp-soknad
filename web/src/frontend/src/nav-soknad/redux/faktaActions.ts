@@ -1,7 +1,7 @@
-import {FaktaActionTypes, Faktum, FaktumActionTypeKeys, FaktumValueType, SoknadDispatch} from "./faktaTypes";
-import {fetchPost, fetchPut} from "../../digisos/redux/rest-utils";
-import {FaktumActionTypes} from "./faktaReducer";
-import {State} from "../../digisos/redux/reducers";
+import { FaktaActionTypes, Faktum, FaktumActionTypeKeys, FaktumValueType, SoknadDispatch } from "./faktaTypes";
+import { fetchPost, fetchPut } from "../../digisos/redux/rest-utils";
+import { FaktumActionTypes } from "./faktaReducer";
+import { State } from "../../digisos/redux/reducers";
 
 export function setFaktumVerdi(faktum: Faktum, value: FaktumValueType, property?: string) {
 	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
