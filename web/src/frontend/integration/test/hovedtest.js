@@ -8,7 +8,7 @@ module.exports = {
         hovedside.navigate();
     },
     after: (browser) => {
-        browser.end();
+        // browser.end();
     },
     "hovedside skal ha minst ett skjemaelement": function () {
         hovedside.expect.element('@input').to.be.present.after(timeout);
