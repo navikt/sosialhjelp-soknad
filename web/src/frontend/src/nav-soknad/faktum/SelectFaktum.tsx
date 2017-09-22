@@ -31,7 +31,7 @@ class FaktumSelect extends React.Component<
 		const tekster = getInputFaktumTekst(intl, faktumKey);
 		return (
 			<Select
-				name={faktumKey}
+				name={this.props.getName()}
 				disabled={disabled}
 				value={this.props.getFaktumVerdi()}
 				bredde={bredde}
