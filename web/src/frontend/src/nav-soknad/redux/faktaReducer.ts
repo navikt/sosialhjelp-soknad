@@ -29,8 +29,8 @@ const initialState: FaktumState = {
 export type FaktumActionTypes =
 	| OppdatertFaktumVerdi
 	| OppdaterFaktumVerdi
-	| OpprettFaktumVerdi
-	| OpprettetFaktumVerdi
+	| OpprettFaktum
+	| OpprettetFaktum
 	| SetFaktaAction
 	| SetFaktaPendingAction
 	| SetFaktaOkAction
@@ -46,11 +46,11 @@ interface OppdatertFaktumVerdi {
 	faktum: Faktum;
 }
 
-interface OpprettFaktumVerdi {
+interface OpprettFaktum {
 	type: FaktumActionTypeKeys.OPPRETT_FAKTUM;
 }
 
-interface OpprettetFaktumVerdi {
+interface OpprettetFaktum {
 	type: FaktumActionTypeKeys.OPPRETTET_FAKTUM;
 	faktum: Faktum;
 }
