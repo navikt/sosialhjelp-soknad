@@ -4,19 +4,29 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Location } from "history";
 import { connect } from "react-redux";
 import NavFrontendSpinner from "nav-frontend-spinner";
-
+import DocumentTitle from "react-document-title";
+import AppTittel from "../components/apptittel/AppTittel";
+import Feiloppsummering from "../components/validering/Feiloppsummering";
+import { Innholdstittel } from "nav-frontend-typografi";
 import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
 import { SkjemaConfig, SkjemaStegType } from "../soknadTypes";
 import { DispatchProps, Faktum } from "../redux/faktaTypes";
 import { SoknadAppState } from "../redux/faktaReducer";
+import { getIntlTextOrKey } from "../utils";
 import {
 	clearFaktaValideringsfeil,
 	setFaktaValideringsfeil
 } from "../redux/valideringActions";
-import { FaktumValideringsregler } from "../validering/types";
+import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { validerAlleFaktum } from "../validering/utils";
-import { gaTilbake, gaVidere, avbryt } from "../utils";
+import {
+	gaTilbake,
+	gaVidere,
+	avbryt,
+	finnBrukerBehandlingIdFraLocation,
+	finnStegFraLocation
+} from "../utils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -24,21 +34,31 @@ const stopEvent = (evt: React.FormEvent<any>) => {
 };
 
 interface OwnProps {
-	fakta: Faktum[];
-	valideringer: FaktumValideringsregler[];
+	stegKey: string;
 	skjemaConfig: SkjemaConfig;
-	aktivtSteg: number;
-	brukerBehandlingId: string;
-	pending: boolean;
-	match: any;
+	pending?: boolean;
+}
+
+interface InjectedRouterProps {
 	location: Location;
 }
-type Props = OwnProps & RouterProps & InjectedIntlProps & DispatchProps;
 
-class StegMedNavigasjon extends React.Component<
-	OwnProps & RouterProps & InjectedIntlProps & DispatchProps,
-	{}
-> {
+interface StateProps {
+	fakta: Faktum[];
+	valideringer: FaktumValideringsregler[];
+	visFeilmeldinger?: boolean;
+	valideringsfeil?: Valideringsfeil[];
+	stegValidertCounter?: number;
+}
+
+type Props = OwnProps &
+	StateProps &
+	RouterProps &
+	InjectedRouterProps &
+	InjectedIntlProps &
+	DispatchProps;
+
+class StegMedNavigasjon extends React.Component<Props, {}> {
 	constructor(props: Props) {
 		super(props);
 		this.handleGaVidere = this.handleGaVidere.bind(this);
@@ -78,14 +98,9 @@ class StegMedNavigasjon extends React.Component<
 	}
 
 	render() {
-		const {
-			aktivtSteg,
-			brukerBehandlingId,
-			skjemaConfig,
-			pending,
-			intl,
-			children
-		} = this.props;
+		const { skjemaConfig, pending, intl, location } = this.props;
+		const aktivtSteg = finnStegFraLocation(location);
+		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(location);
 		if (pending) {
 			return (
 				<div className="application-spinner">
@@ -94,39 +109,62 @@ class StegMedNavigasjon extends React.Component<
 			);
 		} else {
 			const aktivtStegInfo = skjemaConfig.steg.find(
-				s => s.stegnummer === this.props.aktivtSteg
+				s => s.stegnummer === aktivtSteg
 			);
 			const erOppsummering =
 				aktivtStegInfo.type === SkjemaStegType.oppsummering;
+
+			const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
 			return (
-				<form id="soknadsskjema" onSubmit={stopEvent}>
-					{!erOppsummering ? (
-						<div className="skjema__stegindikator">
-							<StegIndikator
-								aktivtSteg={aktivtSteg}
-								steg={skjemaConfig.steg.map(steg => ({
-									tittel: intl.formatMessage({ id: steg.cmskey })
-								}))}
+				<DocumentTitle title={this.props.skjemaConfig.tittelId}>
+					<AppTittel />
+					<div className="skjema-steg skjema-content">
+						<div className="skjema-steg__feiloppsummering">
+							<Feiloppsummering
+								skjemanavn="digisos"
+								valideringsfeil={this.props.valideringsfeil}
+								stegValidertCounter={this.props.stegValidertCounter}
+								visFeilliste={this.props.visFeilmeldinger}
 							/>
 						</div>
-					) : null}
-					{children}
-					<Knapperad
-						gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
-						gaVidere={() => this.handleGaVidere(aktivtSteg, brukerBehandlingId)}
-						gaTilbake={() =>
-							this.handleGaTilbake(aktivtSteg, brukerBehandlingId)}
-						avbryt={() => avbryt(skjemaConfig)}
-					/>
-				</form>
+						<div className="skjema-steg__tittel">
+							<Innholdstittel>{stegTittel}</Innholdstittel>
+						</div>
+						<form id="soknadsskjema" onSubmit={stopEvent}>
+							{!erOppsummering ? (
+								<div className="skjema__stegindikator">
+									<StegIndikator
+										aktivtSteg={aktivtSteg}
+										steg={skjemaConfig.steg.map(steg => ({
+											tittel: stegTittel
+										}))}
+									/>
+								</div>
+							) : null}
+							<Knapperad
+								gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
+								gaVidere={() =>
+									this.handleGaVidere(aktivtSteg, brukerBehandlingId)}
+								gaTilbake={() =>
+									this.handleGaTilbake(aktivtSteg, brukerBehandlingId)}
+								avbryt={() => avbryt(skjemaConfig)}
+							/>
+						</form>
+					</div>
+				</DocumentTitle>
 			);
 		}
 	}
 }
 
-export default connect((state: SoknadAppState, props: any) => {
-	return {
-		fakta: state.fakta.data,
-		valideringer: state.validering.valideringsregler
-	};
-})(injectIntl(withRouter(StegMedNavigasjon)));
+const mapStateToProps = (state: SoknadAppState): StateProps => ({
+	fakta: state.fakta.data,
+	valideringer: state.validering.valideringsregler,
+	visFeilmeldinger: state.validering.visValideringsfeil,
+	valideringsfeil: state.validering.feil,
+	stegValidertCounter: state.validering.stegValidertCounter
+});
+
+export default connect<StateProps, {}, OwnProps>(mapStateToProps)(
+	injectIntl(withRouter(StegMedNavigasjon))
+);

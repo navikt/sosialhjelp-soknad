@@ -105,11 +105,12 @@ export enum SkjemaStegType {
 }
 
 export interface SkjemaSteg {
+	key: string;
 	stegnummer: number;
-	cmskey: string;
 	type: SkjemaStegType;
 }
 
 export interface SkjemaConfig {
 	steg: SkjemaSteg[];
+	tittelId: string;
 }

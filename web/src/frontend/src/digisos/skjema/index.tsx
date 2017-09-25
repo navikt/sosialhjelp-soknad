@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Route, RouterProps, Switch, withRouter } from "react-router";
-import Steg1 from "./kontaktinfo";
+import Steg1 from "./personalia";
 import Steg2 from "./arbeidUtdanning";
 import Steg3 from "./familie";
 import Steg4 from "./begrunnelse";

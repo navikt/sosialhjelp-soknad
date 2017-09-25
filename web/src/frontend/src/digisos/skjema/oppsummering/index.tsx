@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { DispatchProps } from "../../../nav-soknad/redux/faktaTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { Checkbox } from "nav-frontend-skjema";
@@ -40,7 +40,7 @@ class Oppsummering extends React.Component<Props, LocalState> {
 	}
 	render() {
 		return (
-			<StegFaktum tittelId="oppsummering.tittel">
+			<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
 				<div
 					className="skjema-oppsummering"
 					dangerouslySetInnerHTML={
@@ -57,7 +57,7 @@ class Oppsummering extends React.Component<Props, LocalState> {
 							this.setState({ bekreftet: (evt as any).target.checked })}
 					/>
 				</div>
-			</StegFaktum>
+			</DigisosSkjemaSteg>
 		);
 	}
 }
