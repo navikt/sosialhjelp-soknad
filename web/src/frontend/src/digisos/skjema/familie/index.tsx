@@ -4,7 +4,7 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { State } from "../../redux/reducers";
 import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import Sivilstatus from "./Sivilstatus";
-import Barn from "./Barn";
+import HarBarn from "./HarBarn";
 
 class Familie extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -12,7 +12,7 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 		return (
 			<StegFaktum tittelId="familiebolk.tittel">
 				<Sivilstatus fakta={fakta} />
-				<Barn fakta={fakta} />
+				<HarBarn fakta={fakta} />
 			</StegFaktum>
 		);
 	}

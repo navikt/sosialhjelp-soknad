@@ -3,7 +3,8 @@ import { Input, InputBredde } from "nav-frontend-skjema";
 import { getInputFaktumTekst } from "../utils";
 import {
 	faktumComponent,
-	InjectedFaktumComponentProps
+	InjectedFaktumComponentProps,
+	Props as FaktumComponentProps
 } from "./FaktumComponent";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
@@ -13,16 +14,16 @@ interface State {
 	value: string;
 }
 
-interface OwnProps {
-	faktumKey: string;
+export interface OwnProps extends FaktumComponentProps {
 	disabled?: boolean;
 	pattern?: string;
 	maxLength?: number;
 	bredde?: InputBredde;
+	step?: string;
 	type?: InputTypes;
 }
 
-type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
+export type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 const getStateFromProps = (props: Props): State => ({
 	value: props.getFaktumVerdi()
@@ -47,7 +48,7 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 
 	handleOnBlur() {
-		this.props.setFaktumVerdi(this.state.value);
+		this.props.setFaktumVerdi(this.state.value, this.props.property);
 		this.props.validerFaktum(this.state.value);
 	}
 
@@ -58,16 +59,18 @@ class InputFaktum extends React.Component<Props, State> {
 			disabled,
 			pattern,
 			required,
+			step,
 			intl,
 			maxLength,
-			bredde
+			bredde,
+			property
 		} = this.props;
-		const tekster = getInputFaktumTekst(intl, faktumKey);
+		const tekster = getInputFaktumTekst(intl, faktumKey, property);
 		return (
 			<Input
 				className="input--xxl faktumInput"
 				type={type}
-				name={faktumKey}
+				name={this.props.getName()}
 				disabled={disabled}
 				inputRef={(c: any) => (this.input = c)}
 				value={this.state.value}
@@ -80,6 +83,10 @@ class InputFaktum extends React.Component<Props, State> {
 				bredde={bredde}
 				pattern={pattern}
 				required={required}
+				step={step}
+				noValidate={
+					true /* Unngå at nettleser validerer og evt. fjerner verdien */
+				}
 			/>
 		);
 	}

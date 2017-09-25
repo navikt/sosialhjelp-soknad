@@ -76,7 +76,7 @@ class SkjemaRouter extends React.Component<
 }
 
 export default connect((state: State, props: any) => {
-	const dataLoaded = state.fakta.restStatus === REST_STATUS.OK;
+	const dataLoaded = state.soknad.restStatus === REST_STATUS.OK;
 	let progresjon = 0;
 	if (dataLoaded) {
 		const faktum = getProgresjonFaktum(state.fakta.data);

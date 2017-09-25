@@ -81,7 +81,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 			<Textarea
 				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
 				value={this.state.value}
-				name={faktumKey}
+				name={this.props.getName()}
 				disabled={disabled}
 				onChange={this.handleOnChange}
 				onBlur={this.handleOnBlur}
