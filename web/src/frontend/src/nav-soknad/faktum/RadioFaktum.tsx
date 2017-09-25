@@ -31,7 +31,7 @@ class RadioFaktum extends React.Component<
 		const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
 		return (
 			<Radio
-                name={this.props.getName() + (faktumId ? faktumId.toString() : "")}
+				name={this.props.getName() + (faktumId ? faktumId.toString() : "")}
 				checked={
 					property
 						? this.props.getPropertyVerdi() === value
