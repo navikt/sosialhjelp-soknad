@@ -32,9 +32,6 @@ export type FaktumActionTypes =
 	| OpprettFaktum
 	| OpprettetFaktum
 	| SetFaktaAction
-	| SetFaktaPendingAction
-	| SetFaktaOkAction
-	| SetFaktaFailedAction
 	| SetFaktumFailedAction;
 
 interface OppdaterFaktumVerdi {
@@ -58,18 +55,6 @@ interface OpprettetFaktum {
 interface SetFaktaAction {
 	type: FaktaActionTypeKeys.SET_FAKTA;
 	fakta: Faktum[];
-}
-
-interface SetFaktaPendingAction {
-	type: FaktaActionTypeKeys.PENDING;
-}
-
-interface SetFaktaOkAction {
-	type: FaktaActionTypeKeys.OK;
-}
-
-interface SetFaktaFailedAction {
-	type: FaktaActionTypeKeys.SET_SERVER_FEIL;
 }
 
 interface SetFaktumFailedAction {
@@ -101,12 +86,6 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 				data: action.fakta,
 				restStatus: REST_STATUS.OK
 			};
-		case FaktaActionTypeKeys.PENDING:
-			return { ...state, 	restStatus: REST_STATUS.PENDING	};
-		case FaktaActionTypeKeys.OK:
-			return { ...state, restStatus: REST_STATUS.OK };
-		case FaktaActionTypeKeys.SET_SERVER_FEIL:
-			return { ...state, restStatus: REST_STATUS.FEILET };
 		default:
 			return state;
 	}
