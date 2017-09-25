@@ -9,7 +9,7 @@ import {
 } from "./soknadTypes";
 
 import { fetchPost, fetchToJson } from "../rest-utils";
-import { hentFakta, setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";
+import { setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";
 import { finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
 import { State } from "../reducers";
 import { FaktaActionTypeKeys, FaktaActionTypes, Faktum, SoknadDispatch } from "../../../nav-soknad/redux/faktaTypes";
@@ -35,7 +35,7 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 				});
 				const brukerBehandlingId = getState().soknad.data.brukerBehandlingId;
 
-				hentFakta(brukerBehandlingId, dispatch).then(() => {
+				hentSoknad(brukerBehandlingId)(dispatch).then(() => {
 					const fakta = getState().fakta.data;
 					setBostedFaktum(finnFaktum("personalia.kommune", fakta), kommuneId, dispatch);
 					if (bydelId !== "") {
@@ -56,7 +56,7 @@ const setBostedFaktum = (faktum: Faktum, verdi: string, dispatch: any) => {
 export function hentSoknad(brukerBehandlingsId: string) {
 	return (dispatch: SoknadDispatch<SoknadActionTypes | FaktaActionTypes>) => {
 		dispatch({type: SoknadActionTypeKeys.HENT_SOKNAD});
-		fetchToJson("soknader/" + brukerBehandlingsId)
+		return fetchToJson("soknader/" + brukerBehandlingsId)
 			.then((soknadsdata: Soknad) => {
 				const fakta = soknadsdata.fakta;
 				dispatch({type: FaktaActionTypeKeys.SET_FAKTA, fakta});
