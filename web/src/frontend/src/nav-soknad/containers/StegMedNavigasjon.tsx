@@ -19,13 +19,7 @@ import {
 } from "../redux/valideringActions";
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { validerAlleFaktum } from "../validering/utils";
-import {
-	gaTilbake,
-	gaVidere,
-	avbryt,
-	finnBrukerBehandlingIdFraLocation,
-	finnStegFraLocation
-} from "../utils";
+import { gaTilbake, gaVidere, avbryt } from "../utils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -40,6 +34,11 @@ interface OwnProps {
 
 interface InjectedRouterProps {
 	location: Location;
+	match: {
+		params: {
+			brukerBehandlingId: string;
+		};
+	};
 }
 
 interface StateProps {
@@ -97,16 +96,14 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const { skjemaConfig, intl, children, location } = this.props;
-		const aktivtSteg = finnStegFraLocation(location);
-		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(location);
-
-		const aktivtStegInfo = skjemaConfig.steg.find(
-			s => s.stegnummer === aktivtSteg
+		const { skjemaConfig, intl, children } = this.props;
+		const aktivtSteg = skjemaConfig.steg.find(
+			s => s.key === this.props.stegKey
 		);
-		const erOppsummering = aktivtStegInfo.type === SkjemaStegType.oppsummering;
-
+		const brukerBehandlingId = this.props.match.params.brukerBehandlingId;
+		const erOppsummering = aktivtSteg.type === SkjemaStegType.oppsummering;
 		const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
+
 		return (
 			<div>
 				<DocumentTitle title={this.props.skjemaConfig.tittelId} />
@@ -127,7 +124,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						{!erOppsummering ? (
 							<div className="skjema__stegindikator">
 								<StegIndikator
-									aktivtSteg={aktivtSteg}
+									aktivtSteg={aktivtSteg.stegnummer}
 									steg={skjemaConfig.steg.map(steg => ({
 										tittel: stegTittel
 									}))}
@@ -138,9 +135,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						<Knapperad
 							gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
 							gaVidere={() =>
-								this.handleGaVidere(aktivtSteg, brukerBehandlingId)}
+								this.handleGaVidere(aktivtSteg.stegnummer, brukerBehandlingId)}
 							gaTilbake={() =>
-								this.handleGaTilbake(aktivtSteg, brukerBehandlingId)}
+								this.handleGaTilbake(aktivtSteg.stegnummer, brukerBehandlingId)}
 							avbryt={() => avbryt(skjemaConfig)}
 						/>
 					</form>
