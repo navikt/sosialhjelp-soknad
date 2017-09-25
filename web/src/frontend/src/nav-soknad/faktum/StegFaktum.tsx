@@ -7,7 +7,7 @@ import { getIntlTextOrKey } from "../utils";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import { SoknadAppState } from "../redux/faktaReducer";
 import { Valideringsfeil } from "../validering/types";
-import StegMedNavigasjon from "../../digisos/skjema/StegMedNavigasjon";
+import StegMedNavigasjon from "../containers/StegMedNavigasjon";
 import AppTittel from "../components/apptittel/AppTittel";
 import { animateScroll } from "react-scroll";
 

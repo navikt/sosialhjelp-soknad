@@ -1,6 +1,7 @@
 export * from "./animationUtils";
 export * from "./intlUtils";
 export * from "./faktumUtils";
+export * from "./navigasjonUtils";
 
 export function boolToString(flag: boolean) {
 	return flag ? "true" : "false";

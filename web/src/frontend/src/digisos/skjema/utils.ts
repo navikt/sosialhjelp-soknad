@@ -1,5 +1,4 @@
 import { Location } from "history";
-import { ANTALL_STEG } from "./konstanter";
 
 export function finnStegFraLocation(location: Location): number {
 	const stegInfo = location.pathname.split(/skjema\/[^\/]*\//);
@@ -15,42 +14,4 @@ export function finnBrukerBehandlingIdFraLocation(location: Location): string {
 		return matches[1];
 	}
 	return "";
-}
-interface RouterHistoryType {
-	push: (url: string) => void;
-}
-
-export function gaTilSteg(
-	steg: number,
-	brukerBehandlingId: string,
-	history: RouterHistoryType
-) {
-	history.push(`/skjema/${brukerBehandlingId}/${steg}`);
-}
-export function gaVidere(
-	aktivtSteg: number,
-	brukerBehandlingId: string,
-	history: RouterHistoryType
-) {
-	const steg = Math.min(ANTALL_STEG, aktivtSteg + 1);
-	gaTilSteg(steg, brukerBehandlingId, history);
-}
-
-export function gaTilStart(history: RouterHistoryType) {
-	history.push(`/informasjon`);
-}
-export function gaTilbake(
-	aktivtSteg: number,
-	brukerBehandlingId: string,
-	history: RouterHistoryType
-) {
-	if (aktivtSteg === 1) {
-		gaTilStart(history);
-	} else {
-		gaTilSteg(Math.max(1, aktivtSteg - 1), brukerBehandlingId, history);
-	}
-}
-
-export function avbryt() {
-	alert("TODO");
 }

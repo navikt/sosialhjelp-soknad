@@ -109,3 +109,7 @@ export interface SkjemaSteg {
 	cmskey: string;
 	type: SkjemaStegType;
 }
+
+export interface SkjemaConfig {
+	steg: SkjemaSteg[];
+}
