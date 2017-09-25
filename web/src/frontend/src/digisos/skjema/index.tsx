@@ -9,27 +9,26 @@ import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
 import Steg8 from "./ekstrainformasjon";
 import Oppsummering from "./oppsummering";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { Location } from "history";
 import { connect } from "react-redux";
 import { DispatchProps } from "../redux/types";
 import { REST_STATUS } from "../redux/soknad/soknadTypes";
 import { State } from "../redux/reducers";
-import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
 import { hentSoknad } from "../redux/soknad/soknadActions";
 import { finnBrukerBehandlingIdFraLocation } from "./utils";
 import { Faktum } from "../../nav-soknad/redux/faktaTypes";
 
 interface OwnProps {
 	fakta: Faktum[];
-	restStatus: string;
+	pending: boolean;
 	match: any;
 	location: Location;
 }
 
 class SkjemaRouter extends React.Component<
-	OwnProps & RouterProps & InjectedIntlProps & DispatchProps,
+	OwnProps & RouterProps & DispatchProps,
 	{}
 > {
 	componentDidMount() {
@@ -42,8 +41,8 @@ class SkjemaRouter extends React.Component<
 	}
 
 	render() {
-		const { match } = this.props;
-		if (this.props.restStatus !== REST_STATUS.OK) {
+		const { pending, match } = this.props;
+		if (pending) {
 			return (
 				<div className="application-spinner">
 					<NavFrontendSpinner storrelse="xxl" />
@@ -71,6 +70,7 @@ class SkjemaRouter extends React.Component<
 export default connect((state: State, props: any) => {
 	return {
 		fakta: state.fakta.data,
+		pending: state.soknad.restStatus !== REST_STATUS.OK,
 		restStatus: state.soknad.restStatus
 	};
-})(injectIntl(withRouter(SkjemaRouter)));
+})(withRouter(SkjemaRouter));

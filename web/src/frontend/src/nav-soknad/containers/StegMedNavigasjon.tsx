@@ -3,7 +3,6 @@ import { RouterProps, withRouter } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Location } from "history";
 import { connect } from "react-redux";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import DocumentTitle from "react-document-title";
 import AppTittel from "../components/apptittel/AppTittel";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
@@ -98,62 +97,56 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const { skjemaConfig, pending, intl, location } = this.props;
+		const { skjemaConfig, intl, children, location } = this.props;
 		const aktivtSteg = finnStegFraLocation(location);
 		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(location);
-		if (pending) {
-			return (
-				<div className="application-spinner">
-					<NavFrontendSpinner storrelse="xxl" />
-				</div>
-			);
-		} else {
-			const aktivtStegInfo = skjemaConfig.steg.find(
-				s => s.stegnummer === aktivtSteg
-			);
-			const erOppsummering =
-				aktivtStegInfo.type === SkjemaStegType.oppsummering;
 
-			const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
-			return (
-				<DocumentTitle title={this.props.skjemaConfig.tittelId}>
-					<AppTittel />
-					<div className="skjema-steg skjema-content">
-						<div className="skjema-steg__feiloppsummering">
-							<Feiloppsummering
-								skjemanavn="digisos"
-								valideringsfeil={this.props.valideringsfeil}
-								stegValidertCounter={this.props.stegValidertCounter}
-								visFeilliste={this.props.visFeilmeldinger}
-							/>
-						</div>
-						<div className="skjema-steg__tittel">
-							<Innholdstittel>{stegTittel}</Innholdstittel>
-						</div>
-						<form id="soknadsskjema" onSubmit={stopEvent}>
-							{!erOppsummering ? (
-								<div className="skjema__stegindikator">
-									<StegIndikator
-										aktivtSteg={aktivtSteg}
-										steg={skjemaConfig.steg.map(steg => ({
-											tittel: stegTittel
-										}))}
-									/>
-								</div>
-							) : null}
-							<Knapperad
-								gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
-								gaVidere={() =>
-									this.handleGaVidere(aktivtSteg, brukerBehandlingId)}
-								gaTilbake={() =>
-									this.handleGaTilbake(aktivtSteg, brukerBehandlingId)}
-								avbryt={() => avbryt(skjemaConfig)}
-							/>
-						</form>
+		const aktivtStegInfo = skjemaConfig.steg.find(
+			s => s.stegnummer === aktivtSteg
+		);
+		const erOppsummering = aktivtStegInfo.type === SkjemaStegType.oppsummering;
+
+		const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
+		return (
+			<div>
+				<DocumentTitle title={this.props.skjemaConfig.tittelId} />
+				<AppTittel />
+				<div className="skjema-steg skjema-content">
+					<div className="skjema-steg__feiloppsummering">
+						<Feiloppsummering
+							skjemanavn="digisos"
+							valideringsfeil={this.props.valideringsfeil}
+							stegValidertCounter={this.props.stegValidertCounter}
+							visFeilliste={this.props.visFeilmeldinger}
+						/>
 					</div>
-				</DocumentTitle>
-			);
-		}
+					<div className="skjema-steg__tittel">
+						<Innholdstittel>{stegTittel}</Innholdstittel>
+					</div>
+					<form id="soknadsskjema" onSubmit={stopEvent}>
+						{!erOppsummering ? (
+							<div className="skjema__stegindikator">
+								<StegIndikator
+									aktivtSteg={aktivtSteg}
+									steg={skjemaConfig.steg.map(steg => ({
+										tittel: stegTittel
+									}))}
+								/>
+							</div>
+						) : null}
+						{children}
+						<Knapperad
+							gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
+							gaVidere={() =>
+								this.handleGaVidere(aktivtSteg, brukerBehandlingId)}
+							gaTilbake={() =>
+								this.handleGaTilbake(aktivtSteg, brukerBehandlingId)}
+							avbryt={() => avbryt(skjemaConfig)}
+						/>
+					</form>
+				</div>
+			</div>
+		);
 	}
 }
 

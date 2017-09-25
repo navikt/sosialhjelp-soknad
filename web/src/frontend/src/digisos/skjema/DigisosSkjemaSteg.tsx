@@ -75,7 +75,9 @@ class DigisosSkjemaSteg extends React.Component<Props, {}> {
 			<StegMedNavigasjon
 				skjemaConfig={digisosSkjemaConfig}
 				stegKey={this.props.steg}
-			/>
+			>
+				{this.props.children}
+			</StegMedNavigasjon>
 		);
 	}
 }
