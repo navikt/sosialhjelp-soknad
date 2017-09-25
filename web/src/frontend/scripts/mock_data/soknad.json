@@ -38,11 +38,14 @@
 	"innsendteVedlegg": [],
 	"fakta": [
 		{
-			"faktumId": 999,
-			"soknadId": 1,
+			"faktumId": 991,
+			"soknadId": 991,
 			"parrentFaktum": null,
 			"key": "progresjon",
-			"value": "0"
+			"value": "0",
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "SYSTEM"
 		},
 		{
 			"faktumId": 1,

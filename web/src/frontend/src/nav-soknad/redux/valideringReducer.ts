@@ -7,9 +7,13 @@ import { FaktumActionTypeKeys } from "./faktaTypes";
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 
 export interface ValideringState {
+	/** Alle valideringsfeil som finnes for registrerte regler */
 	feil: Valideringsfeil[];
+	/** Alle registrerte valideringsregler */
 	valideringsregler?: FaktumValideringsregler[];
+	/** Om feiloppsummering skal vises */
 	visValideringsfeil?: boolean;
+	/** Økes hver gang hele steget valideres - brukes til å fokusere på oppsummering */
 	stegValidertCounter?: number;
 }
 
