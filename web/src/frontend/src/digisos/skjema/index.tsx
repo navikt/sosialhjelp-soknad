@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, RouterProps, Switch, withRouter } from "react-router";
+import { Route, RouterProps, Switch, Redirect, withRouter } from "react-router";
 import Steg1 from "./personalia";
 import Steg2 from "./arbeidUtdanning";
 import Steg3 from "./familie";
@@ -19,12 +19,20 @@ import { State } from "../redux/reducers";
 import { hentSoknad } from "../redux/soknad/soknadActions";
 import { finnBrukerBehandlingIdFraLocation } from "./utils";
 import { Faktum } from "../../nav-soknad/redux/faktaTypes";
+import { getProgresjonFaktum } from "../../nav-soknad/redux/faktaUtils";
+import { matchPath } from "react-router";
 
 interface OwnProps {
 	fakta: Faktum[];
 	pending: boolean;
+	progresjon: number;
 	match: any;
 	location: Location;
+}
+
+interface UrlParams {
+	brukerbehandlingId: string;
+	steg: string;
 }
 
 class SkjemaRouter extends React.Component<
@@ -41,7 +49,7 @@ class SkjemaRouter extends React.Component<
 	}
 
 	render() {
-		const { pending } = this.props;
+		const { pending, progresjon, match } = this.props;
 		if (pending) {
 			return (
 				<div className="application-spinner">
@@ -49,6 +57,14 @@ class SkjemaRouter extends React.Component<
 				</div>
 			);
 		} else {
+			const localMatch = matchPath(this.props.location.pathname, {
+				path: "/skjema/:brukerbehandlingId/:steg"
+			});
+			const { steg } = localMatch.params as UrlParams;
+			const maksSteg = progresjon + 1;
+			if (parseInt(steg, 10) > maksSteg) {
+				return <Redirect to={`${match.url}/${maksSteg}`} />;
+			}
 			const path = "/skjema/:brukerBehandlingId";
 			return (
 				<Switch>
@@ -69,9 +85,16 @@ class SkjemaRouter extends React.Component<
 }
 
 export default connect((state: State, props: any) => {
+	const dataLoaded = state.fakta.restStatus === REST_STATUS.OK;
+	let progresjon = 0;
+	if (dataLoaded) {
+		const faktum = getProgresjonFaktum(state.fakta.data);
+		progresjon = parseInt(faktum.value as string, 10);
+	}
 	return {
 		fakta: state.fakta.data,
 		pending: state.soknad.restStatus !== REST_STATUS.OK,
-		restStatus: state.soknad.restStatus
+		restStatus: state.soknad.restStatus,
+		progresjon
 	};
 })(withRouter(SkjemaRouter));

@@ -34,3 +34,7 @@ export function finnFaktumMedId(
 export function finnFakta(faktumKey: string, fakta: Faktum[]): Faktum[] {
 	return fakta.filter(faktum => faktum.key === faktumKey);
 }
+
+export function getProgresjonFaktum(fakta: Faktum[]) {
+	return finnFaktum("progresjon", fakta);
+}

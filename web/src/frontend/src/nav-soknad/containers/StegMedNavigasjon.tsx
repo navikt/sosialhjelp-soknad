@@ -97,11 +97,11 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 	render() {
 		const { skjemaConfig, intl, children } = this.props;
-		const aktivtSteg = skjemaConfig.steg.find(
+		const stegConfig = skjemaConfig.steg.find(
 			s => s.key === this.props.stegKey
 		);
 		const brukerBehandlingId = this.props.match.params.brukerBehandlingId;
-		const erOppsummering = aktivtSteg.type === SkjemaStegType.oppsummering;
+		const erOppsummering = stegConfig.type === SkjemaStegType.oppsummering;
 		const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
 
 		return (
@@ -124,7 +124,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						{!erOppsummering ? (
 							<div className="skjema__stegindikator">
 								<StegIndikator
-									aktivtSteg={aktivtSteg.stegnummer}
+									aktivtSteg={stegConfig.stegnummer}
 									steg={skjemaConfig.steg.map(steg => ({
 										tittel: stegTittel
 									}))}
@@ -135,9 +135,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						<Knapperad
 							gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
 							gaVidere={() =>
-								this.handleGaVidere(aktivtSteg.stegnummer, brukerBehandlingId)}
+								this.handleGaVidere(stegConfig.stegnummer, brukerBehandlingId)}
 							gaTilbake={() =>
-								this.handleGaTilbake(aktivtSteg.stegnummer, brukerBehandlingId)}
+								this.handleGaTilbake(stegConfig.stegnummer, brukerBehandlingId)}
 							avbryt={() => avbryt(skjemaConfig)}
 						/>
 					</form>
