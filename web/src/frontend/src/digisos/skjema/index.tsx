@@ -30,11 +30,8 @@ import { hentSoknad } from "../redux/soknad/soknadActions";
 import { finnBrukerBehandlingIdFraLocation } from "./utils";
 
 interface OwnProps {
-	fakta: Faktum[];
-	progresjon: number;
 	match: any;
 	location: Location;
-	dataLoaded: boolean;
 }
 
 interface UrlParams {
@@ -42,8 +39,14 @@ interface UrlParams {
 	steg: string;
 }
 
+interface StateProps {
+	fakta: Faktum[];
+	progresjon: number;
+	restStatus: string;
+}
+
 class SkjemaRouter extends React.Component<
-	OwnProps & RouterProps & DispatchProps,
+	OwnProps & StateProps & RouterProps & DispatchProps,
 	{}
 > {
 	componentDidMount() {
@@ -55,13 +58,18 @@ class SkjemaRouter extends React.Component<
 		}
 	}
 	render() {
-		const { dataLoaded, match, progresjon } = this.props;
-		if (!dataLoaded) {
+		const { restStatus, match, progresjon } = this.props;
+		if (
+			restStatus === REST_STATUS.INITIALISERT ||
+			restStatus === REST_STATUS.PENDING
+		) {
 			return (
 				<div className="application-spinner">
 					<NavFrontendSpinner storrelse="xxl" />
 				</div>
 			);
+		} else if (restStatus === REST_STATUS.FEILET) {
+			return <p>Det oppstod en feil under lasting av data</p>;
 		} else {
 			const localMatch = matchPath(this.props.location.pathname, {
 				path: "/skjema/:brukerbehandlingId/:steg"
@@ -90,7 +98,7 @@ class SkjemaRouter extends React.Component<
 	}
 }
 
-export default connect((state: State, props: any) => {
+const mapStateToProps = (state: State): StateProps => {
 	const dataLoaded = state.soknad.restStatus === REST_STATUS.OK;
 	let progresjon = 0;
 	if (dataLoaded) {
@@ -99,7 +107,9 @@ export default connect((state: State, props: any) => {
 	}
 	return {
 		fakta: state.fakta.data,
-		dataLoaded,
-		progresjon
+		progresjon,
+		restStatus: state.soknad.restStatus
 	};
-})(withRouter(SkjemaRouter));
+};
+
+export default connect(mapStateToProps)(withRouter(SkjemaRouter));
