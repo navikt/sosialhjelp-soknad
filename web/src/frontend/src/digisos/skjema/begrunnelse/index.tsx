@@ -4,7 +4,8 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { State } from "../../redux/reducers";
 import { DispatchProps } from "../../redux/types";
 
-import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
+
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 
@@ -18,7 +19,7 @@ class Begrunnelse extends React.Component<
 > {
 	render() {
 		return (
-			<StegFaktum tittelId="begrunnelsebolk.tittel">
+			<DigisosSkjemaSteg steg={DigisosSteg.begrunnelsebolk}>
 				<SporsmalFaktum faktumKey="begrunnelse.hvorfor">
 					<TextareaFaktum
 						textareaClass="skjema-textarea--large"
@@ -38,7 +39,7 @@ class Begrunnelse extends React.Component<
 						maxLength={MAX_CHARS}
 					/>
 				</SporsmalFaktum>
-			</StegFaktum>
+			</DigisosSkjemaSteg>
 		);
 	}
 }

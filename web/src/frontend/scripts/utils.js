@@ -88,13 +88,23 @@ exports.delayAllResponses = function(millis) {
 
 exports.finnFaktaIndex = function(faktaId, fakta) {
 	for (var i = 0; i < fakta.length; i++) {
-        if (faktaId.toString() === (fakta[i].faktumId && fakta[i].faktumId.toString())) {
-            return i;
-        }
-    }
+		if (
+			faktaId.toString() === (fakta[i].faktumId && fakta[i].faktumId.toString())
+		) {
+			return i;
+		}
+	}
 };
-
 
 exports.hentFaktum = function(faktaId, fakta) {
 	return fakta[this.finnFaktaIndex(faktaId, fakta)];
+};
+
+exports.updateSoknadFakta = function(fakta) {
+	const lagretSoknad = this.lesMockDataFil("soknad.json");
+	const soknad = JSON.parse(JSON.stringify(lagretSoknad));
+	soknad.fakta = fakta;
+	const fileName = this.getFilePath("soknad.json");
+	const soknadString = JSON.stringify(soknad);
+	fs.writeFileSync(fileName, soknadString);
 };

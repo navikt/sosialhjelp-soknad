@@ -2,7 +2,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { State } from "../../redux/reducers";
-import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
+
 import Sivilstatus from "./Sivilstatus";
 import HarBarn from "./HarBarn";
 
@@ -10,10 +11,10 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
 		return (
-			<StegFaktum tittelId="familiebolk.tittel">
+			<DigisosSkjemaSteg steg={DigisosSteg.familiebolk}>
 				<Sivilstatus fakta={fakta} />
 				<HarBarn fakta={fakta} />
-			</StegFaktum>
+			</DigisosSkjemaSteg>
 		);
 	}
 }

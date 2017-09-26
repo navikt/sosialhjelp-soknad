@@ -12,7 +12,7 @@ import { DispatchProps } from "../../redux/types";
 
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import CheckboxFaktum, {
 	createCheckboxFaktumKey
 } from "../../../nav-soknad/faktum/CheckboxFaktum";
@@ -37,11 +37,12 @@ class UtgifterGjeld extends React.Component<
 		const andreBarneutgifter = `${barneUtgifter.faktum}.annet.true.beskrivelse`;
 
 		return (
-			<StegFaktum tittelId="utgifterbolk.tittel">
+			<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk}>
 				<SporsmalFaktum faktumKey={harBoutgifter.faktum} required={true}>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} value="true" />
 					<Underskjema
-						visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}>
+						visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}
+					>
 						<SporsmalFaktum faktumKey={boUtgifter.faktum}>
 							{/*TODO checkboxgruppefaktum*/}
 							<CheckboxFaktum
@@ -94,7 +95,8 @@ class UtgifterGjeld extends React.Component<
 				<SporsmalFaktum faktumKey={harUtgifterBarn.faktum} required={true}>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} value="true" />
 					<Underskjema
-						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}>
+						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}
+					>
 						{/*TODO checkboxgruppefaktum*/}
 
 						<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
@@ -141,7 +143,7 @@ class UtgifterGjeld extends React.Component<
 					</Underskjema>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} value="false" />
 				</SporsmalFaktum>
-			</StegFaktum>
+			</DigisosSkjemaSteg>
 		);
 	}
 }

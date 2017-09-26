@@ -21,6 +21,10 @@ export function finnFaktum(
 	return faktum[0];
 }
 
+export function getProgresjonFaktum(fakta: Faktum[]) {
+	return finnFaktum("progresjon", fakta);
+}
+
 export function finnFaktumMedId(
 	faktumKey: string,
 	fakta: Faktum[],

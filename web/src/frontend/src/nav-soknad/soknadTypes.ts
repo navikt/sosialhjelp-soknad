@@ -97,3 +97,27 @@ export interface PersonaliaProperties {
 	gjeldendeAdresseGyldigTil: null | string;
 	gjeldendeAdresseGyldigFra: null | string;
 }
+
+export enum SkjemaStegType {
+	"skjema" = "skjema",
+	"ekstrainfo" = "ekstrainfo",
+	"oppsummering" = "oppsummering"
+}
+
+export interface SkjemaSteg {
+	key: string;
+	stegnummer: number;
+	type: SkjemaStegType;
+}
+
+export interface SkjemaConfig {
+	steg: SkjemaSteg[];
+	tittelId: string;
+}
+
+export enum REST_STATUS {
+	OK = "OK",
+	FEILET = "FEILET",
+	PENDING = "PENDING",
+	INITIALISERT = "INITIALISERT"
+}
