@@ -97,3 +97,15 @@ export interface PersonaliaProperties {
 	gjeldendeAdresseGyldigTil: null | string;
 	gjeldendeAdresseGyldigFra: null | string;
 }
+
+export enum SkjemaStegType {
+	"skjema" = "skjema",
+	"ekstrainfo" = "ekstrainfo",
+	"oppsummering" = "oppsummering"
+}
+
+export interface SkjemaSteg {
+	stegnummer: number;
+	cmskey: string;
+	type: SkjemaStegType;
+}

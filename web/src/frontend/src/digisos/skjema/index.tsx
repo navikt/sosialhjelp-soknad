@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, RouterProps, Switch, withRouter } from "react-router";
+import { Redirect, Route, RouterProps, Switch, withRouter } from "react-router";
 import Steg1 from "./kontaktinfo";
 import Steg2 from "./arbeidUtdanning";
 import Steg3 from "./familie";
@@ -17,15 +17,18 @@ import { DispatchProps } from "../redux/types";
 import { REST_STATUS } from "../redux/soknad/soknadTypes";
 import { State } from "../redux/reducers";
 import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
+import { finnStegFraLocation } from "./utils";
+import { getProgresjonFaktum } from "../../nav-soknad/redux/faktaUtils";
 import { hentSoknad } from "../redux/soknad/soknadActions";
 import { finnBrukerBehandlingIdFraLocation } from "./utils";
 import { Faktum } from "../../nav-soknad/redux/faktaTypes";
 
 interface OwnProps {
-	fakta: Faktum[];
-	restStatus: string;
 	match: any;
 	location: Location;
+	dataLoaded: boolean;
+	fakta: Faktum[];
+	progresjon: number;
 }
 
 class SkjemaRouter extends React.Component<
@@ -40,16 +43,20 @@ class SkjemaRouter extends React.Component<
 			this.props.dispatch(hentSoknad(brukerBehandlingId));
 		}
 	}
-
 	render() {
-		const { match } = this.props;
-		if (this.props.restStatus !== REST_STATUS.OK) {
+		const { dataLoaded, match, progresjon, location } = this.props;
+		if (!dataLoaded) {
 			return (
 				<div className="application-spinner">
 					<NavFrontendSpinner storrelse="xxl" />
 				</div>
 			);
 		} else {
+			const aktivtSteg = finnStegFraLocation(location);
+			const maksSteg = progresjon + 1;
+			if (aktivtSteg > maksSteg) {
+				return <Redirect to={`${match.url}/${maksSteg}`} />;
+			}
 			return (
 				<Switch>
 					<Route path={`${match.url}/1`} component={Steg1} />
@@ -69,8 +76,15 @@ class SkjemaRouter extends React.Component<
 }
 
 export default connect((state: State, props: any) => {
+	const dataLoaded = state.soknad.restStatus === REST_STATUS.OK;
+	let progresjon = 0;
+	if (dataLoaded) {
+		const faktum = getProgresjonFaktum(state.fakta.data);
+		progresjon = parseInt(faktum.value as string, 10);
+	}
 	return {
 		fakta: state.fakta.data,
-		restStatus: state.soknad.restStatus
+		dataLoaded,
+		progresjon
 	};
 })(injectIntl(withRouter(SkjemaRouter)));
