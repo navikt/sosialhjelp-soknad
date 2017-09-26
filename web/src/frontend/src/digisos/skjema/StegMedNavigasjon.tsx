@@ -3,7 +3,6 @@ import { RouterProps, withRouter } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Location } from "history";
 import { connect } from "react-redux";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import StegIndikator from "../../nav-soknad/components/stegIndikator";
 import Knapperad from "../../nav-soknad/components/knapperad";
 import {
@@ -16,7 +15,6 @@ import {
 import { DispatchProps } from "../redux/types";
 import { REST_STATUS } from "../redux/soknad/soknadTypes";
 import { State } from "../redux/reducers";
-// import { lagreProgresjonOgGaVidere } from "../../nav-soknad/redux/faktaActions";
 import {
 	clearFaktaValideringsfeil,
 	setFaktaValideringsfeil
@@ -33,12 +31,12 @@ const stopEvent = (evt: React.FormEvent<any>) => {
 };
 
 interface OwnProps {
-	restStatus: string;
-	match: any;
-	location: Location;
+	dataLoaded: boolean;
 	fakta: Faktum[];
 	valideringer: FaktumValideringsregler[];
 	progresjon: number;
+	match: any;
+	location: Location;
 }
 type Props = OwnProps & RouterProps & InjectedIntlProps & DispatchProps;
 
@@ -89,57 +87,51 @@ class StegMedNavigasjon extends React.Component<
 	}
 
 	render() {
+		if (!this.props.dataLoaded) {
+			return null;
+		}
 		const aktivtSteg = finnStegFraLocation(this.props.location);
 		const erOppsummering = aktivtSteg === 9;
 		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(
 			this.props.location
 		);
 		const { intl, children } = this.props;
-		if (this.props.restStatus === REST_STATUS.PENDING) {
-			return (
-				<div className="application-spinner">
-					<NavFrontendSpinner storrelse="xxl" />
-				</div>
-			);
-		} else {
-			return (
-				<form id="soknadsskjema" onSubmit={stopEvent}>
-					{!erOppsummering ? (
-						<div className="skjema__stegindikator">
-							<StegIndikator
-								aktivtSteg={aktivtSteg}
-								steg={[
-									{
-										tittel: intl.formatMessage({ id: "personaliabolk.tittel" })
-									},
-									{ tittel: intl.formatMessage({ id: "arbeidbolk.tittel" }) },
-									{ tittel: intl.formatMessage({ id: "familiebolk.tittel" }) },
-									{
-										tittel: intl.formatMessage({ id: "begrunnelsebolk.tittel" })
-									},
-									{
-										tittel: intl.formatMessage({ id: "bosituasjonbolk.tittel" })
-									},
-									{ tittel: intl.formatMessage({ id: "inntektbolk.tittel" }) },
-									{ tittel: intl.formatMessage({ id: "utgifterbolk.tittel" }) },
-									{
-										tittel: intl.formatMessage({ id: "ekstrainfo.tittel" })
-									}
-								]}
-							/>
-						</div>
-					) : null}
-					{children}
-					<Knapperad
-						gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
-						gaVidere={() => this.handleGaVidere(aktivtSteg, brukerBehandlingId)}
-						gaTilbake={() =>
-							this.handleGaTilbake(aktivtSteg, brukerBehandlingId)}
-						avbryt={() => avbryt()}
-					/>
-				</form>
-			);
-		}
+		return (
+			<form id="soknadsskjema" onSubmit={stopEvent}>
+				{!erOppsummering ? (
+					<div className="skjema__stegindikator">
+						<StegIndikator
+							aktivtSteg={aktivtSteg}
+							steg={[
+								{
+									tittel: intl.formatMessage({ id: "personaliabolk.tittel" })
+								},
+								{ tittel: intl.formatMessage({ id: "arbeidbolk.tittel" }) },
+								{ tittel: intl.formatMessage({ id: "familiebolk.tittel" }) },
+								{
+									tittel: intl.formatMessage({ id: "begrunnelsebolk.tittel" })
+								},
+								{
+									tittel: intl.formatMessage({ id: "bosituasjonbolk.tittel" })
+								},
+								{ tittel: intl.formatMessage({ id: "inntektbolk.tittel" }) },
+								{ tittel: intl.formatMessage({ id: "utgifterbolk.tittel" }) },
+								{
+									tittel: intl.formatMessage({ id: "ekstrainfo.tittel" })
+								}
+							]}
+						/>
+					</div>
+				) : null}
+				{children}
+				<Knapperad
+					gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
+					gaVidere={() => this.handleGaVidere(aktivtSteg, brukerBehandlingId)}
+					gaTilbake={() => this.handleGaTilbake(aktivtSteg, brukerBehandlingId)}
+					avbryt={() => avbryt()}
+				/>
+			</form>
+		);
 	}
 }
 
@@ -153,8 +145,8 @@ export default connect((state: State, props: any) => {
 	return {
 		fakta: state.fakta.data,
 		valideringer: state.validering.valideringsregler,
-		restStatus: state.soknad.restStatus,
 		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
+		dataLoaded,
 		progresjon
 	};
 })(injectIntl(withRouter(StegMedNavigasjon)));
