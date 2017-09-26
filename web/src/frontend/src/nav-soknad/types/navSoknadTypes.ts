@@ -1,5 +1,7 @@
 import { Steg } from "./";
 
+export type FaktumValueType = string | null;
+
 export interface Faktum {
 	faktumId: number;
 	soknadId: number;
@@ -18,8 +20,6 @@ export interface FaktumEgenskap {
 	value: string;
 	systemEgenskap: number;
 }
-
-export type FaktumValueType = string | null;
 
 export interface Soknad {
 	soknadId: number;

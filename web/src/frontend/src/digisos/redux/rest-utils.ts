@@ -29,7 +29,7 @@ const serverRequest = (method: string, urlPath: string, body: string) => {
 		headers: {
 			"Content-Type": "application/json",
 			"X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
-			accept: "application/json, text/plain, */*"
+			"accept": "application/json, text/plain, */*"
 		},
 		method,
 		credentials: "same-origin",
