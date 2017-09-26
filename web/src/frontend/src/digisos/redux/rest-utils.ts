@@ -24,12 +24,12 @@ enum RequestMethod {
 	DELETE = "DELETE"
 }
 
-const serverRequest = (method: string, urlPath: string, body: string ) => {
+const serverRequest = (method: string, urlPath: string, body: string) => {
 	const OPTIONS: RequestInit = {
 		headers: {
 			"Content-Type": "application/json",
 			"X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
-			"accept": "application/json, text/plain, */*"
+			accept: "application/json, text/plain, */*"
 		},
 		method,
 		credentials: "same-origin",
@@ -82,7 +82,10 @@ function getCookie(name: string) {
 	const value = "; " + document.cookie;
 	const parts = value.split("; " + name + "=");
 	if (parts.length === 2) {
-		return parts.pop().split(";").shift();
+		return parts
+			.pop()
+			.split(";")
+			.shift();
 	} else {
 		return "null";
 	}

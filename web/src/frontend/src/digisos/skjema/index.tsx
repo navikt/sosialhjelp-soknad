@@ -1,5 +1,16 @@
 import * as React from "react";
-import { Route, RouterProps, Switch, Redirect, withRouter } from "react-router";
+import {
+	Route,
+	RouterProps,
+	Switch,
+	Redirect,
+	withRouter,
+	matchPath
+} from "react-router";
+import { Location } from "history";
+import { connect } from "react-redux";
+import NavFrontendSpinner from "nav-frontend-spinner";
+
 import Steg1 from "./personalia";
 import Steg2 from "./arbeidUtdanning";
 import Steg3 from "./familie";
@@ -9,18 +20,14 @@ import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
 import Steg8 from "./ekstrainformasjon";
 import Oppsummering from "./oppsummering";
+
 import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
-import NavFrontendSpinner from "nav-frontend-spinner";
-import { Location } from "history";
-import { connect } from "react-redux";
-import { DispatchProps } from "../redux/types";
-import { REST_STATUS } from "../redux/soknad/soknadTypes";
-import { State } from "../redux/reducers";
+import { Faktum, REST_STATUS } from "../../nav-soknad/types";
 import { getProgresjonFaktum } from "../../nav-soknad/redux/faktaUtils";
+import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
+import { State } from "../redux/reducers";
 import { hentSoknad } from "../redux/soknad/soknadActions";
 import { finnBrukerBehandlingIdFraLocation } from "./utils";
-import { Faktum } from "../../nav-soknad/redux/faktaTypes";
-import { matchPath } from "react-router";
 
 interface OwnProps {
 	fakta: Faktum[];

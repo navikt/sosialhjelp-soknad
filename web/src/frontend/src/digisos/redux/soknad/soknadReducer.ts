@@ -1,7 +1,7 @@
-import { REST_STATUS, SoknadActionTypeKeys } from "./soknadTypes";
+import { SoknadActionTypeKeys } from "./soknadTypes";
 import { SoknadActionTypes } from "./soknadActions";
-import { Soknad } from "../../../nav-soknad/soknadTypes";
-import { Reducer } from "../../../nav-soknad/redux/faktaTypes";
+import { REST_STATUS, Soknad } from "../../../nav-soknad/types";
+import { Reducer } from "../../../nav-soknad/redux/reduxTypes";
 
 export interface SoknadState {
 	restStatus: REST_STATUS;
@@ -35,7 +35,10 @@ const defaultState: SoknadState = {
 	}
 };
 
-const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultState, action) => {
+const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
+	state = defaultState,
+	action
+) => {
 	switch (action.type) {
 		case SoknadActionTypeKeys.RESET_SOKNAD:
 			return {

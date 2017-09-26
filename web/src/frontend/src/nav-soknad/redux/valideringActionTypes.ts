@@ -34,3 +34,10 @@ export interface SetFaktumValideringsfeilAction {
 	faktumKey: string;
 	valideringsfeil: Valideringsfeil;
 }
+
+export type ValideringActionTypes =
+	| SetFaktaValideringsfeilAction
+	| ClearFaktaValideringsfeilAction
+	| RegisterFaktumValideringAction
+	| UnregisterFaktumValideringAction
+	| SetFaktumValideringsfeilAction;

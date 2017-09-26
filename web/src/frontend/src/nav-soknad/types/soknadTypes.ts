@@ -1,4 +1,25 @@
-import { Faktum } from "./redux/faktaTypes";
+import { Steg } from "./";
+
+export interface Faktum {
+	faktumId: number;
+	soknadId: number;
+	parrentFaktum: null | number;
+	key: string;
+	value: FaktumValueType;
+	faktumEgenskaper?: FaktumEgenskap[];
+	properties: object;
+	type?: string;
+}
+
+export interface FaktumEgenskap {
+	faktumId: number;
+	soknadId: number;
+	key: string;
+	value: string;
+	systemEgenskap: number;
+}
+
+export type FaktumValueType = string | null;
 
 export interface Soknad {
 	soknadId: number;
@@ -22,11 +43,6 @@ export interface Soknad {
 	ikkeInnsendteVedlegg: Vedlegg[];
 	opplastedeVedlegg: Vedlegg[];
 	innsendteVedlegg: Vedlegg[];
-}
-
-export interface Steg {
-	url: string;
-	cmstekst: string;
 }
 
 export interface Vedlegg {
@@ -96,28 +112,4 @@ export interface PersonaliaProperties {
 	navn: string;
 	gjeldendeAdresseGyldigTil: null | string;
 	gjeldendeAdresseGyldigFra: null | string;
-}
-
-export enum SkjemaStegType {
-	"skjema" = "skjema",
-	"ekstrainfo" = "ekstrainfo",
-	"oppsummering" = "oppsummering"
-}
-
-export interface SkjemaSteg {
-	key: string;
-	stegnummer: number;
-	type: SkjemaStegType;
-}
-
-export interface SkjemaConfig {
-	steg: SkjemaSteg[];
-	tittelId: string;
-}
-
-export enum REST_STATUS {
-	OK = "OK",
-	FEILET = "FEILET",
-	PENDING = "PENDING",
-	INITIALISERT = "INITIALISERT"
 }

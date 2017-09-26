@@ -1,4 +1,4 @@
-import { SkjemaConfig, SkjemaStegType } from "../soknadTypes";
+import { SkjemaConfig, SkjemaStegType } from "../types";
 
 interface RouterHistoryType {
 	push: (url: string) => void;

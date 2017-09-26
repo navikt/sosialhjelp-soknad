@@ -8,7 +8,7 @@ import {
 } from "../../../nav-soknad/utils";
 
 import { State } from "../../redux/reducers";
-import { DispatchProps } from "../../redux/types";
+import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
@@ -41,8 +41,7 @@ class UtgifterGjeld extends React.Component<
 				<SporsmalFaktum faktumKey={harBoutgifter.faktum} required={true}>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} value="true" />
 					<Underskjema
-						visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}
-					>
+						visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}>
 						<SporsmalFaktum faktumKey={boUtgifter.faktum}>
 							{/*TODO checkboxgruppefaktum*/}
 							<CheckboxFaktum
@@ -95,8 +94,7 @@ class UtgifterGjeld extends React.Component<
 				<SporsmalFaktum faktumKey={harUtgifterBarn.faktum} required={true}>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} value="true" />
 					<Underskjema
-						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}
-					>
+						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}>
 						{/*TODO checkboxgruppefaktum*/}
 
 						<SporsmalFaktum faktumKey={barneUtgifter.faktum}>

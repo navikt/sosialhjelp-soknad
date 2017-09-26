@@ -8,9 +8,9 @@ import { FaktumComponentProps } from "../../nav-soknad/redux/faktaReducer";
 import Arrow from "../../nav-soknad/components/svg/Arrow";
 import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 import { State } from "../redux/reducers";
-import { DispatchProps } from "../../nav-soknad/redux/faktaTypes";
+import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
+import { REST_STATUS } from "../../nav-soknad/types";
 import { opprettSoknad, resetSoknad } from "../redux/soknad/soknadActions";
-import { REST_STATUS } from "../redux/soknad/soknadTypes";
 
 interface StateProps {
 	soknadRestStatus?: string;
@@ -76,8 +76,7 @@ class Bosted extends React.Component<
 								<div className="bosted__selectLabel bosted__tekst--extraPadding">
 									<FormattedMessage id="personalia.kommune.label" />
 								</div>
-							}
-						>
+							}>
 							{!this.state.kommuneId && (
 								<option value="" disabled={true}>
 									Velg by
@@ -105,8 +104,7 @@ class Bosted extends React.Component<
 									<div className="bosted__selectLabel bosted__tekst--extraPadding">
 										<FormattedMessage id="personalia.bydel.label" />
 									</div>
-								}
-							>
+								}>
 								{!this.state.bydelId && (
 									<option value="" disabled={true}>
 										Velg bydel

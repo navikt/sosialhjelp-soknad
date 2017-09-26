@@ -1,16 +1,11 @@
-import { REST_STATUS } from "../../digisos/redux/soknad/soknadTypes";
+import { REST_STATUS } from "../types";
 import {
 	FaktumActionTypeKeys,
 	Reducer,
-	FaktaActionTypeKeys,
-	Faktum
-} from "./faktaTypes";
-import { ValideringState } from "./valideringReducer";
+	FaktaActionTypeKeys
+} from "./reduxTypes";
 
-export interface SoknadAppState {
-	fakta: FaktumState;
-	validering: ValideringState;
-}
+import { Faktum } from "../types";
 
 export interface FaktumState {
 	restStatus: string;
@@ -75,10 +70,14 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 				data: updateFaktumVerdi(state.data, action.faktum)
 			};
 		case FaktumActionTypeKeys.OPPRETT_FAKTUM: {
-			return {...state, restStatus: REST_STATUS.PENDING};
+			return { ...state, restStatus: REST_STATUS.PENDING };
 		}
 		case FaktumActionTypeKeys.OPPRETTET_FAKTUM: {
-			return {...state, restStatus: REST_STATUS.OK, data: [...state.data, action.faktum]};
+			return {
+				...state,
+				restStatus: REST_STATUS.OK,
+				data: [...state.data, action.faktum]
+			};
 		}
 		case FaktaActionTypeKeys.SET_FAKTA:
 			return {

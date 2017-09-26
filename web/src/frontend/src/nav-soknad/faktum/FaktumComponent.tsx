@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { DispatchProps, Faktum } from "../redux/faktaTypes";
-import { SoknadAppState } from "../redux/faktaReducer";
+import { SoknadAppState, DispatchProps } from "../redux/reduxTypes";
+import { Faktum } from "../types";
 import { setFaktumVerdi as setFaktumVerdiOnState } from "../redux/faktaActions";
 import { finnFaktum } from "../redux/faktaUtils";
 import { getFaktumVerdi, getPropertyVerdi } from "../utils";

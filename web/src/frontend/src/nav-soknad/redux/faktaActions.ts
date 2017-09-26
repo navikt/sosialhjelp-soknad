@@ -1,13 +1,12 @@
 import {
 	FaktaActionTypes,
-	Faktum,
 	FaktumActionTypeKeys,
-	FaktumValueType,
-	SoknadDispatch
-} from "./faktaTypes";
+	SoknadDispatch,
+	SoknadAppState
+} from "./reduxTypes";
+import { Faktum, FaktumValueType } from "../types";
 import { fetchPost, fetchPut } from "../../digisos/redux/rest-utils";
 import { FaktumActionTypes } from "./faktaReducer";
-import { State } from "../../digisos/redux/reducers";
 
 export function setFaktumVerdi(
 	faktum: Faktum,
@@ -45,7 +44,7 @@ interface OpprettFaktumType {
 export function opprettFaktum(faktum: OpprettFaktumType | Faktum) {
 	return (
 		dispatch: SoknadDispatch<FaktumActionTypes>,
-		getState: () => State
+		getState: () => SoknadAppState
 	) => {
 		dispatch({ type: FaktumActionTypeKeys.OPPRETT_FAKTUM });
 		return fetchPost(

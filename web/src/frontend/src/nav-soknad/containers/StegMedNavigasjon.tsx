@@ -9,13 +9,11 @@ import Feiloppsummering from "../components/validering/Feiloppsummering";
 import { Innholdstittel } from "nav-frontend-typografi";
 import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
-import { SkjemaConfig, SkjemaStegType } from "../soknadTypes";
-import { DispatchProps, Faktum } from "../redux/faktaTypes";
-import { SoknadAppState } from "../redux/faktaReducer";
+import { SkjemaConfig, SkjemaStegType, Faktum, REST_STATUS } from "../types";
+import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
 import { getIntlTextOrKey } from "../utils";
 import { getProgresjonFaktum } from "../../nav-soknad/redux/faktaUtils";
 import { setFaktumVerdi } from "../../nav-soknad/redux/faktaActions";
-import { REST_STATUS } from "../soknadTypes";
 import {
 	clearFaktaValideringsfeil,
 	setFaktaValideringsfeil
@@ -133,7 +131,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 				<div className="skjema-steg skjema-content">
 					<div className="skjema-steg__feiloppsummering">
 						<Feiloppsummering
-							skjemanavn="digisos"
+							skjemanavn={this.props.skjemaConfig.skjemanavn}
 							valideringsfeil={this.props.valideringsfeil}
 							stegValidertCounter={this.props.stegValidertCounter}
 							visFeilliste={this.props.visFeilmeldinger}

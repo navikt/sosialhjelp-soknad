@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
-import { DispatchProps } from "../../../nav-soknad/redux/faktaTypes";
+import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { Checkbox } from "nav-frontend-skjema";
 import { hentOppsummering } from "../../redux/oppsummering/oppsummeringActions";

@@ -1,6 +1,6 @@
 import * as React from "react";
 import StegMedNavigasjon from "../../nav-soknad/containers/StegMedNavigasjon";
-import { SkjemaConfig, SkjemaStegType } from "../../nav-soknad/soknadTypes";
+import { SkjemaConfig, SkjemaStegType } from "../../nav-soknad/types";
 
 export enum DigisosSteg {
 	personalia = "personalia",
@@ -16,6 +16,7 @@ export enum DigisosSteg {
 
 export const digisosSkjemaConfig: SkjemaConfig = {
 	tittelId: "applikasjon.sidetittel.kortnavn",
+	skjemanavn: "digisos",
 	steg: [
 		{
 			key: DigisosSteg.personalia,
@@ -74,8 +75,7 @@ class DigisosSkjemaSteg extends React.Component<Props, {}> {
 		return (
 			<StegMedNavigasjon
 				skjemaConfig={digisosSkjemaConfig}
-				stegKey={this.props.steg}
-			>
+				stegKey={this.props.steg}>
 				{this.props.children}
 			</StegMedNavigasjon>
 		);

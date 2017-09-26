@@ -1,13 +1,4 @@
-import { Soknad } from "../../../nav-soknad/soknadTypes";
-
-export * from "../types";
-
-export enum REST_STATUS {
-	OK = "OK",
-	FEILET = "FEILET",
-	PENDING = "PENDING",
-	INITIALISERT = "INITIALISERT"
-}
+import { Soknad } from "../../../nav-soknad/types/soknadTypes";
 
 export enum SoknadActionTypeKeys {
 	OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",

@@ -2,11 +2,11 @@ import { InjectedIntl } from "react-intl";
 import {
 	CheckboxFaktumTekst,
 	SporsmalFaktumTekst,
-	InputFaktumTekst
-} from "../faktumTextTypes";
+	InputFaktumTekst,
+	Faktum
+} from "../types";
 
 import { getIntlTextOrKey, getIntlInfoTekst, getIntlText } from "./intlUtils";
-import { Faktum } from "../redux/faktaTypes";
 import { finnFaktum } from "../redux/faktaUtils";
 
 export const radioCheckKeys = (key: string) => ({

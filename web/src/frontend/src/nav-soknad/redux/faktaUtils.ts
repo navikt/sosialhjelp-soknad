@@ -1,5 +1,5 @@
-import { Faktum } from "./faktaTypes";
-import { erDev } from "../../digisos/redux/rest-utils";
+import { Faktum } from "../types";
+import { erDev } from "../utils";
 
 export function finnFaktum(
 	faktumKey: string,
