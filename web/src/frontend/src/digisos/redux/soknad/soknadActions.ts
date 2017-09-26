@@ -8,7 +8,7 @@ import {
 	SoknadActionTypeKeys
 } from "./soknadTypes";
 
-import { fetchPost, fetchToJson } from "../rest-utils";
+import { fetchPost, fetchToJson } from "../../../nav-soknad/utils/rest-utils";
 import { setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";
 import { finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
 import { State } from "../reducers";

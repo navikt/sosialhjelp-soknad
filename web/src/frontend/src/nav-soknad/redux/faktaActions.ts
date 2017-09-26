@@ -5,7 +5,7 @@ import {
 	SoknadAppState
 } from "./reduxTypes";
 import { Faktum, FaktumValueType } from "../types";
-import { fetchPost, fetchPut } from "../../digisos/redux/rest-utils";
+import { fetchPost, fetchPut } from "../utils/rest-utils";
 import { FaktumActionTypes } from "./faktaReducer";
 
 export function setFaktumVerdi(
