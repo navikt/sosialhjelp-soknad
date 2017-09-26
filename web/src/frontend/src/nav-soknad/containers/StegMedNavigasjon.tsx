@@ -13,6 +13,9 @@ import { SkjemaConfig, SkjemaStegType } from "../soknadTypes";
 import { DispatchProps, Faktum } from "../redux/faktaTypes";
 import { SoknadAppState } from "../redux/faktaReducer";
 import { getIntlTextOrKey } from "../utils";
+import { getProgresjonFaktum } from "../../nav-soknad/redux/faktaUtils";
+import { setFaktumVerdi } from "../../nav-soknad/redux/faktaActions";
+import { REST_STATUS } from "../soknadTypes";
 import {
 	clearFaktaValideringsfeil,
 	setFaktaValideringsfeil
@@ -43,6 +46,7 @@ interface InjectedRouterProps {
 
 interface StateProps {
 	fakta: Faktum[];
+	progresjon: number;
 	valideringer: FaktumValideringsregler[];
 	visFeilmeldinger?: boolean;
 	valideringsfeil?: Valideringsfeil[];
@@ -74,12 +78,30 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		);
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
-			gaVidere(
-				aktivtSteg,
-				brukerBehandlingId,
-				this.props.history,
-				this.props.skjemaConfig
-			);
+			if (aktivtSteg === this.props.progresjon + 1) {
+				this.props
+					.dispatch(
+						setFaktumVerdi(
+							getProgresjonFaktum(this.props.fakta),
+							`${aktivtSteg + 1}`
+						)
+					)
+					.then(() => {
+						gaVidere(
+							aktivtSteg,
+							brukerBehandlingId,
+							this.props.history,
+							this.props.skjemaConfig
+						);
+					});
+			} else {
+				gaVidere(
+					aktivtSteg,
+					brukerBehandlingId,
+					this.props.history,
+					this.props.skjemaConfig
+				);
+			}
 		} else {
 			this.props.dispatch(setFaktaValideringsfeil(valideringsfeil));
 		}
@@ -147,13 +169,22 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	}
 }
 
-const mapStateToProps = (state: SoknadAppState): StateProps => ({
-	fakta: state.fakta.data,
-	valideringer: state.validering.valideringsregler,
-	visFeilmeldinger: state.validering.visValideringsfeil,
-	valideringsfeil: state.validering.feil,
-	stegValidertCounter: state.validering.stegValidertCounter
-});
+const mapStateToProps = (state: SoknadAppState): StateProps => {
+	const dataLoaded = state.fakta.restStatus === REST_STATUS.OK;
+	let progresjon = 0;
+	if (dataLoaded) {
+		const faktum = getProgresjonFaktum(state.fakta.data);
+		progresjon = parseInt(faktum.value as string, 10);
+	}
+	return {
+		fakta: state.fakta.data,
+		progresjon,
+		valideringer: state.validering.valideringsregler,
+		visFeilmeldinger: state.validering.visValideringsfeil,
+		valideringsfeil: state.validering.feil,
+		stegValidertCounter: state.validering.stegValidertCounter
+	};
+};
 
 export default connect<StateProps, {}, OwnProps>(mapStateToProps)(
 	injectIntl(withRouter(StegMedNavigasjon))
