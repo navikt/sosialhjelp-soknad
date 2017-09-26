@@ -23,10 +23,7 @@ export enum FaktumActionTypeKeys {
 }
 
 export enum FaktaActionTypeKeys {
-	PENDING = "fakta/PENDING",
-	OK = "fakta/OK",
 	SET_FAKTA = "SET_FAKTA",
-	SET_SERVER_FEIL = "fakta/SERVER_FEIL",
 	OTHER_ACTION = "__any_other_action_type__"
 }
 

@@ -19,20 +19,22 @@ export default class Barn extends React.Component<FaktumComponentProps & BarnTyp
 		const hvormye = radioCheckKeys(`${faktumKey}.grad`);
 		const faktumId = faktum.faktumId;
 		return (
-			<SporsmalFaktum faktumKey={faktumKey}>
-				<PersonFaktum faktumKey={faktumKey} brukProperties={true} faktumId={faktumId} />
-				<SporsmalFaktum faktumKey={borInfo.faktum}>
-					<FaktumRadio faktumKey={faktumKey} value="true" property="borsammen" faktumId={faktumId} />
-					<NivaTreSkjema
-					visible={faktumIsSelected(getPropertyVerdi(fakta, borInfo.faktum, "borsammen", faktumId ))}>
-					<SporsmalFaktum faktumKey={hvormye.faktum}>
-						<FaktumRadio faktumKey={faktumKey} value="heltid" property="grad" faktumId={faktumId}/>
-						<FaktumRadio faktumKey={faktumKey} value="deltid" property="grad" faktumId={faktumId}/>
+			<div className="blokk">
+				<SporsmalFaktum faktumKey={faktumKey}>
+					<PersonFaktum faktumKey={faktumKey} brukProperties={true} faktumId={faktumId}/>
+					<SporsmalFaktum faktumKey={borInfo.faktum}>
+						<FaktumRadio faktumKey={faktumKey} value="true" property="borsammen" faktumId={faktumId}/>
+						<NivaTreSkjema
+							visible={faktumIsSelected(getPropertyVerdi(fakta, borInfo.faktum, "borsammen", faktumId))}>
+							<SporsmalFaktum faktumKey={hvormye.faktum}>
+								<FaktumRadio faktumKey={faktumKey} value="heltid" property="grad" faktumId={faktumId}/>
+								<FaktumRadio faktumKey={faktumKey} value="deltid" property="grad" faktumId={faktumId}/>
+							</SporsmalFaktum>
+						</NivaTreSkjema>
+						<FaktumRadio faktumKey={faktumKey} value="false" property="borsammen" faktumId={faktumId}/>
 					</SporsmalFaktum>
-					</NivaTreSkjema>
-					<FaktumRadio faktumKey={faktumKey} value="false" property="borsammen" faktumId={faktumId} />
 				</SporsmalFaktum>
-			</SporsmalFaktum>
+			</div>
 		);
 	}
 }
