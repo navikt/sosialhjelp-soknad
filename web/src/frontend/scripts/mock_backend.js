@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
+const fs = require("fs");
 const utils = require("./utils.js");
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -10,6 +11,19 @@ app.use(utils.allowCrossDomain);
 
 var port = process.env.PORT || 3001;
 var router = express.Router();
+
+// Temp-lagring underveis
+function settOpprineligSoknadTilSoknad() {
+	const opprinneligSoknad = utils.lesMockDataFil("opprinneligSoknad.json");
+	var soknad = utils.lesMockDataFil("soknad.json");
+
+	soknad = JSON.parse(JSON.stringify(opprinneligSoknad));
+
+	const fileName = utils.getFilePath("soknad.json");
+	const soknadString = JSON.stringify(soknad);
+	fs.writeFileSync(fileName, soknadString);
+}
+settOpprineligSoknadTilSoknad();
 
 // Språkdata tjeneste /api/tekster
 router.get("/informasjon/tekster", function(req, res) {
@@ -58,12 +72,14 @@ router.get("/fakta/:faktumId", function(req, res) {
 router.put("/fakta/:faktumId", function(req, res) {
 	const faktum = req.body;
 	fakta[utils.finnFaktaIndex(faktum.faktumId, fakta)] = faktum;
+	utils.updateSoknadFakta(fakta);
 	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
 });
 
 router.post("/fakta/:faktumId", function(req, res) {
 	const faktum = req.body;
 	fakta.push(faktum);
+	utils.updateSoknadFakta(fakta);
 	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
 });
 
