@@ -1,9 +1,6 @@
 import { REST_STATUS, Faktum } from "../types";
-import {
-	FaktumActionTypeKeys,
-	Reducer,
-	FaktaActionTypeKeys
-} from "./reduxTypes";
+import { FaktumActionTypeKeys, FaktaActionTypeKeys } from "./faktaActionTypes";
+import { Reducer } from "./reduxTypes";
 
 export interface FaktumState {
 	restStatus: string;
