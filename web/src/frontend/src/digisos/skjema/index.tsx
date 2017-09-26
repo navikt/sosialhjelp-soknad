@@ -65,11 +65,6 @@ class SkjemaRouter extends React.Component<
 				return <Redirect to={`${match.url}/${maksSteg}`} />;
 			}
 			const path = "/skjema/:brukerBehandlingId";
-			// const aktivtSteg = finnStegFraLocation(location);
-			// const maksSteg = progresjon + 1;
-			// if (aktivtSteg > maksSteg) {
-			// 	return <Redirect to={`${match.url}/${maksSteg}`} />;
-			// }
 			return (
 				<Switch>
 					<Route path={`${path}/1`} component={Steg1} />
