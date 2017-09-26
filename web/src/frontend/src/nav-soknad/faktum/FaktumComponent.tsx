@@ -1,23 +1,23 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { InjectedIntl } from "react-intl";
+import { Feil } from "nav-frontend-skjema";
 import { SoknadAppState, DispatchProps } from "../redux/reduxTypes";
-import { Faktum } from "../types";
 import { setFaktumVerdi as setFaktumVerdiOnState } from "../redux/faktaActions";
 import { finnFaktum } from "../redux/faktaUtils";
-import { getFaktumVerdi, getPropertyVerdi } from "../utils";
-import { InjectedIntl } from "react-intl";
-import {
-	FaktumValideringFunc,
-	FaktumValideringsregler
-} from "../validering/types";
 import {
 	registerFaktumValidering,
 	unregisterFaktumValidering,
 	setFaktumValideringsfeil
 } from "../redux/valideringActions";
+import { Faktum } from "../types";
+import {
+	FaktumValideringFunc,
+	FaktumValideringsregler
+} from "../validering/types";
 import { validerFaktum } from "../validering/utils";
-import { Feil } from "nav-frontend-skjema";
 import { pakrevd } from "../validering/valideringer";
+import { getFaktumVerdi, getPropertyVerdi } from "../utils";
 
 export interface Props {
 	faktumKey: string;

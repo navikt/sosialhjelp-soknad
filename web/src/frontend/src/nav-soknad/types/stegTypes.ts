@@ -4,11 +4,6 @@ export enum SkjemaStegType {
 	"oppsummering" = "oppsummering"
 }
 
-export interface Steg {
-	url: string;
-	cmstekst: string;
-}
-
 export interface SkjemaSteg {
 	key: string;
 	stegnummer: number;

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import { Input, InputBredde } from "nav-frontend-skjema";
 import { getInputFaktumTekst } from "../utils";
 import {
@@ -6,7 +7,6 @@ import {
 	InjectedFaktumComponentProps,
 	Props as FaktumComponentProps
 } from "./FaktumComponent";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
 export type InputTypes = "text" | "number" | "email" | "tel";
 

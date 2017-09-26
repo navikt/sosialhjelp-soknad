@@ -1,6 +1,9 @@
-import { Steg } from "./";
-
 export type FaktumValueType = string | null;
+
+export interface Steg {
+	url: string;
+	cmstekst: string;
+}
 
 export interface Faktum {
 	faktumId: number;

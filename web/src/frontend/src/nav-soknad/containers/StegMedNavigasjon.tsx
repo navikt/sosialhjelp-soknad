@@ -4,23 +4,24 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Location } from "history";
 import { connect } from "react-redux";
 import DocumentTitle from "react-document-title";
+
+import { Innholdstittel } from "nav-frontend-typografi";
+
 import AppTittel from "../components/apptittel/AppTittel";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
-import { Innholdstittel } from "nav-frontend-typografi";
 import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
 import { SkjemaConfig, SkjemaStegType, Faktum, REST_STATUS } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
-import { getIntlTextOrKey } from "../utils";
-import { getProgresjonFaktum } from "../../nav-soknad/redux/faktaUtils";
-import { setFaktumVerdi } from "../../nav-soknad/redux/faktaActions";
+import { getProgresjonFaktum } from "../redux/faktaUtils";
+import { setFaktumVerdi } from "../redux/faktaActions";
 import {
 	clearFaktaValideringsfeil,
 	setFaktaValideringsfeil
 } from "../redux/valideringActions";
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { validerAlleFaktum } from "../validering/utils";
-import { gaTilbake, gaVidere, avbryt } from "../utils";
+import { gaTilbake, gaVidere, avbryt, getIntlTextOrKey } from "../utils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -137,9 +138,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 							visFeilliste={this.props.visFeilmeldinger}
 						/>
 					</div>
-					<div className="skjema-steg__tittel">
-						<Innholdstittel>{stegTittel}</Innholdstittel>
-					</div>
 					<form id="soknadsskjema" onSubmit={stopEvent}>
 						{!erOppsummering ? (
 							<div className="skjema__stegindikator">
@@ -151,6 +149,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 								/>
 							</div>
 						) : null}
+						<div className="skjema-steg__tittel">
+							<Innholdstittel>{stegTittel}</Innholdstittel>
+						</div>
 						{children}
 						<Knapperad
 							gaVidereLabel={erOppsummering ? "Send søknad" : undefined}

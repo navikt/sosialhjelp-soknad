@@ -1,4 +1,3 @@
-export type FaktumMap = Map<string, any>;
 import { Reducer } from "./reduxTypes";
 import {
 	ValideringActionTypes,
