@@ -1,9 +1,12 @@
 import * as React from "react";
-import Bosted from "./Bosted";
-import "./start.css";
-import { getIntlTextOrKey } from "../../nav-soknad/utils";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
+import { getIntlTextOrKey } from "../../nav-soknad/utils";
+
+import Bosted from "./Bosted";
+
+import "./start.css";
 
 const DocumentTitle = require("react-document-title");
 

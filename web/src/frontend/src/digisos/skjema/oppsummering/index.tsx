@@ -1,12 +1,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
+import { injectIntl, InjectedIntlProps } from "react-intl";
+import { Checkbox } from "nav-frontend-skjema";
+
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import { Checkbox } from "nav-frontend-skjema";
 import { hentOppsummering } from "../../redux/oppsummering/oppsummeringActions";
+
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+
 import "./oppsummering.css";
 
 interface StateProps {

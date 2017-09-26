@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import StegMedNavigasjon from "../../nav-soknad/containers/StegMedNavigasjon";
 import { SkjemaConfig, SkjemaStegType } from "../../nav-soknad/types";
 

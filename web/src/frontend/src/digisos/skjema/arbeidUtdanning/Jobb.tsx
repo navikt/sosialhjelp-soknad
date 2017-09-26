@@ -1,14 +1,14 @@
 import * as React from "react";
+
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
+import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import Underskjema from "../../../nav-soknad/components/underskjema";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import {
 	faktumIsSelected,
 	getFaktumVerdi,
 	radioCheckKeys
 } from "../../../nav-soknad/utils";
-
-import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import Underskjema from "../../../nav-soknad/components/underskjema";
 
 class Jobb extends React.Component<FaktumComponentProps, any> {
 	render() {

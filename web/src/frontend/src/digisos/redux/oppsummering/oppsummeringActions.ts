@@ -1,9 +1,9 @@
 import { Action, Dispatch } from "redux";
+import { fetchHtml } from "../../../nav-soknad/utils/rest-utils";
 import {
 	OppsummeringActionTypeKeys,
 	SetOppsummering
 } from "./oppsummeringTypes";
-import { fetchHtml } from "../../../nav-soknad/utils/rest-utils";
 import { State } from "../reducers";
 
 export type OppsummeringActionTypes = SetOppsummering;

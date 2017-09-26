@@ -1,6 +1,7 @@
-import { ActionTypeKeys, InformasjonActionTypes } from "./informasjonTypes";
 import { fetchToJson } from "../../../nav-soknad/utils/rest-utils";
 import { SoknadDispatch } from "../../../nav-soknad/redux/reduxTypes";
+
+import { ActionTypeKeys, InformasjonActionTypes } from "./informasjonTypes";
 
 const { OK, PENDING, FEILET } = ActionTypeKeys;
 

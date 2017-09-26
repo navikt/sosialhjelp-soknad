@@ -1,16 +1,16 @@
 import * as React from "react";
-import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
-
 import { connect } from "react-redux";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import { State } from "../../redux/reducers";
 
+import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import YtelserFraNAV from "./YtelserFraNAV";
 import SoknaderUnderBehandling from "./SoknaderUnderBehandling";
 import Bostotte from "./Bostotte";
 import Eiendeler from "./Eiendeler";
 import Bankinnskudd from "./Bankinnskudd";
 import Utbetaling from "./Utbetaling";
+import { State } from "../../redux/reducers";
 
 class InntektFormue extends React.Component<FaktumComponentProps, any> {
 	render() {

@@ -1,10 +1,12 @@
 import * as React from "react";
+
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import TelefonFaktum from "../../../nav-soknad/faktum/typedInput/TelefonFaktum";
 import KontonummerFaktum from "../../../nav-soknad/faktum/typedInput/KontonummerFaktum";
 import { radioCheckKeys } from "../../../nav-soknad/utils";
+
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
 class Kontaktinfo extends React.Component<{}, {}> {
 	render() {

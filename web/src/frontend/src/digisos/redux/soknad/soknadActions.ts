@@ -1,3 +1,14 @@
+import { fetchPost, fetchToJson } from "../../../nav-soknad/utils/rest-utils";
+import { setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";
+import { finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
+import {
+	FaktaActionTypeKeys,
+	FaktaActionTypes,
+	SoknadDispatch
+} from "../../../nav-soknad/redux/reduxTypes";
+import { Soknad, Faktum } from "../../../nav-soknad/types";
+
+import { State } from "../reducers";
 import {
 	HentetSoknadAction,
 	HentSoknadAction,
@@ -7,17 +18,6 @@ import {
 	SetServerFeilAction,
 	SoknadActionTypeKeys
 } from "./soknadTypes";
-
-import { fetchPost, fetchToJson } from "../../../nav-soknad/utils/rest-utils";
-import { setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";
-import { finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
-import { State } from "../reducers";
-import {
-	FaktaActionTypeKeys,
-	FaktaActionTypes,
-	SoknadDispatch
-} from "../../../nav-soknad/redux/reduxTypes";
-import { Soknad, Faktum } from "../../../nav-soknad/types";
 
 export type SoknadActionTypes =
 	| OpprettSoknadAction

@@ -1,7 +1,9 @@
 import * as React from "react";
-import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { connect } from "react-redux";
+
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
 import Jobb from "./Jobb";
 import Studie from "./Studie";

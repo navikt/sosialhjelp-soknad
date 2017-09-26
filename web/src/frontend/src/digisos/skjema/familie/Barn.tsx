@@ -1,4 +1,9 @@
 import * as React from "react";
+
+import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
+import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema/index";
+import PersonFaktum from "../../../nav-soknad/faktum/PersonFaktum";
 import { Faktum } from "../../../nav-soknad/types";
 import {
 	faktumIsSelected,
@@ -6,10 +11,6 @@ import {
 	radioCheckKeys
 } from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
-import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema/index";
-import PersonFaktum from "../../../nav-soknad/faktum/PersonFaktum";
 
 interface BarnTypes {
 	faktum: Faktum;

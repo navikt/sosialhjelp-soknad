@@ -1,16 +1,18 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter, RouterProps } from "react-router";
+import { InjectedIntlProps, FormattedMessage } from "react-intl";
 import Knapp from "nav-frontend-knapper";
 import { Select } from "nav-frontend-skjema";
-import { InjectedIntlProps, FormattedMessage } from "react-intl";
+
 import { FaktumComponentProps } from "../../nav-soknad/redux/faktaReducer";
 import Arrow from "../../nav-soknad/components/svg/Arrow";
-import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
-import { State } from "../redux/reducers";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { REST_STATUS } from "../../nav-soknad/types";
+
+import { State } from "../redux/reducers";
 import { opprettSoknad, resetSoknad } from "../redux/soknad/soknadActions";
+import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 
 interface StateProps {
 	soknadRestStatus?: string;

@@ -1,14 +1,16 @@
 import * as React from "react";
+import { connect } from "react-redux";
+import { injectIntl, InjectedIntlProps } from "react-intl";
+
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { SoknadAppState } from "../../../nav-soknad/redux/reduxTypes";
 import { finnFakta, finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
-import { connect } from "react-redux";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { Faktum } from "../../../nav-soknad/types";
 import { opprettFaktum } from "../../../nav-soknad/redux/faktaActions";
-import Barn from "./Barn";
 import LeggTilLenke from "../../../nav-soknad/components/leggTilLenke/leggtillenke";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+
+import Barn from "./Barn";
 
 interface OwnProps {
 	faktumKey: string;

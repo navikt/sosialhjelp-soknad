@@ -1,19 +1,20 @@
 import * as React from "react";
-import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { connect } from "react-redux";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import { State } from "../../redux/reducers";
+
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
+import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
+import Underskjema from "../../../nav-soknad/components/underskjema";
 import {
 	radioCheckKeys,
 	inputKeys,
 	faktumIsSelected,
 	getFaktumVerdi
 } from "../../../nav-soknad/utils";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 
-import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
-import Underskjema from "../../../nav-soknad/components/underskjema";
+import { State } from "../../redux/reducers";
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
 class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	render() {
@@ -33,8 +34,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="ingen" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="annet" />
 					<Underskjema
-						visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}
-					>
+						visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}>
 						<SporsmalFaktum faktumKey={annen.faktum}>
 							{/*TODO opprette checkboxgruppefaktumet*/}
 							<RadioFaktum faktumKey={annen.faktum} value="institusjon" />
@@ -51,8 +51,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					<Underskjema
 						visible={faktumIsSelected(
 							getFaktumVerdi(fakta, barnUnder18.faktum)
-						)}
-					>
+						)}>
 						<BelopFaktum
 							required={true}
 							faktumKey={barnUnder18True.faktum}
@@ -66,8 +65,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 				<SporsmalFaktum faktumKey={over18.faktum} required={true}>
 					<RadioFaktum faktumKey={over18.faktum} value="true" />
 					<Underskjema
-						visible={faktumIsSelected(getFaktumVerdi(fakta, over18.faktum))}
-					>
+						visible={faktumIsSelected(getFaktumVerdi(fakta, over18.faktum))}>
 						<BelopFaktum
 							required={true}
 							faktumKey={over18True.faktum}

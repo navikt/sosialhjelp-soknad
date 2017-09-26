@@ -1,25 +1,25 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
+import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
+import Underskjema from "../../../nav-soknad/components/underskjema";
+import CheckboxFaktum, {
+	createCheckboxFaktumKey
+} from "../../../nav-soknad/faktum/CheckboxFaktum";
 import {
 	faktumIsSelected,
 	getFaktumVerdi,
 	radioCheckKeys
 } from "../../../nav-soknad/utils";
-
-import { State } from "../../redux/reducers";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
-
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
-import CheckboxFaktum, {
-	createCheckboxFaktumKey
-} from "../../../nav-soknad/faktum/CheckboxFaktum";
-import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
-import Underskjema from "../../../nav-soknad/components/underskjema";
 import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
+
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
+import { State } from "../../redux/reducers";
 
 class UtgifterGjeld extends React.Component<
 	FaktumComponentProps & DispatchProps & InjectedIntlProps,

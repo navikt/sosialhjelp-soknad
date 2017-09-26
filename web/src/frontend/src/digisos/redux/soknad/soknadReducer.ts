@@ -1,12 +1,8 @@
+import { REST_STATUS } from "../../../nav-soknad/types";
+import { Reducer, SoknadState } from "../../../nav-soknad/redux/reduxTypes";
+
 import { SoknadActionTypeKeys } from "./soknadTypes";
 import { SoknadActionTypes } from "./soknadActions";
-import { REST_STATUS, Soknad } from "../../../nav-soknad/types";
-import { Reducer } from "../../../nav-soknad/redux/reduxTypes";
-
-export interface SoknadState {
-	restStatus: REST_STATUS;
-	data: Soknad;
-}
 
 const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
