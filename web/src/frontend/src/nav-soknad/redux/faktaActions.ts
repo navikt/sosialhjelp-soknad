@@ -19,7 +19,7 @@ export function setFaktumVerdi(
 	value: FaktumValueType,
 	property?: string
 ) {
-	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
+	return (dispatch: SoknadDispatch<FaktaActionTypes>): Promise<any> => {
 		let nyttFaktum = { ...faktum };
 		if (property) {
 			nyttFaktum = {
@@ -30,7 +30,7 @@ export function setFaktumVerdi(
 			nyttFaktum.value = value;
 		}
 		dispatch({ type: FaktumActionTypeKeys.OPPDATER_FAKTUM });
-		fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
+		return fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
 			.then(response => {
 				dispatch({
 					type: FaktumActionTypeKeys.OPPDATERT_FAKTUM,
