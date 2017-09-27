@@ -24,8 +24,7 @@ export type FaktumActionTypes =
 	| OpprettFaktum
 	| OpprettetFaktum
 	| SetFaktaAction
-	| SetFaktumFailedAction
-	| SetProgresjonPending;
+	| SetFaktumFailedAction;
 
 interface OppdaterFaktumVerdi {
 	type: FaktumActionTypeKeys.OPPDATER_FAKTUM;
@@ -56,11 +55,6 @@ interface SetFaktumFailedAction {
 	feilmelding: string;
 }
 
-interface SetProgresjonPending {
-	type: FaktumActionTypeKeys.PROGRESJON_LAGRES;
-	pending: boolean;
-}
-
 const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 	state = initialState,
 	action
@@ -70,7 +64,15 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 			return {
 				...state,
 				restStatus: REST_STATUS.OK,
-				data: updateFaktumVerdi(state.data, action.faktum)
+				data: updateFaktumVerdi(state.data, action.faktum),
+				progresjonPending: action.faktum.key === "progresjon"
+			};
+		case FaktumActionTypeKeys.OPPDATERT_FAKTUM:
+			return {
+				...state,
+				restStatus: REST_STATUS.OK,
+				data: updateFaktumVerdi(state.data, action.faktum),
+				progresjonPending: false
 			};
 		case FaktumActionTypeKeys.OPPRETT_FAKTUM: {
 			return { ...state, restStatus: REST_STATUS.PENDING };
@@ -87,11 +89,6 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 				...state,
 				data: action.fakta,
 				restStatus: REST_STATUS.OK
-			};
-		case FaktumActionTypeKeys.PROGRESJON_LAGRES:
-			return {
-				...state,
-				progresjonPending: action.pending
 			};
 		default:
 			return state;

@@ -14,7 +14,7 @@ import Knapperad from "../components/knapperad";
 import { SkjemaConfig, SkjemaStegType, Faktum, REST_STATUS } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
 import { getProgresjonFaktum } from "../redux/faktaUtils";
-import { setFaktumVerdi, setProgresjonPending } from "../redux/faktaActions";
+import { setFaktumVerdi } from "../redux/faktaActions";
 import {
 	clearFaktaValideringsfeil,
 	setFaktaValideringsfeil
@@ -79,7 +79,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
 			if (aktivtSteg === this.props.progresjon) {
-				this.props.dispatch(setProgresjonPending(true));
 				this.props
 					.dispatch(
 						setFaktumVerdi(
@@ -88,7 +87,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						)
 					)
 					.then(() => {
-						this.props.dispatch(setProgresjonPending(false));
 						gaVidere(
 							aktivtSteg,
 							brukerBehandlingId,
