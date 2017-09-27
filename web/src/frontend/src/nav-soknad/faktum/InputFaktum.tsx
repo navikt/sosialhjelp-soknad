@@ -42,7 +42,7 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
-		if (document.activeElement !== this.input) {
+		if (document.activeElement !== this.input && nextProps.feilkode === null) {
 			this.setState(getStateFromProps(nextProps));
 		}
 	}

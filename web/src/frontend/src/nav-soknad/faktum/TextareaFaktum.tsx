@@ -36,7 +36,10 @@ class TextareaFaktum extends React.Component<Props, State> {
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
-		if (document.activeElement !== this.textarea) {
+		if (
+			document.activeElement !== this.textarea &&
+			nextProps.feilkode === null
+		) {
 			this.setState(getStateFromProps(nextProps));
 		}
 	}
