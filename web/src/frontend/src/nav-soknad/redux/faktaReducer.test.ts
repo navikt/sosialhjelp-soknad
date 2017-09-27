@@ -14,7 +14,8 @@ describe("facts reducer", () => {
 				parrentFaktum: 1,
 				properties: {}
 			}
-		]
+		],
+		progresjonPending: false
 	};
 
 	const testFaktum = {

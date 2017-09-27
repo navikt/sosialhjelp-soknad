@@ -4,6 +4,7 @@ import { Reducer } from "./reduxTypes";
 
 export interface FaktumState {
 	restStatus: string;
+	progresjonPending: boolean;
 	data: Faktum[];
 }
 
@@ -13,6 +14,7 @@ export interface FaktumComponentProps {
 
 const initialState: FaktumState = {
 	restStatus: "",
+	progresjonPending: false,
 	data: []
 };
 
@@ -22,7 +24,8 @@ export type FaktumActionTypes =
 	| OpprettFaktum
 	| OpprettetFaktum
 	| SetFaktaAction
-	| SetFaktumFailedAction;
+	| SetFaktumFailedAction
+	| SetProgresjonPending;
 
 interface OppdaterFaktumVerdi {
 	type: FaktumActionTypeKeys.OPPDATER_FAKTUM;
@@ -53,6 +56,11 @@ interface SetFaktumFailedAction {
 	feilmelding: string;
 }
 
+interface SetProgresjonPending {
+	type: FaktumActionTypeKeys.PROGRESJON_LAGRES;
+	pending: boolean;
+}
+
 const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 	state = initialState,
 	action
@@ -79,6 +87,11 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 				...state,
 				data: action.fakta,
 				restStatus: REST_STATUS.OK
+			};
+		case FaktumActionTypeKeys.PROGRESJON_LAGRES:
+			return {
+				...state,
+				progresjonPending: action.pending
 			};
 		default:
 			return state;

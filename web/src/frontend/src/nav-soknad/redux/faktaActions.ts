@@ -65,3 +65,10 @@ export function opprettFaktum(faktum: OpprettFaktumType | Faktum) {
 			});
 	};
 }
+
+export function setProgresjonPending(pending: boolean) {
+	return {
+		type: FaktumActionTypeKeys.PROGRESJON_LAGRES,
+		pending
+	};
+}

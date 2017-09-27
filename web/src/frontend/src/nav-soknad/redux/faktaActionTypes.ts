@@ -10,7 +10,9 @@ export enum FaktumActionTypeKeys {
 	OPPRETTET_FAKTUM = "faktum/OPPRETTET_FAKTUM",
 	FEILET = "faktum/FEILET",
 	OTHER_ACTION = "__any_other_action_type__",
-	VALIDER_FAKTUM = "VALIDER_FAKTUM"
+	VALIDER_FAKTUM = "VALIDER_FAKTUM",
+	PROGRESJON_LAGRES = "PROGRESJON_LAGRES",
+	PROGRESJON_LAGRET = "PROGRESJON_LAGRET"
 }
 
 export enum FaktaActionTypeKeys {
