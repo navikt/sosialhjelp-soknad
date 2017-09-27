@@ -9,7 +9,6 @@ import {
 import {
 	radioCheckKeys,
 	inputKeys,
-	faktumIsSelected,
 	getFaktumVerdi
 } from "../../../nav-soknad/utils";
 
@@ -23,8 +22,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const { fakta } = this.props;
 		const bosituasjon = radioCheckKeys("bosituasjon");
 		const annen = radioCheckKeys("bosituasjon.annet.true.botype");
-		const over18 = radioCheckKeys("bosituasjon.personerover18");
-		const over18True = inputKeys("bosituasjon.personerover18.true.antall");
+		const antallPersonerBorSammen = inputKeys("bosituasjon.personerover18");
 		return (
 			<StegFaktum tittelId="bosituasjonbolk.tittel">
 				<SporsmalFaktum faktumId={bosituasjon.faktum}>
@@ -47,18 +45,12 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						</SkjemagruppeFaktum>
 					</Underskjema>
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumId={over18.faktum}>
-					<RadioFaktum faktumKey={over18.faktum} option="true" />
-					<Underskjema
-						visible={faktumIsSelected(getFaktumVerdi(fakta, over18.faktum))}
-					>
-						<InputFaktum
-							faktumKey={over18True.faktum}
-							maxLength={3}
-							bredde="xs"
-						/>
-					</Underskjema>
-					<RadioFaktum faktumKey={over18.faktum} option="false" />
+				<SporsmalFaktum faktumId={antallPersonerBorSammen.faktum}>
+					<InputFaktum
+						faktumKey={antallPersonerBorSammen.faktum}
+						maxLength={2}
+						bredde="xs"
+					/>
 				</SporsmalFaktum>{" "}
 			</StegFaktum>
 		);
