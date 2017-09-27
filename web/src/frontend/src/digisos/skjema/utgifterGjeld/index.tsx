@@ -84,7 +84,6 @@ class UtgifterGjeld extends React.Component<
 								faktumKey={barneUtgifter.faktum}
 								option="tannbehandling"
 							/>
-							<CheckboxFaktum faktumKey={barneUtgifter.faktum} option="helse" />
 							<CheckboxFaktum faktumKey={barneUtgifter.faktum} option="annet" />
 							{faktumIsSelected(getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`)) ? (
 								<TextareaFaktum faktumKey={andreBarneutgifter} />

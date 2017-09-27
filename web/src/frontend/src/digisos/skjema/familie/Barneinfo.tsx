@@ -6,6 +6,7 @@ import FaktumPersonskjema from "../../../nav-soknad/faktum/PersonFaktum";
 import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
 import FaktumSkjemagruppe from "../../../nav-soknad/faktum/SkjemagruppeFaktum";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
+import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 
 interface OwnProps {
 	faktumKey: string;
@@ -24,8 +25,11 @@ class Barn extends React.Component<OwnProps & FaktumComponentProps, {}> {
 					<FaktumRadio faktumKey={borInfo.faktum} option="true" />
 					<NivaTreSkjema visible={faktumIsSelected(getFaktumVerdi(fakta, borInfo.faktum))}>
 						<FaktumSkjemagruppe faktumId={hvormye.faktum}>
-							<FaktumRadio faktumKey={hvormye.faktum} option="heltid" />
-							<FaktumRadio faktumKey={hvormye.faktum} option="deltid" />
+							<InputFaktum
+							faktumKey={hvormye.faktum}
+							maxLength={2}
+							bredde="xs"
+							/>
 						</FaktumSkjemagruppe>
 					</NivaTreSkjema>
 					<FaktumRadio faktumKey={borInfo.faktum} option="false" />

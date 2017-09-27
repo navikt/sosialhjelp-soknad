@@ -52,19 +52,22 @@ class InputFaktum extends React.Component<Props, State> {
 		const { faktumKey, disabled, feil, intl, maxLength, bredde } = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey);
 		return (
-			<Input
-				className="input--xxl faktumInput"
-				name={faktumKey}
-				disabled={disabled}
-				value={this.state.value}
-				onChange={this.handleOnChange}
-				onBlur={this.handleOnBlur}
-				label={tekster.label}
-				placeholder={tekster.pattern}
-				feil={feil}
-				maxLength={maxLength}
-				bredde={bredde}
-			/>
+			<div>
+				<Input
+					className="input--xxl faktumInput"
+					name={faktumKey}
+					disabled={disabled}
+					value={this.state.value}
+					onChange={this.handleOnChange}
+					onBlur={this.handleOnBlur}
+					label={tekster.label}
+					placeholder={tekster.pattern}
+					feil={feil}
+					maxLength={maxLength}
+					bredde={bredde}
+				/>
+				<span className="hoyretekst">{tekster.hoyretekst}</span>
+			</div>
 		);
 	}
 }

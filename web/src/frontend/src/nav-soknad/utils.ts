@@ -93,7 +93,8 @@ export function getInputFaktumTekst(
 		sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
 		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`),
-		pattern: getIntlText(intl, `${key}.pattern`)
+		pattern: getIntlText(intl, `${key}.pattern`),
+		hoyretekst: getIntlText(intl, `${key}.hoyretekst`)
 	};
 }
 
