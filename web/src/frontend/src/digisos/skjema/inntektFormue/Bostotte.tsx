@@ -1,17 +1,17 @@
 import * as React from "react";
+
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
+import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import CheckboxFaktum, {
+	createCheckboxFaktumKey
+} from "../../../nav-soknad/faktum/CheckboxFaktum";
+import Underskjema from "../../../nav-soknad/components/underskjema";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import {
 	radioCheckKeys,
 	faktumIsSelected,
 	getFaktumVerdi
 } from "../../../nav-soknad/utils";
-
-import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import CheckboxFaktum, {
-	createCheckboxFaktumKey
-} from "../../../nav-soknad/faktum/CheckboxFaktum";
-import Underskjema from "../../../nav-soknad/components/underskjema";
 
 class Bostotte extends React.Component<FaktumComponentProps, {}> {
 	render() {

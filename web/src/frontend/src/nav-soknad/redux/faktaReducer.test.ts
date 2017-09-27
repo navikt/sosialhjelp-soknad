@@ -1,8 +1,7 @@
 import faktumReducer from "./faktaReducer";
-import { FaktumActionTypeKeys, FaktaActionTypeKeys } from "./faktaTypes";
+import { FaktumActionTypeKeys, FaktaActionTypeKeys } from "./reduxTypes";
 
 describe("facts reducer", () => {
-
 	const defaultState = {
 		restStatus: FaktaActionTypeKeys.OTHER_ACTION,
 		data: [
@@ -44,5 +43,4 @@ describe("facts reducer", () => {
 			}).data.length
 		).toEqual(2);
 	});
-
 });

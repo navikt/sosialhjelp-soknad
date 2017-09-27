@@ -1,7 +1,8 @@
 import * as React from "react";
+
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import { radioCheckKeys } from "../../../nav-soknad/utils";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import { radioCheckKeys } from "../../../nav-soknad/utils";
 
 class YtelserFraNAV extends React.Component<{}, {}> {
 	render() {

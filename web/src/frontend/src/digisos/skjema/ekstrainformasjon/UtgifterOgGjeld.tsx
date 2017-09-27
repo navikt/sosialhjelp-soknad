@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
+
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";

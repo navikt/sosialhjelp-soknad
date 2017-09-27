@@ -8,7 +8,7 @@ import {
 	ActionTypeKeys,
 	LedetekstState
 } from "./digisos/redux/informasjon/informasjonTypes";
-import { DispatchProps } from "./nav-soknad/redux/faktaTypes";
+import { DispatchProps } from "./nav-soknad/redux/reduxTypes";
 
 addLocaleData(nb);
 

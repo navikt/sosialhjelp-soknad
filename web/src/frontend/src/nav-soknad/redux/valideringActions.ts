@@ -1,19 +1,5 @@
-import {
-	ValideringActionTypeKeys,
-	SetFaktaValideringsfeilAction,
-	ClearFaktaValideringsfeilAction,
-	RegisterFaktumValideringAction,
-	UnregisterFaktumValideringAction,
-	SetFaktumValideringsfeilAction
-} from "./valideringTypes";
+import { ValideringActionTypeKeys } from "./valideringActionTypes";
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
-
-export type ValideringActionTypes =
-	| SetFaktaValideringsfeilAction
-	| ClearFaktaValideringsfeilAction
-	| RegisterFaktumValideringAction
-	| UnregisterFaktumValideringAction
-	| SetFaktumValideringsfeilAction;
 
 export function setFaktaValideringsfeil(valideringsfeil: Valideringsfeil[]) {
 	return {

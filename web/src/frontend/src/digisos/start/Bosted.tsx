@@ -1,16 +1,18 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter, RouterProps } from "react-router";
+import { InjectedIntlProps, FormattedMessage } from "react-intl";
 import Knapp from "nav-frontend-knapper";
 import { Select } from "nav-frontend-skjema";
-import { InjectedIntlProps, FormattedMessage } from "react-intl";
+
 import { FaktumComponentProps } from "../../nav-soknad/redux/faktaReducer";
 import Arrow from "../../nav-soknad/components/svg/Arrow";
-import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
+import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
+import { REST_STATUS } from "../../nav-soknad/types";
+
 import { State } from "../redux/reducers";
-import { DispatchProps } from "../../nav-soknad/redux/faktaTypes";
 import { opprettSoknad, resetSoknad } from "../redux/soknad/soknadActions";
-import { REST_STATUS } from "../redux/soknad/soknadTypes";
+import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 
 interface StateProps {
 	soknadRestStatus?: string;
@@ -76,8 +78,7 @@ class Bosted extends React.Component<
 								<div className="bosted__selectLabel bosted__tekst--extraPadding">
 									<FormattedMessage id="personalia.kommune.label" />
 								</div>
-							}
-						>
+							}>
 							{!this.state.kommuneId && (
 								<option value="" disabled={true}>
 									Velg by
@@ -105,8 +106,7 @@ class Bosted extends React.Component<
 									<div className="bosted__selectLabel bosted__tekst--extraPadding">
 										<FormattedMessage id="personalia.bydel.label" />
 									</div>
-								}
-							>
+								}>
 								{!this.state.bydelId && (
 									<option value="" disabled={true}>
 										Velg bydel

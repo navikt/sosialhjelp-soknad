@@ -1,15 +1,20 @@
-export type FaktumMap = Map<string, any>;
-import { Reducer } from "./faktaTypes";
-import { ValideringActionTypes } from "./valideringActions";
-import { ValideringActionTypeKeys } from "./valideringTypes";
+import { Reducer } from "./reduxTypes";
+import {
+	ValideringActionTypes,
+	ValideringActionTypeKeys
+} from "./valideringActionTypes";
+import { FaktumActionTypeKeys } from "./faktaActionTypes";
 import { FaktumActionTypes } from "./faktaReducer";
-import { FaktumActionTypeKeys } from "./faktaTypes";
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 
 export interface ValideringState {
+	/** Alle valideringsfeil som finnes for registrerte regler */
 	feil: Valideringsfeil[];
+	/** Alle registrerte valideringsregler */
 	valideringsregler?: FaktumValideringsregler[];
+	/** Om feiloppsummering skal vises */
 	visValideringsfeil?: boolean;
+	/** Økes hver gang hele steget valideres - brukes til å fokusere på oppsummering */
 	stegValidertCounter?: number;
 }
 

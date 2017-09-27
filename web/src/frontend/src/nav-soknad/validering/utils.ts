@@ -1,4 +1,4 @@
-import { Faktum } from "../redux/faktaTypes";
+import { Faktum } from "../types";
 import {
 	Valideringsfeil,
 	FaktumValideringsregler,

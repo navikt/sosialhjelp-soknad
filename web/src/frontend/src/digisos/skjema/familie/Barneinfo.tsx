@@ -1,16 +1,16 @@
 import * as React from "react";
-import {
-	FaktumComponentProps,
-	SoknadAppState
-} from "../../../nav-soknad/redux/faktaReducer";
-import { finnFakta, finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
 import { connect } from "react-redux";
-import { DispatchProps } from "../../../nav-soknad/redux/faktaTypes";
-import { Faktum } from "../../redux/types";
-import { opprettFaktum } from "../../../nav-soknad/redux/faktaActions";
-import Barn from "./Barn";
-import LeggTilLenke from "../../../nav-soknad/components/leggTilLenke/leggtillenke";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+
+import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+import { SoknadAppState } from "../../../nav-soknad/redux/reduxTypes";
+import { finnFakta, finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
+import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
+import { Faktum } from "../../../nav-soknad/types";
+import { opprettFaktum } from "../../../nav-soknad/redux/faktaActions";
+import LeggTilLenke from "../../../nav-soknad/components/leggTilLenke/leggtillenke";
+
+import Barn from "./Barn";
 
 interface OwnProps {
 	faktumKey: string;
@@ -49,7 +49,12 @@ class Barneinfo extends React.Component<
 				{alleBarn.map((barnFaktum: Faktum) => (
 					<Barn fakta={fakta} faktum={barnFaktum} key={barnFaktum.faktumId} />
 				))}
-				<LeggTilLenke leggTil={leggTilBarn} lenketekst={intl.formatMessage({id: "familie.barn.true.barn.leggtil"})}/>
+				<LeggTilLenke
+					leggTil={leggTilBarn}
+					lenketekst={intl.formatMessage({
+						id: "familie.barn.true.barn.leggtil"
+					})}
+				/>
 			</div>
 		);
 	}

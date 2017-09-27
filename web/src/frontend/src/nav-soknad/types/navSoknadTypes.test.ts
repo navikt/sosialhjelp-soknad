@@ -1,4 +1,4 @@
-import { Soknad } from "./soknadTypes";
+import { Soknad } from "./navSoknadTypes";
 
 const soknad: Soknad = {
 	soknadId: 1,

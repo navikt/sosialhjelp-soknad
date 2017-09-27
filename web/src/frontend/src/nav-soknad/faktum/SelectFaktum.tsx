@@ -1,8 +1,8 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+import { Select, SelectBredde } from "nav-frontend-skjema";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
 import { getInputFaktumTekst } from "../utils";
-import { Select, SelectBredde } from "nav-frontend-skjema";
 import {
 	InjectedFaktumComponentProps,
 	faktumComponent

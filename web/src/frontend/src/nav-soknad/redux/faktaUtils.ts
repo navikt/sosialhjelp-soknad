@@ -1,5 +1,5 @@
-import { Faktum } from "./faktaTypes";
-import { erDev } from "../../digisos/redux/rest-utils";
+import { Faktum } from "../types";
+import { erDev } from "../utils";
 
 export function finnFaktum(
 	faktumKey: string,
@@ -19,6 +19,10 @@ export function finnFaktum(
 		}
 	}
 	return faktum[0];
+}
+
+export function getProgresjonFaktum(fakta: Faktum[]) {
+	return finnFaktum("progresjon", fakta);
 }
 
 export function finnFaktumMedId(

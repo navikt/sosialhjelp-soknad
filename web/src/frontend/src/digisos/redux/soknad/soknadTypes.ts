@@ -1,6 +1,4 @@
-import { Soknad } from "../../../nav-soknad/soknadTypes";
-
-export * from "../types";
+import { Soknad } from "../../../nav-soknad/types/navSoknadTypes";
 
 export enum SoknadActionTypeKeys {
 	OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
@@ -12,13 +10,6 @@ export enum SoknadActionTypeKeys {
 	PENDING = "soknad/PENDING",
 	RESET_SOKNAD = "soknad/RESET_SOKNAD",
 	OTHER_ACTION = "__any_other_action_type__"
-}
-
-export enum REST_STATUS {
-	OK = "OK",
-	FEILET = "FEILET",
-	PENDING = "PENDING",
-	INITIALISERT = "INITIALISERT"
 }
 
 export interface OpprettetSoknadAction {

@@ -1,19 +1,20 @@
 import * as React from "react";
-import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { connect } from "react-redux";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import { State } from "../../redux/reducers";
+
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
+import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
+import Underskjema from "../../../nav-soknad/components/underskjema";
 import {
 	radioCheckKeys,
 	inputKeys,
 	faktumIsSelected,
 	getFaktumVerdi
 } from "../../../nav-soknad/utils";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 
-import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
-import Underskjema from "../../../nav-soknad/components/underskjema";
+import { State } from "../../redux/reducers";
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
 class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	render() {
@@ -25,7 +26,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const over18 = radioCheckKeys("bosituasjon.personover18");
 		const over18True = inputKeys("bosituasjon.personover18.true.antall");
 		return (
-			<StegFaktum tittelId="bosituasjonbolk.tittel">
+			<DigisosSkjemaSteg steg={DigisosSteg.bosituasjonbolk}>
 				<SporsmalFaktum faktumKey={bosituasjon.faktum} required={true}>
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="eier" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="leierprivat" />
@@ -75,7 +76,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					</Underskjema>
 					<RadioFaktum faktumKey={over18.faktum} value="false" />
 				</SporsmalFaktum>{" "}
-			</StegFaktum>
+			</DigisosSkjemaSteg>
 		);
 	}
 }
