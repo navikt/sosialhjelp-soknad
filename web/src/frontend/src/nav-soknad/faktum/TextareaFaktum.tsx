@@ -25,6 +25,8 @@ const getStateFromProps = (props: Props): State => ({
 });
 
 class TextareaFaktum extends React.Component<Props, State> {
+	textarea: any;
+
 	constructor(props: Props) {
 		super(props);
 		this.handleOnBlur = this.handleOnBlur.bind(this);
@@ -34,11 +36,15 @@ class TextareaFaktum extends React.Component<Props, State> {
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
-		this.state = getStateFromProps(nextProps);
+		if (document.activeElement !== this.textarea) {
+			this.setState(getStateFromProps(nextProps));
+		}
 	}
 
 	handleOnChange(evt: any) {
-		this.setState({ value: evt.target.value });
+		const value = evt.target.value;
+		this.setState({ value });
+		this.props.validerVerdiDersomNodvendig(value);
 	}
 
 	handleOnBlur() {
@@ -80,6 +86,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 		return (
 			<Textarea
 				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
+				textareaRef={(c: any) => (this.textarea = c)}
 				value={this.state.value}
 				name={this.props.getName()}
 				disabled={disabled}
