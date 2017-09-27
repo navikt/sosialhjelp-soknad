@@ -12,6 +12,7 @@ import {
 } from "../redux/valideringActions";
 import { Faktum } from "../types";
 import {
+	Valideringsfeil,
 	FaktumValideringFunc,
 	FaktumValideringsregler
 } from "../validering/types";
@@ -105,19 +106,19 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		setFaktumVerdi(verdi: string, property?: string) {
-			this.props.dispatch(
-				setFaktumVerdiOnState(
-					finnFaktum(
-						this.props.faktumKey,
-						this.props.fakta,
-						this.props.faktumId
-					),
-					verdi,
-					property
-				)
-			);
-			if (this.props.feilkode) {
-				this.validerFaktum(verdi);
+			const erGyldigVerdi = this.validerFaktumVerdi(verdi) === null;
+			if (erGyldigVerdi) {
+				this.props.dispatch(
+					setFaktumVerdiOnState(
+						finnFaktum(
+							this.props.faktumKey,
+							this.props.fakta,
+							this.props.faktumId
+						),
+						verdi,
+						property
+					)
+				);
 			}
 		}
 
@@ -143,13 +144,17 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			);
 		}
 
-		validerFaktum(verdi: string) {
-			const feil = validerFaktum(
+		validerFaktumVerdi(verdi: string): Valideringsfeil {
+			return validerFaktum(
 				this.props.fakta,
 				this.props.faktumKey,
 				verdi,
 				this.props.valideringsregler
 			);
+		}
+
+		validerFaktum(verdi: string): void {
+			const feil = this.validerFaktumVerdi(verdi);
 			this.props.dispatch(setFaktumValideringsfeil(this.props.faktumKey, feil));
 		}
 
