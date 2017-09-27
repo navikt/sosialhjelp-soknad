@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
-import InputFaktum from "./InputFaktum";
 import TallFaktum from "./typedInput/TallFaktum";
+import NavnFaktum from "./typedInput/NavnFaktum";
 
 interface OwnProps {
 	faktumKey: string;
@@ -25,7 +25,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 				<Container fluid={true} className="container--noPadding">
 					<Row>
 						<Column xs="12">
-							<InputFaktum
+							<NavnFaktum
 								faktumKey={navnFaktumKey}
 								required={validering.navnRequired}
 								faktumId={faktumId}

@@ -10,6 +10,8 @@ import {
 
 export type InputTypes = "text" | "number" | "email" | "tel";
 
+const DEFAULT_MAX_LENGTH = 50;
+
 interface State {
 	value: string;
 }
@@ -61,7 +63,7 @@ class InputFaktum extends React.Component<Props, State> {
 			required,
 			step,
 			intl,
-			maxLength,
+			maxLength = DEFAULT_MAX_LENGTH,
 			bredde,
 			property
 		} = this.props;
