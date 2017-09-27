@@ -6,8 +6,9 @@ const TelefonFaktum: React.StatelessComponent<Props> = (props: Props) => (
 	<InputFaktum
 		{...props}
 		type="tel"
-		validerFunc={[erTelefonnummer]}
 		maxLength={15}
+		bredde={props.bredde || "s"}
+		validerFunc={[erTelefonnummer]}
 	/>
 );
 
