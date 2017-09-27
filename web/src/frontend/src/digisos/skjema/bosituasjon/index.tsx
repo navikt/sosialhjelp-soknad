@@ -34,7 +34,8 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="ingen" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="annet" />
 					<Underskjema
-						visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}>
+						visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}
+					>
 						<SporsmalFaktum faktumKey={annen.faktum}>
 							{/*TODO opprette checkboxgruppefaktumet*/}
 							<RadioFaktum faktumKey={annen.faktum} value="institusjon" />
@@ -51,12 +52,13 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 					<Underskjema
 						visible={faktumIsSelected(
 							getFaktumVerdi(fakta, barnUnder18.faktum)
-						)}>
+						)}
+					>
 						<BelopFaktum
 							required={true}
 							faktumKey={barnUnder18True.faktum}
 							kunHeltall={true}
-							maxLength={3}
+							maxLength={2}
 							bredde="xs"
 						/>
 					</Underskjema>
@@ -65,11 +67,12 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 				<SporsmalFaktum faktumKey={over18.faktum} required={true}>
 					<RadioFaktum faktumKey={over18.faktum} value="true" />
 					<Underskjema
-						visible={faktumIsSelected(getFaktumVerdi(fakta, over18.faktum))}>
+						visible={faktumIsSelected(getFaktumVerdi(fakta, over18.faktum))}
+					>
 						<BelopFaktum
 							required={true}
 							faktumKey={over18True.faktum}
-							maxLength={3}
+							maxLength={2}
 							kunHeltall={true}
 							bredde="xs"
 						/>
