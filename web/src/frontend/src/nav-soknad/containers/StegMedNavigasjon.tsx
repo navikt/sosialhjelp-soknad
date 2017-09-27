@@ -78,7 +78,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		);
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
-			if (aktivtSteg === this.props.progresjon + 1) {
+			if (aktivtSteg === this.props.progresjon) {
 				this.props.dispatch(setProgresjonPending(true));
 				this.props
 					.dispatch(

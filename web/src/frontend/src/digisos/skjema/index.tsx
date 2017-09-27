@@ -75,7 +75,7 @@ class SkjemaRouter extends React.Component<
 				path: "/skjema/:brukerbehandlingId/:steg"
 			});
 			const { steg } = localMatch.params as UrlParams;
-			const maksSteg = progresjon + 1;
+			const maksSteg = progresjon;
 			if (parseInt(steg, 10) > maksSteg) {
 				return <Redirect to={`${match.url}/${maksSteg}`} />;
 			}
