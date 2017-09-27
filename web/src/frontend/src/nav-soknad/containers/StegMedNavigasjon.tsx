@@ -128,7 +128,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 		return (
 			<div>
-				<DocumentTitle title={this.props.skjemaConfig.tittelId} />
+				<DocumentTitle
+					title={intl.formatMessage({ id: this.props.skjemaConfig.tittelId })}
+				/>
 				<AppTittel />
 				<div className="skjema-steg skjema-content">
 					<div className="skjema-steg__feiloppsummering">
