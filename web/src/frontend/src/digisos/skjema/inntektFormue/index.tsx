@@ -6,7 +6,6 @@ import {
 	FaktumComponentProps
 } from "../../../nav-soknad/redux/reducer";
 
-import YtelserFraNAV from "./YtelserFraNAV";
 import SoknaderUnderBehandling from "./SoknaderUnderBehandling";
 import Bostotte from "./Bostotte";
 import Eiendeler from "./Eiendeler";
@@ -18,7 +17,6 @@ class InntektFormue extends React.Component<FaktumComponentProps, any> {
 		const { fakta } = this.props;
 		return (
 			<StegFaktum tittelId="inntektbolk.tittel">
-				<YtelserFraNAV />
 				<SoknaderUnderBehandling />
 				<Bostotte fakta={fakta} />
 				<Eiendeler fakta={fakta} />
