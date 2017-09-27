@@ -71,7 +71,6 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 			return {
 				...state,
 				restStatus: REST_STATUS.OK,
-				// data: updateFaktumVerdi(state.data, action.faktum),
 				progresjonPending: false
 			};
 		case FaktumActionTypeKeys.OPPRETT_FAKTUM: {
