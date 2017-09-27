@@ -83,3 +83,14 @@
 		}
 	}
 }
+
+/** 
+	Firefox required styling 
+	Fjerner default rød ramme på skjema-elementer som her påkrevd
+*/
+:not(output):-moz-ui-invalid {
+	box-shadow: none;
+}
+:not(output):-moz-ui-invalid:-moz-focusring:not:focus {
+	box-shadow: none;
+}
