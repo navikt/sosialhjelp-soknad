@@ -26,6 +26,7 @@ export type FaktumActionTypes =
 
 interface OppdaterFaktumVerdi {
 	type: FaktumActionTypeKeys.OPPDATER_FAKTUM;
+	faktum: Faktum;
 }
 
 interface OppdatertFaktumVerdi {
@@ -58,10 +59,9 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 ): FaktumState => {
 	switch (action.type) {
 		case FaktumActionTypeKeys.OPPDATER_FAKTUM:
-			return { ...state, restStatus: REST_STATUS.OK };
-		case FaktumActionTypeKeys.OPPDATERT_FAKTUM:
 			return {
 				...state,
+				restStatus: REST_STATUS.OK,
 				data: updateFaktumVerdi(state.data, action.faktum)
 			};
 		case FaktumActionTypeKeys.OPPRETT_FAKTUM: {

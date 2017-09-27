@@ -9,7 +9,6 @@ const TallFaktum: React.StatelessComponent<Props> = (props: Props) => {
 	return (
 		<InputFaktum
 			{...props}
-			type="number"
 			pattern={props.kunHeltall ? "\\d*" : null}
 		/>
 	);

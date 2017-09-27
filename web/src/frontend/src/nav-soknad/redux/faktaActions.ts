@@ -23,7 +23,10 @@ export function setFaktumVerdi(
 		} else {
 			nyttFaktum.value = value;
 		}
-		dispatch({ type: FaktumActionTypeKeys.OPPDATER_FAKTUM });
+		dispatch({
+			type: FaktumActionTypeKeys.OPPDATER_FAKTUM,
+			faktum: nyttFaktum
+		});
 		return fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
 			.then(response => {
 				dispatch({
