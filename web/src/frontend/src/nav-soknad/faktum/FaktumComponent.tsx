@@ -38,7 +38,10 @@ interface InjectedProps {
 	setFaktumVerdi: (verdi: string, property?: string, faktumId?: string) => void;
 	getFaktumVerdi: () => string;
 	getPropertyVerdi: () => string;
+	/** Validerer faktumverdi  */
 	validerFaktum: (verdi: string) => string;
+	/** Validerer faktumverdi dersom feil eller verdi er registrert */
+	validerVerdiDersomNodvendig: (verdi: string) => void;
 	getFeil: (intl: InjectedIntl) => Feil;
 }
 
@@ -75,6 +78,9 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.getFaktumVerdi = this.getFaktumVerdi.bind(this);
 			this.getPropertyVerdi = this.getPropertyVerdi.bind(this);
 			this.validerFaktum = this.validerFaktum.bind(this);
+			this.validerVerdiDersomNodvendig = this.validerVerdiDersomNodvendig.bind(
+				this
+			);
 			this.getName = this.getName.bind(this);
 			this.getFeil = this.getFeil.bind(this);
 		}
@@ -147,6 +153,16 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.props.dispatch(setFaktumValideringsfeil(this.props.faktumKey, feil));
 		}
 
+		validerVerdiDersomNodvendig(value: string) {
+			const soknadStateValue = this.getFaktumVerdi();
+			if (
+				(soknadStateValue && soknadStateValue !== "") ||
+				this.props.feilkode
+			) {
+				this.validerFaktum(value);
+			}
+		}
+
 		getFeil(intl: InjectedIntl) {
 			if (!this.props.feilkode) {
 				return null;
@@ -168,6 +184,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 					getFaktumVerdi={this.getFaktumVerdi}
 					getPropertyVerdi={this.getPropertyVerdi}
 					validerFaktum={this.validerFaktum}
+					validerVerdiDersomNodvendig={this.validerVerdiDersomNodvendig}
 					getFeil={this.getFeil}
 					getName={this.getName}
 				/>

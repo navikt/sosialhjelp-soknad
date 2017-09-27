@@ -42,11 +42,15 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
-		this.setState(getStateFromProps(nextProps));
+		if (document.activeElement !== this.input) {
+			this.setState(getStateFromProps(nextProps));
+		}
 	}
 
 	handleOnChange(evt: any) {
-		this.setState({ value: evt.target.value });
+		const value = evt.target.value;
+		this.setState({ value });
+		this.props.validerVerdiDersomNodvendig(value);
 	}
 
 	handleOnBlur() {
