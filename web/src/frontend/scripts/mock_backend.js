@@ -65,7 +65,6 @@ router.get("/soknader/:brukerBehandlingId/fakta", function(req, res) {
 });
 
 router.get("/fakta/:faktumId", function(req, res) {
-	console.log("get faktum");
 	res.json(utils.hentFaktum(req.params.faktumId));
 });
 
