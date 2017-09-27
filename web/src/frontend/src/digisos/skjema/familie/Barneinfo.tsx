@@ -27,7 +27,7 @@ class Barn extends React.Component<OwnProps & FaktumComponentProps, {}> {
 						<FaktumSkjemagruppe faktumId={hvormye.faktum}>
 							<InputFaktum
 							faktumKey={hvormye.faktum}
-							maxLength={2}
+							maxLength={3}
 							bredde="xs"
 							/>
 						</FaktumSkjemagruppe>

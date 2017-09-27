@@ -48,7 +48,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 				<SporsmalFaktum faktumId={antallPersonerBorSammen.faktum}>
 					<InputFaktum
 						faktumKey={antallPersonerBorSammen.faktum}
-						maxLength={3}
+						maxLength={2}
 						bredde="xs"
 					/>
 				</SporsmalFaktum>{" "}
