@@ -42,6 +42,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 					</SkjemagruppeFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={eiendeler.faktum} option="false" />
+				<RadioFaktum faktumKey={eiendeler.faktum} option="ikkeoppgi" />
 			</SporsmalFaktum>
 		);
 	}

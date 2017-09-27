@@ -12,6 +12,7 @@ class Bostotte extends React.Component<FaktumComponentProps, {}> {
 			<SporsmalFaktum faktumId={bostotte.faktum}>
 				<RadioFaktum faktumKey={bostotte.faktum} option="true" />
 				<RadioFaktum faktumKey={bostotte.faktum} option="false" />
+				<RadioFaktum faktumKey={bostotte.faktum} option="ikkeoppgi" />
 			</SporsmalFaktum>
 		);
 	}

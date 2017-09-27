@@ -43,6 +43,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 					</SkjemagruppeFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={innskudd.faktum} option="false" />
+				<RadioFaktum faktumKey={innskudd.faktum} option="ikkeoppgi" />
 			</SporsmalFaktum>
 		);
 	}

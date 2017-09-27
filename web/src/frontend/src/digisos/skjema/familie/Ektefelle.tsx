@@ -23,6 +23,7 @@ class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 							faktumKey={`${borsammen.faktum}.false.beskrivelse`}
 						/>
 					</NivaTreSkjema>
+					<RadioFaktum faktumKey={borsammen.faktum} option="ikkeoppgi" />
 				</SkjemagruppeFaktum>
 			</div>
 		);

@@ -45,6 +45,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 					</SkjemagruppeFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={utbetaling.faktum} option="false" />
+				<RadioFaktum faktumKey={utbetaling.faktum} option="ikkeoppgi" />
 			</SporsmalFaktum>
 		);
 	}

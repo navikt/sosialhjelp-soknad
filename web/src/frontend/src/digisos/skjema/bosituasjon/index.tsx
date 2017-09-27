@@ -42,8 +42,10 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 							<RadioFaktum faktumKey={annen.faktum} option="venner" />
 							<RadioFaktum faktumKey={annen.faktum} option="foreldre" />
 							<RadioFaktum faktumKey={annen.faktum} option="familie" />
+							<RadioFaktum faktumKey={annen.faktum} option="ikkeoppgi" />
 						</SkjemagruppeFaktum>
 					</Underskjema>
+					<RadioFaktum faktumKey={bosituasjon.faktum} option="ikkeoppgi" />
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumId={antallPersonerBorSammen.faktum}>
 					<InputFaktum

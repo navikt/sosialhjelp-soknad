@@ -20,6 +20,7 @@ class Kontaktinfo extends React.Component<{}, {}> {
 				<SporsmalFaktum faktumId={statsborger.faktum}>
 					<RadioFaktum faktumKey={statsborger.faktum} option="true" />
 					<RadioFaktum faktumKey={statsborger.faktum} option="false" />
+					<RadioFaktum faktumKey={statsborger.faktum} option="ikkeoppgi" />
 				</SporsmalFaktum>
 			</StegFaktum>
 		);

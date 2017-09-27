@@ -24,6 +24,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 				<RadioFaktum faktumKey={sivilstatus.faktum} option="samboer" />
 				<RadioFaktum faktumKey={sivilstatus.faktum} option="enke" />
 				<RadioFaktum faktumKey={sivilstatus.faktum} option="skilt" />
+				<RadioFaktum faktumKey={sivilstatus.faktum} option="ikkeoppgi" />
 			</SporsmalFaktum>
 		);
 	}

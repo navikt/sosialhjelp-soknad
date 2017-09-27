@@ -65,6 +65,7 @@ class UtgifterGjeld extends React.Component<
 						</SkjemagruppeFaktum>
 					</Underskjema>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} option="false" />
+					<RadioFaktum faktumKey={harBoutgifter.faktum} option="ikkeoppgi" />
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumId={harUtgifterBarn.faktum}>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="true" />
@@ -91,6 +92,7 @@ class UtgifterGjeld extends React.Component<
 						</SkjemagruppeFaktum>
 					</Underskjema>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="false" />
+					<RadioFaktum faktumKey={harUtgifterBarn.faktum} option="ikkeoppgi" />
 				</SporsmalFaktum>
 			</StegFaktum>
 		);

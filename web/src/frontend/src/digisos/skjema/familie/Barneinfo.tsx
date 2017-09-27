@@ -33,6 +33,7 @@ class Barn extends React.Component<OwnProps & FaktumComponentProps, {}> {
 						</FaktumSkjemagruppe>
 					</NivaTreSkjema>
 					<FaktumRadio faktumKey={borInfo.faktum} option="false" />
+					<FaktumRadio faktumKey={borInfo.faktum} option="ikkeoppgi" />
 				</FaktumSkjemagruppe>
 			</FaktumSkjemagruppe>
 		);

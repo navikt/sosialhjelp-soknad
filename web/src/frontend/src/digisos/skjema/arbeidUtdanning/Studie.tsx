@@ -19,9 +19,11 @@ class Studie extends React.Component<FaktumComponentProps, any> {
 					<SkjemagruppeFaktum faktumId={studerer.faktum}>
 						<RadioFaktum faktumKey={studerer.faktum} option="heltid" />
 						<RadioFaktum faktumKey={studerer.faktum} option="deltid" />
+						<RadioFaktum faktumKey={studerer.faktum} option="ikkeoppgi" />
 					</SkjemagruppeFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={studie.faktum} option="false" />
+				<RadioFaktum faktumKey={studie.faktum} option="ikkeoppgi" />
 			</SporsmalFaktum>
 		);
 	}

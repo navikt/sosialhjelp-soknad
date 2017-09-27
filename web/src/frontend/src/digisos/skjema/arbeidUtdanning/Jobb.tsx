@@ -19,9 +19,12 @@ class Jobb extends React.Component<FaktumComponentProps, any> {
 					<SkjemagruppeFaktum faktumId={jobber.faktum}>
 						<RadioFaktum faktumKey={jobber.faktum} option="heltid" />
 						<RadioFaktum faktumKey={jobber.faktum} option="deltid" />
+						<RadioFaktum faktumKey={jobber.faktum} option="ikkeoppgi" />
 					</SkjemagruppeFaktum>
 				</Underskjema>
 				<RadioFaktum faktumKey={jobb.faktum} option="false" />
+				<RadioFaktum faktumKey={jobb.faktum} option="ikkeoppgi" />
+
 			</SporsmalFaktum>
 		);
 	}
