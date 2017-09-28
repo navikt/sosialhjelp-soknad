@@ -1,9 +1,17 @@
-import { scroller } from "react-scroll";
+import { scroller, animateScroll } from "react-scroll";
+
+const defaultOptions = {
+	duration: 500,
+	easing: "easeOutQuad"
+};
 
 export function scrollToElement(id: string) {
 	scroller.scrollTo(id, {
-		duration: 500,
-		smooth: "easeOutQuad",
+		...defaultOptions,
 		offset: -30
 	});
+}
+
+export function scrollToTop() {
+	animateScroll.scrollToTop(defaultOptions);
 }

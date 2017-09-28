@@ -1,7 +1,6 @@
 import * as React from "react";
 import { RouterProps, withRouter } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { animateScroll } from "react-scroll";
 import { Location } from "history";
 import { connect } from "react-redux";
 import DocumentTitle from "react-document-title";
@@ -22,7 +21,13 @@ import {
 } from "../redux/valideringActions";
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { validerAlleFaktum } from "../validering/utils";
-import { gaTilbake, gaVidere, avbryt, getIntlTextOrKey } from "../utils";
+import {
+	gaTilbake,
+	gaVidere,
+	avbryt,
+	getIntlTextOrKey,
+	scrollToTop
+} from "../utils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -68,7 +73,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	}
 
 	componentDidMount() {
-		animateScroll.scrollToTop();
+		scrollToTop();
 	}
 
 	handleGaVidere(aktivtSteg: number, brukerBehandlingId: string) {
