@@ -125,6 +125,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		const brukerBehandlingId = this.props.match.params.brukerBehandlingId;
 		const erOppsummering = stegConfig.type === SkjemaStegType.oppsummering;
 		const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
+		const synligeSteg = skjemaConfig.steg.filter(
+			s => s.type === SkjemaStegType.skjema
+		);
 
 		return (
 			<div>
@@ -146,7 +149,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 							<div className="skjema__stegindikator">
 								<StegIndikator
 									aktivtSteg={stegConfig.stegnummer}
-									steg={skjemaConfig.steg.map(steg => ({
+									steg={synligeSteg.map(steg => ({
 										tittel: stegTittel
 									}))}
 								/>
