@@ -19,10 +19,20 @@ export interface OwnProps {
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 class SporsmalFaktum extends React.Component<Props, {}> {
+	mounted: boolean;
+
 	constructor(props: Props) {
 		super(props);
 		this.handleOnBlur = this.handleOnBlur.bind(this);
 		this.harValidering = this.harValidering.bind(this);
+	}
+
+	componentDidMount() {
+		this.mounted = true;
+	}
+
+	componentWillUnmount() {
+		this.mounted = false;
 	}
 
 	harValidering() {
@@ -35,7 +45,10 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	handleOnBlur(evt: any) {
 		if (this.harValidering()) {
 			setTimeout(() => {
-				if (!contains(findDOMNode(this), document.activeElement)) {
+				if (
+					this.mounted &&
+					!contains(findDOMNode(this), document.activeElement)
+				) {
 					this.props.validerFaktum(this.props.getFaktumVerdi());
 				}
 			}, 0);

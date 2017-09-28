@@ -21,7 +21,13 @@ import {
 } from "../redux/valideringActions";
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { validerAlleFaktum } from "../validering/utils";
-import { gaTilbake, gaVidere, avbryt, getIntlTextOrKey } from "../utils";
+import {
+	gaTilbake,
+	gaVidere,
+	avbryt,
+	getIntlTextOrKey,
+	scrollToTop
+} from "../utils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -64,6 +70,10 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	constructor(props: Props) {
 		super(props);
 		this.handleGaVidere = this.handleGaVidere.bind(this);
+	}
+
+	componentDidMount() {
+		scrollToTop();
 	}
 
 	handleGaVidere(aktivtSteg: number, brukerBehandlingId: string) {
@@ -125,6 +135,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		const brukerBehandlingId = this.props.match.params.brukerBehandlingId;
 		const erOppsummering = stegConfig.type === SkjemaStegType.oppsummering;
 		const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
+		const synligeSteg = skjemaConfig.steg.filter(
+			s => s.type === SkjemaStegType.skjema
+		);
 
 		return (
 			<div>
@@ -146,7 +159,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 							<div className="skjema__stegindikator">
 								<StegIndikator
 									aktivtSteg={stegConfig.stegnummer}
-									steg={skjemaConfig.steg.map(steg => ({
+									steg={synligeSteg.map(steg => ({
 										tittel: stegTittel
 									}))}
 								/>
