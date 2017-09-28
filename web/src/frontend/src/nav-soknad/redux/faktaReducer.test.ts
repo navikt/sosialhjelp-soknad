@@ -30,10 +30,10 @@ describe("facts reducer", () => {
 
 	it("should updates single fact", () => {
 		const newFaktumState = faktumReducer(defaultState, {
-			type: FaktumActionTypeKeys.OPPDATERT_FAKTUM,
+			type: FaktumActionTypeKeys.OPPDATER_FAKTUM,
 			faktum: testFaktum
 		});
-		expect(newFaktumState.data[0].value).toEqual(123);
+		expect(newFaktumState.data[0].value).toEqual("123");
 	});
 
 	it("should bulk update all facts", () => {

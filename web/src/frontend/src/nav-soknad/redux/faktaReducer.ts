@@ -33,7 +33,6 @@ interface OppdaterFaktumVerdi {
 
 interface OppdatertFaktumVerdi {
 	type: FaktumActionTypeKeys.OPPDATERT_FAKTUM;
-	faktum: Faktum;
 }
 
 interface OpprettFaktum {
@@ -63,7 +62,7 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 		case FaktumActionTypeKeys.OPPDATER_FAKTUM:
 			return {
 				...state,
-				restStatus: REST_STATUS.OK,
+				restStatus: REST_STATUS.PENDING,
 				data: updateFaktumVerdi(state.data, action.faktum),
 				progresjonPending: action.faktum.key === "progresjon"
 			};
