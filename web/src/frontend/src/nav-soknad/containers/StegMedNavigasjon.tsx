@@ -46,6 +46,7 @@ interface InjectedRouterProps {
 interface StateProps {
 	fakta: Faktum[];
 	progresjon: number;
+	progresjonPending?: boolean;
 	valideringer: FaktumValideringsregler[];
 	visFeilmeldinger?: boolean;
 	valideringsfeil?: Valideringsfeil[];
@@ -77,7 +78,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		);
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
-			if (aktivtSteg === this.props.progresjon + 1) {
+			if (aktivtSteg === this.props.progresjon) {
 				this.props
 					.dispatch(
 						setFaktumVerdi(
@@ -127,7 +128,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 		return (
 			<div>
-				<DocumentTitle title={this.props.skjemaConfig.tittelId} />
+				<DocumentTitle
+					title={intl.formatMessage({ id: this.props.skjemaConfig.tittelId })}
+				/>
 				<AppTittel />
 				<div className="skjema-steg skjema-content">
 					<div className="skjema-steg__feiloppsummering">
@@ -154,6 +157,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						</div>
 						{children}
 						<Knapperad
+							gaViderePending={this.props.progresjonPending}
 							gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
 							gaVidere={() =>
 								this.handleGaVidere(stegConfig.stegnummer, brukerBehandlingId)}
@@ -178,6 +182,7 @@ const mapStateToProps = (state: SoknadAppState): StateProps => {
 	return {
 		fakta: state.fakta.data,
 		progresjon,
+		progresjonPending: state.fakta.progresjonPending,
 		valideringer: state.validering.valideringsregler,
 		visFeilmeldinger: state.validering.visValideringsfeil,
 		valideringsfeil: state.validering.feil,

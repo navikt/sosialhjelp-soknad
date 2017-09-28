@@ -6,7 +6,7 @@ const utils = require("./utils.js");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// app.use(utils.delayAllResponses(2000));
+// app.use(utils.delayAllResponses(500));
 app.use(utils.allowCrossDomain);
 
 var port = process.env.PORT || 3001;
@@ -65,7 +65,6 @@ router.get("/soknader/:brukerBehandlingId/fakta", function(req, res) {
 });
 
 router.get("/fakta/:faktumId", function(req, res) {
-	console.log("get faktum");
 	res.json(utils.hentFaktum(req.params.faktumId));
 });
 

@@ -4,7 +4,7 @@ import StegMedNavigasjon from "../../nav-soknad/containers/StegMedNavigasjon";
 import { SkjemaConfig, SkjemaStegType } from "../../nav-soknad/types";
 
 export enum DigisosSteg {
-	personalia = "personalia",
+	personalia = "personaliabolk",
 	arbeidbolk = "arbeidbolk",
 	familiebolk = "familiebolk",
 	begrunnelsebolk = "begrunnelsebolk",
@@ -76,7 +76,8 @@ class DigisosSkjemaSteg extends React.Component<Props, {}> {
 		return (
 			<StegMedNavigasjon
 				skjemaConfig={digisosSkjemaConfig}
-				stegKey={this.props.steg}>
+				stegKey={this.props.steg}
+			>
 				{this.props.children}
 			</StegMedNavigasjon>
 		);
