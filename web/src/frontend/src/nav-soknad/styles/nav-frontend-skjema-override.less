@@ -1,0 +1,30 @@
+@import "./variables.less";
+
+/** Styling som overstyrer css fra nav-frontend-skjema */
+
+.skjemaelement {
+	.checkboks,
+	.radioknapp {
+		width: 30px;
+		height: 30px;
+		margin-top: -5px;
+		margin-left: -5px;
+	}
+}
+
+@media screen and (max-width: @screen-sm) {
+	.skjemaelement {
+		.checkboks,
+		.radioknapp {
+			+ .skjemaelement__label{
+				padding-left: 36px;
+				min-height: 26px;
+				&:before {
+					margin-top: -3px;
+					width: 24px;
+					height: 24px;
+				}
+			}
+		}
+	}
+}
