@@ -6,7 +6,6 @@ import Knapp from "nav-frontend-knapper";
 import { Select } from "nav-frontend-skjema";
 
 import { FaktumComponentProps } from "../../nav-soknad/redux/faktaReducer";
-import { resetFakta } from "../../nav-soknad/redux/faktaActions";
 import Arrow from "../../nav-soknad/components/svg/Arrow";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { REST_STATUS } from "../../nav-soknad/types";
@@ -41,7 +40,6 @@ class Bosted extends React.Component<
 
 	componentDidMount() {
 		this.props.dispatch(resetSoknad());
-		this.props.dispatch(resetFakta());
 	}
 
 	componentDidUpdate() {

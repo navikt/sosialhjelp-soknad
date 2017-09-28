@@ -1,5 +1,8 @@
 import { fetchPost, fetchToJson } from "../../../nav-soknad/utils/rest-utils";
-import { setFaktumVerdi } from "../../../nav-soknad/redux/faktaActions";
+import {
+	setFaktumVerdi,
+	resetFakta
+} from "../../../nav-soknad/redux/faktaActions";
 import { finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
 import {
 	FaktaActionTypeKeys,
@@ -93,7 +96,8 @@ export function hentSoknad(brukerBehandlingsId: string) {
 }
 
 export function resetSoknad() {
-	return (dispatch: SoknadDispatch<SoknadActionTypes>) => {
+	return (dispatch: SoknadDispatch<any>) => {
 		dispatch({ type: SoknadActionTypeKeys.RESET_SOKNAD });
+		dispatch(resetFakta());
 	};
 }
