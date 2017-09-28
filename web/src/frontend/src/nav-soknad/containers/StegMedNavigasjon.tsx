@@ -1,6 +1,7 @@
 import * as React from "react";
 import { RouterProps, withRouter } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+import { animateScroll } from "react-scroll";
 import { Location } from "history";
 import { connect } from "react-redux";
 import DocumentTitle from "react-document-title";
@@ -64,6 +65,10 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	constructor(props: Props) {
 		super(props);
 		this.handleGaVidere = this.handleGaVidere.bind(this);
+	}
+
+	componentDidMount() {
+		animateScroll.scrollToTop();
 	}
 
 	handleGaVidere(aktivtSteg: number, brukerBehandlingId: string) {
