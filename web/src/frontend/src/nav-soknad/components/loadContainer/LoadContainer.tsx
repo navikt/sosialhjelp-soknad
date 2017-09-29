@@ -21,14 +21,14 @@ const LoadContainer: React.StatelessComponent<Props> = ({
 				<NavFrontendSpinner storrelse="xxl" />
 			</div>
 		);
-	} else if (restStatus === REST_STATUS.FEILET || true) {
+	} else if (restStatus === REST_STATUS.FEILET) {
 		return (
 			<p>
 				<FormattedMessage id="applikasjon.ukjentFeilUnderHentData" />
 			</p>
 		);
 	}
-	// return <div>{children}</div>;
+	return <div>{children}</div>;
 };
 
 export default LoadContainer;
