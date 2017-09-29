@@ -34,7 +34,7 @@ const serverRequest = (method: string, urlPath: string, body: string) => {
 		},
 		method,
 		credentials: "same-origin",
-		body
+		body: body ? body : undefined
 	};
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
