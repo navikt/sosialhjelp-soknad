@@ -15,5 +15,6 @@ export enum FaktumActionTypeKeys {
 
 export enum FaktaActionTypeKeys {
 	SET_FAKTA = "SET_FAKTA",
-	OTHER_ACTION = "__any_other_action_type__"
+	OTHER_ACTION = "__any_other_action_type__",
+	RESET_FAKTA = "RESET_FAKTA"
 }

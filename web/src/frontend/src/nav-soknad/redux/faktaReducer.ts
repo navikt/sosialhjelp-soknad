@@ -24,7 +24,12 @@ export type FaktumActionTypes =
 	| OpprettFaktum
 	| OpprettetFaktum
 	| SetFaktaAction
-	| SetFaktumFailedAction;
+	| SetFaktumFailedAction
+	| ResetFaktaAction;
+
+interface ResetFaktaAction {
+	type: FaktaActionTypeKeys.RESET_FAKTA;
+}
 
 interface OppdaterFaktumVerdi {
 	type: FaktumActionTypeKeys.OPPDATER_FAKTUM;
@@ -82,6 +87,11 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 				data: [...state.data, action.faktum]
 			};
 		}
+		case FaktaActionTypeKeys.RESET_FAKTA:
+			return {
+				...state,
+				...initialState
+			};
 		case FaktaActionTypeKeys.SET_FAKTA:
 			return {
 				...state,

@@ -43,7 +43,10 @@ class Bosted extends React.Component<
 	}
 
 	componentDidUpdate() {
-		if (this.props.faktaRestStatus === REST_STATUS.OK) {
+		if (
+			this.props.faktaRestStatus === REST_STATUS.OK &&
+			this.props.soknadRestStatus === REST_STATUS.OK
+		) {
 			this.setState({
 				kommuneId: "",
 				bydelId: ""

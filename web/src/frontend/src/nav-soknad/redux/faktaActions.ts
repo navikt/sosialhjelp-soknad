@@ -1,5 +1,6 @@
 import {
 	FaktaActionTypes,
+	FaktaActionTypeKeys,
 	FaktumActionTypeKeys,
 	SoknadDispatch,
 	SoknadAppState
@@ -62,5 +63,11 @@ export function opprettFaktum(faktum: OpprettFaktumType | Faktum) {
 			.catch((reason: string) => {
 				dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
 			});
+	};
+}
+
+export function resetFakta() {
+	return {
+		type: FaktaActionTypeKeys.RESET_FAKTA
 	};
 }
