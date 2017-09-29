@@ -59,6 +59,12 @@ class SkjemaRouter extends React.Component<
 	}
 	render() {
 		const { restStatus, match, progresjon } = this.props;
+		const brukerBehandlingId = finnBrukerBehandlingIdFraLocation(
+			this.props.location
+		);
+		if (!brukerBehandlingId) {
+			return <Feilside />;
+		}
 		if (
 			restStatus === REST_STATUS.INITIALISERT ||
 			restStatus === REST_STATUS.PENDING
