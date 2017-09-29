@@ -12,7 +12,7 @@ import "./styles/app.css";
 class App extends React.Component<{}, {}> {
 	render() {
 		return (
-			<div className="app-digisos">
+			<div className="app-digisos container">
 				<Switch>
 					<Route path={`/informasjon`} exact={true} component={Start} />
 					<Route
