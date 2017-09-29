@@ -191,17 +191,7 @@
 			"faktumId": 15,
 			"soknadId": 1,
 			"parrentFaktum": null,
-			"key": "bosituasjon.barnunder18",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 16,
-			"soknadId": 1,
-			"parrentFaktum": null,
-			"key": "bosituasjon.personover18",
+			"key": "bosituasjon.antallpersoner",
 			"value": null,
 			"faktumEgenskaper": [],
 			"properties": {},
