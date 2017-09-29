@@ -5,7 +5,7 @@
 		"jasmine": true
 	},
 	"rules": {
-		"object-curly-spacing": "always",
+		"object-curly-spacing": 1,
 		"react/jsx-curly-spacing": { "when": "always" },
 		"react/tsx-curly-spacing": { "when": "always" },
 		"react/prefer-es6-class": 1,
@@ -23,6 +23,7 @@
 				"forbid": ["any"]
 			}
 		],
+		"quote-props": "off",
 		"func-names": 0,
 		"no-underscore-dangle": 0,
 		"linebreak-style": [2, "windows"],
