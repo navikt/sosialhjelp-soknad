@@ -1,15 +1,15 @@
 import * as React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
-import {faktumIsSelected, getFaktumVerdi, inputKeys, radioCheckKeys} from "../../../nav-soknad/utils";
-import {FaktumComponentProps} from "../../../nav-soknad/redux/faktaReducer";
+import { faktumIsSelected, getFaktumVerdi, inputKeys, radioCheckKeys } from "../../../nav-soknad/utils";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 
-import {State} from "../../redux/reducers";
-import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
+import { State } from "../../redux/reducers";
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
 class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	render() {
