@@ -3,17 +3,16 @@ export function erDev(): boolean {
 	return url.indexOf("localhost:3000") > 0;
 }
 
-export function kjorerJetty(): boolean {
+function kjorerJetty(): boolean {
 	const url = window.location.href;
 	return url.indexOf(":8189") > 0;
 }
 
 export function getApiBaseUrl(): string {
-	return "http://a34duvw03630.devillo.no:8181/sendsoknad/";
-	// if (erDev()) {
-	// 	return "http://localhost:3001/";
-	// }
-	// return kjorerJetty() ? "http://127.0.0.1:8181/sendsoknad/" : "/sendsoknad/";
+	if (erDev()) {
+		return "http://localhost:3001/";
+	}
+	return kjorerJetty() ? "http://127.0.0.1:8181/sendsoknad/" : "/sendsoknad/";
 }
 
 export const MED_CREDENTIALS: RequestInit = { credentials: "same-origin" };
@@ -30,7 +29,7 @@ const serverRequest = (method: string, urlPath: string, body: string) => {
 		headers: {
 			"Content-Type": "application/json",
 			"X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
-			accept: "application/json, text/plain, */*"
+			"accept": "application/json, text/plain, */*"
 		},
 		method,
 		credentials: "same-origin",
