@@ -43,7 +43,7 @@ router.post("/soknader", function(req, res) {
 
 router.get("/soknader/:brukerBehandlingId", function(req, res) {
 	console.log("get soknader");
-	if (req.headers["content-type"] === "text/html") {
+	if (req.headers["accept"] === "application/vnd.oppsummering+html") {
 		res.send(utils.lesMockHtmlFil("oppsummering.html"));
 	} else {
 		if (req.accepts("application/json")) {
