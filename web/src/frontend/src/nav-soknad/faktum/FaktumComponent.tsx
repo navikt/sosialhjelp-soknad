@@ -59,6 +59,10 @@ export function getFaktumElementName(faktumKey: string): string {
 	return faktumKey.replace(/\./g, "_");
 }
 
+function getEkstraName(faktumId: number, property: string): string {
+	return (faktumId ? faktumId.toString() : "") + (property ? property : "");
+}
+
 export const faktumComponent = () => <TOriginalProps extends {}>(
 	Component:
 		| React.ComponentClass<TOriginalProps & InjectedProps>
@@ -178,7 +182,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		getName() {
-			return getFaktumElementName(this.props.faktumKey);
+			return getFaktumElementName(this.props.faktumKey) + getEkstraName(this.props.faktumId, this.props.property);
 		}
 
 		render(): JSX.Element {
