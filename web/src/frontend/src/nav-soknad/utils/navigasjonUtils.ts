@@ -4,12 +4,16 @@ interface RouterHistoryType {
 	push: (url: string) => void;
 }
 
+export function getStegUrl(brukerBehandlingId: string, steg: number) {
+	return `/skjema/${brukerBehandlingId}/${steg}`;
+}
+
 export function gaTilSteg(
 	steg: number,
 	brukerBehandlingId: string,
 	history: RouterHistoryType
 ) {
-	history.push(`/skjema/${brukerBehandlingId}/${steg}`);
+	history.push(getStegUrl(brukerBehandlingId, steg));
 }
 
 export function gaVidere(

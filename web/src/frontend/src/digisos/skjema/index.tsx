@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-	Route,
-	RouterProps,
-	Switch,
-	Redirect,
-	withRouter,
-	matchPath
-} from "react-router";
+import { Route, RouterProps, Switch, withRouter } from "react-router";
 import { Location } from "history";
 import { connect } from "react-redux";
 import NavFrontendSpinner from "nav-frontend-spinner";
@@ -23,7 +16,6 @@ import Oppsummering from "./oppsummering";
 
 import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
 import { Faktum, REST_STATUS } from "../../nav-soknad/types";
-import { getProgresjonFaktum } from "../../nav-soknad/redux/faktaUtils";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { State } from "../redux/reducers";
 import { hentSoknad } from "../redux/soknad/soknadActions";
@@ -34,14 +26,8 @@ interface OwnProps {
 	location: Location;
 }
 
-interface UrlParams {
-	brukerbehandlingId: string;
-	steg: string;
-}
-
 interface StateProps {
 	fakta: Faktum[];
-	progresjon: number;
 	restStatus: string;
 }
 
@@ -58,7 +44,7 @@ class SkjemaRouter extends React.Component<
 		}
 	}
 	render() {
-		const { restStatus, match, progresjon } = this.props;
+		const { restStatus } = this.props;
 		if (
 			restStatus === REST_STATUS.INITIALISERT ||
 			restStatus === REST_STATUS.PENDING
@@ -71,14 +57,6 @@ class SkjemaRouter extends React.Component<
 		} else if (restStatus === REST_STATUS.FEILET) {
 			return <p>Det oppstod en feil under lasting av data</p>;
 		} else {
-			const localMatch = matchPath(this.props.location.pathname, {
-				path: "/skjema/:brukerbehandlingId/:steg"
-			});
-			const { steg } = localMatch.params as UrlParams;
-			const maksSteg = progresjon;
-			if (parseInt(steg, 10) > maksSteg) {
-				return <Redirect to={`${match.url}/${maksSteg}`} />;
-			}
 			const path = "/skjema/:brukerBehandlingId";
 			return (
 				<Switch>
@@ -99,15 +77,8 @@ class SkjemaRouter extends React.Component<
 }
 
 const mapStateToProps = (state: State): StateProps => {
-	const dataLoaded = state.soknad.restStatus === REST_STATUS.OK;
-	let progresjon = 0;
-	if (dataLoaded) {
-		const faktum = getProgresjonFaktum(state.fakta.data);
-		progresjon = parseInt((faktum.value || 1) as string, 10); // gå til første steg dersom progresjon ikke er lastet
-	}
 	return {
 		fakta: state.fakta.data,
-		progresjon,
 		restStatus: state.soknad.restStatus
 	};
 };

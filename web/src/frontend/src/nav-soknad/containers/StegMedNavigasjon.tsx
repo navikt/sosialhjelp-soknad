@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RouterProps, withRouter } from "react-router";
+import { RouterProps, withRouter, Redirect, matchPath } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Location } from "history";
 import { connect } from "react-redux";
@@ -11,7 +11,7 @@ import AppTittel from "../components/apptittel/AppTittel";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
-import { SkjemaConfig, SkjemaStegType, Faktum, REST_STATUS } from "../types";
+import { SkjemaConfig, SkjemaStegType, Faktum } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
 import { getProgresjonFaktum } from "../redux/faktaUtils";
 import { setFaktumVerdi } from "../redux/faktaActions";
@@ -26,7 +26,8 @@ import {
 	gaVidere,
 	avbryt,
 	getIntlTextOrKey,
-	scrollToTop
+	scrollToTop,
+	getStegUrl
 } from "../utils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
@@ -46,6 +47,7 @@ interface InjectedRouterProps {
 		params: {
 			brukerBehandlingId: string;
 		};
+		url: string;
 	};
 }
 
@@ -65,6 +67,11 @@ type Props = OwnProps &
 	InjectedRouterProps &
 	InjectedIntlProps &
 	DispatchProps;
+
+interface UrlParams {
+	brukerbehandlingId: string;
+	steg: string;
+}
 
 class StegMedNavigasjon extends React.Component<Props, {}> {
 	constructor(props: Props) {
@@ -128,7 +135,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const { skjemaConfig, intl, children } = this.props;
+		const { skjemaConfig, intl, children, progresjon } = this.props;
 		const stegConfig = skjemaConfig.steg.find(
 			s => s.key === this.props.stegKey
 		);
@@ -138,6 +145,15 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		const synligeSteg = skjemaConfig.steg.filter(
 			s => s.type === SkjemaStegType.skjema
 		);
+
+		const localMatch = matchPath(this.props.location.pathname, {
+			path: "/skjema/:brukerbehandlingId/:steg"
+		});
+		const { steg } = localMatch.params as UrlParams;
+		const maksSteg = progresjon;
+		if (parseInt(steg, 10) > maksSteg) {
+			return <Redirect to={getStegUrl(brukerBehandlingId, maksSteg)} />;
+		}
 
 		return (
 			<div>
@@ -159,8 +175,8 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 							<div className="skjema__stegindikator">
 								<StegIndikator
 									aktivtSteg={stegConfig.stegnummer}
-									steg={synligeSteg.map(steg => ({
-										tittel: stegTittel
+									steg={synligeSteg.map(s => ({
+										tittel: intl.formatMessage({ id: `${s.key}.tittel` })
 									}))}
 								/>
 							</div>
@@ -186,12 +202,8 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 }
 
 const mapStateToProps = (state: SoknadAppState): StateProps => {
-	const dataLoaded = state.fakta.restStatus === REST_STATUS.OK;
-	let progresjon = 0;
-	if (dataLoaded) {
-		const faktum = getProgresjonFaktum(state.fakta.data);
-		progresjon = parseInt((faktum.value || 1) as string, 10);
-	}
+	const faktum = getProgresjonFaktum(state.fakta.data);
+	const progresjon = parseInt((faktum.value || 1) as string, 10);
 	return {
 		fakta: state.fakta.data,
 		progresjon,
