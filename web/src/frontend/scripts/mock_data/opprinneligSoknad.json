@@ -528,26 +528,6 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 56,
-			"soknadId": 1,
-			"parrentFaktum": 15,
-			"key": "bosituasjon.barnunder18.true.antall",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 57,
-			"soknadId": 1,
-			"parrentFaktum": 16,
-			"key": "bosituasjon.personover18.true.antall",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
 			"faktumId": 61,
 			"soknadId": 1,
 			"parrentFaktum": 20,
