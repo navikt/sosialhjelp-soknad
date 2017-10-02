@@ -1,4 +1,5 @@
-@import "./variables";
+@import "./variables.less";
+@import "./nav-frontend-skjema-override.less";
 
 .skjema-content {
 	margin: 0 auto;
@@ -82,4 +83,15 @@
 			margin-bottom: 0;
 		}
 	}
+}
+
+/** 
+	Firefox required styling 
+	Fjerner default rød ramme på skjema-elementer som her påkrevd
+*/
+:not(output):-moz-ui-invalid {
+	box-shadow: none;
+}
+:not(output):-moz-ui-invalid:-moz-focusring:not:focus {
+	box-shadow: none;
 }

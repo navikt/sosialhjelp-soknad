@@ -1,5 +1,5 @@
 import { InjectedIntl } from "react-intl";
-import { Infotekst } from "../faktumTextTypes";
+import { Infotekst } from "../types/faktumTextTypes";
 
 export function intlHasKey(intl: InjectedIntl, key: string) {
 	return intl.messages[key] !== undefined;

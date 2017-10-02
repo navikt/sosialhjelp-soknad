@@ -1,13 +1,19 @@
 import * as React from "react";
-import Bosted from "./Bosted";
-import "./start.css";
-import { getIntlTextOrKey } from "../../nav-soknad/utils";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
+import { getIntlTextOrKey, scrollToTop } from "../../nav-soknad/utils";
+
+import Bosted from "./Bosted";
+
+import "./start.css";
 
 const DocumentTitle = require("react-document-title");
 
 class Start extends React.Component<InjectedIntlProps, {}> {
+	componentDidMount() {
+		scrollToTop();
+	}
 	render() {
 		const intl = this.props.intl;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");

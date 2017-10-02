@@ -1,12 +1,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
-import { DispatchProps } from "../../../nav-soknad/redux/faktaTypes";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import { Checkbox } from "nav-frontend-skjema";
-import { hentOppsummering } from "../../redux/oppsummering/oppsummeringActions";
-import { State } from "../../redux/reducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+import { Checkbox } from "nav-frontend-skjema";
+
+import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+import { hentOppsummering } from "../../redux/oppsummering/oppsummeringActions";
+
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
+import { State } from "../../redux/reducers";
+
 import "./oppsummering.css";
 
 interface StateProps {
@@ -40,7 +43,7 @@ class Oppsummering extends React.Component<Props, LocalState> {
 	}
 	render() {
 		return (
-			<StegFaktum tittelId="oppsummering.tittel">
+			<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
 				<div
 					className="skjema-oppsummering"
 					dangerouslySetInnerHTML={
@@ -57,7 +60,7 @@ class Oppsummering extends React.Component<Props, LocalState> {
 							this.setState({ bekreftet: (evt as any).target.checked })}
 					/>
 				</div>
-			</StegFaktum>
+			</DigisosSkjemaSteg>
 		);
 	}
 }

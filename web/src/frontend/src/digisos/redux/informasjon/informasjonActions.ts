@@ -1,10 +1,14 @@
+import { fetchToJson } from "../../../nav-soknad/utils/rest-utils";
+import { SoknadDispatch } from "../../../nav-soknad/redux/reduxTypes";
+
 import { ActionTypeKeys, InformasjonActionTypes } from "./informasjonTypes";
-import { fetchToJson } from "../rest-utils";
-import { SoknadDispatch } from "../../../nav-soknad/redux/faktaTypes";
 
 const { OK, PENDING, FEILET } = ActionTypeKeys;
 
-function leggNoklerPaaLedetekster(dispatch: SoknadDispatch<InformasjonActionTypes>, data: object) {
+function leggNoklerPaaLedetekster(
+	dispatch: SoknadDispatch<InformasjonActionTypes>,
+	data: object
+) {
 	const meldinger = {};
 	Object.keys(data).forEach(key => {
 		meldinger[key] = `${data[key]} [${key}]`;

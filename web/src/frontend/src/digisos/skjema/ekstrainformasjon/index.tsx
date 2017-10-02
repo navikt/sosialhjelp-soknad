@@ -1,15 +1,17 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import { State } from "../../redux/reducers";
-import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
-import Infoblokk from "../../../nav-soknad/components/infoblokk";
 import { FormattedHTMLMessage } from "react-intl";
-import "./ekstrainfo.css";
 
+import { State } from "../../redux/reducers";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+import Infoblokk from "../../../nav-soknad/components/infoblokk";
+
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import ArbeidOgUtdanning from "./ArbeidOgUtdanning";
 import Familiesituasjon from "./Familiesituasjon";
 import UtgifterOgGjeld from "./UtgifterOgGjeld";
+
+import "./ekstrainfo.css";
 
 class Ekstrainformasjon extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -23,11 +25,11 @@ class Ekstrainformasjon extends React.Component<FaktumComponentProps, {}> {
 						</Infoblokk>
 					</div>
 				</div>
-				<StegFaktum tittelId="ekstrainfo.tittel">
+				<DigisosSkjemaSteg steg={DigisosSteg.ekstrainfo}>
 					<ArbeidOgUtdanning fakta={fakta} />
 					<Familiesituasjon fakta={fakta} />
 					<UtgifterOgGjeld fakta={fakta} />
-				</StegFaktum>
+				</DigisosSkjemaSteg>
 			</div>
 		);
 	}

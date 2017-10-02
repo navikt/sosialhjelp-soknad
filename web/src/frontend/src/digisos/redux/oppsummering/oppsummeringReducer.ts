@@ -1,4 +1,4 @@
-import { Reducer } from "./oppsummeringTypes";
+import { Reducer } from "../../../nav-soknad/redux/reduxTypes";
 import { OppsummeringActionTypeKeys } from "./oppsummeringTypes";
 import { OppsummeringActionTypes } from "./oppsummeringActions";
 
@@ -10,10 +10,10 @@ const defaultState: OppsummeringState = {
 	oppsummering: undefined
 };
 
-const OppsummeringReducer: Reducer<OppsummeringState, OppsummeringActionTypes> = (
-	state = defaultState,
-	action
-): OppsummeringState => {
+const OppsummeringReducer: Reducer<
+	OppsummeringState,
+	OppsummeringActionTypes
+> = (state = defaultState, action): OppsummeringState => {
 	switch (action.type) {
 		case OppsummeringActionTypeKeys.SET_OPPSUMMERING:
 			return {

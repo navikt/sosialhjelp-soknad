@@ -1,5 +1,3 @@
-export * from "../types";
-
 export enum OppsummeringActionTypeKeys {
 	OK = "oppsummering/OK",
 	FEILET = "oppsummering/FEILET",

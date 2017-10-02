@@ -1,10 +1,11 @@
 import * as React from "react";
+
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
+import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
+import Underskjema from "../../../nav-soknad/components/underskjema";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 
-import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
-import Underskjema from "../../../nav-soknad/components/underskjema";
 import Barneinfo from "./Barneinfo";
 
 class HarBarn extends React.Component<FaktumComponentProps, {}> {
@@ -16,7 +17,12 @@ class HarBarn extends React.Component<FaktumComponentProps, {}> {
 			<SporsmalFaktum faktumKey={barn.faktum}>
 				<FaktumRadio faktumKey={barn.faktum} value="true" />
 				<Underskjema visible={getFaktumVerdi(fakta, barn.faktum) === "true"}>
-					<Barneinfo {...this.props} faktumKey="familie.barn.true.barn" parentFaktumKey={barn.faktum} nummer={1} />
+					<Barneinfo
+						{...this.props}
+						faktumKey="familie.barn.true.barn"
+						parentFaktumKey={barn.faktum}
+						nummer={1}
+					/>
 				</Underskjema>
 				<FaktumRadio faktumKey={barn.faktum} value="false" />
 			</SporsmalFaktum>

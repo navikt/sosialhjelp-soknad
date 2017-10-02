@@ -1,7 +1,9 @@
 import * as React from "react";
-import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
 import { connect } from "react-redux";
+
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
 import Jobb from "./Jobb";
 import Studie from "./Studie";
@@ -10,10 +12,10 @@ class ArbeidOgUtdanning extends React.Component<FaktumComponentProps, any> {
 	render() {
 		const { fakta } = this.props;
 		return (
-			<StegFaktum tittelId="arbeidbolk.tittel">
+			<DigisosSkjemaSteg steg={DigisosSteg.arbeidbolk}>
 				<Jobb fakta={fakta} />
 				<Studie fakta={fakta} />
-			</StegFaktum>
+			</DigisosSkjemaSteg>
 		);
 	}
 }

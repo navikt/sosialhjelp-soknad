@@ -1,15 +1,16 @@
 import * as React from "react";
-import {
-	FaktumComponentProps,
-	SoknadAppState
-} from "../../../nav-soknad/redux/faktaReducer";
-import { finnFakta, finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
 import { connect } from "react-redux";
-import { DispatchProps } from "../../../nav-soknad/redux/faktaTypes";
-import { Faktum } from "../../redux/types";
+import { injectIntl, InjectedIntlProps } from "react-intl";
+
+import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+import { SoknadAppState } from "../../../nav-soknad/redux/reduxTypes";
+import { finnFakta, finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
+import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
+import { Faktum } from "../../../nav-soknad/types";
 import { opprettFaktum } from "../../../nav-soknad/redux/faktaActions";
+import LeggTilLenke from "../../../nav-soknad/components/leggTilLenke/leggtillenke";
+
 import Barn from "./Barn";
-import { FormattedMessage } from "react-intl";
 
 interface OwnProps {
 	faktumKey: string;
@@ -18,7 +19,7 @@ interface OwnProps {
 }
 
 class Barneinfo extends React.Component<
-	OwnProps & FaktumComponentProps & DispatchProps,
+	OwnProps & FaktumComponentProps & DispatchProps & InjectedIntlProps,
 	{}
 > {
 	componentDidMount() {
@@ -33,7 +34,7 @@ class Barneinfo extends React.Component<
 	}
 
 	render() {
-		const { fakta, faktumKey, parentFaktumKey } = this.props;
+		const { fakta, faktumKey, parentFaktumKey, intl } = this.props;
 		const alleBarn = finnFakta(faktumKey, fakta);
 		const parrentFaktum = finnFaktum(parentFaktumKey, fakta);
 		const leggTilBarn = (): any =>
@@ -48,9 +49,12 @@ class Barneinfo extends React.Component<
 				{alleBarn.map((barnFaktum: Faktum) => (
 					<Barn fakta={fakta} faktum={barnFaktum} key={barnFaktum.faktumId} />
 				))}
-				<a href="javascript:void(0);" onClick={leggTilBarn} role="button">
-					<FormattedMessage id="familie.barn.true.barn.leggtil" />
-				</a>
+				<LeggTilLenke
+					leggTil={leggTilBarn}
+					lenketekst={intl.formatMessage({
+						id: "familie.barn.true.barn.leggtil"
+					})}
+				/>
 			</div>
 		);
 	}
@@ -68,4 +72,4 @@ export default connect<
 	return {
 		fakta: state.fakta.data
 	};
-})(Barneinfo);
+})(injectIntl(Barneinfo));
