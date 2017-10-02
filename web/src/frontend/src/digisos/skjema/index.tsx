@@ -103,7 +103,7 @@ const mapStateToProps = (state: State): StateProps => {
 	let progresjon = 0;
 	if (dataLoaded) {
 		const faktum = getProgresjonFaktum(state.fakta.data);
-		progresjon = parseInt(faktum.value as string, 10);
+		progresjon = parseInt((faktum.value || 1) as string, 10); // gå til første steg dersom progresjon ikke er lastet
 	}
 	return {
 		fakta: state.fakta.data,

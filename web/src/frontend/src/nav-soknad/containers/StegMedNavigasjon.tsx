@@ -190,7 +190,7 @@ const mapStateToProps = (state: SoknadAppState): StateProps => {
 	let progresjon = 0;
 	if (dataLoaded) {
 		const faktum = getProgresjonFaktum(state.fakta.data);
-		progresjon = parseInt(faktum.value as string, 10);
+		progresjon = parseInt((faktum.value || 0) as string, 10);
 	}
 	return {
 		fakta: state.fakta.data,

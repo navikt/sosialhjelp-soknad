@@ -5,7 +5,11 @@ interface RouterHistoryType {
 }
 
 const getAntallSteg = (config: SkjemaConfig): number => {
-	return config.steg.filter(steg => steg.type === SkjemaStegType.skjema).length;
+	return config.steg.filter(
+		steg =>
+			steg.type === SkjemaStegType.skjema ||
+			steg.type === SkjemaStegType.oppsummering
+	).length;
 };
 
 export function gaTilSteg(
