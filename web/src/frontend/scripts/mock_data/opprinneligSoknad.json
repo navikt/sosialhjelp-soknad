@@ -198,26 +198,6 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 17,
-			"soknadId": 1,
-			"parrentFaktum": null,
-			"key": "inntekt.mottarytelser",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 18,
-			"soknadId": 1,
-			"parrentFaktum": null,
-			"key": "inntekt.soktytelser",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
 			"faktumId": 19,
 			"soknadId": 1,
 			"parrentFaktum": null,
