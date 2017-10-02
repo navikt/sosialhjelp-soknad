@@ -55,7 +55,7 @@ export function fetchPost(urlPath: string, body: string) {
 export function fetchHtml(urlPath: string) {
 	const OPTIONS: RequestInit = {
 		headers: {
-			"Content-Type": "text/html"
+			"accept": "application/vnd.oppsummering+html"
 		},
 		method: "GET",
 		credentials: "same-origin"
