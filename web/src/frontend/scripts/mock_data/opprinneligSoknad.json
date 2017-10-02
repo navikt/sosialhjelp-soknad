@@ -98,6 +98,16 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
+			"faktumId": 551,
+			"soknadId": 1,
+			"parrentFaktum": null,
+			"key": "kontakt.kontonummer.harIkke",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
+		},
+		{
 			"faktumId": 6,
 			"soknadId": 1,
 			"parrentFaktum": null,
