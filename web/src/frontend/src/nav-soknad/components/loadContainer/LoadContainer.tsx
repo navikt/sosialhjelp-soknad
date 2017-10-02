@@ -24,7 +24,7 @@ const LoadContainer: React.StatelessComponent<Props> = ({
 	} else if (restStatus === REST_STATUS.FEILET) {
 		return (
 			<p>
-				<FormattedMessage id="applikasjon.ukjentFeilUnderHentData" />
+				<FormattedMessage id="applikasjon.ukjentfeilunderhentdata" />
 			</p>
 		);
 	}
