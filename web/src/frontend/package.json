@@ -71,6 +71,7 @@
 		"nav-frontend-spinner-style": "^0.2.1",
 		"nav-frontend-stegindikator-style": "^0.3.6",
 		"nav-frontend-typografi-style": "^1.0.1",
+		"nightwatch": "^0.9.16",
 		"npm-run-all": "^4.0.2",
 		"prettier": "^1.7.2",
 		"prettier-eslint-cli": "^4.4.0",
@@ -96,6 +97,8 @@
 		"stylelint": "stylelint \"src/**/*.less\" --syntax less",
 		"stylelint:watch":
 			"chokidar \"src/**/*.less\" -c \"stylelint \"src/**/*.less\" --syntax less\"",
+		"stylelint:watch": "chokidar \"src/**/*.less\" -c \"stylelint \"src/**/*.less\" --syntax less\"",
+		"e2e": "node nightwatch.js --url localhost:3000/soknadsosialhjelp/informasjon",
 		"eject": "react-scripts-ts eject"
 	}
 }
