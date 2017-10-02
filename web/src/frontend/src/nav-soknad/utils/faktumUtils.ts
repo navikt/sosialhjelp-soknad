@@ -80,6 +80,9 @@ function getPropertyKey(property?: string) {
 }
 export function getFaktumVerdi(fakta: Faktum[], key: string): string {
 	const faktum = finnFaktum(key, fakta);
+	if (!faktum) {
+		throw Error(`Kunne ikke finne faktum: [${key}]`);
+	}
 	return faktum.value;
 }
 
