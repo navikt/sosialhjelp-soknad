@@ -3,7 +3,6 @@ import {
 	Route,
 	RouterProps,
 	Switch,
-	Redirect,
 	withRouter,
 	matchPath
 } from "react-router";
@@ -22,8 +21,7 @@ import Oppsummering from "./oppsummering";
 
 import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
 import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
-import { Faktum, REST_STATUS } from "../../nav-soknad/types";
-import { getProgresjonFaktum } from "../../nav-soknad/redux/faktaUtils";
+import { Faktum } from "../../nav-soknad/types";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { State } from "../redux/reducers";
 import { hentSoknad } from "../redux/soknad/soknadActions";
@@ -35,7 +33,6 @@ interface OwnProps {
 
 interface StateProps {
 	fakta: Faktum[];
-	progresjon: number;
 	restStatus: string;
 	gyldigUrl: boolean;
 	steg: string;
@@ -57,14 +54,10 @@ class SkjemaRouter extends React.Component<
 		}
 	}
 	render() {
-		const { steg, gyldigUrl, restStatus, match, progresjon } = this.props;
+		const { gyldigUrl, restStatus } = this.props;
 
 		if (!gyldigUrl) {
 			return <Feilside />;
-		}
-		const maksSteg = progresjon;
-		if (parseInt(steg, 10) > maksSteg) {
-			return <Redirect to={`${match.url}/${maksSteg}`} />;
 		}
 		const path = "/skjema/:brukerBehandlingId";
 		return (
@@ -94,15 +87,8 @@ const mapStateToProps = (
 		path: "/skjema/:brukerbehandlingId/:steg"
 	});
 	const { steg, brukerbehandlingId } = match.params as UrlParams;
-	const dataLoaded = state.soknad.restStatus === REST_STATUS.OK;
-	let progresjon = 1;
-	if (dataLoaded) {
-		const faktum = getProgresjonFaktum(state.fakta.data);
-		progresjon = parseInt((faktum.value || 1) as string, 10); // gå til første steg dersom progresjon ikke er lastet
-	}
 	return {
 		fakta: state.fakta.data,
-		progresjon,
 		restStatus: state.soknad.restStatus,
 		steg,
 		brukerbehandlingId,
