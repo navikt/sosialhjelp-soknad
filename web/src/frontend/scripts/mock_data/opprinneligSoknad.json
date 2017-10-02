@@ -538,36 +538,6 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 58,
-			"soknadId": 1,
-			"parrentFaktum": 19,
-			"key": "inntekt.bostotte.true.type",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 59,
-			"soknadId": 1,
-			"parrentFaktum": 58,
-			"key": "inntekt.bostotte.true.type.husbanken",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 60,
-			"soknadId": 1,
-			"parrentFaktum": 58,
-			"key": "inntekt.bostotte.true.type.kommunal",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
 			"faktumId": 61,
 			"soknadId": 1,
 			"parrentFaktum": 20,
