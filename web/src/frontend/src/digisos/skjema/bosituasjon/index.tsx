@@ -5,7 +5,11 @@ import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
-import { faktumIsSelected, getFaktumVerdi, inputKeys, radioCheckKeys } from "../../../nav-soknad/utils";
+import {
+	radioCheckKeys,
+	inputKeys,
+	getFaktumVerdi
+} from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 
 import { State } from "../../redux/reducers";
@@ -16,10 +20,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const { fakta } = this.props;
 		const bosituasjon = radioCheckKeys("bosituasjon");
 		const annen = radioCheckKeys("bosituasjon.annet.botype");
-		const barnUnder18 = radioCheckKeys("bosituasjon.barnunder18");
-		const barnUnder18True = inputKeys("bosituasjon.barnunder18.true.antall");
-		const over18 = radioCheckKeys("bosituasjon.personover18");
-		const over18True = inputKeys("bosituasjon.personover18.true.antall");
+		const antall = inputKeys("bosituasjon.antallpersoner");
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.bosituasjonbolk}>
 				<SporsmalFaktum faktumKey={bosituasjon.faktum} required={true}>
@@ -42,38 +43,14 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						</SporsmalFaktum>
 					</Underskjema>
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey={barnUnder18.faktum} required={true}>
-					<RadioFaktum faktumKey={barnUnder18.faktum} value="true" />
-					<Underskjema
-						visible={faktumIsSelected(
-							getFaktumVerdi(fakta, barnUnder18.faktum)
-						)}
-					>
-						<BelopFaktum
-							required={true}
-							faktumKey={barnUnder18True.faktum}
-							kunHeltall={true}
+				<SporsmalFaktum faktumKey={antall.faktum} >
+					<BelopFaktum
+							faktumKey={antall.faktum}
 							maxLength={2}
+							kunHeltall={true}
 							bredde="xs"
 						/>
-					</Underskjema>
-					<RadioFaktum faktumKey={barnUnder18.faktum} value="false" />
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey={over18.faktum} required={true}>
-					<RadioFaktum faktumKey={over18.faktum} value="true" />
-					<Underskjema
-						visible={faktumIsSelected(getFaktumVerdi(fakta, over18.faktum))}
-					>
-						<BelopFaktum
-							required={true}
-							faktumKey={over18True.faktum}
-							maxLength={2}
-							kunHeltall={true}
-							bredde="xs"
-						/>
-					</Underskjema>
-					<RadioFaktum faktumKey={over18.faktum} value="false" />
-				</SporsmalFaktum>{" "}
 			</DigisosSkjemaSteg>
 		);
 	}
