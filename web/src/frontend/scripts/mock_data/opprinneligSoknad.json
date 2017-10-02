@@ -98,6 +98,16 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
+			"faktumId": 551,
+			"soknadId": 1,
+			"parrentFaktum": null,
+			"key": "kontakt.kontonummer.harikke",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
+		},
+		{
 			"faktumId": 6,
 			"soknadId": 1,
 			"parrentFaktum": null,
@@ -191,37 +201,7 @@
 			"faktumId": 15,
 			"soknadId": 1,
 			"parrentFaktum": null,
-			"key": "bosituasjon.barnunder18",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 16,
-			"soknadId": 1,
-			"parrentFaktum": null,
-			"key": "bosituasjon.personover18",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 17,
-			"soknadId": 1,
-			"parrentFaktum": null,
-			"key": "inntekt.mottarytelser",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 18,
-			"soknadId": 1,
-			"parrentFaktum": null,
-			"key": "inntekt.soktytelser",
+			"key": "bosituasjon.antallpersoner",
 			"value": null,
 			"faktumEgenskaper": [],
 			"properties": {},
@@ -568,36 +548,6 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 58,
-			"soknadId": 1,
-			"parrentFaktum": 19,
-			"key": "inntekt.bostotte.true.type",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 59,
-			"soknadId": 1,
-			"parrentFaktum": 58,
-			"key": "inntekt.bostotte.true.type.husbanken",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 60,
-			"soknadId": 1,
-			"parrentFaktum": 58,
-			"key": "inntekt.bostotte.true.type.kommunal",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
 			"faktumId": 61,
 			"soknadId": 1,
 			"parrentFaktum": 20,
@@ -922,16 +872,6 @@
 			"soknadId": 1,
 			"parrentFaktum": 90,
 			"key": "utgifter.barn.true.utgifter.tannbehandling",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 94,
-			"soknadId": 1,
-			"parrentFaktum": 90,
-			"key": "utgifter.barn.true.utgifter.helse",
 			"value": null,
 			"faktumEgenskaper": [],
 			"properties": {},
