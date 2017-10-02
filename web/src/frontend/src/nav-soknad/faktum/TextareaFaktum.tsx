@@ -75,6 +75,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 	render() {
 		const {
 			faktumKey,
+			property,
 			labelId,
 			disabled,
 			textareaClass,
@@ -82,7 +83,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 			required,
 			intl
 		} = this.props;
-		const tekster = getInputFaktumTekst(intl, faktumKey);
+		const tekster = getInputFaktumTekst(intl, faktumKey, property);
 		return (
 			<Textarea
 				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
