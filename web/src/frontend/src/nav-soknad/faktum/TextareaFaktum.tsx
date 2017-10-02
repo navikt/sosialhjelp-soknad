@@ -1,11 +1,8 @@
 import * as React from "react";
 import { Textarea } from "nav-frontend-skjema";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { getInputFaktumTekst, getIntlTextOrKey } from "../utils";
-import {
-	InjectedFaktumComponentProps,
-	faktumComponent
-} from "./FaktumComponent";
+import { faktumComponent, InjectedFaktumComponentProps } from "./FaktumComponent";
 
 interface OwnProps {
 	labelId?: string;
@@ -21,7 +18,7 @@ interface State {
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 const getStateFromProps = (props: Props): State => ({
-	value: props.getFaktumVerdi() || ""
+	value: (props.property ? props.getPropertyVerdi() : props.getFaktumVerdi()) || ""
 });
 
 class TextareaFaktum extends React.Component<Props, State> {
@@ -51,7 +48,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 	}
 
 	handleOnBlur() {
-		this.props.setFaktumVerdi(this.state.value);
+		this.props.setFaktumVerdi(this.state.value, this.props.property);
 		this.props.validerFaktum(this.state.value);
 	}
 
