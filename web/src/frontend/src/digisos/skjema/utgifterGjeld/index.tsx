@@ -119,12 +119,6 @@ class UtgifterGjeld extends React.Component<
 							<CheckboxFaktum
 								faktumKey={createCheckboxFaktumKey(
 									barneUtgifter.faktum,
-									"helse"
-								)}
-							/>
-							<CheckboxFaktum
-								faktumKey={createCheckboxFaktumKey(
-									barneUtgifter.faktum,
 									"annet"
 								)}
 							/>
