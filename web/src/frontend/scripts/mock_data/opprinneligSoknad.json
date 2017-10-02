@@ -868,16 +868,6 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 94,
-			"soknadId": 1,
-			"parrentFaktum": 90,
-			"key": "utgifter.barn.true.utgifter.helse",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
 			"faktumId": 95,
 			"soknadId": 1,
 			"parrentFaktum": 90,
