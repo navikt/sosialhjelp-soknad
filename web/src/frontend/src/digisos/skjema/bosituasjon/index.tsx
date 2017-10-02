@@ -25,8 +25,8 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 			<DigisosSkjemaSteg steg={DigisosSteg.bosituasjonbolk}>
 				<SporsmalFaktum faktumKey={bosituasjon.faktum} required={true}>
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="eier" />
-					<RadioFaktum faktumKey={bosituasjon.faktum} value="leierprivat" />
-					<RadioFaktum faktumKey={bosituasjon.faktum} value="leierkommunalt" />
+					<RadioFaktum faktumKey={bosituasjon.faktum} value="leier" />
+					<RadioFaktum faktumKey={bosituasjon.faktum} value="kommunal" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="ingen" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="annet" />
 					<Underskjema
