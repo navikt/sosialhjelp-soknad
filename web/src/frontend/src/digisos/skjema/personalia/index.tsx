@@ -20,7 +20,7 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		const brukerHarIkkeKontonummer = faktumIsSelected(
-			getFaktumVerdi(this.props.fakta, "kontakt.kontonummer.harIkke")
+			getFaktumVerdi(this.props.fakta, "kontakt.kontonummer.harikke")
 		);
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.personalia}>
@@ -29,7 +29,7 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 						faktumKey="kontakt.kontonummer"
 						disabled={brukerHarIkkeKontonummer}
 					/>
-					<CheckboxFaktum faktumKey="kontakt.kontonummer.harIkke" />
+					<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="kontakt.telefon">
 					<TelefonFaktum faktumKey="kontakt.telefon" />
