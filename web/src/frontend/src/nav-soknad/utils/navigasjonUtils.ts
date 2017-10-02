@@ -1,16 +1,8 @@
-import { SkjemaConfig, SkjemaStegType } from "../types";
+import { SkjemaConfig } from "../types";
 
 interface RouterHistoryType {
 	push: (url: string) => void;
 }
-
-const getAntallSteg = (config: SkjemaConfig): number => {
-	return config.steg.filter(
-		steg =>
-			steg.type === SkjemaStegType.skjema ||
-			steg.type === SkjemaStegType.oppsummering
-	).length;
-};
 
 export function gaTilSteg(
 	steg: number,
@@ -26,7 +18,7 @@ export function gaVidere(
 	history: RouterHistoryType,
 	skjemaConfig: SkjemaConfig
 ) {
-	const steg = Math.min(getAntallSteg(skjemaConfig), aktivtSteg + 1);
+	const steg = Math.min(skjemaConfig.steg.length, aktivtSteg + 1);
 	gaTilSteg(steg, brukerBehandlingId, history);
 }
 
