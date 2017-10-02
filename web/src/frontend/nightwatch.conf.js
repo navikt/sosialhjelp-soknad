@@ -20,6 +20,8 @@ module.exports = ((settings) => {
 	settings.selenium.cli_args['webdriver.chrome.driver'] = chromedrivers[process.platform];
 settings.selenium.cli_args['phantomjs.binary.path'] = phantomjsdrivers[process.platform];
 
+settings['test_settings'].default.screenshots = false;
+
 settings['test_settings'].default.login = false;
 if(argv.url) {
 	settings['test_settings'].default['launch_url'] = argv.url;

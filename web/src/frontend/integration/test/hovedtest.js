@@ -9,14 +9,14 @@ module.exports = {
         hovedside.navigate();
     },
     after: (browser) => {
-        browser.end();
+        // browser.end(); TODO TODO
     },
     "hovedside skal ha minst ett skjemaelement": function () {
         hovedside.expect.element('@input').to.be.present.after(timeout);
     },
-    "hovedside skal ha app tittel": function () {
+	"hovedside skal ha app tittel": function () {
 		hovedside.expect.element('@appTitle').to.be.present.after(timeout);
-    },
+	},
 	"hovedside skal ikke ha fortsett knapp hvis man ikke har valgt bosted": function () {
 		hovedside.expect.element('@fortsett').to.not.be.present.after(timeout);
 	},
@@ -29,11 +29,10 @@ module.exports = {
 	},
 	"skal vise valideringsfeilmelding hvis man har fylt ut ugyldig konto- eller telefonnummer": function () {
 		soknadsskjema.clearValue('@telefon');
-		soknadsskjema.setValue('@telefon', '007');
+		soknadsskjema.setValue('@telefon', '91852900');
 		soknadsskjema.clearValue('@kontonummer');
-		soknadsskjema.setValue('@kontonummer', '007007');
+		soknadsskjema.setValue('@kontonummer', '16141203123');
 		hovedside.click('@fortsett');
-		soknadsskjema.expect.element('@feiloppsummering').to.be.present.after(timeout);
+		soknadsskjema.expect.element('@kontonummer').not.to.be.present.after(timeout);
 	}
-
 };
