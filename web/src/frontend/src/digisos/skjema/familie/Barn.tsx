@@ -11,6 +11,8 @@ import {
 	radioCheckKeys
 } from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
+import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
 
 interface BarnTypes {
 	faktum: Faktum;
@@ -24,7 +26,7 @@ export default class Barn extends React.Component<
 		const { fakta, faktum } = this.props;
 		const faktumKey = faktum.key;
 		const borInfo = radioCheckKeys(`${faktumKey}.borsammen`);
-		const hvormye = radioCheckKeys(`${faktumKey}.grad`);
+		const hvormye = inputKeys(`${faktumKey}.grad`);
 		const faktumId = faktum.faktumId;
 		return (
 			<div className="blokk">
@@ -46,17 +48,13 @@ export default class Barn extends React.Component<
 								getPropertyVerdi(fakta, borInfo.faktum, "borsammen", faktumId)
 							)}>
 							<SporsmalFaktum faktumKey={hvormye.faktum}>
-								<FaktumRadio
+								<BelopFaktum
 									faktumKey={faktumKey}
-									value="heltid"
-									property="grad"
 									faktumId={faktumId}
-								/>
-								<FaktumRadio
-									faktumKey={faktumKey}
-									value="deltid"
 									property="grad"
-									faktumId={faktumId}
+									maxLength={3}
+									kunHeltall={true}
+									bredde="xs"
 								/>
 							</SporsmalFaktum>
 						</NivaTreSkjema>
