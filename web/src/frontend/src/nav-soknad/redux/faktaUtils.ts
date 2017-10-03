@@ -48,3 +48,7 @@ export function updateFaktumMedLagretVerdi(faktum: Faktum): Faktum {
 		}
 	};
 }
+
+export function updateFaktaMedLagretVerdi(fakta: Faktum[]): Faktum[] {
+	return fakta.map(f => updateFaktumMedLagretVerdi(f));
+}
