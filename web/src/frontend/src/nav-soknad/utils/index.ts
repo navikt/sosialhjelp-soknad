@@ -7,8 +7,8 @@ export function boolToString(flag: boolean) {
 	return flag ? "true" : "false";
 }
 
-export function contains(node: Element, child: Element) {
-	return node === child || node.contains(child);
+export function is(node: Element, child: Element) {
+	return node === child;
 }
 
 export function erDev(): boolean {

@@ -4,7 +4,7 @@ import * as classNames from "classnames";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { SkjemaGruppe } from "nav-frontend-skjema";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
-import { getFaktumSporsmalTekst, contains } from "../utils";
+import { getFaktumSporsmalTekst, is } from "../utils";
 import {
 	faktumComponent,
 	InjectedFaktumComponentProps
@@ -47,7 +47,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 			setTimeout(() => {
 				if (
 					this.mounted &&
-					!contains(findDOMNode(this), document.activeElement)
+					!is(findDOMNode(this), document.activeElement)
 				) {
 					this.props.validerFaktum(this.props.getFaktumVerdi());
 				}
