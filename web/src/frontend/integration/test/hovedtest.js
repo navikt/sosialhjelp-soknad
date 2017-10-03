@@ -13,7 +13,7 @@ const loginUtils = require('../login');
  *
  *      node nightwatch.js --env chrome --url https://testmiljo.nav.no/soknadsosialhjelp/informasjon
  *              --username xxxxx --password xxxx --login true
- *              
+ *
  */
 module.exports = {
 	before: (browser) => {
