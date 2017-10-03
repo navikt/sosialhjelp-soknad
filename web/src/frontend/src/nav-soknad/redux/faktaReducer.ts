@@ -1,19 +1,10 @@
-import { REST_STATUS } from "../../digisos/redux/soknad/soknadTypes";
-import {
-	FaktumActionTypeKeys,
-	Reducer,
-	FaktaActionTypeKeys,
-	Faktum
-} from "./faktaTypes";
-import { ValideringState } from "./valideringReducer";
-
-export interface SoknadAppState {
-	fakta: FaktumState;
-	validering: ValideringState;
-}
+import { REST_STATUS, Faktum } from "../types";
+import { FaktumActionTypeKeys, FaktaActionTypeKeys } from "./faktaActionTypes";
+import { Reducer } from "./reduxTypes";
 
 export interface FaktumState {
 	restStatus: string;
+	progresjonPending: boolean;
 	data: Faktum[];
 }
 
@@ -23,6 +14,7 @@ export interface FaktumComponentProps {
 
 const initialState: FaktumState = {
 	restStatus: "",
+	progresjonPending: false,
 	data: []
 };
 
@@ -32,15 +24,20 @@ export type FaktumActionTypes =
 	| OpprettFaktum
 	| OpprettetFaktum
 	| SetFaktaAction
-	| SetFaktumFailedAction;
+	| SetFaktumFailedAction
+	| ResetFaktaAction;
+
+interface ResetFaktaAction {
+	type: FaktaActionTypeKeys.RESET_FAKTA;
+}
 
 interface OppdaterFaktumVerdi {
 	type: FaktumActionTypeKeys.OPPDATER_FAKTUM;
+	faktum: Faktum;
 }
 
 interface OppdatertFaktumVerdi {
 	type: FaktumActionTypeKeys.OPPDATERT_FAKTUM;
-	faktum: Faktum;
 }
 
 interface OpprettFaktum {
@@ -68,18 +65,33 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 ): FaktumState => {
 	switch (action.type) {
 		case FaktumActionTypeKeys.OPPDATER_FAKTUM:
-			return { ...state, restStatus: REST_STATUS.OK };
+			return {
+				...state,
+				restStatus: REST_STATUS.PENDING,
+				data: updateFaktumVerdi(state.data, action.faktum),
+				progresjonPending: action.faktum.key === "progresjon"
+			};
 		case FaktumActionTypeKeys.OPPDATERT_FAKTUM:
 			return {
 				...state,
-				data: updateFaktumVerdi(state.data, action.faktum)
+				restStatus: REST_STATUS.OK,
+				progresjonPending: false
 			};
 		case FaktumActionTypeKeys.OPPRETT_FAKTUM: {
-			return {...state, restStatus: REST_STATUS.PENDING};
+			return { ...state, restStatus: REST_STATUS.PENDING };
 		}
 		case FaktumActionTypeKeys.OPPRETTET_FAKTUM: {
-			return {...state, restStatus: REST_STATUS.OK, data: [...state.data, action.faktum]};
+			return {
+				...state,
+				restStatus: REST_STATUS.OK,
+				data: [...state.data, action.faktum]
+			};
 		}
+		case FaktaActionTypeKeys.RESET_FAKTA:
+			return {
+				...state,
+				...initialState
+			};
 		case FaktaActionTypeKeys.SET_FAKTA:
 			return {
 				...state,

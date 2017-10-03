@@ -1,8 +1,7 @@
 import faktumReducer from "./faktaReducer";
-import { FaktumActionTypeKeys, FaktaActionTypeKeys } from "./faktaTypes";
+import { FaktumActionTypeKeys, FaktaActionTypeKeys } from "./reduxTypes";
 
 describe("facts reducer", () => {
-
 	const defaultState = {
 		restStatus: FaktaActionTypeKeys.OTHER_ACTION,
 		data: [
@@ -15,7 +14,8 @@ describe("facts reducer", () => {
 				parrentFaktum: 1,
 				properties: {}
 			}
-		]
+		],
+		progresjonPending: false
 	};
 
 	const testFaktum = {
@@ -30,10 +30,10 @@ describe("facts reducer", () => {
 
 	it("should updates single fact", () => {
 		const newFaktumState = faktumReducer(defaultState, {
-			type: FaktumActionTypeKeys.OPPDATERT_FAKTUM,
+			type: FaktumActionTypeKeys.OPPDATER_FAKTUM,
 			faktum: testFaktum
 		});
-		expect(newFaktumState.data[0].value).toEqual(123);
+		expect(newFaktumState.data[0].value).toEqual("123");
 	});
 
 	it("should bulk update all facts", () => {
@@ -44,5 +44,4 @@ describe("facts reducer", () => {
 			}).data.length
 		).toEqual(2);
 	});
-
 });

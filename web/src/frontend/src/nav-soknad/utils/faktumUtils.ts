@@ -2,11 +2,11 @@ import { InjectedIntl } from "react-intl";
 import {
 	CheckboxFaktumTekst,
 	SporsmalFaktumTekst,
-	InputFaktumTekst
-} from "../faktumTextTypes";
+	InputFaktumTekst,
+	Faktum
+} from "../types";
 
 import { getIntlTextOrKey, getIntlInfoTekst, getIntlText } from "./intlUtils";
-import { Faktum } from "../redux/faktaTypes";
 import { finnFaktum } from "../redux/faktaUtils";
 
 export const radioCheckKeys = (key: string) => ({
@@ -80,6 +80,9 @@ function getPropertyKey(property?: string) {
 }
 export function getFaktumVerdi(fakta: Faktum[], key: string): string {
 	const faktum = finnFaktum(key, fakta);
+	if (!faktum) {
+		throw Error(`Kunne ikke finne faktum: [${key}]`);
+	}
 	return faktum.value;
 }
 

@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { createStore, applyMiddleware } from "redux";
 import App from "./digisos";
 import thunk from "redux-thunk";
-import { erDev } from "./digisos/redux/rest-utils";
+import { erDev } from "./nav-soknad/utils/rest-utils";
 import IntlProvider from "./intlProvider";
 import reducers from "./digisos/redux/reducers";
 import "./index.css";

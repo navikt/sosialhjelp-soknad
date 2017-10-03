@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Checkbox } from "nav-frontend-skjema";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+import { Checkbox } from "nav-frontend-skjema";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
 import {
 	getFaktumCheckboksTekst,

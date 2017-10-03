@@ -1,25 +1,25 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
+import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
+import Underskjema from "../../../nav-soknad/components/underskjema";
+import CheckboxFaktum, {
+	createCheckboxFaktumKey
+} from "../../../nav-soknad/faktum/CheckboxFaktum";
 import {
 	faktumIsSelected,
 	getFaktumVerdi,
 	radioCheckKeys
 } from "../../../nav-soknad/utils";
-
-import { State } from "../../redux/reducers";
-import { DispatchProps } from "../../redux/types";
-
+import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import StegFaktum from "../../../nav-soknad/faktum/StegFaktum";
-import CheckboxFaktum, {
-	createCheckboxFaktumKey
-} from "../../../nav-soknad/faktum/CheckboxFaktum";
-import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
-import Underskjema from "../../../nav-soknad/components/underskjema";
 import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
+
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
+import { State } from "../../redux/reducers";
 
 class UtgifterGjeld extends React.Component<
 	FaktumComponentProps & DispatchProps & InjectedIntlProps,
@@ -37,7 +37,7 @@ class UtgifterGjeld extends React.Component<
 		const andreBarneutgifter = `${barneUtgifter.faktum}.annet.true.beskrivelse`;
 
 		return (
-			<StegFaktum tittelId="utgifterbolk.tittel">
+			<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk}>
 				<SporsmalFaktum faktumKey={harBoutgifter.faktum} required={true}>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} value="true" />
 					<Underskjema
@@ -119,12 +119,6 @@ class UtgifterGjeld extends React.Component<
 							<CheckboxFaktum
 								faktumKey={createCheckboxFaktumKey(
 									barneUtgifter.faktum,
-									"helse"
-								)}
-							/>
-							<CheckboxFaktum
-								faktumKey={createCheckboxFaktumKey(
-									barneUtgifter.faktum,
 									"annet"
 								)}
 							/>
@@ -141,7 +135,7 @@ class UtgifterGjeld extends React.Component<
 					</Underskjema>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} value="false" />
 				</SporsmalFaktum>
-			</StegFaktum>
+			</DigisosSkjemaSteg>
 		);
 	}
 }

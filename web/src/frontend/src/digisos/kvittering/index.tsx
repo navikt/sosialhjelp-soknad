@@ -7,10 +7,13 @@ import { FaktumComponentProps } from "../../nav-soknad/redux/faktaReducer";
 import { State } from "../redux/reducers";
 import "./kvittering.css";
 import { getBosted } from "../data/kommuner";
-import { getFaktumVerdi } from "../../nav-soknad/utils";
+import { getFaktumVerdi, scrollToTop } from "../../nav-soknad/utils";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 
 class Kvittering extends React.Component<State & FaktumComponentProps, {}> {
+	componentDidMount() {
+		scrollToTop();
+	}
 	render() {
 		const { fakta } = this.props;
 		const kommune = getFaktumVerdi(fakta, "personalia.kommune");

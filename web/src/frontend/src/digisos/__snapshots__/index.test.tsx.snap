@@ -9,7 +9,7 @@ ShallowWrapper {
   },
   "length": 1,
   "node": <div
-    className="app-digisos"
+    className="app-digisos container"
   >
     <Switch>
       <Route
@@ -32,7 +32,7 @@ ShallowWrapper {
   </div>,
   "nodes": Array [
     <div
-      className="app-digisos"
+      className="app-digisos container"
     >
       <Switch>
         <Route
@@ -89,7 +89,7 @@ ShallowWrapper {
       "_pendingStateQueue": null,
       "_renderedComponent": NoopInternalComponent {
         "_currentElement": <div
-          className="app-digisos"
+          className="app-digisos container"
         >
           <Switch>
             <Route
@@ -112,7 +112,7 @@ ShallowWrapper {
         </div>,
         "_debugID": 2,
         "_renderedOutput": <div
-          className="app-digisos"
+          className="app-digisos container"
         >
           <Switch>
             <Route

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import { Input, InputBredde } from "nav-frontend-skjema";
 import { getInputFaktumTekst } from "../utils";
 import {
@@ -6,9 +7,10 @@ import {
 	InjectedFaktumComponentProps,
 	Props as FaktumComponentProps
 } from "./FaktumComponent";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 
 export type InputTypes = "text" | "number" | "email" | "tel";
+
+const DEFAULT_MAX_LENGTH = 50;
 
 interface State {
 	value: string;
@@ -40,11 +42,15 @@ class InputFaktum extends React.Component<Props, State> {
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
-		this.setState(getStateFromProps(nextProps));
+		if (document.activeElement !== this.input && nextProps.feilkode === null) {
+			this.setState(getStateFromProps(nextProps));
+		}
 	}
 
 	handleOnChange(evt: any) {
-		this.setState({ value: evt.target.value });
+		const value = evt.target.value;
+		this.setState({ value });
+		this.props.validerVerdiDersomNodvendig(value);
 	}
 
 	handleOnBlur() {
@@ -61,7 +67,7 @@ class InputFaktum extends React.Component<Props, State> {
 			required,
 			step,
 			intl,
-			maxLength,
+			maxLength = DEFAULT_MAX_LENGTH,
 			bredde,
 			property
 		} = this.props;

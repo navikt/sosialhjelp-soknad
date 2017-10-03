@@ -52,6 +52,7 @@
 			"check-else",
 			"check-whitespace"
 		],
+		"object-literal-key-quotes": false,
 		"quotemark": [true, "double", "avoid-escape"],
 		"radix": true,
 		"semicolon": [true],
@@ -72,8 +73,7 @@
 				"index-signature": "nospace",
 				"parameter": "nospace",
 				"property-declaration": "nospace",
-				"variable-declaration": "nospace",
-				"curly": "space"
+				"variable-declaration": "nospace"
 			}
 		],
 		"variable-name": [
