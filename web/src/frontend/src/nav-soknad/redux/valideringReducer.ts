@@ -107,7 +107,8 @@ const valideringReducer: Reducer<
 		case ValideringActionTypeKeys.CLEAR_FAKTA_VALIDERINGSFEIL:
 			return {
 				...state,
-				feil: []
+				feil: [],
+				visValideringsfeil: false
 			};
 		case ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL:
 			return {
