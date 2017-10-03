@@ -14,17 +14,9 @@ interface OwnProps {
 	maxLength?: number;
 }
 
-interface State {
-	value: string;
-}
-
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
-const getStateFromProps = (props: Props): State => ({
-	value: props.getFaktumVerdi() || ""
-});
-
-class TextareaFaktum extends React.Component<Props, State> {
+class TextareaFaktum extends React.Component<Props, {}> {
 	textarea: any;
 
 	constructor(props: Props) {
@@ -32,27 +24,18 @@ class TextareaFaktum extends React.Component<Props, State> {
 		this.handleOnBlur = this.handleOnBlur.bind(this);
 		this.handleOnChange = this.handleOnChange.bind(this);
 		this.tellerTekst = this.tellerTekst.bind(this);
-		this.state = getStateFromProps(this.props);
-	}
-
-	componentWillReceiveProps(nextProps: Props) {
-		if (
-			document.activeElement !== this.textarea &&
-			nextProps.feilkode === null
-		) {
-			this.setState(getStateFromProps(nextProps));
-		}
 	}
 
 	handleOnChange(evt: any) {
 		const value = evt.target.value;
-		this.setState({ value });
-		this.props.validerVerdiDersomNodvendig(value);
+		this.props.setFaktumVerdi(value, this.props.property);
 	}
 
 	handleOnBlur() {
-		this.props.setFaktumVerdi(this.state.value);
-		this.props.validerFaktum(this.state.value);
+		const feil = this.props.validerFaktum();
+		if (!feil) {
+			this.props.lagreFaktum();
+		}
 	}
 
 	tellerTekst(antallTegn: number, maxLength: number) {
@@ -90,7 +73,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 			<Textarea
 				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
 				textareaRef={(c: any) => (this.textarea = c)}
-				value={this.state.value}
+				value={this.props.getFaktumVerdi()}
 				name={this.props.getName()}
 				disabled={disabled}
 				onChange={this.handleOnChange}

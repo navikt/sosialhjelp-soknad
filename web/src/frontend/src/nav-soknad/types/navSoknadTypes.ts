@@ -5,20 +5,23 @@ export interface Steg {
 	cmstekst: string;
 }
 
-export interface Faktum {
-	faktumId: number;
-	soknadId: number;
-	parrentFaktum: null | number;
-	key: string;
+export interface FaktumVerdier {
 	value: FaktumValueType;
-	faktumEgenskaper?: FaktumEgenskap[];
 	properties: object;
-	type?: string;
 	/** Verdier som er lagret på server - kun gyldige verdier */
 	lagret?: {
 		value?: FaktumValueType;
 		properties?: object;
 	};
+}
+
+export interface Faktum extends FaktumVerdier {
+	faktumId: number;
+	soknadId: number;
+	parrentFaktum: null | number;
+	key: string;
+	faktumEgenskaper?: FaktumEgenskap[];
+	type?: string;
 }
 
 export interface FaktumEgenskap {

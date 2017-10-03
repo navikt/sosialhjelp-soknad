@@ -5,7 +5,8 @@ export type FaktaActionTypes = FaktumActionTypes | ValideringActionTypes;
 
 export enum FaktumActionTypeKeys {
 	OPPDATER_FAKTUM = "faktum/OPPDATER_FAKTUM",
-	OPPDATERT_FAKTUM = "faktum/OPPDATERT_FAKTUM",
+	LAGRE_FAKTUM = "faktum/LAGRE_FAKTUM",
+	LAGRET_FAKTUM = "faktum/LAGRET_FAKTUM",
 	OPPRETT_FAKTUM = "faktum/OPPRETT_FAKTUM",
 	OPPRETTET_FAKTUM = "faktum/OPPRETTET_FAKTUM",
 	FEILET = "faktum/FEILET",

@@ -20,7 +20,8 @@ const initialState: FaktumState = {
 };
 
 export type FaktumActionTypes =
-	| OppdatertFaktumVerdi
+	| LagreFaktum
+	| LagretFaktum
 	| OppdaterFaktumVerdi
 	| OpprettFaktum
 	| OpprettetFaktum
@@ -37,8 +38,13 @@ interface OppdaterFaktumVerdi {
 	faktum: Faktum;
 }
 
-interface OppdatertFaktumVerdi {
-	type: FaktumActionTypeKeys.OPPDATERT_FAKTUM;
+interface LagreFaktum {
+	type: FaktumActionTypeKeys.LAGRE_FAKTUM;
+	faktum: Faktum;
+}
+
+interface LagretFaktum {
+	type: FaktumActionTypeKeys.LAGRET_FAKTUM;
 	faktum: Faktum;
 }
 
@@ -69,11 +75,16 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 		case FaktumActionTypeKeys.OPPDATER_FAKTUM:
 			return {
 				...state,
+				data: updateFaktumStateVerdi(state.data, action.faktum)
+			};
+		case FaktumActionTypeKeys.LAGRE_FAKTUM:
+			return {
+				...state,
 				restStatus: REST_STATUS.PENDING,
 				data: updateFaktumStateVerdi(state.data, action.faktum),
 				progresjonPending: action.faktum.key === "progresjon"
 			};
-		case FaktumActionTypeKeys.OPPDATERT_FAKTUM:
+		case FaktumActionTypeKeys.LAGRET_FAKTUM:
 			return {
 				...state,
 				restStatus: REST_STATUS.OK,

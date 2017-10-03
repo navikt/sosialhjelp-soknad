@@ -3,7 +3,9 @@ import {
 	CheckboxFaktumTekst,
 	SporsmalFaktumTekst,
 	InputFaktumTekst,
-	Faktum
+	Faktum,
+	FaktumVerdier,
+	FaktumValueType
 } from "../types";
 
 import { getIntlTextOrKey, getIntlInfoTekst, getIntlText } from "./intlUtils";
@@ -78,6 +80,7 @@ export function getInputFaktumTekst(
 function getPropertyKey(property?: string) {
 	return property === undefined ? "" : `.${property}`;
 }
+
 export function getFaktumVerdi(fakta: Faktum[], key: string): string {
 	const faktum = finnFaktum(key, fakta);
 	if (!faktum) {
@@ -94,4 +97,33 @@ export function getPropertyVerdi(
 ) {
 	const faktum = finnFaktum(key, fakta, faktumId);
 	return faktum.properties[property];
+}
+
+export function getFaktumVerdier(fakta: Faktum[], key: string): FaktumVerdier {
+	const faktum = finnFaktum(key, fakta);
+	if (!faktum) {
+		throw Error(`Kunne ikke finne faktum: [${key}]`);
+	}
+	return {
+		value: faktum.value,
+		properties: faktum.properties,
+		lagret: faktum.lagret
+	};
+}
+
+export function oppdaterFaktum(
+	faktum: Faktum,
+	verdi: FaktumValueType,
+	property?: string
+): Faktum {
+	let nyttFaktum = { ...faktum };
+	if (property) {
+		nyttFaktum = {
+			...faktum,
+			properties: { ...faktum.properties, [property]: verdi }
+		};
+	} else {
+		nyttFaktum.value = verdi;
+	}
+	return nyttFaktum;
 }

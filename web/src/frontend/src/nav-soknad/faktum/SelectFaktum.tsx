@@ -36,14 +36,16 @@ class FaktumSelect extends React.Component<
 				value={this.props.getFaktumVerdi()}
 				bredde={bredde}
 				required={required}
-				onChange={(evt: any) => this.props.setFaktumVerdi(evt.target.value)}
+				onChange={(evt: any) =>
+					this.props.setFaktumVerdiOgLagre(evt.target.value)}
 				label={
 					<LabelMedHjelpetekst
 						id={faktumKey}
 						label={labelFunc ? labelFunc(tekster.label) : tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
 					/>
-				}>
+				}
+			>
 				{children}
 			</Select>
 		);
