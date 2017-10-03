@@ -14,6 +14,11 @@ export interface Faktum {
 	faktumEgenskaper?: FaktumEgenskap[];
 	properties: object;
 	type?: string;
+	/** Verdier som er lagret på server - kun gyldige verdier */
+	lagret?: {
+		value?: FaktumValueType;
+		properties?: object;
+	};
 }
 
 export interface FaktumEgenskap {

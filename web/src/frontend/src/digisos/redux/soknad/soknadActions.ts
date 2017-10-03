@@ -3,7 +3,10 @@ import {
 	setFaktumVerdi,
 	resetFakta
 } from "../../../nav-soknad/redux/faktaActions";
-import { finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
+import {
+	finnFaktum,
+	updateFaktumMedLagretVerdi
+} from "../../../nav-soknad/redux/faktaUtils";
 import {
 	FaktaActionTypeKeys,
 	FaktaActionTypes,
@@ -79,7 +82,9 @@ export function hentSoknad(brukerBehandlingsId: string) {
 		dispatch({ type: SoknadActionTypeKeys.HENT_SOKNAD });
 		return fetchToJson("soknader/" + brukerBehandlingsId)
 			.then((soknadsdata: Soknad) => {
-				const fakta = soknadsdata.fakta;
+				const fakta = soknadsdata.fakta.map((faktum: Faktum) =>
+					updateFaktumMedLagretVerdi(faktum)
+				);
 				dispatch({ type: FaktaActionTypeKeys.SET_FAKTA, fakta });
 				dispatch({
 					type: SoknadActionTypeKeys.HENTET_SOKNAD,

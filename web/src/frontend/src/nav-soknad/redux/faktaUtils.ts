@@ -38,3 +38,13 @@ export function finnFaktumMedId(
 export function finnFakta(faktumKey: string, fakta: Faktum[]): Faktum[] {
 	return fakta.filter(faktum => faktum.key === faktumKey);
 }
+
+export function updateFaktumMedLagretVerdi(faktum: Faktum): Faktum {
+	return {
+		...faktum,
+		lagret: {
+			value: faktum.value,
+			properties: { ...faktum.properties }
+		}
+	};
+}

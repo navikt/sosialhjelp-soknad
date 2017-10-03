@@ -9,6 +9,11 @@ import { Faktum, FaktumValueType } from "../types";
 import { fetchPost, fetchPut } from "../utils/rest-utils";
 import { FaktumActionTypes } from "./faktaReducer";
 
+function prepFaktumForLagring(faktum: Faktum) {
+	delete faktum.lagret;
+	return JSON.stringify(faktum);
+}
+
 export function setFaktumVerdi(
 	faktum: Faktum,
 	value: FaktumValueType,
@@ -28,10 +33,14 @@ export function setFaktumVerdi(
 			type: FaktumActionTypeKeys.OPPDATER_FAKTUM,
 			faktum: nyttFaktum
 		});
-		return fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
+		return fetchPut(
+			"fakta/" + nyttFaktum.faktumId,
+			prepFaktumForLagring(nyttFaktum)
+		)
 			.then(response => {
 				dispatch({
-					type: FaktumActionTypeKeys.OPPDATERT_FAKTUM
+					type: FaktumActionTypeKeys.OPPDATERT_FAKTUM,
+					faktum: response as Faktum
 				});
 			})
 			.catch(reason => {
