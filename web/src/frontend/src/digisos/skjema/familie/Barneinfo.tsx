@@ -4,7 +4,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { DispatchProps, SoknadAppState } from "../../../nav-soknad/redux/reduxTypes";
-import { finnFakta, finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
+import { finnFakta, finnFaktum } from "../../../nav-soknad/utils";
 import { Faktum } from "../../../nav-soknad/types";
 import { opprettFaktum } from "../../../nav-soknad/redux/faktaActions";
 import LeggTilLenke from "../../../nav-soknad/components/leggTilLenke/leggtillenke";
@@ -22,18 +22,18 @@ class Barneinfo extends React.Component<
 	{}
 > {
 	componentDidMount() {
-		const {fakta, faktumKey, parentFaktumKey} = this.props;
+		const { fakta, faktumKey, parentFaktumKey } = this.props;
 		const parentFaktum = finnFaktum(parentFaktumKey, fakta);
 		const faktum = finnFaktum(faktumKey, fakta);
 		if (!faktum) {
 			this.props.dispatch(
-				opprettFaktum({key: faktumKey, parrentFaktum: parentFaktum.faktumId})
+				opprettFaktum({ key: faktumKey, parrentFaktum: parentFaktum.faktumId })
 			);
 		}
 	}
 
 	render() {
-		const {fakta, faktumKey, parentFaktumKey, intl} = this.props;
+		const { fakta, faktumKey, parentFaktumKey, intl } = this.props;
 		const alleBarn = finnFakta(faktumKey, fakta);
 		const parrentFaktum = finnFaktum(parentFaktumKey, fakta);
 		const leggTilBarn = (): any =>
@@ -46,7 +46,7 @@ class Barneinfo extends React.Component<
 		const visFjernlenke = alleBarn.length > 1;
 		return (
 			<div>
-				{alleBarn.map((barnFaktum: Faktum, index) => (
+				{alleBarn.map((barnFaktum: Faktum) => (
 					<Barn fakta={fakta}
 						  faktum={barnFaktum}
 						  key={barnFaktum.faktumId}

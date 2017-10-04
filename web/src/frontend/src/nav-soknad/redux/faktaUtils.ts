@@ -1,40 +1,48 @@
 import { Faktum } from "../types";
-import { erDev } from "../utils";
 
-export function finnFaktum(
-	faktumKey: string,
-	fakta: Faktum[],
-	faktumId?: number
-): Faktum {
-	if (faktumId) {
-		return finnFaktumMedId(faktumKey, fakta, faktumId);
-	}
-	const faktum = fakta.filter((f: Faktum) => {
-		return f.key === faktumKey;
-	});
-	if (faktum.length === 0) {
-		if (erDev()) {
-			// tslint:disable-next-line
-			console.log("Faktum ikke funnet: " + faktumKey);
+export function updateFaktumMedLagretVerdi(faktum: Faktum): Faktum {
+	return {
+		...faktum,
+		lagret: {
+			value: faktum.value,
+			properties: { ...faktum.properties }
 		}
+	};
+}
+
+export function updateFaktaMedLagretVerdi(fakta: Faktum[]): Faktum[] {
+	return fakta.map(f => updateFaktumMedLagretVerdi(f));
+}
+
+export function getFaktumIndex(fakta: Faktum[], faktum: Faktum) {
+	const index = fakta.findIndex(item => {
+		return item.faktumId === faktum.faktumId;
+	});
+	if (index === -1) {
+		console.error("Manglende faktum " + JSON.stringify(faktum, null, 4));
 	}
-	return faktum[0];
+	return index;
 }
 
-export function getProgresjonFaktum(fakta: Faktum[]) {
-	return finnFaktum("progresjon", fakta);
+export function updateFaktumStateVerdi(fakta: Faktum[], faktum: Faktum) {
+	const index = getFaktumIndex(fakta, faktum);
+	if (index === -1) {
+		return [...fakta];
+	} else {
+		return [...fakta.slice(0, index), faktum, ...fakta.slice(index + 1)];
+	}
 }
 
-export function finnFaktumMedId(
-	faktumKey: string,
-	fakta: Faktum[],
-	faktumId: number
-): Faktum {
-	return fakta.filter((f: Faktum) => {
-		return f.faktumId === faktumId;
-	})[0];
-}
-
-export function finnFakta(faktumKey: string, fakta: Faktum[]): Faktum[] {
-	return fakta.filter(faktum => faktum.key === faktumKey);
+export function updateFaktumLagretVerdi(fakta: Faktum[], faktum: Faktum) {
+	const index = getFaktumIndex(fakta, faktum);
+	if (index === -1) {
+		return [...fakta];
+	} else {
+		const lagretFaktum = updateFaktumMedLagretVerdi(faktum);
+		return [
+			...fakta.slice(0, index),
+			{ ...lagretFaktum, touched: true } as Faktum,
+			...fakta.slice(index + 1)
+		];
+	}
 }

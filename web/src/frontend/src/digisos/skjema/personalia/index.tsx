@@ -28,6 +28,7 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 					<KontonummerFaktum
 						faktumKey="kontakt.kontonummer"
 						disabled={brukerHarIkkeKontonummer}
+						ignorert={brukerHarIkkeKontonummer}
 					/>
 					<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
 				</SporsmalFaktum>

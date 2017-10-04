@@ -1,5 +1,10 @@
 import { REST_STATUS, Faktum } from "../types";
 import { FaktumActionTypeKeys, FaktaActionTypeKeys } from "./faktaActionTypes";
+import {
+	updateFaktumMedLagretVerdi,
+	updateFaktumStateVerdi,
+	updateFaktumLagretVerdi
+} from "./faktaUtils";
 import { Reducer } from "./reduxTypes";
 
 export interface FaktumState {
@@ -19,7 +24,8 @@ const initialState: FaktumState = {
 };
 
 export type FaktumActionTypes =
-	| OppdatertFaktumVerdi
+	| LagreFaktum
+	| LagretFaktum
 	| OppdaterFaktumVerdi
 	| OpprettFaktum
 	| OpprettetFaktum
@@ -27,6 +33,7 @@ export type FaktumActionTypes =
 	| SlettetFaktum
 	| SetFaktaAction
 	| SetFaktumFailedAction
+	| SetFaktumIgnorert
 	| ResetFaktaAction;
 
 interface ResetFaktaAction {
@@ -38,8 +45,14 @@ interface OppdaterFaktumVerdi {
 	faktum: Faktum;
 }
 
-interface OppdatertFaktumVerdi {
-	type: FaktumActionTypeKeys.OPPDATERT_FAKTUM;
+interface LagreFaktum {
+	type: FaktumActionTypeKeys.LAGRE_FAKTUM;
+	faktum: Faktum;
+}
+
+interface LagretFaktum {
+	type: FaktumActionTypeKeys.LAGRET_FAKTUM;
+	faktum: Faktum;
 }
 
 interface OpprettFaktum {
@@ -70,6 +83,12 @@ interface SetFaktumFailedAction {
 	feilmelding: string;
 }
 
+interface SetFaktumIgnorert {
+	type: FaktumActionTypeKeys.IGNORER_FAKTUM;
+	faktum: Faktum;
+	ignorert: boolean;
+}
+
 const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 	state = initialState,
 	action
@@ -78,14 +97,20 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 		case FaktumActionTypeKeys.OPPDATER_FAKTUM:
 			return {
 				...state,
+				data: updateFaktumStateVerdi(state.data, action.faktum)
+			};
+		case FaktumActionTypeKeys.LAGRE_FAKTUM:
+			return {
+				...state,
 				restStatus: REST_STATUS.PENDING,
-				data: updateFaktumVerdi(state.data, action.faktum),
+				data: updateFaktumStateVerdi(state.data, action.faktum),
 				progresjonPending: action.faktum.key === "progresjon"
 			};
-		case FaktumActionTypeKeys.OPPDATERT_FAKTUM:
+		case FaktumActionTypeKeys.LAGRET_FAKTUM:
 			return {
 				...state,
 				restStatus: REST_STATUS.OK,
+				data: updateFaktumLagretVerdi(state.data, action.faktum),
 				progresjonPending: false
 			};
 		case FaktumActionTypeKeys.OPPRETT_FAKTUM: {
@@ -95,7 +120,16 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 			return {
 				...state,
 				restStatus: REST_STATUS.OK,
-				data: [...state.data, action.faktum]
+				data: [...state.data, updateFaktumMedLagretVerdi(action.faktum)]
+			};
+		}
+		case FaktumActionTypeKeys.IGNORER_FAKTUM: {
+			return {
+				...state,
+				data: updateFaktumStateVerdi(state.data, {
+					...action.faktum,
+					ignorert: action.ignorert
+				})
 			};
 		}
 		case FaktumActionTypeKeys.SLETTET_FAKTUM: {
@@ -122,17 +156,5 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 			return state;
 	}
 };
-
-function updateFaktumVerdi(fakta: Faktum[], faktum: Faktum) {
-	const index: number = fakta.findIndex(item => {
-		return item.faktumId === faktum.faktumId;
-	});
-	if (index === -1) {
-		console.error("Manglende faktum " + JSON.stringify(faktum, null, 4));
-		return [...fakta];
-	} else {
-		return [...fakta.slice(0, index), faktum, ...fakta.slice(index + 1)];
-	}
-}
 
 export default FaktumReducer;

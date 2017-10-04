@@ -38,10 +38,11 @@ class UtgifterGjeld extends React.Component<
 
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk}>
-				<SporsmalFaktum faktumKey={harBoutgifter.faktum} required={true}>
+				<SporsmalFaktum faktumKey={harBoutgifter.faktum}>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} value="true" />
 					<Underskjema
-						visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}>
+						visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}
+					>
 						<SporsmalFaktum faktumKey={boUtgifter.faktum}>
 							{/*TODO checkboxgruppefaktum*/}
 							<CheckboxFaktum
@@ -91,10 +92,11 @@ class UtgifterGjeld extends React.Component<
 					</Underskjema>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} value="false" />
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey={harUtgifterBarn.faktum} required={true}>
+				<SporsmalFaktum faktumKey={harUtgifterBarn.faktum}>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} value="true" />
 					<Underskjema
-						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}>
+						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}
+					>
 						{/*TODO checkboxgruppefaktum*/}
 
 						<SporsmalFaktum faktumKey={barneUtgifter.faktum}>

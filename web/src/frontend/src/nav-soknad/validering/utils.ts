@@ -4,7 +4,7 @@ import {
 	FaktumValideringsregler,
 	ValideringKey
 } from "./types";
-import { getFaktumVerdi } from "../utils";
+import { getFaktumVerdi, finnFaktum } from "../utils";
 
 export function validerFaktum(
 	fakta: Faktum[],
@@ -17,8 +17,16 @@ export function validerFaktum(
 		vr => vr.faktumKey === faktumKey
 	);
 	if (faktumvalidering) {
+		const faktum = finnFaktum(faktumKey, fakta);
 		faktumvalidering.valideringer.forEach(v => {
 			const feilKey = v(verdi);
+			if (faktum.ignorert) {
+				return;
+			}
+			if (feilKey !== ValideringKey.PAKREVD && (!verdi || verdi === "")) {
+				/** Tillate tomme verdier for alt untatt det som er påkrevd */
+				return;
+			}
 			if (feilKey) {
 				valideringsfeil.push({
 					faktumKey: faktumvalidering.faktumKey,

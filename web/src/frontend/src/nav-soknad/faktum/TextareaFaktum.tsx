@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Textarea } from "nav-frontend-skjema";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { getInputFaktumTekst, getIntlTextOrKey } from "../utils";
 import {
-	InjectedFaktumComponentProps,
-	faktumComponent
+	faktumComponent,
+	InjectedFaktumComponentProps
 } from "./FaktumComponent";
 
 interface OwnProps {
@@ -14,45 +14,22 @@ interface OwnProps {
 	maxLength?: number;
 }
 
-interface State {
-	value: string;
-}
-
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
-const getStateFromProps = (props: Props): State => ({
-	value: props.getFaktumVerdi() || ""
-});
-
-class TextareaFaktum extends React.Component<Props, State> {
-	textarea: any;
-
+class TextareaFaktum extends React.Component<Props, {}> {
 	constructor(props: Props) {
 		super(props);
 		this.handleOnBlur = this.handleOnBlur.bind(this);
 		this.handleOnChange = this.handleOnChange.bind(this);
 		this.tellerTekst = this.tellerTekst.bind(this);
-		this.state = getStateFromProps(this.props);
-	}
-
-	componentWillReceiveProps(nextProps: Props) {
-		if (
-			document.activeElement !== this.textarea &&
-			nextProps.feilkode === null
-		) {
-			this.setState(getStateFromProps(nextProps));
-		}
 	}
 
 	handleOnChange(evt: any) {
-		const value = evt.target.value;
-		this.setState({ value });
-		this.props.validerVerdiDersomNodvendig(value);
+		this.props.setFaktumVerdi(evt.target.value, this.props.property);
 	}
 
 	handleOnBlur() {
-		this.props.setFaktumVerdi(this.state.value);
-		this.props.validerFaktum(this.state.value);
+		this.props.lagreFaktumDersomGyldig();
 	}
 
 	tellerTekst(antallTegn: number, maxLength: number) {
@@ -78,6 +55,7 @@ class TextareaFaktum extends React.Component<Props, State> {
 	render() {
 		const {
 			faktumKey,
+			property,
 			labelId,
 			disabled,
 			textareaClass,
@@ -85,12 +63,15 @@ class TextareaFaktum extends React.Component<Props, State> {
 			required,
 			intl
 		} = this.props;
-		const tekster = getInputFaktumTekst(intl, faktumKey);
+		const tekster = getInputFaktumTekst(intl, faktumKey, property);
+		const verdi =
+			(property
+				? this.props.getPropertyVerdi()
+				: this.props.getFaktumVerdi()) || "";
 		return (
 			<Textarea
 				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
-				textareaRef={(c: any) => (this.textarea = c)}
-				value={this.state.value}
+				value={verdi}
 				name={this.props.getName()}
 				disabled={disabled}
 				onChange={this.handleOnChange}

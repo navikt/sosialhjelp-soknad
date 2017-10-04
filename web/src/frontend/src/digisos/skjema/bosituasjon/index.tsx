@@ -23,7 +23,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const antall = inputKeys("bosituasjon.antallpersoner");
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.bosituasjonbolk}>
-				<SporsmalFaktum faktumKey={bosituasjon.faktum} required={true}>
+				<SporsmalFaktum faktumKey={bosituasjon.faktum}>
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="eier" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="leier" />
 					<RadioFaktum faktumKey={bosituasjon.faktum} value="kommunal" />
@@ -43,13 +43,13 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						</SporsmalFaktum>
 					</Underskjema>
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey={antall.faktum} >
+				<SporsmalFaktum faktumKey={antall.faktum}>
 					<BelopFaktum
-							faktumKey={antall.faktum}
-							maxLength={2}
-							kunHeltall={true}
-							bredde="xs"
-						/>
+						faktumKey={antall.faktum}
+						maxLength={2}
+						kunHeltall={true}
+						bredde="xs"
+					/>
 				</SporsmalFaktum>
 			</DigisosSkjemaSteg>
 		);
