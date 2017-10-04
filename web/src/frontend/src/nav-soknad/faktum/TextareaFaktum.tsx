@@ -27,8 +27,7 @@ class TextareaFaktum extends React.Component<Props, {}> {
 	}
 
 	handleOnChange(evt: any) {
-		const value = evt.target.value;
-		this.props.setFaktumVerdi(value, this.props.property);
+		this.props.setFaktumVerdi(evt.target.value, this.props.property);
 	}
 
 	handleOnBlur() {

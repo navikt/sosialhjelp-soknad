@@ -24,23 +24,6 @@ export interface OwnProps extends FaktumComponentProps {
 export type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 class InputFaktum extends React.Component<Props, {}> {
-	input: any;
-
-	constructor(props: Props) {
-		super(props);
-		this.handleOnBlur = this.handleOnBlur.bind(this);
-		this.handleOnChange = this.handleOnChange.bind(this);
-	}
-
-	handleOnChange(evt: any) {
-		const value = evt.target.value;
-		this.props.setFaktumVerdi(value);
-	}
-
-	handleOnBlur() {
-		this.props.lagreFaktumDersomGyldig();
-	}
-
 	render() {
 		const {
 			faktumKey,
@@ -62,10 +45,10 @@ class InputFaktum extends React.Component<Props, {}> {
 				autoComplete="off"
 				name={this.props.getName()}
 				disabled={disabled}
-				inputRef={(c: any) => (this.input = c)}
 				value={this.props.getFaktumVerdi()}
-				onChange={this.handleOnChange}
-				onBlur={this.handleOnBlur}
+				onChange={(evt: any) =>
+					this.props.setFaktumVerdi(evt.target.value, this.props.property)}
+				onBlur={() => this.props.lagreFaktumDersomGyldig()}
 				label={tekster.label}
 				placeholder={tekster.pattern}
 				feil={this.props.getFeil(intl)}
