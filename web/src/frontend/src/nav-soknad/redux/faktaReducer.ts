@@ -23,6 +23,8 @@ export type FaktumActionTypes =
 	| OppdaterFaktumVerdi
 	| OpprettFaktum
 	| OpprettetFaktum
+	| SlettFaktum
+	| SlettetFaktum
 	| SetFaktaAction
 	| SetFaktumFailedAction
 	| ResetFaktaAction;
@@ -47,6 +49,15 @@ interface OpprettFaktum {
 interface OpprettetFaktum {
 	type: FaktumActionTypeKeys.OPPRETTET_FAKTUM;
 	faktum: Faktum;
+}
+
+interface SlettFaktum {
+	type: FaktumActionTypeKeys.SLETT_FAKTUM;
+	faktumId: number;
+}
+
+interface SlettetFaktum {
+	type: FaktumActionTypeKeys.SLETTET_FAKTUM;
 }
 
 interface SetFaktaAction {
@@ -86,6 +97,15 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 				restStatus: REST_STATUS.OK,
 				data: [...state.data, action.faktum]
 			};
+		}
+		case FaktumActionTypeKeys.SLETTET_FAKTUM: {
+			return {...state, restStatus: REST_STATUS.OK};
+		}
+		case FaktumActionTypeKeys.SLETT_FAKTUM: {
+			return {
+				...state,
+				restStatus: REST_STATUS.PENDING,
+				data: state.data.filter((faktum) => faktum.faktumId !== action.faktumId)};
 		}
 		case FaktaActionTypeKeys.RESET_FAKTA:
 			return {

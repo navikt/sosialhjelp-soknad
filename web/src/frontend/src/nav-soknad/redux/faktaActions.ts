@@ -6,7 +6,7 @@ import {
 	SoknadAppState
 } from "./reduxTypes";
 import { Faktum, FaktumValueType } from "../types";
-import { fetchPost, fetchPut } from "../utils/rest-utils";
+import { fetchPost, fetchPut, fetchDelete } from "../utils/rest-utils";
 import { FaktumActionTypes } from "./faktaReducer";
 
 export function setFaktumVerdi(
@@ -69,5 +69,16 @@ export function opprettFaktum(faktum: OpprettFaktumType | Faktum) {
 export function resetFakta() {
 	return {
 		type: FaktaActionTypeKeys.RESET_FAKTA
+	};
+}
+
+export function slettFaktum(faktumId: number) {
+	return (dispatch: SoknadDispatch<FaktumActionTypes>) => {
+		dispatch({type: FaktumActionTypeKeys.SLETT_FAKTUM, faktumId});
+		return fetchDelete("fakta/" + faktumId)
+			.then(() => dispatch({ type: FaktumActionTypeKeys.SLETTET_FAKTUM }))
+			.catch((reason: string) => {
+			dispatch({type: FaktumActionTypeKeys.FEILET, feilmelding: reason});
+			});
 	};
 }
