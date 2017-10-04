@@ -5,11 +5,7 @@ import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema/index";
 import PersonFaktum from "../../../nav-soknad/faktum/PersonFaktum";
 import { Faktum } from "../../../nav-soknad/types";
-import {
-	faktumIsSelected,
-	getPropertyVerdi,
-	radioCheckKeys
-} from "../../../nav-soknad/utils";
+import { faktumIsSelected, getPropertyVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
@@ -33,7 +29,6 @@ export default class Barn extends React.Component<
 				<SporsmalFaktum faktumKey={faktumKey}>
 					<PersonFaktum
 						faktumKey={faktumKey}
-						brukProperties={true}
 						faktumId={faktumId}
 					/>
 					<SporsmalFaktum faktumKey={borInfo.faktum}>
@@ -45,7 +40,7 @@ export default class Barn extends React.Component<
 						/>
 						<NivaTreSkjema
 							visible={faktumIsSelected(
-								getPropertyVerdi(fakta, borInfo.faktum, "borsammen", faktumId)
+								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId)
 							)}>
 							<SporsmalFaktum faktumKey={hvormye.faktum}>
 								<BelopFaktum
