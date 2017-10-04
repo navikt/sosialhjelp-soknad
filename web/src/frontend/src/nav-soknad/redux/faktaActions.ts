@@ -57,6 +57,16 @@ export function setFaktumVerdi(
 	};
 }
 
+export function setFaktumIgnorert(faktum: Faktum, ignorert: boolean) {
+	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
+		dispatch({
+			type: FaktumActionTypeKeys.IGNORER_FAKTUM,
+			faktum,
+			ignorert
+		});
+	};
+}
+
 interface OpprettFaktumType {
 	key: string;
 	parrentFaktum: number;

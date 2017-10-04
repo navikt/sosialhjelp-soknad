@@ -5,7 +5,7 @@ export interface Steg {
 	cmstekst: string;
 }
 
-export interface Faktum {
+interface BaseFaktum {
 	value: FaktumValueType;
 	properties: object;
 	faktumId: number;
@@ -14,8 +14,13 @@ export interface Faktum {
 	key: string;
 	faktumEgenskaper?: FaktumEgenskap[];
 	type?: string;
+}
+
+export interface Faktum extends BaseFaktum {
 	/** Settes til true ved første lagring av verdi */
 	touched?: boolean;
+	/** Settes til true dersom faktum ikke skal validers */
+	ignorert?: boolean;
 	/** Verdier som er lagret på server - kun gyldige verdier */
 	lagret?: {
 		value?: FaktumValueType;

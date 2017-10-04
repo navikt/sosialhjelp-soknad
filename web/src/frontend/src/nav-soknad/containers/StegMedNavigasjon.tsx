@@ -13,7 +13,7 @@ import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
 import { SkjemaConfig, SkjemaStegType, Faktum } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
-import { getProgresjonFaktum } from "../redux/faktaUtils";
+import { getProgresjonFaktum } from "../utils";
 import { setFaktum, lagreFaktum } from "../redux/faktaActions";
 import {
 	clearFaktaValideringsfeil,

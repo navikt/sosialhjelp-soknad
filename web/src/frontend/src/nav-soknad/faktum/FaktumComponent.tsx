@@ -3,8 +3,12 @@ import { connect } from "react-redux";
 import { InjectedIntl } from "react-intl";
 import { Feil } from "nav-frontend-skjema";
 import { SoknadAppState, DispatchProps } from "../redux/reduxTypes";
-import { setFaktum, lagreFaktum } from "../redux/faktaActions";
-import { finnFaktum } from "../redux/faktaUtils";
+import {
+	setFaktum,
+	lagreFaktum,
+	setFaktumIgnorert
+} from "../redux/faktaActions";
+import { finnFaktum } from "../utils";
 import {
 	registerFaktumValidering,
 	unregisterFaktumValidering,
@@ -37,10 +41,13 @@ export interface Props {
 	validerFunc?: FaktumValideringFunc[];
 	/** Denne legger til validering for påkrevd dersom true */
 	required?: boolean;
+	/** Denne gjør at en evt. feil ikke tas hensyn til */
+	ignorert?: boolean;
 }
 
 interface InjectedProps {
 	fakta: Faktum[];
+	/** Feilkode som brukes for å hente opp feilmelding gjennom intl */
 	feilkode?: string;
 	/** Alle registrerte valideringsregler i state */
 	valideringsregler?: FaktumValideringsregler[];
@@ -106,6 +113,9 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.lagreFaktum = this.lagreFaktum.bind(this);
 			this.getName = this.getName.bind(this);
 			this.getFeil = this.getFeil.bind(this);
+			this.props.dispatch(
+				setFaktumIgnorert(this.faktum(), this.props.ignorert)
+			);
 		}
 
 		componentWillMount() {
@@ -127,6 +137,13 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
 		}
 
+		componentWillReceiveProps(nextProps: any) {
+			const ignorert = (nextProps as ResultProps).ignorert;
+			if (ignorert !== this.props.ignorert) {
+				this.props.dispatch(setFaktumIgnorert(this.faktum(), ignorert));
+			}
+		}
+
 		faktum(): Faktum {
 			return finnFaktum(
 				this.props.faktumKey,
@@ -136,6 +153,9 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		getFaktumVerdi(): string {
+			if (this.props.ignorert) {
+				return "";
+			}
 			return this.props.property
 				? this.getPropertyVerdi()
 				: getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
@@ -211,8 +231,9 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			return lagreFaktum(this.faktum(), this.props.dispatch);
 		}
 
+		/** Returnerer feil for komponenten dersom det finnes og den ikke er ignorert */
 		getFeil(intl: InjectedIntl) {
-			if (!this.props.feilkode) {
+			if (!this.props.feilkode || this.props.ignorert) {
 				return null;
 			}
 			return {

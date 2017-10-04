@@ -3,8 +3,6 @@ import {
 	ValideringActionTypes,
 	ValideringActionTypeKeys
 } from "./valideringActionTypes";
-import { FaktumActionTypeKeys } from "./faktaActionTypes";
-import { FaktumActionTypes } from "./faktaReducer";
 import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
 
 export interface ValideringState {
@@ -72,15 +70,11 @@ const setFaktumValideringsfeil = (
 	return [...feil.slice(0, idx), faktumValideringfeil, ...feil.slice(idx + 1)];
 };
 
-const valideringReducer: Reducer<
-	ValideringState,
-	ValideringActionTypes | FaktumActionTypes
-> = (state = defaultState, action): ValideringState => {
+const valideringReducer: Reducer<ValideringState, ValideringActionTypes> = (
+	state = defaultState,
+	action
+): ValideringState => {
 	switch (action.type) {
-		case FaktumActionTypeKeys.OPPDATER_FAKTUM:
-			return {
-				...state
-			};
 		case ValideringActionTypeKeys.REGISTER_FAKTUM_VALIDERING:
 			return {
 				...state,

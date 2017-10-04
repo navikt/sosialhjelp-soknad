@@ -3,10 +3,8 @@ import {
 	setFaktumVerdi,
 	resetFakta
 } from "../../../nav-soknad/redux/faktaActions";
-import {
-	finnFaktum,
-	updateFaktaMedLagretVerdi
-} from "../../../nav-soknad/redux/faktaUtils";
+import { updateFaktaMedLagretVerdi } from "../../../nav-soknad/redux/faktaUtils";
+import { finnFaktum } from "../../../nav-soknad/utils";
 import {
 	FaktaActionTypeKeys,
 	FaktaActionTypes,

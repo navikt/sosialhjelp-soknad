@@ -1,6 +1,10 @@
 import { REST_STATUS, Faktum } from "../types";
 import { FaktumActionTypeKeys, FaktaActionTypeKeys } from "./faktaActionTypes";
-import { updateFaktumMedLagretVerdi } from "./faktaUtils";
+import {
+	updateFaktumMedLagretVerdi,
+	updateFaktumStateVerdi,
+	updateFaktumLagretVerdi
+} from "./faktaUtils";
 import { Reducer } from "./reduxTypes";
 
 export interface FaktumState {
@@ -27,6 +31,7 @@ export type FaktumActionTypes =
 	| OpprettetFaktum
 	| SetFaktaAction
 	| SetFaktumFailedAction
+	| SetFaktumIgnorert
 	| ResetFaktaAction;
 
 interface ResetFaktaAction {
@@ -67,6 +72,12 @@ interface SetFaktumFailedAction {
 	feilmelding: string;
 }
 
+interface SetFaktumIgnorert {
+	type: FaktumActionTypeKeys.IGNORER_FAKTUM;
+	faktum: Faktum;
+	ignorert: boolean;
+}
+
 const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 	state = initialState,
 	action
@@ -101,6 +112,15 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 				data: [...state.data, updateFaktumMedLagretVerdi(action.faktum)]
 			};
 		}
+		case FaktumActionTypeKeys.IGNORER_FAKTUM: {
+			return {
+				...state,
+				data: updateFaktumStateVerdi(state.data, {
+					...action.faktum,
+					ignorert: action.ignorert
+				})
+			};
+		}
 		case FaktaActionTypeKeys.RESET_FAKTA:
 			return {
 				...state,
@@ -116,38 +136,5 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 			return state;
 	}
 };
-
-function getFaktumIndex(fakta: Faktum[], faktum: Faktum) {
-	const index = fakta.findIndex(item => {
-		return item.faktumId === faktum.faktumId;
-	});
-	if (index === -1) {
-		console.error("Manglende faktum " + JSON.stringify(faktum, null, 4));
-	}
-	return index;
-}
-
-function updateFaktumStateVerdi(fakta: Faktum[], faktum: Faktum) {
-	const index = getFaktumIndex(fakta, faktum);
-	if (index === -1) {
-		return [...fakta];
-	} else {
-		return [...fakta.slice(0, index), faktum, ...fakta.slice(index + 1)];
-	}
-}
-
-function updateFaktumLagretVerdi(fakta: Faktum[], faktum: Faktum) {
-	const index = getFaktumIndex(fakta, faktum);
-	if (index === -1) {
-		return [...fakta];
-	} else {
-		const lagretFaktum = updateFaktumMedLagretVerdi(faktum);
-		return [
-			...fakta.slice(0, index),
-			{ ...lagretFaktum, touched: true } as Faktum,
-			...fakta.slice(index + 1)
-		];
-	}
-}
 
 export default FaktumReducer;
