@@ -95,8 +95,6 @@
 		"prettier:update":
 			"prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css|*.json)\"",
 		"stylelint": "stylelint \"src/**/*.less\" --syntax less",
-		"stylelint:watch":
-			"chokidar \"src/**/*.less\" -c \"stylelint \"src/**/*.less\" --syntax less\"",
 		"stylelint:watch": "chokidar \"src/**/*.less\" -c \"stylelint \"src/**/*.less\" --syntax less\"",
 		"e2e": "node nightwatch.js --url localhost:3000/soknadsosialhjelp/informasjon",
 		"eject": "react-scripts-ts eject"
