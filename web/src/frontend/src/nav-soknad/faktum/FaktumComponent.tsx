@@ -37,37 +37,38 @@ export interface Props {
 	faktumKey: string;
 	property?: string;
 	faktumId?: number;
-	/** Array med valideringsfunksjoner som skal brukes for komponenten */
+	/** Array med valideringsfunksjoner som skal brukes ved validering av Faktum */
 	validerFunc?: FaktumValideringFunc[];
-	/** Denne legger til validering for påkrevd dersom true */
+	/** Påkrevd validering legges til i validerFunc array dersom true */
 	required?: boolean;
-	/** Denne gjør at en evt. feil ikke tas hensyn til */
+	/** Ignorerer validering */
 	ignorert?: boolean;
 }
 
 interface InjectedProps {
+	/** Alle fakta som er registrert i søknaden */
 	fakta: Faktum[];
 	/** Feilkode som brukes for å hente opp feilmelding gjennom intl */
 	feilkode?: string;
 	/** Alle registrerte valideringsregler i state */
 	valideringsregler?: FaktumValideringsregler[];
-
+	/** Genererer navn for bruk i "name"-prop i DOM elementet */
 	getName: () => string;
-	/** Setter verdi på state og server */
-	setFaktumVerdiOgLagre: (verdi: string, property?: string) => void;
 	/** Setter verdi på state */
 	setFaktumVerdi: (verdi: string, property?: string) => void;
+	/** Setter verdi på state og lagrer på server dersom verdier er gyldig */
+	setFaktumVerdiOgLagre: (verdi: string, property?: string) => void;
 	/** Henter faktumverdi fra state  */
 	getFaktumVerdi: () => string;
 	/** Henter properties fra state  */
 	getPropertyVerdi: () => string;
-	/** Validerer faktumverdi  */
-	validerFaktum: () => string;
+	/** Validerer faktumverdi og returnerer feilkode eller null dersom det ikke er noen feil */
+	validerFaktum: () => string | null;
 	/** Validerer faktumverdi og lagre dersom gyldig  */
 	lagreFaktumDersomGyldig: () => void;
 	/** Lagrer faktum på server */
 	lagreFaktum: () => Promise<any>;
-	/** Validerer faktumverdi dersom feil eller verdi er registrert */
+	/** Returnerer feil på faktum. Tar ikke med feil dersom faktum er ignorert */
 	getFeil: (intl: InjectedIntl) => Feil;
 }
 
@@ -220,6 +221,10 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			return feilkode;
 		}
 
+		lagreFaktum(): Promise<any> {
+			return lagreFaktum(this.faktum(), this.props.dispatch);
+		}
+
 		lagreFaktumDersomGyldig() {
 			const feil = this.validerFaktum();
 			if (!feil) {
@@ -227,11 +232,6 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			}
 		}
 
-		lagreFaktum(): Promise<any> {
-			return lagreFaktum(this.faktum(), this.props.dispatch);
-		}
-
-		/** Returnerer feil for komponenten dersom det finnes og den ikke er ignorert */
 		getFeil(intl: InjectedIntl) {
 			if (!this.props.feilkode || this.props.ignorert) {
 				return null;
