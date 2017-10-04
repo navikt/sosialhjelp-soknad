@@ -39,9 +39,9 @@ module.exports = {
 	},
 	"man skal få opprettet en søknad når man har valgt kommune og klikket på Fortsett knappen": () => {
 		hovedside.click('@horten');
-		hovedside.expect.element('@fortsett').to.be.present.after(timeout);
+		hovedside.expect.element('@fortsett').to.be.present.after(timeout * 2);
 		hovedside.click('@fortsett');
-		soknadsskjema.expect.element('@kontonummer').to.be.present.after(timeout);
+		soknadsskjema.expect.element('@kontonummer').to.be.present.after(timeout * 2);
 		soknadsskjema.expect.element('@telefon').to.be.present;
 	},
 	"skal vise valideringsfeilmelding hvis man har fylt ut ugyldig konto- eller telefonnummer": () => {
