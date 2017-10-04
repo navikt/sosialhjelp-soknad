@@ -23,10 +23,14 @@ export function registerFaktumValidering(
 	};
 }
 
-export function unregisterFaktumValidering(faktumKey: string) {
+export function unregisterFaktumValidering(
+	faktumKey: string,
+	property: string
+) {
 	return {
 		type: ValideringActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING,
-		faktumKey
+		faktumKey,
+		property
 	};
 }
 

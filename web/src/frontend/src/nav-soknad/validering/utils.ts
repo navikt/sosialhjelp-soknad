@@ -4,35 +4,36 @@ import {
 	FaktumValideringsregler,
 	ValideringKey
 } from "./types";
-import { getFaktumVerdi, finnFaktum } from "../utils";
+import { finnFaktum } from "../utils";
 
 export function validerFaktum(
-	fakta: Faktum[],
-	faktumKey: string,
-	verdi: string,
+	faktum: Faktum,
 	valideringsregler: FaktumValideringsregler[]
 ): Valideringsfeil {
 	const valideringsfeil: Valideringsfeil[] = [];
 	const faktumvalidering = valideringsregler.find(
-		vr => vr.faktumKey === faktumKey
+		vr => vr.faktumKey === faktum.key
 	);
 	if (faktumvalidering) {
-		const faktum = finnFaktum(faktumKey, fakta);
 		faktumvalidering.valideringer.forEach(v => {
-			const feilKey = v(verdi);
+			const feilKey = v(faktum.value);
 			if (faktum.ignorert) {
 				return;
 			}
-			if (feilKey !== ValideringKey.PAKREVD && (!verdi || verdi === "")) {
+			if (
+				feilKey !== ValideringKey.PAKREVD &&
+				(!faktum.value || faktum.value === "")
+			) {
 				/** Tillate tomme verdier for alt untatt det som er påkrevd */
 				return;
 			}
 			if (feilKey) {
 				valideringsfeil.push({
 					faktumKey: faktumvalidering.faktumKey,
+					property: faktumvalidering.property,
 					feilkode:
 						feilKey === ValideringKey.PAKREVD
-							? `${faktumKey}.feilmelding`
+							? `${faktum.key}.feilmelding`
 							: feilKey
 				});
 			}
@@ -47,12 +48,8 @@ export function validerAlleFaktum(
 ): Valideringsfeil[] {
 	let valideringsfeil: Valideringsfeil[] = [];
 	valideringsregler.forEach(faktumvalidering => {
-		const feil = validerFaktum(
-			fakta,
-			faktumvalidering.faktumKey,
-			getFaktumVerdi(fakta, faktumvalidering.faktumKey),
-			valideringsregler
-		);
+		const faktum = finnFaktum(faktumvalidering.faktumKey, fakta);
+		const feil = validerFaktum(faktum, valideringsregler);
 		if (feil) {
 			valideringsfeil = valideringsfeil.concat(feil);
 		}

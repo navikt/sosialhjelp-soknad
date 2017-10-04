@@ -7,14 +7,16 @@ export enum ValideringKey {
 	ER_KONTONUMMER = "validering.erKontonummer"
 }
 
+export type FaktumValideringFunc = (value: string) => ValideringKey;
+
 export interface Valideringsfeil {
 	faktumKey: string;
+	property?: string;
 	feilkode: string;
 }
 
-export type FaktumValideringFunc = (value: string) => ValideringKey;
-
 export interface FaktumValideringsregler {
 	faktumKey: string;
+	property?: string;
 	valideringer: FaktumValideringFunc[];
 }

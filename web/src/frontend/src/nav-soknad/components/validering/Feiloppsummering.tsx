@@ -31,6 +31,7 @@ const scrollToFaktum = (evt: React.MouseEvent<any>, faktumKey: string) => {
 
 const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 	faktumKey,
+	property,
 	feilkode
 }) => {
 	return (
@@ -76,7 +77,8 @@ class Feiloppsummering extends React.Component<Props, {}> {
 								id={COMP_ID}
 								className="panel panel--feiloppsummering"
 								tabIndex={-1}
-								ref={c => (this.oppsummering = c)}>
+								ref={c => (this.oppsummering = c)}
+							>
 								<Undertittel className="feiloppsummering__tittel blokk-s">
 									Det er {valideringsfeil.length} feil i skjemaet
 								</Undertittel>

@@ -128,6 +128,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 				this.props.dispatch(
 					registerFaktumValidering({
 						faktumKey: this.props.faktumKey,
+						property: this.props.property,
 						valideringer
 					})
 				);
@@ -135,7 +136,9 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		componentWillUnmount() {
-			this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
+			this.props.dispatch(
+				unregisterFaktumValidering(this.props.faktumKey, this.props.property)
+			);
 		}
 
 		componentWillReceiveProps(nextProps: any) {
@@ -175,12 +178,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 
 		validerOgOppdaterFaktum(verdi: string, property?: string): FaktumStatus {
 			const faktum = oppdaterFaktumMedVerdier(this.faktum(), verdi, property);
-			const feilkode = validerFaktum(
-				this.props.fakta,
-				this.props.faktumKey,
-				faktum.value,
-				this.props.valideringsregler
-			);
+			const feilkode = validerFaktum(faktum, this.props.valideringsregler);
 			return {
 				faktum,
 				feilkode
@@ -210,9 +208,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 
 		validerFaktum(): Valideringsfeil {
 			const feilkode = validerFaktum(
-				this.props.fakta,
-				this.props.faktumKey,
-				this.getFaktumVerdi(),
+				this.faktum(),
 				this.props.valideringsregler
 			);
 			this.props.dispatch(
