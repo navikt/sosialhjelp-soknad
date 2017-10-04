@@ -17,8 +17,6 @@ interface OwnProps {
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 class TextareaFaktum extends React.Component<Props, {}> {
-	textarea: any;
-
 	constructor(props: Props) {
 		super(props);
 		this.handleOnBlur = this.handleOnBlur.bind(this);
@@ -73,7 +71,6 @@ class TextareaFaktum extends React.Component<Props, {}> {
 		return (
 			<Textarea
 				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
-				textareaRef={(c: any) => (this.textarea = c)}
 				value={verdi}
 				name={this.props.getName()}
 				disabled={disabled}
