@@ -213,6 +213,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		validerFaktum(): Valideringsfeil {
 			const feilkode = validerFaktum({
 				faktum: this.faktum(),
+				property: this.props.property,
 				valideringsregler: this.props.valideringsregler
 			});
 			this.props.dispatch(
@@ -277,7 +278,9 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		props: Props
 	): PropsFromState => {
 		const feil = state.validering.feil.find(
-			f => f.faktumKey === props.faktumKey
+			f =>
+				f.faktumKey === props.faktumKey &&
+				(props.property ? f.property === props.property : true)
 		);
 		return {
 			fakta: state.fakta.data,
