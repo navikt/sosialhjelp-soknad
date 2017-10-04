@@ -9,7 +9,7 @@ class Bostotte extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const bostotte = radioCheckKeys("inntekt.bostotte");
 		return (
-			<SporsmalFaktum faktumKey={bostotte.faktum} required={true}>
+			<SporsmalFaktum faktumKey={bostotte.faktum}>
 				<RadioFaktum faktumKey={bostotte.faktum} value="true" />
 				<RadioFaktum faktumKey={bostotte.faktum} value="false" />
 			</SporsmalFaktum>
