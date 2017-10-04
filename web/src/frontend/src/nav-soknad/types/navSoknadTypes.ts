@@ -6,14 +6,21 @@ export interface Steg {
 }
 
 export interface Faktum {
+	value: FaktumValueType;
+	properties: object;
 	faktumId: number;
 	soknadId: number;
 	parrentFaktum: null | number;
 	key: string;
-	value: FaktumValueType;
 	faktumEgenskaper?: FaktumEgenskap[];
-	properties: object;
 	type?: string;
+	/** Settes til true ved første lagring av verdi */
+	touched?: boolean;
+	/** Verdier som er lagret på server - kun gyldige verdier */
+	lagret?: {
+		value?: FaktumValueType;
+		properties?: object;
+	};
 }
 
 export interface FaktumEgenskap {

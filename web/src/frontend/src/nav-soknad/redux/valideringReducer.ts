@@ -111,13 +111,18 @@ const valideringReducer: Reducer<
 				visValideringsfeil: false
 			};
 		case ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL:
+			const feil = setFaktumValideringsfeil(
+				state.feil,
+				action.faktumKey,
+				action.valideringsfeil
+			);
+			const visValideringsfeil = state.visValideringsfeil
+				? feil.length > 0
+				: state.visValideringsfeil;
 			return {
 				...state,
-				feil: setFaktumValideringsfeil(
-					state.feil,
-					action.faktumKey,
-					action.valideringsfeil
-				)
+				feil,
+				visValideringsfeil
 			};
 		default:
 			return state;

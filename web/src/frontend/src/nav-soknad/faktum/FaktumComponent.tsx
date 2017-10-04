@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { InjectedIntl } from "react-intl";
 import { Feil } from "nav-frontend-skjema";
 import { SoknadAppState, DispatchProps } from "../redux/reduxTypes";
-import { setFaktumVerdi as setFaktumVerdiOnState } from "../redux/faktaActions";
+import { setFaktum, lagreFaktum } from "../redux/faktaActions";
 import { finnFaktum } from "../redux/faktaUtils";
 import {
 	registerFaktumValidering,
@@ -18,7 +18,16 @@ import {
 } from "../validering/types";
 import { validerFaktum } from "../validering/utils";
 import { pakrevd } from "../validering/valideringer";
-import { getFaktumVerdi, getPropertyVerdi } from "../utils";
+import {
+	getFaktumVerdi,
+	getPropertyVerdi,
+	oppdaterFaktumMedVerdier
+} from "../utils";
+
+interface FaktumStatus {
+	faktum: Faktum;
+	feilkode: Valideringsfeil;
+}
 
 export interface Props {
 	faktumKey: string;
@@ -35,14 +44,23 @@ interface InjectedProps {
 	feilkode?: string;
 	/** Alle registrerte valideringsregler i state */
 	valideringsregler?: FaktumValideringsregler[];
+
 	getName: () => string;
-	setFaktumVerdi: (verdi: string, property?: string, faktumId?: string) => void;
+	/** Setter verdi på state og server */
+	setFaktumVerdiOgLagre: (verdi: string, property?: string) => void;
+	/** Setter verdi på state */
+	setFaktumVerdi: (verdi: string, property?: string) => void;
+	/** Henter faktumverdi fra state  */
 	getFaktumVerdi: () => string;
+	/** Henter properties fra state  */
 	getPropertyVerdi: () => string;
 	/** Validerer faktumverdi  */
-	validerFaktum: (verdi: string) => string;
+	validerFaktum: () => string;
+	/** Validerer faktumverdi og lagre dersom gyldig  */
+	lagreFaktumDersomGyldig: () => void;
+	/** Lagrer faktum på server */
+	lagreFaktum: () => Promise<any>;
 	/** Validerer faktumverdi dersom feil eller verdi er registrert */
-	validerVerdiDersomNodvendig: (verdi: string) => void;
 	getFeil: (intl: InjectedIntl) => Feil;
 }
 
@@ -80,12 +98,12 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		constructor(props: ResultProps) {
 			super(props);
 			this.setFaktumVerdi = this.setFaktumVerdi.bind(this);
+			this.setFaktumVerdiOgLagre = this.setFaktumVerdiOgLagre.bind(this);
 			this.getFaktumVerdi = this.getFaktumVerdi.bind(this);
 			this.getPropertyVerdi = this.getPropertyVerdi.bind(this);
 			this.validerFaktum = this.validerFaktum.bind(this);
-			this.validerVerdiDersomNodvendig = this.validerVerdiDersomNodvendig.bind(
-				this
-			);
+			this.lagreFaktumDersomGyldig = this.lagreFaktumDersomGyldig.bind(this);
+			this.lagreFaktum = this.lagreFaktum.bind(this);
 			this.getName = this.getName.bind(this);
 			this.getFeil = this.getFeil.bind(this);
 		}
@@ -109,31 +127,17 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
 		}
 
-		setFaktumVerdi(verdi: string, property?: string) {
-			const erGyldigVerdi = this.validerFaktumVerdi(verdi) === null;
-			if (erGyldigVerdi) {
-				this.props.dispatch(
-					setFaktumVerdiOnState(
-						finnFaktum(
-							this.props.faktumKey,
-							this.props.fakta,
-							this.props.faktumId
-						),
-						verdi,
-						property
-					)
-				);
-			}
+		faktum(): Faktum {
+			return finnFaktum(
+				this.props.faktumKey,
+				this.props.fakta,
+				this.props.faktumId
+			);
 		}
 
 		getFaktumVerdi(): string {
 			return this.props.property
-				? getPropertyVerdi(
-						this.props.fakta,
-						this.props.faktumKey,
-						this.props.property,
-						this.props.faktumId
-					) || ""
+				? this.getPropertyVerdi()
 				: getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
 		}
 
@@ -148,28 +152,63 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			);
 		}
 
-		validerFaktumVerdi(verdi: string): Valideringsfeil {
-			return validerFaktum(
+		validerOgOppdaterFaktum(verdi: string, property?: string): FaktumStatus {
+			const faktum = oppdaterFaktumMedVerdier(this.faktum(), verdi, property);
+			const feilkode = validerFaktum(
 				this.props.fakta,
 				this.props.faktumKey,
-				verdi,
+				faktum.value,
 				this.props.valideringsregler
+			);
+			return {
+				faktum,
+				feilkode
+			};
+		}
+
+		setFaktumVerdi(verdi: string, property?: string) {
+			const res = this.validerOgOppdaterFaktum(verdi, property);
+			this.props.dispatch(setFaktum(res.faktum));
+			if (res.faktum.touched) {
+				this.props.dispatch(
+					setFaktumValideringsfeil(this.props.faktumKey, res.feilkode)
+				);
+			}
+		}
+
+		setFaktumVerdiOgLagre(verdi: string, property?: string) {
+			const res = this.validerOgOppdaterFaktum(verdi, property);
+			this.props.dispatch(setFaktum(res.faktum));
+			if (!res.feilkode) {
+				lagreFaktum(res.faktum, this.props.dispatch);
+			}
+			this.props.dispatch(
+				setFaktumValideringsfeil(this.props.faktumKey, res.feilkode)
 			);
 		}
 
-		validerFaktum(verdi: string): void {
-			const feil = this.validerFaktumVerdi(verdi);
-			this.props.dispatch(setFaktumValideringsfeil(this.props.faktumKey, feil));
+		validerFaktum(): Valideringsfeil {
+			const feilkode = validerFaktum(
+				this.props.fakta,
+				this.props.faktumKey,
+				this.getFaktumVerdi(),
+				this.props.valideringsregler
+			);
+			this.props.dispatch(
+				setFaktumValideringsfeil(this.props.faktumKey, feilkode)
+			);
+			return feilkode;
 		}
 
-		validerVerdiDersomNodvendig(value: string) {
-			const soknadStateValue = this.getFaktumVerdi();
-			if (
-				(soknadStateValue && soknadStateValue !== "") ||
-				this.props.feilkode
-			) {
-				this.validerFaktum(value);
+		lagreFaktumDersomGyldig() {
+			const feil = this.validerFaktum();
+			if (!feil) {
+				lagreFaktum(this.faktum(), this.props.dispatch);
 			}
+		}
+
+		lagreFaktum(): Promise<any> {
+			return lagreFaktum(this.faktum(), this.props.dispatch);
 		}
 
 		getFeil(intl: InjectedIntl) {
@@ -182,18 +221,23 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		getName() {
-			return getFaktumElementName(this.props.faktumKey) + getEkstraName(this.props.faktumId, this.props.property);
+			return (
+				getFaktumElementName(this.props.faktumKey) +
+				getEkstraName(this.props.faktumId, this.props.property)
+			);
 		}
 
 		render(): JSX.Element {
 			return (
 				<Component
 					{...this.props}
+					setFaktumVerdiOgLagre={this.setFaktumVerdiOgLagre}
 					setFaktumVerdi={this.setFaktumVerdi}
 					getFaktumVerdi={this.getFaktumVerdi}
 					getPropertyVerdi={this.getPropertyVerdi}
 					validerFaktum={this.validerFaktum}
-					validerVerdiDersomNodvendig={this.validerVerdiDersomNodvendig}
+					lagreFaktumDersomGyldig={this.lagreFaktumDersomGyldig}
+					lagreFaktum={this.lagreFaktum}
 					getFeil={this.getFeil}
 					getName={this.getName}
 				/>

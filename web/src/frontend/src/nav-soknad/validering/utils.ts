@@ -19,6 +19,10 @@ export function validerFaktum(
 	if (faktumvalidering) {
 		faktumvalidering.valideringer.forEach(v => {
 			const feilKey = v(verdi);
+			if (feilKey !== ValideringKey.PAKREVD && (!verdi || verdi === "")) {
+				/** Tillate tomme verdier for alt untatt det som er påkrevd */
+				return;
+			}
 			if (feilKey) {
 				valideringsfeil.push({
 					faktumKey: faktumvalidering.faktumKey,
