@@ -25,12 +25,14 @@ export function registerFaktumValidering(
 
 export function unregisterFaktumValidering(
 	faktumKey: string,
-	property: string
+	property: string,
+	faktumId: number
 ) {
 	return {
 		type: ValideringActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING,
 		faktumKey,
-		property
+		property,
+		faktumId
 	};
 }
 

@@ -12,11 +12,13 @@ export type FaktumValideringFunc = (value: string) => ValideringKey;
 export interface Valideringsfeil {
 	faktumKey: string;
 	property?: string;
+	faktumId?: number;
 	feilkode: string;
 }
 
 export interface FaktumValideringsregler {
 	faktumKey: string;
 	property?: string;
+	faktumId?: number;
 	valideringer: FaktumValideringFunc[];
 }
