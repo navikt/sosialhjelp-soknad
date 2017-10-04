@@ -6,17 +6,23 @@ import {
 } from "./types";
 import { finnFaktum } from "../utils";
 
-export function validerFaktum(
-	faktum: Faktum,
-	valideringsregler: FaktumValideringsregler[]
-): Valideringsfeil {
+interface ValiderOptions {
+	faktum: Faktum;
+	property?: string;
+	valideringsregler: FaktumValideringsregler[];
+}
+
+export function validerFaktum(options: ValiderOptions): Valideringsfeil {
+	const { faktum, property, valideringsregler } = options;
 	const valideringsfeil: Valideringsfeil[] = [];
 	const faktumvalidering = valideringsregler.find(
-		vr => vr.faktumKey === faktum.key
+		vr =>
+			vr.faktumKey === faktum.key &&
+			(property ? vr.property === property : true)
 	);
 	if (faktumvalidering) {
 		faktumvalidering.valideringer.forEach(v => {
-			const feilKey = v(faktum.value);
+			const feilKey = v(property ? faktum.properties[property] : faktum.value);
 			if (faktum.ignorert) {
 				return;
 			}
@@ -49,7 +55,7 @@ export function validerAlleFaktum(
 	let valideringsfeil: Valideringsfeil[] = [];
 	valideringsregler.forEach(faktumvalidering => {
 		const faktum = finnFaktum(faktumvalidering.faktumKey, fakta);
-		const feil = validerFaktum(faktum, valideringsregler);
+		const feil = validerFaktum({ faktum, valideringsregler });
 		if (feil) {
 			valideringsfeil = valideringsfeil.concat(feil);
 		}

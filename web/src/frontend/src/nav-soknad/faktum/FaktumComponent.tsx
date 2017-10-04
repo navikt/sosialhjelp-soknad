@@ -178,7 +178,11 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 
 		validerOgOppdaterFaktum(verdi: string, property?: string): FaktumStatus {
 			const faktum = oppdaterFaktumMedVerdier(this.faktum(), verdi, property);
-			const feilkode = validerFaktum(faktum, this.props.valideringsregler);
+			const feilkode = validerFaktum({
+				faktum,
+				property,
+				valideringsregler: this.props.valideringsregler
+			});
 			return {
 				faktum,
 				feilkode
@@ -207,10 +211,10 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		validerFaktum(): Valideringsfeil {
-			const feilkode = validerFaktum(
-				this.faktum(),
-				this.props.valideringsregler
-			);
+			const feilkode = validerFaktum({
+				faktum: this.faktum(),
+				valideringsregler: this.props.valideringsregler
+			});
 			this.props.dispatch(
 				setFaktumValideringsfeil(this.props.faktumKey, feilkode)
 			);
