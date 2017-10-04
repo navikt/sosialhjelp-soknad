@@ -37,12 +37,16 @@ export function unregisterFaktumValidering(
 }
 
 export function setFaktumValideringsfeil(
+	valideringsfeil: Valideringsfeil,
 	faktumKey: string,
-	valideringsfeil: Valideringsfeil
+	property?: string,
+	faktumId?: number
 ) {
 	return {
 		type: ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL,
 		faktumKey,
+		property,
+		faktumId,
 		valideringsfeil
 	};
 }

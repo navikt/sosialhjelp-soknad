@@ -28,7 +28,14 @@ const registerFaktumValidering = (
 	faktumValidering: FaktumValideringsregler
 ) => {
 	const idx = valideringsregler.findIndex(
-		f => f.faktumKey === faktumValidering.faktumKey
+		f =>
+			f.faktumKey === faktumValidering.faktumKey &&
+			(faktumValidering.property
+				? f.property === faktumValidering.property
+				: true) &&
+			(faktumValidering.faktumId
+				? f.faktumId === faktumValidering.faktumId
+				: true)
 	);
 	if (idx === -1) {
 		return [...valideringsregler, faktumValidering];
@@ -42,9 +49,16 @@ const registerFaktumValidering = (
 
 const unregisterFaktumValidering = (
 	valideringsregler: FaktumValideringsregler[],
-	faktumKey: string
+	faktumKey: string,
+	property?: string,
+	faktumId?: number
 ) => {
-	const idx = valideringsregler.findIndex(f => f.faktumKey === faktumKey);
+	const idx = valideringsregler.findIndex(
+		f =>
+			f.faktumKey === faktumKey &&
+			(property ? f.property === property : true) &&
+			(faktumId ? f.faktumId === faktumId : true)
+	);
 	if (idx === -1) {
 		return valideringsregler;
 	}
@@ -56,13 +70,28 @@ const unregisterFaktumValidering = (
 
 const setFaktumValideringsfeil = (
 	feil: Valideringsfeil[],
+	faktumValideringfeil: Valideringsfeil,
 	faktumKey: string,
-	faktumValideringfeil: Valideringsfeil
+	property?: string,
+	faktumId?: number
 ) => {
 	if (!faktumValideringfeil) {
-		return feil.filter(v => v.faktumKey !== faktumKey);
+		const filtrerte = feil.filter(
+			v =>
+				v.faktumKey === faktumKey &&
+				(property ? v.property === property : false) &&
+				(faktumId ? v.faktumId === faktumId : false)
+					? false
+					: true
+		);
+		return filtrerte;
 	}
-	const idx = feil.findIndex(v => v.faktumKey === faktumKey);
+	const idx = feil.findIndex(
+		v =>
+			v.faktumKey === faktumKey &&
+			(property ? v.property === property : true) &&
+			(faktumId ? v.faktumId === faktumId : true)
+	);
 	if (idx === -1) {
 		return feil.concat(faktumValideringfeil);
 	}
@@ -88,7 +117,9 @@ const valideringReducer: Reducer<ValideringState, ValideringActionTypes> = (
 				...state,
 				valideringsregler: unregisterFaktumValidering(
 					state.valideringsregler,
-					action.faktumKey
+					action.faktumKey,
+					action.property,
+					action.faktumId
 				)
 			};
 		case ValideringActionTypeKeys.SET_FAKTA_VALIDERINGSFEIL:
@@ -107,8 +138,10 @@ const valideringReducer: Reducer<ValideringState, ValideringActionTypes> = (
 		case ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL:
 			const feil = setFaktumValideringsfeil(
 				state.feil,
+				action.valideringsfeil,
 				action.faktumKey,
-				action.valideringsfeil
+				action.property,
+				action.faktumId
 			);
 			const visValideringsfeil = state.visValideringsfeil
 				? feil.length > 0

@@ -205,7 +205,12 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.props.dispatch(setFaktum(res.faktum));
 			if (res.faktum.touched) {
 				this.props.dispatch(
-					setFaktumValideringsfeil(this.props.faktumKey, res.feilkode)
+					setFaktumValideringsfeil(
+						res.feilkode,
+						this.props.faktumKey,
+						this.props.property,
+						this.props.faktumId
+					)
 				);
 			}
 		}
@@ -217,7 +222,12 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 				lagreFaktum(res.faktum, this.props.dispatch);
 			}
 			this.props.dispatch(
-				setFaktumValideringsfeil(this.props.faktumKey, res.feilkode)
+				setFaktumValideringsfeil(
+					res.feilkode,
+					this.props.faktumKey,
+					this.props.property,
+					this.props.faktumId
+				)
 			);
 		}
 
@@ -228,7 +238,12 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 				valideringsregler: this.props.valideringsregler
 			});
 			this.props.dispatch(
-				setFaktumValideringsfeil(this.props.faktumKey, feilkode)
+				setFaktumValideringsfeil(
+					feilkode,
+					this.props.faktumKey,
+					this.props.property,
+					this.props.faktumId
+				)
 			);
 			return feilkode;
 		}

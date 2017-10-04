@@ -48,8 +48,7 @@ const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 		<li className="feiloppsummering__feil">
 			<a
 				href={`#`}
-				onClick={evt => scrollToFaktum(evt, faktumKey, property, faktumId)}
-			>
+				onClick={evt => scrollToFaktum(evt, faktumKey, property, faktumId)}>
 				<FormattedMessage id={feilkode} />
 			</a>
 		</li>
@@ -90,8 +89,7 @@ class Feiloppsummering extends React.Component<Props, {}> {
 								id={COMP_ID}
 								className="panel panel--feiloppsummering"
 								tabIndex={-1}
-								ref={c => (this.oppsummering = c)}
-							>
+								ref={c => (this.oppsummering = c)}>
 								<Undertittel className="feiloppsummering__tittel blokk-s">
 									Det er {valideringsfeil.length} feil i skjemaet
 								</Undertittel>

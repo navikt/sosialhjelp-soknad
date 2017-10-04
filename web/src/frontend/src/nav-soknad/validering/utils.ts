@@ -41,7 +41,7 @@ export function validerFaktum(options: ValiderOptions): Valideringsfeil {
 					faktumId: faktumvalidering.faktumId,
 					feilkode:
 						feilKey === ValideringKey.PAKREVD
-							? `${faktum.key}.feilmelding`
+							? `${faktum.key}${faktumvalidering.property || ""}.feilmelding`
 							: feilKey
 				});
 			}
@@ -56,8 +56,16 @@ export function validerAlleFaktum(
 ): Valideringsfeil[] {
 	let valideringsfeil: Valideringsfeil[] = [];
 	valideringsregler.forEach(faktumvalidering => {
-		const faktum = finnFaktum(faktumvalidering.faktumKey, fakta);
-		const feil = validerFaktum({ faktum, valideringsregler });
+		const faktum = finnFaktum(
+			faktumvalidering.faktumKey,
+			fakta,
+			faktumvalidering.faktumId
+		);
+		const feil = validerFaktum({
+			faktum,
+			valideringsregler,
+			property: faktumvalidering.property
+		});
 		if (feil) {
 			valideringsfeil = valideringsfeil.concat(feil);
 		}

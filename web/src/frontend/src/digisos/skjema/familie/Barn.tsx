@@ -34,7 +34,7 @@ export default class Barn extends React.Component<
 					<PersonFaktum
 						faktumKey={faktumKey}
 						faktumId={faktumId}
-						validering={{ navnRequired: true }}
+						validering={{ navnRequired: true, fnrRequired: true }}
 					/>
 					<SporsmalFaktum faktumKey={borInfo.faktum}>
 						<FaktumRadio
@@ -46,8 +46,7 @@ export default class Barn extends React.Component<
 						<NivaTreSkjema
 							visible={faktumIsSelected(
 								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId)
-							)}
-						>
+							)}>
 							<SporsmalFaktum faktumKey={hvormye.faktum}>
 								<BelopFaktum
 									faktumKey={faktumKey}
