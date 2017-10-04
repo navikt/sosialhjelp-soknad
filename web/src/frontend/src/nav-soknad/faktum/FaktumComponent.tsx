@@ -160,7 +160,6 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 				faktum.value,
 				this.props.valideringsregler
 			);
-			this.props.dispatch(setFaktum(faktum));
 			return {
 				faktum,
 				feilkode
@@ -169,6 +168,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 
 		setFaktumVerdi(verdi: string, property?: string) {
 			const res = this.validerOgOppdaterFaktum(verdi, property);
+			this.props.dispatch(setFaktum(res.faktum));
 			if (res.faktum.touched) {
 				this.props.dispatch(
 					setFaktumValideringsfeil(this.props.faktumKey, res.feilkode)
@@ -178,6 +178,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 
 		setFaktumVerdiOgLagre(verdi: string, property?: string) {
 			const res = this.validerOgOppdaterFaktum(verdi, property);
+			this.props.dispatch(setFaktum(res.faktum));
 			if (!res.feilkode) {
 				lagreFaktum(res.faktum, this.props.dispatch);
 			}
@@ -187,14 +188,16 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		validerFaktum(): Valideringsfeil {
-			const feil = validerFaktum(
+			const feilkode = validerFaktum(
 				this.props.fakta,
 				this.props.faktumKey,
 				this.getFaktumVerdi(),
 				this.props.valideringsregler
 			);
-			this.props.dispatch(setFaktumValideringsfeil(this.props.faktumKey, feil));
-			return feil;
+			this.props.dispatch(
+				setFaktumValideringsfeil(this.props.faktumKey, feilkode)
+			);
+			return feilkode;
 		}
 
 		lagreFaktumDersomGyldig() {
