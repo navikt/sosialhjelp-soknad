@@ -298,46 +298,6 @@ const soknad: Soknad = {
 			type: "BRUKERREGISTRERT"
 		},
 		{
-			faktumId: 13,
-			soknadId: 1,
-			parrentFaktum: null,
-			key: "bosituasjon.barnunder18",
-			value: null,
-			faktumEgenskaper: [],
-			properties: {},
-			type: "BRUKERREGISTRERT"
-		},
-		{
-			faktumId: 14,
-			soknadId: 1,
-			parrentFaktum: null,
-			key: "bosituasjon.personover18",
-			value: null,
-			faktumEgenskaper: [],
-			properties: {},
-			type: "BRUKERREGISTRERT"
-		},
-		{
-			faktumId: 15,
-			soknadId: 1,
-			parrentFaktum: null,
-			key: "inntekt.mottarytelser",
-			value: null,
-			faktumEgenskaper: [],
-			properties: {},
-			type: "BRUKERREGISTRERT"
-		},
-		{
-			faktumId: 16,
-			soknadId: 1,
-			parrentFaktum: null,
-			key: "inntekt.soktytelser",
-			value: null,
-			faktumEgenskaper: [],
-			properties: {},
-			type: "BRUKERREGISTRERT"
-		},
-		{
 			faktumId: 17,
 			soknadId: 1,
 			parrentFaktum: null,
