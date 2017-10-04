@@ -28,7 +28,7 @@ def returnOk(message, buildNr) {
     notifyGithub("${project}", "${repoName}", "${commitHash}", 'success', "Build #${buildNr}")
 }
 
-node {
+node("slave master") {
     properties([
             parameters([
                     string(name: 'DeployTilNexus', defaultValue: 'false'),
