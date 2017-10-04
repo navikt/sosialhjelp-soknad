@@ -142,7 +142,11 @@ function updateFaktumLagretVerdi(fakta: Faktum[], faktum: Faktum) {
 		return [...fakta];
 	} else {
 		const lagretFaktum = updateFaktumMedLagretVerdi(faktum);
-		return [...fakta.slice(0, index), lagretFaktum, ...fakta.slice(index + 1)];
+		return [
+			...fakta.slice(0, index),
+			{ ...lagretFaktum, touched: true } as Faktum,
+			...fakta.slice(index + 1)
+		];
 	}
 }
 

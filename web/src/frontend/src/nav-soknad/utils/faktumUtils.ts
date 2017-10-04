@@ -4,7 +4,6 @@ import {
 	SporsmalFaktumTekst,
 	InputFaktumTekst,
 	Faktum,
-	FaktumVerdier,
 	FaktumValueType
 } from "../types";
 
@@ -97,18 +96,6 @@ export function getPropertyVerdi(
 ) {
 	const faktum = finnFaktum(key, fakta, faktumId);
 	return faktum.properties[property];
-}
-
-export function getFaktumVerdier(fakta: Faktum[], key: string): FaktumVerdier {
-	const faktum = finnFaktum(key, fakta);
-	if (!faktum) {
-		throw Error(`Kunne ikke finne faktum: [${key}]`);
-	}
-	return {
-		value: faktum.value,
-		properties: faktum.properties,
-		lagret: faktum.lagret
-	};
 }
 
 export function oppdaterFaktum(

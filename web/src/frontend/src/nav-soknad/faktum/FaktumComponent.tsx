@@ -96,9 +96,6 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.getPropertyVerdi = this.getPropertyVerdi.bind(this);
 			this.validerFaktum = this.validerFaktum.bind(this);
 			this.lagreFaktum = this.lagreFaktum.bind(this);
-			// this.validerVerdiDersomNodvendig = this.validerVerdiDersomNodvendig.bind(
-			// 	this
-			// );
 			this.getName = this.getName.bind(this);
 			this.getFeil = this.getFeil.bind(this);
 		}
@@ -122,16 +119,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
 		}
 
-		protected validerFaktumVerdi(verdi: string): Valideringsfeil {
-			return validerFaktum(
-				this.props.fakta,
-				this.props.faktumKey,
-				verdi,
-				this.props.valideringsregler
-			);
-		}
-
-		protected faktum(): Faktum {
+		faktum(): Faktum {
 			return finnFaktum(
 				this.props.faktumKey,
 				this.props.fakta,
@@ -139,18 +127,40 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			);
 		}
 
-		setFaktumVerdiOgLagre(verdi: string, property?: string) {
-			const feilkode = this.validerFaktumVerdi(verdi);
-			const faktum = oppdaterFaktum(this.faktum(), verdi, property);
-			this.props.dispatch(setFaktum(faktum));
-			if (!feilkode) {
-				soknadLagreFaktum(faktum, this.props.dispatch);
-			}
+		validerFaktum(faktum?: Faktum): Valideringsfeil {
+			const feil = validerFaktum(
+				this.props.fakta,
+				this.props.faktumKey,
+				faktum ? faktum.value : this.getFaktumVerdi(),
+				this.props.valideringsregler
+			);
+			this.props.dispatch(setFaktumValideringsfeil(this.props.faktumKey, feil));
+			return feil;
 		}
 
 		setFaktumVerdi(verdi: string) {
 			const faktum = oppdaterFaktum(this.faktum(), verdi, this.props.property);
 			this.props.dispatch(setFaktum(faktum));
+			if (faktum.touched) {
+				this.validerFaktum(faktum);
+			}
+		}
+
+		setFaktumVerdiOgLagre(verdi: string, property?: string) {
+			const feilkode = validerFaktum(
+				this.props.fakta,
+				this.props.faktumKey,
+				verdi,
+				this.props.valideringsregler
+			);
+			const faktum = oppdaterFaktum(this.faktum(), verdi, property);
+			this.props.dispatch(setFaktum(faktum));
+			if (!feilkode) {
+				soknadLagreFaktum(faktum, this.props.dispatch);
+			}
+			this.props.dispatch(
+				setFaktumValideringsfeil(this.props.faktumKey, feilkode)
+			);
 		}
 
 		getFaktumVerdi(): string {
@@ -163,10 +173,6 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 					) || ""
 				: getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
 		}
-
-		// getFaktumVerdier(): FaktumVerdier {
-		// 	return getFaktumVerdier(this.props.fakta, this.props.faktumKey);
-		// }
 
 		getPropertyVerdi(): string {
 			return (
@@ -187,22 +193,6 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			);
 			return soknadLagreFaktum(faktum, this.props.dispatch);
 		}
-
-		validerFaktum(): Valideringsfeil {
-			const feil = this.validerFaktumVerdi(this.getFaktumVerdi());
-			this.props.dispatch(setFaktumValideringsfeil(this.props.faktumKey, feil));
-			// if (!feil) {
-			// 	this.lagreFaktum();
-			// }
-			return feil;
-		}
-
-		// validerVerdiDersomNodvendig(value: string) {
-		// 	const verdier = this.getFaktumVerdier();
-		// 	if (verdier.lagret.value) {
-		// 		this.validerFaktum();
-		// 	}
-		// }
 
 		getFeil(intl: InjectedIntl) {
 			if (!this.props.feilkode) {
