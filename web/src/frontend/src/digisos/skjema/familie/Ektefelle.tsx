@@ -24,11 +24,12 @@ class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 						}}
 					/>
 				</div>
-				<SporsmalFaktum faktumKey={borsammen.faktum} required={true}>
+				<SporsmalFaktum faktumKey={borsammen.faktum}>
 					<RadioFaktum faktumKey={borsammen.faktum} value="true" />
 					<RadioFaktum faktumKey={borsammen.faktum} value="false" />
 					<NivaTreSkjema
-						visible={getFaktumVerdi(fakta, borsammen.faktum) === "false"}>
+						visible={getFaktumVerdi(fakta, borsammen.faktum) === "false"}
+					>
 						<TextareaFaktum
 							faktumKey={`${borsammen.faktum}.false.beskrivelse`}
 							maxLength={400}
