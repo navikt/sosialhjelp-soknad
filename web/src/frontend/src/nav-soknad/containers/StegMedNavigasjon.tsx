@@ -28,7 +28,7 @@ import {
 	getIntlTextOrKey,
 	scrollToTop,
 	getStegUrl,
-	oppdaterFaktum
+	oppdaterFaktumMedVerdier
 } from "../utils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
@@ -97,7 +97,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
 			if (aktivtSteg === this.props.progresjon) {
-				const faktum = oppdaterFaktum(
+				const faktum = oppdaterFaktumMedVerdier(
 					getProgresjonFaktum(this.props.fakta),
 					`${aktivtSteg + 1}`
 				);

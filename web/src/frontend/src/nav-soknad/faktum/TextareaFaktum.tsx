@@ -32,10 +32,7 @@ class TextareaFaktum extends React.Component<Props, {}> {
 	}
 
 	handleOnBlur() {
-		const feil = this.props.validerFaktum();
-		if (!feil) {
-			this.props.lagreFaktum();
-		}
+		this.props.lagreFaktumDersomGyldig();
 	}
 
 	tellerTekst(antallTegn: number, maxLength: number) {

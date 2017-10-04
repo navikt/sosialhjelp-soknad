@@ -38,10 +38,7 @@ class InputFaktum extends React.Component<Props, {}> {
 	}
 
 	handleOnBlur() {
-		const feil = this.props.validerFaktum();
-		if (!feil) {
-			this.props.lagreFaktum();
-		}
+		this.props.lagreFaktumDersomGyldig();
 	}
 
 	render() {

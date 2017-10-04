@@ -8,7 +8,7 @@ import {
 import { Faktum } from "../types";
 import { fetchPost, fetchPut } from "../utils/rest-utils";
 import { FaktumActionTypes } from "./faktaReducer";
-import { oppdaterFaktum } from "../utils";
+import { oppdaterFaktumMedVerdier } from "../utils";
 
 function prepFaktumForLagring(faktum: Faktum) {
 	delete faktum.lagret;
@@ -52,7 +52,7 @@ export function setFaktumVerdi(
 	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
 		dispatch({
 			type: FaktumActionTypeKeys.OPPDATER_FAKTUM,
-			faktum: oppdaterFaktum(faktum, verdi, property)
+			faktum: oppdaterFaktumMedVerdier(faktum, verdi, property)
 		});
 	};
 }

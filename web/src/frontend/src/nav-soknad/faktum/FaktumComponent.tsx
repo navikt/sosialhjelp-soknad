@@ -3,10 +3,7 @@ import { connect } from "react-redux";
 import { InjectedIntl } from "react-intl";
 import { Feil } from "nav-frontend-skjema";
 import { SoknadAppState, DispatchProps } from "../redux/reduxTypes";
-import {
-	setFaktum,
-	lagreFaktum as soknadLagreFaktum
-} from "../redux/faktaActions";
+import { setFaktum, lagreFaktum } from "../redux/faktaActions";
 import { finnFaktum } from "../redux/faktaUtils";
 import {
 	registerFaktumValidering,
@@ -21,7 +18,16 @@ import {
 } from "../validering/types";
 import { validerFaktum } from "../validering/utils";
 import { pakrevd } from "../validering/valideringer";
-import { getFaktumVerdi, getPropertyVerdi, oppdaterFaktum } from "../utils";
+import {
+	getFaktumVerdi,
+	getPropertyVerdi,
+	oppdaterFaktumMedVerdier
+} from "../utils";
+
+interface FaktumStatus {
+	faktum: Faktum;
+	feilkode: Valideringsfeil;
+}
 
 export interface Props {
 	faktumKey: string;
@@ -38,6 +44,7 @@ interface InjectedProps {
 	feilkode?: string;
 	/** Alle registrerte valideringsregler i state */
 	valideringsregler?: FaktumValideringsregler[];
+
 	getName: () => string;
 	/** Setter verdi på state og server */
 	setFaktumVerdiOgLagre: (verdi: string, property?: string) => void;
@@ -49,10 +56,11 @@ interface InjectedProps {
 	getPropertyVerdi: () => string;
 	/** Validerer faktumverdi  */
 	validerFaktum: () => string;
+	/** Validerer faktumverdi og lagre dersom gyldig  */
+	lagreFaktumDersomGyldig: () => void;
 	/** Lagrer faktum på server */
 	lagreFaktum: () => Promise<any>;
 	/** Validerer faktumverdi dersom feil eller verdi er registrert */
-	// validerVerdiDersomNodvendig: (verdi: string) => void;
 	getFeil: (intl: InjectedIntl) => Feil;
 }
 
@@ -89,12 +97,12 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 
 		constructor(props: ResultProps) {
 			super(props);
-			this.lagreFaktum = this.lagreFaktum.bind(this);
-			this.setFaktumVerdiOgLagre = this.setFaktumVerdiOgLagre.bind(this);
 			this.setFaktumVerdi = this.setFaktumVerdi.bind(this);
+			this.setFaktumVerdiOgLagre = this.setFaktumVerdiOgLagre.bind(this);
 			this.getFaktumVerdi = this.getFaktumVerdi.bind(this);
 			this.getPropertyVerdi = this.getPropertyVerdi.bind(this);
 			this.validerFaktum = this.validerFaktum.bind(this);
+			this.lagreFaktumDersomGyldig = this.lagreFaktumDersomGyldig.bind(this);
 			this.lagreFaktum = this.lagreFaktum.bind(this);
 			this.getName = this.getName.bind(this);
 			this.getFeil = this.getFeil.bind(this);
@@ -127,50 +135,9 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			);
 		}
 
-		validerFaktum(faktum?: Faktum): Valideringsfeil {
-			const feil = validerFaktum(
-				this.props.fakta,
-				this.props.faktumKey,
-				faktum ? faktum.value : this.getFaktumVerdi(),
-				this.props.valideringsregler
-			);
-			this.props.dispatch(setFaktumValideringsfeil(this.props.faktumKey, feil));
-			return feil;
-		}
-
-		setFaktumVerdi(verdi: string) {
-			const faktum = oppdaterFaktum(this.faktum(), verdi, this.props.property);
-			this.props.dispatch(setFaktum(faktum));
-			if (faktum.touched) {
-				this.validerFaktum(faktum);
-			}
-		}
-
-		setFaktumVerdiOgLagre(verdi: string, property?: string) {
-			const feilkode = validerFaktum(
-				this.props.fakta,
-				this.props.faktumKey,
-				verdi,
-				this.props.valideringsregler
-			);
-			const faktum = oppdaterFaktum(this.faktum(), verdi, property);
-			this.props.dispatch(setFaktum(faktum));
-			if (!feilkode) {
-				soknadLagreFaktum(faktum, this.props.dispatch);
-			}
-			this.props.dispatch(
-				setFaktumValideringsfeil(this.props.faktumKey, feilkode)
-			);
-		}
-
 		getFaktumVerdi(): string {
 			return this.props.property
-				? getPropertyVerdi(
-						this.props.fakta,
-						this.props.faktumKey,
-						this.props.property,
-						this.props.faktumId
-					) || ""
+				? this.getPropertyVerdi()
 				: getFaktumVerdi(this.props.fakta, this.props.faktumKey) || "";
 		}
 
@@ -185,13 +152,60 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			);
 		}
 
-		lagreFaktum(): Promise<any> {
-			const faktum = finnFaktum(
-				this.props.faktumKey,
+		validerOgOppdaterFaktum(verdi: string, property?: string): FaktumStatus {
+			const faktum = oppdaterFaktumMedVerdier(this.faktum(), verdi, property);
+			const feilkode = validerFaktum(
 				this.props.fakta,
-				this.props.faktumId
+				this.props.faktumKey,
+				faktum.value,
+				this.props.valideringsregler
 			);
-			return soknadLagreFaktum(faktum, this.props.dispatch);
+			this.props.dispatch(setFaktum(faktum));
+			return {
+				faktum,
+				feilkode
+			};
+		}
+
+		setFaktumVerdi(verdi: string, property?: string) {
+			const res = this.validerOgOppdaterFaktum(verdi, property);
+			if (res.faktum.touched) {
+				this.props.dispatch(
+					setFaktumValideringsfeil(this.props.faktumKey, res.feilkode)
+				);
+			}
+		}
+
+		setFaktumVerdiOgLagre(verdi: string, property?: string) {
+			const res = this.validerOgOppdaterFaktum(verdi, property);
+			if (!res.feilkode) {
+				lagreFaktum(res.faktum, this.props.dispatch);
+			}
+			this.props.dispatch(
+				setFaktumValideringsfeil(this.props.faktumKey, res.feilkode)
+			);
+		}
+
+		validerFaktum(): Valideringsfeil {
+			const feil = validerFaktum(
+				this.props.fakta,
+				this.props.faktumKey,
+				this.getFaktumVerdi(),
+				this.props.valideringsregler
+			);
+			this.props.dispatch(setFaktumValideringsfeil(this.props.faktumKey, feil));
+			return feil;
+		}
+
+		lagreFaktumDersomGyldig() {
+			const feil = this.validerFaktum();
+			if (!feil) {
+				lagreFaktum(this.faktum(), this.props.dispatch);
+			}
+		}
+
+		lagreFaktum(): Promise<any> {
+			return lagreFaktum(this.faktum(), this.props.dispatch);
 		}
 
 		getFeil(intl: InjectedIntl) {
@@ -219,6 +233,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 					getFaktumVerdi={this.getFaktumVerdi}
 					getPropertyVerdi={this.getPropertyVerdi}
 					validerFaktum={this.validerFaktum}
+					lagreFaktumDersomGyldig={this.lagreFaktumDersomGyldig}
 					lagreFaktum={this.lagreFaktum}
 					getFeil={this.getFeil}
 					getName={this.getName}
