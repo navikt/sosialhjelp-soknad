@@ -49,7 +49,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 					this.mounted &&
 					!contains(findDOMNode(this), document.activeElement)
 				) {
-					this.props.validerFaktum(this.props.getFaktumVerdi());
+					this.props.validerFaktum();
 				}
 			}, 0);
 		}
@@ -67,7 +67,8 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 		return (
 			<div className="skjema-sporsmal" onBlur={this.handleOnBlur}>
 				<SkjemaGruppe
-					feil={this.harValidering() ? this.props.getFeil(intl) : null}>
+					feil={this.harValidering() ? this.props.getFeil(intl) : null}
+				>
 					<fieldset className={cls}>
 						<legend>{tekster.sporsmal}</legend>
 						{tekster.hjelpetekst ? (

@@ -19,14 +19,7 @@ class RadioFaktum extends React.Component<
 	{}
 > {
 	render() {
-		const {
-			faktumKey,
-			value,
-			disabled,
-			property,
-			required,
-			intl
-		} = this.props;
+		const { faktumKey, value, disabled, property, required, intl } = this.props;
 		const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
 		return (
 			<Radio
@@ -39,7 +32,8 @@ class RadioFaktum extends React.Component<
 				disabled={disabled}
 				value={value}
 				required={required}
-				onChange={(evt: any) => this.props.setFaktumVerdi(value, property)}
+				onChange={(evt: any) =>
+					this.props.setFaktumVerdiOgLagre(value, property)}
 				label={
 					<LabelMedHjelpetekst
 						id={`${faktumKey}.${value}`}

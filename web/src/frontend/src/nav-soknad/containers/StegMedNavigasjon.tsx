@@ -13,8 +13,8 @@ import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
 import { SkjemaConfig, SkjemaStegType, Faktum } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
-import { getProgresjonFaktum } from "../redux/faktaUtils";
-import { setFaktumVerdi } from "../redux/faktaActions";
+import { getProgresjonFaktum } from "../utils";
+import { setFaktum, lagreFaktum } from "../redux/faktaActions";
 import {
 	clearFaktaValideringsfeil,
 	setFaktaValideringsfeil
@@ -27,7 +27,8 @@ import {
 	avbryt,
 	getIntlTextOrKey,
 	scrollToTop,
-	getStegUrl
+	getStegUrl,
+	oppdaterFaktumMedVerdier
 } from "../utils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
@@ -96,21 +97,19 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
 			if (aktivtSteg === this.props.progresjon) {
-				this.props
-					.dispatch(
-						setFaktumVerdi(
-							getProgresjonFaktum(this.props.fakta),
-							`${aktivtSteg + 1}`
-						)
-					)
-					.then(() => {
-						gaVidere(
-							aktivtSteg,
-							brukerBehandlingId,
-							this.props.history,
-							this.props.skjemaConfig
-						);
-					});
+				const faktum = oppdaterFaktumMedVerdier(
+					getProgresjonFaktum(this.props.fakta),
+					`${aktivtSteg + 1}`
+				);
+				this.props.dispatch(setFaktum(faktum));
+				lagreFaktum(faktum, this.props.dispatch).then(() => {
+					gaVidere(
+						aktivtSteg,
+						brukerBehandlingId,
+						this.props.history,
+						this.props.skjemaConfig
+					);
+				});
 			} else {
 				gaVidere(
 					aktivtSteg,
