@@ -35,7 +35,7 @@ node("master") {
                     string(name: 'testurl', defaultValue: 'http://tjenester-t1.nav.no/veivisersosialhjelp')
             ])
     ])
-    common.setupTools("maven 3.3.3", "java8")
+    common.setupTools("Maven 3.3.3", "java8")
 
     stage('Checkout') {
         deleteDir()
