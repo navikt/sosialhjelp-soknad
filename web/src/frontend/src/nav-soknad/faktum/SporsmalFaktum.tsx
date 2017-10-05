@@ -1,10 +1,9 @@
 import * as React from "react";
-import { findDOMNode } from "react-dom";
 import * as classNames from "classnames";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { SkjemaGruppe } from "nav-frontend-skjema";
 import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
-import { getFaktumSporsmalTekst, contains } from "../utils";
+import { getFaktumSporsmalTekst } from "../utils";
 import {
 	faktumComponent,
 	InjectedFaktumComponentProps
@@ -45,10 +44,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	handleOnBlur(evt: any) {
 		if (this.harValidering()) {
 			setTimeout(() => {
-				if (
-					this.mounted &&
-					!contains(findDOMNode(this), document.activeElement)
-				) {
+				if (this.mounted) {
 					this.props.validerFaktum();
 				}
 			}, 0);
