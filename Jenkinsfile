@@ -120,7 +120,7 @@ node("master") {
                 sh "mvn -B deploy -DskipTests -P pipeline"
                 currentBuild.description = "Version: ${releaseVersion}"
                 withEnv(['HTTPS_PROXY=http://webproxy-utvikler.nav.no:8088']) {
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'navikt-jenkins-token', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+                    withCredentials([[$class: 'usernamePassword', credentialsId: 'navikt-jenkins-token', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
                         sh("git tag -a ${releaseVersion} -m ${releaseVersion} HEAD && git push --tags https://navikt-jenkins:${GIT_PASSWORD}@github.com/navikt/soknadsosialhjelp.git")
                     }
                 }
