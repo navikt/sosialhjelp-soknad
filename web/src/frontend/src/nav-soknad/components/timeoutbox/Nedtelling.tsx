@@ -9,14 +9,14 @@ interface Props {
 }
 
 const Nedtelling: React.StatelessComponent<Props> = props => {
-	const utlopsTidspunkt = Date.now() + (1000 * 60 * 60 * 22);
+	const utlopsTidspunkt = props.remainingTime;
 	return (
 		<div>
 			<Innholdstittel className="blokk-s">
 				Obs!
 			</Innholdstittel>
 			<Normaltekst className="blokk-xxs">
-				Din sesjon vil utløpe om <FormattedTime value={utlopsTidspunkt} format="mm:ss" /> minutter.
+				Din sesjon vil utløpe om <FormattedTime value={utlopsTidspunkt} format="mmss" /> minutter.
 				Dersom du ikke foretar deg noe, vil du bli logget ut. For å forsette, vennligst trykk fortsett.
 			</Normaltekst>
 			<Hovedknapp onClick={props.onContinueClick}>

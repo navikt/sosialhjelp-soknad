@@ -15,7 +15,7 @@ const LoggetUt: React.StatelessComponent<Props> = props => {
 			<Normaltekst className="blokk-xxs">
 				Sesjonen har utløpt. Du må nå logge inn igjen for å fortsette.
 			</Normaltekst>
-			<Hovedknapp onClick={() => props.onLoginAgainClick}>
+			<Hovedknapp onClick={props.onLoginAgainClick}>
 				Logg inn på nytt
 			</Hovedknapp>
 
