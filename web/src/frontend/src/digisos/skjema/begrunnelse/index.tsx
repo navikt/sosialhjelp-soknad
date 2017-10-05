@@ -30,7 +30,6 @@ class Begrunnelse extends React.Component<
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="begrunnelse.hva">
 					<TextareaFaktum
-						required={true}
 						validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
 						textareaClass="skjema-textarea--large"
 						faktumKey="begrunnelse.hva"

@@ -6,31 +6,34 @@ import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import { getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
+import { radioCheckKeys } from "../../../nav-soknad/utils";
 import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
+import { getPropertyVerdi } from "../../../nav-soknad/utils/faktumUtils";
 
 class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
-		const borsammen = radioCheckKeys("familie.sivilstatus.gift.borsammen");
+		const faktumKey = "familie.sivilstatus.gift.ektefelle";
+		const borsammen = radioCheckKeys(`${faktumKey}.borsammen`);
 		return (
 			<div>
 				<div className="blokk-s">
 					<PersonFaktum
-						faktumKey="familie.sivilstatus.gift"
+						faktumKey="familie.sivilstatus.gift.ektefelle"
 						validering={{
 							navnRequired: true,
 							fnrRequired: true
 						}}
 					/>
 				</div>
-				<SporsmalFaktum faktumKey={borsammen.faktum} required={true}>
-					<RadioFaktum faktumKey={borsammen.faktum} value="true" />
-					<RadioFaktum faktumKey={borsammen.faktum} value="false" />
+				<SporsmalFaktum faktumKey={borsammen.faktum}>
+					<RadioFaktum faktumKey={faktumKey} property="borsammen" value="true" />
+					<RadioFaktum faktumKey={faktumKey} property="borsammen" value="false" />
 					<NivaTreSkjema
-						visible={getFaktumVerdi(fakta, borsammen.faktum) === "false"}>
+						visible={getPropertyVerdi(fakta, faktumKey, "borsammen") === "false"}>
 						<TextareaFaktum
-							faktumKey={`${borsammen.faktum}.false.beskrivelse`}
+							faktumKey={faktumKey}
+							property="ikkesammenbeskrivelse"
 							maxLength={400}
 							validerFunc={[getMaksLengdeFunc(400)]}
 						/>

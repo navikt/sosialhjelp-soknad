@@ -67,7 +67,8 @@ class Bosted extends React.Component<
 
 	render() {
 		const { valgtKommune, valgtBydel, ferdig } = this.hentSkjemaVerdier();
-
+		const startSoknadPending =
+			this.props.soknadRestStatus === REST_STATUS.PENDING;
 		return (
 			<form onSubmit={e => this.opprettSoknad(e)}>
 				<div>
@@ -81,7 +82,8 @@ class Bosted extends React.Component<
 								<div className="bosted__selectLabel bosted__tekst--extraPadding">
 									<FormattedMessage id="personalia.kommune.label" />
 								</div>
-							}>
+							}
+						>
 							{!this.state.kommuneId && (
 								<option value="" disabled={true}>
 									Velg by
@@ -109,7 +111,8 @@ class Bosted extends React.Component<
 									<div className="bosted__selectLabel bosted__tekst--extraPadding">
 										<FormattedMessage id="personalia.bydel.label" />
 									</div>
-								}>
+								}
+							>
 								{!this.state.bydelId && (
 									<option value="" disabled={true}>
 										Velg bydel
@@ -134,7 +137,12 @@ class Bosted extends React.Component<
 									)}
 								</strong>
 							</p>
-							<Knapp type="hoved" htmlType="submit">
+							<Knapp
+								type="hoved"
+								htmlType="submit"
+								spinner={startSoknadPending}
+								disabled={startSoknadPending}
+							>
 								Start søknad
 							</Knapp>
 						</div>

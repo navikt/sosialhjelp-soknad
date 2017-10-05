@@ -5,38 +5,65 @@ import {
 	SoknadDispatch,
 	SoknadAppState
 } from "./reduxTypes";
-import { Faktum, FaktumValueType } from "../types";
+import { Faktum } from "../types";
 import { fetchPost, fetchPut } from "../utils/rest-utils";
 import { FaktumActionTypes } from "./faktaReducer";
+import { oppdaterFaktumMedVerdier } from "../utils";
+
+function prepFaktumForLagring(faktum: Faktum) {
+	delete faktum.lagret;
+	return JSON.stringify(faktum);
+}
+
+export function lagreFaktum(
+	faktum: Faktum,
+	dispatch: SoknadDispatch<FaktaActionTypes>
+): Promise<any> {
+	dispatch({
+		type: FaktumActionTypeKeys.LAGRE_FAKTUM,
+		faktum
+	});
+	return fetchPut("fakta/" + faktum.faktumId, prepFaktumForLagring(faktum))
+		.then(response => {
+			dispatch({
+				type: FaktumActionTypeKeys.LAGRET_FAKTUM,
+				faktum: response as Faktum
+			});
+		})
+		.catch(reason => {
+			dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
+		});
+}
+
+export function setFaktum(faktum: Faktum) {
+	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
+		dispatch({
+			type: FaktumActionTypeKeys.OPPDATER_FAKTUM,
+			faktum
+		});
+	};
+}
 
 export function setFaktumVerdi(
 	faktum: Faktum,
-	value: FaktumValueType,
+	verdi: string,
 	property?: string
 ) {
-	return (dispatch: SoknadDispatch<FaktaActionTypes>): Promise<any> => {
-		let nyttFaktum = { ...faktum };
-		if (property) {
-			nyttFaktum = {
-				...faktum,
-				properties: { ...faktum.properties, [property]: value }
-			};
-		} else {
-			nyttFaktum.value = value;
-		}
+	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
 		dispatch({
 			type: FaktumActionTypeKeys.OPPDATER_FAKTUM,
-			faktum: nyttFaktum
+			faktum: oppdaterFaktumMedVerdier(faktum, verdi, property)
 		});
-		return fetchPut("fakta/" + nyttFaktum.faktumId, JSON.stringify(nyttFaktum))
-			.then(response => {
-				dispatch({
-					type: FaktumActionTypeKeys.OPPDATERT_FAKTUM
-				});
-			})
-			.catch(reason => {
-				dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
-			});
+	};
+}
+
+export function setFaktumIgnorert(faktum: Faktum, ignorert: boolean) {
+	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
+		dispatch({
+			type: FaktumActionTypeKeys.IGNORER_FAKTUM,
+			faktum,
+			ignorert
+		});
 	};
 }
 

@@ -4,7 +4,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { SoknadAppState } from "../../../nav-soknad/redux/reduxTypes";
-import { finnFakta, finnFaktum } from "../../../nav-soknad/redux/faktaUtils";
+import { finnFakta, finnFaktum } from "../../../nav-soknad/utils";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { Faktum } from "../../../nav-soknad/types";
 import { opprettFaktum } from "../../../nav-soknad/redux/faktaActions";
