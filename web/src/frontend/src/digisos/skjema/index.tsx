@@ -16,7 +16,7 @@ import Steg4 from "./begrunnelse";
 import Steg5 from "./bosituasjon";
 import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
-import Steg8 from "./ekstrainformasjon";
+import Steg8 from "./ekstrainformasjon/EkstraInformasjon";
 import Oppsummering from "./oppsummering";
 
 import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
