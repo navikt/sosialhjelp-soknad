@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp } from "nav-frontend-knapper";
+import { FormattedMessage } from "react-intl";
 
 interface Props {
 	onLoginAgainClick: () => void;
@@ -10,15 +11,14 @@ const LoggetUt: React.StatelessComponent<Props> = props => {
 	return (
 		<div>
 			<Innholdstittel className="blokk-s">
-				Obs!
+				<FormattedMessage id={"timeout.overskrift"}/>
 			</Innholdstittel>
 			<Normaltekst className="blokk-xxs">
-				Sesjonen har utløpt. Du må nå logge inn igjen for å fortsette.
+				<FormattedMessage id={"timeout.utlopt"} />
 			</Normaltekst>
 			<Hovedknapp onClick={props.onLoginAgainClick}>
-				Logg inn på nytt
+				<FormattedMessage id={"timeout.logginn"} />
 			</Hovedknapp>
-
 		</div>
 	);
 };
