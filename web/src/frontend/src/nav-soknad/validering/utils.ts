@@ -22,18 +22,12 @@ export function validerFaktum(options: ValiderOptions): Valideringsfeil {
 	);
 	if (faktumvalidering) {
 		faktumvalidering.valideringer.forEach(v => {
-			const value = property ? faktum.properties[property] : faktum.value;
-			const feilKey = v(value);
-			if (
-				faktum.ignorert ||
-				(feilKey !== ValideringKey.PAKREVD && value === "")
-			) {
+			if (faktum.ignorert) {
 				return;
 			}
-			if (
-				feilKey !== ValideringKey.PAKREVD &&
-				(!faktum.value || faktum.value === "")
-			) {
+			const value = property ? faktum.properties[property] : faktum.value;
+			const feilKey = v(value);
+			if (feilKey !== ValideringKey.PAKREVD && (!value || value === "")) {
 				/** Tillate tomme verdier for alt untatt det som er påkrevd */
 				return;
 			}
