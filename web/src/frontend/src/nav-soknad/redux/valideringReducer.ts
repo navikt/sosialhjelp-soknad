@@ -3,7 +3,11 @@ import {
 	ValideringActionTypes,
 	ValideringActionTypeKeys
 } from "./valideringActionTypes";
-import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
+import {
+	FaktumValideringsregler,
+	Valideringsfeil,
+	FaktumValideringKey
+} from "../validering/types";
 
 export interface ValideringState {
 	/** Alle valideringsfeil som finnes for registrerte regler */
@@ -23,24 +27,17 @@ const defaultState: ValideringState = {
 	stegValidertCounter: 0
 };
 
-const valideringFilterCheck = (
-	valideringsregel: FaktumValideringsregler,
-	faktumKey: string,
-	property: string,
-	faktumId: number
-) =>
-	valideringsregel.faktumKey === faktumKey &&
-	(property ? valideringsregel.property === property : true) &&
-	(faktumId ? valideringsregel.faktumId === faktumId : true);
-
-const finnValideringIndex = (
-	valideringsregler: FaktumValideringsregler[],
+const finnIndex = (
+	faktumValideringKeys: FaktumValideringKey[],
 	faktumKey: string,
 	property: string,
 	faktumId: number
 ) => {
-	return valideringsregler.findIndex(f =>
-		valideringFilterCheck(f, faktumKey, property, faktumId)
+	return faktumValideringKeys.findIndex(
+		valideringKey =>
+			valideringKey.faktumKey === faktumKey &&
+			(property ? valideringKey.property === property : true) &&
+			(faktumId ? valideringKey.faktumId === faktumId : true)
 	);
 };
 
@@ -48,7 +45,7 @@ const registerFaktumValidering = (
 	valideringsregler: FaktumValideringsregler[],
 	faktumValidering: FaktumValideringsregler
 ) => {
-	const idx = finnValideringIndex(
+	const idx = finnIndex(
 		valideringsregler,
 		faktumValidering.faktumKey,
 		faktumValidering.property,
@@ -71,12 +68,7 @@ const unregisterFaktumValidering = (
 	property?: string,
 	faktumId?: number
 ) => {
-	const idx = finnValideringIndex(
-		valideringsregler,
-		faktumKey,
-		property,
-		faktumId
-	);
+	const idx = finnIndex(valideringsregler, faktumKey, property, faktumId);
 	if (idx === -1) {
 		return valideringsregler;
 	}
@@ -104,12 +96,7 @@ const setFaktumValideringsfeil = (
 		});
 		return filtrerte;
 	}
-	const idx = feil.findIndex(
-		v =>
-			v.faktumKey === faktumKey &&
-			(property ? v.property === property : true) &&
-			(faktumId ? v.faktumId === faktumId : true)
-	);
+	const idx = finnIndex(feil, faktumKey, property, faktumId);
 	if (idx === -1) {
 		return feil.concat(faktumValideringfeil);
 	}

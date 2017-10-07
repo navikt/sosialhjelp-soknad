@@ -2,7 +2,7 @@ import { Faktum } from "../types";
 import {
 	Valideringsfeil,
 	FaktumValideringsregler,
-	ValideringKey
+	ValideringActionKey
 } from "./types";
 import { finnFaktum } from "../utils";
 
@@ -27,7 +27,7 @@ export function validerFaktum(options: ValiderOptions): Valideringsfeil {
 			}
 			const value = property ? faktum.properties[property] : faktum.value;
 			const feilKey = v(value);
-			if (feilKey !== ValideringKey.PAKREVD && (!value || value === "")) {
+			if (feilKey !== ValideringActionKey.PAKREVD && (!value || value === "")) {
 				/** Tillate tomme verdier for alt untatt det som er påkrevd */
 				return;
 			}
@@ -37,7 +37,7 @@ export function validerFaktum(options: ValiderOptions): Valideringsfeil {
 					property: faktumvalidering.property,
 					faktumId: faktumvalidering.faktumId,
 					feilkode:
-						feilKey === ValideringKey.PAKREVD
+						feilKey === ValideringActionKey.PAKREVD
 							? `${faktum.key}${faktumvalidering.property || ""}.feilmelding`
 							: feilKey
 				});
