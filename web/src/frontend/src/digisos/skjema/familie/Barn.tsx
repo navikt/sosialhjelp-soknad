@@ -31,11 +31,7 @@ export default class Barn extends React.Component<
 		return (
 			<div className="blokk">
 				<SporsmalFaktum faktumKey={faktumKey}>
-					<PersonFaktum
-						faktumKey={faktumKey}
-						faktumId={faktumId}
-						validering={{ navnRequired: true, fnrRequired: true }}
-					/>
+					<PersonFaktum faktumKey={faktumKey} faktumId={faktumId} />
 					<SporsmalFaktum faktumKey={borInfo.faktum}>
 						<FaktumRadio
 							faktumKey={faktumKey}
