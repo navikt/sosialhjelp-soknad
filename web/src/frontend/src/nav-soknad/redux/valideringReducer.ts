@@ -76,14 +76,14 @@ const setFaktumValideringsfeil = (
 	faktumId?: number
 ) => {
 	if (!faktumValideringfeil) {
-		const filtrerte = feil.filter(
-			v =>
-				v.faktumKey === faktumKey &&
-				(property ? v.property === property : false) &&
-				(faktumId ? v.faktumId === faktumId : false)
-					? false
-					: true
-		);
+		/** Returner alle andre feil */
+		const filtrerte = feil.filter(v => {
+			return (
+				v.faktumKey !== faktumKey ||
+				v.faktumId !== faktumId ||
+				v.property !== property
+			);
+		});
 		return filtrerte;
 	}
 	const idx = feil.findIndex(

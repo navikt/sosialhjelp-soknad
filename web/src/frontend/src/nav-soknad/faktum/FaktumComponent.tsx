@@ -118,11 +118,6 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.lagreFaktum = this.lagreFaktum.bind(this);
 			this.getName = this.getName.bind(this);
 			this.getFeil = this.getFeil.bind(this);
-			if (this.props.ignorert) {
-				this.props.dispatch(
-					setFaktumIgnorert(this.faktum(), this.props.ignorert)
-				);
-			}
 		}
 
 		componentWillMount() {
@@ -130,6 +125,11 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 				this.props.required,
 				this.props.validerFunc
 			);
+			if (this.props.ignorert) {
+				this.props.dispatch(
+					setFaktumIgnorert(this.faktum(), this.props.ignorert)
+				);
+			}
 			if (valideringer.length > 0) {
 				this.props.dispatch(
 					registerFaktumValidering({

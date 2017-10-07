@@ -18,13 +18,16 @@ export function validerFaktum(options: ValiderOptions): Valideringsfeil {
 	const faktumvalidering = valideringsregler.find(
 		vr =>
 			vr.faktumKey === faktum.key &&
-			(property ? vr.property === property : true) &&
-			(faktum.faktumId ? vr.faktumId === faktum.faktumId : true)
+			(property ? vr.property === property : true)
 	);
 	if (faktumvalidering) {
 		faktumvalidering.valideringer.forEach(v => {
-			const feilKey = v(property ? faktum.properties[property] : faktum.value);
-			if (faktum.ignorert) {
+			const value = property ? faktum.properties[property] : faktum.value;
+			const feilKey = v(value);
+			if (
+				faktum.ignorert ||
+				(feilKey !== ValideringKey.PAKREVD && value === "")
+			) {
 				return;
 			}
 			if (
