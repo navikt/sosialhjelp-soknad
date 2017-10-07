@@ -27,6 +27,7 @@ describe("test av valideringsfunksjoner", () => {
 		expect(validate.erTall(undefined)).toBe(ValideringKey.ER_TALL);
 		expect(validate.erTall("a1")).toBe(ValideringKey.ER_TALL);
 		expect(validate.erTall("1")).toBeUndefined();
+		expect(validate.erTall("121324")).toBeUndefined();
 	});
 	describe("kontonummer", () => {
 		it("skal ikke kunne være mindre enn 11 tegn", () => {

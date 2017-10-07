@@ -26,7 +26,7 @@ export function getMaksLengdeFunc(max: number) {
 }
 
 export function erTall(value: string): ValideringKey {
-	return value && /^[0-9]$/i.test(value) ? undefined : ValideringKey.ER_TALL;
+	return value && /^[0-9]*$/i.test(value) ? undefined : ValideringKey.ER_TALL;
 }
 
 export function erTelefonnummer(value: string): ValideringKey {
