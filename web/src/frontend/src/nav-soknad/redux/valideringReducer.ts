@@ -23,20 +23,38 @@ const defaultState: ValideringState = {
 	stegValidertCounter: 0
 };
 
+const valideringFilterCheck = (
+	valideringsregel: FaktumValideringsregler,
+	faktumKey: string,
+	property: string,
+	faktumId: number
+) =>
+	valideringsregel.faktumKey === faktumKey &&
+	(property ? valideringsregel.property === property : true) &&
+	(faktumId ? valideringsregel.faktumId === faktumId : true);
+
+const finnValideringIndex = (
+	valideringsregler: FaktumValideringsregler[],
+	faktumKey: string,
+	property: string,
+	faktumId: number
+) => {
+	return valideringsregler.findIndex(f =>
+		valideringFilterCheck(f, faktumKey, property, faktumId)
+	);
+};
+
 const registerFaktumValidering = (
 	valideringsregler: FaktumValideringsregler[],
 	faktumValidering: FaktumValideringsregler
 ) => {
-	const idx = valideringsregler.findIndex(
-		f =>
-			f.faktumKey === faktumValidering.faktumKey &&
-			(faktumValidering.property
-				? f.property === faktumValidering.property
-				: true) &&
-			(faktumValidering.faktumId
-				? f.faktumId === faktumValidering.faktumId
-				: true)
+	const idx = finnValideringIndex(
+		valideringsregler,
+		faktumValidering.faktumKey,
+		faktumValidering.property,
+		faktumValidering.faktumId
 	);
+
 	if (idx === -1) {
 		return [...valideringsregler, faktumValidering];
 	}
@@ -53,11 +71,11 @@ const unregisterFaktumValidering = (
 	property?: string,
 	faktumId?: number
 ) => {
-	const idx = valideringsregler.findIndex(
-		f =>
-			f.faktumKey === faktumKey &&
-			(property ? f.property === property : true) &&
-			(faktumId ? f.faktumId === faktumId : true)
+	const idx = finnValideringIndex(
+		valideringsregler,
+		faktumKey,
+		property,
+		faktumId
 	);
 	if (idx === -1) {
 		return valideringsregler;
