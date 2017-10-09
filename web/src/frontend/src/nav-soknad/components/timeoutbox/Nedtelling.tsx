@@ -12,7 +12,14 @@ type Props = OwnProps & InjectedIntlProps;
 
 const Nedtelling: React.StatelessComponent<Props> = ({onContinueClick, remainingTime, intl}) => {
 	const utlopsTidspunkt = remainingTime;
-	const utlopsTidspunktFormattert = intl.formatTime(utlopsTidspunkt, {format: "mmss"});
+	// const minutter = intl.formatMessage({id: "timeout.minutter"});
+	// const sekunder = intl.formatMessage({id: "timeout.sekunder"});
+	// const underEttMinuttIgjen = (utlopsTidspunkt / (1000 * 60)) < 0;
+	console.log("utlopsTidspunkt: " + utlopsTidspunkt);
+	let utlopsTidspunktFormattert = intl.formatTime(utlopsTidspunkt, {format: "mmss"});
+	debugger;
+	// let utlopsTidspunktMsg = utlopsTidspunktFormattert + " x " + underEttMinuttIgjen ? minutter : sekunder;
+	console.log("utlopsTidspunktFormattert: " + utlopsTidspunktFormattert);
 	return (
 		<div>
 			<Innholdstittel className="blokk-s">

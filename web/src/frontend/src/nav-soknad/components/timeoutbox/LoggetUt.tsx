@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import "./timeoutbox.css";
-import { Hovedknapp } from "nav-frontend-knapper";
 import { FormattedMessage } from "react-intl";
 
 interface Props {
@@ -18,9 +17,9 @@ const LoggetUt: React.StatelessComponent<Props> = props => {
 				<FormattedMessage id={"timeout.utlopt"} />
 			</Normaltekst>
 			<div className="timeoutbox__knapperad">
-				<Hovedknapp onClick={props.onLoginAgainClick}>
+				<a href="" onClick={props.onLoginAgainClick}>
 					<FormattedMessage id={"timeout.logginn"} />
-				</Hovedknapp>
+				</a>
 			</div>
 		</div>
 	);
