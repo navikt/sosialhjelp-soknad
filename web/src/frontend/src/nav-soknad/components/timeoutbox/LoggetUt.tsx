@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
-import { Hovedknapp } from "nav-frontend-knapper";
+import "./timeoutbox.css";
 
 interface Props {
 	onLoginAgainClick: () => void;
@@ -13,11 +13,15 @@ const LoggetUt: React.StatelessComponent<Props> = props => {
 				Obs!
 			</Innholdstittel>
 			<Normaltekst className="blokk-xxs">
-				Sesjonen har utløpt. Du må nå logge inn igjen for å fortsette.
+				Du har vært inaktiv på denne siden for lenge.
+				<br/>
+				Du må logge deg inn på nytt for å fortsette.
 			</Normaltekst>
-			<Hovedknapp onClick={props.onLoginAgainClick}>
-				Logg inn på nytt
-			</Hovedknapp>
+			<div className="timeoutbox__knapperad">
+				<a href="">
+					Logg inn på nytt
+				</a>
+			</div>
 
 		</div>
 	);

@@ -25,7 +25,7 @@ class TimeoutBox extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			sesjonGarUt: now() + (this.props.sessionDurationInMinutes * 60 * 1000),
+			sesjonGarUt: now() + 1000, // (this.props.sessionDurationInMinutes * 60 * 1000),
 			visAdvarsel: now() + (this.props.showWarningerAfterMinutes * 60 * 1000),
 			apen: false,
 			sjekkGjenstaendeTid: null
