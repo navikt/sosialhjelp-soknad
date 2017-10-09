@@ -8,6 +8,8 @@ import { SynligeFaktaProps } from "../../redux/synligefakta/synligeFaktaReducer"
 import InformasjonBolk from "./InformasjonBolk";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
+import "./ekstrainfo.css";
+
 type Props = FaktumComponentProps & SynligeFaktaProps;
 
 class EkstraInformasjon extends React.Component<Props, {}> {

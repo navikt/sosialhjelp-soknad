@@ -17,7 +17,7 @@ const InformasjonBolk: React.StatelessComponent<Props> = props => {
 		const inputs = s.properties.map(property => {
 			return (
 				<Column md={width} xs="12" key={property.id}>
-					<BelopFaktum faktumKey={s.id + "." + property.id} bredde="s"/>
+					<BelopFaktum faktumKey={s.id} property={property.id} bredde="s"/>
 				</Column>
 			);
 		});
