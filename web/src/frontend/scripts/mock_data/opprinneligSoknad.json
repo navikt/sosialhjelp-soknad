@@ -411,47 +411,7 @@
 			"faktumId": 39,
 			"soknadId": 1,
 			"parrentFaktum": 10,
-			"key": "familie.sivilstatus.gift.navn",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 40,
-			"soknadId": 1,
-			"parrentFaktum": 10,
-			"key": "familie.sivilstatus.gift.fnr",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 41,
-			"soknadId": 1,
-			"parrentFaktum": 10,
-			"key": "familie.sivilstatus.gift.pnr",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 42,
-			"soknadId": 1,
-			"parrentFaktum": 10,
-			"key": "familie.sivilstatus.gift.borsammen",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 43,
-			"soknadId": 1,
-			"parrentFaktum": 42,
-			"key": "familie.sivilstatus.gift.borsammen.false.beskrivelse",
+			"key": "familie.sivilstatus.gift.ektefelle",
 			"value": null,
 			"faktumEgenskaper": [],
 			"properties": {},
