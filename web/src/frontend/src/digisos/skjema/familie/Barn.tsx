@@ -13,9 +13,14 @@ import {
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
-
+import FjernLenke from "../../../nav-soknad/components/fjernLenke/fjernlenke";
+import { slettFaktum } from "../../../nav-soknad/redux/faktaActions";
+import "./barn.css";
 interface BarnTypes {
 	faktum: Faktum;
+	fjernBarnTekst: string;
+	dispatch: any;
+	visFjernlenke: boolean;
 }
 
 export default class Barn extends React.Component<
@@ -23,13 +28,16 @@ export default class Barn extends React.Component<
 	{}
 > {
 	render() {
-		const { fakta, faktum } = this.props;
+		const { fakta, faktum, fjernBarnTekst, visFjernlenke } = this.props;
 		const faktumKey = faktum.key;
 		const borInfo = radioCheckKeys(`${faktumKey}.borsammen`);
 		const hvormye = inputKeys(`${faktumKey}.grad`);
 		const faktumId = faktum.faktumId;
+		const slettBarn = (): void => {
+			this.props.dispatch(slettFaktum(faktumId));
+		};
 		return (
-			<div className="blokk">
+			<div className="blokk barn">
 				<SporsmalFaktum faktumKey={faktumKey}>
 					<PersonFaktum faktumKey={faktumKey} faktumId={faktumId} />
 					<SporsmalFaktum faktumKey={borInfo.faktum}>
@@ -62,6 +70,7 @@ export default class Barn extends React.Component<
 						/>
 					</SporsmalFaktum>
 				</SporsmalFaktum>
+				{visFjernlenke && (<FjernLenke fjern={slettBarn} lenketekst={fjernBarnTekst}/>)}
 			</div>
 		);
 	}
