@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import { DispatchProps, SoknadAppState } from "../../../nav-soknad/redux/reduxTypes";
+import {
+	DispatchProps,
+	SoknadAppState
+} from "../../../nav-soknad/redux/reduxTypes";
 import { finnFakta, finnFaktum } from "../../../nav-soknad/utils";
 import { Faktum } from "../../../nav-soknad/types";
 import { opprettFaktum } from "../../../nav-soknad/redux/faktaActions";
@@ -47,12 +50,16 @@ class Barneinfo extends React.Component<
 		return (
 			<div>
 				{alleBarn.map((barnFaktum: Faktum) => (
-					<Barn fakta={fakta}
-						  faktum={barnFaktum}
-						  key={barnFaktum.faktumId}
-						  fjernBarnTekst={intl.formatMessage({id: "familie.barn.true.barn.fjern"})}
-						  dispatch={this.props.dispatch}
-						  visFjernlenke={visFjernlenke}/>
+					<Barn
+						fakta={fakta}
+						faktum={barnFaktum}
+						key={barnFaktum.faktumId}
+						fjernBarnTekst={intl.formatMessage({
+							id: "familie.barn.true.barn.fjern"
+						})}
+						dispatch={this.props.dispatch}
+						visFjernlenke={visFjernlenke}
+					/>
 				))}
 				<LeggTilLenke
 					leggTil={leggTilBarn}
