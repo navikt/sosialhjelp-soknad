@@ -1,5 +1,6 @@
 import * as React from "react";
 import { findDOMNode } from "react-dom";
+import * as cuid from "cuid";
 import * as classNames from "classnames";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { SkjemaGruppe } from "nav-frontend-skjema";
@@ -64,12 +65,17 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 		const cls = classNames("skjema-fieldset", {
 			"skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined
 		});
+		const legendId = cuid();
 		return (
-			<div className="skjema-sporsmal" onBlur={this.handleOnBlur}>
+			<div
+				className="skjema-sporsmal"
+				onBlur={this.handleOnBlur}
+				tabIndex={0}
+				aria-labelledby={legendId}>
 				<SkjemaGruppe
 					feil={this.harValidering() ? this.props.getFeil(intl) : null}>
 					<fieldset className={cls}>
-						<legend>{tekster.sporsmal}</legend>
+						<legend id={legendId}>{tekster.sporsmal}</legend>
 						{tekster.hjelpetekst ? (
 							<div className="skjema-sporsmal__hjelpetekst">
 								<HjelpetekstAuto tittel={tekster.hjelpetekst.tittel}>
