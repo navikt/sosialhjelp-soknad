@@ -82,7 +82,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 						<div className="skjema-sporsmal__innhold">{children}</div>
 					</fieldset>
 				</SkjemaGruppe>
-			</div>a
+			</div>
 		);
 	}
 }
