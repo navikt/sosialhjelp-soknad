@@ -23,20 +23,30 @@ export function registerFaktumValidering(
 	};
 }
 
-export function unregisterFaktumValidering(faktumKey: string) {
+export function unregisterFaktumValidering(
+	faktumKey: string,
+	property: string,
+	faktumId: number
+) {
 	return {
 		type: ValideringActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING,
-		faktumKey
+		faktumKey,
+		property,
+		faktumId
 	};
 }
 
 export function setFaktumValideringsfeil(
+	valideringsfeil: Valideringsfeil,
 	faktumKey: string,
-	valideringsfeil: Valideringsfeil
+	property?: string,
+	faktumId?: number
 ) {
 	return {
 		type: ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL,
 		faktumKey,
+		property,
+		faktumId,
 		valideringsfeil
 	};
 }
