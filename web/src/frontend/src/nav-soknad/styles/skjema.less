@@ -24,6 +24,9 @@
 	padding: 1.5rem @skjemaMarg 2rem @skjemaMarg;
 	border-radius: 4px;
 	background-color: @white;
+	&:focus {
+		.focus-outline();
+	}
 
 	@media @mobile {
 		padding: @skjemaMargMobil;
@@ -76,6 +79,9 @@
 	&__tittel {
 		margin-top: 0;
 		margin-bottom: 1rem;
+		&:focus {
+			.focus-outline();
+		}
 	}
 	.skjema-sporsmal {
 		margin-bottom: 1rem;
