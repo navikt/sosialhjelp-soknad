@@ -48,7 +48,8 @@ const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 		<li className="feiloppsummering__feil">
 			<a
 				href={`#`}
-				onClick={evt => scrollToFaktum(evt, faktumKey, property, faktumId)}>
+				onClick={evt => scrollToFaktum(evt, faktumKey, property, faktumId)}
+			>
 				<FormattedMessage id={feilkode} />
 			</a>
 		</li>
@@ -80,29 +81,24 @@ class Feiloppsummering extends React.Component<Props, {}> {
 
 	render() {
 		const { valideringsfeil } = this.props;
+		if (valideringsfeil.length === 0 || !this.props.visFeilliste) {
+			return null;
+		}
 		return (
-			<div aria-live="polite" role="alert">
-				{(() => {
-					if (valideringsfeil.length > 0 && this.props.visFeilliste) {
-						return (
-							<div
-								id={COMP_ID}
-								className="panel panel--feiloppsummering"
-								tabIndex={-1}
-								ref={c => (this.oppsummering = c)}>
-								<Undertittel className="feiloppsummering__tittel blokk-s">
-									Det er {valideringsfeil.length} feil i skjemaet
-								</Undertittel>
-								<ul className="feiloppsummering__liste">
-									{valideringsfeil.map((feilmld, index) => {
-										return <FeillisteMelding key={index} {...feilmld} />;
-									})}
-								</ul>
-							</div>
-						);
-					}
-					return null;
-				})()}
+			<div
+				id={COMP_ID}
+				className="panel panel--feiloppsummering"
+				tabIndex={-1}
+				ref={c => (this.oppsummering = c)}
+			>
+				<Undertittel className="feiloppsummering__tittel blokk-s">
+					Det er {valideringsfeil.length} feil i skjemaet
+				</Undertittel>
+				<ul className="feiloppsummering__liste">
+					{valideringsfeil.map((feilmld, index) => {
+						return <FeillisteMelding key={index} {...feilmld} />;
+					})}
+				</ul>
 			</div>
 		);
 	}
