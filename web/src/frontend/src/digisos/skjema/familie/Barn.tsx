@@ -27,6 +27,13 @@ export default class Barn extends React.Component<
 	FaktumComponentProps & BarnTypes,
 	{}
 > {
+	sporsmal: HTMLElement;
+
+	componentDidMount() {
+		if (this.sporsmal) {
+			this.sporsmal.focus();
+		}
+	}
 	render() {
 		const { fakta, faktum, fjernBarnTekst, visFjernlenke } = this.props;
 		const faktumKey = faktum.key;
@@ -38,7 +45,10 @@ export default class Barn extends React.Component<
 		};
 		return (
 			<div className="blokk barn">
-				<SporsmalFaktum faktumKey={faktumKey}>
+				<SporsmalFaktum
+					faktumKey={faktumKey}
+					htmlRef={c => (this.sporsmal = c)}
+				>
 					<PersonFaktum faktumKey={faktumKey} faktumId={faktumId} />
 					<SporsmalFaktum faktumKey={borInfo.faktum}>
 						<FaktumRadio
@@ -50,7 +60,8 @@ export default class Barn extends React.Component<
 						<NivaTreSkjema
 							visible={faktumIsSelected(
 								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId)
-							)}>
+							)}
+						>
 							<SporsmalFaktum faktumKey={hvormye.faktum}>
 								<BelopFaktum
 									faktumKey={faktumKey}
@@ -69,8 +80,10 @@ export default class Barn extends React.Component<
 							faktumId={faktumId}
 						/>
 					</SporsmalFaktum>
+					{visFjernlenke && (
+						<FjernLenke fjern={slettBarn} lenketekst={fjernBarnTekst} />
+					)}
 				</SporsmalFaktum>
-				{visFjernlenke && (<FjernLenke fjern={slettBarn} lenketekst={fjernBarnTekst}/>)}
 			</div>
 		);
 	}

@@ -14,12 +14,14 @@ export interface OwnProps {
 	faktumKey: string;
 	children: React.ReactNode;
 	visible?: boolean;
+	htmlRef?: (c: any) => HTMLElement;
 }
 
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 class SporsmalFaktum extends React.Component<Props, {}> {
 	mounted: boolean;
+	htmlRef: HTMLElement;
 
 	constructor(props: Props) {
 		super(props);
@@ -67,9 +69,12 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 				className="skjema-sporsmal"
 				onBlur={this.handleOnBlur}
 				tabIndex={0}
-				aria-labelledby={legendId}>
+				aria-labelledby={legendId}
+				ref={c => (this.props.htmlRef ? this.props.htmlRef(c) : null)}
+			>
 				<SkjemaGruppe
-					feil={this.harValidering() ? this.props.getFeil(intl) : null}>
+					feil={this.harValidering() ? this.props.getFeil(intl) : null}
+				>
 					<fieldset className={cls}>
 						<legend id={legendId}>{tekster.sporsmal}</legend>
 						{tekster.hjelpetekst ? (
