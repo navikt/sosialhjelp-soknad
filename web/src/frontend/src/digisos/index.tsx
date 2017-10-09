@@ -23,7 +23,7 @@ class App extends React.Component<{}, {}> {
 					<Route path={`/kvittering`} component={Kvittering} />
 					<Route component={Feilside} />
 				</Switch>
-				<TimeoutBox sessionDurationInMinutes={2} showWarningerAfterMinutes={1}/>
+				<TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25}/>
 				{this.props.children}
 			</div>
 		);

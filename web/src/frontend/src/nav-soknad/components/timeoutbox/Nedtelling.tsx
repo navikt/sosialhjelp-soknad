@@ -1,34 +1,40 @@
 import * as React from "react";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp } from "nav-frontend-knapper";
-import { FormattedTime } from "react-intl";
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 
-interface Props {
+interface OwnProps {
 	onContinueClick: () => void;
 	remainingTime: number;
 }
 
-const Nedtelling: React.StatelessComponent<Props> = props => {
-	const utlopsTidspunkt = props.remainingTime;
+type Props = OwnProps & InjectedIntlProps;
+
+const Nedtelling: React.StatelessComponent<Props> = ({onContinueClick, remainingTime, intl}) => {
+	const utlopsTidspunkt = remainingTime;
+	const utlopsTidspunktFormattert = intl.formatTime(utlopsTidspunkt, {format: "mmss"});
 	return (
 		<div>
 			<Innholdstittel className="blokk-s">
-				Obs!
+				<FormattedMessage id={"timeout.overskrift"}/>
 			</Innholdstittel>
 			<Normaltekst className="blokk-xxs">
-				Din sesjon vil utløpe om <FormattedTime value={utlopsTidspunkt} format="mmss" /> minutter.
-				Dersom du ikke foretar deg noe, vil du bli logget ut.
-				<br/>
-				For å forsette, vennligst trykk fortsett.
+				<FormattedMessage
+					id={"timeout.nedtelling"}
+					values={{utlopsTidspunkt: utlopsTidspunktFormattert}}
+				/>
 			</Normaltekst>
 			<div className="timeoutbox__knapperad">
-				<Hovedknapp onClick={props.onContinueClick}>
-					Fortsett
+				<Hovedknapp onClick={onContinueClick}>
+					<FormattedMessage id={"timeout.fortsett"}/>
 				</Hovedknapp>
-				&nbsp; &nbsp; &nbsp; <a href="/pamcv/goto/logout" className="lenke knapp-lenke">Logg ut</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="/pamcv/goto/logout" className="lenke knapp-lenke">
+					<FormattedMessage id={"timeout.loggut"}/>
+				</a>
 			</div>
 		</div>
 	);
 };
 
-export default Nedtelling;
+export default injectIntl(Nedtelling);

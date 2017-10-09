@@ -51,6 +51,7 @@ class TimeoutBox extends React.Component<Props, State> {
 	onCloseModal() {
 		this.setState({ apen: false });
 	}
+
 	onLoginAgainClick() {
 		window.location.reload();
 	}
