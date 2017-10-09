@@ -2,37 +2,43 @@ import { Faktum } from "../types";
 import {
 	Valideringsfeil,
 	FaktumValideringsregler,
-	ValideringKey
+	ValideringActionKey
 } from "./types";
-import { getFaktumVerdi, finnFaktum } from "../utils";
+import { finnFaktum } from "../utils";
 
-export function validerFaktum(
-	fakta: Faktum[],
-	faktumKey: string,
-	verdi: string,
-	valideringsregler: FaktumValideringsregler[]
-): Valideringsfeil {
+interface ValiderOptions {
+	faktum: Faktum;
+	property?: string;
+	valideringsregler: FaktumValideringsregler[];
+}
+
+export function validerFaktum(options: ValiderOptions): Valideringsfeil {
+	const { faktum, property, valideringsregler } = options;
 	const valideringsfeil: Valideringsfeil[] = [];
 	const faktumvalidering = valideringsregler.find(
-		vr => vr.faktumKey === faktumKey
+		vr =>
+			vr.faktumKey === faktum.key &&
+			(property ? vr.property === property : true)
 	);
 	if (faktumvalidering) {
-		const faktum = finnFaktum(faktumKey, fakta);
 		faktumvalidering.valideringer.forEach(v => {
-			const feilKey = v(verdi);
 			if (faktum.ignorert) {
 				return;
 			}
-			if (feilKey !== ValideringKey.PAKREVD && (!verdi || verdi === "")) {
+			const value = property ? faktum.properties[property] : faktum.value;
+			const feilKey = v(value);
+			if (feilKey !== ValideringActionKey.PAKREVD && (!value || value === "")) {
 				/** Tillate tomme verdier for alt untatt det som er påkrevd */
 				return;
 			}
 			if (feilKey) {
 				valideringsfeil.push({
 					faktumKey: faktumvalidering.faktumKey,
+					property: faktumvalidering.property,
+					faktumId: faktumvalidering.faktumId,
 					feilkode:
-						feilKey === ValideringKey.PAKREVD
-							? `${faktumKey}.feilmelding`
+						feilKey === ValideringActionKey.PAKREVD
+							? `${faktum.key}${faktumvalidering.property || ""}.feilmelding`
 							: feilKey
 				});
 			}
@@ -47,12 +53,16 @@ export function validerAlleFaktum(
 ): Valideringsfeil[] {
 	let valideringsfeil: Valideringsfeil[] = [];
 	valideringsregler.forEach(faktumvalidering => {
-		const feil = validerFaktum(
-			fakta,
+		const faktum = finnFaktum(
 			faktumvalidering.faktumKey,
-			getFaktumVerdi(fakta, faktumvalidering.faktumKey),
-			valideringsregler
+			fakta,
+			faktumvalidering.faktumId
 		);
+		const feil = validerFaktum({
+			faktum,
+			valideringsregler,
+			property: faktumvalidering.property
+		});
 		if (feil) {
 			valideringsfeil = valideringsfeil.concat(feil);
 		}
