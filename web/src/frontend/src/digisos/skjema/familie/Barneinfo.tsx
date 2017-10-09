@@ -20,49 +20,62 @@ interface OwnProps {
 	parentFaktumKey: string;
 }
 
-class Barneinfo extends React.Component<
-	OwnProps & FaktumComponentProps & DispatchProps & InjectedIntlProps,
-	{}
-> {
+type Props = OwnProps &
+	FaktumComponentProps &
+	DispatchProps &
+	InjectedIntlProps;
+
+class Barneinfo extends React.Component<Props, {}> {
+	constructor(props: Props) {
+		super(props);
+		this.leggTilBarn = this.leggTilBarn.bind(this);
+	}
+
 	componentDidMount() {
-		const { fakta, faktumKey, parentFaktumKey } = this.props;
-		const parentFaktum = finnFaktum(parentFaktumKey, fakta);
+		const { fakta, faktumKey } = this.props;
 		const faktum = finnFaktum(faktumKey, fakta);
 		if (!faktum) {
-			this.props.dispatch(
-				opprettFaktum({ key: faktumKey, parrentFaktum: parentFaktum.faktumId })
-			);
+			this.leggTilBarn();
 		}
 	}
 
+	leggTilBarn() {
+		const parentFaktum = finnFaktum(
+			this.props.parentFaktumKey,
+			this.props.fakta
+		);
+		this.props.dispatch(
+			opprettFaktum({
+				key: this.props.faktumKey,
+				parrentFaktum: parentFaktum.faktumId
+			})
+		);
+	}
+
 	render() {
-		const { fakta, faktumKey, parentFaktumKey, intl } = this.props;
+		const { fakta, faktumKey, intl } = this.props;
 		const alleBarn = finnFakta(faktumKey, fakta);
-		const parrentFaktum = finnFaktum(parentFaktumKey, fakta);
-		const leggTilBarn = (): any =>
-			this.props.dispatch(
-				opprettFaktum({
-					key: faktumKey,
-					parrentFaktum: parrentFaktum.faktumId
-				})
-			);
 		const visFjernlenke = alleBarn.length > 1;
 		return (
 			<div>
-				{alleBarn.map((barnFaktum: Faktum) => (
-					<Barn
-						fakta={fakta}
-						faktum={barnFaktum}
-						key={barnFaktum.faktumId}
-						fjernBarnTekst={intl.formatMessage({
-							id: "familie.barn.true.barn.fjern"
-						})}
-						dispatch={this.props.dispatch}
-						visFjernlenke={visFjernlenke}
-					/>
-				))}
+				<ol className="barneliste">
+					{alleBarn.map((barnFaktum: Faktum) => (
+						<li key={barnFaktum.faktumId}>
+							<Barn
+								fakta={fakta}
+								faktum={barnFaktum}
+								key={barnFaktum.faktumId}
+								fjernBarnTekst={intl.formatMessage({
+									id: "familie.barn.true.barn.fjern"
+								})}
+								dispatch={this.props.dispatch}
+								visFjernlenke={visFjernlenke}
+							/>
+						</li>
+					))}
+				</ol>
 				<LeggTilLenke
-					leggTil={leggTilBarn}
+					leggTil={this.leggTilBarn}
 					lenketekst={intl.formatMessage({
 						id: "familie.barn.true.barn.leggtil"
 					})}
