@@ -15,6 +15,7 @@ export interface OwnProps {
 	children: React.ReactNode;
 	visible?: boolean;
 	htmlRef?: (c: any) => HTMLElement;
+	tittelRenderer?: (title: string) => React.ReactNode;
 }
 
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -64,6 +65,9 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 			"skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined
 		});
 		const legendId = cuid();
+		const sporsmal = this.props.tittelRenderer
+			? this.props.tittelRenderer(tekster.sporsmal)
+			: tekster.sporsmal;
 		return (
 			<div
 				className="skjema-sporsmal"
@@ -76,7 +80,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 					feil={this.harValidering() ? this.props.getFeil(intl) : null}
 				>
 					<fieldset className={cls}>
-						<legend id={legendId}>{tekster.sporsmal}</legend>
+						<legend id={legendId}>{sporsmal}</legend>
 						{tekster.hjelpetekst ? (
 							<div className="skjema-sporsmal__hjelpetekst">
 								<HjelpetekstAuto tittel={tekster.hjelpetekst.tittel}>

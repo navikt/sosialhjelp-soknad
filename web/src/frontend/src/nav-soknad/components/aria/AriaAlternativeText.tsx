@@ -3,7 +3,7 @@ import AriaText from "./AriaText";
 
 export interface AriaAlternativeTextProps {
 	/** Alternative text for screen-readers */
-	ariaText: string | React.ReactNode;
+	ariaText?: string | React.ReactNode;
 	/** Text visible on screen */
 	visibleText: string | React.ReactNode;
 }
@@ -11,6 +11,9 @@ export interface AriaAlternativeTextProps {
 const AriaAlternativeText: React.StatelessComponent<
 	AriaAlternativeTextProps
 > = ({ ariaText, visibleText }) => {
+	if (!ariaText) {
+		return <span>{visibleText}</span>;
+	}
 	return (
 		<span>
 			<AriaText>{ariaText}</AriaText>

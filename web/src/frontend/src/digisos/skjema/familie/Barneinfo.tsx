@@ -59,14 +59,18 @@ class Barneinfo extends React.Component<Props, {}> {
 		return (
 			<div>
 				<ol className="barneliste">
-					{alleBarn.map((barnFaktum: Faktum) => (
+					{alleBarn.map((barnFaktum: Faktum, index: number) => (
 						<li key={barnFaktum.faktumId}>
 							<Barn
 								fakta={fakta}
 								faktum={barnFaktum}
+								barnNummer={index + 1}
 								key={barnFaktum.faktumId}
 								fjernBarnTekst={intl.formatMessage({
 									id: "familie.barn.true.barn.fjern"
+								})}
+								fjernBarnAlterantivTekst={intl.formatMessage({
+									id: "familie.barn.true.barn.fjernAlternativTekst"
 								})}
 								dispatch={this.props.dispatch}
 								visFjernlenke={visFjernlenke}

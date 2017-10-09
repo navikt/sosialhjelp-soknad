@@ -3,7 +3,9 @@ import * as React from "react";
 import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema/index";
-import PersonFaktum from "../../../nav-soknad/faktum/PersonFaktum";
+import PersonFaktum, {
+	oppsummerPersonData
+} from "../../../nav-soknad/faktum/PersonFaktum";
 import { Faktum } from "../../../nav-soknad/types";
 import {
 	faktumIsSelected,
@@ -15,10 +17,15 @@ import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
 import FjernLenke from "../../../nav-soknad/components/fjernLenke/fjernlenke";
 import { slettFaktum } from "../../../nav-soknad/redux/faktaActions";
+import AriaAlternativTekst from "../../../nav-soknad/components/aria/AriaAlternativeText";
+
 import "./barn.css";
+
 interface BarnTypes {
 	faktum: Faktum;
 	fjernBarnTekst: string;
+	fjernBarnAlterantivTekst: string;
+	barnNummer: number;
 	dispatch: any;
 	visFjernlenke: boolean;
 }
@@ -35,7 +42,14 @@ export default class Barn extends React.Component<
 		}
 	}
 	render() {
-		const { fakta, faktum, fjernBarnTekst, visFjernlenke } = this.props;
+		const {
+			fakta,
+			faktum,
+			barnNummer,
+			fjernBarnTekst,
+			fjernBarnAlterantivTekst,
+			visFjernlenke
+		} = this.props;
 		const faktumKey = faktum.key;
 		const borInfo = radioCheckKeys(`${faktumKey}.borsammen`);
 		const hvormye = inputKeys(`${faktumKey}.grad`);
@@ -43,11 +57,26 @@ export default class Barn extends React.Component<
 		const slettBarn = (): void => {
 			this.props.dispatch(slettFaktum(faktumId));
 		};
+		const alternativFjernTekst = (): string => {
+			return `${fjernBarnAlterantivTekst} ${barnNummer}: (${oppsummerPersonData(
+				faktum
+			)})`;
+		};
 		return (
 			<div className="blokk barn">
 				<SporsmalFaktum
 					faktumKey={faktumKey}
 					htmlRef={c => (this.sporsmal = c)}
+					tittelRenderer={
+						visFjernlenke
+							? tittel => (
+									<AriaAlternativTekst
+										ariaText={`${tittel} ${barnNummer}`}
+										visibleText={tittel}
+									/>
+								)
+							: null
+					}
 				>
 					<PersonFaktum faktumKey={faktumKey} faktumId={faktumId} />
 					<SporsmalFaktum faktumKey={borInfo.faktum}>
@@ -81,7 +110,11 @@ export default class Barn extends React.Component<
 						/>
 					</SporsmalFaktum>
 					{visFjernlenke && (
-						<FjernLenke fjern={slettBarn} lenketekst={fjernBarnTekst} />
+						<FjernLenke
+							fjern={slettBarn}
+							lenketekst={fjernBarnTekst}
+							alternativLenketekst={alternativFjernTekst()}
+						/>
 					)}
 				</SporsmalFaktum>
 			</div>
