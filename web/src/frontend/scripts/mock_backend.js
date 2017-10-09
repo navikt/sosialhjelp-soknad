@@ -32,7 +32,7 @@ router.get("/informasjon/tekster", function(req, res) {
 
 const brukerBehandlingId = "1000B7FGM";
 const soknad = utils.lesMockDataFil("soknad.json");
-const fakta = soknad.fakta;
+var fakta = soknad.fakta;
 
 // Søknadsressurser
 router.post("/soknader", function(req, res) {
@@ -82,6 +82,14 @@ router.post("/fakta/:faktumId", function(req, res) {
 	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
 });
 
+router.delete("/fakta/:faktumId", function (req, res) {
+	 fakta = fakta.filter(function(f) {
+		return f.faktumId !== Number(req.params.faktumId);
+	});
+	utils.updateSoknadFakta(fakta);
+	return;
+});
+
 var faktumid = 1000;
 function genererFaktumId() {
 	return faktumid++;
@@ -93,6 +101,7 @@ router.post("/fakta", function(req, res) {
 		faktum.faktumId = genererFaktumId();
 		faktum.properties = {};
 		fakta.push(faktum);
+		utils.updateSoknadFakta(fakta);
 		return res.json(faktum);
 	}
 
