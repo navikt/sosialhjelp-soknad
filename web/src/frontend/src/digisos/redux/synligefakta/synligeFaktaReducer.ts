@@ -8,7 +8,7 @@ export interface FaktumStruktur {
 	id: string;
 	type: string;
 	dependOn: FaktumStruktur;
-	flereTillatt: boolean;
+	flereTillatt: string;
 	properties: PropertyStruktur[];
 }
 
@@ -54,7 +54,7 @@ const defaultState: SynligeFaktaState = {
 				flereTillatt: null,
 				properties: null,
 			},
-			flereTillatt: null,
+			flereTillatt: "true",
 			properties: [{
 				id: "avdragpermnd",
 				type: "textbox",
