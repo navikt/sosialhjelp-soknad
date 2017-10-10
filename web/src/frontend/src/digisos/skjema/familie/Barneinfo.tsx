@@ -79,7 +79,7 @@ class Barneinfo extends React.Component<Props, State> {
 			<div>
 				<ol className="barneliste">
 					{alleBarn.map((barnFaktum: Faktum, index: number) => (
-						<li>
+						<li key={barnFaktum.faktumId}>
 							<Barn
 								fakta={fakta}
 								faktum={barnFaktum}
