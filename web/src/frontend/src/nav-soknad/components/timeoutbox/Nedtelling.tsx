@@ -5,31 +5,19 @@ import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 
 interface OwnProps {
 	onContinueClick: () => void;
-	remainingTime: number;
+	utloggingsTidspunkt: number;
 }
 
 type Props = OwnProps & InjectedIntlProps;
 
-const Nedtelling: React.StatelessComponent<Props> = ({onContinueClick, remainingTime, intl}) => {
-	const utlopsTidspunkt = remainingTime;
-	// const minutter = intl.formatMessage({id: "timeout.minutter"});
-	// const sekunder = intl.formatMessage({id: "timeout.sekunder"});
-	// const underEttMinuttIgjen = (utlopsTidspunkt / (1000 * 60)) < 0;
-	console.log("utlopsTidspunkt: " + utlopsTidspunkt);
-	let utlopsTidspunktFormattert = intl.formatTime(utlopsTidspunkt, {format: "mmss"});
-	debugger;
-	// let utlopsTidspunktMsg = utlopsTidspunktFormattert + " x " + underEttMinuttIgjen ? minutter : sekunder;
-	console.log("utlopsTidspunktFormattert: " + utlopsTidspunktFormattert);
+const Nedtelling: React.StatelessComponent<Props> = ({onContinueClick, utloggingsTidspunkt, intl}) => {
 	return (
 		<div>
 			<Innholdstittel className="blokk-s">
 				<FormattedMessage id={"timeout.overskrift"}/>
 			</Innholdstittel>
 			<Normaltekst className="blokk-xxs">
-				<FormattedMessage
-					id={"timeout.nedtelling"}
-					values={{utlopsTidspunkt: utlopsTidspunktFormattert}}
-				/>
+				<FormattedMessage id={"timeout.nedtelling"}/>
 			</Normaltekst>
 			<div className="timeoutbox__knapperad">
 				<Hovedknapp onClick={onContinueClick}>

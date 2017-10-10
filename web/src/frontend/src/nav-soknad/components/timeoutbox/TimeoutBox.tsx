@@ -4,79 +4,76 @@ import NavFrontendModal from "nav-frontend-modal";
 import Nedtelling from "./Nedtelling";
 import LoggetUt from "./LoggetUt";
 import { REST_STATUS } from "../../types/restTypes";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import { now } from "../../utils/index";
 import "./timeoutbox.css";
 
 interface State {
-	sesjonGarUt: number;
-	visAdvarsel: number;
-	apen: boolean;
-	sjekkGjenstaendeTid: any;
+	utloggingsTidspunkt: number;
+	visAdvarselTidspunkt: number;
+	visAdvarsel: boolean;
+	visLoggetUt: boolean;
+	timeoutTimer: any;
 }
 
-interface Props {
+interface OwnProps {
 	sessionDurationInMinutes: number;
 	showWarningerAfterMinutes: number;
 	restStatus: string;
 }
 
-const now = () => {
-	return new Date().getTime();
-};
+type Props = OwnProps & InjectedIntlProps;
 
 class TimeoutBox extends React.Component<Props, State> {
 
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			sesjonGarUt: this.sesjonGarUtTidspunkt(),
-			visAdvarsel: this.visAdvarselTidspunkt(),
-			apen: false,
-			sjekkGjenstaendeTid: null
+			utloggingsTidspunkt: this.beregnUtloggingsTidspunkt(),
+			visAdvarselTidspunkt: this.beregnVisAdvarseTidspunkt(),
+			visAdvarsel: false,
+			visLoggetUt: false,
+			timeoutTimer: null
 		};
 	}
 
-	sesjonGarUtTidspunkt(): number {
-		return now() + 5000; // + (this.props.sessionDurationInMinutes * 60 * 1000);
-	}
-
-	visAdvarselTidspunkt(): number {
-		return now() + 3000; // + (this.props.showWarningerAfterMinutes * 60 * 1000);
-	}
 	componentWillMount() {
-		console.log("TimeoutBox.componentWillMount()");
-		const sjekkGjenstaendeTid = setInterval(() => {
-			const tidIgjenAvSesjon = this.state.sesjonGarUt - now();
-			const tidIgjenForAdvarsel = this.state.visAdvarsel - now();
-			const apen = (tidIgjenAvSesjon < 0) || (tidIgjenForAdvarsel < 0);
-			this.setState({
-				apen
-			});
-			// if (tidIgjenForAdvarsel > 0 && tidIgjenAvSesjon > 0) {
-			// 	console.log("Tid igjen:\n" +
-			// 		"  Advarsel  : " + Math.round( tidIgjenForAdvarsel / 1000 ) + " sekunder.\n" +
-			// 		"  Utlogging : " + Math.round( tidIgjenAvSesjon / 1000 ) + " sekunder."
-			// 	);
-			// }
+		const timeoutTimer = setInterval(() => {
+			const tidIgjenAvSesjon = this.state.utloggingsTidspunkt - now();
+			const tidIgjenForAdvarsel = this.state.visAdvarselTidspunkt - now();
+			const visAdvarsel = (tidIgjenForAdvarsel < 0) && (tidIgjenAvSesjon > 0);
+			const visLoggetUt = (tidIgjenAvSesjon < 0);
+			this.setState({visAdvarsel, visLoggetUt});
 		}, 1000);
-		this.setState({sjekkGjenstaendeTid});
+		this.setState({timeoutTimer});
 	}
 
 	componentDidUpdate(prevProps: Props) {
 		if (prevProps.restStatus === REST_STATUS.PENDING && this.props.restStatus === REST_STATUS.OK) {
 			this.setState({
-				sesjonGarUt: this.sesjonGarUtTidspunkt(),
-				visAdvarsel: this.visAdvarselTidspunkt(),
-				apen: false
+				utloggingsTidspunkt: this.beregnUtloggingsTidspunkt(),
+				visAdvarselTidspunkt: this.beregnVisAdvarseTidspunkt()
 			});
 		}
 	}
 
 	componentWillUnmount() {
-		clearInterval(this.state.sjekkGjenstaendeTid);
+		clearInterval(this.state.timeoutTimer);
 	}
 
 	onCloseModal() {
-		this.setState({ apen: false });
+		this.setState({
+			visAdvarsel: false,
+			visLoggetUt: false
+		});
+	}
+
+	beregnUtloggingsTidspunkt(): number {
+		return now() + (this.props.sessionDurationInMinutes * 60 * 1000);
+	}
+
+	beregnVisAdvarseTidspunkt(): number {
+		return now() + (this.props.showWarningerAfterMinutes * 60 * 1000);
 	}
 
 	onLoginAgainClick() {
@@ -85,18 +82,18 @@ class TimeoutBox extends React.Component<Props, State> {
 
 	onContinueClick() {
 		this.setState({
-			sesjonGarUt: this.sesjonGarUtTidspunkt(),
-			visAdvarsel: this.visAdvarselTidspunkt(),
-			apen: false
+			utloggingsTidspunkt: this.beregnUtloggingsTidspunkt(),
+			visAdvarselTidspunkt: this.beregnVisAdvarseTidspunkt()
 		});
 	}
 
 	render() {
-		const visAdvarsel = ((this.state.visAdvarsel - now()) < 0);
+		const {visAdvarsel, visLoggetUt} = this.state;
 		return (
 			<NavFrontendModal
-				isOpen={this.state.apen}
-				contentLabel="Fortsett"
+				isOpen={visAdvarsel || visLoggetUt}
+				contentLabel={this.props.intl.formatMessage({id: "timeout.fortsett"})}
+				closeButton={false}
 				onRequestClose={() => {
 					this.onCloseModal();
 				}}
@@ -104,12 +101,12 @@ class TimeoutBox extends React.Component<Props, State> {
 				<div className="timeoutbox">
 					{visAdvarsel && (
 						<Nedtelling
-							remainingTime={this.state.sesjonGarUt - now()}
+							utloggingsTidspunkt={this.state.utloggingsTidspunkt}
 							onContinueClick={() => {
 								this.onContinueClick();
 							}}/>
 					)}
-					{!visAdvarsel && (
+					{visLoggetUt && (
 						<LoggetUt
 							onLoginAgainClick={() => {
 								this.onLoginAgainClick();
@@ -126,4 +123,4 @@ export default connect((state: any, props: any) => {
 	return {
 		restStatus: state.fakta.restStatus
 	};
-})(TimeoutBox);
+})(injectIntl(TimeoutBox));
