@@ -18,7 +18,8 @@ export function validerFaktum(options: ValiderOptions): Valideringsfeil {
 	const faktumvalidering = valideringsregler.find(
 		vr =>
 			vr.faktumKey === faktum.key &&
-			(property ? vr.property === property : true)
+			(property ? vr.property === property : true) &&
+			(vr.faktumId ? vr.faktumId === faktum.faktumId : true)
 	);
 	if (faktumvalidering) {
 		faktumvalidering.valideringer.forEach(v => {

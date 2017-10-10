@@ -307,7 +307,8 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		const feil = state.validering.feil.find(
 			f =>
 				f.faktumKey === props.faktumKey &&
-				(props.property ? f.property === props.property : true)
+				(props.property ? f.property === props.property : true) &&
+				(props.faktumId ? f.faktumId === props.faktumId : true)
 		);
 		return {
 			fakta: state.fakta.data,
