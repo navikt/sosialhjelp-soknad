@@ -13,8 +13,8 @@ import {
 import { finnFakta, finnFaktum } from "../../../nav-soknad/utils";
 import { Faktum } from "../../../nav-soknad/types";
 import {
-	opprettFaktum
-	// slettFaktum
+	opprettFaktum,
+	slettFaktum
 } from "../../../nav-soknad/redux/faktaActions";
 import LeggTilLenke from "../../../nav-soknad/components/leggTilLenke/leggtillenke";
 import Barn from "./Barn";
@@ -31,7 +31,7 @@ type Props = OwnProps &
 	InjectedIntlProps;
 
 const Fade: React.StatelessComponent<any> = ({ children, ...props }) => (
-	<CSSTransition timeout={500} {...props} classNames="fade">
+	<CSSTransition timeout={250} {...props} classNames="fade">
 		{children}
 	</CSSTransition>
 );
@@ -42,15 +42,19 @@ interface State {
 
 class Barneinfo extends React.Component<Props, State> {
 	list: HTMLElement;
-	forsteBarn: Barn;
 
 	constructor(props: Props) {
 		super(props);
 		this.leggTilBarn = this.leggTilBarn.bind(this);
 		this.fjernBarn = this.fjernBarn.bind(this);
+		this.resetListState = this.resetListState.bind(this);
 		this.state = {
-			listState: "Her kommer status"
+			listState: ""
 		};
+	}
+
+	resetListState() {
+		this.setState({ listState: "" });
 	}
 
 	componentDidMount() {
@@ -75,13 +79,18 @@ class Barneinfo extends React.Component<Props, State> {
 	}
 
 	fjernBarn(faktumId: number) {
-		// this.props.dispatch(slettFaktum(faktumId));
+		this.props.dispatch(slettFaktum(faktumId));
+		this.oppdaterListStatus("Barn fjernet");
+		this.list.focus();
+	}
+
+	oppdaterListStatus(status: string) {
 		this.setState({
-			listState: "Barn fjernet"
+			listState: status
 		});
-		if (this.forsteBarn) {
-			// this.forsteBarn.focus();
-		}
+		setTimeout(() => {
+			this.resetListState();
+		}, 2500);
 	}
 
 	render() {
@@ -90,7 +99,7 @@ class Barneinfo extends React.Component<Props, State> {
 		const visFjernlenke = alleBarn.length > 1;
 		return (
 			<div>
-				<AriaStatus live="polite" visible={true} atomic={false}>
+				<AriaStatus role="status" live="assertive" visible={true} atomic={true}>
 					{this.state.listState}
 				</AriaStatus>
 				<Element className="blokk-s">
@@ -102,7 +111,6 @@ class Barneinfo extends React.Component<Props, State> {
 							<Fade key={barnFaktum.faktumId}>
 								<li>
 									<Barn
-										ref={c => (index === 0 ? (this.forsteBarn = c) : null)}
 										fakta={fakta}
 										faktum={barnFaktum}
 										barnNummer={index + 1}

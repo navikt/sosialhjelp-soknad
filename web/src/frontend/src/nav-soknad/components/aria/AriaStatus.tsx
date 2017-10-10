@@ -13,6 +13,7 @@ export interface AriaStatusProps {
 	id?: string;
 	atomic?: boolean;
 	relevant?: string;
+	role?: "status" | "alert";
 	live?: "assertive" | "off" | "polite";
 }
 
@@ -29,6 +30,7 @@ class AriaStatus extends React.Component<AriaStatusProps, any> {
 		visible: false,
 		atomic: true,
 		live: "assertive",
+		role: "status",
 		id: cuid()
 	};
 
@@ -42,7 +44,7 @@ class AriaStatus extends React.Component<AriaStatusProps, any> {
 					invisible: !this.props.visible
 				})}
 				id={this.props.id}
-				role="status"
+				role={this.props.role}
 				aria-atomic={this.props.atomic}
 				aria-live={this.props.live}
 				aria-relevant={this.props.relevant}>
