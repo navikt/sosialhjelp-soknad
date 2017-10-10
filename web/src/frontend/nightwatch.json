@@ -23,14 +23,14 @@
 	},
 	"test_settings": {
 		"default": {
-			"launch_url": "https://tjenester-q1.nav.no/veivisersosialhjelp",
+			"launch_url": "https://tjenester-t6.nav.no/soknadsosialhjelp/informasjon",
 			"login": false,
 			"selenium_port": 4444,
 			"timeout": 1000,
 			"selenium_host": "localhost",
 			"silent": true,
 			"screenshots": {
-				"enabled": true,
+				"enabled": false,
 				"on_failure": true,
 				"on_error": true,
 				"path": "./screenshots"
