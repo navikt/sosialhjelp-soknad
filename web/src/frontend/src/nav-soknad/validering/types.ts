@@ -1,4 +1,4 @@
-export enum ValideringKey {
+export enum ValideringActionKey {
 	PAKREVD = "validering.pakrevd",
 	MIN_LENGDE = "validering.minLengde",
 	MAX_LENGDE = "validering.maksLengde",
@@ -7,14 +7,18 @@ export enum ValideringKey {
 	ER_KONTONUMMER = "validering.erKontonummer"
 }
 
-export interface Valideringsfeil {
+export type FaktumValideringFunc = (value: string) => ValideringActionKey;
+
+export interface FaktumValideringKey {
 	faktumKey: string;
+	property?: string;
+	faktumId?: number;
+}
+
+export interface Valideringsfeil extends FaktumValideringKey {
 	feilkode: string;
 }
 
-export type FaktumValideringFunc = (value: string) => ValideringKey;
-
-export interface FaktumValideringsregler {
-	faktumKey: string;
+export interface FaktumValideringsregler extends FaktumValideringKey {
 	valideringer: FaktumValideringFunc[];
 }

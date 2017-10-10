@@ -18,7 +18,10 @@ export interface SetFaktaValideringsfeilAction {
 export interface ClearFaktaValideringsfeilAction {
 	type: ValideringActionTypeKeys.CLEAR_FAKTA_VALIDERINGSFEIL;
 	faktumKey: string;
+	property?: string;
+	faktumId?: number;
 }
+
 export interface RegisterFaktumValideringAction {
 	type: ValideringActionTypeKeys.REGISTER_FAKTUM_VALIDERING;
 	faktumValidering: FaktumValideringsregler;
@@ -27,11 +30,15 @@ export interface RegisterFaktumValideringAction {
 export interface UnregisterFaktumValideringAction {
 	type: ValideringActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING;
 	faktumKey: string;
+	property?: string;
+	faktumId?: number;
 }
 
 export interface SetFaktumValideringsfeilAction {
 	type: ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL;
 	faktumKey: string;
+	property?: string;
+	faktumId?: number;
 	valideringsfeil: Valideringsfeil;
 }
 

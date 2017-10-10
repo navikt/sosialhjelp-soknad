@@ -3,7 +3,11 @@ import {
 	ValideringActionTypes,
 	ValideringActionTypeKeys
 } from "./valideringActionTypes";
-import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
+import {
+	FaktumValideringsregler,
+	Valideringsfeil,
+	FaktumValideringKey
+} from "../validering/types";
 
 export interface ValideringState {
 	/** Alle valideringsfeil som finnes for registrerte regler */
@@ -23,13 +27,31 @@ const defaultState: ValideringState = {
 	stegValidertCounter: 0
 };
 
+const finnIndex = (
+	faktumValideringKeys: FaktumValideringKey[],
+	faktumKey: string,
+	property: string,
+	faktumId: number
+) => {
+	return faktumValideringKeys.findIndex(
+		valideringKey =>
+			valideringKey.faktumKey === faktumKey &&
+			(property ? valideringKey.property === property : true) &&
+			(faktumId ? valideringKey.faktumId === faktumId : true)
+	);
+};
+
 const registerFaktumValidering = (
 	valideringsregler: FaktumValideringsregler[],
 	faktumValidering: FaktumValideringsregler
 ) => {
-	const idx = valideringsregler.findIndex(
-		f => f.faktumKey === faktumValidering.faktumKey
+	const idx = finnIndex(
+		valideringsregler,
+		faktumValidering.faktumKey,
+		faktumValidering.property,
+		faktumValidering.faktumId
 	);
+
 	if (idx === -1) {
 		return [...valideringsregler, faktumValidering];
 	}
@@ -42,9 +64,11 @@ const registerFaktumValidering = (
 
 const unregisterFaktumValidering = (
 	valideringsregler: FaktumValideringsregler[],
-	faktumKey: string
+	faktumKey: string,
+	property?: string,
+	faktumId?: number
 ) => {
-	const idx = valideringsregler.findIndex(f => f.faktumKey === faktumKey);
+	const idx = finnIndex(valideringsregler, faktumKey, property, faktumId);
 	if (idx === -1) {
 		return valideringsregler;
 	}
@@ -56,13 +80,23 @@ const unregisterFaktumValidering = (
 
 const setFaktumValideringsfeil = (
 	feil: Valideringsfeil[],
+	faktumValideringfeil: Valideringsfeil,
 	faktumKey: string,
-	faktumValideringfeil: Valideringsfeil
+	property?: string,
+	faktumId?: number
 ) => {
 	if (!faktumValideringfeil) {
-		return feil.filter(v => v.faktumKey !== faktumKey);
+		/** Returner alle andre feil */
+		const filtrerte = feil.filter(v => {
+			return (
+				v.faktumKey !== faktumKey ||
+				v.faktumId !== faktumId ||
+				v.property !== property
+			);
+		});
+		return filtrerte;
 	}
-	const idx = feil.findIndex(v => v.faktumKey === faktumKey);
+	const idx = finnIndex(feil, faktumKey, property, faktumId);
 	if (idx === -1) {
 		return feil.concat(faktumValideringfeil);
 	}
@@ -88,7 +122,9 @@ const valideringReducer: Reducer<ValideringState, ValideringActionTypes> = (
 				...state,
 				valideringsregler: unregisterFaktumValidering(
 					state.valideringsregler,
-					action.faktumKey
+					action.faktumKey,
+					action.property,
+					action.faktumId
 				)
 			};
 		case ValideringActionTypeKeys.SET_FAKTA_VALIDERINGSFEIL:
@@ -107,8 +143,10 @@ const valideringReducer: Reducer<ValideringState, ValideringActionTypes> = (
 		case ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL:
 			const feil = setFaktumValideringsfeil(
 				state.feil,
+				action.valideringsfeil,
 				action.faktumKey,
-				action.valideringsfeil
+				action.property,
+				action.faktumId
 			);
 			const visValideringsfeil = state.visValideringsfeil
 				? feil.length > 0

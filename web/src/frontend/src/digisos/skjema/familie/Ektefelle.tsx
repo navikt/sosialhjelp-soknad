@@ -18,19 +18,23 @@ class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 		return (
 			<div>
 				<div className="blokk-s">
-					<PersonFaktum
-						faktumKey="familie.sivilstatus.gift.ektefelle"
-						validering={{
-							navnRequired: true,
-							fnrRequired: true
-						}}
-					/>
+					<PersonFaktum faktumKey="familie.sivilstatus.gift.ektefelle" />
 				</div>
 				<SporsmalFaktum faktumKey={borsammen.faktum}>
-					<RadioFaktum faktumKey={faktumKey} property="borsammen" value="true" />
-					<RadioFaktum faktumKey={faktumKey} property="borsammen" value="false" />
+					<RadioFaktum
+						faktumKey={faktumKey}
+						property="borsammen"
+						value="true"
+					/>
+					<RadioFaktum
+						faktumKey={faktumKey}
+						property="borsammen"
+						value="false"
+					/>
 					<NivaTreSkjema
-						visible={getPropertyVerdi(fakta, faktumKey, "borsammen") === "false"}>
+						visible={
+							getPropertyVerdi(fakta, faktumKey, "borsammen") === "false"
+						}>
 						<TextareaFaktum
 							faktumKey={faktumKey}
 							property="ikkesammenbeskrivelse"
