@@ -3,9 +3,7 @@ import * as React from "react";
 import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema/index";
-import PersonFaktum, {
-	oppsummerPersonData
-} from "../../../nav-soknad/faktum/PersonFaktum";
+import PersonFaktum from "../../../nav-soknad/faktum/PersonFaktum";
 import { Faktum } from "../../../nav-soknad/types";
 import {
 	faktumIsSelected,
@@ -16,8 +14,6 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
 import FjernLenke from "../../../nav-soknad/components/fjernLenke/fjernlenke";
-import { slettFaktum } from "../../../nav-soknad/redux/faktaActions";
-import AriaAlternativTekst from "../../../nav-soknad/components/aria/AriaAlternativeText";
 
 import "./barn.css";
 
@@ -28,19 +24,25 @@ interface BarnTypes {
 	barnNummer: number;
 	dispatch: any;
 	visFjernlenke: boolean;
+	onFjernBarn: (faktumId: number) => void;
 }
 
 export default class Barn extends React.Component<
 	FaktumComponentProps & BarnTypes,
 	{}
 > {
-	sporsmal: HTMLElement;
+	sporsmalFaktum: HTMLElement;
 
 	componentDidMount() {
-		if (this.sporsmal) {
-			this.sporsmal.focus();
+		if (this.sporsmalFaktum) {
+			this.sporsmalFaktum.focus();
 		}
 	}
+
+	focus() {
+		this.sporsmalFaktum.focus();
+	}
+
 	render() {
 		const {
 			fakta,
@@ -54,30 +56,15 @@ export default class Barn extends React.Component<
 		const borInfo = radioCheckKeys(`${faktumKey}.borsammen`);
 		const hvormye = inputKeys(`${faktumKey}.grad`);
 		const faktumId = faktum.faktumId;
-		const slettBarn = (): void => {
-			this.props.dispatch(slettFaktum(faktumId));
-		};
 		const alternativFjernTekst = (): string => {
-			return `${fjernBarnAlterantivTekst} ${barnNummer}: (${oppsummerPersonData(
-				faktum
-			)})`;
+			return `${fjernBarnAlterantivTekst} ${barnNummer}`;
 		};
 		return (
 			<div className="blokk barn">
 				<SporsmalFaktum
 					faktumKey={faktumKey}
-					htmlRef={c => (this.sporsmal = c)}
-					tittelRenderer={
-						visFjernlenke
-							? tittel => (
-									<AriaAlternativTekst
-										ariaText={`${tittel} ${barnNummer}`}
-										visibleText={tittel}
-									/>
-								)
-							: null
-					}
-				>
+					htmlRef={c => (this.sporsmalFaktum = c)}
+					tittelRenderer={tittel => `${tittel} ${barnNummer}`}>
 					<PersonFaktum faktumKey={faktumKey} faktumId={faktumId} />
 					<SporsmalFaktum faktumKey={borInfo.faktum}>
 						<FaktumRadio
@@ -89,8 +76,7 @@ export default class Barn extends React.Component<
 						<NivaTreSkjema
 							visible={faktumIsSelected(
 								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId)
-							)}
-						>
+							)}>
 							<SporsmalFaktum faktumKey={hvormye.faktum}>
 								<BelopFaktum
 									faktumKey={faktumKey}
@@ -111,7 +97,7 @@ export default class Barn extends React.Component<
 					</SporsmalFaktum>
 					{visFjernlenke && (
 						<FjernLenke
-							fjern={slettBarn}
+							fjern={() => this.props.onFjernBarn(this.props.faktum.faktumId)}
 							lenketekst={fjernBarnTekst}
 							alternativLenketekst={alternativFjernTekst()}
 						/>
