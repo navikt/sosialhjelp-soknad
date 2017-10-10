@@ -2,6 +2,7 @@ import * as React from "react";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp } from "nav-frontend-knapper";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import "./timeoutbox.css";
 
 interface OwnProps {
 	onContinueClick: () => void;
@@ -23,8 +24,7 @@ const Nedtelling: React.StatelessComponent<Props> = ({onContinueClick, utlogging
 				<Hovedknapp onClick={onContinueClick}>
 					<FormattedMessage id={"timeout.fortsett"}/>
 				</Hovedknapp>
-				&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href={utloggingsUrl} className="lenke knapp-lenke">
+				<a href={utloggingsUrl} className="lenke knapp-lenke timeoutbox__loggutknapp">
 					<FormattedMessage id={"timeout.loggut"}/>
 				</a>
 			</div>

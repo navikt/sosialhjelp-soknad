@@ -38,13 +38,14 @@ class TimeoutBox extends React.Component<Props, State> {
 	}
 
 	componentWillMount() {
+		const millisekunderMellomSjekk = 60 * 1000;
 		const timeoutTimer = setInterval(() => {
 			const tidIgjenAvSesjon = this.state.utloggingsTidspunkt - now();
 			const tidIgjenForAdvarsel = this.state.visAdvarselTidspunkt - now();
 			const visAdvarsel = (tidIgjenForAdvarsel < 0) && (tidIgjenAvSesjon > 0);
 			const visLoggetUt = (tidIgjenAvSesjon < 0);
 			this.setState({visAdvarsel, visLoggetUt});
-		}, 1000);
+		}, millisekunderMellomSjekk);
 		this.setState({timeoutTimer});
 	}
 
@@ -62,11 +63,13 @@ class TimeoutBox extends React.Component<Props, State> {
 	}
 
 	beregnUtloggingsTidspunkt(): number {
-		return now() + (this.props.sessionDurationInMinutes * 60 * 1000);
+		const millisekunderTilUtlogging = (this.props.sessionDurationInMinutes * 60 * 1000);
+		return now() + millisekunderTilUtlogging;
 	}
 
 	beregnVisAdvarseTidspunkt(): number {
-		return now() + (this.props.showWarningerAfterMinutes * 60 * 1000);
+		const millisekunderTilAdvarsel = (this.props.showWarningerAfterMinutes * 60 * 1000);
+		return now() + millisekunderTilAdvarsel;
 	}
 
 	onLoginAgainClick() {
