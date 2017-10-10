@@ -1,8 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import AriaStatus from "../../../nav-soknad/components/aria/AriaStatus";
 
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import {
@@ -29,19 +27,11 @@ type Props = OwnProps &
 	DispatchProps &
 	InjectedIntlProps;
 
-const Fade: React.StatelessComponent<any> = ({ children, ...props }) => (
-	<CSSTransition timeout={250} {...props} classNames="fade">
-		{children}
-	</CSSTransition>
-);
-
 interface State {
 	listState: string;
 }
 
 class Barneinfo extends React.Component<Props, State> {
-	list: HTMLElement;
-
 	constructor(props: Props) {
 		super(props);
 		this.leggTilBarn = this.leggTilBarn.bind(this);
@@ -79,17 +69,6 @@ class Barneinfo extends React.Component<Props, State> {
 
 	fjernBarn(faktumId: number) {
 		this.props.dispatch(slettFaktum(faktumId));
-		this.oppdaterListStatus("Barn fjernet");
-		this.list.focus();
-	}
-
-	oppdaterListStatus(status: string) {
-		this.setState({
-			listState: status
-		});
-		setTimeout(() => {
-			this.resetListState();
-		}, 2500);
 	}
 
 	render() {
@@ -98,36 +77,25 @@ class Barneinfo extends React.Component<Props, State> {
 		const visFjernlenke = alleBarn.length > 1;
 		return (
 			<div>
-				<AriaStatus
-					role="status"
-					live="assertive"
-					visible={false}
-					atomic={true}>
-					{this.state.listState}
-				</AriaStatus>
-				<ol className="barneliste" tabIndex={-1} ref={c => (this.list = c)}>
-					<TransitionGroup>
-						{alleBarn.map((barnFaktum: Faktum, index: number) => (
-							<Fade key={barnFaktum.faktumId}>
-								<li>
-									<Barn
-										fakta={fakta}
-										faktum={barnFaktum}
-										barnNummer={index + 1}
-										onFjernBarn={this.fjernBarn}
-										fjernBarnTekst={intl.formatMessage({
-											id: "familie.barn.true.barn.fjern"
-										})}
-										fjernBarnAlterantivTekst={intl.formatMessage({
-											id: "familie.barn.true.barn.fjernAlternativTekst"
-										})}
-										dispatch={this.props.dispatch}
-										visFjernlenke={visFjernlenke}
-									/>
-								</li>
-							</Fade>
-						))}
-					</TransitionGroup>
+				<ol className="barneliste">
+					{alleBarn.map((barnFaktum: Faktum, index: number) => (
+						<li>
+							<Barn
+								fakta={fakta}
+								faktum={barnFaktum}
+								barnNummer={index + 1}
+								onFjernBarn={this.fjernBarn}
+								fjernBarnTekst={intl.formatMessage({
+									id: "familie.barn.true.barn.fjern"
+								})}
+								fjernBarnAlterantivTekst={intl.formatMessage({
+									id: "familie.barn.true.barn.fjernAlternativTekst"
+								})}
+								dispatch={this.props.dispatch}
+								visFjernlenke={visFjernlenke}
+							/>
+						</li>
+					))}
 				</ol>
 				<LeggTilLenke
 					leggTil={this.leggTilBarn}
