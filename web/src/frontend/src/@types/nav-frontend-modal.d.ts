@@ -1,8 +1,8 @@
 declare module "nav-frontend-modal" {
 	interface NavFrontendModal {
 		isOpen?: boolean;
-		onAfterOpen?: Function;
-		onRequestClose?: Function;
+		onAfterOpen?: () => void;
+		onRequestClose?: () => void;
 		closeTimeoutMS?: number;
 		style?: object;
 		contentLabel?: string;
