@@ -9,6 +9,14 @@ module.exports = {
 		fortsett: '.knapp--hoved'
     },
     sections: {
+	    innloggingsside: {
+	    	selector: '.box',
+		    elements: {
+	    		brukernavn: '.textbox:nth-of-type(1)',
+			    passord: '.textbox:nth-of-type(2)',
+			    loginKnapp: 'input[name=Login.Submit]'
+		    }
+	    },
 	    soknadsskjema: {
 		    selector: '.skjema-steg',
 		    elements: {
