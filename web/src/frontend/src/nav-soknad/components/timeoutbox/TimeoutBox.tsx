@@ -61,13 +61,6 @@ class TimeoutBox extends React.Component<Props, State> {
 		clearInterval(this.state.timeoutTimer);
 	}
 
-	onCloseModal() {
-		this.setState({
-			visAdvarsel: false,
-			visLoggetUt: false
-		});
-	}
-
 	beregnUtloggingsTidspunkt(): number {
 		return now() + (this.props.sessionDurationInMinutes * 60 * 1000);
 	}
@@ -94,14 +87,14 @@ class TimeoutBox extends React.Component<Props, State> {
 				isOpen={visAdvarsel || visLoggetUt}
 				contentLabel={this.props.intl.formatMessage({id: "timeout.fortsett"})}
 				closeButton={false}
+				onRequestClose={() => null}
 			>
 				<div className="timeoutbox">
 					{visAdvarsel && (
 						<Nedtelling
-							utloggingsTidspunkt={this.state.utloggingsTidspunkt}
-							onContinueClick={() => {
-								this.onContinueClick();
-							}}/>
+							onContinueClick={ () => { this.onContinueClick(); }}
+							utloggingsUrl="/esso/logout"
+						/>
 					)}
 					{visLoggetUt && (
 						<LoggetUt

@@ -5,12 +5,12 @@ import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 
 interface OwnProps {
 	onContinueClick: () => void;
-	utloggingsTidspunkt: number;
+	utloggingsUrl: string;
 }
 
 type Props = OwnProps & InjectedIntlProps;
 
-const Nedtelling: React.StatelessComponent<Props> = ({onContinueClick, utloggingsTidspunkt, intl}) => {
+const Nedtelling: React.StatelessComponent<Props> = ({onContinueClick, utloggingsUrl, intl}) => {
 	return (
 		<div>
 			<Innholdstittel className="blokk-s">
@@ -24,7 +24,7 @@ const Nedtelling: React.StatelessComponent<Props> = ({onContinueClick, utlogging
 					<FormattedMessage id={"timeout.fortsett"}/>
 				</Hovedknapp>
 				&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="/esso/logout" className="lenke knapp-lenke">
+				<a href={utloggingsUrl} className="lenke knapp-lenke">
 					<FormattedMessage id={"timeout.loggut"}/>
 				</a>
 			</div>
