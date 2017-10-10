@@ -1,8 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl";
-import { Element } from "nav-frontend-typografi";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import AriaStatus from "../../../nav-soknad/components/aria/AriaStatus";
 
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
@@ -99,12 +98,13 @@ class Barneinfo extends React.Component<Props, State> {
 		const visFjernlenke = alleBarn.length > 1;
 		return (
 			<div>
-				<AriaStatus role="status" live="assertive" visible={true} atomic={true}>
+				<AriaStatus
+					role="status"
+					live="assertive"
+					visible={false}
+					atomic={true}>
 					{this.state.listState}
 				</AriaStatus>
-				<Element className="blokk-s">
-					<FormattedMessage id="familie.barn.true.listetittel" />
-				</Element>
 				<ol className="barneliste" tabIndex={-1} ref={c => (this.list = c)}>
 					<TransitionGroup>
 						{alleBarn.map((barnFaktum: Faktum, index: number) => (
