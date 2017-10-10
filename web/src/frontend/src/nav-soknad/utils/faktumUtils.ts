@@ -95,7 +95,7 @@ export function getPropertyVerdi(
 	faktumId?: number
 ) {
 	const faktum = finnFaktum(key, fakta, faktumId);
-	return faktum.properties[property];
+	return faktum ? faktum.properties[property] : "";
 }
 
 export function oppdaterFaktumMedVerdier(
