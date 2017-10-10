@@ -15,17 +15,28 @@ interface Props {
 }
 
 class Opplysning extends React.Component<Props & DispatchProps & FaktumComponentProps, {}> {
+
+	constructor(props: Props & DispatchProps & FaktumComponentProps) {
+		super(props);
+		this.leggTilBelop = this.leggTilBelop.bind(this);
+	}
+
 	componentDidMount() {
-		const {faktumstruktur, fakta, dispatch} = this.props;
+		const {faktumstruktur, fakta} = this.props;
 
 		const belopFakta = finnFakta(faktumstruktur.id, fakta);
 
 		if (belopFakta.length === 0) {
-			const parent = finnFaktum(faktumstruktur.dependOn.id, fakta);
-			dispatch(
-				opprettFaktum({key: faktumstruktur.id, parrentFaktum: parent.faktumId})
-			);
+			this.leggTilBelop();
 		}
+	}
+
+	leggTilBelop() {
+		const {faktumstruktur, fakta, dispatch} = this.props;
+		const parent = finnFaktum(faktumstruktur.dependOn.id, fakta);
+		dispatch(
+			opprettFaktum({key: faktumstruktur.id, parrentFaktum: parent.faktumId})
+		);
 	}
 
 	render() {
@@ -50,14 +61,17 @@ class Opplysning extends React.Component<Props & DispatchProps & FaktumComponent
 			);
 		});
 
+		let knapp = null;
+		if (faktumstruktur.flereTillatt === "true") {
+			knapp = <div onClick={this.leggTilBelop}>Legg til</div>;
+		}
+
 		return (
 			<SporsmalFaktum faktumKey={faktumstruktur.id} key={faktumstruktur.id}>
 				<Container fluid={true} className="container--noPadding">
 					{rader}
 				</Container>
-				{
-					faktumstruktur.flereTillatt === "true" ? <div>legg til</div> : null
-				}
+				{knapp}
 			</SporsmalFaktum>
 		);
 	}
