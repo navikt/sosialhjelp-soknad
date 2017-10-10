@@ -24,7 +24,7 @@ const Nedtelling: React.StatelessComponent<Props> = ({onContinueClick, utlogging
 					<FormattedMessage id={"timeout.fortsett"}/>
 				</Hovedknapp>
 				&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="/pamcv/goto/logout" className="lenke knapp-lenke">
+				<a href="/esso/logout" className="lenke knapp-lenke">
 					<FormattedMessage id={"timeout.loggut"}/>
 				</a>
 			</div>

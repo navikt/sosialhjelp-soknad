@@ -94,9 +94,6 @@ class TimeoutBox extends React.Component<Props, State> {
 				isOpen={visAdvarsel || visLoggetUt}
 				contentLabel={this.props.intl.formatMessage({id: "timeout.fortsett"})}
 				closeButton={false}
-				onRequestClose={() => {
-					this.onCloseModal();
-				}}
 			>
 				<div className="timeoutbox">
 					{visAdvarsel && (
