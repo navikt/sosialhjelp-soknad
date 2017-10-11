@@ -8,17 +8,23 @@ import { DispatchProps, SoknadAppState } from "../../../nav-soknad/redux/reduxTy
 import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { finnFakta, finnFaktum } from "../../../nav-soknad/utils/faktumUtils";
-import { opprettFaktum } from "../../../nav-soknad/redux/faktaActions";
+import { opprettFaktum, slettFaktum } from "../../../nav-soknad/redux/faktaActions";
+import { injectIntl, InjectedIntlProps } from "react-intl";
+import LeggTilLenke from "../../../nav-soknad/components/leggTilLenke/leggtillenke";
+import FjernLenke from "../../../nav-soknad/components/fjernLenke/fjernlenke";
 
 interface Props {
 	faktumstruktur: FaktumStruktur;
 }
 
-class Opplysning extends React.Component<Props & DispatchProps & FaktumComponentProps, {}> {
+type AllProps = Props & DispatchProps & FaktumComponentProps & InjectedIntlProps;
 
-	constructor(props: Props & DispatchProps & FaktumComponentProps) {
+class Opplysning extends React.Component<AllProps, {}> {
+
+	constructor(props: AllProps) {
 		super(props);
 		this.leggTilBelop = this.leggTilBelop.bind(this);
+		this.fjernBelop = this.fjernBelop.bind(this);
 	}
 
 	componentDidMount() {
@@ -39,39 +45,51 @@ class Opplysning extends React.Component<Props & DispatchProps & FaktumComponent
 		);
 	}
 
+	fjernBelop(faktumId: number) {
+		this.props.dispatch(slettFaktum(faktumId));
+	}
+
 	render() {
-		const {faktumstruktur, fakta} = this.props;
+		const {faktumstruktur, fakta, intl} = this.props;
 		const belopFakta = finnFakta(faktumstruktur.id, fakta);
 
-		const width = "" + (12 / faktumstruktur.properties.length);
+		const leggTilTekst = intl.formatMessage({id: "opplysninger.leggtil"});
+		const slettTekst = intl.formatMessage({id: "opplysninger.fjern"});
 
 		const rader = belopFakta.map(faktum => {
 			const inputs = faktumstruktur.properties.map(property => {
 				return (
-					<Column md={width} xs="12" key={property.id}>
+					<Column md="6" xs="12" key={property.id}>
 						<BelopFaktum faktumId={faktum.faktumId} faktumKey={faktumstruktur.id} property={property.id} bredde="s"/>
 					</Column>
 				);
 			});
 
+			const slettKnapp = (
+				<FjernLenke fjern={() => this.fjernBelop(faktum.faktumId)} lenketekst={slettTekst} />
+			);
+
 			return (
-				<Row key={faktum.faktumId}>
+				<Row key={faktum.faktumId} className="opplysning-row">
 					{inputs}
+					{belopFakta.length > 1 ? slettKnapp : null}
 				</Row>
 			);
 		});
 
-		let knapp = null;
-		if (faktumstruktur.flereTillatt === "true") {
-			knapp = <div onClick={this.leggTilBelop}>Legg til</div>;
-		}
+		const leggTilKnapp = (
+			<LeggTilLenke
+				leggTil={this.leggTilBelop}
+				lenketekst={leggTilTekst}
+			/>
+		);
 
 		return (
 			<SporsmalFaktum faktumKey={faktumstruktur.id} key={faktumstruktur.id}>
 				<Container fluid={true} className="container--noPadding">
 					{rader}
 				</Container>
-				{knapp}
+				{faktumstruktur.flereTillatt === "true" ? leggTilKnapp : null}
 			</SporsmalFaktum>
 		);
 	}
@@ -85,4 +103,4 @@ export default connect<StateFromProps, {}, Props>((state: SoknadAppState) => {
 	return {
 		fakta: state.fakta.data
 	};
-})(Opplysning);
+})(injectIntl(Opplysning));

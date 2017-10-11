@@ -48,11 +48,11 @@ class Barneinfo extends React.Component<
 			<div>
 				{alleBarn.map((barnFaktum: Faktum) => (
 					<Barn fakta={fakta}
-						  faktum={barnFaktum}
-						  key={barnFaktum.faktumId}
-						  fjernBarnTekst={intl.formatMessage({id: "familie.barn.true.barn.fjern"})}
-						  dispatch={this.props.dispatch}
-						  visFjernlenke={visFjernlenke}/>
+						faktum={barnFaktum}
+						key={barnFaktum.faktumId}
+						fjernBarnTekst={intl.formatMessage({id: "familie.barn.true.barn.fjern"})}
+						dispatch={this.props.dispatch}
+						visFjernlenke={visFjernlenke}/>
 				))}
 				<LeggTilLenke
 					leggTil={leggTilBarn}
