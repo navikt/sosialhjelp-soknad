@@ -15,7 +15,7 @@ import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
 import FjernLenke from "../../../nav-soknad/components/fjernLenke/fjernlenke";
 import { slettFaktum } from "../../../nav-soknad/redux/faktaActions";
-import "./barn.css";
+
 interface BarnTypes {
 	faktum: Faktum;
 	fjernBarnTekst: string;
@@ -50,7 +50,8 @@ export default class Barn extends React.Component<
 						<NivaTreSkjema
 							visible={faktumIsSelected(
 								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId)
-							)}>
+							)}
+						>
 							<SporsmalFaktum faktumKey={hvormye.faktum}>
 								<BelopFaktum
 									faktumKey={faktumKey}
@@ -70,7 +71,9 @@ export default class Barn extends React.Component<
 						/>
 					</SporsmalFaktum>
 				</SporsmalFaktum>
-				{visFjernlenke && (<FjernLenke fjern={slettBarn} lenketekst={fjernBarnTekst}/>)}
+				{visFjernlenke && (
+					<FjernLenke fjern={slettBarn} lenketekst={fjernBarnTekst} />
+				)}
 			</div>
 		);
 	}

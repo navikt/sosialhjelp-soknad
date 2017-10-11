@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Collapse } from "react-collapse";
-import "./nivaTreSkjema.css";
 
 interface NivaTreSkjemaProps extends React.Props<any> {
 	tittel?: string;

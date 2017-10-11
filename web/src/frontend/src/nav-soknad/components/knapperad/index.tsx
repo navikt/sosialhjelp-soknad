@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Knapp } from "nav-frontend-knapper";
-import "./knapperad.css";
 
 interface Props {
 	gaViderePending?: boolean;

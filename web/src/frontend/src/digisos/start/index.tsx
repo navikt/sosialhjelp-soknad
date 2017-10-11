@@ -6,8 +6,6 @@ import { getIntlTextOrKey, scrollToTop } from "../../nav-soknad/utils";
 
 import Bosted from "./Bosted";
 
-import "./start.css";
-
 const DocumentTitle = require("react-document-title");
 
 class Start extends React.Component<InjectedIntlProps, {}> {
