@@ -71,9 +71,11 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 			<div
 				className="skjema-sporsmal"
 				onBlur={this.handleOnBlur}
-				aria-labelledby={legendId}>
+				aria-labelledby={legendId}
+			>
 				<SkjemaGruppe
-					feil={this.harValidering() ? this.props.getFeil(intl) : null}>
+					feil={this.harValidering() ? this.props.getFeil(intl) : null}
+				>
 					<fieldset className={cls}>
 						<legend id={legendId}>{sporsmal}</legend>
 						{tekster.hjelpetekst ? (

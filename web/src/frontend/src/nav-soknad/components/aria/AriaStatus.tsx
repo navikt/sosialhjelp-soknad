@@ -47,7 +47,8 @@ class AriaStatus extends React.Component<AriaStatusProps, any> {
 				role={this.props.role}
 				aria-atomic={this.props.atomic}
 				aria-live={this.props.live}
-				aria-relevant={this.props.relevant}>
+				aria-relevant={this.props.relevant}
+			>
 				{this.props.status || this.props.children}
 			</div>
 		);
