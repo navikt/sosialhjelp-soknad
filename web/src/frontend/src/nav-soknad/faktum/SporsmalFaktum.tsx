@@ -3,7 +3,7 @@ import * as cuid from "cuid";
 import * as classNames from "classnames";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { SkjemaGruppe } from "nav-frontend-skjema";
-import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
+import Hjelpetekst from "../components/hjelpetekst/Hjelpetekst";
 import { getFaktumSporsmalTekst } from "../utils";
 import {
 	faktumComponent,
@@ -80,9 +80,18 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 						<legend id={legendId}>{sporsmal}</legend>
 						{tekster.hjelpetekst ? (
 							<div className="skjema-sporsmal__hjelpetekst">
-								<HjelpetekstAuto tittel={tekster.hjelpetekst.tittel}>
+								<span
+									className="invisible"
+									id={`tooltip-hjelpetekst_${legendId}`}
+								>
 									{tekster.hjelpetekst.tekst}
-								</HjelpetekstAuto>
+								</span>
+								<Hjelpetekst
+									tittel={tekster.hjelpetekst.tittel}
+									id={`hjelpetekst_${legendId}`}
+								>
+									{tekster.hjelpetekst.tekst}
+								</Hjelpetekst>
 							</div>
 						) : null}
 						<div className="skjema-sporsmal__innhold">{children}</div>
