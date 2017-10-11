@@ -1,7 +1,6 @@
 import { fetchPost, fetchToJson } from "../../../nav-soknad/utils/rest-utils";
 import {
-	setFaktumVerdi,
-	resetFakta
+	resetFakta, lagreFaktum
 } from "../../../nav-soknad/redux/faktaActions";
 import { updateFaktaMedLagretVerdi } from "../../../nav-soknad/redux/faktaUtils";
 import { finnFaktum } from "../../../nav-soknad/utils";
@@ -22,6 +21,7 @@ import {
 	SetServerFeilAction,
 	SoknadActionTypeKeys
 } from "./soknadTypes";
+import { oppdaterFaktumMedVerdier } from "../../../nav-soknad/utils/faktumUtils";
 
 export type SoknadActionTypes =
 	| OpprettSoknadAction
@@ -72,7 +72,7 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 }
 
 const setBostedFaktum = (faktum: Faktum, verdi: string, dispatch: any) => {
-	dispatch(setFaktumVerdi(faktum, verdi));
+	lagreFaktum(oppdaterFaktumMedVerdier(faktum, verdi), dispatch);
 };
 
 export function hentSoknad(brukerBehandlingsId: string) {
