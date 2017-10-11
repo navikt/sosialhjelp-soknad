@@ -1,31 +1,29 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge" />
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{fragment.styles}}
-    <link rel="stylesheet" href="/soknadsosialhjelp/css/soknadsosialhjelp.css?ts={{timestamp}}"/>
-
     {{fragment.webstats-ga-notrack}}
-    <script type="text/javascript" src="/soknadsosialhjelp/js/vendors.js?ts={{timestamp}}"></script>
-    <script type="text/javascript" src="/soknadsosialhjelp/js/soknadsosialhjelp.js?ts={{timestamp}}"></script>
-    <script type="text/javascript" src="/soknadsosialhjelp/js/templates.js?ts={{timestamp}}"></script>
-    <script type="text/javascript" src="/soknadsosialhjelp/js/felles-templates.js?ts={{timestamp}}"></script>
 
+    <title>Soknad sosialhjelp</title>
     {{fragment.scripts}}
-
+    <link rel="stylesheet" href="/soknadsosialhjelp/statisk/css/main.css?rev=@version"/>
 </head>
 <body>
 <div class="pagewrapper">
     {{fragment.header}}
 
-    <div data-ng-app="soknadsosialhjelp">
-        <div class="spinner spinner-xxl spinner-hoved" data-ng-if="app.laster"></div>
-        <div id="app-content" data-ng-view data-avbryt-helper data-styling-helper data-ng-hide="app.laster"></div>
-    </div>
+    <main id="maincontent" role="main" tabindex="-1">
+        <div class="maincontent side-innhold">
+            <div id="root"></div>
+
+        </div>
+    </main>
 </div>
+<script type="text/javascript" src="/soknadsosialhjelp/statisk/js/main.js?rev=@version"></script>
 {{fragment.footer}}
 </body>
 </html>
