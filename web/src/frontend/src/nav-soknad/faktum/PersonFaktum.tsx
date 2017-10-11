@@ -44,7 +44,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 						</Column>
 					</Row>
 					<Row>
-						<Column xs="12" md="6">
+						<Column xs="12">
 							<TallFaktum
 								faktumKey={faktumKey}
 								maxLength={6}
@@ -54,7 +54,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								property="fnr"
 							/>
 						</Column>
-						<Column xs="12" md="6">
+						<Column xs="12">
 							<TallFaktum
 								faktumKey={faktumKey}
 								maxLength={5}
