@@ -57,7 +57,9 @@ class SkjemaRouter extends React.Component<
 		const { gyldigUrl, restStatus } = this.props;
 
 		if (!gyldigUrl) {
-			return <Feilside />;
+			return (
+				<Feilside tekst="Vi fant ikke siden du prøvde å åpne" feilkode="404" />
+			);
 		}
 		const path = "/skjema/:brukerBehandlingId";
 		return (
