@@ -31,6 +31,7 @@ class IntlProvider extends React.Component<
 		const locale = "nb";
 
 		if (ledetekster.status === ActionTypeKeys.FEILET) {
+			/** I og med tekstressurser ikke er tilgjengelig, må tekster hardkodes */
 			children = (
 				<Feilside tekst="Vi klarer ikke vise skjemaet til deg nå, vennligst prøv igjen senere." />
 			);

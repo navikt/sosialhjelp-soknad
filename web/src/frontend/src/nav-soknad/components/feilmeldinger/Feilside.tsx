@@ -20,6 +20,10 @@ export interface FeilsideProps {
 	visTilbakeKnapp?: boolean;
 }
 
+/**
+ * Default inneholder denne hardkodete tekster i og
+ * med det er ikke sikkert tekstressurser er tilgjengelig
+ */
 const FeilSide: React.StatelessComponent<FeilsideProps> = ({
 	tittel = "OOPS, NOE GIKK GALT",
 	tekst,
