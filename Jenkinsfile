@@ -87,32 +87,6 @@ node("master") {
         }
     }
 
-    dir("web/src/frontend-gammel") {
-        stage('Install') {
-            try {
-                sh "npm install"
-            } catch (Exception e) {
-                notifyFailed("Bygg feilet ved npm-install", e, env.BUILD_URL)
-            }
-        }
-
-        stage('Test') {
-            try {
-                sh "npm run gulp test"
-            } catch (Exception e) {
-                notifyFailed("Tester feilet", e, env.BUILD_URL)
-            }
-        }
-
-        stage('Build') {
-            try {
-                sh "npm run gulp-prod"
-            } catch (Exception e) {
-                notifyFailed("Bygging av JS feilet", e, env.BUILD_URL)
-            }
-        }
-    }
-
     echo "${params.DeployTilNexus} deploy til nexus"
     if (isMasterBuild || params.DeployTilNexus == "true") {
         stage('Deploy nexus') {
@@ -201,7 +175,8 @@ def notifyGithub(owner, repo, sha, state, description) {
             sh "curl 'https://api.github.com/repos/${owner}/${repo}/statuses/${sha}?access_token=$GIT_PASSWORD' \
                 -H 'Content-Type: application/json' \
                 -X POST \
-                -d '${postBodyString}'"
+                -d '${postBodyString}' \
+                -k"
         }
     }
 }

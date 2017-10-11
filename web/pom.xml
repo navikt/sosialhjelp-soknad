@@ -14,12 +14,6 @@
     <name>${project.artifactId}</name>
     <packaging>war</packaging>
 
-
-    <properties>
-        <skip.js-tests>false</skip.js-tests>
-        <gulp.extra.test.parameter>--DUMMY</gulp.extra.test.parameter>
-    </properties>
-
     <dependencies>
         <!-- CMS-DECORATOR AND MESSAGE BEAN -->
         <dependency>
@@ -67,54 +61,4 @@
             <artifactId>common-test</artifactId>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>run-browser-tests</id>
-            <activation>
-                <os>
-                    <family>win</family>
-                </os>
-            </activation>
-            <properties>
-                <gulp.extra.test.parameter>--dev</gulp.extra.test.parameter>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>dev-watch</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <gulpTask>watch</gulpTask>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>sonar</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-
-            <properties>
-                <sonar.language>js</sonar.language>
-                <sonar.coverage.exclusions>
-                    src/frontend/app/js/**/*Spec.js,
-                    src/frontend/app/js/app.js,
-                    src/frontend/app/js/feilsiderRoutes.js,
-                    src/frontend/app/js/navModules.js,
-                    src/frontend/app/js/routes.js,
-                    src/frontend/app/js/vendors.js,
-                    src/frontend/app/js/init.js
-                </sonar.coverage.exclusions>
-                <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-                <sonar.sources>src/frontend/app</sonar.sources>
-                <sonar.javascript.jstest.reportsPath>target/surefire-reports</sonar.javascript.jstest.reportsPath>
-                <sonar.javascript.lcov.reportPath>target/karma-coverage/PhantomJS 1.9.7 (Linux 0.0.0)/lcov.info</sonar.javascript.lcov.reportPath>
-                <skip.js-tests>false</skip.js-tests>
-                <gulp.extra.test.parameter>--DUMMY</gulp.extra.test.parameter>
-            </properties>
-        </profile>
-    </profiles>
 </project>

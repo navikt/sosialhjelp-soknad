@@ -8,6 +8,6 @@ import java.io.IOException;
 public class IsAliveServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.getWriter().write("{status : \"ok\", message: \"Bilstønad fungerer\"}");
+        response.getWriter().write("{status : \"ok\", message: \"Soknadsosialhjelp fungerer\"}");
     }
 }

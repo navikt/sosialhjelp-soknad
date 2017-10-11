@@ -48,6 +48,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 							<TallFaktum
 								faktumKey={faktumKey}
 								maxLength={6}
+								minLength={6}
 								bredde="s"
 								required={validering.fnrRequired}
 								faktumId={faktumId}
@@ -58,6 +59,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 							<TallFaktum
 								faktumKey={faktumKey}
 								maxLength={5}
+								minLength={5}
 								bredde="s"
 								required={validering.pnrRequired}
 								faktumId={faktumId}

@@ -16,6 +16,7 @@ export interface OwnProps extends FaktumComponentProps {
 	disabled?: boolean;
 	pattern?: string;
 	maxLength?: number;
+	minLength?: number;
 	bredde?: InputBredde;
 	step?: string;
 	type?: InputTypes;
