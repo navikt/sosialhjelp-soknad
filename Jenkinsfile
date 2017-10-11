@@ -175,7 +175,8 @@ def notifyGithub(owner, repo, sha, state, description) {
             sh "curl 'https://api.github.com/repos/${owner}/${repo}/statuses/${sha}?access_token=$GIT_PASSWORD' \
                 -H 'Content-Type: application/json' \
                 -X POST \
-                -d '${postBodyString}'"
+                -d '${postBodyString}' \
+                -k"
         }
     }
 }

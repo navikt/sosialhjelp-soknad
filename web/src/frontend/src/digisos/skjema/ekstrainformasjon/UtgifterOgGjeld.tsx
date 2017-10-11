@@ -1,11 +1,12 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
-import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
+import { faktumIsSelected, getFaktumVerdi, getIntlTextOrKey } from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 
 const StromSkjema: React.StatelessComponent<{}> = () => (
@@ -48,9 +49,10 @@ const BarneSkjema: React.StatelessComponent<{}> = () => (
 );
 
 const UtgifterOgGjeld: React.StatelessComponent<
-	FaktumComponentProps
+	FaktumComponentProps &
+	InjectedIntlProps
 > = props => {
-	const { fakta } = props;
+	const { fakta, intl } = props;
 	const visHusleie = faktumIsSelected(
 		getFaktumVerdi(fakta, "utgifter.boutgift.true.type.husleie")
 	);
@@ -68,7 +70,12 @@ const UtgifterOgGjeld: React.StatelessComponent<
 		...(visBarn ? [<BarneSkjema key="barn" />] : [])
 	];
 
-	return <Progresjonsblokk tittel="Utgifter og gjeld" content={content} />;
+	return (
+		<Progresjonsblokk
+			tittel={ getIntlTextOrKey(intl, "ekstrainfo.utgifter.tittel") }
+			content={content}
+		/>
+	);
 };
 
-export default UtgifterOgGjeld;
+export default injectIntl(UtgifterOgGjeld);

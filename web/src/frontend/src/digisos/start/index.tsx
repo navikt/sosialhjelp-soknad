@@ -23,8 +23,7 @@ class Start extends React.Component<InjectedIntlProps, {}> {
 					<AppTittel />
 					<div className="skjema-content">
 						<p className="blokk-l">
-							For at vi skal kunne sende din søknad til riktig kommune trenger
-							vi å vite hvor du bor og-/eller oppholder deg nå.
+							{ getIntlTextOrKey(intl, "personalia.informasjon") }
 						</p>
 						<Bosted />
 					</div>

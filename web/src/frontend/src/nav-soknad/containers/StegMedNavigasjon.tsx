@@ -186,7 +186,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						{children}
 						<Knapperad
 							gaViderePending={this.props.progresjonPending}
-							gaVidereLabel={erOppsummering ? "Send søknad" : undefined}
+							gaVidereLabel={erOppsummering ? getIntlTextOrKey(intl, "skjema.knapper.send") : undefined}
 							gaVidere={() =>
 								this.handleGaVidere(stegConfig.stegnummer, brukerBehandlingId)}
 							gaTilbake={() =>
