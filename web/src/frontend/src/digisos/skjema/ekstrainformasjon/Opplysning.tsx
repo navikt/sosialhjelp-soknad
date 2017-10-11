@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { FaktumStruktur } from "../../redux/synligefakta/synligeFaktaReducer";
+import { FaktumStruktur } from "../../redux/synligefakta/synligeFaktaTypes";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { Column, Container, Row } from "nav-frontend-grid";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";

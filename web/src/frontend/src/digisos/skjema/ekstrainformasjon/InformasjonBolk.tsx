@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FaktumStruktur } from "../../redux/synligefakta/synligeFaktaReducer";
+import { FaktumStruktur } from "../../redux/synligefakta/synligeFaktaTypes";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk/index";
 import Opplysning from "./Opplysning";
 

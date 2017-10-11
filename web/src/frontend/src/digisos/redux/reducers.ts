@@ -9,7 +9,8 @@ import OppsummeringReducer, {
 	OppsummeringState
 } from "./oppsummering/oppsummeringReducer";
 import LedeteksterReducer from "./informasjon/informasjonReducer";
-import SynligeFaktaReducer, { SynligeFaktaState } from "./synligefakta/synligeFaktaReducer";
+import SynligeFaktaReducer from "./synligefakta/synligeFaktaReducer";
+import { SynligeFaktaState } from "./synligefakta/synligeFaktaTypes";
 
 export interface State extends SoknadAppState {
 	oppsummering: OppsummeringState;
