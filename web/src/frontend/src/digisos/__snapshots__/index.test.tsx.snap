@@ -29,6 +29,10 @@ ShallowWrapper {
         component={[Function]}
       />
     </Switch>
+    <Connect(InjectIntl(TimeoutBox))
+      sessionDurationInMinutes={30}
+      showWarningerAfterMinutes={25}
+    />
   </div>,
   "nodes": Array [
     <div
@@ -52,6 +56,10 @@ ShallowWrapper {
           component={[Function]}
         />
       </Switch>
+      <Connect(InjectIntl(TimeoutBox))
+        sessionDurationInMinutes={30}
+        showWarningerAfterMinutes={25}
+      />
     </div>,
   ],
   "options": Object {},
@@ -109,6 +117,10 @@ ShallowWrapper {
               component={[Function]}
             />
           </Switch>
+          <Connect(InjectIntl(TimeoutBox))
+            sessionDurationInMinutes={30}
+            showWarningerAfterMinutes={25}
+          />
         </div>,
         "_debugID": 2,
         "_renderedOutput": <div
@@ -132,6 +144,10 @@ ShallowWrapper {
               component={[Function]}
             />
           </Switch>
+          <Connect(InjectIntl(TimeoutBox))
+            sessionDurationInMinutes={30}
+            showWarningerAfterMinutes={25}
+          />
         </div>,
       },
       "_renderedNodeType": 0,
