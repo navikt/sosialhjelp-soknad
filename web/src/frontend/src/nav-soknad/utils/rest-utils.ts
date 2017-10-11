@@ -3,7 +3,7 @@ export function erDev(): boolean {
 	return url.indexOf("localhost:3000") > 0;
 }
 
-function kjorerJetty(): boolean {
+export function kjorerJetty(): boolean {
 	const url = window.location.href;
 	return url.indexOf(":8189") > 0;
 }
@@ -27,12 +27,12 @@ enum RequestMethod {
 const headers = {
 	"Content-Type": "application/json",
 	"X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
-	"accept": "application/json, text/plain, */*"
+	accept: "application/json, text/plain, */*"
 };
 
 const serverRequest = (method: string, urlPath: string, body: string) => {
 	const OPTIONS: RequestInit = {
-		headers ,
+		headers,
 		method,
 		credentials: "same-origin",
 		body: body ? body : undefined
@@ -60,14 +60,13 @@ export function fetchDelete(urlPath: string) {
 		method: RequestMethod.DELETE,
 		credentials: "same-origin"
 	};
-	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
-		.then(sjekkStatuskode);
+	return fetch(getApiBaseUrl() + urlPath, OPTIONS).then(sjekkStatuskode);
 }
 
 export function fetchHtml(urlPath: string) {
 	const OPTIONS: RequestInit = {
 		headers: {
-			"accept": "application/vnd.oppsummering+html"
+			accept: "application/vnd.oppsummering+html"
 		},
 		method: "GET",
 		credentials: "same-origin"
