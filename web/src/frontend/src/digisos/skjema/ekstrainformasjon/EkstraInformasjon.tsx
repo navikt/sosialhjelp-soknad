@@ -1,18 +1,19 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { State } from "../../redux/reducers";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import Infoblokk from "../../../nav-soknad/components/infoblokk/index";
 import { FormattedHTMLMessage } from "react-intl";
 import { SynligeFaktaProps } from "../../redux/synligefakta/synligeFaktaTypes";
 import InformasjonBolk from "./InformasjonBolk";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
+import NavFrontendSpinner from "nav-frontend-spinner";
 import "./ekstrainfo.css";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { hentSynligeFakta } from "../../redux/synligefakta/synligeFaktaActions";
+import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 
-type Props = FaktumComponentProps & SynligeFaktaProps & DispatchProps;
+type Props = SynligeFaktaProps & DispatchProps;
 
 class EkstraInformasjon extends React.Component<Props, {}> {
 
@@ -21,7 +22,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const {synligefakta} = this.props;
+		const {data, restStatus} = this.props.synligefakta;
 		return (
 			<div className="steg-ekstrainformasjon">
 				<div className="skjema-content">
@@ -33,9 +34,16 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 				</div>
 
 				<DigisosSkjemaSteg steg={DigisosSteg.ekstrainfo}>
-					{Object.keys(synligefakta).map(key => (
-						<InformasjonBolk id={key} key={key} faktumstrukturer={synligefakta[key]}/>
-					))}
+					{
+						restStatus === REST_STATUS.OK ?
+							Object.keys(data).map(key => (
+								<InformasjonBolk id={key} key={key} faktumstrukturer={data[key]}/>
+							))
+							:
+							<div className="ekstrainfo__spinner">
+								<NavFrontendSpinner storrelse="xxl"/>
+							</div>
+					}
 				</DigisosSkjemaSteg>
 			</div>
 		);
@@ -44,7 +52,6 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 
 export default connect((state: State) => {
 	return {
-		fakta: state.fakta.data,
-		synligefakta: state.synligefakta.data,
+		synligefakta: state.synligefakta,
 	};
 })(EkstraInformasjon);

@@ -70,7 +70,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 			);
 
 			return (
-				<Row key={faktum.faktumId} className="opplysning-row">
+				<Row key={faktum.faktumId} className="opplysning__row">
 					{inputs}
 					{belopFakta.length > 1 ? slettKnapp : null}
 				</Row>

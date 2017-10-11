@@ -21,7 +21,7 @@ export interface PropertyStruktur {
 }
 
 export interface SynligeFaktaProps {
-	synligefakta: GruppertFaktumStruktur;
+	synligefakta: SynligeFaktaState;
 }
 
 export enum SynligeFaktaActionTypeKeys {
