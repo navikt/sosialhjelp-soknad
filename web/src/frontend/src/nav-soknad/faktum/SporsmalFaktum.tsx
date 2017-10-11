@@ -22,7 +22,6 @@ type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
 class SporsmalFaktum extends React.Component<Props, {}> {
 	mounted: boolean;
-	htmlRef: HTMLElement;
 
 	constructor(props: Props) {
 		super(props);
@@ -72,13 +71,9 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 			<div
 				className="skjema-sporsmal"
 				onBlur={this.handleOnBlur}
-				tabIndex={0}
-				aria-labelledby={legendId}
-				ref={c => (this.props.htmlRef ? this.props.htmlRef(c) : null)}
-			>
+				aria-labelledby={legendId}>
 				<SkjemaGruppe
-					feil={this.harValidering() ? this.props.getFeil(intl) : null}
-				>
+					feil={this.harValidering() ? this.props.getFeil(intl) : null}>
 					<fieldset className={cls}>
 						<legend id={legendId}>{sporsmal}</legend>
 						{tekster.hjelpetekst ? (
