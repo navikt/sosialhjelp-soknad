@@ -86,9 +86,9 @@
 	},
 	"scripts": {
 		"mock-backend": "node scripts/mock_backend",
-		"build-css": "node-less-chokidar ./src/digisos/styles/digisos.less -o src/",
+		"build-css": "chokidar ./src/index.less",
 		"watch-css":
-			"npm run build-css && node-less-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+			"chokidar \"src/**/*.less\" -c \"node-less-chokidar ./src/index.less\"",
 		"start-js": "react-scripts-ts start",
 		"start": "npm-run-all -p watch-css start-js mock-backend stylelint:watch",
 		"build":
@@ -99,7 +99,7 @@
 			"prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css|*.json)\"",
 		"stylelint": "stylelint \"src/digisos/digisos.less\" --syntax less",
 		"stylelint:watch":
-			"chokidar \"src/digisos/digisos.less\" -c \"stylelint \"src/digisos/digisos.less\" --syntax less\"",
+			"chokidar \"src/index.less\" -c \"stylelint \"src/index.less\" --syntax less\"",
 		"e2e":
 			"node nightwatch.js --url localhost:3000/soknadsosialhjelp/informasjon",
 		"eject": "react-scripts-ts eject"
