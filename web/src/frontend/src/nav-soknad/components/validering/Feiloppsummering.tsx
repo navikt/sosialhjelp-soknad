@@ -7,8 +7,12 @@ import { scrollToElement } from "../../utils";
 
 import { getFaktumElementName } from "../../faktum/FaktumComponent";
 
-const getElementFromFaktumKey = (faktumKey: string): HTMLElement => {
-	const id = getFaktumElementName(faktumKey);
+const getElementFromFaktumKey = (
+	faktumKey: string,
+	property?: string,
+	faktumId?: number
+): HTMLElement => {
+	const id = getFaktumElementName(faktumKey, property, faktumId);
 	if (document.getElementById(id)) {
 		return document.getElementById(id);
 	}
@@ -19,10 +23,15 @@ const getElementFromFaktumKey = (faktumKey: string): HTMLElement => {
 	return null;
 };
 
-const scrollToFaktum = (evt: React.MouseEvent<any>, faktumKey: string) => {
+const scrollToFaktum = (
+	evt: React.MouseEvent<any>,
+	faktumKey: string,
+	property?: string,
+	faktumId?: number
+) => {
 	evt.stopPropagation();
 	evt.preventDefault();
-	const element = getElementFromFaktumKey(faktumKey);
+	const element = getElementFromFaktumKey(faktumKey, property, faktumId);
 	if (element) {
 		scrollToElement(element.id);
 		element.focus();
@@ -31,11 +40,15 @@ const scrollToFaktum = (evt: React.MouseEvent<any>, faktumKey: string) => {
 
 const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 	faktumKey,
+	property,
+	faktumId,
 	feilkode
 }) => {
 	return (
 		<li className="feiloppsummering__feil">
-			<a href={`#`} onClick={evt => scrollToFaktum(evt, faktumKey)}>
+			<a
+				href={`#`}
+				onClick={evt => scrollToFaktum(evt, faktumKey, property, faktumId)}>
 				<FormattedMessage id={feilkode} />
 			</a>
 		</li>

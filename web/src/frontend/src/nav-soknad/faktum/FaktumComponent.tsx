@@ -81,12 +81,16 @@ const getValideringer = (
 	return [...(required ? [pakrevd] : []), ...(validerFunc ? validerFunc : [])];
 };
 
-export function getFaktumElementName(faktumKey: string): string {
-	return faktumKey.replace(/\./g, "_");
+export function getFaktumElementName(
+	faktumKey: string,
+	property?: string,
+	faktumId?: number
+): string {
+	return `${faktumKey}${getEkstraName(faktumId, property)}`.replace(/\./g, "_");
 }
 
 function getEkstraName(faktumId: number, property: string): string {
-	return (faktumId ? faktumId.toString() : "") + (property ? property : "");
+	return `${faktumId || ""}${property || ""}`;
 }
 
 export const faktumComponent = () => <TOriginalProps extends {}>(
@@ -114,9 +118,6 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.lagreFaktum = this.lagreFaktum.bind(this);
 			this.getName = this.getName.bind(this);
 			this.getFeil = this.getFeil.bind(this);
-			this.props.dispatch(
-				setFaktumIgnorert(this.faktum(), this.props.ignorert)
-			);
 		}
 
 		componentWillMount() {
@@ -124,10 +125,17 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 				this.props.required,
 				this.props.validerFunc
 			);
+			if (this.props.ignorert) {
+				this.props.dispatch(
+					setFaktumIgnorert(this.faktum(), this.props.ignorert)
+				);
+			}
 			if (valideringer.length > 0) {
 				this.props.dispatch(
 					registerFaktumValidering({
 						faktumKey: this.props.faktumKey,
+						property: this.props.property,
+						faktumId: this.props.faktumId,
 						valideringer
 					})
 				);
@@ -135,7 +143,13 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		componentWillUnmount() {
-			this.props.dispatch(unregisterFaktumValidering(this.props.faktumKey));
+			this.props.dispatch(
+				unregisterFaktumValidering(
+					this.props.faktumKey,
+					this.props.property,
+					this.props.faktumId
+				)
+			);
 		}
 
 		componentWillReceiveProps(nextProps: any) {
@@ -175,12 +189,11 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 
 		validerOgOppdaterFaktum(verdi: string, property?: string): FaktumStatus {
 			const faktum = oppdaterFaktumMedVerdier(this.faktum(), verdi, property);
-			const feilkode = validerFaktum(
-				this.props.fakta,
-				this.props.faktumKey,
-				faktum.value,
-				this.props.valideringsregler
-			);
+			const feilkode = validerFaktum({
+				faktum,
+				property,
+				valideringsregler: this.props.valideringsregler
+			});
 			return {
 				faktum,
 				feilkode
@@ -192,7 +205,12 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.props.dispatch(setFaktum(res.faktum));
 			if (res.faktum.touched) {
 				this.props.dispatch(
-					setFaktumValideringsfeil(this.props.faktumKey, res.feilkode)
+					setFaktumValideringsfeil(
+						res.feilkode,
+						this.props.faktumKey,
+						this.props.property,
+						this.props.faktumId
+					)
 				);
 			}
 		}
@@ -204,19 +222,28 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 				lagreFaktum(res.faktum, this.props.dispatch);
 			}
 			this.props.dispatch(
-				setFaktumValideringsfeil(this.props.faktumKey, res.feilkode)
+				setFaktumValideringsfeil(
+					res.feilkode,
+					this.props.faktumKey,
+					this.props.property,
+					this.props.faktumId
+				)
 			);
 		}
 
 		validerFaktum(): Valideringsfeil {
-			const feilkode = validerFaktum(
-				this.props.fakta,
-				this.props.faktumKey,
-				this.getFaktumVerdi(),
-				this.props.valideringsregler
-			);
+			const feilkode = validerFaktum({
+				faktum: this.faktum(),
+				property: this.props.property,
+				valideringsregler: this.props.valideringsregler
+			});
 			this.props.dispatch(
-				setFaktumValideringsfeil(this.props.faktumKey, feilkode)
+				setFaktumValideringsfeil(
+					feilkode,
+					this.props.faktumKey,
+					this.props.property,
+					this.props.faktumId
+				)
 			);
 			return feilkode;
 		}
@@ -242,9 +269,10 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		getName() {
-			return (
-				getFaktumElementName(this.props.faktumKey) +
-				getEkstraName(this.props.faktumId, this.props.property)
+			return getFaktumElementName(
+				this.props.faktumKey,
+				this.props.property,
+				this.props.faktumId
 			);
 		}
 
@@ -277,7 +305,10 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		props: Props
 	): PropsFromState => {
 		const feil = state.validering.feil.find(
-			f => f.faktumKey === props.faktumKey
+			f =>
+				f.faktumKey === props.faktumKey &&
+				(props.property ? f.property === props.property : true) &&
+				(props.faktumId ? f.faktumId === props.faktumId : true)
 		);
 		return {
 			fakta: state.fakta.data,

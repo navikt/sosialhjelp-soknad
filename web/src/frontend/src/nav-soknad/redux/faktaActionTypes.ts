@@ -9,6 +9,8 @@ export enum FaktumActionTypeKeys {
 	LAGRET_FAKTUM = "faktum/LAGRET_FAKTUM",
 	OPPRETT_FAKTUM = "faktum/OPPRETT_FAKTUM",
 	OPPRETTET_FAKTUM = "faktum/OPPRETTET_FAKTUM",
+	SLETT_FAKTUM = "faktum/SLETT_FAKTUM",
+	SLETTET_FAKTUM = "faktum/SLETTET_FAKTUM",
 	FEILET = "faktum/FEILET",
 	OTHER_ACTION = "__any_other_action_type__",
 	VALIDER_FAKTUM = "VALIDER_FAKTUM",
