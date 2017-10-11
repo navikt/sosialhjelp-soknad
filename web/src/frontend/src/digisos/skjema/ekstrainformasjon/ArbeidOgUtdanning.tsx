@@ -1,11 +1,12 @@
 import * as React from "react";
 import { Container, Row, Column } from "nav-frontend-grid";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Progresjonsblokk from "../../../nav-soknad/components/progresjonsblokk";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import { faktumIsSelected, getFaktumVerdi } from "../../../nav-soknad/utils";
+import { faktumIsSelected, getFaktumVerdi, getIntlTextOrKey } from "../../../nav-soknad/utils";
 
 const ArbeidsledigSkjema: React.StatelessComponent<{}> = () => (
 	<SporsmalFaktum faktumKey="ekstrainfo.arbeid.arbeidsledig">
@@ -71,9 +72,10 @@ const StudentSkjema: React.StatelessComponent<{}> = () => (
 );
 
 const ArbeidOgUtdanning: React.StatelessComponent<
-	FaktumComponentProps
+	FaktumComponentProps &
+	InjectedIntlProps
 > = props => {
-	const { fakta } = props;
+	const { fakta, intl } = props;
 	const visArbeidsledig =
 		getFaktumVerdi(fakta, "dinsituasjon.jobb") === "false";
 	const visJobb = getFaktumVerdi(fakta, "dinsituasjon.jobb") === "true";
@@ -90,7 +92,12 @@ const ArbeidOgUtdanning: React.StatelessComponent<
 		...(visStudent ? [<StudentSkjema key="student" />] : [])
 	];
 
-	return <Progresjonsblokk tittel="Arbeid og utdanning" content={content} />;
+	return (
+		<Progresjonsblokk
+			tittel={ getIntlTextOrKey(intl, "ekstrainfo.arbeid.tittel") }
+			content={content}
+		/>
+	);
 };
 
-export default ArbeidOgUtdanning;
+export default injectIntl(ArbeidOgUtdanning);
