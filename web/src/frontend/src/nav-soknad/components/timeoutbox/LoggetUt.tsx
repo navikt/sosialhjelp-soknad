@@ -11,7 +11,7 @@ interface Props {
 const LoggetUt: React.StatelessComponent<Props> = props => {
 	return (
 		<div>
-			<Innholdstittel className="blokk-s">
+			<Innholdstittel className="blokk-s timeoutbox__overskrift">
 				<FormattedMessage id={"timeout.overskrift"}/>
 			</Innholdstittel>
 			<Normaltekst className="blokk-xxs">

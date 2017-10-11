@@ -14,7 +14,7 @@ type Props = OwnProps & InjectedIntlProps;
 const Nedtelling: React.StatelessComponent<Props> = ({onContinueClick, utloggingsUrl, intl}) => {
 	return (
 		<div>
-			<Innholdstittel className="blokk-s">
+			<Innholdstittel className="blokk-s timeoutbox__overskrift">
 				<FormattedMessage id={"timeout.overskrift"}/>
 			</Innholdstittel>
 			<Normaltekst className="blokk-xxs">
