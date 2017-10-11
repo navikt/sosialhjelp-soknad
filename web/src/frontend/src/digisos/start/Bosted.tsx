@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter, RouterProps } from "react-router";
-import { InjectedIntlProps, FormattedMessage } from "react-intl";
+import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import Knapp from "nav-frontend-knapper";
 import { Select } from "nav-frontend-skjema";
 
@@ -13,6 +13,7 @@ import { REST_STATUS } from "../../nav-soknad/types";
 import { State } from "../redux/reducers";
 import { opprettSoknad, resetSoknad } from "../redux/soknad/soknadActions";
 import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
+import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 
 interface StateProps {
 	soknadRestStatus?: string;
@@ -86,7 +87,7 @@ class Bosted extends React.Component<
 						>
 							{!this.state.kommuneId && (
 								<option value="" disabled={true}>
-									Velg by
+									{ getIntlTextOrKey(this.props.intl, "personalia.kommune.default") }
 								</option>
 							)}
 							{Kommuner.map(kommune => (
@@ -115,7 +116,7 @@ class Bosted extends React.Component<
 							>
 								{!this.state.bydelId && (
 									<option value="" disabled={true}>
-										Velg bydel
+										{ getIntlTextOrKey(this.props.intl, "personalia.bydel.default") }
 									</option>
 								)}
 								{valgtKommune.bydeler.map(bydel => (
@@ -129,7 +130,7 @@ class Bosted extends React.Component<
 					{ferdig ? (
 						<div>
 							<p className="bosted__tekst--extraPadding">
-								Når du har fylt ut blir søknaden sendt til{" "}
+								{ getIntlTextOrKey(this.props.intl, "personalia.bosted.oppsummering")}{" "}
 								<strong>
 									{getBosted(
 										valgtKommune.id,
@@ -143,7 +144,7 @@ class Bosted extends React.Component<
 								spinner={startSoknadPending}
 								disabled={startSoknadPending}
 							>
-								Start søknad
+								{ getIntlTextOrKey(this.props.intl, "skjema.knapper.start") + " " }
 							</Knapp>
 						</div>
 					) : null}
@@ -174,4 +175,4 @@ export default connect((state: State, props: any) => {
 		faktaRestStatus: state.fakta.restStatus,
 		brukerBehandlingId: state.soknad.data.brukerBehandlingId
 	};
-})(withRouter(Bosted));
+})(withRouter(injectIntl(Bosted)));

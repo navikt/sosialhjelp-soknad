@@ -51,9 +51,10 @@ class Barneinfo extends React.Component<
 						fakta={fakta}
 						faktum={barnFaktum}
 						key={barnFaktum.faktumId}
-						fjernBarnTekst={intl.formatMessage({ id: "familie.barn.true.barn.fjern" })}
+						fjernBarnTekst={intl.formatMessage({id: "familie.barn.true.barn.fjern"})}
 						dispatch={this.props.dispatch}
-						visFjernlenke={visFjernlenke}/>
+						visFjernlenke={visFjernlenke}
+					/>
 				))}
 				<LeggTilLenke
 					leggTil={leggTilBarn}
