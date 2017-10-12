@@ -24,15 +24,15 @@ enum RequestMethod {
 	DELETE = "DELETE"
 }
 
-const headers = {
+const getHeaders = () => ({
 	"Content-Type": "application/json",
 	"X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
 	accept: "application/json, text/plain, */*"
-};
+});
 
 const serverRequest = (method: string, urlPath: string, body: string) => {
 	const OPTIONS: RequestInit = {
-		headers,
+		headers: getHeaders(),
 		method,
 		credentials: "same-origin",
 		body: body ? body : undefined
@@ -56,7 +56,7 @@ export function fetchPost(urlPath: string, body: string) {
 
 export function fetchDelete(urlPath: string) {
 	const OPTIONS: RequestInit = {
-		headers,
+		headers: getHeaders(),
 		method: RequestMethod.DELETE,
 		credentials: "same-origin"
 	};
