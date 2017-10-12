@@ -86,7 +86,7 @@
 	},
 	"scripts": {
 		"mock-backend": "node scripts/mock_backend",
-		"build-css": "chokidar ./src/index.less",
+		"build-css": "node-less-chokidar ./src/index.less",
 		"watch-css":
 			"chokidar \"src/**/*.less\" -c \"node-less-chokidar ./src/index.less\"",
 		"start-js": "react-scripts-ts start",
