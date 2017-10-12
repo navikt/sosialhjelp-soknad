@@ -17,8 +17,6 @@ interface BaseFaktum {
 }
 
 export interface Faktum extends BaseFaktum {
-	/** Settes til true ved første lagring av verdi */
-	touched?: boolean;
 	/** Settes til true dersom faktum ikke skal validers */
 	ignorert?: boolean;
 	/** Verdier som er lagret på server - kun gyldige verdier */

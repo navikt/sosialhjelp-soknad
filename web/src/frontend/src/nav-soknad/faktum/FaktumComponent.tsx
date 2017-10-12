@@ -203,10 +203,10 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		setFaktumVerdi(verdi: string, property?: string) {
 			const res = this.validerOgOppdaterFaktum(verdi, property);
 			this.props.dispatch(setFaktum(res.faktum));
-			if (res.faktum.touched) {
+			if (this.props.feilkode) {
 				this.props.dispatch(
 					setFaktumValideringsfeil(
-						res.feilkode,
+						null,
 						this.props.faktumKey,
 						this.props.property,
 						this.props.faktumId
