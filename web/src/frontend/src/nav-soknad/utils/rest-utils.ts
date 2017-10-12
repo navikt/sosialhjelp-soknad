@@ -9,11 +9,10 @@ export function kjorerJetty(): boolean {
 }
 
 export function getApiBaseUrl(): string {
-	return "http://localhost:8181/sendsoknad/";
-	// if (erDev()) {
-	// 	return "http://localhost:3001/";
-	// }
-	// return kjorerJetty() ? "http://127.0.0.1:8181/sendsoknad/" : "/sendsoknad/";
+	if (erDev()) {
+		return "http://localhost:3001/";
+	}
+	return kjorerJetty() ? "http://127.0.0.1:8181/sendsoknad/" : "/sendsoknad/";
 }
 
 export const MED_CREDENTIALS: RequestInit = { credentials: "same-origin" };
