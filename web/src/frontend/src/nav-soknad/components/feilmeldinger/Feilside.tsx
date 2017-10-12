@@ -1,7 +1,6 @@
 import * as React from "react";
 import "./feilside.css";
 import { Knapp } from "nav-frontend-knapper";
-import { FormattedMessage } from "react-intl";
 import { Innholdstittel } from "nav-frontend-typografi";
 
 const DocumentTitle = require("react-document-title");
@@ -14,22 +13,39 @@ const gaTilbake = () => {
 	}
 };
 
-const FeilSide: React.StatelessComponent<{}> = ({}) => {
+export interface FeilsideProps {
+	tittel?: string;
+	tekst: string;
+	feilkode?: string;
+	visTilbakeKnapp?: boolean;
+}
+
+/**
+ * Default inneholder denne hardkodete tekster i og
+ * med det er ikke sikkert tekstressurser er tilgjengelig
+ */
+const FeilSide: React.StatelessComponent<FeilsideProps> = ({
+	tittel = "OOPS, NOE GIKK GALT",
+	tekst,
+	feilkode,
+	visTilbakeKnapp
+}) => {
 	return (
-		<DocumentTitle title={"Feilside - " + document.location.hostname}>
-			<div className="skjema-feilside">
-				<Innholdstittel className="skjema-feilside__tittel">
-					OOPS, NOE GIKK GALT
-				</Innholdstittel>
-				<p>Vi fant ikke siden du prøvde å åpne.</p>
-				<div className="skjema-feilside__feilkode">
-					<FormattedMessage id="skjema.feilmeldinger.feilkode" /> 404
-				</div>
+		<div className="skjema-feilside">
+			<DocumentTitle title={"Feilside - " + document.location.hostname} />
+			<Innholdstittel className="skjema-feilside__tittel">
+				{tittel}
+			</Innholdstittel>
+			<p>{tekst}</p>
+			{feilkode ? (
+				<div className="skjema-feilside__feilkode">Feilkode {feilkode}</div>
+			) : null}
+			{visTilbakeKnapp ? (
 				<Knapp type="standard" htmlType="button" onClick={gaTilbake}>
-					<FormattedMessage id="skjema.feilmeldinger.tilbake" />
+					Gå tilbake
 				</Knapp>
-			</div>
-		</DocumentTitle>
+			) : null}
+		</div>
 	);
 };
 
