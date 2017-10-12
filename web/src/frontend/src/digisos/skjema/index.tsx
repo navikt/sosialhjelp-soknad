@@ -62,6 +62,7 @@ class SkjemaRouter extends React.Component<
 				<Feilside
 					tekst={intl.formatMessage({ id: "feilmelding.404" })}
 					feilkode="404"
+					visTilbakeKnapp={true}
 				/>
 			);
 		}
