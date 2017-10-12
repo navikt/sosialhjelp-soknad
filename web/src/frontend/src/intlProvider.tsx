@@ -9,6 +9,7 @@ import {
 	LedetekstState
 } from "./digisos/redux/informasjon/informasjonTypes";
 import { DispatchProps } from "./nav-soknad/redux/reduxTypes";
+import Feilside from "./nav-soknad/components/feilmeldinger/Feilside";
 
 addLocaleData(nb);
 
@@ -29,7 +30,12 @@ class IntlProvider extends React.Component<
 		const { ledetekster } = this.props;
 		const locale = "nb";
 
-		if (ledetekster.status !== ActionTypeKeys.OK) {
+		if (ledetekster.status === ActionTypeKeys.FEILET) {
+			/** I og med tekstressurser ikke er tilgjengelig, må tekster hardkodes */
+			children = (
+				<Feilside tekst="Vi klarer ikke vise skjemaet til deg nå, vennligst prøv igjen senere." />
+			);
+		} else if (ledetekster.status !== ActionTypeKeys.OK) {
 			children = (
 				<div className="application-spinner">
 					<NavFrontendSpinner storrelse="xxl" />
