@@ -4,7 +4,7 @@ import StegMedNavigasjon from "../../nav-soknad/containers/StegMedNavigasjon";
 import { SkjemaConfig, SkjemaStegType } from "../../nav-soknad/types";
 
 export enum DigisosSteg {
-	personalia = "personaliabolk",
+	kontakt = "kontakt",
 	arbeidbolk = "arbeidbolk",
 	familiebolk = "familiebolk",
 	begrunnelsebolk = "begrunnelsebolk",
@@ -20,7 +20,7 @@ export const digisosSkjemaConfig: SkjemaConfig = {
 	skjemanavn: "digisos",
 	steg: [
 		{
-			key: DigisosSteg.personalia,
+			key: DigisosSteg.kontakt,
 			stegnummer: 1,
 			type: SkjemaStegType.skjema
 		},
