@@ -1,6 +1,7 @@
 import * as React from "react";
+import { injectIntl, InjectedIntlProps } from "react-intl";
+import { getIntlTextOrKey } from "../../utils/intlUtils";
 import { Knapp } from "nav-frontend-knapper";
-import "./knapperad.css";
 
 interface Props {
 	gaViderePending?: boolean;
@@ -10,9 +11,9 @@ interface Props {
 	avbryt?: () => void;
 }
 
-class SkjemaKnapperad extends React.Component<Props, {}> {
+class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 	render() {
-		const { gaVidere, gaTilbake, avbryt, gaVidereLabel } = this.props;
+		const { gaVidere, gaTilbake, avbryt, gaVidereLabel, intl } = this.props;
 		return (
 			<div className="skjema-knapperad">
 				<Knapp
@@ -21,17 +22,17 @@ class SkjemaKnapperad extends React.Component<Props, {}> {
 					onClick={gaVidere}
 					spinner={this.props.gaViderePending}
 				>
-					{gaVidereLabel ? gaVidereLabel : "Gå videre"}
+					{gaVidereLabel ? gaVidereLabel : getIntlTextOrKey(intl, "skjema.knapper.gaavidere") }
 				</Knapp>
 				<Knapp type="standard" htmlType="button" onClick={gaTilbake}>
-					Tilbake
+					{ getIntlTextOrKey(intl, "skjema.knapper.tilbake") }
 				</Knapp>
 				<a href="#" className="lenke" onClick={avbryt}>
-					Avbryt
+					{ getIntlTextOrKey(intl, "skjema.knapper.avbryt") }
 				</a>
 			</div>
 		);
 	}
 }
 
-export default SkjemaKnapperad;
+export default injectIntl(SkjemaKnapperad);

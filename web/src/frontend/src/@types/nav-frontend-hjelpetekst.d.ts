@@ -2,7 +2,7 @@ declare module "nav-frontend-hjelpetekst" {
 	import * as React from "react";
 
 	export interface HjelpetekstProps {
-		id?: string;
+		id: string;
 		className?: string;
 		tittel?: string;
 		children: React.ReactNode;

@@ -19,7 +19,8 @@ ShallowWrapper {
       />
       <Route
         component={[Function]}
-        path="/skjema/:brukerBehandlingId"
+        exact={true}
+        path="/skjema/:brukerBehandlingId/:steg"
       />
       <Route
         component={[Function]}
@@ -29,6 +30,10 @@ ShallowWrapper {
         component={[Function]}
       />
     </Switch>
+    <Connect(InjectIntl(TimeoutBox))
+      sessionDurationInMinutes={30}
+      showWarningerAfterMinutes={25}
+    />
   </div>,
   "nodes": Array [
     <div
@@ -42,7 +47,8 @@ ShallowWrapper {
         />
         <Route
           component={[Function]}
-          path="/skjema/:brukerBehandlingId"
+          exact={true}
+          path="/skjema/:brukerBehandlingId/:steg"
         />
         <Route
           component={[Function]}
@@ -52,6 +58,10 @@ ShallowWrapper {
           component={[Function]}
         />
       </Switch>
+      <Connect(InjectIntl(TimeoutBox))
+        sessionDurationInMinutes={30}
+        showWarningerAfterMinutes={25}
+      />
     </div>,
   ],
   "options": Object {},
@@ -99,7 +109,8 @@ ShallowWrapper {
             />
             <Route
               component={[Function]}
-              path="/skjema/:brukerBehandlingId"
+              exact={true}
+              path="/skjema/:brukerBehandlingId/:steg"
             />
             <Route
               component={[Function]}
@@ -109,6 +120,10 @@ ShallowWrapper {
               component={[Function]}
             />
           </Switch>
+          <Connect(InjectIntl(TimeoutBox))
+            sessionDurationInMinutes={30}
+            showWarningerAfterMinutes={25}
+          />
         </div>,
         "_debugID": 2,
         "_renderedOutput": <div
@@ -122,7 +137,8 @@ ShallowWrapper {
             />
             <Route
               component={[Function]}
-              path="/skjema/:brukerBehandlingId"
+              exact={true}
+              path="/skjema/:brukerBehandlingId/:steg"
             />
             <Route
               component={[Function]}
@@ -132,6 +148,10 @@ ShallowWrapper {
               component={[Function]}
             />
           </Switch>
+          <Connect(InjectIntl(TimeoutBox))
+            sessionDurationInMinutes={30}
+            showWarningerAfterMinutes={25}
+          />
         </div>,
       },
       "_renderedNodeType": 0,

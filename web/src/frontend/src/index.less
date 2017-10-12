@@ -13,68 +13,7 @@
 @import "./node_modules/nav-frontend-spinner-style/src/spinner-style.less";
 @import "./node_modules/nav-frontend-stegindikator-style/src/index.less";
 @import "./node_modules/nav-frontend-typografi-style/src/index.less";
+@import "./node_modules/nav-frontend-modal-style/src/index.less";
 
-@import "./nav-soknad/styles/skjema.less";
-@import "./nav-soknad/styles/variables.less";
-
-body {
-	overflow-y: scroll;
-	font-family: "Source Sans Pro", Arial, sans-serif; // Todo - finne riktig måte å få inn denne
-}
-
-.invisible {
-	position: absolute !important;
-	height: 1px !important;
-	width: 1px !important;
-	overflow: hidden !important;
-	clip: rect(1px, 1px, 1px, 1px);
-}
-
-.container--noPadding {
-	padding-left: 0 !important;
-	padding-right: 0 !important;
-}
-
-.skjema-texarea--normal {
-	min-height: 6em;
-}
-.skjema-textarea--large {
-	min-height: 12em;
-}
-
-.application-spinner {
-	width: 100%;
-	text-align: center;
-	padding-top: 100px;
-}
-
-.skjema__stegindikator {
-	margin-bottom: 3rem;
-}
-
-@media @mobile {
-	.skjema__stegindikator {
-		margin-bottom: 2rem;
-	}
-	.stegindikator {
-		&__steg {
-			&:not(&--aktiv) {
-				zoom: 0.8;
-				vertical-align: middle;
-				transform: translateY(0.35em);
-			}
-			&--inaktiv {
-				box-shadow: rgb(120, 112, 106) 0px 0px 0px 1.5px inset;
-			}
-			&--aktiv {
-				line-height: 2em;
-				margin-right: 13px;
-				zoom: 1.05;
-				&:after {
-					width: 11px;
-					right: -12px;
-				}
-			}
-		}
-	}
-}
+@import "./digisos/styles/digisos.less";
+@import "./nav-soknad/styles/nav-soknad.less";

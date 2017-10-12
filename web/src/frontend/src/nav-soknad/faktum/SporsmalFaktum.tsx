@@ -1,8 +1,9 @@
 import * as React from "react";
+import * as cuid from "cuid";
 import * as classNames from "classnames";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { SkjemaGruppe } from "nav-frontend-skjema";
-import { HjelpetekstAuto } from "nav-frontend-hjelpetekst";
+import Hjelpetekst from "../components/hjelpetekst/Hjelpetekst";
 import { getFaktumSporsmalTekst } from "../utils";
 import {
 	faktumComponent,
@@ -13,6 +14,8 @@ export interface OwnProps {
 	faktumKey: string;
 	children: React.ReactNode;
 	visible?: boolean;
+	htmlRef?: (c: any) => HTMLElement;
+	tittelRenderer?: (title: string) => React.ReactNode;
 }
 
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -60,17 +63,35 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 		const cls = classNames("skjema-fieldset", {
 			"skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined
 		});
+		const legendId = cuid();
+		const sporsmal = this.props.tittelRenderer
+			? this.props.tittelRenderer(tekster.sporsmal)
+			: tekster.sporsmal;
 		return (
-			<div className="skjema-sporsmal" onBlur={this.handleOnBlur}>
+			<div
+				className="skjema-sporsmal"
+				onBlur={this.handleOnBlur}
+				aria-labelledby={legendId}
+			>
 				<SkjemaGruppe
-					feil={this.harValidering() ? this.props.getFeil(intl) : null}>
+					feil={this.harValidering() ? this.props.getFeil(intl) : null}
+				>
 					<fieldset className={cls}>
-						<legend>{tekster.sporsmal}</legend>
+						<legend id={legendId}>{sporsmal}</legend>
 						{tekster.hjelpetekst ? (
 							<div className="skjema-sporsmal__hjelpetekst">
-								<HjelpetekstAuto tittel={tekster.hjelpetekst.tittel}>
+								<span
+									className="invisible"
+									id={`tooltip-hjelpetekst_${legendId}`}
+								>
 									{tekster.hjelpetekst.tekst}
-								</HjelpetekstAuto>
+								</span>
+								<Hjelpetekst
+									tittel={tekster.hjelpetekst.tittel}
+									id={`hjelpetekst_${legendId}`}
+								>
+									{tekster.hjelpetekst.tekst}
+								</Hjelpetekst>
 							</div>
 						) : null}
 						<div className="skjema-sporsmal__innhold">{children}</div>
