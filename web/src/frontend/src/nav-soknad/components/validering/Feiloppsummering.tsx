@@ -61,10 +61,27 @@ interface Props {
 	valideringsfeil?: Valideringsfeil[];
 }
 
+interface State {
+	laFeilmeldingHengeIgjen: boolean;
+	visFeilliste?: boolean;
+	stegValidertCounter?: number;
+	valideringsfeil?: Valideringsfeil[];
+}
+
 const COMP_ID = "skjema-feiloppsummering";
 
-class Feiloppsummering extends React.Component<Props, {}> {
+class Feiloppsummering extends React.Component<Props, State> {
 	oppsummering: HTMLDivElement;
+
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			laFeilmeldingHengeIgjen: false,
+			visFeilliste: false,
+			valideringsfeil: [],
+			stegValidertCounter: 0
+		};
+	}
 
 	componentDidUpdate(prevProps: Props) {
 		if (
@@ -77,16 +94,38 @@ class Feiloppsummering extends React.Component<Props, {}> {
 		}
 	}
 
+	componentWillReceiveProps(nextProps: Props) {
+		const viserFeil = this.props.valideringsfeil.length > 0 && this.props.visFeilliste;
+		const skalViseFeil = nextProps.valideringsfeil.length > 0 && nextProps.visFeilliste;
+		if (viserFeil && !skalViseFeil) {
+			this.setState({
+				laFeilmeldingHengeIgjen: true,
+				visFeilliste: this.props.visFeilliste,
+				valideringsfeil: this.props.valideringsfeil,
+				stegValidertCounter: this.props.stegValidertCounter
+			});
+			setTimeout(() => {
+				this.setState({laFeilmeldingHengeIgjen: false});
+			}, 1000 * 3);
+		}
+	}
+
 	render() {
-		const { valideringsfeil } = this.props;
+		let { valideringsfeil, visFeilliste } = this.props;
+		let fadeOutClassname = "";
+		if (this.state.laFeilmeldingHengeIgjen) {
+			valideringsfeil = this.state.valideringsfeil;
+			visFeilliste = this.state.visFeilliste;
+			fadeOutClassname = "fadeout";
+		}
 		return (
 			<div aria-live="polite" role="alert">
 				{(() => {
-					if (valideringsfeil.length > 0 && this.props.visFeilliste) {
+					if (valideringsfeil.length > 0 && visFeilliste) {
 						return (
 							<div
 								id={COMP_ID}
-								className="panel panel--feiloppsummering"
+								className={"panel panel--feiloppsummering " + fadeOutClassname}
 								tabIndex={-1}
 								ref={c => (this.oppsummering = c)}
 							>
