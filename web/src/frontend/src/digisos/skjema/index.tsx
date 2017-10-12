@@ -1,4 +1,5 @@
 import * as React from "react";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import {
 	Route,
 	RouterProps,
@@ -45,7 +46,7 @@ interface UrlParams {
 }
 
 class SkjemaRouter extends React.Component<
-	OwnProps & StateProps & RouterProps & DispatchProps,
+	OwnProps & StateProps & RouterProps & DispatchProps & InjectedIntlProps,
 	{}
 > {
 	componentWillMount() {
@@ -54,11 +55,14 @@ class SkjemaRouter extends React.Component<
 		}
 	}
 	render() {
-		const { gyldigUrl, restStatus } = this.props;
+		const { gyldigUrl, restStatus, intl } = this.props;
 
 		if (!gyldigUrl) {
 			return (
-				<Feilside tekst="Vi fant ikke siden du prøvde å åpne" feilkode="404" />
+				<Feilside
+					tekst={intl.formatMessage({ id: "feilmelding.404" })}
+					feilkode="404"
+				/>
 			);
 		}
 		const path = "/skjema/:brukerBehandlingId";
@@ -98,4 +102,4 @@ const mapStateToProps = (
 	};
 };
 
-export default connect(mapStateToProps)(withRouter(SkjemaRouter));
+export default connect(mapStateToProps)(withRouter(injectIntl(SkjemaRouter)));
