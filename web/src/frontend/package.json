@@ -92,7 +92,8 @@
 		"watch-css":
 			"chokidar \"src/**/*.less\" -c \"node-less-chokidar ./src/index.less\"",
 		"start-js": "react-scripts-ts start",
-		"start": "npm-run-all -p watch-css start-js mock-backend stylelint:watch",
+		"start":
+			"npm-run-all -p build-css watch-css start-js mock-backend stylelint:watch",
 		"build":
 			"npm run stylelint && npm run build-css && react-scripts-ts build && node flytt-filer-til-webapp.js && node versjoner-prodfiler.js",
 		"test": "npm run build-css && react-scripts-ts test --env=jsdom",
