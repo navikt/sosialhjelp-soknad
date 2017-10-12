@@ -14,7 +14,6 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
 import FjernLenke from "../../../nav-soknad/components/fjernLenke/fjernlenke";
-import { slettFaktum } from "../../../nav-soknad/redux/faktaActions";
 
 interface BarnTypes {
 	faktum: Faktum;
