@@ -6,7 +6,6 @@ import Icon from "nav-frontend-ikoner-assets";
 import { Undertittel } from "nav-frontend-typografi";
 import { FaktumComponentProps } from "../../nav-soknad/redux/faktaReducer";
 import { State } from "../redux/reducers";
-import "./kvittering.css";
 import { getBosted } from "../data/kommuner";
 import { getFaktumVerdi, scrollToTop } from "../../nav-soknad/utils";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";

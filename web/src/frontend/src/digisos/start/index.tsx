@@ -10,8 +10,6 @@ import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
 
 import Bosted from "./Bosted";
 
-import "./start.css";
-
 const DocumentTitle = require("react-document-title");
 interface StateProps {
 	soknadRestStatus: string;

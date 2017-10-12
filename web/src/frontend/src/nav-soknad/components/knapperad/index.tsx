@@ -2,7 +2,6 @@ import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getIntlTextOrKey } from "../../utils/intlUtils";
 import { Knapp } from "nav-frontend-knapper";
-import "./knapperad.css";
 
 interface Props {
 	gaViderePending?: boolean;

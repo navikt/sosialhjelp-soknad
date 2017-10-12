@@ -2,13 +2,11 @@ import * as React from "react";
 import { Route, Switch } from "react-router";
 
 import Feilside from "../nav-soknad/components/feilmeldinger/Feilside";
+import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
 
 import Start from "./start";
 import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
-
-import "./styles/app.css";
-import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
 
 class App extends React.Component<{}, {}> {
 	render() {

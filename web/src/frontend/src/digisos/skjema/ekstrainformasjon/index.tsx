@@ -11,8 +11,6 @@ import ArbeidOgUtdanning from "./ArbeidOgUtdanning";
 import Familiesituasjon from "./Familiesituasjon";
 import UtgifterOgGjeld from "./UtgifterOgGjeld";
 
-import "./ekstrainfo.css";
-
 class Ekstrainformasjon extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;

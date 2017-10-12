@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./feilside.css";
 import { Knapp } from "nav-frontend-knapper";
 import { Innholdstittel } from "nav-frontend-typografi";
 
