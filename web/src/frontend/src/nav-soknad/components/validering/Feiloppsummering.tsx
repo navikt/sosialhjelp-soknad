@@ -1,10 +1,8 @@
 import * as React from "react";
-import { Undertittel } from "nav-frontend-typografi";
-import "./feiloppsummering.css";
-import { Valideringsfeil } from "../../validering/types";
 import { FormattedMessage } from "react-intl";
+import { Undertittel } from "nav-frontend-typografi";
+import { Valideringsfeil } from "../../validering/types";
 import { scrollToElement } from "../../utils";
-
 import { getFaktumElementName } from "../../faktum/FaktumComponent";
 
 const getElementFromFaktumKey = (

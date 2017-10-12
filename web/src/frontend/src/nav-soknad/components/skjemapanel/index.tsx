@@ -3,7 +3,6 @@ import { Panel } from "nav-frontend-paneler";
 import * as classNames from "classnames";
 
 import { PanelProps } from "nav-frontend-paneler";
-import "./skjemapanel.css";
 
 const Skjemapanel: React.StatelessComponent<PanelProps> = (
 	props: PanelProps

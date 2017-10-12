@@ -14,8 +14,7 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
 import FjernLenke from "../../../nav-soknad/components/fjernLenke/fjernlenke";
-
-import "./barn.css";
+import { slettFaktum } from "../../../nav-soknad/redux/faktaActions";
 
 interface BarnTypes {
 	faktum: Faktum;
@@ -64,7 +63,8 @@ export default class Barn extends React.Component<
 				<SporsmalFaktum
 					faktumKey={faktumKey}
 					htmlRef={c => (this.sporsmalFaktum = c)}
-					tittelRenderer={tittel => `${tittel} ${barnNummer}`}>
+					tittelRenderer={tittel => `${tittel} ${barnNummer}`}
+				>
 					<PersonFaktum faktumKey={faktumKey} faktumId={faktumId} />
 					<SporsmalFaktum faktumKey={borInfo.faktum}>
 						<FaktumRadio
@@ -76,7 +76,8 @@ export default class Barn extends React.Component<
 						<NivaTreSkjema
 							visible={faktumIsSelected(
 								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId)
-							)}>
+							)}
+						>
 							<SporsmalFaktum faktumKey={hvormye.faktum}>
 								<BelopFaktum
 									faktumKey={faktumKey}

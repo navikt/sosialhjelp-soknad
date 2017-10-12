@@ -10,8 +10,6 @@ import { hentOppsummering } from "../../redux/oppsummering/oppsummeringActions";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
 
-import "./oppsummering.css";
-
 interface StateProps {
 	oppsummering?: string;
 }

@@ -2,7 +2,6 @@ import * as React from "react";
 
 import Hjelpetekst from "../hjelpetekst/Hjelpetekst";
 import { Infotekst } from "../../types/faktumTextTypes";
-import "./labelMedHjelpetekst.css";
 
 interface Props {
 	id: string;

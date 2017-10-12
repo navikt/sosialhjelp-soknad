@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./fjernlenke.css";
 import AriaAlternativTekst from "../aria/AriaAlternativeText";
 
 interface Props {
