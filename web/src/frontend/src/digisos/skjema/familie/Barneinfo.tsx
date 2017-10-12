@@ -89,7 +89,7 @@ class Barneinfo extends React.Component<Props, State> {
 									id: "familie.barn.true.barn.fjern"
 								})}
 								fjernBarnAlterantivTekst={intl.formatMessage({
-									id: "familie.barn.true.barn.fjernAlternativTekst"
+									id: "familie.barn.true.barn.fjernalternativtekst"
 								})}
 								dispatch={this.props.dispatch}
 								visFjernlenke={visFjernlenke}
