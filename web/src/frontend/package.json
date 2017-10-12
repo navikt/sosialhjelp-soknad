@@ -90,7 +90,7 @@
 		"mock-backend": "node scripts/mock_backend",
 		"build-css": "node-less-chokidar ./src/index.less",
 		"watch-css":
-			"chokidar \"src/**/*.less\" -c \"node-less-chokidar ./src/index.less\"",
+			"node-less-chokidar \"src/index.less\" -c \"node-less-chokidar ./src/index.less\"",
 		"start-js": "react-scripts-ts start",
 		"start": "npm-run-all -p watch-css start-js mock-backend stylelint:watch",
 		"build":
