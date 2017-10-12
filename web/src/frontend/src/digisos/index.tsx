@@ -15,11 +15,19 @@ class App extends React.Component<{}, {}> {
 				<Switch>
 					<Route path={`/informasjon`} exact={true} component={Start} />
 					<Route
-						path={`/skjema/:brukerBehandlingId`}
+						path={`/skjema/:brukerBehandlingId/:steg`}
 						component={SkjemaRouter}
+						exact={true}
 					/>
 					<Route path={`/kvittering`} component={Kvittering} />
-					<Route component={Feilside} />
+					<Route
+						component={() => (
+							<Feilside
+								tekst="Vi fant ikke siden du prøvde å åpne"
+								visTilbakeKnapp={true}
+							/>
+						)}
+					/>
 				</Switch>
 				<TimeoutBox
 					sessionDurationInMinutes={30}
