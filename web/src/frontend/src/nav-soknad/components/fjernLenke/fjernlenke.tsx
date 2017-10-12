@@ -1,10 +1,12 @@
 import * as React from "react";
+import AriaAlternativTekst from "../aria/AriaAlternativeText";
 
 interface Props {
 	fjern: () => void;
 	lenketekst: string;
+	alternativLenketekst?: string;
 }
-const FjernLenke = ({ fjern, lenketekst }: Props) => {
+const FjernLenke = ({ fjern, lenketekst, alternativLenketekst }: Props) => {
 	return (
 		<a
 			href="javascript:void(0);"
@@ -12,7 +14,10 @@ const FjernLenke = ({ fjern, lenketekst }: Props) => {
 			role="button"
 			className="lenke lenke-fjern"
 		>
-			{lenketekst}
+			<AriaAlternativTekst
+				visibleText={lenketekst}
+				ariaText={alternativLenketekst}
+			/>
 		</a>
 	);
 };

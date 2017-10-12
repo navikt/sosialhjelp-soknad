@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Column, Container, Row } from "nav-frontend-grid";
+import { Faktum } from "../types";
 import TallFaktum from "./typedInput/TallFaktum";
 import NavnFaktum from "./typedInput/NavnFaktum";
 
@@ -12,6 +13,19 @@ interface OwnProps {
 		pnrRequired?: boolean;
 	};
 }
+
+interface PersonFaktumProperties {
+	navn: string;
+	fnr: string;
+	fdato: string;
+}
+
+export const oppsummerPersonData = (faktum: Faktum) => {
+	const props = faktum.properties as PersonFaktumProperties;
+	const ingenVerdi = "blankt";
+	return `Navn: ${props.navn || ingenVerdi}, fødselsnummer: ${props.fnr ||
+		ingenVerdi}, fødselsdato: ${props.fdato || ingenVerdi}`;
+};
 
 class PersonFaktum extends React.Component<OwnProps, {}> {
 	render() {
@@ -30,7 +44,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 						</Column>
 					</Row>
 					<Row>
-						<Column xs="12" md="6">
+						<Column xs="12">
 							<TallFaktum
 								faktumKey={faktumKey}
 								maxLength={6}
@@ -41,7 +55,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								property="fnr"
 							/>
 						</Column>
-						<Column xs="12" md="6">
+						<Column xs="12">
 							<TallFaktum
 								faktumKey={faktumKey}
 								maxLength={5}
