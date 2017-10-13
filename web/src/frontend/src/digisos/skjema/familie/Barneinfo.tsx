@@ -13,7 +13,7 @@ import {
 	opprettFaktum,
 	slettFaktum
 } from "../../../nav-soknad/redux/faktaActions";
-import LeggTilLenke from "../../../nav-soknad/components/leggTilLenke/leggtillenke";
+import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import Barn from "./Barn";
 
 interface OwnProps {
@@ -101,14 +101,15 @@ class Barneinfo extends React.Component<Props, State> {
 									id: "familie.barn.true.barn.fjernalternativtekst"
 								})}
 								dispatch={this.props.dispatch}
-								visFjernlenke={visFjernlenke}
+								visFjernBarn={visFjernlenke}
 							/>
 						</li>
 					))}
 				</ol>
-				<LeggTilLenke
-					leggTil={this.leggTilBarn}
-					lenketekst={intl.formatMessage({
+				<Lenkeknapp
+					onClick={this.leggTilBarn}
+					style="add"
+					label={intl.formatMessage({
 						id: "familie.barn.true.barn.leggtil"
 					})}
 				/>
