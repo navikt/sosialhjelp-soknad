@@ -8,7 +8,6 @@ import InformasjonBolk from "./InformasjonBolk";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
 import NavFrontendSpinner from "nav-frontend-spinner";
-import "./ekstrainfo.css";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { hentSynligeFakta } from "../../redux/synligefakta/synligeFaktaActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
