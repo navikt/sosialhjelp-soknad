@@ -31,6 +31,8 @@ interface State {
 	listState: string;
 }
 
+const createBarnRef = (idx: number) => `barn-${idx}`;
+
 class Barneinfo extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
@@ -67,8 +69,14 @@ class Barneinfo extends React.Component<Props, State> {
 		);
 	}
 
-	fjernBarn(faktumId: number) {
+	/** Denne funksjonen kalles kun når det er mer en ett barn i listen. */
+	fjernBarn(faktumId: number, fjernetBarnListIndex: number) {
 		this.props.dispatch(slettFaktum(faktumId));
+		/** Sett fokus på barnet i listen som er foran det som er fjernet */
+		const barn = this.refs[createBarnRef(fjernetBarnListIndex - 1)] as Barn;
+		if (barn) {
+			barn.focus();
+		}
 	}
 
 	render() {
@@ -81,10 +89,11 @@ class Barneinfo extends React.Component<Props, State> {
 					{alleBarn.map((barnFaktum: Faktum, index: number) => (
 						<li key={barnFaktum.faktumId}>
 							<Barn
+								ref={createBarnRef(index)}
 								fakta={fakta}
 								faktum={barnFaktum}
 								barnNummer={index + 1}
-								onFjernBarn={this.fjernBarn}
+								onFjernBarn={faktumId => this.fjernBarn(faktumId, index)}
 								fjernBarnTekst={intl.formatMessage({
 									id: "familie.barn.true.barn.fjern"
 								})}

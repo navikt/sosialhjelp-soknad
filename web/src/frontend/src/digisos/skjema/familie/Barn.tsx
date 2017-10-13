@@ -25,20 +25,22 @@ interface BarnTypes {
 	onFjernBarn: (faktumId: number) => void;
 }
 
-export default class Barn extends React.Component<
-	FaktumComponentProps & BarnTypes,
-	{}
-> {
-	sporsmalFaktum: HTMLElement;
+type Props = FaktumComponentProps & BarnTypes;
+
+export default class Barn extends React.Component<Props, {}> {
+	personFaktum: PersonFaktum;
+
+	constructor(props: Props) {
+		super(props);
+		this.focus = this.focus.bind(this);
+	}
 
 	componentDidMount() {
-		if (this.sporsmalFaktum) {
-			this.sporsmalFaktum.focus();
-		}
+		this.personFaktum.focus();
 	}
 
 	focus() {
-		this.sporsmalFaktum.focus();
+		this.personFaktum.focus();
 	}
 
 	render() {
@@ -61,10 +63,12 @@ export default class Barn extends React.Component<
 			<div className="blokk barn">
 				<SporsmalFaktum
 					faktumKey={faktumKey}
-					htmlRef={c => (this.sporsmalFaktum = c)}
-					tittelRenderer={tittel => `${tittel} ${barnNummer}`}
-				>
-					<PersonFaktum faktumKey={faktumKey} faktumId={faktumId} />
+					tittelRenderer={tittel => `${tittel} ${barnNummer}`}>
+					<PersonFaktum
+						faktumKey={faktumKey}
+						faktumId={faktumId}
+						ref={c => (this.personFaktum = c)}
+					/>
 					<SporsmalFaktum faktumKey={borInfo.faktum}>
 						<FaktumRadio
 							faktumKey={faktumKey}
@@ -75,8 +79,7 @@ export default class Barn extends React.Component<
 						<NivaTreSkjema
 							visible={faktumIsSelected(
 								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId)
-							)}
-						>
+							)}>
 							<SporsmalFaktum faktumKey={hvormye.faktum}>
 								<BelopFaktum
 									faktumKey={faktumKey}
