@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router";
 
 import Feilside from "../nav-soknad/components/feilmeldinger/Feilside";
 
+import Informasjon from "./informasjon";
 import Start from "./start";
 import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
@@ -15,7 +16,8 @@ class App extends React.Component<{}, {}> {
 		return (
 			<div className="app-digisos container">
 				<Switch>
-					<Route path={`/informasjon`} exact={true} component={Start} />
+					<Route path={`/informasjon`} exact={true} component={Informasjon} />
+					<Route path={`/bosted`} exact={true} component={Start} />
 					<Route
 						path={`/skjema/:brukerBehandlingId`}
 						component={SkjemaRouter}

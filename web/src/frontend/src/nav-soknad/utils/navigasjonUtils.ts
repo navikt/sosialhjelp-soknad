@@ -30,7 +30,7 @@ export function gaTilStart(
 	history: RouterHistoryType,
 	skjemaConfig: SkjemaConfig
 ) {
-	history.push(`/informasjon`);
+	history.push(`/bosted`);
 }
 
 export function gaTilbake(

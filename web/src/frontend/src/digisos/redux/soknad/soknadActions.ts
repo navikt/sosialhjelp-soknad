@@ -21,7 +21,9 @@ import {
 	SetServerFeilAction,
 	SoknadActionTypeKeys
 } from "./soknadTypes";
-import { oppdaterFaktumMedVerdier } from "../../../nav-soknad/utils/faktumUtils";
+import { oppdaterFaktumMedProperties, oppdaterFaktumMedVerdier } from "../../../nav-soknad/utils/faktumUtils";
+import { InjectedIntl } from "react-intl";
+import { getIntlTextOrKey } from "../../../nav-soknad/utils/intlUtils";
 
 export type SoknadActionTypes =
 	| OpprettSoknadAction
@@ -31,7 +33,7 @@ export type SoknadActionTypes =
 	| SetServerFeilAction
 	| ResetSoknadAction;
 
-export function opprettSoknad(kommuneId: string, bydelId: string) {
+export function opprettSoknad(kommuneId: string, bydelId: string, intl: InjectedIntl) {
 	return (
 		dispatch: SoknadDispatch<SoknadActionTypes | FaktaActionTypes>,
 		getState: () => State
@@ -48,6 +50,11 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 
 				hentSoknad(brukerBehandlingId)(dispatch).then(() => {
 					const fakta = getState().fakta.data;
+					setInformasjonsFaktum(
+						fakta,
+						dispatch,
+						intl
+					);
 					setBostedFaktum(
 						finnFaktum("personalia.kommune", fakta),
 						kommuneId,
@@ -70,6 +77,17 @@ export function opprettSoknad(kommuneId: string, bydelId: string) {
 			});
 	};
 }
+
+const setInformasjonsFaktum = (fakta: any, dispatch: any, intl: InjectedIntl) => {
+	const properties = {
+		"1": getIntlTextOrKey(intl, "informasjon.start.undertittel"),
+		"2": getIntlTextOrKey(intl, "informasjon.start.tekst"),
+		"3": getIntlTextOrKey(intl, "informasjon.nodsituasjon.undertittel"),
+		"4": getIntlTextOrKey(intl, "informasjon.nodsituasjon.tekst")
+	};
+	lagreFaktum(oppdaterFaktumMedVerdier(finnFaktum("informasjon.bekreftelse", fakta), "true"), dispatch);
+	lagreFaktum(oppdaterFaktumMedProperties(finnFaktum("informasjon.tekster", fakta), properties), dispatch);
+};
 
 const setBostedFaktum = (faktum: Faktum, verdi: string, dispatch: any) => {
 	lagreFaktum(oppdaterFaktumMedVerdier(faktum, verdi), dispatch);

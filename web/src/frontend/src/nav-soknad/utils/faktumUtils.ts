@@ -98,6 +98,13 @@ export function getPropertyVerdi(
 	return faktum.properties[property];
 }
 
+export function oppdaterFaktumMedProperties(
+	faktum: Faktum,
+	properties: object,
+): Faktum {
+	return { ...faktum, properties: { ...properties } };
+}
+
 export function oppdaterFaktumMedVerdier(
 	faktum: Faktum,
 	verdi: FaktumValueType,
