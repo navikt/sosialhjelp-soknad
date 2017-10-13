@@ -13,7 +13,7 @@ import {
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
-import FjernLenke from "../../../nav-soknad/components/fjernLenke/fjernlenke";
+import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 
 interface BarnTypes {
 	faktum: Faktum;
@@ -21,7 +21,7 @@ interface BarnTypes {
 	fjernBarnAlterantivTekst: string;
 	barnNummer: number;
 	dispatch: any;
-	visFjernlenke: boolean;
+	visFjernBarn: boolean;
 	onFjernBarn: (faktumId: number) => void;
 }
 
@@ -50,7 +50,7 @@ export default class Barn extends React.Component<Props, {}> {
 			barnNummer,
 			fjernBarnTekst,
 			fjernBarnAlterantivTekst,
-			visFjernlenke
+			visFjernBarn
 		} = this.props;
 		const faktumKey = faktum.key;
 		const borInfo = radioCheckKeys(`${faktumKey}.borsammen`);
@@ -98,12 +98,15 @@ export default class Barn extends React.Component<Props, {}> {
 							faktumId={faktumId}
 						/>
 					</SporsmalFaktum>
-					{visFjernlenke && (
-						<FjernLenke
-							fjern={() => this.props.onFjernBarn(this.props.faktum.faktumId)}
-							lenketekst={fjernBarnTekst}
-							alternativLenketekst={alternativFjernTekst()}
-						/>
+					{visFjernBarn && (
+						<span className="barn__fjern">
+							<Lenkeknapp
+								onClick={() =>
+									this.props.onFjernBarn(this.props.faktum.faktumId)}
+								label={fjernBarnTekst}
+								alternativLabel={alternativFjernTekst()}
+							/>
+						</span>
 					)}
 				</SporsmalFaktum>
 			</div>
