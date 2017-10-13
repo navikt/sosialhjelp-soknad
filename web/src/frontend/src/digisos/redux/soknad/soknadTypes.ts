@@ -9,7 +9,9 @@ export enum SoknadActionTypeKeys {
 	FEILET = "soknad/FEILET",
 	PENDING = "soknad/PENDING",
 	RESET_SOKNAD = "soknad/RESET_SOKNAD",
-	OTHER_ACTION = "__any_other_action_type__"
+	OTHER_ACTION = "__any_other_action_type__",
+	AVBRYT_SOKNAD = "soknad/AVBRYT_SOKNAD",
+	FORTSETT_SOKNAD = "soknad/FORTSETT_SOKNAD"
 }
 
 export interface OpprettetSoknadAction {
@@ -40,4 +42,12 @@ export interface ResetSoknadAction {
 
 export interface OtherAction {
 	type: SoknadActionTypeKeys.OTHER_ACTION;
+}
+
+export interface AvbrytSoknadAction {
+	type: SoknadActionTypeKeys.AVBRYT_SOKNAD;
+}
+
+export interface FortsettSoknadAction {
+	type: SoknadActionTypeKeys.FORTSETT_SOKNAD;
 }

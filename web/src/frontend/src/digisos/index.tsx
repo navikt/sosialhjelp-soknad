@@ -7,6 +7,7 @@ import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
 import Start from "./start";
 import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
+import AvbrytSoknad from "../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 
 class App extends React.Component<{}, {}> {
 	render() {
@@ -23,6 +24,7 @@ class App extends React.Component<{}, {}> {
 					<Route
 						component={() => (
 							<Feilside
+
 								tekst="Vi fant ikke siden du prøvde å åpne"
 								visTilbakeKnapp={true}
 							/>
@@ -33,6 +35,7 @@ class App extends React.Component<{}, {}> {
 					sessionDurationInMinutes={30}
 					showWarningerAfterMinutes={25}
 				/>
+				<AvbrytSoknad/>
 				{this.props.children}
 			</div>
 		);

@@ -64,6 +64,10 @@ router.get("/soknader/:brukerBehandlingId/fakta", function(req, res) {
 	res.json(fakta);
 });
 
+router.delete("/soknader/:brukerBehandlingId", function(req, res) {
+	console.log("slett søknad");
+});
+
 router.get("/fakta/:faktumId", function(req, res) {
 	res.json(utils.hentFaktum(req.params.faktumId));
 });

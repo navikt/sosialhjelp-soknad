@@ -24,12 +24,12 @@ import { validerAlleFaktum } from "../validering/utils";
 import {
 	gaTilbake,
 	gaVidere,
-	avbryt,
 	getIntlTextOrKey,
 	scrollToTop,
 	getStegUrl,
 	oppdaterFaktumMedVerdier
 } from "../utils";
+import { avbrytSoknad } from "../../digisos/redux/soknad/soknadActions";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -136,6 +136,10 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		);
 	}
 
+	avbryt() {
+		this.props.dispatch(avbrytSoknad());
+	}
+
 	render() {
 		const { skjemaConfig, intl, children, progresjon } = this.props;
 		const stegConfig = skjemaConfig.steg.find(
@@ -197,7 +201,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 								this.handleGaVidere(stegConfig.stegnummer, brukerBehandlingId)}
 							gaTilbake={() =>
 								this.handleGaTilbake(stegConfig.stegnummer, brukerBehandlingId)}
-							avbryt={() => avbryt(skjemaConfig)}
+							avbryt={() => this.avbryt()}
 						/>
 					</form>
 				</div>

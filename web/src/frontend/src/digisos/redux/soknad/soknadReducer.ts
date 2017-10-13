@@ -27,7 +27,8 @@ const defaultState: SoknadState = {
 		sprak: "",
 		ikkeInnsendteVedlegg: [],
 		opplastedeVedlegg: [],
-		innsendteVedlegg: []
+		innsendteVedlegg: [],
+		avbrytDialogSynlig: false
 	}
 };
 
@@ -36,6 +37,24 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 	action
 ) => {
 	switch (action.type) {
+		case SoknadActionTypeKeys.AVBRYT_SOKNAD:
+			return {
+				...state,
+				data: {
+					...state.data,
+					avbrytDialogSynlig: true
+				}
+
+			};
+		case SoknadActionTypeKeys.FORTSETT_SOKNAD:
+			return {
+				...state,
+				data: {
+					...state.data,
+					avbrytDialogSynlig: false
+				}
+			};
+
 		case SoknadActionTypeKeys.RESET_SOKNAD:
 			return {
 				...state,
