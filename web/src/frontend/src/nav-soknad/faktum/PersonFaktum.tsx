@@ -28,6 +28,17 @@ export const oppsummerPersonData = (faktum: Faktum) => {
 };
 
 class PersonFaktum extends React.Component<OwnProps, {}> {
+	navnInput: HTMLInputElement;
+
+	constructor(props: OwnProps) {
+		super(props);
+		this.focus = this.focus.bind(this);
+	}
+
+	focus() {
+		this.navnInput.focus();
+	}
+
 	render() {
 		const { faktumKey, validering = {}, faktumId } = this.props;
 		return (
@@ -36,6 +47,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 					<Row>
 						<Column xs="12">
 							<NavnFaktum
+								inputRef={c => (this.navnInput = c)}
 								faktumKey={faktumKey}
 								required={validering.navnRequired}
 								faktumId={faktumId}
