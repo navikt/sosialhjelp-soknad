@@ -36,8 +36,12 @@ const finnIndex = (
 	return faktumValideringKeys.findIndex(
 		valideringKey =>
 			valideringKey.faktumKey === faktumKey &&
-			(property ? valideringKey.property === property : true) &&
-			(faktumId ? valideringKey.faktumId === faktumId : true)
+			(property
+				? valideringKey.property === property
+				: valideringKey.property === undefined) &&
+			(faktumId
+				? valideringKey.faktumId === faktumId
+				: valideringKey.faktumId === undefined)
 	);
 };
 
@@ -122,6 +126,13 @@ const valideringReducer: Reducer<ValideringState, ValideringActionTypes> = (
 				...state,
 				valideringsregler: unregisterFaktumValidering(
 					state.valideringsregler,
+					action.faktumKey,
+					action.property,
+					action.faktumId
+				),
+				feil: setFaktumValideringsfeil(
+					state.feil,
+					null,
 					action.faktumKey,
 					action.property,
 					action.faktumId
