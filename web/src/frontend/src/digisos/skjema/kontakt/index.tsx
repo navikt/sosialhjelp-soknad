@@ -23,7 +23,7 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 			getFaktumVerdi(this.props.fakta, "kontakt.kontonummer.harikke")
 		);
 		return (
-			<DigisosSkjemaSteg steg={DigisosSteg.personalia}>
+			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
 				<SporsmalFaktum faktumKey="kontakt.kontonummer">
 					<KontonummerFaktum
 						faktumKey="kontakt.kontonummer"

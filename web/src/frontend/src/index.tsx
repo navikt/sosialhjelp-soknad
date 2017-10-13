@@ -10,6 +10,7 @@ import thunk from "redux-thunk";
 import { erDev } from "./nav-soknad/utils/rest-utils";
 import IntlProvider from "./intlProvider";
 import reducers from "./digisos/redux/reducers";
+
 import "./index.css";
 
 function configureStore() {

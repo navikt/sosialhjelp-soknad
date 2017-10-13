@@ -16,9 +16,11 @@ export interface OwnProps extends FaktumComponentProps {
 	disabled?: boolean;
 	pattern?: string;
 	maxLength?: number;
+	minLength?: number;
 	bredde?: InputBredde;
 	step?: string;
 	type?: InputTypes;
+	inputRef?: (c: any) => HTMLInputElement;
 }
 
 export type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -41,6 +43,8 @@ class InputFaktum extends React.Component<Props, {}> {
 		return (
 			<Input
 				className="input--xxl faktumInput"
+				inputRef={(c: any) =>
+					this.props.inputRef ? this.props.inputRef(c) : null}
 				type={type}
 				autoComplete="off"
 				name={this.props.getName()}

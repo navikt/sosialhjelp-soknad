@@ -1,6 +1,5 @@
 import * as React from "react";
 import Skjemapanel from "../skjemapanel";
-import "./progresjonsblokk.css";
 
 interface Props {
 	progresjon?: number;

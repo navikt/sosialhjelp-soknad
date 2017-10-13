@@ -41,7 +41,7 @@ export function updateFaktumLagretVerdi(fakta: Faktum[], faktum: Faktum) {
 		const lagretFaktum = updateFaktumMedLagretVerdi(faktum);
 		return [
 			...fakta.slice(0, index),
-			{ ...lagretFaktum, touched: true } as Faktum,
+			{ ...lagretFaktum } as Faktum,
 			...fakta.slice(index + 1)
 		];
 	}

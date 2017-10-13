@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Collapse } from "react-collapse";
-import "./underskjema.css";
 
 interface UnderskjemaProps extends React.Props<any> {
 	tittel?: string;
@@ -17,7 +16,8 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
 		<Collapse
 			isOpened={visible}
 			className="underskjema__wrapper"
-			hasNestedCollapse={true}>
+			hasNestedCollapse={true}
+		>
 			{visible ? (
 				<div className="underskjema">
 					<div className="underskjema__boks">

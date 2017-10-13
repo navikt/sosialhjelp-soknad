@@ -2,14 +2,12 @@ import * as React from "react";
 import { Route, Switch } from "react-router";
 
 import Feilside from "../nav-soknad/components/feilmeldinger/Feilside";
+import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
 
 import Informasjon from "./informasjon";
 import Start from "./start";
 import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
-
-import "./styles/app.css";
-import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
 
 class App extends React.Component<{}, {}> {
 	render() {
@@ -19,13 +17,24 @@ class App extends React.Component<{}, {}> {
 					<Route path={`/informasjon`} exact={true} component={Informasjon} />
 					<Route path={`/bosted`} exact={true} component={Start} />
 					<Route
-						path={`/skjema/:brukerBehandlingId`}
+						path={`/skjema/:brukerBehandlingId/:steg`}
 						component={SkjemaRouter}
+						exact={true}
 					/>
 					<Route path={`/kvittering`} component={Kvittering} />
-					<Route component={Feilside} />
+					<Route
+						component={() => (
+							<Feilside
+								tekst="Vi fant ikke siden du prøvde å åpne"
+								visTilbakeKnapp={true}
+							/>
+						)}
+					/>
 				</Switch>
-				<TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25}/>
+				<TimeoutBox
+					sessionDurationInMinutes={30}
+					showWarningerAfterMinutes={25}
+				/>
 				{this.props.children}
 			</div>
 		);

@@ -14,32 +14,61 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
 import FjernLenke from "../../../nav-soknad/components/fjernLenke/fjernlenke";
-import { slettFaktum } from "../../../nav-soknad/redux/faktaActions";
-import "./barn.css";
+
 interface BarnTypes {
 	faktum: Faktum;
 	fjernBarnTekst: string;
+	fjernBarnAlterantivTekst: string;
+	barnNummer: number;
 	dispatch: any;
 	visFjernlenke: boolean;
+	onFjernBarn: (faktumId: number) => void;
 }
 
-export default class Barn extends React.Component<
-	FaktumComponentProps & BarnTypes,
-	{}
-> {
+type Props = FaktumComponentProps & BarnTypes;
+
+export default class Barn extends React.Component<Props, {}> {
+	personFaktum: PersonFaktum;
+
+	constructor(props: Props) {
+		super(props);
+		this.focus = this.focus.bind(this);
+	}
+
+	componentDidMount() {
+		this.personFaktum.focus();
+	}
+
+	focus() {
+		this.personFaktum.focus();
+	}
+
 	render() {
-		const { fakta, faktum, fjernBarnTekst, visFjernlenke } = this.props;
+		const {
+			fakta,
+			faktum,
+			barnNummer,
+			fjernBarnTekst,
+			fjernBarnAlterantivTekst,
+			visFjernlenke
+		} = this.props;
 		const faktumKey = faktum.key;
 		const borInfo = radioCheckKeys(`${faktumKey}.borsammen`);
 		const hvormye = inputKeys(`${faktumKey}.grad`);
 		const faktumId = faktum.faktumId;
-		const slettBarn = (): void => {
-			this.props.dispatch(slettFaktum(faktumId));
+		const alternativFjernTekst = (): string => {
+			return `${fjernBarnAlterantivTekst} ${barnNummer}`;
 		};
 		return (
 			<div className="blokk barn">
-				<SporsmalFaktum faktumKey={faktumKey}>
-					<PersonFaktum faktumKey={faktumKey} faktumId={faktumId} />
+				<SporsmalFaktum
+					faktumKey={faktumKey}
+					tittelRenderer={tittel => `${tittel} ${barnNummer}`}>
+					<PersonFaktum
+						faktumKey={faktumKey}
+						faktumId={faktumId}
+						ref={c => (this.personFaktum = c)}
+					/>
 					<SporsmalFaktum faktumKey={borInfo.faktum}>
 						<FaktumRadio
 							faktumKey={faktumKey}
@@ -69,8 +98,14 @@ export default class Barn extends React.Component<
 							faktumId={faktumId}
 						/>
 					</SporsmalFaktum>
+					{visFjernlenke && (
+						<FjernLenke
+							fjern={() => this.props.onFjernBarn(this.props.faktum.faktumId)}
+							lenketekst={fjernBarnTekst}
+							alternativLenketekst={alternativFjernTekst()}
+						/>
+					)}
 				</SporsmalFaktum>
-				{visFjernlenke && (<FjernLenke fjern={slettBarn} lenketekst={fjernBarnTekst}/>)}
 			</div>
 		);
 	}

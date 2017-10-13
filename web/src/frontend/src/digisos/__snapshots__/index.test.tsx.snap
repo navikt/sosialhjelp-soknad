@@ -19,7 +19,8 @@ ShallowWrapper {
       />
       <Route
         component={[Function]}
-        path="/skjema/:brukerBehandlingId"
+        exact={true}
+        path="/skjema/:brukerBehandlingId/:steg"
       />
       <Route
         component={[Function]}
@@ -46,7 +47,8 @@ ShallowWrapper {
         />
         <Route
           component={[Function]}
-          path="/skjema/:brukerBehandlingId"
+          exact={true}
+          path="/skjema/:brukerBehandlingId/:steg"
         />
         <Route
           component={[Function]}
@@ -107,7 +109,8 @@ ShallowWrapper {
             />
             <Route
               component={[Function]}
-              path="/skjema/:brukerBehandlingId"
+              exact={true}
+              path="/skjema/:brukerBehandlingId/:steg"
             />
             <Route
               component={[Function]}
@@ -134,7 +137,8 @@ ShallowWrapper {
             />
             <Route
               component={[Function]}
-              path="/skjema/:brukerBehandlingId"
+              exact={true}
+              path="/skjema/:brukerBehandlingId/:steg"
             />
             <Route
               component={[Function]}
