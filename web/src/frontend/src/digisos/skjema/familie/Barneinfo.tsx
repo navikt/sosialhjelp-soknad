@@ -70,8 +70,8 @@ class Barneinfo extends React.Component<Props, State> {
 	}
 
 	/** Denne funksjonen kalles kun når det er mer en ett barn i listen. */
-	fjernBarn(faktumId: number, fjernetBarnListIndex: number) {
-		this.props.dispatch(slettFaktum(faktumId));
+	fjernBarn(faktum: Faktum, fjernetBarnListIndex: number) {
+		this.props.dispatch(slettFaktum(faktum.faktumId));
 		/** Sett fokus på barnet i listen som er foran det som er fjernet */
 		const barn = this.refs[createBarnRef(fjernetBarnListIndex - 1)] as Barn;
 		if (barn) {
@@ -93,7 +93,7 @@ class Barneinfo extends React.Component<Props, State> {
 								fakta={fakta}
 								faktum={barnFaktum}
 								barnNummer={index + 1}
-								onFjernBarn={faktumId => this.fjernBarn(faktumId, index)}
+								onFjernBarn={faktumId => this.fjernBarn(barnFaktum, index)}
 								fjernBarnTekst={intl.formatMessage({
 									id: "familie.barn.true.barn.fjern"
 								})}
