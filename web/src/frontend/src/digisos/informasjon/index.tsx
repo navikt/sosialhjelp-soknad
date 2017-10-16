@@ -43,7 +43,7 @@ class Informasjon extends React.Component<
 			<DocumentTitle title={title}>
 				<span>
 					<AppTittel/>
-					<div className="skjema-content">
+					<div className="skjema-content informasjon">
 						<p className="blokk-l">
 							<Undertittel>
 								{ getIntlTextOrKey(intl, "informasjon.start.undertittel") }
@@ -68,6 +68,7 @@ class Informasjon extends React.Component<
 					{ checked &&
 						<Knapp
 							type="hoved"
+							className="informasjon__knapp"
 							onClick={ this.handleGaVidere }
 						>
 							{ getIntlTextOrKey(intl, "skjema.knapper.gaavidere") }
