@@ -1,12 +1,5 @@
 .skjema-oppsummering {
-	text-align: left;
-	overflow: hidden;
-	&__bekreft {
-		text-align: left;
-		margin: 0 auto;
-		max-width: 90%;
-	}
-
+	@vpad: 2rem;
 	.header {
 		display: none !important;
 		position: relative;
@@ -15,304 +8,362 @@
 		}
 		margin: 0 @vpad !important;
 	}
-	.footer,
-	.logo,
-	.headerSider {
-		display: none !important;
-	}
-	.hode {
-		border: none !important;
-		padding: @vpad 0 @vpad 0 !important;
-		margin: 0 !important;
-		background: white;
-
-		h1,
-		hr {
-			display: none !important;
-		}
-	}
-
-	@vpad: 20px;
-	@hpad: 30px;
-	h2 {
-		margin: 1rem 0 0 0 !important;
-		padding: @vpad @hpad @vpad/2 @hpad;
-		background-color: white;
-		width: 100%;
-		float: left;
-		font-size: 18px !important;
-	}
-	h2 + ul {
-		margin-top: 0;
-		padding: 0 0 @vpad 0 !important;
-		background-color: white;
-		width: 100%;
-		float: left;
-		clear: both;
-		> li {
-			padding: 0 @hpad !important;
-		}
-	}
-
-	h3,
-	.tittel {
-		font-size: 1rem !important;
-		margin-top: 1rem !important;
-	}
-
-	.generisk-oppsummering {
-		> * {
-			display: block;
-			width: 100%;
-			clear: both;
-			float: left;
-		}
-	}
-
-	.brosjyre-signatur {
-		background-color: white;
-		width: 100%;
-		float: left;
-		border: none !important;
-		margin: 1rem 0 2rem 0 !important;
-		padding: @vpad @hpad !important;
-	}
-
-	.vedlegg-liste {
-		margin: 0 !important;
-		> li {
-			margin: 0 !important;
-			padding-left: 0;
-			&:before {
-				display: none !important;
-			}
-			.status {
-				margin-left: 20px;
-			}
-		}
-	}
-
-	/** Fra mock backend */
-	h2 {
-		font-family: Modus, Arial, sans-serif;
-		font-size: 13pt;
-		margin-top: 10mm;
-		page-break-after: avoid;
-	}
-
-	.header {
-		position: running(header);
-		text-align: center;
-		margin-bottom: 1cm;
-	}
-
-	.header span {
-		font-family: Modus, Arial, sans-serif;
-		display: inline-block;
-	}
-
-	.header .header-logo {
-		position: absolute;
-		left: 0;
-		top: 8mm;
-		width: 14mm;
-	}
-
-	.header .fnr:before {
-		content: "&#8226;";
-		margin: 0 10px;
-	}
-
-	.header .headerSider {
-		position: absolute;
-		right: 0;
-	}
-
-	.header .headerSider:before {
-		content: counter(page);
-	}
-
-	.header .headerSider:after {
-		content: counter(pages);
-	}
-
-	.footer {
-		position: running(footer);
-		font-size: 8pt;
-		text-align: center;
-		border-top: 0.2pt solid #ccc;
-		padding-top: 0.5cm;
-	}
-
-	.footer span {
-		display: inline-block;
-		margin: 0 10px;
-	}
-
-	.logo {
-		position: absolute;
-		left: 77mm;
-		top: 0;
-		width: 17mm;
-	}
-
-	.hode {
-		text-align: center;
-		margin: 15mm 0 9.5mm;
-		padding-bottom: 9.5mm;
-		border-bottom: 0.2pt solid #ccc;
-	}
-
-	.hode hr {
-		border: none;
-		border-top: 0.2pt solid #ccc;
-		width: 8mm;
-		margin: 7mm auto 5mm;
-	}
-
-	.hode .nvn,
-	.hode .fnr {
-		font-family: Modus, Arial, sans-serif;
-		font-weight: bold;
-		font-size: 13pt;
-	}
-
-	.hode .adr {
-		margin-top: 2mm;
-	}
-
-	.brosjyre-signatur {
-		border-top: 0.2pt solid #ccc;
-		margin-top: 10mm;
-		padding-top: 10mm;
-		page-break-inside: avoid;
-	}
-
-	.personalia p {
-		margin: 0;
-	}
-
-	.generisk-oppsummering h3,
-	.generisk-oppsummering h4,
-	.generisk-oppsummering h5,
-	.generisk-oppsummering h6 {
-		font-size: 10pt;
-		margin: 0 0 8pt 0;
-		padding: 0;
-	}
-
-	ul.vedlegg-liste,
-	ul.fakta-liste,
-	ul.svar-liste {
-		margin: 0;
-		padding: 0;
-		list-style: disc;
-	}
-	ul.fakta-liste {
-		list-style: none;
-	}
-
-	ul.fakta-liste > li,
-	ul.svar-liste > li {
-		margin: 8pt 0;
-	}
-
-	ul.svar-liste > li {
-		position: relative;
-		margin-left: 20px;
-		word-wrap: break-word;
-	}
-
-	ul.svar-liste > li::before,
-	ul.vedlegg-liste > li.lastet-opp::before {
-		display: inline-block;
-		content: " ";
-		font-weight: bold;
-		// background: url(img/hake_sort.gif) no-repeat center bottom;
-		width: 10px;
-		height: 12px;
-		background-size: 8px;
-		position: absolute;
-		left: -20px;
-	}
-
-	ul.svar-liste ul.svar-liste > li::before {
-		content: "•";
-		padding-left: 5px;
-		background: none;
-	}
-
-	ul.svar-liste > li.ikke-stylet::before {
-		background: none;
-	}
-
-	ul.svar-liste ul.svar-liste > li.ikke-stylet::before {
-		content: " ";
-	}
-
-	li.inline ul {
-		display: inline;
-	}
-
-	li.inline li {
-		display: inline;
-		margin-left: 0;
-	}
-
-	li.inline div {
-		display: inline;
-		padding-left: 0;
-	}
-
-	li.inline ul.svar-liste > li::before {
-		content: "";
-	}
-
-	ul.vedlegg-liste > li.ikke-lastet-opp::before {
-		display: inline-block;
-		content: "-";
-		position: absolute;
-		left: -20px;
-	}
-
-	ul.vedlegg-liste > li {
-		position: relative;
-		margin: 12pt 0 12pt 20px;
-	}
-
-	ul.vedlegg-liste p {
-		margin: 0 0 5pt 0;
-	}
-
-	ul.vedlegg-liste .seVedlegg {
+	.hode, .header, .footer, .logo {
 		display: none;
 	}
-
-	ul.vedlegg-liste .aarsak {
-		font-weight: normal;
+}
+.generisk-oppsummering > div {
+	h2 {
+		font-size: 1.3em;
+	}
+	h3 {
+		font-size: 1em;
+		margin: 0 0 .5rem 0;
+	}
+	> h2  {
+		background-color: white;
+		padding: 1rem @skjemaMarg 1rem @skjemaMarg;
+		margin: 0;
+		font-size: 1.3em;
+		&:first-child {
+			margin-top: 2rem;
+		}
+	}
+	h2 + * {
+		margin-bottom: 1rem;
+		padding: 1rem @skjemaMarg;
+		background-color: white;
 	}
 
-	ul.vedlegg-liste .tittel {
-		font-weight: bold;
-	}
 
-	ul.vedlegg-liste .navn {
-		font-weight: normal;
-	}
+	ol, ul {
+		list-style: none;
+		padding: 0;
+		> li {
+			margin-bottom: 2rem;
+		}
+		}
 
-	.hjelpeInfotekst {
-		padding-left: 20px;
-		font-type: italic;
-	}
-
-	.lastetOpp .vedleggSymbol {
-		display: inline-block;
-		// background: url(img/vedlegg-svart.gif) no-repeat center;
-		width: 20px;
-		height: 20px;
-		position: relative;
-		top: 4px;
-		margin-left: 20px;
-		margin-right: 5px;
+	> ul, > ol {
+		margin: 0 0 1rem 0;
+		list-style: none;
+		padding: 0 @skjemaMarg 0 @skjemaMarg;
+		overflow: hidden;
 	}
 }
+.fakta-liste {
+}
+.svar-liste {
+	margin: .5rem 0 0 0;
+}
+
+// .skjema-oppsummering {
+// 	text-align: left;
+// 	overflow: hidden;
+// 	&__bekreft {
+// 		text-align: left;
+// 		margin: 0 auto;
+// 		max-width: 90%;
+// 	}
+
+// 	.footer,
+// 	.logo,
+// 	.headerSider {
+// 		display: none !important;
+// 	}
+// 	.hode {
+// 		border: none !important;
+// 		padding: @vpad 0 @vpad 0 !important;
+// 		margin: 0 !important;
+// 		background: white;
+
+// 		h1,
+// 		hr {
+// 			display: none !important;
+// 		}
+// 	}
+
+// 	@vpad: 20px;
+// 	@hpad: 30px;
+// 	h2 {
+// 		margin: 1rem 0 0 0 !important;
+// 		padding: @vpad @hpad @vpad/2 @hpad;
+// 		background-color: white;
+// 		width: 100%;
+// 		float: left;
+// 		font-size: 18px !important;
+// 	}
+// 	h2 + ul {
+// 		margin-top: 0;
+// 		padding: 0 0 @vpad 0 !important;
+// 		background-color: white;
+// 		width: 100%;
+// 		float: left;
+// 		clear: both;
+// 		> li {
+// 			padding: 0 @hpad !important;
+// 		}
+// 	}
+
+// 	h3,
+// 	.tittel {
+// 		font-size: 1rem !important;
+// 		margin-top: 1rem !important;
+// 	}
+
+// 	.generisk-oppsummering {
+// 		> * {
+// 			display: block;
+// 			width: 100%;
+// 			clear: both;
+// 			float: left;
+// 		}
+// 	}
+
+// 	.brosjyre-signatur {
+// 		background-color: white;
+// 		width: 100%;
+// 		float: left;
+// 		border: none !important;
+// 		margin: 1rem 0 2rem 0 !important;
+// 		padding: @vpad @hpad !important;
+// 	}
+
+// 	.vedlegg-liste {
+// 		margin: 0 !important;
+// 		> li {
+// 			margin: 0 !important;
+// 			padding-left: 0;
+// 			&:before {
+// 				display: none !important;
+// 			}
+// 			.status {
+// 				margin-left: 20px;
+// 			}
+// 		}
+// 	}
+
+// 	/** Fra mock backend */
+// 	h2 {
+// 		font-family: "Source Sans Pro", Arial, sans-serif;
+// 		font-size: 13pt;
+// 		margin-top: 10mm;
+// 		page-break-after: avoid;
+// 	}
+
+// 	.header {
+// 		position: running(header);
+// 		text-align: center;
+// 		margin-bottom: 1cm;
+// 	}
+
+// 	.header span {
+// 		font-family: "Source Sans Pro", Arial, sans-serif;
+// 		display: inline-block;
+// 	}
+
+// 	.header .header-logo {
+// 		position: absolute;
+// 		left: 0;
+// 		top: 8mm;
+// 		width: 14mm;
+// 	}
+
+// 	.header .fnr:before {
+// 		content: "&#8226;";
+// 		margin: 0 10px;
+// 	}
+
+// 	.header .headerSider {
+// 		position: absolute;
+// 		right: 0;
+// 	}
+
+// 	.header .headerSider:before {
+// 		content: counter(page);
+// 	}
+
+// 	.header .headerSider:after {
+// 		content: counter(pages);
+// 	}
+
+// 	.footer {
+// 		position: running(footer);
+// 		font-size: 8pt;
+// 		text-align: center;
+// 		border-top: 0.2pt solid #ccc;
+// 		padding-top: 0.5cm;
+// 	}
+
+// 	.footer span {
+// 		display: inline-block;
+// 		margin: 0 10px;
+// 	}
+
+// 	.logo {
+// 		position: absolute;
+// 		left: 77mm;
+// 		top: 0;
+// 		width: 17mm;
+// 	}
+
+// 	.hode {
+// 		text-align: center;
+// 		margin: 15mm 0 9.5mm;
+// 		padding-bottom: 9.5mm;
+// 		border-bottom: 0.2pt solid #ccc;
+// 	}
+
+// 	.hode hr {
+// 		border: none;
+// 		border-top: 0.2pt solid #ccc;
+// 		width: 8mm;
+// 		margin: 7mm auto 5mm;
+// 	}
+
+// 	.hode .nvn,
+// 	.hode .fnr {
+// 		font-family: "Source Sans Pro", Arial, sans-serif;
+// 		font-weight: bold;
+// 		font-size: 13pt;
+// 	}
+
+// 	.hode .adr {
+// 		margin-top: 2mm;
+// 	}
+
+// 	.brosjyre-signatur {
+// 		border-top: 0.2pt solid #ccc;
+// 		margin-top: 10mm;
+// 		padding-top: 10mm;
+// 		page-break-inside: avoid;
+// 	}
+
+// 	.personalia p {
+// 		margin: 0;
+// 	}
+
+// 	.generisk-oppsummering h3,
+// 	.generisk-oppsummering h4,
+// 	.generisk-oppsummering h5,
+// 	.generisk-oppsummering h6 {
+// 		font-size: 10pt;
+// 		margin: 0 0 8pt 0;
+// 		padding: 0;
+// 	}
+
+// 	ul.vedlegg-liste,
+// 	ul.fakta-liste,
+// 	ul.svar-liste {
+// 		margin: 0;
+// 		padding: 0;
+// 		list-style: disc;
+// 	}
+// 	ul.fakta-liste {
+// 		list-style: none;
+// 	}
+
+// 	ul.fakta-liste > li,
+// 	ul.svar-liste > li {
+// 		margin: 8pt 0;
+// 	}
+
+// 	ul.svar-liste > li {
+// 		position: relative;
+// 		margin-left: 20px;
+// 		word-wrap: break-word;
+// 	}
+
+// 	ul.svar-liste > li::before,
+// 	ul.vedlegg-liste > li.lastet-opp::before {
+// 		display: inline-block;
+// 		content: " ";
+// 		font-weight: bold;
+// 		// background: url(img/hake_sort.gif) no-repeat center bottom;
+// 		width: 10px;
+// 		height: 12px;
+// 		background-size: 8px;
+// 		position: absolute;
+// 		left: -20px;
+// 	}
+
+// 	ul.svar-liste ul.svar-liste > li::before {
+// 		content: "•";
+// 		padding-left: 5px;
+// 		background: none;
+// 	}
+
+// 	ul.svar-liste > li.ikke-stylet::before {
+// 		background: none;
+// 	}
+
+// 	ul.svar-liste ul.svar-liste > li.ikke-stylet::before {
+// 		content: " ";
+// 	}
+
+// 	li.inline ul {
+// 		display: inline;
+// 	}
+
+// 	li.inline li {
+// 		display: inline;
+// 		margin-left: 0;
+// 	}
+
+// 	li.inline div {
+// 		display: inline;
+// 		padding-left: 0;
+// 	}
+
+// 	li.inline ul.svar-liste > li::before {
+// 		content: "";
+// 	}
+
+// 	ul.vedlegg-liste > li.ikke-lastet-opp::before {
+// 		display: inline-block;
+// 		content: "-";
+// 		position: absolute;
+// 		left: -20px;
+// 	}
+
+// 	ul.vedlegg-liste > li {
+// 		position: relative;
+// 		margin: 12pt 0 12pt 20px;
+// 	}
+
+// 	ul.vedlegg-liste p {
+// 		margin: 0 0 5pt 0;
+// 	}
+
+// 	ul.vedlegg-liste .seVedlegg {
+// 		display: none;
+// 	}
+
+// 	ul.vedlegg-liste .aarsak {
+// 		font-weight: normal;
+// 	}
+
+// 	ul.vedlegg-liste .tittel {
+// 		font-weight: bold;
+// 	}
+
+// 	ul.vedlegg-liste .navn {
+// 		font-weight: normal;
+// 	}
+
+// 	.hjelpeInfotekst {
+// 		padding-left: 20px;
+// 		font-type: italic;
+// 	}
+
+// 	.lastetOpp .vedleggSymbol {
+// 		display: inline-block;
+// 		// background: url(img/vedlegg-svart.gif) no-repeat center;
+// 		width: 20px;
+// 		height: 20px;
+// 		position: relative;
+// 		top: 4px;
+// 		margin-left: 20px;
+// 		margin-right: 5px;
+// 	}
+// }
