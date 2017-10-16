@@ -15,82 +15,93 @@
 		display: none;
 	}
 }
-.generisk-oppsummering > div {
-	h2,
-	h3,
-	h4,
-	h5 {
-		margin: 0 0 0.5em 0;
-	}
-	h2 {
-		font-size: 1.3em;
-	}
-	h3,
-	h4,
-	h5 {
-		font-size: 1em;
-	}
-	> h2 {
-		background-color: white;
-		padding: 1.5rem @skjemaMarg 1.5rem @skjemaMarg;
-		margin: 0;
-		font-size: 1.3em;
-		&:first-child {
+.generisk-oppsummering {
+	> div {
+		h2,
+		h3,
+		h4,
+		h5 {
+			margin: 0 0 0.5em 0;
+		}
+		h2 {
+			font-size: 1.3em;
+		}
+		h3,
+		h4,
+		h5 {
+			font-size: 1em;
+		}
+		> h2 {
+			background-color: white;
+			padding: 1.5rem @skjemaMarg 1.5rem @skjemaMarg;
+			margin: 0;
+			font-size: 1.3em;
+			&:first-child {
+				margin-top: 2rem;
+			}
+		}
+		h2 + * {
+			margin-bottom: 1rem;
+			padding: 1rem @skjemaMarg;
+			background-color: white;
+		}
+
+		ol,
+		ul {
+			list-style: none;
+			padding: 0;
+			> li {
+				margin-bottom: 2rem;
+			}
+		}
+
+		> ul,
+		> ol {
+			margin: 0 0 1rem 0;
+			list-style: none;
+			padding: 0 @skjemaMarg 0 @skjemaMarg;
+			overflow: hidden;
+		}
+		.svar-liste {
+			margin: 0.5rem 0 0 0;
+			padding: 0;
+		}
+
+		h4 + .svar-liste {
+			> li {
+				list-style: inside;
+				list-style-type: disc;
+				margin-bottom: 0.5rem;
+			}
+		}
+		li.ikke-stylet {
+			list-style: none !important;
+		}
+		.verdi {
+			&--tekst,
+			&--generell {
+				background-color: @grayBackground;
+				display: inline-block;
+				padding: 0.25em 1em 0.3em 1em;
+				border-radius: 2px;
+			}
+		}
+		.verdi + .svar-liste,
+		.verdi + .fakta-liste {
 			margin-top: 2rem;
 		}
 	}
-	h2 + * {
-		margin-bottom: 1rem;
-		padding: 1rem @skjemaMarg;
+	.brosjyre-signatur {
 		background-color: white;
-	}
-
-	ol,
-	ul {
-		list-style: none;
-		padding: 0;
-		> li {
-			margin-bottom: 2rem;
+		margin: 1rem 0 2rem 0;
+		padding: 1rem @skjemaMarg;
+		ol,
+		ul {
+			margin: 0;
+			padding: 0;
 		}
-	}
-
-	> ul,
-	> ol {
-		margin: 0 0 1rem 0;
-		list-style: none;
-		padding: 0 @skjemaMarg 0 @skjemaMarg;
-		overflow: hidden;
-	}
-	.svar-liste {
-		margin: 0.5rem 0 0 0;
-		padding: 0;
-	}
-
-	h4 + .svar-liste {
-		> li {
-			list-style: inside;
-			list-style-type: disc;
-			margin-bottom: 0.5rem;
-		}
-	}
-	li.ikke-stylet {
-		list-style: none !important;
-	}
-	.verdi {
-		&--tekst,
-		&--generell {
-			background-color: @grayBackground;
-			display: inline-block;
-			padding: 0.25em 1em 0.3em 1em;
-			border-radius: 2px;
-		}
-	}
-	.verdi + .svar-liste,
-	.verdi + .fakta-liste {
-		margin-top: 2rem;
 	}
 }
-
 .svar-liste .svar-liste {
 	.verdi--generell {
 		background-color: initial;
