@@ -10,6 +10,15 @@ const defaultState: OppsummeringState = {
 	oppsummering: undefined
 };
 
+const extractBody = (oppsummering: string): string => {
+	if (!oppsummering) {
+		return "";
+	}
+	const idx1 = oppsummering.indexOf("<body>") + 6;
+	const idx2 = oppsummering.indexOf("</body>");
+	return oppsummering.substring(idx1, idx2);
+};
+
 const OppsummeringReducer: Reducer<
 	OppsummeringState,
 	OppsummeringActionTypes
@@ -18,7 +27,7 @@ const OppsummeringReducer: Reducer<
 		case OppsummeringActionTypeKeys.SET_OPPSUMMERING:
 			return {
 				...state,
-				oppsummering: action.oppsummering
+				oppsummering: extractBody(action.oppsummering)
 			};
 		default:
 			return state;
