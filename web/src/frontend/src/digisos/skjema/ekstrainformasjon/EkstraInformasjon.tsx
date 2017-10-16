@@ -27,12 +27,12 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 				<div className="skjema-content">
 					<div className="ekstrainfo-melding">
 						<Infoblokk>
-							<FormattedHTMLMessage id="ekstrainfo.informasjon"/>
+							<FormattedHTMLMessage id="opplysninger.informasjon"/>
 						</Infoblokk>
 					</div>
 				</div>
 
-				<DigisosSkjemaSteg steg={DigisosSteg.ekstrainfo}>
+				<DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk}>
 					{
 						restStatus === REST_STATUS.OK ?
 							Object.keys(data).map(key => (

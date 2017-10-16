@@ -10,8 +10,7 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { finnFakta, finnFaktum } from "../../../nav-soknad/utils/faktumUtils";
 import { opprettFaktum, slettFaktum } from "../../../nav-soknad/redux/faktaActions";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import LeggTilLenke from "../../../nav-soknad/components/leggTilLenke/leggtillenke";
-import FjernLenke from "../../../nav-soknad/components/fjernLenke/fjernlenke";
+import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 
 interface Props {
 	faktumstruktur: FaktumStruktur;
@@ -66,7 +65,8 @@ class Opplysning extends React.Component<AllProps, {}> {
 			});
 
 			const slettKnapp = (
-				<FjernLenke fjern={() => this.fjernBelop(faktum.faktumId)} lenketekst={slettTekst} />
+				<Lenkeknapp onClick={() => this.fjernBelop(faktum.faktumId)}
+							label={slettTekst} />
 			);
 
 			return (
@@ -78,9 +78,10 @@ class Opplysning extends React.Component<AllProps, {}> {
 		});
 
 		const leggTilKnapp = (
-			<LeggTilLenke
-				leggTil={this.leggTilBelop}
-				lenketekst={leggTilTekst}
+			<Lenkeknapp
+				onClick={this.leggTilBelop}
+				style="add"
+				label={leggTilTekst}
 			/>
 		);
 
