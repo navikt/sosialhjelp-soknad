@@ -2,16 +2,18 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { Checkbox } from "nav-frontend-skjema";
+import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { hentOppsummering } from "../../redux/oppsummering/oppsummeringActions";
+import { Oppsummering } from "../../redux/oppsummering/oppsummeringTypes";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
 
 interface StateProps {
-	oppsummering?: string;
+	oppsummering?: Oppsummering;
 }
 
 interface LocalState {
@@ -23,7 +25,7 @@ type Props = FaktumComponentProps &
 	StateProps &
 	InjectedIntlProps;
 
-class Oppsummering extends React.Component<Props, LocalState> {
+class OppsummeringView extends React.Component<Props, LocalState> {
 	constructor(props: Props) {
 		super(props);
 		this.getOppsummering = this.getOppsummering.bind(this);
@@ -40,14 +42,21 @@ class Oppsummering extends React.Component<Props, LocalState> {
 		};
 	}
 	render() {
+		const { oppsummering } = this.props;
+
+		const bolker = oppsummering
+			? this.props.oppsummering.bolker.map(bolk => (
+					<div className="bolk">
+						<EkspanderbartPanel tittel={bolk.tittel} apen={false}>
+							<div dangerouslySetInnerHTML={{ __html: bolk.html }} />
+						</EkspanderbartPanel>
+					</div>
+				))
+			: null;
+
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
-				<div
-					className="skjema-oppsummering"
-					dangerouslySetInnerHTML={
-						this.props.oppsummering ? this.getOppsummering() : undefined
-					}
-				/>
+				<div className="skjema-oppsummering">{bolker}</div>
 				<div className="skjema-oppsummering__bekreft">
 					<Checkbox
 						label={this.props.intl.formatMessage({
@@ -67,4 +76,4 @@ export default connect((state: State, props: any) => {
 	return {
 		oppsummering: state.oppsummering.oppsummering
 	};
-})(injectIntl(Oppsummering));
+})(injectIntl(OppsummeringView));

@@ -5,11 +5,16 @@ export enum OppsummeringActionTypeKeys {
 	SET_OPPSUMMERING = "soknad/SET_OPPSUMMERING"
 }
 
-export interface SetOppsummering {
-	type: OppsummeringActionTypeKeys.SET_OPPSUMMERING;
-	oppsummering: string;
+export interface OppsummeringBolk {
+	tittel: string;
+	html: string;
 }
 
-export interface OppsummeringState {
+export interface Oppsummering {
+	bolker: OppsummeringBolk[];
+}
+
+export interface SetOppsummering {
+	type: OppsummeringActionTypeKeys.SET_OPPSUMMERING;
 	oppsummering: string;
 }
