@@ -27,7 +27,8 @@ const hentUtOppsummering = (html: string): Oppsummering => {
 	const body = hentUtBody(html);
 	const el = document.createElement("div");
 	el.innerHTML = body;
-	const htmlBolker = Array.from(el.querySelectorAll(".bolk"));
+	const signatur = el.querySelector(".js-signatur").innerHTML;
+	const htmlBolker = Array.from(el.querySelectorAll(".js-bolk"));
 	const bolker: OppsummeringBolk[] = htmlBolker
 		.map(htmlBolk => {
 			return {
@@ -37,6 +38,7 @@ const hentUtOppsummering = (html: string): Oppsummering => {
 		})
 		.filter(b => b.tittel !== "");
 	return {
+		signatur,
 		bolker
 	};
 };

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { Checkbox } from "nav-frontend-skjema";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
+import { Panel } from "nav-frontend-paneler";
 
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
@@ -45,18 +46,28 @@ class OppsummeringView extends React.Component<Props, LocalState> {
 		const { oppsummering } = this.props;
 
 		const bolker = oppsummering
-			? this.props.oppsummering.bolker.map(bolk => (
-					<div className="bolk">
+			? this.props.oppsummering.bolker.map((bolk, idx) => (
+					<div className="blokk-xs bolk" key={idx}>
 						<EkspanderbartPanel tittel={bolk.tittel} apen={false}>
 							<div dangerouslySetInnerHTML={{ __html: bolk.html }} />
 						</EkspanderbartPanel>
 					</div>
 				))
 			: null;
+		const skjemaOppsummering = oppsummering ? (
+			<div className="skjema-oppsummering">
+				{bolker}
+				<div className="blokk-m">
+					<Panel>
+						<div dangerouslySetInnerHTML={{ __html: oppsummering.signatur }} />
+					</Panel>
+				</div>
+			</div>
+		) : null;
 
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
-				<div className="skjema-oppsummering">{bolker}</div>
+				{skjemaOppsummering}
 				<div className="skjema-oppsummering__bekreft">
 					<Checkbox
 						label={this.props.intl.formatMessage({

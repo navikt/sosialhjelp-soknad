@@ -3,263 +3,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<base href="/sendsoknad/"></base>
-	<style type="text/css">
-		@page {
-			size: A4;
-			margin: 3.5cm 2cm 2.5cm;
-			@top-center {
-				content: element(header, last-except)
-			}
-			;
-			@bottom-center {
-				content: element(footer)
-			}
-			;
-		}
 
-		@page: first {
-			margin: 1.5cm 2cm 2.5cm;
-		}
-
-		* {
-			box-sizing: border-box;
-		}
-
-		body {
-			font-family: Arial, sans-serif;
-			font-size: 10pt;
-			line-height: 1.4em;
-			margin: 0;
-			color: #3e3832;
-			word-break: break-word;
-		}
-
-		h1 {
-			font-family: Modus, Arial, sans-serif;
-			font-size: 24pt;
-		}
-
-		h2 {
-			font-family: Modus, Arial, sans-serif;
-			font-size: 13pt;
-			margin-top: 10mm;
-			page-break-after: avoid
-		}
-
-		.header {
-			position: running(header);
-			text-align: center;
-			margin-bottom: 1cm;
-		}
-
-		.header span {
-			font-family: Modus, Arial, sans-serif;
-			display: inline-block;
-		}
-
-		.header .header-logo {
-			position: absolute;
-			left: 0;
-			top: 8mm;
-			width: 14mm;
-		}
-
-		.header .fnr:before {
-			content: "&#8226;";
-			margin: 0 10px;
-		}
-
-		.header .headerSider {
-			position: absolute;
-			right: 0;
-		}
-
-		.header .headerSider:before {
-			content: counter(page);
-		}
-
-		.header .headerSider:after {
-			content: counter(pages);
-		}
-
-		.footer {
-			position: running(footer);
-			font-size: 8pt;
-			text-align: center;
-			border-top: .2pt solid #ccc;
-			padding-top: 0.5cm
-		}
-
-		.footer span {
-			display: inline-block;
-			margin: 0 10px;
-		}
-
-		.logo {
-			position: absolute;
-			left: 77mm;
-			top: 0;
-			width: 17mm;
-		}
-
-		.hode {
-			text-align: center;
-			margin: 15mm 0 9.5mm;
-			padding-bottom: 9.5mm;
-			border-bottom: .2pt solid #ccc;
-		}
-
-		.hode hr {
-			border: none;
-			border-top: .2pt solid #ccc;
-			width: 8mm;
-			margin: 7mm auto 5mm;
-		}
-
-		.hode .nvn,
-		.hode .fnr {
-			font-family: Modus, Arial, sans-serif;
-			font-weight: bold;
-			font-size: 13pt;
-		}
-
-		.hode .adr {
-			margin-top: 2mm;
-		}
-
-
-		.brosjyre-signatur {
-			border-top: .2pt solid #ccc;
-			margin-top: 10mm;
-			padding-top: 10mm;
-			page-break-inside: avoid;
-		}
-
-		.personalia p {
-			margin: 0;
-		}
-
-		.generisk-oppsummering h3,
-		.generisk-oppsummering h4,
-		.generisk-oppsummering h5,
-		.generisk-oppsummering h6 {
-			font-size: 10pt;
-			margin: 0 0 8pt 0;
-			padding: 0;
-		}
-
-		ul.vedlegg-liste,
-		ul.fakta-liste,
-		ul.svar-liste {
-			margin: 0;
-			padding: 0;
-			list-style: none;
-		}
-
-		ul.fakta-liste>li,
-		ul.svar-liste>li {
-			margin: 8pt 0
-		}
-
-		ul.svar-liste>li {
-			position: relative;
-			margin-left: 20px;
-			word-wrap: break-word;
-		}
-
-		ul.svar-liste>li::before,
-		ul.vedlegg-liste>li.lastet-opp::before {
-			display: inline-block;
-			content: " ";
-			font-weight: bold;
-			background: url(img/hake_sort.gif) no-repeat center bottom;
-			width: 10px;
-			height: 12px;
-			background-size: 8px;
-			position: absolute;
-			left: -20px;
-		}
-
-		ul.svar-liste ul.svar-liste>li::before {
-			content: "•";
-			padding-left: 5px;
-			background: none
-		}
-
-		ul.svar-liste>li.ikke-stylet::before {
-			background: none;
-		}
-
-		ul.svar-liste ul.svar-liste>li.ikke-stylet::before {
-			content: " ";
-		}
-
-		li.inline ul {
-			display: inline;
-		}
-
-		li.inline li {
-			display: inline;
-			margin-left: 0;
-		}
-
-		li.inline div {
-			display: inline;
-			padding-left: 0;
-		}
-
-		li.inline ul.svar-liste>li::before {
-			content: '';
-		}
-
-		ul.vedlegg-liste>li.ikke-lastet-opp::before {
-			display: inline-block;
-			content: "-";
-			position: absolute;
-			left: -20px;
-		}
-
-		ul.vedlegg-liste>li {
-			position: relative;
-			margin: 12pt 0 12pt 20px;
-		}
-
-		ul.vedlegg-liste p {
-			margin: 0 0 5pt 0
-		}
-
-		ul.vedlegg-liste .seVedlegg {
-			display: none;
-		}
-
-		ul.vedlegg-liste .aarsak {
-			font-weight: normal;
-		}
-
-		ul.vedlegg-liste .tittel {
-			font-weight: bold;
-		}
-
-		ul.vedlegg-liste .navn {
-			font-weight: normal;
-		}
-
-		.hjelpeInfotekst {
-			padding-left: 20px;
-			font-type: italic
-		}
-
-		.lastetOpp .vedleggSymbol {
-			display: inline-block;
-			background: url(img/vedlegg-svart.gif) no-repeat center;
-			width: 20px;
-			height: 20px;
-			position: relative;
-			top: 4px;
-			margin-left: 20px;
-			margin-right: 5px;
-		}
-	</style>
 
 </head>
 
@@ -272,15 +16,15 @@
 		<span class="fnr">03076321565</span>
 
 		<span class="headerSider">
-        av
-    </span>
+			av
+		</span>
 	</div>
 
 	<div class="footer">
 		<span>
-                <span>NAV DIGISOS e-søknad</span>
-		<span>|</span>
-		<span></span>
+			<span>NAV DIGISOS e-søknad</span>
+			<span>|</span>
+			<span></span>
 		</span>
 	</div>
 
@@ -298,7 +42,8 @@
 
 				<div>
 					<span>Kontonummer</span>:
-					<span>9876 98 98765</span>, <span>Nordea</span>,
+					<span>9876 98 98765</span>,
+					<span>Nordea</span>,
 					<span>Norge</span>
 
 				</div>
@@ -310,1101 +55,1102 @@
 		<div>
 
 
-			<h2>Bosted, kontaktinfo og statsborgerskap</h2>
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Bosted, kontaktinfo og statsborgerskap</h2>
 
 
-			<ul class="fakta-liste">
+				<ul class="fakta-liste">
 
 
 
-				<li>
+					<li>
 
 
 
-					<div class="label">I hvilken kommune bor du og-/eller oppholder deg i?</div>
-					<ul class="svar-liste">
-						<li>
+						<div class="label">I hvilken kommune bor du og-/eller oppholder deg i?</div>
+						<ul class="svar-liste">
+							<li>
 
-							<div class="verdi verdi--tekst">
-								horten
-							</div>
+								<div class="verdi verdi--tekst">
+									oslo
+								</div>
 
 
-						</li>
-					</ul>
+							</li>
+						</ul>
 
-				</li>
+					</li>
 
 
 
-				<li>
+					<li>
 
 
-					<h3>Ditt kontonummer</h3>
+						<h3>Ditt kontonummer</h3>
 
 
 
 
-					<div class="label">Fyll inn kontonummer her (11 siffer)</div>
-					<ul class="svar-liste">
-						<li>
+						<div class="label">Fyll inn kontonummer her (11 siffer)</div>
+						<ul class="svar-liste">
+							<li>
 
-							<div class="verdi verdi--tekst">
-								35431224877
-							</div>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
-						</li>
-					</ul>
+								</div>
 
-				</li>
 
+							</li>
+						</ul>
 
+					</li>
 
-				<li>
 
-				</li>
 
+					<li>
 
+					</li>
 
-				<li>
 
 
-					<h3>Fyll inn telefonnummeret du kan nås på</h3>
+					<li>
 
 
+						<h3>Fyll inn telefonnummeret du kan nås på</h3>
 
 
-					<div class="label">Ditt telefonnummer</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
 
-								<i>Ikke utfylt</i>
+						<div class="label">Ditt telefonnummer</div>
+						<ul class="svar-liste">
+							<li>
 
-							</div>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
-						</li>
-					</ul>
+								</div>
 
-				</li>
 
+							</li>
+						</ul>
 
+					</li>
 
-				<li>
 
 
-					<h3>Er du norsk eller nordisk statsborger?</h3>
+					<li>
 
 
+						<h3>Er du norsk eller nordisk statsborger?</h3>
 
 
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
 
-								<i>Ikke utfylt</i>
+						<ul class="svar-liste">
+							<li>
 
-							</div>
+								<div class="verdi verdi--radio">
+									Ja
+								</div>
 
 
 
-							<ul class="fakta-liste">
+								<ul class="fakta-liste">
 
 
 
-							</ul>
+								</ul>
 
-						</li>
-					</ul>
+							</li>
+						</ul>
 
 
-				</li>
+					</li>
 
 
 
 
 
-			</ul>
+				</ul>
+			</div>
 
-			<h2>Arbeid og utdanning</h2>
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Arbeid og utdanning</h2>
 
 
-			<ul class="fakta-liste">
+				<ul class="fakta-liste">
 
 
 
-				<li>
+					<li>
 
 
-					<h3>Er du i jobb?</h3>
+						<h3>Er du i jobb?</h3>
 
 
 
 
-					<ul class="svar-liste">
-						<li>
+						<ul class="svar-liste">
+							<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
+								<div class="verdi verdi--radio">
+									Ja
+								</div>
 
-								<i>Ikke utfylt</i>
 
-							</div>
 
+								<ul class="fakta-liste">
 
 
-							<ul class="fakta-liste">
 
+									<li>
 
 
+										<h4>Jobber du heltid eller deltid?</h4>
 
 
-							</ul>
 
-						</li>
-					</ul>
 
+										<ul class="svar-liste">
+											<li>
 
-				</li>
+												<div class="verdi verdi--ikkeUtfylt">
 
+													<i>Ikke utfylt</i>
 
+												</div>
 
-				<li>
 
 
-					<h3>Studerer du?</h3>
+												<ul class="fakta-liste">
 
 
 
+												</ul>
 
-					<ul class="svar-liste">
-						<li>
+											</li>
+										</ul>
 
-							<div class="verdi verdi--ikkeUtfylt">
 
-								<i>Ikke utfylt</i>
+									</li>
 
-							</div>
 
 
+								</ul>
 
-							<ul class="fakta-liste">
+							</li>
+						</ul>
 
 
+					</li>
 
 
 
-							</ul>
+					<li>
 
-						</li>
-					</ul>
 
+						<h3>Studerer du?</h3>
 
-				</li>
 
 
 
+						<ul class="svar-liste">
+							<li>
 
+								<div class="verdi verdi--ikkeUtfylt">
 
-			</ul>
+									<i>Ikke utfylt</i>
 
-			<h2>Familiesituasjon</h2>
+								</div>
 
 
-			<ul class="fakta-liste">
 
+								<ul class="fakta-liste">
 
 
-				<li>
 
 
-					<h3>Hva er din sivilstatus?</h3>
 
+								</ul>
 
+							</li>
+						</ul>
 
 
-					<ul class="svar-liste">
-						<li>
+					</li>
 
-							<div class="verdi verdi--ikkeUtfylt">
 
-								<i>Ikke utfylt</i>
 
-							</div>
 
 
+				</ul>
+			</div>
 
-							<ul class="fakta-liste">
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Familiesituasjon</h2>
 
 
+				<ul class="fakta-liste">
 
 
 
-							</ul>
+					<li>
 
-						</li>
-					</ul>
 
+						<h3>Hva er din sivilstatus?</h3>
 
-				</li>
 
 
 
-				<li>
+						<ul class="svar-liste">
+							<li>
 
+								<div class="verdi verdi--radio">
+									Samboer
+								</div>
 
-					<h3>Har du barn du har forsørgeransvar for?</h3>
 
 
+								<ul class="fakta-liste">
 
 
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
 
-								<i>Ikke utfylt</i>
 
-							</div>
+								</ul>
 
+							</li>
+						</ul>
 
 
-							<ul class="fakta-liste">
+					</li>
 
 
 
-							</ul>
+					<li>
 
-						</li>
-					</ul>
 
+						<h3>Har du barn du har forsørgeransvar for?</h3>
 
-				</li>
 
 
 
+						<ul class="svar-liste">
+							<li>
 
+								<div class="verdi verdi--ikkeUtfylt">
 
-			</ul>
+									<i>Ikke utfylt</i>
 
-			<h2>Hvorfor og hva du søker om</h2>
+								</div>
 
 
-			<ul class="fakta-liste">
 
+								<ul class="fakta-liste">
 
 
-				<li>
 
+								</ul>
 
-					<h3>Hvorfor søker du?</h3>
+							</li>
+						</ul>
 
 
+					</li>
 
 
-					<div class="label">Beskriv kort hvorfor du søker om økonomisk sosialhjelp</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
 
-								<i>Ikke utfylt</i>
 
-							</div>
+				</ul>
+			</div>
 
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Hvorfor og hva du søker om</h2>
 
-						</li>
-					</ul>
 
-				</li>
+				<ul class="fakta-liste">
 
 
 
-				<li>
+					<li>
 
 
-					<h3>Hva søker du om?</h3>
+						<h3>Hvorfor søker du?</h3>
 
 
 
 
-					<div class="label">Beskriv kort hva du søker om</div>
-					<ul class="svar-liste">
-						<li>
+						<div class="label">Beskriv kort hvorfor du søker om økonomisk sosialhjelp</div>
+						<ul class="svar-liste">
+							<li>
 
-							<div class="verdi verdi--tekst">
-								&quot;Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
-								eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-								voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem
-								sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed
-								quia non numquam eius modi tem
-							</div>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
-						</li>
-					</ul>
+								</div>
 
-				</li>
 
+							</li>
+						</ul>
 
+					</li>
 
 
 
-			</ul>
+					<li>
 
-			<h2>Bosituasjon</h2>
 
+						<h3>Hva søker du om?</h3>
 
-			<ul class="fakta-liste">
 
 
 
-				<li>
+						<div class="label">Beskriv kort hva du søker om</div>
+						<ul class="svar-liste">
+							<li>
 
+								<div class="verdi verdi--ikkeUtfylt">
 
-					<h3>Hvordan bor du?</h3>
+									<i>Ikke utfylt</i>
 
+								</div>
 
 
+							</li>
+						</ul>
 
-					<ul class="svar-liste">
-						<li>
+					</li>
 
-							<div class="verdi verdi--generell">
-								Jeg eier egen bolig
-							</div>
 
 
 
-							<ul class="fakta-liste">
 
+				</ul>
+			</div>
 
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Bosituasjon</h2>
 
 
+				<ul class="fakta-liste">
 
-							</ul>
 
-						</li>
-					</ul>
 
+					<li>
 
-				</li>
 
+						<h3>Hvordan bor du?</h3>
 
 
-				<li>
 
 
-					<h3>Hvor mange personer bor sammen med deg?</h3>
+						<ul class="svar-liste">
+							<li>
 
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
+								</div>
 
-					<div class="label">Antall</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--tekst">
-								0
-							</div>
 
+								<ul class="fakta-liste">
 
-						</li>
-					</ul>
 
-				</li>
 
 
 
+								</ul>
 
+							</li>
+						</ul>
 
-			</ul>
 
-			<h2>Inntekt og formue</h2>
+					</li>
 
 
-			<ul class="fakta-liste">
 
+					<li>
 
 
-				<li>
+						<h3>Hvor mange personer bor sammen med deg?</h3>
 
 
-					<h3>Mottar du bostøtte fra husbanken?</h3>
 
 
+						<div class="label">Antall</div>
+						<ul class="svar-liste">
+							<li>
 
+								<div class="verdi verdi--ikkeUtfylt">
 
-					<ul class="svar-liste">
-						<li>
+									<i>Ikke utfylt</i>
 
-							<div class="verdi verdi--generell">
-								Ja
-							</div>
+								</div>
 
 
+							</li>
+						</ul>
 
-							<ul class="fakta-liste">
+					</li>
 
 
 
-							</ul>
 
-						</li>
-					</ul>
 
+				</ul>
+			</div>
 
-				</li>
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Inntekt og formue</h2>
 
 
+				<ul class="fakta-liste">
 
-				<li>
 
 
-					<h3>Eier du noe med økonomisk verdi?</h3>
+					<li>
 
 
+						<h3>Mottar du bostøtte fra husbanken?</h3>
 
 
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--generell">
-								Ja
-							</div>
 
+						<ul class="svar-liste">
+							<li>
 
+								<div class="verdi verdi--ikkeUtfylt">
 
-							<ul class="fakta-liste">
+									<i>Ikke utfylt</i>
 
+								</div>
 
 
-								<li>
 
+								<ul class="fakta-liste">
 
-									<h4>Hva eier du</h4>
 
 
+								</ul>
 
+							</li>
+						</ul>
 
-									<ul class="svar-liste">
 
+					</li>
 
-										<li>
-											Bolig
 
 
+					<li>
 
 
-											<ul class="fakta-liste">
+						<h3>Eier du noe med økonomisk verdi?</h3>
 
 
 
-											</ul>
 
-										</li>
+						<ul class="svar-liste">
+							<li>
 
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
-										<li>
-											Kjøretøy
+								</div>
 
 
 
+								<ul class="fakta-liste">
 
-											<ul class="fakta-liste">
 
 
 
-											</ul>
 
-										</li>
+								</ul>
 
+							</li>
+						</ul>
 
 
-										<li>
-											Campingvogn og-/eller båt
+					</li>
 
 
 
+					<li>
 
-											<ul class="fakta-liste">
 
+						<h3>Har du bankinnskudd eller annen sparing?</h3>
 
 
-											</ul>
 
-										</li>
 
+						<ul class="svar-liste">
+							<li>
 
+								<div class="verdi verdi--ikkeUtfylt">
 
-										<li>
-											Fritidseiendom
+									<i>Ikke utfylt</i>
 
+								</div>
 
 
 
-											<ul class="fakta-liste">
+								<ul class="fakta-liste">
 
 
 
-											</ul>
 
-										</li>
 
+								</ul>
 
+							</li>
+						</ul>
 
-										<li>
-											Annet
 
+					</li>
 
 
 
-											<ul class="fakta-liste">
+					<li>
 
 
+						<h3>Har du de siste tre månedene mottatt noen form for utbetaling utover lønn og/eller ytelser fra NAV?</h3>
 
-												<li>
 
 
 
-													<div class="label">Beskriv hva du eier</div>
-													<ul class="svar-liste">
-														<li>
+						<ul class="svar-liste">
+							<li>
 
-															<div class="verdi verdi--tekst">
-																Alt i hele verden
-															</div>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
-														</li>
-													</ul>
+								</div>
 
-												</li>
 
 
+								<ul class="fakta-liste">
 
-											</ul>
 
-										</li>
 
 
-									</ul>
-								</li>
 
+								</ul>
 
+							</li>
+						</ul>
 
-							</ul>
 
-						</li>
-					</ul>
+					</li>
 
 
-				</li>
 
 
 
-				<li>
+				</ul>
+			</div>
 
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Utgifter og gjeld</h2>
 
-					<h3>Har du bankinnskudd eller annen sparing?</h3>
 
+				<ul class="fakta-liste">
 
 
 
-					<ul class="svar-liste">
-						<li>
+					<li>
 
-							<div class="verdi verdi--generell">
-								Nei
-							</div>
 
+						<h3>Har du boutgifter?</h3>
 
 
-							<ul class="fakta-liste">
 
 
+						<ul class="svar-liste">
+							<li>
 
+								<div class="verdi verdi--radio">
+									Ja
+								</div>
 
 
-							</ul>
 
-						</li>
-					</ul>
+								<ul class="fakta-liste">
 
 
-				</li>
 
+									<li>
 
 
-				<li>
+										<h4>Hvilke utgifter er det?</h4>
 
 
-					<h3>Har du de siste tre månedene mottatt noen form for utbetaling utover lønn og/eller ytelser fra NAV?</h3>
 
 
+										<ul class="svar-liste">
 
 
-					<ul class="svar-liste">
-						<li>
+											<li>
+												Husleie
 
-							<div class="verdi verdi--generell">
-								Ja
-							</div>
 
 
 
-							<ul class="fakta-liste">
+												<ul class="fakta-liste">
 
 
 
-								<li>
+												</ul>
 
+											</li>
 
-									<h4>Hvilke utbetalinger?</h4>
 
 
 
 
-									<ul class="svar-liste">
+											<li>
+												Kommunale avgifter
 
 
 
 
+												<ul class="fakta-liste">
 
 
 
+												</ul>
 
-										<li>
-											Annet
+											</li>
 
 
 
+											<li>
+												Oppvarming
 
-											<ul class="fakta-liste">
 
 
 
-												<li>
+												<ul class="fakta-liste">
 
 
 
-													<div class="label">Beskriv</div>
-													<ul class="svar-liste">
-														<li>
+												</ul>
 
-															<div class="verdi verdi--tekst">
-																Sorte penger
-															</div>
+											</li>
 
 
-														</li>
-													</ul>
 
-												</li>
+											<li>
+												Avdrag og renter boliglån
 
 
 
-											</ul>
 
-										</li>
+												<ul class="fakta-liste">
 
 
-									</ul>
-								</li>
 
+												</ul>
 
+											</li>
 
-							</ul>
 
-						</li>
-					</ul>
 
+											<li>
+												Andre utgifter
 
-				</li>
 
 
 
+												<ul class="fakta-liste">
 
 
-			</ul>
 
-			<h2>Utgifter og gjeld</h2>
+													<li>
 
 
-			<ul class="fakta-liste">
 
+														<div class="label">Beskriv</div>
+														<ul class="svar-liste">
+															<li>
 
+																<div class="verdi verdi--tekst">
+																	Godterier
+																</div>
 
-				<li>
 
+															</li>
+														</ul>
 
-					<h3>Har du boutgifter?</h3>
+													</li>
 
 
 
+												</ul>
 
-					<ul class="svar-liste">
-						<li>
+											</li>
 
-							<div class="verdi verdi--generell">
-								Nei
-							</div>
 
+										</ul>
+									</li>
 
 
-							<ul class="fakta-liste">
 
+								</ul>
 
+							</li>
+						</ul>
 
 
+					</li>
 
-							</ul>
 
-						</li>
-					</ul>
 
+					<li>
 
-				</li>
 
+						<h3>Har du utgifter til barn?</h3>
 
 
-				<li>
 
 
-					<h3>Har du utgifter til barn?</h3>
+						<ul class="svar-liste">
+							<li>
 
+								<div class="verdi verdi--radio">
+									Nei
+								</div>
 
 
 
-					<ul class="svar-liste">
-						<li>
+								<ul class="fakta-liste">
 
-							<div class="verdi verdi--generell">
-								Nei
-							</div>
 
 
 
-							<ul class="fakta-liste">
 
+								</ul>
 
+							</li>
+						</ul>
 
 
+					</li>
 
-							</ul>
 
-						</li>
-					</ul>
 
 
-				</li>
 
+				</ul>
+			</div>
 
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel"></h2>
 
 
+				<ul class="fakta-liste">
 
-			</ul>
 
-			<h2></h2>
 
+					<li>
 
-			<ul class="fakta-liste">
 
 
+						<div class="label">Evt. feriepenger tilgode</div>
+						<ul class="svar-liste">
+							<li>
 
-				<li>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
+								</div>
 
-					<div class="label">Evt. feriepenger tilgode</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
+							</li>
+						</ul>
 
-								<i>Ikke utfylt</i>
+					</li>
 
-							</div>
 
 
-						</li>
-					</ul>
+					<li>
 
-				</li>
 
 
+						<div class="label">Sluttoppgjør</div>
+						<ul class="svar-liste">
+							<li>
 
-				<li>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
+								</div>
 
-					<div class="label">Sluttoppgjør</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
+							</li>
+						</ul>
 
-								<i>Ikke utfylt</i>
+					</li>
 
-							</div>
 
 
-						</li>
-					</ul>
+					<li>
 
-				</li>
 
 
+						<div class="label">Bruttolønn (per mnd)</div>
+						<ul class="svar-liste">
+							<li>
 
-				<li>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
+								</div>
 
-					<div class="label">Bruttolønn (per mnd)</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
+							</li>
+						</ul>
 
-								<i>Ikke utfylt</i>
+					</li>
 
-							</div>
 
 
-						</li>
-					</ul>
+					<li>
 
-				</li>
 
 
+						<div class="label">Nettolønn (per mnd)</div>
+						<ul class="svar-liste">
+							<li>
 
-				<li>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
+								</div>
 
-					<div class="label">Nettolønn (per mnd)</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
+							</li>
+						</ul>
 
-								<i>Ikke utfylt</i>
+					</li>
 
-							</div>
 
 
-						</li>
-					</ul>
+					<li>
 
-				</li>
 
 
+						<div class="label">Utbetaling studielån</div>
+						<ul class="svar-liste">
+							<li>
 
-				<li>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
+								</div>
 
-					<div class="label">Utbetaling studielån</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
+							</li>
+						</ul>
 
-								<i>Ikke utfylt</i>
+					</li>
 
-							</div>
 
 
-						</li>
-					</ul>
+					<li>
 
-				</li>
 
 
+						<div class="label">Studielån totalt</div>
+						<ul class="svar-liste">
+							<li>
 
-				<li>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
+								</div>
 
-					<div class="label">Studielån totalt</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
+							</li>
+						</ul>
 
-								<i>Ikke utfylt</i>
+					</li>
 
-							</div>
 
 
-						</li>
-					</ul>
+					<li>
 
-				</li>
 
 
+						<div class="label">Bidrag du betaler</div>
+						<ul class="svar-liste">
+							<li>
 
-				<li>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
+								</div>
 
-					<div class="label">Bidrag du betaler</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
+							</li>
+						</ul>
 
-								<i>Ikke utfylt</i>
+					</li>
 
-							</div>
 
 
-						</li>
-					</ul>
+					<li>
 
-				</li>
 
 
+						<div class="label">Bidrag du får</div>
+						<ul class="svar-liste">
+							<li>
 
-				<li>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
+								</div>
 
-					<div class="label">Bidrag du får</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
+							</li>
+						</ul>
 
-								<i>Ikke utfylt</i>
+					</li>
 
-							</div>
 
 
-						</li>
-					</ul>
+					<li>
 
-				</li>
 
 
+						<div class="label">Hva er utgiften</div>
+						<ul class="svar-liste">
+							<li>
 
-				<li>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
+								</div>
 
-					<div class="label">Hva er utgiften</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
+							</li>
+						</ul>
 
-								<i>Ikke utfylt</i>
+					</li>
 
-							</div>
 
 
-						</li>
-					</ul>
+					<li>
 
-				</li>
 
 
+						<div class="label">Sum per måned</div>
+						<ul class="svar-liste">
+							<li>
 
-				<li>
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
+								</div>
 
-					<div class="label">Sum per måned</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
+							</li>
+						</ul>
 
-								<i>Ikke utfylt</i>
+					</li>
 
-							</div>
 
 
-						</li>
-					</ul>
+					<li>
 
-				</li>
 
+						<h3>Du har svart at du har strøm som boutgift, vi ber deg derfor oppgi</h3>
 
 
-				<li>
 
 
-					<h3>Du har svart at du har strøm som boutgift, vi ber deg derfor oppgi</h3>
+						<div class="label">Beløp siste regning</div>
+						<ul class="svar-liste">
+							<li>
 
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
+								</div>
 
-					<div class="label">Beløp siste regning</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
+							</li>
+						</ul>
 
-								<i>Ikke utfylt</i>
+					</li>
 
-							</div>
 
 
-						</li>
-					</ul>
+					<li>
 
-				</li>
 
+						<h3>Du har svart at du har husleie som boutgift, vi ber deg derfor oppgi
+						</h3>
 
 
-				<li>
 
 
-					<h3>Du har svart at du har husleie som boutgift, vi ber deg derfor oppgi
-					</h3>
+						<div class="label">Beløp siste regning</div>
+						<ul class="svar-liste">
+							<li>
 
+								<div class="verdi verdi--ikkeUtfylt">
 
+									<i>Ikke utfylt</i>
 
+								</div>
 
-					<div class="label">Beløp siste regning</div>
-					<ul class="svar-liste">
-						<li>
 
-							<div class="verdi verdi--ikkeUtfylt">
+							</li>
+						</ul>
 
-								<i>Ikke utfylt</i>
+					</li>
 
-							</div>
 
 
-						</li>
-					</ul>
 
-				</li>
 
+				</ul>
+			</div>
 
+			<div class="js-vedlegg js-bolk">
+				<h2>Vedlegg</h2>
 
+				<ul class="vedlegg-liste">
 
+					<li class="lastet-opp">Ingen vedlegg</li>
 
-			</ul>
+				</ul>
 
-
-			<h2>Vedlegg</h2>
-
-			<ul class="vedlegg-liste">
-
-				<li class="lastet-opp">Ingen vedlegg</li>
-
-			</ul>
-
+			</div>
 		</div>
 
-		<div class="brosjyre-signatur">
+		<div class="brosjyre-signatur js-signatur">
 
 			<ul class="fakta-liste">
 				<li>

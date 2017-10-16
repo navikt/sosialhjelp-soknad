@@ -11,6 +11,7 @@ export interface OppsummeringBolk {
 }
 
 export interface Oppsummering {
+	signatur: string;
 	bolker: OppsummeringBolk[];
 }
 
