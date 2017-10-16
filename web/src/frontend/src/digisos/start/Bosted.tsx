@@ -145,7 +145,7 @@ class Bosted extends React.Component<
 								spinner={startSoknadPending}
 								disabled={startSoknadPending}
 							>
-								{ getIntlTextOrKey(this.props.intl, "skjema.knapper.start") + " " }
+								{ getIntlTextOrKey(this.props.intl, "skjema.knapper.gaavidere") + " " }
 							</Knapp>
 						</div>
 					) : null}

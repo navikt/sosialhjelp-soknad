@@ -80,7 +80,7 @@ export function opprettSoknad(kommuneId: string, bydelId: string, intl: Injected
 
 const setInformasjonsFaktum = (fakta: any, dispatch: any, intl: InjectedIntl) => {
 	const properties = {
-		"1": getIntlTextOrKey(intl, "informasjon.start.undertittel"),
+		"1": getIntlTextOrKey(intl, "informasjon.start.tittel"),
 		"2": getIntlTextOrKey(intl, "informasjon.start.tekst"),
 		"3": getIntlTextOrKey(intl, "informasjon.nodsituasjon.undertittel"),
 		"4": getIntlTextOrKey(intl, "informasjon.nodsituasjon.tekst")

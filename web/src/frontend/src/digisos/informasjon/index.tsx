@@ -7,6 +7,7 @@ import { Undertittel } from "nav-frontend-typografi";
 import { Checkbox } from "nav-frontend-skjema";
 import Knapp from "nav-frontend-knapper";
 import { RouterProps } from "react-router";
+import Infoblokk from "../../nav-soknad/components/infoblokk";
 
 interface StateProps {
 	checked: boolean;
@@ -38,29 +39,30 @@ class Informasjon extends React.Component<
 	render() {
 		const { checked } = this.state;
 		const { intl } = this.props;
-		const title = getIntlTextOrKey(intl, "");
+		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 		return (
 			<DocumentTitle title={title}>
 				<span>
 					<AppTittel/>
-					<div className="skjema-content informasjon">
-						<p className="blokk-l">
-							<Undertittel>
-								{ getIntlTextOrKey(intl, "informasjon.start.undertittel") }
-							</Undertittel>
-							<p>
+					<div className="skjema-content">
+						<Infoblokk
+							className="blokk-s"
+							tittel={ getIntlTextOrKey(intl, "informasjon.start.tittel") }
+						>
+
+							<p className="blokk-s">
 								<FormattedHTMLMessage id="informasjon.start.tekst"/>
 							</p>
-						</p>
-						<p className="blokk-l">
+
 							<Undertittel key="informasjon.nodsituasjon.undertittel">
 								{ getIntlTextOrKey(intl, "informasjon.nodsituasjon.undertittel") }
 							</Undertittel>
-							<p>
+							<p className="blokk-s">
 								<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst"/>
 							</p>
-						</p>
+						</Infoblokk>
 						<Checkbox
+							className="blokk-s"
 							onChange={ this.handleToggleChecked }
 							label={ getIntlTextOrKey(intl, "informasjon.bekreftelse") }
 						/>
@@ -68,10 +70,9 @@ class Informasjon extends React.Component<
 					{ checked &&
 						<Knapp
 							type="hoved"
-							className="informasjon__knapp"
 							onClick={ this.handleGaVidere }
 						>
-							{ getIntlTextOrKey(intl, "skjema.knapper.gaavidere") }
+							{ getIntlTextOrKey(intl, "skjema.knapper.start") }
 						</Knapp>
 					}
 				</span>
