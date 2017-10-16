@@ -18,6 +18,12 @@ export interface FaktumStruktur {
 export interface PropertyStruktur {
 	id: string;
 	type: string;
+	configuration: {
+		configuration: [{
+			key: string;
+			value: string;
+		}]
+	};
 }
 
 export interface SynligeFaktaProps {
