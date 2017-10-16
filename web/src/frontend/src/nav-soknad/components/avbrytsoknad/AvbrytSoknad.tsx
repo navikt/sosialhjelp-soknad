@@ -1,5 +1,6 @@
 import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
+import Icon from "nav-frontend-ikoner-assets";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp } from "nav-frontend-knapper";
 import { fortsettSoknad, slettSoknad } from "../../../digisos/redux/soknad/soknadActions";
@@ -10,6 +11,7 @@ import { DispatchProps } from "../../redux/reduxTypes";
 interface OwnProps {
 	avbrytDialogSynlig: boolean;
 	brukerBehandlingId: string;
+	miljovariabler: string;
 }
 
 type Props = OwnProps & InjectedIntlProps & DispatchProps;
@@ -18,7 +20,9 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 
 	onAvbryt() {
 		this.props.dispatch(slettSoknad(this.props.brukerBehandlingId)).then(() => {
-			window.location.href = "https://tjenester.nav.no/dittnav";
+			const dittnavKey = "dittnav.link.url";
+			const dittnavUrl = this.props.miljovariabler[dittnavKey];
+			window.location.href = dittnavUrl;
 		});
 	}
 
@@ -35,6 +39,9 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 				onRequestClose={() => null}
 			>
 				<div className="avbrytmodal">
+					<div className="avbrytmodal__infoikon_wrapper">
+						<Icon kind="info-sirkel-orange" />
+					</div>
 					<div className="avbrytmodal__infoikon_wrapper">
 						<div className="avbrytmodal__infoikon"/>
 					</div>
@@ -68,6 +75,7 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 export default connect((state: any, props: any) => {
 	return {
 		avbrytDialogSynlig: state.soknad.data.avbrytDialogSynlig,
-		brukerBehandlingId: state.soknad.data.brukerBehandlingId
+		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
+		miljovariabler: state.miljovariabler.data
 	};
 })(injectIntl(AvbrytSoknad));

@@ -9,6 +9,7 @@ import OppsummeringReducer, {
 	OppsummeringState
 } from "./oppsummering/oppsummeringReducer";
 import LedeteksterReducer from "./informasjon/informasjonReducer";
+import MiljovariablerReducer from "./informasjon/miljovariablerReducer";
 
 export interface State extends SoknadAppState {
 	oppsummering: OppsummeringState;
@@ -19,7 +20,8 @@ const reducers = combineReducers({
 	fakta: FaktumReducer,
 	oppsummering: OppsummeringReducer,
 	validering: ValideringReducer,
-	ledetekster: LedeteksterReducer
+	ledetekster: LedeteksterReducer,
+	miljovariabler: MiljovariablerReducer
 });
 
 export default reducers;

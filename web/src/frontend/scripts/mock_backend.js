@@ -30,8 +30,15 @@ router.get("/informasjon/tekster", function(req, res) {
 	res.json(utils.lesSpraakfil());
 });
 
+// Miljøvariabler
+const miljovariabler = utils.lesMockDataFil("miljovariabler.json");
+router.get("/informasjon/miljovariabler", function(req, res) {
+	res.json(miljovariabler);
+});
+
 const brukerBehandlingId = "1000B7FGM";
 const soknad = utils.lesMockDataFil("soknad.json");
+
 var fakta = soknad.fakta;
 
 // Søknadsressurser
@@ -42,7 +49,7 @@ router.post("/soknader", function(req, res) {
 });
 
 router.get("/soknader/:brukerBehandlingId", function(req, res) {
-	console.log("get soknader");
+	console.log("Mock backend: get soknader");
 	if (req.headers["accept"] === "application/vnd.oppsummering+html") {
 		res.send(utils.lesMockHtmlFil("oppsummering.html"));
 	} else {
@@ -60,13 +67,14 @@ router.get("/soknader/:brukerBehandlingId/oppsummering", function(req, res) {
 });
 
 router.get("/soknader/:brukerBehandlingId/fakta", function(req, res) {
-	console.log("get fakta");
+	console.log("Mock backend: get fakta");
 	res.json(fakta);
 });
 
 router.delete("/soknader/:brukerBehandlingId", function(req, res) {
-	console.log("slett søknad");
-	return;
+	console.log("Mock backend: slett søknad");
+	res.status(204); // 204 = "No content"
+	res.json();
 });
 
 router.get("/fakta/:faktumId", function(req, res) {
