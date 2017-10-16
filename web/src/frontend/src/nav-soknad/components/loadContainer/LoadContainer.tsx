@@ -1,6 +1,7 @@
 import * as React from "react";
-import { FormattedMessage } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import Feilside from "../feilmeldinger/Feilside";
 
 import { REST_STATUS } from "../../types";
 
@@ -8,9 +9,10 @@ interface Props {
 	restStatus: string;
 }
 
-const LoadContainer: React.StatelessComponent<Props> = ({
+const LoadContainer: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	restStatus,
-	children
+	children,
+	intl
 }) => {
 	if (
 		restStatus === REST_STATUS.INITIALISERT ||
@@ -23,12 +25,14 @@ const LoadContainer: React.StatelessComponent<Props> = ({
 		);
 	} else if (restStatus === REST_STATUS.FEILET) {
 		return (
-			<p>
-				<FormattedMessage id="applikasjon.ukjentfeilunderhentdata" />
-			</p>
+			<Feilside
+				tekst={intl.formatMessage({
+					id: "applikasjon.ukjentfeilunderhentdata"
+				})}
+			/>
 		);
 	}
 	return <div>{children}</div>;
 };
 
-export default LoadContainer;
+export default injectIntl(LoadContainer);

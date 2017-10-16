@@ -113,6 +113,9 @@ class UtgifterGjeld extends React.Component<
 								)}
 							/>
 							<CheckboxFaktum
+								faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "sfo")}
+							/>
+							<CheckboxFaktum
 								faktumKey={createCheckboxFaktumKey(
 									barneUtgifter.faktum,
 									"tannbehandling"
