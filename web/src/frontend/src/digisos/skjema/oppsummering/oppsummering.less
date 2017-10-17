@@ -1,128 +1,76 @@
+@vpad: 2rem;
 .skjema-oppsummering {
-	@vpad: 2rem;
-	.header {
-		display: none !important;
-		position: relative;
-		.fnr:before {
-			content: "\2022" !important;
-		}
-		margin: 0 @vpad !important;
+	h3,
+	h4,
+	h5 {
+		font-size: 1em;
 	}
-	.hode,
-	.header,
-	.footer,
-	.logo {
+
+	ol,
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 @vpad 0;
+	}
+
+	.svar-liste .svar-liste {
+		> li {
+			margin-bottom: 0.5rem;
+		}
+	}
+
+	.fakta-liste {
+		> li {
+			margin-bottom: @vpad;
+		}
+	}
+
+	.label {
+		margin-bottom: 0.5rem;
+	}
+
+	/** Skjule lister som ikke har noen verdier */
+	.tomListe {
 		display: none;
 	}
 
-		h2,
-		h3,
-		h4,
-		h5 {
-			margin: 0 0 0.5em 0;
+	.verdi {
+		display: block;
+		position: relative;
+		&--tekst,
+		&--generell {
+			background-color: @grayBackground;
+			padding: 0.25em 1em 0.3em 1em;
+			border-radius: 2px;
 		}
-		h2 {
-			font-size: 1.3em;
-		}
-		h3,
-		h4,
-		h5 {
-			font-size: 1em;
-		}
-		> h2 {
-			background-color: white;
-			padding: 1.5rem @skjemaMarg 1.5rem @skjemaMarg;
-			margin: 0;
-			font-size: 1.3em;
-			&:first-child {
-				margin-top: 2rem;
+		&--radio,
+		&--check {
+			position: relative;
+			padding-left: 1.5rem;
+			&:before {
+				content: "";
+				position: absolute;
+				left: -3px;
+				top: 0;
+				width: 24px;
+				height: 24px;
+				background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyMiAyMiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjIgMjI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cG9seWdvbiBwb2ludHM9IjkuMywxNS40IDYsMTEgOC40LDExIDEwLDEzIDEzLjcsNi42IDE2LDYuNiAxMC45LDE1LjQgCSIvPgo8L2c+Cjwvc3ZnPgo=");
+				background-size: 24px 24px;
 			}
-		}
-		h2 + * {
-			margin-bottom: 1rem;
-			padding: 1rem @skjemaMarg;
-			background-color: white;
-		}
-
-		ol,
-		ul {
-			list-style: none;
-			padding: 0;
-			> li {
-				margin-bottom: 2rem;
-			}
-		}
-
-		> ul,
-		> ol {
-			margin: 0 0 1rem 0;
-			list-style: none;
-			padding: 0 @skjemaMarg 0 @skjemaMarg;
-			overflow: hidden;
-		}
-		.svar-liste {
-			margin: 0.5rem 0 0 0;
-			padding: 0;
-		}
-
-		h4 + .svar-liste {
-			> li {
-				list-style: inside;
-				list-style-type: none;
-				margin-bottom: 0.5rem;
-			}
-		}
-		li.ikke-stylet {
-			list-style: none !important;
-		}
-		.verdi {
-			&--tekst,
-			&--generell {
-				background-color: @grayBackground;
-				display: inline-block;
-				padding: 0.25em 1em 0.3em 1em;
-				border-radius: 2px;
-			}
-			&--radio,
-			&--check {
-				position: relative;
-				padding-left: 1.5rem;
-				&:before {
-					content: "";
-					position: absolute;
-					left: -3px;
-					top: 0;
-					width: 24px;
-					height: 24px;
-					background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyMiAyMiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjIgMjI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cG9seWdvbiBwb2ludHM9IjkuMywxNS40IDYsMTEgOC40LDExIDEwLDEzIDEzLjcsNi42IDE2LDYuNiAxMC45LDE1LjQgCSIvPgo8L2c+Cjwvc3ZnPgo=");
-					background-size: 24px 24px;
-				}
-			}
-		}
-		.verdi + .svar-liste,
-		.verdi + .fakta-liste {
-			margin-top: 2rem;
 		}
 	}
-	.brosjyre-signatur {
-		background-color: white;
-		margin: 1rem 0 2rem 0;
-		padding: 1rem @skjemaMarg;
-		ol,
-		ul {
-			margin: 0;
-			padding: 0;
+
+	/** Spacing gitt kombinasjoner */
+	.verdi--check,
+	.verdi--radio {
+		+ .fakta-liste {
+			margin-top: @vpad;
 		}
-}
-.svar-liste .svar-liste {
-	.verdi--generell {
-		background-color: initial;
-		padding: 0;
-		display: inline;
-		border-radius: 0;
 	}
 }
 
-.svar-liste > li > .fakta-liste {
-	margin-top: 1rem;
+.brosjyre-signatur {
+	background-color: white;
+	margin: 1rem 0 @vpad 0;
+	padding: 1rem @skjemaMarg;
 }
