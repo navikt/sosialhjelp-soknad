@@ -16,11 +16,10 @@ import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
-		const eiendeler = radioCheckKeys("inntekt.eierandeler");
-		const hvilkeEiendeler = radioCheckKeys("inntekt.eierandeler.type");
-		const hvilkeEiendelerAnnet = "inntekt.eierandeler.type.annet";
+		const hvilkeEiendeler = radioCheckKeys("inntekt.eierandeler");
+		const hvilkeEiendelerAnnet = "inntekt.eierandeler.annet";
 		return (
-			<SporsmalFaktum faktumKey={eiendeler.faktum}>
+			<SporsmalFaktum faktumKey={hvilkeEiendeler.faktum}>
 				<CheckboxFaktum
 					faktumKey={createCheckboxFaktumKey(
 						hvilkeEiendeler.faktum,

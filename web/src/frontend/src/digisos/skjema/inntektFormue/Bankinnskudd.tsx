@@ -16,11 +16,10 @@ import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
-		const innskudd = radioCheckKeys("inntekt.bankinnskudd");
-		const hvilkeInnskudd = radioCheckKeys("inntekt.bankinnskudd.type");
-		const hvilkeInnskuddAnnet = "inntekt.bankinnskudd.type.annet";
+		const hvilkeInnskudd = radioCheckKeys("inntekt.bankinnskudd");
+		const hvilkeInnskuddAnnet = "inntekt.bankinnskudd.annet";
 		return (
-			<SporsmalFaktum faktumKey={innskudd.faktum}>
+			<SporsmalFaktum faktumKey={hvilkeInnskudd.faktum}>
 				{/*TODO checkboxbgroup-faktum*/}
 				<CheckboxFaktum
 					faktumKey={createCheckboxFaktumKey(
