@@ -13,7 +13,7 @@ import {
 	opprettFaktum,
 	slettFaktum
 } from "../../../nav-soknad/redux/faktaActions";
-import LeggTilLenke from "../../../nav-soknad/components/leggTilLenke/leggtillenke";
+import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import Barn from "./Barn";
 
 interface OwnProps {
@@ -70,8 +70,8 @@ class Barneinfo extends React.Component<Props, State> {
 	}
 
 	/** Denne funksjonen kalles kun når det er mer en ett barn i listen. */
-	fjernBarn(faktumId: number, fjernetBarnListIndex: number) {
-		this.props.dispatch(slettFaktum(faktumId));
+	fjernBarn(faktum: Faktum, fjernetBarnListIndex: number) {
+		this.props.dispatch(slettFaktum(faktum.faktumId));
 		/** Sett fokus på barnet i listen som er foran det som er fjernet */
 		const barn = this.refs[createBarnRef(fjernetBarnListIndex - 1)] as Barn;
 		if (barn) {
@@ -93,7 +93,7 @@ class Barneinfo extends React.Component<Props, State> {
 								fakta={fakta}
 								faktum={barnFaktum}
 								barnNummer={index + 1}
-								onFjernBarn={faktumId => this.fjernBarn(faktumId, index)}
+								onFjernBarn={faktumId => this.fjernBarn(barnFaktum, index)}
 								fjernBarnTekst={intl.formatMessage({
 									id: "familie.barn.true.barn.fjern"
 								})}
@@ -101,14 +101,15 @@ class Barneinfo extends React.Component<Props, State> {
 									id: "familie.barn.true.barn.fjernalternativtekst"
 								})}
 								dispatch={this.props.dispatch}
-								visFjernlenke={visFjernlenke}
+								visFjernBarn={visFjernlenke}
 							/>
 						</li>
 					))}
 				</ol>
-				<LeggTilLenke
-					leggTil={this.leggTilBarn}
-					lenketekst={intl.formatMessage({
+				<Lenkeknapp
+					onClick={this.leggTilBarn}
+					style="add"
+					label={intl.formatMessage({
 						id: "familie.barn.true.barn.leggtil"
 					})}
 				/>

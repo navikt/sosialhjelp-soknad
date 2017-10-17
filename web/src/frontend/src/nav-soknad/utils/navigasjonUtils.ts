@@ -45,7 +45,3 @@ export function gaTilbake(
 		gaTilSteg(Math.max(1, aktivtSteg - 1), brukerBehandlingId, history);
 	}
 }
-
-export function avbryt(skjemaConfig: SkjemaConfig) {
-	alert("TODO");
-}

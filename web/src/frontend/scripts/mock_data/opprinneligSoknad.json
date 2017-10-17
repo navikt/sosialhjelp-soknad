@@ -706,6 +706,16 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
+			"faktumId": 446,
+			"soknadId": 2,
+			"parrentFaktum": 144,
+			"key": "utgifter.barn.true.utgifter.sfo",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
+		},
+		{
 			"faktumId": 147,
 			"soknadId": 2,
 			"parrentFaktum": 144,

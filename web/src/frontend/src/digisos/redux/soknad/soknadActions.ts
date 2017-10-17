@@ -1,4 +1,4 @@
-import { fetchPost, fetchToJson } from "../../../nav-soknad/utils/rest-utils";
+import { fetchDelete, fetchPost, fetchToJson } from "../../../nav-soknad/utils/rest-utils";
 import {
 	resetFakta, lagreFaktum
 } from "../../../nav-soknad/redux/faktaActions";
@@ -13,6 +13,8 @@ import { Soknad, Faktum } from "../../../nav-soknad/types";
 
 import { State } from "../reducers";
 import {
+	AvbrytSoknadAction,
+	FortsettSoknadAction,
 	HentetSoknadAction,
 	HentSoknadAction,
 	OpprettetSoknadAction,
@@ -31,7 +33,9 @@ export type SoknadActionTypes =
 	| HentSoknadAction
 	| HentetSoknadAction
 	| SetServerFeilAction
-	| ResetSoknadAction;
+	| ResetSoknadAction
+	| AvbrytSoknadAction
+	| FortsettSoknadAction;
 
 export function opprettSoknad(kommuneId: string, bydelId: string, intl: InjectedIntl) {
 	return (
@@ -117,5 +121,29 @@ export function resetSoknad() {
 	return (dispatch: SoknadDispatch<any>) => {
 		dispatch({ type: SoknadActionTypeKeys.RESET_SOKNAD });
 		dispatch(resetFakta());
+	};
+}
+
+export function avbrytSoknad() {
+	return (dispatch: SoknadDispatch<any>) => {
+		dispatch({ type: SoknadActionTypeKeys.AVBRYT_SOKNAD });
+	};
+}
+
+export function fortsettSoknad() {
+	return (dispatch: SoknadDispatch<any>) => {
+		dispatch({ type: SoknadActionTypeKeys.FORTSETT_SOKNAD });
+	};
+}
+
+export function slettSoknad(brukerBehandlingsId: string) {
+	return (dispatch: SoknadDispatch<any>) => {
+		return fetchDelete("soknader/" + brukerBehandlingsId)
+		.catch(reason => {
+			dispatch({
+				type: SoknadActionTypeKeys.SET_SERVER_FEIL,
+				feilmelding: reason
+			});
+		});
 	};
 }
