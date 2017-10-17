@@ -136,10 +136,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		);
 	}
 
-	avbryt() {
-		this.props.dispatch(avbrytSoknad());
-	}
-
 	render() {
 		const { skjemaConfig, intl, children, progresjon } = this.props;
 		const stegConfig = skjemaConfig.steg.find(
@@ -201,7 +197,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 								this.handleGaVidere(stegConfig.stegnummer, brukerBehandlingId)}
 							gaTilbake={() =>
 								this.handleGaTilbake(stegConfig.stegnummer, brukerBehandlingId)}
-							avbryt={() => this.avbryt()}
+							avbryt={() => this.props.dispatch(avbrytSoknad())}
 						/>
 					</form>
 				</div>

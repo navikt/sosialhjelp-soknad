@@ -20,8 +20,7 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 
 	onAvbryt() {
 		this.props.dispatch(slettSoknad(this.props.brukerBehandlingId)).then(() => {
-			const dittnavKey = "dittnav.link.url";
-			const dittnavUrl = this.props.miljovariabler[dittnavKey];
+			const dittnavUrl = this.props.miljovariabler["dittnav.link.url"];
 			window.location.href = dittnavUrl;
 		});
 	}
@@ -34,7 +33,7 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 		return (
 			<NavFrontendModal
 				isOpen={this.props.avbrytDialogSynlig || false}
-				contentLabel={"Avbryt"}
+				contentLabel={this.props.intl.formatMessage({id: "avbryt.avbryt"})}
 				closeButton={false}
 				onRequestClose={() => null}
 			>

@@ -1,15 +1,14 @@
 import * as React from "react";
 import { Route, Switch } from "react-router";
-
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import Feilside from "../nav-soknad/components/feilmeldinger/Feilside";
 import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
-
 import Start from "./start";
 import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
 import AvbrytSoknad from "../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 
-class App extends React.Component<{}, {}> {
+class App extends React.Component<InjectedIntlProps, {}> {
 	render() {
 		return (
 			<div className="app-digisos container">
@@ -24,8 +23,7 @@ class App extends React.Component<{}, {}> {
 					<Route
 						component={() => (
 							<Feilside
-
-								tekst="Vi fant ikke siden du prøvde å åpne"
+								tekst={this.props.intl.formatMessage({id: "feilmelding.404"})}
 								visTilbakeKnapp={true}
 							/>
 						)}
@@ -42,4 +40,4 @@ class App extends React.Component<{}, {}> {
 	}
 }
 
-export default App;
+export default injectIntl(App);

@@ -121,9 +121,7 @@ export function fortsettSoknad() {
 
 export function slettSoknad(brukerBehandlingsId: string) {
 	return (dispatch: SoknadDispatch<any>) => {
-		return fetchDelete("soknader/" + brukerBehandlingsId).then(() => {
-			//
-		})
+		return fetchDelete("soknader/" + brukerBehandlingsId)
 		.catch(reason => {
 			dispatch({
 				type: SoknadActionTypeKeys.SET_SERVER_FEIL,
