@@ -133,13 +133,14 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 			};
 		}
 		case FaktumActionTypeKeys.SLETTET_FAKTUM: {
-			return {...state, restStatus: REST_STATUS.OK};
+			return { ...state, restStatus: REST_STATUS.OK };
 		}
 		case FaktumActionTypeKeys.SLETT_FAKTUM: {
 			return {
 				...state,
 				restStatus: REST_STATUS.PENDING,
-				data: state.data.filter((faktum) => faktum.faktumId !== action.faktumId)};
+				data: state.data.filter(faktum => faktum.faktumId !== action.faktumId)
+			};
 		}
 		case FaktaActionTypeKeys.RESET_FAKTA:
 			return {
