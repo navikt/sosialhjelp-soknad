@@ -749,16 +749,6 @@
 			"faktumId": 150,
 			"soknadId": 2,
 			"parrentFaktum": null,
-			"key": "informasjon.bekreftelse",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 151,
-			"soknadId": 2,
-			"parrentFaktum": null,
 			"key": "informasjon.tekster",
 			"value": null,
 			"faktumEgenskaper": [],
