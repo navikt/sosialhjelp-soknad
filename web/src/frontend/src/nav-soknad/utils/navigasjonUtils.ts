@@ -30,7 +30,7 @@ export function gaTilStart(
 	history: RouterHistoryType,
 	skjemaConfig: SkjemaConfig
 ) {
-	history.push(`/informasjon`);
+	history.push(`/bosted`);
 }
 
 export function gaTilbake(
@@ -44,8 +44,4 @@ export function gaTilbake(
 	} else {
 		gaTilSteg(Math.max(1, aktivtSteg - 1), brukerBehandlingId, history);
 	}
-}
-
-export function avbryt(skjemaConfig: SkjemaConfig) {
-	alert("TODO");
 }

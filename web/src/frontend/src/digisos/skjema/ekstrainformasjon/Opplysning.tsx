@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { FaktumStruktur } from "../../redux/synligefakta/synligeFaktaTypes";
+import { FaktumStruktur, PropertyStruktur } from "../../redux/synligefakta/synligeFaktaTypes";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { Column, Container, Row } from "nav-frontend-grid";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
@@ -11,12 +11,24 @@ import { finnFakta, finnFaktum } from "../../../nav-soknad/utils/faktumUtils";
 import { opprettFaktum, slettFaktum } from "../../../nav-soknad/redux/faktaActions";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
+import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 
 interface Props {
 	faktumstruktur: FaktumStruktur;
 }
 
 type AllProps = Props & DispatchProps & FaktumComponentProps & InjectedIntlProps;
+
+function getValideringsType(property: PropertyStruktur) {
+	let type = "belop";
+	if (property.configuration && property.configuration.configuration) {
+		const configuration = property.configuration.configuration.find(conf => conf.key === "validering");
+		if (configuration) {
+			type = configuration.value;
+		}
+	}
+	return type;
+}
 
 class Opplysning extends React.Component<AllProps, {}> {
 
@@ -57,16 +69,36 @@ class Opplysning extends React.Component<AllProps, {}> {
 
 		const rader = belopFakta.map(faktum => {
 			const inputs = faktumstruktur.properties.map(property => {
+
+				const type = getValideringsType(property);
+				let inputFelt = null;
+
+				switch (type) {
+					case "text":
+						inputFelt = <InputFaktum faktumId={faktum.faktumId}
+												faktumKey={faktumstruktur.id}
+												property={property.id}
+												bredde="m"/>;
+						break;
+					case "belop":
+					default:
+						inputFelt =
+							<BelopFaktum faktumId={faktum.faktumId}
+										faktumKey={faktumstruktur.id}
+										property={property.id}
+										bredde="s"/>;
+				}
+
 				return (
 					<Column md="6" xs="12" key={property.id}>
-						<BelopFaktum faktumId={faktum.faktumId} faktumKey={faktumstruktur.id} property={property.id} bredde="s"/>
+						{inputFelt}
 					</Column>
 				);
 			});
 
 			const slettKnapp = (
 				<Lenkeknapp onClick={() => this.fjernBelop(faktum.faktumId)}
-							label={slettTekst} />
+							label={slettTekst}/>
 			);
 
 			return (
