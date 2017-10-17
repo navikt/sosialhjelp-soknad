@@ -1,18 +1,15 @@
-import { fetchPost, fetchToJson } from "../../../nav-soknad/utils/rest-utils";
-import {
-	resetFakta,
-	lagreFaktum
-} from "../../../nav-soknad/redux/faktaActions";
-import { updateFaktaMedLagretVerdi } from "../../../nav-soknad/redux/faktaUtils";
-import { finnFaktum } from "../../../nav-soknad/utils";
+import { fetchPost, fetchToJson } from "../utils/rest-utils";
+import { resetFakta, lagreFaktum } from "./faktaActions";
+import { updateFaktaMedLagretVerdi } from "./faktaUtils";
+import { finnFaktum } from "../utils";
 import {
 	FaktaActionTypeKeys,
 	FaktaActionTypes,
 	SoknadDispatch
-} from "../../../nav-soknad/redux/reduxTypes";
-import { Soknad, Faktum } from "../../../nav-soknad/types";
+} from "./reduxTypes";
+import { Soknad, Faktum } from "../types";
 
-import { State } from "../reducers";
+import { SoknadAppState } from "./reduxTypes";
 import {
 	HentetSoknadAction,
 	HentSoknadAction,
@@ -22,7 +19,7 @@ import {
 	SetServerFeilAction,
 	SoknadActionTypeKeys
 } from "./soknadTypes";
-import { oppdaterFaktumMedVerdier } from "../../../nav-soknad/utils/faktumUtils";
+import { oppdaterFaktumMedVerdier } from "../utils/faktumUtils";
 
 export type SoknadActionTypes =
 	| OpprettSoknadAction
@@ -35,7 +32,7 @@ export type SoknadActionTypes =
 export function opprettSoknad(kommuneId: string, bydelId: string) {
 	return (
 		dispatch: SoknadDispatch<SoknadActionTypes | FaktaActionTypes>,
-		getState: () => State
+		getState: () => SoknadAppState
 	) => {
 		dispatch({ type: SoknadActionTypeKeys.OPPRETT_SOKNAD });
 		const payload = JSON.stringify({ soknadType: "NAV DIGISOS" });

@@ -11,7 +11,10 @@ import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { REST_STATUS } from "../../nav-soknad/types";
 
 import { State } from "../redux/reducers";
-import { opprettSoknad, resetSoknad } from "../redux/soknad/soknadActions";
+import {
+	opprettSoknad,
+	resetSoknad
+} from "../../nav-soknad/redux/soknadActions";
 import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 
@@ -87,7 +90,10 @@ class Bosted extends React.Component<
 						>
 							{!this.state.kommuneId && (
 								<option value="" disabled={true}>
-									{ getIntlTextOrKey(this.props.intl, "personalia.kommune.default") }
+									{getIntlTextOrKey(
+										this.props.intl,
+										"personalia.kommune.default"
+									)}
 								</option>
 							)}
 							{Kommuner.map(kommune => (
@@ -116,7 +122,10 @@ class Bosted extends React.Component<
 							>
 								{!this.state.bydelId && (
 									<option value="" disabled={true}>
-										{ getIntlTextOrKey(this.props.intl, "personalia.bydel.default") }
+										{getIntlTextOrKey(
+											this.props.intl,
+											"personalia.bydel.default"
+										)}
 									</option>
 								)}
 								{valgtKommune.bydeler.map(bydel => (
@@ -130,7 +139,10 @@ class Bosted extends React.Component<
 					{ferdig ? (
 						<div>
 							<p className="bosted__tekst--extraPadding">
-								{ getIntlTextOrKey(this.props.intl, "personalia.bosted.oppsummering")}{" "}
+								{getIntlTextOrKey(
+									this.props.intl,
+									"personalia.bosted.oppsummering"
+								)}{" "}
 								<strong>
 									{getBosted(
 										valgtKommune.id,
@@ -144,7 +156,8 @@ class Bosted extends React.Component<
 								spinner={startSoknadPending}
 								disabled={startSoknadPending}
 							>
-								{ getIntlTextOrKey(this.props.intl, "skjema.knapper.start") + " " }
+								{getIntlTextOrKey(this.props.intl, "skjema.knapper.start") +
+									" "}
 							</Knapp>
 						</div>
 					) : null}

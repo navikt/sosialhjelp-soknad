@@ -1,5 +1,5 @@
-import { fetchToJson } from "../../../nav-soknad/utils/rest-utils";
-import { SoknadDispatch } from "../../../nav-soknad/redux/reduxTypes";
+import { fetchToJson } from "../utils/rest-utils";
+import { SoknadDispatch } from "./reduxTypes";
 
 import { ActionTypeKeys, InformasjonActionTypes } from "./informasjonTypes";
 

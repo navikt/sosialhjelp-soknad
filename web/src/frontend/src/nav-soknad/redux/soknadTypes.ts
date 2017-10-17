@@ -1,4 +1,4 @@
-import { Soknad } from "../../../nav-soknad/types/navSoknadTypes";
+import { Soknad } from "../types/navSoknadTypes";
 
 export enum SoknadActionTypeKeys {
 	OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
