@@ -1,18 +1,12 @@
 import { combineReducers } from "redux";
 
+export { SoknadAppState as State } from "../../nav-soknad/redux/reduxTypes";
 import FaktumReducer from "../../nav-soknad/redux/faktaReducer";
-import { SoknadAppState } from "../../nav-soknad/redux/reduxTypes";
 import ValideringReducer from "../../nav-soknad/redux/valideringReducer";
+import OppsummeringReducer from "../../nav-soknad/redux/oppsummeringReducer";
 
 import SoknadReducer from "./soknad/soknadReducer";
-import OppsummeringReducer, {
-	OppsummeringState
-} from "./oppsummering/oppsummeringReducer";
 import LedeteksterReducer from "./informasjon/informasjonReducer";
-
-export interface State extends SoknadAppState {
-	oppsummering: OppsummeringState;
-}
 
 const reducers = combineReducers({
 	soknad: SoknadReducer,

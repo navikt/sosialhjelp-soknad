@@ -1,5 +1,5 @@
 import { Action, Dispatch } from "redux";
-import { fetchHtml } from "../../../nav-soknad/utils/rest-utils";
+import { fetchHtml } from "../utils/rest-utils";
 import {
 	OppsummeringActionTypeKeys,
 	SetOppsummering,
@@ -7,7 +7,7 @@ import {
 	SetServerFeil,
 	BekreftOppsummering
 } from "./oppsummeringTypes";
-import { State } from "../reducers";
+import { SoknadAppState } from "./reduxTypes";
 
 export type OppsummeringActionTypes =
 	| SetOppsummering
@@ -23,7 +23,7 @@ export function bekreftOppsummering(bekreftet: boolean) {
 }
 
 export function hentOppsummering() {
-	return (dispatch: Dispatch<Action>, getState: () => State) => {
+	return (dispatch: Dispatch<Action>, getState: () => SoknadAppState) => {
 		dispatch({ type: OppsummeringActionTypeKeys.PENDING });
 		fetchHtml("soknader/" + getState().soknad.data.brukerBehandlingId)
 			.then(response => {

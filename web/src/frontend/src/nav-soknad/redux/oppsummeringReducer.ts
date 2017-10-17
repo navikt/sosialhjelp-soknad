@@ -1,5 +1,5 @@
-import { Reducer } from "../../../nav-soknad/redux/reduxTypes";
-import { REST_STATUS } from "../../../nav-soknad/types";
+import { Reducer } from "./reduxTypes";
+import { REST_STATUS } from "../types";
 import {
 	OppsummeringActionTypeKeys,
 	Oppsummering,

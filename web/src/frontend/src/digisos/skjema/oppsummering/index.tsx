@@ -12,8 +12,8 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import {
 	hentOppsummering,
 	bekreftOppsummering
-} from "../../redux/oppsummering/oppsummeringActions";
-import { Oppsummering } from "../../redux/oppsummering/oppsummeringTypes";
+} from "../../../nav-soknad/redux/oppsummeringActions";
+import { Oppsummering } from "../../../nav-soknad/redux/oppsummeringTypes";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
