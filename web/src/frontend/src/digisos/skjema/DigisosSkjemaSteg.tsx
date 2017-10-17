@@ -11,7 +11,7 @@ export enum DigisosSteg {
 	bosituasjonbolk = "bosituasjonbolk",
 	inntektbolk = "inntektbolk",
 	utgifterbolk = "utgifterbolk",
-	ekstrainfo = "ekstrainfo",
+	opplysningerbolk = "opplysningerbolk",
 	oppsummering = "oppsummering"
 }
 
@@ -55,7 +55,7 @@ export const digisosSkjemaConfig: SkjemaConfig = {
 			type: SkjemaStegType.skjema
 		},
 		{
-			key: DigisosSteg.ekstrainfo,
+			key: DigisosSteg.opplysningerbolk,
 			stegnummer: 8,
 			type: SkjemaStegType.ekstrainfo
 		},
