@@ -989,7 +989,8 @@ const soknad: Soknad = {
 	sprak: "nb_NO",
 	ikkeInnsendteVedlegg: [],
 	opplastedeVedlegg: [],
-	innsendteVedlegg: []
+	innsendteVedlegg: [],
+	avbrytDialogSynlig: false
 };
 
 describe("soknad types", () => {

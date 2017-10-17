@@ -10,6 +10,7 @@ import {
 } from "./nav-soknad/redux/informasjonTypes";
 import { DispatchProps } from "./nav-soknad/redux/reduxTypes";
 import Feilside from "./nav-soknad/components/feilmeldinger/Feilside";
+import { hentMiljovariabler } from "./digisos/redux/informasjon/miljovariablerActions";
 
 addLocaleData(nb);
 
@@ -23,6 +24,7 @@ class IntlProvider extends React.Component<
 	componentDidMount() {
 		const visNokler = window.location.search.match(/vistekster=true/) !== null;
 		this.props.dispatch(hentLedetekster(visNokler));
+		this.props.dispatch(hentMiljovariabler());
 	}
 
 	render() {

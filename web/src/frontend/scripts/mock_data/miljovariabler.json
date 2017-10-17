@@ -1,0 +1,16 @@
+{
+	"soknad.dagpengerbrosjyre.url": "https://www.nav.no/Arbeid/Arbeidss%C3%B8ker/Inntektssikring/Dagpenger/_attachment/250272?_ts=13cd31b3080&download=true",
+	"soknadtilleggsstonader.url": "http://127.0.0.1:8186/soknadtilleggsstonader/app",
+	"dineutbetalinger.link.url": "http://www.nav.no/dineutbetalinger",
+	"dialogarena.navnolink.url": "http://127.0.0.1:/site/2",
+	"soknad.brukerprofil.url": "https://tjenester.nav.no/brukerprofil/brukerprofil",
+	"soknad.ettersending.antalldager": "42",
+	"soknad.alderspensjon.url": "https://tjenester.nav.no/pselv/tilleggsfunksjonalitet/innlogging.jsf",
+	"soknad.reelarbeidsoker.url": "https://tjenester.nav.no/sbl/arbeid/registering",
+	"soknad.skjemaveileder.url": "http://nav.no/skjema/Skjemaer",
+	"modia.url": "",
+	"soknadinnsending.soknad.path": "http://127.0.0.1:8282/soknadinnsending/soknad",
+	"dialogarena.cms.url": "https://appres-q1.nav.no",
+	"dittnav.link.url": "http://www.nav.no/dittnav",
+	"saksoversikt.link.url": "http://127.0.0.1:8443/saksoversikt"
+}
