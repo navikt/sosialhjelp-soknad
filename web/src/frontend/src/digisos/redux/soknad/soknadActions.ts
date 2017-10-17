@@ -85,7 +85,6 @@ const setInformasjonsFaktum = (fakta: any, dispatch: any, intl: InjectedIntl) =>
 		"3": getIntlTextOrKey(intl, "informasjon.nodsituasjon.undertittel"),
 		"4": getIntlTextOrKey(intl, "informasjon.nodsituasjon.tekst")
 	};
-	lagreFaktum(oppdaterFaktumMedVerdier(finnFaktum("informasjon.bekreftelse", fakta), "true"), dispatch);
 	lagreFaktum(oppdaterFaktumMedProperties(finnFaktum("informasjon.tekster", fakta), properties), dispatch);
 };
 
