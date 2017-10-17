@@ -29,7 +29,7 @@ import {
 	getStegUrl,
 	oppdaterFaktumMedVerdier
 } from "../utils";
-import { avbrytSoknad } from "../../digisos/redux/soknad/soknadActions";
+import { avbrytSoknad } from "../redux/soknadActions";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
