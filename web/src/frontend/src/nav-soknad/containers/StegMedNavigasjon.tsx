@@ -29,7 +29,7 @@ import {
 	getStegUrl,
 	oppdaterFaktumMedVerdier
 } from "../utils";
-import { avbrytSoknad } from "../redux/soknadActions";
+import { avbrytSoknad, sendSoknad } from "../redux/soknadActions";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -89,7 +89,14 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
 		if (aktivtSteg.type === SkjemaStegType.oppsummering) {
-			this.props.history.push("/kvittering");
+			this.props.dispatch(sendSoknad(brukerBehandlingId)).then(
+				() => {
+					this.props.history.push("/kvittering");
+				},
+				() => {
+					console.log("feil");
+				}
+			);
 			return;
 		}
 
@@ -212,11 +219,11 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 }
 
 const mapStateToProps = (state: SoknadAppState): StateProps => {
-	const faktum = getProgresjonFaktum(state.fakta.data);
-	const progresjon = parseInt((faktum.value || 1) as string, 10);
+	// const faktum = getProgresjonFaktum(state.fakta.data);
+	// const progresjon = parseInt((faktum.value || 1) as string, 10);
 	return {
 		fakta: state.fakta.data,
-		progresjon,
+		progresjon: 9,
 		progresjonPending: state.fakta.progresjonPending,
 		valideringer: state.validering.valideringsregler,
 		visFeilmeldinger: state.validering.visValideringsfeil,

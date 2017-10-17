@@ -11,12 +11,23 @@ export enum SoknadActionTypeKeys {
 	RESET_SOKNAD = "soknad/RESET_SOKNAD",
 	OTHER_ACTION = "__any_other_action_type__",
 	AVBRYT_SOKNAD = "soknad/AVBRYT_SOKNAD",
-	FORTSETT_SOKNAD = "soknad/FORTSETT_SOKNAD"
+	FORTSETT_SOKNAD = "soknad/FORTSETT_SOKNAD",
+	SEND_SOKNAD = "soknad/SEND_SOKNAD",
+	SOKNAD_SENDT = "soknad/SOKNAD_SENDT"
 }
 
 export interface OpprettetSoknadAction {
 	type: SoknadActionTypeKeys.OPPRETTET_SOKNAD;
 	brukerBehandlingId: string;
+}
+
+export interface SendSoknadAction {
+	type: SoknadActionTypeKeys.SEND_SOKNAD;
+	brukerBehandlingId: string;
+}
+
+export interface SoknadSendtAction {
+	type: SoknadActionTypeKeys.SOKNAD_SENDT;
 }
 
 export interface OpprettSoknadAction {

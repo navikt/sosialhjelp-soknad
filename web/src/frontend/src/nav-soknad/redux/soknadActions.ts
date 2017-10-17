@@ -19,7 +19,9 @@ import {
 	OpprettSoknadAction,
 	ResetSoknadAction,
 	SetServerFeilAction,
-	SoknadActionTypeKeys
+	SendSoknadAction,
+	SoknadActionTypeKeys,
+	SoknadSendtAction
 } from "./soknadTypes";
 import { oppdaterFaktumMedVerdier } from "../utils/faktumUtils";
 
@@ -31,7 +33,9 @@ export type SoknadActionTypes =
 	| SetServerFeilAction
 	| ResetSoknadAction
 	| AvbrytSoknadAction
-	| FortsettSoknadAction;
+	| FortsettSoknadAction
+	| SendSoknadAction
+	| SoknadSendtAction;
 
 export function opprettSoknad(kommuneId: string, bydelId: string) {
 	return (
@@ -125,5 +129,27 @@ export function slettSoknad(brukerBehandlingsId: string) {
 				feilmelding: reason
 			});
 		});
+	};
+}
+
+export function sendSoknad(brukerBehandlingsId: string) {
+	return (
+		dispatch: SoknadDispatch<SoknadActionTypes | FaktaActionTypes>,
+		getState: () => SoknadAppState
+	) => {
+		const payload = JSON.stringify({ behandlingsId: brukerBehandlingsId });
+		return fetchPost(
+			"soknader/" + brukerBehandlingsId + "/actions/send",
+			payload
+		)
+			.then((response: any) => {
+				dispatch({ type: SoknadActionTypeKeys.SOKNAD_SENDT });
+			})
+			.catch(reason => {
+				dispatch({
+					type: SoknadActionTypeKeys.SET_SERVER_FEIL,
+					feilmelding: reason
+				});
+			});
 	};
 }
