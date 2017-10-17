@@ -5,16 +5,22 @@ import { Innholdstittel } from "nav-frontend-typografi";
 
 interface Props {
 	tittel?: string;
+	className?: string;
 }
 
-const Infoblokk: React.StatelessComponent<Props> = ({ children, tittel }) => {
+const Infoblokk: React.StatelessComponent<Props> = ({ className, children, tittel }) => {
 	return (
-		<Panel className="skjema-infoblokk">
+		<Panel className={`skjema-infoblokk ${className}`}>
 			<div className="skjema-infoblokk__content">
 				<div className="skjema-infoblokk__icon">
 					<Icon kind="info-sirkel" />
 				</div>
-				{tittel ? <Innholdstittel>{tittel}</Innholdstittel> : null}
+				{tittel &&
+					<div>
+						<Innholdstittel className="skjema-infoblokk__title">{tittel}</Innholdstittel>
+						<div className="skjema-infoblokk__dash"/>
+					</div>
+				}
 				{children}
 			</div>
 		</Panel>
