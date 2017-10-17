@@ -18,6 +18,29 @@ for lokal utvikling.
 * Start no.nav.sbl.soknadsosialhjelp.StartJetty fra IntelliJ - Starter frontend server
 * Åpne `http://localhost:8189/soknadsosialhjelp/informasjon` i nettleser
  
+ ## Kjøring mot sendsoknad backend i stedet for mock backend
+ 
+ * `cd soknadsosialhjelp-tekster && mvn clean install -Ddev` - bygger tekstfilene.
+ * Start no.nav.sbl.dialogarena.StartSoknadJetty fra IntelliJ - Starter reel backend
+ * Legg inn url til sendsokand i nav-soknad/utils/rest-utils.ts:
+ 
+ ```javascript
+    export function getApiBaseUrl(): string {
+        if (erDev()) {
+        	// Kjør mot lokal sendsoknad
+            return "http://a34duvw03208.devillo.no:8181/sendsoknad/";
+            // return "http://localhost:3001/";
+        }
+        return kjorerJetty() ? "http://127.0.0.1:8181/sendsoknad/" : "/sendsoknad/";
+    }
+ ```
+
+ * Endre linjen environment-test.properties fra true til false for å laste ned kodeverk på xml format:
+ ```
+    start.kodeverk.withmock=true
+ ```
+ * `cd soknadsosialhjelp/web/src/frontend && npm start`
+   
  ## Tekster
  
  Tekstene ligger i repoert `soknadsosialhjelp-tekster` med felles byggejobb på `cisbl.devillo.no`. Tekstendringer blir automatisk
