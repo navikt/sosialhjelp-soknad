@@ -1,6 +1,7 @@
 import { fetchPost, fetchToJson } from "../../../nav-soknad/utils/rest-utils";
 import {
-	resetFakta, lagreFaktum
+	resetFakta,
+	lagreFaktum
 } from "../../../nav-soknad/redux/faktaActions";
 import { updateFaktaMedLagretVerdi } from "../../../nav-soknad/redux/faktaUtils";
 import { finnFaktum } from "../../../nav-soknad/utils";

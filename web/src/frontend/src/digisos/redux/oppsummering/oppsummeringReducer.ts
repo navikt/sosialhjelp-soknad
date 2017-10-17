@@ -1,4 +1,5 @@
 import { Reducer } from "../../../nav-soknad/redux/reduxTypes";
+import { REST_STATUS } from "../../../nav-soknad/types";
 import {
 	OppsummeringActionTypeKeys,
 	Oppsummering,
@@ -8,10 +9,14 @@ import { OppsummeringActionTypes } from "./oppsummeringActions";
 
 export interface OppsummeringState {
 	oppsummering?: Oppsummering;
+	bekreftet?: boolean;
+	restStatus: REST_STATUS;
 }
 
 const defaultState: OppsummeringState = {
-	oppsummering: undefined
+	oppsummering: undefined,
+	bekreftet: false,
+	restStatus: REST_STATUS.INITIALISERT
 };
 
 const hentUtBody = (html: string): string => {
@@ -48,10 +53,27 @@ const OppsummeringReducer: Reducer<
 	OppsummeringActionTypes
 > = (state = defaultState, action): OppsummeringState => {
 	switch (action.type) {
+		case OppsummeringActionTypeKeys.HENT_OPPSUMMERING:
+			return {
+				...state,
+				restStatus: REST_STATUS.PENDING
+			};
 		case OppsummeringActionTypeKeys.SET_OPPSUMMERING:
 			return {
 				...state,
-				oppsummering: hentUtOppsummering(action.oppsummering)
+				oppsummering: hentUtOppsummering(action.oppsummering),
+				restStatus: REST_STATUS.OK
+			};
+		case OppsummeringActionTypeKeys.SET_SERVER_FEIL:
+			return {
+				...state,
+				oppsummering: null,
+				restStatus: REST_STATUS.FEILET
+			};
+		case OppsummeringActionTypeKeys.BEKREFT_OPPSUMMERING:
+			return {
+				...state,
+				bekreftet: action.bekreftet
 			};
 		default:
 			return state;

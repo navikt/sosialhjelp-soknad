@@ -2,11 +2,25 @@ import { Action, Dispatch } from "redux";
 import { fetchHtml } from "../../../nav-soknad/utils/rest-utils";
 import {
 	OppsummeringActionTypeKeys,
-	SetOppsummering
+	SetOppsummering,
+	HentOppsummering,
+	SetServerFeil,
+	BekreftOppsummering
 } from "./oppsummeringTypes";
 import { State } from "../reducers";
 
-export type OppsummeringActionTypes = SetOppsummering;
+export type OppsummeringActionTypes =
+	| SetOppsummering
+	| BekreftOppsummering
+	| HentOppsummering
+	| SetServerFeil;
+
+export function bekreftOppsummering(bekreftet: boolean) {
+	return {
+		type: OppsummeringActionTypeKeys.BEKREFT_OPPSUMMERING,
+		bekreftet
+	};
+}
 
 export function hentOppsummering() {
 	return (dispatch: Dispatch<Action>, getState: () => State) => {

@@ -5,9 +5,14 @@ import { Checkbox } from "nav-frontend-skjema";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 import { Panel } from "nav-frontend-paneler";
 
+import { REST_STATUS } from "../../../nav-soknad/types";
+import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
-import { hentOppsummering } from "../../redux/oppsummering/oppsummeringActions";
+import {
+	hentOppsummering,
+	bekreftOppsummering
+} from "../../redux/oppsummering/oppsummeringActions";
 import { Oppsummering } from "../../redux/oppsummering/oppsummeringTypes";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
@@ -15,10 +20,8 @@ import { State } from "../../redux/reducers";
 
 interface StateProps {
 	oppsummering?: Oppsummering;
-}
-
-interface LocalState {
 	bekreftet: boolean;
+	restStatus: REST_STATUS;
 }
 
 type Props = FaktumComponentProps &
@@ -26,13 +29,10 @@ type Props = FaktumComponentProps &
 	StateProps &
 	InjectedIntlProps;
 
-class OppsummeringView extends React.Component<Props, LocalState> {
+class OppsummeringView extends React.Component<Props, {}> {
 	constructor(props: Props) {
 		super(props);
 		this.getOppsummering = this.getOppsummering.bind(this);
-		this.state = {
-			bekreftet: false
-		};
 	}
 	componentDidMount() {
 		this.props.dispatch(hentOppsummering());
@@ -54,6 +54,7 @@ class OppsummeringView extends React.Component<Props, LocalState> {
 					</div>
 				))
 			: null;
+
 		const skjemaOppsummering = oppsummering ? (
 			<div className="skjema-oppsummering">
 				{bolker}
@@ -66,25 +67,31 @@ class OppsummeringView extends React.Component<Props, LocalState> {
 		) : null;
 
 		return (
-			<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
-				{skjemaOppsummering}
-				<div className="skjema-oppsummering__bekreft">
-					<Checkbox
-						label={this.props.intl.formatMessage({
-							id: "oppsummering.bekreft.true"
-						})}
-						checked={this.state.bekreftet}
-						onChange={evt =>
-							this.setState({ bekreftet: (evt as any).target.checked })}
-					/>
-				</div>
-			</DigisosSkjemaSteg>
+			<LoadContainer restStatus={this.props.restStatus}>
+				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
+					{skjemaOppsummering}
+					<div className="skjema-oppsummering__bekreft">
+						<Checkbox
+							label={this.props.intl.formatMessage({
+								id: "oppsummering.bekreft.true"
+							})}
+							checked={this.props.bekreftet}
+							onChange={evt =>
+								this.props.dispatch(
+									bekreftOppsummering((evt as any).target.checked)
+								)}
+						/>
+					</div>
+				</DigisosSkjemaSteg>
+			</LoadContainer>
 		);
 	}
 }
 
 export default connect((state: State, props: any) => {
 	return {
-		oppsummering: state.oppsummering.oppsummering
+		oppsummering: state.oppsummering.oppsummering,
+		bekreftet: state.oppsummering.bekreftet,
+		restStatus: state.oppsummering.restStatus
 	};
 })(injectIntl(OppsummeringView));
