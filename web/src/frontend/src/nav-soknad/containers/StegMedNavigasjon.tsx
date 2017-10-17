@@ -11,7 +11,7 @@ import AppTittel from "../components/apptittel/AppTittel";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
-import { SkjemaConfig, SkjemaStegType, Faktum } from "../types";
+import { SkjemaConfig, SkjemaStegType, SkjemaSteg, Faktum } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
 import { getProgresjonFaktum } from "../utils";
 import { setFaktum, lagreFaktum } from "../redux/faktaActions";
@@ -87,8 +87,8 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		this.stegTittel.focus();
 	}
 
-	handleGaVidere(aktivtSteg: number, brukerBehandlingId: string) {
-		if (aktivtSteg === 9) {
+	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
+		if (aktivtSteg.type === SkjemaStegType.oppsummering) {
 			this.props.history.push("/kvittering");
 			return;
 		}
@@ -99,15 +99,15 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		);
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
-			if (aktivtSteg === this.props.progresjon) {
+			if (aktivtSteg.stegnummer === this.props.progresjon) {
 				const faktum = oppdaterFaktumMedVerdier(
 					getProgresjonFaktum(this.props.fakta),
-					`${aktivtSteg + 1}`
+					`${aktivtSteg.stegnummer + 1}`
 				);
 				this.props.dispatch(setFaktum(faktum));
 				lagreFaktum(faktum, this.props.dispatch).then(() => {
 					gaVidere(
-						aktivtSteg,
+						aktivtSteg.stegnummer,
 						brukerBehandlingId,
 						this.props.history,
 						this.props.skjemaConfig
@@ -115,7 +115,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 				});
 			} else {
 				gaVidere(
-					aktivtSteg,
+					aktivtSteg.stegnummer,
 					brukerBehandlingId,
 					this.props.history,
 					this.props.skjemaConfig
@@ -199,7 +199,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 									: undefined
 							}
 							gaVidere={() =>
-								this.handleGaVidere(stegConfig.stegnummer, brukerBehandlingId)}
+								this.handleGaVidere(stegConfig, brukerBehandlingId)}
 							gaTilbake={() =>
 								this.handleGaTilbake(stegConfig.stegnummer, brukerBehandlingId)}
 							avbryt={() => avbryt(skjemaConfig)}
