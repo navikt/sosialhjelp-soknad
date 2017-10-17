@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { Checkbox } from "nav-frontend-skjema";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
-import { Panel } from "nav-frontend-paneler";
 
 import { REST_STATUS } from "../../../nav-soknad/types";
 import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
@@ -56,14 +55,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 			: null;
 
 		const skjemaOppsummering = oppsummering ? (
-			<div className="skjema-oppsummering">
-				{bolker}
-				<div className="blokk-m">
-					<Panel>
-						<div dangerouslySetInnerHTML={{ __html: oppsummering.signatur }} />
-					</Panel>
-				</div>
-			</div>
+			<div className="skjema-oppsummering">{bolker}</div>
 		) : null;
 
 		return (

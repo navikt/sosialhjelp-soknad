@@ -1,9 +1,11 @@
 @vpad: 2rem;
 .skjema-oppsummering {
+	margin-bottom: 2rem;
 	h3,
 	h4,
 	h5 {
 		font-size: 1em;
+		margin-bottom: 1rem;
 	}
 
 	ol,
@@ -36,12 +38,12 @@
 	}
 
 	.verdi {
-		display: block;
+		display: inline-block;
 		position: relative;
 		&--tekst,
 		&--generell {
 			background-color: @grayBackground;
-			padding: 0.25em 1em 0.3em 1em;
+			padding: 0.4em 1em 0.5em 1em;
 			border-radius: 2px;
 		}
 		&--radio,
@@ -52,13 +54,18 @@
 				content: "";
 				position: absolute;
 				left: -3px;
-				top: 0;
+				top: -1px;
 				width: 24px;
 				height: 24px;
 				background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyMiAyMiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjIgMjI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cG9seWdvbiBwb2ludHM9IjkuMywxNS40IDYsMTEgOC40LDExIDEwLDEzIDEzLjcsNi42IDE2LDYuNiAxMC45LDE1LjQgCSIvPgo8L2c+Cjwvc3ZnPgo=");
 				background-size: 24px 24px;
 			}
 		}
+	}
+
+	&__bekreft {
+		max-width: 500px;
+		margin: 0 auto;
 	}
 
 	/** Spacing gitt kombinasjoner */
