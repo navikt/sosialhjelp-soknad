@@ -1,5 +1,5 @@
-import { REST_STATUS } from "../../../nav-soknad/types";
-import { Reducer, SoknadState } from "../../../nav-soknad/redux/reduxTypes";
+import { REST_STATUS } from "../types";
+import { Reducer, SoknadState } from "./reduxTypes";
 
 import { SoknadActionTypeKeys } from "./soknadTypes";
 import { SoknadActionTypes } from "./soknadActions";

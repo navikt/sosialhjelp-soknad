@@ -1,5 +1,6 @@
 import { ValideringState } from "./valideringReducer";
 import { FaktumState } from "./faktaReducer";
+import { OppsummeringState } from "./oppsummeringReducer";
 import { Soknad, REST_STATUS } from "../types";
 
 export * from "./faktaActionTypes";
@@ -19,6 +20,7 @@ export interface SoknadAppState {
 	soknad: SoknadState;
 	fakta: FaktumState;
 	validering: ValideringState;
+	oppsummering: OppsummeringState;
 }
 
 export interface SoknadState {

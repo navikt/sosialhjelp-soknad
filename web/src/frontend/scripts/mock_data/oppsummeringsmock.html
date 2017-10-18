@@ -1,0 +1,803 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <base href="/sendsoknad/"></base>
+    <style type="text/css">
+        @page {
+            size: A4;
+            margin: 3.5cm 2cm 2.5cm; @top-center {
+            content: element(header, last-except)
+        }; @bottom-center {
+            content: element(footer)
+        };
+        }
+
+        @page :first {
+            margin: 1.5cm 2cm 2.5cm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.4em;
+            margin: 0;
+            color: #3e3832;
+            word-break: break-word;
+        }
+
+        h1 {
+            font-family: Modus, Arial, sans-serif;
+            font-size: 24pt;
+        }
+
+        h2 {
+            font-family: Modus, Arial, sans-serif;
+            font-size: 13pt;
+            margin-top: 10mm;
+            page-break-after: avoid
+        }
+
+        .header {
+            position: running(header);
+            text-align: center;
+            margin-bottom: 1cm;
+        }
+
+        .header span {
+            font-family: Modus, Arial, sans-serif;
+            display: inline-block;
+        }
+
+        .header .header-logo {
+            position: absolute;
+            left: 0;
+            top: 8mm;
+            width: 14mm;
+        }
+
+        .header .fnr:before {
+            content: "&#8226;";
+            margin: 0 10px;
+        }
+
+        .header .headerSider {
+            position: absolute;
+            right: 0;
+        }
+
+        .header .headerSider:before {
+            content: counter(page);
+        }
+
+        .header .headerSider:after {
+            content: counter(pages);
+        }
+
+        .footer {
+            position: running(footer);
+            font-size: 8pt;
+            text-align: center;
+            border-top: .2pt solid #ccc;
+            padding-top: 0.5cm
+        }
+
+        .footer span {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .logo {
+            position: absolute;
+            left: 77mm;
+            top: 0;
+            width: 17mm;
+        }
+
+        .hode {
+            text-align: center;
+            margin: 15mm 0 9.5mm;
+            padding-bottom: 9.5mm;
+            border-bottom: .2pt solid #ccc;
+        }
+
+        .hode hr {
+            border: none;
+            border-top: .2pt solid #ccc;
+            width: 8mm;
+            margin: 7mm auto 5mm;
+        }
+
+        .hode .nvn, .hode .fnr {
+            font-family: Modus, Arial, sans-serif;
+            font-weight: bold;
+            font-size: 13pt;
+        }
+
+        .hode .adr {
+            margin-top: 2mm;
+        }
+
+        .brosjyre-signatur {
+            border-top: .2pt solid #ccc;
+            margin-top: 10mm;
+            padding-top: 10mm;
+            page-break-inside: avoid;
+        }
+
+        .personalia p {
+            margin: 0;
+        }
+
+        .generisk-oppsummering h3, .generisk-oppsummering h4, .generisk-oppsummering h5, .generisk-oppsummering h6 {
+            font-size: 10pt;
+            margin: 0 0 8pt 0;
+            padding: 0;
+        }
+
+        ul.vedlegg-liste, ul.fakta-liste, ul.svar-liste {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        ul.fakta-liste > li, ul.svar-liste > li {
+            margin: 8pt 0
+        }
+
+        ul.svar-liste > li {
+            position: relative;
+            margin-left: 20px;
+            word-wrap: break-word;
+        }
+
+        ul.svar-liste > li::before, ul.vedlegg-liste > li.lastet-opp::before {
+            display: inline-block;
+            content: " ";
+            font-weight: bold;
+            background: url(img/hake_sort.gif) no-repeat center bottom;
+            width: 10px;
+            height: 12px;
+            background-size: 8px;
+            position: absolute;
+            left: -20px;
+        }
+
+        ul.svar-liste ul.svar-liste > li::before {
+            content: "•";
+            padding-left: 5px;
+            background: none
+        }
+
+        ul.svar-liste > li.ikke-stylet::before {
+            background: none;
+        }
+
+        ul.svar-liste ul.svar-liste > li.ikke-stylet::before {
+            content: " ";
+        }
+
+        li.inline ul {
+            display: inline;
+        }
+
+        li.inline li {
+            display: inline;
+            margin-left: 0;
+        }
+
+        li.inline div {
+            display: inline;
+            padding-left: 0;
+        }
+
+        li.inline ul.svar-liste > li::before {
+            content: '';
+        }
+
+        ul.vedlegg-liste > li.ikke-lastet-opp::before {
+            display: inline-block;
+            content: "-";
+            position: absolute;
+            left: -20px;
+        }
+
+        ul.vedlegg-liste > li {
+            position: relative;
+            margin: 12pt 0 12pt 20px;
+        }
+
+        ul.vedlegg-liste p {
+            margin: 0 0 5pt 0
+        }
+
+        ul.vedlegg-liste .seVedlegg {
+            display: none;
+        }
+
+        ul.vedlegg-liste .aarsak {
+            font-weight: normal;
+        }
+
+        ul.vedlegg-liste .tittel {
+            font-weight: bold;
+        }
+
+        ul.vedlegg-liste .navn {
+            font-weight: normal;
+        }
+
+        .hjelpeInfotekst {
+            padding-left: 20px;
+            font-type: italic
+        }
+
+        .lastetOpp .vedleggSymbol {
+            display: inline-block;
+            background: url(img/vedlegg-svart.gif) no-repeat center;
+            width: 20px;
+            height: 20px;
+            position: relative;
+            top: 4px;
+            margin-left: 20px;
+            margin-right: 5px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="header">
+    <img class="header-logo" src="img/nav-logo.gif"/>
+
+    <span class="navn">Donald D. Mockmann</span>
+    <span class="fnr">03076321565</span>
+
+    <span class="headerSider">
+        av
+    </span>
+</div>
+
+<div class="footer">
+            <span>
+                <span>NAV DIGISOS e-søknad</span>
+                <span>|</span>
+                <span></span>
+            </span>
+</div>
+
+<div id="soknad" class="generisk-oppsummering">
+    <img class="logo" src="img/nav-logo.gif"/>
+
+    <div class="hode">
+        <h1>Søknad for økonomisk sosialhjelp</h1>
+        <hr/>
+
+        <div class="personalia">
+            <p class="nvn">Donald D. Mockmann</p>
+            <p class="fnr">03076321565</p>
+            <p class="adr">Grepalida 44B, 0560 Oslo, Norge</p>
+
+            <div>
+                <span>Kontonummer</span>:
+                <span>9876 98 98765</span>, <span>Nordea</span>,
+                <span>Norge</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div>
+
+
+        <h2>Arbeid og utdanning</h2>
+
+
+        <ul class="fakta-liste">
+
+
+            <li>
+
+
+                <h3>Hva er din situasjon?</h3>
+
+
+                <ul class="svar-liste">
+
+
+                    <li>
+                        Jeg er arbeidsledig
+
+
+                        <ul class="fakta-liste">
+
+
+                        </ul>
+
+                    </li>
+
+
+                    <li>
+                        Jeg er jobb
+
+
+                        <ul class="fakta-liste">
+
+
+                        </ul>
+
+                    </li>
+
+
+                </ul>
+            </li>
+
+
+        </ul>
+
+        <h2>Familiesituasjon</h2>
+
+
+        <ul class="fakta-liste">
+
+
+            <li>
+
+
+                <h3>Hva er din sivilstatus?</h3>
+
+
+                <ul class="svar-liste">
+                    <li>
+                        Gift
+
+
+                        <ul class="fakta-liste">
+
+
+                        </ul>
+
+                    </li>
+                </ul>
+
+
+            </li>
+
+
+            <li>
+
+
+                <h3>Har du barn du har forsørgeransvar for?</h3>
+
+
+                <ul class="svar-liste">
+                    <li>
+                        Ja
+
+
+                        <ul class="fakta-liste">
+
+
+                        </ul>
+
+                    </li>
+                </ul>
+
+
+            </li>
+
+
+            <li>
+
+
+                <ul class="svar-liste">
+                    <li>
+
+
+                        <ul class="fakta-liste">
+
+
+                        </ul>
+
+                    </li>
+                </ul>
+
+
+            </li>
+
+
+        </ul>
+
+        <h2>Hvorfor og hva du søker om</h2>
+
+
+        <ul class="fakta-liste">
+
+
+            <li>
+
+
+                <h3>Hvorfor søker du?</h3>
+
+
+                <ul class="svar-liste">
+                    <li>
+
+                        sdf
+
+
+                    </li>
+                </ul>
+
+            </li>
+
+
+            <li>
+
+
+                <h3>Hva søker du om?</h3>
+
+
+                <ul class="svar-liste">
+                    <li>
+
+                        sdf
+
+
+                    </li>
+                </ul>
+
+            </li>
+
+
+        </ul>
+
+        <h2>Bosituasjon</h2>
+
+
+        <ul class="fakta-liste">
+
+
+            <li>
+
+
+                <h3>Hvordan bor du?</h3>
+
+
+                <ul class="svar-liste">
+                    <li>
+                        Jeg har ikke noe sted å bo
+
+
+                        <ul class="fakta-liste">
+
+
+                        </ul>
+
+                    </li>
+                </ul>
+
+
+            </li>
+
+
+        </ul>
+
+        <h2>Inntekt og formue</h2>
+
+
+        <ul class="fakta-liste">
+
+
+            <li>
+
+
+                <h3>Mottar du ytelser fra NAV?</h3>
+
+
+                <ul class="svar-liste">
+                    <li>
+                        Ja
+
+
+                        <ul class="fakta-liste">
+
+
+                        </ul>
+
+                    </li>
+                </ul>
+
+
+            </li>
+
+
+            <li>
+
+
+                <h3>Har du søkt om ytelser i NAV som ikke er ferdigbehandlet?</h3>
+
+
+                <ul class="svar-liste">
+                    <li>
+                        Ja
+
+
+                        <ul class="fakta-liste">
+
+
+                        </ul>
+
+                    </li>
+                </ul>
+
+
+            </li>
+
+
+            <li>
+
+
+                <h3>Mottar du bostøtte?</h3>
+
+
+                <ul class="svar-liste">
+                    <li>
+                        Ja
+
+
+                        <ul class="fakta-liste">
+
+
+                        </ul>
+
+                    </li>
+                </ul>
+
+
+            </li>
+
+
+            <li>
+
+
+                <ul class="svar-liste">
+                    <li>
+
+
+                        <ul class="fakta-liste">
+
+
+                        </ul>
+
+                    </li>
+                </ul>
+
+
+            </li>
+
+
+            <li>
+
+
+                <ul class="svar-liste">
+                    <li>
+
+
+                        <ul class="fakta-liste">
+
+
+                            <li>
+
+
+                                <ul class="svar-liste">
+                                    <li>
+
+
+                                        <ul class="fakta-liste">
+
+
+                                        </ul>
+
+                                    </li>
+                                </ul>
+
+
+                            </li>
+
+
+                            <li>
+
+
+                                <ul class="svar-liste">
+                                    <li>
+
+
+                                        <ul class="fakta-liste">
+
+
+                                        </ul>
+
+                                    </li>
+                                </ul>
+
+
+                            </li>
+
+
+                            <li>
+
+
+                                <ul class="svar-liste">
+                                    <li>
+
+
+                                        <ul class="fakta-liste">
+
+
+                                        </ul>
+
+                                    </li>
+                                </ul>
+
+
+                            </li>
+
+
+                            <li>
+
+
+                                <ul class="svar-liste">
+                                    <li>
+
+
+                                        <ul class="fakta-liste">
+
+
+                                        </ul>
+
+                                    </li>
+                                </ul>
+
+
+                            </li>
+
+
+                            <li>
+
+
+                                <ul class="svar-liste">
+                                    <li>
+
+
+                                        <ul class="fakta-liste">
+
+
+                                        </ul>
+
+                                    </li>
+                                </ul>
+
+
+                            </li>
+
+
+                        </ul>
+
+                    </li>
+                </ul>
+
+
+            </li>
+
+
+        </ul>
+
+        <h2></h2>
+
+
+        <ul class="fakta-liste">
+
+
+            <li>
+
+
+                <ul class="svar-liste">
+                    <li>
+
+
+                        <ul class="fakta-liste">
+
+
+                        </ul>
+
+                    </li>
+                </ul>
+
+
+            </li>
+
+
+        </ul>
+
+        <h2>Utgifter og gjeld</h2>
+
+
+        <ul class="fakta-liste">
+
+
+            <li>
+
+
+                <h3>Har du boutgifter?</h3>
+
+
+                <ul class="svar-liste">
+                    <li>
+                        Ja
+
+
+                        <ul class="fakta-liste">
+
+
+                        </ul>
+
+                    </li>
+                </ul>
+
+
+            </li>
+
+
+        </ul>
+
+
+        <h2>Vedlegg</h2>
+
+        <ul class="vedlegg-liste">
+
+
+            <li
+
+                    class="ikke-lastet-opp"
+
+            >
+                <div>
+                    <p class="tittel">Dokumentasjon av dato for overtakelse av omsorg</p>
+
+
+                    <span class="status">Ettersendes</span>
+
+
+                </div>
+            </li>
+
+
+        </ul>
+
+    </div>
+
+    <div class="brosjyre-signatur">
+
+        <ul class="fakta-liste">
+            <li>
+                <ul class="svar-liste">
+                    <li>
+                        <p>Jeg er kjent med at hvis opplysningene jeg har oppgitt, ikke er riktige og fullstendige, kan
+                            jeg miste retten til stønad. Jeg er også klar over at jeg må betale tilbake det jeg har fått
+                            feilaktig utbetalt, og at jeg kan bli anmeldt politiet. Videre er jeg kjent med og
+                            aksepterer at NAV kan innhente opplysninger som er nødvendige for å behandle søknaden.</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,17 +1,15 @@
-import { fetchDelete, fetchPost, fetchToJson } from "../../../nav-soknad/utils/rest-utils";
-import {
-	resetFakta, lagreFaktum
-} from "../../../nav-soknad/redux/faktaActions";
-import { updateFaktaMedLagretVerdi } from "../../../nav-soknad/redux/faktaUtils";
-import { finnFaktum } from "../../../nav-soknad/utils";
+import { fetchDelete, fetchPost, fetchToJson } from "../utils/rest-utils";
+import { resetFakta, lagreFaktum } from "./faktaActions";
+import { updateFaktaMedLagretVerdi } from "./faktaUtils";
+import { finnFaktum } from "../utils";
 import {
 	FaktaActionTypeKeys,
 	FaktaActionTypes,
 	SoknadDispatch
-} from "../../../nav-soknad/redux/reduxTypes";
-import { Soknad, Faktum } from "../../../nav-soknad/types";
+} from "./reduxTypes";
+import { Soknad, Faktum } from "../types";
 
-import { State } from "../reducers";
+import { SoknadAppState } from "./reduxTypes";
 import {
 	AvbrytSoknadAction,
 	FortsettSoknadAction,
@@ -23,9 +21,12 @@ import {
 	SetServerFeilAction,
 	SoknadActionTypeKeys
 } from "./soknadTypes";
-import { oppdaterFaktumMedProperties, oppdaterFaktumMedVerdier } from "../../../nav-soknad/utils/faktumUtils";
+import {
+	oppdaterFaktumMedProperties,
+	oppdaterFaktumMedVerdier
+} from "../../nav-soknad/utils/faktumUtils";
 import { InjectedIntl } from "react-intl";
-import { getIntlTextOrKey } from "../../../nav-soknad/utils/intlUtils";
+import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 
 export type SoknadActionTypes =
 	| OpprettSoknadAction
@@ -37,10 +38,14 @@ export type SoknadActionTypes =
 	| AvbrytSoknadAction
 	| FortsettSoknadAction;
 
-export function opprettSoknad(kommuneId: string, bydelId: string, intl: InjectedIntl) {
+export function opprettSoknad(
+	kommuneId: string,
+	bydelId: string,
+	intl: InjectedIntl
+) {
 	return (
 		dispatch: SoknadDispatch<SoknadActionTypes | FaktaActionTypes>,
-		getState: () => State
+		getState: () => SoknadAppState
 	) => {
 		dispatch({ type: SoknadActionTypeKeys.OPPRETT_SOKNAD });
 		const payload = JSON.stringify({ soknadType: "NAV DIGISOS" });
@@ -54,11 +59,7 @@ export function opprettSoknad(kommuneId: string, bydelId: string, intl: Injected
 
 				hentSoknad(brukerBehandlingId)(dispatch).then(() => {
 					const fakta = getState().fakta.data;
-					setInformasjonsFaktum(
-						fakta,
-						dispatch,
-						intl
-					);
+					setInformasjonsFaktum(fakta, dispatch, intl);
 					setBostedFaktum(
 						finnFaktum("personalia.kommune", fakta),
 						kommuneId,
@@ -82,14 +83,24 @@ export function opprettSoknad(kommuneId: string, bydelId: string, intl: Injected
 	};
 }
 
-const setInformasjonsFaktum = (fakta: any, dispatch: any, intl: InjectedIntl) => {
+const setInformasjonsFaktum = (
+	fakta: any,
+	dispatch: any,
+	intl: InjectedIntl
+) => {
 	const properties = {
 		"1": getIntlTextOrKey(intl, "informasjon.start.tittel"),
 		"2": getIntlTextOrKey(intl, "informasjon.start.tekst"),
 		"3": getIntlTextOrKey(intl, "informasjon.nodsituasjon.undertittel"),
 		"4": getIntlTextOrKey(intl, "informasjon.nodsituasjon.tekst")
 	};
-	lagreFaktum(oppdaterFaktumMedProperties(finnFaktum("informasjon.tekster", fakta), properties), dispatch);
+	lagreFaktum(
+		oppdaterFaktumMedProperties(
+			finnFaktum("informasjon.tekster", fakta),
+			properties
+		),
+		dispatch
+	);
 };
 
 const setBostedFaktum = (faktum: Faktum, verdi: string, dispatch: any) => {
@@ -138,8 +149,7 @@ export function fortsettSoknad() {
 
 export function slettSoknad(brukerBehandlingsId: string) {
 	return (dispatch: SoknadDispatch<any>) => {
-		return fetchDelete("soknader/" + brukerBehandlingsId)
-		.catch(reason => {
+		return fetchDelete("soknader/" + brukerBehandlingsId).catch(reason => {
 			dispatch({
 				type: SoknadActionTypeKeys.SET_SERVER_FEIL,
 				feilmelding: reason

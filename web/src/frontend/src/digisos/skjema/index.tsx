@@ -24,8 +24,8 @@ import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
 import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
 import { Faktum } from "../../nav-soknad/types";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
+import { hentSoknad } from "../../nav-soknad/redux/soknadActions";
 import { State } from "../redux/reducers";
-import { hentSoknad } from "../redux/soknad/soknadActions";
 
 interface OwnProps {
 	match: any;

@@ -1,17 +1,16 @@
 import { combineReducers } from "redux";
 
-import FaktumReducer from "../../nav-soknad/redux/faktaReducer";
 import { SoknadAppState } from "../../nav-soknad/redux/reduxTypes";
+import FaktumReducer from "../../nav-soknad/redux/faktaReducer";
 import ValideringReducer from "../../nav-soknad/redux/valideringReducer";
-import SoknadReducer from "./soknad/soknadReducer";
-import OppsummeringReducer, { OppsummeringState } from "./oppsummering/oppsummeringReducer";
-import LedeteksterReducer from "./informasjon/informasjonReducer";
+import OppsummeringReducer from "../../nav-soknad/redux/oppsummeringReducer";
+import SoknadReducer from "../../nav-soknad/redux/soknadReducer";
+import LedeteksterReducer from "../../nav-soknad/redux/informasjonReducer";
 import SynligeFaktaReducer from "./synligefakta/synligeFaktaReducer";
 import { SynligeFaktaState } from "./synligefakta/synligeFaktaTypes";
 import MiljovariablerReducer from "./informasjon/miljovariablerReducer";
 
 export interface State extends SoknadAppState {
-	oppsummering: OppsummeringState;
 	synligefakta: SynligeFaktaState;
 }
 
