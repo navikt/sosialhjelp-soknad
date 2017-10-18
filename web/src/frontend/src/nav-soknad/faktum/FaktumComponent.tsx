@@ -126,8 +126,15 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 				this.props.validerFunc
 			);
 			if (this.props.ignorert) {
+				const faktum = this.faktum();
+				this.props.dispatch(setFaktumIgnorert(faktum, this.props.ignorert));
 				this.props.dispatch(
-					setFaktumIgnorert(this.faktum(), this.props.ignorert)
+					setFaktumValideringsfeil(
+						null,
+						faktum.key,
+						this.props.property,
+						faktum.faktumId
+					)
 				);
 			}
 			if (valideringer.length > 0) {
