@@ -84,7 +84,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 	componentDidMount() {
 		scrollToTop();
-		this.stegTittel.focus();
+		if (this.stegTittel) {
+			this.stegTittel.focus();
+		}
 	}
 
 	handleGaVidere(aktivtSteg: number, brukerBehandlingId: string) {
@@ -186,13 +188,18 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						<div
 							className="skjema-steg__tittel"
 							tabIndex={-1}
-							ref={c => (this.stegTittel = c)}>
+							ref={c => (this.stegTittel = c)}
+						>
 							<Innholdstittel>{stegTittel}</Innholdstittel>
 						</div>
 						{children}
 						<Knapperad
 							gaViderePending={this.props.progresjonPending}
-							gaVidereLabel={erOppsummering ? getIntlTextOrKey(intl, "skjema.knapper.send") : undefined}
+							gaVidereLabel={
+								erOppsummering
+									? getIntlTextOrKey(intl, "skjema.knapper.send")
+									: undefined
+							}
 							gaVidere={() =>
 								this.handleGaVidere(stegConfig.stegnummer, brukerBehandlingId)}
 							gaTilbake={() =>
