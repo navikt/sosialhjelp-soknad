@@ -8,6 +8,7 @@ import DocumentTitle from "react-document-title";
 import { Innholdstittel } from "nav-frontend-typografi";
 
 import AppTittel from "../components/apptittel/AppTittel";
+import Dialog from "../components/dialog/Dialog";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
@@ -179,6 +180,12 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 		return (
 			<div>
+				<Dialog
+					dialogtittel="abc"
+					overskrift="ABC"
+					okLabel="Ok"
+					onClose={() => null}
+				/>
 				<DocumentTitle
 					title={intl.formatMessage({ id: this.props.skjemaConfig.tittelId })}
 				/>
