@@ -3,7 +3,7 @@ import NavFrontendModal from "nav-frontend-modal";
 import Icon from "nav-frontend-ikoner-assets";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp } from "nav-frontend-knapper";
-import { fortsettSoknad, slettSoknad } from "../../../digisos/redux/soknad/soknadActions";
+import { fortsettSoknad, slettSoknad } from "../../redux/soknadActions";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import { DispatchProps } from "../../redux/reduxTypes";
@@ -17,7 +17,6 @@ interface OwnProps {
 type Props = OwnProps & InjectedIntlProps & DispatchProps;
 
 class AvbrytSoknad extends React.Component<Props, {}> {
-
 	onAvbryt() {
 		this.props.dispatch(slettSoknad(this.props.brukerBehandlingId)).then(() => {
 			const dittnavUrl = this.props.miljovariabler["dittnav.link.url"];
@@ -33,7 +32,7 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 		return (
 			<NavFrontendModal
 				isOpen={this.props.avbrytDialogSynlig || false}
-				contentLabel={this.props.intl.formatMessage({id: "avbryt.avbryt"})}
+				contentLabel={this.props.intl.formatMessage({ id: "avbryt.avbryt" })}
 				closeButton={false}
 				onRequestClose={() => null}
 			>
@@ -42,13 +41,13 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 						<Icon kind="info-sirkel-orange" />
 					</div>
 					<div className="avbrytmodal__infoikon_wrapper">
-						<div className="avbrytmodal__infoikon"/>
+						<div className="avbrytmodal__infoikon" />
 					</div>
 					<Innholdstittel className="blokk-s avbrytmodal__overskrift">
 						<FormattedMessage id={"avbryt.overskrift"} />
 					</Innholdstittel>
 					<div className="avbrytmodal__understrek_wrapper">
-						<div className="avbrytmodal__understrek"/>
+						<div className="avbrytmodal__understrek" />
 					</div>
 					<Normaltekst className="blokk-xxs avbrytmodal__tekst">
 						<FormattedMessage id={"avbryt.tekst"} />
@@ -60,11 +59,13 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 						<Hovedknapp onClick={() => this.onAvbryt()}>
 							<FormattedMessage id={"avbryt.ja"} />
 						</Hovedknapp>
-						<Hovedknapp onClick={() => this.onFortsett()} className="avbrytmodal__neiknapp">
+						<Hovedknapp
+							onClick={() => this.onFortsett()}
+							className="avbrytmodal__neiknapp"
+						>
 							<FormattedMessage id={"avbryt.nei"} />
 						</Hovedknapp>
 					</div>
-
 				</div>
 			</NavFrontendModal>
 		);

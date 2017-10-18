@@ -1,155 +1,1739 @@
-<body>
-    <div class="header">
-        <img class="header-logo" src="img/nav-logo.gif" />
-        <span class="navn">Donald D. Mockmann</span>
-        <span class="fnr">11111111111</span>
-        <span class="headerSider">
-			av
-		</span>
-    </div>
-    <div class="footer">
-        <span>
-		<span>NAV DIGISOS e-søknad</span>
-        <span>|</span>
-        <span></span>
-        </span>
-    </div>
-    <div id="soknad" class="generisk-oppsummering">
-        <img class="logo" src="img/nav-logo.gif" />
-        <div>
-            <h2>Arbeid og utdanning</h2>
-            <ul class="fakta-liste">
-                <li>
-                    <h3>Hva er din situasjon?</h3>
-                    <ul class="svar-liste">
-                        <li>
-                            Jeg er arbeidsledig
-                            <ul class="fakta-liste">
-                            </ul>
-                        </li>
-                        <li>
-                            Jeg er jobb
-                            <ul class="fakta-liste">
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <h2>Familiesituasjon</h2>
-            <ul class="fakta-liste">
-                <li>
-                    <h3>Hva er din sivilstatus?</h3>
-                    <ul class="svar-liste">
-                        <li>
-                            Gift
-                            <ul class="fakta-liste">
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <h3>Har du barn du har forsørgeransvar for?</h3>
-                    <ul class="svar-liste">
-                        <li>
-                            Ja
-                            <ul class="fakta-liste">
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <h2>Hvorfor og hva du søker om</h2>
-            <ul class="fakta-liste">
-                <li>
-                    <h3>Hvorfor søker du?</h3>
-                    <ul class="svar-liste">
-                        <li>
-                            sdf
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <h3>Hva søker du om?</h3>
-                    <ul class="svar-liste">
-                        <li>
-                            sdf
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <h2>Bosituasjon</h2>
-            <ul class="fakta-liste">
-                <li>
-                    <h3>Hvordan bor du?</h3>
-                    <ul class="svar-liste">
-                        <li>
-                            Jeg har ikke noe sted å bo
-                            <ul class="fakta-liste">
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <h2>Inntekt og formue</h2>
-            <ul class="fakta-liste">
-                <li>
-                    <h3>Mottar du ytelser fra NAV?</h3>
-                    <ul class="svar-liste">
-                        <li>
-                            Ja
-                            <ul class="fakta-liste">
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <h3>Har du søkt om ytelser i NAV som ikke er ferdigbehandlet?</h3>
-                    <ul class="svar-liste">
-                        <li>
-                            Ja
-                            <ul class="fakta-liste">
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <h3>Mottar du bostøtte?</h3>
-                    <ul class="svar-liste">
-                        <li>
-                            Ja
-                            <ul class="fakta-liste">
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+<html>
 
-            <h2>Utgifter og gjeld</h2>
-            <ul class="fakta-liste">
-                <li>
-                    <h3>Har du boutgifter?</h3>
-                    <ul class="svar-liste">
-                        <li>
-                            Ja
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div class="brosjyre-signatur">
-            <ul class="fakta-liste">
-                <li>
-                    <ul class="svar-liste">
-                        <li>
-                            <p>Jeg er kjent med at hvis opplysningene jeg har oppgitt, ikke er riktige og fullstendige, kan
-                                jeg miste retten til stønad. Jeg er også klar over at jeg må betale tilbake det jeg har fått
-                                feilaktig utbetalt, og at jeg kan bli anmeldt politiet. Videre er jeg kjent med og aksepterer
-                                at NAV kan innhente opplysninger som er nødvendige for å behandle søknaden.
-                            </p>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<base href="/sendsoknad/"></base>
+</head>
+
+<body>
+
+	<div class="header">
+		<img class="header-logo" src="img/nav-logo.gif" />
+
+		<span class="navn">Donald D. Mockmann</span>
+		<span class="fnr">03076321565</span>
+
+		<span class="headerSider">
+        av
+    </span>
+	</div>
+
+	<div class="footer">
+		<span>
+                <span>NAV DIGISOS e-søknad</span>
+		<span>|</span>
+		<span></span>
+		</span>
+	</div>
+
+	<div id="soknad" class="generisk-oppsummering">
+		<img class="logo" src="img/nav-logo.gif" />
+
+		<div class="hode">
+			<h1>Søknad om økonomisk sosialhjelp</h1>
+			<hr/>
+
+			<div class="personalia">
+				<p class="nvn">Donald D. Mockmann</p>
+				<p class="fnr">03076321565</p>
+				<p class="adr">Grepalida 44B, 0560 Oslo, Norge</p>
+
+				<div>
+					<span>Kontonummer</span>:
+					<span>9876 98 98765</span>, <span>Nordea</span>,
+					<span>Norge</span>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div>
+
+
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Bosted, kontaktinfo og statsborgerskap</h2>
+
+
+				<ul class="fakta-liste">
+
+
+
+					<li>
+
+
+
+						<div class="label">I hvilken kommune bor du og-/eller oppholder deg i?</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--tekst">
+									bærum
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+						<h3>Ditt kontonummer</h3>
+
+
+
+
+						<div class="label">Fyll inn kontonummer her (11 siffer)</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--tekst">
+									35431224877
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+					</li>
+
+
+
+					<li>
+
+
+						<h3>Fyll inn telefonnummeret du kan nås på</h3>
+
+
+
+
+						<div class="label">Ditt telefonnummer</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--tekst">
+									98219409
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+						<h3>Er du norsk eller nordisk statsborger?</h3>
+
+
+
+
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--radio">
+									Ja
+								</div>
+
+
+
+								<ul class="fakta-liste">
+
+
+
+								</ul>
+
+							</li>
+						</ul>
+
+
+					</li>
+
+
+
+
+
+				</ul>
+			</div>
+
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Arbeid og utdanning</h2>
+
+
+				<ul class="fakta-liste">
+
+
+
+					<li>
+
+
+						<h3>Er du i jobb?</h3>
+
+
+
+
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--radio">
+									Ja
+								</div>
+
+
+
+								<ul class="fakta-liste">
+
+
+
+									<li>
+
+
+										<h4>Jobber du heltid eller deltid?</h4>
+
+
+
+
+										<ul class="svar-liste">
+											<li>
+
+												<div class="verdi verdi--radio">
+													Heltid
+												</div>
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+										</ul>
+
+
+									</li>
+
+
+
+								</ul>
+
+							</li>
+						</ul>
+
+
+					</li>
+
+
+
+					<li>
+
+
+						<h3>Studerer du?</h3>
+
+
+
+
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--radio">
+									Nei
+								</div>
+
+
+
+								<ul class="fakta-liste">
+
+
+
+
+
+								</ul>
+
+							</li>
+						</ul>
+
+
+					</li>
+
+
+
+
+
+				</ul>
+			</div>
+
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Familiesituasjon</h2>
+
+
+				<ul class="fakta-liste">
+
+
+
+					<li>
+
+
+						<h3>Hva er din sivilstatus?</h3>
+
+
+
+
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--radio">
+									Samboer
+								</div>
+
+
+
+								<ul class="fakta-liste">
+
+
+
+
+
+								</ul>
+
+							</li>
+						</ul>
+
+
+					</li>
+
+
+
+					<li>
+
+
+						<h3>Har du barn du har forsørgeransvar for?</h3>
+
+
+
+
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--radio">
+									Ja
+								</div>
+
+
+
+								<ul class="fakta-liste">
+
+
+
+									<li>
+
+
+										<h4>Opplysninger om barn</h4>
+
+
+
+
+
+										<ul class="svar-liste">
+
+											<li class="ikke-stylet composite">
+												<ul class="fakta-liste">
+
+
+
+													<li>
+
+
+
+														<div class="label">Navn</div>
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--tekst">
+																	Laurits
+																</div>
+
+
+															</li>
+														</ul>
+
+													</li>
+
+
+
+													<li>
+
+
+
+														<div class="label">Fødselsdato (ddmmåå)</div>
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--tekst">
+																	270108
+																</div>
+
+
+															</li>
+														</ul>
+
+													</li>
+
+
+
+													<li>
+
+
+
+														<div class="label">Personnummer</div>
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--ikkeUtfylt">
+
+																	<i>Ikke utfylt</i>
+
+																</div>
+
+
+															</li>
+														</ul>
+
+													</li>
+
+
+
+													<li>
+
+
+														<h5>Bor barnet sammen med deg?</h5>
+
+
+
+
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--radio">
+																	Ja
+																</div>
+
+
+
+																<ul class="fakta-liste">
+
+
+
+																</ul>
+
+															</li>
+														</ul>
+
+
+													</li>
+
+
+
+													<li>
+
+
+														<h5>Hvor mye bor barnet med deg/dere?</h5>
+
+
+
+
+														<div class="label">Antall</div>
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--tekst">
+																	100
+																</div>
+
+
+															</li>
+														</ul>
+
+													</li>
+
+
+
+												</ul>
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+										</ul>
+
+
+									</li>
+
+
+
+									<li>
+
+
+										<h4>Opplysninger om barn</h4>
+
+
+
+
+
+										<ul class="svar-liste">
+
+											<li class="ikke-stylet composite">
+												<ul class="fakta-liste">
+
+
+
+													<li>
+
+
+
+														<div class="label">Navn</div>
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--tekst">
+																	Edvin
+																</div>
+
+
+															</li>
+														</ul>
+
+													</li>
+
+
+
+													<li>
+
+
+
+														<div class="label">Fødselsdato (ddmmåå)</div>
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--tekst">
+																	290411
+																</div>
+
+
+															</li>
+														</ul>
+
+													</li>
+
+
+
+													<li>
+
+
+
+														<div class="label">Personnummer</div>
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--ikkeUtfylt">
+
+																	<i>Ikke utfylt</i>
+
+																</div>
+
+
+															</li>
+														</ul>
+
+													</li>
+
+
+
+													<li>
+
+
+														<h5>Bor barnet sammen med deg?</h5>
+
+
+
+
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--radio">
+																	Ja
+																</div>
+
+
+
+																<ul class="fakta-liste">
+
+
+
+																</ul>
+
+															</li>
+														</ul>
+
+
+													</li>
+
+
+
+													<li>
+
+
+														<h5>Hvor mye bor barnet med deg/dere?</h5>
+
+
+
+
+														<div class="label">Antall</div>
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--tekst">
+																	100
+																</div>
+
+
+															</li>
+														</ul>
+
+													</li>
+
+
+
+												</ul>
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+										</ul>
+
+
+									</li>
+
+
+
+								</ul>
+
+							</li>
+						</ul>
+
+
+					</li>
+
+
+
+
+
+				</ul>
+			</div>
+
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Hvorfor og hva du søker om</h2>
+
+
+				<ul class="fakta-liste">
+
+
+
+					<li>
+
+
+						<h3>Hvorfor søker du?</h3>
+
+
+
+
+						<div class="label">Beskriv kort hvorfor du søker om økonomisk sosialhjelp</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--tekst">
+									Blakk
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+						<h3>Hva søker du om?</h3>
+
+
+
+
+						<div class="label">Beskriv kort hva du søker om</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--tekst">
+									Jeg trenger penger for å kunne kjøpe et hoppeslott. Og en popcornmaskin. Og et fly.
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+
+
+				</ul>
+			</div>
+
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Bosituasjon</h2>
+
+
+				<ul class="fakta-liste">
+
+
+
+					<li>
+
+
+						<h3>Hvordan bor du?</h3>
+
+
+
+
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--radio">
+									Jeg eier egen bolig
+								</div>
+
+
+
+								<ul class="fakta-liste">
+
+
+
+
+
+								</ul>
+
+							</li>
+						</ul>
+
+
+					</li>
+
+
+
+					<li>
+
+
+						<h3>Hvor mange personer bor sammen med deg?</h3>
+
+
+
+
+						<div class="label">Antall</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--tekst">
+									4
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+
+
+				</ul>
+			</div>
+
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Inntekt og formue</h2>
+
+
+				<ul class="fakta-liste">
+
+
+
+					<li>
+
+
+						<h3>Mottar du bostøtte fra husbanken?</h3>
+
+
+
+
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--radio">
+									Nei
+								</div>
+
+
+
+								<ul class="fakta-liste">
+
+
+
+								</ul>
+
+							</li>
+						</ul>
+
+
+					</li>
+
+
+
+					<li>
+
+
+						<h3>Eier du noe med økonomisk verdi?</h3>
+
+
+
+
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--radio">
+									Ja
+								</div>
+
+
+
+								<ul class="fakta-liste">
+
+
+
+									<li>
+
+
+										<h4>Hva eier du</h4>
+
+
+
+
+										<ul class="svar-liste">
+
+
+											<li>
+												Bolig
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+											<li>
+												Kjøretøy
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+											<li>
+												Campingvogn og-/eller båt
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+
+
+											<li>
+												Annet
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+													<li>
+
+
+
+														<div class="label">Beskriv hva du eier</div>
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--tekst">
+																	Vaskebalje
+																</div>
+
+
+															</li>
+														</ul>
+
+													</li>
+
+
+
+												</ul>
+
+											</li>
+
+
+										</ul>
+									</li>
+
+
+
+								</ul>
+
+							</li>
+						</ul>
+
+
+					</li>
+
+
+
+					<li>
+
+
+						<h3>Har du bankinnskudd eller annen sparing?</h3>
+
+
+
+
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--radio">
+									Ja
+								</div>
+
+
+
+								<ul class="fakta-liste">
+
+
+
+									<li>
+
+
+										<h4>Velg type innskudd og-/eller sparing</h4>
+
+
+
+
+										<ul class="svar-liste">
+
+
+
+
+											<li>
+												Penger på brukskonto
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+											<li>
+												Livsforsikring med sparedel
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+											<li>
+												Aksjer, obligasjoner og fond
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+											<li>
+												Annet
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+													<li>
+
+
+
+														<div class="label">Beskriv</div>
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--tekst">
+																	Penger i madrassen, men dere får ikke vite hvor mye
+																</div>
+
+
+															</li>
+														</ul>
+
+													</li>
+
+
+
+												</ul>
+
+											</li>
+
+
+										</ul>
+									</li>
+
+
+
+								</ul>
+
+							</li>
+						</ul>
+
+
+					</li>
+
+
+
+					<li>
+
+
+						<h3>Har du de siste tre månedene mottatt noen form for utbetaling utover lønn og/eller ytelser fra NAV?</h3>
+
+
+
+
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--radio">
+									Nei
+								</div>
+
+
+
+								<ul class="fakta-liste">
+
+
+
+
+
+								</ul>
+
+							</li>
+						</ul>
+
+
+					</li>
+
+
+
+
+
+				</ul>
+			</div>
+
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel">Utgifter og gjeld</h2>
+
+
+				<ul class="fakta-liste">
+
+
+
+					<li>
+
+
+						<h3>Har du boutgifter?</h3>
+
+
+
+
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--radio">
+									Ja
+								</div>
+
+
+
+								<ul class="fakta-liste">
+
+
+
+									<li>
+
+
+										<h4>Hvilke utgifter er det?</h4>
+
+
+
+
+										<ul class="svar-liste">
+
+
+											<li>
+												Husleie
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+											<li>
+												Strøm
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+											<li>
+												Kommunale avgifter
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+											<li>
+												Oppvarming
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+											<li>
+												Avdrag og renter boliglån
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+											<li>
+												Andre utgifter
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+													<li>
+
+
+
+														<div class="label">Beskriv</div>
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--tekst">
+																	Norsk Tipping
+																</div>
+
+
+															</li>
+														</ul>
+
+													</li>
+
+
+
+												</ul>
+
+											</li>
+
+
+										</ul>
+									</li>
+
+
+
+								</ul>
+
+							</li>
+						</ul>
+
+
+					</li>
+
+
+
+					<li>
+
+
+						<h3>Har du utgifter til barn?</h3>
+
+
+
+
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--radio">
+									Ja
+								</div>
+
+
+
+								<ul class="fakta-liste">
+
+
+
+									<li>
+
+
+										<h4>Hvilke utgifter er det?</h4>
+
+
+
+
+										<ul class="svar-liste">
+
+
+											<li>
+												Fritidsaktiviteter
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+											<li>
+												Barnehage
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+
+
+											<li>
+												Tannregulering
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+												</ul>
+
+											</li>
+
+
+
+											<li>
+												Annet
+
+
+
+
+												<ul class="fakta-liste">
+
+
+
+													<li>
+
+
+
+														<div class="label">Beskriv</div>
+														<ul class="svar-liste">
+															<li>
+
+																<div class="verdi verdi--tekst">
+																	Godterier
+																</div>
+
+
+															</li>
+														</ul>
+
+													</li>
+
+
+
+												</ul>
+
+											</li>
+
+
+										</ul>
+									</li>
+
+
+
+								</ul>
+
+							</li>
+						</ul>
+
+
+					</li>
+
+
+
+
+
+				</ul>
+			</div>
+
+			<div class="bolk js-bolk">
+				<h2 class="bolk__tittel"></h2>
+
+
+				<ul class="fakta-liste">
+
+
+
+					<li>
+
+
+
+						<div class="label">Evt. feriepenger tilgode</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--ikkeUtfylt">
+
+									<i>Ikke utfylt</i>
+
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+
+						<div class="label">Sluttoppgjør</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--ikkeUtfylt">
+
+									<i>Ikke utfylt</i>
+
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+
+						<div class="label">Bruttolønn (per mnd)</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--tekst">
+									100000
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+
+						<div class="label">Nettolønn (per mnd)</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--tekst">
+									100000
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+
+						<div class="label">Utbetaling studielån</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--ikkeUtfylt">
+
+									<i>Ikke utfylt</i>
+
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+
+						<div class="label">Studielån totalt</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--ikkeUtfylt">
+
+									<i>Ikke utfylt</i>
+
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+
+						<div class="label">Bidrag du betaler</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--ikkeUtfylt">
+
+									<i>Ikke utfylt</i>
+
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+
+						<div class="label">Bidrag du får</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--ikkeUtfylt">
+
+									<i>Ikke utfylt</i>
+
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+
+						<div class="label">Hva er utgiften</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--tekst">
+									2312
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+
+						<div class="label">Sum per måned</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--tekst">
+									100
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+						<h3>Du har svart at du har strøm som boutgift, vi ber deg derfor oppgi</h3>
+
+
+
+
+						<div class="label">Beløp siste regning</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--tekst">
+									9000
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+					<li>
+
+
+						<h3>Du har svart at du har husleie som boutgift, vi ber deg derfor oppgi
+						</h3>
+
+
+
+
+						<div class="label">Beløp siste regning</div>
+						<ul class="svar-liste">
+							<li>
+
+								<div class="verdi verdi--tekst">
+									50
+								</div>
+
+
+							</li>
+						</ul>
+
+					</li>
+
+
+
+
+
+				</ul>
+			</div>
+
+			<div class="js-vedlegg js-bolk">
+				<h2>Vedlegg</h2>
+
+				<ul class="vedlegg-liste">
+
+					<li class="lastet-opp">Ingen vedlegg</li>
+
+				</ul>
+
+			</div>
+		</div>
+
+		<div class="brosjyre-signatur js-signatur">
+
+			<ul class="fakta-liste">
+				<li>
+					<ul class="svar-liste">
+						<li>
+							<p>Jeg er kjent med at hvis opplysningene jeg har oppgitt ikke er riktige og fullstendige, kan jeg miste retten til stønad.
+								Jeg er også klar over at jeg må betale tilbake det jeg har fått feilaktig utbetalt, og at jeg kan bli anmeldt politiet.
+								Videre er jeg kjent med og aksepterer at NAV kan innhente opplysninger som er nødvendige for å behandle søknaden.</p>
+						</li>
+					</ul>
+				</li>
+			</ul>
+
+		</div>
+	</div>
 </body>
+
+</html>
