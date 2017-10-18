@@ -34,7 +34,7 @@ const Dialog: React.StatelessComponent<Props> = ({
 					<Icon kind={icon} />
 				</div>
 			) : null}
-			<div className="nav-soknad-dialog__overskrift">
+			<div className="nav-soknad-dialog__overskrift blokk-s">
 				<Innholdstittel>{overskrift}</Innholdstittel>
 			</div>
 			<div className="nav-soknad-dialog__content">{children}</div>
