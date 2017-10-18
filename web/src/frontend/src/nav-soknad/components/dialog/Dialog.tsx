@@ -8,6 +8,7 @@ interface Props {
 	dialogtittel: string;
 	overskrift: string;
 	okLabel: string;
+	isOpen?: boolean;
 	icon?: icons;
 	onClose: () => void;
 }
@@ -18,13 +19,14 @@ const Dialog: React.StatelessComponent<Props> = ({
 	okLabel,
 	icon,
 	children,
+	isOpen,
 	onClose
 }) => (
 	<NavFrontendModal
-		isOpen={true}
+		isOpen={isOpen}
 		contentLabel={dialogtittel}
 		closeButton={false}
-		onRequestClose={() => null}
+		onRequestClose={onClose}
 	>
 		<div className="nav-soknad-dialog">
 			{icon ? (
