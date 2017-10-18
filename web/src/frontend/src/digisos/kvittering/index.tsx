@@ -9,7 +9,7 @@ import { State } from "../redux/reducers";
 import { getBosted } from "../data/kommuner";
 import { getFaktumVerdi, scrollToTop } from "../../nav-soknad/utils";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
-import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
+import Feilside from "../../nav-soknad/components/feilside/Feilside";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 
 class Kvittering extends React.Component<
