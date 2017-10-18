@@ -1,14 +1,17 @@
-import { ApplikasjonsfeilActionTypes } from "./applikasjonsfeilTypes";
+import {
+	ApplikasjonsfeilActionTypeKeys,
+	ApplikasjonsfeilActionTypes
+} from "./applikasjonsfeilTypes";
 
-export function setApplikasjonsfeil(feil: string) {
+export function setApplikasjonsfeil(feil: string): ApplikasjonsfeilActionTypes {
 	return {
-		type: ApplikasjonsfeilActionTypes.SET_APPLIKASJONSFEIL,
+		type: ApplikasjonsfeilActionTypeKeys.SET_APPLIKASJONSFEIL,
 		feil
 	};
 }
 
-export function clearApplikasjonsfeil() {
+export function clearApplikasjonsfeil(): ApplikasjonsfeilActionTypes {
 	return {
-		type: ApplikasjonsfeilActionTypes.CLEAR_APPLIKASJONSFEIL
+		type: ApplikasjonsfeilActionTypeKeys.CLEAR_APPLIKASJONSFEIL
 	};
 }

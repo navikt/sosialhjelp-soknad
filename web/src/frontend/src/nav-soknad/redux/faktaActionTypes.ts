@@ -1,7 +1,6 @@
-import { ValideringActionTypes } from "./valideringActionTypes";
 import { FaktumActionTypes } from "./faktaReducer";
 
-export type FaktaActionTypes = FaktumActionTypes | ValideringActionTypes;
+export type FaktaActionTypes = FaktumActionTypes;
 
 export enum FaktumActionTypeKeys {
 	OPPDATER_FAKTUM = "faktum/OPPDATER_FAKTUM",

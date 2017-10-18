@@ -1,7 +1,7 @@
 import { Reducer } from "../reduxTypes";
 import {
-	ApplikasjonsfeilActions,
-	ApplikasjonsfeilActionTypes
+	ApplikasjonsfeilActionTypes,
+	ApplikasjonsfeilActionTypeKeys
 } from "./applikasjonsfeilTypes";
 
 export interface ApplikasjonsfeilState {
@@ -16,16 +16,16 @@ const defaultState: ApplikasjonsfeilState = {
 
 const applikasjonsfeilReducer: Reducer<
 	ApplikasjonsfeilState,
-	ApplikasjonsfeilActions
+	ApplikasjonsfeilActionTypes
 > = (state = defaultState, action) => {
 	switch (action.type) {
-		case ApplikasjonsfeilActionTypes.SET_APPLIKASJONSFEIL:
+		case ApplikasjonsfeilActionTypeKeys.SET_APPLIKASJONSFEIL:
 			return {
 				...state,
 				feil: action.feil,
 				visDialog: true
 			};
-		case ApplikasjonsfeilActionTypes.CLEAR_APPLIKASJONSFEIL:
+		case ApplikasjonsfeilActionTypeKeys.CLEAR_APPLIKASJONSFEIL:
 			return {
 				...state,
 				feil: undefined,
