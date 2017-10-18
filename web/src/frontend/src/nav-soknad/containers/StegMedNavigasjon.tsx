@@ -84,7 +84,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 	componentDidMount() {
 		scrollToTop();
-		this.stegTittel.focus();
+		if (this.stegTittel) {
+			this.stegTittel.focus();
+		}
 	}
 
 	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
