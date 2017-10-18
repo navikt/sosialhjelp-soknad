@@ -1,4 +1,5 @@
 import { ValideringActionKey } from "./types";
+import { mod11Kontroll } from "./valideringFuncUtils";
 
 export function pakrevd(value: string): ValideringActionKey {
 	return typeof value === "string" && value.length > 0
@@ -43,17 +44,16 @@ export function erTelefonnummer(value: string): ValideringActionKey {
 }
 
 export function erKontonummer(value: string): ValideringActionKey {
+	const kontonummer = value.replace(/\.|\ /g, "");
 	if (
-		typeof value !== "string" ||
-		value.length < 11 ||
-		value.length > 13 ||
-		value.length === 12 ||
-		(value.length === 11 && !/^[0-9]{11}$/i.test(value)) ||
-		(value.length === 13 && !/^[. 0-9]{13}$/i.test(value))
+		kontonummer.length !== 11 ||
+		!(
+			parseInt(kontonummer.charAt(kontonummer.length - 1), 10) ===
+			mod11Kontroll(kontonummer)
+		)
 	) {
 		return ValideringActionKey.ER_KONTONUMMER;
 	}
-
 	return undefined;
 }
 

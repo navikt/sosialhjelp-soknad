@@ -118,18 +118,52 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			this.lagreFaktum = this.lagreFaktum.bind(this);
 			this.getName = this.getName.bind(this);
 			this.getFeil = this.getFeil.bind(this);
+			this.registerFaktumValidering = this.registerFaktumValidering.bind(this);
+			this.unregisterFaktumValidering = this.unregisterFaktumValidering.bind(
+				this
+			);
 		}
 
 		componentWillMount() {
+			this.registerFaktumValidering();
 			const valideringer = getValideringer(
 				this.props.required,
 				this.props.validerFunc
 			);
 			if (this.props.ignorert) {
-				this.props.dispatch(
-					setFaktumIgnorert(this.faktum(), this.props.ignorert)
-				);
+				const faktum = this.faktum();
+				this.props.dispatch(setFaktumIgnorert(faktum, this.props.ignorert));
 			}
+			if (valideringer.length > 0) {
+				this.registerFaktumValidering();
+				if (this.props.ignorert) {
+					const faktum = this.faktum();
+					this.props.dispatch(setFaktumIgnorert(faktum, this.props.ignorert));
+				}
+			}
+		}
+
+		componentWillUnmount() {
+			this.unregisterFaktumValidering();
+		}
+
+		componentWillReceiveProps(nextProps: any) {
+			const ignorert = (nextProps as ResultProps).ignorert;
+			if (ignorert !== this.props.ignorert) {
+				this.props.dispatch(setFaktumIgnorert(this.faktum(), ignorert));
+				if (ignorert) {
+					this.unregisterFaktumValidering();
+				} else {
+					this.registerFaktumValidering();
+				}
+			}
+		}
+
+		registerFaktumValidering() {
+			const valideringer = getValideringer(
+				this.props.required,
+				this.props.validerFunc
+			);
 			if (valideringer.length > 0) {
 				this.props.dispatch(
 					registerFaktumValidering({
@@ -142,7 +176,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			}
 		}
 
-		componentWillUnmount() {
+		unregisterFaktumValidering() {
 			this.props.dispatch(
 				unregisterFaktumValidering(
 					this.props.faktumKey,
@@ -150,13 +184,6 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 					this.props.faktumId
 				)
 			);
-		}
-
-		componentWillReceiveProps(nextProps: any) {
-			const ignorert = (nextProps as ResultProps).ignorert;
-			if (ignorert !== this.props.ignorert) {
-				this.props.dispatch(setFaktumIgnorert(this.faktum(), ignorert));
-			}
 		}
 
 		faktum(): Faktum {
