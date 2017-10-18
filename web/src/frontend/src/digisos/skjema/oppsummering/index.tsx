@@ -18,8 +18,9 @@ import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
 
 interface StateProps {
-	oppsummering?: Oppsummering;
+	oppsummering: Oppsummering;
 	bekreftet: boolean;
+	visBekreftMangler: boolean;
 	restStatus: REST_STATUS;
 }
 
@@ -42,7 +43,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 		};
 	}
 	render() {
-		const { oppsummering } = this.props;
+		const { oppsummering, intl } = this.props;
 
 		const bolker = oppsummering
 			? this.props.oppsummering.bolker.map((bolk, idx) => (
@@ -68,10 +69,20 @@ class OppsummeringView extends React.Component<Props, {}> {
 								id: "oppsummering.bekreft.true"
 							})}
 							checked={this.props.bekreftet}
-							onChange={evt =>
+							feil={
+								this.props.visBekreftMangler
+									? {
+											feilmelding: intl.formatMessage({
+												id: "oppsummering.feilmelding.bekreftmangler"
+											})
+										}
+									: null
+							}
+							onChange={evt => {
 								this.props.dispatch(
 									bekreftOppsummering((evt as any).target.checked)
-								)}
+								);
+							}}
 						/>
 					</div>
 				</DigisosSkjemaSteg>
@@ -84,6 +95,7 @@ export default connect((state: State, props: any) => {
 	return {
 		oppsummering: state.oppsummering.oppsummering,
 		bekreftet: state.oppsummering.bekreftet,
+		visBekreftMangler: state.oppsummering.visBekreftMangler,
 		restStatus: state.oppsummering.restStatus
 	};
 })(injectIntl(OppsummeringView));

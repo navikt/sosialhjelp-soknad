@@ -1,5 +1,7 @@
+import { InjectedIntl } from "react-intl";
 import { fetchDelete, fetchPost, fetchToJson } from "../utils/rest-utils";
 import { resetFakta, lagreFaktum } from "./faktaActions";
+import { ApplikasjonsfeilActionTypes } from "./applikasjonsfeil/applikasjonsfeilTypes";
 import { updateFaktaMedLagretVerdi } from "./faktaUtils";
 import { finnFaktum } from "../utils";
 import {
@@ -19,13 +21,14 @@ import {
 	OpprettSoknadAction,
 	ResetSoknadAction,
 	SetServerFeilAction,
-	SoknadActionTypeKeys
+	SendSoknadAction,
+	SoknadActionTypeKeys,
+	SoknadSendtAction
 } from "./soknadTypes";
 import {
 	oppdaterFaktumMedProperties,
 	oppdaterFaktumMedVerdier
 } from "../../nav-soknad/utils/faktumUtils";
-import { InjectedIntl } from "react-intl";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 
 export type SoknadActionTypes =
@@ -36,7 +39,9 @@ export type SoknadActionTypes =
 	| SetServerFeilAction
 	| ResetSoknadAction
 	| AvbrytSoknadAction
-	| FortsettSoknadAction;
+	| FortsettSoknadAction
+	| SendSoknadAction
+	| SoknadSendtAction;
 
 export function opprettSoknad(
 	kommuneId: string,
@@ -154,6 +159,23 @@ export function slettSoknad(brukerBehandlingsId: string) {
 				type: SoknadActionTypeKeys.SET_SERVER_FEIL,
 				feilmelding: reason
 			});
+		});
+	};
+}
+
+export function sendSoknad(brukerBehandlingsId: string) {
+	return (
+		dispatch: SoknadDispatch<
+			SoknadActionTypes | FaktaActionTypes | ApplikasjonsfeilActionTypes
+		>,
+		getState: () => SoknadAppState
+	) => {
+		const payload = JSON.stringify({ behandlingsId: brukerBehandlingsId });
+		return fetchPost(
+			`soknader/${brukerBehandlingsId}/actions/send`,
+			payload
+		).then((response: any) => {
+			dispatch({ type: SoknadActionTypeKeys.SOKNAD_SENDT });
 		});
 	};
 }

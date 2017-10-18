@@ -9,7 +9,7 @@ import {
 	LedetekstState
 } from "./nav-soknad/redux/informasjonTypes";
 import { DispatchProps } from "./nav-soknad/redux/reduxTypes";
-import Feilside from "./nav-soknad/components/feilmeldinger/Feilside";
+import Feilside from "./nav-soknad/components/feilside/Feilside";
 import { hentMiljovariabler } from "./digisos/redux/informasjon/miljovariablerActions";
 
 addLocaleData(nb);

@@ -5,7 +5,8 @@ import {
 	SetOppsummering,
 	HentOppsummering,
 	SetServerFeil,
-	BekreftOppsummering
+	BekreftOppsummering,
+	SetVisBekreftMangler
 } from "./oppsummeringTypes";
 import { SoknadAppState } from "./reduxTypes";
 
@@ -13,12 +14,20 @@ export type OppsummeringActionTypes =
 	| SetOppsummering
 	| BekreftOppsummering
 	| HentOppsummering
-	| SetServerFeil;
+	| SetServerFeil
+	| SetVisBekreftMangler;
 
 export function bekreftOppsummering(bekreftet: boolean) {
 	return {
 		type: OppsummeringActionTypeKeys.BEKREFT_OPPSUMMERING,
 		bekreftet
+	};
+}
+
+export function setVisBekreftMangler(visBekreftMangler: boolean) {
+	return {
+		type: OppsummeringActionTypeKeys.SET_VIS_BEKREFT_MANGLER,
+		visBekreftMangler
 	};
 }
 
