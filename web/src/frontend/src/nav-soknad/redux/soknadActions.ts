@@ -171,15 +171,8 @@ export function sendSoknad(brukerBehandlingsId: string) {
 		return fetchPost(
 			"soknader/" + brukerBehandlingsId + "/actions/send",
 			payload
-		)
-			.then((response: any) => {
-				dispatch({ type: SoknadActionTypeKeys.SOKNAD_SENDT });
-			})
-			.catch(reason => {
-				dispatch({
-					type: SoknadActionTypeKeys.SET_SERVER_FEIL,
-					feilmelding: reason
-				});
-			});
+		).then((response: any) => {
+			dispatch({ type: SoknadActionTypeKeys.SOKNAD_SENDT });
+		});
 	};
 }

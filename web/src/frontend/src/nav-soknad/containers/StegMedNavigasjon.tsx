@@ -15,6 +15,7 @@ import { SkjemaConfig, SkjemaStegType, SkjemaSteg, Faktum } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
 import { getProgresjonFaktum } from "../utils";
 import { setFaktum, lagreFaktum } from "../redux/faktaActions";
+import { setVisBekreftMangler } from "../redux/oppsummeringActions";
 import {
 	clearFaktaValideringsfeil,
 	setFaktaValideringsfeil
@@ -60,6 +61,7 @@ interface StateProps {
 	visFeilmeldinger?: boolean;
 	valideringsfeil?: Valideringsfeil[];
 	stegValidertCounter?: number;
+	oppsummeringBekreftet?: boolean;
 }
 
 type Props = OwnProps &
@@ -80,6 +82,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	constructor(props: Props) {
 		super(props);
 		this.handleGaVidere = this.handleGaVidere.bind(this);
+		this.sendSoknad = this.sendSoknad.bind(this);
 	}
 
 	componentDidMount() {
@@ -89,16 +92,24 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		}
 	}
 
+	sendSoknad(brukerBehandlingId: string) {
+		this.props.dispatch(sendSoknad(brukerBehandlingId)).then(
+			() => {
+				this.props.history.push("/kvittering");
+			},
+			() => {
+				alert("Noe feilet under innsending av søknad");
+			}
+		);
+	}
+
 	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
 		if (aktivtSteg.type === SkjemaStegType.oppsummering) {
-			this.props.dispatch(sendSoknad(brukerBehandlingId)).then(
-				() => {
-					this.props.history.push("/kvittering");
-				},
-				() => {
-					console.log("feil");
-				}
-			);
+			if (this.props.oppsummeringBekreftet) {
+				this.sendSoknad(brukerBehandlingId);
+			} else {
+				this.props.dispatch(setVisBekreftMangler(true));
+			}
 			return;
 		}
 
@@ -227,6 +238,7 @@ const mapStateToProps = (state: SoknadAppState): StateProps => {
 		fakta: state.fakta.data,
 		progresjon: 9,
 		progresjonPending: state.fakta.progresjonPending,
+		oppsummeringBekreftet: state.oppsummering.bekreftet,
 		valideringer: state.validering.valideringsregler,
 		visFeilmeldinger: state.validering.visValideringsfeil,
 		valideringsfeil: state.validering.feil,
