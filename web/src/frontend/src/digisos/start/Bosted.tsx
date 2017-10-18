@@ -66,7 +66,8 @@ class Bosted extends React.Component<
 	opprettSoknad(event: any) {
 		event.preventDefault();
 		const { kommuneId, bydelId } = this.state;
-		this.props.dispatch(opprettSoknad(kommuneId, bydelId));
+		const { intl } = this.props;
+		this.props.dispatch(opprettSoknad(kommuneId, bydelId, intl));
 	}
 
 	render() {
@@ -156,7 +157,7 @@ class Bosted extends React.Component<
 								spinner={startSoknadPending}
 								disabled={startSoknadPending}
 							>
-								{getIntlTextOrKey(this.props.intl, "skjema.knapper.start") +
+								{getIntlTextOrKey(this.props.intl, "skjema.knapper.gaavidere") +
 									" "}
 							</Knapp>
 						</div>

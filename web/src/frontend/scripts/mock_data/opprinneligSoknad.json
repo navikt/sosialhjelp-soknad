@@ -744,6 +744,16 @@
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
+		},
+		{
+			"faktumId": 150,
+			"soknadId": 2,
+			"parrentFaktum": null,
+			"key": "informasjon.tekster",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
 		}
 	],
 	"status": "UNDER_ARBEID",
