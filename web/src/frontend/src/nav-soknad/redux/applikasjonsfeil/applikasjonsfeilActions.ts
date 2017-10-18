@@ -1,9 +1,12 @@
 import {
 	ApplikasjonsfeilActionTypeKeys,
-	ApplikasjonsfeilActionTypes
+	ApplikasjonsfeilActionTypes,
+	Applikasjonsfeil
 } from "./applikasjonsfeilTypes";
 
-export function setApplikasjonsfeil(feil: string): ApplikasjonsfeilActionTypes {
+export function setApplikasjonsfeil(
+	feil: Applikasjonsfeil
+): ApplikasjonsfeilActionTypes {
 	return {
 		type: ApplikasjonsfeilActionTypeKeys.SET_APPLIKASJONSFEIL,
 		feil

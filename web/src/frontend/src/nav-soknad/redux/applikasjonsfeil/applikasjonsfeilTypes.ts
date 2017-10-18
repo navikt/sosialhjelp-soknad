@@ -3,9 +3,14 @@ export enum ApplikasjonsfeilActionTypeKeys {
 	CLEAR_APPLIKASJONSFEIL = "applikasjonsfeil/CLEAR_APPLIKASJONSFEIL"
 }
 
+export interface Applikasjonsfeil {
+	tittel: string;
+	innhold: React.ReactNode;
+}
+
 export interface SetApplikasjonsfeilAction {
 	type: ApplikasjonsfeilActionTypeKeys.SET_APPLIKASJONSFEIL;
-	feil: string;
+	feil: Applikasjonsfeil;
 }
 
 export interface ClearApplikasjonsfeilAction {
