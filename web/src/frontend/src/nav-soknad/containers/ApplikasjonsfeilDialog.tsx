@@ -17,21 +17,22 @@ type Props = StateProps & DispatchProps & InjectedIntlProps;
 
 class ApplikasjonsfeilDialog extends React.Component<Props, {}> {
 	render() {
-		if (!this.props.visDialog) {
-			return null;
-		}
 		return (
 			<Dialog
 				isOpen={this.props.visDialog}
 				icon="advarsel-trekant"
-				overskrift={this.props.feil.tittel}
-				dialogtittel={this.props.intl.formatMessage({
-					id: "applikasjonsfeil.dialogtittel"
-				})}
+				overskrift={this.props.visDialog ? this.props.feil.tittel : ""}
+				dialogtittel={
+					this.props.visDialog
+						? this.props.intl.formatMessage({
+								id: "applikasjonsfeil.dialogtittel"
+							})
+						: ""
+				}
 				okLabel="ok"
 				onClose={() => this.props.dispatch(clearApplikasjonsfeil())}
 			>
-				{this.props.feil.innhold}
+				{this.props.visDialog ? this.props.feil.innhold : ""}
 			</Dialog>
 		);
 	}
