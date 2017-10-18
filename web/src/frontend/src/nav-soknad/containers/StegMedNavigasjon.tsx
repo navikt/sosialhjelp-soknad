@@ -232,11 +232,11 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 }
 
 const mapStateToProps = (state: SoknadAppState): StateProps => {
-	// const faktum = getProgresjonFaktum(state.fakta.data);
-	// const progresjon = parseInt((faktum.value || 1) as string, 10);
+	const faktum = getProgresjonFaktum(state.fakta.data);
+	const progresjon = parseInt((faktum.value || 1) as string, 10);
 	return {
 		fakta: state.fakta.data,
-		progresjon: 9,
+		progresjon,
 		progresjonPending: state.fakta.progresjonPending,
 		oppsummeringBekreftet: state.oppsummering.bekreftet,
 		valideringer: state.validering.valideringsregler,
