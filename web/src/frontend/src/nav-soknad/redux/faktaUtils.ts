@@ -24,6 +24,9 @@ export function getFaktumIndex(fakta: Faktum[], faktum: Faktum) {
 	return index;
 }
 
+
+
+
 export function updateFaktumStateVerdi(fakta: Faktum[], faktum: Faktum) {
 	const index = getFaktumIndex(fakta, faktum);
 	if (index === -1) {
