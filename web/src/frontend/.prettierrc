@@ -1,5 +1,4 @@
 {
-	"eslintIntegration": true,
 	"useTabs": true,
 	"bracketSpacing": true,
 	"jsxBracketSameLine": true,
