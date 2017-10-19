@@ -44,6 +44,9 @@ export function erTelefonnummer(value: string): ValideringActionKey {
 }
 
 export function erKontonummer(value: string): ValideringActionKey {
+	if (!value || typeof value !== "string") {
+		return ValideringActionKey.ER_KONTONUMMER;
+	}
 	const kontonummer = value.replace(/\.|\ /g, "");
 	if (
 		kontonummer.length !== 11 ||
