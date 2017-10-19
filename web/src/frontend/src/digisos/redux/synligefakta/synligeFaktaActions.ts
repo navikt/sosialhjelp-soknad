@@ -8,6 +8,7 @@ import { fetchToJson } from "../../../nav-soknad/utils/rest-utils";
 
 export type SynligeFaktaActionTypes = HentSynligeFaktaAction | HentetSynligeFaktaAction;
 
+
 export function hentSynligeFakta() {
 	return (dispatch: SoknadDispatch<SynligeFaktaActionTypes>, getState: () => State) => {
 		dispatch({type: SynligeFaktaActionTypeKeys.HENT_SYNLIGE});
