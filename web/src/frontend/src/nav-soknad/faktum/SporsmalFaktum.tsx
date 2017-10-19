@@ -97,7 +97,9 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 						{tekster.infotekst ? (
 							<div className="skjema-sporsmal__infotekst">
 								{tekster.infotekst.tittel ? (
-									<h4>{tekster.infotekst.tittel}</h4>
+									<h4 className="skjema-sporsmal__infotekst__tittel">
+										{tekster.infotekst.tittel}
+									</h4>
 								) : null}
 								{tekster.infotekst.tekst}
 							</div>
