@@ -1,5 +1,5 @@
 import { Action, Dispatch } from "redux";
-import { fetchHtml } from "../utils/rest-utils";
+import { fetchOppsummering } from "../utils/rest-utils";
 import {
 	OppsummeringActionTypeKeys,
 	SetOppsummering,
@@ -25,7 +25,7 @@ export function bekreftOppsummering(bekreftet: boolean) {
 export function hentOppsummering() {
 	return (dispatch: Dispatch<Action>, getState: () => SoknadAppState) => {
 		dispatch({ type: OppsummeringActionTypeKeys.PENDING });
-		fetchHtml("soknader/" + getState().soknad.data.brukerBehandlingId)
+		fetchOppsummering("soknader/" + getState().soknad.data.brukerBehandlingId)
 			.then(response => {
 				dispatch({
 					type: OppsummeringActionTypeKeys.SET_OPPSUMMERING,

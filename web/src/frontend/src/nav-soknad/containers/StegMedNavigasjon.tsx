@@ -91,7 +91,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
 		if (aktivtSteg.type === SkjemaStegType.oppsummering) {
-			this.props.history.push("/kvittering");
+			this.props.history.push(`/kvittering/${brukerBehandlingId}`);
 			return;
 		}
 

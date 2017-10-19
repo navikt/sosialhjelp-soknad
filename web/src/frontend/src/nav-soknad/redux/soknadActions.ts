@@ -1,4 +1,9 @@
-import { fetchDelete, fetchPost, fetchToJson } from "../utils/rest-utils";
+import {
+	fetchDelete,
+	fetchPost,
+	fetchToJson,
+	fetchKvittering
+} from "../utils/rest-utils";
 import { resetFakta, lagreFaktum } from "./faktaActions";
 import { updateFaktaMedLagretVerdi } from "./faktaUtils";
 import { finnFaktum } from "../utils";
@@ -20,6 +25,7 @@ import {
 	ResetSoknadAction,
 	SetServerFeilAction,
 	SoknadActionTypeKeys,
+	HentKvitteringAction,
 	KvitteringHentetAction
 } from "./soknadTypes";
 import {
@@ -38,6 +44,7 @@ export type SoknadActionTypes =
 	| ResetSoknadAction
 	| AvbrytSoknadAction
 	| FortsettSoknadAction
+	| HentKvitteringAction
 	| KvitteringHentetAction;
 
 export function opprettSoknad(
@@ -163,7 +170,7 @@ export function slettSoknad(brukerBehandlingsId: string) {
 export function hentKvittering(brukerBehandlingsId: string) {
 	return (dispatch: SoknadDispatch<any>) => {
 		dispatch({ type: SoknadActionTypeKeys.HENT_KVITTERING });
-		return fetchToJson("soknader/" + brukerBehandlingsId + "/kvittering")
+		return fetchKvittering("soknader/" + brukerBehandlingsId + "?lang=nb_NO")
 			.then((kvittering: Kvittering) => {
 				dispatch(kvitteringHentet(kvittering));
 			})
@@ -178,6 +185,6 @@ export function hentKvittering(brukerBehandlingsId: string) {
 
 export function kvitteringHentet(kvittering: Kvittering) {
 	return (dispatch: SoknadDispatch<any>) => {
-		dispatch({ type: SoknadActionTypeKeys.KVITTERING_HENTET });
+		dispatch({ type: SoknadActionTypeKeys.KVITTERING_HENTET, kvittering });
 	};
 }

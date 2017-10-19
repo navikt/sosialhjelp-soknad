@@ -22,11 +22,14 @@ class App extends React.Component<InjectedIntlProps, {}> {
 						component={SkjemaRouter}
 						exact={true}
 					/>
-					<Route path={`/kvittering`} component={Kvittering} />
+					<Route
+						path={`/kvittering/:brukerBehandlingId`}
+						component={Kvittering}
+					/>
 					<Route
 						component={() => (
 							<Feilside
-								tekst={this.props.intl.formatMessage({id: "feilmelding.404"})}
+								tekst={this.props.intl.formatMessage({ id: "feilmelding.404" })}
 								visTilbakeKnapp={true}
 							/>
 						)}
@@ -36,7 +39,7 @@ class App extends React.Component<InjectedIntlProps, {}> {
 					sessionDurationInMinutes={30}
 					showWarningerAfterMinutes={25}
 				/>
-				<AvbrytSoknad/>
+				<AvbrytSoknad />
 				{this.props.children}
 			</div>
 		);

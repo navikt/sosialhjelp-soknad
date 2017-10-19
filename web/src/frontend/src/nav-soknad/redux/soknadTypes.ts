@@ -1,4 +1,4 @@
-import { Soknad } from "../types/navSoknadTypes";
+import { Soknad, Kvittering } from "../types/navSoknadTypes";
 
 export enum SoknadActionTypeKeys {
 	OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
@@ -54,10 +54,11 @@ export interface FortsettSoknadAction {
 	type: SoknadActionTypeKeys.FORTSETT_SOKNAD;
 }
 
-export interface HentKvittering {
+export interface HentKvitteringAction {
 	type: SoknadActionTypeKeys.HENT_KVITTERING;
 }
 
 export interface KvitteringHentetAction {
 	type: SoknadActionTypeKeys.KVITTERING_HENTET;
+	kvittering: Kvittering;
 }
