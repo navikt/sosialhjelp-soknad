@@ -45,7 +45,7 @@
 		"@types/jest": "^20.0.6",
 		"@types/node": "8.0.31",
 		"@types/prop-types": "^15.5.1",
-		"@types/react": "16.0.7",
+		"@types/react": "^16.0.14",
 		"@types/react-document-title": "^2.0.0",
 		"@types/react-dom": "^16.0.0",
 		"@types/react-intl": "^2.3.2",
@@ -81,7 +81,6 @@
 		"nightwatch": "^0.9.16",
 		"npm-run-all": "^4.0.2",
 		"prettier": "^1.7.2",
-		"prettier-eslint-cli": "^4.4.0",
 		"react-dom": "^15.6.1",
 		"react-test-renderer": "^15.6.1",
 		"replace": "0.3.0",
@@ -90,22 +89,16 @@
 	"scripts": {
 		"mock-backend": "node scripts/mock_backend",
 		"build-css": "node-less-chokidar ./src/index.less",
-		"watch-css":
-			"chokidar \"src/**/*.less\" -c \"node-less-chokidar ./src/index.less\"",
+		"watch-css": "chokidar \"src/**/*.less\" -c \"node-less-chokidar ./src/index.less\"",
 		"start-js": "react-scripts-ts start",
-		"start":
-			"npm-run-all -p build-css watch-css start-js mock-backend stylelint:watch",
-		"build":
-			"npm run stylelint && npm run build-css && react-scripts-ts build && node flytt-filer-til-webapp.js && node versjoner-prodfiler.js",
+		"start": "npm-run-all -p build-css watch-css start-js mock-backend stylelint:watch",
+		"build": "npm run stylelint && npm run build-css && react-scripts-ts build && node flytt-filer-til-webapp.js && node versjoner-prodfiler.js",
 		"test": "npm run build-css && react-scripts-ts test --env=jsdom",
 		"prettier": "prettier-eslint \"src/**/*(*.less|*.tsx|*.ts|*.css|*.json)\"",
-		"prettier:update":
-			"prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css|*.json)\"",
+		"prettier:update": "prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css|*.json)\"",
 		"stylelint": "stylelint \"src/digisos/digisos.less\" --syntax less",
-		"stylelint:watch":
-			"chokidar \"src/index.less\" -c \"stylelint \"src/index.less\" --syntax less\"",
-		"e2e":
-			"node nightwatch.js --url localhost:3000/soknadsosialhjelp/informasjon",
+		"stylelint:watch": "chokidar \"src/index.less\" -c \"stylelint \"src/index.less\" --syntax less\"",
+		"e2e": "node nightwatch.js --url localhost:3000/soknadsosialhjelp/informasjon",
 		"eject": "react-scripts-ts eject"
 	}
 }
