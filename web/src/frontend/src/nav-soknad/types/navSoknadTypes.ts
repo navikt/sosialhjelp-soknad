@@ -74,6 +74,11 @@ export interface Vedlegg {
 	aarsak: string;
 }
 
+export interface Kvittering {
+	kommune: string;
+	bydel?: string;
+}
+
 export enum DelstegStatus {
 	OPPRETTET = "OPPRETTET",
 	UTFYLLING = "UTFYLLING",

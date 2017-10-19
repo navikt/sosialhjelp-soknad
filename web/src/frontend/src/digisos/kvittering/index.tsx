@@ -1,55 +1,77 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { Panel } from "nav-frontend-paneler";
 import Icon from "nav-frontend-ikoner-assets";
 import { Undertittel } from "nav-frontend-typografi";
-import { FaktumComponentProps } from "../../nav-soknad/redux/faktaReducer";
 import { State } from "../redux/reducers";
 import { getBosted } from "../data/kommuner";
-import { getFaktumVerdi, scrollToTop } from "../../nav-soknad/utils";
+import { scrollToTop } from "../../nav-soknad/utils";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
+import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
+import { hentKvittering } from "../../nav-soknad/redux/soknadActions";
+import { REST_STATUS, Kvittering } from "../../nav-soknad/types";
+import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
 
-class Kvittering extends React.Component<
-	State &
-	FaktumComponentProps &
-	InjectedIntlProps,
+interface InjectedRouterProps {
+	location: Location;
+	match: {
+		params: {
+			brukerBehandlingId: string;
+		};
+		url: string;
+	};
+}
+
+interface StateProps {
+	kvittering: Kvittering;
+	restStatus: REST_STATUS;
+}
+
+class KvitteringView extends React.Component<
+	StateProps & InjectedIntlProps & DispatchProps & InjectedRouterProps,
 	{}
 > {
 	componentDidMount() {
 		scrollToTop();
+		this.props.dispatch(
+			hentKvittering(this.props.match.params.brukerBehandlingId)
+		);
 	}
 	render() {
-		const { fakta, intl } = this.props;
-		const kommune = getFaktumVerdi(fakta, "personalia.kommune");
-		const bydel = getFaktumVerdi(fakta, "personalia.bydel");
+		const { kvittering, restStatus, intl } = this.props;
 		return (
-			<span>
+			<LoadContainer restStatus={restStatus}>
 				<AppTittel />
 				<div className="kvittering skjema-content">
 					<Panel>
 						<Icon kind="stegindikator__hake" className="kvittering__ikon" />
 						<Undertittel className="kvittering__tittel">
-							{ getIntlTextOrKey(intl, "kvittering.undertittel") }
+							{getIntlTextOrKey(intl, "kvittering.undertittel")}
 						</Undertittel>
-						<div className="kvittering__tekst">
-							<p>
-								{ getIntlTextOrKey(intl, "kvittering.tekst.pre") } {" "}
-								<strong>{getBosted(kommune, bydel)}</strong>
-								{ getIntlTextOrKey(intl, "kvittering.tekst.post") }
-							</p>
-						</div>
+						{kvittering ? (
+							<div className="kvittering__tekst">
+								<p>
+									{getIntlTextOrKey(intl, "kvittering.tekst.pre")} {" "}
+									<strong>
+										{getBosted(kvittering.kommune, kvittering.bydel)}
+									</strong>
+									{getIntlTextOrKey(intl, "kvittering.tekst.post")}
+								</p>
+							</div>
+						) : null}
 					</Panel>
 				</div>
-			</span>
+			</LoadContainer>
 		);
 	}
 }
 
 export default connect((state: State, props: any) => {
 	return {
-		fakta: state.fakta.data,
-		soknad: state.soknad
+		restStatus: state.soknad.restStatus,
+		kvittering: state.soknad.kvittering
 	};
-})(injectIntl(Kvittering));
+})(injectIntl(withRouter(KvitteringView)));

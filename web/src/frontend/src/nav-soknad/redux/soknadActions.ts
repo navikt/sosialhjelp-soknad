@@ -7,7 +7,7 @@ import {
 	FaktaActionTypes,
 	SoknadDispatch
 } from "./reduxTypes";
-import { Soknad, Faktum } from "../types";
+import { Soknad, Faktum, Kvittering } from "../types";
 
 import { SoknadAppState } from "./reduxTypes";
 import {
@@ -19,7 +19,8 @@ import {
 	OpprettSoknadAction,
 	ResetSoknadAction,
 	SetServerFeilAction,
-	SoknadActionTypeKeys
+	SoknadActionTypeKeys,
+	KvitteringHentetAction
 } from "./soknadTypes";
 import {
 	oppdaterFaktumMedProperties,
@@ -36,7 +37,8 @@ export type SoknadActionTypes =
 	| SetServerFeilAction
 	| ResetSoknadAction
 	| AvbrytSoknadAction
-	| FortsettSoknadAction;
+	| FortsettSoknadAction
+	| KvitteringHentetAction;
 
 export function opprettSoknad(
 	kommuneId: string,
@@ -155,5 +157,27 @@ export function slettSoknad(brukerBehandlingsId: string) {
 				feilmelding: reason
 			});
 		});
+	};
+}
+
+export function hentKvittering(brukerBehandlingsId: string) {
+	return (dispatch: SoknadDispatch<any>) => {
+		dispatch({ type: SoknadActionTypeKeys.HENT_KVITTERING });
+		return fetchToJson("soknader/" + brukerBehandlingsId + "/kvittering")
+			.then((kvittering: Kvittering) => {
+				dispatch(kvitteringHentet(kvittering));
+			})
+			.catch(reason => {
+				dispatch({
+					type: SoknadActionTypeKeys.SET_SERVER_FEIL,
+					feilmelding: reason
+				});
+			});
+	};
+}
+
+export function kvitteringHentet(kvittering: Kvittering) {
+	return (dispatch: SoknadDispatch<any>) => {
+		dispatch({ type: SoknadActionTypeKeys.KVITTERING_HENTET });
 	};
 }
