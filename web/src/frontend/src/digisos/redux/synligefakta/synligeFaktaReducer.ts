@@ -13,6 +13,10 @@ const defaultState: SynligeFaktaState = {
 	data: {}
 };
 
+
+
+
+
 const synligeFaktaReducer: Reducer<SynligeFaktaState, SynligeFaktaActionTypes> = (state = defaultState, action) => {
 
 	switch (action.type) {
