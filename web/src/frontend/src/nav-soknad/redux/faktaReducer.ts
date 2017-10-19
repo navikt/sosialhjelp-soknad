@@ -20,8 +20,12 @@ export interface FaktumComponentProps {
 const initialState: FaktumState = {
 	restStatus: "",
 	progresjonPending: false,
-	
+
 	data: []
+
+
+
+	
 };
 
 export type FaktumActionTypes =
