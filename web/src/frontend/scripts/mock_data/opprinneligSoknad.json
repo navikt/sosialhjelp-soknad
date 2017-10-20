@@ -136,6 +136,16 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
+			"faktumId": 200,
+			"soknadId": 2,
+			"parrentFaktum": null,
+			"key": "familie.barn.true.barnebidrag",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
+		},
+		{
 			"faktumId": 90,
 			"soknadId": 2,
 			"parrentFaktum": null,
