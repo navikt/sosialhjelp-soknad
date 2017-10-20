@@ -12,3 +12,21 @@ export const mod11Kontroll = (verdi: string) => {
 	const result = 11 - sumForMod % 11;
 	return result === 11 ? 0 : result;
 };
+
+export const konverterFdatoTilDato = (dato: string): Date => {
+	const dag = parseInt(dato.substr(0, 2), 10);
+	const mnd = parseInt(dato.substr(2, 2), 10) - 1;
+	let ar = parseInt(dato.substr(4, 2), 10);
+
+	const now = new Date();
+	if (ar + 2000 > now.getFullYear()) {
+		ar += 1900;
+	} else {
+		ar += 2000;
+	}
+	const d = new Date(ar, mnd, dag);
+	if (d.getDate() !== dag || d.getMonth() !== mnd) {
+		return null;
+	}
+	return d;
+};

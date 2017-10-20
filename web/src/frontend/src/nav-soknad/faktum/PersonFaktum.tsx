@@ -3,6 +3,7 @@ import { Column, Container, Row } from "nav-frontend-grid";
 import { Faktum } from "../types";
 import TallFaktum from "./typedInput/TallFaktum";
 import NavnFaktum from "./typedInput/NavnFaktum";
+import { fdato } from "../validering/valideringer";
 
 interface OwnProps {
 	faktumKey: string;
@@ -65,6 +66,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								required={validering.fnrRequired}
 								faktumId={faktumId}
 								property="fnr"
+								validerFunc={[fdato]}
 							/>
 						</Column>
 						<Column xs="12">
