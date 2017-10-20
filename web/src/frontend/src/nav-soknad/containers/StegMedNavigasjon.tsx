@@ -97,7 +97,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	sendSoknad(brukerBehandlingId: string) {
 		this.props.dispatch(sendSoknad(brukerBehandlingId)).then(
 			() => {
-				this.props.history.push("/kvittering");
+				this.props.history.push(`/kvittering/${brukerBehandlingId}`);
 			},
 			response => {
 				this.props.dispatch(
@@ -116,7 +116,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
 		if (aktivtSteg.type === SkjemaStegType.oppsummering) {
-			// this.props.history.push(`/kvittering/${brukerBehandlingId}`);
 			if (this.props.oppsummeringBekreftet) {
 				this.sendSoknad(brukerBehandlingId);
 			} else {
