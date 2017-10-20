@@ -6,8 +6,10 @@ import { connect } from "react-redux";
 import DocumentTitle from "react-document-title";
 
 import { Innholdstittel } from "nav-frontend-typografi";
+import { setApplikasjonsfeil } from "../redux/applikasjonsfeil/applikasjonsfeilActions";
 
 import AppTittel from "../components/apptittel/AppTittel";
+import ApplikasjonsfeilDialog from "../containers/ApplikasjonsfeilDialog";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
@@ -15,6 +17,7 @@ import { SkjemaConfig, SkjemaStegType, SkjemaSteg, Faktum } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
 import { getProgresjonFaktum } from "../utils";
 import { setFaktum, lagreFaktum } from "../redux/faktaActions";
+import { setVisBekreftMangler } from "../redux/oppsummeringActions";
 import {
 	clearFaktaValideringsfeil,
 	setFaktaValideringsfeil
@@ -29,7 +32,7 @@ import {
 	getStegUrl,
 	oppdaterFaktumMedVerdier
 } from "../utils";
-import { avbrytSoknad } from "../redux/soknadActions";
+import { avbrytSoknad, sendSoknad } from "../redux/soknadActions";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -60,6 +63,7 @@ interface StateProps {
 	visFeilmeldinger?: boolean;
 	valideringsfeil?: Valideringsfeil[];
 	stegValidertCounter?: number;
+	oppsummeringBekreftet?: boolean;
 }
 
 type Props = OwnProps &
@@ -80,6 +84,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	constructor(props: Props) {
 		super(props);
 		this.handleGaVidere = this.handleGaVidere.bind(this);
+		this.sendSoknad = this.sendSoknad.bind(this);
 	}
 
 	componentDidMount() {
@@ -89,9 +94,34 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		}
 	}
 
+	sendSoknad(brukerBehandlingId: string) {
+		this.props.dispatch(sendSoknad(brukerBehandlingId)).then(
+			() => {
+				this.props.history.push("/kvittering");
+			},
+			response => {
+				this.props.dispatch(
+					setApplikasjonsfeil({
+						tittel: this.props.intl.formatMessage({
+							id: "sendsoknadfeilet.tittel"
+						}),
+						innhold: this.props.intl.formatMessage({
+							id: "sendsoknadfeilet.melding"
+						})
+					})
+				);
+			}
+		);
+	}
+
 	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
 		if (aktivtSteg.type === SkjemaStegType.oppsummering) {
-			this.props.history.push(`/kvittering/${brukerBehandlingId}`);
+			// this.props.history.push(`/kvittering/${brukerBehandlingId}`);
+			if (this.props.oppsummeringBekreftet) {
+				this.sendSoknad(brukerBehandlingId);
+			} else {
+				this.props.dispatch(setVisBekreftMangler(true));
+			}
 			return;
 		}
 
@@ -161,6 +191,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 		return (
 			<div>
+				<ApplikasjonsfeilDialog />
 				<DocumentTitle
 					title={intl.formatMessage({ id: this.props.skjemaConfig.tittelId })}
 				/>
@@ -220,6 +251,7 @@ const mapStateToProps = (state: SoknadAppState): StateProps => {
 		fakta: state.fakta.data,
 		progresjon,
 		progresjonPending: state.fakta.progresjonPending,
+		oppsummeringBekreftet: state.oppsummering.bekreftet,
 		valideringer: state.validering.valideringsregler,
 		visFeilmeldinger: state.validering.visValideringsfeil,
 		valideringsfeil: state.validering.feil,

@@ -1,7 +1,7 @@
 declare module "nav-frontend-ikoner-assets" {
 	import * as React from "react";
 
-	type icons =
+	export type icons =
 		| "advarsel-sirkel"
 		| "advarsel-trekant"
 		| "advarsel-trekant-fylt"

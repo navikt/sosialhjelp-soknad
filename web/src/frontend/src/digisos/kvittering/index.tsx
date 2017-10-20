@@ -42,7 +42,6 @@ class KvitteringView extends React.Component<
 	}
 	render() {
 		const { kvittering, restStatus, intl } = this.props;
-		console.log(kvittering);
 		return (
 			<LoadContainer restStatus={restStatus}>
 				<AppTittel />

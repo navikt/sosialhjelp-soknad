@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Route, Switch } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import Feilside from "../nav-soknad/components/feilmeldinger/Feilside";
+import Feilside from "../nav-soknad/components/feilside/Feilside";
 import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
 
 import Informasjon from "./informasjon";

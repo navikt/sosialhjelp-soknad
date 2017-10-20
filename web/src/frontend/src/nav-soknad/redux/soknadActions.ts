@@ -4,7 +4,9 @@ import {
 	fetchToJson,
 	fetchKvittering
 } from "../utils/rest-utils";
+import { InjectedIntl } from "react-intl";
 import { resetFakta, lagreFaktum } from "./faktaActions";
+import { ApplikasjonsfeilActionTypes } from "./applikasjonsfeil/applikasjonsfeilTypes";
 import { updateFaktaMedLagretVerdi } from "./faktaUtils";
 import { finnFaktum } from "../utils";
 import {
@@ -24,15 +26,16 @@ import {
 	OpprettSoknadAction,
 	ResetSoknadAction,
 	SetServerFeilAction,
-	SoknadActionTypeKeys,
 	HentKvitteringAction,
-	KvitteringHentetAction
+	KvitteringHentetAction,
+	SendSoknadAction,
+	SoknadActionTypeKeys,
+	SoknadSendtAction
 } from "./soknadTypes";
 import {
 	oppdaterFaktumMedProperties,
 	oppdaterFaktumMedVerdier
 } from "../../nav-soknad/utils/faktumUtils";
-import { InjectedIntl } from "react-intl";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 
 export type SoknadActionTypes =
@@ -45,7 +48,9 @@ export type SoknadActionTypes =
 	| AvbrytSoknadAction
 	| FortsettSoknadAction
 	| HentKvitteringAction
-	| KvitteringHentetAction;
+	| KvitteringHentetAction
+	| SendSoknadAction
+	| SoknadSendtAction;
 
 export function opprettSoknad(
 	kommuneId: string,
@@ -186,5 +191,22 @@ export function hentKvittering(brukerBehandlingsId: string) {
 export function kvitteringHentet(kvittering: Kvittering) {
 	return (dispatch: SoknadDispatch<any>) => {
 		dispatch({ type: SoknadActionTypeKeys.KVITTERING_HENTET, kvittering });
+	};
+}
+
+export function sendSoknad(brukerBehandlingsId: string) {
+	return (
+		dispatch: SoknadDispatch<
+			SoknadActionTypes | FaktaActionTypes | ApplikasjonsfeilActionTypes
+		>,
+		getState: () => SoknadAppState
+	) => {
+		const payload = JSON.stringify({ behandlingsId: brukerBehandlingsId });
+		return fetchPost(
+			`soknader/${brukerBehandlingsId}/actions/send`,
+			payload
+		).then((response: any) => {
+			dispatch({ type: SoknadActionTypeKeys.SOKNAD_SENDT });
+		});
 	};
 }

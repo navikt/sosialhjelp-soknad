@@ -20,7 +20,7 @@ import Steg7 from "./utgifterGjeld";
 import Steg8 from "./ekstrainformasjon/EkstraInformasjon";
 import Oppsummering from "./oppsummering";
 
-import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
+import Feilside from "../../nav-soknad/components/feilside/Feilside";
 import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
 import { Faktum } from "../../nav-soknad/types";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";

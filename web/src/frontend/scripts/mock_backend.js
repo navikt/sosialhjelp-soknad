@@ -136,6 +136,11 @@ router.post("/fakta", function(req, res) {
 	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
 });
 
+router.post("/soknader/:brukerBehandlingId/actions/send", function(req, res) {
+	const faktum = req.body;
+	return res.json('{ done: "ok" }');
+});
+
 app.use("/", router);
 
 app.listen(port);
