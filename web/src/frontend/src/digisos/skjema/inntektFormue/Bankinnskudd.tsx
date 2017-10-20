@@ -44,6 +44,12 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 						<CheckboxFaktum
 							faktumKey={createCheckboxFaktumKey(
 								hvilkeInnskudd.faktum,
+								"bsu"
+							)}
+						/>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeInnskudd.faktum,
 								"livsforsikring"
 							)}
 						/>
