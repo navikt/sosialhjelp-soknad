@@ -143,6 +143,8 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						this.props.history,
 						this.props.skjemaConfig
 					);
+				}).catch(() => {
+					console.log("lagre faktum feilet");
 				});
 			} else {
 				gaVidere(

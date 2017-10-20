@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
 	FaktaActionTypes,
 	FaktaActionTypeKeys,
@@ -9,6 +10,8 @@ import { Faktum } from "../types";
 import { fetchPost, fetchPut, fetchDelete } from "../utils/rest-utils";
 import { FaktumActionTypes } from "./faktaReducer";
 import { oppdaterFaktumMedVerdier } from "../utils";
+import { setApplikasjonsfeil } from "./applikasjonsfeil/applikasjonsfeilActions";
+import { ApplikasjonsfeilActionTypes } from "./applikasjonsfeil/applikasjonsfeilTypes";
 
 function prepFaktumForLagring(faktum: Faktum) {
 	delete faktum.lagret;
@@ -17,7 +20,7 @@ function prepFaktumForLagring(faktum: Faktum) {
 
 export function lagreFaktum(
 	faktum: Faktum,
-	dispatch: SoknadDispatch<FaktaActionTypes>
+	dispatch: SoknadDispatch<FaktaActionTypes | ApplikasjonsfeilActionTypes>
 ): Promise<any> {
 	dispatch({
 		type: FaktumActionTypeKeys.LAGRE_FAKTUM,
@@ -32,6 +35,10 @@ export function lagreFaktum(
 		})
 		.catch(reason => {
 			dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
+			dispatch(setApplikasjonsfeil({
+				tittel: "Serverfeil",
+				innhold: React.createElement("div", null, "Serverfeil" )
+			}));
 		});
 }
 

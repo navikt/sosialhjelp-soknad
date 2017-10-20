@@ -101,10 +101,13 @@ router.get("/fakta/:faktumId", function(req, res) {
 });
 
 router.put("/fakta/:faktumId", function(req, res) {
-	const faktum = req.body;
-	fakta[utils.finnFaktaIndex(faktum.faktumId, fakta)] = faktum;
-	utils.updateSoknadFakta(fakta);
-	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
+	setTimeout(() => {
+		return res.status(503).send("Server error");
+	}, 1000);
+	// const faktum = req.body;
+	// fakta[utils.finnFaktaIndex(faktum.faktumId, fakta)] = faktum;
+	// utils.updateSoknadFakta(fakta);
+	// return res.json(utils.hentFaktum(faktum.faktumId, fakta));
 });
 
 router.post("/fakta/:faktumId", function(req, res) {
