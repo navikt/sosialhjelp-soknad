@@ -194,16 +194,17 @@ export function kvitteringHentet(kvittering: Kvittering) {
 	};
 }
 
-export function sendSoknad(brukerBehandlingsId: string) {
+export function sendSoknad(brukerBehandlingId: string) {
 	return (
 		dispatch: SoknadDispatch<
 			SoknadActionTypes | FaktaActionTypes | ApplikasjonsfeilActionTypes
 		>,
 		getState: () => SoknadAppState
 	) => {
-		const payload = JSON.stringify({ behandlingsId: brukerBehandlingsId });
+		dispatch({ type: SoknadActionTypeKeys.SEND_SOKNAD, brukerBehandlingId });
+		const payload = JSON.stringify({ behandlingsId: brukerBehandlingId });
 		return fetchPost(
-			`soknader/${brukerBehandlingsId}/actions/send`,
+			`soknader/${brukerBehandlingId}/actions/send`,
 			payload
 		).then((response: any) => {
 			dispatch({ type: SoknadActionTypeKeys.SOKNAD_SENDT });
