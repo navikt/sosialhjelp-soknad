@@ -77,6 +77,12 @@ router.delete("/soknader/:brukerBehandlingId", function(req, res) {
 	res.json();
 });
 
+router.post("/soknader/:brukerBehandlingId/actions/send", function(req, res) {
+	console.log("Mock backend: send søknad");
+	res.status(204); // 204 = "No content"
+	res.send();
+});
+
 router.get("/fakta/:faktumId", function(req, res) {
 	res.json(utils.hentFaktum(req.params.faktumId));
 });
@@ -121,11 +127,6 @@ router.post("/fakta", function(req, res) {
 	const faktum = req.body;
 	fakta.push(faktum);
 	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
-});
-
-router.post("/soknader/:brukerBehandlingId/actions/send", function(req, res) {
-	const faktum = req.body;
-	return res.json('{ done: "ok" }');
 });
 
 app.use("/", router);
