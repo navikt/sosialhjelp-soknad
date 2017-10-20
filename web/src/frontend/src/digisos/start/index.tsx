@@ -6,7 +6,7 @@ import { State } from "../redux/reducers";
 import { REST_STATUS } from "../../nav-soknad/types";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import { getIntlTextOrKey, scrollToTop } from "../../nav-soknad/utils";
-import Feilside from "../../nav-soknad/components/feilmeldinger/Feilside";
+import Feilside from "../../nav-soknad/components/feilside/Feilside";
 
 import Bosted from "./Bosted";
 

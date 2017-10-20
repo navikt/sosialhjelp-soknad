@@ -10,12 +10,14 @@ import { OppsummeringActionTypes } from "./oppsummeringActions";
 export interface OppsummeringState {
 	oppsummering?: Oppsummering;
 	bekreftet?: boolean;
+	visBekreftMangler?: boolean;
 	restStatus: REST_STATUS;
 }
 
 const defaultState: OppsummeringState = {
 	oppsummering: undefined,
 	bekreftet: false,
+	visBekreftMangler: false,
 	restStatus: REST_STATUS.INITIALISERT
 };
 
@@ -73,7 +75,13 @@ const OppsummeringReducer: Reducer<
 		case OppsummeringActionTypeKeys.BEKREFT_OPPSUMMERING:
 			return {
 				...state,
-				bekreftet: action.bekreftet
+				bekreftet: action.bekreftet,
+				visBekreftMangler: false
+			};
+		case OppsummeringActionTypeKeys.SET_VIS_BEKREFT_MANGLER:
+			return {
+				...state,
+				visBekreftMangler: action.visBekreftMangler
 			};
 		default:
 			return state;
