@@ -1,7 +1,7 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import NavFrontendSpinner from "nav-frontend-spinner";
-import Feilside from "../feilmeldinger/Feilside";
+import Feilside from "../feilside/Feilside";
 
 import { REST_STATUS } from "../../types";
 

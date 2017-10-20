@@ -95,8 +95,8 @@ router.post("/fakta/:faktumId", function(req, res) {
 	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
 });
 
-router.delete("/fakta/:faktumId", function (req, res) {
-	 fakta = fakta.filter(function(f) {
+router.delete("/fakta/:faktumId", function(req, res) {
+	fakta = fakta.filter(function(f) {
 		return f.faktumId !== Number(req.params.faktumId);
 	});
 	utils.updateSoknadFakta(fakta);
@@ -121,6 +121,11 @@ router.post("/fakta", function(req, res) {
 	const faktum = req.body;
 	fakta.push(faktum);
 	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
+});
+
+router.post("/soknader/:brukerBehandlingId/actions/send", function(req, res) {
+	const faktum = req.body;
+	return res.json('{ done: "ok" }');
 });
 
 app.use("/", router);

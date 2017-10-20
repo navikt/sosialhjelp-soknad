@@ -101,11 +101,11 @@ export function resetFakta() {
 
 export function slettFaktum(faktumId: number) {
 	return (dispatch: SoknadDispatch<FaktumActionTypes>) => {
-		dispatch({type: FaktumActionTypeKeys.SLETT_FAKTUM, faktumId});
+		dispatch({ type: FaktumActionTypeKeys.SLETT_FAKTUM, faktumId });
 		return fetchDelete("fakta/" + faktumId)
 			.then(() => dispatch({ type: FaktumActionTypeKeys.SLETTET_FAKTUM }))
 			.catch((reason: string) => {
-			dispatch({type: FaktumActionTypeKeys.FEILET, feilmelding: reason});
+				dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
 			});
 	};
 }

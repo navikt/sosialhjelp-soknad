@@ -5,7 +5,8 @@ export enum OppsummeringActionTypeKeys {
 	HENT_OPPSUMMERING = "oppsummering/HENT_OPPSUMMERING",
 	SET_SERVER_FEIL = "oppsummering/SET_SERVER_FEIL",
 	SET_OPPSUMMERING = "oppsummering/SET_OPPSUMMERING",
-	BEKREFT_OPPSUMMERING = "oppsummering/BEKREFT_OPPSUMMERING"
+	BEKREFT_OPPSUMMERING = "oppsummering/BEKREFT_OPPSUMMERING",
+	SET_VIS_BEKREFT_MANGLER = "oppsummering/SET_VIS_BEKREFT_MANGLER"
 }
 
 export interface OppsummeringBolk {
@@ -34,4 +35,9 @@ export interface SetOppsummering {
 export interface BekreftOppsummering {
 	type: OppsummeringActionTypeKeys.BEKREFT_OPPSUMMERING;
 	bekreftet: boolean;
+}
+
+export interface SetVisBekreftMangler {
+	type: OppsummeringActionTypeKeys.SET_VIS_BEKREFT_MANGLER;
+	visBekreftMangler: boolean;
 }

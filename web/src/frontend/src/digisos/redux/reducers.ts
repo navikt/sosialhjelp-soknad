@@ -9,6 +9,7 @@ import LedeteksterReducer from "../../nav-soknad/redux/informasjonReducer";
 import SynligeFaktaReducer from "./synligefakta/synligeFaktaReducer";
 import { SynligeFaktaState } from "./synligefakta/synligeFaktaTypes";
 import MiljovariablerReducer from "./informasjon/miljovariablerReducer";
+import ApplikasjonsfeilReducer from "../../nav-soknad/redux/applikasjonsfeil/applikasjonsfeilReducer";
 
 export interface State extends SoknadAppState {
 	synligefakta: SynligeFaktaState;
@@ -21,7 +22,8 @@ const reducers = combineReducers({
 	validering: ValideringReducer,
 	ledetekster: LedeteksterReducer,
 	synligefakta: SynligeFaktaReducer,
-	miljovariabler: MiljovariablerReducer
+	miljovariabler: MiljovariablerReducer,
+	applikasjonsfeil: ApplikasjonsfeilReducer
 });
 
 export default reducers;

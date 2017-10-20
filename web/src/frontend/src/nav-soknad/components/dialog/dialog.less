@@ -1,0 +1,36 @@
+.nav-soknad-dialog {
+	min-width: 24rem;
+
+	&__icon {
+		text-align: center;
+		margin-bottom: 1rem;
+	}
+}
+@media @desktop {
+	.nav-soknad-dialog {
+		padding: 2rem;
+		max-width: 24rem;
+
+		&__knapperad {
+			margin-top: 2rem;
+			text-align: center;
+		}
+	}
+}
+
+@media @mobile {
+	.nav-soknad-dialog {
+		padding: 0rem;
+		max-width: 100%;
+		min-width: 0;
+
+		&__overskrift {
+			margin-bottom: 0.5rem;
+		}
+
+		&__knapperad {
+			margin-top: 1rem;
+			text-align: center;
+		}
+	}
+}
