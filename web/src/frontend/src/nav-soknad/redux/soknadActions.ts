@@ -62,7 +62,7 @@ export function opprettSoknad(
 		getState: () => SoknadAppState
 	) => {
 		dispatch({ type: SoknadActionTypeKeys.OPPRETT_SOKNAD });
-		const payload = JSON.stringify({ soknadType: "NAV DIGISOS" });
+		const payload = JSON.stringify({ soknadType: "NAV 35-18.01" });
 		fetchPost("soknader", payload)
 			.then((response: { brukerBehandlingId: string }) => {
 				dispatch({
