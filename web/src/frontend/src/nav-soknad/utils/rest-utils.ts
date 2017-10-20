@@ -63,7 +63,7 @@ export function fetchDelete(urlPath: string) {
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS).then(sjekkStatuskode);
 }
 
-export function fetchHtml(urlPath: string) {
+export function fetchOppsummering(urlPath: string) {
 	const OPTIONS: RequestInit = {
 		headers: {
 			accept: "application/vnd.oppsummering+html"
@@ -75,6 +75,23 @@ export function fetchHtml(urlPath: string) {
 		.then(sjekkStatuskode)
 		.then((response: Response) => {
 			return response.text();
+		});
+}
+
+export function fetchKvittering(urlPath: string) {
+	const OPTIONS: RequestInit = {
+		headers: {
+			accept: "application/vnd.kvitteringforinnsendtsoknad+json",
+			"Content-Type": "application/json",
+			"X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API")
+		},
+		method: "GET",
+		credentials: "same-origin"
+	};
+	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
+		.then(sjekkStatuskode)
+		.then((response: Response) => {
+			return response.json();
 		});
 }
 

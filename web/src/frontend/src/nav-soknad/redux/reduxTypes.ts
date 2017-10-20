@@ -1,8 +1,8 @@
 import { ValideringState } from "./valideringReducer";
 import { FaktumState } from "./faktaReducer";
 import { OppsummeringState } from "./oppsummeringReducer";
+import { Soknad, Kvittering, REST_STATUS } from "../types";
 import { ApplikasjonsfeilState } from "./applikasjonsfeil/applikasjonsfeilReducer";
-import { Soknad, REST_STATUS } from "../types";
 
 export * from "./faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -28,4 +28,5 @@ export interface SoknadAppState {
 export interface SoknadState {
 	restStatus: REST_STATUS;
 	data: Soknad;
+	kvittering?: Kvittering;
 }

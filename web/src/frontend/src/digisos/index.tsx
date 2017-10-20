@@ -22,7 +22,10 @@ class App extends React.Component<InjectedIntlProps, {}> {
 						component={SkjemaRouter}
 						exact={true}
 					/>
-					<Route path={`/kvittering`} component={Kvittering} />
+					<Route
+						path={`/kvittering/:brukerBehandlingId`}
+						component={Kvittering}
+					/>
 					<Route
 						component={() => (
 							<Feilside

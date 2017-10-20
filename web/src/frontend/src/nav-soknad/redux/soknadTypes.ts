@@ -1,4 +1,4 @@
-import { Soknad } from "../types/navSoknadTypes";
+import { Soknad, Kvittering } from "../types/navSoknadTypes";
 
 export enum SoknadActionTypeKeys {
 	OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
@@ -12,6 +12,8 @@ export enum SoknadActionTypeKeys {
 	OTHER_ACTION = "__any_other_action_type__",
 	AVBRYT_SOKNAD = "soknad/AVBRYT_SOKNAD",
 	FORTSETT_SOKNAD = "soknad/FORTSETT_SOKNAD",
+	HENT_KVITTERING = "soknad/HENT_KVITTERING",
+	KVITTERING_HENTET = "soknad/KVITTERING_HENTET",
 	SEND_SOKNAD = "soknad/SEND_SOKNAD",
 	SOKNAD_SENDT = "soknad/SOKNAD_SENDT"
 }
@@ -61,4 +63,13 @@ export interface AvbrytSoknadAction {
 
 export interface FortsettSoknadAction {
 	type: SoknadActionTypeKeys.FORTSETT_SOKNAD;
+}
+
+export interface HentKvitteringAction {
+	type: SoknadActionTypeKeys.HENT_KVITTERING;
+}
+
+export interface KvitteringHentetAction {
+	type: SoknadActionTypeKeys.KVITTERING_HENTET;
+	kvittering: Kvittering;
 }

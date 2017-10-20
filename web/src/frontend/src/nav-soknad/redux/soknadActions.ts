@@ -1,5 +1,10 @@
+import {
+	fetchDelete,
+	fetchPost,
+	fetchToJson,
+	fetchKvittering
+} from "../utils/rest-utils";
 import { InjectedIntl } from "react-intl";
-import { fetchDelete, fetchPost, fetchToJson } from "../utils/rest-utils";
 import { resetFakta, lagreFaktum } from "./faktaActions";
 import { ApplikasjonsfeilActionTypes } from "./applikasjonsfeil/applikasjonsfeilTypes";
 import { updateFaktaMedLagretVerdi } from "./faktaUtils";
@@ -9,7 +14,7 @@ import {
 	FaktaActionTypes,
 	SoknadDispatch
 } from "./reduxTypes";
-import { Soknad, Faktum } from "../types";
+import { Soknad, Faktum, Kvittering } from "../types";
 
 import { SoknadAppState } from "./reduxTypes";
 import {
@@ -21,6 +26,8 @@ import {
 	OpprettSoknadAction,
 	ResetSoknadAction,
 	SetServerFeilAction,
+	HentKvitteringAction,
+	KvitteringHentetAction,
 	SendSoknadAction,
 	SoknadActionTypeKeys,
 	SoknadSendtAction
@@ -40,6 +47,8 @@ export type SoknadActionTypes =
 	| ResetSoknadAction
 	| AvbrytSoknadAction
 	| FortsettSoknadAction
+	| HentKvitteringAction
+	| KvitteringHentetAction
 	| SendSoknadAction
 	| SoknadSendtAction;
 
@@ -160,6 +169,28 @@ export function slettSoknad(brukerBehandlingsId: string) {
 				feilmelding: reason
 			});
 		});
+	};
+}
+
+export function hentKvittering(brukerBehandlingsId: string) {
+	return (dispatch: SoknadDispatch<any>) => {
+		dispatch({ type: SoknadActionTypeKeys.HENT_KVITTERING });
+		return fetchKvittering("soknader/" + brukerBehandlingsId + "?lang=nb_NO")
+			.then((kvittering: Kvittering) => {
+				dispatch(kvitteringHentet(kvittering));
+			})
+			.catch(reason => {
+				dispatch({
+					type: SoknadActionTypeKeys.SET_SERVER_FEIL,
+					feilmelding: reason
+				});
+			});
+	};
+}
+
+export function kvitteringHentet(kvittering: Kvittering) {
+	return (dispatch: SoknadDispatch<any>) => {
+		dispatch({ type: SoknadActionTypeKeys.KVITTERING_HENTET, kvittering });
 	};
 }
 

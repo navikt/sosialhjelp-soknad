@@ -97,7 +97,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	sendSoknad(brukerBehandlingId: string) {
 		this.props.dispatch(sendSoknad(brukerBehandlingId)).then(
 			() => {
-				this.props.history.push("/kvittering");
+				this.props.history.push(`/kvittering/${brukerBehandlingId}`);
 			},
 			response => {
 				this.props.dispatch(

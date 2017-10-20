@@ -48,11 +48,24 @@ router.post("/soknader", function(req, res) {
 	});
 });
 
+// Hent ut søknad
+router.get("/soknader/:brukerBehandlingId?lang=nb_NO", function(req, res) {
+	console.log("sss");
+});
+
 router.get("/soknader/:brukerBehandlingId", function(req, res) {
 	console.log("Mock backend: get soknader");
+	console.log(req.headers["accept"]);
 	if (req.headers["accept"] === "application/vnd.oppsummering+html") {
+		console.log("Mock backend: oppsummering");
 		res.send(utils.lesMockHtmlFil("oppsummering.html"));
+	} else if (
+		req.headers["accept"] === "application/vnd.kvitteringforinnsendtsoknad+json"
+	) {
+		console.log("Mock backend: kvittering");
+		res.json(utils.lesMockDataFil("kvittering.json"));
 	} else {
+		console.log("Mock backend: søknad");
 		if (req.accepts("application/json")) {
 			res.json(utils.lesMockDataFil("soknad.json"));
 		} else {

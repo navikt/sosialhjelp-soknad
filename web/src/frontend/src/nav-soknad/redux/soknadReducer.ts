@@ -44,7 +44,6 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 					...state.data,
 					avbrytDialogSynlig: true
 				}
-
 			};
 		case SoknadActionTypeKeys.FORTSETT_SOKNAD:
 			return {
@@ -83,6 +82,17 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 			return {
 				...state,
 				data: action.data,
+				restStatus: REST_STATUS.OK
+			};
+		case SoknadActionTypeKeys.HENT_KVITTERING:
+			return {
+				...state,
+				restStatus: REST_STATUS.PENDING
+			};
+		case SoknadActionTypeKeys.KVITTERING_HENTET:
+			return {
+				...state,
+				kvittering: action.kvittering,
 				restStatus: REST_STATUS.OK
 			};
 		case SoknadActionTypeKeys.SET_SERVER_FEIL:
