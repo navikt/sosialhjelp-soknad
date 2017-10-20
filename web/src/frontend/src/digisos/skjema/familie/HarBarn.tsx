@@ -7,6 +7,7 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
 import { getFaktumVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 
 import Barneinfo from "./Barneinfo";
+import Barnebidrag from "./Barnebidrag";
 
 class HarBarn extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -17,6 +18,7 @@ class HarBarn extends React.Component<FaktumComponentProps, {}> {
 			<SporsmalFaktum faktumKey={barn.faktum}>
 				<FaktumRadio faktumKey={barn.faktum} value="true" />
 				<Underskjema visible={getFaktumVerdi(fakta, barn.faktum) === "true"}>
+					<Barnebidrag />
 					<Barneinfo
 						{...this.props}
 						faktumKey="familie.barn.true.barn"
