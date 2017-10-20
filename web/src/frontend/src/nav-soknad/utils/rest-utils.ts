@@ -79,6 +79,9 @@ export function fetchHtml(urlPath: string) {
 }
 
 function toJson<T>(response: Response): Promise<T> {
+	if (response.status === 204) {
+		return response.text() as Promise<any>;
+	}
 	return response.json();
 }
 
