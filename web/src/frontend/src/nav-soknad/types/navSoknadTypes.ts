@@ -75,8 +75,8 @@ export interface Vedlegg {
 }
 
 export interface Kvittering {
-	kommune: string;
-	bydel?: string;
+	orgnummer: string;
+	navkontor: string;
 }
 
 export enum DelstegStatus {

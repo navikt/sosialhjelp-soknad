@@ -64,5 +64,6 @@
 	"tittel": "Søknad om økonimisk sosialhjelp",
 	"tittelCmsKey": "foreldresoknad.skjema.tittel",
 	"klokkeslett": "16.03",
-	"kommune": "horten"
+	"navkontor": "horten",
+	"orgnummer": 123123123
 }
