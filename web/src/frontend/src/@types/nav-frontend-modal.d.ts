@@ -8,6 +8,9 @@ declare module "nav-frontend-modal" {
 		contentLabel?: string;
 		closeButton?: boolean;
 	}
-	const t: new (props: NavFrontendModal) => React.Component<NavFrontendModal, any>;
+	const t: new (props: NavFrontendModal) => React.Component<
+		NavFrontendModal,
+		any
+	>;
 	export default t;
 }

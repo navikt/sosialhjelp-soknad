@@ -44,7 +44,6 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 					...state.data,
 					avbrytDialogSynlig: true
 				}
-
 			};
 		case SoknadActionTypeKeys.FORTSETT_SOKNAD:
 			return {

@@ -31,7 +31,7 @@ ReactDOM.render(
 	<Provider store={store}>
 		<IntlProvider>
 			<BrowserRouter basename="soknadsosialhjelp">
-				<App intl={null}/>
+				<App intl={null} />
 			</BrowserRouter>
 		</IntlProvider>
 	</Provider>,

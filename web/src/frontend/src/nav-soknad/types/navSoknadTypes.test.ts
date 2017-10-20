@@ -187,7 +187,8 @@ const soknad: Soknad = {
 				sekundarAdresseGyldigTil: "2012-11-12",
 				utenlandskKontoLand: "Norge",
 				kontonummer: "9876 98 98765",
-				sekundarAdresse: "Poitigatan 55, Nord-Poiti, 1111 Helsinki, Finland, Finland",
+				sekundarAdresse:
+					"Poitigatan 55, Nord-Poiti, 1111 Helsinki, Finland, Finland",
 				sekundarAdresseGyldigFra: "2017-09-06",
 				gjeldendeAdresseType: "POSTADRESSE",
 				diskresjonskode: null,
@@ -994,14 +995,11 @@ const soknad: Soknad = {
 };
 
 describe("soknad types", () => {
-
 	it("should have types checked", () => {
-
 		function prosesserSoknad(soknad: Soknad) {
 			return soknad;
 		}
 
 		expect(prosesserSoknad(soknad).brukerBehandlingId).toEqual("1000B7FGM");
 	});
-
 });

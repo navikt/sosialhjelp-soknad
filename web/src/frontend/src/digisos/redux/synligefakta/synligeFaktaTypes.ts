@@ -1,6 +1,8 @@
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 
-export interface GruppertFaktumStruktur { [key: string]: FaktumStruktur[]; }
+export interface GruppertFaktumStruktur {
+	[key: string]: FaktumStruktur[];
+}
 
 export interface SynligeFaktaState {
 	data: GruppertFaktumStruktur;
@@ -19,10 +21,12 @@ export interface PropertyStruktur {
 	id: string;
 	type: string;
 	configuration: {
-		configuration: [{
-			key: string;
-			value: string;
-		}]
+		configuration: [
+			{
+				key: string;
+				value: string;
+			}
+		];
 	};
 }
 

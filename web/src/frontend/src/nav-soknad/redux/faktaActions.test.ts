@@ -2,7 +2,6 @@
 // import { setFaktumVerdi } from "./actions";
 
 describe("setFaktumVerdi action creator", () => {
-
 	it("should update fact", () => {
 		expect(1).toEqual(1);
 	});

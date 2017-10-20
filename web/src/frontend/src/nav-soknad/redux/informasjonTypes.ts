@@ -6,7 +6,11 @@ export enum ActionTypeKeys {
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
-export type InformasjonActionTypes = HentetTeksterAction | HentTeksterAction | TeksterFeiletAction | OtherAction;
+export type InformasjonActionTypes =
+	| HentetTeksterAction
+	| HentTeksterAction
+	| TeksterFeiletAction
+	| OtherAction;
 
 interface HentetTeksterAction {
 	type: ActionTypeKeys.OK;

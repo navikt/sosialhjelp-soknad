@@ -1,6 +1,9 @@
 import { fetchToJson } from "../../../nav-soknad/utils/rest-utils";
 import { SoknadDispatch } from "../../../nav-soknad/redux/reduxTypes";
-import { ActionTypeKeys, MiljovariablerActionTypes } from "./miljovariablerTypes";
+import {
+	ActionTypeKeys,
+	MiljovariablerActionTypes
+} from "./miljovariablerTypes";
 
 const { OK, PENDING, FEILET } = ActionTypeKeys;
 

@@ -9,12 +9,11 @@ interface Props {
 }
 
 const InformasjonBolk: React.StatelessComponent<Props> = props => {
-
 	const sporsmal = props.faktumstrukturer.map(struktur => {
 		return <Opplysning faktumstruktur={struktur} key={struktur.id} />;
 	});
 
-	return <Progresjonsblokk tittel={props.id} content={sporsmal}/>;
+	return <Progresjonsblokk tittel={props.id} content={sporsmal} />;
 };
 
 export default InformasjonBolk;

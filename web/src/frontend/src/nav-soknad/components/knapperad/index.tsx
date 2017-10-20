@@ -22,13 +22,15 @@ class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 					onClick={gaVidere}
 					spinner={this.props.gaViderePending}
 				>
-					{gaVidereLabel ? gaVidereLabel : getIntlTextOrKey(intl, "skjema.knapper.gaavidere") }
+					{gaVidereLabel
+						? gaVidereLabel
+						: getIntlTextOrKey(intl, "skjema.knapper.gaavidere")}
 				</Knapp>
 				<Knapp type="standard" htmlType="button" onClick={gaTilbake}>
-					{ getIntlTextOrKey(intl, "skjema.knapper.tilbake") }
+					{getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
 				</Knapp>
 				<a href="#" className="lenke" onClick={avbryt}>
-					{ getIntlTextOrKey(intl, "skjema.knapper.avbryt") }
+					{getIntlTextOrKey(intl, "skjema.knapper.avbryt")}
 				</a>
 			</div>
 		);

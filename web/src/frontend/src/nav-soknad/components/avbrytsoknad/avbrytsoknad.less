@@ -1,61 +1,57 @@
 @media @desktop {
+	.avbrytmodal {
+		padding: 2rem;
 
-  .avbrytmodal {
-	padding: 2rem;
-
-	&__neiknapp {
-	  margin-left: 2rem;
+		&__neiknapp {
+			margin-left: 2rem;
+		}
 	}
-
-  }
-
 }
 
 @media @mobile {
+	.avbrytmodal {
+		padding: 0;
 
-  .avbrytmodal {
-	padding: 0;
+		&__neiknapp {
+			margin-left: 0.7rem;
+		}
 
-	&__neiknapp {
-	  margin-left: 0.7rem;
+		&__infoikon_wrapper {
+			display: none;
+		}
 	}
-
-	&__infoikon_wrapper {
-	  display: none;
-	}
-  }
 }
 
 .avbrytmodal {
-  max-width: 26rem;
+	max-width: 26rem;
 
-  &__infoikon_wrapper {
-	text-align: center;
-	margin-bottom: 1rem;
-  }
+	&__infoikon_wrapper {
+		text-align: center;
+		margin-bottom: 1rem;
+	}
 
-  &__overskrift {
-	text-align: center;
-  }
+	&__overskrift {
+		text-align: center;
+	}
 
-  &__tekst {
-	text-align: center;
-  }
+	&__tekst {
+		text-align: center;
+	}
 
-  &__uthevet_tekst {
-	text-align: center;
-	font-weight: bold;
-  }
+	&__uthevet_tekst {
+		text-align: center;
+		font-weight: bold;
+	}
 
-  &__understrek_wrapper {
-	text-align: center;
-	padding-bottom: 2.0rem;
-	line-height: .7rem;
-  }
+	&__understrek_wrapper {
+		text-align: center;
+		padding-bottom: 2rem;
+		line-height: 0.7rem;
+	}
 
-  &__understrek {
-	width: 2.7rem;
-	border-bottom: 2px solid @orangeFocus;
-	display: inline-block;
-  }
+	&__understrek {
+		width: 2.7rem;
+		border-bottom: 2px solid @orangeFocus;
+		display: inline-block;
+	}
 }

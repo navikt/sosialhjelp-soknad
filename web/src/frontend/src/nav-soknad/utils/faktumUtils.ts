@@ -100,7 +100,7 @@ export function getPropertyVerdi(
 
 export function oppdaterFaktumMedProperties(
 	faktum: Faktum,
-	properties: object,
+	properties: object
 ): Faktum {
 	return { ...faktum, properties: { ...properties } };
 }

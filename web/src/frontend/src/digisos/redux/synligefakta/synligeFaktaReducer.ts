@@ -13,12 +13,10 @@ const defaultState: SynligeFaktaState = {
 	data: {}
 };
 
-
-
-
-
-const synligeFaktaReducer: Reducer<SynligeFaktaState, SynligeFaktaActionTypes> = (state = defaultState, action) => {
-
+const synligeFaktaReducer: Reducer<
+	SynligeFaktaState,
+	SynligeFaktaActionTypes
+> = (state = defaultState, action) => {
 	switch (action.type) {
 		case SynligeFaktaActionTypeKeys.HENT_SYNLIGE:
 			return {
@@ -36,7 +34,9 @@ const synligeFaktaReducer: Reducer<SynligeFaktaState, SynligeFaktaActionTypes> =
 	}
 };
 
-function grupperFaktumStrukturer(faktumStrukturer: FaktumStruktur[]): GruppertFaktumStruktur {
+function grupperFaktumStrukturer(
+	faktumStrukturer: FaktumStruktur[]
+): GruppertFaktumStruktur {
 	const gruppert: GruppertFaktumStruktur = {};
 
 	faktumStrukturer.forEach(struktur => {

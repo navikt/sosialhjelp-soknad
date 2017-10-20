@@ -22,10 +22,6 @@ const initialState: FaktumState = {
 	progresjonPending: false,
 
 	data: []
-
-
-
-	
 };
 
 export type FaktumActionTypes =

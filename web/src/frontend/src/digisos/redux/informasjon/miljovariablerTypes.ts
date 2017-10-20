@@ -6,7 +6,8 @@ export enum ActionTypeKeys {
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
-export type MiljovariablerActionTypes = HentetMiljovariablerAction
+export type MiljovariablerActionTypes =
+	| HentetMiljovariablerAction
 	| HentMiljovariablerAction
 	| MiljovariablerFeiletAction
 	| OtherAction;

@@ -34,7 +34,8 @@ class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 					<NivaTreSkjema
 						visible={
 							getPropertyVerdi(fakta, faktumKey, "borsammen") === "false"
-						}>
+						}
+					>
 						<TextareaFaktum
 							faktumKey={faktumKey}
 							property="ikkesammenbeskrivelse"

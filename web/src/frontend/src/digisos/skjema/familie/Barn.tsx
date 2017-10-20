@@ -63,7 +63,8 @@ export default class Barn extends React.Component<Props, {}> {
 			<div className="blokk barn">
 				<SporsmalFaktum
 					faktumKey={faktumKey}
-					tittelRenderer={tittel => `${tittel} ${barnNummer}`}>
+					tittelRenderer={tittel => `${tittel} ${barnNummer}`}
+				>
 					<PersonFaktum
 						faktumKey={faktumKey}
 						faktumId={faktumId}
@@ -79,7 +80,8 @@ export default class Barn extends React.Component<Props, {}> {
 						<NivaTreSkjema
 							visible={faktumIsSelected(
 								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId)
-							)}>
+							)}
+						>
 							<SporsmalFaktum faktumKey={hvormye.faktum}>
 								<BelopFaktum
 									faktumKey={faktumKey}

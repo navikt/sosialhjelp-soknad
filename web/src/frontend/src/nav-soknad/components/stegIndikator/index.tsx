@@ -42,11 +42,7 @@ export const Steg: React.StatelessComponent<StegProps> = (props: StegProps) => {
 	return (
 		<li className={className} aria-label={props.tittel}>
 			<StatusTekst {...props} />
-			{passert
-				? <StegindikatorHake />
-				: <span>
-						{props.steg}
-					</span>}
+			{passert ? <StegindikatorHake /> : <span>{props.steg}</span>}
 		</li>
 	);
 };
@@ -58,16 +54,17 @@ const StegIndikator: React.StatelessComponent<Props> = (props: Props) => {
 			role="progressbar"
 			aria-valuenow={props.aktivtSteg}
 			aria-valuemin={1}
-			aria-valuemax={props.steg.length}>
+			aria-valuemax={props.steg.length}
+		>
 			<ul className="stegindikator">
-				{props.steg.map((steg, idx) =>
+				{props.steg.map((steg, idx) => (
 					<Steg
 						key={idx + 1}
 						steg={idx + 1}
 						aktivtSteg={props.aktivtSteg}
 						tittel={steg.tittel}
 					/>
-				)}
+				))}
 			</ul>
 		</div>
 	);

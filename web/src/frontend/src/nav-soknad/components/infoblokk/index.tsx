@@ -8,19 +8,25 @@ interface Props {
 	className?: string;
 }
 
-const Infoblokk: React.StatelessComponent<Props> = ({ className, children, tittel }) => {
+const Infoblokk: React.StatelessComponent<Props> = ({
+	className,
+	children,
+	tittel
+}) => {
 	return (
 		<Panel className={`skjema-infoblokk ${className}`}>
 			<div className="skjema-infoblokk__content">
 				<div className="skjema-infoblokk__icon">
 					<Icon kind="info-sirkel" />
 				</div>
-				{tittel &&
+				{tittel && (
 					<div>
-						<Innholdstittel className="skjema-infoblokk__title">{tittel}</Innholdstittel>
-						<div className="skjema-infoblokk__dash"/>
+						<Innholdstittel className="skjema-infoblokk__title">
+							{tittel}
+						</Innholdstittel>
+						<div className="skjema-infoblokk__dash" />
 					</div>
-				}
+				)}
 				{children}
 			</div>
 		</Panel>
