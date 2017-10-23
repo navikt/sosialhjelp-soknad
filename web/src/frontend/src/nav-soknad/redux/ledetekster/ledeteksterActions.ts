@@ -1,4 +1,4 @@
-import { ActionTypeKeys, InformasjonActionTypes } from "./informasjonTypes";
+import { ActionTypeKeys, InformasjonActionTypes } from "./ledeteksterTypes";
 
 const hentTekster = (): InformasjonActionTypes  => {
 	return {

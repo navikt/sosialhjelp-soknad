@@ -1,13 +1,13 @@
-import { initSaga, leggNoklerPaaLedetekster, urlInneholderVistekster } from "./informasjonSaga";
-import { henterTekster, hentetTekster, hentTeksterFeilet } from "./informasjonActions";
+import { hentTeksterSaga, leggNoklerPaaLedetekster, urlInneholderVistekster } from "./ledeteksterSaga";
+import { henterTekster, hentetTekster, hentTeksterFeilet } from "./ledeteksterActions";
 import { call, put } from "redux-saga/effects";
 import { fetchToJson } from "../../utils/rest-utils";
 
-describe("informasjonsSaga", () => {
+describe("ledeteksterSaga", () => {
 
-	describe("initSaga - hovedflyt", () => {
+	describe("hentTeksterSaga - hovedflyt", () => {
 
-		const saga = initSaga();
+		const saga = hentTeksterSaga();
 		const visNokler = false;
 		const response = {
 			tekst: "tekst"
@@ -48,8 +48,8 @@ describe("informasjonsSaga", () => {
 		});
 	});
 
-	describe("initSaga - dekorer tekster flyt", () => {
-		const saga = initSaga();
+	describe("hentTeksterSaga - dekorer tekster flyt", () => {
+		const saga = hentTeksterSaga();
 		const visNokler = true;
 		const response = {
 			tekst: "tekst"
@@ -74,8 +74,8 @@ describe("informasjonsSaga", () => {
 
 	});
 
-	describe("initSaga - feilflyt", () => {
-		const saga = initSaga();
+	describe("hentTeksterSaga - feilflyt", () => {
+		const saga = hentTeksterSaga();
 		const reason = "Serverfeil";
 		saga.next();
 

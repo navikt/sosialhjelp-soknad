@@ -6,11 +6,11 @@ import { connect } from "react-redux";
 import {
 	ActionTypeKeys,
 	LedetekstState
-} from "./nav-soknad/redux/informasjon/informasjonTypes";
+} from "./nav-soknad/redux/ledetekster/ledeteksterTypes";
 import { DispatchProps } from "./nav-soknad/redux/reduxTypes";
 import Feilside from "./nav-soknad/components/feilside/Feilside";
 import { hentMiljovariabler } from "./digisos/redux/informasjon/miljovariablerActions";
-import { hentTekster } from "./nav-soknad/redux/informasjon/informasjonActions";
+import { hentTekster } from "./nav-soknad/redux/ledetekster/ledeteksterActions";
 
 addLocaleData(nb);
 

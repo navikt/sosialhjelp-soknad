@@ -2,7 +2,7 @@ import {
 	ActionTypeKeys,
 	InformasjonActionTypes,
 	LedetekstApiType
-} from "./informasjonTypes";
+} from "./ledeteksterTypes";
 
 const { OK, PENDING, FEILET, INIT } = ActionTypeKeys;
 
