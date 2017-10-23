@@ -1,8 +1,8 @@
 import { all } from "redux-saga/effects";
-import informasjonsSaga from "./nav-soknad/redux/informasjon/informasjonSaga";
+import ledeteksterSaga from "./nav-soknad/redux/ledetekster/ledeteksterSaga";
 
 export default function* rootSaga() {
 	yield all([
-		informasjonsSaga()
+		ledeteksterSaga()
 	]);
 }
