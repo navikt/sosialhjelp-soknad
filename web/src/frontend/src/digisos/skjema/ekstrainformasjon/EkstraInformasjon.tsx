@@ -6,13 +6,14 @@ import { FormattedHTMLMessage } from "react-intl";
 import { SynligeFaktaProps } from "../../redux/synligefakta/synligeFaktaTypes";
 import InformasjonBolk from "./InformasjonBolk";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { hentSynligeFakta } from "../../redux/synligefakta/synligeFaktaActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 
-type Props = SynligeFaktaProps & DispatchProps;
+type Props = SynligeFaktaProps & DispatchProps & InjectedIntlProps;
 
 class EkstraInformasjon extends React.Component<Props, {}> {
 
@@ -22,6 +23,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 
 	render() {
 		const {data, restStatus} = this.props.synligefakta;
+		const intl = this.props.intl;
 		return (
 			<div className="steg-ekstrainformasjon">
 				<div className="skjema-content">
@@ -36,7 +38,11 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 					{
 						restStatus === REST_STATUS.OK ?
 							Object.keys(data).map(key => (
-								<InformasjonBolk id={key} key={key} faktumstrukturer={data[key]}/>
+								<InformasjonBolk
+									id={key}
+									key={key}
+									tittel={intl.formatMessage({id: `${key}.sporsmal`})}
+									faktumstrukturer={data[key]}/>
 							))
 							:
 							<div className="ekstrainfo__spinner">
@@ -53,4 +59,4 @@ export default connect((state: State) => {
 	return {
 		synligefakta: state.synligefakta,
 	};
-})(EkstraInformasjon);
+})(injectIntl(EkstraInformasjon));
