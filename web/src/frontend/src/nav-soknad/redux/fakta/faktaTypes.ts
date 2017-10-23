@@ -27,7 +27,7 @@ interface OppdaterFaktumVerdi {
 	faktum: Faktum;
 }
 
-interface LagreFaktum {
+export interface LagreFaktum {
 	type: FaktumActionTypeKeys.LAGRE_FAKTUM;
 	faktum: Faktum;
 }

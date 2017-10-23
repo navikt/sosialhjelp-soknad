@@ -136,14 +136,16 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 					`${aktivtSteg.stegnummer + 1}`
 				);
 				this.props.dispatch(setFaktum(faktum));
-				lagreFaktum(faktum, this.props.dispatch).then(() => {
-					gaVidere(
-						aktivtSteg.stegnummer,
-						brukerBehandlingId,
-						this.props.history,
-						this.props.skjemaConfig
-					);
-				});
+				this.props.dispatch(lagreFaktum(faktum));
+				// TODO: Gjør det mulig å gå videre her
+					// .then(() => {
+					// gaVidere(
+					// 	aktivtSteg.stegnummer,
+					// 	brukerBehandlingId,
+					// 	this.props.history,
+					// 	this.props.skjemaConfig
+					// );
+				// });
 			} else {
 				gaVidere(
 					aktivtSteg.stegnummer,

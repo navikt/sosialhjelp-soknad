@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
 	FaktaActionTypes,
 	FaktaActionTypeKeys,
@@ -9,39 +8,15 @@ import {
 	SoknadAppState
 } from "../reduxTypes";
 import { Faktum } from "../../types";
-import { fetchPost, fetchPut, fetchDelete } from "../../utils/rest-utils";
+import { fetchPost, fetchDelete } from "../../utils/rest-utils";
 import { FaktumActionTypes } from "./faktaTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils";
-import { setApplikasjonsfeil } from "../applikasjonsfeil/applikasjonsfeilActions";
-import { ApplikasjonsfeilActionTypes } from "../applikasjonsfeil/applikasjonsfeilTypes";
 
-function prepFaktumForLagring(faktum: Faktum) {
-	delete faktum.lagret;
-	return JSON.stringify(faktum);
-}
-
-export function lagreFaktum(
-	faktum: Faktum,
-	dispatch: SoknadDispatch<FaktaActionTypes | ApplikasjonsfeilActionTypes>
-): Promise<any> {
-	dispatch({
+export function lagreFaktum( faktum: Faktum ): FaktumActionTypes {
+	return {
 		type: FaktumActionTypeKeys.LAGRE_FAKTUM,
 		faktum
-	});
-	return fetchPut("fakta/" + faktum.faktumId, prepFaktumForLagring(faktum))
-		.then(response => {
-			dispatch({
-				type: FaktumActionTypeKeys.LAGRET_FAKTUM,
-				faktum: response as Faktum
-			});
-		})
-		.catch(reason => {
-			dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
-			dispatch(setApplikasjonsfeil({
-				tittel: "Serverfeil",
-				innhold: React.createElement("div", null, "Serverfeil" )
-			}));
-		});
+	};
 }
 
 export function setFaktum(faktum: Faktum) {

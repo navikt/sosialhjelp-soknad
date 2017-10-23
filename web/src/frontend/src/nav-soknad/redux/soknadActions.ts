@@ -108,17 +108,16 @@ const setInformasjonsFaktum = (
 		"3": getIntlTextOrKey(intl, "informasjon.nodsituasjon.undertittel"),
 		"4": getIntlTextOrKey(intl, "informasjon.nodsituasjon.tekst")
 	};
-	lagreFaktum(
+	dispatch(lagreFaktum(
 		oppdaterFaktumMedProperties(
 			finnFaktum("informasjon.tekster", fakta),
 			properties
-		),
-		dispatch
-	);
+		)
+	));
 };
 
 const setBostedFaktum = (faktum: Faktum, verdi: string, dispatch: any) => {
-	lagreFaktum(oppdaterFaktumMedVerdier(faktum, verdi), dispatch);
+	dispatch(lagreFaktum(oppdaterFaktumMedVerdier(faktum, verdi)));
 };
 
 export function hentSoknad(brukerBehandlingsId: string) {

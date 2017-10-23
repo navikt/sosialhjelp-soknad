@@ -46,3 +46,8 @@ export function updateFaktumLagretVerdi(fakta: Faktum[], faktum: Faktum) {
 		];
 	}
 }
+
+export function prepFaktumForLagring(faktum: Faktum) {
+	delete faktum.lagret;
+	return JSON.stringify(faktum);
+}
