@@ -3,15 +3,17 @@ import {
 	FaktaActionTypes,
 	FaktaActionTypeKeys,
 	FaktumActionTypeKeys,
+} from "./faktaActionTypes";
+import {
 	SoknadDispatch,
 	SoknadAppState
-} from "./reduxTypes";
-import { Faktum } from "../types";
-import { fetchPost, fetchPut, fetchDelete } from "../utils/rest-utils";
-import { FaktumActionTypes } from "./faktaReducer";
-import { oppdaterFaktumMedVerdier } from "../utils";
-import { setApplikasjonsfeil } from "./applikasjonsfeil/applikasjonsfeilActions";
-import { ApplikasjonsfeilActionTypes } from "./applikasjonsfeil/applikasjonsfeilTypes";
+} from "../reduxTypes";
+import { Faktum } from "../../types";
+import { fetchPost, fetchPut, fetchDelete } from "../../utils/rest-utils";
+import { FaktumActionTypes } from "./faktaTypes";
+import { oppdaterFaktumMedVerdier } from "../../utils";
+import { setApplikasjonsfeil } from "../applikasjonsfeil/applikasjonsfeilActions";
+import { ApplikasjonsfeilActionTypes } from "../applikasjonsfeil/applikasjonsfeilTypes";
 
 function prepFaktumForLagring(faktum: Faktum) {
 	delete faktum.lagret;

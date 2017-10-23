@@ -10,7 +10,7 @@ import {
 	inputKeys,
 	getFaktumVerdi
 } from "../../../nav-soknad/utils";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 
 import { State } from "../../redux/reducers";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";

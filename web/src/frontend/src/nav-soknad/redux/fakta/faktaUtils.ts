@@ -1,4 +1,4 @@
-import { Faktum } from "../types";
+import { Faktum } from "../../types";
 
 export function updateFaktumMedLagretVerdi(faktum: Faktum): Faktum {
 	return {

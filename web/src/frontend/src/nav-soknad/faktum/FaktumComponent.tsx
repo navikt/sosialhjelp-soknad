@@ -7,7 +7,7 @@ import {
 	setFaktum,
 	lagreFaktum,
 	setFaktumIgnorert
-} from "../redux/faktaActions";
+} from "../redux/fakta/faktaActions";
 import { finnFaktum } from "../utils";
 import {
 	registerFaktumValidering,

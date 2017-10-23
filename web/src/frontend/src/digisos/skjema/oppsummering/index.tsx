@@ -7,7 +7,7 @@ import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 import { REST_STATUS } from "../../../nav-soknad/types";
 import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import {
 	hentOppsummering,
 	bekreftOppsummering

@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import {
 	DispatchProps,
 	SoknadAppState
@@ -12,7 +12,7 @@ import { Faktum } from "../../../nav-soknad/types";
 import {
 	opprettFaktum,
 	slettFaktum
-} from "../../../nav-soknad/redux/faktaActions";
+} from "../../../nav-soknad/redux/fakta/faktaActions";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import Barn from "./Barn";
 

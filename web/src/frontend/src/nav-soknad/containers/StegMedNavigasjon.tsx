@@ -16,7 +16,7 @@ import Knapperad from "../components/knapperad";
 import { SkjemaConfig, SkjemaStegType, SkjemaSteg, Faktum } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
 import { getProgresjonFaktum } from "../utils";
-import { setFaktum, lagreFaktum } from "../redux/faktaActions";
+import { setFaktum, lagreFaktum } from "../redux/fakta/faktaActions";
 import { setVisBekreftMangler } from "../redux/oppsummeringActions";
 import {
 	clearFaktaValideringsfeil,
@@ -143,8 +143,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						this.props.history,
 						this.props.skjemaConfig
 					);
-				}).catch(() => {
-					console.log("lagre faktum feilet");
 				});
 			} else {
 				gaVidere(

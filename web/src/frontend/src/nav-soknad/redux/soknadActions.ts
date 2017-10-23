@@ -5,9 +5,9 @@ import {
 	fetchKvittering
 } from "../utils/rest-utils";
 import { InjectedIntl } from "react-intl";
-import { resetFakta, lagreFaktum } from "./faktaActions";
+import { resetFakta, lagreFaktum } from "./fakta/faktaActions";
 import { ApplikasjonsfeilActionTypes } from "./applikasjonsfeil/applikasjonsfeilTypes";
-import { updateFaktaMedLagretVerdi } from "./faktaUtils";
+import { updateFaktaMedLagretVerdi } from "./fakta/faktaUtils";
 import { finnFaktum } from "../utils";
 import {
 	FaktaActionTypeKeys,
