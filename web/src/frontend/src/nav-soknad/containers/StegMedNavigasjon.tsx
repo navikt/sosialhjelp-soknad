@@ -58,7 +58,7 @@ interface InjectedRouterProps {
 interface StateProps {
 	fakta: Faktum[];
 	progresjon: number;
-	progresjonPending?: boolean;
+	nextButtonPending?: boolean;
 	valideringer: FaktumValideringsregler[];
 	visFeilmeldinger?: boolean;
 	valideringsfeil?: Valideringsfeil[];
@@ -226,7 +226,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						</div>
 						{children}
 						<Knapperad
-							gaViderePending={this.props.progresjonPending}
+							gaViderePending={this.props.nextButtonPending}
 							gaVidereLabel={
 								erOppsummering
 									? getIntlTextOrKey(intl, "skjema.knapper.send")
@@ -251,7 +251,8 @@ const mapStateToProps = (state: SoknadAppState): StateProps => {
 	return {
 		fakta: state.fakta.data,
 		progresjon,
-		progresjonPending: state.fakta.progresjonPending,
+		nextButtonPending:
+			state.fakta.progresjonPending || state.soknad.sendSoknadPending,
 		oppsummeringBekreftet: state.oppsummering.bekreftet,
 		valideringer: state.validering.valideringsregler,
 		visFeilmeldinger: state.validering.visValideringsfeil,

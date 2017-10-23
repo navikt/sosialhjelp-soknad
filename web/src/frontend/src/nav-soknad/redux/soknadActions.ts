@@ -62,7 +62,7 @@ export function opprettSoknad(
 		getState: () => SoknadAppState
 	) => {
 		dispatch({ type: SoknadActionTypeKeys.OPPRETT_SOKNAD });
-		const payload = JSON.stringify({ soknadType: "NAV DIGISOS" });
+		const payload = JSON.stringify({ soknadType: "NAV 35-18.01" });
 		fetchPost("soknader", payload)
 			.then((response: { brukerBehandlingId: string }) => {
 				dispatch({
@@ -175,7 +175,7 @@ export function slettSoknad(brukerBehandlingsId: string) {
 export function hentKvittering(brukerBehandlingsId: string) {
 	return (dispatch: SoknadDispatch<any>) => {
 		dispatch({ type: SoknadActionTypeKeys.HENT_KVITTERING });
-		return fetchKvittering("soknader/" + brukerBehandlingsId + "?lang=nb_NO")
+		return fetchKvittering("soknader/" + brukerBehandlingsId + "?sprak=nb_NO")
 			.then((kvittering: Kvittering) => {
 				dispatch(kvitteringHentet(kvittering));
 			})
@@ -194,16 +194,17 @@ export function kvitteringHentet(kvittering: Kvittering) {
 	};
 }
 
-export function sendSoknad(brukerBehandlingsId: string) {
+export function sendSoknad(brukerBehandlingId: string) {
 	return (
 		dispatch: SoknadDispatch<
 			SoknadActionTypes | FaktaActionTypes | ApplikasjonsfeilActionTypes
 		>,
 		getState: () => SoknadAppState
 	) => {
-		const payload = JSON.stringify({ behandlingsId: brukerBehandlingsId });
+		dispatch({ type: SoknadActionTypeKeys.SEND_SOKNAD, brukerBehandlingId });
+		const payload = JSON.stringify({ behandlingsId: brukerBehandlingId });
 		return fetchPost(
-			`soknader/${brukerBehandlingsId}/actions/send`,
+			`soknader/${brukerBehandlingId}/actions/send`,
 			payload
 		).then((response: any) => {
 			dispatch({ type: SoknadActionTypeKeys.SOKNAD_SENDT });

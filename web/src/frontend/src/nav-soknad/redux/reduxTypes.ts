@@ -29,4 +29,5 @@ export interface SoknadState {
 	restStatus: REST_STATUS;
 	data: Soknad;
 	kvittering?: Kvittering;
+	sendSoknadPending: boolean;
 }

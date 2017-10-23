@@ -2,7 +2,7 @@ import { Soknad } from "./navSoknadTypes";
 
 const soknad: Soknad = {
 	soknadId: 1,
-	skjemaNummer: "NAV DIGISOS",
+	skjemaNummer: "NAV 35-18.01",
 	uuid: "0d2c7ea4-5201-4231-9fa0-7608be0c7266",
 	brukerBehandlingId: "1000B7FGM",
 	behandlingskjedeId: null,
