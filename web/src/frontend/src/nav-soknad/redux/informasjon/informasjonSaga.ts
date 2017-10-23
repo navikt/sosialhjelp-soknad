@@ -1,4 +1,4 @@
-import { put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { ActionTypeKeys } from "./informasjonTypes";
 import { fetchToJson } from "../../utils/rest-utils";
 import { henterTekster, hentetTekster, hentTeksterFeilet } from "./informasjonActions";
@@ -16,15 +16,23 @@ function leggNoklerPaaLedetekster(data: object) {
 function* initSaga(): IterableIterator<any> {
 	try {
 		yield put(henterTekster());
-		const response = yield fetchToJson("informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp");
-		const visNokler = yield urlInneholderVistekster();
-		const tekster = yield visNokler ? leggNoklerPaaLedetekster(response) : response;
+		const response = yield call(fetchToJson, "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp");
+		const visNokler = yield call(urlInneholderVistekster);
+		const tekster = visNokler ? leggNoklerPaaLedetekster(response) : response;
 		yield put(hentetTekster(tekster));
 	} catch (reason) {
 		yield put(hentTeksterFeilet(reason));
 	}
 }
 
-export default function* informasjonsSaga() {
+function* informasjonsSaga() {
 	yield takeEvery(ActionTypeKeys.INIT, initSaga);
 }
+
+export {
+	urlInneholderVistekster,
+	leggNoklerPaaLedetekster,
+	initSaga
+};
+
+export default informasjonsSaga;
