@@ -175,7 +175,7 @@ export function slettSoknad(brukerBehandlingsId: string) {
 export function hentKvittering(brukerBehandlingsId: string) {
 	return (dispatch: SoknadDispatch<any>) => {
 		dispatch({ type: SoknadActionTypeKeys.HENT_KVITTERING });
-		return fetchKvittering("soknader/" + brukerBehandlingsId + "?lang=nb_NO")
+		return fetchKvittering("soknader/" + brukerBehandlingsId + "?sprak=nb_NO")
 			.then((kvittering: Kvittering) => {
 				dispatch(kvitteringHentet(kvittering));
 			})

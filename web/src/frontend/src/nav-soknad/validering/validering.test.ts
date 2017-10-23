@@ -42,14 +42,14 @@ describe("test av valideringsfunksjoner", () => {
 			);
 		});
 		it("Skal ikke være over 13 tegn", () => {
-			expect(validate.erKontonummer("12331212345")).toBeUndefined();
+			expect(validate.erKontonummer("12331212340")).toBeUndefined();
 			expect(validate.erKontonummer("123312123455")).toBe(
 				ValideringActionKey.ER_KONTONUMMER
 			);
 		});
 		it("skal kun inneholde gyldige tegn", () => {
-			expect(validate.erKontonummer("1234.12.12345")).toBeUndefined();
-			expect(validate.erKontonummer("1234 12 12345")).toBeUndefined();
+			expect(validate.erKontonummer("1233.12.12340")).toBeUndefined();
+			expect(validate.erKontonummer("1233 12 12340")).toBeUndefined();
 			expect(validate.erKontonummer("1234 12,12345")).toBe(
 				ValideringActionKey.ER_KONTONUMMER
 			);
