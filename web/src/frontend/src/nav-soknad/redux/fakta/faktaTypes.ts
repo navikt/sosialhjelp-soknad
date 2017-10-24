@@ -66,7 +66,7 @@ interface SetFaktaAction {
 	fakta: Faktum[];
 }
 
-interface SetFaktumFailedAction {
+export interface SetFaktumFailedAction {
 	type: FaktumActionTypeKeys.FEILET;
 	feilmelding: string;
 }

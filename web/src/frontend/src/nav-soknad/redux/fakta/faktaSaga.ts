@@ -7,7 +7,8 @@ import { SoknadState } from "../reduxTypes";
 import {
 	LagreFaktum,
 	OpprettFaktum,
-	SlettFaktum
+	SlettFaktum,
+	SetFaktumFailedAction
 } from "./faktaTypes";
 import {
 	lagreFaktumFeilet,
@@ -24,22 +25,16 @@ function selectBrukerBehandlingId(state: { soknad: SoknadState }) {
 	return state.soknad.data.brukerBehandlingId;
 }
 
-function* lagreFaktumSaga( action: LagreFaktum ): SagaIterator {
+function* lagreFaktumSaga(action: LagreFaktum ): SagaIterator {
 	try {
 		const response = yield call( fetchPut, `fakta/${action.faktum.faktumId}`, prepFaktumForLagring(action.faktum));
 		yield put( lagretFaktum(response) );
 	} catch (reason) {
 		yield put(lagreFaktumFeilet(reason));
-
-		// TODO: Lag applikasjonsfeil saga - Ikke send funksjoner gjennom state
-		// yield put(setApplikasjonsfeil({
-		// 	tittel: "Serverfeil",
-		// 	innhold: React.createElement("div", null, "Serverfeil" )
-		// }));
 	}
 }
 
-function* opprettFaktumSaga( action: OpprettFaktum ): SagaIterator {
+function* opprettFaktumSaga(action: OpprettFaktum ): SagaIterator {
 	try {
 		const brukerBehandlingId = yield select( selectBrukerBehandlingId );
 		const response = yield call(fetchPost, `fakta?behandlingsId=${brukerBehandlingId}`, JSON.stringify(action.faktum));
@@ -49,7 +44,7 @@ function* opprettFaktumSaga( action: OpprettFaktum ): SagaIterator {
 	}
 }
 
-function* slettFaktumSaga( action: SlettFaktum): SagaIterator {
+function* slettFaktumSaga(action: SlettFaktum): SagaIterator {
 	try {
 		yield call(fetchDelete, `fakta/${action.faktumId}`);
 		yield put(slettetFaktum());
@@ -58,10 +53,20 @@ function* slettFaktumSaga( action: SlettFaktum): SagaIterator {
 	}
 }
 
+function* feiletFaktumSaga(action: SetFaktumFailedAction): SagaIterator {
+	// TODO: Lag applikasjonsfeil saga - Ikke send funksjoner gjennom state
+	// yield put(setApplikasjonsfeil({
+	// 	tittel: "Serverfeil",
+	// 	innhold: React.createElement("div", null, "Serverfeil" )
+	// }));
+
+}
+
 function* faktaSaga(): SagaIterator {
 	yield takeEvery(FaktumActionTypeKeys.LAGRE_FAKTUM, lagreFaktumSaga);
 	yield takeEvery(FaktumActionTypeKeys.OPPRETT_FAKTUM, opprettFaktumSaga);
 	yield takeEvery(FaktumActionTypeKeys.SLETT_FAKTUM, slettFaktumSaga);
+	yield takeEvery(FaktumActionTypeKeys.FEILET, feiletFaktumSaga);
 }
 
 export {

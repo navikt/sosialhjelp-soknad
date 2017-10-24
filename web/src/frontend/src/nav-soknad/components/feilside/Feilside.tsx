@@ -14,9 +14,11 @@ const gaTilbake = () => {
 
 export interface FeilsideProps {
 	tittel?: string;
-	tekst: string;
+	children: React.ReactNode;
 	feilkode?: string;
-	visTilbakeKnapp?: boolean;
+	visKnapp?: boolean;
+	knappTekst?: string;
+	onClick?: (event: React.MouseEvent<any>) => void;
 }
 
 /**
@@ -25,9 +27,11 @@ export interface FeilsideProps {
  */
 const FeilSide: React.StatelessComponent<FeilsideProps> = ({
 	tittel = "OOPS, NOE GIKK GALT",
-	tekst,
+	children,
 	feilkode,
-	visTilbakeKnapp
+	visKnapp,
+	knappTekst = "Gå tilbake",
+	onClick = gaTilbake
 }) => {
 	return (
 		<div className="skjema-feilside">
@@ -35,13 +39,13 @@ const FeilSide: React.StatelessComponent<FeilsideProps> = ({
 			<Innholdstittel className="skjema-feilside__tittel">
 				{tittel}
 			</Innholdstittel>
-			<p>{tekst}</p>
+			{children}
 			{feilkode ? (
 				<div className="skjema-feilside__feilkode">Feilkode {feilkode}</div>
 			) : null}
-			{visTilbakeKnapp ? (
-				<Knapp type="standard" htmlType="button" onClick={gaTilbake}>
-					Gå tilbake
+			{visKnapp ? (
+				<Knapp type="standard" htmlType="button" onClick={onClick}>
+					{knappTekst}
 				</Knapp>
 			) : null}
 		</div>

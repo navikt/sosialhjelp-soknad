@@ -30,11 +30,7 @@ class Start extends React.Component<Props, {}> {
 			faktaRestStatus === REST_STATUS.FEILET
 		) {
 			return (
-				<Feilside
-					tekst={intl.formatMessage({
-						id: "applikasjon.opprettsoknadfeilet"
-					})}
-				/>
+				<Feilside>{intl.formatMessage({id: "applikasjon.opprettsoknadfeilet"})}</Feilside>
 			);
 		}
 		return (

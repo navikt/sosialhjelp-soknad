@@ -1,5 +1,4 @@
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 import {
 	Route,
 	RouterProps,
@@ -20,7 +19,7 @@ import Steg7 from "./utgifterGjeld";
 import Steg8 from "./ekstrainformasjon/EkstraInformasjon";
 import Oppsummering from "./oppsummering";
 
-import Feilside from "../../nav-soknad/components/feilside/Feilside";
+import SideIkkeFunnet from "../../nav-soknad/components/feilside/IkkeFunnet";
 import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
 import { Faktum } from "../../nav-soknad/types";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
@@ -46,7 +45,7 @@ interface UrlParams {
 }
 
 class SkjemaRouter extends React.Component<
-	OwnProps & StateProps & RouterProps & DispatchProps & InjectedIntlProps,
+	OwnProps & StateProps & RouterProps & DispatchProps,
 	{}
 > {
 	componentWillMount() {
@@ -55,15 +54,11 @@ class SkjemaRouter extends React.Component<
 		}
 	}
 	render() {
-		const { gyldigUrl, restStatus, intl } = this.props;
+		const { gyldigUrl, restStatus } = this.props;
 
 		if (!gyldigUrl) {
 			return (
-				<Feilside
-					tekst={intl.formatMessage({ id: "feilmelding.404" })}
-					feilkode="404"
-					visTilbakeKnapp={true}
-				/>
+				<SideIkkeFunnet/>
 			);
 		}
 		const path = "/skjema/:brukerBehandlingId";
@@ -79,7 +74,7 @@ class SkjemaRouter extends React.Component<
 					<Route path={`${path}/7`} component={Steg7} />
 					<Route path={`${path}/8`} component={Steg8} />
 					<Route path={`${path}/9`} component={Oppsummering} />
-					<Route component={Feilside} />
+					<Route component={SideIkkeFunnet} />
 				</Switch>
 			</LoadContainer>
 		);
@@ -103,4 +98,4 @@ const mapStateToProps = (
 	};
 };
 
-export default connect(mapStateToProps)(withRouter(injectIntl(SkjemaRouter)));
+export default connect(mapStateToProps)(withRouter(SkjemaRouter));
