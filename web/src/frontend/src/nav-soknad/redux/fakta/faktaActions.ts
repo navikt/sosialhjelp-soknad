@@ -3,12 +3,7 @@ import {
 	FaktaActionTypeKeys,
 	FaktumActionTypeKeys,
 } from "./faktaActionTypes";
-import {
-	SoknadDispatch,
-	SoknadAppState
-} from "../reduxTypes";
 import { Faktum } from "../../types";
-import { fetchPost, fetchDelete } from "../../utils/rest-utils";
 import { FaktumActionTypes } from "./faktaTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils";
 
@@ -19,12 +14,24 @@ export function lagreFaktum( faktum: Faktum ): FaktumActionTypes {
 	};
 }
 
-export function setFaktum(faktum: Faktum) {
-	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
-		dispatch({
-			type: FaktumActionTypeKeys.OPPDATER_FAKTUM,
-			faktum
-		});
+export function lagretFaktum(faktum: Faktum): FaktumActionTypes {
+	return {
+		type: FaktumActionTypeKeys.LAGRET_FAKTUM,
+		faktum
+	};
+}
+
+export function lagreFaktumFeilet(feilmelding: string): FaktumActionTypes {
+	return {
+		type: FaktumActionTypeKeys.FEILET,
+		feilmelding
+	};
+}
+
+export function setFaktum(faktum: Faktum): FaktaActionTypes {
+	return {
+		type: FaktumActionTypeKeys.OPPDATER_FAKTUM,
+		faktum
 	};
 }
 
@@ -32,22 +39,18 @@ export function setFaktumVerdi(
 	faktum: Faktum,
 	verdi: string,
 	property?: string
-) {
-	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
-		dispatch({
-			type: FaktumActionTypeKeys.OPPDATER_FAKTUM,
-			faktum: oppdaterFaktumMedVerdier(faktum, verdi, property)
-		});
+): FaktaActionTypes {
+	return {
+		type: FaktumActionTypeKeys.OPPDATER_FAKTUM,
+		faktum: oppdaterFaktumMedVerdier(faktum, verdi, property)
 	};
 }
 
-export function setFaktumIgnorert(faktum: Faktum, ignorert: boolean) {
-	return (dispatch: SoknadDispatch<FaktaActionTypes>) => {
-		dispatch({
-			type: FaktumActionTypeKeys.IGNORER_FAKTUM,
-			faktum,
-			ignorert
-		});
+export function setFaktumIgnorert(faktum: Faktum, ignorert: boolean): FaktaActionTypes {
+	return {
+		type: FaktumActionTypeKeys.IGNORER_FAKTUM,
+		faktum,
+		ignorert
 	};
 }
 
@@ -55,25 +58,25 @@ interface OpprettFaktumType {
 	key: string;
 	parrentFaktum: number;
 }
+
 export function opprettFaktum(faktum: OpprettFaktumType | Faktum) {
-	return (
-		dispatch: SoknadDispatch<FaktumActionTypes>,
-		getState: () => SoknadAppState
-	) => {
-		dispatch({ type: FaktumActionTypeKeys.OPPRETT_FAKTUM });
-		return fetchPost(
-			"fakta?behandlingsId=" + getState().soknad.data.brukerBehandlingId,
-			JSON.stringify(faktum)
-		)
-			.then((response: Faktum) => {
-				dispatch({
-					type: FaktumActionTypeKeys.OPPRETTET_FAKTUM,
-					faktum: response
-				});
-			})
-			.catch((reason: string) => {
-				dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
-			});
+	return {
+		type: FaktumActionTypeKeys.OPPRETT_FAKTUM,
+		faktum
+	};
+}
+
+export function opprettetFaktum(faktum: Faktum): FaktumActionTypes {
+	return {
+		type: FaktumActionTypeKeys.OPPRETTET_FAKTUM,
+		faktum
+	};
+}
+
+export function opprettFaktumFeilet(feilmelding: string): FaktumActionTypes {
+	return {
+		type: FaktumActionTypeKeys.FEILET,
+		feilmelding
 	};
 }
 
@@ -84,12 +87,21 @@ export function resetFakta() {
 }
 
 export function slettFaktum(faktumId: number) {
-	return (dispatch: SoknadDispatch<FaktumActionTypes>) => {
-		dispatch({ type: FaktumActionTypeKeys.SLETT_FAKTUM, faktumId });
-		return fetchDelete("fakta/" + faktumId)
-			.then(() => dispatch({ type: FaktumActionTypeKeys.SLETTET_FAKTUM }))
-			.catch((reason: string) => {
-				dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
-			});
+	return {
+		type: FaktumActionTypeKeys.SLETT_FAKTUM,
+		faktumId
+	};
+}
+
+export function slettetFaktum(): FaktumActionTypes {
+	return {
+		type: FaktumActionTypeKeys.SLETTET_FAKTUM
+	};
+}
+
+export function slettFaktumFeilet(feilmelding: string): FaktumActionTypes {
+	return {
+		type: FaktumActionTypeKeys.FEILET,
+		feilmelding
 	};
 }

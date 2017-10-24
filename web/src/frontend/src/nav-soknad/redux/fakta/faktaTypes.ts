@@ -37,8 +37,14 @@ interface LagretFaktum {
 	faktum: Faktum;
 }
 
-interface OpprettFaktum {
+interface OpprettFaktumType {
+	key: string;
+	parrentFaktum: number;
+}
+
+export interface OpprettFaktum {
 	type: FaktumActionTypeKeys.OPPRETT_FAKTUM;
+	faktum: OpprettFaktumType | Faktum;
 }
 
 interface OpprettetFaktum {
@@ -46,7 +52,7 @@ interface OpprettetFaktum {
 	faktum: Faktum;
 }
 
-interface SlettFaktum {
+export interface SlettFaktum {
 	type: FaktumActionTypeKeys.SLETT_FAKTUM;
 	faktumId: number;
 }
