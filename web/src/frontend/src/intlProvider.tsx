@@ -3,14 +3,14 @@ import { addLocaleData, IntlProvider as Provider } from "react-intl";
 import * as nb from "react-intl/locale-data/nb";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { connect } from "react-redux";
-import { hentLedetekster } from "./nav-soknad/redux/informasjonActions";
 import {
 	ActionTypeKeys,
 	LedetekstState
-} from "./nav-soknad/redux/informasjonTypes";
+} from "./nav-soknad/redux/ledetekster/ledeteksterTypes";
 import { DispatchProps } from "./nav-soknad/redux/reduxTypes";
 import Feilside from "./nav-soknad/components/feilside/Feilside";
 import { hentMiljovariabler } from "./digisos/redux/informasjon/miljovariablerActions";
+import { hentTekster } from "./nav-soknad/redux/ledetekster/ledeteksterActions";
 
 addLocaleData(nb);
 
@@ -22,8 +22,7 @@ class IntlProvider extends React.Component<
 	IntlProviderProps & DispatchProps & LedetekstState
 > {
 	componentDidMount() {
-		const visNokler = window.location.search.match(/vistekster=true/) !== null;
-		this.props.dispatch(hentLedetekster(visNokler));
+		this.props.dispatch(hentTekster());
 		this.props.dispatch(hentMiljovariabler());
 	}
 
