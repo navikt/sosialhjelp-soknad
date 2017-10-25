@@ -6,6 +6,7 @@ import { SoknadActionTypes } from "./soknadActions";
 
 const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
+	sendSoknadPending: false,
 	data: {
 		soknadId: null,
 		skjemaNummer: "",
@@ -84,6 +85,16 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				data: action.data,
 				restStatus: REST_STATUS.OK
 			};
+		case SoknadActionTypeKeys.SEND_SOKNAD:
+			return {
+				...state,
+				sendSoknadPending: true
+			};
+		case SoknadActionTypeKeys.SOKNAD_SENDT:
+			return {
+				...state,
+				sendSoknadPending: false
+			};
 		case SoknadActionTypeKeys.HENT_KVITTERING:
 			return {
 				...state,
@@ -98,7 +109,8 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 		case SoknadActionTypeKeys.SET_SERVER_FEIL:
 			return {
 				...state,
-				restStatus: REST_STATUS.FEILET
+				restStatus: REST_STATUS.FEILET,
+				sendSoknadPending: false
 			};
 		default:
 			return state;
