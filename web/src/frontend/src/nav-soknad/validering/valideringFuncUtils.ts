@@ -16,16 +16,9 @@ export const mod11Kontroll = (verdi: string) => {
 export const konverterFdatoTilDato = (dato: string): Date => {
 	const dag = parseInt(dato.substr(0, 2), 10);
 	const mnd = parseInt(dato.substr(2, 2), 10) - 1;
-	let ar = parseInt(dato.substr(4, 2), 10);
-
-	const now = new Date();
-	if (ar + 2000 > now.getFullYear()) {
-		ar += 1900;
-	} else {
-		ar += 2000;
-	}
+	const ar = parseInt(dato.substr(4, 4), 10);
 	const d = new Date(ar, mnd, dag);
-	if (d.getDate() !== dag || d.getMonth() !== mnd) {
+	if (d.getDate() !== dag || d.getMonth() !== mnd || d.getFullYear() !== ar) {
 		return null;
 	}
 	return d;

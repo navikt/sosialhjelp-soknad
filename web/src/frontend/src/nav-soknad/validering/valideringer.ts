@@ -60,14 +60,16 @@ export function erKontonummer(value: string): ValideringActionKey {
 	return undefined;
 }
 
-/** Validerer ddmmyy - fødselsdato i fødselsnummeret */
+/** Validerer ddmmåååå - fødselsdato i fødselsnummeret */
 export function fdato(dato: string): ValideringActionKey {
-	if (!dato || typeof dato !== "string" || !dato.match(/[0-9]{6}/)) {
+	if (!dato || typeof dato !== "string" || !dato.match(/[0-9]{8}/)) {
 		return ValideringActionKey.ER_FDATO;
 	}
 	const d = konverterFdatoTilDato(dato);
-	if (d.getTime() > new Date().getTime()) {
+	if (!d) {
 		return ValideringActionKey.ER_FDATO;
+	} else if (d.getTime() > new Date().getTime()) {
+		return ValideringActionKey.ER_FDATO_ETTER_IDAG;
 	}
 	return undefined;
 }

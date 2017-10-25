@@ -1,7 +1,6 @@
 import * as React from "react";
 import InputFaktum, { OwnProps as InheritedProps } from "../InputFaktum";
 import { erTall, minLengde } from "../../validering/valideringer";
-// import { FaktumValideringFunc } from "../../validering/types";
 
 export interface Props extends InheritedProps {
 	/** Trigger rent tall-tastatur på mobil (tilsvarende som type=tel) */

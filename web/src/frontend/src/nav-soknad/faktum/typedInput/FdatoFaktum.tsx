@@ -1,0 +1,14 @@
+import * as React from "react";
+import InputFaktum, { OwnProps as InheritedProps } from "../InputFaktum";
+import { fdato } from "../../validering/valideringer";
+
+const TallFaktum: React.StatelessComponent<InheritedProps> = (
+	props: InheritedProps
+) => {
+	const validerFunc = [fdato].concat(
+		props.validerFunc ? props.validerFunc : []
+	);
+	return <InputFaktum {...props} pattern={"\\d*"} validerFunc={validerFunc} />;
+};
+
+export default TallFaktum;
