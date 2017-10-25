@@ -18,8 +18,7 @@ import {
 	slettetFaktum,
 	slettFaktumFeilet
 } from "./faktaActions";
-
-// import { setApplikasjonsfeil } from "../applikasjonsfeil/applikasjonsfeilActions";
+import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 
 function selectBrukerBehandlingId(state: { soknad: SoknadState }) {
 	return state.soknad.data.brukerBehandlingId;
@@ -54,12 +53,7 @@ function* slettFaktumSaga(action: SlettFaktum): SagaIterator {
 }
 
 function* feiletFaktumSaga(action: SetFaktumFailedAction): SagaIterator {
-	// TODO: Lag applikasjonsfeil saga - Ikke send funksjoner gjennom state
-	// yield put(setApplikasjonsfeil({
-	// 	tittel: "Serverfeil",
-	// 	innhold: React.createElement("div", null, "Serverfeil" )
-	// }));
-
+	yield put(navigerTilServerfeil());
 }
 
 function* faktaSaga(): SagaIterator {

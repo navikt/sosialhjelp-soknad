@@ -26,4 +26,4 @@ const ServerFeil: React.StatelessComponent<InjectedIntlProps> = ({ intl }) => {
 	);
 };
 
-export default injectIntl(ServerFeil);
+export default injectIntl(ServerFeil as React.StatelessComponent);

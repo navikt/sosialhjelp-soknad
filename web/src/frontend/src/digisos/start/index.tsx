@@ -6,7 +6,7 @@ import { State } from "../redux/reducers";
 import { REST_STATUS } from "../../nav-soknad/types";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import { getIntlTextOrKey, scrollToTop } from "../../nav-soknad/utils";
-import Feilside from "../../nav-soknad/components/feilside/Feilside";
+import ServerFeil from "../../nav-soknad/components/feilside/ServerFeil";
 
 import Bosted from "./Bosted";
 
@@ -30,7 +30,7 @@ class Start extends React.Component<Props, {}> {
 			faktaRestStatus === REST_STATUS.FEILET
 		) {
 			return (
-				<Feilside>{intl.formatMessage({id: "applikasjon.opprettsoknadfeilet"})}</Feilside>
+				<ServerFeil/>
 			);
 		}
 		return (

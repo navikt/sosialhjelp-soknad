@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { routerReducer } from "react-router-redux";
 
 import { SoknadAppState } from "../../nav-soknad/redux/reduxTypes";
 import FaktumReducer from "../../nav-soknad/redux/fakta/faktaReducer";
@@ -16,6 +17,7 @@ export interface State extends SoknadAppState {
 }
 
 const reducers = combineReducers({
+	router: routerReducer,
 	soknad: SoknadReducer,
 	fakta: FaktumReducer,
 	oppsummering: OppsummeringReducer,
