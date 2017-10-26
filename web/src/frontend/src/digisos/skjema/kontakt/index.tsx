@@ -33,7 +33,7 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 					<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="kontakt.telefon">
-					<TelefonFaktum faktumKey="kontakt.telefon" />
+					<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8} />
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey={statsborger.faktum}>
 					<RadioFaktum faktumKey={statsborger.faktum} value="true" />
