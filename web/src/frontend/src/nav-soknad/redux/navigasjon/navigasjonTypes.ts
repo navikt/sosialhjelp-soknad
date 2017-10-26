@@ -1,5 +1,5 @@
 export enum Sider {
-	FORSIDEN = "https://www.navn.no",
+	FORSIDEN = "https://www.nav.no",
 	FINN_DITT_NAV_KOTOR = "https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Relatert+informasjon/finn-ditt-nav-kontor--353421",
 	SERVERFEIL = "/serverfeil"
 }

@@ -26,7 +26,7 @@ export function tilSteg(stegnummer: number): NavigasjonActions {
 	};
 }
 
-export function tilbakeEllerNavNO(): NavigasjonActions {
+export function tilbakeEllerForsiden(): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.TILBAKE_ELLER_FORSIDEN
 	};

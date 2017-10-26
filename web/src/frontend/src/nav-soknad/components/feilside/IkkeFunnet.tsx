@@ -3,7 +3,7 @@ import Feilside from "./Feilside";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import { NavigasjonActions } from "../../redux/navigasjon/navigasjonTypes";
-import { tilbakeEllerNavNO } from "../../redux/navigasjon/navigasjonActions";
+import { tilbakeEllerForsiden } from "../../redux/navigasjon/navigasjonActions";
 
 interface OwnProps {
 	onClick: () => NavigasjonActions;
@@ -22,6 +22,6 @@ const IkkeFunnet: React.StatelessComponent<OwnProps & InjectedIntlProps> = ({ in
 
 export default connect(() => ({}), dispatch => {
 	return {
-		onClick: () => dispatch(tilbakeEllerNavNO())
+		onClick: () => dispatch(tilbakeEllerForsiden())
 	};
 })(injectIntl(IkkeFunnet));
