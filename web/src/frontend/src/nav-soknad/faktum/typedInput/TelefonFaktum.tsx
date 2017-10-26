@@ -10,7 +10,7 @@ const TelefonFaktum: React.StatelessComponent<Props> = (props: Props) => {
 		<InputFaktum
 			{...props}
 			type="tel"
-			maxLength={15}
+			maxLength={props.maxLength || 8}
 			bredde={props.bredde || "s"}
 			validerFunc={validerFunc}
 		/>

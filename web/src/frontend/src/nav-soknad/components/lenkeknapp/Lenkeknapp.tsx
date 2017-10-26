@@ -17,7 +17,7 @@ const Lenkeknapp = ({ onClick, label, style, alternativLabel }: Props) => {
 		style ? `${baseClassName}--${style}` : null
 	);
 	return (
-		<button onClick={onClick} className={className}>
+		<button onClick={onClick} className={className} type="button">
 			<AriaAlternativTekst visibleText={label} ariaText={alternativLabel} />
 		</button>
 	);
