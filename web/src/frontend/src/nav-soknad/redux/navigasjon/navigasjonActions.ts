@@ -6,6 +6,12 @@ export function navigerTilServerfeil(): NavigasjonActions {
 	};
 }
 
+export function navigerTilFinnDittNavKontor(): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.TIL_FINN_DITT_NAV_KONTOR
+	};
+}
+
 export function gaVidere(stegnummer: number): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.GA_VIDERE,
@@ -17,5 +23,11 @@ export function tilSteg(stegnummer: number): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.TIL_STEG,
 		stegnummer
+	};
+}
+
+export function tilbakeEllerNavNO(): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.TILBAKE_ELLER_FORSIDEN
 	};
 }

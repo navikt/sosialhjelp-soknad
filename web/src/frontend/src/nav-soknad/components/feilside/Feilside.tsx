@@ -4,14 +4,6 @@ import { Innholdstittel } from "nav-frontend-typografi";
 
 const DocumentTitle = require("react-document-title");
 
-const gaTilbake = () => {
-	if (history.length === 1) {
-		window.location.href = "https://www.nav.no";
-	} else {
-		history.back();
-	}
-};
-
 export interface FeilsideProps {
 	tittel?: string;
 	children: React.ReactNode;
@@ -31,7 +23,7 @@ const FeilSide: React.StatelessComponent<FeilsideProps> = ({
 	feilkode,
 	visKnapp,
 	knappTekst = "Gå tilbake",
-	onClick = gaTilbake
+	onClick
 }) => {
 	return (
 		<div className="skjema-feilside">

@@ -101,9 +101,6 @@ router.get("/fakta/:faktumId", function(req, res) {
 });
 
 router.put("/fakta/:faktumId", function(req, res) {
-	// setTimeout(() => {
-	// 	return res.status(503).send("Server error");
-	// }, 1000);
 	const faktum = req.body;
 	fakta[utils.finnFaktaIndex(faktum.faktumId, fakta)] = faktum;
 	utils.updateSoknadFakta(fakta);
