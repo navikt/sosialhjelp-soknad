@@ -5,6 +5,7 @@ import Opplysning from "./Opplysning";
 
 interface Props {
 	id: string;
+	tittel: string;
 	faktumstrukturer: FaktumStruktur[];
 }
 
@@ -14,7 +15,7 @@ const InformasjonBolk: React.StatelessComponent<Props> = props => {
 		return <Opplysning faktumstruktur={struktur} key={struktur.id} />;
 	});
 
-	return <Progresjonsblokk tittel={props.id} content={sporsmal}/>;
+	return <Progresjonsblokk tittel={props.tittel} content={sporsmal}/>;
 };
 
 export default InformasjonBolk;
