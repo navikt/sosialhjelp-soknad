@@ -7,8 +7,7 @@ import { SoknadState } from "../reduxTypes";
 import {
 	LagreFaktum,
 	OpprettFaktum,
-	SlettFaktum,
-	SetFaktumFailedAction
+	SlettFaktum
 } from "./faktaTypes";
 import {
 	lagreFaktumFeilet,
@@ -52,7 +51,7 @@ function* slettFaktumSaga(action: SlettFaktum): SagaIterator {
 	}
 }
 
-function* feiletFaktumSaga(action: SetFaktumFailedAction): SagaIterator {
+function* feiletFaktumSaga(): SagaIterator {
 	yield put(navigerTilServerfeil());
 }
 
@@ -64,7 +63,11 @@ function* faktaSaga(): SagaIterator {
 }
 
 export {
-	lagreFaktumSaga
+	lagreFaktumSaga,
+	opprettFaktumSaga,
+	slettFaktumSaga,
+	feiletFaktumSaga,
+	selectBrukerBehandlingId
 };
 
 export default faktaSaga;

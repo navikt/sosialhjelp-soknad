@@ -27,7 +27,7 @@ describe("ledeteksterSaga", () => {
 			});
 		});
 
-		it("kall urlInneholderVistekster", () => {
+		it("call urlInneholderVistekster", () => {
 			expect(saga.next(response)).toEqual({
 				done: false,
 				value: call(urlInneholderVistekster)

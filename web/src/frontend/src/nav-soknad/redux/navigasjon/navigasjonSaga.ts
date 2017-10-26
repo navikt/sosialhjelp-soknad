@@ -9,6 +9,7 @@ import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
 import { SoknadState } from "../reduxTypes";
 import { tilSteg } from "./navigasjonActions";
 
+const getHistoryLength = () => window.history.length;
 const navigateTo = (path: string) => window.location.href = path;
 
 const selectProgresjonFaktum = ( state: { fakta: FaktumState }) => {
@@ -28,7 +29,8 @@ function* tilServerfeilSaga(): SagaIterator {
 }
 
 function* tilbakeEllerForsidenSaga(): SagaIterator {
-	if (window.history.length === 1) {
+	const historyLength = yield call( getHistoryLength );
+	if (historyLength === 1) {
 		yield call(navigateTo, Sider.FORSIDEN);
 	} else {
 		yield put( goBack() );
@@ -43,7 +45,7 @@ function* tilStegSaga(action: TilSteg): SagaIterator {
 function* gaVidereSaga(action: GaVidere): SagaIterator {
 	const progresjonFaktum = yield select(selectProgresjonFaktum);
 	if ( parseInt((progresjonFaktum.value || 1), 10) === action.stegnummer ) {
-		const faktum = oppdaterFaktumMedVerdier(
+		const faktum = yield  call( oppdaterFaktumMedVerdier,
 			progresjonFaktum,
 			`${action.stegnummer + 1}`
 		);
@@ -61,5 +63,17 @@ function* navigasjonSaga(): SagaIterator {
 	yield takeEvery(NavigasjonActionTypes.TIL_FINN_DITT_NAV_KONTOR, tilFinnDittNavKontorSaga);
 	yield takeEvery(NavigasjonActionTypes.TILBAKE_ELLER_FORSIDEN, tilbakeEllerForsidenSaga);
 }
+
+export {
+	tilFinnDittNavKontorSaga,
+	tilServerfeilSaga,
+	tilbakeEllerForsidenSaga,
+	tilStegSaga,
+	gaVidereSaga,
+	navigateTo,
+	getHistoryLength,
+	selectBehandlingsId,
+	selectProgresjonFaktum
+};
 
 export default navigasjonSaga;

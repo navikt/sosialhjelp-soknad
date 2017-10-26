@@ -37,7 +37,7 @@ interface LagretFaktum {
 	faktum: Faktum;
 }
 
-interface OpprettFaktumType {
+export interface OpprettFaktumType {
 	key: string;
 	parrentFaktum: number;
 }
