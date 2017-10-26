@@ -4,7 +4,9 @@ export enum ValideringActionKey {
 	MAX_LENGDE = "validering.maksLengde",
 	ER_TALL = "validering.erTall",
 	ER_TELEFONNUMMER = "validering.erTelefonnummer",
-	ER_KONTONUMMER = "validering.erKontonummer"
+	ER_KONTONUMMER = "validering.erKontonummer",
+	ER_FDATO = "validering.erFdato",
+	ER_FDATO_ETTER_IDAG = "validering.erFdatoEtterIdag"
 }
 
 export type FaktumValideringFunc = (value: string) => ValideringActionKey;

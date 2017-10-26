@@ -1,5 +1,5 @@
 import { ValideringActionKey } from "./types";
-import { mod11Kontroll } from "./valideringFuncUtils";
+import { mod11Kontroll, konverterFdatoTilDato } from "./valideringFuncUtils";
 
 export function pakrevd(value: string): ValideringActionKey {
 	return typeof value === "string" && value.length > 0
@@ -56,6 +56,20 @@ export function erKontonummer(value: string): ValideringActionKey {
 		)
 	) {
 		return ValideringActionKey.ER_KONTONUMMER;
+	}
+	return undefined;
+}
+
+/** Validerer ddmmåååå - fødselsdato i fødselsnummeret */
+export function fdato(dato: string): ValideringActionKey {
+	if (!dato || typeof dato !== "string" || !dato.match(/[0-9]{8}/)) {
+		return ValideringActionKey.ER_FDATO;
+	}
+	const d = konverterFdatoTilDato(dato);
+	if (!d) {
+		return ValideringActionKey.ER_FDATO;
+	} else if (d.getTime() > new Date().getTime()) {
+		return ValideringActionKey.ER_FDATO_ETTER_IDAG;
 	}
 	return undefined;
 }
