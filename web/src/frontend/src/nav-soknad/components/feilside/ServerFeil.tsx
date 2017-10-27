@@ -18,8 +18,10 @@ const ServerFeil: React.StatelessComponent<InjectedIntlProps & OwnProps> = ({ in
 			onClick={ onClick }
 			knappTekst={ intl.formatMessage({id: "feilside.serverfeil.knapp"})}
 		>
-			<div>
-				{ intl.formatMessage({ id: "feilside.serverfeil.feilmelding" })}
+			<div className="blokk-m">
+				<p className="blokk-s">
+					{ intl.formatMessage({ id: "feilside.serverfeil.feilmelding" })}
+				</p>
 				<Undertittel key="feilside.serverfeil.nodsituasjon.tittel">
 					{getIntlTextOrKey(intl, "feilside.serverfeil.nodsituasjon.tittel")}
 				</Undertittel>
