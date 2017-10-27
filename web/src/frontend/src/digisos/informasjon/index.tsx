@@ -22,35 +22,52 @@ type Props = StateProps & InjectedIntlProps & RouterProps;
 
 class Informasjon extends React.Component<Props, {}> {
 	render() {
-		const { intl, history } = this.props;
+		const { intl, history, harTilgang } = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 		const handleGaVidere = () => history.push("/bosted");
 		return (
-			<DocumentTitle title={title}>
-				<span>
-					<AppTittel />
+			<div>
+				<DocumentTitle title={title} />
+				<AppTittel />
+				{harTilgang ? (
+					<div>
+						<div className="skjema-content">
+							<Infoblokk
+								className="blokk-s"
+								tittel={getIntlTextOrKey(intl, "informasjon.start.tittel")}
+							>
+								<p className="blokk-s">
+									<FormattedHTMLMessage id="informasjon.start.tekst" />
+								</p>
+
+								<Undertittel key="informasjon.nodsituasjon.undertittel">
+									{getIntlTextOrKey(
+										intl,
+										"informasjon.nodsituasjon.undertittel"
+									)}
+								</Undertittel>
+								<p className="blokk-s">
+									<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst" />
+								</p>
+							</Infoblokk>
+						</div>
+						<Knapp type="hoved" onClick={handleGaVidere}>
+							{getIntlTextOrKey(intl, "skjema.knapper.start")}
+						</Knapp>
+					</div>
+				) : (
 					<div className="skjema-content">
 						<Infoblokk
 							className="blokk-s"
-							tittel={getIntlTextOrKey(intl, "informasjon.start.tittel")}
+							tittel={getIntlTextOrKey(intl, "informasjon.ikketilgang.tittel")}
 						>
 							<p className="blokk-s">
-								<FormattedHTMLMessage id="informasjon.start.tekst" />
-							</p>
-
-							<Undertittel key="informasjon.nodsituasjon.undertittel">
-								{getIntlTextOrKey(intl, "informasjon.nodsituasjon.undertittel")}
-							</Undertittel>
-							<p className="blokk-s">
-								<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst" />
+								<FormattedHTMLMessage id="informasjon.ikketilgang.tekst" />
 							</p>
 						</Infoblokk>
 					</div>
-					<Knapp type="hoved" onClick={handleGaVidere}>
-						{getIntlTextOrKey(intl, "skjema.knapper.start")}
-					</Knapp>
-				</span>
-			</DocumentTitle>
+				)}
+			</div>
 		);
 	}
 }
