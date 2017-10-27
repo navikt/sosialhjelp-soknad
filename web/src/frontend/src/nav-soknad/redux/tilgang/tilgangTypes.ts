@@ -41,7 +41,7 @@ export interface TilgangApiType {
 }
 
 export interface TilgangState {
-	tilgang: TilgangApiType;
+	harTilgang: boolean;
 }
 
 export interface TilgangApiResponse {
