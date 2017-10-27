@@ -6,6 +6,7 @@ import ValideringReducer from "../../nav-soknad/redux/valideringReducer";
 import OppsummeringReducer from "../../nav-soknad/redux/oppsummeringReducer";
 import SoknadReducer from "../../nav-soknad/redux/soknadReducer";
 import LedeteksterReducer from "../../nav-soknad/redux/ledetekster/ledeteksterReducer";
+import TilgangReducer from "../../nav-soknad/redux/tilgang/tilgangReducer";
 import SynligeFaktaReducer from "./synligefakta/synligeFaktaReducer";
 import { SynligeFaktaState } from "./synligefakta/synligeFaktaTypes";
 import MiljovariablerReducer from "./informasjon/miljovariablerReducer";
@@ -21,6 +22,7 @@ const reducers = combineReducers({
 	oppsummering: OppsummeringReducer,
 	validering: ValideringReducer,
 	ledetekster: LedeteksterReducer,
+	tilgang: TilgangReducer,
 	synligefakta: SynligeFaktaReducer,
 	miljovariabler: MiljovariablerReducer,
 	applikasjonsfeil: ApplikasjonsfeilReducer

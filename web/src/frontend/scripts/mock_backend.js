@@ -30,6 +30,11 @@ router.get("/informasjon/tekster", function(req, res) {
 	res.json(utils.lesSpraakfil());
 });
 
+// Tilgang til søknadsskjema
+router.get("/informasjon/utslagskriterier/adresse", function(req, res) {
+	res.json({ pilotSosialhjelp: true });
+});
+
 // Miljøvariabler
 const miljovariabler = utils.lesMockDataFil("miljovariabler.json");
 router.get("/informasjon/miljovariabler", function(req, res) {
