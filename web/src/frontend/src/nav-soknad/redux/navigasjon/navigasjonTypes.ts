@@ -1,5 +1,6 @@
 export enum Sider {
 	FORSIDEN = "https://www.nav.no",
+	/* tslint:disable-next-line */
 	FINN_DITT_NAV_KOTOR = "https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Relatert+informasjon/finn-ditt-nav-kontor--353421",
 	SERVERFEIL = "/serverfeil"
 }
