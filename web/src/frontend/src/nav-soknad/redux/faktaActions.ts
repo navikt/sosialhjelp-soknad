@@ -9,6 +9,9 @@ import { Faktum } from "../types";
 import { fetchPost, fetchPut, fetchDelete } from "../utils/rest-utils";
 import { FaktumActionTypes } from "./faktaReducer";
 import { oppdaterFaktumMedVerdier } from "../utils";
+import NavLogger from "../utils/navLogger";
+
+const Logger = new NavLogger();
 
 function prepFaktumForLagring(faktum: Faktum) {
 	delete faktum.lagret;
@@ -31,6 +34,7 @@ export function lagreFaktum(
 			});
 		})
 		.catch(reason => {
+			Logger.error("Problemer med å lagre faktum: " + reason);
 			dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
 		});
 }
@@ -88,6 +92,7 @@ export function opprettFaktum(faktum: OpprettFaktumType | Faktum) {
 				});
 			})
 			.catch((reason: string) => {
+				Logger.error("Problemer med å opprette faktum: " + reason);
 				dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
 			});
 	};
@@ -105,6 +110,7 @@ export function slettFaktum(faktumId: number) {
 		return fetchDelete("fakta/" + faktumId)
 			.then(() => dispatch({ type: FaktumActionTypeKeys.SLETTET_FAKTUM }))
 			.catch((reason: string) => {
+				Logger.error("Problemer med å slette faktum: " + reason);
 				dispatch({ type: FaktumActionTypeKeys.FEILET, feilmelding: reason });
 			});
 	};

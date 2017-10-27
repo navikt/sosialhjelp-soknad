@@ -142,6 +142,14 @@ router.post("/fakta", function(req, res) {
 	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
 });
 
+router.post("/actions/logg", function(req, res) {
+	req.body.userAgent = req.body.userAgent.substr(0, 10) + "...";
+	console.log("Klient logget feil:");
+	console.log(JSON.stringify(req.body, null, 4));
+	res.status(204); // 204 = "No content"
+	res.json();
+});
+
 app.use("/", router);
 
 app.listen(port);
