@@ -7,7 +7,7 @@ import {
 	setFaktum,
 	lagreFaktum,
 	setFaktumIgnorert
-} from "../redux/faktaActions";
+} from "../redux/fakta/faktaActions";
 import { finnFaktum } from "../utils";
 import {
 	registerFaktumValidering,
@@ -246,7 +246,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			const res = this.validerOgOppdaterFaktum(verdi, property);
 			this.props.dispatch(setFaktum(res.faktum));
 			if (!res.feilkode) {
-				lagreFaktum(res.faktum, this.props.dispatch);
+				this.props.dispatch(lagreFaktum(res.faktum));
 			}
 			this.props.dispatch(
 				setFaktumValideringsfeil(
@@ -276,13 +276,13 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		lagreFaktum(): Promise<any> {
-			return lagreFaktum(this.faktum(), this.props.dispatch);
+			return this.props.dispatch(lagreFaktum(this.faktum()));
 		}
 
 		lagreFaktumDersomGyldig() {
 			const feil = this.validerFaktum();
 			if (!feil) {
-				lagreFaktum(this.faktum(), this.props.dispatch);
+				this.lagreFaktum();
 			}
 		}
 

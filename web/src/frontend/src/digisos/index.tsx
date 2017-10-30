@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Route, Switch } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import Feilside from "../nav-soknad/components/feilside/Feilside";
+import SideIkkeFunnet from "../nav-soknad/components/feilside/IkkeFunnet";
 import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
 
 import Informasjon from "./informasjon";
@@ -9,6 +9,7 @@ import Start from "./start";
 import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
 import AvbrytSoknad from "../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
+import ServerFeil from "../nav-soknad/components/feilside/ServerFeil";
 
 class App extends React.Component<InjectedIntlProps, {}> {
 	render() {
@@ -27,12 +28,11 @@ class App extends React.Component<InjectedIntlProps, {}> {
 						component={Kvittering}
 					/>
 					<Route
-						component={() => (
-							<Feilside
-								tekst={this.props.intl.formatMessage({ id: "feilmelding.404" })}
-								visTilbakeKnapp={true}
-							/>
-						)}
+						path={`/serverfeil`}
+						component={ ServerFeil }
+					/>
+					<Route
+						component={ SideIkkeFunnet }
 					/>
 				</Switch>
 				<TimeoutBox

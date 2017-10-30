@@ -1,13 +1,38 @@
-.skjema-feilside {
+.feilside {
 	text-align: center;
 
+	&__ikon {
+		margin-top: 40px;
+	}
+
 	&__tittel {
-		padding-top: 3rem;
 		color: @navGra40;
+		margin-bottom: 2rem;
+		padding-top: 3rem;
+	}
+
+	&__innhold {
+		margin-bottom: 20px;
 	}
 
 	&__feilkode {
-		margin-top: 1rem;
 		margin-bottom: 3rem;
+		margin-top: 1rem;
+	}
+
+	&__link-liste {
+		margin-top: 20px;
+		padding-left: 0;
+	}
+
+	&__link {
+		display: inline-block;
+		margin-top: 20px;
+		padding-left: 30px;
+		position: relative;
+
+		&:first-child {
+			padding-left: 0;
+		}
 	}
 }

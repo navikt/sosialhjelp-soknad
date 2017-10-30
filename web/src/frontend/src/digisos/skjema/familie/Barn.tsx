@@ -10,7 +10,7 @@ import {
 	getPropertyVerdi,
 	radioCheckKeys
 } from "../../../nav-soknad/utils";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";

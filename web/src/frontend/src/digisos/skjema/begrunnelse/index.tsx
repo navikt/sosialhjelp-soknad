@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";

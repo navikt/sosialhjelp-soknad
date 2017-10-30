@@ -1,22 +1,16 @@
 import * as React from "react";
 import { Knapp } from "nav-frontend-knapper";
 import { Innholdstittel } from "nav-frontend-typografi";
-
-const DocumentTitle = require("react-document-title");
-
-const gaTilbake = () => {
-	if (history.length === 1) {
-		window.location.href = "https://www.nav.no";
-	} else {
-		history.back();
-	}
-};
+import DocumentTitle from "react-document-title";
+import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
 
 export interface FeilsideProps {
 	tittel?: string;
-	tekst: string;
+	children: React.ReactNode;
 	feilkode?: string;
-	visTilbakeKnapp?: boolean;
+	visKnapp?: boolean;
+	knappTekst?: string;
+	onClick?: (event: React.MouseEvent<any>) => void;
 }
 
 /**
@@ -25,25 +19,41 @@ export interface FeilsideProps {
  */
 const FeilSide: React.StatelessComponent<FeilsideProps> = ({
 	tittel = "OOPS, NOE GIKK GALT",
-	tekst,
+	children,
 	feilkode,
-	visTilbakeKnapp
+	visKnapp,
+	knappTekst = "Gå tilbake",
+	onClick
 }) => {
 	return (
-		<div className="skjema-feilside">
+		<div className="feilside skjema-content">
 			<DocumentTitle title={"Feilside - " + document.location.hostname} />
-			<Innholdstittel className="skjema-feilside__tittel">
+			<div className="feilside__ikon">
+				<UtropstegnSirkelGraIkon/>
+			</div>
+			<Innholdstittel className="feilside__tittel">
 				{tittel}
 			</Innholdstittel>
-			<p>{tekst}</p>
+			<div className="feilside__innhold">
+				{children}
+			</div>
 			{feilkode ? (
-				<div className="skjema-feilside__feilkode">Feilkode {feilkode}</div>
+				<div className="feilside__feilkode">Feilkode {feilkode}</div>
 			) : null}
-			{visTilbakeKnapp ? (
-				<Knapp type="standard" htmlType="button" onClick={gaTilbake}>
-					Gå tilbake
+			{visKnapp ? (
+				<Knapp type="standard" htmlType="button" onClick={onClick}>
+					{knappTekst}
 				</Knapp>
 			) : null}
+			<ul className="feilside__link-liste">
+				<li className="feilside__link"><a href="http://www.nav.no">Gå til forsiden nav.no</a></li>
+				<li className="feilside__link"><a href="https://www.nav.no/no/Ditt+NAV">Gå til Ditt NAV</a></li>
+				<li className="feilside__link">
+					<a href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Klage+ris+og+ros/Feil+og+mangler+paa+navno">
+						Meld fra om feil
+					</a>
+				</li>
+			</ul>
 		</div>
 	);
 };

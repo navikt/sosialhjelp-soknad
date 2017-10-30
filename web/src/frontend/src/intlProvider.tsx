@@ -36,7 +36,9 @@ class IntlProvider extends React.Component<
 		if (ledetekster.status === ActionTypeKeys.FEILET) {
 			/** I og med tekstressurser ikke er tilgjengelig, må tekster hardkodes */
 			children = (
-				<Feilside tekst="Vi klarer ikke vise skjemaet til deg nå, vennligst prøv igjen senere." />
+				<Feilside>
+					<p>Vi klarer ikke vise skjemaet til deg nå, vennligst prøv igjen senere.</p>
+				</Feilside>
 			);
 		} else if (ledetekster.status !== ActionTypeKeys.OK) {
 			children = (
