@@ -1,11 +1,11 @@
-import { Reducer } from "./reduxTypes";
-import { REST_STATUS } from "../types";
+import { Reducer } from "../reduxTypes";
+import { REST_STATUS } from "../../types";
 import {
 	OppsummeringActionTypeKeys,
 	Oppsummering,
-	OppsummeringBolk
+	OppsummeringBolk,
+	OppsummeringActionTypes
 } from "./oppsummeringTypes";
-import { OppsummeringActionTypes } from "./oppsummeringActions";
 
 export interface OppsummeringState {
 	oppsummering?: Oppsummering;
@@ -66,7 +66,7 @@ const OppsummeringReducer: Reducer<
 				oppsummering: hentUtOppsummering(action.oppsummering),
 				restStatus: REST_STATUS.OK
 			};
-		case OppsummeringActionTypeKeys.SET_SERVER_FEIL:
+		case OppsummeringActionTypeKeys.FEILET:
 			return {
 				...state,
 				oppsummering: null,

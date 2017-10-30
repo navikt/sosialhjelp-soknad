@@ -1,6 +1,11 @@
 import {
-	navigateTo, tilFinnDittNavKontorSaga, tilServerfeilSaga, tilbakeEllerForsidenSaga, getHistoryLength,
-	tilStegSaga, selectBehandlingsId, gaVidereSaga, selectProgresjonFaktum
+	navigateTo,
+	tilFinnDittNavKontorSaga,
+	tilServerfeilSaga,
+	tilbakeEllerForsidenSaga,
+	getHistoryLength,
+	tilStegSaga,
+	gaVidereSaga
 } from "./navigasjonSaga";
 import { call, put, select, take } from "redux-saga/effects";
 import { GaVidere, Sider, TilSteg } from "./navigasjonTypes";
@@ -11,6 +16,7 @@ import { setFaktum, lagreFaktum } from "../fakta/faktaActions";
 import { Faktum } from "../../types/navSoknadTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
+import { selectProgresjonFaktum, selectBrukerBehandlingId } from "../selectors";
 
 const ferdig = (saga: SagaIterator) => {
 	expect(saga.next()).toEqual({
@@ -84,7 +90,7 @@ describe("navigasjonSaga", () => {
 		it("select behandlingsId", () => {
 			expect(saga.next()).toEqual({
 				done: false,
-				value: select( selectBehandlingsId )
+				value: select( selectBrukerBehandlingId )
 			});
 		});
 

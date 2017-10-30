@@ -1,18 +1,15 @@
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 import NavFrontendSpinner from "nav-frontend-spinner";
-import Feilside from "../feilside/Feilside";
-
+import ServerFeil from "../feilside/ServerFeil";
 import { REST_STATUS } from "../../types";
 
 interface Props {
 	restStatus: string;
 }
 
-const LoadContainer: React.StatelessComponent<Props & InjectedIntlProps> = ({
+const LoadContainer: React.StatelessComponent<Props> = ({
 	restStatus,
-	children,
-	intl
+	children
 }) => {
 	if (
 		restStatus === REST_STATUS.INITIALISERT ||
@@ -24,13 +21,9 @@ const LoadContainer: React.StatelessComponent<Props & InjectedIntlProps> = ({
 			</div>
 		);
 	} else if (restStatus === REST_STATUS.FEILET) {
-		return (
-			<Feilside>
-				{intl.formatMessage({ id: "applikasjon.ukjentfeilunderhentdata" })}
-			</Feilside>
-		);
+		return <ServerFeil/>;
 	}
 	return <div>{children}</div>;
 };
 
-export default injectIntl(LoadContainer);
+export default LoadContainer;

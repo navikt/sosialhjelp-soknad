@@ -75,10 +75,6 @@ router.get("/soknader/:brukerBehandlingId", function(req, res) {
 	}
 });
 
-router.get("/soknader/:brukerBehandlingId/oppsummering", function(req, res) {
-	res.send(utils.lesMockHtmlFil("oppsummering.html"));
-});
-
 router.get("/soknader/:brukerBehandlingId/fakta", function(req, res) {
 	console.log("Mock backend: get fakta");
 	res.json(fakta);
