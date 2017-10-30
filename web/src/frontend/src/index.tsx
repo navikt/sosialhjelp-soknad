@@ -16,6 +16,7 @@ import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga";
 
 import "./index.css";
+import { loggException } from "./nav-soknad/redux/navlogger/navloggerActions";
 
 const history = createHistory({
 	basename: "soknadsosialhjelp"
@@ -44,6 +45,11 @@ function configureStore() {
 }
 
 const store = configureStore();
+
+window.onerror = (errorMessage, url, line, column) => {
+	store.dispatch(loggException(errorMessage, url, line, column));
+};
+
 ReactDOM.render(
 	<Provider store={store}>
 		<IntlProvider>

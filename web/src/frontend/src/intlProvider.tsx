@@ -9,7 +9,7 @@ import {
 } from "./nav-soknad/redux/ledetekster/ledeteksterTypes";
 import { DispatchProps } from "./nav-soknad/redux/reduxTypes";
 import Feilside from "./nav-soknad/components/feilside/Feilside";
-import { hentMiljovariabler } from "./digisos/redux/informasjon/miljovariablerActions";
+import { hentMiljovariabler } from "./digisos/redux/miljovariabler/miljovariablerActions";
 import { hentTekster } from "./nav-soknad/redux/ledetekster/ledeteksterActions";
 
 addLocaleData(nb);

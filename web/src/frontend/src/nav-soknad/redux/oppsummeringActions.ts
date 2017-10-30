@@ -9,9 +9,6 @@ import {
 	SetVisBekreftMangler
 } from "./oppsummeringTypes";
 import { SoknadAppState } from "./reduxTypes";
-import NavLogger from "../utils/navLogger";
-
-const Logger = new NavLogger();
 
 export type OppsummeringActionTypes =
 	| SetOppsummering
@@ -45,7 +42,6 @@ export function hentOppsummering() {
 				});
 			})
 			.catch(reason => {
-				Logger.error("Problemer med å hente oppsummering: " + reason);
 				dispatch({
 					type: OppsummeringActionTypeKeys.FEILET,
 					feilmelding: reason

@@ -2,6 +2,7 @@ import { hentTeksterSaga, leggNoklerPaaLedetekster, urlInneholderVistekster } fr
 import { henterTekster, hentetTekster, hentTeksterFeilet } from "./ledeteksterActions";
 import { call, put } from "redux-saga/effects";
 import { fetchToJson } from "../../utils/rest-utils";
+import { loggFeil } from "../navlogger/navloggerActions";
 
 describe("ledeteksterSaga", () => {
 
@@ -81,6 +82,13 @@ describe("ledeteksterSaga", () => {
 
 		it("put hentTekstFeiler", () => {
 			expect(saga.throw(reason)).toEqual({
+				done: false,
+				value: put(loggFeil("Problemer med å hente ledetekster: " + reason.toString()))
+			});
+		});
+
+		it("er ferdig", () => {
+			expect(saga.next()).toEqual({
 				done: false,
 				value: put(hentTeksterFeilet(reason))
 			});

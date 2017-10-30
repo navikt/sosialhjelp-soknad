@@ -37,9 +37,6 @@ import {
 	oppdaterFaktumMedVerdier
 } from "../../nav-soknad/utils/faktumUtils";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
-import NavLogger from "../utils/navLogger";
-
-const Logger = new NavLogger();
 
 export type SoknadActionTypes =
 	| OpprettSoknadAction
@@ -92,7 +89,6 @@ export function opprettSoknad(
 				});
 			})
 			.catch(reason => {
-				Logger.error("Problemer med å opprette søknad: " + reason);
 				dispatch({
 					type: SoknadActionTypeKeys.SET_SERVER_FEIL,
 					feilmelding: reason
@@ -137,7 +133,6 @@ export function hentSoknad(brukerBehandlingsId: string) {
 				});
 			})
 			.catch(reason => {
-				Logger.error("Problemer med å hente søknad: " + reason);
 				dispatch({
 					type: SoknadActionTypeKeys.SET_SERVER_FEIL,
 					feilmelding: reason
@@ -169,7 +164,6 @@ export function slettSoknad(brukerBehandlingsId: string) {
 	return (dispatch: SoknadDispatch<any>) => {
 		return fetchDelete("soknader/" + brukerBehandlingsId)
 			.catch(reason => {
-				Logger.error("Problemer med å slette søknad: " + reason);
 				dispatch({
 					type: SoknadActionTypeKeys.SET_SERVER_FEIL,
 					feilmelding: reason
@@ -186,7 +180,6 @@ export function hentKvittering(brukerBehandlingsId: string) {
 				dispatch(kvitteringHentet(kvittering));
 			})
 			.catch(reason => {
-				Logger.error("Problemer med å hente kvittering: " + reason);
 				dispatch({
 					type: SoknadActionTypeKeys.SET_SERVER_FEIL,
 					feilmelding: reason
