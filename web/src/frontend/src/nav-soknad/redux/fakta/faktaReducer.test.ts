@@ -1,5 +1,5 @@
 import faktumReducer from "./faktaReducer";
-import { FaktumActionTypeKeys, FaktaActionTypeKeys } from "./reduxTypes";
+import { FaktumActionTypeKeys, FaktaActionTypeKeys } from "./faktaActionTypes";
 
 describe("facts reducer", () => {
 	const defaultState = {

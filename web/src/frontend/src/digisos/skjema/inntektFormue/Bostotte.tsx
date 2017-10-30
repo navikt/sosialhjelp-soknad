@@ -2,7 +2,7 @@ import * as React from "react";
 
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { radioCheckKeys } from "../../../nav-soknad/utils";
 
 class Bostotte extends React.Component<FaktumComponentProps, {}> {

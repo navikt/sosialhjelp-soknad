@@ -1,4 +1,4 @@
-import { Faktum } from "../types";
+import { Faktum } from "../../types";
 
 export function updateFaktumMedLagretVerdi(faktum: Faktum): Faktum {
 	return {
@@ -45,4 +45,9 @@ export function updateFaktumLagretVerdi(fakta: Faktum[], faktum: Faktum) {
 			...fakta.slice(index + 1)
 		];
 	}
+}
+
+export function prepFaktumForLagring(faktum: Faktum) {
+	delete faktum.lagret;
+	return JSON.stringify(faktum);
 }

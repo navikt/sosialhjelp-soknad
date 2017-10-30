@@ -6,13 +6,12 @@ export enum ActionTypeKeys {
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
-export type InformasjonActionTypes = (
+export type InformasjonActionTypes =
 	HentTeksterAction |
 	HentetTeksterAction |
 	HenterTeksterAction |
 	HentTeksterFeiletAction |
-	OtherAction
-);
+	OtherAction;
 
 interface HentTeksterAction {
 	type: ActionTypeKeys.INIT;

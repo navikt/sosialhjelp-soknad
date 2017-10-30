@@ -16,16 +16,6 @@ export function gaTilSteg(
 	history.push(getStegUrl(brukerBehandlingId, steg));
 }
 
-export function gaVidere(
-	aktivtSteg: number,
-	brukerBehandlingId: string,
-	history: RouterHistoryType,
-	skjemaConfig: SkjemaConfig
-) {
-	const steg = Math.min(skjemaConfig.steg.length, aktivtSteg + 1);
-	gaTilSteg(steg, brukerBehandlingId, history);
-}
-
 export function gaTilStart(
 	history: RouterHistoryType,
 	skjemaConfig: SkjemaConfig

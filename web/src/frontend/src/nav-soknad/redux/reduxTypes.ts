@@ -1,10 +1,10 @@
 import { ValideringState } from "./valideringReducer";
-import { FaktumState } from "./faktaReducer";
+import { FaktumState } from "./fakta/faktaReducer";
 import { OppsummeringState } from "./oppsummeringReducer";
 import { Soknad, Kvittering, REST_STATUS } from "../types";
 import { ApplikasjonsfeilState } from "./applikasjonsfeil/applikasjonsfeilReducer";
 
-export * from "./faktaActionTypes";
+export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
 
 export type Dispatch = (action: any) => Promise<any>;
