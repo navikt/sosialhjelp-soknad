@@ -24,7 +24,7 @@ describe("navigasjonSaga", () => {
 		it("call navigateTo", () => {
 			expect(saga.next()).toEqual({
 				done: false,
-				value: call( navigateTo, Sider.FINN_DITT_NAV_KOTOR )
+				value: call( navigateTo, Sider.FINN_DITT_NAV_KONTOR )
 			});
 		});
 

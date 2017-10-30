@@ -21,7 +21,7 @@ const selectBehandlingsId = ( state: { soknad: SoknadState} ) => {
 };
 
 function* tilFinnDittNavKontorSaga(): SagaIterator {
-	yield call(navigateTo, Sider.FINN_DITT_NAV_KOTOR);
+	yield call(navigateTo, Sider.FINN_DITT_NAV_KONTOR);
 }
 
 function* tilServerfeilSaga(): SagaIterator {
