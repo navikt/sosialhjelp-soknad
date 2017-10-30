@@ -108,12 +108,14 @@ const setInformasjonsFaktum = (
 		"3": getIntlTextOrKey(intl, "informasjon.nodsituasjon.undertittel"),
 		"4": getIntlTextOrKey(intl, "informasjon.nodsituasjon.tekst")
 	};
-	dispatch(lagreFaktum(
-		oppdaterFaktumMedProperties(
-			finnFaktum("informasjon.tekster", fakta),
-			properties
+	dispatch(
+		lagreFaktum(
+			oppdaterFaktumMedProperties(
+				finnFaktum("informasjon.tekster", fakta),
+				properties
+			)
 		)
-	));
+	);
 };
 
 const setBostedFaktum = (faktum: Faktum, verdi: string, dispatch: any) => {
