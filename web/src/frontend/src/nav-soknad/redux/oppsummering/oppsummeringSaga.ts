@@ -18,4 +18,8 @@ function* oppsummeringSaga() {
 	yield takeEvery(OppsummeringActionTypeKeys.HENT_OPPSUMMERING, hentOppsummeringSaga);
 }
 
+export {
+	hentOppsummeringSaga
+};
+
 export default oppsummeringSaga;
