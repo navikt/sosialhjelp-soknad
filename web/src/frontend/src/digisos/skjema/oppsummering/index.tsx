@@ -73,7 +73,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 								this.props.visBekreftMangler
 									? {
 											feilmelding: intl.formatHTMLMessage({
-												id: "oppsummering.bekreftOpplysninger"
+												id: "soknadsosialhjelp.oppsummering.bekreftOpplysninger"
 											})
 										}
 									: null
