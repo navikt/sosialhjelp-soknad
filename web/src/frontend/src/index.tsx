@@ -3,9 +3,11 @@ import "babel-polyfill";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { ConnectedRouter, routerMiddleware } from "react-router-redux";
+import createHistory from "history/createBrowserHistory";
 import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
+import { createLogger } from "redux-logger";
 import App from "./digisos";
 import thunk from "redux-thunk";
 import { erDev } from "./nav-soknad/utils/rest-utils";
@@ -14,6 +16,14 @@ import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga";
 
 import "./index.css";
+
+const history = createHistory({
+	basename: "soknadsosialhjelp"
+});
+
+const logger = createLogger({
+	collapsed: true
+});
 
 function configureStore() {
 	/* tslint:disable */
@@ -25,7 +35,9 @@ function configureStore() {
 			: (f: any) => f;
 	/* tslint:enable */
 	const saga = createSagaMiddleware();
-	const middleware = applyMiddleware(thunk, saga);
+	const middleware = erDev()
+		? applyMiddleware(thunk, saga, logger, routerMiddleware(history))
+		: applyMiddleware(thunk, saga, routerMiddleware(history));
 	const createdStore = createStore(reducers, devtools, middleware);
 	saga.run(sagas);
 	return createdStore;
@@ -35,9 +47,9 @@ const store = configureStore();
 ReactDOM.render(
 	<Provider store={store}>
 		<IntlProvider>
-			<BrowserRouter basename="soknadsosialhjelp">
+			<ConnectedRouter history={ history }>
 				<App intl={null}/>
-			</BrowserRouter>
+			</ConnectedRouter>
 		</IntlProvider>
 	</Provider>,
 	document.getElementById("root") as HTMLElement

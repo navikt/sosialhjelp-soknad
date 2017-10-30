@@ -5,7 +5,7 @@ import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { radioCheckKeys } from "../../../nav-soknad/utils";
 import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 import { getPropertyVerdi } from "../../../nav-soknad/utils/faktumUtils";

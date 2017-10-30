@@ -36,7 +36,11 @@
   version "20.0.8"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/jest/-/jest-20.0.8.tgz#7f8c97f73d20d3bf5448fbe33661a342002b5954"
 
-"@types/node@*", "@types/node@8.0.31":
+"@types/node@*":
+  version "8.0.45"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/node/-/node-8.0.45.tgz#89fad82439d5624e1b5c6b42f0f5d85136dcdecc"
+
+"@types/node@8.0.31":
   version "8.0.31"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/node/-/node-8.0.31.tgz#d9af61093cf4bfc9f066ca34de0175012cfb0ce9"
 
@@ -76,6 +80,14 @@
     "@types/react" "*"
     "@types/react-router" "*"
 
+"@types/react-router-redux@^5.0.8":
+  version "5.0.8"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-router-redux/-/react-router-redux-5.0.8.tgz#168117d79ec5095246fb11b1fdea65ec412218d9"
+  dependencies:
+    "@types/history" "*"
+    "@types/react" "*"
+    redux "^3.7.2"
+
 "@types/react-router@*", "@types/react-router@^4.0.14":
   version "4.0.15"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-router/-/react-router-4.0.15.tgz#be8aaefc20afd968a5dbcffcf09060e6c2e8746e"
@@ -92,6 +104,12 @@
 "@types/react@*", "@types/react@^16.0.14":
   version "16.0.14"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react/-/react-16.0.14.tgz#c46d92be936820a93a14ffc84ad805e83f6535ef"
+
+"@types/redux-logger@^3.0.5":
+  version "3.0.5"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/redux-logger/-/redux-logger-3.0.5.tgz#d1a02758f90845899cd304aa0912daeba2028eb6"
+  dependencies:
+    redux "^3.6.0"
 
 abab@^1.0.3:
   version "1.0.4"
@@ -138,13 +156,17 @@ acorn@^5.0.0, acorn@^5.1.1:
   version "5.1.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/acorn/-/acorn-5.1.2.tgz#911cb53e036807cf0fa778dc5d370fbd864246d7"
 
-address@1.0.1, address@^1.0.1:
+address@1.0.1:
   version "1.0.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/address/-/address-1.0.1.tgz#363f5d3f2be26d0655d8afd5a9562e4fc2194537"
 
 address@1.0.2:
   version "1.0.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/address/-/address-1.0.2.tgz#480081e82b587ba319459fef512f516fe03d58af"
+
+address@^1.0.1:
+  version "1.0.3"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/address/-/address-1.0.3.tgz#b5f50631f8d6cec8bd20c963963afb55e06cbce9"
 
 agent-base@2:
   version "2.1.1"
@@ -1547,6 +1569,10 @@ decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
+deep-diff@^0.3.5:
+  version "0.3.8"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/deep-diff/-/deep-diff-0.3.8.tgz#c01de63efb0eec9798801d40c7e0dae25b582c84"
+
 deep-eql@0.1.3:
   version "0.1.3"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/deep-eql/-/deep-eql-0.1.3.tgz#ef558acab8de25206cd713906d74e56930eb69f2"
@@ -1710,9 +1736,16 @@ domutils@1.1:
   dependencies:
     domelementtype "1"
 
-domutils@1.5.1, domutils@^1.5.1:
+domutils@1.5.1:
   version "1.5.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/domutils/-/domutils-1.5.1.tgz#dcd8488a26f563d61079e48c9f7b7e32373682cf"
+  dependencies:
+    dom-serializer "0"
+    domelementtype "1"
+
+domutils@^1.5.1:
+  version "1.6.2"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/domutils/-/domutils-1.6.2.tgz#1958cc0b4c9426e9ed367fb1c8e854891b0fa3ff"
   dependencies:
     dom-serializer "0"
     domelementtype "1"
@@ -2362,14 +2395,14 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
 
-fsevents@1.0.17, fsevents@^1.0.0:
+fsevents@1.0.17:
   version "1.0.17"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/fsevents/-/fsevents-1.0.17.tgz#8537f3f12272678765b4fd6528c0f1f66f8f4558"
   dependencies:
     nan "^2.3.0"
     node-pre-gyp "^0.6.29"
 
-fsevents@^1.1.1:
+fsevents@^1.0.0, fsevents@^1.1.1:
   version "1.1.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/fsevents/-/fsevents-1.1.2.tgz#3282b713fb3ad80ede0e9fcf4611b5aa6fc033f4"
   dependencies:
@@ -4261,9 +4294,9 @@ lowercase-keys@^1.0.0:
   version "1.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/lowercase-keys/-/lowercase-keys-1.0.0.tgz#4e3366b39e7f5457e35f1324bdf6f88d0bfc7306"
 
-lru-cache@2, lru-cache@~2.6.5:
-  version "2.6.5"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/lru-cache/-/lru-cache-2.6.5.tgz#e56d6354148ede8d7707b58d143220fd08df0fd5"
+lru-cache@2:
+  version "2.7.3"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/lru-cache/-/lru-cache-2.7.3.tgz#6d4524e8b955f95d4f5b58851ce21dd72fb4e952"
 
 lru-cache@^4.0.1:
   version "4.1.1"
@@ -4271,6 +4304,10 @@ lru-cache@^4.0.1:
   dependencies:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
+
+lru-cache@~2.6.5:
+  version "2.6.5"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/lru-cache/-/lru-cache-2.6.5.tgz#e56d6354148ede8d7707b58d143220fd08df0fd5"
 
 macaddress@^0.2.8:
   version "0.2.8"
@@ -4429,13 +4466,17 @@ minimatch@~0.2.9:
     lru-cache "2"
     sigmund "~1.0.0"
 
-minimist@0.0.8, minimist@~0.0.1:
+minimist@0.0.8:
   version "0.0.8"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
 
 minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0:
   version "1.2.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
+
+minimist@~0.0.1:
+  version "0.0.10"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
 
 mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
   version "0.5.1"
@@ -4604,10 +4645,6 @@ nav-frontend-typografi-style@^1.0.6:
 nav-frontend-typografi@^1.0.9:
   version "1.0.9"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-typografi/-/nav-frontend-typografi-1.0.9.tgz#2afae82afdff2fd94e7a1185ef0339e07bf6d4c8"
-
-nav-logger@^2.0.1:
-  version "2.0.2"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-logger/-/nav-logger-2.0.2.tgz#17263144385c8c6ed5a7fd64c8f42b25a85ea9bf"
 
 ncname@1.0.x:
   version "1.0.0"
@@ -5569,13 +5606,19 @@ progress@^2.0.0:
   version "2.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/progress/-/progress-2.0.0.tgz#8a1be366bf8fc23db2bd23f10c6fe920b4389d1f"
 
-promise@7.1.1, promise@^7.1.1:
+promise@7.1.1:
   version "7.1.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/promise/-/promise-7.1.1.tgz#489654c692616b8aa55b0724fa809bb7db49c5bf"
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8:
+promise@^7.1.1:
+  version "7.3.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/promise/-/promise-7.3.1.tgz#064b72602b18f90f29192b8b1bc418ffd1ebd3bf"
+  dependencies:
+    asap "~2.0.3"
+
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0:
   version "15.6.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:
@@ -5635,9 +5678,13 @@ punycode@^1.2.4, punycode@^1.4.1:
   version "1.4.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
-q@1.4.1, q@^1.1.2:
+q@1.4.1:
   version "1.4.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/q/-/q-1.4.1.tgz#55705bcd93c5f3673530c2c2cbc0c2b3addc286e"
+
+q@^1.1.2:
+  version "1.5.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/q/-/q-1.5.0.tgz#dd01bac9d06d30e6f219aecb8253ee9ebdc308f1"
 
 qs@6.5.1, qs@~6.5.1:
   version "6.5.1"
@@ -5836,6 +5883,14 @@ react-router-dom@^4.1.2:
     react-router "^4.2.0"
     warning "^3.0.0"
 
+react-router-redux@^5.0.0-alpha.8:
+  version "5.0.0-alpha.8"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react-router-redux/-/react-router-redux-5.0.0-alpha.8.tgz#5242c705730b2ac862aff7a8e90f870d0cf45e12"
+  dependencies:
+    history "^4.7.2"
+    prop-types "^15.6.0"
+    react-router "^4.2.0"
+
 react-router@^4.1.2, react-router@^4.2.0:
   version "4.2.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react-router/-/react-router-4.2.0.tgz#61f7b3e3770daeb24062dae3eedef1b054155986"
@@ -6024,6 +6079,12 @@ reduce-function-call@^1.0.1:
 redux-devtools-extension@^2.13.2:
   version "2.13.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/redux-devtools-extension/-/redux-devtools-extension-2.13.2.tgz#e0f9a8e8dfca7c17be92c7124958a3b94eb2911d"
+
+redux-logger@^3.0.6:
+  version "3.0.6"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/redux-logger/-/redux-logger-3.0.6.tgz#f7555966f3098f3c88604c449cf0baf5778274bf"
+  dependencies:
+    deep-diff "^0.3.5"
 
 redux-saga@^0.15.6:
   version "0.15.6"

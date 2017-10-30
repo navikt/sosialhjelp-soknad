@@ -7,7 +7,7 @@ import CheckboxFaktum, {
 } from "../../../nav-soknad/faktum/CheckboxFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/faktaReducer";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import {
 	radioCheckKeys,
 	faktumIsSelected,

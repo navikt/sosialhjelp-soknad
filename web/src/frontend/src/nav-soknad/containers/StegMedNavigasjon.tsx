@@ -16,7 +16,6 @@ import Knapperad from "../components/knapperad";
 import { SkjemaConfig, SkjemaStegType, SkjemaSteg, Faktum } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
 import { getProgresjonFaktum } from "../utils";
-import { setFaktum, lagreFaktum } from "../redux/faktaActions";
 import { setVisBekreftMangler } from "../redux/oppsummeringActions";
 import {
 	clearFaktaValideringsfeil,
@@ -24,15 +23,9 @@ import {
 } from "../redux/valideringActions";
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { validerAlleFaktum } from "../validering/utils";
-import {
-	gaTilbake,
-	gaVidere,
-	getIntlTextOrKey,
-	scrollToTop,
-	getStegUrl,
-	oppdaterFaktumMedVerdier
-} from "../utils";
+import { gaTilbake, getIntlTextOrKey, scrollToTop, getStegUrl } from "../utils";
 import { avbrytSoknad, sendSoknad } from "../redux/soknadActions";
+import { gaVidere } from "../redux/navigasjon/navigasjonActions";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -130,28 +123,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		);
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
-			if (aktivtSteg.stegnummer === this.props.progresjon) {
-				const faktum = oppdaterFaktumMedVerdier(
-					getProgresjonFaktum(this.props.fakta),
-					`${aktivtSteg.stegnummer + 1}`
-				);
-				this.props.dispatch(setFaktum(faktum));
-				lagreFaktum(faktum, this.props.dispatch).then(() => {
-					gaVidere(
-						aktivtSteg.stegnummer,
-						brukerBehandlingId,
-						this.props.history,
-						this.props.skjemaConfig
-					);
-				});
-			} else {
-				gaVidere(
-					aktivtSteg.stegnummer,
-					brukerBehandlingId,
-					this.props.history,
-					this.props.skjemaConfig
-				);
-			}
+			this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
 		} else {
 			this.props.dispatch(setFaktaValideringsfeil(valideringsfeil));
 		}
@@ -175,6 +147,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		const brukerBehandlingId = this.props.match.params.brukerBehandlingId;
 		const erOppsummering = stegConfig.type === SkjemaStegType.oppsummering;
 		const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
+		const documentTitle = intl.formatMessage({
+			id: this.props.skjemaConfig.tittelId
+		});
 		const synligeSteg = skjemaConfig.steg.filter(
 			s => s.type === SkjemaStegType.skjema
 		);
@@ -191,9 +166,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		return (
 			<div>
 				<ApplikasjonsfeilDialog />
-				<DocumentTitle
-					title={intl.formatMessage({ id: this.props.skjemaConfig.tittelId })}
-				/>
+				<DocumentTitle title={`${stegTittel} - ${documentTitle}`} />
 				<AppTittel />
 				<div className="skjema-steg skjema-content">
 					<div className="skjema-steg__feiloppsummering">

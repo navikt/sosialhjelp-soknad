@@ -1,4 +1,4 @@
-import { FaktumActionTypes } from "./faktaReducer";
+import { FaktumActionTypes } from "./faktaTypes";
 
 export type FaktaActionTypes = FaktumActionTypes;
 

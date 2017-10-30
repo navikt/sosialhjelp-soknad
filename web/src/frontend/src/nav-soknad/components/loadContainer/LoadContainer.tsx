@@ -25,11 +25,9 @@ const LoadContainer: React.StatelessComponent<Props & InjectedIntlProps> = ({
 		);
 	} else if (restStatus === REST_STATUS.FEILET) {
 		return (
-			<Feilside
-				tekst={intl.formatMessage({
-					id: "applikasjon.ukjentfeilunderhentdata"
-				})}
-			/>
+			<Feilside>
+				{intl.formatMessage({ id: "applikasjon.ukjentfeilunderhentdata" })}
+			</Feilside>
 		);
 	}
 	return <div>{children}</div>;

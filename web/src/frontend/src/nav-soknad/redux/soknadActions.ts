@@ -5,9 +5,9 @@ import {
 	fetchKvittering
 } from "../utils/rest-utils";
 import { InjectedIntl } from "react-intl";
-import { resetFakta, lagreFaktum } from "./faktaActions";
+import { resetFakta, lagreFaktum } from "./fakta/faktaActions";
 import { ApplikasjonsfeilActionTypes } from "./applikasjonsfeil/applikasjonsfeilTypes";
-import { updateFaktaMedLagretVerdi } from "./faktaUtils";
+import { updateFaktaMedLagretVerdi } from "./fakta/faktaUtils";
 import { finnFaktum } from "../utils";
 import {
 	FaktaActionTypeKeys,
@@ -112,17 +112,16 @@ const setInformasjonsFaktum = (
 		"3": getIntlTextOrKey(intl, "informasjon.nodsituasjon.undertittel"),
 		"4": getIntlTextOrKey(intl, "informasjon.nodsituasjon.tekst")
 	};
-	lagreFaktum(
+	dispatch(lagreFaktum(
 		oppdaterFaktumMedProperties(
 			finnFaktum("informasjon.tekster", fakta),
 			properties
-		),
-		dispatch
-	);
+		)
+	));
 };
 
 const setBostedFaktum = (faktum: Faktum, verdi: string, dispatch: any) => {
-	lagreFaktum(oppdaterFaktumMedVerdier(faktum, verdi), dispatch);
+	dispatch(lagreFaktum(oppdaterFaktumMedVerdier(faktum, verdi)));
 };
 
 export function hentSoknad(brukerBehandlingsId: string) {
