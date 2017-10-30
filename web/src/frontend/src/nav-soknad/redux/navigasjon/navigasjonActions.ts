@@ -31,3 +31,9 @@ export function tilbakeEllerForsiden(): NavigasjonActions {
 		type: NavigasjonActionTypes.TILBAKE_ELLER_FORSIDEN
 	};
 }
+
+export function tilBosted(): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.TIL_BOSTED
+	};
+}
