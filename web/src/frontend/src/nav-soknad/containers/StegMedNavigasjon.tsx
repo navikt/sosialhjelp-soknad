@@ -23,12 +23,7 @@ import {
 } from "../redux/valideringActions";
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { validerAlleFaktum } from "../validering/utils";
-import {
-	gaTilbake,
-	getIntlTextOrKey,
-	scrollToTop,
-	getStegUrl
-} from "../utils";
+import { gaTilbake, getIntlTextOrKey, scrollToTop, getStegUrl } from "../utils";
 import { avbrytSoknad, sendSoknad } from "../redux/soknadActions";
 import { gaVidere } from "../redux/navigasjon/navigasjonActions";
 
@@ -152,6 +147,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		const brukerBehandlingId = this.props.match.params.brukerBehandlingId;
 		const erOppsummering = stegConfig.type === SkjemaStegType.oppsummering;
 		const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
+		const documentTitle = intl.formatMessage({
+			id: this.props.skjemaConfig.tittelId
+		});
 		const synligeSteg = skjemaConfig.steg.filter(
 			s => s.type === SkjemaStegType.skjema
 		);
@@ -168,9 +166,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		return (
 			<div>
 				<ApplikasjonsfeilDialog />
-				<DocumentTitle
-					title={intl.formatMessage({ id: this.props.skjemaConfig.tittelId })}
-				/>
+				<DocumentTitle title={`${stegTittel} - ${documentTitle}`} />
 				<AppTittel />
 				<div className="skjema-steg skjema-content">
 					<div className="skjema-steg__feiloppsummering">

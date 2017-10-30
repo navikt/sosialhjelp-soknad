@@ -16,7 +16,7 @@ export enum DigisosSteg {
 }
 
 export const digisosSkjemaConfig: SkjemaConfig = {
-	tittelId: "applikasjon.sidetittel.kortnavn",
+	tittelId: "applikasjon.sidetittel",
 	skjemanavn: "digisos",
 	steg: [
 		{
