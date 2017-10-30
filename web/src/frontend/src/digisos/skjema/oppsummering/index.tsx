@@ -6,13 +6,12 @@ import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 
 import { REST_STATUS } from "../../../nav-soknad/types";
 import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
-import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import {
 	hentOppsummering,
 	bekreftOppsummering
 } from "../../../nav-soknad/redux/oppsummering/oppsummeringActions";
-import { Oppsummering } from "../../../nav-soknad/redux/oppsummering/oppsummeringTypes";
+import { Oppsummering, OppsummeringActionTypes } from "../../../nav-soknad/redux/oppsummering/oppsummeringTypes";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
@@ -22,6 +21,11 @@ interface StateProps {
 	bekreftet: boolean;
 	visBekreftMangler: boolean;
 	restStatus: REST_STATUS;
+}
+
+interface DispatchProps {
+	onChange: () => OppsummeringActionTypes;
+	onDidMount: () => OppsummeringActionTypes;
 }
 
 type Props = FaktumComponentProps &
@@ -35,7 +39,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 		this.getOppsummering = this.getOppsummering.bind(this);
 	}
 	componentDidMount() {
-		this.props.dispatch(hentOppsummering());
+		this.props.onDidMount();
 	}
 	getOppsummering() {
 		return {
@@ -72,17 +76,13 @@ class OppsummeringView extends React.Component<Props, {}> {
 							feil={
 								this.props.visBekreftMangler
 									? {
-											feilmelding: intl.formatHTMLMessage({
-												id: "oppsummering.bekreftOpplysninger"
-											})
-										}
+										feilmelding: intl.formatHTMLMessage({
+											id: "oppsummering.bekreftOpplysninger"
+										})
+									}
 									: null
 							}
-							onChange={evt => {
-								this.props.dispatch(
-									bekreftOppsummering((evt as any).target.checked)
-								);
-							}}
+							onChange={ this.props.onChange }
 						/>
 					</div>
 				</DigisosSkjemaSteg>
@@ -97,5 +97,10 @@ export default connect((state: State, props: any) => {
 		bekreftet: state.oppsummering.bekreftet,
 		visBekreftMangler: state.oppsummering.visBekreftMangler,
 		restStatus: state.oppsummering.restStatus
+	};
+}, dispatch => {
+	return {
+		onChange: () => dispatch(bekreftOppsummering()),
+		onDidMount: () => dispatch(hentOppsummering())
 	};
 })(injectIntl(OppsummeringView));

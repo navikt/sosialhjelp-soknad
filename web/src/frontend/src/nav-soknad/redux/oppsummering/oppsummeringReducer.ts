@@ -75,7 +75,7 @@ const OppsummeringReducer: Reducer<
 		case OppsummeringActionTypeKeys.BEKREFT_OPPSUMMERING:
 			return {
 				...state,
-				bekreftet: action.bekreftet,
+				bekreftet: !state.bekreftet,
 				visBekreftMangler: false
 			};
 		case OppsummeringActionTypeKeys.SET_VIS_BEKREFT_MANGLER:

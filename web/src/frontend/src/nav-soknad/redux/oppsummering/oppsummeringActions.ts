@@ -3,10 +3,9 @@ import {
 	OppsummeringActionTypes
 } from "./oppsummeringTypes";
 
-export function bekreftOppsummering(bekreftet: boolean): OppsummeringActionTypes {
+export function bekreftOppsummering(): OppsummeringActionTypes {
 	return {
-		type: OppsummeringActionTypeKeys.BEKREFT_OPPSUMMERING,
-		bekreftet
+		type: OppsummeringActionTypeKeys.BEKREFT_OPPSUMMERING
 	};
 }
 

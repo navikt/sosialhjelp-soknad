@@ -39,7 +39,6 @@ export interface SetOppsummering {
 
 export interface BekreftOppsummering {
 	type: OppsummeringActionTypeKeys.BEKREFT_OPPSUMMERING;
-	bekreftet: boolean;
 }
 
 export interface SetVisBekreftMangler {
