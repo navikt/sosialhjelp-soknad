@@ -1,6 +1,6 @@
 import { ValideringState } from "./valideringReducer";
 import { FaktumState } from "./fakta/faktaReducer";
-import { OppsummeringState } from "./oppsummeringReducer";
+import { OppsummeringState } from "./oppsummering/oppsummeringReducer";
 import { Soknad, Kvittering, REST_STATUS } from "../types";
 import { ApplikasjonsfeilState } from "./applikasjonsfeil/applikasjonsfeilReducer";
 

@@ -6,16 +6,16 @@ import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 
 import { REST_STATUS } from "../../../nav-soknad/types";
 import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
-import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import {
 	hentOppsummering,
 	bekreftOppsummering
-} from "../../../nav-soknad/redux/oppsummeringActions";
-import { Oppsummering } from "../../../nav-soknad/redux/oppsummeringTypes";
+} from "../../../nav-soknad/redux/oppsummering/oppsummeringActions";
+import { Oppsummering } from "../../../nav-soknad/redux/oppsummering/oppsummeringTypes";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
+import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 
 interface StateProps {
 	oppsummering: Oppsummering;
@@ -72,17 +72,13 @@ class OppsummeringView extends React.Component<Props, {}> {
 							feil={
 								this.props.visBekreftMangler
 									? {
-											feilmelding: intl.formatHTMLMessage({
-												id: "soknadsosialhjelp.oppsummering.bekreftOpplysninger"
-											})
-										}
+										feilmelding: intl.formatHTMLMessage({
+											id: "soknadsosialhjelp.oppsummering.bekreftOpplysninger"
+										})
+									}
 									: null
 							}
-							onChange={evt => {
-								this.props.dispatch(
-									bekreftOppsummering((evt as any).target.checked)
-								);
-							}}
+							onChange={ () => this.props.dispatch(bekreftOppsummering()) }
 						/>
 					</div>
 				</DigisosSkjemaSteg>

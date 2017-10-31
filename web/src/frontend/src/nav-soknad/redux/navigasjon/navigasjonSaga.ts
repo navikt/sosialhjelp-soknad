@@ -1,24 +1,15 @@
-import { put, select, takeEvery, take, call } from "redux-saga/effects";
+import { call, put, select, take, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import { push, goBack } from "react-router-redux";
-import { NavigasjonActionTypes, Sider, GaVidere, TilSteg } from "./navigasjonTypes";
-import { FaktumState } from "../fakta/faktaReducer";
+import { goBack, push } from "react-router-redux";
+import { GaVidere, NavigasjonActionTypes, Sider, TilSteg } from "./navigasjonTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
-import { SoknadState } from "../reduxTypes";
 import { tilSteg } from "./navigasjonActions";
+import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 
 const getHistoryLength = () => window.history.length;
 const navigateTo = (path: string) => window.location.href = path;
-
-const selectProgresjonFaktum = ( state: { fakta: FaktumState }) => {
-	return state.fakta.data.filter(f => f.key === "progresjon")[0];
-};
-
-const selectBehandlingsId = ( state: { soknad: SoknadState} ) => {
-	return state.soknad.data.brukerBehandlingId;
-};
 
 function* tilFinnDittNavKontorSaga(): SagaIterator {
 	yield call(navigateTo, Sider.FINN_DITT_NAV_KONTOR);
@@ -38,14 +29,14 @@ function* tilbakeEllerForsidenSaga(): SagaIterator {
 }
 
 function* tilStegSaga(action: TilSteg): SagaIterator {
-	const behandlingsId = yield select( selectBehandlingsId );
+	const behandlingsId = yield select( selectBrukerBehandlingId );
 	yield put( push( `/skjema/${behandlingsId}/${action.stegnummer}`));
 }
 
 function* gaVidereSaga(action: GaVidere): SagaIterator {
 	const progresjonFaktum = yield select(selectProgresjonFaktum);
 	if ( parseInt((progresjonFaktum.value || 1), 10) === action.stegnummer ) {
-		const faktum = yield  call( oppdaterFaktumMedVerdier,
+		const faktum = yield call( oppdaterFaktumMedVerdier,
 			progresjonFaktum,
 			`${action.stegnummer + 1}`
 		);
@@ -71,9 +62,7 @@ export {
 	tilStegSaga,
 	gaVidereSaga,
 	navigateTo,
-	getHistoryLength,
-	selectBehandlingsId,
-	selectProgresjonFaktum
+	getHistoryLength
 };
 
 export default navigasjonSaga;
