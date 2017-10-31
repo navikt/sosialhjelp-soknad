@@ -7,10 +7,10 @@ import ValideringReducer from "../../nav-soknad/redux/valideringReducer";
 import OppsummeringReducer from "../../nav-soknad/redux/oppsummeringReducer";
 import SoknadReducer from "../../nav-soknad/redux/soknad/soknadReducer";
 import LedeteksterReducer from "../../nav-soknad/redux/ledetekster/ledeteksterReducer";
+import ApplikasjonsfeilReducer from "../../nav-soknad/redux/applikasjonsfeil/applikasjonsfeilReducer";
+import MiljovariablerReducer from "../../nav-soknad/redux/miljovariabler/miljovariablerReducer";
 import SynligeFaktaReducer from "./synligefakta/synligeFaktaReducer";
 import { SynligeFaktaState } from "./synligefakta/synligeFaktaTypes";
-import MiljovariablerReducer from "./informasjon/miljovariablerReducer";
-import ApplikasjonsfeilReducer from "../../nav-soknad/redux/applikasjonsfeil/applikasjonsfeilReducer";
 
 export interface State extends SoknadAppState {
 	synligefakta: SynligeFaktaState;

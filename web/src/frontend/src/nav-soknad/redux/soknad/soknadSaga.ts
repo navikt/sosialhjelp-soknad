@@ -1,15 +1,16 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "redux-saga/effects";
-import { fetchPost, fetchToJson } from "../../utils/rest-utils";
+import { fetchPost, fetchToJson, fetchDelete } from "../../utils/rest-utils";
 import { finnFaktum, oppdaterFaktumMedVerdier } from "../../utils";
 import { updateFaktaMedLagretVerdi } from "../fakta/faktaUtils";
 
 import {
 	SoknadActionTypeKeys,
 	HentSoknadAction,
+	SlettSoknadAction,
 	StartSoknadAction
 } from "./soknadActionTypes";
-import { tilSteg } from "../navigasjon/navigasjonActions";
+import { tilSteg, navigerTilDittNav } from "../navigasjon/navigasjonActions";
 import { lagreFaktum, setFakta } from "../fakta/faktaActions";
 import { Soknad } from "../../types";
 
@@ -17,7 +18,9 @@ import {
 	opprettSoknadOk,
 	opprettSoknadFeilet,
 	hentetSoknad,
-	hentSoknadFeilet
+	hentSoknadFeilet,
+	slettSoknadOk,
+	slettSoknadFeilet
 } from "./soknadActions";
 
 const SKJEMAID = "NAV 35-18.01";
@@ -79,12 +82,23 @@ function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
 	yield put(tilSteg(1));
 }
 
+function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
+	try {
+		yield call(fetchDelete, "soknader/" + action.brukerBehandlingId);
+		yield put(slettSoknadOk());
+		yield put(navigerTilDittNav());
+	} catch (reason) {
+		yield put(slettSoknadFeilet(reason));
+	}
+}
+
 export { startSoknadSaga, opprettSoknadSaga, hentSoknadSaga };
 
 function* soknadSaga(): SagaIterator {
 	yield takeEvery(SoknadActionTypeKeys.START_SOKNAD, startSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.OPPRETT_SOKNAD, opprettSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.HENT_SOKNAD, hentSoknadSaga);
+	yield takeEvery(SoknadActionTypeKeys.SLETT_SOKNAD, slettSoknadSaga);
 }
 
 export default soknadSaga;

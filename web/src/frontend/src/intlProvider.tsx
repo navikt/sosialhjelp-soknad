@@ -9,7 +9,7 @@ import {
 } from "./nav-soknad/redux/ledetekster/ledeteksterTypes";
 import { DispatchProps } from "./nav-soknad/redux/reduxTypes";
 import Feilside from "./nav-soknad/components/feilside/Feilside";
-import { hentMiljovariabler } from "./digisos/redux/informasjon/miljovariablerActions";
+import { hentMiljovariabler } from "./nav-soknad/redux/miljovariabler/miljovariablerActions";
 import { hentTekster } from "./nav-soknad/redux/ledetekster/ledeteksterActions";
 
 addLocaleData(nb);
@@ -35,7 +35,10 @@ class IntlProvider extends React.Component<
 			/** I og med tekstressurser ikke er tilgjengelig, må tekster hardkodes */
 			children = (
 				<Feilside>
-					<p>Vi klarer ikke vise skjemaet til deg nå, vennligst prøv igjen senere.</p>
+					<p>
+						Vi klarer ikke vise skjemaet til deg nå, vennligst prøv igjen
+						senere.
+					</p>
 				</Feilside>
 			);
 		} else if (ledetekster.status !== ActionTypeKeys.OK) {

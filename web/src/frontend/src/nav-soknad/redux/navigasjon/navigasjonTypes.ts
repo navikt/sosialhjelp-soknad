@@ -9,6 +9,7 @@ export enum Sider {
 export enum NavigasjonActionTypes {
 	TILBAKE_ELLER_FORSIDEN = "navigasjon/TILBAKE_ELLER_FORSIDEN",
 	TIL_FINN_DITT_NAV_KONTOR = "navigasjon/TIL_FINN_DITT_NAV_KONTOR",
+	TIL_DITT_NAV = "navigasjon/TIL_DITT_NAV",
 	TIL_STEG = "navigasjon/TIL_STEG",
 	GA_VIDERE = "navigasjon/GA_VIDERE",
 	TIL_SERVERFEIL = "navigasjon/TIL_SERVERFEIL",
@@ -21,7 +22,8 @@ export type NavigasjonActions =
 	| TilFinnDittNavKontor
 	| TilbakeEllerForsiden
 	| GaVidere
-	| TilBosted;
+	| TilBosted
+	| TilDittNav;
 
 export interface TilServerfeil {
 	type: NavigasjonActionTypes.TIL_SERVERFEIL;
@@ -47,4 +49,8 @@ export interface TilbakeEllerForsiden {
 
 export interface TilBosted {
 	type: NavigasjonActionTypes.TIL_BOSTED;
+}
+
+export interface TilDittNav {
+	type: NavigasjonActionTypes.TIL_DITT_NAV;
 }

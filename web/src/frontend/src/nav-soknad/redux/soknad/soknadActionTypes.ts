@@ -16,6 +16,8 @@ export enum SoknadActionTypeKeys {
 	AVBRYT_SOKNAD = "soknad/AVBRYT_SOKNAD",
 	FORTSETT_SOKNAD = "soknad/FORTSETT_SOKNAD",
 	SLETT_SOKNAD = "soknad/SLETT_SOKNAD",
+	SLETT_SOKNAD_OK = "soknad/SLETT_SOKNAD_OK",
+	SLETT_SOKNAD_FEILET = "soknad/SLETT_SOKNAD_FEILET",
 	HENT_KVITTERING = "soknad/HENT_KVITTERING",
 	KVITTERING_HENTET = "soknad/KVITTERING_HENTET",
 	SEND_SOKNAD = "soknad/SEND_SOKNAD",
@@ -40,7 +42,9 @@ export type SoknadActionTypes =
 	| OtherAction
 	| HentKvitteringAction
 	| KvitteringHentetAction
-	| SlettSoknadAction;
+	| SlettSoknadAction
+	| SlettSoknadOkAction
+	| SlettSoknadFeiletAction;
 
 export interface StartSoknadAction {
 	type: SoknadActionTypeKeys.START_SOKNAD;
@@ -105,6 +109,15 @@ export interface FortsettSoknadAction {
 export interface SlettSoknadAction {
 	type: SoknadActionTypeKeys.SLETT_SOKNAD;
 	brukerBehandlingId: string;
+}
+
+export interface SlettSoknadOkAction {
+	type: SoknadActionTypeKeys.SLETT_SOKNAD_OK;
+}
+
+export interface SlettSoknadFeiletAction {
+	type: SoknadActionTypeKeys.SLETT_SOKNAD_FEILET;
+	feilmelding: string;
 }
 
 export interface HentKvitteringAction {

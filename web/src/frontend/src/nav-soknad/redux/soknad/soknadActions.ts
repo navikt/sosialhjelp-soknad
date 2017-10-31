@@ -103,6 +103,19 @@ export function slettSoknad(brukerBehandlingId: string): SoknadActionTypes {
 	};
 }
 
+export function slettSoknadOk(): SoknadActionTypes {
+	return {
+		type: SoknadActionTypeKeys.SLETT_SOKNAD_OK
+	};
+}
+
+export function slettSoknadFeilet(feilmelding: string): SoknadActionTypes {
+	return {
+		type: SoknadActionTypeKeys.SLETT_SOKNAD_FEILET,
+		feilmelding
+	};
+}
+
 export function hentKvittering(brukerBehandlingId: string): SoknadActionTypes {
 	return {
 		type: SoknadActionTypeKeys.HENT_KVITTERING,

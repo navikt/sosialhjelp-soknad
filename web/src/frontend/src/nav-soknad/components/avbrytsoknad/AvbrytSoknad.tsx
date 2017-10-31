@@ -18,10 +18,7 @@ type Props = OwnProps & InjectedIntlProps & DispatchProps;
 
 class AvbrytSoknad extends React.Component<Props, {}> {
 	onAvbryt() {
-		this.props.dispatch(slettSoknad(this.props.brukerBehandlingId)).then(() => {
-			const dittnavUrl = this.props.miljovariabler["dittnav.link.url"];
-			window.location.href = dittnavUrl;
-		});
+		this.props.dispatch(slettSoknad(this.props.brukerBehandlingId));
 	}
 
 	onFortsett() {

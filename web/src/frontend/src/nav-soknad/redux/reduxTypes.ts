@@ -1,6 +1,7 @@
 import { ValideringState } from "./valideringReducer";
 import { FaktumState } from "./fakta/faktaReducer";
 import { OppsummeringState } from "./oppsummeringReducer";
+import { MiljovariablerApiType } from "./miljovariabler/miljovariablerTypes";
 import { Soknad, Kvittering, REST_STATUS } from "../types";
 import { ApplikasjonsfeilState } from "./applikasjonsfeil/applikasjonsfeilReducer";
 
@@ -23,6 +24,7 @@ export interface SoknadAppState {
 	validering: ValideringState;
 	oppsummering: OppsummeringState;
 	applikasjonsfeil: ApplikasjonsfeilState;
+	miljovariabler: MiljovariablerApiType;
 }
 
 export interface SoknadState {

@@ -12,6 +12,12 @@ export function navigerTilFinnDittNavKontor(): NavigasjonActions {
 	};
 }
 
+export function navigerTilDittNav(): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.TIL_DITT_NAV
+	};
+}
+
 export function gaVidere(stegnummer: number): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.GA_VIDERE,

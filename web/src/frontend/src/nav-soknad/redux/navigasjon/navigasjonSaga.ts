@@ -5,7 +5,8 @@ import {
 	NavigasjonActionTypes,
 	Sider,
 	GaVidere,
-	TilSteg
+	TilSteg,
+	TilDittNav
 } from "./navigasjonTypes";
 import { FaktumState } from "../fakta/faktaReducer";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
@@ -13,6 +14,7 @@ import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
 import { SoknadState } from "../reduxTypes";
 import { tilSteg } from "./navigasjonActions";
+import { SoknadAppState } from "../reduxTypes";
 
 const getHistoryLength = () => window.history.length;
 const navigateTo = (path: string) => (window.location.href = path);
@@ -66,6 +68,13 @@ function* gaVidereSaga(action: GaVidere): SagaIterator {
 	yield put(tilSteg(action.stegnummer + 1));
 }
 
+function* tilDittNav(action: TilDittNav): SagaIterator {
+	const url = yield select(
+		(state: SoknadAppState) => state.miljovariabler.data["dittnav.link.url"]
+	);
+	yield call(navigateTo, url);
+}
+
 function* navigasjonSaga(): SagaIterator {
 	yield takeEvery(NavigasjonActionTypes.TIL_SERVERFEIL, tilServerfeilSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_STEG, tilStegSaga);
@@ -79,6 +88,7 @@ function* navigasjonSaga(): SagaIterator {
 		tilbakeEllerForsidenSaga
 	);
 	yield takeEvery(NavigasjonActionTypes.TIL_BOSTED, tilBostedSaga);
+	yield takeEvery(NavigasjonActionTypes.TIL_DITT_NAV, tilDittNav);
 }
 
 export {
