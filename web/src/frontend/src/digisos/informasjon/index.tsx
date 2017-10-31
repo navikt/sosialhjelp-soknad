@@ -1,47 +1,77 @@
 import * as React from "react";
-import { InjectedIntlProps, injectIntl, FormattedHTMLMessage } from "react-intl";
+import { connect } from "react-redux";
+import { RouterProps } from "react-router";
+import {
+	InjectedIntlProps,
+	injectIntl,
+	FormattedHTMLMessage
+} from "react-intl";
 import DocumentTitle from "react-document-title";
-import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
-import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import { Undertittel } from "nav-frontend-typografi";
 import Knapp from "nav-frontend-knapper";
-import { RouterProps } from "react-router";
+import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
+import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import Infoblokk from "../../nav-soknad/components/infoblokk";
+import { State } from "../redux/reducers";
 
-const Informasjon: React.StatelessComponent<InjectedIntlProps & RouterProps> = ({ intl, history }) => {
-	const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
-	const handleGaVidere = () => history.push("/bosted");
-	return (
-		<DocumentTitle title={title}>
-			<span>
-				<AppTittel/>
-				<div className="skjema-content">
-					<Infoblokk
-						className="blokk-s"
-						tittel={getIntlTextOrKey(intl, "informasjon.start.tittel")}
-					>
+interface StateProps {
+	harTilgang: boolean;
+}
 
-						<p className="blokk-s">
-							<FormattedHTMLMessage id="informasjon.start.tekst"/>
-						</p>
+type Props = StateProps & InjectedIntlProps & RouterProps;
 
-						<Undertittel key="informasjon.nodsituasjon.undertittel">
-							{getIntlTextOrKey(intl, "informasjon.nodsituasjon.undertittel")}
-						</Undertittel>
-						<p className="blokk-s">
-							<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst"/>
-						</p>
-					</Infoblokk>
-				</div>
-				<Knapp
-					type="hoved"
-					onClick={ handleGaVidere }
-				>
-					{getIntlTextOrKey(intl, "skjema.knapper.start")}
-				</Knapp>
-			</span>
-		</DocumentTitle>
-	);
-};
+class Informasjon extends React.Component<Props, {}> {
+	render() {
+		const { intl, history, harTilgang } = this.props;
+		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
+		const handleGaVidere = () => history.push("/bosted");
+		return (
+			<div>
+				<DocumentTitle title={title} />
+				<AppTittel />
+				{harTilgang ? (
+					<div>
+						<div className="skjema-content">
+							<Infoblokk
+								className="blokk-s"
+								tittel={getIntlTextOrKey(intl, "informasjon.start.tittel")}
+							>
+								<p className="blokk-s">
+									<FormattedHTMLMessage id="informasjon.start.tekst" />
+								</p>
 
-export default injectIntl(Informasjon);
+								<Undertittel key="informasjon.nodsituasjon.undertittel">
+									{getIntlTextOrKey(
+										intl,
+										"informasjon.nodsituasjon.undertittel"
+									)}
+								</Undertittel>
+								<p className="blokk-s">
+									<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst" />
+								</p>
+							</Infoblokk>
+						</div>
+						<Knapp type="hoved" onClick={handleGaVidere}>
+							{getIntlTextOrKey(intl, "skjema.knapper.start")}
+						</Knapp>
+					</div>
+				) : (
+					<div className="skjema-content">
+						<Infoblokk
+							className="blokk-s"
+							tittel={getIntlTextOrKey(intl, "informasjon.ikketilgang.tittel")}
+						>
+							<p className="blokk-s">
+								<FormattedHTMLMessage id="informasjon.ikketilgang.tekst" />
+							</p>
+						</Infoblokk>
+					</div>
+				)}
+			</div>
+		);
+	}
+}
+
+export default connect((state: State) => ({
+	harTilgang: state.tilgang.harTilgang
+}))(injectIntl(Informasjon));
