@@ -1,16 +1,13 @@
 import {
 	FaktaActionTypes,
 	FaktaActionTypeKeys,
-	FaktumActionTypeKeys,
+	FaktumActionTypeKeys
 } from "./faktaActionTypes";
 import { Faktum } from "../../types";
-import {
-	FaktumActionTypes,
-	OpprettFaktumType
-} from "./faktaTypes";
+import { FaktumActionTypes, OpprettFaktumType } from "./faktaTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils";
 
-export function lagreFaktum( faktum: Faktum ): FaktumActionTypes {
+export function lagreFaktum(faktum: Faktum): FaktumActionTypes {
 	return {
 		type: FaktumActionTypeKeys.LAGRE_FAKTUM,
 		faktum
@@ -38,6 +35,13 @@ export function setFaktum(faktum: Faktum): FaktaActionTypes {
 	};
 }
 
+export function setFakta(fakta: Faktum[]) {
+	return {
+		type: FaktaActionTypeKeys.SET_FAKTA,
+		fakta
+	};
+}
+
 export function setFaktumVerdi(
 	faktum: Faktum,
 	verdi: string,
@@ -49,7 +53,10 @@ export function setFaktumVerdi(
 	};
 }
 
-export function setFaktumIgnorert(faktum: Faktum, ignorert: boolean): FaktaActionTypes {
+export function setFaktumIgnorert(
+	faktum: Faktum,
+	ignorert: boolean
+): FaktaActionTypes {
 	return {
 		type: FaktumActionTypeKeys.IGNORER_FAKTUM,
 		faktum,
@@ -57,7 +64,9 @@ export function setFaktumIgnorert(faktum: Faktum, ignorert: boolean): FaktaActio
 	};
 }
 
-export function opprettFaktum(faktum: OpprettFaktumType | Faktum): FaktumActionTypes {
+export function opprettFaktum(
+	faktum: OpprettFaktumType | Faktum
+): FaktumActionTypes {
 	return {
 		type: FaktumActionTypeKeys.OPPRETT_FAKTUM,
 		faktum

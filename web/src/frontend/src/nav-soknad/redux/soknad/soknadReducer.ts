@@ -79,7 +79,6 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				restStatus: REST_STATUS.PENDING
 			};
 		case SoknadActionTypeKeys.HENTET_SOKNAD:
-			console.log(action.data);
 			return {
 				...state,
 				data: action.data,
