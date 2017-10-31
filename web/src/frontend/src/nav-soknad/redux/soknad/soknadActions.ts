@@ -25,8 +25,15 @@ export function opprettSoknad(
 
 export function opprettSoknadOk(brukerBehandlingId: string): SoknadActionTypes {
 	return {
-		type: SoknadActionTypeKeys.OPPRETTET_SOKNAD,
+		type: SoknadActionTypeKeys.OPPRETT_SOKNAD_OK,
 		brukerBehandlingId
+	};
+}
+
+export function opprettSoknadFeilet(feilmelding: string): SoknadActionTypes {
+	return {
+		type: SoknadActionTypeKeys.OPPRETT_SOKNAD_FEILET,
+		feilmelding
 	};
 }
 
@@ -39,17 +46,15 @@ export function hentSoknad(brukerBehandlingId: string): SoknadActionTypes {
 
 export function hentetSoknad(data: Soknad): SoknadActionTypes {
 	return {
-		type: SoknadActionTypeKeys.HENTET_SOKNAD,
+		type: SoknadActionTypeKeys.HENT_SOKNAD_OK,
 		data
 	};
 }
 
-export function hentSoknadFeilet(
-	brukerBehandlingId: string
-): SoknadActionTypes {
+export function hentSoknadFeilet(feilmelding: string): SoknadActionTypes {
 	return {
-		type: SoknadActionTypeKeys.HENTET_SOKNAD_FEILET,
-		brukerBehandlingId
+		type: SoknadActionTypeKeys.HENT_SOKNAD_FEILET,
+		feilmelding
 	};
 }
 
@@ -60,10 +65,16 @@ export function sendSoknad(brukerBehandlingId: string): SoknadActionTypes {
 	};
 }
 
-export function soknadSendt(brukerBehandlingId: string): SoknadActionTypes {
+export function sendSoknadOk(brukerBehandlingId: string): SoknadActionTypes {
 	return {
-		type: SoknadActionTypeKeys.SOKNAD_SENDT,
+		type: SoknadActionTypeKeys.SEND_SOKNAD_OK,
 		brukerBehandlingId
+	};
+}
+
+export function sendSoknadFeilet(): SoknadActionTypes {
+	return {
+		type: SoknadActionTypeKeys.SEND_SOKNAD_FEILET
 	};
 }
 

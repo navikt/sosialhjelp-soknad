@@ -3,12 +3,11 @@ import { Soknad, Kvittering } from "../../types/navSoknadTypes";
 export enum SoknadActionTypeKeys {
 	START_SOKNAD = "soknad/START_SOKNAD",
 	OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
-	OPPRETTER_SOKNAD = "soknad/OPPRETTER_SOKNAD",
-	OPPRETTET_SOKNAD = "soknad/OPPRETTET_SOKNAD",
+	OPPRETT_SOKNAD_OK = "soknad/OPPRETT_SOKNAD_OK",
+	OPPRETT_SOKNAD_FEILET = "soknad/OPPRETT_SOKNAD_FEILET",
 	HENT_SOKNAD = "soknad/HENT_SOKNAD",
-	HENTER_SOKNAD = "soknad/HENTER_SOKNAD",
-	HENTET_SOKNAD = "soknad/HENTET_SOKNAD",
-	HENTET_SOKNAD_FEILET = "soknad/HENTET_SOKNAD_FEILET",
+	HENT_SOKNAD_OK = "soknad/HENT_SOKNAD_OK",
+	HENT_SOKNAD_FEILET = "soknad/HENT_SOKNAD_FEILET",
 	SET_SERVER_FEIL = "SET_SERVER_FEIL",
 	FEILET = "soknad/FEILET",
 	PENDING = "soknad/PENDING",
@@ -20,19 +19,20 @@ export enum SoknadActionTypeKeys {
 	HENT_KVITTERING = "soknad/HENT_KVITTERING",
 	KVITTERING_HENTET = "soknad/KVITTERING_HENTET",
 	SEND_SOKNAD = "soknad/SEND_SOKNAD",
-	SOKNAD_SENDT = "soknad/SOKNAD_SENDT"
+	SEND_SOKNAD_OK = "soknad/SEND_SOKNAD_OK",
+	SEND_SOKNAD_FEILET = "soknad/SEND_SOKNAD_FEILET"
 }
 
 export type SoknadActionTypes =
 	| OpprettSoknadAction
-	| OppretterSoknadAction
-	| OpprettetSoknadAction
+	| OpprettSoknadOkAction
+	| OpprettSoknadFeiletAction
 	| HentSoknadAction
-	| HenterSoknadAction
-	| HentetSoknadAction
+	| HentSoknaOkdAction
 	| HentSoknadFeiletAction
 	| SendSoknadAction
-	| SoknadSendtAction
+	| SendSoknadOkAction
+	| SendSoknadFeiletAction
 	| AvbrytSoknadAction
 	| FortsettSoknadAction
 	| SetServerFeilAction
@@ -52,13 +52,14 @@ export interface OpprettSoknadAction {
 	type: SoknadActionTypeKeys.OPPRETT_SOKNAD;
 }
 
-export interface OppretterSoknadAction {
-	type: SoknadActionTypeKeys.OPPRETTER_SOKNAD;
+export interface OpprettSoknadOkAction {
+	type: SoknadActionTypeKeys.OPPRETT_SOKNAD_OK;
+	brukerBehandlingId: string;
 }
 
-export interface OpprettetSoknadAction {
-	type: SoknadActionTypeKeys.OPPRETTET_SOKNAD;
-	brukerBehandlingId: string;
+export interface OpprettSoknadFeiletAction {
+	type: SoknadActionTypeKeys.OPPRETT_SOKNAD_FEILET;
+	feilmelding: string;
 }
 
 export interface HentSoknadAction {
@@ -66,19 +67,14 @@ export interface HentSoknadAction {
 	brukerBehandlingId: string;
 }
 
-export interface HenterSoknadAction {
-	type: SoknadActionTypeKeys.HENTER_SOKNAD;
-	brukerBehandlingId: string;
-}
-
-export interface HentetSoknadAction {
-	type: SoknadActionTypeKeys.HENTET_SOKNAD;
+export interface HentSoknaOkdAction {
+	type: SoknadActionTypeKeys.HENT_SOKNAD_OK;
 	data: Soknad;
 }
 
 export interface HentSoknadFeiletAction {
-	type: SoknadActionTypeKeys.HENTET_SOKNAD_FEILET;
-	brukerBehandlingId: string;
+	type: SoknadActionTypeKeys.HENT_SOKNAD_FEILET;
+	feilmelding: string;
 }
 
 export interface SendSoknadAction {
@@ -86,8 +82,12 @@ export interface SendSoknadAction {
 	brukerBehandlingId: string;
 }
 
-export interface SoknadSendtAction {
-	type: SoknadActionTypeKeys.SOKNAD_SENDT;
+export interface SendSoknadOkAction {
+	type: SoknadActionTypeKeys.SEND_SOKNAD_OK;
+}
+
+export interface SendSoknadFeiletAction {
+	type: SoknadActionTypeKeys.SEND_SOKNAD_FEILET;
 }
 
 export interface ResetSoknadAction {

@@ -64,7 +64,7 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				...state,
 				restStatus: REST_STATUS.PENDING
 			};
-		case SoknadActionTypeKeys.OPPRETTET_SOKNAD:
+		case SoknadActionTypeKeys.OPPRETT_SOKNAD_OK:
 			return {
 				...state,
 				data: {
@@ -78,23 +78,18 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				...state,
 				restStatus: REST_STATUS.PENDING
 			};
-		case SoknadActionTypeKeys.HENTET_SOKNAD:
+		case SoknadActionTypeKeys.HENT_SOKNAD_OK:
 			return {
 				...state,
 				data: action.data,
 				restStatus: REST_STATUS.OK
-			};
-		case SoknadActionTypeKeys.HENTER_SOKNAD:
-			return {
-				...state,
-				restStatus: REST_STATUS.PENDING
 			};
 		case SoknadActionTypeKeys.SEND_SOKNAD:
 			return {
 				...state,
 				sendSoknadPending: true
 			};
-		case SoknadActionTypeKeys.SOKNAD_SENDT:
+		case SoknadActionTypeKeys.SEND_SOKNAD_OK:
 			return {
 				...state,
 				sendSoknadPending: false

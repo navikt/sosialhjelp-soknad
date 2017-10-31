@@ -15,8 +15,9 @@ import { Soknad } from "../../types";
 
 import {
 	opprettSoknadOk,
-	hentetSoknad
-	// hentSoknadFeilet
+	opprettSoknadFeilet,
+	hentetSoknad,
+	hentSoknadFeilet
 } from "./soknadActions";
 
 const SKJEMAID = "NAV 35-18.01";
@@ -26,25 +27,33 @@ export interface OpprettSoknadResponse {
 }
 
 function* opprettSoknadSaga(): SagaIterator {
-	const response: OpprettSoknadResponse = yield call(
-		fetchPost,
-		"soknader",
-		JSON.stringify({ soknadType: SKJEMAID })
-	);
-	yield put(opprettSoknadOk(response.brukerBehandlingId));
-	return response.brukerBehandlingId;
+	try {
+		const response: OpprettSoknadResponse = yield call(
+			fetchPost,
+			"soknader",
+			JSON.stringify({ soknadType: SKJEMAID })
+		);
+		yield put(opprettSoknadOk(response.brukerBehandlingId));
+		return response.brukerBehandlingId;
+	} catch (reason) {
+		yield put(opprettSoknadFeilet(reason));
+	}
 }
 
 function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
-	const soknad: Soknad = yield call(
-		fetchToJson,
-		`soknader/${action.brukerBehandlingId}`,
-		null
-	);
-	const fakta = updateFaktaMedLagretVerdi(soknad.fakta);
-	yield put(setFakta(fakta));
-	yield put(hentetSoknad(soknad));
-	return soknad;
+	try {
+		const soknad: Soknad = yield call(
+			fetchToJson,
+			`soknader/${action.brukerBehandlingId}`,
+			null
+		);
+		const fakta = updateFaktaMedLagretVerdi(soknad.fakta);
+		yield put(setFakta(fakta));
+		yield put(hentetSoknad(soknad));
+		return soknad;
+	} catch (reason) {
+		yield put(hentSoknadFeilet(reason));
+	}
 }
 
 function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
