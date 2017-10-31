@@ -11,6 +11,7 @@ import { DispatchProps } from "./nav-soknad/redux/reduxTypes";
 import Feilside from "./nav-soknad/components/feilside/Feilside";
 import { hentMiljovariabler } from "./digisos/redux/miljovariabler/miljovariablerActions";
 import { hentTekster } from "./nav-soknad/redux/ledetekster/ledeteksterActions";
+import { hentTilgang } from "./nav-soknad/redux/tilgang/tilgangActions";
 
 addLocaleData(nb);
 
@@ -22,6 +23,7 @@ class IntlProvider extends React.Component<
 	IntlProviderProps & DispatchProps & LedetekstState
 > {
 	componentDidMount() {
+		this.props.dispatch(hentTilgang());
 		this.props.dispatch(hentTekster());
 		this.props.dispatch(hentMiljovariabler());
 	}
