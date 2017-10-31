@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import DocumentTitle from "react-document-title";
 
 import { Innholdstittel } from "nav-frontend-typografi";
-import { setApplikasjonsfeil } from "../redux/applikasjonsfeil/applikasjonsfeilActions";
 
 import AppTittel from "../components/apptittel/AppTittel";
 import ApplikasjonsfeilDialog from "../containers/ApplikasjonsfeilDialog";
@@ -88,23 +87,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	}
 
 	sendSoknad(brukerBehandlingId: string) {
-		this.props.dispatch(sendSoknad(brukerBehandlingId)).then(
-			() => {
-				this.props.history.push(`/kvittering/${brukerBehandlingId}`);
-			},
-			response => {
-				this.props.dispatch(
-					setApplikasjonsfeil({
-						tittel: this.props.intl.formatMessage({
-							id: "sendsoknadfeilet.tittel"
-						}),
-						innhold: this.props.intl.formatMessage({
-							id: "sendsoknadfeilet.melding"
-						})
-					})
-				);
-			}
-		);
+		this.props.dispatch(sendSoknad(brukerBehandlingId));
 	}
 
 	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {

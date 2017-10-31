@@ -13,7 +13,8 @@ export enum NavigasjonActionTypes {
 	TIL_STEG = "navigasjon/TIL_STEG",
 	GA_VIDERE = "navigasjon/GA_VIDERE",
 	TIL_SERVERFEIL = "navigasjon/TIL_SERVERFEIL",
-	TIL_BOSTED = "navigasjon/TIL_BOSTED"
+	TIL_BOSTED = "navigasjon/TIL_BOSTED",
+	TIL_KVITTERING = "navigasjon/TIL_KVITTERING"
 }
 
 export type NavigasjonActions =
@@ -23,7 +24,8 @@ export type NavigasjonActions =
 	| TilbakeEllerForsiden
 	| GaVidere
 	| TilBosted
-	| TilDittNav;
+	| TilDittNav
+	| TilKvittering;
 
 export interface TilServerfeil {
 	type: NavigasjonActionTypes.TIL_SERVERFEIL;
@@ -53,4 +55,9 @@ export interface TilBosted {
 
 export interface TilDittNav {
 	type: NavigasjonActionTypes.TIL_DITT_NAV;
+}
+
+export interface TilKvittering {
+	type: NavigasjonActionTypes.TIL_KVITTERING;
+	brukerbehandlingId: string;
 }

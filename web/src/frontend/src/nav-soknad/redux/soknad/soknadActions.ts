@@ -72,9 +72,10 @@ export function sendSoknadOk(brukerBehandlingId: string): SoknadActionTypes {
 	};
 }
 
-export function sendSoknadFeilet(): SoknadActionTypes {
+export function sendSoknadFeilet(feilmelding: string): SoknadActionTypes {
 	return {
-		type: SoknadActionTypeKeys.SEND_SOKNAD_FEILET
+		type: SoknadActionTypeKeys.SEND_SOKNAD_FEILET,
+		feilmelding
 	};
 }
 
@@ -123,9 +124,15 @@ export function hentKvittering(brukerBehandlingId: string): SoknadActionTypes {
 	};
 }
 
-export function kvitteringHentet(kvittering: Kvittering): SoknadActionTypes {
+export function hentKvitteringOk(kvittering: Kvittering): SoknadActionTypes {
 	return {
-		type: SoknadActionTypeKeys.KVITTERING_HENTET,
+		type: SoknadActionTypeKeys.HENT_KVITTERING_OK,
 		kvittering
+	};
+}
+export function hentKvitteringFeilet(feilmelding: string): SoknadActionTypes {
+	return {
+		type: SoknadActionTypeKeys.HENT_KVITTERING_FEILET,
+		feilmelding
 	};
 }

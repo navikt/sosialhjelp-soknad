@@ -99,7 +99,7 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				...state,
 				restStatus: REST_STATUS.PENDING
 			};
-		case SoknadActionTypeKeys.KVITTERING_HENTET:
+		case SoknadActionTypeKeys.HENT_KVITTERING_OK:
 			return {
 				...state,
 				kvittering: action.kvittering,

@@ -19,7 +19,8 @@ export enum SoknadActionTypeKeys {
 	SLETT_SOKNAD_OK = "soknad/SLETT_SOKNAD_OK",
 	SLETT_SOKNAD_FEILET = "soknad/SLETT_SOKNAD_FEILET",
 	HENT_KVITTERING = "soknad/HENT_KVITTERING",
-	KVITTERING_HENTET = "soknad/KVITTERING_HENTET",
+	HENT_KVITTERING_OK = "soknad/KVITTERING_HENTET",
+	HENT_KVITTERING_FEILET = "soknad/KVITTERING_FEILET",
 	SEND_SOKNAD = "soknad/SEND_SOKNAD",
 	SEND_SOKNAD_OK = "soknad/SEND_SOKNAD_OK",
 	SEND_SOKNAD_FEILET = "soknad/SEND_SOKNAD_FEILET"
@@ -41,7 +42,9 @@ export type SoknadActionTypes =
 	| ResetSoknadAction
 	| OtherAction
 	| HentKvitteringAction
-	| KvitteringHentetAction
+	| HentKvitteringOkAction
+	| HentKvitteringFeiletAction
+	| HentKvitteringOkAction
 	| SlettSoknadAction
 	| SlettSoknadOkAction
 	| SlettSoknadFeiletAction;
@@ -92,6 +95,7 @@ export interface SendSoknadOkAction {
 
 export interface SendSoknadFeiletAction {
 	type: SoknadActionTypeKeys.SEND_SOKNAD_FEILET;
+	feilmelding: string;
 }
 
 export interface ResetSoknadAction {
@@ -125,9 +129,14 @@ export interface HentKvitteringAction {
 	brukerBehandlingId: string;
 }
 
-export interface KvitteringHentetAction {
-	type: SoknadActionTypeKeys.KVITTERING_HENTET;
+export interface HentKvitteringOkAction {
+	type: SoknadActionTypeKeys.HENT_KVITTERING_OK;
 	kvittering: Kvittering;
+}
+
+export interface HentKvitteringFeiletAction {
+	type: SoknadActionTypeKeys.HENT_KVITTERING_FEILET;
+	feilmelding: string;
 }
 
 export interface SetServerFeilAction {

@@ -1,16 +1,27 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "redux-saga/effects";
-import { fetchPost, fetchToJson, fetchDelete } from "../../utils/rest-utils";
+import {
+	fetchPost,
+	fetchToJson,
+	fetchDelete,
+	fetchKvittering
+} from "../../utils/rest-utils";
 import { finnFaktum, oppdaterFaktumMedVerdier } from "../../utils";
 import { updateFaktaMedLagretVerdi } from "../fakta/faktaUtils";
-
+import { setApplikasjonsfeil } from "../applikasjonsfeil/applikasjonsfeilActions";
 import {
 	SoknadActionTypeKeys,
 	HentSoknadAction,
 	SlettSoknadAction,
-	StartSoknadAction
+	StartSoknadAction,
+	SendSoknadAction,
+	HentKvitteringAction
 } from "./soknadActionTypes";
-import { tilSteg, navigerTilDittNav } from "../navigasjon/navigasjonActions";
+import {
+	tilSteg,
+	navigerTilDittNav,
+	navigerTilKvittering
+} from "../navigasjon/navigasjonActions";
 import { lagreFaktum, setFakta } from "../fakta/faktaActions";
 import { Soknad } from "../../types";
 
@@ -20,7 +31,11 @@ import {
 	hentetSoknad,
 	hentSoknadFeilet,
 	slettSoknadOk,
-	slettSoknadFeilet
+	slettSoknadFeilet,
+	hentKvitteringOk,
+	hentKvitteringFeilet,
+	sendSoknadOk,
+	sendSoknadFeilet
 } from "./soknadActions";
 
 const SKJEMAID = "NAV 35-18.01";
@@ -89,16 +104,72 @@ function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
 		yield put(navigerTilDittNav());
 	} catch (reason) {
 		yield put(slettSoknadFeilet(reason));
+		yield put(setApplikasjonsfeil({ tittel: "", innhold: "" }));
+		// yield put(setApplikasjonsfeil, )
+		// 		this.props.dispatch(
+		// 			setApplikasjonsfeil({
+		// 				tittel: this.props.intl.formatMessage({
+		// 					id: "sendsoknadfeilet.tittel"
+		// 				}),
+		// 				innhold: this.props.intl.formatMessage({
+		// 					id: "sendsoknadfeilet.melding"
+		// 				})
+		// 			})
+		// 		);
 	}
 }
 
-export { startSoknadSaga, opprettSoknadSaga, hentSoknadSaga };
+function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
+	try {
+		yield call(
+			fetchPost,
+			`soknader/${action.brukerBehandlingId}/actions/send`,
+			JSON.stringify({ behandlingsId: action.brukerBehandlingId })
+		);
+		yield put(sendSoknadOk(action.brukerBehandlingId));
+		yield put(navigerTilKvittering(action.brukerBehandlingId));
+	} catch (reason) {
+		yield put(sendSoknadFeilet(reason));
+	}
+}
+
+function* hentKvitteringSaga(action: HentKvitteringAction): SagaIterator {
+	try {
+		const kvittering = yield call(
+			fetchKvittering,
+			"soknader/" + action.brukerBehandlingId + "?sprak=nb_NO"
+		);
+		yield put(hentKvitteringOk(kvittering));
+	} catch (reason) {
+		yield put(hentKvitteringFeilet(reason));
+	}
+}
+
+// this.props.dispatch(sendSoknad(brukerBehandlingId)).then(
+// 	() => {
+// 		this.props.history.push(`/kvittering/${brukerBehandlingId}`);
+// 	},
+// 	response => {
+// 		this.props.dispatch(
+// 			setApplikasjonsfeil({
+// 				tittel: this.props.intl.formatMessage({
+// 					id: "sendsoknadfeilet.tittel"
+// 				}),
+// 				innhold: this.props.intl.formatMessage({
+// 					id: "sendsoknadfeilet.melding"
+// 				})
+// 			})
+// 		);
+// 	}
+// );
 
 function* soknadSaga(): SagaIterator {
 	yield takeEvery(SoknadActionTypeKeys.START_SOKNAD, startSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.OPPRETT_SOKNAD, opprettSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.HENT_SOKNAD, hentSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.SLETT_SOKNAD, slettSoknadSaga);
+	yield takeEvery(SoknadActionTypeKeys.SEND_SOKNAD, sendSoknadSaga);
+	yield takeEvery(SoknadActionTypeKeys.HENT_KVITTERING, hentKvitteringSaga);
 }
 
 export default soknadSaga;

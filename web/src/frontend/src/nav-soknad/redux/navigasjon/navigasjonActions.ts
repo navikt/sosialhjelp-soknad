@@ -43,3 +43,12 @@ export function tilBosted(): NavigasjonActions {
 		type: NavigasjonActionTypes.TIL_BOSTED
 	};
 }
+
+export function navigerTilKvittering(
+	brukerbehandlingId: string
+): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.TIL_KVITTERING,
+		brukerbehandlingId
+	};
+}

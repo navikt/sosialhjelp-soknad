@@ -6,7 +6,8 @@ import {
 	Sider,
 	GaVidere,
 	TilSteg,
-	TilDittNav
+	TilDittNav,
+	TilKvittering
 } from "./navigasjonTypes";
 import { FaktumState } from "../fakta/faktaReducer";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
@@ -75,6 +76,10 @@ function* tilDittNav(action: TilDittNav): SagaIterator {
 	yield call(navigateTo, url);
 }
 
+function* tilKvittering(action: TilKvittering): SagaIterator {
+	yield call(navigateTo, `/kvittering/${action.brukerbehandlingId}`);
+}
+
 function* navigasjonSaga(): SagaIterator {
 	yield takeEvery(NavigasjonActionTypes.TIL_SERVERFEIL, tilServerfeilSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_STEG, tilStegSaga);
@@ -89,6 +94,7 @@ function* navigasjonSaga(): SagaIterator {
 	);
 	yield takeEvery(NavigasjonActionTypes.TIL_BOSTED, tilBostedSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_DITT_NAV, tilDittNav);
+	yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilKvittering);
 }
 
 export {
@@ -100,7 +106,8 @@ export {
 	navigateTo,
 	getHistoryLength,
 	selectBehandlingsId,
-	selectProgresjonFaktum
+	selectProgresjonFaktum,
+	tilKvittering
 };
 
 export default navigasjonSaga;
