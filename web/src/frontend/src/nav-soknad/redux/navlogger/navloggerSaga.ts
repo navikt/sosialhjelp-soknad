@@ -18,6 +18,6 @@ function* navloggerSaga(): SagaIterator {
 
 export {
 	loggTilServerSaga
-}
+};
 
 export default navloggerSaga;
