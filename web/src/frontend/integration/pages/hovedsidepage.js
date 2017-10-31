@@ -6,7 +6,7 @@ module.exports = {
 	    input: '.skjemaelement__input',
 	    appTitle: '.app-digisos__title',
 	    horten: '.skjemaelement__input option[value=horten]',
-		fortsett: '.knapp--hoved'
+		hovedknapp: '.knapp--hoved'
     },
     sections: {
 	    innloggingsside: {
@@ -22,6 +22,7 @@ module.exports = {
 		    elements: {
 			    kontonummer: 'input[id=kontakt_kontonummer]',
 			    telefon: 'input[id=kontakt_telefon]',
+			    statsborger: 'input[name=kontakt_statsborger]',
 			    har_feil: '.skjemaelement__input--harFeil',
 			    input_feilmelding: '.skjemaelement__feilmelding',
 			    feiloppsummering: '.panel--feiloppsummering'
