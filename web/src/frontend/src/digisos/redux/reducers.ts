@@ -11,7 +11,7 @@ import TilgangReducer from "../../nav-soknad/redux/tilgang/tilgangReducer";
 import { TilgangState } from "../../nav-soknad/redux/tilgang/tilgangTypes";
 import SynligeFaktaReducer from "./synligefakta/synligeFaktaReducer";
 import { SynligeFaktaState } from "./synligefakta/synligeFaktaTypes";
-import MiljovariablerReducer from "./informasjon/miljovariablerReducer";
+import MiljovariablerReducer from "./miljovariabler/miljovariablerReducer";
 import ApplikasjonsfeilReducer from "../../nav-soknad/redux/applikasjonsfeil/applikasjonsfeilReducer";
 
 export interface State extends SoknadAppState {

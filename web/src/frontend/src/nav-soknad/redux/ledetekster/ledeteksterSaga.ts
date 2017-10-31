@@ -3,6 +3,7 @@ import { ActionTypeKeys } from "./ledeteksterTypes";
 import { fetchToJson } from "../../utils/rest-utils";
 import { henterTekster, hentetTekster, hentTeksterFeilet } from "./ledeteksterActions";
 import { SagaIterator } from "redux-saga";
+import { loggFeil } from "../navlogger/navloggerActions";
 
 const urlInneholderVistekster = () => window.location.search.match(/vistekster=true/) !== null;
 
@@ -23,6 +24,7 @@ function* hentTeksterSaga(): SagaIterator {
 		const tekster = visNokler ? leggNoklerPaaLedetekster(response) : response;
 		yield put(hentetTekster(tekster));
 	} catch (reason) {
+		yield put(loggFeil("Problemer med å hente ledetekster: " + reason.toString()));
 		yield put(hentTeksterFeilet(reason));
 	}
 }
