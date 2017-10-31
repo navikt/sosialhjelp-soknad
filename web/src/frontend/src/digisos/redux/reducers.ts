@@ -5,7 +5,7 @@ import { SoknadAppState } from "../../nav-soknad/redux/reduxTypes";
 import FaktumReducer from "../../nav-soknad/redux/fakta/faktaReducer";
 import ValideringReducer from "../../nav-soknad/redux/valideringReducer";
 import OppsummeringReducer from "../../nav-soknad/redux/oppsummeringReducer";
-import SoknadReducer from "../../nav-soknad/redux/soknadReducer";
+import SoknadReducer from "../../nav-soknad/redux/soknad/soknadReducer";
 import LedeteksterReducer from "../../nav-soknad/redux/ledetekster/ledeteksterReducer";
 import SynligeFaktaReducer from "./synligefakta/synligeFaktaReducer";
 import { SynligeFaktaState } from "./synligefakta/synligeFaktaTypes";

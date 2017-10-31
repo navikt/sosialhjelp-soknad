@@ -24,7 +24,7 @@ import {
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { validerAlleFaktum } from "../validering/utils";
 import { gaTilbake, getIntlTextOrKey, scrollToTop, getStegUrl } from "../utils";
-import { avbrytSoknad, sendSoknad } from "../redux/soknadActions";
+import { avbrytSoknad, sendSoknad } from "../redux/soknad/soknadActions";
 import { gaVidere } from "../redux/navigasjon/navigasjonActions";
 
 const stopEvent = (evt: React.FormEvent<any>) => {

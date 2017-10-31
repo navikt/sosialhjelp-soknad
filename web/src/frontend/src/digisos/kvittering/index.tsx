@@ -10,7 +10,7 @@ import { scrollToTop } from "../../nav-soknad/utils";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
-import { hentKvittering } from "../../nav-soknad/redux/soknadActions";
+import { hentKvittering } from "../../nav-soknad/redux/soknad/soknadActions";
 import { REST_STATUS, Kvittering } from "../../nav-soknad/types";
 import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
 

@@ -1,8 +1,7 @@
 import { REST_STATUS } from "../../types";
 import { Reducer, SoknadState } from "../reduxTypes";
 
-import { SoknadActionTypeKeys } from "./soknadTypes";
-import { SoknadActionTypes } from "./soknadActions";
+import { SoknadActionTypes, SoknadActionTypeKeys } from "./soknadActionTypes";
 
 const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
@@ -80,10 +79,16 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				restStatus: REST_STATUS.PENDING
 			};
 		case SoknadActionTypeKeys.HENTET_SOKNAD:
+			console.log(action.data);
 			return {
 				...state,
 				data: action.data,
 				restStatus: REST_STATUS.OK
+			};
+		case SoknadActionTypeKeys.HENTER_SOKNAD:
+			return {
+				...state,
+				restStatus: REST_STATUS.PENDING
 			};
 		case SoknadActionTypeKeys.SEND_SOKNAD:
 			return {

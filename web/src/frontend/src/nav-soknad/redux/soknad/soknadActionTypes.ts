@@ -1,10 +1,14 @@
 import { Soknad, Kvittering } from "../../types/navSoknadTypes";
 
 export enum SoknadActionTypeKeys {
+	START_SOKNAD = "soknad/START_SOKNAD",
 	OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
+	OPPRETTER_SOKNAD = "soknad/OPPRETTER_SOKNAD",
 	OPPRETTET_SOKNAD = "soknad/OPPRETTET_SOKNAD",
 	HENT_SOKNAD = "soknad/HENT_SOKNAD",
+	HENTER_SOKNAD = "soknad/HENTER_SOKNAD",
 	HENTET_SOKNAD = "soknad/HENTET_SOKNAD",
+	HENTET_SOKNAD_FEILET = "soknad/HENTET_SOKNAD_FEILET",
 	SET_SERVER_FEIL = "SET_SERVER_FEIL",
 	FEILET = "soknad/FEILET",
 	PENDING = "soknad/PENDING",
@@ -21,9 +25,12 @@ export enum SoknadActionTypeKeys {
 
 export type SoknadActionTypes =
 	| OpprettSoknadAction
+	| OppretterSoknadAction
 	| OpprettetSoknadAction
 	| HentSoknadAction
+	| HenterSoknadAction
 	| HentetSoknadAction
+	| HentSoknadFeiletAction
 	| SendSoknadAction
 	| SoknadSendtAction
 	| AvbrytSoknadAction
@@ -35,22 +42,43 @@ export type SoknadActionTypes =
 	| KvitteringHentetAction
 	| SlettSoknadAction;
 
-export interface OpprettetSoknadAction {
-	type: SoknadActionTypeKeys.OPPRETTET_SOKNAD;
-	brukerBehandlingId: string;
+export interface StartSoknadAction {
+	type: SoknadActionTypeKeys.START_SOKNAD;
+	kommune?: string;
+	bydel?: string;
 }
 
 export interface OpprettSoknadAction {
 	type: SoknadActionTypeKeys.OPPRETT_SOKNAD;
 }
 
+export interface OppretterSoknadAction {
+	type: SoknadActionTypeKeys.OPPRETTER_SOKNAD;
+}
+
+export interface OpprettetSoknadAction {
+	type: SoknadActionTypeKeys.OPPRETTET_SOKNAD;
+	brukerBehandlingId: string;
+}
+
 export interface HentSoknadAction {
 	type: SoknadActionTypeKeys.HENT_SOKNAD;
+	brukerBehandlingId: string;
+}
+
+export interface HenterSoknadAction {
+	type: SoknadActionTypeKeys.HENTER_SOKNAD;
+	brukerBehandlingId: string;
 }
 
 export interface HentetSoknadAction {
 	type: SoknadActionTypeKeys.HENTET_SOKNAD;
 	data: Soknad;
+}
+
+export interface HentSoknadFeiletAction {
+	type: SoknadActionTypeKeys.HENTET_SOKNAD_FEILET;
+	brukerBehandlingId: string;
 }
 
 export interface SendSoknadAction {
@@ -81,6 +109,7 @@ export interface SlettSoknadAction {
 
 export interface HentKvitteringAction {
 	type: SoknadActionTypeKeys.HENT_KVITTERING;
+	brukerBehandlingId: string;
 }
 
 export interface KvitteringHentetAction {

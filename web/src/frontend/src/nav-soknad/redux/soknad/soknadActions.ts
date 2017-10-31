@@ -2,6 +2,14 @@ import { InjectedIntl } from "react-intl";
 import { SoknadActionTypeKeys, SoknadActionTypes } from "./soknadActionTypes";
 import { Soknad, Kvittering } from "../../types";
 
+export function startSoknad(kommune: string, bydel?: string) {
+	return {
+		type: SoknadActionTypeKeys.START_SOKNAD,
+		kommune,
+		bydel
+	};
+}
+
 export function opprettSoknad(
 	kommuneId: string,
 	bydelId: string,
@@ -29,10 +37,19 @@ export function hentSoknad(brukerBehandlingId: string): SoknadActionTypes {
 	};
 }
 
-export function hentSoknadOk(data: Soknad): SoknadActionTypes {
+export function hentetSoknad(data: Soknad): SoknadActionTypes {
 	return {
 		type: SoknadActionTypeKeys.HENTET_SOKNAD,
 		data
+	};
+}
+
+export function hentSoknadFeilet(
+	brukerBehandlingId: string
+): SoknadActionTypes {
+	return {
+		type: SoknadActionTypeKeys.HENTET_SOKNAD_FEILET,
+		brukerBehandlingId
 	};
 }
 
@@ -56,10 +73,9 @@ export function resetSoknad(): SoknadActionTypes {
 	};
 }
 
-export function avbrytSoknad(brukerBehandlingId: string): SoknadActionTypes {
+export function avbrytSoknad(): SoknadActionTypes {
 	return {
-		type: SoknadActionTypeKeys.AVBRYT_SOKNAD,
-		brukerBehandlingId
+		type: SoknadActionTypeKeys.AVBRYT_SOKNAD
 	};
 }
 
@@ -76,9 +92,10 @@ export function slettSoknad(brukerBehandlingId: string): SoknadActionTypes {
 	};
 }
 
-export function hentKvittering(): SoknadActionTypes {
+export function hentKvittering(brukerBehandlingId: string): SoknadActionTypes {
 	return {
-		type: SoknadActionTypeKeys.HENT_KVITTERING
+		type: SoknadActionTypeKeys.HENT_KVITTERING,
+		brukerBehandlingId
 	};
 }
 
