@@ -151,7 +151,8 @@ export {
 	hentSoknadSaga,
 	startSoknadSaga,
 	sendSoknadSaga,
-	hentKvitteringSaga
+	hentKvitteringSaga,
+	slettSoknadSaga
 };
 
 function* soknadSaga(): SagaIterator {

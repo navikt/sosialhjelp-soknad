@@ -4,15 +4,32 @@ import {
 	startSoknadSaga,
 	hentSoknadSaga,
 	// hentKvittergSaga,
-	// sendSoknadSaga,
+	slettSoknadSaga,
+	sendSoknadSaga,
 	SKJEMAID
 } from "./soknadSaga";
-import { opprettSoknadOk, startSoknad } from "./soknadActions";
-import { StartSoknadAction, SoknadInfoTekster } from "./soknadActionTypes";
-import { tilSteg } from "../navigasjon/navigasjonActions";
+import {
+	opprettSoknadOk,
+	startSoknad,
+	sendSoknad,
+	sendSoknadOk,
+	slettSoknad,
+	slettSoknadOk
+} from "./soknadActions";
+import {
+	StartSoknadAction,
+	SoknadInfoTekster,
+	SendSoknadAction,
+	SlettSoknadAction
+} from "./soknadActionTypes";
+import {
+	tilSteg,
+	navigerTilKvittering,
+	navigerTilDittNav
+} from "../navigasjon/navigasjonActions";
 import { lagreFaktum } from "../fakta/faktaActions";
 import { Faktum } from "../../types";
-import { fetchPost } from "../../utils/rest-utils";
+import { fetchPost, fetchDelete } from "../../utils/rest-utils";
 
 describe("soknadSaga", () => {
 	describe("opprettSoknadSaga", () => {
@@ -94,6 +111,74 @@ describe("soknadSaga", () => {
 
 		it("ferdig", () => {
 			expect(saga.next()).toEqual({ done: true });
+		});
+	});
+
+	describe("sendSoknad", () => {
+		const action = sendSoknad("1") as SendSoknadAction;
+		const saga = sendSoknadSaga(action);
+
+		it("call sendSoknad", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: call(
+					fetchPost,
+					"soknader/1/actions/send",
+					JSON.stringify({ behandlingsId: "1" })
+				)
+			});
+		});
+
+		it("puts soknad sendt", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(sendSoknadOk("1"))
+			});
+		});
+
+		it("puts navigerTilKvittering", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(navigerTilKvittering("1"))
+			});
+		});
+
+		it("is ferdig", () => {
+			expect(saga.next()).toEqual({
+				done: true
+			});
+		});
+	});
+
+	describe("slettSoknad", () => {
+		const action = slettSoknad("1") as SlettSoknadAction;
+		const saga = slettSoknadSaga(action);
+
+		it("calls slettSoknad", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: call(fetchDelete, "soknader/1")
+			});
+		});
+
+		it("puts slettSoknadOk", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(slettSoknadOk())
+			});
+		});
+
+		it("puts navigerTilDittNAV", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(navigerTilDittNav())
+			});
+		});
+
+		it("er ferdig", () => {
+			expect(saga.next()).toEqual({
+				done: true
+			});
 		});
 	});
 });
