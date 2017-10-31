@@ -49,7 +49,7 @@ export function hentSoknad(brukerBehandlingId: string): SoknadActionTypes {
 	};
 }
 
-export function hentetSoknad(data: Soknad): SoknadActionTypes {
+export function hentSoknadOk(data: Soknad): SoknadActionTypes {
 	return {
 		type: SoknadActionTypeKeys.HENT_SOKNAD_OK,
 		data

@@ -32,7 +32,7 @@ import { Soknad } from "../../types";
 import {
 	opprettSoknadOk,
 	opprettSoknadFeilet,
-	hentetSoknad,
+	hentSoknadOk,
 	hentSoknadFeilet,
 	slettSoknadOk,
 	slettSoknadFeilet,
@@ -71,7 +71,7 @@ function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
 		);
 		const fakta = updateFaktaMedLagretVerdi(soknad.fakta);
 		yield put(setFakta(fakta));
-		yield put(hentetSoknad(soknad));
+		yield put(hentSoknadOk(soknad));
 		return soknad;
 	} catch (reason) {
 		yield put(hentSoknadFeilet(reason));
