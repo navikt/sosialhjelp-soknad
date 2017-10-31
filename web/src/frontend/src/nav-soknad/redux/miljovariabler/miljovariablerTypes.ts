@@ -10,11 +10,16 @@ export type MiljovariablerActionTypes =
 	| HentetMiljovariablerAction
 	| HentMiljovariablerAction
 	| MiljovariablerFeiletAction
+	| MiljovariablerInitAction
 	| OtherAction;
 
 interface HentetMiljovariablerAction {
 	type: ActionTypeKeys.OK;
 	data: object;
+}
+
+interface MiljovariablerInitAction {
+	type: ActionTypeKeys.INIT;
 }
 
 interface HentMiljovariablerAction {

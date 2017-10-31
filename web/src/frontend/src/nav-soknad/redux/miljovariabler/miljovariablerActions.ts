@@ -1,23 +1,41 @@
-import { fetchToJson } from "../../utils/rest-utils";
-import { SoknadDispatch } from "../reduxTypes";
 import {
 	ActionTypeKeys,
 	MiljovariablerActionTypes
 } from "./miljovariablerTypes";
 
-const { OK, PENDING, FEILET } = ActionTypeKeys;
-
-export function hentMiljovariabler() {
-	return (dispatch: SoknadDispatch<MiljovariablerActionTypes>) => {
-		if (PENDING) {
-			dispatch({ type: PENDING });
-		}
-		return fetchToJson("informasjon/miljovariabler")
-			.then(response => {
-				dispatch({ type: OK, data: response });
-			})
-			.catch(reason => {
-				dispatch({ type: FEILET, feilmelding: reason });
-			});
+const mottattMiljovariabler = (
+	miljovariabler: object
+): MiljovariablerActionTypes => {
+	return {
+		type: ActionTypeKeys.OK,
+		data: miljovariabler
 	};
-}
+};
+
+const hentMiljovariablerFeilet = (
+	feilmelding: string
+): MiljovariablerActionTypes => {
+	return {
+		type: ActionTypeKeys.FEILET,
+		feilmelding
+	};
+};
+
+const hentMiljovariabler = (): MiljovariablerActionTypes => {
+	return {
+		type: ActionTypeKeys.INIT
+	};
+};
+
+const henterMiljovariabler = (): MiljovariablerActionTypes => {
+	return {
+		type: ActionTypeKeys.PENDING
+	};
+};
+
+export {
+	mottattMiljovariabler,
+	hentMiljovariablerFeilet,
+	hentMiljovariabler,
+	henterMiljovariabler
+};

@@ -4,7 +4,7 @@ import tilgangSaga from "./nav-soknad/redux/tilgang/tilgangSaga";
 import faktaSaga from "./nav-soknad/redux/fakta/faktaSaga";
 import navigasjonSaga from "./nav-soknad/redux/navigasjon/navigasjonSaga";
 import soknadSaga from "./nav-soknad/redux/soknad/soknadSaga";
-import miljovariablerSaga from "./digisos/redux/miljovariabler/miljoVariablerSaga";
+import miljovariablerSaga from "./nav-soknad/redux/miljovariabler/miljoVariablerSaga";
 import navloggerSaga from "./nav-soknad/redux/navlogger/navloggerSaga";
 
 export default function* rootSaga() {
