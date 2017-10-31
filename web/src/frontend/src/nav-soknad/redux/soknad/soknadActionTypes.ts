@@ -1,4 +1,5 @@
 import { Soknad, Kvittering } from "../../types/navSoknadTypes";
+import { InjectedIntl } from "react-intl";
 
 export enum SoknadActionTypeKeys {
 	START_SOKNAD = "soknad/START_SOKNAD",
@@ -51,6 +52,7 @@ export type SoknadActionTypes =
 
 export interface StartSoknadAction {
 	type: SoknadActionTypeKeys.START_SOKNAD;
+	intl: InjectedIntl;
 	kommune?: string;
 	bydel?: string;
 }

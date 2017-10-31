@@ -65,9 +65,9 @@ class Bosted extends React.Component<
 
 	opprettSoknad(event: any) {
 		event.preventDefault();
-		const { kommuneId, bydelId } = this.state;
-		// const { intl } = this.props;
-		this.props.dispatch(startSoknad(kommuneId, bydelId));
+		this.props.dispatch(
+			startSoknad(this.props.intl, this.state.kommuneId, this.state.bydelId)
+		);
 	}
 
 	render() {

@@ -6,9 +6,13 @@ import {
 	fetchDelete,
 	fetchKvittering
 } from "../../utils/rest-utils";
-import { finnFaktum, oppdaterFaktumMedVerdier } from "../../utils";
+import {
+	finnFaktum,
+	oppdaterFaktumMedVerdier,
+	oppdaterFaktumMedProperties,
+	getIntlTextOrKey
+} from "../../utils";
 import { updateFaktaMedLagretVerdi } from "../fakta/faktaUtils";
-import { setApplikasjonsfeil } from "../applikasjonsfeil/applikasjonsfeilActions";
 import {
 	SoknadActionTypeKeys,
 	HentSoknadAction,
@@ -78,22 +82,40 @@ function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
 	const id = yield call(opprettSoknadSaga);
 	const hentAction = { brukerBehandlingId: id } as HentSoknadAction;
 	const soknad = yield call(hentSoknadSaga, hentAction);
-	yield call(
-		lagreFaktum,
-		oppdaterFaktumMedVerdier(
-			finnFaktum("personalia.kommune", soknad.fakta),
-			action.kommune
+	yield put(
+		lagreFaktum(
+			oppdaterFaktumMedVerdier(
+				finnFaktum("personalia.kommune", soknad.fakta),
+				action.kommune
+			)
 		)
 	);
 	if (action.bydel) {
-		yield call(
-			lagreFaktum,
-			oppdaterFaktumMedVerdier(
-				finnFaktum("personalia.bydel", soknad.fakta),
-				action.kommune
+		yield put(
+			lagreFaktum(
+				oppdaterFaktumMedVerdier(
+					finnFaktum("personalia.bydel", soknad.fakta),
+					action.kommune
+				)
 			)
 		);
 	}
+	yield put(
+		lagreFaktum(
+			oppdaterFaktumMedProperties(
+				finnFaktum("informasjon.tekster", soknad.fakta),
+				{
+					"1": getIntlTextOrKey(action.intl, "informasjon.start.tittel"),
+					"2": getIntlTextOrKey(action.intl, "informasjon.start.tekst"),
+					"3": getIntlTextOrKey(
+						action.intl,
+						"informasjon.nodsituasjon.undertittel"
+					),
+					"4": getIntlTextOrKey(action.intl, "informasjon.nodsituasjon.tekst")
+				}
+			)
+		)
+	);
 	yield put(tilSteg(1));
 }
 
@@ -104,18 +126,6 @@ function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
 		yield put(navigerTilDittNav());
 	} catch (reason) {
 		yield put(slettSoknadFeilet(reason));
-		yield put(setApplikasjonsfeil({ tittel: "", innhold: "" }));
-		// yield put(setApplikasjonsfeil, )
-		// 		this.props.dispatch(
-		// 			setApplikasjonsfeil({
-		// 				tittel: this.props.intl.formatMessage({
-		// 					id: "sendsoknadfeilet.tittel"
-		// 				}),
-		// 				innhold: this.props.intl.formatMessage({
-		// 					id: "sendsoknadfeilet.melding"
-		// 				})
-		// 			})
-		// 		);
 	}
 }
 
@@ -144,24 +154,6 @@ function* hentKvitteringSaga(action: HentKvitteringAction): SagaIterator {
 		yield put(hentKvitteringFeilet(reason));
 	}
 }
-
-// this.props.dispatch(sendSoknad(brukerBehandlingId)).then(
-// 	() => {
-// 		this.props.history.push(`/kvittering/${brukerBehandlingId}`);
-// 	},
-// 	response => {
-// 		this.props.dispatch(
-// 			setApplikasjonsfeil({
-// 				tittel: this.props.intl.formatMessage({
-// 					id: "sendsoknadfeilet.tittel"
-// 				}),
-// 				innhold: this.props.intl.formatMessage({
-// 					id: "sendsoknadfeilet.melding"
-// 				})
-// 			})
-// 		);
-// 	}
-// );
 
 function* soknadSaga(): SagaIterator {
 	yield takeEvery(SoknadActionTypeKeys.START_SOKNAD, startSoknadSaga);
