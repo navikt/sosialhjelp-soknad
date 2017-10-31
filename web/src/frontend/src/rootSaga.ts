@@ -3,12 +3,14 @@ import ledeteksterSaga from "./nav-soknad/redux/ledetekster/ledeteksterSaga";
 import faktaSaga from "./nav-soknad/redux/fakta/faktaSaga";
 import navigasjonSaga from "./nav-soknad/redux/navigasjon/navigasjonSaga";
 import oppsummeringSaga from "./nav-soknad/redux/oppsummering/oppsummeringSaga";
+import synligeFaktaSaga from "./digisos/redux/synligefakta/synligeFaktaSaga";
 
 export default function* rootSaga() {
 	yield all([
 		ledeteksterSaga(),
 		faktaSaga(),
 		navigasjonSaga(),
-		oppsummeringSaga()
+		oppsummeringSaga(),
+		synligeFaktaSaga()
 	]);
 }

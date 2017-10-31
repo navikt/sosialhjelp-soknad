@@ -32,15 +32,23 @@ export interface SynligeFaktaProps {
 
 export enum SynligeFaktaActionTypeKeys {
 	HENT_SYNLIGE = "synligefakta/HENT_SYNLIGE",
-	HENTET_SYNLIGE = "synligefakta/HENTET_SYNLIGE",
+	HENT_SYNLIGE_OK = "synligefakta/HENT_SYNLIGE_OK",
+	HENT_SYNLIGE_FEILET = "synligefakta/HENT_SYNLIGE_FEILET",
 	OTHER_ACTION = "__any_other_action_type__"
 }
+
+export type SynligeFaktaActionTypes = HentSynligeFaktaAction | HentSynligeFaktaOKAction | HentSynligeFaktaFeiletAction;
 
 export interface HentSynligeFaktaAction {
 	type: SynligeFaktaActionTypeKeys.HENT_SYNLIGE;
 }
 
-export interface HentetSynligeFaktaAction {
-	type: SynligeFaktaActionTypeKeys.HENTET_SYNLIGE;
+export interface HentSynligeFaktaOKAction {
+	type: SynligeFaktaActionTypeKeys.HENT_SYNLIGE_OK;
 	data: FaktumStruktur[];
+}
+
+export interface HentSynligeFaktaFeiletAction {
+	type: SynligeFaktaActionTypeKeys.HENT_SYNLIGE_FEILET;
+	feilmelding: string;
 }

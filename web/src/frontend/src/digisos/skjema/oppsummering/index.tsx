@@ -11,21 +11,17 @@ import {
 	hentOppsummering,
 	bekreftOppsummering
 } from "../../../nav-soknad/redux/oppsummering/oppsummeringActions";
-import { Oppsummering, OppsummeringActionTypes } from "../../../nav-soknad/redux/oppsummering/oppsummeringTypes";
+import { Oppsummering } from "../../../nav-soknad/redux/oppsummering/oppsummeringTypes";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
+import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 
 interface StateProps {
 	oppsummering: Oppsummering;
 	bekreftet: boolean;
 	visBekreftMangler: boolean;
 	restStatus: REST_STATUS;
-}
-
-interface DispatchProps {
-	onChange: () => OppsummeringActionTypes;
-	onDidMount: () => OppsummeringActionTypes;
 }
 
 type Props = FaktumComponentProps &
@@ -39,7 +35,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 		this.getOppsummering = this.getOppsummering.bind(this);
 	}
 	componentDidMount() {
-		this.props.onDidMount();
+		this.props.dispatch(hentOppsummering());
 	}
 	getOppsummering() {
 		return {
@@ -82,7 +78,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 									}
 									: null
 							}
-							onChange={ this.props.onChange }
+							onChange={ () => this.props.dispatch(bekreftOppsummering()) }
 						/>
 					</div>
 				</DigisosSkjemaSteg>
@@ -97,10 +93,5 @@ export default connect((state: State, props: any) => {
 		bekreftet: state.oppsummering.bekreftet,
 		visBekreftMangler: state.oppsummering.visBekreftMangler,
 		restStatus: state.oppsummering.restStatus
-	};
-}, dispatch => {
-	return {
-		onChange: () => dispatch(bekreftOppsummering()),
-		onDidMount: () => dispatch(hentOppsummering())
 	};
 })(injectIntl(OppsummeringView));
