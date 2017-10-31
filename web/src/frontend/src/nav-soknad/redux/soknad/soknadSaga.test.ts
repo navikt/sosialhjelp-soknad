@@ -3,7 +3,6 @@ import {
 	opprettSoknadSaga,
 	startSoknadSaga,
 	hentSoknadSaga,
-	// hentKvittergSaga,
 	slettSoknadSaga,
 	sendSoknadSaga,
 	SKJEMAID
