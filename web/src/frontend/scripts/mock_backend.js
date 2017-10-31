@@ -30,6 +30,11 @@ router.get("/informasjon/tekster", function(req, res) {
 	res.json(utils.lesSpraakfil());
 });
 
+// Tilgang til søknadsskjema
+router.get("/informasjon/utslagskriterier/adresse", function(req, res) {
+	res.json({ pilotSosialhjelp: true });
+});
+
 // Miljøvariabler
 const miljovariabler = utils.lesMockDataFil("miljovariabler.json");
 router.get("/informasjon/miljovariabler", function(req, res) {
@@ -140,6 +145,19 @@ router.post("/fakta", function(req, res) {
 	const faktum = req.body;
 	fakta.push(faktum);
 	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
+});
+
+router.post("/actions/logg", function(req, res) {
+	console.log("Klient logget feil:");
+	if( typeof req.body === "string") {
+		console.log(req);
+	} else {
+		req.body.userAgent = req.body.userAgent.substr(0, 10) + "...";
+		console.log(JSON.stringify(req.body, null, 4));
+	}
+
+	res.status(204); // 204 = "No content"
+	res.json();
 });
 
 app.use("/", router);
