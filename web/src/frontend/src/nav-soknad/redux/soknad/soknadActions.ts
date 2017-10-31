@@ -1,9 +1,13 @@
 import { InjectedIntl } from "react-intl";
-import { SoknadActionTypeKeys, SoknadActionTypes } from "./soknadActionTypes";
+import {
+	SoknadActionTypeKeys,
+	SoknadActionTypes,
+	SoknadInfoTekster
+} from "./soknadActionTypes";
 import { Soknad, Kvittering } from "../../types";
 
 export function startSoknad(
-	intl: InjectedIntl,
+	info: SoknadInfoTekster,
 	kommune: string,
 	bydel?: string
 ) {
@@ -11,7 +15,7 @@ export function startSoknad(
 		type: SoknadActionTypeKeys.START_SOKNAD,
 		kommune,
 		bydel,
-		intl
+		info
 	};
 }
 

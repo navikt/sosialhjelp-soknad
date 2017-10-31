@@ -66,7 +66,22 @@ class Bosted extends React.Component<
 	opprettSoknad(event: any) {
 		event.preventDefault();
 		this.props.dispatch(
-			startSoknad(this.props.intl, this.state.kommuneId, this.state.bydelId)
+			startSoknad(
+				{
+					"1": getIntlTextOrKey(this.props.intl, "informasjon.start.tittel"),
+					"2": getIntlTextOrKey(this.props.intl, "informasjon.start.tekst"),
+					"3": getIntlTextOrKey(
+						this.props.intl,
+						"informasjon.nodsituasjon.undertittel"
+					),
+					"4": getIntlTextOrKey(
+						this.props.intl,
+						"informasjon.nodsituasjon.tekst"
+					)
+				},
+				this.state.kommuneId,
+				this.state.bydelId
+			)
 		);
 	}
 

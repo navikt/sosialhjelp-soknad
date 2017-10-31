@@ -1,5 +1,4 @@
 import { Soknad, Kvittering } from "../../types/navSoknadTypes";
-import { InjectedIntl } from "react-intl";
 
 export enum SoknadActionTypeKeys {
 	START_SOKNAD = "soknad/START_SOKNAD",
@@ -50,9 +49,17 @@ export type SoknadActionTypes =
 	| SlettSoknadOkAction
 	| SlettSoknadFeiletAction;
 
+/** Teksters om bruker får presentert på informasjonssteget - må inn pga oppsummering og pdf */
+export interface SoknadInfoTekster {
+	"1": string;
+	"2": string;
+	"3": string;
+	"4": string;
+}
+
 export interface StartSoknadAction {
 	type: SoknadActionTypeKeys.START_SOKNAD;
-	intl: InjectedIntl;
+	info: SoknadInfoTekster;
 	kommune?: string;
 	bydel?: string;
 }

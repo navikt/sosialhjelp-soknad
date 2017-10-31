@@ -9,8 +9,7 @@ import {
 import {
 	finnFaktum,
 	oppdaterFaktumMedVerdier,
-	oppdaterFaktumMedProperties,
-	getIntlTextOrKey
+	oppdaterFaktumMedProperties
 } from "../../utils";
 import { updateFaktaMedLagretVerdi } from "../fakta/faktaUtils";
 import {
@@ -42,7 +41,7 @@ import {
 	sendSoknadFeilet
 } from "./soknadActions";
 
-const SKJEMAID = "NAV 35-18.01";
+export const SKJEMAID = "NAV 35-18.01";
 
 export interface OpprettSoknadResponse {
 	brukerBehandlingId: string;
@@ -104,15 +103,7 @@ function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
 		lagreFaktum(
 			oppdaterFaktumMedProperties(
 				finnFaktum("informasjon.tekster", soknad.fakta),
-				{
-					"1": getIntlTextOrKey(action.intl, "informasjon.start.tittel"),
-					"2": getIntlTextOrKey(action.intl, "informasjon.start.tekst"),
-					"3": getIntlTextOrKey(
-						action.intl,
-						"informasjon.nodsituasjon.undertittel"
-					),
-					"4": getIntlTextOrKey(action.intl, "informasjon.nodsituasjon.tekst")
-				}
+				action.info
 			)
 		)
 	);
@@ -154,6 +145,14 @@ function* hentKvitteringSaga(action: HentKvitteringAction): SagaIterator {
 		yield put(hentKvitteringFeilet(reason));
 	}
 }
+
+export {
+	opprettSoknadSaga,
+	hentSoknadSaga,
+	startSoknadSaga,
+	sendSoknadSaga,
+	hentKvitteringSaga
+};
 
 function* soknadSaga(): SagaIterator {
 	yield takeEvery(SoknadActionTypeKeys.START_SOKNAD, startSoknadSaga);
