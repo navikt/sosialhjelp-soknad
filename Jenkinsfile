@@ -85,6 +85,28 @@ node("master") {
                 notifyFailed("Bygging av JS feilet", e, env.BUILD_URL)
             }
         }
+
+
+
+        // Test stage. Skal fjernes:
+        stage('Integrasjonstester') {
+            node {
+                try {
+                    dir('web/src/frontend') {
+                        withCredentials([usernameColonPassword(credentialsId: 'openam_testuser', variable: 'USERPASS')]) {
+                            withCredentials([usernameColonPassword(credentialsId: 'openam_testuser', variable: 'ID')]) {
+                                sh("node nightwatch.js --env phantomjs --url ${testurl}  --username $ID --password $USERPASS --login true")
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    notifyFailed('Integrasjonstester feilet', e)
+                    step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
+                }
+            }
+        }
+
+
     }
 
     echo "${params.DeployTilNexus} deploy til nexus"
@@ -142,20 +164,24 @@ if (isMasterBuild) {
     }
 }
 
-//if (isMasterBuild) {
-//    stage('Integrasjonstester') {
-//        node {
-//            try {
-//                dir('web/src/frontend') {
-//                    sh("node nightwatch.js --env phantomjs --url ${testurl}")
-//                }
-//            } catch (Exception e) {
-//                notifyFailed('Integrasjonstester feilet', e)
-//                step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
-//            }
-//        }
-//    }
-//}
+if (isMasterBuild) {
+    stage('Integrasjonstester') {
+        node {
+            try {
+                dir('web/src/frontend') {
+                    withCredentials([usernameColonPassword(credentialsId: 'openam_testuser', variable: 'USERPASS')]) {
+                        withCredentials([usernameColonPassword(credentialsId: 'openam_testuser', variable: 'ID')]) {
+                            sh("node nightwatch.js --env phantomjs --url ${testurl}  --username $ID --password $USERPASS --login true")
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                notifyFailed('Integrasjonstester feilet', e)
+                step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
+            }
+        }
+    }
+}
 
 node {
     returnOk('All good', env.BUILD_URL)
