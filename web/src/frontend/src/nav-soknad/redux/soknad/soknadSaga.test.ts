@@ -5,6 +5,7 @@ import {
 	hentSoknadSaga,
 	slettSoknadSaga,
 	sendSoknadSaga,
+	hentKvitteringSaga,
 	SKJEMAID
 } from "./soknadSaga";
 import {
@@ -13,13 +14,16 @@ import {
 	sendSoknad,
 	sendSoknadOk,
 	slettSoknad,
-	slettSoknadOk
+	slettSoknadOk,
+	hentKvittering,
+	hentKvitteringOk
 } from "./soknadActions";
 import {
 	StartSoknadAction,
 	SoknadInfoTekster,
 	SendSoknadAction,
-	SlettSoknadAction
+	SlettSoknadAction,
+	HentKvitteringAction
 } from "./soknadActionTypes";
 import {
 	tilSteg,
@@ -28,7 +32,11 @@ import {
 } from "../navigasjon/navigasjonActions";
 import { lagreFaktum } from "../fakta/faktaActions";
 import { Faktum } from "../../types";
-import { fetchPost, fetchDelete } from "../../utils/rest-utils";
+import {
+	fetchPost,
+	fetchDelete,
+	fetchKvittering
+} from "../../utils/rest-utils";
 
 describe("soknadSaga", () => {
 	describe("opprettSoknadSaga", () => {
@@ -178,6 +186,27 @@ describe("soknadSaga", () => {
 			expect(saga.next()).toEqual({
 				done: true
 			});
+		});
+	});
+
+	describe("hentKvittering", () => {
+		const action = hentKvittering("1") as HentKvitteringAction;
+		const saga = hentKvitteringSaga(action);
+		it("calls hentKvittering", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: call(fetchKvittering, "soknader/1?sprak=nb_NO")
+			});
+		});
+		const kvittering = { navkontor: "horten", orgnummer: "123" };
+		it("puts kvitteringOk", () => {
+			expect(saga.next(kvittering)).toEqual({
+				done: false,
+				value: put(hentKvitteringOk(kvittering))
+			});
+		});
+		it("er ferdig", () => {
+			expect(saga.next()).toEqual({ done: true });
 		});
 	});
 });
