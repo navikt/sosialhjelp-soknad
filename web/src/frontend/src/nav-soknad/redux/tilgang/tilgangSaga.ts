@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { ActionTypeKeys, TilgangApiResponse } from "./tilgangTypes";
+import { TilgangActionTypeKeys, TilgangApiResponse } from "./tilgangTypes";
 import { fetchToJson } from "../../utils/rest-utils";
 import {
 	henterTilgang,
@@ -21,7 +21,7 @@ function* hentTilgangSaga(): IterableIterator<any> {
 }
 
 function* tilgangSaga() {
-	yield takeEvery(ActionTypeKeys.INIT, hentTilgangSaga);
+	yield takeEvery(TilgangActionTypeKeys.INIT, hentTilgangSaga);
 }
 
 export default tilgangSaga;

@@ -1,4 +1,4 @@
-export enum ActionTypeKeys {
+export enum TilgangActionTypeKeys {
 	OK = "tilgang/OK",
 	FEILET = "tilgang/FEILET",
 	PENDING = "tilgang/PENDING",
@@ -14,30 +14,30 @@ export type TilgangActionTypes =
 	| OtherAction;
 
 interface HentTilgangAction {
-	type: ActionTypeKeys.INIT;
+	type: TilgangActionTypeKeys.INIT;
 }
 
 interface HentetTilgangAction {
-	type: ActionTypeKeys.OK;
+	type: TilgangActionTypeKeys.OK;
 	harTilgang: boolean;
 }
 
 interface HenterTilgangAction {
-	type: ActionTypeKeys.PENDING;
+	type: TilgangActionTypeKeys.PENDING;
 }
 
 interface HentTilgangFeiletAction {
-	type: ActionTypeKeys.FEILET;
+	type: TilgangActionTypeKeys.FEILET;
 	feilmelding: string;
 }
 
 export interface OtherAction {
-	type: ActionTypeKeys.OTHER_ACTION;
+	type: TilgangActionTypeKeys.OTHER_ACTION;
 }
 
 export interface TilgangApiType {
 	harTilgang: boolean;
-	status: ActionTypeKeys;
+	status: TilgangActionTypeKeys;
 }
 
 export interface TilgangState {

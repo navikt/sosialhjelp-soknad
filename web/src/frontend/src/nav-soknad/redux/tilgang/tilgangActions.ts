@@ -1,27 +1,27 @@
-import { ActionTypeKeys, TilgangActionTypes } from "./tilgangTypes";
+import { TilgangActionTypeKeys, TilgangActionTypes } from "./tilgangTypes";
 
 const hentTilgang = (): TilgangActionTypes => {
 	return {
-		type: ActionTypeKeys.INIT
+		type: TilgangActionTypeKeys.INIT
 	};
 };
 
 const henterTilgang = (): TilgangActionTypes => {
 	return {
-		type: ActionTypeKeys.PENDING
+		type: TilgangActionTypeKeys.PENDING
 	};
 };
 
 const hentetTilgang = (harTilgang: boolean): TilgangActionTypes => {
 	return {
-		type: ActionTypeKeys.OK,
+		type: TilgangActionTypeKeys.OK,
 		harTilgang
 	};
 };
 
 const hentTilgangFeilet = (feilmelding: string): TilgangActionTypes => {
 	return {
-		type: ActionTypeKeys.FEILET,
+		type: TilgangActionTypeKeys.FEILET,
 		feilmelding
 	};
 };

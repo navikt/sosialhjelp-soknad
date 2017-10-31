@@ -1,10 +1,10 @@
 import {
-	ActionTypeKeys,
+	TilgangActionTypeKeys,
 	TilgangActionTypes,
 	TilgangApiType
 } from "./tilgangTypes";
 
-const { OK, PENDING, FEILET, INIT } = ActionTypeKeys;
+const { OK, PENDING, FEILET, INIT } = TilgangActionTypeKeys;
 
 const initialState = {
 	harTilgang: false,
