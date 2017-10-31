@@ -1,9 +1,8 @@
-import { call, takeEvery, put, select } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 import { FaktumActionTypeKeys } from "./faktaActionTypes";
 import { fetchDelete, fetchPost, fetchPut } from "../../utils/rest-utils";
 import { prepFaktumForLagring } from "./faktaUtils";
 import { SagaIterator } from "redux-saga";
-import { SoknadState } from "../reduxTypes";
 import { LagreFaktum, OpprettFaktum, SlettFaktum } from "./faktaTypes";
 import {
 	lagreFaktumFeilet,
@@ -14,10 +13,7 @@ import {
 	slettFaktumFeilet
 } from "./faktaActions";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
-
-function selectBrukerBehandlingId(state: { soknad: SoknadState }) {
-	return state.soknad.data.brukerBehandlingId;
-}
+import { selectBrukerBehandlingId } from "../selectors";
 
 function* lagreFaktumSaga(action: LagreFaktum): SagaIterator {
 	try {
@@ -70,8 +66,7 @@ export {
 	lagreFaktumSaga,
 	opprettFaktumSaga,
 	slettFaktumSaga,
-	feiletFaktumSaga,
-	selectBrukerBehandlingId
+	feiletFaktumSaga
 };
 
 export default faktaSaga;

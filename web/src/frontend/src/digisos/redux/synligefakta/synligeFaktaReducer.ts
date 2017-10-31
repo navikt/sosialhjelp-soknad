@@ -3,9 +3,9 @@ import {
 	FaktumStruktur,
 	SynligeFaktaActionTypeKeys,
 	SynligeFaktaState,
-	GruppertFaktumStruktur
+	GruppertFaktumStruktur,
+	SynligeFaktaActionTypes
 } from "./synligeFaktaTypes";
-import { SynligeFaktaActionTypes } from "./synligeFaktaActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 
 const defaultState: SynligeFaktaState = {
@@ -21,11 +21,16 @@ const synligeFaktaReducer: Reducer<SynligeFaktaState, SynligeFaktaActionTypes> =
 				...defaultState,
 				restStatus: REST_STATUS.PENDING
 			};
-		case SynligeFaktaActionTypeKeys.HENTET_SYNLIGE:
+		case SynligeFaktaActionTypeKeys.HENT_SYNLIGE_OK:
 			return {
 				...state,
 				restStatus: REST_STATUS.OK,
 				data: grupperFaktumStrukturer(action.data)
+			};
+		case SynligeFaktaActionTypeKeys.HENT_SYNLIGE_FEILET:
+			return {
+				...state,
+				restStatus: REST_STATUS.FEILET
 			};
 		default:
 			return state;

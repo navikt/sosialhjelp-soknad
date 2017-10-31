@@ -15,7 +15,7 @@ import Knapperad from "../components/knapperad";
 import { SkjemaConfig, SkjemaStegType, SkjemaSteg, Faktum } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
 import { getProgresjonFaktum } from "../utils";
-import { setVisBekreftMangler } from "../redux/oppsummeringActions";
+import { setVisBekreftMangler } from "../redux/oppsummering/oppsummeringActions";
 import {
 	clearFaktaValideringsfeil,
 	setFaktaValideringsfeil

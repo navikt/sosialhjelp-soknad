@@ -1,4 +1,4 @@
-import { put, select, takeEvery, take, call } from "redux-saga/effects";
+import { call, put, select, take, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { push, goBack } from "react-router-redux";
 import {
@@ -9,24 +9,15 @@ import {
 	TilDittNav,
 	TilKvittering
 } from "./navigasjonTypes";
-import { FaktumState } from "../fakta/faktaReducer";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
-import { SoknadState } from "../reduxTypes";
 import { tilSteg } from "./navigasjonActions";
 import { SoknadAppState } from "../reduxTypes";
+import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 
 const getHistoryLength = () => window.history.length;
 const navigateTo = (path: string) => (window.location.href = path);
-
-const selectProgresjonFaktum = (state: { fakta: FaktumState }) => {
-	return state.fakta.data.filter(f => f.key === "progresjon")[0];
-};
-
-const selectBehandlingsId = (state: { soknad: SoknadState }) => {
-	return state.soknad.data.brukerBehandlingId;
-};
 
 function* tilFinnDittNavKontorSaga(): SagaIterator {
 	yield call(navigateTo, Sider.FINN_DITT_NAV_KONTOR);
@@ -50,7 +41,7 @@ function* tilbakeEllerForsidenSaga(): SagaIterator {
 }
 
 function* tilStegSaga(action: TilSteg): SagaIterator {
-	const behandlingsId = yield select(selectBehandlingsId);
+	const behandlingsId = yield select(selectBrukerBehandlingId);
 	yield put(push(`/skjema/${behandlingsId}/${action.stegnummer}`));
 }
 
@@ -104,10 +95,9 @@ export {
 	tilStegSaga,
 	gaVidereSaga,
 	navigateTo,
-	getHistoryLength,
-	selectBehandlingsId,
 	selectProgresjonFaktum,
-	tilKvittering
+	tilKvittering,
+	getHistoryLength
 };
 
 export default navigasjonSaga;

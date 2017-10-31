@@ -6,6 +6,8 @@ import navigasjonSaga from "./nav-soknad/redux/navigasjon/navigasjonSaga";
 import soknadSaga from "./nav-soknad/redux/soknad/soknadSaga";
 import miljovariablerSaga from "./nav-soknad/redux/miljovariabler/miljoVariablerSaga";
 import navloggerSaga from "./nav-soknad/redux/navlogger/navloggerSaga";
+import oppsummeringSaga from "./nav-soknad/redux/oppsummering/oppsummeringSaga";
+import synligeFaktaSaga from "./digisos/redux/synligefakta/synligeFaktaSaga";
 
 export default function* rootSaga() {
 	yield all([
@@ -15,6 +17,8 @@ export default function* rootSaga() {
 		navigasjonSaga(),
 		miljovariablerSaga(),
 		navloggerSaga(),
+		oppsummeringSaga(),
+		synligeFaktaSaga(),
 		soknadSaga()
 	]);
 }

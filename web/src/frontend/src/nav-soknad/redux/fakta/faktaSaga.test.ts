@@ -2,7 +2,6 @@ import {
 	feiletFaktumSaga,
 	lagreFaktumSaga,
 	opprettFaktumSaga,
-	selectBrukerBehandlingId,
 	slettFaktumSaga
 } from "./faktaSaga";
 import {
@@ -22,6 +21,7 @@ import { fetchDelete, fetchPost, fetchPut } from "../../utils/rest-utils";
 import { prepFaktumForLagring } from "./faktaUtils";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 import { LagreFaktum, OpprettFaktum, SlettFaktum } from "./faktaTypes";
+import { selectBrukerBehandlingId } from "../selectors";
 
 describe("faktaSaga", () => {
 	describe("lagreFaktumSaga - hovedflyt", () => {
