@@ -6,6 +6,7 @@ import { SoknadActionTypes, SoknadActionTypeKeys } from "./soknadActionTypes";
 export const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
 	sendSoknadPending: false,
+	avbrytDialogSynlig: false,
 	data: {
 		soknadId: null,
 		skjemaNummer: "",
@@ -27,8 +28,7 @@ export const defaultState: SoknadState = {
 		sprak: "",
 		ikkeInnsendteVedlegg: [],
 		opplastedeVedlegg: [],
-		innsendteVedlegg: [],
-		avbrytDialogSynlig: false
+		innsendteVedlegg: []
 	}
 };
 
@@ -40,18 +40,12 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 		case SoknadActionTypeKeys.AVBRYT_SOKNAD:
 			return {
 				...state,
-				data: {
-					...state.data,
-					avbrytDialogSynlig: true
-				}
+				avbrytDialogSynlig: true
 			};
 		case SoknadActionTypeKeys.FORTSETT_SOKNAD:
 			return {
 				...state,
-				data: {
-					...state.data,
-					avbrytDialogSynlig: false
-				}
+				avbrytDialogSynlig: false
 			};
 
 		case SoknadActionTypeKeys.RESET_SOKNAD:
