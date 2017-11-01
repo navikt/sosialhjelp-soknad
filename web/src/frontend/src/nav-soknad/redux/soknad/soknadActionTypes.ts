@@ -31,7 +31,7 @@ export type SoknadActionTypes =
 	| OpprettSoknadOkAction
 	| OpprettSoknadFeiletAction
 	| HentSoknadAction
-	| HentSoknaOkdAction
+	| HentSoknaOkAction
 	| HentSoknadFeiletAction
 	| SendSoknadAction
 	| SendSoknadOkAction
@@ -83,7 +83,7 @@ export interface HentSoknadAction {
 	brukerBehandlingId: string;
 }
 
-export interface HentSoknaOkdAction {
+export interface HentSoknaOkAction {
 	type: SoknadActionTypeKeys.HENT_SOKNAD_OK;
 	data: Soknad;
 }

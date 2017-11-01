@@ -3,7 +3,7 @@ import { Reducer, SoknadState } from "../reduxTypes";
 
 import { SoknadActionTypes, SoknadActionTypeKeys } from "./soknadActionTypes";
 
-const defaultState: SoknadState = {
+export const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
 	sendSoknadPending: false,
 	data: {
