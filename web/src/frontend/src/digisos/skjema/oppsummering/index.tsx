@@ -16,6 +16,8 @@ import { Oppsummering } from "../../../nav-soknad/redux/oppsummering/oppsummerin
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
+import { settInfofaktum } from "../../../nav-soknad/redux/soknad/soknadActions";
+import { getIntlTextOrKey } from "../../../nav-soknad/utils/intlUtils";
 
 interface StateProps {
 	oppsummering: Oppsummering;
@@ -34,8 +36,26 @@ class OppsummeringView extends React.Component<Props, {}> {
 		super(props);
 		this.getOppsummering = this.getOppsummering.bind(this);
 	}
+
 	componentDidMount() {
 		this.props.dispatch(hentOppsummering());
+		this.props.dispatch(
+			settInfofaktum({
+				faktumKey: "informasjon.tekster",
+				properties: {
+					"1": getIntlTextOrKey(this.props.intl, "informasjon.start.tittel"),
+					"2": getIntlTextOrKey(this.props.intl, "informasjon.start.tekst"),
+					"3": getIntlTextOrKey(
+						this.props.intl,
+						"informasjon.nodsituasjon.undertittel"
+					),
+					"4": getIntlTextOrKey(
+						this.props.intl,
+						"informasjon.nodsituasjon.tekst"
+					)
+				}
+			})
+		);
 	}
 	getOppsummering() {
 		return {
@@ -72,13 +92,13 @@ class OppsummeringView extends React.Component<Props, {}> {
 							feil={
 								this.props.visBekreftMangler
 									? {
-										feilmelding: intl.formatHTMLMessage({
-											id: "soknadsosialhjelp.oppsummering.bekreftOpplysninger"
-										})
-									}
+											feilmelding: intl.formatHTMLMessage({
+												id: "soknadsosialhjelp.oppsummering.bekreftOpplysninger"
+											})
+										}
 									: null
 							}
-							onChange={ () => this.props.dispatch(bekreftOppsummering()) }
+							onChange={() => this.props.dispatch(bekreftOppsummering())}
 						/>
 					</div>
 				</DigisosSkjemaSteg>

@@ -7,6 +7,7 @@ export const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
 	sendSoknadPending: false,
 	avbrytDialogSynlig: false,
+	infofaktum: null,
 	data: {
 		soknadId: null,
 		skjemaNummer: "",
@@ -103,6 +104,11 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				...state,
 				restStatus: REST_STATUS.FEILET,
 				sendSoknadPending: false
+			};
+		case SoknadActionTypeKeys.SETT_INFOFAKTUM:
+			return {
+				...state,
+				infofaktum: action.info
 			};
 		default:
 			return state;

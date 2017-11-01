@@ -1,4 +1,4 @@
-import { Soknad, Kvittering } from "../../types/navSoknadTypes";
+import { Soknad, Kvittering, Infofaktum } from "../../types/navSoknadTypes";
 
 export enum SoknadActionTypeKeys {
 	START_SOKNAD = "soknad/START_SOKNAD",
@@ -23,7 +23,8 @@ export enum SoknadActionTypeKeys {
 	HENT_KVITTERING_FEILET = "soknad/KVITTERING_FEILET",
 	SEND_SOKNAD = "soknad/SEND_SOKNAD",
 	SEND_SOKNAD_OK = "soknad/SEND_SOKNAD_OK",
-	SEND_SOKNAD_FEILET = "soknad/SEND_SOKNAD_FEILET"
+	SEND_SOKNAD_FEILET = "soknad/SEND_SOKNAD_FEILET",
+	SETT_INFOFAKTUM = "soknad/SETT_INFOFAKTUM"
 }
 
 export type SoknadActionTypes =
@@ -47,19 +48,20 @@ export type SoknadActionTypes =
 	| HentKvitteringOkAction
 	| SlettSoknadAction
 	| SlettSoknadOkAction
-	| SlettSoknadFeiletAction;
+	| SlettSoknadFeiletAction
+	| SettInfofaktumAction;
 
 /** Teksters om bruker får presentert på informasjonssteget - må inn pga oppsummering og pdf */
-export interface SoknadInfoTekster {
-	"1": string;
-	"2": string;
-	"3": string;
-	"4": string;
-}
+// export interface SoknadInfoTekster {
+// 	"1": string;
+// 	"2": string;
+// 	"3": string;
+// 	"4": string;
+// }
 
 export interface StartSoknadAction {
 	type: SoknadActionTypeKeys.START_SOKNAD;
-	info: SoknadInfoTekster;
+	// info: SoknadInfoTekster;
 	kommune?: string;
 	bydel?: string;
 }
@@ -155,4 +157,9 @@ export interface SetServerFeilAction {
 
 export interface OtherAction {
 	type: SoknadActionTypeKeys.OTHER_ACTION;
+}
+
+export interface SettInfofaktumAction {
+	type: SoknadActionTypeKeys.SETT_INFOFAKTUM;
+	info: Infofaktum;
 }

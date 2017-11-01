@@ -20,7 +20,7 @@ import {
 } from "./soknadActions";
 import {
 	StartSoknadAction,
-	SoknadInfoTekster,
+	// SoknadInfoTekster,
 	SendSoknadAction,
 	SlettSoknadAction,
 	HentKvitteringAction
@@ -69,15 +69,15 @@ describe("soknadSaga", () => {
 	});
 
 	describe("startSoknadSaga - horten", () => {
-		const info: SoknadInfoTekster = {
-			"1": "",
-			"2": "",
-			"3": "",
-			"4": ""
-		};
+		// const info: SoknadInfoTekster = {
+		// 	"1": "",
+		// 	"2": "",
+		// 	"3": "",
+		// 	"4": ""
+		// };
 
 		const action: StartSoknadAction = startSoknad(
-			info,
+			// info,
 			"horten"
 		) as StartSoknadAction;
 
