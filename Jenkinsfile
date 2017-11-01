@@ -32,7 +32,7 @@ node("master") {
     properties([
             parameters([
                     string(name: 'DeployTilNexus', defaultValue: 'false'),
-                    string(name: 'testurl', defaultValue: 'http://tjenester-t1.nav.no/veivisersosialhjelp')
+                    string(name: 'testurl', defaultValue: 'https://tjenester-t6.nav.no/soknadsosialhjelp/informasjon')
             ])
     ])
     common.setupTools("maven3", "java8")
