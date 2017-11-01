@@ -86,17 +86,13 @@ node("master") {
             }
         }
 
-
-
-        // Test stage. Skal fjernes:
+        // Kun for test stage. Skal fjernes:
         stage('Integrasjonstester') {
             node {
                 try {
                     dir('web/src/frontend') {
                         withCredentials([usernameColonPassword(credentialsId: 'openam_testuser', variable: 'USERPASS')]) {
-                            withCredentials([usernameColonPassword(credentialsId: 'openam_testuser', variable: 'ID')]) {
-                                sh("node nightwatch.js --env phantomjs --url ${testurl}  --username $ID --password $USERPASS --login true")
-                            }
+                            sh("node nightwatch.js --env phantomjs --url ${testurl}  --username 19066712345 --password $USERPASS --login true")
                         }
                     }
                 } catch (Exception e) {
