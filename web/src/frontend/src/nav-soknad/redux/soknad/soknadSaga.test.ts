@@ -1,4 +1,5 @@
 import { call, put } from "redux-saga/effects";
+// import { finnFaktum, oppdaterFaktumMedProperties } from "../../utils";
 import {
 	opprettSoknadSaga,
 	startSoknadSaga,
@@ -16,7 +17,9 @@ import {
 	slettSoknad,
 	slettSoknadOk,
 	hentKvittering,
-	hentKvitteringOk
+	hentKvitteringOk,
+	resetSoknad,
+	startSoknadOk
 } from "./soknadActions";
 import {
 	StartSoknadAction,
@@ -29,7 +32,7 @@ import {
 	navigerTilKvittering,
 	navigerTilDittNav
 } from "../navigasjon/navigasjonActions";
-import { lagreFaktum } from "../fakta/faktaActions";
+import { lagreFaktum, resetFakta } from "../fakta/faktaActions";
 import { Faktum } from "../../types";
 import {
 	fetchPost,
@@ -74,6 +77,19 @@ describe("soknadSaga", () => {
 
 		const saga = startSoknadSaga(action);
 
+		it("resets soknad", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(resetSoknad())
+			});
+		});
+		it("resets fakta", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(resetFakta())
+			});
+		});
+
 		it("calls opprettSoknad", () => {
 			expect(saga.next()).toEqual({
 				done: false,
@@ -99,12 +115,12 @@ describe("soknadSaga", () => {
 			});
 		});
 
-		it("puts informasjonsFaktum", () => {
-			saga.next();
-		});
-
 		it("puts tilSteg(1)", () => {
 			expect(saga.next()).toEqual({ done: false, value: put(tilSteg(1)) });
+		});
+
+		it("says startSoknadOk", () => {
+			expect(saga.next()).toEqual({ done: false, value: put(startSoknadOk()) });
 		});
 
 		it("ferdig", () => {
@@ -115,6 +131,18 @@ describe("soknadSaga", () => {
 	describe("sendSoknad", () => {
 		const action = sendSoknad("1") as SendSoknadAction;
 		const saga = sendSoknadSaga(action);
+
+		const faktum: Faktum = {
+			faktumId: 1,
+			key: "1",
+			value: "",
+			properties: {},
+			soknadId: 1,
+			parrentFaktum: null
+		};
+		saga.next(); // Select infofaktum
+		saga.next(faktum); // Select fakta
+		saga.next([faktum]); // Lagre faktum
 
 		it("call sendSoknad", () => {
 			expect(saga.next()).toEqual({

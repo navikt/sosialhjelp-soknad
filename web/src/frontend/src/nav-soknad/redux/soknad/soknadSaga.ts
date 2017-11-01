@@ -126,7 +126,6 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
 		const fakta: Faktum[] = yield select(
 			(state: SoknadAppState) => state.fakta.data
 		);
-
 		yield put(
 			lagreFaktum(
 				oppdaterFaktumMedProperties(
