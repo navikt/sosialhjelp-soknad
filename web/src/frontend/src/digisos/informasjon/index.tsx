@@ -13,8 +13,9 @@ import Knapp from "nav-frontend-knapper";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import Infoblokk from "../../nav-soknad/components/infoblokk";
-import { tilBosted } from "../../nav-soknad/redux/navigasjon/navigasjonActions";
+import { startSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
+import { Horten } from "../data/kommuner";
 
 interface StateProps {
 	harTilgang: boolean;
@@ -52,7 +53,10 @@ class Informasjon extends React.Component<Props, {}> {
 								</p>
 							</Infoblokk>
 						</div>
-						<Knapp type="hoved" onClick={() => dispatch(tilBosted())}>
+						<Knapp
+							type="hoved"
+							onClick={() => dispatch(startSoknad(Horten.id))}
+						>
 							{getIntlTextOrKey(intl, "skjema.knapper.start")}
 						</Knapp>
 					</div>
