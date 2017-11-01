@@ -20,6 +20,7 @@ const DocumentTitle = require("react-document-title");
 interface StateProps {
 	soknadRestStatus: string;
 	faktaRestStatus: string;
+	startSoknadPending: boolean;
 }
 
 type Props = StateProps & InjectedIntlProps & DispatchProps;
@@ -58,9 +59,7 @@ class Start extends React.Component<Props, {}> {
 						</p>
 						<Bosted
 							onStartSoknad={this.startSoknad}
-							startSoknadPending={
-								this.props.soknadRestStatus === REST_STATUS.PENDING
-							}
+							startSoknadPending={this.props.startSoknadPending}
 						/>
 					</div>
 				</span>
@@ -72,6 +71,7 @@ class Start extends React.Component<Props, {}> {
 export default connect((state: State, props: any) => {
 	return {
 		soknadRestStatus: state.soknad.restStatus,
+		startSoknadPending: state.soknad.startSoknadPending,
 		faktaRestStatus: state.fakta.restStatus
 	};
 })(injectIntl(Start));
