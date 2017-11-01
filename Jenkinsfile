@@ -91,9 +91,7 @@ node("master") {
             node {
                 try {
                     dir('web/src/frontend') {
-                        withCredentials([usernameColonPassword(credentialsId: 'openam_testuser', variable: 'USERPASS')]) {
-                            sh("node nightwatch.js --env phantomjs --url ${testurl}  --username 19066712345 --password $USERPASS --login true")
-                        }
+                        sh("node nightwatch.js --env phantomjs --url ${testurl}  --username bambus --password feil_passord --login true")
                     }
                 } catch (Exception e) {
                     notifyFailed('Integrasjonstester feilet', e)
