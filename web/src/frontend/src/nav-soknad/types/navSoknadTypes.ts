@@ -56,7 +56,6 @@ export interface Soknad {
 	ikkeInnsendteVedlegg: Vedlegg[];
 	opplastedeVedlegg: Vedlegg[];
 	innsendteVedlegg: Vedlegg[];
-	avbrytDialogSynlig: boolean;
 }
 
 export interface Vedlegg {

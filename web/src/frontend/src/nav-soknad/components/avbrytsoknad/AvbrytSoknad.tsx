@@ -3,7 +3,7 @@ import NavFrontendModal from "nav-frontend-modal";
 import Icon from "nav-frontend-ikoner-assets";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp } from "nav-frontend-knapper";
-import { fortsettSoknad, slettSoknad } from "../../redux/soknadActions";
+import { fortsettSoknad, slettSoknad } from "../../redux/soknad/soknadActions";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import { DispatchProps } from "../../redux/reduxTypes";
@@ -18,10 +18,7 @@ type Props = OwnProps & InjectedIntlProps & DispatchProps;
 
 class AvbrytSoknad extends React.Component<Props, {}> {
 	onAvbryt() {
-		this.props.dispatch(slettSoknad(this.props.brukerBehandlingId)).then(() => {
-			const dittnavUrl = this.props.miljovariabler["dittnav.link.url"];
-			window.location.href = dittnavUrl;
-		});
+		this.props.dispatch(slettSoknad(this.props.brukerBehandlingId));
 	}
 
 	onFortsett() {
@@ -74,7 +71,7 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 
 export default connect((state: any, props: any) => {
 	return {
-		avbrytDialogSynlig: state.soknad.data.avbrytDialogSynlig,
+		avbrytDialogSynlig: state.soknad.avbrytDialogSynlig,
 		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
 		miljovariabler: state.miljovariabler.data
 	};

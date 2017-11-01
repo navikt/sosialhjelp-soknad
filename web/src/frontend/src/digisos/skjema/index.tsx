@@ -23,7 +23,7 @@ import SideIkkeFunnet from "../../nav-soknad/components/feilside/IkkeFunnet";
 import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
 import { Faktum } from "../../nav-soknad/types";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
-import { hentSoknad } from "../../nav-soknad/redux/soknadActions";
+import { hentSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import { State } from "../redux/reducers";
 
 interface OwnProps {
@@ -57,9 +57,7 @@ class SkjemaRouter extends React.Component<
 		const { gyldigUrl, restStatus } = this.props;
 
 		if (!gyldigUrl) {
-			return (
-				<SideIkkeFunnet/>
-			);
+			return <SideIkkeFunnet />;
 		}
 		const path = "/skjema/:brukerBehandlingId";
 		return (

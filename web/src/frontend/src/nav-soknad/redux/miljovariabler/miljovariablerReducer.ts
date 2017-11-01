@@ -1,4 +1,8 @@
-import { ActionTypeKeys, MiljovariablerApiType, MiljovariablerActionTypes } from "./miljovariablerTypes";
+import {
+	ActionTypeKeys,
+	MiljovariablerApiType,
+	MiljovariablerActionTypes
+} from "./miljovariablerTypes";
 
 const { OK, PENDING, FEILET, INIT } = ActionTypeKeys;
 

@@ -12,9 +12,9 @@ import { REST_STATUS } from "../../nav-soknad/types";
 
 import { State } from "../redux/reducers";
 import {
-	opprettSoknad,
+	startSoknad,
 	resetSoknad
-} from "../../nav-soknad/redux/soknadActions";
+} from "../../nav-soknad/redux/soknad/soknadActions";
 import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 
@@ -65,9 +65,24 @@ class Bosted extends React.Component<
 
 	opprettSoknad(event: any) {
 		event.preventDefault();
-		const { kommuneId, bydelId } = this.state;
-		const { intl } = this.props;
-		this.props.dispatch(opprettSoknad(kommuneId, bydelId, intl));
+		this.props.dispatch(
+			startSoknad(
+				{
+					"1": getIntlTextOrKey(this.props.intl, "informasjon.start.tittel"),
+					"2": getIntlTextOrKey(this.props.intl, "informasjon.start.tekst"),
+					"3": getIntlTextOrKey(
+						this.props.intl,
+						"informasjon.nodsituasjon.undertittel"
+					),
+					"4": getIntlTextOrKey(
+						this.props.intl,
+						"informasjon.nodsituasjon.tekst"
+					)
+				},
+				this.state.kommuneId,
+				this.state.bydelId
+			)
+		);
 	}
 
 	render() {

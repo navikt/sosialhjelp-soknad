@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import DocumentTitle from "react-document-title";
 
 import { Innholdstittel } from "nav-frontend-typografi";
-import { setApplikasjonsfeil } from "../redux/applikasjonsfeil/applikasjonsfeilActions";
 
 import AppTittel from "../components/apptittel/AppTittel";
 import ApplikasjonsfeilDialog from "../containers/ApplikasjonsfeilDialog";
@@ -24,7 +23,7 @@ import {
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { validerAlleFaktum } from "../validering/utils";
 import { getIntlTextOrKey, scrollToTop, getStegUrl } from "../utils";
-import { avbrytSoknad, sendSoknad } from "../redux/soknadActions";
+import { avbrytSoknad, sendSoknad } from "../redux/soknad/soknadActions";
 import { gaVidere, gaTilbake } from "../redux/navigasjon/navigasjonActions";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
@@ -88,23 +87,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	}
 
 	sendSoknad(brukerBehandlingId: string) {
-		this.props.dispatch(sendSoknad(brukerBehandlingId)).then(
-			() => {
-				this.props.history.push(`/kvittering/${brukerBehandlingId}`);
-			},
-			response => {
-				this.props.dispatch(
-					setApplikasjonsfeil({
-						tittel: this.props.intl.formatMessage({
-							id: "sendsoknadfeilet.tittel"
-						}),
-						innhold: this.props.intl.formatMessage({
-							id: "sendsoknadfeilet.melding"
-						})
-					})
-				);
-			}
-		);
+		this.props.dispatch(sendSoknad(brukerBehandlingId));
 	}
 
 	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {

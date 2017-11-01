@@ -3,27 +3,34 @@ export enum Sider {
 	/* tslint:disable-next-line */
 	FINN_DITT_NAV_KONTOR = "https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Relatert+informasjon/finn-ditt-nav-kontor--353421",
 	SERVERFEIL = "/serverfeil",
-	START = "/informasjon"
+	START = "/informasjon",
+	BOSTED = "/bosted"
 }
 
 export enum NavigasjonActionTypes {
 	TILBAKE_ELLER_FORSIDEN = "navigasjon/TILBAKE_ELLER_FORSIDEN",
 	TIL_FINN_DITT_NAV_KONTOR = "navigasjon/TIL_FINN_DITT_NAV_KONTOR",
+	TIL_DITT_NAV = "navigasjon/TIL_DITT_NAV",
 	TIL_STEG = "navigasjon/TIL_STEG",
 	TIL_START = "navigasjon/TIL_START",
 	GA_VIDERE = "navigasjon/GA_VIDERE",
 	GA_TILBAKE = "navigasjon/GA_TILBAKE",
-	TIL_SERVERFEIL = "navigasjon/TIL_SERVERFEIL"
+	TIL_SERVERFEIL = "navigasjon/TIL_SERVERFEIL",
+	TIL_BOSTED = "navigasjon/TIL_BOSTED",
+	TIL_KVITTERING = "navigasjon/TIL_KVITTERING"
 }
 
 export type NavigasjonActions =
+	| TilStart
+	| GaTilbake
 	| TilServerfeil
 	| TilSteg
-	| TilStart
 	| TilFinnDittNavKontor
 	| TilbakeEllerForsiden
-	| GaTilbake
-	| GaVidere;
+	| GaVidere
+	| TilBosted
+	| TilDittNav
+	| TilKvittering;
 
 export interface TilServerfeil {
 	type: NavigasjonActionTypes.TIL_SERVERFEIL;
@@ -54,4 +61,17 @@ export interface TilFinnDittNavKontor {
 
 export interface TilbakeEllerForsiden {
 	type: NavigasjonActionTypes.TILBAKE_ELLER_FORSIDEN;
+}
+
+export interface TilBosted {
+	type: NavigasjonActionTypes.TIL_BOSTED;
+}
+
+export interface TilDittNav {
+	type: NavigasjonActionTypes.TIL_DITT_NAV;
+}
+
+export interface TilKvittering {
+	type: NavigasjonActionTypes.TIL_KVITTERING;
+	brukerbehandlingId: string;
 }

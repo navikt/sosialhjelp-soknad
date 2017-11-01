@@ -12,6 +12,12 @@ export function navigerTilFinnDittNavKontor(): NavigasjonActions {
 	};
 }
 
+export function navigerTilDittNav(): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.TIL_DITT_NAV
+	};
+}
+
 export function gaTilbake(stegnummer: number): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.GA_TILBAKE,
@@ -42,5 +48,20 @@ export function tilStart(): NavigasjonActions {
 export function tilbakeEllerForsiden(): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.TILBAKE_ELLER_FORSIDEN
+	};
+}
+
+export function tilBosted(): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.TIL_BOSTED
+	};
+}
+
+export function navigerTilKvittering(
+	brukerbehandlingId: string
+): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.TIL_KVITTERING,
+		brukerbehandlingId
 	};
 }

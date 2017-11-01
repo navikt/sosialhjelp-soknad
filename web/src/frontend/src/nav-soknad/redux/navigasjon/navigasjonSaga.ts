@@ -6,12 +6,15 @@ import {
 	GaVidere,
 	NavigasjonActionTypes,
 	Sider,
-	TilSteg
+	TilSteg,
+	TilDittNav,
+	TilKvittering
 } from "./navigasjonTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
 import { tilStart, tilSteg } from "./navigasjonActions";
+import { SoknadAppState } from "../reduxTypes";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 import { hentSynligeFakta } from "../../../digisos/redux/synligefakta/synligeFaktaActions";
 import { SynligeFaktaActionTypeKeys } from "../../../digisos/redux/synligefakta/synligeFaktaTypes";
@@ -25,6 +28,10 @@ function* tilFinnDittNavKontorSaga(): SagaIterator {
 
 function* tilServerfeilSaga(): SagaIterator {
 	yield put(push(Sider.SERVERFEIL));
+}
+
+function* tilBostedSaga(): SagaIterator {
+	yield put(push(Sider.BOSTED));
 }
 
 function* tilStartSaga(): SagaIterator {
@@ -83,6 +90,17 @@ function* gaTilbakeSaga(action: GaTilbake): SagaIterator {
 	}
 }
 
+function* tilDittNav(action: TilDittNav): SagaIterator {
+	const url = yield select(
+		(state: SoknadAppState) => state.miljovariabler.data["dittnav.link.url"]
+	);
+	yield call(navigateTo, url);
+}
+
+function* tilKvittering(action: TilKvittering): SagaIterator {
+	yield put(push(`/kvittering/${action.brukerbehandlingId}`));
+}
+
 function* navigasjonSaga(): SagaIterator {
 	yield takeEvery(NavigasjonActionTypes.TIL_SERVERFEIL, tilServerfeilSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_STEG, tilStegSaga);
@@ -97,6 +115,9 @@ function* navigasjonSaga(): SagaIterator {
 		tilbakeEllerForsidenSaga
 	);
 	yield takeEvery(NavigasjonActionTypes.TIL_START, tilStartSaga);
+	yield takeEvery(NavigasjonActionTypes.TIL_BOSTED, tilBostedSaga);
+	yield takeEvery(NavigasjonActionTypes.TIL_DITT_NAV, tilDittNav);
+	yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilKvittering);
 }
 
 export {
@@ -106,6 +127,8 @@ export {
 	tilStegSaga,
 	gaVidereSaga,
 	navigateTo,
+	selectProgresjonFaktum,
+	tilKvittering,
 	getHistoryLength
 };
 
