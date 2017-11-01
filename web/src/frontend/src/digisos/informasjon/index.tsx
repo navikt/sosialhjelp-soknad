@@ -13,18 +13,19 @@ import Knapp from "nav-frontend-knapper";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import Infoblokk from "../../nav-soknad/components/infoblokk";
+import { tilBosted } from "../../nav-soknad/redux/navigasjon/navigasjonActions";
+import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 
 interface StateProps {
 	harTilgang: boolean;
 }
 
-type Props = StateProps & InjectedIntlProps & RouterProps;
+type Props = StateProps & InjectedIntlProps & RouterProps & DispatchProps;
 
 class Informasjon extends React.Component<Props, {}> {
 	render() {
-		const { intl, history, harTilgang } = this.props;
+		const { intl, dispatch, harTilgang } = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
-		const handleGaVidere = () => history.push("/bosted");
 		return (
 			<div>
 				<DocumentTitle title={title} />
@@ -51,7 +52,7 @@ class Informasjon extends React.Component<Props, {}> {
 								</p>
 							</Infoblokk>
 						</div>
-						<Knapp type="hoved" onClick={handleGaVidere}>
+						<Knapp type="hoved" onClick={() => dispatch(tilBosted())}>
 							{getIntlTextOrKey(intl, "skjema.knapper.start")}
 						</Knapp>
 					</div>
