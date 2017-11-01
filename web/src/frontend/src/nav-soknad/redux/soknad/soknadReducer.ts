@@ -50,7 +50,6 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 
 		case SoknadActionTypeKeys.RESET_SOKNAD:
 			return {
-				...state,
 				...defaultState
 			};
 		case SoknadActionTypeKeys.OPPRETT_SOKNAD:

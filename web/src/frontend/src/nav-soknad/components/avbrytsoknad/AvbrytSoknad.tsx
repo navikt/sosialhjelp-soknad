@@ -71,7 +71,7 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 
 export default connect((state: any, props: any) => {
 	return {
-		avbrytDialogSynlig: state.soknad.data.avbrytDialogSynlig,
+		avbrytDialogSynlig: state.soknad.avbrytDialogSynlig,
 		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
 		miljovariabler: state.miljovariabler.data
 	};
