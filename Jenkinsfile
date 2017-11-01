@@ -89,7 +89,9 @@ node("master") {
         // Kun for test stage. Skal fjernes:
         stage('Integrasjonstest') {
             try {
-                sh("node nightwatch.js --env phantomjs --url ${testurl}  --username USERNAME --password USERPASS --login true")
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'openam_testuser', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS']]) {
+                    sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${USERNAME} --password ${USERPASS} --login true")
+                }
             } catch (Exception e) {
                 notifyFailed('Integrasjonstester feilet', e)
             }
