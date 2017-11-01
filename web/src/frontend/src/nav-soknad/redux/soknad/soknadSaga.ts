@@ -25,7 +25,7 @@ import {
 	navigerTilDittNav,
 	navigerTilKvittering
 } from "../navigasjon/navigasjonActions";
-import { lagreFaktum, setFakta } from "../fakta/faktaActions";
+import { lagreFaktum, setFakta, resetFakta } from "../fakta/faktaActions";
 import { Soknad, Faktum, Infofaktum } from "../../types";
 import { SoknadAppState } from "../reduxTypes";
 
@@ -39,7 +39,8 @@ import {
 	hentKvitteringOk,
 	hentKvitteringFeilet,
 	sendSoknadOk,
-	sendSoknadFeilet
+	sendSoknadFeilet,
+	resetSoknad
 } from "./soknadActions";
 
 export const SKJEMAID = "NAV 35-18.01";
@@ -79,6 +80,8 @@ function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
 }
 
 function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
+	yield put(resetSoknad());
+	yield put(resetFakta());
 	const id = yield call(opprettSoknadSaga);
 	const hentAction = { brukerBehandlingId: id } as HentSoknadAction;
 	const soknad = yield call(hentSoknadSaga, hentAction);
