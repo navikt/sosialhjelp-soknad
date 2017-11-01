@@ -94,7 +94,6 @@ node("master") {
                 }
             } catch (Exception e) {
                 notifyFailed('Integrasjonstester feilet', e)
-                step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
             }
         }
 
