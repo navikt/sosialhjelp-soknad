@@ -32,7 +32,7 @@ node("master") {
     properties([
             parameters([
                     string(name: 'DeployTilNexus', defaultValue: 'false'),
-                    string(name: 'testurl', defaultValue: 'https://tjenester-t6.nav.no/soknadsosialhjelp/informasjon')
+                    string(name: 'testurl', defaultValue: 'https://tjenester-t6.nav.no/soknadsosialhjelp/informasjon'),
             ])
     ])
     common.setupTools("maven3", "java8")
@@ -88,15 +88,13 @@ node("master") {
 
         // Kun for test stage. Skal fjernes:
         stage('Integrasjonstester') {
-            node {
-                try {
-                    dir('web/src/frontend') {
-                        sh("node nightwatch.js --env phantomjs --url ${testurl}  --username bambus --password feil_passord --login true")
-                    }
-                } catch (Exception e) {
-                    notifyFailed('Integrasjonstester feilet', e)
-                    step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
+            try {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '\'openam_testuser', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS']]) {
+                    sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${USERNAME} --password ${USERPASS} --login true")
                 }
+            } catch (Exception e) {
+                notifyFailed('Integrasjonstester feilet', e)
+                step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
             }
         }
 
