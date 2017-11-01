@@ -86,18 +86,6 @@ node("master") {
             }
         }
 
-        // Kun for test stage. Skal fjernes:
-        stage('Integrasjonstest') {
-            try {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'openam_testuser', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS']]) {
-                    sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${USERNAME} --password ${USERPASS} --login true")
-                }
-            } catch (Exception e) {
-                notifyFailed('Integrasjonstester feilet', e)
-            }
-        }
-
-
     }
 
     echo "${params.DeployTilNexus} deploy til nexus"
@@ -160,10 +148,8 @@ if (isMasterBuild) {
         node {
             try {
                 dir('web/src/frontend') {
-                    withCredentials([usernameColonPassword(credentialsId: 'openam_testuser', variable: 'USERPASS')]) {
-                        withCredentials([usernameColonPassword(credentialsId: 'openam_testuser', variable: 'ID')]) {
-                            sh("node nightwatch.js --env phantomjs --url ${testurl}  --username $ID --password $USERPASS --login true")
-                        }
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'openam_testuser', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS']]) {
+                        sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${USERNAME} --password ${USERPASS} --login true")
                     }
                 }
             } catch (Exception e) {
