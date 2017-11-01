@@ -6,6 +6,7 @@ import { SoknadActionTypes, SoknadActionTypeKeys } from "./soknadActionTypes";
 export const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
 	sendSoknadPending: false,
+	startSoknadPending: false,
 	avbrytDialogSynlig: false,
 	infofaktum: null,
 	data: {
@@ -38,6 +39,16 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 	action
 ) => {
 	switch (action.type) {
+		case SoknadActionTypeKeys.START_SOKNAD:
+			return {
+				...state,
+				startSoknadPending: true
+			};
+		case SoknadActionTypeKeys.START_SOKNAD_OK:
+			return {
+				...state,
+				startSoknadPending: false
+			};
 		case SoknadActionTypeKeys.AVBRYT_SOKNAD:
 			return {
 				...state,
@@ -51,7 +62,8 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 
 		case SoknadActionTypeKeys.RESET_SOKNAD:
 			return {
-				...defaultState
+				...defaultState,
+				startSoknadPending: state.startSoknadPending // Beholder i og med reset kalles også når en starter en ny søknad
 			};
 		case SoknadActionTypeKeys.OPPRETT_SOKNAD:
 			return {

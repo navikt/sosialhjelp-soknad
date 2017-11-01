@@ -19,13 +19,14 @@ import { Horten } from "../data/kommuner";
 
 interface StateProps {
 	harTilgang: boolean;
+	startSoknadPending: boolean;
 }
 
 type Props = StateProps & InjectedIntlProps & RouterProps & DispatchProps;
 
 class Informasjon extends React.Component<Props, {}> {
 	render() {
-		const { intl, dispatch, harTilgang } = this.props;
+		const { intl, dispatch, harTilgang, startSoknadPending } = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 		return (
 			<div>
@@ -55,6 +56,8 @@ class Informasjon extends React.Component<Props, {}> {
 						</div>
 						<Knapp
 							type="hoved"
+							spinner={startSoknadPending}
+							disabled={startSoknadPending}
 							onClick={() => dispatch(startSoknad(Horten.id))}
 						>
 							{getIntlTextOrKey(intl, "skjema.knapper.start")}
@@ -78,5 +81,6 @@ class Informasjon extends React.Component<Props, {}> {
 }
 
 export default connect((state: State) => ({
-	harTilgang: state.tilgang.harTilgang
+	harTilgang: state.tilgang.harTilgang,
+	startSoknadPending: state.soknad.startSoknadPending
 }))(injectIntl(Informasjon));

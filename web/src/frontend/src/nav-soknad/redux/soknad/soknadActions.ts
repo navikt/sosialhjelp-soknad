@@ -10,6 +10,12 @@ export function startSoknad(kommune: string, bydel?: string) {
 	};
 }
 
+export function startSoknadOk() {
+	return {
+		type: SoknadActionTypeKeys.START_SOKNAD_OK
+	};
+}
+
 export function opprettSoknad(
 	kommuneId: string,
 	bydelId: string,

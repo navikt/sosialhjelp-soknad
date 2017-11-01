@@ -2,6 +2,7 @@ import { Soknad, Kvittering, Infofaktum } from "../../types/navSoknadTypes";
 
 export enum SoknadActionTypeKeys {
 	START_SOKNAD = "soknad/START_SOKNAD",
+	START_SOKNAD_OK = "soknad/START_SOKNAD_OK",
 	OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
 	OPPRETT_SOKNAD_OK = "soknad/OPPRETT_SOKNAD_OK",
 	OPPRETT_SOKNAD_FEILET = "soknad/OPPRETT_SOKNAD_FEILET",
@@ -28,6 +29,9 @@ export enum SoknadActionTypeKeys {
 }
 
 export type SoknadActionTypes =
+	| StartSoknadAction
+	| StartSoknadOkAction
+	| OpprettSoknadAction
 	| OpprettSoknadAction
 	| OpprettSoknadOkAction
 	| OpprettSoknadFeiletAction
@@ -51,19 +55,14 @@ export type SoknadActionTypes =
 	| SlettSoknadFeiletAction
 	| SettInfofaktumAction;
 
-/** Teksters om bruker får presentert på informasjonssteget - må inn pga oppsummering og pdf */
-// export interface SoknadInfoTekster {
-// 	"1": string;
-// 	"2": string;
-// 	"3": string;
-// 	"4": string;
-// }
-
 export interface StartSoknadAction {
 	type: SoknadActionTypeKeys.START_SOKNAD;
-	// info: SoknadInfoTekster;
 	kommune?: string;
 	bydel?: string;
+}
+
+export interface StartSoknadOkAction {
+	type: SoknadActionTypeKeys.START_SOKNAD_OK;
 }
 
 export interface OpprettSoknadAction {

@@ -40,7 +40,8 @@ import {
 	hentKvitteringFeilet,
 	sendSoknadOk,
 	sendSoknadFeilet,
-	resetSoknad
+	resetSoknad,
+	startSoknadOk
 } from "./soknadActions";
 
 export const SKJEMAID = "NAV 35-18.01";
@@ -104,6 +105,7 @@ function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
 		);
 	}
 	yield put(tilSteg(1));
+	yield put(startSoknadOk());
 }
 
 function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {

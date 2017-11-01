@@ -33,32 +33,6 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 		this.state = getDefaultState();
 	}
 
-	// gaaTilSkjema() {
-	// 	this.props.history.push(`/skjema/${this.props.brukerBehandlingId}/1`);
-	// }
-
-	// opprettSoknad(event: any) {
-	// 	event.preventDefault();
-	// 	this.props.dispatch(
-	// 		startSoknad(
-	// 			{
-	// 				"1": getIntlTextOrKey(this.props.intl, "informasjon.start.tittel"),
-	// 				"2": getIntlTextOrKey(this.props.intl, "informasjon.start.tekst"),
-	// 				"3": getIntlTextOrKey(
-	// 					this.props.intl,
-	// 					"informasjon.nodsituasjon.undertittel"
-	// 				),
-	// 				"4": getIntlTextOrKey(
-	// 					this.props.intl,
-	// 					"informasjon.nodsituasjon.tekst"
-	// 				)
-	// 			},
-	// 			this.state.kommuneId,
-	// 			this.state.bydelId
-	// 		)
-	// 	);
-	// }
-
 	onSubmit(evt: React.FormEvent<HTMLFormElement>) {
 		evt.preventDefault();
 		this.props.onStartSoknad(this.state.kommuneId, this.state.bydelId);

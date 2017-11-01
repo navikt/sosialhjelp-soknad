@@ -34,5 +34,6 @@ export interface SoknadState {
 	infofaktum?: Infofaktum;
 	kvittering?: Kvittering;
 	sendSoknadPending: boolean;
+	startSoknadPending: boolean;
 	avbrytDialogSynlig: boolean;
 }
