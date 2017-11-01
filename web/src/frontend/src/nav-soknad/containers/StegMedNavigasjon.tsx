@@ -22,9 +22,9 @@ import {
 } from "../redux/valideringActions";
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { validerAlleFaktum } from "../validering/utils";
-import { gaTilbake, getIntlTextOrKey, scrollToTop, getStegUrl } from "../utils";
+import { getIntlTextOrKey, scrollToTop, getStegUrl } from "../utils";
 import { avbrytSoknad, sendSoknad } from "../redux/soknad/soknadActions";
-import { gaVidere } from "../redux/navigasjon/navigasjonActions";
+import { gaVidere, gaTilbake } from "../redux/navigasjon/navigasjonActions";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -112,23 +112,19 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		}
 	}
 
-	handleGaTilbake(aktivtSteg: number, brukerBehandlingId: string) {
+	handleGaTilbake(aktivtSteg: number) {
 		this.props.dispatch(clearFaktaValideringsfeil());
-		gaTilbake(
-			aktivtSteg,
-			brukerBehandlingId,
-			this.props.history,
-			this.props.skjemaConfig
-		);
+		this.props.dispatch(gaTilbake(aktivtSteg));
 	}
 
 	render() {
 		const { skjemaConfig, intl, children, progresjon } = this.props;
-		const stegConfig = skjemaConfig.steg.find(
+		const aktivtStegConfig = skjemaConfig.steg.find(
 			s => s.key === this.props.stegKey
 		);
 		const brukerBehandlingId = this.props.match.params.brukerBehandlingId;
-		const erOppsummering = stegConfig.type === SkjemaStegType.oppsummering;
+		const erOppsummering =
+			aktivtStegConfig.type === SkjemaStegType.oppsummering;
 		const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
 		const documentTitle = intl.formatMessage({
 			id: this.props.skjemaConfig.tittelId
@@ -164,7 +160,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						{!erOppsummering ? (
 							<div className="skjema__stegindikator">
 								<StegIndikator
-									aktivtSteg={stegConfig.stegnummer}
+									aktivtSteg={aktivtStegConfig.stegnummer}
 									steg={synligeSteg.map(s => ({
 										tittel: intl.formatMessage({ id: `${s.key}.tittel` })
 									}))}
@@ -187,9 +183,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 									: undefined
 							}
 							gaVidere={() =>
-								this.handleGaVidere(stegConfig, brukerBehandlingId)}
+								this.handleGaVidere(aktivtStegConfig, brukerBehandlingId)}
 							gaTilbake={() =>
-								this.handleGaTilbake(stegConfig.stegnummer, brukerBehandlingId)}
+								this.handleGaTilbake(aktivtStegConfig.stegnummer)}
 							avbryt={() => this.props.dispatch(avbrytSoknad())}
 						/>
 					</form>

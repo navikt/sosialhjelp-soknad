@@ -25,6 +25,13 @@ export function gaVidere(stegnummer: number): NavigasjonActions {
 	};
 }
 
+export function gaTilbake(stegnummer: number): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.GA_TILBAKE,
+		stegnummer
+	};
+}
+
 export function tilSteg(stegnummer: number): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.TIL_STEG,
@@ -41,6 +48,12 @@ export function tilbakeEllerForsiden(): NavigasjonActions {
 export function tilBosted(): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.TIL_BOSTED
+	};
+}
+
+export function tilInformasjon(): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.TIL_INFORMASJON
 	};
 }
 

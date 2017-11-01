@@ -3,7 +3,8 @@ export enum Sider {
 	/* tslint:disable-next-line */
 	FINN_DITT_NAV_KONTOR = "https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Relatert+informasjon/finn-ditt-nav-kontor--353421",
 	SERVERFEIL = "/serverfeil",
-	BOSTED = "/bosted"
+	BOSTED = "/bosted",
+	INFORMASJON = "/informasjon"
 }
 
 export enum NavigasjonActionTypes {
@@ -12,7 +13,9 @@ export enum NavigasjonActionTypes {
 	TIL_DITT_NAV = "navigasjon/TIL_DITT_NAV",
 	TIL_STEG = "navigasjon/TIL_STEG",
 	GA_VIDERE = "navigasjon/GA_VIDERE",
+	GA_TILBAKE = "navigasjon/GA_TILBALE",
 	TIL_SERVERFEIL = "navigasjon/TIL_SERVERFEIL",
+	TIL_INFORMASJON = "navigasjon/TIL_INFORMASJON",
 	TIL_BOSTED = "navigasjon/TIL_BOSTED",
 	TIL_KVITTERING = "navigasjon/TIL_KVITTERING"
 }
@@ -23,7 +26,9 @@ export type NavigasjonActions =
 	| TilFinnDittNavKontor
 	| TilbakeEllerForsiden
 	| GaVidere
+	| GaTilbake
 	| TilBosted
+	| TilInformasjon
 	| TilDittNav
 	| TilKvittering;
 
@@ -41,6 +46,11 @@ export interface GaVidere {
 	stegnummer: number;
 }
 
+export interface GaTilbake {
+	type: NavigasjonActionTypes.GA_TILBAKE;
+	stegnummer: number;
+}
+
 export interface TilFinnDittNavKontor {
 	type: NavigasjonActionTypes.TIL_FINN_DITT_NAV_KONTOR;
 }
@@ -51,6 +61,10 @@ export interface TilbakeEllerForsiden {
 
 export interface TilBosted {
 	type: NavigasjonActionTypes.TIL_BOSTED;
+}
+
+export interface TilInformasjon {
+	type: NavigasjonActionTypes.TIL_INFORMASJON;
 }
 
 export interface TilDittNav {

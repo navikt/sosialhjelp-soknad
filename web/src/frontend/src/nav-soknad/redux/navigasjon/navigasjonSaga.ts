@@ -5,6 +5,7 @@ import {
 	NavigasjonActionTypes,
 	Sider,
 	GaVidere,
+	GaTilbake,
 	TilSteg,
 	TilDittNav,
 	TilKvittering
@@ -12,7 +13,7 @@ import {
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
-import { tilSteg } from "./navigasjonActions";
+import { tilSteg, tilInformasjon } from "./navigasjonActions";
 import { SoknadAppState } from "../reduxTypes";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 
@@ -29,6 +30,10 @@ function* tilServerfeilSaga(): SagaIterator {
 
 function* tilBostedSaga(): SagaIterator {
 	yield put(push(Sider.BOSTED));
+}
+
+function* tilInformasjonSaga(): SagaIterator {
+	yield put(push(Sider.INFORMASJON));
 }
 
 function* tilbakeEllerForsidenSaga(): SagaIterator {
@@ -71,10 +76,19 @@ function* tilKvittering(action: TilKvittering): SagaIterator {
 	yield put(push(`/kvittering/${action.brukerbehandlingId}`));
 }
 
+function* gaTilbakeSaga(action: GaTilbake): SagaIterator {
+	if (action.stegnummer === 1) {
+		yield put(tilInformasjon());
+	} else {
+		yield put(tilSteg(Math.max(1, action.stegnummer - 1)));
+	}
+}
+
 function* navigasjonSaga(): SagaIterator {
 	yield takeEvery(NavigasjonActionTypes.TIL_SERVERFEIL, tilServerfeilSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_STEG, tilStegSaga);
 	yield takeEvery(NavigasjonActionTypes.GA_VIDERE, gaVidereSaga);
+	yield takeEvery(NavigasjonActionTypes.GA_TILBAKE, gaTilbakeSaga);
 	yield takeEvery(
 		NavigasjonActionTypes.TIL_FINN_DITT_NAV_KONTOR,
 		tilFinnDittNavKontorSaga
@@ -83,6 +97,7 @@ function* navigasjonSaga(): SagaIterator {
 		NavigasjonActionTypes.TILBAKE_ELLER_FORSIDEN,
 		tilbakeEllerForsidenSaga
 	);
+	yield takeEvery(NavigasjonActionTypes.TIL_INFORMASJON, tilInformasjonSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_BOSTED, tilBostedSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_DITT_NAV, tilDittNav);
 	yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilKvittering);
@@ -97,7 +112,9 @@ export {
 	navigateTo,
 	selectProgresjonFaktum,
 	tilKvittering,
-	getHistoryLength
+	getHistoryLength,
+	tilBostedSaga,
+	tilInformasjonSaga
 };
 
 export default navigasjonSaga;
