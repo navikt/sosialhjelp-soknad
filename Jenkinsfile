@@ -90,10 +90,13 @@ node("master") {
 
         // Dette steget skal egentlig bare kjøres under masterbuild(?)
         stage('E2E test') {
-            try {
-                sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
-            } catch (Exception e) {
-                notifyFailed('Integrasjonstester feilet', e)
+            node {
+                try {
+                    sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
+                } catch (Exception e) {
+                    notifyFailed('Integrasjonstester feilet', e)
+                    step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
+                }
             }
         }
 
