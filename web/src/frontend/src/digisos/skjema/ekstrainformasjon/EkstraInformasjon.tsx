@@ -16,39 +16,37 @@ import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 type Props = SynligeFaktaProps & DispatchProps & InjectedIntlProps;
 
 class EkstraInformasjon extends React.Component<Props, {}> {
-
 	componentDidMount() {
 		this.props.dispatch(hentSynligeFakta());
 	}
 
 	render() {
-		const {data, restStatus} = this.props.synligefakta;
+		const { data, restStatus } = this.props.synligefakta;
 		const intl = this.props.intl;
 		return (
 			<div className="steg-ekstrainformasjon">
-				<div className="skjema-content">
-					<div className="ekstrainfo-melding">
-						<Infoblokk>
-							<FormattedHTMLMessage id="opplysninger.informasjon"/>
-						</Infoblokk>
-					</div>
-				</div>
-
 				<DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk}>
-					{
-						restStatus === REST_STATUS.OK ?
-							Object.keys(data).map(key => (
-								<InformasjonBolk
-									id={key}
-									key={key}
-									tittel={intl.formatMessage({id: `${key}.sporsmal`})}
-									faktumstrukturer={data[key]}/>
-							))
-							:
-							<div className="ekstrainfo__spinner">
-								<NavFrontendSpinner storrelse="xxl"/>
-							</div>
-					}
+					<div className="skjema-content">
+						<div className="ekstrainfo-melding">
+							<Infoblokk>
+								<FormattedHTMLMessage id="opplysninger.informasjon" />
+							</Infoblokk>
+						</div>
+					</div>
+					{restStatus === REST_STATUS.OK ? (
+						Object.keys(data).map(key => (
+							<InformasjonBolk
+								id={key}
+								key={key}
+								tittel={intl.formatMessage({ id: `${key}.sporsmal` })}
+								faktumstrukturer={data[key]}
+							/>
+						))
+					) : (
+						<div className="ekstrainfo__spinner">
+							<NavFrontendSpinner storrelse="xxl" />
+						</div>
+					)}
 				</DigisosSkjemaSteg>
 			</div>
 		);
@@ -57,6 +55,6 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 
 export default connect((state: State) => {
 	return {
-		synligefakta: state.synligefakta,
+		synligefakta: state.synligefakta
 	};
 })(injectIntl(EkstraInformasjon));
