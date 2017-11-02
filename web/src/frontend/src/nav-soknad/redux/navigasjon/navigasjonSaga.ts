@@ -15,7 +15,7 @@ import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
 import { tilStart, tilSteg } from "./navigasjonActions";
 import { SoknadAppState } from "../reduxTypes";
-import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
+import { selectBrukerBehandlingId, selectProgresjonFaktum, selectSynligFaktaData } from "../selectors";
 import { hentSynligeFakta } from "../../../digisos/redux/synligefakta/synligeFaktaActions";
 import { SynligeFaktaActionTypeKeys } from "../../../digisos/redux/synligefakta/synligeFaktaTypes";
 
@@ -52,23 +52,24 @@ function* tilStegSaga(action: TilSteg): SagaIterator {
 	yield put(push(`/skjema/${behandlingsId}/${action.stegnummer}`));
 }
 
-function* skalHoppeOverSaga(stegnummer: number): SagaIterator {
+function* skalHoppeOverNesteStegSaga(stegnummer: number): SagaIterator {
 	if (stegnummer === 7 || stegnummer === 9) {
 		yield put(hentSynligeFakta());
 		yield take([
 			SynligeFaktaActionTypeKeys.HENT_SYNLIGE_OK,
 			SynligeFaktaActionTypeKeys.HENT_SYNLIGE_FEILET
 		]);
-		const synligeFakta = yield select((state: any) => state.synligefakta.data);
+		const synligeFakta = yield select(selectSynligFaktaData);
 		return Object.keys(synligeFakta).length === 0;
 	}
 	return false;
 }
 
 function* gaVidereSaga(action: GaVidere): SagaIterator {
-	const skalHoppeOver = yield call(skalHoppeOverSaga, action.stegnummer);
+	const skalHoppeOver = yield call(skalHoppeOverNesteStegSaga, action.stegnummer);
 	const progresjonFaktum = yield select(selectProgresjonFaktum);
-	if (parseInt(progresjonFaktum.value || 1, 10) === action.stegnummer) {
+	const progresjonFaktumVerdi = parseInt(progresjonFaktum.value || 1, 10);
+	if (progresjonFaktumVerdi === action.stegnummer) {
 		const faktum = yield call(
 			oppdaterFaktumMedVerdier,
 			progresjonFaktum,
@@ -85,7 +86,7 @@ function* gaTilbakeSaga(action: GaTilbake): SagaIterator {
 	if (action.stegnummer === 1) {
 		yield put(tilStart());
 	} else {
-		const skalHoppeOver = yield call(skalHoppeOverSaga, action.stegnummer);
+		const skalHoppeOver = yield call(skalHoppeOverNesteStegSaga, action.stegnummer);
 		yield put(tilSteg(action.stegnummer - (skalHoppeOver ? 2 : 1)));
 	}
 }
@@ -121,15 +122,16 @@ function* navigasjonSaga(): SagaIterator {
 }
 
 export {
-	tilFinnDittNavKontorSaga,
-	tilServerfeilSaga,
-	tilbakeEllerForsidenSaga,
-	tilStegSaga,
 	gaVidereSaga,
+	getHistoryLength,
 	navigateTo,
 	selectProgresjonFaktum,
+	skalHoppeOverNesteStegSaga,
+	tilbakeEllerForsidenSaga,
+	tilFinnDittNavKontorSaga,
 	tilKvittering,
-	getHistoryLength
+	tilServerfeilSaga,
+	tilStegSaga,
 };
 
 export default navigasjonSaga;
