@@ -115,12 +115,12 @@ describe("soknadSaga", () => {
 			});
 		});
 
-		it("puts tilSteg(1)", () => {
-			expect(saga.next()).toEqual({ done: false, value: put(tilSteg(1)) });
-		});
-
 		it("says startSoknadOk", () => {
 			expect(saga.next()).toEqual({ done: false, value: put(startSoknadOk()) });
+		});
+
+		it("puts tilSteg(1)", () => {
+			expect(saga.next()).toEqual({ done: false, value: put(tilSteg(1)) });
 		});
 
 		it("ferdig", () => {

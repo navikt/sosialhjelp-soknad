@@ -104,8 +104,8 @@ function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
 			)
 		);
 	}
-	yield put(tilSteg(1));
 	yield put(startSoknadOk());
+	yield put(tilSteg(1));
 }
 
 function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
