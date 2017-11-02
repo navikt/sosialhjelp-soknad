@@ -92,7 +92,9 @@ node("master") {
         stage('E2E test') {
             node {
                 try {
-                    sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
+                    dir("web/src/frontend") {
+                        sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
+                    }
                 } catch (Exception e) {
                     notifyFailed('Integrasjonstester feilet', e)
                     step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
