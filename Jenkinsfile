@@ -64,7 +64,7 @@ node("master") {
     dir("web/src/frontend") {
         stage('Install') {
             try {
-                sh "yarn install"
+                sh "npm install"
             } catch (Exception e) {
                 notifyFailed("Bygg feilet ved npm-install", e, env.BUILD_URL)
             }
@@ -73,7 +73,7 @@ node("master") {
         // Dette steget skal kommenteres inn igjen:
 //        stage('Test') {
 //            try {
-//                sh "CI=true yarn run test"
+//                sh "CI=true npm run test"
 //            } catch (Exception e) {
 //                notifyFailed("Tester feilet", e, env.BUILD_URL)
 //            }
@@ -81,7 +81,7 @@ node("master") {
 
         stage('Build') {
             try {
-                sh "yarn run build"
+                sh "npm run build"
             } catch (Exception e) {
                 notifyFailed("Bygging av JS feilet", e, env.BUILD_URL)
             }
