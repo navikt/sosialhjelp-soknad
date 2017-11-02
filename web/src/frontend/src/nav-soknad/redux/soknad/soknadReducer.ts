@@ -1,12 +1,12 @@
-import { REST_STATUS } from "../types";
-import { Reducer, SoknadState } from "./reduxTypes";
+import { REST_STATUS } from "../../types";
+import { Reducer, SoknadState } from "../reduxTypes";
 
-import { SoknadActionTypeKeys } from "./soknadTypes";
-import { SoknadActionTypes } from "./soknadActions";
+import { SoknadActionTypes, SoknadActionTypeKeys } from "./soknadActionTypes";
 
-const defaultState: SoknadState = {
+export const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
 	sendSoknadPending: false,
+	avbrytDialogSynlig: false,
 	data: {
 		soknadId: null,
 		skjemaNummer: "",
@@ -28,8 +28,7 @@ const defaultState: SoknadState = {
 		sprak: "",
 		ikkeInnsendteVedlegg: [],
 		opplastedeVedlegg: [],
-		innsendteVedlegg: [],
-		avbrytDialogSynlig: false
+		innsendteVedlegg: []
 	}
 };
 
@@ -41,23 +40,16 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 		case SoknadActionTypeKeys.AVBRYT_SOKNAD:
 			return {
 				...state,
-				data: {
-					...state.data,
-					avbrytDialogSynlig: true
-				}
+				avbrytDialogSynlig: true
 			};
 		case SoknadActionTypeKeys.FORTSETT_SOKNAD:
 			return {
 				...state,
-				data: {
-					...state.data,
-					avbrytDialogSynlig: false
-				}
+				avbrytDialogSynlig: false
 			};
 
 		case SoknadActionTypeKeys.RESET_SOKNAD:
 			return {
-				...state,
 				...defaultState
 			};
 		case SoknadActionTypeKeys.OPPRETT_SOKNAD:
@@ -65,7 +57,7 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				...state,
 				restStatus: REST_STATUS.PENDING
 			};
-		case SoknadActionTypeKeys.OPPRETTET_SOKNAD:
+		case SoknadActionTypeKeys.OPPRETT_SOKNAD_OK:
 			return {
 				...state,
 				data: {
@@ -79,7 +71,7 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				...state,
 				restStatus: REST_STATUS.PENDING
 			};
-		case SoknadActionTypeKeys.HENTET_SOKNAD:
+		case SoknadActionTypeKeys.HENT_SOKNAD_OK:
 			return {
 				...state,
 				data: action.data,
@@ -90,7 +82,7 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				...state,
 				sendSoknadPending: true
 			};
-		case SoknadActionTypeKeys.SOKNAD_SENDT:
+		case SoknadActionTypeKeys.SEND_SOKNAD_OK:
 			return {
 				...state,
 				sendSoknadPending: false
@@ -100,7 +92,7 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				...state,
 				restStatus: REST_STATUS.PENDING
 			};
-		case SoknadActionTypeKeys.KVITTERING_HENTET:
+		case SoknadActionTypeKeys.HENT_KVITTERING_OK:
 			return {
 				...state,
 				kvittering: action.kvittering,

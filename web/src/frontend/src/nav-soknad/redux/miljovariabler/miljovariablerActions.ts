@@ -1,13 +1,20 @@
-import { ActionTypeKeys, MiljovariablerActionTypes } from "./miljovariablerTypes";
+import {
+	ActionTypeKeys,
+	MiljovariablerActionTypes
+} from "./miljovariablerTypes";
 
-const mottattMiljovariabler = ( miljovariabler: object ): MiljovariablerActionTypes => {
+const mottattMiljovariabler = (
+	miljovariabler: object
+): MiljovariablerActionTypes => {
 	return {
 		type: ActionTypeKeys.OK,
 		data: miljovariabler
 	};
 };
 
-const hentMiljovariablerFeilet = (feilmelding: string): MiljovariablerActionTypes => {
+const hentMiljovariablerFeilet = (
+	feilmelding: string
+): MiljovariablerActionTypes => {
 	return {
 		type: ActionTypeKeys.FEILET,
 		feilmelding

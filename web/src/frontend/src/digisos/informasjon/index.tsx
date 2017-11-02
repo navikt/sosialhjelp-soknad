@@ -7,12 +7,12 @@ import {
 	FormattedHTMLMessage
 } from "react-intl";
 import DocumentTitle from "react-document-title";
+import { State } from "../redux/reducers";
 import { Undertittel } from "nav-frontend-typografi";
 import Knapp from "nav-frontend-knapper";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import Infoblokk from "../../nav-soknad/components/infoblokk";
-import { State } from "../redux/reducers";
 
 interface StateProps {
 	harTilgang: boolean;
