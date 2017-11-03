@@ -4,7 +4,7 @@ import * as nb from "react-intl/locale-data/nb";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { connect } from "react-redux";
 import {
-	ActionTypeKeys,
+	LedeteksterActionTypeKeys,
 	LedetekstState
 } from "./nav-soknad/redux/ledetekster/ledeteksterTypes";
 import { DispatchProps } from "./nav-soknad/redux/reduxTypes";
@@ -33,7 +33,7 @@ class IntlProvider extends React.Component<
 		const { ledetekster } = this.props;
 		const locale = "nb";
 
-		if (ledetekster.status === ActionTypeKeys.FEILET) {
+		if (ledetekster.status === LedeteksterActionTypeKeys.FEILET) {
 			/** I og med tekstressurser ikke er tilgjengelig, må tekster hardkodes */
 			children = (
 				<Feilside>
@@ -43,7 +43,7 @@ class IntlProvider extends React.Component<
 					</p>
 				</Feilside>
 			);
-		} else if (ledetekster.status !== ActionTypeKeys.OK) {
+		} else if (ledetekster.status !== LedeteksterActionTypeKeys.OK) {
 			children = (
 				<div className="application-spinner">
 					<NavFrontendSpinner storrelse="xxl" />
