@@ -93,8 +93,9 @@ node("master") {
             node {
                 try {
                     dir("web/src/frontend") {
-                        sh("node ./nightwatch.js --env phantomjs --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
-                        // sh("pwd && ls")
+                        // sh("node ./nightwatch.js --env phantomjs --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
+                        sh("pwd")
+                        sh("cat nightwatch.js")
                     }
                 } catch (Exception e) {
                     notifyFailed('Integrasjonstester feilet', e)
