@@ -54,7 +54,7 @@ ReactDOM.render(
 	<Provider store={store}>
 		<IntlProvider>
 			<ConnectedRouter history={history}>
-				<App />
+				<App intl={null} />
 			</ConnectedRouter>
 		</IntlProvider>
 	</Provider>,

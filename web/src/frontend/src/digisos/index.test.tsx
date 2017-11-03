@@ -20,7 +20,7 @@ it("renders without crashing", () => {
 	const wrapper = shallow(
 		<Provider store={store}>
 			<IntlProvider>
-				<App />
+				<App intl={null} />
 			</IntlProvider>
 		</Provider>
 	);
