@@ -12,6 +12,7 @@ import Feilside from "./nav-soknad/components/feilside/Feilside";
 import { hentMiljovariabler } from "./nav-soknad/redux/miljovariabler/miljovariablerActions";
 import { hentTekster } from "./nav-soknad/redux/ledetekster/ledeteksterActions";
 import { hentTilgang } from "./nav-soknad/redux/tilgang/tilgangActions";
+import { SoknadAppState } from "./nav-soknad/redux/reduxTypes";
 
 addLocaleData(nb);
 
@@ -19,9 +20,13 @@ interface IntlProviderProps {
 	children: React.ReactNode;
 }
 
-class IntlProvider extends React.Component<
-	IntlProviderProps & DispatchProps & LedetekstState
-> {
+interface StateProps {
+	ledetekster: LedetekstState;
+}
+
+type Props = StateProps & IntlProviderProps & DispatchProps;
+
+class IntlProvider extends React.Component<Props, {}> {
 	componentDidMount() {
 		this.props.dispatch(hentTilgang());
 		this.props.dispatch(hentTekster());
@@ -58,7 +63,7 @@ class IntlProvider extends React.Component<
 	}
 }
 
-export default connect((state: LedetekstState) => {
+export default connect((state: SoknadAppState) => {
 	return {
 		ledetekster: state.ledetekster
 	};

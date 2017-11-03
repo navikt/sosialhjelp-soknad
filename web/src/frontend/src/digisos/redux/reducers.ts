@@ -12,6 +12,7 @@ import TilgangReducer from "../../nav-soknad/redux/tilgang/tilgangReducer";
 import SynligeFaktaReducer from "./synligefakta/synligeFaktaReducer";
 import { SynligeFaktaState } from "./synligefakta/synligeFaktaTypes";
 import ApplikasjonsfeilReducer from "../../nav-soknad/redux/applikasjonsfeil/applikasjonsfeilReducer";
+import InitReducer from "../../nav-soknad/redux/init/initReducer";
 
 export interface State extends SoknadAppState {
 	synligefakta: SynligeFaktaState;
@@ -27,7 +28,8 @@ const reducers = combineReducers({
 	tilgang: TilgangReducer,
 	synligefakta: SynligeFaktaReducer,
 	miljovariabler: MiljovariablerReducer,
-	applikasjonsfeil: ApplikasjonsfeilReducer
+	applikasjonsfeil: ApplikasjonsfeilReducer,
+	init: InitReducer
 });
 
 export default reducers;

@@ -35,11 +35,7 @@ export interface OtherAction {
 	type: LedeteksterActionTypeKeys.OTHER_ACTION;
 }
 
-export interface LedetekstApiType {
+export interface LedetekstState {
 	data: {};
 	status: LedeteksterActionTypeKeys;
-}
-
-export interface LedetekstState {
-	ledetekster: LedetekstApiType;
 }

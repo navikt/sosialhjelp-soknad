@@ -53,7 +53,7 @@ class App extends React.Component<InjectedIntlProps & StateProps, {}> {
 
 const mapStateToProps = (state: SoknadAppState): StateProps => {
 	return {
-		initRestStatus: state.soknad.restStatus
+		initRestStatus: state.init.restStatus
 	};
 };
 
