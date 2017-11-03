@@ -23,7 +23,7 @@ function leggNoklerPaaLedetekster(data: object) {
 function* hentTeksterSaga(): SagaIterator {
 	try {
 		yield put(henterTekster());
-		// TODO: Burde lage egen funskjon som holder på url-string
+		// TODO: Burde lage egen funksjon som holder på url-string
 		const response = yield call(
 			fetchToJson,
 			"informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp"
