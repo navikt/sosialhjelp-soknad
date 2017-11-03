@@ -70,37 +70,19 @@ node("master") {
             }
         }
 
-        // Dette steget skal kommenteres inn igjen:
-//        stage('Test') {
-//            try {
-//                sh "CI=true npm run test"
-//            } catch (Exception e) {
-//                notifyFailed("Tester feilet", e, env.BUILD_URL)
-//            }
-//        }
+        stage('Test') {
+            try {
+                sh "CI=true npm run test"
+            } catch (Exception e) {
+                notifyFailed("Tester feilet", e, env.BUILD_URL)
+            }
+        }
 
         stage('Build') {
             try {
                 sh "npm run build"
             } catch (Exception e) {
                 notifyFailed("Bygging av JS feilet", e, env.BUILD_URL)
-            }
-        }
-
-
-        // Dette steget skal egentlig bare kjøres under masterbuild(?)
-        stage('E2E test') {
-            node {
-                try {
-                    dir("web/src/frontend") {
-                        // sh("node ./nightwatch.js --env phantomjs --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
-                        sh("pwd")
-                        sh("cat nightwatch.js")
-                    }
-                } catch (Exception e) {
-                    notifyFailed('Integrasjonstester feilet', e)
-                    step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
-                }
             }
         }
 
