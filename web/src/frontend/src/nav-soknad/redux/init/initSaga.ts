@@ -1,23 +1,36 @@
-import { call, put, takeEvery } from "redux-saga/effects";
-import { TilgangActionTypeKeys, TilgangApiResponse } from "./tilgangTypes";
-import { fetchToJson } from "../../utils/rest-utils";
-import {
-	henterTilgang,
-	hentetTilgang,
-	hentTilgangFeilet
-} from "./tilgangActions";
+import { takeEvery, put } from "redux-saga/effects";
+import { hentMiljovariabler } from "../miljovariabler/miljovariablerActions";
+import { MiljovariablerActionTypeKeys } from "../miljovariabler/miljovariablerTypes";
+import { hentTekster } from "../ledetekster/ledeteksterActions";
+import { LedeteksterActionTypeKeys } from "../ledetekster/ledeteksterTypes";
+import { hentTilgang } from "../tilgang/tilgangActions";
+import { TilgangActionTypeKeys } from "../tilgang/tilgangTypes";
 
-function* initSaga(): IterableIterator<any> {
-	try {
-		yield put(henterTilgang());
-		yield put(hentetTilgang());
-	} catch (reason) {
-		yield put(hentTilgangFeilet(reason));
+import { InitActionTypeKeys } from "./initTypes";
+import { initFerdig } from "./initActions";
+
+let initActions = [
+	TilgangActionTypeKeys.OK,
+	MiljovariablerActionTypeKeys.OK,
+	LedeteksterActionTypeKeys.OK
+];
+
+function* startInit(): IterableIterator<any> {
+	yield put(hentMiljovariabler());
+	yield put(hentTilgang());
+	yield put(hentTekster());
+}
+
+function* isAllDataLoaded(action: any): IterableIterator<any> {
+	initActions = initActions.filter(el => el !== action.type);
+	if (initActions.length === 0) {
+		yield put(initFerdig());
 	}
 }
 
-function* tilgangSaga() {
-	yield takeEvery(TilgangActionTypeKeys.INIT, hentTilgangSaga);
+function* initSaga() {
+	yield takeEvery(InitActionTypeKeys.START, startInit);
+	yield takeEvery(initActions, isAllDataLoaded);
 }
 
-export default tilgangSaga;
+export default initSaga;

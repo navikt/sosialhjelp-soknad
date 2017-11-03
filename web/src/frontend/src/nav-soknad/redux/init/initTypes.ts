@@ -1,19 +1,27 @@
+import { REST_STATUS } from "../../types";
+
 export enum InitActionTypeKeys {
+	INIT = "init/INIT",
 	START = "init/START",
-	SUCCESS = "init/SUCCESS"
+	OK = "init/OK",
+	FEILET = "init/FEILET"
 }
 
-export type InitActionTypes = StartAction | SuccessAction;
+export type InitActionTypes = StartAction | FerdigAction | FeiletAction;
 
 interface StartAction {
 	type: InitActionTypeKeys.START;
 }
 
-interface SuccessAction {
-	type: InitActionTypeKeys.SUCCESS;
+interface FerdigAction {
+	type: InitActionTypeKeys.OK;
+}
+
+interface FeiletAction {
+	type: InitActionTypeKeys.FEILET;
+	feilmelding: string;
 }
 
 export interface InitState {
-	henterData: boolean;
-	harTilgang: boolean;
+	restStatus: REST_STATUS;
 }

@@ -1,7 +1,20 @@
 import { InitActionTypeKeys, InitActionTypes } from "./initTypes";
 
-const start = (): InitActionTypes => {
+export const initStart = (): InitActionTypes => {
 	return {
-		type: TilgangActionTypeKeys.INIT
+		type: InitActionTypeKeys.START
+	};
+};
+
+export const initFerdig = (): InitActionTypes => {
+	return {
+		type: InitActionTypeKeys.OK
+	};
+};
+
+export const initFeilet = (feilmelding: string): InitActionTypes => {
+	return {
+		type: InitActionTypeKeys.FEILET,
+		feilmelding
 	};
 };
