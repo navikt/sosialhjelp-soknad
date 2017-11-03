@@ -19,7 +19,6 @@ interface FerdigAction {
 
 interface FeiletAction {
 	type: InitActionTypeKeys.FEILET;
-	feilmelding: string;
 }
 
 export interface InitState {

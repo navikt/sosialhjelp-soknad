@@ -12,9 +12,8 @@ export const initFerdig = (): InitActionTypes => {
 	};
 };
 
-export const initFeilet = (feilmelding: string): InitActionTypes => {
+export const initFeilet = (): InitActionTypes => {
 	return {
-		type: InitActionTypeKeys.FEILET,
-		feilmelding
+		type: InitActionTypeKeys.FEILET
 	};
 };

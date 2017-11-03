@@ -7,12 +7,17 @@ import { hentTilgang } from "../tilgang/tilgangActions";
 import { TilgangActionTypeKeys } from "../tilgang/tilgangTypes";
 
 import { InitActionTypeKeys } from "./initTypes";
-import { initFerdig } from "./initActions";
+import { initFerdig, initFeilet } from "./initActions";
 
 let initActions = [
 	TilgangActionTypeKeys.OK,
 	MiljovariablerActionTypeKeys.OK,
 	LedeteksterActionTypeKeys.OK
+];
+const initFeiletActions = [
+	TilgangActionTypeKeys.FEILET,
+	MiljovariablerActionTypeKeys.FEILET,
+	LedeteksterActionTypeKeys.FEILET
 ];
 
 function* startInit(): IterableIterator<any> {
@@ -28,9 +33,14 @@ function* isAllDataLoaded(action: any): IterableIterator<any> {
 	}
 }
 
+function* initActionFeilet(): IterableIterator<any> {
+	yield put(initFeilet());
+}
+
 function* initSaga() {
 	yield takeEvery(InitActionTypeKeys.START, startInit);
 	yield takeEvery(initActions, isAllDataLoaded);
+	yield takeEvery(initFeiletActions, initActionFeilet);
 }
 
 export default initSaga;
