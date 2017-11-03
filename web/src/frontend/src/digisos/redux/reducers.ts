@@ -9,14 +9,12 @@ import OppsummeringReducer from "../../nav-soknad/redux/oppsummering/oppsummerin
 import LedeteksterReducer from "../../nav-soknad/redux/ledetekster/ledeteksterReducer";
 import MiljovariablerReducer from "../../nav-soknad/redux/miljovariabler/miljovariablerReducer";
 import TilgangReducer from "../../nav-soknad/redux/tilgang/tilgangReducer";
-import { TilgangState } from "../../nav-soknad/redux/tilgang/tilgangTypes";
 import SynligeFaktaReducer from "./synligefakta/synligeFaktaReducer";
 import { SynligeFaktaState } from "./synligefakta/synligeFaktaTypes";
 import ApplikasjonsfeilReducer from "../../nav-soknad/redux/applikasjonsfeil/applikasjonsfeilReducer";
 
 export interface State extends SoknadAppState {
 	synligefakta: SynligeFaktaState;
-	tilgang: TilgangState;
 }
 
 const reducers = combineReducers({
