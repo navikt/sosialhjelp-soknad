@@ -5,7 +5,8 @@ import {
 	tilbakeEllerForsidenSaga,
 	getHistoryLength,
 	tilStegSaga,
-	gaVidereSaga
+	gaVidereSaga,
+	skalHoppeOverNesteStegSaga
 } from "./navigasjonSaga";
 import { call, put, select, take } from "redux-saga/effects";
 import { GaVidere, Sider, TilSteg } from "./navigasjonTypes";
@@ -16,7 +17,9 @@ import { setFaktum, lagreFaktum } from "../fakta/faktaActions";
 import { Faktum } from "../../types/navSoknadTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
-import { selectProgresjonFaktum, selectBrukerBehandlingId } from "../selectors";
+import { selectProgresjonFaktum, selectBrukerBehandlingId, selectSynligFaktaData } from "../selectors";
+import { hentSynligeFakta } from "../../../digisos/redux/synligefakta/synligeFaktaActions";
+import { SynligeFaktaActionTypeKeys } from "../../../digisos/redux/synligefakta/synligeFaktaTypes";
 
 const ferdig = (saga: SagaIterator) => {
 	expect(saga.next()).toEqual({
@@ -122,8 +125,15 @@ describe("navigasjonSaga", () => {
 		const action = gaVidere(1);
 		const saga = gaVidereSaga(action as GaVidere);
 
-		it("select selectProgresjonFaktum", () => {
+		it("call skalHoppeOverNesteStegSaga", () => {
 			expect(saga.next()).toEqual({
+				done: false,
+				value: call(skalHoppeOverNesteStegSaga, 1)
+			});
+		});
+
+		it("select selectProgresjonFaktum", () => {
+			expect(saga.next(false)).toEqual({
 				done: false,
 				value: select(selectProgresjonFaktum)
 			});
@@ -179,6 +189,13 @@ describe("navigasjonSaga", () => {
 		const action = gaVidere(1);
 		const saga = gaVidereSaga(action as GaVidere);
 
+		it("call skalHoppeOverNesteStegSaga", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: call(skalHoppeOverNesteStegSaga, 1)
+			});
+		});
+
 		it("select selectProgresjonFaktum", () => {
 			expect(saga.next()).toEqual({
 				done: false,
@@ -196,4 +213,50 @@ describe("navigasjonSaga", () => {
 		it("ferdig", () => ferdig(saga));
 	});
 
+	describe("skalHoppeOverNesteStegSaga - true flyt", () => {
+		const saga = skalHoppeOverNesteStegSaga(7);
+		const synligefaktaData = {}
+
+		it("put hentSynligFakta", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(hentSynligeFakta())
+			});
+		});
+
+		it("take utfall av hentSynligFaktaSaga", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: take([
+					SynligeFaktaActionTypeKeys.HENT_SYNLIGE_OK,
+					SynligeFaktaActionTypeKeys.HENT_SYNLIGE_FEILET
+				])
+			});
+		});
+
+		it("select selectSynligFaktaData", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: select(selectSynligFaktaData)
+			});
+		});
+
+		it("ferdig", () => {
+			expect(saga.next(synligefaktaData)).toEqual({
+				done: true,
+				value: true
+			});
+		});
+	});
+
+	describe("skalHoppeOverNesteStegSaga - false flyt", () => {
+		const saga = skalHoppeOverNesteStegSaga(1);
+
+		it("ferdig", () => {
+			expect(saga.next()).toEqual({
+				done: true,
+				value: false
+			});
+		});
+	});
 });
