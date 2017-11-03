@@ -1,10 +1,11 @@
 import { call, put, select, take, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import { push, goBack } from "react-router-redux";
+import { goBack, push } from "react-router-redux";
 import {
+	GaTilbake,
+	GaVidere,
 	NavigasjonActionTypes,
 	Sider,
-	GaVidere,
 	TilSteg,
 	TilDittNav,
 	TilKvittering
@@ -12,9 +13,11 @@ import {
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
-import { tilSteg } from "./navigasjonActions";
+import { tilStart, tilSteg } from "./navigasjonActions";
 import { SoknadAppState } from "../reduxTypes";
-import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
+import { selectBrukerBehandlingId, selectProgresjonFaktum, selectSynligFaktaData } from "../selectors";
+import { hentSynligeFakta } from "../../../digisos/redux/synligefakta/synligeFaktaActions";
+import { SynligeFaktaActionTypeKeys } from "../../../digisos/redux/synligefakta/synligeFaktaTypes";
 
 const getHistoryLength = () => window.history.length;
 const navigateTo = (path: string) => (window.location.href = path);
@@ -31,6 +34,10 @@ function* tilBostedSaga(): SagaIterator {
 	yield put(push(Sider.BOSTED));
 }
 
+function* tilStartSaga(): SagaIterator {
+	yield put(push(Sider.START));
+}
+
 function* tilbakeEllerForsidenSaga(): SagaIterator {
 	const historyLength = yield call(getHistoryLength);
 	if (historyLength === 1) {
@@ -45,19 +52,43 @@ function* tilStegSaga(action: TilSteg): SagaIterator {
 	yield put(push(`/skjema/${behandlingsId}/${action.stegnummer}`));
 }
 
+function* skalHoppeOverNesteStegSaga(stegnummer: number): SagaIterator {
+	if (stegnummer === 7 || stegnummer === 9) {
+		yield put(hentSynligeFakta());
+		yield take([
+			SynligeFaktaActionTypeKeys.HENT_SYNLIGE_OK,
+			SynligeFaktaActionTypeKeys.HENT_SYNLIGE_FEILET
+		]);
+		const synligeFakta = yield select(selectSynligFaktaData);
+		return Object.keys(synligeFakta).length === 0;
+	}
+	return false;
+}
+
 function* gaVidereSaga(action: GaVidere): SagaIterator {
+	const skalHoppeOver = yield call(skalHoppeOverNesteStegSaga, action.stegnummer);
 	const progresjonFaktum = yield select(selectProgresjonFaktum);
-	if (parseInt(progresjonFaktum.value || 1, 10) === action.stegnummer) {
+	const progresjonFaktumVerdi = parseInt(progresjonFaktum.value || 1, 10);
+	if (progresjonFaktumVerdi === action.stegnummer) {
 		const faktum = yield call(
 			oppdaterFaktumMedVerdier,
 			progresjonFaktum,
-			`${action.stegnummer + 1}`
+			`${action.stegnummer + (skalHoppeOver ? 2 : 1)}`
 		);
 		yield put(setFaktum(faktum));
 		yield put(lagreFaktum(faktum));
 		yield take([FaktumActionTypeKeys.LAGRET_FAKTUM]);
 	}
-	yield put(tilSteg(action.stegnummer + 1));
+	yield put(tilSteg(action.stegnummer + (skalHoppeOver ? 2 : 1)));
+}
+
+function* gaTilbakeSaga(action: GaTilbake): SagaIterator {
+	if (action.stegnummer === 1) {
+		yield put(tilStart());
+	} else {
+		const skalHoppeOver = yield call(skalHoppeOverNesteStegSaga, action.stegnummer);
+		yield put(tilSteg(action.stegnummer - (skalHoppeOver ? 2 : 1)));
+	}
 }
 
 function* tilDittNav(action: TilDittNav): SagaIterator {
@@ -75,6 +106,7 @@ function* navigasjonSaga(): SagaIterator {
 	yield takeEvery(NavigasjonActionTypes.TIL_SERVERFEIL, tilServerfeilSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_STEG, tilStegSaga);
 	yield takeEvery(NavigasjonActionTypes.GA_VIDERE, gaVidereSaga);
+	yield takeEvery(NavigasjonActionTypes.GA_TILBAKE, gaTilbakeSaga);
 	yield takeEvery(
 		NavigasjonActionTypes.TIL_FINN_DITT_NAV_KONTOR,
 		tilFinnDittNavKontorSaga
@@ -83,21 +115,23 @@ function* navigasjonSaga(): SagaIterator {
 		NavigasjonActionTypes.TILBAKE_ELLER_FORSIDEN,
 		tilbakeEllerForsidenSaga
 	);
+	yield takeEvery(NavigasjonActionTypes.TIL_START, tilStartSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_BOSTED, tilBostedSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_DITT_NAV, tilDittNav);
 	yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilKvittering);
 }
 
 export {
-	tilFinnDittNavKontorSaga,
-	tilServerfeilSaga,
-	tilbakeEllerForsidenSaga,
-	tilStegSaga,
 	gaVidereSaga,
+	getHistoryLength,
 	navigateTo,
 	selectProgresjonFaktum,
+	skalHoppeOverNesteStegSaga,
+	tilbakeEllerForsidenSaga,
+	tilFinnDittNavKontorSaga,
 	tilKvittering,
-	getHistoryLength
+	tilServerfeilSaga,
+	tilStegSaga,
 };
 
 export default navigasjonSaga;
