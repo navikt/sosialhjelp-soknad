@@ -105,6 +105,5 @@ exports.updateSoknadFakta = function(fakta) {
 	const soknad = JSON.parse(JSON.stringify(lagretSoknad));
 	soknad.fakta = fakta;
 	const fileName = this.getFilePath("soknad.json");
-	const soknadString = JSON.stringify(soknad);
-	fs.writeFileSync(fileName, soknadString);
+	fs.writeFileSync(fileName, JSON.stringify(soknad, null, 4));
 };

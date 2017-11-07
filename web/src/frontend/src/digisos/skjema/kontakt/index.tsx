@@ -18,6 +18,8 @@ import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
 class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 	render() {
+		const kontonummerSystem = getFaktumVerdi(this.props.fakta, "kontakt.kontonummer.system");
+		const harKontonummer: boolean = kontonummerSystem !== null && kontonummerSystem !== "";
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		const brukerHarIkkeKontonummer = faktumIsSelected(
 			getFaktumVerdi(this.props.fakta, "kontakt.kontonummer.harikke")
@@ -25,11 +27,28 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
 				<SporsmalFaktum faktumKey="kontakt.kontonummer">
-					<KontonummerFaktum
-						faktumKey="kontakt.kontonummer"
-						disabled={brukerHarIkkeKontonummer}
-						ignorert={brukerHarIkkeKontonummer}
-					/>
+					{!harKontonummer && (
+						<KontonummerFaktum
+							faktumKey="kontakt.kontonummer"
+							disabled={brukerHarIkkeKontonummer}
+							ignorert={brukerHarIkkeKontonummer}
+						/>
+					)}
+					{harKontonummer && (
+						<span>
+						<KontonummerFaktum
+							faktumKey="kontakt.kontonummer.system"
+							disabled={true}
+							ignorert={false}
+						/>
+						<br/>
+						<KontonummerFaktum
+							faktumKey="kontakt.kontonummer.bruker"
+							disabled={brukerHarIkkeKontonummer}
+							ignorert={brukerHarIkkeKontonummer}
+						/>
+						</span>
+					)}
 					<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="kontakt.telefon">
