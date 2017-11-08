@@ -43,7 +43,7 @@ router.get("/informasjon/miljovariabler", function(req, res) {
 
 // Ekstrainformasjon - økonomiske opplysninger
 const synligsoknadstruktur = utils.lesMockDataFil("synligsoknadstruktur.json");
-router.get("/soknader/1000B7K33/synligsoknadstruktur", function(req, res) {
+router.get("/soknader/1000B7FGM/synligsoknadstruktur", function(req, res) {
 	res.json(synligsoknadstruktur);
 });
 
@@ -86,7 +86,10 @@ router.get("/soknader/:brukerBehandlingId", function(req, res) {
 	}
 });
 
-router.get("/soknader/:brukerBehandlingId/synligsoknadstruktur", function (req, res) {
+router.get("/soknader/:brukerBehandlingId/synligsoknadstruktur", function(
+	req,
+	res
+) {
 	console.log("Mock backend: get synligsoknadstruktur");
 	res.json(utils.lesMockDataFil("synligsoknadstruktur.json"));
 });
