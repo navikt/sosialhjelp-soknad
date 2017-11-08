@@ -4,6 +4,9 @@ import { MiljovariablerApiType } from "./miljovariabler/miljovariablerTypes";
 import { OppsummeringState } from "./oppsummering/oppsummeringReducer";
 import { Soknad, Kvittering, REST_STATUS } from "../types";
 import { ApplikasjonsfeilState } from "./applikasjonsfeil/applikasjonsfeilReducer";
+import { TilgangState } from "./tilgang/tilgangTypes";
+import { LedetekstState } from "./ledetekster/ledeteksterTypes";
+import { InitState } from "./init/initTypes";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -25,6 +28,9 @@ export interface SoknadAppState {
 	oppsummering: OppsummeringState;
 	applikasjonsfeil: ApplikasjonsfeilState;
 	miljovariabler: MiljovariablerApiType;
+	tilgang: TilgangState;
+	ledetekster: LedetekstState;
+	init: InitState;
 }
 
 export interface SoknadState {

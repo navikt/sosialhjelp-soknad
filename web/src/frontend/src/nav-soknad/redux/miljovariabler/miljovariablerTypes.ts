@@ -1,5 +1,5 @@
-export enum ActionTypeKeys {
-	OK = "Miljovariabler/OK",
+export enum MiljovariablerActionTypeKeys {
+	OK = "miljovariabler/OK",
 	FEILET = "miljovariabler/FEILET",
 	PENDING = "miljovariabler/PENDING",
 	INIT = "miljovariabler/INIT",
@@ -14,28 +14,28 @@ export type MiljovariablerActionTypes =
 	| OtherAction;
 
 interface HentetMiljovariablerAction {
-	type: ActionTypeKeys.OK;
+	type: MiljovariablerActionTypeKeys.OK;
 	data: object;
 }
 
 interface MiljovariablerInitAction {
-	type: ActionTypeKeys.INIT;
+	type: MiljovariablerActionTypeKeys.INIT;
 }
 
 interface HentMiljovariablerAction {
-	type: ActionTypeKeys.PENDING;
+	type: MiljovariablerActionTypeKeys.PENDING;
 }
 
 interface MiljovariablerFeiletAction {
-	type: ActionTypeKeys.FEILET;
+	type: MiljovariablerActionTypeKeys.FEILET;
 	feilmelding: string;
 }
 
 export interface OtherAction {
-	type: ActionTypeKeys.OTHER_ACTION;
+	type: MiljovariablerActionTypeKeys.OTHER_ACTION;
 }
 
 export interface MiljovariablerApiType {
 	data: {};
-	status: ActionTypeKeys;
+	status: MiljovariablerActionTypeKeys;
 }

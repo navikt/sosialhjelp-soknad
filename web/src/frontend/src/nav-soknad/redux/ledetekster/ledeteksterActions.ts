@@ -1,34 +1,32 @@
-import { ActionTypeKeys, InformasjonActionTypes } from "./ledeteksterTypes";
+import {
+	LedeteksterActionTypeKeys,
+	InformasjonActionTypes
+} from "./ledeteksterTypes";
 
-const hentTekster = (): InformasjonActionTypes  => {
+const hentTekster = (): InformasjonActionTypes => {
 	return {
-		type: ActionTypeKeys.INIT
+		type: LedeteksterActionTypeKeys.INIT
 	};
 };
 
 const henterTekster = (): InformasjonActionTypes => {
 	return {
-		type: ActionTypeKeys.PENDING
+		type: LedeteksterActionTypeKeys.PENDING
 	};
 };
 
-const hentetTekster = ( tekster: object ): InformasjonActionTypes => {
+const hentetTekster = (tekster: object): InformasjonActionTypes => {
 	return {
-		type: ActionTypeKeys.OK,
+		type: LedeteksterActionTypeKeys.OK,
 		data: tekster
 	};
 };
 
 const hentTeksterFeilet = (feilmelding: string): InformasjonActionTypes => {
 	return {
-		type: ActionTypeKeys.FEILET,
+		type: LedeteksterActionTypeKeys.FEILET,
 		feilmelding
 	};
 };
 
-export {
-	hentTekster,
-	henterTekster,
-	hentetTekster,
-	hentTeksterFeilet
-};
+export { hentTekster, henterTekster, hentetTekster, hentTeksterFeilet };
