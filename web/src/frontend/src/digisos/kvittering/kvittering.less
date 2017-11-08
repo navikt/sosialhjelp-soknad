@@ -7,17 +7,28 @@
 		padding-bottom: 1.5em;
 		position: relative;
 		&:after {
-			content: "";
-			position: absolute;
-			width: 30px;
-			height: 2px;
-			bottom: 0.4em;
-			left: 50%;
-			margin-left: -15px;
+			.tittel-strek-after();
 			background-color: @navGronnLighten60;
 		}
 	}
 	&__tekst {
 		padding: 0 @skjemaMarg @skjemaMarg @skjemaMarg;
+		text-align: left;
+	}
+}
+
+.panelIllustrasjon {
+	width: 100%;
+	margin-bottom: 1rem;
+	background-color: @navGronnLighten60;
+}
+
+.infoSeksjon {
+	padding: 0 @skjemaMarg 0 @skjemaMarg;
+	&__ikon {
+		margin-bottom: 1rem;
+	}
+	&__innhold {
+		text-align: left;
 	}
 }

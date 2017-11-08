@@ -52,6 +52,15 @@ body {
 	margin-bottom: 3rem;
 }
 
+.tittel-strek {
+	position: relative;
+	padding-bottom: 2em;
+	&:after {
+		.tittel-strek-after();
+		background-color: @navMorkGra;
+	}
+}
+
 @media @mobile {
 	.skjema__stegindikator {
 		margin-bottom: 2rem;
