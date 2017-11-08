@@ -32,13 +32,6 @@ export function gaVidere(stegnummer: number): NavigasjonActions {
 	};
 }
 
-export function gaTilbake(stegnummer: number): NavigasjonActions {
-	return {
-		type: NavigasjonActionTypes.GA_TILBAKE,
-		stegnummer
-	};
-}
-
 export function tilSteg(stegnummer: number): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.TIL_STEG,
