@@ -45,6 +45,14 @@
 				"browserName": "chrome",
 				"javascriptEnabled": true,
 				"acceptSslCerts": true,
+				"keepAlive": false
+			}
+		},
+		"headlesschrome": {
+			"desiredCapabilities": {
+				"browserName": "chrome",
+				"javascriptEnabled": true,
+				"acceptSslCerts": true,
 				"keepAlive": false,
 				"chromeOptions": {
 					"args": [
