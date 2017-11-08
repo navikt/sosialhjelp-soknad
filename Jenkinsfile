@@ -145,7 +145,7 @@ if (isMasterBuild) {
 
 if (isMasterBuild) {
     stage('Integrasjonstester') {
-        node {
+        node("master") {
             try {
                 dir('web/src/frontend') {
                     sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
