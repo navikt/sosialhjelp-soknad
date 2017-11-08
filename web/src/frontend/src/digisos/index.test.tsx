@@ -17,11 +17,10 @@ function configureStore() {
 
 const store = configureStore();
 it("renders without crashing", () => {
-
 	const wrapper = shallow(
 		<Provider store={store}>
 			<IntlProvider>
-				<App intl={null}/>
+				<App intl={null} />
 			</IntlProvider>
 		</Provider>
 	);

@@ -1,10 +1,10 @@
 import {
-	ActionTypeKeys,
+	LedeteksterActionTypeKeys,
 	InformasjonActionTypes,
-	LedetekstApiType
+	LedetekstState
 } from "./ledeteksterTypes";
 
-const { OK, PENDING, FEILET, INIT } = ActionTypeKeys;
+const { OK, PENDING, FEILET, INIT } = LedeteksterActionTypeKeys;
 
 const initialState = {
 	data: {},
@@ -12,7 +12,7 @@ const initialState = {
 };
 
 export default (
-	state: LedetekstApiType = initialState,
+	state: LedetekstState = initialState,
 	action: InformasjonActionTypes
 ) => {
 	switch (action.type) {

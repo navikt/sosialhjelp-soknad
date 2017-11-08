@@ -53,8 +53,8 @@ window.onerror = (errorMessage, url, line, column) => {
 ReactDOM.render(
 	<Provider store={store}>
 		<IntlProvider>
-			<ConnectedRouter history={ history }>
-				<App intl={null}/>
+			<ConnectedRouter history={history}>
+				<App intl={null} />
 			</ConnectedRouter>
 		</IntlProvider>
 	</Provider>,

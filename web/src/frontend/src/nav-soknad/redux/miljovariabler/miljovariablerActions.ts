@@ -1,5 +1,5 @@
 import {
-	ActionTypeKeys,
+	MiljovariablerActionTypeKeys,
 	MiljovariablerActionTypes
 } from "./miljovariablerTypes";
 
@@ -7,7 +7,7 @@ const mottattMiljovariabler = (
 	miljovariabler: object
 ): MiljovariablerActionTypes => {
 	return {
-		type: ActionTypeKeys.OK,
+		type: MiljovariablerActionTypeKeys.OK,
 		data: miljovariabler
 	};
 };
@@ -16,20 +16,20 @@ const hentMiljovariablerFeilet = (
 	feilmelding: string
 ): MiljovariablerActionTypes => {
 	return {
-		type: ActionTypeKeys.FEILET,
+		type: MiljovariablerActionTypeKeys.FEILET,
 		feilmelding
 	};
 };
 
 const hentMiljovariabler = (): MiljovariablerActionTypes => {
 	return {
-		type: ActionTypeKeys.INIT
+		type: MiljovariablerActionTypeKeys.INIT
 	};
 };
 
 const henterMiljovariabler = (): MiljovariablerActionTypes => {
 	return {
-		type: ActionTypeKeys.PENDING
+		type: MiljovariablerActionTypeKeys.PENDING
 	};
 };
 
