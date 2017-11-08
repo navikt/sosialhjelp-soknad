@@ -1,4 +1,5 @@
 import * as React from "react";
+import { FormattedHTMLMessage, FormattedMessage } from "react-intl";
 import { Panel } from "nav-frontend-paneler";
 import { Innholdstittel, Undertittel } from "nav-frontend-typografi";
 import SVG from "../../nav-soknad/components/svg/SVGImage";
@@ -10,8 +11,8 @@ interface Props {
 
 interface AvsnittProps {
 	icon: string;
-	tittel: string;
-	children: React.ReactNode;
+	tittelId: string;
+	tekstId: string;
 }
 
 const Avsnitt: React.StatelessComponent<AvsnittProps> = (
@@ -22,15 +23,19 @@ const Avsnitt: React.StatelessComponent<AvsnittProps> = (
 			<SVG src={props.icon} width={35} height={35} />
 		</div>
 		<Undertittel className="infoSeksjon__tittel tittel-strek">
-			{props.tittel}
+			<FormattedMessage id={props.tittelId} />
 		</Undertittel>
-		<div className="infoSeksjon__innhold">{props.children}</div>
+		<div className="infoSeksjon__innhold">
+			<FormattedHTMLMessage id={props.tekstId} />
+		</div>
 	</div>
 );
 
 const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 	<div>
-		<Innholdstittel className="blokk-s">Hva skjer videre nå?</Innholdstittel>
+		<Innholdstittel className="blokk-s">
+			<FormattedMessage id="kvittering.veienvidere.tittel" />
+		</Innholdstittel>
 		<Panel className="panel--noPadding">
 			<div className="panelIllustrasjon">
 				<img src={illustration} width="100%" alt="" />
@@ -39,34 +44,25 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 				<div className="blokk-xl">
 					<Avsnitt
 						icon={require("../svg/snakkebobler.svg")}
-						tittel="Samtale med NAV-kontoret"
-					>
-						Hvis det er første gang du søker om økonomisk sosialhjelp, blir du
-						vanligvis innkalt til et møte.
-					</Avsnitt>
+						tittelId="kvittering.samtale.tittel"
+						tekstId="kvittering.samtale.tekst"
+					/>
 				</div>
 
 				<div className="blokk-xl">
 					<Avsnitt
 						icon={require("../svg/kalender.svg")}
-						tittel="Saksbehandlingstid"
-					>
-						Saksbehandlingstiden varierer fra kommune til kommune. Når vi har
-						behandlet søknaden din, får du et vedtak. Hvos det går mer enn én
-						måned, skal du få et foreløpig svar. Hvis vi mangler opplysninger
-						eller du ikke har levert all nødvendig dokumentasjon, kan det ta
-						lengre tid før du får svar på søknaden din.
-					</Avsnitt>
+						tittelId="kvittering.saksbehandling.tittel"
+						tekstId="kvittering.saksbehandling.tekst"
+					/>
 				</div>
 
 				<div className="blokk-xl">
 					<Avsnitt
 						icon={require("../svg/person.svg")}
-						tittel="Hvis situasjonen din endrer seg"
-					>
-						Du må gi beskjed hvis den økonimiske situasjonen din endrer seg
-						etter at du har sendt søknaden.
-					</Avsnitt>
+						tittelId="kvittering.situasjon.tittel"
+						tekstId="kvittering.situasjon.tekst"
+					/>
 				</div>
 			</div>
 		</Panel>
