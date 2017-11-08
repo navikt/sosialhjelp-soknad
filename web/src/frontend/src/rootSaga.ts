@@ -8,9 +8,11 @@ import miljovariablerSaga from "./nav-soknad/redux/miljovariabler/miljoVariabler
 import navloggerSaga from "./nav-soknad/redux/navlogger/navloggerSaga";
 import oppsummeringSaga from "./nav-soknad/redux/oppsummering/oppsummeringSaga";
 import synligeFaktaSaga from "./digisos/redux/synligefakta/synligeFaktaSaga";
+import initSaga from "./nav-soknad/redux/init/initSaga";
 
 export default function* rootSaga() {
 	yield all([
+		initSaga(),
 		tilgangSaga(),
 		ledeteksterSaga(),
 		faktaSaga(),

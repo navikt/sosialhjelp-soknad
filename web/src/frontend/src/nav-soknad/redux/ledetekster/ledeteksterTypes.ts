@@ -1,4 +1,4 @@
-export enum ActionTypeKeys {
+export enum LedeteksterActionTypeKeys {
 	OK = "tekster/OK",
 	FEILET = "tekster/FEILET",
 	PENDING = "tekster/PENDING",
@@ -7,39 +7,35 @@ export enum ActionTypeKeys {
 }
 
 export type InformasjonActionTypes =
-	HentTeksterAction |
-	HentetTeksterAction |
-	HenterTeksterAction |
-	HentTeksterFeiletAction |
-	OtherAction;
+	| HentTeksterAction
+	| HentetTeksterAction
+	| HenterTeksterAction
+	| HentTeksterFeiletAction
+	| OtherAction;
 
 interface HentTeksterAction {
-	type: ActionTypeKeys.INIT;
+	type: LedeteksterActionTypeKeys.INIT;
 }
 
 interface HentetTeksterAction {
-	type: ActionTypeKeys.OK;
+	type: LedeteksterActionTypeKeys.OK;
 	data: object;
 }
 
 interface HenterTeksterAction {
-	type: ActionTypeKeys.PENDING;
+	type: LedeteksterActionTypeKeys.PENDING;
 }
 
 interface HentTeksterFeiletAction {
-	type: ActionTypeKeys.FEILET;
+	type: LedeteksterActionTypeKeys.FEILET;
 	feilmelding: string;
 }
 
 export interface OtherAction {
-	type: ActionTypeKeys.OTHER_ACTION;
-}
-
-export interface LedetekstApiType {
-	data: {};
-	status: ActionTypeKeys;
+	type: LedeteksterActionTypeKeys.OTHER_ACTION;
 }
 
 export interface LedetekstState {
-	ledetekster: LedetekstApiType;
+	data: {};
+	status: LedeteksterActionTypeKeys;
 }

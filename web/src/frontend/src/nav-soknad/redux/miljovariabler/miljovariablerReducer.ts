@@ -1,10 +1,10 @@
 import {
-	ActionTypeKeys,
+	MiljovariablerActionTypeKeys,
 	MiljovariablerApiType,
 	MiljovariablerActionTypes
 } from "./miljovariablerTypes";
 
-const { OK, PENDING, FEILET, INIT } = ActionTypeKeys;
+const { OK, PENDING, FEILET, INIT } = MiljovariablerActionTypeKeys;
 
 const initialState = {
 	data: {},

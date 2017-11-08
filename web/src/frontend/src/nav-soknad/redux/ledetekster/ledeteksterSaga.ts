@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { ActionTypeKeys } from "./ledeteksterTypes";
+import { LedeteksterActionTypeKeys } from "./ledeteksterTypes";
 import { fetchToJson } from "../../utils/rest-utils";
 import {
 	henterTekster,
@@ -23,7 +23,7 @@ function leggNoklerPaaLedetekster(data: object) {
 function* hentTeksterSaga(): SagaIterator {
 	try {
 		yield put(henterTekster());
-		// TODO: Burde lage egen funskjon som holder på url-string
+		// TODO: Burde lage egen funksjon som holder på url-string
 		const response = yield call(
 			fetchToJson,
 			"informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp"
@@ -40,7 +40,7 @@ function* hentTeksterSaga(): SagaIterator {
 }
 
 function* ledeteksterSaga(): SagaIterator {
-	yield takeEvery(ActionTypeKeys.INIT, hentTeksterSaga);
+	yield takeEvery(LedeteksterActionTypeKeys.INIT, hentTeksterSaga);
 }
 
 export { urlInneholderVistekster, leggNoklerPaaLedetekster, hentTeksterSaga };
