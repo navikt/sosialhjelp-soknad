@@ -17,7 +17,9 @@ type Props = SynligeFaktaProps & DispatchProps & InjectedIntlProps;
 
 class EkstraInformasjon extends React.Component<Props, {}> {
 	componentDidMount() {
-		this.props.dispatch(hentSynligeFakta());
+		if ( Object.keys(this.props.synligefakta.data).length === 0 ) {
+			this.props.dispatch(hentSynligeFakta());
+		}
 	}
 
 	render() {

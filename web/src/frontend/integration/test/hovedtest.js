@@ -28,6 +28,10 @@ module.exports = {
     after: (browser) => {
         browser.end();
     },
+	"førstesiden skal ha en knapp for å starte søknad": () => {
+		hovedside.expect.element('@hovedknapp').to.be.present.after(timeout * 2);
+		hovedside.click('@hovedknapp');
+	},
 	"hovedside skal ha minst ett skjemaelement": () => {
 		hovedside.expect.element('@input').to.be.present.after(timeout);
 	},
@@ -35,12 +39,12 @@ module.exports = {
 		hovedside.expect.element('@appTitle').to.be.present.after(timeout);
 	},
 	"hovedside skal ikke ha fortsett knapp hvis man ikke har valgt bosted": () => {
-		hovedside.expect.element('@fortsett').to.not.be.present.after(timeout);
+		hovedside.expect.element('@hovedknapp').to.not.be.present.after(timeout);
 	},
 	"man skal få opprettet en søknad når man har valgt kommune og klikket på Fortsett knappen": () => {
 		hovedside.click('@horten');
-		hovedside.expect.element('@fortsett').to.be.present.after(timeout * 2);
-		hovedside.click('@fortsett');
+		hovedside.expect.element('@hovedknapp').to.be.present.after(timeout * 2);
+		hovedside.click('@hovedknapp');
 		soknadsskjema.expect.element('@kontonummer').to.be.present.after(timeout * 2);
 		soknadsskjema.expect.element('@telefon').to.be.present;
 	},
@@ -49,7 +53,7 @@ module.exports = {
 		soknadsskjema.setValue('@telefon', '91852900');
 		soknadsskjema.clearValue('@kontonummer');
 		soknadsskjema.setValue('@kontonummer', '16141203123');
-		hovedside.click('@fortsett');
-		soknadsskjema.expect.element('@kontonummer').not.to.be.present.after(timeout);
+		hovedside.click('@hovedknapp');
+		soknadsskjema.expect.element('@kontonummer').to.be.present.after(timeout);
 	}
 };

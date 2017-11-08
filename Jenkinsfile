@@ -32,7 +32,7 @@ node("master") {
     properties([
             parameters([
                     string(name: 'DeployTilNexus', defaultValue: 'false'),
-                    string(name: 'testurl', defaultValue: 'http://tjenester-t1.nav.no/veivisersosialhjelp')
+                    string(name: 'testurl', defaultValue: 'https://tjenester-t6.nav.no/soknadsosialhjelp/informasjon'),
             ])
     ])
     common.setupTools("maven3", "java8")
@@ -85,6 +85,7 @@ node("master") {
                 notifyFailed("Bygging av JS feilet", e, env.BUILD_URL)
             }
         }
+
     }
 
     echo "${params.DeployTilNexus} deploy til nexus"
@@ -106,10 +107,10 @@ node("master") {
 }
 
 if (isMasterBuild) {
-    stage("Deploy app til t6") {
+    stage("Deploy app til t1") {
         callback = "${env.BUILD_URL}input/Deploy/"
         node {
-            deploy = common.deployApp(application, releaseVersion, "t6", callback, author).key
+            deploy = common.deployApp(application, releaseVersion, "t1", callback, author).key
         }
 
         try {
@@ -142,20 +143,20 @@ if (isMasterBuild) {
     }
 }
 
-//if (isMasterBuild) {
-//    stage('Integrasjonstester') {
-//        node {
-//            try {
-//                dir('web/src/frontend') {
-//                    sh("node nightwatch.js --env phantomjs --url ${testurl}")
-//                }
-//            } catch (Exception e) {
-//                notifyFailed('Integrasjonstester feilet', e)
-//                step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
-//            }
-//        }
-//    }
-//}
+if (isMasterBuild) {
+    stage('Integrasjonstester') {
+        node {
+            try {
+                dir('web/src/frontend') {
+                    sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
+                }
+            } catch (Exception e) {
+                notifyFailed('Integrasjonstester feilet', e)
+                step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
+            }
+        }
+    }
+}
 
 node {
     returnOk('All good', env.BUILD_URL)

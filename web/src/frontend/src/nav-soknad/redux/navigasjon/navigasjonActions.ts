@@ -18,6 +18,13 @@ export function navigerTilDittNav(): NavigasjonActions {
 	};
 }
 
+export function gaTilbake(stegnummer: number): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.GA_TILBAKE,
+		stegnummer
+	};
+}
+
 export function gaVidere(stegnummer: number): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.GA_VIDERE,
@@ -36,6 +43,12 @@ export function tilSteg(stegnummer: number): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.TIL_STEG,
 		stegnummer
+	};
+}
+
+export function tilStart(): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.TIL_START
 	};
 }
 

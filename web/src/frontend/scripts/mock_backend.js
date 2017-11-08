@@ -86,6 +86,11 @@ router.get("/soknader/:brukerBehandlingId", function(req, res) {
 	}
 });
 
+router.get("/soknader/:brukerBehandlingId/synligsoknadstruktur", function (req, res) {
+	console.log("Mock backend: get synligsoknadstruktur");
+	res.json(utils.lesMockDataFil("synligsoknadstruktur.json"));
+});
+
 router.get("/soknader/:brukerBehandlingId/fakta", function(req, res) {
 	console.log("Mock backend: get fakta");
 	res.json(fakta);
