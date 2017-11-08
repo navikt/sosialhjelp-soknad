@@ -49,7 +49,8 @@
 				"chromeOptions": {
 					"args": [
 						"headless",
-						"disable-gpu"
+						"disable-gpu",
+						"ignore-certificate-errors"
 					]
 				}
 			}

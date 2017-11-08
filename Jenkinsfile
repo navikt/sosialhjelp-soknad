@@ -148,8 +148,8 @@ if (isMasterBuild) {
         node("master") {
             try {
                 dir('web/src/frontend') {
-                    sh("chmod u+x ./selenium/chromedriver")
-                    sh("node nightwatch.js --env chrome --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
+                    sh("chmod u+x ./selenium/phantomjs")
+                    sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
                 }
             } catch (Exception e) {
                 notifyFailed('Integrasjonstester feilet', e)
