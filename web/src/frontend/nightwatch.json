@@ -45,7 +45,13 @@
 				"browserName": "chrome",
 				"javascriptEnabled": true,
 				"acceptSslCerts": true,
-				"keepAlive": false
+				"keepAlive": false,
+				"chromeOptions": {
+					"args": [
+						"headless",
+						"disable-gpu"
+					]
+				}
 			}
 		},
 		"phantomjs": {

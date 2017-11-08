@@ -1,6 +1,6 @@
 "use strict";
 
-var hovedside, soknadsskjema, timeout, innloggingsside;
+var hovedside, soknadsskjema, timeout, innloggingsside, browserInit;
 
 const loginUtils = require('../login');
 
@@ -18,7 +18,7 @@ const loginUtils = require('../login');
 module.exports = {
 	before: (browser) => {
         timeout = browser.globals.test_settings.timeout;
-        const browserInit = browser.init();
+        browserInit = browser.init();
         hovedside = browserInit.page.hovedsidepage();
 		loginUtils.login(browser, hovedside);
 		soknadsskjema = hovedside.section.soknadsskjema;
@@ -29,11 +29,26 @@ module.exports = {
         browser.end();
     },
 	"førstesiden skal ha en knapp for å starte søknad": () => {
-		hovedside.expect.element('@hovedknapp').to.be.present.after(timeout * 2);
-		hovedside.click('@hovedknapp');
+		hovedside.expect.element('@logo').to.be.present.after(timeout);
+		hovedside.expect.element('@knapp').to.be.present.after(timeout);
+		hovedside.click('@knapp');
+		// PhantomJS finner ikke altid knappen //
+		browserInit.useCss().isVisible('.knapp', (result) => {
+			if(result.status >= 0) {
+				hovedside.click('@hovedknapp');
+			}
+		});
 	},
+	// "neste side skal også ha en knapp for å starte søknad": () => {
+	//
+	// 	hovedside.expect.element('@knapp').to.be.present.after(timeout);
+	// 	hovedside.click('@knapp');
+	// },
 	"hovedside skal ha minst ett skjemaelement": () => {
-		hovedside.expect.element('@input').to.be.present.after(timeout);
+		hovedside.expect.element('@logo').to.be.present.after(timeout);
+		hovedside.expect.element('@hovedknapp').to.not.be.present.after(timeout);
+		hovedside.expect.element('.skjemaelement__input').to.be.present.after(timeout);
+		// hovedside.expect.element('@input').to.be.present.after(timeout);
 	},
 	"hovedside skal ha app tittel": () => {
 		hovedside.expect.element('@appTitle').to.be.present.after(timeout);
