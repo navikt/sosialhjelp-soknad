@@ -30,7 +30,7 @@ class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 					type="standard"
 					htmlType="button"
 					onClick={gaTilbake}
-					disabled={this.props.gaViderePending}
+					disabled={this.props.gaViderePending || !this.props.gaTilbake}
 				>
 					{getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
 				</Knapp>
