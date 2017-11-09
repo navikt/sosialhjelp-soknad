@@ -27,13 +27,8 @@ class App extends React.Component<InjectedIntlProps, {}> {
 						path={`/kvittering/:brukerBehandlingId`}
 						component={Kvittering}
 					/>
-					<Route
-						path={`/serverfeil`}
-						component={ ServerFeil }
-					/>
-					<Route
-						component={ SideIkkeFunnet }
-					/>
+					<Route path={`/serverfeil`} component={ServerFeil} />
+					<Route component={SideIkkeFunnet} />
 				</Switch>
 				<TimeoutBox
 					sessionDurationInMinutes={30}

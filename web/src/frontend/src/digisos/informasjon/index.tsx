@@ -13,18 +13,21 @@ import Knapp from "nav-frontend-knapper";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import Infoblokk from "../../nav-soknad/components/infoblokk";
+import { startSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
+import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
+import { Horten } from "../data/kommuner";
 
 interface StateProps {
 	harTilgang: boolean;
+	startSoknadPending: boolean;
 }
 
-type Props = StateProps & InjectedIntlProps & RouterProps;
+type Props = StateProps & InjectedIntlProps & RouterProps & DispatchProps;
 
 class Informasjon extends React.Component<Props, {}> {
 	render() {
-		const { intl, history, harTilgang } = this.props;
+		const { intl, dispatch, harTilgang, startSoknadPending } = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
-		const handleGaVidere = () => history.push("/bosted");
 		return (
 			<div>
 				<DocumentTitle title={title} />
@@ -51,7 +54,12 @@ class Informasjon extends React.Component<Props, {}> {
 								</p>
 							</Infoblokk>
 						</div>
-						<Knapp type="hoved" onClick={handleGaVidere}>
+						<Knapp
+							type="hoved"
+							spinner={startSoknadPending}
+							disabled={startSoknadPending}
+							onClick={() => dispatch(startSoknad(Horten.id))}
+						>
 							{getIntlTextOrKey(intl, "skjema.knapper.start")}
 						</Knapp>
 					</div>
@@ -73,5 +81,6 @@ class Informasjon extends React.Component<Props, {}> {
 }
 
 export default connect((state: State) => ({
-	harTilgang: state.tilgang.harTilgang
+	harTilgang: state.tilgang.harTilgang,
+	startSoknadPending: state.soknad.startSoknadPending
 }))(injectIntl(Informasjon));

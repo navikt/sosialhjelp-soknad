@@ -13,6 +13,7 @@ import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { hentKvittering } from "../../nav-soknad/redux/soknad/soknadActions";
 import { REST_STATUS, Kvittering } from "../../nav-soknad/types";
 import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
+import VeienVidere from "./VeienVidere";
 
 interface InjectedRouterProps {
 	location: Location;
@@ -45,21 +46,24 @@ class KvitteringView extends React.Component<
 			<LoadContainer restStatus={restStatus}>
 				<AppTittel />
 				<div className="kvittering skjema-content">
-					<Panel>
-						<Icon kind="stegindikator__hake" className="kvittering__ikon" />
-						<Undertittel className="kvittering__tittel">
-							{getIntlTextOrKey(intl, "kvittering.undertittel")}
-						</Undertittel>
-						{kvittering ? (
-							<div className="kvittering__tekst">
-								<p>
-									{getIntlTextOrKey(intl, "kvittering.tekst.pre")} {" "}
-									<strong>{kvittering.navenhet}</strong>
-									{getIntlTextOrKey(intl, "kvittering.tekst.post")}
-								</p>
-							</div>
-						) : null}
-					</Panel>
+					<div className="blokk-xl">
+						<Panel>
+							<Icon kind="stegindikator__hake" className="kvittering__ikon" />
+							<Undertittel className="kvittering__tittel">
+								{getIntlTextOrKey(intl, "kvittering.undertittel")}
+							</Undertittel>
+							{kvittering ? (
+								<div className="kvittering__tekst">
+									<p>
+										{getIntlTextOrKey(intl, "kvittering.tekst.pre")} {" "}
+										<strong>{kvittering.navenhet}</strong>
+										{getIntlTextOrKey(intl, "kvittering.tekst.post")}
+									</p>
+								</div>
+							) : null}
+						</Panel>
+					</div>
+					<VeienVidere />
 				</div>
 			</LoadContainer>
 		);

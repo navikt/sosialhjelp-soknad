@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery, select } from "redux-saga/effects";
 import {
 	fetchPost,
 	fetchToJson,
@@ -23,10 +23,12 @@ import {
 import {
 	tilSteg,
 	navigerTilDittNav,
-	navigerTilKvittering
+	navigerTilKvittering,
+	navigerTilServerfeil
 } from "../navigasjon/navigasjonActions";
-import { lagreFaktum, setFakta } from "../fakta/faktaActions";
-import { Soknad } from "../../types";
+import { lagreFaktum, setFakta, resetFakta } from "../fakta/faktaActions";
+import { Soknad, Faktum, Infofaktum } from "../../types";
+import { SoknadAppState } from "../reduxTypes";
 
 import {
 	opprettSoknadOk,
@@ -38,7 +40,9 @@ import {
 	hentKvitteringOk,
 	hentKvitteringFeilet,
 	sendSoknadOk,
-	sendSoknadFeilet
+	sendSoknadFeilet,
+	resetSoknad,
+	startSoknadOk
 } from "./soknadActions";
 
 export const SKJEMAID = "NAV 35-18.01";
@@ -78,36 +82,35 @@ function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
 }
 
 function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
-	const id = yield call(opprettSoknadSaga);
-	const hentAction = { brukerBehandlingId: id } as HentSoknadAction;
-	const soknad = yield call(hentSoknadSaga, hentAction);
-	yield put(
-		lagreFaktum(
-			oppdaterFaktumMedVerdier(
-				finnFaktum("personalia.kommune", soknad.fakta),
-				action.kommune
-			)
-		)
-	);
-	if (action.bydel) {
+	try {
+		yield put(resetSoknad());
+		yield put(resetFakta());
+		const id = yield call(opprettSoknadSaga);
+		const hentAction = { brukerBehandlingId: id } as HentSoknadAction;
+		const soknad = yield call(hentSoknadSaga, hentAction);
 		yield put(
 			lagreFaktum(
 				oppdaterFaktumMedVerdier(
-					finnFaktum("personalia.bydel", soknad.fakta),
-					action.bydel
+					finnFaktum("personalia.kommune", soknad.fakta),
+					action.kommune
 				)
 			)
 		);
+		if (action.bydel) {
+			yield put(
+				lagreFaktum(
+					oppdaterFaktumMedVerdier(
+						finnFaktum("personalia.bydel", soknad.fakta),
+						action.bydel
+					)
+				)
+			);
+		}
+		yield put(startSoknadOk());
+		yield put(tilSteg(1));
+	} catch (reason) {
+		yield put(navigerTilServerfeil());
 	}
-	yield put(
-		lagreFaktum(
-			oppdaterFaktumMedProperties(
-				finnFaktum("informasjon.tekster", soknad.fakta),
-				action.info
-			)
-		)
-	);
-	yield put(tilSteg(1));
 }
 
 function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
@@ -122,6 +125,20 @@ function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
 
 function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
 	try {
+		const infofaktum: Infofaktum = yield select(
+			(state: SoknadAppState) => state.soknad.infofaktum
+		);
+		const fakta: Faktum[] = yield select(
+			(state: SoknadAppState) => state.fakta.data
+		);
+		yield put(
+			lagreFaktum(
+				oppdaterFaktumMedProperties(
+					finnFaktum(infofaktum.faktumKey, fakta),
+					infofaktum.properties
+				)
+			)
+		);
 		yield call(
 			fetchPost,
 			`soknader/${action.brukerBehandlingId}/actions/send`,

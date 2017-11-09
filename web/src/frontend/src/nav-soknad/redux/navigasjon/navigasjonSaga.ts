@@ -13,9 +13,13 @@ import {
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
-import { tilStart, tilSteg } from "./navigasjonActions";
+import { tilSteg, tilStart } from "./navigasjonActions";
 import { SoknadAppState } from "../reduxTypes";
-import { selectBrukerBehandlingId, selectProgresjonFaktum, selectSynligFaktaData } from "../selectors";
+import {
+	selectBrukerBehandlingId,
+	selectProgresjonFaktum,
+	selectSynligFaktaData
+} from "../selectors";
 import { hentSynligeFakta } from "../../../digisos/redux/synligefakta/synligeFaktaActions";
 import { SynligeFaktaActionTypeKeys } from "../../../digisos/redux/synligefakta/synligeFaktaTypes";
 
@@ -66,7 +70,10 @@ function* skalHoppeOverNesteStegSaga(stegnummer: number): SagaIterator {
 }
 
 function* gaVidereSaga(action: GaVidere): SagaIterator {
-	const skalHoppeOver = yield call(skalHoppeOverNesteStegSaga, action.stegnummer);
+	const skalHoppeOver = yield call(
+		skalHoppeOverNesteStegSaga,
+		action.stegnummer
+	);
 	const progresjonFaktum = yield select(selectProgresjonFaktum);
 	const progresjonFaktumVerdi = parseInt(progresjonFaktum.value || 1, 10);
 	if (progresjonFaktumVerdi === action.stegnummer) {
@@ -86,7 +93,10 @@ function* gaTilbakeSaga(action: GaTilbake): SagaIterator {
 	if (action.stegnummer === 1) {
 		yield put(tilStart());
 	} else {
-		const skalHoppeOver = yield call(skalHoppeOverNesteStegSaga, action.stegnummer);
+		const skalHoppeOver = yield call(
+			skalHoppeOverNesteStegSaga,
+			action.stegnummer
+		);
 		yield put(tilSteg(action.stegnummer - (skalHoppeOver ? 2 : 1)));
 	}
 }
@@ -131,7 +141,7 @@ export {
 	tilFinnDittNavKontorSaga,
 	tilKvittering,
 	tilServerfeilSaga,
-	tilStegSaga,
+	tilStegSaga
 };
 
 export default navigasjonSaga;

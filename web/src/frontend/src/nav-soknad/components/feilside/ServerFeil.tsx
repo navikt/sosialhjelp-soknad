@@ -11,30 +11,36 @@ interface OwnProps {
 	onClick: () => NavigasjonActions;
 }
 
-const ServerFeil: React.StatelessComponent<InjectedIntlProps & OwnProps> = ({ intl, onClick}) => {
+const ServerFeil: React.StatelessComponent<InjectedIntlProps & OwnProps> = ({
+	intl,
+	onClick
+}) => {
 	return (
 		<Feilside
 			visKnapp={true}
-			onClick={ onClick }
-			knappTekst={ intl.formatMessage({id: "feilside.serverfeil.knapp"})}
+			onClick={onClick}
+			knappTekst={intl.formatMessage({ id: "feilside.serverfeil.knapp" })}
 		>
 			<div className="blokk-m">
-				<p className="blokk-s">
-					{ intl.formatMessage({ id: "feilside.serverfeil.feilmelding" })}
+				<p className="blokk-m">
+					{intl.formatMessage({ id: "feilside.serverfeil.feilmelding" })}
 				</p>
 				<Undertittel key="feilside.serverfeil.nodsituasjon.tittel">
 					{getIntlTextOrKey(intl, "feilside.serverfeil.nodsituasjon.tittel")}
 				</Undertittel>
 				<p className="blokk-s">
-					<FormattedMessage id="feilside.serverfeil.nodsituasjon.tekst"/>
+					<FormattedMessage id="feilside.serverfeil.nodsituasjon.tekst" />
 				</p>
 			</div>
 		</Feilside>
 	);
 };
 
-export default connect(() => ({}), dispatch => {
-	return {
-		onClick: () => dispatch(navigerTilFinnDittNavKontor())
-	};
-})(injectIntl(ServerFeil));
+export default connect(
+	() => ({}),
+	dispatch => {
+		return {
+			onClick: () => dispatch(navigerTilFinnDittNavKontor())
+		};
+	}
+)(injectIntl(ServerFeil));

@@ -1,21 +1,18 @@
 import { InjectedIntl } from "react-intl";
-import {
-	SoknadActionTypeKeys,
-	SoknadActionTypes,
-	SoknadInfoTekster
-} from "./soknadActionTypes";
-import { Soknad, Kvittering } from "../../types";
+import { SoknadActionTypeKeys, SoknadActionTypes } from "./soknadActionTypes";
+import { Soknad, Kvittering, Infofaktum } from "../../types";
 
-export function startSoknad(
-	info: SoknadInfoTekster,
-	kommune: string,
-	bydel?: string
-) {
+export function startSoknad(kommune: string, bydel?: string) {
 	return {
 		type: SoknadActionTypeKeys.START_SOKNAD,
 		kommune,
-		bydel,
-		info
+		bydel
+	};
+}
+
+export function startSoknadOk() {
+	return {
+		type: SoknadActionTypeKeys.START_SOKNAD_OK
 	};
 }
 
@@ -143,5 +140,12 @@ export function hentKvitteringFeilet(feilmelding: string): SoknadActionTypes {
 	return {
 		type: SoknadActionTypeKeys.HENT_KVITTERING_FEILET,
 		feilmelding
+	};
+}
+
+export function settInfofaktum(info: Infofaktum): SoknadActionTypes {
+	return {
+		type: SoknadActionTypeKeys.SETT_INFOFAKTUM,
+		info
 	};
 }
