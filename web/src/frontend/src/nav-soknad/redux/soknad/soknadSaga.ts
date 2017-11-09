@@ -23,7 +23,8 @@ import {
 import {
 	tilSteg,
 	navigerTilDittNav,
-	navigerTilKvittering
+	navigerTilKvittering,
+	navigerTilServerfeil
 } from "../navigasjon/navigasjonActions";
 import { lagreFaktum, setFakta, resetFakta } from "../fakta/faktaActions";
 import { Soknad, Faktum, Infofaktum } from "../../types";
@@ -81,31 +82,35 @@ function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
 }
 
 function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
-	yield put(resetSoknad());
-	yield put(resetFakta());
-	const id = yield call(opprettSoknadSaga);
-	const hentAction = { brukerBehandlingId: id } as HentSoknadAction;
-	const soknad = yield call(hentSoknadSaga, hentAction);
-	yield put(
-		lagreFaktum(
-			oppdaterFaktumMedVerdier(
-				finnFaktum("personalia.kommune", soknad.fakta),
-				action.kommune
-			)
-		)
-	);
-	if (action.bydel) {
+	try {
+		yield put(resetSoknad());
+		yield put(resetFakta());
+		const id = yield call(opprettSoknadSaga);
+		const hentAction = { brukerBehandlingId: id } as HentSoknadAction;
+		const soknad = yield call(hentSoknadSaga, hentAction);
 		yield put(
 			lagreFaktum(
 				oppdaterFaktumMedVerdier(
-					finnFaktum("personalia.bydel", soknad.fakta),
+					finnFaktum("personalia.kommune", soknad.fakta),
 					action.kommune
 				)
 			)
 		);
+		if (action.bydel) {
+			yield put(
+				lagreFaktum(
+					oppdaterFaktumMedVerdier(
+						finnFaktum("personalia.bydel", soknad.fakta),
+						action.kommune
+					)
+				)
+			);
+		}
+		yield put(startSoknadOk());
+		yield put(tilSteg(1));
+	} catch (reason) {
+		yield put(navigerTilServerfeil());
 	}
-	yield put(startSoknadOk());
-	yield put(tilSteg(1));
 }
 
 function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {

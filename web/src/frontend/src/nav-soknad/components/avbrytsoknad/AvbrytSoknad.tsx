@@ -2,7 +2,7 @@ import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
 import Icon from "nav-frontend-ikoner-assets";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
-import { Hovedknapp } from "nav-frontend-knapper";
+import { Hovedknapp, Knapp } from "nav-frontend-knapper";
 import { fortsettSoknad, slettSoknad } from "../../redux/soknad/soknadActions";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
@@ -56,12 +56,13 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 						<Hovedknapp onClick={() => this.onAvbryt()}>
 							<FormattedMessage id={"avbryt.ja"} />
 						</Hovedknapp>
-						<Hovedknapp
+						<Knapp
+							type="standard"
 							onClick={() => this.onFortsett()}
 							className="avbrytmodal__neiknapp"
 						>
 							<FormattedMessage id={"avbryt.nei"} />
-						</Hovedknapp>
+						</Knapp>
 					</div>
 				</div>
 			</NavFrontendModal>
