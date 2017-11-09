@@ -94,7 +94,7 @@ function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
 			lagreFaktum(
 				oppdaterFaktumMedVerdier(
 					finnFaktum("personalia.bydel", soknad.fakta),
-					action.kommune
+					action.bydel
 				)
 			)
 		);

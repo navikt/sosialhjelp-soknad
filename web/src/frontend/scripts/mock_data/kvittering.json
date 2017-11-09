@@ -1,69 +1,39 @@
 {
-	"behandlingsId": "1000B7iKQ",
-	"dato": "17. oktober 2017",
-	"innsendteVedlegg": [
-		{
-			"vedleggId": null,
-			"soknadId": null,
-			"faktumId": null,
-			"skjemaNummer": "NAV 14-05.07",
-			"skjemanummerTillegg": null,
-			"innsendingsvalg": "LastetOpp",
-			"opprinneligInnsendingsvalg": null,
-			"navn": null,
-			"storrelse": 0,
-			"antallSider": 0,
-			"opprettetDato": null,
-			"fillagerReferanse": "df433a57-5bc4-44e7-9d2c-9fe1e215b3bd",
-			"urls": {
-				"URLNEWNORWEGIAN":
-					"https://www.nav.no/skjema/Skjemaer/Alle+skjemaer+JSON/_attachment/381648?_ts=15d048e9b28&download=true",
-				"URLFRENCH": "",
-				"URLPOLISH": "",
-				"URLGERMAN": "",
-				"URLENGLISH":
-					"https://www.nav.no/skjema/Skjemaer/Alle+skjemaer+JSON/_attachment/316778?_ts=15d36928bc0&download=true",
-				"URLSAMISK": "",
-				"URLSPANISH": "",
-				"URL":
-					"https://www.nav.no/skjema/Skjemaer/Alle+skjemaer+JSON/_attachment/267695?_ts=15d048d4b38&download=true"
-			},
-			"tittel": "Søknad om engangsstønad ved fødsel",
-			"aarsak": null
-		}
-	],
-	"ikkeInnsendteVedlegg": [
-		{
-			"vedleggId": null,
-			"soknadId": null,
-			"faktumId": null,
-			"skjemaNummer": "P3",
-			"skjemanummerTillegg": null,
-			"innsendingsvalg": "SendesSenere",
-			"opprinneligInnsendingsvalg": null,
-			"navn": null,
-			"storrelse": 0,
-			"antallSider": 0,
-			"opprettetDato": null,
-			"fillagerReferanse": "192c35ad-394e-42df-ae04-896debbb5460",
-			"urls": {
-				"URLNEWNORWEGIAN": "",
-				"URLFRENCH": "",
-				"URLPOLISH": "",
-				"URLGERMAN": "",
-				"URLENGLISH": "",
-				"URLSAMISK": "",
-				"URLSPANISH": "",
-				"URL": ""
-			},
-			"tittel": "Bekreftelse på ventet fødselsdato",
-			"aarsak": null
-		}
-	],
-	"temakode": "FOR",
-	"tittel": "Søknad om økonimisk sosialhjelp",
-	"tittelCmsKey": "foreldresoknad.skjema.tittel",
-	"klokkeslett": "16.03",
-	"navkontor": "NAV Horten",
-	"orgnummer": 123123123
+  "behandlingsId": "1000B7K42",
+  "dato": "3. november 2017",
+  "innsendteVedlegg": [
+    {
+      "vedleggId": null,
+      "soknadId": null,
+      "faktumId": null,
+      "skjemaNummer": "NAV 35-18.01",
+      "skjemanummerTillegg": null,
+      "innsendingsvalg": "LastetOpp",
+      "opprinneligInnsendingsvalg": null,
+      "navn": null,
+      "storrelse": 0,
+      "antallSider": 0,
+      "opprettetDato": null,
+      "fillagerReferanse": "8ecfd250-b512-462b-9642-539e4a78481c",
+      "urls": {
+        "URLNEWNORWEGIAN": "",
+        "URLPOLISH": "",
+        "URLFRENCH": "",
+        "URLGERMAN": "",
+        "URLENGLISH": "",
+        "URLSAMISK": "",
+        "URLSPANISH": "",
+        "URL": "https://www.nav.no/skjema/Skjemaer/Alle+skjemaer+JSON/_attachment/399302?_ts=14a1546b8a0&download=true"
+      },
+      "tittel": "Søknad om økonomisk sosialhjelp",
+      "aarsak": null
+    }
+  ],
+  "ikkeInnsendteVedlegg": [],
+  "temakode": "KOM",
+  "tittel": "Søknad om økonomisk sosialhjelp",
+  "tittelCmsKey": "soknadsosialhjelp.skjema.tittel",
+  "navenhet": "NAV Horten",
+  "orgnummer": "123456789",
+  "klokkeslett": "12.11"
 }

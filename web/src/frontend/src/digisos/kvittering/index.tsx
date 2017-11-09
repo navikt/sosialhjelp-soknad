@@ -54,7 +54,7 @@ class KvitteringView extends React.Component<
 							<div className="kvittering__tekst">
 								<p>
 									{getIntlTextOrKey(intl, "kvittering.tekst.pre")} {" "}
-									<strong>{kvittering.navkontor}</strong>
+									<strong>{kvittering.navenhet}</strong>
 									{getIntlTextOrKey(intl, "kvittering.tekst.post")}
 								</p>
 							</div>
