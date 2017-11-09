@@ -184,6 +184,8 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 							}
 							gaVidere={() =>
 								this.handleGaVidere(aktivtStegConfig, brukerBehandlingId)}
+							gaTilbake={() =>
+								this.handleGaTilbake(aktivtStegConfig.stegnummer)}
 							avbryt={() => this.props.dispatch(avbrytSoknad())}
 						/>
 					</form>
