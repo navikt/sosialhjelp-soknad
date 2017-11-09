@@ -14,6 +14,10 @@
 	&__tekst {
 		padding: 0 @skjemaMarg @skjemaMarg @skjemaMarg;
 		text-align: left;
+		@media @mobile {
+			padding-left: @skjemaMarg/2;
+			padding-right: @skjemaMarg/2;
+		}
 	}
 }
 
@@ -33,5 +37,9 @@
 	}
 	&__innhold {
 		text-align: left;
+	}
+	@media @mobile {
+		padding-left: @skjemaMarg/2;
+		padding-right: @skjemaMarg/2;
 	}
 }
