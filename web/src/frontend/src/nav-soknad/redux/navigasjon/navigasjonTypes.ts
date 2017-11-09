@@ -29,7 +29,6 @@ export type NavigasjonActions =
 	| TilFinnDittNavKontor
 	| TilbakeEllerForsiden
 	| GaVidere
-	| GaTilbake
 	| TilBosted
 	| TilInformasjon
 	| TilDittNav
