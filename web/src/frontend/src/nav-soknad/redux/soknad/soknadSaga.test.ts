@@ -217,7 +217,7 @@ describe("soknadSaga", () => {
 				value: call(fetchKvittering, "soknader/1?sprak=nb_NO")
 			});
 		});
-		const kvittering = { navkontor: "horten", orgnummer: "123" };
+		const kvittering = { navenhet: "horten", orgnummer: "123" };
 		it("puts kvitteringOk", () => {
 			expect(saga.next(kvittering)).toEqual({
 				done: false,

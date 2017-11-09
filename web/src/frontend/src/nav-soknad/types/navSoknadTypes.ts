@@ -75,7 +75,7 @@ export interface Vedlegg {
 
 export interface Kvittering {
 	orgnummer: string;
-	navkontor: string;
+	navenhet: string;
 }
 
 export enum DelstegStatus {
