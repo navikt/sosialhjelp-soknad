@@ -44,7 +44,6 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 								disabled={true}
 								systemverdi={true}
 							/>
-							<br/>
 							<KontonummerFaktum
 								faktumKey="kontakt.kontonummer.bruker"
 								disabled={brukerHarIkkeKontonummer}
