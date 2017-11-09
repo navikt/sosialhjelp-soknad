@@ -38,7 +38,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 		</Innholdstittel>
 		<Panel className="panel--noPadding">
 			<div className="panelIllustrasjon">
-				<img src={illustration} width="100%" alt="" />
+				<img src={illustration} alt="" className="kvittering-illustration" />
 			</div>
 			<div className="panel-padding">
 				<div className="blokk-xl">
