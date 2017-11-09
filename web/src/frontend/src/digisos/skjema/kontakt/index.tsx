@@ -42,7 +42,7 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 							<KontonummerFaktum
 								faktumKey="kontakt.kontonummer.system"
 								disabled={true}
-								ignorert={false}
+								systemverdi={true}
 							/>
 							<br/>
 							<KontonummerFaktum
