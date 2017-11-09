@@ -43,6 +43,8 @@ export interface Props {
 	required?: boolean;
 	/** Ignorerer validering */
 	ignorert?: boolean;
+	/** Om verdien er hentet gjennom integrasjon og ikke skal kunne endres */
+	systemverdi?: boolean;
 }
 
 interface InjectedProps {
@@ -160,6 +162,9 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		registerFaktumValidering() {
+			if (this.props.systemverdi) {
+				return;
+			}
 			const valideringer = getValideringer(
 				this.props.required,
 				this.props.validerFunc
@@ -177,6 +182,9 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 		}
 
 		unregisterFaktumValidering() {
+			if (this.props.systemverdi) {
+				return;
+			}
 			this.props.dispatch(
 				unregisterFaktumValidering(
 					this.props.faktumKey,
