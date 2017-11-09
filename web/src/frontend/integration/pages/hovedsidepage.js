@@ -6,7 +6,9 @@ module.exports = {
 	    input: '.skjemaelement__input',
 	    appTitle: '.app-digisos__title',
 	    horten: '.skjemaelement__input option[value=horten]',
-		hovedknapp: '.knapp--hoved'
+		hovedknapp: '.knapp--hoved',
+	    knapp: '.knapp',
+	    logo: '.sitelogo'
     },
     sections: {
 	    innloggingsside: {

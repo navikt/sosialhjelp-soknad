@@ -1,96 +1,48 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { withRouter, RouterProps } from "react-router";
 import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import Knapp from "nav-frontend-knapper";
 import { Select } from "nav-frontend-skjema";
 
-import { FaktumComponentProps } from "../../nav-soknad/redux/fakta/faktaTypes";
 import Arrow from "../../nav-soknad/components/svg/Arrow";
-import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
-import { REST_STATUS } from "../../nav-soknad/types";
-
-import { State } from "../redux/reducers";
-import {
-	startSoknad,
-	resetSoknad
-} from "../../nav-soknad/redux/soknad/soknadActions";
 import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 
 interface StateProps {
-	soknadRestStatus?: string;
-	faktaRestStatus?: string;
-	brukerBehandlingId?: string;
 	kommuneId: string;
 	bydelId: string;
 }
 
-class Bosted extends React.Component<
-	FaktumComponentProps &
-		StateProps &
-		RouterProps &
-		DispatchProps &
-		InjectedIntlProps,
-	StateProps
-> {
+interface OwnProps {
+	onStartSoknad: (kommuneId: string, bydelId: string) => void;
+	startSoknadPending: boolean;
+}
+
+const getDefaultState = () => ({
+	kommuneId: "",
+	bydelId: ""
+});
+
+class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 	constructor(props: any) {
 		super(props);
-		this.state = {
-			kommuneId: "",
-			bydelId: ""
-		};
+		this.onSubmit = this.onSubmit.bind(this);
+		this.state = getDefaultState();
 	}
 
-	componentDidMount() {
-		this.props.dispatch(resetSoknad());
+	componentWillUnmount() {
+		this.state = getDefaultState();
 	}
 
-	componentDidUpdate() {
-		if (
-			this.props.faktaRestStatus === REST_STATUS.OK &&
-			this.props.soknadRestStatus === REST_STATUS.OK
-		) {
-			this.setState({
-				kommuneId: "",
-				bydelId: ""
-			});
-			this.gaaTilSkjema();
-		}
-	}
-
-	gaaTilSkjema() {
-		this.props.history.push(`/skjema/${this.props.brukerBehandlingId}/1`);
-	}
-
-	opprettSoknad(event: any) {
-		event.preventDefault();
-		this.props.dispatch(
-			startSoknad(
-				{
-					"1": getIntlTextOrKey(this.props.intl, "informasjon.start.tittel"),
-					"2": getIntlTextOrKey(this.props.intl, "informasjon.start.tekst"),
-					"3": getIntlTextOrKey(
-						this.props.intl,
-						"informasjon.nodsituasjon.undertittel"
-					),
-					"4": getIntlTextOrKey(
-						this.props.intl,
-						"informasjon.nodsituasjon.tekst"
-					)
-				},
-				this.state.kommuneId,
-				this.state.bydelId
-			)
-		);
+	onSubmit(evt: React.FormEvent<HTMLFormElement>) {
+		evt.preventDefault();
+		this.props.onStartSoknad(this.state.kommuneId, this.state.bydelId);
 	}
 
 	render() {
+		const { startSoknadPending } = this.props;
 		const { valgtKommune, valgtBydel, ferdig } = this.hentSkjemaVerdier();
-		const startSoknadPending =
-			this.props.soknadRestStatus === REST_STATUS.PENDING;
 		return (
-			<form onSubmit={e => this.opprettSoknad(e)}>
+			<form onSubmit={e => this.onSubmit(e)}>
 				<div>
 					<div className="blokk-m">
 						<Select
@@ -197,11 +149,4 @@ class Bosted extends React.Component<
 	}
 }
 
-export default connect((state: State, props: any) => {
-	return {
-		fakta: state.fakta.data,
-		soknadRestStatus: state.soknad.restStatus,
-		faktaRestStatus: state.fakta.restStatus,
-		brukerBehandlingId: state.soknad.data.brukerBehandlingId
-	};
-})(withRouter(injectIntl(Bosted)));
+export default injectIntl(Bosted);

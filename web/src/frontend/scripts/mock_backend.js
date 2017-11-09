@@ -41,6 +41,12 @@ router.get("/informasjon/miljovariabler", function(req, res) {
 	res.json(miljovariabler);
 });
 
+// Ekstrainformasjon - økonomiske opplysninger
+const synligsoknadstruktur = utils.lesMockDataFil("synligsoknadstruktur.json");
+router.get("/soknader/1000B7FGM/synligsoknadstruktur", function(req, res) {
+	res.json(synligsoknadstruktur);
+});
+
 const brukerBehandlingId = "1000B7FGM";
 const soknad = utils.lesMockDataFil("soknad.json");
 
@@ -80,7 +86,10 @@ router.get("/soknader/:brukerBehandlingId", function(req, res) {
 	}
 });
 
-router.get("/soknader/:brukerBehandlingId/synligsoknadstruktur", function (req, res) {
+router.get("/soknader/:brukerBehandlingId/synligsoknadstruktur", function(
+	req,
+	res
+) {
 	console.log("Mock backend: get synligsoknadstruktur");
 	res.json(utils.lesMockDataFil("synligsoknadstruktur.json"));
 });
@@ -150,7 +159,7 @@ router.post("/fakta", function(req, res) {
 
 router.post("/actions/logg", function(req, res) {
 	console.log("Klient logget feil:");
-	if( typeof req.body === "string") {
+	if (typeof req.body === "string") {
 		console.log(req);
 	} else {
 		req.body.userAgent = req.body.userAgent.substr(0, 10) + "...";

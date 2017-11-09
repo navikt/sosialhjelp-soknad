@@ -48,6 +48,21 @@
 				"keepAlive": false
 			}
 		},
+		"headlesschrome": {
+			"desiredCapabilities": {
+				"browserName": "chrome",
+				"javascriptEnabled": true,
+				"acceptSslCerts": true,
+				"keepAlive": false,
+				"chromeOptions": {
+					"args": [
+						"headless",
+						"disable-gpu",
+						"ignore-certificate-errors"
+					]
+				}
+			}
+		},
 		"phantomjs": {
 			"desiredCapabilities": {
 				"browserName": "phantomjs",

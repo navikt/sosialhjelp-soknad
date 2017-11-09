@@ -8,7 +8,14 @@ const FdatoFaktum: React.StatelessComponent<InheritedProps> = (
 	const validerFunc = [fdato].concat(
 		props.validerFunc ? props.validerFunc : []
 	);
-	return <InputFaktum {...props} pattern={"\\d*"} validerFunc={validerFunc} />;
+	return (
+		<InputFaktum
+			{...props}
+			pattern={"\\d*"}
+			validerFunc={validerFunc}
+			maxLength={8}
+		/>
+	);
 };
 
 export default FdatoFaktum;
