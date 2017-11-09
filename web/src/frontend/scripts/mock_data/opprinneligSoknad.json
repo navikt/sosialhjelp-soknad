@@ -260,6 +260,28 @@
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
 		},
+
+		{
+			"faktumId": 3101,
+			"soknadId": 4,
+			"parrentFaktum": null,
+			"key": "kontakt.kontonummer.system",
+			"value": "98769898765",
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "SYSTEM"
+		},
+		{
+			"faktumId": 3102,
+			"soknadId": 4,
+			"parrentFaktum": null,
+			"key": "kontakt.kontonummer.bruker",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
+		},
+
 		{
 			"faktumId": 311,
 			"soknadId": 4,

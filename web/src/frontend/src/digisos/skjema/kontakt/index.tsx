@@ -26,31 +26,34 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 		);
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
-				<SporsmalFaktum faktumKey="kontakt.kontonummer">
+
 					{!harKontonummer && (
+						<SporsmalFaktum faktumKey="kontakt.kontonummer">
 						<KontonummerFaktum
 							faktumKey="kontakt.kontonummer"
 							disabled={brukerHarIkkeKontonummer}
 							ignorert={brukerHarIkkeKontonummer}
 						/>
+							<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
+						</SporsmalFaktum>
 					)}
 					{harKontonummer && (
-						<span>
-						<KontonummerFaktum
-							faktumKey="kontakt.kontonummer.system"
-							disabled={true}
-							ignorert={false}
-						/>
-						<br/>
-						<KontonummerFaktum
-							faktumKey="kontakt.kontonummer.bruker"
-							disabled={brukerHarIkkeKontonummer}
-							ignorert={brukerHarIkkeKontonummer}
-						/>
-						</span>
+						<SporsmalFaktum faktumKey="kontakt.kontonummer.bruker">
+							<KontonummerFaktum
+								faktumKey="kontakt.kontonummer.system"
+								disabled={true}
+								ignorert={false}
+							/>
+							<br/>
+							<KontonummerFaktum
+								faktumKey="kontakt.kontonummer.bruker"
+								disabled={brukerHarIkkeKontonummer}
+								ignorert={brukerHarIkkeKontonummer}
+							/>
+							<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
+						</SporsmalFaktum>
 					)}
-					<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
-				</SporsmalFaktum>
+
 				<SporsmalFaktum faktumKey="kontakt.telefon">
 					<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8} />
 				</SporsmalFaktum>
