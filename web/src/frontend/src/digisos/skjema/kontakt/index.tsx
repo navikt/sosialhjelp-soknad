@@ -26,39 +26,37 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 		);
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
-
-					{!harKontonummer && (
-						<SporsmalFaktum faktumKey="kontakt.kontonummer">
+				{!harKontonummer && (
+					<SporsmalFaktum faktumKey="kontakt.kontonummer">
 						<KontonummerFaktum
 							faktumKey="kontakt.kontonummer"
 							disabled={brukerHarIkkeKontonummer}
 							ignorert={brukerHarIkkeKontonummer}
 						/>
-							<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
-						</SporsmalFaktum>
-					)}
-					{harKontonummer && (
-						<SporsmalFaktum faktumKey="kontakt.kontonummer.bruker">
-							<KontonummerFaktum
-								faktumKey="kontakt.kontonummer.system"
-								disabled={true}
-								systemverdi={true}
-							/>
-							<KontonummerFaktum
-								faktumKey="kontakt.kontonummer.bruker"
-								disabled={brukerHarIkkeKontonummer}
-								ignorert={brukerHarIkkeKontonummer}
-							/>
-							<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
-						</SporsmalFaktum>
-					)}
-
+						<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke"/>
+					</SporsmalFaktum>
+				)}
+				{harKontonummer && (
+					<SporsmalFaktum faktumKey="kontakt.kontonummer.bruker">
+						<KontonummerFaktum
+							faktumKey="kontakt.kontonummer.system"
+							disabled={true}
+							systemverdi={true}
+						/>
+						<KontonummerFaktum
+							faktumKey="kontakt.kontonummer.bruker"
+							disabled={brukerHarIkkeKontonummer}
+							ignorert={brukerHarIkkeKontonummer}
+						/>
+						<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke"/>
+					</SporsmalFaktum>
+				)}
 				<SporsmalFaktum faktumKey="kontakt.telefon">
-					<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8} />
+					<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8}/>
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey={statsborger.faktum}>
-					<RadioFaktum faktumKey={statsborger.faktum} value="true" />
-					<RadioFaktum faktumKey={statsborger.faktum} value="false" />
+					<RadioFaktum faktumKey={statsborger.faktum} value="true"/>
+					<RadioFaktum faktumKey={statsborger.faktum} value="false"/>
 				</SporsmalFaktum>
 			</DigisosSkjemaSteg>
 		);
