@@ -7,21 +7,39 @@ import { REST_STATUS } from "../../nav-soknad/types";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import { getIntlTextOrKey, scrollToTop } from "../../nav-soknad/utils";
 import ServerFeil from "../../nav-soknad/components/feilside/ServerFeil";
+import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
+import {
+	resetSoknad,
+	startSoknad
+} from "../../nav-soknad/redux/soknad/soknadActions";
 
 import Bosted from "./Bosted";
 
 const DocumentTitle = require("react-document-title");
+
 interface StateProps {
 	soknadRestStatus: string;
 	faktaRestStatus: string;
+	startSoknadPending: boolean;
 }
 
-type Props = StateProps & InjectedIntlProps;
+type Props = StateProps & InjectedIntlProps & DispatchProps;
 
 class Start extends React.Component<Props, {}> {
+	constructor(props: Props) {
+		super(props);
+		this.startSoknad = this.startSoknad.bind(this);
+	}
+
 	componentDidMount() {
 		scrollToTop();
+		this.props.dispatch(resetSoknad());
 	}
+
+	startSoknad(kommuneId: string, bydelId?: string) {
+		this.props.dispatch(startSoknad(kommuneId, bydelId));
+	}
+
 	render() {
 		const { intl, soknadRestStatus, faktaRestStatus } = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
@@ -29,9 +47,7 @@ class Start extends React.Component<Props, {}> {
 			soknadRestStatus === REST_STATUS.FEILET ||
 			faktaRestStatus === REST_STATUS.FEILET
 		) {
-			return (
-				<ServerFeil/>
-			);
+			return <ServerFeil />;
 		}
 		return (
 			<DocumentTitle title={title}>
@@ -41,7 +57,10 @@ class Start extends React.Component<Props, {}> {
 						<p className="blokk-l">
 							{getIntlTextOrKey(intl, "personalia.informasjon")}
 						</p>
-						<Bosted />
+						<Bosted
+							onStartSoknad={this.startSoknad}
+							startSoknadPending={this.props.startSoknadPending}
+						/>
 					</div>
 				</span>
 			</DocumentTitle>
@@ -52,6 +71,7 @@ class Start extends React.Component<Props, {}> {
 export default connect((state: State, props: any) => {
 	return {
 		soknadRestStatus: state.soknad.restStatus,
+		startSoknadPending: state.soknad.startSoknadPending,
 		faktaRestStatus: state.fakta.restStatus
 	};
 })(injectIntl(Start));

@@ -131,3 +131,8 @@ export interface PersonaliaProperties {
 	gjeldendeAdresseGyldigTil: null | string;
 	gjeldendeAdresseGyldigFra: null | string;
 }
+
+export interface Infofaktum {
+	faktumKey: string;
+	properties?: object;
+}

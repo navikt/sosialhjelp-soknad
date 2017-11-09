@@ -1,184 +1,182 @@
 [
-  {
-    "id": "opplysninger.arbeid",
-    "type": "gruppe",
-    "panel": "opplysningerBolk",
-    "dependOn": null,
-    "dependOnProperty": null,
-    "dependOnValues": null,
-    "useExpression": false,
-    "kunUtvidet": false,
-    "optional": false,
-    "flereTillatt": null,
-    "erSystemFaktum": null,
-    "properties": null,
-    "constraints": null,
-    "tekster": null,
-    "configuration": {
-      "configuration": []
-    }
-  },
-  {
-    "id": "opplysninger.familiesituasjon",
-    "type": "gruppe",
-    "panel": "opplysningerBolk",
-    "dependOn": null,
-    "dependOnProperty": null,
-    "dependOnValues": null,
-    "useExpression": false,
-    "kunUtvidet": false,
-    "optional": false,
-    "flereTillatt": null,
-    "erSystemFaktum": null,
-    "properties": null,
-    "constraints": null,
-    "tekster": null,
-    "configuration": {
-      "configuration": []
-    }
-  },
-  {
-    "id": "opplysninger.inntekt",
-    "type": "gruppe",
-    "panel": "opplysningerBolk",
-    "dependOn": null,
-    "dependOnProperty": null,
-    "dependOnValues": null,
-    "useExpression": false,
-    "kunUtvidet": false,
-    "optional": false,
-    "flereTillatt": null,
-    "erSystemFaktum": null,
-    "properties": null,
-    "constraints": null,
-    "tekster": null,
-    "configuration": {
-      "configuration": []
-    }
-  },
-  {
-    "id": "opplysninger.utgifter",
-    "type": "gruppe",
-    "panel": "opplysningerBolk",
-    "dependOn": null,
-    "dependOnProperty": null,
-    "dependOnValues": null,
-    "useExpression": false,
-    "kunUtvidet": false,
-    "optional": false,
-    "flereTillatt": null,
-    "erSystemFaktum": null,
-    "properties": null,
-    "constraints": null,
-    "tekster": null,
-    "configuration": {
-      "configuration": []
-    }
-  },
-  {
-    "id": "opplysninger.utgifter.barn.fritidsaktivitet",
-    "type": "composite",
-    "panel": null,
-    "dependOn": {
-      "id": "opplysninger.utgifter",
-      "type": "gruppe",
-      "panel": "opplysningerBolk",
-      "dependOn": null,
-      "dependOnProperty": null,
-      "dependOnValues": null,
-      "useExpression": false,
-      "kunUtvidet": false,
-      "optional": false,
-      "flereTillatt": null,
-      "erSystemFaktum": null,
-      "properties": null,
-      "constraints": null,
-      "tekster": null,
-      "configuration": {
-        "configuration": []
-      }
-    },
-    "dependOnProperty": null,
-    "dependOnValues": null,
-    "useExpression": false,
-    "kunUtvidet": false,
-    "optional": true,
-    "flereTillatt": "true",
-    "erSystemFaktum": null,
-    "properties": [
-      {
-        "id": "sisteregning",
-        "type": "textbox",
-        "dependOn": null,
-        "constraints": null,
-        "configuration": null
-      }
-    ],
-    "constraints": [
-      {
-        "faktumStruktur": {
-          "id": "utgifter.barn.true.utgifter.fritidsaktivitet",
-          "type": "bool",
-          "panel": null,
-          "dependOn": {
-            "id": "utgifter.barn.true.utgifter",
-            "type": "checkboxGroup",
-            "panel": null,
-            "dependOn": {
-              "id": "utgifter.barn",
-              "type": "bool",
-              "panel": "utgifterBolk",
-              "dependOn": null,
-              "dependOnProperty": null,
-              "dependOnValues": null,
-              "useExpression": false,
-              "kunUtvidet": false,
-              "optional": true,
-              "flereTillatt": null,
-              "erSystemFaktum": null,
-              "properties": null,
-              "constraints": null,
-              "tekster": null,
-              "configuration": {
-                "configuration": []
-              }
-            },
-            "dependOnProperty": null,
-            "dependOnValues": [
-              "true"
-            ],
-            "useExpression": false,
-            "kunUtvidet": false,
-            "optional": true,
-            "flereTillatt": null,
-            "erSystemFaktum": null,
-            "properties": null,
-            "constraints": null,
-            "tekster": null,
-            "configuration": {
-              "configuration": []
-            }
-          },
-          "dependOnProperty": null,
-          "dependOnValues": null,
-          "useExpression": false,
-          "kunUtvidet": false,
-          "optional": true,
-          "flereTillatt": null,
-          "erSystemFaktum": null,
-          "properties": null,
-          "constraints": null,
-          "tekster": null,
-          "configuration": {
-            "configuration": []
-          }
-        },
-        "expression": "value == 'true'"
-      }
-    ],
-    "tekster": null,
-    "configuration": {
-      "configuration": []
-    }
-  }
+	{
+		"id": "opplysninger.arbeid",
+		"type": "gruppe",
+		"panel": "opplysningerBolk",
+		"dependOn": null,
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": false,
+		"flereTillatt": null,
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.familiesituasjon",
+		"type": "gruppe",
+		"panel": "opplysningerBolk",
+		"dependOn": null,
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": false,
+		"flereTillatt": null,
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.inntekt",
+		"type": "gruppe",
+		"panel": "opplysningerBolk",
+		"dependOn": null,
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": false,
+		"flereTillatt": null,
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.utgifter",
+		"type": "gruppe",
+		"panel": "opplysningerBolk",
+		"dependOn": null,
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": false,
+		"flereTillatt": null,
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.utgifter.barn.fritidsaktivitet",
+		"type": "composite",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.utgifter",
+			"type": "gruppe",
+			"panel": "opplysningerBolk",
+			"dependOn": null,
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": false,
+			"flereTillatt": null,
+			"erSystemFaktum": null,
+			"properties": null,
+			"constraints": null,
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": [
+			{
+				"id": "sisteregning",
+				"type": "textbox",
+				"dependOn": null,
+				"constraints": null,
+				"configuration": null
+			}
+		],
+		"constraints": [
+			{
+				"faktumStruktur": {
+					"id": "utgifter.barn.true.utgifter.fritidsaktivitet",
+					"type": "bool",
+					"panel": null,
+					"dependOn": {
+						"id": "utgifter.barn.true.utgifter",
+						"type": "checkboxGroup",
+						"panel": null,
+						"dependOn": {
+							"id": "utgifter.barn",
+							"type": "bool",
+							"panel": "utgifterBolk",
+							"dependOn": null,
+							"dependOnProperty": null,
+							"dependOnValues": null,
+							"useExpression": false,
+							"kunUtvidet": false,
+							"optional": true,
+							"flereTillatt": null,
+							"erSystemFaktum": null,
+							"properties": null,
+							"constraints": null,
+							"tekster": null,
+							"configuration": {
+								"configuration": []
+							}
+						},
+						"dependOnProperty": null,
+						"dependOnValues": ["true"],
+						"useExpression": false,
+						"kunUtvidet": false,
+						"optional": true,
+						"flereTillatt": null,
+						"erSystemFaktum": null,
+						"properties": null,
+						"constraints": null,
+						"tekster": null,
+						"configuration": {
+							"configuration": []
+						}
+					},
+					"dependOnProperty": null,
+					"dependOnValues": null,
+					"useExpression": false,
+					"kunUtvidet": false,
+					"optional": true,
+					"flereTillatt": null,
+					"erSystemFaktum": null,
+					"properties": null,
+					"constraints": null,
+					"tekster": null,
+					"configuration": {
+						"configuration": []
+					}
+				},
+				"expression": "value == 'true'"
+			}
+		],
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	}
 ]

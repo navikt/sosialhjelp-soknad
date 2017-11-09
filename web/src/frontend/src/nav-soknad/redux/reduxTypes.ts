@@ -2,7 +2,7 @@ import { ValideringState } from "./valideringReducer";
 import { FaktumState } from "./fakta/faktaReducer";
 import { MiljovariablerApiType } from "./miljovariabler/miljovariablerTypes";
 import { OppsummeringState } from "./oppsummering/oppsummeringReducer";
-import { Soknad, Kvittering, REST_STATUS } from "../types";
+import { Soknad, Kvittering, Infofaktum, REST_STATUS } from "../types";
 import { ApplikasjonsfeilState } from "./applikasjonsfeil/applikasjonsfeilReducer";
 import { TilgangState } from "./tilgang/tilgangTypes";
 import { LedetekstState } from "./ledetekster/ledeteksterTypes";
@@ -36,7 +36,10 @@ export interface SoknadAppState {
 export interface SoknadState {
 	restStatus: REST_STATUS;
 	data: Soknad;
+	/** Faktum som lagrer informasjon presentert på infosiden */
+	infofaktum?: Infofaktum;
 	kvittering?: Kvittering;
 	sendSoknadPending: boolean;
+	startSoknadPending: boolean;
 	avbrytDialogSynlig: boolean;
 }
