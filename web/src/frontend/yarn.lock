@@ -36,11 +36,7 @@
   version "20.0.8"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/jest/-/jest-20.0.8.tgz#7f8c97f73d20d3bf5448fbe33661a342002b5954"
 
-"@types/node@*":
-  version "8.0.45"
-  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/node/-/node-8.0.45.tgz#89fad82439d5624e1b5c6b42f0f5d85136dcdecc"
-
-"@types/node@8.0.31":
+"@types/node@*", "@types/node@8.0.31":
   version "8.0.31"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/node/-/node-8.0.31.tgz#d9af61093cf4bfc9f066ca34de0175012cfb0ce9"
 
@@ -101,9 +97,13 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.0.14":
+"@types/react@*":
   version "16.0.14"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react/-/react-16.0.14.tgz#c46d92be936820a93a14ffc84ad805e83f6535ef"
+
+"@types/react@^16.0.20":
+  version "16.0.20"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react/-/react-16.0.20.tgz#dc16feb9c0bdf50e439482c6fd3c43d5a1d9f3b1"
 
 "@types/redux-logger@^3.0.5":
   version "3.0.5"
@@ -156,17 +156,13 @@ acorn@^5.0.0, acorn@^5.1.1:
   version "5.1.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/acorn/-/acorn-5.1.2.tgz#911cb53e036807cf0fa778dc5d370fbd864246d7"
 
-address@1.0.1:
+address@1.0.1, address@^1.0.1:
   version "1.0.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/address/-/address-1.0.1.tgz#363f5d3f2be26d0655d8afd5a9562e4fc2194537"
 
 address@1.0.2:
   version "1.0.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/address/-/address-1.0.2.tgz#480081e82b587ba319459fef512f516fe03d58af"
-
-address@^1.0.1:
-  version "1.0.3"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/address/-/address-1.0.3.tgz#b5f50631f8d6cec8bd20c963963afb55e06cbce9"
 
 agent-base@2:
   version "2.1.1"
@@ -1736,16 +1732,9 @@ domutils@1.1:
   dependencies:
     domelementtype "1"
 
-domutils@1.5.1:
+domutils@1.5.1, domutils@^1.5.1:
   version "1.5.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/domutils/-/domutils-1.5.1.tgz#dcd8488a26f563d61079e48c9f7b7e32373682cf"
-  dependencies:
-    dom-serializer "0"
-    domelementtype "1"
-
-domutils@^1.5.1:
-  version "1.6.2"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/domutils/-/domutils-1.6.2.tgz#1958cc0b4c9426e9ed367fb1c8e854891b0fa3ff"
   dependencies:
     dom-serializer "0"
     domelementtype "1"
@@ -1895,9 +1884,9 @@ escodegen@1.x.x, escodegen@^1.6.1:
   optionalDependencies:
     source-map "~0.5.6"
 
-eslint-config-prettier@^2.6.0:
-  version "2.6.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/eslint-config-prettier/-/eslint-config-prettier-2.6.0.tgz#f21db0ebb438ad678fb98946097c4bb198befccc"
+eslint-config-prettier@^2.7.0:
+  version "2.7.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/eslint-config-prettier/-/eslint-config-prettier-2.7.0.tgz#7bbfef66ad783277836f4ea556e68b9bcc9da4d0"
   dependencies:
     get-stdin "^5.0.1"
 
@@ -2395,14 +2384,14 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
 
-fsevents@1.0.17:
+fsevents@1.0.17, fsevents@^1.0.0:
   version "1.0.17"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/fsevents/-/fsevents-1.0.17.tgz#8537f3f12272678765b4fd6528c0f1f66f8f4558"
   dependencies:
     nan "^2.3.0"
     node-pre-gyp "^0.6.29"
 
-fsevents@^1.0.0, fsevents@^1.1.1:
+fsevents@^1.1.1:
   version "1.1.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/fsevents/-/fsevents-1.1.2.tgz#3282b713fb3ad80ede0e9fcf4611b5aa6fc033f4"
   dependencies:
@@ -3873,6 +3862,10 @@ json-loader@^0.5.4:
   version "0.5.7"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/json-loader/-/json-loader-0.5.7.tgz#dca14a70235ff82f0ac9a3abeb60d337a365185d"
 
+json-parse-better-errors@^1.0.1:
+  version "1.0.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/json-parse-better-errors/-/json-parse-better-errors-1.0.1.tgz#50183cd1b2d25275de069e9e71b467ac9eab973a"
+
 json-schema-traverse@^0.3.0:
   version "0.3.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/json-schema-traverse/-/json-schema-traverse-0.3.1.tgz#349a6d44c53a51de89b40805c5d5e59b417d3340"
@@ -4019,6 +4012,15 @@ load-json-file@^2.0.0:
     graceful-fs "^4.1.2"
     parse-json "^2.2.0"
     pify "^2.0.0"
+    strip-bom "^3.0.0"
+
+load-json-file@^4.0.0:
+  version "4.0.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/load-json-file/-/load-json-file-4.0.0.tgz#2f5f45ab91e33216234fd53adab668eb4ec0993b"
+  dependencies:
+    graceful-fs "^4.1.2"
+    parse-json "^4.0.0"
+    pify "^3.0.0"
     strip-bom "^3.0.0"
 
 loader-runner@^2.3.0:
@@ -4294,9 +4296,9 @@ lowercase-keys@^1.0.0:
   version "1.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/lowercase-keys/-/lowercase-keys-1.0.0.tgz#4e3366b39e7f5457e35f1324bdf6f88d0bfc7306"
 
-lru-cache@2:
-  version "2.7.3"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/lru-cache/-/lru-cache-2.7.3.tgz#6d4524e8b955f95d4f5b58851ce21dd72fb4e952"
+lru-cache@2, lru-cache@~2.6.5:
+  version "2.6.5"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/lru-cache/-/lru-cache-2.6.5.tgz#e56d6354148ede8d7707b58d143220fd08df0fd5"
 
 lru-cache@^4.0.1:
   version "4.1.1"
@@ -4304,10 +4306,6 @@ lru-cache@^4.0.1:
   dependencies:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
-
-lru-cache@~2.6.5:
-  version "2.6.5"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/lru-cache/-/lru-cache-2.6.5.tgz#e56d6354148ede8d7707b58d143220fd08df0fd5"
 
 macaddress@^0.2.8:
   version "0.2.8"
@@ -4359,11 +4357,9 @@ memory-fs@^0.4.0, memory-fs@~0.4.1:
     errno "^0.1.3"
     readable-stream "^2.0.1"
 
-memory-streams@^0.1.2:
-  version "0.1.2"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/memory-streams/-/memory-streams-0.1.2.tgz#273ff777ab60fec599b116355255282cca2c50c2"
-  dependencies:
-    readable-stream "~1.0.2"
+memorystream@^0.3.1:
+  version "0.3.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/memorystream/-/memorystream-0.3.1.tgz#86d7090b30ce455d63fbae12dda51a47ddcaf9b2"
 
 meow@^3.7.0:
   version "3.7.0"
@@ -4466,17 +4462,13 @@ minimatch@~0.2.9:
     lru-cache "2"
     sigmund "~1.0.0"
 
-minimist@0.0.8:
+minimist@0.0.8, minimist@~0.0.1:
   version "0.0.8"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
 
 minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0:
   version "1.2.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
-
-minimist@~0.0.1:
-  version "0.0.10"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
 
 mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
   version "0.5.1"
@@ -4532,13 +4524,13 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
-nav-frontend-alertstriper-style@^0.2.18:
-  version "0.2.18"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-0.2.18.tgz#9511bb8a3303584ef0b85d95d1638f9a4438d0ce"
+nav-frontend-alertstriper-style@^0.2.20:
+  version "0.2.20"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-0.2.20.tgz#e48ff9d0091576597c2e414ee5f8b51f17b80589"
 
-nav-frontend-alertstriper@^0.2.9:
-  version "0.2.9"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-alertstriper/-/nav-frontend-alertstriper-0.2.9.tgz#a90562765e4608d748ea6dad62452a72634e35cc"
+nav-frontend-alertstriper@^0.2.11:
+  version "0.2.11"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-alertstriper/-/nav-frontend-alertstriper-0.2.11.tgz#15c492be71efc82d1e43a2bcd259fb4e9dca3c6e"
 
 nav-frontend-chevron-style@^0.3.3:
   version "0.3.3"
@@ -4568,13 +4560,13 @@ nav-frontend-hjelpetekst-style@^0.3.6:
   version "0.3.6"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-hjelpetekst-style/-/nav-frontend-hjelpetekst-style-0.3.6.tgz#5b933e6c95856af8021358cfbd9941d13b79ddf5"
 
-nav-frontend-hjelpetekst@^0.2.23:
-  version "0.2.23"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-0.2.23.tgz#8066a4415e87fff697116c1c59dd2e55191d6cc3"
+nav-frontend-hjelpetekst@^0.2.25:
+  version "0.2.25"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-0.2.25.tgz#b194d9a34a8b11a6d0a56d2c13ec3004156c81b4"
 
-nav-frontend-ikoner-assets@^0.2.16:
-  version "0.2.16"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-0.2.16.tgz#9ee0eb8526f12cdb0fae80783ba54672c13ba2e9"
+nav-frontend-ikoner-assets@^0.2.17:
+  version "0.2.17"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-0.2.17.tgz#11df0fb9bbdb526cc2a1df4b79e003a347a61ca6"
 
 nav-frontend-js-utils@^0.2.9:
   version "0.2.9"
@@ -4616,25 +4608,25 @@ nav-frontend-paneler@^0.2.13:
   version "0.2.13"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-paneler/-/nav-frontend-paneler-0.2.13.tgz#7329241827c6b1d46d393cab131cb9ee81bf2c4a"
 
-nav-frontend-skjema-style@^0.3.8:
-  version "0.3.8"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-skjema-style/-/nav-frontend-skjema-style-0.3.8.tgz#aa22c44016257346e0a083b052ca58bfca52e5ae"
+nav-frontend-skjema-style@^0.3.9:
+  version "0.3.9"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-skjema-style/-/nav-frontend-skjema-style-0.3.9.tgz#11614162face666728ee23ca8f5596f43a50e716"
 
-nav-frontend-skjema@^0.1.17:
-  version "0.1.17"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-skjema/-/nav-frontend-skjema-0.1.17.tgz#11bb47d77c356fff071e897aa1622457a27678c9"
+nav-frontend-skjema@^0.1.18:
+  version "0.1.18"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-skjema/-/nav-frontend-skjema-0.1.18.tgz#c47af22b8317ec1c2487c47c7f485b518fdabc81"
 
 nav-frontend-spinner-style@^0.2.3:
   version "0.2.3"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-spinner-style/-/nav-frontend-spinner-style-0.2.3.tgz#d4db18f43310b7ac35079cf845abe46b8ffbbe62"
 
-nav-frontend-spinner@^0.1.17:
-  version "0.1.17"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-spinner/-/nav-frontend-spinner-0.1.17.tgz#54fac7bc2cdd03349a87de7a22fbe0ec9783f508"
+nav-frontend-spinner@^0.1.18:
+  version "0.1.18"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-spinner/-/nav-frontend-spinner-0.1.18.tgz#58080ee181407122b99de18976369d3fecf36bdf"
 
-nav-frontend-stegindikator-style@^0.3.15:
-  version "0.3.15"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-stegindikator-style/-/nav-frontend-stegindikator-style-0.3.15.tgz#c71a519fc382789b639231ed8c07a7c7d41d57d3"
+nav-frontend-stegindikator-style@^0.3.16:
+  version "0.3.16"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-stegindikator-style/-/nav-frontend-stegindikator-style-0.3.16.tgz#c8e9d0b05a394e97a324924ec9c2b2f35afc24d8"
 
 nav-frontend-typografi-style@^1.0.6:
   version "1.0.6"
@@ -4810,17 +4802,17 @@ normalize-url@^1.4.0:
     query-string "^4.1.0"
     sort-keys "^1.0.0"
 
-npm-run-all@^4.0.2:
-  version "4.1.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/npm-run-all/-/npm-run-all-4.1.1.tgz#3095cf3f3cacf57fcb662b210ab10c609af6ddbb"
+npm-run-all@^4.1.2:
+  version "4.1.2"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/npm-run-all/-/npm-run-all-4.1.2.tgz#90d62d078792d20669139e718621186656cea056"
   dependencies:
     ansi-styles "^3.2.0"
     chalk "^2.1.0"
     cross-spawn "^5.1.0"
-    memory-streams "^0.1.2"
+    memorystream "^0.3.1"
     minimatch "^3.0.4"
     ps-tree "^1.1.0"
-    read-pkg "^2.0.0"
+    read-pkg "^3.0.0"
     shell-quote "^1.6.1"
     string.prototype.padend "^3.0.0"
 
@@ -5104,6 +5096,13 @@ parse-json@^3.0.0:
   dependencies:
     error-ex "^1.3.1"
 
+parse-json@^4.0.0:
+  version "4.0.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/parse-json/-/parse-json-4.0.0.tgz#be35f5425be1f7f6c747184f98a788cb99477ee0"
+  dependencies:
+    error-ex "^1.3.1"
+    json-parse-better-errors "^1.0.1"
+
 parse-passwd@^1.0.0:
   version "1.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/parse-passwd/-/parse-passwd-1.0.0.tgz#6d5b934a456993b23d37f40a382d6f1666a8e5c6"
@@ -5169,6 +5168,12 @@ path-type@^2.0.0:
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/path-type/-/path-type-2.0.0.tgz#f012ccb8415b7096fc2daa1054c3d72389594c73"
   dependencies:
     pify "^2.0.0"
+
+path-type@^3.0.0:
+  version "3.0.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/path-type/-/path-type-3.0.0.tgz#cef31dc8e0a1a3bb0d105c0cd97cf3bf47f4e36f"
+  dependencies:
+    pify "^3.0.0"
 
 pause-stream@0.0.11:
   version "0.0.11"
@@ -5561,9 +5566,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@^1.7.2:
-  version "1.7.4"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/prettier/-/prettier-1.7.4.tgz#5e8624ae9363c80f95ec644584ecdf55d74f93fa"
+prettier@^1.8.1:
+  version "1.8.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/prettier/-/prettier-1.8.1.tgz#91064d778c08c85ac1cbe6b23195c34310d039f9"
 
 pretty-bytes@^4.0.2:
   version "4.0.2"
@@ -5606,15 +5611,9 @@ progress@^2.0.0:
   version "2.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/progress/-/progress-2.0.0.tgz#8a1be366bf8fc23db2bd23f10c6fe920b4389d1f"
 
-promise@7.1.1:
+promise@7.1.1, promise@^7.1.1:
   version "7.1.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/promise/-/promise-7.1.1.tgz#489654c692616b8aa55b0724fa809bb7db49c5bf"
-  dependencies:
-    asap "~2.0.3"
-
-promise@^7.1.1:
-  version "7.3.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/promise/-/promise-7.3.1.tgz#064b72602b18f90f29192b8b1bc418ffd1ebd3bf"
   dependencies:
     asap "~2.0.3"
 
@@ -5678,13 +5677,9 @@ punycode@^1.2.4, punycode@^1.4.1:
   version "1.4.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
-q@1.4.1:
+q@1.4.1, q@^1.1.2:
   version "1.4.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/q/-/q-1.4.1.tgz#55705bcd93c5f3673530c2c2cbc0c2b3addc286e"
-
-q@^1.1.2:
-  version "1.5.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/q/-/q-1.5.0.tgz#dd01bac9d06d30e6f219aecb8253ee9ebdc308f1"
 
 qs@6.5.1, qs@~6.5.1:
   version "6.5.1"
@@ -6010,7 +6005,15 @@ read-pkg@^2.0.0:
     normalize-package-data "^2.3.2"
     path-type "^2.0.0"
 
-readable-stream@1.0, readable-stream@~1.0.2:
+read-pkg@^3.0.0:
+  version "3.0.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/read-pkg/-/read-pkg-3.0.0.tgz#9cbc686978fee65d16c00e2b19c237fcf6e38389"
+  dependencies:
+    load-json-file "^4.0.0"
+    normalize-package-data "^2.3.2"
+    path-type "^3.0.0"
+
+readable-stream@1.0:
   version "1.0.34"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/readable-stream/-/readable-stream-1.0.34.tgz#125820e34bc842d2f2aaafafe4c2916ee32c157c"
   dependencies:
