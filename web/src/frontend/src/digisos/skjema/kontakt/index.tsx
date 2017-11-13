@@ -11,15 +11,15 @@ import KontonummerFaktum from "../../../nav-soknad/faktum/typedInput/Kontonummer
 import {
 	radioCheckKeys,
 	faktumIsSelected,
-	getFaktumVerdi
+	getFaktumVerdi,
+	eksistererFaktum,
 } from "../../../nav-soknad/utils";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
 class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 	render() {
-		const kontonummerSystem = getFaktumVerdi(this.props.fakta, "kontakt.kontonummer.system");
-		const harKontonummer: boolean = kontonummerSystem !== null && kontonummerSystem !== "";
+		const harKontonummer: boolean = eksistererFaktum(this.props.fakta, "kontakt.kontonummer.system");
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		const brukerHarIkkeKontonummer = faktumIsSelected(
 			getFaktumVerdi(this.props.fakta, "kontakt.kontonummer.harikke")
