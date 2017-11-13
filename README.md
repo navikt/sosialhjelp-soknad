@@ -37,8 +37,8 @@ Forutsetter at man har tilgang til git repository tilgjengelig på internt nett 
     export function getApiBaseUrl(): string {
         if (erDev()) {
         	// Kjør mot lokal sendsoknad
-            return "http://localhost:8189/sendsoknad/";
-            // return "http://localhost:3001/";
+            // return "http://localhost:8189/sendsoknad/";
+            return "http://localhost:3001/";
         }
         return kjorerJetty() ? "http://127.0.0.1:8181/sendsoknad/" : "/sendsoknad/";
     }
