@@ -1,16 +1,25 @@
-Soknadsosialhjelp
+Søknadsosialhjelp
 ================
 
-## Kjøring lokalt 
+Frontend for søknad om sosialhjelp. 
 
+## Kjøring lokalt mot lokal utviklingsbackend
+
+Kan gjøres av alle. Kjører mot (mock backend)
+
+* `cd web/src/frontend` 
 * `npm install` 
 * `npm start` - Starter webpack server og mock backend utviklet i node express.
 * `npm test` - Kjør enhetstestene
-* `npm test -- -u` - Oppdatert snapshotfilen som snapshottestene tester mot 
-for lokal utvikling. 
+* `npm test -- -u` - Oppdatert snapshotfilen som snapshottestene tester mot for lokal utvikling. 
+
+I stedet for npm er det mulig å bruke yarn.
  
 ## Kjøring via jetty
 
+Forutsetter at man har tilgang til git repository tilgjengelig på internt nett hos NAV.
+
+* `cd web/src/frontend` 
 * `npm build` - bygger filer til buildmappen som videre blir kopiert til webappmappen
 * `cd soknadsosialhjelp-tekster`
 * `mvn clean install -Ddev` - bygger tekstfilene. Slår samme alle tekstfilene til lokal fil i temp folder.
@@ -28,7 +37,7 @@ for lokal utvikling.
     export function getApiBaseUrl(): string {
         if (erDev()) {
         	// Kjør mot lokal sendsoknad
-            return "http://a34duvw03208.devillo.no:8181/sendsoknad/";
+            return "http://localhost:8189/sendsoknad/";
             // return "http://localhost:3001/";
         }
         return kjorerJetty() ? "http://127.0.0.1:8181/sendsoknad/" : "/sendsoknad/";
@@ -40,7 +49,9 @@ for lokal utvikling.
     start.kodeverk.withmock=true
  ```
  * `cd soknadsosialhjelp/web/src/frontend && npm start`
-   
+
+ * Åpne `http://localhost:3000/soknadsosialhjelp/informasjon` i nettelseren
+     
  ## Tekster
  
  Tekstene ligger i repoert `soknadsosialhjelp-tekster` med felles byggejobb på `cisbl.devillo.no`. Tekstendringer blir automatisk
