@@ -9,10 +9,10 @@ import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { finnFakta, finnFaktum } from "../../../nav-soknad/utils/faktumUtils";
 import { opprettFaktum, slettFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
-import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
-import { Knapp } from "nav-frontend-knapper";
+import Vedlegg from "../../../nav-soknad/components/vedlegg/Vedlegg";
 
 interface Props {
 	faktumstruktur: FaktumStruktur;
@@ -142,20 +142,8 @@ class Opplysning extends React.Component<AllProps, {}> {
 		const visLastOppLonnslippKnapp: boolean =
 			this.props.featureToggleBeOmLonnslippVedlegg &&
 			this.vedleggForventet(faktumstruktur.id);
-
-		const lastOppLonnslippKnapp = (
-			<div className="container--noPadding">
-				<p>
-					<FormattedMessage id="opplysninger.arbeid.jobb.lonn.vedlegg" />
-				</p>
-				<Knapp
-					type="standard"
-					htmlType="submit"
-					spinner={false}
-					disabled={false}
-				>+ <FormattedMessage id="opplysninger.vedlegg.knapp" /></Knapp>
-			</div>
-		);
+		const lastOppLonnslippTekst =
+			intl.formatMessage({ id: "opplysninger.arbeid.jobb.lonn.vedlegg.label" });
 
 		return (
 			<SporsmalFaktum faktumKey={faktumstruktur.id} key={faktumstruktur.id}>
@@ -163,7 +151,11 @@ class Opplysning extends React.Component<AllProps, {}> {
 					{rader}
 				</Container>
 				{faktumstruktur.flereTillatt === "true" ? leggTilKnapp : null}
-				{visLastOppLonnslippKnapp ? lastOppLonnslippKnapp : null}
+				{visLastOppLonnslippKnapp && (
+					<Vedlegg
+						faktumId={faktumstruktur.id}
+						label={lastOppLonnslippTekst}
+					/> )}
 			</SporsmalFaktum>
 		);
 	}
@@ -177,6 +169,6 @@ export default connect<StateFromProps, {}, Props>((state: SoknadAppState) => {
 	return {
 		fakta: state.fakta.data,
 		vedlegg: state.vedlegg.data,
-		featureToggleBeOmLonnslippVedlegg: state.miljovariabler.data["feature.toggle.beOmLonnslippVedlegg"]
+		featureToggleBeOmLonnslippVedlegg: state.miljovariabler.data["feature.toggle.beOmLonnslippVedlegg.enabled"]
 	};
 })(injectIntl(Opplysning));
