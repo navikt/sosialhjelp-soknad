@@ -3,7 +3,7 @@ import { FormattedHTMLMessage, FormattedMessage } from "react-intl";
 import { Panel } from "nav-frontend-paneler";
 import { Innholdstittel, Undertittel } from "nav-frontend-typografi";
 import SVG from "../../nav-soknad/components/svg/SVGImage";
-const illustration = require("../svg/kvittering-illustrasjon.svg");
+// const illustration = require("../svg/kvittering-illustrasjon.svg");
 
 interface Props {
 	prop?: any;
@@ -38,12 +38,16 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 		</Innholdstittel>
 		<Panel className="panel--noPadding">
 			<div className="panelIllustrasjon">
-				<img src={illustration} alt="" className="kvittering-illustration" />
+				<img
+					src="/soknadsosialhjelp/statisk/bilder/kvittering-illustrasjon.svg"
+					alt=""
+					className="kvittering-illustration"
+				/>
 			</div>
 			<div className="panel-padding">
 				<div className="blokk-xl">
 					<Avsnitt
-						icon={require("../svg/snakkebobler.svg")}
+						icon="/soknadsosialhjelp/statisk/bilder/snakkebobler.svg"
 						tittelId="kvittering.samtale.tittel"
 						tekstId="kvittering.samtale.tekst"
 					/>
@@ -51,7 +55,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 
 				<div className="blokk-xl">
 					<Avsnitt
-						icon={require("../svg/kalender.svg")}
+						icon="/soknadsosialhjelp/statisk/bilder/kalender.svg"
 						tittelId="kvittering.saksbehandling.tittel"
 						tekstId="kvittering.saksbehandling.tekst"
 					/>
@@ -59,7 +63,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 
 				<div className="blokk-xl">
 					<Avsnitt
-						icon={require("../svg/person.svg")}
+						icon="/soknadsosialhjelp/statisk/bilder/person.svg"
 						tittelId="kvittering.situasjon.tittel"
 						tekstId="kvittering.situasjon.tekst"
 					/>
