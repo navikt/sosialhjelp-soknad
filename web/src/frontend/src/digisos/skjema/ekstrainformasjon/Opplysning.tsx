@@ -9,7 +9,7 @@ import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { finnFakta, finnFaktum } from "../../../nav-soknad/utils/faktumUtils";
 import { opprettFaktum, slettFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import { Knapp } from "nav-frontend-knapper";
@@ -146,16 +146,14 @@ class Opplysning extends React.Component<AllProps, {}> {
 		const lastOppLonnslippKnapp = (
 			<div className="container--noPadding">
 				<p>
-					Lønnslipp for siste 3 måneder
-					<br/>
-					Feature enabled: '{this.props.featureToggleBeOmLonnslippVedlegg && (<span>Ok</span>)}'
+					<FormattedMessage id="opplysninger.arbeid.jobb.lonn.vedlegg" />
 				</p>
 				<Knapp
 					type="standard"
 					htmlType="submit"
 					spinner={false}
 					disabled={false}
-				>+ Last opp vedlegg</Knapp>
+				>+ <FormattedMessage id="opplysninger.vedlegg.knapp" /></Knapp>
 			</div>
 		);
 
