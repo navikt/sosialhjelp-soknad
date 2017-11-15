@@ -13,16 +13,6 @@ import AvbrytSoknad from "../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 import ServerFeil from "../nav-soknad/components/feilside/ServerFeil";
 
 class App extends React.Component<InjectedIntlProps, {}> {
-	constructor(props: any) {
-		super(props);
-		this.msg = this.msg.bind(this);
-	}
-	msg(loc: any) {
-		if (erSkjemaside(loc.pathname)) {
-			return null;
-		}
-		return "Du er på vei til å forlate søknadsskjemaet. Søknaden vil da bli slettet. Ønsker du å forlate skjemaet?";
-	}
 	render() {
 		return (
 			<div className="app-digisos container">
@@ -41,7 +31,12 @@ class App extends React.Component<InjectedIntlProps, {}> {
 					<Route path={`/serverfeil`} component={ServerFeil} />
 					<Route component={SideIkkeFunnet} />
 				</Switch>
-				<Prompt when={true} message={this.msg} />
+				<Prompt
+					message={loc =>
+						erSkjemaside(loc.pathname)
+							? null
+							: "denne-teksten-brukes-ikke-men-trenger-tekst-her-for-å-vise-avbryt-dialog"}
+				/>
 				<TimeoutBox
 					sessionDurationInMinutes={30}
 					showWarningerAfterMinutes={25}
