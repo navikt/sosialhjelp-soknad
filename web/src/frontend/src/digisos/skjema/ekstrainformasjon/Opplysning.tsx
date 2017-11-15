@@ -13,6 +13,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import Vedlegg from "../../../nav-soknad/components/vedlegg/Vedlegg";
+import { FeatureToggles } from "../../../nav-soknad/utils/featureToggles";
 
 interface Props {
 	faktumstruktur: FaktumStruktur;
@@ -169,6 +170,6 @@ export default connect<StateFromProps, {}, Props>((state: SoknadAppState) => {
 	return {
 		fakta: state.fakta.data,
 		vedlegg: state.vedlegg.data,
-		featureToggleBeOmLonnslippVedlegg: state.miljovariabler.data["feature.toggle.beOmLonnslippVedlegg.enabled"]
+		featureToggleBeOmLonnslippVedlegg: state.miljovariabler.data[FeatureToggles.beOmLonnslippVedlegg]
 	};
 })(injectIntl(Opplysning));
