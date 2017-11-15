@@ -17,6 +17,18 @@ interface StateProps {
 
 type Props = StateProps & InjectedIntlProps & DispatchProps;
 
+const TEKSTNOKLER_VANLIG = {
+	overskrift: "avbryt.overskrift",
+	tekst: "avbryt.tekst",
+	bekreft: "avbryt.uthevet.tekst"
+};
+
+const TEKSTNOKLER_NAVIGASJON = {
+	overskrift: "avbryt.navigasjon.overskrift",
+	tekst: "avbryt.navigasjon.tekst",
+	bekreft: "avbryt.navigasjon.uthevet.tekst"
+};
+
 class AvbrytSoknad extends React.Component<Props, {}> {
 	onAvbryt() {
 		this.props.dispatch(
@@ -29,6 +41,12 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 	}
 
 	render() {
+		const tekst = {
+			...this.props.destinasjon === "MINSIDE"
+				? TEKSTNOKLER_VANLIG
+				: TEKSTNOKLER_NAVIGASJON
+		};
+
 		return (
 			<NavFrontendModal
 				isOpen={this.props.avbrytDialogSynlig || false}
@@ -44,16 +62,16 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 						<div className="avbrytmodal__infoikon" />
 					</div>
 					<Innholdstittel className="blokk-s avbrytmodal__overskrift">
-						<FormattedMessage id={"avbryt.overskrift"} />
+						<FormattedMessage id={tekst.overskrift} />
 					</Innholdstittel>
 					<div className="avbrytmodal__understrek_wrapper">
 						<div className="avbrytmodal__understrek" />
 					</div>
 					<Normaltekst className="blokk-xxs avbrytmodal__tekst">
-						<FormattedMessage id={"avbryt.tekst"} />
+						<FormattedMessage id={tekst.tekst} />
 					</Normaltekst>
 					<Normaltekst className="blokk-xxs avbrytmodal__uthevet_tekst">
-						<FormattedMessage id={"avbryt.uthevet.tekst"} />
+						<FormattedMessage id={tekst.bekreft} />
 					</Normaltekst>
 					<div className="timeoutbox__knapperad">
 						<Hovedknapp onClick={() => this.onAvbryt()}>
