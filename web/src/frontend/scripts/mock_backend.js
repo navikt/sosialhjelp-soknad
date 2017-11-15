@@ -65,7 +65,7 @@ router.get("/soknader/:brukerBehandlingId?lang=nb_NO", function(req, res) {
 });
 
 router.get("/soknader/:brukerBehandlingId", function(req, res) {
-	console.log("Mock backend: get soknader");
+	console.log("Mock backend: GET soknader");
 	console.log(req.headers["accept"]);
 	if (req.headers["accept"] === "application/vnd.oppsummering+html") {
 		console.log("Mock backend: oppsummering");
@@ -90,12 +90,20 @@ router.get("/soknader/:brukerBehandlingId/synligsoknadstruktur", function(
 	req,
 	res
 ) {
-	console.log("Mock backend: get synligsoknadstruktur");
+	console.log("Mock backend: GET synligsoknadstruktur");
 	res.json(utils.lesMockDataFil("synligsoknadstruktur.json"));
 });
 
+router.get("/soknader/:brukerBehandlingId/vedlegg", function(
+	req,
+	res
+) {
+	console.log("Mock backend: GET vedlegg (vedleggsforventning)");
+	res.json(utils.lesMockDataFil("vedlegg.json"));
+});
+
 router.get("/soknader/:brukerBehandlingId/fakta", function(req, res) {
-	console.log("Mock backend: get fakta");
+	console.log("Mock backend: GET fakta");
 	res.json(fakta);
 });
 
@@ -106,7 +114,7 @@ router.delete("/soknader/:brukerBehandlingId", function(req, res) {
 });
 
 router.post("/soknader/:brukerBehandlingId/actions/send", function(req, res) {
-	console.log("Mock backend: send søknad");
+	console.log("Mock backend: POST søknad");
 	res.status(204); // 204 = "No content"
 	res.send();
 });

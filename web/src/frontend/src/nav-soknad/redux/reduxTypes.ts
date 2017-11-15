@@ -7,6 +7,7 @@ import { ApplikasjonsfeilState } from "./applikasjonsfeil/applikasjonsfeilReduce
 import { TilgangState } from "./tilgang/tilgangTypes";
 import { LedetekstState } from "./ledetekster/ledeteksterTypes";
 import { InitState } from "./init/initTypes";
+import { VedleggState } from "../../digisos/redux/vedlegg/vedleggTypes";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -29,6 +30,7 @@ export interface SoknadAppState {
 	applikasjonsfeil: ApplikasjonsfeilState;
 	miljovariabler: MiljovariablerApiType;
 	tilgang: TilgangState;
+	vedlegg: VedleggState;
 	ledetekster: LedetekstState;
 	init: InitState;
 }

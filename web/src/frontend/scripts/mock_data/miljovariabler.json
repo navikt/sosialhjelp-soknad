@@ -12,5 +12,7 @@
 	"soknadinnsending.soknad.path": "http://127.0.0.1:8282/soknadinnsending/soknad",
 	"dialogarena.cms.url": "https://appres-q1.nav.no",
 	"dittnav.link.url": "http://www.nav.no/dittnav",
-	"saksoversikt.link.url": "http://127.0.0.1:8443/saksoversikt"
+	"saksoversikt.link.url": "http://127.0.0.1:8443/saksoversikt",
+	"feature.toggle.viseTpsKontonummer.enabled": true,
+	"feature.toggle.beOmLonnslippVedlegg.enabled": true
 }
