@@ -2,5 +2,5 @@
 
 export const FeatureToggles = {
 	beOmLonnslippVedlegg: "feature.toggle.beOmLonnslippVedlegg.enabled",
-	viseTpsKontonummer: "feature.toggle.viseTpsKontonummer.enabled""
+	viseTpsKontonummer: "feature.toggle.viseTpsKontonummer.enabled"
 };
