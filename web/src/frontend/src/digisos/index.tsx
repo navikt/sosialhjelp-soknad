@@ -17,12 +17,6 @@ class App extends React.Component<InjectedIntlProps, {}> {
 		super(props);
 		this.msg = this.msg.bind(this);
 	}
-	componentDidMount() {
-		window.onbeforeunload = evt => {
-			// console.log(evt);
-			return true;
-		};
-	}
 	msg(loc: any) {
 		if (erSkjemaside(loc.pathname)) {
 			return null;

@@ -4,8 +4,7 @@ import {
 	RouterProps,
 	Switch,
 	withRouter,
-	matchPath,
-	Prompt
+	matchPath
 } from "react-router";
 import { Location } from "history";
 import { connect } from "react-redux";
@@ -47,20 +46,6 @@ interface UrlParams {
 
 type Props = OwnProps & StateProps & RouterProps & DispatchProps;
 class SkjemaRouter extends React.Component<Props, {}> {
-	constructor(props: Props) {
-		super(props);
-		this.skalMeldingVises = this.skalMeldingVises.bind(this);
-	}
-
-	skalMeldingVises() {
-		// console.log(this.props.location);
-		return false;
-	}
-
-	componentWillReceiveProps(nextProps: Props) {
-		// console.log(this.props);
-	}
-
 	componentWillMount() {
 		if (this.props.brukerbehandlingId && this.props.fakta.length <= 1) {
 			this.props.dispatch(hentSoknad(this.props.brukerbehandlingId));
@@ -88,7 +73,6 @@ class SkjemaRouter extends React.Component<Props, {}> {
 					<Route path={`${path}/9`} component={Oppsummering} />
 					<Route component={SideIkkeFunnet} />
 				</Switch>
-				<Prompt when={this.skalMeldingVises()} message="Vil du" />
 			</LoadContainer>
 		);
 	}
