@@ -165,7 +165,7 @@ router.post("/fakta", function(req, res) {
 	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
 });
 
-router.post("/actions/logg", function(req, res) {
+router.post("/informasjon/actions/logg", function(req, res) {
 	console.log("Klient logget feil:");
 	if (typeof req.body === "string") {
 		console.log(req);

@@ -6,7 +6,7 @@ import { loggingTilServerFeilet, } from "./navloggerActions";
 
 function* loggTilServerSaga(action: NavLogInitAction): SagaIterator {
 	try {
-		yield call(fetchPost, "actions/logg", JSON.stringify(action.logEntry));
+		yield call(fetchPost, "informasjon/actions/logg", JSON.stringify(action.logEntry));
 	} catch (reason) {
 		yield put( loggingTilServerFeilet() );
 	}
