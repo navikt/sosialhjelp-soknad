@@ -7,7 +7,10 @@ export const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
 	sendSoknadPending: false,
 	startSoknadPending: false,
-	avbrytDialogSynlig: false,
+	avbrytDialog: {
+		synlig: false,
+		destinasjon: null
+	},
 	infofaktum: null,
 	data: {
 		soknadId: null,
@@ -52,12 +55,18 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 		case SoknadActionTypeKeys.AVBRYT_SOKNAD:
 			return {
 				...state,
-				avbrytDialogSynlig: true
+				avbrytDialog: {
+					synlig: true,
+					destinasjon: action.destinasjon
+				}
 			};
 		case SoknadActionTypeKeys.FORTSETT_SOKNAD:
 			return {
 				...state,
-				avbrytDialogSynlig: false
+				avbrytDialog: {
+					synlig: false,
+					destinasjon: null
+				}
 			};
 
 		case SoknadActionTypeKeys.RESET_SOKNAD:
@@ -121,6 +130,10 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 			return {
 				...state,
 				infofaktum: action.info
+			};
+		case SoknadActionTypeKeys.SLETT_SOKNAD_OK:
+			return {
+				...defaultState
 			};
 		default:
 			return state;

@@ -6,19 +6,22 @@ import { Hovedknapp, Knapp } from "nav-frontend-knapper";
 import { fortsettSoknad, slettSoknad } from "../../redux/soknad/soknadActions";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
-import { DispatchProps } from "../../redux/reduxTypes";
+import { DispatchProps, SoknadAppState } from "../../redux/reduxTypes";
+import { AVBRYT_DESTINASJON } from "../../redux/soknad/soknadActionTypes";
 
-interface OwnProps {
+interface StateProps {
 	avbrytDialogSynlig: boolean;
+	destinasjon: AVBRYT_DESTINASJON;
 	brukerBehandlingId: string;
-	miljovariabler: string;
 }
 
-type Props = OwnProps & InjectedIntlProps & DispatchProps;
+type Props = StateProps & InjectedIntlProps & DispatchProps;
 
 class AvbrytSoknad extends React.Component<Props, {}> {
 	onAvbryt() {
-		this.props.dispatch(slettSoknad(this.props.brukerBehandlingId));
+		this.props.dispatch(
+			slettSoknad(this.props.brukerBehandlingId, this.props.destinasjon)
+		);
 	}
 
 	onFortsett() {
@@ -70,10 +73,10 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 	}
 }
 
-export default connect((state: any, props: any) => {
+export default connect((state: SoknadAppState, props: any): StateProps => {
 	return {
-		avbrytDialogSynlig: state.soknad.avbrytDialogSynlig,
-		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
-		miljovariabler: state.miljovariabler.data
+		avbrytDialogSynlig: state.soknad.avbrytDialog.synlig,
+		destinasjon: state.soknad.avbrytDialog.destinasjon,
+		brukerBehandlingId: state.soknad.data.brukerBehandlingId
 	};
 })(injectIntl(AvbrytSoknad));
