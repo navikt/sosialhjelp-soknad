@@ -129,6 +129,7 @@ function* navigasjonSaga(): SagaIterator {
 	yield takeEvery(NavigasjonActionTypes.TIL_BOSTED, tilBostedSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_DITT_NAV, tilDittNav);
 	yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilKvittering);
+	yield takeEvery(NavigasjonActionTypes.TIL_START, tilStart);
 }
 
 export {

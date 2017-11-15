@@ -44,15 +44,14 @@ interface UrlParams {
 	steg: string;
 }
 
-class SkjemaRouter extends React.Component<
-	OwnProps & StateProps & RouterProps & DispatchProps,
-	{}
-> {
+type Props = OwnProps & StateProps & RouterProps & DispatchProps;
+class SkjemaRouter extends React.Component<Props, {}> {
 	componentWillMount() {
 		if (this.props.brukerbehandlingId && this.props.fakta.length <= 1) {
 			this.props.dispatch(hentSoknad(this.props.brukerbehandlingId));
 		}
 	}
+
 	render() {
 		const { gyldigUrl, restStatus } = this.props;
 

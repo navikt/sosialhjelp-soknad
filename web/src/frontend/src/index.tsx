@@ -14,11 +14,22 @@ import { erDev } from "./nav-soknad/utils/rest-utils";
 import IntlProvider from "./intlProvider";
 import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga";
+import { avbrytSoknad } from "./nav-soknad/redux/soknad/soknadActions";
+import { SoknadState } from "./nav-soknad/redux/reduxTypes";
 
 import "./index.css";
 import { loggException } from "./nav-soknad/redux/navlogger/navloggerActions";
 
 const history = createHistory({
+	getUserConfirmation: (msg: any, callback: (flag: boolean) => void) => {
+		const soknad: SoknadState = store.getState().soknad;
+		if (soknad.data.soknadId) {
+			store.dispatch(avbrytSoknad("START"));
+			callback(false);
+		} else {
+			callback(true);
+		}
+	},
 	basename: "soknadsosialhjelp"
 });
 

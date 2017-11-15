@@ -57,12 +57,6 @@ export function tilBosted(): NavigasjonActions {
 	};
 }
 
-export function tilInformasjon(): NavigasjonActions {
-	return {
-		type: NavigasjonActionTypes.TIL_INFORMASJON
-	};
-}
-
 export function navigerTilKvittering(
 	brukerbehandlingId: string
 ): NavigasjonActions {

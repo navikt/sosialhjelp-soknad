@@ -38,7 +38,7 @@ describe("soknad reducer", () => {
 			type: SoknadActionTypeKeys.AVBRYT_SOKNAD
 		};
 		const updatedState = soknadReducer(defaultState, action);
-		expect(updatedState.avbrytDialogSynlig).toBeTruthy();
+		expect(updatedState.avbrytDialog.synlig).toBeTruthy();
 	});
 
 	it("should hide avbrytSoknadDialog", () => {
@@ -46,7 +46,7 @@ describe("soknad reducer", () => {
 			type: SoknadActionTypeKeys.FORTSETT_SOKNAD
 		};
 		const updatedState = soknadReducer(defaultState, action);
-		expect(updatedState.avbrytDialogSynlig).toBeFalsy();
+		expect(updatedState.avbrytDialog.synlig).toBeFalsy();
 	});
 
 	it("should reset soknad", () => {
