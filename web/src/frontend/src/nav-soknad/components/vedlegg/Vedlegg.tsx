@@ -3,10 +3,13 @@ import { InjectedIntlProps, FormattedMessage, injectIntl } from "react-intl";
 import { Knapp } from "nav-frontend-knapper";
 import Lenkeknapp from "../lenkeknapp/Lenkeknapp";
 
+interface Vedlegg {
+	name: string;
+}
 interface OwnProps {
 	faktumId: string;
 	label: string;
-	vedlegg?: any;
+	vedlegg?: Vedlegg[];
 }
 
 interface State {
@@ -29,7 +32,7 @@ class Vedlegg extends React.Component<Props, State> {
 	}
 
 	handleFileUpload(event: any) {
-		const files = Array.from(event.target.files).map((file: any) => {
+		const files = Array.from(event.target.files).map((file: File) => {
 			return { name: file.name };
 		});
 		this.setState({
