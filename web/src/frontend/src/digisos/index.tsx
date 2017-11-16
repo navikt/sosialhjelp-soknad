@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Route, Switch } from "react-router";
+import { Route, Switch, Prompt } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import SideIkkeFunnet from "../nav-soknad/components/feilside/IkkeFunnet";
 import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
+import { erSkjemaside } from "../nav-soknad/utils/navigasjonUtils";
 
 import Informasjon from "./informasjon";
 import Start from "./start";
@@ -30,6 +31,12 @@ class App extends React.Component<InjectedIntlProps, {}> {
 					<Route path={`/serverfeil`} component={ServerFeil} />
 					<Route component={SideIkkeFunnet} />
 				</Switch>
+				<Prompt
+					message={loc =>
+						erSkjemaside(loc.pathname)
+							? null
+							: "denne-teksten-brukes-ikke-men-trenger-tekst-her-for-å-vise-avbryt-dialog"}
+				/>
 				<TimeoutBox
 					sessionDurationInMinutes={30}
 					showWarningerAfterMinutes={25}
