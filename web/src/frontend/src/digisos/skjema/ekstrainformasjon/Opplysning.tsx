@@ -13,7 +13,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import Vedlegg from "../../../nav-soknad/components/vedlegg/Vedlegg";
-import { FeatureToggles } from "../../../nav-soknad/utils/featureToggles";
+import { FeatureToggles } from "../../../featureToggles";
 
 interface Props {
 	faktumstruktur: FaktumStruktur;

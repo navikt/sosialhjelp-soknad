@@ -13,7 +13,7 @@ import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { hentSynligeFakta } from "../../redux/synligefakta/synligeFaktaActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 import { hentVedleggsForventning } from "../../redux/vedlegg/vedleggActions";
-import { FeatureToggles } from "../../../nav-soknad/utils/featureToggles";
+import { FeatureToggles } from "../../../featureToggles";
 
 interface OwnProps {
 	featureToggleBeOmLonnslippVedlegg: boolean;
