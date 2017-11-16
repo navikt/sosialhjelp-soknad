@@ -20,7 +20,7 @@ describe("navloggerSaga", () => {
 		it("fetch tekster", () => {
 			expect(saga.next()).toEqual({
 				done: false,
-				value: call(fetchPost, "actions/logg", JSON.stringify(logEntry))
+				value: call(fetchPost, "informasjon/actions/logg", JSON.stringify(logEntry))
 			});
 		});
 
