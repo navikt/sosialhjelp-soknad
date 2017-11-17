@@ -2,7 +2,7 @@ declare module "nav-frontend-spinner" {
 	interface Spinner {
 		negativ?: boolean;
 		stroke?: boolean;
-		storrelse?: "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl" | "xxxl";
+		type?: "XXS" | "XS" | "S" | "M" | "L" | "XL" | "XXL" | "XXXL";
 		className?: string;
 		ariaLabel?: string;
 	}

@@ -50,7 +50,7 @@ class IntlProvider extends React.Component<Props, {}> {
 		} else if (initRestStatus !== REST_STATUS.OK) {
 			children = (
 				<div className="application-spinner">
-					<NavFrontendSpinner storrelse="xxl" />
+					<NavFrontendSpinner type="XXL" />
 				</div>
 			);
 		}

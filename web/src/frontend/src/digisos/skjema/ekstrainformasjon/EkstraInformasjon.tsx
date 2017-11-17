@@ -22,7 +22,7 @@ type Props = OwnProps & SynligeFaktaProps & DispatchProps & InjectedIntlProps;
 
 class EkstraInformasjon extends React.Component<Props, {}> {
 	componentDidMount() {
-		if ( Object.keys(this.props.synligefakta.data).length === 0 ) {
+		if (Object.keys(this.props.synligefakta.data).length === 0) {
 			this.props.dispatch(hentSynligeFakta());
 			if (this.props.featureToggleBeOmLonnslippVedlegg) {
 				this.props.dispatch(hentVedleggsForventning());
@@ -54,7 +54,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 						))
 					) : (
 						<div className="ekstrainfo__spinner">
-							<NavFrontendSpinner storrelse="xxl" />
+							<NavFrontendSpinner type="XXL" />
 						</div>
 					)}
 				</DigisosSkjemaSteg>
@@ -63,9 +63,10 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 	}
 }
 
-export default connect((state: State ) => {
+export default connect((state: State) => {
 	return {
 		synligefakta: state.synligefakta,
-		featureToggleBeOmLonnslippVedlegg: state.miljovariabler.data["feature.toggle.beOmLonnslippVedlegg.enabled"]
+		featureToggleBeOmLonnslippVedlegg:
+			state.miljovariabler.data["feature.toggle.beOmLonnslippVedlegg.enabled"]
 	};
 })(injectIntl(EkstraInformasjon));

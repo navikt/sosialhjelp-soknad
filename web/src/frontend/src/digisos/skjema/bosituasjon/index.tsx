@@ -48,7 +48,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						faktumKey={antall.faktum}
 						maxLength={2}
 						kunHeltall={true}
-						bredde="xs"
+						bredde="XS"
 					/>
 				</SporsmalFaktum>
 			</DigisosSkjemaSteg>
