@@ -3,6 +3,8 @@ var app = express();
 var bodyParser = require("body-parser");
 const fs = require("fs");
 const utils = require("./utils.js");
+const path = require("path");
+const reloadable = require("express-reloadable");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -94,13 +96,13 @@ router.get("/soknader/:brukerBehandlingId/synligsoknadstruktur", function(
 	res.json(utils.lesMockDataFil("synligsoknadstruktur.json"));
 });
 
-router.get("/soknader/:brukerBehandlingId/vedlegg", function(
-	req,
-	res
-) {
-	console.log("Mock backend: GET vedlegg (vedleggsforventning)");
-	res.json(utils.lesMockDataFil("vedlegg.json"));
-});
+// router.get("/soknader/:brukerBehandlingId/vedlegg", function(
+// 	req,
+// 	res
+// ) {
+// 	console.log("Mock backend: GET vedlegg (vedleggsforventning)");
+// 	res.json(utils.lesMockDataFil("vedlegg.json"));
+// });
 
 router.get("/soknader/:brukerBehandlingId/fakta", function(req, res) {
 	console.log("Mock backend: GET fakta");
@@ -170,15 +172,23 @@ router.post("/informasjon/actions/logg", function(req, res) {
 	if (typeof req.body === "string") {
 		console.log(req);
 	} else {
-		req.body.userAgent = req.body.userAgent.substr(0, 10) + "...";
+		if(req.body && req.body.userAgent) {
+			req.body.userAgent = req.body.userAgent.substr(0, 10) + "...";
+		}
 		console.log(JSON.stringify(req.body, null, 4));
 	}
-
 	res.status(204); // 204 = "No content"
 	res.json();
 });
 
+// var vedleggRouter = require("./vedlegg_ressurser");
+// app.use("/", vedleggRouter);
 app.use("/", router);
+
+// reloadable.new(app, {
+// 	requireFile: path.resolve(__dirname, "./vedlegg_ressurser.js"),
+// 	watch: path.resolve(__dirname)
+// });
 
 app.listen(port);
 console.log("Mock API server running on port " + port);

@@ -2089,6 +2089,10 @@ expect@^21.2.1:
     jest-message-util "^21.2.1"
     jest-regex-util "^21.2.0"
 
+express-reloadable@^2.0.2:
+  version "2.0.2"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/express-reloadable/-/express-reloadable-2.0.2.tgz#e376749c689d2cc65ef1c8fb42149e67f428c8d4"
+
 express@^4.13.3, express@^4.15.4:
   version "4.16.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/express/-/express-4.16.2.tgz#e35c6dfe2d64b7dca0a5cd4f21781be3299e076c"
