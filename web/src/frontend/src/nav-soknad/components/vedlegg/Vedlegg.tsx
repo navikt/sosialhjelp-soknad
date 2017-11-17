@@ -3,17 +3,18 @@ import { InjectedIntlProps, FormattedMessage, injectIntl } from "react-intl";
 import { Knapp } from "nav-frontend-knapper";
 import Lenkeknapp from "../lenkeknapp/Lenkeknapp";
 
-interface Vedlegg {
+interface VedleggType {
 	name: string;
 }
+
 interface OwnProps {
 	faktumId: string;
 	label: string;
-	vedlegg?: Vedlegg[];
+	vedlegg?: VedleggType[];
 }
 
 interface State {
-	files: object[];
+	vedlegg: VedleggType[];
 }
 
 type Props = OwnProps & InjectedIntlProps;
@@ -21,22 +22,23 @@ type Props = OwnProps & InjectedIntlProps;
 class Vedlegg extends React.Component<Props, State> {
 
 	refs: {
-		leggTilVedleggKnapp: any;
+		leggTilVedleggKnapp: HTMLInputElement;
 	};
 
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			files: []
+			vedlegg: []
 		};
 	}
 
 	handleFileUpload(event: any) {
-		const files = Array.from(event.target.files).map((file: File) => {
-			return { name: file.name };
+		const vedlegg: VedleggType[] = [];
+		Array.from(event.target.files).map((file: File) => {
+			vedlegg.push({ name: file.name});
 		});
 		this.setState({
-			files
+			vedlegg
 		});
 		event.preventDefault();
 	}
@@ -66,12 +68,12 @@ class Vedlegg extends React.Component<Props, State> {
 					multiple={true}
 				/>
 				<div>
-					{this.state.files.map((file: any, index: number) => {
+					{this.state.vedlegg.map((vedlegg: VedleggType, index: number) => {
 						return (
 							<div key={index}>
 								<Lenkeknapp
 									onClick={ () => { alert("todo"); }}
-									label={file.name}
+									label={vedlegg.name}
 								/>
 							</div>
 
