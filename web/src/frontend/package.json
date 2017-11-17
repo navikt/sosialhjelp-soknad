@@ -8,18 +8,18 @@
 		"express": "^4.15.4",
 		"history": "^4.7.2",
 		"lodash.throttle": "^4.1.1",
-		"nav-frontend-alertstriper": "^0.2.11",
-		"nav-frontend-ekspanderbartpanel": "^0.2.14",
+		"nav-frontend-alertstriper": "^0.2.12",
+		"nav-frontend-ekspanderbartpanel": "^0.2.16",
 		"nav-frontend-grid": "^0.1.8",
-		"nav-frontend-hjelpetekst": "^0.2.25",
+		"nav-frontend-hjelpetekst": "^0.2.28",
 		"nav-frontend-ikoner-assets": "^0.2.17",
 		"nav-frontend-knapper": "^0.2.12",
-		"nav-frontend-lukknapp": "^0.1.10",
-		"nav-frontend-modal": "^0.2.12",
-		"nav-frontend-paneler": "^0.2.13",
-		"nav-frontend-skjema": "^0.1.18",
+		"nav-frontend-lukknapp": "^0.1.11",
+		"nav-frontend-modal": "^0.2.13",
+		"nav-frontend-paneler": "^0.2.14",
+		"nav-frontend-skjema": "^0.1.19",
 		"nav-frontend-spinner": "^0.1.18",
-		"nav-frontend-typografi": "^1.0.9",
+		"nav-frontend-typografi": "^1.0.10",
 		"node-less-chokidar": "^0.1.0",
 		"prop-types": "^15.5.10",
 		"react": "^15.6.1",
@@ -79,7 +79,7 @@
 		"nav-frontend-lukknapp-style": "^0.2.3",
 		"nav-frontend-modal-style": "^0.3.5",
 		"nav-frontend-paneler-style": "^0.3.6",
-		"nav-frontend-skjema-style": "^0.3.9",
+		"nav-frontend-skjema-style": "^0.3.10",
 		"nav-frontend-spinner-style": "^0.2.3",
 		"nav-frontend-stegindikator-style": "^0.3.16",
 		"nav-frontend-typografi-style": "^1.0.6",
@@ -94,16 +94,22 @@
 	"scripts": {
 		"mock-backend": "node scripts/mock_backend",
 		"build-css": "node-less-chokidar ./src/index.less",
-		"watch-css": "chokidar \"src/**/*.less\" -c \"node-less-chokidar ./src/index.less\"",
+		"watch-css":
+			"chokidar \"src/**/*.less\" -c \"node-less-chokidar ./src/index.less\"",
 		"start-js": "react-scripts-ts start",
-		"start": "npm-run-all -p build-css watch-css start-js mock-backend stylelint:watch",
-		"build": "npm run stylelint && npm run build-css && react-scripts-ts build && node flytt-filer-til-webapp.js && node versjoner-prodfiler.js",
+		"start":
+			"npm-run-all -p build-css watch-css start-js mock-backend stylelint:watch",
+		"build":
+			"npm run stylelint && npm run build-css && react-scripts-ts build && node flytt-filer-til-webapp.js && node versjoner-prodfiler.js",
 		"test": "npm run build-css && react-scripts-ts test --env=jsdom",
 		"prettier": "prettier-eslint \"src/**/*(*.less|*.tsx|*.ts|*.css|*.json)\"",
-		"prettier:update": "prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css|*.json)\"",
+		"prettier:update":
+			"prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css|*.json)\"",
 		"stylelint": "stylelint \"src/digisos/digisos.less\" --syntax less",
-		"stylelint:watch": "chokidar \"src/index.less\" -c \"stylelint \"src/index.less\" --syntax less\"",
-		"e2e": "node nightwatch.js --url localhost:3000/soknadsosialhjelp/informasjon",
+		"stylelint:watch":
+			"chokidar \"src/index.less\" -c \"stylelint \"src/index.less\" --syntax less\"",
+		"e2e":
+			"node nightwatch.js --url localhost:3000/soknadsosialhjelp/informasjon",
 		"eject": "react-scripts-ts eject"
 	}
 }
