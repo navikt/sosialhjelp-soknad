@@ -32,9 +32,9 @@ class Vedlegg extends React.Component<Props, State> {
 		};
 	}
 
-	handleFileUpload(event: any) {
+	handleFileUpload(files: FileList) {
 		const vedlegg: VedleggType[] = [];
-		Array.from(event.target.files).map((file: File) => {
+		Array.from(files).map((file: File) => {
 			vedlegg.push({ name: file.name});
 		});
 		this.setState({
@@ -61,7 +61,7 @@ class Vedlegg extends React.Component<Props, State> {
 
 				<input
 					ref="leggTilVedleggKnapp"
-					onChange={(e) => this.handleFileUpload(e)}
+					onChange={(e) => this.handleFileUpload(e.target.files)}
 					type="file"
 					className="visuallyhidden"
 					accept="image/jpeg,image/png,application/pdf"
