@@ -13,6 +13,7 @@ import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { hentSynligeFakta } from "../../redux/synligefakta/synligeFaktaActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 import { hentVedleggsForventning } from "../../redux/vedlegg/vedleggActions";
+import { FeatureToggles } from "../../../featureToggles";
 
 interface OwnProps {
 	featureToggleBeOmLonnslippVedlegg: boolean;
@@ -67,6 +68,6 @@ export default connect((state: State) => {
 	return {
 		synligefakta: state.synligefakta,
 		featureToggleBeOmLonnslippVedlegg:
-			state.miljovariabler.data["feature.toggle.beOmLonnslippVedlegg.enabled"]
+			state.miljovariabler.data[FeatureToggles.beOmLonnslippVedlegg]
 	};
 })(injectIntl(EkstraInformasjon));
