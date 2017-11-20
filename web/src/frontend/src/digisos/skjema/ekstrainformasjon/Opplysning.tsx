@@ -97,7 +97,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 								faktumId={faktum.faktumId}
 								faktumKey={faktumstruktur.id}
 								property={property.id}
-								bredde="m"
+								bredde="M"
 							/>;
 						break;
 					case "belop":
@@ -107,7 +107,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 								faktumId={faktum.faktumId}
 								faktumKey={faktumstruktur.id}
 								property={property.id}
-								bredde="s"
+								bredde="S"
 							/>;
 				}
 

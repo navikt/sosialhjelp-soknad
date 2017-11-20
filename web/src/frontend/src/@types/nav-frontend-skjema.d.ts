@@ -3,15 +3,15 @@ declare module "nav-frontend-skjema" {
 
 	export type InputBredde =
 		| "fullbredde"
-		| "xxl"
-		| "xl"
-		| "l"
-		| "m"
-		| "s"
-		| "xs"
-		| "xxs";
+		| "XXLl"
+		| "XL"
+		| "L"
+		| "M"
+		| "S"
+		| "XS"
+		| "XXS";
 
-	type SelectBredde = "fullbredde" | "xxl" | "xl" | "l" | "m" | "s" | "xs";
+	type SelectBredde = "fullbredde" | "XXL" | "XL" | "L" | "M" | "S" | "XS";
 
 	interface RadioProps extends React.HTMLProps<Radio> {
 		className?: string;
