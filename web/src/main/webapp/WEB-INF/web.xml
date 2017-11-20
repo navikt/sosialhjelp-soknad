@@ -43,6 +43,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>featureServlet</servlet-name>
+        <servlet-class>no.nav.sbl.soknadsosialhjelp.FeatureServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>featureServlet</servlet-name>
+        <url-pattern>/api/feature</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>selftest</servlet-name>
         <servlet-class>no.nav.sbl.soknadsosialhjelp.selftest.SelftestServlet</servlet-class>
     </servlet>

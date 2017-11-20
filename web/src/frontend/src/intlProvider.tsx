@@ -4,13 +4,13 @@ import * as nb from "react-intl/locale-data/nb";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { connect } from "react-redux";
 import { LedetekstState } from "./nav-soknad/redux/ledetekster/ledeteksterTypes";
-import { DispatchProps } from "./nav-soknad/redux/reduxTypes";
+import { DispatchProps, SoknadAppState } from "./nav-soknad/redux/reduxTypes";
 import Feilside from "./nav-soknad/components/feilside/Feilside";
 import { hentMiljovariabler } from "./nav-soknad/redux/miljovariabler/miljovariablerActions";
 import { hentTekster } from "./nav-soknad/redux/ledetekster/ledeteksterActions";
 import { hentTilgang } from "./nav-soknad/redux/tilgang/tilgangActions";
-import { SoknadAppState } from "./nav-soknad/redux/reduxTypes";
 import { REST_STATUS } from "./nav-soknad/types";
+import { hentFeatureToggles } from "./nav-soknad/redux/featuretoggles/featureTogglesActions";
 
 addLocaleData(nb);
 
@@ -30,6 +30,7 @@ class IntlProvider extends React.Component<Props, {}> {
 		this.props.dispatch(hentTilgang());
 		this.props.dispatch(hentTekster());
 		this.props.dispatch(hentMiljovariabler());
+		this.props.dispatch(hentFeatureToggles());
 	}
 
 	render() {
