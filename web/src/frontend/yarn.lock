@@ -101,7 +101,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.0.24":
+"@types/react@*", "@types/react@16.0.24":
   version "16.0.24"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react/-/react-16.0.24.tgz#a6fd8015892fe8ae3c17453615f7ebdd2301d818"
 
@@ -5964,9 +5964,9 @@ react-test-renderer@^15.6.1:
     fbjs "^0.8.9"
     object-assign "^4.1.0"
 
-react@^15.6.1:
-  version "15.6.2"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react/-/react-15.6.2.tgz#dba0434ab439cfe82f108f0f511663908179aa72"
+react@15.6.1:
+  version "15.6.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
   dependencies:
     create-react-class "^15.6.0"
     fbjs "^0.8.9"
