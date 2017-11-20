@@ -60,7 +60,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 						<Column xs="12">
 							<FdatoFaktum
 								faktumKey={faktumKey}
-								bredde="s"
+								bredde="S"
 								required={validering.fnrRequired}
 								faktumId={faktumId}
 								property="fnr"
@@ -71,7 +71,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								faktumKey={faktumKey}
 								maxLength={5}
 								minLength={5}
-								bredde="s"
+								bredde="S"
 								required={validering.pnrRequired}
 								faktumId={faktumId}
 								property="pnr"

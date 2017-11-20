@@ -46,7 +46,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 				<div>
 					<div className="blokk-m">
 						<Select
-							bredde="m"
+							bredde="M"
 							defaultValue=""
 							onChange={(evt: any) =>
 								this.setState({ kommuneId: evt.target.value })}
@@ -78,7 +78,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 								<Arrow />
 							</div>
 							<Select
-								bredde="m"
+								bredde="M"
 								defaultValue=""
 								onChange={(evt: any) =>
 									this.setState({ bydelId: evt.target.value })}

@@ -17,11 +17,11 @@ const LoadContainer: React.StatelessComponent<Props> = ({
 	) {
 		return (
 			<div className="application-spinner">
-				<NavFrontendSpinner storrelse="xxl" />
+				<NavFrontendSpinner type="XXL" />
 			</div>
 		);
 	} else if (restStatus === REST_STATUS.FEILET) {
-		return <ServerFeil/>;
+		return <ServerFeil />;
 	}
 	return <div>{children}</div>;
 };

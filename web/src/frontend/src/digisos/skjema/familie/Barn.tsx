@@ -87,7 +87,7 @@ export default class Barn extends React.Component<Props, {}> {
 									property="grad"
 									maxLength={3}
 									kunHeltall={true}
-									bredde="xs"
+									bredde="XS"
 								/>
 							</SporsmalFaktum>
 						</NivaTreSkjema>
