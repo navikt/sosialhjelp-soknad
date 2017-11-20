@@ -14,6 +14,7 @@ import { hentSynligeFakta } from "../../redux/synligefakta/synligeFaktaActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 import { hentVedleggsForventning } from "../../redux/vedlegg/vedleggActions";
 import { FeatureToggles } from "../../../featureToggles";
+import { getIntlText } from "../../../nav-soknad/utils";
 
 interface OwnProps {
 	featureToggleBeOmLonnslippVedlegg: boolean;
@@ -50,6 +51,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 								id={key}
 								key={key}
 								tittel={intl.formatMessage({ id: `${key}.sporsmal` })}
+								beskrivelse={getIntlText(this.props.intl, `${key}.beskrivelse`)}
 								faktumstrukturer={data[key]}
 							/>
 						))

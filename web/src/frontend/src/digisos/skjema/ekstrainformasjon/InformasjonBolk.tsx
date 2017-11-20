@@ -6,16 +6,24 @@ import Opplysning from "./Opplysning";
 interface Props {
 	id: string;
 	tittel: string;
+	beskrivelse?: string;
 	faktumstrukturer: FaktumStruktur[];
 }
 
 const InformasjonBolk: React.StatelessComponent<Props> = props => {
-
 	const sporsmal = props.faktumstrukturer.map(struktur => {
-		return <Opplysning faktumstruktur={struktur} key={struktur.id} vedlegg={null}/>;
+		return (
+			<Opplysning faktumstruktur={struktur} key={struktur.id} vedlegg={null} />
+		);
 	});
 
-	return <Progresjonsblokk tittel={props.tittel} content={sporsmal}/>;
+	return (
+		<Progresjonsblokk
+			tittel={props.tittel}
+			beskrivelse={props.beskrivelse}
+			content={sporsmal}
+		/>
+	);
 };
 
 export default InformasjonBolk;
