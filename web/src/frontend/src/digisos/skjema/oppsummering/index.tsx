@@ -72,15 +72,18 @@ class OppsummeringView extends React.Component<Props, {}> {
 					<div className="blokk-xs bolk" key={idx}>
 						<EkspanderbartPanel tittel={bolk.tittel} apen={false}>
 							<div>
-								<div dangerouslySetInnerHTML={{ __html: bolk.html }} />
 								<div className="bolk__rediger">
 									<Link
 										className="lenke"
 										to={`/skjema/${brukerbehandlingId}/${idx + 1}`}
 									>
-										Rediger bolk
+										{getIntlTextOrKey(
+											this.props.intl,
+											"oppsummering.gatilbake"
+										)}
 									</Link>
 								</div>
+								<div dangerouslySetInnerHTML={{ __html: bolk.html }} />
 							</div>
 						</EkspanderbartPanel>
 					</div>
