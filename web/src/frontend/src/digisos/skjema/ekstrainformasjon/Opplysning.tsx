@@ -1,14 +1,23 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { FaktumStruktur, PropertyStruktur } from "../../redux/synligefakta/synligeFaktaTypes";
+import {
+	FaktumStruktur,
+	PropertyStruktur
+} from "../../redux/synligefakta/synligeFaktaTypes";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { Column, Container, Row } from "nav-frontend-grid";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
-import { DispatchProps, SoknadAppState } from "../../../nav-soknad/redux/reduxTypes";
+import {
+	DispatchProps,
+	SoknadAppState
+} from "../../../nav-soknad/redux/reduxTypes";
 import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { finnFakta, finnFaktum } from "../../../nav-soknad/utils/faktumUtils";
-import { opprettFaktum, slettFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
+import {
+	opprettFaktum,
+	slettFaktum
+} from "../../../nav-soknad/redux/fakta/faktaActions";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
@@ -21,12 +30,17 @@ interface Props {
 	featureToggleBeOmLonnslippVedlegg?: boolean;
 }
 
-type AllProps = Props & DispatchProps & FaktumComponentProps & InjectedIntlProps;
+type AllProps = Props &
+	DispatchProps &
+	FaktumComponentProps &
+	InjectedIntlProps;
 
 function getValideringsType(property: PropertyStruktur) {
 	let type = "belop";
 	if (property.configuration && property.configuration.configuration) {
-		const configuration = property.configuration.configuration.find(conf => conf.key === "validering");
+		const configuration = property.configuration.configuration.find(
+			conf => conf.key === "validering"
+		);
 		if (configuration) {
 			type = configuration.value;
 		}
@@ -35,7 +49,6 @@ function getValideringsType(property: PropertyStruktur) {
 }
 
 class Opplysning extends React.Component<AllProps, {}> {
-
 	constructor(props: AllProps) {
 		super(props);
 		this.leggTilBelop = this.leggTilBelop.bind(this);
@@ -69,7 +82,9 @@ class Opplysning extends React.Component<AllProps, {}> {
 		const faktum = finnFaktum(faktumKey, fakta);
 		if (faktum && faktum.faktumId && vedlegg && vedlegg.map) {
 			for (const vedleggsForventning of vedlegg) {
-				if (vedleggsForventning.faktumId.toString() === faktum.faktumId.toString()) {
+				if (
+					vedleggsForventning.faktumId.toString() === faktum.faktumId.toString()
+				) {
 					return true;
 				}
 			}
@@ -86,29 +101,30 @@ class Opplysning extends React.Component<AllProps, {}> {
 
 		const rader = belopFakta.map(faktum => {
 			const inputs = faktumstruktur.properties.map(property => {
-
 				const type = getValideringsType(property);
 				let inputFelt = null;
 
 				switch (type) {
 					case "text":
-						inputFelt =
+						inputFelt = (
 							<InputFaktum
 								faktumId={faktum.faktumId}
 								faktumKey={faktumstruktur.id}
 								property={property.id}
-								bredde="M"
-							/>;
+								bredde="L"
+							/>
+						);
 						break;
 					case "belop":
 					default:
-						inputFelt =
+						inputFelt = (
 							<BelopFaktum
 								faktumId={faktum.faktumId}
 								faktumKey={faktumstruktur.id}
 								property={property.id}
 								bredde="S"
-							/>;
+							/>
+						);
 				}
 
 				return (
@@ -121,7 +137,8 @@ class Opplysning extends React.Component<AllProps, {}> {
 			const slettKnapp = (
 				<Lenkeknapp
 					onClick={() => this.fjernBelop(faktum.faktumId)}
-					label={slettTekst}/>
+					label={slettTekst}
+				/>
 			);
 
 			return (
@@ -143,8 +160,6 @@ class Opplysning extends React.Component<AllProps, {}> {
 		const visLastOppLonnslippKnapp: boolean =
 			this.props.featureToggleBeOmLonnslippVedlegg &&
 			this.vedleggForventet(faktumstruktur.id);
-		const lastOppLonnslippTekst =
-			intl.formatMessage({ id: "opplysninger.arbeid.jobb.lonn.vedlegg.label" });
 
 		return (
 			<SporsmalFaktum faktumKey={faktumstruktur.id} key={faktumstruktur.id}>
@@ -155,8 +170,11 @@ class Opplysning extends React.Component<AllProps, {}> {
 				{visLastOppLonnslippKnapp && (
 					<Vedlegg
 						faktumId={faktumstruktur.id}
-						label={lastOppLonnslippTekst}
-					/> )}
+						label={intl.formatMessage({
+							id: "opplysninger.arbeid.jobb.lonn.vedlegg.label"
+						})}
+					/>
+				)}
 			</SporsmalFaktum>
 		);
 	}
@@ -170,6 +188,7 @@ export default connect<StateFromProps, {}, Props>((state: SoknadAppState) => {
 	return {
 		fakta: state.fakta.data,
 		vedlegg: state.vedlegg.data,
-		featureToggleBeOmLonnslippVedlegg: state.miljovariabler.data[FeatureToggles.beOmLonnslippVedlegg]
+		featureToggleBeOmLonnslippVedlegg:
+			state.miljovariabler.data[FeatureToggles.beOmLonnslippVedlegg]
 	};
 })(injectIntl(Opplysning));
