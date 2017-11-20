@@ -28,6 +28,8 @@ export enum SoknadActionTypeKeys {
 	SETT_INFOFAKTUM = "soknad/SETT_INFOFAKTUM"
 }
 
+export type AVBRYT_DESTINASJON = "START" | "MINSIDE";
+
 export type SoknadActionTypes =
 	| StartSoknadAction
 	| StartSoknadOkAction
@@ -114,6 +116,7 @@ export interface ResetSoknadAction {
 
 export interface AvbrytSoknadAction {
 	type: SoknadActionTypeKeys.AVBRYT_SOKNAD;
+	destinasjon?: AVBRYT_DESTINASJON;
 }
 
 export interface FortsettSoknadAction {
@@ -123,6 +126,7 @@ export interface FortsettSoknadAction {
 export interface SlettSoknadAction {
 	type: SoknadActionTypeKeys.SLETT_SOKNAD;
 	brukerBehandlingId: string;
+	destinasjon?: AVBRYT_DESTINASJON;
 }
 
 export interface SlettSoknadOkAction {

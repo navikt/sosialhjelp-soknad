@@ -12,13 +12,22 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { hentSynligeFakta } from "../../redux/synligefakta/synligeFaktaActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
+import { hentVedleggsForventning } from "../../redux/vedlegg/vedleggActions";
+import { FeatureToggles } from "../../../featureToggles";
 
-type Props = SynligeFaktaProps & DispatchProps & InjectedIntlProps;
+interface OwnProps {
+	featureToggleBeOmLonnslippVedlegg: boolean;
+}
+
+type Props = OwnProps & SynligeFaktaProps & DispatchProps & InjectedIntlProps;
 
 class EkstraInformasjon extends React.Component<Props, {}> {
 	componentDidMount() {
-		if ( Object.keys(this.props.synligefakta.data).length === 0 ) {
+		if (Object.keys(this.props.synligefakta.data).length === 0) {
 			this.props.dispatch(hentSynligeFakta());
+			if (this.props.featureToggleBeOmLonnslippVedlegg) {
+				this.props.dispatch(hentVedleggsForventning());
+			}
 		}
 	}
 
@@ -46,7 +55,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 						))
 					) : (
 						<div className="ekstrainfo__spinner">
-							<NavFrontendSpinner storrelse="xxl" />
+							<NavFrontendSpinner type="XXL" />
 						</div>
 					)}
 				</DigisosSkjemaSteg>
@@ -57,6 +66,8 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 
 export default connect((state: State) => {
 	return {
-		synligefakta: state.synligefakta
+		synligefakta: state.synligefakta,
+		featureToggleBeOmLonnslippVedlegg:
+			state.miljovariabler.data[FeatureToggles.beOmLonnslippVedlegg]
 	};
 })(injectIntl(EkstraInformasjon));

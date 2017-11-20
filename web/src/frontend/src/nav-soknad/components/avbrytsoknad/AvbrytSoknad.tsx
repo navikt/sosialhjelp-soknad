@@ -6,19 +6,34 @@ import { Hovedknapp, Knapp } from "nav-frontend-knapper";
 import { fortsettSoknad, slettSoknad } from "../../redux/soknad/soknadActions";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
-import { DispatchProps } from "../../redux/reduxTypes";
+import { DispatchProps, SoknadAppState } from "../../redux/reduxTypes";
+import { AVBRYT_DESTINASJON } from "../../redux/soknad/soknadActionTypes";
 
-interface OwnProps {
+interface StateProps {
 	avbrytDialogSynlig: boolean;
+	destinasjon: AVBRYT_DESTINASJON;
 	brukerBehandlingId: string;
-	miljovariabler: string;
 }
 
-type Props = OwnProps & InjectedIntlProps & DispatchProps;
+type Props = StateProps & InjectedIntlProps & DispatchProps;
+
+const TEKSTNOKLER_VANLIG = {
+	overskrift: "avbryt.overskrift",
+	tekst: "avbryt.tekst",
+	bekreft: "avbryt.uthevet.tekst"
+};
+
+const TEKSTNOKLER_NAVIGASJON = {
+	overskrift: "avbryt.navigasjon.overskrift",
+	tekst: "avbryt.navigasjon.tekst",
+	bekreft: "avbryt.navigasjon.uthevet.tekst"
+};
 
 class AvbrytSoknad extends React.Component<Props, {}> {
 	onAvbryt() {
-		this.props.dispatch(slettSoknad(this.props.brukerBehandlingId));
+		this.props.dispatch(
+			slettSoknad(this.props.brukerBehandlingId, this.props.destinasjon)
+		);
 	}
 
 	onFortsett() {
@@ -26,6 +41,12 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 	}
 
 	render() {
+		const tekst = {
+			...this.props.destinasjon === "MINSIDE"
+				? TEKSTNOKLER_VANLIG
+				: TEKSTNOKLER_NAVIGASJON
+		};
+
 		return (
 			<NavFrontendModal
 				isOpen={this.props.avbrytDialogSynlig || false}
@@ -41,16 +62,16 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 						<div className="avbrytmodal__infoikon" />
 					</div>
 					<Innholdstittel className="blokk-s avbrytmodal__overskrift">
-						<FormattedMessage id={"avbryt.overskrift"} />
+						<FormattedMessage id={tekst.overskrift} />
 					</Innholdstittel>
 					<div className="avbrytmodal__understrek_wrapper">
 						<div className="avbrytmodal__understrek" />
 					</div>
 					<Normaltekst className="blokk-xxs avbrytmodal__tekst">
-						<FormattedMessage id={"avbryt.tekst"} />
+						<FormattedMessage id={tekst.tekst} />
 					</Normaltekst>
 					<Normaltekst className="blokk-xxs avbrytmodal__uthevet_tekst">
-						<FormattedMessage id={"avbryt.uthevet.tekst"} />
+						<FormattedMessage id={tekst.bekreft} />
 					</Normaltekst>
 					<div className="timeoutbox__knapperad">
 						<Hovedknapp onClick={() => this.onAvbryt()}>
@@ -70,10 +91,10 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 	}
 }
 
-export default connect((state: any, props: any) => {
+export default connect((state: SoknadAppState, props: any): StateProps => {
 	return {
-		avbrytDialogSynlig: state.soknad.avbrytDialogSynlig,
-		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
-		miljovariabler: state.miljovariabler.data
+		avbrytDialogSynlig: state.soknad.avbrytDialog.synlig,
+		destinasjon: state.soknad.avbrytDialog.destinasjon,
+		brukerBehandlingId: state.soknad.data.brukerBehandlingId
 	};
 })(injectIntl(AvbrytSoknad));

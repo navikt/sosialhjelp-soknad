@@ -29,14 +29,18 @@
     "@types/react" "*"
 
 "@types/history@*":
-  version "4.6.1"
-  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/history/-/history-4.6.1.tgz#0dbaef4febad5d074d06dbdfae6b027d1d701d25"
+  version "4.6.2"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/history/-/history-4.6.2.tgz#12cfaba693ba20f114ed5765467ff25fdf67ddb0"
 
 "@types/jest@^20.0.6":
   version "20.0.8"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/jest/-/jest-20.0.8.tgz#7f8c97f73d20d3bf5448fbe33661a342002b5954"
 
-"@types/node@*", "@types/node@8.0.31":
+"@types/node@*":
+  version "8.0.53"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/node/-/node-8.0.53.tgz#396b35af826fa66aad472c8cb7b8d5e277f4e6d8"
+
+"@types/node@8.0.31":
   version "8.0.31"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/node/-/node-8.0.31.tgz#d9af61093cf4bfc9f066ca34de0175012cfb0ce9"
 
@@ -45,14 +49,14 @@
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/prop-types/-/prop-types-15.5.2.tgz#3c6b8dceb2906cc87fe4358e809f9d20c8d59be1"
 
 "@types/react-document-title@^2.0.0":
-  version "2.0.0"
-  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-document-title/-/react-document-title-2.0.0.tgz#1ec98a105c9b68e6b76e9f3e26fb1423b2c0aaba"
+  version "2.0.1"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-document-title/-/react-document-title-2.0.1.tgz#f2ac6d1a87d50b89e4ce141cb050ad7b865d63d8"
   dependencies:
     "@types/react" "*"
 
-"@types/react-dom@^16.0.0":
-  version "16.0.1"
-  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-dom/-/react-dom-16.0.1.tgz#de159d00dd70050000f462e8bcff0c08ef803dee"
+"@types/react-dom@^16.0.3":
+  version "16.0.3"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-dom/-/react-dom-16.0.3.tgz#8accad7eabdab4cca3e1a56f5ccb57de2da0ff64"
   dependencies:
     "@types/node" "*"
     "@types/react" "*"
@@ -69,41 +73,37 @@
     redux "^3.6.0"
 
 "@types/react-router-dom@^4.0.7":
-  version "4.0.8"
-  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-router-dom/-/react-router-dom-4.0.8.tgz#a9731bf35d053cdd27053baacc19e505d74514f3"
+  version "4.2.1"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-router-dom/-/react-router-dom-4.2.1.tgz#c5583550d7246dea60612cc55a523cf980d56df1"
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
     "@types/react-router" "*"
 
 "@types/react-router-redux@^5.0.8":
-  version "5.0.8"
-  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-router-redux/-/react-router-redux-5.0.8.tgz#168117d79ec5095246fb11b1fdea65ec412218d9"
+  version "5.0.10"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-router-redux/-/react-router-redux-5.0.10.tgz#42f612fe6c608e2803b476c035ef81606bdd3bbf"
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
     redux "^3.7.2"
 
 "@types/react-router@*", "@types/react-router@^4.0.14":
-  version "4.0.15"
-  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-router/-/react-router-4.0.15.tgz#be8aaefc20afd968a5dbcffcf09060e6c2e8746e"
+  version "4.0.17"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-router/-/react-router-4.0.17.tgz#1032c800ed0da188d8a3bb38fe6afa8c917865d5"
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
 
 "@types/react-scroll@^1.5.1":
-  version "1.5.1"
-  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-scroll/-/react-scroll-1.5.1.tgz#03b11e5452548669a5ee1349de8add03d77f1457"
+  version "1.5.2"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-scroll/-/react-scroll-1.5.2.tgz#bd1adc45f09d373a5779f954cbf11f9776a47000"
   dependencies:
     "@types/react" "*"
 
-"@types/react@*":
-  version "16.0.14"
-  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react/-/react-16.0.14.tgz#c46d92be936820a93a14ffc84ad805e83f6535ef"
-
-"@types/react@^16.0.20":
-  version "16.0.20"
-  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react/-/react-16.0.20.tgz#dc16feb9c0bdf50e439482c6fd3c43d5a1d9f3b1"
+"@types/react@*", "@types/react@16.0.24":
+  version "16.0.24"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react/-/react-16.0.24.tgz#a6fd8015892fe8ae3c17453615f7ebdd2301d818"
 
 "@types/redux-logger@^3.0.5":
   version "3.0.5"
@@ -4524,119 +4524,119 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
-nav-frontend-alertstriper-style@^0.2.20:
-  version "0.2.20"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-0.2.20.tgz#e48ff9d0091576597c2e414ee5f8b51f17b80589"
+nav-frontend-alertstriper-style@^0.2.22:
+  version "0.2.22"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-0.2.22.tgz#881c93d71f89f27ba63e5bfc723b2531ba0744d8"
 
-nav-frontend-alertstriper@^0.2.11:
-  version "0.2.11"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-alertstriper/-/nav-frontend-alertstriper-0.2.11.tgz#15c492be71efc82d1e43a2bcd259fb4e9dca3c6e"
+nav-frontend-alertstriper@^0.2.15:
+  version "0.2.15"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-alertstriper/-/nav-frontend-alertstriper-0.2.15.tgz#3fd316c650d8dfa74fc2d99e2bb8b374eb66e3d1"
 
-nav-frontend-chevron-style@^0.3.3:
-  version "0.3.3"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-chevron-style/-/nav-frontend-chevron-style-0.3.3.tgz#c0f137056d68e5db1df4290c9d2725f34be1f814"
+nav-frontend-chevron-style@^0.3.4:
+  version "0.3.4"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-chevron-style/-/nav-frontend-chevron-style-0.3.4.tgz#e6b0d5e9ddd87af988e4e1a44fc7fcb1fbb70994"
 
 nav-frontend-core@^4.0.2:
   version "4.0.5"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-core/-/nav-frontend-core-4.0.5.tgz#309c9de6a5146e8e93b3f52d4fc42cc309acdca1"
 
-nav-frontend-ekspanderbartpanel-style@^0.3.6:
-  version "0.3.6"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-0.3.6.tgz#7a5a3f2e6884c123f447226fed93209c911574aa"
+nav-frontend-ekspanderbartpanel-style@^0.3.8:
+  version "0.3.8"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-0.3.8.tgz#3aa1000f445b5c184433eb8848b5521daeb6c69c"
 
-nav-frontend-ekspanderbartpanel@^0.2.14:
-  version "0.2.14"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-0.2.14.tgz#fa808662e9eace35f5cb2d6216a77c790ef07499"
+nav-frontend-ekspanderbartpanel@^0.2.19:
+  version "0.2.19"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-0.2.19.tgz#b3392ab27b5ec82b332947e63298c1b4b917c761"
 
-nav-frontend-grid-style@^0.2.3:
-  version "0.2.3"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-grid-style/-/nav-frontend-grid-style-0.2.3.tgz#951d4d3a193c3dc0e7c7c96ec9d5cb9ec5b4baa2"
-
-nav-frontend-grid@^0.1.8:
-  version "0.1.8"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-grid/-/nav-frontend-grid-0.1.8.tgz#1ae877df8698ec29dee9d8e1d6a10e57622f7715"
-
-nav-frontend-hjelpetekst-style@^0.3.6:
-  version "0.3.6"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-hjelpetekst-style/-/nav-frontend-hjelpetekst-style-0.3.6.tgz#5b933e6c95856af8021358cfbd9941d13b79ddf5"
-
-nav-frontend-hjelpetekst@^0.2.25:
-  version "0.2.25"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-0.2.25.tgz#b194d9a34a8b11a6d0a56d2c13ec3004156c81b4"
-
-nav-frontend-ikoner-assets@^0.2.17:
-  version "0.2.17"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-0.2.17.tgz#11df0fb9bbdb526cc2a1df4b79e003a347a61ca6"
-
-nav-frontend-js-utils@^0.2.9:
-  version "0.2.9"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-js-utils/-/nav-frontend-js-utils-0.2.9.tgz#98c57167bc604c4ae5378f2c71a969269bfb19ad"
-
-nav-frontend-knapper-style@^0.3.4:
-  version "0.3.4"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.4.tgz#918d9ef40993da00202d9cfabe591c15b81fc394"
-
-nav-frontend-knapper@^0.2.12:
-  version "0.2.12"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-knapper/-/nav-frontend-knapper-0.2.12.tgz#94718db8ad9b6ae7ee0dda46492e4b2002a4ea38"
-
-nav-frontend-lenker-style@^0.2.4:
+nav-frontend-grid-style@^0.2.4:
   version "0.2.4"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-lenker-style/-/nav-frontend-lenker-style-0.2.4.tgz#b1383ff64ef7ad2380a551906e79be9864d7db69"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-grid-style/-/nav-frontend-grid-style-0.2.4.tgz#94680796515a9e3d6db2c9b37ba8c705e397695e"
 
-nav-frontend-lukknapp-style@^0.2.3:
-  version "0.2.3"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-lukknapp-style/-/nav-frontend-lukknapp-style-0.2.3.tgz#3cb84f3e2155d3460ab2286838d9b473047b07a0"
-
-nav-frontend-lukknapp@^0.1.10:
+nav-frontend-grid@^0.1.10:
   version "0.1.10"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-lukknapp/-/nav-frontend-lukknapp-0.1.10.tgz#b7de7f309a1d0e7d43692e71c1dc16218fedcc53"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-grid/-/nav-frontend-grid-0.1.10.tgz#6e2a6cb9b38683607399ebdf24f87e64169672cd"
 
-nav-frontend-modal-style@^0.3.5:
-  version "0.3.6"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-modal-style/-/nav-frontend-modal-style-0.3.6.tgz#c8e6a0d31519066d081cc1102f06a41217dccc21"
+nav-frontend-hjelpetekst-style@^0.3.8:
+  version "0.3.8"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-hjelpetekst-style/-/nav-frontend-hjelpetekst-style-0.3.8.tgz#b75379fa4fb0cb636a5696baedbe777f033d746f"
 
-nav-frontend-modal@^0.2.12:
-  version "0.2.12"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-modal/-/nav-frontend-modal-0.2.12.tgz#ebcc2ffbe8568d13de410f1f569c960eca3e9bcd"
+nav-frontend-hjelpetekst@^0.2.31:
+  version "0.2.31"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-0.2.31.tgz#4ec01a6c1832e616de00a0924c33cc544111b3c2"
 
-nav-frontend-paneler-style@^0.3.6:
-  version "0.3.6"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-paneler-style/-/nav-frontend-paneler-style-0.3.6.tgz#fb50d4292a3e4498c620315281363f69c97fb8bf"
+nav-frontend-ikoner-assets@^0.2.18:
+  version "0.2.18"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-0.2.18.tgz#b1eabaac55527d6d39439369f02b401f516be95c"
 
-nav-frontend-paneler@^0.2.13:
-  version "0.2.13"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-paneler/-/nav-frontend-paneler-0.2.13.tgz#7329241827c6b1d46d393cab131cb9ee81bf2c4a"
+nav-frontend-js-utils@^0.2.10:
+  version "0.2.10"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-js-utils/-/nav-frontend-js-utils-0.2.10.tgz#95cf2975e7ec3cc235971dfc683a6eded0f9a153"
 
-nav-frontend-skjema-style@^0.3.9:
-  version "0.3.9"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-skjema-style/-/nav-frontend-skjema-style-0.3.9.tgz#11614162face666728ee23ca8f5596f43a50e716"
+nav-frontend-knapper-style@^0.3.5:
+  version "0.3.5"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.5.tgz#4460b9fd99551052f71b29b5c5bec6f9b33f4991"
 
-nav-frontend-skjema@^0.1.18:
-  version "0.1.18"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-skjema/-/nav-frontend-skjema-0.1.18.tgz#c47af22b8317ec1c2487c47c7f485b518fdabc81"
+nav-frontend-knapper@^0.2.14:
+  version "0.2.14"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-knapper/-/nav-frontend-knapper-0.2.14.tgz#ace90b40830e42ec352c75d4858484747fe90abf"
 
-nav-frontend-spinner-style@^0.2.3:
-  version "0.2.3"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-spinner-style/-/nav-frontend-spinner-style-0.2.3.tgz#d4db18f43310b7ac35079cf845abe46b8ffbbe62"
+nav-frontend-lenker-style@^0.2.5:
+  version "0.2.5"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-lenker-style/-/nav-frontend-lenker-style-0.2.5.tgz#8691fbf75198c7e59de96a099e6456836b2f3be6"
 
-nav-frontend-spinner@^0.1.18:
-  version "0.1.18"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-spinner/-/nav-frontend-spinner-0.1.18.tgz#58080ee181407122b99de18976369d3fecf36bdf"
+nav-frontend-lukknapp-style@^0.2.4:
+  version "0.2.4"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-lukknapp-style/-/nav-frontend-lukknapp-style-0.2.4.tgz#dd112ed9071c75d4eff3239d5a2dd02d3c62a4c5"
 
-nav-frontend-stegindikator-style@^0.3.16:
-  version "0.3.16"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-stegindikator-style/-/nav-frontend-stegindikator-style-0.3.16.tgz#c8e9d0b05a394e97a324924ec9c2b2f35afc24d8"
+nav-frontend-lukknapp@^0.1.13:
+  version "0.1.13"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-lukknapp/-/nav-frontend-lukknapp-0.1.13.tgz#af99002cc9eb3fc4a2d658806f1c0946a8f421bf"
 
-nav-frontend-typografi-style@^1.0.6:
-  version "1.0.6"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-typografi-style/-/nav-frontend-typografi-style-1.0.6.tgz#36b7c723781a6b3c3ee72579988aeecedb1a3ae2"
+nav-frontend-modal-style@^0.3.8:
+  version "0.3.8"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-modal-style/-/nav-frontend-modal-style-0.3.8.tgz#2d0cf2be12b8bd59040bf353fda5f6b680c966b8"
+
+nav-frontend-modal@^0.2.16:
+  version "0.2.16"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-modal/-/nav-frontend-modal-0.2.16.tgz#033ab708e3f6b21db2c464da830afae01664bf80"
+
+nav-frontend-paneler-style@^0.3.7:
+  version "0.3.7"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-paneler-style/-/nav-frontend-paneler-style-0.3.7.tgz#05c668d671ceb33a496c7ae6639c087e85107731"
+
+nav-frontend-paneler@^0.2.17:
+  version "0.2.17"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-paneler/-/nav-frontend-paneler-0.2.17.tgz#96c12d8176181ffa9c95c4a407d7ec03658336c9"
+
+nav-frontend-skjema-style@^0.3.11:
+  version "0.3.11"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-skjema-style/-/nav-frontend-skjema-style-0.3.11.tgz#9d5f614055369f4516b14897e06df01ec1efc603"
+
+nav-frontend-skjema@^0.1.21:
+  version "0.1.21"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-skjema/-/nav-frontend-skjema-0.1.21.tgz#25f0f68d276370fef290bce37067610208064786"
+
+nav-frontend-spinner-style@^0.2.4:
+  version "0.2.4"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-spinner-style/-/nav-frontend-spinner-style-0.2.4.tgz#2c851f5bd4ffe21b2802a9b2f16fade1506a961a"
+
+nav-frontend-spinner@^0.1.20:
+  version "0.1.20"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-spinner/-/nav-frontend-spinner-0.1.20.tgz#44e1aee7c9c3ee3827b64da80033c3e6ad8dfe59"
+
+nav-frontend-stegindikator-style@^0.3.18:
+  version "0.3.18"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-stegindikator-style/-/nav-frontend-stegindikator-style-0.3.18.tgz#8f6a0d936bf407fd183709f16a8fefbab1fbc22b"
+
+nav-frontend-typografi-style@^1.0.7:
+  version "1.0.7"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-typografi-style/-/nav-frontend-typografi-style-1.0.7.tgz#9bc9ca86b3f45b6c6b30755adbbc1489421b2b06"
   dependencies:
     nav-frontend-core "^4.0.2"
 
-nav-frontend-typografi@^1.0.9:
-  version "1.0.9"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-typografi/-/nav-frontend-typografi-1.0.9.tgz#2afae82afdff2fd94e7a1185ef0339e07bf6d4c8"
+nav-frontend-typografi@^1.0.12:
+  version "1.0.12"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-typografi/-/nav-frontend-typografi-1.0.12.tgz#9e8e769b2b83dcd7f68ab363dfaa0fdd0863740a"
 
 ncname@1.0.x:
   version "1.0.0"
@@ -5611,9 +5611,15 @@ progress@^2.0.0:
   version "2.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/progress/-/progress-2.0.0.tgz#8a1be366bf8fc23db2bd23f10c6fe920b4389d1f"
 
-promise@7.1.1, promise@^7.1.1:
+promise@7.1.1:
   version "7.1.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/promise/-/promise-7.1.1.tgz#489654c692616b8aa55b0724fa809bb7db49c5bf"
+  dependencies:
+    asap "~2.0.3"
+
+promise@^7.1.1:
+  version "7.3.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/promise/-/promise-7.3.1.tgz#064b72602b18f90f29192b8b1bc418ffd1ebd3bf"
   dependencies:
     asap "~2.0.3"
 
@@ -5958,9 +5964,9 @@ react-test-renderer@^15.6.1:
     fbjs "^0.8.9"
     object-assign "^4.1.0"
 
-react@^15.6.1:
-  version "15.6.2"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react/-/react-15.6.2.tgz#dba0434ab439cfe82f108f0f511663908179aa72"
+react@15.6.1:
+  version "15.6.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
   dependencies:
     create-react-class "^15.6.0"
     fbjs "^0.8.9"

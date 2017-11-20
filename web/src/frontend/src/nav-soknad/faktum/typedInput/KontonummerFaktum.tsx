@@ -10,7 +10,7 @@ const KontonummerFaktum: React.StatelessComponent<Props> = (props: Props) => {
 		<InputFaktum
 			{...props}
 			maxLength={13}
-			bredde={props.bredde || "s"}
+			bredde={props.bredde || "S"}
 			validerFunc={validerFunc}
 		/>
 	);

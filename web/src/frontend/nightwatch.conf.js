@@ -6,7 +6,7 @@ const argv = require('yargs')
 		alias: 'timeout',
 		type: 'number'
 	})
-	.option('l',  {
+	.option('L',  {
 		alias: 'login',
 		type: 'string'
 	})

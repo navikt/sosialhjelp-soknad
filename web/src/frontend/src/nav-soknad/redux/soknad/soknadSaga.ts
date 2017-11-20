@@ -24,7 +24,8 @@ import {
 	tilSteg,
 	navigerTilDittNav,
 	navigerTilKvittering,
-	navigerTilServerfeil
+	navigerTilServerfeil,
+	tilStart
 } from "../navigasjon/navigasjonActions";
 import { lagreFaktum, setFakta, resetFakta } from "../fakta/faktaActions";
 import { Soknad, Faktum, Infofaktum } from "../../types";
@@ -117,7 +118,11 @@ function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
 	try {
 		yield call(fetchDelete, "soknader/" + action.brukerBehandlingId);
 		yield put(slettSoknadOk());
-		yield put(navigerTilDittNav());
+		if (action.destinasjon === "START") {
+			yield put(tilStart());
+		} else {
+			yield put(navigerTilDittNav());
+		}
 	} catch (reason) {
 		yield put(slettSoknadFeilet(reason));
 	}

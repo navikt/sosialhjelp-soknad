@@ -28,7 +28,7 @@ const soknad: Soknad = {
 					faktumId: 2,
 					soknadId: 1,
 					key: "kjonn",
-					value: "m",
+					value: "M",
 					systemEgenskap: 1
 				},
 				{
@@ -178,7 +178,7 @@ const soknad: Soknad = {
 				statsborgerskap: "NOR",
 				utenlandskKontoBanknavn: "Nordea",
 				erUtenlandskBankkonto: "true",
-				kjonn: "m",
+				kjonn: "M",
 				epost: "test@epost.com",
 				sekundarAdresseType: "MIDLERTIDIG_POSTADRESSE_UTLAND",
 				gjeldendeAdresse: "Grepalida 44B, 0560 Oslo, Norge",

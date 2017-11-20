@@ -19,6 +19,81 @@
 		}
 	},
 	{
+		"id": "opplysninger.arbeid.jobb",
+		"type": "composite",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.arbeid",
+			"type": "gruppe",
+			"panel": "opplysningerBolk",
+			"dependOn": null,
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": false,
+			"flereTillatt": null,
+			"erSystemFaktum": null,
+			"properties": null,
+			"constraints": null,
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": [
+			{
+				"id": "bruttolonn",
+				"type": "textbox",
+				"dependOn": null,
+				"constraints": null,
+				"configuration": null
+			},
+			{
+				"id": "nettolonn",
+				"type": "textbox",
+				"dependOn": null,
+				"constraints": null,
+				"configuration": null
+			}
+		],
+		"constraints": [
+			{
+				"faktumStruktur": {
+					"id": "dinsituasjon.jobb",
+					"type": "bool",
+					"panel": "arbeidbolk",
+					"dependOn": null,
+					"dependOnProperty": null,
+					"dependOnValues": null,
+					"useExpression": false,
+					"kunUtvidet": false,
+					"optional": true,
+					"flereTillatt": null,
+					"erSystemFaktum": null,
+					"properties": null,
+					"constraints": null,
+					"tekster": null,
+					"configuration": {
+						"configuration": []
+					}
+				},
+				"expression": "value == 'true'"
+			}
+		],
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
 		"id": "opplysninger.familiesituasjon",
 		"type": "gruppe",
 		"panel": "opplysningerBolk",
@@ -144,7 +219,9 @@
 							}
 						},
 						"dependOnProperty": null,
-						"dependOnValues": ["true"],
+						"dependOnValues": [
+							"true"
+						],
 						"useExpression": false,
 						"kunUtvidet": false,
 						"optional": true,

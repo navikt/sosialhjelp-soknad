@@ -30,7 +30,8 @@ import {
 import {
 	tilSteg,
 	navigerTilKvittering,
-	navigerTilDittNav
+	navigerTilDittNav,
+	tilStart
 } from "../navigasjon/navigasjonActions";
 import { lagreFaktum, resetFakta } from "../fakta/faktaActions";
 import { Faktum } from "../../types";
@@ -176,7 +177,7 @@ describe("soknadSaga", () => {
 		});
 	});
 
-	describe("slettSoknad", () => {
+	describe("slettSoknad default", () => {
 		const action = slettSoknad("1") as SlettSoknadAction;
 		const saga = slettSoknadSaga(action);
 
@@ -198,6 +199,38 @@ describe("soknadSaga", () => {
 			expect(saga.next()).toEqual({
 				done: false,
 				value: put(navigerTilDittNav())
+			});
+		});
+
+		it("er ferdig", () => {
+			expect(saga.next()).toEqual({
+				done: true
+			});
+		});
+	});
+
+	describe("slettSoknad ved navigasjon til start", () => {
+		const action = slettSoknad("1", "START") as SlettSoknadAction;
+		const saga = slettSoknadSaga(action);
+
+		it("calls slettSoknad", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: call(fetchDelete, "soknader/1")
+			});
+		});
+
+		it("puts slettSoknadOk", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(slettSoknadOk())
+			});
+		});
+
+		it("puts navigerTilDittNAV", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(tilStart())
 			});
 		});
 

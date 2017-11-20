@@ -1,5 +1,9 @@
 import { InjectedIntl } from "react-intl";
-import { SoknadActionTypeKeys, SoknadActionTypes } from "./soknadActionTypes";
+import {
+	SoknadActionTypeKeys,
+	SoknadActionTypes,
+	AVBRYT_DESTINASJON
+} from "./soknadActionTypes";
 import { Soknad, Kvittering, Infofaktum } from "../../types";
 
 export function startSoknad(kommune: string, bydel?: string) {
@@ -91,9 +95,12 @@ export function resetSoknad(): SoknadActionTypes {
 	};
 }
 
-export function avbrytSoknad(): SoknadActionTypes {
+export function avbrytSoknad(
+	destinasjon: AVBRYT_DESTINASJON = "MINSIDE"
+): SoknadActionTypes {
 	return {
-		type: SoknadActionTypeKeys.AVBRYT_SOKNAD
+		type: SoknadActionTypeKeys.AVBRYT_SOKNAD,
+		destinasjon
 	};
 }
 
@@ -103,10 +110,14 @@ export function fortsettSoknad(): SoknadActionTypes {
 	};
 }
 
-export function slettSoknad(brukerBehandlingId: string): SoknadActionTypes {
+export function slettSoknad(
+	brukerBehandlingId: string,
+	destinasjon: AVBRYT_DESTINASJON = "MINSIDE"
+): SoknadActionTypes {
 	return {
 		type: SoknadActionTypeKeys.SLETT_SOKNAD,
-		brukerBehandlingId
+		brukerBehandlingId,
+		destinasjon
 	};
 }
 
