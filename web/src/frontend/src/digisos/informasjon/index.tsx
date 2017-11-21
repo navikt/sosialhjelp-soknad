@@ -30,7 +30,7 @@ class Informasjon extends React.Component<Props, {}> {
 			<div>
 				<DocumentTitle title={title} />
 				<AppTittel />
-				{soknadErLive && harTilgang ? (
+				{soknadErLive === "true" && harTilgang ? (
 					<div>
 						<div className="skjema-content">
 							<Infoblokk
