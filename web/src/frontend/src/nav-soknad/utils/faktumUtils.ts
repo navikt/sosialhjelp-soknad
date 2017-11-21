@@ -104,7 +104,7 @@ export function getPropertyVerdi(
 
 export function oppdaterFaktumMedProperties(
 	faktum: Faktum,
-	properties: object,
+	properties: object
 ): Faktum {
 	return { ...faktum, properties: { ...properties } };
 }
@@ -162,4 +162,11 @@ export function finnFaktumMedId(
 
 export function finnFakta(faktumKey: string, fakta: Faktum[]): Faktum[] {
 	return fakta.filter(faktum => faktum.key === faktumKey);
+}
+
+export function harBrukerSvartFaktum(fakta: Faktum[]) {
+	const besvarte = fakta.filter(f => {
+		return f.value !== undefined && f.value !== null && f.value !== "";
+	});
+	return besvarte.length > 0;
 }

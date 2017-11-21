@@ -219,9 +219,7 @@
 							}
 						},
 						"dependOnProperty": null,
-						"dependOnValues": [
-							"true"
-						],
+						"dependOnValues": ["true"],
 						"useExpression": false,
 						"kunUtvidet": false,
 						"optional": true,
