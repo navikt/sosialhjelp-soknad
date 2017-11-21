@@ -27,6 +27,7 @@ public class StartJetty {
     private static void configureLocalConfig() {
         System.setProperty("dialogarena.cms.url", "https://appres-t10.nav.no");
         System.setProperty("soknadsapi.url", "http://localhost:8181/sendsoknad");
+        System.setProperty("feature.frontend.sosialhjelp.live", "true");
     }
 
 }

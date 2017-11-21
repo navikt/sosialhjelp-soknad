@@ -18,6 +18,7 @@
     <resources>
         <baseUrl mapToProperty="dialogarena.cms" alias="appres.cms"/>
         <baseUrl mapToProperty="soknadsapi" alias="soknadsapi"/>
+        <applicationProperties alias="soknadsosialhjelp.properties"/>
     </resources>
 
     <loadBalancer isAlive="/soknadsosialhjelp/internal/isAlive"/>

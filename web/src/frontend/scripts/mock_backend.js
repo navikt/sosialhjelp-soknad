@@ -64,6 +64,15 @@ router.get("/soknader/:brukerBehandlingId?lang=nb_NO", function(req, res) {
 	console.log("sss");
 });
 
+
+router.get("/api/feature", function(req, res) {
+    console.log("features");
+    res.json({
+        "feature.frontend.sosialhjelp.kontonummer": "true",
+        "feature.frontend.sosialhjelp.live": "true",
+	});
+});
+
 router.get("/soknader/:brukerBehandlingId", function(req, res) {
 	console.log("Mock backend: GET soknader");
 	console.log(req.headers["accept"]);
