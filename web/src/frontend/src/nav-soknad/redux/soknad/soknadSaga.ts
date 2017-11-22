@@ -39,7 +39,6 @@ import {
 	slettSoknadOk,
 	slettSoknadFeilet,
 	hentKvitteringOk,
-	hentKvitteringFeilet,
 	sendSoknadOk,
 	sendSoknadFeilet,
 	resetSoknad,
@@ -164,7 +163,7 @@ function* hentKvitteringSaga(action: HentKvitteringAction): SagaIterator {
 		);
 		yield put(hentKvitteringOk(kvittering));
 	} catch (reason) {
-		yield put(hentKvitteringFeilet(reason));
+		yield put(navigerTilServerfeil());
 	}
 }
 
