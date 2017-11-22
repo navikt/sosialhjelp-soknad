@@ -40,7 +40,7 @@ const Vedleggsinfo: React.StatelessComponent<
 		<div className="kvittering__vedlegg">
 			<Ekspanderbartpanel
 				className="ekspanderbartPanel--kvittering"
-				tittel="Vedlegg som NAV-kontoret trenger for å kunne vurdere søknaden din"
+				tittel={intl.formatMessage({ id: "kvittering.vedlegg.tittel" })}
 				apen={false}
 			>
 				<div className="kvittering__tekst blokk-s">
