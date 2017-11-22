@@ -33,15 +33,10 @@ import { SoknadAppState } from "../reduxTypes";
 
 import {
 	opprettSoknadOk,
-	opprettSoknadFeilet,
 	hentSoknadOk,
-	hentSoknadFeilet,
 	slettSoknadOk,
-	slettSoknadFeilet,
 	hentKvitteringOk,
-	hentKvitteringFeilet,
 	sendSoknadOk,
-	sendSoknadFeilet,
 	resetSoknad,
 	startSoknadOk
 } from "./soknadActions";
@@ -62,7 +57,7 @@ function* opprettSoknadSaga(): SagaIterator {
 		yield put(opprettSoknadOk(response.brukerBehandlingId));
 		return response.brukerBehandlingId;
 	} catch (reason) {
-		yield put(opprettSoknadFeilet(reason));
+		yield put(navigerTilServerfeil());
 	}
 }
 
@@ -78,7 +73,7 @@ function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
 		yield put(hentSoknadOk(soknad));
 		return soknad;
 	} catch (reason) {
-		yield put(hentSoknadFeilet(reason));
+		yield put(navigerTilServerfeil());
 	}
 }
 
@@ -124,7 +119,7 @@ function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
 			yield put(navigerTilDittNav());
 		}
 	} catch (reason) {
-		yield put(slettSoknadFeilet(reason));
+		yield put(navigerTilServerfeil());
 	}
 }
 
@@ -152,7 +147,7 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
 		yield put(sendSoknadOk(action.brukerBehandlingId));
 		yield put(navigerTilKvittering(action.brukerBehandlingId));
 	} catch (reason) {
-		yield put(sendSoknadFeilet(reason));
+		yield put(navigerTilServerfeil());
 	}
 }
 
@@ -164,7 +159,7 @@ function* hentKvitteringSaga(action: HentKvitteringAction): SagaIterator {
 		);
 		yield put(hentKvitteringOk(kvittering));
 	} catch (reason) {
-		yield put(hentKvitteringFeilet(reason));
+		yield put(navigerTilServerfeil());
 	}
 }
 
