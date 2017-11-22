@@ -12,11 +12,27 @@
 		}
 	}
 	&__tekst {
-		padding: 0 @skjemaMarg @skjemaMarg @skjemaMarg;
+		padding: 0 @skjemaMarg 0 @skjemaMarg;
 		text-align: left;
 		@media @mobile {
 			padding-left: @skjemaMarg/2;
 			padding-right: @skjemaMarg/2;
+		}
+	}
+}
+
+/** Veldig spesifikk overrid enn så lenge */
+.ekspanderbartPanel--kvittering {
+	.ekspanderbartPanel__hode {
+		text-align: left;
+		.typo-undertittel {
+			font-size: 1rem;
+			padding-left: @skjemaMarg;
+			padding-right: @skjemaMarg;
+			@media @mobile {
+				padding-left: @skjemaMarg/2;
+				padding-right: @skjemaMarg/2;
+			}
 		}
 	}
 }
