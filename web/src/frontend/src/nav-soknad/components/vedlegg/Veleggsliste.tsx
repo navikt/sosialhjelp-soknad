@@ -8,7 +8,7 @@ interface Props {
 const Vedleggsliste: React.StatelessComponent<Props> = (props: Props) => (
 	<ul className="vedleggsliste">
 		{props.vedlegg.map(vedlegg => (
-			<li key={vedlegg.vedleggId}>{vedlegg.navn}</li>
+			<li key={vedlegg.vedleggId}>{vedlegg.tittel}</li>
 		))}
 	</ul>
 );
