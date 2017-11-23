@@ -164,9 +164,17 @@ export function finnFakta(faktumKey: string, fakta: Faktum[]): Faktum[] {
 	return fakta.filter(faktum => faktum.key === faktumKey);
 }
 
-export function harBrukerSvartFaktum(fakta: Faktum[]) {
-	const besvarte = fakta.filter(f => {
-		return f.value !== undefined && f.value !== null && f.value !== "";
+export function harBrukerBesvartFaktum(fakta: Faktum[], faktaKeys: string[]) {
+	const besvarte = faktaKeys.filter(key => {
+		const faktum = fakta.find(f => f.key === key);
+		if (faktum) {
+			return (
+				faktum.value !== undefined &&
+				faktum.value !== null &&
+				faktum.value !== ""
+			);
+		}
+		return false;
 	});
 	return besvarte.length > 0;
 }
