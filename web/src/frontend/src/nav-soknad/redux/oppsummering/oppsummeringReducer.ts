@@ -35,7 +35,9 @@ const hentUtOppsummering = (html: string): Oppsummering => {
 	const el = document.createElement("div");
 	el.innerHTML = body;
 	const signatur = el.querySelector(".js-signatur").innerHTML;
-	const htmlBolker = Array.from(el.querySelectorAll(".js-bolk"));
+	const htmlBolker = Array.from(el.querySelectorAll(".js-bolk")).concat(
+		el.querySelector(".js-vedlegg")
+	);
 	const bolker: OppsummeringBolk[] = htmlBolker
 		.map(htmlBolk => {
 			return {
