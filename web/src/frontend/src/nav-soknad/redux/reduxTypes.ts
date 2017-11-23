@@ -2,13 +2,14 @@ import { ValideringState } from "./valideringReducer";
 import { FaktumState } from "./fakta/faktaReducer";
 import { MiljovariablerApiType } from "./miljovariabler/miljovariablerTypes";
 import { OppsummeringState } from "./oppsummering/oppsummeringReducer";
-import { Soknad, Kvittering, Infofaktum, REST_STATUS } from "../types";
+import { Infofaktum, Kvittering, REST_STATUS, Soknad } from "../types";
 import { ApplikasjonsfeilState } from "./applikasjonsfeil/applikasjonsfeilReducer";
 import { TilgangState } from "./tilgang/tilgangTypes";
 import { LedetekstState } from "./ledetekster/ledeteksterTypes";
 import { AVBRYT_DESTINASJON } from "./soknad/soknadActionTypes";
 import { InitState } from "./init/initTypes";
 import { VedleggState } from "../../digisos/redux/vedlegg/vedleggTypes";
+import { FeatureTogglesApiType } from "./featuretoggles/featureTogglesTypes";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -30,6 +31,7 @@ export interface SoknadAppState {
 	oppsummering: OppsummeringState;
 	applikasjonsfeil: ApplikasjonsfeilState;
 	miljovariabler: MiljovariablerApiType;
+	featuretoggles: FeatureTogglesApiType;
 	tilgang: TilgangState;
 	vedlegg: VedleggState;
 	ledetekster: LedetekstState;

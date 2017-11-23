@@ -1,4 +1,4 @@
-import { takeEvery, put } from "redux-saga/effects";
+import { put, takeEvery } from "redux-saga/effects";
 import { hentMiljovariabler } from "../miljovariabler/miljovariablerActions";
 import { hentTekster } from "../ledetekster/ledeteksterActions";
 import { hentTilgang } from "../tilgang/tilgangActions";
@@ -7,22 +7,27 @@ import { LedeteksterActionTypeKeys } from "../ledetekster/ledeteksterTypes";
 import { TilgangActionTypeKeys } from "../tilgang/tilgangTypes";
 
 import { InitActionTypeKeys } from "./initTypes";
-import { initFerdig, initFeilet } from "./initActions";
+import { initFeilet, initFerdig } from "./initActions";
+import { FeatureTogglesActionTypeKeys } from "../featuretoggles/featureTogglesTypes";
+import { hentFeatureToggles } from "../featuretoggles/featureTogglesActions";
 
 export let initActions = [
 	TilgangActionTypeKeys.OK,
 	MiljovariablerActionTypeKeys.OK,
-	LedeteksterActionTypeKeys.OK
+	LedeteksterActionTypeKeys.OK,
+	FeatureTogglesActionTypeKeys.OK
 ];
 
 export const initFeiletActions = [
 	TilgangActionTypeKeys.FEILET,
 	MiljovariablerActionTypeKeys.FEILET,
-	LedeteksterActionTypeKeys.FEILET
+	LedeteksterActionTypeKeys.FEILET,
+	FeatureTogglesActionTypeKeys.FEILET
 ];
 
 function* startInit(): IterableIterator<any> {
 	yield put(hentMiljovariabler());
+	yield put(hentFeatureToggles());
 	yield put(hentTilgang());
 	yield put(hentTekster());
 }

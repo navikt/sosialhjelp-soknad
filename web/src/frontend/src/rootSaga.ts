@@ -10,6 +10,7 @@ import oppsummeringSaga from "./nav-soknad/redux/oppsummering/oppsummeringSaga";
 import synligeFaktaSaga from "./digisos/redux/synligefakta/synligeFaktaSaga";
 import initSaga from "./nav-soknad/redux/init/initSaga";
 import vedleggsForventningSaga from "./digisos/redux/vedlegg/vedleggSaga";
+import featureTogglesSaga from "./nav-soknad/redux/featuretoggles/featureTogglesSaga";
 
 export default function* rootSaga() {
 	yield all([
@@ -19,6 +20,7 @@ export default function* rootSaga() {
 		faktaSaga(),
 		navigasjonSaga(),
 		miljovariablerSaga(),
+		featureTogglesSaga(),
 		navloggerSaga(),
 		oppsummeringSaga(),
 		synligeFaktaSaga(),

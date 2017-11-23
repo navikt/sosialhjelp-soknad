@@ -2,13 +2,11 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { State } from "../../redux/reducers";
 import Infoblokk from "../../../nav-soknad/components/infoblokk/index";
-import { FormattedHTMLMessage } from "react-intl";
+import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { SynligeFaktaProps } from "../../redux/synligefakta/synligeFaktaTypes";
 import InformasjonBolk from "./InformasjonBolk";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { hentSynligeFakta } from "../../redux/synligefakta/synligeFaktaActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
@@ -104,6 +102,6 @@ export default connect((state: State) => {
 		fakta: state.fakta.data,
 		synligefakta: state.synligefakta,
 		featureToggleBeOmLonnslippVedlegg:
-			state.miljovariabler.data[FeatureToggles.beOmLonnslippVedlegg]
+			state.featuretoggles.data[FeatureToggles.beOmLonnslippVedlegg]
 	};
 })(injectIntl(EkstraInformasjon));
