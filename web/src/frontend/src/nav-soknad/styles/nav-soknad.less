@@ -34,6 +34,9 @@ body {
 	padding-right: 0 !important;
 }
 
+.tekst-capitalize {
+	text-transform: capitalize;
+}
 .skjema-texarea--normal {
 	min-height: 6em;
 }
@@ -58,6 +61,27 @@ body {
 	&:after {
 		.tittel-strek-after();
 		background-color: @navMorkGra;
+	}
+}
+
+.detaljeliste {
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	dd,
+	dt {
+		padding: 0;
+		margin: 0;
+	}
+	dd {
+		margin-bottom: 0.2rem;
+	}
+	&__tittel {
+		flex: 1 1 30%;
+		color: @navGra60;
+	}
+	&__verdi {
+		flex-basis: 70%;
 	}
 }
 

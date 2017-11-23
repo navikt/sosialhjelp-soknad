@@ -5,6 +5,11 @@
 	padding-top: 0.8rem;
 	padding-bottom: 1rem;
 
+	&--noPadding {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+
 	&__wrapper {
 		margin-left: -1 * @skjemaMarg;
 		margin-right: -1 * @skjemaMarg;
@@ -24,8 +29,14 @@
 				@skjemaMargMobil;
 		}
 	}
+	&--kompakt {
+		.underskjema__boks {
+			padding-top: 1rem;
+			padding-bottom: 1.5rem;
+		}
+	}
 
-	&--pil {
+	&--arrow {
 		.underskjema__innhold:before {
 			content: "";
 			height: 1rem;

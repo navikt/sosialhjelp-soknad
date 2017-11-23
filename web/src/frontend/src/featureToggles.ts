@@ -3,5 +3,6 @@
 export const FeatureToggles = {
 	soknadErLive: "feature.frontend.sosialhjelp.live",
 	beOmLonnslippVedlegg: "feature.frontend.sosialhjelp.lonnslippvedlegg",
-	viseTpsKontonummer: "feature.frontend.sosialhjelp.kontonummer"
+	viseTpsKontonummer: "feature.frontend.sosialhjelp.kontonummer",
+	viseTpsPersonalia: "feature.frontend.sosialhjelp.personalia"
 };

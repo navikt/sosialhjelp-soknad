@@ -8,24 +8,48 @@ import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import CheckboxFaktum from "../../../nav-soknad/faktum/CheckboxFaktum";
 import TelefonFaktum from "../../../nav-soknad/faktum/typedInput/TelefonFaktum";
 import KontonummerFaktum from "../../../nav-soknad/faktum/typedInput/KontonummerFaktum";
+import { FeatureToggles } from "../../../featureToggles";
 import {
 	radioCheckKeys,
 	faktumIsSelected,
 	getFaktumVerdi,
 	eksistererFaktum,
+	finnFaktum,
+	faktumEgenskapVerdi
 } from "../../../nav-soknad/utils";
-
+import PersonaliaTPS from "./PersonaliaTPS";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
-class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
+interface StateProps {
+	visTpsPersonalia: boolean;
+}
+
+type Props = StateProps & FaktumComponentProps;
+class Personalia extends React.Component<Props, {}> {
 	render() {
-		const harKontonummer: boolean = eksistererFaktum(this.props.fakta, "kontakt.kontonummer.system");
+		const harKontonummer: boolean = eksistererFaktum(
+			this.props.fakta,
+			"kontakt.kontonummer.system"
+		);
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		const brukerHarIkkeKontonummer = faktumIsSelected(
 			getFaktumVerdi(this.props.fakta, "kontakt.kontonummer.harikke")
 		);
+		const personaliaFaktum = finnFaktum("personalia", this.props.fakta);
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
+				{this.props.visTpsPersonalia && (
+					<SporsmalFaktum faktumKey="personalia">
+						<PersonaliaTPS
+							navn={faktumEgenskapVerdi(personaliaFaktum, "navn")}
+							fnr={faktumEgenskapVerdi(personaliaFaktum, "fnr")}
+							statsborgerskap={faktumEgenskapVerdi(
+								personaliaFaktum,
+								"statsborgerskapType"
+							)}
+						/>
+					</SporsmalFaktum>
+				)}
 				{!harKontonummer && (
 					<SporsmalFaktum faktumKey="kontakt.kontonummer">
 						<KontonummerFaktum
@@ -33,7 +57,7 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 							disabled={brukerHarIkkeKontonummer}
 							ignorert={brukerHarIkkeKontonummer}
 						/>
-						<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke"/>
+						<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
 					</SporsmalFaktum>
 				)}
 				{harKontonummer && (
@@ -48,15 +72,15 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 							disabled={brukerHarIkkeKontonummer}
 							ignorert={brukerHarIkkeKontonummer}
 						/>
-						<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke"/>
+						<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
 					</SporsmalFaktum>
 				)}
 				<SporsmalFaktum faktumKey="kontakt.telefon">
-					<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8}/>
+					<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8} />
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey={statsborger.faktum}>
-					<RadioFaktum faktumKey={statsborger.faktum} value="true"/>
-					<RadioFaktum faktumKey={statsborger.faktum} value="false"/>
+					<RadioFaktum faktumKey={statsborger.faktum} value="true" />
+					<RadioFaktum faktumKey={statsborger.faktum} value="false" />
 				</SporsmalFaktum>
 			</DigisosSkjemaSteg>
 		);
@@ -65,6 +89,8 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 
 export default connect((state: State) => {
 	return {
+		visTpsPersonalia:
+			state.featuretoggles.data[FeatureToggles.viseTpsPersonalia],
 		fakta: state.fakta.data
 	};
-})(Kontaktinfo);
+})(Personalia);

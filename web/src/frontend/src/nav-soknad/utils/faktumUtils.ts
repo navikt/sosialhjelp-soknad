@@ -146,8 +146,22 @@ export function finnFaktum(
 	return faktum[0];
 }
 
+export function faktumEgenskapVerdi(faktum: Faktum, key: string): string {
+	if (faktum && faktum.faktumEgenskaper) {
+		const faktumEgenskap = faktum.faktumEgenskaper.find(fe => fe.key === key);
+		if (faktumEgenskap) {
+			return faktumEgenskap.value;
+		}
+	}
+	return null;
+}
+
 export function getProgresjonFaktum(fakta: Faktum[]) {
 	return finnFaktum("progresjon", fakta);
+}
+
+export function getPersonaliaFaktum(fakta: Faktum[]) {
+	return finnFaktum("personalia", fakta);
 }
 
 export function finnFaktumMedId(
@@ -166,7 +180,7 @@ export function finnFakta(faktumKey: string, fakta: Faktum[]): Faktum[] {
 
 export function harBrukerBesvartFaktum(fakta: Faktum[], faktaKeys: string[]) {
 	const besvarte = faktaKeys.filter(key => {
-		const faktum = fakta.find(f => f.key === key);
+		const faktum = finnFaktum(key, fakta);
 		if (faktum) {
 			return (
 				faktum.value !== undefined &&

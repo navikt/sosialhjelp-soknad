@@ -4,7 +4,7 @@ import { Collapse } from "react-collapse";
 
 interface UnderskjemaProps extends React.Props<any> {
 	tittel?: string;
-	visible: boolean;
+	visible?: boolean;
 	arrow?: boolean;
 	collapsable?: boolean;
 	children: React.ReactNode;
@@ -17,10 +17,13 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
 	collapsable = true,
 	children
 }) => {
-	if (!visible && !collapsable) {
+	if (!visible && collapsable) {
 		return null;
 	}
-	const cls = classNames("underskjema", { "underskjema--pil": arrow });
+	const cls = classNames("underskjema", {
+		"underskjema--arrow": arrow,
+		"underskjema--noPadding": !collapsable
+	});
 	const renderContent = () => (
 		<div className={cls}>
 			<div className="underskjema__boks">
