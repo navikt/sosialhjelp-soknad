@@ -124,10 +124,10 @@ if (isMasterBuild) {
             }
         }
     }
-    stage("Deploy app til q6") {
+    stage("Deploy app til q0") {
         callback = "${env.BUILD_URL}input/Deploy/"
         node {
-            deploy = common.deployApp(application, releaseVersion, "q6", callback, author).key
+            deploy = common.deployApp(application, releaseVersion, "q0", callback, author).key
         }
 
         try {
