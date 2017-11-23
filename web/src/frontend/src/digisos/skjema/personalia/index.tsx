@@ -39,7 +39,10 @@ class Personalia extends React.Component<Props, {}> {
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
 				{this.props.visTpsPersonalia && (
-					<SporsmalFaktum faktumKey="personalia">
+					<SporsmalFaktum
+						faktumKey="personalia"
+						className={"skjema-sporsmal--noBottomPadding"}
+					>
 						<PersonaliaTPS
 							navn={faktumEgenskapVerdi(personaliaFaktum, "navn")}
 							fnr={faktumEgenskapVerdi(personaliaFaktum, "fnr")}

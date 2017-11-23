@@ -15,6 +15,7 @@ export interface OwnProps {
 	children: React.ReactNode;
 	visible?: boolean;
 	htmlRef?: (c: any) => HTMLElement;
+	className?: string;
 	tittelRenderer?: (title: string) => React.ReactNode;
 }
 
@@ -55,7 +56,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const { visible, feilkode, intl, children } = this.props;
+		const { visible, feilkode, intl, className, children } = this.props;
 		if (visible === false) {
 			return null;
 		}
@@ -69,7 +70,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 			: tekster.sporsmal;
 		return (
 			<div
-				className="skjema-sporsmal"
+				className={classNames("skjema-sporsmal", className)}
 				onBlur={this.handleOnBlur}
 				aria-labelledby={legendId}
 			>
