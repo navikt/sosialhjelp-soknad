@@ -6,6 +6,7 @@ interface UnderskjemaProps extends React.Props<any> {
 	tittel?: string;
 	visible?: boolean;
 	arrow?: boolean;
+	style?: "default" | "system";
 	collapsable?: boolean;
 	children: React.ReactNode;
 }
@@ -14,16 +15,22 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
 	tittel,
 	visible,
 	arrow = true,
+	style = "default",
 	collapsable = true,
 	children
 }) => {
 	if (!visible && collapsable) {
 		return null;
 	}
-	const cls = classNames("underskjema", {
-		"underskjema--arrow": arrow,
-		"underskjema--noPadding": !collapsable
-	});
+	const cls = classNames(
+		"underskjema",
+		`underskjema--${style}`,
+		{
+			"underskjema--arrow": arrow,
+			"underskjema--noPadding": !collapsable
+		},
+		style
+	);
 	const renderContent = () => (
 		<div className={cls}>
 			<div className="underskjema__boks">

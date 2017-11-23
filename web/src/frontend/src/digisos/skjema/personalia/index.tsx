@@ -42,7 +42,9 @@ class Personalia extends React.Component<Props, {}> {
 				{this.props.visTpsPersonalia && (
 					<SporsmalFaktum
 						faktumKey="tps.personalia"
-						className={"skjema-sporsmal--noBottomPadding"}
+						className={
+							"skjema-sporsmal--noBottomPadding skjema-sporsmal--systeminfo"
+						}
 					>
 						<PersonaliaTPS
 							navn={faktumEgenskapVerdi(personaliaFaktum, "navn")}

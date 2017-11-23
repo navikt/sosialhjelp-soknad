@@ -6,7 +6,7 @@ interface Props {
 }
 
 const Systeminfo: React.StatelessComponent<Props> = (props: Props) => (
-	<Underskjema arrow={false} visible={true} collapsable={false}>
+	<Underskjema arrow={false} visible={true} collapsable={false} style="system">
 		{props.children}
 	</Underskjema>
 );

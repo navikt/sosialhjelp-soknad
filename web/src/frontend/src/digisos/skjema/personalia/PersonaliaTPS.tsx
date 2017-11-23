@@ -32,7 +32,7 @@ const PersonaliaTPS: React.StatelessComponent<Props> = ({
 				{statsborgerskap && (
 					<DetaljelisteElement
 						tittel={<FormattedMessage id="tps.personalia.statsborgerskap" />}
-						verdi={<span className="tekst-capitalize">statsborgerskap</span>}
+						verdi={<span className="tekst-capitalize">{statsborgerskap}</span>}
 					/>
 				)}
 			</Detaljeliste>
