@@ -1,30 +1,29 @@
 import * as React from "react";
-import * as classNames from "classnames";
 
-export interface Detalje {
-	tittel: string;
+export interface ElementProps {
+	tittel: React.ReactNode;
 	verdi: React.ReactNode;
-	className?: string;
 }
+
+export const DetaljelisteElement: React.StatelessComponent<ElementProps> = (
+	props: ElementProps
+) => (
+	<li>
+		<strong className="detaljeliste__tittel" key="tittel">
+			{props.tittel}:
+		</strong>
+		<div className={"detaljeliste__verdi"} key="verdi">
+			{props.verdi}
+		</div>
+	</li>
+);
 
 interface Props {
-	detaljer: Detalje[];
+	children: React.ReactNode;
 }
 
-const Detaljeliste: React.StatelessComponent<Props> = ({ detaljer }) => (
-	<dl className="detaljeliste">
-		{detaljer.map((d, idx) => [
-			<dt className="detaljeliste__tittel" key={`tittel-${idx}`}>
-				{d.tittel}:
-			</dt>,
-			<dd
-				className={classNames("detaljeliste__verdi", d.className)}
-				key={`verdi-${idx}`}
-			>
-				{d.verdi}
-			</dd>
-		])}
-	</dl>
+const Detaljeliste: React.StatelessComponent<Props> = ({ children }) => (
+	<ul className="detaljeliste">{children}</ul>
 );
 
 export default Detaljeliste;

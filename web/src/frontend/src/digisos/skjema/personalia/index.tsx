@@ -25,6 +25,7 @@ interface StateProps {
 }
 
 type Props = StateProps & FaktumComponentProps;
+
 class Personalia extends React.Component<Props, {}> {
 	render() {
 		const harKontonummer: boolean = eksistererFaktum(
@@ -40,7 +41,7 @@ class Personalia extends React.Component<Props, {}> {
 			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
 				{this.props.visTpsPersonalia && (
 					<SporsmalFaktum
-						faktumKey="personalia"
+						faktumKey="tps.personalia"
 						className={"skjema-sporsmal--noBottomPadding"}
 					>
 						<PersonaliaTPS

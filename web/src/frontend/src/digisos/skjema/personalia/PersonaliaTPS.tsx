@@ -1,7 +1,8 @@
 import * as React from "react";
+import { FormattedMessage } from "react-intl";
 import Systeminfo from "../../../nav-soknad/components/systeminfo";
 import Detaljeliste, {
-	Detalje
+	DetaljelisteElement
 } from "../../../nav-soknad/components/detaljeliste";
 
 interface Props {
@@ -15,26 +16,26 @@ const PersonaliaTPS: React.StatelessComponent<Props> = ({
 	fnr,
 	statsborgerskap
 }) => {
-	const detaljer: Detalje[] = [
-		{
-			tittel: "Navn",
-			verdi: navn
-		}
-	];
-	if (fnr) {
-		detaljer.push({ tittel: "Fødselsnummer", verdi: fnr });
-	}
-	if (fnr) {
-		detaljer.push({
-			tittel: "Statsborgerskap",
-			verdi: statsborgerskap,
-			className: "tekst-capitalize"
-		});
-	}
-
 	return (
 		<Systeminfo>
-			<Detaljeliste detaljer={detaljer} />
+			<Detaljeliste>
+				<DetaljelisteElement
+					tittel={<FormattedMessage id="tps.personalia.navn" />}
+					verdi={navn}
+				/>
+				{fnr && (
+					<DetaljelisteElement
+						tittel={<FormattedMessage id="tps.personalia.fnr" />}
+						verdi={fnr}
+					/>
+				)}
+				{statsborgerskap && (
+					<DetaljelisteElement
+						tittel={<FormattedMessage id="tps.personalia.statsborgerskap" />}
+						verdi={<span className="tekst-capitalize">statsborgerskap</span>}
+					/>
+				)}
+			</Detaljeliste>
 		</Systeminfo>
 	);
 };
