@@ -13,21 +13,24 @@ import {
 	radioCheckKeys,
 	faktumIsSelected,
 	getFaktumVerdi,
-	eksistererFaktum,
-	finnFaktum,
-	faktumEgenskapVerdi
+	eksistererFaktum
 } from "../../../nav-soknad/utils";
-import PersonaliaTPS from "./PersonaliaTPS";
+import TPS from "./tps";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
 interface StateProps {
-	visTpsPersonalia: boolean;
+	visPersonaliaFraTPS: boolean;
+	visKontaktinfoFraTPS: boolean;
 }
 
-type Props = StateProps & FaktumComponentProps;
+export type Props = StateProps & FaktumComponentProps;
 
 class Personalia extends React.Component<Props, {}> {
 	render() {
+		if (this.props.visPersonaliaFraTPS) {
+			return <TPS {...this.props} />;
+		}
+
 		const harKontonummer: boolean = eksistererFaktum(
 			this.props.fakta,
 			"kontakt.kontonummer.system"
@@ -36,26 +39,9 @@ class Personalia extends React.Component<Props, {}> {
 		const brukerHarIkkeKontonummer = faktumIsSelected(
 			getFaktumVerdi(this.props.fakta, "kontakt.kontonummer.harikke")
 		);
-		const personaliaFaktum = finnFaktum("personalia", this.props.fakta);
+
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
-				{this.props.visTpsPersonalia && (
-					<SporsmalFaktum
-						faktumKey="tps.personalia"
-						className={
-							"skjema-sporsmal--noBottomPadding skjema-sporsmal--systeminfo"
-						}
-					>
-						<PersonaliaTPS
-							navn={faktumEgenskapVerdi(personaliaFaktum, "navn")}
-							fnr={faktumEgenskapVerdi(personaliaFaktum, "fnr")}
-							statsborgerskap={faktumEgenskapVerdi(
-								personaliaFaktum,
-								"statsborgerskapType"
-							)}
-						/>
-					</SporsmalFaktum>
-				)}
 				{!harKontonummer && (
 					<SporsmalFaktum faktumKey="kontakt.kontonummer">
 						<KontonummerFaktum
@@ -88,14 +74,17 @@ class Personalia extends React.Component<Props, {}> {
 					<RadioFaktum faktumKey={statsborger.faktum} value="true" />
 					<RadioFaktum faktumKey={statsborger.faktum} value="false" />
 				</SporsmalFaktum>
+				)}
 			</DigisosSkjemaSteg>
 		);
 	}
 }
 
-export default connect((state: State) => {
+export default connect((state: State): Props => {
 	return {
-		visTpsPersonalia:
+		visPersonaliaFraTPS:
+			state.featuretoggles.data[FeatureToggles.viseTpsPersonalia],
+		visKontaktinfoFraTPS:
 			state.featuretoggles.data[FeatureToggles.viseTpsPersonalia],
 		fakta: state.fakta.data
 	};

@@ -13,7 +13,7 @@
 	&__wrapper {
 		margin-left: -1 * @skjemaMarg;
 		margin-right: -1 * @skjemaMarg;
-		@media screen and (max-width: @screen-sm) {
+		@media @mobile {
 			margin-left: -1 * @skjemaMargMobil;
 			margin-right: -1 * @skjemaMargMobil;
 		}
@@ -24,7 +24,7 @@
 		border: 1px solid @ramme;
 		background-color: @bakgrunn;
 		position: relative;
-		@media screen and (max-width: @screen-sm) {
+		@media @mobile {
 			padding: @skjemaMargMobil @skjemaMargMobil @skjemaMargMobil*1.5
 				@skjemaMargMobil;
 		}
@@ -32,7 +32,7 @@
 	&--system {
 		.underskjema__boks {
 			padding-top: 1rem;
-			padding-bottom: 1.5rem;
+			padding-bottom: 1rem;
 		}
 	}
 
@@ -51,7 +51,7 @@
 			box-sizing: border-box;
 			top: 0px;
 			left: 29px;
-			@media screen and (max-width: @screen-sm) {
+			@media @mobile {
 				left: 16px;
 			}
 		}

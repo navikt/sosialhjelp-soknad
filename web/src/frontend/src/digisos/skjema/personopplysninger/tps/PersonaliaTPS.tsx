@@ -1,9 +1,9 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
-import Systeminfo from "../../../nav-soknad/components/systeminfo";
+import Systeminfo from "../../../../nav-soknad/components/systeminfo";
 import Detaljeliste, {
 	DetaljelisteElement
-} from "../../../nav-soknad/components/detaljeliste";
+} from "../../../../nav-soknad/components/detaljeliste";
 
 interface Props {
 	navn: string;
