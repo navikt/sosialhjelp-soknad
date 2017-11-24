@@ -31,6 +31,7 @@ const PersonaliaTPS: React.StatelessComponent<Props> = ({
 				)}
 				{statsborgerskap && (
 					<DetaljelisteElement
+						spaced={true}
 						tittel={<FormattedMessage id="tps.personalia.statsborgerskap" />}
 						verdi={<span className="tekst-capitalize">{statsborgerskap}</span>}
 					/>
