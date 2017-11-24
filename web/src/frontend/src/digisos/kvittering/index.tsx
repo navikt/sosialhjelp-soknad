@@ -64,32 +64,38 @@ class KvitteringView extends React.Component<
 	render() {
 		const { kvittering, visVedlegg, restStatus, intl } = this.props;
 		return (
-			<LoadContainer restStatus={restStatus}>
-				<AppTittel />
-				<div className="kvittering skjema-content">
-					{kvittering && (
-						<div className="blokk-xl">
-							<Panel className="blokk-xxs">
-								<Icon kind="stegindikator__hake" className="kvittering__ikon" />
-								<Undertittel className="kvittering__tittel">
-									{getIntlTextOrKey(intl, "kvittering.undertittel")}
-								</Undertittel>
-								<div>
-									<div className="kvittering__tekst blokk-m">
-										<p>
-											{getIntlTextOrKey(intl, "kvittering.tekst.pre")}{" "}
-											<strong>{kvittering.navenhet}</strong>
-											{getIntlTextOrKey(intl, "kvittering.tekst.post")}
-										</p>
+			<LoadContainer
+				restStatus={restStatus}
+				contentRenderer={() => (
+					<div>
+						<AppTittel />
+						<div className="kvittering skjema-content">
+							<div className="blokk-xl">
+								<Panel className="blokk-xxs">
+									<Icon
+										kind="stegindikator__hake"
+										className="kvittering__ikon"
+									/>
+									<Undertittel className="kvittering__tittel">
+										{getIntlTextOrKey(intl, "kvittering.undertittel")}
+									</Undertittel>
+									<div>
+										<div className="kvittering__tekst blokk-m">
+											<p>
+												{getIntlTextOrKey(intl, "kvittering.tekst.pre")}{" "}
+												<strong>{kvittering.navenhet}</strong>
+												{getIntlTextOrKey(intl, "kvittering.tekst.post")}
+											</p>
+										</div>
 									</div>
-								</div>
-							</Panel>
-							{visVedlegg && <Vedleggsinfo {...this.props} />}
+								</Panel>
+								{visVedlegg && <Vedleggsinfo {...this.props} />}
+							</div>
+							<VeienVidere />
 						</div>
-					)}
-					<VeienVidere />
-				</div>
-			</LoadContainer>
+					</div>
+				)}
+			/>
 		);
 	}
 }
