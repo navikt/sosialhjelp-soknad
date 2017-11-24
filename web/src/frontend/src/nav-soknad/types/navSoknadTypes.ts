@@ -73,9 +73,19 @@ export interface Vedlegg {
 	aarsak: string;
 }
 
+export type InnsendingsvalgIkkeInnsendt =
+	| "VedleggSendesIkke"
+	| "VedleggAlleredeSendt";
+
+export interface IkkeInnsendtVedlegg extends Vedlegg {
+	innsendingsvalg: InnsendingsvalgIkkeInnsendt;
+	opprinneligInnsendingsvalg: InnsendingsvalgIkkeInnsendt;
+}
+
 export interface Kvittering {
 	orgnummer: string;
 	navenhet: string;
+	ikkeInnsendteVedlegg?: IkkeInnsendtVedlegg[];
 }
 
 export enum DelstegStatus {
