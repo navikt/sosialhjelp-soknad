@@ -1,23 +1,27 @@
 import * as React from "react";
-import { InjectedIntlProps, FormattedMessage, injectIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { Knapp } from "nav-frontend-knapper";
-import Lenkeknapp from "../lenkeknapp/Lenkeknapp";
+import { FeatureToggles } from "../../../featureToggles";
+import { connect } from "react-redux";
+import { hentVedleggsForventning, lastOppVedlegg } from "../../redux/vedlegg/vedleggActions";
+import { SoknadAppState } from "../../redux/reduxTypes";
+import VedleggsListe from "./VedleggsListe";
+import { finnFaktum } from "../../utils/faktumUtils";
 
-interface VedleggType {
-	name: string;
-}
-
-interface OwnProps {
-	faktumId: string;
+interface Props {
 	label: string;
-	vedlegg?: VedleggType[];
+	faktumKey: string;
+	vedlegg?: any;
+	featureToggleBeOmLonnslippVedlegg?: boolean;
+	fakta?: any;
+	lastOppVedlegg?: any;
+	hentVedleggsForventning?: any;
+	filer?: any[];
 }
 
 interface State {
-	vedlegg: VedleggType[];
+	vedleggId: number;
 }
-
-type Props = OwnProps & InjectedIntlProps;
 
 class Vedlegg extends React.Component<Props, State> {
 
@@ -28,62 +32,100 @@ class Vedlegg extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			vedlegg: []
+			vedleggId: null
 		};
 	}
 
+	hentVedleggsId(faktumKey: string): number {
+		const { fakta, vedlegg } = this.props;
+		const faktum = finnFaktum(faktumKey, fakta, null);
+
+		if (faktum && faktum.faktumId && vedlegg && vedlegg.map) {
+			for (const vedleggsForventning of vedlegg) {
+				if (vedleggsForventning.faktumId.toString() === faktum.faktumId.toString()) {
+					return vedleggsForventning.vedleggId;
+				}
+			}
+		}
+		return -1;
+	}
+
 	handleFileUpload(files: FileList) {
-		const vedlegg: VedleggType[] = [];
-		Array.from(files).map((file: File) => {
-			vedlegg.push({ name: file.name});
-		});
-		this.setState({
-			vedlegg
-		});
-		event.preventDefault();
+		const formData = new FormData();
+		for (let i = 0; i < files.length; i++) {
+			formData.append("file" + i, files[i], files[i].name);
+		}
+		this.props.lastOppVedlegg(this.state.vedleggId, formData);
+	}
+
+	componentDidUpdate() {
+		if (this.props.featureToggleBeOmLonnslippVedlegg) {
+			if (this.state.vedleggId === null ) {
+				const vedleggId = this.hentVedleggsId(this.props.faktumKey);
+				if (vedleggId > 0) {
+					this.setState({vedleggId});
+				}
+			}
+		}
+	}
+
+	componentDidMount() {
+		if (this.props.featureToggleBeOmLonnslippVedlegg) {
+			this.props.hentVedleggsForventning();
+		}
 	}
 
 	render() {
-		return (
-			<div className="container--noPadding">
-				<p>
-					{this.props.label}
-				</p>
-				<Knapp
-					type="standard"
-					htmlType="submit"
-					spinner={false}
-					disabled={false}
-					onClick={() => {
-						this.refs.leggTilVedleggKnapp.click();
-					}}
-				>+ <FormattedMessage id="opplysninger.vedlegg.knapp.tekst"/></Knapp>
-
-				<input
-					ref="leggTilVedleggKnapp"
-					onChange={(e) => this.handleFileUpload(e.target.files)}
-					type="file"
-					className="visuallyhidden"
-					accept="image/jpeg,image/png,application/pdf"
-					multiple={true}
-				/>
-				<div>
-					{this.state.vedlegg.map((vedlegg: VedleggType, index: number) => {
-						return (
-							<div key={index}>
-								<Lenkeknapp
-									onClick={ () => { alert("todo"); }}
-									label={vedlegg.name}
-								/>
-							</div>
-
-						);
-					})
-					}
+		const vedleggForventet: boolean = (Number(this.state.vedleggId) > 0);
+		if (!vedleggForventet) {
+			return null;
+		} else {
+			return (
+				<div className="container--noPadding">
+					<p>
+						{this.props.label}
+					</p>
+					<VedleggsListe vedlegg={this.props.filer}
+					/>
+					<Knapp
+						type="standard"
+						htmlType="submit"
+						spinner={false}
+						disabled={false}
+						onClick={() => {
+							this.refs.leggTilVedleggKnapp.click();
+						}}
+					>
+						+ <FormattedMessage id="opplysninger.vedlegg.knapp.tekst"/>
+					</Knapp>
+					<input
+						ref="leggTilVedleggKnapp"
+						onChange={(e) => this.handleFileUpload(e.target.files)}
+						type="file"
+						className="visuallyhidden"
+						accept="image/jpeg,image/png,application/pdf"
+						multiple={true}
+					/>
 				</div>
-			</div>
-		);
+			);
+		}
 	}
+
 }
 
-export default (injectIntl(Vedlegg));
+const mapStateToProps = (state: SoknadAppState) => ({
+	fakta: state.fakta.data,
+	vedlegg: state.vedlegg.data,
+	filer: state.vedlegg.filer,
+	featureToggleBeOmLonnslippVedlegg: state.miljovariabler.data[FeatureToggles.beOmLonnslippVedlegg]
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+	lastOppVedlegg: (vedleggId: string, formData: any) => dispatch(lastOppVedlegg(vedleggId, formData)),
+	hentVedleggsForventning: () => dispatch(hentVedleggsForventning())
+});
+
+export default connect<{}, {}, Props>(
+	mapStateToProps,
+	mapDispatchToProps
+)(Vedlegg);

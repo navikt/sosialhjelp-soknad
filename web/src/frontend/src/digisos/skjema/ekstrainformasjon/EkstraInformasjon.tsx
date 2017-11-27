@@ -12,8 +12,8 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { hentSynligeFakta } from "../../redux/synligefakta/synligeFaktaActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
-import { hentVedleggsForventning } from "../../redux/vedlegg/vedleggActions";
 import { FeatureToggles } from "../../../featureToggles";
+// import { hentVedleggsForventning } from "../../../nav-soknad/redux/vedlegg/vedleggActions";
 
 interface OwnProps {
 	featureToggleBeOmLonnslippVedlegg: boolean;
@@ -25,9 +25,9 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 	componentDidMount() {
 		if (Object.keys(this.props.synligefakta.data).length === 0) {
 			this.props.dispatch(hentSynligeFakta());
-			if (this.props.featureToggleBeOmLonnslippVedlegg) {
-				this.props.dispatch(hentVedleggsForventning());
-			}
+			// if (this.props.featureToggleBeOmLonnslippVedlegg) {
+			// 	this.props.dispatch(hentVedleggsForventning());
+			// }
 		}
 	}
 

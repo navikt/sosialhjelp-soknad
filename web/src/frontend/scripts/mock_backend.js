@@ -4,10 +4,12 @@ var bodyParser = require("body-parser");
 const fs = require("fs");
 const utils = require("./utils.js");
 const path = require("path");
-const reloadable = require("express-reloadable");
+const fileUpload = require('express-fileupload');
 
+app.use(fileUpload());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 // app.use(utils.delayAllResponses(500));
 app.use(utils.allowCrossDomain);
 
@@ -18,9 +20,7 @@ var router = express.Router();
 function settOpprineligSoknadTilSoknad() {
 	const opprinneligSoknad = utils.lesMockDataFil("opprinneligSoknad.json");
 	var soknad = utils.lesMockDataFil("soknad.json");
-
 	soknad = JSON.parse(JSON.stringify(opprinneligSoknad));
-
 	const fileName = utils.getFilePath("soknad.json");
 	const soknadString = JSON.stringify(soknad);
 	fs.writeFileSync(fileName, soknadString);
@@ -96,14 +96,6 @@ router.get("/soknader/:brukerBehandlingId/synligsoknadstruktur", function(
 	res.json(utils.lesMockDataFil("synligsoknadstruktur.json"));
 });
 
-// router.get("/soknader/:brukerBehandlingId/vedlegg", function(
-// 	req,
-// 	res
-// ) {
-// 	console.log("Mock backend: GET vedlegg (vedleggsforventning)");
-// 	res.json(utils.lesMockDataFil("vedlegg.json"));
-// });
-
 router.get("/soknader/:brukerBehandlingId/fakta", function(req, res) {
 	console.log("Mock backend: GET fakta");
 	res.json(fakta);
@@ -153,7 +145,8 @@ function genererFaktumId() {
 }
 
 router.post("/fakta", function(req, res) {
-	if (req.param("behandlingsId")) {
+	if (req.query["behandlingsId"]) {
+		console.log("Mock backend: POST /fakta/?behandlingsId=" + req.query["behandlingsId"]);
 		const faktum = req.body;
 		faktum.faktumId = genererFaktumId();
 		faktum.properties = {};
@@ -161,7 +154,6 @@ router.post("/fakta", function(req, res) {
 		utils.updateSoknadFakta(fakta);
 		return res.json(faktum);
 	}
-
 	const faktum = req.body;
 	fakta.push(faktum);
 	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
@@ -181,14 +173,10 @@ router.post("/informasjon/actions/logg", function(req, res) {
 	res.json();
 });
 
-// var vedleggRouter = require("./vedlegg_ressurser");
-// app.use("/", vedleggRouter);
 app.use("/", router);
 
-// reloadable.new(app, {
-// 	requireFile: path.resolve(__dirname, "./vedlegg_ressurser.js"),
-// 	watch: path.resolve(__dirname)
-// });
+var vedleggRouter = require("./vedlegg_ressurser");
+app.use("/", vedleggRouter);
 
 app.listen(port);
 console.log("Mock API server running on port " + port);

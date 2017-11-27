@@ -900,6 +900,13 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
 
+busboy@^0.2.14:
+  version "0.2.14"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/busboy/-/busboy-0.2.14.tgz#6c2a622efcf47c57bbbe1e2a9c37ad36c7925453"
+  dependencies:
+    dicer "0.2.5"
+    readable-stream "1.1.x"
+
 bytes@3.0.0:
   version "3.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
@@ -1660,6 +1667,13 @@ detect-port-alt@1.1.3:
     address "^1.0.1"
     debug "^2.6.0"
 
+dicer@0.2.5:
+  version "0.2.5"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/dicer/-/dicer-0.2.5.tgz#5996c086bb33218c812c090bddc09cd12facb70f"
+  dependencies:
+    readable-stream "1.1.x"
+    streamsearch "0.1.2"
+
 diff@1.4.0:
   version "1.4.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/diff/-/diff-1.4.0.tgz#7f28d2eb9ee7b15a97efd89ce63dcfdaa3ccbabf"
@@ -2089,6 +2103,14 @@ expect@^21.2.1:
     jest-message-util "^21.2.1"
     jest-regex-util "^21.2.0"
 
+express-fileupload@^0.3.0:
+  version "0.3.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/express-fileupload/-/express-fileupload-0.3.0.tgz#d1b77b56e5b50e5f22f8326894c4f25b6ccba1b7"
+  dependencies:
+    busboy "^0.2.14"
+    fs-extra "^4.0.1"
+    streamifier "^0.1.1"
+
 express-reloadable@^2.0.2:
   version "2.0.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/express-reloadable/-/express-reloadable-2.0.2.tgz#e376749c689d2cc65ef1c8fb42149e67f428c8d4"
@@ -2376,7 +2398,7 @@ fs-extra@^0.30.0:
     path-is-absolute "^1.0.0"
     rimraf "^2.2.8"
 
-fs-extra@^4.0.0:
+fs-extra@^4.0.0, fs-extra@^4.0.1:
   version "4.0.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/fs-extra/-/fs-extra-4.0.2.tgz#f91704c53d1b461f893452b0c307d9997647ab6b"
   dependencies:
@@ -6751,6 +6773,14 @@ stream-http@^2.3.1:
     readable-stream "^2.2.6"
     to-arraybuffer "^1.0.0"
     xtend "^4.0.0"
+
+streamifier@^0.1.1:
+  version "0.1.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/streamifier/-/streamifier-0.1.1.tgz#97e98d8fa4d105d62a2691d1dc07e820db8dfc4f"
+
+streamsearch@0.1.2:
+  version "0.1.2"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/streamsearch/-/streamsearch-0.1.2.tgz#808b9d0e56fc273d809ba57338e929919a1a9f1a"
 
 strict-uri-encode@^1.0.0:
   version "1.1.0"

@@ -8,7 +8,7 @@ import { TilgangState } from "./tilgang/tilgangTypes";
 import { LedetekstState } from "./ledetekster/ledeteksterTypes";
 import { AVBRYT_DESTINASJON } from "./soknad/soknadActionTypes";
 import { InitState } from "./init/initTypes";
-import { VedleggState } from "../../digisos/redux/vedlegg/vedleggTypes";
+import { VedleggState } from "./vedlegg/vedleggTypes";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
