@@ -19,9 +19,6 @@ class SysteminfoFaktum extends React.Component<
 	OwnProps & InjectedFaktumComponentProps & InjectedIntlProps,
 	{}
 > {
-	// static defaultProps: any = {
-	// 	property: "brukerendret"
-	// };
 	render() {
 		const { intl, children, endreLabel, avbrytLabel, skjema } = this.props;
 		const skjemaErSynlig = this.props.getPropertyVerdi() === "true";
@@ -72,4 +69,6 @@ class SysteminfoFaktum extends React.Component<
 	}
 }
 
-export default injectIntl(faktumComponent()(SysteminfoFaktum));
+export default injectIntl(
+	faktumComponent({ property: "brukerendret" })(SysteminfoFaktum)
+);

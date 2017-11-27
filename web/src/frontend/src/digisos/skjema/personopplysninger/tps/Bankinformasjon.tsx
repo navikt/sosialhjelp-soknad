@@ -49,7 +49,6 @@ const BankinformasjonTPS: React.StatelessComponent<
 			<SporsmalFaktum faktumKey="kontakt.tps.bankinfo" style="system">
 				<SysteminfoFaktum
 					faktumKey="kontakt.kontonummer"
-					property="brukerendret"
 					endreLabel={intl.formatMessage({
 						id: "kontakt.kontonummer.endreknapp.label"
 					})}
