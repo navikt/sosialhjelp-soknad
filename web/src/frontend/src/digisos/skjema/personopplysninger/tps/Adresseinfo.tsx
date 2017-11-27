@@ -32,7 +32,13 @@ const KontaktinfoTPS: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	intl
 }) => {
 	return (
-		<SysteminfoFaktum faktumKey="kontakt.tps.adresse" skjema={<Skjema />}>
+		<SysteminfoFaktum
+			faktumKey="kontakt.tps.adresse"
+			skjema={<Skjema />}
+			endreLabel={intl.formatMessage({
+				id: "kontakt.tps.adresse.endreknapp.label"
+			})}
+		>
 			<Detaljeliste>
 				<DetaljelisteElement
 					tittel={<FormattedMessage id="kontakt.tps.kontaktinfo.adresse" />}

@@ -1,10 +1,7 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import SysteminfoFaktum from "../../../../nav-soknad/faktum/SysteminfoFaktum";
-import {
-	finnFaktum,
-	getFaktumPropertyVerdi
-} from "../../../../nav-soknad/utils";
+import { getFaktumVerdi } from "../../../../nav-soknad/utils";
 import { Faktum } from "../../../../nav-soknad/types";
 import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
 import TelefonFaktum from "../../../../nav-soknad/faktum/typedInput/TelefonFaktum";
@@ -28,18 +25,20 @@ const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	fakta,
 	intl
 }) => {
-	const personaliaFaktum = finnFaktum("personalia", fakta);
-	const telefonnummer = getFaktumPropertyVerdi(
-		personaliaFaktum,
-		"telefonnummer"
-	);
+	const telefonnummer = getFaktumVerdi(fakta, "kontakt.system.telefon");
 
 	if (!telefonnummer && telefonnummer !== "") {
 		return <Skjema />;
 	}
 
 	return (
-		<SysteminfoFaktum faktumKey="kontakt.tps.telefoninfo">
+		<SysteminfoFaktum
+			faktumKey="kontakt.system.telefon"
+			skjema={<Skjema />}
+			endreLabel={intl.formatMessage({
+				id: "kontakt.system.telefon.endreknapp.label"
+			})}
+		>
 			<Detaljeliste>
 				<DetaljelisteElement
 					tittel={

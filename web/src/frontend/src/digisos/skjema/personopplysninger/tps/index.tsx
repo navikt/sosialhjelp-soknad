@@ -32,7 +32,7 @@ class Personalia extends React.Component<Props, {}> {
 					/>
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="kontakt.tps.kontaktinfo" style="system">
-					<div className="blokk-s">
+					<div className="blokk-xxs">
 						<Adresseinfo
 							adresse={getFaktumPropertyVerdi(
 								personaliaFaktum,

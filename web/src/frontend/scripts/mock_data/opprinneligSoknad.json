@@ -307,10 +307,20 @@
 			"soknadId": 4,
 			"parrentFaktum": null,
 			"key": "kontakt.telefon",
-			"value": null,
+			"value": "98219409",
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
+		},
+		{
+			"faktumId": 31299,
+			"soknadId": 4,
+			"parrentFaktum": null,
+			"key": "kontakt.system.telefon",
+			"value": "98219409",
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "SYSTEMREGISTRERT"
 		},
 		{
 			"faktumId": 3123,
