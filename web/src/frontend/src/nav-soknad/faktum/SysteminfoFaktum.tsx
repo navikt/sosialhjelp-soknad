@@ -7,6 +7,15 @@ import {
 	InjectedFaktumComponentProps
 } from "./FaktumComponent";
 
+/** Navn på property som setter om bruker ønsker å endre verdien
+ * fra system for denne søknaden eller ikke. Settes til strengen "true"
+ * dersom bruker ønsker å overstyre. Tom tekststreng dersom ikke.
+ */
+
+const FAKTUMPROPERTY = "brukerendret";
+const PROPERTY_VALGT_VERDI = "true";
+const PROPERTY_IKKE_VALGT_VERDI = "";
+
 interface OwnProps {
 	/** Skjema som viser når bruker ønsker å endre verdier */
 	skjema?: React.ReactNode;
@@ -24,7 +33,8 @@ class SysteminfoFaktum extends React.Component<
 > {
 	render() {
 		const { intl, children, endreLabel, avbrytLabel, skjema } = this.props;
-		const skjemaErSynlig = this.props.getPropertyVerdi() === "true";
+		const skjemaErSynlig =
+			this.props.getPropertyVerdi() === PROPERTY_VALGT_VERDI;
 		return (
 			<Underskjema
 				arrow={false}
@@ -43,7 +53,10 @@ class SysteminfoFaktum extends React.Component<
 									intl.formatMessage({ id: "systeminfo.endreknapp.label" })
 								}
 								onClick={() =>
-									this.props.setFaktumVerdi("true", this.props.property)
+									this.props.setFaktumVerdi(
+										PROPERTY_VALGT_VERDI,
+										this.props.property
+									)
 								}
 							/>
 						)}
@@ -59,7 +72,10 @@ class SysteminfoFaktum extends React.Component<
 											})
 										}
 										onClick={() =>
-											this.props.setFaktumVerdi("", this.props.property)
+											this.props.setFaktumVerdi(
+												PROPERTY_IKKE_VALGT_VERDI,
+												this.props.property
+											)
 										}
 									/>
 								</div>
@@ -73,5 +89,5 @@ class SysteminfoFaktum extends React.Component<
 }
 
 export default injectIntl(
-	faktumComponent({ property: "brukerendret" })(SysteminfoFaktum)
+	faktumComponent({ property: FAKTUMPROPERTY })(SysteminfoFaktum)
 );
