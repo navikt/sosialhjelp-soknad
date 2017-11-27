@@ -8,9 +8,13 @@ import {
 } from "./FaktumComponent";
 
 interface OwnProps {
+	/** Skjema som viser når bruker ønsker å endre verdier */
 	skjema?: React.ReactNode;
+	/** Informasjonen som er hentet opp fra system */
 	children?: React.ReactNode;
+	/** Label - endre knapp */
 	endreLabel?: string;
+	/** Label - avbryt endring knapp */
 	avbrytLabel?: string;
 }
 
