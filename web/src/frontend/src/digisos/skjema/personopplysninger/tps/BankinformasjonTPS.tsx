@@ -1,34 +1,60 @@
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
-import { FormattedMessage } from "react-intl";
-import Systeminfo from "../../../../nav-soknad/components/systeminfo";
-import Lenkeknapp from "../../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import SysteminfoFaktum from "../../../../nav-soknad/faktum/SysteminfoFaktum";
+import {
+	faktumIsSelected,
+	getFaktumVerdi,
+	getPropertyVerdi
+} from "../../../../nav-soknad/utils";
+import { Faktum } from "../../../../nav-soknad/types";
 import Detaljeliste, {
 	DetaljelisteElement
 } from "../../../../nav-soknad/components/detaljeliste";
+import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
+import KontonummerFaktum from "../../../../nav-soknad/faktum/typedInput/KontonummerFaktum";
+import CheckboxFaktum from "../../../../nav-soknad/faktum/CheckboxFaktum";
 
 interface Props {
-	kontonummer: string;
+	fakta: Faktum[];
 }
 
 const BankinformasjonTPS: React.StatelessComponent<
 	Props & InjectedIntlProps
-> = ({ kontonummer, intl }) => {
+> = ({ fakta, intl }) => {
+	const brukerHarIkkeKontonummer = faktumIsSelected(
+		getFaktumVerdi(fakta, "kontakt.kontonummer.harikke")
+	);
+
+	const visEndreSkjema =
+		getPropertyVerdi(fakta, "kontakt.kontonummer", "brukerendret") === "true";
+
+	const kontonummer = "abc";
 	return (
-		<Systeminfo>
-			<div className="blokk-xxs">
-				<Detaljeliste>
-					<DetaljelisteElement
-						tittel={<FormattedMessage id="tps.bankinfo.kontonummer" />}
-						verdi={kontonummer}
+		<SysteminfoFaktum
+			faktumKey="kontakt.kontonummer"
+			property="brukerendret"
+			endreLabel="Endre"
+			skjema={
+				<SporsmalFaktum
+					faktumKey="kontakt.kontonummer"
+					visible={visEndreSkjema}
+				>
+					<KontonummerFaktum
+						faktumKey="kontakt.kontonummer"
+						disabled={brukerHarIkkeKontonummer}
+						ignorert={brukerHarIkkeKontonummer}
 					/>
-				</Detaljeliste>
-			</div>
-			<Lenkeknapp
-				label={intl.formatMessage({ id: "tps.bankinfo.endreknapp.label" })}
-				onClick={() => alert(1)}
-			/>
-		</Systeminfo>
+					<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
+				</SporsmalFaktum>
+			}
+		>
+			<Detaljeliste>
+				<DetaljelisteElement
+					tittel={<FormattedMessage id="tps.bankinfo.kontonummer" />}
+					verdi={kontonummer}
+				/>
+			</Detaljeliste>
+		</SysteminfoFaktum>
 	);
 };
 

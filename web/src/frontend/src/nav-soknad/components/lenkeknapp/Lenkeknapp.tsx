@@ -2,7 +2,7 @@ import * as React from "react";
 import AriaAlternativTekst from "../aria/AriaAlternativeText";
 import * as classNames from "classnames";
 
-interface Props {
+export interface Props {
 	label: string;
 	onClick: () => void;
 	style?: "add";

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
-import Systeminfo from "../../../../nav-soknad/components/systeminfo";
+import SysteminfoFaktum from "../../../../nav-soknad/faktum/SysteminfoFaktum";
 import Detaljeliste, {
 	DetaljelisteElement
 } from "../../../../nav-soknad/components/detaljeliste";
@@ -17,7 +17,7 @@ const PersonaliaTPS: React.StatelessComponent<Props> = ({
 	statsborgerskap
 }) => {
 	return (
-		<Systeminfo>
+		<SysteminfoFaktum faktumKey="tps.personalia">
 			<Detaljeliste>
 				<DetaljelisteElement
 					tittel={<FormattedMessage id="tps.personalia.navn" />}
@@ -36,7 +36,7 @@ const PersonaliaTPS: React.StatelessComponent<Props> = ({
 					/>
 				)}
 			</Detaljeliste>
-		</Systeminfo>
+		</SysteminfoFaktum>
 	);
 };
 

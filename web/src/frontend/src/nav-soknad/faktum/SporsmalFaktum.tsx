@@ -15,7 +15,7 @@ export interface OwnProps {
 	children: React.ReactNode;
 	visible?: boolean;
 	htmlRef?: (c: any) => HTMLElement;
-	className?: string;
+	style?: "normal" | "system";
 	tittelRenderer?: (title: string) => React.ReactNode;
 }
 
@@ -56,11 +56,15 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const { visible, feilkode, intl, className, children } = this.props;
+		const { visible, feilkode, intl, children } = this.props;
 		if (visible === false) {
 			return null;
 		}
 		const tekster = getFaktumSporsmalTekst(intl, this.props.faktumKey);
+		const sporsmalCls = classNames("skjema-sporsmal", {
+			"skjema-sporsmal--noBottomPadding": this.props.style === "system",
+			"skjema-sporsmal--systeminfo": this.props.style === "system"
+		});
 		const cls = classNames("skjema-fieldset", {
 			"skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined
 		});
@@ -70,7 +74,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 			: tekster.sporsmal;
 		return (
 			<div
-				className={classNames("skjema-sporsmal", className)}
+				className={sporsmalCls}
 				onBlur={this.handleOnBlur}
 				aria-labelledby={legendId}
 			>
