@@ -148,7 +148,6 @@ class Opplysning extends React.Component<AllProps, {}> {
 			/>
 		);
 
-
 		const lastOppLonnslippTekst =
 			intl.formatMessage({ id: "opplysninger.arbeid.jobb.lonn.vedlegg.label" });
 
@@ -159,7 +158,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 				</Container>
 				{faktumstruktur.flereTillatt === "true" ? leggTilKnapp : null}
 				<Vedlegg
-					faktumId={faktumstruktur.id}
+					faktumKey={faktumstruktur.id}
 					label={lastOppLonnslippTekst}
 				/>
 				<Vedlegg
