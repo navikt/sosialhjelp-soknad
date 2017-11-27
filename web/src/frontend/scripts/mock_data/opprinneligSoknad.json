@@ -16,6 +16,16 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
+			"faktumId": 3280,
+			"soknadId": 4,
+			"parrentFaktum": null,
+			"key": "kontakt.tps.kontonummer",
+			"value": "35431224877",
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "SYSTEM"
+		},
+		{
 			"faktumId": 306,
 			"soknadId": 4,
 			"parrentFaktum": null,

@@ -19,11 +19,12 @@ class SysteminfoFaktum extends React.Component<
 	OwnProps & InjectedFaktumComponentProps & InjectedIntlProps,
 	{}
 > {
+	// static defaultProps: any = {
+	// 	property: "brukerendret"
+	// };
 	render() {
 		const { intl, children, endreLabel, avbrytLabel, skjema } = this.props;
-
 		const skjemaErSynlig = this.props.getPropertyVerdi() === "true";
-
 		return (
 			<Underskjema
 				arrow={false}
