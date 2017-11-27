@@ -313,6 +313,46 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
+			"faktumId": 3123,
+			"soknadId": 4,
+			"parrentFaktum": null,
+			"key": "kontakt.tps.adresse",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "SYSTEMREGISTRERT"
+		},
+		{
+			"faktumId": 31231,
+			"soknadId": 4,
+			"parrentFaktum": null,
+			"key": "kontakt.adresse.gateadresse",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
+		},
+		{
+			"faktumId": 31232,
+			"soknadId": 4,
+			"parrentFaktum": null,
+			"key": "kontakt.adresse.postnummer",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
+		},
+		{
+			"faktumId": 31233,
+			"soknadId": 4,
+			"parrentFaktum": null,
+			"key": "kontakt.adresse.poststed",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
+		},
+		{
 			"faktumId": 313,
 			"soknadId": 4,
 			"parrentFaktum": null,

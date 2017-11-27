@@ -9,7 +9,8 @@ import {
 	getFaktumPropertyVerdi
 } from "../../../../nav-soknad/utils";
 import PersonaliaTPS from "./PersonaliaTPS";
-import KontaktinfoTPS from "./KontaktinfoTPS";
+import Adresseinfo from "./Adresseinfo";
+import Telefoninfo from "./Telefoninfo";
 import Bankinformasjon from "./Bankinformasjon";
 import DigisosSkjemaSteg, { DigisosSteg } from "../../DigisosSkjemaSteg";
 
@@ -31,18 +32,20 @@ class Personalia extends React.Component<Props, {}> {
 					/>
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="kontakt.tps.kontaktinfo" style="system">
-					<KontaktinfoTPS
-						telefonnummer={getFaktumPropertyVerdi(
-							personaliaFaktum,
-							"telefonnummer"
-						)}
-						adresse={getFaktumPropertyVerdi(
-							personaliaFaktum,
-							"gjeldendeAdresse"
-						)}
-						postnummer={getFaktumPropertyVerdi(personaliaFaktum, "postnummer")}
-						poststed={getFaktumPropertyVerdi(personaliaFaktum, "poststed")}
-					/>
+					<div className="blokk-s">
+						<Adresseinfo
+							adresse={getFaktumPropertyVerdi(
+								personaliaFaktum,
+								"gjeldendeAdresse"
+							)}
+							postnummer={getFaktumPropertyVerdi(
+								personaliaFaktum,
+								"postnummer"
+							)}
+							poststed={getFaktumPropertyVerdi(personaliaFaktum, "poststed")}
+						/>
+					</div>
+					<Telefoninfo fakta={this.props.fakta} />
 				</SporsmalFaktum>
 				<Bankinformasjon fakta={this.props.fakta} />
 			</DigisosSkjemaSteg>
