@@ -1,4 +1,5 @@
 import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
 import Systeminfo from "../../../../nav-soknad/components/systeminfo";
 import Lenkeknapp from "../../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
@@ -10,9 +11,9 @@ interface Props {
 	kontonummer: string;
 }
 
-const BankinformasjonTPS: React.StatelessComponent<Props> = ({
-	kontonummer
-}) => {
+const BankinformasjonTPS: React.StatelessComponent<
+	Props & InjectedIntlProps
+> = ({ kontonummer, intl }) => {
 	return (
 		<Systeminfo>
 			<div className="blokk-xxs">
@@ -23,9 +24,12 @@ const BankinformasjonTPS: React.StatelessComponent<Props> = ({
 					/>
 				</Detaljeliste>
 			</div>
-			<Lenkeknapp label="Endre" onClick={() => alert(1)} />
+			<Lenkeknapp
+				label={intl.formatMessage({ id: "tps.bankinfo.endreknapp.label" })}
+				onClick={() => alert(1)}
+			/>
 		</Systeminfo>
 	);
 };
 
-export default BankinformasjonTPS;
+export default injectIntl(BankinformasjonTPS);

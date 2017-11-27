@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FormattedMessage } from "react-intl";
+import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import Systeminfo from "../../../../nav-soknad/components/systeminfo";
 import Detaljeliste, {
 	DetaljelisteElement
@@ -13,11 +13,12 @@ interface Props {
 	telefonnummer: string;
 }
 
-const KontaktinfoTPS: React.StatelessComponent<Props> = ({
+const KontaktinfoTPS: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	postnummer,
 	poststed,
 	adresse,
-	telefonnummer
+	telefonnummer,
+	intl
 }) => {
 	return (
 		<Systeminfo>
@@ -42,9 +43,12 @@ const KontaktinfoTPS: React.StatelessComponent<Props> = ({
 					/>
 				</Detaljeliste>
 			</div>
-			<Lenkeknapp label="Endre" onClick={() => null} />
+			<Lenkeknapp
+				label={intl.formatMessage({ id: "tps.kontaktinfo.endreknapp.label" })}
+				onClick={() => alert(1)}
+			/>
 		</Systeminfo>
 	);
 };
 
-export default KontaktinfoTPS;
+export default injectIntl(KontaktinfoTPS);
