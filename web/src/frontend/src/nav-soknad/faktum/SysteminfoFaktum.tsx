@@ -8,10 +8,11 @@ import {
 } from "./FaktumComponent";
 
 interface OwnProps {
-	children: React.ReactNode;
 	skjema?: React.ReactNode;
+	children?: React.ReactNode;
 	endreLabel?: string;
 	avbrytLabel?: string;
+	harSysteminfo?: boolean;
 }
 
 class SysteminfoFaktum extends React.Component<

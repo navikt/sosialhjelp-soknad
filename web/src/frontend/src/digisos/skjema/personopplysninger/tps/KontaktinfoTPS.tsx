@@ -20,22 +20,24 @@ const KontaktinfoTPS: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	intl
 }) => {
 	return (
-		<SysteminfoFaktum faktumKey="tps.kontaktinfo">
+		<SysteminfoFaktum faktumKey="kontakt.tps.kontaktinfo">
 			<Detaljeliste>
 				<DetaljelisteElement
-					tittel={<FormattedMessage id="tps.kontaktinfo.adresse" />}
+					tittel={<FormattedMessage id="kontakt.tps.kontaktinfo.adresse" />}
 					verdi={adresse}
 				/>
 				<DetaljelisteElement
-					tittel={<FormattedMessage id="tps.kontaktinfo.postnummer" />}
+					tittel={<FormattedMessage id="kontakt.tps.kontaktinfo.postnummer" />}
 					verdi={postnummer}
 				/>
 				<DetaljelisteElement
-					tittel={<FormattedMessage id="tps.kontaktinfo.poststed" />}
+					tittel={<FormattedMessage id="kontakt.tps.kontaktinfo.poststed" />}
 					verdi={poststed}
 				/>
 				<DetaljelisteElement
-					tittel={<FormattedMessage id="tps.kontaktinfo.telefonnummer" />}
+					tittel={
+						<FormattedMessage id="kontakt.tps.kontaktinfo.telefonnummer" />
+					}
 					verdi={telefonnummer}
 					spaced={true}
 				/>

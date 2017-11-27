@@ -7,7 +7,7 @@ import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
 import { finnFaktum, faktumEgenskapVerdi } from "../../../../nav-soknad/utils";
 import PersonaliaTPS from "./PersonaliaTPS";
 import KontaktinfoTPS from "./KontaktinfoTPS";
-import BankinformasjonTPS from "./BankinformasjonTPS";
+import Bankinformasjon from "./Bankinformasjon";
 import DigisosSkjemaSteg, { DigisosSteg } from "../../DigisosSkjemaSteg";
 
 type Props = FaktumComponentProps;
@@ -38,9 +38,7 @@ class Personalia extends React.Component<Props, {}> {
 						poststed={faktumEgenskapVerdi(personaliaFaktum, "poststed")}
 					/>
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey="kontakt.tps.bankinfo" style="system">
-					<BankinformasjonTPS fakta={this.props.fakta} />
-				</SporsmalFaktum>
+				<Bankinformasjon fakta={this.props.fakta} />
 			</DigisosSkjemaSteg>
 		);
 	}
