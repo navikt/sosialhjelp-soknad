@@ -12,7 +12,6 @@ interface OwnProps {
 	children?: React.ReactNode;
 	endreLabel?: string;
 	avbrytLabel?: string;
-	harSysteminfo?: boolean;
 }
 
 class SysteminfoFaktum extends React.Component<
