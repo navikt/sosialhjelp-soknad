@@ -63,7 +63,8 @@ export default class Barn extends React.Component<Props, {}> {
 			<div className="blokk barn">
 				<SporsmalFaktum
 					faktumKey={faktumKey}
-					tittelRenderer={tittel => `${tittel} ${barnNummer}`}>
+					tittelRenderer={tittel => `${tittel} ${barnNummer}`}
+				>
 					<PersonFaktum
 						faktumKey={faktumKey}
 						faktumId={faktumId}
@@ -79,7 +80,8 @@ export default class Barn extends React.Component<Props, {}> {
 						<NivaTreSkjema
 							visible={faktumIsSelected(
 								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId)
-							)}>
+							)}
+						>
 							<SporsmalFaktum faktumKey={hvormye.faktum}>
 								<BelopFaktum
 									faktumKey={faktumKey}
@@ -102,10 +104,12 @@ export default class Barn extends React.Component<Props, {}> {
 						<span className="barn__fjern">
 							<Lenkeknapp
 								onClick={() =>
-									this.props.onFjernBarn(this.props.faktum.faktumId)}
-								label={fjernBarnTekst}
+									this.props.onFjernBarn(this.props.faktum.faktumId)
+								}
 								alternativLabel={alternativFjernTekst()}
-							/>
+							>
+								{fjernBarnTekst}
+							</Lenkeknapp>
 						</span>
 					)}
 				</SporsmalFaktum>
