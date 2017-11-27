@@ -4,9 +4,6 @@ import SysteminfoFaktum from "../../../../nav-soknad/faktum/SysteminfoFaktum";
 import {
 	finnFaktum,
 	getFaktumPropertyVerdi
-	// eksistererFaktum
-	// faktumIsSelected,
-	// getFaktumVerdi
 } from "../../../../nav-soknad/utils";
 import { Faktum } from "../../../../nav-soknad/types";
 import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
@@ -20,9 +17,11 @@ interface Props {
 }
 
 const Skjema: React.StatelessComponent<{}> = () => (
-	<SporsmalFaktum faktumKey="kontakt.telefon">
-		<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8} />
-	</SporsmalFaktum>
+	<div className="blokk-s">
+		<SporsmalFaktum faktumKey="kontakt.telefon">
+			<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8} />
+		</SporsmalFaktum>
+	</div>
 );
 
 const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({

@@ -2,6 +2,7 @@ import * as React from "react";
 import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import SysteminfoFaktum from "../../../../nav-soknad/faktum/SysteminfoFaktum";
 import InputFaktum from "../../../../nav-soknad/faktum/InputFaktum";
+import TallFaktum from "../../../../nav-soknad/faktum/typedInput/TallFaktum";
 import Detaljeliste, {
 	DetaljelisteElement
 } from "../../../../nav-soknad/components/detaljeliste";
@@ -13,9 +14,13 @@ interface Props {
 }
 
 export const Skjema: React.StatelessComponent<{}> = () => (
-	<div>
+	<div className="blokk-xs">
 		<InputFaktum faktumKey="kontakt.adresse.gateadresse" />
-		<InputFaktum faktumKey="kontakt.adresse.postnummer" />
+		<TallFaktum
+			faktumKey="kontakt.adresse.postnummer"
+			maxLength={4}
+			bredde="S"
+		/>
 		<InputFaktum faktumKey="kontakt.adresse.poststed" />
 	</div>
 );

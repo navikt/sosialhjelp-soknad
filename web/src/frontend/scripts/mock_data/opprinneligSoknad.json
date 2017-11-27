@@ -323,6 +323,16 @@
 			"type": "SYSTEMREGISTRERT"
 		},
 		{
+			"faktumId": 3993,
+			"soknadId": 4,
+			"parrentFaktum": null,
+			"key": "kontakt.tps.personalia",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "SYSTEMREGISTRERT"
+		},
+		{
 			"faktumId": 31231,
 			"soknadId": 4,
 			"parrentFaktum": null,
