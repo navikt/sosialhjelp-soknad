@@ -14,30 +14,12 @@ interface OwnProps {
 	avbrytLabel?: string;
 }
 
-type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
-
 class SysteminfoFaktum extends React.Component<
 	OwnProps & InjectedFaktumComponentProps & InjectedIntlProps,
 	{}
 > {
-	constructor(props: Props) {
-		super(props);
-		this.toggle = this.toggle.bind(this);
-	}
-	toggle() {
-		const verdi = this.props.getPropertyVerdi();
-		this.props.setFaktumVerdi(
-			verdi === "true" ? "" : "true",
-			this.props.property
-		);
-	}
 	render() {
-		const {
-			children,
-			endreLabel = "Endre",
-			avbrytLabel = "Angre endringer",
-			skjema
-		} = this.props;
+		const { intl, children, endreLabel, avbrytLabel, skjema } = this.props;
 
 		const skjemaErSynlig = this.props.getPropertyVerdi() === "true";
 
@@ -53,13 +35,31 @@ class SysteminfoFaktum extends React.Component<
 				{skjema && (
 					<div className="blokk-xxs">
 						{!skjemaErSynlig && (
-							<Lenkeknapp label={endreLabel} onClick={this.toggle} />
+							<Lenkeknapp
+								label={
+									endreLabel ||
+									intl.formatMessage({ id: "systeminfo.endreknapp.label" })
+								}
+								onClick={() =>
+									this.props.setFaktumVerdi("true", this.props.property)
+								}
+							/>
 						)}
 						{skjemaErSynlig && (
 							<div>
 								<div className="systeminfo_endreSkjema">{skjema}</div>
 								<div className="blokk-xxs">
-									<Lenkeknapp label={avbrytLabel} onClick={this.toggle} />
+									<Lenkeknapp
+										label={
+											avbrytLabel ||
+											intl.formatMessage({
+												id: "systeminfo.avbrytendringknapp.label"
+											})
+										}
+										onClick={() =>
+											this.props.setFaktumVerdi("", this.props.property)
+										}
+									/>
 								</div>
 							</div>
 						)}
