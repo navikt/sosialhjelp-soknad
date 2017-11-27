@@ -1,5 +1,10 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
+import { Faktum } from "../../../../nav-soknad/types";
+import {
+	finnFaktum,
+	getFaktumPropertyVerdi
+} from "../../../../nav-soknad/utils";
 import SysteminfoFaktum from "../../../../nav-soknad/faktum/SysteminfoFaktum";
 import InputFaktum from "../../../../nav-soknad/faktum/InputFaktum";
 import TallFaktum from "../../../../nav-soknad/faktum/typedInput/TallFaktum";
@@ -8,9 +13,7 @@ import Detaljeliste, {
 } from "../../../../nav-soknad/components/detaljeliste";
 
 interface Props {
-	adresse: string;
-	postnummer: string;
-	poststed: string;
+	fakta: Faktum[];
 }
 
 export const Skjema: React.StatelessComponent<{}> = () => (
@@ -26,11 +29,11 @@ export const Skjema: React.StatelessComponent<{}> = () => (
 );
 
 const KontaktinfoTPS: React.StatelessComponent<Props & InjectedIntlProps> = ({
-	postnummer,
-	poststed,
-	adresse,
+	fakta,
 	intl
 }) => {
+	const personaliaFaktum = finnFaktum("personalia", fakta);
+
 	return (
 		<SysteminfoFaktum
 			faktumKey="kontakt.tps.adresse"
@@ -42,15 +45,15 @@ const KontaktinfoTPS: React.StatelessComponent<Props & InjectedIntlProps> = ({
 			<Detaljeliste>
 				<DetaljelisteElement
 					tittel={<FormattedMessage id="kontakt.tps.kontaktinfo.adresse" />}
-					verdi={adresse}
+					verdi={getFaktumPropertyVerdi(personaliaFaktum, "adresse")}
 				/>
 				<DetaljelisteElement
 					tittel={<FormattedMessage id="kontakt.tps.kontaktinfo.postnummer" />}
-					verdi={postnummer}
+					verdi={getFaktumPropertyVerdi(personaliaFaktum, "postnummer")}
 				/>
 				<DetaljelisteElement
 					tittel={<FormattedMessage id="kontakt.tps.kontaktinfo.poststed" />}
-					verdi={poststed}
+					verdi={getFaktumPropertyVerdi(personaliaFaktum, "poststed")}
 				/>
 			</Detaljeliste>
 		</SysteminfoFaktum>

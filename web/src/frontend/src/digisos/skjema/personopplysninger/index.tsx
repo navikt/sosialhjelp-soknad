@@ -9,7 +9,10 @@ import TelefonFaktum from "../../../nav-soknad/faktum/typedInput/TelefonFaktum";
 import { Skjema as BankinformasjonSkjema } from "./tps/Bankinformasjon";
 import { FeatureToggles } from "../../../featureToggles";
 import { radioCheckKeys } from "../../../nav-soknad/utils";
-import TPS from "./tps";
+import PersonaliaTPS from "./tps/PersonaliaTPS";
+import Adresseinfo from "./tps/Adresseinfo";
+import Telefoninfo from "./tps/Telefoninfo";
+import Bankinformasjon from "./tps/Bankinformasjon";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
 interface StateProps {
@@ -22,7 +25,20 @@ export type Props = StateProps & FaktumComponentProps;
 class Personalia extends React.Component<Props, {}> {
 	render() {
 		if (this.props.visPersonaliaFraTPS) {
-			return <TPS {...this.props} />;
+			return (
+				<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
+					<SporsmalFaktum faktumKey="kontakt.tps.personalia" style="system">
+						<PersonaliaTPS fakta={this.props.fakta} />
+					</SporsmalFaktum>
+					<SporsmalFaktum faktumKey="kontakt.tps.kontaktinfo" style="system">
+						<div className="blokk-xxs">
+							<Adresseinfo fakta={this.props.fakta} />
+						</div>
+						<Telefoninfo fakta={this.props.fakta} />
+					</SporsmalFaktum>
+					<Bankinformasjon fakta={this.props.fakta} />
+				</DigisosSkjemaSteg>
+			);
 		}
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		return (

@@ -4,31 +4,34 @@ import SysteminfoFaktum from "../../../../nav-soknad/faktum/SysteminfoFaktum";
 import Detaljeliste, {
 	DetaljelisteElement
 } from "../../../../nav-soknad/components/detaljeliste";
+import {
+	finnFaktum,
+	getFaktumPropertyVerdi
+} from "../../../../nav-soknad/utils";
+import { Faktum } from "../../../../nav-soknad/types";
 
 interface Props {
-	navn: string;
-	fnr: string;
-	statsborgerskap: string;
+	fakta: Faktum[];
 }
 
-const PersonaliaTPS: React.StatelessComponent<Props> = ({
-	navn,
-	fnr,
-	statsborgerskap
-}) => {
+const PersonaliaTPS: React.StatelessComponent<Props> = ({ fakta }) => {
+	const personaliaFaktum = finnFaktum("personalia", fakta);
+	const statsborgerskap = getFaktumPropertyVerdi(
+		personaliaFaktum,
+		"statsborgerskapType"
+	);
 	return (
 		<SysteminfoFaktum faktumKey="kontakt.tps.personalia">
 			<Detaljeliste>
 				<DetaljelisteElement
 					tittel={<FormattedMessage id="kontakt.tps.personalia.navn" />}
-					verdi={navn}
+					verdi={getFaktumPropertyVerdi(personaliaFaktum, "navn")}
 				/>
-				{fnr && (
-					<DetaljelisteElement
-						tittel={<FormattedMessage id="kontakt.tps.personalia.fnr" />}
-						verdi={fnr}
-					/>
-				)}
+				<DetaljelisteElement
+					skjulDersomTomVerdi={true}
+					tittel={<FormattedMessage id="kontakt.tps.personalia.fnr" />}
+					verdi={getFaktumPropertyVerdi(personaliaFaktum, "fnr")}
+				/>
 				{statsborgerskap && (
 					<DetaljelisteElement
 						tittel={
