@@ -9,7 +9,7 @@ import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { finnFakta, finnFaktum } from "../../../nav-soknad/utils/faktumUtils";
 import { opprettFaktum, slettFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import Vedlegg from "../../../nav-soknad/components/vedlegg/Vedlegg";
@@ -21,12 +21,17 @@ interface Props {
 	featureToggleBeOmLonnslippVedlegg?: boolean;
 }
 
-type AllProps = Props & DispatchProps & FaktumComponentProps & InjectedIntlProps;
+type AllProps = Props &
+	DispatchProps &
+	FaktumComponentProps &
+	InjectedIntlProps;
 
 function getValideringsType(property: PropertyStruktur) {
 	let type = "belop";
 	if (property.configuration && property.configuration.configuration) {
-		const configuration = property.configuration.configuration.find(conf => conf.key === "validering");
+		const configuration = property.configuration.configuration.find(
+			conf => conf.key === "validering"
+		);
 		if (configuration) {
 			type = configuration.value;
 		}
@@ -35,7 +40,6 @@ function getValideringsType(property: PropertyStruktur) {
 }
 
 class Opplysning extends React.Component<AllProps, {}> {
-
 	constructor(props: AllProps) {
 		super(props);
 		this.leggTilBelop = this.leggTilBelop.bind(this);
@@ -69,7 +73,9 @@ class Opplysning extends React.Component<AllProps, {}> {
 		const faktum = finnFaktum(faktumKey, fakta);
 		if (faktum && faktum.faktumId && vedlegg && vedlegg.map) {
 			for (const vedleggsForventning of vedlegg) {
-				if (vedleggsForventning.faktumId.toString() === faktum.faktumId.toString()) {
+				if (
+					vedleggsForventning.faktumId.toString() === faktum.faktumId.toString()
+				) {
 					return true;
 				}
 			}
@@ -86,29 +92,30 @@ class Opplysning extends React.Component<AllProps, {}> {
 
 		const rader = belopFakta.map(faktum => {
 			const inputs = faktumstruktur.properties.map(property => {
-
 				const type = getValideringsType(property);
 				let inputFelt = null;
 
 				switch (type) {
 					case "text":
-						inputFelt =
+						inputFelt = (
 							<InputFaktum
 								faktumId={faktum.faktumId}
 								faktumKey={faktumstruktur.id}
 								property={property.id}
-								bredde="M"
-							/>;
+								bredde="L"
+							/>
+						);
 						break;
 					case "belop":
 					default:
-						inputFelt =
+						inputFelt = (
 							<BelopFaktum
 								faktumId={faktum.faktumId}
 								faktumKey={faktumstruktur.id}
 								property={property.id}
 								bredde="S"
-							/>;
+							/>
+						);
 				}
 
 				return (
@@ -121,7 +128,8 @@ class Opplysning extends React.Component<AllProps, {}> {
 			const slettKnapp = (
 				<Lenkeknapp
 					onClick={() => this.fjernBelop(faktum.faktumId)}
-					label={slettTekst}/>
+					label={slettTekst}
+				/>
 			);
 
 			return (
@@ -140,6 +148,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 			/>
 		);
 
+
 		const lastOppLonnslippTekst =
 			intl.formatMessage({ id: "opplysninger.arbeid.jobb.lonn.vedlegg.label" });
 
@@ -149,6 +158,10 @@ class Opplysning extends React.Component<AllProps, {}> {
 					{rader}
 				</Container>
 				{faktumstruktur.flereTillatt === "true" ? leggTilKnapp : null}
+				<Vedlegg
+					faktumId={faktumstruktur.id}
+					label={lastOppLonnslippTekst}
+				/>
 				<Vedlegg
 					faktumKey={faktumstruktur.id}
 					label={lastOppLonnslippTekst}
@@ -166,6 +179,7 @@ export default connect<StateFromProps, {}, Props>((state: SoknadAppState) => {
 	return {
 		fakta: state.fakta.data,
 		vedlegg: state.vedlegg.data,
-		featureToggleBeOmLonnslippVedlegg: state.miljovariabler.data[FeatureToggles.beOmLonnslippVedlegg]
+		featureToggleBeOmLonnslippVedlegg:
+			state.featuretoggles.data[FeatureToggles.beOmLonnslippVedlegg]
 	};
 })(injectIntl(Opplysning));

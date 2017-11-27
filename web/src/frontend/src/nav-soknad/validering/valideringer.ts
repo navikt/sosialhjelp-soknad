@@ -26,10 +26,12 @@ export function getMaksLengdeFunc(max: number) {
 	return (value: string): ValideringActionKey => maksLengde(value, max);
 }
 
-export function erTall(value: string): ValideringActionKey {
-	return value && /^[0-9]*$/i.test(value)
-		? undefined
-		: ValideringActionKey.ER_TALL;
+export function erTall(
+	value: string,
+	kunHeltall?: boolean
+): ValideringActionKey {
+	const reg = kunHeltall ? /^[0-9]*$/i : /^[0-9,\.]*$/i;
+	return value && reg.test(value) ? undefined : ValideringActionKey.ER_TALL;
 }
 
 export function erTelefonnummer(value: string): ValideringActionKey {

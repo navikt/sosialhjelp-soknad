@@ -8,6 +8,7 @@ import SoknadReducer from "../../nav-soknad/redux/soknad/soknadReducer";
 import OppsummeringReducer from "../../nav-soknad/redux/oppsummering/oppsummeringReducer";
 import LedeteksterReducer from "../../nav-soknad/redux/ledetekster/ledeteksterReducer";
 import MiljovariablerReducer from "../../nav-soknad/redux/miljovariabler/miljovariablerReducer";
+import FeatureTogglesReducer from "../../nav-soknad/redux/featuretoggles/featureTogglesReducer";
 import TilgangReducer from "../../nav-soknad/redux/tilgang/tilgangReducer";
 import SynligeFaktaReducer from "./synligefakta/synligeFaktaReducer";
 import { SynligeFaktaState } from "./synligefakta/synligeFaktaTypes";
@@ -30,6 +31,7 @@ const reducers = combineReducers({
 	synligefakta: SynligeFaktaReducer,
 	vedlegg: VedleggReducer,
 	miljovariabler: MiljovariablerReducer,
+	featuretoggles: FeatureTogglesReducer,
 	applikasjonsfeil: ApplikasjonsfeilReducer,
 	init: InitReducer
 });

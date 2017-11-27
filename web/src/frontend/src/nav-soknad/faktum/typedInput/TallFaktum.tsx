@@ -7,9 +7,9 @@ export interface Props extends InheritedProps {
 	kunHeltall?: boolean;
 }
 const TallFaktum: React.StatelessComponent<Props> = (props: Props) => {
-	const validerFunc = [erTall].concat(
-		props.validerFunc ? props.validerFunc : []
-	);
+	const validerFunc = [
+		(value: string) => erTall(value, props.kunHeltall)
+	].concat(props.validerFunc ? props.validerFunc : []);
 	if (props.minLength) {
 		validerFunc.push(value => minLengde(value, props.minLength));
 	}

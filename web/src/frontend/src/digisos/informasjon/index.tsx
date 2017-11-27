@@ -1,11 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouterProps } from "react-router";
-import {
-	InjectedIntlProps,
-	injectIntl,
-	FormattedHTMLMessage
-} from "react-intl";
+import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import DocumentTitle from "react-document-title";
 import { State } from "../redux/reducers";
 import { Undertittel } from "nav-frontend-typografi";
@@ -16,9 +12,11 @@ import Infoblokk from "../../nav-soknad/components/infoblokk";
 import { startSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { Horten } from "../data/kommuner";
+import { FeatureToggles } from "../../featureToggles";
 
 interface StateProps {
 	harTilgang: boolean;
+	soknadErLive: string;
 	startSoknadPending: boolean;
 }
 
@@ -26,13 +24,13 @@ type Props = StateProps & InjectedIntlProps & RouterProps & DispatchProps;
 
 class Informasjon extends React.Component<Props, {}> {
 	render() {
-		const { intl, dispatch, harTilgang, startSoknadPending } = this.props;
+		const { intl, dispatch, harTilgang, startSoknadPending, soknadErLive } = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 		return (
 			<div>
 				<DocumentTitle title={title} />
 				<AppTittel />
-				{harTilgang ? (
+				{soknadErLive === "true" && harTilgang ? (
 					<div>
 						<div className="skjema-content">
 							<Infoblokk
@@ -82,5 +80,6 @@ class Informasjon extends React.Component<Props, {}> {
 
 export default connect((state: State) => ({
 	harTilgang: state.tilgang.harTilgang,
+	soknadErLive: state.featuretoggles.data[FeatureToggles.soknadErLive],
 	startSoknadPending: state.soknad.startSoknadPending
 }))(injectIntl(Informasjon));

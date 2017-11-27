@@ -17,6 +17,15 @@ export function getApiBaseUrl(): string {
 	return kjorerJetty() ? "http://127.0.0.1:8181/sendsoknad/" : "/sendsoknad/";
 }
 
+function getServletBaseUrl(): string {
+	if (erDev()) {
+		// Kjør mot lokal jetty
+		// return "http://localhost:8189/soknadsosialhjelp/";
+		return "http://localhost:3001/";
+	}
+	return "/soknadsosialhjelp/";
+}
+
 export const MED_CREDENTIALS: RequestInit = { credentials: "same-origin" };
 
 enum RequestMethod {
@@ -95,6 +104,17 @@ export function fetchKvittering(urlPath: string) {
 		.then((response: Response) => {
 			return response.json();
 		});
+}
+
+export function fetchFeatureToggles() {
+	const OPTIONS: RequestInit = {
+		headers: getHeaders(),
+		method: "GET",
+		credentials: "same-origin"
+	};
+	return fetch(getServletBaseUrl() + "api/feature", OPTIONS)
+		.then(sjekkStatuskode)
+		.then(toJson);
 }
 
 export function fetchUpload(urlPath: string, formData: FormData) {

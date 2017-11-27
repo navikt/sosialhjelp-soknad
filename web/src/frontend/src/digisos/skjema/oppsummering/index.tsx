@@ -18,12 +18,14 @@ import { State } from "../../redux/reducers";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { settInfofaktum } from "../../../nav-soknad/redux/soknad/soknadActions";
 import { getIntlTextOrKey } from "../../../nav-soknad/utils/intlUtils";
+import { Link } from "react-router-dom";
 
 interface StateProps {
 	oppsummering: Oppsummering;
 	bekreftet: boolean;
 	visBekreftMangler: boolean;
 	restStatus: REST_STATUS;
+	brukerbehandlingId: number;
 }
 
 type Props = FaktumComponentProps &
@@ -63,13 +65,26 @@ class OppsummeringView extends React.Component<Props, {}> {
 		};
 	}
 	render() {
-		const { oppsummering, intl } = this.props;
+		const { oppsummering, brukerbehandlingId, intl } = this.props;
 
 		const bolker = oppsummering
 			? this.props.oppsummering.bolker.map((bolk, idx) => (
 					<div className="blokk-xs bolk" key={idx}>
 						<EkspanderbartPanel tittel={bolk.tittel} apen={false}>
-							<div dangerouslySetInnerHTML={{ __html: bolk.html }} />
+							<div>
+								<div className="bolk__rediger">
+									<Link
+										className="lenke"
+										to={`/skjema/${brukerbehandlingId}/${idx + 1}`}
+									>
+										{getIntlTextOrKey(
+											this.props.intl,
+											"oppsummering.gatilbake"
+										)}
+									</Link>
+								</div>
+								<div dangerouslySetInnerHTML={{ __html: bolk.html }} />
+							</div>
 						</EkspanderbartPanel>
 					</div>
 				))
@@ -112,6 +127,7 @@ export default connect((state: State, props: any) => {
 		oppsummering: state.oppsummering.oppsummering,
 		bekreftet: state.oppsummering.bekreftet,
 		visBekreftMangler: state.oppsummering.visBekreftMangler,
-		restStatus: state.oppsummering.restStatus
+		restStatus: state.oppsummering.restStatus,
+		brukerbehandlingId: state.soknad.data.brukerBehandlingId
 	};
 })(injectIntl(OppsummeringView));

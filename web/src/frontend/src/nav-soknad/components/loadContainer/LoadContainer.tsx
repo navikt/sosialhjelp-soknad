@@ -5,10 +5,12 @@ import { REST_STATUS } from "../../types";
 
 interface Props {
 	restStatus: string;
+	contentRenderer?: () => React.ReactNode;
 }
 
 const LoadContainer: React.StatelessComponent<Props> = ({
 	restStatus,
+	contentRenderer,
 	children
 }) => {
 	if (
@@ -23,7 +25,7 @@ const LoadContainer: React.StatelessComponent<Props> = ({
 	} else if (restStatus === REST_STATUS.FEILET) {
 		return <ServerFeil />;
 	}
-	return <div>{children}</div>;
+	return <div>{contentRenderer ? contentRenderer() : children}</div>;
 };
 
 export default LoadContainer;
