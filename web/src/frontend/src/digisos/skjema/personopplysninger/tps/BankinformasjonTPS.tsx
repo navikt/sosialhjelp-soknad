@@ -33,7 +33,9 @@ const BankinformasjonTPS: React.StatelessComponent<
 		<SysteminfoFaktum
 			faktumKey="kontakt.kontonummer"
 			property="brukerendret"
-			endreLabel="Endre"
+			endreLabel={intl.formatMessage({
+				id: "kontakt.kontonummer.endreknapp.label"
+			})}
 			skjema={
 				<SporsmalFaktum
 					faktumKey="kontakt.kontonummer"
@@ -50,7 +52,7 @@ const BankinformasjonTPS: React.StatelessComponent<
 		>
 			<Detaljeliste>
 				<DetaljelisteElement
-					tittel={<FormattedMessage id="tps.bankinfo.kontonummer" />}
+					tittel={<FormattedMessage id="kontakt.tps.bankinfo.kontonummer" />}
 					verdi={kontonummer}
 				/>
 			</Detaljeliste>

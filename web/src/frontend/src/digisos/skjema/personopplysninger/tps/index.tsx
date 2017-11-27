@@ -17,7 +17,7 @@ class Personalia extends React.Component<Props, {}> {
 		const personaliaFaktum = finnFaktum("personalia", this.props.fakta);
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
-				<SporsmalFaktum faktumKey="tps.personalia" style="system">
+				<SporsmalFaktum faktumKey="kontakt.tps.personalia" style="system">
 					<PersonaliaTPS
 						navn={faktumEgenskapVerdi(personaliaFaktum, "navn")}
 						fnr={faktumEgenskapVerdi(personaliaFaktum, "fnr")}
@@ -27,7 +27,7 @@ class Personalia extends React.Component<Props, {}> {
 						)}
 					/>
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey="tps.kontaktinfo" style="system">
+				<SporsmalFaktum faktumKey="kontakt.tps.kontaktinfo" style="system">
 					<KontaktinfoTPS
 						telefonnummer={faktumEgenskapVerdi(
 							personaliaFaktum,
@@ -38,7 +38,7 @@ class Personalia extends React.Component<Props, {}> {
 						poststed={faktumEgenskapVerdi(personaliaFaktum, "poststed")}
 					/>
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey="tps.bankinfo" style="system">
+				<SporsmalFaktum faktumKey="kontakt.tps.bankinfo" style="system">
 					<BankinformasjonTPS fakta={this.props.fakta} />
 				</SporsmalFaktum>
 			</DigisosSkjemaSteg>
