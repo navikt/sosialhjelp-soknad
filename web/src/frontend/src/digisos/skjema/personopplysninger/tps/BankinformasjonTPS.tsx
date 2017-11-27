@@ -1,6 +1,7 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import Systeminfo from "../../../../nav-soknad/components/systeminfo";
+import Lenkeknapp from "../../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import Detaljeliste, {
 	DetaljelisteElement
 } from "../../../../nav-soknad/components/detaljeliste";
@@ -14,12 +15,15 @@ const BankinformasjonTPS: React.StatelessComponent<Props> = ({
 }) => {
 	return (
 		<Systeminfo>
-			<Detaljeliste>
-				<DetaljelisteElement
-					tittel={<FormattedMessage id="tps.bankinfo.kontonummer" />}
-					verdi={kontonummer}
-				/>
-			</Detaljeliste>
+			<div className="blokk-xxs">
+				<Detaljeliste>
+					<DetaljelisteElement
+						tittel={<FormattedMessage id="tps.bankinfo.kontonummer" />}
+						verdi={kontonummer}
+					/>
+				</Detaljeliste>
+			</div>
+			<Lenkeknapp label="Endre" onClick={() => alert(1)} />
 		</Systeminfo>
 	);
 };
