@@ -4,7 +4,10 @@ import { connect } from "react-redux";
 import { State } from "../../../redux/reducers";
 import { FaktumComponentProps } from "../../../../nav-soknad/redux/fakta/faktaTypes";
 import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
-import { finnFaktum, faktumEgenskapVerdi } from "../../../../nav-soknad/utils";
+import {
+	finnFaktum,
+	getFaktumPropertyVerdi
+} from "../../../../nav-soknad/utils";
 import PersonaliaTPS from "./PersonaliaTPS";
 import KontaktinfoTPS from "./KontaktinfoTPS";
 import Bankinformasjon from "./Bankinformasjon";
@@ -19,9 +22,9 @@ class Personalia extends React.Component<Props, {}> {
 			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
 				<SporsmalFaktum faktumKey="kontakt.tps.personalia" style="system">
 					<PersonaliaTPS
-						navn={faktumEgenskapVerdi(personaliaFaktum, "navn")}
-						fnr={faktumEgenskapVerdi(personaliaFaktum, "fnr")}
-						statsborgerskap={faktumEgenskapVerdi(
+						navn={getFaktumPropertyVerdi(personaliaFaktum, "navn")}
+						fnr={getFaktumPropertyVerdi(personaliaFaktum, "fnr")}
+						statsborgerskap={getFaktumPropertyVerdi(
 							personaliaFaktum,
 							"statsborgerskapType"
 						)}
@@ -29,13 +32,16 @@ class Personalia extends React.Component<Props, {}> {
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey="kontakt.tps.kontaktinfo" style="system">
 					<KontaktinfoTPS
-						telefonnummer={faktumEgenskapVerdi(
+						telefonnummer={getFaktumPropertyVerdi(
 							personaliaFaktum,
 							"telefonnummer"
 						)}
-						adresse={faktumEgenskapVerdi(personaliaFaktum, "gjeldendeAdresse")}
-						postnummer={faktumEgenskapVerdi(personaliaFaktum, "postnummer")}
-						poststed={faktumEgenskapVerdi(personaliaFaktum, "poststed")}
+						adresse={getFaktumPropertyVerdi(
+							personaliaFaktum,
+							"gjeldendeAdresse"
+						)}
+						postnummer={getFaktumPropertyVerdi(personaliaFaktum, "postnummer")}
+						poststed={getFaktumPropertyVerdi(personaliaFaktum, "poststed")}
 					/>
 				</SporsmalFaktum>
 				<Bankinformasjon fakta={this.props.fakta} />

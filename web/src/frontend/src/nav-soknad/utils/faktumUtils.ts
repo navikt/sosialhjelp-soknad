@@ -99,6 +99,10 @@ export function getPropertyVerdi(
 	faktumId?: number
 ) {
 	const faktum = finnFaktum(key, fakta, faktumId);
+	return getFaktumPropertyVerdi(faktum, property);
+}
+
+export function getFaktumPropertyVerdi(faktum: Faktum, property: string) {
 	return faktum ? faktum.properties[property] : "";
 }
 
@@ -144,16 +148,6 @@ export function finnFaktum(
 		}
 	}
 	return faktum[0];
-}
-
-export function faktumEgenskapVerdi(faktum: Faktum, key: string): string {
-	if (faktum && faktum.faktumEgenskaper) {
-		const faktumEgenskap = faktum.faktumEgenskaper.find(fe => fe.key === key);
-		if (faktumEgenskap) {
-			return faktumEgenskap.value;
-		}
-	}
-	return null;
 }
 
 export function getProgresjonFaktum(fakta: Faktum[]) {
