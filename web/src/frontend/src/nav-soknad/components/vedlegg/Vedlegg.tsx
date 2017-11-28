@@ -20,7 +20,6 @@ interface State {
 type Props = OwnProps & InjectedIntlProps;
 
 class Vedlegg extends React.Component<Props, State> {
-
 	refs: {
 		leggTilVedleggKnapp: HTMLInputElement;
 	};
@@ -35,7 +34,7 @@ class Vedlegg extends React.Component<Props, State> {
 	handleFileUpload(files: FileList) {
 		const vedlegg: VedleggType[] = [];
 		Array.from(files).map((file: File) => {
-			vedlegg.push({ name: file.name});
+			vedlegg.push({ name: file.name });
 		});
 		this.setState({
 			vedlegg
@@ -46,9 +45,7 @@ class Vedlegg extends React.Component<Props, State> {
 	render() {
 		return (
 			<div className="container--noPadding">
-				<p>
-					{this.props.label}
-				</p>
+				<p>{this.props.label}</p>
 				<Knapp
 					type="standard"
 					htmlType="submit"
@@ -57,11 +54,13 @@ class Vedlegg extends React.Component<Props, State> {
 					onClick={() => {
 						this.refs.leggTilVedleggKnapp.click();
 					}}
-				>+ <FormattedMessage id="opplysninger.vedlegg.knapp.tekst"/></Knapp>
+				>
+					+ <FormattedMessage id="opplysninger.vedlegg.knapp.tekst" />
+				</Knapp>
 
 				<input
 					ref="leggTilVedleggKnapp"
-					onChange={(e) => this.handleFileUpload(e.target.files)}
+					onChange={e => this.handleFileUpload(e.target.files)}
 					type="file"
 					className="visuallyhidden"
 					accept="image/jpeg,image/png,application/pdf"
@@ -72,18 +71,19 @@ class Vedlegg extends React.Component<Props, State> {
 						return (
 							<div key={index}>
 								<Lenkeknapp
-									onClick={ () => { alert("todo"); }}
-									label={vedlegg.name}
-								/>
+									onClick={() => {
+										alert("todo");
+									}}
+								>
+									{vedlegg.name}
+								</Lenkeknapp>
 							</div>
-
 						);
-					})
-					}
+					})}
 				</div>
 			</div>
 		);
 	}
 }
 
-export default (injectIntl(Vedlegg));
+export default injectIntl(Vedlegg);

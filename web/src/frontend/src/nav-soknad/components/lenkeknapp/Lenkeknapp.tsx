@@ -2,17 +2,17 @@ import * as React from "react";
 import AriaAlternativTekst from "../aria/AriaAlternativeText";
 import * as classNames from "classnames";
 
-export interface Props {
-	label: string;
+interface Props {
+	children: string;
 	onClick: () => void;
 	style?: "add";
-	alternativLabel?: string;
+	skjermleserLabel?: string;
 }
 const baseClassName = "lenkeknapp";
 
 class Lenkeknapp extends React.Component<Props> {
 	render() {
-		const { onClick, label, style, alternativLabel } = this.props;
+		const { onClick, children, style, skjermleserLabel } = this.props;
 		const className = classNames(
 			"lenke",
 			baseClassName,
@@ -20,7 +20,10 @@ class Lenkeknapp extends React.Component<Props> {
 		);
 		return (
 			<button onClick={onClick} className={className} type="button">
-				<AriaAlternativTekst visibleText={label} ariaText={alternativLabel} />
+				<AriaAlternativTekst
+					visibleText={children}
+					ariaText={skjermleserLabel}
+				/>
 			</button>
 		);
 	}
