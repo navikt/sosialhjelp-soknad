@@ -1,7 +1,7 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import SysteminfoFaktum from "../../../../nav-soknad/faktum/SysteminfoFaktum";
-import { getFaktumVerdi } from "../../../../nav-soknad/utils";
+import { harFaktumVerdi, getFaktumVerdi } from "../../../../nav-soknad/utils";
 import { Faktum } from "../../../../nav-soknad/types";
 import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
 import TelefonFaktum from "../../../../nav-soknad/faktum/typedInput/TelefonFaktum";
@@ -23,9 +23,7 @@ const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	fakta,
 	intl
 }) => {
-	const telefonnummer = getFaktumVerdi(fakta, "kontakt.system.telefon");
-
-	if (!telefonnummer || telefonnummer === "") {
+	if (!harFaktumVerdi(fakta, "kontakt.system.telefon")) {
 		return (
 			<div className="blokk-m-top">
 				<Skjema />
@@ -46,7 +44,7 @@ const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 					tittel={
 						<FormattedMessage id="kontakt.tps.kontaktinfo.telefonnummer" />
 					}
-					verdi={telefonnummer}
+					verdi={getFaktumVerdi(fakta, "kontakt.system.telefon")}
 				/>
 			</Detaljeliste>
 		</SysteminfoFaktum>

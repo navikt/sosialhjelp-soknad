@@ -28,7 +28,7 @@ export const Skjema: React.StatelessComponent<{}> = () => (
 	</div>
 );
 
-const KontaktinfoTPS: React.StatelessComponent<Props & InjectedIntlProps> = ({
+const Kontaktinfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	fakta,
 	intl
 }) => {
@@ -36,15 +36,15 @@ const KontaktinfoTPS: React.StatelessComponent<Props & InjectedIntlProps> = ({
 
 	return (
 		<SysteminfoFaktum
-			faktumKey="kontakt.tps.adresse"
+			faktumKey="kontakt.system.adresse"
 			skjema={<Skjema />}
 			endreLabel={intl.formatMessage({
-				id: "kontakt.tps.adresse.endreknapp.label"
+				id: "kontakt.system.adresse.endreknapp.label"
 			})}
 		>
 			<Detaljeliste>
 				<DetaljelisteElement
-					tittel={<FormattedMessage id="kontakt.tps.kontaktinfo.adresse" />}
+					tittel={<FormattedMessage id="kontakt.system.adresse" />}
 					verdi={getFaktumPropertyVerdi(personaliaFaktum, "gjeldendeAdresse")}
 				/>
 			</Detaljeliste>
@@ -52,4 +52,4 @@ const KontaktinfoTPS: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	);
 };
 
-export default injectIntl(KontaktinfoTPS);
+export default injectIntl(Kontaktinfo);

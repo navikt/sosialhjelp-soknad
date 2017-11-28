@@ -88,6 +88,11 @@ export function getFaktumVerdi(fakta: Faktum[], key: string): string {
 	return faktum.value;
 }
 
+export function harFaktumVerdi(fakta: Faktum[], key: string): boolean {
+	const faktum = finnFaktum(key, fakta);
+	return faktum && faktum.value && faktum.value !== "";
+}
+
 export function eksistererFaktum(fakta: Faktum[], key: string): boolean {
 	return finnFaktum(key, fakta) != null;
 }

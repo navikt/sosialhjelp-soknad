@@ -21,21 +21,21 @@ const PersonaliaTPS: React.StatelessComponent<Props> = ({ fakta }) => {
 		"statsborgerskapType"
 	);
 	return (
-		<SysteminfoFaktum faktumKey="kontakt.tps.personalia">
+		<SysteminfoFaktum faktumKey="kontakt.system.personalia">
 			<Detaljeliste>
 				<DetaljelisteElement
-					tittel={<FormattedMessage id="kontakt.tps.personalia.navn" />}
+					tittel={<FormattedMessage id="kontakt.system.personalia.navn" />}
 					verdi={getFaktumPropertyVerdi(personaliaFaktum, "navn")}
 				/>
 				<DetaljelisteElement
 					skjulDersomTomVerdi={true}
-					tittel={<FormattedMessage id="kontakt.tps.personalia.fnr" />}
+					tittel={<FormattedMessage id="kontakt.system.personalia.fnr" />}
 					verdi={getFaktumPropertyVerdi(personaliaFaktum, "fnr")}
 				/>
 				{statsborgerskap && (
 					<DetaljelisteElement
 						tittel={
-							<FormattedMessage id="kontakt.tps.personalia.statsborgerskap" />
+							<FormattedMessage id="kontakt.system.personalia.statsborgerskap" />
 						}
 						verdi={<span className="tekst-capitalize">{statsborgerskap}</span>}
 					/>

@@ -2,9 +2,9 @@ import * as React from "react";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import SysteminfoFaktum from "../../../../nav-soknad/faktum/SysteminfoFaktum";
 import {
-	eksistererFaktum,
 	faktumIsSelected,
-	getFaktumVerdi
+	getFaktumVerdi,
+	harFaktumVerdi
 } from "../../../../nav-soknad/utils";
 import { Faktum } from "../../../../nav-soknad/types";
 import Detaljeliste, {
@@ -37,29 +37,24 @@ export const Skjema: React.StatelessComponent<Props> = ({ fakta }) => {
 const BankinformasjonTPS: React.StatelessComponent<
 	Props & InjectedIntlProps
 > = ({ fakta, intl }) => {
-	const harSystemKontonummer = eksistererFaktum(
-		fakta,
-		"kontakt.tps.kontonummer"
-	);
+	const systemKontonummerKey = "kontakt.system.kontonummer";
 
-	if (!harSystemKontonummer) {
+	if (!harFaktumVerdi(fakta, systemKontonummerKey)) {
 		return <Skjema fakta={fakta} />;
 	} else {
 		return (
-			<SporsmalFaktum faktumKey="kontakt.tps.bankinfo" style="system">
+			<SporsmalFaktum faktumKey={systemKontonummerKey} style="system">
 				<SysteminfoFaktum
-					faktumKey="kontakt.kontonummer"
+					faktumKey={systemKontonummerKey}
 					endreLabel={intl.formatMessage({
-						id: "kontakt.kontonummer.endreknapp.label"
+						id: "kontakt.system.kontonummer.endreknapp.label"
 					})}
 					skjema={<Skjema fakta={fakta} />}
 				>
 					<Detaljeliste>
 						<DetaljelisteElement
-							tittel={
-								<FormattedMessage id="kontakt.tps.bankinfo.kontonummer" />
-							}
-							verdi={getFaktumVerdi(fakta, "kontakt.tps.kontonummer")}
+							tittel={<FormattedMessage id="kontakt.system.kontonummer" />}
+							verdi={getFaktumVerdi(fakta, systemKontonummerKey)}
 						/>
 					</Detaljeliste>
 				</SysteminfoFaktum>
