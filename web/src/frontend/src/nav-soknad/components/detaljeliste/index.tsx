@@ -1,28 +1,21 @@
 import * as React from "react";
-import * as classNames from "classnames";
 
 export interface ElementProps {
 	tittel: React.ReactNode;
 	verdi: React.ReactNode;
 	skjulDersomTomVerdi?: boolean;
-	spaced?: boolean;
 }
 
 export const DetaljelisteElement: React.StatelessComponent<ElementProps> = ({
 	tittel,
 	verdi,
-	skjulDersomTomVerdi = true,
-	spaced
+	skjulDersomTomVerdi = true
 }) => {
 	if (skjulDersomTomVerdi && (verdi === null || verdi === undefined)) {
 		return null;
 	}
 	return (
-		<li
-			className={classNames("detaljeliste__element", {
-				"detaljeliste__element--spaced": spaced
-			})}
-		>
+		<li className="detaljeliste__element">
 			<strong className="detaljeliste__tittel" key="tittel">
 				{tittel}:
 			</strong>
