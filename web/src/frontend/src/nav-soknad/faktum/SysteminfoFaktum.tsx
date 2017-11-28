@@ -74,12 +74,11 @@ class SysteminfoFaktum extends React.Component<Props, {}> {
 						{!skjemaErSynlig && (
 							<Lenkeknapp
 								ref={c => (this.visSkjemaKnapp = c)}
-								label={
-									endreLabel ||
-									intl.formatMessage({ id: "systeminfo.endreknapp.label" })
-								}
 								onClick={() => this.visSkjema()}
-							/>
+							>
+								{endreLabel ||
+									intl.formatMessage({ id: "systeminfo.endreknapp.label" })}
+							</Lenkeknapp>
 						)}
 						{skjemaErSynlig && (
 							<div>
@@ -90,15 +89,12 @@ class SysteminfoFaktum extends React.Component<Props, {}> {
 									{skjema}
 								</div>
 								<div className="blokk-xxs">
-									<Lenkeknapp
-										label={
-											avbrytLabel ||
+									<Lenkeknapp onClick={() => this.skjulSkjema()}>
+										{avbrytLabel ||
 											intl.formatMessage({
 												id: "systeminfo.avbrytendringknapp.label"
-											})
-										}
-										onClick={() => this.skjulSkjema()}
-									/>
+											})}
+									</Lenkeknapp>
 								</div>
 							</div>
 						)}
