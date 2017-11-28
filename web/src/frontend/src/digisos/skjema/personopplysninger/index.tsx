@@ -16,15 +16,14 @@ import Bankinformasjon from "./tps/Bankinformasjon";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
 interface StateProps {
-	visPersonaliaFraTPS: boolean;
-	visKontaktinfoFraTPS: boolean;
+	visPersonaliaFraTPSfeatureToggle: boolean;
 }
 
 export type Props = StateProps & FaktumComponentProps;
 
 class Personalia extends React.Component<Props, {}> {
 	render() {
-		if (this.props.visPersonaliaFraTPS) {
+		if (this.props.visPersonaliaFraTPSfeatureToggle) {
 			return (
 				<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
 					<SporsmalFaktum faktumKey="kontakt.tps.personalia" style="system">
@@ -56,9 +55,7 @@ class Personalia extends React.Component<Props, {}> {
 
 export default connect((state: State): Props => {
 	return {
-		visPersonaliaFraTPS:
-			state.featuretoggles.data[FeatureToggles.viseTpsPersonalia],
-		visKontaktinfoFraTPS:
+		visPersonaliaFraTPSfeatureToggle:
 			state.featuretoggles.data[FeatureToggles.viseTpsPersonalia],
 		fakta: state.fakta.data
 	};
