@@ -3,14 +3,14 @@ import AriaAlternativTekst from "../aria/AriaAlternativeText";
 import * as classNames from "classnames";
 
 interface Props {
-	label: string;
+	children: string;
 	onClick: () => void;
 	style?: "add";
-	alternativLabel?: string;
+	skjermleserLabel?: string;
 }
 const baseClassName = "lenkeknapp";
 
-const Lenkeknapp = ({ onClick, label, style, alternativLabel }: Props) => {
+const Lenkeknapp = ({ onClick, children, style, skjermleserLabel }: Props) => {
 	const className = classNames(
 		"lenke",
 		baseClassName,
@@ -18,7 +18,7 @@ const Lenkeknapp = ({ onClick, label, style, alternativLabel }: Props) => {
 	);
 	return (
 		<button onClick={onClick} className={className} type="button">
-			<AriaAlternativTekst visibleText={label} ariaText={alternativLabel} />
+			<AriaAlternativTekst visibleText={children} ariaText={skjermleserLabel} />
 		</button>
 	);
 };
