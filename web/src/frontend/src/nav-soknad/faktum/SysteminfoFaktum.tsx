@@ -1,4 +1,5 @@
 import * as React from "react";
+import { findDOMNode } from "react-dom";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import Lenkeknapp from "../components/lenkeknapp/Lenkeknapp";
 import Underskjema from "../components/underskjema";
@@ -6,6 +7,7 @@ import {
 	faktumComponent,
 	InjectedFaktumComponentProps
 } from "./FaktumComponent";
+import { focusOnFirstElement } from "../utils/domUtils";
 
 /** Navn på property som setter om bruker ønsker å endre verdien
  * fra system for denne søknaden eller ikke. Settes til strengen "true"
@@ -27,10 +29,33 @@ interface OwnProps {
 	avbrytLabel?: string;
 }
 
-class SysteminfoFaktum extends React.Component<
-	OwnProps & InjectedFaktumComponentProps & InjectedIntlProps,
-	{}
-> {
+type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
+
+class SysteminfoFaktum extends React.Component<Props, {}> {
+	skjema: HTMLElement;
+	visSkjemaKnapp: Lenkeknapp;
+	constructor(props: Props) {
+		super(props);
+		this.visSkjema = this.visSkjema.bind(this);
+		this.skjulSkjema = this.skjulSkjema.bind(this);
+	}
+
+	visSkjema() {
+		this.props.setFaktumVerdiOgLagre(PROPERTY_VALGT_VERDI, this.props.property);
+		/** Setter fokus på første element i skjemaet etter at bruker har valgt å endre */
+		setTimeout(() => {
+			focusOnFirstElement(this.skjema);
+		}, 0);
+	}
+
+	skjulSkjema() {
+		this.props.setFaktumVerdi(PROPERTY_IKKE_VALGT_VERDI, this.props.property);
+		/** Setter fokus tilbake på endre-knapp etter at bruker har avbrutt endring */
+		setTimeout(() => {
+			(findDOMNode(this.visSkjemaKnapp) as HTMLElement).focus();
+		}, 0);
+	}
+
 	render() {
 		const { intl, children, endreLabel, avbrytLabel, skjema } = this.props;
 		const skjemaErSynlig =
@@ -48,21 +73,22 @@ class SysteminfoFaktum extends React.Component<
 					<div className="blokk-xxs">
 						{!skjemaErSynlig && (
 							<Lenkeknapp
+								ref={c => (this.visSkjemaKnapp = c)}
 								label={
 									endreLabel ||
 									intl.formatMessage({ id: "systeminfo.endreknapp.label" })
 								}
-								onClick={() =>
-									this.props.setFaktumVerdi(
-										PROPERTY_VALGT_VERDI,
-										this.props.property
-									)
-								}
+								onClick={() => this.visSkjema()}
 							/>
 						)}
 						{skjemaErSynlig && (
 							<div>
-								<div className="systeminfo_endreSkjema">{skjema}</div>
+								<div
+									className="systeminfo_endreSkjema"
+									ref={c => (this.skjema = c)}
+								>
+									{skjema}
+								</div>
 								<div className="blokk-xxs">
 									<Lenkeknapp
 										label={
@@ -71,12 +97,7 @@ class SysteminfoFaktum extends React.Component<
 												id: "systeminfo.avbrytendringknapp.label"
 											})
 										}
-										onClick={() =>
-											this.props.setFaktumVerdi(
-												PROPERTY_IKKE_VALGT_VERDI,
-												this.props.property
-											)
-										}
+										onClick={() => this.skjulSkjema()}
 									/>
 								</div>
 							</div>
