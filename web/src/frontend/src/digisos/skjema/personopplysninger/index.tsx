@@ -31,9 +31,7 @@ class Personalia extends React.Component<Props, {}> {
 						<PersonaliaTPS fakta={this.props.fakta} />
 					</SporsmalFaktum>
 					<SporsmalFaktum faktumKey="kontakt.tps.kontaktinfo" style="system">
-						<div className="blokk-xxs">
-							<Adresseinfo fakta={this.props.fakta} />
-						</div>
+						<Adresseinfo fakta={this.props.fakta} />
 						<Telefoninfo fakta={this.props.fakta} />
 					</SporsmalFaktum>
 					<Bankinformasjon fakta={this.props.fakta} />
