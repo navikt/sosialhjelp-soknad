@@ -13,9 +13,9 @@ import { hentFeatureToggles } from "../featuretoggles/featureTogglesActions";
 
 export let initActions = [
 	TilgangActionTypeKeys.OK,
+	FeatureTogglesActionTypeKeys.OK,
 	MiljovariablerActionTypeKeys.OK,
-	LedeteksterActionTypeKeys.OK,
-	FeatureTogglesActionTypeKeys.OK
+	LedeteksterActionTypeKeys.OK
 ];
 
 export const initFeiletActions = [
