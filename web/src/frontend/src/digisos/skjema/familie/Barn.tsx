@@ -104,7 +104,7 @@ export default class Barn extends React.Component<Props, {}> {
 						<span className="barn__fjern">
 							<Lenkeknapp
 								onClick={() =>
-									this.props.onFjernBarn(this.props.faktum.faktumId)
+									skjermleserLabejernBarn(this.props.faktum.faktumId)
 								}
 								alternativLabel={alternativFjernTekst()}
 							>

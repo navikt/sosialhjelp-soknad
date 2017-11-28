@@ -6,11 +6,11 @@ interface Props {
 	children: string;
 	onClick: () => void;
 	style?: "add";
-	alternativLabel?: string;
+	skjermleserLabel?: string;
 }
 const baseClassName = "lenkeknapp";
 
-const Lenkeknapp = ({ onClick, children, style, alternativLabel }: Props) => {
+const Lenkeknapp = ({ onClick, children, style, skjermleserLabel }: Props) => {
 	const className = classNames(
 		"lenke",
 		baseClassName,
@@ -18,7 +18,7 @@ const Lenkeknapp = ({ onClick, children, style, alternativLabel }: Props) => {
 	);
 	return (
 		<button onClick={onClick} className={className} type="button">
-			<AriaAlternativTekst visibleText={children} ariaText={alternativLabel} />
+			<AriaAlternativTekst visibleText={children} ariaText={skjermleserLabel} />
 		</button>
 	);
 };
