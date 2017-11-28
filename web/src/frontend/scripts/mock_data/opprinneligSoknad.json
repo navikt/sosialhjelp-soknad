@@ -323,31 +323,11 @@
 			"type": "SYSTEMREGISTRERT"
 		},
 		{
-			"faktumId": 3123,
-			"soknadId": 4,
-			"parrentFaktum": null,
-			"key": "kontakt.tps.adresse",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "SYSTEMREGISTRERT"
-		},
-		{
-			"faktumId": 3993,
-			"soknadId": 4,
-			"parrentFaktum": null,
-			"key": "kontakt.tps.personalia",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "SYSTEMREGISTRERT"
-		},
-		{
 			"faktumId": 31231,
 			"soknadId": 4,
 			"parrentFaktum": null,
 			"key": "kontakt.adresse.gateadresse",
-			"value": null,
+			"value": "Grepalida 44",
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
@@ -357,7 +337,7 @@
 			"soknadId": 4,
 			"parrentFaktum": null,
 			"key": "kontakt.adresse.postnummer",
-			"value": null,
+			"value": "0560",
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
@@ -367,7 +347,7 @@
 			"soknadId": 4,
 			"parrentFaktum": null,
 			"key": "kontakt.adresse.poststed",
-			"value": null,
+			"value": "null",
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"

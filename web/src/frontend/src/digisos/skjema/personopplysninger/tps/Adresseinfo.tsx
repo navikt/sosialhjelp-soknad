@@ -45,15 +45,7 @@ const KontaktinfoTPS: React.StatelessComponent<Props & InjectedIntlProps> = ({
 			<Detaljeliste>
 				<DetaljelisteElement
 					tittel={<FormattedMessage id="kontakt.tps.kontaktinfo.adresse" />}
-					verdi={getFaktumPropertyVerdi(personaliaFaktum, "adresse")}
-				/>
-				<DetaljelisteElement
-					tittel={<FormattedMessage id="kontakt.tps.kontaktinfo.postnummer" />}
-					verdi={getFaktumPropertyVerdi(personaliaFaktum, "postnummer")}
-				/>
-				<DetaljelisteElement
-					tittel={<FormattedMessage id="kontakt.tps.kontaktinfo.poststed" />}
-					verdi={getFaktumPropertyVerdi(personaliaFaktum, "poststed")}
+					verdi={getFaktumPropertyVerdi(personaliaFaktum, "gjeldendeAdresse")}
 				/>
 			</Detaljeliste>
 		</SysteminfoFaktum>
