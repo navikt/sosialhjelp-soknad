@@ -43,12 +43,9 @@ const BankinformasjonTPS: React.StatelessComponent<
 		return <Skjema fakta={fakta} />;
 	} else {
 		return (
-			<SporsmalFaktum
-				faktumKey="kontakt.kontonummer.brukerendring"
-				style="system"
-			>
+			<SporsmalFaktum faktumKey="kontakt.kontonummer" style="system">
 				<SysteminfoFaktum
-					faktumKey={systemKontonummerKey}
+					faktumKey="kontakt.kontonummer.brukerendret"
 					endreLabel={intl.formatMessage({
 						id: "kontakt.system.kontonummer.endreknapp.label"
 					})}

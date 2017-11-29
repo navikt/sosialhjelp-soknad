@@ -275,7 +275,7 @@
 			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "kontakt.system.kontonummer",
-			"value": null,
+			"value": "35431224877",
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
