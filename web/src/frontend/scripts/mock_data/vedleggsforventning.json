@@ -24,5 +24,32 @@
 		},
 		"tittel": "Lønnslipp for siste 3 mnd",
 		"aarsak": null
+	},
+
+	{
+		"vedleggId": 1001,
+		"soknadId": 4,
+		"faktumId": 310,
+		"skjemaNummer": "K4",
+		"skjemanummerTillegg": null,
+		"innsendingsvalg": "VedleggKreves",
+		"opprinneligInnsendingsvalg": null,
+		"navn": "Donald D. Mockmann",
+		"storrelse": 0,
+		"antallSider": 0,
+		"opprettetDato": 1510317440000,
+		"fillagerReferanse": "e7be01fc-58c4-4c13-b37a-85e2726336c9",
+		"urls": {
+			"URLNEWNORWEGIAN": "",
+			"URLFRENCH": "",
+			"URLPOLISH": "",
+			"URLGERMAN": "",
+			"URLENGLISH": "",
+			"URLSAMISK": "",
+			"URLSPANISH": "",
+			"URL": ""
+		},
+		"tittel": "Test av vedlegg. Last opp kontonummer dokumentasjon.",
+		"aarsak": null
 	}
 ]

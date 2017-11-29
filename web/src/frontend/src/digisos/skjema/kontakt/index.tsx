@@ -16,6 +16,7 @@ import {
 } from "../../../nav-soknad/utils";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
+import Vedlegg from "../../../nav-soknad/components/vedlegg/Vedlegg";
 
 class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -49,10 +50,15 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 							ignorert={brukerHarIkkeKontonummer}
 						/>
 						<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke"/>
+						<Vedlegg
+							faktumKey="kontakt.kontonummer"
+							label="Test av vedlegg"
+						/>
 					</SporsmalFaktum>
 				)}
 				<SporsmalFaktum faktumKey="kontakt.telefon">
 					<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8}/>
+
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey={statsborger.faktum}>
 					<RadioFaktum faktumKey={statsborger.faktum} value="true"/>

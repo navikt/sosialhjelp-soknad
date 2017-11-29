@@ -157,14 +157,12 @@ class Opplysning extends React.Component<AllProps, {}> {
 					{rader}
 				</Container>
 				{faktumstruktur.flereTillatt === "true" ? leggTilKnapp : null}
-				<Vedlegg
-					faktumKey={faktumstruktur.id}
-					label={lastOppLonnslippTekst}
-				/>
-				<Vedlegg
-					faktumKey={faktumstruktur.id}
-					label={lastOppLonnslippTekst}
-				/>
+				{ this.props.featureToggleBeOmLonnslippVedlegg && (
+					<Vedlegg
+						faktumKey={faktumstruktur.id}
+						label={lastOppLonnslippTekst}
+					/>
+				) }
 			</SporsmalFaktum>
 		);
 	}

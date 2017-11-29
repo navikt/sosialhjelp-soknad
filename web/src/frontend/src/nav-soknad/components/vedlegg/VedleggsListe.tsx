@@ -1,29 +1,26 @@
 import * as React from "react";
 import Lenkeknapp from "../lenkeknapp/Lenkeknapp";
 import SlettIkon from "./SlettIkon";
-
-interface Vedlegg {
-	name: string;
-	vedleggId: string;
-}
+import { Fil } from "../../redux/vedlegg/vedleggTypes";
 
 interface Props extends React.Props<any> {
-	vedlegg: Vedlegg[];
+	filer: Fil[];
+	faktumKey: string;
 }
 
-function lastNedVedlegg(vedleggId: string) {
+function lastNedVedlegg(vedleggId: string, faktumKey: string) {
 	window.alert("Last ned vedlegg ikke implementert");
 }
 
-const VedleggsListe: React.StatelessComponent<Props> = ({ vedlegg }) => {
+const VedleggsListe: React.StatelessComponent<Props> = ({ filer, faktumKey }) => {
 	return (
 		<div>
-			{vedlegg && vedlegg.map((vedlagtFil: Vedlegg, index: number) => {
+			{filer && filer.map((fil: Fil, index: number) => {
 				return (
 					<p key={index}>
 						<Lenkeknapp
-							onClick={() => lastNedVedlegg(vedlagtFil.vedleggId)}
-							label={vedlagtFil.name}
+							onClick={() => lastNedVedlegg(fil.navn, faktumKey)}
+							label={fil.navn}
 						/>
 						<span className="slettIkon"><SlettIkon/></span>
 					</p>

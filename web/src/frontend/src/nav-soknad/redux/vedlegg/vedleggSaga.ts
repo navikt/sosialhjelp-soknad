@@ -5,24 +5,27 @@ import { HentVedleggListeAction, LastOppVedleggAction, VedleggActionTypeKeys } f
 import {
 	hentVedleggsForventningOk,
 	hentVedleggsForventningFeilet,
-	lastetOppVedlegg,
-	mottattVedleggListe
+	mottattVedleggListe,
+	lastOppVedleggPending,
+	lastOppVedleggOk, lastOppVedleggFeilet
 } from "./vedleggActions";
 import { loggFeil } from "../../../nav-soknad/redux/navlogger/navloggerActions";
-import { selectBrukerBehandlingId } from "../selectors";
+import { selectBrukerBehandlingId, selectFaktaData } from "../selectors";
 
 function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 	try {
+		yield put(lastOppVedleggPending(action.faktumKey, action.vedleggId)); // Trengs denne?
+
 		const behandlingsId = yield select(selectBrukerBehandlingId);
 		const { vedleggId } = {vedleggId: action.vedleggId};
 		const url = `vedlegg/${vedleggId}/fil?behandlingsId=${behandlingsId}`;
-		const response = yield call(fetchUpload, url, action.formData);
-		yield put(mottattVedleggListe(response));
-		yield put(lastetOppVedlegg());
+		yield call(fetchUpload, url, action.formData);
+		// const response = yield call(fetchUpload, url, action.formData);
+		// yield put(mottattVedleggListe(response));
+		// yield put(lastOppVedleggOk(action.faktumKey, action.vedleggId));
+		yield put(lastOppVedleggOk(action.faktumKey, action.vedleggId));
 	} catch (reason) {
-		yield put(
-			loggFeil("Problemer med å laste opp fil: " + reason.toString())
-		);
+		yield put(lastOppVedleggFeilet(action.faktumKey, action.vedleggId, reason.toString()));
 	}
 }
 
@@ -46,7 +49,8 @@ function* hentVedleggsForventningSaga(): SagaIterator {
 		const url = `soknader/${behandlingsId}/vedlegg`;
 		yield call(fetchToJson, url);
 		const response = yield call(fetchToJson, url);
-		yield put(hentVedleggsForventningOk(response));
+		const fakta = yield select(selectFaktaData);
+		yield put(hentVedleggsForventningOk(response, fakta));
 	} catch ( reason) {
 		yield put(hentVedleggsForventningFeilet(reason));
 	}

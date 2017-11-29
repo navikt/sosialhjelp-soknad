@@ -1,13 +1,14 @@
 import { REST_STATUS } from "../../types/restTypes";
+import { Faktum } from "../../types/navSoknadTypes";
 
 export enum VedleggActionTypeKeys {
 	LASTOPP = "vedlegg/LASTOPP",
 	OK = "vedlegg/OK",
-	LASTOPP_FEILET = "vedlegg/LASTOPP_FEILET",
 	LASTOPP_OK = "vedlegg/LASTOPP_OK",
+	LASTOPP_PENDING = "vedlegg/LASTOPP_PENDING",
+	LASTOPP_FEILET = "vedlegg/LASTOPP_FEILET",
 	HENT = "vedlegg/HENT",
 	HENT_FEILET = "vedlegg/HENT_FEILET",
-	LASTOPP_PENDING = "vedlegg/LASTOPP_PENDING",
 	HENT_VEDLEGG_LISTE = "vedlegg/HENT_VEDLEGG_LISTE",
 	MOTTATT_VEDLEGG_LISTE = "vedlegg/MOTTATT_VEDLEGG_LISTE",
 	HENT_PENDING = "vedlegg/HENT_PENDING",
@@ -20,20 +21,19 @@ export enum VedleggActionTypeKeys {
 
 export interface VedleggState {
 	data: any;
-	filer: any[];
 	restStatus: REST_STATUS;
 }
 
 export type VedleggActionTypes =
 	LastOppVedleggAction
-	| LasterOppVedleggAction
-	| LastetOppVedleggAction
+	| LastOppVedleggPendingAction
+	| LastOppVedleggFeiletAction
+	| LastOppVedleggOkAction
 	| HentVedleggListeAction
 	| MottattVedleggListeAction
 	| HentetVedleggAction
 	| HentVedleggAction
 	| HentVedleggFeiletAction
-	| LastoppVedleggFeiletAction
 	| HentVedleggsForventning
 	| HentVedleggsForventningOk
 	| HentVedleggsForventningFeilet
@@ -42,15 +42,28 @@ export type VedleggActionTypes =
 export interface LastOppVedleggAction {
 	type: VedleggActionTypeKeys.LASTOPP;
 	vedleggId: string;
+	faktumKey: string;
+	filer: Fil[];
 	formData: FormData;
 }
 
-interface LasterOppVedleggAction {
+interface LastOppVedleggPendingAction {
 	type: VedleggActionTypeKeys.LASTOPP_PENDING;
+	vedleggId: string;
+	faktumKey: string;
 }
 
-interface LastetOppVedleggAction {
+interface LastOppVedleggFeiletAction {
+	type: VedleggActionTypeKeys.LASTOPP_FEILET;
+	vedleggId: string;
+	faktumKey: string;
+	feilmelding: string;
+}
+
+interface LastOppVedleggOkAction {
 	type: VedleggActionTypeKeys.LASTOPP_OK;
+	vedleggId: string;
+	faktumKey: string;
 }
 
 interface HentetVedleggAction {
@@ -65,11 +78,13 @@ export interface HentVedleggListeAction {
 
 interface HentVedleggsForventning {
 	type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING;
+	fakta: Faktum[];
 }
 
 interface HentVedleggsForventningOk {
 	type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_OK;
-	data: any;
+	vedleggsforventninger: any;
+	fakta: Faktum[];
 }
 
 interface HentVedleggsForventningFeilet {
@@ -86,11 +101,6 @@ interface HentVedleggAction {
 	type: VedleggActionTypeKeys.HENT;
 }
 
-interface LastoppVedleggFeiletAction {
-	type: VedleggActionTypeKeys.LASTOPP_FEILET;
-	feilmelding: string;
-}
-
 interface HentVedleggFeiletAction {
 	type: VedleggActionTypeKeys.HENT_FEILET;
 	feilmelding: string;
@@ -99,10 +109,24 @@ interface HentVedleggFeiletAction {
 export interface OtherAction {
 	type: VedleggActionTypeKeys.OTHER_ACTION;
 }
+export interface Fil {
+	navn: string;
+	status: string;
+}
+
+export interface Vedlegg {
+	[ key: string ]: {
+		faktumId: string;
+		faktumKey: string;
+		vedleggId: number;
+		filer: Fil[];
+	};
+}
 
 export interface VedleggApiType {
-	data: {};
-	filer: any[];
-	status: VedleggActionTypeKeys;
+	data: {
+		vedlegg?: Vedlegg
+	};
 	restStatus: REST_STATUS;
+	feilmelding: string;
 }

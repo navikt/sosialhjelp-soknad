@@ -1,25 +1,65 @@
-import { VedleggActionTypeKeys, VedleggActionTypes } from "./vedleggTypes";
+import { Fil, VedleggActionTypeKeys, VedleggActionTypes } from "./vedleggTypes";
+import { Faktum } from "../../types/navSoknadTypes";
 
 const lastOppVedlegg = (
+	key: string,
 	vedleggId: string,
-	formData: FormData
+	formData: FormData,
+	filer: Fil[]
 ): VedleggActionTypes => {
 	return {
 		type: VedleggActionTypeKeys.LASTOPP,
+		faktumKey: key,
 		vedleggId,
-		formData
+		formData,
+		filer
 	};
 };
 
-const lasterOppVedlegg = (): VedleggActionTypes => {
+// const lasterOppVedlegg = (): VedleggActionTypes => {
+// 	return {
+// 		type: VedleggActionTypeKeys.LASTOPP_PENDING,
+// 	};
+// };
+
+// const lastOppVedleggOk = (): VedleggActionTypes => {
+// 	return {
+// 		type: VedleggActionTypeKeys.LASTOPP_OK,
+// 	};
+// };
+
+const lastOppVedleggPending = (
+	key: string,
+	vedleggId: string,
+): VedleggActionTypes => {
 	return {
 		type: VedleggActionTypeKeys.LASTOPP_PENDING,
+		faktumKey: key,
+		vedleggId
 	};
 };
 
-const lastetOppVedlegg = (): VedleggActionTypes => {
+const lastOppVedleggOk = (
+	key: string,
+	vedleggId: string,
+): VedleggActionTypes => {
 	return {
 		type: VedleggActionTypeKeys.LASTOPP_OK,
+		faktumKey: key,
+		vedleggId
+	};
+};
+
+const lastOppVedleggFeilet = (
+	key: string,
+	vedleggId: string,
+	feilmelding: string
+): VedleggActionTypes => {
+	return {
+		type: VedleggActionTypeKeys.LASTOPP_FEILET,
+		faktumKey: key,
+		vedleggId,
+		feilmelding
 	};
 };
 
@@ -39,13 +79,6 @@ const mottattVedleggListe = (data: any): VedleggActionTypes => {
 	};
 };
 
-const lastOppVedleggFeilet = (feilmelding: string): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.LASTOPP_FEILET,
-		feilmelding
-	};
-};
-
 const hentVedleggFeilet = (feilmelding: string): VedleggActionTypes => {
 	return {
 		type: VedleggActionTypeKeys.HENT_FEILET,
@@ -53,16 +86,18 @@ const hentVedleggFeilet = (feilmelding: string): VedleggActionTypes => {
 	};
 };
 
-const hentVedleggsForventning = (): VedleggActionTypes => {
+const hentVedleggsForventning = (fakta: Faktum[]): VedleggActionTypes => {
 	return {
-		type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING
+		type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING,
+		fakta
 	};
 };
 
-const hentVedleggsForventningOk = (struktur: any): VedleggActionTypes => {
+const hentVedleggsForventningOk = (struktur: any, fakta: Faktum[]): VedleggActionTypes => {
 	return {
 		type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_OK,
-		data: struktur
+		vedleggsforventninger: struktur,
+		fakta
 	};
 };
 
@@ -75,14 +110,14 @@ const hentVedleggsForventningFeilet = (feilmelding: string): VedleggActionTypes 
 
 export {
 	lastOppVedlegg,
-	lastetOppVedlegg,
+	lastOppVedleggPending,
+	lastOppVedleggFeilet,
+	lastOppVedleggOk,
 	mottattVedleggListe,
 	hentVedleggsForventning,
 	hentVedleggsForventningOk,
 	hentVedleggsForventningFeilet,
 
-	lasterOppVedlegg,
 	hentVedleggListe,
-	hentVedleggFeilet,
-	lastOppVedleggFeilet,
+	hentVedleggFeilet
 };
