@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
-import SysteminfoFaktum from "../../../../nav-soknad/faktum/SysteminfoFaktum";
+import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import Detaljeliste, {
 	DetaljelisteElement
 } from "../../../../nav-soknad/components/detaljeliste";
@@ -21,7 +21,7 @@ const PersonaliaTPS: React.StatelessComponent<Props> = ({ fakta }) => {
 		"statsborgerskapType"
 	);
 	return (
-		<SysteminfoFaktum faktumKey="kontakt.system.personalia">
+		<SysteminfoMedSkjema>
 			<Detaljeliste>
 				<DetaljelisteElement
 					tittel={<FormattedMessage id="kontakt.system.personalia.navn" />}
@@ -41,7 +41,7 @@ const PersonaliaTPS: React.StatelessComponent<Props> = ({ fakta }) => {
 					/>
 				)}
 			</Detaljeliste>
-		</SysteminfoFaktum>
+		</SysteminfoMedSkjema>
 	);
 };
 

@@ -6,9 +6,9 @@ import { focusOnFirstElement } from "../../utils/domUtils";
 
 interface Props {
 	/** Kalles når bruker velger å vise skjema */
-	onVisSkjema: () => void;
+	onVisSkjema?: () => void;
 	/** Kalles når bruker velger å avbryte endring */
-	onSkjulSkjema: () => void;
+	onSkjulSkjema?: () => void;
 	/** Skjema som viser når bruker ønsker å endre verdier */
 	skjema?: React.ReactNode;
 	/** Informasjonen som er hentet opp fra system */
@@ -18,7 +18,7 @@ interface Props {
 	/** Label - avbryt endring knapp */
 	avbrytLabel?: string;
 	/** Om skjema skal vises eller ikke */
-	skjemaErSynlig: boolean;
+	skjemaErSynlig?: boolean;
 }
 
 class SysteminfoMedSkjema extends React.Component<Props> {
