@@ -24,11 +24,7 @@ const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	intl
 }) => {
 	if (!harFaktumVerdi(fakta, "kontakt.system.telefon")) {
-		return (
-			<div className="blokk-m-top">
-				<Skjema />
-			</div>
-		);
+		return <Skjema />;
 	}
 
 	return (
@@ -41,9 +37,7 @@ const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 		>
 			<Detaljeliste>
 				<DetaljelisteElement
-					tittel={
-						<FormattedMessage id="kontakt.tps.kontaktinfo.telefonnummer" />
-					}
+					tittel={<FormattedMessage id="kontakt.system.telefon.label" />}
 					verdi={getFaktumVerdi(fakta, "kontakt.system.telefon")}
 				/>
 			</Detaljeliste>

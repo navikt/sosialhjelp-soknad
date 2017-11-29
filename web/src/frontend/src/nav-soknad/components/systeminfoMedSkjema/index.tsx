@@ -54,42 +54,39 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 			skjemaErSynlig
 		} = this.props;
 		return (
-			<Underskjema
-				arrow={false}
-				visible={true}
-				collapsable={false}
-				style="system"
-			>
-				<div className="blokk-xxs">{children}</div>
+			<div className="systeminfoMedSkjema">
+				<Underskjema
+					arrow={false}
+					visible={true}
+					collapsable={false}
+					style="system"
+				>
+					<div className="systeminfoMedSkjema__info">{children}</div>
 
-				{skjema && (
-					<div className="blokk-xxs">
-						{!skjemaErSynlig && (
-							<Lenkeknapp
-								ref={c => (this.visSkjemaKnapp = c)}
-								onClick={this.props.onVisSkjema}
-							>
-								{endreLabel}
-							</Lenkeknapp>
-						)}
-						{skjemaErSynlig && (
-							<div>
-								<div
-									className="systeminfo_endreSkjema"
-									ref={c => (this.skjema = c)}
+					{skjema && (
+						<div className="systeminfoMedSkjema__visSkjemaKnapp">
+							{!skjemaErSynlig && (
+								<Lenkeknapp
+									ref={c => (this.visSkjemaKnapp = c)}
+									onClick={this.props.onVisSkjema}
 								>
+									{endreLabel}
+								</Lenkeknapp>
+							)}
+							{skjemaErSynlig && (
+								<div className="systeminfoMedSkjema__skjema">
 									{skjema}
+									<div className="systeminfoMedSkjema__skjulSkjemaKnapp">
+										<Lenkeknapp onClick={this.props.onSkjulSkjema}>
+											{avbrytLabel}
+										</Lenkeknapp>
+									</div>
 								</div>
-								<div className="blokk-xxs">
-									<Lenkeknapp onClick={this.props.onSkjulSkjema}>
-										{avbrytLabel}
-									</Lenkeknapp>
-								</div>
-							</div>
-						)}
-					</div>
-				)}
-			</Underskjema>
+							)}
+						</div>
+					)}
+				</Underskjema>
+			</div>
 		);
 	}
 }

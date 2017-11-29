@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const Skjema: React.StatelessComponent<{}> = () => (
-	<div className="blokk-xs">
+	<div>
 		<InputFaktum faktumKey="kontakt.adresse.gateadresse" />
 		<TallFaktum
 			faktumKey="kontakt.adresse.postnummer"

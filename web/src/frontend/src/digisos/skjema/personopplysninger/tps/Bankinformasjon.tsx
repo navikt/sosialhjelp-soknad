@@ -53,7 +53,9 @@ const BankinformasjonTPS: React.StatelessComponent<
 				>
 					<Detaljeliste>
 						<DetaljelisteElement
-							tittel={<FormattedMessage id="kontakt.system.kontonummer" />}
+							tittel={
+								<FormattedMessage id="kontakt.system.kontonummer.label" />
+							}
 							verdi={getFaktumVerdi(fakta, systemKontonummerKey)}
 						/>
 					</Detaljeliste>
