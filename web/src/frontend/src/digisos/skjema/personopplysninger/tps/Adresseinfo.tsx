@@ -36,7 +36,7 @@ const Kontaktinfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 
 	return (
 		<SysteminfoFaktum
-			faktumKey="kontakt.system.adresse"
+			faktumKey="kontakt.adresse.brukerendring"
 			skjema={<Skjema />}
 			endreLabel={intl.formatMessage({
 				id: "kontakt.system.adresse.endreknapp.label"

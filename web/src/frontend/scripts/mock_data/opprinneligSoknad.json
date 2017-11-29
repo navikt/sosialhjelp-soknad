@@ -254,7 +254,7 @@
 			"faktumId": 220,
 			"soknadId": 3,
 			"parrentFaktum": null,
-			"key": "kontakt.system.adresse",
+			"key": "kontakt.adresse.brukerendring",
 			"value": null,
 			"faktumEgenskaper": [
 				{
@@ -339,6 +339,16 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
+			"faktumId": 2281,
+			"soknadId": 3,
+			"parrentFaktum": null,
+			"key": "kontakt.kontonummer.brukerendring",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
+		},
+		{
 			"faktumId": 228,
 			"soknadId": 3,
 			"parrentFaktum": null,
@@ -364,6 +374,16 @@
 			"parrentFaktum": null,
 			"key": "kontakt.system.telefon",
 			"value": "98219409",
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
+		},
+		{
+			"faktumId": 23000,
+			"soknadId": 3,
+			"parrentFaktum": null,
+			"key": "kontakt.telefon.brukerendring",
+			"value": null,
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
