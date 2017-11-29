@@ -5,11 +5,7 @@ import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema/index";
 import PersonFaktum from "../../../nav-soknad/faktum/PersonFaktum";
 import { Faktum } from "../../../nav-soknad/types";
-import {
-	faktumIsSelected,
-	getPropertyVerdi,
-	radioCheckKeys
-} from "../../../nav-soknad/utils";
+import { getPropertyVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
@@ -63,7 +59,8 @@ export default class Barn extends React.Component<Props, {}> {
 			<div className="blokk barn">
 				<SporsmalFaktum
 					faktumKey={faktumKey}
-					tittelRenderer={tittel => `${tittel} ${barnNummer}`}>
+					tittelRenderer={tittel => `${tittel} ${barnNummer}`}
+				>
 					<PersonFaktum
 						faktumKey={faktumKey}
 						faktumId={faktumId}
@@ -76,10 +73,18 @@ export default class Barn extends React.Component<Props, {}> {
 							property="borsammen"
 							faktumId={faktumId}
 						/>
+						<FaktumRadio
+							faktumKey={faktumKey}
+							value="false"
+							property="borsammen"
+							faktumId={faktumId}
+						/>
 						<NivaTreSkjema
-							visible={faktumIsSelected(
-								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId)
-							)}>
+							visible={
+								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId) ===
+								"false"
+							}
+						>
 							<SporsmalFaktum faktumKey={hvormye.faktum}>
 								<BelopFaktum
 									faktumKey={faktumKey}
@@ -91,21 +96,17 @@ export default class Barn extends React.Component<Props, {}> {
 								/>
 							</SporsmalFaktum>
 						</NivaTreSkjema>
-						<FaktumRadio
-							faktumKey={faktumKey}
-							value="false"
-							property="borsammen"
-							faktumId={faktumId}
-						/>
 					</SporsmalFaktum>
 					{visFjernBarn && (
 						<span className="barn__fjern">
 							<Lenkeknapp
 								onClick={() =>
-									this.props.onFjernBarn(this.props.faktum.faktumId)}
-								label={fjernBarnTekst}
-								alternativLabel={alternativFjernTekst()}
-							/>
+									this.props.onFjernBarn(this.props.faktum.faktumId)
+								}
+								skjermleserLabel={alternativFjernTekst()}
+							>
+								{fjernBarnTekst}
+							</Lenkeknapp>
 						</span>
 					)}
 				</SporsmalFaktum>

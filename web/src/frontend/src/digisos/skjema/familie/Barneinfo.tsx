@@ -106,13 +106,11 @@ class Barneinfo extends React.Component<Props, State> {
 						</li>
 					))}
 				</ol>
-				<Lenkeknapp
-					onClick={this.leggTilBarn}
-					style="add"
-					label={intl.formatMessage({
+				<Lenkeknapp onClick={this.leggTilBarn} style="add">
+					{intl.formatMessage({
 						id: "familie.barn.true.barn.leggtil"
 					})}
-				/>
+				</Lenkeknapp>
 			</div>
 		);
 	}
@@ -122,12 +120,10 @@ interface StateFromProps {
 	fakta: Faktum[];
 }
 
-export default connect<
-	StateFromProps,
-	{},
-	OwnProps
->((state: SoknadAppState) => {
-	return {
-		fakta: state.fakta.data
-	};
-})(injectIntl(Barneinfo));
+export default connect<StateFromProps, {}, OwnProps>(
+	(state: SoknadAppState) => {
+		return {
+			fakta: state.fakta.data
+		};
+	}
+)(injectIntl(Barneinfo));

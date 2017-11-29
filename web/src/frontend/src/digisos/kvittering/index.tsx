@@ -64,9 +64,8 @@ class KvitteringView extends React.Component<
 	render() {
 		const { kvittering, visVedlegg, restStatus, intl } = this.props;
 		return (
-			<LoadContainer
-				restStatus={restStatus}
-				contentRenderer={() => (
+			<LoadContainer restStatus={restStatus}>
+				{kvittering && (
 					<div>
 						<AppTittel />
 						<div className="kvittering skjema-content">
@@ -95,7 +94,7 @@ class KvitteringView extends React.Component<
 						</div>
 					</div>
 				)}
-			/>
+			</LoadContainer>
 		);
 	}
 }
