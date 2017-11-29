@@ -298,7 +298,7 @@ export const faktumComponent = (defProps?: { property: string }) => <
 			}
 		}
 
-		getFeil(intl: InjectedIntl) {
+		getFeil(intl: InjectedIntl): Feil {
 			if (!this.props.feilkode || this.props.ignorert) {
 				return null;
 			}
