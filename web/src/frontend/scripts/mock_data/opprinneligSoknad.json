@@ -1,13 +1,13 @@
 {
-	"soknadId": 3,
+	"soknadId": 1,
 	"skjemaNummer": "NAV 35-18.01",
-	"uuid": "7bf0c330-15e8-445f-af20-bc20ae7a6c8f",
-	"brukerBehandlingId": "1000CPY58",
+	"uuid": "2d63bab0-186e-4d28-aa46-cc99bd1e9f1d",
+	"brukerBehandlingId": "1000CPY7D",
 	"behandlingskjedeId": null,
 	"fakta": [
 		{
-			"faktumId": 215,
-			"soknadId": 3,
+			"faktumId": 1,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "bolker",
 			"value": null,
@@ -16,199 +16,199 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 216,
-			"soknadId": 3,
+			"faktumId": 2,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "personalia",
 			"value": null,
 			"faktumEgenskaper": [
 				{
-					"faktumId": 216,
-					"soknadId": 3,
+					"faktumId": 2,
+					"soknadId": 1,
 					"key": "fnr",
-					"value": "11223344553",
+					"value": "11223344551",
 					"systemEgenskap": 1
 				},
 				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "epost",
-					"value": "",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "utenlandskKontoLand",
-					"value": "Norge",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "statsborgerskap",
-					"value": "NOR",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
+					"faktumId": 2,
+					"soknadId": 1,
 					"key": "kjonn",
 					"value": "m",
 					"systemEgenskap": 1
 				},
 				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "gjeldendeAdresseGyldigFra",
-					"value": null,
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "sekundarAdresseType",
-					"value": "MIDLERTIDIG_POSTADRESSE_UTLAND",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "erUtenlandskBankkonto",
-					"value": "true",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "sekundarAdresseGyldigFra",
-					"value": "2017-11-28",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "sekundarAdresseGyldigTil",
-					"value": "2012-11-12",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "gjeldendeAdresseGyldigTil",
-					"value": null,
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "utenlandskKontoBanknavn",
-					"value": "Nordea",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "gjeldendeAdresseLandkode",
-					"value": null,
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "etternavn",
-					"value": "Mockmann",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "alder",
-					"value": "54",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "navn",
-					"value": "Donald D. Mockmann",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "fornavn",
-					"value": "Donald",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "statsborgerskapType",
-					"value": "norsk",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "diskresjonskode",
-					"value": null,
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "kontonummer",
-					"value": "9876 98 98765",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
-					"key": "mellomnavn",
-					"value": "D.",
-					"systemEgenskap": 1
-				},
-				{
-					"faktumId": 216,
-					"soknadId": 3,
+					"faktumId": 2,
+					"soknadId": 1,
 					"key": "gjeldendeAdresseType",
 					"value": "BOSTEDSADRESSE",
 					"systemEgenskap": 1
 				},
 				{
-					"faktumId": 216,
-					"soknadId": 3,
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "erUtenlandskBankkonto",
+					"value": "true",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "gjeldendeAdresseGyldigTil",
+					"value": null,
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "alder",
+					"value": "54",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
 					"key": "gjeldendeAdresse",
 					"value": "Grepalida 44, 0560 OSLO",
 					"systemEgenskap": 1
 				},
 				{
-					"faktumId": 216,
-					"soknadId": 3,
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "gjeldendeAdresseGyldigFra",
+					"value": null,
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "diskresjonskode",
+					"value": null,
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "statsborgerskap",
+					"value": "NOR",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "utenlandskKontoBanknavn",
+					"value": "Nordea",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "utenlandskKontoLand",
+					"value": "Norge",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "etternavn",
+					"value": "Mockmann",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
 					"key": "sekundarAdresse",
 					"value": "Poitigatan 55, Nord-Poiti, 1111 Helsinki, Finland, Finland",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "sekundarAdresseType",
+					"value": "MIDLERTIDIG_POSTADRESSE_UTLAND",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "kontonummer",
+					"value": "9876 98 98765",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "epost",
+					"value": "tester.scrambling-script@fellesregistre.no",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "fornavn",
+					"value": "Donald",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "statsborgerskapType",
+					"value": "norsk",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "navn",
+					"value": "Donald D. Mockmann",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "mellomnavn",
+					"value": "D.",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "sekundarAdresseGyldigTil",
+					"value": "2012-11-12",
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "gjeldendeAdresseLandkode",
+					"value": null,
+					"systemEgenskap": 1
+				},
+				{
+					"faktumId": 2,
+					"soknadId": 1,
+					"key": "sekundarAdresseGyldigFra",
+					"value": "2017-11-29",
 					"systemEgenskap": 1
 				}
 			],
 			"properties": {
-				"gjeldendeAdresseLandkode": null,
 				"statsborgerskapType": "norsk",
+				"gjeldendeAdresseLandkode": null,
 				"statsborgerskap": "NOR",
 				"utenlandskKontoBanknavn": "Nordea",
 				"mellomnavn": "D.",
 				"erUtenlandskBankkonto": "true",
 				"kjonn": "m",
-				"epost": "",
 				"sekundarAdresseType": "MIDLERTIDIG_POSTADRESSE_UTLAND",
+				"epost": "tester.scrambling-script@fellesregistre.no",
 				"gjeldendeAdresse": "Grepalida 44, 0560 OSLO",
-				"fnr": "11223344551",
 				"fornavn": "Donald",
+				"fnr": "11223344551",
 				"alder": "54",
 				"sekundarAdresseGyldigTil": "2012-11-12",
 				"utenlandskKontoLand": "Norge",
+				"sekundarAdresseGyldigFra": "2017-11-29",
 				"kontonummer": "9876 98 98765",
-				"sekundarAdresseGyldigFra": "2017-11-28",
 				"sekundarAdresse":
 					"Poitigatan 55, Nord-Poiti, 1111 Helsinki, Finland, Finland",
 				"etternavn": "Mockmann",
@@ -221,18 +221,18 @@
 			"type": "SYSTEMREGISTRERT"
 		},
 		{
-			"faktumId": 217,
-			"soknadId": 3,
+			"faktumId": 3,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "progresjon",
-			"value": "2",
+			"value": null,
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 218,
-			"soknadId": 3,
+			"faktumId": 4,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "informasjon.tekster",
 			"value": null,
@@ -241,116 +241,58 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 219,
-			"soknadId": 3,
+			"faktumId": 5,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "personalia.kommune",
-			"value": "horten",
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 220,
-			"soknadId": 3,
-			"parrentFaktum": null,
-			"key": "kontakt.adresse.brukerendring",
-			"value": null,
-			"faktumEgenskaper": [
-				{
-					"faktumId": 220,
-					"soknadId": 3,
-					"key": "brukerendret",
-					"value": "",
-					"systemEgenskap": 0
-				}
-			],
-			"properties": { "brukerendret": "" },
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 221,
-			"soknadId": 3,
-			"parrentFaktum": null,
-			"key": "kontakt.system.adresse.gateadresse",
 			"value": null,
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 222,
-			"soknadId": 3,
+			"faktumId": 6,
+			"soknadId": 1,
 			"parrentFaktum": null,
-			"key": "kontakt.system.adresse.postnummer",
+			"key": "kontakt.adresse.brukerendret",
 			"value": null,
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 223,
-			"soknadId": 3,
+			"faktumId": 7,
+			"soknadId": 1,
 			"parrentFaktum": null,
-			"key": "kontakt.system.adresse.poststed",
+			"key": "kontakt.adresse.bruker",
 			"value": null,
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 224,
-			"soknadId": 3,
-			"parrentFaktum": null,
-			"key": "kontakt.adresse.gateadresse",
-			"value": null,
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 225,
-			"soknadId": 3,
-			"parrentFaktum": null,
-			"key": "kontakt.adresse.postnummer",
-			"value": "2131",
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 226,
-			"soknadId": 3,
-			"parrentFaktum": null,
-			"key": "kontakt.adresse.poststed",
-			"value": "ds12123123 123 ",
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 227,
-			"soknadId": 3,
+			"faktumId": 8,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "kontakt.system.kontonummer",
-			"value": "35431224877",
-			"faktumEgenskaper": [],
-			"properties": {},
-			"type": "BRUKERREGISTRERT"
-		},
-		{
-			"faktumId": 2281,
-			"soknadId": 3,
-			"parrentFaktum": null,
-			"key": "kontakt.kontonummer.brukerendring",
 			"value": null,
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 228,
-			"soknadId": 3,
+			"faktumId": 9,
+			"soknadId": 1,
+			"parrentFaktum": null,
+			"key": "kontakt.kontonummer.brukerendret",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
+		},
+		{
+			"faktumId": 10,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "kontakt.kontonummer",
 			"value": null,
@@ -359,28 +301,28 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 229,
-			"soknadId": 3,
+			"faktumId": 11,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "kontakt.kontonummer.harikke",
-			"value": "false",
+			"value": null,
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 230,
-			"soknadId": 3,
+			"faktumId": 12,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "kontakt.system.telefon",
-			"value": "98219409",
+			"value": null,
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 23000,
-			"soknadId": 3,
+			"faktumId": 13,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "kontakt.telefon.brukerendring",
 			"value": null,
@@ -389,8 +331,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 231,
-			"soknadId": 3,
+			"faktumId": 14,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "kontakt.telefon",
 			"value": null,
@@ -399,8 +341,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 232,
-			"soknadId": 3,
+			"faktumId": 15,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "kontakt.statsborger",
 			"value": null,
@@ -409,8 +351,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 233,
-			"soknadId": 3,
+			"faktumId": 16,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "dinsituasjon.jobb",
 			"value": null,
@@ -419,8 +361,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 234,
-			"soknadId": 3,
+			"faktumId": 17,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "dinsituasjon.studerer",
 			"value": null,
@@ -429,8 +371,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 235,
-			"soknadId": 3,
+			"faktumId": 18,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "familie.sivilstatus",
 			"value": null,
@@ -439,8 +381,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 236,
-			"soknadId": 3,
+			"faktumId": 19,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "familie.barn",
 			"value": null,
@@ -449,8 +391,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 237,
-			"soknadId": 3,
+			"faktumId": 20,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "begrunnelse.hvorfor",
 			"value": null,
@@ -459,8 +401,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 238,
-			"soknadId": 3,
+			"faktumId": 21,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "begrunnelse.hva",
 			"value": null,
@@ -469,8 +411,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 239,
-			"soknadId": 3,
+			"faktumId": 22,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "bosituasjon",
 			"value": null,
@@ -479,8 +421,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 240,
-			"soknadId": 3,
+			"faktumId": 23,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "bosituasjon.antallpersoner",
 			"value": null,
@@ -489,8 +431,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 241,
-			"soknadId": 3,
+			"faktumId": 24,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "inntekt.bostotte",
 			"value": null,
@@ -499,8 +441,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 242,
-			"soknadId": 3,
+			"faktumId": 25,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "inntekt.eierandeler",
 			"value": null,
@@ -509,8 +451,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 243,
-			"soknadId": 3,
+			"faktumId": 26,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "inntekt.bankinnskudd",
 			"value": null,
@@ -519,8 +461,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 244,
-			"soknadId": 3,
+			"faktumId": 27,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "inntekt.inntekter",
 			"value": null,
@@ -529,8 +471,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 245,
-			"soknadId": 3,
+			"faktumId": 28,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "utgifter.boutgift",
 			"value": null,
@@ -539,8 +481,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 246,
-			"soknadId": 3,
+			"faktumId": 29,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "utgifter.barn",
 			"value": null,
@@ -549,8 +491,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 247,
-			"soknadId": 3,
+			"faktumId": 30,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "opplysninger.arbeid",
 			"value": null,
@@ -559,8 +501,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 248,
-			"soknadId": 3,
+			"faktumId": 31,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "opplysninger.familiesituasjon",
 			"value": null,
@@ -569,8 +511,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 249,
-			"soknadId": 3,
+			"faktumId": 32,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "opplysninger.inntekt",
 			"value": null,
@@ -579,8 +521,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 250,
-			"soknadId": 3,
+			"faktumId": 33,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "opplysninger.utgifter",
 			"value": null,
@@ -589,8 +531,8 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 251,
-			"soknadId": 3,
+			"faktumId": 34,
+			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "opplysninger.ekstrainfo",
 			"value": null,
@@ -599,9 +541,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 252,
-			"soknadId": 3,
-			"parrentFaktum": 219,
+			"faktumId": 35,
+			"soknadId": 1,
+			"parrentFaktum": 5,
 			"key": "personalia.bydel",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -609,9 +551,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 253,
-			"soknadId": 3,
-			"parrentFaktum": 233,
+			"faktumId": 36,
+			"soknadId": 1,
+			"parrentFaktum": 16,
 			"key": "dinsituasjon.jobb.true.grad",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -619,9 +561,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 254,
-			"soknadId": 3,
-			"parrentFaktum": 234,
+			"faktumId": 37,
+			"soknadId": 1,
+			"parrentFaktum": 17,
 			"key": "dinsituasjon.studerer.true.grad",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -629,9 +571,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 255,
-			"soknadId": 3,
-			"parrentFaktum": 235,
+			"faktumId": 38,
+			"soknadId": 1,
+			"parrentFaktum": 18,
 			"key": "familie.sivilstatus.gift.ektefelle",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -639,9 +581,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 256,
-			"soknadId": 3,
-			"parrentFaktum": 236,
+			"faktumId": 39,
+			"soknadId": 1,
+			"parrentFaktum": 19,
 			"key": "familie.barn.true.barnebidrag",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -649,9 +591,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 257,
-			"soknadId": 3,
-			"parrentFaktum": 239,
+			"faktumId": 40,
+			"soknadId": 1,
+			"parrentFaktum": 22,
 			"key": "bosituasjon.annet.botype",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -659,9 +601,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 258,
-			"soknadId": 3,
-			"parrentFaktum": 242,
+			"faktumId": 41,
+			"soknadId": 1,
+			"parrentFaktum": 25,
 			"key": "inntekt.eierandeler.true.type",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -669,9 +611,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 259,
-			"soknadId": 3,
-			"parrentFaktum": 258,
+			"faktumId": 42,
+			"soknadId": 1,
+			"parrentFaktum": 41,
 			"key": "inntekt.eierandeler.true.type.bolig",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -679,9 +621,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 260,
-			"soknadId": 3,
-			"parrentFaktum": 258,
+			"faktumId": 43,
+			"soknadId": 1,
+			"parrentFaktum": 41,
 			"key": "inntekt.eierandeler.true.type.kjoretoy",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -689,9 +631,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 261,
-			"soknadId": 3,
-			"parrentFaktum": 258,
+			"faktumId": 44,
+			"soknadId": 1,
+			"parrentFaktum": 41,
 			"key": "inntekt.eierandeler.true.type.campingvogn",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -699,9 +641,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 262,
-			"soknadId": 3,
-			"parrentFaktum": 258,
+			"faktumId": 45,
+			"soknadId": 1,
+			"parrentFaktum": 41,
 			"key": "inntekt.eierandeler.true.type.fritidseiendom",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -709,9 +651,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 263,
-			"soknadId": 3,
-			"parrentFaktum": 258,
+			"faktumId": 46,
+			"soknadId": 1,
+			"parrentFaktum": 41,
 			"key": "inntekt.eierandeler.true.type.annet",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -719,9 +661,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 264,
-			"soknadId": 3,
-			"parrentFaktum": 263,
+			"faktumId": 47,
+			"soknadId": 1,
+			"parrentFaktum": 46,
 			"key": "inntekt.eierandeler.true.type.annet.true.beskrivelse",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -729,9 +671,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 265,
-			"soknadId": 3,
-			"parrentFaktum": 243,
+			"faktumId": 48,
+			"soknadId": 1,
+			"parrentFaktum": 26,
 			"key": "inntekt.bankinnskudd.true.type",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -739,9 +681,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 266,
-			"soknadId": 3,
-			"parrentFaktum": 265,
+			"faktumId": 49,
+			"soknadId": 1,
+			"parrentFaktum": 48,
 			"key": "inntekt.bankinnskudd.true.type.sparekonto",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -749,9 +691,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 267,
-			"soknadId": 3,
-			"parrentFaktum": 265,
+			"faktumId": 50,
+			"soknadId": 1,
+			"parrentFaktum": 48,
 			"key": "inntekt.bankinnskudd.true.type.brukskonto",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -759,9 +701,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 268,
-			"soknadId": 3,
-			"parrentFaktum": 265,
+			"faktumId": 51,
+			"soknadId": 1,
+			"parrentFaktum": 48,
 			"key": "inntekt.bankinnskudd.true.type.livsforsikring",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -769,9 +711,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 269,
-			"soknadId": 3,
-			"parrentFaktum": 265,
+			"faktumId": 52,
+			"soknadId": 1,
+			"parrentFaktum": 48,
 			"key": "inntekt.bankinnskudd.true.type.aksjer",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -779,9 +721,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 270,
-			"soknadId": 3,
-			"parrentFaktum": 265,
+			"faktumId": 53,
+			"soknadId": 1,
+			"parrentFaktum": 48,
 			"key": "inntekt.bankinnskudd.true.type.bsu",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -789,9 +731,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 271,
-			"soknadId": 3,
-			"parrentFaktum": 265,
+			"faktumId": 54,
+			"soknadId": 1,
+			"parrentFaktum": 48,
 			"key": "inntekt.bankinnskudd.true.type.annet",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -799,9 +741,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 272,
-			"soknadId": 3,
-			"parrentFaktum": 271,
+			"faktumId": 55,
+			"soknadId": 1,
+			"parrentFaktum": 54,
 			"key": "inntekt.bankinnskudd.true.type.annet.true.beskrivelse",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -809,9 +751,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 273,
-			"soknadId": 3,
-			"parrentFaktum": 244,
+			"faktumId": 56,
+			"soknadId": 1,
+			"parrentFaktum": 27,
 			"key": "inntekt.inntekter.true.type",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -819,9 +761,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 274,
-			"soknadId": 3,
-			"parrentFaktum": 273,
+			"faktumId": 57,
+			"soknadId": 1,
+			"parrentFaktum": 56,
 			"key": "inntekt.inntekter.true.type.utbytte",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -829,9 +771,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 275,
-			"soknadId": 3,
-			"parrentFaktum": 273,
+			"faktumId": 58,
+			"soknadId": 1,
+			"parrentFaktum": 56,
 			"key": "inntekt.inntekter.true.type.salg",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -839,9 +781,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 276,
-			"soknadId": 3,
-			"parrentFaktum": 273,
+			"faktumId": 59,
+			"soknadId": 1,
+			"parrentFaktum": 56,
 			"key": "inntekt.inntekter.true.type.forsikringsutbetalinger",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -849,9 +791,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 277,
-			"soknadId": 3,
-			"parrentFaktum": 273,
+			"faktumId": 60,
+			"soknadId": 1,
+			"parrentFaktum": 56,
 			"key": "inntekt.inntekter.true.type.annet",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -859,9 +801,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 278,
-			"soknadId": 3,
-			"parrentFaktum": 277,
+			"faktumId": 61,
+			"soknadId": 1,
+			"parrentFaktum": 60,
 			"key": "inntekt.inntekter.true.type.annet.true.beskrivelse",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -869,9 +811,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 279,
-			"soknadId": 3,
-			"parrentFaktum": 245,
+			"faktumId": 62,
+			"soknadId": 1,
+			"parrentFaktum": 28,
 			"key": "utgifter.boutgift.true.type",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -879,9 +821,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 280,
-			"soknadId": 3,
-			"parrentFaktum": 279,
+			"faktumId": 63,
+			"soknadId": 1,
+			"parrentFaktum": 62,
 			"key": "utgifter.boutgift.true.type.husleie",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -889,9 +831,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 281,
-			"soknadId": 3,
-			"parrentFaktum": 279,
+			"faktumId": 64,
+			"soknadId": 1,
+			"parrentFaktum": 62,
 			"key": "utgifter.boutgift.true.type.strom",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -899,9 +841,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 282,
-			"soknadId": 3,
-			"parrentFaktum": 279,
+			"faktumId": 65,
+			"soknadId": 1,
+			"parrentFaktum": 62,
 			"key": "utgifter.boutgift.true.type.kommunaleavgifter",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -909,9 +851,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 283,
-			"soknadId": 3,
-			"parrentFaktum": 279,
+			"faktumId": 66,
+			"soknadId": 1,
+			"parrentFaktum": 62,
 			"key": "utgifter.boutgift.true.type.oppvarming",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -919,9 +861,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 284,
-			"soknadId": 3,
-			"parrentFaktum": 279,
+			"faktumId": 67,
+			"soknadId": 1,
+			"parrentFaktum": 62,
 			"key": "utgifter.boutgift.true.type.avdraglaan",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -929,9 +871,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 285,
-			"soknadId": 3,
-			"parrentFaktum": 279,
+			"faktumId": 68,
+			"soknadId": 1,
+			"parrentFaktum": 62,
 			"key": "utgifter.boutgift.true.type.andreutgifter",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -939,9 +881,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 286,
-			"soknadId": 3,
-			"parrentFaktum": 285,
+			"faktumId": 69,
+			"soknadId": 1,
+			"parrentFaktum": 68,
 			"key": "utgifter.boutgift.true.type.andreutgifter.true.beskrivelse",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -949,9 +891,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 287,
-			"soknadId": 3,
-			"parrentFaktum": 246,
+			"faktumId": 70,
+			"soknadId": 1,
+			"parrentFaktum": 29,
 			"key": "utgifter.barn.true.utgifter",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -959,9 +901,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 288,
-			"soknadId": 3,
-			"parrentFaktum": 287,
+			"faktumId": 71,
+			"soknadId": 1,
+			"parrentFaktum": 70,
 			"key": "utgifter.barn.true.utgifter.fritidsaktivitet",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -969,9 +911,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 289,
-			"soknadId": 3,
-			"parrentFaktum": 287,
+			"faktumId": 72,
+			"soknadId": 1,
+			"parrentFaktum": 70,
 			"key": "utgifter.barn.true.utgifter.barnehage",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -979,9 +921,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 290,
-			"soknadId": 3,
-			"parrentFaktum": 287,
+			"faktumId": 73,
+			"soknadId": 1,
+			"parrentFaktum": 70,
 			"key": "utgifter.barn.true.utgifter.sfo",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -989,9 +931,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 291,
-			"soknadId": 3,
-			"parrentFaktum": 287,
+			"faktumId": 74,
+			"soknadId": 1,
+			"parrentFaktum": 70,
 			"key": "utgifter.barn.true.utgifter.tannbehandling",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -999,9 +941,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 292,
-			"soknadId": 3,
-			"parrentFaktum": 287,
+			"faktumId": 75,
+			"soknadId": 1,
+			"parrentFaktum": 70,
 			"key": "utgifter.barn.true.utgifter.annet",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -1009,9 +951,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 293,
-			"soknadId": 3,
-			"parrentFaktum": 292,
+			"faktumId": 76,
+			"soknadId": 1,
+			"parrentFaktum": 75,
 			"key": "utgifter.barn.true.utgifter.annet.true.beskrivelse",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -1019,9 +961,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 294,
-			"soknadId": 3,
-			"parrentFaktum": 247,
+			"faktumId": 77,
+			"soknadId": 1,
+			"parrentFaktum": 30,
 			"key": "opplysninger.arbeid.student",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -1029,9 +971,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 295,
-			"soknadId": 3,
-			"parrentFaktum": 248,
+			"faktumId": 78,
+			"soknadId": 1,
+			"parrentFaktum": 31,
 			"key": "opplysninger.familiesituasjon.barnebidrag.betaler",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -1039,9 +981,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 296,
-			"soknadId": 3,
-			"parrentFaktum": 248,
+			"faktumId": 79,
+			"soknadId": 1,
+			"parrentFaktum": 31,
 			"key": "opplysninger.familiesituasjon.barnebidrag.mottar",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -1049,9 +991,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 297,
-			"soknadId": 3,
-			"parrentFaktum": 248,
+			"faktumId": 80,
+			"soknadId": 1,
+			"parrentFaktum": 31,
 			"key": "opplysninger.familiesituasjon.barnebidrag.begge",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -1059,9 +1001,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 298,
-			"soknadId": 3,
-			"parrentFaktum": 249,
+			"faktumId": 81,
+			"soknadId": 1,
+			"parrentFaktum": 32,
 			"key": "opplysninger.inntekt.bostotte",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -1069,9 +1011,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 299,
-			"soknadId": 3,
-			"parrentFaktum": 250,
+			"faktumId": 82,
+			"soknadId": 1,
+			"parrentFaktum": 33,
 			"key": "opplysninger.utgifter.boutgift.husleie",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -1079,9 +1021,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 300,
-			"soknadId": 3,
-			"parrentFaktum": 250,
+			"faktumId": 83,
+			"soknadId": 1,
+			"parrentFaktum": 33,
 			"key": "opplysninger.utgifter.boutgift.strom",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -1089,9 +1031,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 301,
-			"soknadId": 3,
-			"parrentFaktum": 250,
+			"faktumId": 84,
+			"soknadId": 1,
+			"parrentFaktum": 33,
 			"key": "opplysninger.utgifter.boutgift.kommunaleavgifter",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -1099,9 +1041,9 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
-			"faktumId": 302,
-			"soknadId": 3,
-			"parrentFaktum": 250,
+			"faktumId": 85,
+			"soknadId": 1,
+			"parrentFaktum": 33,
 			"key": "opplysninger.utgifter.boutgift.oppvarming",
 			"value": null,
 			"faktumEgenskaper": [],
@@ -1111,9 +1053,9 @@
 	],
 	"status": "UNDER_ARBEID",
 	"aktoerId": "01015245464",
-	"opprettetDato": "2017-11-28T12:04:58.377Z",
-	"sistLagret": "2017-11-28T14:04:51.054Z",
-	"delstegStatus": "UTFYLLING",
+	"opprettetDato": "2017-11-29T13:53:38.495Z",
+	"sistLagret": "2017-11-29T13:53:38.566Z",
+	"delstegStatus": "OPPRETTET",
 	"vedlegg": [],
 	"journalforendeEnhet": null,
 	"soknadPrefix": "soknadsosialhjelp",
@@ -1126,7 +1068,7 @@
 		{ "url": "oppsummering", "cmstekst": "sendInn" }
 	],
 	"sprak": "nb_NO",
-	"innsendteVedlegg": [],
+	"ikkeInnsendteVedlegg": [],
 	"opplastedeVedlegg": [],
-	"ikkeInnsendteVedlegg": []
+	"innsendteVedlegg": []
 }

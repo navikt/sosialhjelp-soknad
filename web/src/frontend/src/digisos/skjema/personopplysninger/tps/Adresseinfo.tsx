@@ -18,13 +18,14 @@ interface Props {
 
 export const Skjema: React.StatelessComponent<{}> = () => (
 	<div>
-		<InputFaktum faktumKey="kontakt.adresse.gateadresse" />
+		<InputFaktum faktumKey="kontakt.adresse.bruker" property="gateadresse" />
 		<TallFaktum
-			faktumKey="kontakt.adresse.postnummer"
+			faktumKey="kontakt.adresse.bruker"
+			property="postnummer"
 			maxLength={4}
 			bredde="S"
 		/>
-		<InputFaktum faktumKey="kontakt.adresse.poststed" />
+		<InputFaktum faktumKey="kontakt.adresse.bruker" property="poststed" />
 	</div>
 );
 
@@ -36,7 +37,7 @@ const Kontaktinfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 
 	return (
 		<SysteminfoFaktum
-			faktumKey="kontakt.adresse.brukerendring"
+			faktumKey="kontakt.adresse.brukerendret"
 			skjema={<Skjema />}
 			endreLabel={intl.formatMessage({
 				id: "kontakt.system.adresse.endreknapp.label"

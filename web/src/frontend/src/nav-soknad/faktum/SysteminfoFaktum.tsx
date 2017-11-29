@@ -11,9 +11,8 @@ import {
  * dersom bruker ønsker å overstyre. Tom tekststreng dersom ikke.
  */
 
-const FAKTUMPROPERTY = "brukerendret";
-const PROPERTY_VALGT_VERDI = "true";
-const PROPERTY_IKKE_VALGT_VERDI = "";
+const VALGT_VERDI = "true";
+const IKKE_VALGT_VERDI = "";
 
 interface OwnProps {
 	/** Skjema som viser når bruker ønsker å endre verdier */
@@ -31,24 +30,13 @@ type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 class SysteminfoFaktum extends React.Component<Props, {}> {
 	render() {
 		const { endreLabel, avbrytLabel, intl } = this.props;
-		const skjemaErSynlig =
-			this.props.getPropertyVerdi() === PROPERTY_VALGT_VERDI;
+		const skjemaErSynlig = this.props.getFaktumVerdi() === VALGT_VERDI;
 		return (
 			<SysteminfoMedSkjema
 				{...this.props}
 				skjemaErSynlig={skjemaErSynlig}
-				onVisSkjema={() =>
-					this.props.setFaktumVerdiOgLagre(
-						PROPERTY_VALGT_VERDI,
-						this.props.property
-					)
-				}
-				onSkjulSkjema={() =>
-					this.props.setFaktumVerdiOgLagre(
-						PROPERTY_IKKE_VALGT_VERDI,
-						this.props.property
-					)
-				}
+				onVisSkjema={() => this.props.setFaktumVerdiOgLagre(VALGT_VERDI)}
+				onSkjulSkjema={() => this.props.setFaktumVerdiOgLagre(IKKE_VALGT_VERDI)}
 				endreLabel={
 					endreLabel ||
 					intl.formatMessage({
@@ -66,6 +54,4 @@ class SysteminfoFaktum extends React.Component<Props, {}> {
 	}
 }
 
-export default injectIntl(
-	faktumComponent({ property: FAKTUMPROPERTY })(SysteminfoFaktum)
-);
+export default injectIntl(faktumComponent()(SysteminfoFaktum));
