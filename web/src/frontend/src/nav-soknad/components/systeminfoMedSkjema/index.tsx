@@ -26,6 +26,11 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 	visSkjemaKnapp: Lenkeknapp;
 	focusFunc: () => void;
 
+	constructor(props: Props) {
+		super(props);
+		this.renderSkjema = this.renderSkjema.bind(this);
+	}
+
 	componentWillReceiveProps(nextProps: Props) {
 		if (!this.props.skjemaErSynlig && nextProps.skjemaErSynlig) {
 			this.focusFunc = () => {
@@ -45,14 +50,38 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 		}
 	}
 
+	renderSkjema() {
+		const { skjema, endreLabel, avbrytLabel, skjemaErSynlig } = this.props;
+		if (!skjema) {
+			return null;
+		}
+		return (
+			<div className="systeminfoMedSkjema__skjemaWrapper">
+				{skjemaErSynlig ? (
+					<div className="systeminfoMedSkjema__skjema">{skjema}</div>
+				) : null}
+				{!skjemaErSynlig && (
+					<Lenkeknapp
+						ref={c => (this.visSkjemaKnapp = c)}
+						onClick={this.props.onVisSkjema}
+					>
+						{endreLabel}
+					</Lenkeknapp>
+				)}
+				{skjemaErSynlig && (
+					<div className="systeminfoMedSkjema__skjulSkjemaKnapp">
+						<Lenkeknapp onClick={this.props.onSkjulSkjema}>
+							{avbrytLabel}
+						</Lenkeknapp>
+					</div>
+				)}
+			</div>
+		);
+	}
+
 	render() {
-		const {
-			children,
-			skjema,
-			endreLabel,
-			avbrytLabel,
-			skjemaErSynlig
-		} = this.props;
+		const { children } = this.props;
+
 		return (
 			<div className="systeminfoMedSkjema">
 				<Underskjema
@@ -62,29 +91,7 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 					style="system"
 				>
 					<div className="systeminfoMedSkjema__info">{children}</div>
-
-					{skjema && (
-						<div className="systeminfoMedSkjema__visSkjemaKnapp">
-							{!skjemaErSynlig && (
-								<Lenkeknapp
-									ref={c => (this.visSkjemaKnapp = c)}
-									onClick={this.props.onVisSkjema}
-								>
-									{endreLabel}
-								</Lenkeknapp>
-							)}
-							{skjemaErSynlig && (
-								<div className="systeminfoMedSkjema__skjema">
-									{skjema}
-									<div className="systeminfoMedSkjema__skjulSkjemaKnapp">
-										<Lenkeknapp onClick={this.props.onSkjulSkjema}>
-											{avbrytLabel}
-										</Lenkeknapp>
-									</div>
-								</div>
-							)}
-						</div>
-					)}
+					{this.renderSkjema()}
 				</Underskjema>
 			</div>
 		);
