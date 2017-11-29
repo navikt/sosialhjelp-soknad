@@ -58,7 +58,12 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 		return (
 			<div className="systeminfoMedSkjema__skjemaWrapper">
 				{skjemaErSynlig ? (
-					<div className="systeminfoMedSkjema__skjema">{skjema}</div>
+					<div
+						className="systeminfoMedSkjema__skjema"
+						ref={c => (this.skjema = c)}
+					>
+						{skjema}
+					</div>
 				) : null}
 				{!skjemaErSynlig && (
 					<Lenkeknapp

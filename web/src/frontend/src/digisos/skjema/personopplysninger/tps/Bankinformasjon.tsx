@@ -43,24 +43,20 @@ const BankinformasjonTPS: React.StatelessComponent<
 		return <Skjema fakta={fakta} />;
 	} else {
 		return (
-			<SporsmalFaktum faktumKey="kontakt.kontonummer" style="system">
-				<SysteminfoFaktum
-					faktumKey="kontakt.kontonummer.brukerendret"
-					endreLabel={intl.formatMessage({
-						id: "kontakt.system.kontonummer.endreknapp.label"
-					})}
-					skjema={<Skjema fakta={fakta} />}
-				>
-					<Detaljeliste>
-						<DetaljelisteElement
-							tittel={
-								<FormattedMessage id="kontakt.system.kontonummer.label" />
-							}
-							verdi={getFaktumVerdi(fakta, systemKontonummerKey)}
-						/>
-					</Detaljeliste>
-				</SysteminfoFaktum>
-			</SporsmalFaktum>
+			<SysteminfoFaktum
+				faktumKey="kontakt.kontonummer.brukerendret"
+				endreLabel={intl.formatMessage({
+					id: "kontakt.system.kontonummer.endreknapp.label"
+				})}
+				skjema={<Skjema fakta={fakta} />}
+			>
+				<Detaljeliste>
+					<DetaljelisteElement
+						tittel={<FormattedMessage id="kontakt.system.kontonummer.label" />}
+						verdi={getFaktumVerdi(fakta, systemKontonummerKey)}
+					/>
+				</Detaljeliste>
+			</SysteminfoFaktum>
 		);
 	}
 };
