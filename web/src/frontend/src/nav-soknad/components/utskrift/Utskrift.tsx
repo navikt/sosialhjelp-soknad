@@ -18,15 +18,13 @@ export const Side: React.StatelessComponent<SideProps> = ({
 }) => (
 	<div className="utskrift__side">
 		{tittel && (
-			<Sidetittel className="utskrift__sidetittel">
-				{tittel}
-			</Sidetittel>
+			<Sidetittel className="utskrift__sidetittel">{tittel}</Sidetittel>
 		)}
 		{children}
 	</div>
 );
 
-const UtskriftContainer: React.StatelessComponent<Props> = props => {
+const Utskrift: React.StatelessComponent<Props> = props => {
 	if (!props.active) {
 		return null;
 	}
@@ -46,4 +44,4 @@ const UtskriftContainer: React.StatelessComponent<Props> = props => {
 	);
 };
 
-export default UtskriftContainer;
+export default Utskrift;

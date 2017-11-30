@@ -22,6 +22,10 @@ const UtskriftKVittering: React.StatelessComponent<Props> = ({
 	<div className="kvitteringsutskrift">
 		<Side tittel="Søknad om økonomisk sosialhjelp">
 			<p className="blokk-l">
+				{kvittering.dato}, {kvittering.klokkeslett}. Behandlingsnummer:{" "}
+				{kvittering.behandlingsId}.
+			</p>
+			<p className="blokk-l">
 				<FormattedMessage id="kvittering.tekst.pre" />
 				<strong> {kvittering.navenhet}</strong>
 				<FormattedMessage id="kvittering.tekst.post" />
