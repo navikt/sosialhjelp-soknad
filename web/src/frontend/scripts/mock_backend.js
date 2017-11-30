@@ -64,12 +64,12 @@ router.get("/soknader/:brukerBehandlingId?lang=nb_NO", function(req, res) {
 	console.log("sss");
 });
 
-
 router.get("/api/feature", function(req, res) {
-    console.log("features");
-    res.json({
-        "feature.frontend.sosialhjelp.kontonummer": "true",
-        "feature.frontend.sosialhjelp.live": "true",
+	console.log("features");
+	res.json({
+		"feature.frontend.sosialhjelp.kontonummer": "true",
+		"feature.frontend.sosialhjelp.live": "true",
+		"feature.frontend.sosialhjelp.personalia": "true"
 	});
 });
 
@@ -103,10 +103,7 @@ router.get("/soknader/:brukerBehandlingId/synligsoknadstruktur", function(
 	res.json(utils.lesMockDataFil("synligsoknadstruktur.json"));
 });
 
-router.get("/soknader/:brukerBehandlingId/vedlegg", function(
-	req,
-	res
-) {
+router.get("/soknader/:brukerBehandlingId/vedlegg", function(req, res) {
 	console.log("Mock backend: GET vedlegg (vedleggsforventning)");
 	res.json(utils.lesMockDataFil("vedlegg.json"));
 });

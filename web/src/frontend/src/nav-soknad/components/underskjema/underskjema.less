@@ -5,13 +5,21 @@
 	padding-top: 0.8rem;
 	padding-bottom: 1rem;
 
+	&--noPadding {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+
 	&__wrapper {
 		margin-left: -1 * @skjemaMarg;
 		margin-right: -1 * @skjemaMarg;
-		@media screen and (max-width: @screen-sm) {
+		@media @mobile {
 			margin-left: -1 * @skjemaMargMobil;
 			margin-right: -1 * @skjemaMargMobil;
 		}
+	}
+	&__wrapper + &__wrapper {
+		margin-top: -1px;
 	}
 
 	&__boks {
@@ -19,28 +27,36 @@
 		border: 1px solid @ramme;
 		background-color: @bakgrunn;
 		position: relative;
-		@media screen and (max-width: @screen-sm) {
+		@media @mobile {
 			padding: @skjemaMargMobil @skjemaMargMobil @skjemaMargMobil*1.5
 				@skjemaMargMobil;
 		}
 	}
+	&--system {
+		.underskjema__boks {
+			padding-top: 1rem;
+			padding-bottom: 1rem;
+		}
+	}
 
-	&__innhold:before {
-		content: "";
-		height: 1rem;
-		width: 1rem;
-		background-color: @bakgrunn;
-		display: block;
-		position: absolute;
-		transform: rotate(-45deg);
-		transform-origin: 0 0;
-		border-top: 1px solid @ramme;
-		border-right: 1px solid @ramme;
-		box-sizing: border-box;
-		top: 0px;
-		left: 29px;
-		@media screen and (max-width: @screen-sm) {
-			left: 16px;
+	&--arrow {
+		.underskjema__innhold:before {
+			content: "";
+			height: 1rem;
+			width: 1rem;
+			background-color: @bakgrunn;
+			display: block;
+			position: absolute;
+			transform: rotate(-45deg);
+			transform-origin: 0 0;
+			border-top: 1px solid @ramme;
+			border-right: 1px solid @ramme;
+			box-sizing: border-box;
+			top: 0px;
+			left: 29px;
+			@media @mobile {
+				left: 16px;
+			}
 		}
 	}
 }
