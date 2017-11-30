@@ -1,0 +1,31 @@
+.utskriftContainer {
+	display: none !important;
+}
+@media print {
+	.utskriftContainer {
+		display: block !important;
+	}
+	.utskriftsside {
+		page-break-after: always;
+	}
+}
+
+@media print {
+	html.js-utskriftsmodus {
+		height: auto;
+		padding: 0 !important;
+		overflow: auto !important;
+		.pagewrapper {
+			height: auto;
+		}
+		body {
+			height: auto;
+			overflow: auto;
+		}
+
+		/* Skjul vanlig innhold */
+		#js-bodyContainer {
+			display: none;
+		}
+	}
+}

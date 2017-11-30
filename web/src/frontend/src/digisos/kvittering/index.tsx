@@ -16,6 +16,9 @@ import { REST_STATUS, Kvittering } from "../../nav-soknad/types";
 import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
 import Vedleggsliste from "../../nav-soknad/components/vedlegg/Veleggsliste";
 import VeienVidere from "./VeienVidere";
+import SkrivUtKnapp from "../../nav-soknad/components/utskrift/SkrivUtKnapp";
+import OppsummeringForUtskrift from "../skjema/oppsummering/OppsummeringForUtskrift";
+import { Oppsummering } from "../../nav-soknad/redux/oppsummering/oppsummeringTypes";
 
 interface InjectedRouterProps {
 	location: Location;
@@ -30,6 +33,7 @@ interface InjectedRouterProps {
 interface StateProps {
 	kvittering: Kvittering;
 	visVedlegg: boolean;
+	oppsummering: Oppsummering;
 	restStatus: REST_STATUS;
 }
 
@@ -51,6 +55,26 @@ const Vedleggsinfo: React.StatelessComponent<
 	);
 };
 
+const Kvitteringsmelding: React.StatelessComponent<
+	StateProps & InjectedIntlProps
+> = ({ intl, kvittering }) => (
+	<div>
+		<Icon kind="stegindikator__hake" className="kvittering__ikon" />
+		<Undertittel className="kvittering__tittel">
+			{getIntlTextOrKey(intl, "kvittering.undertittel")}
+		</Undertittel>
+		<div>
+			<div className="kvittering__tekst blokk-m">
+				<p>
+					{getIntlTextOrKey(intl, "kvittering.tekst.pre")}{" "}
+					<strong>{kvittering.navenhet}</strong>
+					{getIntlTextOrKey(intl, "kvittering.tekst.post")}
+				</p>
+			</div>
+		</div>
+	</div>
+);
+
 class KvitteringView extends React.Component<
 	StateProps & InjectedIntlProps & DispatchProps & InjectedRouterProps,
 	{}
@@ -62,7 +86,7 @@ class KvitteringView extends React.Component<
 		);
 	}
 	render() {
-		const { kvittering, visVedlegg, restStatus, intl } = this.props;
+		const { kvittering, visVedlegg, restStatus } = this.props;
 		return (
 			<LoadContainer restStatus={restStatus}>
 				{kvittering && (
@@ -71,22 +95,18 @@ class KvitteringView extends React.Component<
 						<div className="kvittering skjema-content">
 							<div className="blokk-xl">
 								<Panel className="blokk-xxs">
-									<Icon
-										kind="stegindikator__hake"
-										className="kvittering__ikon"
-									/>
-									<Undertittel className="kvittering__tittel">
-										{getIntlTextOrKey(intl, "kvittering.undertittel")}
-									</Undertittel>
-									<div>
-										<div className="kvittering__tekst blokk-m">
-											<p>
-												{getIntlTextOrKey(intl, "kvittering.tekst.pre")}{" "}
-												<strong>{kvittering.navenhet}</strong>
-												{getIntlTextOrKey(intl, "kvittering.tekst.post")}
-											</p>
-										</div>
-									</div>
+									<Kvitteringsmelding {...this.props} />
+									{this.props.oppsummering !== undefined && (
+										<SkrivUtKnapp
+											innholdRenderer={() => (
+												<OppsummeringForUtskrift
+													oppsummering={this.props.oppsummering}
+												/>
+											)}
+										>
+											Skriv ut søknaden
+										</SkrivUtKnapp>
+									)}
 								</Panel>
 								{visVedlegg && <Vedleggsinfo {...this.props} />}
 							</div>
@@ -99,10 +119,12 @@ class KvitteringView extends React.Component<
 	}
 }
 
-export default connect((state: State, props: any) => {
+export default connect((state: State, props: any): StateProps => {
+	const harOppsummering = state.oppsummering.restStatus === REST_STATUS.OK;
 	return {
 		restStatus: state.soknad.restStatus,
 		kvittering: state.soknad.kvittering,
+		oppsummering: harOppsummering ? state.oppsummering.oppsummering : undefined,
 		visVedlegg:
 			state.soknad.kvittering &&
 			state.soknad.kvittering.ikkeInnsendteVedlegg &&
