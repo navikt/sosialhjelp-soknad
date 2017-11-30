@@ -5,7 +5,10 @@ import {
 	unmountComponentAtNode
 } from "react-dom";
 
-export type Props = React.Props<any>;
+// export type Props = React.Props<any>;
+export interface Props extends React.Props<any> {
+	renderTargetId?: string;
+}
 
 class DOMPortal extends React.Component<Props, {}> {
 	node: HTMLElement;
@@ -14,12 +17,13 @@ class DOMPortal extends React.Component<Props, {}> {
 	constructor(props: Props) {
 		super(props);
 		this.renderLayer = this.renderLayer.bind(this);
+		this.getTargetNode = this.getTargetNode.bind(this);
 	}
 
 	componentDidMount() {
 		this.node = document.createElement("div");
 		this.node.className = "DOMPortal";
-		document.body.appendChild(this.node);
+		this.getTargetNode().appendChild(this.node);
 		this.renderLayer(this.props);
 	}
 
@@ -29,7 +33,14 @@ class DOMPortal extends React.Component<Props, {}> {
 
 	componentWillUnmount() {
 		unmountComponentAtNode(this.node);
-		document.body.removeChild(this.node);
+		this.getTargetNode().removeChild(this.node);
+	}
+
+	getTargetNode() {
+		if (this.props.renderTargetId) {
+			return document.getElementById(this.props.renderTargetId);
+		}
+		return document.body;
 	}
 
 	renderLayer(props: Props) {

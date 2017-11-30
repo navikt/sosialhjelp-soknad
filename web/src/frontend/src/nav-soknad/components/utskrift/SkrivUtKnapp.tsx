@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Knapp } from "nav-frontend-knapper";
 import DOMPortal from "./DOMPortal";
-import UtskriftContainer from "./UtskriftContainer";
+import Utskrift from "./Utskrift";
 
 export interface SkrivUtKnappProps {
 	innholdRenderer: () => React.ReactNode;
@@ -80,9 +80,7 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
 
 				{this.state.active ? (
 					<DOMPortal>
-						<UtskriftContainer active={true}>
-							{this.props.innholdRenderer()}
-						</UtskriftContainer>
+						<Utskrift active={true}>{this.props.innholdRenderer()}</Utskrift>
 					</DOMPortal>
 				) : null}
 			</div>

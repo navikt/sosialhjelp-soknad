@@ -19,12 +19,7 @@ const OppsummeringForUtskrift: React.StatelessComponent<Props> = (
 		</div>
 	));
 
-	return (
-		<div className="oppsummeringUtskrift">
-			<h1>Søknad om økonomisk sosialhjelp</h1>
-			<div className="skjema-oppsummering">{bolker}</div>
-		</div>
-	);
+	return <div className="skjema-oppsummering">{bolker}</div>;
 };
 
 export default OppsummeringForUtskrift;

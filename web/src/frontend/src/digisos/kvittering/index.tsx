@@ -17,7 +17,7 @@ import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContain
 import Vedleggsliste from "../../nav-soknad/components/vedlegg/Veleggsliste";
 import VeienVidere from "./VeienVidere";
 import SkrivUtKnapp from "../../nav-soknad/components/utskrift/SkrivUtKnapp";
-import OppsummeringForUtskrift from "../skjema/oppsummering/OppsummeringForUtskrift";
+import UtskriftKvittering from "./UtskriftKvittering";
 import { Oppsummering } from "../../nav-soknad/redux/oppsummering/oppsummeringTypes";
 
 interface InjectedRouterProps {
@@ -86,7 +86,7 @@ class KvitteringView extends React.Component<
 		);
 	}
 	render() {
-		const { kvittering, visVedlegg, restStatus } = this.props;
+		const { kvittering, oppsummering, visVedlegg, restStatus } = this.props;
 		return (
 			<LoadContainer restStatus={restStatus}>
 				{kvittering && (
@@ -99,8 +99,10 @@ class KvitteringView extends React.Component<
 									{this.props.oppsummering !== undefined && (
 										<SkrivUtKnapp
 											innholdRenderer={() => (
-												<OppsummeringForUtskrift
-													oppsummering={this.props.oppsummering}
+												<UtskriftKvittering
+													oppsummering={oppsummering}
+													kvittering={kvittering}
+													visVedlegg={visVedlegg}
 												/>
 											)}
 										>
@@ -124,7 +126,9 @@ export default connect((state: State, props: any): StateProps => {
 	return {
 		restStatus: state.soknad.restStatus,
 		kvittering: state.soknad.kvittering,
-		oppsummering: harOppsummering ? state.oppsummering.oppsummering : undefined,
+		oppsummering: harOppsummering
+			? state.oppsummering.oppsummering
+			: { bolker: [], signatur: "asdf" },
 		visVedlegg:
 			state.soknad.kvittering &&
 			state.soknad.kvittering.ikkeInnsendteVedlegg &&

@@ -8,6 +8,10 @@ export interface Props extends React.Props<any> {
 	active?: boolean;
 }
 
+export const Side: React.StatelessComponent<any> = ({ children }) => (
+	<div className="utskriftsContainer__side">{children}</div>
+);
+
 const UtskriftContainer: React.StatelessComponent<Props> = props => {
 	if (!props.active) {
 		return null;
@@ -15,7 +19,15 @@ const UtskriftContainer: React.StatelessComponent<Props> = props => {
 
 	return (
 		<div className="utskriftContainer" role="presentation">
-			{props.children}
+			<div className="utskriftContainer__hode">
+				<img
+					src="/soknadsosialhjelp/statisk/nav-logo.svg"
+					alt=""
+					width="90"
+					height="56"
+				/>
+			</div>
+			<div className="utskriftContainer__innhold">{props.children}</div>
 		</div>
 	);
 };

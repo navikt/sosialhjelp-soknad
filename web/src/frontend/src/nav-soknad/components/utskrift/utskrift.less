@@ -4,9 +4,22 @@
 @media print {
 	.utskriftContainer {
 		display: block !important;
-	}
-	.utskriftsside {
-		page-break-after: always;
+		border-bottom: 1px solid @navGra40;
+
+		&__hode {
+			text-align: center;
+			margin-bottom: 2rem;
+			padding-top: 2rem;
+			padding-bottom: 2rem;
+			border-bottom: 1px solid @navGra40;
+		}
+		&__innhold {
+			margin: 0 2rem;
+			padding-bottom: 2rem;
+		}
+		&__side {
+			page-break-after: always;
+		}
 	}
 }
 
@@ -15,6 +28,9 @@
 		height: auto;
 		padding: 0 !important;
 		overflow: auto !important;
+		.hodefot {
+			display: none;
+		}
 		.pagewrapper {
 			height: auto;
 		}

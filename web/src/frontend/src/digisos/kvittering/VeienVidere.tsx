@@ -3,7 +3,6 @@ import { FormattedHTMLMessage, FormattedMessage } from "react-intl";
 import { Panel } from "nav-frontend-paneler";
 import { Innholdstittel, Undertittel } from "nav-frontend-typografi";
 import SVG from "../../nav-soknad/components/svg/SVGImage";
-// const illustration = require("../svg/kvittering-illustrasjon.svg");
 
 interface Props {
 	prop?: any;
