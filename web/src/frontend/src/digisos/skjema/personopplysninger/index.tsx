@@ -33,9 +33,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 						<Adresseinfo fakta={this.props.fakta} />
 						<Telefoninfo fakta={this.props.fakta} />
 					</SporsmalFaktum>
-					<SporsmalFaktum faktumKey="kontakt.system.kontonummer" style="system">
-						<Bankinformasjon fakta={this.props.fakta} />
-					</SporsmalFaktum>
+					<Bankinformasjon fakta={this.props.fakta} />
 				</DigisosSkjemaSteg>
 			);
 		}
