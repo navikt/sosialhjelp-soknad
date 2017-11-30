@@ -33,10 +33,9 @@ export default (
 	switch (action.type) {
 		case LASTOPP: {
 			const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
-			const filer: Fil[] = action.filer.map( (fil: Fil) => {
+			vedlegg[action.faktumKey].filer = action.filer.map( (fil: Fil) => {
 				return {navn: fil.navn, status: REST_STATUS.PENDING};
 			});
-			vedlegg[action.faktumKey].filer = filer;
 			return {...state, restStatus: REST_STATUS.PENDING, data: { vedlegg }};
 		}
 

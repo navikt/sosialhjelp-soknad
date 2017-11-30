@@ -16,8 +16,7 @@ function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 	try {
 		yield put(lastOppVedleggPending(action.faktumKey, action.vedleggId));
 		const behandlingsId = yield select(selectBrukerBehandlingId);
-		const { vedleggId } = {vedleggId: action.vedleggId};
-		const url = `vedlegg/${vedleggId}/fil?behandlingsId=${behandlingsId}`;
+		const url = `vedlegg/${action.vedleggId}/fil?behandlingsId=${behandlingsId}`;
 		yield call(fetchUpload, url, action.formData);
 		yield put(lastOppVedleggOk(action.faktumKey, action.vedleggId));
 	} catch (reason) {

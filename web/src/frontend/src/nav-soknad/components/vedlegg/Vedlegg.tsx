@@ -24,9 +24,7 @@ type AllProps = Props & ConnectedProps;
 
 class Vedlegg extends React.Component<AllProps, {}> {
 
-	refs: {
-		leggTilVedleggKnapp: HTMLInputElement;
-	};
+	leggTilVedleggKnapp: HTMLInputElement;
 
 	handleFileUpload(files: FileList) {
 		const formData = new FormData();
@@ -37,10 +35,6 @@ class Vedlegg extends React.Component<AllProps, {}> {
 		}
 		const vedleggId = this.lesVedleggId();
 		this.props.lastOppVedlegg(this.props.faktumKey, vedleggId, formData, filer);
-	}
-
-	componentDidMount() {
-		this.props.hentVedleggsForventning(this.props.fakta);
 	}
 
 	render() {
@@ -65,13 +59,13 @@ class Vedlegg extends React.Component<AllProps, {}> {
 						htmlType="submit"
 						disabled={false}
 						onClick={() => {
-							this.refs.leggTilVedleggKnapp.click();
+							this.leggTilVedleggKnapp.click();
 						}}
 					>
 						+ <FormattedMessage id="opplysninger.vedlegg.knapp.tekst"/>
 					</Knapp>
 					<input
-						ref="leggTilVedleggKnapp"
+						ref={ c => this.leggTilVedleggKnapp = c}
 						onChange={(e) => this.handleFileUpload(e.target.files)}
 						type="file"
 						className="visuallyhidden"

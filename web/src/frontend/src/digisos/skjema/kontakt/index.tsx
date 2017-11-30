@@ -17,8 +17,19 @@ import {
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import Vedlegg from "../../../nav-soknad/components/vedlegg/Vedlegg";
+import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
+import { hentVedleggsForventning } from "../../../nav-soknad/redux/vedlegg/vedleggActions";
 
-class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
+interface OwnProps {
+	hentVedleggsForventning?: (fakta: Faktum[]) => void;
+}
+
+class Kontaktinfo extends React.Component<FaktumComponentProps & OwnProps, {}> {
+
+	componentDidMount() {
+		this.props.hentVedleggsForventning(this.props.fakta);
+	}
+
 	render() {
 		const harKontonummer: boolean = eksistererFaktum(this.props.fakta, "kontakt.kontonummer.system");
 		const statsborger = radioCheckKeys("kontakt.statsborger");
@@ -69,8 +80,15 @@ class Kontaktinfo extends React.Component<FaktumComponentProps, {}> {
 	}
 }
 
-export default connect((state: State) => {
-	return {
-		fakta: state.fakta.data
-	};
-})(Kontaktinfo);
+const mapDispatchToProps = (dispatch: any) => ({
+	hentVedleggsForventning: (fakta: Faktum[]) => dispatch(hentVedleggsForventning(fakta))
+});
+
+const mapStateToProps = (state: State) => ({
+	fakta: state.fakta.data,
+});
+
+export default connect<{}, {}, OwnProps>(
+	mapStateToProps,
+	mapDispatchToProps
+)(Kontaktinfo);
