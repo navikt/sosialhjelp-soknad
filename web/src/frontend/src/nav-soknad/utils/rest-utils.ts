@@ -117,6 +117,21 @@ export function fetchFeatureToggles() {
 		.then(toJson);
 }
 
+export function fetchUpload(urlPath: string, formData: FormData) {
+	const OPTIONS: RequestInit = {
+		headers: {
+			"X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
+			accept: "application/json, text/plain, */*"
+		},
+		method: "POST",
+		credentials: "same-origin",
+		body: formData
+	};
+	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
+		.then(sjekkStatuskode)
+		.then(toJson);
+}
+
 function toJson<T>(response: Response): Promise<T> {
 	if (response.status === 204) {
 		return response.text() as Promise<any>;
@@ -131,7 +146,7 @@ function sjekkStatuskode(response: Response) {
 	throw new Error(response.statusText);
 }
 
-function getCookie(name: string) {
+export function getCookie(name: string) {
 	const value = "; " + document.cookie;
 	const parts = value.split("; " + name + "=");
 	if (parts.length === 2) {

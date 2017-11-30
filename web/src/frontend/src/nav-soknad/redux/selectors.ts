@@ -12,8 +12,11 @@ const selectProgresjonFaktum = (state: { fakta: FaktumState }) => {
 
 const selectSynligFaktaData = (state: { synligefakta: SynligeFaktaState }) => state.synligefakta.data;
 
+const selectFaktaData = (state: { fakta: FaktumState }) => state.fakta.data;
+
 export {
 	selectBrukerBehandlingId,
 	selectSynligFaktaData,
+	selectFaktaData,
 	selectProgresjonFaktum
 };

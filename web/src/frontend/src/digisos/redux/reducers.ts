@@ -14,7 +14,7 @@ import SynligeFaktaReducer from "./synligefakta/synligeFaktaReducer";
 import { SynligeFaktaState } from "./synligefakta/synligeFaktaTypes";
 import ApplikasjonsfeilReducer from "../../nav-soknad/redux/applikasjonsfeil/applikasjonsfeilReducer";
 import InitReducer from "../../nav-soknad/redux/init/initReducer";
-import VedleggReducer from "./vedlegg/vedleggReducer";
+import VedleggReducer from "../../nav-soknad/redux/vedlegg/vedleggReducer";
 
 export interface State extends SoknadAppState {
 	synligefakta: SynligeFaktaState;

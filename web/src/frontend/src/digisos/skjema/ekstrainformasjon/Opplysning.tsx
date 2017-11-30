@@ -154,9 +154,8 @@ class Opplysning extends React.Component<AllProps, {}> {
 			</Lenkeknapp>
 		);
 
-		const visLastOppLonnslippKnapp: boolean =
-			this.props.featureToggleBeOmLonnslippVedlegg &&
-			this.vedleggForventet(faktumstruktur.id);
+		const lastOppLonnslippTekst =
+			intl.formatMessage({ id: "opplysninger.arbeid.jobb.lonn.vedlegg.label" });
 
 		return (
 			<SporsmalFaktum faktumKey={faktumstruktur.id} key={faktumstruktur.id}>
@@ -164,14 +163,12 @@ class Opplysning extends React.Component<AllProps, {}> {
 					{rader}
 				</Container>
 				{faktumstruktur.flereTillatt === "true" ? leggTilKnapp : null}
-				{visLastOppLonnslippKnapp && (
+				{ this.props.featureToggleBeOmLonnslippVedlegg && (
 					<Vedlegg
-						faktumId={faktumstruktur.id}
-						label={intl.formatMessage({
-							id: "opplysninger.arbeid.jobb.lonn.vedlegg.label"
-						})}
+						faktumKey={faktumstruktur.id}
+						label={lastOppLonnslippTekst}
 					/>
-				)}
+				) }
 			</SporsmalFaktum>
 		);
 	}
