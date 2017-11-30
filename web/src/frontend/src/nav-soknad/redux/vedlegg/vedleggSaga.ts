@@ -14,15 +14,11 @@ import { selectBrukerBehandlingId, selectFaktaData } from "../selectors";
 
 function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 	try {
-		yield put(lastOppVedleggPending(action.faktumKey, action.vedleggId)); // Trengs denne?
-
+		yield put(lastOppVedleggPending(action.faktumKey, action.vedleggId));
 		const behandlingsId = yield select(selectBrukerBehandlingId);
 		const { vedleggId } = {vedleggId: action.vedleggId};
 		const url = `vedlegg/${vedleggId}/fil?behandlingsId=${behandlingsId}`;
 		yield call(fetchUpload, url, action.formData);
-		// const response = yield call(fetchUpload, url, action.formData);
-		// yield put(mottattVedleggListe(response));
-		// yield put(lastOppVedleggOk(action.faktumKey, action.vedleggId));
 		yield put(lastOppVedleggOk(action.faktumKey, action.vedleggId));
 	} catch (reason) {
 		yield put(lastOppVedleggFeilet(action.faktumKey, action.vedleggId, reason.toString()));
@@ -32,8 +28,7 @@ function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 function* hentVedleggListeSaga(action: HentVedleggListeAction): SagaIterator {
 	try {
 		const behandlingsId = yield select(selectBrukerBehandlingId);
-		const { vedleggId } = action;
-		const url = `vedlegg/${vedleggId}/fil?behandlingsId=${behandlingsId}`;
+		const url = `vedlegg/${action.vedleggId}/fil?behandlingsId=${behandlingsId}`;
 		const response = yield call(fetchToJson, url);
 		yield put(mottattVedleggListe(response));
 	} catch (reason) {

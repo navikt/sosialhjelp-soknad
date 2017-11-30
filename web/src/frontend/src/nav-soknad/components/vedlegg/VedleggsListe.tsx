@@ -20,8 +20,9 @@ const VedleggsListe: React.StatelessComponent<Props> = ({ filer, faktumKey }) =>
 					<p key={index}>
 						<Lenkeknapp
 							onClick={() => lastNedVedlegg(fil.navn, faktumKey)}
-							label={fil.navn}
-						/>
+						>
+							{fil.navn}
+						</Lenkeknapp>
 						<span className="slettIkon"><SlettIkon/></span>
 					</p>
 
