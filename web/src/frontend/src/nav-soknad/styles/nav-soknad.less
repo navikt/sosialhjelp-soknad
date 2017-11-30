@@ -61,6 +61,12 @@ body {
 		.tittel-strek-after();
 		background-color: @navMorkGra;
 	}
+	@media print {
+		padding-bottom: 2mm;
+		&:after {
+			display: none;
+		}
+	}
 }
 
 @media @mobile {

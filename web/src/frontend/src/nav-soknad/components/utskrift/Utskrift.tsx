@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Sidetittel } from "nav-frontend-typografi";
 
 /**
  * Innhold som legges her er skjult på skjerm, men vises på utskrift
@@ -8,8 +9,21 @@ export interface Props extends React.Props<any> {
 	active?: boolean;
 }
 
-export const Side: React.StatelessComponent<any> = ({ children }) => (
-	<div className="utskriftsContainer__side">{children}</div>
+export interface SideProps extends React.Props<any> {
+	tittel?: string;
+}
+export const Side: React.StatelessComponent<SideProps> = ({
+	children,
+	tittel
+}) => (
+	<div className="utskrift__side">
+		{tittel && (
+			<Sidetittel className="utskrift__sidetittel">
+				{tittel}
+			</Sidetittel>
+		)}
+		{children}
+	</div>
 );
 
 const UtskriftContainer: React.StatelessComponent<Props> = props => {
@@ -18,8 +32,8 @@ const UtskriftContainer: React.StatelessComponent<Props> = props => {
 	}
 
 	return (
-		<div className="utskriftContainer" role="presentation">
-			<div className="utskriftContainer__hode">
+		<div className="utskrift" role="presentation">
+			<div className="utskrift__hode">
 				<img
 					src="/soknadsosialhjelp/statisk/nav-logo.svg"
 					alt=""
@@ -27,7 +41,7 @@ const UtskriftContainer: React.StatelessComponent<Props> = props => {
 					height="56"
 				/>
 			</div>
-			<div className="utskriftContainer__innhold">{props.children}</div>
+			<div className="utskrift__innhold">{props.children}</div>
 		</div>
 	);
 };

@@ -20,16 +20,15 @@ const UtskriftKVittering: React.StatelessComponent<Props> = ({
 	visVedlegg
 }) => (
 	<div className="kvitteringsutskrift">
-		<Side>
-			<h1>Søknad om økonomisk sosialhjelp</h1>
-			<p>
+		<Side tittel="Søknad om økonomisk sosialhjelp">
+			<p className="blokk-l">
 				<FormattedMessage id="kvittering.tekst.pre" />
 				<strong> {kvittering.navenhet}</strong>
 				<FormattedMessage id="kvittering.tekst.post" />
 			</p>
 			{visVedlegg && (
 				<div>
-					<Undertittel>
+					<Undertittel className="blokk-s">
 						<FormattedMessage id="kvittering.vedlegg.tittel" />
 					</Undertittel>
 					<Vedleggsliste vedlegg={kvittering.ikkeInnsendteVedlegg} />
@@ -39,7 +38,7 @@ const UtskriftKVittering: React.StatelessComponent<Props> = ({
 		<Side>
 			<VeienVidere />
 		</Side>
-		<Side>
+		<Side tittel="Informasjon i søknaden">
 			<OppsummeringForUtskrift oppsummering={oppsummering} />
 		</Side>
 	</div>
