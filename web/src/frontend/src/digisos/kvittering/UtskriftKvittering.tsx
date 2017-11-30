@@ -1,6 +1,7 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import OppsummeringForUtskrift from "../skjema/oppsummering/OppsummeringForUtskrift";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import { Oppsummering } from "../../nav-soknad/redux/oppsummering/oppsummeringTypes";
 import Vedleggsliste from "../../nav-soknad/components/vedlegg/Veleggsliste";
 import { Kvittering } from "../../nav-soknad/types";
@@ -14,18 +15,17 @@ interface Props {
 	oppsummering: Oppsummering;
 }
 
-const UtskriftKVittering: React.StatelessComponent<Props> = ({
-	kvittering,
-	oppsummering,
-	visVedlegg
-}) => (
+const UtskriftKVittering: React.StatelessComponent<
+	Props & InjectedIntlProps
+> = ({ kvittering, oppsummering, visVedlegg, intl }) => (
 	<div className="kvitteringsutskrift">
-		<Side tittel="Søknad om økonomisk sosialhjelp">
+		<Side tittel={intl.formatMessage({ id: "applikasjon.sidetittel" })}>
 			<p className="blokk-l">
-				{kvittering.dato}, {kvittering.klokkeslett}. Behandlingsnummer:{" "}
+				{kvittering.dato}, {kvittering.klokkeslett}.{" "}
+				<FormattedMessage id="kvittering.behandlingsnummer" />:{" "}
 				{kvittering.behandlingsId}.
 			</p>
-			<p className="blokk-l">
+			<p className="blokk-xl">
 				<FormattedMessage id="kvittering.tekst.pre" />
 				<strong> {kvittering.navenhet}</strong>
 				<FormattedMessage id="kvittering.tekst.post" />
@@ -42,10 +42,14 @@ const UtskriftKVittering: React.StatelessComponent<Props> = ({
 		<Side>
 			<VeienVidere />
 		</Side>
-		<Side tittel="Informasjon i søknaden">
+		<Side
+			tittel={intl.formatMessage({
+				id: "kvittering.utskrift.oppsummering.tittel"
+			})}
+		>
 			<OppsummeringForUtskrift oppsummering={oppsummering} />
 		</Side>
 	</div>
 );
 
-export default UtskriftKVittering;
+export default injectIntl(UtskriftKVittering);

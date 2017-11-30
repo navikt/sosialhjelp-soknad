@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import { Panel } from "nav-frontend-paneler";
 import Icon from "nav-frontend-ikoner-assets";
 import { Undertittel } from "nav-frontend-typografi";
@@ -97,17 +97,19 @@ class KvitteringView extends React.Component<
 								<Panel className="blokk-xxs">
 									<Kvitteringsmelding {...this.props} />
 									{this.props.oppsummering !== undefined && (
-										<SkrivUtKnapp
-											innholdRenderer={() => (
-												<UtskriftKvittering
-													oppsummering={oppsummering}
-													kvittering={kvittering}
-													visVedlegg={visVedlegg}
-												/>
-											)}
-										>
-											Skriv ut søknaden
-										</SkrivUtKnapp>
+										<div className="blokk-s">
+											<SkrivUtKnapp
+												innholdRenderer={() => (
+													<UtskriftKvittering
+														oppsummering={oppsummering}
+														kvittering={kvittering}
+														visVedlegg={visVedlegg}
+													/>
+												)}
+											>
+												<FormattedMessage id="kvittering.skrivutknapp.label" />
+											</SkrivUtKnapp>
+										</div>
 									)}
 								</Panel>
 								{visVedlegg && <Vedleggsinfo {...this.props} />}
