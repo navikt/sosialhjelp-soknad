@@ -64,13 +64,14 @@ router.get("/soknader/:brukerBehandlingId?lang=nb_NO", function(req, res) {
 	console.log("sss");
 });
 
+const mockFeatures = {
+	"feature.frontend.sosialhjelp.kontonummer": "true",
+	"feature.frontend.sosialhjelp.live": "true",
+	"feature.frontend.sosialhjelp.personalia": "false"
+};
 router.get("/api/feature", function(req, res) {
-	console.log("features");
-	res.json({
-		"feature.frontend.sosialhjelp.kontonummer": "true",
-		"feature.frontend.sosialhjelp.live": "true",
-		"feature.frontend.sosialhjelp.personalia": "true"
-	});
+	console.log("bruker mockFeatures");
+	res.json(mockFeatures);
 });
 
 router.get("/soknader/:brukerBehandlingId", function(req, res) {

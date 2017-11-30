@@ -56,7 +56,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 export default connect((state: State): Props => {
 	return {
 		visPersonaliaFraTPSfeatureToggle:
-			state.featuretoggles.data[FeatureToggles.viseTpsPersonalia],
+			state.featuretoggles.data[FeatureToggles.viseTpsPersonalia] === "true",
 		fakta: state.fakta.data
 	};
 })(Personopplysninger);
