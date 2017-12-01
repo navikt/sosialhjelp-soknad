@@ -33,7 +33,7 @@ const Utskrift: React.StatelessComponent<Props> = props => {
 		<div className="utskrift" role="presentation">
 			<div className="utskrift__hode">
 				<img
-					src="/soknadsosialhjelp/statisk/nav-logo.svg"
+					src="/soknadsosialhjelp/statisk/bilder/nav-logo.svg"
 					alt=""
 					width="90"
 					height="56"
