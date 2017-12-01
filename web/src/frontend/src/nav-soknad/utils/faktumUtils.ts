@@ -88,6 +88,11 @@ export function getFaktumVerdi(fakta: Faktum[], key: string): string {
 	return faktum.value;
 }
 
+export function harFaktumVerdi(fakta: Faktum[], key: string): boolean {
+	const faktum = finnFaktum(key, fakta);
+	return faktum && faktum.value && faktum.value !== "";
+}
+
 export function eksistererFaktum(fakta: Faktum[], key: string): boolean {
 	return finnFaktum(key, fakta) != null;
 }
@@ -99,6 +104,10 @@ export function getPropertyVerdi(
 	faktumId?: number
 ) {
 	const faktum = finnFaktum(key, fakta, faktumId);
+	return getFaktumPropertyVerdi(faktum, property);
+}
+
+export function getFaktumPropertyVerdi(faktum: Faktum, property: string) {
 	return faktum ? faktum.properties[property] : "";
 }
 
@@ -150,6 +159,10 @@ export function getProgresjonFaktum(fakta: Faktum[]) {
 	return finnFaktum("progresjon", fakta);
 }
 
+export function getPersonaliaFaktum(fakta: Faktum[]) {
+	return finnFaktum("personalia", fakta);
+}
+
 export function finnFaktumMedId(
 	faktumKey: string,
 	fakta: Faktum[],
@@ -166,7 +179,7 @@ export function finnFakta(faktumKey: string, fakta: Faktum[]): Faktum[] {
 
 export function harBrukerBesvartFaktum(fakta: Faktum[], faktaKeys: string[]) {
 	const besvarte = faktaKeys.filter(key => {
-		const faktum = fakta.find(f => f.key === key);
+		const faktum = finnFaktum(key, fakta);
 		if (faktum) {
 			return (
 				faktum.value !== undefined &&
