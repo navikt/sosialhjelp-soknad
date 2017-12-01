@@ -15,6 +15,7 @@
 @import "../components/timeoutbox/timeoutbox.less";
 @import "../components/avbrytsoknad/avbrytsoknad.less";
 @import "../components/underskjema/underskjema.less";
+@import "../components/systeminfoMedSkjema/systeminfoMedSkjema.less";
 @import "../components/validering/feiloppsummering.less";
 @import "../components/vedlegg/vedleggsliste.less";
 @import "../components/utskrift/utskrift.less";
@@ -37,6 +38,9 @@ body {
 	padding-right: 0 !important;
 }
 
+.tekst-capitalize {
+	text-transform: capitalize;
+}
 .skjema-texarea--normal {
 	min-height: 6em;
 }
@@ -68,6 +72,42 @@ body {
 			display: none;
 		}
 	}
+}
+
+.detaljeliste {
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	&__element {
+		padding: 0;
+		margin: 0 0 0.2em 0;
+		display: flex;
+		width: 100%;
+		align-items: top;
+		&--spaced {
+			margin-top: 1rem;
+		}
+	}
+	&__tittel {
+		flex: 1 1 5%;
+		font-weight: normal;
+		color: @navGra60;
+		padding-right: 0.5rem;
+	}
+	&__verdi {
+		flex-basis: 95%;
+		font-weight: 700;
+	}
+}
+
+.blokk-m-top  {
+	margin-top: 1.5rem;
+}
+.blokk-s-top  {
+	margin-top: 1rem;
 }
 
 @media @mobile {

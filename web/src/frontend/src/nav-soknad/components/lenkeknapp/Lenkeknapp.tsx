@@ -10,17 +10,23 @@ interface Props {
 }
 const baseClassName = "lenkeknapp";
 
-const Lenkeknapp = ({ onClick, children, style, skjermleserLabel }: Props) => {
-	const className = classNames(
-		"lenke",
-		baseClassName,
-		style ? `${baseClassName}--${style}` : null
-	);
-	return (
-		<button onClick={onClick} className={className} type="button">
-			<AriaAlternativTekst visibleText={children} ariaText={skjermleserLabel} />
-		</button>
-	);
-};
+class Lenkeknapp extends React.Component<Props> {
+	render() {
+		const { onClick, children, style, skjermleserLabel } = this.props;
+		const className = classNames(
+			"lenke",
+			baseClassName,
+			style ? `${baseClassName}--${style}` : null
+		);
+		return (
+			<button onClick={onClick} className={className} type="button">
+				<AriaAlternativTekst
+					visibleText={children}
+					ariaText={skjermleserLabel}
+				/>
+			</button>
+		);
+	}
+}
 
 export default Lenkeknapp;

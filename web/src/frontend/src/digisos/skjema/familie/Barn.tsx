@@ -5,7 +5,11 @@ import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema/index";
 import PersonFaktum from "../../../nav-soknad/faktum/PersonFaktum";
 import { Faktum } from "../../../nav-soknad/types";
-import { getPropertyVerdi, radioCheckKeys } from "../../../nav-soknad/utils";
+import {
+	faktumIsSelected,
+	getPropertyVerdi,
+	radioCheckKeys
+} from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
@@ -73,17 +77,10 @@ export default class Barn extends React.Component<Props, {}> {
 							property="borsammen"
 							faktumId={faktumId}
 						/>
-						<FaktumRadio
-							faktumKey={faktumKey}
-							value="false"
-							property="borsammen"
-							faktumId={faktumId}
-						/>
 						<NivaTreSkjema
-							visible={
-								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId) ===
-								"false"
-							}
+							visible={faktumIsSelected(
+								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId)
+							)}
 						>
 							<SporsmalFaktum faktumKey={hvormye.faktum}>
 								<BelopFaktum
@@ -96,6 +93,12 @@ export default class Barn extends React.Component<Props, {}> {
 								/>
 							</SporsmalFaktum>
 						</NivaTreSkjema>
+						<FaktumRadio
+							faktumKey={faktumKey}
+							value="false"
+							property="borsammen"
+							faktumId={faktumId}
+						/>
 					</SporsmalFaktum>
 					{visFjernBarn && (
 						<span className="barn__fjern">
