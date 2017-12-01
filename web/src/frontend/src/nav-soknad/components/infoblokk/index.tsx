@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as classNames from "classnames";
 import { Panel } from "nav-frontend-paneler";
 import Icon from "nav-frontend-ikoner-assets";
 import { Innholdstittel, Systemtittel } from "nav-frontend-typografi";
@@ -17,6 +18,9 @@ const Infoblokk: React.StatelessComponent<Props> = ({
 	ikon,
 	brukSystemtittel
 }) => {
+	const dashClassName = classNames("skjema-infoblokk__dash", {
+		"skjema-infoblokk__dash--gul": ikon === "gult"
+	});
 	return (
 		<Panel className={`skjema-infoblokk ${className}`}>
 			<div className="skjema-infoblokk__content">
@@ -38,7 +42,7 @@ const Infoblokk: React.StatelessComponent<Props> = ({
 								{tittel}
 							</Innholdstittel>
 						)}
-						<div className="skjema-infoblokk__dash" />
+						<div className={dashClassName} />
 					</div>
 				)}
 				<div className="skjema-infoblokk__tekst">{children}</div>
