@@ -104,8 +104,12 @@ router.delete("/vedlegg/:vedleggId/:filnavn", function(
 	res
 ) {
 	console.log("Mock backend: DELETE vedlegg (enkelt fil)");
-	var vedleggId = Number(req.params.vedleggId);
-	var filnavn = Number(req.params.filnavn);
+	utils.checkMandatoryQueryParam(req, res, "behandlingsId");
+	if(res.statusCode !== 200) {return;}
+
+	var vedleggId = req.params.vedleggId;
+	var filnavn = req.params.filnavn;
+
 	var deleteFilename = DATA_DIR + "/vedlegg_" + vedleggId + "/" + filnavn;
 	fs.unlink(deleteFilename, function(err) {
 		if (err) throw err;

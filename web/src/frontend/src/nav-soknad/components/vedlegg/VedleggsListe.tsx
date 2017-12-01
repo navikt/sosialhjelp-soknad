@@ -6,17 +6,14 @@ import { Fil } from "../../redux/vedlegg/vedleggTypes";
 interface Props extends React.Props<any> {
 	filer: Fil[];
 	faktumKey: string;
+	slettFil(faktumKey: string, filNavn: string): void;
 }
 
 function lastNedVedlegg(vedleggId: string, faktumKey: string) {
 	window.alert("Last ned vedlegg ikke implementert");
 }
 
-function slettVedlegg(vedleggId: string, faktumKey: string) {
-	window.alert("Last ned vedlegg ikke implementert");
-}
-
-const VedleggsListe: React.StatelessComponent<Props> = ({ filer, faktumKey }) => {
+const VedleggsListe: React.StatelessComponent<Props> = ({ filer, faktumKey, slettFil }) => {
 	return (
 		<div className="vedleggsliste">
 			{filer && filer.map((fil: Fil, index: number) => {
@@ -24,14 +21,14 @@ const VedleggsListe: React.StatelessComponent<Props> = ({ filer, faktumKey }) =>
 					<div key={index} className="vedlegg">
 						<span className="filnavn">
 							<Lenkeknapp
-								onClick={() => lastNedVedlegg(fil.navn, faktumKey)}
+								onClick={() => lastNedVedlegg(faktumKey, fil.navn)}
 							>
 								{fil.navn}
 							</Lenkeknapp>
 						</span>
 						<span
 							className="slettIkon"
-							onClick={() => slettVedlegg(fil.navn, faktumKey)}
+							onClick={() => slettFil(faktumKey, fil.navn)}
 						>
 							<SlettIkon/>
 						</span>

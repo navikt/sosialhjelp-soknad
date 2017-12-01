@@ -8,7 +8,7 @@ const lastOppVedlegg = (
 	filer: Fil[]
 ): VedleggActionTypes => {
 	return {
-		type: VedleggActionTypeKeys.LASTOPP,
+		type: VedleggActionTypeKeys.LAST_OPP,
 		faktumKey: key,
 		vedleggId,
 		formData,
@@ -16,12 +16,12 @@ const lastOppVedlegg = (
 	};
 };
 
-const lastOppVedleggPending = (
+const lastOppVedleggPending = ( // Fjerne ?
 	key: string,
 	vedleggId: string,
 ): VedleggActionTypes => {
 	return {
-		type: VedleggActionTypeKeys.LASTOPP_PENDING,
+		type: VedleggActionTypeKeys.LAST_OPP_PENDING,
 		faktumKey: key,
 		vedleggId
 	};
@@ -32,7 +32,7 @@ const lastOppVedleggOk = (
 	vedleggId: string,
 ): VedleggActionTypes => {
 	return {
-		type: VedleggActionTypeKeys.LASTOPP_OK,
+		type: VedleggActionTypeKeys.LAST_OPP_OK,
 		faktumKey: key,
 		vedleggId
 	};
@@ -44,10 +44,36 @@ const lastOppVedleggFeilet = (
 	feilmelding: string
 ): VedleggActionTypes => {
 	return {
-		type: VedleggActionTypeKeys.LASTOPP_FEILET,
+		type: VedleggActionTypeKeys.LAST_OPP_FEILET,
 		faktumKey: key,
 		vedleggId,
 		feilmelding
+	};
+};
+
+const slettFil = (
+	faktumKey: string,
+	vedleggId: string,
+	filNavn: string
+): VedleggActionTypes => {
+	return {
+		type: VedleggActionTypeKeys.SLETT_FIL,
+		faktumKey,
+		vedleggId,
+		filNavn
+	};
+};
+
+const slettFilOk = (
+	faktumKey: string,
+	vedleggId: string,
+	filNavn: string
+): VedleggActionTypes => {
+	return {
+		type: VedleggActionTypeKeys.SLETT_FIL_OK,
+		faktumKey,
+		vedleggId,
+		filNavn
 	};
 };
 
@@ -121,7 +147,10 @@ export {
 	hentVedleggsForventningFeilet,
 
 	hentFilListe,
-	hentFilListeOk
+	hentFilListeOk,
+
+	slettFil,
+	slettFilOk
 	// hentVedleggFeilet
 	// hentVedleggListe,
 	// hentVedleggListeOk,
