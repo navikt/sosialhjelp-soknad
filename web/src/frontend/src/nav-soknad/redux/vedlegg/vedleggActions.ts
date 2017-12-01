@@ -16,17 +16,6 @@ const lastOppVedlegg = (
 	};
 };
 
-const lastOppVedleggPending = ( // Fjerne ?
-	key: string,
-	vedleggId: string,
-): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.LAST_OPP_PENDING,
-		faktumKey: key,
-		vedleggId
-	};
-};
-
 const lastOppVedleggOk = (
 	key: string,
 	vedleggId: string,
@@ -121,24 +110,8 @@ const hentFilListeOk = (
 	};
 };
 
-// const hentVedleggListeOk = (faktumKey: string, data: any): VedleggActionTypes => {
-// 	return {
-// 		type: VedleggActionTypeKeys.MOTTATT_VEDLEGG_LISTE,
-// 		faktumKey,
-// 		data
-// 	};
-// };
-//
-// const hentVedleggFeilet = (feilmelding: string): VedleggActionTypes => {
-// 	return {
-// 		type: VedleggActionTypeKeys.HENT_FEILET,
-// 		feilmelding
-// 	};
-// };
-
 export {
 	lastOppVedlegg,
-	lastOppVedleggPending,
 	lastOppVedleggFeilet,
 	lastOppVedleggOk,
 
@@ -151,8 +124,4 @@ export {
 
 	slettFil,
 	slettFilOk
-	// hentVedleggFeilet
-	// hentVedleggListe,
-	// hentVedleggListeOk,
-
 };

@@ -6,7 +6,6 @@ import {
 	hentVedleggsForventningOk,
 	hentVedleggsForventningFeilet,
 	hentFilListeOk,
-	lastOppVedleggPending,
 	lastOppVedleggOk,
 	lastOppVedleggFeilet,
 	slettFilOk,
@@ -30,7 +29,6 @@ function* hentVedleggsForventningSaga(): SagaIterator {
 
 function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 	try {
-		yield put(lastOppVedleggPending(action.faktumKey, action.vedleggId));
 		const behandlingsId = yield select(selectBrukerBehandlingId);
 		const url = `vedlegg/${action.vedleggId}/fil?behandlingsId=${behandlingsId}`;
 		yield call(fetchUpload, url, action.formData);
@@ -49,7 +47,7 @@ function* slettVedleggFilSaga(action: SlettFilAction): SagaIterator {
 		yield put(slettFilOk(action.faktumKey, action.vedleggId, action.filNavn));
 		yield put(hentFilListe(action.faktumKey, action.vedleggId));
 	} catch (reason) {
-		yield put(loggFeil("TODO SlettFilFiletAction"));
+		yield put(loggFeil("TODO implementer put(slettFilFeilet(faktumKey, vedleggId, reason"));
 	}
 }
 
@@ -60,9 +58,8 @@ function* hentFilListeSaga(action: HentFilListeAction): SagaIterator {
 		const response = yield call(fetchToJson, url);
 		yield put(hentFilListeOk(action.faktumKey, response));
 	} catch (reason) {
-		// TODO put(hentFilListeFeilet
 		yield put(
-			loggFeil("Problemer med å hente liste med filer i vedlegg: " + reason.toString())
+			loggFeil("TODO Implementer put(hentFilListeFeilet,reson): " + reason.toString())
 		);
 	}
 }
