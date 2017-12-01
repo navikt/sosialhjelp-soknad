@@ -96,7 +96,7 @@ class KvitteringView extends React.Component<
 							<div className="blokk-xl">
 								<Panel className="blokk-xxs">
 									<Kvitteringsmelding {...this.props} />
-									{this.props.oppsummering !== undefined && (
+									{this.props.oppsummering && (
 										<div className="blokk-s">
 											<SkrivUtKnapp
 												innholdRenderer={() => (
@@ -128,9 +128,7 @@ export default connect((state: State, props: any): StateProps => {
 	return {
 		restStatus: state.soknad.restStatus,
 		kvittering: state.soknad.kvittering,
-		oppsummering: harOppsummering
-			? state.oppsummering.oppsummering
-			: { bolker: [], signatur: "asdf" },
+		oppsummering: harOppsummering ? state.oppsummering.oppsummering : null,
 		visVedlegg:
 			state.soknad.kvittering &&
 			state.soknad.kvittering.ikkeInnsendteVedlegg &&
