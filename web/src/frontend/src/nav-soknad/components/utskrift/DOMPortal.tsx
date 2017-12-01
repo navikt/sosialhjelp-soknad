@@ -5,7 +5,6 @@ import {
 	unmountComponentAtNode
 } from "react-dom";
 
-// export type Props = React.Props<any>;
 export interface Props extends React.Props<any> {
 	renderTargetId?: string;
 }
