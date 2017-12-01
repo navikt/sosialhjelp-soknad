@@ -108,25 +108,27 @@ exports.updateSoknadFakta = function(fakta) {
 	fs.writeFileSync(fileName, JSON.stringify(soknad, null, 4));
 };
 
-exports.checkMandatoryQueryParam = function (req, res, paramName) {
+exports.checkMandatoryQueryParam = function(req, res, paramName) {
 	var parameterVerdi = req.query[paramName];
-	if (typeof parameterVerdi === 'undefined') {
+	if (typeof parameterVerdi === "undefined") {
 		var feilmelding = "Mangler query parameter: " + paramName;
 		var responskode = 406;
 		console.log("Returnerer feilmelding: " + responskode + ": " + feilmelding);
 		res.status(responskode);
-		res.json({feil: feilmelding});
+		res.json({ feil: feilmelding });
 	}
 };
 
 exports.emptyDirectory = function(directory) {
-	fs.readdir(directory, function(err, files) {
-		if (err) throw err;
+	if (fs.existsSync(directory)) {
+		fs.readdir(directory, function(err, files) {
+			if (err) throw err;
 
-		files.forEach(function(file) {
-			fs.unlink(path.join(directory, file), function(err) {
-				if (err) throw err;
+			files.forEach(function(file) {
+				fs.unlink(path.join(directory, file), function(err) {
+					if (err) throw err;
+				});
 			});
 		});
-	});
+	}
 };
