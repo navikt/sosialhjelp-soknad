@@ -16,18 +16,6 @@ const lastOppVedlegg = (
 	};
 };
 
-// const lasterOppVedlegg = (): VedleggActionTypes => {
-// 	return {
-// 		type: VedleggActionTypeKeys.LASTOPP_PENDING,
-// 	};
-// };
-
-// const lastOppVedleggOk = (): VedleggActionTypes => {
-// 	return {
-// 		type: VedleggActionTypeKeys.LASTOPP_OK,
-// 	};
-// };
-
 const lastOppVedleggPending = (
 	key: string,
 	vedleggId: string,
@@ -63,29 +51,6 @@ const lastOppVedleggFeilet = (
 	};
 };
 
-const hentVedleggListe = (
-	vedleggId: string,
-): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.HENT_VEDLEGG_LISTE,
-		vedleggId
-	};
-};
-
-const mottattVedleggListe = (data: any): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.MOTTATT_VEDLEGG_LISTE,
-		data
-	};
-};
-
-const hentVedleggFeilet = (feilmelding: string): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.HENT_FEILET,
-		feilmelding
-	};
-};
-
 const hentVedleggsForventning = (fakta: Faktum[]): VedleggActionTypes => {
 	return {
 		type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING,
@@ -108,16 +73,57 @@ const hentVedleggsForventningFeilet = (feilmelding: string): VedleggActionTypes 
 	};
 };
 
+const hentFilListe = (
+	key: string,
+	vedleggId: string,
+): VedleggActionTypes => {
+	return {
+		type: VedleggActionTypeKeys.HENT_FIL_LISTE,
+		faktumKey: key,
+		vedleggId
+	};
+};
+
+const hentFilListeOk = (
+	key: string,
+	filer: Fil[],
+): VedleggActionTypes => {
+	return {
+		type: VedleggActionTypeKeys.HENT_FIL_LISTE_OK,
+		faktumKey: key,
+		filer
+	};
+};
+
+// const hentVedleggListeOk = (faktumKey: string, data: any): VedleggActionTypes => {
+// 	return {
+// 		type: VedleggActionTypeKeys.MOTTATT_VEDLEGG_LISTE,
+// 		faktumKey,
+// 		data
+// 	};
+// };
+//
+// const hentVedleggFeilet = (feilmelding: string): VedleggActionTypes => {
+// 	return {
+// 		type: VedleggActionTypeKeys.HENT_FEILET,
+// 		feilmelding
+// 	};
+// };
+
 export {
 	lastOppVedlegg,
 	lastOppVedleggPending,
 	lastOppVedleggFeilet,
 	lastOppVedleggOk,
-	mottattVedleggListe,
+
 	hentVedleggsForventning,
 	hentVedleggsForventningOk,
 	hentVedleggsForventningFeilet,
 
-	hentVedleggListe,
-	hentVedleggFeilet
+	hentFilListe,
+	hentFilListeOk
+	// hentVedleggFeilet
+	// hentVedleggListe,
+	// hentVedleggListeOk,
+
 };

@@ -12,19 +12,30 @@ function lastNedVedlegg(vedleggId: string, faktumKey: string) {
 	window.alert("Last ned vedlegg ikke implementert");
 }
 
+function slettVedlegg(vedleggId: string, faktumKey: string) {
+	window.alert("Last ned vedlegg ikke implementert");
+}
+
 const VedleggsListe: React.StatelessComponent<Props> = ({ filer, faktumKey }) => {
 	return (
-		<div>
+		<div className="vedleggsliste">
 			{filer && filer.map((fil: Fil, index: number) => {
 				return (
-					<p key={index}>
-						<Lenkeknapp
-							onClick={() => lastNedVedlegg(fil.navn, faktumKey)}
+					<div key={index} className="vedlegg">
+						<span className="filnavn">
+							<Lenkeknapp
+								onClick={() => lastNedVedlegg(fil.navn, faktumKey)}
+							>
+								{fil.navn}
+							</Lenkeknapp>
+						</span>
+						<span
+							className="slettIkon"
+							onClick={() => slettVedlegg(fil.navn, faktumKey)}
 						>
-							{fil.navn}
-						</Lenkeknapp>
-						<span className="slettIkon"><SlettIkon/></span>
-					</p>
+							<SlettIkon/>
+						</span>
+					</div>
 
 				);
 			})

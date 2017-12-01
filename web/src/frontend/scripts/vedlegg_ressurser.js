@@ -18,7 +18,18 @@ router.get("/soknader/:brukerBehandlingId/vedlegg", function(
 	res
 ) {
 	console.log("Mock backend: GET vedlegg (vedleggsforventning)");
-	res.json(utils.lesMockDataFil("vedleggsforventning.json"));
+
+	var forventninger = utils.lesMockDataFil("vedleggsforventning.json");
+	for (var i = 0; i < forventninger.length; i++) {
+		var vedleggId = forventninger[i].vedleggId;
+		var files = [];
+		fs.readdirSync(DATA_DIR + "/vedlegg_" + vedleggId).forEach( function(file) {
+			files.push({navn: file});
+		});
+		// console.log(i.toString(10) + ": " + vedleggId + " " + JSON.stringify(files, null, 4));
+		forventninger[i].filer = files;
+	}
+	res.json(forventninger);
 });
 
 router.get("/vedlegg/:vedleggId", function(
@@ -48,7 +59,7 @@ router.get("/vedlegg/:vedleggId/fil", function(
 	var vedleggId = Number(req.params.vedleggId);
 	var files = [];
 	fs.readdirSync(DATA_DIR + "/vedlegg_" + vedleggId).forEach( function(file) {
-		files.push({name: file});
+		files.push({navn: file});
 	});
 	res.json(files);
 });
@@ -65,7 +76,7 @@ router.post("/vedlegg/:vedleggId/fil", function(
 
 	Object.keys(req.files).forEach(function(file) {
 		var filename = req.files[file].name;
-		files.push({name: filename});
+		files.push({navn: filename});
 		var outputFilename = DATA_DIR + "/vedlegg_" + vedleggId + "/" + filename;
 		req.files[file].mv(outputFilename, function (err) {
 			if (err) {

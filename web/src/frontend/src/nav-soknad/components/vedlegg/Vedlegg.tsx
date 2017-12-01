@@ -2,7 +2,11 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import { Knapp } from "nav-frontend-knapper";
 import { connect } from "react-redux";
-import { hentVedleggsForventning, lastOppVedlegg } from "../../redux/vedlegg/vedleggActions";
+import {
+	hentFilListe,
+	hentVedleggsForventning,
+	lastOppVedlegg
+} from "../../redux/vedlegg/vedleggActions";
 import { SoknadAppState } from "../../redux/reduxTypes";
 import VedleggsListe from "./VedleggsListe";
 import { Faktum } from "../../types/navSoknadTypes";
@@ -18,6 +22,7 @@ interface ConnectedProps {
 	fakta?: Faktum[];
 	lastOppVedlegg?: (faktumKey: string, vedleggId: number, formData: FormData, filer: Fil[]) => void;
 	hentVedleggsForventning?: (fakta: Faktum[]) => void;
+	hentFilListe: (key: string, vedleggId: string) => any;
 }
 
 type AllProps = Props & ConnectedProps;
@@ -77,7 +82,7 @@ class Vedlegg extends React.Component<AllProps, {}> {
 		}
 	}
 
-	private lesFilListe() {
+	private lesFilListe(): Fil[] {
 		let filer: Fil[] = [];
 		if (this.props.vedlegg.vedlegg && this.props.vedlegg.vedlegg[ this.props.faktumKey ]) {
 			filer = this.props.vedlegg.vedlegg[ this.props.faktumKey ].filer;
@@ -100,6 +105,8 @@ const mapStateToProps = (state: SoknadAppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
+	hentFilListe: (key: string, vedleggId: string) =>
+		dispatch(hentFilListe(key, vedleggId)),
 	lastOppVedlegg: (key: string, vedleggId: string, formData: any, filer: Fil[]) =>
 		dispatch(lastOppVedlegg(key, vedleggId, formData, filer)),
 	hentVedleggsForventning: (fakta: Faktum[]) => dispatch(hentVedleggsForventning(fakta))
