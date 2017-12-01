@@ -95,7 +95,9 @@ function getEkstraName(faktumId: number, property: string): string {
 	return `${faktumId || ""}${property || ""}`;
 }
 
-export const faktumComponent = () => <TOriginalProps extends {}>(
+export const faktumComponent = (defProps?: { property: string }) => <
+	TOriginalProps extends {}
+>(
 	Component:
 		| React.ComponentClass<TOriginalProps & InjectedProps>
 		| React.StatelessComponent<TOriginalProps & InjectedProps>
@@ -108,6 +110,8 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 	> {
 		static displayName: string = `FaktumComponent(${Component.displayName ||
 			Component.name})`;
+
+		static defaultProps: any = { ...defProps };
 
 		constructor(props: ResultProps) {
 			super(props);
@@ -294,7 +298,7 @@ export const faktumComponent = () => <TOriginalProps extends {}>(
 			}
 		}
 
-		getFeil(intl: InjectedIntl) {
+		getFeil(intl: InjectedIntl): Feil {
 			if (!this.props.feilkode || this.props.ignorert) {
 				return null;
 			}
