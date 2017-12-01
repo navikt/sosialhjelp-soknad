@@ -18,7 +18,6 @@ router.get("/soknader/:brukerBehandlingId/vedlegg", function(
 	res
 ) {
 	console.log("Mock backend: GET vedlegg (vedleggsforventning)");
-
 	var forventninger = utils.lesMockDataFil("vedleggsforventning.json");
 	for (var i = 0; i < forventninger.length; i++) {
 		var vedleggId = forventninger[i].vedleggId;
@@ -26,7 +25,6 @@ router.get("/soknader/:brukerBehandlingId/vedlegg", function(
 		fs.readdirSync(DATA_DIR + "/vedlegg_" + vedleggId).forEach( function(file) {
 			files.push({navn: file});
 		});
-		// console.log(i.toString(10) + ": " + vedleggId + " " + JSON.stringify(files, null, 4));
 		forventninger[i].filer = files;
 	}
 	res.json(forventninger);
@@ -106,16 +104,13 @@ router.delete("/vedlegg/:vedleggId/:filnavn", function(
 	console.log("Mock backend: DELETE vedlegg (enkelt fil)");
 	utils.checkMandatoryQueryParam(req, res, "behandlingsId");
 	if(res.statusCode !== 200) {return;}
-
 	var vedleggId = req.params.vedleggId;
 	var filnavn = req.params.filnavn;
-
 	var deleteFilename = DATA_DIR + "/vedlegg_" + vedleggId + "/" + filnavn;
 	fs.unlink(deleteFilename, function(err) {
 		if (err) throw err;
 	});
 	res.send({"status": "ok"});
-
 });
 
 module.exports = router;
