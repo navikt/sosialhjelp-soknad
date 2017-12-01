@@ -7,19 +7,25 @@ interface Props {
 	tittel?: string;
 	brukSystemtittel?: boolean;
 	className?: string;
+	ikon?: "standard" | "gult";
 }
 
 const Infoblokk: React.StatelessComponent<Props> = ({
 	className,
 	children,
 	tittel,
+	ikon,
 	brukSystemtittel
 }) => {
 	return (
 		<Panel className={`skjema-infoblokk ${className}`}>
 			<div className="skjema-infoblokk__content">
 				<div className="skjema-infoblokk__icon">
-					<Icon kind="info-sirkel-fylt" className="digisos-infosirkel-gul" />
+					{ikon === "gult" ? (
+						<Icon kind="info-sirkel-fylt" className="digisos-infosirkel-gul" />
+					) : (
+						<Icon kind="info-sirkel" />
+					)}
 				</div>
 				{tittel && (
 					<div>
