@@ -96,10 +96,6 @@ export default (
 			return 	{...state, restStatus: REST_STATUS.OK, data: { vedlegg }};
 		}
 
-		// case HENT_FIL_LISTE_FEILET: {
-		// 	return 	{...state, restStatus: REST_STATUS.FEILET};
-		// }
-
 		case HENT_VEDLEGGSFORVENTNING:
 			return {...state, restStatus: REST_STATUS.PENDING};
 

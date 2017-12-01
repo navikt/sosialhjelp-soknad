@@ -109,19 +109,6 @@ export interface HentFilListeOkAction {
 	filer: any;
 }
 
-// interface MottattVedleggListeAction {
-// 	type: VedleggActionTypeKeys.MOTTATT_VEDLEGG_LISTE;
-// 	data: any;
-// }
-//
-// interface HentVedleggAction {
-// 	type: VedleggActionTypeKeys.HENT;
-// }
-//
-// interface HentVedleggFeiletAction {
-// 	type: VedleggActionTypeKeys.HENT_FEILET;
-// 	feilmelding: string;
-// }
 export interface OtherAction {
 	type: VedleggActionTypeKeys.OTHER_ACTION;
 }
