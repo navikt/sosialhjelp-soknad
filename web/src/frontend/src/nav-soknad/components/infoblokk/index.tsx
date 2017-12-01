@@ -19,7 +19,7 @@ const Infoblokk: React.StatelessComponent<Props> = ({
 		<Panel className={`skjema-infoblokk ${className}`}>
 			<div className="skjema-infoblokk__content">
 				<div className="skjema-infoblokk__icon">
-					<Icon kind="info-sirkel" />
+					<Icon kind="info-sirkel-fylt" className="digisos-infosirkel-gul" />
 				</div>
 				{tittel && (
 					<div>
