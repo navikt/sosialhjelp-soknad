@@ -4551,12 +4551,12 @@ natural-compare@^1.4.0:
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
 nav-frontend-alertstriper-style@^0.2.22:
-  version "0.2.22"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-0.2.22.tgz#881c93d71f89f27ba63e5bfc723b2531ba0744d8"
+  version "0.2.23"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-0.2.23.tgz#42180668f3fb0ac255eaeac393234401dc2ad109"
 
 nav-frontend-alertstriper@^0.2.15:
-  version "0.2.15"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-alertstriper/-/nav-frontend-alertstriper-0.2.15.tgz#3fd316c650d8dfa74fc2d99e2bb8b374eb66e3d1"
+  version "0.2.18"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-alertstriper/-/nav-frontend-alertstriper-0.2.18.tgz#9a3211f17cba295ce36c561637a209ffe3494b0b"
 
 nav-frontend-chevron-style@^0.3.4:
   version "0.3.4"
@@ -4587,12 +4587,12 @@ nav-frontend-hjelpetekst-style@^0.3.8:
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-hjelpetekst-style/-/nav-frontend-hjelpetekst-style-0.3.8.tgz#b75379fa4fb0cb636a5696baedbe777f033d746f"
 
 nav-frontend-hjelpetekst@^0.2.31:
-  version "0.2.31"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-0.2.31.tgz#4ec01a6c1832e616de00a0924c33cc544111b3c2"
+  version "0.2.32"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-0.2.32.tgz#a7e3a9a4bace0cfa888f3ba946b3abb5decddf61"
 
 nav-frontend-ikoner-assets@^0.2.18:
-  version "0.2.18"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-0.2.18.tgz#b1eabaac55527d6d39439369f02b401f516be95c"
+  version "0.2.19"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-0.2.19.tgz#8eeb675f12f31c435788ceb1463f86bd91ec7920"
 
 nav-frontend-js-utils@^0.2.10:
   version "0.2.10"
@@ -4647,12 +4647,12 @@ nav-frontend-spinner-style@^0.2.4:
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-spinner-style/-/nav-frontend-spinner-style-0.2.4.tgz#2c851f5bd4ffe21b2802a9b2f16fade1506a961a"
 
 nav-frontend-spinner@^0.1.20:
-  version "0.1.20"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-spinner/-/nav-frontend-spinner-0.1.20.tgz#44e1aee7c9c3ee3827b64da80033c3e6ad8dfe59"
+  version "0.1.21"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-spinner/-/nav-frontend-spinner-0.1.21.tgz#4a352607af72e4679c4f2a2c5084cf23dc4246b0"
 
 nav-frontend-stegindikator-style@^0.3.18:
-  version "0.3.18"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-stegindikator-style/-/nav-frontend-stegindikator-style-0.3.18.tgz#8f6a0d936bf407fd183709f16a8fefbab1fbc22b"
+  version "0.3.19"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-stegindikator-style/-/nav-frontend-stegindikator-style-0.3.19.tgz#d4df6594a4c73b296cd3ae3e77170a2e7ec6734c"
 
 nav-frontend-typografi-style@^1.0.7:
   version "1.0.7"
@@ -5970,10 +5970,9 @@ react-scripts-ts@2.5.0:
     fsevents "1.0.17"
 
 react-scroll@^1.5.4:
-  version "1.6.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react-scroll/-/react-scroll-1.6.1.tgz#a13540e5cc64d8b798c5692d84cad4e4776b25ce"
+  version "1.6.7"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react-scroll/-/react-scroll-1.6.7.tgz#23b55b1333411e729ea1a609686b1f87978ce77b"
   dependencies:
-    object-assign "^4.1.1"
     prop-types "^15.5.8"
 
 react-side-effect@^1.0.2:
