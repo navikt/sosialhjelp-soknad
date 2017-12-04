@@ -26,7 +26,9 @@ const Infoblokk: React.StatelessComponent<Props> = ({
 			<div className="skjema-infoblokk__content">
 				<div className="skjema-infoblokk__icon">
 					{ikon === "gult" ? (
-						<Icon kind="info-sirkel-fylt" className="digisos-infosirkel-gul" />
+						<div className="digisos-infosirkel-gul">
+							<Icon kind="info-sirkel-fylt" />
+						</div>
 					) : (
 						<Icon kind="info-sirkel" />
 					)}
