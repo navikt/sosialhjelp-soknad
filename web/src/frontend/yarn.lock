@@ -6039,12 +6039,13 @@ react-intl@^2.4.0:
     intl-relativeformat "^2.0.0"
     invariant "^2.1.1"
 
-react-modal@^2.3.3:
-  version "2.4.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react-modal/-/react-modal-2.4.1.tgz#cb09b26711b148eb9f59cb180e1b7d82980ded05"
+react-modal@^3.1.6:
+  version "3.1.6"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react-modal/-/react-modal-3.1.6.tgz#82e63f1ec86b80e242518250d066ee37fa035f8a"
   dependencies:
     exenv "^1.2.0"
     prop-types "^15.5.10"
+    warning "^3.0.0"
 
 react-motion@^0.5.0:
   version "0.5.2"
