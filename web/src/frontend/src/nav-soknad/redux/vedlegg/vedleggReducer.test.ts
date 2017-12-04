@@ -18,7 +18,8 @@ describe("vedlegg reducer", () => {
 		{
 			soknadId: 4,
 			faktumId: 326,
-			vedleggId: 9146
+			vedleggId: 9146,
+			filer: []
 		}
 	];
 

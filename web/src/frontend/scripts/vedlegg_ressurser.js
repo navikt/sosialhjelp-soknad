@@ -84,7 +84,11 @@ router.post("/vedlegg/:vedleggId/fil", function(
 			}
 		});
 	});
-	res.json(files);
+	// res.json(files);
+	const responseDelayInSeconds = 4;
+	setTimeout((function() {
+		res.json(files);
+	}), responseDelayInSeconds * 1000);
 });
 
 router.get("/vedlegg/:vedleggId/:filnavn", function(
@@ -110,7 +114,12 @@ router.delete("/vedlegg/:vedleggId/:filnavn", function(
 	fs.unlink(deleteFilename, function(err) {
 		if (err) throw err;
 	});
-	res.send({"status": "ok"});
+
+	// res.send({"status": "ok"});
+	const responseDelayInSeconds = 4;
+	setTimeout((function() {
+		res.send({"status": "ok"});
+	}), responseDelayInSeconds * 1000);
 });
 
 module.exports = router;

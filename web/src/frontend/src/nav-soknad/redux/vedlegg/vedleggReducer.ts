@@ -37,8 +37,10 @@ export default (
 	switch (action.type) {
 		case LAST_OPP: {
 			const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
-			vedlegg[action.faktumKey].filer = action.filer.map( (fil: Fil) => {
-				return {navn: fil.navn, status: REST_STATUS.PENDING};
+			action.filer.map( (fil: Fil) => {
+				vedlegg[action.faktumKey].filer.push(
+					{navn: fil.navn, status: REST_STATUS.PENDING}
+				);
 			});
 			return {...state, restStatus: REST_STATUS.PENDING, data: { vedlegg }};
 		}

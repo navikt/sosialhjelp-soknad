@@ -2,21 +2,37 @@
 .vedleggsliste {
   padding-bottom: 1rem;
 
-  & .vedlegg {
+  &__vedlegg {
 	display: flex;
 	padding-top: 4px;
 	padding-bottom: 4px;
-
-	& .filnavn {
-		padding-right: 8px;
-	}
-
-	& .slettIkon {
-	  display: inline-block;
-	  padding-top: 1px;
-	  cursor: pointer;
-	}
   }
 
+  &__filnavn {
+	padding-right: 8px;
+  }
+
+  &__slett_ikon {
+	width: 24px;
+	height: 24px;
+	display: inline-block;
+	padding-top: 1px;
+	cursor: pointer;
+  }
+
+  &__slett_ikon path {
+	fill: #ba3a26;
+  }
+
+  &__spinner {
+	padding-top: 2px;
+	padding-right: 8px;
+  }
+
+  &__usynlig_knapp {
+	background: none;
+	border: none;
+	color: inherit;
+  }
 }
 
