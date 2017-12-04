@@ -82,7 +82,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 								tittel={this.props.intl.formatMessage({
 									id: "opplysninger.ikkebesvart.tittel"
 								})}
-								ikon="gult"
+								ikon="advarsel"
 							>
 								<div className="blokk-m">
 									<FormattedHTMLMessage id="opplysninger.ikkebesvart.melding" />

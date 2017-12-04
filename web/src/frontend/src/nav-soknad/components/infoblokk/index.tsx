@@ -3,12 +3,13 @@ import * as classNames from "classnames";
 import { Panel } from "nav-frontend-paneler";
 import Icon from "nav-frontend-ikoner-assets";
 import { Innholdstittel, Systemtittel } from "nav-frontend-typografi";
+import ProblemSirkel from "../svg/ProblemSirkel";
 
 interface Props {
 	tittel?: string;
 	brukSystemtittel?: boolean;
 	className?: string;
-	ikon?: "standard" | "gult";
+	ikon?: "standard" | "advarsel";
 }
 
 const Infoblokk: React.StatelessComponent<Props> = ({
@@ -19,15 +20,15 @@ const Infoblokk: React.StatelessComponent<Props> = ({
 	brukSystemtittel
 }) => {
 	const dashClassName = classNames("skjema-infoblokk__dash", {
-		"skjema-infoblokk__dash--gul": ikon === "gult"
+		"skjema-infoblokk__dash--gul": ikon === "advarsel"
 	});
 	return (
 		<Panel className={`skjema-infoblokk ${className}`}>
 			<div className="skjema-infoblokk__content">
 				<div className="skjema-infoblokk__icon">
-					{ikon === "gult" ? (
-						<div className="digisos-infosirkel-gul">
-							<Icon kind="info-sirkel-fylt" />
+					{ikon === "advarsel" ? (
+						<div className="ikon-sirkel-gul">
+							<ProblemSirkel />
 						</div>
 					) : (
 						<Icon kind="info-sirkel" />

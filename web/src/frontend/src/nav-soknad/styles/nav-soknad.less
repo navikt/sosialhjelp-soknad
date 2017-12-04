@@ -130,11 +130,11 @@ body {
 	}
 }
 
-.digisos-infosirkel-gul {
+.ikon-sirkel-gul {
 	display: inline-block;
 	position: relative;
 	@iconSize: 32px;
-	@bkgSize: 26px;
+	@bkgSize: 24px;
 	&:before {
 		content: "";
 		width: @bkgSize;
@@ -144,8 +144,8 @@ body {
 		position: absolute;
 		top: 50%;
 		left: 50%;
-		margin-top: -1 * (@bkgSize / 2);
-		margin-left: -1 * (@bkgSize / 2);
+		margin-top: -1 * (@bkgSize / 2) - 2;
+		margin-left: -1 * (@bkgSize / 2) - 1;
 		z-index: 1;
 	}
 	svg {
@@ -154,7 +154,7 @@ body {
 		position: relative;
 		z-index: 2;
 	}
-	svg * {
+	svg .sirkel {
 		fill: @orangeFocus;
 	}
 }
