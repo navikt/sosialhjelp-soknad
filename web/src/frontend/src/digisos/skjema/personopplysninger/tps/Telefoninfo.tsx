@@ -29,7 +29,7 @@ const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 
 	return (
 		<SysteminfoFaktum
-			faktumKey="kontakt.telefon.brukerendring"
+			faktumKey="kontakt.telefon.brukerendrettoggle"
 			skjema={<Skjema />}
 			endreLabel={intl.formatMessage({
 				id: "kontakt.system.telefon.endreknapp.label"
