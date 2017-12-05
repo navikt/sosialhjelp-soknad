@@ -44,10 +44,14 @@
 .kvittering-illustration {
 	width: 100%;
 	max-width: 400px;
+	@media print {
+		max-height: 50mm;
+	}
 }
 
 .infoSeksjon {
 	padding: 0 @skjemaMarg 0 @skjemaMarg;
+	text-align: center;
 	&__ikon {
 		margin-bottom: 1rem;
 	}

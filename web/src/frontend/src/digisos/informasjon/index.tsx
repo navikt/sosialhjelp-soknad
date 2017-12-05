@@ -1,7 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouterProps } from "react-router";
-import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import {
+	FormattedHTMLMessage,
+	InjectedIntlProps,
+	injectIntl
+} from "react-intl";
 import DocumentTitle from "react-document-title";
 import { State } from "../redux/reducers";
 import { Undertittel } from "nav-frontend-typografi";
@@ -9,22 +13,30 @@ import Knapp from "nav-frontend-knapper";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import Infoblokk from "../../nav-soknad/components/infoblokk";
-import { startSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
-import { Horten } from "../data/kommuner";
+import { tilBostedEllerStartSoknad } from "../../nav-soknad/redux/navigasjon/navigasjonActions";
 import { FeatureToggles } from "../../featureToggles";
+import { Horten } from "../data/kommuner";
 
 interface StateProps {
 	harTilgang: boolean;
 	soknadErLive: string;
 	startSoknadPending: boolean;
+	visVelgBosted: boolean;
 }
 
 type Props = StateProps & InjectedIntlProps & RouterProps & DispatchProps;
 
 class Informasjon extends React.Component<Props, {}> {
 	render() {
-		const { intl, dispatch, harTilgang, startSoknadPending, soknadErLive } = this.props;
+		const {
+			intl,
+			dispatch,
+			harTilgang,
+			startSoknadPending,
+			visVelgBosted,
+			soknadErLive
+		} = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 		return (
 			<div>
@@ -56,7 +68,11 @@ class Informasjon extends React.Component<Props, {}> {
 							type="hoved"
 							spinner={startSoknadPending}
 							disabled={startSoknadPending}
-							onClick={() => dispatch(startSoknad(Horten.id))}
+							onClick={() =>
+								dispatch(
+									tilBostedEllerStartSoknad(visVelgBosted ? null : Horten)
+								)
+							}
 						>
 							{getIntlTextOrKey(intl, "skjema.knapper.start")}
 						</Knapp>
@@ -81,5 +97,7 @@ class Informasjon extends React.Component<Props, {}> {
 export default connect((state: State) => ({
 	harTilgang: state.tilgang.harTilgang,
 	soknadErLive: state.featuretoggles.data[FeatureToggles.soknadErLive],
+	visVelgBosted:
+		state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
 	startSoknadPending: state.soknad.startSoknadPending
 }))(injectIntl(Informasjon));

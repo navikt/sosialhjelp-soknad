@@ -1,0 +1,26 @@
+.systeminfoMedSkjema {
+	&__info {
+		margin-top: 0.5rem;
+		margin-bottom: 1rem;
+	}
+	&__skjema {
+		margin-bottom: 1rem;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid @navGra40;
+	}
+	&__skjemaWrapper {
+		padding-bottom: 1rem;
+	}
+
+	& + .skjema-sporsmal {
+		margin-top: 2rem;
+	}
+	& + .systeminfoMedSkjema {
+		margin-top: -1px;
+	}
+}
+.skjema-sporsmal--noBottomPadding {
+	.skjema-sporsmal:last-child {
+		margin-bottom: 1rem;
+	}
+}

@@ -9,7 +9,7 @@ import {
 import { Location } from "history";
 import { connect } from "react-redux";
 
-import Steg1 from "./kontakt";
+import Steg1 from "./personopplysninger";
 import Steg2 from "./arbeidUtdanning";
 import Steg3 from "./familie";
 import Steg4 from "./begrunnelse";

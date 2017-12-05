@@ -30,7 +30,9 @@ class UtgifterGjeld extends React.Component<
 
 		const harBoutgifter = radioCheckKeys("utgifter.boutgift");
 		const boUtgifter = radioCheckKeys(`${harBoutgifter.faktum}.true.type`);
-		const andreBoUtgifter = `${boUtgifter.faktum}.andreutgifter.true.beskrivelse`;
+		const andreBoUtgifter = `${
+			boUtgifter.faktum
+		}.andreutgifter.true.beskrivelse`;
 
 		const harUtgifterBarn = radioCheckKeys("utgifter.barn");
 		const barneUtgifter = radioCheckKeys("utgifter.barn.true.utgifter");
@@ -92,7 +94,10 @@ class UtgifterGjeld extends React.Component<
 					</Underskjema>
 					<RadioFaktum faktumKey={harBoutgifter.faktum} value="false" />
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey={harUtgifterBarn.faktum}>
+				<SporsmalFaktum
+					faktumKey={harUtgifterBarn.faktum}
+					visible={getFaktumVerdi(fakta, "familie.barn") !== "false"}
+				>
 					<RadioFaktum faktumKey={harUtgifterBarn.faktum} value="true" />
 					<Underskjema
 						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}

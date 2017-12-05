@@ -1,3 +1,4 @@
+import { Kommune } from "../../types";
 export enum Sider {
 	FORSIDEN = "https://www.nav.no",
 	/* tslint:disable-next-line */
@@ -17,6 +18,7 @@ export enum NavigasjonActionTypes {
 	GA_TILBAKE = "navigasjon/GA_TILBAKE",
 	TIL_SERVERFEIL = "navigasjon/TIL_SERVERFEIL",
 	TIL_BOSTED = "navigasjon/TIL_BOSTED",
+	TIL_BOSTED_ELLER_START_SOKNAD = "navigasjon/TIL_BOSTED_ELLER_START_SOKNAD",
 	TIL_KVITTERING = "navigasjon/TIL_KVITTERING"
 }
 
@@ -30,7 +32,8 @@ export type NavigasjonActions =
 	| GaVidere
 	| TilBosted
 	| TilDittNav
-	| TilKvittering;
+	| TilKvittering
+	| TilBostedEllerStartSoknad;
 
 export interface TilServerfeil {
 	type: NavigasjonActionTypes.TIL_SERVERFEIL;
@@ -65,6 +68,11 @@ export interface TilbakeEllerForsiden {
 
 export interface TilBosted {
 	type: NavigasjonActionTypes.TIL_BOSTED;
+}
+
+export interface TilBostedEllerStartSoknad {
+	type: NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD;
+	valgtKommune?: Kommune;
 }
 
 export interface TilDittNav {

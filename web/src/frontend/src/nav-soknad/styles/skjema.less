@@ -24,9 +24,16 @@
 	&:focus {
 		.focus-outline();
 	}
+	&--noBottomPadding {
+		padding-bottom: 0;
+	}
+	&--systeminfo {
+		padding-bottom: 0;
+	}
 
 	@media @mobile {
-		padding: @skjemaMargMobil;
+		padding-left: @skjemaMargMobil;
+		padding-right: @skjemaMargMobil;
 	}
 
 	.skjema__feilomrade--harFeil:last-child {
@@ -62,6 +69,11 @@
 			margin: 1rem 0 1rem 0;
 		}
 	}
+	&--systeminfo {
+		.skjema-sporsmal__infotekst {
+			margin-bottom: 1.5rem;
+		}
+	}
 
 	&__hjelpetekst {
 		position: absolute;
@@ -85,7 +97,7 @@
 		margin-top: 0;
 		margin-bottom: 1rem;
 		&:focus {
-			.focus-outline();
+			outline: none;
 		}
 	}
 	.skjema-sporsmal {

@@ -86,6 +86,9 @@ export interface Kvittering {
 	orgnummer: string;
 	navenhet: string;
 	ikkeInnsendteVedlegg?: IkkeInnsendtVedlegg[];
+	dato?: string;
+	klokkeslett?: string;
+	behandlingsId?: string;
 }
 
 export enum DelstegStatus {

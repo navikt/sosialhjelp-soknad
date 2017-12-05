@@ -4,7 +4,7 @@ var bodyParser = require("body-parser");
 const fs = require("fs");
 const utils = require("./utils.js");
 const path = require("path");
-const fileUpload = require('express-fileupload');
+const fileUpload = require("express-fileupload");
 
 app.use(fileUpload());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -66,13 +66,15 @@ router.get("/soknader/:brukerBehandlingId?lang=nb_NO", function(req, res) {
 	console.log("sss");
 });
 
-
+const mockFeatures = {
+	"feature.frontend.sosialhjelp.kontonummer": "true",
+	"feature.frontend.sosialhjelp.live": "true",
+	"feature.frontend.sosialhjelp.personalia": "false",
+	"feature.frontend.visvelgbosted": "true"
+};
 router.get("/api/feature", function(req, res) {
-    console.log("features");
-    res.json({
-        "feature.frontend.sosialhjelp.kontonummer": "true",
-        "feature.frontend.sosialhjelp.live": "true",
-	});
+	console.log("bruker mockFeatures");
+	res.json(mockFeatures);
 });
 
 router.get("/soknader/:brukerBehandlingId", function(req, res) {
@@ -155,7 +157,9 @@ function genererFaktumId() {
 
 router.post("/fakta", function(req, res) {
 	if (req.query["behandlingsId"]) {
-		console.log("Mock backend: POST /fakta/?behandlingsId=" + req.query["behandlingsId"]);
+		console.log(
+			"Mock backend: POST /fakta/?behandlingsId=" + req.query["behandlingsId"]
+		);
 		const faktum = req.body;
 		faktum.faktumId = genererFaktumId();
 		faktum.properties = {};
@@ -173,7 +177,7 @@ router.post("/informasjon/actions/logg", function(req, res) {
 	if (typeof req.body === "string") {
 		console.log(req);
 	} else {
-		if(req.body && req.body.userAgent) {
+		if (req.body && req.body.userAgent) {
 			req.body.userAgent = req.body.userAgent.substr(0, 10) + "...";
 		}
 		console.log(JSON.stringify(req.body, null, 4));
