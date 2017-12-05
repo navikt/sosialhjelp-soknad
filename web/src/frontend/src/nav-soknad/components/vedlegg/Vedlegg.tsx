@@ -4,7 +4,6 @@ import { Knapp } from "nav-frontend-knapper";
 import { connect } from "react-redux";
 import {
 	hentFilListe,
-	hentVedleggsForventning,
 	lastOppVedlegg, slettFil
 } from "../../redux/vedlegg/vedleggActions";
 import { SoknadAppState } from "../../redux/reduxTypes";
@@ -24,7 +23,6 @@ interface ConnectedProps {
 	brukerBehandlingId: string;
 	lastOppVedlegg?: (faktumKey: string, vedleggId: number, formData: FormData, filer: Fil[]) => void;
 	slettFil?: (faktumKey: string, vedleggId: string, filNavn: string) => void;
-	hentVedleggsForventning?: (fakta: Faktum[]) => void;
 	hentFilListe: (key: string, vedleggId: string) => any;
 }
 
@@ -126,8 +124,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 	lastOppVedlegg: (key: string, vedleggId: string, formData: any, filer: Fil[]) =>
 		dispatch(lastOppVedlegg(key, vedleggId, formData, filer)),
 	slettFil: (faktumKey: string, vedleggId: string, filNavn: string): void =>
-		dispatch(slettFil(faktumKey, vedleggId, filNavn)),
-	hentVedleggsForventning: (fakta: Faktum[]) => dispatch(hentVedleggsForventning(fakta))
+		dispatch(slettFil(faktumKey, vedleggId, filNavn))
 });
 
 export default connect<{}, {}, Props>(
