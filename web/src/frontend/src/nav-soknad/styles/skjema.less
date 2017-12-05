@@ -18,7 +18,7 @@
 .skjema-sporsmal {
 	position: relative;
 	display: block;
-	padding: 1.5rem @skjemaMarg 2rem @skjemaMarg;
+	padding: 1.5rem @skjemaMarg @sporsmalBottomPadding @skjemaMarg;
 	border-radius: 4px;
 	background-color: @white;
 	&:focus {
@@ -29,7 +29,13 @@
 	}
 	&--systeminfo {
 		padding-bottom: 0;
+		.skjema-sporsmal--noBottomPadding .skjema-sporsmal:last-child {
+			margin-bottom: 1rem;
+		}
 	}
+	
+}
+
 
 	@media @mobile {
 		padding-left: @skjemaMargMobil;
@@ -40,7 +46,7 @@
 		margin-bottom: 0;
 	}
 
-	// Underspørsmål
+	// Underspørsmål (.skjema-sporsmal .skjema-sporsmal)
 	.skjema-sporsmal {
 		padding: 0;
 		border-radius: 0;
@@ -64,14 +70,9 @@
 	}
 
 	&__infotekst {
-		margin: 0 0 2rem 0;
+		margin: 0 0 1.5rem 0;
 		&__tittel {
 			margin: 1rem 0 1rem 0;
-		}
-	}
-	&--systeminfo {
-		.skjema-sporsmal__infotekst {
-			margin-bottom: 1.5rem;
 		}
 	}
 

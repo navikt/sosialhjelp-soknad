@@ -5,11 +5,13 @@ import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
 import Hjelpetekst from "../hjelpetekst/Hjelpetekst";
 import { SporsmalFaktumTekst } from "../../types";
 
+export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
+
 export interface Props {
 	children: React.ReactNode;
 	visible?: boolean;
 	htmlRef?: (c: any) => HTMLElement;
-	style?: "normal" | "system";
+	style?: SporsmalStyle;
 	tittelRenderer?: (title: string) => React.ReactNode;
 	handleOnBlur?: (evt: any) => void;
 	feil?: Feil;
@@ -24,7 +26,8 @@ class Sporsmal extends React.Component<Props, {}> {
 			return null;
 		}
 		const sporsmalCls = classNames("skjema-sporsmal", {
-			"skjema-sporsmal--noBottomPadding": this.props.style === "system",
+			"skjema-sporsmal--noBottomPadding":
+				this.props.style === "system" || this.props.style === "jaNeiSporsmal",
 			"skjema-sporsmal--systeminfo": this.props.style === "system"
 		});
 		const cls = classNames("skjema-fieldset", {
