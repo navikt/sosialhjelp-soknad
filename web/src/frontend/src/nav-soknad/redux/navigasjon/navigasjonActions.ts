@@ -1,3 +1,4 @@
+import { Kommune } from "../../types";
 import { NavigasjonActionTypes, NavigasjonActions } from "./navigasjonTypes";
 
 export function navigerTilServerfeil(): NavigasjonActions {
@@ -54,6 +55,15 @@ export function tilbakeEllerForsiden(): NavigasjonActions {
 export function tilBosted(): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.TIL_BOSTED
+	};
+}
+
+export function tilBostedEllerStartSoknad(
+	valgtKommune: Kommune
+): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD,
+		valgtKommune
 	};
 }
 

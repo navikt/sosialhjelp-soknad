@@ -8,6 +8,7 @@ import {
 	Sider,
 	TilSteg,
 	TilDittNav,
+	TilBostedEllerStartSoknad,
 	TilKvittering
 } from "./navigasjonTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
@@ -22,6 +23,8 @@ import {
 } from "../selectors";
 import { hentSynligeFakta } from "../../../digisos/redux/synligefakta/synligeFaktaActions";
 import { SynligeFaktaActionTypeKeys } from "../../../digisos/redux/synligefakta/synligeFaktaTypes";
+
+import { startSoknad } from "../soknad/soknadActions";
 
 const getHistoryLength = () => window.history.length;
 const navigateTo = (path: string) => (window.location.href = path);
@@ -40,6 +43,16 @@ function* tilBostedSaga(): SagaIterator {
 
 function* tilStartSaga(): SagaIterator {
 	yield put(push(Sider.START));
+}
+
+function* tilBostedEllerStartSoknadSaga(
+	action: TilBostedEllerStartSoknad
+): SagaIterator {
+	if (action.valgtKommune) {
+		yield put(startSoknad(action.valgtKommune.id));
+	} else {
+		yield put(push(Sider.BOSTED));
+	}
 }
 
 function* tilbakeEllerForsidenSaga(): SagaIterator {
@@ -129,7 +142,10 @@ function* navigasjonSaga(): SagaIterator {
 	yield takeEvery(NavigasjonActionTypes.TIL_BOSTED, tilBostedSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_DITT_NAV, tilDittNav);
 	yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilKvittering);
-	yield takeEvery(NavigasjonActionTypes.TIL_START, tilStart);
+	yield takeEvery(
+		NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD,
+		tilBostedEllerStartSoknadSaga
+	);
 }
 
 export {
@@ -142,7 +158,9 @@ export {
 	tilFinnDittNavKontorSaga,
 	tilKvittering,
 	tilServerfeilSaga,
-	tilStegSaga
+	tilStegSaga,
+	tilBostedEllerStartSoknadSaga,
+	tilBostedSaga
 };
 
 export default navigasjonSaga;
