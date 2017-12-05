@@ -13,7 +13,7 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.familiebolk}>
 				<Sivilstatus fakta={fakta} />
-				<HarBarn fakta={fakta} />
+				<HarBarn />
 			</DigisosSkjemaSteg>
 		);
 	}

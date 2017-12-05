@@ -15,7 +15,7 @@ class InntektFormue extends React.Component<FaktumComponentProps, any> {
 		const { fakta } = this.props;
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.inntektbolk}>
-				<Bostotte fakta={fakta} />
+				<Bostotte />
 				<Eiendeler fakta={fakta} />
 				<Bankinnskudd fakta={fakta} />
 				<Utbetaling fakta={fakta} />

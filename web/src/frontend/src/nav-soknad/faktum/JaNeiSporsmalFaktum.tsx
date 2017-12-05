@@ -1,16 +1,19 @@
 import * as React from "react";
+import { connect } from "react-redux";
+import { SoknadAppState } from "../redux/reduxTypes";
+
 import ValgMedUnderskjema from "../components/valgMedUnderskjema";
 import RadioFaktum from "../faktum/RadioFaktum";
 import Underskjema from "../components/underskjema";
-import { Faktum } from "../types";
+import { FaktumComponentProps } from "../redux/fakta/faktaTypes";
 
-import SporsmalFaktum, {
-	OwnProps as SporsmalFaktumProps
-} from "./SporsmalFaktum";
+import SporsmalFaktum from "./SporsmalFaktum";
 
-interface Props extends SporsmalFaktumProps {
-	fakta: Faktum[];
+interface OwnProps {
+	faktumKey: string;
+	visible?: boolean;
 }
+type Props = OwnProps & FaktumComponentProps;
 
 import { faktumIsSelected, getFaktumVerdi, radioCheckKeys } from "../utils";
 
@@ -39,4 +42,8 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 	}
 }
 
-export default JaNeiSporsmalFaktum;
+export default connect((state: SoknadAppState, props: OwnProps) => {
+	return {
+		fakta: state.fakta.data
+	};
+})(JaNeiSporsmalFaktum);
