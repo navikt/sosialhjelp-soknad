@@ -26,6 +26,11 @@ function getServletBaseUrl(): string {
 	return "/soknadsosialhjelp/";
 }
 
+export function downloadAttachedFile(urlPath: string): void {
+	const filUrl = `${getServletBaseUrl()}${urlPath}`;
+	window.open(filUrl);
+}
+
 export const MED_CREDENTIALS: RequestInit = { credentials: "same-origin" };
 
 enum RequestMethod {

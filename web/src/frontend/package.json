@@ -70,6 +70,7 @@
     "express-reloadable": "^2.0.2",
     "fs-extra": "2.1.2",
     "jest-cli": "^21.1.0",
+    "mime": "^2.0.3",
     "nav-frontend-alertstriper-style": "^0.2.22",
     "nav-frontend-chevron-style": "^0.3.4",
     "nav-frontend-ekspanderbartpanel-style": "^0.3.8",

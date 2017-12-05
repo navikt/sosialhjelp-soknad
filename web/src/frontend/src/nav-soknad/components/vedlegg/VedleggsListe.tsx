@@ -10,13 +10,17 @@ interface Props extends React.Props<any> {
 	filer: Fil[];
 	faktumKey: string;
 	slettFil(faktumKey: string, filNavn: string): void;
+	lastNedVedlegg(filNavn: string): void;
 }
 
-function lastNedVedlegg(vedleggId: string, faktumKey: string) {
-	window.alert("Last ned vedlegg ikke implementert");
-}
+// function lastNedVedlegg(vedleggId: string, faktumKey: string) {
+// 	// window.alert("Last ned vedlegg ikke implementert");
+// 	// const filUrl = "http://localhost:3001/vedlegg/1001/image1.PNG?behandlingsId=1000CPY7D";
+// 	// window.open(filUrl);
+//
+// }
 
-const VedleggsListe: React.StatelessComponent<Props> = ({ filer, faktumKey, slettFil }) => {
+const VedleggsListe: React.StatelessComponent<Props> = ({ filer, faktumKey, slettFil, lastNedVedlegg }) => {
 	return (
 		<div className="vedleggsliste">
 			{filer && filer.map((fil: Fil, index: number) => {
@@ -24,7 +28,7 @@ const VedleggsListe: React.StatelessComponent<Props> = ({ filer, faktumKey, slet
 					<div key={index} className="vedleggsliste__vedlegg">
 						<span className="vedleggsliste__filnavn">
 							<Lenkeknapp
-								onClick={() => lastNedVedlegg(faktumKey, fil.navn)}
+								onClick={() => lastNedVedlegg(fil.navn)}
 							>
 								{fil.navn}
 							</Lenkeknapp>

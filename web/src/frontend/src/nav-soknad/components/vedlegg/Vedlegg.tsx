@@ -11,6 +11,7 @@ import { SoknadAppState } from "../../redux/reduxTypes";
 import VedleggsListe from "./VedleggsListe";
 import { Faktum } from "../../types/navSoknadTypes";
 import { Fil, Vedlegg as VedleggType } from "../../redux/vedlegg/vedleggTypes";
+import { downloadAttachedFile } from "../../utils/rest-utils";
 
 interface Props {
 	faktumKey: string;
@@ -20,6 +21,7 @@ interface Props {
 interface ConnectedProps {
 	vedlegg?: VedleggType;
 	fakta?: Faktum[];
+	brukerBehandlingId: string;
 	lastOppVedlegg?: (faktumKey: string, vedleggId: number, formData: FormData, filer: Fil[]) => void;
 	slettFil?: (faktumKey: string, vedleggId: string, filNavn: string) => void;
 	hentVedleggsForventning?: (fakta: Faktum[]) => void;
@@ -48,6 +50,11 @@ class Vedlegg extends React.Component<AllProps, {}> {
 		this.props.slettFil(faktumKey, vedleggId.toString(10), filNavn);
 	}
 
+	lastNedVedlegg(filNavn: string) {
+		const urlPath = `vedlegg/${this.lesVedleggId()}/${filNavn}?behandlingsId=${this.props.brukerBehandlingId}`;
+		downloadAttachedFile(urlPath);
+	}
+
 	render() {
 		const vedleggId = this.lesVedleggId();
 		const vedleggForventet: boolean = (Number(vedleggId) > 0);
@@ -65,6 +72,7 @@ class Vedlegg extends React.Component<AllProps, {}> {
 						filer={filer}
 						faktumKey={this.props.faktumKey}
 						slettFil={(faktumKey: string, filNavn: string) => this.slettFil(faktumKey, filNavn)}
+						lastNedVedlegg={(filNavn: string) => this.lastNedVedlegg(filNavn)}
 					/>
 					<Knapp
 						type="standard"
@@ -108,7 +116,8 @@ class Vedlegg extends React.Component<AllProps, {}> {
 
 const mapStateToProps = (state: SoknadAppState) => ({
 	fakta: state.fakta.data,
-	vedlegg: state.vedlegg.data
+	vedlegg: state.vedlegg.data,
+	brukerBehandlingId: state.soknad.data.brukerBehandlingId
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

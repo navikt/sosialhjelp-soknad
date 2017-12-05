@@ -14,14 +14,24 @@ import Adresseinfo from "./tps/Adresseinfo";
 import Telefoninfo from "./tps/Telefoninfo";
 import Bankinformasjon from "./tps/Bankinformasjon";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
+import { hentVedleggsForventning } from "../../../nav-soknad/redux/vedlegg/vedleggActions";
 
 interface StateProps {
 	visPersonaliaFraTPSfeatureToggle: boolean;
 }
 
+interface StateProps {
+	visPersonaliaFraTPSfeatureToggle: boolean;
+	hentVedleggsForventning?: (fakta: any) => void;
+}
+
 export type Props = StateProps & FaktumComponentProps;
 
-class Personopplysninger extends React.Component<Props, {}> {
+class Personopplysninger extends React.Component<Props, StateProps> {
+
+	componentDidMount() {
+		this.props.hentVedleggsForventning(this.props.fakta);
+	}
 
 	render() {
 		if (this.props.visPersonaliaFraTPSfeatureToggle) {
@@ -54,12 +64,17 @@ class Personopplysninger extends React.Component<Props, {}> {
 	}
 }
 
+const mapDispatchToProps = (dispatch: any) => ({
+	hentVedleggsForventning: (fakta: any) => dispatch(hentVedleggsForventning(fakta))
+});
+
 const mapStateToProps = (state: State) => ({
 	visPersonaliaFraTPSfeatureToggle:
-		state.featuretoggles.data[FeatureToggles.viseTpsPersonalia] === "true",
+	state.featuretoggles.data[FeatureToggles.viseTpsPersonalia] === "true",
 	fakta: state.fakta.data
 });
 
 export default connect<{}, {}, Props>(
-	mapStateToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(Personopplysninger);

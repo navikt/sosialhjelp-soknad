@@ -3,6 +3,7 @@ const path = require("path");
 var router = express.Router();
 const utils = require("./utils.js");
 const fs = require("fs");
+var mime = require("mime");
 
 /*
  * Mock backend: REST ressurser for vedlegg
@@ -95,10 +96,17 @@ router.get("/vedlegg/:vedleggId/:filnavn", function(
 	req,
     res
 ) {
-	console.log("Mock backend: GET vedlegg (enkelt fil)");
+	console.log("Mock backend: GET vedlegg - Last ned vedlegg.");
 	var vedleggId = Number(req.params.vedleggId);
-	var filnavn = Number(req.params.filnavn);
-	res.send(utils.lesMockHtmlFil(DATA_DIR + "/vedlegg_" + vedleggId + "/" + filnavn));
+	var filnavn = req.params.filnavn;
+	var filsti = utils.getFilePath("/vedlegg_" + vedleggId + "/" + filnavn);
+	var mimeType = mime.getType(filsti);
+	var file = fs.createReadStream(filsti);
+	var stat = fs.statSync(filsti);
+	res.setHeader('Content-Length', stat.size);
+	res.setHeader('Content-Type', mimeType); // 'application/pdf');
+	res.setHeader('Content-Disposition', 'attachment; filename=' + filnavn);
+	file.pipe(res);
 });
 
 router.delete("/vedlegg/:vedleggId/:filnavn", function(
