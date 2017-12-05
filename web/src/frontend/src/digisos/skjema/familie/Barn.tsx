@@ -8,6 +8,7 @@ import { Faktum } from "../../../nav-soknad/types";
 import {
 	faktumIsSelected,
 	getPropertyVerdi,
+	getFaktumPropertyVerdi,
 	radioCheckKeys
 } from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
@@ -36,7 +37,9 @@ export default class Barn extends React.Component<Props, {}> {
 	}
 
 	componentDidMount() {
-		this.personFaktum.focus();
+		if (this.props.barnNummer > 1) {
+			this.personFaktum.focus();
+		}
 	}
 
 	focus() {
@@ -56,8 +59,12 @@ export default class Barn extends React.Component<Props, {}> {
 		const borInfo = radioCheckKeys(`${faktumKey}.borsammen`);
 		const hvormye = inputKeys(`${faktumKey}.grad`);
 		const faktumId = faktum.faktumId;
+		const navn = getFaktumPropertyVerdi(faktum, "navn");
+
 		const alternativFjernTekst = (): string => {
-			return `${fjernBarnAlterantivTekst} ${barnNummer}`;
+			return `${fjernBarnAlterantivTekst} ${barnNummer} ${
+				navn ? `(${navn})` : ""
+			}`;
 		};
 		return (
 			<div className="blokk barn">
