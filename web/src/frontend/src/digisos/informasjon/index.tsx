@@ -70,7 +70,7 @@ class Informasjon extends React.Component<Props, {}> {
 							disabled={startSoknadPending}
 							onClick={() =>
 								dispatch(
-									tilBostedEllerStartSoknad(visVelgBosted ? Horten : null)
+									tilBostedEllerStartSoknad(visVelgBosted ? null : Horten)
 								)
 							}
 						>
@@ -97,6 +97,7 @@ class Informasjon extends React.Component<Props, {}> {
 export default connect((state: State) => ({
 	harTilgang: state.tilgang.harTilgang,
 	soknadErLive: state.featuretoggles.data[FeatureToggles.soknadErLive],
-	visVelgBosted: state.featuretoggles.data[FeatureToggles.visVelgBosted],
+	visVelgBosted:
+		state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
 	startSoknadPending: state.soknad.startSoknadPending
 }))(injectIntl(Informasjon));
