@@ -18,6 +18,7 @@
 @import "../components/systeminfoMedSkjema/systeminfoMedSkjema.less";
 @import "../components/validering/feiloppsummering.less";
 @import "../components/vedlegg/vedleggsliste.less";
+@import "../components/utskrift/utskrift.less";
 
 body {
 	overflow-y: scroll;
@@ -64,6 +65,12 @@ body {
 	&:after {
 		.tittel-strek-after();
 		background-color: @navMorkGra;
+	}
+	@media print {
+		padding-bottom: 2mm;
+		&:after {
+			display: none;
+		}
 	}
 }
 
