@@ -1,5 +1,4 @@
 import "raf/polyfill";
-
 import {
 	feiletFaktumSaga,
 	lagreFaktumSaga,

@@ -1,7 +1,5 @@
 import "raf/polyfill";
-
 import { call, put } from "redux-saga/effects";
-// import { finnFaktum, oppdaterFaktumMedProperties } from "../../utils";
 import {
 	opprettSoknadSaga,
 	startSoknadSaga,
