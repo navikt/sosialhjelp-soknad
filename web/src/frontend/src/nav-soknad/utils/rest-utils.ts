@@ -11,8 +11,8 @@ export function kjorerJetty(): boolean {
 export function getApiBaseUrl(): string {
 	if (erDev()) {
 		// Kjør mot lokal sendsoknad
-		// return "http://localhost:8181/sendsoknad/";
-		return "http://localhost:3001/";
+		return "http://localhost:8181/sendsoknad/";
+		// return "http://localhost:3001/";
 	}
 	return kjorerJetty() ? "http://127.0.0.1:8181/sendsoknad/" : "/sendsoknad/";
 }
