@@ -101,14 +101,14 @@ class OppsummeringView extends React.Component<Props, {}> {
 					<div className="skjema-oppsummering__bekreft">
 						<Checkbox
 							label={this.props.intl.formatMessage({
-								id: "oppsummering.bekreft.true"
+								id: "soknadsosialhjelp.oppsummering.bekreftOpplysninger"
 							})}
 							checked={this.props.bekreftet}
 							feil={
 								this.props.visBekreftMangler
 									? {
 											feilmelding: intl.formatHTMLMessage({
-												id: "soknadsosialhjelp.oppsummering.bekreftOpplysninger"
+												id: "oppsummering.feilmelding.bekreftmangler"
 											})
 										}
 									: null
