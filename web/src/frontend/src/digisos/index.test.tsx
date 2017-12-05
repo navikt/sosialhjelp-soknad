@@ -1,6 +1,12 @@
-import polyfillObjectEntries from "../objectEntriesPolyfill";
-
+import polyfillObjectEntries from "../test/objectEntriesPolyfill";
 polyfillObjectEntries();
+(global as any).requestAnimationFrame = (callback: any) => {
+	setTimeout(callback, 0);
+};
+import * as Enzyme from "enzyme";
+import * as Adapter from "enzyme-adapter-react-16";
+Enzyme.configure({ adapter: new Adapter() });
+
 import * as React from "react";
 import { shallow } from "enzyme";
 import App from "./index";

@@ -4,7 +4,8 @@ import Knapp from "nav-frontend-knapper";
 import { Select } from "nav-frontend-skjema";
 
 import Arrow from "../../nav-soknad/components/svg/Arrow";
-import { Kommuner, Kommune, Bydel, getBosted } from "../data/kommuner";
+import { Kommune, Bydel } from "../../nav-soknad/types";
+import { Kommuner, getBosted } from "../data/kommuner";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 
 interface StateProps {
@@ -46,10 +47,11 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 				<div>
 					<div className="blokk-m">
 						<Select
-							bredde="M"
+							bredde="m"
 							defaultValue=""
 							onChange={(evt: any) =>
-								this.setState({ kommuneId: evt.target.value })}
+								this.setState({ kommuneId: evt.target.value })
+							}
 							label={
 								<div className="bosted__selectLabel bosted__tekst--extraPadding">
 									<FormattedMessage id="personalia.kommune.label" />
@@ -78,10 +80,11 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 								<Arrow />
 							</div>
 							<Select
-								bredde="M"
+								bredde="m"
 								defaultValue=""
 								onChange={(evt: any) =>
-									this.setState({ bydelId: evt.target.value })}
+									this.setState({ bydelId: evt.target.value })
+								}
 								label={
 									<div className="bosted__selectLabel bosted__tekst--extraPadding">
 										<FormattedMessage id="personalia.bydel.label" />
