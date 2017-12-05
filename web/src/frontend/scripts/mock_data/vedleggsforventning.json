@@ -25,11 +25,10 @@
 		"tittel": "Lønnslipp for siste 3 mnd",
 		"aarsak": null
 	},
-
 	{
 		"vedleggId": 1001,
 		"soknadId": 4,
-		"faktumId": 310,
+		"faktumId": 10,
 		"skjemaNummer": "K4",
 		"skjemanummerTillegg": null,
 		"innsendingsvalg": "VedleggKreves",
