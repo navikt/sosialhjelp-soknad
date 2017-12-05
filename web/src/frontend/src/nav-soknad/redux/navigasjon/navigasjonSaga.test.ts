@@ -6,6 +6,7 @@ import {
 	getHistoryLength,
 	tilStegSaga,
 	gaVidereSaga,
+	tilBostedEllerStartSoknadSaga,
 	skalHoppeOverNesteStegSaga
 } from "./navigasjonSaga";
 import { call, put, select, take } from "redux-saga/effects";
@@ -13,13 +14,19 @@ import { GaVidere, Sider, TilSteg } from "./navigasjonTypes";
 import { push, goBack } from "react-router-redux";
 import { SagaIterator } from "redux-saga";
 import { gaVidere, tilSteg } from "./navigasjonActions";
+import { NavigasjonActionTypes } from "./navigasjonTypes";
 import { setFaktum, lagreFaktum } from "../fakta/faktaActions";
 import { Faktum } from "../../types/navSoknadTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
-import { selectProgresjonFaktum, selectBrukerBehandlingId, selectSynligFaktaData } from "../selectors";
+import {
+	selectProgresjonFaktum,
+	selectBrukerBehandlingId,
+	selectSynligFaktaData
+} from "../selectors";
 import { hentSynligeFakta } from "../../../digisos/redux/synligefakta/synligeFaktaActions";
 import { SynligeFaktaActionTypeKeys } from "../../../digisos/redux/synligefakta/synligeFaktaTypes";
+import { startSoknad } from "../soknad/soknadActions";
 
 const ferdig = (saga: SagaIterator) => {
 	expect(saga.next()).toEqual({
@@ -33,7 +40,7 @@ describe("navigasjonSaga", () => {
 		it("call navigateTo", () => {
 			expect(saga.next()).toEqual({
 				done: false,
-				value: call( navigateTo, Sider.FINN_DITT_NAV_KONTOR )
+				value: call(navigateTo, Sider.FINN_DITT_NAV_KONTOR)
 			});
 		});
 
@@ -45,7 +52,7 @@ describe("navigasjonSaga", () => {
 		it("call navigateTo", () => {
 			expect(saga.next()).toEqual({
 				done: false,
-				value: put( push(Sider.SERVERFEIL ) )
+				value: put(push(Sider.SERVERFEIL))
 			});
 		});
 
@@ -57,7 +64,7 @@ describe("navigasjonSaga", () => {
 		it("call getHistoryLength", () => {
 			expect(saga.next()).toEqual({
 				done: false,
-				value: call( getHistoryLength )
+				value: call(getHistoryLength)
 			});
 		});
 
@@ -78,7 +85,7 @@ describe("navigasjonSaga", () => {
 		it("put goBack", () => {
 			expect(saga.next(2)).toEqual({
 				done: false,
-				value: put( goBack() )
+				value: put(goBack())
 			});
 		});
 
@@ -93,20 +100,20 @@ describe("navigasjonSaga", () => {
 		it("select behandlingsId", () => {
 			expect(saga.next()).toEqual({
 				done: false,
-				value: select( selectBrukerBehandlingId )
+				value: select(selectBrukerBehandlingId)
 			});
 		});
 
 		it("put push", () => {
 			expect(saga.next(behandlingsId)).toEqual({
 				done: false,
-				value: put( push("/skjema/id1234/1") )
+				value: put(push("/skjema/id1234/1"))
 			});
 		});
 	});
 
 	describe("gaVidereSaga - lagreFaktum", () => {
-		const progresjonFaktum: Faktum =  {
+		const progresjonFaktum: Faktum = {
 			faktumId: 1,
 			value: "1",
 			soknadId: 1,
@@ -149,14 +156,14 @@ describe("navigasjonSaga", () => {
 		it("put setFaktum", () => {
 			expect(saga.next(oppdatertFaktum)).toEqual({
 				done: false,
-				value: put( setFaktum(oppdatertFaktum) )
+				value: put(setFaktum(oppdatertFaktum))
 			});
 		});
 
 		it("put lagreFaktum", () => {
 			expect(saga.next()).toEqual({
 				done: false,
-				value: put( lagreFaktum(oppdatertFaktum) )
+				value: put(lagreFaktum(oppdatertFaktum))
 			});
 		});
 
@@ -178,7 +185,7 @@ describe("navigasjonSaga", () => {
 	});
 
 	describe("gaVidereSaga - hopp over lagreFaktum", () => {
-		const progresjonFaktum: Faktum =  {
+		const progresjonFaktum: Faktum = {
 			faktumId: 1,
 			value: "2",
 			soknadId: 1,
@@ -215,7 +222,7 @@ describe("navigasjonSaga", () => {
 
 	describe("skalHoppeOverNesteStegSaga - true flyt", () => {
 		const saga = skalHoppeOverNesteStegSaga(7);
-		const synligefaktaData = {}
+		const synligefaktaData = {};
 
 		it("put hentSynligFakta", () => {
 			expect(saga.next()).toEqual({
@@ -258,5 +265,32 @@ describe("navigasjonSaga", () => {
 				value: false
 			});
 		});
+	});
+
+	describe("skalGåTilBostedEllerStarteSoknad - Horten", () => {
+		const saga = tilBostedEllerStartSoknadSaga({
+			valgtKommune: { id: "123", navn: "Horten" },
+			type: NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD
+		});
+		it("starter søknad for horten", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(startSoknad("123"))
+			});
+		});
+		it("ferdig", () => ferdig(saga));
+	});
+
+	describe("skalGåTilBostedEllerStarteSoknad - til bosted", () => {
+		const saga = tilBostedEllerStartSoknadSaga({
+			type: NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD
+		});
+		it("starter søknad for horten", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(push(Sider.BOSTED))
+			});
+		});
+		it("ferdig", () => ferdig(saga));
 	});
 });

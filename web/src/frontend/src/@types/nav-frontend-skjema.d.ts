@@ -11,7 +11,7 @@ declare module "nav-frontend-skjema" {
 		| "XS"
 		| "XXS";
 
-	type SelectBredde = "fullbredde" | "XXL" | "XL" | "L" | "M" | "S" | "XS";
+	type SelectBredde = "fullbredde" | "xxl" | "xl" | "l" | "m" | "s" | "xs";
 
 	interface RadioProps extends React.HTMLProps<Radio> {
 		className?: string;
