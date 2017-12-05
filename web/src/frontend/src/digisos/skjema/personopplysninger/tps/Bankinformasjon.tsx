@@ -13,7 +13,6 @@ import Detaljeliste, {
 import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
 import KontonummerFaktum from "../../../../nav-soknad/faktum/typedInput/KontonummerFaktum";
 import CheckboxFaktum from "../../../../nav-soknad/faktum/CheckboxFaktum";
-import Vedlegg from "../../../../nav-soknad/components/vedlegg/Vedlegg";
 
 interface Props {
 	fakta: Faktum[];
@@ -31,10 +30,6 @@ export const Skjema: React.StatelessComponent<Props> = ({ fakta }) => {
 				ignorert={brukerHarIkkeKontonummer}
 			/>
 			<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
-			<Vedlegg
-				faktumKey="kontakt.kontonummer"
-				label="Test av vedlegg"
-			/>
 		</SporsmalFaktum>
 	);
 };
