@@ -83,7 +83,11 @@ class UtgifterGjeld extends React.Component<
 						) : null}
 					</SporsmalFaktum>
 				</JaNeiSporsmalFaktum>
-				<JaNeiSporsmalFaktum faktumKey={harUtgifterBarn.faktum} fakta={fakta}>
+				<JaNeiSporsmalFaktum
+					faktumKey={harUtgifterBarn.faktum}
+					fakta={fakta}
+					visible={getFaktumVerdi(fakta, "familie.barn") !== "false"}
+				>
 					<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
 						<CheckboxFaktum
 							faktumKey={createCheckboxFaktumKey(

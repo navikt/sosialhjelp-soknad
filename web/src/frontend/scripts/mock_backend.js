@@ -69,7 +69,8 @@ router.get("/soknader/:brukerBehandlingId?lang=nb_NO", function(req, res) {
 const mockFeatures = {
 	"feature.frontend.sosialhjelp.kontonummer": "true",
 	"feature.frontend.sosialhjelp.live": "true",
-	"feature.frontend.sosialhjelp.personalia": "false"
+	"feature.frontend.sosialhjelp.personalia": "false",
+	"feature.frontend.visvelgbosted": "true"
 };
 router.get("/api/feature", function(req, res) {
 	console.log("bruker mockFeatures");
