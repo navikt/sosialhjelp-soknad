@@ -59,7 +59,7 @@ export function tilBosted(): NavigasjonActions {
 }
 
 export function tilBostedEllerStartSoknad(
-	valgtKommune: Kommune
+	valgtKommune?: Kommune
 ): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD,

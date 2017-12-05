@@ -23,7 +23,6 @@ import {
 } from "../selectors";
 import { hentSynligeFakta } from "../../../digisos/redux/synligefakta/synligeFaktaActions";
 import { SynligeFaktaActionTypeKeys } from "../../../digisos/redux/synligefakta/synligeFaktaTypes";
-
 import { startSoknad } from "../soknad/soknadActions";
 
 const getHistoryLength = () => window.history.length;

@@ -72,7 +72,7 @@ export interface TilBosted {
 
 export interface TilBostedEllerStartSoknad {
 	type: NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD;
-	valgtKommune: Kommune;
+	valgtKommune?: Kommune;
 }
 
 export interface TilDittNav {
