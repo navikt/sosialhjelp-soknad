@@ -8,10 +8,3 @@ export interface Kommune {
 	navn: string;
 	bydeler?: Bydel[];
 }
-
-export const Kommuner: Kommune[] = [
-	{
-		id: "horten",
-		navn: "Horten"
-	}
-];

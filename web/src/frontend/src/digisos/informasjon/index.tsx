@@ -34,6 +34,7 @@ class Informasjon extends React.Component<Props, {}> {
 			dispatch,
 			harTilgang,
 			startSoknadPending,
+			visVelgBosted,
 			soknadErLive
 		} = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
@@ -67,7 +68,11 @@ class Informasjon extends React.Component<Props, {}> {
 							type="hoved"
 							spinner={startSoknadPending}
 							disabled={startSoknadPending}
-							onClick={() => dispatch(tilBostedEllerStartSoknad(Horten))}
+							onClick={() =>
+								dispatch(
+									tilBostedEllerStartSoknad(visVelgBosted ? Horten : null)
+								)
+							}
 						>
 							{getIntlTextOrKey(intl, "skjema.knapper.start")}
 						</Knapp>
