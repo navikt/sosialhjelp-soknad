@@ -50,10 +50,7 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 				<SporsmalFaktum faktumKey="kontakt.telefon">
 					<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8} />
 				</SporsmalFaktum>
-				<JaNeiSporsmalFaktum
-					faktumKey={statsborger.faktum}
-					fakta={this.props.fakta}
-				/>
+				<JaNeiSporsmalFaktum faktumKey={statsborger.faktum} />
 			</DigisosSkjemaSteg>
 		);
 	}

@@ -21,9 +21,8 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeUtbetalinger = radioCheckKeys("inntekt.inntekter.true.type");
 		const hvilkeUtbetalingerAnnet = "inntekt.inntekter.true.type.annet";
 		return (
-			<JaNeiSporsmalFaktum faktumKey={utbetaling.faktum} fakta={fakta}>
+			<JaNeiSporsmalFaktum faktumKey={utbetaling.faktum}>
 				<SporsmalFaktum faktumKey={hvilkeUtbetalinger.faktum}>
-					{/*TODO legg til checkboxgruppefaktum*/}
 					<CheckboxFaktum
 						faktumKey={createCheckboxFaktumKey(
 							hvilkeUtbetalinger.faktum,

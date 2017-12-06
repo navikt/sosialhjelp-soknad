@@ -1,16 +1,10 @@
 import * as React from "react";
 
-import FaktumRadio from "../../../nav-soknad/faktum/RadioFaktum";
+import JaNeiSporsmalFaktum from "../../../nav-soknad/faktum/JaNeiSporsmalFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema/index";
 import PersonFaktum from "../../../nav-soknad/faktum/PersonFaktum";
 import { Faktum } from "../../../nav-soknad/types";
-import {
-	faktumIsSelected,
-	getPropertyVerdi,
-	getFaktumPropertyVerdi,
-	radioCheckKeys
-} from "../../../nav-soknad/utils";
+import { getFaktumPropertyVerdi } from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
@@ -48,7 +42,6 @@ export default class Barn extends React.Component<Props, {}> {
 
 	render() {
 		const {
-			fakta,
 			faktum,
 			barnNummer,
 			fjernBarnTekst,
@@ -56,7 +49,6 @@ export default class Barn extends React.Component<Props, {}> {
 			visFjernBarn
 		} = this.props;
 		const faktumKey = faktum.key;
-		const borInfo = radioCheckKeys(`${faktumKey}.borsammen`);
 		const hvormye = inputKeys(`${faktumKey}.grad`);
 		const faktumId = faktum.faktumId;
 		const navn = getFaktumPropertyVerdi(faktum, "navn");
@@ -77,36 +69,26 @@ export default class Barn extends React.Component<Props, {}> {
 						faktumId={faktumId}
 						ref={c => (this.personFaktum = c)}
 					/>
-					<SporsmalFaktum faktumKey={borInfo.faktum}>
-						<FaktumRadio
-							faktumKey={faktumKey}
-							value="true"
-							property="borsammen"
-							faktumId={faktumId}
-						/>
-						<NivaTreSkjema
-							visible={faktumIsSelected(
-								getPropertyVerdi(fakta, faktumKey, "borsammen", faktumId)
-							)}
-						>
-							<SporsmalFaktum faktumKey={hvormye.faktum}>
-								<BelopFaktum
-									faktumKey={faktumKey}
-									faktumId={faktumId}
-									property="grad"
-									maxLength={3}
-									kunHeltall={true}
-									bredde="XS"
-								/>
-							</SporsmalFaktum>
-						</NivaTreSkjema>
-						<FaktumRadio
-							faktumKey={faktumKey}
-							value="false"
-							property="borsammen"
-							faktumId={faktumId}
-						/>
-					</SporsmalFaktum>
+					<JaNeiSporsmalFaktum
+						faktumKey={`${faktumKey}.borsammen`}
+						faktumId={faktumId}
+						jaNeiPropFaktum={{
+							property: "borsammen",
+							faktumKey,
+							faktumId
+						}}
+					>
+						<SporsmalFaktum faktumKey={hvormye.faktum}>
+							<BelopFaktum
+								faktumKey={faktumKey}
+								faktumId={faktumId}
+								property="grad"
+								maxLength={3}
+								kunHeltall={true}
+								bredde="XS"
+							/>
+						</SporsmalFaktum>
+					</JaNeiSporsmalFaktum>
 					{visFjernBarn && (
 						<span className="barn__fjern">
 							<Lenkeknapp
