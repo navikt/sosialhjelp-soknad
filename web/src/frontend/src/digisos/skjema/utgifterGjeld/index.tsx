@@ -2,10 +2,9 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
+import JaNeiSporsmalFaktum from "../../../nav-soknad/faktum/JaNeiSporsmalFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
-import Underskjema from "../../../nav-soknad/components/underskjema";
 import CheckboxFaktum, {
 	createCheckboxFaktumKey
 } from "../../../nav-soknad/faktum/CheckboxFaktum";
@@ -40,111 +39,91 @@ class UtgifterGjeld extends React.Component<
 
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk}>
-				<SporsmalFaktum faktumKey={harBoutgifter.faktum}>
-					<RadioFaktum faktumKey={harBoutgifter.faktum} value="true" />
-					<Underskjema
-						visible={getFaktumVerdi(fakta, harBoutgifter.faktum) === "true"}
-					>
-						<SporsmalFaktum faktumKey={boUtgifter.faktum}>
-							{/*TODO checkboxgruppefaktum*/}
-							<CheckboxFaktum
-								faktumKey={createCheckboxFaktumKey(
-									boUtgifter.faktum,
-									"husleie"
-								)}
-							/>
-							<CheckboxFaktum
-								faktumKey={createCheckboxFaktumKey(boUtgifter.faktum, "strom")}
-							/>
-							<CheckboxFaktum
-								faktumKey={createCheckboxFaktumKey(
-									boUtgifter.faktum,
-									"kommunaleavgifter"
-								)}
-							/>
-							<CheckboxFaktum
-								faktumKey={createCheckboxFaktumKey(
-									boUtgifter.faktum,
-									"oppvarming"
-								)}
-							/>
-							<CheckboxFaktum
-								faktumKey={createCheckboxFaktumKey(
-									boUtgifter.faktum,
-									"avdraglaan"
-								)}
-							/>
-							<CheckboxFaktum
-								faktumKey={createCheckboxFaktumKey(
-									boUtgifter.faktum,
-									"andreutgifter"
-								)}
-							/>
+				<JaNeiSporsmalFaktum faktumKey={harBoutgifter.faktum} fakta={fakta}>
+					<SporsmalFaktum faktumKey={boUtgifter.faktum}>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(boUtgifter.faktum, "husleie")}
+						/>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(boUtgifter.faktum, "strom")}
+						/>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(
+								boUtgifter.faktum,
+								"kommunaleavgifter"
+							)}
+						/>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(
+								boUtgifter.faktum,
+								"oppvarming"
+							)}
+						/>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(
+								boUtgifter.faktum,
+								"avdraglaan"
+							)}
+						/>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(
+								boUtgifter.faktum,
+								"andreutgifter"
+							)}
+						/>
 
-							{faktumIsSelected(
-								getFaktumVerdi(fakta, `${boUtgifter.faktum}.andreutgifter`)
-							) ? (
-								<TextareaFaktum
-									faktumKey={andreBoUtgifter}
-									maxLength={400}
-									validerFunc={[getMaksLengdeFunc(400)]}
-								/>
-							) : null}
-						</SporsmalFaktum>
-					</Underskjema>
-					<RadioFaktum faktumKey={harBoutgifter.faktum} value="false" />
-				</SporsmalFaktum>
-				<SporsmalFaktum
+						{faktumIsSelected(
+							getFaktumVerdi(fakta, `${boUtgifter.faktum}.andreutgifter`)
+						) ? (
+							<TextareaFaktum
+								faktumKey={andreBoUtgifter}
+								maxLength={400}
+								validerFunc={[getMaksLengdeFunc(400)]}
+							/>
+						) : null}
+					</SporsmalFaktum>
+				</JaNeiSporsmalFaktum>
+				<JaNeiSporsmalFaktum
 					faktumKey={harUtgifterBarn.faktum}
+					fakta={fakta}
 					visible={getFaktumVerdi(fakta, "familie.barn") !== "false"}
 				>
-					<RadioFaktum faktumKey={harUtgifterBarn.faktum} value="true" />
-					<Underskjema
-						visible={getFaktumVerdi(fakta, harUtgifterBarn.faktum) === "true"}
-					>
-						{/*TODO checkboxgruppefaktum*/}
-
-						<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
-							<CheckboxFaktum
-								faktumKey={createCheckboxFaktumKey(
-									barneUtgifter.faktum,
-									"fritidsaktivitet"
-								)}
+					<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(
+								barneUtgifter.faktum,
+								"fritidsaktivitet"
+							)}
+						/>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(
+								barneUtgifter.faktum,
+								"barnehage"
+							)}
+						/>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "sfo")}
+						/>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(
+								barneUtgifter.faktum,
+								"tannbehandling"
+							)}
+						/>
+						<CheckboxFaktum
+							faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "annet")}
+						/>
+						{faktumIsSelected(
+							getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`)
+						) ? (
+							<TextareaFaktum
+								faktumKey={andreBarneutgifter}
+								maxLength={400}
+								validerFunc={[getMaksLengdeFunc(400)]}
 							/>
-							<CheckboxFaktum
-								faktumKey={createCheckboxFaktumKey(
-									barneUtgifter.faktum,
-									"barnehage"
-								)}
-							/>
-							<CheckboxFaktum
-								faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "sfo")}
-							/>
-							<CheckboxFaktum
-								faktumKey={createCheckboxFaktumKey(
-									barneUtgifter.faktum,
-									"tannbehandling"
-								)}
-							/>
-							<CheckboxFaktum
-								faktumKey={createCheckboxFaktumKey(
-									barneUtgifter.faktum,
-									"annet"
-								)}
-							/>
-							{faktumIsSelected(
-								getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`)
-							) ? (
-								<TextareaFaktum
-									faktumKey={andreBarneutgifter}
-									maxLength={400}
-									validerFunc={[getMaksLengdeFunc(400)]}
-								/>
-							) : null}
-						</SporsmalFaktum>
-					</Underskjema>
-					<RadioFaktum faktumKey={harUtgifterBarn.faktum} value="false" />
-				</SporsmalFaktum>
+						) : null}
+					</SporsmalFaktum>
+				</JaNeiSporsmalFaktum>
 			</DigisosSkjemaSteg>
 		);
 	}

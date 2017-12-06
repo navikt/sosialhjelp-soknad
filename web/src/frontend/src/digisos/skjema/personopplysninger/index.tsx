@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { State } from "../../redux/reducers";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
+import JaNeiSporsmalFaktum from "../../../nav-soknad/faktum/JaNeiSporsmalFaktum";
 import TelefonFaktum from "../../../nav-soknad/faktum/typedInput/TelefonFaktum";
 import { Skjema as BankinformasjonSkjema } from "./tps/Bankinformasjon";
 import { FeatureToggles } from "../../../featureToggles";
@@ -50,10 +50,10 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 				<SporsmalFaktum faktumKey="kontakt.telefon">
 					<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8} />
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey={statsborger.faktum}>
-					<RadioFaktum faktumKey={statsborger.faktum} value="true" />
-					<RadioFaktum faktumKey={statsborger.faktum} value="false" />
-				</SporsmalFaktum>
+				<JaNeiSporsmalFaktum
+					faktumKey={statsborger.faktum}
+					fakta={this.props.fakta}
+				/>
 			</DigisosSkjemaSteg>
 		);
 	}

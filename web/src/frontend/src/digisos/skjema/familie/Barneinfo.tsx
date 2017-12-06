@@ -76,6 +76,8 @@ class Barneinfo extends React.Component<Props, State> {
 		const barn = this.refs[createBarnRef(fjernetBarnListIndex - 1)] as Barn;
 		if (barn) {
 			barn.focus();
+		} else {
+			(this.refs[createBarnRef(1)] as Barn).focus();
 		}
 	}
 
