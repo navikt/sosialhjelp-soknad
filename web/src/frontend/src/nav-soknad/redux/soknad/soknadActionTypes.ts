@@ -103,6 +103,7 @@ export interface SendSoknadAction {
 
 export interface SendSoknadOkAction {
 	type: SoknadActionTypeKeys.SEND_SOKNAD_OK;
+	brukerBehandlingId: string;
 }
 
 export interface SendSoknadFeiletAction {
