@@ -29,7 +29,7 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
 		this.print = this.print.bind(this);
 		this.reset = this.reset.bind(this);
 		this.state = {
-			active: false,
+			active: false
 		};
 	}
 
@@ -49,7 +49,7 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
 
 	reset() {
 		this.setState({
-			active: false,
+			active: false
 		});
 	}
 
@@ -72,7 +72,7 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
 					htmlType="button"
 					onClick={() =>
 						this.setState({
-							active: !this.state.active,
+							active: !this.state.active
 						})
 					}
 				>
