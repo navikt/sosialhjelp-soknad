@@ -11,19 +11,44 @@ import SporsmalFaktum from "./SporsmalFaktum";
 
 interface OwnProps {
 	faktumKey: string;
+	faktumId?: number;
+	jaNeiFaktum?: {
+		faktumKey: string;
+		property?: string;
+		faktumId?: number;
+	};
 	visible?: boolean;
 }
 type Props = OwnProps & FaktumComponentProps;
 
-import { faktumIsSelected, getFaktumVerdi, radioCheckKeys } from "../utils";
+import {
+	faktumIsSelected,
+	getFaktumVerdi,
+	getPropertyVerdi,
+	radioCheckKeys
+} from "../utils";
 
 class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 	render() {
-		const valgFaktum = radioCheckKeys(this.props.faktumKey);
-		const harSkjema = this.props.children !== undefined;
-		const visSkjema =
-			harSkjema &&
-			faktumIsSelected(getFaktumVerdi(this.props.fakta, valgFaktum.faktum));
+		const { fakta, faktumKey, faktumId, jaNeiFaktum, children } = this.props;
+		const valgFaktum = radioCheckKeys(faktumKey);
+		const harSkjema = children !== undefined;
+		const faktumVerdi = jaNeiFaktum
+			? getPropertyVerdi(
+					fakta,
+					jaNeiFaktum.faktumKey,
+					jaNeiFaktum.property,
+					jaNeiFaktum.faktumId
+				)
+			: getFaktumVerdi(fakta, valgFaktum.faktum);
+		const visSkjema = harSkjema && faktumIsSelected(faktumVerdi);
+		const radioProps = jaNeiFaktum
+			? jaNeiFaktum
+			: {
+					faktumKey: valgFaktum.faktum,
+					faktumId
+				};
+
 		return (
 			<SporsmalFaktum
 				{...this.props}
@@ -31,11 +56,11 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 			>
 				<ValgMedUnderskjema
 					underskjema={
-						<Underskjema visible={visSkjema}>{this.props.children}</Underskjema>
+						<Underskjema visible={visSkjema}>{children}</Underskjema>
 					}
 				>
-					<RadioFaktum faktumKey={valgFaktum.faktum} value="true" />
-					<RadioFaktum faktumKey={valgFaktum.faktum} value="false" />
+					<RadioFaktum {...radioProps} value="true" />
+					<RadioFaktum {...radioProps} value="false" />
 				</ValgMedUnderskjema>
 			</SporsmalFaktum>
 		);

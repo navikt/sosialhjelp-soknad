@@ -18,6 +18,7 @@
 			margin-right: -1 * @skjemaMargMobil;
 		}
 	}
+
 	&__wrapper + &__wrapper {
 		margin-top: -1px;
 	}
@@ -57,6 +58,29 @@
 			@media @mobile {
 				left: 16px;
 			}
+		}
+	}
+}
+
+// Nivå 2+n underskjema
+.underskjema {
+	.underskjema {
+		padding-top: 0.5rem;
+		padding-bottom: 0;
+		.underskjema__wrapper {
+			margin-left: 0;
+			margin-right: 0;
+		}
+		.underskjema__boks {
+			border: none;
+			padding-top: 1rem;
+		}
+		.underskjema__innhold:before {
+			border-top: none;
+			border-right-width: 2px;
+			transform: none;
+			top: -0.5rem;
+			left: 26px;
 		}
 	}
 }
