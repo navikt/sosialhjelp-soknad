@@ -72,7 +72,7 @@ export default class Barn extends React.Component<Props, {}> {
 					<JaNeiSporsmalFaktum
 						faktumKey={`${faktumKey}.borsammen`}
 						faktumId={faktumId}
-						jaNeiFaktum={{
+						jaNeiPropFaktum={{
 							property: "borsammen",
 							faktumKey,
 							faktumId

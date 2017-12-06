@@ -10,13 +10,17 @@ import { FaktumComponentProps } from "../redux/fakta/faktaTypes";
 import SporsmalFaktum from "./SporsmalFaktum";
 
 interface OwnProps {
+	/** Nøkkel til spørsmålets faktum */
 	faktumKey: string;
+	/** Id til faktum dersom dette er nødvendig */
 	faktumId?: number;
-	jaNeiFaktum?: {
+	/** Må settes dersom ja/nei valget settes som properties på et eget faktum */
+	jaNeiPropFaktum?: {
 		faktumKey: string;
 		property?: string;
 		faktumId?: number;
 	};
+	/** Om faktumet skal være synlig eller ikke */
 	visible?: boolean;
 }
 type Props = OwnProps & FaktumComponentProps;
@@ -30,20 +34,26 @@ import {
 
 class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 	render() {
-		const { fakta, faktumKey, faktumId, jaNeiFaktum, children } = this.props;
+		const {
+			fakta,
+			faktumKey,
+			faktumId,
+			jaNeiPropFaktum,
+			children
+		} = this.props;
 		const valgFaktum = radioCheckKeys(faktumKey);
 		const harSkjema = children !== undefined;
-		const faktumVerdi = jaNeiFaktum
+		const erValgtVerdi = jaNeiPropFaktum
 			? getPropertyVerdi(
 					fakta,
-					jaNeiFaktum.faktumKey,
-					jaNeiFaktum.property,
-					jaNeiFaktum.faktumId
+					jaNeiPropFaktum.faktumKey,
+					jaNeiPropFaktum.property,
+					jaNeiPropFaktum.faktumId
 				)
 			: getFaktumVerdi(fakta, valgFaktum.faktum);
-		const visSkjema = harSkjema && faktumIsSelected(faktumVerdi);
-		const radioProps = jaNeiFaktum
-			? jaNeiFaktum
+		const visSkjema = harSkjema && faktumIsSelected(erValgtVerdi);
+		const radioProps = jaNeiPropFaktum
+			? jaNeiPropFaktum
 			: {
 					faktumKey: valgFaktum.faktum,
 					faktumId
