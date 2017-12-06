@@ -59,7 +59,6 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
 			if (this.printTimeoutId) {
 				clearTimeout(this.printTimeoutId);
 			}
-
 			setTimeout(this.print, 10);
 		}
 	}
