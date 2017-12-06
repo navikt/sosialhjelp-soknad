@@ -41,8 +41,10 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 			jaNeiPropFaktum,
 			children
 		} = this.props;
-		const valgFaktum = radioCheckKeys(faktumKey);
+		const sporsmalFaktum = radioCheckKeys(faktumKey);
+		/** Sjekk om komponenten har children og dermed skal vise skjema når ja er valgtg */
 		const harSkjema = children !== undefined;
+		/** Hent ut true/false verdien fra faktumet, eller fra property på jaNeiPropFaktum dersom det er satt */
 		const erValgtVerdi = jaNeiPropFaktum
 			? getPropertyVerdi(
 					fakta,
@@ -50,12 +52,14 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 					jaNeiPropFaktum.property,
 					jaNeiPropFaktum.faktumId
 				)
-			: getFaktumVerdi(fakta, valgFaktum.faktum);
+			: getFaktumVerdi(fakta, sporsmalFaktum.faktum);
+		/** Vis kun skjema dersom komponenten har fått inn skjema og at ja er valgt */
 		const visSkjema = harSkjema && faktumIsSelected(erValgtVerdi);
+		/** Variabel som holder i properties for radioFaktumene */
 		const radioProps = jaNeiPropFaktum
 			? jaNeiPropFaktum
 			: {
-					faktumKey: valgFaktum.faktum,
+					faktumKey: sporsmalFaktum.faktum,
 					faktumId
 				};
 
