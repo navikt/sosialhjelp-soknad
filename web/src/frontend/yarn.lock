@@ -3599,7 +3599,7 @@ jest-cli@^20.0.3:
     worker-farm "^1.3.1"
     yargs "^7.0.2"
 
-jest-cli@^21.1.0:
+jest-cli@^21.1.0, jest-cli@^21.2.1:
   version "21.2.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/jest-cli/-/jest-cli-21.2.1.tgz#9c528b6629d651911138d228bdb033c157ec8c00"
   dependencies:
@@ -3983,6 +3983,12 @@ jest@20.0.3:
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/jest/-/jest-20.0.3.tgz#e4fd054c4f1170a116a00761da4cfdb73f1cdc33"
   dependencies:
     jest-cli "^20.0.3"
+
+jest@^21.2.1:
+  version "21.2.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/jest/-/jest-21.2.1.tgz#c964e0b47383768a1438e3ccf3c3d470327604e1"
+  dependencies:
+    jest-cli "^21.2.1"
 
 js-base64@^2.1.9:
   version "2.4.0"
