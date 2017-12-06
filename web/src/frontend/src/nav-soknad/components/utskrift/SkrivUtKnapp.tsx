@@ -41,9 +41,11 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
 	}
 
 	print() {
-		window.print();
-		this.printTimeoutId = null;
-		setTimeout(this.reset, 10); // Tilbakestiller utskriftsmodus
+		setTimeout(() => {
+			window.print();
+			this.printTimeoutId = null;
+			setTimeout(this.reset, 10); // Tilbakestiller utskriftsmodus
+		}, 100);
 	}
 
 	reset() {
