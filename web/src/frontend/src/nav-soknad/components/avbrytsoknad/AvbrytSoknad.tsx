@@ -74,16 +74,15 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 						<FormattedMessage id={tekst.bekreft} />
 					</Normaltekst>
 					<div className="timeoutbox__knapperad">
-						<Hovedknapp onClick={() => this.onAvbryt()}>
+						<Knapp onClick={() => this.onAvbryt()} type="standard">
 							<FormattedMessage id={"avbryt.ja"} />
-						</Hovedknapp>
-						<Knapp
-							type="standard"
+						</Knapp>
+						<Hovedknapp
 							onClick={() => this.onFortsett()}
 							className="avbrytmodal__neiknapp"
 						>
 							<FormattedMessage id={"avbryt.nei"} />
-						</Knapp>
+						</Hovedknapp>
 					</div>
 				</div>
 			</NavFrontendModal>
