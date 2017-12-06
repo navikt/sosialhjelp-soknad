@@ -1,3 +1,4 @@
+import "raf/polyfill";
 import {
 	navigateTo,
 	tilFinnDittNavKontorSaga,

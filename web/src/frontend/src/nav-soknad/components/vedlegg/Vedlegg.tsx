@@ -2,11 +2,15 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import { Knapp } from "nav-frontend-knapper";
 import { connect } from "react-redux";
-import { hentVedleggsForventning, lastOppVedlegg } from "../../redux/vedlegg/vedleggActions";
+import {
+	hentFilListe,
+	lastOppVedlegg, slettFil
+} from "../../redux/vedlegg/vedleggActions";
 import { SoknadAppState } from "../../redux/reduxTypes";
 import VedleggsListe from "./VedleggsListe";
 import { Faktum } from "../../types/navSoknadTypes";
 import { Fil, Vedlegg as VedleggType } from "../../redux/vedlegg/vedleggTypes";
+import { downloadAttachedFile } from "../../utils/rest-utils";
 
 interface Props {
 	faktumKey: string;
@@ -16,8 +20,10 @@ interface Props {
 interface ConnectedProps {
 	vedlegg?: VedleggType;
 	fakta?: Faktum[];
+	brukerBehandlingId: string;
 	lastOppVedlegg?: (faktumKey: string, vedleggId: number, formData: FormData, filer: Fil[]) => void;
-	hentVedleggsForventning?: (fakta: Faktum[]) => void;
+	slettFil?: (faktumKey: string, vedleggId: string, filNavn: string) => void;
+	hentFilListe: (key: string, vedleggId: string) => any;
 }
 
 type AllProps = Props & ConnectedProps;
@@ -37,6 +43,16 @@ class Vedlegg extends React.Component<AllProps, {}> {
 		this.props.lastOppVedlegg(this.props.faktumKey, vedleggId, formData, filer);
 	}
 
+	slettFil(faktumKey: string, filNavn: string) {
+		const vedleggId = this.lesVedleggId();
+		this.props.slettFil(faktumKey, vedleggId.toString(10), filNavn);
+	}
+
+	lastNedVedlegg(filNavn: string) {
+		const urlPath = `vedlegg/${this.lesVedleggId()}/${filNavn}?behandlingsId=${this.props.brukerBehandlingId}`;
+		downloadAttachedFile(urlPath);
+	}
+
 	render() {
 		const vedleggId = this.lesVedleggId();
 		const vedleggForventet: boolean = (Number(vedleggId) > 0);
@@ -53,6 +69,8 @@ class Vedlegg extends React.Component<AllProps, {}> {
 					<VedleggsListe
 						filer={filer}
 						faktumKey={this.props.faktumKey}
+						slettFil={(faktumKey: string, filNavn: string) => this.slettFil(faktumKey, filNavn)}
+						lastNedVedlegg={(filNavn: string) => this.lastNedVedlegg(filNavn)}
 					/>
 					<Knapp
 						type="standard"
@@ -77,7 +95,7 @@ class Vedlegg extends React.Component<AllProps, {}> {
 		}
 	}
 
-	private lesFilListe() {
+	private lesFilListe(): Fil[] {
 		let filer: Fil[] = [];
 		if (this.props.vedlegg.vedlegg && this.props.vedlegg.vedlegg[ this.props.faktumKey ]) {
 			filer = this.props.vedlegg.vedlegg[ this.props.faktumKey ].filer;
@@ -96,13 +114,17 @@ class Vedlegg extends React.Component<AllProps, {}> {
 
 const mapStateToProps = (state: SoknadAppState) => ({
 	fakta: state.fakta.data,
-	vedlegg: state.vedlegg.data
+	vedlegg: state.vedlegg.data,
+	brukerBehandlingId: state.soknad.data.brukerBehandlingId
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
+	hentFilListe: (key: string, vedleggId: string) =>
+		dispatch(hentFilListe(key, vedleggId)),
 	lastOppVedlegg: (key: string, vedleggId: string, formData: any, filer: Fil[]) =>
 		dispatch(lastOppVedlegg(key, vedleggId, formData, filer)),
-	hentVedleggsForventning: (fakta: Faktum[]) => dispatch(hentVedleggsForventning(fakta))
+	slettFil: (faktumKey: string, vedleggId: string, filNavn: string): void =>
+		dispatch(slettFil(faktumKey, vedleggId, filNavn))
 });
 
 export default connect<{}, {}, Props>(

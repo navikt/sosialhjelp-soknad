@@ -19,9 +19,15 @@ interface StateProps {
 	visPersonaliaFraTPSfeatureToggle: boolean;
 }
 
+interface StateProps {
+	visPersonaliaFraTPSfeatureToggle: boolean;
+	hentVedleggsForventning?: (fakta: any) => void;
+}
+
 export type Props = StateProps & FaktumComponentProps;
 
-class Personopplysninger extends React.Component<Props, {}> {
+class Personopplysninger extends React.Component<Props, StateProps> {
+
 	render() {
 		if (this.props.visPersonaliaFraTPSfeatureToggle) {
 			return (
@@ -50,10 +56,12 @@ class Personopplysninger extends React.Component<Props, {}> {
 	}
 }
 
-export default connect((state: State): Props => {
-	return {
-		visPersonaliaFraTPSfeatureToggle:
-			state.featuretoggles.data[FeatureToggles.viseTpsPersonalia] === "true",
-		fakta: state.fakta.data
-	};
-})(Personopplysninger);
+const mapStateToProps = (state: State) => ({
+	visPersonaliaFraTPSfeatureToggle:
+	state.featuretoggles.data[FeatureToggles.viseTpsPersonalia] === "true",
+	fakta: state.fakta.data
+});
+
+export default connect<{}, {}, Props>(
+	mapStateToProps
+)(Personopplysninger);
