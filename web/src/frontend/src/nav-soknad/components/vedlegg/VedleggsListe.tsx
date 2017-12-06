@@ -44,7 +44,7 @@ const VedleggsListe: React.StatelessComponent<Props> = ({ filer, faktumKey, slet
 							>
 								<button
 									type="button"
-									className="vedleggsliste__usynlig_knapp"
+									className="vedleggsliste__kunSkjermleser_knapp"
 									onClick={() => slettFil(faktumKey, fil.navn)}
 								>
 									<AriaText>Slett {fil.navn}</AriaText>

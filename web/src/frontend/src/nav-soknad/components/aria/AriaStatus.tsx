@@ -41,7 +41,7 @@ class AriaStatus extends React.Component<AriaStatusProps, any> {
 		return (
 			<div
 				className={classNames({
-					invisible: !this.props.visible
+					kunSkjermleser: !this.props.visible
 				})}
 				id={this.props.id}
 				role={this.props.role}

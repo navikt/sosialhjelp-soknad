@@ -27,7 +27,7 @@ const StatusTekst: React.StatelessComponent<StegProps> = (props: StegProps) => {
 		return null;
 	}
 	return (
-		<span className="invisible">
+		<span className="kunSkjermleser">
 			{props.aktivtSteg === props.steg ? (
 				<FormattedMessage id="stegindikator.aktivt" />
 			) : (

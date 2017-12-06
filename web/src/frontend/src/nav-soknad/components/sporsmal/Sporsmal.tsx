@@ -49,7 +49,7 @@ class Sporsmal extends React.Component<Props, {}> {
 						{tekster.hjelpetekst ? (
 							<div className="skjema-sporsmal__hjelpetekst">
 								<span
-									className="invisible"
+									className="kunSkjermleser"
 									id={`tooltip-hjelpetekst_${legendId}`}
 								>
 									{tekster.hjelpetekst.tekst}
