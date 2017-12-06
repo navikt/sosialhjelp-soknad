@@ -99,6 +99,7 @@ class KvitteringView extends React.Component<
 									{this.props.oppsummering && (
 										<div className="blokk-s">
 											<SkrivUtKnapp
+												prerenderInnhold={true}
 												innholdRenderer={() => (
 													<UtskriftKvittering
 														oppsummering={oppsummering}

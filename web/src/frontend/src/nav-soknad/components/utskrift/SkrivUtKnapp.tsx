@@ -6,6 +6,7 @@ import Utskrift from "./Utskrift";
 
 export interface SkrivUtKnappProps {
 	innholdRenderer: () => React.ReactNode;
+	prerenderInnhold?: boolean;
 }
 
 export interface State {
@@ -28,7 +29,7 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
 		this.print = this.print.bind(this);
 		this.reset = this.reset.bind(this);
 		this.state = {
-			active: false
+			active: false,
 		};
 	}
 
@@ -41,16 +42,14 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
 	}
 
 	print() {
-		setTimeout(() => {
-			window.print();
-			this.printTimeoutId = null;
-			setTimeout(this.reset, 10); // Tilbakestiller utskriftsmodus
-		}, 100);
+		window.print();
+		this.printTimeoutId = null;
+		setTimeout(this.reset, 10); // Tilbakestiller utskriftsmodus
 	}
 
 	reset() {
 		this.setState({
-			active: false
+			active: false,
 		});
 	}
 
@@ -73,14 +72,14 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
 					htmlType="button"
 					onClick={() =>
 						this.setState({
-							active: !this.state.active
+							active: !this.state.active,
 						})
 					}
 				>
 					{this.props.children}
 				</Knapp>
 
-				{this.state.active ? (
+				{this.props.prerenderInnhold || this.state.active ? (
 					<DOMPortal>
 						<Utskrift active={true}>{this.props.innholdRenderer()}</Utskrift>
 					</DOMPortal>
