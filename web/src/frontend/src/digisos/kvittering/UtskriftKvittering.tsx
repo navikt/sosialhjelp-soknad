@@ -22,8 +22,6 @@ const UtskriftKVittering: React.StatelessComponent<
 		<Side tittel={intl.formatMessage({ id: "applikasjon.sidetittel" })}>
 			<p className="blokk-l">
 				{kvittering.dato}, {kvittering.klokkeslett}.{" "}
-				<FormattedMessage id="kvittering.behandlingsnummer" />:{" "}
-				{kvittering.behandlingsId}.
 			</p>
 			<p className="blokk-xl">
 				<FormattedMessage id="kvittering.tekst.pre" />
