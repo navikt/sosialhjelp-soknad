@@ -500,7 +500,6 @@
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
 		},
-
 		{
 			"parrentFaktum": 30,
 			"faktumId": 3000,
@@ -516,7 +515,6 @@
 			},
 			"type": "SYSTEM"
 		},
-
 		{
 			"parrentFaktum": 30,
 			"faktumId": 3001,
@@ -532,7 +530,6 @@
 			},
 			"type": "SYSTEM"
 		},
-
 		{
 			"parrentFaktum": 30,
 			"faktumId": 3002,
@@ -543,9 +540,6 @@
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
 		},
-
-
-
 		{
 			"faktumId": 31,
 			"soknadId": 1,
