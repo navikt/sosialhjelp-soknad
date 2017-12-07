@@ -11,11 +11,9 @@ interface Props {
 }
 
 const InformasjonBolk: React.StatelessComponent<Props> = props => {
-	const sporsmal = props.faktumstrukturer.map(struktur => {
-		return (
-			<Opplysning faktumstruktur={struktur} key={struktur.id} vedlegg={null} />
-		);
-	});
+	const sporsmal = props.faktumstrukturer.map(struktur => (
+		<Opplysning faktumstruktur={struktur} key={struktur.id} vedlegg={null} />
+	));
 
 	return (
 		<Progresjonsblokk

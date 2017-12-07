@@ -21,9 +21,9 @@ const AriaWrapText: React.StatelessComponent<AriaWrapTextProps> = ({
 	}
 	return (
 		<span>
-			{before ? <span className="invisible">{before}</span> : null}
+			{before ? <span className="kunSkjermleser">{before}</span> : null}
 			{text || children}
-			{after ? <span className="invisible">{after}</span> : null}
+			{after ? <span className="kunSkjermleser">{after}</span> : null}
 		</span>
 	);
 };

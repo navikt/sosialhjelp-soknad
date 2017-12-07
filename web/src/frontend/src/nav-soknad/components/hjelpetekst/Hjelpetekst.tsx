@@ -9,7 +9,7 @@ const Hjelpetekst: React.StatelessComponent<HjelpetekstProps> = (
 	props: HjelpetekstProps
 ) => (
 	<span>
-		<span className="invisible" id={`tooltip-${props.id}`}>
+		<span className="kunSkjermleser" id={`tooltip-${props.id}`}>
 			{props.children}
 		</span>
 		<HjelpetekstAuto {...props} />

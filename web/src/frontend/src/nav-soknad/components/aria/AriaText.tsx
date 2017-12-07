@@ -10,7 +10,7 @@ export interface AriaTextProps {
 
 const AriaText: React.StatelessComponent<AriaTextProps> = props => {
 	return (
-		<span id={props.id} className="invisible">
+		<span id={props.id} className="kunSkjermleser">
 			{props.children}
 		</span>
 	);

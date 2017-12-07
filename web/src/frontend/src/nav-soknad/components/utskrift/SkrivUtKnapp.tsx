@@ -6,6 +6,7 @@ import Utskrift from "./Utskrift";
 
 export interface SkrivUtKnappProps {
 	innholdRenderer: () => React.ReactNode;
+	prerenderInnhold?: boolean;
 }
 
 export interface State {
@@ -58,7 +59,6 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
 			if (this.printTimeoutId) {
 				clearTimeout(this.printTimeoutId);
 			}
-
 			setTimeout(this.print, 10);
 		}
 	}
@@ -78,7 +78,7 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
 					{this.props.children}
 				</Knapp>
 
-				{this.state.active ? (
+				{this.props.prerenderInnhold || this.state.active ? (
 					<DOMPortal>
 						<Utskrift active={true}>{this.props.innholdRenderer()}</Utskrift>
 					</DOMPortal>

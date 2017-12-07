@@ -20,17 +20,14 @@ interface OwnProps {
 		property?: string;
 		faktumId?: number;
 	};
+	/** Når skjema skal vises - default nei */
+	skjemaTilhorerValg?: "ja" | "nei";
 	/** Om faktumet skal være synlig eller ikke */
 	visible?: boolean;
 }
 type Props = OwnProps & FaktumComponentProps;
 
-import {
-	faktumIsSelected,
-	getFaktumVerdi,
-	getPropertyVerdi,
-	radioCheckKeys
-} from "../utils";
+import { getFaktumVerdi, getPropertyVerdi, radioCheckKeys } from "../utils";
 
 class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 	render() {
@@ -39,13 +36,14 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 			faktumKey,
 			faktumId,
 			jaNeiPropFaktum,
+			skjemaTilhorerValg = "ja",
 			children
 		} = this.props;
 		const sporsmalFaktum = radioCheckKeys(faktumKey);
 		/** Sjekk om komponenten har children og dermed skal vise skjema når ja er valgtg */
 		const harSkjema = children !== undefined;
 		/** Hent ut true/false verdien fra faktumet, eller fra property på jaNeiPropFaktum dersom det er satt */
-		const erValgtVerdi = jaNeiPropFaktum
+		const jaNeiVerdi = jaNeiPropFaktum
 			? getPropertyVerdi(
 					fakta,
 					jaNeiPropFaktum.faktumKey,
@@ -54,7 +52,9 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 				)
 			: getFaktumVerdi(fakta, sporsmalFaktum.faktum);
 		/** Vis kun skjema dersom komponenten har fått inn skjema og at ja er valgt */
-		const visSkjema = harSkjema && faktumIsSelected(erValgtVerdi);
+		const visSkjema =
+			(harSkjema && (skjemaTilhorerValg === "ja" && jaNeiVerdi === "true")) ||
+			(skjemaTilhorerValg === "nei" && jaNeiVerdi === "false");
 		/** Variabel som holder i properties for radioFaktumene */
 		const radioProps = jaNeiPropFaktum
 			? jaNeiPropFaktum

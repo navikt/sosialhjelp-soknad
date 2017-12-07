@@ -2,13 +2,6 @@
 # yarn lockfile v1
 
 
-"@timer/detect-port@1.1.3":
-  version "1.1.3"
-  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@timer/detect-port/-/detect-port-1.1.3.tgz#1383abd67f9a5d683df5276f8a92d60bdf9abb90"
-  dependencies:
-    address "^1.0.1"
-    debug "^2.6.0"
-
 "@types/cheerio@*":
   version "0.22.6"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/cheerio/-/cheerio-0.22.6.tgz#ad8c630a942efe3fc59165857851b55f95de2d50"
@@ -162,15 +155,7 @@ acorn@^5.0.0, acorn@^5.2.1:
   version "5.2.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/acorn/-/acorn-5.2.1.tgz#317ac7821826c22c702d66189ab8359675f135d7"
 
-address@1.0.1:
-  version "1.0.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/address/-/address-1.0.1.tgz#363f5d3f2be26d0655d8afd5a9562e4fc2194537"
-
-address@1.0.2:
-  version "1.0.2"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/address/-/address-1.0.2.tgz#480081e82b587ba319459fef512f516fe03d58af"
-
-address@^1.0.1:
+address@1.0.3, address@^1.0.1:
   version "1.0.3"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/address/-/address-1.0.3.tgz#b5f50631f8d6cec8bd20c963963afb55e06cbce9"
 
@@ -181,22 +166,18 @@ agent-base@2:
     extend "~3.0.0"
     semver "~5.0.1"
 
-ajv-keywords@^1.1.1:
-  version "1.5.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ajv-keywords/-/ajv-keywords-1.5.1.tgz#314dd0a4b3368fad3dfcdc54ede6171b886daf3c"
-
-ajv-keywords@^2.1.0:
+ajv-keywords@^2.0.0, ajv-keywords@^2.1.0:
   version "2.1.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ajv-keywords/-/ajv-keywords-2.1.1.tgz#617997fc5f60576894c435f940d819e135b80762"
 
-ajv@^4.11.2, ajv@^4.7.0, ajv@^4.9.1:
+ajv@^4.9.1:
   version "4.11.8"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ajv/-/ajv-4.11.8.tgz#82ffb02b29e662ae53bdc20af15947706739c536"
   dependencies:
     co "^4.6.0"
     json-stable-stringify "^1.0.1"
 
-ajv@^5.0.0, ajv@^5.1.0, ajv@^5.2.3, ajv@^5.3.0:
+ajv@^5.0.0, ajv@^5.1.0, ajv@^5.1.5, ajv@^5.2.3, ajv@^5.3.0:
   version "5.5.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ajv/-/ajv-5.5.1.tgz#b38bb8876d9e86bee994956a04e721e88b248eb2"
   dependencies:
@@ -221,27 +202,15 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-anser@1.3.0:
-  version "1.3.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/anser/-/anser-1.3.0.tgz#65b42f01119edb5a2fc8ea6f0892274cbcbec6b1"
-
-anser@1.4.1:
-  version "1.4.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/anser/-/anser-1.4.1.tgz#c3641863a962cebef941ea2c8706f2cb4f0716bd"
-
 ansi-align@^1.1.0:
   version "1.1.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ansi-align/-/ansi-align-1.1.0.tgz#2f0c1658829739add5ebb15e6b0c6e3423f016ba"
   dependencies:
     string-width "^1.0.1"
 
-ansi-escapes@^1.1.0, ansi-escapes@^1.4.0:
+ansi-escapes@^1.4.0:
   version "1.4.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ansi-escapes/-/ansi-escapes-1.4.0.tgz#d3a8a83b319aa67793662b13e761c7911422306e"
-
-ansi-escapes@^2.0.0:
-  version "2.0.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ansi-escapes/-/ansi-escapes-2.0.0.tgz#5bae52be424878dd9783e8910e3fc2922e83c81b"
 
 ansi-escapes@^3.0.0:
   version "3.0.0"
@@ -269,20 +238,12 @@ ansi-styles@^3.0.0, ansi-styles@^3.1.0, ansi-styles@^3.2.0:
   dependencies:
     color-convert "^1.9.0"
 
-any-promise@^1.0.0:
-  version "1.3.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/any-promise/-/any-promise-1.3.0.tgz#abc6afeedcea52e809cdc0376aed3ce39635d17f"
-
 anymatch@^1.1.0, anymatch@^1.3.0:
   version "1.3.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/anymatch/-/anymatch-1.3.2.tgz#553dcb8f91e3c889845dfdba34c77721b90b9d7a"
   dependencies:
     micromatch "^2.1.5"
     normalize-path "^2.0.0"
-
-app-root-path@^2.0.1:
-  version "2.0.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/app-root-path/-/app-root-path-2.0.1.tgz#cd62dcf8e4fd5a417efc664d2e5b10653c651b46"
 
 append-transform@^0.4.0:
   version "0.4.0"
@@ -338,6 +299,10 @@ array-find-index@^1.0.1:
 array-flatten@1.1.1:
   version "1.1.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/array-flatten/-/array-flatten-1.1.1.tgz#9a5f699051b1e7073328f2a008968b64ea2955d2"
+
+array-flatten@^2.1.0:
+  version "2.1.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/array-flatten/-/array-flatten-2.1.1.tgz#426bb9da84090c1838d812c8150af20a8331e296"
 
 array-includes@^3.0.3:
   version "3.0.3"
@@ -434,7 +399,7 @@ async@^1.4.0, async@^1.5.2:
   version "1.5.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
-async@^2.1.2, async@^2.1.4, async@^2.5.0:
+async@^2.1.2, async@^2.1.4, async@^2.4.1, async@^2.5.0:
   version "2.6.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/async/-/async-2.6.0.tgz#61a29abb6fcc026fea77e56d1c6ec53a795951f4"
   dependencies:
@@ -444,15 +409,15 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-autoprefixer@7.1.0:
-  version "7.1.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/autoprefixer/-/autoprefixer-7.1.0.tgz#ae4913adc221fa6ca5ad3a6f8039f6a5c06b3877"
+autoprefixer@7.1.2:
+  version "7.1.2"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/autoprefixer/-/autoprefixer-7.1.2.tgz#fbeaf07d48fd878e0682bf7cbeeade728adb2b18"
   dependencies:
-    browserslist "^2.1.2"
-    caniuse-lite "^1.0.30000669"
+    browserslist "^2.1.5"
+    caniuse-lite "^1.0.30000697"
     normalize-range "^0.1.2"
     num2fraction "^1.2.2"
-    postcss "^6.0.1"
+    postcss "^6.0.6"
     postcss-value-parser "^3.2.3"
 
 autoprefixer@^6.3.1:
@@ -495,15 +460,7 @@ axobject-query@^0.1.0:
   dependencies:
     ast-types-flow "0.0.7"
 
-babel-code-frame@6.22.0:
-  version "6.22.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/babel-code-frame/-/babel-code-frame-6.22.0.tgz#027620bee567a88c32561574e7fd0801d33118e4"
-  dependencies:
-    chalk "^1.1.0"
-    esutils "^2.0.2"
-    js-tokens "^3.0.0"
-
-babel-code-frame@^6.11.0, babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
+babel-code-frame@6.26.0, babel-code-frame@^6.11.0, babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
   version "6.26.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"
   dependencies:
@@ -645,13 +602,6 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@6.23.0:
-  version "6.23.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/babel-runtime/-/babel-runtime-6.23.0.tgz#0a9489f144de70efb3ce4300accdb329e2fc543b"
-  dependencies:
-    core-js "^2.4.0"
-    regenerator-runtime "^0.10.0"
-
 babel-runtime@^6.22.0, babel-runtime@^6.26.0, babel-runtime@^6.9.2:
   version "6.26.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
@@ -762,6 +712,17 @@ body-parser@1.18.2, body-parser@^1.17.2:
     qs "6.5.1"
     raw-body "2.3.2"
     type-is "~1.6.15"
+
+bonjour@^3.5.0:
+  version "3.5.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/bonjour/-/bonjour-3.5.0.tgz#8e890a183d8ee9a2393b3844c691a42bcf7bc9f5"
+  dependencies:
+    array-flatten "^2.1.0"
+    deep-equal "^1.0.1"
+    dns-equal "^1.0.0"
+    dns-txt "^2.0.2"
+    multicast-dns "^6.0.1"
+    multicast-dns-service-types "^1.1.0"
 
 boolbase@~1.0.0:
   version "1.0.0"
@@ -891,7 +852,14 @@ browserslist@^1.3.6, browserslist@^1.5.2, browserslist@^1.7.6:
     caniuse-db "^1.0.30000639"
     electron-to-chromium "^1.2.7"
 
-browserslist@^2.1.2, browserslist@^2.9.1:
+browserslist@^2.1.5:
+  version "2.10.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/browserslist/-/browserslist-2.10.0.tgz#bac5ee1cc69ca9d96403ffb8a3abdc5b6aed6346"
+  dependencies:
+    caniuse-lite "^1.0.30000780"
+    electron-to-chromium "^1.3.28"
+
+browserslist@^2.9.1:
   version "2.9.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/browserslist/-/browserslist-2.9.1.tgz#b72d3982ab01b5cd24da62ff6d45573886aff275"
   dependencies:
@@ -909,6 +877,10 @@ bser@^2.0.0:
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/bser/-/bser-2.0.0.tgz#9ac78d3ed5d915804fd87acb158bc797147a1719"
   dependencies:
     node-int64 "^0.4.0"
+
+buffer-indexof@^1.0.0:
+  version "1.1.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/buffer-indexof/-/buffer-indexof-1.1.1.tgz#52fabcc6a606d1a00302802648ef68f639da268c"
 
 buffer-xor@^1.0.3:
   version "1.0.3"
@@ -998,7 +970,7 @@ caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
   version "1.0.30000780"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/caniuse-db/-/caniuse-db-1.0.30000780.tgz#8d1977561d00ff0f0ed2b6b66140328ab4504c0a"
 
-caniuse-lite@^1.0.30000669, caniuse-lite@^1.0.30000770, caniuse-lite@^1.0.30000777:
+caniuse-lite@^1.0.30000697, caniuse-lite@^1.0.30000770, caniuse-lite@^1.0.30000777, caniuse-lite@^1.0.30000780:
   version "1.0.30000780"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/caniuse-lite/-/caniuse-lite-1.0.30000780.tgz#1f9095f2efd4940e0ba6c5992ab7a9b64cc35ba4"
 
@@ -1006,9 +978,9 @@ capture-stack-trace@^1.0.0:
   version "1.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/capture-stack-trace/-/capture-stack-trace-1.0.0.tgz#4a6fa07399c26bba47f0b2496b4d0fb408c5550d"
 
-case-sensitive-paths-webpack-plugin@2.0.0:
-  version "2.0.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/case-sensitive-paths-webpack-plugin/-/case-sensitive-paths-webpack-plugin-2.0.0.tgz#60142d7d0beabdb35676ef0aeace3027da0578ba"
+case-sensitive-paths-webpack-plugin@2.1.1:
+  version "2.1.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/case-sensitive-paths-webpack-plugin/-/case-sensitive-paths-webpack-plugin-2.1.1.tgz#3d29ced8c1f124bf6f53846fb3f5894731fdc909"
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -1032,7 +1004,7 @@ chai-nightwatch@~0.1.x:
     assertion-error "1.0.0"
     deep-eql "0.1.3"
 
-chalk@1.1.3, chalk@^1.0.0, chalk@^1.1.0, chalk@^1.1.1, chalk@^1.1.3:
+chalk@1.1.3, chalk@^1.0.0, chalk@^1.1.1, chalk@^1.1.3:
   version "1.1.3"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/chalk/-/chalk-1.1.3.tgz#a8115c55e4a702fe4d150abd3872822a7e09fc98"
   dependencies:
@@ -1148,16 +1120,6 @@ cli-cursor@^2.1.0:
   dependencies:
     restore-cursor "^2.0.0"
 
-cli-highlight@1.1.4:
-  version "1.1.4"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/cli-highlight/-/cli-highlight-1.1.4.tgz#e45590c14fb18e13865e3899e824c5592cc22926"
-  dependencies:
-    chalk "^1.1.3"
-    he "^1.1.0"
-    highlight.js "^9.6.0"
-    mz "^2.4.0"
-    yargs "^4.8.1"
-
 cli-width@^2.0.0:
   version "2.2.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/cli-width/-/cli-width-2.2.0.tgz#ff19ede8a9a5e579324147b0c11f0fbcbabed639"
@@ -1247,7 +1209,7 @@ colors@0.5.x:
   version "0.5.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/colors/-/colors-0.5.1.tgz#7d0023eaeb154e8ee9fce75dcb923d0ed1667774"
 
-colors@^1.1.2, colors@~1.1.2:
+colors@~1.1.2:
   version "1.1.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/colors/-/colors-1.1.2.tgz#168a4701756b6a7f51a12ce0c97bfa28c084ed63"
 
@@ -1439,13 +1401,6 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-cross-spawn@4.0.2:
-  version "4.0.2"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/cross-spawn/-/cross-spawn-4.0.2.tgz#7b9247621c23adfdd3856004a823cbe397424d41"
-  dependencies:
-    lru-cache "^4.0.1"
-    which "^1.2.9"
-
 cross-spawn@5.1.0, cross-spawn@^5.0.1, cross-spawn@^5.1.0:
   version "5.1.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -1486,13 +1441,14 @@ css-color-names@0.0.4:
   version "0.0.4"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
 
-css-loader@0.28.1:
-  version "0.28.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/css-loader/-/css-loader-0.28.1.tgz#220325599f8f00452d9ceb4c3ca6c8a66798642d"
+css-loader@0.28.4:
+  version "0.28.4"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/css-loader/-/css-loader-0.28.4.tgz#6cf3579192ce355e8b38d5f42dd7a1f2ec898d0f"
   dependencies:
     babel-code-frame "^6.11.0"
     css-selector-tokenizer "^0.7.0"
     cssnano ">=2.6.1 <4"
+    icss-utils "^2.1.0"
     loader-utils "^1.0.2"
     lodash.camelcase "^4.3.0"
     object-assign "^4.0.1"
@@ -1597,6 +1553,12 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
+d@1:
+  version "1.0.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/d/-/d-1.0.0.tgz#754bb5bfe55451da69a58b94d45f4c5b0462d58f"
+  dependencies:
+    es5-ext "^0.10.9"
+
 damerau-levenshtein@^1.0.0:
   version "1.0.4"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/damerau-levenshtein/-/damerau-levenshtein-1.0.4.tgz#03191c432cb6eea168bb77f3a55ffdccb8978514"
@@ -1647,6 +1609,10 @@ deep-eql@0.1.3:
   dependencies:
     type-detect "0.1.1"
 
+deep-equal@^1.0.1:
+  version "1.0.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
+
 deep-extend@~0.4.0:
   version "0.4.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/deep-extend/-/deep-extend-0.4.2.tgz#48b699c27e334bf89f10892be432f6e4c7d34a7f"
@@ -1690,6 +1656,17 @@ del@^2.0.2, del@^2.2.2:
     object-assign "^4.0.1"
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
+    rimraf "^2.2.8"
+
+del@^3.0.0:
+  version "3.0.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/del/-/del-3.0.0.tgz#53ecf699ffcbcb39637691ab13baf160819766e5"
+  dependencies:
+    globby "^6.1.0"
+    is-path-cwd "^1.0.0"
+    is-path-in-cwd "^1.0.0"
+    p-map "^1.1.1"
+    pify "^3.0.0"
     rimraf "^2.2.8"
 
 delayed-stream@~1.0.0:
@@ -1769,6 +1746,23 @@ dir-glob@^2.0.0:
 discontinuous-range@1.0.0:
   version "1.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/discontinuous-range/-/discontinuous-range-1.0.0.tgz#e38331f0844bba49b9a9cb71c771585aab1bc65a"
+
+dns-equal@^1.0.0:
+  version "1.0.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/dns-equal/-/dns-equal-1.0.0.tgz#b39e7f1da6eb0a75ba9c17324b34753c47e0654d"
+
+dns-packet@^1.0.1:
+  version "1.2.2"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/dns-packet/-/dns-packet-1.2.2.tgz#a8a26bec7646438963fc86e06f8f8b16d6c8bf7a"
+  dependencies:
+    ip "^1.1.0"
+    safe-buffer "^5.0.1"
+
+dns-txt@^2.0.2:
+  version "2.0.2"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/dns-txt/-/dns-txt-2.0.2.tgz#b91d806f5d27188e4ab3e7d107d881a1cc4642b6"
+  dependencies:
+    buffer-indexof "^1.0.0"
 
 doctrine@1.5.0:
   version "1.5.0"
@@ -1886,7 +1880,7 @@ ejs@2.5.7:
   version "2.5.7"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ejs/-/ejs-2.5.7.tgz#cc872c168880ae3c7189762fd5ffc00896c9518a"
 
-electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.27:
+electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.27, electron-to-chromium@^1.3.28:
   version "1.3.28"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/electron-to-chromium/-/electron-to-chromium-1.3.28.tgz#8dd4e6458086644e9f9f0a1cf32e2a1f9dffd9ee"
 
@@ -1920,7 +1914,7 @@ encoding@^0.1.11:
   dependencies:
     iconv-lite "~0.4.13"
 
-enhanced-resolve@^3.0.0:
+enhanced-resolve@^3.0.0, enhanced-resolve@^3.4.0:
   version "3.4.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/enhanced-resolve/-/enhanced-resolve-3.4.1.tgz#0421e339fd71419b3da13d129b3979040230476e"
   dependencies:
@@ -1998,9 +1992,61 @@ es-to-primitive@^1.1.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.1"
 
+es5-ext@^0.10.14, es5-ext@^0.10.35, es5-ext@^0.10.9, es5-ext@~0.10.14:
+  version "0.10.37"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/es5-ext/-/es5-ext-0.10.37.tgz#0ee741d148b80069ba27d020393756af257defc3"
+  dependencies:
+    es6-iterator "~2.0.1"
+    es6-symbol "~3.1.1"
+
+es6-iterator@^2.0.1, es6-iterator@~2.0.1:
+  version "2.0.3"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/es6-iterator/-/es6-iterator-2.0.3.tgz#a7de889141a05a94b0854403b2d0a0fbfa98f3b7"
+  dependencies:
+    d "1"
+    es5-ext "^0.10.35"
+    es6-symbol "^3.1.1"
+
+es6-map@^0.1.3:
+  version "0.1.5"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/es6-map/-/es6-map-0.1.5.tgz#9136e0503dcc06a301690f0bb14ff4e364e949f0"
+  dependencies:
+    d "1"
+    es5-ext "~0.10.14"
+    es6-iterator "~2.0.1"
+    es6-set "~0.1.5"
+    es6-symbol "~3.1.1"
+    event-emitter "~0.3.5"
+
 es6-promise@^4.0.5:
   version "4.1.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/es6-promise/-/es6-promise-4.1.1.tgz#8811e90915d9a0dba36274f0b242dbda78f9c92a"
+
+es6-set@~0.1.5:
+  version "0.1.5"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/es6-set/-/es6-set-0.1.5.tgz#d2b3ec5d4d800ced818db538d28974db0a73ccb1"
+  dependencies:
+    d "1"
+    es5-ext "~0.10.14"
+    es6-iterator "~2.0.1"
+    es6-symbol "3.1.1"
+    event-emitter "~0.3.5"
+
+es6-symbol@3.1.1, es6-symbol@^3.1.1, es6-symbol@~3.1.1:
+  version "3.1.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/es6-symbol/-/es6-symbol-3.1.1.tgz#bf00ef4fdab6ba1b46ecb7b629b4c7ed5715cc77"
+  dependencies:
+    d "1"
+    es5-ext "~0.10.14"
+
+es6-weak-map@^2.0.1:
+  version "2.0.2"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/es6-weak-map/-/es6-weak-map-2.0.2.tgz#5e3ab32251ffd1538a1f8e5ffa1357772f92d96f"
+  dependencies:
+    d "1"
+    es5-ext "^0.10.14"
+    es6-iterator "^2.0.1"
+    es6-symbol "^3.1.1"
 
 escape-html@~1.0.3:
   version "1.0.3"
@@ -2020,6 +2066,15 @@ escodegen@1.x.x, escodegen@^1.6.1:
     optionator "^0.8.1"
   optionalDependencies:
     source-map "~0.5.6"
+
+escope@^3.6.0:
+  version "3.6.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/escope/-/escope-3.6.0.tgz#e01975e812781a163a6dadfdd80398dc64c889c3"
+  dependencies:
+    es6-map "^0.1.3"
+    es6-weak-map "^2.0.1"
+    esrecurse "^4.1.0"
+    estraverse "^4.1.1"
 
 eslint-config-airbnb-base@^12.1.0:
   version "12.1.0"
@@ -2193,6 +2248,13 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
 
+event-emitter@~0.3.5:
+  version "0.3.5"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/event-emitter/-/event-emitter-0.3.5.tgz#df8c69eef1647923c7157b9ce83840610b02cc39"
+  dependencies:
+    d "1"
+    es5-ext "~0.10.14"
+
 event-stream@~3.3.0:
   version "3.3.4"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/event-stream/-/event-stream-3.3.4.tgz#4ab4c9a0f5a54db9338b4c34d86bfce8f4b35571"
@@ -2334,7 +2396,7 @@ extend@3, extend@^3.0.0, extend@~3.0.0, extend@~3.0.1:
   version "3.0.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/extend/-/extend-3.0.1.tgz#a755ea7bc1adfcc5a31ce7e762dbaadc5e636444"
 
-external-editor@^2.0.1, external-editor@^2.0.4:
+external-editor@^2.0.4:
   version "2.1.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/external-editor/-/external-editor-2.1.0.tgz#3d026a21b7f95b5726387d4200ac160d372c3b48"
   dependencies:
@@ -2348,14 +2410,14 @@ extglob@^0.3.1:
   dependencies:
     is-extglob "^1.0.0"
 
-extract-text-webpack-plugin@2.1.0:
-  version "2.1.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/extract-text-webpack-plugin/-/extract-text-webpack-plugin-2.1.0.tgz#69315b885f876dbf96d3819f6a9f1cca7aebf159"
+extract-text-webpack-plugin@3.0.0:
+  version "3.0.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/extract-text-webpack-plugin/-/extract-text-webpack-plugin-3.0.0.tgz#90caa7907bc449f335005e3ac7532b41b00de612"
   dependencies:
-    ajv "^4.11.2"
-    async "^2.1.2"
-    loader-utils "^1.0.2"
-    webpack-sources "^0.1.0"
+    async "^2.4.1"
+    loader-utils "^1.1.0"
+    schema-utils "^0.3.0"
+    webpack-sources "^1.0.1"
 
 extsprintf@1.3.0:
   version "1.3.0"
@@ -2434,9 +2496,9 @@ file-entry-cache@^2.0.0:
     flat-cache "^1.2.1"
     object-assign "^4.0.1"
 
-file-loader@0.11.1:
-  version "0.11.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/file-loader/-/file-loader-0.11.1.tgz#6b328ee1234a729e4e47d36375dd6d35c0e1db84"
+file-loader@0.11.2:
+  version "0.11.2"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/file-loader/-/file-loader-0.11.2.tgz#4ff1df28af38719a6098093b88c82c71d1794a34"
   dependencies:
     loader-utils "^1.0.2"
 
@@ -2455,13 +2517,9 @@ fileset@^2.0.2:
     glob "^7.0.3"
     minimatch "^3.0.3"
 
-filesize@3.3.0:
-  version "3.3.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/filesize/-/filesize-3.3.0.tgz#53149ea3460e3b2e024962a51648aa572cf98122"
-
-filesize@3.5.10:
-  version "3.5.10"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/filesize/-/filesize-3.5.10.tgz#fc8fa23ddb4ef9e5e0ab6e1e64f679a24a56761f"
+filesize@3.5.11:
+  version "3.5.11"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/filesize/-/filesize-3.5.11.tgz#1919326749433bb3cf77368bd158caabcc19e9ee"
 
 fill-range@^2.1.0:
   version "2.2.3"
@@ -2505,12 +2563,6 @@ find-up@^2.0.0, find-up@^2.1.0:
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/find-up/-/find-up-2.1.0.tgz#45d1b7e506c717ddd482775a2b77920a3c0c57a7"
   dependencies:
     locate-path "^2.0.0"
-
-findup-sync@~0.3.0:
-  version "0.3.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/findup-sync/-/findup-sync-0.3.0.tgz#37930aa5d816b777c03445e1966cc6790a4c0b16"
-  dependencies:
-    glob "~5.0.0"
 
 flat-cache@^1.2.1:
   version "1.3.0"
@@ -2608,12 +2660,12 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
 
-fsevents@1.0.17:
-  version "1.0.17"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/fsevents/-/fsevents-1.0.17.tgz#8537f3f12272678765b4fd6528c0f1f66f8f4558"
+fsevents@1.1.2:
+  version "1.1.2"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/fsevents/-/fsevents-1.1.2.tgz#3282b713fb3ad80ede0e9fcf4611b5aa6fc033f4"
   dependencies:
     nan "^2.3.0"
-    node-pre-gyp "^0.6.29"
+    node-pre-gyp "^0.6.36"
 
 fsevents@^1.0.0, fsevents@^1.1.1:
   version "1.1.3"
@@ -2749,16 +2801,6 @@ glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@~5.0.0:
-  version "5.0.15"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/glob/-/glob-5.0.15.tgz#1bc936b9e02f4a603fcc222ecf7633d30b8b93b1"
-  dependencies:
-    inflight "^1.0.4"
-    inherits "2"
-    minimatch "2 || 3"
-    once "^1.3.0"
-    path-is-absolute "^1.0.0"
-
 global-modules@1.0.0, global-modules@^1.0.0:
   version "1.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/global-modules/-/global-modules-1.0.0.tgz#6d770f0eb523ac78164d72b5e71a8877265cc3ea"
@@ -2791,6 +2833,16 @@ globby@^5.0.0:
   dependencies:
     array-union "^1.0.1"
     arrify "^1.0.0"
+    glob "^7.0.3"
+    object-assign "^4.0.1"
+    pify "^2.0.0"
+    pinkie-promise "^2.0.0"
+
+globby@^6.1.0:
+  version "6.1.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/globby/-/globby-6.1.0.tgz#f5a6d70e8395e21c858fb0489d64df02424d506c"
+  dependencies:
+    array-union "^1.0.1"
     glob "^7.0.3"
     object-assign "^4.0.1"
     pify "^2.0.0"
@@ -2951,13 +3003,9 @@ hawk@~6.0.2:
     hoek "4.x.x"
     sntp "2.x.x"
 
-he@1.1.x, he@^1.1.0:
+he@1.1.x:
   version "1.1.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
-
-highlight.js@^9.6.0:
-  version "9.12.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/highlight.js/-/highlight.js-9.12.0.tgz#e6d9dbe57cbefe60751f02af336195870c90c01e"
 
 history@^4.7.2:
   version "4.7.2"
@@ -3025,7 +3073,7 @@ html-encoding-sniffer@^1.0.1:
   dependencies:
     whatwg-encoding "^1.0.1"
 
-html-entities@1.2.1, html-entities@^1.2.0:
+html-entities@^1.2.0:
   version "1.2.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/html-entities/-/html-entities-1.2.1.tgz#0df29351f0721163515dfb9e5543e5f6eed5162f"
 
@@ -3046,9 +3094,9 @@ html-tags@^2.0.0:
   version "2.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/html-tags/-/html-tags-2.0.0.tgz#10b30a386085f43cede353cc8fa7cb0deeea668b"
 
-html-webpack-plugin@2.28.0:
-  version "2.28.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/html-webpack-plugin/-/html-webpack-plugin-2.28.0.tgz#2e7863b57e5fd48fe263303e2ffc934c3064d009"
+html-webpack-plugin@2.29.0:
+  version "2.29.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/html-webpack-plugin/-/html-webpack-plugin-2.29.0.tgz#e987f421853d3b6938c8c4c8171842e5fd17af23"
   dependencies:
     bluebird "^3.4.7"
     html-minifier "^3.2.3"
@@ -3162,6 +3210,12 @@ icss-replace-symbols@^1.1.0:
   version "1.1.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/icss-replace-symbols/-/icss-replace-symbols-1.1.0.tgz#06ea6f83679a7749e386cfe1fe812ae5db223ded"
 
+icss-utils@^2.1.0:
+  version "2.1.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/icss-utils/-/icss-utils-2.1.0.tgz#83f0a0ec378bf3246178b6c2ad9136f135b1c962"
+  dependencies:
+    postcss "^6.0.1"
+
 ieee754@^1.1.4:
   version "1.1.8"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
@@ -3211,44 +3265,7 @@ ini@^1.3.4, ini@~1.3.0:
   version "1.3.5"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
 
-inquirer@3.0.6:
-  version "3.0.6"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/inquirer/-/inquirer-3.0.6.tgz#e04aaa9d05b7a3cb9b0f407d04375f0447190347"
-  dependencies:
-    ansi-escapes "^1.1.0"
-    chalk "^1.0.0"
-    cli-cursor "^2.1.0"
-    cli-width "^2.0.0"
-    external-editor "^2.0.1"
-    figures "^2.0.0"
-    lodash "^4.3.0"
-    mute-stream "0.0.7"
-    run-async "^2.2.0"
-    rx "^4.1.0"
-    string-width "^2.0.0"
-    strip-ansi "^3.0.0"
-    through "^2.3.6"
-
-inquirer@3.2.1:
-  version "3.2.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/inquirer/-/inquirer-3.2.1.tgz#06ceb0f540f45ca548c17d6840959878265fa175"
-  dependencies:
-    ansi-escapes "^2.0.0"
-    chalk "^2.0.0"
-    cli-cursor "^2.1.0"
-    cli-width "^2.0.0"
-    external-editor "^2.0.4"
-    figures "^2.0.0"
-    lodash "^4.3.0"
-    mute-stream "0.0.7"
-    run-async "^2.2.0"
-    rx-lite "^4.0.8"
-    rx-lite-aggregates "^4.0.8"
-    string-width "^2.1.0"
-    strip-ansi "^4.0.0"
-    through "^2.3.6"
-
-inquirer@^3.0.6:
+inquirer@3.3.0, inquirer@^3.0.6:
   version "3.3.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/inquirer/-/inquirer-3.3.0.tgz#9dd2f2ad765dcab1ff0443b491442a20ba227dc9"
   dependencies:
@@ -3266,6 +3283,12 @@ inquirer@^3.0.6:
     string-width "^2.1.0"
     strip-ansi "^4.0.0"
     through "^2.3.6"
+
+internal-ip@^1.2.0:
+  version "1.2.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/internal-ip/-/internal-ip-1.2.0.tgz#ae9fbf93b984878785d50a8de1b356956058cf5c"
+  dependencies:
+    meow "^3.3.0"
 
 interpret@^1.0.0:
   version "1.1.0"
@@ -3305,7 +3328,7 @@ ip@1.0.1:
   version "1.0.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ip/-/ip-1.0.1.tgz#c7e356cdea225ae71b36d70f2e71a92ba4e42590"
 
-ip@^1.1.4:
+ip@^1.1.0, ip@^1.1.4, ip@^1.1.5:
   version "1.1.5"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
 
@@ -3656,7 +3679,7 @@ jest-changed-files@^21.2.0:
   dependencies:
     throat "^4.0.0"
 
-jest-cli@^20.0.3:
+jest-cli@^20.0.4:
   version "20.0.4"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/jest-cli/-/jest-cli-20.0.4.tgz#e532b19d88ae5bc6c417e8b0593a6fe954b1dc93"
   dependencies:
@@ -4070,11 +4093,11 @@ jest-validate@^21.2.1:
     leven "^2.1.0"
     pretty-format "^21.2.1"
 
-jest@20.0.3:
-  version "20.0.3"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/jest/-/jest-20.0.3.tgz#e4fd054c4f1170a116a00761da4cfdb73f1cdc33"
+jest@20.0.4:
+  version "20.0.4"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/jest/-/jest-20.0.4.tgz#3dd260c2989d6dad678b1e9cc4d91944f6d602ac"
   dependencies:
-    jest-cli "^20.0.3"
+    jest-cli "^20.0.4"
 
 jest@^21.2.1:
   version "21.2.1"
@@ -4326,7 +4349,7 @@ loader-utils@^0.2.16, loader-utils@~0.2.2:
     json5 "^0.5.0"
     object-assign "^4.0.1"
 
-loader-utils@^1.0.2, loader-utils@^1.x:
+loader-utils@^1.0.2, loader-utils@^1.1.0:
   version "1.1.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/loader-utils/-/loader-utils-1.1.0.tgz#c98aef488bcceda2ffb5e2de646d6a754429f5cd"
   dependencies:
@@ -4406,10 +4429,6 @@ lodash._reinterpolate@~3.0.0:
 lodash._stack@^4.0.0:
   version "4.1.3"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/lodash._stack/-/lodash._stack-4.1.3.tgz#751aa76c1b964b047e76d14fc72a093fcb5e2dd0"
-
-lodash.assign@^4.0.3, lodash.assign@^4.0.6:
-  version "4.2.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/lodash.assign/-/lodash.assign-4.2.0.tgz#0d99f3ccd7a6d261d19bdaeb9245005d285808e7"
 
 lodash.camelcase@^4.3.0:
   version "4.3.0"
@@ -4525,6 +4544,10 @@ log-symbols@^2.0.0:
   dependencies:
     chalk "^2.0.1"
 
+loglevel@^1.4.1:
+  version "1.6.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/loglevel/-/loglevel-1.6.0.tgz#ae0caa561111498c5ba13723d6fb631d24003934"
+
 longest-streak@^2.0.1:
   version "2.0.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/longest-streak/-/longest-streak-2.0.2.tgz#2421b6ba939a443bb9ffebf596585a50b4c38e2e"
@@ -4638,7 +4661,7 @@ memorystream@^0.3.1:
   version "0.3.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/memorystream/-/memorystream-0.3.1.tgz#86d7090b30ce455d63fbae12dda51a47ddcaf9b2"
 
-meow@^3.7.0:
+meow@^3.3.0, meow@^3.7.0:
   version "3.7.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/meow/-/meow-3.7.0.tgz#72cb668b425228290abbfa856892587308a801fb"
   dependencies:
@@ -4732,17 +4755,17 @@ minimalistic-crypto-utils@^1.0.0, minimalistic-crypto-utils@^1.0.1:
   version "1.0.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz#f6c00c1c0b082246e5c4d99dfb8c7c083b2b582a"
 
-"minimatch@2 || 3", minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.3, minimatch@^3.0.4:
-  version "3.0.4"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
-  dependencies:
-    brace-expansion "^1.1.7"
-
 minimatch@3.0.3:
   version "3.0.3"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/minimatch/-/minimatch-3.0.3.tgz#2a4e4090b96b2db06a9d7df01055a62a77c9b774"
   dependencies:
     brace-expansion "^1.0.0"
+
+minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.3, minimatch@^3.0.4:
+  version "3.0.4"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
+  dependencies:
+    brace-expansion "^1.1.7"
 
 minimatch@~0.2.9:
   version "0.2.14"
@@ -4797,17 +4820,20 @@ ms@2.0.0:
   version "2.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
+multicast-dns-service-types@^1.1.0:
+  version "1.1.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/multicast-dns-service-types/-/multicast-dns-service-types-1.1.0.tgz#899f11d9686e5e05cb91b35d5f0e63b773cfc901"
+
+multicast-dns@^6.0.1:
+  version "6.2.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/multicast-dns/-/multicast-dns-6.2.1.tgz#c5035defa9219d30640558a49298067352098060"
+  dependencies:
+    dns-packet "^1.0.1"
+    thunky "^0.1.0"
+
 mute-stream@0.0.7:
   version "0.0.7"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
-
-mz@^2.4.0:
-  version "2.7.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/mz/-/mz-2.7.0.tgz#95008057a56cafadc2bc63dde7f9ff6955948e32"
-  dependencies:
-    any-promise "^1.0.0"
-    object-assign "^4.0.1"
-    thenify-all "^1.0.0"
 
 nan@^2.3.0:
   version "2.8.0"
@@ -4985,6 +5011,10 @@ node-fingerprint@0.0.2:
   version "0.0.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/node-fingerprint/-/node-fingerprint-0.0.2.tgz#31cbabeb71a67ae7dd5a7dc042e51c3c75868501"
 
+node-forge@0.6.33:
+  version "0.6.33"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/node-forge/-/node-forge-0.6.33.tgz#463811879f573d45155ad6a9f43dc296e8e85ebc"
+
 node-int64@^0.4.0:
   version "0.4.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/node-int64/-/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
@@ -5038,7 +5068,7 @@ node-notifier@^5.0.2:
     shellwords "^0.1.0"
     which "^1.2.12"
 
-node-pre-gyp@^0.6.29, node-pre-gyp@^0.6.39:
+node-pre-gyp@^0.6.36, node-pre-gyp@^0.6.39:
   version "0.6.39"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/node-pre-gyp/-/node-pre-gyp-0.6.39.tgz#c00e96860b23c0e1420ac7befc5044e1d78d8649"
   dependencies:
@@ -5233,19 +5263,13 @@ opn@4.0.2:
     object-assign "^4.0.1"
     pinkie-promise "^2.0.0"
 
-opn@5.0.0:
-  version "5.0.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/opn/-/opn-5.0.0.tgz#f8870d7cd969b218030cb6ce5a1285e795931df3"
-  dependencies:
-    is-wsl "^1.1.0"
-
 opn@5.1.0:
   version "5.1.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/opn/-/opn-5.1.0.tgz#72ce2306a17dbea58ff1041853352b4a8fc77519"
   dependencies:
     is-wsl "^1.1.0"
 
-optimist@0.6.1, optimist@^0.6.1, optimist@~0.6.0:
+optimist@0.6.1, optimist@^0.6.1:
   version "0.6.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/optimist/-/optimist-0.6.1.tgz#da3ea74686fa21a19a111c326e90eb15a0196686"
   dependencies:
@@ -5621,9 +5645,9 @@ postcss-filter-plugins@^2.0.0:
     postcss "^5.0.4"
     uniqid "^4.0.0"
 
-postcss-flexbugs-fixes@3.0.0:
-  version "3.0.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/postcss-flexbugs-fixes/-/postcss-flexbugs-fixes-3.0.0.tgz#7b31cb6c27d0417a35a67914c295f83c403c7ed4"
+postcss-flexbugs-fixes@3.2.0:
+  version "3.2.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/postcss-flexbugs-fixes/-/postcss-flexbugs-fixes-3.2.0.tgz#9b8b932c53f9cf13ba0f61875303e447c33dcc51"
   dependencies:
     postcss "^6.0.1"
 
@@ -5641,7 +5665,7 @@ postcss-less@^1.1.0:
   dependencies:
     postcss "^5.2.16"
 
-postcss-load-config@^1.x:
+postcss-load-config@^1.2.0:
   version "1.2.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/postcss-load-config/-/postcss-load-config-1.2.0.tgz#539e9afc9ddc8620121ebf9d8c3673e0ce50d28a"
   dependencies:
@@ -5664,14 +5688,14 @@ postcss-load-plugins@^2.3.0:
     cosmiconfig "^2.1.1"
     object-assign "^4.1.0"
 
-postcss-loader@2.0.5:
-  version "2.0.5"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/postcss-loader/-/postcss-loader-2.0.5.tgz#c19d3e8b83eb1ac316f5621ef4c0ef5b3d1b8b3a"
+postcss-loader@2.0.6:
+  version "2.0.6"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/postcss-loader/-/postcss-loader-2.0.6.tgz#8c7e0055a3df1889abc6bad52dd45b2f41bbc6fc"
   dependencies:
-    loader-utils "^1.x"
-    postcss "^6.x"
-    postcss-load-config "^1.x"
-    schema-utils "^0.x"
+    loader-utils "^1.1.0"
+    postcss "^6.0.2"
+    postcss-load-config "^1.2.0"
+    schema-utils "^0.3.0"
 
 postcss-media-query-parser@^0.2.3:
   version "0.2.3"
@@ -5887,7 +5911,7 @@ postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0
     source-map "^0.5.6"
     supports-color "^3.2.3"
 
-postcss@^6.0.1, postcss@^6.0.14, postcss@^6.0.3, postcss@^6.0.6, postcss@^6.0.8, postcss@^6.x:
+postcss@^6.0.1, postcss@^6.0.14, postcss@^6.0.2, postcss@^6.0.3, postcss@^6.0.6, postcss@^6.0.8:
   version "6.0.14"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/postcss/-/postcss-6.0.14.tgz#5534c72114739e75d0afcf017db853099f562885"
   dependencies:
@@ -5952,9 +5976,9 @@ progress@^2.0.0:
   version "2.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/progress/-/progress-2.0.0.tgz#8a1be366bf8fc23db2bd23f10c6fe920b4389d1f"
 
-promise@7.1.1:
-  version "7.1.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/promise/-/promise-7.1.1.tgz#489654c692616b8aa55b0724fa809bb7db49c5bf"
+promise@8.0.1:
+  version "8.0.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/promise/-/promise-8.0.1.tgz#e45d68b00a17647b6da711bf85ed6ed47208f450"
   dependencies:
     asap "~2.0.3"
 
@@ -6128,46 +6152,23 @@ react-collapse@^4.0.3:
   dependencies:
     prop-types "^15.5.8"
 
-react-dev-utils@^2.0.1:
-  version "2.0.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react-dev-utils/-/react-dev-utils-2.0.1.tgz#5843504d89f038f046258a871fc26071775fc065"
+react-dev-utils@^4.0.1:
+  version "4.2.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react-dev-utils/-/react-dev-utils-4.2.1.tgz#9f2763e7bafa1a1b9c52254d2a479deec280f111"
   dependencies:
-    "@timer/detect-port" "1.1.3"
-    address "1.0.1"
-    anser "1.3.0"
-    babel-code-frame "6.22.0"
-    chalk "1.1.3"
-    cross-spawn "4.0.2"
-    escape-string-regexp "1.0.5"
-    filesize "3.3.0"
-    gzip-size "3.0.0"
-    html-entities "1.2.1"
-    inquirer "3.0.6"
-    opn "5.0.0"
-    recursive-readdir "2.2.1"
-    shell-quote "1.6.1"
-    sockjs-client "1.1.4"
-    strip-ansi "3.0.1"
-    text-table "0.2.0"
-
-react-dev-utils@^3.1.0:
-  version "3.1.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react-dev-utils/-/react-dev-utils-3.1.1.tgz#09ae7209a81384248db56547e718e65bd3b20eb5"
-  dependencies:
-    address "1.0.2"
-    anser "1.4.1"
-    babel-code-frame "6.22.0"
+    address "1.0.3"
+    babel-code-frame "6.26.0"
     chalk "1.1.3"
     cross-spawn "5.1.0"
     detect-port-alt "1.1.3"
     escape-string-regexp "1.0.5"
-    filesize "3.5.10"
+    filesize "3.5.11"
     global-modules "1.0.0"
     gzip-size "3.0.0"
-    html-entities "1.2.1"
-    inquirer "3.2.1"
+    inquirer "3.3.0"
     is-root "1.0.0"
     opn "5.1.0"
+    react-error-overlay "^3.0.0"
     recursive-readdir "2.2.1"
     shell-quote "1.6.1"
     sockjs-client "1.1.4"
@@ -6190,16 +6191,9 @@ react-dom@^16.2.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-error-overlay@^1.0.6:
-  version "1.0.10"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react-error-overlay/-/react-error-overlay-1.0.10.tgz#da8cd1eafac41afdca2a33792b23694ef6c528f1"
-  dependencies:
-    anser "1.4.1"
-    babel-code-frame "6.22.0"
-    babel-runtime "6.23.0"
-    react-dev-utils "^3.1.0"
-    settle-promise "1.0.0"
-    source-map "0.5.6"
+react-error-overlay@^3.0.0:
+  version "3.0.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
 
 react-inlinesvg@^0.7.1:
   version "0.7.1"
@@ -6275,44 +6269,41 @@ react-router@^4.1.2, react-router@^4.2.0:
     prop-types "^15.5.4"
     warning "^3.0.0"
 
-react-scripts-ts@2.5.0:
-  version "2.5.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react-scripts-ts/-/react-scripts-ts-2.5.0.tgz#bac40d432e90ae09ae4c07d8f0296be43b21f8b1"
+react-scripts-ts@2.8.0:
+  version "2.8.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/react-scripts-ts/-/react-scripts-ts-2.8.0.tgz#6ef17a490725fd34ca3ba8829354581a97b310e8"
   dependencies:
-    app-root-path "^2.0.1"
-    autoprefixer "7.1.0"
-    case-sensitive-paths-webpack-plugin "2.0.0"
+    autoprefixer "7.1.2"
+    case-sensitive-paths-webpack-plugin "2.1.1"
     chalk "1.1.3"
-    cli-highlight "1.1.4"
-    css-loader "0.28.1"
+    css-loader "0.28.4"
     dotenv "4.0.0"
-    extract-text-webpack-plugin "2.1.0"
-    file-loader "0.11.1"
+    extract-text-webpack-plugin "3.0.0"
+    file-loader "0.11.2"
     fs-extra "3.0.1"
-    html-webpack-plugin "2.28.0"
-    jest "20.0.3"
+    html-webpack-plugin "2.29.0"
+    jest "20.0.4"
     object-assign "4.1.1"
-    postcss-flexbugs-fixes "3.0.0"
-    postcss-loader "2.0.5"
-    promise "7.1.1"
-    react-dev-utils "^2.0.1"
-    react-error-overlay "^1.0.6"
+    postcss-flexbugs-fixes "3.2.0"
+    postcss-loader "2.0.6"
+    promise "8.0.1"
+    react-dev-utils "^4.0.1"
     source-map-loader "^0.2.1"
-    style-loader "0.17.0"
-    sw-precache-webpack-plugin "0.9.1"
+    style-loader "0.18.2"
+    sw-precache-webpack-plugin "0.11.4"
     ts-jest "^20.0.7"
-    ts-loader "^2.2.1"
-    tslint "^5.2.0"
+    ts-loader "^2.3.7"
+    tslint "^5.7.0"
     tslint-loader "^3.5.3"
-    tslint-react "^3.0.0"
-    typescript "~2.4.0"
-    url-loader "0.5.8"
-    webpack "2.6.0"
-    webpack-dev-server "2.4.5"
-    webpack-manifest-plugin "1.1.0"
+    tslint-react "^3.2.0"
+    typescript "~2.5.3"
+    url-loader "0.5.9"
+    webpack "3.5.1"
+    webpack-dev-server "2.7.1"
+    webpack-manifest-plugin "1.2.1"
     whatwg-fetch "2.0.3"
   optionalDependencies:
-    fsevents "1.0.17"
+    fsevents "1.1.2"
 
 react-scroll@^1.5.4:
   version "1.7.3"
@@ -6486,7 +6477,7 @@ regenerate@^1.2.1:
   version "1.3.3"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/regenerate/-/regenerate-1.3.3.tgz#0c336d3980553d755c39b586ae3b20aa49c82b7f"
 
-regenerator-runtime@^0.10.0, regenerator-runtime@^0.10.5:
+regenerator-runtime@^0.10.5:
   version "0.10.5"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
 
@@ -6785,10 +6776,6 @@ rx-lite@*, rx-lite@^4.0.8:
   version "4.0.8"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
 
-rx@^4.1.0:
-  version "4.1.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/rx/-/rx-4.1.0.tgz#a5f13ff79ef3b740fe30aa803fb09f98805d4782"
-
 safe-buffer@5.1.1, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
@@ -6823,17 +6810,21 @@ sax@^1.2.1, sax@~1.2.1:
   version "1.2.4"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
-schema-utils@^0.x:
-  version "0.4.2"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/schema-utils/-/schema-utils-0.4.2.tgz#86d92aedf4dfc51c9b321ef16bd33a9417b122d0"
+schema-utils@^0.3.0:
+  version "0.3.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/schema-utils/-/schema-utils-0.3.0.tgz#f5877222ce3e931edae039f17eb3716e7137f8cf"
   dependencies:
     ajv "^5.0.0"
-    ajv-keywords "^2.1.0"
-    chalk "^2.3.0"
 
 select-hose@^2.0.0:
   version "2.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
+
+selfsigned@^1.9.1:
+  version "1.10.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/selfsigned/-/selfsigned-1.10.1.tgz#bf8cb7b83256c4551e31347c6311778db99eec52"
+  dependencies:
+    node-forge "0.6.33"
 
 semver-diff@^2.0.0:
   version "2.1.0"
@@ -6912,10 +6903,6 @@ setprototypeof@1.1.0:
   version "1.1.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/setprototypeof/-/setprototypeof-1.1.0.tgz#d0bd85536887b6fe7c0d818cb962d9d91c54e656"
 
-settle-promise@1.0.0:
-  version "1.0.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/settle-promise/-/settle-promise-1.0.0.tgz#697adb58b821f387ce2757c06efc9de5f0ee33d8"
-
 sha.js@^2.4.0, sha.js@^2.4.8:
   version "2.4.9"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/sha.js/-/sha.js-2.4.9.tgz#98f64880474b74f4a38b8da9d3c0f2d104633e7d"
@@ -6988,17 +6975,6 @@ sntp@2.x.x:
   dependencies:
     hoek "4.x.x"
 
-sockjs-client@1.1.2:
-  version "1.1.2"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/sockjs-client/-/sockjs-client-1.1.2.tgz#f0212a8550e4c9468c8cceaeefd2e3493c033ad5"
-  dependencies:
-    debug "^2.2.0"
-    eventsource "0.1.6"
-    faye-websocket "~0.11.0"
-    inherits "^2.0.1"
-    json3 "^3.3.2"
-    url-parse "^1.1.1"
-
 sockjs-client@1.1.4:
   version "1.1.4"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/sockjs-client/-/sockjs-client-1.1.4.tgz#5babe386b775e4cf14e7520911452654016c8b12"
@@ -7038,13 +7014,13 @@ sort-keys@^1.0.0:
   dependencies:
     is-plain-obj "^1.0.0"
 
-source-list-map@^0.1.7, source-list-map@~0.1.7:
+source-list-map@^0.1.7:
   version "0.1.8"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/source-list-map/-/source-list-map-0.1.8.tgz#c550b2ab5427f6b3f21f5afead88c4f5587b2106"
 
-source-list-map@^1.1.1:
-  version "1.1.2"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/source-list-map/-/source-list-map-1.1.2.tgz#9889019d1024cce55cdc069498337ef6186a11a1"
+source-list-map@^2.0.0:
+  version "2.0.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/source-list-map/-/source-list-map-2.0.0.tgz#aaa47403f7b245a92fbc97ea08f250d6087ed085"
 
 source-map-loader@^0.2.1:
   version "0.2.3"
@@ -7066,11 +7042,7 @@ source-map-support@^0.5.0:
   dependencies:
     source-map "^0.6.0"
 
-source-map@0.5.6:
-  version "0.5.6"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/source-map/-/source-map-0.5.6.tgz#75ce38f52bf0733c5a7f0c118d81334a2bb5f412"
-
-source-map@0.5.x, source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.1, source-map@~0.5.3, source-map@~0.5.6:
+source-map@0.5.x, source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.1, source-map@~0.5.6:
   version "0.5.7"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
 
@@ -7297,11 +7269,12 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-style-loader@0.17.0:
-  version "0.17.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/style-loader/-/style-loader-0.17.0.tgz#e8254bccdb7af74bd58274e36107b4d5ab4df310"
+style-loader@0.18.2:
+  version "0.18.2"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/style-loader/-/style-loader-0.18.2.tgz#cc31459afbcd6d80b7220ee54b291a9fd66ff5eb"
   dependencies:
     loader-utils "^1.0.2"
+    schema-utils "^0.3.0"
 
 style-search@^0.1.0:
   version "0.1.0"
@@ -7372,13 +7345,13 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
-supports-color@^3.1.0, supports-color@^3.1.1, supports-color@^3.1.2, supports-color@^3.2.3:
+supports-color@^3.1.1, supports-color@^3.1.2, supports-color@^3.2.3:
   version "3.2.3"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
   dependencies:
     has-flag "^1.0.0"
 
-supports-color@^4.0.0, supports-color@^4.4.0:
+supports-color@^4.0.0, supports-color@^4.2.1, supports-color@^4.4.0:
   version "4.5.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/supports-color/-/supports-color-4.5.0.tgz#be7a0de484dec5c5cddf8b3d59125044912f635b"
   dependencies:
@@ -7400,15 +7373,15 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
-sw-precache-webpack-plugin@0.9.1:
-  version "0.9.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/sw-precache-webpack-plugin/-/sw-precache-webpack-plugin-0.9.1.tgz#2381ff706fbb6cabdb20a20337de8e58fb49a2a7"
+sw-precache-webpack-plugin@0.11.4:
+  version "0.11.4"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/sw-precache-webpack-plugin/-/sw-precache-webpack-plugin-0.11.4.tgz#a695017e54eed575551493a519dc1da8da2dc5e0"
   dependencies:
     del "^2.2.2"
-    sw-precache "^5.0.0"
-    uglify-js "^2.8.5"
+    sw-precache "^5.1.1"
+    uglify-js "^3.0.13"
 
-sw-precache@^5.0.0:
+sw-precache@^5.1.1:
   version "5.2.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/sw-precache/-/sw-precache-5.2.0.tgz#eb6225ce580ceaae148194578a0ad01ab7ea199c"
   dependencies:
@@ -7449,7 +7422,7 @@ table@^4.0.1:
     slice-ansi "1.0.0"
     string-width "^2.1.1"
 
-tapable@^0.2.7, tapable@~0.2.5:
+tapable@^0.2.7:
   version "0.2.8"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/tapable/-/tapable-0.2.8.tgz#99372a5c999bf2df160afc0d74bed4f47948cd22"
 
@@ -7488,18 +7461,6 @@ text-table@0.2.0, text-table@~0.2.0:
   version "0.2.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
 
-thenify-all@^1.0.0:
-  version "1.6.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/thenify-all/-/thenify-all-1.6.0.tgz#1a1918d402d8fc3f98fbf234db0bcc8cc10e9726"
-  dependencies:
-    thenify ">= 3.1.0 < 4"
-
-"thenify@>= 3.1.0 < 4":
-  version "3.3.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/thenify/-/thenify-3.3.0.tgz#e69e38a1babe969b0108207978b9f62b88604839"
-  dependencies:
-    any-promise "^1.0.0"
-
 throat@^3.0.0:
   version "3.2.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/throat/-/throat-3.2.0.tgz#50cb0670edbc40237b9e347d7e1f88e4620af836"
@@ -7515,6 +7476,10 @@ through@2, through@^2.3.6, through@~2.3, through@~2.3.1:
 thunkify@~2.1.1:
   version "2.1.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/thunkify/-/thunkify-2.1.2.tgz#faa0e9d230c51acc95ca13a361ac05ca7e04553d"
+
+thunky@^0.1.0:
+  version "0.1.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/thunky/-/thunky-0.1.0.tgz#bf30146824e2b6e67b0f2d7a4ac8beb26908684e"
 
 time-stamp@^2.0.0:
   version "2.0.0"
@@ -7616,7 +7581,7 @@ ts-jest@^21.2.4:
     source-map-support "^0.5.0"
     yargs "^10.0.3"
 
-ts-loader@^2.2.1:
+ts-loader@^2.3.7:
   version "2.3.7"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ts-loader/-/ts-loader-2.3.7.tgz#a9028ced473bee12f28a75f9c5b139979d33f2fc"
   dependencies:
@@ -7639,27 +7604,13 @@ tslint-loader@^3.5.3:
     rimraf "^2.4.4"
     semver "^5.3.0"
 
-tslint-react@^3.0.0, tslint-react@^3.2.0:
+tslint-react@3.2.0, tslint-react@^3.2.0:
   version "3.2.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/tslint-react/-/tslint-react-3.2.0.tgz#851fb505201c63d0343c51726e6364f7e9ad2e99"
   dependencies:
     tsutils "^2.8.0"
 
-tslint@5.1.0:
-  version "5.1.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/tslint/-/tslint-5.1.0.tgz#51a47baeeb58956fcd617bd2cf00e2ef0eea2ed9"
-  dependencies:
-    babel-code-frame "^6.22.0"
-    colors "^1.1.2"
-    diff "^3.2.0"
-    findup-sync "~0.3.0"
-    glob "^7.1.1"
-    optimist "~0.6.0"
-    resolve "^1.3.2"
-    semver "^5.3.0"
-    tsutils "^1.4.0"
-
-tslint@^5.2.0:
+tslint@5.8.0, tslint@^5.7.0:
   version "5.8.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/tslint/-/tslint-5.8.0.tgz#1f49ad5b2e77c76c3af4ddcae552ae4e3612eb13"
   dependencies:
@@ -7674,10 +7625,6 @@ tslint@^5.2.0:
     semver "^5.3.0"
     tslib "^1.7.1"
     tsutils "^2.12.1"
-
-tsutils@^1.4.0:
-  version "1.9.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/tsutils/-/tsutils-1.9.1.tgz#b9f9ab44e55af9681831d5f28d0aeeaf5c750cb0"
 
 tsutils@^2.12.1, tsutils@^2.8.0:
   version "2.13.0"
@@ -7720,26 +7667,26 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^2.6.2:
-  version "2.6.2"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
+typescript@2.6.1:
+  version "2.6.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/typescript/-/typescript-2.6.1.tgz#ef39cdea27abac0b500242d6726ab90e0c846631"
 
-typescript@~2.4.0:
-  version "2.4.2"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/typescript/-/typescript-2.4.2.tgz#f8395f85d459276067c988aa41837a8f82870844"
+typescript@~2.5.3:
+  version "2.5.3"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/typescript/-/typescript-2.5.3.tgz#df3dcdc38f3beb800d4bc322646b04a3f6ca7f0d"
 
 ua-parser-js@^0.7.9:
   version "0.7.17"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/ua-parser-js/-/ua-parser-js-0.7.17.tgz#e9ec5f9498b9ec910e7ae3ac626a805c4d09ecac"
 
-uglify-js@3.2.x:
+uglify-js@3.2.x, uglify-js@^3.0.13:
   version "3.2.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/uglify-js/-/uglify-js-3.2.1.tgz#d6427fd45a25fefc5d196689c0c772a6915e10fe"
   dependencies:
     commander "~2.12.1"
     source-map "~0.6.1"
 
-uglify-js@^2.6, uglify-js@^2.8.27, uglify-js@^2.8.5:
+uglify-js@^2.6, uglify-js@^2.8.29:
   version "2.8.29"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/uglify-js/-/uglify-js-2.8.29.tgz#29c5733148057bb4e1f75df35b7a9cb72e6a59dd"
   dependencies:
@@ -7751,6 +7698,14 @@ uglify-js@^2.6, uglify-js@^2.8.27, uglify-js@^2.8.5:
 uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
+
+uglifyjs-webpack-plugin@^0.4.6:
+  version "0.4.6"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-0.4.6.tgz#b951f4abb6bd617e66f63eb891498e391763e309"
+  dependencies:
+    source-map "^0.5.6"
+    uglify-js "^2.8.29"
+    webpack-sources "^1.0.1"
 
 uid-number@^0.0.6:
   version "0.0.6"
@@ -7858,9 +7813,9 @@ urijs@^1.16.1:
   version "1.19.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/urijs/-/urijs-1.19.0.tgz#d8aa284d0e7469703a6988ad045c4cbfdf08ada0"
 
-url-loader@0.5.8:
-  version "0.5.8"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/url-loader/-/url-loader-0.5.8.tgz#b9183b1801e0f847718673673040bc9dc1c715c5"
+url-loader@0.5.9:
+  version "0.5.9"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/url-loader/-/url-loader-0.5.9.tgz#cc8fea82c7b906e7777019250869e569e995c295"
   dependencies:
     loader-utils "^1.0.2"
     mime "1.3.x"
@@ -7878,7 +7833,7 @@ url-parse@1.0.x:
     querystringify "0.0.x"
     requires-port "1.0.x"
 
-url-parse@^1.1.1, url-parse@^1.1.8:
+url-parse@^1.1.8:
   version "1.2.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/url-parse/-/url-parse-1.2.0.tgz#3a19e8aaa6d023ddd27dcc44cb4fc8f7fec23986"
   dependencies:
@@ -8003,7 +7958,7 @@ watch@~0.18.0:
     exec-sh "^0.2.0"
     minimist "^1.2.0"
 
-watchpack@^1.3.1:
+watchpack@^1.4.0:
   version "1.4.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/watchpack/-/watchpack-1.4.0.tgz#4a1472bcbb952bd0a9bb4036801f954dfb39faac"
   dependencies:
@@ -8025,7 +7980,7 @@ webidl-conversions@^4.0.0:
   version "4.0.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
 
-webpack-dev-middleware@^1.10.2:
+webpack-dev-middleware@^1.11.0:
   version "1.12.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/webpack-dev-middleware/-/webpack-dev-middleware-1.12.2.tgz#f8fc1120ce3b4fc5680ceecb43d777966b21105e"
   dependencies:
@@ -8035,74 +7990,74 @@ webpack-dev-middleware@^1.10.2:
     range-parser "^1.0.3"
     time-stamp "^2.0.0"
 
-webpack-dev-server@2.4.5:
-  version "2.4.5"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/webpack-dev-server/-/webpack-dev-server-2.4.5.tgz#31384ce81136be1080b4b4cde0eb9b90e54ee6cf"
+webpack-dev-server@2.7.1:
+  version "2.7.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/webpack-dev-server/-/webpack-dev-server-2.7.1.tgz#21580f5a08cd065c71144cf6f61c345bca59a8b8"
   dependencies:
     ansi-html "0.0.7"
+    bonjour "^3.5.0"
     chokidar "^1.6.0"
     compression "^1.5.2"
     connect-history-api-fallback "^1.3.0"
+    del "^3.0.0"
     express "^4.13.3"
     html-entities "^1.2.0"
     http-proxy-middleware "~0.17.4"
+    internal-ip "^1.2.0"
+    ip "^1.1.5"
+    loglevel "^1.4.1"
     opn "4.0.2"
     portfinder "^1.0.9"
+    selfsigned "^1.9.1"
     serve-index "^1.7.2"
     sockjs "0.3.18"
-    sockjs-client "1.1.2"
+    sockjs-client "1.1.4"
     spdy "^3.4.1"
     strip-ansi "^3.0.0"
     supports-color "^3.1.1"
-    webpack-dev-middleware "^1.10.2"
+    webpack-dev-middleware "^1.11.0"
     yargs "^6.0.0"
 
-webpack-manifest-plugin@1.1.0:
-  version "1.1.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/webpack-manifest-plugin/-/webpack-manifest-plugin-1.1.0.tgz#6b6c718aade8a2537995784b46bd2e9836057caa"
+webpack-manifest-plugin@1.2.1:
+  version "1.2.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/webpack-manifest-plugin/-/webpack-manifest-plugin-1.2.1.tgz#e02f0846834ce98dca516946ee3ee679745e7db1"
   dependencies:
     fs-extra "^0.30.0"
     lodash ">=3.5 <5"
 
-webpack-sources@^0.1.0:
-  version "0.1.5"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/webpack-sources/-/webpack-sources-0.1.5.tgz#aa1f3abf0f0d74db7111c40e500b84f966640750"
+webpack-sources@^1.0.1:
+  version "1.1.0"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/webpack-sources/-/webpack-sources-1.1.0.tgz#a101ebae59d6507354d71d8013950a3a8b7a5a54"
   dependencies:
-    source-list-map "~0.1.7"
-    source-map "~0.5.3"
+    source-list-map "^2.0.0"
+    source-map "~0.6.1"
 
-webpack-sources@^0.2.3:
-  version "0.2.3"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/webpack-sources/-/webpack-sources-0.2.3.tgz#17c62bfaf13c707f9d02c479e0dcdde8380697fb"
-  dependencies:
-    source-list-map "^1.1.1"
-    source-map "~0.5.3"
-
-webpack@2.6.0:
-  version "2.6.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/webpack/-/webpack-2.6.0.tgz#7e650a92816abff5db5f43316b0b8b19b13d76c1"
+webpack@3.5.1:
+  version "3.5.1"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/webpack/-/webpack-3.5.1.tgz#b749ee3d2b5a118dad53e8e41585b3f71e75499a"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"
-    ajv "^4.7.0"
-    ajv-keywords "^1.1.1"
+    ajv "^5.1.5"
+    ajv-keywords "^2.0.0"
     async "^2.1.2"
-    enhanced-resolve "^3.0.0"
+    enhanced-resolve "^3.4.0"
+    escope "^3.6.0"
     interpret "^1.0.0"
     json-loader "^0.5.4"
     json5 "^0.5.1"
     loader-runner "^2.3.0"
-    loader-utils "^0.2.16"
+    loader-utils "^1.1.0"
     memory-fs "~0.4.1"
     mkdirp "~0.5.0"
     node-libs-browser "^2.0.0"
     source-map "^0.5.3"
-    supports-color "^3.1.0"
-    tapable "~0.2.5"
-    uglify-js "^2.8.27"
-    watchpack "^1.3.1"
-    webpack-sources "^0.2.3"
-    yargs "^6.0.0"
+    supports-color "^4.2.1"
+    tapable "^0.2.7"
+    uglifyjs-webpack-plugin "^0.4.6"
+    watchpack "^1.4.0"
+    webpack-sources "^1.0.1"
+    yargs "^8.0.2"
 
 websocket-driver@>=0.5.1:
   version "0.7.0"
@@ -8169,10 +8124,6 @@ window-size@0.1.0:
 window-size@^0.1.4:
   version "0.1.4"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/window-size/-/window-size-0.1.4.tgz#f8e1aa1ee5a53ec5bf151ffa09742a6ad7697876"
-
-window-size@^0.2.0:
-  version "0.2.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/window-size/-/window-size-0.2.0.tgz#b4315bb4214a3d7058ebeee892e13fa24d98b075"
 
 wordwrap@0.0.2:
   version "0.0.2"
@@ -8272,13 +8223,6 @@ yallist@^2.1.2:
   version "2.1.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/yallist/-/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
 
-yargs-parser@^2.4.1:
-  version "2.4.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/yargs-parser/-/yargs-parser-2.4.1.tgz#85568de3cf150ff49fa51825f03a8c880ddcc5c4"
-  dependencies:
-    camelcase "^3.0.0"
-    lodash.assign "^4.0.6"
-
 yargs-parser@^4.2.0:
   version "4.2.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/yargs-parser/-/yargs-parser-4.2.1.tgz#29cceac0dc4f03c6c87b4a9f217dd18c9f74871c"
@@ -8332,25 +8276,6 @@ yargs@^3.7.2:
     window-size "^0.1.4"
     y18n "^3.2.0"
 
-yargs@^4.8.1:
-  version "4.8.1"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/yargs/-/yargs-4.8.1.tgz#c0c42924ca4aaa6b0e6da1739dfb216439f9ddc0"
-  dependencies:
-    cliui "^3.2.0"
-    decamelize "^1.1.1"
-    get-caller-file "^1.0.1"
-    lodash.assign "^4.0.3"
-    os-locale "^1.4.0"
-    read-pkg-up "^1.0.1"
-    require-directory "^2.1.1"
-    require-main-filename "^1.0.1"
-    set-blocking "^2.0.0"
-    string-width "^1.0.1"
-    which-module "^1.0.0"
-    window-size "^0.2.0"
-    y18n "^3.2.1"
-    yargs-parser "^2.4.1"
-
 yargs@^6.0.0:
   version "6.6.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/yargs/-/yargs-6.6.0.tgz#782ec21ef403345f830a808ca3d513af56065208"
@@ -8387,7 +8312,7 @@ yargs@^7.0.2:
     y18n "^3.2.1"
     yargs-parser "^5.0.0"
 
-yargs@^8.0.1:
+yargs@^8.0.1, yargs@^8.0.2:
   version "8.0.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/yargs/-/yargs-8.0.2.tgz#6299a9055b1cefc969ff7e79c1d918dceb22c360"
   dependencies:

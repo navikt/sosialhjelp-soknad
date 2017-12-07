@@ -93,9 +93,9 @@ class Feiloppsummering extends React.Component<Props, {}> {
 					Det er {valideringsfeil.length} feil i skjemaet
 				</Undertittel>
 				<ul className="feiloppsummering__liste">
-					{valideringsfeil.map((feilmld, index) => {
-						return <FeillisteMelding key={index} {...feilmld} />;
-					})}
+					{valideringsfeil.map((feilmld, index) => (
+						<FeillisteMelding key={index} {...feilmld} />
+					))}
 				</ul>
 			</div>
 		);
