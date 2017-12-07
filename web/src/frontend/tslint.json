@@ -14,8 +14,10 @@
 		"indent": [true, "tabs"],
 		"interface-name": [false],
 		"jsdoc-format": true,
+		"jsx-key": false,
 		"label-position": true,
 		"max-line-length": [true, 120],
+		"switch-default": false,
 		"member-ordering": [
 			true,
 			"public-before-private",
@@ -56,7 +58,6 @@
 		"quotemark": [true, "double", "avoid-escape"],
 		"radix": true,
 		"semicolon": [true],
-		"switch-default": true,
 		"trailing-comma": [
 			false,
 			{
