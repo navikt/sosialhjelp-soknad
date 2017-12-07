@@ -70,11 +70,6 @@ const Kvitteringsmelding: React.StatelessComponent<
 					<strong>{kvittering.navenhet}</strong>
 					{getIntlTextOrKey(intl, "kvittering.tekst.post")}
 				</p>
-				<p className="blokk-l">
-					{kvittering.dato}, {kvittering.klokkeslett}.{" "}
-					<FormattedMessage id="kvittering.behandlingsnummer" />:{" "}
-					{kvittering.behandlingsId}.
-				</p>
 			</div>
 		</div>
 	</div>
