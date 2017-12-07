@@ -20,28 +20,29 @@ interface Props extends React.Props<any> {
 //
 // }
 
-const VedleggsListe: React.StatelessComponent<Props> = ({ filer, faktumKey, slettFil, lastNedVedlegg }) => {
+const VedleggsListe: React.StatelessComponent<Props> = ({
+	filer,
+	faktumKey,
+	slettFil,
+	lastNedVedlegg
+}) => {
 	return (
 		<div className="vedleggsliste">
-			{filer && filer.map((fil: Fil, index: number) => {
-				return (
+			{filer &&
+				filer.map((fil: Fil, index: number) => (
 					<div key={index} className="vedleggsliste__vedlegg">
 						<span className="vedleggsliste__filnavn">
-							<Lenkeknapp
-								onClick={() => lastNedVedlegg(fil.navn)}
-							>
+							<Lenkeknapp onClick={() => lastNedVedlegg(fil.navn)}>
 								{fil.navn}
 							</Lenkeknapp>
 						</span>
 						{fil.status !== REST_STATUS.OK && (
-							<span
-								className="vedleggsliste__spinner">
-							<NavFrontendSpinner type="XS"/>
-						</span>)}
+							<span className="vedleggsliste__spinner">
+								<NavFrontendSpinner type="XS" />
+							</span>
+						)}
 						{fil.status === REST_STATUS.OK && (
-							<span
-								className="vedleggsliste__slett_ikon"
-							>
+							<span className="vedleggsliste__slett_ikon">
 								<button
 									type="button"
 									className="vedleggsliste__kunSkjermleser_knapp"
@@ -56,10 +57,7 @@ const VedleggsListe: React.StatelessComponent<Props> = ({ filer, faktumKey, slet
 							</span>
 						)}
 					</div>
-
-				);
-			})
-			}
+				))}
 		</div>
 	);
 };
