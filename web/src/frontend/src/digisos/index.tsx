@@ -16,9 +16,10 @@ import NavFrontendModal from "nav-frontend-modal";
 /** Setter globalt hvilket appElement react-modal skal bruke når modal dialog vises
  *
  */
-(NavFrontendModal as any).setAppElement("#root");
-
 class App extends React.Component<InjectedIntlProps, {}> {
+	componentDidMount() {
+		(NavFrontendModal as any).setAppElement("#root");
+	}
 	render() {
 		return (
 			<div className="app-digisos container">
