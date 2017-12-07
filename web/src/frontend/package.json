@@ -102,7 +102,7 @@
 		"ts-jest": "^21.2.4",
 		"tslint": "5.8.0",
 		"tslint-react": "^3.2.0",
-		"typescript": "^2.6.2"
+		"typescript": "^2.6.1"
 	},
 	"scripts": {
 		"mock-backend": "node scripts/mock_backend",
