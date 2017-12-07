@@ -11,6 +11,12 @@ import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
 import AvbrytSoknad from "../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 import ServerFeil from "../nav-soknad/components/feilside/ServerFeil";
+import NavFrontendModal from "nav-frontend-modal";
+
+/** Setter globalt hvilket appElement react-modal skal bruke når modal dialog vises
+ *
+ */
+(NavFrontendModal as any).setAppElement("#root");
 
 class App extends React.Component<InjectedIntlProps, {}> {
 	render() {
@@ -35,7 +41,8 @@ class App extends React.Component<InjectedIntlProps, {}> {
 					message={loc =>
 						erSkjemaside(loc.pathname)
 							? null
-							: "denne-teksten-brukes-ikke-men-trenger-tekst-her-for-å-vise-avbryt-dialog"}
+							: "denne-teksten-brukes-ikke-men-trenger-tekst-her-for-å-vise-avbryt-dialog"
+					}
 				/>
 				<TimeoutBox
 					sessionDurationInMinutes={30}
