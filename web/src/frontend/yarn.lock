@@ -7623,7 +7623,7 @@ tslint-loader@^3.5.3:
     rimraf "^2.4.4"
     semver "^5.3.0"
 
-tslint-react@3.2.0, tslint-react@^3.0.0:
+tslint-react@^3.0.0, tslint-react@^3.2.0:
   version "3.2.0"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/tslint-react/-/tslint-react-3.2.0.tgz#851fb505201c63d0343c51726e6364f7e9ad2e99"
   dependencies:

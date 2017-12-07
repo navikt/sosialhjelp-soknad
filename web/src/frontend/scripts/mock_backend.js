@@ -60,7 +60,7 @@ let fakta = soknad.fakta;
 // Søknadsressurser
 router.post("/soknader", (req, res) => {
 	res.json({
-		brukerBehandlingId,
+		brukerBehandlingId
 	});
 });
 
@@ -73,7 +73,7 @@ const mockFeatures = {
 	"feature.frontend.sosialhjelp.kontonummer": "true",
 	"feature.frontend.sosialhjelp.live": "true",
 	"feature.frontend.sosialhjelp.personalia": "false",
-	"feature.frontend.visvelgbosted": "true",
+	"feature.frontend.visvelgbosted": "true"
 };
 router.get("/api/feature", (req, res) => {
 	console.log("bruker mockFeatures");
@@ -155,7 +155,7 @@ function genererFaktumId() {
 router.post("/fakta", (req, res) => {
 	if (req.query.behandlingsId) {
 		console.log(
-			`Mock backend: POST /fakta/?behandlingsId=${req.query.behandlingsId}`,
+			`Mock backend: POST /fakta/?behandlingsId=${req.query.behandlingsId}`
 		);
 		const faktum = req.body;
 		faktum.faktumId = genererFaktumId();
