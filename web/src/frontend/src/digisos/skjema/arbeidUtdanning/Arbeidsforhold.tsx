@@ -26,12 +26,12 @@ const Arbeidsforhold: React.StatelessComponent<FaktumComponentProps> = ({ fakta 
 			)}
 			{alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
 				<ul className={"arbeidsgiverliste"}>
-
 					{alleArbeidsforhold.map((arbeidsforhold: Faktum) =>
-						<ArbeidsforholdDetaljer
-							key={arbeidsforhold.faktumId}
-							arbeidsforhold={arbeidsforhold}
-						/>
+						<li key={arbeidsforhold.faktumId} className="arbeidsgiverliste__arbeidsgiver">
+							<ArbeidsforholdDetaljer
+								arbeidsforhold={arbeidsforhold}
+							/>
+						</li>
 					)}
 				</ul>
 			)}
