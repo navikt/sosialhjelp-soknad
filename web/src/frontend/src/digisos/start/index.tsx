@@ -6,7 +6,7 @@ import { State } from "../redux/reducers";
 import { REST_STATUS } from "../../nav-soknad/types";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import { getIntlTextOrKey, scrollToTop } from "../../nav-soknad/utils";
-import ServerFeil from "../../nav-soknad/components/feilside/ServerFeil";
+import ServerFeil from "../../nav-soknad/containers/ServerFeil";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import {
 	resetSoknad,
