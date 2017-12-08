@@ -501,6 +501,46 @@
 			"type": "BRUKERREGISTRERT"
 		},
 		{
+			"parrentFaktum": 30,
+			"faktumId": 3000,
+			"soknadId": 1,
+			"key": "opplysninger.arbeidsituasjon",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {
+				"navn": "Buck Consulting AS",
+				"startet": "01.10.2017",
+				"sluttet": "",
+				"stillingsprosent": "100%"
+			},
+			"type": "SYSTEM"
+		},
+		{
+			"parrentFaktum": 30,
+			"faktumId": 3001,
+			"soknadId": 1,
+			"key": "opplysninger.arbeidsituasjon",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {
+				"navn": "Sop og Stirr AS",
+				"startet": "23.09.2012",
+				"sluttet": "30.09.2017",
+				"stillingsprosent": "100%"
+			},
+			"type": "SYSTEM"
+		},
+		{
+			"parrentFaktum": 30,
+			"faktumId": 3002,
+			"soknadId": 1,
+			"key": "opplysninger.arbeidsituasjon.kommentarer",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
+		},
+		{
 			"faktumId": 31,
 			"soknadId": 1,
 			"parrentFaktum": null,
