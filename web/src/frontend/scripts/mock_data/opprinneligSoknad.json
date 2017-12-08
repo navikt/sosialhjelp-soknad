@@ -225,7 +225,7 @@
 			"soknadId": 1,
 			"parrentFaktum": null,
 			"key": "progresjon",
-			"value": null,
+			"value": "8",
 			"faktumEgenskaper": [],
 			"properties": {},
 			"type": "BRUKERREGISTRERT"
