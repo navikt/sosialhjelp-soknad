@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Route, Switch, Prompt } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import SideIkkeFunnet from "../nav-soknad/components/feilside/IkkeFunnet";
+import SideIkkeFunnet from "../nav-soknad/containers/SideIkkeFunnet";
+import ServerFeil from "../nav-soknad/containers/ServerFeil";
 import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
 import { erSkjemaside } from "../nav-soknad/utils/navigasjonUtils";
 
@@ -10,7 +11,6 @@ import Start from "./start";
 import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
 import AvbrytSoknad from "../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
-import ServerFeil from "../nav-soknad/components/feilside/ServerFeil";
 import NavFrontendModal from "nav-frontend-modal";
 
 /** Setter globalt hvilket appElement react-modal skal bruke når modal dialog vises

@@ -1,11 +1,11 @@
 import * as React from "react";
-import Feilside from "./Feilside";
+import Feilside from "../components/feilside/Feilside";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { Undertittel } from "nav-frontend-typografi";
-import { getIntlTextOrKey } from "../../utils/intlUtils";
+import { getIntlTextOrKey } from "../utils/intlUtils";
 import { connect } from "react-redux";
-import { navigerTilFinnDittNavKontor } from "../../redux/navigasjon/navigasjonActions";
-import { NavigasjonActions } from "../../redux/navigasjon/navigasjonTypes";
+import { navigerTilFinnDittNavKontor } from "../redux/navigasjon/navigasjonActions";
+import { NavigasjonActions } from "../redux/navigasjon/navigasjonTypes";
 
 interface OwnProps {
 	onClick: () => NavigasjonActions;

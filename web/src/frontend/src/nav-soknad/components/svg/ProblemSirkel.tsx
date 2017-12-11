@@ -14,10 +14,10 @@ const ProblemSirkel: React.StatelessComponent<Props> = ({ className }) => (
 		viewBox="0 0 24 24"
 		focusable="false"
 	>
-		<path
-			className="sirkel"
-			d="M11.696.996l-.205.002a11.715 11.715 0 0 0-8.162 3.506C1.13 6.727-.051 9.637.002 12.699.112 19.036 5.077 24 11.305 24l.203-.002c6.446-.111 11.601-5.361 11.49-11.7C22.888 5.961 17.923.996 11.696.996zm-.696 6a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm.518 11.5H11.5a1 1 0 0 1-.018-1.999l.018-.001a1 1 0 0 1 .018 2z"
-		/>
+  <g stroke="#000" stroke-linejoin="round" stroke-miterlimit="10" fill="none">
+    <path stroke-linecap="round" d="M22.498 12.31c.105 6.075-4.923 11.086-10.998 11.192C5.426 23.607.607 18.768.502 12.692.396 6.619 5.426 1.607 11.5 1.502c6.074-.106 10.893 4.734 10.998 10.808zM11.5 14V7"/>
+    <path d="M12 17.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+  </g>
 	</svg>
 );
 export default ProblemSirkel;
