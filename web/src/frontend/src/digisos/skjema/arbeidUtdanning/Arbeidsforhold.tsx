@@ -9,8 +9,17 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 import { Faktum } from "../../../nav-soknad/types";
 import { FormattedMessage } from "react-intl";
 import ArbeidsforholdDetaljer from "./ArbeidsforholdDetaljer";
+import { FeatureToggles } from "../../../featureToggles";
 
-const Arbeidsforhold: React.StatelessComponent<FaktumComponentProps> = ({ fakta }) => {
+interface StateProps {
+	visArbeidsforhold: boolean;
+}
+
+const Arbeidsforhold: React.StatelessComponent<FaktumComponentProps & StateProps> = ({ fakta, visArbeidsforhold }) => {
+
+	if (!visArbeidsforhold) {
+		return <div />;
+	}
 
 	const alleArbeidsforhold: Faktum[] = finnFakta("opplysninger.arbeidsituasjon", fakta);
 
@@ -42,6 +51,8 @@ const Arbeidsforhold: React.StatelessComponent<FaktumComponentProps> = ({ fakta 
 
 export default connect((state: State, {}) => {
 	return {
-		fakta: state.fakta.data
+		fakta: state.fakta.data,
+		visArbeidsforhold:
+		state.featuretoggles.data[FeatureToggles.arbeidsforhold] === "true",
 	};
 })(Arbeidsforhold);
