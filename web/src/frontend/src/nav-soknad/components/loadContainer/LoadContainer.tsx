@@ -1,6 +1,6 @@
 import * as React from "react";
 import NavFrontendSpinner from "nav-frontend-spinner";
-import ServerFeil from "../feilside/ServerFeil";
+import ServerFeil from "../../containers/ServerFeil";
 import { REST_STATUS } from "../../types";
 
 interface Props {
