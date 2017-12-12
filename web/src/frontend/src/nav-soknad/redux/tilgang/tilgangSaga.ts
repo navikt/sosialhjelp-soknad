@@ -14,7 +14,7 @@ function* hentTilgangSaga(): IterableIterator<any> {
 			fetchToJson,
 			"informasjon/utslagskriterier/adresse"
 		);
-		yield put(hentetTilgang(response.pilotSosialhjelp));
+		yield put(hentetTilgang(response.harTilgang, response.sperrekode));
 	} catch (reason) {
 		yield put(hentTilgangFeilet(reason));
 	}

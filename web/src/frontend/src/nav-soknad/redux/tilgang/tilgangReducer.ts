@@ -1,23 +1,30 @@
 import {
 	TilgangActionTypeKeys,
 	TilgangActionTypes,
-	TilgangApiType
+	TilgangState
 } from "./tilgangTypes";
 
 const { OK, PENDING, FEILET, INIT } = TilgangActionTypeKeys;
 
-const initialState = {
+const initialState: TilgangState = {
 	harTilgang: false,
+	sperrekode: null,
 	status: INIT
 };
 
 export default (
-	state: TilgangApiType = initialState,
+	state: TilgangState = initialState,
 	action: TilgangActionTypes
 ) => {
 	switch (action.type) {
 		case OK: {
-			return { ...state, status: OK, harTilgang: action.harTilgang };
+			const okState: TilgangState = {
+				...state,
+				status: OK,
+				harTilgang: action.harTilgang,
+				sperrekode: action.sperrekode
+			};
+			return okState;
 		}
 		case PENDING:
 			return { ...state, status: PENDING };

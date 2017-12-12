@@ -17,9 +17,12 @@ import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { tilBostedEllerStartSoknad } from "../../nav-soknad/redux/navigasjon/navigasjonActions";
 import { FeatureToggles } from "../../featureToggles";
 import { Horten } from "../data/kommuner";
+import IkkeTilgang from "./IkkeTilgang";
+import { TilgangSperrekode } from "../../nav-soknad/redux/tilgang/tilgangTypes";
 
 interface StateProps {
 	harTilgang: boolean;
+	sperrekode: TilgangSperrekode;
 	soknadErLive: string;
 	startSoknadPending: boolean;
 	visVelgBosted: boolean;
@@ -35,7 +38,8 @@ class Informasjon extends React.Component<Props, {}> {
 			harTilgang,
 			startSoknadPending,
 			visVelgBosted,
-			soknadErLive
+			soknadErLive,
+			sperrekode
 		} = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 		return (
@@ -79,14 +83,7 @@ class Informasjon extends React.Component<Props, {}> {
 					</div>
 				) : (
 					<div className="skjema-content">
-						<Infoblokk
-							className="blokk-s"
-							tittel={getIntlTextOrKey(intl, "informasjon.ikketilgang.tittel")}
-						>
-							<p className="blokk-s">
-								<FormattedHTMLMessage id="informasjon.ikketilgang.tekst" />
-							</p>
-						</Infoblokk>
+						<IkkeTilgang sperrekode={sperrekode} />
 					</div>
 				)}
 			</div>
@@ -96,6 +93,7 @@ class Informasjon extends React.Component<Props, {}> {
 
 export default connect((state: State) => ({
 	harTilgang: state.tilgang.harTilgang,
+	sperrekode: state.tilgang.sperrekode,
 	soknadErLive: state.featuretoggles.data[FeatureToggles.soknadErLive],
 	visVelgBosted:
 		state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
