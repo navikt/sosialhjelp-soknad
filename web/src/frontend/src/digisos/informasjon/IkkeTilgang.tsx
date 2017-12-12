@@ -14,15 +14,13 @@ interface Props {
 const IkkeTilgangInformasjon: React.StatelessComponent<
 	Props & InjectedIntlProps
 > = ({ sperrekode, intl }) => {
-	console.log(sperrekode);
 	if (sperrekode && sperrekode === "bruker") {
 		return (
 			<Infoblokk
 				className="blokk-s"
 				tittel={intl.formatMessage({
 					id: "informasjon.ikketilgang.bruker.tittel"
-				})}
-			>
+				})}>
 				<p className="blokk-s">
 					<FormattedHTMLMessage id="informasjon.ikketilgang.bruker.tekst" />
 				</p>
@@ -32,8 +30,7 @@ const IkkeTilgangInformasjon: React.StatelessComponent<
 		return (
 			<Infoblokk
 				className="blokk-s"
-				tittel={intl.formatMessage({ id: "informasjon.ikketilgang.tittel" })}
-			>
+				tittel={intl.formatMessage({ id: "informasjon.ikketilgang.tittel" })}>
 				<p className="blokk-s">
 					<FormattedHTMLMessage id="informasjon.ikketilgang.tekst" />
 				</p>
