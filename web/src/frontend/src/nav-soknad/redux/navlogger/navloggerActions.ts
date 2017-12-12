@@ -39,6 +39,8 @@ const createLogEntry = (message: string, level: NavLogLevel): NavLogEntry => {
 const loggException = (errorMessage: string, url: string, line?: number, column?: number): NavloggerActionTypes => {
 	const logEntry: NavLogEntry = {
 		level: NavLogLevel.ERROR,
+		userAgent: window.navigator.userAgent,
+		url: document.location.href,
 		message: errorMessage,
 		jsFileUrl: url,
 		lineNumber: line
