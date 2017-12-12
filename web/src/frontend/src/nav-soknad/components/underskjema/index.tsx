@@ -3,7 +3,6 @@ import * as classNames from "classnames";
 import { Collapse } from "react-collapse";
 
 interface UnderskjemaProps extends React.Props<any> {
-	tittel?: string;
 	visible?: boolean;
 	arrow?: boolean;
 	style?: "default" | "system";
@@ -12,16 +11,12 @@ interface UnderskjemaProps extends React.Props<any> {
 }
 
 const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
-	tittel,
 	visible,
 	arrow = true,
 	style = "default",
 	collapsable = true,
 	children
 }) => {
-	if (!visible && collapsable) {
-		return null;
-	}
 	const cls = classNames(
 		"underskjema",
 		`underskjema--${style}`,
