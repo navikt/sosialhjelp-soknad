@@ -24,6 +24,7 @@
         <filter-name>decoratorFilter</filter-name>
         <url-pattern>/skjema/*</url-pattern>
         <url-pattern>/informasjon/*</url-pattern>
+        <url-pattern>/bosted/*</url-pattern>
         <url-pattern>/kvittering/*</url-pattern>
     </filter-mapping>
 
@@ -39,6 +40,7 @@
         <servlet-name>routingNySoknadsosialhjelp</servlet-name>
         <url-pattern>/skjema/*</url-pattern>
         <url-pattern>/informasjon/*</url-pattern>
+        <url-pattern>/bosted/*</url-pattern>
         <url-pattern>/kvittering/*</url-pattern>
     </servlet-mapping>
 
