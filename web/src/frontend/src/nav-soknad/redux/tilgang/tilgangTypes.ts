@@ -1,3 +1,5 @@
+export type TilgangSperrekode = "pilot" | "bruker";
+
 export enum TilgangActionTypeKeys {
 	OK = "tilgang/OK",
 	FEILET = "tilgang/FEILET",
@@ -20,6 +22,7 @@ interface HentTilgangAction {
 interface HentetTilgangAction {
 	type: TilgangActionTypeKeys.OK;
 	harTilgang: boolean;
+	sperrekode?: TilgangSperrekode;
 }
 
 interface HenterTilgangAction {
@@ -35,15 +38,13 @@ export interface OtherAction {
 	type: TilgangActionTypeKeys.OTHER_ACTION;
 }
 
-export interface TilgangApiType {
+export interface TilgangState {
 	harTilgang: boolean;
+	sperrekode: TilgangSperrekode;
 	status: TilgangActionTypeKeys;
 }
 
-export interface TilgangState {
-	harTilgang: boolean;
-}
-
 export interface TilgangApiResponse {
-	pilotSosialhjelp: boolean;
+	harTilgang: boolean;
+	sperrekode: TilgangSperrekode;
 }
