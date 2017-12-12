@@ -12,7 +12,7 @@ function* hentTilgangSaga(): IterableIterator<any> {
 		yield put(henterTilgang());
 		const response: TilgangApiResponse = yield call(
 			fetchToJson,
-			"informasjon/utslagskriterier/adresse"
+			"informasjon/utslagskriterier/sosialhjelp"
 		);
 		yield put(hentetTilgang(response.harTilgang, response.sperrekode));
 	} catch (reason) {

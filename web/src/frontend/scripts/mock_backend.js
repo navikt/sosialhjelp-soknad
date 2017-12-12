@@ -36,8 +36,8 @@ router.get("/informasjon/tekster", (req, res) => {
 });
 
 // Tilgang til søknadsskjema
-router.get("/informasjon/utslagskriterier/adresse", (req, res) => {
-	res.json({ harTilgang: false, sperrekode: "pilot" });
+router.get("/informasjon/utslagskriterier/sosialhjelp", (req, res) => {
+	res.json({ harTilgang: true, sperrekode: "bruker" });
 });
 
 // Miljøvariabler
