@@ -1,10 +1,10 @@
 import { Reducer } from "../../../nav-soknad/redux/reduxTypes";
 import {
 	FaktumStruktur,
-	SynligeFaktaActionTypeKeys,
-	SynligeFaktaState,
 	GruppertFaktumStruktur,
-	SynligeFaktaActionTypes
+	SynligeFaktaActionTypeKeys,
+	SynligeFaktaActionTypes,
+	SynligeFaktaState
 } from "./synligeFaktaTypes";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 
@@ -16,7 +16,7 @@ const defaultState: SynligeFaktaState = {
 const synligeFaktaReducer: Reducer<SynligeFaktaState, SynligeFaktaActionTypes> = (state = defaultState, action) => {
 
 	switch (action.type) {
-		case SynligeFaktaActionTypeKeys.HENT_SYNLIGE:
+		case SynligeFaktaActionTypeKeys.START_BYGG_STRUKTUR:
 			return {
 				...defaultState,
 				restStatus: REST_STATUS.PENDING
@@ -24,13 +24,17 @@ const synligeFaktaReducer: Reducer<SynligeFaktaState, SynligeFaktaActionTypes> =
 		case SynligeFaktaActionTypeKeys.HENT_SYNLIGE_OK:
 			return {
 				...state,
-				restStatus: REST_STATUS.OK,
 				data: grupperFaktumStrukturer(action.data)
 			};
-		case SynligeFaktaActionTypeKeys.HENT_SYNLIGE_FEILET:
+		case SynligeFaktaActionTypeKeys.BYGG_STRUKTUR_FEILET:
 			return {
 				...state,
 				restStatus: REST_STATUS.FEILET
+			};
+		case SynligeFaktaActionTypeKeys.BYGG_STRUKTUR_OK:
+			return {
+				...state,
+				restStatus: REST_STATUS.OK
 			};
 		default:
 			return state;
@@ -39,6 +43,7 @@ const synligeFaktaReducer: Reducer<SynligeFaktaState, SynligeFaktaActionTypes> =
 
 function grupperFaktumStrukturer(faktumStrukturer: FaktumStruktur[]): GruppertFaktumStruktur {
 	const gruppert: GruppertFaktumStruktur = {};
+	// TODO
 
 	faktumStrukturer.forEach(struktur => {
 		if (struktur.dependOn) {

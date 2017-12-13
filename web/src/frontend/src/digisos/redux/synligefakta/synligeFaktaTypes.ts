@@ -31,16 +31,22 @@ export interface SynligeFaktaProps {
 }
 
 export enum SynligeFaktaActionTypeKeys {
-	HENT_SYNLIGE = "synligefakta/HENT_SYNLIGE",
+	START_BYGG_STRUKTUR = "synligefakta/START_BYGG_STRUKTUR", // TODO bedre navn
+	// HENT_SYNLIGE = "synligefakta/HENT_SYNLIGE",
 	HENT_SYNLIGE_OK = "synligefakta/HENT_SYNLIGE_OK",
-	HENT_SYNLIGE_FEILET = "synligefakta/HENT_SYNLIGE_FEILET",
+		BYGG_STRUKTUR_OK = "synligefakta/BYGG_STRUKTUR_OK",
+	BYGG_STRUKTUR_FEILET = "synligefakta/BYGG_STRUKTUR_FEILET",
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
-export type SynligeFaktaActionTypes = HentSynligeFaktaAction | HentSynligeFaktaOKAction | HentSynligeFaktaFeiletAction;
+export type SynligeFaktaActionTypes =
+	ByggStrukturAction |
+	HentSynligeFaktaOKAction |
+	ByggStrukturFeiletAction |
+	ByggStrukturOkAction;
 
-export interface HentSynligeFaktaAction {
-	type: SynligeFaktaActionTypeKeys.HENT_SYNLIGE;
+export interface ByggStrukturAction {
+	type: SynligeFaktaActionTypeKeys.START_BYGG_STRUKTUR;
 }
 
 export interface HentSynligeFaktaOKAction {
@@ -48,7 +54,11 @@ export interface HentSynligeFaktaOKAction {
 	data: FaktumStruktur[];
 }
 
-export interface HentSynligeFaktaFeiletAction {
-	type: SynligeFaktaActionTypeKeys.HENT_SYNLIGE_FEILET;
+export interface ByggStrukturFeiletAction {
+	type: SynligeFaktaActionTypeKeys.BYGG_STRUKTUR_FEILET;
 	feilmelding: string;
+}
+
+export interface ByggStrukturOkAction {
+	type: SynligeFaktaActionTypeKeys.BYGG_STRUKTUR_OK;
 }

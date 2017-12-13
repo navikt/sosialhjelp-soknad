@@ -1,30 +1,24 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import { fetchToJson, fetchUpload, fetchDelete } from "../../../nav-soknad/utils/rest-utils";
+import { fetchDelete, fetchToJson, fetchUpload } from "../../../nav-soknad/utils/rest-utils";
 import { HentFilListeAction, LastOppVedleggAction, SlettFilAction, VedleggActionTypeKeys } from "./vedleggTypes";
 import {
-	hentVedleggsForventningOk,
-	hentVedleggsForventningFeilet,
+	hentFilListe,
 	hentFilListeOk,
-	lastOppVedleggOk,
+	hentVedleggsForventningOk,
 	lastOppVedleggFeilet,
-	slettFilOk,
-	hentFilListe
+	lastOppVedleggOk,
+	slettFilOk
 } from "./vedleggActions";
 import { loggFeil } from "../../../nav-soknad/redux/navlogger/navloggerActions";
 import { selectBrukerBehandlingId, selectFaktaData } from "../selectors";
 
-function* hentVedleggsForventningSaga(): SagaIterator {
-	try {
-		const behandlingsId = yield select(selectBrukerBehandlingId);
-		const url = `soknader/${behandlingsId}/vedlegg`;
-		yield call(fetchToJson, url);
-		const response = yield call(fetchToJson, url);
-		const fakta = yield select(selectFaktaData);
-		yield put(hentVedleggsForventningOk(response, fakta));
-	} catch ( reason) {
-		yield put(hentVedleggsForventningFeilet(reason));
-	}
+function* hentVedleggsForventningSaga(behandlingsId: string): SagaIterator {
+	const url = `soknader/${behandlingsId}/vedlegg`;
+	yield call(fetchToJson, url);
+	const response = yield call(fetchToJson, url);
+	const fakta = yield select(selectFaktaData);
+	yield put(hentVedleggsForventningOk(response, fakta));
 }
 
 function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
@@ -68,7 +62,10 @@ function* vedleggSaga(): SagaIterator {
 	yield takeEvery(VedleggActionTypeKeys.LAST_OPP, lastOppVedleggSaga);
 	yield takeEvery(VedleggActionTypeKeys.SLETT_FIL, slettVedleggFilSaga);
 	yield takeEvery(VedleggActionTypeKeys.HENT_FIL_LISTE, hentFilListeSaga);
-	yield takeEvery(VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING, hentVedleggsForventningSaga);
 }
+
+export {
+	hentVedleggsForventningSaga
+};
 
 export default vedleggSaga;

@@ -2,17 +2,13 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { State } from "../../redux/reducers";
 import Infoblokk from "../../../nav-soknad/components/infoblokk/index";
-import {
-	FormattedHTMLMessage,
-	InjectedIntlProps,
-	injectIntl
-} from "react-intl";
+import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { SynligeFaktaProps } from "../../redux/synligefakta/synligeFaktaTypes";
 import InformasjonBolk from "./InformasjonBolk";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
-import { hentSynligeFakta } from "../../redux/synligefakta/synligeFaktaActions";
+import { byggBelopOgVedleggStruktur } from "../../redux/synligefakta/synligeFaktaActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 import { FeatureToggles } from "../../../featureToggles";
 import { getIntlText, harBrukerBesvartFaktum } from "../../../nav-soknad/utils";
@@ -66,9 +62,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 	}
 
 	componentDidMount() {
-		if (Object.keys(this.props.synligefakta.data).length === 0) {
-			this.props.dispatch(hentSynligeFakta());
-		}
+		this.props.dispatch(byggBelopOgVedleggStruktur());
 	}
 
 	renderIkkeBesvart() {

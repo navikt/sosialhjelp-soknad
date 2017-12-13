@@ -1,23 +1,14 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import {
-	FaktumStruktur,
-	PropertyStruktur
-} from "../../redux/synligefakta/synligeFaktaTypes";
+import { FaktumStruktur, PropertyStruktur } from "../../redux/synligefakta/synligeFaktaTypes";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { Column, Container, Row } from "nav-frontend-grid";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
-import {
-	DispatchProps,
-	SoknadAppState
-} from "../../../nav-soknad/redux/reduxTypes";
+import { DispatchProps, SoknadAppState } from "../../../nav-soknad/redux/reduxTypes";
 import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { finnFakta, finnFaktum } from "../../../nav-soknad/utils/faktumUtils";
-import {
-	opprettFaktum,
-	slettFaktum
-} from "../../../nav-soknad/redux/fakta/faktaActions";
+import { opprettFaktum, slettFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
@@ -56,13 +47,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 	}
 
 	componentDidMount() {
-		const { faktumstruktur, fakta } = this.props;
 
-		const belopFakta = finnFakta(faktumstruktur.id, fakta);
-
-		if (belopFakta.length === 0) {
-			this.leggTilBelop();
-		}
 	}
 
 	leggTilBelop() {
@@ -99,7 +84,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 		const leggTilTekst = intl.formatMessage({ id: "opplysninger.leggtil" });
 		const slettTekst = intl.formatMessage({ id: "opplysninger.fjern" });
 
-		const rader = belopFakta.map(faktum => {
+		const rader = belopFakta.map((faktum, index) => {
 			const inputs = faktumstruktur.properties.map(property => {
 				const type = getValideringsType(property);
 				let inputFelt = null;
@@ -143,7 +128,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 			return (
 				<Row key={faktum.faktumId} className="opplysning__row">
 					{inputs}
-					{belopFakta.length > 1 ? slettKnapp : null}
+					{index > 0 ? slettKnapp : null}
 				</Row>
 			);
 		});

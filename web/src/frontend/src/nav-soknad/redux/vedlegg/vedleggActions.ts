@@ -66,25 +66,11 @@ const slettFilOk = (
 	};
 };
 
-const hentVedleggsForventning = (fakta: Faktum[]): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING,
-		fakta
-	};
-};
-
 const hentVedleggsForventningOk = (struktur: any, fakta: Faktum[]): VedleggActionTypes => {
 	return {
 		type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_OK,
 		vedleggsforventninger: struktur,
 		fakta
-	};
-};
-
-const hentVedleggsForventningFeilet = (feilmelding: string): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_FEILET,
-		feilmelding
 	};
 };
 
@@ -115,9 +101,7 @@ export {
 	lastOppVedleggFeilet,
 	lastOppVedleggOk,
 
-	hentVedleggsForventning,
 	hentVedleggsForventningOk,
-	hentVedleggsForventningFeilet,
 
 	hentFilListe,
 	hentFilListeOk,
