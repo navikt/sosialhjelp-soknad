@@ -105,6 +105,9 @@ class Vedlegg extends React.Component<AllProps, {}> {
 
 	private lesVedleggId() {
 		let vedleggId = -1;
+		console.warn(
+			"Vedleggg: " + Object.keys(this.props.vedlegg.vedlegg).join(", ") +
+			" FaktumKey: " + this.props.faktumKey);
 		if (this.props.vedlegg.vedlegg && this.props.vedlegg.vedlegg[ this.props.faktumKey ]) {
 			vedleggId = this.props.vedlegg.vedlegg[ this.props.faktumKey ].vedleggId;
 		}

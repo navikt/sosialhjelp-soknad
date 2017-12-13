@@ -13,13 +13,6 @@ interface Props extends React.Props<any> {
 	lastNedVedlegg(filNavn: string): void;
 }
 
-// function lastNedVedlegg(vedleggId: string, faktumKey: string) {
-// 	// window.alert("Last ned vedlegg ikke implementert");
-// 	// const filUrl = "http://localhost:3001/vedlegg/1001/image1.PNG?behandlingsId=1000CPY7D";
-// 	// window.open(filUrl);
-//
-// }
-
 const VedleggsListe: React.StatelessComponent<Props> = ({
 	filer,
 	faktumKey,
