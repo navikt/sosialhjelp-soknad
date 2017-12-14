@@ -1,4 +1,4 @@
-import { Fil, VedleggActionTypeKeys, VedleggActionTypes } from "./vedleggTypes";
+import { Fil, Vedlegg, VedleggActionTypeKeys, VedleggActionTypes } from "./vedleggTypes";
 import { Faktum } from "../../types/navSoknadTypes";
 
 const lastOppVedlegg = (
@@ -66,10 +66,10 @@ const slettFilOk = (
 	};
 };
 
-const hentVedleggsForventningOk = (struktur: any, fakta: Faktum[]): VedleggActionTypes => {
+const hentVedleggsForventningOk = (vedlegg: Vedlegg[], fakta: Faktum[]): VedleggActionTypes => {
 	return {
 		type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_OK,
-		vedleggsforventninger: struktur,
+		vedleggsforventninger: vedlegg,
 		fakta
 	};
 };

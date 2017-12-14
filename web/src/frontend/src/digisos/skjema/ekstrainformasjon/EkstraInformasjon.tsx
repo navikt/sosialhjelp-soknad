@@ -10,7 +10,6 @@ import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadCont
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { byggBelopOgVedleggStruktur } from "../../redux/synligefakta/synligeFaktaActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
-import { FeatureToggles } from "../../../featureToggles";
 import { getIntlText, harBrukerBesvartFaktum } from "../../../nav-soknad/utils";
 import { Faktum } from "../../../nav-soknad/types";
 
@@ -48,7 +47,6 @@ const okonomiskeFaktumKeys = [
 ];
 
 interface OwnProps {
-	featureToggleBeOmLonnslippVedlegg: boolean;
 	fakta: Faktum[];
 }
 
@@ -138,8 +136,6 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 export default connect((state: State) => {
 	return {
 		fakta: state.fakta.data,
-		synligefakta: state.synligefakta,
-		featureToggleBeOmLonnslippVedlegg:
-			state.featuretoggles.data[FeatureToggles.beOmLonnslippVedlegg]
+		synligefakta: state.synligefakta
 	};
 })(injectIntl(EkstraInformasjon));

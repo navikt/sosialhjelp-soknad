@@ -19,7 +19,7 @@ export enum VedleggActionTypeKeys {
 }
 
 export interface VedleggState {
-	data: any;
+	data: Vedlegg[];
 	restStatus: REST_STATUS;
 }
 
@@ -83,7 +83,7 @@ interface HentVedleggsForventning {
 
 interface HentVedleggsForventningOk {
 	type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_OK;
-	vedleggsforventninger: any;
+	vedleggsforventninger: Vedlegg[];
 	fakta: Faktum[];
 }
 
@@ -95,11 +95,21 @@ interface HentVedleggsForventningFeilet {
 export interface OtherAction {
 	type: VedleggActionTypeKeys.OTHER_ACTION;
 }
+
 export interface Fil {
 	navn: string;
 	status: string;
 }
 
+export interface Vedlegg {
+	vedleggId: number;
+	mimetype?: string;
+	filnavn?: string;
+	faktumId: number;
+	innsendingsvalg: string;
+	belopFaktumId: number;
+}
+/*
 export interface Vedlegg {
 	[ key: string ]: {
 		faktumId: string;
@@ -107,12 +117,14 @@ export interface Vedlegg {
 		vedleggId: number;
 		filer: Fil[];
 	};
-}
+}*/
 
 export interface VedleggApiType {
-	data: {
-		vedlegg?: Vedlegg
-	};
+	data: Vedlegg[];
 	restStatus: REST_STATUS;
 	feilmelding: string;
+}
+
+export interface VedleggProps {
+	vedlegg: Vedlegg[];
 }
