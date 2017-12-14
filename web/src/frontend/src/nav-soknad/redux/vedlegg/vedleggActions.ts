@@ -74,37 +74,12 @@ const hentVedleggsForventningOk = (struktur: any, fakta: Faktum[]): VedleggActio
 	};
 };
 
-const hentFilListe = (
-	key: string,
-	vedleggId: string,
-): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.HENT_FIL_LISTE,
-		faktumKey: key,
-		vedleggId
-	};
-};
-
-const hentFilListeOk = (
-	key: string,
-	filer: Fil[],
-): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.HENT_FIL_LISTE_OK,
-		faktumKey: key,
-		filer
-	};
-};
-
 export {
 	lastOppVedlegg,
 	lastOppVedleggFeilet,
 	lastOppVedleggOk,
 
 	hentVedleggsForventningOk,
-
-	hentFilListe,
-	hentFilListeOk,
 
 	slettFil,
 	slettFilOk

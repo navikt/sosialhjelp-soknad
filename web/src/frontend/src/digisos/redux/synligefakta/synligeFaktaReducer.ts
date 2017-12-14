@@ -43,17 +43,19 @@ const synligeFaktaReducer: Reducer<SynligeFaktaState, SynligeFaktaActionTypes> =
 
 function grupperFaktumStrukturer(faktumStrukturer: FaktumStruktur[]): GruppertFaktumStruktur {
 	const gruppert: GruppertFaktumStruktur = {};
-	// TODO
 
-	faktumStrukturer.forEach(struktur => {
-		if (struktur.dependOn) {
-			const gruppe = struktur.dependOn.id;
-			if (!gruppert[gruppe]) {
-				gruppert[gruppe] = [];
+	faktumStrukturer
+		.filter(struktur => struktur.dependOn)
+		.filter(struktur => !struktur.id.endsWith(".vedlegg"))
+		.forEach(struktur => {
+			if (struktur.dependOn) {
+				const gruppe = struktur.dependOn.id;
+				if (!gruppert[gruppe]) {
+					gruppert[gruppe] = [];
+				}
+				gruppert[gruppe].push(struktur);
 			}
-			gruppert[gruppe].push(struktur);
-		}
-	});
+		});
 
 	return gruppert;
 }

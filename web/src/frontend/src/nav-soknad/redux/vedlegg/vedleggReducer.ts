@@ -1,6 +1,5 @@
 import { Fil, Vedlegg, VedleggActionTypeKeys, VedleggActionTypes, VedleggApiType } from "./vedleggTypes";
 import { REST_STATUS } from "../../types/restTypes";
-import { Faktum } from "../../types/navSoknadTypes";
 
 const {
 	LAST_OPP,
@@ -10,8 +9,6 @@ const {
 	SLETT_FIL,
 	SLETT_FIL_OK,
 	HENT_VEDLEGGSFORVENTNING_OK,
-	HENT_FIL_LISTE,
-	HENT_FIL_LISTE_OK
 } = VedleggActionTypeKeys;
 
 const initialState: VedleggApiType = {
@@ -78,21 +75,12 @@ export default (
 			return {...state, restStatus: REST_STATUS.OK, data: {vedlegg}};
 		}
 
-		case HENT_FIL_LISTE: {
-			return {...state, restStatus: REST_STATUS.PENDING};
-		}
-
-		case HENT_FIL_LISTE_OK: {
-			const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
-			vedlegg[action.faktumKey].filer = action.filer.map((fil: any) => {
-				return {navn: fil.navn, status: REST_STATUS.OK};
-			});
-			return {...state, restStatus: REST_STATUS.OK, data: {vedlegg}};
-		}
-
 		case HENT_VEDLEGGSFORVENTNING_OK: {
 			const vedlegg = {};
-			action.vedleggsforventninger.map((forventning: any) => {
+
+			// har action.fakta
+
+			/*action.vedleggsforventninger.map((forventning: any) => {
 				action.fakta.map((faktum: Faktum) => {
 					if (faktum.faktumId === forventning.faktumId) {
 						const filer = forventning.filer.map((fil: any) => {
@@ -105,7 +93,7 @@ export default (
 						};
 					}
 				});
-			});
+			});*/
 			return {
 				...state,
 				restStatus: REST_STATUS.OK,

@@ -2,10 +2,7 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import { Knapp } from "nav-frontend-knapper";
 import { connect } from "react-redux";
-import {
-	hentFilListe,
-	lastOppVedlegg, slettFil
-} from "../../redux/vedlegg/vedleggActions";
+import { lastOppVedlegg, slettFil } from "../../redux/vedlegg/vedleggActions";
 import { SoknadAppState } from "../../redux/reduxTypes";
 import VedleggsListe from "./VedleggsListe";
 import { Faktum } from "../../types/navSoknadTypes";
@@ -119,8 +116,6 @@ const mapStateToProps = (state: SoknadAppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-	hentFilListe: (key: string, vedleggId: string) =>
-		dispatch(hentFilListe(key, vedleggId)),
 	lastOppVedlegg: (key: string, vedleggId: string, formData: any, filer: Fil[]) =>
 		dispatch(lastOppVedlegg(key, vedleggId, formData, filer)),
 	slettFil: (faktumKey: string, vedleggId: string, filNavn: string): void =>

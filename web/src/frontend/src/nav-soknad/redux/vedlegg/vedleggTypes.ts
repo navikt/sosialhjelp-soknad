@@ -14,9 +14,6 @@ export enum VedleggActionTypeKeys {
 	HENT_VEDLEGGSFORVENTNING_OK = "vedlegg/HENT_VEDLEGGSFORVENTNING_OK",
 	HENT_VEDLEGGSFORVENTNING_FEILET = "vedlegg/HENT_VEDLEGGSFORVENTNING_FEILET",
 
-	HENT_FIL_LISTE = "vedlegg/HENT_FIL_LISTE",
-	HENT_FIL_LISTE_OK = "vedlegg/HENT_FIL_LISTE_OK",
-
 	INIT = "vedlegg/INIT",
 	OTHER_ACTION = "__any_other_action_type__"
 }
@@ -36,8 +33,6 @@ export type VedleggActionTypes =
 	| HentVedleggsForventning // ...Action navn?
 	| HentVedleggsForventningOk
 	| HentVedleggsForventningFeilet
-	| HentFilListeAction
-	| HentFilListeOkAction
 	| OtherAction;
 
 export interface LastOppVedleggAction {
@@ -95,18 +90,6 @@ interface HentVedleggsForventningOk {
 interface HentVedleggsForventningFeilet {
 	type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_FEILET;
 	feilmelding: string;
-}
-
-export interface HentFilListeAction {
-	type: VedleggActionTypeKeys.HENT_FIL_LISTE;
-	faktumKey: string;
-	vedleggId: string;
-}
-
-export interface HentFilListeOkAction {
-	type: VedleggActionTypeKeys.HENT_FIL_LISTE_OK;
-	faktumKey: string;
-	filer: any;
 }
 
 export interface OtherAction {
