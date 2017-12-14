@@ -11,7 +11,7 @@ import {
 	DispatchProps,
 } from "../../../nav-soknad/redux/reduxTypes";
 import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
+import { FaktumComponentProps, OpprettFaktumType } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { finnFakta, finnFaktum } from "../../../nav-soknad/utils/faktumUtils";
 import {
 	opprettFaktum,
@@ -30,6 +30,7 @@ interface Props {
 	vedlegg: any;
 	featureToggleBeOmLonnslippVedlegg?: boolean;
 	hentVedleggsForventning?: (fakta: any) => void;
+	opprettFaktum?: (faktum: OpprettFaktumType) => void;
 }
 
 type AllProps = Props &
@@ -70,11 +71,9 @@ class Opplysning extends React.Component<AllProps, {}> {
 	}
 
 	leggTilBelop() {
-		const { faktumstruktur, fakta, dispatch } = this.props;
+		const { faktumstruktur, fakta} = this.props;
 		const parent = finnFaktum(faktumstruktur.dependOn.id, fakta);
-		dispatch(
-			opprettFaktum({ key: faktumstruktur.id, parrentFaktum: parent.faktumId })
-		);
+		this.props.opprettFaktum({ key: faktumstruktur.id, parrentFaktum: parent.faktumId });
 	}
 
 	fjernBelop(faktumId: number) {
@@ -184,7 +183,8 @@ interface StateFromProps {
 }
 
 const mapDispatchToProps = (dispatch: any) => ({
-	hentVedleggsForventning: (fakta: any) => dispatch(hentVedleggsForventning(fakta))
+	hentVedleggsForventning: (fakta: any) => dispatch(hentVedleggsForventning(fakta)),
+	opprettFaktum: (faktum: OpprettFaktumType) => dispatch( opprettFaktum(faktum))
 });
 
 const mapStateToProps = (state: State) => ({

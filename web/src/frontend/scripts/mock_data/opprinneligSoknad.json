@@ -502,6 +502,16 @@
 		},
 		{
 			"parrentFaktum": 30,
+			"faktumId": 3033,
+			"soknadId": 1,
+			"key": "opplysninger.arbeid.jobb",
+			"value": null,
+			"faktumEgenskaper": [],
+			"properties": {},
+			"type": "BRUKERREGISTRERT"
+		},
+		{
+			"parrentFaktum": 30,
 			"faktumId": 3000,
 			"soknadId": 1,
 			"key": "opplysninger.arbeidsituasjon",
