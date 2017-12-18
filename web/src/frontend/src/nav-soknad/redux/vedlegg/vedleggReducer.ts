@@ -6,15 +6,14 @@ import { finnFaktumMedId } from "../../utils/faktumUtils";
 const {
 	LAST_OPP,
 	LAST_OPP_OK,
-	LAST_OPP_PENDING,
-	LAST_OPP_FEILET,
-	SLETT_FIL,
-	SLETT_FIL_OK,
+	OPPDATERT_VEDLEGG,
+	NYTT_VEDLEGG,
 	HENT_VEDLEGGSFORVENTNING_OK,
 } = VedleggActionTypeKeys;
 
 const initialState: VedleggApiType = {
 	restStatus: REST_STATUS.INITIALISERT,
+	opplastingStatus: REST_STATUS.OK,
 	feilmelding: "",
 	data: []
 };
@@ -24,31 +23,36 @@ export default (
 	action: VedleggActionTypes
 ) => {
 	switch (action.type) {
-		// case LAST_OPP: {
-		// 	const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
-		// 	action.filer.map((fil: Fil) => {
-		// 		vedlegg[action.faktumKey].filer.push(
-		// 			{navn: fil.navn, status: REST_STATUS.PENDING}
-		// 		);
-		// 	});
-		// 	return {...state, restStatus: REST_STATUS.PENDING, data: {vedlegg}};
-		// }
-		//
-		// case LAST_OPP_PENDING: {
-		// 	const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
-		// 	vedlegg[action.faktumKey].filer = vedlegg[action.faktumKey].filer.map((fil: Fil) => {
-		// 		return {navn: fil.navn, status: REST_STATUS.PENDING};
-		// 	});
-		// 	return {...state, restStatus: REST_STATUS.PENDING, data: {vedlegg}};
-		// }
-		//
-		// case LAST_OPP_OK: {
-		// 	const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
-		// 	vedlegg[action.faktumKey].filer = vedlegg[action.faktumKey].filer.map((fil: Fil) => {
-		// 		return {navn: fil.navn, status: REST_STATUS.OK};
-		// 	});
-		// 	return {...state, restStatus: REST_STATUS.OK, data: {vedlegg}};
-		// }
+		case LAST_OPP: {
+			return {
+				...state,
+				opplastingStatus: REST_STATUS.PENDING
+			};
+		}
+		case LAST_OPP_OK: {
+			return {
+				...state,
+				opplastingStatus: REST_STATUS.OK
+			};
+		}
+		case OPPDATERT_VEDLEGG: {
+			const index = state.data.findIndex(v => v.vedleggId === action.vedlegg.vedleggId);
+			const data = [
+				...state.data.slice(0, index),
+				leggFaktumPaVedleggStruktur(action.vedlegg, action.fakta),
+				...state.data.slice(index + 1)
+			];
+			return {
+				...state,
+				data
+			};
+		}
+		case NYTT_VEDLEGG: {
+			return {
+				...state,
+				data: [...state.data, leggFaktumPaVedleggStruktur(action.vedlegg, action.fakta)]
+			};
+		}
 		//
 		// case LAST_OPP_FEILET: {
 		// 	const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
@@ -96,4 +100,5 @@ export default (
 function leggFaktumPaVedleggStruktur(vedlegg: Vedlegg, fakta: Faktum[]) {
 	const vedleggFaktum = finnFaktumMedId("", fakta, vedlegg.faktumId);
 	vedlegg.belopFaktumId = vedleggFaktum.parrentFaktum;
+	return vedlegg;
 }

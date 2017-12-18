@@ -2,28 +2,19 @@ import { Fil, Vedlegg, VedleggActionTypeKeys, VedleggActionTypes } from "./vedle
 import { Faktum } from "../../types/navSoknadTypes";
 
 const lastOppVedlegg = (
-	key: string,
-	vedleggId: string,
+	belopFaktumId: number,
 	formData: FormData,
-	filer: Fil[]
 ): VedleggActionTypes => {
 	return {
 		type: VedleggActionTypeKeys.LAST_OPP,
-		faktumKey: key,
-		vedleggId,
-		formData,
-		filer
+		belopFaktumId,
+		formData
 	};
 };
 
-const lastOppVedleggOk = (
-	key: string,
-	vedleggId: string,
-): VedleggActionTypes => {
+const lastOppVedleggOk = (): VedleggActionTypes => {
 	return {
-		type: VedleggActionTypeKeys.LAST_OPP_OK,
-		faktumKey: key,
-		vedleggId
+		type: VedleggActionTypeKeys.LAST_OPP_OK
 	};
 };
 
@@ -37,6 +28,22 @@ const lastOppVedleggFeilet = (
 		faktumKey: key,
 		vedleggId,
 		feilmelding
+	};
+};
+
+const oppdatertVedlegg = (vedlegg: Vedlegg, fakta: Faktum[]) => {
+	return {
+		type: VedleggActionTypeKeys.OPPDATERT_VEDLEGG,
+		vedlegg,
+		fakta
+	};
+};
+
+const nyttVedlegg = (vedlegg: Vedlegg, fakta: Faktum[]) => {
+	return {
+		type: VedleggActionTypeKeys.NYTT_VEDLEGG,
+		vedlegg,
+		fakta
 	};
 };
 
@@ -78,6 +85,9 @@ export {
 	lastOppVedlegg,
 	lastOppVedleggFeilet,
 	lastOppVedleggOk,
+
+	oppdatertVedlegg,
+	nyttVedlegg,
 
 	hentVedleggsForventningOk,
 

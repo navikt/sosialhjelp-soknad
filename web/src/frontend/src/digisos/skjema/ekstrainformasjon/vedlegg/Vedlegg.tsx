@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { DispatchProps, SoknadAppState } from "../../../../nav-soknad/redux/reduxTypes";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Vedlegg } from "../../../../nav-soknad/redux/vedlegg/vedleggTypes";
+import VedlegssFil from "./VedleggsFil";
+import LastOppVedlegg from "./LastOppVedlegg";
 
 interface Props {
 	vedlegg: Vedlegg[];
@@ -19,19 +21,19 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 	}
 
 	render() {
-		// const { faktumstruktur, fakta, intl } = this.props;
-		// const belopFakta = finnFakta(faktumstruktur.id, fakta);
+		const { vedlegg, belopFaktumId, intl, dispatch } = this.props;
 
-		const vedleggListe = this.props.vedlegg
-			.filter(vedlegg => vedlegg.innsendingsvalg === "LastetOpp")
-			.map(vedlegg => {
+		const vedleggListe = vedlegg
+			.filter(v => v.innsendingsvalg === "LastetOpp")
+			.map(v => {
 			return (
-				<div key={vedlegg.vedleggId}>Vedlegg: {vedlegg.filnavn}</div>
+				<VedlegssFil key={v.vedleggId} vedlegg={v} dispatch={dispatch} />
 			);
 		});
 
 		return (
-			<div>vedlegg kreves
+			<div>
+				<LastOppVedlegg belopFaktumId={belopFaktumId} />
 				<div>{vedleggListe}</div>
 			</div>
 		);

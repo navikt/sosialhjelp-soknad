@@ -7,6 +7,9 @@ export enum VedleggActionTypeKeys {
 	LAST_OPP_PENDING = "vedlegg/LAST_OPP_PENDING",
 	LAST_OPP_FEILET = "vedlegg/LAST_OPP_FEILET",
 
+	NYTT_VEDLEGG = "vedlegg/NYTT_VEDLEGG",
+	OPPDATERT_VEDLEGG = "vedlegg/OPPDATERT_VEDLEGG",
+
 	SLETT_FIL = "vedlegg/SLETT_FIL",
 	SLETT_FIL_OK = "vedlegg/SLETT_FIL_OK",
 
@@ -28,6 +31,8 @@ export type VedleggActionTypes =
 	| LastOppVedleggPendingAction
 	| LastOppVedleggFeiletAction
 	| LastOppVedleggOkAction
+	| OppdatertVedleggAction
+	| NyttVedleggAction
 	| SlettFilAction
 	| SlettFilOkAction
 	| HentVedleggsForventning // ...Action navn?
@@ -37,9 +42,7 @@ export type VedleggActionTypes =
 
 export interface LastOppVedleggAction {
 	type: VedleggActionTypeKeys.LAST_OPP;
-	vedleggId: string;
-	faktumKey: string;
-	filer: Fil[];
+	belopFaktumId: number;
 	formData: FormData;
 }
 
@@ -58,8 +61,18 @@ interface LastOppVedleggFeiletAction {
 
 interface LastOppVedleggOkAction {
 	type: VedleggActionTypeKeys.LAST_OPP_OK;
-	vedleggId: string;
-	faktumKey: string;
+}
+
+interface OppdatertVedleggAction {
+	type: VedleggActionTypeKeys.OPPDATERT_VEDLEGG;
+	vedlegg: Vedlegg;
+	fakta: Faktum[];
+}
+
+interface NyttVedleggAction {
+	type: VedleggActionTypeKeys.NYTT_VEDLEGG;
+	vedlegg: Vedlegg;
+	fakta: Faktum[];
 }
 
 export interface SlettFilAction {
@@ -122,6 +135,7 @@ export interface Vedlegg {
 export interface VedleggApiType {
 	data: Vedlegg[];
 	restStatus: REST_STATUS;
+	opplastingStatus: REST_STATUS;
 	feilmelding: string;
 }
 

@@ -30,7 +30,7 @@ function getServletBaseUrl(): string {
 }
 
 export function downloadAttachedFile(urlPath: string): void {
-	const filUrl = `${getServletBaseUrl()}${urlPath}`;
+	const filUrl = `${getApiBaseUrl()}${urlPath}`;
 	window.open(filUrl);
 }
 

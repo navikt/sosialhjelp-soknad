@@ -12,7 +12,6 @@ import { opprettFaktum, slettFaktum } from "../../../nav-soknad/redux/fakta/fakt
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
-// import Vedlegg from "../../../nav-soknad/components/vedlegg/Vedlegg";
 import { Vedlegg, VedleggProps } from "../../../nav-soknad/redux/vedlegg/vedleggTypes";
 import VedleggComponent from "./vedlegg/Vedlegg";
 
@@ -60,21 +59,6 @@ class Opplysning extends React.Component<AllProps, {}> {
 
 	fjernBelop(faktumId: number) {
 		this.props.dispatch(slettFaktum(faktumId));
-	}
-
-	vedleggForventet(faktumKey: string): boolean {
-		const { fakta, vedlegg } = this.props;
-		const faktum = finnFaktum(faktumKey, fakta);
-		if (faktum && faktum.faktumId && vedlegg && vedlegg.map) {
-			for (const vedleggsForventning of vedlegg) {
-				if (
-					vedleggsForventning.faktumId.toString() === faktum.faktumId.toString()
-				) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	lagRader(faktum: Faktum, index: number, faktumstruktur: FaktumStruktur, slettTekst: string) {

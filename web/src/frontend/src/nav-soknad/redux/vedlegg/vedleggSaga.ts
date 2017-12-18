@@ -2,9 +2,14 @@ import { call, put, select, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { fetchDelete, fetchToJson, fetchUpload } from "../../../nav-soknad/utils/rest-utils";
 import { LastOppVedleggAction, SlettFilAction, VedleggActionTypeKeys } from "./vedleggTypes";
-import { hentVedleggsForventningOk, lastOppVedleggFeilet, lastOppVedleggOk, slettFilOk } from "./vedleggActions";
+import {
+	hentVedleggsForventningOk, lastOppVedleggFeilet, lastOppVedleggOk, nyttVedlegg, oppdatertVedlegg,
+	slettFilOk
+} from "./vedleggActions";
 import { loggFeil } from "../../../nav-soknad/redux/navlogger/navloggerActions";
 import { selectBrukerBehandlingId, selectFaktaData } from "../selectors";
+import { opprettetFaktum } from "../fakta/faktaActions";
+import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 
 function* hentVedleggsForventningSaga(behandlingsId: string): SagaIterator {
 	const url = `soknader/${behandlingsId}/vedlegg`;
@@ -15,12 +20,23 @@ function* hentVedleggsForventningSaga(behandlingsId: string): SagaIterator {
 
 function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 	try {
-		const behandlingsId = yield select(selectBrukerBehandlingId);
-		const url = `vedlegg/${action.vedleggId}/fil?behandlingsId=${behandlingsId}`;
-		yield call(fetchUpload, url, action.formData);
-		yield put(lastOppVedleggOk(action.faktumKey, action.vedleggId));
+
+		const url = `sosialhjelpvedlegg/originalfil/${action.belopFaktumId}`;
+		const response: any = yield call(fetchUpload, url, action.formData);
+		yield call(console.log, response.right);
+		yield put(lastOppVedleggOk());
+
+		if (response.nyForventning) {
+			yield put(opprettetFaktum(response.faktum));
+			const fakta = yield select(selectFaktaData);
+			yield put(nyttVedlegg(response.vedlegg, fakta));
+		} else {
+			const fakta = yield select(selectFaktaData);
+			yield put(oppdatertVedlegg(response.vedlegg, fakta));
+		}
 	} catch (reason) {
-		yield put(lastOppVedleggFeilet(action.faktumKey, action.vedleggId, reason.toString()));
+		yield put(loggFeil("Last opp vedlegg feilet: " + reason));
+		yield put(navigerTilServerfeil());
 	}
 }
 
