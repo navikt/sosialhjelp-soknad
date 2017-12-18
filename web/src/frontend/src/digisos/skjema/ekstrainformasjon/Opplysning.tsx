@@ -9,10 +9,9 @@ import { Column, Container, Row } from "nav-frontend-grid";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import {
 	DispatchProps,
-	SoknadAppState
 } from "../../../nav-soknad/redux/reduxTypes";
 import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
+import { FaktumComponentProps, OpprettFaktumType } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { finnFakta, finnFaktum } from "../../../nav-soknad/utils/faktumUtils";
 import {
 	opprettFaktum,
@@ -23,11 +22,15 @@ import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import Vedlegg from "../../../nav-soknad/components/vedlegg/Vedlegg";
 import { FeatureToggles } from "../../../featureToggles";
+import { hentVedleggsForventning } from "../../../nav-soknad/redux/vedlegg/vedleggActions";
+import { State } from "../../redux/reducers";
 
 interface Props {
 	faktumstruktur: FaktumStruktur;
 	vedlegg: any;
 	featureToggleBeOmLonnslippVedlegg?: boolean;
+	hentVedleggsForventning?: (fakta: any) => void;
+	opprettFaktum?: (faktum: OpprettFaktumType) => void;
 }
 
 type AllProps = Props &
@@ -55,22 +58,22 @@ class Opplysning extends React.Component<AllProps, {}> {
 		this.fjernBelop = this.fjernBelop.bind(this);
 	}
 
+	componentWillMount() {
+		this.props.hentVedleggsForventning(this.props.fakta);
+	}
+
 	componentDidMount() {
 		const { faktumstruktur, fakta } = this.props;
-
 		const belopFakta = finnFakta(faktumstruktur.id, fakta);
-
 		if (belopFakta.length === 0) {
 			this.leggTilBelop();
 		}
 	}
 
 	leggTilBelop() {
-		const { faktumstruktur, fakta, dispatch } = this.props;
+		const { faktumstruktur, fakta} = this.props;
 		const parent = finnFaktum(faktumstruktur.dependOn.id, fakta);
-		dispatch(
-			opprettFaktum({ key: faktumstruktur.id, parrentFaktum: parent.faktumId })
-		);
+		this.props.opprettFaktum({ key: faktumstruktur.id, parrentFaktum: parent.faktumId });
 	}
 
 	fjernBelop(faktumId: number) {
@@ -179,11 +182,19 @@ interface StateFromProps {
 	fakta: Faktum[];
 }
 
-export default connect<StateFromProps, {}, Props>((state: SoknadAppState) => {
-	return {
-		fakta: state.fakta.data,
-		vedlegg: state.vedlegg.data,
-		featureToggleBeOmLonnslippVedlegg:
-			state.featuretoggles.data[FeatureToggles.beOmLonnslippVedlegg]
-	};
-})(injectIntl(Opplysning));
+const mapDispatchToProps = (dispatch: any) => ({
+	hentVedleggsForventning: (fakta: any) => dispatch(hentVedleggsForventning(fakta)),
+	opprettFaktum: (faktum: OpprettFaktumType) => dispatch( opprettFaktum(faktum))
+});
+
+const mapStateToProps = (state: State) => ({
+	fakta: state.fakta.data,
+	vedlegg: state.vedlegg.data,
+	featureToggleBeOmLonnslippVedlegg:
+		state.featuretoggles.data[FeatureToggles.beOmLonnslippVedlegg]
+});
+
+export default connect<StateFromProps, {}, Props>(
+	mapStateToProps,
+	mapDispatchToProps
+)(injectIntl(Opplysning));
