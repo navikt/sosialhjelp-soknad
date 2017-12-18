@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Vedlegg } from "../../types";
+import { FormattedMessage } from "react-intl";
 
 interface Props {
 	vedlegg: Vedlegg[];
@@ -7,9 +8,12 @@ interface Props {
 
 const Vedleggsliste: React.StatelessComponent<Props> = (props: Props) => (
 	<ul className="vedleggsliste">
-		{props.vedlegg.map(vedlegg => (
-			<li key={vedlegg.vedleggId}>{vedlegg.tittel}</li>
-		))}
+		{props.vedlegg
+			.filter(v => v.skjemanummerTillegg !== "annet" && v.skjemaNummer !== "annet")
+			.map(vedlegg => {
+			const vedleggsKey = `vedlegg.${vedlegg.skjemaNummer}.${vedlegg.skjemanummerTillegg}.tittel`;
+			return (<li key={vedlegg.fillagerReferanse}><FormattedMessage id={vedleggsKey} /></li>);
+		})}
 	</ul>
 );
 

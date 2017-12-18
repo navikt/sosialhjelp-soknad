@@ -1,127 +1,84 @@
-import { Fil, VedleggActionTypeKeys, VedleggActionTypes } from "./vedleggTypes";
+import { Vedlegg, VedleggActionTypeKeys, VedleggActionTypes } from "./vedleggTypes";
 import { Faktum } from "../../types/navSoknadTypes";
 
 const lastOppVedlegg = (
-	key: string,
-	vedleggId: string,
+	belopFaktumId: number,
 	formData: FormData,
-	filer: Fil[]
 ): VedleggActionTypes => {
 	return {
 		type: VedleggActionTypeKeys.LAST_OPP,
-		faktumKey: key,
-		vedleggId,
-		formData,
-		filer
+		belopFaktumId,
+		formData
 	};
 };
 
-const lastOppVedleggOk = (
-	key: string,
-	vedleggId: string,
-): VedleggActionTypes => {
+const lastOppVedleggOk = (): VedleggActionTypes => {
 	return {
-		type: VedleggActionTypeKeys.LAST_OPP_OK,
-		faktumKey: key,
-		vedleggId
+		type: VedleggActionTypeKeys.LAST_OPP_OK
 	};
 };
 
-const lastOppVedleggFeilet = (
-	key: string,
-	vedleggId: string,
-	feilmelding: string
-): VedleggActionTypes => {
+const oppdatertVedlegg = (vedlegg: Vedlegg, fakta: Faktum[]) => {
 	return {
-		type: VedleggActionTypeKeys.LAST_OPP_FEILET,
-		faktumKey: key,
-		vedleggId,
-		feilmelding
-	};
-};
-
-const slettFil = (
-	faktumKey: string,
-	vedleggId: string,
-	filNavn: string
-): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.SLETT_FIL,
-		faktumKey,
-		vedleggId,
-		filNavn
-	};
-};
-
-const slettFilOk = (
-	faktumKey: string,
-	vedleggId: string,
-	filNavn: string
-): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.SLETT_FIL_OK,
-		faktumKey,
-		vedleggId,
-		filNavn
-	};
-};
-
-const hentVedleggsForventning = (fakta: Faktum[]): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING,
+		type: VedleggActionTypeKeys.OPPDATERT_VEDLEGG,
+		vedlegg,
 		fakta
 	};
 };
 
-const hentVedleggsForventningOk = (struktur: any, fakta: Faktum[]): VedleggActionTypes => {
+const nyttVedlegg = (vedlegg: Vedlegg, fakta: Faktum[]) => {
+	return {
+		type: VedleggActionTypeKeys.NYTT_VEDLEGG,
+		vedlegg,
+		fakta
+	};
+};
+
+const startSlettVedlegg = (
+	vedleggId: number,
+	vedleggsFaktumId: number
+): VedleggActionTypes => {
+	return {
+		type: VedleggActionTypeKeys.START_SLETT_VEDLEGG,
+		vedleggId,
+		vedleggsFaktumId
+	};
+};
+
+const slettVedlegg = (
+	vedleggId: number
+): VedleggActionTypes => {
+	return {
+		type: VedleggActionTypeKeys.SLETT_VEDLEGG,
+		vedleggId
+	};
+};
+
+const slettVedleggOk = (
+): VedleggActionTypes => {
+	return {
+		type: VedleggActionTypeKeys.SLETT_VEDLEGG_OK,
+	};
+};
+
+const hentVedleggsForventningOk = (vedlegg: Vedlegg[], fakta: Faktum[]): VedleggActionTypes => {
 	return {
 		type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_OK,
-		vedleggsforventninger: struktur,
+		vedleggsforventninger: vedlegg,
 		fakta
-	};
-};
-
-const hentVedleggsForventningFeilet = (feilmelding: string): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_FEILET,
-		feilmelding
-	};
-};
-
-const hentFilListe = (
-	key: string,
-	vedleggId: string,
-): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.HENT_FIL_LISTE,
-		faktumKey: key,
-		vedleggId
-	};
-};
-
-const hentFilListeOk = (
-	key: string,
-	filer: Fil[],
-): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.HENT_FIL_LISTE_OK,
-		faktumKey: key,
-		filer
 	};
 };
 
 export {
 	lastOppVedlegg,
-	lastOppVedleggFeilet,
 	lastOppVedleggOk,
 
-	hentVedleggsForventning,
+	oppdatertVedlegg,
+	nyttVedlegg,
+
 	hentVedleggsForventningOk,
-	hentVedleggsForventningFeilet,
 
-	hentFilListe,
-	hentFilListeOk,
-
-	slettFil,
-	slettFilOk
+	startSlettVedlegg,
+	slettVedlegg,
+	slettVedleggOk
 };

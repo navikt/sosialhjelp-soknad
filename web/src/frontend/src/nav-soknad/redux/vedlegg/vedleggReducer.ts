@@ -1,33 +1,13 @@
-import {
-	Fil,
-	VedleggActionTypeKeys,
-	VedleggActionTypes,
-	VedleggApiType,
-	Vedlegg
-} from "./vedleggTypes";
+import { Vedlegg, VedleggActionTypeKeys, VedleggActionTypes, VedleggApiType } from "./vedleggTypes";
 import { REST_STATUS } from "../../types/restTypes";
 import { Faktum } from "../../types/navSoknadTypes";
-
-const {
-	LAST_OPP,
-	LAST_OPP_OK,
-	LAST_OPP_PENDING,
-	LAST_OPP_FEILET,
-	SLETT_FIL,
-	SLETT_FIL_OK,
-	HENT_VEDLEGGSFORVENTNING,
-	HENT_VEDLEGGSFORVENTNING_OK,
-	HENT_VEDLEGGSFORVENTNING_FEILET,
-	HENT_FIL_LISTE,
-	HENT_FIL_LISTE_OK
-} = VedleggActionTypeKeys;
+import { finnFaktumMedId } from "../../utils/faktumUtils";
 
 const initialState: VedleggApiType = {
 	restStatus: REST_STATUS.INITIALISERT,
+	opplastingStatus: REST_STATUS.OK,
 	feilmelding: "",
-	data: {
-		vedlegg: {}
-	}
+	data: []
 };
 
 export default (
@@ -35,102 +15,72 @@ export default (
 	action: VedleggActionTypes
 ) => {
 	switch (action.type) {
-		case LAST_OPP: {
-			const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
-			action.filer.map( (fil: Fil) => {
-				vedlegg[action.faktumKey].filer.push(
-					{navn: fil.navn, status: REST_STATUS.PENDING}
-				);
-			});
-			return {...state, restStatus: REST_STATUS.PENDING, data: { vedlegg }};
+		case VedleggActionTypeKeys.LAST_OPP: {
+			return {
+				...state,
+				opplastingStatus: REST_STATUS.PENDING
+			};
+		}
+		case VedleggActionTypeKeys.LAST_OPP_OK: {
+			return {
+				...state,
+				opplastingStatus: REST_STATUS.OK
+			};
+		}
+		case VedleggActionTypeKeys.OPPDATERT_VEDLEGG: {
+			const index = state.data.findIndex(v => v.vedleggId === action.vedlegg.vedleggId);
+			const data = [
+				...state.data.slice(0, index),
+				leggFaktumPaVedleggStruktur(action.vedlegg, action.fakta),
+				...state.data.slice(index + 1)
+			];
+			return {
+				...state,
+				data
+			};
+		}
+		case VedleggActionTypeKeys.NYTT_VEDLEGG: {
+			return {
+				...state,
+				data: [...state.data, leggFaktumPaVedleggStruktur(action.vedlegg, action.fakta)]
+			};
+		}
+		case VedleggActionTypeKeys.START_SLETT_VEDLEGG: {
+			return {
+				...state,
+				opplastingStatus: REST_STATUS.PENDING
+			};
+		}
+		case VedleggActionTypeKeys.SLETT_VEDLEGG: {
+			return {
+				...state,
+				data: state.data.filter(v => v.vedleggId !== action.vedleggId)
+			};
 		}
 
-		case LAST_OPP_PENDING: {
-			const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
-			vedlegg[action.faktumKey].filer = vedlegg[action.faktumKey].filer.map( (fil: Fil) => {
-				return {navn: fil.navn, status: REST_STATUS.PENDING};
-			});
-			return {...state, restStatus: REST_STATUS.PENDING, data: { vedlegg }};
+		case VedleggActionTypeKeys.SLETT_VEDLEGG_OK: {
+			return {
+				...state,
+				opplastingStatus: REST_STATUS.OK
+			};
 		}
+		case VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_OK: {
+			const vedleggsForventninger = action.vedleggsforventninger;
+			vedleggsForventninger.forEach(vedlegg => leggFaktumPaVedleggStruktur(vedlegg, action.fakta));
 
-		case LAST_OPP_OK: {
-			const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
-			vedlegg[action.faktumKey].filer = vedlegg[action.faktumKey].filer.map( (fil: Fil) => {
-				return {navn: fil.navn, status: REST_STATUS.OK};
-			});
-			return {...state, restStatus: REST_STATUS.OK, data: { vedlegg }};
-		}
-
-		case LAST_OPP_FEILET: {
-			const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
-			vedlegg[action.faktumKey].filer = vedlegg[action.faktumKey].filer.map( (fil: Fil) => {
-				return {navn: fil.navn, status: REST_STATUS.FEILET};
-			});
-			return {...state, restStatus: REST_STATUS.FEILET, data: { vedlegg }};
-		}
-
-		case SLETT_FIL: {
-			const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
-			vedlegg[action.faktumKey].filer = vedlegg[action.faktumKey].filer.map( (fil: Fil) => {
-				const status = (fil.navn === action.filNavn) ? REST_STATUS.PENDING : fil.status;
-				return {navn: fil.navn, status};
-			});
-			return {...state, restStatus: REST_STATUS.PENDING, data: { vedlegg }};
-		}
-
-		case SLETT_FIL_OK: {
-			const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
-			vedlegg[action.faktumKey].filer = vedlegg[action.faktumKey].filer.filter( (fil: Fil) => {
-				return (fil.navn !== action.filNavn);
-			});
-			return {...state, restStatus: REST_STATUS.OK, data: { vedlegg }};
-		}
-
-		case HENT_FIL_LISTE: {
-			return 	{...state, restStatus: REST_STATUS.PENDING};
-		}
-
-		case HENT_FIL_LISTE_OK: {
-			const vedlegg: Vedlegg = Object.assign(state.data.vedlegg);
-			vedlegg[action.faktumKey].filer = action.filer.map( (fil: any) => {
-				return {navn: fil.navn, status: REST_STATUS.OK};
-			});
-			return 	{...state, restStatus: REST_STATUS.OK, data: { vedlegg }};
-		}
-
-		case HENT_VEDLEGGSFORVENTNING:
-			return {...state, restStatus: REST_STATUS.PENDING};
-
-		case HENT_VEDLEGGSFORVENTNING_OK: {
-			const vedlegg = {};
-			action.vedleggsforventninger.map( (forventning: any) => {
-				action.fakta.map( (faktum: Faktum) => {
-					if (faktum.faktumId === forventning.faktumId) {
-						const filer = forventning.filer.map((fil: any) => {
-							return {navn: fil.navn, status: REST_STATUS.OK};
-						});
-						vedlegg[faktum.key] = {
-							faktumId: faktum.faktumId,
-							vedleggId: forventning.vedleggId,
-							filer
-						};
-					}
-				});
-			});
 			return {
 				...state,
 				restStatus: REST_STATUS.OK,
-				data: {
-					vedlegg
-				}
+				data:  vedleggsForventninger
 			};
-}
-		case HENT_VEDLEGGSFORVENTNING_FEILET:
-			return {
-				...state,
-				restStatus: REST_STATUS.FEILET
-			};
+		}
 		default:
 			return state;
 	}
 };
+
+function leggFaktumPaVedleggStruktur(vedlegg: Vedlegg, fakta: Faktum[]) {
+	const vedleggFaktum = finnFaktumMedId("", fakta, vedlegg.faktumId);
+	vedlegg.belopFaktumId = vedleggFaktum.parrentFaktum;
+	return vedlegg;
+}

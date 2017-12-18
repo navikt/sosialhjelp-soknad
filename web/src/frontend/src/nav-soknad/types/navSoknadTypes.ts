@@ -66,6 +66,7 @@ export interface Vedlegg {
 	skjemanummerTillegg: string;
 	innsendingsvalg: string;
 	opprinneligInnsendingsvalg: string;
+	fillagerReferanse: string;
 	navn: string;
 	opprettetDato: string;
 	urls: any;
