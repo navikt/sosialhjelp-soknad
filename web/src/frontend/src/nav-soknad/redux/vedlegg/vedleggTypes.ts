@@ -4,8 +4,6 @@ import { Faktum } from "../../types/navSoknadTypes";
 export enum VedleggActionTypeKeys {
 	LAST_OPP = "vedlegg/LAST_OPP",
 	LAST_OPP_OK = "vedlegg/LAST_OPP_OK",
-	LAST_OPP_PENDING = "vedlegg/LAST_OPP_PENDING",
-	LAST_OPP_FEILET = "vedlegg/LAST_OPP_FEILET",
 
 	NYTT_VEDLEGG = "vedlegg/NYTT_VEDLEGG",
 	OPPDATERT_VEDLEGG = "vedlegg/OPPDATERT_VEDLEGG",
@@ -14,9 +12,7 @@ export enum VedleggActionTypeKeys {
 	SLETT_VEDLEGG = "vedlegg/SLETT_VEDLEGG",
 	SLETT_VEDLEGG_OK = "vedlegg/SLETT_VEDLEGG_OK",
 
-	HENT_VEDLEGGSFORVENTNING = "vedlegg/HENT_VEDLEGGSFORVENTNING",
 	HENT_VEDLEGGSFORVENTNING_OK = "vedlegg/HENT_VEDLEGGSFORVENTNING_OK",
-	HENT_VEDLEGGSFORVENTNING_FEILET = "vedlegg/HENT_VEDLEGGSFORVENTNING_FEILET",
 
 	INIT = "vedlegg/INIT",
 	OTHER_ACTION = "__any_other_action_type__"
@@ -29,36 +25,19 @@ export interface VedleggState {
 
 export type VedleggActionTypes =
 	LastOppVedleggAction
-	| LastOppVedleggPendingAction
-	| LastOppVedleggFeiletAction
 	| LastOppVedleggOkAction
 	| OppdatertVedleggAction
 	| NyttVedleggAction
 	| StartSlettVedleggAction
 	| SlettVedleggAction
 	| SlettVedleggOkAction
-	| HentVedleggsForventning // ...Action navn?
 	| HentVedleggsForventningOk
-	| HentVedleggsForventningFeilet
 	| OtherAction;
 
 export interface LastOppVedleggAction {
 	type: VedleggActionTypeKeys.LAST_OPP;
 	belopFaktumId: number;
 	formData: FormData;
-}
-
-interface LastOppVedleggPendingAction {
-	type: VedleggActionTypeKeys.LAST_OPP_PENDING;
-	vedleggId: string;
-	faktumKey: string;
-}
-
-interface LastOppVedleggFeiletAction {
-	type: VedleggActionTypeKeys.LAST_OPP_FEILET;
-	vedleggId: string;
-	faktumKey: string;
-	feilmelding: string;
 }
 
 interface LastOppVedleggOkAction {
@@ -92,20 +71,10 @@ export interface SlettVedleggOkAction {
 	type: VedleggActionTypeKeys.SLETT_VEDLEGG_OK;
 }
 
-interface HentVedleggsForventning {
-	type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING;
-	fakta: Faktum[];
-}
-
 interface HentVedleggsForventningOk {
 	type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_OK;
 	vedleggsforventninger: Vedlegg[];
 	fakta: Faktum[];
-}
-
-interface HentVedleggsForventningFeilet {
-	type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_FEILET;
-	feilmelding: string;
 }
 
 export interface OtherAction {

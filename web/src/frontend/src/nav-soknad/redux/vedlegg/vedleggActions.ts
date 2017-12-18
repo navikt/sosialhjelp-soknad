@@ -1,4 +1,4 @@
-import { Fil, Vedlegg, VedleggActionTypeKeys, VedleggActionTypes } from "./vedleggTypes";
+import { Vedlegg, VedleggActionTypeKeys, VedleggActionTypes } from "./vedleggTypes";
 import { Faktum } from "../../types/navSoknadTypes";
 
 const lastOppVedlegg = (
@@ -15,19 +15,6 @@ const lastOppVedlegg = (
 const lastOppVedleggOk = (): VedleggActionTypes => {
 	return {
 		type: VedleggActionTypeKeys.LAST_OPP_OK
-	};
-};
-
-const lastOppVedleggFeilet = (
-	key: string,
-	vedleggId: string,
-	feilmelding: string
-): VedleggActionTypes => {
-	return {
-		type: VedleggActionTypeKeys.LAST_OPP_FEILET,
-		faktumKey: key,
-		vedleggId,
-		feilmelding
 	};
 };
 
@@ -84,7 +71,6 @@ const hentVedleggsForventningOk = (vedlegg: Vedlegg[], fakta: Faktum[]): Vedlegg
 
 export {
 	lastOppVedlegg,
-	lastOppVedleggFeilet,
 	lastOppVedleggOk,
 
 	oppdatertVedlegg,

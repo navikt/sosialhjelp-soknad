@@ -31,8 +31,7 @@ export interface SynligeFaktaProps {
 }
 
 export enum SynligeFaktaActionTypeKeys {
-	START_BYGG_STRUKTUR = "synligefakta/START_BYGG_STRUKTUR", // TODO bedre navn
-	// HENT_SYNLIGE = "synligefakta/HENT_SYNLIGE",
+	START_BYGG_STRUKTUR = "synligefakta/START_BYGG_STRUKTUR",
 	HENT_SYNLIGE_OK = "synligefakta/HENT_SYNLIGE_OK",
 		BYGG_STRUKTUR_OK = "synligefakta/BYGG_STRUKTUR_OK",
 	BYGG_STRUKTUR_FEILET = "synligefakta/BYGG_STRUKTUR_FEILET",
