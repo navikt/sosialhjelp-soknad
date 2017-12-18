@@ -45,10 +45,6 @@ class Opplysning extends React.Component<AllProps, {}> {
 		this.fjernBelop = this.fjernBelop.bind(this);
 	}
 
-	componentDidMount() {
-
-	}
-
 	leggTilBelop() {
 		const { faktumstruktur, fakta, dispatch } = this.props;
 		const parent = finnFaktum(faktumstruktur.dependOn.id, fakta);

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dispatch} from "../../../../nav-soknad/redux/reduxTypes";
+import { Dispatch } from "../../../../nav-soknad/redux/reduxTypes";
 import { Vedlegg } from "../../../../nav-soknad/redux/vedlegg/vedleggTypes";
 import Lenkeknapp from "../../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import { downloadAttachedFile } from "../../../../nav-soknad/utils/rest-utils";

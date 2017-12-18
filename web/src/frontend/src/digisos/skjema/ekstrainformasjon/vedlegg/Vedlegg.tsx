@@ -22,7 +22,7 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 	}
 
 	render() {
-		const { vedlegg, belopFaktum, intl, dispatch } = this.props;
+		const { vedlegg, belopFaktum, dispatch } = this.props;
 
 		const vedleggListe = vedlegg
 			.filter(v => v.innsendingsvalg === "LastetOpp")
@@ -43,7 +43,6 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 				<div className="vedleggsliste">
 					{vedleggListe}
 					</div>
-
 
 				<LastOppVedlegg belopFaktumId={belopFaktum.faktumId} />
 			</div>

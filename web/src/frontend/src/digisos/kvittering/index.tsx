@@ -87,7 +87,8 @@ class KvitteringView extends React.Component<
 	render() {
 		const { kvittering, oppsummering, restStatus } = this.props;
 		const visVedlegg = kvittering && kvittering.ikkeInnsendteVedlegg &&
-			 kvittering.ikkeInnsendteVedlegg.filter(v => v.skjemanummerTillegg !== "annet" && v.skjemaNummer !== "annet").length > 0;
+			kvittering.ikkeInnsendteVedlegg.filter(v => v.skjemanummerTillegg !== "annet" && v.skjemaNummer !== "annet")
+			.length > 0;
 		return (
 			<LoadContainer restStatus={restStatus}>
 				{kvittering && (

@@ -2,16 +2,15 @@ import { call, put, select, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { fetchDelete, fetchToJson, fetchUpload, toJson } from "../../../nav-soknad/utils/rest-utils";
 import {
-	LastOppVedleggAction, SlettVedleggAction, StartSlettVedleggAction,
+	LastOppVedleggAction, StartSlettVedleggAction,
 	VedleggActionTypeKeys
 } from "./vedleggTypes";
 import {
-	hentVedleggsForventningOk, lastOppVedleggOk, nyttVedlegg, oppdatertVedlegg, slettVedlegg, slettVedleggOk,
-	startSlettVedlegg,
+	hentVedleggsForventningOk, lastOppVedleggOk, nyttVedlegg, oppdatertVedlegg, slettVedlegg, slettVedleggOk
 } from "./vedleggActions";
 import { loggFeil } from "../../../nav-soknad/redux/navlogger/navloggerActions";
 import { selectFaktaData } from "../selectors";
-import { opprettetFaktum, slettetFaktum, slettFaktum, slettFaktumLokalt } from "../fakta/faktaActions";
+import { opprettetFaktum, slettFaktumLokalt } from "../fakta/faktaActions";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 
 function* hentVedleggsForventningSaga(behandlingsId: string): SagaIterator {
