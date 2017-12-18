@@ -32,7 +32,6 @@ interface InjectedRouterProps {
 
 interface StateProps {
 	kvittering: Kvittering;
-	visVedlegg: boolean;
 	oppsummering: Oppsummering;
 	restStatus: REST_STATUS;
 }
@@ -86,7 +85,9 @@ class KvitteringView extends React.Component<
 		);
 	}
 	render() {
-		const { kvittering, oppsummering, visVedlegg, restStatus } = this.props;
+		const { kvittering, oppsummering, restStatus } = this.props;
+		const visVedlegg = kvittering && kvittering.ikkeInnsendteVedlegg &&
+			 kvittering.ikkeInnsendteVedlegg.filter(v => v.skjemanummerTillegg !== "annet" && v.skjemaNummer !== "annet").length > 0;
 		return (
 			<LoadContainer restStatus={restStatus}>
 				{kvittering && (
@@ -129,10 +130,6 @@ export default connect((state: State, props: any): StateProps => {
 	return {
 		restStatus: state.soknad.restStatus,
 		kvittering: state.soknad.kvittering,
-		oppsummering: harOppsummering ? state.oppsummering.oppsummering : null,
-		visVedlegg:
-			state.soknad.kvittering &&
-			state.soknad.kvittering.ikkeInnsendteVedlegg &&
-			state.soknad.kvittering.ikkeInnsendteVedlegg.length > 0
+		oppsummering: harOppsummering ? state.oppsummering.oppsummering : null
 	};
 })(injectIntl(withRouter(KvitteringView)));

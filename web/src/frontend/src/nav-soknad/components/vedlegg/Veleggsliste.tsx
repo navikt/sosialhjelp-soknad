@@ -8,7 +8,9 @@ interface Props {
 
 const Vedleggsliste: React.StatelessComponent<Props> = (props: Props) => (
 	<ul className="vedleggsliste">
-		{props.vedlegg.map(vedlegg => {
+		{props.vedlegg
+			.filter(v => v.skjemanummerTillegg !== "annet" && v.skjemaNummer !== "annet")
+			.map(vedlegg => {
 			const vedleggsKey = `vedlegg.${vedlegg.skjemaNummer}.${vedlegg.skjemanummerTillegg}.tittel`;
 			// const vedleggsKey = "asd";
 			return (<li key={vedlegg.fillagerReferanse}><FormattedMessage id={vedleggsKey} /></li>);
