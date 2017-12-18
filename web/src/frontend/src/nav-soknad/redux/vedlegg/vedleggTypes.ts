@@ -92,6 +92,8 @@ export interface Vedlegg {
 	filnavn?: string;
 	faktumId: number;
 	innsendingsvalg: string;
+	skjemaNummer: string;
+	skjemanummerTillegg: string;
 	belopFaktumId: number;
 }
 

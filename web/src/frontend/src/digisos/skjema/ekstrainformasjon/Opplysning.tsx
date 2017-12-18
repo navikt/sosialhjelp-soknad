@@ -138,7 +138,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 				{faktumstruktur.flereTillatt === "true" ? leggTilKnapp : null}
 				{
 					vedleggForOpplysning.length > 0 &&
-						<VedleggComponent vedlegg={vedleggForOpplysning} belopFaktumId={belopFaktumId} />
+						<VedleggComponent vedlegg={vedleggForOpplysning} belopFaktum={belopFakta[0]} />
 				}
 			</SporsmalFaktum>
 		);

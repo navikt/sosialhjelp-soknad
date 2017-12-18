@@ -1,14 +1,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { DispatchProps, SoknadAppState } from "../../../../nav-soknad/redux/reduxTypes";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { Vedlegg } from "../../../../nav-soknad/redux/vedlegg/vedleggTypes";
 import VedlegssFil from "./VedleggsFil";
 import LastOppVedlegg from "./LastOppVedlegg";
+import { Faktum } from "../../../../nav-soknad/types/navSoknadTypes";
 
 interface Props {
 	vedlegg: Vedlegg[];
-	belopFaktumId: number;
+	belopFaktum: Faktum;
 }
 
 type AllProps = Props &
@@ -21,7 +22,7 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 	}
 
 	render() {
-		const { vedlegg, belopFaktumId, intl, dispatch } = this.props;
+		const { vedlegg, belopFaktum, intl, dispatch } = this.props;
 
 		const vedleggListe = vedlegg
 			.filter(v => v.innsendingsvalg === "LastetOpp")
@@ -31,10 +32,20 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 			);
 		});
 
+		const vedleggsKey = `vedlegg.${vedlegg[0].skjemaNummer}.${vedlegg[0].skjemanummerTillegg}.tittel`;
+
 		return (
-			<div>
-				<LastOppVedlegg belopFaktumId={belopFaktumId} />
-				<div>{vedleggListe}</div>
+			<div className="">
+				<p>
+					<FormattedMessage id={vedleggsKey} />
+				</p>
+
+				<div className="vedleggsliste">
+					{vedleggListe}
+					</div>
+
+
+				<LastOppVedlegg belopFaktumId={belopFaktum.faktumId} />
 			</div>
 		);
 	}

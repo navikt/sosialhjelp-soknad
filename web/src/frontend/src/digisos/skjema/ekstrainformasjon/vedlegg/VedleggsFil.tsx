@@ -1,7 +1,5 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { Dispatch, DispatchProps, SoknadAppState } from "../../../../nav-soknad/redux/reduxTypes";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { Dispatch} from "../../../../nav-soknad/redux/reduxTypes";
 import { Vedlegg } from "../../../../nav-soknad/redux/vedlegg/vedleggTypes";
 import Lenkeknapp from "../../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import { downloadAttachedFile } from "../../../../nav-soknad/utils/rest-utils";
@@ -14,21 +12,19 @@ interface Props {
 	dispatch: Dispatch;
 }
 
-type AllProps = Props &
-	InjectedIntlProps;
+type AllProps = Props;
 
-class VedleggsFil extends React.Component<AllProps, {}> {
+export default class VedleggsFil extends React.Component<AllProps, {}> {
 	constructor(props: AllProps) {
 		super(props);
 	}
 
 	render() {
-		const {vedlegg, dispatch, intl} = this.props;
-		// const belopFakta = finnFakta(faktumstruktur.id, fakta);
+		const {vedlegg, dispatch} = this.props;
 		const lastNedUrl = `sosialhjelpvedlegg/${vedlegg.vedleggId}/fil`;
 
 		return (
-			<div>
+			<div className="vedleggsliste__vedlegg">
 				<span className="vedleggsliste__filnavn">
 					<Lenkeknapp onClick={() => downloadAttachedFile(lastNedUrl)}>
 						{vedlegg.filnavn}
@@ -51,5 +47,3 @@ class VedleggsFil extends React.Component<AllProps, {}> {
 		);
 	}
 }
-
-export default (injectIntl(VedleggsFil));
