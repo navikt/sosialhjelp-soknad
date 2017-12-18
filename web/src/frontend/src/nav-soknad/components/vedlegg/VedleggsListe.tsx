@@ -13,13 +13,6 @@ interface Props extends React.Props<any> {
 	lastNedVedlegg(filNavn: string): void;
 }
 
-// function lastNedVedlegg(vedleggId: string, faktumKey: string) {
-// 	// window.alert("Last ned vedlegg ikke implementert");
-// 	// const filUrl = "http://localhost:3001/vedlegg/1001/image1.PNG?behandlingsId=1000CPY7D";
-// 	// window.open(filUrl);
-//
-// }
-
 const VedleggsListe: React.StatelessComponent<Props> = ({
 	filer,
 	faktumKey,
@@ -29,8 +22,8 @@ const VedleggsListe: React.StatelessComponent<Props> = ({
 	return (
 		<div className="vedleggsliste">
 			{filer &&
-				filer.map((fil: Fil, index: number) => (
-					<div key={index} className="vedleggsliste__vedlegg">
+				filer.map((fil: Fil) => (
+					<div key={fil.navn} className="vedleggsliste__vedlegg">
 						<span className="vedleggsliste__filnavn">
 							<Lenkeknapp onClick={() => lastNedVedlegg(fil.navn)}>
 								{fil.navn}
