@@ -10,8 +10,9 @@ export enum VedleggActionTypeKeys {
 	NYTT_VEDLEGG = "vedlegg/NYTT_VEDLEGG",
 	OPPDATERT_VEDLEGG = "vedlegg/OPPDATERT_VEDLEGG",
 
-	SLETT_FIL = "vedlegg/SLETT_FIL",
-	SLETT_FIL_OK = "vedlegg/SLETT_FIL_OK",
+	START_SLETT_VEDLEGG = "vedlegg/START_SLETT_VEDLEGG",
+	SLETT_VEDLEGG = "vedlegg/SLETT_VEDLEGG",
+	SLETT_VEDLEGG_OK = "vedlegg/SLETT_VEDLEGG_OK",
 
 	HENT_VEDLEGGSFORVENTNING = "vedlegg/HENT_VEDLEGGSFORVENTNING",
 	HENT_VEDLEGGSFORVENTNING_OK = "vedlegg/HENT_VEDLEGGSFORVENTNING_OK",
@@ -33,8 +34,9 @@ export type VedleggActionTypes =
 	| LastOppVedleggOkAction
 	| OppdatertVedleggAction
 	| NyttVedleggAction
-	| SlettFilAction
-	| SlettFilOkAction
+	| StartSlettVedleggAction
+	| SlettVedleggAction
+	| SlettVedleggOkAction
 	| HentVedleggsForventning // ...Action navn?
 	| HentVedleggsForventningOk
 	| HentVedleggsForventningFeilet
@@ -75,18 +77,19 @@ interface NyttVedleggAction {
 	fakta: Faktum[];
 }
 
-export interface SlettFilAction {
-	type: VedleggActionTypeKeys.SLETT_FIL;
-	faktumKey: string;
-	vedleggId: string;
-	filNavn: string;
+export interface StartSlettVedleggAction {
+	type: VedleggActionTypeKeys.START_SLETT_VEDLEGG;
+	vedleggId: number;
+	vedleggsFaktumId: number;
 }
 
-export interface SlettFilOkAction {
-	type: VedleggActionTypeKeys.SLETT_FIL_OK;
-	faktumKey: string;
-	vedleggId: string;
-	filNavn: string;
+export interface SlettVedleggAction {
+	type: VedleggActionTypeKeys.SLETT_VEDLEGG;
+	vedleggId: number;
+}
+
+export interface SlettVedleggOkAction {
+	type: VedleggActionTypeKeys.SLETT_VEDLEGG_OK;
 }
 
 interface HentVedleggsForventning {
@@ -122,15 +125,6 @@ export interface Vedlegg {
 	innsendingsvalg: string;
 	belopFaktumId: number;
 }
-/*
-export interface Vedlegg {
-	[ key: string ]: {
-		faktumId: string;
-		faktumKey: string;
-		vedleggId: number;
-		filer: Fil[];
-	};
-}*/
 
 export interface VedleggApiType {
 	data: Vedlegg[];

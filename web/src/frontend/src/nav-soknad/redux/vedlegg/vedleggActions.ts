@@ -47,29 +47,30 @@ const nyttVedlegg = (vedlegg: Vedlegg, fakta: Faktum[]) => {
 	};
 };
 
-const slettFil = (
-	faktumKey: string,
-	vedleggId: string,
-	filNavn: string
+const startSlettVedlegg = (
+	vedleggId: number,
+	vedleggsFaktumId: number
 ): VedleggActionTypes => {
 	return {
-		type: VedleggActionTypeKeys.SLETT_FIL,
-		faktumKey,
+		type: VedleggActionTypeKeys.START_SLETT_VEDLEGG,
 		vedleggId,
-		filNavn
+		vedleggsFaktumId
 	};
 };
 
-const slettFilOk = (
-	faktumKey: string,
-	vedleggId: string,
-	filNavn: string
+const slettVedlegg = (
+	vedleggId: number
 ): VedleggActionTypes => {
 	return {
-		type: VedleggActionTypeKeys.SLETT_FIL_OK,
-		faktumKey,
-		vedleggId,
-		filNavn
+		type: VedleggActionTypeKeys.SLETT_VEDLEGG,
+		vedleggId
+	};
+};
+
+const slettVedleggOk = (
+): VedleggActionTypes => {
+	return {
+		type: VedleggActionTypeKeys.SLETT_VEDLEGG_OK,
 	};
 };
 
@@ -91,6 +92,7 @@ export {
 
 	hentVedleggsForventningOk,
 
-	slettFil,
-	slettFilOk
+	startSlettVedlegg,
+	slettVedlegg,
+	slettVedleggOk
 };

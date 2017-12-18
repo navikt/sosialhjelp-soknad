@@ -138,7 +138,7 @@ export function fetchUpload(urlPath: string, formData: FormData) {
 		.then(toJson);
 }
 
-function toJson<T>(response: Response): Promise<T> {
+export function toJson<T>(response: Response): Promise<T> {
 	if (response.status === 204) {
 		return response.text() as Promise<any>;
 	}

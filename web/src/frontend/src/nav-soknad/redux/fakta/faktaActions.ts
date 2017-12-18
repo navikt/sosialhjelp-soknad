@@ -100,6 +100,13 @@ export function slettFaktum(faktumId: number): FaktumActionTypes {
 	};
 }
 
+export function slettFaktumLokalt(faktumId: number): FaktumActionTypes {
+	return {
+		type: FaktumActionTypeKeys.SLETT_FAKTUM_LOKALT,
+		faktumId
+	};
+}
+
 export function slettetFaktum(): FaktumActionTypes {
 	return {
 		type: FaktumActionTypeKeys.SLETTET_FAKTUM
