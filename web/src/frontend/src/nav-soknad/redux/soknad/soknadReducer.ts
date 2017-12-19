@@ -24,16 +24,16 @@ export const defaultState: SoknadState = {
 		opprettetDato: "",
 		sistLagret: "",
 		delstegStatus: "",
-		vedlegg: [],
+		// vedlegg: [],
 		journalforendeEnhet: "",
 		soknadPrefix: "",
 		soknadUrl: "",
 		fortsettSoknadUrl: "",
 		stegliste: [],
-		sprak: "",
-		ikkeInnsendteVedlegg: [],
-		opplastedeVedlegg: [],
-		innsendteVedlegg: []
+		sprak: "" // ,
+		// ikkeInnsendteVedlegg: [],
+		// opplastedeVedlegg: [],
+		// innsendteVedlegg: []
 	}
 };
 
@@ -94,9 +94,16 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				restStatus: REST_STATUS.PENDING
 			};
 		case SoknadActionTypeKeys.HENT_SOKNAD_OK:
+			let reducedData = action.data;
+			delete reducedData['vedlegg'];
+			delete reducedData['ikkeInnsendteVedlegg'];
+			delete reducedData['opplastedeVedlegg'];
+			delete reducedData['innsendteVedlegg'];
+			// TODO Bruk destructuring for å bare hente ut data vi trenger.
+
 			return {
 				...state,
-				data: action.data,
+				data: reducedData,
 				restStatus: REST_STATUS.OK
 			};
 		case SoknadActionTypeKeys.SEND_SOKNAD:

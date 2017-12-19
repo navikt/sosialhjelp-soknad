@@ -46,16 +46,16 @@ export interface Soknad {
 	opprettetDato: string;
 	sistLagret: string;
 	delstegStatus: string;
-	vedlegg: Vedlegg[];
+	// vedlegg: Vedlegg[];
 	journalforendeEnhet: null | string;
 	soknadPrefix: string;
 	soknadUrl: string;
 	fortsettSoknadUrl: string;
 	stegliste: Steg[];
 	sprak: string;
-	ikkeInnsendteVedlegg: Vedlegg[];
-	opplastedeVedlegg: Vedlegg[];
-	innsendteVedlegg: Vedlegg[];
+	// ikkeInnsendteVedlegg: Vedlegg[];
+	// opplastedeVedlegg: Vedlegg[];
+	// innsendteVedlegg: Vedlegg[];
 }
 
 export interface Vedlegg {

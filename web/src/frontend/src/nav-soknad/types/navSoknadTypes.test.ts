@@ -964,7 +964,7 @@ const soknad: Soknad = {
 	opprettetDato: "2017-09-06T14:09:36.152Z",
 	sistLagret: "2017-09-06T14:09:36.188Z",
 	delstegStatus: "OPPRETTET",
-	vedlegg: [],
+	// vedlegg: [],
 	journalforendeEnhet: null,
 	soknadPrefix: "soknadsosialhjelp",
 	soknadUrl: "http://127.0.0.1:8189/soknadsosialhjelp/app",
@@ -987,10 +987,10 @@ const soknad: Soknad = {
 			cmstekst: "sendInn"
 		}
 	],
-	sprak: "nb_NO",
-	ikkeInnsendteVedlegg: [],
-	opplastedeVedlegg: [],
-	innsendteVedlegg: []
+	sprak: "nb_NO" // ,
+	// ikkeInnsendteVedlegg: [],
+	// opplastedeVedlegg: [],
+	// innsendteVedlegg: []
 };
 
 describe("soknad types", () => {
