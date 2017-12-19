@@ -1,12 +1,8 @@
-import {
-	FaktumStruktur,
-	SynligeFaktaActionTypeKeys,
-	SynligeFaktaActionTypes
-} from "./synligeFaktaTypes";
+import { FaktumStruktur, SynligeFaktaActionTypeKeys, SynligeFaktaActionTypes } from "./synligeFaktaTypes";
 
-export function hentSynligeFakta(): SynligeFaktaActionTypes {
+export function byggBelopOgVedleggStruktur(): SynligeFaktaActionTypes {
 	return {
-		type: SynligeFaktaActionTypeKeys.HENT_SYNLIGE
+		type: SynligeFaktaActionTypeKeys.START_BYGG_STRUKTUR
 	};
 }
 
@@ -17,9 +13,15 @@ export function hentSynligeFaktaOk(struktur: FaktumStruktur[]): SynligeFaktaActi
 	};
 }
 
-export function hentSynligeFaktaFeilet(feilmelding: string): SynligeFaktaActionTypes {
+export function byggStrukturFeilet(feilmelding: string): SynligeFaktaActionTypes {
 	return {
-		type: SynligeFaktaActionTypeKeys.HENT_SYNLIGE_FEILET,
+		type: SynligeFaktaActionTypeKeys.BYGG_STRUKTUR_FEILET,
 		feilmelding
+	};
+}
+
+export function byggStrukturOk(): SynligeFaktaActionTypes {
+	return {
+		type: SynligeFaktaActionTypeKeys.BYGG_STRUKTUR_OK
 	};
 }

@@ -12,7 +12,7 @@ interface Props {
 
 const InformasjonBolk: React.StatelessComponent<Props> = props => {
 	const sporsmal = props.faktumstrukturer.map(struktur => (
-		<Opplysning faktumstruktur={struktur} key={struktur.id} vedlegg={null} />
+		<Opplysning faktumstruktur={struktur} key={struktur.id} />
 	));
 
 	return (

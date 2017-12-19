@@ -6,23 +6,17 @@ import {
 	GaVidere,
 	NavigasjonActionTypes,
 	Sider,
-	TilSteg,
-	TilDittNav,
 	TilBostedEllerStartSoknad,
-	TilKvittering
+	TilDittNav,
+	TilKvittering,
+	TilSteg
 } from "./navigasjonTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
-import { tilSteg, tilStart } from "./navigasjonActions";
+import { tilStart, tilSteg } from "./navigasjonActions";
 import { SoknadAppState } from "../reduxTypes";
-import {
-	selectBrukerBehandlingId,
-	selectProgresjonFaktum,
-	selectSynligFaktaData
-} from "../selectors";
-import { hentSynligeFakta } from "../../../digisos/redux/synligefakta/synligeFaktaActions";
-import { SynligeFaktaActionTypeKeys } from "../../../digisos/redux/synligefakta/synligeFaktaTypes";
+import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 import { startSoknad } from "../soknad/soknadActions";
 
 const getHistoryLength = () => window.history.length;
@@ -68,48 +62,27 @@ function* tilStegSaga(action: TilSteg): SagaIterator {
 	yield put(push(`/skjema/${behandlingsId}/${action.stegnummer}`));
 }
 
-function* skalHoppeOverNesteStegSaga(stegnummer: number): SagaIterator {
-	if (stegnummer === 7 || stegnummer === 9) {
-		yield put(hentSynligeFakta());
-		yield take([
-			SynligeFaktaActionTypeKeys.HENT_SYNLIGE_OK,
-			SynligeFaktaActionTypeKeys.HENT_SYNLIGE_FEILET
-		]);
-		const synligeFakta = yield select(selectSynligFaktaData);
-		return Object.keys(synligeFakta).length === 0;
-	}
-	return false;
-}
-
 function* gaVidereSaga(action: GaVidere): SagaIterator {
-	const skalHoppeOver = yield call(
-		skalHoppeOverNesteStegSaga,
-		action.stegnummer
-	);
 	const progresjonFaktum = yield select(selectProgresjonFaktum);
 	const progresjonFaktumVerdi = parseInt(progresjonFaktum.value || 1, 10);
 	if (progresjonFaktumVerdi === action.stegnummer) {
 		const faktum = yield call(
 			oppdaterFaktumMedVerdier,
 			progresjonFaktum,
-			`${action.stegnummer + (skalHoppeOver ? 2 : 1)}`
+			`${action.stegnummer + 1}`
 		);
 		yield put(setFaktum(faktum));
 		yield put(lagreFaktum(faktum));
 		yield take([FaktumActionTypeKeys.LAGRET_FAKTUM]);
 	}
-	yield put(tilSteg(action.stegnummer + (skalHoppeOver ? 2 : 1)));
+	yield put(tilSteg(action.stegnummer + 1));
 }
 
 function* gaTilbakeSaga(action: GaTilbake): SagaIterator {
 	if (action.stegnummer === 1) {
 		yield put(tilStart());
 	} else {
-		const skalHoppeOver = yield call(
-			skalHoppeOverNesteStegSaga,
-			action.stegnummer
-		);
-		yield put(tilSteg(action.stegnummer - (skalHoppeOver ? 2 : 1)));
+		yield put(tilSteg(action.stegnummer - 1));
 	}
 }
 
@@ -152,7 +125,6 @@ export {
 	getHistoryLength,
 	navigateTo,
 	selectProgresjonFaktum,
-	skalHoppeOverNesteStegSaga,
 	tilbakeEllerForsidenSaga,
 	tilFinnDittNavKontorSaga,
 	tilKvittering,
