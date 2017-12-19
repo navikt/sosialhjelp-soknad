@@ -12,19 +12,19 @@ const ArbeidsforholdDetaljer: React.StatelessComponent<{ arbeidsforhold: Faktum 
 				tittel={
 					<FormattedMessage id="opplysninger.arbeidsituasjon.arbeidsforhold.navn"/>
 				}
-				verdi={getFaktumPropertyVerdi(arbeidsforhold, "navn")}
+				verdi={getFaktumPropertyVerdi(arbeidsforhold, "arbeidsgivernavn")}
 			/>
 			<DetaljelisteElement
 				tittel={
 					<FormattedMessage id="opplysninger.arbeidsituasjon.arbeidsforhold.startet"/>
 				}
-				verdi={getFaktumPropertyVerdi(arbeidsforhold, "startet")}
+				verdi={getFaktumPropertyVerdi(arbeidsforhold, "fom")}
 			/>
 			<DetaljelisteElement
 				tittel={
 					<FormattedMessage id="opplysninger.arbeidsituasjon.arbeidsforhold.sluttet"/>
 				}
-				verdi={getFaktumPropertyVerdi(arbeidsforhold, "sluttet")}
+				verdi={getFaktumPropertyVerdi(arbeidsforhold, "tom")}
 			/>
 			<DetaljelisteElement
 				tittel={

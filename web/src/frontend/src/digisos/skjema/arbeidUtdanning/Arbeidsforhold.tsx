@@ -21,8 +21,9 @@ const Arbeidsforhold: React.StatelessComponent<FaktumComponentProps & StateProps
 		return <div />;
 	}
 
-	const alleArbeidsforhold: Faktum[] = finnFakta("opplysninger.arbeidsituasjon", fakta);
+	const alleArbeidsforhold: Faktum[] = finnFakta("arbeidsforhold", fakta);
 
+	//  TODO: Oppdatere oversettelsesfiler og nøkler med "opplysninger.arbeidsituasjon" -> "arbeidsforhold"
 	return <SporsmalFaktum faktumKey="opplysninger.arbeidsituasjon" style="system">
 		<SysteminfoMedSkjema>
 			<h4 className="skjema-sporsmal__infotekst__tittel">
