@@ -45,12 +45,18 @@ class Adresserad {
 export function adressePropertiesTilVisning(properties: object, intl: InjectedIntl): Adresserad[] {
 	const result = new Array<Adresserad>();
 	const propertyOrder: string[] = [
-		"adresse", "kommunenummer", "bolignummer", "gatenavn", "husnummer", "postnummer", "poststed",
+		"adresse",
+		// Vises ikke til bruker etter krav fra interaksjonsdesigner:
+		// "kommunenummer"
+		// "bolignummer",
+		// "gatenavn",
+		// "husnummer",
+		"postnummer", "poststed",
 		"eiendomsnavn", "gaardsnummer", "bruksnummer", "festenummer", "seksjonsnummer", "undernummer"
 	];
 
 	for (const key of propertyOrder) {
-		const tittel = intl.formatMessage({id: "adresse." + key});
+		const tittel = intl.formatMessage({id: "kontakt.system.adresse." + key + ".label"});
 		const value = properties[key];
 		if (value != null) {
 			result.push(new Adresserad(
