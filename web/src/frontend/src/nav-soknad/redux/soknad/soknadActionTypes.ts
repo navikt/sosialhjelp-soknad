@@ -25,7 +25,8 @@ export enum SoknadActionTypeKeys {
 	SEND_SOKNAD = "soknad/SEND_SOKNAD",
 	SEND_SOKNAD_OK = "soknad/SEND_SOKNAD_OK",
 	SEND_SOKNAD_FEILET = "soknad/SEND_SOKNAD_FEILET",
-	SETT_INFOFAKTUM = "soknad/SETT_INFOFAKTUM"
+	SETT_INFOFAKTUM = "soknad/SETT_INFOFAKTUM",
+	SETT_AVBRYT_SOKNAD_SJEKK = "navigasjon/SETT_AVBRYT_SOKNAD_SJEKK"
 }
 
 export type AVBRYT_DESTINASJON = "START" | "MINSIDE";
@@ -55,7 +56,8 @@ export type SoknadActionTypes =
 	| SlettSoknadAction
 	| SlettSoknadOkAction
 	| SlettSoknadFeiletAction
-	| SettInfofaktumAction;
+	| SettInfofaktumAction
+	| SettAvbrytSoknadSjekk;
 
 export interface StartSoknadAction {
 	type: SoknadActionTypeKeys.START_SOKNAD;
@@ -166,4 +168,9 @@ export interface OtherAction {
 export interface SettInfofaktumAction {
 	type: SoknadActionTypeKeys.SETT_INFOFAKTUM;
 	info: Infofaktum;
+}
+
+export interface SettAvbrytSoknadSjekk {
+	type: SoknadActionTypeKeys.SETT_AVBRYT_SOKNAD_SJEKK;
+	aktiv: boolean;
 }

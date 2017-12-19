@@ -1,7 +1,16 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, select, takeEvery } from "redux-saga/effects";
-import { fetchDelete, fetchKvittering, fetchPost, fetchToJson } from "../../utils/rest-utils";
-import { finnFaktum, oppdaterFaktumMedProperties, oppdaterFaktumMedVerdier } from "../../utils";
+import {
+	fetchDelete,
+	fetchKvittering,
+	fetchPost,
+	fetchToJson
+} from "../../utils/rest-utils";
+import {
+	finnFaktum,
+	oppdaterFaktumMedProperties,
+	oppdaterFaktumMedVerdier
+} from "../../utils";
 import { updateFaktaMedLagretVerdi } from "../fakta/faktaUtils";
 import {
 	HentKvitteringAction,

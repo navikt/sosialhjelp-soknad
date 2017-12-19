@@ -46,6 +46,7 @@ export interface SoknadState {
 	kvittering?: Kvittering;
 	sendSoknadPending: boolean;
 	startSoknadPending: boolean;
+	avbrytSoknadSjekkAktiv: boolean;
 	avbrytDialog: {
 		synlig: boolean;
 		destinasjon: AVBRYT_DESTINASJON;
