@@ -51,6 +51,7 @@ const Kontaktinfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 			<Detaljeliste>
 				<DetaljelisteElement {...getProperty("adresse")} />
 				<DetaljelisteElement {...getProperty("postnummer")} />
+				<DetaljelisteElement {...getProperty("poststed")} />
 				<DetaljelisteElement {...getProperty("eiendomsnavn")} />
 				<DetaljelisteElement {...getProperty("gaardsnummer")} />
 				<DetaljelisteElement {...getProperty("bruksnummer")} />
