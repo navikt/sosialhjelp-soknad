@@ -12,6 +12,7 @@ export type FaktumActionTypes =
 	| OpprettFaktum
 	| OpprettetFaktum
 	| SlettFaktum
+	| SlettFaktumLokalt
 	| SlettetFaktum
 	| SetFaktaAction
 	| SetFaktumFailedAction
@@ -54,6 +55,11 @@ interface OpprettetFaktum {
 
 export interface SlettFaktum {
 	type: FaktumActionTypeKeys.SLETT_FAKTUM;
+	faktumId: number;
+}
+
+export interface SlettFaktumLokalt {
+	type: FaktumActionTypeKeys.SLETT_FAKTUM_LOKALT;
 	faktumId: number;
 }
 

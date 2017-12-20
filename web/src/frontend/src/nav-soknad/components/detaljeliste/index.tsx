@@ -1,8 +1,8 @@
 import * as React from "react";
 
 export interface ElementProps {
-	tittel: React.ReactNode;
-	verdi: React.ReactNode;
+	tittel: React.ReactNode|string;
+	verdi: React.ReactNode|string;
 	skjulDersomTomVerdi?: boolean;
 }
 

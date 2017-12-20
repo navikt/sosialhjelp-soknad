@@ -1,74 +1,73 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import { fetchToJson, fetchUpload, fetchDelete } from "../../../nav-soknad/utils/rest-utils";
-import { HentFilListeAction, LastOppVedleggAction, SlettFilAction, VedleggActionTypeKeys } from "./vedleggTypes";
+import { fetchDelete, fetchToJson, fetchUpload, toJson } from "../../../nav-soknad/utils/rest-utils";
 import {
-	hentVedleggsForventningOk,
-	hentVedleggsForventningFeilet,
-	hentFilListeOk,
-	lastOppVedleggOk,
-	lastOppVedleggFeilet,
-	slettFilOk,
-	hentFilListe
+	LastOppVedleggAction, StartSlettVedleggAction,
+	VedleggActionTypeKeys
+} from "./vedleggTypes";
+import {
+	hentVedleggsForventningOk, lastOppVedleggOk, nyttVedlegg, oppdatertVedlegg, slettVedlegg, slettVedleggOk
 } from "./vedleggActions";
 import { loggFeil } from "../../../nav-soknad/redux/navlogger/navloggerActions";
-import { selectBrukerBehandlingId, selectFaktaData } from "../selectors";
+import { selectFaktaData } from "../selectors";
+import { opprettetFaktum, slettFaktumLokalt } from "../fakta/faktaActions";
+import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 
-function* hentVedleggsForventningSaga(): SagaIterator {
-	try {
-		const behandlingsId = yield select(selectBrukerBehandlingId);
-		const url = `soknader/${behandlingsId}/vedlegg`;
-		yield call(fetchToJson, url);
-		const response = yield call(fetchToJson, url);
-		const fakta = yield select(selectFaktaData);
-		yield put(hentVedleggsForventningOk(response, fakta));
-	} catch ( reason) {
-		yield put(hentVedleggsForventningFeilet(reason));
-	}
+function* hentVedleggsForventningSaga(behandlingsId: string): SagaIterator {
+	const url = `soknader/${behandlingsId}/vedlegg`;
+	const response = yield call(fetchToJson, url);
+	const fakta = yield select(selectFaktaData);
+	yield put(hentVedleggsForventningOk(response, fakta));
 }
 
 function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 	try {
-		const behandlingsId = yield select(selectBrukerBehandlingId);
-		const url = `vedlegg/${action.vedleggId}/fil?behandlingsId=${behandlingsId}`;
-		yield call(fetchUpload, url, action.formData);
-		yield put(lastOppVedleggOk(action.faktumKey, action.vedleggId));
-		yield put(hentFilListe(action.faktumKey, action.vedleggId));
+
+		const url = `sosialhjelpvedlegg/originalfil/${action.belopFaktumId}`;
+		const response: any = yield call(fetchUpload, url, action.formData);
+		yield call(console.log, response.right);
+		yield put(lastOppVedleggOk());
+
+		if (response.nyForventning) {
+			yield put(opprettetFaktum(response.faktum));
+			const fakta = yield select(selectFaktaData);
+			yield put(nyttVedlegg(response.vedlegg, fakta));
+		} else {
+			const fakta = yield select(selectFaktaData);
+			yield put(oppdatertVedlegg(response.vedlegg, fakta));
+		}
 	} catch (reason) {
-		yield put(lastOppVedleggFeilet(action.faktumKey, action.vedleggId, reason.toString()));
+		yield put(loggFeil("Last opp vedlegg feilet: " + reason));
+		yield put(navigerTilServerfeil());
 	}
 }
 
-function* slettVedleggFilSaga(action: SlettFilAction): SagaIterator {
+function* slettVedleggSaga(action: StartSlettVedleggAction): SagaIterator {
 	try {
-		const behandlingsId = yield select(selectBrukerBehandlingId);
-		const url = `vedlegg/${action.vedleggId}/${action.filNavn}?behandlingsId=${behandlingsId}`;
-		yield call(fetchDelete, url);
-		yield put(slettFilOk(action.faktumKey, action.vedleggId, action.filNavn));
-		yield put(hentFilListe(action.faktumKey, action.vedleggId));
-	} catch (reason) {
-		yield put(loggFeil("TODO implementer put(slettFilFeilet(faktumKey, vedleggId, reason"));
-	}
-}
+		const promise = yield call(fetchDelete, `sosialhjelpvedlegg/${action.vedleggId}`);
+		const vedlegg = yield call(toJson, promise);
 
-function* hentFilListeSaga(action: HentFilListeAction): SagaIterator {
-	try {
-		const behandlingsId = yield select(selectBrukerBehandlingId);
-		const url = `vedlegg/${action.vedleggId}/fil?behandlingsId=${behandlingsId}`;
-		const response = yield call(fetchToJson, url);
-		yield put(hentFilListeOk(action.faktumKey, response));
+		if (vedlegg) {
+			const fakta = yield select(selectFaktaData);
+			yield put(oppdatertVedlegg(vedlegg, fakta));
+		} else {
+			yield put(slettVedlegg(action.vedleggId));
+			yield put(slettFaktumLokalt(action.vedleggsFaktumId));
+		}
+		yield put(slettVedleggOk());
 	} catch (reason) {
-		yield put(
-			loggFeil("TODO Implementer put(hentFilListeFeilet,reson): " + reason.toString())
-		);
+		yield put(loggFeil("Slett vedlegg feilet: " + reason));
+		yield put(navigerTilServerfeil());
 	}
 }
 
 function* vedleggSaga(): SagaIterator {
 	yield takeEvery(VedleggActionTypeKeys.LAST_OPP, lastOppVedleggSaga);
-	yield takeEvery(VedleggActionTypeKeys.SLETT_FIL, slettVedleggFilSaga);
-	yield takeEvery(VedleggActionTypeKeys.HENT_FIL_LISTE, hentFilListeSaga);
-	yield takeEvery(VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING, hentVedleggsForventningSaga);
+	yield takeEvery(VedleggActionTypeKeys.START_SLETT_VEDLEGG, slettVedleggSaga);
 }
+
+export {
+	hentVedleggsForventningSaga
+};
 
 export default vedleggSaga;

@@ -1,43 +1,34 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, takeEvery, select } from "redux-saga/effects";
-import {
-	fetchPost,
-	fetchToJson,
-	fetchDelete,
-	fetchKvittering
-} from "../../utils/rest-utils";
-import {
-	finnFaktum,
-	oppdaterFaktumMedVerdier,
-	oppdaterFaktumMedProperties
-} from "../../utils";
+import { call, put, select, takeEvery } from "redux-saga/effects";
+import { fetchDelete, fetchKvittering, fetchPost, fetchToJson } from "../../utils/rest-utils";
+import { finnFaktum, oppdaterFaktumMedProperties, oppdaterFaktumMedVerdier } from "../../utils";
 import { updateFaktaMedLagretVerdi } from "../fakta/faktaUtils";
 import {
-	SoknadActionTypeKeys,
+	HentKvitteringAction,
 	HentSoknadAction,
-	SlettSoknadAction,
-	StartSoknadAction,
 	SendSoknadAction,
-	HentKvitteringAction
+	SlettSoknadAction,
+	SoknadActionTypeKeys,
+	StartSoknadAction
 } from "./soknadActionTypes";
 import {
-	tilSteg,
 	navigerTilDittNav,
 	navigerTilKvittering,
 	navigerTilServerfeil,
-	tilStart
+	tilStart,
+	tilSteg
 } from "../navigasjon/navigasjonActions";
-import { lagreFaktum, setFakta, resetFakta } from "../fakta/faktaActions";
-import { Soknad, Faktum, Infofaktum } from "../../types";
+import { lagreFaktum, resetFakta, setFakta } from "../fakta/faktaActions";
+import { Faktum, Infofaktum, Soknad } from "../../types";
 import { SoknadAppState } from "../reduxTypes";
 
 import {
-	opprettSoknadOk,
-	hentSoknadOk,
-	slettSoknadOk,
 	hentKvitteringOk,
-	sendSoknadOk,
+	hentSoknadOk,
+	opprettSoknadOk,
 	resetSoknad,
+	sendSoknadOk,
+	slettSoknadOk,
 	startSoknadOk
 } from "./soknadActions";
 
@@ -68,13 +59,17 @@ function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
 			`soknader/${action.brukerBehandlingId}`,
 			null
 		);
-		const fakta = updateFaktaMedLagretVerdi(soknad.fakta);
-		yield put(setFakta(fakta));
-		yield put(hentSoknadOk(soknad));
+		yield call(oppdaterSoknadSaga, soknad);
 		return soknad;
 	} catch (reason) {
 		yield put(navigerTilServerfeil());
 	}
+}
+
+function* oppdaterSoknadSaga(soknad: Soknad): SagaIterator {
+	const fakta = updateFaktaMedLagretVerdi(soknad.fakta);
+	yield put(setFakta(fakta));
+	yield put(hentSoknadOk(soknad));
 }
 
 function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
@@ -166,6 +161,7 @@ function* hentKvitteringSaga(action: HentKvitteringAction): SagaIterator {
 export {
 	opprettSoknadSaga,
 	hentSoknadSaga,
+	oppdaterSoknadSaga,
 	startSoknadSaga,
 	sendSoknadSaga,
 	hentKvitteringSaga,

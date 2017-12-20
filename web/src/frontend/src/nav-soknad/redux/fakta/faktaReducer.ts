@@ -62,6 +62,7 @@ const FaktumReducer: Reducer<FaktumState, FaktumActionTypes> = (
 		case FaktumActionTypeKeys.SLETTET_FAKTUM: {
 			return { ...state, restStatus: REST_STATUS.OK };
 		}
+		case FaktumActionTypeKeys.SLETT_FAKTUM_LOKALT:
 		case FaktumActionTypeKeys.SLETT_FAKTUM: {
 			return {
 				...state,
