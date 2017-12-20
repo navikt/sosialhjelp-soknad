@@ -10,8 +10,8 @@ const OppsummeringForUtskrift: React.StatelessComponent<Props> = (
 ) => {
 	const { oppsummering } = props;
 
-	const bolker = oppsummering.bolker.map((bolk, idx) => (
-		<div className="blokk-xs bolk" key={idx}>
+	const bolker = oppsummering.bolker.map((bolk) => (
+		<div className="blokk-xs bolk" key={bolk.tittel}>
 			<h2>{bolk.tittel}</h2>
 			<div>
 				<div dangerouslySetInnerHTML={{ __html: bolk.html }} />
