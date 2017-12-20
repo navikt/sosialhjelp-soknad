@@ -1,7 +1,6 @@
 import { Soknad } from "./navSoknadTypes";
 
 const soknad: Soknad = {
-	soknadId: 1,
 	brukerBehandlingId: "1000B7FGM",
 	fakta: [
 		{

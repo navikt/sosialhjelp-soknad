@@ -13,27 +13,8 @@ export const defaultState: SoknadState = {
 	},
 	infofaktum: null,
 	data: {
-		soknadId: null,
-		// skjemaNummer: "",
-		// uuid: "",
-		brukerBehandlingId: "", // ,
-		// behandlingskjedeId: "",
-		fakta: [] // ,
-		// status: "",
-		// aktoerId: "",
-		// opprettetDato: "",
-		// sistLagret: "",
-		// delstegStatus: "",
-		// // vedlegg: [],
-		// journalforendeEnhet: "",
-		// soknadPrefix: "",
-		// soknadUrl: "",
-		// fortsettSoknadUrl: "",
-		// stegliste: [],
-		// sprak: "" // ,
-		// // ikkeInnsendteVedlegg: [],
-		// // opplastedeVedlegg: [],
-		// // innsendteVedlegg: []
+		brukerBehandlingId: "",
+		fakta: []
 	}
 };
 
@@ -91,10 +72,10 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultS
 				restStatus: REST_STATUS.PENDING
 			};
 		case SoknadActionTypeKeys.HENT_SOKNAD_OK:
-			const { brukerBehandlingId, soknadId, fakta } = action.data;
+			const { brukerBehandlingId, fakta } = action.data;
 			return {
 				...state,
-				data: { brukerBehandlingId, soknadId, fakta },
+				data: { brukerBehandlingId, fakta},
 				restStatus: REST_STATUS.OK
 			};
 		case SoknadActionTypeKeys.SEND_SOKNAD:

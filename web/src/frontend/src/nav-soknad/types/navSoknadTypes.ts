@@ -35,7 +35,6 @@ export interface FaktumEgenskap {
 }
 
 export interface Soknad {
-	soknadId: number;
 	brukerBehandlingId: string;
 	fakta: Faktum[];
 }
