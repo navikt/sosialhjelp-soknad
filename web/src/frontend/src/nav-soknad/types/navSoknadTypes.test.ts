@@ -2,10 +2,7 @@ import { Soknad } from "./navSoknadTypes";
 
 const soknad: Soknad = {
 	soknadId: 1,
-	skjemaNummer: "NAV 35-18.01",
-	uuid: "0d2c7ea4-5201-4231-9fa0-7608be0c7266",
 	brukerBehandlingId: "1000B7FGM",
-	behandlingskjedeId: null,
 	fakta: [
 		{
 			faktumId: 1,
@@ -958,39 +955,7 @@ const soknad: Soknad = {
 			properties: {},
 			type: "BRUKERREGISTRERT"
 		}
-	],
-	status: "UNDER_ARBEID",
-	aktoerId: "01011045454",
-	opprettetDato: "2017-09-06T14:09:36.152Z",
-	sistLagret: "2017-09-06T14:09:36.188Z",
-	delstegStatus: "OPPRETTET",
-	// vedlegg: [],
-	journalforendeEnhet: null,
-	soknadPrefix: "soknadsosialhjelp",
-	soknadUrl: "http://127.0.0.1:8189/soknadsosialhjelp/app",
-	fortsettSoknadUrl: "http://127.0.0.1:8189/soknadsosialhjelp/app",
-	stegliste: [
-		{
-			url: "informasjonsside",
-			cmstekst: "veiledning"
-		},
-		{
-			url: "soknad",
-			cmstekst: "skjema"
-		},
-		{
-			url: "vedlegg",
-			cmstekst: "vedlegg"
-		},
-		{
-			url: "oppsummering",
-			cmstekst: "sendInn"
-		}
-	],
-	sprak: "nb_NO" // ,
-	// ikkeInnsendteVedlegg: [],
-	// opplastedeVedlegg: [],
-	// innsendteVedlegg: []
+	]
 };
 
 describe("soknad types", () => {

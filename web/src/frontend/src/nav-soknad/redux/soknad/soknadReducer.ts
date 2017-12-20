@@ -14,33 +14,30 @@ export const defaultState: SoknadState = {
 	infofaktum: null,
 	data: {
 		soknadId: null,
-		skjemaNummer: "",
-		uuid: "",
-		brukerBehandlingId: "",
-		behandlingskjedeId: "",
-		fakta: [],
-		status: "",
-		aktoerId: "",
-		opprettetDato: "",
-		sistLagret: "",
-		delstegStatus: "",
-		// vedlegg: [],
-		journalforendeEnhet: "",
-		soknadPrefix: "",
-		soknadUrl: "",
-		fortsettSoknadUrl: "",
-		stegliste: [],
-		sprak: "" // ,
-		// ikkeInnsendteVedlegg: [],
-		// opplastedeVedlegg: [],
-		// innsendteVedlegg: []
+		// skjemaNummer: "",
+		// uuid: "",
+		brukerBehandlingId: "", // ,
+		// behandlingskjedeId: "",
+		fakta: [] // ,
+		// status: "",
+		// aktoerId: "",
+		// opprettetDato: "",
+		// sistLagret: "",
+		// delstegStatus: "",
+		// // vedlegg: [],
+		// journalforendeEnhet: "",
+		// soknadPrefix: "",
+		// soknadUrl: "",
+		// fortsettSoknadUrl: "",
+		// stegliste: [],
+		// sprak: "" // ,
+		// // ikkeInnsendteVedlegg: [],
+		// // opplastedeVedlegg: [],
+		// // innsendteVedlegg: []
 	}
 };
 
-const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
-	state = defaultState,
-	action
-) => {
+const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultState, action) => {
 	switch (action.type) {
 		case SoknadActionTypeKeys.START_SOKNAD:
 			return {
@@ -94,16 +91,10 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				restStatus: REST_STATUS.PENDING
 			};
 		case SoknadActionTypeKeys.HENT_SOKNAD_OK:
-			let reducedData = action.data;
-			delete reducedData['vedlegg'];
-			delete reducedData['ikkeInnsendteVedlegg'];
-			delete reducedData['opplastedeVedlegg'];
-			delete reducedData['innsendteVedlegg'];
-			// TODO Bruk destructuring for å bare hente ut data vi trenger.
-
+			const { brukerBehandlingId, soknadId, fakta } = action.data;
 			return {
 				...state,
-				data: reducedData,
+				data: { brukerBehandlingId, soknadId, fakta },
 				restStatus: REST_STATUS.OK
 			};
 		case SoknadActionTypeKeys.SEND_SOKNAD:

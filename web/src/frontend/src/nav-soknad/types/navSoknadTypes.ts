@@ -36,26 +36,8 @@ export interface FaktumEgenskap {
 
 export interface Soknad {
 	soknadId: number;
-	skjemaNummer: string;
-	uuid: string;
 	brukerBehandlingId: string;
-	behandlingskjedeId: null | string;
 	fakta: Faktum[];
-	status: string;
-	aktoerId: string;
-	opprettetDato: string;
-	sistLagret: string;
-	delstegStatus: string;
-	// vedlegg: Vedlegg[];
-	journalforendeEnhet: null | string;
-	soknadPrefix: string;
-	soknadUrl: string;
-	fortsettSoknadUrl: string;
-	stegliste: Steg[];
-	sprak: string;
-	// ikkeInnsendteVedlegg: Vedlegg[];
-	// opplastedeVedlegg: Vedlegg[];
-	// innsendteVedlegg: Vedlegg[];
 }
 
 export interface Vedlegg {
