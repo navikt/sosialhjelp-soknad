@@ -23,7 +23,7 @@ import { loggException } from "./nav-soknad/redux/navlogger/navloggerActions";
 const history = createHistory({
 	getUserConfirmation: (msg: any, callback: (flag: boolean) => void) => {
 		const soknad: SoknadState = store.getState().soknad;
-		if (soknad.data.soknadId) {
+		if (soknad.data.soknadId && soknad.avbrytSoknadSjekkAktiv) {
 			store.dispatch(avbrytSoknad("START"));
 			callback(false);
 		} else {

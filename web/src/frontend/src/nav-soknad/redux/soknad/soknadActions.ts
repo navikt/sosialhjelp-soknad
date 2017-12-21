@@ -160,3 +160,10 @@ export function settInfofaktum(info: Infofaktum): SoknadActionTypes {
 		info
 	};
 }
+
+export function settAvbrytSoknadSjekk(aktiv: boolean): SoknadActionTypes {
+	return {
+		type: SoknadActionTypeKeys.SETT_AVBRYT_SOKNAD_SJEKK,
+		aktiv
+	};
+}

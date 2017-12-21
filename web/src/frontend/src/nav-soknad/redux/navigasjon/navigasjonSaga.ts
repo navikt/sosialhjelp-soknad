@@ -15,6 +15,7 @@ import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
 import { tilStart, tilSteg } from "./navigasjonActions";
+import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import { SoknadAppState } from "../reduxTypes";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 import { startSoknad } from "../soknad/soknadActions";
@@ -27,7 +28,12 @@ function* tilFinnDittNavKontorSaga(): SagaIterator {
 }
 
 function* tilServerfeilSaga(): SagaIterator {
+	/** Forhindre at avbryt dialog dukker opp når en redirecter til feilsiden
+	 * Selve sjekken på om dialog skal vises eller implementer i hoved index.tsx
+	 */
+	yield put(settAvbrytSoknadSjekk(false));
 	yield put(push(Sider.SERVERFEIL));
+	yield put(settAvbrytSoknadSjekk(true));
 }
 
 function* tilBostedSaga(): SagaIterator {

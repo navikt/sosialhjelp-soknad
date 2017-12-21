@@ -12,6 +12,7 @@ export const defaultState: SoknadState = {
 		destinasjon: null
 	},
 	infofaktum: null,
+	avbrytSoknadSjekkAktiv: true,
 	data: {
 		soknadId: null,
 		skjemaNummer: "",
@@ -134,6 +135,11 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 		case SoknadActionTypeKeys.SLETT_SOKNAD_OK:
 			return {
 				...defaultState
+			};
+		case SoknadActionTypeKeys.SETT_AVBRYT_SOKNAD_SJEKK:
+			return {
+				...state,
+				avbrytSoknadSjekkAktiv: action.aktiv
 			};
 		default:
 			return state;

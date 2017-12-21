@@ -7,10 +7,15 @@ import {
 	tilBostedEllerStartSoknadSaga,
 	tilFinnDittNavKontorSaga,
 	tilServerfeilSaga,
-	tilStegSaga,
+	tilStegSaga
 } from "./navigasjonSaga";
 import { call, put, select, take } from "redux-saga/effects";
-import { GaVidere, NavigasjonActionTypes, Sider, TilSteg } from "./navigasjonTypes";
+import {
+	GaVidere,
+	NavigasjonActionTypes,
+	Sider,
+	TilSteg
+} from "./navigasjonTypes";
 import { goBack, push } from "react-router-redux";
 import { SagaIterator } from "redux-saga";
 import { gaVidere, tilSteg } from "./navigasjonActions";
@@ -18,8 +23,8 @@ import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
 import { Faktum } from "../../types/navSoknadTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
-import { selectBrukerBehandlingId, selectProgresjonFaktum, } from "../selectors";
-import { startSoknad } from "../soknad/soknadActions";
+import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
+import { startSoknad, settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 
 const ferdig = (saga: SagaIterator) => {
 	expect(saga.next()).toEqual({
@@ -42,13 +47,24 @@ describe("navigasjonSaga", () => {
 
 	describe("tilServerfeilSaga", () => {
 		const saga = tilServerfeilSaga();
+		it("sets avbrytDialogSjek to false", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(settAvbrytSoknadSjekk(false))
+			});
+		});
 		it("call navigateTo", () => {
 			expect(saga.next()).toEqual({
 				done: false,
 				value: put(push(Sider.SERVERFEIL))
 			});
 		});
-
+		it("sets avbrytDialogSjek to true", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(settAvbrytSoknadSjekk(true))
+			});
+		});
 		it("ferdig", () => ferdig(saga));
 	});
 
