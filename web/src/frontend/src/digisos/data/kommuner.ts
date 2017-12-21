@@ -31,11 +31,15 @@ export const Kommuner: Kommune[] = [
 ];
 
 export function getBosted(kommuneId: string, bydelId?: string): string {
+	/** Denne koden fungerer kun så lenge kommune og bydel er hardkodet i frontend */
 	const kommune = Kommuner.find(k => k.id === kommuneId);
+	const bydel =
+		kommuneId === "oslo" ? OsloBydeler.find(b => b.id === bydelId) : undefined;
+
 	if (!kommune) {
 		return "N/A";
 	}
-	return kommune.navn;
+	return `${kommune.navn}${bydel ? `, ${bydel.navn}` : ""}`;
 }
 
 export const Horten = Kommuner.find(k => k.id === "horten");
