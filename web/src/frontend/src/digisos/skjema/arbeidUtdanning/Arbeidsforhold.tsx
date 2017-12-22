@@ -23,15 +23,14 @@ const Arbeidsforhold: React.StatelessComponent<FaktumComponentProps & StateProps
 
 	const alleArbeidsforhold: Faktum[] = finnFakta("arbeidsforhold", fakta);
 
-	//  TODO: Oppdatere oversettelsesfiler og nøkler med "opplysninger.arbeidsituasjon" -> "arbeidsforhold"
 	return <SporsmalFaktum faktumKey="opplysninger.arbeidsituasjon" style="system">
 		<SysteminfoMedSkjema>
 			<h4 className="skjema-sporsmal__infotekst__tittel">
-				<FormattedMessage id="opplysninger.arbeidsituasjon.arbeidsforhold.infotekst"/>
+				<FormattedMessage id="arbeidsforhold.infotekst"/>
 			</h4>
 			{alleArbeidsforhold && alleArbeidsforhold.length === 0 && (
 				<p>
-					<FormattedMessage id="opplysninger.arbeidsituasjon.arbeidsforhold.ingen"/>
+					<FormattedMessage id="arbeidsforhold.ingen"/>
 				</p>
 			)}
 			{alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
