@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import {FaktumComponentProps} from "../../../nav-soknad/redux/fakta/faktaTypes";
 import {finnFakta} from "../../../nav-soknad/utils";
 import {Faktum} from "../../../nav-soknad/types";
+import {FormattedMessage} from "react-intl";
 
 interface StateProps {
 	visArbeidsforhold: boolean;
@@ -22,6 +23,7 @@ const ArbeidOgUtdanning: React.StatelessComponent<FaktumComponentProps & StatePr
 	return (
 		<DigisosSkjemaSteg steg={DigisosSteg.arbeidbolk}>
 			<Arbeidsforhold/>
+			// Hvis det ikke funnet noe data i AA-registeret skal skjema for utfylling av arbeidsforhold vises
 			{!visErDuIJobb && (
 				<Jobb/>
 			)}
