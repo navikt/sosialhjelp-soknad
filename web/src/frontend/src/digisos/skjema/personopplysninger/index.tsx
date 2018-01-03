@@ -43,7 +43,7 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 			if (!harFaktumVerdi(this.props.fakta, "kontakt.system.telefon")) {
 				oppdaterFaktumVerdi("kontakt.telefon.brukerendrettoggle", "true");
 			}
-			if (!harFaktumVerdi(this.props.fakta, "kontakt.kontonummer.telefon")) {
+			if (!harFaktumVerdi(this.props.fakta, "kontakt.system.kontonummer")) {
 				oppdaterFaktumVerdi("kontakt.kontonummer.brukerendrettoggle", "true");
 			}
 			if (getPropertyVerdi(this.props.fakta, "kontakt.system.adresse", "type") == null) {
