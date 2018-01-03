@@ -9,7 +9,6 @@ import {connect} from "react-redux";
 import {FaktumComponentProps} from "../../../nav-soknad/redux/fakta/faktaTypes";
 import {finnFakta} from "../../../nav-soknad/utils";
 import {Faktum} from "../../../nav-soknad/types";
-import {FormattedMessage} from "react-intl";
 
 interface StateProps {
 	visArbeidsforhold: boolean;
