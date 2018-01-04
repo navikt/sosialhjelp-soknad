@@ -58,6 +58,10 @@ class Opplysning extends React.Component<AllProps, {}> {
 	}
 
 	lagRader(faktum: Faktum, index: number, faktumstruktur: FaktumStruktur, slettTekst: string) {
+		if (faktumstruktur.properties == null || faktumstruktur.properties.length === 0) {
+			return null;
+		}
+
 		const inputs = faktumstruktur.properties.map(property => this.lagInputFelter(faktumstruktur, faktum, property));
 
 		const slettKnapp = (
