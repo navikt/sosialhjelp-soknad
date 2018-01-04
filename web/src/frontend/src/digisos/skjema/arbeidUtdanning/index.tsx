@@ -22,7 +22,6 @@ const ArbeidOgUtdanning: React.StatelessComponent<FaktumComponentProps & StatePr
 	return (
 		<DigisosSkjemaSteg steg={DigisosSteg.arbeidbolk}>
 			<Arbeidsforhold/>
-			// Hvis det ikke funnet noe data i AA-registeret skal skjema for utfylling av arbeidsforhold vises
 			{!visErDuIJobb && (
 				<Jobb/>
 			)}
