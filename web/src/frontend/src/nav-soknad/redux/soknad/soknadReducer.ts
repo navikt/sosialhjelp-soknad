@@ -14,34 +14,12 @@ export const defaultState: SoknadState = {
 	infofaktum: null,
 	avbrytSoknadSjekkAktiv: true,
 	data: {
-		soknadId: null,
-		skjemaNummer: "",
-		uuid: "",
 		brukerBehandlingId: "",
-		behandlingskjedeId: "",
-		fakta: [],
-		status: "",
-		aktoerId: "",
-		opprettetDato: "",
-		sistLagret: "",
-		delstegStatus: "",
-		vedlegg: [],
-		journalforendeEnhet: "",
-		soknadPrefix: "",
-		soknadUrl: "",
-		fortsettSoknadUrl: "",
-		stegliste: [],
-		sprak: "",
-		ikkeInnsendteVedlegg: [],
-		opplastedeVedlegg: [],
-		innsendteVedlegg: []
+		fakta: []
 	}
 };
 
-const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
-	state = defaultState,
-	action
-) => {
+const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultState, action) => {
 	switch (action.type) {
 		case SoknadActionTypeKeys.START_SOKNAD:
 			return {
@@ -95,9 +73,10 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (
 				restStatus: REST_STATUS.PENDING
 			};
 		case SoknadActionTypeKeys.HENT_SOKNAD_OK:
+			const { brukerBehandlingId, fakta } = action.data;
 			return {
 				...state,
-				data: action.data,
+				data: { brukerBehandlingId, fakta},
 				restStatus: REST_STATUS.OK
 			};
 		case SoknadActionTypeKeys.SEND_SOKNAD:

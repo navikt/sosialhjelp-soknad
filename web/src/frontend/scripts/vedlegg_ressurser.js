@@ -14,6 +14,26 @@ var DATA_DIR = "./scripts/mock_data";
 var VEDLEGG_ID = "9146";
 utils.emptyDirectory(DATA_DIR + "/vedlegg_" + VEDLEGG_ID + "/");
 
+// Nytt API kall
+router.get("/sosialhjelpvedlegg/oppdaterVedlegg/:behandlingsId", function(
+	req,
+	res
+) {
+	// Returner fullt søknadsobjekt
+	res.json(utils.lesMockDataFil("soknad.json"));
+});
+
+// Nytt API kall
+router.get("/soknader/:brukerBehandlingId/vedlegg", function(
+	req,
+	res
+) {
+	var brukerBehandlingId = req.params.brukerBehandlingId;
+	console.log("Mock backend: GET /soknader/" + brukerBehandlingId + "/vedlegg\"");
+	res.json(utils.lesMockDataFil("vedlegg_" + brukerBehandlingId + ".json"));
+});
+
+// Gammelt API kall
 router.get("/soknader/:brukerBehandlingId/vedlegg", function(
 	req,
 	res
@@ -63,25 +83,27 @@ router.get("/vedlegg/:vedleggId/fil", function(
 	res.json(files);
 });
 
-router.post("/vedlegg/:vedleggId/fil", function(
+// router.post("/vedlegg/:vedleggId/fil", function(
+router.post("/sosialhjelpvedlegg/originalfil/:faktumId", function(
 	req,
 	res
 ) {
 	console.log("Mock backend: POST vedlegg (fil liste)");
-	utils.checkMandatoryQueryParam(req, res, "behandlingsId");
-	if(res.statusCode !== 200) {return;}
-	var vedleggId = Number(req.params.vedleggId);
+	// utils.checkMandatoryQueryParam(req, res, "behandlingsId");
+	// if(res.statusCode !== 200) {return;}
+	// var vedleggId = Number(req.params.vedleggId);
+	var faktumId = req.params.faktumId;
 	var files = [];
 
 	Object.keys(req.files).forEach(function(file) {
 		var filename = req.files[file].name;
 		files.push({navn: filename});
-		var outputFilename = DATA_DIR + "/vedlegg_" + vedleggId + "/" + filename;
+		var outputFilename = DATA_DIR + "/vedlegg_" + faktumId + "/" + filename;
 		req.files[file].mv(outputFilename, function (err) {
 			if (err) {
 				console.log("Warning: " + err);
 			} else {
-				console.log("  Lagret: 'mock_data/vedlegg_" + vedleggId + "/" + filename);
+				console.log("  Lagret: 'mock_data/vedlegg_" + faktumId + "/" + filename);
 			}
 		});
 	});

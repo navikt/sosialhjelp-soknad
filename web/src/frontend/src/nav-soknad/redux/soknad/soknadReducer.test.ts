@@ -19,8 +19,8 @@ const faktum: Faktum = {
 
 const soknad: Soknad = {
 	...defaultState.data,
-	soknadId: 1,
-	fakta: [faktum]
+	fakta: [faktum],
+	brukerBehandlingId: "123"
 };
 
 describe("soknad reducer", () => {
@@ -30,7 +30,7 @@ describe("soknad reducer", () => {
 			data: soknad
 		};
 		const updatedState = soknadReducer(defaultState, action);
-		expect(updatedState.data.soknadId).toBe(1);
+		expect(updatedState.data.brukerBehandlingId).toBe("123");
 	});
 
 	it("should show avbrytSoknadDialog", () => {
@@ -55,11 +55,11 @@ describe("soknad reducer", () => {
 			data: soknad
 		};
 		const updatedState = soknadReducer(defaultState, updateAction);
-		expect(updatedState.data.soknadId).toBe(1);
+		expect(updatedState.data.brukerBehandlingId).toBe("123");
 		const resetAction: ResetSoknadAction = {
 			type: SoknadActionTypeKeys.RESET_SOKNAD
 		};
 		const resetState = soknadReducer(updatedState, resetAction);
-		expect(resetState.data.soknadId).toBe(null);
+		expect(resetState.data.brukerBehandlingId).toBe("");
 	});
 });
