@@ -5,7 +5,7 @@ import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
-const MAX_CHARS = 800;
+const MAX_CHARS = 500;
 
 const Begrunnelse: React.StatelessComponent = () => (
 	<DigisosSkjemaSteg steg={DigisosSteg.begrunnelsebolk}>
