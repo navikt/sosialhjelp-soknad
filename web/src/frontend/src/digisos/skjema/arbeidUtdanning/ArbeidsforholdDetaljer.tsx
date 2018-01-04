@@ -10,26 +10,26 @@ const ArbeidsforholdDetaljer: React.StatelessComponent<{ arbeidsforhold: Faktum 
 		<Detaljeliste>
 			<DetaljelisteElement
 				tittel={
-					<FormattedMessage id="opplysninger.arbeidsituasjon.arbeidsforhold.navn"/>
+					<FormattedMessage id="arbeidsforhold.arbeidsgivernavn.label"/>
 				}
-				verdi={getFaktumPropertyVerdi(arbeidsforhold, "navn")}
+				verdi={getFaktumPropertyVerdi(arbeidsforhold, "arbeidsgivernavn")}
 			/>
 			<DetaljelisteElement
 				tittel={
-					<FormattedMessage id="opplysninger.arbeidsituasjon.arbeidsforhold.startet"/>
+					<FormattedMessage id="arbeidsforhold.fom.label"/>
 				}
-				verdi={getFaktumPropertyVerdi(arbeidsforhold, "startet")}
+				verdi={getFaktumPropertyVerdi(arbeidsforhold, "fom")}
 			/>
 			<DetaljelisteElement
 				tittel={
-					<FormattedMessage id="opplysninger.arbeidsituasjon.arbeidsforhold.sluttet"/>
+					<FormattedMessage id="arbeidsforhold.tom.label"/>
 				}
-				verdi={getFaktumPropertyVerdi(arbeidsforhold, "sluttet")}
+				verdi={getFaktumPropertyVerdi(arbeidsforhold, "tom")}
 			/>
 			<DetaljelisteElement
 				tittel={
 					<FormattedMessage
-						id="opplysninger.arbeidsituasjon.arbeidsforhold.stillingsprosent"/>
+						id="arbeidsforhold.stillingsprosent.label"/>
 				}
 				verdi={getFaktumPropertyVerdi(arbeidsforhold, "stillingsprosent")}
 			/>

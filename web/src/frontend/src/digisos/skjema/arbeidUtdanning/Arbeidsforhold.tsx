@@ -21,16 +21,16 @@ const Arbeidsforhold: React.StatelessComponent<FaktumComponentProps & StateProps
 		return <div />;
 	}
 
-	const alleArbeidsforhold: Faktum[] = finnFakta("opplysninger.arbeidsituasjon", fakta);
+	const alleArbeidsforhold: Faktum[] = finnFakta("arbeidsforhold", fakta);
 
 	return <SporsmalFaktum faktumKey="opplysninger.arbeidsituasjon" style="system">
 		<SysteminfoMedSkjema>
 			<h4 className="skjema-sporsmal__infotekst__tittel">
-				<FormattedMessage id="opplysninger.arbeidsituasjon.arbeidsforhold.infotekst"/>
+				<FormattedMessage id="arbeidsforhold.infotekst"/>
 			</h4>
 			{alleArbeidsforhold && alleArbeidsforhold.length === 0 && (
 				<p>
-					<FormattedMessage id="opplysninger.arbeidsituasjon.arbeidsforhold.ingen"/>
+					<FormattedMessage id="arbeidsforhold.ingen"/>
 				</p>
 			)}
 			{alleArbeidsforhold && alleArbeidsforhold.length > 0 && (

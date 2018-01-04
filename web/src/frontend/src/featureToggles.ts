@@ -6,4 +6,5 @@ export const FeatureToggles = {
 	viseTpsPersonalia: "feature.frontend.sosialhjelp.personalia",
 	visVelgBosted: "feature.frontend.visvelgbosted",
 	arbeidsforhold: "feature.frontend.arbeidsforhold"
+
 };
