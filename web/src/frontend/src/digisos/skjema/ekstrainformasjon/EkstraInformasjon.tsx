@@ -63,6 +63,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 		super(props);
 		this.renderIkkeBesvart = this.renderIkkeBesvart.bind(this);
 		this.renderEkstrasporsmal = this.renderEkstrasporsmal.bind(this);
+		this.renderInfoMelding = this.renderInfoMelding.bind(this);
 	}
 
 	componentDidMount() {
@@ -71,58 +72,55 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 
 	renderIkkeBesvart() {
 		return (
-			<div className="steg-ekstrainformasjon">
-				<DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk}>
-					<div className="skjema-content">
-						<div className="ekstrainfo-melding">
-							<Infoblokk
-								brukSystemtittel={true}
-								tittel={this.props.intl.formatMessage({
-									id: "opplysninger.ikkebesvart.tittel"
-								})}
-								ikon="advarsel"
-							>
-								<div className="blokk-m">
-									<FormattedHTMLMessage id="opplysninger.ikkebesvart.melding" />
-								</div>
-							</Infoblokk>
+			<div className="skjema-content">
+				<div className="ekstrainfo-melding">
+					<Infoblokk
+						brukSystemtittel={true}
+						tittel={this.props.intl.formatMessage({
+							id: "opplysninger.ikkebesvart.tittel"
+						})}
+						ikon="advarsel"
+					>
+						<div className="blokk-m">
+							<FormattedHTMLMessage id="opplysninger.ikkebesvart.melding"/>
 						</div>
-					</div>
-				</DigisosSkjemaSteg>
+					</Infoblokk>
+				</div>
+			</div>
+		);
+	}
+
+	renderInfoMelding() {
+		return (
+			<div className="skjema-content">
+				<div className="ekstrainfo-melding">
+					<Infoblokk>
+						<FormattedHTMLMessage id="opplysninger.informasjon"/>
+					</Infoblokk>
+				</div>
 			</div>
 		);
 	}
 
 	renderEkstrasporsmal() {
-		const { data } = this.props.synligefakta;
-		return (
-			<div className="steg-ekstrainformasjon">
-				<DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk}>
-					<div className="skjema-content">
-						<div className="ekstrainfo-melding">
-							<Infoblokk>
-								<FormattedHTMLMessage id="opplysninger.informasjon" />
-							</Infoblokk>
-						</div>
-					</div>
-					{Object.keys(data).map(key => (
-						<InformasjonBolk
-							id={key}
-							key={key}
-							tittel={this.props.intl.formatMessage({
-								id: `${key}.sporsmal`
-							})}
-							beskrivelse={getIntlText(this.props.intl, `${key}.beskrivelse`)}
-							faktumstrukturer={data[key]}
-						/>
-					))}
-				</DigisosSkjemaSteg>
-			</div>
-		);
+		const {data} = this.props.synligefakta;
+		return Object.keys(data).map(key => (
+			<InformasjonBolk
+				id={key}
+				key={key}
+				tittel={this.props.intl.formatMessage({
+					id: `${key}.sporsmal`
+				})}
+				beskrivelse={getIntlText(this.props.intl, `${key}.beskrivelse`)}
+				faktumstrukturer={data[key]}
+			/>
+		));
+
 	}
 
 	render() {
-		const { data, restStatus } = this.props.synligefakta;
+		const {data, restStatus} = this.props.synligefakta;
+		let melding;
 		let content;
 		if (restStatus === REST_STATUS.OK) {
 			const harBesvartOkonomiskeFaktum = harBrukerBesvartFaktum(
@@ -130,12 +128,24 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 				okonomiskeFaktumKeys
 			);
 			if (!harBesvartOkonomiskeFaktum || Object.keys(data).length === 0) {
-				content = this.renderIkkeBesvart();
+				melding = this.renderIkkeBesvart();
 			} else {
-				content = this.renderEkstrasporsmal();
+				melding = this.renderInfoMelding();
 			}
+
+			content = this.renderEkstrasporsmal();
 		}
-		return <LoadContainer restStatus={restStatus}>{content}</LoadContainer>;
+		return (
+			<LoadContainer restStatus={restStatus}>
+
+				<div className="steg-ekstrainformasjon">
+					<DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk}>
+						{melding}
+						{content}
+					</DigisosSkjemaSteg>
+				</div>
+			</LoadContainer>
+		);
 	}
 }
 
