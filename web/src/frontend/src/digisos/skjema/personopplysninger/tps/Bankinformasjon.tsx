@@ -16,9 +16,10 @@ import CheckboxFaktum from "../../../../nav-soknad/faktum/CheckboxFaktum";
 
 interface Props {
 	fakta: Faktum[];
+	onHarIkkeKontonummer: (s: string) => void;
 }
 
-export const Skjema: React.StatelessComponent<Props> = ({ fakta }) => {
+export const Skjema: React.StatelessComponent<Props> = ({ fakta, onHarIkkeKontonummer }) => {
 	const brukerHarIkkeKontonummer = faktumIsSelected(
 		getFaktumVerdi(fakta, "kontakt.kontonummer.harikke")
 	);
@@ -29,18 +30,18 @@ export const Skjema: React.StatelessComponent<Props> = ({ fakta }) => {
 				disabled={brukerHarIkkeKontonummer}
 				ignorert={brukerHarIkkeKontonummer}
 			/>
-			<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" />
+			<CheckboxFaktum faktumKey="kontakt.kontonummer.harikke" onChange={onHarIkkeKontonummer} />
 		</SporsmalFaktum>
 	);
 };
 
 const BankinformasjonTPS: React.StatelessComponent<
 	Props & InjectedIntlProps
-> = ({ fakta, intl }) => {
+> = ({ fakta, onHarIkkeKontonummer, intl }) => {
 	const systemKontonummerKey = "kontakt.system.kontonummer";
 
 	if (!harFaktumVerdi(fakta, systemKontonummerKey)) {
-		return <Skjema fakta={fakta} />;
+		return <Skjema fakta={fakta} onHarIkkeKontonummer={onHarIkkeKontonummer} />;
 	} else {
 		return (
 			<SporsmalFaktum faktumKey="kontakt.system.kontonummer" style="system">
@@ -49,7 +50,7 @@ const BankinformasjonTPS: React.StatelessComponent<
 					endreLabel={intl.formatMessage({
 						id: "kontakt.system.kontonummer.endreknapp.label"
 					})}
-					skjema={<Skjema fakta={fakta} />}
+					skjema={<Skjema fakta={fakta} onHarIkkeKontonummer={onHarIkkeKontonummer} />}
 				>
 					<Detaljeliste>
 						<DetaljelisteElement

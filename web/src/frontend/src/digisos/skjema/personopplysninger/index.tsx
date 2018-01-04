@@ -2,20 +2,29 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { State } from "../../redux/reducers";
-import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
+import { DispatchProps, Dispatch } from "../../../nav-soknad/redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import JaNeiSporsmalFaktum from "../../../nav-soknad/faktum/JaNeiSporsmalFaktum";
 import TelefonFaktum from "../../../nav-soknad/faktum/typedInput/TelefonFaktum";
 import { Skjema as BankinformasjonSkjema } from "./tps/Bankinformasjon";
 import { FeatureToggles } from "../../../featureToggles";
-import { radioCheckKeys, harFaktumVerdi, finnFaktum, getPropertyVerdi } from "../../../nav-soknad/utils";
+import {
+	radioCheckKeys,
+	harFaktumVerdi,
+	finnFaktum,
+	getPropertyVerdi,
+	getFaktumVerdi
+} from "../../../nav-soknad/utils";
 import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
 import Personalia from "./tps/Personalia";
 import Adresseinfo from "./tps/Adresseinfo";
 import Telefoninfo from "./tps/Telefoninfo";
 import Bankinformasjon from "./tps/Bankinformasjon";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
+import {
+	Faktum
+} from "../../../nav-soknad/types";
 
 interface StateProps {
 	visPersonaliaFraTPSfeatureToggle: boolean;
@@ -29,29 +38,6 @@ interface StateProps {
 export type Props = StateProps & FaktumComponentProps & DispatchProps;
 
 class Personopplysninger extends React.Component<Props, StateProps> {
-	componentDidMount() {
-		/* XXX: Bør flyttes til backend: */
-		if (this.props.visPersonaliaFraTPSfeatureToggle) {
-			const oppdaterFaktumVerdi = (brukerendrettoggleFaktumKey: string, verdi: string) => {
-				const brukerEndret = finnFaktum(brukerendrettoggleFaktumKey, this.props.fakta);
-				brukerEndret.value = verdi;
-				this.props.dispatch(
-					lagreFaktum(brukerEndret)
-				);
-			};
-
-			if (!harFaktumVerdi(this.props.fakta, "kontakt.system.telefon")) {
-				oppdaterFaktumVerdi("kontakt.telefon.brukerendrettoggle", "true");
-			}
-			if (!harFaktumVerdi(this.props.fakta, "kontakt.system.kontonummer")) {
-				oppdaterFaktumVerdi("kontakt.kontonummer.brukerendrettoggle", "true");
-			}
-			if (getPropertyVerdi(this.props.fakta, "kontakt.system.adresse", "type") == null) {
-				oppdaterFaktumVerdi("kontakt.adresse.brukerendrettoggle", "true");
-			}
-		}
-	}
-
 	render() {
 		if (this.props.visPersonaliaFraTPSfeatureToggle) {
 			return (
@@ -63,14 +49,18 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 						<Adresseinfo fakta={this.props.fakta} />
 						<Telefoninfo fakta={this.props.fakta} />
 					</SporsmalFaktum>
-					<Bankinformasjon fakta={this.props.fakta} />
+					<Bankinformasjon fakta={this.props.fakta} onHarIkkeKontonummer={(verdi: string) => {
+						this.oppdaterHarIkkeKontonummer(this.props.fakta, verdi, this.props.dispatch);
+					}} />
 				</DigisosSkjemaSteg>
 			);
 		}
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
-				<BankinformasjonSkjema fakta={this.props.fakta} />
+				<BankinformasjonSkjema fakta={this.props.fakta} onHarIkkeKontonummer={(verdi: string) => {
+					this.oppdaterHarIkkeKontonummer(this.props.fakta, verdi, this.props.dispatch);
+				}} />
 				<SporsmalFaktum faktumKey="kontakt.telefon">
 					<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8} />
 				</SporsmalFaktum>
@@ -78,6 +68,61 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 			</DigisosSkjemaSteg>
 		);
 	}
+
+	/* BEGIN: XXX: Bør flyttes til backend: */
+	componentDidMount() {
+		if (this.props.visPersonaliaFraTPSfeatureToggle) {
+			if (!harFaktumVerdi(this.props.fakta, "kontakt.system.telefon")) {
+				this.oppdaterFaktumVerdi(this.props.fakta, "kontakt.telefon.brukerendrettoggle", "true", this.props.dispatch);
+			}
+			if (!harFaktumVerdi(this.props.fakta, "kontakt.system.kontonummer")) {
+				this.oppdaterFaktumVerdi(this.props.fakta, "kontakt.kontonummer.brukerendrettoggle", "true", this.props.dispatch);
+			}
+			if (getPropertyVerdi(this.props.fakta, "kontakt.system.adresse", "type") == null) {
+				this.oppdaterFaktumVerdi(this.props.fakta, "kontakt.adresse.brukerendrettoggle", "true", this.props.dispatch);
+			}
+
+			this.oppdaterHarIkkeKontonummer(
+				this.props.fakta,
+				getFaktumVerdi(this.props.fakta, "kontakt.kontonummer.harikke"),
+				this.props.dispatch
+			);
+		}
+	}
+
+	oppdaterHarIkkeKontonummer(fakta: Faktum[], verdi: string, dispatch: Dispatch) {
+		if (verdi === "true" ) {
+			if (getPropertyVerdi(fakta, "kontakt.kontonummer.brukerendrettoggle", "harikke") !== "true") {
+				this.oppdaterFaktumPropertyVerdi(fakta, "kontakt.kontonummer.brukerendrettoggle", "harikke", "true", dispatch);
+			}
+		} else {
+			if (getPropertyVerdi(fakta, "kontakt.kontonummer.brukerendrettoggle", "harikke") !== "false") {
+				this.oppdaterFaktumPropertyVerdi(fakta, "kontakt.kontonummer.brukerendrettoggle", "harikke", "false", dispatch);
+			}
+		}
+	}
+
+	private oppdaterFaktumVerdi(fakta: Faktum[], faktumKey: string, verdi: string, dispatch: Dispatch) {
+		const brukerEndret = finnFaktum(faktumKey, fakta);
+		brukerEndret.value = verdi;
+		dispatch(
+			lagreFaktum(brukerEndret)
+		);
+	}
+
+	private oppdaterFaktumPropertyVerdi(
+			fakta: Faktum[],
+			faktumKey: string,
+			propertyNavn: string,
+			verdi: string,
+			dispatch: Dispatch) {
+		const brukerEndret = finnFaktum(faktumKey, fakta);
+		brukerEndret.properties[propertyNavn] = verdi;
+		dispatch(
+			lagreFaktum(brukerEndret)
+		);
+	}
+	/* END: XXX: Bør flyttes til backend. */
 }
 
 const mapStateToProps = (state: State) => ({
