@@ -8,7 +8,7 @@ import {
 	FaktumValueType
 } from "../types";
 
-import { getIntlTextOrKey, getIntlInfoTekst, getIntlText } from "./intlUtils";
+import { getIntlTextOrKey, getIntlInfoTekst, getIntlHjelpeTekst, getIntlText } from "./intlUtils";
 
 export const radioCheckKeys = (key: string) => ({
 	faktum: `${key}`,
@@ -35,7 +35,7 @@ export function getFaktumSporsmalTekst(
 	return {
 		sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
-		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`)
+		hjelpetekst: getIntlHjelpeTekst(intl, `${key}.hjelpetekst`)
 	};
 }
 export function getFaktumCheckboksTekst(
@@ -45,7 +45,7 @@ export function getFaktumCheckboksTekst(
 	return {
 		label: getIntlTextOrKey(intl, key),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
-		hjelpetekst: getIntlInfoTekst(intl, `${key}.hjelpetekst`)
+		hjelpetekst: getIntlHjelpeTekst(intl, `${key}.hjelpetekst`)
 	};
 }
 
@@ -71,7 +71,7 @@ export function getInputFaktumTekst(
 		label: getIntlTextOrKey(intl, `${key}${propertyKey}.label`),
 		sporsmal: getIntlTextOrKey(intl, `${key}${propertyKey}.sporsmal`),
 		infotekst: getIntlInfoTekst(intl, `${key}${propertyKey}.infotekst`),
-		hjelpetekst: getIntlInfoTekst(intl, `${key}${propertyKey}.hjelpetekst`),
+		hjelpetekst: getIntlHjelpeTekst(intl, `${key}${propertyKey}.hjelpetekst`),
 		pattern: getIntlText(intl, `${key}${propertyKey}.pattern`)
 	};
 }
