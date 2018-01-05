@@ -2,7 +2,6 @@
 
 export const FeatureToggles = {
 	soknadErLive: "feature.frontend.sosialhjelp.live",
-	beOmLonnslippVedlegg: "feature.frontend.sosialhjelp.lonnslippvedlegg",
 	viseTpsPersonalia: "feature.frontend.sosialhjelp.personalia",
 	visVelgBosted: "feature.frontend.visvelgbosted",
 	arbeidsforhold: "feature.frontend.arbeidsforhold"

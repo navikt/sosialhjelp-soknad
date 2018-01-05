@@ -1,14 +1,14 @@
 import * as React from "react";
-import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
+import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import Jobb from "./Jobb";
 import Studie from "./Studie";
 import Arbeidsforhold from "./Arbeidsforhold";
-import {FeatureToggles} from "../../../featureToggles";
-import {State} from "../../redux/reducers";
-import {connect} from "react-redux";
-import {FaktumComponentProps} from "../../../nav-soknad/redux/fakta/faktaTypes";
-import {finnFakta} from "../../../nav-soknad/utils";
-import {Faktum} from "../../../nav-soknad/types";
+import { FeatureToggles } from "../../../featureToggles";
+import { State } from "../../redux/reducers";
+import { connect } from "react-redux";
+import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
+import { finnFakta } from "../../../nav-soknad/utils";
+import { Faktum } from "../../../nav-soknad/types";
 
 interface StateProps {
 	visArbeidsforhold: boolean;
@@ -18,7 +18,6 @@ const ArbeidOgUtdanning: React.StatelessComponent<FaktumComponentProps & StatePr
 	const alleArbeidsforhold: Faktum[] = finnFakta("arbeidsforhold", fakta);
 	let visErDuIJobb: boolean = !alleArbeidsforhold || alleArbeidsforhold.length === 0;
 	visErDuIJobb = visArbeidsforhold! ? true : visErDuIJobb;
-	console.warn("visErDuIJobb: " + visErDuIJobb);
 	return (
 		<DigisosSkjemaSteg steg={DigisosSteg.arbeidbolk}>
 			<Arbeidsforhold/>

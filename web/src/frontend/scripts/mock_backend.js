@@ -70,11 +70,10 @@ router.get("/soknader/:brukerBehandlingId?lang=nb_NO", (req, res) => {
 });
 
 const mockFeatures = {
-	"feature.frontend.sosialhjelp.kontonummer": "true",
 	"feature.frontend.sosialhjelp.live": "true",
-	"feature.frontend.sosialhjelp.personalia": "false",
+	"feature.frontend.sosialhjelp.personalia": "true",
 	"feature.frontend.visvelgbosted": "true",
-	"feature.frontend.vis.aa-register-info": "true"
+	"feature.frontend.arbeidsforhold": "true"
 };
 router.get("/api/feature", (req, res) => {
 	console.log("bruker mockFeatures");
