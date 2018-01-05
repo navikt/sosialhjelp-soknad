@@ -27,3 +27,22 @@ export function getIntlInfoTekst(
 	const tekst = getIntlText(intl, `${key}.tekst`);
 	return tittel || tekst ? { tittel, tekst } : undefined;
 }
+
+export function getIntlHjelpeTekst(
+	intl: InjectedIntl,
+	key: string
+): Infotekst | undefined {
+	const tittel = getIkkeTomIntlText(intl, `${key}.tittel`);
+	const tekst = getIkkeTomIntlText(intl, `${key}.tekst`);
+	return tittel || tekst ? { tittel, tekst } : undefined;
+}
+
+function getIkkeTomIntlText(intl: InjectedIntl, key?: string) {
+	return intlTextIkkeTom(intl, key)
+		? intl.formatHTMLMessage({ id: key })
+		: undefined;
+}
+
+function intlTextIkkeTom(intl: InjectedIntl, key: string) {
+	return intl.messages[key] !== undefined && intl.messages[key] !== "";
+}
