@@ -6,6 +6,7 @@ import { finnFaktumMedId } from "../../utils/faktumUtils";
 const initialState: VedleggApiType = {
 	restStatus: REST_STATUS.INITIALISERT,
 	opplastingStatus: REST_STATUS.OK,
+	sistBrukteFaktumId: 0,
 	feilmelding: "",
 	data: []
 };
@@ -18,7 +19,8 @@ export default (
 		case VedleggActionTypeKeys.LAST_OPP: {
 			return {
 				...state,
-				opplastingStatus: REST_STATUS.PENDING
+				opplastingStatus: REST_STATUS.PENDING,
+				sistBrukteFaktumId: action.belopFaktumId
 			};
 		}
 		case VedleggActionTypeKeys.LAST_OPP_OK: {

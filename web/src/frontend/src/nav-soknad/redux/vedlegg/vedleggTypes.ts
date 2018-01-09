@@ -21,6 +21,8 @@ export enum VedleggActionTypeKeys {
 export interface VedleggState {
 	data: Vedlegg[];
 	restStatus: REST_STATUS;
+	opplastingStatus: REST_STATUS;
+	sistBrukteFaktumId: number;
 }
 
 export type VedleggActionTypes =
@@ -101,6 +103,7 @@ export interface VedleggApiType {
 	data: Vedlegg[];
 	restStatus: REST_STATUS;
 	opplastingStatus: REST_STATUS;
+	sistBrukteFaktumId: number;
 	feilmelding: string;
 }
 

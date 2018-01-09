@@ -10,6 +10,8 @@ import { Faktum } from "../../../../nav-soknad/types/navSoknadTypes";
 interface Props {
 	vedlegg: Vedlegg[];
 	belopFaktum: Faktum;
+	opplastingStatus?: string;
+	sistBrukteFaktumId?: number;
 }
 
 type AllProps = Props &
@@ -22,7 +24,8 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 	}
 
 	render() {
-		const { vedlegg, belopFaktum, dispatch } = this.props;
+		const { vedlegg, belopFaktum, dispatch, opplastingStatus, sistBrukteFaktumId } = this.props;
+		console.warn("opplastingStatus: " + opplastingStatus);
 
 		const vedleggListe = vedlegg
 			.filter(v => v.innsendingsvalg === "LastetOpp")
@@ -44,7 +47,11 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 					{vedleggListe}
 					</div>
 
-				<LastOppVedlegg belopFaktumId={belopFaktum.faktumId} />
+				<LastOppVedlegg
+					belopFaktumId={belopFaktum.faktumId}
+					opplastingStatus={opplastingStatus}
+					sistBrukteFaktumId={sistBrukteFaktumId}
+				/>
 			</div>
 		);
 	}
