@@ -16,6 +16,7 @@ import {
 interface OwnProps {
 	disabled?: boolean;
 	feilkode?: string;
+	onChange?: (s: string) => void;
 }
 
 export const createCheckboxFaktumKey = (key: string, option: string) =>
@@ -35,8 +36,13 @@ class CheckboxFaktum extends React.Component<
 				checked={checked}
 				disabled={disabled}
 				required={required}
-				onChange={(evt: any) =>
-					this.props.setFaktumVerdiOgLagre(boolToString(evt.target.checked))}
+				onChange={(evt: any) => {
+					const value = boolToString(evt.target.checked);
+					this.props.setFaktumVerdiOgLagre(value);
+					if (this.props.onChange != null) {
+						this.props.onChange(value);
+					}
+				}}
 				label={
 					<LabelMedHjelpetekst
 						id={faktumKey}
