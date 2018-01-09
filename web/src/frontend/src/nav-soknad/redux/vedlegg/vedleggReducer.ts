@@ -50,7 +50,8 @@ export default (
 		case VedleggActionTypeKeys.START_SLETT_VEDLEGG: {
 			return {
 				...state,
-				opplastingStatus: REST_STATUS.PENDING
+				opplastingStatus: REST_STATUS.PENDING,
+				sistBrukteFaktumId: action.vedleggsFaktumId
 			};
 		}
 		case VedleggActionTypeKeys.SLETT_VEDLEGG: {

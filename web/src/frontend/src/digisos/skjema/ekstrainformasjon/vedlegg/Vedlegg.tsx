@@ -25,8 +25,6 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 
 	render() {
 		const { vedlegg, belopFaktum, dispatch, opplastingStatus, sistBrukteFaktumId } = this.props;
-		console.warn("opplastingStatus: " + opplastingStatus);
-
 		const vedleggListe = vedlegg
 			.filter(v => v.innsendingsvalg === "LastetOpp")
 			.map(v => {
@@ -34,7 +32,6 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 				<VedlegssFil key={v.vedleggId} vedlegg={v} dispatch={dispatch} />
 			);
 		});
-
 		const vedleggsKey = `vedlegg.${vedlegg[0].skjemaNummer}.${vedlegg[0].skjemanummerTillegg}.tittel`;
 
 		return (
@@ -42,7 +39,6 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 				<p>
 					<FormattedMessage id={vedleggsKey} />
 				</p>
-
 				<div className="vedleggsliste">
 					{vedleggListe}
 					</div>

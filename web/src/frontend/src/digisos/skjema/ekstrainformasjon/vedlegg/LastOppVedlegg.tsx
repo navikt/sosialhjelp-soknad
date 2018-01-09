@@ -28,11 +28,8 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 		if (files.length !== 1) {
 			return;
 		}
-
 		const formData = new FormData();
 		formData.append("file", files[0], files[0].name);
-		console.warn("filename: " + files[0].name);
-
 		this.props.dispatch(lastOppVedlegg( this.props.belopFaktumId, formData));
 		this.leggTilVedleggKnapp.value = null;
 	}
