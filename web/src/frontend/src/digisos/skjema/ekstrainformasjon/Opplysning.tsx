@@ -18,7 +18,7 @@ import VedleggComponent from "./vedlegg/Vedlegg";
 interface Props {
 	faktumstruktur: FaktumStruktur;
 	opplastingStatus?: string;
-	sistBrukteFaktumId?: number;
+	sistEndredeFaktumId?: number;
 }
 
 type AllProps = Props &
@@ -115,7 +115,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 	}
 
 	render() {
-		const { faktumstruktur, fakta, vedlegg, opplastingStatus, sistBrukteFaktumId, intl } = this.props;
+		const { faktumstruktur, fakta, vedlegg, opplastingStatus, sistEndredeFaktumId, intl } = this.props;
 		const belopFakta = finnFakta(faktumstruktur.id, fakta);
 
 		const leggTilTekst = intl.formatMessage({ id: "opplysninger.leggtil" });
@@ -142,7 +142,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 					vedleggForOpplysning.length > 0 &&
 						<VedleggComponent
 							opplastingStatus={opplastingStatus}
-							sistBrukteFaktumId={sistBrukteFaktumId}
+							sistEndredeFaktumId={sistEndredeFaktumId}
 							vedlegg={vedleggForOpplysning}
 							belopFaktum={belopFakta[0]}
 						/>
@@ -162,6 +162,6 @@ export default connect<StateFromProps, {}, Props>((state: SoknadAppState) => {
 		fakta: state.fakta.data,
 		vedlegg: state.vedlegg.data,
 		opplastingStatus: state.vedlegg.opplastingStatus,
-		sistBrukteFaktumId: state.vedlegg.sistBrukteFaktumId
+		sistEndredeFaktumId: state.vedlegg.sistEndredeFaktumId
 	};
 })(injectIntl(Opplysning));

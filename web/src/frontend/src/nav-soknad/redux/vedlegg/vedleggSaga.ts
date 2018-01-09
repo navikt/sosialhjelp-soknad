@@ -26,7 +26,6 @@ function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 		const url = `sosialhjelpvedlegg/originalfil/${action.belopFaktumId}`;
 		const response: any = yield call(fetchUpload, url, action.formData);
 		yield call(console.log, response.right);
-
 		yield put(lastOppVedleggOk());
 
 		if (response.nyForventning) {

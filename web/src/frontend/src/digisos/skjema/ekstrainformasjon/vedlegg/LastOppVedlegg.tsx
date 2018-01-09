@@ -9,7 +9,7 @@ import { REST_STATUS } from "../../../../nav-soknad/types";
 interface Props {
 	belopFaktumId: number;
 	opplastingStatus?: string;
-	sistBrukteFaktumId?: number;
+	sistEndredeFaktumId?: number;
 }
 
 type AllProps = Props &
@@ -36,7 +36,7 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 
 	render() {
 		const visSpinner = this.props.opplastingStatus === REST_STATUS.PENDING &&
-			(this.props.belopFaktumId === this.props.sistBrukteFaktumId);
+			(this.props.belopFaktumId === this.props.sistEndredeFaktumId);
 		return (
 			<div>
 				<Knapp
