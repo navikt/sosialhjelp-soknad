@@ -16,10 +16,16 @@ interface Props {
 
 const PersonaliaTPS: React.StatelessComponent<Props> = ({ fakta }) => {
 	const personaliaFaktum = finnFaktum("personalia", fakta);
-	const statsborgerskap = getFaktumPropertyVerdi(
+	let statsborgerskap = getFaktumPropertyVerdi(
 		personaliaFaktum,
-		"statsborgerskapType"
+		"statsborgerskap"
 	);
+
+	// TODO: Backendstøtte for oversettelse mellom kode- og visningsverdi.
+	if (statsborgerskap === "NOR") {
+		statsborgerskap = "Norge";
+	}
+
 	return (
 		<SysteminfoMedSkjema>
 			<Detaljeliste>
