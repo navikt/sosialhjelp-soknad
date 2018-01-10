@@ -62,6 +62,7 @@ export interface StartSlettVedleggAction {
 	type: VedleggActionTypeKeys.START_SLETT_VEDLEGG;
 	vedleggId: number;
 	vedleggsFaktumId: number;
+	belopFaktumId: number;
 }
 
 export interface SlettVedleggAction {

@@ -51,7 +51,7 @@ export default (
 			return {
 				...state,
 				opplastingStatus: REST_STATUS.PENDING,
-				sistEndredeFaktumId: action.vedleggsFaktumId
+				sistEndredeFaktumId: action.belopFaktumId
 			};
 		}
 		case VedleggActionTypeKeys.SLETT_VEDLEGG: {

@@ -29,7 +29,7 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 			.filter(v => v.innsendingsvalg === "LastetOpp")
 			.map(v => {
 			return (
-				<VedlegssFil key={v.vedleggId} vedlegg={v} dispatch={dispatch} />
+				<VedlegssFil key={v.vedleggId} vedlegg={v} dispatch={dispatch} belopFaktumId={belopFaktum.faktumId}/>
 			);
 		});
 		const vedleggsKey = `vedlegg.${vedlegg[0].skjemaNummer}.${vedlegg[0].skjemanummerTillegg}.tittel`;
