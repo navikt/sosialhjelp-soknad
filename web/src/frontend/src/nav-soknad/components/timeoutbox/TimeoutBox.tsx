@@ -83,7 +83,9 @@ class TimeoutBox extends React.Component<Props, State> {
 	onContinueClick() {
 		this.setState({
 			utloggingsTidspunkt: this.beregnUtloggingsTidspunkt(),
-			visAdvarselTidspunkt: this.beregnVisAdvarseTidspunkt()
+			visAdvarselTidspunkt: this.beregnVisAdvarseTidspunkt(),
+			visAdvarsel: false,
+			visLoggetUt: false
 		});
 	}
 
