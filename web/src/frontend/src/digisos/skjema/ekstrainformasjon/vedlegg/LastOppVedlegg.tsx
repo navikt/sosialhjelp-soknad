@@ -52,6 +52,7 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 					onChange={(e) => this.handleFileUpload(e.target.files)}
 					type="file"
 					className="visuallyhidden"
+					tabIndex={-1}
 					accept="image/jpeg,image/png,application/pdf"
 				/>
 			</div>
