@@ -13,6 +13,8 @@ const ArbeidsforholdDetaljer: React.StatelessComponent<{ arbeidsforhold: Faktum 
 		stillingsprosent = stillingsprosent + "%";
 	}
 
+	const tom = getFaktumPropertyVerdi(arbeidsforhold, "tom");
+
 	return (
 		<Detaljeliste>
 			<DetaljelisteElement
@@ -27,12 +29,14 @@ const ArbeidsforholdDetaljer: React.StatelessComponent<{ arbeidsforhold: Faktum 
 				}
 				verdi={getFaktumPropertyVerdi(arbeidsforhold, "fom")}
 			/>
-			<DetaljelisteElement
-				tittel={
-					<FormattedMessage id="arbeidsforhold.tom.label"/>
-				}
-				verdi={getFaktumPropertyVerdi(arbeidsforhold, "tom")}
-			/>
+			{tom !== "" && (
+				<DetaljelisteElement
+					tittel={
+						<FormattedMessage id="arbeidsforhold.tom.label"/>
+					}
+					verdi={tom}
+				/>
+			)}
 			<DetaljelisteElement
 				tittel={
 					<FormattedMessage
