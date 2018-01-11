@@ -9,6 +9,8 @@ const ArbeidsforholdDetaljer: React.StatelessComponent<{ arbeidsforhold: Faktum 
 	let stillingsprosent = getFaktumPropertyVerdi(arbeidsforhold, "stillingsprosent");
 	if (stillingsprosent === "0" && getFaktumPropertyVerdi(arbeidsforhold, "stillingstype") === "variabel") {
 		stillingsprosent = "Variabel";
+	} else {
+		stillingsprosent = stillingsprosent + "%";
 	}
 
 	return (

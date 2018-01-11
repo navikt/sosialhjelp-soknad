@@ -21,14 +21,17 @@ const Arbeidsforhold: React.StatelessComponent<FaktumComponentProps & StateProps
 		return <div />;
 	}
 
-	const alleArbeidsforhold: Faktum[] = finnFakta("arbeidsforhold", fakta);
+	const removeSecurityAddedArbeidsforhold = (af: any) => {
+		return Object.getOwnPropertyNames(af.properties).length > 0;
+	};
+	const alleArbeidsforhold: Faktum[] = finnFakta("arbeidsforhold", fakta).filter(removeSecurityAddedArbeidsforhold);
 
 	return <SporsmalFaktum faktumKey="opplysninger.arbeidsituasjon" style="system">
 		<SysteminfoMedSkjema>
 			<h4 className="skjema-sporsmal__infotekst__tittel">
 				<FormattedMessage id="arbeidsforhold.infotekst"/>
 			</h4>
-			{alleArbeidsforhold && alleArbeidsforhold.length === 0 && (
+			{(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (
 				<p>
 					<FormattedMessage id="arbeidsforhold.ingen"/>
 				</p>
