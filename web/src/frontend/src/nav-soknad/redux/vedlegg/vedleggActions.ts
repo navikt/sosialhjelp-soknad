@@ -36,12 +36,14 @@ const nyttVedlegg = (vedlegg: Vedlegg, fakta: Faktum[]) => {
 
 const startSlettVedlegg = (
 	vedleggId: number,
-	vedleggsFaktumId: number
+	vedleggsFaktumId: number,
+	belopFaktumId: number
 ): VedleggActionTypes => {
 	return {
 		type: VedleggActionTypeKeys.START_SLETT_VEDLEGG,
 		vedleggId,
-		vedleggsFaktumId
+		vedleggsFaktumId,
+		belopFaktumId
 	};
 };
 

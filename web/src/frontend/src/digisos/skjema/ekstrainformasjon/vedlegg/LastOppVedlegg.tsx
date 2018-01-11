@@ -4,9 +4,12 @@ import { DispatchProps, SoknadAppState } from "../../../../nav-soknad/redux/redu
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { Knapp } from "nav-frontend-knapper";
 import { lastOppVedlegg } from "../../../../nav-soknad/redux/vedlegg/vedleggActions";
+import { REST_STATUS } from "../../../../nav-soknad/types";
 
 interface Props {
 	belopFaktumId: number;
+	opplastingStatus?: string;
+	sistEndredeFaktumId?: number;
 }
 
 type AllProps = Props &
@@ -25,22 +28,22 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 		if (files.length !== 1) {
 			return;
 		}
-
 		const formData = new FormData();
 		formData.append("file", files[0], files[0].name);
-
 		this.props.dispatch(lastOppVedlegg( this.props.belopFaktumId, formData));
 		this.leggTilVedleggKnapp.value = null;
 	}
 
 	render() {
-
+		const visSpinner = this.props.opplastingStatus === REST_STATUS.PENDING &&
+			(this.props.belopFaktumId === this.props.sistEndredeFaktumId);
 		return (
 			<div>
 				<Knapp
 					type="standard"
 					htmlType="submit"
 					disabled={false}
+					spinner={visSpinner}
 					onClick={() => {
 						this.leggTilVedleggKnapp.click();
 					}}

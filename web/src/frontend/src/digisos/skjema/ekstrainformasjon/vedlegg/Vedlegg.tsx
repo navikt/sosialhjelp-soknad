@@ -10,6 +10,8 @@ import { Faktum } from "../../../../nav-soknad/types/navSoknadTypes";
 interface Props {
 	vedlegg: Vedlegg[];
 	belopFaktum: Faktum;
+	opplastingStatus?: string;
+	sistEndredeFaktumId?: number;
 }
 
 type AllProps = Props &
@@ -22,16 +24,14 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 	}
 
 	render() {
-		const { vedlegg, belopFaktum, dispatch } = this.props;
-
+		const { vedlegg, belopFaktum, dispatch, opplastingStatus, sistEndredeFaktumId } = this.props;
 		const vedleggListe = vedlegg
 			.filter(v => v.innsendingsvalg === "LastetOpp")
 			.map(v => {
 			return (
-				<VedlegssFil key={v.vedleggId} vedlegg={v} dispatch={dispatch} />
+				<VedlegssFil key={v.vedleggId} vedlegg={v} dispatch={dispatch} belopFaktumId={belopFaktum.faktumId}/>
 			);
 		});
-
 		const vedleggsKey = `vedlegg.${vedlegg[0].skjemaNummer}.${vedlegg[0].skjemanummerTillegg}.tittel`;
 
 		return (
@@ -39,12 +39,15 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 				<p>
 					<FormattedMessage id={vedleggsKey} />
 				</p>
-
 				<div className="vedleggsliste">
 					{vedleggListe}
 					</div>
 
-				<LastOppVedlegg belopFaktumId={belopFaktum.faktumId} />
+				<LastOppVedlegg
+					belopFaktumId={belopFaktum.faktumId}
+					opplastingStatus={opplastingStatus}
+					sistEndredeFaktumId={sistEndredeFaktumId}
+				/>
 			</div>
 		);
 	}

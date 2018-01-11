@@ -10,6 +10,7 @@ import { startSlettVedlegg } from "../../../../nav-soknad/redux/vedlegg/vedleggA
 interface Props {
 	vedlegg: Vedlegg;
 	dispatch: Dispatch;
+	belopFaktumId: number;
 }
 
 type AllProps = Props;
@@ -20,7 +21,7 @@ export default class VedleggsFil extends React.Component<AllProps, {}> {
 	}
 
 	render() {
-		const {vedlegg, dispatch} = this.props;
+		const {vedlegg, dispatch, belopFaktumId} = this.props;
 		const lastNedUrl = `sosialhjelpvedlegg/${vedlegg.vedleggId}/fil`;
 
 		return (
@@ -34,7 +35,7 @@ export default class VedleggsFil extends React.Component<AllProps, {}> {
 					<button
 						type="button"
 						className="vedleggsliste__kunSkjermleser_knapp"
-						onClick={() => dispatch(startSlettVedlegg(vedlegg.vedleggId, vedlegg.faktumId))}
+						onClick={() => dispatch(startSlettVedlegg(vedlegg.vedleggId, vedlegg.faktumId, belopFaktumId))}
 					>
 						<AriaText>Slett {vedlegg.filnavn}</AriaText>
 						<SVG

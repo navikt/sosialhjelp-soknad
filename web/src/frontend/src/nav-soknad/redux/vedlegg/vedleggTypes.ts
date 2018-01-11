@@ -21,6 +21,8 @@ export enum VedleggActionTypeKeys {
 export interface VedleggState {
 	data: Vedlegg[];
 	restStatus: REST_STATUS;
+	opplastingStatus: REST_STATUS;
+	sistEndredeFaktumId: number;
 }
 
 export type VedleggActionTypes =
@@ -60,6 +62,7 @@ export interface StartSlettVedleggAction {
 	type: VedleggActionTypeKeys.START_SLETT_VEDLEGG;
 	vedleggId: number;
 	vedleggsFaktumId: number;
+	belopFaktumId: number;
 }
 
 export interface SlettVedleggAction {
@@ -101,6 +104,7 @@ export interface VedleggApiType {
 	data: Vedlegg[];
 	restStatus: REST_STATUS;
 	opplastingStatus: REST_STATUS;
+	sistEndredeFaktumId: number;
 	feilmelding: string;
 }
 
