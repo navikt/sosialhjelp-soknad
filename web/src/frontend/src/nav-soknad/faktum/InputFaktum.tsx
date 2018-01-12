@@ -11,11 +11,11 @@ import {
 export type InputTypes = "text" | "number" | "email" | "tel";
 
 const DEFAULT_MAX_LENGTH = 50;
-
 export interface OwnProps extends FaktumComponentProps {
 	disabled?: boolean;
 	pattern?: string;
 	maxLength?: number;
+	maxAmount?: number;
 	minLength?: number;
 	bredde?: InputBredde;
 	step?: string;
@@ -25,7 +25,32 @@ export interface OwnProps extends FaktumComponentProps {
 
 export type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
 
-class InputFaktum extends React.Component<Props, {}> {
+class InputFaktum extends React.Component<Props, {feil?: string}> {
+
+	setValue(value: any) {
+		const { maxAmount } = this.props;
+		if ( maxAmount && maxAmount > 0) {
+			const parsedValue = parseFloat(value);
+			if (!parsedValue || parsedValue <= maxAmount) {
+				this.props.setFaktumVerdi(value, this.props.property);
+			} else {
+				if (!parsedValue || parsedValue > maxAmount) {
+					this.setState({feil: "Max " + maxAmount});
+				}
+			}
+		} else {
+			this.props.setFaktumVerdi(value, this.props.property);
+		}
+	}
+
+	getFeil(intl: any) {
+		// const feil = this.state.feil;
+		// if (feil) {
+		// 	return feil;
+		// }
+		return this.props.getFeil(intl);
+	}
+
 	render() {
 		const {
 			faktumKey,
@@ -51,11 +76,11 @@ class InputFaktum extends React.Component<Props, {}> {
 				disabled={disabled}
 				value={this.props.getFaktumVerdi()}
 				onChange={(evt: any) =>
-					this.props.setFaktumVerdi(evt.target.value, this.props.property)}
+					this.setValue(evt.target.value)}
 				onBlur={() => this.props.lagreFaktumDersomGyldig()}
 				label={tekster.label}
 				placeholder={tekster.pattern}
-				feil={this.props.getFeil(intl)}
+				feil={this.getFeil(intl)}
 				maxLength={maxLength}
 				bredde={bredde}
 				pattern={pattern}

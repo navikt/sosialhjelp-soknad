@@ -69,6 +69,7 @@ class TextareaFaktum extends React.Component<Props, {}> {
 				? this.props.getPropertyVerdi()
 				: this.props.getFaktumVerdi()) || "";
 		return (
+			<div title="Max 50">
 			<Textarea
 				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
 				value={verdi}
@@ -82,6 +83,7 @@ class TextareaFaktum extends React.Component<Props, {}> {
 				tellerTekst={this.tellerTekst}
 				required={required}
 			/>
+			</div>
 		);
 	}
 }
