@@ -19,9 +19,11 @@
         <baseUrl mapToProperty="dialogarena.cms" alias="appres.cms"/>
         <baseUrl mapToProperty="soknadsapi" alias="soknadsapi"/>
         <applicationProperties alias="soknadsosialhjelp.properties"/>
+        <credential alias="suspender" />
     </resources>
 
     <loadBalancer isAlive="/soknadsosialhjelp/internal/isAlive"/>
+    <!--<suspend url="/soknadforeldrepenger/management/suspend" credential="suspender" />-->
 
     <serverOptions>
         <memoryParameters resourceAlias="soknadsdialoger-memparams"/>

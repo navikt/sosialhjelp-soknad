@@ -61,6 +61,13 @@
                 <version>2.0.4</version>
             </dependency>
 
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>common-suspend</artifactId>
+                <version>1.0.4</version>
+                <scope>runtime</scope>
+            </dependency>
+
             <!-- Avhengigheter med scope test -->
             <dependency>
                 <groupId>no.nav.sbl.dialogarena</groupId>
