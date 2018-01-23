@@ -23,7 +23,7 @@
     </resources>
 
     <loadBalancer isAlive="/soknadsosialhjelp/internal/isAlive"/>
-    <suspend url="/soknadsosialhjelp/management/suspend" credential="suspender" />
+    <suspend url="/soknadsosialhjelp/management/suspend" credential="suspender" timeoutSeconds="20" />
 
     <serverOptions>
         <memoryParameters resourceAlias="soknadsdialoger-memparams"/>
