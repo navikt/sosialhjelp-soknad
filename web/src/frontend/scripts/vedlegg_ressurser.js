@@ -20,7 +20,7 @@ router.get("/sosialhjelpvedlegg/oppdaterVedlegg/:behandlingsId", function(
 	res
 ) {
 	// Returner fullt søknadsobjekt
-	res.json(utils.lesMockDataFil("soknad.json"));
+	res.json(utils.lesMockDataFil("soknadVedlegg.json"));
 });
 
 // Nytt API kall
@@ -30,7 +30,7 @@ router.get("/soknader/:brukerBehandlingId/vedlegg", function(
 ) {
 	var brukerBehandlingId = req.params.brukerBehandlingId;
 	console.log("Mock backend: GET /soknader/" + brukerBehandlingId + "/vedlegg\"");
-	res.json(utils.lesMockDataFil("vedlegg_" + brukerBehandlingId + ".json"));
+	res.json(utils.lesMockDataFil("soknadVedlegg.json"));
 });
 
 // Gammelt API kall

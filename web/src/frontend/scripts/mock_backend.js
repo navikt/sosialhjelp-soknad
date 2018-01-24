@@ -52,7 +52,7 @@ router.get("/soknader/1000B7FGM/synligsoknadstruktur", (req, res) => {
 	res.json(synligsoknadstruktur);
 });
 
-const brukerBehandlingId = "1000B7FGM";
+const brukerBehandlingId = "1000CPZ2U";
 const soknad = utils.lesMockDataFil("soknad.json");
 
 let fakta = soknad.fakta;
@@ -65,9 +65,9 @@ router.post("/soknader", (req, res) => {
 });
 
 // Hent ut søknad
-router.get("/soknader/:brukerBehandlingId?lang=nb_NO", (req, res) => {
-	console.log("sss");
-});
+// router.get("/soknader/:brukerBehandlingId?lang=nb_NO", (req, res) => {
+// 	console.log("sss");
+// });
 
 const mockFeatures = {
 	"feature.frontend.sosialhjelp.live": "true",

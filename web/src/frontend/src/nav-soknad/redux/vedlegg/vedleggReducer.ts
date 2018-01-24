@@ -69,8 +69,9 @@ export default (
 		}
 		case VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_OK: {
 			const vedleggsForventninger = action.vedleggsforventninger;
-			vedleggsForventninger.forEach(vedlegg => leggFaktumPaVedleggStruktur(vedlegg, action.fakta));
-
+			if (vedleggsForventninger && Array.isArray(vedleggsForventninger)) {
+				vedleggsForventninger.forEach(vedlegg => leggFaktumPaVedleggStruktur(vedlegg, action.fakta));
+			}
 			return {
 				...state,
 				restStatus: REST_STATUS.OK,

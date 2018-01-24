@@ -60,7 +60,7 @@ exports.getFilePath = function(filnavn) {
 exports.lesMockDataFil = function(filnavn) {
 	const fileName = this.getFilePath(filnavn);
 	if (!fs.existsSync(fileName)) {
-		console.log("Advarsel! Finner mockdata fil " + fileName);
+		console.log("Feil! Finner ikke mockdata fil " + fileName);
 	} else {
 		try {
 			return JSON.parse(fs.readFileSync(fileName, "utf8"));
