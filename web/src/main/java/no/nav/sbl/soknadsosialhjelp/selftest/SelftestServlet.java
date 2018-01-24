@@ -38,6 +38,7 @@ public class SelftestServlet extends SelfTestBaseServlet {
                 try {
                     connection = (HttpURLConnection) new URL(url).openConnection();
                     connection.setConnectTimeout(10000);
+                    connection.setInstanceFollowRedirects(false);
                     if (connection.getResponseCode() == HTTP_OK) {
                         return Ping.lyktes(name);
                     } else {
