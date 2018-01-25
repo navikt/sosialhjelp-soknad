@@ -1,5 +1,24 @@
 [
 	{
+		"id": "opplysninger.statsborgerskap",
+		"type": "gruppe",
+		"panel": "opplysningerBolk",
+		"dependOn": null,
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": false,
+		"flereTillatt": null,
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
 		"id": "opplysninger.arbeid",
 		"type": "gruppe",
 		"panel": "opplysningerBolk",
@@ -94,7 +113,119 @@
 		}
 	},
 	{
+		"id": "opplysninger.arbeid.jobb.vedlegg",
+		"type": "hidden",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.arbeid.jobb",
+			"type": "composite",
+			"panel": null,
+			"dependOn": {
+				"id": "opplysninger.arbeid",
+				"type": "gruppe",
+				"panel": "opplysningerBolk",
+				"dependOn": null,
+				"dependOnProperty": null,
+				"dependOnValues": null,
+				"useExpression": false,
+				"kunUtvidet": false,
+				"optional": false,
+				"flereTillatt": null,
+				"erSystemFaktum": null,
+				"properties": null,
+				"constraints": null,
+				"tekster": null,
+				"configuration": {
+					"configuration": []
+				}
+			},
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": true,
+			"flereTillatt": "true",
+			"erSystemFaktum": null,
+			"properties": [
+				{
+					"id": "bruttolonn",
+					"type": "textbox",
+					"dependOn": null,
+					"constraints": null,
+					"configuration": null
+				},
+				{
+					"id": "nettolonn",
+					"type": "textbox",
+					"dependOn": null,
+					"constraints": null,
+					"configuration": null
+				}
+			],
+			"constraints": [
+				{
+					"faktumStruktur": {
+						"id": "dinsituasjon.jobb",
+						"type": "bool",
+						"panel": "arbeidbolk",
+						"dependOn": null,
+						"dependOnProperty": null,
+						"dependOnValues": null,
+						"useExpression": false,
+						"kunUtvidet": false,
+						"optional": true,
+						"flereTillatt": null,
+						"erSystemFaktum": null,
+						"properties": null,
+						"constraints": null,
+						"tekster": null,
+						"configuration": {
+							"configuration": []
+						}
+					},
+					"expression": "value == 'true'"
+				}
+			],
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
 		"id": "opplysninger.familiesituasjon",
+		"type": "gruppe",
+		"panel": "opplysningerBolk",
+		"dependOn": null,
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": false,
+		"flereTillatt": null,
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.bosituasjon",
 		"type": "gruppe",
 		"panel": "opplysningerBolk",
 		"dependOn": null,
@@ -132,30 +263,11 @@
 		}
 	},
 	{
-		"id": "opplysninger.utgifter",
-		"type": "gruppe",
-		"panel": "opplysningerBolk",
-		"dependOn": null,
-		"dependOnProperty": null,
-		"dependOnValues": null,
-		"useExpression": false,
-		"kunUtvidet": false,
-		"optional": false,
-		"flereTillatt": null,
-		"erSystemFaktum": null,
-		"properties": null,
-		"constraints": null,
-		"tekster": null,
-		"configuration": {
-			"configuration": []
-		}
-	},
-	{
-		"id": "opplysninger.utgifter.barn.fritidsaktivitet",
+		"id": "opplysninger.inntekt.inntekter.utbytte",
 		"type": "composite",
 		"panel": null,
 		"dependOn": {
-			"id": "opplysninger.utgifter",
+			"id": "opplysninger.inntekt",
 			"type": "gruppe",
 			"panel": "opplysningerBolk",
 			"dependOn": null,
@@ -182,7 +294,7 @@
 		"erSystemFaktum": null,
 		"properties": [
 			{
-				"id": "sisteregning",
+				"id": "sum",
 				"type": "textbox",
 				"dependOn": null,
 				"constraints": null,
@@ -192,17 +304,17 @@
 		"constraints": [
 			{
 				"faktumStruktur": {
-					"id": "utgifter.barn.true.utgifter.fritidsaktivitet",
+					"id": "inntekt.inntekter.true.type.utbytte",
 					"type": "bool",
 					"panel": null,
 					"dependOn": {
-						"id": "utgifter.barn.true.utgifter",
+						"id": "inntekt.inntekter.true.type",
 						"type": "checkboxGroup",
 						"panel": null,
 						"dependOn": {
-							"id": "utgifter.barn",
+							"id": "inntekt.inntekter",
 							"type": "bool",
-							"panel": "utgifterBolk",
+							"panel": "inntektBolk",
 							"dependOn": null,
 							"dependOnProperty": null,
 							"dependOnValues": null,
@@ -219,7 +331,9 @@
 							}
 						},
 						"dependOnProperty": null,
-						"dependOnValues": ["true"],
+						"dependOnValues": [
+							"true"
+						],
 						"useExpression": false,
 						"kunUtvidet": false,
 						"optional": true,
@@ -249,6 +363,1335 @@
 				"expression": "value == 'true'"
 			}
 		],
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.inntekt.inntekter.utbytte.vedlegg",
+		"type": "hidden",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.inntekt.inntekter.utbytte",
+			"type": "composite",
+			"panel": null,
+			"dependOn": {
+				"id": "opplysninger.inntekt",
+				"type": "gruppe",
+				"panel": "opplysningerBolk",
+				"dependOn": null,
+				"dependOnProperty": null,
+				"dependOnValues": null,
+				"useExpression": false,
+				"kunUtvidet": false,
+				"optional": false,
+				"flereTillatt": null,
+				"erSystemFaktum": null,
+				"properties": null,
+				"constraints": null,
+				"tekster": null,
+				"configuration": {
+					"configuration": []
+				}
+			},
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": true,
+			"flereTillatt": "true",
+			"erSystemFaktum": null,
+			"properties": [
+				{
+					"id": "sum",
+					"type": "textbox",
+					"dependOn": null,
+					"constraints": null,
+					"configuration": null
+				}
+			],
+			"constraints": [
+				{
+					"faktumStruktur": {
+						"id": "inntekt.inntekter.true.type.utbytte",
+						"type": "bool",
+						"panel": null,
+						"dependOn": {
+							"id": "inntekt.inntekter.true.type",
+							"type": "checkboxGroup",
+							"panel": null,
+							"dependOn": {
+								"id": "inntekt.inntekter",
+								"type": "bool",
+								"panel": "inntektBolk",
+								"dependOn": null,
+								"dependOnProperty": null,
+								"dependOnValues": null,
+								"useExpression": false,
+								"kunUtvidet": false,
+								"optional": true,
+								"flereTillatt": null,
+								"erSystemFaktum": null,
+								"properties": null,
+								"constraints": null,
+								"tekster": null,
+								"configuration": {
+									"configuration": []
+								}
+							},
+							"dependOnProperty": null,
+							"dependOnValues": [
+								"true"
+							],
+							"useExpression": false,
+							"kunUtvidet": false,
+							"optional": true,
+							"flereTillatt": null,
+							"erSystemFaktum": null,
+							"properties": null,
+							"constraints": null,
+							"tekster": null,
+							"configuration": {
+								"configuration": []
+							}
+						},
+						"dependOnProperty": null,
+						"dependOnValues": null,
+						"useExpression": false,
+						"kunUtvidet": false,
+						"optional": true,
+						"flereTillatt": null,
+						"erSystemFaktum": null,
+						"properties": null,
+						"constraints": null,
+						"tekster": null,
+						"configuration": {
+							"configuration": []
+						}
+					},
+					"expression": "value == 'true'"
+				}
+			],
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.inntekt.inntekter.salg",
+		"type": "composite",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.inntekt",
+			"type": "gruppe",
+			"panel": "opplysningerBolk",
+			"dependOn": null,
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": false,
+			"flereTillatt": null,
+			"erSystemFaktum": null,
+			"properties": null,
+			"constraints": null,
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": [
+			{
+				"id": "sum",
+				"type": "textbox",
+				"dependOn": null,
+				"constraints": null,
+				"configuration": null
+			}
+		],
+		"constraints": [
+			{
+				"faktumStruktur": {
+					"id": "inntekt.inntekter.true.type.salg",
+					"type": "bool",
+					"panel": null,
+					"dependOn": {
+						"id": "inntekt.inntekter.true.type",
+						"type": "checkboxGroup",
+						"panel": null,
+						"dependOn": {
+							"id": "inntekt.inntekter",
+							"type": "bool",
+							"panel": "inntektBolk",
+							"dependOn": null,
+							"dependOnProperty": null,
+							"dependOnValues": null,
+							"useExpression": false,
+							"kunUtvidet": false,
+							"optional": true,
+							"flereTillatt": null,
+							"erSystemFaktum": null,
+							"properties": null,
+							"constraints": null,
+							"tekster": null,
+							"configuration": {
+								"configuration": []
+							}
+						},
+						"dependOnProperty": null,
+						"dependOnValues": [
+							"true"
+						],
+						"useExpression": false,
+						"kunUtvidet": false,
+						"optional": true,
+						"flereTillatt": null,
+						"erSystemFaktum": null,
+						"properties": null,
+						"constraints": null,
+						"tekster": null,
+						"configuration": {
+							"configuration": []
+						}
+					},
+					"dependOnProperty": null,
+					"dependOnValues": null,
+					"useExpression": false,
+					"kunUtvidet": false,
+					"optional": true,
+					"flereTillatt": null,
+					"erSystemFaktum": null,
+					"properties": null,
+					"constraints": null,
+					"tekster": null,
+					"configuration": {
+						"configuration": []
+					}
+				},
+				"expression": "value == 'true'"
+			}
+		],
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.inntekt.inntekter.salg.vedlegg",
+		"type": "hidden",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.inntekt.inntekter.salg",
+			"type": "composite",
+			"panel": null,
+			"dependOn": {
+				"id": "opplysninger.inntekt",
+				"type": "gruppe",
+				"panel": "opplysningerBolk",
+				"dependOn": null,
+				"dependOnProperty": null,
+				"dependOnValues": null,
+				"useExpression": false,
+				"kunUtvidet": false,
+				"optional": false,
+				"flereTillatt": null,
+				"erSystemFaktum": null,
+				"properties": null,
+				"constraints": null,
+				"tekster": null,
+				"configuration": {
+					"configuration": []
+				}
+			},
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": true,
+			"flereTillatt": "true",
+			"erSystemFaktum": null,
+			"properties": [
+				{
+					"id": "sum",
+					"type": "textbox",
+					"dependOn": null,
+					"constraints": null,
+					"configuration": null
+				}
+			],
+			"constraints": [
+				{
+					"faktumStruktur": {
+						"id": "inntekt.inntekter.true.type.salg",
+						"type": "bool",
+						"panel": null,
+						"dependOn": {
+							"id": "inntekt.inntekter.true.type",
+							"type": "checkboxGroup",
+							"panel": null,
+							"dependOn": {
+								"id": "inntekt.inntekter",
+								"type": "bool",
+								"panel": "inntektBolk",
+								"dependOn": null,
+								"dependOnProperty": null,
+								"dependOnValues": null,
+								"useExpression": false,
+								"kunUtvidet": false,
+								"optional": true,
+								"flereTillatt": null,
+								"erSystemFaktum": null,
+								"properties": null,
+								"constraints": null,
+								"tekster": null,
+								"configuration": {
+									"configuration": []
+								}
+							},
+							"dependOnProperty": null,
+							"dependOnValues": [
+								"true"
+							],
+							"useExpression": false,
+							"kunUtvidet": false,
+							"optional": true,
+							"flereTillatt": null,
+							"erSystemFaktum": null,
+							"properties": null,
+							"constraints": null,
+							"tekster": null,
+							"configuration": {
+								"configuration": []
+							}
+						},
+						"dependOnProperty": null,
+						"dependOnValues": null,
+						"useExpression": false,
+						"kunUtvidet": false,
+						"optional": true,
+						"flereTillatt": null,
+						"erSystemFaktum": null,
+						"properties": null,
+						"constraints": null,
+						"tekster": null,
+						"configuration": {
+							"configuration": []
+						}
+					},
+					"expression": "value == 'true'"
+				}
+			],
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.inntekt.inntekter.forsikringsutbetalinger",
+		"type": "composite",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.inntekt",
+			"type": "gruppe",
+			"panel": "opplysningerBolk",
+			"dependOn": null,
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": false,
+			"flereTillatt": null,
+			"erSystemFaktum": null,
+			"properties": null,
+			"constraints": null,
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": [
+			{
+				"id": "sum",
+				"type": "textbox",
+				"dependOn": null,
+				"constraints": null,
+				"configuration": null
+			}
+		],
+		"constraints": [
+			{
+				"faktumStruktur": {
+					"id": "inntekt.inntekter.true.type.forsikringsutbetalinger",
+					"type": "bool",
+					"panel": null,
+					"dependOn": {
+						"id": "inntekt.inntekter.true.type",
+						"type": "checkboxGroup",
+						"panel": null,
+						"dependOn": {
+							"id": "inntekt.inntekter",
+							"type": "bool",
+							"panel": "inntektBolk",
+							"dependOn": null,
+							"dependOnProperty": null,
+							"dependOnValues": null,
+							"useExpression": false,
+							"kunUtvidet": false,
+							"optional": true,
+							"flereTillatt": null,
+							"erSystemFaktum": null,
+							"properties": null,
+							"constraints": null,
+							"tekster": null,
+							"configuration": {
+								"configuration": []
+							}
+						},
+						"dependOnProperty": null,
+						"dependOnValues": [
+							"true"
+						],
+						"useExpression": false,
+						"kunUtvidet": false,
+						"optional": true,
+						"flereTillatt": null,
+						"erSystemFaktum": null,
+						"properties": null,
+						"constraints": null,
+						"tekster": null,
+						"configuration": {
+							"configuration": []
+						}
+					},
+					"dependOnProperty": null,
+					"dependOnValues": null,
+					"useExpression": false,
+					"kunUtvidet": false,
+					"optional": true,
+					"flereTillatt": null,
+					"erSystemFaktum": null,
+					"properties": null,
+					"constraints": null,
+					"tekster": null,
+					"configuration": {
+						"configuration": []
+					}
+				},
+				"expression": "value == 'true'"
+			}
+		],
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.inntekt.inntekter.forsikringsutbetalinger.vedlegg",
+		"type": "hidden",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.inntekt.inntekter.forsikringsutbetalinger",
+			"type": "composite",
+			"panel": null,
+			"dependOn": {
+				"id": "opplysninger.inntekt",
+				"type": "gruppe",
+				"panel": "opplysningerBolk",
+				"dependOn": null,
+				"dependOnProperty": null,
+				"dependOnValues": null,
+				"useExpression": false,
+				"kunUtvidet": false,
+				"optional": false,
+				"flereTillatt": null,
+				"erSystemFaktum": null,
+				"properties": null,
+				"constraints": null,
+				"tekster": null,
+				"configuration": {
+					"configuration": []
+				}
+			},
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": true,
+			"flereTillatt": "true",
+			"erSystemFaktum": null,
+			"properties": [
+				{
+					"id": "sum",
+					"type": "textbox",
+					"dependOn": null,
+					"constraints": null,
+					"configuration": null
+				}
+			],
+			"constraints": [
+				{
+					"faktumStruktur": {
+						"id": "inntekt.inntekter.true.type.forsikringsutbetalinger",
+						"type": "bool",
+						"panel": null,
+						"dependOn": {
+							"id": "inntekt.inntekter.true.type",
+							"type": "checkboxGroup",
+							"panel": null,
+							"dependOn": {
+								"id": "inntekt.inntekter",
+								"type": "bool",
+								"panel": "inntektBolk",
+								"dependOn": null,
+								"dependOnProperty": null,
+								"dependOnValues": null,
+								"useExpression": false,
+								"kunUtvidet": false,
+								"optional": true,
+								"flereTillatt": null,
+								"erSystemFaktum": null,
+								"properties": null,
+								"constraints": null,
+								"tekster": null,
+								"configuration": {
+									"configuration": []
+								}
+							},
+							"dependOnProperty": null,
+							"dependOnValues": [
+								"true"
+							],
+							"useExpression": false,
+							"kunUtvidet": false,
+							"optional": true,
+							"flereTillatt": null,
+							"erSystemFaktum": null,
+							"properties": null,
+							"constraints": null,
+							"tekster": null,
+							"configuration": {
+								"configuration": []
+							}
+						},
+						"dependOnProperty": null,
+						"dependOnValues": null,
+						"useExpression": false,
+						"kunUtvidet": false,
+						"optional": true,
+						"flereTillatt": null,
+						"erSystemFaktum": null,
+						"properties": null,
+						"constraints": null,
+						"tekster": null,
+						"configuration": {
+							"configuration": []
+						}
+					},
+					"expression": "value == 'true'"
+				}
+			],
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.inntekt.inntekter.annet",
+		"type": "composite",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.inntekt",
+			"type": "gruppe",
+			"panel": "opplysningerBolk",
+			"dependOn": null,
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": false,
+			"flereTillatt": null,
+			"erSystemFaktum": null,
+			"properties": null,
+			"constraints": null,
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": [
+			{
+				"id": "sum",
+				"type": "textbox",
+				"dependOn": null,
+				"constraints": null,
+				"configuration": null
+			}
+		],
+		"constraints": [
+			{
+				"faktumStruktur": {
+					"id": "inntekt.inntekter.true.type.annet",
+					"type": "bool",
+					"panel": null,
+					"dependOn": {
+						"id": "inntekt.inntekter.true.type",
+						"type": "checkboxGroup",
+						"panel": null,
+						"dependOn": {
+							"id": "inntekt.inntekter",
+							"type": "bool",
+							"panel": "inntektBolk",
+							"dependOn": null,
+							"dependOnProperty": null,
+							"dependOnValues": null,
+							"useExpression": false,
+							"kunUtvidet": false,
+							"optional": true,
+							"flereTillatt": null,
+							"erSystemFaktum": null,
+							"properties": null,
+							"constraints": null,
+							"tekster": null,
+							"configuration": {
+								"configuration": []
+							}
+						},
+						"dependOnProperty": null,
+						"dependOnValues": [
+							"true"
+						],
+						"useExpression": false,
+						"kunUtvidet": false,
+						"optional": true,
+						"flereTillatt": null,
+						"erSystemFaktum": null,
+						"properties": null,
+						"constraints": null,
+						"tekster": null,
+						"configuration": {
+							"configuration": []
+						}
+					},
+					"dependOnProperty": null,
+					"dependOnValues": null,
+					"useExpression": false,
+					"kunUtvidet": false,
+					"optional": true,
+					"flereTillatt": null,
+					"erSystemFaktum": null,
+					"properties": null,
+					"constraints": null,
+					"tekster": null,
+					"configuration": {
+						"configuration": []
+					}
+				},
+				"expression": "value == 'true'"
+			}
+		],
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.inntekt.inntekter.annet.vedlegg",
+		"type": "hidden",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.inntekt.inntekter.annet",
+			"type": "composite",
+			"panel": null,
+			"dependOn": {
+				"id": "opplysninger.inntekt",
+				"type": "gruppe",
+				"panel": "opplysningerBolk",
+				"dependOn": null,
+				"dependOnProperty": null,
+				"dependOnValues": null,
+				"useExpression": false,
+				"kunUtvidet": false,
+				"optional": false,
+				"flereTillatt": null,
+				"erSystemFaktum": null,
+				"properties": null,
+				"constraints": null,
+				"tekster": null,
+				"configuration": {
+					"configuration": []
+				}
+			},
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": true,
+			"flereTillatt": "true",
+			"erSystemFaktum": null,
+			"properties": [
+				{
+					"id": "sum",
+					"type": "textbox",
+					"dependOn": null,
+					"constraints": null,
+					"configuration": null
+				}
+			],
+			"constraints": [
+				{
+					"faktumStruktur": {
+						"id": "inntekt.inntekter.true.type.annet",
+						"type": "bool",
+						"panel": null,
+						"dependOn": {
+							"id": "inntekt.inntekter.true.type",
+							"type": "checkboxGroup",
+							"panel": null,
+							"dependOn": {
+								"id": "inntekt.inntekter",
+								"type": "bool",
+								"panel": "inntektBolk",
+								"dependOn": null,
+								"dependOnProperty": null,
+								"dependOnValues": null,
+								"useExpression": false,
+								"kunUtvidet": false,
+								"optional": true,
+								"flereTillatt": null,
+								"erSystemFaktum": null,
+								"properties": null,
+								"constraints": null,
+								"tekster": null,
+								"configuration": {
+									"configuration": []
+								}
+							},
+							"dependOnProperty": null,
+							"dependOnValues": [
+								"true"
+							],
+							"useExpression": false,
+							"kunUtvidet": false,
+							"optional": true,
+							"flereTillatt": null,
+							"erSystemFaktum": null,
+							"properties": null,
+							"constraints": null,
+							"tekster": null,
+							"configuration": {
+								"configuration": []
+							}
+						},
+						"dependOnProperty": null,
+						"dependOnValues": null,
+						"useExpression": false,
+						"kunUtvidet": false,
+						"optional": true,
+						"flereTillatt": null,
+						"erSystemFaktum": null,
+						"properties": null,
+						"constraints": null,
+						"tekster": null,
+						"configuration": {
+							"configuration": []
+						}
+					},
+					"expression": "value == 'true'"
+				}
+			],
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.utgifter",
+		"type": "gruppe",
+		"panel": "opplysningerBolk",
+		"dependOn": null,
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": false,
+		"flereTillatt": null,
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.utgifter.boutgift.husleie",
+		"type": "composite",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.utgifter",
+			"type": "gruppe",
+			"panel": "opplysningerBolk",
+			"dependOn": null,
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": false,
+			"flereTillatt": null,
+			"erSystemFaktum": null,
+			"properties": null,
+			"constraints": null,
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": null,
+		"erSystemFaktum": null,
+		"properties": [
+			{
+				"id": "permnd",
+				"type": "textbox",
+				"dependOn": null,
+				"constraints": null,
+				"configuration": null
+			}
+		],
+		"constraints": [
+			{
+				"faktumStruktur": {
+					"id": "utgifter.boutgift.true.type.husleie",
+					"type": "bool",
+					"panel": null,
+					"dependOn": {
+						"id": "utgifter.boutgift.true.type",
+						"type": "checkboxGroup",
+						"panel": null,
+						"dependOn": {
+							"id": "utgifter.boutgift",
+							"type": "bool",
+							"panel": "utgifterBolk",
+							"dependOn": null,
+							"dependOnProperty": null,
+							"dependOnValues": null,
+							"useExpression": false,
+							"kunUtvidet": false,
+							"optional": true,
+							"flereTillatt": null,
+							"erSystemFaktum": null,
+							"properties": null,
+							"constraints": null,
+							"tekster": null,
+							"configuration": {
+								"configuration": []
+							}
+						},
+						"dependOnProperty": null,
+						"dependOnValues": [
+							"true"
+						],
+						"useExpression": false,
+						"kunUtvidet": false,
+						"optional": true,
+						"flereTillatt": null,
+						"erSystemFaktum": null,
+						"properties": null,
+						"constraints": null,
+						"tekster": null,
+						"configuration": {
+							"configuration": []
+						}
+					},
+					"dependOnProperty": null,
+					"dependOnValues": null,
+					"useExpression": false,
+					"kunUtvidet": false,
+					"optional": true,
+					"flereTillatt": null,
+					"erSystemFaktum": null,
+					"properties": null,
+					"constraints": null,
+					"tekster": null,
+					"configuration": {
+						"configuration": []
+					}
+				},
+				"expression": "value == 'true'"
+			}
+		],
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.utgifter.boutgift.husleie.vedlegg",
+		"type": "hidden",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.utgifter.boutgift.husleie",
+			"type": "composite",
+			"panel": null,
+			"dependOn": {
+				"id": "opplysninger.utgifter",
+				"type": "gruppe",
+				"panel": "opplysningerBolk",
+				"dependOn": null,
+				"dependOnProperty": null,
+				"dependOnValues": null,
+				"useExpression": false,
+				"kunUtvidet": false,
+				"optional": false,
+				"flereTillatt": null,
+				"erSystemFaktum": null,
+				"properties": null,
+				"constraints": null,
+				"tekster": null,
+				"configuration": {
+					"configuration": []
+				}
+			},
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": true,
+			"flereTillatt": null,
+			"erSystemFaktum": null,
+			"properties": [
+				{
+					"id": "permnd",
+					"type": "textbox",
+					"dependOn": null,
+					"constraints": null,
+					"configuration": null
+				}
+			],
+			"constraints": [
+				{
+					"faktumStruktur": {
+						"id": "utgifter.boutgift.true.type.husleie",
+						"type": "bool",
+						"panel": null,
+						"dependOn": {
+							"id": "utgifter.boutgift.true.type",
+							"type": "checkboxGroup",
+							"panel": null,
+							"dependOn": {
+								"id": "utgifter.boutgift",
+								"type": "bool",
+								"panel": "utgifterBolk",
+								"dependOn": null,
+								"dependOnProperty": null,
+								"dependOnValues": null,
+								"useExpression": false,
+								"kunUtvidet": false,
+								"optional": true,
+								"flereTillatt": null,
+								"erSystemFaktum": null,
+								"properties": null,
+								"constraints": null,
+								"tekster": null,
+								"configuration": {
+									"configuration": []
+								}
+							},
+							"dependOnProperty": null,
+							"dependOnValues": [
+								"true"
+							],
+							"useExpression": false,
+							"kunUtvidet": false,
+							"optional": true,
+							"flereTillatt": null,
+							"erSystemFaktum": null,
+							"properties": null,
+							"constraints": null,
+							"tekster": null,
+							"configuration": {
+								"configuration": []
+							}
+						},
+						"dependOnProperty": null,
+						"dependOnValues": null,
+						"useExpression": false,
+						"kunUtvidet": false,
+						"optional": true,
+						"flereTillatt": null,
+						"erSystemFaktum": null,
+						"properties": null,
+						"constraints": null,
+						"tekster": null,
+						"configuration": {
+							"configuration": []
+						}
+					},
+					"expression": "value == 'true'"
+				}
+			],
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.generell",
+		"type": "gruppe",
+		"panel": "opplysningerBolk",
+		"dependOn": null,
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": false,
+		"flereTillatt": null,
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.generell.skattemelding",
+		"type": "composite",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.generell",
+			"type": "gruppe",
+			"panel": "opplysningerBolk",
+			"dependOn": null,
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": false,
+			"flereTillatt": null,
+			"erSystemFaktum": null,
+			"properties": null,
+			"constraints": null,
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": true,
+		"optional": true,
+		"flereTillatt": null,
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.generell.skattemelding.vedlegg",
+		"type": "hidden",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.generell.skattemelding",
+			"type": "composite",
+			"panel": null,
+			"dependOn": {
+				"id": "opplysninger.generell",
+				"type": "gruppe",
+				"panel": "opplysningerBolk",
+				"dependOn": null,
+				"dependOnProperty": null,
+				"dependOnValues": null,
+				"useExpression": false,
+				"kunUtvidet": false,
+				"optional": false,
+				"flereTillatt": null,
+				"erSystemFaktum": null,
+				"properties": null,
+				"constraints": null,
+				"tekster": null,
+				"configuration": {
+					"configuration": []
+				}
+			},
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": true,
+			"optional": true,
+			"flereTillatt": null,
+			"erSystemFaktum": null,
+			"properties": null,
+			"constraints": null,
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.ekstrainfo",
+		"type": "gruppe",
+		"panel": "opplysningerBolk",
+		"dependOn": null,
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": false,
+		"flereTillatt": null,
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.ekstrainfo.utgifter",
+		"type": "composite",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.ekstrainfo",
+			"type": "gruppe",
+			"panel": "opplysningerBolk",
+			"dependOn": null,
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": false,
+			"flereTillatt": null,
+			"erSystemFaktum": null,
+			"properties": null,
+			"constraints": null,
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": [
+			{
+				"id": "beskrivelse",
+				"type": "textbox",
+				"dependOn": null,
+				"constraints": null,
+				"configuration": {
+					"configuration": [
+						{
+							"key": "validering",
+							"value": "text"
+						}
+					]
+				}
+			},
+			{
+				"id": "utgift",
+				"type": "textbox",
+				"dependOn": null,
+				"constraints": null,
+				"configuration": null
+			}
+		],
+		"constraints": null,
+		"tekster": null,
+		"configuration": {
+			"configuration": []
+		}
+	},
+	{
+		"id": "opplysninger.ekstrainfo.utgifter.vedlegg",
+		"type": "hidden",
+		"panel": null,
+		"dependOn": {
+			"id": "opplysninger.ekstrainfo.utgifter",
+			"type": "composite",
+			"panel": null,
+			"dependOn": {
+				"id": "opplysninger.ekstrainfo",
+				"type": "gruppe",
+				"panel": "opplysningerBolk",
+				"dependOn": null,
+				"dependOnProperty": null,
+				"dependOnValues": null,
+				"useExpression": false,
+				"kunUtvidet": false,
+				"optional": false,
+				"flereTillatt": null,
+				"erSystemFaktum": null,
+				"properties": null,
+				"constraints": null,
+				"tekster": null,
+				"configuration": {
+					"configuration": []
+				}
+			},
+			"dependOnProperty": null,
+			"dependOnValues": null,
+			"useExpression": false,
+			"kunUtvidet": false,
+			"optional": true,
+			"flereTillatt": "true",
+			"erSystemFaktum": null,
+			"properties": [
+				{
+					"id": "beskrivelse",
+					"type": "textbox",
+					"dependOn": null,
+					"constraints": null,
+					"configuration": {
+						"configuration": [
+							{
+								"key": "validering",
+								"value": "text"
+							}
+						]
+					}
+				},
+				{
+					"id": "utgift",
+					"type": "textbox",
+					"dependOn": null,
+					"constraints": null,
+					"configuration": null
+				}
+			],
+			"constraints": null,
+			"tekster": null,
+			"configuration": {
+				"configuration": []
+			}
+		},
+		"dependOnProperty": null,
+		"dependOnValues": null,
+		"useExpression": false,
+		"kunUtvidet": false,
+		"optional": true,
+		"flereTillatt": "true",
+		"erSystemFaktum": null,
+		"properties": null,
+		"constraints": null,
 		"tekster": null,
 		"configuration": {
 			"configuration": []

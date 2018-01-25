@@ -1,0 +1,32 @@
+{
+	"faktum": {
+		"faktumId": 549,
+		"soknadId": 3,
+		"parrentFaktum": 548,
+		"key": "opplysninger.arbeid.jobb.vedlegg",
+		"value": null,
+		"faktumEgenskaper": [],
+		"properties": {},
+		"type": "BRUKERREGISTRERT"
+	},
+	"vedlegg": {
+		"vedleggId": 10,
+		"soknadId": 3,
+		"faktumId": 549,
+		"skjemaNummer": "lonnslipp",
+		"skjemanummerTillegg": "arbeid",
+		"innsendingsvalg": "LastetOpp",
+		"opprinneligInnsendingsvalg": null,
+		"navn": "",
+		"storrelse": 77259,
+		"antallSider": 1,
+		"opprettetDato": 1516718518000,
+		"fillagerReferanse": "8995f402-0ea7-410a-8bf7-5d7e9a23d28e",
+		"urls": {},
+		"tittel": null,
+		"aarsak": null,
+		"filnavn": "ny_forside-8995f402.png",
+		"mimetype": "image/png"
+	},
+	"nyForventning": false
+}

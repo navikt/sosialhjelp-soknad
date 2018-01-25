@@ -124,7 +124,10 @@ class Opplysning extends React.Component<AllProps, {}> {
 		const rader = belopFakta.map((faktum, index) => this.lagRader(faktum, index, faktumstruktur, slettTekst));
 
 		const belopFaktumId = belopFakta[0].faktumId;
-		const vedleggForOpplysning = vedlegg.filter(v => v.belopFaktumId === belopFaktumId);
+		let vedleggForOpplysning: any = [];
+		if (vedlegg && Array.isArray(vedlegg)) {
+			vedleggForOpplysning = vedlegg.filter(v => v.belopFaktumId === belopFaktumId);
+		}
 
 		const leggTilKnapp = (
 			<Lenkeknapp onClick={this.leggTilBelop} style="add">
