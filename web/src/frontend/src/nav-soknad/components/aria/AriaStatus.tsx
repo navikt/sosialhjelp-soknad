@@ -12,7 +12,7 @@ export interface AriaStatusProps {
 	visible?: boolean;
 	id?: string;
 	atomic?: boolean;
-	relevant?: string;
+	relevant?: "additions" | "additions text" | "all" | "removals" | "text";
 	role?: "status" | "alert";
 	live?: "assertive" | "off" | "polite";
 }
