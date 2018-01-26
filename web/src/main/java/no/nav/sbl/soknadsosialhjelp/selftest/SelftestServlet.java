@@ -26,7 +26,7 @@ public class SelftestServlet extends SelfTestBaseServlet {
     protected Collection<? extends Pingable> getPingables() {
         return asList(
                 pingUrl("REST_API", getProperty("soknadsapi.url") + "/internal/isAlive"),
-                pingUrl("ENONIC_APPRES", getProperty("dialogarena.cms.url"))
+                pingUrl("ENONIC_APPRES", getProperty("dialogarena.cms.url") + "/common-html/v4/navno")
         );
     }
 
@@ -38,6 +38,7 @@ public class SelftestServlet extends SelfTestBaseServlet {
                 try {
                     connection = (HttpURLConnection) new URL(url).openConnection();
                     connection.setConnectTimeout(10000);
+                    connection.setInstanceFollowRedirects(false);
                     if (connection.getResponseCode() == HTTP_OK) {
                         return Ping.lyktes(name);
                     } else {
