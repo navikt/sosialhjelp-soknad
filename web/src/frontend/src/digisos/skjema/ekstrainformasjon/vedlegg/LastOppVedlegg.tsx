@@ -42,7 +42,7 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 				<Knapp
 					type="standard"
 					htmlType="submit"
-					disabled={false}
+					disabled={visSpinner}
 					spinner={visSpinner}
 					onClick={() => {
 						this.leggTilVedleggKnapp.click();
