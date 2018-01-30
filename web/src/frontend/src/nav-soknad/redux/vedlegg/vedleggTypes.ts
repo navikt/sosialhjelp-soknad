@@ -4,6 +4,7 @@ import { Faktum } from "../../types/navSoknadTypes";
 export enum VedleggActionTypeKeys {
 	LAST_OPP = "vedlegg/LAST_OPP",
 	LAST_OPP_OK = "vedlegg/LAST_OPP_OK",
+	LAST_OPP_FEILET = "vedlegg/LAST_OPP_FEILET",
 
 	NYTT_VEDLEGG = "vedlegg/NYTT_VEDLEGG",
 	OPPDATERT_VEDLEGG = "vedlegg/OPPDATERT_VEDLEGG",
@@ -23,11 +24,13 @@ export interface VedleggState {
 	restStatus: REST_STATUS;
 	opplastingStatus: REST_STATUS;
 	sistEndredeFaktumId: number;
+	feil: boolean;
 }
 
 export type VedleggActionTypes =
 	LastOppVedleggAction
 	| LastOppVedleggOkAction
+	| LastOppVedleggFeiletAction
 	| OppdatertVedleggAction
 	| NyttVedleggAction
 	| StartSlettVedleggAction
@@ -44,6 +47,10 @@ export interface LastOppVedleggAction {
 
 interface LastOppVedleggOkAction {
 	type: VedleggActionTypeKeys.LAST_OPP_OK;
+}
+
+interface LastOppVedleggFeiletAction {
+	type: VedleggActionTypeKeys.LAST_OPP_FEILET;
 }
 
 interface OppdatertVedleggAction {
@@ -84,11 +91,6 @@ export interface OtherAction {
 	type: VedleggActionTypeKeys.OTHER_ACTION;
 }
 
-export interface Fil {
-	navn: string;
-	status: string;
-}
-
 export interface Vedlegg {
 	vedleggId: number;
 	mimetype?: string;
@@ -105,7 +107,7 @@ export interface VedleggApiType {
 	restStatus: REST_STATUS;
 	opplastingStatus: REST_STATUS;
 	sistEndredeFaktumId: number;
-	feilmelding: string;
+	feil: boolean;
 }
 
 export interface VedleggProps {
