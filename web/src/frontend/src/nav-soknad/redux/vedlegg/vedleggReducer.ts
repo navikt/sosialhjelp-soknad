@@ -11,10 +11,7 @@ const initialState: VedleggApiType = {
 	data: []
 };
 
-export default (
-	state: VedleggApiType = initialState,
-	action: VedleggActionTypes
-) => {
+export default (state: VedleggApiType = initialState, action: VedleggActionTypes) => {
 	switch (action.type) {
 		case VedleggActionTypeKeys.LAST_OPP: {
 			return {
@@ -44,7 +41,7 @@ export default (
 		case VedleggActionTypeKeys.NYTT_VEDLEGG: {
 			return {
 				...state,
-				data: [...state.data, leggFaktumPaVedleggStruktur(action.vedlegg, action.fakta)]
+				data: [ ...state.data, leggFaktumPaVedleggStruktur(action.vedlegg, action.fakta) ]
 			};
 		}
 		case VedleggActionTypeKeys.START_SLETT_VEDLEGG: {
@@ -74,9 +71,26 @@ export default (
 			return {
 				...state,
 				restStatus: REST_STATUS.OK,
-				data:  vedleggsForventninger
+				data: vedleggsForventninger
 			};
 		}
+
+		case VedleggActionTypeKeys.VEDLEGG_ALLEREDE_SENDT_OK: {
+			return {
+				...state,
+				data: state.data.map((v: Vedlegg) => {
+					if (v.vedleggId === action.vedlegg[ 0 ].vedleggId) {
+						if (v.innsendingsvalg === "VedleggKreves") {
+							v.innsendingsvalg = "VedleggAlleredeSendt";
+						} else if (v.innsendingsvalg === "VedleggAlleredeSendt") {
+							v.innsendingsvalg = "VedleggKreves";
+						}
+					}
+					return v;
+				})
+			};
+		}
+
 		default:
 			return state;
 	}
