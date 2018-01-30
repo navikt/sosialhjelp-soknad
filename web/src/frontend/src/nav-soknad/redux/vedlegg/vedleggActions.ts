@@ -18,6 +18,12 @@ const lastOppVedleggOk = (): VedleggActionTypes => {
 	};
 };
 
+const lastOppVedleggFeilet = (): VedleggActionTypes => {
+	return {
+		type: VedleggActionTypeKeys.LAST_OPP_FEILET
+	};
+};
+
 const oppdatertVedlegg = (vedlegg: Vedlegg, fakta: Faktum[]) => {
 	return {
 		type: VedleggActionTypeKeys.OPPDATERT_VEDLEGG,
@@ -74,6 +80,7 @@ const hentVedleggsForventningOk = (vedlegg: Vedlegg[], fakta: Faktum[]): Vedlegg
 export {
 	lastOppVedlegg,
 	lastOppVedleggOk,
+	lastOppVedleggFeilet,
 
 	oppdatertVedlegg,
 	nyttVedlegg,

@@ -12,6 +12,7 @@ interface Props {
 	belopFaktum: Faktum;
 	opplastingStatus?: string;
 	sistEndredeFaktumId?: number;
+	feil: boolean;
 }
 
 type AllProps = Props &
@@ -24,7 +25,7 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 	}
 
 	render() {
-		const { vedlegg, belopFaktum, dispatch, opplastingStatus, sistEndredeFaktumId } = this.props;
+		const { vedlegg, belopFaktum, dispatch, opplastingStatus, sistEndredeFaktumId, feil } = this.props;
 		const vedleggListe = vedlegg
 			.filter(v => v.innsendingsvalg === "LastetOpp")
 			.map(v => {
@@ -47,6 +48,7 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 					belopFaktumId={belopFaktum.faktumId}
 					opplastingStatus={opplastingStatus}
 					sistEndredeFaktumId={sistEndredeFaktumId}
+					feil={feil}
 				/>
 			</div>
 		);

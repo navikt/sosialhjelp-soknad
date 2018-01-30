@@ -10,6 +10,7 @@ interface Props {
 	belopFaktumId: number;
 	opplastingStatus?: string;
 	sistEndredeFaktumId?: number;
+	feil: boolean;
 }
 
 type AllProps = Props &
@@ -35,14 +36,14 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 	}
 
 	render() {
-		const visSpinner = this.props.opplastingStatus === REST_STATUS.PENDING &&
-			(this.props.belopFaktumId === this.props.sistEndredeFaktumId);
+		const gjeldende = this.props.belopFaktumId === this.props.sistEndredeFaktumId;
+		const visSpinner = gjeldende && this.props.opplastingStatus === REST_STATUS.PENDING;
 		return (
 			<div>
 				<Knapp
 					type="standard"
 					htmlType="submit"
-					disabled={false}
+					disabled={visSpinner}
 					spinner={visSpinner}
 					onClick={() => {
 						this.leggTilVedleggKnapp.click();
@@ -58,6 +59,14 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 					tabIndex={-1}
 					accept="image/jpeg,image/png,application/pdf"
 				/>
+
+				<div role="alert" aria-live="assertive">
+					{this.props.feil && gjeldende && (
+						<div className="skjemaelement__feilmelding">
+							<FormattedMessage id="opplysninger.vedlegg.ugyldig"/>
+						</div>
+					)}
+				</div>
 			</div>
 		);
 	}
