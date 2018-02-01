@@ -75,7 +75,7 @@ export default (state: VedleggApiType = initialState, action: VedleggActionTypes
 			};
 		}
 
-		case VedleggActionTypeKeys.VEDLEGG_ALLEREDE_SENDT_OK: {
+		case VedleggActionTypeKeys.VEDLEGG_ALLEREDE_SENDT: {
 			return {
 				...state,
 				data: state.data.map((v: Vedlegg) => {
