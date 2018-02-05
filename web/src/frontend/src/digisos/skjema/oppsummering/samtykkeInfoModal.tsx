@@ -6,8 +6,7 @@ import { connect } from "react-redux";
 import { setVisBekreftInfo } from "../../../nav-soknad/redux/oppsummering/oppsummeringActions";
 import { Faktum } from "../../../nav-soknad/types";
 import { State } from "../../redux/reducers";
-import { finnFakta } from "../../../nav-soknad/utils";
-// import { Faktum } from "../../../nav-soknad/types";
+import { finnFaktum } from "../../../nav-soknad/utils";
 
 interface StateProps {
 	modalSynlig: boolean;
@@ -44,8 +43,8 @@ class SamtykkeInfoModal extends React.Component<Props, {}> {
 	}
 
 	private finnStedsnavn() {
-		const kommuner: Faktum[] = finnFakta("personalia.kommune", this.props.fakta);
-		let stedsNavn = (kommuner[ 0 ] && kommuner[ 0 ].lagret && kommuner[ 0 ].lagret.value) || "";
+		const kommune: Faktum = finnFaktum("personalia.kommune", this.props.fakta);
+		let stedsNavn = (kommune && kommune.lagret && kommune.lagret.value) || "";
 		if (stedsNavn !== "") {
 			stedsNavn = stedsNavn.charAt(0).toUpperCase() + stedsNavn.slice(1);
 		}
