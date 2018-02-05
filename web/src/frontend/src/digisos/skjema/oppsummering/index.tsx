@@ -25,7 +25,6 @@ interface StateProps {
 	oppsummering: Oppsummering;
 	bekreftet: boolean;
 	visBekreftMangler: boolean;
-	visBekreftInfo: boolean;
 	restStatus: REST_STATUS;
 	brukerbehandlingId: number;
 }
@@ -111,25 +110,23 @@ class OppsummeringView extends React.Component<Props, {}> {
 					{skjemaOppsummering}
 					<div className="blokk-xs bolk">
 						<div className={classNames}>
-								<Checkbox
-									label={bekreftOpplysninger}
-									checked={this.props.bekreftet}
-									feil={
-										this.props.visBekreftMangler
-											? {
-													feilmelding: intl.formatHTMLMessage({
-														id: "oppsummering.feilmelding.bekreftmangler"
-													})
-												}
-											: null
-									}
-									onChange={() => this.props.dispatch(bekreftOppsummering())}
-								/>
+							<Checkbox
+								label={bekreftOpplysninger}
+								checked={this.props.bekreftet}
+								feil={
+									this.props.visBekreftMangler
+										? {
+											feilmelding: intl.formatHTMLMessage({
+												id: "oppsummering.feilmelding.bekreftmangler"
+											})
+										}
+										: null
+								}
+								onChange={() => this.props.dispatch(bekreftOppsummering())}
+							/>
 						</div>
 					</div>
-
-					<SamtykkeInfoModal />
-
+					<SamtykkeInfoModal/>
 				</DigisosSkjemaSteg>
 			</LoadContainer>
 		);
@@ -160,7 +157,6 @@ export default connect((state: State, props: any) => {
 		oppsummering: state.oppsummering.oppsummering,
 		bekreftet: state.oppsummering.bekreftet,
 		visBekreftMangler: state.oppsummering.visBekreftMangler,
-		visBekreftInfo: state.oppsummering.visBekreftInfo,
 		restStatus: state.oppsummering.restStatus,
 		brukerbehandlingId: state.soknad.data.brukerBehandlingId
 	};
