@@ -6,9 +6,9 @@ import PersonFaktum from "../../../nav-soknad/faktum/PersonFaktum";
 import { Faktum } from "../../../nav-soknad/types";
 import { getFaktumPropertyVerdi } from "../../../nav-soknad/utils";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
-import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import { inputKeys } from "../../../nav-soknad/utils/faktumUtils";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
+import TallFaktum from "../../../nav-soknad/faktum/typedInput/TallFaktum";
 
 interface BarnTypes {
 	faktum: Faktum;
@@ -80,14 +80,18 @@ export default class Barn extends React.Component<Props, {}> {
 						}}
 					>
 						<SporsmalFaktum faktumKey={hvormye.faktum}>
-							<BelopFaktum
-								faktumKey={faktumKey}
-								faktumId={faktumId}
-								property="grad"
-								maxLength={3}
-								kunHeltall={true}
-								bredde="XS"
-							/>
+							<div className="container_enhetsbetegnelse">
+								<TallFaktum
+									faktumKey={faktumKey}
+									faktumId={faktumId}
+									property="grad"
+									maxLength={3}
+									maxAmount={50}
+									kunHeltall={true}
+									bredde="XS"
+								/>
+								<span>%</span>
+							</div>
 						</SporsmalFaktum>
 					</JaNeiSporsmalFaktum>
 					{visFjernBarn && (
