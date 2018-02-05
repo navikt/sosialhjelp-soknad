@@ -9,7 +9,7 @@ import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadCont
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import {
 	hentOppsummering,
-	bekreftOppsummering
+	bekreftOppsummering, setVisBekreftInfo
 } from "../../../nav-soknad/redux/oppsummering/oppsummeringActions";
 import { Oppsummering } from "../../../nav-soknad/redux/oppsummering/oppsummeringTypes";
 
@@ -19,11 +19,13 @@ import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { settInfofaktum } from "../../../nav-soknad/redux/soknad/soknadActions";
 import { getIntlTextOrKey } from "../../../nav-soknad/utils/intlUtils";
 import { Link } from "react-router-dom";
+import SamtykkeInfoModal from "./samtykkeInfoModal";
 
 interface StateProps {
 	oppsummering: Oppsummering;
 	bekreftet: boolean;
 	visBekreftMangler: boolean;
+	visBekreftInfo: boolean;
 	restStatus: REST_STATUS;
 	brukerbehandlingId: number;
 }
@@ -94,31 +96,62 @@ class OppsummeringView extends React.Component<Props, {}> {
 			<div className="skjema-oppsummering">{bolker}</div>
 		) : null;
 
+		const bekreftOpplysningTekst: string = intl.formatMessage({
+			id: "soknadsosialhjelp.oppsummering.bekreftOpplysninger"
+		});
+		const bekreftOpplysninger = this.bekreftOpplysninger(bekreftOpplysningTekst);
+
+		let classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
+		if (this.props.visBekreftMangler) {
+			classNames += " skjema-oppsummering__bekreft___feil";
+		}
 		return (
 			<LoadContainer restStatus={this.props.restStatus}>
 				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
 					{skjemaOppsummering}
-					<div className="skjema-oppsummering__bekreft">
-						<Checkbox
-							label={this.props.intl.formatMessage({
-								id: "soknadsosialhjelp.oppsummering.bekreftOpplysninger"
-							})}
-							checked={this.props.bekreftet}
-							feil={
-								this.props.visBekreftMangler
-									? {
-											feilmelding: intl.formatHTMLMessage({
-												id: "oppsummering.feilmelding.bekreftmangler"
-											})
-										}
-									: null
-							}
-							onChange={() => this.props.dispatch(bekreftOppsummering())}
-						/>
+					<div className="blokk-xs bolk">
+						<div className={classNames}>
+								<Checkbox
+									label={bekreftOpplysninger}
+									checked={this.props.bekreftet}
+									feil={
+										this.props.visBekreftMangler
+											? {
+													feilmelding: intl.formatHTMLMessage({
+														id: "oppsummering.feilmelding.bekreftmangler"
+													})
+												}
+											: null
+									}
+									onChange={() => this.props.dispatch(bekreftOppsummering())}
+								/>
+						</div>
 					</div>
+
+					<SamtykkeInfoModal />
+
 				</DigisosSkjemaSteg>
 			</LoadContainer>
 		);
+	}
+
+	/* Legg på lenke i tekst fra stash som ser slik ut "Tekst [lenketekst] mer tekst" */
+	private bekreftOpplysninger(bekreftOpplysningTekst: string) {
+		const bekreftOpplysningTekster = bekreftOpplysningTekst.split(/[\[\]]/);
+		let bekreftOpplysninger = <span/>;
+		if (bekreftOpplysningTekster.length === 3) {
+			bekreftOpplysninger = (
+				<span>
+					{bekreftOpplysningTekster[ 0 ]}
+					<a
+						className="lenke"
+						onClick={() => this.props.dispatch(setVisBekreftInfo(true))}>
+					{bekreftOpplysningTekster[ 1 ]}
+					</a>
+					{bekreftOpplysningTekster[ 2 ]}
+				</span>);
+		}
+		return bekreftOpplysninger;
 	}
 }
 
@@ -127,6 +160,7 @@ export default connect((state: State, props: any) => {
 		oppsummering: state.oppsummering.oppsummering,
 		bekreftet: state.oppsummering.bekreftet,
 		visBekreftMangler: state.oppsummering.visBekreftMangler,
+		visBekreftInfo: state.oppsummering.visBekreftInfo,
 		restStatus: state.oppsummering.restStatus,
 		brukerbehandlingId: state.soknad.data.brukerBehandlingId
 	};
