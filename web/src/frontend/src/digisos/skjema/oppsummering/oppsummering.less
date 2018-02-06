@@ -4,7 +4,6 @@
 		margin-bottom: 2rem;
 		text-align: right;
 	}
-	margin-bottom: 2rem;
 	h3,
 	h4,
 	h5 {
@@ -71,9 +70,19 @@
 	}
 
 	&__bekreft {
-		max-width: 500px;
+		border-radius: 4px;
+		background: @white;
+		padding-left: 1rem;
+		padding-right: 1rem;
+		padding-top: 1rem;
+		padding-bottom: 0.5rem;
 		margin: 0 auto;
+
+	    &___feil {
+		  background: @navRodLighten80;
+		}
 	}
+
 
 	/** Spacing gitt kombinasjoner */
 	.verdi--check,
