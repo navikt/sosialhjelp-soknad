@@ -44,13 +44,24 @@ class SamtykkeInfoModal extends React.Component<Props, {}> {
 
 	private finnStedsnavn() {
 		const kommune: Faktum = finnFaktum("personalia.kommune", this.props.fakta);
-		let stedsNavn = (kommune && kommune.lagret && kommune.lagret.value) || "";
-		if (stedsNavn !== "") {
-			stedsNavn = stedsNavn.charAt(0).toUpperCase() + stedsNavn.slice(1);
+		let kommuneNavn = (kommune && kommune.lagret && kommune.lagret.value) || "";
+		kommuneNavn = this.capitalize(kommuneNavn);
+
+		const bydel: Faktum = finnFaktum("personalia.bydel", this.props.fakta);
+		let bydelsNavn = (bydel && bydel.lagret && bydel.lagret.value) || "";
+		bydelsNavn = this.capitalize(bydelsNavn);
+
+		if (bydelsNavn === "") {
+			bydelsNavn = kommuneNavn;
 		}
-		const kommuneNavn = stedsNavn;
-		const navKontorNavn = stedsNavn;
-		return { kommuneNavn, navKontorNavn };
+		return { kommuneNavn, navKontorNavn: bydelsNavn };
+	}
+
+	private capitalize(str: string): string {
+		if (str !== "") {
+			str = str.charAt(0).toUpperCase() + str.slice(1);
+		}
+		return str;
 	}
 }
 
