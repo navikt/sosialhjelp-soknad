@@ -65,7 +65,7 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 					onChange={(event) => this.props.dispatch(vedleggAlleredeSendt(this.props.vedlegg))}
 					checked={disableLastOppVedleggKnapp}
 					disabled={disabledAlleredeLastetOppCheckbox}
-					feil={feil}
+					feil={feil ? {tittel: "Tittel", feilmelding : "Feilmelding"} : null}
 				/>
 			</div>
 		);

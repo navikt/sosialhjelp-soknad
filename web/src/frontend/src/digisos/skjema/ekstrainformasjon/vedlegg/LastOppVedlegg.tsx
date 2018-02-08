@@ -10,7 +10,8 @@ interface Props {
 	belopFaktumId: number;
 	opplastingStatus?: string;
 	sistEndredeFaktumId?: number;
-	feil: boolean;
+	feil?: boolean;
+	disabled?: boolean;
 }
 
 type AllProps = Props &
@@ -43,7 +44,7 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 				<Knapp
 					type="standard"
 					htmlType="submit"
-					disabled={visSpinner}
+					disabled={this.props.disabled}
 					spinner={visSpinner}
 					onClick={() => {
 						this.leggTilVedleggKnapp.click();
