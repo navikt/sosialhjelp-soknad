@@ -63,7 +63,7 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 					disabled={this.props.vedlegg[ 0 ].innsendingsvalg === "LastetOpp"}
 				/>
 
-				<p>Dersom vedlegget har status lastet opp skal man ikke kunne trykke på checkbox'en</p>
+				<pn</p>
 				<p>this.props.vedlegg[ 0 ].innsendingsvalg : {this.props.vedlegg[ 0 ].innsendingsvalg}</p>
 			</div>
 		);
