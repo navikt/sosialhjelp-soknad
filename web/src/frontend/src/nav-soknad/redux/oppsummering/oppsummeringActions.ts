@@ -16,6 +16,13 @@ export function setVisBekreftMangler(visBekreftMangler: boolean): OppsummeringAc
 	};
 }
 
+export function setVisBekreftInfo(visBekreftInfo: boolean): OppsummeringActionTypes {
+	return {
+		type: OppsummeringActionTypeKeys.SET_VIS_BEKREFT_INFO,
+		visBekreftInfo
+	};
+}
+
 export function hentOppsummering(): OppsummeringActionTypes {
 	return {
 		type: OppsummeringActionTypeKeys.HENT_OPPSUMMERING

@@ -9,8 +9,8 @@ import {
 	VedleggActionTypeKeys, VedleggAlleredeSendtAction
 } from "./vedleggTypes";
 import {
-	hentVedleggsForventningOk, lastOppVedleggOk, nyttVedlegg, oppdatertVedlegg, slettVedlegg, slettVedleggOk,
-	vedleggAlleredeSendtOk
+	hentVedleggsForventningOk, lastOppVedleggFeilet, lastOppVedleggOk, nyttVedlegg,
+	oppdatertVedlegg, slettVedlegg, slettVedleggOk, vedleggAlleredeSendtOk
 } from "./vedleggActions";
 import { loggFeil } from "../../../nav-soknad/redux/navlogger/navloggerActions";
 import { selectFaktaData } from "../selectors";
@@ -40,8 +40,12 @@ function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 			yield put(oppdatertVedlegg(response.vedlegg, fakta));
 		}
 	} catch (reason) {
+		yield put(lastOppVedleggFeilet());
 		yield put(loggFeil("Last opp vedlegg feilet: " + reason));
-		yield put(navigerTilServerfeil());
+
+		if (reason.message !== "Unsupported Media Type") {
+			yield put(navigerTilServerfeil());
+		}
 	}
 }
 

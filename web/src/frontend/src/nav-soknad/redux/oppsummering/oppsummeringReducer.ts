@@ -12,6 +12,7 @@ export interface OppsummeringState {
 	bekreftet?: boolean;
 	visBekreftMangler?: boolean;
 	restStatus: REST_STATUS;
+	visBekreftInfo?: boolean;
 }
 
 const defaultState: OppsummeringState = {
@@ -82,6 +83,11 @@ const OppsummeringReducer: Reducer<
 			return {
 				...state,
 				visBekreftMangler: action.visBekreftMangler
+			};
+		case OppsummeringActionTypeKeys.SET_VIS_BEKREFT_INFO:
+			return {
+				...state,
+				visBekreftInfo: action.visBekreftInfo
 			};
 		default:
 			return state;

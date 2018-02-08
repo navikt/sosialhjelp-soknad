@@ -57,7 +57,6 @@
         <servlet-name>selftest</servlet-name>
         <servlet-class>no.nav.sbl.soknadsosialhjelp.selftest.SelftestServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>selftest</servlet-name>
         <url-pattern>/internal/selftest</url-pattern>
@@ -67,19 +66,38 @@
         <servlet-name>selftestJson</servlet-name>
         <servlet-class>no.nav.sbl.soknadsosialhjelp.selftest.SelftestJsonServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>selftestJson</servlet-name>
         <url-pattern>/internal/selftest.json</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>isAlive</servlet-name>
-        <servlet-class>no.nav.sbl.soknadsosialhjelp.IsAliveServlet</servlet-class>
+        <servlet-class>no.nav.sbl.dialogarena.common.suspend.IsAliveServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>isAlive</servlet-name>
         <url-pattern>/internal/isAlive</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <filter-name>basicAuthenticationFilter</filter-name>
+        <filter-class>no.nav.sbl.dialogarena.common.suspend.BasicAuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>basicAuthenticationFilter</filter-name>
+        <url-pattern>/management/suspend</url-pattern>
+    </filter-mapping>
+    <servlet>
+        <servlet-name>suspend</servlet-name>
+        <servlet-class>no.nav.sbl.dialogarena.common.suspend.SuspendServlet</servlet-class>
+        <init-param>
+            <param-name>shutdownTimeMs</param-name>
+            <param-value>15000</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>suspend</servlet-name>
+        <url-pattern>/management/suspend</url-pattern>
+    </servlet-mapping>
 </web-app>

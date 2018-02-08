@@ -17,11 +17,10 @@ import VedleggComponent from "./vedlegg/Vedlegg";
 
 interface Props {
 	faktumstruktur: FaktumStruktur;
-	opplastingStatus?: string;
-	sistEndredeFaktumId?: number;
 }
 
 type AllProps = Props &
+	StateFromProps &
 	DispatchProps &
 	FaktumComponentProps &
 	VedleggProps &
@@ -115,7 +114,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 	}
 
 	render() {
-		const { faktumstruktur, fakta, vedlegg, opplastingStatus, sistEndredeFaktumId, intl } = this.props;
+		const { faktumstruktur, fakta, vedlegg, opplastingStatus, sistEndredeFaktumId, feil, intl } = this.props;
 		const belopFakta = finnFakta(faktumstruktur.id, fakta);
 
 		const leggTilTekst = intl.formatMessage({ id: "opplysninger.leggtil" });
@@ -124,7 +123,10 @@ class Opplysning extends React.Component<AllProps, {}> {
 		const rader = belopFakta.map((faktum, index) => this.lagRader(faktum, index, faktumstruktur, slettTekst));
 
 		const belopFaktumId = belopFakta[0].faktumId;
-		const vedleggForOpplysning = vedlegg.filter(v => v.belopFaktumId === belopFaktumId);
+		let vedleggForOpplysning: any = [];
+		if (vedlegg && Array.isArray(vedlegg)) {
+			vedleggForOpplysning = vedlegg.filter(v => v.belopFaktumId === belopFaktumId);
+		}
 
 		const leggTilKnapp = (
 			<Lenkeknapp onClick={this.leggTilBelop} style="add">
@@ -145,6 +147,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 							sistEndredeFaktumId={sistEndredeFaktumId}
 							vedlegg={vedleggForOpplysning}
 							belopFaktum={belopFakta[0]}
+							feil={feil}
 						/>
 				}
 			</SporsmalFaktum>
@@ -155,6 +158,9 @@ class Opplysning extends React.Component<AllProps, {}> {
 interface StateFromProps {
 	fakta: Faktum[];
 	vedlegg: Vedlegg[];
+	opplastingStatus?: string;
+	sistEndredeFaktumId?: number;
+	feil: boolean;
 }
 
 export default connect<StateFromProps, {}, Props>((state: SoknadAppState) => {
@@ -162,6 +168,7 @@ export default connect<StateFromProps, {}, Props>((state: SoknadAppState) => {
 		fakta: state.fakta.data,
 		vedlegg: state.vedlegg.data,
 		opplastingStatus: state.vedlegg.opplastingStatus,
-		sistEndredeFaktumId: state.vedlegg.sistEndredeFaktumId
+		sistEndredeFaktumId: state.vedlegg.sistEndredeFaktumId,
+		feil: state.vedlegg.feil
 	};
 })(injectIntl(Opplysning));
