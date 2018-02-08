@@ -37,6 +37,8 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 				/>;
 			});
 		const vedleggsKey = `vedlegg.${vedlegg[ 0 ].skjemaNummer}.${vedlegg[ 0 ].skjemanummerTillegg}.tittel`;
+		const disabledAlleredeLastetOppCheckbox = this.props.vedlegg[ 0 ].innsendingsvalg === "LastetOpp";
+		const disableLastOppVedleggKnapp = this.props.vedlegg[ 0 ].innsendingsvalg === "VedleggAlleredeSendt";
 
 		return (
 			<div className="">
@@ -51,20 +53,18 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 					belopFaktumId={belopFaktum.faktumId}
 					opplastingStatus={opplastingStatus}
 					sistEndredeFaktumId={sistEndredeFaktumId}
-					disabled={this.props.vedlegg[ 0 ].innsendingsvalg === "VedleggAlleredeSendt"}
+					disabled={disableLastOppVedleggKnapp}
 				/>
 				<Checkbox
-					className="vedleggLastetOppCheckbox"
+					className={"vedleggLastetOppCheckbox " +
+					(disabledAlleredeLastetOppCheckbox ? " checkboks--disabled" : "")}
 					label={this.props.intl.formatMessage({
 						id: "opplysninger.vedlegg.alleredelastetopp"
 					})}
 					onChange={(event) => this.props.dispatch(vedleggAlleredeSendt(this.props.vedlegg))}
-					checked={this.props.vedlegg[ 0 ].innsendingsvalg === "VedleggAlleredeSendt"}
-					disabled={this.props.vedlegg[ 0 ].innsendingsvalg === "LastetOpp"}
+					checked={disableLastOppVedleggKnapp}
+					disabled={disabledAlleredeLastetOppCheckbox}
 				/>
-
-				<pn</p>
-				<p>this.props.vedlegg[ 0 ].innsendingsvalg : {this.props.vedlegg[ 0 ].innsendingsvalg}</p>
 			</div>
 		);
 	}

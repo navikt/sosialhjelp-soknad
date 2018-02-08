@@ -77,12 +77,15 @@ export default (state: VedleggApiType = initialState, action: VedleggActionTypes
 
 		case VedleggActionTypeKeys.VEDLEGG_ALLEREDE_SENDT: {
 			let data = Object.assign(state.data);
+			const VedleggKreves = "VedleggKreves";
+			const VedleggAlleredeSendt = "VedleggAlleredeSendt";
+
 			data = data.map((v: Vedlegg) => {
 				if (v.vedleggId === action.vedlegg[ 0 ].vedleggId) {
-					if (v.innsendingsvalg === "VedleggKreves") {
-						v.innsendingsvalg = "VedleggAlleredeSendt";
-					} else if (v.innsendingsvalg === "VedleggAlleredeSendt") {
-						v.innsendingsvalg = "VedleggKreves";
+					if (v.innsendingsvalg === VedleggKreves) {
+						v.innsendingsvalg = VedleggAlleredeSendt;
+					} else if (v.innsendingsvalg === VedleggAlleredeSendt) {
+						v.innsendingsvalg = VedleggKreves;
 					}
 				}
 				return v;
@@ -90,16 +93,6 @@ export default (state: VedleggApiType = initialState, action: VedleggActionTypes
 
 			return {
 				...state, data
-				// data: state.data.map((v: Vedlegg) => {
-				// 	if (v.vedleggId === action.vedlegg[ 0 ].vedleggId) {
-				// 		if (v.innsendingsvalg === "VedleggKreves") {
-				// 			v.innsendingsvalg = "VedleggAlleredeSendt";
-				// 		} else if (v.innsendingsvalg === "VedleggAlleredeSendt") {
-				// 			v.innsendingsvalg = "VedleggKreves";
-				// 		}
-				// 	}
-				// 	return v;
-				// })
 			};
 		}
 
