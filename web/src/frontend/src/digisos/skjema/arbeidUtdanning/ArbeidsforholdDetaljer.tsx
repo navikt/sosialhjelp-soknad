@@ -12,7 +12,7 @@ const ArbeidsforholdDetaljer: React.StatelessComponent<{ arbeidsforhold: Faktum 
 	} else {
 		stillingsprosent = stillingsprosent + "%";
 	}
-	let stillingstype =  getFaktumPropertyVerdi(arbeidsforhold, "stillingstype") || "";
+	const stillingstype =  getFaktumPropertyVerdi(arbeidsforhold, "stillingstype") || "";
 
 	const tom = getFaktumPropertyVerdi(arbeidsforhold, "tom");
 

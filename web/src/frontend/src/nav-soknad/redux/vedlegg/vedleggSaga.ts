@@ -1,13 +1,16 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import { fetchDelete, fetchToJson, fetchUpload, toJson } from "../../../nav-soknad/utils/rest-utils";
+import {
+	fetchDelete, fetchPut, fetchToJson, fetchUpload,
+	toJson
+} from "../../../nav-soknad/utils/rest-utils";
 import {
 	LastOppVedleggAction, StartSlettVedleggAction,
-	VedleggActionTypeKeys
+	VedleggActionTypeKeys, VedleggAlleredeSendtAction
 } from "./vedleggTypes";
 import {
 	hentVedleggsForventningOk, lastOppVedleggFeilet, lastOppVedleggOk, nyttVedlegg,
-	oppdatertVedlegg, slettVedlegg, slettVedleggOk
+	oppdatertVedlegg, slettVedlegg, slettVedleggOk, vedleggAlleredeSendtOk
 } from "./vedleggActions";
 import { loggFeil } from "../../../nav-soknad/redux/navlogger/navloggerActions";
 import { selectFaktaData } from "../selectors";
@@ -65,9 +68,21 @@ function* slettVedleggSaga(action: StartSlettVedleggAction): SagaIterator {
 	}
 }
 
+function* vedleggAlleredeSendt(action: VedleggAlleredeSendtAction): SagaIterator {
+	try {
+		const url = `vedlegg/${action.vedlegg[0].vedleggId}`;
+		yield call(fetchPut, url, JSON.stringify(action.vedlegg[0]));
+		yield put(vedleggAlleredeSendtOk(action.vedlegg));
+	} catch (reason) {
+		yield put(loggFeil("Oppdatering vedleggstatus feilet: " + reason));
+		yield put(navigerTilServerfeil());
+	}
+}
+
 function* vedleggSaga(): SagaIterator {
 	yield takeEvery(VedleggActionTypeKeys.LAST_OPP, lastOppVedleggSaga);
 	yield takeEvery(VedleggActionTypeKeys.START_SLETT_VEDLEGG, slettVedleggSaga);
+	yield takeEvery(VedleggActionTypeKeys.VEDLEGG_ALLEREDE_SENDT, vedleggAlleredeSendt);
 }
 
 export {
