@@ -34,7 +34,7 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 				return <VedlegssFil
 					key={v.vedleggId}
 					vedlegg={v} dispatch={dispatch} belopFaktumId={belopFaktum.faktumId}
-			/>;
+				/>;
 			});
 		const vedleggsKey = `vedlegg.${vedlegg[ 0 ].skjemaNummer}.${vedlegg[ 0 ].skjemanummerTillegg}.tittel`;
 
@@ -59,7 +59,12 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 						id: "opplysninger.vedlegg.alleredelastetopp"
 					})}
 					onChange={(event) => this.props.dispatch(vedleggAlleredeSendt(this.props.vedlegg))}
+					checked={this.props.vedlegg[ 0 ].innsendingsvalg === "VedleggAlleredeSendt"}
+					disabled={this.props.vedlegg[ 0 ].innsendingsvalg === "LastetOpp"}
 				/>
+
+				<p>Dersom vedlegget har status lastet opp skal man ikke kunne trykke på checkbox'en</p>
+				<p>this.props.vedlegg[ 0 ].innsendingsvalg : {this.props.vedlegg[ 0 ].innsendingsvalg}</p>
 			</div>
 		);
 	}
