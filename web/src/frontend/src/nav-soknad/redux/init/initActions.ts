@@ -17,3 +17,23 @@ export const initFeilet = (): InitActionTypes => {
 		type: InitActionTypeKeys.FEILET
 	};
 };
+
+export function setVisSamtykkeInfo(visSamtykkeInfo: boolean): InitActionTypes {
+	return {
+		type: InitActionTypeKeys.SET_VIS_SAMTYKKE_INFO,
+		visSamtykkeInfo
+	};
+}
+
+export function visSamtykkeMangler(visSamtykkeMangler: boolean): InitActionTypes {
+	return {
+		type: InitActionTypeKeys.SET_VIS_SAMTYKKE_MANGLER,
+		visSamtykkeMangler
+	};
+}
+
+export function bekreftSamtykke(): InitActionTypes {
+	return {
+		type: InitActionTypeKeys.BEKREFT_SAMTYKKE
+	};
+}
