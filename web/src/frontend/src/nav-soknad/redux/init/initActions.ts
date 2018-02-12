@@ -25,10 +25,10 @@ export function setVisSamtykkeInfo(visSamtykkeInfo: boolean): InitActionTypes {
 	};
 }
 
-export function visSamtykkeMangler(visSamtykkeMangler: boolean): InitActionTypes {
+export function visSamtykkeMangler(samtykkeMangler: boolean): InitActionTypes {
 	return {
 		type: InitActionTypeKeys.SET_VIS_SAMTYKKE_MANGLER,
-		visSamtykkeMangler
+		visSamtykkeMangler: samtykkeMangler
 	};
 }
 

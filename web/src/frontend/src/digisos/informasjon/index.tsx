@@ -23,7 +23,7 @@ import {
 	bekreftSamtykke,
 	setVisSamtykkeInfo, visSamtykkeMangler
 } from "../../nav-soknad/redux/init/initActions";
-import SamtykkeInfoModalInformasjon from "./samtykkeInfoModalInformasjon";
+import SamtykkeInfoForsidenModal from "./samtykkeInfoForsidenModal";
 import { Checkbox } from "nav-frontend-skjema";
 
 interface StateProps {
@@ -61,7 +61,7 @@ class Informasjon extends React.Component<Props, {}> {
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 
 		const bekreftOpplysningTekst: string = intl.formatMessage({
-			id: "soknadsosialhjelp.oppsummering.bekreftOpplysninger"
+			id: "soknadsosialhjelp.forstesiden.bekreftOpplysninger"
 		});
 		const bekreftOpplysninger = this.bekreftOpplysninger(bekreftOpplysningTekst);
 
@@ -114,7 +114,7 @@ class Informasjon extends React.Component<Props, {}> {
 									/>
 								</div>
 							</div>
-							<SamtykkeInfoModalInformasjon/>
+							<SamtykkeInfoForsidenModal/>
 
 						</div>
 

@@ -12,7 +12,7 @@ interface StateProps {
 
 type Props = StateProps & InjectedIntlProps & DispatchProps;
 
-class SamtykkeInfoModalInformasjon extends React.Component<Props, {}> {
+class SamtykkeInfoForsidenModal extends React.Component<Props, {}> {
 
 	render() {
 
@@ -25,10 +25,10 @@ class SamtykkeInfoModalInformasjon extends React.Component<Props, {}> {
 			>
 				<div className="samtykke_info">
 					<h1 className="typo-innholdstittel">
-						<FormattedMessage id={"soknadsosialhjelp.oppsummering.bekreftInfoModal.title"}/>
+						<FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.title"}/>
 					</h1>
 					<FormattedHTMLMessage
-						id={"soknadsosialhjelp.oppsummering.bekreftInfoModal.body"}
+						id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.body"}
 						values={{}}
 					/>
 				</div>
@@ -41,4 +41,4 @@ export default connect((state: State, props: any): StateProps => {
 	return {
 		modalSynlig: state.init.visSamtykkeInfo
 	};
-})(injectIntl(SamtykkeInfoModalInformasjon));
+})(injectIntl(SamtykkeInfoForsidenModal));
