@@ -10,10 +10,11 @@ const Vedleggsliste: React.StatelessComponent<Props> = (props: Props) => (
 	<ul className="vedleggsliste">
 		{props.vedlegg
 			.filter(v => v.skjemanummerTillegg !== "annet" && v.skjemaNummer !== "annet")
+			.filter(v => v.innsendingsvalg !== "VedleggAlleredeSendt")
 			.map(vedlegg => {
-			const vedleggsKey = `vedlegg.${vedlegg.skjemaNummer}.${vedlegg.skjemanummerTillegg}.tittel`;
-			return (<li key={vedlegg.fillagerReferanse}><FormattedMessage id={vedleggsKey} /></li>);
-		})}
+				const vedleggsKey = `vedlegg.${vedlegg.skjemaNummer}.${vedlegg.skjemanummerTillegg}.tittel`;
+				return (<li key={vedlegg.fillagerReferanse}><FormattedMessage id={vedleggsKey}/></li>);
+			})}
 	</ul>
 );
 

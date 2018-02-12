@@ -77,6 +77,20 @@ const hentVedleggsForventningOk = (vedlegg: Vedlegg[], fakta: Faktum[]): Vedlegg
 	};
 };
 
+const vedleggAlleredeSendt  = (vedlegg: Vedlegg[]): VedleggActionTypes => {
+	return {
+		type: VedleggActionTypeKeys.VEDLEGG_ALLEREDE_SENDT,
+		vedlegg
+	};
+};
+
+const vedleggAlleredeSendtOk  = (vedlegg: Vedlegg[]): VedleggActionTypes => {
+	return {
+		type: VedleggActionTypeKeys.VEDLEGG_ALLEREDE_SENDT_OK,
+		vedlegg
+	};
+};
+
 export {
 	lastOppVedlegg,
 	lastOppVedleggOk,
@@ -89,5 +103,7 @@ export {
 
 	startSlettVedlegg,
 	slettVedlegg,
-	slettVedleggOk
+	slettVedleggOk,
+	vedleggAlleredeSendt,
+	vedleggAlleredeSendtOk
 };

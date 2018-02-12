@@ -14,7 +14,8 @@ export enum VedleggActionTypeKeys {
 	SLETT_VEDLEGG_OK = "vedlegg/SLETT_VEDLEGG_OK",
 
 	HENT_VEDLEGGSFORVENTNING_OK = "vedlegg/HENT_VEDLEGGSFORVENTNING_OK",
-
+	VEDLEGG_ALLEREDE_SENDT = "vedlegg/VEDLEGG_ALLEREDE_SENDT",
+	VEDLEGG_ALLEREDE_SENDT_OK = "vedlegg/VEDLEGG_ALLEREDE_SENDT_OK",
 	INIT = "vedlegg/INIT",
 	OTHER_ACTION = "__any_other_action_type__"
 }
@@ -37,6 +38,8 @@ export type VedleggActionTypes =
 	| SlettVedleggAction
 	| SlettVedleggOkAction
 	| HentVedleggsForventningOk
+	| VedleggAlleredeSendtAction
+	| VedleggAlleredeSendtOkAction
 	| OtherAction;
 
 export interface LastOppVedleggAction {
@@ -85,6 +88,16 @@ interface HentVedleggsForventningOk {
 	type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_OK;
 	vedleggsforventninger: Vedlegg[];
 	fakta: Faktum[];
+}
+
+export interface VedleggAlleredeSendtAction {
+	type: VedleggActionTypeKeys.VEDLEGG_ALLEREDE_SENDT;
+	vedlegg: Vedlegg[];
+}
+
+export interface VedleggAlleredeSendtOkAction {
+	type: VedleggActionTypeKeys.VEDLEGG_ALLEREDE_SENDT_OK;
+	vedlegg: Vedlegg[];
 }
 
 export interface OtherAction {

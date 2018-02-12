@@ -40,18 +40,23 @@ export const Kommuner: Kommune[] = [
 	}
 ];
 
-export function getBosted(kommuneId: string, bydelId?: string): string {
-	/** Denne koden fungerer kun så lenge kommune og bydel er hardkodet i frontend */
+export function getKommune(kommuneId: string): string {
 	const kommune = Kommuner.find(k => k.id === kommuneId);
-
-	const bydel = kommune.bydeler ?
-		kommune.bydeler.find(b => b.id === bydelId)
-		: undefined;
-
 	if (!kommune) {
 		return "N/A";
 	}
-	return `${kommune.navn}${bydel ? `, ${bydel.navn}` : ""}`;
+	return kommune.navn;
+}
+
+export function getBydel(kommuneId: string, bydelId: string): string {
+	const bydel =
+		kommuneId === "oslo" ? OsloBydeler.find(b => b.id === bydelId) : undefined;
+	return bydel ? bydel.navn : "";
+}
+
+export function getBosted(kommuneId: string, bydelId?: string): string {
+	let bydel = getBydel(kommuneId, bydelId);
+	return getKommune(kommuneId) + (bydel === "" ? "" : ", ") + bydel;
 }
 
 export const Horten = Kommuner.find(k => k.id === "horten");

@@ -57,7 +57,7 @@ export interface Vedlegg {
 
 export type InnsendingsvalgIkkeInnsendt =
 	| "VedleggSendesIkke"
-	| "VedleggAlleredeSendt";
+	| "VedleggAlleredeSendtAction";
 
 export interface IkkeInnsendtVedlegg extends Vedlegg {
 	innsendingsvalg: InnsendingsvalgIkkeInnsendt;

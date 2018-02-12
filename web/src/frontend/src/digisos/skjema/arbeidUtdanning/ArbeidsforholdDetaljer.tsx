@@ -5,14 +5,12 @@ import { FormattedMessage } from "react-intl";
 import { Faktum } from "../../../nav-soknad/types";
 
 const ArbeidsforholdDetaljer: React.StatelessComponent<{ arbeidsforhold: Faktum }> = ({ arbeidsforhold }) => {
-
 	let stillingsprosent = getFaktumPropertyVerdi(arbeidsforhold, "stillingsprosent");
 	if (stillingsprosent === "0" && getFaktumPropertyVerdi(arbeidsforhold, "stillingstype") === "variabel") {
 		stillingsprosent = "Variabel";
 	} else {
 		stillingsprosent = stillingsprosent + "%";
 	}
-	let stillingstype =  getFaktumPropertyVerdi(arbeidsforhold, "stillingstype") || "";
 
 	const tom = getFaktumPropertyVerdi(arbeidsforhold, "tom");
 
@@ -45,14 +43,6 @@ const ArbeidsforholdDetaljer: React.StatelessComponent<{ arbeidsforhold: Faktum 
 				}
 				verdi={stillingsprosent}
 			/>
-			<DetaljelisteElement
-				tittel={
-					<FormattedMessage
-						id="arbeidsforhold.stillingstype.label"/>
-				}
-				verdi={stillingstype}
-			/>
-
 		</Detaljeliste>
 	);
 };
