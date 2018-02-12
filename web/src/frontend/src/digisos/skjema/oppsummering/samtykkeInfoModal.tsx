@@ -7,6 +7,7 @@ import { setVisBekreftInfo } from "../../../nav-soknad/redux/oppsummering/oppsum
 import { Faktum } from "../../../nav-soknad/types";
 import { State } from "../../redux/reducers";
 import { finnFaktum } from "../../../nav-soknad/utils";
+import { getBydel, getKommune } from "../../data/kommuner";
 
 interface StateProps {
 	modalSynlig: boolean;
@@ -44,12 +45,12 @@ class SamtykkeInfoModal extends React.Component<Props, {}> {
 
 	private finnStedsnavn() {
 		const kommune: Faktum = finnFaktum("personalia.kommune", this.props.fakta);
-		let kommuneNavn = (kommune && kommune.lagret && kommune.lagret.value) || "";
-		kommuneNavn = this.capitalize(kommuneNavn);
+		const kommuneId = (kommune && kommune.lagret && kommune.lagret.value) || "";
+		const kommuneNavn = getKommune(kommuneId);
 
 		const bydel: Faktum = finnFaktum("personalia.bydel", this.props.fakta);
-		let bydelsNavn = (bydel && bydel.lagret && bydel.lagret.value) || "";
-		bydelsNavn = this.capitalize(bydelsNavn);
+		const bydelId = (bydel && bydel.lagret && bydel.lagret.value) || "";
+		let bydelsNavn = getBydel(kommuneId, bydelId);
 
 		if (bydelsNavn === "") {
 			bydelsNavn = kommuneNavn;
@@ -57,12 +58,6 @@ class SamtykkeInfoModal extends React.Component<Props, {}> {
 		return { kommuneNavn, navKontorNavn: bydelsNavn };
 	}
 
-	private capitalize(str: string): string {
-		if (str !== "") {
-			str = str.charAt(0).toUpperCase() + str.slice(1);
-		}
-		return str;
-	}
 }
 
 export default connect((state: State, props: any): StateProps => {
