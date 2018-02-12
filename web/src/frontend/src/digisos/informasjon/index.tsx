@@ -19,6 +19,12 @@ import { FeatureToggles } from "../../featureToggles";
 import { Horten } from "../data/kommuner";
 import IkkeTilgang from "./IkkeTilgang";
 import { TilgangSperrekode } from "../../nav-soknad/redux/tilgang/tilgangTypes";
+import {
+	bekreftSamtykke,
+	setVisSamtykkeInfo, visSamtykkeMangler
+} from "../../nav-soknad/redux/init/initActions";
+import SamtykkeInfoForsidenModal from "./samtykkeInfoForsidenModal";
+import { Checkbox } from "nav-frontend-skjema";
 
 interface StateProps {
 	harTilgang: boolean;
@@ -26,22 +32,44 @@ interface StateProps {
 	soknadErLive: string;
 	startSoknadPending: boolean;
 	visVelgBosted: boolean;
+	bekreftet: boolean;
+	visSamtykkeMangler: boolean;
 }
 
 type Props = StateProps & InjectedIntlProps & RouterProps & DispatchProps;
 
 class Informasjon extends React.Component<Props, {}> {
+
+	startSoknad() {
+		if (this.props.bekreftet === true) {
+			this.props.dispatch(
+				tilBostedEllerStartSoknad(this.props.visVelgBosted ? null : Horten)
+			);
+		} else {
+			this.props.dispatch(visSamtykkeMangler(true));
+		}
+	}
+
 	render() {
 		const {
 			intl,
-			dispatch,
 			harTilgang,
 			startSoknadPending,
-			visVelgBosted,
 			soknadErLive,
 			sperrekode
 		} = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
+
+		const bekreftOpplysningTekst: string = intl.formatMessage({
+			id: "soknadsosialhjelp.forstesiden.bekreftOpplysninger"
+		});
+		const bekreftOpplysninger = this.bekreftOpplysninger(bekreftOpplysningTekst);
+
+		let classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
+		if (this.props.visSamtykkeMangler) {
+			classNames += " skjema-oppsummering__bekreft___feil";
+		}
+
 		return (
 			<div>
 				<DocumentTitle title={title} />
@@ -67,16 +95,34 @@ class Informasjon extends React.Component<Props, {}> {
 									<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst" />
 								</p>
 							</Infoblokk>
+
+							<div className="blokk-xs bolk">
+								<div className={classNames} >
+									<Checkbox
+										label={bekreftOpplysninger}
+										checked={this.props.bekreftet}
+										feil={
+											this.props.visSamtykkeMangler
+												? {
+													feilmelding: intl.formatHTMLMessage({
+														id: "oppsummering.feilmelding.bekreftmangler"
+													})
+												}
+												: null
+										}
+										onChange={() => this.props.dispatch(bekreftSamtykke())}
+									/>
+								</div>
+							</div>
+							<SamtykkeInfoForsidenModal/>
+
 						</div>
+
 						<Knapp
 							type="hoved"
 							spinner={startSoknadPending}
 							disabled={startSoknadPending}
-							onClick={() =>
-								dispatch(
-									tilBostedEllerStartSoknad(visVelgBosted ? null : Horten)
-								)
-							}
+							onClick={() => this.startSoknad()}
 						>
 							{getIntlTextOrKey(intl, "skjema.knapper.start")}
 						</Knapp>
@@ -89,6 +135,25 @@ class Informasjon extends React.Component<Props, {}> {
 			</div>
 		);
 	}
+
+	/* Legg på lenke i tekst fra stash som ser slik ut "Tekst [lenketekst] mer tekst" */
+	private bekreftOpplysninger(bekreftOpplysningTekst: string) {
+		const bekreftOpplysningTekster = bekreftOpplysningTekst.split(/[\[\]]/);
+		let bekreftOpplysninger = <span/>;
+		if (bekreftOpplysningTekster.length === 3) {
+			bekreftOpplysninger = (
+				<span>
+					{bekreftOpplysningTekster[ 0 ]}
+					<a
+						className="lenke"
+						onClick={() => this.props.dispatch(setVisSamtykkeInfo(true))}>
+					{bekreftOpplysningTekster[ 1 ]}
+					</a>
+					{bekreftOpplysningTekster[ 2 ]}
+				</span>);
+		}
+		return bekreftOpplysninger;
+	}
 }
 
 export default connect((state: State) => ({
@@ -97,5 +162,7 @@ export default connect((state: State) => ({
 	soknadErLive: state.featuretoggles.data[FeatureToggles.soknadErLive],
 	visVelgBosted:
 		state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
-	startSoknadPending: state.soknad.startSoknadPending
+	startSoknadPending: state.soknad.startSoknadPending,
+	bekreftet: state.init.bekreftSamtykkeInfo,
+	visSamtykkeMangler: state.init.visSamtykkeMangler
 }))(injectIntl(Informasjon));
