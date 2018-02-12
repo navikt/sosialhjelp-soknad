@@ -20,7 +20,7 @@ const OsloBydeler: Bydel[] = [
 
 const BergenBydeler: Bydel[] = [
 	{ id: "bergenhus", navn: "Bydel Bergenhus"},
-	{ id: "ytrebygda", navn: "Bydel Ytebygda"}
+	{ id: "ytrebygda", navn: "Bydel Ytrebygda"}
 ];
 
 export const Kommuner: Kommune[] = [
@@ -55,7 +55,7 @@ export function getBydel(kommuneId: string, bydelId: string): string {
 }
 
 export function getBosted(kommuneId: string, bydelId?: string): string {
-	let bydel = getBydel(kommuneId, bydelId);
+	const bydel = getBydel(kommuneId, bydelId);
 	return getKommune(kommuneId) + (bydel === "" ? "" : ", ") + bydel;
 }
 
