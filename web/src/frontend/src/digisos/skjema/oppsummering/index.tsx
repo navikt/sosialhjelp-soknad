@@ -136,7 +136,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 	private bekreftOpplysninger(bekreftOpplysningTekst: string) {
 		const bekreftOpplysningTekster = bekreftOpplysningTekst.split(/[\[\]]/);
 		let bekreftOpplysninger = <span/>;
-		if (bekreftOpplysningTekster.length === 3) {
+		if (bekreftOpplysningTekster.length > 2) {
 			bekreftOpplysninger = (
 				<span>
 					{bekreftOpplysningTekster[ 0 ]}
@@ -145,7 +145,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 						onClick={() => this.props.dispatch(setVisBekreftInfo(true))}>
 					{bekreftOpplysningTekster[ 1 ]}
 					</a>
-					{bekreftOpplysningTekster[ 2 ]}
+					{bekreftOpplysningTekster.slice(2, bekreftOpplysningTekster.length).join("|")}
 				</span>);
 		}
 		return bekreftOpplysninger;
