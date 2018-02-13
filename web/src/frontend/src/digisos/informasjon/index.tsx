@@ -63,6 +63,7 @@ class Informasjon extends React.Component<Props, {}> {
 		const bekreftOpplysningTekst: string = intl.formatMessage({
 			id: "soknadsosialhjelp.forstesiden.bekreftOpplysninger"
 		});
+		console.warn("bekreftOpplysningTekst : " + bekreftOpplysningTekst);
 		const bekreftOpplysninger = this.bekreftOpplysninger(bekreftOpplysningTekst);
 
 		let classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
@@ -140,7 +141,7 @@ class Informasjon extends React.Component<Props, {}> {
 	private bekreftOpplysninger(bekreftOpplysningTekst: string) {
 		const bekreftOpplysningTekster = bekreftOpplysningTekst.split(/[\[\]]/);
 		let bekreftOpplysninger = <span/>;
-		if (bekreftOpplysningTekster.length === 3) {
+		if (bekreftOpplysningTekster.length > 2) {
 			bekreftOpplysninger = (
 				<span>
 					{bekreftOpplysningTekster[ 0 ]}
@@ -149,7 +150,7 @@ class Informasjon extends React.Component<Props, {}> {
 						onClick={() => this.props.dispatch(setVisSamtykkeInfo(true))}>
 					{bekreftOpplysningTekster[ 1 ]}
 					</a>
-					{bekreftOpplysningTekster[ 2 ]}
+					{bekreftOpplysningTekster.slice(2, bekreftOpplysningTekster.length).join("|")}
 				</span>);
 		}
 		return bekreftOpplysninger;
