@@ -114,7 +114,18 @@ class Opplysning extends React.Component<AllProps, {}> {
 	}
 
 	render() {
-		const { faktumstruktur, fakta, vedlegg, opplastingStatus, sistEndredeFaktumId, feil, intl } = this.props;
+		const {
+			faktumstruktur,
+			fakta,
+			vedlegg,
+			opplastingStatus,
+			sistEndredeFaktumId,
+			feil,
+			intl,
+			feiletFaktumId,
+			feiltype
+		} = this.props;
+
 		const belopFakta = finnFakta(faktumstruktur.id, fakta);
 
 		const leggTilTekst = intl.formatMessage({ id: "opplysninger.leggtil" });
@@ -148,6 +159,8 @@ class Opplysning extends React.Component<AllProps, {}> {
 							vedlegg={vedleggForOpplysning}
 							belopFaktum={belopFakta[0]}
 							feil={feil}
+							feiletFaktumId={feiletFaktumId}
+							feiltype={feiltype}
 						/>
 				}
 			</SporsmalFaktum>
@@ -161,6 +174,9 @@ interface StateFromProps {
 	opplastingStatus?: string;
 	sistEndredeFaktumId?: number;
 	feil: boolean;
+	feiletFaktumId: number;
+	feiltype: string;
+
 }
 
 export default connect<StateFromProps, {}, Props>((state: SoknadAppState) => {
@@ -169,6 +185,8 @@ export default connect<StateFromProps, {}, Props>((state: SoknadAppState) => {
 		vedlegg: state.vedlegg.data,
 		opplastingStatus: state.vedlegg.opplastingStatus,
 		sistEndredeFaktumId: state.vedlegg.sistEndredeFaktumId,
-		feil: state.vedlegg.feil
+		feil: state.vedlegg.feil,
+		feiletFaktumId: state.vedlegg.feiletFaktumId,
+		feiltype: state.vedlegg.feiltype
 	};
 })(injectIntl(Opplysning));

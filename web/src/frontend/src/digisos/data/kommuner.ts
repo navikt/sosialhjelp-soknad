@@ -1,5 +1,29 @@
 import { Kommune, Bydel } from "../../nav-soknad/types";
 
+const bydelsnavn: any = {
+	"oslo": [
+		{ id: "alna", navn: "Bydel Alna" },
+		{ id: "bjerke", navn: "Bydel Bjerke" },
+		{ id: "frogner", navn: "Bydel Frogner" },
+		{ id: "gamleoslo", navn: "Bydel Gamle Oslo" },
+		{ id: "grorud", navn: "Bydel Grorud" },
+		{ id: "grunerlokka", navn: "Bydel Grünerløkka" },
+		{ id: "nordreaker", navn: "Bydel Nordre Aker" },
+		{ id: "nordstrand", navn: "Bydel Nordstrand" },
+		{ id: "sagene", navn: "Bydel Sagene" },
+		{ id: "sthanshaugen", navn: "Bydel St. Hanshaugen" },
+		{ id: "stovner", navn: "Bydel Stovner" },
+		{ id: "sondrenordstrand", navn: "Bydel Søndre Nordstrand" },
+		{ id: "ullern", navn: "Bydel Ullern" },
+		{ id: "vestreaker", navn: "Bydel Vestre Aker" },
+		{ id: "ostonsjo", navn: "Bydel Østensjø" }
+	],
+	"bergen": [
+		{ id: "bergenhus", navn: "Bydel Bergenhus"},
+		{ id: "ytrebygda", navn: "Bydel Ytrebygda"}
+	]
+};
+
 const OsloBydeler: Bydel[] = [
 	// { id: "alna", navn: "Bydel Alna" },
 	// { id: "bjerke", navn: "Bydel Bjerke" },
@@ -49,8 +73,7 @@ export function getKommune(kommuneId: string): string {
 }
 
 export function getBydel(kommuneId: string, bydelId: string): string {
-	const bydel =
-		kommuneId === "oslo" ? OsloBydeler.find(b => b.id === bydelId) : undefined;
+	const bydel = bydelsnavn[kommuneId] ? bydelsnavn[kommuneId].find((b: any) => b.id === bydelId) : undefined;
 	return bydel ? bydel.navn : "";
 }
 
