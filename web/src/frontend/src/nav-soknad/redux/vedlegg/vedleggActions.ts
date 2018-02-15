@@ -18,9 +18,11 @@ const lastOppVedleggOk = (): VedleggActionTypes => {
 	};
 };
 
-const lastOppVedleggFeilet = (): VedleggActionTypes => {
+const lastOppVedleggFeilet = (belopFaktumId: number, feiltype: string): VedleggActionTypes => {
 	return {
-		type: VedleggActionTypeKeys.LAST_OPP_FEILET
+		type: VedleggActionTypeKeys.LAST_OPP_FEILET,
+		belopFaktumId,
+		feiltype
 	};
 };
 

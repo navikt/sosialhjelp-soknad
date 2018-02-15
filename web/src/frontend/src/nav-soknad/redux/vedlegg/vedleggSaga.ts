@@ -40,9 +40,8 @@ function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 			yield put(oppdatertVedlegg(response.vedlegg, fakta));
 		}
 	} catch (reason) {
-		yield put(lastOppVedleggFeilet());
-		yield put(loggFeil("Last opp vedlegg feilet: " + reason));
-
+		yield put(lastOppVedleggFeilet(action.belopFaktumId, reason.toString()));
+		yield put(loggFeil("Last opp vedlegg feilet: " + reason.toString()));
 		if (reason.message !== "Unsupported Media Type") {
 			yield put(navigerTilServerfeil());
 		}

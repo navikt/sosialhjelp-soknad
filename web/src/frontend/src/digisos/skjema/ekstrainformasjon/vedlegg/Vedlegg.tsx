@@ -14,7 +14,9 @@ interface Props {
 	belopFaktum: Faktum;
 	opplastingStatus?: string;
 	sistEndredeFaktumId?: number;
-	feil: boolean;
+	feil?: boolean;
+	feiletFaktumId: number;
+	feiltype: string;
 }
 
 type AllProps = Props &
@@ -28,7 +30,7 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 	}
 
 	render() {
-		const { vedlegg, belopFaktum, dispatch, opplastingStatus, sistEndredeFaktumId, feil } = this.props;
+		const { vedlegg, belopFaktum, dispatch, opplastingStatus, sistEndredeFaktumId} = this.props;
 		const vedleggListe = vedlegg
 			.filter(v => v.innsendingsvalg === "LastetOpp")
 			.map(v => {
@@ -40,6 +42,17 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 		const vedleggsKey = `vedlegg.${vedlegg[ 0 ].skjemaNummer}.${vedlegg[ 0 ].skjemanummerTillegg}.tittel`;
 		const disabledAlleredeLastetOppCheckbox = this.props.vedlegg[ 0 ].innsendingsvalg === "LastetOpp";
 		const disableLastOppVedleggKnapp = this.props.vedlegg[ 0 ].innsendingsvalg === "VedleggAlleredeSendt";
+
+		let feil = false;
+		let feilmelding = "";
+		if (this.props.belopFaktum.faktumId === this.props.feiletFaktumId) {
+			feil = true;
+			if ( this.props.feiltype.match(/Unsupported Media Type/)) {
+				feilmelding = this.props.intl.formatMessage({ id: "opplysninger.vedlegg.ugyldig" });
+			} else {
+				feilmelding = this.props.intl.formatMessage({ id: "opplysninger.vedlegg.ukjent_feil" });
+			}
+		}
 
 		return (
 			<div className="">
@@ -65,7 +78,7 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 					onChange={(event) => this.props.dispatch(vedleggAlleredeSendt(this.props.vedlegg))}
 					checked={disableLastOppVedleggKnapp}
 					disabled={disabledAlleredeLastetOppCheckbox}
-					feil={feil ? {tittel: "Tittel", feilmelding : "Feilmelding"} : null}
+					feil={feil ? {tittel: "", feilmelding} : null}
 				/>
 			</div>
 		);

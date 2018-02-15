@@ -63,7 +63,6 @@ class Informasjon extends React.Component<Props, {}> {
 		const bekreftOpplysningTekst: string = intl.formatMessage({
 			id: "soknadsosialhjelp.forstesiden.bekreftOpplysninger"
 		});
-		console.warn("bekreftOpplysningTekst : " + bekreftOpplysningTekst);
 		const bekreftOpplysninger = this.bekreftOpplysninger(bekreftOpplysningTekst);
 
 		let classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
