@@ -14,9 +14,6 @@ interface Props {
 	belopFaktum: Faktum;
 	opplastingStatus?: string;
 	sistEndredeFaktumId?: number;
-	feil?: boolean;
-	feiletFaktumId: number;
-	feiltype: string;
 }
 
 type AllProps = Props &
@@ -43,17 +40,6 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 		const disabledAlleredeLastetOppCheckbox = this.props.vedlegg[ 0 ].innsendingsvalg === "LastetOpp";
 		const disableLastOppVedleggKnapp = this.props.vedlegg[ 0 ].innsendingsvalg === "VedleggAlleredeSendt";
 
-		let feil = false;
-		let feilmelding = "";
-		if (this.props.belopFaktum.faktumId === this.props.feiletFaktumId) {
-			feil = true;
-			if ( this.props.feiltype.match(/Unsupported Media Type/)) {
-				feilmelding = this.props.intl.formatMessage({ id: "opplysninger.vedlegg.ugyldig" });
-			} else {
-				feilmelding = this.props.intl.formatMessage({ id: "opplysninger.vedlegg.ukjent_feil" });
-			}
-		}
-
 		return (
 			<div className="">
 				<p>
@@ -78,7 +64,6 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 					onChange={(event) => this.props.dispatch(vedleggAlleredeSendt(this.props.vedlegg))}
 					checked={disableLastOppVedleggKnapp}
 					disabled={disabledAlleredeLastetOppCheckbox}
-					feil={feil ? {tittel: "", feilmelding} : null}
 				/>
 			</div>
 		);

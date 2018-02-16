@@ -120,20 +120,15 @@ class Opplysning extends React.Component<AllProps, {}> {
 			vedlegg,
 			opplastingStatus,
 			sistEndredeFaktumId,
-			feil,
 			intl,
-			feiletFaktumId,
-			feiltype
 		} = this.props;
 
 		const belopFakta = finnFakta(faktumstruktur.id, fakta);
-
 		const leggTilTekst = intl.formatMessage({ id: "opplysninger.leggtil" });
 		const slettTekst = intl.formatMessage({ id: "opplysninger.fjern" });
-
 		const rader = belopFakta.map((faktum, index) => this.lagRader(faktum, index, faktumstruktur, slettTekst));
-
 		const belopFaktumId = belopFakta[0].faktumId;
+
 		let vedleggForOpplysning: any = [];
 		if (vedlegg && Array.isArray(vedlegg)) {
 			vedleggForOpplysning = vedlegg.filter(v => v.belopFaktumId === belopFaktumId);
@@ -158,9 +153,6 @@ class Opplysning extends React.Component<AllProps, {}> {
 							sistEndredeFaktumId={sistEndredeFaktumId}
 							vedlegg={vedleggForOpplysning}
 							belopFaktum={belopFakta[0]}
-							feil={feil}
-							feiletFaktumId={feiletFaktumId}
-							feiltype={feiltype}
 						/>
 				}
 			</SporsmalFaktum>
@@ -173,10 +165,6 @@ interface StateFromProps {
 	vedlegg: Vedlegg[];
 	opplastingStatus?: string;
 	sistEndredeFaktumId?: number;
-	feil: boolean;
-	feiletFaktumId: number;
-	feiltype: string;
-
 }
 
 export default connect<StateFromProps, {}, Props>((state: SoknadAppState) => {
@@ -185,8 +173,5 @@ export default connect<StateFromProps, {}, Props>((state: SoknadAppState) => {
 		vedlegg: state.vedlegg.data,
 		opplastingStatus: state.vedlegg.opplastingStatus,
 		sistEndredeFaktumId: state.vedlegg.sistEndredeFaktumId,
-		feil: state.vedlegg.feil,
-		feiletFaktumId: state.vedlegg.feiletFaktumId,
-		feiltype: state.vedlegg.feiltype
 	};
 })(injectIntl(Opplysning));

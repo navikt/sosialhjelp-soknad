@@ -10,7 +10,6 @@ interface Props {
 	belopFaktumId: number;
 	opplastingStatus?: string;
 	sistEndredeFaktumId?: number;
-	feil?: boolean;
 	disabled?: boolean;
 }
 
@@ -62,7 +61,7 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 				/>
 
 				<div role="alert" aria-live="assertive">
-					{this.props.feil && gjeldende && (
+					{this.props.opplastingStatus === REST_STATUS.FEILET && gjeldende && (
 						<div className="skjemaelement__feilmelding">
 							<FormattedMessage id="opplysninger.vedlegg.ugyldig"/>
 						</div>
