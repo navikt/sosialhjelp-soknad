@@ -50,7 +50,10 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 							bredde="m"
 							defaultValue=""
 							onChange={(evt: any) =>
-								this.setState({ kommuneId: evt.target.value })
+								this.setState({
+									kommuneId: evt.target.value,
+									bydelId: undefined
+								})
 							}
 							label={
 								<div className="bosted__selectLabel bosted__tekst--extraPadding">
