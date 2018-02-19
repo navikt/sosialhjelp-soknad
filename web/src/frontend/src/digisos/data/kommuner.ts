@@ -56,11 +56,6 @@ export const Kommuner: Kommune[] = [
 		id: "bergen",
 		navn: "Bergen",
 		bydeler: BergenBydeler
-	},
-	{
-		id: "oslo",
-		navn: "Oslo",
-		bydeler: OsloBydeler
 	}
 ];
 
