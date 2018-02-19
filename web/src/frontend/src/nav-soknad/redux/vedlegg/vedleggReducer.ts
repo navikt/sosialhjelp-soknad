@@ -7,9 +7,6 @@ const initialState: VedleggApiType = {
 	restStatus: REST_STATUS.INITIALISERT,
 	opplastingStatus: REST_STATUS.OK,
 	sistEndredeFaktumId: 0,
-	feil: false,
-	feiletFaktumId: 0,
-	feiltype: "",
 	data: []
 };
 
@@ -19,25 +16,19 @@ export default (state: VedleggApiType = initialState, action: VedleggActionTypes
 			return {
 				...state,
 				opplastingStatus: REST_STATUS.PENDING,
-				sistEndredeFaktumId: action.belopFaktumId,
-				feil: false
+				sistEndredeFaktumId: action.belopFaktumId
 			};
 		}
 		case VedleggActionTypeKeys.LAST_OPP_OK: {
 			return {
 				...state,
-				opplastingStatus: REST_STATUS.OK,
-				feil: false,
-				feiletFaktumId: -1
+				opplastingStatus: REST_STATUS.OK
 			};
 		}
 		case VedleggActionTypeKeys.LAST_OPP_FEILET: {
 			return {
 				...state,
-				opplastingStatus: REST_STATUS.FEILET,
-				feil: true,
-				feiletFaktumId: action.belopFaktumId,
-				feiltype: action.feiltype
+				opplastingStatus: REST_STATUS.FEILET
 			};
 		}
 		case VedleggActionTypeKeys.OPPDATERT_VEDLEGG: {
@@ -75,8 +66,7 @@ export default (state: VedleggApiType = initialState, action: VedleggActionTypes
 		case VedleggActionTypeKeys.SLETT_VEDLEGG_OK: {
 			return {
 				...state,
-				opplastingStatus: REST_STATUS.OK,
-				feiletFaktumId: -1
+				opplastingStatus: REST_STATUS.OK
 			};
 		}
 		case VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_OK: {
@@ -87,8 +77,7 @@ export default (state: VedleggApiType = initialState, action: VedleggActionTypes
 			return {
 				...state,
 				restStatus: REST_STATUS.OK,
-				data: vedleggsForventninger,
-				feiletFaktumId: -1
+				data: vedleggsForventninger
 			};
 		}
 

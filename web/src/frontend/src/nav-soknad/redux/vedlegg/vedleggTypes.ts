@@ -124,9 +124,6 @@ export interface VedleggApiType {
 	restStatus: REST_STATUS;
 	opplastingStatus: REST_STATUS;
 	sistEndredeFaktumId: number;
-	feil: boolean;
-	feiletFaktumId: number;
-	feiltype: string;
 }
 
 export interface VedleggProps {
