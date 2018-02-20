@@ -1,16 +1,19 @@
-import { Vedlegg, VedleggActionTypeKeys, VedleggActionTypes, VedleggApiType } from "./vedleggTypes";
+import { Vedlegg, VedleggActionTypeKeys, VedleggActionTypes, VedleggState, } from "./vedleggTypes";
 import { REST_STATUS } from "../../types/restTypes";
 import { Faktum } from "../../types/navSoknadTypes";
-import { finnFaktumMedId } from "../../utils/faktumUtils";
+import { Reducer } from "../reduxTypes";
 
-const initialState: VedleggApiType = {
+const initialState: VedleggState = {
 	restStatus: REST_STATUS.INITIALISERT,
 	opplastingStatus: REST_STATUS.OK,
 	sistEndredeFaktumId: 0,
 	data: []
 };
 
-export default (state: VedleggApiType = initialState, action: VedleggActionTypes) => {
+const VedleggReducer: Reducer<VedleggState, VedleggActionTypes> = (
+	state = initialState,
+	action
+): VedleggState => {
 	switch (action.type) {
 		case VedleggActionTypeKeys.LAST_OPP: {
 			return {
@@ -105,10 +108,15 @@ export default (state: VedleggApiType = initialState, action: VedleggActionTypes
 		default:
 			return state;
 	}
+
 };
 
+export default VedleggReducer;
+
 function leggFaktumPaVedleggStruktur(vedlegg: Vedlegg, fakta: Faktum[]) {
-	const vedleggFaktum = finnFaktumMedId("", fakta, vedlegg.faktumId);
+	const vedleggFaktum = fakta.filter((f: Faktum) => {
+		return f.faktumId === vedlegg.faktumId;
+	})[0];
 	vedlegg.belopFaktumId = vedleggFaktum.parrentFaktum;
 	return vedlegg;
 }

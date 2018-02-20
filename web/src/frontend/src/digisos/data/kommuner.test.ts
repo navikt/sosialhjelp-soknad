@@ -1,25 +1,15 @@
-import { Kommuner, getBosted, getKommune } from "../data/kommuner";
-import { Kommune } from "../../nav-soknad/types";
+import { getBosted, getKommune } from "../data/kommuner";
 
 describe("kommuner", () => {
 
-	it("should return list of 'bydeler'", () => {
-		let oslo: Kommune = Kommuner.find(k => k.id === "oslo");
-		const antallBydeler = oslo.bydeler.length;
-		expect(antallBydeler).toBeGreaterThanOrEqual(2);
-	});
-
 	it("should return name of 'kommune'", () => {
-		const navn = getKommune("oslo");
-		expect(navn).toEqual("Oslo");
+		const navn = getKommune("bergen");
+		expect(navn).toEqual("Bergen");
 	});
 
 	it("should return a valid 'bosted 'string", () => {
-		let bosted = getBosted("oslo", "frogner");
-		expect(bosted).toEqual("Oslo, Bydel Frogner");
-
-		bosted = getBosted("oslo", "sondrenordstrand");
-		expect(bosted).toEqual("Oslo, Bydel Søndre Nordstrand");
+		let bosted = getBosted("bergen", "bergenhus");
+		expect(bosted).toEqual("Bergen, Bydel Bergenhus");
 	});
 
 });
