@@ -1,0 +1,133 @@
+.banner {
+  background-color: #9bd0b0;
+  border-bottom: 5px solid #38a161;
+  color: #3e3832;
+  width: 100%;
+  margin: 0;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 0;
+}
+
+.banner__forside {
+  padding-top: 4rem;
+}
+
+.banner__forside-wrapper {
+  display: flex;
+}
+
+.banner__forside-illustrasjon {
+  flex-shrink: 0;
+  height: 160px;
+  margin-bottom: -4px;
+}
+
+.banner__william-illustrasjon {
+  width: 74px;
+  height: 98px;
+}
+
+.ettersendelse {
+
+  &.maincontent {
+	display: block;
+	border: 1px dotted red;
+	padding-top: 0;
+  }
+
+  &.ingress {
+    border: 1px dotted red;
+    font-size: 20px;
+  }
+
+  &__ikon {
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.blokk-center {
+  border: 1px dotted green;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Avsnitt med ikoner i margen */
+.avsnitt_med_marger {
+  display: flex;
+  width: 100%;
+}
+
+.venstemarg {
+  flex-direction: row;
+  border: 1px dotted darkorange;
+  width: 55px;
+}
+
+.avsnitt {
+  flex-direction: row;
+  border: 1px dotted darkcyan;
+  width: 552px;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1rem;
+    border: 1px dotted red;
+  }
+
+  p {
+    margin-top: 0;
+    border: 1px dotted yellowgreen;
+  }
+}
+
+.hoyremarg {
+  flex-direction: row;
+  border: 1px dotted red;
+  width: 55px;
+  text-align: right;
+  text-align: -webkit-right;
+}
+
+.chevron__nedover {
+  color: #3e3832;
+  display: inline-block;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  height: 2px;
+  line-height: 2px;
+  width: 20px;
+  position: relative;
+  text-align: center;
+  -webkit-transition: 200ms -webkit-transform;
+  transition: 200ms -webkit-transform;
+  -o-transition: 200ms transform;
+  transition: 200ms transform;
+  transition: 200ms transform, 200ms -webkit-transform;
+  vertical-align: middle;
+}
+
+.chevron__nedover:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50%;
+  background: currentColor;
+}
+
+.chevron__nedover:after {
+  -webkit-transition: 200ms -webkit-transform;
+  transition: 200ms -webkit-transform;
+  -o-transition: 200ms transform;
+  transition: 200ms transform;
+  transition: 200ms transform, 200ms -webkit-transform;
+  border-radius: 10px;
+}

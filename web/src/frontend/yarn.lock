@@ -31,9 +31,9 @@
   version "4.6.2"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/history/-/history-4.6.2.tgz#12cfaba693ba20f114ed5765467ff25fdf67ddb0"
 
-"@types/jest@^20.0.6":
-  version "20.0.8"
-  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/jest/-/jest-20.0.8.tgz#7f8c97f73d20d3bf5448fbe33661a342002b5954"
+"@types/jest@21.1.10":
+  version "21.1.10"
+  resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/jest/-/jest-21.1.10.tgz#dcacb5217ddf997a090cc822bba219b4b2fd7984"
 
 "@types/node@*":
   version "8.0.55"
@@ -87,7 +87,7 @@
     "@types/react" "*"
     redux "^3.7.2"
 
-"@types/react-router@*", "@types/react-router@^4.0.14":
+"@types/react-router@*", "@types/react-router@4.0.19":
   version "4.0.19"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react-router/-/react-router-4.0.19.tgz#4258eb59a9c3a01b5adf1bf9b14f068a7699bbb6"
   dependencies:
@@ -4099,7 +4099,7 @@ jest@20.0.4:
   dependencies:
     jest-cli "^20.0.4"
 
-jest@^21.2.1:
+jest@^21.1.10:
   version "21.2.1"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/jest/-/jest-21.2.1.tgz#c964e0b47383768a1438e3ccf3c3d470327604e1"
   dependencies:
