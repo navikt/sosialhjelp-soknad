@@ -4855,6 +4855,10 @@ nav-frontend-chevron-style@^0.3.4:
   version "0.3.4"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-chevron-style/-/nav-frontend-chevron-style-0.3.4.tgz#e6b0d5e9ddd87af988e4e1a44fc7fcb1fbb70994"
 
+nav-frontend-chevron@^1.0.2:
+  version "1.0.2"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-chevron/-/nav-frontend-chevron-1.0.2.tgz#93a3bdf9d6a774cd64c6498ebfd7e278a35729b3"
+
 nav-frontend-core@^4.0.2:
   version "4.0.5"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-core/-/nav-frontend-core-4.0.5.tgz#309c9de6a5146e8e93b3f52d4fc42cc309acdca1"
