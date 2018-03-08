@@ -44,6 +44,10 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 		};
 	}
 
+	toggleVedlegg() {
+		this.setState({ vedleggEkspandert: !this.state.vedleggEkspandert })
+	}
+
 	render() {
 		return (
 			<div className="ettersendelse maincontent">
@@ -94,11 +98,11 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 							<DigisosIkon navn="advarselSirkel" className="ettersendelse__ikon"/>
 						</div>
 						<div className="avsnitt">
-							<h3>3 vedlegg mangler</h3>
+							<h3 onClick={() => this.toggleVedlegg()} style={{cursor: "pointer"}}>3 vedlegg mangler</h3>
 						</div>
 						<div
 							className="hoyremarg hoyremarg__ikon"
-							onClick={() => this.setState({ vedleggEkspandert: !this.state.vedleggEkspandert })}
+							onClick={() => this.toggleVedlegg()}
 						>
 							<NavFrontendChevron
 								className="ettersendelse__chevron"

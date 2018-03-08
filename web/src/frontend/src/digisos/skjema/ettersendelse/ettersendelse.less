@@ -4,10 +4,8 @@
   color: #3e3832;
   width: 100%;
   margin: 0;
-  padding-left: 1rem;
   padding-right: 1rem;
   padding-bottom: 0;
-
 
   &__forside {
 	padding-top: 2rem;
@@ -39,19 +37,14 @@
 	  left: 0;
 	  z-index: 2;
 	  transform-origin: bottom;
-	  margin-bottom: -7px;
-
-	  -webkit-animation-name: openLaptop;
+	  margin-bottom: -4px;
+	  transform: rotateX(80deg);
 	  animation-name: openLaptop;
-	  -webkit-animation-duration: 1s;
 	  animation-duration: 1s;
-	  -webkit-animation-fill-mode: forwards;
+	  animation-delay: 2s;
 	  animation-fill-mode: forwards;
-	  -webkit-animation-iteration-count: 1;
 	  animation-iteration-count: 1;
-	  -webkit-animation-timing-function: ease;
 	  animation-timing-function: ease;
-	  -webkit-transition: all 0.5s ease-in-out;
 	  -o-transition: all 0.5s ease-in-out;
 	  transition: all 0.5s ease-in-out;
 	}
@@ -60,35 +53,20 @@
 
 }
 
-@-webkit-keyframes openLaptop {
+@keyframes openLaptop {
   to {
 	transform: rotateX(0deg);
+	margin-bottom: -7px;
   }
   0% {
 	transform: rotateX(60deg);
+	margin-bottom: -5px;
   }
-  60% {
-	transform: rotateX(40deg);
-  }
-  70% {
-	transform: rotateX(20deg);
-  }
+
   100% {
 	transform: rotateX(0deg);
+	margin-bottom: -7px;
   }
-}
-
-@keyframes openLaptop {
-  to {
-	transform: rotateX(0deg);}
-  0% {
-	transform: rotateX(60deg);}
-  60% {
-	transform: rotateX(40deg);}
-  70% {
-	transform: rotateX(20deg);}
-  100% {
-	transform: rotateX(0deg); }
 }
 
 .ettersendelse {
