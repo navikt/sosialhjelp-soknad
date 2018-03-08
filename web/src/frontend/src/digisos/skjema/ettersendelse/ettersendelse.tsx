@@ -45,7 +45,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	}
 
 	toggleVedlegg() {
-		this.setState({ vedleggEkspandert: !this.state.vedleggEkspandert })
+		this.setState({ vedleggEkspandert: !this.state.vedleggEkspandert});
 	}
 
 	render() {
