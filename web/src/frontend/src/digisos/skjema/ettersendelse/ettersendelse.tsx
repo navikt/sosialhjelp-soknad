@@ -22,6 +22,32 @@ interface OwnState {
 	vedleggEkspandert: boolean;
 }
 
+const BannerEttersendelse: React.StatelessComponent<{ children: React.ReactNode } & {}> = ({ children }) => {
+	return (
+		<div className="banner banner__forside">
+			<div className="blokk-center">
+				<div className="banner__forside-wrapper">
+					<div className="banner__tittel-tekst">
+						<h1 className="typo-sidetittel">
+							{children}
+						</h1>
+					</div>
+					<div className="banner__illustrasjon">
+						<SVG
+							className="banner__illustrasjon__william"
+							src={"/soknadsosialhjelp/statisk/bilder/illustrasjon_william.svg"}
+						/>
+						<SVG
+							className="banner__illustrasjon__laptop"
+							src={"/soknadsosialhjelp/statisk/bilder/illustrasjon_laptop.svg"}
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	)
+};
+
 const ManglendeVedlegg: React.StatelessComponent<{ children: React.ReactNode } & {}> = ({ children }) => {
 	return (
 		<div className="avsnitt_med_marger">
@@ -52,27 +78,9 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 		return (
 			<div className="ettersendelse maincontent">
 
-				<div className="banner banner__forside">
-					<div className="blokk-center">
-						<div className="banner__forside-wrapper">
-							<div className="banner__tittel-tekst">
-								<h1 className="typo-sidetittel">
-									<span>Søknad om økonomisk sosialhjelp</span>
-								</h1>
-							</div>
-							<div className="banner__illustrasjon">
-								<SVG
-									className="banner__illustrasjon__william"
-									src={"/soknadsosialhjelp/statisk/bilder/illustrasjon_william.svg"}
-								/>
-								<SVG
-									className="banner__illustrasjon__laptop"
-									src={"/soknadsosialhjelp/statisk/bilder/illustrasjon_laptop.svg"}
-								/>
-							</div>
-						</div>
-					</div>
-				</div>
+				<BannerEttersendelse>
+					<span>Søknad om økonomisk sosialhjelp</span>
+				</BannerEttersendelse>
 
 				<div className="blokk-center">
 					<p className="ettersendelse ingress">
