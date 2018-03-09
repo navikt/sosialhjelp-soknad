@@ -45,7 +45,7 @@ const BannerEttersendelse: React.StatelessComponent<{ children: React.ReactNode 
 				</div>
 			</div>
 		</div>
-	)
+	);
 };
 
 const ManglendeVedlegg: React.StatelessComponent<{ children: React.ReactNode } & {}> = ({ children }) => {
