@@ -9,6 +9,10 @@
 
   &__forside {
 	padding-top: 2rem;
+
+  	@media screen and (min-width: 680px) {
+	  padding-left: 0.75rem;
+	}
   }
 
   &__forside-wrapper {
@@ -37,11 +41,10 @@
 	  left: 0;
 	  z-index: 2;
 	  transform-origin: bottom;
-	  margin-bottom: -4px;
+	  margin-bottom: -7px;
 	  transform: rotateX(80deg);
 	  animation-name: openLaptop;
 	  animation-duration: 1s;
-	  animation-delay: 2s;
 	  animation-fill-mode: forwards;
 	  animation-iteration-count: 1;
 	  animation-timing-function: ease;
@@ -54,18 +57,11 @@
 }
 
 @keyframes openLaptop {
-  to {
-	transform: rotateX(0deg);
-	margin-bottom: -7px;
-  }
   0% {
 	transform: rotateX(60deg);
-	margin-bottom: -5px;
   }
-
   100% {
 	transform: rotateX(0deg);
-	margin-bottom: -7px;
   }
 }
 
@@ -98,7 +94,6 @@
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
-
 }
 
 .avsnitt_med_marger {
@@ -116,6 +111,10 @@
   flex-direction: row;
   width: 552px;
   margin-bottom: 48px;
+
+  &__sentrert {
+	text-align: center;
+  }
 
   @media @mobile {
     margin-bottom: 20px;
@@ -137,8 +136,6 @@
 .hoyremarg {
   flex-direction: row;
   width: 55px;
-  text-align: right;
-  text-align: -webkit-right;
 
   &__ikon {
 	color: #0067C5;

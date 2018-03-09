@@ -131,7 +131,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
 						<div className="avsnitt_med_marger">
 							<div className="venstemarg"/>
-							<div className="avsnitt">
+							<div className="avsnitt avsnitt__sentrert">
 								<Knapp
 									type="hoved"
 									htmlType="submit"
