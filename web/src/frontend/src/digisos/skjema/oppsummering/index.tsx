@@ -142,7 +142,11 @@ class OppsummeringView extends React.Component<Props, {}> {
 					{bekreftOpplysningTekster[ 0 ]}
 					<a
 						className="lenke"
-						onClick={() => this.props.dispatch(setVisBekreftInfo(true))}>
+						onClick={(event: React.MouseEvent<HTMLElement>) => {
+								this.props.dispatch(setVisBekreftInfo(true));
+								event.preventDefault();
+							}
+						}>
 					{bekreftOpplysningTekster[ 1 ]}
 					</a>
 					{bekreftOpplysningTekster.slice(2, bekreftOpplysningTekster.length).join("|")}
