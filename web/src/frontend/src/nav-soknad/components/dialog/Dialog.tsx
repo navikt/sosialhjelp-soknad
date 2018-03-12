@@ -1,6 +1,6 @@
 import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
-import Icon, { icons } from "nav-frontend-ikoner-assets";
+import Icon from "nav-frontend-ikoner-assets";
 import { Innholdstittel } from "nav-frontend-typografi";
 import { Hovedknapp } from "nav-frontend-knapper";
 
@@ -9,7 +9,7 @@ interface Props {
 	overskrift: string;
 	okLabel: string;
 	isOpen?: boolean;
-	icon?: icons;
+	icon?: any;
 	onClose: () => void;
 }
 
