@@ -99,6 +99,7 @@ class Informasjon extends React.Component<Props, {}> {
 							<div className="blokk-xs bolk">
 								<div className={classNames} >
 									<Checkbox
+										id="samtykke_sjekkboks"
 										label={bekreftOpplysninger}
 										checked={this.props.bekreftet}
 										feil={
@@ -119,6 +120,7 @@ class Informasjon extends React.Component<Props, {}> {
 						</div>
 
 						<Knapp
+							id="start_soknad_knapp"
 							type="hoved"
 							spinner={startSoknadPending}
 							disabled={startSoknadPending}
