@@ -27,7 +27,7 @@ function flyttSVG() {
 				"bilder",
 				filename
 			];
-			const outFile = ["..", "main", "webapp", "statisk", "bilder", filename];
+			const outFile = ["..", "main", "webapp", "resources", "statisk", "bilder", filename];
 			copyFile(srcFile, outFile);
 		});
 	});
@@ -49,6 +49,7 @@ function flyttStatisk() {
 					var outFile = [
 						"..",
 						"main",
+						"resources",
 						"webapp",
 						"statisk",
 						folder,
@@ -68,7 +69,7 @@ function flyttStatisk() {
 									"/" +
 									mainFile +
 									" til: " +
-									"../main/webapp/statisk/" +
+									"../main/resources/webapp/statisk/" +
 									folder +
 									"/" +
 									filename +

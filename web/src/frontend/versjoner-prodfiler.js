@@ -1,7 +1,7 @@
 var replace = require("replace");
 var fsextra = require('fs-extra');
 
-var outputDir = '../main/webapp/';
+var outputDir = '../main/resources/webapp/';
 var htmlFil = "soknadsosialhjelp.html";
 var bygdHtmlfil = "soknadsosialhjelp-built.html";
 
