@@ -138,7 +138,12 @@ class OppsummeringView extends React.Component<Props, {}> {
 		let bekreftOpplysninger = <span/>;
 		if (bekreftOpplysningTekster.length > 2) {
 			bekreftOpplysninger = (
-				<span>
+				<span
+					style={{ cursor: "auto" }}
+					onClick={(event: React.MouseEvent<HTMLElement>) => {
+						event.preventDefault();
+					}}
+				>
 					{bekreftOpplysningTekster[ 0 ]}
 					<a
 						className="lenke"
