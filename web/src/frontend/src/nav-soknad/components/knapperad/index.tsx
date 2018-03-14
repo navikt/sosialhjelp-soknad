@@ -17,6 +17,7 @@ class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 		return (
 			<div className="skjema-knapperad">
 				<Knapp
+					id="gaa_videre_knapp"
 					type="hoved"
 					htmlType="button"
 					onClick={gaVidere}
@@ -27,6 +28,7 @@ class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 						: getIntlTextOrKey(intl, "skjema.knapper.gaavidere")}
 				</Knapp>
 				<Knapp
+					id="gaa_tilbake_knapp"
 					type="standard"
 					htmlType="button"
 					onClick={gaTilbake}
