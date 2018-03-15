@@ -51,7 +51,7 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 	}
 
 	labelToId(str: string) {
-		return str.replace(/\s+/g, "_").toLowerCase() + "_lenke";
+		return str.replace(/\s+/g, "_").toLowerCase();
 	}
 
 	renderSkjema() {

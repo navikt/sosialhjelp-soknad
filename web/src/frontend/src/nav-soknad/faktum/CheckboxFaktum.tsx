@@ -17,6 +17,7 @@ interface OwnProps {
 	disabled?: boolean;
 	feilkode?: string;
 	onChange?: (s: string) => void;
+	id?: string;
 }
 
 export const createCheckboxFaktumKey = (key: string, option: string) =>
@@ -32,7 +33,7 @@ class CheckboxFaktum extends React.Component<
 		const checked = faktumIsSelected(getFaktumVerdi(fakta, faktumKey));
 		return (
 			<Checkbox
-				id={faktumKey + "_checkbox"}
+				id={this.props.id ? this.props.id : faktumKey + "_checkbox"}
 				name={this.props.getName()}
 				checked={checked}
 				disabled={disabled}

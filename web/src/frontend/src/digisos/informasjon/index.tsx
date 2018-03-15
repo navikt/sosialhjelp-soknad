@@ -99,7 +99,7 @@ class Informasjon extends React.Component<Props, {}> {
 							<div className="blokk-xs bolk">
 								<div className={classNames} >
 									<Checkbox
-										id="samtykke_sjekkboks"
+										id="samtykke_checkbox"
 										label={bekreftOpplysninger}
 										checked={this.props.bekreftet}
 										feil={
@@ -120,7 +120,7 @@ class Informasjon extends React.Component<Props, {}> {
 						</div>
 
 						<Knapp
-							id="start_soknad_knapp"
+							id="start_soknad_button"
 							type="hoved"
 							spinner={startSoknadPending}
 							disabled={startSoknadPending}
@@ -147,6 +147,7 @@ class Informasjon extends React.Component<Props, {}> {
 				<span>
 					{bekreftOpplysningTekster[ 0 ]}
 					<a
+						id="informasjon_om_samtykke_link"
 						className="lenke"
 						onClick={(event: React.MouseEvent<HTMLElement>) => {
 							this.props.dispatch(setVisSamtykkeInfo(true));

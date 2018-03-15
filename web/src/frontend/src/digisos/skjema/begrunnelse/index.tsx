@@ -11,6 +11,7 @@ const Begrunnelse: React.StatelessComponent = () => (
 	<DigisosSkjemaSteg steg={DigisosSteg.begrunnelsebolk}>
 		<SporsmalFaktum faktumKey="begrunnelse.hvorfor">
 			<TextareaFaktum
+				id="begrunnelse_soknad_textarea"
 				textareaClass="skjema-textarea--large"
 				faktumKey="begrunnelse.hvorfor"
 				labelId="begrunnelse.hvorfor.label"
@@ -20,6 +21,7 @@ const Begrunnelse: React.StatelessComponent = () => (
 		</SporsmalFaktum>
 		<SporsmalFaktum faktumKey="begrunnelse.hva">
 			<TextareaFaktum
+				id="hva_sokes_det_om_textarea"
 				validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
 				textareaClass="skjema-textarea--large"
 				faktumKey="begrunnelse.hva"

@@ -50,12 +50,14 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 				</div>
 
 				<LastOppVedlegg
+					id={belopFaktum.key}
 					belopFaktumId={belopFaktum.faktumId}
 					opplastingStatus={opplastingStatus}
 					sistEndredeFaktumId={sistEndredeFaktumId}
 					disabled={disableLastOppVedleggKnapp}
 				/>
 				<Checkbox
+					id={this.props.belopFaktum.key + "_allerede_lastet_opp_checkbox"}
 					className={"vedleggLastetOppCheckbox " +
 					(disabledAlleredeLastetOppCheckbox ? " checkboks--disabled" : "")}
 					label={this.props.intl.formatMessage({

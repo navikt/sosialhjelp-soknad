@@ -11,6 +11,7 @@ interface Props {
 	opplastingStatus?: string;
 	sistEndredeFaktumId?: number;
 	disabled?: boolean;
+	id?: string;
 }
 
 type AllProps = Props &
@@ -38,9 +39,11 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 	render() {
 		const gjeldende = this.props.belopFaktumId === this.props.sistEndredeFaktumId;
 		const visSpinner = gjeldende && this.props.opplastingStatus === REST_STATUS.PENDING;
+		const id = this.props.id ? this.props.id : this.props.belopFaktumId.toString();
 		return (
 			<div>
 				<Knapp
+					id={id + "_lastopp_knapp"}
 					type="standard"
 					htmlType="button"
 					disabled={this.props.disabled}
@@ -52,6 +55,7 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 					+ <FormattedMessage id="opplysninger.vedlegg.knapp.tekst"/>
 				</Knapp>
 				<input
+					id={id + "_skjult_upload_input"}
 					ref={c => this.leggTilVedleggKnapp = c}
 					onChange={(e) => this.handleFileUpload(e.target.files)}
 					type="file"
