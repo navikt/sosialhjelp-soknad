@@ -25,9 +25,6 @@ export interface VedleggState {
 	restStatus: REST_STATUS;
 	opplastingStatus: REST_STATUS;
 	sistEndredeFaktumId: number;
-	feil: boolean;
-	feiletFaktumId: number;
-	feiltype: string;
 }
 
 export type VedleggActionTypes =
@@ -117,13 +114,6 @@ export interface Vedlegg {
 	skjemaNummer: string;
 	skjemanummerTillegg: string;
 	belopFaktumId: number;
-}
-
-export interface VedleggApiType {
-	data: Vedlegg[];
-	restStatus: REST_STATUS;
-	opplastingStatus: REST_STATUS;
-	sistEndredeFaktumId: number;
 }
 
 export interface VedleggProps {
