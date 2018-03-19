@@ -4887,9 +4887,9 @@ nav-frontend-hjelpetekst@^0.2.32:
   version "0.2.32"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-0.2.32.tgz#a7e3a9a4bace0cfa888f3ba946b3abb5decddf61"
 
-nav-frontend-ikoner-assets@^0.2.19:
-  version "0.2.19"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-0.2.19.tgz#8eeb675f12f31c435788ceb1463f86bd91ec7920"
+nav-frontend-ikoner-assets@^0.2.26:
+  version "0.2.26"
+  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-0.2.26.tgz#a26470e3e98b2658ea3f818ccedca6addeff2f5e"
 
 nav-frontend-js-utils@^0.2.10:
   version "0.2.10"

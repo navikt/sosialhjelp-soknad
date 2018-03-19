@@ -108,7 +108,7 @@ class Barneinfo extends React.Component<Props, State> {
 						</li>
 					))}
 				</ol>
-				<Lenkeknapp onClick={this.leggTilBarn} style="add">
+				<Lenkeknapp id="legg_til_barn_knapp" onClick={this.leggTilBarn} style="add">
 					{intl.formatMessage({
 						id: "familie.barn.true.barn.leggtil"
 					})}

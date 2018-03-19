@@ -7,6 +7,7 @@ interface Props {
 	onClick: () => void;
 	style?: "add";
 	skjermleserLabel?: string;
+	id?: string;
 }
 const baseClassName = "lenkeknapp";
 
@@ -19,7 +20,7 @@ class Lenkeknapp extends React.Component<Props> {
 			style ? `${baseClassName}--${style}` : null
 		);
 		return (
-			<button onClick={onClick} className={className} type="button">
+			<button id={this.props.id} onClick={onClick} className={className} type="button">
 				<AriaAlternativTekst
 					visibleText={children}
 					ariaText={skjermleserLabel}

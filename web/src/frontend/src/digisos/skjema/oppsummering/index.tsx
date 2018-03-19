@@ -111,6 +111,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 					<div className="blokk-xs bolk">
 						<div className={classNames}>
 							<Checkbox
+								id="bekreft_oppsummering_checkbox"
 								label={bekreftOpplysninger}
 								checked={this.props.bekreftet}
 								feil={
@@ -138,9 +139,15 @@ class OppsummeringView extends React.Component<Props, {}> {
 		let bekreftOpplysninger = <span/>;
 		if (bekreftOpplysningTekster.length > 2) {
 			bekreftOpplysninger = (
-				<span>
+				<span
+					style={{ cursor: "auto" }}
+					onClick={(event: React.MouseEvent<HTMLElement>) => {
+						event.preventDefault();
+					}}
+				>
 					{bekreftOpplysningTekster[ 0 ]}
 					<a
+						id="vis_samtykke_info_link"
 						className="lenke"
 						onClick={(event: React.MouseEvent<HTMLElement>) => {
 								this.props.dispatch(setVisBekreftInfo(true));
