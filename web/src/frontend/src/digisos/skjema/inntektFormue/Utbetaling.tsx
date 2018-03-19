@@ -24,24 +24,28 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 			<JaNeiSporsmalFaktum faktumKey={utbetaling.faktum}>
 				<SporsmalFaktum faktumKey={hvilkeUtbetalinger.faktum}>
 					<CheckboxFaktum
+						id="utbetalinger_utbytte_checkbox"
 						faktumKey={createCheckboxFaktumKey(
 							hvilkeUtbetalinger.faktum,
 							"utbytte"
 						)}
 					/>
 					<CheckboxFaktum
+						id="utbetalinger_salg_checkbox"
 						faktumKey={createCheckboxFaktumKey(
 							hvilkeUtbetalinger.faktum,
 							"salg"
 						)}
 					/>
 					<CheckboxFaktum
+						id="utbetalinger_forsikringsutbetalinger_checkbox"
 						faktumKey={createCheckboxFaktumKey(
 							hvilkeUtbetalinger.faktum,
 							"forsikringsutbetalinger"
 						)}
 					/>
 					<CheckboxFaktum
+						id="utbetalinger_annet_checkbox"
 						faktumKey={createCheckboxFaktumKey(
 							hvilkeUtbetalinger.faktum,
 							"annet"
@@ -49,6 +53,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 					/>
 					{faktumIsSelected(getFaktumVerdi(fakta, hvilkeUtbetalingerAnnet)) ? (
 						<TextareaFaktum
+							id="utbetalinger_annet_textarea"
 							faktumKey={`${hvilkeUtbetalingerAnnet}.true.beskrivelse`}
 							maxLength={400}
 							validerFunc={[getMaksLengdeFunc(400)]}

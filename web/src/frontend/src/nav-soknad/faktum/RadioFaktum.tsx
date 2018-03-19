@@ -12,6 +12,7 @@ interface OwnProps {
 	value: string;
 	faktumKey: string;
 	disabled?: boolean;
+	id?: string;
 }
 
 class RadioFaktum extends React.Component<
@@ -23,6 +24,7 @@ class RadioFaktum extends React.Component<
 		const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
 		return (
 			<Radio
+				id={this.props.id}
 				name={this.props.getName()}
 				checked={
 					property

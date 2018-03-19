@@ -24,31 +24,37 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 			<JaNeiSporsmalFaktum faktumKey={eiendeler.faktum}>
 				<SporsmalFaktum faktumKey={hvilkeEiendeler.faktum}>
 					<CheckboxFaktum
+						id="eiendeler_bolig_checkbox"
 						faktumKey={createCheckboxFaktumKey(hvilkeEiendeler.faktum, "bolig")}
 					/>
 					<CheckboxFaktum
+						id="eiendeler_campingvogn_checkbox"
 						faktumKey={createCheckboxFaktumKey(
 							hvilkeEiendeler.faktum,
 							"campingvogn"
 						)}
 					/>
 					<CheckboxFaktum
+						id="eiendeler_kjoretoy_checkbox"
 						faktumKey={createCheckboxFaktumKey(
 							hvilkeEiendeler.faktum,
 							"kjoretoy"
 						)}
 					/>
 					<CheckboxFaktum
+						id="eiendeler_fritidseiendom_checkbox"
 						faktumKey={createCheckboxFaktumKey(
 							hvilkeEiendeler.faktum,
 							"fritidseiendom"
 						)}
 					/>
 					<CheckboxFaktum
+						id="eiendeler_annet_checkbox"
 						faktumKey={createCheckboxFaktumKey(hvilkeEiendeler.faktum, "annet")}
 					/>
 					{faktumIsSelected(getFaktumVerdi(fakta, hvilkeEiendelerAnnet)) ? (
 						<TextareaFaktum
+							id="eiendeler_annet_textarea"
 							faktumKey={`${hvilkeEiendelerAnnet}.true.beskrivelse`}
 							maxLength={400}
 							validerFunc={[getMaksLengdeFunc(400)]}

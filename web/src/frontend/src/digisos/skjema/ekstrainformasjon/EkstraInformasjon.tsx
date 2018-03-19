@@ -132,12 +132,10 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 			} else {
 				melding = this.renderInfoMelding();
 			}
-
 			content = this.renderEkstrasporsmal();
 		}
 		return (
 			<LoadContainer restStatus={restStatus}>
-
 				<div className="steg-ekstrainformasjon">
 					<DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk}>
 						{melding}

@@ -42,30 +42,36 @@ class UtgifterGjeld extends React.Component<
 				<JaNeiSporsmalFaktum faktumKey={harBoutgifter.faktum}>
 					<SporsmalFaktum faktumKey={boUtgifter.faktum}>
 						<CheckboxFaktum
+							id="boutgifter_husleie_checkbox"
 							faktumKey={createCheckboxFaktumKey(boUtgifter.faktum, "husleie")}
 						/>
 						<CheckboxFaktum
+							id="boutgifter_strom_checkbox"
 							faktumKey={createCheckboxFaktumKey(boUtgifter.faktum, "strom")}
 						/>
 						<CheckboxFaktum
+							id="boutgifter_kommunale_avgifter_checkbox"
 							faktumKey={createCheckboxFaktumKey(
 								boUtgifter.faktum,
 								"kommunaleavgifter"
 							)}
 						/>
 						<CheckboxFaktum
+							id="boutgifter_oppvarming_checkbox"
 							faktumKey={createCheckboxFaktumKey(
 								boUtgifter.faktum,
 								"oppvarming"
 							)}
 						/>
 						<CheckboxFaktum
+							id="boutgifter_avdrag_renter_checkbox"
 							faktumKey={createCheckboxFaktumKey(
 								boUtgifter.faktum,
 								"avdraglaan"
 							)}
 						/>
 						<CheckboxFaktum
+							id="boutgifter_andre_utgifter_checkbox"
 							faktumKey={createCheckboxFaktumKey(
 								boUtgifter.faktum,
 								"andreutgifter"
@@ -76,6 +82,7 @@ class UtgifterGjeld extends React.Component<
 							getFaktumVerdi(fakta, `${boUtgifter.faktum}.andreutgifter`)
 						) ? (
 							<TextareaFaktum
+								id="boutgifter_andre_utgifter_textarea"
 								faktumKey={andreBoUtgifter}
 								maxLength={400}
 								validerFunc={[getMaksLengdeFunc(400)]}
@@ -89,33 +96,39 @@ class UtgifterGjeld extends React.Component<
 				>
 					<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
 						<CheckboxFaktum
+							id="utgifter_barn_fritidsaktivitet_checkbox"
 							faktumKey={createCheckboxFaktumKey(
 								barneUtgifter.faktum,
 								"fritidsaktivitet"
 							)}
 						/>
 						<CheckboxFaktum
+							id="utgifter_barn_barnehage_checkbox"
 							faktumKey={createCheckboxFaktumKey(
 								barneUtgifter.faktum,
 								"barnehage"
 							)}
 						/>
 						<CheckboxFaktum
+							id="utgifter_barn_sfo_checkbox"
 							faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "sfo")}
 						/>
 						<CheckboxFaktum
+							id="utgifter_barn_tannbehandling_checkbox"
 							faktumKey={createCheckboxFaktumKey(
 								barneUtgifter.faktum,
 								"tannbehandling"
 							)}
 						/>
 						<CheckboxFaktum
+							id="utgifter_barn_annet_checkbox"
 							faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "annet")}
 						/>
 						{faktumIsSelected(
 							getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`)
 						) ? (
 							<TextareaFaktum
+								id="utgifter_barn_annet_textarea"
 								faktumKey={andreBarneutgifter}
 								maxLength={400}
 								validerFunc={[getMaksLengdeFunc(400)]}

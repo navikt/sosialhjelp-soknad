@@ -47,6 +47,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 				<div>
 					<div className="blokk-m">
 						<Select
+							id="kommune_dropdown"
 							bredde="m"
 							defaultValue=""
 							onChange={(evt: any) =>
@@ -83,6 +84,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 								<Arrow />
 							</div>
 							<Select
+								id="bydel_dropdown"
 								bredde="m"
 								defaultValue=""
 								onChange={(evt: any) =>
@@ -125,6 +127,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 								</strong>
 							</p>
 							<Knapp
+								id="gaa_videre_knapp"
 								type="hoved"
 								htmlType="submit"
 								spinner={startSoknadPending}

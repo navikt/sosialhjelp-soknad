@@ -66,7 +66,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 		const inputs = faktumstruktur.properties.map(property => this.lagInputFelter(faktumstruktur, faktum, property));
 
 		const slettKnapp = (
-			<Lenkeknapp onClick={() => this.fjernBelop(faktum.faktumId)}>
+			<Lenkeknapp onClick={() => this.fjernBelop(faktum.faktumId)} id={faktum.key + "_fjern_lenke"}>
 				{slettTekst}
 			</Lenkeknapp>
 		);
@@ -87,6 +87,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 			case "text":
 				inputFelt = (
 					<InputFaktum
+						id={faktum.key + "_text_input"}
 						faktumId={faktum.faktumId}
 						faktumKey={faktumstruktur.id}
 						property={property.id}
@@ -98,6 +99,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 			default:
 				inputFelt = (
 					<BelopFaktum
+						id={faktum.key + "_number_input"}
 						faktumId={faktum.faktumId}
 						faktumKey={faktumstruktur.id}
 						property={property.id}
@@ -135,7 +137,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 		}
 
 		const leggTilKnapp = (
-			<Lenkeknapp onClick={this.leggTilBelop} style="add">
+			<Lenkeknapp onClick={this.leggTilBelop} style="add" id={faktumstruktur.id + "_link"}>
 				{leggTilTekst}
 			</Lenkeknapp>
 		);

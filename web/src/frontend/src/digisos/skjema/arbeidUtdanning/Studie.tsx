@@ -11,8 +11,8 @@ const Studie: React.StatelessComponent = () => {
 	return (
 		<JaNeiSporsmalFaktum faktumKey={studie.faktum}>
 			<SporsmalFaktum faktumKey={studerer.faktum}>
-				<RadioFaktum faktumKey={studerer.faktum} value="heltid" />
-				<RadioFaktum faktumKey={studerer.faktum} value="deltid" />
+				<RadioFaktum id="studerer_radio_heltid" faktumKey={studerer.faktum} value="heltid" />
+				<RadioFaktum id="studerer_radio_deltid" faktumKey={studerer.faktum} value="deltid" />
 			</SporsmalFaktum>
 		</JaNeiSporsmalFaktum>
 	);
