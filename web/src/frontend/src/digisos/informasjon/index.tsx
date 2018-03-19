@@ -98,19 +98,18 @@ class Informasjon extends React.Component<Props, {}> {
 
 							<div className="blokk-xs bolk">
 								<div className={classNames} >
-									<p>
+									<p style={{marginTop: "0"}}>
 										<FormattedMessage id="soknadsosialhjelp.forstesiden.rettigheterPlikter"/>
 										&nbsp;
 										<a
 											className="lenke"
-															onClick={(event: React.MouseEvent<HTMLElement>) => {
-																this.props.dispatch(setVisSamtykkeInfo(true));
+											onClick={(event: React.MouseEvent<HTMLElement>) => {
+												this.props.dispatch(setVisSamtykkeInfo(true));
 										}}
 										>
 											<FormattedMessage id="soknadsosialhjelp.forstesiden.rettigheterPlikterLinktekst"/>
 										</a>
 									</p>
-
 									<Checkbox
 										label={bekreftOpplysning}
 										checked={this.props.bekreftet}
@@ -149,33 +148,6 @@ class Informasjon extends React.Component<Props, {}> {
 		);
 	}
 
-	// /* Legg på lenke i tekst fra stash som ser slik ut "Tekst [lenketekst] mer tekst" */
-	// private bekreftOpplysninger(bekreftOpplysningTekst: string) {
-	// 	const bekreftOpplysningTekster = bekreftOpplysningTekst.split(/[\[\]]/);
-	// 	let bekreftOpplysninger = <span/>;
-	// 	if (bekreftOpplysningTekster.length > 2) {
-	// 		bekreftOpplysninger = (
-	// 			<span
-	// 				style={{ cursor: "auto", border: "1px dotted red" }}
-	// 				onClick={(event: React.MouseEvent<HTMLElement>) => {
-	// 					event.preventDefault();
-	// 				}}
-	// 			>
-	// 				{bekreftOpplysningTekster[ 0 ]}
-	// 				<a
-	// 					className="lenke"
-	// 					onClick={(event: React.MouseEvent<HTMLElement>) => {
-	// 						this.props.dispatch(setVisSamtykkeInfo(true));
-	// 						event.preventDefault();
-	// 					}}
-	// 				>
-	// 				{bekreftOpplysningTekster[ 1 ]}
-	// 				</a>
-	// 				{bekreftOpplysningTekster.slice(2, bekreftOpplysningTekster.length).join("|")}
-	// 			</span>);
-	// 	}
-	// 	return bekreftOpplysninger;
-	// }
 }
 
 export default connect((state: State) => ({

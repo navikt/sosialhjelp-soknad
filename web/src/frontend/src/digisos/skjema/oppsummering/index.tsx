@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import { Checkbox } from "nav-frontend-skjema";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 
@@ -95,10 +95,10 @@ class OppsummeringView extends React.Component<Props, {}> {
 			<div className="skjema-oppsummering">{bolker}</div>
 		) : null;
 
-		const bekreftOpplysningTekst: string = intl.formatMessage({
-			id: "soknadsosialhjelp.oppsummering.bekreftOpplysninger"
+		const bekreftOpplysninger: string = intl.formatMessage({
+			id: "soknadsosialhjelp.oppsummering.harLestSamtykker"
 		});
-		const bekreftOpplysninger = this.bekreftOpplysninger(bekreftOpplysningTekst);
+		// const bekreftOpplysninger = this.bekreftOpplysninger(bekreftOpplysningTekst);
 
 		let classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
 		if (this.props.visBekreftMangler) {
@@ -110,6 +110,20 @@ class OppsummeringView extends React.Component<Props, {}> {
 					{skjemaOppsummering}
 					<div className="blokk-xs bolk">
 						<div className={classNames}>
+							<p style={{marginTop: "0"}}>
+								<FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger"/>
+								&nbsp;
+								<a
+									className="lenke"
+									onClick={(event: React.MouseEvent<HTMLElement>) => {
+										this.props.dispatch(setVisBekreftInfo(true));
+										event.preventDefault();
+									}
+								}>
+									<FormattedMessage id="soknadsosialhjelp.oppsummering.infoSamtykke"/>
+								</a>.
+							</p>
+
 							<Checkbox
 								label={bekreftOpplysninger}
 								checked={this.props.bekreftet}
@@ -132,33 +146,6 @@ class OppsummeringView extends React.Component<Props, {}> {
 		);
 	}
 
-	/* Legg på lenke i tekst fra stash som ser slik ut "Tekst [lenketekst] mer tekst" */
-	private bekreftOpplysninger(bekreftOpplysningTekst: string) {
-		const bekreftOpplysningTekster = bekreftOpplysningTekst.split(/[\[\]]/);
-		let bekreftOpplysninger = <span/>;
-		if (bekreftOpplysningTekster.length > 2) {
-			bekreftOpplysninger = (
-				<span
-					style={{ cursor: "auto" }}
-					onClick={(event: React.MouseEvent<HTMLElement>) => {
-						event.preventDefault();
-					}}
-				>
-					{bekreftOpplysningTekster[ 0 ]}
-					<a
-						className="lenke"
-						onClick={(event: React.MouseEvent<HTMLElement>) => {
-								this.props.dispatch(setVisBekreftInfo(true));
-								event.preventDefault();
-							}
-						}>
-					{bekreftOpplysningTekster[ 1 ]}
-					</a>
-					{bekreftOpplysningTekster.slice(2, bekreftOpplysningTekster.length).join("|")}
-				</span>);
-		}
-		return bekreftOpplysninger;
-	}
 }
 
 export default connect((state: State, props: any) => {
