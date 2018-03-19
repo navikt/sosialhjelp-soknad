@@ -112,7 +112,6 @@ class Informasjon extends React.Component<Props, {}> {
 									<Checkbox
 										label={bekreftOpplysning}
 										id="samtykke_checkbox"
-										label={bekreftOpplysninger}
 										checked={this.props.bekreftet}
 										feil={
 											this.props.visSamtykkeMangler
