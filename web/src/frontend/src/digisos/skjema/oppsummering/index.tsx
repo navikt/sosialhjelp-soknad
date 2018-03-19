@@ -98,7 +98,6 @@ class OppsummeringView extends React.Component<Props, {}> {
 		const bekreftOpplysninger: string = intl.formatMessage({
 			id: "soknadsosialhjelp.oppsummering.harLestSamtykker"
 		});
-		// const bekreftOpplysninger = this.bekreftOpplysninger(bekreftOpplysningTekst);
 
 		let classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
 		if (this.props.visBekreftMangler) {
@@ -125,6 +124,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 							</p>
 
 							<Checkbox
+								id="bekreft_oppsummering_checkbox"
 								label={bekreftOpplysninger}
 								checked={this.props.bekreftet}
 								feil={

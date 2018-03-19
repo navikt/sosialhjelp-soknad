@@ -5,6 +5,7 @@ import { erTall, minLengde } from "../../validering/valideringer";
 export interface Props extends InheritedProps {
 	/** Trigger rent tall-tastatur på mobil (tilsvarende som type=tel) */
 	kunHeltall?: boolean;
+	id?: string;
 }
 const TallFaktum: React.StatelessComponent<Props> = (props: Props) => {
 	const validerFunc = [

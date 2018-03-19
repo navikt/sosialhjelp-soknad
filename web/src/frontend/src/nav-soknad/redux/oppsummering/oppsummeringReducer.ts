@@ -35,16 +35,23 @@ const hentUtOppsummering = (html: string): Oppsummering => {
 	const body = hentUtBody(html);
 	const el = document.createElement("div");
 	el.innerHTML = body;
-	const signatur = el.querySelector(".js-signatur").innerHTML;
-	const htmlBolker = Array.from(el.querySelectorAll(".js-bolk"));
-	const bolker: OppsummeringBolk[] = htmlBolker
-		.map(htmlBolk => {
-			return {
-				tittel: htmlBolk.querySelector("h2").innerText,
-				html: htmlBolk.innerHTML.substr(htmlBolk.innerHTML.indexOf("</h2>") + 5)
-			};
-		})
-		.filter(b => b.tittel !== "");
+	let signatur = "";
+	let bolker: OppsummeringBolk[] = [];
+	try {
+		signatur = el.querySelector(".js-signatur").innerHTML;
+		const htmlBolker = Array.from(el.querySelectorAll(".js-bolk"));
+		bolker  = htmlBolker
+			.map(htmlBolk => {
+				return {
+					tittel: htmlBolk.querySelector("h2").innerText,
+					html: htmlBolk.innerHTML.substr(htmlBolk.innerHTML.indexOf("</h2>") + 5)
+				};
+			})
+			.filter(b => b.tittel !== "");
+	} catch (error) {
+		console.error("Feil ved uthenting av informasjon fra DOM tre :", error.toString());
+	}
+
 	return {
 		signatur,
 		bolker

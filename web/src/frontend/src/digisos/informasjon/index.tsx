@@ -63,7 +63,6 @@ class Informasjon extends React.Component<Props, {}> {
 		const bekreftOpplysning: string = intl.formatMessage({
 			id: "soknadsosialhjelp.forstesiden.bekreftOpplysninger"
 		});
-		// const bekreftOpplysninger = this.bekreftOpplysninger(bekreftOpplysningTekst);
 
 		let classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
 		if (this.props.visSamtykkeMangler) {
@@ -112,6 +111,8 @@ class Informasjon extends React.Component<Props, {}> {
 									</p>
 									<Checkbox
 										label={bekreftOpplysning}
+										id="samtykke_checkbox"
+										label={bekreftOpplysninger}
 										checked={this.props.bekreftet}
 										feil={
 											this.props.visSamtykkeMangler
@@ -131,6 +132,7 @@ class Informasjon extends React.Component<Props, {}> {
 						</div>
 
 						<Knapp
+							id="start_soknad_button"
 							type="hoved"
 							spinner={startSoknadPending}
 							disabled={startSoknadPending}
