@@ -1,70 +1,3 @@
-.banner {
-  background-color: #9bd0b0;
-  border-bottom: 5px solid #38a161;
-  color: #3e3832;
-  width: 100%;
-  margin: 0;
-  padding-right: 1rem;
-  padding-bottom: 0;
-
-  &__forside {
-	padding-top: 2rem;
-
-  	@media screen and (min-width: 680px) {
-	  padding-left: 0.75rem;
-	}
-  }
-
-  &__forside-wrapper {
-	display: flex;
-  }
-
-  &__illustrasjon {
-	display: block;
-	position: relative;
-	width: 93px;
-	height: 100px;
-
-	&__william {
-	  display: block;
-	  position: absolute;
-	  bottom: 0;
-	  left: 23px;
-	  z-index: 1;
-	  margin-bottom: -5px;
-	}
-
-	&__laptop {
-	  display: block;
-	  position: absolute;
-	  bottom: 2px;
-	  left: 0;
-	  z-index: 2;
-	  transform-origin: bottom;
-	  margin-bottom: -7px;
-	  transform: rotateX(80deg);
-	  animation-name: openLaptop;
-	  animation-duration: 1s;
-	  animation-fill-mode: forwards;
-	  animation-iteration-count: 1;
-	  animation-timing-function: ease;
-	  -o-transition: all 0.5s ease-in-out;
-	  transition: all 0.5s ease-in-out;
-	}
-
-  }
-
-}
-
-@keyframes openLaptop {
-  0% {
-	transform: rotateX(60deg);
-  }
-  100% {
-	transform: rotateX(0deg);
-  }
-}
-
 .ettersendelse {
 
   &.maincontent {
@@ -80,6 +13,7 @@
     display: block;
     width: 24px;
     height: 24px;
+    cursor: pointer;
   }
 
   &__chevron {
@@ -141,4 +75,8 @@
 	color: #0067C5;
   	padding-right: 5px;
   }
+}
+
+.trashcan {
+  padding-left: 3px;
 }

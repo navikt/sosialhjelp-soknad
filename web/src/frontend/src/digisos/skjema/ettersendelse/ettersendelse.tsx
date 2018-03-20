@@ -11,22 +11,9 @@ import NavFrontendChevron from "nav-frontend-chevron";
 import { Collapse } from "react-collapse";
 import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon";
 import Knapp from "nav-frontend-knapper";
-import BannerEttersendelse from "./BannerEttersendelse";
+import BannerEttersendelse from "./bannerEttersendelse";
 import { FeatureToggles } from "../../../featureToggles";
-
-const ManglendeVedlegg: React.StatelessComponent<{ children: React.ReactNode } & {}> = ({ children }) => {
-	return (
-		<div className="avsnitt_med_marger">
-			<div className="venstemarg"/>
-			<div className="avsnitt">
-				{children}
-			</div>
-			<div className="hoyremarg hoyremarg__ikon">
-				<DigisosIkon navn="lastOpp" className="ettersendelse__ikon"/>
-			</div>
-		</div>
-	);
-};
+import EttersendelseVedlegg from "./ettersendelseVedlegg";
 
 interface OwnProps {
 	fakta: Faktum[];
@@ -107,22 +94,22 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 						</div>
 
 						<Collapse isOpened={this.state.vedleggEkspandert}>
-							<ManglendeVedlegg>
+							<EttersendelseVedlegg>
 								<h3>Kontooversikt med saldo for brukskonto (siste måned)</h3>
-							</ManglendeVedlegg>
+							</EttersendelseVedlegg>
 
-							<ManglendeVedlegg>
+							<EttersendelseVedlegg>
 								<h3>Skattemelding og skatteoppgjør</h3>
-							</ManglendeVedlegg>
+							</EttersendelseVedlegg>
 
-							<ManglendeVedlegg>
+							<EttersendelseVedlegg>
 								<h3>Lønnslipp (siste måned)</h3>
-							</ManglendeVedlegg>
+							</EttersendelseVedlegg>
 
-							<ManglendeVedlegg>
+							<EttersendelseVedlegg>
 								<h3>Annen dokumentasjon</h3>
 								<p>Hvis du har andre vedlegg du ønsker å gi oss, kan de lastes opp her.</p>
-							</ManglendeVedlegg>
+							</EttersendelseVedlegg>
 
 							<div className="avsnitt_med_marger">
 								<div className="venstemarg"/>

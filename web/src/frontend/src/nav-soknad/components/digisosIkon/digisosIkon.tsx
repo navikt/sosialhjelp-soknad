@@ -6,6 +6,7 @@ export type ikoner =
 	| "printer"
 	| "konvolutt"
 	| "advarselSirkel"
+	| "trashcan"
 	| "snakkebobler";
 
 const DigisosIkon: React.StatelessComponent<{className?: string, navn: ikoner} & {}> = ({className, navn}) => {
