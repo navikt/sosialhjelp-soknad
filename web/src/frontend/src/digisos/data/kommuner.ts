@@ -29,21 +29,10 @@ const BergenBydeler: Bydel[] = [
 	{ id: "ytrebygda", navn: "Bydel Ytrebygda"}
 ];
 
-const OsloBydeler: Bydel[] = [
-	{ id: "frogner", navn: "Bydel Frogner"},
-	{ id: "grorud", navn: "Bydel Grorud"}
-];
-
-
 export const Kommuner: Kommune[] = [
 	{
 		id: "horten",
 		navn: "Horten"
-	},
-	{
-		id: "oslo",
-		navn: "Oslo",
-		bydeler: OsloBydeler
 	},
 	{
 		id: "bergen",
