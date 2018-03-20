@@ -4,7 +4,8 @@ import { RouterProps } from "react-router";
 import {
 	FormattedHTMLMessage,
 	InjectedIntlProps,
-	injectIntl
+	injectIntl,
+	FormattedMessage,
 } from "react-intl";
 import DocumentTitle from "react-document-title";
 import { State } from "../redux/reducers";
@@ -20,8 +21,7 @@ import { Horten } from "../data/kommuner";
 import IkkeTilgang from "./IkkeTilgang";
 import { TilgangSperrekode } from "../../nav-soknad/redux/tilgang/tilgangTypes";
 import {
-	bekreftSamtykke,
-	setVisSamtykkeInfo, visSamtykkeMangler
+	bekreftSamtykke, setVisSamtykkeInfo, visSamtykkeMangler
 } from "../../nav-soknad/redux/init/initActions";
 import SamtykkeInfoForsidenModal from "./samtykkeInfoForsidenModal";
 import { Checkbox } from "nav-frontend-skjema";
@@ -60,10 +60,9 @@ class Informasjon extends React.Component<Props, {}> {
 		} = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 
-		const bekreftOpplysningTekst: string = intl.formatMessage({
+		const bekreftOpplysning: string = intl.formatMessage({
 			id: "soknadsosialhjelp.forstesiden.bekreftOpplysninger"
 		});
-		const bekreftOpplysninger = this.bekreftOpplysninger(bekreftOpplysningTekst);
 
 		let classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
 		if (this.props.visSamtykkeMangler) {
@@ -98,9 +97,21 @@ class Informasjon extends React.Component<Props, {}> {
 
 							<div className="blokk-xs bolk">
 								<div className={classNames} >
+									<p style={{marginTop: "0"}}>
+										<FormattedMessage id="soknadsosialhjelp.forstesiden.rettigheterPlikter"/>
+										&nbsp;
+										<a
+											className="lenke"
+											onClick={(event: React.MouseEvent<HTMLElement>) => {
+												this.props.dispatch(setVisSamtykkeInfo(true));
+										}}
+										>
+											<FormattedMessage id="soknadsosialhjelp.forstesiden.rettigheterPlikterLinktekst"/>
+										</a>
+									</p>
 									<Checkbox
+										label={bekreftOpplysning}
 										id="samtykke_checkbox"
-										label={bekreftOpplysninger}
 										checked={this.props.bekreftet}
 										feil={
 											this.props.visSamtykkeMangler
@@ -138,34 +149,6 @@ class Informasjon extends React.Component<Props, {}> {
 		);
 	}
 
-	/* Legg på lenke i tekst fra stash som ser slik ut "Tekst [lenketekst] mer tekst" */
-	private bekreftOpplysninger(bekreftOpplysningTekst: string) {
-		const bekreftOpplysningTekster = bekreftOpplysningTekst.split(/[\[\]]/);
-		let bekreftOpplysninger = <span/>;
-		if (bekreftOpplysningTekster.length > 2) {
-			bekreftOpplysninger = (
-				<span
-					style={{ cursor: "auto" }}
-					onClick={(event: React.MouseEvent<HTMLElement>) => {
-						event.preventDefault();
-					}}
-				>
-					{bekreftOpplysningTekster[ 0 ]}
-					<a
-						id="informasjon_om_samtykke_link"
-						className="lenke"
-						onClick={(event: React.MouseEvent<HTMLElement>) => {
-							this.props.dispatch(setVisSamtykkeInfo(true));
-							event.preventDefault();
-						}}
-					>
-					{bekreftOpplysningTekster[ 1 ]}
-					</a>
-					{bekreftOpplysningTekster.slice(2, bekreftOpplysningTekster.length).join("|")}
-				</span>);
-		}
-		return bekreftOpplysninger;
-	}
 }
 
 export default connect((state: State) => ({

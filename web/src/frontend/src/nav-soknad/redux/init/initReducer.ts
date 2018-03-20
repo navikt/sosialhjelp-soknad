@@ -33,7 +33,7 @@ export default (state: InitState = initialState, action: InitActionTypes) => {
 			return {
 				...state,
 				bekreftSamtykkeInfo: !state.bekreftSamtykkeInfo,
-				visSamtykkeMangler: state.bekreftSamtykkeInfo
+				visSamtykkeMangler: false
 			};
 		default:
 			return state;
