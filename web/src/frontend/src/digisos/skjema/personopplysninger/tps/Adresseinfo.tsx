@@ -16,14 +16,15 @@ interface Props {
 
 export const Skjema: React.StatelessComponent<{}> = () => (
 	<div>
-		<InputFaktum faktumKey="kontakt.adresse.bruker" property="gateadresse" />
+		<InputFaktum id="gateadresse_text_input" faktumKey="kontakt.adresse.bruker" property="gateadresse" />
 		<TallFaktum
+			id="postnummer_number_input"
 			faktumKey="kontakt.adresse.bruker"
 			property="postnummer"
 			maxLength={4}
 			bredde="S"
 		/>
-		<InputFaktum faktumKey="kontakt.adresse.bruker" property="poststed" />
+		<InputFaktum id="poststed_text_input" faktumKey="kontakt.adresse.bruker" property="poststed" />
 	</div>
 );
 

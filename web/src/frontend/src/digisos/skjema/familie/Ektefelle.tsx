@@ -22,11 +22,13 @@ class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 				</div>
 				<SporsmalFaktum faktumKey={borsammen.faktum}>
 					<RadioFaktum
+						id="sivilstatus_gift_bor_sammen_radio_ja"
 						faktumKey={faktumKey}
 						property="borsammen"
 						value="true"
 					/>
 					<RadioFaktum
+						id="sivilstatus_gift_bor_sammen_radio_nei"
 						faktumKey={faktumKey}
 						property="borsammen"
 						value="false"
@@ -36,6 +38,7 @@ class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 							getPropertyVerdi(fakta, faktumKey, "borsammen") === "false"
 						}>
 						<TextareaFaktum
+							id="sivilstatus_gift_bor_ikke_sammen_textarea"
 							faktumKey={faktumKey}
 							property="ikkesammenbeskrivelse"
 							maxLength={400}

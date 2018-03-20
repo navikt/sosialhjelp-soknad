@@ -81,6 +81,7 @@ export default class Barn extends React.Component<Props, {}> {
 					>
 						<SporsmalFaktum faktumKey={hvormye.faktum}>
 							<BelopFaktum
+								id="samvaersgrad_text_input"
 								faktumKey={faktumKey}
 								faktumId={faktumId}
 								property="grad"
