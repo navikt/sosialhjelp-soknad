@@ -1,6 +1,7 @@
 import * as React from "react";
 import SVG from "react-inlinesvg";
 
+// TODO Gjøre om til generell banner komponent...
 const BannerEttersendelse: React.StatelessComponent<{ children: React.ReactNode } & {}> = ({ children }) => {
 	return (
 		<div className="banner banner__ettersendelse">
