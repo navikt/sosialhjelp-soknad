@@ -1,0 +1,82 @@
+.ettersendelse {
+
+  &.maincontent {
+	display: block;
+	padding-top: 0;
+  }
+
+  &.ingress {
+    font-size: 20px;
+  }
+
+  &__ikon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+  &__chevron {
+	cursor: pointer;
+  }
+
+}
+
+.blokk-center {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.avsnitt_med_marger {
+  display: flex;
+  width: 100%;
+}
+
+.venstemarg {
+  flex-direction: row;
+  width: 55px;
+  min-width: 35px;
+}
+
+.avsnitt {
+  flex-direction: row;
+  width: 552px;
+  margin-bottom: 48px;
+
+  &__sentrert {
+	text-align: center;
+  }
+
+  @media @mobile {
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1rem;
+  }
+
+  p {
+    margin-top: 0;
+	margin-bottom: 0;
+  }
+
+}
+
+.hoyremarg {
+  flex-direction: row;
+  width: 55px;
+
+  &__ikon {
+	color: #0067C5;
+  	padding-right: 5px;
+  }
+}
+
+.trashcan {
+  padding-left: 2px;
+}
