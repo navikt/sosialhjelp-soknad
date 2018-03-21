@@ -41,7 +41,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	render() {
 		const visEttersendeFeatureToggle = this.props.visEttersendelse && (this.props.visEttersendelse === true);
 		return (
-			<div className="ettersendelse maincontent">
+			<div className="ettersendelse">
 
 				<BannerEttersendelse>
 					<span>Søknad om økonomisk sosialhjelp</span>
