@@ -18,7 +18,6 @@ import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
 import Steg8 from "./ekstrainformasjon/EkstraInformasjon";
 import Oppsummering from "./oppsummering";
-import Ettersendelse from "./ettersendelse/ettersendelse";
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
 import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
 import { Faktum } from "../../nav-soknad/types";
@@ -71,7 +70,6 @@ class SkjemaRouter extends React.Component<Props, {}> {
 					<Route path={`${path}/7`} component={Steg7} />
 					<Route path={`${path}/8`} component={Steg8} />
 					<Route path={`${path}/9`} component={Oppsummering} />
-					<Route path={`${path}/ettersendelse`} component={Ettersendelse} />
 					<Route component={SideIkkeFunnet} />
 				</Switch>
 			</LoadContainer>
