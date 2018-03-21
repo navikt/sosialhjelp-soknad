@@ -64,7 +64,7 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 					faktumId
 				};
 
-		const id = (this.props.id ? this.props.id : faktumKey);
+		const id = (this.props.id ? this.props.id : faktumKey + "_" + Math.round(Math.random() * 1000000));
 		return (
 			<SporsmalFaktum
 				{...this.props}
