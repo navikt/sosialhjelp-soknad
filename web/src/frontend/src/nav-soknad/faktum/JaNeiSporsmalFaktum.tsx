@@ -24,6 +24,7 @@ interface OwnProps {
 	skjemaTilhorerValg?: "ja" | "nei";
 	/** Om faktumet skal være synlig eller ikke */
 	visible?: boolean;
+	id?: string;
 }
 type Props = OwnProps & FaktumComponentProps;
 
@@ -63,6 +64,7 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 					faktumId
 				};
 
+		const id = (this.props.id ? this.props.id : faktumKey);
 		return (
 			<SporsmalFaktum
 				{...this.props}
@@ -73,8 +75,8 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 						<Underskjema visible={visSkjema}>{children}</Underskjema>
 					}
 				>
-					<RadioFaktum id={faktumKey + "_radio_ja"} {...radioProps} value="true" />
-					<RadioFaktum id={faktumKey + "_radio_nei"} {...radioProps} value="false" />
+					<RadioFaktum id={id + "_ja"} {...radioProps} value="true" />
+					<RadioFaktum id={id + "_nei"} {...radioProps} value="false" />
 				</ValgMedUnderskjema>
 			</SporsmalFaktum>
 		);

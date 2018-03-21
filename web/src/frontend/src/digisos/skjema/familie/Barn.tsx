@@ -70,6 +70,7 @@ export default class Barn extends React.Component<Props, {}> {
 						ref={c => (this.personFaktum = c)}
 					/>
 					<JaNeiSporsmalFaktum
+						id={"bor_barn_nummer_" + this.props.barnNummer + "_med_deg_radio"}
 						faktumKey={`${faktumKey}.borsammen`}
 						faktumId={faktumId}
 						skjemaTilhorerValg="nei"
