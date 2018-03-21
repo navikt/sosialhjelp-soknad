@@ -22,18 +22,23 @@ class App extends React.Component<InjectedIntlProps, {}> {
 		(NavFrontendModal as any).setAppElement("#root");
 	}
 	render() {
+		const ettersendelse = (window.location.pathname.match(/ettersendelse$/) != null);
 		return (
 			<span>
 				<Switch>
 					<Route
-						path={`/ettersendelse/:brukerBehandlingId`}
+						path={`/skjema/:brukerBehandlingId/ettersendelse`}
 						component={Ettersendelse}
 					/>
 				</Switch>
-			<div className="app-digisos container">
+			{!ettersendelse && (<div className="app-digisos container">
 				<Switch>
 					<Route path={`/informasjon`} exact={true} component={Informasjon} />
 					<Route path={`/bosted`} exact={true} component={Start} />
+					<Route
+						path={`/skjema/:brukerBehandlingId/ettersendelse`}
+						component={() => (<span/>)}
+					/>
 					<Route
 						path={`/skjema/:brukerBehandlingId/:steg`}
 						component={SkjemaRouter}
@@ -44,10 +49,6 @@ class App extends React.Component<InjectedIntlProps, {}> {
 						component={Kvittering}
 					/>
 					<Route path={`/serverfeil`} component={ServerFeil} />
-					<Route
-						path={`/ettersendelse/:brukerBehandlingId`}
-						component={() => (<span/>)}
-					/>
 					<Route component={SideIkkeFunnet} />
 				</Switch>
 				<Prompt
@@ -64,6 +65,7 @@ class App extends React.Component<InjectedIntlProps, {}> {
 				<AvbrytSoknad />
 				{this.props.children}
 			</div>
+			)}
 			</span>
 		);
 	}
