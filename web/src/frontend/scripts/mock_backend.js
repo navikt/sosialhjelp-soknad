@@ -73,8 +73,10 @@ const mockFeatures = {
 	"feature.frontend.sosialhjelp.live": "true",
 	"feature.frontend.sosialhjelp.personalia": "true",
 	"feature.frontend.visvelgbosted": "true",
-	"feature.frontend.arbeidsforhold": "true"
+	"feature.frontend.arbeidsforhold": "true",
+	"feature.frontend.ettersendvedlegg": "true"
 };
+
 router.get("/api/feature", (req, res) => {
 	console.log("bruker mockFeatures");
 	res.json(mockFeatures);

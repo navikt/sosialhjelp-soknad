@@ -10,6 +10,7 @@
 		"history": "^4.7.2",
 		"lodash.throttle": "^4.1.1",
 		"nav-frontend-alertstriper": "^0.2.18",
+		"nav-frontend-chevron": "^1.0.2",
 		"nav-frontend-ekspanderbartpanel": "^0.2.19",
 		"nav-frontend-grid": "^0.1.10",
 		"nav-frontend-hjelpetekst": "^0.2.32",
@@ -107,22 +108,16 @@
 	"scripts": {
 		"mock-backend": "node scripts/mock_backend",
 		"build-css": "node-less-chokidar ./src/index.less",
-		"watch-css":
-			"chokidar \"src/**/*.less\" -c \"node-less-chokidar ./src/index.less\"",
+		"watch-css": "chokidar \"src/**/*.less\" -c \"node-less-chokidar ./src/index.less\"",
 		"start-js": "react-scripts-ts start",
-		"start":
-			"npm-run-all -p build-css watch-css start-js mock-backend stylelint:watch",
-		"build":
-			"npm run stylelint && npm run build-css && react-scripts-ts build && node ./scripts/flytt-filer-til-webapp.js && node versjoner-prodfiler.js",
+		"start": "npm-run-all -p build-css watch-css start-js mock-backend stylelint:watch",
+		"build": "npm run stylelint && npm run build-css && react-scripts-ts build && node ./scripts/flytt-filer-til-webapp.js && node versjoner-prodfiler.js",
 		"test": "npm run build-css && react-scripts-ts test --env=jsdom",
 		"prettier": "prettier-eslint \"src/**/*(*.less|*.tsx|*.ts|*.css|*.json)\"",
-		"prettier:update":
-			"prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css|*.json)\"",
+		"prettier:update": "prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css|*.json)\"",
 		"stylelint": "stylelint \"src/digisos/digisos.less\" --syntax less",
-		"stylelint:watch":
-			"chokidar \"src/index.less\" -c \"stylelint \"src/index.less\" --syntax less\"",
-		"e2e":
-			"node nightwatch.js --url localhost:3000/soknadsosialhjelp/informasjon",
+		"stylelint:watch": "chokidar \"src/index.less\" -c \"stylelint \"src/index.less\" --syntax less\"",
+		"e2e": "node nightwatch.js --url localhost:3000/soknadsosialhjelp/informasjon",
 		"eject": "react-scripts-ts eject"
 	}
 }
