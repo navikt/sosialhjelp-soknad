@@ -91,6 +91,7 @@ class Barneinfo extends React.Component<Props, State> {
 					{alleBarn.map((barnFaktum: Faktum, index: number) => (
 						<li key={barnFaktum.faktumId}>
 							<Barn
+								id={"barn_" + (index + 1)}
 								ref={createBarnRef(index)}
 								fakta={fakta}
 								faktum={barnFaktum}
