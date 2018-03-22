@@ -64,7 +64,16 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 					faktumId
 				};
 
-		const id = (this.props.id ? this.props.id : faktumKey + "_" + Math.round(Math.random() * 1000000));
+		let id_radio_ja = null;
+		let id_radio_nei = null;
+		if (this.props.id) {
+			id_radio_ja = this.props.id + "_radio_ja";
+			id_radio_nei = this.props.id + "_radio_neo";
+		} else {
+			id_radio_ja = faktumKey + "_" + this.randomId() + "_radio_ja";
+			id_radio_nei = faktumKey + "_" + this.randomId() + "_radio_nei";
+		}
+
 		return (
 			<SporsmalFaktum
 				{...this.props}
@@ -75,11 +84,15 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 						<Underskjema visible={visSkjema}>{children}</Underskjema>
 					}
 				>
-					<RadioFaktum id={id + "_ja"} {...radioProps} value="true" />
-					<RadioFaktum id={id + "_nei"} {...radioProps} value="false" />
+					<RadioFaktum id={id_radio_ja} {...radioProps} value="true" />
+					<RadioFaktum id={id_radio_nei} {...radioProps} value="false" />
 				</ValgMedUnderskjema>
 			</SporsmalFaktum>
 		);
+	}
+
+	private randomId() {
+		return Math.round(Math.random() * 1000000);
 	}
 }
 
