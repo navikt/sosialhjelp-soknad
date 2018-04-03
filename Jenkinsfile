@@ -64,7 +64,7 @@ node("master") {
     dir("web/src/frontend") {
         stage('Install') {
             try {
-                sh "npm install"
+                sh "npm install --verbose"
             } catch (Exception e) {
                 notifyFailed("Bygg feilet ved npm-install", e, env.BUILD_URL)
             }
