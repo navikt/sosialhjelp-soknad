@@ -14,14 +14,16 @@ import static no.nav.modig.lang.collections.RunnableUtils.waitFor;
 import static no.nav.sbl.dialogarena.common.jetty.Jetty.usingWar;
 
 public class StartJetty {
-    public static final int PORT = 8189;
+    public static final int PORT = 8080;
     private static final Logger logger = LoggerFactory.getLogger(StartJetty.class);
 
     public static void main(String[] args) throws Exception {
-
         File WEBAPP_SOURCE = getWebAppSource();
-
-        configureLocalConfig();
+        if (isRunningOnNais()) {
+            mapNaisProperties();
+        } else  {
+            configureLocalConfig();
+        }
         Jetty jetty = usingWar(WEBAPP_SOURCE)
                 .at("/soknadsosialhjelp")
                 .port(PORT)
@@ -33,6 +35,14 @@ public class StartJetty {
     private static void configureLocalConfig() {
         System.setProperty("dialogarena.cms.url", "https://appres-t10.nav.no");
         System.setProperty("soknadsapi.url", "http://localhost:8181/sendsoknad");
+        System.setProperty("feature.frontend.sosialhjelp.live", "true");
+        System.setProperty("suspender.username", "user");
+        System.setProperty("suspender.password", "pass");
+    }
+
+    private static void mapNaisProperties() {
+        System.setProperty("dialogarena.cms.url", System.getenv("APPRES_CMS_URL"));
+        System.setProperty("soknadsapi.url", System.getenv("SOKNADSAPI_URL"));
         System.setProperty("feature.frontend.sosialhjelp.live", "true");
         System.setProperty("suspender.username", "user");
         System.setProperty("suspender.password", "pass");
@@ -50,4 +60,15 @@ public class StartJetty {
         return new File(MAIN_DIR, "webapp");
     }
 
+    private static boolean isRunningOnNais() {
+        return determineEnvironment() != null;
+    }
+
+    private static String determineEnvironment() {
+        final String env = System.getenv("FASIT_ENVIRONMENT_NAME");
+        if (env == null || env.trim().equals("")) {
+            return null;
+        }
+        return env;
+    }
 }
