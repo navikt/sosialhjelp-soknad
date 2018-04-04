@@ -24,7 +24,7 @@ public class StartJetty {
         } else  {
             configureLocalConfig();
         }
-        Jetty jetty = usingWar(WEBAPP_SOURCE)
+        Jetty jetty = new Jetty.JettyBuilder()
                 .at("/soknadsosialhjelp")
                 .port(PORT)
                 .buildJetty();
@@ -56,7 +56,7 @@ public class StartJetty {
         } catch (IOException | URISyntaxException var1) {
             throw new RuntimeException(var1.getMessage(), var1);
         }
-        File MAIN_DIR = new File(PROJECT_BASEDIR, "src/main");
+        File MAIN_DIR = new File(PROJECT_BASEDIR, "src/main/resources");
         return new File(MAIN_DIR, "webapp");
     }
 
