@@ -18,7 +18,6 @@ import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
 import Steg8 from "./ekstrainformasjon/EkstraInformasjon";
 import Oppsummering from "./oppsummering";
-
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
 import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
 import { Faktum } from "../../nav-soknad/types";

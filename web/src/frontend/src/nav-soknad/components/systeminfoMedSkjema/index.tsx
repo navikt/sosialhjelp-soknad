@@ -50,6 +50,10 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 		}
 	}
 
+	labelToId(str: string) {
+		return str.replace(/\s+/g, "_").toLowerCase();
+	}
+
 	renderSkjema() {
 		const { skjema, endreLabel, avbrytLabel, skjemaErSynlig } = this.props;
 		if (!skjema) {
@@ -69,13 +73,17 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 					<Lenkeknapp
 						ref={c => (this.visSkjemaKnapp = c)}
 						onClick={this.props.onVisSkjema}
+						id={this.labelToId(this.props.endreLabel) + "_lenke"}
 					>
 						{endreLabel}
 					</Lenkeknapp>
 				)}
 				{skjemaErSynlig && (
 					<div className="systeminfoMedSkjema__skjulSkjemaKnapp">
-						<Lenkeknapp onClick={this.props.onSkjulSkjema}>
+						<Lenkeknapp
+							onClick={this.props.onSkjulSkjema}
+							id={this.labelToId(this.props.avbrytLabel) + "_lenke"}
+						>
 							{avbrytLabel}
 						</Lenkeknapp>
 					</div>

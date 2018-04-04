@@ -64,7 +64,7 @@ node("master") {
     dir("web/src/frontend") {
         stage('Install') {
             try {
-                sh "npm install"
+                sh "npm install -ddd"
             } catch (Exception e) {
                 notifyFailed("Bygg feilet ved npm-install", e, env.BUILD_URL)
             }
@@ -126,21 +126,22 @@ if (isMasterBuild) {
     }
 }
 
-if (isMasterBuild) {
-    stage('Integrasjonstester') {
-        node("master") {
-            try {
-                dir('web/src/frontend') {
-                    sh("chmod u+x ./selenium/phantomjs")
-                    sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
-                }
-            } catch (Exception e) {
-                notifyFailed('Integrasjonstester feilet', e)
-                step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
-            }
-        }
-    }
-}
+// Kommenterer ut da vi ikke har openam konfig p? nye jenkinsen
+//if (isMasterBuild) {
+//    stage('Integrasjonstester') {
+//        node("master") {
+//            try {
+//                dir('web/src/frontend') {
+//                    sh("chmod u+x ./selenium/phantomjs")
+//                    sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
+//                }
+//            } catch (Exception e) {
+//                notifyFailed('Integrasjonstester feilet', e)
+//                step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
+//            }
+//        }
+//    }
+//}
 
 node {
     returnOk('All good', env.BUILD_URL)

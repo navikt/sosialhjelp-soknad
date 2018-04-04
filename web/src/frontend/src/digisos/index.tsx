@@ -12,6 +12,7 @@ import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
 import AvbrytSoknad from "../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 import NavFrontendModal from "nav-frontend-modal";
+import Ettersendelse from "./skjema/ettersendelse/ettersendelse";
 
 /** Setter globalt hvilket appElement react-modal skal bruke når modal dialog vises
  *
@@ -21,11 +22,23 @@ class App extends React.Component<InjectedIntlProps, {}> {
 		(NavFrontendModal as any).setAppElement("#root");
 	}
 	render() {
+		const ettersendelse = (window.location.pathname.match(/ettersendelse$/) != null);
 		return (
-			<div className="app-digisos container">
+			<span>
+				<Switch>
+					<Route
+						path={`/skjema/:brukerBehandlingId/ettersendelse`}
+						component={Ettersendelse}
+					/>
+				</Switch>
+			{!ettersendelse && (<div className="app-digisos container">
 				<Switch>
 					<Route path={`/informasjon`} exact={true} component={Informasjon} />
 					<Route path={`/bosted`} exact={true} component={Start} />
+					<Route
+						path={`/skjema/:brukerBehandlingId/ettersendelse`}
+						component={() => (<span/>)}
+					/>
 					<Route
 						path={`/skjema/:brukerBehandlingId/:steg`}
 						component={SkjemaRouter}
@@ -52,6 +65,8 @@ class App extends React.Component<InjectedIntlProps, {}> {
 				<AvbrytSoknad />
 				{this.props.children}
 			</div>
+			)}
+			</span>
 		);
 	}
 }

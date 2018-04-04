@@ -20,7 +20,7 @@ interface BarnTypes {
 	onFjernBarn: (faktumId: number) => void;
 }
 
-type Props = FaktumComponentProps & BarnTypes;
+type Props = FaktumComponentProps & BarnTypes & {id?: string};
 
 export default class Barn extends React.Component<Props, {}> {
 	personFaktum: PersonFaktum;
@@ -58,6 +58,15 @@ export default class Barn extends React.Component<Props, {}> {
 				navn ? `(${navn})` : ""
 			}`;
 		};
+
+		let id_samvaersgrad = null;
+		let id_fjern_barn = null;
+		let id_bor_sammen = null;
+		if (this.props.id) {
+			id_samvaersgrad = this.props.id + "_samvaersgrad_nummer_input";
+			id_fjern_barn = this.props.id + "_fjern_barn_knapp";
+			id_bor_sammen = this.props.id + "_bor_fast";
+		}
 		return (
 			<div className="blokk barn">
 				<SporsmalFaktum
@@ -65,11 +74,13 @@ export default class Barn extends React.Component<Props, {}> {
 					tittelRenderer={tittel => `${tittel} ${barnNummer}`}
 				>
 					<PersonFaktum
+						id={this.props.id}
 						faktumKey={faktumKey}
 						faktumId={faktumId}
 						ref={c => (this.personFaktum = c)}
 					/>
 					<JaNeiSporsmalFaktum
+						id={id_bor_sammen}
 						faktumKey={`${faktumKey}.borsammen`}
 						faktumId={faktumId}
 						skjemaTilhorerValg="nei"
@@ -81,6 +92,7 @@ export default class Barn extends React.Component<Props, {}> {
 					>
 						<SporsmalFaktum faktumKey={hvormye.faktum}>
 							<BelopFaktum
+								id={id_samvaersgrad}
 								faktumKey={faktumKey}
 								faktumId={faktumId}
 								property="grad"
@@ -93,6 +105,7 @@ export default class Barn extends React.Component<Props, {}> {
 					{visFjernBarn && (
 						<span className="barn__fjern">
 							<Lenkeknapp
+								id={id_fjern_barn}
 								onClick={() =>
 									this.props.onFjernBarn(this.props.faktum.faktumId)
 								}

@@ -91,6 +91,7 @@ class Barneinfo extends React.Component<Props, State> {
 					{alleBarn.map((barnFaktum: Faktum, index: number) => (
 						<li key={barnFaktum.faktumId}>
 							<Barn
+								id={"barn_" + (index + 1)}
 								ref={createBarnRef(index)}
 								fakta={fakta}
 								faktum={barnFaktum}
@@ -108,7 +109,7 @@ class Barneinfo extends React.Component<Props, State> {
 						</li>
 					))}
 				</ol>
-				<Lenkeknapp onClick={this.leggTilBarn} style="add">
+				<Lenkeknapp id="legg_til_barn_knapp" onClick={this.leggTilBarn} style="add">
 					{intl.formatMessage({
 						id: "familie.barn.true.barn.leggtil"
 					})}
