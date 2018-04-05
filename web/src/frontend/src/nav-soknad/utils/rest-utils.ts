@@ -26,7 +26,7 @@ function getServletBaseUrl(): string {
 		// return "http://localhost:8189/soknadsosialhjelp/";
 		return "http://localhost:3001/";
 	}
-	return "/soknadsosialhjelp/";
+	return "/soknadsosialhjelp-ny/";
 }
 
 export function downloadAttachedFile(urlPath: string): void {
