@@ -93,7 +93,11 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 							</div>
 						</div>
 
-						<Collapse isOpened={this.state.vedleggEkspandert}>
+						<Collapse
+							isOpened={this.state.vedleggEkspandert}
+							className={"ettersendelse__vedlegg " +
+							(this.state.vedleggEkspandert ? "ettersendelse__vedlegg__ekspandert" : "")}
+						>
 							<EttersendelseVedlegg>
 								<h3>Kontooversikt med saldo for brukskonto (siste måned)</h3>
 							</EttersendelseVedlegg>
