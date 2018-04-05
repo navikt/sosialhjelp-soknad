@@ -36,10 +36,6 @@ class App extends React.Component<InjectedIntlProps, {}> {
 					<Route path={`/informasjon`} exact={true} component={Informasjon} />
 					<Route path={`/bosted`} exact={true} component={Start} />
 					<Route
-						path={`/skjema/:brukerBehandlingId/ettersendelse`}
-						component={() => (<span/>)}
-					/>
-					<Route
 						path={`/skjema/:brukerBehandlingId/:steg`}
 						component={SkjemaRouter}
 						exact={true}
