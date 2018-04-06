@@ -1,10 +1,10 @@
 @import "../../styles/variables";
 
 .nivaTreSkjema {
+	padding-top: 0.5rem;
+	padding-bottom: 1.5rem;
 	position: relative;
 	padding-left: 1.6rem;
-	padding-top: 0.5rem;
-  	padding-bottom: 1.5rem;
 
   	&__small {
 	  padding-top: 0;
@@ -21,4 +21,13 @@
 		left: 0.5rem;
 	}
 
+  	&__innhold {
+	  opacity: 0;
+	  transition: opacity 1s;
+	  transition-delay: 0.2s;
+	}
+
+  	&__innhold__ekspandert {
+	  opacity: 1;
+	}
 }

@@ -11,6 +11,13 @@ import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 import { getPropertyVerdi } from "../../../nav-soknad/utils/faktumUtils";
 
 class Ektefelle extends React.Component<FaktumComponentProps, {}> {
+
+	// componentDidMount() {
+	// 	const { fakta } = this.props;
+	// 	const faktumKey = "familie.sivilstatus.gift.ektefelle";
+	// 	const borSammen: boolean = getPropertyVerdi(fakta, faktumKey, "borsammen") === "false";
+	// 	console.warn("debug: Eketfelle borSammen: " + borSammen.valueOf());
+	// }
 	render() {
 		const { fakta } = this.props;
 		const faktumKey = "familie.sivilstatus.gift.ektefelle";
