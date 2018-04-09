@@ -26,6 +26,9 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 		<SporsmalFaktum faktumKey="begrunnelse.hva">
 			<TextareaFaktum
 				id="hva_sokes_det_om_textarea"
+				placeholder={intl.formatMessage({
+					id: "begrunnelse.hva.placeholder"
+				})}
 				validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
 				textareaClass="skjema-textarea--large"
 				faktumKey="begrunnelse.hva"
