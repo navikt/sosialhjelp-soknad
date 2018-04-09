@@ -19,6 +19,7 @@ import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
+import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 
 class UtgifterGjeld extends React.Component<
 	FaktumComponentProps & DispatchProps & InjectedIntlProps,
@@ -78,16 +79,17 @@ class UtgifterGjeld extends React.Component<
 							)}
 						/>
 
-						{faktumIsSelected(
-							getFaktumVerdi(fakta, `${boUtgifter.faktum}.andreutgifter`)
-						) ? (
+						<NivaTreSkjema
+							visible={faktumIsSelected(getFaktumVerdi(fakta, `${boUtgifter.faktum}.andreutgifter`))}
+							size="small"
+						>
 							<TextareaFaktum
 								id="boutgifter_andre_utgifter_textarea"
 								faktumKey={andreBoUtgifter}
 								maxLength={400}
 								validerFunc={[getMaksLengdeFunc(400)]}
 							/>
-						) : null}
+						</NivaTreSkjema>
 					</SporsmalFaktum>
 				</JaNeiSporsmalFaktum>
 				<JaNeiSporsmalFaktum
@@ -124,16 +126,17 @@ class UtgifterGjeld extends React.Component<
 							id="utgifter_barn_annet_checkbox"
 							faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "annet")}
 						/>
-						{faktumIsSelected(
-							getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`)
-						) ? (
+						<NivaTreSkjema
+							visible={faktumIsSelected(getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`))}
+							size="small"
+						>
 							<TextareaFaktum
 								id="utgifter_barn_annet_textarea"
 								faktumKey={andreBarneutgifter}
 								maxLength={400}
 								validerFunc={[getMaksLengdeFunc(400)]}
 							/>
-						) : null}
+						</NivaTreSkjema>
 					</SporsmalFaktum>
 				</JaNeiSporsmalFaktum>
 			</DigisosSkjemaSteg>

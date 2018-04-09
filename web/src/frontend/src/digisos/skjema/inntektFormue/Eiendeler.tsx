@@ -13,6 +13,7 @@ import {
 	getFaktumVerdi
 } from "../../../nav-soknad/utils";
 import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
+import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 
 class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -52,14 +53,17 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 						id="eiendeler_annet_checkbox"
 						faktumKey={createCheckboxFaktumKey(hvilkeEiendeler.faktum, "annet")}
 					/>
-					{faktumIsSelected(getFaktumVerdi(fakta, hvilkeEiendelerAnnet)) ? (
+					<NivaTreSkjema
+						visible={faktumIsSelected(getFaktumVerdi(fakta, hvilkeEiendelerAnnet))}
+						size="small"
+						>
 						<TextareaFaktum
 							id="eiendeler_annet_textarea"
 							faktumKey={`${hvilkeEiendelerAnnet}.true.beskrivelse`}
 							maxLength={400}
 							validerFunc={[getMaksLengdeFunc(400)]}
 						/>
-					) : null}
+					</NivaTreSkjema>
 				</SporsmalFaktum>
 			</JaNeiSporsmalFaktum>
 		);
