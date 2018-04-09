@@ -64,7 +64,7 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 					this.oppdaterHarIkkeKontonummer(this.props.fakta, verdi, this.props.dispatch);
 				}} />
 				<SporsmalFaktum faktumKey="kontakt.telefon">
-					<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8} />
+					<TelefonFaktum id="kontakt_telefon" faktumKey="kontakt.telefon" maxLength={8} />
 				</SporsmalFaktum>
 				<JaNeiSporsmalFaktum faktumKey={statsborger.faktum} />
 			</DigisosSkjemaSteg>
