@@ -25,17 +25,17 @@ export const digisosSkjemaConfig: SkjemaConfig = {
 			type: SkjemaStegType.skjema
 		},
 		{
-			key: DigisosSteg.arbeidbolk,
+			key: DigisosSteg.begrunnelsebolk,
 			stegnummer: 2,
 			type: SkjemaStegType.skjema
 		},
 		{
-			key: DigisosSteg.familiebolk,
+			key: DigisosSteg.arbeidbolk,
 			stegnummer: 3,
 			type: SkjemaStegType.skjema
 		},
 		{
-			key: DigisosSteg.begrunnelsebolk,
+			key: DigisosSteg.familiebolk,
 			stegnummer: 4,
 			type: SkjemaStegType.skjema
 		},
