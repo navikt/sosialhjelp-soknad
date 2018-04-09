@@ -122,7 +122,8 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 								<strong>
 									{getBosted(
 										valgtKommune.id,
-										valgtBydel ? valgtBydel.id : null
+										valgtBydel ? valgtBydel.id : null,
+										this.props.intl
 									)}
 								</strong>
 							</p>

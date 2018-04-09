@@ -1,4 +1,5 @@
 import { Kommune, Bydel } from "../../nav-soknad/types";
+import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 
 const bydelsnavn: any = {
 	"oslo": [
@@ -54,9 +55,15 @@ export function getBydel(kommuneId: string, bydelId: string): string {
 	return bydel ? bydel.navn : "";
 }
 
-export function getBosted(kommuneId: string, bydelId?: string): string {
+export function getBosted(kommuneId: string, bydelId?: string, intl?: any): string {
+	const kommuneLabel = getIntlTextOrKey( intl, "generelt.kommune");
+	const kommune = getKommune(kommuneId);
 	const bydel = getBydel(kommuneId, bydelId);
-	return getKommune(kommuneId) + (bydel === "" ? "" : ", ") + bydel;
+	if (bydel === "") {
+		return `NAV ${kommune} ${kommuneLabel}`;
+	} else {
+		return `NAV ${bydel}, ${kommune} ${kommuneLabel}`;
+	}
 }
 
 export const Horten = Kommuner.find(k => k.id === "horten");
