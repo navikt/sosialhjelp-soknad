@@ -50,6 +50,7 @@ const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, visArbeidsforh
 				</ul>
 			)}
 			<TextareaFaktum
+				id="opplysninger_arbeidsituasjon_kommentarer"
 				faktumKey="opplysninger.arbeidsituasjon.kommentarer"
 				placeholder={intl.formatMessage({
 					id: "arbeidsforhold.kommentar.placeholder"
