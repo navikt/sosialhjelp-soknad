@@ -1,5 +1,4 @@
 import { getBosted, getKommune } from "../data/kommuner";
-import { func } from "prop-types";
 
 describe("kommuner", () => {
 
