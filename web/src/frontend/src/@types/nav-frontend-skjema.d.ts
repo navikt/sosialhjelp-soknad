@@ -17,6 +17,7 @@ declare module "nav-frontend-skjema" {
 		className?: string;
 		id?: string;
 		label: React.ReactNode | any;
+		labelId?: string;
 		name: string;
 		checked?: boolean;
 		radioRef?: Function;
