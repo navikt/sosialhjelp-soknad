@@ -4,6 +4,7 @@
 .underskjema {
 	padding-top: 0.8rem;
 	padding-bottom: 1rem;
+  	transition: opacity 1s;
 
 	&--noPadding {
 		padding-top: 0;
@@ -32,6 +33,15 @@
 			padding: @skjemaMargMobil @skjemaMargMobil @skjemaMargMobil*1.5
 				@skjemaMargMobil;
 		}
+
+	  	transition: opacity 1s;
+	  	transition-delay: 0.2s;
+	  	opacity: 0;
+
+	  	&__synlig {
+		  opacity: 1;
+		}
+
 	}
 	&--system {
 		.underskjema__boks {
