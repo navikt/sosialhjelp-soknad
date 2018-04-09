@@ -10,9 +10,9 @@ import { Location } from "history";
 import { connect } from "react-redux";
 
 import Steg1 from "./personopplysninger";
-import Steg2 from "./arbeidUtdanning";
-import Steg3 from "./familie";
-import Steg4 from "./begrunnelse";
+import Steg2 from "./begrunnelse";
+import Steg3 from "./arbeidUtdanning";
+import Steg4 from "./familie";
 import Steg5 from "./bosituasjon";
 import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
