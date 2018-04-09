@@ -15,7 +15,7 @@ interface Props {
 
 const Skjema: React.StatelessComponent<{}> = () => (
 	<SporsmalFaktum faktumKey="kontakt.telefon">
-		<TelefonFaktum faktumKey="kontakt.telefon" maxLength={8} />
+		<TelefonFaktum faktumKey="kontakt.telefon" id="kontakt_telefon" maxLength={8} />
 	</SporsmalFaktum>
 );
 

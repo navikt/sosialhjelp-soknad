@@ -22,9 +22,10 @@ class RadioFaktum extends React.Component<
 	render() {
 		const { faktumKey, value, disabled, property, required, intl } = this.props;
 		const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
+		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
 		return (
 			<Radio
-				id={this.props.id}
+				id={id}
 				name={this.props.getName()}
 				checked={
 					property
@@ -38,6 +39,7 @@ class RadioFaktum extends React.Component<
 					this.props.setFaktumVerdiOgLagre(value, property)}
 				label={
 					<LabelMedHjelpetekst
+						labelId={id + "_label"}
 						id={`${faktumKey}.${value}`}
 						label={tekster.label}
 						hjelpetekst={tekster.hjelpetekst}
