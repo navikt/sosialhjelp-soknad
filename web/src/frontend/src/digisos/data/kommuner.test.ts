@@ -1,4 +1,5 @@
 import { getBosted, getKommune } from "../data/kommuner";
+import { func } from "prop-types";
 
 describe("kommuner", () => {
 
@@ -8,8 +9,14 @@ describe("kommuner", () => {
 	});
 
 	it("should return a valid 'bosted 'string", () => {
-		let bosted = getBosted("bergen", "bergenhus");
-		expect(bosted).toEqual("Bergen, Bydel Bergenhus");
+		let intlMock = {
+			messages: function() {
+				return {}
+			}
+		};
+
+		let bosted = getBosted("bergen", "bergenhus", intlMock);
+		expect(bosted).toEqual("NAV Bydel Bergenhus, Bergen generelt.kommune");
 	});
 
 });
