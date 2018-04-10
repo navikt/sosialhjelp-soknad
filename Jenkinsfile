@@ -9,6 +9,7 @@ author = "Unknown"
 deploy = "Unknown"
 releaseVersion = "Unknown"
 isMasterBuild = (env.BRANCH_NAME == 'master')
+isEkstraKommunerBuild = (env.BRANCH_NAME == 'ekstraKommuner')
 
 project = "navikt"
 repoName = "soknadsosialhjelp"
@@ -105,8 +106,8 @@ node("master") {
         }
     }
 }
-
-if (isMasterBuild) {
+if (isEkstraKommunerBuild) {
+    // if (isMasterBuild) {
     stage("Deploy app til t1") {
         callback = "${env.BUILD_URL}input/Deploy/"
         node {
