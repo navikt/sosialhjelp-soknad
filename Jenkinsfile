@@ -9,7 +9,7 @@ author = "Unknown"
 deploy = "Unknown"
 releaseVersion = "Unknown"
 isMasterBuild = (env.BRANCH_NAME == 'master')
-isEkstraKommunerBuild = (env.BRANCH_NAME == 'ekstraKommuner')
+isEkstraKommunerBuild = (env.BRANCH_NAME == 'ekstra-kommuner')
 
 project = "navikt"
 repoName = "soknadsosialhjelp"
