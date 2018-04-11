@@ -36,6 +36,10 @@ then
     then
         echo "Deployment failed!";
         exit 1;
+    else
+        echo "Deployment succeeded.";
     fi
+else
+    echo "Skipping deploy on Nais.";
 fi
 
