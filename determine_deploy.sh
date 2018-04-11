@@ -3,6 +3,8 @@
 function determine_deploy() {
     nais_deploy_environment="";
 
+    git fetch -q origin 'refs/tags/*:refs/tags/*'
+
     IFS=$'\n';
     for line in $(git log --first-parent --pretty=oneline -10)
     do
