@@ -28,4 +28,4 @@ function determine_deploy() {
 }
 
 determine_deploy
-echo "${nais_deploy_environment}"
+echo -n "${nais_deploy_environment}"
