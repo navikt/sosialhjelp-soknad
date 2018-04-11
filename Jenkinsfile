@@ -93,13 +93,9 @@ node("a34apvl00071") {
     if (isMasterBuild || isNaisBuild || params.DeployTilNexus == "true") {
         stage('Deploy nexus') {
             try {
+                // TODO: Vent med deploy til etter tag, men ta en install.
                 sh "mvn -B deploy -DskipTests -P pipeline"
                 currentBuild.description = "Version: ${releaseVersion}"
-                withEnv(['HTTPS_PROXY=http://webproxy-utvikler.nav.no:8088']) {
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'navikt-jenkins-github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
-                        sh("git tag -a ${releaseVersion} -m ${releaseVersion} HEAD && git push --tags https://navikt-jenkins:${GIT_PASSWORD}@github.com/navikt/soknadsosialhjelp.git")
-                    }
-                }
             } catch (Exception e) {
                 notifyFailed("Deploy av artifakt til nexus feilet", e, env.BUILD_URL)
             }
@@ -125,6 +121,15 @@ node("a34apvl00071") {
          }
     }
 
+    if (isMasterBuild || isNaisBuild || params.DeployTilNexus == "true") {
+        stage("Git tag") {
+            withEnv(['HTTPS_PROXY=http://webproxy-utvikler.nav.no:8088']) {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'navikt-jenkins-github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+                    sh("git tag -a ${releaseVersion} -m ${releaseVersion} HEAD && git push --tags https://navikt-jenkins:${GIT_PASSWORD}@github.com/navikt/soknadsosialhjelp.git")
+                }
+            }
+        }
+    }
 }
 
 if (isMasterBuild) {
