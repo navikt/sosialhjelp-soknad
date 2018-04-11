@@ -13,6 +13,7 @@ isNaisBuild = env.BRANCH_NAME.contains('nais')
 
 project = "navikt"
 repoName = "soknadsosialhjelp"
+deployToNaisEnvironment = ""
 
 def notifyFailed(reason, error, buildNr) {
     currentBuild.result = 'FAILED'
@@ -89,6 +90,10 @@ node("a34apvl00071") {
 
     }
 
+    if (isNaisBuild) {
+        deployToNaisEnvironment = sh script: './determine_deploy.sh', returnStdout: true
+    }
+
     echo "${params.DeployTilNexus} deploy til nexus"
     if (isMasterBuild || isNaisBuild || params.DeployTilNexus == "true") {
         stage('Deploy nexus') {
@@ -100,9 +105,16 @@ node("a34apvl00071") {
                 notifyFailed("Deploy av artifakt til nexus feilet", e, env.BUILD_URL)
             }
         }
+        stage("Git tag") {
+            withEnv(['HTTPS_PROXY=http://webproxy-utvikler.nav.no:8088']) {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'navikt-jenkins-github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+                    sh("git tag -a ${releaseVersion} -m ${releaseVersion} HEAD && git push --tags https://navikt-jenkins:${GIT_PASSWORD}@github.com/navikt/soknadsosialhjelp.git")
+                }
+            }
+        }
     }
 
-    if (isNaisBuild) {
+    if (deployToNaisEnvironment != "") {
         stage("Build Docker and Update Nais") {
             dir("web/target/appassembler") {
                 sh "docker build . -t docker.adeo.no:5000/${application}:${releaseVersion}"
@@ -113,20 +125,10 @@ node("a34apvl00071") {
                 sh "curl -v -s -S --user \"${nexusUploaderUsername}:${nexusUploaderPassword}\" --upload-file config/src/main/resources/openam/app-policies.xml \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/am/app-policies.xml\""
                 sh "curl -v -s -S --user \"${nexusUploaderUsername}:${nexusUploaderPassword}\" --upload-file config/src/main/resources/openam/not-enforced-urls.txt \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/am/not-enforced-urls.txt\""
             }
-         }
-         stage("Deploy Nais") {
-             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'domenebruker', usernameVariable: 'domenebrukernavn', passwordVariable: 'domenepassord']]) {
-                 sh "./nais_deploy.sh"
-             }
-         }
-    }
-
-    if (isMasterBuild || isNaisBuild || params.DeployTilNexus == "true") {
-        stage("Git tag") {
-            withEnv(['HTTPS_PROXY=http://webproxy-utvikler.nav.no:8088']) {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'navikt-jenkins-github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
-                    sh("git tag -a ${releaseVersion} -m ${releaseVersion} HEAD && git push --tags https://navikt-jenkins:${GIT_PASSWORD}@github.com/navikt/soknadsosialhjelp.git")
-                }
+        }
+        stage("Deploy Nais") {
+            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'domenebruker', usernameVariable: 'domenebrukernavn', passwordVariable: 'domenepassord']]) {
+                sh "./nais_deploy.sh ${deployToNaisEnvironment}"
             }
         }
     }
