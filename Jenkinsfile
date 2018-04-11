@@ -4,7 +4,7 @@ import common
 
 def common = new common()
 
-application = "soknadsosialhjelp"
+application = "soknadsosialhjelp-ny"
 author = "Unknown"
 deploy = "Unknown"
 releaseVersion = "Unknown"
