@@ -109,12 +109,12 @@ node("master") {
     if (isNaisBuild) {
         stage("Build Docker and Update Nais") {
             dir("web/target/appassembler") {
-                sh "docker build . -t docker.adeo.no:5000/soknadsosialhjelp:${releaseVersion}"
-                sh "docker push docker.adeo.no:5000/soknadsosialhjelp:${releaseVersion}"
+                sh "docker build . -t docker.adeo.no:5000/${application}:${releaseVersion}"
+                sh "docker push docker.adeo.no:5000/${application}:${releaseVersion}"
             }
-            sh "curl -v -s -S --user \"${nexusUploader}\" --upload-file web/nais.yaml \"https://repo.adeo.no/repository/raw/nais/soknadsosialhjelp/${releaseVersion}/nais.yaml\""
-            sh "curl -v -s -S --user \"${nexusUploader}\" --upload-file config/src/main/resources/openam/app-policies.xml \"https://repo.adeo.no/repository/raw/nais/soknadsosialhjelp/${releaseVersion}/am/app-policies.xml\""
-            sh "curl -v -s -S --user \"${nexusUploader}\" --upload-file config/src/main/resources/openam/not-enforced-urls.txt \"https://repo.adeo.no/repository/raw/nais/soknadsosialhjelp/${releaseVersion}/am/not-enforced-urls.txt\""
+            sh "curl -v -s -S --user \"${nexusUploader}\" --upload-file web/nais.yaml \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/nais.yaml\""
+            sh "curl -v -s -S --user \"${nexusUploader}\" --upload-file config/src/main/resources/openam/app-policies.xml \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/am/app-policies.xml\""
+            sh "curl -v -s -S --user \"${nexusUploader}\" --upload-file config/src/main/resources/openam/not-enforced-urls.txt \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/am/not-enforced-urls.txt\""
          }
          stage("Deploy Nais") {
              sh "nais_deploy.sh"
