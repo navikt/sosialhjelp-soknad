@@ -119,7 +119,9 @@ node("a34apvl00071") {
             }
          }
          stage("Deploy Nais") {
-             sh "nais_deploy.sh"
+             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'domenebruker', usernameVariable: 'domenebrukernavn', passwordVariable: 'domenepassord']]) {
+                 sh "./nais_deploy.sh"
+             }
          }
     }
 
