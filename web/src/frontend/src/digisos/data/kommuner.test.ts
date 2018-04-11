@@ -15,7 +15,7 @@ describe("kommuner", () => {
 		};
 
 		let bosted = getBosted("bergen", "bergenhus", intlMock);
-		expect(bosted).toEqual("NAV Bydel Bergenhus, Bergen generelt.kommune");
+		expect(bosted).toEqual("NAV Bergenhus");
 	});
 
 });
