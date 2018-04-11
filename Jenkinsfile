@@ -9,6 +9,7 @@ author = "Unknown"
 deploy = "Unknown"
 releaseVersion = "Unknown"
 isMasterBuild = (env.BRANCH_NAME == 'master')
+isNaisBuild = env.BRANCH_NAME.contains('nais')
 
 project = "navikt"
 repoName = "soknadsosialhjelp"
@@ -122,6 +123,15 @@ if (isMasterBuild) {
             node {
                 notifyFailed(msg, e, env.BUILD_URL)
             }
+        }
+    }
+}
+
+if (isNaisBuild) {
+    stage("Docker image") {
+        dir("web/target/appassembler") {
+            sh "docker build . -t docker.adeo.no:5000/soknadsosialhjelp:${releaseVersion}"
+            sh "docker push docker.adeo.no:5000/soknadsosialhjelp:${releaseVersion}"
         }
     }
 }
