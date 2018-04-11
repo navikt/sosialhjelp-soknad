@@ -59,7 +59,7 @@ node("a34apvl00071") {
         def gitCommitNumber = sh(returnStdout: true, script: 'git rev-list --count HEAD').trim()
         def version = pom.version.replace("-SNAPSHOT", "")
         releaseVersion =  "${version}.${gitCommitNumber}.${currentBuild.number}"
-        sh "mvn versions:set -DnewVersion=${releaseVersion} -DallowSnapshots=true -DprocessParent=false"
+        sh "mvn versions:set -DnewVersion=${releaseVersion}"
     }
 
     dir("web/src/frontend") {
