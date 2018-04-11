@@ -91,7 +91,7 @@ node("a34apvl00071") {
     }
 
     if (isNaisBuild) {
-        deployToNaisEnvironment = (sh script: './determine_deploy.sh', returnStdout: true).trim()
+        deployToNaisEnvironment = sh script: './determine_deploy.sh', returnStdout: true
     }
 
     echo "${params.DeployTilNexus} deploy til nexus"
