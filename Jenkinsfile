@@ -90,7 +90,7 @@ node("master") {
     }
 
     echo "${params.DeployTilNexus} deploy til nexus"
-    if (isMasterBuild || params.DeployTilNexus == "true") {
+    if (isMasterBuild || isNaisBuild || params.DeployTilNexus == "true") {
         stage('Deploy nexus') {
             try {
                 sh "mvn -B deploy -DskipTests -P pipeline"
