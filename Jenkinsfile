@@ -129,7 +129,7 @@ node("a34apvl00071") {
         stage("Deploy Nais") {
             echo "Deploying to ${deployToNaisEnvironment}."
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'domenebruker', usernameVariable: 'domenebrukernavn', passwordVariable: 'domenepassord']]) {
-                sh "./nais_deploy.sh"
+                sh "./nais_deploy.sh \"${application}\" \"${deployToNaisEnvironment}\" \"${releaseVersion}\" \"${domenebrukernavn}\" \"${domenepassord}\""
             }
         }
     }
