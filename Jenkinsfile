@@ -65,7 +65,7 @@ node("a34apvl00071") {
     dir("web/src/frontend") {
         stage('Install') {
             try {
-                sh "npm install -ddd"
+                sh "npm install"
             } catch (Exception e) {
                 notifyFailed("Bygg feilet ved npm-install", e, env.BUILD_URL)
             }
@@ -112,9 +112,11 @@ node("a34apvl00071") {
                 sh "docker build . -t docker.adeo.no:5000/${application}:${releaseVersion}"
                 sh "docker push docker.adeo.no:5000/${application}:${releaseVersion}"
             }
-            sh "curl -v -s -S --user \"${nexusUploader}\" --upload-file web/nais.yaml \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/nais.yaml\""
-            sh "curl -v -s -S --user \"${nexusUploader}\" --upload-file config/src/main/resources/openam/app-policies.xml \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/am/app-policies.xml\""
-            sh "curl -v -s -S --user \"${nexusUploader}\" --upload-file config/src/main/resources/openam/not-enforced-urls.txt \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/am/not-enforced-urls.txt\""
+            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexusUploader', usernameVariable: 'nexusUploaderUsername', passwordVariable: 'nexusUploaderPassword']]) {
+                sh "curl -v -s -S --user \"${nexusUploaderUsername}:${nexusUploaderPassword}\" --upload-file web/nais.yaml \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/nais.yaml\""
+                sh "curl -v -s -S --user \"${nexusUploaderUsername}:${nexusUploaderPassword}\" --upload-file config/src/main/resources/openam/app-policies.xml \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/am/app-policies.xml\""
+                sh "curl -v -s -S --user \"${nexusUploaderUsername}:${nexusUploaderPassword}\" --upload-file config/src/main/resources/openam/not-enforced-urls.txt \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/am/not-enforced-urls.txt\""
+            }
          }
          stage("Deploy Nais") {
              sh "nais_deploy.sh"
