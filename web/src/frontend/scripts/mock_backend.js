@@ -46,13 +46,15 @@ router.get("/informasjon/miljovariabler", (req, res) => {
 	res.json(miljovariabler);
 });
 
+// const brukerBehandlingId = "1000CPZ2U";
+const { brukerBehandlingId } = require("./testdata");
+
 // Ekstrainformasjon - økonomiske opplysninger
 const synligsoknadstruktur = utils.lesMockDataFil("synligsoknadstruktur.json");
-router.get("/soknader/1000B7FGM/synligsoknadstruktur", (req, res) => {
+router.get("/soknader/:brukerBehandlingId/synligsoknadstruktur", (req, res) => {
 	res.json(synligsoknadstruktur);
 });
 
-const brukerBehandlingId = "1000CPZ2U";
 const soknad = utils.lesMockDataFil("soknad.json");
 
 let fakta = soknad.fakta;
