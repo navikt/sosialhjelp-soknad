@@ -11,6 +11,7 @@ import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 import { getPropertyVerdi } from "../../../nav-soknad/utils/faktumUtils";
 
 class Ektefelle extends React.Component<FaktumComponentProps, {}> {
+
 	render() {
 		const { fakta } = this.props;
 		const faktumKey = "familie.sivilstatus.gift.ektefelle";

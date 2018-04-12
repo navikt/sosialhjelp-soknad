@@ -7,7 +7,7 @@ import { State } from "../../redux/reducers";
 import { connect } from "react-redux";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { Faktum } from "../../../nav-soknad/types";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import ArbeidsforholdDetaljer from "./ArbeidsforholdDetaljer";
 import { FeatureToggles } from "../../../featureToggles";
 
@@ -15,7 +15,9 @@ interface StateProps {
 	visArbeidsforhold: boolean;
 }
 
-const Arbeidsforhold: React.StatelessComponent<FaktumComponentProps & StateProps> = ({ fakta, visArbeidsforhold }) => {
+type Props = FaktumComponentProps & StateProps & InjectedIntlProps;
+
+const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, visArbeidsforhold, intl }) => {
 
 	if (!visArbeidsforhold) {
 		return <div />;
@@ -47,7 +49,13 @@ const Arbeidsforhold: React.StatelessComponent<FaktumComponentProps & StateProps
 					)}
 				</ul>
 			)}
-			<TextareaFaktum faktumKey="opplysninger.arbeidsituasjon.kommentarer"/>
+			<TextareaFaktum
+				id="opplysninger_arbeidsituasjon_kommentarer"
+				faktumKey="opplysninger.arbeidsituasjon.kommentarer"
+				placeholder={intl.formatMessage({
+					id: "arbeidsforhold.kommentar.placeholder"
+				})}
+			/>
 		</SysteminfoMedSkjema>
 	</SporsmalFaktum>;
 };
@@ -58,4 +66,4 @@ export default connect((state: State, {}) => {
 		visArbeidsforhold:
 		state.featuretoggles.data[FeatureToggles.arbeidsforhold] === "true",
 	};
-})(Arbeidsforhold);
+})(injectIntl(Arbeidsforhold));

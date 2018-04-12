@@ -13,6 +13,7 @@ import {
 	getFaktumVerdi
 } from "../../../nav-soknad/utils";
 import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
+import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 
 class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -51,14 +52,17 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 							"annet"
 						)}
 					/>
-					{faktumIsSelected(getFaktumVerdi(fakta, hvilkeUtbetalingerAnnet)) ? (
+					<NivaTreSkjema
+						visible={faktumIsSelected(getFaktumVerdi(fakta, hvilkeUtbetalingerAnnet))}
+						size="small"
+					>
 						<TextareaFaktum
 							id="utbetalinger_annet_textarea"
 							faktumKey={`${hvilkeUtbetalingerAnnet}.true.beskrivelse`}
 							maxLength={400}
 							validerFunc={[getMaksLengdeFunc(400)]}
 						/>
-					) : null}
+					</NivaTreSkjema>
 				</SporsmalFaktum>
 			</JaNeiSporsmalFaktum>
 		);

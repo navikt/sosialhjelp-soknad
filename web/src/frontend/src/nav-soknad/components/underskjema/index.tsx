@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as classNames from "classnames";
 import { Collapse } from "react-collapse";
+import { loggFeil } from "../../redux/navlogger/navloggerActions";
 
 interface UnderskjemaProps extends React.Props<any> {
 	visible?: boolean;
@@ -28,11 +29,20 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
 	);
 	const renderContent = () => (
 		<div className={cls}>
-			<div className="underskjema__boks">
-				<div className="underskjema__innhold">{children}</div>
+			<div className={"underskjema__boks " + (visible ? "underskjema__boks__synlig" : "")}>
+				<div className="underskjema__innhold ">
+					{children}
+				</div>
 			</div>
 		</div>
 	);
+
+	let content = (<span/>);
+	try {
+		content = renderContent();
+	} catch (e) {
+		loggFeil("Feil ved rendering av underskjema: " + e.toString());
+	}
 	if (collapsable) {
 		return (
 			<Collapse
@@ -40,7 +50,7 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
 				className="underskjema__wrapper"
 				hasNestedCollapse={true}
 			>
-				{visible ? renderContent() : <div />}
+				{content}
 			</Collapse>
 		);
 	}

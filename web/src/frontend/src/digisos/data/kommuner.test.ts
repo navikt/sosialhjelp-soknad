@@ -8,8 +8,14 @@ describe("kommuner", () => {
 	});
 
 	it("should return a valid 'bosted 'string", () => {
-		let bosted = getBosted("bergen", "bergenhus");
-		expect(bosted).toEqual("Bergen, Bydel Bergenhus");
+		let intlMock = {
+			messages: function() {
+				return {}
+			}
+		};
+
+		let bosted = getBosted("bergen", "bergenhus", intlMock);
+		expect(bosted).toEqual("NAV Bergenhus");
 	});
 
 });

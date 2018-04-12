@@ -2,31 +2,49 @@ import { Kommune, Bydel } from "../../nav-soknad/types";
 
 const bydelsnavn: any = {
 	"oslo": [
-		{ id: "alna", navn: "Bydel Alna" },
-		{ id: "bjerke", navn: "Bydel Bjerke" },
-		{ id: "frogner", navn: "Bydel Frogner" },
-		{ id: "gamleoslo", navn: "Bydel Gamle Oslo" },
-		{ id: "grorud", navn: "Bydel Grorud" },
-		{ id: "grunerlokka", navn: "Bydel Grünerløkka" },
-		{ id: "nordreaker", navn: "Bydel Nordre Aker" },
-		{ id: "nordstrand", navn: "Bydel Nordstrand" },
-		{ id: "sagene", navn: "Bydel Sagene" },
-		{ id: "sthanshaugen", navn: "Bydel St. Hanshaugen" },
-		{ id: "stovner", navn: "Bydel Stovner" },
-		{ id: "sondrenordstrand", navn: "Bydel Søndre Nordstrand" },
-		{ id: "ullern", navn: "Bydel Ullern" },
-		{ id: "vestreaker", navn: "Bydel Vestre Aker" },
-		{ id: "ostonsjo", navn: "Bydel Østensjø" }
+		{ id: "alna", navn: "Alna" },
+		{ id: "bjerke", navn: "Bjerke" },
+		{ id: "frogner", navn: "Frogner" },
+		{ id: "gamleoslo", navn: "Gamle Oslo" },
+		{ id: "grorud", navn: "Grorud" },
+		{ id: "grunerlokka", navn: "Grünerløkka" },
+		{ id: "nordreaker", navn: "Nordre Aker" },
+		{ id: "nordstrand", navn: "Nordstrand" },
+		{ id: "sagene", navn: "Sagene" },
+		{ id: "sthanshaugen", navn: "St. Hanshaugen" },
+		{ id: "stovner", navn: "Stovner" },
+		{ id: "sondrenordstrand", navn: "Søndre Nordstrand" },
+		{ id: "ullern", navn: "Ullern" },
+		{ id: "vestreaker", navn: "Vestre Aker" },
+		{ id: "ostonsjo", navn: "Østensjø" }
 	],
 	"bergen": [
-		{ id: "bergenhus", navn: "Bydel Bergenhus"},
-		{ id: "ytrebygda", navn: "Bydel Ytrebygda"}
+		{ id: "bergenhus", navn: "Bergenhus"},
+		{ id: "ytrebygda", navn: "Ytrebygda"}
 	]
 };
 
+const OsloBydeler: Bydel[] = [
+	// { id: "alna", navn: "Alna" },
+	// { id: "bjerke", navn: "Bjerke" },
+	{ id: "frogner", navn: "Frogner" },
+	// { id: "gamleoslo", navn: "Gamle Oslo" },
+	{ id: "grorud", navn: "Grorud" },
+	{ id: "grunerlokka", navn: "Grünerløkka" },
+	// { id: "nordreaker", navn: "Nordre Aker" },
+	// { id: "nordstrand", navn: "Nordstrand" },
+	// { id: "sagene", navn: "Sagene" },
+	// { id: "sthanshaugen", navn: "St. Hanshaugen" },
+	// { id: "stovner", navn: "Stovner" },
+	// { id: "sondrenordstrand", navn: "Søndre Nordstrand" },
+	// { id: "ullern", navn: "Ullern" },
+	// { id: "vestreaker", navn: "Vestre Aker" },
+	// { id: "ostonsjo", navn: "Østensjø" }
+];
+
 const BergenBydeler: Bydel[] = [
-	{ id: "bergenhus", navn: "Bydel Bergenhus"},
-	{ id: "ytrebygda", navn: "Bydel Ytrebygda"}
+	{ id: "bergenhus", navn: "Bergenhus"},
+	{ id: "ytrebygda", navn: "Ytrebygda"}
 ];
 
 export const Kommuner: Kommune[] = [
@@ -35,9 +53,18 @@ export const Kommuner: Kommune[] = [
 		navn: "Horten"
 	},
 	{
+		id: "askoy",
+		navn: "Askøy"
+	},
+	{
 		id: "bergen",
 		navn: "Bergen",
 		bydeler: BergenBydeler
+	},
+	{
+		id: "oslo",
+		navn: "Oslo",
+		bydeler: OsloBydeler
 	}
 ];
 
@@ -54,9 +81,14 @@ export function getBydel(kommuneId: string, bydelId: string): string {
 	return bydel ? bydel.navn : "";
 }
 
-export function getBosted(kommuneId: string, bydelId?: string): string {
+export function getBosted(kommuneId: string, bydelId?: string, intl?: any): string {
+	const kommune = getKommune(kommuneId);
 	const bydel = getBydel(kommuneId, bydelId);
-	return getKommune(kommuneId) + (bydel === "" ? "" : ", ") + bydel;
+	if (bydel === "") {
+		return `NAV ${kommune}`;
+	} else {
+		return `NAV ${bydel}`;
+	}
 }
 
 export const Horten = Kommuner.find(k => k.id === "horten");
