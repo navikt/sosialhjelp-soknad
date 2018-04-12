@@ -108,7 +108,7 @@ node("a34apvl00071") {
                     try {
                         sh("git tag -a ${releaseVersion} -m ${releaseVersion} HEAD && git push --tags https://navikt-jenkins:${GIT_PASSWORD}@github.com/navikt/soknadsosialhjelp.git")
                     } catch (Exception e) {
-                        notifyFailed("Git tag feilet, e, env.BUILD_URL)
+                        notifyFailed("Git tag feilet", e, env.BUILD_URL)
                     }
                 }
             }
