@@ -4,14 +4,18 @@ import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
 const MAX_CHARS = 500;
 
-const Begrunnelse: React.StatelessComponent = () => (
+const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 	<DigisosSkjemaSteg steg={DigisosSteg.begrunnelsebolk}>
 		<SporsmalFaktum faktumKey="begrunnelse.hvorfor">
 			<TextareaFaktum
 				id="begrunnelse_soknad_textarea"
+				placeholder={intl.formatMessage({
+					id: "begrunnelse.hvorfor.placeholder"
+				})}
 				textareaClass="skjema-textarea--large"
 				faktumKey="begrunnelse.hvorfor"
 				labelId="begrunnelse.hvorfor.label"
@@ -22,6 +26,9 @@ const Begrunnelse: React.StatelessComponent = () => (
 		<SporsmalFaktum faktumKey="begrunnelse.hva">
 			<TextareaFaktum
 				id="hva_sokes_det_om_textarea"
+				placeholder={intl.formatMessage({
+					id: "begrunnelse.hva.placeholder"
+				})}
 				validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
 				textareaClass="skjema-textarea--large"
 				faktumKey="begrunnelse.hva"
@@ -32,4 +39,4 @@ const Begrunnelse: React.StatelessComponent = () => (
 	</DigisosSkjemaSteg>
 );
 
-export default Begrunnelse;
+export default injectIntl(Begrunnelse);

@@ -10,6 +10,7 @@ deploy = "Unknown"
 releaseVersion = "Unknown"
 isMasterBuild = (env.BRANCH_NAME == 'master')
 isNaisBuild = env.BRANCH_NAME.contains('nais')
+isEkstraKommunerBuild = (env.BRANCH_NAME == 'ekstra-kommuner')
 
 project = "navikt"
 repoName = "soknadsosialhjelp"
@@ -134,26 +135,26 @@ node("a34apvl00071") {
         }
     }
 }
-
-if (isMasterBuild) {
-    stage("Deploy app til t1") {
-        callback = "${env.BUILD_URL}input/Deploy/"
-        node {
-            deploy = common.deployApp(application, releaseVersion, "t1", callback, author).key
-        }
-
-        try {
-            timeout(time: 30, unit: 'MINUTES') {
-                input id: 'deploy', message: "deployer ${deploy}, deploy OK?"
-            }
-        } catch (Exception e) {
-            msg = "Deploy feilet [" + deploy + "](https://jira.adeo.no/browse/" + deploy + ")"
-            node {
-                notifyFailed(msg, e, env.BUILD_URL)
-            }
-        }
-    }
-}
+//if (isEkstraKommunerBuild) {
+    // if (isMasterBuild) {
+//    stage("Deploy app til t1") {
+//        callback = "${env.BUILD_URL}input/Deploy/"
+//        node {
+//            deploy = common.deployApp(application, releaseVersion, "t1", callback, author).key
+//        }
+//
+//        try {
+//            timeout(time: 30, unit: 'MINUTES') {
+//                input id: 'deploy', message: "deployer ${deploy}, deploy OK?"
+//            }
+//        } catch (Exception e) {
+//            msg = "Deploy feilet [" + deploy + "](https://jira.adeo.no/browse/" + deploy + ")"
+//            node {
+//                notifyFailed(msg, e, env.BUILD_URL)
+//            }
+//        }
+//    }
+//}
 
 // Kommenterer ut da vi ikke har openam konfig p? nye jenkinsen
 //if (isMasterBuild) {

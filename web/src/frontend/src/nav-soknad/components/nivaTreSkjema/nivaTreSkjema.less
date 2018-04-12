@@ -6,6 +6,11 @@
 	position: relative;
 	padding-left: 1.6rem;
 
+  	&__small {
+	  padding-top: 0;
+	  padding-bottom: 0.2rem;
+	}
+
 	&__innhold:before {
 		content: "";
 		width: 1px;
@@ -14,5 +19,15 @@
 		top: 0rem;
 		bottom: 0.5rem;
 		left: 0.5rem;
+	}
+
+  	&__innhold {
+	  opacity: 0;
+	  transition: opacity 1s;
+	  transition-delay: 0.2s;
+	}
+
+  	&__innhold__ekspandert {
+	  opacity: 1;
 	}
 }

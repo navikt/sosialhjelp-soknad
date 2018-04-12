@@ -68,10 +68,12 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 		let id_radio_nei = null;
 		if (this.props.id) {
 			id_radio_ja = this.props.id + "_radio_ja";
-			id_radio_nei = this.props.id + "_radio_neo";
+			id_radio_nei = this.props.id + "_radio_nei";
 		} else {
-			id_radio_ja = faktumKey + "_" + this.randomId() + "_radio_ja";
-			id_radio_nei = faktumKey + "_" + this.randomId() + "_radio_nei";
+			id_radio_ja = faktumKey.replace(/\./g, "_") + "_radio_ja";
+			id_radio_ja = id_radio_ja.replace(/__/g, "_");
+			id_radio_nei = faktumKey.replace(/\./g, "_") + "_radio_nei";
+			id_radio_nei = id_radio_nei.replace(/__/g, "_");
 		}
 
 		return (
@@ -91,9 +93,6 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 		);
 	}
 
-	private randomId() {
-		return Math.round(Math.random() * 1000000);
-	}
 }
 
 export default connect((state: SoknadAppState, props: OwnProps) => {
