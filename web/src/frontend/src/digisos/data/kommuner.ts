@@ -52,10 +52,10 @@ export const Kommuner: Kommune[] = [
 		id: "horten",
 		navn: "Horten"
 	},
-	{
-		id: "askoy",
-		navn: "Askøy"
-	},
+	//{
+	//	id: "askoy",
+	//	navn: "Askøy"
+	//},
 	{
 		id: "bergen",
 		navn: "Bergen",
