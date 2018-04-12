@@ -1,22 +1,25 @@
 package no.nav.sbl.soknadsosialhjelp;
 
+import no.nav.modig.testcertificates.TestCertificates;
 import no.nav.sbl.dialogarena.common.jetty.Jetty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
 
 import static no.nav.modig.lang.collections.FactoryUtils.gotKeypress;
 import static no.nav.modig.lang.collections.RunnableUtils.first;
 import static no.nav.modig.lang.collections.RunnableUtils.waitFor;
 import static no.nav.sbl.dialogarena.common.jetty.Jetty.usingWar;
-import static no.nav.sbl.dialogarena.test.path.FilesAndDirs.WEBAPP_SOURCE;
 
-public class StartJetty {
-    public static final int PORT = 8189;
-    private static final Logger logger = LoggerFactory.getLogger(StartJetty.class);
+public class DevStartJetty {
+    public static final int PORT = 8080;
+    private static final Logger logger = LoggerFactory.getLogger(DevStartJetty.class);
 
     public static void main(String[] args) throws Exception {
+        TestCertificates.setupKeyAndTrustStore();
         configureLocalConfig();
-        Jetty jetty = usingWar(WEBAPP_SOURCE)
+        Jetty jetty = usingWar(new File("web/src/main/resources/webapp"))
                 .at("/soknadsosialhjelp")
                 .port(PORT)
                 .buildJetty();
