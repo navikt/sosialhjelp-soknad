@@ -41,9 +41,10 @@ class InputFaktum extends React.Component<Props, {}> {
 			property
 		} = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey, property);
+		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g,"_");
 		return (
 			<Input
-				id={this.props.id ? this.props.id : faktumKey}
+				id={id}
 				className="input--xxl faktumInput"
 				inputRef={(c: any) =>
 					this.props.inputRef ? this.props.inputRef(c) : null}
