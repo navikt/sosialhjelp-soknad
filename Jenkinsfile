@@ -9,8 +9,6 @@ author = "Unknown"
 deploy = "Unknown"
 releaseVersion = "Unknown"
 isMasterBuild = (env.BRANCH_NAME == 'master')
-isNaisBuild = env.BRANCH_NAME.contains('nais')
-isEkstraKommunerBuild = (env.BRANCH_NAME == 'ekstra-kommuner')
 
 project = "navikt"
 repoName = "soknadsosialhjelp"
@@ -91,12 +89,10 @@ node("a34apvl00071") {
 
     }
 
-    if (isNaisBuild) {
-        deployToNaisEnvironment = sh script: './determine_deploy.sh', returnStdout: true
-    }
+    deployToNaisEnvironment = sh script: './determine_deploy.sh', returnStdout: true
 
     echo "${params.DeployTilNexus} deploy til nexus"
-    if (isMasterBuild || isNaisBuild || params.DeployTilNexus == "true") {
+    if (isMasterBuild || params.DeployTilNexus == "true" || deployToNaisEnvironment != "") {
         stage('Deploy nexus') {
             try {
                 // TODO: Vent med deploy til etter tag, men ta en install.
@@ -109,7 +105,11 @@ node("a34apvl00071") {
         stage("Git tag") {
             withEnv(['HTTPS_PROXY=http://webproxy-utvikler.nav.no:8088']) {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'navikt-jenkins-github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
-                    sh("git tag -a ${releaseVersion} -m ${releaseVersion} HEAD && git push --tags https://navikt-jenkins:${GIT_PASSWORD}@github.com/navikt/soknadsosialhjelp.git")
+                    try {
+                        sh("git tag -a ${releaseVersion} -m ${releaseVersion} HEAD && git push --tags https://navikt-jenkins:${GIT_PASSWORD}@github.com/navikt/soknadsosialhjelp.git")
+                    } catch (Exception e) {
+                        notifyFailed("Git tag feilet, e, env.BUILD_URL)
+                    }
                 }
             }
         }
@@ -117,61 +117,32 @@ node("a34apvl00071") {
 
     if (deployToNaisEnvironment != "") {
         stage("Build Docker and Update Nais") {
-            dir("web/target/appassembler") {
-                sh "docker build . -t docker.adeo.no:5000/${application}:${releaseVersion}"
-                sh "docker push docker.adeo.no:5000/${application}:${releaseVersion}"
-            }
-            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexusUploader', usernameVariable: 'nexusUploaderUsername', passwordVariable: 'nexusUploaderPassword']]) {
-                sh "curl -v -s -S --user \"${nexusUploaderUsername}:${nexusUploaderPassword}\" --upload-file web/nais.yaml \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/nais.yaml\""
-                sh "curl -v -s -S --user \"${nexusUploaderUsername}:${nexusUploaderPassword}\" --upload-file config/src/main/resources/openam/app-policies.xml \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/am/app-policies.xml\""
-                sh "curl -v -s -S --user \"${nexusUploaderUsername}:${nexusUploaderPassword}\" --upload-file config/src/main/resources/openam/not-enforced-urls.txt \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/am/not-enforced-urls.txt\""
+            try {
+                dir("web/target/appassembler") {
+                    sh "docker build . -t docker.adeo.no:5000/${application}:${releaseVersion}"
+                    sh "docker push docker.adeo.no:5000/${application}:${releaseVersion}"
+                }
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexusUploader', usernameVariable: 'nexusUploaderUsername', passwordVariable: 'nexusUploaderPassword']]) {
+                    sh "curl -v -s -S --user \"${nexusUploaderUsername}:${nexusUploaderPassword}\" --upload-file web/nais.yaml \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/nais.yaml\""
+                    sh "curl -v -s -S --user \"${nexusUploaderUsername}:${nexusUploaderPassword}\" --upload-file config/src/main/resources/openam/app-policies.xml \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/am/app-policies.xml\""
+                    sh "curl -v -s -S --user \"${nexusUploaderUsername}:${nexusUploaderPassword}\" --upload-file config/src/main/resources/openam/not-enforced-urls.txt \"https://repo.adeo.no/repository/raw/nais/${application}/${releaseVersion}/am/not-enforced-urls.txt\""
+                }
+            } catch (Exception e) {
+                notifyFailed("Build Docker and Update Nais Failed", e, env.BUILD_URL)
             }
         }
         stage("Deploy Nais") {
-            echo "Deploying to ${deployToNaisEnvironment}."
-            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'domenebruker', usernameVariable: 'domenebrukernavn', passwordVariable: 'domenepassord']]) {
-                sh "./nais_deploy.sh '${application}' '${deployToNaisEnvironment}' '${releaseVersion}' '${domenebrukernavn}' '${domenepassord}'"
+            try {
+                echo "Deploying to ${deployToNaisEnvironment}."
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'domenebruker', usernameVariable: 'domenebrukernavn', passwordVariable: 'domenepassord']]) {
+                    sh "./nais_deploy.sh '${application}' '${deployToNaisEnvironment}' '${releaseVersion}' '${domenebrukernavn}' '${domenepassord}'"
+                }
+            } catch (Exception e) {
+                notifyFailed("Deploy Nais Failed", e, env.BUILD_URL)
             }
         }
     }
 }
-//if (isEkstraKommunerBuild) {
-    // if (isMasterBuild) {
-//    stage("Deploy app til t1") {
-//        callback = "${env.BUILD_URL}input/Deploy/"
-//        node {
-//            deploy = common.deployApp(application, releaseVersion, "t1", callback, author).key
-//        }
-//
-//        try {
-//            timeout(time: 30, unit: 'MINUTES') {
-//                input id: 'deploy', message: "deployer ${deploy}, deploy OK?"
-//            }
-//        } catch (Exception e) {
-//            msg = "Deploy feilet [" + deploy + "](https://jira.adeo.no/browse/" + deploy + ")"
-//            node {
-//                notifyFailed(msg, e, env.BUILD_URL)
-//            }
-//        }
-//    }
-//}
-
-// Kommenterer ut da vi ikke har openam konfig p? nye jenkinsen
-//if (isMasterBuild) {
-//    stage('Integrasjonstester') {
-//        node("master") {
-//            try {
-//                dir('web/src/frontend') {
-//                    sh("chmod u+x ./selenium/phantomjs")
-//                    sh("node nightwatch.js --env phantomjs --url ${testurl}  --username ${env.OPENAM_USERNAME} --password ${env.OPENAM_PASSWORD} --login true")
-//                }
-//            } catch (Exception e) {
-//                notifyFailed('Integrasjonstester feilet', e)
-//                step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.int.xml'])
-//            }
-//        }
-//    }
-//}
 
 node {
     returnOk('All good', env.BUILD_URL)
