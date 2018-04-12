@@ -1,0 +1,27 @@
+image: docker.adeo.no:5000/soknadsosialhjelp
+prometheus:
+  enabled: true
+  path: /prometheus
+healthcheck:
+  liveness:
+    path: /soknadsosialhjelp/internal/isAlive
+    initialDelay: 60
+    timeout: 1
+    periodSeconds: 10
+    failureThreshold: 10
+  readiness:
+    path: /soknadsosialhjelp/internal/isAlive
+    initialDelay: 60
+    timeout: 1
+resources:
+  limits:
+    cpu: 1
+    memory: 256Mi
+fasitResources:
+  used:
+  - alias: appres.cms
+    resourceType: baseurl
+  - alias: soknadsapi
+    resourceType: baseurl
+  - alias: suspender
+    resourceType: credential

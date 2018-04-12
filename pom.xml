@@ -18,7 +18,7 @@
 
     <modules>
         <module>config</module>
-        <module>ear</module>
+        <!-- <module>ear</module> -->
         <module>web</module>
     </modules>
 
