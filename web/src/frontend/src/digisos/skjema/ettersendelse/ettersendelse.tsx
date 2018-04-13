@@ -29,17 +29,11 @@ interface OwnState {
 	vedleggEkspandert: boolean;
 }
 
-/*
- * TODO:
- * - Gjøre rest kall mot backend for å få nytt
- *
- *
- */
 class Ettersendelse extends React.Component<Props, OwnState> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			vedleggEkspandert: true // false TODO kommentere inn
+			vedleggEkspandert: false;
 		};
 	}
 
