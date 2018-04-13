@@ -11,13 +11,6 @@ var rimraf = require('rimraf');
  *
  */
 
-// var DATA_DIR = "./scripts/mock_data";
-// var VEDLEGG_ID = "9146";
-
-const mockManglendeVedlegg = {
-
-};
-
 const { nyBehandlingsId, brukerBehandlingId } = require("./testdata");
 
 // Opprett ny søknad for å ettersende vedlegg
