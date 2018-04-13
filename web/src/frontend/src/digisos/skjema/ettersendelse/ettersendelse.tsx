@@ -33,7 +33,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			vedleggEkspandert: false;
+			vedleggEkspandert: false
 		};
 	}
 
