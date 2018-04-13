@@ -14,10 +14,13 @@ import Knapp from "nav-frontend-knapper";
 import BannerEttersendelse from "./bannerEttersendelse";
 import { FeatureToggles } from "../../../featureToggles";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
+import { lesEttersendelsesVedlegg } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 
 interface OwnProps {
 	fakta: Faktum[];
 	visEttersendelse: boolean;
+	manglendeVedlegg: any[];
+	brukerbehandlingId: string;
 }
 
 type Props = OwnProps & SynligeFaktaProps & DispatchProps & InjectedIntlProps;
@@ -26,16 +29,34 @@ interface OwnState {
 	vedleggEkspandert: boolean;
 }
 
+/*
+ * TODO:
+ * - Gjøre rest kall mot backend for å få nytt
+ *
+ *
+ */
 class Ettersendelse extends React.Component<Props, OwnState> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			vedleggEkspandert: false
+			vedleggEkspandert: true // false TODO kommentere inn
 		};
 	}
 
+	componentDidMount() {
+		let brukerbehandlingId = this.props.brukerbehandlingId;
+		if (!brukerbehandlingId) {
+			// Under utvikling er ikke brukerbehandlingId på redux state, så vi leser den fra url:
+			const match = window.location.pathname.match(/\/skjema\/(.*)\/ettersendelse/);
+			if (match) {
+				brukerbehandlingId = match[ 1 ];
+			}
+		}
+		this.props.dispatch(lesEttersendelsesVedlegg(brukerbehandlingId));
+	}
+
 	toggleVedlegg() {
-		this.setState({ vedleggEkspandert: !this.state.vedleggEkspandert});
+		this.setState({ vedleggEkspandert: !this.state.vedleggEkspandert });
 	}
 
 	render() {
@@ -58,11 +79,12 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 				{visEttersendeFeatureToggle && (
 					<div className="blokk-center">
 						<p className="ettersendelse ingress">
-							Du må gi beskjed hvis den økonomiske situasjonen din endrer seg etter at du har sendt søknaden.
+							Du må gi beskjed hvis den økonomiske situasjonen din endrer seg etter at du har sendt
+							søknaden.
 						</p>
 
 						<div className="avsnitt_med_marger">
-							<div className="venstemarg">
+							<div className="venstremarg">
 								<Icon kind="stegindikator__hake" className="ettersendelse__ikon"/>
 							</div>
 							<div className="avsnitt">
@@ -70,17 +92,18 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 								<p>07.02.2018</p>
 							</div>
 
-							<div className="hoyremarg hoyremarg__ikon">
+							<div className="hoyremarg hoyremarg__ikon hoyremarg__ikon__hover">
 								<DigisosIkon navn="printer" className="ettersendelse__ikon"/>
 							</div>
 						</div>
 
-						<div className="avsnitt_med_marger">
-							<div className="venstemarg">
+						<div className="avsnitt_med_marger vedlegg_mangler_avsnitt">
+							<div className="venstremarg">
 								<DigisosIkon navn="advarselSirkel" className="ettersendelse__ikon"/>
 							</div>
 							<div className="avsnitt">
-								<h3 onClick={() => this.toggleVedlegg()} style={{cursor: "pointer"}}>3 vedlegg mangler</h3>
+								<h3 onClick={() => this.toggleVedlegg()} style={{ cursor: "pointer" }}>3 vedlegg
+									mangler</h3>
 							</div>
 							<div
 								className="hoyremarg hoyremarg__ikon"
@@ -98,25 +121,25 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 							className={"ettersendelse__vedlegg " +
 							(this.state.vedleggEkspandert ? "ettersendelse__vedlegg__ekspandert" : "")}
 						>
-							<EttersendelseVedlegg>
-								<h3>Kontooversikt med saldo for brukskonto (siste måned)</h3>
-							</EttersendelseVedlegg>
+							{this.props.manglendeVedlegg && this.props.manglendeVedlegg.map((vedlegg) => {
+								return (
+									<EttersendelseVedlegg
+										dispatch={this.props.dispatch}
+										vedlegg={vedlegg}
+										key={vedlegg.vedleggId}
+									>
+										<h3>{vedlegg.skjemaNummer}</h3>
+									</EttersendelseVedlegg>
+								);
+							})}
 
-							<EttersendelseVedlegg>
-								<h3>Skattemelding og skatteoppgjør</h3>
-							</EttersendelseVedlegg>
-
-							<EttersendelseVedlegg>
-								<h3>Lønnslipp (siste måned)</h3>
-							</EttersendelseVedlegg>
-
-							<EttersendelseVedlegg>
+							<EttersendelseVedlegg dispatch={this.props.dispatch}>
 								<h3>Annen dokumentasjon</h3>
 								<p>Hvis du har andre vedlegg du ønsker å gi oss, kan de lastes opp her.</p>
 							</EttersendelseVedlegg>
 
 							<div className="avsnitt_med_marger">
-								<div className="venstemarg"/>
+								<div className="venstremarg"/>
 								<div className="avsnitt avsnitt__sentrert">
 									<Knapp
 										type="hoved"
@@ -130,7 +153,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 						</Collapse>
 
 						<div className="avsnitt_med_marger">
-							<div className="venstemarg">
+							<div className="venstremarg">
 								<DigisosIkon navn="snakkebobler" className="ettersendelse__ikon"/>
 							</div>
 							<div className="avsnitt">
@@ -145,7 +168,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 						</div>
 
 						<div className="avsnitt_med_marger">
-							<div className="venstemarg">
+							<div className="venstremarg">
 								<SVG
 									className="ettersendelse__ikon"
 									src={"/soknadsosialhjelp/statisk/bilder/ikon_konvolutt.svg"}
@@ -174,6 +197,8 @@ export default connect((state: State, {}) => {
 	return {
 		fakta: state.fakta.data,
 		synligefakta: state.synligefakta,
-		visEttersendelse: state.featuretoggles.data[FeatureToggles.ettersendvedlegg] === "true",
+		brukerbehandlingId: state.soknad.data.brukerBehandlingId,
+		visEttersendelse: state.featuretoggles.data[ FeatureToggles.ettersendvedlegg ] === "true",
+		manglendeVedlegg: state.ettersendelse.data
 	};
 })(injectIntl(Ettersendelse));

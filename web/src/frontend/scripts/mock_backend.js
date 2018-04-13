@@ -59,17 +59,8 @@ const soknad = utils.lesMockDataFil("soknad.json");
 
 let fakta = soknad.fakta;
 
-// Søknadsressurser
-router.post("/soknader", (req, res) => {
-	res.json({
-		brukerBehandlingId
-	});
-});
-
-// Hent ut søknad
-// router.get("/soknader/:brukerBehandlingId?lang=nb_NO", (req, res) => {
-// 	console.log("sss");
-// });
+const ettersendelseRouter = require("./ettersendelse_ressurser");
+app.use("/", ettersendelseRouter);
 
 const mockFeatures = {
 	"feature.frontend.sosialhjelp.live": "true",
@@ -98,7 +89,9 @@ router.get("/soknader/:brukerBehandlingId", (req, res) => {
 	} else {
 		console.log("Mock backend: søknad");
 		if (req.accepts("application/json")) {
-			res.json(utils.lesMockDataFil("soknad.json"));
+			const soknadData = utils.lesMockDataFil("soknad.json");
+			soknadData.brukerBehandlingId = req.params["brukerBehandlingId"] + "";
+			res.json(soknadData);
 		} else {
 			res.status(406);
 			res.json({ feil: "Forventer Accept: application/json i header" });
@@ -190,7 +183,6 @@ router.post("/informasjon/actions/logg", (req, res) => {
 app.use("/", router);
 
 const vedleggRouter = require("./vedlegg_ressurser");
-
 app.use("/", vedleggRouter);
 
 app.listen(port);
