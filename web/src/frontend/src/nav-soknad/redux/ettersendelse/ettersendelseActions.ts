@@ -8,6 +8,13 @@ const slettEttersendtVedlegg = (vedleggId: string, filId: string): Ettersendelse
 	};
 };
 
+const lagEttersendelse = (brukerbehandlingId: string): EttersendelseActionTypes => {
+	return {
+		type: EttersendelseActionTypeKeys.NY,
+		brukerbehandlingId
+	};
+};
+
 const lastOppEttersendelseVedlegg = (
 	vedleggId: number,
 	formData: FormData
@@ -16,6 +23,13 @@ const lastOppEttersendelseVedlegg = (
 		type: EttersendelseActionTypeKeys.LAST_OPP,
 		vedleggId,
 		formData
+	};
+};
+
+const lagEttersendelseOk = (brukerbehandlingId: string): EttersendelseActionTypes => {
+	return {
+		type: EttersendelseActionTypeKeys.NY_OK,
+		brukerbehandlingId
 	};
 };
 
@@ -39,10 +53,20 @@ const lesEttersendelsesVedlegg = (brukerbehandlingId: string): EttersendelseActi
 	};
 };
 
+const sendEttersendelse = (brukerbehandlingId: string): EttersendelseActionTypes => {
+	return {
+		type: EttersendelseActionTypeKeys.SEND,
+		brukerbehandlingId
+	};
+};
+
 export {
+	lagEttersendelse,
+	lagEttersendelseOk,
 	lesEttersendelsesVedlegg,
 	lastOppEttersendelseVedlegg,
 	lastOppEttersendtVedleggOk,
 	slettEttersendtVedlegg,
-	lesEttersendteVedlegg
+	lesEttersendteVedlegg,
+	sendEttersendelse
 };

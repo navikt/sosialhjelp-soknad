@@ -1,9 +1,12 @@
 import { REST_STATUS } from "../../types/restTypes";
 
 export enum EttersendelseActionTypeKeys {
+	NY = "ettersendelse/NY",
+	NY_OK = "ettersendelse/NY_OK",
 	LAST_OPP = "ettersendelse/LAST_OPP",
 	LAST_OPP_OK = "ettersendelse/LAST_OPP_OK",
 	LAST_OPP_FEILET = "ettersendelse/LAST_OPP_FEILET",
+	SEND = "ettersendelse/SEND",
 
 	NYTT_VEDLEGG = "ettersendelse/NYTT_VEDLEGG",
 	OPPDATERT_VEDLEGG = "ettersendelse/OPPDATERT_VEDLEGG",
@@ -26,6 +29,16 @@ export interface EttersendteVedleggState {
 	opplastingStatus: REST_STATUS;
 }
 
+export interface LagEttersendelseAction {
+	type: EttersendelseActionTypeKeys.NY;
+	brukerbehandlingId: string;
+}
+
+export interface SendEttersendelseAction {
+	type: EttersendelseActionTypeKeys.SEND;
+	brukerbehandlingId: string;
+}
+
 export interface LastOppEttersendtVedleggAction {
 	type: EttersendelseActionTypeKeys.LAST_OPP;
 	vedleggId: number;
@@ -44,11 +57,14 @@ export interface LesEttersendelsesVedleggAction {
 }
 
 export type EttersendelseActionTypes =
-	LastOppEttersendelseAction
+	LagEttersendelseAction
+	| LagEttersendelseOkAction
+	| LastOppEttersendelseAction
 	| LastOppEttersendelseOkAction
 	| LessEttersendteVedleggAction
 	| SlettEttersendtVedleggAction
 	| LesEttersendelsesVedleggAction
+	| SendEttersendelseAction
 	| OtherAction;
 
 interface LessEttersendteVedleggAction {
@@ -66,6 +82,11 @@ export interface LastOppEttersendelseOkAction {
 	type: EttersendelseActionTypeKeys.LAST_OPP_OK;
 }
 
+export interface LagEttersendelseOkAction {
+	type: EttersendelseActionTypeKeys.NY_OK;
+	brukerbehandlingId: string;
+}
+
 export interface OtherAction {
 	type: EttersendelseActionTypeKeys.OTHER_ACTION;
 }
@@ -74,4 +95,5 @@ export interface EttersendelseState {
 	data: any[];
 	restStatus: REST_STATUS;
 	opplastingStatus: REST_STATUS;
+	brukerbehandlingId: string;
 }
