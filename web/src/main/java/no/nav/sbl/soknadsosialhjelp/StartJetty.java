@@ -20,10 +20,10 @@ public class StartJetty {
             configureLocalConfig();
         }
         Jetty jetty = new Jetty.JettyBuilder()
-                .at("/soknadsosialhjelp")
+                .at("/soknadsosialhjelp-ny")
                 .port(PORT)
                 .buildJetty();
-        logger.info("http://127.0.0.1:" + PORT + "/soknadsosialhjelp/informasjon");
+        logger.info("http://127.0.0.1:" + PORT + "/soknadsosialhjelp-ny/informasjon");
         jetty.startAnd(first(waitFor(gotKeypress())).then(jetty.stop));
     }
 

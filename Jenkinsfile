@@ -4,7 +4,7 @@ import common
 
 def common = new common()
 
-application = "soknadsosialhjelp"
+application = "soknadsosialhjelp-ny"
 author = "Unknown"
 deploy = "Unknown"
 releaseVersion = "Unknown"
@@ -49,9 +49,9 @@ node("a34apvl00071") {
     }
 
     if (!isMasterBuild) {
-        stage('Merge master') {
-            sh "git merge origin/master"
-        }
+//        stage('Merge master') {
+//            sh "git merge origin/master"
+//        }
     }
 
     stage('Set version') {
