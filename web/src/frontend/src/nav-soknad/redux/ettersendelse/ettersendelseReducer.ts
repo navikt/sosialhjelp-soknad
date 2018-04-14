@@ -5,7 +5,8 @@ import { Reducer } from "../reduxTypes";
 const initialState: EttersendelseState = {
 	restStatus: REST_STATUS.INITIALISERT,
 	opplastingStatus: REST_STATUS.OK,
-	data: []
+	data: [],
+	brukerbehandlingId: null
 };
 
 const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes> = (
@@ -13,6 +14,12 @@ const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes
 	action
 ): EttersendelseState => {
 	switch (action.type) {
+		case EttersendelseActionTypeKeys.NY_OK: {
+			return {
+				...state,
+				brukerbehandlingId: action.brukerbehandlingId
+			};
+		}
 		case EttersendelseActionTypeKeys.LAST_OPP: {
 			return {
 				...state,

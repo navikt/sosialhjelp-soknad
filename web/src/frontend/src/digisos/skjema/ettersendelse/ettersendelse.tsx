@@ -14,12 +14,13 @@ import Knapp from "nav-frontend-knapper";
 import BannerEttersendelse from "./bannerEttersendelse";
 import { FeatureToggles } from "../../../featureToggles";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
-import { lesEttersendelsesVedlegg } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
+import { lagEttersendelse, sendEttersendelse } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 
 interface OwnProps {
 	fakta: Faktum[];
 	visEttersendelse: boolean;
 	manglendeVedlegg: any[];
+	brukerbehandlingskjedeId: string;
 	brukerbehandlingId: string;
 }
 
@@ -38,19 +39,23 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	}
 
 	componentDidMount() {
-		let brukerbehandlingId = this.props.brukerbehandlingId;
-		if (!brukerbehandlingId) {
+		let brukerbehandlingskjedeId = this.props.brukerbehandlingskjedeId;
+		if (!brukerbehandlingskjedeId) {
 			// Under utvikling er ikke brukerbehandlingId på redux state, så vi leser den fra url:
 			const match = window.location.pathname.match(/\/skjema\/(.*)\/ettersendelse/);
 			if (match) {
-				brukerbehandlingId = match[ 1 ];
+				brukerbehandlingskjedeId = match[ 1 ];
 			}
 		}
-		this.props.dispatch(lesEttersendelsesVedlegg(brukerbehandlingId));
+		this.props.dispatch(lagEttersendelse(brukerbehandlingskjedeId));
 	}
 
 	toggleVedlegg() {
 		this.setState({ vedleggEkspandert: !this.state.vedleggEkspandert });
+	}
+
+	sendEttersendelse() {
+		this.props.dispatch(sendEttersendelse(this.props.brukerbehandlingId));
 	}
 
 	render() {
@@ -127,17 +132,13 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 								);
 							})}
 
-							<EttersendelseVedlegg dispatch={this.props.dispatch}>
-								<h3>Annen dokumentasjon</h3>
-								<p>Hvis du har andre vedlegg du ønsker å gi oss, kan de lastes opp her.</p>
-							</EttersendelseVedlegg>
-
 							<div className="avsnitt_med_marger">
 								<div className="venstremarg"/>
 								<div className="avsnitt avsnitt__sentrert">
 									<Knapp
 										type="hoved"
 										htmlType="submit"
+										onClick={() => this.sendEttersendelse()}
 									>
 										Send vedlegg
 									</Knapp>
@@ -191,8 +192,9 @@ export default connect((state: State, {}) => {
 	return {
 		fakta: state.fakta.data,
 		synligefakta: state.synligefakta,
-		brukerbehandlingId: state.soknad.data.brukerBehandlingId,
+		brukerbehandlingskjedeId: state.soknad.data.brukerBehandlingId,
 		visEttersendelse: state.featuretoggles.data[ FeatureToggles.ettersendvedlegg ] === "true",
-		manglendeVedlegg: state.ettersendelse.data
+		manglendeVedlegg: state.ettersendelse.data,
+		brukerbehandlingId: state.ettersendelse.brukerbehandlingId
 	};
 })(injectIntl(Ettersendelse));
