@@ -9,21 +9,30 @@ import { connect } from "react-redux";
 import { State } from "../../redux/reducers";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import { downloadAttachedFile } from "../../../nav-soknad/utils/rest-utils";
+import NavFrontendSpinner from "nav-frontend-spinner";
+import { REST_STATUS } from "../../../nav-soknad/types";
 
 interface OwnProps {
 	children: React.ReactNode;
 	vedlegg?: any;
+	restStatus?: string;
 }
 
+interface OwnState {
+	filnavn: string;
+}
 export type Props = OwnProps & DispatchProps;
 
-class EttersendelseVedlegg extends React.Component<Props, {}> {
+class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
 	leggTilVedleggKnapp: HTMLInputElement;
 
 	constructor(props: Props) {
 		super(props);
 		this.handleFileUpload = this.handleFileUpload.bind(this);
+		this.state = {
+			filnavn: null
+		};
 	}
 
 	removeFile(filId: string, vedleggId: string) {
@@ -36,6 +45,7 @@ class EttersendelseVedlegg extends React.Component<Props, {}> {
 		}
 		const formData = new FormData();
 		formData.append("file", files[ 0 ], files[ 0 ].name);
+		this.setState({filnavn: files[ 0 ].name});
 		const vedleggId = this.props.vedlegg.vedleggId;
 		this.props.dispatch(lastOppEttersendelseVedlegg(vedleggId, formData));
 	}
@@ -65,6 +75,7 @@ class EttersendelseVedlegg extends React.Component<Props, {}> {
 						accept="image/jpeg,image/png,application/pdf"
 					/>
 				</div>
+
 				{this.props.vedlegg && this.props.vedlegg.filer.map((fil: any) => {
 						const vedleggId = this.props.vedlegg.vedleggId;
 						const lastNedUrl = `sendsoknad/ettersendelsevedlegg/vedlegg/${vedleggId}?filId=${fil.filId}`;
@@ -89,6 +100,22 @@ class EttersendelseVedlegg extends React.Component<Props, {}> {
 							</div>
 						);
 					}
+				)}
+
+				{this.state.filnavn && this.props.restStatus === REST_STATUS.PENDING && (
+					<span>
+						<div className="avsnitt_med_marger" key={this.state.filnavn}>
+								<div className="venstremarg"/>
+								<div className="avsnitt">
+									{this.state.filnavn}
+								</div>
+								<div className="hoyremarg">
+									<div className="ettersendelse__ikon hoyremarg__spinner">
+										<NavFrontendSpinner type="XS" />
+									</div>
+								</div>
+							</div>
+					</span>
 				)}
 
 			</span>

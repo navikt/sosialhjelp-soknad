@@ -24,6 +24,7 @@ interface OwnProps {
 	brukerbehandlingskjedeId: string;
 	brukerbehandlingId: string;
 	restStatus: REST_STATUS;
+	opplastingStatus: REST_STATUS;
 }
 
 type Props = OwnProps & SynligeFaktaProps & DispatchProps & InjectedIntlProps;
@@ -59,13 +60,17 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	}
 
 	sendEttersendelse() {
-		const antallOpplastedeFiler = this.props.manglendeVedlegg
-				.map((vedlegg: any) => vedlegg.filer.length)
-				.reduce((a: number, b: number) => a + b);
-		this.setState({advarselManglerVedlegg: (antallOpplastedeFiler === 0)});
+		const antallOpplastedeFiler = this.antallOpplastedeFiler();
+		this.setState({ advarselManglerVedlegg: (antallOpplastedeFiler === 0) });
 		if (antallOpplastedeFiler > 0) {
 			this.props.dispatch(sendEttersendelse(this.props.brukerbehandlingId));
 		}
+	}
+
+	antallOpplastedeFiler() {
+		return this.props.manglendeVedlegg
+			.map((vedlegg: any) => vedlegg.filer.length)
+			.reduce((a: number, b: number) => a + b);
 	}
 
 	skrivUt() {
@@ -74,6 +79,11 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
 	render() {
 		const visEttersendeFeatureToggle = this.props.visEttersendelse && (this.props.visEttersendelse === true);
+		let expanded: boolean = this.state.vedleggEkspandert;
+		const sendVedleggOk = this.props.restStatus === REST_STATUS.OK;
+		if ( sendVedleggOk && expanded ) {
+			expanded = false;
+		}
 		return (
 			<div className="ettersendelse">
 
@@ -84,7 +94,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 				{!visEttersendeFeatureToggle && (
 					<div className="blokk-center">
 						<p className="ettersendelse ingress">
-							<FormattedHTMLMessage id="ettersendelse.ikke_tilgjengelig" />
+							<FormattedHTMLMessage id="ettersendelse.ikke_tilgjengelig"/>
 						</p>
 					</div>
 				)}
@@ -92,7 +102,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 				{visEttersendeFeatureToggle && (
 					<div className="blokk-center">
 						<p className="ettersendelse ingress">
-							<FormattedHTMLMessage id="ettersendelse.ingress" />
+							<FormattedHTMLMessage id="ettersendelse.ingress"/>
 						</p>
 
 						<div className="avsnitt_med_marger">
@@ -100,7 +110,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 								<Icon kind="stegindikator__hake" className="ettersendelse__ikon"/>
 							</div>
 							<div className="avsnitt">
-								<h3><FormattedHTMLMessage id="ettersendelse.soknad_sendt" /> Horten kommune</h3>
+								<h3><FormattedHTMLMessage id="ettersendelse.soknad_sendt"/> Horten kommune</h3>
 								<p>07.02.2018</p>
 							</div>
 
@@ -112,16 +122,19 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 							</div>
 						</div>
 
-						<div className={"avsnitt_med_marger vedlegg_mangler_avsnitt "
+						<div className={"avsnitt_med_marger " + (sendVedleggOk ? " " : "vedlegg_mangler_avsnitt ")
 						+ (this.state.vedleggEkspandert ? "" : "vedlegg_mangler_avsnitt__kollaps")}>
 							<div className="venstremarg">
-								<DigisosIkon navn="advarselSirkel" className="ettersendelse__ikon"/>
+								{!sendVedleggOk && (<DigisosIkon navn="advarselSirkel" className="ettersendelse__ikon"/>)}
+								{sendVedleggOk && (<Icon kind="stegindikator__hake" className="ettersendelse__ikon"/>)}
 							</div>
 							<div className="avsnitt">
-								<h3 onClick={() => this.toggleVedlegg()} style={{ cursor: "pointer" }}>3 vedlegg
-									mangler</h3>
+								{sendVedleggOk && (<h3>{this.antallOpplastedeFiler()} vedlegg er sendt</h3>)}
+								{!sendVedleggOk && (<h3 onClick={() => this.toggleVedlegg()} style={{ cursor: "pointer" }}>3 vedlegg
+									mangler</h3>)}
 								<div>09.04.2018</div>
 							</div>
+							{!sendVedleggOk && (
 							<div
 								className="hoyremarg hoyremarg__ikon"
 								onClick={() => this.toggleVedlegg()}
@@ -131,10 +144,12 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 									type={this.state.vedleggEkspandert ? "opp" : "ned"}
 								/>
 							</div>
+							)}
+							{sendVedleggOk && (<div className="hoyremarg" />)}
 						</div>
 
 						<Collapse
-							isOpened={this.state.vedleggEkspandert}
+							isOpened={expanded}
 							className={"ettersendelse__vedlegg " +
 							(this.state.vedleggEkspandert ? "ettersendelse__vedlegg__ekspandert " : " ")}
 						>
@@ -150,18 +165,26 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
 							<div
 								className={"ettersendelse__vedlegg__innhold " +
-									(this.state.advarselManglerVedlegg ? "ettersendelse__vedlegg__feil " : "")}
+								(this.state.advarselManglerVedlegg ? "ettersendelse__vedlegg__feil " : "")}
 							>
 								{this.props.manglendeVedlegg && this.props.manglendeVedlegg.map((vedlegg) => {
+									const tittelKey = `vedlegg.${vedlegg.skjemaNummer}.${vedlegg.skjemanummerTillegg}.tittel`;
+									const infoKey   = `vedlegg.${vedlegg.skjemaNummer}.${vedlegg.skjemanummerTillegg}.info`;
+									let info;
+									if (!!this.props.intl.messages[ infoKey ]) {
+										info = this.props.intl.formatMessage({ id: infoKey });
+									}
 									return (
 										<EttersendelseVedlegg
 											dispatch={this.props.dispatch}
 											vedlegg={vedlegg}
 											key={vedlegg.vedleggId}
+											restStatus={this.props.opplastingStatus}
 										>
 											<h3>
-												<FormattedMessage id={"vedlegg." + vedlegg.skjemaNummer + "." + vedlegg.skjemanummerTillegg + ".tittel"} />
+												<FormattedMessage id={tittelKey}/>
 											</h3>
+											{info && (<p>{info}</p>)}
 										</EttersendelseVedlegg>
 									);
 								})}
@@ -170,7 +193,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 									<div className="avsnitt_med_marger">
 										<div className="venstremarg"/>
 										<div className="skjema__feilmelding">
-											Du må laste opp et vedlegg før du sender inn.
+											<FormattedHTMLMessage id="ettersendelse.feilmelding.ingen_vedlegg"/>
 										</div>
 										<div className="hoyremarg"/>
 									</div>
@@ -186,7 +209,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 											htmlType="submit"
 											onClick={() => this.sendEttersendelse()}
 										>
-											<FormattedMessage id="ettersendelse.knapp.tittel" />
+											<FormattedMessage id="ettersendelse.knapp.tittel"/>
 										</Knapp>
 									</div>
 									<div className="hoyremarg"/>
@@ -194,7 +217,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 							</div>
 						</Collapse>
 
-						<EttersendelseBunntekst />
+						<EttersendelseBunntekst/>
 
 					</div>
 				)}
@@ -211,6 +234,7 @@ export default connect((state: State, {}) => {
 		visEttersendelse: state.featuretoggles.data[ FeatureToggles.ettersendvedlegg ] === "true",
 		manglendeVedlegg: state.ettersendelse.data,
 		brukerbehandlingId: state.ettersendelse.brukerbehandlingId,
+		opplastingStatus: state.ettersendelse.opplastingStatus,
 		restStatus: state.ettersendelse.restStatus
 	};
 })(injectIntl(Ettersendelse));

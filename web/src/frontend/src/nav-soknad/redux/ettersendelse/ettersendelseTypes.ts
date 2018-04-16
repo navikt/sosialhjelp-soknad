@@ -4,6 +4,7 @@ export enum EttersendelseActionTypeKeys {
 	NY = "ettersendelse/NY",
 	NY_OK = "ettersendelse/NY_OK",
 	LAST_OPP = "ettersendelse/LAST_OPP",
+	LAST_OPP_PENDING = "ettersendelse/LAST_OPP_PENDING",
 	LAST_OPP_OK = "ettersendelse/LAST_OPP_OK",
 	LAST_OPP_FEILET = "ettersendelse/LAST_OPP_FEILET",
 	SEND = "ettersendelse/SEND",
