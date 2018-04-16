@@ -1,3 +1,15 @@
+.vedlegg_mangler_avsnitt:focus {
+  box-shadow: 0 0 0px 3px @orangeFocus;
+  outline: none;
+  border-radius: 4px;
+}
+.vedlegg_mangler_avsnitt:hover {
+  box-shadow: @navGra40 0 2px 1px 0;
+  color: @navDypBla;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .ettersendelse {
 
   &.maincontent {
@@ -11,9 +23,9 @@
   }
 
   &__ikon {
-    display: block;
-    width: 24px;
-    height: 24px;
+    display: inline-block;
+    width: 26px;
+    height: 26px;
     cursor: pointer;
   }
 
@@ -43,18 +55,39 @@
 .avsnitt_med_marger {
   display: flex;
   width: 100%;
+  margin-bottom: 16px;
 }
 
-.venstemarg {
+.venstremarg {
   flex-direction: row;
   width: 55px;
   min-width: 35px;
+  padding-left: 4px;
+}
+
+.hoyremarg {
+  flex-direction: row;
+
+  &__ikon {
+    width: 40px;
+    height: 36px;
+    display: block;
+    text-align: center;
+    color: @navBla;
+    padding-top: 3px;
+    border-radius: 4px;
+  }
+
+  &__ikon__hover:hover {
+    box-shadow: @navGra40 0 2px 1px 0;
+  }
 }
 
 .avsnitt {
   flex-direction: row;
-  width: 552px;
-  margin-bottom: 48px;
+  width: 540px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 
   &__sentrert {
 	text-align: center;
@@ -75,16 +108,6 @@
 	margin-bottom: 0;
   }
 
-}
-
-.hoyremarg {
-  flex-direction: row;
-  width: 55px;
-
-  &__ikon {
-	color: #0067C5;
-  	padding-right: 5px;
-  }
 }
 
 .trashcan {
