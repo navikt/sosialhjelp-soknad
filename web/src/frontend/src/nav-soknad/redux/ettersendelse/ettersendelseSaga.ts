@@ -7,7 +7,10 @@ import {
 	LastOppEttersendtVedleggAction, LesEttersendelsesVedleggAction,
 	SlettEttersendtVedleggAction, SendEttersendelseAction
 } from "./ettersendelseTypes";
-import { lesEttersendelsesVedlegg, lastOppEttersendtVedleggOk, lesEttersendteVedlegg, lagEttersendelseOk } from "./ettersendelseActions";
+import {
+	lesEttersendelsesVedlegg, lastOppEttersendtVedleggOk,
+	lesEttersendteVedlegg, lagEttersendelseOk
+} from "./ettersendelseActions";
 import { loggFeil } from "../navlogger/navloggerActions";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 

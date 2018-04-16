@@ -67,9 +67,9 @@ class EttersendelseVedlegg extends React.Component<Props, {}> {
 				</div>
 				{this.props.vedlegg && this.props.vedlegg.filer.map((fil: any) => {
 						const vedleggId = this.props.vedlegg.vedleggId;
-						const lastNedUrl = `sendsoknad/ettersendelsevedlegg/vedlegg/${vedleggId}?filId=${fil.id}`;
+						const lastNedUrl = `sendsoknad/ettersendelsevedlegg/vedlegg/${vedleggId}?filId=${fil.filId}`;
 						return (
-							<div className="avsnitt_med_marger" key={fil.id}>
+							<div className="avsnitt_med_marger" key={fil.filId}>
 								<div className="venstremarg"/>
 								<div className="avsnitt">
 									<Lenkeknapp onClick={() => downloadAttachedFile(lastNedUrl)}>
@@ -80,7 +80,7 @@ class EttersendelseVedlegg extends React.Component<Props, {}> {
 									<div
 										className="hoyremarg__ikon hoyremarg__ikon__hover"
 										onClick={() => {
-											this.removeFile(fil.id, this.props.vedlegg.vedleggId);
+											this.removeFile(fil.filId, this.props.vedlegg.vedleggId);
 										}}
 									>
 										<DigisosIkon navn="trashcan" className="ettersendelse__ikon trashcan"/>

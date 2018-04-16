@@ -1,5 +1,6 @@
 import * as React from "react";
-import { RouterProps, withRouter, Redirect, matchPath } from "react-router";
+// import { RouterProps, withRouter, Redirect, matchPath } from "react-router";
+import { RouterProps, withRouter} from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Location } from "history";
 import { connect } from "react-redux";
@@ -22,7 +23,8 @@ import {
 } from "../redux/valideringActions";
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { validerAlleFaktum } from "../validering/utils";
-import { getIntlTextOrKey, scrollToTop, getStegUrl } from "../utils";
+// import { getIntlTextOrKey, scrollToTop, getStegUrl } from "../utils";
+import { getIntlTextOrKey, scrollToTop} from "../utils";
 import { avbrytSoknad, sendSoknad } from "../redux/soknad/soknadActions";
 import { gaVidere, gaTilbake } from "../redux/navigasjon/navigasjonActions";
 
@@ -65,10 +67,10 @@ type Props = OwnProps &
 	InjectedIntlProps &
 	DispatchProps;
 
-interface UrlParams {
-	brukerbehandlingId: string;
-	steg: string;
-}
+// interface UrlParams {
+// 	brukerbehandlingId: string;
+// 	steg: string;
+// }
 
 class StegMedNavigasjon extends React.Component<Props, {}> {
 	stegTittel: HTMLElement;
@@ -118,7 +120,8 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const { skjemaConfig, intl, children, progresjon } = this.props;
+		// const { skjemaConfig, intl, children, progresjon } = this.props;
+		const { skjemaConfig, intl, children } = this.props;
 		const aktivtStegConfig = skjemaConfig.steg.find(
 			s => s.key === this.props.stegKey
 		);
@@ -133,14 +136,16 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 			s => s.type === SkjemaStegType.skjema
 		);
 
-		const localMatch = matchPath(this.props.location.pathname, {
-			path: "/skjema/:brukerbehandlingId/:steg"
-		});
-		const { steg } = localMatch.params as UrlParams;
-		const maksSteg = progresjon;
-		if (parseInt(steg, 10) > maksSteg) {
+		/*
+			const localMatch = matchPath(this.props.location.pathname, {
+				path: "/skjema/:brukerbehandlingId/:steg"
+			});
+			const { steg } = localMatch.params as UrlParams;
+			const maksSteg = progresjon;
+		if (parseInt(steg, 10) > maksSteg && location.hash.indexOf("force") < 0) {
 			return <Redirect to={getStegUrl(brukerBehandlingId, maksSteg)} />;
 		}
+		*/
 
 		return (
 			<div>

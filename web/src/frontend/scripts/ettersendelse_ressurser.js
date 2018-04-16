@@ -17,7 +17,7 @@ const { nyBehandlingsId, brukerBehandlingId } = require("./testdata");
 router.post("/soknader", function(req, res) {
 	if (req.query.ettersendTil) {
 		console.log(`Mock backend: POST /soknader?ettersendTil=${req.query.ettersendTil}`);
-		res.json({"status": "ok", "behandlingsId": nyBehandlingsId});
+		res.json({"status": "ok", "brukerBehandlingId": nyBehandlingsId});
 	} else {
 		res.json({brukerBehandlingId: brukerBehandlingId});
 	}
@@ -31,7 +31,7 @@ var ettersendteVedlegg = [
 		skjemaNummer: "lonnslipp",
 		skjemanummerTillegg: "arbeid",
 		filer: [ {
-			id: 1,
+			filId: 1,
 			filnavn: "en fil.png"
 		} ]
 	},
@@ -45,7 +45,7 @@ var ettersendteVedlegg = [
 ];
 
 // Liste over vedlegg, status og evt allerede opplastede filer
-router.get("/sendsoknad/ettersendelsevedlegg/:behandlingsId", function(req, res) {
+router.get("/ettersendelsevedlegg/:behandlingsId", function(req, res) {
 	res.json(ettersendteVedlegg);
 });
 
@@ -61,7 +61,7 @@ function createDir(dir) {
 
 rimraf(DATA_DIR + "/vedlegg_*", function () { console.log("Slettet tidligere vedleggfiler"); });
 
-router.post("/sendsoknad/ettersendelsevedlegg/vedlegg/:vedleggId", function(req, res) {
+router.post("/ettersendelsevedlegg/vedlegg/:vedleggId", function(req, res) {
 	console.log("Mock backend: POST ettersendt vedlegg (enkelt fil)");
 	var vedleggId = req.params.vedleggId;
 	var files = [];
@@ -85,7 +85,7 @@ router.post("/sendsoknad/ettersendelsevedlegg/vedlegg/:vedleggId", function(req,
 
 		for (let vedlegg of ettersendteVedlegg) {
 			if (vedlegg.vedleggId == vedleggId) {
-				vedlegg.filer.push({id: filId, filnavn: filename});
+				vedlegg.filer.push({filId: filId, filnavn: filename});
 			}
 		}
 	});
@@ -96,13 +96,13 @@ router.post("/sendsoknad/ettersendelsevedlegg/vedlegg/:vedleggId", function(req,
 	}), responseDelayInSeconds * 1000);
 });
 
-router.delete("/sendsoknad/ettersendelsevedlegg/vedlegg/:vedleggId", function(req, res) {
+router.delete("/ettersendelsevedlegg/vedlegg/:vedleggId", function(req, res) {
 	var vedleggId = req.params.vedleggId;
 	var filId = req.query.filId;
 	for (let vedlegg of ettersendteVedlegg) {
 		if (vedlegg.vedleggId == vedleggId) {
 			vedlegg.filer = vedlegg.filer.filter((fil) => {
-				return fil.id != filId;
+				return fil.filId != filId;
 			});
 		}
 	}
@@ -111,7 +111,7 @@ router.delete("/sendsoknad/ettersendelsevedlegg/vedlegg/:vedleggId", function(re
 	res.json(ettersendteVedlegg);
 });
 
-router.get("/sendsoknad/ettersendelsevedlegg/vedlegg/:vedleggId", function(req, res) {
+router.get("/ettersendelsevedlegg/vedlegg/:vedleggId", function(req, res) {
 	var vedleggId = req.params.vedleggId;
 	var filId = req.query.filId;
 	console.log("GET ettersendelse-vedlegg - Last ned filen");
