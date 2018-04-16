@@ -1,6 +1,6 @@
 import * as React from "react";
 // import { RouterProps, withRouter, Redirect, matchPath } from "react-router";
-import { RouterProps, withRouter} from "react-router";
+import { RouterProps, withRouter } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Location } from "history";
 import { connect } from "react-redux";
@@ -24,7 +24,7 @@ import {
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { validerAlleFaktum } from "../validering/utils";
 // import { getIntlTextOrKey, scrollToTop, getStegUrl } from "../utils";
-import { getIntlTextOrKey, scrollToTop} from "../utils";
+import { getIntlTextOrKey, scrollToTop } from "../utils";
 import { avbrytSoknad, sendSoknad } from "../redux/soknad/soknadActions";
 import { gaVidere, gaTilbake } from "../redux/navigasjon/navigasjonActions";
 

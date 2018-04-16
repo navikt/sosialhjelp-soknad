@@ -29,11 +29,12 @@ var ettersendteVedlegg = [
 		vedleggId: 498,
 		innsendingsvalg: "LastetOpp/VedleggKreves",
 		skjemaNummer: "lonnslipp",
-		skjemanummerTillegg: "arbeid",
-		filer: [ {
-			filId: 1,
-			filnavn: "en fil.png"
-		} ]
+		skjemanummerTillegg: "arbeid"
+
+		// filer: [ {
+		// 	filId: 1,
+		// 	filnavn: "en fil.png"
+		// } ]
 	},
 	{
 		vedleggId: 700,
