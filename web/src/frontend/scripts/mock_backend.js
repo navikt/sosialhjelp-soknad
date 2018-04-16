@@ -120,7 +120,11 @@ router.delete("/soknader/:brukerBehandlingId", (req, res) => {
 router.post("/soknader/:brukerBehandlingId/actions/send", (req, res) => {
 	console.log("Mock backend: POST søknad");
 	res.status(204); // 204 = "No content"
-	res.send();
+
+	const responseDelayInSeconds = 2;
+	setTimeout((function() {
+		res.send();
+	}), responseDelayInSeconds * 1000);
 });
 
 router.get("/fakta/:faktumId", (req, res) => {

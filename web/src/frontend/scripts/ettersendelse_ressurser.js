@@ -23,14 +23,14 @@ router.post("/soknader", function(req, res) {
 	}
 });
 
-// Initielle random data for å ha noe å vise på siden:
+// Initielle tilfeldige data for å ha noe å vise på siden unswe utvikling:
 var ettersendteVedlegg = [
 	{
 		vedleggId: 498,
 		innsendingsvalg: "LastetOpp/VedleggKreves",
 		skjemaNummer: "lonnslipp",
-		skjemanummerTillegg: "arbeid"
-
+		skjemanummerTillegg: "arbeid",
+		filer: []
 		// filer: [ {
 		// 	filId: 1,
 		// 	filnavn: "en fil.png"
@@ -39,8 +39,15 @@ var ettersendteVedlegg = [
 	{
 		vedleggId: 700,
 		innsendingsvalg: "LastetOpp/VedleggKreves",
-		skjemaNummer: "husleie",
-		skjemanummerTillegg: "kontrakt",
+		skjemaNummer: "faktura",
+		skjemanummerTillegg: "husleie",
+		filer: []
+	},
+	{
+		vedleggId: 990,
+		innsendingsvalg: "LastetOpp",
+		skjemaNummer: "annet",
+		skjemanummerTillegg: "annet",
 		filer: []
 	}
 ];
@@ -60,7 +67,7 @@ function createDir(dir) {
 	}
 }
 
-rimraf(DATA_DIR + "/vedlegg_*", function () { console.log("Slettet tidligere vedleggfiler"); });
+rimraf(DATA_DIR + "/vedlegg_*", function () { console.log("*Sletter tidligere vedleggfiler*"); });
 
 router.post("/ettersendelsevedlegg/vedlegg/:vedleggId", function(req, res) {
 	console.log("Mock backend: POST ettersendt vedlegg (enkelt fil)");

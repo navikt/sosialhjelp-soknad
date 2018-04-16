@@ -38,6 +38,18 @@ const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes
 				data: action.vedlegg
 			};
 		}
+		case EttersendelseActionTypeKeys.SEND_PENDING: {
+			return {
+				...state,
+				restStatus: REST_STATUS.PENDING
+			};
+		}
+		case EttersendelseActionTypeKeys.SEND_OK: {
+			return {
+				...state,
+				restStatus: REST_STATUS.OK
+			};
+		}
 		default:
 			return state;
 	}

@@ -7,6 +7,8 @@ export enum EttersendelseActionTypeKeys {
 	LAST_OPP_OK = "ettersendelse/LAST_OPP_OK",
 	LAST_OPP_FEILET = "ettersendelse/LAST_OPP_FEILET",
 	SEND = "ettersendelse/SEND",
+	SEND_PENDING = "ettersendelse/SEND_PENDING",
+	SEND_OK = "ettersendelse/SEND_OK",
 
 	NYTT_VEDLEGG = "ettersendelse/NYTT_VEDLEGG",
 	OPPDATERT_VEDLEGG = "ettersendelse/OPPDATERT_VEDLEGG",
@@ -39,6 +41,14 @@ export interface SendEttersendelseAction {
 	brukerbehandlingId: string;
 }
 
+export interface SendEttersendelsePendingAction {
+	type: EttersendelseActionTypeKeys.SEND_PENDING;
+}
+
+export interface SendEttersendelseOkAction {
+	type: EttersendelseActionTypeKeys.SEND_OK;
+}
+
 export interface LastOppEttersendtVedleggAction {
 	type: EttersendelseActionTypeKeys.LAST_OPP;
 	vedleggId: number;
@@ -65,6 +75,8 @@ export type EttersendelseActionTypes =
 	| SlettEttersendtVedleggAction
 	| LesEttersendelsesVedleggAction
 	| SendEttersendelseAction
+	| SendEttersendelsePendingAction
+	| SendEttersendelseOkAction
 	| OtherAction;
 
 interface LessEttersendteVedleggAction {
