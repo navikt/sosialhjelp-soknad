@@ -3,11 +3,15 @@
   outline: none;
   border-radius: 4px;
 }
+
 .vedlegg_mangler_avsnitt:hover {
-  box-shadow: @navGra40 0 2px 1px 0;
   color: @navDypBla;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.vedlegg_mangler_avsnitt__kollaps:hover {
+  box-shadow: @navGra40 0 2px 1px 0;
 }
 
 .ettersendelse {
@@ -41,6 +45,21 @@
     &__ekspandert {
       opacity: 1;
     }
+
+    &__innhold {
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      padding-right: 0.5rem;
+      padding-top: 0.5rem;
+    }
+
+    &__feil {
+      background: @navRosa;
+    }
+  }
+
+  &_bunntekst {
+	margin-top: 1rem;
   }
 }
 
@@ -65,6 +84,11 @@
   padding-left: 4px;
 }
 
+.venstremarg svg {
+  margin-top: 7px;
+  margin-left: 1px;
+}
+
 .hoyremarg {
   flex-direction: row;
 
@@ -81,6 +105,10 @@
   &__ikon__hover:hover {
     box-shadow: @navGra40 0 2px 1px 0;
   }
+
+  &__spinner {
+    margin-right: 4px;
+  }
 }
 
 .avsnitt {
@@ -89,8 +117,8 @@
   margin-top: 4px;
   margin-bottom: 4px;
 
-  &__sentrert {
-	text-align: center;
+  &_knapp {
+
   }
 
   @media @mobile {

@@ -30,6 +30,8 @@ function settOpprineligSoknadTilSoknad() {
 }
 settOpprineligSoknadTilSoknad();
 
+const contextPath = "/sendsoknad"; // TODO Denne bør leses fra kommandolinjer
+
 // Språkdata tjeneste /api/tekster
 router.get("/informasjon/tekster", (req, res) => {
 	res.json(utils.lesSpraakfil());
@@ -60,7 +62,7 @@ const soknad = utils.lesMockDataFil("soknad.json");
 let fakta = soknad.fakta;
 
 const ettersendelseRouter = require("./ettersendelse_ressurser");
-app.use("/", ettersendelseRouter);
+app.use(contextPath + "/", ettersendelseRouter);
 
 const mockFeatures = {
 	"feature.frontend.sosialhjelp.live": "true",
@@ -118,7 +120,11 @@ router.delete("/soknader/:brukerBehandlingId", (req, res) => {
 router.post("/soknader/:brukerBehandlingId/actions/send", (req, res) => {
 	console.log("Mock backend: POST søknad");
 	res.status(204); // 204 = "No content"
-	res.send();
+
+	const responseDelayInSeconds = 2;
+	setTimeout((function() {
+		res.send();
+	}), responseDelayInSeconds * 1000);
 });
 
 router.get("/fakta/:faktumId", (req, res) => {
@@ -180,10 +186,10 @@ router.post("/informasjon/actions/logg", (req, res) => {
 	res.json();
 });
 
-app.use("/", router);
+app.use(contextPath + "/", router);
 
 const vedleggRouter = require("./vedlegg_ressurser");
-app.use("/", vedleggRouter);
+app.use(contextPath + "/", vedleggRouter);
 
 app.listen(port);
 console.log(`Mock API server running on port ${port}`);

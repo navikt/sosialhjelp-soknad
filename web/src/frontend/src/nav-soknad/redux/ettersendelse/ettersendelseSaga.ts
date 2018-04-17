@@ -7,7 +7,10 @@ import {
 	LastOppEttersendtVedleggAction, LesEttersendelsesVedleggAction,
 	SlettEttersendtVedleggAction, SendEttersendelseAction
 } from "./ettersendelseTypes";
-import { lesEttersendelsesVedlegg, lastOppEttersendtVedleggOk, lesEttersendteVedlegg, lagEttersendelseOk } from "./ettersendelseActions";
+import {
+	lesEttersendelsesVedlegg, lastOppEttersendtVedleggOk,
+	lesEttersendteVedlegg, lagEttersendelseOk
+} from "./ettersendelseActions";
 import { loggFeil } from "../navlogger/navloggerActions";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 
@@ -68,11 +71,10 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
 
 function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
 	try {
+		yield put({type: EttersendelseActionTypeKeys.SEND_PENDING});
 		const url = `soknader/${action.brukerbehandlingId}/actions/send`;
-		const response = yield call(fetchPost, url, {});
-		if (response) {
-			// TODO.
-		}
+		yield call(fetchPost, url, {});
+		yield put({type: EttersendelseActionTypeKeys.SEND_OK});
 	} catch (reason) {
 		yield put(loggFeil("Send ettersendelse feilet: " + reason.toString()));
 		yield put(navigerTilServerfeil());

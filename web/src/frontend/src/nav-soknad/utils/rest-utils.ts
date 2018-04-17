@@ -15,7 +15,7 @@ export function getApiBaseUrl(): string {
 		// return "http://localhost:8181/sendsoknad/";
 
 		// Kjør mot lokal mock backend:
-		return "http://localhost:3001/";
+		return "http://localhost:3001/sendsoknad/";
 	}
 	return kjorerJetty() ? "http://127.0.0.1:8181/sendsoknad/" : "/sendsoknad/";
 }
@@ -24,7 +24,7 @@ function getServletBaseUrl(): string {
 	if (erDev()) {
 		// Kjør mot lokal jetty
 		// return "http://localhost:8189/soknadsosialhjelp/";
-		return "http://localhost:3001/";
+		return "http://localhost:3001/sendsoknad/";
 	}
 	return "/soknadsosialhjelp/";
 }
