@@ -19,8 +19,8 @@ const bydelsnavn: any = {
 		{ id: "ostonsjo", navn: "Østensjø" }
 	],
 	"bergen": [
-		{ id: "bergenhus", navn: "Bergenhus"},
-		{ id: "ytrebygda", navn: "Ytrebygda"}
+		{ id: "bergenhus", navn: "Bergenhus" },
+		{ id: "ytrebygda", navn: "Ytrebygda" }
 	]
 };
 
@@ -43,8 +43,8 @@ const OsloBydeler: Bydel[] = [
 ];
 
 const BergenBydeler: Bydel[] = [
-	{ id: "bergenhus", navn: "Bergenhus"},
-	{ id: "ytrebygda", navn: "Ytrebygda"}
+	{ id: "bergenhus", navn: "Bergenhus" },
+	{ id: "ytrebygda", navn: "Ytrebygda" }
 ];
 
 export const Kommuner: Kommune[] = [
@@ -52,10 +52,10 @@ export const Kommuner: Kommune[] = [
 		id: "horten",
 		navn: "Horten"
 	},
-	{
-		id: "askoy",
-		navn: "Askøy"
-	},
+	// {
+	//   id: "askoy",
+	//   navn: "Askøy"
+	// },
 	{
 		id: "bergen",
 		navn: "Bergen",
@@ -77,7 +77,7 @@ export function getKommune(kommuneId: string): string {
 }
 
 export function getBydel(kommuneId: string, bydelId: string): string {
-	const bydel = bydelsnavn[kommuneId] ? bydelsnavn[kommuneId].find((b: any) => b.id === bydelId) : undefined;
+	const bydel = bydelsnavn[ kommuneId ] ? bydelsnavn[ kommuneId ].find((b: any) => b.id === bydelId) : undefined;
 	return bydel ? bydel.navn : "";
 }
 

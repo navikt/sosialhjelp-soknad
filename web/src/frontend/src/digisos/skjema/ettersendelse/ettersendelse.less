@@ -1,3 +1,19 @@
+.vedlegg_mangler_avsnitt:focus {
+  box-shadow: 0 0 0px 3px @orangeFocus;
+  outline: none;
+  border-radius: 4px;
+}
+
+.vedlegg_mangler_avsnitt:hover {
+  color: @navDypBla;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.vedlegg_mangler_avsnitt__kollaps:hover {
+  box-shadow: @navGra40 0 2px 1px 0;
+}
+
 .ettersendelse {
 
   &.maincontent {
@@ -11,9 +27,9 @@
   }
 
   &__ikon {
-    display: block;
-    width: 24px;
-    height: 24px;
+    display: inline-block;
+    width: 26px;
+    height: 26px;
     cursor: pointer;
   }
 
@@ -29,6 +45,21 @@
     &__ekspandert {
       opacity: 1;
     }
+
+    &__innhold {
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      padding-right: 0.5rem;
+      padding-top: 0.5rem;
+    }
+
+    &__feil {
+      background: @navRosa;
+    }
+  }
+
+  &_bunntekst {
+	margin-top: 1rem;
   }
 }
 
@@ -43,21 +74,51 @@
 .avsnitt_med_marger {
   display: flex;
   width: 100%;
+  margin-bottom: 16px;
 }
 
-.venstemarg {
+.venstremarg {
   flex-direction: row;
   width: 55px;
   min-width: 35px;
+  padding-left: 4px;
+}
+
+.venstremarg svg {
+  margin-top: 7px;
+  margin-left: 1px;
+}
+
+.hoyremarg {
+  flex-direction: row;
+
+  &__ikon {
+    width: 40px;
+    height: 36px;
+    display: block;
+    text-align: center;
+    color: @navBla;
+    padding-top: 3px;
+    border-radius: 4px;
+  }
+
+  &__ikon__hover:hover {
+    box-shadow: @navGra40 0 2px 1px 0;
+  }
+
+  &__spinner {
+    margin-right: 4px;
+  }
 }
 
 .avsnitt {
   flex-direction: row;
-  width: 552px;
-  margin-bottom: 48px;
+  width: 540px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 
-  &__sentrert {
-	text-align: center;
+  &_knapp {
+
   }
 
   @media @mobile {
@@ -75,16 +136,6 @@
 	margin-bottom: 0;
   }
 
-}
-
-.hoyremarg {
-  flex-direction: row;
-  width: 55px;
-
-  &__ikon {
-	color: #0067C5;
-  	padding-right: 5px;
-  }
 }
 
 .trashcan {

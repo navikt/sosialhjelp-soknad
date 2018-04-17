@@ -10,6 +10,7 @@ import { AVBRYT_DESTINASJON } from "./soknad/soknadActionTypes";
 import { InitState } from "./init/initTypes";
 import { FeatureTogglesApiType } from "./featuretoggles/featureTogglesTypes";
 import { VedleggState } from "./vedlegg/vedleggTypes";
+import { EttersendelseState } from "./ettersendelse/ettersendelseTypes";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -35,6 +36,7 @@ export interface SoknadAppState {
 	tilgang: TilgangState;
 	vedlegg: VedleggState;
 	ledetekster: LedetekstState;
+	ettersendelse: EttersendelseState;
 	init: InitState;
 }
 
