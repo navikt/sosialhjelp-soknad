@@ -53,6 +53,8 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 			}
 		}
 		this.props.dispatch(lagEttersendelse(brukerbehandlingskjedeId));
+		// Hent ut søknad så vi får kommune søknaden er sendt til og tidspunkter
+		// this.props.dispatch(hentSoknad(brukerbehandlingskjedeId));
 	}
 
 	toggleVedlegg() {
