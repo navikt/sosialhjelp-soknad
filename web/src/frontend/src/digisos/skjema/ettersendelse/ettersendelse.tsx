@@ -4,27 +4,20 @@ import { State } from "../../redux/reducers";
 import * as React from "react";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { SynligeFaktaProps } from "../../redux/synligefakta/synligeFaktaTypes";
-import { Faktum } from "../../../nav-soknad/types";
-import Icon from "nav-frontend-ikoner-assets";
-import NavFrontendChevron from "nav-frontend-chevron";
-import { Collapse } from "react-collapse";
-import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon";
-import Knapp from "nav-frontend-knapper";
 import BannerEttersendelse from "./bannerEttersendelse";
 import { FeatureToggles } from "../../../featureToggles";
-import EttersendelseVedlegg from "./ettersendelseVedlegg";
 import { lagEttersendelse, sendEttersendelse } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
-import EttersendelseBunntekst from "./ettersendelseBunntekst";
+import AvsnittMedMarger from "./avsnittMedMarger";
+import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
+import { MargIkoner } from "./margIkoner";
 
 interface OwnProps {
-	fakta: Faktum[];
 	visEttersendelse: boolean;
 	manglendeVedlegg: any[];
 	brukerbehandlingskjedeId: string;
 	brukerbehandlingId: string;
 	restStatus: REST_STATUS;
-	opplastingStatus: REST_STATUS;
 }
 
 type Props = OwnProps & SynligeFaktaProps & DispatchProps & InjectedIntlProps;
@@ -107,119 +100,30 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 							<FormattedHTMLMessage id="ettersendelse.ingress"/>
 						</p>
 
-						<div className="avsnitt_med_marger">
-							<div className="venstremarg">
-								<Icon kind="stegindikator__hake" className="ettersendelse__ikon"/>
-							</div>
-							<div className="avsnitt">
-								<h3><FormattedHTMLMessage id="ettersendelse.soknad_sendt"/> Horten kommune</h3>
-								<p>07.02.2018</p>
-							</div>
-
-							<div
-								className="hoyremarg hoyremarg__ikon hoyremarg__ikon__hover"
-								onClick={() => this.skrivUt()}
-							>
-								<DigisosIkon navn="printer" className="ettersendelse__ikon"/>
-							</div>
-						</div>
-
-						<div className={"avsnitt_med_marger " + (sendVedleggOk ? " " : "vedlegg_mangler_avsnitt ")
-						+ (this.state.vedleggEkspandert ? "" : "vedlegg_mangler_avsnitt__kollaps")}>
-							<div className="venstremarg">
-								{!sendVedleggOk && (<DigisosIkon navn="advarselSirkel" className="ettersendelse__ikon"/>)}
-								{sendVedleggOk && (<Icon kind="stegindikator__hake" className="ettersendelse__ikon"/>)}
-							</div>
-							<div className="avsnitt">
-								{sendVedleggOk && (<h3>{this.antallOpplastedeFiler()} vedlegg er sendt</h3>)}
-								{!sendVedleggOk && (<h3 onClick={() => this.toggleVedlegg()} style={{ cursor: "pointer" }}>3 vedlegg
-									mangler</h3>)}
-								<div>09.04.2018</div>
-							</div>
-							{!sendVedleggOk && (
-							<div
-								className="hoyremarg hoyremarg__ikon"
-								onClick={() => this.toggleVedlegg()}
-							>
-								<NavFrontendChevron
-									className="ettersendelse__chevron"
-									type={this.state.vedleggEkspandert ? "opp" : "ned"}
-								/>
-							</div>
-							)}
-							{sendVedleggOk && (<div className="hoyremarg" />)}
-						</div>
-
-						<Collapse
-							isOpened={expanded}
-							className={"ettersendelse__vedlegg " +
-							(this.state.vedleggEkspandert ? "ettersendelse__vedlegg__ekspandert " : " ")}
+						<AvsnittMedMarger
+							venstreIkon={MargIkoner.OK}
+							hoyreIkon={MargIkoner.PRINTER}
+							onClickHoyreIkon={() => this.skrivUt()}
 						>
-							<div className="avsnitt_med_marger">
-								<div className="venstremarg"/>
-								<div className="avsnitt">
-									<p>
-										<FormattedHTMLMessage id="ettersendelse.mangler_info"/>r
-									</p>
-								</div>
-								<div className="hoyremarg"/>
-							</div>
+							<h3><FormattedHTMLMessage id="ettersendelse.soknad_sendt"/> Horten kommune</h3>
+							<p>Sendt 07.02.2018</p>
+						</AvsnittMedMarger>
 
-							<div
-								className={"ettersendelse__vedlegg__innhold " +
-								(this.state.advarselManglerVedlegg ? "ettersendelse__vedlegg__feil " : "")}
-							>
-								{this.props.manglendeVedlegg && this.props.manglendeVedlegg.map((vedlegg) => {
-									const tittelKey = `vedlegg.${vedlegg.skjemaNummer}.${vedlegg.skjemanummerTillegg}.tittel`;
-									const infoKey   = `vedlegg.${vedlegg.skjemaNummer}.${vedlegg.skjemanummerTillegg}.info`;
-									let info;
-									if (!!this.props.intl.messages[ infoKey ]) {
-										info = this.props.intl.formatMessage({ id: infoKey });
-									}
-									return (
-										<EttersendelseVedlegg
-											dispatch={this.props.dispatch}
-											vedlegg={vedlegg}
-											key={vedlegg.vedleggId}
-											restStatus={this.props.opplastingStatus}
-										>
-											<h3>
-												<FormattedMessage id={tittelKey}/>
-											</h3>
-											{info && (<p>{info}</p>)}
-										</EttersendelseVedlegg>
-									);
-								})}
+						<EttersendelseEkspanderbart
+							onVedleggSendt={() => console.warn("Ettersendelse er sendt inn!")}>
+							<h3>4 vedlegg mangler</h3>
+							<div>09.04.2018</div>
+						</EttersendelseEkspanderbart>
 
-								{this.state.advarselManglerVedlegg && (
-									<div className="avsnitt_med_marger">
-										<div className="venstremarg"/>
-										<div className="skjema__feilmelding">
-											<FormattedHTMLMessage id="ettersendelse.feilmelding.ingen_vedlegg"/>
-										</div>
-										<div className="hoyremarg"/>
-									</div>
-								)}
+						<AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>
+							<h3><FormattedHTMLMessage id="ettersendelse.samtale.tittel" /></h3>
+							<p><FormattedHTMLMessage id="ettersendelse.samtale.info" /></p>
+						</AvsnittMedMarger>
 
-								<div className="avsnitt_med_marger">
-									<div className="venstremarg"/>
-									<div className="avsnitt avsnitt_knapp">
-										<Knapp
-											spinner={this.props.restStatus === REST_STATUS.PENDING}
-											disabled={this.props.restStatus === REST_STATUS.PENDING}
-											type="hoved"
-											htmlType="submit"
-											onClick={() => this.sendEttersendelse()}
-										>
-											<FormattedMessage id="ettersendelse.knapp.tittel"/>
-										</Knapp>
-									</div>
-									<div className="hoyremarg"/>
-								</div>
-							</div>
-						</Collapse>
-
-						<EttersendelseBunntekst/>
+						<AvsnittMedMarger venstreIkon={MargIkoner.KONVOLUTT}>
+							<h3><FormattedHTMLMessage id="ettersendelse.vedtak.tittel" /></h3>
+							<p><FormattedHTMLMessage id="ettersendelse.vedtak.info" /></p>
+						</AvsnittMedMarger>
 
 					</div>
 				)}
@@ -230,13 +134,10 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
 export default connect((state: State, {}) => {
 	return {
-		fakta: state.fakta.data,
-		synligefakta: state.synligefakta,
 		brukerbehandlingskjedeId: state.soknad.data.brukerBehandlingId,
 		visEttersendelse: state.featuretoggles.data[ FeatureToggles.ettersendvedlegg ] === "true",
 		manglendeVedlegg: state.ettersendelse.data,
 		brukerbehandlingId: state.ettersendelse.brukerbehandlingId,
-		opplastingStatus: state.ettersendelse.opplastingStatus,
 		restStatus: state.ettersendelse.restStatus
 	};
 })(injectIntl(Ettersendelse));
