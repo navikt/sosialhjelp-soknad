@@ -62,6 +62,11 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 		) {
 			this.props.onVedleggSendt();
 		}
+		if (this.state.advarselManglerVedlegg &&
+			this.props.manglendeVedlegg &&
+			this.antallOpplastedeFiler() > 0) {
+				this.setState({advarselManglerVedlegg: false});
+		}
 	}
 
 	render() {
