@@ -74,7 +74,15 @@
 .avsnitt_med_marger {
   display: flex;
   width: 100%;
-  margin-bottom: 16px;
+
+  &__klikkbar {
+    cursor: pointer;
+  }
+
+  &__klikkbar:hover {
+    box-shadow: @navGra40 0 2px 1px 0;
+  }
+
 }
 
 .venstremarg {
@@ -91,11 +99,11 @@
 
 .hoyremarg {
   flex-direction: row;
+  width: 40px;
+  display: block;
 
   &__ikon {
-    width: 40px;
     height: 36px;
-    display: block;
     text-align: center;
     color: @navBla;
     padding-top: 3px;
@@ -114,8 +122,8 @@
 .avsnitt {
   flex-direction: row;
   width: 540px;
-  margin-top: 4px;
-  margin-bottom: 4px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 
   &_knapp {
 

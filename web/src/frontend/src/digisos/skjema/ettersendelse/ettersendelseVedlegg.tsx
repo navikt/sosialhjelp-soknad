@@ -1,5 +1,4 @@
 import * as React from "react";
-import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon";
 import {
 	lastOppEttersendelseVedlegg,
 	slettEttersendtVedlegg
@@ -9,8 +8,9 @@ import { connect } from "react-redux";
 import { State } from "../../redux/reducers";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import { downloadAttachedFile } from "../../../nav-soknad/utils/rest-utils";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import { REST_STATUS } from "../../../nav-soknad/types";
+import { MargIkoner } from "./margIkoner";
+import AvsnittMedMarger from "./avsnittMedMarger";
 
 interface OwnProps {
 	children: React.ReactNode;
@@ -53,19 +53,11 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 	render() {
 		return (
 			<span>
-				<div className="avsnitt_med_marger">
-					<div className="venstremarg"/>
-					<div className="avsnitt">
-						{this.props.children}
-					</div>
-					<div
-						className="hoyremarg hoyremarg__ikon hoyremarg__ikon__hover"
-						onClick={() => {
-							this.leggTilVedleggKnapp.click();
-						}}
-					>
-						<DigisosIkon navn="lastOpp" className="ettersendelse__ikon"/>
-					</div>
+				<AvsnittMedMarger
+					hoyreIkon={MargIkoner.LAST_OPP}
+					onClickHoyreIkon={() => this.leggTilVedleggKnapp.click()}
+				>
+					{this.props.children}
 					<input
 						ref={c => this.leggTilVedleggKnapp = c}
 						onChange={(e) => this.handleFileUpload(e.target.files)}
@@ -74,48 +66,30 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 						tabIndex={-1}
 						accept="image/jpeg,image/png,application/pdf"
 					/>
-				</div>
+				</AvsnittMedMarger>
 
 				{this.props.vedlegg && this.props.vedlegg.filer.map((fil: any) => {
 						const vedleggId = this.props.vedlegg.vedleggId;
 						const lastNedUrl = `sendsoknad/ettersendelsevedlegg/vedlegg/${vedleggId}?filId=${fil.filId}`;
+
 						return (
-							<div className="avsnitt_med_marger" key={fil.filId}>
-								<div className="venstremarg"/>
-								<div className="avsnitt">
-									<Lenkeknapp onClick={() => downloadAttachedFile(lastNedUrl)}>
-										{fil.filnavn}
-									</Lenkeknapp>
-								</div>
-								<div className="hoyremarg">
-									<div
-										className="hoyremarg__ikon hoyremarg__ikon__hover"
-										onClick={() => {
-											this.removeFile(fil.filId, this.props.vedlegg.vedleggId);
-										}}
-									>
-										<DigisosIkon navn="trashcan" className="ettersendelse__ikon trashcan"/>
-									</div>
-								</div>
-							</div>
+							<AvsnittMedMarger
+								hoyreIkon={MargIkoner.SØPPELBØTTE}
+								key={fil.filId}
+								onClickHoyreIkon={() => this.removeFile(fil.filId, vedleggId)}
+							>
+								<Lenkeknapp onClick={() => downloadAttachedFile(lastNedUrl)}>
+									{fil.filnavn}
+								</Lenkeknapp>
+							</AvsnittMedMarger>
 						);
 					}
 				)}
 
 				{this.state.filnavn && this.props.restStatus === REST_STATUS.PENDING && (
-					<span>
-						<div className="avsnitt_med_marger" key={this.state.filnavn}>
-								<div className="venstremarg"/>
-								<div className="avsnitt">
-									{this.state.filnavn}
-								</div>
-								<div className="hoyremarg">
-									<div className="ettersendelse__ikon hoyremarg__spinner">
-										<NavFrontendSpinner type="XS" />
-									</div>
-								</div>
-							</div>
-					</span>
+					<AvsnittMedMarger hoyreIkon={MargIkoner.SPINNER} key={this.state.filnavn}>
+						{this.state.filnavn}
+					</AvsnittMedMarger>
 				)}
 
 			</span>
