@@ -43,7 +43,7 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 		return (
 			<div>
 				<Knapp
-					id={id + "_lastopp_knapp"}
+					id={id.replace(/\./g, "_") + "_lastopp_knapp"}
 					type="standard"
 					htmlType="button"
 					disabled={this.props.disabled}
@@ -55,7 +55,7 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 					+ <FormattedMessage id="opplysninger.vedlegg.knapp.tekst"/>
 				</Knapp>
 				<input
-					id={id + "_skjult_upload_input"}
+					id={id.replace(/\./g, "_") + "_skjult_upload_input"}
 					ref={c => this.leggTilVedleggKnapp = c}
 					onChange={(e) => this.handleFileUpload(e.target.files)}
 					type="file"

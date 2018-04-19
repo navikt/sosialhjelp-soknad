@@ -100,7 +100,7 @@ function* tilDittNav(action: TilDittNav): SagaIterator {
 }
 
 function* tilKvittering(action: TilKvittering): SagaIterator {
-	yield put(push(`/kvittering/${action.brukerbehandlingId}`));
+	yield put(push(`/skjema/${action.brukerbehandlingId}/ettersendelse`));
 }
 
 function* navigasjonSaga(): SagaIterator {

@@ -30,6 +30,8 @@ function settOpprineligSoknadTilSoknad() {
 }
 settOpprineligSoknadTilSoknad();
 
+const contextPath = "/sendsoknad"; // TODO Denne bør leses fra kommandolinjer
+
 // Språkdata tjeneste /api/tekster
 router.get("/informasjon/tekster", (req, res) => {
 	res.json(utils.lesSpraakfil());
@@ -46,28 +48,21 @@ router.get("/informasjon/miljovariabler", (req, res) => {
 	res.json(miljovariabler);
 });
 
+// const brukerBehandlingId = "1000CPZ2U";
+const { brukerBehandlingId } = require("./testdata");
+
 // Ekstrainformasjon - økonomiske opplysninger
 const synligsoknadstruktur = utils.lesMockDataFil("synligsoknadstruktur.json");
-router.get("/soknader/1000B7FGM/synligsoknadstruktur", (req, res) => {
+router.get("/soknader/:brukerBehandlingId/synligsoknadstruktur", (req, res) => {
 	res.json(synligsoknadstruktur);
 });
 
-const brukerBehandlingId = "1000CPZ2U";
 const soknad = utils.lesMockDataFil("soknad.json");
 
 let fakta = soknad.fakta;
 
-// Søknadsressurser
-router.post("/soknader", (req, res) => {
-	res.json({
-		brukerBehandlingId
-	});
-});
-
-// Hent ut søknad
-// router.get("/soknader/:brukerBehandlingId?lang=nb_NO", (req, res) => {
-// 	console.log("sss");
-// });
+const ettersendelseRouter = require("./ettersendelse_ressurser");
+app.use(contextPath + "/", ettersendelseRouter);
 
 const mockFeatures = {
 	"feature.frontend.sosialhjelp.live": "true",
@@ -96,7 +91,9 @@ router.get("/soknader/:brukerBehandlingId", (req, res) => {
 	} else {
 		console.log("Mock backend: søknad");
 		if (req.accepts("application/json")) {
-			res.json(utils.lesMockDataFil("soknad.json"));
+			const soknadData = utils.lesMockDataFil("soknad.json");
+			soknadData.brukerBehandlingId = req.params["brukerBehandlingId"] + "";
+			res.json(soknadData);
 		} else {
 			res.status(406);
 			res.json({ feil: "Forventer Accept: application/json i header" });
@@ -123,7 +120,11 @@ router.delete("/soknader/:brukerBehandlingId", (req, res) => {
 router.post("/soknader/:brukerBehandlingId/actions/send", (req, res) => {
 	console.log("Mock backend: POST søknad");
 	res.status(204); // 204 = "No content"
-	res.send();
+
+	const responseDelayInSeconds = 2;
+	setTimeout((function() {
+		res.send();
+	}), responseDelayInSeconds * 1000);
 });
 
 router.get("/fakta/:faktumId", (req, res) => {
@@ -185,11 +186,10 @@ router.post("/informasjon/actions/logg", (req, res) => {
 	res.json();
 });
 
-app.use("/", router);
+app.use(contextPath + "/", router);
 
 const vedleggRouter = require("./vedlegg_ressurser");
-
-app.use("/", vedleggRouter);
+app.use(contextPath + "/", vedleggRouter);
 
 app.listen(port);
 console.log(`Mock API server running on port ${port}`);

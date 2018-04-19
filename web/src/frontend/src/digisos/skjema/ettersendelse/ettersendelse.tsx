@@ -1,56 +1,126 @@
 import { connect } from "react-redux";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl, FormattedMessage, FormattedHTMLMessage } from "react-intl";
 import { State } from "../../redux/reducers";
 import * as React from "react";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { SynligeFaktaProps } from "../../redux/synligefakta/synligeFaktaTypes";
-import { Faktum } from "../../../nav-soknad/types";
-import Icon from "nav-frontend-ikoner-assets";
-import SVG from "react-inlinesvg";
-import NavFrontendChevron from "nav-frontend-chevron";
-import { Collapse } from "react-collapse";
-import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon";
-import Knapp from "nav-frontend-knapper";
 import BannerEttersendelse from "./bannerEttersendelse";
 import { FeatureToggles } from "../../../featureToggles";
-import EttersendelseVedlegg from "./ettersendelseVedlegg";
+import {
+	lagEttersendelse, lesEttersendelser,
+	sendEttersendelse
+} from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
+import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
+import AvsnittMedMarger from "./avsnittMedMarger";
+import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
+import { MargIkoner } from "./margIkoner";
 
 interface OwnProps {
-	fakta: Faktum[];
 	visEttersendelse: boolean;
+	manglendeVedlegg: any[];
+	brukerbehandlingskjedeId: string;
+	brukerbehandlingId: string;
+	restStatus: REST_STATUS;
+	originalSoknad: any;
+	ettersendelser: any;
 }
 
 type Props = OwnProps & SynligeFaktaProps & DispatchProps & InjectedIntlProps;
 
 interface OwnState {
 	vedleggEkspandert: boolean;
+	advarselManglerVedlegg: boolean;
 }
 
 class Ettersendelse extends React.Component<Props, OwnState> {
+
+	leggTilGenereltVedleggKnapp: HTMLInputElement;
+
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			vedleggEkspandert: false
+			vedleggEkspandert: false,
+			advarselManglerVedlegg: false
 		};
 	}
 
+	componentDidMount() {
+		let brukerbehandlingskjedeId = this.props.brukerbehandlingskjedeId;
+		if (!brukerbehandlingskjedeId) {
+			// Under utvikling er ikke brukerbehandlingId på redux state, så vi leser den fra url:
+			const match = window.location.pathname.match(/\/skjema\/(.*)\/ettersendelse/);
+			if (match) {
+				brukerbehandlingskjedeId = match[ 1 ];
+			}
+		}
+		this.props.dispatch(lagEttersendelse(brukerbehandlingskjedeId));
+		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
+	}
+
 	toggleVedlegg() {
-		this.setState({ vedleggEkspandert: !this.state.vedleggEkspandert});
+		this.setState({ vedleggEkspandert: !this.state.vedleggEkspandert });
+	}
+
+	sendEttersendelse() {
+		const antallOpplastedeFiler = this.antallOpplastedeFiler();
+		this.setState({ advarselManglerVedlegg: (antallOpplastedeFiler === 0) });
+		if (antallOpplastedeFiler > 0) {
+			this.props.dispatch(sendEttersendelse(this.props.brukerbehandlingId));
+		}
+	}
+
+	antallOpplastedeFiler() {
+		return this.props.manglendeVedlegg
+			.map((vedlegg: any) => vedlegg.filer.length)
+			.reduce((a: number, b: number) => a + b);
+	}
+
+	skrivUt() {
+		window.print();
+	}
+
+	handleFileUpload(files: FileList) {
+		if (files.length !== 1) {
+			return;
+		}
+		const formData = new FormData();
+		formData.append("file", files[ 0 ], files[ 0 ].name);
+		console.warn("Last opp generelt vedlegg ikke implementert.");
+		// this.setState({filnavn: files[ 0 ].name});
+		// const vedleggId = this.props.vedlegg.vedleggId;
+		// this.props.dispatch(lastOppEttersendelseVedlegg(vedleggId, formData));
 	}
 
 	render() {
-		const visEttersendeFeatureToggle = this.props.visEttersendelse && (this.props.visEttersendelse === true);
+		const { originalSoknad, ettersendelser, restStatus, visEttersendelse} = this.props;
+		const visEttersendeFeatureToggle = visEttersendelse && (visEttersendelse === true);
+		let expanded: boolean = this.state.vedleggEkspandert;
+		const sendVedleggOk = restStatus === REST_STATUS.OK;
+		if ( sendVedleggOk && expanded ) {
+			expanded = false;
+		}
+
+		let antallManglendeVedlegg: number = 0;
+		let datoManglendeVedlegg: string = "";
+		if ( originalSoknad ) {
+			antallManglendeVedlegg = originalSoknad.ikkeInnsendteVedlegg.length;
+		}
+		if ( ettersendelser ) {
+			antallManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].ikkeInnsendteVedlegg.length;
+			datoManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].innsendtDato;
+		}
+
 		return (
 			<div className="ettersendelse">
 
 				<BannerEttersendelse>
-					<span>Søknad om økonomisk sosialhjelp</span>
+					<FormattedMessage id="applikasjon.sidetittel"/>
 				</BannerEttersendelse>
 
 				{!visEttersendeFeatureToggle && (
 					<div className="blokk-center">
 						<p className="ettersendelse ingress">
-							Ettersendelse av vedlegg er ikke tilgjengelig
+							<FormattedHTMLMessage id="ettersendelse.ikke_tilgjengelig"/>
 						</p>
 					</div>
 				)}
@@ -58,110 +128,68 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 				{visEttersendeFeatureToggle && (
 					<div className="blokk-center">
 						<p className="ettersendelse ingress">
-							Du må gi beskjed hvis den økonomiske situasjonen din endrer seg etter at du har sendt søknaden.
+							<FormattedHTMLMessage id="ettersendelse.ingress"/>
 						</p>
 
-						<div className="avsnitt_med_marger">
-							<div className="venstemarg">
-								<Icon kind="stegindikator__hake" className="ettersendelse__ikon"/>
-							</div>
-							<div className="avsnitt">
-								<h3>Søknaden er sendt til Horten kommune</h3>
-								<p>07.02.2018</p>
-							</div>
-
-							<div className="hoyremarg hoyremarg__ikon">
-								<DigisosIkon navn="printer" className="ettersendelse__ikon"/>
-							</div>
-						</div>
-
-						<div className="avsnitt_med_marger">
-							<div className="venstemarg">
-								<DigisosIkon navn="advarselSirkel" className="ettersendelse__ikon"/>
-							</div>
-							<div className="avsnitt">
-								<h3 onClick={() => this.toggleVedlegg()} style={{cursor: "pointer"}}>3 vedlegg mangler</h3>
-							</div>
-							<div
-								className="hoyremarg hoyremarg__ikon"
-								onClick={() => this.toggleVedlegg()}
+						{originalSoknad && (
+							<AvsnittMedMarger
+								venstreIkon={MargIkoner.OK}
+								hoyreIkon={MargIkoner.PRINTER}
+								onClickHoyreIkon={() => this.skrivUt()}
 							>
-								<NavFrontendChevron
-									className="ettersendelse__chevron"
-									type={this.state.vedleggEkspandert ? "opp" : "ned"}
-								/>
-							</div>
-						</div>
+								<h3><FormattedHTMLMessage id="ettersendelse.soknad_sendt"/> {originalSoknad.navenhet}</h3>
+								<p>Innsendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}</p>
+							</AvsnittMedMarger>
+						)}
 
-						<Collapse
-							isOpened={this.state.vedleggEkspandert}
-							className={"ettersendelse__vedlegg " +
-							(this.state.vedleggEkspandert ? "ettersendelse__vedlegg__ekspandert" : "")}
-						>
-							<EttersendelseVedlegg>
-								<h3>Kontooversikt med saldo for brukskonto (siste måned)</h3>
-							</EttersendelseVedlegg>
-
-							<EttersendelseVedlegg>
-								<h3>Skattemelding og skatteoppgjør</h3>
-							</EttersendelseVedlegg>
-
-							<EttersendelseVedlegg>
-								<h3>Lønnslipp (siste måned)</h3>
-							</EttersendelseVedlegg>
-
-							<EttersendelseVedlegg>
-								<h3>Annen dokumentasjon</h3>
-								<p>Hvis du har andre vedlegg du ønsker å gi oss, kan de lastes opp her.</p>
-							</EttersendelseVedlegg>
-
-							<div className="avsnitt_med_marger">
-								<div className="venstemarg"/>
-								<div className="avsnitt avsnitt__sentrert">
-									<Knapp
-										type="hoved"
-										htmlType="submit"
+						{ettersendelser && ettersendelser.length > 0 && ettersendelser.map((ettersendelse: any) => {
+								return (
+									<AvsnittMedMarger
+										venstreIkon={MargIkoner.OK}
+										key={ettersendelse.behandlingsId}
 									>
-										Send vedlegg
-									</Knapp>
-								</div>
-								<div className="hoyremarg"/>
-							</div>
-						</Collapse>
+										<h3>{ettersendelse.innsendteVedlegg.length} vedlegg er sendt til NAV</h3>
+										<p>Ettersendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}</p>
+									</AvsnittMedMarger>
+								);
+							}
+						)}
 
-						<div className="avsnitt_med_marger">
-							<div className="venstemarg">
-								<DigisosIkon navn="snakkebobler" className="ettersendelse__ikon"/>
-							</div>
-							<div className="avsnitt">
-								<h3>Du blir innkalt til en samtale</h3>
-								<p>
-									Hvis du søker om økonomisk sosialhjelp, blir du vanligvis innkalt til en
-									samtale med en veileder. Du kan også kontakte NAV-kontoret ditt og avtale et møte.
-									Les mer om hvordan et møte foregår.
-								</p>
-							</div>
-							<div className="hoyremarg"/>
-						</div>
+						{antallManglendeVedlegg > 0 && (
+							<EttersendelseEkspanderbart
+								onVedleggSendt={() => console.warn("Ettersendelse er sendt inn!")}
+							>
+								<h3>{antallManglendeVedlegg} vedlegg mangler</h3>
+								<div>{datoManglendeVedlegg}</div>
+							</EttersendelseEkspanderbart>
+						)}
 
-						<div className="avsnitt_med_marger">
-							<div className="venstemarg">
-								<SVG
-									className="ettersendelse__ikon"
-									src={"/soknadsosialhjelp/statisk/bilder/ikon_konvolutt.svg"}
+						{antallManglendeVedlegg === 0 && (
+							<AvsnittMedMarger
+								hoyreIkon={MargIkoner.LAST_OPP}
+								onClickHoyreIkon={() => this.leggTilGenereltVedleggKnapp.click()}
+							>
+								Last opp generelt vedlegg.
+								<input
+									ref={c => this.leggTilGenereltVedleggKnapp = c}
+									onChange={(e) => this.handleFileUpload(e.target.files)}
+									type="file"
+									className="visuallyhidden"
+									tabIndex={-1}
+									accept="image/jpeg,image/png,application/pdf"
 								/>
-							</div>
-							<div className="avsnitt">
-								<h3>Du får beskjed om vedtak</h3>
-								<p>
-									Saksbehandlingstiden varierer fra kommune til kommune.
-									Når vi har behandlet søknaden din, får du et vedtak. Hvis det går mer enn én måned,
-									skal du få et foreløpig svar. Hvis vi mangler opplysninger eller du ikke har levert
-									all nødvendig dokumentasjon, kan det ta lengre tid før du får svar på søknaden din.
-								</p>
-							</div>
-							<div className="hoyremarg"/>
-						</div>
+							</AvsnittMedMarger>
+						)}
+
+						<AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>
+							<h3><FormattedHTMLMessage id="ettersendelse.samtale.tittel" /></h3>
+							<p><FormattedHTMLMessage id="ettersendelse.samtale.info" /></p>
+						</AvsnittMedMarger>
+
+						<AvsnittMedMarger venstreIkon={MargIkoner.KONVOLUTT}>
+							<h3><FormattedHTMLMessage id="ettersendelse.vedtak.tittel" /></h3>
+							<p><FormattedHTMLMessage id="ettersendelse.vedtak.info" /></p>
+						</AvsnittMedMarger>
 
 					</div>
 				)}
@@ -172,8 +200,12 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
 export default connect((state: State, {}) => {
 	return {
-		fakta: state.fakta.data,
-		synligefakta: state.synligefakta,
-		visEttersendelse: state.featuretoggles.data[FeatureToggles.ettersendvedlegg] === "true",
+		brukerbehandlingskjedeId: state.soknad.data.brukerBehandlingId,
+		visEttersendelse: state.featuretoggles.data[ FeatureToggles.ettersendvedlegg ] === "true",
+		manglendeVedlegg: state.ettersendelse.data,
+		brukerbehandlingId: state.ettersendelse.brukerbehandlingId,
+		originalSoknad: state.ettersendelse.innsendte.originalSoknad,
+		ettersendelser: state.ettersendelse.innsendte.ettersendelser,
+		restStatus: state.ettersendelse.restStatus
 	};
 })(injectIntl(Ettersendelse));
