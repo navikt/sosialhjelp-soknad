@@ -6,7 +6,10 @@ import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { SynligeFaktaProps } from "../../redux/synligefakta/synligeFaktaTypes";
 import BannerEttersendelse from "./bannerEttersendelse";
 import { FeatureToggles } from "../../../featureToggles";
-import { lagEttersendelse, sendEttersendelse } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
+import {
+	lagEttersendelse, lesEttersendelser,
+	sendEttersendelse
+} from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
@@ -18,6 +21,8 @@ interface OwnProps {
 	brukerbehandlingskjedeId: string;
 	brukerbehandlingId: string;
 	restStatus: REST_STATUS;
+	originalSoknad: any;
+	ettersendelser: any;
 }
 
 type Props = OwnProps & SynligeFaktaProps & DispatchProps & InjectedIntlProps;
@@ -28,6 +33,9 @@ interface OwnState {
 }
 
 class Ettersendelse extends React.Component<Props, OwnState> {
+
+	leggTilGenereltVedleggKnapp: HTMLInputElement;
+
 	constructor(props: Props) {
 		super(props);
 		this.state = {
@@ -46,8 +54,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 			}
 		}
 		this.props.dispatch(lagEttersendelse(brukerbehandlingskjedeId));
-		// Hent ut søknad så vi får kommune søknaden er sendt til og tidspunkter
-		// this.props.dispatch(hentSoknad(brukerbehandlingskjedeId));
+		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
 	}
 
 	toggleVedlegg() {
@@ -72,13 +79,37 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 		window.print();
 	}
 
+	handleFileUpload(files: FileList) {
+		if (files.length !== 1) {
+			return;
+		}
+		const formData = new FormData();
+		formData.append("file", files[ 0 ], files[ 0 ].name);
+		console.warn("Last opp generelt vedlegg ikke implementert.");
+		// this.setState({filnavn: files[ 0 ].name});
+		// const vedleggId = this.props.vedlegg.vedleggId;
+		// this.props.dispatch(lastOppEttersendelseVedlegg(vedleggId, formData));
+	}
+
 	render() {
-		const visEttersendeFeatureToggle = this.props.visEttersendelse && (this.props.visEttersendelse === true);
+		const { originalSoknad, ettersendelser, restStatus, visEttersendelse} = this.props;
+		const visEttersendeFeatureToggle = visEttersendelse && (visEttersendelse === true);
 		let expanded: boolean = this.state.vedleggEkspandert;
-		const sendVedleggOk = this.props.restStatus === REST_STATUS.OK;
+		const sendVedleggOk = restStatus === REST_STATUS.OK;
 		if ( sendVedleggOk && expanded ) {
 			expanded = false;
 		}
+
+		let antallManglendeVedlegg: number = 0;
+		let datoManglendeVedlegg: string = "";
+		if ( originalSoknad ) {
+			antallManglendeVedlegg = originalSoknad.ikkeInnsendteVedlegg.length;
+		}
+		if ( ettersendelser ) {
+			antallManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].ikkeInnsendteVedlegg.length;
+			datoManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].innsendtDato;
+		}
+
 		return (
 			<div className="ettersendelse">
 
@@ -100,21 +131,55 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 							<FormattedHTMLMessage id="ettersendelse.ingress"/>
 						</p>
 
-						<AvsnittMedMarger
-							venstreIkon={MargIkoner.OK}
-							hoyreIkon={MargIkoner.PRINTER}
-							onClickHoyreIkon={() => this.skrivUt()}
-						>
-							<h3><FormattedHTMLMessage id="ettersendelse.soknad_sendt"/> Horten kommune</h3>
-							<p>Sendt 07.02.2018</p>
-						</AvsnittMedMarger>
+						{originalSoknad && (
+							<AvsnittMedMarger
+								venstreIkon={MargIkoner.OK}
+								hoyreIkon={MargIkoner.PRINTER}
+								onClickHoyreIkon={() => this.skrivUt()}
+							>
+								<h3><FormattedHTMLMessage id="ettersendelse.soknad_sendt"/> {originalSoknad.navenhet}</h3>
+								<p>Innsendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}</p>
+							</AvsnittMedMarger>
+						)}
 
-						<EttersendelseEkspanderbart
-							onVedleggSendt={() => console.warn("Ettersendelse er sendt inn!")}
-						>
-							<h3>4 vedlegg mangler</h3>
-							<div>09.04.2018</div>
-						</EttersendelseEkspanderbart>
+						{ettersendelser && ettersendelser.length > 0 && ettersendelser.map((ettersendelse: any) => {
+								return (
+									<AvsnittMedMarger
+										venstreIkon={MargIkoner.OK}
+										key={ettersendelse.behandlingsId}
+									>
+										<h3>{ettersendelse.innsendteVedlegg.length} vedlegg er sendt til NAV</h3>
+										<p>Ettersendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}</p>
+									</AvsnittMedMarger>
+								);
+							}
+						)}
+
+						{antallManglendeVedlegg > 0 && (
+							<EttersendelseEkspanderbart
+								onVedleggSendt={() => console.warn("Ettersendelse er sendt inn!")}
+							>
+								<h3>{antallManglendeVedlegg} vedlegg mangler</h3>
+								<div>{datoManglendeVedlegg}</div>
+							</EttersendelseEkspanderbart>
+						)}
+
+						{antallManglendeVedlegg === 0 && (
+							<AvsnittMedMarger
+								hoyreIkon={MargIkoner.LAST_OPP}
+								onClickHoyreIkon={() => this.leggTilGenereltVedleggKnapp.click()}
+							>
+								Last opp generelt vedlegg.
+								<input
+									ref={c => this.leggTilGenereltVedleggKnapp = c}
+									onChange={(e) => this.handleFileUpload(e.target.files)}
+									type="file"
+									className="visuallyhidden"
+									tabIndex={-1}
+									accept="image/jpeg,image/png,application/pdf"
+								/>
+							</AvsnittMedMarger>
+						)}
 
 						<AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>
 							<h3><FormattedHTMLMessage id="ettersendelse.samtale.tittel" /></h3>
@@ -139,6 +204,8 @@ export default connect((state: State, {}) => {
 		visEttersendelse: state.featuretoggles.data[ FeatureToggles.ettersendvedlegg ] === "true",
 		manglendeVedlegg: state.ettersendelse.data,
 		brukerbehandlingId: state.ettersendelse.brukerbehandlingId,
+		originalSoknad: state.ettersendelse.innsendte.originalSoknad,
+		ettersendelser: state.ettersendelse.innsendte.ettersendelser,
 		restStatus: state.ettersendelse.restStatus
 	};
 })(injectIntl(Ettersendelse));

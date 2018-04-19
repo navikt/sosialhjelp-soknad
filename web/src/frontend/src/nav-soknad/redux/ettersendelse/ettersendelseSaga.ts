@@ -5,11 +5,11 @@ import { fetchDelete, fetchToJson, fetchPost, fetchUpload, toJson } from "../../
 import {
 	EttersendelseActionTypeKeys, LagEttersendelseAction,
 	LastOppEttersendtVedleggAction, LesEttersendelsesVedleggAction,
-	SlettEttersendtVedleggAction, SendEttersendelseAction
+	SlettEttersendtVedleggAction, SendEttersendelseAction, LesEttersendelserAction
 } from "./ettersendelseTypes";
 import {
 	lesEttersendelsesVedlegg, lastOppEttersendtVedleggOk,
-	lesEttersendteVedlegg, lagEttersendelseOk
+	lesEttersendteVedlegg, lagEttersendelseOk, settEttersendelser
 } from "./ettersendelseActions";
 import { loggFeil } from "../navlogger/navloggerActions";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
@@ -24,6 +24,19 @@ function* lagEttersendelseSaga(action: LagEttersendelseAction): SagaIterator {
 		}
 	} catch (reason) {
 		yield put(loggFeil("Lag ettersendelse feilet: " + reason.toString()));
+		yield put(navigerTilServerfeil());
+	}
+}
+
+function* lesEttersendelserSaga(action: LesEttersendelserAction): SagaIterator {
+	try {
+		const url = `ettersendelsevedlegg/innsendte/${action.brukerbehandlingId}`;
+		const response = yield call(fetchToJson, url);
+		if (response) {
+			yield put(settEttersendelser(response));
+		}
+	} catch (reason) {
+		yield put(loggFeil("Les ettersendelser feilet: " + reason.toString()));
 		yield put(navigerTilServerfeil());
 	}
 }
@@ -87,6 +100,8 @@ function* ettersendelseSaga(): SagaIterator {
 	yield takeEvery(EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG, lesEttersendelsesVedleggSaga);
 	yield takeEvery(EttersendelseActionTypeKeys.SLETT_VEDLEGG, slettEttersendelsesVedleggSaga);
 	yield takeEvery(EttersendelseActionTypeKeys.SEND, sendEttersendelseSaga);
+
+	yield takeEvery(EttersendelseActionTypeKeys.LES_ETTERSENDELSER, lesEttersendelserSaga);
 }
 
 export default ettersendelseSaga;

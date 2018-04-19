@@ -57,6 +57,11 @@ router.get("/ettersendelsevedlegg/:behandlingsId", function(req, res) {
 	res.json(ettersendteVedlegg);
 });
 
+// REST endepunkt med oversikt over innsendelse
+router.get("/ettersendelsevedlegg/innsendte/:behandlingsId", function(req, res) {
+	res.json(utils.lesMockDataFil("ettersendelseVedlegg.json"));
+});
+
 var DATA_DIR = "./scripts/mock_data";
 var filId = 1;
 
