@@ -110,7 +110,8 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 						</AvsnittMedMarger>
 
 						<EttersendelseEkspanderbart
-							onVedleggSendt={() => console.warn("Ettersendelse er sendt inn!")}>
+							onVedleggSendt={() => console.warn("Ettersendelse er sendt inn!")}
+						>
 							<h3>4 vedlegg mangler</h3>
 							<div>09.04.2018</div>
 						</EttersendelseEkspanderbart>

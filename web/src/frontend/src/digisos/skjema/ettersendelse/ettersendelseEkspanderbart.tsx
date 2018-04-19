@@ -35,6 +35,11 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 		}
 	}
 
+	onVedleggSendt() {
+		console.warn("Vedlegg sendt: nå kollapse...");
+		// this.setState({vedleggSendt: true})
+	}
+
 	render() {
 		return (
 			<span>
@@ -58,7 +63,7 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 					</AvsnittMedMarger>
 
 					<EttersendelseVedleggListe
-						onVedleggSendt={() => this.setState({vedleggSendt: true})}
+						onVedleggSendt={() => this.onVedleggSendt()}
 					/>
 
 				</Collapse>
