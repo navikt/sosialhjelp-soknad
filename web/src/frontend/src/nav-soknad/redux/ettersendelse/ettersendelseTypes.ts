@@ -22,6 +22,10 @@ export enum EttersendelseActionTypeKeys {
 
 	VEDLEGG_ALLEREDE_SENDT = "ettersendelse/VEDLEGG_ALLEREDE_SENDT",
 	VEDLEGG_ALLEREDE_SENDT_OK = "ettersendelse/VEDLEGG_ALLEREDE_SENDT_OK",
+
+	LES_ETTERSENDELSER = "ettersendelse/LES_ETTERSENDELSER",
+	LES_ETTERSENDELSER_OK = "ettersendelse/LES_ETTERSENDELSER_OK",
+
 	INIT = "ettersendelse/INIT",
 	OTHER_ACTION = "__any_other_action_type__"
 }
@@ -67,6 +71,15 @@ export interface LesEttersendelsesVedleggAction {
 	brukerbehandlingId: string;
 }
 
+export interface LesEttersendelserAction {
+	type: EttersendelseActionTypeKeys.LES_ETTERSENDELSER;
+	brukerbehandlingId: string;
+}
+
+export interface LesEttersendelserOkAction {
+	type: EttersendelseActionTypeKeys.LES_ETTERSENDELSER_OK;
+	ettersendelser: any;
+}
 export type EttersendelseActionTypes =
 	LagEttersendelseAction
 	| LagEttersendelseOkAction
@@ -78,6 +91,8 @@ export type EttersendelseActionTypes =
 	| SendEttersendelseAction
 	| SendEttersendelsePendingAction
 	| SendEttersendelseOkAction
+	| LesEttersendelserAction
+	| LesEttersendelserOkAction
 	| OtherAction;
 
 interface LessEttersendteVedleggAction {
@@ -106,6 +121,7 @@ export interface OtherAction {
 
 export interface EttersendelseState {
 	data: any[];
+	innsendte: any;
 	restStatus: REST_STATUS;
 	opplastingStatus: REST_STATUS;
 	brukerbehandlingId: string;

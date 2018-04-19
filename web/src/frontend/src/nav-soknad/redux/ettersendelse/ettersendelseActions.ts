@@ -60,6 +60,20 @@ const sendEttersendelse = (brukerbehandlingId: string): EttersendelseActionTypes
 	};
 };
 
+const lesEttersendelser = (brukerbehandlingId: string): EttersendelseActionTypes => {
+	return {
+		type: EttersendelseActionTypeKeys.LES_ETTERSENDELSER,
+		brukerbehandlingId
+	};
+};
+
+const settEttersendelser = (ettersendelser: any) => {
+	return {
+		type: EttersendelseActionTypeKeys.LES_ETTERSENDELSER_OK,
+		ettersendelser
+	};
+};
+
 export {
 	lagEttersendelse,
 	lagEttersendelseOk,
@@ -68,5 +82,7 @@ export {
 	lastOppEttersendtVedleggOk,
 	slettEttersendtVedlegg,
 	lesEttersendteVedlegg,
-	sendEttersendelse
+	lesEttersendelser,
+	sendEttersendelse,
+	settEttersendelser
 };

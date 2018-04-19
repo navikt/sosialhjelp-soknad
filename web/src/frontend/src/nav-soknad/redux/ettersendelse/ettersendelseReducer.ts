@@ -6,7 +6,11 @@ const initialState: EttersendelseState = {
 	restStatus: REST_STATUS.INITIALISERT,
 	opplastingStatus: REST_STATUS.OK,
 	data: [],
-	brukerbehandlingId: null
+	brukerbehandlingId: null,
+	innsendte: {
+		originalSoknad: null,
+		ettersendelser: null
+	}
 };
 
 const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes> = (
@@ -48,6 +52,19 @@ const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes
 			return {
 				...state,
 				restStatus: REST_STATUS.OK
+			};
+		}
+		case EttersendelseActionTypeKeys.LES_ETTERSENDELSER: {
+			return {
+				...state,
+				restStatus: REST_STATUS.PENDING
+			};
+		}
+		case EttersendelseActionTypeKeys.LES_ETTERSENDELSER_OK: {
+			return {
+				...state,
+				restStatus: REST_STATUS.OK,
+				innsendte: action.ettersendelser
 			};
 		}
 		default:
