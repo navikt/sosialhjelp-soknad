@@ -91,6 +91,19 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 		// this.props.dispatch(lastOppEttersendelseVedlegg(vedleggId, formData));
 	}
 
+	handleEttersendelseSendt() {
+		let brukerbehandlingskjedeId = this.props.brukerbehandlingskjedeId;
+		if (!brukerbehandlingskjedeId) {
+			// Under utvikling er ikke brukerbehandlingId på redux state, så vi leser den fra url:
+			const match = window.location.pathname.match(/\/skjema\/(.*)\/ettersendelse/);
+			if (match) {
+				brukerbehandlingskjedeId = match[ 1 ];
+			}
+		}
+		this.props.dispatch(lagEttersendelse(brukerbehandlingskjedeId));
+		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
+	}
+
 	render() {
 		const { originalSoknad, ettersendelser, restStatus, visEttersendelse} = this.props;
 		const visEttersendeFeatureToggle = visEttersendelse && (visEttersendelse === true);
@@ -105,10 +118,12 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 		if ( originalSoknad ) {
 			antallManglendeVedlegg = originalSoknad.ikkeInnsendteVedlegg.length;
 		}
-		if ( ettersendelser ) {
+		if ( ettersendelser && ettersendelser.length > 0) {
 			antallManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].ikkeInnsendteVedlegg.length;
 			datoManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].innsendtDato;
 		}
+
+		console.warn(" ===> antallManglendeVedlegg: " + antallManglendeVedlegg);
 
 		return (
 			<div className="ettersendelse">
@@ -157,28 +172,11 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
 						{antallManglendeVedlegg > 0 && (
 							<EttersendelseEkspanderbart
-								onVedleggSendt={() => console.warn("Ettersendelse er sendt inn!")}
+								onVedleggSendt={() => this.handleEttersendelseSendt()}
 							>
 								<h3>{antallManglendeVedlegg} vedlegg mangler</h3>
 								<div>{datoManglendeVedlegg}</div>
 							</EttersendelseEkspanderbart>
-						)}
-
-						{antallManglendeVedlegg === 0 && (
-							<AvsnittMedMarger
-								hoyreIkon={MargIkoner.LAST_OPP}
-								onClickHoyreIkon={() => this.leggTilGenereltVedleggKnapp.click()}
-							>
-								Last opp generelt vedlegg.
-								<input
-									ref={c => this.leggTilGenereltVedleggKnapp = c}
-									onChange={(e) => this.handleFileUpload(e.target.files)}
-									type="file"
-									className="visuallyhidden"
-									tabIndex={-1}
-									accept="image/jpeg,image/png,application/pdf"
-								/>
-							</AvsnittMedMarger>
 						)}
 
 						<AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>

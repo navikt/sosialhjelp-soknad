@@ -8,6 +8,7 @@ import EttersendelseVedleggListe from "./ettersendelseVedleggListe";
 interface Props {
 	children: React.ReactNode;
 	onVedleggSendt?: () => void;
+	kunGenerellDokumentasjon?: boolean;
 }
 
 interface State {
@@ -36,21 +37,32 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 	}
 
 	onVedleggSendt() {
-		console.warn("Vedlegg sendt: nå kollapse...");
-		// this.setState({vedleggSendt: true})
+		this.setState({ekspandert: false, vedleggSendt: true});
 	}
 
 	render() {
 		return (
 			<span>
 
-				<AvsnittMedMarger
-					venstreIkon={MargIkoner.ADVARSEL}
-					hoyreIkon={this.state.ekspandert ? MargIkoner.CHEVRON_OPP : MargIkoner.CHEVRON_NED}
-					onClick={() => this.toggleEkspandering()}
-				>
-					{this.props.children}
-				</AvsnittMedMarger>
+				{this.props.kunGenerellDokumentasjon && (
+					<AvsnittMedMarger
+						venstreIkon={MargIkoner.DOKUMENTER}
+						hoyreIkon={this.state.ekspandert ? MargIkoner.CHEVRON_OPP : MargIkoner.CHEVRON_NED}
+						onClick={() => this.toggleEkspandering()}
+					>
+						{this.props.children}
+					</AvsnittMedMarger>
+				) }
+
+				{!this.props.kunGenerellDokumentasjon && (
+					<AvsnittMedMarger
+						venstreIkon={MargIkoner.ADVARSEL}
+						hoyreIkon={this.state.ekspandert ? MargIkoner.CHEVRON_OPP : MargIkoner.CHEVRON_NED}
+						onClick={() => this.toggleEkspandering()}
+					>
+						{this.props.children}
+					</AvsnittMedMarger>
+				) }
 
 				<Collapse
 					isOpened={this.state.ekspandert }
