@@ -44,6 +44,8 @@ const MargIkon: React.StatelessComponent<{ ikon: MargIkoner }> = ({ ikon }) => {
 			return <DigisosIkon navn="trashcan" className="ettersendelse__ikon trashcan"/>;
 		case MargIkoner.LAST_OPP:
 			return <DigisosIkon navn="lastOpp" className="ettersendelse__ikon"/>;
+		case MargIkoner.DOKUMENTER:
+			return <DigisosIkon navn="dokumenter" className="ettersendelse__ikon"/>;
 		default:
 			return <DigisosIkon navn="advarselSirkel" className="ettersendelse__ikon"/>;
 	}
