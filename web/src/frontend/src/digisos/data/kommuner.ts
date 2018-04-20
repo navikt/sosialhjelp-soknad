@@ -5,7 +5,7 @@ const bydelsnavn: any = {
 		{ id: "alna", navn: "Bydel Alna" },
 		{ id: "bjerke", navn: "Bydel Bjerke" },
 		{ id: "frogner", navn: "Bydel Frogner" },
-		{ id: "gamleoslo", navn: "Bydel Gamle Oslo" },
+		{ id: "gamleoslo", navn: "Gamle Oslo" },
 		{ id: "grorud", navn: "Bydel Grorud" },
 		{ id: "grunerlokka", navn: "Bydel Grünerløkka" },
 		{ id: "nordreaker", navn: "Bydel Nordre Aker" },
@@ -19,14 +19,17 @@ const bydelsnavn: any = {
 		{ id: "ostonsjo", navn: "Bydel Østensjø" }
 	],
 	"bergen": [
-		{ id: "bergenhus", navn: "Bydel Bergenhus"},
-		{ id: "ytrebygda", navn: "Bydel Ytrebygda"}
+		{ id: "bergenhus", navn: "Bergenhus"},
+		{ id: "ytrebygda", navn: "Ytrebygda"}
 	]
 };
 
 const BergenBydeler: Bydel[] = [
-	{ id: "bergenhus", navn: "Bydel Bergenhus"},
-	{ id: "ytrebygda", navn: "Bydel Ytrebygda"}
+	{ id: "bergenhus", navn: "Bergenhus"},
+	{ id: "ytrebygda", navn: "Ytrebygda"}
+];
+const OsloBydeler: Bydel[] = [
+	{ id: "gamleoslo", navn: "Gamle Oslo"}
 ];
 
 export const Kommuner: Kommune[] = [
@@ -38,6 +41,11 @@ export const Kommuner: Kommune[] = [
 		id: "bergen",
 		navn: "Bergen",
 		bydeler: BergenBydeler
+	},
+	{
+		id: "oslo",
+		navn: "Oslo",
+		bydeler: OsloBydeler
 	}
 ];
 
