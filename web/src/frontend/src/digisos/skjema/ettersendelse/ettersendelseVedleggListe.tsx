@@ -8,7 +8,10 @@ import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { FeatureToggles } from "../../../featureToggles";
 import { State as ReduxState } from "../../redux/reducers";
-import { sendEttersendelse } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
+import {
+	// lagEttersendelse, lesEttersendelser,
+	sendEttersendelse
+} from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 
 interface OwnProps {
 	onVedleggSendt?: () => void;
@@ -44,7 +47,8 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 		const antallOpplastedeFiler = this.antallOpplastedeFiler();
 		this.setState({ advarselManglerVedlegg: (antallOpplastedeFiler === 0) });
 		if (antallOpplastedeFiler > 0) {
-			this.props.dispatch(sendEttersendelse(this.props.brukerbehandlingId));
+			const brukerbehandlingId = this.props.brukerbehandlingId;
+			this.props.dispatch(sendEttersendelse(brukerbehandlingId));
 		}
 	}
 
@@ -56,17 +60,38 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 
 	componentDidUpdate(prevProps: Props) {
 		if (
-			prevProps.restStatus === REST_STATUS.PENDING &&
-			this.props.restStatus === REST_STATUS.OK &&
-			this.props.onVedleggSendt
+			prevProps.opplastingStatus === REST_STATUS.PENDING &&
+			this.props.opplastingStatus === REST_STATUS.OK
 		) {
+			// // TODO Fjern dette hacket
+			// const delayInSeconds = 1;
+			// setTimeout(() => {
+			// 	this.friskOppData();
+			// }, delayInSeconds * 1000);
+
 			this.props.onVedleggSendt();
 		}
+
 		if (this.state.advarselManglerVedlegg &&
 			this.props.manglendeVedlegg &&
 			this.antallOpplastedeFiler() > 0) {
 				this.setState({advarselManglerVedlegg: false});
 		}
+	}
+
+	friskOppData() {
+		// let brukerbehandlingskjedeId = this.props.brukerbehandlingskjedeId;
+		// if (!brukerbehandlingskjedeId) {
+		// 	const match = window.location.pathname.match(/\/skjema\/(.*)\/ettersendelse/);
+		// 	if (match) {
+		// 		brukerbehandlingskjedeId = match[ 1 ];
+		// 	}
+		// }
+		// // console.warn("[EttersendelseVedleggListe]: frisker opp data");
+		// this.props.dispatch(lagEttersendelse(brukerbehandlingskjedeId));
+		// this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
+
+		// window.location.reload(false);
 	}
 
 	render() {
@@ -113,6 +138,13 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 						<FormattedMessage id="ettersendelse.knapp.tittel"/>
 					</Knapp>
 				</AvsnittMedMarger>
+
+				{/*<Knapp*/}
+					{/*type="hoved"*/}
+					{/*htmlType="submit"*/}
+					{/*onClick={() => this.friskOppData()}>*/}
+					{/*[Frisk opp data]*/}
+				{/*</Knapp>*/}
 
 			</div>
 		);

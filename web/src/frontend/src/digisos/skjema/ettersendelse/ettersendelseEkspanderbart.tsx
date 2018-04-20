@@ -31,13 +31,21 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 	}
 
 	onAnimasjonFerdig() {
-		if (this.state.vedleggSendt && this.props.onVedleggSendt) {
+		// console.warn("onAnimasjonFerdig");
+		if (this.state.vedleggSendt === true && this.props.onVedleggSendt) {
+			// console.warn("[EttersendelseEkspanderbart]: animasjon ferdig.");
 			this.props.onVedleggSendt();
 		}
 	}
 
 	onVedleggSendt() {
-		this.setState({ekspandert: false, vedleggSendt: true});
+		// console.warn("[EttersendelseEkspanderbart]: Vedlegg er sendt");
+
+		// const delayInSeconds = 2;
+		// setTimeout(() => {
+		// 	this.setState({ekspandert: false, vedleggSendt: true});
+		// }, delayInSeconds * 1000);
+
 	}
 
 	render() {

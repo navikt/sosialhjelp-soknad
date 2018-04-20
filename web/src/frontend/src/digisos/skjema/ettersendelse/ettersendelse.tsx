@@ -34,8 +34,6 @@ interface OwnState {
 
 class Ettersendelse extends React.Component<Props, OwnState> {
 
-	leggTilGenereltVedleggKnapp: HTMLInputElement;
-
 	constructor(props: Props) {
 		super(props);
 		this.state = {
@@ -79,39 +77,13 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 		window.print();
 	}
 
-	handleFileUpload(files: FileList) {
-		if (files.length !== 1) {
-			return;
-		}
-		const formData = new FormData();
-		formData.append("file", files[ 0 ], files[ 0 ].name);
-		console.warn("Last opp generelt vedlegg ikke implementert.");
-		// this.setState({filnavn: files[ 0 ].name});
-		// const vedleggId = this.props.vedlegg.vedleggId;
-		// this.props.dispatch(lastOppEttersendelseVedlegg(vedleggId, formData));
-	}
-
-	handleEttersendelseSendt() {
-		let brukerbehandlingskjedeId = this.props.brukerbehandlingskjedeId;
-		if (!brukerbehandlingskjedeId) {
-			// Under utvikling er ikke brukerbehandlingId på redux state, så vi leser den fra url:
-			const match = window.location.pathname.match(/\/skjema\/(.*)\/ettersendelse/);
-			if (match) {
-				brukerbehandlingskjedeId = match[ 1 ];
-			}
-		}
-		this.props.dispatch(lagEttersendelse(brukerbehandlingskjedeId));
-		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
+	onEttersendelseSendt() {
+		// TODO Trigger animasjon når ettersendelse er sendt
 	}
 
 	render() {
-		const { originalSoknad, ettersendelser, restStatus, visEttersendelse} = this.props;
+		const { originalSoknad, ettersendelser, visEttersendelse} = this.props;
 		const visEttersendeFeatureToggle = visEttersendelse && (visEttersendelse === true);
-		let expanded: boolean = this.state.vedleggEkspandert;
-		const sendVedleggOk = restStatus === REST_STATUS.OK;
-		if ( sendVedleggOk && expanded ) {
-			expanded = false;
-		}
 
 		let antallManglendeVedlegg: number = 0;
 		let datoManglendeVedlegg: string = "";
@@ -119,11 +91,13 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 			antallManglendeVedlegg = originalSoknad.ikkeInnsendteVedlegg.length;
 		}
 		if ( ettersendelser && ettersendelser.length > 0) {
-			antallManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].ikkeInnsendteVedlegg.length;
+			antallManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].ikkeInnsendteVedlegg.length - 1;
 			datoManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].innsendtDato;
 		}
 
-		console.warn(" ===> antallManglendeVedlegg: " + antallManglendeVedlegg);
+		if (antallManglendeVedlegg < 0) {
+			antallManglendeVedlegg = 0;
+		}
 
 		return (
 			<div className="ettersendelse">
@@ -142,6 +116,9 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
 				{visEttersendeFeatureToggle && (
 					<div className="blokk-center">
+
+						<p style={{color: "red", fontWeight: "bold"}}>
+							Denne siden er under utvikling. Hvis ting ikke virker, så ta en refresh.</p>
 						<p className="ettersendelse ingress">
 							<FormattedHTMLMessage id="ettersendelse.ingress"/>
 						</p>
@@ -170,14 +147,20 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 							}
 						)}
 
-						{antallManglendeVedlegg > 0 && (
-							<EttersendelseEkspanderbart
-								onVedleggSendt={() => this.handleEttersendelseSendt()}
-							>
-								<h3>{antallManglendeVedlegg} vedlegg mangler</h3>
-								<div>{datoManglendeVedlegg}</div>
-							</EttersendelseEkspanderbart>
-						)}
+						<EttersendelseEkspanderbart
+							kunGenerellDokumentasjon={antallManglendeVedlegg === 0}
+							onVedleggSendt={() => this.onEttersendelseSendt()}
+						>
+							{antallManglendeVedlegg > 0 && (
+								<span>
+									<h3>{antallManglendeVedlegg} vedlegg mangler</h3>
+									<div>{datoManglendeVedlegg}</div>
+								</span>
+							)}
+							{antallManglendeVedlegg === 0 && (
+								<h3>Last opp generell dokumentasjon</h3>
+							)}
+						</EttersendelseEkspanderbart>
 
 						<AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>
 							<h3><FormattedHTMLMessage id="ettersendelse.samtale.tittel" /></h3>
