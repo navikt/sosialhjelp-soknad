@@ -7,7 +7,7 @@ import { SynligeFaktaProps } from "../../redux/synligefakta/synligeFaktaTypes";
 import BannerEttersendelse from "./bannerEttersendelse";
 import { FeatureToggles } from "../../../featureToggles";
 import {
-	lagEttersendelse, lesEttersendelser,
+	lesEttersendelser, opprettEttersendelse,
 	sendEttersendelse
 } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
@@ -43,6 +43,12 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	}
 
 	componentDidMount() {
+		const brukerbehandlingskjedeId = this.lesBrukerbehandlingskjedeId();
+		this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
+		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
+	}
+
+	lesBrukerbehandlingskjedeId() {
 		let brukerbehandlingskjedeId = this.props.brukerbehandlingskjedeId;
 		if (!brukerbehandlingskjedeId) {
 			// Under utvikling er ikke brukerbehandlingId på redux state, så vi leser den fra url:
@@ -51,8 +57,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 				brukerbehandlingskjedeId = match[ 1 ];
 			}
 		}
-		this.props.dispatch(lagEttersendelse(brukerbehandlingskjedeId));
-		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
+		return brukerbehandlingskjedeId;
 	}
 
 	toggleVedlegg() {
@@ -78,7 +83,16 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	}
 
 	onEttersendelseSendt() {
-		// TODO Trigger animasjon når ettersendelse er sendt
+		// Denne metoden skal helst
+		// - bli kjørt
+		// - ettersendelsene være sendt inn
+		// - og collaps animasjon helst være kjørt
+		//
+		// Så nå skal det være trygt å gjøre rest kall for å gjøre rest kall på nytt
+		// console.warn("Nå skal det være trygt å gjøre rest kall på nytt.");
+		const brukerbehandlingskjedeId = this.lesBrukerbehandlingskjedeId();
+		this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
+		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
 	}
 
 	render() {
@@ -116,9 +130,6 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
 				{visEttersendeFeatureToggle && (
 					<div className="blokk-center">
-
-						<p style={{color: "red", fontWeight: "bold"}}>
-							Denne siden er under utvikling. Hvis ting ikke virker, så ta en refresh.</p>
 						<p className="ettersendelse ingress">
 							<FormattedHTMLMessage id="ettersendelse.ingress"/>
 						</p>
@@ -149,7 +160,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
 						<EttersendelseEkspanderbart
 							kunGenerellDokumentasjon={antallManglendeVedlegg === 0}
-							onVedleggSendt={() => this.onEttersendelseSendt()}
+							onEttersendelse={() => this.onEttersendelseSendt()}
 						>
 							{antallManglendeVedlegg > 0 && (
 								<span>

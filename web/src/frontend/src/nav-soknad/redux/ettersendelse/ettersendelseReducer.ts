@@ -4,7 +4,8 @@ import { Reducer } from "../reduxTypes";
 
 const initialState: EttersendelseState = {
 	restStatus: REST_STATUS.INITIALISERT,
-	opplastingStatus: REST_STATUS.OK,
+	opplastingStatus: REST_STATUS.INITIALISERT,
+	ettersendStatus: REST_STATUS.INITIALISERT,
 	data: [],
 	brukerbehandlingId: null,
 	innsendte: {
@@ -42,16 +43,16 @@ const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes
 				data: action.vedlegg
 			};
 		}
-		case EttersendelseActionTypeKeys.SEND_PENDING: {
+		case EttersendelseActionTypeKeys.ETTERSEND_PENDING: {
 			return {
 				...state,
-				restStatus: REST_STATUS.PENDING
+				ettersendStatus: REST_STATUS.PENDING
 			};
 		}
-		case EttersendelseActionTypeKeys.SEND_OK: {
+		case EttersendelseActionTypeKeys.ETTERSEND_OK: {
 			return {
 				...state,
-				restStatus: REST_STATUS.OK
+				ettersendStatus: REST_STATUS.OK
 			};
 		}
 		case EttersendelseActionTypeKeys.LES_ETTERSENDELSER: {

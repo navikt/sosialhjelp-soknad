@@ -26,6 +26,9 @@ export enum EttersendelseActionTypeKeys {
 	LES_ETTERSENDELSER = "ettersendelse/LES_ETTERSENDELSER",
 	LES_ETTERSENDELSER_OK = "ettersendelse/LES_ETTERSENDELSER_OK",
 
+	ETTERSEND_PENDING = "ettersendelse/ETTERSEND_PENDING",
+	ETTERSEND_OK = "ettersendelse/ETTERSEND_OK",
+
 	INIT = "ettersendelse/INIT",
 	OTHER_ACTION = "__any_other_action_type__"
 }
@@ -36,7 +39,7 @@ export interface EttersendteVedleggState {
 	opplastingStatus: REST_STATUS;
 }
 
-export interface LagEttersendelseAction {
+export interface OpprettEttersendelseAction {
 	type: EttersendelseActionTypeKeys.NY;
 	brukerbehandlingId: string;
 }
@@ -47,11 +50,11 @@ export interface SendEttersendelseAction {
 }
 
 export interface SendEttersendelsePendingAction {
-	type: EttersendelseActionTypeKeys.SEND_PENDING;
+	type: EttersendelseActionTypeKeys.ETTERSEND_PENDING;
 }
 
 export interface SendEttersendelseOkAction {
-	type: EttersendelseActionTypeKeys.SEND_OK;
+	type: EttersendelseActionTypeKeys.ETTERSEND_OK;
 }
 
 export interface LastOppEttersendtVedleggAction {
@@ -81,7 +84,7 @@ export interface LesEttersendelserOkAction {
 	ettersendelser: any;
 }
 export type EttersendelseActionTypes =
-	LagEttersendelseAction
+	OpprettEttersendelseAction
 	| LagEttersendelseOkAction
 	| LastOppEttersendelseAction
 	| LastOppEttersendelseOkAction
@@ -124,5 +127,6 @@ export interface EttersendelseState {
 	innsendte: any;
 	restStatus: REST_STATUS;
 	opplastingStatus: REST_STATUS;
+	ettersendStatus: REST_STATUS;
 	brukerbehandlingId: string;
 }

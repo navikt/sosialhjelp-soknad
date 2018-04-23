@@ -14,7 +14,7 @@ import {
 } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 
 interface OwnProps {
-	onVedleggSendt?: () => void;
+	onEttersendelse?: () => void;
 }
 
 interface StateProps {
@@ -24,6 +24,7 @@ interface StateProps {
 	visEttersendelse: boolean;
 	brukerbehandlingskjedeId: string;
 	brukerbehandlingId: string;
+	ettersendStatus: REST_STATUS;
 }
 
 type Props = OwnProps & StateProps & DispatchProps & InjectedIntlProps;
@@ -49,6 +50,7 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 		if (antallOpplastedeFiler > 0) {
 			const brukerbehandlingId = this.props.brukerbehandlingId;
 			this.props.dispatch(sendEttersendelse(brukerbehandlingId));
+			// this.props.dispatch()
 		}
 	}
 
@@ -59,17 +61,16 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 	}
 
 	componentDidUpdate(prevProps: Props) {
+		if (prevProps.ettersendStatus === REST_STATUS.PENDING && this.props.ettersendStatus === REST_STATUS.OK) {
+			// console.warn("2. filer er ettersend / ettersendStatus: ok");
+
+			this.props.onEttersendelse();
+		}
 		if (
 			prevProps.opplastingStatus === REST_STATUS.PENDING &&
 			this.props.opplastingStatus === REST_STATUS.OK
 		) {
-			// // TODO Fjern dette hacket
-			// const delayInSeconds = 1;
-			// setTimeout(() => {
-			// 	this.friskOppData();
-			// }, delayInSeconds * 1000);
-
-			this.props.onVedleggSendt();
+			// console.warn("1. liste opplastede filer lest/opplastingStatus ok");
 		}
 
 		if (this.state.advarselManglerVedlegg &&
@@ -77,21 +78,6 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 			this.antallOpplastedeFiler() > 0) {
 				this.setState({advarselManglerVedlegg: false});
 		}
-	}
-
-	friskOppData() {
-		// let brukerbehandlingskjedeId = this.props.brukerbehandlingskjedeId;
-		// if (!brukerbehandlingskjedeId) {
-		// 	const match = window.location.pathname.match(/\/skjema\/(.*)\/ettersendelse/);
-		// 	if (match) {
-		// 		brukerbehandlingskjedeId = match[ 1 ];
-		// 	}
-		// }
-		// // console.warn("[EttersendelseVedleggListe]: frisker opp data");
-		// this.props.dispatch(lagEttersendelse(brukerbehandlingskjedeId));
-		// this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
-
-		// window.location.reload(false);
 	}
 
 	render() {
@@ -158,6 +144,7 @@ export default connect<{}, {}, OwnProps>((state: ReduxState, {}) => {
 		manglendeVedlegg: state.ettersendelse.data,
 		brukerbehandlingId: state.ettersendelse.brukerbehandlingId,
 		opplastingStatus: state.ettersendelse.opplastingStatus,
+		ettersendStatus: state.ettersendelse.ettersendStatus,
 		restStatus: state.ettersendelse.restStatus
 	};
 })(injectIntl(EttersendelseVedleggListe));
