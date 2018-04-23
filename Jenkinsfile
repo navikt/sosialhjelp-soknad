@@ -115,7 +115,7 @@ node("a34apvl00071") {
         }
     }
 
-    if (deployToNaisEnvironment != "") {
+    if (deployToNaisEnvironment != "" || params.DeployTilNexus == "true") {
         stage("Build Docker and Update Nais") {
             try {
                 dir("web/target/appassembler") {
@@ -131,6 +131,8 @@ node("a34apvl00071") {
                 notifyFailed("Build Docker and Update Nais Failed", e, env.BUILD_URL)
             }
         }
+    }
+    if (deployToNaisEnvironment != "") {
         stage("Deploy Nais") {
             try {
                 echo "Deploying to ${deployToNaisEnvironment}."
