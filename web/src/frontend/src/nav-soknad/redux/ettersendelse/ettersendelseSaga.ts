@@ -3,7 +3,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 import { fetchDelete, fetchToJson, fetchPost, fetchUpload, toJson } from "../../utils/rest-utils";
 import {
-	EttersendelseActionTypeKeys, LagEttersendelseAction,
+	EttersendelseActionTypeKeys, OpprettEttersendelseAction,
 	LastOppEttersendtVedleggAction, LesEttersendelsesVedleggAction,
 	SlettEttersendtVedleggAction, SendEttersendelseAction, LesEttersendelserAction
 } from "./ettersendelseTypes";
@@ -14,7 +14,7 @@ import {
 import { loggFeil } from "../navlogger/navloggerActions";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 
-function* lagEttersendelseSaga(action: LagEttersendelseAction): SagaIterator {
+function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIterator {
 	try {
 		const url = `soknader?ettersendTil=${action.brukerbehandlingId}`;
 		const response = yield call(fetchPost, url, {});
@@ -84,18 +84,19 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
 
 function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
 	try {
-		yield put({type: EttersendelseActionTypeKeys.SEND_PENDING});
+		yield put({type: EttersendelseActionTypeKeys.ETTERSEND_PENDING});
 		const url = `soknader/${action.brukerbehandlingId}/actions/send`;
 		yield call(fetchPost, url, {});
-		yield put({type: EttersendelseActionTypeKeys.SEND_OK});
+		yield put({type: EttersendelseActionTypeKeys.ETTERSEND_OK});
 	} catch (reason) {
+		// yield put({type: EttersendelseActionTypeKeys.ETTERSEND_FEILET});
 		yield put(loggFeil("Send ettersendelse feilet: " + reason.toString()));
 		yield put(navigerTilServerfeil());
 	}
 }
 
 function* ettersendelseSaga(): SagaIterator {
-	yield takeEvery(EttersendelseActionTypeKeys.NY, lagEttersendelseSaga);
+	yield takeEvery(EttersendelseActionTypeKeys.NY, opprettEttersendelseSaga);
 	yield takeEvery(EttersendelseActionTypeKeys.LAST_OPP, lastOppEttersendelsesVedleggSaga);
 	yield takeEvery(EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG, lesEttersendelsesVedleggSaga);
 	yield takeEvery(EttersendelseActionTypeKeys.SLETT_VEDLEGG, slettEttersendelsesVedleggSaga);
