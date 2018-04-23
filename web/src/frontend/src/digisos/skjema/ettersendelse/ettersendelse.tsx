@@ -83,35 +83,39 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	}
 
 	onEttersendelseSendt() {
-		// Denne metoden skal helst
-		// - bli kjørt
-		// - ettersendelsene være sendt inn
-		// - og collaps animasjon helst være kjørt
-		//
-		// Så nå skal det være trygt å gjøre rest kall for å gjøre rest kall på nytt
-		// console.warn("Nå skal det være trygt å gjøre rest kall på nytt.");
+		// Denne metoden skal trigges når:
+		// - En ettersendelsene av filer er sendt inn
+		// - EttersendelseEkspanderbart har kollapset
+		// Da er det klart for å kjøre:
+		// - Kjøre restkall for å opprette ny ettersendelse
+		// - Kjøre restkall for å få en oppdatert liste over ettersendelser (ikke filer)
 		const brukerbehandlingskjedeId = this.lesBrukerbehandlingskjedeId();
 		this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
 		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
 	}
 
-	render() {
-		const { originalSoknad, ettersendelser, visEttersendelse} = this.props;
-		const visEttersendeFeatureToggle = visEttersendelse && (visEttersendelse === true);
-
+	antallManglendeVedleggOgDato() {
+		const { originalSoknad, ettersendelser } = this.props;
 		let antallManglendeVedlegg: number = 0;
 		let datoManglendeVedlegg: string = "";
 		if ( originalSoknad ) {
-			antallManglendeVedlegg = originalSoknad.ikkeInnsendteVedlegg.length;
+			antallManglendeVedlegg = originalSoknad.ikkeInnsendteVedlegg.length - 1;
+			datoManglendeVedlegg = originalSoknad.innsendtDato;
 		}
 		if ( ettersendelser && ettersendelser.length > 0) {
 			antallManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].ikkeInnsendteVedlegg.length - 1;
 			datoManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].innsendtDato;
 		}
-
 		if (antallManglendeVedlegg < 0) {
 			antallManglendeVedlegg = 0;
 		}
+		return { antallManglendeVedlegg, datoManglendeVedlegg };
+	}
+
+	render() {
+		const { originalSoknad, ettersendelser, visEttersendelse} = this.props;
+		const visEttersendeFeatureToggle = visEttersendelse && (visEttersendelse === true);
+		const { antallManglendeVedlegg, datoManglendeVedlegg } = this.antallManglendeVedleggOgDato();
 
 		return (
 			<div className="ettersendelse">
