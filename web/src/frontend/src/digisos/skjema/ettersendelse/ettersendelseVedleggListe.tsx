@@ -115,8 +115,8 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 
 				<AvsnittMedMarger>
 					<Knapp
-						spinner={this.props.restStatus === REST_STATUS.PENDING}
-						disabled={this.props.restStatus === REST_STATUS.PENDING}
+						spinner={this.props.ettersendStatus === REST_STATUS.PENDING}
+						disabled={this.props.ettersendStatus === REST_STATUS.PENDING}
 						type="hoved"
 						htmlType="submit"
 						onClick={() => this.sendEttersendelse()}
@@ -124,13 +124,6 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 						<FormattedMessage id="ettersendelse.knapp.tittel"/>
 					</Knapp>
 				</AvsnittMedMarger>
-
-				{/*<Knapp*/}
-					{/*type="hoved"*/}
-					{/*htmlType="submit"*/}
-					{/*onClick={() => this.friskOppData()}>*/}
-					{/*[Frisk opp data]*/}
-				{/*</Knapp>*/}
 
 			</div>
 		);

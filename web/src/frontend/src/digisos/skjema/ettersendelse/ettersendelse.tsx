@@ -79,16 +79,11 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	}
 
 	skrivUt() {
+		// TODO Rediriger bruker til skriv ut kvitteringsside i ny arkfane
 		window.print();
 	}
 
 	onEttersendelseSendt() {
-		// Denne metoden skal trigges når:
-		// - En ettersendelsene av filer er sendt inn
-		// - EttersendelseEkspanderbart har kollapset
-		// Da er det klart for å kjøre:
-		// - Kjøre restkall for å opprette ny ettersendelse
-		// - Kjøre restkall for å få en oppdatert liste over ettersendelser (ikke filer)
 		const brukerbehandlingskjedeId = this.lesBrukerbehandlingskjedeId();
 		this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
 		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
@@ -118,7 +113,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 		const { antallManglendeVedlegg, datoManglendeVedlegg } = this.antallManglendeVedleggOgDato();
 
 		return (
-			<div className="ettersendelse">
+			<div className="ettersendelse ">
 
 				<BannerEttersendelse>
 					<FormattedMessage id="applikasjon.sidetittel"/>
@@ -133,7 +128,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 				)}
 
 				{visEttersendeFeatureToggle && (
-					<div className="blokk-center">
+					<div className="blokk-center ettersendelse__boks">
 						<p className="ettersendelse ingress">
 							<FormattedHTMLMessage id="ettersendelse.ingress"/>
 						</p>
