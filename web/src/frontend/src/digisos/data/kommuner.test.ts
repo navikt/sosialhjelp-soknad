@@ -1,4 +1,4 @@
-import { getBosted, getKommune } from "../data/kommuner";
+import { finnBydeler, getNavEnhet, getKommune, kommuner } from "../data/kommuner";
 
 describe("kommuner", () => {
 
@@ -14,8 +14,15 @@ describe("kommuner", () => {
 			}
 		};
 
-		let bosted = getBosted("bergen", "bergenhus", intlMock);
-		expect(bosted).toEqual("NAV Bergenhus");
+		let bosted = getNavEnhet("bergen", "bergenhus", intlMock);
+		expect(bosted).toEqual("NAV Bergenhus, Bergen Kommune");
 	});
 
+	it("should return a list of municipalities", () => {
+		expect(kommuner.length).toBeGreaterThan(2);
+	});
+
+	it("should return a list of districts", () => {
+		expect(finnBydeler("bergen").length).toBeGreaterThan(1);
+	});
 });

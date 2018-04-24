@@ -1,5 +1,5 @@
-import { Kommune } from "../../types";
 import { NavigasjonActionTypes, NavigasjonActions } from "./navigasjonTypes";
+import { NavEnhet } from "../../../digisos/data/kommuner";
 
 export function navigerTilServerfeil(): NavigasjonActions {
 	return {
@@ -59,7 +59,7 @@ export function tilBosted(): NavigasjonActions {
 }
 
 export function tilBostedEllerStartSoknad(
-	valgtKommune?: Kommune
+	valgtKommune?: NavEnhet
 ): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD,

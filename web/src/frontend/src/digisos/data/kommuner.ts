@@ -1,94 +1,106 @@
-import { Kommune, Bydel } from "../../nav-soknad/types";
+export const enum EnhetsType {
+	KOMMUNE = "KOMMUNE",
+	BYDEL = "BYDEL"
+}
 
-const bydelsnavn: any = {
-	"oslo": [
-		{ id: "alna", navn: "Alna" },
-		{ id: "bjerke", navn: "Bjerke" },
-		{ id: "frogner", navn: "Frogner" },
-		{ id: "gamleoslo", navn: "Gamle Oslo" },
-		{ id: "grorud", navn: "Grorud" },
-		{ id: "grunerlokka", navn: "Grünerløkka" },
-		{ id: "nordreaker", navn: "Nordre Aker" },
-		{ id: "nordstrand", navn: "Nordstrand" },
-		{ id: "sagene", navn: "Sagene" },
-		{ id: "sthanshaugen", navn: "St. Hanshaugen" },
-		{ id: "stovner", navn: "Stovner" },
-		{ id: "sondrenordstrand", navn: "Søndre Nordstrand" },
-		{ id: "ullern", navn: "Ullern" },
-		{ id: "vestreaker", navn: "Vestre Aker" },
-		{ id: "ostonsjo", navn: "Østensjø" }
-	],
-	"bergen": [
-		{ id: "bergenhus", navn: "Bergenhus" },
-		{ id: "ytrebygda", navn: "Ytrebygda" }
-	]
-};
+export interface NavEnhet {
+	id: string;
+	navn: string;
+	kommuneId?: string;
+	fulltNavn: string;
+	type: EnhetsType;
+}
 
-const OsloBydeler: Bydel[] = [
-	// { id: "alna", navn: "Alna" },
-	// { id: "bjerke", navn: "Bjerke" },
-	{ id: "frogner", navn: "Frogner" },
-	// { id: "gamleoslo", navn: "Gamle Oslo" },
-	{ id: "grorud", navn: "Grorud" },
-	{ id: "grunerlokka", navn: "Grünerløkka" },
-	// { id: "nordreaker", navn: "Nordre Aker" },
-	// { id: "nordstrand", navn: "Nordstrand" },
-	// { id: "sagene", navn: "Sagene" },
-	// { id: "sthanshaugen", navn: "St. Hanshaugen" },
-	// { id: "stovner", navn: "Stovner" },
-	// { id: "sondrenordstrand", navn: "Søndre Nordstrand" },
-	// { id: "ullern", navn: "Ullern" },
-	// { id: "vestreaker", navn: "Vestre Aker" },
-	// { id: "ostonsjo", navn: "Østensjø" }
-];
-
-const BergenBydeler: Bydel[] = [
-	{ id: "bergenhus", navn: "Bergenhus" },
-	{ id: "ytrebygda", navn: "Ytrebygda" }
-];
-
-export const Kommuner: Kommune[] = [
+export const NavEnheter: NavEnhet[] = [
 	{
-		id: "horten",
-		navn: "Horten"
+		id: "askoy",
+		navn: "Askøy",
+		kommuneId: null,
+		fulltNavn: "NAV Askøy",
+		type: EnhetsType.KOMMUNE
 	},
-	// {
-	//   id: "askoy",
-	//   navn: "Askøy"
-	// },
+	{
+		id: "bergenhus",
+		navn: "Bergenhus",
+		kommuneId: "bergen",
+		fulltNavn: "NAV Bergenhus, Bergen Kommune",
+		type: EnhetsType.BYDEL
+	},
 	{
 		id: "bergen",
 		navn: "Bergen",
-		bydeler: BergenBydeler
+		fulltNavn: null,
+		type: EnhetsType.KOMMUNE
+	},
+	{
+		id: "horten",
+		navn: "Horten",
+		kommuneId: null,
+		fulltNavn: "NAV Horten",
+		type: EnhetsType.KOMMUNE
 	},
 	{
 		id: "oslo",
 		navn: "Oslo",
-		bydeler: OsloBydeler
+		kommuneId: null,
+		fulltNavn: null,
+		type: EnhetsType.KOMMUNE
+	},
+	{
+		id: "ytrebygda",
+		navn: "Ytrebygda",
+		kommuneId: "bergen",
+		fulltNavn: "NAV Ytrebygda, Bergen kommune",
+		type: EnhetsType.BYDEL
+	},
+	{
+		id: "frogner",
+		navn: "Frogner",
+		kommuneId: "oslo",
+		fulltNavn: "NAV Frogner, Oslo kommune",
+		type: EnhetsType.BYDEL
+	},
+	{
+		id: "grorud",
+		navn: "Grorud",
+		kommuneId: "oslo",
+		fulltNavn: "NAV Grorud, Oslo kommune",
+		type: EnhetsType.BYDEL
+	},
+	{
+		id: "grunerlokka",
+		navn: "Grünerløkka",
+		kommuneId: "oslo",
+		fulltNavn: "NAV Grünerløkka, Oslo kommune",
+		type: EnhetsType.BYDEL
 	}
 ];
 
+export function getNavEnhet(kommuneId: string, bydelId?: string, intl?: any): string {
+	const enhet = NavEnheter.find((element: NavEnhet) => {
+		return element.id === kommuneId || (bydelId && element.id === bydelId);
+	});
+	return enhet ? enhet.fulltNavn : null;
+}
+
 export function getKommune(kommuneId: string): string {
-	const kommune = Kommuner.find(k => k.id === kommuneId);
-	if (!kommune) {
-		return "N/A";
-	}
-	return kommune.navn;
+	const enhet = NavEnheter.find((element: NavEnhet) => {
+		return element.id === kommuneId;
+	});
+	return enhet ? enhet.navn : null;
 }
 
 export function getBydel(kommuneId: string, bydelId: string): string {
-	const bydel = bydelsnavn[ kommuneId ] ? bydelsnavn[ kommuneId ].find((b: any) => b.id === bydelId) : undefined;
-	return bydel ? bydel.navn : "";
+	const enhet = NavEnheter.find(e => e.id === bydelId);
+	return enhet ? enhet.navn : null;
 }
 
-export function getBosted(kommuneId: string, bydelId?: string, intl?: any): string {
-	const kommune = getKommune(kommuneId);
-	const bydel = getBydel(kommuneId, bydelId);
-	if (bydel === "") {
-		return `NAV ${kommune}`;
-	} else {
-		return `NAV ${bydel}`;
-	}
+export const kommuner = NavEnheter.filter(e => e.type === EnhetsType.KOMMUNE);
+
+export function finnBydeler(kommuneId: string): NavEnhet[] {
+	return NavEnheter.filter(e => e.type === EnhetsType.BYDEL && e.kommuneId === kommuneId);
 }
 
-export const Horten = Kommuner.find(k => k.id === "horten");
+export const bydeler = NavEnheter.filter(e => e.type === EnhetsType.BYDEL);
+
+export const Horten = NavEnheter.find(k => k.id === "horten");
