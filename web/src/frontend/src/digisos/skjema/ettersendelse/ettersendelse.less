@@ -16,6 +16,19 @@
 
 .ettersendelse {
 
+  &__boks {
+	background-color: white;
+	border-radius: 4px;
+	margin-top: 1rem;
+	padding-top: 0.5rem;
+	padding-bottom: 2rem;
+
+	@media @mobile {
+		margin-top: 0;
+	  	margin-bottom: 0;
+	}
+  }
+
   &.maincontent {
 	display: block;
 	padding-top: 0;
@@ -94,6 +107,7 @@
 .venstremarg svg {
   margin-top: 7px;
   margin-left: 1px;
+  width: 25px;
 }
 
 .hoyremarg {
@@ -103,7 +117,7 @@
 
   &__ikon {
     height: 36px;
-    text-align: center;
+	width: 36px;
     color: @navBla;
     padding-top: 3px;
     border-radius: 4px;
