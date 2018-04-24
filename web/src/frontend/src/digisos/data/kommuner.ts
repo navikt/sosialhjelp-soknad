@@ -28,9 +28,9 @@ const BergenBydeler: Bydel[] = [
 	{ id: "bergenhus", navn: "Bergenhus"},
 	{ id: "ytrebygda", navn: "Ytrebygda"}
 ];
-const OsloBydeler: Bydel[] = [
-	{ id: "gamleoslo", navn: "Gamle Oslo"}
-];
+// const OsloBydeler: Bydel[] = [
+// 	{ id: "gamleoslo", navn: "Gamle Oslo"}
+// ];
 
 export const Kommuner: Kommune[] = [
 	{
@@ -41,12 +41,12 @@ export const Kommuner: Kommune[] = [
 		id: "bergen",
 		navn: "Bergen",
 		bydeler: BergenBydeler
-	},
-	{
-		id: "oslo",
-		navn: "Oslo",
-		bydeler: OsloBydeler
 	}
+	// {
+	// 	id: "oslo",
+	// 	navn: "Oslo",
+	// 	bydeler: OsloBydeler
+	// }
 ];
 
 export function getKommune(kommuneId: string): string {
