@@ -31,7 +31,7 @@ function getBydel(kommuneId: string, bydelId: string, navEnheter: NavEnhet[]): s
 }
 
 function alleKommuner(navEnheter: NavEnhet[]): NavEnhet[] {
-	return navEnheter.filter(e => e.type === EnhetsType.KOMMUNE);
+	return navEnheter ? navEnheter.filter((e: NavEnhet) => e.type === EnhetsType.KOMMUNE) : [];
 }
 
 function finnBydeler(kommuneId: string, navEnheter: NavEnhet[]): NavEnhet[] {

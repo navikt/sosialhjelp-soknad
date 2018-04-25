@@ -14,7 +14,7 @@ function* lesKommunerSaga(action: KommunerActionTypes): SagaIterator {
 			yield put(lesKommunerOk(response));
 		}
 	} catch (reason) {
-		yield put(loggFeil("Lese inn kommuner feilet: " + reason.toString()));
+		yield put(loggFeil("Lese inn navEnheter feilet: " + reason.toString()));
 		yield put(navigerTilServerfeil());
 	}
 }
