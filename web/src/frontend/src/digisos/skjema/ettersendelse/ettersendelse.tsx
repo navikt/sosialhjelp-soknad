@@ -155,11 +155,17 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 										venstreIkon={MargIkoner.OK}
 										key={ettersendelse.behandlingsId}
 									>
-										<h3>{ettersendelse.innsendteVedlegg.length} <FormattedHTMLMessage id="ettersendelse.vedlegg_sendt"/></h3>
+										<h3>
+											{ettersendelse.innsendteVedlegg.length}
+											<FormattedHTMLMessage id="ettersendelse.vedlegg_sendt"/></h3>
 										<p>
 											<FormattedHTMLMessage
 												id="ettersendelse.dato_tid"
-												values={{dato: ettersendelse.innsendtDato, tid: ettersendelse.innsendtTidspunkt}}
+												values={
+													{
+														dato: ettersendelse.innsendtDato,
+														tid: ettersendelse.innsendtTidspunkt
+													}}
 											/>
 										</p>
 									</AvsnittMedMarger>
