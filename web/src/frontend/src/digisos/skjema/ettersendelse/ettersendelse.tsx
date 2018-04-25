@@ -155,8 +155,19 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 										venstreIkon={MargIkoner.OK}
 										key={ettersendelse.behandlingsId}
 									>
-										<h3>{ettersendelse.innsendteVedlegg.length} vedlegg er sendt til NAV</h3>
-										<p>Ettersendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}</p>
+										<h3>
+											{ettersendelse.innsendteVedlegg.length}
+											<FormattedHTMLMessage id="ettersendelse.vedlegg_sendt"/></h3>
+										<p>
+											<FormattedHTMLMessage
+												id="ettersendelse.dato_tid"
+												values={
+													{
+														dato: ettersendelse.innsendtDato,
+														tid: ettersendelse.innsendtTidspunkt
+													}}
+											/>
+										</p>
 									</AvsnittMedMarger>
 								);
 							}
