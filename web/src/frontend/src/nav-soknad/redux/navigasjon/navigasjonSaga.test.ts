@@ -25,6 +25,7 @@ import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 import { startSoknad, settAvbrytSoknadSjekk } from "../soknad/soknadActions";
+import { EnhetsType } from "../../../digisos/data/kommuner";
 
 const ferdig = (saga: SagaIterator) => {
 	expect(saga.next()).toEqual({
@@ -217,7 +218,13 @@ describe("navigasjonSaga", () => {
 
 	describe("skalGåTilBostedEllerStarteSoknad - Horten", () => {
 		const saga = tilBostedEllerStartSoknadSaga({
-			valgtKommune: { id: "123", navn: "Horten" },
+			valgtKommune: {
+				id: "123",
+				navn: "Horten",
+				kommuneId: null,
+				fulltNavn: "NAV Horten",
+				type: EnhetsType.KOMMUNE
+			},
 			type: NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD
 		});
 		it("starter søknad for horten", () => {
@@ -241,4 +248,5 @@ describe("navigasjonSaga", () => {
 		});
 		it("ferdig", () => ferdig(saga));
 	});
+
 });

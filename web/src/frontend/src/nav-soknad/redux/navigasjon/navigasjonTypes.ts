@@ -1,4 +1,5 @@
-import { Kommune } from "../../types";
+import { NavEnhet } from "../../../digisos/data/kommuner";
+
 export enum Sider {
 	FORSIDEN = "https://www.nav.no",
 	/* tslint:disable-next-line */
@@ -72,7 +73,7 @@ export interface TilBosted {
 
 export interface TilBostedEllerStartSoknad {
 	type: NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD;
-	valgtKommune?: Kommune;
+	valgtKommune?: NavEnhet;
 }
 
 export interface TilDittNav {
