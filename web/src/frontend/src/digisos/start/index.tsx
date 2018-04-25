@@ -14,6 +14,8 @@ import {
 } from "../../nav-soknad/redux/soknad/soknadActions";
 
 import Bosted from "./Bosted";
+import { lesKommuner } from "../../nav-soknad/redux/kommuner/kommuneActions";
+import { NavEnhet } from "../data/kommuner";
 
 const DocumentTitle = require("react-document-title");
 
@@ -21,6 +23,8 @@ interface StateProps {
 	soknadRestStatus: string;
 	faktaRestStatus: string;
 	startSoknadPending: boolean;
+	kommuner: NavEnhet[];
+	kommunerRestStatus: REST_STATUS;
 }
 
 type Props = StateProps & InjectedIntlProps & DispatchProps;
@@ -34,6 +38,7 @@ class Start extends React.Component<Props, {}> {
 	componentDidMount() {
 		scrollToTop();
 		this.props.dispatch(resetSoknad());
+		this.props.dispatch(lesKommuner());
 	}
 
 	startSoknad(kommuneId: string, bydelId?: string) {
@@ -60,6 +65,8 @@ class Start extends React.Component<Props, {}> {
 						<Bosted
 							onStartSoknad={this.startSoknad}
 							startSoknadPending={this.props.startSoknadPending}
+							kommuner={this.props.kommuner}
+							kommunerRestStatus={this.props.kommunerRestStatus}
 						/>
 					</div>
 				</span>
@@ -72,6 +79,8 @@ export default connect((state: State, props: any) => {
 	return {
 		soknadRestStatus: state.soknad.restStatus,
 		startSoknadPending: state.soknad.startSoknadPending,
-		faktaRestStatus: state.fakta.restStatus
+		faktaRestStatus: state.fakta.restStatus,
+		kommuner: state.kommuner.data,
+		kommunerRestStatus: state.kommuner.restStatus
 	};
 })(injectIntl(Start));

@@ -11,6 +11,7 @@ import { InitState } from "./init/initTypes";
 import { FeatureTogglesApiType } from "./featuretoggles/featureTogglesTypes";
 import { VedleggState } from "./vedlegg/vedleggTypes";
 import { EttersendelseState } from "./ettersendelse/ettersendelseTypes";
+import { KommunerState } from "./kommuner/kommunerTypes";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -37,6 +38,7 @@ export interface SoknadAppState {
 	vedlegg: VedleggState;
 	ledetekster: LedetekstState;
 	ettersendelse: EttersendelseState;
+	kommuner: KommunerState;
 	init: InitState;
 }
 

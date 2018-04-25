@@ -16,6 +16,7 @@ import ApplikasjonsfeilReducer from "../../nav-soknad/redux/applikasjonsfeil/app
 import InitReducer from "../../nav-soknad/redux/init/initReducer";
 import VedleggReducer from "../../nav-soknad/redux/vedlegg/vedleggReducer";
 import EttersendelseReducer from "../../nav-soknad/redux/ettersendelse/ettersendelseReducer";
+import KommunerReducer from "../../nav-soknad/redux/kommuner/kommuneReducer";
 
 export interface State extends SoknadAppState {
 	synligefakta: SynligeFaktaState;
@@ -35,6 +36,7 @@ const reducers = combineReducers({
 	featuretoggles: FeatureTogglesReducer,
 	applikasjonsfeil: ApplikasjonsfeilReducer,
 	ettersendelse: EttersendelseReducer,
+	kommuner: KommunerReducer,
 	init: InitReducer
 });
 

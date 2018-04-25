@@ -12,6 +12,7 @@ import initSaga from "./nav-soknad/redux/init/initSaga";
 import featureTogglesSaga from "./nav-soknad/redux/featuretoggles/featureTogglesSaga";
 import vedleggSaga from "./nav-soknad/redux/vedlegg/vedleggSaga";
 import ettersendelseSaga from "./nav-soknad/redux/ettersendelse/ettersendelseSaga";
+import kommunerSaga from "./nav-soknad/redux/kommuner/kommunerSaga";
 
 export default function* rootSaga() {
 	yield all([
@@ -27,6 +28,7 @@ export default function* rootSaga() {
 		synligeFaktaSaga(),
 		soknadSaga(),
 		vedleggSaga(),
-		ettersendelseSaga()
+		ettersendelseSaga(),
+		kommunerSaga()
 	]);
 }

@@ -25,6 +25,7 @@ import {
 } from "../../nav-soknad/redux/init/initActions";
 import SamtykkeInfoForsidenModal from "./samtykkeInfoForsidenModal";
 import { Checkbox } from "nav-frontend-skjema";
+import { lesKommuner } from "../../nav-soknad/redux/kommuner/kommuneActions";
 
 interface StateProps {
 	harTilgang: boolean;
@@ -42,6 +43,7 @@ class Informasjon extends React.Component<Props, {}> {
 
 	startSoknad() {
 		if (this.props.bekreftet === true) {
+			this.props.dispatch(lesKommuner());
 			this.props.dispatch(
 				tilBostedEllerStartSoknad(this.props.visVelgBosted ? null : Horten)
 			);

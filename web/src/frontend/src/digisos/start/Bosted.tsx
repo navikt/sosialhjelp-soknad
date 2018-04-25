@@ -3,8 +3,9 @@ import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import Knapp from "nav-frontend-knapper";
 import { Select } from "nav-frontend-skjema";
 import Arrow from "../../nav-soknad/components/svg/Arrow";
-import { kommuner, getNavEnhet, NavEnheter, finnBydeler, NavEnhet } from "../data/kommuner";
+import { getNavEnhet, finnBydeler, NavEnhet, alleKommuner } from "../data/kommuner";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
+import { REST_STATUS } from "../../nav-soknad/types";
 
 interface StateProps {
 	kommuneId: string;
@@ -14,14 +15,18 @@ interface StateProps {
 interface OwnProps {
 	onStartSoknad: (kommuneId: string, bydelId: string) => void;
 	startSoknadPending: boolean;
+	kommuner: NavEnhet[];
+	kommunerRestStatus: REST_STATUS;
 }
+
+type Props = OwnProps & InjectedIntlProps;
 
 const getDefaultState = () => ({
 	kommuneId: "",
 	bydelId: ""
 });
 
-class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
+class Bosted extends React.Component<Props, StateProps> {
 	constructor(props: any) {
 		super(props);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -42,7 +47,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 		const { valgtKommune, valgtBydel, ferdig } = this.hentSkjemaVerdier();
 		let bydeler: NavEnhet[] = null;
 		if (valgtKommune) {
-			bydeler = finnBydeler(valgtKommune.id);
+			bydeler = finnBydeler(valgtKommune.id, this.props.kommuner);
 			if (bydeler.length === 0) {
 				bydeler = null;
 			}
@@ -64,7 +69,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 							}
 							label={
 								<div className="bosted__selectLabel bosted__tekst--extraPadding">
-									<FormattedMessage id="personalia.kommune.label" />
+									<FormattedMessage id="personalia.kommune.label"/>
 								</div>
 							}
 						>
@@ -76,7 +81,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 									)}
 								</option>
 							)}
-							{kommuner.map((enhet: any) => (
+							{alleKommuner(this.props.kommuner).map((enhet: any) => (
 								<option value={enhet.id} key={enhet.id}>
 									{enhet.navn}
 								</option>
@@ -87,7 +92,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 					{valgtKommune && bydeler ? (
 						<div className="blokk-m">
 							<div className="bosted__bydelArrow">
-								<Arrow />
+								<Arrow/>
 							</div>
 							<Select
 								id="bydel_dropdown"
@@ -98,7 +103,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 								}
 								label={
 									<div className="bosted__selectLabel bosted__tekst--extraPadding">
-										<FormattedMessage id="personalia.bydel.label" />
+										<FormattedMessage id="personalia.bydel.label"/>
 									</div>
 								}
 							>
@@ -128,6 +133,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 								<strong>
 									{getNavEnhet(
 										valgtKommune.id,
+										this.props.kommuner,
 										valgtBydel ? valgtBydel.id : null,
 										this.props.intl
 									)}
@@ -141,7 +147,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 								disabled={startSoknadPending}
 							>
 								{getIntlTextOrKey(this.props.intl, "skjema.knapper.gaavidere") +
-									" "}
+								" "}
 							</Knapp>
 						</div>
 					) : null}
@@ -153,14 +159,15 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 	private hentSkjemaVerdier() {
 		const { kommuneId, bydelId } = this.state;
 		const valgtKommune: NavEnhet | undefined = kommuneId
-			? NavEnheter.find(k => k.id === kommuneId)
+			? this.props.kommuner.find(k => k.id === kommuneId)
 			: undefined;
 		const valgtBydel: NavEnhet | undefined =
-			valgtKommune && finnBydeler(valgtKommune.id)
-				? finnBydeler(valgtKommune.id).find(b => b.id === bydelId)
+			valgtKommune && finnBydeler(valgtKommune.id, this.props.kommuner)
+				? finnBydeler(valgtKommune.id, this.props.kommuner).find(b => b.id === bydelId)
 				: undefined;
 		const ferdig =
-			(valgtKommune && (finnBydeler(valgtKommune.id)) && finnBydeler(valgtKommune.id).length === 0)
+			(valgtKommune && (finnBydeler(valgtKommune.id, this.props.kommuner)) &&
+				finnBydeler(valgtKommune.id, this.props.kommuner).length === 0)
 			|| (valgtKommune && valgtBydel);
 		return { valgtKommune, valgtBydel, ferdig };
 	}

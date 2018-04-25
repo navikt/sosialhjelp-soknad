@@ -7,11 +7,12 @@ import { setVisBekreftInfo } from "../../../nav-soknad/redux/oppsummering/oppsum
 import { Faktum } from "../../../nav-soknad/types";
 import { State } from "../../redux/reducers";
 import { finnFaktum } from "../../../nav-soknad/utils";
-import { getBydel, getKommune } from "../../data/kommuner";
+import { getBydel, getKommune, NavEnhet } from "../../data/kommuner";
 
 interface StateProps {
 	modalSynlig: boolean;
 	fakta: Faktum[];
+	kommuner: NavEnhet[];
 }
 
 type Props = StateProps & InjectedIntlProps & DispatchProps;
@@ -45,12 +46,12 @@ class SamtykkeInfoModal extends React.Component<Props, {}> {
 
 	private finnStedsnavn() {
 		const kommune: Faktum = finnFaktum("personalia.kommune", this.props.fakta);
-		const kommuneId = (kommune && kommune.lagret && kommune.lagret.value) || "";
-		const kommuneNavn = getKommune(kommuneId);
+		const kommuneId: string = (kommune && kommune.lagret && kommune.lagret.value) || "";
+		const kommuneNavn: string = getKommune(kommuneId, this.props.kommuner);
 
 		const bydel: Faktum = finnFaktum("personalia.bydel", this.props.fakta);
-		const bydelId = (bydel && bydel.lagret && bydel.lagret.value) || "";
-		let bydelsNavn = getBydel(kommuneId, bydelId);
+		const bydelId: string = (bydel && bydel.lagret && bydel.lagret.value) || "";
+		let bydelsNavn = getBydel(kommuneId, bydelId, this.props.kommuner);
 
 		if (bydelsNavn === "") {
 			bydelsNavn = kommuneNavn;
@@ -63,6 +64,7 @@ class SamtykkeInfoModal extends React.Component<Props, {}> {
 export default connect((state: State, props: any): StateProps => {
 	return {
 		fakta: state.fakta.data,
-		modalSynlig: state.oppsummering.visBekreftInfo
+		modalSynlig: state.oppsummering.visBekreftInfo,
+		kommuner: state.kommuner.data,
 	};
 })(injectIntl(SamtykkeInfoModal));
