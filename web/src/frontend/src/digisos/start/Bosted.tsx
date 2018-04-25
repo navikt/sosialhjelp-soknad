@@ -15,7 +15,7 @@ interface StateProps {
 interface OwnProps {
 	onStartSoknad: (kommuneId: string, bydelId: string) => void;
 	startSoknadPending: boolean;
-	kommuner: NavEnhet[];
+	navEnheter: NavEnhet[];
 	kommunerRestStatus: REST_STATUS;
 }
 
@@ -47,7 +47,7 @@ class Bosted extends React.Component<Props, StateProps> {
 		const { valgtKommune, valgtBydel, ferdig } = this.hentSkjemaVerdier();
 		let bydeler: NavEnhet[] = null;
 		if (valgtKommune) {
-			bydeler = finnBydeler(valgtKommune.id, this.props.kommuner);
+			bydeler = finnBydeler(valgtKommune.id, this.props.navEnheter);
 			if (bydeler.length === 0) {
 				bydeler = null;
 			}
@@ -81,7 +81,7 @@ class Bosted extends React.Component<Props, StateProps> {
 									)}
 								</option>
 							)}
-							{alleKommuner(this.props.kommuner).map((enhet: any) => (
+							{alleKommuner(this.props.navEnheter).map((enhet: any) => (
 								<option value={enhet.id} key={enhet.id}>
 									{enhet.navn}
 								</option>
@@ -133,7 +133,7 @@ class Bosted extends React.Component<Props, StateProps> {
 								<strong>
 									{getNavEnhet(
 										valgtKommune.id,
-										this.props.kommuner,
+										this.props.navEnheter,
 										valgtBydel ? valgtBydel.id : null,
 										this.props.intl
 									)}
@@ -157,17 +157,18 @@ class Bosted extends React.Component<Props, StateProps> {
 	}
 
 	private hentSkjemaVerdier() {
+		const navEnheter = this.props.navEnheter;
 		const { kommuneId, bydelId } = this.state;
 		const valgtKommune: NavEnhet | undefined = kommuneId
-			? this.props.kommuner.find(k => k.id === kommuneId)
+			? navEnheter.find((k: NavEnhet) => k.id === kommuneId)
 			: undefined;
 		const valgtBydel: NavEnhet | undefined =
-			valgtKommune && finnBydeler(valgtKommune.id, this.props.kommuner)
-				? finnBydeler(valgtKommune.id, this.props.kommuner).find(b => b.id === bydelId)
+			valgtKommune && finnBydeler(valgtKommune.id, navEnheter)
+				? finnBydeler(valgtKommune.id, navEnheter).find(b => b.id === bydelId)
 				: undefined;
 		const ferdig =
-			(valgtKommune && (finnBydeler(valgtKommune.id, this.props.kommuner)) &&
-				finnBydeler(valgtKommune.id, this.props.kommuner).length === 0)
+			(valgtKommune && (finnBydeler(valgtKommune.id, navEnheter)) &&
+				finnBydeler(valgtKommune.id, navEnheter).length === 0)
 			|| (valgtKommune && valgtBydel);
 		return { valgtKommune, valgtBydel, ferdig };
 	}

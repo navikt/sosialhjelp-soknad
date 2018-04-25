@@ -1,71 +1,71 @@
-import { finnBydeler, getNavEnhet, getKommune, NavEnhet, EnhetsType, alleKommuner } from "../data/kommuner";
+import { finnBydeler, getNavEnhet, getKommune, alleKommuner } from "../data/kommuner";
 
-const navEnheter: NavEnhet[] = [
+const navEnheter: any[] = [
 	{
 		id: "askoy",
 		navn: "Askøy",
 		kommuneId: null,
 		fulltNavn: "NAV Askøy",
-		type: EnhetsType.KOMMUNE
+		type: "KOMMUNE"
 	},
 	{
 		id: "bergenhus",
 		navn: "Bergenhus",
 		kommuneId: "bergen",
 		fulltNavn: "NAV Bergenhus, Bergen Kommune",
-		type: EnhetsType.BYDEL
+		type: "BYDEL"
 	},
 	{
 		id: "bergen",
 		navn: "Bergen",
 		fulltNavn: null,
-		type: EnhetsType.KOMMUNE
+		type: "KOMMUNE"
 	},
 	{
 		id: "horten",
 		navn: "Horten",
 		kommuneId: null,
 		fulltNavn: "NAV Horten",
-		type: EnhetsType.KOMMUNE
+		type: "KOMMUNE"
 	},
 	{
 		id: "oslo",
 		navn: "Oslo",
 		kommuneId: null,
 		fulltNavn: null,
-		type: EnhetsType.KOMMUNE
+		type: "KOMMUNE"
 	},
 	{
 		id: "ytrebygda",
 		navn: "Ytrebygda",
 		kommuneId: "bergen",
 		fulltNavn: "NAV Ytrebygda, Bergen kommune",
-		type: EnhetsType.BYDEL
+		type: "BYDEL"
 	},
 	{
 		id: "frogner",
 		navn: "Frogner",
 		kommuneId: "oslo",
 		fulltNavn: "NAV Frogner, Oslo kommune",
-		type: EnhetsType.BYDEL
+		type: "BYDEL"
 	},
 	{
 		id: "grorud",
 		navn: "Grorud",
 		kommuneId: "oslo",
 		fulltNavn: "NAV Grorud, Oslo kommune",
-		type: EnhetsType.BYDEL
+		type: "BYDEL"
 	},
 	{
 		id: "grunerlokka",
 		navn: "Grünerløkka",
 		kommuneId: "oslo",
 		fulltNavn: "NAV Grünerløkka, Oslo kommune",
-		type: EnhetsType.BYDEL
+		type: "BYDEL"
 	}
 ];
 
-describe("kommuner", () => {
+describe("navEnheter", () => {
 
 	it("should return name of 'kommune'", () => {
 		const navn = getKommune("bergen", navEnheter);

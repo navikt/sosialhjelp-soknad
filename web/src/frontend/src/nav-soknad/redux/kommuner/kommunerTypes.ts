@@ -2,9 +2,9 @@ import { NavEnhet } from "../../../digisos/data/kommuner";
 import { REST_STATUS } from "../../types/restTypes";
 
 export enum KommunerActionTypeKeys {
-	LES_KOMMUNER = "kommuner/LES_KOMMUNER",
-	LES_KOMMUNER_OK = "kommuner/LES_KOMMUNER_OK",
-	LES_KOMMUNER_FEILET = "kommuner/LES_KOMMUNER_FEILET"
+	LES_KOMMUNER = "navEnheter/LES_KOMMUNER",
+	LES_KOMMUNER_OK = "navEnheter/LES_KOMMUNER_OK",
+	LES_KOMMUNER_FEILET = "navEnheter/LES_KOMMUNER_FEILET"
 }
 
 export type KommunerActionTypes =

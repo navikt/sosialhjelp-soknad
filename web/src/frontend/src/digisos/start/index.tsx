@@ -23,7 +23,7 @@ interface StateProps {
 	soknadRestStatus: string;
 	faktaRestStatus: string;
 	startSoknadPending: boolean;
-	kommuner: NavEnhet[];
+	navEnheter: NavEnhet[];
 	kommunerRestStatus: REST_STATUS;
 }
 
@@ -65,7 +65,7 @@ class Start extends React.Component<Props, {}> {
 						<Bosted
 							onStartSoknad={this.startSoknad}
 							startSoknadPending={this.props.startSoknadPending}
-							kommuner={this.props.kommuner}
+							navEnheter={this.props.navEnheter}
 							kommunerRestStatus={this.props.kommunerRestStatus}
 						/>
 					</div>
@@ -80,7 +80,7 @@ export default connect((state: State, props: any) => {
 		soknadRestStatus: state.soknad.restStatus,
 		startSoknadPending: state.soknad.startSoknadPending,
 		faktaRestStatus: state.fakta.restStatus,
-		kommuner: state.kommuner.data,
+		navEnheter: state.kommuner.data,
 		kommunerRestStatus: state.kommuner.restStatus
 	};
 })(injectIntl(Start));
