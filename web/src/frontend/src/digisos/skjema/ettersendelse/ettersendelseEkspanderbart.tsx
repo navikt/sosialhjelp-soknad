@@ -7,7 +7,7 @@ import EttersendelseVedleggListe from "./ettersendelseVedleggListe";
 
 interface Props {
 	children: React.ReactNode;
-	onVedleggSendt?: () => void;
+	onEttersendelse?: () => void;
 	kunGenerellDokumentasjon?: boolean;
 }
 
@@ -31,21 +31,14 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 	}
 
 	onAnimasjonFerdig() {
-		// console.warn("onAnimasjonFerdig");
-		if (this.state.vedleggSendt === true && this.props.onVedleggSendt) {
-			// console.warn("[EttersendelseEkspanderbart]: animasjon ferdig.");
-			this.props.onVedleggSendt();
+		if (this.state.vedleggSendt === true && this.state.ekspandert === false && this.props.onEttersendelse) {
+			this.setState({vedleggSendt: false});
+			this.props.onEttersendelse();
 		}
 	}
 
-	onVedleggSendt() {
-		// console.warn("[EttersendelseEkspanderbart]: Vedlegg er sendt");
-
-		// const delayInSeconds = 2;
-		// setTimeout(() => {
-		// 	this.setState({ekspandert: false, vedleggSendt: true});
-		// }, delayInSeconds * 1000);
-
+	onEttersendelse() {
+		this.setState({ekspandert: false, vedleggSendt: true});
 	}
 
 	render() {
@@ -83,7 +76,7 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 					</AvsnittMedMarger>
 
 					<EttersendelseVedleggListe
-						onVedleggSendt={() => this.onVedleggSendt()}
+						onEttersendelse={() => this.onEttersendelse()}
 					/>
 
 				</Collapse>

@@ -48,6 +48,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 		this.setState({filnavn: files[ 0 ].name});
 		const vedleggId = this.props.vedlegg.vedleggId;
 		this.props.dispatch(lastOppEttersendelseVedlegg(vedleggId, formData));
+		this.leggTilVedleggKnapp.value = "";
 	}
 
 	render() {

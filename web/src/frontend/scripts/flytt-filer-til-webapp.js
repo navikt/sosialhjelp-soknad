@@ -13,27 +13,21 @@ function copyFile(srcFile, outFile) {
 	});
 }
 
-function flyttSVG() {
+function kopierSVG() {
 	const bildefolder = [".", "build", "soknadsosialhjelp", "statisk", "bilder"];
 
 	fs.readdir(bildefolder.join(path.sep), function(err, files) {
 		var mainFile = files[0];
 		files.forEach(function(filename) {
-			const srcFile = [
-				".",
-				"build",
-				"soknadsosialhjelp",
-				"statisk",
-				"bilder",
-				filename
-			];
-			const outFile = ["..", "main", "webapp", "resources", "statisk", "bilder", filename];
+			const srcFile = bildefolder.slice();
+			srcFile.push(filename);
+			const outFile = ["..", "main", "resources", "webapp", "statisk", "bilder", filename];
 			copyFile(srcFile, outFile);
 		});
 	});
 }
 
-function flyttStatisk() {
+function kopierStatisk() {
 	const mainFolder = [".", "build", "static"];
 	fs.readdir(mainFolder.join(path.sep), function(err, folders) {
 		folders.forEach(function(folder) {
@@ -84,5 +78,5 @@ function flyttStatisk() {
 	});
 }
 
-flyttStatisk();
-flyttSVG();
+kopierStatisk();
+kopierSVG();

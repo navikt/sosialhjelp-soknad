@@ -7,7 +7,7 @@ import { SynligeFaktaProps } from "../../redux/synligefakta/synligeFaktaTypes";
 import BannerEttersendelse from "./bannerEttersendelse";
 import { FeatureToggles } from "../../../featureToggles";
 import {
-	lagEttersendelse, lesEttersendelser,
+	lesEttersendelser, opprettEttersendelse,
 	sendEttersendelse
 } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
@@ -43,6 +43,12 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	}
 
 	componentDidMount() {
+		const brukerbehandlingskjedeId = this.lesBrukerbehandlingskjedeId();
+		this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
+		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
+	}
+
+	lesBrukerbehandlingskjedeId() {
 		let brukerbehandlingskjedeId = this.props.brukerbehandlingskjedeId;
 		if (!brukerbehandlingskjedeId) {
 			// Under utvikling er ikke brukerbehandlingId på redux state, så vi leser den fra url:
@@ -51,8 +57,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 				brukerbehandlingskjedeId = match[ 1 ];
 			}
 		}
-		this.props.dispatch(lagEttersendelse(brukerbehandlingskjedeId));
-		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
+		return brukerbehandlingskjedeId;
 	}
 
 	toggleVedlegg() {
@@ -78,26 +83,39 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	}
 
 	onEttersendelseSendt() {
-		// TODO Trigger animasjon når ettersendelse er sendt
+		// Denne metoden skal trigges når:
+		// - En ettersendelsene av filer er sendt inn
+		// - EttersendelseEkspanderbart har kollapset
+		// Da er det klart for å kjøre:
+		// - Kjøre restkall for å opprette ny ettersendelse
+		// - Kjøre restkall for å få en oppdatert liste over ettersendelser (ikke filer)
+		const brukerbehandlingskjedeId = this.lesBrukerbehandlingskjedeId();
+		this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
+		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
 	}
 
-	render() {
-		const { originalSoknad, ettersendelser, visEttersendelse} = this.props;
-		const visEttersendeFeatureToggle = visEttersendelse && (visEttersendelse === true);
-
+	antallManglendeVedleggOgDato() {
+		const { originalSoknad, ettersendelser } = this.props;
 		let antallManglendeVedlegg: number = 0;
 		let datoManglendeVedlegg: string = "";
 		if ( originalSoknad ) {
-			antallManglendeVedlegg = originalSoknad.ikkeInnsendteVedlegg.length;
+			antallManglendeVedlegg = originalSoknad.ikkeInnsendteVedlegg.length - 1;
+			datoManglendeVedlegg = originalSoknad.innsendtDato;
 		}
 		if ( ettersendelser && ettersendelser.length > 0) {
 			antallManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].ikkeInnsendteVedlegg.length - 1;
 			datoManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].innsendtDato;
 		}
-
 		if (antallManglendeVedlegg < 0) {
 			antallManglendeVedlegg = 0;
 		}
+		return { antallManglendeVedlegg, datoManglendeVedlegg };
+	}
+
+	render() {
+		const { originalSoknad, ettersendelser, visEttersendelse} = this.props;
+		const visEttersendeFeatureToggle = visEttersendelse && (visEttersendelse === true);
+		const { antallManglendeVedlegg, datoManglendeVedlegg } = this.antallManglendeVedleggOgDato();
 
 		return (
 			<div className="ettersendelse">
@@ -116,9 +134,6 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
 				{visEttersendeFeatureToggle && (
 					<div className="blokk-center">
-
-						<p style={{color: "red", fontWeight: "bold"}}>
-							Denne siden er under utvikling. Hvis ting ikke virker, så ta en refresh.</p>
 						<p className="ettersendelse ingress">
 							<FormattedHTMLMessage id="ettersendelse.ingress"/>
 						</p>
@@ -140,8 +155,19 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 										venstreIkon={MargIkoner.OK}
 										key={ettersendelse.behandlingsId}
 									>
-										<h3>{ettersendelse.innsendteVedlegg.length} vedlegg er sendt til NAV</h3>
-										<p>Ettersendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}</p>
+										<h3>
+											{ettersendelse.innsendteVedlegg.length}
+											<FormattedHTMLMessage id="ettersendelse.vedlegg_sendt"/></h3>
+										<p>
+											<FormattedHTMLMessage
+												id="ettersendelse.dato_tid"
+												values={
+													{
+														dato: ettersendelse.innsendtDato,
+														tid: ettersendelse.innsendtTidspunkt
+													}}
+											/>
+										</p>
 									</AvsnittMedMarger>
 								);
 							}
@@ -149,7 +175,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
 						<EttersendelseEkspanderbart
 							kunGenerellDokumentasjon={antallManglendeVedlegg === 0}
-							onVedleggSendt={() => this.onEttersendelseSendt()}
+							onEttersendelse={() => this.onEttersendelseSendt()}
 						>
 							{antallManglendeVedlegg > 0 && (
 								<span>

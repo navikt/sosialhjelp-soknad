@@ -8,7 +8,7 @@ const slettEttersendtVedlegg = (vedleggId: string, filId: string): Ettersendelse
 	};
 };
 
-const lagEttersendelse = (brukerbehandlingId: string): EttersendelseActionTypes => {
+const opprettEttersendelse = (brukerbehandlingId: string): EttersendelseActionTypes => {
 	return {
 		type: EttersendelseActionTypeKeys.NY,
 		brukerbehandlingId
@@ -75,7 +75,7 @@ const settEttersendelser = (ettersendelser: any) => {
 };
 
 export {
-	lagEttersendelse,
+	opprettEttersendelse,
 	lagEttersendelseOk,
 	lesEttersendelsesVedlegg,
 	lastOppEttersendelseVedlegg,

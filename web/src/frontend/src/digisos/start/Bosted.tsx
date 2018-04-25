@@ -2,10 +2,8 @@ import * as React from "react";
 import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import Knapp from "nav-frontend-knapper";
 import { Select } from "nav-frontend-skjema";
-
 import Arrow from "../../nav-soknad/components/svg/Arrow";
-import { Kommune, Bydel } from "../../nav-soknad/types";
-import { Kommuner, getBosted } from "../data/kommuner";
+import { kommuner, getNavEnhet, NavEnheter, finnBydeler, NavEnhet } from "../data/kommuner";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 
 interface StateProps {
@@ -42,6 +40,14 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 	render() {
 		const { startSoknadPending } = this.props;
 		const { valgtKommune, valgtBydel, ferdig } = this.hentSkjemaVerdier();
+		let bydeler: NavEnhet[] = null;
+		if (valgtKommune) {
+			bydeler = finnBydeler(valgtKommune.id);
+			if (bydeler.length === 0) {
+				bydeler = null;
+			}
+		}
+
 		return (
 			<form onSubmit={e => this.onSubmit(e)}>
 				<div>
@@ -70,15 +76,15 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 									)}
 								</option>
 							)}
-							{Kommuner.map(kommune => (
-								<option value={kommune.id} key={kommune.id}>
-									{kommune.navn}
+							{kommuner.map((enhet: any) => (
+								<option value={enhet.id} key={enhet.id}>
+									{enhet.navn}
 								</option>
 							))}
 						</Select>
 					</div>
 
-					{valgtKommune && valgtKommune.bydeler ? (
+					{valgtKommune && bydeler ? (
 						<div className="blokk-m">
 							<div className="bosted__bydelArrow">
 								<Arrow />
@@ -104,7 +110,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 										)}
 									</option>
 								)}
-								{valgtKommune.bydeler.map(bydel => (
+								{bydeler.map(bydel => (
 									<option value={bydel.id} key={bydel.id}>
 										{bydel.navn}
 									</option>
@@ -120,7 +126,7 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 									"personalia.bosted.oppsummering"
 								)}{" "}
 								<strong>
-									{getBosted(
+									{getNavEnhet(
 										valgtKommune.id,
 										valgtBydel ? valgtBydel.id : null,
 										this.props.intl
@@ -146,15 +152,16 @@ class Bosted extends React.Component<OwnProps & InjectedIntlProps, StateProps> {
 
 	private hentSkjemaVerdier() {
 		const { kommuneId, bydelId } = this.state;
-		const valgtKommune: Kommune | undefined = kommuneId
-			? Kommuner.find(k => k.id === kommuneId)
+		const valgtKommune: NavEnhet | undefined = kommuneId
+			? NavEnheter.find(k => k.id === kommuneId)
 			: undefined;
-		const valgtBydel: Bydel | undefined =
-			valgtKommune && valgtKommune.bydeler
-				? valgtKommune.bydeler.find(b => b.id === bydelId)
+		const valgtBydel: NavEnhet | undefined =
+			valgtKommune && finnBydeler(valgtKommune.id)
+				? finnBydeler(valgtKommune.id).find(b => b.id === bydelId)
 				: undefined;
 		const ferdig =
-			(valgtKommune && !valgtKommune.bydeler) || (valgtKommune && valgtBydel);
+			(valgtKommune && (finnBydeler(valgtKommune.id)) && finnBydeler(valgtKommune.id).length === 0)
+			|| (valgtKommune && valgtBydel);
 		return { valgtKommune, valgtBydel, ferdig };
 	}
 }

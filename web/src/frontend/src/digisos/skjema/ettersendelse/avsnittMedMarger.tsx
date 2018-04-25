@@ -9,6 +9,12 @@ interface Props {
 	onClick?: () => void;
 }
 
+/**
+ * Vis et avsnitt med marger. Vis eventuelt ikoner i margene.
+ * Hvis callback onClick er satt, vis peker og hovereffekt på mouseover for hele avsnitt.
+ * Hvis callback onClickHoyreIkon er satt, vis peker og hovereffekt på mouseover på ikonet.
+ *
+ */
 const AvsnittMedMarger: React.StatelessComponent<Props> = (
 	{ children, venstreIkon, hoyreIkon, onClickHoyreIkon, onClick }) => {
 
@@ -33,7 +39,7 @@ const AvsnittMedMarger: React.StatelessComponent<Props> = (
 				<span>
 					{onClickHoyreIkon && (
 						<div
-							className="hoyremarg hoyremarg__ikon hoyremarg__ikon__hover"
+							className="hoyremarg hoyremarg__ikon hoyremarg__ikon__klikkbart hoyremarg__ikon__hover"
 							onClick={() => onClickHoyreIkon()}
 						>
 							<MargIkon ikon={hoyreIkon}/>
