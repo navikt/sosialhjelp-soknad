@@ -10,9 +10,15 @@ export type ikoner =
 	| "snakkebobler"
 	| "dokumenter";
 
-const DigisosIkon: React.StatelessComponent<{className?: string, navn: ikoner} & {}> = ({className, navn}) => {
+interface Props {
+	className?: string;
+	navn: ikoner;
+	style?: any;
+}
+
+const DigisosIkon: React.StatelessComponent<Props & {}> = ({className, navn, style}) => {
 	return (
-		<SVG
+		<SVG style={style}
 			className={className || ""}
 			src={"/soknadsosialhjelp/statisk/bilder/ikon_" + navn + ".svg"}
 		/>
