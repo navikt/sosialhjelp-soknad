@@ -37,6 +37,8 @@ const logger = createLogger({
 	collapsed: true
 });
 
+const visReduxLogger = false;
+
 function configureStore() {
 	/* tslint:disable */
 	const devtools: any =
@@ -47,7 +49,7 @@ function configureStore() {
 			: (f: any) => f;
 	/* tslint:enable */
 	const saga = createSagaMiddleware();
-	const middleware = erDev()
+	const middleware = (erDev() && visReduxLogger)
 		? applyMiddleware(thunk, saga, logger, routerMiddleware(history))
 		: applyMiddleware(thunk, saga, routerMiddleware(history));
 	const createdStore = createStore(reducers, devtools, middleware);

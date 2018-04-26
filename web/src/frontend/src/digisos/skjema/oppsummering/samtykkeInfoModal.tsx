@@ -21,7 +21,6 @@ type Props = StateProps & InjectedIntlProps & DispatchProps;
 class SamtykkeInfoModal extends React.Component<Props, {}> {
 
 	componentDidMount() {
-		console.warn("ant: " + this.props.navEnheter.length);
 		if (this.props.navEnheter.length === 0) {
 			this.props.dispatch(lesKommuner());
 		}

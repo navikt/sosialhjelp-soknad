@@ -48,6 +48,11 @@ router.get("/informasjon/miljovariabler", (req, res) => {
 	res.json(miljovariabler);
 });
 
+// Liste over NAV enheter
+router.get("/informasjon/kommunevalg", (req, res) => {
+	res.json(utils.lesMockDataFil("kommunevalg.json"));
+});
+
 // const brukerBehandlingId = "1000CPZ2U";
 const { brukerBehandlingId } = require("./testdata");
 

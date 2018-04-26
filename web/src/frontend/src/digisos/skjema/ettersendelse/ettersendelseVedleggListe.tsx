@@ -18,7 +18,6 @@ interface OwnProps {
 }
 
 interface StateProps {
-	restStatus: REST_STATUS;
 	opplastingStatus: REST_STATUS;
 	manglendeVedlegg: any[];
 	visEttersendelse: boolean;
@@ -50,7 +49,6 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 		if (antallOpplastedeFiler > 0) {
 			const brukerbehandlingId = this.props.brukerbehandlingId;
 			this.props.dispatch(sendEttersendelse(brukerbehandlingId));
-			// this.props.dispatch()
 		}
 	}
 
@@ -62,17 +60,8 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 
 	componentDidUpdate(prevProps: Props) {
 		if (prevProps.ettersendStatus === REST_STATUS.PENDING && this.props.ettersendStatus === REST_STATUS.OK) {
-			// console.warn("2. filer er ettersend / ettersendStatus: ok");
-
 			this.props.onEttersendelse();
 		}
-		if (
-			prevProps.opplastingStatus === REST_STATUS.PENDING &&
-			this.props.opplastingStatus === REST_STATUS.OK
-		) {
-			// console.warn("1. liste opplastede filer lest/opplastingStatus ok");
-		}
-
 		if (this.state.advarselManglerVedlegg &&
 			this.props.manglendeVedlegg &&
 			this.antallOpplastedeFiler() > 0) {
@@ -115,8 +104,8 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 
 				<AvsnittMedMarger>
 					<Knapp
-						spinner={this.props.restStatus === REST_STATUS.PENDING}
-						disabled={this.props.restStatus === REST_STATUS.PENDING}
+						spinner={this.props.ettersendStatus === REST_STATUS.PENDING}
+						disabled={this.props.ettersendStatus === REST_STATUS.PENDING}
 						type="hoved"
 						htmlType="submit"
 						onClick={() => this.sendEttersendelse()}
@@ -124,13 +113,6 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 						<FormattedMessage id="ettersendelse.knapp.tittel"/>
 					</Knapp>
 				</AvsnittMedMarger>
-
-				{/*<Knapp*/}
-					{/*type="hoved"*/}
-					{/*htmlType="submit"*/}
-					{/*onClick={() => this.friskOppData()}>*/}
-					{/*[Frisk opp data]*/}
-				{/*</Knapp>*/}
 
 			</div>
 		);
@@ -144,7 +126,6 @@ export default connect<{}, {}, OwnProps>((state: ReduxState, {}) => {
 		manglendeVedlegg: state.ettersendelse.data,
 		brukerbehandlingId: state.ettersendelse.brukerbehandlingId,
 		opplastingStatus: state.ettersendelse.opplastingStatus,
-		ettersendStatus: state.ettersendelse.ettersendStatus,
-		restStatus: state.ettersendelse.restStatus
+		ettersendStatus: state.ettersendelse.ettersendStatus
 	};
 })(injectIntl(EttersendelseVedleggListe));
