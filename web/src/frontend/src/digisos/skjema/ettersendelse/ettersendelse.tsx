@@ -113,11 +113,29 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 		return { antallManglendeVedlegg, datoManglendeVedlegg };
 	}
 
+	manglendeVedleggDato() {
+		const { originalSoknad, ettersendelser } = this.props;
+		let datoManglendeVedlegg: string = "";
+		if ( originalSoknad ) {
+			datoManglendeVedlegg = originalSoknad.innsendtDato;
+		}
+		if ( ettersendelser && ettersendelser.length > 0) {
+			datoManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].innsendtDato;
+		}
+		return datoManglendeVedlegg;
+	}
+
+	antallManglendeVedlegg() {
+		return this.props.manglendeVedlegg.filter((item: any) => {
+			return !(item.skjemaNummer === "annet" && item.skjemanummerTillegg === "annet");
+		}).length;
+	}
+
 	render() {
 		const { originalSoknad, ettersendelser, visEttersendelse} = this.props;
 		const visEttersendeFeatureToggle = visEttersendelse && (visEttersendelse === true);
-		const { antallManglendeVedlegg, datoManglendeVedlegg } = this.antallManglendeVedleggOgDato();
-
+		const antallManglendeVedlegg = this.antallManglendeVedlegg();
+		const datoManglendeVedlegg = this.manglendeVedleggDato();
 		return (
 			<div className="ettersendelse">
 
@@ -157,7 +175,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 										key={ettersendelse.behandlingsId}
 									>
 										<h3>
-											{ettersendelse.innsendteVedlegg.length}
+											{ettersendelse.innsendteVedlegg.length} &nbsp;
 											<FormattedHTMLMessage id="ettersendelse.vedlegg_sendt"/></h3>
 										<p>
 											<FormattedHTMLMessage
