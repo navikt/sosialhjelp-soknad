@@ -94,6 +94,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
 	}
 
+	// Tell hvor mange vedlegg vi har sendt
 	antallManglendeVedleggOgDato() {
 		const { originalSoknad, ettersendelser } = this.props;
 		let antallManglendeVedlegg: number = 0;
