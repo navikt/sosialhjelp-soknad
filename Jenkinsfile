@@ -113,9 +113,6 @@ node("a34apvl00071") {
                 }
             }
         }
-    }
-
-    if (deployToNaisEnvironment != "" || params.DeployTilNexus == "true") {
         stage("Build Docker and Update Nais") {
             try {
                 dir("web/target/appassembler") {
@@ -132,6 +129,7 @@ node("a34apvl00071") {
             }
         }
     }
+
     if (deployToNaisEnvironment != "") {
         stage("Deploy Nais") {
             try {
