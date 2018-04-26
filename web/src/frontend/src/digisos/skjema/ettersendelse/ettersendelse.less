@@ -23,38 +23,48 @@
   }
 
   &.ingress {
-    font-size: 20px;
+	font-size: 20px;
   }
 
   &__ikon {
-    display: inline-block;
-    width: 26px;
-    height: 26px;
+	display: inline-block;
+	width: 26px;
+	height: 26px;
   }
 
   &__chevron {
 	cursor: pointer;
+	margin-right: 7px;
+  }
+
+  &__panel {
+	margin-top: 1rem;
+	padding-top: 0.1rem;
+
+	@media @mobile {
+	  margin-top: 0;
+	}
   }
 
   &__vedlegg {
-    opacity: 0;
-    transition: opacity 1s;
-    transition-delay: 0.2s;
+	opacity: 0;
+	transition: opacity 1s;
+	transition-delay: 0.2s;
 
-    &__ekspandert {
-      opacity: 1;
-    }
+	&__ekspandert {
+	  opacity: 1;
+	}
 
-    &__innhold {
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      padding-right: 0.5rem;
-      padding-top: 0.5rem;
-    }
+	&__innhold {
+	  // margin-bottom: 1rem;
+	  padding-bottom: 0.5rem;
+	  padding-right: 0.5rem;
+	  padding-top: 0.5rem;
+	}
 
-    &__feil {
-      background: @navRosa;
-    }
+	&__feil {
+	  background: @navRosa;
+	}
   }
 
   &_bunntekst {
@@ -75,11 +85,11 @@
   width: 100%;
 
   &__klikkbar {
-    cursor: pointer;
+	cursor: pointer;
   }
 
   &__klikkbar:hover {
-    box-shadow: @navGra40 0 2px 1px 0;
+	box-shadow: @navGra40 0 2px 1px 0;
   }
 
 }
@@ -102,24 +112,24 @@
   display: block;
 
   &__ikon {
-    height: 36px;
-    text-align: center;
-    color: @navBla;
-    padding-top: 3px;
-    border-radius: 4px;
+	height: 36px;
+	text-align: center;
+	color: @navBla;
+	padding-top: 3px;
+	border-radius: 4px;
 
-    &__klikkbart {
-      cursor: pointer;
-    }
+	&__klikkbart {
+	  cursor: pointer;
+	}
 
   }
 
   &__ikon__hover:hover {
-    box-shadow: @navGra40 0 2px 1px 0;
+	box-shadow: @navGra40 0 2px 1px 0;
   }
 
   &__spinner {
-    margin-right: 4px;
+	margin-right: 4px;
   }
 }
 
@@ -134,17 +144,17 @@
   }
 
   @media @mobile {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
   }
 
   h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 1rem;
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 1rem;
   }
 
   p {
-    margin-top: 0;
+	margin-top: 0;
 	margin-bottom: 0;
   }
 

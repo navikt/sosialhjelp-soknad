@@ -26,7 +26,10 @@ const MargIkon: React.StatelessComponent<{ ikon: MargIkoner }> = ({ ikon }) => {
 		case MargIkoner.OK:
 			return <Icon kind="stegindikator__hake" className="ettersendelse__ikon"/>;
 		case MargIkoner.PRINTER:
-			return <DigisosIkon navn="printer" className="ettersendelse__ikon"/>;
+			return (<DigisosIkon
+				navn="printer"
+				style={{paddingTop: "6px", paddingRight: "6px"}}
+				className="ettersendelse__ikon"/>);
 		case MargIkoner.CHEVRON_OPP:
 			return <NavFrontendChevron className="ettersendelse__chevron" type="opp"/>;
 		case MargIkoner.CHEVRON_NED:
@@ -41,9 +44,15 @@ const MargIkon: React.StatelessComponent<{ ikon: MargIkoner }> = ({ ikon }) => {
 				src={"/soknadsosialhjelp/statisk/bilder/ikon_konvolutt.svg"}
 			/>);
 		case MargIkoner.SØPPELBØTTE:
-			return <DigisosIkon navn="trashcan" className="ettersendelse__ikon trashcan"/>;
+			return (<DigisosIkon
+					navn="trashcan"
+					style={{paddingTop: "6px"}}
+					className="ettersendelse__ikon trashcan"/>);
 		case MargIkoner.LAST_OPP:
-			return <DigisosIkon navn="lastOpp" className="ettersendelse__ikon"/>;
+			return (<DigisosIkon
+				navn="lastOpp"
+				style={{paddingTop: "6px"}}
+				className="ettersendelse__ikon"/>);
 		case MargIkoner.DOKUMENTER:
 			return <DigisosIkon navn="dokumenter" className="ettersendelse__ikon"/>;
 		default:

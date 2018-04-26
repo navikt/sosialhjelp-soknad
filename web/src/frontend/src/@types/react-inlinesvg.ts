@@ -4,6 +4,7 @@ declare module "react-inlinesvg" {
 	export interface SVGProps {
 		src: string;
 		className?: string;
+		style?: any;
 	}
 
 	export default class SVG extends React.Component<SVGProps, {}> {}

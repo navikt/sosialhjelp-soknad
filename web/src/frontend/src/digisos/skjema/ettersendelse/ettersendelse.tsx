@@ -51,7 +51,6 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	lesBrukerbehandlingskjedeId() {
 		let brukerbehandlingskjedeId = this.props.brukerbehandlingskjedeId;
 		if (!brukerbehandlingskjedeId) {
-			// Under utvikling er ikke brukerbehandlingId på redux state, så vi leser den fra url:
 			const match = window.location.pathname.match(/\/skjema\/(.*)\/ettersendelse/);
 			if (match) {
 				brukerbehandlingskjedeId = match[ 1 ];
@@ -83,34 +82,9 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	}
 
 	onEttersendelseSendt() {
-		// Denne metoden skal trigges når:
-		// - En ettersendelsene av filer er sendt inn
-		// - EttersendelseEkspanderbart har kollapset
-		// Da er det klart for å kjøre:
-		// - Kjøre restkall for å opprette ny ettersendelse
-		// - Kjøre restkall for å få en oppdatert liste over ettersendelser (ikke filer)
 		const brukerbehandlingskjedeId = this.lesBrukerbehandlingskjedeId();
 		this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
 		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
-	}
-
-	// Tell hvor mange vedlegg vi har sendt
-	antallManglendeVedleggOgDato() {
-		const { originalSoknad, ettersendelser } = this.props;
-		let antallManglendeVedlegg: number = 0;
-		let datoManglendeVedlegg: string = "";
-		if ( originalSoknad ) {
-			antallManglendeVedlegg = originalSoknad.ikkeInnsendteVedlegg.length - 1;
-			datoManglendeVedlegg = originalSoknad.innsendtDato;
-		}
-		if ( ettersendelser && ettersendelser.length > 0) {
-			antallManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].ikkeInnsendteVedlegg.length - 1;
-			datoManglendeVedlegg = ettersendelser[ ettersendelser.length - 1 ].innsendtDato;
-		}
-		if (antallManglendeVedlegg < 0) {
-			antallManglendeVedlegg = 0;
-		}
-		return { antallManglendeVedlegg, datoManglendeVedlegg };
 	}
 
 	manglendeVedleggDato() {
@@ -152,7 +126,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 				)}
 
 				{visEttersendeFeatureToggle && (
-					<div className="blokk-center">
+					<div className="blokk-center panel ettersendelse__panel">
 						<p className="ettersendelse ingress">
 							<FormattedHTMLMessage id="ettersendelse.ingress"/>
 						</p>
