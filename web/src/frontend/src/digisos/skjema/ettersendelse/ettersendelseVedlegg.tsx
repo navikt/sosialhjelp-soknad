@@ -71,7 +71,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
 				{this.props.vedlegg && this.props.vedlegg.filer.map((fil: any) => {
 						const vedleggId = this.props.vedlegg.vedleggId;
-						const lastNedUrl = `sendsoknad/ettersendelsevedlegg/vedlegg/${vedleggId}?filId=${fil.filId}`;
+						const lastNedUrl = `sosialhjelpvedlegg/${fil.filId}/fil`;
 
 						return (
 							<AvsnittMedMarger

@@ -30,7 +30,7 @@ function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIter
 
 function* lesEttersendelserSaga(action: LesEttersendelserAction): SagaIterator {
 	try {
-		const url = `ettersendelsevedlegg/innsendte/${action.brukerbehandlingId}`;
+		const url = `ettersendelse/innsendte/${action.brukerbehandlingId}`;
 		const response = yield call(fetchToJson, url);
 		if (response) {
 			yield put(settEttersendelser(response));
@@ -43,7 +43,7 @@ function* lesEttersendelserSaga(action: LesEttersendelserAction): SagaIterator {
 
 function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction): SagaIterator {
 	try {
-		const url = `ettersendelsevedlegg/${action.brukerbehandlingId}`;
+		const url = `ettersendelse/vedlegg/${action.brukerbehandlingId}`;
 		const response = yield call(fetchToJson, url);
 		if (response) {
 			yield put(lesEttersendteVedlegg(response));
@@ -56,7 +56,7 @@ function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction): 
 
 function* slettEttersendelsesVedleggSaga(action: SlettEttersendtVedleggAction): SagaIterator {
 	try {
-		const url = `ettersendelsevedlegg/vedlegg/${action.vedleggId}?filId=${action.filId}`;
+		const url = `ettersendelse/vedlegg/${action.vedleggId}?filId=${action.filId}`;
 		const promise = yield call(fetchDelete, url);
 		const response = yield call(toJson, promise);
 		if (response) {
@@ -70,7 +70,7 @@ function* slettEttersendelsesVedleggSaga(action: SlettEttersendtVedleggAction): 
 
 function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggAction): SagaIterator {
 	try {
-		const url = `ettersendelsevedlegg/vedlegg/${action.vedleggId}`;
+		const url = `ettersendelse/vedlegg/${action.vedleggId}`;
 		const response: any = yield call(fetchUpload, url, action.formData);
 		yield put(lastOppEttersendtVedleggOk());
 		if (response) {

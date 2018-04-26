@@ -53,12 +53,12 @@ var ettersendteVedlegg = [
 ];
 
 // Liste over vedlegg, status og evt allerede opplastede filer
-router.get("/ettersendelsevedlegg/:behandlingsId", function(req, res) {
+router.get("/ettersendelse/vedlegg/:behandlingsId", function(req, res) {
 	res.json(ettersendteVedlegg);
 });
 
 // REST endepunkt med oversikt over innsendelse
-router.get("/ettersendelsevedlegg/innsendte/:behandlingsId", function(req, res) {
+router.get("/ettersendelse/innsendte/:behandlingsId", function(req, res) {
 	res.json(utils.lesMockDataFil("ettersendelseVedlegg.json"));
 });
 
@@ -74,7 +74,7 @@ function createDir(dir) {
 
 rimraf(DATA_DIR + "/vedlegg_*", function () { console.log("*Sletter tidligere vedleggfiler*"); });
 
-router.post("/ettersendelsevedlegg/vedlegg/:vedleggId", function(req, res) {
+router.post("/ettersendelse/vedlegg/:vedleggId", function(req, res) {
 	console.log("Mock backend: POST ettersendt vedlegg (enkelt fil)");
 	var vedleggId = req.params.vedleggId;
 	var files = [];
@@ -109,7 +109,7 @@ router.post("/ettersendelsevedlegg/vedlegg/:vedleggId", function(req, res) {
 	}), responseDelayInSeconds * 1000);
 });
 
-router.delete("/ettersendelsevedlegg/vedlegg/:vedleggId", function(req, res) {
+router.delete("/ettersendelse/vedlegg/:vedleggId", function(req, res) {
 	var vedleggId = req.params.vedleggId;
 	var filId = req.query.filId;
 	for (let vedlegg of ettersendteVedlegg) {
@@ -124,7 +124,7 @@ router.delete("/ettersendelsevedlegg/vedlegg/:vedleggId", function(req, res) {
 	res.json(ettersendteVedlegg);
 });
 
-router.get("/ettersendelsevedlegg/vedlegg/:vedleggId", function(req, res) {
+router.get("/ettersendelse/vedlegg/:vedleggId", function(req, res) {
 	var vedleggId = req.params.vedleggId;
 	var filId = req.query.filId;
 	console.log("GET ettersendelse-vedlegg - Last ned filen");
