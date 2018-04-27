@@ -5,10 +5,12 @@ const enum EnhetsType {
 
 interface NavEnhet {
 	id: string;
+	orgnr: string;
 	navn: string;
 	kommuneId?: string;
 	fulltNavn: string;
 	type: EnhetsType;
+	features: any;
 }
 
 function getNavEnhet(kommuneId: string, navEnheter: NavEnhet[], bydelId?: string, intl?: any ): string {
@@ -42,12 +44,18 @@ function bydeler(navEnheter: NavEnhet[]) {
 	return navEnheter.filter(e => e.type === EnhetsType.BYDEL);
 }
 
+function getNavEnhetMedOrgnr(navEnheter: NavEnhet[], orgnr: string): NavEnhet {
+	return navEnheter.find((e: NavEnhet) => e.orgnr === orgnr);
+}
+
 const Horten: NavEnhet = 	{
 	id: "horten",
+	orgnr: null,
 	navn: "Horten",
 	kommuneId: null,
 	fulltNavn: "NAV Horten",
-	type: EnhetsType.KOMMUNE
+	type: EnhetsType.KOMMUNE,
+	features: {}
 };
 
 export {
@@ -55,6 +63,7 @@ export {
 	NavEnhet,
 	getKommune,
 	getNavEnhet,
+	getNavEnhetMedOrgnr,
 	getBydel,
 	finnBydeler,
 	alleKommuner,

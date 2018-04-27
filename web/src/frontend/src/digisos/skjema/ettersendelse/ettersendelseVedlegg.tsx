@@ -13,6 +13,7 @@ import { MargIkoner } from "./margIkoner";
 import AvsnittMedMarger from "./avsnittMedMarger";
 
 interface OwnProps {
+	ettersendelseAktivert: boolean;
 	children: React.ReactNode;
 	vedlegg?: any;
 	restStatus?: string;
@@ -55,8 +56,8 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 		return (
 			<span>
 				<AvsnittMedMarger
-					hoyreIkon={MargIkoner.LAST_OPP}
-					onClickHoyreIkon={() => this.leggTilVedleggKnapp.click()}
+					hoyreIkon={this.props.ettersendelseAktivert && MargIkoner.LAST_OPP}
+					onClickHoyreIkon={() => this.props.ettersendelseAktivert && this.leggTilVedleggKnapp.click()}
 				>
 					{this.props.children}
 					<input

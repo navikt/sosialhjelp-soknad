@@ -7,6 +7,7 @@ import EttersendelseVedleggListe from "./ettersendelseVedleggListe";
 
 interface Props {
 	children: React.ReactNode;
+	ettersendelseAktivert: boolean;
 	onEttersendelse?: () => void;
 	kunGenerellDokumentasjon?: boolean;
 }
@@ -72,10 +73,14 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 					(this.state.ekspandert ? "ettersendelse__vedlegg__ekspandert " : " ")}
 				>
 					<AvsnittMedMarger>
-						<FormattedHTMLMessage id="ettersendelse.mangler_info"/>
+						{!this.props.kunGenerellDokumentasjon && this.props.ettersendelseAktivert && 
+							(<FormattedHTMLMessage id="ettersendelse.mangler_info"/>)}
+						{!this.props.ettersendelseAktivert && 
+							(<FormattedHTMLMessage id="ettersendelse.mangler_info_manuell"/>)}
 					</AvsnittMedMarger>
 
 					<EttersendelseVedleggListe
+						ettersendelseAktivert={this.props.ettersendelseAktivert}
 						onEttersendelse={() => this.onEttersendelse()}
 					/>
 

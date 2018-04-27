@@ -14,6 +14,7 @@ import {
 } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 
 interface OwnProps {
+	ettersendelseAktivert: boolean;
 	onEttersendelse?: () => void;
 }
 
@@ -82,8 +83,14 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 					if (!!this.props.intl.messages[ infoKey ]) {
 						info = this.props.intl.formatMessage({ id: infoKey });
 					}
+					if (!this.props.ettersendelseAktivert
+							&& vedlegg.skjemaNummer === "annet"
+							&& vedlegg.skjemanummerTillegg === "annet") {
+						return null;
+					}
 					return (
 						<EttersendelseVedlegg
+							ettersendelseAktivert={this.props.ettersendelseAktivert}
 							dispatch={this.props.dispatch}
 							vedlegg={vedlegg}
 							key={vedlegg.vedleggId}
@@ -103,15 +110,15 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 				)}
 
 				<AvsnittMedMarger>
-					<Knapp
-						spinner={this.props.ettersendStatus === REST_STATUS.PENDING}
-						disabled={this.props.ettersendStatus === REST_STATUS.PENDING}
-						type="hoved"
-						htmlType="submit"
-						onClick={() => this.sendEttersendelse()}
-					>
+					{this.props.ettersendelseAktivert && (<Knapp
+							spinner={this.props.ettersendStatus === REST_STATUS.PENDING}
+							disabled={this.props.ettersendStatus === REST_STATUS.PENDING}
+							type="hoved"
+							htmlType="submit"
+							onClick={() => this.sendEttersendelse()}>
 						<FormattedMessage id="ettersendelse.knapp.tittel"/>
-					</Knapp>
+						</Knapp>
+					)}
 				</AvsnittMedMarger>
 
 			</div>
