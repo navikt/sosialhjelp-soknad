@@ -9,7 +9,7 @@ import {
 } from "./ettersendelseTypes";
 import {
 	lesEttersendelsesVedlegg, lastOppEttersendtVedleggOk,
-	lesEttersendteVedlegg, lagEttersendelseOk, settEttersendelser
+	lesEttersendteVedlegg, lagEttersendelseOk, settEttersendelser, lastOppEttersendelseFeilet
 } from "./ettersendelseActions";
 import { loggFeil } from "../navlogger/navloggerActions";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
@@ -77,8 +77,8 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
 			yield put(lesEttersendteVedlegg(response));
 		}
 	} catch (reason) {
+		yield put(lastOppEttersendelseFeilet(reason.toString()));
 		yield put(loggFeil("Last opp vedlegg for ettersendelse feilet: " + reason.toString()));
-		yield put(navigerTilServerfeil());
 	}
 }
 

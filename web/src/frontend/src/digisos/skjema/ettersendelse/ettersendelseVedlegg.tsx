@@ -11,18 +11,23 @@ import { downloadAttachedFile } from "../../../nav-soknad/utils/rest-utils";
 import { REST_STATUS } from "../../../nav-soknad/types";
 import { MargIkoner } from "./margIkoner";
 import AvsnittMedMarger from "./avsnittMedMarger";
+import { FeilKode } from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
+import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 
 interface OwnProps {
 	ettersendelseAktivert: boolean;
 	children: React.ReactNode;
 	vedlegg?: any;
 	restStatus?: string;
+	feilKode?: string;
+	dispatch?: any;
 }
 
 interface OwnState {
 	filnavn: string;
 }
-export type Props = OwnProps & DispatchProps;
+
+export type Props = OwnProps & DispatchProps & InjectedIntlProps;
 
 class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
@@ -53,6 +58,11 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 	}
 
 	render() {
+		const visFilForStorFeilmelding: boolean = (this.state.filnavn &&
+			this.props.restStatus === REST_STATUS.FEILET &&
+			this.props.feilKode &&
+			this.props.feilKode === FeilKode.FIL_FOR_STOR);
+
 		return (
 			<span>
 				<AvsnittMedMarger
@@ -94,9 +104,17 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 					</AvsnittMedMarger>
 				)}
 
+				{visFilForStorFeilmelding && (
+					<AvsnittMedMarger hoyreIkon={MargIkoner.ADVARSEL} key={this.state.filnavn}>
+						<span className="skjema__feilmelding">
+							{this.state.filnavn} <FormattedMessage id="fil.for.stor"/>
+						</span>
+					</AvsnittMedMarger>
+				)}
+
 			</span>
 		);
 	}
 }
 
-export default connect<{}, {}, Props>((state: State) => ({}))(EttersendelseVedlegg);
+export default connect<{}, {}, OwnProps>((state: State) => ({}))(injectIntl(EttersendelseVedlegg));

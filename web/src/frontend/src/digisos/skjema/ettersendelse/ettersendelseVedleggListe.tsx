@@ -25,6 +25,7 @@ interface StateProps {
 	brukerbehandlingskjedeId: string;
 	brukerbehandlingId: string;
 	ettersendStatus: REST_STATUS;
+	feilKode: string;
 }
 
 type Props = OwnProps & StateProps & DispatchProps & InjectedIntlProps;
@@ -95,6 +96,7 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 							vedlegg={vedlegg}
 							key={vedlegg.vedleggId}
 							restStatus={this.props.opplastingStatus}
+							feilKode={this.props.feilKode}
 						>
 							<h3><FormattedMessage id={tittelKey}/></h3>
 							{info && (<p>{info}</p>)}
@@ -133,6 +135,7 @@ export default connect<{}, {}, OwnProps>((state: ReduxState, {}) => {
 		manglendeVedlegg: state.ettersendelse.data,
 		brukerbehandlingId: state.ettersendelse.brukerbehandlingId,
 		opplastingStatus: state.ettersendelse.opplastingStatus,
-		ettersendStatus: state.ettersendelse.ettersendStatus
+		ettersendStatus: state.ettersendelse.ettersendStatus,
+		feilKode: state.ettersendelse.feilKode
 	};
 })(injectIntl(EttersendelseVedleggListe));

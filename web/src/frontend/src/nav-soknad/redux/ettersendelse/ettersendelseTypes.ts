@@ -33,6 +33,10 @@ export enum EttersendelseActionTypeKeys {
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
+export enum FeilKode {
+	FIL_FOR_STOR = "vedlegg.opplasting.feil.forStor"
+}
+
 export interface EttersendteVedleggState {
 	data: any[];
 	restStatus: REST_STATUS;
@@ -88,6 +92,7 @@ export type EttersendelseActionTypes =
 	| LagEttersendelseOkAction
 	| LastOppEttersendelseAction
 	| LastOppEttersendelseOkAction
+	| LastOppEttersendelseFeiletAction
 	| LessEttersendteVedleggAction
 	| SlettEttersendtVedleggAction
 	| LesEttersendelsesVedleggAction
@@ -113,6 +118,11 @@ export interface LastOppEttersendelseOkAction {
 	type: EttersendelseActionTypeKeys.LAST_OPP_OK;
 }
 
+export interface LastOppEttersendelseFeiletAction {
+	type: EttersendelseActionTypeKeys.LAST_OPP_FEILET;
+	feilKode: string;
+}
+
 export interface LagEttersendelseOkAction {
 	type: EttersendelseActionTypeKeys.NY_OK;
 	brukerbehandlingId: string;
@@ -129,4 +139,5 @@ export interface EttersendelseState {
 	opplastingStatus: REST_STATUS;
 	ettersendStatus: REST_STATUS;
 	brukerbehandlingId: string;
+	feilKode: string;
 }

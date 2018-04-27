@@ -14,7 +14,7 @@ import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
 import { MargIkoner } from "./margIkoner";
-import { NavEnhet, getNavEnhetMedOrgnr } from "../../data/kommuner";
+import { getNavEnhetMedOrgnr, NavEnhet } from "../../data/kommuner";
 import { lesKommuner } from "../../../nav-soknad/redux/kommuner/kommuneActions";
 
 interface OwnProps {

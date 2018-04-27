@@ -11,7 +11,8 @@ const initialState: EttersendelseState = {
 	innsendte: {
 		originalSoknad: null,
 		ettersendelser: null
-	}
+	},
+	feilKode: ""
 };
 
 const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes> = (
@@ -29,6 +30,13 @@ const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes
 			return {
 				...state,
 				opplastingStatus: REST_STATUS.PENDING
+			};
+		}
+		case EttersendelseActionTypeKeys.LAST_OPP_FEILET: {
+			return {
+				...state,
+				feilKode: action.feilKode,
+				opplastingStatus: REST_STATUS.FEILET
 			};
 		}
 		case EttersendelseActionTypeKeys.LAST_OPP_OK: {

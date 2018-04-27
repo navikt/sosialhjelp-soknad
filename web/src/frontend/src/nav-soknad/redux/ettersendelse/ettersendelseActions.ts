@@ -39,6 +39,14 @@ const lastOppEttersendtVedleggOk = (): EttersendelseActionTypes => {
 	};
 };
 
+const lastOppEttersendelseFeilet = (feilKode: string): EttersendelseActionTypes => {
+
+	return {
+		type: EttersendelseActionTypeKeys.LAST_OPP_FEILET,
+		feilKode: feilKode.match(/Request Entity Too Large/i) ? "vedlegg.opplasting.feil.forStor" : feilKode
+	};
+};
+
 const lesEttersendteVedlegg = (vedlegg: any) => {
 	return {
 		type: EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG_OK,
@@ -80,6 +88,7 @@ export {
 	lesEttersendelsesVedlegg,
 	lastOppEttersendelseVedlegg,
 	lastOppEttersendtVedleggOk,
+	lastOppEttersendelseFeilet,
 	slettEttersendtVedlegg,
 	lesEttersendteVedlegg,
 	lesEttersendelser,
