@@ -64,7 +64,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 			this.props.feilKode === FeilKode.FIL_FOR_STOR);
 
 		return (
-			<span>
+			<span className={visFilForStorFeilmelding ? "ettersendelse__vedlegg__feil" : ""}>
 				<AvsnittMedMarger
 					hoyreIkon={this.props.ettersendelseAktivert && MargIkoner.LAST_OPP}
 					onClickHoyreIkon={() => this.props.ettersendelseAktivert && this.leggTilVedleggKnapp.click()}
@@ -105,7 +105,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 				)}
 
 				{visFilForStorFeilmelding && (
-					<AvsnittMedMarger hoyreIkon={MargIkoner.ADVARSEL} key={this.state.filnavn}>
+					<AvsnittMedMarger key={this.state.filnavn}>
 						<span className="skjema__feilmelding">
 							{this.state.filnavn} <FormattedMessage id="fil.for.stor"/>
 						</span>
