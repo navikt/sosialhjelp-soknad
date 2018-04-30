@@ -13,15 +13,19 @@ import Kvittering from "./kvittering";
 import AvbrytSoknad from "../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 import NavFrontendModal from "nav-frontend-modal";
 import Ettersendelse from "./skjema/ettersendelse/ettersendelse";
+import { skjulMenu } from "../nav-soknad/utils/domUtils";
 
 /** Setter globalt hvilket appElement react-modal skal bruke når modal dialog vises
  *
  */
 class App extends React.Component<InjectedIntlProps, {}> {
+
 	componentDidMount() {
 		(NavFrontendModal as any).setAppElement("#root");
 	}
+
 	render() {
+		skjulMenu();
 		const ettersendelse = (window.location.pathname.match(/ettersendelse$/) != null);
 		return (
 			<span>

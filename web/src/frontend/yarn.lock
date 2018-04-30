@@ -3314,6 +3314,10 @@ intl-relativeformat@^2.0.0:
   dependencies:
     intl-messageformat "^2.0.0"
 
+intl@^1.2.5:
+  version "1.2.5"
+  resolved "https://repo.adeo.no/repository/npm-public/intl/-/intl-1.2.5.tgz#82244a2190c4e419f8371f5aa34daa3420e2abde"
+
 invariant@^2.0.0, invariant@^2.1.1, invariant@^2.2.1, invariant@^2.2.2:
   version "2.2.2"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
@@ -4887,9 +4891,9 @@ nav-frontend-hjelpetekst@^0.2.32:
   version "0.2.32"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-0.2.32.tgz#a7e3a9a4bace0cfa888f3ba946b3abb5decddf61"
 
-nav-frontend-ikoner-assets@^0.2.26:
+nav-frontend-ikoner-assets@0.2.26:
   version "0.2.26"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-0.2.26.tgz#a26470e3e98b2658ea3f818ccedca6addeff2f5e"
+  resolved "https://repo.adeo.no/repository/npm-public/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-0.2.26.tgz#a26470e3e98b2658ea3f818ccedca6addeff2f5e"
 
 nav-frontend-js-utils@^0.2.10:
   version "0.2.10"
@@ -4935,9 +4939,9 @@ nav-frontend-skjema-style@^0.3.11:
   version "0.3.11"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-skjema-style/-/nav-frontend-skjema-style-0.3.11.tgz#9d5f614055369f4516b14897e06df01ec1efc603"
 
-nav-frontend-skjema@^0.1.21:
-  version "0.1.21"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/nav-frontend-skjema/-/nav-frontend-skjema-0.1.21.tgz#25f0f68d276370fef290bce37067610208064786"
+nav-frontend-skjema@0.1.29:
+  version "0.1.29"
+  resolved "https://repo.adeo.no/repository/npm-public/nav-frontend-skjema/-/nav-frontend-skjema-0.1.29.tgz#2f5ad3e403926877cc2d17bf01add0a694899d51"
 
 nav-frontend-spinner-style@^0.2.4:
   version "0.2.4"
