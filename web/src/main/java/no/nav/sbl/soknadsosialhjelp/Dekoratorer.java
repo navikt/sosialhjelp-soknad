@@ -21,11 +21,10 @@ public class Dekoratorer extends DecoratorFilter {
         setNoDecoratePatterns(NO_DECORATOR_PATTERNS);
         setFragmentNames(asList(
                 "webstats-ga-notrack",
-                "header-withmenu",
+                "header",
                 "footer",
                 "scripts",
-                "styles",
-                "megamenu-resources"
+                "styles"
         ));
     }
 
