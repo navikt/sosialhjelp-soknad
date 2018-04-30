@@ -6,13 +6,3 @@ export function focusOnFirstElement(el: HTMLElement) {
 		}
 	}
 }
-
-export function visMenu() {
-	const body = document.getElementsByTagName("body")[0];
-	body.classList.remove("without-menu");
-}
-
-export function skjulMenu() {
-	const body = document.getElementsByTagName("body")[0];
-	body.classList.add("without-menu");
-}
