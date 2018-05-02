@@ -152,7 +152,7 @@ def deployAppNais(app, version, environment, zone, namespace, callback) {
     }
 }
 
-node("a34apvl00071") {
+node("docker") {
     properties([
             parameters([
                     string(name: 'DeployTilNexus', defaultValue: 'false'),
