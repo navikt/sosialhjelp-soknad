@@ -1,5 +1,7 @@
 import "whatwg-fetch";
 import "babel-polyfill";
+import "intl";
+import "intl/locale-data/jsonp/nb-NO.js";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
