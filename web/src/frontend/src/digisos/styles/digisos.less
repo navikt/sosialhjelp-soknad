@@ -2,34 +2,40 @@
     App spesic styling
 */
 
-@import "../kvittering/kvittering.less";
-@import "../skjema/ekstrainformasjon/ekstrainfo.less";
-@import "../skjema/ekstrainformasjon/vedlegg/slettIkon.less";
-@import "../skjema/ekstrainformasjon/vedlegg/vedleggsliste.less";
-@import "../skjema/familie/barn.less";
-@import "../skjema/oppsummering/oppsummering.less";
-@import "../skjema/oppsummering/samtykkeInfoModal.less";
-@import "../skjema/ettersendelse/ettersendelse.less";
-@import "../skjema/ettersendelse/bannerEttersendelse.less";
+.app-digisos-style {
 
-@navRosa: #f3e3e3;
+  @import "../skjema/oppsummering/samtykkeInfoModal.less";
 
-.app-digisos {
+  @import "../kvittering/kvittering.less";
+  @import "../skjema/ekstrainformasjon/ekstrainfo.less";
+  @import "../skjema/ekstrainformasjon/vedlegg/slettIkon.less";
+  @import "../skjema/ekstrainformasjon/vedlegg/vedleggsliste.less";
+  @import "../skjema/familie/barn.less";
+  @import "../skjema/oppsummering/oppsummering.less";
+
+  @import "../skjema/ettersendelse/ettersendelse.less";
+  @import "../skjema/ettersendelse/bannerEttersendelse.less";
+
+  @navRosa: #f3e3e3;
+
+  .app-digisos {
 	text-align: center;
 	padding-bottom: 10em;
 	&__title {
-		margin-bottom: 3rem;
-		margin-top: 1.5rem;
-		@media @mobile {
-			margin-bottom: 1.5rem;
-		}
+	  margin-bottom: 3rem;
+	  margin-top: 1.5rem;
+	  @media @mobile {
+		margin-bottom: 1.5rem;
+	  }
 	}
-}
+  }
 
-.ekstrainfo-melding {
+  .ekstrainfo-melding {
 	margin-bottom: 2rem;
+  }
+
 }
 
 .without-menu .topnavsection-wrapper {
-	display: none;
+  display: none;
 }
