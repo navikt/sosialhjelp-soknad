@@ -5,6 +5,7 @@ import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { Knapp } from "nav-frontend-knapper";
 import { lastOppVedlegg } from "../../../../nav-soknad/redux/vedlegg/vedleggActions";
 import { REST_STATUS } from "../../../../nav-soknad/types";
+import { REST_FEIL } from "../../../../nav-soknad/types/restFeilTypes";
 
 interface Props {
 	belopFaktumId: number;
@@ -12,18 +13,26 @@ interface Props {
 	sistEndredeFaktumId?: number;
 	disabled?: boolean;
 	id?: string;
+	feilKode?: string;
 }
 
 type AllProps = Props &
 	DispatchProps &
 	InjectedIntlProps;
 
-class LastOppVedlegg extends React.Component<AllProps, {}> {
+interface State {
+	sisteBrukteFilnavn: string;
+}
+
+class LastOppVedlegg extends React.Component<AllProps, State> {
 	leggTilVedleggKnapp: HTMLInputElement;
 
 	constructor(props: AllProps) {
 		super(props);
 		this.handleFileUpload = this.handleFileUpload.bind(this);
+		this.state = {
+			sisteBrukteFilnavn: ""
+		};
 	}
 
 	handleFileUpload(files: FileList) {
@@ -32,6 +41,7 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 		}
 		const formData = new FormData();
 		formData.append("file", files[0], files[0].name);
+		this.setState({sisteBrukteFilnavn: files[0].name});
 		this.props.dispatch(lastOppVedlegg( this.props.belopFaktumId, formData));
 		this.leggTilVedleggKnapp.value = null;
 	}
@@ -40,6 +50,9 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 		const gjeldende = this.props.belopFaktumId === this.props.sistEndredeFaktumId;
 		const visSpinner = gjeldende && this.props.opplastingStatus === REST_STATUS.PENDING;
 		const id = this.props.id ? this.props.id : this.props.belopFaktumId.toString();
+		const forStorFilFeil: boolean = this.props.feilKode && this.props.feilKode === REST_FEIL.FOR_STOR_FIL;
+		const feilFiltype: boolean = this.props.feilKode && this.props.feilKode === REST_FEIL.FEIL_FILTPYE;
+
 		return (
 			<div>
 				<Knapp
@@ -67,7 +80,16 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 				<div role="alert" aria-live="assertive">
 					{this.props.opplastingStatus === REST_STATUS.FEILET && gjeldende && (
 						<div className="skjemaelement__feilmelding">
-							<FormattedMessage id="opplysninger.vedlegg.ugyldig"/>
+							{forStorFilFeil && (
+								<FormattedMessage id="fil.for.stor"/>
+							)}
+							{feilFiltype && (
+								<FormattedMessage id="fil.feil.format"/>
+							)}
+							{!forStorFilFeil && !feilFiltype && (
+								<FormattedMessage id="opplysninger.vedlegg.ugyldig"/>
+							)}
+							&nbsp;"{this.state.sisteBrukteFilnavn}"
 						</div>
 					)}
 				</div>
@@ -76,6 +98,8 @@ class LastOppVedlegg extends React.Component<AllProps, {}> {
 	}
 }
 
-export default connect<{}, {}, Props>((state: SoknadAppState) => ({
-
-}))(injectIntl(LastOppVedlegg));
+export default connect<{}, {}, Props>((state: SoknadAppState) => {
+	return {
+		feilKode: state.vedlegg.feilKode
+	};
+})(injectIntl(LastOppVedlegg));

@@ -11,8 +11,8 @@ import { downloadAttachedFile } from "../../../nav-soknad/utils/rest-utils";
 import { REST_STATUS } from "../../../nav-soknad/types";
 import { MargIkoner } from "./margIkoner";
 import AvsnittMedMarger from "./avsnittMedMarger";
-import { FeilKode } from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
+import { REST_FEIL } from "../../../nav-soknad/types/restFeilTypes";
 
 interface OwnProps {
 	ettersendelseAktivert: boolean;
@@ -58,11 +58,13 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 	}
 
 	render() {
-		const visFilForStorFeilmelding: boolean = (this.state.filnavn &&
+		const opplastingsFeil: boolean = (this.state.filnavn &&
 			this.props.restStatus === REST_STATUS.FEILET &&
-			this.props.feilKode &&
-			this.props.feilKode === FeilKode.FIL_FOR_STOR);
-
+			this.props.feilKode !== null && this.props.feilKode !== "");
+		const visFilForStorFeilmelding: boolean = opplastingsFeil &&
+			this.props.feilKode === REST_FEIL.FOR_STOR_FIL;
+		const visFeilFiltypeFeilmelding: boolean = opplastingsFeil &&
+			this.props.feilKode === REST_FEIL.FEIL_FILTPYE;
 		return (
 			<span className={visFilForStorFeilmelding ? "ettersendelse__vedlegg__feil" : ""}>
 				<AvsnittMedMarger
@@ -104,10 +106,21 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 					</AvsnittMedMarger>
 				)}
 
-				{visFilForStorFeilmelding && (
+				<p><b>Debug: feilKode: {this.props.feilKode}</b></p>
+
+				{opplastingsFeil && (
 					<AvsnittMedMarger key={this.state.filnavn}>
 						<span className="skjema__feilmelding">
-							{this.state.filnavn} <FormattedMessage id="fil.for.stor"/>
+							{this.state.filnavn}
+							{visFilForStorFeilmelding && (
+								<FormattedMessage id="fil.for.stor"/>
+							)}
+							{visFeilFiltypeFeilmelding && (
+								<FormattedMessage id="fil.feil.format"/>
+							)}
+							{!visFilForStorFeilmelding && !visFeilFiltypeFeilmelding && (
+								<FormattedMessage id="opplysninger.vedlegg.ugyldig"/>
+							)}
 						</span>
 					</AvsnittMedMarger>
 				)}

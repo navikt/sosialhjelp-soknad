@@ -7,7 +7,8 @@ const initialState: VedleggState = {
 	restStatus: REST_STATUS.INITIALISERT,
 	opplastingStatus: REST_STATUS.OK,
 	sistEndredeFaktumId: 0,
-	data: []
+	data: [],
+	feilKode: ""
 };
 
 const VedleggReducer: Reducer<VedleggState, VedleggActionTypes> = (
@@ -31,7 +32,8 @@ const VedleggReducer: Reducer<VedleggState, VedleggActionTypes> = (
 		case VedleggActionTypeKeys.LAST_OPP_FEILET: {
 			return {
 				...state,
-				opplastingStatus: REST_STATUS.FEILET
+				opplastingStatus: REST_STATUS.FEILET,
+				feilKode: action.feilKode
 			};
 		}
 		case VedleggActionTypeKeys.OPPDATERT_VEDLEGG: {

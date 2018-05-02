@@ -1,4 +1,5 @@
 import { EttersendelseActionTypeKeys, EttersendelseActionTypes } from "./ettersendelseTypes";
+import { detekterInternFeilKode } from "../../utils/rest-utils";
 
 const slettEttersendtVedlegg = (vedleggId: string, filId: string): EttersendelseActionTypes => {
 	return {
@@ -40,10 +41,10 @@ const lastOppEttersendtVedleggOk = (): EttersendelseActionTypes => {
 };
 
 const lastOppEttersendelseFeilet = (feilKode: string): EttersendelseActionTypes => {
-
+	const internFeilKode = detekterInternFeilKode(feilKode);
 	return {
 		type: EttersendelseActionTypeKeys.LAST_OPP_FEILET,
-		feilKode: feilKode.match(/Request Entity Too Large/i) ? "vedlegg.opplasting.feil.forStor" : feilKode
+		feilKode: internFeilKode
 	};
 };
 

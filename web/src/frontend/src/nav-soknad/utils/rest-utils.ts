@@ -1,4 +1,6 @@
 /* tslint:disable */
+import { REST_FEIL } from "../types/restFeilTypes";
+
 export function erDev(): boolean {
 	const url = window.location.href;
 	return url.indexOf("localhost:3000") > 0;
@@ -163,4 +165,15 @@ export function getCookie(name: string) {
 	} else {
 		return "null";
 	}
+}
+
+export function detekterInternFeilKode(feilKode: string): string {
+	let internFeilKode = feilKode;
+	if (feilKode.match(/Request Entity Too Large/i)) {
+		internFeilKode = REST_FEIL.FOR_STOR_FIL;
+	}
+	if (feilKode.match(/Unsupp?orted Media Type/i)) {
+		internFeilKode = REST_FEIL.FEIL_FILTPYE;
+	}
+	return internFeilKode;
 }
