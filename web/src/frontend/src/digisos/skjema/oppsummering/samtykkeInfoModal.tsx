@@ -60,7 +60,7 @@ class SamtykkeInfoModal extends React.Component<Props, {}> {
 		const bydelId: string = (bydel && bydel.lagret && bydel.lagret.value) || "";
 		let bydelsNavn = getBydel(kommuneId, bydelId, this.props.navEnheter);
 
-		if (bydelsNavn === "") {
+		if (bydelsNavn === null || bydelsNavn === "") {
 			bydelsNavn = kommuneNavn;
 		}
 		return { kommuneNavn, navKontorNavn: bydelsNavn };
