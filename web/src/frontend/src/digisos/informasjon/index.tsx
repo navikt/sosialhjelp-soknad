@@ -26,6 +26,7 @@ import {
 import SamtykkeInfoForsidenModal from "./samtykkeInfoForsidenModal";
 import { Checkbox } from "nav-frontend-skjema";
 import { lesKommuner } from "../../nav-soknad/redux/kommuner/kommuneActions";
+import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
 
 interface StateProps {
 	harTilgang: boolean;
@@ -40,6 +41,10 @@ interface StateProps {
 type Props = StateProps & InjectedIntlProps & RouterProps & DispatchProps;
 
 class Informasjon extends React.Component<Props, {}> {
+
+	componentDidMount() {
+		skjulToppMeny();
+	}
 
 	startSoknad() {
 		if (this.props.bekreftet === true) {

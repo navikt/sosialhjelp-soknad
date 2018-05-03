@@ -16,6 +16,7 @@ import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
 import { MargIkoner } from "./margIkoner";
 import { getNavEnhetMedOrgnr, NavEnhet } from "../../data/kommuner";
 import { lesKommuner } from "../../../nav-soknad/redux/kommuner/kommuneActions";
+import { visToppMeny } from "../../../nav-soknad/utils/domUtils";
 
 interface OwnProps {
 	visEttersendelse: boolean;
@@ -46,6 +47,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	}
 
 	componentDidMount() {
+		visToppMeny();
 		const brukerbehandlingskjedeId = this.lesBrukerbehandlingskjedeId();
 		this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
 		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
