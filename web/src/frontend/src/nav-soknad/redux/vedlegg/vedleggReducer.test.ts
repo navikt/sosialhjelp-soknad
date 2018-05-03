@@ -42,7 +42,7 @@ describe('vedlegg reducer', () => {
 		state = vedleggReducer(state, {
 			type: VedleggActionTypeKeys.LAST_OPP_FEILET,
 			belopFaktumId: 1,
-			feiltype: 'Unsuported media type'
+			feilKode: 'Unsuported media type'
 		});
 		expect(state.data.length).toBe(1);
 

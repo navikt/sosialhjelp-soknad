@@ -25,6 +25,7 @@ export interface VedleggState {
 	restStatus: REST_STATUS;
 	opplastingStatus: REST_STATUS;
 	sistEndredeFaktumId: number;
+	feilKode: string;
 }
 
 export type VedleggActionTypes =
@@ -54,7 +55,7 @@ interface LastOppVedleggOkAction {
 interface LastOppVedleggFeiletAction {
 	type: VedleggActionTypeKeys.LAST_OPP_FEILET;
 	belopFaktumId: number;
-	feiltype: string;
+	feilKode: string;
 }
 
 interface OppdatertVedleggAction {
