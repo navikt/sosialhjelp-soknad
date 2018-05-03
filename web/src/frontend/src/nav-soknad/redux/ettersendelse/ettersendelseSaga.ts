@@ -77,7 +77,7 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
 			yield put(lesEttersendteVedlegg(response));
 		}
 	} catch (reason) {
-		yield put(lastOppEttersendelseFeilet(reason.toString()));
+		yield put(lastOppEttersendelseFeilet(reason.toString(), action.vedleggId.toString()));
 		yield put(loggFeil("Last opp vedlegg for ettersendelse feilet: " + reason.toString()));
 	}
 }
@@ -89,7 +89,6 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
 		yield call(fetchPost, url, {});
 		yield put({type: EttersendelseActionTypeKeys.ETTERSEND_OK});
 	} catch (reason) {
-		// yield put({type: EttersendelseActionTypeKeys.ETTERSEND_FEILET});
 		yield put(loggFeil("Send ettersendelse feilet: " + reason.toString()));
 		yield put(navigerTilServerfeil());
 	}

@@ -40,11 +40,12 @@ const lastOppEttersendtVedleggOk = (): EttersendelseActionTypes => {
 	};
 };
 
-const lastOppEttersendelseFeilet = (feilKode: string): EttersendelseActionTypes => {
+const lastOppEttersendelseFeilet = (feilKode: string, vedleggId: string): EttersendelseActionTypes => {
 	const internFeilKode = detekterInternFeilKode(feilKode);
 	return {
 		type: EttersendelseActionTypeKeys.LAST_OPP_FEILET,
-		feilKode: internFeilKode
+		feilKode: internFeilKode,
+		vedleggId
 	};
 };
 

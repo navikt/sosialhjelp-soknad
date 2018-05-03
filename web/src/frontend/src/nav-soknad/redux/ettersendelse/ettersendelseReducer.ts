@@ -12,7 +12,8 @@ const initialState: EttersendelseState = {
 		originalSoknad: null,
 		ettersendelser: null
 	},
-	feilKode: ""
+	feilKode: "",
+	feiletVedleggId: ""
 };
 
 const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes> = (
@@ -36,7 +37,8 @@ const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes
 			return {
 				...state,
 				feilKode: action.feilKode,
-				opplastingStatus: REST_STATUS.FEILET
+				opplastingStatus: REST_STATUS.FEILET,
+				feiletVedleggId: action.vedleggId
 			};
 		}
 		case EttersendelseActionTypeKeys.LAST_OPP_OK: {

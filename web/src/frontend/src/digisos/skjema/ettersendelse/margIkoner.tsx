@@ -2,7 +2,6 @@ import * as React from "react";
 import Icon from "nav-frontend-ikoner-assets";
 import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon";
 import NavFrontendChevron from "nav-frontend-chevron";
-import SVG from "react-inlinesvg";
 import NavFrontendSpinner from "nav-frontend-spinner";
 
 enum MargIkoner {
@@ -39,10 +38,7 @@ const MargIkon: React.StatelessComponent<{ ikon: MargIkoner }> = ({ ikon }) => {
 		case MargIkoner.SPINNER:
 			return <NavFrontendSpinner type="XS" />;
 		case MargIkoner.KONVOLUTT:
-			return (<SVG
-				className="ettersendelse__ikon"
-				src={"/soknadsosialhjelp/statisk/bilder/ikon_konvolutt.svg"}
-			/>);
+			return <DigisosIkon navn="konvolutt" className="ettersendelse__ikon"/>;
 		case MargIkoner.SØPPELBØTTE:
 			return (<DigisosIkon
 					navn="trashcan"
