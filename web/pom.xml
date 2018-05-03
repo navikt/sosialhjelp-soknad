@@ -140,7 +140,7 @@
                 <artifactId>appassembler-maven-plugin</artifactId>
                 <version>1.10</version>
                 <configuration>
-                    <extraJvmArguments>-Djavax.net.ssl.trustStore=${NAV_TRUSTSTORE_PATH} -Djavax.net.ssl.trustStorePassword=${NAV_TRUSTSTORE_PASSWORD}</extraJvmArguments>
+                    <extraJvmArguments>-Djavax.net.ssl.trustStore=${NAV_TRUSTSTORE_PATH} -Djavax.net.ssl.trustStorePassword=${NAV_TRUSTSTORE_PASSWORD} -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap</extraJvmArguments>
                     <!--  -Djavax.net.ssl.keyStore=${SRVSOKNADSOSIALHJELP_KEYSTORE} -Djavax.net.ssl.keyStorePassword=${SRVSOKNADSOSIALHJELP_PASSWORD} -->
                     <programs>
                         <program>
