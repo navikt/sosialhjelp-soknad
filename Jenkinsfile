@@ -172,11 +172,13 @@ node("docker") {
 
     }
 
+    /*
     if (!isMasterBuild) {
         stage('Merge master') {
             sh "git merge origin/master"
         }
     }
+    */
 
     stage('Set version') {
         pom = readMavenPom file: 'pom.xml'
