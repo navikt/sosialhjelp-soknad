@@ -122,7 +122,7 @@ def deployAppNais(app, version, environment, zone, namespace, callback) {
     def environmentId = environmentIds[environment]
     def zoneId = zoneIds[zone]
 
-    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jiradeploy', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jiradeploy', usernameVariable: 'JIRA_USERNAME', passwordVariable: 'JIRA_PASSWORD']]) {
         def postBody = [
             fields: [
                 project          : [key: 'DEPLOY'],
@@ -137,8 +137,8 @@ def deployAppNais(app, version, environment, zone, namespace, callback) {
         ]
 
         def postBodyString = groovy.json.JsonOutput.toJson(postBody)
-        //def base64encoded = "${env.USERNAME}:${env.PASSWORD}".bytes.encodeBase64().toString()
-        def base64encoded = sh(script: "echo '${env.USERNAME}:${env.PASSWORD}' | base64", returnStdout: true)
+        //def base64encoded = "${JIRA_USERNAME}:${JIRA_PASSWORD}".bytes.encodeBase64().toString()
+        def base64encoded = sh(script: "echo '${JIRA_USERNAME}:${JIRA_PASSWORD}' | base64", returnStdout: true)
 
         def response = httpRequest (
             url: 'https://jira.adeo.no/rest/api/2/issue/',
@@ -148,6 +148,7 @@ def deployAppNais(app, version, environment, zone, namespace, callback) {
             httpMode: 'POST',
             requestBody: postBodyString
         )
+
         def slurper = new groovy.json.JsonSlurperClassic()
         return slurper.parseText(response.content);
     }
