@@ -21,6 +21,7 @@ interface OwnProps {
 	restStatus?: string;
 	feilKode?: string;
 	dispatch?: any;
+	feiletVedleggId?: string;
 }
 
 interface OwnState {
@@ -58,15 +59,18 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 	}
 
 	render() {
-		const opplastingsFeil: boolean = (this.state.filnavn &&
-			this.props.restStatus === REST_STATUS.FEILET &&
-			this.props.feilKode !== null && this.props.feilKode !== "");
+		const vedleggId = this.props.vedlegg.vedleggId;
+		const opplastingsFeil: boolean = this.props.restStatus === REST_STATUS.FEILET &&
+			this.props.feiletVedleggId === vedleggId.toString();
+
 		const visFilForStorFeilmelding: boolean = opplastingsFeil &&
 			this.props.feilKode === REST_FEIL.FOR_STOR_FIL;
+
 		const visFeilFiltypeFeilmelding: boolean = opplastingsFeil &&
 			this.props.feilKode === REST_FEIL.FEIL_FILTPYE;
+
 		return (
-			<span className={visFilForStorFeilmelding ? "ettersendelse__vedlegg__feil" : ""}>
+			<span className={opplastingsFeil ? "ettersendelse__vedlegg__feil" : ""}>
 				<AvsnittMedMarger
 					hoyreIkon={this.props.ettersendelseAktivert && MargIkoner.LAST_OPP}
 					onClickHoyreIkon={() => this.props.ettersendelseAktivert && this.leggTilVedleggKnapp.click()}
@@ -83,9 +87,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 				</AvsnittMedMarger>
 
 				{this.props.vedlegg && this.props.vedlegg.filer.map((fil: any) => {
-						const vedleggId = this.props.vedlegg.vedleggId;
 						const lastNedUrl = `sosialhjelpvedlegg/${fil.filId}/fil`;
-
 						return (
 							<AvsnittMedMarger
 								hoyreIkon={MargIkoner.SØPPELBØTTE}
@@ -106,12 +108,10 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 					</AvsnittMedMarger>
 				)}
 
-				<p><b>Debug: feilKode: {this.props.feilKode}</b></p>
-
 				{opplastingsFeil && (
 					<AvsnittMedMarger key={this.state.filnavn}>
 						<span className="skjema__feilmelding">
-							{this.state.filnavn}
+							"{this.state.filnavn}" &nbsp;
 							{visFilForStorFeilmelding && (
 								<FormattedMessage id="fil.for.stor"/>
 							)}

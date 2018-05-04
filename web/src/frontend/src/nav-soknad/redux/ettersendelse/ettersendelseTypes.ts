@@ -117,6 +117,7 @@ export interface LastOppEttersendelseOkAction {
 export interface LastOppEttersendelseFeiletAction {
 	type: EttersendelseActionTypeKeys.LAST_OPP_FEILET;
 	feilKode: string;
+	vedleggId: string;
 }
 
 export interface LagEttersendelseOkAction {
@@ -136,4 +137,5 @@ export interface EttersendelseState {
 	ettersendStatus: REST_STATUS;
 	brukerbehandlingId: string;
 	feilKode: string;
+	feiletVedleggId: string;
 }
