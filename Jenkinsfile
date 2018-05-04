@@ -161,7 +161,7 @@ node("docker") {
     properties([
             parameters([
                     string(name: 'DeployTilNexus', defaultValue: 'false'),
-                    string(name: 'testurl', defaultValue: 'https://tjenester-t6.nav.no/soknadsosialhjelp/informasjon'),
+                    string(name: 'Deploy_til_miljo', defaultValue: ''),
             ])
     ])
     common.setupTools("maven3", "java8")
@@ -223,6 +223,9 @@ node("docker") {
     if (deployToNaisEnvironment == "" && env.BRANCH_NAME == 'feature/DIGISOS-618-autodeploy') {
         deployToNaisEnvironment = "t1"
     }
+    if (params.Deploy_til_miljo != "") {
+        deployToNaisEnvironment = params.Deploy_til_miljo
+    }
 
     echo "${params.DeployTilNexus} deploy til nexus"
     if (isMasterBuild || params.DeployTilNexus == "true" || deployToNaisEnvironment != "") {
@@ -237,7 +240,7 @@ node("docker") {
         }
         stage("Git tag") {
             withEnv(['HTTPS_PROXY=http://webproxy-utvikler.nav.no:8088']) {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'navikt-jenkins-github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-pus', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
                     try {
                         sh("git tag -a ${releaseVersion} -m ${releaseVersion} HEAD && git push --tags https://navikt-jenkins:${GIT_PASSWORD}@github.com/navikt/soknadsosialhjelp.git")
                     } catch (Exception e) {
@@ -296,7 +299,7 @@ def notifyGithub(owner, repo, sha, state, description) {
     def postBodyString = groovy.json.JsonOutput.toJson(postBody)
 
     withEnv(['HTTPS_PROXY=http://webproxy-utvikler.nav.no:8088']) {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'navikt-jenkins-github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-pus', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
             sh "curl 'https://api.github.com/repos/${owner}/${repo}/statuses/${sha}?access_token=$GIT_PASSWORD' \
                 -H 'Content-Type: application/json' \
                 -X POST \
