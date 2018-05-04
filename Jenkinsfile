@@ -242,7 +242,7 @@ node("docker") {
             withEnv(['HTTPS_PROXY=http://webproxy-utvikler.nav.no:8088']) {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-pus', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
                     try {
-                        sh("git tag -a ${releaseVersion} -m ${releaseVersion} HEAD && git push --tags https://navikt-jenkins:${GIT_PASSWORD}@github.com/navikt/soknadsosialhjelp.git")
+                        sh("git tag -a ${releaseVersion} -m ${releaseVersion} HEAD && git push --tags https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/navikt/soknadsosialhjelp.git")
                     } catch (Exception e) {
                         notifyFailed("Git tag feilet", e, env.BUILD_URL)
                     }
