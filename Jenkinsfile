@@ -138,7 +138,7 @@ def deployAppNais(app, version, environment, zone, namespace, callback) {
 
         def postBodyString = groovy.json.JsonOutput.toJson(postBody)
         //def base64encoded = "${env.USERNAME}:${env.PASSWORD}".bytes.encodeBase64().toString()
-        def base64encoded = sh(script: "echo '${env.USERNAME}:${env.PASSWORD}' | base64'", returnStdout: true)
+        def base64encoded = sh(script: "echo '${env.USERNAME}:${env.PASSWORD}' | base64", returnStdout: true)
 
         def response = httpRequest (
             url: 'https://jira.adeo.no/rest/api/2/issue/',
