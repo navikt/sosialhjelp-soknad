@@ -220,6 +220,9 @@ node("docker") {
     }
 
     deployToNaisEnvironment = sh script: './determine_deploy.sh', returnStdout: true
+    if (deployToNaisEnvironment == "" && env.BRANCH_NAME == 'feature/DIGISOS-618-autodeploy') {
+        deployToNaisEnvironment = "t1"
+    }
 
     echo "${params.DeployTilNexus} deploy til nexus"
     if (isMasterBuild || params.DeployTilNexus == "true" || deployToNaisEnvironment != "") {
