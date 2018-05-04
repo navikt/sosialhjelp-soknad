@@ -29,7 +29,7 @@ def returnOk(message, buildNr) {
     notifyGithub("${project}", "${repoName}", "${commitHash}", 'success', "Build #${buildNr}")
 }
 
-def deployAppNais(app, version, environment, zone, namespace, callback) {
+def deployAppNais(app, version, environment, zone, namespace, contextPath, callback) {
     // Generert:
     def environmentIds = [
         "d1": "18650",
@@ -137,6 +137,7 @@ def deployAppNais(app, version, environment, zone, namespace, callback) {
         ]
 
         def postBodyString = groovy.json.JsonOutput.toJson(postBody)
+/*
         //def base64encoded = "${JIRA_USERNAME}:${JIRA_PASSWORD}".bytes.encodeBase64().toString()
         def base64encoded = sh(script: "echo '${JIRA_USERNAME}:${JIRA_PASSWORD}' | base64", returnStdout: true)
 
@@ -147,7 +148,9 @@ def deployAppNais(app, version, environment, zone, namespace, callback) {
             contentType: 'APPLICATION_JSON',
             httpMode: 'POST',
             requestBody: postBodyString
-        )
+        )*/
+
+        def response = sh(script: """curl -v -s -S --user "${JIRA_USERNAME}:${JIRA_PASSWORD}" -X POST --header "Content-Type: application/json" -d '${postBodyString}' "https://jira.adeo.no/rest/api/2/issue/\"""", returnStdout: true)
 
         def slurper = new groovy.json.JsonSlurperClassic()
         return slurper.parseText(response.content);
@@ -269,7 +272,7 @@ node("docker") {
 //            }
 //        }
         def callback = "${env.BUILD_URL}input/Deploy/"
-        deployAppNais(application, releaseVersion, deployToNaisEnvironment, "sbs", deployToNaisEnvironment, callback) 
+        deployAppNais(application, releaseVersion, deployToNaisEnvironment, "sbs", deployToNaisEnvironment, "soknadsosialhjelp", callback) 
         timeout(time: 60, unit: 'MINUTES') {
             input id: 'deploy', message: "deployer ${deploy.key}, deploy OK?"
         }
