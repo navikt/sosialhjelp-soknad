@@ -6,3 +6,14 @@ export function focusOnFirstElement(el: HTMLElement) {
 		}
 	}
 }
+
+export function skjulToppMeny(): void {
+	const topnav = document.getElementsByClassName("topnavsection-wrapper")[0];
+	topnav.classList.remove("show-topnavsection");
+
+}
+
+export function visToppMeny(): void {
+	const topnav = document.getElementsByClassName("topnavsection-wrapper")[0];
+	topnav.classList.add("show-topnavsection");
+}
