@@ -122,7 +122,7 @@ def deployAppNais(app, version, environment, zone, namespace, callback) {
     def environmentId = environmentIds[environment]
     def zoneId = zoneIds[zone]
 
-    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'domenebruker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '	jiradeploy', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
         def postBody = [
             fields: [
                 project          : [key: 'DEPLOY'],
