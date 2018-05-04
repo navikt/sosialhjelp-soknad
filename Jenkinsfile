@@ -132,12 +132,13 @@ def deployAppNais(app, version, environment, zone, namespace, contextPath, callb
                 customfield_19413: namespace,
                 customfield_19610: [id: zoneId, value: zoneId],
                 customfield_17410: callback,
+                customfield_20310: contextPath,
                 summary          : "Automatisk deploy"
             ]
         ]
 
         def postBodyString = groovy.json.JsonOutput.toJson(postBody)
-/*
+        /*
         //def base64encoded = "${JIRA_USERNAME}:${JIRA_PASSWORD}".bytes.encodeBase64().toString()
         def base64encoded = sh(script: "echo '${JIRA_USERNAME}:${JIRA_PASSWORD}' | base64", returnStdout: true)
 
@@ -152,8 +153,11 @@ def deployAppNais(app, version, environment, zone, namespace, contextPath, callb
 
         def response = sh(script: """curl -v -s -S --user "${JIRA_USERNAME}:${JIRA_PASSWORD}" -X POST --header "Content-Type: application/json" -d '${postBodyString}' "https://jira.adeo.no/rest/api/2/issue/\"""", returnStdout: true)
 
+        /*
         def slurper = new groovy.json.JsonSlurperClassic()
         return slurper.parseText(response.content);
+        */
+        return response;
     }
 }
 
