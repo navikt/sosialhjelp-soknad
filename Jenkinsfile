@@ -161,7 +161,7 @@ def deployAppNais(app, version, environment, zone, namespace, contextPath, callb
     }
 }
 
-node("docker") {
+node("digisos") {
     properties([
             parameters([
                     string(name: 'DeployTilNexus', defaultValue: 'false'),
