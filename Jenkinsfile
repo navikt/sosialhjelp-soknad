@@ -281,7 +281,7 @@ node("digisos") {
 //                notifyFailed("Deploy Nais Failed", e, env.BUILD_URL)
 //            }
 //        }
-        def callback = "${env.BUILD_URL}input/Deploy/"
+        def callback = "${env.BUILD_URL}"
         deployAppNais(application, releaseVersion, deployToNaisEnvironment, "sbs", deployToNaisEnvironment, "soknadsosialhjelp", callback) 
         timeout(time: 60, unit: 'MINUTES') {
             input id: 'deploy', message: "deploy done?"
