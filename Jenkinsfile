@@ -138,25 +138,7 @@ def deployAppNais(app, version, environment, zone, namespace, contextPath, callb
         ]
 
         def postBodyString = groovy.json.JsonOutput.toJson(postBody)
-        /*
-        //def base64encoded = "${JIRA_USERNAME}:${JIRA_PASSWORD}".bytes.encodeBase64().toString()
-        def base64encoded = sh(script: "echo '${JIRA_USERNAME}:${JIRA_PASSWORD}' | base64", returnStdout: true)
-
-        def response = httpRequest (
-            url: 'https://jira.adeo.no/rest/api/2/issue/',
-            customHeaders: [[name: "Authorization", value: "Basic ${base64encoded}"]],
-            consoleLogResponseBody: true,
-            contentType: 'APPLICATION_JSON',
-            httpMode: 'POST',
-            requestBody: postBodyString
-        )*/
-
         def response = sh(script: """curl -v -s -S --user "${JIRA_USERNAME}:${JIRA_PASSWORD}" -X POST --header "Content-Type: application/json" -d '${postBodyString}' "https://jira.adeo.no/rest/api/2/issue/\"""", returnStdout: true)
-
-        /*
-        def slurper = new groovy.json.JsonSlurperClassic()
-        return slurper.parseText(response.content);
-        */
         return response;
     }
 }
@@ -179,14 +161,6 @@ node("digisos") {
         notifyGithub("${project}", "${repoName}", "${commitHash}", 'pending', "Build #${env.BUILD_NUMBER} has started")
 
     }
-
-    /*
-    if (!isMasterBuild) {
-        stage('Merge master') {
-            sh "git merge origin/master"
-        }
-    }
-    */
 
     stage('Set version') {
         pom = readMavenPom file: 'pom.xml'
@@ -235,7 +209,6 @@ node("digisos") {
     if (isMasterBuild || params.DeployTilNexus == "true" || deployToNaisEnvironment != "") {
         stage('Deploy nexus') {
             try {
-                // TODO: Vent med deploy til etter tag, men ta en install.
                 sh "mvn -B deploy -DskipTests -P pipeline"
                 currentBuild.description = "Version: ${releaseVersion}"
             } catch (Exception e) {
@@ -271,17 +244,7 @@ node("digisos") {
     }
 
     if (deployToNaisEnvironment != "") {
-//        stage("Deploy Nais") {
-//            try {
-//                echo "Deploying to ${deployToNaisEnvironment}."
-//                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'domenebruker', usernameVariable: 'domenebrukernavn', passwordVariable: 'domenepassord']]) {
-//                    sh "./nais_deploy.sh '${application}' '${deployToNaisEnvironment}' '${releaseVersion}' '${domenebrukernavn}' '${domenepassord}'"
-//                }
-//            } catch (Exception e) {
-//                notifyFailed("Deploy Nais Failed", e, env.BUILD_URL)
-//            }
-//        }
-        def callback = "${env.BUILD_URL}"
+        def callback = "${env.BUILD_URL}input/Deploy/"
         deployAppNais(application, releaseVersion, deployToNaisEnvironment, "sbs", deployToNaisEnvironment, "soknadsosialhjelp", callback) 
         timeout(time: 60, unit: 'MINUTES') {
             input id: 'deploy', message: "deploy done?"
