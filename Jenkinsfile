@@ -284,7 +284,7 @@ node("digisos") {
         def callback = "${env.BUILD_URL}input/Deploy/"
         deployAppNais(application, releaseVersion, deployToNaisEnvironment, "sbs", deployToNaisEnvironment, "soknadsosialhjelp", callback) 
         timeout(time: 60, unit: 'MINUTES') {
-            input id: 'deploy', message: "deployer ${deploy.key}, deploy OK?"
+            input id: 'deploy', message: "deploy done?"
         }
     }
 }
