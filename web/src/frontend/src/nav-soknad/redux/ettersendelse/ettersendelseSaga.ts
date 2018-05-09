@@ -17,7 +17,7 @@ import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIterator {
 	try {
 		const url = `soknader?ettersendTil=${action.brukerbehandlingId}`;
-		const response = yield call(fetchPost, url, {});
+		const response = yield call(fetchPost, url, JSON.stringify({}));
 		if (response) {
 			yield put(lagEttersendelseOk(response.brukerBehandlingId));
 			yield put(lesEttersendelsesVedlegg(response.brukerBehandlingId));
@@ -86,7 +86,7 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
 	try {
 		yield put({type: EttersendelseActionTypeKeys.ETTERSEND_PENDING});
 		const url = `soknader/${action.brukerbehandlingId}/actions/send`;
-		yield call(fetchPost, url, {});
+		yield call(fetchPost, url, JSON.stringify({}));
 		yield put({type: EttersendelseActionTypeKeys.ETTERSEND_OK});
 	} catch (reason) {
 		yield put(loggFeil("Send ettersendelse feilet: " + reason.toString()));
