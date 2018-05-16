@@ -16,6 +16,7 @@ import {
 import Bosted from "./Bosted";
 import { lesKommuner } from "../../nav-soknad/redux/kommuner/kommuneActions";
 import { NavEnhet } from "../data/kommuner";
+import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
 
 const DocumentTitle = require("react-document-title");
 
@@ -36,6 +37,7 @@ class Start extends React.Component<Props, {}> {
 	}
 
 	componentDidMount() {
+		skjulToppMeny();
 		scrollToTop();
 		this.props.dispatch(resetSoknad());
 		this.props.dispatch(lesKommuner());

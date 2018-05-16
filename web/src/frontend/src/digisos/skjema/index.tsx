@@ -24,6 +24,7 @@ import { Faktum } from "../../nav-soknad/types";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { hentSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import { State } from "../redux/reducers";
+import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
 
 interface OwnProps {
 	match: any;
@@ -45,10 +46,15 @@ interface UrlParams {
 
 type Props = OwnProps & StateProps & RouterProps & DispatchProps;
 class SkjemaRouter extends React.Component<Props, {}> {
+
 	componentWillMount() {
 		if (this.props.brukerbehandlingId && this.props.fakta.length <= 1) {
 			this.props.dispatch(hentSoknad(this.props.brukerbehandlingId));
 		}
+	}
+
+	componentDidMount() {
+		skjulToppMeny();
 	}
 
 	render() {
