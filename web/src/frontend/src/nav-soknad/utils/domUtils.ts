@@ -8,11 +8,15 @@ export function focusOnFirstElement(el: HTMLElement) {
 }
 
 export function skjulToppMeny(): void {
-	let topnav = document.getElementsByClassName("topnavsection-wrapper")[0];
-	topnav.classList.add("hidden-topnavsection");
+	const topnav = document.getElementsByClassName("topnavsection-wrapper");
+	if (topnav && topnav[0]) {
+		topnav[0].classList.add("hidden-topnavsection");
+	}
 }
 
 export function visToppMeny(): void {
-	let topnav = document.getElementsByClassName("topnavsection-wrapper")[0];
-	topnav.classList.remove("hidden-topnavsection");
+	const topnav = document.getElementsByClassName("topnavsection-wrapper");
+	if (topnav && topnav[0]) {
+		topnav[0].classList.remove("hidden-topnavsection");
+	}
 }
