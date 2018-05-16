@@ -5,7 +5,7 @@ import TallFaktum, { Props } from "../typedInput/TallFaktum";
  * greit å ha en hook for senere funksjonalitet
  */
 const BelopFaktum: React.StatelessComponent<Props> = (props: Props) => {
-	return <TallFaktum {...props} />;
+	return <TallFaktum kunHeltall={true} {...props} />;
 };
 
 export default BelopFaktum;
