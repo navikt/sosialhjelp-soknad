@@ -7,18 +7,32 @@ import {
 	faktumComponent,
 	InjectedFaktumComponentProps
 } from "./FaktumComponent";
+import { CheckboxFaktumTekst } from "../types/index";
 
 interface OwnProps {
 	value: string;
 	faktumKey: string;
 	disabled?: boolean;
 	id?: string;
+	label?: any;
 }
 
 class RadioFaktum extends React.Component<
 	OwnProps & InjectedFaktumComponentProps & InjectedIntlProps,
 	{}
 > {
+	determineLabel(id: string, faktumKey: string, tekster: CheckboxFaktumTekst, value: string) {
+		if (this.props.label != null) {
+			return this.props.label;
+		}
+		return <LabelMedHjelpetekst
+			labelId={id + "_label"}
+			id={`${faktumKey}.${value}`}
+			label={tekster.label}
+			hjelpetekst={tekster.hjelpetekst}
+		/>;
+	}
+
 	render() {
 		const { faktumKey, value, disabled, property, required, intl } = this.props;
 		const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
@@ -38,12 +52,7 @@ class RadioFaktum extends React.Component<
 				onChange={(evt: any) =>
 					this.props.setFaktumVerdiOgLagre(value, property)}
 				label={
-					<LabelMedHjelpetekst
-						labelId={id + "_label"}
-						id={`${faktumKey}.${value}`}
-						label={tekster.label}
-						hjelpetekst={tekster.hjelpetekst}
-					/>
+					this.determineLabel(id, faktumKey, tekster, value)
 				}
 			/>
 		);

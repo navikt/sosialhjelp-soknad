@@ -20,6 +20,7 @@ import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
 import Personalia from "./tps/Personalia";
 import Adresseinfo from "./tps/Adresseinfo";
 import Telefoninfo from "./tps/Telefoninfo";
+import Oppholdsadresse from "./tps/Oppholdsadresse";
 import Bankinformasjon from "./tps/Bankinformasjon";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import {
@@ -44,6 +45,9 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 				<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
 					<SporsmalFaktum faktumKey="kontakt.system.personalia" style="system">
 						<Personalia fakta={this.props.fakta} />
+					</SporsmalFaktum>
+					<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse" style="system">
+						<Oppholdsadresse fakta={this.props.fakta} />
 					</SporsmalFaktum>
 					<SporsmalFaktum faktumKey="kontakt.system.kontaktinfo" style="system">
 						<Adresseinfo fakta={this.props.fakta} />
