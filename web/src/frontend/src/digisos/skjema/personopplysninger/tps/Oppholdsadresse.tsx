@@ -17,40 +17,62 @@ interface Props {
 	fakta: Faktum[];
 }
 
+interface AdresseProperties {
+	kilde?: string;
+}
+
 const Oppholdsadresse: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	fakta,
 	intl
 }) => {
+	const folkeregistrertAdresseFaktum = finnFaktum("kontakt.system.folkeregistrert.adresse", fakta);
 	const adresseFaktum = finnFaktum("kontakt.system.adresse", fakta);
 
-	const getProperty = (key: string): ElementProps => ({
+	const getProperty = (faktum: Faktum, key: string): ElementProps => ({
 		tittel: intl.formatMessage({
 			id: "kontakt.system.adresse." + key + ".label"
 		}),
-		verdi: adresseFaktum.properties[key]
+		verdi: faktum.properties[key]
 	});
 
-	/*
-			<RadioFaktum id="oppholdsadresse_folkeregistrert" faktumKey="kontakt.system.oppholdsadresse.valg" value="folkeregistrert" />
-			<RadioFaktum id="oppholdsadresse_midlertidig" faktumKey="kontakt.system.oppholdsadresse.valg" value="midlertidig" />
-	*/
+	const visAdresse = (faktum: Faktum) => {
+		return <Detaljeliste>
+				<DetaljelisteElement {...getProperty(faktum, "adresse")} />
+				<DetaljelisteElement {...getProperty(faktum, "postnummer")} />
+				<DetaljelisteElement {...getProperty(faktum, "poststed")} />
+				<DetaljelisteElement {...getProperty(faktum, "eiendomsnavn")} />
+				<DetaljelisteElement {...getProperty(faktum, "gaardsnummer")} />
+				<DetaljelisteElement {...getProperty(faktum, "bruksnummer")} />
+				<DetaljelisteElement {...getProperty(faktum, "festenummer")} />
+				<DetaljelisteElement {...getProperty(faktum, "seksjonsnummer")} />
+				<DetaljelisteElement {...getProperty(faktum, "undernummer")} />
+			</Detaljeliste>;
+	};
 
 	return (
 		<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse.valg">
-			<RadioFaktum id="oppholdsadresse_system" faktumKey="kontakt.system.oppholdsadresse.valg"
-					value="system" label={
-						<Detaljeliste>
-							<DetaljelisteElement {...getProperty("adresse")} />
-							<DetaljelisteElement {...getProperty("postnummer")} />
-							<DetaljelisteElement {...getProperty("poststed")} />
-							<DetaljelisteElement {...getProperty("eiendomsnavn")} />
-							<DetaljelisteElement {...getProperty("gaardsnummer")} />
-							<DetaljelisteElement {...getProperty("bruksnummer")} />
-							<DetaljelisteElement {...getProperty("festenummer")} />
-							<DetaljelisteElement {...getProperty("seksjonsnummer")} />
-							<DetaljelisteElement {...getProperty("undernummer")} />
-						</Detaljeliste>
-					} />
+			<RadioFaktum id="oppholdsadresse_folkeregistrert"
+				faktumKey="kontakt.system.oppholdsadresse.valg"
+				value="folkeregistrert"
+				label={
+					<div>
+						<div style={{fontWeight: 600}}>Folkeregistrert adresse:</div>
+						{visAdresse(folkeregistrertAdresseFaktum)}
+					</div>
+				}
+			/>
+			{(adresseFaktum.properties as AdresseProperties).kilde !== "folkeregister" &&
+				<RadioFaktum id="oppholdsadresse_midlertidig"
+					faktumKey="kontakt.system.oppholdsadresse.valg"
+					value="midlertidig"
+					label={
+						<div>
+							<div style={{fontWeight: 600}}>Midlertidig adresse:</div>
+							{visAdresse(adresseFaktum)}
+						</div>
+					}
+				/>
+			}
 			<RadioFaktum id="oppholdsadresse_soknad" faktumKey="kontakt.system.oppholdsadresse.valg" value="soknad" />
 			<Underskjema
 				visible={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "soknad"}
