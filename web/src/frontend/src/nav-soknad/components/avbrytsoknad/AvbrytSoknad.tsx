@@ -8,6 +8,7 @@ import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import { DispatchProps, SoknadAppState } from "../../redux/reduxTypes";
 import { AVBRYT_DESTINASJON } from "../../redux/soknad/soknadActionTypes";
+import { navigerTilDittNav } from "../../redux/navigasjon/navigasjonActions";
 
 interface StateProps {
 	avbrytDialogSynlig: boolean;
@@ -19,14 +20,12 @@ type Props = StateProps & InjectedIntlProps & DispatchProps;
 
 const TEKSTNOKLER_VANLIG = {
 	overskrift: "avbryt.overskrift",
-	tekst: "avbryt.tekst",
-	bekreft: "avbryt.uthevet.tekst"
+	tekst: "avbryt.forklaring"
 };
 
 const TEKSTNOKLER_NAVIGASJON = {
 	overskrift: "avbryt.navigasjon.overskrift",
-	tekst: "avbryt.navigasjon.tekst",
-	bekreft: "avbryt.navigasjon.uthevet.tekst"
+	tekst: "avbryt.navigasjon.forklaring"
 };
 
 class AvbrytSoknad extends React.Component<Props, {}> {
@@ -40,6 +39,10 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 		this.props.dispatch(fortsettSoknad());
 	}
 
+	onFortsettSenere() {
+		this.props.dispatch(navigerTilDittNav());
+	}
+
 	render() {
 		const tekst = {
 			...this.props.destinasjon === "MINSIDE"
@@ -51,8 +54,9 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 			<NavFrontendModal
 				isOpen={this.props.avbrytDialogSynlig || false}
 				contentLabel={this.props.intl.formatMessage({ id: "avbryt.avbryt" })}
-				closeButton={false}
-				onRequestClose={() => null}
+				closeButton={true}
+				onRequestClose={() => this.onFortsett()}
+				shouldCloseOnOverlayClick={true}
 			>
 				<div className="avbrytmodal">
 					<div className="avbrytmodal__infoikon_wrapper">
@@ -70,19 +74,15 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 					<Normaltekst className="blokk-xxs avbrytmodal__tekst">
 						<FormattedMessage id={tekst.tekst} />
 					</Normaltekst>
-					<Normaltekst className="blokk-xxs avbrytmodal__uthevet_tekst">
-						<FormattedMessage id={tekst.bekreft} />
-					</Normaltekst>
 					<div className="timeoutbox__knapperad">
-						<Knapp onClick={() => this.onAvbryt()} type="standard">
-							<FormattedMessage id={"avbryt.ja"} />
-						</Knapp>
 						<Hovedknapp
-							onClick={() => this.onFortsett()}
-							className="avbrytmodal__neiknapp"
+							onClick={() => this.onFortsettSenere()}
 						>
-							<FormattedMessage id={"avbryt.nei"} />
+							<FormattedMessage id={"avbryt.fortsettsenere"} />
 						</Hovedknapp>
+						<Knapp onClick={() => this.onAvbryt()} type="standard" className="avbrytmodal__slettknapp">
+							<FormattedMessage id={"avbryt.slett"} />
+						</Knapp>
 					</div>
 				</div>
 			</NavFrontendModal>

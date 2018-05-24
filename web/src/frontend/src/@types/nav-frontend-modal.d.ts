@@ -7,6 +7,7 @@ declare module "nav-frontend-modal" {
 		style?: object;
 		contentLabel?: string;
 		closeButton?: boolean;
+		shouldCloseOnOverlayClick?: boolean;
 	}
 	const t: new (props: NavFrontendModal) => React.Component<NavFrontendModal, any>;
 	export default t;
