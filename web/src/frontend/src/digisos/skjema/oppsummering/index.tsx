@@ -9,7 +9,7 @@ import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadCont
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import {
 	hentOppsummering,
-	bekreftOppsummering, setVisBekreftInfo
+	bekreftOppsummering
 } from "../../../nav-soknad/redux/oppsummering/oppsummeringActions";
 import { Oppsummering } from "../../../nav-soknad/redux/oppsummering/oppsummeringTypes";
 
@@ -111,16 +111,6 @@ class OppsummeringView extends React.Component<Props, {}> {
 						<div className={classNames}>
 							<p style={{marginTop: "0"}}>
 								<FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger"/>
-								&nbsp;
-								<a
-									className="lenke"
-									onClick={(event: React.MouseEvent<HTMLElement>) => {
-										this.props.dispatch(setVisBekreftInfo(true));
-										event.preventDefault();
-									}
-								}>
-									<FormattedMessage id="soknadsosialhjelp.oppsummering.infoSamtykke"/>
-								</a>.
 							</p>
 
 							<Checkbox
