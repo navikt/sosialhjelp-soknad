@@ -21,10 +21,9 @@ import { Horten } from "../data/kommuner";
 import IkkeTilgang from "./IkkeTilgang";
 import { TilgangSperrekode } from "../../nav-soknad/redux/tilgang/tilgangTypes";
 import {
-	bekreftSamtykke, setVisSamtykkeInfo, visSamtykkeMangler
+	setVisSamtykkeInfo
 } from "../../nav-soknad/redux/init/initActions";
 import SamtykkeInfoForsidenModal from "./samtykkeInfoForsidenModal";
-import { Checkbox } from "nav-frontend-skjema";
 import { lesKommuner } from "../../nav-soknad/redux/kommuner/kommuneActions";
 import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
 
@@ -34,8 +33,6 @@ interface StateProps {
 	soknadErLive: string;
 	startSoknadPending: boolean;
 	visVelgBosted: boolean;
-	bekreftet: boolean;
-	visSamtykkeMangler: boolean;
 }
 
 type Props = StateProps & InjectedIntlProps & RouterProps & DispatchProps;
@@ -47,14 +44,10 @@ class Informasjon extends React.Component<Props, {}> {
 	}
 
 	startSoknad() {
-		if (this.props.bekreftet === true) {
-			this.props.dispatch(lesKommuner());
-			this.props.dispatch(
-				tilBostedEllerStartSoknad(this.props.visVelgBosted ? null : Horten)
-			);
-		} else {
-			this.props.dispatch(visSamtykkeMangler(true));
-		}
+		this.props.dispatch(lesKommuner());
+		this.props.dispatch(
+			tilBostedEllerStartSoknad(this.props.visVelgBosted ? null : Horten)
+		);
 	}
 
 	render() {
@@ -67,14 +60,7 @@ class Informasjon extends React.Component<Props, {}> {
 		} = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 
-		const bekreftOpplysning: string = intl.formatMessage({
-			id: "soknadsosialhjelp.forstesiden.bekreftOpplysninger"
-		});
-
-		let classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
-		if (this.props.visSamtykkeMangler) {
-			classNames += " skjema-oppsummering__bekreft___feil";
-		}
+		const classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
 
 		return (
 			<div>
@@ -116,21 +102,6 @@ class Informasjon extends React.Component<Props, {}> {
 											<FormattedMessage id="soknadsosialhjelp.forstesiden.rettigheterPlikterLinktekst"/>
 										</a>
 									</p>
-									<Checkbox
-										label={bekreftOpplysning}
-										id="samtykke_checkbox"
-										checked={this.props.bekreftet}
-										feil={
-											this.props.visSamtykkeMangler
-												? {
-													feilmelding: intl.formatHTMLMessage({
-														id: "oppsummering.feilmelding.bekreftmangler"
-													})
-												}
-												: null
-										}
-										onChange={() => this.props.dispatch(bekreftSamtykke())}
-									/>
 								</div>
 							</div>
 							<SamtykkeInfoForsidenModal/>
@@ -164,7 +135,5 @@ export default connect((state: State) => ({
 	soknadErLive: state.featuretoggles.data[FeatureToggles.soknadErLive],
 	visVelgBosted:
 		state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
-	startSoknadPending: state.soknad.startSoknadPending,
-	bekreftet: state.init.bekreftSamtykkeInfo,
-	visSamtykkeMangler: state.init.visSamtykkeMangler
+	startSoknadPending: state.soknad.startSoknadPending
 }))(injectIntl(Informasjon));

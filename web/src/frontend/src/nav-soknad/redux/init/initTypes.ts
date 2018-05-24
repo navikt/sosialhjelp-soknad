@@ -6,17 +6,13 @@ export enum InitActionTypeKeys {
 	OK = "init/OK",
 	FEILET = "init/FEILET",
 	SET_VIS_SAMTYKKE_INFO = "init/SET_VIS_SAMTYKKE_INFO",
-	SET_VIS_SAMTYKKE_MANGLER = "init/SET_VIS_SAMTYKKE_MANGLER",
-	BEKREFT_SAMTYKKE = "init/BEKREFT_SAMTYKKE"
 }
 
 export type InitActionTypes =
 	StartAction
 	| FerdigAction
 	| FeiletAction
-	| VisSamtykkeInfoAction
-	| VisSamtykkeManglerAction
-	| BekreftSamtykkeAction;
+	| VisSamtykkeInfoAction;
 
 interface StartAction {
 	type: InitActionTypeKeys.START;
@@ -35,17 +31,7 @@ interface VisSamtykkeInfoAction {
 	visSamtykkeInfo: boolean;
 }
 
-interface VisSamtykkeManglerAction {
-	type: InitActionTypeKeys.SET_VIS_SAMTYKKE_MANGLER;
-	visSamtykkeMangler: boolean;
-}
-
-interface BekreftSamtykkeAction {
-	type: InitActionTypeKeys.BEKREFT_SAMTYKKE;
-}
 export interface InitState {
 	restStatus: REST_STATUS;
 	visSamtykkeInfo: boolean;
-	bekreftSamtykkeInfo: boolean;
-	visSamtykkeMangler: boolean;
 }
