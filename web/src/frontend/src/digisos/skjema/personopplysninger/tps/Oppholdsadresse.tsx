@@ -19,6 +19,9 @@ interface Props {
 
 interface AdresseProperties {
 	kilde?: string;
+	gaardsnummer?: string;
+	postnummer?: string;
+	poststed?: string;
 }
 
 const Oppholdsadresse: React.StatelessComponent<Props & InjectedIntlProps> = ({
@@ -28,19 +31,37 @@ const Oppholdsadresse: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	const folkeregistrertAdresseFaktum = finnFaktum("kontakt.system.folkeregistrert.adresse", fakta);
 	const adresseFaktum = finnFaktum("kontakt.system.adresse", fakta);
 
-	const getProperty = (faktum: Faktum, key: string): ElementProps => ({
-		tittel: intl.formatMessage({
-			id: "kontakt.system.adresse." + key + ".label"
-		}),
-		verdi: faktum.properties[key]
-	});
+	const getProperty = (faktum: Faktum, key: string): ElementProps => {
+		if (faktum.properties[key] == null) {
+			return null;
+		}
+		return ({
+			tittel: intl.formatMessage({
+				id: "kontakt.system.adresse." + key + ".label"
+			}),
+			verdi: faktum.properties[key]
+		});
+	};
 
+	const getPropertyWithoutName = (faktum: Faktum, key: string) => {
+		if (faktum.properties[key] == null) {
+			return null;
+		}
+		return <li className="detaljeliste__element">{faktum.properties[key]}</li>;
+	};
+
+	/* <DetaljelisteElement {...getProperty(faktum, "adresse")} /> */
 	const visAdresse = (faktum: Faktum) => {
+		const adresseProperties = faktum.properties as AdresseProperties;
 		return <Detaljeliste>
-				<DetaljelisteElement {...getProperty(faktum, "adresse")} />
-				<DetaljelisteElement {...getProperty(faktum, "postnummer")} />
-				<DetaljelisteElement {...getProperty(faktum, "poststed")} />
+				{getPropertyWithoutName(faktum, "adresse")}
+				{adresseProperties.postnummer != null && adresseProperties.poststed != null &&
+					<li className="detaljeliste__element">{adresseProperties.postnummer} {adresseProperties.poststed}</li>
+				}
 				<DetaljelisteElement {...getProperty(faktum, "eiendomsnavn")} />
+				{adresseProperties.gaardsnummer != null &&
+					<DetaljelisteElement {...getProperty(faktum, "kommunenummer")} />
+				}
 				<DetaljelisteElement {...getProperty(faktum, "gaardsnummer")} />
 				<DetaljelisteElement {...getProperty(faktum, "bruksnummer")} />
 				<DetaljelisteElement {...getProperty(faktum, "festenummer")} />
@@ -51,17 +72,20 @@ const Oppholdsadresse: React.StatelessComponent<Props & InjectedIntlProps> = ({
 
 	return (
 		<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse.valg">
-			<RadioFaktum id="oppholdsadresse_folkeregistrert"
-				faktumKey="kontakt.system.oppholdsadresse.valg"
-				value="folkeregistrert"
-				label={
-					<div>
-						<div style={{fontWeight: 600}}>Folkeregistrert adresse:</div>
-						{visAdresse(folkeregistrertAdresseFaktum)}
-					</div>
-				}
-			/>
-			{(adresseFaktum.properties as AdresseProperties).kilde !== "folkeregister" &&
+			{Object.getOwnPropertyNames(folkeregistrertAdresseFaktum.properties).length !== 0 &&
+				<RadioFaktum id="oppholdsadresse_folkeregistrert"
+					faktumKey="kontakt.system.oppholdsadresse.valg"
+					value="folkeregistrert"
+					label={
+						<div>
+							<div style={{fontWeight: 600}}>Folkeregistrert adresse:</div>
+							{visAdresse(folkeregistrertAdresseFaktum)}
+						</div>
+					}
+				/>
+			}
+			{Object.getOwnPropertyNames(adresseFaktum.properties).length !== 0
+				&& (adresseFaktum.properties as AdresseProperties).kilde !== "folkeregister" &&
 				<RadioFaktum id="oppholdsadresse_midlertidig"
 					faktumKey="kontakt.system.oppholdsadresse.valg"
 					value="midlertidig"
