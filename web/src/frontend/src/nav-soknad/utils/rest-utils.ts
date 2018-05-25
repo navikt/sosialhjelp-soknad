@@ -48,11 +48,11 @@ enum RequestMethod {
 	DELETE = "DELETE"
 }
 
-const getHeaders = () => [
-	["Content-Type", "application/json"],
-	["X-XSRF-TOKEN", getCookie("XSRF-TOKEN-SOKNAD-API")],
-	["accept", "application/json, text/plain, */*"]
-];
+const getHeaders = () => {return new Headers({
+	"Content-Type": "application/json",
+	"X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
+	"accept": "application/json, text/plain, */*"
+})};
 
 const serverRequest = (method: string, urlPath: string, body: string) => {
 	const OPTIONS: RequestInit = {
@@ -89,7 +89,7 @@ export function fetchDelete(urlPath: string) {
 
 export function fetchOppsummering(urlPath: string) {
 	const OPTIONS: RequestInit = {
-		headers: [["accept", "application/vnd.oppsummering+html"]],
+		headers: new Headers({"accept": "application/vnd.oppsummering+html"}),
 		method: "GET",
 		credentials: "same-origin"
 	};
@@ -102,11 +102,11 @@ export function fetchOppsummering(urlPath: string) {
 
 export function fetchKvittering(urlPath: string) {
 	const OPTIONS: RequestInit = {
-		headers: [
-			["accept", "application/vnd.kvitteringforinnsendtsoknad+json"],
-			["Content-Type", "application/json"],
-			["X-XSRF-TOKEN", getCookie("XSRF-TOKEN-SOKNAD-API")]
-		],
+		headers: new Headers({
+			"accept": "application/vnd.kvitteringforinnsendtsoknad+json",
+			"Content-Type": "application/json",
+			"X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API")
+		}),
 		method: "GET",
 		credentials: "same-origin"
 	};
@@ -130,10 +130,10 @@ export function fetchFeatureToggles() {
 
 export function fetchUpload(urlPath: string, formData: FormData) {
 	const OPTIONS: RequestInit = {
-		headers: [
-			["X-XSRF-TOKEN", getCookie("XSRF-TOKEN-SOKNAD-API")],
-			["accept", "application/json, text/plain, */*"]
-		],
+		headers: new Headers({
+			"X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
+			"accept": "application/json, text/plain, */*"
+		}),
 		method: "POST",
 		credentials: "same-origin",
 		body: formData

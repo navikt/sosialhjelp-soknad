@@ -52,9 +52,7 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 					<SporsmalFaktum faktumKey="kontakt.system.kontaktinfo" style="system">
 						<Adresseinfo fakta={this.props.fakta} />
 					</SporsmalFaktum>
-					<SporsmalFaktum faktumKey="kontakt.system.telefoninfo" style="system">
-						<Telefoninfo fakta={this.props.fakta} />
-					</SporsmalFaktum>
+					<Telefoninfo fakta={this.props.fakta} />
 					<Bankinformasjon fakta={this.props.fakta} onHarIkkeKontonummer={(verdi: string) => {
 						this.oppdaterHarIkkeKontonummer(this.props.fakta, verdi, this.props.dispatch);
 					}} />

@@ -28,20 +28,22 @@ const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	}
 
 	return (
-		<SysteminfoFaktum
-			faktumKey="kontakt.telefon.brukerendrettoggle"
-			skjema={<Skjema />}
-			endreLabel={intl.formatMessage({
-				id: "kontakt.system.telefon.endreknapp.label"
-			})}
-		>
-			<Detaljeliste>
-				<DetaljelisteElement
-					tittel={<FormattedMessage id="kontakt.system.telefon.label" />}
-					verdi={getFaktumVerdi(fakta, "kontakt.system.telefon")}
-				/>
-			</Detaljeliste>
-		</SysteminfoFaktum>
+		<SporsmalFaktum faktumKey="kontakt.system.telefoninfo" style="system">
+			<SysteminfoFaktum
+				faktumKey="kontakt.telefon.brukerendrettoggle"
+				skjema={<Skjema />}
+				endreLabel={intl.formatMessage({
+					id: "kontakt.system.telefon.endreknapp.label"
+				})}
+			>
+				<Detaljeliste>
+					<DetaljelisteElement
+						tittel={<FormattedMessage id="kontakt.system.telefon.label" />}
+						verdi={getFaktumVerdi(fakta, "kontakt.system.telefon")}
+					/>
+				</Detaljeliste>
+			</SysteminfoFaktum>
+		</SporsmalFaktum>
 	);
 };
 
