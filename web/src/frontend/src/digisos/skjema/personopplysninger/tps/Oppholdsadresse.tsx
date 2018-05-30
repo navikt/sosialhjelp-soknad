@@ -13,8 +13,8 @@ import Detaljeliste, {
 } from "../../../../nav-soknad/components/detaljeliste";
 import { finnFaktum } from "../../../../nav-soknad/utils";
 import NavAutocomplete from "../../../../nav-soknad/components/navAutocomplete/navAutocomplete";
-import {connect} from "react-redux";
-import {State} from "../../../redux/reducers";
+import { connect } from "react-redux";
+import { State } from "../../../redux/reducers";
 
 interface Props {
 	fakta: Faktum[];
@@ -114,7 +114,7 @@ const Oppholdsadresse: React.StatelessComponent<Props & InjectedIntlProps> = ({
 
 export default connect((state: State, props: any) => {
 	return {
-		soknadRestStatus: state.soknad.restStatus,
+		adresseliste: state.soknad.restStatus,
 		startSoknadPending: state.soknad.startSoknadPending,
 		faktaRestStatus: state.fakta.restStatus,
 		navEnheter: state.kommuner.data,
