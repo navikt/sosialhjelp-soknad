@@ -1,0 +1,41 @@
+.navAutcomplete input {
+
+  padding: 0.45rem;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid #B7B1A9;
+  box-sizing: border-box;
+
+  &:focus {
+    .focus-outline();
+  }
+
+  &:hover {
+    border-color: #0067C5;
+  }
+}
+
+.menu {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid @navGra40;
+  z-index: 1;
+}
+
+.item {
+  padding: 2px 6px;
+  cursor: default;
+  background-color: white;
+}
+
+.item-highlighted {
+  color: white;
+  background-color: @navGronnLighten60;
+}
+
+.item-header {
+  background-color: #eeeeee;
+  color: #454545;
+  font-weight: bold;
+}

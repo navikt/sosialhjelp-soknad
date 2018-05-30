@@ -12,6 +12,9 @@ import Detaljeliste, {
 	DetaljelisteElement
 } from "../../../../nav-soknad/components/detaljeliste";
 import { finnFaktum } from "../../../../nav-soknad/utils";
+import NavAutocomplete from "../../../../nav-soknad/components/navAutocomplete/navAutocomplete";
+import {connect} from "react-redux";
+import {State} from "../../../redux/reducers";
 
 interface Props {
 	fakta: Faktum[];
@@ -102,11 +105,21 @@ const Oppholdsadresse: React.StatelessComponent<Props & InjectedIntlProps> = ({
 				visible={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "soknad"}
 			>
 				<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse.soknad">
-					<div>TODO: Legg til søkefelt.</div>
+					<NavAutocomplete/>
 				</SporsmalFaktum>
 			</Underskjema>
 		</SporsmalFaktum>
 	);
 };
 
-export default injectIntl(Oppholdsadresse);
+export default connect((state: State, props: any) => {
+	return {
+		soknadRestStatus: state.soknad.restStatus,
+		startSoknadPending: state.soknad.startSoknadPending,
+		faktaRestStatus: state.fakta.restStatus,
+		navEnheter: state.kommuner.data,
+		kommunerRestStatus: state.kommuner.restStatus
+	};
+})(injectIntl(Oppholdsadresse));
+
+// export default injectIntl(Oppholdsadresse);
