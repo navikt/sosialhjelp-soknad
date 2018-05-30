@@ -46,9 +46,7 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 					<SporsmalFaktum faktumKey="kontakt.system.personalia" style="system">
 						<Personalia fakta={this.props.fakta} />
 					</SporsmalFaktum>
-					<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse" style="system">
-						<Oppholdsadresse fakta={this.props.fakta} />
-					</SporsmalFaktum>
+					<Oppholdsadresse fakta={this.props.fakta} />
 					<SporsmalFaktum faktumKey="kontakt.system.kontaktinfo" style="system">
 						<Adresseinfo fakta={this.props.fakta} />
 					</SporsmalFaktum>

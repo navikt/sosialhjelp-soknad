@@ -15,6 +15,8 @@ import { finnFaktum } from "../../../../nav-soknad/utils";
 import NavAutocomplete from "../../../../nav-soknad/components/navAutocomplete/navAutocomplete";
 import { connect } from "react-redux";
 import { State } from "../../../redux/reducers";
+import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
+import Informasjonspanel from "../../../../nav-soknad/components/informasjonspanel";
 
 interface Props {
 	fakta: Faktum[];
@@ -73,43 +75,70 @@ const Oppholdsadresse: React.StatelessComponent<Props & InjectedIntlProps> = ({
 			</Detaljeliste>;
 	};
 
-	return (
-		<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse.valg">
-			{Object.getOwnPropertyNames(folkeregistrertAdresseFaktum.properties).length !== 0 &&
-				<RadioFaktum id="oppholdsadresse_folkeregistrert"
-					faktumKey="kontakt.system.oppholdsadresse.valg"
-					value="folkeregistrert"
-					label={
-						<div>
-							<div style={{fontWeight: 600}}>Folkeregistrert adresse:</div>
-							{visAdresse(folkeregistrertAdresseFaktum)}
-						</div>
+	const NavKontorInformasjon = (props: {children: any, style?: string}) => {
+		const faktum = finnFaktum("kontakt.system.oppholdsadresse.valg", fakta);
+		if (faktum.value == null) {
+			return null;
+		}
+		if (faktum.value === "soknad") {
+			return null;
+		}
+
+		const ikon = (props.style === "feil") ? "konvolutt-feil.svg" : "konvolutt.svg";
+		return (
+			<Informasjonspanel style={props.style} icon={(<img src={"/soknadsosialhjelp/statisk/bilder/" + ikon} />)}>
+				{props.children}
+			</Informasjonspanel>
+		);
+	};
+
+	return (<div>
+		<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse" style="system">
+			<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse.valg"
+				validerFunc={[(value) => {
+					if (value == null) {
+						return ValideringActionKey.PAKREVD;
 					}
-				/>
-			}
-			{Object.getOwnPropertyNames(adresseFaktum.properties).length !== 0
-				&& (adresseFaktum.properties as AdresseProperties).kilde !== "folkeregister" &&
-				<RadioFaktum id="oppholdsadresse_midlertidig"
-					faktumKey="kontakt.system.oppholdsadresse.valg"
-					value="midlertidig"
-					label={
-						<div>
-							<div style={{fontWeight: 600}}>Midlertidig adresse:</div>
-							{visAdresse(adresseFaktum)}
-						</div>
-					}
-				/>
-			}
-			<RadioFaktum id="oppholdsadresse_soknad" faktumKey="kontakt.system.oppholdsadresse.valg" value="soknad" />
-			<Underskjema
-				visible={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "soknad"}
+					return null;
+				}]}
 			>
-				<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse.soknad">
-					<NavAutocomplete/>
-				</SporsmalFaktum>
-			</Underskjema>
+				{Object.getOwnPropertyNames(folkeregistrertAdresseFaktum.properties).length !== 0 &&
+					<RadioFaktum id="oppholdsadresse_folkeregistrert"
+						faktumKey="kontakt.system.oppholdsadresse.valg"
+						value="folkeregistrert"
+						label={
+							<div>
+								<div className="detaljeliste__element" style={{fontWeight: 600}}>Folkeregistrert adresse:</div>
+								{visAdresse(folkeregistrertAdresseFaktum)}
+							</div>
+						}
+					/>
+				}
+				{Object.getOwnPropertyNames(adresseFaktum.properties).length !== 0
+					&& (adresseFaktum.properties as AdresseProperties).kilde !== "folkeregister" &&
+					<RadioFaktum id="oppholdsadresse_midlertidig"
+						faktumKey="kontakt.system.oppholdsadresse.valg"
+						value="midlertidig"
+						label={
+							<div>
+								<div style={{fontWeight: 600}}>Midlertidig adresse:</div>
+								{visAdresse(adresseFaktum)}
+							</div>
+						}
+					/>
+				}
+				<RadioFaktum id="oppholdsadresse_soknad" faktumKey="kontakt.system.oppholdsadresse.valg" value="soknad" />
+				<Underskjema
+					visible={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "soknad"}
+				>
+					<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse.soknad">
+						<NavAutocomplete/>
+					</SporsmalFaktum>
+				</Underskjema>
+			</SporsmalFaktum>
 		</SporsmalFaktum>
-	);
+		<NavKontorInformasjon style="feil">TODO: Søknaden sendes til Oslo kommune</NavKontorInformasjon>
+	</div>);
 };
 
 export default connect((state: State, props: any) => {
