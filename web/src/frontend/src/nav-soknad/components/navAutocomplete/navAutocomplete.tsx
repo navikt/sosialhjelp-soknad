@@ -1,13 +1,43 @@
 import * as React from "react";
 import { fetchToJson } from "../../utils/rest-utils";
+import Icon from "nav-frontend-ikoner-assets";
 
 // import { lesAdresser } from "../../nav-soknad/redux/kommuner/kommuneActions";
+
+function setCaretPosition(ctrl: any, pos: number) {
+	// Modern browsers
+	if (ctrl.setSelectionRange) {
+		ctrl.focus();
+		ctrl.setSelectionRange(pos, pos);
+
+		// IE8 and below
+	} else if (ctrl.createTextRange) {
+		const range = ctrl.createTextRange();
+		range.collapse(true);
+		range.moveEnd("character", pos);
+		range.moveStart("character", pos);
+		range.select();
+	}
+}
 
 const Autocomplete = require("react-autocomplete");
 
 interface StateProps {
 	value: string;
 	adresser: any[];
+	adresserWithId: any[];
+	valueIsValid: undefined | false | true;
+	caretPosition: number;
+	adresseObject: undefined | {
+		"adresse": null | string,
+		"kommunenummer": null | string,
+		"kommunenavn": null | string,
+		"postnummer": null | string,
+		"poststed": null | string,
+		"geografiskTilknytning":  null | string,
+		"gatekode":  null | string,
+		"bydel":  null | string,
+	};
 }
 
 class NavAutocomplete extends React.Component<{}, StateProps> {
@@ -16,15 +46,26 @@ class NavAutocomplete extends React.Component<{}, StateProps> {
 		super(props);
 		this.state = {
 			value: "",
-			adresser: []
+			caretPosition: 0,
+			adresseObject: {
+				"adresse": null,
+				"kommunenummer": null,
+				"kommunenavn": null,
+				"postnummer": null,
+				"poststed": null,
+				"geografiskTilknytning": null,
+				"gatekode": null,
+				"bydel": null
+			},
+			adresser: [],
+			adresserWithId: [],
+			valueIsValid: undefined,
 		};
 	}
 
 	matchStateToTerm(state: any, value: any) {
 		return (
 			state.adresse.toLowerCase().indexOf(value.toLowerCase()) !== -1
-			// ||
-			// state.abbr.toLowerCase().indexOf(value.toLowerCase()) !== -1
 		);
 	}
 
@@ -40,71 +81,75 @@ class NavAutocomplete extends React.Component<{}, StateProps> {
 		return aLower < bLower ? -1 : 1;
 	}
 
-	hentAdresser() {
-		return [
-			{
-				"adresse": "SANNERGATA",
-				"kommunenummer": "0216",
-				"kommunenavn": "Nesodden",
-				"postnummer": null,
-				"poststed": null,
-				"geografiskTilknytning": "0216",
-				"gatekode": "02081",
-				"bydel": null
-			},
-			{
-				"adresse": "SANNERGATA",
-				"kommunenummer": "0403",
-				"kommunenavn": "Hamar",
-				"postnummer": null,
-				"poststed": null,
-				"geografiskTilknytning": "0403",
-				"gatekode": "02081",
-				"bydel": null
-			},
-			{
-				"adresse": "SANNERGATA",
-				"kommunenummer": "0631",
-				"kommunenavn": "Flesberg",
-				"postnummer": "3614",
-				"poststed": "KONGSBERG",
-				"geografiskTilknytning": "0631",
-				"gatekode": "02081",
-				"bydel": ""
-			},
-			{
-				"adresse": "SANNERGATA",
-				"kommunenummer": "0438",
-				"kommunenavn": "Alvdal",
-				"postnummer": "2560",
-				"poststed": "ALVDAL",
-				"geografiskTilknytning": "0438",
-				"gatekode": "02081",
-				"bydel": null
-			}
-		];
+	componentDidUpdate() {
+		if (this.state.caretPosition > 0) {
+			const input = document.getElementById("states-autocomplete");
+			setCaretPosition(input, this.state.caretPosition);
+			this.setState({caretPosition: 0});
+		}
 	}
 
 	onChange( event: any, value: string) {
-		console.warn("===> nytt requiest : " + value);
 		this.setState({ value });
 		if (value.length >= 3) {
 			fetchToJson("informasjon/adressesok?sokestreng=" + value)
 				.then((response: any) => {
-					/// console.warn(JSON.stringify(response, null, 4));
-					console.warn("==> response " + response.length);
 					this.setState({adresser: response});
 				})
 				.catch((error: any) => {
 					console.error(error);
 				});
+			this.setState({valueIsValid: true});
 		} else {
-			this.setState({adresser: []});
+			this.setState({adresser: [], valueIsValid: false});
 		}
 	}
 
-	formatItem(item: any) {
-		return `${item.adresse}, ${item.postnummer} ${item.poststed}`;
+	onSelect(value: any, item: any) {
+		this.setState({
+			value: this.formatItem(item, true),
+			caretPosition: item.adresse.length + 1,
+			adresseObject: item
+		});
+	}
+
+	formatItem(item: any, addSpaceAfterAddress: boolean) {
+		let value = item.adresse;
+		if (addSpaceAfterAddress) {
+			value += " ";
+		}
+		if (item.postnummer !== null && item.poststed !== null) {
+			value += ", " + item.postnummer + " " + item.poststed;
+		} else {
+			if (item.kommunenavn !== null) {
+				value += ", " + item.kommunenavn;
+			}
+		}
+		return value;
+	}
+
+	showValidationStatus() {
+			let ikkeValid: boolean = true;
+			let advarsel: boolean = false;
+			let ok: boolean = false;
+			if (this.state.valueIsValid === undefined) {
+				ikkeValid = true;
+			} else if (this.state.valueIsValid === false) {
+				ikkeValid = false;
+				advarsel = true;
+				ok = false;
+			} else {
+				advarsel = false;
+				ikkeValid = false;
+				ok = true;
+			}
+			return (
+				<span className="valideringsStatus">
+					{ikkeValid && <Icon kind="minus"/>}
+					{advarsel && <Icon kind="advarsel-sirkel"/>}
+					{ok && <Icon kind="ok-sirkel"/>}
+				</span>
+			);
 	}
 
 	render() {
@@ -112,14 +157,14 @@ class NavAutocomplete extends React.Component<{}, StateProps> {
 			<div className="navAutcomplete">
 				<Autocomplete
 					value={this.state.value}
-					inputProps={{id: "states-autocomplete"}}
+					inputProps={{id: "states-autocomplete", placeholder: "Gatenavn, kommune eller postnummer" }}
 					wrapperStyle={{position: "relative", display: "inline-block"}}
 					items={ this.state.adresser.slice(0, 8) }
 					getItemValue={(item: any) => item.adresse}
 					shouldItemRender={this.matchStateToTerm}
 					sortItems={this.sortStates}
 					onChange={(event: any, value: string) => this.onChange(event, value)}
-					onSelect={(value: any) => this.setState({value})}
+					onSelect={(value: any, item: any) => this.onSelect(value, item)}
 					renderMenu={(children: any) => (
 						<div className="menu">
 							{children}
@@ -129,9 +174,15 @@ class NavAutocomplete extends React.Component<{}, StateProps> {
 						<div
 							className={`item ${isHighlighted ? "item-highlighted" : ""}`}
 							key={Math.random()}
-						>{this.formatItem(item)}</div>
+						>{this.formatItem(item, false)}</div>
 					)}
 				/>
+				{ this.showValidationStatus()}
+				<div>
+					{this.state.adresseObject.kommunenavn !== null && (
+						<p>Søknaden vil bli sendt til { this.state.adresseObject.kommunenavn } kommune.</p>
+					)}
+				</div>
 			</div>
 		);
 	}

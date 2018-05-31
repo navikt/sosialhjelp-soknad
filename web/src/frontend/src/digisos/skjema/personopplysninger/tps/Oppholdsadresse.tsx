@@ -81,6 +81,7 @@ const Oppholdsadresse: React.StatelessComponent<Props & InjectedIntlProps> = ({
 			return null;
 		}
 		if (faktum.value === "soknad") {
+			// TODO: Legg til data for "annet sted".
 			return null;
 		}
 
@@ -137,7 +138,7 @@ const Oppholdsadresse: React.StatelessComponent<Props & InjectedIntlProps> = ({
 				</Underskjema>
 			</SporsmalFaktum>
 		</SporsmalFaktum>
-		<NavKontorInformasjon style="feil">TODO: Søknaden sendes til Oslo kommune</NavKontorInformasjon>
+		<NavKontorInformasjon style="advarsel">TODO: Søknaden sendes til Oslo kommune</NavKontorInformasjon>
 	</div>);
 };
 
