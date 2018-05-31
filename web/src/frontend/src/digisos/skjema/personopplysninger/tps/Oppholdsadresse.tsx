@@ -92,7 +92,7 @@ const Oppholdsadresse: React.StatelessComponent<Props & InjectedIntlProps> = ({
 		);
 	};
 
-	return (<div>
+	return (<div className="sosialhjelp-oppholdsadresse">
 		<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse" style="system">
 			<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse.valg"
 				validerFunc={[(value) => {
