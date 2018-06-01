@@ -1,6 +1,7 @@
 import * as React from "react";
 import { fetchToJson } from "../../utils/rest-utils";
-import Icon from "nav-frontend-ikoner-assets";
+import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon";
+import NavFrontendSpinner from "nav-frontend-spinner";
 
 // import { lesAdresser } from "../../nav-soknad/redux/kommuner/kommuneActions";
 
@@ -22,13 +23,23 @@ function setCaretPosition(ctrl: any, pos: number) {
 
 const Autocomplete = require("react-autocomplete");
 
+const enum autcompleteTilstand {
+	INITIELL = "INITIELL",
+	SOKER = "SOKER",
+	ADRESSE_OK = "ADRESSE_OK",
+	ADRESSE_UGYLDIG = "ADRESSE_UGYLDIG"
+}
+
 interface StateProps {
 	value: string;
 	adresser: any[];
 	adresserWithId: any[];
 	valueIsValid: undefined | false | true;
-	caretPosition: number;
-	adresseObject: undefined | {
+	cursorPosisjon: number;
+	searching: boolean; // TODO Fjerne denne
+	antallAktiveSok: number;
+	tilstand: autcompleteTilstand;
+	valgtAdresse: undefined | {
 		"adresse": null | string,
 		"kommunenummer": null | string,
 		"kommunenavn": null | string,
@@ -40,14 +51,14 @@ interface StateProps {
 	};
 }
 
-class NavAutocomplete extends React.Component<{}, StateProps> {
+class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps> {
 
-	constructor(props: {}) {
+	constructor(props: {onDataVerified: any}) {
 		super(props);
 		this.state = {
 			value: "",
-			caretPosition: 0,
-			adresseObject: {
+			cursorPosisjon: 0,
+			valgtAdresse: {
 				"adresse": null,
 				"kommunenummer": null,
 				"kommunenavn": null,
@@ -60,6 +71,9 @@ class NavAutocomplete extends React.Component<{}, StateProps> {
 			adresser: [],
 			adresserWithId: [],
 			valueIsValid: undefined,
+			searching: true,
+			antallAktiveSok: 0,
+			tilstand: autcompleteTilstand.INITIELL
 		};
 	}
 
@@ -82,22 +96,25 @@ class NavAutocomplete extends React.Component<{}, StateProps> {
 	}
 
 	componentDidUpdate() {
-		if (this.state.caretPosition > 0) {
+		if (this.state.cursorPosisjon > 0) {
 			const input = document.getElementById("states-autocomplete");
-			setCaretPosition(input, this.state.caretPosition);
-			this.setState({caretPosition: 0});
+			setCaretPosition(input, this.state.cursorPosisjon);
+			this.setState({cursorPosisjon: 0});
 		}
 	}
 
 	onChange( event: any, value: string) {
 		this.setState({ value });
 		if (value.length >= 3) {
+			this.setState({ antallAktiveSok: this.state.antallAktiveSok +1 });
 			fetchToJson("informasjon/adressesok?sokestreng=" + value)
 				.then((response: any) => {
-					this.setState({adresser: response});
+					this.setState({ adresser: response });
+					this.setState({ antallAktiveSok: this.state.antallAktiveSok -1 });
 				})
 				.catch((error: any) => {
 					console.error(error);
+					this.setState({ antallAktiveSok: this.state.antallAktiveSok -1 });
 				});
 			this.setState({valueIsValid: true});
 		} else {
@@ -108,9 +125,10 @@ class NavAutocomplete extends React.Component<{}, StateProps> {
 	onSelect(value: any, item: any) {
 		this.setState({
 			value: this.formatItem(item, true),
-			caretPosition: item.adresse.length + 1,
-			adresseObject: item
+			cursorPosisjon: item.adresse.length + 1,
+			valgtAdresse: item
 		});
+		this.props.onDataVerified(item);
 	}
 
 	formatItem(item: any, addSpaceAfterAddress: boolean) {
@@ -128,7 +146,7 @@ class NavAutocomplete extends React.Component<{}, StateProps> {
 		return value;
 	}
 
-	showValidationStatus() {
+	visIkon() {
 			let ikkeValid: boolean = true;
 			let advarsel: boolean = false;
 			let ok: boolean = false;
@@ -145,9 +163,18 @@ class NavAutocomplete extends React.Component<{}, StateProps> {
 			}
 			return (
 				<span className="valideringsStatus">
-					{ikkeValid && <Icon kind="minus"/>}
-					{advarsel && <Icon kind="advarsel-sirkel"/>}
-					{ok && <Icon kind="ok-sirkel"/>}
+					{this.state.antallAktiveSok > 0 && (
+						<span className="navAutcomplete__spinner">
+							<NavFrontendSpinner  type="XS" />
+						</span>
+					)}
+					{this.state.antallAktiveSok === 0 && (
+						<span>
+							{ikkeValid && <DigisosIkon navn="searchAddresse" />}
+							{advarsel && <DigisosIkon navn="reportProblemCircle" />}
+							{ok && <DigisosIkon navn="checkCircle" />}
+						</span>
+					)}
 				</span>
 			);
 	}
@@ -177,10 +204,10 @@ class NavAutocomplete extends React.Component<{}, StateProps> {
 						>{this.formatItem(item, false)}</div>
 					)}
 				/>
-				{ this.showValidationStatus()}
+				{ this.visIkon()}
 				<div>
-					{this.state.adresseObject.kommunenavn !== null && (
-						<p>Søknaden vil bli sendt til { this.state.adresseObject.kommunenavn } kommune.</p>
+					{this.state.valgtAdresse.kommunenavn !== null && (
+						<p>Søknaden vil bli sendt til { this.state.valgtAdresse.kommunenavn } kommune.</p>
 					)}
 				</div>
 			</div>
