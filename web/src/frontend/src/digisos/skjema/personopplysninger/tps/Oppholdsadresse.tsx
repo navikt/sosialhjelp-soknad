@@ -17,11 +17,15 @@ import { connect } from "react-redux";
 import { State } from "../../../redux/reducers";
 import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import Informasjonspanel from "../../../../nav-soknad/components/informasjonspanel";
+// import {lagreFaktum, setFaktumVerdi} from "../../../../nav-soknad/redux/fakta/faktaActions";
+import {DispatchProps} from "../../../../nav-soknad/redux/reduxTypes";
 
-interface Props {
+interface OwnProps {
 	fakta: Faktum[];
 	visUtvidetAdressesok: boolean;
 }
+
+type Props = OwnProps & InjectedIntlProps & DispatchProps;
 
 interface AdresseProperties {
 	kilde?: string;
@@ -34,9 +38,9 @@ interface StateProps {
 	data: any;
 }
 
-class Oppholdsadresse extends React.Component<Props & InjectedIntlProps, StateProps> {
+class Oppholdsadresse extends React.Component<Props, StateProps> {
 
-	constructor(props: Props & InjectedIntlProps) {
+	constructor(props: Props) {
 		super(props);
 		this.state = {
 			data: null,
@@ -45,6 +49,18 @@ class Oppholdsadresse extends React.Component<Props & InjectedIntlProps, StatePr
 
 	handleNavAutoCompleteData(data: any) {
 		this.setState({data});
+		// debugger;
+		// if (data){
+		// 	const faktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
+		// 	this.props.dispatch(setFaktumVerdi(faktum, data.adresse, "gateadresse"));
+		// 	this.props.dispatch(setFaktumVerdi(faktum, data.postnummer, "postnummer"));
+		// 	this.props.dispatch(setFaktumVerdi(faktum, data.poststed, "poststed"));
+		// }
+
+		// this.props.dispatch(lagreFaktum(faktum));
+
+		// setFaktumVerdi()
+		// lagreFaktumDersomGyldig()
 	}
 
 	render() {
@@ -107,6 +123,7 @@ class Oppholdsadresse extends React.Component<Props & InjectedIntlProps, StatePr
 					if (this.state.data.kommunenavn) {
 						return (
 							<Informasjonspanel
+								style={props.style}
 								icon={(<img src={"/soknadsosialhjelp/statisk/bilder/" + ikon}/>)}>
 								<p>Søknaden vil bli sendt til {this.state.data.kommunenavn} kommune.</p>
 							</Informasjonspanel>
@@ -181,9 +198,11 @@ class Oppholdsadresse extends React.Component<Props & InjectedIntlProps, StatePr
 					<Underskjema
 						visible={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "soknad"}
 					>
-						<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse.soknad">
-							<NavAutocomplete onDataVerified={(data: any) => this.handleNavAutoCompleteData(data)}/>
-						</SporsmalFaktum>
+						<div className="utvidetAddresseSok">
+							<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse.soknad">
+								<NavAutocomplete onDataVerified={(data: any) => this.handleNavAutoCompleteData(data)}/>
+							</SporsmalFaktum>
+						</div>
 					</Underskjema>
 				</SporsmalFaktum>
 			</SporsmalFaktum>

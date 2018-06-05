@@ -3,8 +3,6 @@ import { fetchToJson } from "../../utils/rest-utils";
 import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon";
 import NavFrontendSpinner from "nav-frontend-spinner";
 
-// import { lesAdresser } from "../../nav-soknad/redux/kommuner/kommuneActions";
-
 function setCaretPosition(ctrl: any, pos: number) {
 	// Modern browsers
 	if (ctrl.setSelectionRange) {
@@ -27,39 +25,53 @@ const enum autcompleteTilstand {
 	INITIELL = "INITIELL",
 	SOKER = "SOKER",
 	ADRESSE_OK = "ADRESSE_OK",
-	ADRESSE_UGYLDIG = "ADRESSE_UGYLDIG"
+	ADRESSE_UGYLDIG = "ADRESSE_UGYLDIG",
+	ADRESSE_IKKE_VALGT = "ADRESSE_IKKE_VALGT"
+}
+
+interface Adresse {
+	"adresse": null | string;
+	"husnummer": null | string;
+	"husbokstav": null | string;
+	"kommunenummer": null | string;
+	"kommunenavn": null | string;
+	"postnummer": null | string;
+	"poststed": null | string;
+	"geografiskTilknytning":  null | string;
+	"gatekode":  null | string;
+	"bydel":  null | string;
 }
 
 interface StateProps {
 	value: string;
-	adresser: any[];
+	adresser: Adresse[];
 	adresserWithId: any[];
 	valueIsValid: undefined | false | true;
 	cursorPosisjon: number;
 	searching: boolean; // TODO Fjerne denne
 	antallAktiveSok: number;
 	tilstand: autcompleteTilstand;
-	valgtAdresse: undefined | {
-		"adresse": null | string,
-		"kommunenummer": null | string,
-		"kommunenavn": null | string,
-		"postnummer": null | string,
-		"poststed": null | string,
-		"geografiskTilknytning":  null | string,
-		"gatekode":  null | string,
-		"bydel":  null | string,
-	};
+	valgtAdresse?: Adresse;
+	//abortController: any;
+	//abortSignal: any;
+	sokPostponed: boolean;
 }
 
 class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps> {
 
 	constructor(props: {onDataVerified: any}) {
 		super(props);
+
+		//const abortController = new AbortController();
+		//const abortSignal = abortController.signal;
+
 		this.state = {
 			value: "",
 			cursorPosisjon: 0,
 			valgtAdresse: {
 				"adresse": null,
+				"husnummer": null,
+				"husbokstav": null,
 				"kommunenummer": null,
 				"kommunenavn": null,
 				"postnummer": null,
@@ -73,94 +85,113 @@ class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps>
 			valueIsValid: undefined,
 			searching: true,
 			antallAktiveSok: 0,
-			tilstand: autcompleteTilstand.INITIELL
+			tilstand: autcompleteTilstand.INITIELL,
+			//abortController: abortController,
+			//abortSignal: abortSignal,
+			sokPostponed: false
 		};
-	}
-
-	matchStateToTerm(state: any, value: any) {
-		return (
-			state.adresse.toLowerCase().indexOf(value.toLowerCase()) !== -1
-		);
-	}
-
-	sortStates(a: any, b: any, value: any) {
-		const aLower = a.adresse.toLowerCase();
-		const bLower = b.adresse.toLowerCase();
-		const valueLower = value.toLowerCase();
-		const queryPosA = aLower.indexOf(valueLower);
-		const queryPosB = bLower.indexOf(valueLower);
-		if (queryPosA !== queryPosB) {
-			return queryPosA - queryPosB;
-		}
-		return aLower < bLower ? -1 : 1;
 	}
 
 	componentDidUpdate() {
 		if (this.state.cursorPosisjon > 0) {
 			const input = document.getElementById("states-autocomplete");
 			setCaretPosition(input, this.state.cursorPosisjon);
-			this.setState({cursorPosisjon: 0});
+			this.setState({ cursorPosisjon: 0 });
 		}
+	}
+
+	onSelect(value: string, adresse: Adresse) {
+
+		console.warn(adresse);
+		this.setState({
+			value: this.formaterAdresseString(adresse),
+			cursorPosisjon: this.settCursorPosisjon(adresse),
+			valgtAdresse: adresse,
+			tilstand: autcompleteTilstand.ADRESSE_OK
+		});
+		this.props.onDataVerified(adresse);
+	}
+
+	invalidateFetch(value: string) {
+		this.props.onDataVerified(null);
+		this.setState({ value , tilstand: autcompleteTilstand.ADRESSE_UGYLDIG});
+	}
+
+	shouldFetch(value: string) {
+		return value.length >= 3;
+	}
+
+	executeFetch(value: string) {
+		this.setState({sokPostponed: false});
+		this.setState({antallAktiveSok: this.state.antallAktiveSok + 1});
+		fetchToJson("informasjon/adressesok?sokestreng=" + value)
+			.then((response: any) => {
+				this.setState({adresser: response});
+				this.setState({antallAktiveSok: this.state.antallAktiveSok - 1});
+				if (this.state.sokPostponed) {
+					const newValue = this.state.value;
+					this.invalidateFetch(newValue);
+					if (this.shouldFetch(newValue)) {
+						this.executeFetch(newValue);
+					}
+				}
+			})
+			.catch((error: any) => {
+				console.error(error);
+				this.setState({
+					antallAktiveSok: this.state.antallAktiveSok - 1,
+					tilstand: autcompleteTilstand.ADRESSE_UGYLDIG
+				});
+			});
 	}
 
 	onChange( event: any, value: string) {
-		this.setState({ value });
-		if (value.length >= 3) {
-			this.setState({ antallAktiveSok: this.state.antallAktiveSok +1 });
-			fetchToJson("informasjon/adressesok?sokestreng=" + value)
-				.then((response: any) => {
-					this.setState({ adresser: response });
-					this.setState({ antallAktiveSok: this.state.antallAktiveSok -1 });
-				})
-				.catch((error: any) => {
-					console.error(error);
-					this.setState({ antallAktiveSok: this.state.antallAktiveSok -1 });
-				});
-			this.setState({valueIsValid: true});
+		//this.abortController.abort();
+		this.invalidateFetch(value);
+		if (this.shouldFetch(value)) {
+			if (this.state.antallAktiveSok === 0) {
+				this.executeFetch(value);
+			} else {
+				this.setState({sokPostponed: true});
+			}
+			this.setState({tilstand: this.state.adresser.length === 1 ? autcompleteTilstand.ADRESSE_OK : autcompleteTilstand.ADRESSE_IKKE_VALGT});
 		} else {
-			this.setState({adresser: [], valueIsValid: false});
+			this.setState({adresser: [], tilstand: autcompleteTilstand.ADRESSE_UGYLDIG});
 		}
 	}
 
-	onSelect(value: any, item: any) {
-		this.setState({
-			value: this.formatItem(item, true),
-			cursorPosisjon: item.adresse.length + 1,
-			valgtAdresse: item
-		});
-		this.props.onDataVerified(item);
-	}
+	formaterAdresseString(adresse: Adresse) {
+		let value = adresse.adresse;
+		const husbokstav: string = adresse.husbokstav ? adresse.husbokstav : "";
+		if (adresse.postnummer !== null && adresse.poststed !== null) {
+			if (adresse.husnummer !== "") {
+				value += " " + adresse.husnummer + husbokstav + ", " + adresse.postnummer + " " + adresse.poststed;
+			} else {
+				value += " , " + adresse.postnummer + " " + adresse.poststed;
+			}
+		} else if (adresse.kommunenavn !== null) {
 
-	formatItem(item: any, addSpaceAfterAddress: boolean) {
-		let value = item.adresse;
-		if (addSpaceAfterAddress) {
-			value += " ";
-		}
-		if (item.postnummer !== null && item.poststed !== null) {
-			value += ", " + item.postnummer + " " + item.poststed;
-		} else {
-			if (item.kommunenavn !== null) {
-				value += ", " + item.kommunenavn;
+			if (adresse.husnummer !== "") {
+				value += " " + adresse.husnummer + husbokstav + ", " + adresse.kommunenavn;
+			} else {
+				value += " , " + adresse.kommunenavn;
 			}
 		}
+
 		return value;
 	}
 
+	settCursorPosisjon(adresse: Adresse){
+		// const husnummer: string = adresse.husnummer ? adresse.husnummer : " ";
+		// const husbokstav: string = adresse.husbokstav ? adresse.husbokstav : "";
+		const husbokstav = adresse.husbokstav ? adresse.husbokstav : "";
+
+		return adresse.husnummer ? adresse.adresse.length + adresse.husnummer.length + husbokstav.length + 1 : adresse.adresse.length + 1;
+			// adresse.adresse.length + husnummer.length + husbokstav.length;
+
+	}
+
 	visIkon() {
-			let ikkeValid: boolean = true;
-			let advarsel: boolean = false;
-			let ok: boolean = false;
-			if (this.state.valueIsValid === undefined) {
-				ikkeValid = true;
-			} else if (this.state.valueIsValid === false) {
-				ikkeValid = false;
-				advarsel = true;
-				ok = false;
-			} else {
-				advarsel = false;
-				ikkeValid = false;
-				ok = true;
-			}
 			return (
 				<span className="valideringsStatus">
 					{this.state.antallAktiveSok > 0 && (
@@ -170,9 +201,9 @@ class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps>
 					)}
 					{this.state.antallAktiveSok === 0 && (
 						<span>
-							{ikkeValid && <DigisosIkon navn="searchAddresse" />}
-							{advarsel && <DigisosIkon navn="reportProblemCircle" />}
-							{ok && <DigisosIkon navn="checkCircle" />}
+							{this.state.tilstand === autcompleteTilstand.INITIELL && <DigisosIkon navn="searchAddresse" />}
+							{this.state.tilstand === autcompleteTilstand.ADRESSE_OK && <DigisosIkon navn="checkCircle" />}
+							{this.state.tilstand === autcompleteTilstand.ADRESSE_UGYLDIG && <DigisosIkon navn="advarselSirkel" />}
 						</span>
 					)}
 				</span>
@@ -188,20 +219,22 @@ class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps>
 					wrapperStyle={{position: "relative", display: "inline-block"}}
 					items={ this.state.adresser.slice(0, 8) }
 					getItemValue={(item: any) => item.adresse}
-					shouldItemRender={this.matchStateToTerm}
-					sortItems={this.sortStates}
 					onChange={(event: any, value: string) => this.onChange(event, value)}
 					onSelect={(value: any, item: any) => this.onSelect(value, item)}
 					renderMenu={(children: any) => (
-						<div className="menu">
-							{children}
-						</div>
+						<span>
+						{children.toString() === "" && (<span/>)}
+						{children.toString() !== "" && (
+							<div className="menu">
+								{children}
+							</div>)}
+						</span>
 					)}
 					renderItem={(item: any, isHighlighted: any) => (
 						<div
 							className={`item ${isHighlighted ? "item-highlighted" : ""}`}
 							key={Math.random()}
-						>{this.formatItem(item, false)}</div>
+						>{this.formaterAdresseString(item)}</div>
 					)}
 				/>
 				{ this.visIkon()}

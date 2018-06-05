@@ -60,6 +60,7 @@ const Kontaktinfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 				<DetaljelisteElement {...getProperty("seksjonsnummer")} />
 				<DetaljelisteElement {...getProperty("undernummer")} />
 			</Detaljeliste>
+			asdf
 		</SysteminfoFaktum>
 	);
 };
