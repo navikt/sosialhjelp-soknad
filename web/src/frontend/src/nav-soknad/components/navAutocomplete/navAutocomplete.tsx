@@ -52,8 +52,6 @@ interface StateProps {
 	antallAktiveSok: number;
 	tilstand: autcompleteTilstand;
 	valgtAdresse?: Adresse;
-	//abortController: any;
-	//abortSignal: any;
 	sokPostponed: boolean;
 }
 
@@ -61,9 +59,6 @@ class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps>
 
 	constructor(props: {onDataVerified: any}) {
 		super(props);
-
-		//const abortController = new AbortController();
-		//const abortSignal = abortController.signal;
 
 		this.state = {
 			value: "",
@@ -86,8 +81,6 @@ class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps>
 			searching: true,
 			antallAktiveSok: 0,
 			tilstand: autcompleteTilstand.INITIELL,
-			//abortController: abortController,
-			//abortSignal: abortSignal,
 			sokPostponed: false
 		};
 	}
@@ -146,7 +139,6 @@ class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps>
 	}
 
 	onChange( event: any, value: string) {
-		//this.abortController.abort();
 		this.invalidateFetch(value);
 		if (this.shouldFetch(value)) {
 			if (this.state.antallAktiveSok === 0) {
@@ -154,7 +146,9 @@ class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps>
 			} else {
 				this.setState({sokPostponed: true});
 			}
-			this.setState({tilstand: this.state.adresser.length === 1 ? autcompleteTilstand.ADRESSE_OK : autcompleteTilstand.ADRESSE_IKKE_VALGT});
+			this.setState({tilstand: this.state.adresser.length === 1
+					? autcompleteTilstand.ADRESSE_OK
+					: autcompleteTilstand.ADRESSE_IKKE_VALGT});
 		} else {
 			this.setState({adresser: [], tilstand: autcompleteTilstand.ADRESSE_UGYLDIG});
 		}
@@ -181,14 +175,14 @@ class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps>
 		return value;
 	}
 
-	settCursorPosisjon(adresse: Adresse){
-		// const husnummer: string = adresse.husnummer ? adresse.husnummer : " ";
-		// const husbokstav: string = adresse.husbokstav ? adresse.husbokstav : "";
+	settCursorPosisjon(adresse: Adresse) {
 		const husbokstav = adresse.husbokstav ? adresse.husbokstav : "";
 
-		return adresse.husnummer ? adresse.adresse.length + adresse.husnummer.length + husbokstav.length + 1 : adresse.adresse.length + 1;
-			// adresse.adresse.length + husnummer.length + husbokstav.length;
-
+		return adresse.husnummer ?
+			(adresse.adresse.length +
+			adresse.husnummer.length +
+			husbokstav.length + 1)
+			: (adresse.adresse.length + 1);
 	}
 
 	visIkon() {

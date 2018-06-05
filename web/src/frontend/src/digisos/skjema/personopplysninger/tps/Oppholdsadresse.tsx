@@ -17,8 +17,8 @@ import { connect } from "react-redux";
 import { State } from "../../../redux/reducers";
 import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import Informasjonspanel from "../../../../nav-soknad/components/informasjonspanel";
-// import {lagreFaktum, setFaktumVerdi} from "../../../../nav-soknad/redux/fakta/faktaActions";
-import {DispatchProps} from "../../../../nav-soknad/redux/reduxTypes";
+// import { lagreFaktum, setFaktumVerdi } from "../../../../nav-soknad/redux/fakta/faktaActions";
+import { DispatchProps } from "../../../../nav-soknad/redux/reduxTypes";
 
 interface OwnProps {
 	fakta: Faktum[];
