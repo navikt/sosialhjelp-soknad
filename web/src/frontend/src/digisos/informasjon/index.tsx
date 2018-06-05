@@ -9,7 +9,7 @@ import {
 } from "react-intl";
 import DocumentTitle from "react-document-title";
 import { State } from "../redux/reducers";
-import { Undertittel } from "nav-frontend-typografi";
+import { Element} from "nav-frontend-typografi";
 import Knapp from "nav-frontend-knapper";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
@@ -20,12 +20,9 @@ import { FeatureToggles } from "../../featureToggles";
 import { Horten } from "../data/kommuner";
 import IkkeTilgang from "./IkkeTilgang";
 import { TilgangSperrekode } from "../../nav-soknad/redux/tilgang/tilgangTypes";
-import {
-	setVisSamtykkeInfo
-} from "../../nav-soknad/redux/init/initActions";
-import SamtykkeInfoForsidenModal from "./samtykkeInfoForsidenModal";
 import { lesKommuner } from "../../nav-soknad/redux/kommuner/kommuneActions";
 import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
+import Personopplysninger from "./Personopplysninger";
 
 interface StateProps {
 	harTilgang: boolean;
@@ -60,8 +57,6 @@ class Informasjon extends React.Component<Props, {}> {
 		} = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 
-		const classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
-
 		return (
 			<div>
 				<DocumentTitle title={title} />
@@ -73,38 +68,23 @@ class Informasjon extends React.Component<Props, {}> {
 								className="blokk-s"
 								tittel={getIntlTextOrKey(intl, "informasjon.start.tittel")}
 							>
+								<Element>
+									<FormattedMessage id="informasjon.start.undertittel" />
+								</Element>
+
 								<p className="blokk-s">
 									<FormattedHTMLMessage id="informasjon.start.tekst" />
 								</p>
 
-								<Undertittel key="informasjon.nodsituasjon.undertittel">
-									{getIntlTextOrKey(
-										intl,
-										"informasjon.nodsituasjon.undertittel"
-									)}
-								</Undertittel>
+								<Element>
+									<FormattedMessage id="informasjon.nodsituasjon.undertittel" />
+								</Element>
 								<p className="blokk-s">
 									<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst" />
 								</p>
 							</Infoblokk>
 
-							<div className="blokk-xs bolk">
-								<div className={classNames} >
-									<p style={{marginTop: "0"}}>
-										<FormattedMessage id="soknadsosialhjelp.forstesiden.rettigheterPlikter"/>
-										&nbsp;
-										<a
-											className="lenke"
-											onClick={(event: React.MouseEvent<HTMLElement>) => {
-												this.props.dispatch(setVisSamtykkeInfo(true));
-										}}
-										>
-											<FormattedMessage id="soknadsosialhjelp.forstesiden.rettigheterPlikterLinktekst"/>
-										</a>
-									</p>
-								</div>
-							</div>
-							<SamtykkeInfoForsidenModal/>
+							<Personopplysninger />
 
 						</div>
 
