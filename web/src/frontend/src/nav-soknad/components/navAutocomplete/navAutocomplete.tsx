@@ -29,7 +29,7 @@ const enum autcompleteTilstand {
 	ADRESSE_IKKE_VALGT = "ADRESSE_IKKE_VALGT"
 }
 
-interface Adresse {
+export interface Adresse {
 	"adresse": null | string;
 	"husnummer": null | string;
 	"husbokstav": null | string;
@@ -48,7 +48,6 @@ interface StateProps {
 	adresserWithId: any[];
 	valueIsValid: undefined | false | true;
 	cursorPosisjon: number;
-	searching: boolean; // TODO Fjerne denne
 	antallAktiveSok: number;
 	tilstand: autcompleteTilstand;
 	valgtAdresse?: Adresse;
@@ -78,7 +77,6 @@ class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps>
 			adresser: [],
 			adresserWithId: [],
 			valueIsValid: undefined,
-			searching: true,
 			antallAktiveSok: 0,
 			tilstand: autcompleteTilstand.INITIELL,
 			sokPostponed: false
@@ -95,14 +93,15 @@ class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps>
 
 	onSelect(value: string, adresse: Adresse) {
 
-		console.warn(adresse);
 		this.setState({
 			value: this.formaterAdresseString(adresse),
 			cursorPosisjon: this.settCursorPosisjon(adresse),
 			valgtAdresse: adresse,
 			tilstand: autcompleteTilstand.ADRESSE_OK
 		});
-		this.props.onDataVerified(adresse);
+		if (adresse) {
+			this.props.onDataVerified(adresse);
+		}
 	}
 
 	invalidateFetch(value: string) {
@@ -232,11 +231,6 @@ class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps>
 					)}
 				/>
 				{ this.visIkon()}
-				<div>
-					{this.state.valgtAdresse.kommunenavn !== null && (
-						<p>Søknaden vil bli sendt til { this.state.valgtAdresse.kommunenavn } kommune.</p>
-					)}
-				</div>
 			</div>
 		);
 	}

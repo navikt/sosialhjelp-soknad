@@ -5,8 +5,15 @@
 	background-color: #ffffff;
 	border: solid 2px @navGronnLighten60;
 	padding: 2rem 1.5rem 2rem 3.5rem;
-	margin-bottom: 1rem;
+	margin-bottom: 2rem;
 	font-weight: 600;
+	opacity: 0;
+	transition: opacity 0.2s;
+	transition-delay: 1s;
+
+	&__synlig {
+		opacity: 1;
+	}
 
 	&>div {
 		position: absolute;
