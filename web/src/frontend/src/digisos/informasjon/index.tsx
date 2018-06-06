@@ -1,15 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouterProps } from "react-router";
-import {
-	FormattedHTMLMessage,
-	InjectedIntlProps,
-	injectIntl,
-	FormattedMessage,
-} from "react-intl";
+import { FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl, } from "react-intl";
 import DocumentTitle from "react-document-title";
 import { State } from "../redux/reducers";
-import { Element} from "nav-frontend-typografi";
+import { Element } from "nav-frontend-typografi";
 import Knapp from "nav-frontend-knapper";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
@@ -59,8 +54,8 @@ class Informasjon extends React.Component<Props, {}> {
 
 		return (
 			<div>
-				<DocumentTitle title={title} />
-				<AppTittel />
+				<DocumentTitle title={title}/>
+				<AppTittel/>
 				{soknadErLive === "true" && harTilgang ? (
 					<div>
 						<div className="skjema-content">
@@ -69,22 +64,22 @@ class Informasjon extends React.Component<Props, {}> {
 								tittel={getIntlTextOrKey(intl, "informasjon.start.tittel")}
 							>
 								<Element>
-									<FormattedMessage id="informasjon.start.undertittel" />
+									<FormattedMessage id="informasjon.start.undertittel"/>
 								</Element>
 
 								<p className="blokk-s">
-									<FormattedHTMLMessage id="informasjon.start.tekst" />
+									<FormattedHTMLMessage id="informasjon.start.tekst"/>
 								</p>
 
 								<Element>
-									<FormattedMessage id="informasjon.nodsituasjon.undertittel" />
+									<FormattedMessage id="informasjon.nodsituasjon.undertittel"/>
 								</Element>
 								<p className="blokk-s">
-									<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst" />
+									<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst"/>
 								</p>
 							</Infoblokk>
 
-							<Personopplysninger />
+							<Personopplysninger/>
 
 						</div>
 
@@ -100,7 +95,7 @@ class Informasjon extends React.Component<Props, {}> {
 					</div>
 				) : (
 					<div className="skjema-content">
-						<IkkeTilgang sperrekode={sperrekode} />
+						<IkkeTilgang sperrekode={sperrekode}/>
 					</div>
 				)}
 			</div>
@@ -114,6 +109,6 @@ export default connect((state: State) => ({
 	sperrekode: state.tilgang.sperrekode,
 	soknadErLive: state.featuretoggles.data[FeatureToggles.soknadErLive],
 	visVelgBosted:
-		state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
+	state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
 	startSoknadPending: state.soknad.startSoknadPending
 }))(injectIntl(Informasjon));

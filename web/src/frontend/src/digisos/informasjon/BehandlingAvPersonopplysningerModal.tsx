@@ -31,11 +31,7 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 				closeButton={true}
 				onRequestClose={() => this.props.dispatch(setVisSamtykkeInfo(false))}
 			>
-				<div className="samtykke_info">
-					<h1 className="typo-innholdstittel">
-						<FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.title"}/>
-					</h1>
-
+				<div className="personopplysning_info">
 					<div dangerouslySetInnerHTML={{__html: this.getText()}}/>
 				</div>
 
