@@ -5,6 +5,8 @@ import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
 import { State } from "../redux/reducers";
+import { Hovedknapp } from "nav-frontend-knapper";
+
 
 interface StateProps {
 	modalSynlig: boolean;
@@ -31,6 +33,14 @@ class SamtykkeInfoForsidenModal extends React.Component<Props, {}> {
 						id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.body"}
 						values={{}}
 					/>
+				</div>
+
+				<div className="timeoutbox__knapperad">
+					<Hovedknapp
+						onClick={() => this.props.dispatch(setVisSamtykkeInfo(false))}
+					>
+						<FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"} />
+					</Hovedknapp>
 				</div>
 			</NavFrontendModal>
 		);
