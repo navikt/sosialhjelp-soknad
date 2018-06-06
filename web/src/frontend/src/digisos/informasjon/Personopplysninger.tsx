@@ -4,7 +4,7 @@ import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
 import { State } from "../redux/reducers";
-import SamtykkeInfoForsidenModal from "./samtykkeInfoForsidenModal";
+import BehandlingAvPersonopplysningerModal from "./BehandlingAvPersonopplysningerModal";
 import { Element, Undertittel } from "nav-frontend-typografi";
 
 type Props = InjectedIntlProps & DispatchProps;
@@ -12,8 +12,6 @@ type Props = InjectedIntlProps & DispatchProps;
 class Personopplysninger extends React.Component<Props, {}> {
 
 	render() {
-
-		const classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
 
 		return (
 			<div className="blokk-s panel">
@@ -82,7 +80,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 
 				</div>
 
-				<SamtykkeInfoForsidenModal/>
+				<BehandlingAvPersonopplysningerModal/>
 			</div>
 		);
 	}
