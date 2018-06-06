@@ -8,6 +8,7 @@ declare module "react-collapse" {
 		children: React.ReactNode;
 		hasNestedCollapse?: boolean;
 		onRest?: Function;
+		fixedHeight?: number;
 	}
 
 	export class Collapse extends React.Component<CollapseProps, {}> {}

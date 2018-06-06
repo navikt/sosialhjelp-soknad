@@ -19,11 +19,12 @@ import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import Informasjonspanel from "../../../../nav-soknad/components/informasjonspanel";
 import { DispatchProps } from "../../../../nav-soknad/redux/reduxTypes";
 import { lagreFaktum } from "../../../../nav-soknad/redux/fakta/faktaActions";
-import {Collapse} from "react-collapse";
+import {fetchToJson} from "../../../../nav-soknad/utils/rest-utils";
 
 interface OwnProps {
 	fakta: Faktum[];
 	visUtvidetAdressesok: boolean;
+	brukerBehandlingId: string;
 }
 
 type Props = OwnProps & InjectedIntlProps & DispatchProps;
@@ -39,6 +40,22 @@ interface StateProps {
 	data: Adresse;
 	visInformasjonsPanel: boolean;
 	visInformasjonsPanel2: boolean;
+	soknadsmottaker: any;
+}
+
+function settAdresseFaktum(adresse: Adresse, dispatch: any) {
+	let faktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
+	const properties = [
+		"type", "husnummer", "husbokstav", "kommunenummer",
+		"kommunenavn", "postnummer", "poststed", "geografiskTilknytning",
+	];
+	properties.map((property: string) => {
+		if (adresse[property]) {
+			faktum = oppdaterFaktumMedVerdier(faktum, adresse[property], property);
+		}
+	});
+	faktum = oppdaterFaktumMedVerdier(faktum, adresse.adresse, "gatenavn");
+	dispatch(lagreFaktum(faktum));
 }
 
 class Oppholdsadresse extends React.Component<Props, StateProps> {
@@ -48,25 +65,30 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		this.state = {
 			data: null,
 			visInformasjonsPanel: false,
-			visInformasjonsPanel2: false
+			visInformasjonsPanel2: false,
+			soknadsmottaker: null
 		};
 	}
 
 	handleNavAutoCompleteData(adresse: Adresse) {
 		this.setState({data: adresse});
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
-			let faktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
-			const properties = [
-				"type", "husnummer", "husbokstav", "kommunenummer",
-				"kommunenavn", "postnummer", "poststed", "geografiskTilknytning",
-			];
-			properties.map((property: string) => {
-				if (adresse[property]) {
-					faktum = oppdaterFaktumMedVerdier(faktum, adresse[property], property);
-				}
-			});
-			faktum = oppdaterFaktumMedVerdier(faktum, adresse.adresse, "gatenavn");
-			this.props.dispatch(lagreFaktum(faktum));
+			settAdresseFaktum.call(this, adresse);
+
+			// http://localhost:8181/sendsoknad/adresse/110000001
+			// http://localhost:8181/sendsoknad/soknadsmottaker/110000001
+
+			console.warn(this.props.brukerBehandlingId);
+
+			fetchToJson("adresse/" + this.props.brukerBehandlingId)
+				.then((response: any) => {
+					this.setState({soknadsmottaker: response, visInformasjonsPanel: true});
+					console.warn(JSON.stringify(response, null, 4));
+					// Nytt rest
+				})
+				.catch((error: any) => {
+					console.error(error);
+				});
 		}
 	}
 
@@ -222,22 +244,30 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 				</SporsmalFaktum>
 			</SporsmalFaktum>
 
-			<Collapse
-				isOpened={this.state.visInformasjonsPanel}
-			>
+			{this.state.visInformasjonsPanel && (
 				<Informasjonspanel
 					icon={<img src="/soknadsosialhjelp/statisk/bilder/konvolutt-feil.svg"/>}
 					synlig={this.state.visInformasjonsPanel}
 				>
-					{this.state.visInformasjonsPanel && (<span>case 1</span>)}
-					{this.state.data && (<span>case 2</span>)}
+					Søknaden vil bli sendt til:
+					{ this.state.soknadsmottaker && this.state.soknadsmottaker.enhetsnavn },
+					{ this.state.soknadsmottaker && this.state.soknadsmottaker.kommunenavn }
+
 				</Informasjonspanel>
-			</Collapse>
+			)}
 
 			{/*<NavKontorInformasjon style="advarsel">*/}
 				{/*Hvor havner denne teksten?*/}
 			{/*</NavKontorInformasjon>*/}
 		</div>);
+	}
+
+	handleOnRest() {
+		// setState
+		if (this.state.visInformasjonsPanel && !this.state.visInformasjonsPanel2) {
+			this.setState({visInformasjonsPanel2: !this.state.visInformasjonsPanel2});
+			console.warn("handle onRest...");
+		}
 	}
 }
 
@@ -247,6 +277,7 @@ export default connect((state: State, props: any) => {
 		startSoknadPending: state.soknad.startSoknadPending,
 		faktaRestStatus: state.fakta.restStatus,
 		navEnheter: state.kommuner.data,
-		kommunerRestStatus: state.kommuner.restStatus
+		kommunerRestStatus: state.kommuner.restStatus,
+		brukerBehandlingId: state.soknad.data.brukerBehandlingId
 	};
 })(injectIntl(Oppholdsadresse));
