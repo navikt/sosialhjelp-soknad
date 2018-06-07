@@ -189,22 +189,20 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 
 	formaterAdresseString(adresse: Adresse) {
 		let value = adresse.adresse;
-		const husbokstav: string = adresse.husbokstav ? adresse.husbokstav : "";
-		if (adresse.postnummer !== null && adresse.poststed !== null) {
+		const husbokstav: string = adresse.husbokstav != null ? adresse.husbokstav : "";
+		if (adresse.postnummer != null && adresse.poststed != null) {
 			if (adresse.husnummer !== "") {
 				value += " " + adresse.husnummer + husbokstav + ", " + adresse.postnummer + " " + adresse.poststed;
 			} else {
 				value += " , " + adresse.postnummer + " " + adresse.poststed;
 			}
-		} else if (adresse.kommunenavn !== null) {
-
+		} else if (adresse.kommunenavn != null) {
 			if (adresse.husnummer !== "") {
 				value += " " + adresse.husnummer + husbokstav + ", " + adresse.kommunenavn;
 			} else {
 				value += " , " + adresse.kommunenavn;
 			}
 		}
-
 		return value;
 	}
 
