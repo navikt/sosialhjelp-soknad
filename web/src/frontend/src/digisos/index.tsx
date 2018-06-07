@@ -5,9 +5,7 @@ import SideIkkeFunnet from "../nav-soknad/containers/SideIkkeFunnet";
 import ServerFeil from "../nav-soknad/containers/ServerFeil";
 import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
 import { erSkjemaside } from "../nav-soknad/utils/navigasjonUtils";
-
 import Informasjon from "./informasjon";
-import Start from "./start";
 import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
 import AvbrytSoknad from "../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
@@ -34,7 +32,6 @@ class App extends React.Component<InjectedIntlProps, {}> {
 			{!ettersendelse && (<div className="app-digisos container">
 				<Switch>
 					<Route path={`/informasjon`} exact={true} component={Informasjon} />
-					<Route path={`/bosted`} exact={true} component={Start} />
 					<Route
 						path={`/skjema/:brukerBehandlingId/:steg`}
 						component={SkjemaRouter}
