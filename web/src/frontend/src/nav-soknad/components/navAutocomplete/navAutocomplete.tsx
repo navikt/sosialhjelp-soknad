@@ -2,6 +2,7 @@ import * as React from "react";
 import { fetchToJson } from "../../utils/rest-utils";
 import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import { Faktum } from "../../types";
 
 function setCaretPosition(ctrl: any, pos: number) {
 	// Modern browsers
@@ -54,13 +55,20 @@ interface StateProps {
 	sokPostponed: boolean;
 }
 
-class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps> {
+interface Props {
+	onDataVerified: any;
+	adresseFaktum: Faktum;
+}
 
-	constructor(props: {onDataVerified: any}) {
+class NavAutocomplete extends React.Component<Props, StateProps> {
+
+	constructor(props: Props) {
 		super(props);
 
+		const angittAdresse: Adresse = this.hentAdresseFraFaktum(props.adresseFaktum.properties);
+		const value = this.formaterAdresseString(angittAdresse);
 		this.state = {
-			value: "",
+			value,
 			cursorPosisjon: 0,
 			valgtAdresse: {
 				"adresse": null,
@@ -81,6 +89,32 @@ class NavAutocomplete extends React.Component<{onDataVerified: any}, StateProps>
 			tilstand: autcompleteTilstand.INITIELL,
 			sokPostponed: false
 		};
+	}
+
+	hentAdresseFraFaktum(properties: any): Adresse {
+		const angittAdresse: Adresse = {
+			"adresse": null,
+			"husnummer": null,
+			"husbokstav": null,
+			"kommunenummer": null,
+			"kommunenavn": null,
+			"postnummer": null,
+			"poststed": null,
+			"geografiskTilknytning": null,
+			"gatekode": null,
+			"bydel": null
+		};
+		const gatenavnKey = "gatenavn";
+		angittAdresse.adresse = properties[ gatenavnKey ];
+		const keys = [
+			"type", "husnummer", "husbokstav", "kommunenummer",
+			"kommunenavn", "postnummer", "poststed", "geografiskTilknytning",
+		];
+		keys.map((key: string) => {
+			angittAdresse[ key ] = properties[ key ];
+		});
+		return angittAdresse;
+
 	}
 
 	componentDidUpdate() {

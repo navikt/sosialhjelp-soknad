@@ -93,6 +93,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		const fakta = this.props.fakta;
 		const folkeregistrertAdresseFaktum = finnFaktum("kontakt.system.folkeregistrert.adresse", this.props.fakta);
 		const adresseFaktum = finnFaktum("kontakt.system.adresse", this.props.fakta);
+		const adressesokAdresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
 
 		const getProperty = (faktum: Faktum, key: string): ElementProps => {
 			if (faktum.properties[key] == null) {
@@ -184,7 +185,10 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 					>
 						<div className="utvidetAddresseSok">
 							<SporsmalFaktum faktumKey="kontakt.system.kontaktinfo">
-								<NavAutocomplete onDataVerified={(data: any) => this.handleNavAutoCompleteData(data)}/>
+								<NavAutocomplete
+									adresseFaktum={adressesokAdresseFaktum}
+									onDataVerified={(data: any) => this.handleNavAutoCompleteData(data)}
+								/>
 							</SporsmalFaktum>
 							{/*<button*/}
 								{/*onClick={() => {*/}
