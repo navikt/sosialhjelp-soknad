@@ -69,22 +69,50 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		this.props.dispatch(lagreFaktum(faktum));
 	}
 
+	oppdaterValgtSoknadsmottaker(soknadsmottaker: any) {
+		let faktum = finnFaktum("soknadsmottaker", this.props.fakta);
+		const properties = [
+			"enhetsId", "enhetsnavn", "kommunenummer", "kommunenavn", "sosialOrgnr"
+		];
+		properties.map((property: string) => {
+			if (soknadsmottaker[property]) {
+				faktum = oppdaterFaktumMedVerdier(faktum, soknadsmottaker[property], property);
+			}
+		});
+		this.props.dispatch(lagreFaktum(faktum));
+	}
+
+	invalidateValgtSoknadsmottaker() {
+		this.oppdaterValgtSoknadsmottaker({
+			"enhetsId": null,
+			"enhetsnavn": null,
+			"kommunenummer": null,
+			"kommunenavn": null,
+			"sosialOrgnr": null
+		});
+	}
+
+	beregnSoknadsmottaker(brukerBehandlingId: string) {
+		fetchToJson("soknadsmottaker/" + brukerBehandlingId)
+		.then((response: any) => {
+			if (response && response.toString().length > 0) {
+				this.setState({ soknadsmottaker: response, visInformasjonsPanel: true });
+				this.oppdaterValgtSoknadsmottaker(response);
+			} else {
+				this.setState({ soknadsmottaker: {}, visInformasjonsPanel: false });
+				this.invalidateValgtSoknadsmottaker();
+			}
+		})
+		.catch((error: any) => {
+			console.error(error);
+		});
+	}
+
 	handleNavAutoCompleteData(adresse: Adresse) {
 		this.setState({data: adresse});
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
 			this.settAdresseFaktum(adresse);
-			fetchToJson("soknadsmottaker/" + this.props.brukerBehandlingId)
-				.then((response: any) => {
-					if (response && response.toString().length > 0) {
-						this.setState({ soknadsmottaker: response, visInformasjonsPanel: true });
-						// TODO Gjør ntytt rest kall for å sette søknadsmottaker på server
-					} else {
-						this.setState({ soknadsmottaker: {}, visInformasjonsPanel: false });
-					}
-				})
-				.catch((error: any) => {
-					console.error(error);
-				});
+			this.beregnSoknadsmottaker(this.props.brukerBehandlingId);
 		}
 	}
 
@@ -151,6 +179,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 							id="oppholdsadresse_folkeregistrert"
 							faktumKey="kontakt.system.oppholdsadresse.valg"
 							value="folkeregistrert"
+							onChange={() => this.beregnSoknadsmottaker(this.props.brukerBehandlingId)}
 							label={
 								<div>
 									<div
@@ -168,6 +197,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 							id="oppholdsadresse_midlertidig"
 							faktumKey="kontakt.system.oppholdsadresse.valg"
 							value="midlertidig"
+							onChange={() => this.beregnSoknadsmottaker(this.props.brukerBehandlingId)}
 							label={
 								<div>
 									<div style={{fontWeight: 600}}>Midlertidig adresse:</div>
@@ -179,6 +209,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 					<RadioFaktum
 						id="oppholdsadresse_soknad"
 						faktumKey="kontakt.system.oppholdsadresse.valg"
+						onChange={() => this.beregnSoknadsmottaker(this.props.brukerBehandlingId)}
 						value="soknad"/>
 					<Underskjema
 						visible={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "soknad"}

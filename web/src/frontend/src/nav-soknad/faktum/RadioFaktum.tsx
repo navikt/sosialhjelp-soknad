@@ -15,6 +15,7 @@ interface OwnProps {
 	disabled?: boolean;
 	id?: string;
 	label?: any;
+	onChange?: any;
 }
 
 class RadioFaktum extends React.Component<
@@ -34,7 +35,7 @@ class RadioFaktum extends React.Component<
 	}
 
 	render() {
-		const { faktumKey, value, disabled, property, required, intl } = this.props;
+		const { faktumKey, value, disabled, property, required, intl, onChange } = this.props;
 		const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
 		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
 		return (
@@ -49,8 +50,12 @@ class RadioFaktum extends React.Component<
 				disabled={disabled}
 				value={value}
 				required={required}
-				onChange={(evt: any) =>
-					this.props.setFaktumVerdiOgLagre(value, property)}
+				onChange={(evt: any) => {
+					this.props.setFaktumVerdiOgLagre(value, property);
+					if (onChange != null) {
+						onChange(evt);
+					}
+				}}
 				label={
 					this.determineLabel(id, faktumKey, tekster, value)
 				}
