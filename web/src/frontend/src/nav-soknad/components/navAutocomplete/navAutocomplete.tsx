@@ -22,7 +22,7 @@ function setCaretPosition(ctrl: any, pos: number) {
 
 const Autocomplete = require("react-autocomplete");
 
-const enum autcompleteTilstand {
+export const enum autcompleteTilstand {
 	INITIELL = "INITIELL",
 	SOKER = "SOKER",
 	ADRESSE_OK = "ADRESSE_OK",
@@ -56,7 +56,8 @@ interface StateProps {
 }
 
 interface Props {
-	onValgtVerdi: any;
+	onValgtVerdi: (data: any) => void;
+	onOppdaterTilstand?: (tilstand: autcompleteTilstand) => void;
 	adresseFaktum: Faktum;
 }
 
@@ -116,16 +117,18 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 		return angittAdresse;
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate(prevProps: Props, prevState: StateProps) {
 		if (this.state.cursorPosisjon > 0) {
 			const input = document.getElementById("states-autocomplete");
 			setCaretPosition(input, this.state.cursorPosisjon);
 			this.setState({ cursorPosisjon: 0 });
 		}
+		if (prevState.tilstand !== this.state.tilstand && this.props.onOppdaterTilstand) {
+			this.props.onOppdaterTilstand(this.state.tilstand);
+		}
 	}
 
 	onSelect(value: string, adresse: Adresse) {
-
 		this.setState({
 			value: this.formaterAdresseString(adresse),
 			cursorPosisjon: this.settCursorPosisjon(adresse),

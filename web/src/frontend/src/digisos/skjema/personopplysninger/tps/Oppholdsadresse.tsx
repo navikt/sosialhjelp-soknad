@@ -12,7 +12,9 @@ import Detaljeliste, {
 	DetaljelisteElement
 } from "../../../../nav-soknad/components/detaljeliste";
 import { finnFaktum } from "../../../../nav-soknad/utils";
-import NavAutocomplete from "../../../../nav-soknad/components/navAutocomplete/navAutocomplete";
+import NavAutocomplete, {
+	autcompleteTilstand
+} from "../../../../nav-soknad/components/navAutocomplete/navAutocomplete";
 import { connect } from "react-redux";
 import { State } from "../../../redux/reducers";
 import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
@@ -20,7 +22,6 @@ import Informasjonspanel from "../../../../nav-soknad/components/informasjonspan
 import { DispatchProps } from "../../../../nav-soknad/redux/reduxTypes";
 import { lagreFaktum } from "../../../../nav-soknad/redux/fakta/faktaActions";
 import { fetchToJson } from "../../../../nav-soknad/utils/rest-utils";
-// import {fetchToJson} from "../../../../nav-soknad/utils/rest-utils";
 
 interface OwnProps {
 	fakta: Faktum[];
@@ -104,7 +105,6 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		});
 	}
 
-	// -----------------------------------------------------------
 	settSoknadsmottaterFraFaktumAdresse(faktumKey: string) {
 
 		const faktum = finnFaktum(faktumKey, this.props.fakta);
@@ -163,6 +163,15 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		}
 	}
 
+	handleAutcompleteTilstand(tilstand: autcompleteTilstand) {
+		if (tilstand === autcompleteTilstand.ADRESSE_IKKE_VALGT) {
+			this.setState({visInformasjonsPanel: false});
+		}
+		if (tilstand === autcompleteTilstand.ADRESSE_OK) {
+			this.setState({visInformasjonsPanel: true});
+		}
+	}
+
 	renderInformasjonsPanel() {
 		let style: any = null;
 		let tekst: any = "";
@@ -172,6 +181,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		const SOSIALORGNR = "sosialOrgnr";
 		const KOMMUNENAVN = "kommunenavn";
 		const ENHETSNAVN = "enhetsnavn";
+		const HUSNUMMER = "husnummer";
 
 		if (faktum.properties[SOSIALORGNR] == null) {
 			style = "feil";
@@ -180,6 +190,11 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 			tekst = "Søknaden vil bli sendt til: " + faktum.properties[KOMMUNENAVN] + " " + faktum.properties[ENHETSNAVN];
 		}
 
+		const adressesokAdresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
+		if (adressesokAdresseFaktum.properties[HUSNUMMER] == null || adressesokAdresseFaktum.properties[HUSNUMMER] === "") {
+			style = "advarsel";
+			tekst = tekst + ". Advarsel: Du har ikke tastet inn husbokstav.";
+		}
 		return (
 			<Informasjonspanel
 				icon={<img src="/soknadsosialhjelp/statisk/bilder/konvolutt.svg"/>}
@@ -292,6 +307,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 								<NavAutocomplete
 									adresseFaktum={adressesokAdresseFaktum}
 									onValgtVerdi={(data: any) => this.handleVelgAutocompleteAdresse(data)}
+									onOppdaterTilstand={(tilstand: autcompleteTilstand) => this.handleAutcompleteTilstand(tilstand)}
 								/>
 							</SporsmalFaktum>
 							{/*<button*/}
