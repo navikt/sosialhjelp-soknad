@@ -56,7 +56,7 @@ interface StateProps {
 }
 
 interface Props {
-	onDataVerified: any;
+	onValgtVerdi: any;
 	adresseFaktum: Faktum;
 }
 
@@ -114,7 +114,6 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			angittAdresse[ key ] = properties[ key ];
 		});
 		return angittAdresse;
-
 	}
 
 	componentDidUpdate() {
@@ -134,12 +133,12 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			tilstand: autcompleteTilstand.ADRESSE_OK
 		});
 		if (adresse) {
-			this.props.onDataVerified(adresse);
+			this.props.onValgtVerdi(adresse);
 		}
 	}
 
 	invalidateFetch(value: string) {
-		this.props.onDataVerified(null);
+		this.props.onValgtVerdi(null);
 		this.setState({ value , tilstand: autcompleteTilstand.ADRESSE_UGYLDIG});
 	}
 
