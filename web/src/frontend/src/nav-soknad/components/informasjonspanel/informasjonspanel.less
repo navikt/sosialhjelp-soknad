@@ -12,6 +12,9 @@
 
 	&__synlig {
 		opacity: 1;
+		@media screen and (max-width: 730px) {
+			padding-left: 80px;
+		}
 	}
 
 	&>div {
@@ -24,6 +27,10 @@
 		border-radius: 100%;
 		height: 5rem;
 		width: 5rem;
+
+		@media screen and (max-width: 730px) {
+			transform: scale(0.7) translate(0%, -70%);
+		}
 
 		&>img {
 			position: absolute;
