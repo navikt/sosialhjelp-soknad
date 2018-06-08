@@ -12,7 +12,7 @@ import Detaljeliste, {
 	DetaljelisteElement
 } from "../../../../nav-soknad/components/detaljeliste";
 import { finnFaktum } from "../../../../nav-soknad/utils";
-import NavAutocomplete, { Adresse } from "../../../../nav-soknad/components/navAutocomplete/navAutocomplete";
+import NavAutocomplete from "../../../../nav-soknad/components/navAutocomplete/navAutocomplete";
 import { connect } from "react-redux";
 import { State } from "../../../redux/reducers";
 import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
@@ -41,6 +41,7 @@ export interface Adresse {
 	"geografiskTilknytning":  null | string;
 	"gatekode": null | string;
 	"bydel": null | string;
+	"type": null | string;
 }
 
 interface AdresseProperties {
@@ -70,7 +71,6 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 	}
 
 	settAdresseFaktum(adresse: Adresse) {
-		console.warn(JSON.stringify(adresse, null, 4));
 		let faktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
 		const properties = [
 			"type", "husnummer", "husbokstav", "kommunenummer",
@@ -106,37 +106,37 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 
 	// -----------------------------------------------------------
 	settSoknadsmottaterFraFaktumAdresse(faktumKey: string) {
-		// const temp_adresse: Adresse = {
-		// 	"adresse": null,
-		// 	"husnummer": null,
-		// 	"husbokstav": null,
-		// 	"kommunenummer": null,
-		// 	"kommunenavn": null,
-		// 	"postnummer": null,
-		// 	"poststed": null,
-		// 	"geografiskTilknytning": null,
-		// 	"gatekode": null,
-		// 	"bydel": null,
-		// 	"type": null
-		// };
-		//
-		// const faktum = finnFaktum(faktumKey, this.props.fakta);
-		// console.warn(JSON.stringify(faktum, null, 4));
-		// const GATENAVN = "gatenavn";
+
+		const faktum = finnFaktum(faktumKey, this.props.fakta);
+		console.warn(JSON.stringify(faktum, null, 4));
+
+		const ADRESSE = "adresse";
+		const GATENAVN = "gatenavn";
 		// const HUSNUMMER = "husnummer";
-		// const HUSBOKSTAV = "husbokstav";
-		// const KOMMUNENUMMER = "kommunenummer";
-		// const POSTSTED = "poststed";
-		//
-		//
-		// console.warn(faktum.properties[GATENAVN]);
-		// console.warn(faktum.properties[HUSNUMMER]);
-		//
-		//
-		//
-		// let soknadsMottakerFaktum = finnFaktum("soknadsmottaker", this.props.fakta);
-		// soknadsMottakerFaktum.properties = faktum.properties;
-		// this.props.dispatch(lagreFaktum(soknadsMottakerFaktum));
+		const HUSBOKSTAV = "husbokstav";
+		const KOMMUNENUMMER = "kommunenummer";
+		const KOMMUNENAVN = "kommunenavn";
+		const POSTNUMMER = "postnummer";
+		const POSTSTED = "poststed";
+		const adresse: Adresse = {
+			"adresse": faktum.properties[ADRESSE],
+			"husnummer": faktum.properties[GATENAVN],
+			"husbokstav": faktum.properties[HUSBOKSTAV],
+			"kommunenummer": faktum.properties[KOMMUNENUMMER],
+			"kommunenavn": faktum.properties[KOMMUNENAVN],
+			"postnummer": faktum.properties[POSTNUMMER],
+			"poststed": faktum.properties[POSTSTED],
+			"geografiskTilknytning": null,
+			"gatekode": null,
+			"bydel": null,
+			"type": "gateadresse"
+		};
+
+		this.setState({data: adresse});
+		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
+			this.settAdresseFaktum(adresse);
+			this.hentSoknadsmottaker(this.props.brukerBehandlingId);
+		}
 	}
 
 	hentSoknadsmottaker(brukerBehandlingId: string) {
@@ -156,7 +156,6 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 	}
 
 	handleVelgAutocompleteAdresse(adresse: Adresse) {
-		console.warn(adresse);
 		this.setState({data: adresse});
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
 			this.settAdresseFaktum(adresse);
