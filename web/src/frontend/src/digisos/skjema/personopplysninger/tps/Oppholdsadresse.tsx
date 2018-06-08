@@ -61,9 +61,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 			"kommunenavn", "postnummer", "poststed", "geografiskTilknytning",
 		];
 		properties.map((property: string) => {
-			if (adresse[property]) {
-				faktum = oppdaterFaktumMedVerdier(faktum, adresse[property], property);
-			}
+			faktum = oppdaterFaktumMedVerdier(faktum, adresse[property], property);
 		});
 		faktum = oppdaterFaktumMedVerdier(faktum, adresse.adresse, "gatenavn");
 		this.props.dispatch(lagreFaktum(faktum));
@@ -75,9 +73,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 			"enhetsId", "enhetsnavn", "kommunenummer", "kommunenavn", "sosialOrgnr"
 		];
 		properties.map((property: string) => {
-			if (soknadsmottaker[property]) {
-				faktum = oppdaterFaktumMedVerdier(faktum, soknadsmottaker[property], property);
-			}
+			faktum = oppdaterFaktumMedVerdier(faktum, soknadsmottaker[property], property);
 		});
 		this.props.dispatch(lagreFaktum(faktum));
 	}
