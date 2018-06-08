@@ -18,7 +18,6 @@ import {
 } from "../../../nav-soknad/utils";
 import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
 import Personalia from "./tps/Personalia";
-import Adresseinfo from "./tps/Adresseinfo";
 import Telefoninfo from "./tps/Telefoninfo";
 import Oppholdsadresse from "./tps/Oppholdsadresse";
 import Bankinformasjon from "./tps/Bankinformasjon";
@@ -47,9 +46,6 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 						<Personalia fakta={this.props.fakta} />
 					</SporsmalFaktum>
 					<Oppholdsadresse fakta={this.props.fakta} />
-					<SporsmalFaktum faktumKey="kontakt.system.kontaktinfo" style="system">
-						<Adresseinfo fakta={this.props.fakta} />
-					</SporsmalFaktum>
 					<Telefoninfo fakta={this.props.fakta} />
 					<Bankinformasjon fakta={this.props.fakta} onHarIkkeKontonummer={(verdi: string) => {
 						this.oppdaterHarIkkeKontonummer(this.props.fakta, verdi, this.props.dispatch);
