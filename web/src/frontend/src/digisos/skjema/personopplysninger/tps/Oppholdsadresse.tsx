@@ -108,7 +108,6 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 	settSoknadsmottaterFraFaktumAdresse(faktumKey: string) {
 
 		const faktum = finnFaktum(faktumKey, this.props.fakta);
-		console.warn(JSON.stringify(faktum, null, 4));
 
 		const ADRESSE = "adresse";
 		const GATENAVN = "gatenavn";
@@ -204,6 +203,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 			</Informasjonspanel>
 		);
 	}
+
 	render() {
 		const intl = this.props.intl;
 		const fakta = this.props.fakta;
