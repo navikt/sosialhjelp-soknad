@@ -27,7 +27,8 @@ export const enum autcompleteTilstand {
 	SOKER = "SOKER",
 	ADRESSE_OK = "ADRESSE_OK",
 	ADRESSE_UGYLDIG = "ADRESSE_UGYLDIG",
-	ADRESSE_IKKE_VALGT = "ADRESSE_IKKE_VALGT"
+	ADRESSE_IKKE_VALGT = "ADRESSE_IKKE_VALGT",
+	HUSNUMMER_IKKE_SATT = "HUSNUMMER_IKKE_SATT"
 }
 
 export interface Adresse {
@@ -88,7 +89,7 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			valueIsValid: undefined,
 			antallAktiveSok: 0,
 			tilstand: autcompleteTilstand.INITIELL,
-			sokPostponed: false
+			sokPostponed: false,
 		};
 	}
 
@@ -128,12 +129,14 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 		}
 	}
 
-	onSelect(value: string, adresse: Adresse) {
+	handleSelect(value: string, adresse: Adresse) {
 		this.setState({
 			value: this.formaterAdresseString(adresse),
 			cursorPosisjon: this.settCursorPosisjon(adresse),
 			valgtAdresse: adresse,
-			tilstand: autcompleteTilstand.ADRESSE_OK
+			tilstand: adresse.husnummer ?
+				autcompleteTilstand.ADRESSE_OK :
+				autcompleteTilstand.HUSNUMMER_IKKE_SATT
 		});
 		if (adresse) {
 			this.props.onValgtVerdi(adresse);
@@ -173,7 +176,7 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			});
 	}
 
-	onChange( event: any, value: string) {
+	handleChange( event: any, value: string) {
 		this.invalidateFetch(value);
 		if (this.shouldFetch(value)) {
 			if (this.state.antallAktiveSok === 0) {
@@ -231,10 +234,34 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 							{this.state.tilstand === autcompleteTilstand.INITIELL && <DigisosIkon navn="searchAddresse" />}
 							{this.state.tilstand === autcompleteTilstand.ADRESSE_OK && <DigisosIkon navn="checkCircle" />}
 							{this.state.tilstand === autcompleteTilstand.ADRESSE_UGYLDIG && <DigisosIkon navn="advarselSirkel" />}
+							{this.state.tilstand === autcompleteTilstand.HUSNUMMER_IKKE_SATT && <DigisosIkon navn="advarselSirkel" />}
 						</span>
 					)}
 				</span>
 			);
+	}
+
+	handleInputBlur(){
+		console.warn("Blurring...");
+	}
+
+	getRenderItem(item: any, isHighlighted:any){
+		if(this.state.tilstand === autcompleteTilstand.ADRESSE_OK){
+			// return (
+			// 	<div
+			// 		className={`item ${isHighlighted ? "item-highlighted" : ""}`}
+			// 		key={Math.random()}
+			// 	>{this.formaterAdresseString(item)}</div>
+			// )
+			return null
+		} else {
+			return (
+				<div
+					className={`item ${isHighlighted ? "item-highlighted" : ""}`}
+					key={Math.random()}
+				>{this.formaterAdresseString(item)}</div>
+			)
+		}
 	}
 
 	render() {
@@ -242,12 +269,16 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			<div className="navAutcomplete">
 				<Autocomplete
 					value={this.state.value}
-					inputProps={{id: "states-autocomplete", placeholder: "Gatenavn, kommune eller postnummer" }}
+					inputProps={{
+						id: "states-autocomplete",
+						placeholder: "Gatenavn, kommune eller postnummer",
+						onBlur: () => this.handleInputBlur()
+					}}
 					wrapperStyle={{position: "relative", display: "inline-block"}}
 					items={ this.state.adresser.slice(0, 8) }
 					getItemValue={(item: any) => item.adresse}
-					onChange={(event: any, value: string) => this.onChange(event, value)}
-					onSelect={(value: any, item: any) => this.onSelect(value, item)}
+					onChange={(event: any, value: string) => this.handleChange(event, value)}
+					onSelect={(value: any, item: any) => this.handleSelect(value, item)}
 					renderMenu={(children: any) => (
 						<span>
 						{children.toString() === "" && (<span/>)}
@@ -257,14 +288,13 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 							</div>)}
 						</span>
 					)}
-					renderItem={(item: any, isHighlighted: any) => (
-						<div
-							className={`item ${isHighlighted ? "item-highlighted" : ""}`}
-							key={Math.random()}
-						>{this.formaterAdresseString(item)}</div>
-					)}
+					renderItem={(item: any, isHighlighted: any) => this.getRenderItem(item, isHighlighted)}
 				/>
 				{ this.visIkon()}
+				{
+					this.state.tilstand === autcompleteTilstand.HUSNUMMER_IKKE_SATT &&
+					("Hvis du har husnummer må du legge til det (før kommaet)")
+				}
 			</div>
 		);
 	}
