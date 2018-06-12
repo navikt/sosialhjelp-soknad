@@ -12,6 +12,7 @@ import { FeatureTogglesApiType } from "./featuretoggles/featureTogglesTypes";
 import { VedleggState } from "./vedlegg/vedleggTypes";
 import { EttersendelseState } from "./ettersendelse/ettersendelseTypes";
 import { KommunerState } from "./kommuner/kommunerTypes";
+import { OppholdsAdresseState } from "../../digisos/skjema/personopplysninger/tps/oppholdsadresseReducer";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -39,6 +40,7 @@ export interface SoknadAppState {
 	ledetekster: LedetekstState;
 	ettersendelse: EttersendelseState;
 	kommuner: KommunerState;
+	oppholdsadresse: OppholdsAdresseState;
 	init: InitState;
 }
 

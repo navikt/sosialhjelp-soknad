@@ -22,11 +22,13 @@ import Informasjonspanel from "../../../../nav-soknad/components/informasjonspan
 import { DispatchProps } from "../../../../nav-soknad/redux/reduxTypes";
 import { lagreFaktum } from "../../../../nav-soknad/redux/fakta/faktaActions";
 import { fetchToJson } from "../../../../nav-soknad/utils/rest-utils";
+import { velgAdresseFraSoketreff, velgFolkeregistrertAdresse } from "./oppholdsadresseReducer";
 
 interface OwnProps {
 	fakta: Faktum[];
 	visUtvidetAdressesok: boolean;
 	brukerBehandlingId: string;
+	oppholdsadresse: any;
 }
 
 type Props = OwnProps & InjectedIntlProps & DispatchProps;
@@ -131,6 +133,8 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 			"type": "gateadresse"
 		};
 
+		this.props.dispatch(velgFolkeregistrertAdresse(adresse));
+
 		this.setState({data: adresse});
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
 			this.settAdresseFaktum(adresse);
@@ -155,6 +159,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 	}
 
 	handleVelgAutocompleteAdresse(adresse: Adresse) {
+		this.props.dispatch(velgAdresseFraSoketreff(adresse));
 		this.setState({data: adresse});
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
 			this.settAdresseFaktum(adresse);
@@ -336,6 +341,7 @@ export default connect((state: State, props: any) => {
 		faktaRestStatus: state.fakta.restStatus,
 		navEnheter: state.kommuner.data,
 		kommunerRestStatus: state.kommuner.restStatus,
-		brukerBehandlingId: state.soknad.data.brukerBehandlingId
+		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
+		oppholdsadresse: state.oppholdsadresse
 	};
 })(injectIntl(Oppholdsadresse));
