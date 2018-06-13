@@ -52,8 +52,9 @@ interface StateProps {
 	cursorPosisjon: number;
 	antallAktiveSok: number;
 	tilstand: autcompleteTilstand;
-	valgtAdresse?: Adresse;
+	valgtAdresse: Adresse | null;
 	sokPostponed: boolean;
+	open: boolean;
 }
 
 interface Props {
@@ -72,24 +73,26 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 		this.state = {
 			value,
 			cursorPosisjon: 0,
-			valgtAdresse: {
-				"adresse": null,
-				"husnummer": null,
-				"husbokstav": null,
-				"kommunenummer": null,
-				"kommunenavn": null,
-				"postnummer": null,
-				"poststed": null,
-				"geografiskTilknytning": null,
-				"gatekode": null,
-				"bydel": null
-			},
+			valgtAdresse: null,
+			// valgtAdresse: {
+			// 	"adresse": null,
+			// 	"husnummer": null,
+			// 	"husbokstav": null,
+			// 	"kommunenummer": null,
+			// 	"kommunenavn": null,
+			// 	"postnummer": null,
+			// 	"poststed": null,
+			// 	"geografiskTilknytning": null,
+			// 	"gatekode": null,
+			// 	"bydel": null
+			// },
 			adresser: [],
 			adresserWithId: [],
 			valueIsValid: undefined,
 			antallAktiveSok: 0,
 			tilstand: autcompleteTilstand.INITIELL,
 			sokPostponed: false,
+			open: false,
 		};
 	}
 
@@ -134,6 +137,7 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			value: this.formaterAdresseString(adresse),
 			cursorPosisjon: this.settCursorPosisjon(adresse),
 			valgtAdresse: adresse,
+			adresser: [],
 			tilstand: adresse.husnummer ?
 				autcompleteTilstand.ADRESSE_OK :
 				autcompleteTilstand.HUSNUMMER_IKKE_SATT
@@ -176,10 +180,31 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			});
 	}
 
-	handleChange( event: any, value: string) {
+	handleChange(event: any, value: string) {
+		if (this.state.valgtAdresse) {
+			const valgtAdresseToFormattedString = this.formaterAdresseString(this.state.valgtAdresse);
+			const previousFirstPart: string = valgtAdresseToFormattedString.split(",")[0];
+			const previousLastPart: string = valgtAdresseToFormattedString.split(",")[1];
+
+			if (value.indexOf(previousFirstPart, 0) === -1 || value.indexOf(previousLastPart, 0) === -1) {
+				console.warn("nå ble noe forrandret i input feltet som gjør tilstand ugyldig ");
+				this.setState({valgtAdresse: null, tilstand: autcompleteTilstand.ADRESSE_UGYLDIG});
+			} else {
+				const addedPart = /(\d+)[a-zA-Z]*/g.exec(value);
+				const valgtAdresse = this.state.valgtAdresse;
+				valgtAdresse.husnummer = /\d+/g.exec(addedPart[0])[0];
+				if (/[a-zA-Z]+/g.exec(addedPart[0])) {
+					valgtAdresse.husbokstav = /[a-zA-Z]+/g.exec(addedPart[0])[0];
+				}
+				this.setState({valgtAdresse});
+			}
+		}
+		console.warn(this.state.valgtAdresse);
+
 		this.invalidateFetch(value);
 		if (this.shouldFetch(value)) {
 			if (this.state.antallAktiveSok === 0) {
+				console.warn("debug1: fetching: '" + value + "'");
 				this.executeFetch(value);
 			} else {
 				this.setState({sokPostponed: true});
@@ -190,25 +215,36 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 		} else {
 			this.setState({adresser: [], tilstand: autcompleteTilstand.ADRESSE_UGYLDIG});
 		}
+
+		if (this.state.valgtAdresse) {
+			this.props.onValgtVerdi(this.state.valgtAdresse);
+		}
 	}
 
 	formaterAdresseString(adresse: Adresse) {
-		let value = adresse.adresse;
+		let returverdi = adresse.adresse;
 		const husbokstav: string = adresse.husbokstav != null ? adresse.husbokstav : "";
-		if (adresse.postnummer != null && adresse.poststed != null) {
-			if (adresse.husnummer !== "") {
-				value += " " + adresse.husnummer + husbokstav + ", " + adresse.postnummer + " " + adresse.poststed;
-			} else {
-				value += " , " + adresse.postnummer + " " + adresse.poststed;
+		try {
+			if (adresse.postnummer != null && adresse.poststed != null) {
+				if (adresse.husnummer !== "" && adresse.husnummer !== null) {
+					returverdi += " " + adresse.husnummer + husbokstav + ", " + adresse.postnummer + " " + adresse.poststed;
+				} else {
+					if (adresse.postnummer !== null && adresse.poststed !== null) {
+						returverdi += " , " + adresse.postnummer + " " + adresse.poststed;
+					}
+				}
+			} else if (adresse.kommunenavn != null) {
+				if (adresse.husnummer !== "" && adresse.husnummer !== null) {
+					returverdi += " " + adresse.husnummer + husbokstav + ", " + adresse.kommunenavn;
+				} else {
+					returverdi += " , " + adresse.kommunenavn;
+				}
 			}
-		} else if (adresse.kommunenavn != null) {
-			if (adresse.husnummer !== "") {
-				value += " " + adresse.husnummer + husbokstav + ", " + adresse.kommunenavn;
-			} else {
-				value += " , " + adresse.kommunenavn;
-			}
+		} catch (error) {
+			console.warn("error: " + error);
 		}
-		return value;
+
+		return returverdi;
 	}
 
 	settCursorPosisjon(adresse: Adresse) {
@@ -241,27 +277,32 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			);
 	}
 
-	handleInputBlur(){
-		console.warn("Blurring...");
+	handleInputBlur() {
+		if (this.state.valgtAdresse) {
+			this.setState({tilstand: autcompleteTilstand.ADRESSE_OK});
+		}
 	}
 
-	getRenderItem(item: any, isHighlighted:any){
-		if(this.state.tilstand === autcompleteTilstand.ADRESSE_OK){
-			// return (
-			// 	<div
-			// 		className={`item ${isHighlighted ? "item-highlighted" : ""}`}
-			// 		key={Math.random()}
-			// 	>{this.formaterAdresseString(item)}</div>
-			// )
-			return null
+	getRenderItem(item: any, isHighlighted: any) {
+		if (this.state.tilstand === autcompleteTilstand.ADRESSE_OK) {
+			return (
+				<div
+					className={`item ${isHighlighted ? "item-highlighted" : ""}`}
+					key={Math.random()}
+				>{this.formaterAdresseString(item)}</div>
+			);
 		} else {
 			return (
 				<div
 					className={`item ${isHighlighted ? "item-highlighted" : ""}`}
 					key={Math.random()}
 				>{this.formaterAdresseString(item)}</div>
-			)
+			);
 		}
+	}
+
+	open(): boolean {
+		return this.state.adresser.length > 1;
 	}
 
 	render() {
@@ -289,11 +330,12 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 						</span>
 					)}
 					renderItem={(item: any, isHighlighted: any) => this.getRenderItem(item, isHighlighted)}
+					open={this.open()}
 				/>
 				{ this.visIkon()}
 				{
 					this.state.tilstand === autcompleteTilstand.HUSNUMMER_IKKE_SATT &&
-					("Hvis du har husnummer må du legge til det (før kommaet)")
+					(<p>"Hvis du har husnummer må du legge til det (før kommaet)"</p>)
 				}
 			</div>
 		);
