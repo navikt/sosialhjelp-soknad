@@ -193,22 +193,29 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 	}
 
 	formaterAdresseString(adresse: Adresse) {
-		let value = adresse.adresse;
+		let returverdi = adresse.adresse;
 		const husbokstav: string = adresse.husbokstav != null ? adresse.husbokstav : "";
-		if (adresse.postnummer != null && adresse.poststed != null) {
-			if (adresse.husnummer !== "") {
-				value += " " + adresse.husnummer + husbokstav + ", " + adresse.postnummer + " " + adresse.poststed;
-			} else {
-				value += " , " + adresse.postnummer + " " + adresse.poststed;
+		try {
+			if (adresse.postnummer != null && adresse.poststed != null) {
+				if (adresse.husnummer !== "" && adresse.husnummer !== null) {
+					returverdi += " " + adresse.husnummer + husbokstav + ", " + adresse.postnummer + " " + adresse.poststed;
+				} else {
+					if (adresse.postnummer !== null && adresse.poststed !== null) {
+						returverdi += " , " + adresse.postnummer + " " + adresse.poststed;
+					}
+				}
+			} else if (adresse.kommunenavn != null) {
+				if (adresse.husnummer !== "" && adresse.husnummer !== null) {
+					returverdi += " " + adresse.husnummer + husbokstav + ", " + adresse.kommunenavn;
+				} else {
+					returverdi += " , " + adresse.kommunenavn;
+				}
 			}
-		} else if (adresse.kommunenavn != null) {
-			if (adresse.husnummer !== "") {
-				value += " " + adresse.husnummer + husbokstav + ", " + adresse.kommunenavn;
-			} else {
-				value += " , " + adresse.kommunenavn;
-			}
+		} catch (error) {
+			console.warn("error: " + error);
 		}
-		return value;
+
+		return returverdi;
 	}
 
 	settCursorPosisjon(adresse: Adresse) {
@@ -241,26 +248,25 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			);
 	}
 
-	handleInputBlur(){
+	handleInputBlur() {
 		console.warn("Blurring...");
 	}
 
-	getRenderItem(item: any, isHighlighted:any){
-		if(this.state.tilstand === autcompleteTilstand.ADRESSE_OK){
-			// return (
-			// 	<div
-			// 		className={`item ${isHighlighted ? "item-highlighted" : ""}`}
-			// 		key={Math.random()}
-			// 	>{this.formaterAdresseString(item)}</div>
-			// )
-			return null
+	getRenderItem(item: any, isHighlighted: any) {
+		if (this.state.tilstand === autcompleteTilstand.ADRESSE_OK) {
+			return (
+				<div
+					className={`item ${isHighlighted ? "item-highlighted" : ""}`}
+					key={Math.random()}
+				>{this.formaterAdresseString(item)}</div>
+			);
 		} else {
 			return (
 				<div
 					className={`item ${isHighlighted ? "item-highlighted" : ""}`}
 					key={Math.random()}
 				>{this.formaterAdresseString(item)}</div>
-			)
+			);
 		}
 	}
 
