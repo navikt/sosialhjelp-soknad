@@ -51,8 +51,9 @@ interface StateProps {
 	cursorPosisjon: number;
 	antallAktiveSok: number;
 	tilstand: autcompleteTilstand;
-	valgtAdresse?: Adresse;
+	valgtAdresse: Adresse | null;
 	sokPostponed: boolean;
+	open: boolean;
 }
 
 interface Props {
@@ -71,24 +72,26 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 		this.state = {
 			value,
 			cursorPosisjon: 0,
-			valgtAdresse: {
-				"adresse": null,
-				"husnummer": null,
-				"husbokstav": null,
-				"kommunenummer": null,
-				"kommunenavn": null,
-				"postnummer": null,
-				"poststed": null,
-				"geografiskTilknytning": null,
-				"gatekode": null,
-				"bydel": null
-			},
+			valgtAdresse: null,
+			// valgtAdresse: {
+			// 	"adresse": null,
+			// 	"husnummer": null,
+			// 	"husbokstav": null,
+			// 	"kommunenummer": null,
+			// 	"kommunenavn": null,
+			// 	"postnummer": null,
+			// 	"poststed": null,
+			// 	"geografiskTilknytning": null,
+			// 	"gatekode": null,
+			// 	"bydel": null
+			// },
 			adresser: [],
 			adresserWithId: [],
 			valueIsValid: undefined,
 			antallAktiveSok: 0,
 			tilstand: autcompleteTilstand.INITIELL,
 			sokPostponed: false,
+			open: false,
 		};
 	}
 
@@ -133,6 +136,7 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			value: this.formaterAdresseString(adresse),
 			cursorPosisjon: this.settCursorPosisjon(adresse),
 			valgtAdresse: adresse,
+			adresser: [],
 			tilstand: adresse.husnummer ?
 				autcompleteTilstand.ADRESSE_OK :
 				autcompleteTilstand.HUSNUMMER_IKKE_SATT
@@ -175,10 +179,31 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			});
 	}
 
-	handleChange( event: any, value: string) {
+	handleChange(event: any, value: string) {
+		if (this.state.valgtAdresse) {
+			const valgtAdresseToFormattedString = this.formaterAdresseString(this.state.valgtAdresse);
+			const previousFirstPart: string = valgtAdresseToFormattedString.split(",")[0];
+			const previousLastPart: string = valgtAdresseToFormattedString.split(",")[1];
+
+			if (value.indexOf(previousFirstPart, 0) === -1 || value.indexOf(previousLastPart, 0) === -1) {
+				console.warn("nå ble noe forrandret i input feltet som gjør tilstand ugyldig ");
+				this.setState({valgtAdresse: null, tilstand: autcompleteTilstand.ADRESSE_UGYLDIG});
+			} else {
+				const addedPart = /(\d+)[a-zA-Z]*/g.exec(value);
+				const valgtAdresse = this.state.valgtAdresse;
+				valgtAdresse.husnummer = /\d+/g.exec(addedPart[0])[0];
+				if (/[a-zA-Z]+/g.exec(addedPart[0])) {
+					valgtAdresse.husbokstav = /[a-zA-Z]+/g.exec(addedPart[0])[0];
+				}
+				this.setState({valgtAdresse});
+			}
+		}
+		console.warn(this.state.valgtAdresse);
+
 		this.invalidateFetch(value);
 		if (this.shouldFetch(value)) {
 			if (this.state.antallAktiveSok === 0) {
+				console.warn("debug1: fetching: '" + value + "'");
 				this.executeFetch(value);
 			} else {
 				this.setState({sokPostponed: true});
@@ -188,6 +213,10 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 					: autcompleteTilstand.ADRESSE_IKKE_VALGT});
 		} else {
 			this.setState({adresser: [], tilstand: autcompleteTilstand.ADRESSE_UGYLDIG});
+		}
+
+		if (this.state.valgtAdresse) {
+			this.props.onValgtVerdi(this.state.valgtAdresse);
 		}
 	}
 
@@ -248,7 +277,9 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 	}
 
 	handleInputBlur() {
-		console.warn("Blurring...");
+		if (this.state.valgtAdresse) {
+			this.setState({tilstand: autcompleteTilstand.ADRESSE_OK});
+		}
 	}
 
 	getRenderItem(item: any, isHighlighted: any) {
@@ -298,11 +329,12 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 					)}
 					open={this.open()}
 					renderItem={(item: any, isHighlighted: any) => this.getRenderItem(item, isHighlighted)}
+					open={this.open()}
 				/>
 				{ this.visIkon()}
 				{
 					this.state.tilstand === autcompleteTilstand.HUSNUMMER_IKKE_SATT &&
-					("Hvis du har husnummer må du legge til det (før kommaet)")
+					(<p>"Hvis du har husnummer må du legge til det (før kommaet)"</p>)
 				}
 			</div>
 		);
