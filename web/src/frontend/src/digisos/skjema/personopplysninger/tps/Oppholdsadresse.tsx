@@ -159,6 +159,10 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 	}
 
 	handleVelgAutocompleteAdresse(adresse: Adresse) {
+		if (adresse) {
+			console.warn("===> adresse satt hos foreldre");
+		}
+
 		this.props.dispatch(velgAdresseFraSoketreff(adresse));
 		this.setState({data: adresse});
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
@@ -311,7 +315,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 							<SporsmalFaktum faktumKey="kontakt.system.kontaktinfo">
 								<NavAutocomplete
 									adresseFaktum={adressesokAdresseFaktum}
-									onValgtVerdi={(data: any) => this.handleVelgAutocompleteAdresse(data)}
+									onValgtVerdi={(adresse: Adresse) => this.handleVelgAutocompleteAdresse(adresse)}
 									onOppdaterTilstand={(tilstand: autcompleteTilstand) => this.handleAutcompleteTilstand(tilstand)}
 								/>
 							</SporsmalFaktum>

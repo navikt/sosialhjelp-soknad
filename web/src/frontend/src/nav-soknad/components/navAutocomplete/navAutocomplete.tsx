@@ -3,6 +3,7 @@ import { fetchToJson } from "../../utils/rest-utils";
 import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { Faktum } from "../../types";
+const Autocomplete = require("react-autocomplete");
 
 function setCaretPosition(ctrl: any, pos: number) {
 	// Modern browsers
@@ -19,8 +20,6 @@ function setCaretPosition(ctrl: any, pos: number) {
 		range.select();
 	}
 }
-
-const Autocomplete = require("react-autocomplete");
 
 export const enum autcompleteTilstand {
 	INITIELL = "INITIELL",
@@ -270,6 +269,10 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 		}
 	}
 
+	open(): boolean {
+		return this.state.adresser.length > 1;
+	}
+
 	render() {
 		return (
 			<div className="navAutcomplete">
@@ -277,8 +280,7 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 					value={this.state.value}
 					inputProps={{
 						id: "states-autocomplete",
-						placeholder: "Gatenavn, kommune eller postnummer",
-						onBlur: () => this.handleInputBlur()
+						placeholder: "Gatenavn, kommune eller postnummer"
 					}}
 					wrapperStyle={{position: "relative", display: "inline-block"}}
 					items={ this.state.adresser.slice(0, 8) }
@@ -294,6 +296,7 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 							</div>)}
 						</span>
 					)}
+					open={this.open()}
 					renderItem={(item: any, isHighlighted: any) => this.getRenderItem(item, isHighlighted)}
 				/>
 				{ this.visIkon()}
