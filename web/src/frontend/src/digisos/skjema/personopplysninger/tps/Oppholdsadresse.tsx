@@ -55,7 +55,8 @@ interface AdresseProperties {
 }
 
 interface StateProps {
-	data: Adresse;
+	adresseFolkeregistrert: Adresse;
+	adresseValgt: Adresse;
 	visInformasjonsPanel: boolean; // TODO Rename til visSoknadsMottakerPanel
 	soknadsmottaker: any;
 }
@@ -67,22 +68,23 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		const SOSIALORGNR = "sosialOrgnr";
 		const faktum = finnFaktum("soknadsmottaker", this.props.fakta);
 		this.state = {
-			data: null,
+			adresseFolkeregistrert: null,
+			adresseValgt: null,
 			visInformasjonsPanel: faktum.properties[SOSIALORGNR] ? true : false,
 			soknadsmottaker: {}
 		};
 	}
 
-	settAdresseFaktum(adresse: Adresse) {
+	settAdresseFaktum(adresseFolkeregistrert: Adresse) {
 		let faktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
 		const properties = [
 			"type", "husnummer", "husbokstav", "kommunenummer",
 			"kommunenavn", "postnummer", "poststed", "geografiskTilknytning",
 		];
 		properties.map((property: string) => {
-			faktum = oppdaterFaktumMedVerdier(faktum, adresse[property], property);
+			faktum = oppdaterFaktumMedVerdier(faktum, adresseFolkeregistrert[property], property);
 		});
-		faktum = oppdaterFaktumMedVerdier(faktum, adresse.adresse, "gatenavn");
+		faktum = oppdaterFaktumMedVerdier(faktum, adresseFolkeregistrert.adresse, "gatenavn");
 		this.props.dispatch(lagreFaktum(faktum));
 	}
 
@@ -105,6 +107,31 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 			"kommunenavn": null,
 			"sosialOrgnr": null
 		});
+	}
+	
+	slettSoknadsmottakerFraFaktumAdresse(){
+		
+		const adresse: Adresse = {
+			"adresse": null,
+			"husnummer": null,
+			"husbokstav": null,
+			"kommunenummer": null,
+			"kommunenavn": null,
+			"postnummer": null,
+			"poststed": null,
+			"geografiskTilknytning": null,
+			"gatekode": null,
+			"bydel": null,
+			"type": "gateadresse"
+		};
+
+		this.props.dispatch(velgAdresseFraSoketreff(adresse));
+
+		this.setState({adresseFolkeregistrert: adresse});
+		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
+			this.settAdresseFaktum(adresse);
+			this.hentSoknadsmottaker(this.props.brukerBehandlingId);
+		}
 	}
 
 	settSoknadsmottaterFraFaktumAdresse(faktumKey: string) {
@@ -135,11 +162,26 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 
 		this.props.dispatch(velgFolkeregistrertAdresse(adresse));
 
-		this.setState({data: adresse});
+		this.setState({adresseFolkeregistrert: adresse, visInformasjonsPanel: true});
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
 			this.settAdresseFaktum(adresse);
 			this.hentSoknadsmottaker(this.props.brukerBehandlingId);
 		}
+	}
+
+	brukValgtAdresse(){
+		// fjern infopanel med en gang
+		this.setState({visInformasjonsPanel: false});
+		// slettSoknadsmottakerFraFaktumAdresse
+		this.slettSoknadsmottakerFraFaktumAdresse();
+		// if this.state.adresseValgt => fyr av ny call
+		console.warn("this.state.adresseValgt:")
+		console.warn(this.state.adresseValgt);
+		if (this.state.adresseValgt){
+			this.settAdresseFaktum(this.state.adresseValgt);
+		}
+
+		this.hentSoknadsmottaker(this.props.brukerBehandlingId)
 	}
 
 	hentSoknadsmottaker(brukerBehandlingId: string) {
@@ -160,20 +202,23 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 
 	handleVelgAutocompleteAdresse(adresse: Adresse) {
 		this.props.dispatch(velgAdresseFraSoketreff(adresse));
-		this.setState({data: adresse});
+		this.setState({adresseValgt: adresse});
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
+			console.warn("**********");
+			console.warn(adresse);
 			this.settAdresseFaktum(adresse);
 			this.hentSoknadsmottaker(this.props.brukerBehandlingId);
 		}
 	}
 
 	handleAutcompleteTilstand(tilstand: autcompleteTilstand) {
-		if (tilstand === autcompleteTilstand.ADRESSE_IKKE_VALGT) {
-			this.setState({visInformasjonsPanel: false});
-		}
-		if (tilstand === autcompleteTilstand.ADRESSE_OK) {
-			this.setState({visInformasjonsPanel: true});
-		}
+		console.warn("prøver uten dette.");
+		// if (tilstand === autcompleteTilstand.ADRESSE_IKKE_VALGT) {
+		// 	this.setState({visInformasjonsPanel: false});
+		// }
+		// if (tilstand === autcompleteTilstand.ADRESSE_OK) {
+		// 	this.setState({visInformasjonsPanel: true});
+		// }
 	}
 
 	renderInformasjonsPanel() {
@@ -185,7 +230,6 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		const SOSIALORGNR = "sosialOrgnr";
 		const KOMMUNENAVN = "kommunenavn";
 		const ENHETSNAVN = "enhetsnavn";
-		const HUSNUMMER = "husnummer";
 
 		if (faktum.properties[SOSIALORGNR] == null) {
 			style = "feil";
@@ -194,11 +238,6 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 			tekst = "Søknaden vil bli sendt til: " + faktum.properties[KOMMUNENAVN] + " " + faktum.properties[ENHETSNAVN];
 		}
 
-		const adressesokAdresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
-		if (adressesokAdresseFaktum.properties[HUSNUMMER] == null || adressesokAdresseFaktum.properties[HUSNUMMER] === "") {
-			style = "advarsel";
-			tekst = tekst + ". Advarsel: Du har ikke tastet inn husbokstav.";
-		}
 		return (
 			<Informasjonspanel
 				icon={<img src="/soknadsosialhjelp/statisk/bilder/konvolutt.svg"/>}
@@ -302,7 +341,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 					<RadioFaktum
 						id="oppholdsadresse_soknad"
 						faktumKey="kontakt.system.oppholdsadresse.valg"
-						onChange={() => this.hentSoknadsmottaker(this.props.brukerBehandlingId)}
+						onChange={() => this.brukValgtAdresse()}
 						value="soknad"/>
 					<Underskjema
 						visible={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "soknad"}
@@ -311,17 +350,10 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 							<SporsmalFaktum faktumKey="kontakt.system.kontaktinfo">
 								<NavAutocomplete
 									adresseFaktum={adressesokAdresseFaktum}
-									onValgtVerdi={(data: any) => this.handleVelgAutocompleteAdresse(data)}
+									onValgtVerdi={(adresse: any) => this.handleVelgAutocompleteAdresse(adresse)}
 									onOppdaterTilstand={(tilstand: autcompleteTilstand) => this.handleAutcompleteTilstand(tilstand)}
 								/>
 							</SporsmalFaktum>
-							{/*<button*/}
-								{/*onClick={() => {*/}
-									{/*this.setState({visInformasjonsPanel: !this.state.visInformasjonsPanel});*/}
-								{/*}}>*/}
-									{/*{!this.state.visInformasjonsPanel && (<span>Vis informasjonspanel</span>)}*/}
-									{/*{this.state.visInformasjonsPanel && (<span>Skjult informasjonspanel</span>)}*/}
-							{/*</button>*/}
 						</div>
 					</Underskjema>
 				</SporsmalFaktum>
