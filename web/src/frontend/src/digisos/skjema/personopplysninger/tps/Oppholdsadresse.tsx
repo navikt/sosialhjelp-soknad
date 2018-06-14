@@ -234,7 +234,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 					+ this.state.soknadsmottaker[ENHETSNAVN]
 					+ ", "
 					+ this.state.soknadsmottaker[KOMMUNENAVN]
-					+ " kommune."
+					+ " kommune.";
 			}
 
 			return (

@@ -124,8 +124,8 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 
 	handleSelect(value: string, adresse: Adresse) {
 
-		const temp = this.formaterAdresseString(adresse).split(",")[0]
-		const temp2 = /[a-zA-Z]/.exec(temp[0])
+		const temp = this.formaterAdresseString(adresse).split(",")[0];
+		const temp2 = /[a-zA-Z]/.exec(temp[0]);
 
 		this.setState({
 			value: this.formaterAdresseString(adresse),
@@ -191,10 +191,10 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			} else {
 				const everythingBeforeComma = value.split(",")[0];
 				const addedPart = /(\d+)[a-zA-Z]*/g.exec(everythingBeforeComma);
-				let valgtAdresse = this.state.valgtAdresse;
+				const valgtAdresse = this.state.valgtAdresse;
 				console.warn(addedPart);
-				valgtAdresse.husnummer = addedPart ? /\d+/g.exec(addedPart[0])[0] : null ;
-				if(addedPart){
+				valgtAdresse.husnummer = addedPart ? /\d+/g.exec(addedPart[0])[0] : null;
+				if (addedPart) {
 					if (/[a-zA-Z]+/g.exec(addedPart[0])) {
 						valgtAdresse.husbokstav = /[a-zA-Z]+/g.exec(addedPart[0])[0];
 					} else {
@@ -210,7 +210,7 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 					});
 				} else {
 					this.props.onValgtVerdi(null);
-					this.handleChange(null,this.state.valgtAdresse.adresse);
+					this.handleChange(null, this.state.valgtAdresse.adresse);
 				}
 			}
 		} else {
