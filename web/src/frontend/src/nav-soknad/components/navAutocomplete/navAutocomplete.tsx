@@ -70,8 +70,6 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 	constructor(props: Props) {
 		super(props);
 
-		// const angittAdresse: Adresse = this.hentAdresseFraFaktum(props.adresseFaktum.properties);
-		// const value = this.formaterAdresseString(angittAdresse);
 		this.state = {
 			value: "",
 			cursorPosisjon: 0,

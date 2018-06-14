@@ -76,9 +76,6 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 	constructor(props: Props) {
 		super(props);
 
-		// const SOSIALORGNR = "sosialOrgnr";
-		// const faktum = finnFaktum("soknadsmottaker", this.props.fakta);
-
 		this.state = {
 			adresseFolkeregistrert: null,
 			adresseValgt: null,
@@ -174,6 +171,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 	}
 
 	brukValgtAdresse() {
+		this.setState({visInformasjonsPanel: false});
 		this.slettSoknadsmottakerFraFaktumAdresse();
 
 		if (this.state.adresseValgt) {
@@ -202,6 +200,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 	}
 
 	handleVelgAutocompleteAdresse(adresse: Adresse) {
+		this.setState({visInformasjonsPanel: false});
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
 			this.props.dispatch(velgAdresseFraSoketreff(adresse));
 			this.settAdresseFaktum(adresse);
@@ -226,15 +225,16 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		const KOMMUNENAVN = "kommunenavn";
 		const ENHETSNAVN = "enhetsnavn";
 
-		if (this.state.soknadsmottaker) {
+		if (this.state.soknadsmottaker && this.state.visInformasjonsPanel) {
 			if (this.state.soknadsmottaker[SOSIALORGNR] === null) {
 				style = "feil";
 				tekst = "Søknaden er ikke tilgjengelig digitalt i din kommune. Ta kontakt direkte med ditt NAV kontor. Les mer";
 			} else {
 				tekst = "Søknaden vil bli sendt til: "
+					+ this.state.soknadsmottaker[ENHETSNAVN]
+					+ ", "
 					+ this.state.soknadsmottaker[KOMMUNENAVN]
-					+ " "
-					+ this.state.soknadsmottaker[ENHETSNAVN];
+					+ " kommune."
 			}
 
 			return (
