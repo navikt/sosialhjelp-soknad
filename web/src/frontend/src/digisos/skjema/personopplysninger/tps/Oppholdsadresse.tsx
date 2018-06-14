@@ -54,7 +54,7 @@ export interface Soknadsmottaker {
 	"sosialOrgnr": null | string;
 	"features": {
 		"ettersendelse":  null | string;
-	}
+	};
 }
 
 interface AdresseProperties {
@@ -135,7 +135,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 	}
 
 	settSoknadsmottaterFraFaktumAdresse(faktumKey: string) {
-		this.setState({visInformasjonsPanel: false})
+		this.setState({visInformasjonsPanel: false});
 
 		const faktum = finnFaktum(faktumKey, this.props.fakta);
 
@@ -180,9 +180,9 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 			this.props.dispatch(velgAdresseFraSoketreff(this.state.adresseValgt));
 			this.settAdresseFaktum(this.state.adresseValgt);
 			this.hentSoknadsmottaker(this.props.brukerBehandlingId);
-			this.setState({visInformasjonsPanel: true})
+			this.setState({visInformasjonsPanel: true});
 		} else {
-			this.setState({visInformasjonsPanel: false})
+			this.setState({visInformasjonsPanel: false});
 		}
 	}
 
@@ -202,8 +202,6 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 	}
 
 	handleVelgAutocompleteAdresse(adresse: Adresse) {
-		console.warn("handle new adress result given from navAutocomplete! The value of adress is: ");
-		console.warn(adresse);
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
 			this.props.dispatch(velgAdresseFraSoketreff(adresse));
 			this.settAdresseFaktum(adresse);
@@ -228,12 +226,15 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		const KOMMUNENAVN = "kommunenavn";
 		const ENHETSNAVN = "enhetsnavn";
 
-		if(this.state.soknadsmottaker){
+		if (this.state.soknadsmottaker) {
 			if (this.state.soknadsmottaker[SOSIALORGNR] === null) {
 				style = "feil";
 				tekst = "Søknaden er ikke tilgjengelig digitalt i din kommune. Ta kontakt direkte med ditt NAV kontor. Les mer";
 			} else {
-				tekst = "Søknaden vil bli sendt til: " + this.state.soknadsmottaker[KOMMUNENAVN] + " " + this.state.soknadsmottaker[ENHETSNAVN];
+				tekst = "Søknaden vil bli sendt til: "
+					+ this.state.soknadsmottaker[KOMMUNENAVN]
+					+ " "
+					+ this.state.soknadsmottaker[ENHETSNAVN];
 			}
 
 			return (
@@ -241,11 +242,11 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 					icon={<img src="/soknadsosialhjelp/statisk/bilder/konvolutt.svg"/>}
 					style={style}
 				>
-					{ tekst }
+					{tekst}
 				</Informasjonspanel>
 			);
 		} else {
-			return null
+			return null;
 		}
 
 	}
