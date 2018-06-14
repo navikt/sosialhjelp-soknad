@@ -4,7 +4,10 @@ import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon"
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { Faktum } from "../../types";
 
+const Autocomplete = require("react-autocomplete");
+
 function setCaretPosition(ctrl: any, pos: number) {
+	console.warn("setCaretPosition() " + pos);
 	// Modern browsers
 	if (ctrl.setSelectionRange) {
 		ctrl.focus();
@@ -19,8 +22,6 @@ function setCaretPosition(ctrl: any, pos: number) {
 		range.select();
 	}
 }
-
-const Autocomplete = require("react-autocomplete");
 
 export const enum autcompleteTilstand {
 	INITIELL = "INITIELL",
@@ -70,24 +71,12 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 	constructor(props: Props) {
 		super(props);
 
-		const angittAdresse: Adresse = this.hentAdresseFraFaktum(props.adresseFaktum.properties);
-		const value = this.formaterAdresseString(angittAdresse);
+		// const angittAdresse: Adresse = this.hentAdresseFraFaktum(props.adresseFaktum.properties);
+		// const value = this.formaterAdresseString(angittAdresse);
 		this.state = {
-			value,
+			value: "",
 			cursorPosisjon: 0,
 			valgtAdresse: null,
-			// valgtAdresse: {
-			// 	"adresse": null,
-			// 	"husnummer": null,
-			// 	"husbokstav": null,
-			// 	"kommunenummer": null,
-			// 	"kommunenavn": null,
-			// 	"postnummer": null,
-			// 	"poststed": null,
-			// 	"geografiskTilknytning": null,
-			// 	"gatekode": null,
-			// 	"bydel": null
-			// },
 			adresser: [],
 			adresserWithId: [],
 			valueIsValid: undefined,
@@ -127,6 +116,7 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 
 	componentDidUpdate(prevProps: Props, prevState: StateProps) {
 		if (this.state.cursorPosisjon > 0) {
+			console.warn("oppdatere tekstfelt markør: " + this.state.cursorPosisjon);
 			const input = document.getElementById("states-autocomplete");
 			setCaretPosition(input, this.state.cursorPosisjon);
 			this.setState({ cursorPosisjon: 0 });
@@ -139,7 +129,7 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 	handleSelect(value: string, adresse: Adresse) {
 		this.setState({
 			value: this.formaterAdresseString(adresse),
-			cursorPosisjon: this.settCursorPosisjon(adresse),
+			cursorPosisjon: this.hvorSkalTekstfeltMarkorSettes(adresse),
 			valgtAdresse: adresse,
 			adresser: [],
 			tilstand: adresse.husnummer ?
@@ -149,13 +139,13 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			previousLastPart: this.formaterAdresseString(adresse).split(",")[1],
 		});
 		if (adresse) {
-			console.warn("blir dette også kjørt på mark all delete?");
+			console.warn("navAutoComp handleSelect. Next: callback onValgtVerdi");
 			this.props.onValgtVerdi(adresse);
 		}
 	}
 
 	invalidateFetch(value: string) {
-		console.warn("GGGGG");
+		console.warn("invalidateFetch. Next: onValgtVerdi(null). And autocompleteTilstand = UGYLDIG");
 		this.props.onValgtVerdi(null);
 		this.setState({ value , tilstand: autcompleteTilstand.ADRESSE_UGYLDIG});
 	}
@@ -193,11 +183,13 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 
 			if (value.indexOf(this.state.previousFirstPart, 0) === -1 || value.indexOf(this.state.previousLastPart, 0) === -1) {
 				this.setState({
+					value,
 					valgtAdresse: null,
 					tilstand: autcompleteTilstand.ADRESSE_UGYLDIG,
 					previousFirstPart: null,
 					previousLastPart: null
 				});
+				this.props.onValgtVerdi(null)
 			} else {
 				const addedPart = /(\d+)[a-zA-Z]*/g.exec(value);
 				const valgtAdresse = this.state.valgtAdresse;
@@ -207,28 +199,26 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 				} else {
 					valgtAdresse.husbokstav = null;
 				}
-				this.setState({valgtAdresse});
+				this.setState({
+					value,
+					valgtAdresse,
+				});
+				this.props.onValgtVerdi(valgtAdresse);
 			}
-		}
-
-		this.invalidateFetch(value);
-		if (this.shouldFetch(value)) {
-			if (this.state.antallAktiveSok === 0) {
-				this.executeFetch(value);
+		} else {
+			this.invalidateFetch(value);
+			if (this.shouldFetch(value)) {
+				if (this.state.antallAktiveSok === 0) {
+					this.executeFetch(value);
+				} else {
+					this.setState({sokPostponed: true});
+				}
+				this.setState({tilstand: this.state.adresser.length === 1
+						? autcompleteTilstand.ADRESSE_OK
+						: autcompleteTilstand.ADRESSE_IKKE_VALGT});
 			} else {
-				this.setState({sokPostponed: true});
+				this.setState({adresser: [], tilstand: autcompleteTilstand.ADRESSE_UGYLDIG});
 			}
-			this.setState({tilstand: this.state.adresser.length === 1
-					? autcompleteTilstand.ADRESSE_OK
-					: autcompleteTilstand.ADRESSE_IKKE_VALGT});
-		} else {
-			this.setState({adresser: [], tilstand: autcompleteTilstand.ADRESSE_UGYLDIG});
-		}
-
-		if (this.state.valgtAdresse) {
-			this.props.onValgtVerdi(this.state.valgtAdresse);
-		} else {
-			this.props.onValgtVerdi(null);
 		}
 	}
 
@@ -258,7 +248,7 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 		return returverdi;
 	}
 
-	settCursorPosisjon(adresse: Adresse) {
+	hvorSkalTekstfeltMarkorSettes(adresse: Adresse) {
 		const husbokstav = adresse.husbokstav ? adresse.husbokstav : "";
 
 		return adresse.husnummer ?

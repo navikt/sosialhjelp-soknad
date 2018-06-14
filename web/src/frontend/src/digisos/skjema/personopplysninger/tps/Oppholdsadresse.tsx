@@ -202,7 +202,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 	}
 
 	handleVelgAutocompleteAdresse(adresse: Adresse) {
-		console.warn("handle it !");
+		console.warn("handle new adress result given from navAutocomplete! The value of adress is: ");
 		console.warn(adresse);
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
 			this.props.dispatch(velgAdresseFraSoketreff(adresse));
@@ -224,19 +224,15 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		let style: any = null;
 		let tekst: any = "";
 
-		// const faktum = finnFaktum("soknadsmottaker", this.props.fakta);
-		//
 		const SOSIALORGNR = "sosialOrgnr";
 		const KOMMUNENAVN = "kommunenavn";
 		const ENHETSNAVN = "enhetsnavn";
 
-		// if (faktum.properties[SOSIALORGNR] == null) {
 		if(this.state.soknadsmottaker){
 			if (this.state.soknadsmottaker[SOSIALORGNR] === null) {
 				style = "feil";
 				tekst = "Søknaden er ikke tilgjengelig digitalt i din kommune. Ta kontakt direkte med ditt NAV kontor. Les mer";
 			} else {
-				// tekst = "Søknaden vil bli sendt til: " + faktum.properties[KOMMUNENAVN] + " " + faktum.properties[ENHETSNAVN];
 				tekst = "Søknaden vil bli sendt til: " + this.state.soknadsmottaker[KOMMUNENAVN] + " " + this.state.soknadsmottaker[ENHETSNAVN];
 			}
 
