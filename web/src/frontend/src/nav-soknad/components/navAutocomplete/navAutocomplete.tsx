@@ -1,25 +1,26 @@
 import * as React from "react";
 import { fetchToJson } from "../../utils/rest-utils";
-import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon";
-import NavFrontendSpinner from "nav-frontend-spinner";
+// import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon";
+// import NavFrontendSpinner from "nav-frontend-spinner";
 import { Faktum } from "../../types";
-const Autocomplete = require("react-autocomplete");
+import GenerellAutocomplete, { NavAutocompleteIcon } from "./generellAutocomplete";
+// const Autocomplete = require("react-autocomplete");
 
-function setCaretPosition(ctrl: any, pos: number) {
-	// Modern browsers
-	if (ctrl.setSelectionRange) {
-		ctrl.focus();
-		ctrl.setSelectionRange(pos, pos);
-
-		// IE8 and below
-	} else if (ctrl.createTextRange) {
-		const range = ctrl.createTextRange();
-		range.collapse(true);
-		range.moveEnd("character", pos);
-		range.moveStart("character", pos);
-		range.select();
-	}
-}
+// function setCaretPosition(ctrl: any, pos: number) {
+// 	// Modern browsers
+// 	if (ctrl.setSelectionRange) {
+// 		ctrl.focus();
+// 		ctrl.setSelectionRange(pos, pos);
+//
+// 		// IE8 and below
+// 	} else if (ctrl.createTextRange) {
+// 		const range = ctrl.createTextRange();
+// 		range.collapse(true);
+// 		range.moveEnd("character", pos);
+// 		range.moveStart("character", pos);
+// 		range.select();
+// 	}
+// }
 
 export const enum autcompleteTilstand {
 	INITIELL = "INITIELL",
@@ -48,12 +49,12 @@ interface StateProps {
 	adresser: Adresse[];
 	adresserWithId: any[];
 	valueIsValid: undefined | false | true;
-	cursorPosisjon: number;
 	antallAktiveSok: number;
 	tilstand: autcompleteTilstand;
 	valgtAdresse: Adresse | null;
 	sokPostponed: boolean;
 	open: boolean;
+	caretPosition?: number;
 }
 
 interface Props {
@@ -71,20 +72,7 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 		const value = this.formaterAdresseString(angittAdresse);
 		this.state = {
 			value,
-			cursorPosisjon: 0,
 			valgtAdresse: null,
-			// valgtAdresse: {
-			// 	"adresse": null,
-			// 	"husnummer": null,
-			// 	"husbokstav": null,
-			// 	"kommunenummer": null,
-			// 	"kommunenavn": null,
-			// 	"postnummer": null,
-			// 	"poststed": null,
-			// 	"geografiskTilknytning": null,
-			// 	"gatekode": null,
-			// 	"bydel": null
-			// },
 			adresser: [],
 			adresserWithId: [],
 			valueIsValid: undefined,
@@ -92,6 +80,8 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			tilstand: autcompleteTilstand.INITIELL,
 			sokPostponed: false,
 			open: false,
+			// For ny GenerellAutocomplete
+			caretPosition: undefined
 		};
 	}
 
@@ -121,11 +111,6 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 	}
 
 	componentDidUpdate(prevProps: Props, prevState: StateProps) {
-		if (this.state.cursorPosisjon > 0) {
-			const input = document.getElementById("states-autocomplete");
-			setCaretPosition(input, this.state.cursorPosisjon);
-			this.setState({ cursorPosisjon: 0 });
-		}
 		if (prevState.tilstand !== this.state.tilstand && this.props.onOppdaterTilstand) {
 			this.props.onOppdaterTilstand(this.state.tilstand);
 		}
@@ -134,7 +119,7 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 	handleSelect(value: string, adresse: Adresse) {
 		this.setState({
 			value: this.formaterAdresseString(adresse),
-			cursorPosisjon: this.settCursorPosisjon(adresse),
+			caretPosition: this.bestEgnetCaretPosisjon(adresse),
 			valgtAdresse: adresse,
 			adresser: [],
 			tilstand: adresse.husnummer ?
@@ -198,13 +183,15 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 				this.setState({valgtAdresse});
 			}
 		}
-		console.warn(this.state.valgtAdresse);
+		console.warn("valgtAdresse: " + this.state.valgtAdresse);
 
 		this.invalidateFetch(value);
 		if (this.shouldFetch(value)) {
 			if (this.state.antallAktiveSok === 0) {
-				console.warn("debug1: fetching: '" + value + "'");
-				this.executeFetch(value);
+				if (value && value.length > 0) {
+					console.warn("debug1: fetching: '" + value + "'");
+					this.executeFetch(value);
+				}
 			} else {
 				this.setState({sokPostponed: true});
 			}
@@ -242,13 +229,11 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 		} catch (error) {
 			console.warn("error: " + error);
 		}
-
 		return returverdi;
 	}
 
-	settCursorPosisjon(adresse: Adresse) {
+	bestEgnetCaretPosisjon(adresse: Adresse) {
 		const husbokstav = adresse.husbokstav ? adresse.husbokstav : "";
-
 		return adresse.husnummer ?
 			(adresse.adresse.length +
 			adresse.husnummer.length +
@@ -256,24 +241,23 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 			: (adresse.adresse.length + 1);
 	}
 
-	visIkon() {
-			return (
-				<span className="valideringsStatus">
-					{this.state.antallAktiveSok > 0 && (
-						<span className="navAutcomplete__spinner">
-							<NavFrontendSpinner  type="XS" />
-						</span>
-					)}
-					{this.state.antallAktiveSok === 0 && (
-						<span>
-							{this.state.tilstand === autcompleteTilstand.INITIELL && <DigisosIkon navn="searchAddresse" />}
-							{this.state.tilstand === autcompleteTilstand.ADRESSE_OK && <DigisosIkon navn="checkCircle" />}
-							{this.state.tilstand === autcompleteTilstand.ADRESSE_UGYLDIG && <DigisosIkon navn="advarselSirkel" />}
-							{this.state.tilstand === autcompleteTilstand.HUSNUMMER_IKKE_SATT && <DigisosIkon navn="advarselSirkel" />}
-						</span>
-					)}
-				</span>
-			);
+	autocompleteIkon(): NavAutocompleteIcon {
+		if (this.state.antallAktiveSok > 0) {
+			return "spinner";
+		}
+		if (this.state.antallAktiveSok > 0) {
+			switch (this.state.tilstand) {
+				case autcompleteTilstand.INITIELL:
+					return "search";
+				case autcompleteTilstand.ADRESSE_OK:
+					return "ok";
+				case autcompleteTilstand.ADRESSE_UGYLDIG:
+					return "warning";
+				case autcompleteTilstand.HUSNUMMER_IKKE_SATT:
+					return "warning";
+			}
+		}
+		return "search";
 	}
 
 	handleInputBlur() {
@@ -307,35 +291,22 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 	render() {
 		return (
 			<div className="navAutcomplete">
-				<Autocomplete
-					value={this.state.value}
-					inputProps={{
-						id: "states-autocomplete",
-						placeholder: "Gatenavn, kommune eller postnummer"
-					}}
-					wrapperStyle={{position: "relative", display: "inline-block"}}
+				<GenerellAutocomplete
+					value={ this.state.value }
 					items={ this.state.adresser.slice(0, 8) }
-					getItemValue={(item: any) => item.adresse}
+					icon={this.autocompleteIkon()}
+					caretPosition={this.state.caretPosition}
+					placeholder="Gatenavn, kommune eller postnummer"
 					onChange={(event: any, value: string) => this.handleChange(event, value)}
-					onSelect={(value: any, item: any) => this.handleSelect(value, item)}
-					renderMenu={(children: any) => (
-						<span>
-						{children.toString() === "" && (<span/>)}
-						{children.toString() !== "" && (
-							<div className="menu">
-								{children}
-							</div>)}
-						</span>
-					)}
-					open={this.open()}
+					onSelect={(value: string, item: any) => this.handleSelect(value, item)}
+					getItemValue={(item: any) => item.adresse}
 					renderItem={(item: any, isHighlighted: any) => this.getRenderItem(item, isHighlighted)}
 					open={this.open()}
 				/>
-				{ this.visIkon()}
-				{
-					this.state.tilstand === autcompleteTilstand.HUSNUMMER_IKKE_SATT &&
-					(<p>"Hvis du har husnummer må du legge til det (før kommaet)"</p>)
-				}
+				{ this.state.tilstand === autcompleteTilstand.HUSNUMMER_IKKE_SATT && (
+					<p>"Hvis du har husnummer må du legge til det (før kommaet)"</p>
+				)}
+
 			</div>
 		);
 	}
