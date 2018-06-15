@@ -132,7 +132,9 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 	}
 
 	settSoknadsmottaterFraFaktumAdresse(faktumKey: string) {
-		this.setState({visInformasjonsPanel: false});
+		this.setState({
+			visInformasjonsPanel: false
+		});
 
 		const faktum = finnFaktum(faktumKey, this.props.fakta);
 
@@ -158,6 +160,10 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 			"type": "gateadresse"
 		};
 
+		console.warn("Du klikket på radio folkeregister. Adressen er:");
+		console.warn(JSON.stringify(adresse, null, 4));
+
+
 		this.props.dispatch(velgFolkeregistrertAdresse(adresse));
 
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
@@ -167,20 +173,22 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 
 		this.setState({
 			adresseFolkeregistrert: adresse,
-			visInformasjonsPanel: true});
+		});
 	}
 
 	brukValgtAdresse() {
-		this.setState({visInformasjonsPanel: false});
-		this.slettSoknadsmottakerFraFaktumAdresse();
+		this.setState({
+			visInformasjonsPanel: false,
+			soknadsmottaker: null
+		});
+		// this.slettSoknadsmottakerFraFaktumAdresse();
+
+		console.error(JSON.stringify(this.state.adresseValgt, null, 4));
 
 		if (this.state.adresseValgt) {
 			this.props.dispatch(velgAdresseFraSoketreff(this.state.adresseValgt));
 			this.settAdresseFaktum(this.state.adresseValgt);
 			this.hentSoknadsmottaker(this.props.brukerBehandlingId);
-			this.setState({visInformasjonsPanel: true});
-		} else {
-			this.setState({visInformasjonsPanel: false});
 		}
 	}
 
@@ -188,10 +196,18 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		fetchToJson("soknadsmottaker/" + brukerBehandlingId)
 		.then((response: any) => {
 			if (response && response.toString().length > 0) {
-				this.setState({ soknadsmottaker: response});
+				this.setState({
+					soknadsmottaker: response,
+					visInformasjonsPanel: true
+				});
 				this.oppdaterValgtSoknadsmottaker(response);
+				console.warn(JSON.stringify(response, null, 4));
 			} else {
-				this.setState({ soknadsmottaker: null});
+				this.setState({
+					soknadsmottaker: null,
+					visInformasjonsPanel: false
+				});
+				console.warn("soknadsmottaker: null !!!!!!!!!!!! altså respons fra zero-...nothing... blæ");
 			}
 		})
 		.catch((error: any) => {
@@ -199,16 +215,28 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		});
 	}
 
+	hentSoknadsmottakerMidlertidig(){
+		this.hentSoknadsmottaker(this.props.brukerBehandlingId);
+		console.error("DANGER ! DANGER ! ^^");
+	}
+
 	handleVelgAutocompleteAdresse(adresse: Adresse) {
-		this.setState({visInformasjonsPanel: false});
+		console.error("adresse fra autocomplete");
+		console.warn(JSON.stringify(adresse, null, 4));
+		this.setState({
+			adresseValgt: null,
+			soknadsmottaker: null,
+			visInformasjonsPanel: false
+		});
+
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
 			this.props.dispatch(velgAdresseFraSoketreff(adresse));
 			this.settAdresseFaktum(adresse);
 			this.hentSoknadsmottaker(this.props.brukerBehandlingId);
 			this.setState({
 				adresseValgt: adresse,
-				visInformasjonsPanel: true
 			});
+			console.warn("adressen ble lagret på valgt adresse...");
 		} else {
 			this.setState({
 				adresseValgt: null,
@@ -332,7 +360,7 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 							id="oppholdsadresse_midlertidig"
 							faktumKey="kontakt.system.oppholdsadresse.valg"
 							value="midlertidig"
-							onChange={() => this.hentSoknadsmottaker(this.props.brukerBehandlingId)}
+							onChange={() => this.hentSoknadsmottakerMidlertidig()}
 							label={
 								<div>
 									<div style={{fontWeight: 600}}>Midlertidig adresse:</div>
@@ -360,6 +388,12 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 					</Underskjema>
 				</SporsmalFaktum>
 			</SporsmalFaktum>
+
+			{/*{ this.state.soknadsmottaker && this.state.visInformasjonsPanel && <ul>*/}
+				{/*<li>{ this.state.soknadsmottaker.enhetsnavn }</li>*/}
+				{/*<li>{ this.state.soknadsmottaker.kommunenavn }</li>*/}
+				{/*<li>{ this.state.soknadsmottaker.sosialOrgnr }</li>*/}
+			{/*</ul> }*/}
 
 			{this.state.visInformasjonsPanel && this.renderInformasjonsPanel()}
 
