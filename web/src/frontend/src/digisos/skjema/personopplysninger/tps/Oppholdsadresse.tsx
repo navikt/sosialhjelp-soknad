@@ -160,10 +160,6 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 			"type": "gateadresse"
 		};
 
-		console.warn("Du klikket på radio folkeregister. Adressen er:");
-		console.warn(JSON.stringify(adresse, null, 4));
-
-
 		this.props.dispatch(velgFolkeregistrertAdresse(adresse));
 
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
@@ -201,13 +197,11 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 					visInformasjonsPanel: true
 				});
 				this.oppdaterValgtSoknadsmottaker(response);
-				console.warn(JSON.stringify(response, null, 4));
 			} else {
 				this.setState({
 					soknadsmottaker: null,
 					visInformasjonsPanel: false
 				});
-				console.warn("soknadsmottaker: null !!!!!!!!!!!! altså respons fra zero-...nothing... blæ");
 			}
 		})
 		.catch((error: any) => {
@@ -215,14 +209,11 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 		});
 	}
 
-	hentSoknadsmottakerMidlertidig(){
+	hentSoknadsmottakerMidlertidig() {
 		this.hentSoknadsmottaker(this.props.brukerBehandlingId);
-		console.error("DANGER ! DANGER ! ^^");
 	}
 
 	handleVelgAutocompleteAdresse(adresse: Adresse) {
-		console.error("adresse fra autocomplete");
-		console.warn(JSON.stringify(adresse, null, 4));
 		this.setState({
 			adresseValgt: null,
 			soknadsmottaker: null,
@@ -236,7 +227,6 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 			this.setState({
 				adresseValgt: adresse,
 			});
-			console.warn("adressen ble lagret på valgt adresse...");
 		} else {
 			this.setState({
 				adresseValgt: null,
@@ -388,12 +378,6 @@ class Oppholdsadresse extends React.Component<Props, StateProps> {
 					</Underskjema>
 				</SporsmalFaktum>
 			</SporsmalFaktum>
-
-			{/*{ this.state.soknadsmottaker && this.state.visInformasjonsPanel && <ul>*/}
-				{/*<li>{ this.state.soknadsmottaker.enhetsnavn }</li>*/}
-				{/*<li>{ this.state.soknadsmottaker.kommunenavn }</li>*/}
-				{/*<li>{ this.state.soknadsmottaker.sosialOrgnr }</li>*/}
-			{/*</ul> }*/}
 
 			{this.state.visInformasjonsPanel && this.renderInformasjonsPanel()}
 
