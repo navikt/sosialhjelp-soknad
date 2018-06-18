@@ -192,7 +192,6 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 				const everythingBeforeComma = value.split(",")[0];
 				const addedPart = /(\d+)[a-zA-Z]*/g.exec(everythingBeforeComma);
 				const valgtAdresse = this.state.valgtAdresse;
-				console.warn(addedPart);
 				valgtAdresse.husnummer = addedPart ? /\d+/g.exec(addedPart[0])[0] : null;
 				if (addedPart) {
 					if (/[a-zA-Z]+/g.exec(addedPart[0])) {
@@ -208,6 +207,7 @@ class NavAutocomplete extends React.Component<Props, StateProps> {
 							autcompleteTilstand.ADRESSE_OK :
 							autcompleteTilstand.ADRESSE_UGYLDIG
 					});
+					this.props.onValgtVerdi(valgtAdresse);
 				} else {
 					this.props.onValgtVerdi(null);
 					this.handleChange(null, this.state.valgtAdresse.adresse);

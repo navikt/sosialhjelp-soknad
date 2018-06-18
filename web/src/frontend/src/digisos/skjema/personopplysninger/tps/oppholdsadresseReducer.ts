@@ -3,7 +3,8 @@ import { Adresse } from "./Oppholdsadresse";
 
 export enum OppholdsadresseActionTypeKeys {
 	VELG_FOLKEREGISTRERT_ADRESSE = "oppholdsadresse/VELG_FOLKEREGISTRERT_ADRESSE",
-	VELG_ADRESSE_FRA_SOKETREFF = "oppholdsadresse/VELG_ADRESSE_FRA_SOKETREFF"
+	VELG_ADRESSE_FRA_SOKETREFF = "oppholdsadresse/VELG_ADRESSE_FRA_SOKETREFF",
+	HENT_SOKNADSMOTTAKER_INFO = "oppholdsadresse/HENT_SOKNADSMOTTAKER_INFO",
 }
 
 enum SoknadsMottakerStatus {
@@ -43,6 +44,12 @@ const oppholdsadresseReducer: Reducer<OppholdsAdresseState, any> = (
 				valgtAdresse: action.adresse
 			};
 		}
+		case OppholdsadresseActionTypeKeys.HENT_SOKNADSMOTTAKER_INFO: {
+			action.hentSoknadsmottakerCallback();
+			return {
+				...state,
+			};
+		}
 		default:
 			return state;
 	}
@@ -59,6 +66,13 @@ export const velgAdresseFraSoketreff = (adresse: Adresse): any => {
 	return {
 		type: OppholdsadresseActionTypeKeys.VELG_ADRESSE_FRA_SOKETREFF,
 		adresse
+	};
+};
+
+export const hentSoknadsmottakerInfo = (hentSoknadsmottakerCallback: any): any => {
+	return {
+		type: OppholdsadresseActionTypeKeys.HENT_SOKNADSMOTTAKER_INFO,
+		hentSoknadsmottakerCallback
 	};
 };
 
