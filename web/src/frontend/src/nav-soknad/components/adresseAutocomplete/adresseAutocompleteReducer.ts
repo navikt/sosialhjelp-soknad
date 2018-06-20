@@ -1,5 +1,5 @@
 import { Reducer } from "../../redux/reduxTypes";
-import { Adresse } from "./adresseAutocomplete";
+import { Adresse } from "./adresseAutcomplete";
 
 export enum AdresseAutocompleteActionTypeKeys {
 	SETT_VERDI = "adresseAutcomplete/SETT_VERDI",

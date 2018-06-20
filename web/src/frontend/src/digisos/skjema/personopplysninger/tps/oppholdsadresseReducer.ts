@@ -1,9 +1,6 @@
 import { Reducer } from "../../../../nav-soknad/redux/reduxTypes";
 import { Adresse } from "./Oppholdsadresse";
-// import { fetchToJson } from "../../../../nav-soknad/utils/rest-utils";
-// import { Faktum } from "../../../../nav-soknad/types";
-// import {  oppdaterFaktumMedVerdier } from "../../../../nav-soknad/utils";
-// import { FaktumActionTypeKeys } from "../../../../nav-soknad/redux/fakta/faktaActionTypes";
+import { Faktum } from "../../../../nav-soknad/types";
 
 export enum OppholdsadresseActionTypeKeys {
 	VELG_FOLKEREGISTRERT_ADRESSE = "oppholdsadresse/VELG_FOLKEREGISTRERT_ADRESSE",
@@ -72,13 +69,6 @@ const oppholdsadresseReducer: Reducer<OppholdsAdresseState, any> = (
 	}
 };
 
-export const velgFolkeregistrertAdresse = (adresse: Adresse): any => {
-	return {
-		type: OppholdsadresseActionTypeKeys.VELG_FOLKEREGISTRERT_ADRESSE,
-		adresse
-	};
-};
-
 export const velgAdresseFraSoketreff = (adresse: Adresse): any => {
 	return {
 		type: OppholdsadresseActionTypeKeys.VELG_ADRESSE_FRA_SOKETREFF,
@@ -96,62 +86,15 @@ export const settSoknadsmottakerStatus = (status: SoknadsMottakerStatus): any =>
 export interface HentSoknadsmottakerAction {
 	type: OppholdsadresseActionTypeKeys.HENT_SOKNADSMOTTAKER;
 	brukerBehandlingId: string;
+	faktum: Faktum;
 }
 
-export const hentSoknadsmottakerAction = (brukerBehandlingId: string): HentSoknadsmottakerAction => {
+export const hentSoknadsmottakerAction = (brukerBehandlingId: string, faktum: Faktum): HentSoknadsmottakerAction => {
 	return {
 		type: OppholdsadresseActionTypeKeys.HENT_SOKNADSMOTTAKER,
-		brukerBehandlingId
-	}
+		brukerBehandlingId,
+		faktum
+	};
 };
-// export const hentSoknadsmottaker = (brukerBehandlingId: string, faktum: Faktum): any => {
-//
-// 		fetchToJson("soknadsmottaker/" + brukerBehandlingId)
-// 			.then((response: any) => {
-// 				if (response && response.toString().length > 0) {
-// 					const properties = [
-// 						"enhetsId",
-// 						"enhetsnavn",
-// 						"kommunenummer",
-// 						"kommunenavn",
-// 						"sosialOrgnr"
-// 					];
-// 					properties.map((property: string) => {
-// 						let value = null;
-// 						if (response !== null) {
-// 							value = response[property];
-// 						}
-// 						faktum = oppdaterFaktumMedVerdier(faktum, value, property);
-// 					});
-// 					return {
-// 						type: FaktumActionTypeKeys.LAGRE_FAKTUM,
-// 						faktum
-// 					};
-//
-// 				} else {
-// 					const properties = [
-// 						"enhetsId",
-// 						"enhetsnavn",
-// 						"kommunenummer",
-// 						"kommunenavn",
-// 						"sosialOrgnr"
-// 					];
-// 					properties.map((property: string) => {
-// 						faktum = oppdaterFaktumMedVerdier(faktum, null, property);
-// 					});
-// 					return {
-// 						type: FaktumActionTypeKeys.LAGRE_FAKTUM,
-// 						faktum
-// 					};
-// 				}
-// 			})
-// 			.catch((error: any) => {
-// 				console.error(error);
-// 				return {
-// 					type: "error",
-// 					error: "TODO Add error message"
-// 				};
-// 			});
-// };
 
 export default oppholdsadresseReducer;
