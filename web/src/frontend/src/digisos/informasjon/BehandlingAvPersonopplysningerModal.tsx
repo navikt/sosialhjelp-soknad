@@ -6,9 +6,14 @@ import { connect } from "react-redux";
 import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
 import { State } from "../redux/reducers";
 import { Hovedknapp } from "nav-frontend-knapper";
+import { Faktum } from "../../nav-soknad/types/navSoknadTypes";
+import { finnFaktum } from "../../nav-soknad/utils/faktumUtils";
+import { getBydel, getKommune, NavEnhet } from "../data/kommuner";
 
 interface StateProps {
+	fakta: Faktum[];
 	modalSynlig: boolean;
+	navEnheter: NavEnhet[];
 }
 
 type Props = StateProps & InjectedIntlProps & DispatchProps;
@@ -16,10 +21,20 @@ type Props = StateProps & InjectedIntlProps & DispatchProps;
 class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 
 	getText() {
+		const kommune: Faktum = finnFaktum("personalia.kommune", this.props.fakta);
+		let replaceValue = "$1";
+
+		if (kommune) {
+			const bydel: Faktum = finnFaktum("personalia.bydel", this.props.fakta);
+			if (bydel && bydel.value && bydel.value !== "") {
+				replaceValue = "NAV " +  getBydel(kommune.value, bydel.value, this.props.navEnheter);
+			} else {
+				replaceValue = "NAV " + getKommune(kommune.value, this.props.navEnheter);
+			}
+		}
+
 		let string = this.props.intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"];
-
-		string = string.replace(/{navkontor:(.*)}/g, "$1");
-
+		string = string.replace(/{navkontor:(.*)}/g, replaceValue);
 		return string;
 	}
 
@@ -49,6 +64,8 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 
 export default connect((state: State, props: any): StateProps => {
 	return {
-		modalSynlig: state.init.visSamtykkeInfo
+		fakta: state.fakta.data,
+		modalSynlig: state.init.visSamtykkeInfo,
+		navEnheter: state.kommuner.data
 	};
 })(injectIntl(BehandlingAvPersonopplysningerModal));
