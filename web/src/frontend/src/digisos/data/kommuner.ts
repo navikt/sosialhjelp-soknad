@@ -55,11 +55,12 @@ function finnValgtEnhetsNavn(fakta: Faktum[], navEnheter:  NavEnhet[]) {
 	const kommune: Faktum = finnFaktum("personalia.kommune", fakta);
 
 	if (kommune) {
+		const kommunenavn = getKommune(kommune.value, navEnheter);
 		const bydel: Faktum = finnFaktum("personalia.bydel", fakta);
 		if (bydel && bydel.value && bydel.value !== "") {
-			return "NAV " +  getBydel(kommune.value, bydel.value, navEnheter);
+			return "NAV " +  getBydel(kommune.value, bydel.value, navEnheter) + ", " + kommunenavn + " kommune";
 		} else {
-			return "NAV " + getKommune(kommune.value, navEnheter);
+			return "NAV " + kommunenavn + ", " + kommunenavn + " kommune";
 		}
 	}
 	return null;
