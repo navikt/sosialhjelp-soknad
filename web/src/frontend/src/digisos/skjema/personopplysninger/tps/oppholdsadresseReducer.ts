@@ -17,25 +17,13 @@ export enum SoknadsMottakerStatus {
 }
 
 export interface OppholdsAdresseState {
-	valgtAdresse: Adresse;
+	valgtAdresse: Adresse | null;
 	soknadsmottaker: any;
 	soknadsmottakerStatus: SoknadsMottakerStatus;
 }
 
 const initialState: OppholdsAdresseState = {
-	valgtAdresse: {
-		"adresse": null,
-		"husnummer": null,
-		"husbokstav": null,
-		"kommunenummer": null,
-		"kommunenavn": null,
-		"postnummer": null,
-		"poststed": null,
-		"geografiskTilknytning": null,
-		"gatekode": null,
-		"bydel": null,
-		"type": "gateadresse"
-	},
+	valgtAdresse: null,
 	soknadsmottaker: null,
 	soknadsmottakerStatus: SoknadsMottakerStatus.IKKE_VALGT
 };
@@ -86,14 +74,26 @@ export const settSoknadsmottakerStatus = (status: SoknadsMottakerStatus): any =>
 export interface HentSoknadsmottakerAction {
 	type: OppholdsadresseActionTypeKeys.HENT_SOKNADSMOTTAKER;
 	brukerBehandlingId: string;
-	faktum: Faktum;
+	adresse: Adresse;
+	adresseFaktum: Faktum;
+	soknadsmottakerFaktum: Faktum;
+	fakta: Faktum[];
 }
 
-export const hentSoknadsmottakerAction = (brukerBehandlingId: string, faktum: Faktum): HentSoknadsmottakerAction => {
+export const hentSoknadsmottakerAction = (
+	brukerBehandlingId: string,
+	adresse: Adresse,
+	adresseFaktum: Faktum,
+	soknadsmottakerFaktum: Faktum,
+	fakta: Faktum[]
+): HentSoknadsmottakerAction => {
 	return {
 		type: OppholdsadresseActionTypeKeys.HENT_SOKNADSMOTTAKER,
 		brukerBehandlingId,
-		faktum
+		adresse,
+		adresseFaktum,
+		soknadsmottakerFaktum,
+		fakta
 	};
 };
 
