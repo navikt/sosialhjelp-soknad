@@ -5,7 +5,7 @@ import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
 import { State } from "../redux/reducers";
-import { Hovedknapp } from "nav-frontend-knapper";
+import { Knapp } from "nav-frontend-knapper";
 import { Faktum } from "../../nav-soknad/types/navSoknadTypes";
 import { finnValgtEnhetsNavn, NavEnhet } from "../data/kommuner";
 
@@ -44,11 +44,12 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 				</div>
 
 				<div className="timeoutbox__knapperad">
-					<Hovedknapp
+					<Knapp
+						type="standard"
 						onClick={() => this.props.dispatch(setVisSamtykkeInfo(false))}
 					>
 						<FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"}/>
-					</Hovedknapp>
+					</Knapp>
 				</div>
 			</NavFrontendModal>
 		);
