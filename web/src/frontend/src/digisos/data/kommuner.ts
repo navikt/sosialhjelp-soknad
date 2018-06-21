@@ -1,3 +1,6 @@
+import { Faktum } from "../../nav-soknad/types/navSoknadTypes";
+import { finnFaktum } from "../../nav-soknad/utils/faktumUtils";
+
 const enum EnhetsType {
 	KOMMUNE = "KOMMUNE",
 	BYDEL = "BYDEL"
@@ -48,6 +51,20 @@ function getNavEnhetMedOrgnr(navEnheter: NavEnhet[], orgnr: string): NavEnhet {
 	return navEnheter.find((e: NavEnhet) => e.orgnr === orgnr);
 }
 
+function finnValgtEnhetsNavn(fakta: Faktum[], navEnheter:  NavEnhet[]) {
+	const kommune: Faktum = finnFaktum("personalia.kommune", fakta);
+
+	if (kommune) {
+		const bydel: Faktum = finnFaktum("personalia.bydel", fakta);
+		if (bydel && bydel.value && bydel.value !== "") {
+			return "NAV " +  getBydel(kommune.value, bydel.value, navEnheter);
+		} else {
+			return "NAV " + getKommune(kommune.value, navEnheter);
+		}
+	}
+	return null;
+}
+
 const Horten: NavEnhet = 	{
 	id: "horten",
 	orgnr: null,
@@ -68,5 +85,6 @@ export {
 	finnBydeler,
 	alleKommuner,
 	bydeler,
+	finnValgtEnhetsNavn,
 	Horten
 };

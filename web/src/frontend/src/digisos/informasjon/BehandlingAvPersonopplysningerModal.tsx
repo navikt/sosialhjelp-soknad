@@ -7,8 +7,7 @@ import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
 import { State } from "../redux/reducers";
 import { Hovedknapp } from "nav-frontend-knapper";
 import { Faktum } from "../../nav-soknad/types/navSoknadTypes";
-import { finnFaktum } from "../../nav-soknad/utils/faktumUtils";
-import { getBydel, getKommune, NavEnhet } from "../data/kommuner";
+import { finnValgtEnhetsNavn, NavEnhet } from "../data/kommuner";
 
 interface StateProps {
 	fakta: Faktum[];
@@ -21,20 +20,14 @@ type Props = StateProps & InjectedIntlProps & DispatchProps;
 class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 
 	getText() {
-		const kommune: Faktum = finnFaktum("personalia.kommune", this.props.fakta);
-		let replaceValue = "$1";
+		let valgtEnhetsNavn = finnValgtEnhetsNavn(this.props.fakta, this.props.navEnheter);
 
-		if (kommune) {
-			const bydel: Faktum = finnFaktum("personalia.bydel", this.props.fakta);
-			if (bydel && bydel.value && bydel.value !== "") {
-				replaceValue = "NAV " +  getBydel(kommune.value, bydel.value, this.props.navEnheter);
-			} else {
-				replaceValue = "NAV " + getKommune(kommune.value, this.props.navEnheter);
-			}
+		if (!valgtEnhetsNavn) {
+			valgtEnhetsNavn = "$1";
 		}
 
 		let string = this.props.intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"];
-		string = string.replace(/{navkontor:(.*)}/g, replaceValue);
+		string = string.replace(/{navkontor:(.*)}/g, valgtEnhetsNavn);
 		return string;
 	}
 

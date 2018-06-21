@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { Checkbox } from "nav-frontend-skjema";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 
@@ -17,8 +17,7 @@ import { settInfofaktum } from "../../../nav-soknad/redux/soknad/soknadActions";
 import { getIntlTextOrKey } from "../../../nav-soknad/utils/intlUtils";
 import { Link } from "react-router-dom";
 import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
-import { setVisSamtykkeInfo } from "../../../nav-soknad/redux/init/initActions";
-import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel/index";
+import InformasjonsBoks from "./InformasjonsBoks";
 
 interface StateProps {
 	oppsummering: Oppsummering;
@@ -109,19 +108,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
 					{skjemaOppsummering}
 
-					<Informasjonspanel style="advarsel"
-							icon={<img src="/soknadsosialhjelp/statisk/bilder/ikon_brevkonvolutt.svg"/>}>
-						<FormattedHTMLMessage id="soknasosialhjelp.oppsummering.hvorsendes" values={{navkontor: "ditt NAV-kontor"}}/>
-						<p>
-							<a
-								className="lenke"
-								onClick={() => {
-									this.props.dispatch(setVisSamtykkeInfo(true));
-								}}>
-								<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke"/>
-							</a>
-						</p>
-					</Informasjonspanel>
+					<InformasjonsBoks/>
 
 					<div className="blokk-xs bolk">
 						<div className={classNames}>
