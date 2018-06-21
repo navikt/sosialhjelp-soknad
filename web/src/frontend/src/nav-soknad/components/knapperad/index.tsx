@@ -15,7 +15,7 @@ class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 	render() {
 		const { gaVidere, gaTilbake, avbryt, gaVidereLabel, intl } = this.props;
 		return (
-			<div className="skjema-knapperad">
+			<div className="skjema-knapperad ikke-juridisk-tekst">
 				<Knapp
 					id="gaa_videre_button"
 					type="hoved"
