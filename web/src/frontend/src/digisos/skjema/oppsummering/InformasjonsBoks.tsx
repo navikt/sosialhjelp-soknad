@@ -25,7 +25,7 @@ class InformasjonsBoks extends React.Component<Props, {}> {
 		return (
 			<Informasjonspanel style="advarsel" icon={<img src="/soknadsosialhjelp/statisk/bilder/ikon_brevkonvolutt.svg"/>}>
 				<FormattedHTMLMessage id="soknasosialhjelp.oppsummering.hvorsendes" values={{navkontor: valgtEnhetsNavn}}/>
-				<p>
+				<br/><br/>
 					<a
 						className="lenke"
 						onClick={() => {
@@ -33,7 +33,6 @@ class InformasjonsBoks extends React.Component<Props, {}> {
 						}}>
 						<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke"/>
 					</a>
-				</p>
 			</Informasjonspanel>
 		);
 	}
