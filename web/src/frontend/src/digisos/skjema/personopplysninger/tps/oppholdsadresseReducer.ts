@@ -74,25 +74,25 @@ export const settSoknadsmottakerStatus = (status: SoknadsMottakerStatus): any =>
 export interface HentSoknadsmottakerAction {
 	type: OppholdsadresseActionTypeKeys.HENT_SOKNADSMOTTAKER;
 	brukerBehandlingId: string;
-	adresse: Adresse;
 	adresseFaktum: Faktum;
 	soknadsmottakerFaktum: Faktum;
+	oppholdsadressevalg: string;
 	fakta: Faktum[];
 }
 
 export const hentSoknadsmottakerAction = (
 	brukerBehandlingId: string,
-	adresse: Adresse,
 	adresseFaktum: Faktum,
 	soknadsmottakerFaktum: Faktum,
+	oppholdsadressevalg: string,
 	fakta: Faktum[]
 ): HentSoknadsmottakerAction => {
 	return {
 		type: OppholdsadresseActionTypeKeys.HENT_SOKNADSMOTTAKER,
 		brukerBehandlingId,
-		adresse,
 		adresseFaktum,
 		soknadsmottakerFaktum,
+		oppholdsadressevalg,
 		fakta
 	};
 };

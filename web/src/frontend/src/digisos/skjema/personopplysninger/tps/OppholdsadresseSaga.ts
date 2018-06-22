@@ -27,6 +27,7 @@ function oppdaterSoknadsMottaker(soknadsmottaker: any, faktum: Faktum) {
 		}
 		faktum = oppdaterFaktumMedVerdier(faktum, value, property);
 	});
+
 	return faktum;
 }
 
@@ -40,37 +41,51 @@ export function nullUtSoknadsmottakerFaktum(soknadsmottakerFaktum: Faktum) {
 
 function* hentSoknadsmottakerSaga(action: HentSoknadsmottakerAction): SagaIterator {
 	try {
-		if (action.adresse) {
-			yield put(lagreFaktum(action.adresseFaktum));
-			const url = `soknadsmottaker/${action.brukerBehandlingId}`;
-			const response = yield call(fetchToJson, url);
-			if (response && response.toString().length > 0) {
-				yield put(lagreFaktum(oppdaterSoknadsMottaker(response, action.soknadsmottakerFaktum)));
-				yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.GYLDIG));
+		yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.IKKE_VALGT));
+
+		if (action.oppholdsadressevalg === "soknad") {
+			if (action.adresseFaktum != null
+					&& (action.adresseFaktum.properties as any).gatenavn != null
+					&& (action.adresseFaktum.properties as any).gatenavn.trim() !== "") {
+				yield put(lagreFaktum(action.adresseFaktum));
 			} else {
 				let soknadsmottakerFaktum = finnFaktum("soknadsmottaker", action.fakta);
 				soknadsmottakerFaktum = nullUtSoknadsmottakerFaktum(soknadsmottakerFaktum);
+
+				/*
+				let adresseFaktum = finnFaktum("kontakt.adresse.bruker", action.fakta);
+
+				adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "postnummer");
+				adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "husbokstav");
+				adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "husnummer");
+				adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "kommunenummer");
+				adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "gatenavn");
+				adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "type");
+				adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "geografiskTilknytning");
+				adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "poststed");
+				yield put(lagreFaktum(adresseFaktum));
+				*/
+
 				yield put(lagreFaktum(soknadsmottakerFaktum));
+				return null;
+			}
+		}
+		const url = `soknadsmottaker/${action.brukerBehandlingId}?valg=${action.oppholdsadressevalg}`;
+		const response = yield call(fetchToJson, url);
+		if (response && response.toString().length > 0) {
+			// TODO: Støtte visning av dropdown med NAV-kontor hvis mer enn én blir returnert.
+			yield put(lagreFaktum(oppdaterSoknadsMottaker(response, action.soknadsmottakerFaktum)));
+			if (response.sosialOrgnr) {
+				yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.GYLDIG));
+			} else {
 				yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.UGYLDIG));
 			}
 		} else {
-			let adresseFaktum = finnFaktum("kontakt.adresse.bruker", action.fakta);
-
-			adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "postnummer");
-			adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "husbokstav");
-			adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "husnummer");
-			adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "kommunenummer");
-			adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "gatenavn");
-			adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "type");
-			adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "geografiskTilknytning");
-			adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, null, "poststed");
-
 			let soknadsmottakerFaktum = finnFaktum("soknadsmottaker", action.fakta);
 			soknadsmottakerFaktum = nullUtSoknadsmottakerFaktum(soknadsmottakerFaktum);
-			yield put(lagreFaktum(adresseFaktum));
 			yield put(lagreFaktum(soknadsmottakerFaktum));
+			yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.UGYLDIG));
 		}
-
 	} catch (reason) {
 		yield put(loggFeil("Hent soknadsmottaker feilet: " + reason.toString()));
 		yield put(navigerTilServerfeil());
