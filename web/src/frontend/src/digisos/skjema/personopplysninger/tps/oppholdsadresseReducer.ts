@@ -6,7 +6,8 @@ export enum OppholdsadresseActionTypeKeys {
 	VELG_FOLKEREGISTRERT_ADRESSE = "oppholdsadresse/VELG_FOLKEREGISTRERT_ADRESSE",
 	VELG_ADRESSE_FRA_SOKETREFF = "oppholdsadresse/VELG_ADRESSE_FRA_SOKETREFF",
 	SETT_SOKNADSMOTTAKER_STATUS = "oppholdsadresse/HENT_SOKNADSMOTTAKER_INFO",
-	HENT_SOKNADSMOTTAKER = "oppholdsadresse/HENT_SOKNADSMOTTAKER"
+	HENT_SOKNADSMOTTAKER = "oppholdsadresse/HENT_SOKNADSMOTTAKER",
+	SETT_ADRESSE_KATEGORI = "oppholdsadresse/SETT_ADRESSE_KATEGORI"
 }
 
 export enum SoknadsMottakerStatus {
@@ -16,16 +17,25 @@ export enum SoknadsMottakerStatus {
 	UGYLDIG = "ugyldig",
 }
 
+export enum AdresseKategori {
+	IKKE_VALGT = "IKKE_VALGT",
+	FOLKEREGISTRERT = "FOLKEREGISTRERT",
+	MIDLERTIDIG = "MIDLERTIDIG",
+	SOKNAD = "SOKNAD"
+}
+
 export interface OppholdsAdresseState {
 	valgtAdresse: Adresse | null;
 	soknadsmottaker: any;
 	soknadsmottakerStatus: SoknadsMottakerStatus;
+	adresseKategori: AdresseKategori;
 }
 
 const initialState: OppholdsAdresseState = {
 	valgtAdresse: null,
 	soknadsmottaker: null,
-	soknadsmottakerStatus: SoknadsMottakerStatus.IKKE_VALGT
+	soknadsmottakerStatus: SoknadsMottakerStatus.IKKE_VALGT,
+	adresseKategori: AdresseKategori.IKKE_VALGT
 };
 
 const oppholdsadresseReducer: Reducer<OppholdsAdresseState, any> = (
@@ -52,6 +62,12 @@ const oppholdsadresseReducer: Reducer<OppholdsAdresseState, any> = (
 				soknadsmottakerStatus: action.status
 			};
 		}
+		case OppholdsadresseActionTypeKeys.SETT_ADRESSE_KATEGORI: {
+			return {
+				...state,
+				adresseKategori: action.adresseKategori
+			};
+		}
 		default:
 			return state;
 	}
@@ -71,6 +87,13 @@ export const settSoknadsmottakerStatus = (status: SoknadsMottakerStatus): any =>
 	};
 };
 
+export const settAdresseKategori = (adresseKategori: AdresseKategori): any => {
+	return {
+		type: OppholdsadresseActionTypeKeys.SETT_ADRESSE_KATEGORI,
+		adresseKategori
+	};
+};
+
 export interface HentSoknadsmottakerAction {
 	type: OppholdsadresseActionTypeKeys.HENT_SOKNADSMOTTAKER;
 	brukerBehandlingId: string;
@@ -78,6 +101,7 @@ export interface HentSoknadsmottakerAction {
 	soknadsmottakerFaktum: Faktum;
 	oppholdsadressevalg: string;
 	fakta: Faktum[];
+	adresseKategori: AdresseKategori;
 }
 
 export const hentSoknadsmottakerAction = (
@@ -85,7 +109,8 @@ export const hentSoknadsmottakerAction = (
 	adresseFaktum: Faktum,
 	soknadsmottakerFaktum: Faktum,
 	oppholdsadressevalg: string,
-	fakta: Faktum[]
+	fakta: Faktum[],
+	adresseKategori: AdresseKategori
 ): HentSoknadsmottakerAction => {
 	return {
 		type: OppholdsadresseActionTypeKeys.HENT_SOKNADSMOTTAKER,
@@ -93,7 +118,8 @@ export const hentSoknadsmottakerAction = (
 		adresseFaktum,
 		soknadsmottakerFaktum,
 		oppholdsadressevalg,
-		fakta
+		fakta,
+		adresseKategori
 	};
 };
 

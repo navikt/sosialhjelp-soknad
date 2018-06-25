@@ -14,7 +14,7 @@ import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
 import AdresseAutocomplete from "../../../../nav-soknad/components/adresseAutocomplete/adresseAutcomplete";
 import {
 	SoknadsMottakerStatus,
-	hentSoknadsmottakerAction, settSoknadsmottakerStatus, velgAdresseFraSoketreff
+	hentSoknadsmottakerAction, settSoknadsmottakerStatus, velgAdresseFraSoketreff, AdresseKategori, settAdresseKategori
 } from "./oppholdsadresseReducer";
 // import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 
@@ -58,6 +58,7 @@ interface OwnProps {
 	valgtAdresse: Adresse | null;
 	soknadsmottaker: any;
 	soknadsmottakerStatus: SoknadsMottakerStatus;
+	adresseKategori: AdresseKategori;
 }
 
 export function faktumHarLogvligAdresse(faktum: any) {
@@ -92,7 +93,8 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 			adresseFaktum,
 			soknadsmottakerFaktum,
 			this.finnOppholdsadressevalg(),
-			this.props.fakta
+			this.props.fakta,
+			this.props.adresseKategori
 		));
 	}
 
@@ -171,6 +173,15 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 		}
 	}
 
+	brukFolkeregistrertAdresse() {
+		this.props.dispatch(settAdresseKategori(AdresseKategori.FOLKEREGISTRERT));
+		this.brukSystemAdresse("kontakt.system.folkeregistrert.adresse");
+	}
+
+	// brukMidlertidigAdresse() {
+	//
+	// }
+
 	render() {
 		const fakta = this.props.fakta;
 		const folkeregistrertAdresseFaktum = finnFaktum("kontakt.system.folkeregistrert.adresse", this.props.fakta);
@@ -195,7 +206,8 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 							id="oppholdsadresse_folkeregistrert"
 							faktumKey="kontakt.system.oppholdsadresse.valg"
 							value="folkeregistrert"
-							onChange={() => this.brukSystemAdresse("kontakt.system.folkeregistrert.adresse")}
+							deaktiverLagring={true}
+							onChange={() => this.brukFolkeregistrertAdresse()}
 							label={
 								<div>
 									<div
@@ -214,6 +226,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 							id="oppholdsadresse_midlertidig"
 							faktumKey="kontakt.system.oppholdsadresse.valg"
 							value="midlertidig"
+							deaktiverLagring={true}
 							onChange={() => this.brukSystemAdresse("kontakt.system.adresse")}
 							label={
 								<div>
@@ -227,6 +240,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 					<RadioFaktum
 						id="oppholdsadresse_soknad"
 						faktumKey="kontakt.system.oppholdsadresse.valg"
+						deaktiverLagring={true}
 						onChange={() => this.brukValgtAdresse()}
 						value="soknad"/>
 					<Underskjema
@@ -265,7 +279,8 @@ export default connect((state: State, props: any) => {
 		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
 		valgtAdresse: state.oppholdsadresse.valgtAdresse,
 		soknadsmottaker: state.oppholdsadresse.soknadsmottaker,
-		soknadsmottakerStatus: state.oppholdsadresse.soknadsmottakerStatus
+		soknadsmottakerStatus: state.oppholdsadresse.soknadsmottakerStatus,
+		adresseKategori: state.oppholdsadresse.adresseKategori
 
 	};
 })(injectIntl(Oppholdsadresse));
