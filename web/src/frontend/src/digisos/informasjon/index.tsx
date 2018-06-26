@@ -26,6 +26,8 @@ import {
 import SamtykkeInfoForsidenModal from "./samtykkeInfoForsidenModal";
 import { lesKommuner } from "../../nav-soknad/redux/kommuner/kommuneActions";
 import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
+import Ella from "../../nav-soknad/components/svg/Ella";
+import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 
 interface StateProps {
 	harTilgang: boolean;
@@ -69,6 +71,15 @@ class Informasjon extends React.Component<Props, {}> {
 				{soknadErLive === "true" && harTilgang ? (
 					<div>
 						<div className="skjema-content">
+
+							<Snakkeboble>
+								<h3>Hei Arne Magnus</h3>
+								Jeg vil fortelle deg om viktige punkter i søknaden.
+								Du bør lese informasjonen på denne siden før du begynner på søknaden.
+							</Snakkeboble>
+
+							<Ella />
+
 							<Infoblokk
 								className="blokk-s"
 								tittel={getIntlTextOrKey(intl, "informasjon.start.tittel")}
