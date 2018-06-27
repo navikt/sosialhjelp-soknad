@@ -13,23 +13,23 @@ export function kjorerJetty(): boolean {
 
 export function getApiBaseUrl(): string {
 	if (erDev()) {
-		// Kjør mot lokal sendsoknad:
-		return "http://localhost:8181/sendsoknad/";
+		// Kjør mot lokal soknadsosialhjelp-server:
+		return "http://localhost:8181/soknadsosialhjelp-server/";
 
 		// Kjør mot lokal mock backend:
-		// return "http://localhost:3001/sendsoknad/";
+		// return "http://localhost:3001/soknadsosialhjelp-server/";
 	}
 	if (location.href.indexOf("localhost:8080") >= 0) {
-		return "http://localhost:8181/sendsoknad/";
+		return "http://localhost:8181/soknadsosialhjelp-server/";
 	}
-	return kjorerJetty() ? "http://127.0.0.1:8181/sendsoknad/" : "/soknadsosialhjelp-server/";
+	return kjorerJetty() ? "http://127.0.0.1:8181/soknadsosialhjelp-server/" : "/soknadsosialhjelp-server/";
 }
 
 function getServletBaseUrl(): string {
 	if (erDev()) {
 		// Kjør mot lokal jetty
 		// return "http://localhost:8189/soknadsosialhjelp/";
-		return "http://localhost:3001/sendsoknad/";
+		return "http://localhost:3001/soknadsosialhjelp-server/";
 	}
 	return "/soknadsosialhjelp/";
 }
