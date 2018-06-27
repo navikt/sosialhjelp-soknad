@@ -12,7 +12,7 @@
 
 .digisos-snakkeboble-innhold {
   display: block;
-  width: 390px;
+  max-width: 390px;
   border-radius: 10px;
   padding: 18px;
   background-color: #cde7d8;
@@ -25,12 +25,17 @@
 
 .digisos-snakkeboble-pil {
   position: absolute;
-  bottom: -1.2rem;
-  right: 5rem;
+  bottom: -0.7rem;
+  right: 5.5rem;
   width: 4rem;
-  height: 4rem;
+  height: 3rem;
   background-color: #cde7d8;
   transform: rotate(90deg) skew(36deg);
+
+  @media screen and (max-width: 390px ) {
+    right: 17vw;
+  }
+
 }
 
 .digisos-snakkeboble-innhold h3 {

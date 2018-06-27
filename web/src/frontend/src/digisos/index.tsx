@@ -23,6 +23,7 @@ class App extends React.Component<InjectedIntlProps, {}> {
 	}
 	render() {
 		const ettersendelse = (window.location.pathname.match(/ettersendelse$/) != null);
+		const informasjon = (window.location.pathname.match(/informasjon$/) != null);
 		return (
 			<span>
 				<Switch>
@@ -30,37 +31,42 @@ class App extends React.Component<InjectedIntlProps, {}> {
 						path={`/skjema/:brukerBehandlingId/ettersendelse`}
 						component={Ettersendelse}
 					/>
-				</Switch>
-			{!ettersendelse && (<div className="app-digisos container">
-				<Switch>
-					<Route path={`/informasjon`} exact={true} component={Informasjon} />
-					<Route path={`/bosted`} exact={true} component={Start} />
 					<Route
-						path={`/skjema/:brukerBehandlingId/:steg`}
-						component={SkjemaRouter}
+						path={`/informasjon`}
 						exact={true}
+						component={Informasjon}
 					/>
-					<Route
-						path={`/kvittering/:brukerBehandlingId`}
-						component={Kvittering}
-					/>
-					<Route path={`/serverfeil`} component={ServerFeil} />
-					<Route component={SideIkkeFunnet} />
 				</Switch>
-				<Prompt
-					message={loc =>
-						erSkjemaside(loc.pathname)
-							? null
-							: "denne-teksten-brukes-ikke-men-trenger-tekst-her-for-å-vise-avbryt-dialog"
-					}
-				/>
-				<TimeoutBox
-					sessionDurationInMinutes={30}
-					showWarningerAfterMinutes={25}
-				/>
-				<AvbrytSoknad />
-				{this.props.children}
-			</div>
+			{!ettersendelse && !informasjon && (
+				<div className="app-digisos container">
+					<Switch>
+						<Route path={`/bosted`} exact={true} component={Start} />
+						<Route
+							path={`/skjema/:brukerBehandlingId/:steg`}
+							component={SkjemaRouter}
+							exact={true}
+						/>
+						<Route
+							path={`/kvittering/:brukerBehandlingId`}
+							component={Kvittering}
+						/>
+						<Route path={`/serverfeil`} component={ServerFeil} />
+						<Route component={SideIkkeFunnet} />
+					</Switch>
+					<Prompt
+						message={loc =>
+							erSkjemaside(loc.pathname)
+								? null
+								: "denne-teksten-brukes-ikke-men-trenger-tekst-her-for-å-vise-avbryt-dialog"
+						}
+					/>
+					<TimeoutBox
+						sessionDurationInMinutes={30}
+						showWarningerAfterMinutes={25}
+					/>
+					<AvbrytSoknad />
+					{this.props.children}
+				</div>
 			)}
 			</span>
 		);

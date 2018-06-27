@@ -1,0 +1,41 @@
+.personopplysning-blokk {
+  position: relative;
+  padding-left: 6.25rem;
+
+  .ikon {
+    position: absolute;
+    text-align: center; // Venstrejuster når grå bakgrunn på hele
+    width: 5rem;
+    left: 0%;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+
+
+}
+
+.personopplysning_info {
+  padding: 3rem 2rem 0 2rem;
+  max-width: 600px;
+
+  @media @mobile {
+    padding-top: 3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  h3 {
+    &:extend(.typo-systemtittel);
+  }
+
+  h4 {
+    &:extend(.typo-undertittel);
+    margin-top: 2rem;
+  }
+
+  h5 {
+    &:extend(.typo-element);
+    margin-top: 1rem;
+  }
+}
