@@ -8,6 +8,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import { DispatchProps } from "../../redux/reduxTypes";
 import { AdresseAutocompleteStatus, settStatus, settValgtAdresse, settVerdi } from "./adresseAutocompleteReducer";
+import { finnFaktum } from "../../utils";
 
 const Autocomplete = require("react-autocomplete");
 
@@ -54,6 +55,7 @@ interface StateProps {
 }
 
 interface OwnProps {
+	fakta: Faktum[];
 	value: string;
 	status: AdresseAutocompleteStatus;
 	valgtAdresse: Adresse;
@@ -79,6 +81,41 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 			previousFirstPart: null,
 			previousLastPart: null,
 		};
+
+		const adresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
+
+		let value: any = null;
+
+		const GATENAVN = "gatenavn";
+		const HUSNUMMER = "husnummer";
+		const HUSBOKSTAV = "husbokstav";
+		const KOMMUNENUMMER = "kommunenummer";
+		const KOMMUNENAVN = "kommunenavn";
+		const POSTNUMMER = "postnummer";
+		const POSTSTED = "poststed";
+		const GEOGRAFISKTILKNYTNING = "geografisktilknytning";
+
+		if (adresseFaktum && adresseFaktum.properties && adresseFaktum.properties[GATENAVN]) {
+
+			const adresse: Adresse = {
+				"adresse": adresseFaktum.properties[GATENAVN],
+				"husnummer": adresseFaktum.properties[HUSNUMMER],
+				"husbokstav": adresseFaktum.properties[HUSBOKSTAV],
+				"kommunenummer": adresseFaktum.properties[KOMMUNENUMMER],
+				"kommunenavn": adresseFaktum.properties[KOMMUNENAVN],
+				"postnummer": adresseFaktum.properties[POSTNUMMER],
+				"poststed": adresseFaktum.properties[POSTSTED],
+				"geografiskTilknytning": adresseFaktum.properties[GEOGRAFISKTILKNYTNING],
+				"gatekode": null,
+				"bydel": null
+			};
+
+			value = this.formaterAdresseString(adresse);
+			this.props.dispatch(settVerdi(value));
+			this.props.dispatch(settValgtAdresse(adresse));
+			// this.props.onValgtVerdi(adresse);
+		}
+
 	}
 
 	componentDidUpdate(prevProps: Props, prevState: StateProps) {

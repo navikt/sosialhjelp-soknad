@@ -258,9 +258,11 @@ export const faktumComponent = (defProps?: { property: string }) => <
 
 		setFaktumVerdiOgLagre(verdi: string, property?: string) {
 			const res = this.validerOgOppdaterFaktum(verdi, property);
-			this.props.dispatch(setFaktum(res.faktum));
+			if (!(this.props.deaktiverLagring !== null && this.props.deaktiverLagring === true )) {
+				this.props.dispatch(setFaktum(res.faktum));
+			}
 			if (!res.feilkode) {
-				if (!(this.props.deaktiverLagring && this.props.deaktiverLagring === true )) {
+				if (!(this.props.deaktiverLagring !== null && this.props.deaktiverLagring === true )) {
 					this.props.dispatch(lagreFaktum(res.faktum));
 				}
 			}
@@ -292,7 +294,7 @@ export const faktumComponent = (defProps?: { property: string }) => <
 		}
 
 		lagreFaktum(): Promise<any> {
-			if (this.props.deaktiverLagring && this.props.deaktiverLagring === true ) {
+			if (this.props.deaktiverLagring !== null && this.props.deaktiverLagring === true ) {
 				return null;
 			}
 			return this.props.dispatch(lagreFaktum(this.faktum()));

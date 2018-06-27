@@ -4,7 +4,7 @@ import { Faktum } from "../../../../nav-soknad/types";
 import RadioFaktum from "../../../../nav-soknad/faktum/RadioFaktum";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
-import { getFaktumVerdi, oppdaterFaktumMedVerdier } from "../../../../nav-soknad/utils";
+import { getFaktumVerdi } from "../../../../nav-soknad/utils";
 import { finnFaktum } from "../../../../nav-soknad/utils";
 import { connect } from "react-redux";
 import { State } from "../../../redux/reducers";
@@ -14,9 +14,9 @@ import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
 import AdresseAutocomplete from "../../../../nav-soknad/components/adresseAutocomplete/adresseAutcomplete";
 import {
 	SoknadsMottakerStatus,
-	hentSoknadsmottakerAction, settSoknadsmottakerStatus, velgAdresseFraSoketreff, AdresseKategori, settAdresseKategori
+	hentSoknadsmottakerAction, velgAdresseFraSoketreff, AdresseKategori, settAdresseKategori, settSoknadsmottakerStatus
 } from "./oppholdsadresseReducer";
-// import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
+import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 
 export interface Adresse {
 	"adresse": null | string;
@@ -61,6 +61,50 @@ interface OwnProps {
 	adresseKategori: AdresseKategori;
 }
 
+function transformAdresse(adresseFaktum: Faktum){
+
+	const ADRESSE = "adresse";
+	const HUSNUMMER = "husnummer";
+	const HUSBOKSTAV = "husbokstav";
+	const KOMMUNENUMMER = "kommunenummer";
+	const KOMMUNENAVN = "kommunenavn";
+	const POSTNUMMER = "postnummer";
+	const POSTSTED = "poststed";
+	const GEOGRAFISKTILKNYTNING = "geografiskTilknytning";
+	const GATEKODE = "gatekode";
+	const BYDEL = "bydel";
+	const TYPE = "type";
+	const GATENAVN = "gatenavn";
+
+	const adresse: Adresse = {
+		"adresse": null,
+		"husnummer": null,
+		"husbokstav": null,
+		"kommunenummer": null,
+		"kommunenavn": null,
+		"postnummer": null,
+		"poststed": null,
+		"geografiskTilknytning": null,
+		"gatekode": null,
+		"bydel": null,
+		"type": null
+	};
+
+	adresse[ADRESSE] = adresseFaktum.properties[GATENAVN];
+	adresse[HUSNUMMER] = adresseFaktum.properties[HUSNUMMER];
+	adresse[HUSBOKSTAV] = adresseFaktum.properties[HUSBOKSTAV];
+	adresse[KOMMUNENUMMER] = adresseFaktum.properties[KOMMUNENUMMER];
+	adresse[KOMMUNENAVN] = adresseFaktum.properties[KOMMUNENAVN];
+	adresse[POSTNUMMER] = adresseFaktum.properties[POSTNUMMER];
+	adresse[POSTSTED] = adresseFaktum.properties[POSTSTED];
+	adresse[GEOGRAFISKTILKNYTNING] = adresseFaktum.properties[GEOGRAFISKTILKNYTNING];
+	adresse[GATEKODE] = null;
+	adresse[BYDEL] = null;
+	adresse[TYPE] = "gateadresse";
+
+	return adresse;
+}
+
 export function faktumHarLogvligAdresse(faktum: any) {
 	return faktum != null &&
 		typeof faktum.properties !== "undefined" &&
@@ -73,114 +117,94 @@ type Props = OwnProps & InjectedIntlProps & DispatchProps;
 
 class Oppholdsadresse extends React.Component<Props, {}> {
 
-	finnOppholdsadressevalg() {
-		// Midlertidig løsning. Skal erstattes med at man kan vente på at adressefaktumet er blitt oppdatert.
-		const a = Array.from(document.getElementsByName("kontakt_system_oppholdsadresse_valg"))
-			.filter(e => (e as any).checked);
-		if (a.length > 0) {
-			return (a[0] as any).value;
-		} else {
-			return null;
+	constructor(props: Props) {
+		super(props);
+		console.error("Kjører konstruktøren til oppholdsadresse....");
+
+		const oppholdsadresseFaktum = finnFaktum("kontakt.system.oppholdsadresse.valg", this.props.fakta);
+
+		if (oppholdsadresseFaktum.value) {
+			this.kjorSagaVedRefresh(oppholdsadresseFaktum);
 		}
 	}
-	settAdresseOgSoknadsmottaker(brukerBehandlingId: string, adresseFaktum: Faktum, fakta: Faktum[] ) {
+
+	kjorSagaVedRefresh(oppholdsadresseFaktum: Faktum) {
+
+		if (oppholdsadresseFaktum.value === "folkeregistrert") {
+			this.brukFolkeregistrertAdresse();
+
+		} else if (oppholdsadresseFaktum.value === "midlertidig") {
+			this.brukMidlertidigAdresse();
+
+		} else if (oppholdsadresseFaktum.value === "soknad") {
+			const adresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
+			const GATENAVN = "gatenavn";
+			const Oppholdsadressevalg = "soknad";
+			const adresseKategori = AdresseKategori.SOKNAD;
+
+			if (adresseFaktum.properties[GATENAVN]) {
+				const adresse: Adresse = transformAdresse(adresseFaktum);
+
+				this.props.dispatch(velgAdresseFraSoketreff(adresse));
+				this.settAdresseOgSoknadsmottaker(adresse, Oppholdsadressevalg, adresseKategori);
+			} else {
+				this.settAdresseOgSoknadsmottaker(null, Oppholdsadressevalg, adresseKategori);
+			}
+		}
+	}
+
+	settAdresseOgSoknadsmottaker(adresse: Adresse, oppholdsadressevalg: string, adresseKategori: AdresseKategori ) {
+
+		this.props.dispatch(settSoknadsmottakerStatus(SoknadsMottakerStatus.IKKE_VALGT));
+
 		// TODO Detektere om vi har folkeregistrert|midlertidig|soknad
-		const soknadsmottakerFaktum = finnFaktum("soknadsmottaker", this.props.fakta);
-		// const oppholdsadressevalg = getFaktumVerdi(this.props.fakta, "kontakt.system.oppholdsadresse.valg")
 
 		this.props.dispatch(hentSoknadsmottakerAction(
 			this.props.brukerBehandlingId,
-			adresseFaktum,
-			soknadsmottakerFaktum,
-			this.finnOppholdsadressevalg(),
 			this.props.fakta,
-			this.props.adresseKategori
+			adresse,
+			oppholdsadressevalg,
+			adresseKategori
 		));
-	}
-
-	settAdresseFaktum(adresse: Adresse) {
-		this.props.dispatch(settSoknadsmottakerStatus(SoknadsMottakerStatus.IKKE_VALGT));
-
-		let adresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
-
-		if (adresse) {
-			const properties = [
-				"type", "husnummer", "husbokstav", "kommunenummer",
-				"kommunenavn", "postnummer", "poststed", "geografiskTilknytning",
-			];
-			properties.map((property: string) => {
-				adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, adresse[property], property);
-			});
-			adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, adresse.adresse, "gatenavn");
-		} else {
-			adresseFaktum = null;
-		}
-
-		this.settAdresseOgSoknadsmottaker(
-			this.props.brukerBehandlingId,
-			adresseFaktum,
-			this.props.fakta
-		);
-	}
-
-	brukSystemAdresse(faktumKey: string) {
-		const faktum = finnFaktum(faktumKey, this.props.fakta);
-		const GATENAVN = "gatenavn";
-		const HUSNUMMER = "husnummer";
-		const HUSBOKSTAV = "husbokstav";
-		const KOMMUNENUMMER = "kommunenummer";
-		const KOMMUNENAVN = "kommunenavn";
-		const POSTNUMMER = "postnummer";
-		const POSTSTED = "poststed";
-
-		// Denne må kunne håndtere andre typer adresse som matrikkeladresse
-		const adresse: Adresse = {
-			"adresse": faktum.properties[GATENAVN],
-			"husnummer": faktum.properties[HUSNUMMER],
-			"husbokstav": faktum.properties[HUSBOKSTAV],
-			"kommunenummer": faktum.properties[KOMMUNENUMMER],
-			"kommunenavn": faktum.properties[KOMMUNENAVN],
-			"postnummer": faktum.properties[POSTNUMMER],
-			"poststed": faktum.properties[POSTSTED],
-			"geografiskTilknytning": null,
-			"gatekode": null,
-			"bydel": null,
-			"type": "gateadresse"
-		};
-		//
-		this.settAdresseFaktum(adresse);
-	}
-
-	brukValgtAdresse() {
-		if (this.props.valgtAdresse) {
-			this.settAdresseFaktum(this.props.valgtAdresse);
-		} else {
-			this.settAdresseFaktum(null);
-		}
-	}
-
-	hentSoknadsmottakerMidlertidig() { // TODO: fiks denne.
-		console.warn("debug hentSoknadsmottakerMidlertidig...her må gjøre noe.");
-	}
-
-	handleVelgAutocompleteAdresse(adresse: Adresse) {
-		this.props.dispatch(velgAdresseFraSoketreff(adresse));
-		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
-			this.settAdresseFaktum(adresse);
-		} else {
-			this.settAdresseFaktum(null);
-			this.props.dispatch(velgAdresseFraSoketreff(null));
-		}
 	}
 
 	brukFolkeregistrertAdresse() {
 		this.props.dispatch(settAdresseKategori(AdresseKategori.FOLKEREGISTRERT));
-		this.brukSystemAdresse("kontakt.system.folkeregistrert.adresse");
+		const Oppholdsadressevalg = "folkeregistrert";
+		const adresseKategori = AdresseKategori.FOLKEREGISTRERT;
+		const adresse: Adresse = this.props.valgtAdresse;
+		this.settAdresseOgSoknadsmottaker(adresse, Oppholdsadressevalg, adresseKategori);
 	}
 
-	// brukMidlertidigAdresse() {
-	//
-	// }
+	brukMidlertidigAdresse() {
+		const Oppholdsadressevalg = "midlertidig";
+		const adresseKategori = AdresseKategori.MIDLERTIDIG;
+
+		const adresse: Adresse = this.props.valgtAdresse;
+		this.settAdresseOgSoknadsmottaker(adresse, Oppholdsadressevalg, adresseKategori);
+	}
+
+	brukSoknadAdresse() {
+		const Oppholdsadressevalg = "soknad";
+		const adresseKategori = AdresseKategori.SOKNAD;
+		if (this.props.valgtAdresse) {
+			this.settAdresseOgSoknadsmottaker(this.props.valgtAdresse, Oppholdsadressevalg, adresseKategori);
+		} else {
+			this.settAdresseOgSoknadsmottaker(null, Oppholdsadressevalg, adresseKategori);
+		}
+	}
+
+	handleVelgAutocompleteAdresse(adresse: Adresse) {
+		const adresseKategori = AdresseKategori.SOKNAD;
+		const oppholdsadressevalg = "soknad";
+		this.props.dispatch(velgAdresseFraSoketreff(adresse));
+		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
+			this.settAdresseOgSoknadsmottaker(adresse, oppholdsadressevalg, adresseKategori);
+		} else {
+			this.settAdresseOgSoknadsmottaker(null, oppholdsadressevalg, adresseKategori);
+			this.props.dispatch(velgAdresseFraSoketreff(null));
+		}
+	}
 
 	render() {
 		const fakta = this.props.fakta;
@@ -189,15 +213,15 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 		const adressesokAdresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
 
 		return (<div className="sosialhjelp-oppholdsadresse">
-			<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse" style="system">
+			{/*<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse" style="system">*/}
 				<SporsmalFaktum
 
 					faktumKey="soknadsmottaker"
 					validerFunc={[(value) => {
-						// const soknadsmottakerFaktum = finnFaktum("soknadsmottaker", this.props.fakta);
-						// if (!faktumHarLogvligAdresse(soknadsmottakerFaktum)) {
-						// 	return ValideringActionKey.PAKREVD;
-						// }
+						if (this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.GYLDIG) {
+							return ValideringActionKey.PAKREVD;
+						}
+
 						return null;
 					}]}
 				>
@@ -227,7 +251,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 							faktumKey="kontakt.system.oppholdsadresse.valg"
 							value="midlertidig"
 							deaktiverLagring={true}
-							onChange={() => this.brukSystemAdresse("kontakt.system.adresse")}
+							onChange={() => this.brukMidlertidigAdresse()}
 							label={
 								<div>
 									<div style={{fontWeight: 600}}>Midlertidig adresse:</div>
@@ -241,7 +265,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 						id="oppholdsadresse_soknad"
 						faktumKey="kontakt.system.oppholdsadresse.valg"
 						deaktiverLagring={true}
-						onChange={() => this.brukValgtAdresse()}
+						onChange={() => this.brukSoknadAdresse()}
 						value="soknad"/>
 					<Underskjema
 						visible={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "soknad"}
@@ -254,12 +278,13 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 								<AdresseAutocomplete
 									adresseFaktum={adressesokAdresseFaktum}
 									onValgtVerdi={(adresse: any) => this.handleVelgAutocompleteAdresse(adresse)}
+									fakta={this.props.fakta}
 								/>
 							</SporsmalFaktum>
 						</div>
 					</Underskjema>
 				</SporsmalFaktum>
-			</SporsmalFaktum>
+			{/*</SporsmalFaktum>*/}
 			<SoknadsmottakerInfoPanel
 				soknadsmottakerStatus={this.props.soknadsmottakerStatus}
 				soknadsmottakerFaktum={finnFaktum("soknadsmottaker", this.props.fakta)}
