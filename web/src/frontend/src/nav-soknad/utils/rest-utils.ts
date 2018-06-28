@@ -17,7 +17,7 @@ export function getApiBaseUrl(): string {
 		return "http://localhost:8181/soknadsosialhjelp-server/";
 
 		// Kjør mot lokal mock backend:
-		// return "http://localhost:3001/soknadsosialhjelp-server/";
+		// return "http://localhost:3001/sendsoknad/";
 	}
 	if (location.href.indexOf("localhost:8080") >= 0) {
 		return "http://localhost:8181/soknadsosialhjelp-server/";
