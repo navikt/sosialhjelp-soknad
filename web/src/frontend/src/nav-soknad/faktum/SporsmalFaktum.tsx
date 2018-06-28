@@ -14,6 +14,7 @@ export interface OwnProps {
 	htmlRef?: (c: any) => HTMLElement;
 	style?: SporsmalStyle;
 	tittelRenderer?: (title: string) => React.ReactNode;
+	noValidateOnBlur?: boolean;
 }
 
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -43,7 +44,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	}
 
 	handleOnBlur(evt: any) {
-		if (this.harValidering()) {
+		if (this.harValidering() && !this.props.noValidateOnBlur) {
 			setTimeout(() => {
 				if (this.mounted) {
 					this.props.validerFaktum();

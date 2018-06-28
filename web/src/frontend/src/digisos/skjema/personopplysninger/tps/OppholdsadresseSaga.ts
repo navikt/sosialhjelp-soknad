@@ -10,9 +10,11 @@ import { navigerTilServerfeil } from "../../../../nav-soknad/redux/navigasjon/na
 import { loggFeil } from "../../../../nav-soknad/redux/navlogger/navloggerActions";
 import { fetchToJson } from "../../../../nav-soknad/utils/rest-utils";
 import { finnFaktum, oppdaterFaktumMedVerdier } from "../../../../nav-soknad/utils";
-import { lagreFaktum, setFaktum } from "../../../../nav-soknad/redux/fakta/faktaActions";
+import { lagreFaktum } from "../../../../nav-soknad/redux/fakta/faktaActions";
 import { Faktum } from "../../../../nav-soknad/types";
 import { Adresse } from "./Oppholdsadresse";
+import { lagreFaktumSaga } from "../../../../nav-soknad/redux/fakta/faktaSaga";
+import { LagreFaktum } from "../../../../nav-soknad/redux/fakta/faktaTypes";
 
 function oppdaterSoknadsMottaker(soknadsmottaker: any, faktum: Faktum) {
 	const properties = [
@@ -71,71 +73,72 @@ function* fetchOgSettSoknadsmottakerOgOppdaterStatus(
 		soknadsmottakerFaktum: Faktum): any {
 	const url = `soknadsmottaker/${brukerBehandlingId}?valg=${oppholdsadressevalg}`;
 	const response = yield call(fetchToJson, url);
+	console.error("response:");
+	console.warn(response);
 	if (response && response.toString().length > 0) {
 		// TODO: Støtte visning av dropdown med NAV-kontor hvis mer enn én blir returnert.
-		yield put(lagreFaktum(oppdaterSoknadsMottaker(response, soknadsmottakerFaktum)));
+		yield* lagreFaktumSaga(lagreFaktum(oppdaterSoknadsMottaker(response, soknadsmottakerFaktum)) as LagreFaktum) as any;
 
 		response.sosialOrgnr ?
 			yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.GYLDIG)) :
 			yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.UGYLDIG));
 
 	} else {
+		console.error("EMPTY RESPONSE");
 		soknadsmottakerFaktum = nullUtSoknadsmottakerFaktum(soknadsmottakerFaktum);
-		yield put(lagreFaktum(soknadsmottakerFaktum));
+		yield* lagreFaktumSaga(lagreFaktum(soknadsmottakerFaktum) as LagreFaktum) as any;
 		yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.UGYLDIG));
+	}
+}
+
+function getOppholdsadresseFaktumValue(adresseKategori: AdresseKategori ) {
+	if (adresseKategori === AdresseKategori.FOLKEREGISTRERT) {
+		return "folkeregistrert";
+	} else if (adresseKategori === AdresseKategori.MIDLERTIDIG) {
+		return "midlertidig";
+	} else if (adresseKategori === AdresseKategori.SOKNAD) {
+		return "soknad";
+	} else {
+		return null;
 	}
 }
 
 function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): SagaIterator {
 	try {
 		const adresse = action.adresse;
+
 		const oppholdsadresseFaktum = finnFaktum("kontakt.system.oppholdsadresse.valg", action.fakta);
 		let adresseFaktum = finnFaktum("kontakt.adresse.bruker", action.fakta);
-		const soknadsmottakerFaktum = finnFaktum("soknadsmottaker", action.fakta);
+		let soknadsmottakerFaktum = finnFaktum("soknadsmottaker", action.fakta);
 
-		if (action.adresseKategori === AdresseKategori.FOLKEREGISTRERT) {
+		soknadsmottakerFaktum = nullUtSoknadsmottakerFaktum(soknadsmottakerFaktum);
 
-			oppholdsadresseFaktum.value = "folkeregistrert";
-			yield put(setFaktum(oppholdsadresseFaktum));
-			yield put(lagreFaktum(oppholdsadresseFaktum));
+		yield* lagreFaktumSaga(lagreFaktum(soknadsmottakerFaktum) as LagreFaktum) as any;
 
-			yield* fetchOgSettSoknadsmottakerOgOppdaterStatus(
-				action.brukerBehandlingId,
-				action.oppholdsadressevalg,
-				soknadsmottakerFaktum);
+		oppholdsadresseFaktum.value = getOppholdsadresseFaktumValue(action.adresseKategori);
+		if (oppholdsadresseFaktum.value == null) {
+			return null;
+		}
 
-		} else if (action.adresseKategori === AdresseKategori.MIDLERTIDIG) {
-			oppholdsadresseFaktum.value = "midlertidig";
-			yield put(setFaktum(oppholdsadresseFaktum));
-			yield put(lagreFaktum(oppholdsadresseFaktum));
+		yield* lagreFaktumSaga(lagreFaktum(oppholdsadresseFaktum) as LagreFaktum) as any;
 
-			yield* fetchOgSettSoknadsmottakerOgOppdaterStatus(
-				action.brukerBehandlingId,
-				action.oppholdsadressevalg,
-				soknadsmottakerFaktum);
-
-		} else if (action.adresseKategori === AdresseKategori.SOKNAD) {
-			oppholdsadresseFaktum.value = "soknad";
-			yield put(setFaktum(oppholdsadresseFaktum));
-			yield put(lagreFaktum(oppholdsadresseFaktum));
-
+		if (action.adresseKategori === AdresseKategori.SOKNAD) {
 			if (adresse) {
 				adresseFaktum = oppdaterAdresse(adresseFaktum, adresse);
-				yield put(setFaktum(adresseFaktum));
-				yield put(lagreFaktum(adresseFaktum));
-
-				yield* fetchOgSettSoknadsmottakerOgOppdaterStatus(
-					action.brukerBehandlingId,
-					action.oppholdsadressevalg,
-					soknadsmottakerFaktum);
-
+				// yield put(setFaktum(adresseFaktum));
+				yield* lagreFaktumSaga(lagreFaktum(adresseFaktum) as LagreFaktum) as any;
 			} else {
 				yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.IKKE_VALGT));
+				return null;
 			}
 		}
 
+		yield* fetchOgSettSoknadsmottakerOgOppdaterStatus(
+			action.brukerBehandlingId,
+			action.oppholdsadressevalg,
+			soknadsmottakerFaktum);
+
 	} catch (reason) {
-		console.error("Error in sage: " + reason.toString());
 		yield put(loggFeil("Hent soknadsmottaker feilet: " + reason.toString()));
 		yield put(navigerTilServerfeil());
 	}

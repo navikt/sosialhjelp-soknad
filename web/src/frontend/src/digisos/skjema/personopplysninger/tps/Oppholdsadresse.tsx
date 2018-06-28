@@ -14,7 +14,7 @@ import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
 import AdresseAutocomplete from "../../../../nav-soknad/components/adresseAutocomplete/adresseAutcomplete";
 import {
 	SoknadsMottakerStatus,
-	hentSoknadsmottakerAction, velgAdresseFraSoketreff, AdresseKategori, settAdresseKategori, settSoknadsmottakerStatus
+	hentSoknadsmottakerAction, AdresseKategori, settAdresseKategori, settSoknadsmottakerStatus
 } from "./oppholdsadresseReducer";
 import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 
@@ -61,7 +61,7 @@ interface OwnProps {
 	adresseKategori: AdresseKategori;
 }
 
-function transformAdresse(adresseFaktum: Faktum){
+function transformAdresse(adresseFaktum: Faktum) {
 
 	const ADRESSE = "adresse";
 	const HUSNUMMER = "husnummer";
@@ -119,7 +119,6 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 
 	constructor(props: Props) {
 		super(props);
-		console.error("Kjører konstruktøren til oppholdsadresse....");
 
 		const oppholdsadresseFaktum = finnFaktum("kontakt.system.oppholdsadresse.valg", this.props.fakta);
 
@@ -129,7 +128,6 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 	}
 
 	kjorSagaVedRefresh(oppholdsadresseFaktum: Faktum) {
-
 		if (oppholdsadresseFaktum.value === "folkeregistrert") {
 			this.brukFolkeregistrertAdresse();
 
@@ -137,19 +135,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 			this.brukMidlertidigAdresse();
 
 		} else if (oppholdsadresseFaktum.value === "soknad") {
-			const adresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
-			const GATENAVN = "gatenavn";
-			const Oppholdsadressevalg = "soknad";
-			const adresseKategori = AdresseKategori.SOKNAD;
-
-			if (adresseFaktum.properties[GATENAVN]) {
-				const adresse: Adresse = transformAdresse(adresseFaktum);
-
-				this.props.dispatch(velgAdresseFraSoketreff(adresse));
-				this.settAdresseOgSoknadsmottaker(adresse, Oppholdsadressevalg, adresseKategori);
-			} else {
-				this.settAdresseOgSoknadsmottaker(null, Oppholdsadressevalg, adresseKategori);
-			}
+			this.brukSoknadAdresse();
 		}
 	}
 
@@ -172,23 +158,26 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 		this.props.dispatch(settAdresseKategori(AdresseKategori.FOLKEREGISTRERT));
 		const Oppholdsadressevalg = "folkeregistrert";
 		const adresseKategori = AdresseKategori.FOLKEREGISTRERT;
-		const adresse: Adresse = this.props.valgtAdresse;
-		this.settAdresseOgSoknadsmottaker(adresse, Oppholdsadressevalg, adresseKategori);
+		this.settAdresseOgSoknadsmottaker(null, Oppholdsadressevalg, adresseKategori);
 	}
 
 	brukMidlertidigAdresse() {
 		const Oppholdsadressevalg = "midlertidig";
 		const adresseKategori = AdresseKategori.MIDLERTIDIG;
 
-		const adresse: Adresse = this.props.valgtAdresse;
-		this.settAdresseOgSoknadsmottaker(adresse, Oppholdsadressevalg, adresseKategori);
+		this.settAdresseOgSoknadsmottaker(null, Oppholdsadressevalg, adresseKategori);
 	}
 
 	brukSoknadAdresse() {
+		const adresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
+		const GATENAVN = "gatenavn";
 		const Oppholdsadressevalg = "soknad";
 		const adresseKategori = AdresseKategori.SOKNAD;
-		if (this.props.valgtAdresse) {
-			this.settAdresseOgSoknadsmottaker(this.props.valgtAdresse, Oppholdsadressevalg, adresseKategori);
+
+		if (adresseFaktum.properties[GATENAVN]) {
+			const adresse: Adresse = transformAdresse(adresseFaktum);
+
+			this.settAdresseOgSoknadsmottaker(adresse, Oppholdsadressevalg, adresseKategori);
 		} else {
 			this.settAdresseOgSoknadsmottaker(null, Oppholdsadressevalg, adresseKategori);
 		}
@@ -197,12 +186,10 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 	handleVelgAutocompleteAdresse(adresse: Adresse) {
 		const adresseKategori = AdresseKategori.SOKNAD;
 		const oppholdsadressevalg = "soknad";
-		this.props.dispatch(velgAdresseFraSoketreff(adresse));
 		if (adresse && adresse.adresse && adresse.adresse.length > 0) {
 			this.settAdresseOgSoknadsmottaker(adresse, oppholdsadressevalg, adresseKategori);
 		} else {
 			this.settAdresseOgSoknadsmottaker(null, oppholdsadressevalg, adresseKategori);
-			this.props.dispatch(velgAdresseFraSoketreff(null));
 		}
 	}
 
@@ -217,6 +204,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 				<SporsmalFaktum
 
 					faktumKey="soknadsmottaker"
+					noValidateOnBlur={true}
 					validerFunc={[(value) => {
 						if (this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.GYLDIG) {
 							return ValideringActionKey.PAKREVD;
@@ -291,7 +279,6 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 			/>
 		</div>);
 	}
-
 }
 
 export default connect((state: State, props: any) => {
