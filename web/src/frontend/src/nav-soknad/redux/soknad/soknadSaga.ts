@@ -8,8 +8,7 @@ import {
 } from "../../utils/rest-utils";
 import {
 	finnFaktum,
-	oppdaterFaktumMedProperties,
-	oppdaterFaktumMedVerdier
+	oppdaterFaktumMedProperties, oppdaterFaktumMedVerdier
 } from "../../utils";
 import { updateFaktaMedLagretVerdi } from "../fakta/faktaUtils";
 import {
@@ -17,8 +16,7 @@ import {
 	HentSoknadAction,
 	SendSoknadAction,
 	SlettSoknadAction,
-	SoknadActionTypeKeys,
-	StartSoknadAction
+	SoknadActionTypeKeys, StartSoknadAction
 } from "./soknadActionTypes";
 import {
 	navigerTilDittNav,
@@ -49,13 +47,18 @@ export interface OpprettSoknadResponse {
 
 function* opprettSoknadSaga(): SagaIterator {
 	try {
+		yield put(resetSoknad());
+		yield put(resetFakta());
 		const response: OpprettSoknadResponse = yield call(
 			fetchPost,
 			"soknader",
 			JSON.stringify({ soknadType: SKJEMAID })
 		);
 		yield put(opprettSoknadOk(response.brukerBehandlingId));
-		return response.brukerBehandlingId;
+		const hentAction = { brukerBehandlingId: response.brukerBehandlingId } as HentSoknadAction;
+		yield call(hentSoknadSaga, hentAction);
+		yield put(startSoknadOk()); // TODO Rename metode navn
+		yield put(tilSteg(1));
 	} catch (reason) {
 		yield put(navigerTilServerfeil());
 	}
@@ -83,8 +86,6 @@ function* oppdaterSoknadSaga(soknad: Soknad): SagaIterator {
 
 function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
 	try {
-		yield put(resetSoknad());
-		yield put(resetFakta());
 		const id = yield call(opprettSoknadSaga);
 		const hentAction = { brukerBehandlingId: id } as HentSoknadAction;
 		const soknad = yield call(hentSoknadSaga, hentAction);

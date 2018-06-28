@@ -1,0 +1,57 @@
+
+.skjema-informasjonspanel {
+	position: relative;
+	border-radius: 0.5rem;
+	background-color: #ffffff;
+	border: solid 2px @navGronnLighten60;
+	padding: 2rem 1.5rem 2rem 3.5rem;
+	margin-bottom: 2rem;
+	font-weight: 600;
+	opacity: 0;
+	transition: opacity 1s;
+
+	&__synlig {
+		opacity: 1;
+		@media screen and (max-width: 730px) {
+			padding-left: 80px;
+		}
+	}
+
+	&>div {
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translate(-50%, -50%);
+
+		background: @navGronnLighten60;
+		border-radius: 100%;
+		height: 5rem;
+		width: 5rem;
+
+		@media screen and (max-width: 730px) {
+			transform: scale(0.7) translate(0%, -70%);
+		}
+
+		&>img {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			height: 3.125rem;
+		}
+	}
+}
+
+.skjema-informasjonspanel.skjema-informasjonspanel-advarsel {
+	border: solid 2px @navOransjeLighten40;
+	&>div {
+		background: @navOransjeLighten40;
+	}
+}
+
+.skjema-informasjonspanel.skjema-informasjonspanel-feil {
+	border: solid 2px @redError;
+	&>div {
+		background: @redError;
+	}
+}

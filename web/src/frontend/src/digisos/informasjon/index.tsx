@@ -15,17 +15,17 @@ import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
 import Infoblokk from "../../nav-soknad/components/infoblokk";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
-import { tilBostedEllerStartSoknad } from "../../nav-soknad/redux/navigasjon/navigasjonActions";
+// import { tilSteg } from "../../nav-soknad/redux/navigasjon/navigasjonActions";
 import { FeatureToggles } from "../../featureToggles";
-import { Horten } from "../data/kommuner";
+// import { Horten } from "../data/kommuner";
 import IkkeTilgang from "./IkkeTilgang";
 import { TilgangSperrekode } from "../../nav-soknad/redux/tilgang/tilgangTypes";
 import {
 	setVisSamtykkeInfo
 } from "../../nav-soknad/redux/init/initActions";
 import SamtykkeInfoForsidenModal from "./samtykkeInfoForsidenModal";
-import { lesKommuner } from "../../nav-soknad/redux/kommuner/kommuneActions";
 import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
+import { opprettSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 
 interface StateProps {
 	harTilgang: boolean;
@@ -44,10 +44,7 @@ class Informasjon extends React.Component<Props, {}> {
 	}
 
 	startSoknad() {
-		this.props.dispatch(lesKommuner());
-		this.props.dispatch(
-			tilBostedEllerStartSoknad(this.props.visVelgBosted ? null : Horten)
-		);
+		this.props.dispatch(opprettSoknad(this.props.intl));
 	}
 
 	render() {

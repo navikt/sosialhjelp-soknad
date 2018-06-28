@@ -8,7 +8,10 @@ export type ikoner =
 	| "advarselSirkel"
 	| "trashcan"
 	| "snakkebobler"
-	| "dokumenter";
+	| "dokumenter"
+	| "searchAddresse"
+	| "checkCircle"
+	| "reportProblemCircle";
 
 interface Props {
 	className?: string;

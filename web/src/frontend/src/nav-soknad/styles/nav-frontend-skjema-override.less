@@ -28,6 +28,18 @@
 	}
 }
 
+.skjemaelement {
+	.checkboks,
+	.radioknapp {
+		+ .skjemaelement__label {
+			&:before {
+				top: 50%;
+				transform: translateY(-50%);
+			}
+		}
+	}
+}
+
 .panel--noPadding {
 	padding: 0;
 }
