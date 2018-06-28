@@ -29,7 +29,7 @@ function getServletBaseUrl(): string {
 	if (erDev()) {
 		// Kjør mot lokal jetty
 		// return "http://localhost:8189/soknadsosialhjelp/";
-		return "http://localhost:3001/soknadsosialhjelp-server/";
+		return "http://localhost:3001/sendsoknad/";
 	}
 	return "/soknadsosialhjelp/";
 }
