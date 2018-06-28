@@ -14,8 +14,8 @@ class Personopplysninger extends React.Component<Props, {}> {
 	render() {
 
 		return (
-			<div className="blokk-s panel">
-				<div className="skjema-infoblokk__content">
+			<div className="blokk-s panel personopplysninger-panel">
+				<div className="personopplysning-infoblokk">
 					<Undertittel className="blokk-m">
 						<FormattedMessage id="informasjon.tekster.personopplysninger.tittel"/>
 					</Undertittel>

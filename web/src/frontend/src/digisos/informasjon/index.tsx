@@ -79,55 +79,62 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 
 		return (
-			<div className="ettersendelse">
+			<div className="ettersendelse informasjon-side">
 				<Banner>
 					<FormattedMessage id="skjema.tittel" />
 				</Banner>
 				<DocumentTitle title={title}/>
 				{soknadErLive === "true" && harTilgang ? (
-					<div>
-						<div className="skjema-content informasjon-innhold">
-							<span className="informasjon-fra-ella">
-								<Snakkeboble>
-									{this.renderHilsen()}
-									<FormattedMessage id="informasjon.hilsen.tittel"/>
-								</Snakkeboble>
-								<Ella />
-							</span>
+					<span>
+						<div>
+							<div className="skjema-content informasjon-innhold">
+								<span className="informasjon-fra-ella">
+									<Snakkeboble>
+										{this.renderHilsen()}
+										<FormattedMessage id="informasjon.hilsen.tittel"/>
+									</Snakkeboble>
+									<Ella />
+								</span>
 
-							<Panel className="informasjon-viktig">
-								<Element>
-									<FormattedMessage id="informasjon.start.undertittel"/>
-								</Element>
+								<Panel className="informasjon-viktig">
+									<Element>
+										<FormattedMessage id="informasjon.start.undertittel"/>
+									</Element>
 
-								<p className="blokk-s">
-									<FormattedHTMLMessage id="informasjon.start.tekst"/>
-								</p>
+									<p className="blokk-s">
+										<FormattedHTMLMessage id="informasjon.start.tekst"/>
+									</p>
 
-								<Element>
-									<FormattedMessage id="informasjon.nodsituasjon.undertittel"/>
-								</Element>
-								<p className="blokk-s">
-									<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst"/>
-								</p>
-							</Panel>
-
-							<Personopplysninger/>
-
-							<span className="informasjon-start-knapp">
-								<Knapp
-									id="start_soknad_button"
-									type="hoved"
-									spinner={startSoknadPending}
-									disabled={startSoknadPending}
-									onClick={() => this.startSoknad()}
-								>
-									{getIntlTextOrKey(intl, "skjema.knapper.start")}
-								</Knapp>
-							</span>
+									<Element>
+										<FormattedMessage id="informasjon.nodsituasjon.undertittel"/>
+									</Element>
+									<p className="blokk-s">
+										<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst"/>
+									</p>
+								</Panel>
+							</div>
 						</div>
 
-					</div>
+						<div className="zebra-stripe graa">
+							<div className="skjema-content">
+								<Personopplysninger/>
+							</div>
+
+							<div className="skjema-content">
+								<span className="informasjon-start-knapp">
+									<Knapp
+										id="start_soknad_button"
+										type="hoved"
+										spinner={startSoknadPending}
+										disabled={startSoknadPending}
+										onClick={() => this.startSoknad()}
+									>
+										{getIntlTextOrKey(intl, "skjema.knapper.start")}
+									</Knapp>
+								</span>
+							</div>
+						</div>
+					</span>
 				) : (
 					<div className="skjema-content">
 						<IkkeTilgang sperrekode={sperrekode}/>
