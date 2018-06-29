@@ -22,6 +22,7 @@ import {
 	settErrorFarge
 } from "./oppholdsadresseReducer";
 import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
+import {Select} from "nav-frontend-skjema";
 
 export interface Adresse {
 	"adresse": null | string;
@@ -275,6 +276,21 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 									onValgtVerdi={(adresse: any) => this.handleVelgAutocompleteAdresse(adresse)}
 									fakta={this.props.fakta}
 								/>
+								<p></p>
+								<Select
+									label='Adressen ga flere treff på Nav-kontor velg ditt lokale kontor.'
+									className="velgNavKontorDropDown"
+								>
+									<option value='velg'key='velg'>
+										Velg Nav-kontor
+									</option>
+									<option value='frogner'key='frogner'>
+										NAV Frogner
+									</option>
+									<option value='drammen'key='drammen'>
+										NAV Drammen
+									</option>
+								</Select>
 							</SporsmalFaktum>
 						</div>
 					</Underskjema>
