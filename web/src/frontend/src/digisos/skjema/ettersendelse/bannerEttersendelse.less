@@ -8,8 +8,18 @@
   padding-bottom: 0;
 
   &__tittel {
+	font-size: 32px;
+	font-weight: bold;
 	margin-right: 4.5rem;
 	margin-bottom: 25px;
+
+	@media screen and (max-width: 680px ) and (min-width: 380px ) {
+	  font-size: 24px;
+	}
+
+	@media screen and (max-width: 380px ) {
+	  font-size: 18px;
+	}
   }
 
   &__ettersendelse {

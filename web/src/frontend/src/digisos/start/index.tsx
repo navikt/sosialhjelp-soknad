@@ -14,7 +14,6 @@ import {
 } from "../../nav-soknad/redux/soknad/soknadActions";
 
 import Bosted from "./Bosted";
-import { lesKommuner } from "../../nav-soknad/redux/kommuner/kommuneActions";
 import { NavEnhet } from "../data/kommuner";
 import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
 
@@ -40,7 +39,6 @@ class Start extends React.Component<Props, {}> {
 		skjulToppMeny();
 		scrollToTop();
 		this.props.dispatch(resetSoknad());
-		this.props.dispatch(lesKommuner());
 	}
 
 	startSoknad(kommuneId: string, bydelId?: string) {

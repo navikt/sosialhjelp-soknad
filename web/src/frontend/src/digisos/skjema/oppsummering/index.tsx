@@ -1,16 +1,13 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { Checkbox } from "nav-frontend-skjema";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 
 import { REST_STATUS } from "../../../nav-soknad/types";
 import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
-import {
-	hentOppsummering,
-	bekreftOppsummering
-} from "../../../nav-soknad/redux/oppsummering/oppsummeringActions";
+import { bekreftOppsummering, hentOppsummering, } from "../../../nav-soknad/redux/oppsummering/oppsummeringActions";
 import { Oppsummering } from "../../../nav-soknad/redux/oppsummering/oppsummeringTypes";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
@@ -19,7 +16,8 @@ import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { settInfofaktum } from "../../../nav-soknad/redux/soknad/soknadActions";
 import { getIntlTextOrKey } from "../../../nav-soknad/utils/intlUtils";
 import { Link } from "react-router-dom";
-import SamtykkeInfoModal from "./samtykkeInfoModal";
+import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
+import InformasjonsBoks from "./InformasjonsBoks";
 
 interface StateProps {
 	oppsummering: Oppsummering;
@@ -60,35 +58,37 @@ class OppsummeringView extends React.Component<Props, {}> {
 			})
 		);
 	}
+
 	getOppsummering() {
 		return {
 			__html: this.props.oppsummering || ""
 		};
 	}
+
 	render() {
-		const { oppsummering, brukerbehandlingId, intl } = this.props;
+		const {oppsummering, brukerbehandlingId, intl} = this.props;
 
 		const bolker = oppsummering
 			? this.props.oppsummering.bolker.map((bolk, idx) => (
-					<div className="blokk-xs bolk" key={idx}>
-						<EkspanderbartPanel tittel={bolk.tittel} apen={false}>
-							<div>
-								<div className="bolk__rediger">
-									<Link
-										className="lenke"
-										to={`/skjema/${brukerbehandlingId}/${idx + 1}`}
-									>
-										{getIntlTextOrKey(
-											this.props.intl,
-											"oppsummering.gatilbake"
-										)}
-									</Link>
-								</div>
-								<div dangerouslySetInnerHTML={{ __html: bolk.html }} />
+				<div className="blokk-xs bolk" key={idx}>
+					<EkspanderbartPanel tittel={bolk.tittel} apen={false}>
+						<div>
+							<div className="bolk__rediger">
+								<Link
+									className="lenke"
+									to={`/skjema/${brukerbehandlingId}/${idx + 1}`}
+								>
+									{getIntlTextOrKey(
+										this.props.intl,
+										"oppsummering.gatilbake"
+									)}
+								</Link>
 							</div>
-						</EkspanderbartPanel>
-					</div>
-				))
+							<div dangerouslySetInnerHTML={{__html: bolk.html}}/>
+						</div>
+					</EkspanderbartPanel>
+				</div>
+			))
 			: null;
 
 		const skjemaOppsummering = oppsummering ? (
@@ -107,6 +107,9 @@ class OppsummeringView extends React.Component<Props, {}> {
 			<LoadContainer restStatus={this.props.restStatus}>
 				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
 					{skjemaOppsummering}
+
+					<InformasjonsBoks/>
+
 					<div className="blokk-xs bolk">
 						<div className={classNames}>
 							<p style={{marginTop: "0"}}>
@@ -130,7 +133,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 							/>
 						</div>
 					</div>
-					<SamtykkeInfoModal/>
+					<BehandlingAvPersonopplysningerModal/>
 				</DigisosSkjemaSteg>
 			</LoadContainer>
 		);
