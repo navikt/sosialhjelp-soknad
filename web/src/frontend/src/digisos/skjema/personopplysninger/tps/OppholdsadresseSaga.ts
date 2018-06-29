@@ -1,9 +1,9 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "redux-saga/effects";
 import {
-	AdresseKategori,
+	AdresseKategori, ErrorFarge,
 	HentSoknadsmottakerAction,
-	OppholdsadresseActionTypeKeys,
+	OppholdsadresseActionTypeKeys, settErrorFarge,
 	settSoknadsmottakerStatus, SoknadsMottakerStatus
 } from "./oppholdsadresseReducer";
 import { navigerTilServerfeil } from "../../../../nav-soknad/redux/navigasjon/navigasjonActions";
@@ -73,21 +73,22 @@ function* fetchOgSettSoknadsmottakerOgOppdaterStatus(
 		soknadsmottakerFaktum: Faktum): any {
 	const url = `soknadsmottaker/${brukerBehandlingId}?valg=${oppholdsadressevalg}`;
 	const response = yield call(fetchToJson, url);
-	console.error("response:");
-	console.warn(response);
 	if (response && response.toString().length > 0) {
 		// TODO: Støtte visning av dropdown med NAV-kontor hvis mer enn én blir returnert.
 		yield* lagreFaktumSaga(lagreFaktum(oppdaterSoknadsMottaker(response, soknadsmottakerFaktum)) as LagreFaktum) as any;
 
-		response.sosialOrgnr ?
-			yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.GYLDIG)) :
+		if (response.sosialOrgnr) {
+			yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.GYLDIG));
+			// yield put(settErrorFarge(ErrorFarge.GYLDIG));
+		} else {
 			yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.UGYLDIG));
-
+			// yield put(settErrorFarge(ErrorFarge.UGYLDIG));
+		}
 	} else {
-		console.error("EMPTY RESPONSE");
 		soknadsmottakerFaktum = nullUtSoknadsmottakerFaktum(soknadsmottakerFaktum);
 		yield* lagreFaktumSaga(lagreFaktum(soknadsmottakerFaktum) as LagreFaktum) as any;
 		yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.UGYLDIG));
+		// yield put(settErrorFarge(ErrorFarge.UGYLDIG));
 	}
 }
 
@@ -129,6 +130,7 @@ function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): 
 				yield* lagreFaktumSaga(lagreFaktum(adresseFaktum) as LagreFaktum) as any;
 			} else {
 				yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.IKKE_VALGT));
+				yield put(settErrorFarge(ErrorFarge.IKKE_VALGT));
 				return null;
 			}
 		}

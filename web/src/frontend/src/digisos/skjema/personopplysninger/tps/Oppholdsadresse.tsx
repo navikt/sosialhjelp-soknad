@@ -14,7 +14,12 @@ import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
 import AdresseAutocomplete from "../../../../nav-soknad/components/adresseAutocomplete/adresseAutcomplete";
 import {
 	SoknadsMottakerStatus,
-	hentSoknadsmottakerAction, AdresseKategori, settAdresseKategori, settSoknadsmottakerStatus
+	hentSoknadsmottakerAction,
+	AdresseKategori,
+	settAdresseKategori,
+	settSoknadsmottakerStatus,
+	ErrorFarge,
+	settErrorFarge
 } from "./oppholdsadresseReducer";
 import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 
@@ -59,6 +64,7 @@ interface OwnProps {
 	soknadsmottaker: any;
 	soknadsmottakerStatus: SoknadsMottakerStatus;
 	adresseKategori: AdresseKategori;
+	errorFarge: ErrorFarge;
 }
 
 function transformAdresse(adresseFaktum: Faktum) {
@@ -202,11 +208,12 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 		return (<div className="sosialhjelp-oppholdsadresse">
 			{/*<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse" style="system">*/}
 				<SporsmalFaktum
-
+					className={this.props.errorFarge === ErrorFarge.UGYLDIG ? "oppholdsadresse-harFeil " : ""}
 					faktumKey="soknadsmottaker"
 					noValidateOnBlur={true}
 					validerFunc={[(value) => {
 						if (this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.GYLDIG) {
+							this.props.dispatch(settErrorFarge(ErrorFarge.UGYLDIG));
 							return ValideringActionKey.PAKREVD;
 						}
 
@@ -292,7 +299,8 @@ export default connect((state: State, props: any) => {
 		valgtAdresse: state.oppholdsadresse.valgtAdresse,
 		soknadsmottaker: state.oppholdsadresse.soknadsmottaker,
 		soknadsmottakerStatus: state.oppholdsadresse.soknadsmottakerStatus,
-		adresseKategori: state.oppholdsadresse.adresseKategori
+		adresseKategori: state.oppholdsadresse.adresseKategori,
+		errorFarge: state.oppholdsadresse.errorFarge
 
 	};
 })(injectIntl(Oppholdsadresse));

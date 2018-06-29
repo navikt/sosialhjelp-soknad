@@ -15,6 +15,7 @@ export interface OwnProps {
 	style?: SporsmalStyle;
 	tittelRenderer?: (title: string) => React.ReactNode;
 	noValidateOnBlur?: boolean;
+	className?: string;
 }
 
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -61,13 +62,15 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 			htmlRef,
 			faktumKey,
 			intl,
-			children
+			children,
+			className
 		} = this.props;
 		if (visible === false) {
 			return null;
 		}
 		return (
 			<Sporsmal
+				className={className}
 				feil={this.harValidering() ? this.props.getFeil(intl) : null}
 				handleOnBlur={this.handleOnBlur}
 				style={style}

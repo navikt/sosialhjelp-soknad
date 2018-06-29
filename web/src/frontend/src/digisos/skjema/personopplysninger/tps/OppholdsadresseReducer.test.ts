@@ -1,6 +1,6 @@
 import {
 	AdresseKategori,
-	default as oppholdsadresseReducer,
+	default as oppholdsadresseReducer, ErrorFarge,
 	OppholdsadresseActionTypeKeys,
 	OppholdsAdresseState,
 	SoknadsMottakerStatus
@@ -13,7 +13,8 @@ describe("oppholdsadresse", () => {
 		valgtAdresse: null,
 		soknadsmottaker: null,
 		soknadsmottakerStatus: SoknadsMottakerStatus.IKKE_VALGT,
-		adresseKategori: AdresseKategori.IKKE_VALGT
+		adresseKategori: AdresseKategori.IKKE_VALGT,
+		errorFarge: ErrorFarge.IKKE_VALGT,
 	};
 
 	const defaultAdresse: Adresse  = {

@@ -17,6 +17,7 @@ export interface Props {
 	feil?: Feil;
 	feilkode?: string;
 	tekster: SporsmalFaktumTekst;
+	className?: string;
 }
 
 class Sporsmal extends React.Component<Props, {}> {
@@ -39,7 +40,7 @@ class Sporsmal extends React.Component<Props, {}> {
 			: tekster.sporsmal;
 		return (
 			<div
-				className={sporsmalCls}
+				className={sporsmalCls + " " + this.props.className}
 				onBlur={this.props.handleOnBlur}
 				aria-labelledby={legendId}
 			>

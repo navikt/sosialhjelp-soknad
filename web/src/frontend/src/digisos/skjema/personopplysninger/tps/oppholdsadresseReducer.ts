@@ -7,7 +7,8 @@ export enum OppholdsadresseActionTypeKeys {
 	VELG_ADRESSE_FRA_SOKETREFF = "oppholdsadresse/VELG_ADRESSE_FRA_SOKETREFF",
 	SETT_SOKNADSMOTTAKER_STATUS = "oppholdsadresse/HENT_SOKNADSMOTTAKER_INFO",
 	HENT_SOKNADSMOTTAKER = "oppholdsadresse/HENT_SOKNADSMOTTAKER",
-	SETT_ADRESSE_KATEGORI = "oppholdsadresse/SETT_ADRESSE_KATEGORI"
+	SETT_ADRESSE_KATEGORI = "oppholdsadresse/SETT_ADRESSE_KATEGORI",
+	SETT_ERROR_FARGE = "oppholdsadresse/SETT_ERROR_FARGE"
 }
 
 export enum SoknadsMottakerStatus {
@@ -24,18 +25,27 @@ export enum AdresseKategori {
 	SOKNAD = "SOKNAD"
 }
 
+export enum ErrorFarge {
+	IKKE_VALGT = "IKKE_VALGT",
+	GYLDIG = "GYLDIG",
+	SOKNAD_NO_SELECT = "SOKNAD_NO_SELECT",
+	UGYLDIG = "UGYLDIG",
+}
+
 export interface OppholdsAdresseState {
 	valgtAdresse: Adresse | null;
 	soknadsmottaker: any;
 	soknadsmottakerStatus: SoknadsMottakerStatus;
 	adresseKategori: AdresseKategori;
+	errorFarge: ErrorFarge;
 }
 
 const initialState: OppholdsAdresseState = {
 	valgtAdresse: null,
 	soknadsmottaker: null,
 	soknadsmottakerStatus: SoknadsMottakerStatus.IKKE_VALGT,
-	adresseKategori: AdresseKategori.IKKE_VALGT
+	adresseKategori: AdresseKategori.IKKE_VALGT,
+	errorFarge: ErrorFarge.IKKE_VALGT,
 };
 
 const oppholdsadresseReducer: Reducer<OppholdsAdresseState, any> = (
@@ -68,6 +78,12 @@ const oppholdsadresseReducer: Reducer<OppholdsAdresseState, any> = (
 				adresseKategori: action.adresseKategori
 			};
 		}
+		case OppholdsadresseActionTypeKeys.SETT_ERROR_FARGE: {
+			return {
+				...state,
+				errorFarge: action.errorFarge
+			};
+		}
 		default:
 			return state;
 	}
@@ -91,6 +107,13 @@ export const settAdresseKategori = (adresseKategori: AdresseKategori): any => {
 	return {
 		type: OppholdsadresseActionTypeKeys.SETT_ADRESSE_KATEGORI,
 		adresseKategori
+	};
+};
+
+export const settErrorFarge = (errorFarge: ErrorFarge): any => {
+	return {
+		type: OppholdsadresseActionTypeKeys.SETT_ERROR_FARGE,
+		errorFarge
 	};
 };
 
