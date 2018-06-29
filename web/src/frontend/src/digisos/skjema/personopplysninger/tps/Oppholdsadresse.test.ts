@@ -6,6 +6,7 @@ describe("oppholdsadresse react component", () => {
 
 	it("should detect if user have added a valid address", () => {
 
+		/* Utkommentert grunnet for gammel nodeversjon på byggtjener:
 		const validFaktum: any = {
 			"faktumId": 3327,
 			"properties": {
@@ -35,7 +36,6 @@ describe("oppholdsadresse react component", () => {
 
 		const anotherNotValidFaktum: any = null;
 
-		/* Utkommentert grunnet for gammel nodeversjon på byggtjener:
 		expect(faktumHarLogvligAdresse(validFaktum)).toBeTruthy();
 		expect(faktumHarLogvligAdresse(notValidFaktum)).toBeFalsy();
 		expect(faktumHarLogvligAdresse(alsoNotValidFaktum)).toBeFalsy();
