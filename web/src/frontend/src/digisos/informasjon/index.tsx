@@ -1,31 +1,27 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouterProps } from "react-router";
-import {
-	FormattedHTMLMessage,
-	InjectedIntlProps,
-	injectIntl,
-	FormattedMessage,
-} from "react-intl";
+import { FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl, } from "react-intl";
 import DocumentTitle from "react-document-title";
 import { State } from "../redux/reducers";
-import { Undertittel } from "nav-frontend-typografi";
+import { Element } from "nav-frontend-typografi";
 import Knapp from "nav-frontend-knapper";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
-import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
-import Infoblokk from "../../nav-soknad/components/infoblokk";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { tilBostedEllerStartSoknad } from "../../nav-soknad/redux/navigasjon/navigasjonActions";
 import { FeatureToggles } from "../../featureToggles";
 import { Horten } from "../data/kommuner";
 import IkkeTilgang from "./IkkeTilgang";
 import { TilgangSperrekode } from "../../nav-soknad/redux/tilgang/tilgangTypes";
-import {
-	setVisSamtykkeInfo
-} from "../../nav-soknad/redux/init/initActions";
-import SamtykkeInfoForsidenModal from "./samtykkeInfoForsidenModal";
 import { lesKommuner } from "../../nav-soknad/redux/kommuner/kommuneActions";
 import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
+import Ella from "../../nav-soknad/components/svg/Ella";
+import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
+import Personopplysninger from "./Personopplysninger";
+import { fetchToJson } from "../../nav-soknad/utils/rest-utils";
+import { loggFeil } from "../../nav-soknad/redux/navlogger/navloggerActions";
+import { Panel } from "nav-frontend-paneler";
+import Banner from "../../nav-soknad/components/banner/Banner";
 
 interface StateProps {
 	harTilgang: boolean;
@@ -37,12 +33,34 @@ interface StateProps {
 
 type Props = StateProps & InjectedIntlProps & RouterProps & DispatchProps;
 
-class Informasjon extends React.Component<Props, {}> {
+class Informasjon extends React.Component<Props, {fornavn: string}> {
+
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			fornavn: ""
+		};
+	}
 
 	componentDidMount() {
 		skjulToppMeny();
+		fetchToJson("informasjon/personalia").then((result: any) => {
+			const FORNAVN = "fornavn";
+			this.setState({fornavn: result[FORNAVN]});
+		}).catch((e: any) => {
+			loggFeil("Feil ved uthenting av personalia: " + e.toString());
+		});
 	}
 
+	renderHilsen(): React.ReactNode {
+		if (this.state.fornavn && this.state.fornavn.length > 0) {
+			return (
+				<h3>
+					<FormattedHTMLMessage id="informasjon.hilsen.hei" values={{fornavn: this.state.fornavn}}/>
+				</h3>);
+		}
+		return null;
+	}
 	startSoknad() {
 		this.props.dispatch(lesKommuner());
 		this.props.dispatch(
@@ -60,67 +78,66 @@ class Informasjon extends React.Component<Props, {}> {
 		} = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 
-		const classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
-
 		return (
-			<div>
-				<DocumentTitle title={title} />
-				<AppTittel />
+			<div className="ettersendelse informasjon-side">
+				<Banner>
+					<FormattedMessage id="skjema.tittel" />
+				</Banner>
+				<DocumentTitle title={title}/>
 				{soknadErLive === "true" && harTilgang ? (
-					<div>
-						<div className="skjema-content">
-							<Infoblokk
-								className="blokk-s"
-								tittel={getIntlTextOrKey(intl, "informasjon.start.tittel")}
-							>
-								<p className="blokk-s">
-									<FormattedHTMLMessage id="informasjon.start.tekst" />
-								</p>
+					<span>
+						<div>
+							<div className="skjema-content informasjon-innhold">
+								<span className="informasjon-fra-ella">
+									<Snakkeboble>
+										{this.renderHilsen()}
+										<FormattedMessage id="informasjon.hilsen.tittel"/>
+									</Snakkeboble>
+									<Ella />
+								</span>
 
-								<Undertittel key="informasjon.nodsituasjon.undertittel">
-									{getIntlTextOrKey(
-										intl,
-										"informasjon.nodsituasjon.undertittel"
-									)}
-								</Undertittel>
-								<p className="blokk-s">
-									<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst" />
-								</p>
-							</Infoblokk>
+								<Panel className="informasjon-viktig">
+									<Element>
+										<FormattedMessage id="informasjon.start.undertittel"/>
+									</Element>
 
-							<div className="blokk-xs bolk">
-								<div className={classNames} >
-									<p style={{marginTop: "0"}}>
-										<FormattedMessage id="soknadsosialhjelp.forstesiden.rettigheterPlikter"/>
-										&nbsp;
-										<a
-											className="lenke"
-											onClick={(event: React.MouseEvent<HTMLElement>) => {
-												this.props.dispatch(setVisSamtykkeInfo(true));
-										}}
-										>
-											<FormattedMessage id="soknadsosialhjelp.forstesiden.rettigheterPlikterLinktekst"/>
-										</a>
+									<p className="blokk-s">
+										<FormattedHTMLMessage id="informasjon.start.tekst"/>
 									</p>
-								</div>
-							</div>
-							<SamtykkeInfoForsidenModal/>
 
+									<Element>
+										<FormattedMessage id="informasjon.nodsituasjon.undertittel"/>
+									</Element>
+									<p className="blokk-s">
+										<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst"/>
+									</p>
+								</Panel>
+							</div>
 						</div>
 
-						<Knapp
-							id="start_soknad_button"
-							type="hoved"
-							spinner={startSoknadPending}
-							disabled={startSoknadPending}
-							onClick={() => this.startSoknad()}
-						>
-							{getIntlTextOrKey(intl, "skjema.knapper.start")}
-						</Knapp>
-					</div>
+						<div className="zebra-stripe graa">
+							<div className="skjema-content">
+								<Personopplysninger/>
+							</div>
+
+							<div className="skjema-content">
+								<span className="informasjon-start-knapp">
+									<Knapp
+										id="start_soknad_button"
+										type="hoved"
+										spinner={startSoknadPending}
+										disabled={startSoknadPending}
+										onClick={() => this.startSoknad()}
+									>
+										{getIntlTextOrKey(intl, "skjema.knapper.start")}
+									</Knapp>
+								</span>
+							</div>
+						</div>
+					</span>
 				) : (
 					<div className="skjema-content">
-						<IkkeTilgang sperrekode={sperrekode} />
+						<IkkeTilgang sperrekode={sperrekode}/>
 					</div>
 				)}
 			</div>
@@ -134,6 +151,6 @@ export default connect((state: State) => ({
 	sperrekode: state.tilgang.sperrekode,
 	soknadErLive: state.featuretoggles.data[FeatureToggles.soknadErLive],
 	visVelgBosted:
-		state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
+	state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
 	startSoknadPending: state.soknad.startSoknadPending
 }))(injectIntl(Informasjon));

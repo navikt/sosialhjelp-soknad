@@ -55,7 +55,7 @@ export const Steg: React.StatelessComponent<StegProps> = (props: StegProps) => {
 const StegIndikator: React.StatelessComponent<Props> = (props: Props) => {
 	return (
 		<div
-			className="blokk--l"
+			className="blokk--l ikke-juridisk-tekst"
 			role="progressbar"
 			aria-valuenow={props.aktivtSteg}
 			aria-valuemin={1}

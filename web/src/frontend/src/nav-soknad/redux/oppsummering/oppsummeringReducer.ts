@@ -91,11 +91,6 @@ const OppsummeringReducer: Reducer<
 				...state,
 				visBekreftMangler: action.visBekreftMangler
 			};
-		case OppsummeringActionTypeKeys.SET_VIS_BEKREFT_INFO:
-			return {
-				...state,
-				visBekreftInfo: action.visBekreftInfo
-			};
 		default:
 			return state;
 	}

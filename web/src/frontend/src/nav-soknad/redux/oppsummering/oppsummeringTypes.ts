@@ -4,7 +4,6 @@ export enum OppsummeringActionTypeKeys {
 	SET_OPPSUMMERING = "oppsummering/SET_OPPSUMMERING",
 	BEKREFT_OPPSUMMERING = "oppsummering/BEKREFT_OPPSUMMERING",
 	SET_VIS_BEKREFT_MANGLER = "oppsummering/SET_VIS_BEKREFT_MANGLER",
-	SET_VIS_BEKREFT_INFO = "oppsummering/SET_VIS_BEKREFT_INFO"
 }
 
 export type OppsummeringActionTypes =
@@ -12,8 +11,7 @@ export type OppsummeringActionTypes =
 	| BekreftOppsummering
 	| HentOppsummering
 	| HentOppsummeringFeilet
-	| SetVisBekreftMangler
-	| SetVisBekreftInfo ;
+	| SetVisBekreftMangler;
 
 export interface OppsummeringBolk {
 	tittel: string;
@@ -46,9 +44,4 @@ export interface BekreftOppsummering {
 export interface SetVisBekreftMangler {
 	type: OppsummeringActionTypeKeys.SET_VIS_BEKREFT_MANGLER;
 	visBekreftMangler: boolean;
-}
-
-export interface SetVisBekreftInfo {
-	type: OppsummeringActionTypeKeys.SET_VIS_BEKREFT_INFO;
-	visBekreftInfo: boolean;
 }
