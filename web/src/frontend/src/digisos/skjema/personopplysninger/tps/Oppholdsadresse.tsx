@@ -22,7 +22,7 @@ import {
 	settErrorFarge
 } from "./oppholdsadresseReducer";
 import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
-import {Select} from "nav-frontend-skjema";
+import VelgSoknadsmottaker from "./VelgSoknadsmottaker";
 
 export interface Adresse {
 	"adresse": null | string;
@@ -38,6 +38,7 @@ export interface Adresse {
 	"type": null | string;
 }
 
+// TODO Slette denne?
 export interface Soknadsmottaker {
 	"enhetsId": null | string;
 	"enhetsnavn": null | string;
@@ -62,10 +63,11 @@ interface OwnProps {
 	visUtvidetAdressesok: boolean;
 	brukerBehandlingId: string;
 	valgtAdresse: Adresse | null;
-	soknadsmottaker: any;
+	soknadsmottaker: any; // Soknadsmottaker
 	soknadsmottakerStatus: SoknadsMottakerStatus;
 	adresseKategori: AdresseKategori;
 	errorFarge: ErrorFarge;
+	soknadsmottakere: any[];
 }
 
 function transformAdresse(adresseFaktum: Faktum) {
@@ -126,9 +128,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 
 	constructor(props: Props) {
 		super(props);
-
 		const oppholdsadresseFaktum = finnFaktum("kontakt.system.oppholdsadresse.valg", this.props.fakta);
-
 		if (oppholdsadresseFaktum.value) {
 			this.kjorSagaVedRefresh(oppholdsadresseFaktum);
 		}
@@ -163,16 +163,16 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 
 	brukFolkeregistrertAdresse() {
 		this.props.dispatch(settAdresseKategori(AdresseKategori.FOLKEREGISTRERT));
-		const Oppholdsadressevalg = "folkeregistrert";
+		const oppholdsadressevalg = "folkeregistrert";
 		const adresseKategori = AdresseKategori.FOLKEREGISTRERT;
-		this.settAdresseOgSoknadsmottaker(null, Oppholdsadressevalg, adresseKategori);
+		this.settAdresseOgSoknadsmottaker(null, oppholdsadressevalg, adresseKategori);
 	}
 
 	brukMidlertidigAdresse() {
-		const Oppholdsadressevalg = "midlertidig";
+		const oppholdsadressevalg = "midlertidig";
 		const adresseKategori = AdresseKategori.MIDLERTIDIG;
 
-		this.settAdresseOgSoknadsmottaker(null, Oppholdsadressevalg, adresseKategori);
+		this.settAdresseOgSoknadsmottaker(null, oppholdsadressevalg, adresseKategori);
 	}
 
 	brukSoknadAdresse() {
@@ -206,22 +206,22 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 		const adresseFaktum = finnFaktum("kontakt.system.adresse", this.props.fakta);
 		const adressesokAdresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
 
-		return (<div className="sosialhjelp-oppholdsadresse">
-			{/*<SporsmalFaktum faktumKey="kontakt.system.oppholdsadresse" style="system">*/}
+		return (
+			<div className="sosialhjelp-oppholdsadresse">
 				<SporsmalFaktum
 					className={this.props.errorFarge === ErrorFarge.UGYLDIG ? "oppholdsadresse-harFeil " : ""}
 					faktumKey="soknadsmottaker"
 					noValidateOnBlur={true}
-					validerFunc={[(value) => {
+					validerFunc={[ (value) => {
 						if (this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.GYLDIG) {
 							this.props.dispatch(settErrorFarge(ErrorFarge.UGYLDIG));
 							return ValideringActionKey.PAKREVD;
 						}
 
 						return null;
-					}]}
+					} ]}
 				>
-					{ Object.getOwnPropertyNames(folkeregistrertAdresseFaktum.properties).length !== 0 && (
+					{Object.getOwnPropertyNames(folkeregistrertAdresseFaktum.properties).length !== 0 && (
 						<RadioFaktum
 							id="oppholdsadresse_folkeregistrert"
 							faktumKey="kontakt.system.oppholdsadresse.valg"
@@ -232,7 +232,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 								<div>
 									<div
 										className="detaljeliste__element"
-										style={{fontWeight: 600}}>Folkeregistrert adresse:
+										style={{ fontWeight: 600 }}>Folkeregistrert adresse:
 									</div>
 									<AdresseVisning faktum={folkeregistrertAdresseFaktum}/>
 
@@ -240,7 +240,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 							}
 						/>
 					)}
-					{ Object.getOwnPropertyNames(adresseFaktum.properties).length !== 0
+					{Object.getOwnPropertyNames(adresseFaktum.properties).length !== 0
 					&& (adresseFaktum.properties as AdresseProperties).kilde !== "folkeregister" && (
 						<RadioFaktum
 							id="oppholdsadresse_midlertidig"
@@ -250,7 +250,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 							onChange={() => this.brukMidlertidigAdresse()}
 							label={
 								<div>
-									<div style={{fontWeight: 600}}>Midlertidig adresse:</div>
+									<div style={{ fontWeight: 600 }}>Midlertidig adresse:</div>
 									<AdresseVisning faktum={adresseFaktum}/>
 
 								</div>
@@ -276,31 +276,21 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 									onValgtVerdi={(adresse: any) => this.handleVelgAutocompleteAdresse(adresse)}
 									fakta={this.props.fakta}
 								/>
-								<p></p>
-								<Select
-									label='Adressen ga flere treff på Nav-kontor velg ditt lokale kontor.'
-									className="velgNavKontorDropDown"
-								>
-									<option value='velg'key='velg'>
-										Velg Nav-kontor
-									</option>
-									<option value='frogner'key='frogner'>
-										NAV Frogner
-									</option>
-									<option value='drammen'key='drammen'>
-										NAV Drammen
-									</option>
-								</Select>
 							</SporsmalFaktum>
 						</div>
 					</Underskjema>
+					<VelgSoknadsmottaker
+						label="Adressen ga flere treff på Nav-kontor velg ditt lokale kontor."
+						fakta={this.props.fakta}
+					/>
 				</SporsmalFaktum>
-			{/*</SporsmalFaktum>*/}
-			<SoknadsmottakerInfoPanel
-				soknadsmottakerStatus={this.props.soknadsmottakerStatus}
-				soknadsmottakerFaktum={finnFaktum("soknadsmottaker", this.props.fakta)}
-			/>
-		</div>);
+				<p />
+				<SoknadsmottakerInfoPanel
+					soknadsmottakerStatus={this.props.soknadsmottakerStatus}
+					soknadsmottakerFaktum={finnFaktum("soknadsmottaker", this.props.fakta)}
+				/>
+			</div>
+		);
 	}
 }
 
@@ -316,7 +306,8 @@ export default connect((state: State, props: any) => {
 		soknadsmottaker: state.oppholdsadresse.soknadsmottaker,
 		soknadsmottakerStatus: state.oppholdsadresse.soknadsmottakerStatus,
 		adresseKategori: state.oppholdsadresse.adresseKategori,
-		errorFarge: state.oppholdsadresse.errorFarge
+		errorFarge: state.oppholdsadresse.errorFarge,
+		soknadsmottakere: state.oppholdsadresse.soknadsmottakere
 
 	};
 })(injectIntl(Oppholdsadresse));

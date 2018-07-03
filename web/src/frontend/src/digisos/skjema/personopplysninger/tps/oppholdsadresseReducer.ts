@@ -8,7 +8,9 @@ export enum OppholdsadresseActionTypeKeys {
 	SETT_SOKNADSMOTTAKER_STATUS = "oppholdsadresse/HENT_SOKNADSMOTTAKER_INFO",
 	HENT_SOKNADSMOTTAKER = "oppholdsadresse/HENT_SOKNADSMOTTAKER",
 	SETT_ADRESSE_KATEGORI = "oppholdsadresse/SETT_ADRESSE_KATEGORI",
-	SETT_ERROR_FARGE = "oppholdsadresse/SETT_ERROR_FARGE"
+	SETT_ERROR_FARGE = "oppholdsadresse/SETT_ERROR_FARGE",
+	SETT_SOKNADSMOTTAKERE = "oppholdsadresse/SETT_SOKNADSMOTTAKERE",
+	VELG_SOKNADSMOTTAKER = "oppholdsadresse/VELG_SOKNADSMOTTAKER"
 }
 
 export enum SoknadsMottakerStatus {
@@ -38,6 +40,7 @@ export interface OppholdsAdresseState {
 	soknadsmottakerStatus: SoknadsMottakerStatus;
 	adresseKategori: AdresseKategori;
 	errorFarge: ErrorFarge;
+	soknadsmottakere: any[];
 }
 
 const initialState: OppholdsAdresseState = {
@@ -46,6 +49,7 @@ const initialState: OppholdsAdresseState = {
 	soknadsmottakerStatus: SoknadsMottakerStatus.IKKE_VALGT,
 	adresseKategori: AdresseKategori.IKKE_VALGT,
 	errorFarge: ErrorFarge.IKKE_VALGT,
+	soknadsmottakere: []
 };
 
 const oppholdsadresseReducer: Reducer<OppholdsAdresseState, any> = (
@@ -84,11 +88,23 @@ const oppholdsadresseReducer: Reducer<OppholdsAdresseState, any> = (
 				errorFarge: action.errorFarge
 			};
 		}
+		case OppholdsadresseActionTypeKeys.SETT_SOKNADSMOTTAKERE: {
+			return {
+				...state,
+				soknadsmottakere: action.soknadsmottakere
+			};
+		}
 		default:
 			return state;
 	}
 };
 
+export const settSoknadsmottakere = (soknadsmottakere: any): any => {
+	return {
+		type: OppholdsadresseActionTypeKeys.SETT_SOKNADSMOTTAKERE,
+		soknadsmottakere
+	};
+};
 export const velgAdresseFraSoketreff = (adresse: Adresse): any => {
 	return {
 		type: OppholdsadresseActionTypeKeys.VELG_ADRESSE_FRA_SOKETREFF,
@@ -116,6 +132,20 @@ export const settErrorFarge = (errorFarge: ErrorFarge): any => {
 		errorFarge
 	};
 };
+
+export const velgSoknadsmottaker = (soknadsmottaker: any, fakta: Faktum[]): any => {
+	return {
+		type: OppholdsadresseActionTypeKeys.VELG_SOKNADSMOTTAKER,
+		soknadsmottaker,
+		fakta
+	};
+};
+
+export interface VelgSoknadsmottakerAction {
+	type: OppholdsadresseActionTypeKeys.VELG_SOKNADSMOTTAKER;
+	soknadsmottaker: any;
+	fakta: Faktum[];
+}
 
 export interface HentSoknadsmottakerAction {
 	type: OppholdsadresseActionTypeKeys.HENT_SOKNADSMOTTAKER;

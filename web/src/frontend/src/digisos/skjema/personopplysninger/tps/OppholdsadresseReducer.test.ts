@@ -15,6 +15,7 @@ describe("oppholdsadresse", () => {
 		soknadsmottakerStatus: SoknadsMottakerStatus.IKKE_VALGT,
 		adresseKategori: AdresseKategori.IKKE_VALGT,
 		errorFarge: ErrorFarge.IKKE_VALGT,
+		soknadsmottakere: []
 	};
 
 	const defaultAdresse: Adresse  = {

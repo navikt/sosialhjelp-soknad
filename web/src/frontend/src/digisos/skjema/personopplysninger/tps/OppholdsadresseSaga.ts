@@ -3,8 +3,8 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import {
 	AdresseKategori, ErrorFarge,
 	HentSoknadsmottakerAction,
-	OppholdsadresseActionTypeKeys, settErrorFarge,
-	settSoknadsmottakerStatus, SoknadsMottakerStatus
+	OppholdsadresseActionTypeKeys, settErrorFarge, settSoknadsmottakere,
+	settSoknadsmottakerStatus, SoknadsMottakerStatus, VelgSoknadsmottakerAction
 } from "./oppholdsadresseReducer";
 import { navigerTilServerfeil } from "../../../../nav-soknad/redux/navigasjon/navigasjonActions";
 import { loggFeil } from "../../../../nav-soknad/redux/navlogger/navloggerActions";
@@ -16,22 +16,25 @@ import { Adresse } from "./Oppholdsadresse";
 import { lagreFaktumSaga } from "../../../../nav-soknad/redux/fakta/faktaSaga";
 import { LagreFaktum } from "../../../../nav-soknad/redux/fakta/faktaTypes";
 
-function oppdaterSoknadsMottaker(soknadsmottaker: any, faktum: Faktum) {
-	const properties = [
-		"enhetsId",
-		"enhetsnavn",
-		"kommunenummer",
-		"kommunenavn",
-		"sosialOrgnr"
-	];
-	properties.map((property: string) => {
-		let value = null;
-		if (soknadsmottaker !== null) {
-			value = soknadsmottaker[property];
-		}
-		faktum = oppdaterFaktumMedVerdier(faktum, value, property);
-	});
-
+export function oppdaterSoknadsMottaker(soknadsmottaker: any, faktum: Faktum) {
+	if (soknadsmottaker == null) {
+		// reset faktum??
+	} else {
+		const properties = [
+			"enhetsId",
+			"enhetsnavn",
+			"kommunenummer",
+			"kommunenavn",
+			"sosialOrgnr"
+		];
+		properties.map((property: string) => {
+			let value = null;
+			if (soknadsmottaker !== null) {
+				value = soknadsmottaker[property];
+			}
+			faktum = oppdaterFaktumMedVerdier(faktum, value, property);
+		});
+	}
 	return faktum;
 }
 
@@ -67,6 +70,26 @@ export function oppdaterAdresse(adresseFaktum: Faktum, adresse: Adresse) {
 	return adresseFaktum;
 }
 
+function* velgSoknadsmottakerOgOppdaterStatusSaga(action: VelgSoknadsmottakerAction): SagaIterator {
+	const soknadsmottakerFaktum = finnFaktum("soknadsmottaker", action.fakta);
+	if (action.soknadsmottaker == null) {
+		console.error("Mangler søknadsmottaker.");
+	}
+	yield* lagreSoknadsmottakerOgOppdaterStatus(action.soknadsmottaker, soknadsmottakerFaktum);
+}
+
+function* lagreSoknadsmottakerOgOppdaterStatus(
+	soknadsmottaker: any, soknadsmottakerFaktum: Faktum): any {
+
+	yield* lagreFaktumSaga(lagreFaktum(
+		oppdaterSoknadsMottaker(soknadsmottaker, soknadsmottakerFaktum)) as LagreFaktum) as any;
+	if (soknadsmottaker.sosialOrgnr) {
+		yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.GYLDIG));
+	} else {
+		yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.UGYLDIG));
+	}
+}
+
 function* fetchOgSettSoknadsmottakerOgOppdaterStatus(
 		brukerBehandlingId: any,
 		oppholdsadressevalg: any,
@@ -74,15 +97,22 @@ function* fetchOgSettSoknadsmottakerOgOppdaterStatus(
 	const url = `soknadsmottaker/${brukerBehandlingId}?valg=${oppholdsadressevalg}`;
 	const response = yield call(fetchToJson, url);
 	if (response && response.toString().length > 0) {
-		// TODO: Støtte visning av dropdown med NAV-kontor hvis mer enn én blir returnert.
-		yield* lagreFaktumSaga(lagreFaktum(oppdaterSoknadsMottaker(response, soknadsmottakerFaktum)) as LagreFaktum) as any;
-
-		if (response.sosialOrgnr) {
-			yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.GYLDIG));
-			// yield put(settErrorFarge(ErrorFarge.GYLDIG));
-		} else {
-			yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.UGYLDIG));
-			// yield put(settErrorFarge(ErrorFarge.UGYLDIG));
+		const soknadsmottakere = response.filter((item: any) => item != null);
+		yield put(settSoknadsmottakere(soknadsmottakere));
+		if (soknadsmottakere.length === 1) {
+			const soknadsmottaker = soknadsmottakere[0];
+			if (soknadsmottaker == null) {
+				console.error("Søknadsmottaker mangler");
+				throw Error("Mangler soknadsmottaker");
+			}
+			yield* lagreSoknadsmottakerOgOppdaterStatus(soknadsmottaker, soknadsmottakerFaktum);
+			// yield* lagreFaktumSaga(lagreFaktum(
+			// 	oppdaterSoknadsMottaker(soknadsmottaker, soknadsmottakerFaktum)) as LagreFaktum) as any;
+			// if (response.sosialOrgnr) {
+			// 	yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.GYLDIG));
+			// } else {
+			// 	yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.UGYLDIG));
+			// }
 		}
 	} else {
 		soknadsmottakerFaktum = nullUtSoknadsmottakerFaktum(soknadsmottakerFaktum);
@@ -148,6 +178,7 @@ function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): 
 
 function* oppholdsadresseSaga(): SagaIterator {
 	yield takeEvery(OppholdsadresseActionTypeKeys.HENT_SOKNADSMOTTAKER, lagreAdresseOgSoknadsmottakerSaga);
+	yield takeEvery(OppholdsadresseActionTypeKeys.VELG_SOKNADSMOTTAKER, velgSoknadsmottakerOgOppdaterStatusSaga);
 }
 
 export default oppholdsadresseSaga;
