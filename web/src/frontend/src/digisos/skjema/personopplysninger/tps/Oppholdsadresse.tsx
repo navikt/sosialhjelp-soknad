@@ -1,5 +1,5 @@
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import { Faktum } from "../../../../nav-soknad/types";
 import RadioFaktum from "../../../../nav-soknad/faktum/RadioFaktum";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
@@ -23,6 +23,8 @@ import {
 } from "./oppholdsadresseReducer";
 import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import VelgSoknadsmottaker from "./VelgSoknadsmottaker";
+import FinnNavKontorProgressIndikator from "./FinnNavKontorProgressIndikator";
+import { getIntlTextOrKey } from "../../../../nav-soknad/utils/intlUtils";
 
 export interface Adresse {
 	"adresse": null | string;
@@ -36,19 +38,6 @@ export interface Adresse {
 	"gatekode": null | string;
 	"bydel": null | string;
 	"type": null | string;
-}
-
-// TODO Slette denne?
-export interface Soknadsmottaker {
-	"enhetsId": null | string;
-	"enhetsnavn": null | string;
-	"kommunenummer": null | string;
-	"kommunenavn": null | string;
-	"bydelsnummer": null | string;
-	"sosialOrgnr": null | string;
-	"features": {
-		"ettersendelse":  null | string;
-	};
 }
 
 interface AdresseProperties {
@@ -137,21 +126,15 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 	kjorSagaVedRefresh(oppholdsadresseFaktum: Faktum) {
 		if (oppholdsadresseFaktum.value === "folkeregistrert") {
 			this.brukFolkeregistrertAdresse();
-
 		} else if (oppholdsadresseFaktum.value === "midlertidig") {
 			this.brukMidlertidigAdresse();
-
 		} else if (oppholdsadresseFaktum.value === "soknad") {
 			this.brukSoknadAdresse();
 		}
 	}
 
 	settAdresseOgSoknadsmottaker(adresse: Adresse, oppholdsadressevalg: string, adresseKategori: AdresseKategori ) {
-
 		this.props.dispatch(settSoknadsmottakerStatus(SoknadsMottakerStatus.IKKE_VALGT));
-
-		// TODO Detektere om vi har folkeregistrert|midlertidig|soknad
-
 		this.props.dispatch(hentSoknadsmottakerAction(
 			this.props.brukerBehandlingId,
 			this.props.fakta,
@@ -171,7 +154,6 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 	brukMidlertidigAdresse() {
 		const oppholdsadressevalg = "midlertidig";
 		const adresseKategori = AdresseKategori.MIDLERTIDIG;
-
 		this.settAdresseOgSoknadsmottaker(null, oppholdsadressevalg, adresseKategori);
 	}
 
@@ -217,7 +199,6 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 							this.props.dispatch(settErrorFarge(ErrorFarge.UGYLDIG));
 							return ValideringActionKey.PAKREVD;
 						}
-
 						return null;
 					} ]}
 				>
@@ -230,9 +211,8 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 							onChange={() => this.brukFolkeregistrertAdresse()}
 							label={
 								<div>
-									<div
-										className="detaljeliste__element"
-										style={{ fontWeight: 600 }}>Folkeregistrert adresse:
+									<div className="detaljeliste__element adresse-tittel">
+										<FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
 									</div>
 									<AdresseVisning faktum={folkeregistrertAdresseFaktum}/>
 
@@ -250,7 +230,9 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 							onChange={() => this.brukMidlertidigAdresse()}
 							label={
 								<div>
-									<div style={{ fontWeight: 600 }}>Midlertidig adresse:</div>
+									<div className="adresse-tittel">
+										<FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
+									</div>
 									<AdresseVisning faktum={adresseFaktum}/>
 
 								</div>
@@ -269,7 +251,10 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 						<div className="utvidetAddresseSok">
 							<SporsmalFaktum
 								faktumKey="kontakt.system.kontaktinfo"
-								tittelRenderer={tittel => `${"Hvor oppholder du deg nå?"}`}
+								tittelRenderer={() =>
+									getIntlTextOrKey(this.props.intl,
+										"kontakt.system.oppholdsadresse.hvorOppholder")
+								}
 							>
 								<AdresseAutocomplete
 									adresseFaktum={adressesokAdresseFaktum}
@@ -279,12 +264,18 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 							</SporsmalFaktum>
 						</div>
 					</Underskjema>
-					<VelgSoknadsmottaker
-						label="Adressen ga flere treff på Nav-kontor velg ditt lokale kontor."
+
+					<FinnNavKontorProgressIndikator
+						label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.finnerKontor")}
 						fakta={this.props.fakta}
 					/>
+
+					<VelgSoknadsmottaker
+						label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgKontor")}
+						fakta={this.props.fakta}
+					/>
+
 				</SporsmalFaktum>
-				<p />
 				<SoknadsmottakerInfoPanel
 					soknadsmottakerStatus={this.props.soknadsmottakerStatus}
 					soknadsmottakerFaktum={finnFaktum("soknadsmottaker", this.props.fakta)}

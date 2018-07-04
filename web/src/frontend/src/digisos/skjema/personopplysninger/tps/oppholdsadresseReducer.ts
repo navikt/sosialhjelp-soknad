@@ -105,12 +105,6 @@ export const settSoknadsmottakere = (soknadsmottakere: any): any => {
 		soknadsmottakere
 	};
 };
-export const velgAdresseFraSoketreff = (adresse: Adresse): any => {
-	return {
-		type: OppholdsadresseActionTypeKeys.VELG_ADRESSE_FRA_SOKETREFF,
-		adresse
-	};
-};
 
 export const settSoknadsmottakerStatus = (status: SoknadsMottakerStatus): any => {
 	return {

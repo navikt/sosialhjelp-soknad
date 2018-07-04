@@ -17,9 +17,7 @@ import { lagreFaktumSaga } from "../../../../nav-soknad/redux/fakta/faktaSaga";
 import { LagreFaktum } from "../../../../nav-soknad/redux/fakta/faktaTypes";
 
 export function oppdaterSoknadsMottaker(soknadsmottaker: any, faktum: Faktum) {
-	if (soknadsmottaker == null) {
-		// reset faktum??
-	} else {
+	if (soknadsmottaker != null) {
 		const properties = [
 			"enhetsId",
 			"enhetsnavn",
@@ -47,7 +45,6 @@ export function nullUtSoknadsmottakerFaktum(soknadsmottakerFaktum: Faktum) {
 }
 
 export function oppdaterAdresse(adresseFaktum: Faktum, adresse: Adresse) {
-
 	const properties = [
 		"husnummer",
 		"husbokstav",
@@ -64,9 +61,7 @@ export function oppdaterAdresse(adresseFaktum: Faktum, adresse: Adresse) {
 
 	const ADRESSE = "adresse";
 	adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, adresse[ADRESSE], "gatenavn");
-
 	adresseFaktum = oppdaterFaktumMedVerdier(adresseFaktum, "gateadresse", "type");
-
 	return adresseFaktum;
 }
 
@@ -106,19 +101,11 @@ function* fetchOgSettSoknadsmottakerOgOppdaterStatus(
 				throw Error("Mangler soknadsmottaker");
 			}
 			yield* lagreSoknadsmottakerOgOppdaterStatus(soknadsmottaker, soknadsmottakerFaktum);
-			// yield* lagreFaktumSaga(lagreFaktum(
-			// 	oppdaterSoknadsMottaker(soknadsmottaker, soknadsmottakerFaktum)) as LagreFaktum) as any;
-			// if (response.sosialOrgnr) {
-			// 	yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.GYLDIG));
-			// } else {
-			// 	yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.UGYLDIG));
-			// }
 		}
 	} else {
 		soknadsmottakerFaktum = nullUtSoknadsmottakerFaktum(soknadsmottakerFaktum);
 		yield* lagreFaktumSaga(lagreFaktum(soknadsmottakerFaktum) as LagreFaktum) as any;
 		yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.UGYLDIG));
-		// yield put(settErrorFarge(ErrorFarge.UGYLDIG));
 	}
 }
 
@@ -156,7 +143,6 @@ function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): 
 		if (action.adresseKategori === AdresseKategori.SOKNAD) {
 			if (adresse) {
 				adresseFaktum = oppdaterAdresse(adresseFaktum, adresse);
-				// yield put(setFaktum(adresseFaktum));
 				yield* lagreFaktumSaga(lagreFaktum(adresseFaktum) as LagreFaktum) as any;
 			} else {
 				yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.IKKE_VALGT));
@@ -169,7 +155,6 @@ function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): 
 			action.brukerBehandlingId,
 			action.oppholdsadressevalg,
 			soknadsmottakerFaktum);
-
 	} catch (reason) {
 		yield put(loggFeil("Hent soknadsmottaker feilet: " + reason.toString()));
 		yield put(navigerTilServerfeil());

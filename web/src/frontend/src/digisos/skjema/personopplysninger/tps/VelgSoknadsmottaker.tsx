@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Select } from "nav-frontend-skjema";
 import { Faktum } from "../../../../nav-soknad/types";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import { DispatchProps } from "../../../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { State } from "../../../redux/reducers";
-// import { velgSoknadsmottaker } from "./oppholdsadresseReducer";
 import { finnFaktum } from "../../../../nav-soknad/utils";
 import { velgSoknadsmottaker } from "./oppholdsadresseReducer";
+import { getIntlTextOrKey } from "../../../../nav-soknad/utils/intlUtils";
 
 interface OwnProps {
 	soknadsmottakere: any[];
@@ -43,7 +43,7 @@ class VelgSoknadsmottaker extends React.Component<Props, {}> {
 					value={enhetsId}
 				>
 					<option key="velg">
-						Velg NAV kontor
+						{getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgMottaker")}}
 					</option>
 					{this.props.soknadsmottakere.map((item: any, index: number) => {
 						return (

@@ -4,7 +4,7 @@ import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon"
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { Faktum } from "../../types";
 import { State } from "../../../digisos/redux/reducers";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { DispatchProps } from "../../redux/reduxTypes";
 import { AdresseAutocompleteStatus, settStatus, settValgtAdresse, settVerdi } from "./adresseAutocompleteReducer";
@@ -42,7 +42,6 @@ export interface Adresse {
 }
 
 interface StateProps {
-
 	adresser: Adresse[];
 	adresserWithId: any[];
 	valueIsValid: undefined | false | true;
@@ -69,7 +68,6 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 
 	constructor(props: Props) {
 		super(props);
-
 		this.state = {
 			cursorPosisjon: 0,
 			adresser: [],
@@ -127,7 +125,6 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 	}
 
 	handleSelect(value: string, adresse: Adresse) {
-
 		const temp = this.formaterAdresseString(adresse).split(",")[0];
 		const temp2 = /[a-zA-Z]/.exec(temp[0]);
 
@@ -186,13 +183,10 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 
 	handleChange(event: any, value: string) {
 		if (this.props.valgtAdresse) {
-
 			if (value.indexOf(this.state.previousFirstPart, 0) === -1 || value.indexOf(this.state.previousLastPart, 0) === -1) {
-
 				this.props.dispatch(settVerdi(value));
 				this.props.dispatch(settStatus(AdresseAutocompleteStatus.ADRESSE_UGYLDIG));
 				this.props.dispatch(settValgtAdresse(null));
-
 				this.setState({
 					previousFirstPart: null,
 					previousLastPart: null
@@ -201,9 +195,7 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 			} else {
 				const everythingBeforeComma = value.split(",")[0];
 				const addedPart = /(\d+)[a-zA-Z]*/g.exec(everythingBeforeComma);
-
 				const valgtAdresse = this.props.valgtAdresse;
-
 				valgtAdresse.husnummer = addedPart ? /\d+/g.exec(addedPart[0])[0] : null;
 				if (addedPart) {
 					if (/[a-zA-Z]+/g.exec(addedPart[0])) {
@@ -260,13 +252,11 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 		} catch (error) {
 			console.warn("error: " + error);
 		}
-
 		return returverdi;
 	}
 
 	hvorSkalTekstfeltMarkorSettes(adresse: Adresse) {
 		const husbokstav = adresse.husbokstav ? adresse.husbokstav : "";
-
 		return adresse.husnummer ?
 			(adresse.adresse.length +
 				adresse.husnummer.length +
@@ -284,13 +274,17 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 					)}
 				{this.state.antallAktiveSok === 0 && (
 					<span>
-						{this.props.status === AdresseAutocompleteStatus.INITIELL && <DigisosIkon navn="searchAddresse"/>}
-						{this.props.status === AdresseAutocompleteStatus.ADRESSE_OK && <DigisosIkon navn="checkCircle"/>}
+						{this.props.status === AdresseAutocompleteStatus.INITIELL &&
+							<DigisosIkon navn="searchAddresse"/>
+						}
+						{this.props.status === AdresseAutocompleteStatus.ADRESSE_OK &&
+							<DigisosIkon navn="checkCircle"/>
+						}
 						{this.props.status === AdresseAutocompleteStatus.ADRESSE_UGYLDIG &&
-						<DigisosIkon navn="advarselSirkel"/>}
+							<DigisosIkon navn="advarselSirkel"/>}
 						{this.props.status === AdresseAutocompleteStatus.HUSNUMMER_IKKE_SATT &&
-						<DigisosIkon navn="advarselSirkel"/>}
-						</span>
+							<DigisosIkon navn="advarselSirkel"/>}
+					</span>
 				)}
 				</span>
 		);
@@ -299,6 +293,18 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 	handleInputBlur() {
 		if (this.props.valgtAdresse) {
 			this.props.dispatch(settStatus(AdresseAutocompleteStatus.ADRESSE_OK));
+		}
+	}
+
+	renderMenu(children: any) {
+		if (children.toString() === "") {
+			return null;
+		} else {
+			return (
+				<div className="menu">
+					{children}
+				</div>
+			);
 		}
 	}
 
@@ -320,11 +326,6 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 		}
 	}
 
-	open(): boolean {
-		// return this.state.adresser.length > 1;
-		return true;
-	}
-
 	render() {
 		return (
 			<div className="navAutcomplete">
@@ -340,26 +341,19 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 					getItemValue={(item: any) => item.adresse}
 					onChange={(event: any, value: string) => this.handleChange(event, value)}
 					onSelect={(value: any, item: any) => this.handleSelect(value, item)}
-					renderMenu={(children: any) => (
-						<span>
-						{children.toString() === "" && (<span/>)}
-							{children.toString() !== "" && (
-								<div className="menu">
-									{children}
-								</div>)}
-						</span>
-					)}
+					renderMenu={(children: any) => this.renderMenu(children)}
 					renderItem={(item: any, isHighlighted: any) => this.getRenderItem(item, isHighlighted)}
-					open={this.open()}
 				/>
 				{this.visIkon()}
-				{
-					this.props.status === AdresseAutocompleteStatus.HUSNUMMER_IKKE_SATT &&
-					(<p>"Hvis du har husnummer må du legge til det (før kommaet)"</p>)
+				{this.props.status === AdresseAutocompleteStatus.HUSNUMMER_IKKE_SATT &&
+					(<p>
+						<FormattedMessage id="autocomplete.husnummer"/>
+					</p>)
 				}
 			</div>
 		);
 	}
+
 }
 
 export default connect((state: State, props: any) => {
