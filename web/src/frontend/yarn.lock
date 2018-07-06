@@ -100,9 +100,13 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.0.26":
+"@types/react@*":
   version "16.0.27"
   resolved "http://a34apvl062.devillo.no:8082/repository/npm-all/@types/react/-/react-16.0.27.tgz#341899469ea2e98b48b11c18afb4d8361d03b013"
+
+"@types/react@16.0.25":
+  version "16.0.25"
+  resolved "https://repo.adeo.no/repository/npm-public/@types/react/-/react-16.0.25.tgz#bf696b83fe480c5e0eff4335ee39ebc95884a1ed"
 
 "@types/redux-logger@^3.0.5":
   version "3.0.5"
@@ -6468,13 +6472,13 @@ redux-saga@^0.15.6:
   version "0.15.6"
   resolved "http://maven.adeo.no/nexus/content/groups/npm-all/redux-saga/-/redux-saga-0.15.6.tgz#8638dc522de6c6c0a496fe8b2b5466287ac2dc4d"
 
-redux-thunk@^2.2.0:
+redux-thunk@2.2.0:
   version "2.2.0"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
+  resolved "https://repo.adeo.no/repository/npm-public/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
 
-redux@^3.6.0, redux@^3.7.2:
+redux@3.7.2, redux@^3.6.0, redux@^3.7.2:
   version "3.7.2"
-  resolved "http://maven.adeo.no/nexus/content/groups/npm-all/redux/-/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
+  resolved "https://repo.adeo.no/repository/npm-public/redux/-/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
   dependencies:
     lodash "^4.2.1"
     lodash-es "^4.2.1"
