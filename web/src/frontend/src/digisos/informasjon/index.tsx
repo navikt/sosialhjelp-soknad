@@ -59,6 +59,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 		}
 		return null;
 	}
+
 	startSoknad() {
 		this.props.dispatch(opprettSoknad(this.props.intl));
 	}

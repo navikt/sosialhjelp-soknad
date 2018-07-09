@@ -261,17 +261,16 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 									onValgtVerdi={(adresse: any) => this.handleVelgAutocompleteAdresse(adresse)}
 									fakta={this.props.fakta}
 								/>
+								<VelgSoknadsmottaker
+									label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgKontor")}
+									fakta={this.props.fakta}
+								/>
 							</SporsmalFaktum>
 						</div>
 					</Underskjema>
 
 					<FinnNavKontorProgressIndikator
 						label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.finnerKontor")}
-						fakta={this.props.fakta}
-					/>
-
-					<VelgSoknadsmottaker
-						label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgKontor")}
 						fakta={this.props.fakta}
 					/>
 

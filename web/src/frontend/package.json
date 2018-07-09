@@ -115,7 +115,7 @@
 		"start-js": "react-scripts-ts start",
 		"start": "npm-run-all -p build-css watch-css start-js mock-backend stylelint:watch",
 		"build": "npm run stylelint && npm run build-css && react-scripts-ts build && node ./scripts/flytt-filer-til-webapp.js && node versjoner-prodfiler.js",
-		"test": "npm run build-css && react-scripts-ts test --env=jsdom",
+		"test": "npm run build-css && react-scripts-ts test --env=jsdom --setupTestFrameworkScriptFile=raf/polyfill",
 		"tdd": "npm run build-css && react-scripts-ts test --watch --watchAll --env=jsdom --setupTestFrameworkScriptFile=raf/polyfill",
 		"prettier": "prettier-eslint \"src/**/*(*.less|*.tsx|*.ts|*.css|*.json)\"",
 		"prettier:update": "prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css|*.json)\"",

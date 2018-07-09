@@ -43,7 +43,7 @@ class VelgSoknadsmottaker extends React.Component<Props, {}> {
 					value={enhetsId}
 				>
 					<option key="velg">
-						{getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgMottaker")}}
+						{getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgMottaker")}
 					</option>
 					{this.props.soknadsmottakere.map((item: any, index: number) => {
 						return (

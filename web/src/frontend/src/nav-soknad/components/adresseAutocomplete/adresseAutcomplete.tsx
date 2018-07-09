@@ -296,9 +296,9 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 		}
 	}
 
-	renderMenu(children: any) {
+	renderMenu(children: any): React.ReactNode {
 		if (children.toString() === "") {
-			return null;
+			return (<span/>);
 		} else {
 			return (
 				<div className="menu">

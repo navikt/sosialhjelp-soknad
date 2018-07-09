@@ -17,9 +17,11 @@ import Ettersendelse from "./skjema/ettersendelse/ettersendelse";
  *
  */
 class App extends React.Component<InjectedIntlProps, {}> {
+
 	componentDidMount() {
 		(NavFrontendModal as any).setAppElement("#root");
 	}
+
 	render() {
 		const ettersendelse = (window.location.pathname.match(/ettersendelse$/) != null);
 		const informasjon = (window.location.pathname.match(/informasjon$/) != null);

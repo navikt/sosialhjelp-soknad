@@ -6,6 +6,9 @@ declare module "react-autocomplete" {
         items: any[];
         getItemValue: any;
         renderItem: any;
+        renderMenu: any;
+	    onSelect: any;
+	    onChange: any;
     }
 
     export class Autocomplete extends React.Component<AutocompleteProps, {}> {}
