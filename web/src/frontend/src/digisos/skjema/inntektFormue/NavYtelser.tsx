@@ -20,11 +20,11 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 			const type = getFaktumPropertyVerdi(utbetaling, "type");
 			const dato = getFaktumPropertyVerdi(utbetaling, "utbetalingsDato");
 			const utbetalt = getFaktumPropertyVerdi(utbetaling, "netto");
-			const erUtbetalt = getFaktumPropertyVerdi(utbetaling, "erUtbetalt");
+			// const erUtbetalt = getFaktumPropertyVerdi(utbetaling, "erUtbetalt");
 			return (
 				<div key={id} className="utbetaling blokk-s">
 					<div>{type}</div>
-					<div>{dato}{erUtbetalt === "true" && utbetaltMelding}</div>
+					<div>{dato}{utbetaltMelding}</div>
 					<div className="verdi detaljeliste__verdi">{utbetalt}</div>
 				</div>
 			);
