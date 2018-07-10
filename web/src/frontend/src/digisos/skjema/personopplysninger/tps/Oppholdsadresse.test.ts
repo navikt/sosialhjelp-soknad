@@ -1,4 +1,4 @@
-import {faktumHarLogvligAdresse} from "./Oppholdsadresse";
+// import {faktumHarLogvligAdresse} from "./Oppholdsadresse";
 
 describe("oppholdsadresse react component", () => {
 
