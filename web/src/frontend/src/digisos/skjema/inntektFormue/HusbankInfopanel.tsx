@@ -8,7 +8,10 @@ class HusbankInfopanel extends React.Component<FaktumComponentProps & InjectedIn
 	render() {
 		const { fakta } = this.props;
 		const bostotteFaktum = finnFaktum("inntekt.bostotte", fakta);
-		const mottarBostotte = bostotteFaktum.value;
+		let mottarBostotte: string = "";
+		if (bostotteFaktum && "value" in bostotteFaktum) {
+			mottarBostotte = bostotteFaktum.value;
+		}
 		if (mottarBostotte === "false") {
 			return (
 				<Informasjonspanel>
