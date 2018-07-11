@@ -39,28 +39,37 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 		return icon;
 	}
 
-	render() {
+	renderContent(fadeIn: boolean) {
 		const styleClassName = (this.props.style != null)
 			? "skjema-informasjonspanel-" + this.props.style
 			: "";
-
 		return (
-			<Collapse
-				isOpened={this.state.vises && this.props.synlig}
-			>
-				<div className="skjema-informasjonspanel-wrapper">
+			<div className="skjema-informasjonspanel-wrapper">
 				<div
 					className={
 						"skjema-informasjonspanel " + styleClassName
-						+ (this.props.synlig ? " skjema-informasjonspanel__synlig" : "")
+						+ (this.props.synlig || fadeIn === false ? " skjema-informasjonspanel__synlig" : "")
 					}
 				>
 					<div>{this.renderIkon()}</div>
 					<span>{this.props.children}</span>
 				</div>
-				</div>
-			</Collapse>
+			</div>
 		);
+	}
+	render() {
+		const isOpened = this.state.vises && this.props.synlig;
+		if (typeof isOpened === "undefined") {
+			return this.renderContent(false);
+		} else {
+			return (
+				<Collapse
+					isOpened={isOpened}
+				>
+					{this.renderContent(true)}
+				</Collapse>
+			);
+		}
 	}
 
 }

@@ -1,5 +1,7 @@
 # Informasjonspanel
 
+Vises panel med runde hjørner og ikon.
+
 ```jsx harmony
 <Informasjonspanel>
   Denne teksten havner i et panel med runde hjørner og ikon.
@@ -7,6 +9,11 @@
 ```
 
 # Props
+
+## synlig
+
+Hvis synlig er satt og endrer verdi fra false til true, 
+så trigges en animasjon som ekspanderer og fader in panelet.
 
 ## icon
 
@@ -27,7 +34,7 @@ En streng:
 </Informasjonspanel>
 ```
 
-Eller "undefined". Da vises default ikon.
+Hvis ikke satt, så vises default ikon.
 
 ## children
 
@@ -35,4 +42,4 @@ ReactNode
 
 ## style
 
-String className
+String med className
