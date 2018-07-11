@@ -6,6 +6,8 @@
 	border: solid 2px @navGronnLighten60;
 	padding: 2rem 1.5rem 2rem 3.5rem;
 	margin-bottom: 1rem;
+	transition: opacity 1s;
+  	opacity: 0;
 
 	&>div {
 		position: absolute;
@@ -18,6 +20,10 @@
 		height: 5rem;
 		width: 5rem;
 
+	  	transition: opacity 2s;
+		transition-delay: 1s;
+		opacity: 0;
+
 		&>img {
 			position: absolute;
 			left: 50%;
@@ -25,7 +31,28 @@
 			transform: translate(-50%, -50%);
 			height: 3.125rem;
 		}
+
 	}
+
+  	&__synlig {
+		opacity: 1.0;
+
+	  	&>div {
+		  opacity: 1.0;
+		}
+	}
+}
+
+@media screen and (max-width: 740px ) {
+  .skjema-informasjonspanel {
+	padding: 3.5rem 1.5rem 2rem 1.5rem;
+	margin-top: 3rem;
+
+	& > div {
+	  left: 50%;
+	  top: 0;
+	}
+  }
 }
 
 .skjema-informasjonspanel.skjema-informasjonspanel-advarsel {
