@@ -6,7 +6,8 @@
 	border: solid 2px @navGronnLighten60;
 	padding: 2rem 1.5rem 2rem 3.5rem;
 	margin-bottom: 1rem;
-	transition: opacity 1s;
+	transition: opacity 3s;
+    transition-delay: 1s;
   	opacity: 0;
 
 	&>div {
@@ -14,6 +15,8 @@
 		left: 0;
 		top: 50%;
 		transform: translate(-50%, -50%);
+	  	opacity: 0;
+	  	transition: all 2s;
 
 		background: @navGronnLighten60;
 		border-radius: 100%;
@@ -21,7 +24,7 @@
 		width: 5rem;
 
 	  	transition: opacity 2s;
-		transition-delay: 1s;
+		transition-delay: 2s;
 		opacity: 0;
 
 		&>img {
@@ -41,6 +44,12 @@
 		  opacity: 1.0;
 		}
 	}
+}
+
+.skjema-informasjonspanel-wrapper {
+  display: block;
+  border-top: 1px solid #efefef;
+  border-bottom: 1px solid #efefef;
 }
 
 @media screen and (max-width: 740px ) {

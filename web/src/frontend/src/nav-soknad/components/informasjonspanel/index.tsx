@@ -48,14 +48,16 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 			<Collapse
 				isOpened={this.state.vises && this.props.synlig}
 			>
+				<div className="skjema-informasjonspanel-wrapper">
 				<div
 					className={
 						"skjema-informasjonspanel " + styleClassName
-						+ (this.state.vises ? " skjema-informasjonspanel__synlig" : "")
+						+ (this.props.synlig ? " skjema-informasjonspanel__synlig" : "")
 					}
 				>
 					<div>{this.renderIkon()}</div>
 					<span>{this.props.children}</span>
+				</div>
 				</div>
 			</Collapse>
 		);
