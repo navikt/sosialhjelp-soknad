@@ -9,6 +9,7 @@ import Eiendeler from "./Eiendeler";
 import Bankinnskudd from "./Bankinnskudd";
 import Utbetaling from "./Utbetaling";
 import { State } from "../../redux/reducers";
+import HusbankInfopanel from "./HusbankInfopanel";
 
 class InntektFormue extends React.Component<FaktumComponentProps, any> {
 	render() {
@@ -16,6 +17,7 @@ class InntektFormue extends React.Component<FaktumComponentProps, any> {
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.inntektbolk}>
 				<Bostotte />
+				<HusbankInfopanel fakta={fakta}/>
 				<Eiendeler fakta={fakta} />
 				<Bankinnskudd fakta={fakta} />
 				<Utbetaling fakta={fakta} />
