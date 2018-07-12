@@ -6,8 +6,8 @@
 	border: solid 2px @navGronnLighten60;
 	padding: 2rem 1.5rem 2rem 3.5rem;
 	margin-bottom: 1rem;
-	transition: opacity 3s;
-    transition-delay: 1s;
+	transition: opacity 1s;
+    // transition-delay: 1s;
   	opacity: 0;
 
 	&>div {
@@ -23,8 +23,8 @@
 		height: 5rem;
 		width: 5rem;
 
-	  	transition: opacity 2s;
-		transition-delay: 2s;
+	  	transition: opacity 0.5s;
+		// transition-delay: 2s;
 		opacity: 0;
 
 		&>img {
@@ -46,10 +46,15 @@
 	}
 }
 
+// Unngå at React Collapse kutter damen i to på desktop under animasjon.
+.ReactCollapse--collapse {
+  overflow: visible !important;
+}
+
 .skjema-informasjonspanel-wrapper {
   display: block;
-  border-top: 1px solid #efefef;
-  border-bottom: 1px solid #efefef;
+  border-top: 1px solid @navBodyGraa;
+  border-bottom: 1px solid @navBodyGraa;
 }
 
 @media screen and (max-width: 740px ) {
