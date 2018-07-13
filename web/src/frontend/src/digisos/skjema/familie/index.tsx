@@ -7,28 +7,26 @@ import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import Sivilstatus from "./Sivilstatus";
 import HarBarn from "./HarBarn";
 import SivilstatusTPS from "./SivilstatusTPS";
-import {Faktum} from "../../../nav-soknad/types";
-import {finnFaktum} from "../../../nav-soknad/utils";
+import { Faktum } from "../../../nav-soknad/types";
+import { finnFaktum } from "../../../nav-soknad/utils";
 
 class Familie extends React.Component<FaktumComponentProps, {}> {
 
-
 	render() {
 		const { fakta } = this.props;
-		const systemFamilieSivilstatusFakta: Faktum = finnFaktum("system.familie.sivilstatus", fakta);
-		console.warn(systemFamilieSivilstatusFakta);
+		const sivilstatusFaktum: Faktum = finnFaktum("system.familie.sivilstatus", fakta);
+		const ektefelleFaktum: Faktum = finnFaktum("system.familie.sivilstatus.gift.ektefelle", fakta);
 
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.familiebolk}>
 				{
-					systemFamilieSivilstatusFakta.value &&
-					<SivilstatusTPS systemFamilieSivilstatusFakta={systemFamilieSivilstatusFakta}/>
+					sivilstatusFaktum.value &&
+					<SivilstatusTPS sivilstatusFaktum={sivilstatusFaktum} ektefelleFaktum={ektefelleFaktum}/>
 				}
 				{
-					systemFamilieSivilstatusFakta.value === null &&
+					sivilstatusFaktum.value === null &&
 					<Sivilstatus fakta={fakta} />
 				}
-
 				<HarBarn />
 			</DigisosSkjemaSteg>
 		);
