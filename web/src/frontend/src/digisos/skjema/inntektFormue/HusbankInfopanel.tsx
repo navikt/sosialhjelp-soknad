@@ -12,15 +12,14 @@ class HusbankInfopanel extends React.Component<FaktumComponentProps & InjectedIn
 		if (bostotteFaktum && "value" in bostotteFaktum) {
 			mottarBostotte = bostotteFaktum.value;
 		}
-		if (mottarBostotte === "false") {
-			return (
-				<Informasjonspanel>
-					<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
-				</Informasjonspanel>
-			);
-		} else {
-			return <span/>;
-		}
+		return (
+			<Informasjonspanel
+				synlig={mottarBostotte === "false"}
+				icon="illustrasjon_ella.svg"
+			>
+				<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
+			</Informasjonspanel>
+		);
 	}
 }
 
