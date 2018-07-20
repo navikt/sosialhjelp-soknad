@@ -1,8 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
-
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import Bostotte from "./Bostotte";
 import Eiendeler from "./Eiendeler";
