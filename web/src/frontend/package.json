@@ -23,7 +23,7 @@
 		"nav-frontend-skjema": "0.1.29",
 		"nav-frontend-spinner": "^0.1.21",
 		"nav-frontend-typografi": "^1.0.12",
-		"node-less-chokidar": "^0.1.0",
+		"node-less-chokidar": "0.1.0",
 		"prop-types": "^15.5.10",
 		"react": "16.2.0",
 		"react-collapse": "^4.0.3",
