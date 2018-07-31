@@ -27,9 +27,12 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 		const status = sivilstatusFaktum.value;
 		const ektefelleFaktum = this.props.ektefelleFaktum;
 
-		const NAME = "name";
+		const NAME = "navn";
 		const FODSELSDATO = "fodselsdato";
-		const FOLKEREGISTRERT = "folkeregistrert";
+		const FOLKEREGISTRERT = "folkeregistrertsammen";
+		const IKKETILGANGTILEKTEFELLE = "ikkeTilgangTilEktefelle";
+
+		const FOLKEREGISTRERTVERDI = ektefelleFaktum.properties[FOLKEREGISTRERT] === "true" ? "Ja" : "Nei";
 
 		return (
 			<div>
@@ -47,42 +50,46 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 							/>
 						</Detaljeliste>
 
-						{
-							ektefelleFaktum.properties[NAME] &&
-							<h4 className="skjema-sporsmal__infotekst__tittel">
-								<FormattedMessage id="system.familie.sivilstatus.infotekst"/>
-							</h4>
-						}
-
-						<Detaljeliste>
+						{ !ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] &&
+						<div>
 							{
 								ektefelleFaktum.properties[NAME] &&
-								<DetaljelisteElement
-									tittel={
-										<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.navn"/>
-									}
-									verdi={ ektefelleFaktum.properties[NAME] }
-								/>
+								<h4 className="skjema-sporsmal__infotekst__tittel">
+									<FormattedMessage id="system.familie.sivilstatus.infotekst"/>
+								</h4>
 							}
-							{
-								ektefelleFaktum.properties[FODSELSDATO] &&
-								<DetaljelisteElement
-									tittel={
-										<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.fodselsdato"/>
-									}
-									verdi={ektefelleFaktum.properties[FODSELSDATO]}
-								/>
-							}
-							{
-								ektefelleFaktum.properties[FOLKEREGISTRERT] &&
-								<DetaljelisteElement
-									tittel={
-										<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.folkereg"/>
-									}
-									verdi={ ektefelleFaktum.properties[FOLKEREGISTRERT]}
-								/>
-							}
-						</Detaljeliste>
+
+							<Detaljeliste>
+								{
+									ektefelleFaktum.properties[NAME] &&
+									<DetaljelisteElement
+										tittel={
+											<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.navn"/>
+										}
+										verdi={ ektefelleFaktum.properties[NAME] }
+									/>
+								}
+								{
+									ektefelleFaktum.properties[FODSELSDATO] &&
+									<DetaljelisteElement
+										tittel={
+											<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.fodselsdato"/>
+										}
+										verdi={ektefelleFaktum.properties[FODSELSDATO]}
+									/>
+								}
+								{
+									ektefelleFaktum.properties[FOLKEREGISTRERT] &&
+									<DetaljelisteElement
+										tittel={
+											<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.folkereg"/>
+										}
+										verdi={ FOLKEREGISTRERTVERDI }
+									/>
+								}
+							</Detaljeliste>
+						</div> }
+
 					</SysteminfoMedSkjema>
 				</SporsmalFaktum>
 				<Informasjonspanel
