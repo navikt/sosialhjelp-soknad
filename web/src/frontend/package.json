@@ -58,8 +58,8 @@
 		"@types/react-dom": "^16.0.3",
 		"@types/react-intl": "^2.3.2",
 		"@types/react-redux": "5.0.1",
-		"@types/react-router": "4.0.19",
-		"@types/react-router-dom": "^4.0.7",
+		"@types/react-router": "4.0.30",
+		"@types/react-router-dom": "4.3.0",
 		"@types/react-router-redux": "^5.0.8",
 		"@types/react-scroll": "^1.5.1",
 		"@types/redux-logger": "^3.0.5",
@@ -80,7 +80,7 @@
 		"jest": "^21.1.10",
 		"jest-cli": "^21.1.0",
 		"less": "^2.7.2",
-	        "less-plugin-npm-import": "^2.1.0",
+		"less-plugin-npm-import": "^2.1.0",
 		"mime": "^2.0.3",
 		"nav-frontend-alertstriper-style": "^0.2.23",
 		"nav-frontend-chevron-style": "^0.3.4",
@@ -106,7 +106,7 @@
 		"ts-jest": "^21.2.4",
 		"tslint": "5.8.0",
 		"tslint-react": "3.2.0",
-		"typescript": "2.6.1"
+		"typescript": "^2.9.2"
 	},
 	"scripts": {
 		"mock-backend": "node scripts/mock_backend",
@@ -121,6 +121,7 @@
 		"stylelint": "stylelint \"src/digisos/digisos.less\" --syntax less",
 		"stylelint:watch": "chokidar \"src/index.less\" -c \"stylelint \"src/index.less\" --syntax less\"",
 		"e2e": "node nightwatch.js --url localhost:3000/soknadsosialhjelp/informasjon",
-		"eject": "react-scripts-ts eject"
+		"eject": "react-scripts-ts eject",
+		"lint": "tslint -c tslint.json --project tsconfig.json"
 	}
 }

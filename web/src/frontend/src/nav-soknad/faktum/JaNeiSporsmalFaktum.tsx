@@ -64,16 +64,16 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 					faktumId
 				};
 
-		let id_radio_ja = null;
-		let id_radio_nei = null;
+		let idRadioJa = null;
+		let idRadioNei = null;
 		if (this.props.id) {
-			id_radio_ja = this.props.id + "_radio_ja";
-			id_radio_nei = this.props.id + "_radio_nei";
+			idRadioJa = this.props.id + "_radio_ja";
+			idRadioNei = this.props.id + "_radio_nei";
 		} else {
-			id_radio_ja = faktumKey.replace(/\./g, "_") + "_radio_ja";
-			id_radio_ja = id_radio_ja.replace(/__/g, "_");
-			id_radio_nei = faktumKey.replace(/\./g, "_") + "_radio_nei";
-			id_radio_nei = id_radio_nei.replace(/__/g, "_");
+			idRadioJa = faktumKey.replace(/\./g, "_") + "_radio_ja";
+			idRadioJa = idRadioJa.replace(/__/g, "_");
+			idRadioNei = faktumKey.replace(/\./g, "_") + "_radio_nei";
+			idRadioNei = idRadioNei.replace(/__/g, "_");
 		}
 
 		return (
@@ -86,8 +86,8 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 						<Underskjema visible={visSkjema}>{children}</Underskjema>
 					}
 				>
-					<RadioFaktum id={id_radio_ja} {...radioProps} value="true" />
-					<RadioFaktum id={id_radio_nei} {...radioProps} value="false" />
+					<RadioFaktum id={idRadioJa} {...radioProps} value="true" />
+					<RadioFaktum id={idRadioNei} {...radioProps} value="false" />
 				</ValgMedUnderskjema>
 			</SporsmalFaktum>
 		);
