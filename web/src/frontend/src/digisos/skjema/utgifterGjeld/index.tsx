@@ -4,22 +4,18 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import JaNeiSporsmalFaktum from "../../../nav-soknad/faktum/JaNeiSporsmalFaktum";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import TextareaFaktum from "../../../nav-soknad/faktum/TextareaFaktum";
 import CheckboxFaktum, {
 	createCheckboxFaktumKey
 } from "../../../nav-soknad/faktum/CheckboxFaktum";
 import {
-	faktumIsSelected,
 	getFaktumVerdi,
 	radioCheckKeys
 } from "../../../nav-soknad/utils";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
-import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
-import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 
 class UtgifterGjeld extends React.Component<
 	FaktumComponentProps & DispatchProps & InjectedIntlProps,
@@ -30,13 +26,13 @@ class UtgifterGjeld extends React.Component<
 
 		const harBoutgifter = radioCheckKeys("utgifter.boutgift");
 		const boUtgifter = radioCheckKeys(`${harBoutgifter.faktum}.true.type`);
-		const andreBoUtgifter = `${
-			boUtgifter.faktum
-		}.andreutgifter.true.beskrivelse`;
+		// const andreBoUtgifter = `${
+		// 	boUtgifter.faktum
+		// }.andreutgifter.true.beskrivelse`;
 
 		const harUtgifterBarn = radioCheckKeys("utgifter.barn");
 		const barneUtgifter = radioCheckKeys("utgifter.barn.true.utgifter");
-		const andreBarneutgifter = `${barneUtgifter.faktum}.annet.true.beskrivelse`;
+		// const andreBarneutgifter = `${barneUtgifter.faktum}.annet.true.beskrivelse`;
 
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk}>
@@ -79,17 +75,17 @@ class UtgifterGjeld extends React.Component<
 							)}
 						/>
 
-						<NivaTreSkjema
-							visible={faktumIsSelected(getFaktumVerdi(fakta, `${boUtgifter.faktum}.andreutgifter`))}
-							size="small"
-						>
-							<TextareaFaktum
-								id="boutgifter_andre_utgifter_textarea"
-								faktumKey={andreBoUtgifter}
-								maxLength={400}
-								validerFunc={[getMaksLengdeFunc(400)]}
-							/>
-						</NivaTreSkjema>
+						{/*<NivaTreSkjema*/}
+							{/*visible={faktumIsSelected(getFaktumVerdi(fakta, `${boUtgifter.faktum}.andreutgifter`))}*/}
+							{/*size="small"*/}
+						{/*>*/}
+							{/*<TextareaFaktum*/}
+								{/*id="boutgifter_andre_utgifter_textarea"*/}
+								{/*faktumKey={andreBoUtgifter}*/}
+								{/*maxLength={400}*/}
+								{/*validerFunc={[getMaksLengdeFunc(400)]}*/}
+							{/*/>*/}
+						{/*</NivaTreSkjema>*/}
 					</SporsmalFaktum>
 				</JaNeiSporsmalFaktum>
 				<JaNeiSporsmalFaktum
@@ -126,17 +122,17 @@ class UtgifterGjeld extends React.Component<
 							id="utgifter_barn_annet_checkbox"
 							faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "annet")}
 						/>
-						<NivaTreSkjema
-							visible={faktumIsSelected(getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`))}
-							size="small"
-						>
-							<TextareaFaktum
-								id="utgifter_barn_annet_textarea"
-								faktumKey={andreBarneutgifter}
-								maxLength={400}
-								validerFunc={[getMaksLengdeFunc(400)]}
-							/>
-						</NivaTreSkjema>
+						{/*<NivaTreSkjema*/}
+							{/*visible={faktumIsSelected(getFaktumVerdi(fakta, `${barneUtgifter.faktum}.annet`))}*/}
+							{/*size="small"*/}
+						{/*>*/}
+							{/*<TextareaFaktum*/}
+								{/*id="utgifter_barn_annet_textarea"*/}
+								{/*faktumKey={andreBarneutgifter}*/}
+								{/*maxLength={400}*/}
+								{/*validerFunc={[getMaksLengdeFunc(400)]}*/}
+							{/*/>*/}
+						{/*</NivaTreSkjema>*/}
 					</SporsmalFaktum>
 				</JaNeiSporsmalFaktum>
 			</DigisosSkjemaSteg>
