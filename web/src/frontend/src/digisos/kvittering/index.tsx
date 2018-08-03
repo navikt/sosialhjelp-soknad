@@ -126,8 +126,8 @@ class KvitteringView extends React.Component<KvitteringProps, {}> {
 export default connect((state: State, props: any): StateProps => {
 	const harOppsummering = state.oppsummering.restStatus === REST_STATUS.OK;
 	return {
-		restStatus: REST_STATUS.OK, // state.soknad.restStatus,
 		kvittering: state.soknad.kvittering,
-		oppsummering: harOppsummering ? state.oppsummering.oppsummering : null
+		oppsummering: harOppsummering ? state.oppsummering.oppsummering : null,
+		restStatus: REST_STATUS.OK // state.soknad.restStatus
 	};
-})(injectIntl(withRouter(KvitteringView)));
+})(injectIntl(withRouter(KvitteringView as any) as any));

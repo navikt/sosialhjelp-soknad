@@ -49,7 +49,7 @@ const hentUtOppsummering = (html: string): Oppsummering => {
 			})
 			.filter(b => b.tittel !== "");
 	} catch (error) {
-		console.error("Feil ved uthenting av informasjon fra DOM tre :", error.toString());
+		console.error("Feil ved uthenting av informasjon fra DOM tre :", error.toString()); // tslint:disable-line
 	}
 
 	return {
