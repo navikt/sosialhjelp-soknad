@@ -9,6 +9,7 @@
 	"rules": {
 		"interface-name": false,
 		"ordered-imports": false,
+		"object-literal-sort-keys": false,
 		"member-access": false,
 		"jsx-no-lambda": false
 	}
