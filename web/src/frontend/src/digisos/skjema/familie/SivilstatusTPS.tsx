@@ -26,12 +26,9 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 		const sivilstatusFaktum = this.props.sivilstatusFaktum;
 		const status = sivilstatusFaktum.value;
 		const ektefelleFaktum = this.props.ektefelleFaktum;
-
 		const NAME = "navn";
 		const FODSELSDATO = "fodselsdato";
 		const FOLKEREGISTRERT = "folkeregistrertsammen";
-		const IKKETILGANGTILEKTEFELLE = "ikkeTilgangTilEktefelle";
-
 		const FOLKEREGISTRERTVERDI = ektefelleFaktum.properties[FOLKEREGISTRERT] === "true" ? "Ja" : "Nei";
 
 		return (
@@ -50,7 +47,6 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 							/>
 						</Detaljeliste>
 
-						{ !ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] &&
 						<div>
 							{
 								ektefelleFaktum.properties[NAME] &&
@@ -88,7 +84,7 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 									/>
 								}
 							</Detaljeliste>
-						</div> }
+						</div>
 
 					</SysteminfoMedSkjema>
 				</SporsmalFaktum>
@@ -104,7 +100,6 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 			</div>
 		);
 	}
-
 }
 
 export default connect((state: State, props: any) => {
