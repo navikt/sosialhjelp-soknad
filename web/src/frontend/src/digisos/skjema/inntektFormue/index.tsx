@@ -1,8 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
-
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import Bostotte from "./Bostotte";
 import Eiendeler from "./Eiendeler";
@@ -10,6 +8,7 @@ import Bankinnskudd from "./Bankinnskudd";
 import Utbetaling from "./Utbetaling";
 import { State } from "../../redux/reducers";
 import NavYtelser from "./NavYtelser";
+import HusbankInfopanel from "./HusbankInfopanel";
 
 class InntektFormue extends React.Component<FaktumComponentProps, any> {
 	render() {
@@ -18,6 +17,7 @@ class InntektFormue extends React.Component<FaktumComponentProps, any> {
 			<DigisosSkjemaSteg steg={DigisosSteg.inntektbolk}>
 				<NavYtelser fakta={fakta}/>
 				<Bostotte />
+				<HusbankInfopanel fakta={fakta}/>
 				<Eiendeler fakta={fakta} />
 				<Bankinnskudd fakta={fakta} />
 				<Utbetaling fakta={fakta} />

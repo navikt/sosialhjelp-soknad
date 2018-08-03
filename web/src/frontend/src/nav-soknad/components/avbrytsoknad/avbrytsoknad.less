@@ -1,3 +1,44 @@
+.modal {
+  border-radius: 8px;
+  border: solid 2px @navOransjeLighten40;
+  overflow: visible;
+}
+
+.avbrytmodal {
+  max-width: 34rem;
+
+  &__infoikon_wrapper {
+	position: absolute;
+	left: 50%;
+	top: 0;
+	z-index: 1;
+	transform: translate(-50%, -50%);
+	background: @navOransjeLighten40;
+	border-radius: 100%;
+	height: 5rem;
+	width: 5rem;
+
+	&>img {
+	  z-index: 2;
+	  display: block;
+	  position: absolute;
+	  height: 3.125rem;
+	  left: 50%;
+	  top: 50%;
+	  transform: translate(-50%, -50%);
+	}
+  }
+
+  &__overskrift {
+	text-align: center;
+  }
+
+  &__tekst {
+	text-align: center;
+  }
+
+}
+
 @media @desktop {
 
   .avbrytmodal {
@@ -24,34 +65,5 @@
 	&__infoikon_wrapper {
 	  display: none;
 	}
-  }
-}
-
-.avbrytmodal {
-  max-width: 34rem;
-
-  &__infoikon_wrapper {
-	text-align: center;
-	margin-bottom: 1rem;
-  }
-
-  &__overskrift {
-	text-align: center;
-  }
-
-  &__tekst {
-	text-align: center;
-  }
-
-  &__understrek_wrapper {
-	text-align: center;
-	padding-bottom: 2.0rem;
-	line-height: .7rem;
-  }
-
-  &__understrek {
-	width: 2.7rem;
-	border-bottom: 2px solid @orangeFocus;
-	display: inline-block;
   }
 }

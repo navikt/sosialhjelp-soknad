@@ -12,7 +12,7 @@ describe("navloggerSaga", () => {
 		};
 		const action: NavLogInitAction = {
 			type: ActionTypeKeys.INIT,
-			logEntry: logEntry
+			logEntry
 		};
 
 		const saga = loggTilServerSaga(action);

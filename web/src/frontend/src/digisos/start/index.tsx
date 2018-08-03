@@ -17,7 +17,7 @@ import Bosted from "./Bosted";
 import { NavEnhet } from "../data/kommuner";
 import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
 
-const DocumentTitle = require("react-document-title");
+const DocumentTitle = require("react-document-title"); // tslint:disable-line
 
 interface StateProps {
 	soknadRestStatus: string;

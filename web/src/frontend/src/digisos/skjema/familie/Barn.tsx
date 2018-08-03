@@ -59,13 +59,13 @@ export default class Barn extends React.Component<Props, {}> {
 			}`;
 		};
 
-		let id_samvaersgrad = null;
-		let id_fjern_barn = null;
-		let id_bor_sammen = null;
+		let idSamvaersgrad = null;
+		let idFjernBarn = null;
+		let idBorSammen = null;
 		if (this.props.id) {
-			id_samvaersgrad = this.props.id + "_samvaersgrad_nummer_input";
-			id_fjern_barn = this.props.id + "_fjern_barn_knapp";
-			id_bor_sammen = this.props.id + "_bor_fast";
+			idSamvaersgrad = this.props.id + "_samvaersgrad_nummer_input";
+			idFjernBarn = this.props.id + "_fjern_barn_knapp";
+			idBorSammen = this.props.id + "_bor_fast";
 		}
 		return (
 			<div className="blokk barn">
@@ -80,7 +80,7 @@ export default class Barn extends React.Component<Props, {}> {
 						ref={c => (this.personFaktum = c)}
 					/>
 					<JaNeiSporsmalFaktum
-						id={id_bor_sammen}
+						id={idBorSammen}
 						faktumKey={`${faktumKey}.borsammen`}
 						faktumId={faktumId}
 						skjemaTilhorerValg="nei"
@@ -92,7 +92,7 @@ export default class Barn extends React.Component<Props, {}> {
 					>
 						<SporsmalFaktum faktumKey={hvormye.faktum}>
 							<BelopFaktum
-								id={id_samvaersgrad}
+								id={idSamvaersgrad}
 								faktumKey={faktumKey}
 								faktumId={faktumId}
 								property="grad"
@@ -106,7 +106,7 @@ export default class Barn extends React.Component<Props, {}> {
 					{visFjernBarn && (
 						<span className="barn__fjern">
 							<Lenkeknapp
-								id={id_fjern_barn}
+								id={idFjernBarn}
 								onClick={() =>
 									this.props.onFjernBarn(this.props.faktum.faktumId)
 								}
