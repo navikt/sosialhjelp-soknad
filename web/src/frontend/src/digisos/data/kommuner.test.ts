@@ -73,13 +73,13 @@ describe("navEnheter", () => {
 	});
 
 	it("should return a valid 'bosted 'string", () => {
-		let intlMock = {
-			messages: function() {
+		const intlMock = {
+			messages() {
 				return {}
 			}
 		};
 
-		let bosted = getNavEnhet("bergen", navEnheter, "bergenhus", intlMock);
+		const bosted = getNavEnhet("bergen", navEnheter, "bergenhus", intlMock);
 		expect(bosted).toEqual("NAV Bergenhus, Bergen Kommune");
 	});
 

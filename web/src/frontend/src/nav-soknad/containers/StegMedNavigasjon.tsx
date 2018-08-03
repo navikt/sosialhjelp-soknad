@@ -219,6 +219,4 @@ const mapStateToProps = (state: SoknadAppState): StateProps => {
 	};
 };
 
-export default connect<StateProps, {}, OwnProps>(mapStateToProps)(
-	injectIntl(withRouter(StegMedNavigasjon))
-);
+export default connect<StateProps, {}, OwnProps>(mapStateToProps)(injectIntl(withRouter(StegMedNavigasjon as any) as any) as any);
