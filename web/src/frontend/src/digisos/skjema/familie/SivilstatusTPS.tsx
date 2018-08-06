@@ -89,7 +89,7 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 					</SysteminfoMedSkjema>
 				</SporsmalFaktum>
 				<Informasjonspanel
-					icon={<img src="/soknadsosialhjelp/statisk/bilder/illustrasjon_william.svg"/>}
+					icon={<img src="/soknadsosialhjelp/statisk/bilder/illustrasjon_ella.svg"/>}
 					style="advarsel"
 				>
 					<h4 className="skjema-sporsmal__infotekst__tittel">
