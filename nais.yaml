@@ -1,4 +1,5 @@
 image: docker.adeo.no:5000/soknadsosialhjelp
+team: digisos
 prometheus:
   enabled: true
   path: /prometheus
