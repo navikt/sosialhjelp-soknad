@@ -77,7 +77,7 @@ describe("oppholdsadresse saga", () => {
 			}
 		};
 
-		let newFaktum = nullUtSoknadsmottakerFaktum(testFaktum);
+		const newFaktum = nullUtSoknadsmottakerFaktum(testFaktum);
 		expect(newFaktum.properties["kommunenavn"]).toBe(null);
 	});
 

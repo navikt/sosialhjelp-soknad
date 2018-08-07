@@ -33,9 +33,9 @@ describe("oppholdsadresse", () => {
 	};
 	const reducer = oppholdsadresseReducer;
 
-	it("should not have any selected adresses on first view", () => {
-
-	});
+	// it("should not have any selected adresses on first view", () => {
+	//
+	// });
 
 	it("tests", () => {
 		const newState = reducer(defaultState,

@@ -31,7 +31,7 @@ export enum ErrorFarge {
 	IKKE_VALGT = "IKKE_VALGT",
 	GYLDIG = "GYLDIG",
 	SOKNAD_NO_SELECT = "SOKNAD_NO_SELECT",
-	UGYLDIG = "UGYLDIG",
+	UGYLDIG = "UGYLDIG"
 }
 
 export interface OppholdsAdresseState {

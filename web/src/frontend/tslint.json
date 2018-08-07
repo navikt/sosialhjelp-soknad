@@ -3,6 +3,7 @@
 	"linterOptions": {
 		"exclude": [
 			"**/*.js",
+			"**/*.test.ts",
 			"node_modules/**/*.ts"
 		]
 	},
@@ -11,6 +12,9 @@
 		"ordered-imports": false,
 		"object-literal-sort-keys": false,
 		"member-access": false,
-		"jsx-no-lambda": false
+		"jsx-no-lambda": false,
+		"no-require-imports": false,
+		"no-var-requires": false,
+		"no-console": [true, "log", "debug", "info", "time", "timeEnd", "trace"]
 	}
 }

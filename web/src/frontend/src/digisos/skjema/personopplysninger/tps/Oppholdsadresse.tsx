@@ -118,7 +118,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 	constructor(props: Props) {
 		super(props);
 		const oppholdsadresseFaktum = finnFaktum("kontakt.system.oppholdsadresse.valg", this.props.fakta);
-		if (oppholdsadresseFaktum.value) {
+		if (oppholdsadresseFaktum && oppholdsadresseFaktum.value) {
 			this.kjorSagaVedRefresh(oppholdsadresseFaktum);
 		}
 	}
