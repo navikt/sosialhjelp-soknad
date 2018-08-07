@@ -6,13 +6,13 @@ prometheus:
 healthcheck:
   liveness:
     path: /soknadsosialhjelp/internal/isAlive
-    initialDelay: 60
+    initialDelay: 5
     timeout: 1
     periodSeconds: 10
     failureThreshold: 10
   readiness:
     path: /soknadsosialhjelp/internal/isAlive
-    initialDelay: 60
+    initialDelay: 5
     timeout: 1
 resources:
   limits:
