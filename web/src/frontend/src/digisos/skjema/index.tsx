@@ -100,4 +100,4 @@ const mapStateToProps = (
 	};
 };
 
-export default connect(mapStateToProps)(withRouter(SkjemaRouter));
+export default connect(mapStateToProps)(withRouter(SkjemaRouter) as any);

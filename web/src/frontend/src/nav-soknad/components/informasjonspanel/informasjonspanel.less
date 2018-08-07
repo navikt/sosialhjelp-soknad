@@ -5,28 +5,21 @@
 	background-color: #ffffff;
 	border: solid 2px @navGronnLighten60;
 	padding: 2rem 1.5rem 2rem 3.5rem;
-	margin-bottom: 2rem;
-	font-weight: 600;
-	opacity: 0;
-	transition: opacity 1s;
-
-	&__synlig {
-		opacity: 1;
-		@media screen and (max-width: 730px) {
-			padding-left: 80px;
-		}
-	}
+	margin-bottom: 1rem;
 
 	&>div {
 		position: absolute;
 		left: 0;
 		top: 50%;
 		transform: translate(-50%, -50%);
-
+	  	opacity: 0;
+	  	transition: all 2s;
 		background: @navGronnLighten60;
 		border-radius: 100%;
 		height: 5rem;
 		width: 5rem;
+	  	transition: opacity 0.5s;
+		opacity: 0;
 
 		@media screen and (max-width: 730px) {
 			transform: scale(0.7) translate(0%, -70%);
@@ -39,7 +32,39 @@
 			transform: translate(-50%, -50%);
 			height: 3.125rem;
 		}
+
 	}
+
+  	&__synlig {
+		opacity: 1.0;
+
+	  	&>div {
+		  opacity: 1.0;
+		}
+	}
+}
+
+// Unngå at React Collapse kutter damen i to på desktop under animasjon.
+.ReactCollapse--collapse {
+  overflow: visible !important;
+}
+
+.skjema-informasjonspanel-wrapper {
+  display: block;
+  border-top: 1px solid @navBodyGraa;
+  border-bottom: 1px solid @navBodyGraa;
+}
+
+@media screen and (max-width: 740px ) {
+  .skjema-informasjonspanel {
+	padding: 3.5rem 1.5rem 2rem 1.5rem;
+	margin-top: 3rem;
+
+	& > div {
+	  left: 50%;
+	  top: 0;
+	}
+  }
 }
 
 .skjema-informasjonspanel.skjema-informasjonspanel-advarsel {

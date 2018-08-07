@@ -1,6 +1,5 @@
 import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
-import Icon from "nav-frontend-ikoner-assets";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp, Knapp } from "nav-frontend-knapper";
 import { fortsettSoknad, slettSoknad } from "../../redux/soknad/soknadActions";
@@ -54,23 +53,18 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 			<NavFrontendModal
 				isOpen={this.props.avbrytDialogSynlig || false}
 				contentLabel={this.props.intl.formatMessage({ id: "avbryt.avbryt" })}
-				closeButton={true}
+				closeButton={false}
 				onRequestClose={() => this.onFortsett()}
 				shouldCloseOnOverlayClick={true}
 			>
 				<div className="avbrytmodal">
 					<div className="avbrytmodal__infoikon_wrapper">
-						<Icon kind="info-sirkel-orange" />
+						<img src="/soknadsosialhjelp/statisk/bilder/ikon_ark.svg"/>
 					</div>
-					<div className="avbrytmodal__infoikon_wrapper">
-						<div className="avbrytmodal__infoikon" />
-					</div>
+
 					<Innholdstittel className="blokk-s avbrytmodal__overskrift">
 						<FormattedMessage id={tekst.overskrift} />
 					</Innholdstittel>
-					<div className="avbrytmodal__understrek_wrapper">
-						<div className="avbrytmodal__understrek" />
-					</div>
 					<Normaltekst className="blokk-xxs avbrytmodal__tekst">
 						<FormattedMessage id={tekst.tekst} />
 					</Normaltekst>

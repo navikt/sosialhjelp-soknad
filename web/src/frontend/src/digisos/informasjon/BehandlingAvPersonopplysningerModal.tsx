@@ -26,9 +26,9 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 			valgtEnhetsNavn = "$1";
 		}
 
-		let string = this.props.intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"];
-		string = string.replace(/{navkontor:(.*)}/g, valgtEnhetsNavn);
-		return string;
+		let text = this.props.intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"];
+		text = text.replace(/{navkontor:(.*)}/g, valgtEnhetsNavn);
+		return text;
 	}
 
 	render() {

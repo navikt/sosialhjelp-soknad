@@ -19,7 +19,7 @@ export function getFaktumIndex(fakta: Faktum[], faktum: Faktum) {
 		return item.faktumId === faktum.faktumId;
 	});
 	if (index === -1) {
-		console.error("Manglende faktum " + JSON.stringify(faktum, null, 4));
+		console.error("Manglende faktum " + JSON.stringify(faktum, null, 4)); // tslint:disable-line
 	}
 	return index;
 }
