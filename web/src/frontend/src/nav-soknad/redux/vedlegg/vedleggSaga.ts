@@ -1,7 +1,8 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import {
-	fetchDelete, fetchPut, fetchToJson, fetchUpload,
+	detekterInternFeilKode,
+	fetchDelete, fetchPut, fetchToJson, fetchUpload, fetchUploadIgnoreErrors,
 	toJson
 } from "../../../nav-soknad/utils/rest-utils";
 import {
@@ -25,10 +26,10 @@ function* hentVedleggsForventningSaga(behandlingsId: string): SagaIterator {
 }
 
 function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
+	const url = `sosialhjelpvedlegg/originalfil/${action.belopFaktumId}`;
+	let response: any = "";
 	try {
-
-		const url = `sosialhjelpvedlegg/originalfil/${action.belopFaktumId}`;
-		const response: any = yield call(fetchUpload, url, action.formData);
+		response = yield call(fetchUpload, url, action.formData);
 		yield put(lastOppVedleggOk());
 
 		if (response.nyForventning) {
@@ -40,7 +41,15 @@ function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 			yield put(oppdatertVedlegg(response.vedlegg, fakta));
 		}
 	} catch (reason) {
-		yield put(lastOppVedleggFeilet(action.belopFaktumId, reason.toString()));
+		let feilKode: string = detekterInternFeilKode(reason.toString());
+
+		// Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
+		response = yield call(fetchUploadIgnoreErrors, url, action.formData);
+		const ID = "id";
+		if (response && response[ID]) {
+			feilKode = response[ID];
+		}
+		yield put(lastOppVedleggFeilet(action.belopFaktumId, feilKode));
 		yield put(loggFeil("Last opp vedlegg feilet: " + reason.toString()));
 	}
 }
