@@ -5,6 +5,7 @@ import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
 import SysteminfoMedSkjema from "../../../nav-soknad/components/systeminfoMedSkjema/index";
 import { finnFakta, getFaktumPropertyVerdi } from "../../../nav-soknad/utils/faktumUtils";
 import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
+import {finnFaktum} from "../../../nav-soknad/utils";
 
 class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 
@@ -39,9 +40,12 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const {fakta} = this.props;
 		const utbetalinger = finnFakta("utbetalinger.utbetaling", fakta);
-		const harUtbetalinger: boolean = utbetalinger && utbetalinger.length > 0;
+		// const harUtbetalinger: boolean = utbetalinger && utbetalinger.length > 0;
 
-		if (harUtbetalinger) {
+		const utbetalingerFeilet: Faktum = finnFaktum("utbetalinger.feilet", fakta);
+		const VALUE = "value";
+
+		if (utbetalingerFeilet[VALUE] !== "true") {
 			return (
 
 				<SporsmalFaktum faktumKey="navytelser" style="system">
