@@ -40,21 +40,28 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 		const {fakta} = this.props;
 		const utbetalinger = finnFakta("utbetalinger.utbetaling", fakta);
 		const harUtbetalinger: boolean = utbetalinger && utbetalinger.length > 0;
-		return (
-			<SporsmalFaktum faktumKey="navytelser" style="system">
-				<SysteminfoMedSkjema>
-					<h4 className="skjema-sporsmal__infotekst__tittel">
-						<FormattedMessage id="utbetalinger.sporsmal"/>
-					</h4>
-					<div className="utbetalinger">
-						{this.renderUtbetalinger(utbetalinger)}
-						{harUtbetalinger && (
+
+		if (harUtbetalinger) {
+			return (
+
+				<SporsmalFaktum faktumKey="navytelser" style="system">
+					<SysteminfoMedSkjema>
+						<h4 className="skjema-sporsmal__infotekst__tittel">
+							<FormattedMessage id="utbetalinger.sporsmal"/>
+						</h4>
+						<div className="utbetalinger">
+							{this.renderUtbetalinger(utbetalinger)}
+
 							<FormattedHTMLMessage id="utbetalinger.infotekst.tekst"/>
-						)}
-					</div>
-				</SysteminfoMedSkjema>
-			</SporsmalFaktum>
-		);
+
+						</div>
+					</SysteminfoMedSkjema>
+				</SporsmalFaktum>
+
+			);
+		} else {
+			return null;
+		}
 	}
 }
 
