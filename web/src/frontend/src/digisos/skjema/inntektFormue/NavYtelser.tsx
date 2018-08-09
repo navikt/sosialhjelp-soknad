@@ -40,7 +40,7 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const {fakta} = this.props;
 		const utbetalinger = finnFakta("utbetalinger.utbetaling", fakta);
-		// const harUtbetalinger: boolean = utbetalinger && utbetalinger.length > 0;
+		const harUtbetalinger: boolean = utbetalinger && utbetalinger.length > 0;
 
 		const utbetalingerFeilet: Faktum = finnFaktum("utbetalinger.feilet", fakta);
 		const VALUE = "value";
@@ -56,7 +56,9 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 						<div className="utbetalinger">
 							{this.renderUtbetalinger(utbetalinger)}
 
-							<FormattedHTMLMessage id="utbetalinger.infotekst.tekst"/>
+							{ harUtbetalinger && (
+								<FormattedHTMLMessage id="utbetalinger.infotekst.tekst"/>
+							)}
 
 						</div>
 					</SysteminfoMedSkjema>
