@@ -43,8 +43,13 @@
 }
 
 // Unngå at React Collapse kutter damen i to på desktop under animasjon.
-.ReactCollapse--collapse {
-  overflow: visible !important;
+//.ReactCollapse--collapse {
+//  overflow: visible !important;
+//}
+
+// Fordi endringen over på .ReactCollapse--collapse ødelegger for bruken av react-collapse andre steder
+.react-collapse-konfigurering {
+	overflow: visible !important;
 }
 
 .skjema-informasjonspanel-wrapper {
@@ -78,3 +83,5 @@
 		background: @redError;
 	}
 }
+
+

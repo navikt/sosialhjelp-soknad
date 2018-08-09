@@ -65,6 +65,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 			return (
 				<Collapse
 					isOpened={isOpened}
+					className="react-collapse-konfigurering"
 				>
 					{this.renderContent(true)}
 				</Collapse>
