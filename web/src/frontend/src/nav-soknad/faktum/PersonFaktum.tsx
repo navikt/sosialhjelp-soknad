@@ -62,7 +62,31 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								faktumKey={faktumKey}
 								required={validering.navnRequired}
 								faktumId={faktumId}
-								property="navn"
+								property="fornavn"
+							/>
+						</Column>
+					</Row>
+					<Row>
+						<Column xs="12">
+							<NavnFaktum
+								id={idNavn}
+								inputRef={c => (this.navnInput = c)}
+								faktumKey={faktumKey}
+								required={validering.navnRequired}
+								faktumId={faktumId}
+								property="mellomnavn"
+							/>
+						</Column>
+					</Row>
+					<Row className="add-padding-bottom">
+						<Column xs="12">
+							<NavnFaktum
+								id={idNavn}
+								inputRef={c => (this.navnInput = c)}
+								faktumKey={faktumKey}
+								required={validering.navnRequired}
+								faktumId={faktumId}
+								property="etternavn"
 							/>
 						</Column>
 					</Row>
@@ -77,6 +101,8 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 								property="fnr"
 							/>
 						</Column>
+					</Row>
+					<Row>
 						<Column xs="12">
 							<TallFaktum
 								id={idPersonnummer}

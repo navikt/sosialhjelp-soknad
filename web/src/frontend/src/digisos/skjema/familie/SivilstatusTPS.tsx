@@ -21,21 +21,76 @@ type Props = DispatchProps &
 
 class SivilstatusTPS extends React.Component<Props, {}> {
 
-	render() {
+	formaterDato(fodselsDato: string){
 
-		const sivilstatusFaktum = this.props.sivilstatusFaktum;
-		const status = sivilstatusFaktum.value;
-		const ektefelleFaktum = this.props.ektefelleFaktum;
+		if (fodselsDato){
+			const aar = fodselsDato.slice(0, 4);
+			const maaned = fodselsDato.slice(5, 7);
+			const dag = fodselsDato.slice(8);
+
+			return `${dag}.${maaned}.${aar}`;
+		}
+
+		return ""
+	}
+
+	renderEktefelleInformasjon(ektefelleFaktum: Faktum){
 
 		const FORNAVN = "fornavn";
 		const MELLOMNAVN = "mellomnavn";
 		const ETTERNAVN = "etternavn";
-
 		const navnString = `${ektefelleFaktum.properties[FORNAVN]} ${ektefelleFaktum.properties[MELLOMNAVN]} ${ektefelleFaktum.properties[ETTERNAVN]}`;
 
 		const FODSELSDATO = "fodselsdato";
+		const fodselsDato = ektefelleFaktum.properties[FODSELSDATO];
+		const datoFormatert = this.formaterDato(fodselsDato)
+
 		const FOLKEREGISTRERT = "folkeregistrertsammen";
 		const FOLKEREGISTRERTVERDI = ektefelleFaktum.properties[FOLKEREGISTRERT] === "true" ? "Ja" : "Nei";
+
+		return (<div>
+
+			<h4 className="skjema-sporsmal__infotekst__tittel">
+				<FormattedMessage id="system.familie.sivilstatus.infotekst"/>
+			</h4>
+
+			<Detaljeliste>
+				{
+					ektefelleFaktum.properties[FORNAVN] &&
+					<DetaljelisteElement
+						tittel={
+							<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.navn"/>
+						}
+						verdi={ navnString }
+					/>
+				}
+				{
+					ektefelleFaktum.properties[FODSELSDATO] &&
+					<DetaljelisteElement
+						tittel={
+							<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.fodselsdato"/>
+						}
+						verdi={datoFormatert}
+					/>
+				}
+				{
+					ektefelleFaktum.properties[FOLKEREGISTRERT] &&
+					<DetaljelisteElement
+						tittel={
+							<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.folkereg"/>
+						}
+						verdi={ FOLKEREGISTRERTVERDI }
+					/>
+				}
+			</Detaljeliste>
+		</div>)
+
+	}
+
+	render() {
+
+		const ektefelleFaktum: Faktum = this.props.ektefelleFaktum;
+		const IKKETILGANGTILEKTEFELLE = "ikketilgangtilektefelle";
 
 		return (
 			<div>
@@ -49,48 +104,13 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 								tittel={
 									<FormattedMessage id="system.familie.sivilstatus.label"/>
 								}
-								verdi={status}
+								verdi={<FormattedMessage id="familie.sivilstatus.gift"/>}
 							/>
 						</Detaljeliste>
 
-						<div>
-							{
-								ektefelleFaktum.properties[FORNAVN] &&
-								<h4 className="skjema-sporsmal__infotekst__tittel">
-									<FormattedMessage id="system.familie.sivilstatus.infotekst"/>
-								</h4>
-							}
+						{ ektefelleFaktum[IKKETILGANGTILEKTEFELLE] !== "true" &&
+							this.renderEktefelleInformasjon(ektefelleFaktum) }
 
-							<Detaljeliste>
-								{
-									ektefelleFaktum.properties[FORNAVN] &&
-									<DetaljelisteElement
-										tittel={
-											<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.navn"/>
-										}
-										verdi={ navnString }
-									/>
-								}
-								{
-									ektefelleFaktum.properties[FODSELSDATO] &&
-									<DetaljelisteElement
-										tittel={
-											<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.fodselsdato"/>
-										}
-										verdi={ektefelleFaktum.properties[FODSELSDATO]}
-									/>
-								}
-								{
-									ektefelleFaktum.properties[FOLKEREGISTRERT] &&
-									<DetaljelisteElement
-										tittel={
-											<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.folkereg"/>
-										}
-										verdi={ FOLKEREGISTRERTVERDI }
-									/>
-								}
-							</Detaljeliste>
-						</div>
 
 					</SysteminfoMedSkjema>
 				</SporsmalFaktum>
