@@ -26,7 +26,13 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 		const sivilstatusFaktum = this.props.sivilstatusFaktum;
 		const status = sivilstatusFaktum.value;
 		const ektefelleFaktum = this.props.ektefelleFaktum;
-		const NAME = "navn";
+
+		const FORNAVN = "fornavn";
+		const MELLOMNAVN = "mellomnavn";
+		const ETTERNAVN = "etternavn";
+
+		const navnString = `${ektefelleFaktum.properties[FORNAVN]} ${ektefelleFaktum.properties[MELLOMNAVN]} ${ektefelleFaktum.properties[ETTERNAVN]}`;
+
 		const FODSELSDATO = "fodselsdato";
 		const FOLKEREGISTRERT = "folkeregistrertsammen";
 		const FOLKEREGISTRERTVERDI = ektefelleFaktum.properties[FOLKEREGISTRERT] === "true" ? "Ja" : "Nei";
@@ -49,7 +55,7 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 
 						<div>
 							{
-								ektefelleFaktum.properties[NAME] &&
+								ektefelleFaktum.properties[FORNAVN] &&
 								<h4 className="skjema-sporsmal__infotekst__tittel">
 									<FormattedMessage id="system.familie.sivilstatus.infotekst"/>
 								</h4>
@@ -57,12 +63,12 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 
 							<Detaljeliste>
 								{
-									ektefelleFaktum.properties[NAME] &&
+									ektefelleFaktum.properties[FORNAVN] &&
 									<DetaljelisteElement
 										tittel={
 											<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.navn"/>
 										}
-										verdi={ ektefelleFaktum.properties[NAME] }
+										verdi={ navnString }
 									/>
 								}
 								{
