@@ -45,7 +45,7 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 		const utbetalingerFeilet: Faktum = finnFaktum("utbetalinger.feilet", fakta);
 		const VALUE = "value";
 
-		if (utbetalingerFeilet[VALUE] !== "true") {
+		if (utbetalingerFeilet && utbetalingerFeilet[VALUE] !== "true") {
 			return (
 
 				<SporsmalFaktum faktumKey="navytelser" style="system">
