@@ -58,3 +58,15 @@ Forutsetter at man har tilgang til git repository tilgjengelig på internt nett 
  deployet til miljø som er konfigurert opp i byggejobben. I tillegg har man en mocket tekstfil for lokal utvikling, men endringer
  gjort i denne må synces til teksterrepoet for å bli brukt i miljøene.
  
+# Henvendelser
+
+Spørsmål knyttet til koden eller prosjektet kan rettes mot:
+* https://github.com/orgs/navikt/teams/digisos
+
+## For Kommunalt ansatte og leverandører av soisalsystemer
+* Be om tilgang til https://digisos-nav-it.slack.com/
+* Slack kanal #general
+
+## For NAV-ansatte
+
+Interne henvendelser kan sendes via Slack i kanalen #digisos.
