@@ -39,11 +39,16 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 		const FORNAVN = "fornavn";
 		const MELLOMNAVN = "mellomnavn";
 		const ETTERNAVN = "etternavn";
-		const navnString = `${ektefelleFaktum.properties[FORNAVN]} ${ektefelleFaktum.properties[MELLOMNAVN]} ${ektefelleFaktum.properties[ETTERNAVN]}`;
+
+		const fornavn = ektefelleFaktum.properties[FORNAVN] ? ektefelleFaktum.properties[FORNAVN] : "";
+		const mellomnavn = ektefelleFaktum.properties[MELLOMNAVN] ? ektefelleFaktum.properties[MELLOMNAVN] : "";
+		const etternavn = ektefelleFaktum.properties[ETTERNAVN] ? ektefelleFaktum.properties[ETTERNAVN] : "";
+
+		const navnString = `${fornavn} ${mellomnavn} ${etternavn}`;
 
 		const FODSELSDATO = "fodselsdato";
 		const fodselsDato = ektefelleFaktum.properties[FODSELSDATO];
-		const datoFormatert = this.formaterDato(fodselsDato)
+		const datoFormatert = this.formaterDato(fodselsDato);
 
 		const FOLKEREGISTRERT = "folkeregistrertsammen";
 		const FOLKEREGISTRERTVERDI = ektefelleFaktum.properties[FOLKEREGISTRERT] === "true" ? "Ja" : "Nei";
