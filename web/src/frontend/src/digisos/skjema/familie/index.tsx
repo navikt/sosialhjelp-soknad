@@ -6,6 +6,7 @@ import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 
 import Sivilstatus from "./Sivilstatus";
 import HarBarn from "./HarBarn";
+import Familierelasjoner from "./Familierelasjoner";
 
 class Familie extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -13,6 +14,7 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.familiebolk}>
 				<Sivilstatus fakta={fakta} />
+				<Familierelasjoner fakta={fakta}/>
 				<HarBarn />
 			</DigisosSkjemaSteg>
 		);
