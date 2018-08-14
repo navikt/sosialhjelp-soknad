@@ -15,11 +15,17 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 		const { fakta } = this.props;
 		const sivilstatus = radioCheckKeys("familie.sivilstatus");
 
+		const sivilstatusGiftEktefelleFaktum = finnFaktum("familie.sivilstatus.gift.ektefelle", fakta);
+		const BORSAMMEN = "borsammen";
 		const sivilstatusFaktum = finnFaktum("familie.sivilstatus", fakta);
 
-		let status: string = "";
-		if (sivilstatusFaktum && "value" in sivilstatusFaktum) {
-			status = sivilstatusFaktum.value;
+		let status: boolean = false;
+		if (sivilstatusFaktum.value === "gift"){
+			if (sivilstatusGiftEktefelleFaktum && sivilstatusGiftEktefelleFaktum.properties && sivilstatusGiftEktefelleFaktum.properties[BORSAMMEN]) {
+				status = sivilstatusGiftEktefelleFaktum.properties[BORSAMMEN] === "true";
+			}
+		} else {
+			status = false;
 		}
 
 		return (
@@ -44,7 +50,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 				<Informasjonspanel
 					icon={<img src="/soknadsosialhjelp/statisk/bilder/illustrasjon_ella.svg"/>}
 					style="advarsel"
-					synlig={status === "gift"}
+					synlig={ status }
 				>
 					<h4 className="skjema-sporsmal__infotekst__tittel">
 						<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel"/>
