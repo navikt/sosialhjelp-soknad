@@ -1,6 +1,9 @@
 import * as React from "react";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
-import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, {
+	InformasjonspanelFarge,
+	InformasjonspanelIkon
+} from "../../../nav-soknad/components/informasjonspanel";
 import { finnFaktum } from "../../../nav-soknad/utils";
 import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
 
@@ -15,7 +18,8 @@ class HusbankInfopanel extends React.Component<FaktumComponentProps & InjectedIn
 		return (
 			<Informasjonspanel
 				synlig={mottarBostotte === "false"}
-				icon="illustrasjon_ella.svg"
+				ikon={InformasjonspanelIkon.ELLA}
+				farge={InformasjonspanelFarge.ADVARSEL}
 			>
 				<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
 			</Informasjonspanel>

@@ -1,15 +1,30 @@
 import * as React from "react";
 import { Collapse } from "react-collapse";
+import Ella from "../svg/Ella";
+import Brevkonvolutt from "../svg/Brevkonvolutt";
+import {DigisosFarge} from "../svg/DigisosFarger";
 
 interface OwnProps {
-	style?: string;
-	icon?: any;
+	farge: InformasjonspanelFarge;
 	children?: any;
 	synlig?: boolean;
+	ikon: InformasjonspanelIkon;
 }
 
 interface State {
 	vises: boolean;
+}
+
+export enum InformasjonspanelIkon {
+	ELLA = "ella",
+	// WILLIAM = "william",
+	BREVKONVOLUTT = "brevkonvolutt"
+}
+
+export enum InformasjonspanelFarge {
+	GRONN = "",
+	ADVARSEL = "advarsel",
+	FEIL = "feil"
 }
 
 class Informasjonspanel extends React.Component<OwnProps, State> {
@@ -27,21 +42,44 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 		}, 200);
 	}
 
+	getIkonFargeKode(informasjonspanelFarge: InformasjonspanelFarge){
+		switch (informasjonspanelFarge) {
+			case "": {
+				return DigisosFarge.GRONN_TO
+			}
+			case "advarsel": {
+				return DigisosFarge.ORANGE
+			}
+			case "feil": {
+				return DigisosFarge.ROD
+			}
+			default: {
+				return DigisosFarge.GRONN
+			}
+		}
+	}
+
 	renderIkon() {
-		const SVG_FOLDER = "/soknadsosialhjelp/statisk/bilder/";
-		let icon = this.props.icon;
-		if (typeof this.props.icon === "string") {
-			icon = (<img src={SVG_FOLDER + this.props.icon}/>);
+
+		switch (this.props.ikon){
+			case "ella": {
+				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.getIkonFargeKode(this.props.farge)}/>;
+			}
+			// case "william": {
+			//
+			// }
+			case "brevkonvolutt": {
+				return <Brevkonvolutt size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.getIkonFargeKode(this.props.farge)}/>
+			}
+			default: {
+				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.getIkonFargeKode(this.props.farge)}/>;
+			}
 		}
-		if (typeof this.props.icon === "undefined") {
-			icon = (<img src={SVG_FOLDER + "illustrasjon_ella.svg"}/>);
-		}
-		return icon;
 	}
 
 	renderContent(fadeIn: boolean) {
-		const styleClassName = (this.props.style != null)
-			? "skjema-informasjonspanel-" + this.props.style
+		const styleClassName = (this.props.farge)
+			? "skjema-informasjonspanel-" + this.props.farge
 			: "";
 		return (
 			<div className="skjema-informasjonspanel-wrapper">
@@ -57,6 +95,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 			</div>
 		);
 	}
+
 	render() {
 		const isOpened = this.state.vises && this.props.synlig;
 		if (typeof isOpened === "undefined") {
