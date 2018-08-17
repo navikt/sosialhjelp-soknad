@@ -17,7 +17,6 @@ interface State {
 
 export enum InformasjonspanelIkon {
 	ELLA = "ella",
-	// WILLIAM = "william",
 	BREVKONVOLUTT = "brevkonvolutt"
 }
 
@@ -35,7 +34,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 			this.setState({vises: true});
 		}, 200);
 	}
-	
+
 	renderIkon() {
 
 		switch (this.props.ikon){
@@ -52,9 +51,8 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 	}
 
 	renderContent(fadeIn: boolean) {
-		const styleClassName = (this.props.farge)
-			? "skjema-informasjonspanel-" + this.props.farge
-			: "navGronnLighten60";
+		const styleClassName = "skjema-informasjonspanel-" + this.props.farge;
+
 		return (
 			<div className="skjema-informasjonspanel-wrapper">
 				<div

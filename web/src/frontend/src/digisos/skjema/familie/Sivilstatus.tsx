@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import Ektefelle from "./Ektefelle";
-import Informasjonspanel, {	InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 
 
