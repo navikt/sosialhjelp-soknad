@@ -14,19 +14,8 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
 		const sivilstatus = radioCheckKeys("familie.sivilstatus");
-
-		const sivilstatusGiftEktefelleFaktum = finnFaktum("familie.sivilstatus.gift.ektefelle", fakta);
-		const BORSAMMEN = "borsammen";
 		const sivilstatusFaktum = finnFaktum("familie.sivilstatus", fakta);
-
-		let status: boolean = false;
-		if (sivilstatusFaktum.value === "gift"){
-			if (sivilstatusGiftEktefelleFaktum && sivilstatusGiftEktefelleFaktum.properties && sivilstatusGiftEktefelleFaktum.properties[BORSAMMEN]) {
-				status = sivilstatusGiftEktefelleFaktum.properties[BORSAMMEN] === "true";
-			}
-		} else {
-			status = false;
-		}
+		const status = sivilstatusFaktum.value === "gift";
 
 		return (
 			<div>
