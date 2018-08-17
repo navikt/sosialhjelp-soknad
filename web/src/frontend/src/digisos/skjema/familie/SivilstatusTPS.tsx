@@ -1,6 +1,6 @@
 import * as React from "react";
 import Informasjonspanel, {
-	InformasjonspanelFarge,
+	NavFarger,
 	InformasjonspanelIkon
 } from "../../../nav-soknad/components/informasjonspanel";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
@@ -125,7 +125,7 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 				{ ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] &&
 				  ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] !== "true" &&
 					(<Informasjonspanel
-						farge={InformasjonspanelFarge.GRONN}
+						farge={NavFarger.GRONN}
 						ikon={InformasjonspanelIkon.ELLA}
 					>
 						<h4 className="skjema-sporsmal__infotekst__tittel">

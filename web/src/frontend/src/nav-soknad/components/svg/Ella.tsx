@@ -9,17 +9,12 @@ interface OwnProps {
 	bakgrundsFarge?: DigisosFarge;
 }
 
-
 class Ella extends React.Component<OwnProps, {}> {
 
 	render() {
 
-
-
 		const height = this.props.size || 80;
 		const width = this.props.size || 80;
-
-		// const style: string = "#6AB889";
 		const bakgrundsFarge: DigisosFarge = this.props.bakgrundsFarge;
 		const showBackgroundCircle: boolean = this.props.visBakgrundsSirkel;
 

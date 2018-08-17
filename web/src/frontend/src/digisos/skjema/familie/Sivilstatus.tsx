@@ -9,7 +9,7 @@ import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import Ektefelle from "./Ektefelle";
 import Informasjonspanel, {
-	InformasjonspanelFarge,
+	NavFarger,
 	InformasjonspanelIkon
 } from "../../../nav-soknad/components/informasjonspanel";
 
@@ -52,7 +52,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 				</SporsmalFaktum>
 				<Informasjonspanel
 					synlig={ status }
-					farge={InformasjonspanelFarge.ADVARSEL}
+					farge={NavFarger.ADVARSEL}
 					ikon={InformasjonspanelIkon.ELLA}
 				>
 					<h4 className="skjema-sporsmal__infotekst__tittel">

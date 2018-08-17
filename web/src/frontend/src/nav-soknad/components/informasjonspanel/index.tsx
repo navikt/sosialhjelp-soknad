@@ -5,7 +5,7 @@ import Brevkonvolutt from "../svg/Brevkonvolutt";
 import {DigisosFarge} from "../svg/DigisosFarger";
 
 interface OwnProps {
-	farge: InformasjonspanelFarge;
+	farge: NavFarger;
 	children?: any;
 	synlig?: boolean;
 	ikon: InformasjonspanelIkon;
@@ -21,7 +21,7 @@ export enum InformasjonspanelIkon {
 	BREVKONVOLUTT = "brevkonvolutt"
 }
 
-export enum InformasjonspanelFarge {
+export enum NavFarger {
 	GRONN = "",
 	ADVARSEL = "advarsel",
 	FEIL = "feil"
@@ -42,19 +42,19 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 		}, 200);
 	}
 
-	getIkonFargeKode(informasjonspanelFarge: InformasjonspanelFarge){
+	getIkonFargeKode(informasjonspanelFarge: NavFarger){
 		switch (informasjonspanelFarge) {
 			case "": {
-				return DigisosFarge.GRONN_TO
+				return DigisosFarge.OK_LYS_GRONN
 			}
 			case "advarsel": {
-				return DigisosFarge.ORANGE
+				return DigisosFarge.ADVARSEL
 			}
 			case "feil": {
-				return DigisosFarge.ROD
+				return DigisosFarge.FEIL
 			}
 			default: {
-				return DigisosFarge.GRONN
+				return DigisosFarge.OK_LYS_GRONN
 			}
 		}
 	}
@@ -65,9 +65,6 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 			case "ella": {
 				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.getIkonFargeKode(this.props.farge)}/>;
 			}
-			// case "william": {
-			//
-			// }
 			case "brevkonvolutt": {
 				return <Brevkonvolutt size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.getIkonFargeKode(this.props.farge)}/>
 			}

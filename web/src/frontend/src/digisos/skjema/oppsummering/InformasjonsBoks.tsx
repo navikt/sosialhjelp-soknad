@@ -5,7 +5,7 @@ import { State } from "../../redux/reducers";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { setVisSamtykkeInfo } from "../../../nav-soknad/redux/init/initActions";
 import Informasjonspanel, {
-	InformasjonspanelFarge,
+	NavFarger,
 	InformasjonspanelIkon
 } from "../../../nav-soknad/components/informasjonspanel/index";
 import { finnValgtEnhetsNavn, NavEnhet } from "../../data/kommuner";
@@ -27,7 +27,7 @@ class InformasjonsBoks extends React.Component<Props, {}> {
 
 		return (
 			<Informasjonspanel
-				farge={InformasjonspanelFarge.ADVARSEL}
+				farge={NavFarger.ADVARSEL}
 				ikon={InformasjonspanelIkon.BREVKONVOLUTT}
 			>
 				<FormattedHTMLMessage id="soknasosialhjelp.oppsummering.hvorsendes" values={{navkontor: valgtEnhetsNavn}}/>

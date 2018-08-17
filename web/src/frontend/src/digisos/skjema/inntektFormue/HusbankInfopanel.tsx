@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import Informasjonspanel, {
-	InformasjonspanelFarge,
+	NavFarger,
 	InformasjonspanelIkon
 } from "../../../nav-soknad/components/informasjonspanel";
 import { finnFaktum } from "../../../nav-soknad/utils";
@@ -19,7 +19,7 @@ class HusbankInfopanel extends React.Component<FaktumComponentProps & InjectedIn
 			<Informasjonspanel
 				synlig={mottarBostotte === "false"}
 				ikon={InformasjonspanelIkon.ELLA}
-				farge={InformasjonspanelFarge.ADVARSEL}
+				farge={NavFarger.ADVARSEL}
 			>
 				<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
 			</Informasjonspanel>
