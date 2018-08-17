@@ -5,7 +5,7 @@ import Brevkonvolutt from "../svg/Brevkonvolutt";
 import {DigisosFarge} from "../svg/DigisosFarger";
 
 interface OwnProps {
-	farge: NavFarger;
+	farge: DigisosFarge;
 	children?: any;
 	synlig?: boolean;
 	ikon: InformasjonspanelIkon;
@@ -19,12 +19,6 @@ export enum InformasjonspanelIkon {
 	ELLA = "ella",
 	// WILLIAM = "william",
 	BREVKONVOLUTT = "brevkonvolutt"
-}
-
-export enum NavFarger {
-	GRONN = "",
-	ADVARSEL = "advarsel",
-	FEIL = "feil"
 }
 
 class Informasjonspanel extends React.Component<OwnProps, State> {
@@ -41,35 +35,18 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 			this.setState({vises: true});
 		}, 200);
 	}
-
-	getIkonFargeKode(informasjonspanelFarge: NavFarger){
-		switch (informasjonspanelFarge) {
-			case "": {
-				return DigisosFarge.OK_LYS_GRONN
-			}
-			case "advarsel": {
-				return DigisosFarge.ADVARSEL
-			}
-			case "feil": {
-				return DigisosFarge.FEIL
-			}
-			default: {
-				return DigisosFarge.OK_LYS_GRONN
-			}
-		}
-	}
-
+	
 	renderIkon() {
 
 		switch (this.props.ikon){
 			case "ella": {
-				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.getIkonFargeKode(this.props.farge)}/>;
+				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
 			}
 			case "brevkonvolutt": {
-				return <Brevkonvolutt size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.getIkonFargeKode(this.props.farge)}/>
+				return <Brevkonvolutt size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
 			}
 			default: {
-				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.getIkonFargeKode(this.props.farge)}/>;
+				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
 			}
 		}
 	}
@@ -77,7 +54,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 	renderContent(fadeIn: boolean) {
 		const styleClassName = (this.props.farge)
 			? "skjema-informasjonspanel-" + this.props.farge
-			: "";
+			: "navGronnLighten60";
 		return (
 			<div className="skjema-informasjonspanel-wrapper">
 				<div

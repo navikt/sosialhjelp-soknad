@@ -94,7 +94,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 										{this.renderHilsen()}
 										<FormattedMessage id="informasjon.hilsen.tittel"/>
 									</Snakkeboble>
-									<Ella size={175} visBakgrundsSirkel={true} bakgrundsFarge={DigisosFarge.OK}/>
+									<Ella size={175} visBakgrundsSirkel={true} bakgrundsFarge={DigisosFarge.NAVGRONN}/>
 								</span>
 
 								<Panel className="informasjon-viktig">

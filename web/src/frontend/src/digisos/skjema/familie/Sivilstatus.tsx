@@ -4,14 +4,12 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 import {finnFaktum, getFaktumVerdi, radioCheckKeys} from "../../../nav-soknad/utils";
 import { FormattedMessage } from "react-intl";
 
-
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import Ektefelle from "./Ektefelle";
-import Informasjonspanel, {
-	NavFarger,
-	InformasjonspanelIkon
-} from "../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, {	InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
+import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
+
 
 class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -52,7 +50,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 				</SporsmalFaktum>
 				<Informasjonspanel
 					synlig={ status }
-					farge={NavFarger.ADVARSEL}
+					farge={DigisosFarge.NAVORANSJELIGHTEN40}
 					ikon={InformasjonspanelIkon.ELLA}
 				>
 					<h4 className="skjema-sporsmal__infotekst__tittel">
