@@ -1,9 +1,7 @@
-
 .skjema-informasjonspanel {
 	position: relative;
 	border-radius: 0.5rem;
-	background-color: #ffffff;
-	border: solid 2px @navGronnLighten60;
+	background-color: @white;
 	padding: 2rem 1.5rem 2rem 3.5rem;
 	margin-bottom: 1rem;
 	transition: opacity 0.5s;
@@ -21,11 +19,6 @@
 		left: 0;
 		top: 50%;
 		transform: translate(-50%, -50%);
-		background: @navGronnLighten60;
-		border-radius: 100%;
-		height: 5rem;
-		width: 5rem;
-		overflow: hidden;
 
 		&>img {
 			position: absolute;
@@ -87,18 +80,23 @@
   }
 }
 
-.skjema-informasjonspanel.skjema-informasjonspanel-advarsel {
-	border: solid 2px @navOransjeLighten40;
-	&>div {
-		background: @navOransjeLighten40;
-	}
+.skjema-informasjonspanel.skjema-informasjonspanel-navGronnLighten40 {
+	border: solid 2px @navGronnLighten40;
 }
 
-.skjema-informasjonspanel.skjema-informasjonspanel-feil {
-	border: solid 2px @redError;
-	&>div {
-		background: @redError;
-	}
+.skjema-informasjonspanel.skjema-informasjonspanel-navGronnLighten60 {
+	border: solid 2px @navGronnLighten60;
 }
+
+.skjema-informasjonspanel.skjema-informasjonspanel-navOransjeLighten40 {
+	border: solid 2px @navOransjeLighten40;
+}
+
+.skjema-informasjonspanel.skjema-informasjonspanel-redError {
+	border: solid 2px @redError;
+}
+
+
+
 
 

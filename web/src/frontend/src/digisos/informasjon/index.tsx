@@ -15,13 +15,14 @@ import IkkeTilgang from "./IkkeTilgang";
 import { TilgangSperrekode } from "../../nav-soknad/redux/tilgang/tilgangTypes";
 import { lesKommuner } from "../../nav-soknad/redux/kommuner/kommuneActions";
 import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
-import Ella from "../../nav-soknad/components/svg/Ella";
-import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import Personopplysninger from "./Personopplysninger";
 import { fetchToJson } from "../../nav-soknad/utils/rest-utils";
 import { loggFeil } from "../../nav-soknad/redux/navlogger/navloggerActions";
 import { Panel } from "nav-frontend-paneler";
 import Banner from "../../nav-soknad/components/banner/Banner";
+import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
+import Ella from "../../nav-soknad/components/svg/Ella";
+import {DigisosFarge} from "../../nav-soknad/components/svg/DigisosFarger";
 
 interface StateProps {
 	harTilgang: boolean;
@@ -93,7 +94,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 										{this.renderHilsen()}
 										<FormattedMessage id="informasjon.hilsen.tittel"/>
 									</Snakkeboble>
-									<Ella />
+									<Ella size={175} visBakgrundsSirkel={true} bakgrundsFarge={DigisosFarge.NAV_GRONN_LIGHTEN_40}/>
 								</span>
 
 								<Panel className="informasjon-viktig">

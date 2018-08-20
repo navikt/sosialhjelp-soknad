@@ -1,5 +1,5 @@
 import * as React from "react";
-import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import SysteminfoMedSkjema from "../../../nav-soknad/components/systeminfoMedSkjema";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
@@ -8,6 +8,7 @@ import { State } from "../../redux/reducers";
 import { connect } from "react-redux";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import Detaljeliste, { DetaljelisteElement } from "../../../nav-soknad/components/detaljeliste";
+import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 
 interface StateProps {
 	fakta: Faktum[];
@@ -122,8 +123,8 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 				{ ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] &&
 				  ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] !== "true" &&
 					(<Informasjonspanel
-						icon={<img src="/soknadsosialhjelp/statisk/bilder/illustrasjon_ella.svg"/>}
-						style="advarsel"
+						farge={DigisosFarge.NAV_GRONN_LIGHTEN_60}
+						ikon={InformasjonspanelIkon.ELLA}
 					>
 						<h4 className="skjema-sporsmal__infotekst__tittel">
 							<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel"/>
