@@ -25,7 +25,7 @@ class InformasjonsBoks extends React.Component<Props, {}> {
 
 		return (
 			<Informasjonspanel
-				farge={DigisosFarge.NAVORANSJELIGHTEN40}
+				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 				ikon={InformasjonspanelIkon.BREVKONVOLUTT}
 			>
 				<FormattedHTMLMessage id="soknasosialhjelp.oppsummering.hvorsendes" values={{navkontor: valgtEnhetsNavn}}/>

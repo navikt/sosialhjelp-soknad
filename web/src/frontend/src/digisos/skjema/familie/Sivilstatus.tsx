@@ -50,7 +50,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 				</SporsmalFaktum>
 				<Informasjonspanel
 					synlig={ status }
-					farge={DigisosFarge.NAVORANSJELIGHTEN40}
+					farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 					ikon={InformasjonspanelIkon.ELLA}
 				>
 					<h4 className="skjema-sporsmal__infotekst__tittel">

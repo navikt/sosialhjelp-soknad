@@ -1,6 +1,6 @@
 export enum DigisosFarge {
-	NAVGRONNLIGHTEN40 = 'navGronnLighten40',
-	NAVGRONNLIGHTEN60 = 'navGronnLighten60',
-	NAVORANSJELIGHTEN40 = 'navOransjeLighten40',
-	REDERROR = 'redError'
+	NAV_GRONN_LIGHTEN_40 = 'navGronnLighten40',
+	NAV_GRONN_LIGHTEN_60 = 'navGronnLighten60',
+	NAV_ORANSJE_LIGHTEN_40 = 'navOransjeLighten40',
+	RED_ERROR = 'redError'
 }
