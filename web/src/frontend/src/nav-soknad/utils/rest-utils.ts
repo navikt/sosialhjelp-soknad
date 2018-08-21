@@ -128,8 +128,8 @@ export function fetchFeatureToggles() {
 		.then(toJson);
 }
 
-export function fetchUpload(urlPath: string, formData: FormData) {
-	const OPTIONS: RequestInit = {
+let generateUploadOptions = function (formData: FormData) {
+	const UPLOAD_OPTIONS: RequestInit = {
 		headers: new Headers({
 			"X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
 			"accept": "application/json, text/plain, */*"
@@ -138,8 +138,17 @@ export function fetchUpload(urlPath: string, formData: FormData) {
 		credentials: "same-origin",
 		body: formData
 	};
-	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
+	return UPLOAD_OPTIONS;
+};
+
+export function fetchUpload(urlPath: string, formData: FormData) {
+	return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData))
 		.then(sjekkStatuskode)
+		.then(toJson);
+}
+
+export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData) {
+	return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData))
 		.then(toJson);
 }
 

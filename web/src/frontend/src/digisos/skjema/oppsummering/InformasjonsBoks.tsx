@@ -4,9 +4,10 @@ import { FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl }
 import { State } from "../../redux/reducers";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { setVisSamtykkeInfo } from "../../../nav-soknad/redux/init/initActions";
-import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel/index";
+import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel/index";
 import { finnValgtEnhetsNavn, NavEnhet } from "../../data/kommuner";
 import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
+import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 
 interface StateProps {
 	fakta: Faktum[];
@@ -23,7 +24,10 @@ class InformasjonsBoks extends React.Component<Props, {}> {
 		const valgtEnhetsNavn = finnValgtEnhetsNavn(this.props.fakta, this.props.navEnheter);
 
 		return (
-			<Informasjonspanel style="advarsel" icon={<img src="/soknadsosialhjelp/statisk/bilder/ikon_brevkonvolutt.svg"/>}>
+			<Informasjonspanel
+				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+				ikon={InformasjonspanelIkon.BREVKONVOLUTT}
+			>
 				<FormattedHTMLMessage id="soknasosialhjelp.oppsummering.hvorsendes" values={{navkontor: valgtEnhetsNavn}}/>
 				<br/><br/>
 					<a

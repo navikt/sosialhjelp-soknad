@@ -1,16 +1,32 @@
 import * as React from "react";
+import {DigisosFarge} from "./DigisosFarger";
 
 /* tslint:disable */
-class Ella extends React.Component<{}, {}> {
+
+interface OwnProps {
+	size?: number;
+	visBakgrundsSirkel: boolean;
+	bakgrundsFarge?: DigisosFarge;
+}
+
+class Ella extends React.Component<OwnProps, {}> {
 
 	render() {
+
+		const height = this.props.size || 80;
+		const width = this.props.size || 80;
+		const bakgrundsFarge: DigisosFarge = this.props.bakgrundsFarge;
+		const showBackgroundCircle: boolean = this.props.visBakgrundsSirkel;
+
 		return (
 			<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" preserveAspectRatio="none"
-			     width="175" height="175">
+			     width={width} height={height} viewBox="0 0 175 175"  className={"ella__" + bakgrundsFarge}>
 				<defs>
-					<path fill="#6AB889"
-					      d="M175 87.5q0-17.8-6.9-34.05-6.6-15.7-18.75-27.8-12.1-12.1-27.8-18.75Q105.3 0 87.5 0 69.7 0 53.45 6.9q-15.7 6.65-27.85 18.75-12.1 12.1-18.75 27.8Q0 69.7 0 87.5q0 17.8 6.85 34.05 6.65 15.7 18.75 27.85 12.15 12.1 27.85 18.75Q69.7 175 87.5 175q17.8 0 34.05-6.85 15.7-6.65 27.8-18.75 12.15-12.15 18.75-27.85Q175 105.3 175 87.5z"
-					      id="a"/>
+					{ showBackgroundCircle &&
+						<path className="bakgrunnsSirkel"
+						      d="M175 87.5q0-17.8-6.9-34.05-6.6-15.7-18.75-27.8-12.1-12.1-27.8-18.75Q105.3 0 87.5 0 69.7 0 53.45 6.9q-15.7 6.65-27.85 18.75-12.1 12.1-18.75 27.8Q0 69.7 0 87.5q0 17.8 6.85 34.05 6.65 15.7 18.75 27.85 12.15 12.1 27.85 18.75Q69.7 175 87.5 175q17.8 0 34.05-6.85 15.7-6.65 27.8-18.75 12.15-12.15 18.75-27.85Q175 105.3 175 87.5z"
+						      id="a"/>
+					}
 					<path fill="#3E3832"
 					      d="M115.25 33.35q-12.4-14-30-14.05-17.6-.05-30.1 13.95-12.45 14-12.55 33.8 0 11.4.6 17 1 9.45 4.35 15.8 8.6 16.2 35.55 16.8h3.85q26.95-.5 35.6-16.7 3.35-6.3 4.4-15.75.65-5.6.65-17 .05-19.85-12.35-33.85z"
 					      id="b"/>
@@ -65,7 +81,7 @@ class Ella extends React.Component<{}, {}> {
 					      d="M96.5 90.4q-.35.1-.5.4 0 .1-.5.95-.75 1.2-1.75 2.1-3.3 3.25-8.3 3.1-4.8-.15-8.25-3.1-1-.9-1.95-2.15-.5-.75-.55-.95-.15-.3-.45-.4-.35-.1-.65.05-.3.15-.4.5-.15.3 0 .6.5.85.75 1.15.8 1.25 2.2 2.4 3.8 3.35 9.25 3.55 5.65.15 9.5-3.55 1.2-1.15 2-2.45l.6-1.15q.15-.3.05-.6-.15-.35-.45-.45-.3-.15-.6 0z"
 					      id="w"/>
 				</defs>
-				<use xlinkHref="#a"/>
+				<use xlinkHref="#a" className="bakgrunnsSirkel"/>
 				<use xlinkHref="#b"/>
 				<use xlinkHref="#c"/>
 				<use xlinkHref="#d"/>

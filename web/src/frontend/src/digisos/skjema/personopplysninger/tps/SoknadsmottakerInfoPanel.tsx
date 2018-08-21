@@ -1,8 +1,9 @@
 import * as React from "react";
 import { SoknadsMottakerStatus } from "./oppholdsadresseReducer";
-import Informasjonspanel from "../../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Faktum } from "../../../../nav-soknad/types";
+import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
 
 interface SoknadsmottakerInfoOwnProps {
 	soknadsmottakerStatus: string;
@@ -15,7 +16,7 @@ const SoknadsmottakerInfoPanel: React.StatelessComponent<SoknadsmottakerInfoProp
 	soknadsmottakerStatus,
 	soknadsmottakerFaktum
 }) => {
-	let style: any = null;
+	let farge: DigisosFarge = DigisosFarge.NAV_GRONN_LIGHTEN_60;
 	let tekst: any = "";
 	const KOMMUNENAVN = "kommunenavn";
 	const ENHETSNAVN = "enhetsnavn";
@@ -29,21 +30,21 @@ const SoknadsmottakerInfoPanel: React.StatelessComponent<SoknadsmottakerInfoProp
 			+ " Kommune.";
 		return (
 			<Informasjonspanel
-				icon={<img src="/soknadsosialhjelp/statisk/bilder/konvolutt.svg"/>}
-				style={style}
+				ikon={InformasjonspanelIkon.BREVKONVOLUTT}
+				farge={farge}
 			>
 				{tekst}
 			</Informasjonspanel>
 		);
 	} else if (soknadsmottakerStatus === SoknadsMottakerStatus.UGYLDIG) {
 
-		style = "feil";
+		farge = DigisosFarge.RED_ERROR;
 		tekst = "Søknaden er ikke tilgjengelig digitalt i din kommune. Ta kontakt direkte med ditt NAV kontor.";
 		// TODO: Legg til link senere.
 		return (
 			<Informasjonspanel
-				icon={<img src="/soknadsosialhjelp/statisk/bilder/konvolutt.svg"/>}
-				style={style}
+				ikon={InformasjonspanelIkon.BREVKONVOLUTT}
+				farge={farge}
 			>
 				{tekst}
 			</Informasjonspanel>

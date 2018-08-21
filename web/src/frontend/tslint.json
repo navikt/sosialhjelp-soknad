@@ -15,6 +15,7 @@
 		"jsx-no-lambda": false,
 		"no-require-imports": false,
 		"no-var-requires": false,
-		"no-console": [true, "log", "debug", "info", "time", "timeEnd", "trace"]
+		"no-console": [true, "log", "debug", "info", "time", "timeEnd", "trace"],
+		"no-debugger": false
 	}
 }

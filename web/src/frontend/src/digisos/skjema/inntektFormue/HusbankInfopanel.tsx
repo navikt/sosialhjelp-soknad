@@ -1,8 +1,9 @@
 import * as React from "react";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
-import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
 import { finnFaktum } from "../../../nav-soknad/utils";
 import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 
 class HusbankInfopanel extends React.Component<FaktumComponentProps & InjectedIntlProps, any> {
 	render() {
@@ -15,7 +16,8 @@ class HusbankInfopanel extends React.Component<FaktumComponentProps & InjectedIn
 		return (
 			<Informasjonspanel
 				synlig={mottarBostotte === "false"}
-				icon="illustrasjon_ella.svg"
+				ikon={InformasjonspanelIkon.ELLA}
+				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 			>
 				<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
 			</Informasjonspanel>

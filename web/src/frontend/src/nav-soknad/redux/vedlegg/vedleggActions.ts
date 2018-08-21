@@ -1,6 +1,5 @@
 import { Vedlegg, VedleggActionTypeKeys, VedleggActionTypes } from "./vedleggTypes";
 import { Faktum } from "../../types/navSoknadTypes";
-import { detekterInternFeilKode } from "../../utils/rest-utils";
 
 const lastOppVedlegg = (
 	belopFaktumId: number,
@@ -20,11 +19,10 @@ const lastOppVedleggOk = (): VedleggActionTypes => {
 };
 
 const lastOppVedleggFeilet = (belopFaktumId: number, feilKode: string): VedleggActionTypes => {
-	const internFeilKode = detekterInternFeilKode(feilKode);
 	return {
 		type: VedleggActionTypeKeys.LAST_OPP_FEILET,
 		belopFaktumId,
-		feilKode: internFeilKode
+		feilKode
 	};
 };
 
