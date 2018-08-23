@@ -157,76 +157,51 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 		return value.length >= 3;
 	}
 
+	executePostponedSearch() {
+		const newValue = this.props.value;
+		this.invalidateFetch(newValue);
+		if (this.shouldFetch(newValue)) {
+			this.executeFetch(newValue);
+		}
+	}
+
 	executeFetch(value: string) {
 		this.setState({sokPostponed: false});
 		this.setState({antallAktiveSok: this.state.antallAktiveSok + 1});
-		fetchToJson("informasjon/adressesok?sokestreng=" + value)
-			.then((response: any) => {
-				this.setState({adresser: response});
+		setTimeout(() => {
+			if (this.state.sokPostponed) {
 				this.setState({antallAktiveSok: this.state.antallAktiveSok - 1});
-				if (this.state.sokPostponed) {
-					const newValue = this.props.value;
-					this.invalidateFetch(newValue);
-					if (this.shouldFetch(newValue)) {
-						this.executeFetch(newValue);
+				this.executePostponedSearch();
+				return;
+			}
+			fetchToJson("informasjon/adressesok?sokestreng=" + value)
+				.then((response: any) => {
+					this.setState({adresser: response});
+					this.setState({antallAktiveSok: this.state.antallAktiveSok - 1});
+					if (this.state.sokPostponed) {
+						this.executePostponedSearch();
 					}
-				}
-			})
-			.catch((error: any) => {
-				console.error(error);
-				this.props.dispatch(settStatus(AdresseAutocompleteStatus.ADRESSE_UGYLDIG));
-				this.setState({
-					antallAktiveSok: this.state.antallAktiveSok - 1
+				})
+				.catch((error: any) => {
+					console.error(error);
+					this.props.dispatch(settStatus(AdresseAutocompleteStatus.ADRESSE_UGYLDIG));
+					this.setState({
+						antallAktiveSok: this.state.antallAktiveSok - 1
+					});
 				});
-			});
+		}, 1000);
 	}
 
 	handleChange(event: any, value: string) {
-		if (this.props.valgtAdresse) {
-			if (value.indexOf(this.state.previousFirstPart, 0) === -1 || value.indexOf(this.state.previousLastPart, 0) === -1) {
-				this.props.dispatch(settVerdi(value));
-				this.props.dispatch(settStatus(AdresseAutocompleteStatus.ADRESSE_UGYLDIG));
-				this.props.dispatch(settValgtAdresse(null));
-				this.setState({
-					previousFirstPart: null,
-					previousLastPart: null
-				});
-				this.props.onValgtVerdi(null);
+		this.invalidateFetch(value);
+		if (this.shouldFetch(value)) {
+			if (this.state.antallAktiveSok === 0) {
+				this.executeFetch(value);
 			} else {
-				const everythingBeforeComma = value.split(",")[0];
-				const addedPart = /(\d+)[a-zA-Z]*/g.exec(everythingBeforeComma);
-				const valgtAdresse = this.props.valgtAdresse;
-				valgtAdresse.husnummer = addedPart ? /\d+/g.exec(addedPart[0])[0] : null;
-				if (addedPart) {
-					if (/[a-zA-Z]+/g.exec(addedPart[0])) {
-						valgtAdresse.husbokstav = /[a-zA-Z]+/g.exec(addedPart[0])[0];
-					} else {
-						valgtAdresse.husbokstav = null;
-					}
-
-					this.props.dispatch(settVerdi(value));
-					const status = valgtAdresse.husnummer ?
-						AdresseAutocompleteStatus.ADRESSE_OK :
-						AdresseAutocompleteStatus.ADRESSE_UGYLDIG;
-					this.props.dispatch(settStatus(status));
-					this.props.dispatch(settValgtAdresse(valgtAdresse));
-					this.props.onValgtVerdi(valgtAdresse);
-				} else {
-					this.props.onValgtVerdi(null);
-					this.handleChange(null, this.props.valgtAdresse.adresse);
-				}
+				this.setState({sokPostponed: true});
 			}
 		} else {
-			this.invalidateFetch(value);
-			if (this.shouldFetch(value)) {
-				if (this.state.antallAktiveSok === 0) {
-					this.executeFetch(value);
-				} else {
-					this.setState({sokPostponed: true});
-				}
-			} else {
-				this.setState({adresser: []});
-			}
+			this.setState({adresser: []});
 		}
 	}
 
@@ -326,6 +301,22 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 		}
 	}
 
+	/**
+	 * Returns the original array with duplicate elements removed. The duplicate
+	 * check is executed on the elements returned by the transform function.
+	 * 
+	 * @param myArray The array to be filtered.
+	 * @param transform A transform executed on the element before checking
+	 * 		if it is duplicate.
+	 * @return An array without the duplicated elements.
+	 */
+	removeDuplicatesAfterTransform(myArray: any[], transform: (item: any) => any) {
+		const propArray = myArray.map(elem => transform(elem));
+    	return myArray.filter((obj, pos) => {
+        	return propArray.indexOf(propArray[pos]) === pos;
+    	});
+	}
+
 	render() {
 		return (
 			<div className="navAutcomplete">
@@ -337,7 +328,7 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 						onBlur: () => this.handleInputBlur()
 					}}
 					wrapperStyle={{position: "relative", display: "inline-block"}}
-					items={this.state.adresser.slice(0, 8)}
+					items={this.removeDuplicatesAfterTransform(this.state.adresser.slice(0, 8), this.formaterAdresseString)}
 					getItemValue={(item: any) => item.adresse}
 					onChange={(event: any, value: string) => this.handleChange(event, value)}
 					onSelect={(value: any, item: any) => this.handleSelect(value, item)}

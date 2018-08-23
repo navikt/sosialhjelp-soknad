@@ -125,6 +125,8 @@ function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): 
 	try {
 		const adresse = action.adresse;
 
+		const brukerValgFaktum = finnFaktum("kontakt.adresse.brukerendrettoggle", action.fakta);
+
 		const oppholdsadresseFaktum = finnFaktum("kontakt.system.oppholdsadresse.valg", action.fakta);
 		let adresseFaktum = finnFaktum("kontakt.adresse.bruker", action.fakta);
 		let soknadsmottakerFaktum = finnFaktum("soknadsmottaker", action.fakta);
@@ -142,14 +144,21 @@ function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): 
 
 		if (action.adresseKategori === AdresseKategori.SOKNAD) {
 			if (adresse) {
+				brukerValgFaktum.value = "true";
 				adresseFaktum = oppdaterAdresse(adresseFaktum, adresse);
 				yield* lagreFaktumSaga(lagreFaktum(adresseFaktum) as LagreFaktum) as any;
 			} else {
+				brukerValgFaktum.value = "false";
 				yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.IKKE_VALGT));
 				yield put(settErrorFarge(ErrorFarge.IKKE_VALGT));
+				yield* lagreFaktumSaga(lagreFaktum(brukerValgFaktum) as LagreFaktum) as any;
 				return null;
 			}
+		} else {
+			brukerValgFaktum.value = "false";
 		}
+
+		yield* lagreFaktumSaga(lagreFaktum(brukerValgFaktum) as LagreFaktum) as any;
 
 		yield* fetchOgSettSoknadsmottakerOgOppdaterStatus(
 			action.brukerBehandlingId,
