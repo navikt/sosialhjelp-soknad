@@ -38,11 +38,6 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 				contentLabel={this.props.intl.formatMessage({id: "avbryt.avbryt"})}
 				closeButton={true}
 				onRequestClose={() => this.props.dispatch(setVisSamtykkeInfo(false))}
-				style={{
-					content: {
-						overflowY: 'auto'
-					}
-				}}
 			>
 				<div className="personopplysning_info">
 					<div dangerouslySetInnerHTML={{__html: this.getText()}}/>
