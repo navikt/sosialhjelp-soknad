@@ -121,34 +121,50 @@ function getOppholdsadresseFaktumValue(adresseKategori: AdresseKategori ) {
 	}
 }
 
+function* updateIfChanged(faktum: Faktum, value: string): any {
+	if (faktum.value !== value) {
+		faktum.value = value;
+		yield* lagreFaktumSaga(lagreFaktum(faktum) as LagreFaktum) as any;
+	}
+}
+
 function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): SagaIterator {
 	try {
 		const adresse = action.adresse;
+
+		const brukerValgFaktum = finnFaktum("kontakt.adresse.brukerendrettoggle", action.fakta);
 
 		const oppholdsadresseFaktum = finnFaktum("kontakt.system.oppholdsadresse.valg", action.fakta);
 		let adresseFaktum = finnFaktum("kontakt.adresse.bruker", action.fakta);
 		let soknadsmottakerFaktum = finnFaktum("soknadsmottaker", action.fakta);
 
-		soknadsmottakerFaktum = nullUtSoknadsmottakerFaktum(soknadsmottakerFaktum);
+		const KOMMUNENUMMER = "kommunenummer";
+		if (soknadsmottakerFaktum.properties[KOMMUNENUMMER] != null) {
+			soknadsmottakerFaktum = nullUtSoknadsmottakerFaktum(soknadsmottakerFaktum);
+			yield* lagreFaktumSaga(lagreFaktum(soknadsmottakerFaktum) as LagreFaktum) as any;
+		}
 
-		yield* lagreFaktumSaga(lagreFaktum(soknadsmottakerFaktum) as LagreFaktum) as any;
-
-		oppholdsadresseFaktum.value = getOppholdsadresseFaktumValue(action.adresseKategori);
-		if (oppholdsadresseFaktum.value == null) {
+		const newOppholdsadresseFaktumValue = getOppholdsadresseFaktumValue(action.adresseKategori);
+		if (newOppholdsadresseFaktumValue == null) {
 			return null;
 		}
 
-		yield* lagreFaktumSaga(lagreFaktum(oppholdsadresseFaktum) as LagreFaktum) as any;
+		yield* updateIfChanged(oppholdsadresseFaktum, newOppholdsadresseFaktumValue);
+		yield put(settSoknadsmottakere([]));
 
 		if (action.adresseKategori === AdresseKategori.SOKNAD) {
 			if (adresse) {
 				adresseFaktum = oppdaterAdresse(adresseFaktum, adresse);
 				yield* lagreFaktumSaga(lagreFaktum(adresseFaktum) as LagreFaktum) as any;
+				yield* updateIfChanged(brukerValgFaktum, "true");
 			} else {
 				yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.IKKE_VALGT));
 				yield put(settErrorFarge(ErrorFarge.IKKE_VALGT));
+				yield* updateIfChanged(brukerValgFaktum, "false");
 				return null;
 			}
+		} else {
+			yield* updateIfChanged(brukerValgFaktum, "false");
 		}
 
 		yield* fetchOgSettSoknadsmottakerOgOppdaterStatus(

@@ -151,6 +151,7 @@ export function finnFaktum(
 			// tslint:disable-next-line
 			console.log("Faktum ikke funnet: " + faktumKey);
 		}
+		return null;
 	}
 	return faktum[0];
 }
