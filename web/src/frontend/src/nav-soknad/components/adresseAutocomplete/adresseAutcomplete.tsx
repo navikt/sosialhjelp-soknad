@@ -246,16 +246,7 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 					)}
 				{this.state.antallAktiveSok === 0 && (
 					<span>
-						{this.props.status === AdresseAutocompleteStatus.INITIELL &&
-							<DigisosIkon navn="searchAddresse"/>
-						}
-						{this.props.status === AdresseAutocompleteStatus.ADRESSE_OK &&
-							<DigisosIkon navn="checkCircle"/>
-						}
-						{this.props.status === AdresseAutocompleteStatus.ADRESSE_UGYLDIG &&
-							<DigisosIkon navn="advarselSirkel"/>}
-						{this.props.status === AdresseAutocompleteStatus.HUSNUMMER_IKKE_SATT &&
-							<DigisosIkon navn="advarselSirkel"/>}
+						<DigisosIkon navn="searchAddresse"/>
 					</span>
 				)}
 				</span>
@@ -335,6 +326,11 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 				{this.props.status === AdresseAutocompleteStatus.HUSNUMMER_IKKE_SATT &&
 					(<p>
 						<FormattedMessage id="autocomplete.husnummer"/>
+					</p>)
+				}
+				{this.props.status === AdresseAutocompleteStatus.ADRESSE_UGYLDIG &&
+					(<p>
+						<FormattedMessage id="autocomplete.ugyldig"/>
 					</p>)
 				}
 			</div>
