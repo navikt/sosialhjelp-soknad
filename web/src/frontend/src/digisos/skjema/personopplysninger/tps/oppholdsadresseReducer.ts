@@ -18,6 +18,7 @@ export enum SoknadsMottakerStatus {
 	VALGT = "valgt",
 	GYLDIG = "gyldig",
 	UGYLDIG = "ugyldig",
+	MANGLER_NAV_KONTOR = "mangler_nav_kontor"
 }
 
 export enum AdresseKategori {

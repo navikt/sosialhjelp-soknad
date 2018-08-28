@@ -105,7 +105,7 @@ function* fetchOgSettSoknadsmottakerOgOppdaterStatus(
 	} else {
 		soknadsmottakerFaktum = nullUtSoknadsmottakerFaktum(soknadsmottakerFaktum);
 		yield* lagreFaktumSaga(lagreFaktum(soknadsmottakerFaktum) as LagreFaktum) as any;
-		yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.UGYLDIG));
+		yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.MANGLER_NAV_KONTOR));
 	}
 }
 
