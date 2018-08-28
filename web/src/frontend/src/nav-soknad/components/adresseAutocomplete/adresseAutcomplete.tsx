@@ -43,14 +43,11 @@ export interface Adresse {
 
 interface StateProps {
 	adresser: Adresse[];
-	adresserWithId: any[];
 	valueIsValid: undefined | false | true;
 	cursorPosisjon: number;
 	antallAktiveSok: number;
 	sokPostponed: boolean;
 	open: boolean;
-	previousFirstPart: null | string;
-	previousLastPart: null | string;
 }
 
 interface OwnProps {
@@ -71,13 +68,10 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 		this.state = {
 			cursorPosisjon: 0,
 			adresser: [],
-			adresserWithId: [],
 			valueIsValid: undefined,
 			antallAktiveSok: 0,
 			sokPostponed: false,
 			open: false,
-			previousFirstPart: null,
-			previousLastPart: null,
 		};
 
 		const adresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
@@ -125,9 +119,6 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 	}
 
 	handleSelect(value: string, adresse: Adresse) {
-		const temp = this.formaterAdresseString(adresse).split(",")[0];
-		const temp2 = /^[^0-9]*/.exec(temp[0]);
-
 		const status = adresse.husnummer ?
 			AdresseAutocompleteStatus.ADRESSE_OK :
 			AdresseAutocompleteStatus.HUSNUMMER_IKKE_SATT;
@@ -136,12 +127,17 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 		this.props.dispatch(settStatus(status));
 		this.props.dispatch(settValgtAdresse(adresse));
 
-		this.setState({
-			cursorPosisjon: this.hvorSkalTekstfeltMarkorSettes(adresse),
-			adresser: [],
-			previousFirstPart: temp2[0],
-			previousLastPart: this.formaterAdresseString(adresse).split(",")[1],
-		});
+		if (!adresse.husnummer) {
+			this.setState({
+				cursorPosisjon: this.hvorSkalTekstfeltMarkorSettes(adresse),
+				adresser: []
+			});
+		} else {
+			this.setState({
+				adresser: []
+			});
+		}
+
 		if (adresse) {
 			this.props.onValgtVerdi(adresse);
 		}
@@ -177,7 +173,7 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 			}
 			fetchToJson("informasjon/adressesok?sokestreng=" + value)
 				.then((response: any) => {
-					this.setState({adresser: response});
+					this.setState({adresser: this.removeDuplicatesAfterTransform(response, this.formaterAdresseString).slice(0, 8)});
 					this.setState({antallAktiveSok: this.state.antallAktiveSok - 1});
 					if (this.state.sokPostponed) {
 						this.executePostponedSearch();
@@ -267,21 +263,18 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 	}
 
 	handleInputBlur() {
-		if (this.props.valgtAdresse) {
-			this.props.dispatch(settStatus(AdresseAutocompleteStatus.ADRESSE_OK));
+		if (this.state.adresser.length === 1){
+			const chosenItem = this.state.adresser[0];
+			this.handleSelect(chosenItem.adresse, chosenItem);
 		}
 	}
 
 	renderMenu(children: any): React.ReactNode {
-		if (children.toString() === "") {
-			return (<span/>);
-		} else {
-			return (
-				<div className="menu">
-					{children}
-				</div>
-			);
-		}
+		return (
+			<div className="menu">
+				{children}
+			</div>
+		);
 	}
 
 	getRenderItem(item: any, isHighlighted: any) {
@@ -329,12 +322,14 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 						onBlur: () => this.handleInputBlur()
 					}}
 					wrapperStyle={{position: "relative", display: "inline-block"}}
-					items={this.removeDuplicatesAfterTransform(this.state.adresser.slice(0, 8), this.formaterAdresseString)}
-					getItemValue={(item: any) => item.adresse}
+					items={this.state.adresser}
+					getItemValue={(item: any) => this.formaterAdresseString(item)}
 					onChange={(event: any, value: string) => this.handleChange(event, value)}
 					onSelect={(value: any, item: any) => this.handleSelect(value, item)}
 					renderMenu={(children: any) => this.renderMenu(children)}
 					renderItem={(item: any, isHighlighted: any) => this.getRenderItem(item, isHighlighted)}
+					autoHighlight={true}
+					selectOnBlur={false}
 				/>
 				{this.visIkon()}
 				{this.props.status === AdresseAutocompleteStatus.HUSNUMMER_IKKE_SATT &&
