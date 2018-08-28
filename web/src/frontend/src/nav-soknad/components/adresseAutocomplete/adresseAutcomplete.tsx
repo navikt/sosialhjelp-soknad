@@ -126,7 +126,7 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 
 	handleSelect(value: string, adresse: Adresse) {
 		const temp = this.formaterAdresseString(adresse).split(",")[0];
-		const temp2 = /[a-zA-Z]/.exec(temp[0]);
+		const temp2 = /^[^0-9]*/.exec(temp[0]);
 
 		const status = adresse.husnummer ?
 			AdresseAutocompleteStatus.ADRESSE_OK :
@@ -166,6 +166,7 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 	}
 
 	executeFetch(value: string) {
+		const MS_VENT_NYE_TEGN = 250;
 		this.setState({sokPostponed: false});
 		this.setState({antallAktiveSok: this.state.antallAktiveSok + 1});
 		setTimeout(() => {
@@ -189,7 +190,7 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 						antallAktiveSok: this.state.antallAktiveSok - 1
 					});
 				});
-		}, 1000);
+		}, MS_VENT_NYE_TEGN);
 	}
 
 	handleChange(event: any, value: string) {
