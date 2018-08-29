@@ -59,14 +59,18 @@ class Panel extends React.Component<OwnProps, OwnState> {
 
 	render() {
 
-		const className = this.props.panelAction === PanelAction.FADE_IN
-			? PanelFadeClassName.FADE_IN
+		const classNameTo: string = "infopanel_fade_in";
+
+		const classNameAddition: string = this.props.panelAction === PanelAction.FADE_IN
+			? ""
 			: PanelFadeClassName.FADE_OUT;
+
+		const className = classNameTo + " " + classNameAddition;
 
 		return (
 			<div className={ className }>
 				<div>
-					{ "panel action: " + className }
+					{ "className: " + className }
 				</div>
 				<div>
 					{ this.props.children }
