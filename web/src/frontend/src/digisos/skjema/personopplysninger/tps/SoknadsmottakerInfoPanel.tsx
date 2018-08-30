@@ -52,7 +52,7 @@ const SoknadsmottakerInfoPanel: React.StatelessComponent<SoknadsmottakerInfoProp
 	}  else if (soknadsmottakerStatus === SoknadsMottakerStatus.MANGLER_NAV_KONTOR) {
 		
 				farge = DigisosFarge.RED_ERROR;
-				tekst = "Kan ikke finne NAV-kontor for angitt adresse. Rett eventuelle feil i adressen eller ta direkte kontakt med ditt lokale NAV-kontor hvis du mener adressen likevel er riktig.";
+				tekst = "Kan ikke finne NAV-kontor for angitt adresse. Rett eventuelle feil i adressen eller ta direkte kontakt med ditt lokale NAV-kontor.";
 				return (
 					<Informasjonspanel
 						ikon={InformasjonspanelIkon.BREVKONVOLUTT}
