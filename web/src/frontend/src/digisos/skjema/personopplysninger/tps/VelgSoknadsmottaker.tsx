@@ -42,7 +42,7 @@ class VelgSoknadsmottaker extends React.Component<Props, {}> {
 					onChange={(event: any) => this.velgNavKontor(event)}
 					value={enhetsId}
 				>
-					<option key="velg">
+					<option key="velg" disabled={true}>
 						{getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgMottaker")}
 					</option>
 					{this.props.soknadsmottakere.map((item: any, index: number) => {
