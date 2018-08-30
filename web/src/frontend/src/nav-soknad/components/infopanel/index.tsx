@@ -50,7 +50,9 @@ class InfoPanel extends React.Component<OwnProps, State> {
 			this.setState({
 				collapseState: CollapseState.EXPANDED
 			})
-		} else if(!isOpened && this.state.collapseState === CollapseState.EXPANDED) {
+		}
+		if(!isOpened && this.state.collapseState === CollapseState.CONTENT_FADED_OUT) {
+
 			this.setState({
 				collapseState: CollapseState.COLLAPSED
 			})
@@ -68,38 +70,46 @@ class InfoPanel extends React.Component<OwnProps, State> {
 			switch (this.state.collapseState){
 				case CollapseState.COLLAPSED: {
 					isOpened = true;
-					panelAction = PanelAction.NO_OPERATION;
+					panelAction = PanelAction.FADE_OUT;
+					break;
 				}
 				case CollapseState.EXPANDED: {
 					isOpened = true;
 					panelAction = PanelAction.FADE_IN;
+					break;
 				}
 				case CollapseState.CONTENT_FADED_IN: {
 					isOpened = true;
-					panelAction = PanelAction.NO_OPERATION;
+					panelAction = PanelAction.FADE_IN;
+					break;
 				}
 				case CollapseState.CONTENT_FADED_OUT: {
 					isOpened = true;
 					panelAction = PanelAction.FADE_IN;
+					break;
 				}
 			}
 		} else {
 			switch (this.state.collapseState){
 				case CollapseState.COLLAPSED: {
 					isOpened = false;
-					panelAction = PanelAction.NO_OPERATION;
+					panelAction = PanelAction.FADE_OUT;
+					break;
 				}
 				case CollapseState.EXPANDED: {
 					isOpened = false;
-					panelAction = PanelAction.NO_OPERATION;
+					panelAction = PanelAction.FADE_IN;
+					break;
 				}
 				case CollapseState.CONTENT_FADED_IN: {
 					isOpened = true;
 					panelAction = PanelAction.FADE_OUT;
+					break;
 				}
 				case CollapseState.CONTENT_FADED_OUT: {
 					isOpened = false;
-					panelAction = PanelAction.NO_OPERATION;
+					panelAction = PanelAction.FADE_OUT;
+					break;
 				}
 			}
 		}
@@ -107,7 +117,7 @@ class InfoPanel extends React.Component<OwnProps, State> {
 		return (
 				<Collapse
 					isOpened={isOpened}
-					className="infopanel"
+					className="infopanel react-collapse-konfigurering"
 					onRest={() => this.handleOnRest(isOpened)}
 				>
 					<Panel

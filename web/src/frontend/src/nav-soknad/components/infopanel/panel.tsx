@@ -3,6 +3,7 @@ import * as React from "react";
 interface OwnState {
 	actionReceivedButNotCompleted: boolean;
 	currentAction: PanelAction;
+	vises: boolean;
 }
 
 interface OwnProps {
@@ -30,30 +31,28 @@ class Panel extends React.Component<OwnProps, OwnState> {
 		super(props);
 		this.state = {
 			actionReceivedButNotCompleted: false,
-			currentAction: PanelAction.NO_OPERATION
+			currentAction: PanelAction.NO_OPERATION,
+			vises: false,
 		}
 	}
 
 	componentDidUpdate(){
-		if (this.props.panelAction === PanelAction.FADE_IN && this.state.actionReceivedButNotCompleted){
+
+		if (this.props.panelAction === PanelAction.FADE_IN && this.state.currentAction !== PanelAction.FADE_IN){
+
 			this.props.onFinishedFadingIn();
 			this.setState({
-				actionReceivedButNotCompleted: false
+				currentAction: PanelAction.FADE_IN
 			})
-
 		}
 
-		if (this.props.panelAction === PanelAction.FADE_OUT && this.state.actionReceivedButNotCompleted){
-			this.props.onFinishedFadingOut();
-		}
-	}
-
-	componentWillReceiveProps(){
-		if (this.props.panelAction !== this.state.currentAction){
-			this.setState({
-				actionReceivedButNotCompleted: true,
-				currentAction: this.props.panelAction
-			})
+		if (this.props.panelAction === PanelAction.FADE_OUT && this.state.currentAction !== PanelAction.FADE_OUT){
+			setTimeout(()=> {
+				this.props.onFinishedFadingOut();
+				this.setState({
+					currentAction: PanelAction.FADE_OUT
+				})
+			},500);
 		}
 	}
 
@@ -68,14 +67,9 @@ class Panel extends React.Component<OwnProps, OwnState> {
 		const className = classNameTo + " " + classNameAddition;
 
 		return (
-			<div className={ className }>
-				<div>
-					{ "className: " + className }
-				</div>
-				<div>
+				<div className={ className }>
 					{ this.props.children }
 				</div>
-			</div>
 			)
 	}
 

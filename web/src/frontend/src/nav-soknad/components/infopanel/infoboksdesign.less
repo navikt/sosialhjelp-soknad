@@ -1,0 +1,51 @@
+.infoboksdesign {
+  position: relative;
+  border-radius: 0.5rem;
+  background-color: @white;
+  padding: 2rem 1.5rem 2rem 3.5rem;
+  display: block;
+  margin-bottom: 1rem;
+  border-top: 1px solid @navBodyGraa;
+  border-bottom: 1px solid @navBodyGraa;
+
+    &>div {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translate(-50%, -50%);
+
+    }
+}
+
+@media screen and (max-width: 740px ) {
+  .infoboksdesign {
+    padding: 3.5rem 1.5rem 2rem 1.5rem;
+    margin-top: 3rem;
+
+    & > div {
+      left: 50%;
+      top: 0;
+    }
+  }
+}
+
+.infoboksdesign-navGronnLighten40 {
+  border: solid 2px @navGronnLighten40;
+}
+
+.infoboksdesign-navGronnLighten60 {
+  border: solid 2px @navGronnLighten60;
+}
+
+.infoboksdesign-navOransjeLighten40 {
+  border: solid 2px @navOransjeLighten40;
+}
+
+.infoboksdesign-redError {
+  border: solid 2px @redError;
+}
+
+
+
+
+
