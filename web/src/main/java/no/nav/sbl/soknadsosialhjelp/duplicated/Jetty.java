@@ -216,7 +216,6 @@ public final class Jetty {
         Map<String, String> initParams = webAppContext.getInitParams();
         initParams.put("useFileMappedBuffer", "false");
         initParams.put("org.eclipse.jetty.servlet.SessionIdPathParameterName", "none"); // Forhindre url rewriting av sessionid
-        webAppContext.setAttribute(WebInfConfiguration.CONTAINER_JAR_PATTERN, ".*");
 
         if (!dataSources.isEmpty()) {
             for (Map.Entry<String, DataSource> entrySet : dataSources.entrySet()) {
