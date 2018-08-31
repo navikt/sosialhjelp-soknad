@@ -4,4 +4,4 @@ WORKDIR /app
 
 COPY web/target/appassembler /app/
 
-ENTRYPOINT /app/bin/app
+CMD ["/app/bin/app"]
