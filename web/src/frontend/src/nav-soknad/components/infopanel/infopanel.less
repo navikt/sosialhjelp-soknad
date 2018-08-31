@@ -3,42 +3,46 @@
 }
 
 .infopanel_fade_in {
-	transition: opacity 500ms;
+	transition: opacity 750ms;
 	opacity: 1;
 }
 
 .infopanel_fade_out {
+	transition: opacity 750ms;
 	opacity: 0;
 
-	//animation-name: fjernInfoPanel;
-	//animation-delay: 2s;
-	//animation-duration: 0.01s;
-	//animation-fill-mode: forwards;
-	//animation-iteration-count: 1;
-	//animation-timing-function: ease;
 }
 
 .react-collapse-konfigurering {
 	overflow: visible !important;
-
-	//animation-name: visInfoPanel;
-	//animation-delay: 2s;
-	//animation-duration: 0.01s;
-	//animation-fill-mode: forwards;
-	//animation-iteration-count: 1;
-	//animation-timing-function: ease;
 }
 
-//@keyframes visInfoPanel {
-//	100% {
-//		height: initial;
-//	}
-//}
-//
-//@keyframes fjernInfoPanel {
-//	100% {
-//		height: 0;
-//	}
-//}
+.add-margin-smoothly {
+	animation-name: visMargin;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+}
+
+.remove-margin-smoothly {
+	animation-name: fjernMargin;
+	animation-duration: 1s;
+	animation-fill-mode: backwards;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+}
+
+@keyframes visMargin {
+	100% {
+		margin-bottom: 1rem;
+	}
+}
+
+@keyframes fjernMargin {
+	100% {
+		margin-bottom: 0;
+	}
+}
 
 

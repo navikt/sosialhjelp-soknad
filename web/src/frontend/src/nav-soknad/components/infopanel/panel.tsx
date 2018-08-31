@@ -20,11 +20,6 @@ export enum PanelAction {
 	NO_OPERATION = "no_operation"
 }
 
-export enum PanelFadeClassName {
-	FADE_IN = "infopanel_fade_in",
-	FADE_OUT = "infopanel_fade_out"
-}
-
 class Panel extends React.Component<OwnProps, OwnState> {
 
 	constructor(props: OwnProps){
@@ -52,22 +47,16 @@ class Panel extends React.Component<OwnProps, OwnState> {
 				this.setState({
 					currentAction: PanelAction.FADE_OUT
 				})
-			},500);
+			},250);
 		}
 	}
 
 	render() {
 
-		const classNameTo: string = "infopanel_fade_in";
-
-		const classNameAddition: string = this.props.panelAction === PanelAction.FADE_IN
-			? ""
-			: PanelFadeClassName.FADE_OUT;
-
-		const className = classNameTo + " " + classNameAddition;
+		const className = "infopanel_" + this.props.panelAction;
 
 		return (
-				<div className={ className }>
+				<div className={ "infopanel " + className }>
 					{ this.props.children }
 				</div>
 			)

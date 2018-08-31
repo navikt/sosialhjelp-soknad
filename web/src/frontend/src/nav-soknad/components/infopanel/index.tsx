@@ -66,11 +66,15 @@ class InfoPanel extends React.Component<OwnProps, State> {
 		let isOpened = false;
 		let panelAction: PanelAction = PanelAction.NO_OPERATION;
 
+		const margin: string = this.state.collapseState === CollapseState.EXPANDED ||
+						this.state.collapseState === CollapseState.CONTENT_FADED_IN ?
+						"add-margin-smoothly" : "remove-margin-smoothly";
+
 		if (open){
 			switch (this.state.collapseState){
 				case CollapseState.COLLAPSED: {
 					isOpened = true;
-					panelAction = PanelAction.FADE_OUT;
+					panelAction = PanelAction.FADE_IN;
 					break;
 				}
 				case CollapseState.EXPANDED: {
@@ -117,7 +121,7 @@ class InfoPanel extends React.Component<OwnProps, State> {
 		return (
 				<Collapse
 					isOpened={isOpened}
-					className="infopanel react-collapse-konfigurering"
+					className={"infopanel react-collapse-konfigurering " + margin }
 					onRest={() => this.handleOnRest(isOpened)}
 				>
 					<Panel
