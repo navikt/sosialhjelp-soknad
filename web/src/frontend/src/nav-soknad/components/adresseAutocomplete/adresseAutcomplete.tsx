@@ -324,12 +324,12 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 				/>
 				{this.visIkon()}
 				{this.props.status === AdresseAutocompleteStatus.HUSNUMMER_IKKE_SATT &&
-					(<p>
+					(<p className="skjemaelement__feilmelding">
 						<FormattedMessage id="autocomplete.husnummer"/>
 					</p>)
 				}
 				{this.props.status === AdresseAutocompleteStatus.ADRESSE_UGYLDIG &&
-					(<p>
+					(<p className="skjemaelement__feilmelding">
 						<FormattedMessage id="autocomplete.ugyldig"/>
 					</p>)
 				}
