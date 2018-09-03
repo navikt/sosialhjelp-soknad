@@ -1,5 +1,6 @@
 import * as React from "react";
 import SVG from "react-inlinesvg";
+import EllaForfra from "../../../nav-soknad/components/svg/EllaForfra";
 
 // TODO Bruk Banner komponent.
 const BannerEttersendelse: React.StatelessComponent<{ children: React.ReactNode } & {}> = ({ children }) => {
@@ -12,10 +13,9 @@ const BannerEttersendelse: React.StatelessComponent<{ children: React.ReactNode 
 							{children}
 						</h1>
 					</div>
-					<SVG
-						className="banner__ettersendelse__innhold__william"
-						src={"/soknadsosialhjelp/statisk/bilder/illustrasjon_william.svg"}
-					/>
+					<span className="banner__ettersendelse__innhold__ella_forfra">
+						<EllaForfra />
+					</span>
 					<SVG
 						className="banner__ettersendelse__innhold__laptop"
 						src={"/soknadsosialhjelp/statisk/bilder/illustrasjon_laptop.svg"}

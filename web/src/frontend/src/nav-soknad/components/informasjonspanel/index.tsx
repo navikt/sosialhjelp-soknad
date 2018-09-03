@@ -1,15 +1,23 @@
 import * as React from "react";
 import { Collapse } from "react-collapse";
+import Ella from "../svg/Ella";
+import Brevkonvolutt from "../svg/Brevkonvolutt";
+import {DigisosFarge} from "../svg/DigisosFarger";
 
 interface OwnProps {
-	style?: string;
-	icon?: any;
+	farge: DigisosFarge;
 	children?: any;
 	synlig?: boolean;
+	ikon: InformasjonspanelIkon;
 }
 
 interface State {
 	vises: boolean;
+}
+
+export enum InformasjonspanelIkon {
+	ELLA = "ella",
+	BREVKONVOLUTT = "brevkonvolutt"
 }
 
 class Informasjonspanel extends React.Component<OwnProps, State> {
@@ -28,21 +36,23 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 	}
 
 	renderIkon() {
-		const SVG_FOLDER = "/soknadsosialhjelp/statisk/bilder/";
-		let icon = this.props.icon;
-		if (typeof this.props.icon === "string") {
-			icon = (<img src={SVG_FOLDER + this.props.icon}/>);
+
+		switch (this.props.ikon){
+			case "ella": {
+				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
+			}
+			case "brevkonvolutt": {
+				return <Brevkonvolutt size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+			}
+			default: {
+				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
+			}
 		}
-		if (typeof this.props.icon === "undefined") {
-			icon = (<img src={SVG_FOLDER + "illustrasjon_ella.svg"}/>);
-		}
-		return icon;
 	}
 
 	renderContent(fadeIn: boolean) {
-		const styleClassName = (this.props.style != null)
-			? "skjema-informasjonspanel-" + this.props.style
-			: "";
+		const styleClassName = "skjema-informasjonspanel-" + this.props.farge;
+
 		return (
 			<div className="skjema-informasjonspanel-wrapper">
 				<div
@@ -57,6 +67,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 			</div>
 		);
 	}
+
 	render() {
 		const isOpened = this.state.vises && this.props.synlig;
 		if (typeof isOpened === "undefined") {
@@ -65,6 +76,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 			return (
 				<Collapse
 					isOpened={isOpened}
+					className="react-collapse-konfigurering"
 				>
 					{this.renderContent(true)}
 				</Collapse>

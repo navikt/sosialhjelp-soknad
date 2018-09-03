@@ -1,34 +1,31 @@
-
 .skjema-informasjonspanel {
 	position: relative;
 	border-radius: 0.5rem;
-	background-color: #ffffff;
-	border: solid 2px @navGronnLighten60;
+	background-color: @white;
 	padding: 2rem 1.5rem 2rem 3.5rem;
 	margin-bottom: 1rem;
-	transition: opacity 1s;
+	transition: opacity 0.5s;
   	opacity: 0;
+
+	animation-name: fjernInfoPanel;
+	animation-delay: 0.5s;
+	animation-duration: 0.01s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
 
 	&>div {
 		position: absolute;
 		left: 0;
 		top: 50%;
 		transform: translate(-50%, -50%);
-	  	opacity: 0;
-	  	transition: all 2s;
-		background: @navGronnLighten60;
-		border-radius: 100%;
-		height: 5rem;
-		width: 5rem;
-	  	transition: opacity 0.5s;
-		opacity: 0;
 
 		&>img {
 			position: absolute;
 			left: 50%;
 			top: 50%;
-			transform: translate(-50%, -50%);
-			height: 3.125rem;
+			transform: translate(-50%, -40%);
+			height: 4.5rem;
 		}
 
 	}
@@ -36,15 +33,33 @@
   	&__synlig {
 		opacity: 1.0;
 
+		animation-name: visInfoPanel;
+		animation-delay: 0.5s;
+		animation-duration: 0.01s;
+		animation-fill-mode: forwards;
+		animation-iteration-count: 1;
+		animation-timing-function: ease;
+
 	  	&>div {
 		  opacity: 1.0;
 		}
 	}
 }
 
-// Unngå at React Collapse kutter damen i to på desktop under animasjon.
-.ReactCollapse--collapse {
-  overflow: visible !important;
+@keyframes visInfoPanel {
+	100% {
+		height: initial;
+	}
+}
+
+@keyframes fjernInfoPanel {
+	100% {
+		height: 0;
+	}
+}
+
+.react-collapse-konfigurering {
+	overflow: visible !important;
 }
 
 .skjema-informasjonspanel-wrapper {
@@ -65,16 +80,23 @@
   }
 }
 
-.skjema-informasjonspanel.skjema-informasjonspanel-advarsel {
-	border: solid 2px @navOransjeLighten40;
-	&>div {
-		background: @navOransjeLighten40;
-	}
+.skjema-informasjonspanel.skjema-informasjonspanel-navGronnLighten40 {
+	border: solid 2px @navGronnLighten40;
 }
 
-.skjema-informasjonspanel.skjema-informasjonspanel-feil {
-	border: solid 2px @redError;
-	&>div {
-		background: @redError;
-	}
+.skjema-informasjonspanel.skjema-informasjonspanel-navGronnLighten60 {
+	border: solid 2px @navGronnLighten60;
 }
+
+.skjema-informasjonspanel.skjema-informasjonspanel-navOransjeLighten40 {
+	border: solid 2px @navOransjeLighten40;
+}
+
+.skjema-informasjonspanel.skjema-informasjonspanel-redError {
+	border: solid 2px @redError;
+}
+
+
+
+
+
