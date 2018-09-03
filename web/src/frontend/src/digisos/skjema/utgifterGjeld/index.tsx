@@ -94,7 +94,7 @@ class UtgifterGjeld extends React.Component<
 				</JaNeiSporsmalFaktum>
 				<JaNeiSporsmalFaktum
 					faktumKey={harUtgifterBarn.faktum}
-					visible={getFaktumVerdi(fakta, "familie.barn") !== "false"}
+					visible={getFaktumVerdi(fakta, "system.familie.barn") !== "false"}
 				>
 					<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
 						<CheckboxFaktum
