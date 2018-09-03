@@ -1,5 +1,5 @@
 import * as React from "react";
-import {injectIntl} from "react-intl";
+import { FormattedMessage, FormattedHTMLMessage, injectIntl } from "react-intl";
 import {Faktum} from "../../../nav-soknad/types";
 import {State} from "../../redux/reducers";
 import {connect} from "react-redux";
@@ -9,8 +9,10 @@ import Detaljeliste, { DetaljelisteElement } from "../../../nav-soknad/component
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
-import {finnFakta, finnFaktum} from "../../../nav-soknad/utils/faktumUtils";
+// import {finnFakta, finnFaktum} from "../../../nav-soknad/utils/faktumUtils";
+import {finnFakta} from "../../../nav-soknad/utils/faktumUtils";
 import JaNeiSporsmalFaktum from "../../../nav-soknad/faktum/JaNeiSporsmalFaktum";
+import { formaterIsoDato } from "../../../nav-soknad/utils";
 
 interface StateProps {
     fakta: Faktum[];
@@ -20,24 +22,9 @@ type Props = DispatchProps &
     StateProps &
     InjectedIntlProps;
 
-
 class Familierelasjoner extends React.Component<Props, {}> {
 
-    formaterDato(fodselsDato: string) {
-        if (fodselsDato) {
-            const aar = fodselsDato.slice(0, 4);
-            const maaned = fodselsDato.slice(5, 7);
-            const dag = fodselsDato.slice(8);
-
-            return `${dag}.${maaned}.${aar}`;
-        }
-        return ""
-    }
-
     renderBarn(barnFakta: Faktum[]) {
-        if (barnFakta === null || barnFakta.length === 0) {
-            return <p>Du har ingen registrerte barn.</p>;
-        }
         const idSamvaersgrad = "idSamvaersgrad";
         const idDeltBosted = "idDeltBosted";
         const faktumKey = "faktum.key";
@@ -54,13 +41,10 @@ class Familierelasjoner extends React.Component<Props, {}> {
             const fornavn = barn.properties[FORNAVN] ? barn.properties[FORNAVN] : "";
             const mellomnavn = barn.properties[MELLOMNAVN] ? barn.properties[MELLOMNAVN] : "";
             const etternavn = barn.properties[ETTERNAVN] ? barn.properties[ETTERNAVN] : "";
-
             const navnString = `${fornavn} ${mellomnavn} ${etternavn}`;
-
             const fodselsDato = barn.properties[FODSELSDATO];
-            const datoFormatert = this.formaterDato(fodselsDato);
+            const datoFormatert = formaterIsoDato(fodselsDato);
             const FOLKEREGISTRERTVERDI = barn.properties[FOLKEREGISTRERT] === "true" ? "Ja" : "Nei";
-
             if (barn.properties[IKKETILGANGTILBARN] && barn.properties[IKKETILGANGTILBARN] === "true") {
                 return null;
             }
@@ -74,12 +58,14 @@ class Familierelasjoner extends React.Component<Props, {}> {
 							verdi={datoFormatert}
 						/>
 						<DetaljelisteElement
-							tittel={<span>Har samme folkeregistrerte adresse som deg</span>}
+							tittel={(
+								<span><FormattedMessage id="familierelasjon.samme_folkeregistrerte_adresse"/></span>
+							)}
 							verdi={FOLKEREGISTRERTVERDI}
 						/>
 						{ barn.properties[FOLKEREGISTRERT] && barn.properties[FOLKEREGISTRERT] === "false" && (
 							<div>
-								<p><b>Hvor mye samvær har du med barnet?</b></p>
+								<p><strong><FormattedMessage id="familierelasjon.samvaer.sporsmal" /></strong></p>
 								<div className="skjema-sporsmal skjema-sporsmal__innhold barn">
 									<SporsmalFaktum faktumKey={"hvormye.faktum"}>
 										<BelopFaktum
@@ -98,7 +84,12 @@ class Familierelasjoner extends React.Component<Props, {}> {
 						}
                         { barn.properties[FOLKEREGISTRERT] && barn.properties[FOLKEREGISTRERT] === "true" && (
 							<div>
-								<p><b>Har {navnString} delt bosted?</b></p>
+								<p>
+									<strong>
+										<FormattedMessage
+											id="familierelasjon.delt.samvaer.sporsmal" values={{navnString}} />
+									</strong>
+								</p>
                                 <JaNeiSporsmalFaktum
                                     id={idDeltBosted}
                                     faktumKey={`${faktumKey}.deltbosted`}
@@ -120,29 +111,24 @@ class Familierelasjoner extends React.Component<Props, {}> {
 
     render() {
         const fakta = this.props.fakta;
-
-        const harBarnFaktum: Faktum = finnFaktum("system.familie.barn", fakta);
-        const harBarn = harBarnFaktum.value === "true";
         const barnFakta: Faktum[] = finnFakta("system.familie.barn.true.barn", fakta);
-
-        if (harBarn === false || barnFakta === null || barnFakta.length === 0) {
+	    const antallBarn = barnFakta.length;
+        if (antallBarn === 0) {
             return (
 				<SporsmalFaktum faktumKey={"familierelasjon.faktum"}>
-					<p>Du har ingen registrerte barn.</p>
+					<p><FormattedMessage id="familierelasjon.ingen_registrerte_barn"/></p>
 				</SporsmalFaktum>
 			);
+        } else {
+	        return (
+		        <SporsmalFaktum faktumKey={"familierelasjon.faktum"}>
+			        <p><FormattedHTMLMessage id="familierelasjon.ingress" values={{antallBarn}}/></p>
+			        <SysteminfoMedSkjema>
+				        {this.renderBarn(barnFakta)}
+			        </SysteminfoMedSkjema>
+		        </SporsmalFaktum>
+	        );
         }
-
-        const antallBarn = barnFakta.length;
-
-        return (
-			<SporsmalFaktum faktumKey={"familierelasjon.faktum"}>
-                {<p>Vi har registrert at du har forsørgeransvar for: <b>{antallBarn} barn under 18 år</b></p>}
-				<SysteminfoMedSkjema>
-                    {this.renderBarn(barnFakta)}
-				</SysteminfoMedSkjema>
-			</SporsmalFaktum>
-        );
     }
 }
 
