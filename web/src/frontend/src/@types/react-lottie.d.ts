@@ -1,19 +1,3 @@
-//
-// declare module "react-lottie" {
-// 	import * as React from "react";
-//
-// 	export interface ReactLottieProps {
-// 		options: any;
-// 		height: any;
-// 		width: any;
-// 		isStopped: any;
-// 		isPaused: any;
-// 	}
-//
-// 	export class Collapse extends React.Component<ReactLottieProps, {}> {}
-// }
-
-
 declare module 'react-lottie' {
 	/**
 	 * @param loop if the animation must be continue after the animation has fully executed

@@ -29,14 +29,16 @@ export default class EllaBlunk extends React.Component<OwnProps, any> {
 		const width = height*blunkeDameAspectRatio;
 
 		return (
-			<div>
-				<Lottie
-					options={defaultOptions}
-					height={height}
-					width={width}
-					isStopped={this.state.isStopped}
-					isPaused={this.state.isPaused}
-				/>
+			<div className="ellablunk_bakgrunn_wrapper">
+				<div className="ellablunk_bakgrunn">
+					<Lottie
+						options={defaultOptions}
+						height={height}
+						width={width}
+						isStopped={this.state.isStopped}
+						isPaused={this.state.isPaused}
+					/>
+				</div>
 			</div>
 		)
 	}
