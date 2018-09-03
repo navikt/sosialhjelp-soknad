@@ -14,7 +14,7 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 			return <FormattedMessage id="utbetalinger.ingen.true"/>;
 		}
 
-		const utbetaltMelding = <span> / <FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/></span>;
+		const utbetaltMelding = <span><FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/></span>;
 
 		return utbetalinger.map(utbetaling => {
 			const id = getFaktumPropertyVerdi(utbetaling, "id");
@@ -25,13 +25,12 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 			const maaned = dato.slice(5, 7);
 			const dag = dato.slice(8);
 
-			const utbetalt = getFaktumPropertyVerdi(utbetaling, "netto");
+			const belop = getFaktumPropertyVerdi(utbetaling, "netto");
 
 			return (
 				<div key={id} className="utbetaling blokk-s">
-					<div>{type}</div>
-					<div>{dag}.{maaned}.{aar}{utbetaltMelding}</div>
-					<div className="verdi detaljeliste__verdi">{utbetalt}</div>
+					<div>{type}<span className="verdi detaljeliste__verdi">{belop}</span></div>
+					<div>{utbetaltMelding} {dag}.{maaned}.{aar}</div>
 				</div>
 			);
 		});
