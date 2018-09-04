@@ -25,7 +25,7 @@ const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) =>
 	const FOLKEREGISTRERT = "folkeregistrertsammen";
 	const IKKETILGANGTILBARN = "ikketilgangtilbarn";
 
-	return barnFakta.map((barn: any) => {
+	return barnFakta.map((barn: any, index: number) => {
 		const fornavn = barn.properties[FORNAVN] ? barn.properties[FORNAVN] : "";
 		const mellomnavn = barn.properties[MELLOMNAVN] ? barn.properties[MELLOMNAVN] : "";
 		const etternavn = barn.properties[ETTERNAVN] ? barn.properties[ETTERNAVN] : "";
@@ -33,12 +33,12 @@ const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) =>
 		const fodselsDato = barn.properties[FODSELSDATO];
 		const datoFormatert = formaterIsoDato(fodselsDato);
 		const FOLKEREGISTRERTVERDI = barn.properties[FOLKEREGISTRERT] === "true" ? "Ja" : "Nei";
+		const sisteListeElement: boolean =  (index + 1 ===  barnFakta.length);
 		if (barn.properties[IKKETILGANGTILBARN] && barn.properties[IKKETILGANGTILBARN] === "true") {
 			return null;
 		}
-
 		return (
-			<div key={barn.faktumId} className="barn">
+			<div key={barn.faktumId} className={sisteListeElement ? "" : "barn"}>
 				<h4>{navnString}</h4>
 				<Detaljeliste>
 					<DetaljelisteElement
