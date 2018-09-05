@@ -58,6 +58,5 @@ declare module 'react-lottie' {
 	 * @component Lottie is a component that allow you to use animation from JSON file that created by
 	 * Bodymovin on Adobe After Effect
 	 */
-	class Lottie extends React.Component<LottiePropsType, any> {}
-	export default Lottie;
+	export default class Lottie extends React.Component<LottiePropsType, any> {}
 }

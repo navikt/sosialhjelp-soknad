@@ -93,7 +93,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 										{this.renderHilsen()}
 										<FormattedMessage id="informasjon.hilsen.tittel"/>
 									</Snakkeboble>
-									<EllaBlunk height={175}/>
+									<EllaBlunk hoyde={175} />
 								</span>
 
 								<Panel className="informasjon-viktig">
