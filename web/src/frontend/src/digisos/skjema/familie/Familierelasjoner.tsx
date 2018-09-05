@@ -32,7 +32,7 @@ class Familierelasjoner extends React.Component<Props, {}> {
 			);
         } else {
 	        return (
-		        <SporsmalFaktum faktumKey={"familierelasjon.faktum"}>
+		        <SporsmalFaktum faktumKey={"familierelasjon.faktum"} style="system">
 			        <p><FormattedHTMLMessage id="familierelasjon.ingress" values={{antallBarn}}/></p>
 			        <SysteminfoMedSkjema>
 				        <SystemregistrertBarn barnFakta={barnFakta} />
