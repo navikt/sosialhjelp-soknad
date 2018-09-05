@@ -34,15 +34,17 @@ const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) =>
 		const datoFormatert = formaterIsoDato(fodselsDato);
 		const FOLKEREGISTRERTVERDI = barn.properties[FOLKEREGISTRERT] === "true" ? "Ja" : "Nei";
 		const sisteListeElement: boolean =  (index + 1 ===  barnFakta.length);
+
 		if (barn.properties[IKKETILGANGTILBARN] && barn.properties[IKKETILGANGTILBARN] === "true") {
 			return null;
 		}
+
 		return (
-			<div key={barn.faktumId} className={sisteListeElement ? "" : "barn"}>
+			<div key={barn.faktumId} className={sisteListeElement ? "barn barn_siste_liste_element" : "barn"}>
 				<h4>{navnString}</h4>
 				<Detaljeliste>
 					<DetaljelisteElement
-						tittel={<span>Fødselsdato</span>}
+						tittel={<span><FormattedMessage id="familierelasjon.fodselsdato"/></span>}
 						verdi={datoFormatert}
 					/>
 					<DetaljelisteElement
@@ -53,7 +55,7 @@ const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) =>
 					/>
 					{ barn.properties[FOLKEREGISTRERT] && barn.properties[FOLKEREGISTRERT] === "false" && (
 						<div>
-							<div className="skjema-sporsmal skjema-sporsmal__innhold">
+							<div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
 								<SporsmalFaktum faktumKey={"hvormye.faktum"}>
 									<BelopFaktum
 										id={idSamvaersgrad}
