@@ -1,23 +1,19 @@
 import * as React from "react";
-// import { Faktum } from "../../../nav-soknad/types";
 import { formaterIsoDato } from "../../../nav-soknad/utils";
 import Detaljeliste, { DetaljelisteElement } from "../../../nav-soknad/components/detaljeliste";
 import { FormattedMessage } from "react-intl";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import JaNeiSporsmalFaktum from "../../../nav-soknad/faktum/JaNeiSporsmalFaktum";
+import {inputKeys} from "../../../nav-soknad/utils/faktumUtils";
 
 interface Props {
-	barnFakta: any; // Faktum[]; // TODO Hvorfor virker ikke dette?
+	barnFakta: any;
 }
 
 const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) => {
-
 	const idSamvaersgrad = "idSamvaersgrad";
 	const idDeltBosted = "idDeltBosted";
-	const faktumKey = "faktum.key";
-	const faktumId = 1234;
-
 	const FORNAVN = "fornavn";
 	const MELLOMNAVN = "mellomnavn";
 	const ETTERNAVN = "etternavn";
@@ -34,6 +30,8 @@ const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) =>
 		const datoFormatert = formaterIsoDato(fodselsDato);
 		const FOLKEREGISTRERTVERDI = barn.properties[FOLKEREGISTRERT] === "true" ? "Ja" : "Nei";
 		const sisteListeElement: boolean =  (index + 1 ===  barnFakta.length);
+        const faktumKey = barn.key;
+        const hvormye = inputKeys(`${faktumKey}.grad`);
 
 		if (barn.properties[IKKETILGANGTILBARN] && barn.properties[IKKETILGANGTILBARN] === "true") {
 			return null;
@@ -56,11 +54,11 @@ const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) =>
 					{ barn.properties[FOLKEREGISTRERT] && barn.properties[FOLKEREGISTRERT] === "false" && (
 						<div>
 							<div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
-								<SporsmalFaktum faktumKey={"hvormye.faktum"}>
+								<SporsmalFaktum faktumKey={hvormye.faktum}>
 									<BelopFaktum
 										id={idSamvaersgrad}
-										faktumKey={faktumKey}
-										faktumId={faktumId}
+										faktumKey={barn.faktumKey}
+										faktumId={barn.faktumId}
 										property="grad"
 										maxLength={3}
 										kunHeltall={true}
@@ -81,13 +79,13 @@ const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) =>
 							</p>
 							<JaNeiSporsmalFaktum
 								id={idDeltBosted}
-								faktumKey={`${faktumKey}.deltbosted`}
-								faktumId={faktumId}
+								faktumKey={`${barn.faktumKey}.deltbosted`}
+								faktumId={barn.faktumId}
 								skjemaTilhorerValg="nei"
 								jaNeiPropFaktum={{
 									property: "deltbosted",
-									faktumKey,
-									faktumId
+									faktumKey: barn.faktumKey,
+									faktumId: barn.faktumId
 								}}
 							/>
 						</div>)
