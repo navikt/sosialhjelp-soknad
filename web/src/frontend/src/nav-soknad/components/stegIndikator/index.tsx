@@ -2,16 +2,8 @@ import * as React from "react";
 import * as classNames from "classnames";
 import StegindikatorHake from "../svg/StegindikatorHake";
 import { FormattedMessage } from "react-intl";
-// import { tilSteg } from "../../redux/navigasjon/navigasjonActions";
-import { DispatchProps } from "../../redux/reduxTypes";
-
-interface Props {
-	aktivtSteg: number;
-	steg: Array<{
-		tittel: string;
-		ariaLabel?: string;
-	}>;
-}
+import { tilSteg } from "../../redux/navigasjon/navigasjonActions";
+import { Dispatch, DispatchProps } from "../../redux/reduxTypes";
 
 interface OwnStegProps {
 	steg: number;
@@ -19,12 +11,7 @@ interface OwnStegProps {
 	aktivtSteg: number;
 }
 
-export const StatusText = {
-	ferdig: "Gjennomført",
-	aktivt: "Aktivt"
-};
-
-const StatusTekst: React.StatelessComponent<StegProps> = (props: StegProps) => {
+const StatusTekst: React.StatelessComponent<OwnStegProps> = (props: OwnStegProps) => {
 	if (props.steg > props.aktivtSteg) {
 		return null;
 	}
@@ -48,8 +35,7 @@ export const Steg: React.StatelessComponent<StegProps> = (props: StegProps) => {
 	});
 
 	const gaTilSteg = (stegnummer: number) => {
-		console.warn("Gå til steg " + stegnummer.toString());
-		// props.dispatch(tilSteg(stegnummer));
+		props.dispatch(tilSteg(stegnummer));
 	};
 
 	const passert = props.aktivtSteg > props.steg;
@@ -60,6 +46,15 @@ export const Steg: React.StatelessComponent<StegProps> = (props: StegProps) => {
 		</li>
 	);
 };
+
+interface Props {
+	aktivtSteg: number;
+	steg: Array<{
+		tittel: string;
+		ariaLabel?: string;
+	}>;
+	dispatch: Dispatch;
+}
 
 const StegIndikator: React.StatelessComponent<Props> = (props: Props) => {
 	return (
@@ -77,6 +72,7 @@ const StegIndikator: React.StatelessComponent<Props> = (props: Props) => {
 						steg={idx + 1}
 						aktivtSteg={props.aktivtSteg}
 						tittel={steg.tittel}
+						dispatch={props.dispatch}
 					/>
 				))}
 			</ul>
