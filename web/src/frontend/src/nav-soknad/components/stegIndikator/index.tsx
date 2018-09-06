@@ -2,6 +2,8 @@ import * as React from "react";
 import * as classNames from "classnames";
 import StegindikatorHake from "../svg/StegindikatorHake";
 import { FormattedMessage } from "react-intl";
+// import { tilSteg } from "../../redux/navigasjon/navigasjonActions";
+import { DispatchProps } from "../../redux/reduxTypes";
 
 interface Props {
 	aktivtSteg: number;
@@ -11,7 +13,7 @@ interface Props {
 	}>;
 }
 
-interface StegProps {
+interface OwnStegProps {
 	steg: number;
 	tittel: string;
 	aktivtSteg: number;
@@ -37,15 +39,22 @@ const StatusTekst: React.StatelessComponent<StegProps> = (props: StegProps) => {
 	);
 };
 
+type StegProps = OwnStegProps & DispatchProps;
+
 export const Steg: React.StatelessComponent<StegProps> = (props: StegProps) => {
 	const className = classNames("stegindikator__steg", {
 		"stegindikator__steg--aktiv": props.aktivtSteg === props.steg,
 		"stegindikator__steg--inaktiv": props.aktivtSteg < props.steg
 	});
 
+	const gaTilSteg = (stegnummer: number) => {
+		console.warn("Gå til steg " + stegnummer.toString());
+		// props.dispatch(tilSteg(stegnummer));
+	};
+
 	const passert = props.aktivtSteg > props.steg;
 	return (
-		<li className={className} aria-label={props.tittel}>
+		<li className={className} aria-label={props.tittel} onClick={() => gaTilSteg(props.steg)}>
 			<StatusTekst {...props} />
 			{passert ? <StegindikatorHake /> : <span> {props.steg}</span>}
 		</li>
