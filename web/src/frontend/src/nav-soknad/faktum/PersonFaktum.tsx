@@ -43,21 +43,27 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 
 	render() {
 		const { faktumKey, validering = {}, faktumId } = this.props;
-		let idNavn = null;
+		let idFornavn = null;
+		let idMellomnavn = null;
+		let idEtternavn = null;
 		let idFdato = null;
 		let idPersonnummer = null;
+
 		if (this.props.id !== null) {
-			idNavn = this.props.id + "_navn_input";
+			idFornavn = this.props.id + "_fornavn_input";
+			idMellomnavn = this.props.id + "_mellomnavn_input";
+			idEtternavn = this.props.id + "_etternavn_input";
 			idFdato = this.props.id + "_fodselsdato_input";
 			idPersonnummer = this.props.id + "_personnummer_input";
 		}
+
 		return (
 			<div className="personskjema">
 				<Container fluid={true} className="container--noPadding">
 					<Row>
 						<Column xs="12">
 							<NavnFaktum
-								id={idNavn}
+								id={idFornavn}
 								inputRef={c => (this.navnInput = c)}
 								faktumKey={faktumKey}
 								required={validering.navnRequired}
@@ -69,7 +75,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 					<Row>
 						<Column xs="12">
 							<NavnFaktum
-								id={idNavn}
+								id={idMellomnavn}
 								inputRef={c => (this.navnInput = c)}
 								faktumKey={faktumKey}
 								required={validering.navnRequired}
@@ -81,7 +87,7 @@ class PersonFaktum extends React.Component<OwnProps, {}> {
 					<Row className="add-padding-bottom">
 						<Column xs="12">
 							<NavnFaktum
-								id={idNavn}
+								id={idEtternavn}
 								inputRef={c => (this.navnInput = c)}
 								faktumKey={faktumKey}
 								required={validering.navnRequired}

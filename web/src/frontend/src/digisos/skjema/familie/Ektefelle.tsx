@@ -14,7 +14,7 @@ class Ektefelle extends React.Component<FaktumComponentProps, {}> {
 		return (
 			<div>
 				<div className="blokk-s">
-					<PersonFaktum faktumKey="familie.sivilstatus.gift.ektefelle" />
+					<PersonFaktum id="ektefelle" faktumKey="familie.sivilstatus.gift.ektefelle" />
 				</div>
 				<SporsmalFaktum faktumKey={borsammen.faktum}>
 					<RadioFaktum
