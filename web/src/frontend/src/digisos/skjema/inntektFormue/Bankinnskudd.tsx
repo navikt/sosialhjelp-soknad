@@ -8,16 +8,26 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 import {
 	radioCheckKeys,
 	faktumIsSelected,
-	getFaktumVerdi
+	getFaktumVerdi, finnFaktum
 } from "../../../nav-soknad/utils";
 import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
+import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
+import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
 
-class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
+class Bankinnskudd extends React.Component<FaktumComponentProps & DispatchProps, {}> {
+
+	componentDidMount() {
+		const jaNeiFaktum = finnFaktum("inntekt.bankinnskudd", this.props.fakta);
+		jaNeiFaktum.value = "true";
+		this.props.dispatch(lagreFaktum(jaNeiFaktum));
+	}
+
 	render() {
 		const { fakta } = this.props;
 		const hvilkeInnskudd = radioCheckKeys("inntekt.bankinnskudd.true.type");
 		const hvilkeInnskuddAnnet = "inntekt.bankinnskudd.true.type.annet";
+
 		return (
 			<SporsmalFaktum faktumKey={hvilkeInnskudd.faktum}>
 				<CheckboxFaktum
