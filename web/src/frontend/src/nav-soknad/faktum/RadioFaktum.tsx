@@ -13,25 +13,40 @@ interface OwnProps {
 	faktumKey: string;
 	disabled?: boolean;
 	id?: string;
+	visPanel?: boolean;
+	className?: string;
 }
 
-class RadioFaktum extends React.Component<
-	OwnProps & InjectedFaktumComponentProps & InjectedIntlProps,
-	{}
-> {
-	render() {
-		const { faktumKey, value, disabled, property, required, intl } = this.props;
+type RadioFaktumProps = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
+
+class RadioFaktum extends React.Component<RadioFaktumProps, {}> {
+
+	constructor(props: RadioFaktumProps) {
+		super(props);
+	}
+
+	onChange() {
+		const { value, property } = this.props;
+		this.props.setFaktumVerdiOgLagre(value, property)
+	}
+
+	checked(): boolean {
+		const { value, property} = this.props;
+		return property
+			? this.props.getPropertyVerdi() === value
+			: this.props.getFaktumVerdi() === value
+	}
+
+	renderRadio() {
+		const { faktumKey, value, disabled, property, required, intl} = this.props;
 		const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
 		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
+
 		return (
 			<Radio
 				id={id}
 				name={this.props.getName()}
-				checked={
-					property
-						? this.props.getPropertyVerdi() === value
-						: this.props.getFaktumVerdi() === value
-				}
+				checked={this.checked()}
 				disabled={disabled}
 				value={value}
 				required={required}
@@ -46,7 +61,28 @@ class RadioFaktum extends React.Component<
 					/>
 				}
 			/>
+
 		);
+	}
+
+	render() {
+		const { visPanel, className } = this.props;
+		let classNames = "radioInputPanel " + className;
+		if (this.checked()) {
+			classNames += " radioPanelChecked";
+		}
+		if(visPanel) {
+			return (
+				<div
+					className={classNames}
+					onClick={() => this.onChange()}
+				>
+					{this.renderRadio()}
+				</div>
+			);
+		} else {
+			return this.renderRadio();
+		}
 	}
 }
 
