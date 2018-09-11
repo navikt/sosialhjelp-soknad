@@ -28,10 +28,9 @@
 	}
 }
 
-// Paneler rundt radioknapper
-.radioInputPanel {
-  background-color: #FFF;
-  border: 1px solid #C6C2BF;
+.inputPanel {
+  background-color: @white;
+  border: 1px solid @navGra20;
   border-radius: 8px;
   display: block;
   cursor: pointer;
@@ -39,24 +38,14 @@
   position: relative;
 
   &:hover {
-	border: 1px solid #0067C5;
-	box-shadow: #B7B1A9 0 2px 1px 0;
+	border: 1px solid @navBla;
+	box-shadow: @grayIcon 0 2px 1px 0;
   }
+}
 
-  &:has (skjemaelement__input radioknapp) {
-	border: 1px dotted red;
-  }
-  &--horisontal {
-
-  }
-
-  &--vertikal {
-
-  }
-
-  &:has (input[type="radio"]:checked) {
-
-	}
+.inputPanelChecked {
+  background-color: rgba(0, 103, 197, 0.2);
+  border: 1px solid transparent;
 }
 
 .panel--noPadding {
@@ -74,7 +63,3 @@
   margin-bottom: 1rem;
 }
 
-.radioPanelChecked {
-  background-color: rgba(0, 103, 197, 0.2);
-  border: 1px solid transparent;
-}

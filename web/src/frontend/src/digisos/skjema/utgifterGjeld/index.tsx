@@ -37,10 +37,14 @@ class UtgifterGjeld extends React.Component<
 						<CheckboxFaktum
 							id="boutgifter_husleie_checkbox"
 							faktumKey={createCheckboxFaktumKey(boUtgifter.faktum, "husleie")}
+							visPanel={true}
+							className="fullBreddeRadioPanel"
 						/>
 						<CheckboxFaktum
 							id="boutgifter_strom_checkbox"
 							faktumKey={createCheckboxFaktumKey(boUtgifter.faktum, "strom")}
+							visPanel={true}
+							className="fullBreddeRadioPanel"
 						/>
 						<CheckboxFaktum
 							id="boutgifter_kommunale_avgifter_checkbox"
@@ -48,6 +52,8 @@ class UtgifterGjeld extends React.Component<
 								boUtgifter.faktum,
 								"kommunaleavgifter"
 							)}
+							visPanel={true}
+							className="fullBreddeRadioPanel"
 						/>
 						<CheckboxFaktum
 							id="boutgifter_oppvarming_checkbox"
@@ -55,6 +61,8 @@ class UtgifterGjeld extends React.Component<
 								boUtgifter.faktum,
 								"oppvarming"
 							)}
+							visPanel={true}
+							className="fullBreddeRadioPanel"
 						/>
 						<CheckboxFaktum
 							id="boutgifter_avdrag_renter_checkbox"
@@ -62,6 +70,8 @@ class UtgifterGjeld extends React.Component<
 								boUtgifter.faktum,
 								"avdraglaan"
 							)}
+							visPanel={true}
+							className="fullBreddeRadioPanel"
 						/>
 						<CheckboxFaktum
 							id="boutgifter_andre_utgifter_checkbox"
@@ -69,6 +79,8 @@ class UtgifterGjeld extends React.Component<
 								boUtgifter.faktum,
 								"andreutgifter"
 							)}
+							visPanel={true}
+							className="fullBreddeRadioPanel"
 						/>
 					</SporsmalFaktum>
 				</JaNeiSporsmalFaktum>
