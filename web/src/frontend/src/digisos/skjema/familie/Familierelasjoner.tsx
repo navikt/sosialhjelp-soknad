@@ -37,10 +37,8 @@ class Familierelasjoner extends React.Component<Props, {}> {
 			        <p><FormattedHTMLMessage id="familierelasjon.ingress" values={{antallBarn}}/></p>
 			        <SysteminfoMedSkjema>
 				        <SystemregistrertBarn barnFakta={barnFakta} />
-			        </SysteminfoMedSkjema>
-					<SysteminfoMedSkjema>
 						<Barnebidrag />
-					</SysteminfoMedSkjema>
+			        </SysteminfoMedSkjema>
 		        </SporsmalFaktum>
 	        );
         }

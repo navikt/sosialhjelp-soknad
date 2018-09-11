@@ -70,7 +70,7 @@ const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) =>
 						</div>)
 					}
 					{ barn.properties[FOLKEREGISTRERT] && barn.properties[FOLKEREGISTRERT] === "true" && (
-						<div>
+						<div className="barn_delt_bosted_ja_nei">
 							<JaNeiSporsmalFaktum
 								id={idDeltBosted}
 								faktumKey={`system.familie.barn.true.barn.deltbosted`}
