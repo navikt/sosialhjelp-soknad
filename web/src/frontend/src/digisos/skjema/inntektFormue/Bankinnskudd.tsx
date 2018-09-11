@@ -8,7 +8,8 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 import {
 	radioCheckKeys,
 	faktumIsSelected,
-	getFaktumVerdi, finnFaktum
+	getFaktumVerdi,
+	finnFaktum
 } from "../../../nav-soknad/utils";
 import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
