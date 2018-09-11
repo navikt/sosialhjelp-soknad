@@ -9,6 +9,7 @@ import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import {finnFakta} from "../../../nav-soknad/utils/faktumUtils";
 import SystemregistrertBarn from "./SystemregistrertBarn";
+import Barnebidrag from "./Barnebidrag";
 
 interface StateProps {
     fakta: Faktum[];
@@ -37,6 +38,9 @@ class Familierelasjoner extends React.Component<Props, {}> {
 			        <SysteminfoMedSkjema>
 				        <SystemregistrertBarn barnFakta={barnFakta} />
 			        </SysteminfoMedSkjema>
+					<SysteminfoMedSkjema>
+						<Barnebidrag />
+					</SysteminfoMedSkjema>
 		        </SporsmalFaktum>
 	        );
         }
