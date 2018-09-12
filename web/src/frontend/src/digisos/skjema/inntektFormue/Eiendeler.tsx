@@ -28,7 +28,6 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 						id="eiendeler_bolig_checkbox"
 						faktumKey={createCheckboxFaktumKey(hvilkeEiendeler.faktum, "bolig")}
 						visPanel={true}
-						className="fullBreddeRadioPanel"
 					/>
 					<CheckboxFaktum
 						id="eiendeler_campingvogn_checkbox"
@@ -37,7 +36,6 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 							"campingvogn"
 						)}
 						visPanel={true}
-						className="fullBreddeRadioPanel"
 					/>
 					<CheckboxFaktum
 						id="eiendeler_kjoretoy_checkbox"
@@ -46,7 +44,6 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 							"kjoretoy"
 						)}
 						visPanel={true}
-						className="fullBreddeRadioPanel"
 					/>
 					<CheckboxFaktum
 						id="eiendeler_fritidseiendom_checkbox"
@@ -55,13 +52,11 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 							"fritidseiendom"
 						)}
 						visPanel={true}
-						className="fullBreddeRadioPanel"
 					/>
 					<CheckboxFaktum
 						id="eiendeler_annet_checkbox"
 						faktumKey={createCheckboxFaktumKey(hvilkeEiendeler.faktum, "annet")}
 						visPanel={true}
-						className="fullBreddeRadioPanel"
 					/>
 					<NivaTreSkjema
 						visible={faktumIsSelected(getFaktumVerdi(fakta, hvilkeEiendelerAnnet))}

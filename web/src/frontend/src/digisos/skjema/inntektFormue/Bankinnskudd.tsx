@@ -28,7 +28,6 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 						"brukskonto"
 					)}
 					visPanel={true}
-					className="fullBreddeRadioPanel"
 				/>
 				<CheckboxFaktum
 					id="bankinnskudd_sparekonto_checkbox"
@@ -37,13 +36,11 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 						"sparekonto"
 					)}
 					visPanel={true}
-					className="fullBreddeRadioPanel"
 				/>
 				<CheckboxFaktum
 					id="bankinnskudd_bsu_checkbox"
 					faktumKey={createCheckboxFaktumKey(hvilkeInnskudd.faktum, "bsu")}
 					visPanel={true}
-					className="fullBreddeRadioPanel"
 				/>
 				<CheckboxFaktum
 					id="bankinnskudd_livsforsikring_checkbox"
@@ -52,19 +49,16 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 						"livsforsikring"
 					)}
 					visPanel={true}
-					className="fullBreddeRadioPanel"
 				/>
 				<CheckboxFaktum
 					id="bankinnskudd_aksjer_checkbox"
 					faktumKey={createCheckboxFaktumKey(hvilkeInnskudd.faktum, "aksjer")}
 					visPanel={true}
-					className="fullBreddeRadioPanel"
 				/>
 				<CheckboxFaktum
 					id="bankinnskudd_annet_checkbox"
 					faktumKey={createCheckboxFaktumKey(hvilkeInnskudd.faktum, "annet")}
 					visPanel={true}
-					className="fullBreddeRadioPanel"
 				/>
 				<NivaTreSkjema
 					visible={faktumIsSelected(getFaktumVerdi(fakta, hvilkeInnskuddAnnet))}

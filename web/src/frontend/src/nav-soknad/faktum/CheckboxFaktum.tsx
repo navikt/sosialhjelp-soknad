@@ -92,7 +92,7 @@ class CheckboxFaktum extends React.Component<CheckboxFaktumProps, {checked: bool
 		const checked = faktumIsSelected(getFaktumVerdi(fakta, faktumKey));
 		let classNames = "inputPanel " + className;
 		if (checked) {
-			classNames += " inputPanelChecked";
+			classNames += " inputPanel__checked";
 		}
 		if(visPanel) {
 			return (

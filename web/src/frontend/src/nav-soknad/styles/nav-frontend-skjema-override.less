@@ -44,33 +44,31 @@
   cursor: pointer;
   padding: 1rem 1rem 0.6rem 1rem;
   position: relative;
+  margin-bottom: 1rem;
 
   &:hover {
 	border: 1px solid @navBla;
 	box-shadow: @grayIcon 0 2px 1px 0;
   }
-}
 
-.inputPanelChecked {
-  background-color: rgba(0, 103, 197, 0.2);
-  border: 1px solid transparent;
-}
+  &__checked {
+	background-color: rgba(0, 103, 197, 0.2);
+	border: 1px solid transparent;
+  }
 
-.fullBreddeRadioPanel {
-  margin-bottom: 1rem;
-}
-
-//.fullBreddeInputPanel {
-//  margin-bottom: 1rem;
-//}
-
-.jaNeiRadioPanel {
-  width: 10rem;
-}
-
-@media @mobile {
-  .jaNeiRadioPanel {
-	width: 7rem;
+  &__smal {
+	width: 10rem;
+	margin-bottom: 0;
   }
 }
 
+@media @mobile {
+  .inputPanel {
+
+	&__smal {
+	  width: 7rem;
+	  margin-bottom: 0;
+	}
+
+  }
+}

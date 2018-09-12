@@ -29,37 +29,31 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						faktumKey={bosituasjon.faktum}
 						value="eier"
 						visPanel={true}
-						className="fullBreddeRadioPanel"
 					/>
 					<RadioFaktum
 						id="bosituasjon_radio_leier"
 						faktumKey={bosituasjon.faktum}
 						value="leier"
 						visPanel={true}
-						className="fullBreddeRadioPanel"
 					/>
 					<RadioFaktum
 						id="bosituasjon_radio_kommunal"
 						faktumKey={bosituasjon.faktum}
 						value="kommunal"
 						visPanel={true}
-
-						className="fullBreddeRadioPanel"
 					/>
 					<RadioFaktum
 						id="bosituasjon_radio_ingen"
 						faktumKey={bosituasjon.faktum}
 						value="ingen"
 						visPanel={true}
-
-						className="fullBreddeRadioPanel"
 					/>
 					<RadioFaktum
 						id="bosituasjon_radio_annet"
 						faktumKey={bosituasjon.faktum}
 						value="annet"
 						visPanel={true}
-						className="fullBreddeRadioPanel"/>
+					/>
 					<Underskjema
 						visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}
 					>
@@ -70,42 +64,36 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 								faktumKey={annen.faktum}
 								value="foreldre"
 								visPanel={true}
-								className="fullBreddeRadioPanel"
 							/>
 							<RadioFaktum
 								id="bosituasjon_radio_familie"
 								faktumKey={annen.faktum}
 								value="familie"
 								visPanel={true}
-								className="fullBreddeRadioPanel"
 							/>
 							<RadioFaktum
 								id="bosituasjon_radio_venner"
 								faktumKey={annen.faktum}
 								value="venner"
 								visPanel={true}
-								className="fullBreddeRadioPanel"
 							/>
 							<RadioFaktum
 								id="bosituasjon_radio_institusjon"
 								faktumKey={annen.faktum}
 								value="institusjon"
 								visPanel={true}
-								className="fullBreddeRadioPanel"
 							/>
 							<RadioFaktum
 								id="bosituasjon_radio_fengsel"
 								faktumKey={annen.faktum}
 								value="fengsel"
 								visPanel={true}
-								className="fullBreddeRadioPanel"
 							/>
 							<RadioFaktum
 								id="bosituasjon_radio_krisesenter"
 								faktumKey={annen.faktum}
 								value="krisesenter"
 								visPanel={true}
-								className="fullBreddeRadioPanel"
 							/>
 						</SporsmalFaktum>
 					</Underskjema>

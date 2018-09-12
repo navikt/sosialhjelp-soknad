@@ -91,14 +91,14 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 						id={idRadioJa}
 						value="true"
 						visPanel={true}
-						className="jaNeiRadioPanel"
+						className="inputPanel__smal"
 					/>
 					<RadioFaktum
 						{...radioProps}
 						id={idRadioNei}
 						value="false"
 						visPanel={true}
-						className="jaNeiRadioPanel"
+						className="inputPanel__smal"
 					/>
 				</ValgMedUnderskjema>
 			</SporsmalFaktum>

@@ -16,7 +16,6 @@ const Studie: React.StatelessComponent = () => {
 					faktumKey={studerer.faktum}
 					value="heltid"
 					visPanel={true}
-					className="fullBreddeRadioPanel"
 				/>
 				<RadioFaktum
 					id="studerer_radio_deltid"
