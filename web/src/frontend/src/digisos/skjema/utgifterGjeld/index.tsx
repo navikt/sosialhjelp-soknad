@@ -95,6 +95,8 @@ class UtgifterGjeld extends React.Component<
 								barneUtgifter.faktum,
 								"fritidsaktivitet"
 							)}
+							visPanel={true}
+							className="fullBreddeRadioPanel"
 						/>
 						<CheckboxFaktum
 							id="utgifter_barn_barnehage_checkbox"
@@ -102,10 +104,14 @@ class UtgifterGjeld extends React.Component<
 								barneUtgifter.faktum,
 								"barnehage"
 							)}
+							visPanel={true}
+							className="fullBreddeRadioPanel"
 						/>
 						<CheckboxFaktum
 							id="utgifter_barn_sfo_checkbox"
 							faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "sfo")}
+							visPanel={true}
+							className="fullBreddeRadioPanel"
 						/>
 						<CheckboxFaktum
 							id="utgifter_barn_tannbehandling_checkbox"
@@ -113,10 +119,14 @@ class UtgifterGjeld extends React.Component<
 								barneUtgifter.faktum,
 								"tannbehandling"
 							)}
+							visPanel={true}
+							className="fullBreddeRadioPanel"
 						/>
 						<CheckboxFaktum
 							id="utgifter_barn_annet_checkbox"
 							faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "annet")}
+							visPanel={true}
+							className="fullBreddeRadioPanel"
 						/>
 					</SporsmalFaktum>
 				</JaNeiSporsmalFaktum>
