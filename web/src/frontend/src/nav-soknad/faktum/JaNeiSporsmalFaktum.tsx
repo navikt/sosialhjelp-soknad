@@ -82,8 +82,8 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 				style={visSkjema ? "jaNeiSporsmal" : "normal"}
 			>
 				<ValgMedUnderskjema
-					underskjema={
-						<Underskjema visible={visSkjema}>{children}</Underskjema>
+					underskjema={ children ?
+						<Underskjema visible={visSkjema}>{children}</Underskjema> : <span/>
 					}
 				>
 					<RadioFaktum id={idRadioJa} {...radioProps} value="true" />

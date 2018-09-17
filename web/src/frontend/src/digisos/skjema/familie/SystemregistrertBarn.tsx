@@ -57,7 +57,7 @@ const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) =>
 								<SporsmalFaktum faktumKey={hvormye.faktum}>
 									<BelopFaktum
 										id={idSamvaersgrad}
-										faktumKey={'familie.barn.true.barn'}
+										faktumKey={'system.familie.barn.true.barn'}
 										faktumId={barn.faktumId}
 										property="grad"
 										maxLength={3}
@@ -72,7 +72,7 @@ const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) =>
 					{ barn.properties[FOLKEREGISTRERT] && barn.properties[FOLKEREGISTRERT] === "true" && (
 						<div className="barn_delt_bosted_ja_nei">
 							<JaNeiSporsmalFaktum
-								id={idDeltBosted}
+								id={barn.faktumId + "__" + idDeltBosted}
 								faktumKey={`system.familie.barn.true.barn.deltbosted`}
 								faktumId={barn.faktumId}
 								skjemaTilhorerValg="nei"
