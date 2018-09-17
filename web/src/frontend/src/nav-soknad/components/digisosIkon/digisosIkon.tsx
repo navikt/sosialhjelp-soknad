@@ -1,5 +1,6 @@
 import * as React from "react";
 import SVG from "react-inlinesvg";
+import SearchAddress from "./SearchAddress";
 
 export type ikoner =
 	| "lastOpp"
@@ -20,12 +21,16 @@ interface Props {
 }
 
 const DigisosIkon: React.StatelessComponent<Props & {}> = ({className, navn, style}) => {
-	return (
-		<SVG style={style}
-			className={className || ""}
-			src={"/soknadsosialhjelp/statisk/bilder/ikon_" + navn + ".svg"}
-		/>
-	);
+	if (navn === "searchAddresse") {
+		return <SearchAddress/>;
+	} else {
+		return (
+			<SVG style={style}
+			     className={className || ""}
+			     src={"/soknadsosialhjelp/statisk/bilder/ikon_" + navn + ".svg"}
+			/>
+		);
+	}
 };
 
 export default DigisosIkon;
