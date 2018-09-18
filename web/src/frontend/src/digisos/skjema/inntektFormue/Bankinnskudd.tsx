@@ -8,20 +8,43 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 import {
 	radioCheckKeys,
 	faktumIsSelected,
-	getFaktumVerdi,
-	finnFaktum
+	getFaktumVerdi, finnFaktum
 } from "../../../nav-soknad/utils";
 import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
-import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
+import { DispatchProps, SoknadAppState } from "../../../nav-soknad/redux/reduxTypes";
+import { connect } from "react-redux";
+import { Faktum } from "../../../nav-soknad/types";
 import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
 
-class Bankinnskudd extends React.Component<FaktumComponentProps & DispatchProps, {}> {
+type Props = FaktumComponentProps & DispatchProps;
 
-	componentDidMount() {
-		const jaNeiFaktum = finnFaktum("inntekt.bankinnskudd", this.props.fakta);
-		jaNeiFaktum.value = "true";
-		this.props.dispatch(lagreFaktum(jaNeiFaktum));
+class Bankinnskudd extends React.Component<Props, {}> {
+
+	innskuddstyper = ["brukskonto", "sparekonto", "bsu", "livsforsikring", "aksjer", "annet"];
+
+	harBankinnskudd(): boolean {
+		const faktumKey = "inntekt.bankinnskudd.true.type.";
+		let faktum: Faktum;
+		let harBankinnskudd = false;
+		this.innskuddstyper.map((innskuddstype: string) => {
+			faktum = finnFaktum(faktumKey + innskuddstype, this.props.fakta);
+			const value = faktum ? faktum.value : "";
+			if (value === "true") {
+				harBankinnskudd = true;
+			}
+		});
+		return harBankinnskudd;
+	}
+
+	componentDidUpdate() {
+		const harBankinnskuddFaktum = finnFaktum("inntekt.bankinnskudd", this.props.fakta);
+		const lagretVerdi = harBankinnskuddFaktum.value;
+		const utledetVerdi = this.harBankinnskudd().toString();
+		if (lagretVerdi !== utledetVerdi) {
+			harBankinnskuddFaktum.value = utledetVerdi;
+			this.props.dispatch(lagreFaktum(harBankinnskuddFaktum));
+		}
 	}
 
 	render() {
@@ -31,39 +54,17 @@ class Bankinnskudd extends React.Component<FaktumComponentProps & DispatchProps,
 
 		return (
 			<SporsmalFaktum faktumKey={hvilkeInnskudd.faktum}>
-				<CheckboxFaktum
-					id="bankinnskudd_brukskonto_checkbox"
-					faktumKey={createCheckboxFaktumKey(
-						hvilkeInnskudd.faktum,
-						"brukskonto"
-					)}
-				/>
-				<CheckboxFaktum
-					id="bankinnskudd_sparekonto_checkbox"
-					faktumKey={createCheckboxFaktumKey(
-						hvilkeInnskudd.faktum,
-						"sparekonto"
-					)}
-				/>
-				<CheckboxFaktum
-					id="bankinnskudd_bsu_checkbox"
-					faktumKey={createCheckboxFaktumKey(hvilkeInnskudd.faktum, "bsu")}
-				/>
-				<CheckboxFaktum
-					id="bankinnskudd_livsforsikring_checkbox"
-					faktumKey={createCheckboxFaktumKey(
-						hvilkeInnskudd.faktum,
-						"livsforsikring"
-					)}
-				/>
-				<CheckboxFaktum
-					id="bankinnskudd_aksjer_checkbox"
-					faktumKey={createCheckboxFaktumKey(hvilkeInnskudd.faktum, "aksjer")}
-				/>
-				<CheckboxFaktum
-					id="bankinnskudd_annet_checkbox"
-					faktumKey={createCheckboxFaktumKey(hvilkeInnskudd.faktum, "annet")}
-				/>
+				{this.innskuddstyper.map((innskuddstype: string) => {
+					const id = "bankinnskudd_" + innskuddstype + "_checkbox";
+					return (
+						<CheckboxFaktum
+							key={id}
+							id={id}
+							faktumKey={createCheckboxFaktumKey(
+								hvilkeInnskudd.faktum, innskuddstype
+							)}
+						/>)
+				})}
 				<NivaTreSkjema
 					visible={faktumIsSelected(getFaktumVerdi(fakta, hvilkeInnskuddAnnet))}
 					size="small"
@@ -80,4 +81,10 @@ class Bankinnskudd extends React.Component<FaktumComponentProps & DispatchProps,
 	}
 }
 
-export default Bankinnskudd;
+// export default Bankinnskudd;
+
+export default connect<{}, {}, Props>((state: SoknadAppState) => {
+	return {
+		fakta: state.fakta.data
+	};
+})(Bankinnskudd);
