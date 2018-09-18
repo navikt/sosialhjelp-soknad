@@ -51,7 +51,6 @@ class Bankinnskudd extends React.Component<Props, {}> {
 		const { fakta } = this.props;
 		const hvilkeInnskudd = radioCheckKeys("inntekt.bankinnskudd.true.type");
 		const hvilkeInnskuddAnnet = "inntekt.bankinnskudd.true.type.annet";
-
 		return (
 			<SporsmalFaktum faktumKey={hvilkeInnskudd.faktum}>
 				{this.innskuddstyper.map((innskuddstype: string) => {
@@ -80,8 +79,6 @@ class Bankinnskudd extends React.Component<Props, {}> {
 		);
 	}
 }
-
-// export default Bankinnskudd;
 
 export default connect<{}, {}, Props>((state: SoknadAppState) => {
 	return {
