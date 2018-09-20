@@ -52,6 +52,14 @@ const okonomiskeFaktumKeys = [
 	"utgifter.barn.true.utgifter.annet"
 ];
 
+const eiendelerSomIkkeTrengerVedleggsOpplasting = [
+	"opplysninger.inntekt.eierandeler.bolig",
+	"opplysninger.inntekt.eierandeler.kjoretoy",
+	"opplysninger.inntekt.eierandeler.campingvogn",
+	"opplysninger.inntekt.eierandeler.fritidseiendom",
+	"opplysninger.inntekt.eierandeler.annet"
+];
+
 interface OwnProps {
 	fakta: Faktum[];
 }
@@ -104,17 +112,44 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 
 	renderEkstrasporsmal() {
 		const {data} = this.props.synligefakta;
-		return Object.keys(data).map(key => (
-			<InformasjonBolk
-				id={key}
-				key={key}
-				tittel={this.props.intl.formatMessage({
-					id: `${key}.sporsmal`
-				})}
-				beskrivelse={getIntlText(this.props.intl, `${key}.beskrivelse`)}
-				faktumstrukturer={data[key]}
-			/>
-		));
+
+		const OPPLYSNINGER_INNTEKT: string = "opplysninger.inntekt";
+		const inntektListe: object[] = data[OPPLYSNINGER_INNTEKT];
+		let n: number = 0;
+		const ID = "id";
+
+		for (const key in inntektListe){
+			if(key){
+
+				const inntektListeElement = inntektListe[key][ID];
+
+				if (eiendelerSomIkkeTrengerVedleggsOpplasting.indexOf(inntektListeElement) < 0){
+					n ++;
+					console.warn("ADDED PÅ N");
+				}
+			}
+		}
+
+		return Object.keys(data).map(key => {
+
+			console.warn("n = " + n);
+
+			if (key !== OPPLYSNINGER_INNTEKT || n > 0){
+				return (
+					<InformasjonBolk
+						id={key}
+						key={key}
+						tittel={this.props.intl.formatMessage({
+							id: `${key}.sporsmal`
+						})}
+						beskrivelse={getIntlText(this.props.intl, `${key}.beskrivelse`)}
+						faktumstrukturer={data[key]}
+					/>
+				)
+			} else {
+				return null
+			}
+		});
 
 	}
 
@@ -134,6 +169,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 			}
 			content = this.renderEkstrasporsmal();
 		}
+
 		return (
 			<LoadContainer restStatus={restStatus}>
 				<div className="steg-ekstrainformasjon">
