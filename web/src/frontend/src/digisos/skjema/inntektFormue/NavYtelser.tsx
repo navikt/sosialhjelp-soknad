@@ -29,7 +29,7 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 
 			return (
 				<div key={id} className="utbetaling blokk-s">
-					<div>{type} {belop} kr</div>
+					<div>{type}<span className="verdi detaljeliste__verdi">{belop}</span></div>
 					<div>{utbetaltMelding} {dag}.{maaned}.{aar}</div>
 				</div>
 			);

@@ -25,6 +25,7 @@ public class Routing extends HttpServlet {
     @Override
     protected final void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
+        response.setHeader("Cache-Control","max-age=0");
         try (InputStream input = getServletContext().getResourceAsStream(applicationFile);
              OutputStream output = response.getOutputStream()) {
             int bufferLength = 4096;

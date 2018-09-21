@@ -33,6 +33,7 @@
 		"react-dom": "^16.2.0",
 		"react-inlinesvg": "^0.7.1",
 		"react-intl": "^2.4.0",
+		"react-lottie": "^1.2.3",
 		"react-modal": "^3.1.6",
 		"react-motion": "^0.5.0",
 		"react-redux": "^5.0.6",
