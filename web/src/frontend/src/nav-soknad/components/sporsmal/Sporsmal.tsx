@@ -28,7 +28,8 @@ class Sporsmal extends React.Component<Props, {}> {
 		const sporsmalCls = classNames("skjema-sporsmal", {
 			"skjema-sporsmal--noBottomPadding":
 				this.props.style === "system" || this.props.style === "jaNeiSporsmal",
-			"skjema-sporsmal--systeminfo": this.props.style === "system"
+			"skjema-sporsmal--systeminfo": this.props.style === "system",
+			"skjema-sporsmal--jaNeiSporsmal": this.props.style === "jaNeiSporsmal"
 		});
 		const cls = classNames("skjema-fieldset", {
 			"skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined

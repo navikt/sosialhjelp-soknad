@@ -12,7 +12,26 @@
 			margin-right: 0;
 		}
 	}
+
+  	@media @mobile {
+	  padding: 0 @skjemaMargMobil 0 @skjemaMargMobil;
+
+	  .knapp {
+		width: 100%;
+		margin-left: 0;
+		margin-top: @skjemaMargMobil;
+		padding-top: @skjemaMargMobil;
+		padding-bottom: @skjemaMargMobil;
+	  }
+
+	  #avbryt_link {
+		padding-top: @skjemaMargMobil;
+	  }
+	}
+
 }
+
+
 @media screen and (max-width: @screen-sm) {
 	.skjema-knapperad {
 		a {

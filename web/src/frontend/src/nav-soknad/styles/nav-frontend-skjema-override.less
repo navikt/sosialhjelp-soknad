@@ -60,14 +60,28 @@
 	width: 10rem;
 	margin-bottom: 0;
   }
+
+  &__mobil--nei {
+	margin-top: @skjemaMarg;
+  }
+
+  &__mobil--uten-underSkjema {
+	margin-top: 1rem;
+  }
+
 }
 
 @media @mobile {
+  .valgMedUnderskjema__valg {
+	width: 100%;
+	padding-right: 0 !important;
+  }
+
   .inputPanel {
 
 	&__smal {
-	  width: 7rem;
-	  margin-bottom: 0;
+	  width: 100%;
+	  // margin-bottom: 16px;
 	}
 
   }
