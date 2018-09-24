@@ -270,7 +270,7 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 			const selectedValue = items[0][INNER_TEXT];
 			this.state.adresser.map(adresse => {
 				if(this.formaterAdresseString(adresse) === selectedValue) {
-					this.handleSelect(selectedValue, adresse)
+					this.handleSelect(selectedValue, adresse);
 					event.preventDefault();
 				}
 			});
