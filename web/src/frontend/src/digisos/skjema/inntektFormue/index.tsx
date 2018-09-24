@@ -9,8 +9,9 @@ import Utbetaling from "./Utbetaling";
 import { State } from "../../redux/reducers";
 import NavYtelser from "./NavYtelser";
 import HusbankInfopanel from "./HusbankInfopanel";
+import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 
-class InntektFormue extends React.Component<FaktumComponentProps, any> {
+class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps, any> {
 	render() {
 		const { fakta } = this.props;
 		return (
@@ -19,7 +20,7 @@ class InntektFormue extends React.Component<FaktumComponentProps, any> {
 				<Bostotte />
 				<HusbankInfopanel fakta={fakta}/>
 				<Eiendeler fakta={fakta} />
-				<Bankinnskudd fakta={fakta} />
+				<Bankinnskudd fakta={fakta} dispatch={this.props.dispatch}/>
 				<Utbetaling fakta={fakta} />
 			</DigisosSkjemaSteg>
 		);
