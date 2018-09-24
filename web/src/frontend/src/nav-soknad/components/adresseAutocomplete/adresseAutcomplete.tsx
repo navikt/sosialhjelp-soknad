@@ -267,13 +267,14 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 		const items: HTMLCollection = document.getElementsByClassName("item-highlighted");
 		if (items && items[0]) {
 			const INNER_TEXT = "innerText";
-			const selectedValue = items[0][INNER_TEXT];
-			this.state.adresser.map(adresse => {
-				if(this.formaterAdresseString(adresse) === selectedValue) {
-					this.handleSelect(selectedValue, adresse);
-					event.preventDefault();
-				}
+			const valgtTekststreng = items[0][INNER_TEXT];
+			const valgtAdresse = this.state.adresser.find((adresse: Adresse) => {
+				return this.formaterAdresseString(adresse) === valgtTekststreng;
 			});
+			if (valgtAdresse) {
+				this.handleSelect(valgtTekststreng, valgtAdresse);
+			}
+			event.preventDefault();
 		}
 	}
 
