@@ -260,9 +260,26 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 		}
 	}
 
+	/*
+	 * Hack for å få museklikk på trefflisten i autocomplete til å fanges opp i Edge nettleser.
+	 */
+	handleItemClickInEdgeBrowser(event: any) {
+		const items: HTMLCollection = document.getElementsByClassName("item-highlighted");
+		if (items && items[0]) {
+			const INNER_TEXT = "innerText";
+			const selectedValue = items[0][INNER_TEXT];
+			this.state.adresser.map(adresse => {
+				if(this.formaterAdresseString(adresse) === selectedValue) {
+					this.handleSelect(selectedValue, adresse)
+					event.preventDefault();
+				}
+			});
+		}
+	}
+
 	renderMenu(children: any): React.ReactNode {
 		return (
-			<div className="menu">
+			<div className="menu" onClick={(event: any) => this.handleItemClickInEdgeBrowser(event)}>
 				{children}
 			</div>
 		);
