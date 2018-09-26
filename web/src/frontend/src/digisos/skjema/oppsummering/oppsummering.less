@@ -1,5 +1,40 @@
 @vpad: 2rem;
+
+.infopanel-oppsummering {
+  margin-top: 2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.bekreftOpplysningerPanel {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+@media @mobile {
+  .bekreftOpplysningerPanel {
+	margin-left: 1rem;
+	margin-right: 1rem;
+  }
+
+  .infopanel-oppsummering {
+	margin-left: 1rem;
+	margin-right: 1rem;
+  }
+
+  .skjema-oppsummering {
+	padding: 1rem 1rem 1rem 1rem !important;
+	margin-left: 1rem !important;
+	margin-right: 1rem !important;
+  }
+}
+
 .skjema-oppsummering {
+  	background-color: @navLysGra;
+  	padding: 2rem 2rem 1rem 2rem;
+	margin-left: 2rem;
+  	margin-right: 2rem;
+
 	.bolk__rediger {
 		margin-bottom: 2rem;
 		text-align: right;
@@ -70,14 +105,23 @@
 	}
 
 	&__bekreft {
-		border-radius: 4px;
-		background: @white;
+	  	border-radius: 0.5rem;
+		background-color: #fff2e0;
+	  	border-color: #fff2e0;
 		padding-left: 1rem;
 		padding-right: 1rem;
 		padding-top: 1rem;
 		padding-bottom: 0.5rem;
 		margin: 0 auto;
 		text-align: left;
+
+	  	.skjemaelement__label:before {
+		  background-color: #fff2e0;
+		}
+
+	  	.skjemaelement__label:hover:before {
+			background-color: #FFBD66;
+	  	}
 
 	    &___feil {
 		  background: @navRosa;

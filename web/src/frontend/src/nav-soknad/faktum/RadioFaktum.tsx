@@ -44,6 +44,7 @@ class RadioFaktum extends React.Component<RadioFaktumProps, {}> {
 
 		return (
 			<Radio
+				className="soknadsosialhjelp"
 				id={id}
 				name={this.props.getName()}
 				checked={this.checked()}

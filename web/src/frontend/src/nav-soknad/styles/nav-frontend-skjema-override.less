@@ -10,6 +10,21 @@
 	}
 }
 
+.skjemaelement {
+  .checkboks,
+  .radioknapp {
+	+ .skjemaelement__label {
+	  padding-left: 34px;
+	  min-height: 26px;
+	  line-height: 24px;
+	  &:before {
+		width: 24px;
+		height: 24px;
+	  }
+	}
+  }
+}
+
 @media @mobile {
 	.skjemaelement {
 		.checkboks,
@@ -39,7 +54,7 @@
 .inputPanel {
   background-color: @white;
   border: 1px solid @navGra20;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   display: block;
   cursor: pointer;
   padding: 1rem 1rem 0.6rem 1rem;
@@ -81,8 +96,38 @@
 
 	&__smal {
 	  width: 100%;
-	  // margin-bottom: 16px;
 	}
 
   }
+}
+
+.soknadsosialhjelp {
+
+  .radioknapp {
+	+ .skjemaelement__label:before {
+	  border-radius: 50%;
+	}
+
+	&:checked + .skjemaelement__label:before {
+	  border: 2px solid @navBla;
+	  box-shadow: 0 0 0 3px @white inset, 0 0 0 12px @navBla inset;
+	}
+
+	&:disabled {
+	  &:checked + .skjemaelement__label:before {
+		border: 2px solid @navGra40;
+		box-shadow: 0 0 0 3px @white inset, 0 0 0 12px @navGra40 inset;
+	  }
+	}
+
+	&:focus + .skjemaelement__label:before {
+	  box-shadow: 0 0 0 2px @orangeFocus, 0 0 0 12px @white inset;
+	}
+
+	&:checked:focus + .skjemaelement__label:before {
+	  .mixin-transition(200ms, box-shadow);
+	  box-shadow: 0 0 0 2px @orangeFocus, 0 0 0 3px @white inset, 0 0 0 12px @navBla inset;
+	}
+  }
+
 }
