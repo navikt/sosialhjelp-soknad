@@ -98,7 +98,6 @@
 		"nav-frontend-spinner-style": "^0.2.4",
 		"nav-frontend-stegindikator-style": "^0.3.19",
 		"nav-frontend-typografi-style": "^1.0.7",
-		"nightwatch": "^0.9.16",
 		"npm-run-all": "^4.1.2",
 		"prettier": "^1.8.1",
 		"react-test-renderer": "^16.2.0",
@@ -107,7 +106,16 @@
 		"ts-jest": "^21.2.4",
 		"tslint": "5.8.0",
 		"tslint-react": "3.2.0",
-		"typescript": "^2.9.2"
+		"typescript": "^2.9.2",
+		"babel-cli": "^6.26.0",
+		"babel-core": "^6.26.3",
+		"babel-preset-env": "^1.7.0",
+		"chromedriver": "^2.40.0",
+		"cucumber": "^4.2.1",
+		"cucumber-pretty": "^1.4.4",
+		"nightwatch": "1.0.6",
+		"nightwatch-api": "latest",
+		"start-server-and-test": "^1.5.0"
 	},
 	"scripts": {
 		"mock-backend": "node scripts/mock_backend",
@@ -123,6 +131,10 @@
 		"stylelint:watch": "chokidar \"src/index.less\" -c \"stylelint \"src/index.less\" --syntax less\"",
 		"e2e": "node nightwatch.js --url localhost:3000/soknadsosialhjelp/informasjon",
 		"eject": "react-scripts-ts eject",
-		"lint": "tslint -c tslint.json --project tsconfig.json"
+		"lint": "tslint -c tslint.json --project tsconfig.json",
+		"cucumber-test:setup": "babel-node cucumber/server/server.js",
+		"cucumber-test:run": "cucumber-js cucumber/features/digisos-alle-steg.feature --require-module babel-core/register --require cucumber/server/support --require cucumber/step-definitions --format node_modules/cucumber-pretty",
+		"cucumber-test": "start-server-and-test cucumber-test:setup http-get://localhost:4444/status cucumber-test:run",
+		"cucumber-make-test-report": "node cucumber/server/createHtmlReports.js"
 	}
 }
