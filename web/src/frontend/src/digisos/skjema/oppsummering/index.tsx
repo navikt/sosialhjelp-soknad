@@ -114,7 +114,9 @@ class OppsummeringView extends React.Component<Props, {}> {
 					</div>
 
 					<div className="bekreftOpplysningerPanel blokk-xs bolk">
-						<div className={classNames + " bekreftCheckboksPanel-innhold"}>
+						<div className={classNames + " bekreftCheckboksPanel-innhold " +
+							(this.props.bekreftet ? " bekreftOpplysningerPanel__checked " : " ")}
+						>
 							<p style={{marginTop: "0"}}>
 								<FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger"/>
 							</p>

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { State } from "../../redux/reducers";
-import Infoblokk from "../../../nav-soknad/components/infoblokk/index";
 import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { SynligeFaktaProps } from "../../redux/synligefakta/synligeFaktaTypes";
 import InformasjonBolk from "./InformasjonBolk";
@@ -75,22 +74,14 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 
 	renderIkkeBesvart() {
 		return (
-			<div className="skjema-content">
-				<div className="ekstrainfo-melding">
-					<Infoblokk
-						brukSystemtittel={true}
-						tittel={this.props.intl.formatMessage({
-							id: "opplysninger.ikkebesvart.tittel"
-						})}
-						ikon="advarsel"
-					>
-						<div className="blokk-m">
-							<FormattedHTMLMessage id="opplysninger.ikkebesvart.melding"/>
-						</div>
-					</Infoblokk>
-				</div>
-			</div>
-		);
+			<Informasjonspanel
+				synlig={true}
+				ikon={InformasjonspanelIkon.HENSYN}
+				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+			>
+				<FormattedHTMLMessage id="opplysninger.ikkebesvart.melding"/>
+			</Informasjonspanel>
+			);
 	}
 
 	renderInfoMelding() {
