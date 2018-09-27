@@ -8,7 +8,7 @@ import SysteminfoMedSkjema from "../../../nav-soknad/components/systeminfoMedSkj
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import {finnFakta} from "../../../nav-soknad/utils/faktumUtils";
-import SystemregistrertBarn from "./SystemregistrertBarn";
+import SystemregistrerteBarn from "./SystemregistrerteBarn";
 import Barnebidrag from "./Barnebidrag";
 
 interface StateProps {
@@ -36,7 +36,7 @@ class Familierelasjoner extends React.Component<Props, {}> {
 		        <SporsmalFaktum faktumKey={"familierelasjon.faktum"} style="system">
 			        <p><FormattedHTMLMessage id="familierelasjon.ingress" values={{antallBarn}}/></p>
 			        <SysteminfoMedSkjema>
-				        <SystemregistrertBarn barnFakta={barnFakta} />
+				        <SystemregistrerteBarn barnFakta={barnFakta} />
 						<Barnebidrag />
 			        </SysteminfoMedSkjema>
 		        </SporsmalFaktum>

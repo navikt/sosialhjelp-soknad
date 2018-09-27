@@ -11,7 +11,7 @@ interface Props {
 	barnFakta: any;
 }
 
-const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) => {
+const SystemregistrerteBarn: React.StatelessComponent<Props> = ({ barnFakta }) => {
 	const idSamvaersgrad = "idSamvaersgrad";
 	const idDeltBosted = "idDeltBosted";
 	const FORNAVN = "fornavn";
@@ -21,12 +21,20 @@ const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) =>
 	const FOLKEREGISTRERT = "folkeregistrertsammen";
 	const IKKETILGANGTILBARN = "ikketilgangtilbarn";
 
-	return barnFakta.map((barn: any, index: number) => {
+	const sorterteBarn = barnFakta.sort((barn1: any, barn2: any) => {
+		const fodselsDato1: number = new Date(barn1.properties[FODSELSDATO]).valueOf();
+		const fodselsDato2: number = new Date(barn2.properties[FODSELSDATO]).valueOf();
+		return fodselsDato2 - fodselsDato1;
+	});
+
+	return sorterteBarn.map((barn: any, index: number) => {
 		const fornavn = barn.properties[FORNAVN] ? barn.properties[FORNAVN] : "";
 		const mellomnavn = barn.properties[MELLOMNAVN] ? barn.properties[MELLOMNAVN] : "";
 		const etternavn = barn.properties[ETTERNAVN] ? barn.properties[ETTERNAVN] : "";
 		const navnString = `${fornavn} ${mellomnavn} ${etternavn}`;
 		const fodselsDato = barn.properties[FODSELSDATO];
+		console.warn( "debug. " + fornavn + " " + etternavn + ": " + fodselsDato);
+
 		const datoFormatert = formaterIsoDato(fodselsDato);
 		const FOLKEREGISTRERTVERDI = barn.properties[FOLKEREGISTRERT] === "true" ? "Ja" : "Nei";
 		const sisteListeElement: boolean =  (index + 1 ===  barnFakta.length);
@@ -91,4 +99,4 @@ const SystemregistrertBarn: React.StatelessComponent<Props> = ({ barnFakta }) =>
 
 };
 
-export default SystemregistrertBarn;
+export default SystemregistrerteBarn;
