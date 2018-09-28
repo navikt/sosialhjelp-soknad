@@ -1,7 +1,6 @@
 import * as React from "react";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import SysteminfoMedSkjema from "../../../nav-soknad/components/systeminfoMedSkjema";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { Faktum } from "../../../nav-soknad/types";
 import { State } from "../../redux/reducers";
@@ -105,10 +104,10 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 		return (
 			<div>
 				<SporsmalFaktum faktumKey="system.familie.sivilstatus" style="system">
-					<p>
+					<div>
 						<FormattedMessage id="system.familie.sivilstatus"/>
-					</p>
-					<SysteminfoMedSkjema>
+					</div>
+					<div>
 						<Detaljeliste>
 							<DetaljelisteElement
 								tittel={
@@ -118,7 +117,7 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 							/>
 						</Detaljeliste>
 						{ this.renderEktefelleInformasjon(ektefelleFaktum) }
-					</SysteminfoMedSkjema>
+					</div>
 				</SporsmalFaktum>
 				{ ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] &&
 				  ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] !== "true" &&

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
-import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import Detaljeliste, {
 	DetaljelisteElement
 } from "../../../../nav-soknad/components/detaljeliste";
@@ -27,7 +26,7 @@ const PersonaliaTPS: React.StatelessComponent<Props> = ({ fakta }) => {
 	}
 
 	return (
-		<SysteminfoMedSkjema>
+		<div>
 			<Detaljeliste>
 				<DetaljelisteElement
 					tittel={<FormattedMessage id="kontakt.system.personalia.navn" />}
@@ -47,7 +46,7 @@ const PersonaliaTPS: React.StatelessComponent<Props> = ({ fakta }) => {
 					/>
 				)}
 			</Detaljeliste>
-		</SysteminfoMedSkjema>
+		</div>
 	);
 };
 

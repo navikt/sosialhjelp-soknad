@@ -106,12 +106,17 @@ class OppsummeringView extends React.Component<Props, {}> {
 		return (
 			<LoadContainer restStatus={this.props.restStatus}>
 				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
+
 					{skjemaOppsummering}
 
-					<InformasjonsBoks/>
+					<div className="infopanel-oppsummering">
+						<InformasjonsBoks/>
+					</div>
 
-					<div className="blokk-xs bolk">
-						<div className={classNames}>
+					<div className="bekreftOpplysningerPanel blokk-xs bolk">
+						<div className={classNames + " bekreftCheckboksPanel-innhold " +
+							(this.props.bekreftet ? " bekreftOpplysningerPanel__checked " : " ")}
+						>
 							<p style={{marginTop: "0"}}>
 								<FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger"/>
 							</p>

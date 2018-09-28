@@ -3,6 +3,7 @@ import { Collapse } from "react-collapse";
 import Ella from "../svg/Ella";
 import Brevkonvolutt from "../svg/Brevkonvolutt";
 import {DigisosFarge} from "../svg/DigisosFarger";
+import Hensyn from "../svg/Hensyn";
 
 interface OwnProps {
 	farge: DigisosFarge;
@@ -17,7 +18,8 @@ interface State {
 
 export enum InformasjonspanelIkon {
 	ELLA = "ella",
-	BREVKONVOLUTT = "brevkonvolutt"
+	BREVKONVOLUTT = "brevkonvolutt",
+	HENSYN = "hensyn"
 }
 
 class Informasjonspanel extends React.Component<OwnProps, State> {
@@ -38,11 +40,14 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 	renderIkon() {
 
 		switch (this.props.ikon){
-			case "ella": {
+			case InformasjonspanelIkon.ELLA: {
 				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
 			}
-			case "brevkonvolutt": {
+			case InformasjonspanelIkon.BREVKONVOLUTT: {
 				return <Brevkonvolutt size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+			}
+			case InformasjonspanelIkon.HENSYN: {
+				return <Hensyn size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
 			}
 			default: {
 				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
