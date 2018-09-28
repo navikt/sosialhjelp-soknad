@@ -13,6 +13,7 @@
 		"member-access": false,
 		"jsx-no-lambda": false,
 		"no-console": [true, "log", "debug", "info", "time", "timeEnd", "trace"],
-		"no-debugger": false
+		"no-debugger": false,
+		"comment-format": [false]
 	}
 }
