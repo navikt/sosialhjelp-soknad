@@ -119,7 +119,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 								<Personopplysninger/>
 							</div>
 
-							<div className="skjema-content">
+							<div className="skjema-content" style={{border: "1px solid transparent"}}>
 								<span className="informasjon-start-knapp">
 									<Knapp
 										id="start_soknad_button"

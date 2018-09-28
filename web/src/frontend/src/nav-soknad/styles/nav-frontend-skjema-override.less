@@ -10,6 +10,22 @@
 	}
 }
 
+.skjemaelement {
+  .checkboks,
+  .radioknapp {
+	+ .skjemaelement__label {
+	  padding-left: 34px;
+	  min-height: 26px;
+	  line-height: 24px;
+	  &:before {
+		width: 24px;
+		height: 24px;
+		border-radius: 4px;
+	  }
+	}
+  }
+}
+
 @media @mobile {
 	.skjemaelement {
 		.checkboks,
@@ -33,4 +49,86 @@
 }
 .panel-padding {
 	padding: 1rem;
+}
+
+// Mobilvennlige radioknapper og sjekkbokser med klikkbare paneler
+.inputPanel {
+  background-color: @white;
+  border: 1px solid @navGra20;
+  border-radius: 0.5rem;
+  display: block;
+  cursor: pointer;
+  padding: 1rem 1rem 0.3rem 1rem;
+  position: relative;
+  margin-bottom: 1rem;
+
+  &:hover {
+	border: 1px solid @navBla;
+	box-shadow: @grayIcon 0 2px 1px 0;
+  }
+
+  &__checked {
+	background-color: rgba(0, 103, 197, 0.2);
+	border: 1px solid transparent;
+  }
+
+  &__smal {
+	width: 10rem;
+	margin-bottom: 0;
+  }
+
+  &__mobil--nei {
+	margin-top: @skjemaMarg;
+  }
+
+  &__mobil--uten-underSkjema {
+	margin-top: 1rem;
+  }
+
+}
+
+@media @mobile {
+  .valgMedUnderskjema__valg {
+	width: 100%;
+	padding-right: 0 !important;
+  }
+
+  .inputPanel {
+
+	&__smal {
+	  width: 100%;
+	}
+
+  }
+}
+
+.soknadsosialhjelp {
+
+  .radioknapp {
+	+ .skjemaelement__label:before {
+	  border-radius: 50%;
+	}
+
+	&:checked + .skjemaelement__label:before {
+	  border: 2px solid @navBla;
+	  box-shadow: 0 0 0 3px @white inset, 0 0 0 12px @navBla inset;
+	}
+
+	&:disabled {
+	  &:checked + .skjemaelement__label:before {
+		border: 2px solid @navGra40;
+		box-shadow: 0 0 0 3px @white inset, 0 0 0 12px @navGra40 inset;
+	  }
+	}
+
+	&:focus + .skjemaelement__label:before {
+	  box-shadow: 0 0 0 2px @orangeFocus, 0 0 0 12px @white inset;
+	}
+
+	&:checked:focus + .skjemaelement__label:before {
+	  .mixin-transition(200ms, box-shadow);
+	  box-shadow: 0 0 0 2px @orangeFocus, 0 0 0 3px @white inset, 0 0 0 12px @navBla inset;
+	}
+  }
+
 }

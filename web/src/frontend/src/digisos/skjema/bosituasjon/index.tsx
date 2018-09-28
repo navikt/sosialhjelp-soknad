@@ -24,24 +24,85 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.bosituasjonbolk}>
 				<SporsmalFaktum faktumKey={bosituasjon.faktum}>
-					<RadioFaktum id="bosituasjon_radio_eier" faktumKey={bosituasjon.faktum} value="eier" />
-					<RadioFaktum id="bosituasjon_radio_leier" faktumKey={bosituasjon.faktum} value="leier" />
-					<RadioFaktum id="bosituasjon_radio_kommunal" faktumKey={bosituasjon.faktum} value="kommunal" />
-					<RadioFaktum id="bosituasjon_radio_ingen" faktumKey={bosituasjon.faktum} value="ingen" />
-					<RadioFaktum id="bosituasjon_radio_annet" faktumKey={bosituasjon.faktum} value="annet" />
-					<Underskjema
-						visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}
-					>
-						<SporsmalFaktum faktumKey={annen.faktum}>
-							{/*TODO opprette checkboxgruppefaktumet*/}
-							<RadioFaktum id="bosituasjon_radio_foreldre" faktumKey={annen.faktum} value="foreldre" />
-							<RadioFaktum id="bosituasjon_radio_familie" faktumKey={annen.faktum} value="familie" />
-							<RadioFaktum id="bosituasjon_radio_venner" faktumKey={annen.faktum} value="venner" />
-							<RadioFaktum id="bosituasjon_radio_institusjon" faktumKey={annen.faktum} value="institusjon" />
-							<RadioFaktum id="bosituasjon_radio_fengsel" faktumKey={annen.faktum} value="fengsel" />
-							<RadioFaktum id="bosituasjon_radio_krisesenter" faktumKey={annen.faktum} value="krisesenter" />
-						</SporsmalFaktum>
-					</Underskjema>
+					<RadioFaktum
+						id="bosituasjon_radio_eier"
+						faktumKey={bosituasjon.faktum}
+						value="eier"
+						visPanel={true}
+					/>
+					<RadioFaktum
+						id="bosituasjon_radio_leier"
+						faktumKey={bosituasjon.faktum}
+						value="leier"
+						visPanel={true}
+					/>
+					<RadioFaktum
+						id="bosituasjon_radio_kommunal"
+						faktumKey={bosituasjon.faktum}
+						value="kommunal"
+						visPanel={true}
+					/>
+					<RadioFaktum
+						id="bosituasjon_radio_ingen"
+						faktumKey={bosituasjon.faktum}
+						value="ingen"
+						visPanel={true}
+					/>
+					<RadioFaktum
+						id="bosituasjon_radio_annet"
+						faktumKey={bosituasjon.faktum}
+						value="annet"
+						visPanel={true}
+					/>
+					<div className="skjema-sporsmal--jaNeiSporsmal">
+						<Underskjema
+							visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}
+							arrow={true}
+						>
+							<SporsmalFaktum
+								faktumKey={annen.faktum}
+								style="system"
+							>
+								{/*TODO opprette checkboxgruppefaktumet*/}
+								<RadioFaktum
+									id="bosituasjon_radio_foreldre"
+									faktumKey={annen.faktum}
+									value="foreldre"
+									visPanel={true}
+								/>
+								<RadioFaktum
+									id="bosituasjon_radio_familie"
+									faktumKey={annen.faktum}
+									value="familie"
+									visPanel={true}
+								/>
+								<RadioFaktum
+									id="bosituasjon_radio_venner"
+									faktumKey={annen.faktum}
+									value="venner"
+									visPanel={true}
+								/>
+								<RadioFaktum
+									id="bosituasjon_radio_institusjon"
+									faktumKey={annen.faktum}
+									value="institusjon"
+									visPanel={true}
+								/>
+								<RadioFaktum
+									id="bosituasjon_radio_fengsel"
+									faktumKey={annen.faktum}
+									value="fengsel"
+									visPanel={true}
+								/>
+								<RadioFaktum
+									id="bosituasjon_radio_krisesenter"
+									faktumKey={annen.faktum}
+									value="krisesenter"
+									visPanel={true}
+								/>
+							</SporsmalFaktum>
+						</Underskjema>
+					</div>
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey={antall.faktum}>
 					<BelopFaktum

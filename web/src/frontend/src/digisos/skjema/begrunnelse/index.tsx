@@ -16,7 +16,6 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 				placeholder={intl.formatMessage({
 					id: "begrunnelse.hvorfor.placeholder"
 				})}
-				textareaClass="skjema-textarea--large"
 				faktumKey="begrunnelse.hvorfor"
 				labelId="begrunnelse.hvorfor.label"
 				maxLength={MAX_CHARS}
@@ -30,7 +29,6 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 					id: "begrunnelse.hva.placeholder"
 				})}
 				validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
-				textareaClass="skjema-textarea--large"
 				faktumKey="begrunnelse.hva"
 				labelId="begrunnelse.hva.label"
 				maxLength={MAX_CHARS}

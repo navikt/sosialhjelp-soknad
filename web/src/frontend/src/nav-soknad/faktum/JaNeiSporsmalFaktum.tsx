@@ -29,6 +29,7 @@ interface OwnProps {
 type Props = OwnProps & FaktumComponentProps;
 
 import { getFaktumVerdi, getPropertyVerdi, radioCheckKeys } from "../utils";
+import { erMobilVisning } from "../utils/domUtils";
 
 class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 	render() {
@@ -76,6 +77,8 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 			idRadioNei = idRadioNei.replace(/__/g, "_");
 		}
 
+		const mobilVisning = erMobilVisning();
+
 		return (
 			<SporsmalFaktum
 				{...this.props}
@@ -86,9 +89,34 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 						<Underskjema visible={visSkjema}>{children}</Underskjema>
 					}
 				>
-					<RadioFaktum id={idRadioJa} {...radioProps} value="true" />
-					<RadioFaktum id={idRadioNei} {...radioProps} value="false" />
+					<RadioFaktum
+						{...radioProps}
+						id={idRadioJa}
+						value="true"
+						visPanel={true}
+						className="inputPanel__smal"
+					/>
+					{!mobilVisning && (
+						<RadioFaktum
+							{...radioProps}
+							id={idRadioNei}
+							value="false"
+							visPanel={true}
+							className="inputPanel__smal"
+						/>
+					) }
 				</ValgMedUnderskjema>
+				{mobilVisning && (
+					<RadioFaktum
+						{...radioProps}
+						id={idRadioNei}
+						value="false"
+						visPanel={true}
+						className={
+							"inputPanel__smal inputPanel__mobil--nei " +
+							visSkjema ? "inputPanel__mobil--uten-underSkjema" : ""}
+					/>
+				) }
 			</SporsmalFaktum>
 		);
 	}
