@@ -21,20 +21,12 @@ const SystemregistrerteBarn: React.StatelessComponent<Props> = ({ barnFakta }) =
 	const FOLKEREGISTRERT = "folkeregistrertsammen";
 	const IKKETILGANGTILBARN = "ikketilgangtilbarn";
 
-	const sorterteBarn = barnFakta.sort((barn1: any, barn2: any) => {
-		const fodselsDato1: number = new Date(barn1.properties[FODSELSDATO]).valueOf();
-		const fodselsDato2: number = new Date(barn2.properties[FODSELSDATO]).valueOf();
-		return fodselsDato2 - fodselsDato1;
-	});
-
-	return sorterteBarn.map((barn: any, index: number) => {
+	return barnFakta.map((barn: any, index: number) => {
 		const fornavn = barn.properties[FORNAVN] ? barn.properties[FORNAVN] : "";
 		const mellomnavn = barn.properties[MELLOMNAVN] ? barn.properties[MELLOMNAVN] : "";
 		const etternavn = barn.properties[ETTERNAVN] ? barn.properties[ETTERNAVN] : "";
 		const navnString = `${fornavn} ${mellomnavn} ${etternavn}`;
 		const fodselsDato = barn.properties[FODSELSDATO];
-		console.warn( "debug. " + fornavn + " " + etternavn + ": " + fodselsDato);
-
 		const datoFormatert = formaterIsoDato(fodselsDato);
 		const FOLKEREGISTRERTVERDI = barn.properties[FOLKEREGISTRERT] === "true" ? "Ja" : "Nei";
 		const sisteListeElement: boolean =  (index + 1 ===  barnFakta.length);
@@ -47,8 +39,11 @@ const SystemregistrerteBarn: React.StatelessComponent<Props> = ({ barnFakta }) =
 
 		return (
 			<div key={barn.faktumId} className={sisteListeElement ? "barn barn_siste_liste_element" : "barn"}>
-				<h4>{navnString}</h4>
 				<Detaljeliste>
+					<DetaljelisteElement
+						tittel={<span><FormattedMessage id="kontakt.system.personalia.navn" /></span>}
+						verdi={navnString}
+					/>
 					<DetaljelisteElement
 						tittel={<span><FormattedMessage id="familierelasjon.fodselsdato"/></span>}
 						verdi={datoFormatert}
