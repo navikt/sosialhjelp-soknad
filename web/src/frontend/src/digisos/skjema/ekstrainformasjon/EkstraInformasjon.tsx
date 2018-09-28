@@ -75,7 +75,6 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 	renderIkkeBesvart() {
 		return (
 			<Informasjonspanel
-				synlig={true}
 				ikon={InformasjonspanelIkon.HENSYN}
 				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 			>
@@ -87,7 +86,6 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 	renderInfoMelding() {
 		return (
 			<Informasjonspanel
-				synlig={true}
 				ikon={InformasjonspanelIkon.HENSYN}
 				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 			>
