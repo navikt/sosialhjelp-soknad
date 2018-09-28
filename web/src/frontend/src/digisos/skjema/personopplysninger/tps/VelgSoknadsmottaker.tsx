@@ -30,7 +30,7 @@ class VelgSoknadsmottaker extends React.Component<Props, {}> {
 	render() {
 		const valgtSoknadsmottaker = finnFaktum("soknadsmottaker", this.props.fakta);
 		const ENHETSID = "enhetsId";
-		const enhetsId = valgtSoknadsmottaker.properties[ENHETSID] || -1;
+		const enhetsId = valgtSoknadsmottaker.properties[ENHETSID] || "velg";
 		const antallSoknadsmottakere = this.props.soknadsmottakere.length;
 		if (antallSoknadsmottakere < 2) {
 			return null;
@@ -42,7 +42,7 @@ class VelgSoknadsmottaker extends React.Component<Props, {}> {
 					onChange={(event: any) => this.velgNavKontor(event)}
 					value={enhetsId}
 				>
-					<option key="velg" disabled={true}>
+					<option value="velg" key="velg" disabled={true}>
 						{getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgMottaker")}
 					</option>
 					{this.props.soknadsmottakere.map((item: any, index: number) => {
