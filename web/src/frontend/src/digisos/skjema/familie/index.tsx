@@ -3,12 +3,11 @@ import { connect } from "react-redux";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { State } from "../../redux/reducers";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
-
 import Sivilstatus from "./Sivilstatus";
-import HarBarn from "./HarBarn";
 import SivilstatusTPS from "./SivilstatusTPS";
 import { Faktum } from "../../../nav-soknad/types";
 import { finnFaktum } from "../../../nav-soknad/utils";
+import Familierelasjoner from "./Familierelasjoner";
 
 class Familie extends React.Component<FaktumComponentProps, {}> {
 
@@ -27,7 +26,7 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 					sivilstatusFaktum.value !== "gift" &&
 					<Sivilstatus fakta={fakta} />
 				}
-				<HarBarn />
+				<Familierelasjoner />
 			</DigisosSkjemaSteg>
 		);
 	}

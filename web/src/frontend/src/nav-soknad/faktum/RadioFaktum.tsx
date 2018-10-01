@@ -16,12 +16,17 @@ interface OwnProps {
 	id?: string;
 	label?: any;
 	onChange?: any;
+	visPanel?: boolean;
+	className?: string;
 }
 
-class RadioFaktum extends React.Component<
-	OwnProps & InjectedFaktumComponentProps & InjectedIntlProps,
-	{}
-> {
+type RadioFaktumProps = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
+
+class RadioFaktum extends React.Component<RadioFaktumProps, {}> {
+	constructor(props: RadioFaktumProps) {
+		super(props);
+	}
+
 	determineLabel(id: string, faktumKey: string, tekster: CheckboxFaktumTekst, value: string) {
 		if (this.props.label != null) {
 			return this.props.label;
@@ -34,19 +39,42 @@ class RadioFaktum extends React.Component<
 		/>;
 	}
 
-	render() {
-		const { faktumKey, value, disabled, property, required, intl, onChange } = this.props;
+	defaultOnChange(value: string, property: string) {
+		this.props.setFaktumVerdiOgLagre(value, property)
+	}
+
+	checked(): boolean {
+		const { value, property} = this.props;
+		return property
+			? this.props.getPropertyVerdi() === value
+			: this.props.getFaktumVerdi() === value
+	}
+
+	determineOnChange() {
+		if (this.props.onChange != null) {
+			return this.props.onChange;
+		}
+
+		const { value, property } = this.props;
+		
+		return () => {
+			return this.defaultOnChange(value, property);
+		}
+	}
+
+	renderRadio() {
+		const { faktumKey, value, disabled, property, required, intl } = this.props;
+		const onChange = this.determineOnChange();
+
 		const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
 		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
+
 		return (
 			<Radio
+				className="soknadsosialhjelp"
 				id={id}
 				name={this.props.getName()}
-				checked={
-					property
-						? this.props.getPropertyVerdi() === value
-						: this.props.getFaktumVerdi() === value
-				}
+				checked={this.checked()}
 				disabled={disabled}
 				value={value}
 				required={required}
@@ -60,7 +88,29 @@ class RadioFaktum extends React.Component<
 					this.determineLabel(id, faktumKey, tekster, value)
 				}
 			/>
+
 		);
+	}
+
+	render() {
+		const { visPanel, className } = this.props;
+		const onChange = this.determineOnChange();
+		let classNames = "inputPanel " + className;
+		if (this.checked()) {
+			classNames += " inputPanel__checked";
+		}
+		if(visPanel) {
+			return (
+				<div
+					className={classNames}
+					onClick={() => onChange()}
+				>
+					{this.renderRadio()}
+				</div>
+			);
+		} else {
+			return this.renderRadio();
+		}
 	}
 }
 

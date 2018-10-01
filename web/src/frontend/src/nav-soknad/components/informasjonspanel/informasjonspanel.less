@@ -68,8 +68,15 @@
 
 .skjema-informasjonspanel-wrapper {
   display: block;
-  border-top: 1px solid @navBodyGraa;
-  border-bottom: 1px solid @navBodyGraa;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+@media @mobile {
+  .skjema-informasjonspanel-wrapper {
+	margin-left: 1rem;
+	margin-right: 1rem;
+  }
 }
 
 @media screen and (max-width: 740px ) {
