@@ -67,7 +67,8 @@ class RadioFaktum extends React.Component<RadioFaktumProps, {}> {
 	}
 
 	render() {
-		const { visPanel, className } = this.props;
+		const visPanel = (this.props.visPanel != null ? this.props.visPanel : true);
+		const { className } = this.props;
 		let classNames = "inputPanel " + className;
 		if (this.checked()) {
 			classNames += " inputPanel__checked";

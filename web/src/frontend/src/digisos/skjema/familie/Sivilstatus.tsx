@@ -21,7 +21,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 		return (
 			<div>
 				<SporsmalFaktum faktumKey={sivilstatus.faktum}>
-					<RadioFaktum id="sivilstatus_gift_radio" faktumKey={sivilstatus.faktum} value="gift" visPanel={true}/>
+					<RadioFaktum id="sivilstatus_gift_radio" faktumKey={sivilstatus.faktum} value="gift"/>
 					<div className="skjema-sporsmal--jaNeiSporsmal">
 						<Underskjema
 							visible={getFaktumVerdi(fakta, sivilstatus.faktum) === "gift"}
@@ -33,11 +33,11 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 
 						</Underskjema>
 					</div>
-					<RadioFaktum id="sivilstatus_ugift_radio" faktumKey={sivilstatus.faktum} value="ugift" visPanel={true}/>
-					<RadioFaktum id="sivilstatus_samboer_radio" faktumKey={sivilstatus.faktum} value="samboer" visPanel={true}/>
-					<RadioFaktum id="sivilstatus_enke_radio" faktumKey={sivilstatus.faktum} value="enke" visPanel={true}/>
-					<RadioFaktum id="sivilstatus_skilt_radio" faktumKey={sivilstatus.faktum} value="skilt" visPanel={true}/>
-					<RadioFaktum id="sivilstatus_separert_radio" faktumKey={sivilstatus.faktum} value="separert" visPanel={true}/>
+					<RadioFaktum id="sivilstatus_ugift_radio" faktumKey={sivilstatus.faktum} value="ugift"/>
+					<RadioFaktum id="sivilstatus_samboer_radio" faktumKey={sivilstatus.faktum} value="samboer"/>
+					<RadioFaktum id="sivilstatus_enke_radio" faktumKey={sivilstatus.faktum} value="enke"/>
+					<RadioFaktum id="sivilstatus_skilt_radio" faktumKey={sivilstatus.faktum} value="skilt"/>
+					<RadioFaktum id="sivilstatus_separert_radio" faktumKey={sivilstatus.faktum} value="separert"/>
 				</SporsmalFaktum>
 				<Informasjonspanel
 					synlig={ status }

@@ -35,12 +35,10 @@ class UtgifterGjeld extends React.Component<
 						<CheckboxFaktum
 							id="boutgifter_husleie_checkbox"
 							faktumKey={createCheckboxFaktumKey(boUtgifter.faktum, "husleie")}
-							visPanel={true}
 							/>
 						<CheckboxFaktum
 							id="boutgifter_strom_checkbox"
 							faktumKey={createCheckboxFaktumKey(boUtgifter.faktum, "strom")}
-							visPanel={true}
 						/>
 						<CheckboxFaktum
 							id="boutgifter_kommunale_avgifter_checkbox"
@@ -48,7 +46,6 @@ class UtgifterGjeld extends React.Component<
 								boUtgifter.faktum,
 								"kommunaleavgifter"
 							)}
-							visPanel={true}
 						/>
 						<CheckboxFaktum
 							id="boutgifter_oppvarming_checkbox"
@@ -56,7 +53,6 @@ class UtgifterGjeld extends React.Component<
 								boUtgifter.faktum,
 								"oppvarming"
 							)}
-							visPanel={true}
 						/>
 						<CheckboxFaktum
 							id="boutgifter_avdrag_renter_checkbox"
@@ -64,7 +60,6 @@ class UtgifterGjeld extends React.Component<
 								boUtgifter.faktum,
 								"avdraglaan"
 							)}
-							visPanel={true}
 						/>
 						<CheckboxFaktum
 							id="boutgifter_andre_utgifter_checkbox"
@@ -72,7 +67,6 @@ class UtgifterGjeld extends React.Component<
 								boUtgifter.faktum,
 								"andreutgifter"
 							)}
-							visPanel={true}
 						/>
 					</SporsmalFaktum>
 				</JaNeiSporsmalFaktum>
@@ -87,7 +81,6 @@ class UtgifterGjeld extends React.Component<
 								barneUtgifter.faktum,
 								"fritidsaktivitet"
 							)}
-							visPanel={true}
 						/>
 						<CheckboxFaktum
 							id="utgifter_barn_barnehage_checkbox"
@@ -95,12 +88,10 @@ class UtgifterGjeld extends React.Component<
 								barneUtgifter.faktum,
 								"barnehage"
 							)}
-							visPanel={true}
 						/>
 						<CheckboxFaktum
 							id="utgifter_barn_sfo_checkbox"
 							faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "sfo")}
-							visPanel={true}
 						/>
 						<CheckboxFaktum
 							id="utgifter_barn_tannbehandling_checkbox"
@@ -108,12 +99,10 @@ class UtgifterGjeld extends React.Component<
 								barneUtgifter.faktum,
 								"tannbehandling"
 							)}
-							visPanel={true}
 						/>
 						<CheckboxFaktum
 							id="utgifter_barn_annet_checkbox"
 							faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "annet")}
-							visPanel={true}
 						/>
 					</SporsmalFaktum>
 				</JaNeiSporsmalFaktum>

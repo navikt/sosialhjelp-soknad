@@ -30,7 +30,6 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 							hvilkeUtbetalinger.faktum,
 							"utbytte"
 						)}
-						visPanel={true}
 					/>
 					<CheckboxFaktum
 						id="utbetalinger_salg_checkbox"
@@ -38,7 +37,6 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 							hvilkeUtbetalinger.faktum,
 							"salg"
 						)}
-						visPanel={true}
 					/>
 					<CheckboxFaktum
 						id="utbetalinger_forsikringsutbetalinger_checkbox"
@@ -46,7 +44,6 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 							hvilkeUtbetalinger.faktum,
 							"forsikringsutbetalinger"
 						)}
-						visPanel={true}
 					/>
 					<CheckboxFaktum
 						id="utbetalinger_annet_checkbox"
@@ -54,7 +51,6 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 							hvilkeUtbetalinger.faktum,
 							"annet"
 						)}
-						visPanel={true}
 					/>
 					<NivaTreSkjema
 						visible={faktumIsSelected(getFaktumVerdi(fakta, hvilkeUtbetalingerAnnet))}
