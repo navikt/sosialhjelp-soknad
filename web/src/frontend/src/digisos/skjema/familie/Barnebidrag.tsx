@@ -10,10 +10,10 @@ class Barnebidrag extends React.Component<{}, {}> {
 		return (
 			<div className="blokk barnebidrag">
 				<SporsmalFaktum faktumKey={barnebidrag.faktum}>
-					<RadioFaktum visPanel={true} id="familie_barnebedrag_radio_betaler" faktumKey={barnebidrag.faktum} value="betaler" />
-					<RadioFaktum visPanel={true} id="familie_barnebedrag_radio_mottar" faktumKey={barnebidrag.faktum} value="mottar" />
-					<RadioFaktum visPanel={true} id="familie_barnebedrag_radio_begge" faktumKey={barnebidrag.faktum} value="begge" />
-					<RadioFaktum visPanel={true} id="familie_barnebedrag_radio_ingen" faktumKey={barnebidrag.faktum} value="ingen" />
+					<RadioFaktum id="familie_barnebedrag_radio_betaler" faktumKey={barnebidrag.faktum} value="betaler" />
+					<RadioFaktum id="familie_barnebedrag_radio_mottar" faktumKey={barnebidrag.faktum} value="mottar" />
+					<RadioFaktum id="familie_barnebedrag_radio_begge" faktumKey={barnebidrag.faktum} value="begge" />
+					<RadioFaktum id="familie_barnebedrag_radio_ingen" faktumKey={barnebidrag.faktum} value="ingen" />
 				</SporsmalFaktum>
 			</div>
 		);

@@ -45,7 +45,7 @@ class CheckboxFaktum extends React.Component<CheckboxFaktumProps, {checked: bool
 	}
 
 	onClick(evt: any) {
-		const { visPanel } = this.props;
+		const visPanel = (this.props.visPanel != null ? this.props.visPanel : true);
 		if (visPanel) {
 			evt.preventDefault();
 		} else {
@@ -88,7 +88,8 @@ class CheckboxFaktum extends React.Component<CheckboxFaktumProps, {checked: bool
 	}
 
 	render() {
-		const { visPanel, className, fakta, faktumKey } = this.props;
+		const visPanel = (this.props.visPanel != null ? this.props.visPanel : true);
+		const {className, fakta, faktumKey } = this.props;
 		const checked = faktumIsSelected(getFaktumVerdi(fakta, faktumKey));
 		let classNames = "inputPanel " + className;
 		if (checked) {
