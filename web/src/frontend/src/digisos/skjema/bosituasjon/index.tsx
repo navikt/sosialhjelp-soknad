@@ -49,49 +49,46 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						faktumKey={bosituasjon.faktum}
 						value="annet"
 					/>
-					<div className="skjema-sporsmal--jaNeiSporsmal">
-						<Underskjema
-							visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}
-							arrow={true}
+					<Underskjema
+						visible={getFaktumVerdi(fakta, bosituasjon.faktum) === "annet"}
+					>
+						<SporsmalFaktum
+							faktumKey={annen.faktum}
+							style="system"
 						>
-							<SporsmalFaktum
+							{/*TODO opprette checkboxgruppefaktumet*/}
+							<RadioFaktum
+								id="bosituasjon_radio_foreldre"
 								faktumKey={annen.faktum}
-								style="system"
-							>
-								{/*TODO opprette checkboxgruppefaktumet*/}
-								<RadioFaktum
-									id="bosituasjon_radio_foreldre"
-									faktumKey={annen.faktum}
-									value="foreldre"
-								/>
-								<RadioFaktum
-									id="bosituasjon_radio_familie"
-									faktumKey={annen.faktum}
-									value="familie"
-								/>
-								<RadioFaktum
-									id="bosituasjon_radio_venner"
-									faktumKey={annen.faktum}
-									value="venner"
-								/>
-								<RadioFaktum
-									id="bosituasjon_radio_institusjon"
-									faktumKey={annen.faktum}
-									value="institusjon"
-								/>
-								<RadioFaktum
-									id="bosituasjon_radio_fengsel"
-									faktumKey={annen.faktum}
-									value="fengsel"
-								/>
-								<RadioFaktum
-									id="bosituasjon_radio_krisesenter"
-									faktumKey={annen.faktum}
-									value="krisesenter"
-								/>
-							</SporsmalFaktum>
-						</Underskjema>
-					</div>
+								value="foreldre"
+							/>
+							<RadioFaktum
+								id="bosituasjon_radio_familie"
+								faktumKey={annen.faktum}
+								value="familie"
+							/>
+							<RadioFaktum
+								id="bosituasjon_radio_venner"
+								faktumKey={annen.faktum}
+								value="venner"
+							/>
+							<RadioFaktum
+								id="bosituasjon_radio_institusjon"
+								faktumKey={annen.faktum}
+								value="institusjon"
+							/>
+							<RadioFaktum
+								id="bosituasjon_radio_fengsel"
+								faktumKey={annen.faktum}
+								value="fengsel"
+							/>
+							<RadioFaktum
+								id="bosituasjon_radio_krisesenter"
+								faktumKey={annen.faktum}
+								value="krisesenter"
+							/>
+						</SporsmalFaktum>
+					</Underskjema>
 				</SporsmalFaktum>
 				<SporsmalFaktum faktumKey={antall.faktum}>
 					<BelopFaktum

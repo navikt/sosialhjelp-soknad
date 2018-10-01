@@ -1,15 +1,15 @@
-@bakgrunn: @white;
-@ramme: @white;
+@bakgrunn: @navLysGra;
+@ramme: @navLysGra;
 
 .skjema-sporsmal--jaNeiSporsmal .underskjema__boks {
-  background-color: @navLysGra;
+  background-color: @bakgrunn;
   margin-left: @skjemaMarg;
   margin-right: @skjemaMarg;
   border-radius: 4px;
 }
 
 .skjema-sporsmal--jaNeiSporsmal .underskjema__innhold:before {
-  background-color: @navLysGra !important;
+  background-color: @bakgrunn !important;
 }
 
 @media @mobile {
@@ -47,6 +47,9 @@
 		border: 1px solid @ramme;
 		background-color: @bakgrunn;
 		position: relative;
+		margin-left: @skjemaMarg;
+		margin-right: @skjemaMarg;
+		border-radius: 4px;
 
 		@media @mobile {
 			padding: @skjemaMargMobil @skjemaMargMobil @skjemaMargMobil*1.5
