@@ -25,7 +25,8 @@ class FinnNavKontorProgressIndikator extends React.Component<Props, {}> {
 		const visProgressIndikator: boolean = (oppholdsadresseValg === "folkeregistrert" ||
 			oppholdsadresseValg === "midlertidig") &&
 			antallSoknadsmottakere === 0 &&
-			this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.UGYLDIG;
+			this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.UGYLDIG &&
+			this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.MANGLER_NAV_KONTOR;
 		if (visProgressIndikator) {
 			return (<div>{this.props.label} <NavFrontendSpinner type="XS" /></div>);
 		} else {
