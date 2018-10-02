@@ -35,6 +35,7 @@ export const Skjema: React.StatelessComponent<Props> = ({ fakta, onHarIkkeKonton
 				id="kontakt_kontonummer_har_ikke_checkbox"
 				faktumKey="kontakt.kontonummer.harikke"
 				onChange={onHarIkkeKontonummer}
+				visPanel={false}
 			/>
 		</SporsmalFaktum>
 	);
