@@ -15,13 +15,11 @@ const Studie: React.StatelessComponent = () => {
 					id="studerer_radio_heltid"
 					faktumKey={studerer.faktum}
 					value="heltid"
-					visPanel={true}
 				/>
 				<RadioFaktum
 					id="studerer_radio_deltid"
 					faktumKey={studerer.faktum}
 					value="deltid"
-					visPanel={true}
 				/>
 			</SporsmalFaktum>
 		</JaNeiSporsmalFaktum>

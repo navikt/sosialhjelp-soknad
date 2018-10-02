@@ -28,31 +28,26 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						id="bosituasjon_radio_eier"
 						faktumKey={bosituasjon.faktum}
 						value="eier"
-						visPanel={true}
 					/>
 					<RadioFaktum
 						id="bosituasjon_radio_leier"
 						faktumKey={bosituasjon.faktum}
 						value="leier"
-						visPanel={true}
 					/>
 					<RadioFaktum
 						id="bosituasjon_radio_kommunal"
 						faktumKey={bosituasjon.faktum}
 						value="kommunal"
-						visPanel={true}
 					/>
 					<RadioFaktum
 						id="bosituasjon_radio_ingen"
 						faktumKey={bosituasjon.faktum}
 						value="ingen"
-						visPanel={true}
 					/>
 					<RadioFaktum
 						id="bosituasjon_radio_annet"
 						faktumKey={bosituasjon.faktum}
 						value="annet"
-						visPanel={true}
 					/>
 					<div className="skjema-sporsmal--jaNeiSporsmal">
 						<Underskjema
@@ -68,37 +63,31 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 									id="bosituasjon_radio_foreldre"
 									faktumKey={annen.faktum}
 									value="foreldre"
-									visPanel={true}
 								/>
 								<RadioFaktum
 									id="bosituasjon_radio_familie"
 									faktumKey={annen.faktum}
 									value="familie"
-									visPanel={true}
 								/>
 								<RadioFaktum
 									id="bosituasjon_radio_venner"
 									faktumKey={annen.faktum}
 									value="venner"
-									visPanel={true}
 								/>
 								<RadioFaktum
 									id="bosituasjon_radio_institusjon"
 									faktumKey={annen.faktum}
 									value="institusjon"
-									visPanel={true}
 								/>
 								<RadioFaktum
 									id="bosituasjon_radio_fengsel"
 									faktumKey={annen.faktum}
 									value="fengsel"
-									visPanel={true}
 								/>
 								<RadioFaktum
 									id="bosituasjon_radio_krisesenter"
 									faktumKey={annen.faktum}
 									value="krisesenter"
-									visPanel={true}
 								/>
 							</SporsmalFaktum>
 						</Underskjema>

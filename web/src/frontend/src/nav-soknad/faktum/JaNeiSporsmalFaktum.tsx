@@ -93,7 +93,6 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 						{...radioProps}
 						id={idRadioJa}
 						value="true"
-						visPanel={true}
 						className="inputPanel__smal"
 					/>
 					{!mobilVisning && (
@@ -101,7 +100,6 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 							{...radioProps}
 							id={idRadioNei}
 							value="false"
-							visPanel={true}
 							className="inputPanel__smal"
 						/>
 					) }
@@ -111,7 +109,6 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 						{...radioProps}
 						id={idRadioNei}
 						value="false"
-						visPanel={true}
 						className={
 							"inputPanel__smal inputPanel__mobil--nei " +
 							visSkjema ? "inputPanel__mobil--uten-underSkjema" : ""}
