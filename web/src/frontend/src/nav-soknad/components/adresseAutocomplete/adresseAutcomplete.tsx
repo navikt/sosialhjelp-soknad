@@ -327,7 +327,7 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 					value={this.props.value}
 					inputProps={{
 						id: "states-autocomplete",
-						placeholder: "Gatenavn, kommune eller postnummer",
+						placeholder: "",
 						onBlur: () => this.handleInputBlur()
 					}}
 					wrapperStyle={{position: "relative", display: "inline-block"}}
