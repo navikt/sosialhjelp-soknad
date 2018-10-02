@@ -130,9 +130,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 			<LoadContainer restStatus={restStatus}>
 				<div className="steg-ekstrainformasjon">
 					<DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk}>
-						<div className="steg-ekstrainformasjon__blokk">
-							{melding}
-						</div>
+						{melding}
 						{content}
 					</DigisosSkjemaSteg>
 				</div>
