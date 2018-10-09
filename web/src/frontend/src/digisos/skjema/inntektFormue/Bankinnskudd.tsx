@@ -23,15 +23,15 @@ class Bankinnskudd extends React.Component<Props, {}> {
 
 	innskuddstyper = ["brukskonto", "sparekonto", "bsu", "livsforsikring", "aksjer", "annet"];
 
-	harBankinnskudd(): boolean {
+	harBankinnskuddVerdi(): string {
 		const faktumKey = "inntekt.bankinnskudd.true.type.";
 		let faktum: Faktum;
-		let harBankinnskudd = false;
+		let harBankinnskudd = null;
 		this.innskuddstyper.map((innskuddstype: string) => {
 			faktum = finnFaktum(faktumKey + innskuddstype, this.props.fakta);
 			const value = faktum ? faktum.value : "";
 			if (value === "true") {
-				harBankinnskudd = true;
+				harBankinnskudd = "true";
 			}
 		});
 		return harBankinnskudd;
@@ -40,7 +40,7 @@ class Bankinnskudd extends React.Component<Props, {}> {
 	componentDidUpdate() {
 		const harBankinnskuddFaktum = finnFaktum("inntekt.bankinnskudd", this.props.fakta);
 		const lagretVerdi = harBankinnskuddFaktum.value;
-		const utledetVerdi = this.harBankinnskudd().toString();
+		const utledetVerdi = this.harBankinnskuddVerdi();
 		if (lagretVerdi !== utledetVerdi) {
 			harBankinnskuddFaktum.value = utledetVerdi;
 			this.props.dispatch(lagreFaktum(harBankinnskuddFaktum));
