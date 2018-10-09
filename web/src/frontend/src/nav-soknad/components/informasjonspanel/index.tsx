@@ -38,19 +38,19 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 	}
 
 	renderIkon() {
-
+		const iconSize = 80;
 		switch (this.props.ikon){
 			case InformasjonspanelIkon.ELLA: {
-				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
+				return <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
 			}
 			case InformasjonspanelIkon.BREVKONVOLUTT: {
-				return <Brevkonvolutt size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+				return <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
 			}
 			case InformasjonspanelIkon.HENSYN: {
-				return <Hensyn size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+				return <Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
 			}
 			default: {
-				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
+				return <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
 			}
 		}
 	}
