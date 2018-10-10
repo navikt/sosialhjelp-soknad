@@ -58,7 +58,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 		switch (this.props.ikon){
 			case InformasjonspanelIkon.ELLA: {
 				if (iconSize === 64) {
-					return <EllaKompakt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
+					return <EllaKompakt bakgrundsFarge={this.props.farge}/>;
 				} else {
 					return <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
 				}
