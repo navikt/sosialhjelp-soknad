@@ -25,6 +25,8 @@ import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import {
 	Faktum
 } from "../../../nav-soknad/types";
+import Ella from "../../../nav-soknad/components/svg/Ella";
+import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 
 interface StateProps {
 	visPersonaliaFraTPSfeatureToggle: boolean;
@@ -41,7 +43,10 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 	render() {
 		if (this.props.visPersonaliaFraTPSfeatureToggle) {
 			return (
-				<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
+				<DigisosSkjemaSteg
+					steg={DigisosSteg.kontakt}
+					ikon={<Ella visBakgrundsSirkel={true}  bakgrundsFarge={DigisosFarge.NAV_GRONN_LIGHTEN_40}/>}
+				>
 					<SporsmalFaktum faktumKey="kontakt.system.personalia" style="system">
 						<Personalia fakta={this.props.fakta} />
 					</SporsmalFaktum>
@@ -57,7 +62,7 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 		}
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		return (
-			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}>
+			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}  ikon={<Ella visBakgrundsSirkel={true}/>}>
 				<BankinformasjonSkjema fakta={this.props.fakta} onHarIkkeKontonummer={(verdi: string) => {
 					this.oppdaterHarIkkeKontonummer(this.props.fakta, verdi, this.props.dispatch);
 				}} />

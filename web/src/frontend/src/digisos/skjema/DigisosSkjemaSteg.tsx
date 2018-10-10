@@ -69,6 +69,7 @@ export const digisosSkjemaConfig: SkjemaConfig = {
 
 interface Props {
 	steg: string;
+	ikon?: React.ReactNode;
 }
 
 class DigisosSkjemaSteg extends React.Component<Props, {}> {
@@ -77,6 +78,7 @@ class DigisosSkjemaSteg extends React.Component<Props, {}> {
 			<StegMedNavigasjon
 				skjemaConfig={digisosSkjemaConfig}
 				stegKey={this.props.steg}
+				ikon={this.props.ikon}
 			>
 				{this.props.children}
 			</StegMedNavigasjon>
