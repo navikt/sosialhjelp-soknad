@@ -4,6 +4,7 @@
 	background-color: @white;
 	padding: 2rem 1.5rem 2rem 3.5rem;
 	margin-bottom: 1rem;
+  	margin-top: 2rem;
 	transition: opacity 0.5s;
   	opacity: 0;
 
@@ -13,6 +14,10 @@
 	animation-fill-mode: forwards;
 	animation-iteration-count: 1;
 	animation-timing-function: ease;
+
+  	.skjema-sporsmal__infotekst__tittel {
+	  margin-top: 0;
+	}
 
 	&>div {
 		position: absolute;
@@ -72,6 +77,11 @@
   .skjema-informasjonspanel-wrapper {
 	margin-left: 1rem;
 	margin-right: 1rem;
+  }
+
+  .skjema-informasjonspanel {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
   }
 }
 
