@@ -4,6 +4,8 @@ import Ella from "../svg/Ella";
 import Brevkonvolutt from "../svg/Brevkonvolutt";
 import {DigisosFarge} from "../svg/DigisosFarger";
 import Hensyn from "../svg/Hensyn";
+import { erMobilVisning } from "../../utils/domUtils";
+import EllaKompakt from "../svg/EllaKompakt";
 
 interface OwnProps {
 	farge: DigisosFarge;
@@ -14,6 +16,7 @@ interface OwnProps {
 
 interface State {
 	vises: boolean;
+	mobilvisning: boolean;
 }
 
 export enum InformasjonspanelIkon {
@@ -27,21 +30,38 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 	constructor(props: OwnProps) {
 		super(props);
 		this.state = {
-			vises: false
+			vises: false,
+			mobilvisning: erMobilVisning()
 		};
+	}
+
+	updateDimensions() {
+		if (this.state.mobilvisning !== erMobilVisning()) {
+			this.setState({mobilvisning: erMobilVisning()});
+		}
 	}
 
 	componentDidMount() {
 		setTimeout(() => {
 			this.setState({vises: true});
 		}, 200);
+		this.updateDimensions();
+		window.addEventListener("resize", this.updateDimensions.bind(this));
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("resize", this.updateDimensions.bind(this));
 	}
 
 	renderIkon() {
-		const iconSize = 80;
+		const iconSize = erMobilVisning() ? 64 : 80;
 		switch (this.props.ikon){
 			case InformasjonspanelIkon.ELLA: {
-				return <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
+				if (iconSize === 64) {
+					return <EllaKompakt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
+				} else {
+					return <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
+				}
 			}
 			case InformasjonspanelIkon.BREVKONVOLUTT: {
 				return <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
