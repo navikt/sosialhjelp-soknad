@@ -245,35 +245,36 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 						deaktiverLagring={true}
 						onChange={() => this.brukSoknadAdresse()}
 						value="soknad"/>
-					<Underskjema
-						visible={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "soknad"}
-					>
-						<div className="utvidetAddresseSok">
-							<SporsmalFaktum
-								faktumKey="kontakt.system.kontaktinfo"
-								tittelRenderer={() =>
-									getIntlTextOrKey(this.props.intl,
-										"kontakt.system.oppholdsadresse.hvorOppholder")
-								}
-							>
-								<AdresseAutocomplete
-									adresseFaktum={adressesokAdresseFaktum}
-									onValgtVerdi={(adresse: any) => this.handleVelgAutocompleteAdresse(adresse)}
-									fakta={this.props.fakta}
-								/>
-							</SporsmalFaktum>
-						</div>
-					</Underskjema>
-					<VelgSoknadsmottaker
-						label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgKontor")}
-						fakta={this.props.fakta}
-					/>
+					<div className="skjema-sporsmal--jaNeiSporsmal__advarsel">
+						<Underskjema
+							visible={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "soknad"}
+						>
+							<div className="utvidetAddresseSok">
+								<SporsmalFaktum
+									faktumKey="kontakt.system.kontaktinfo"
+									tittelRenderer={() =>
+										getIntlTextOrKey(this.props.intl,
+											"kontakt.system.oppholdsadresse.hvorOppholder")
+									}
+								>
+									<AdresseAutocomplete
+										adresseFaktum={adressesokAdresseFaktum}
+										onValgtVerdi={(adresse: any) => this.handleVelgAutocompleteAdresse(adresse)}
+										fakta={this.props.fakta}
+									/>
+								</SporsmalFaktum>
+							</div>
+						</Underskjema>
+						<VelgSoknadsmottaker
+							label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgKontor")}
+							fakta={this.props.fakta}
+						/>
 
-					<FinnNavKontorProgressIndikator
-						label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.finnerKontor")}
-						fakta={this.props.fakta}
-					/>
-
+						<FinnNavKontorProgressIndikator
+							label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.finnerKontor")}
+							fakta={this.props.fakta}
+						/>
+					</div>
 				</SporsmalFaktum>
 				<SoknadsmottakerInfoPanel
 					soknadsmottakerStatus={this.props.soknadsmottakerStatus}

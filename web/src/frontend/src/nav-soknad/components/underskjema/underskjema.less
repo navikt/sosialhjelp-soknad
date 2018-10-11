@@ -1,94 +1,137 @@
 @bakgrunn: @white;
 @ramme: @white;
 
-.skjema-sporsmal--jaNeiSporsmal .underskjema__boks {
-  background-color: @navLysGra;
-  margin-left: @skjemaMarg;
-  margin-right: @skjemaMarg;
-  border-radius: 4px;
-}
+.skjema-sporsmal--jaNeiSporsmal {
 
-.skjema-sporsmal--jaNeiSporsmal .underskjema__innhold:before {
-  background-color: @navLysGra !important;
+  .underskjema__boks {
+	background-color: @navLysGra;
+	margin-left: @skjemaMarg;
+	margin-right: @skjemaMarg;
+	border-radius: 4px;
+  }
+
+  .underskjema__innhold:before {
+	background-color: @navLysGra !important;
+  }
+
 }
 
 @media @mobile {
-  .skjema-sporsmal--jaNeiSporsmal .underskjema__boks {
-	margin-left: @skjemaMargMobil;
-	margin-right: @skjemaMargMobil;
+  .skjema-sporsmal--jaNeiSporsmal {
+
+	.underskjema__boks {
+	  margin-left: 0;
+	  margin-right: 0;
+	}
+
+  }
+}
+
+.skjema-sporsmal--jaNeiSporsmal__advarsel {
+
+  .underskjema__boks {
+	background-color: @navRosa;
+	margin-left: @skjemaMarg;
+	margin-right: @skjemaMarg;
+	border-radius: 4px;
+  }
+
+  .underskjema__innhold:before {
+	background-color: @navRosa !important;
+  }
+
+}
+
+@media @mobile {
+  .skjema-sporsmal--jaNeiSporsmal__advarsel {
+
+	.underskjema__boks {
+	  margin-left: 1rem;
+	  margin-right: 1rem;
+	}
+
+  }
+}
+
+@media @mobile {
+  .skjema-sporsmal--jaNeiSporsmal {
+	.underskjema__boks {
+	  margin-left: @skjemaMargMobil;
+	  margin-right: @skjemaMargMobil;
+	}
   }
 }
 
 .underskjema {
-	padding-top: 0.8rem;
-	padding-bottom: 1rem;
-  	transition: opacity 1s;
+  padding-top: 0.8rem;
+  padding-bottom: 1rem;
+  transition: opacity 1s;
 
-	&--noPadding {
-		padding-top: 0;
-		padding-bottom: 0;
+  &--noPadding {
+	padding-top: 0;
+	padding-bottom: 0;
+  }
+
+  &__wrapper {
+	margin-left: -1 * @skjemaMarg;
+	margin-right: -1 * @skjemaMarg;
+	@media @mobile {
+	  margin-left: -1 * @skjemaMargMobil;
+	  margin-right: -1 * @skjemaMargMobil;
+	}
+  }
+
+  &__wrapper + &__wrapper {
+	margin-top: -1px;
+  }
+
+  &__boks {
+	padding: 2rem @skjemaMarg;
+	border: 1px solid @ramme;
+	background-color: @bakgrunn;
+	position: relative;
+
+	@media @mobile {
+	  padding: @skjemaMargMobil @skjemaMargMobil @skjemaMargMobil*1.5
+	  @skjemaMargMobil;
 	}
 
-	&__wrapper {
-		margin-left: -1 * @skjemaMarg;
-		margin-right: -1 * @skjemaMarg;
-		@media @mobile {
-			margin-left: -1 * @skjemaMargMobil;
-			margin-right: -1 * @skjemaMargMobil;
-		}
+	transition: opacity 1s;
+	transition-delay: 0.2s;
+	opacity: 0;
+
+	&__synlig {
+	  opacity: 1;
 	}
 
-	&__wrapper + &__wrapper {
-		margin-top: -1px;
+  }
+  &--system {
+	.underskjema__boks {
+	  padding-top: 1rem;
+	  padding-bottom: 1rem;
 	}
+  }
 
-	&__boks {
-		padding: 2rem @skjemaMarg;
-		border: 1px solid @ramme;
-		background-color: @bakgrunn;
-		position: relative;
-
-		@media @mobile {
-			padding: @skjemaMargMobil @skjemaMargMobil @skjemaMargMobil*1.5
-				@skjemaMargMobil;
-		}
-
-	  	transition: opacity 1s;
-	  	transition-delay: 0.2s;
-	  	opacity: 0;
-
-	  	&__synlig {
-		  opacity: 1;
-		}
-
+  &--arrow {
+	.underskjema__innhold:before {
+	  content: "";
+	  height: 1rem;
+	  width: 1rem;
+	  background-color: @bakgrunn;
+	  display: block;
+	  position: absolute;
+	  transform: rotate(-45deg);
+	  transform-origin: 0 0;
+	  border-top: 1px solid @ramme;
+	  border-right: 1px solid @ramme;
+	  box-sizing: border-box;
+	  top: 0px;
+	  left: 14px;
+	  @media @mobile {
+		left: 16px;
+	  }
 	}
-	&--system {
-		.underskjema__boks {
-			padding-top: 1rem;
-			padding-bottom: 1rem;
-		}
-	}
-
-	&--arrow {
-		.underskjema__innhold:before {
-			content: "";
-			height: 1rem;
-			width: 1rem;
-			background-color: @bakgrunn;
-			display: block;
-			position: absolute;
-			transform: rotate(-45deg);
-			transform-origin: 0 0;
-			border-top: 1px solid @ramme;
-			border-right: 1px solid @ramme;
-			box-sizing: border-box;
-			top: 0px;
-			left: 14px;
-			@media @mobile {
-				left: 16px;
-			}
-		}
-	}
+  }
 }
 
 /**
@@ -96,20 +139,21 @@
 * Fjern border og bytt pil til strek - juster margin
 */
 .underskjema {
-	.underskjema {
-		padding-top: 0;
-		padding-bottom: 0;
-		.underskjema__wrapper {
-			margin-left: 0;
-			margin-right: 0;
-		}
-		.underskjema__boks {
-			border: none;
-			padding-top: 0.8rem;
-			padding-bottom: 0;
-		}
-		.underskjema__innhold:before {
-			display: none;
-		}
+  .underskjema {
+	padding-top: 0;
+	padding-bottom: 0;
+	.underskjema__wrapper {
+	  margin-left: 0;
+	  margin-right: 0;
 	}
+	.underskjema__boks {
+	  border: none;
+	  padding-top: 0.8rem;
+	  padding-bottom: 0;
+	}
+	.underskjema__innhold:before {
+	  display: none;
+	}
+  }
 }
+
