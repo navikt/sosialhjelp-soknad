@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { finnFakta } from "../../../nav-soknad/utils";
 import { Faktum } from "../../../nav-soknad/types";
+import Koffert from "../../../nav-soknad/components/svg/illustrasjoner/Koffert";
 
 interface StateProps {
 	visArbeidsforhold: boolean;
@@ -19,7 +20,7 @@ const ArbeidOgUtdanning: React.StatelessComponent<FaktumComponentProps & StatePr
 	let visErDuIJobb: boolean = !alleArbeidsforhold || alleArbeidsforhold.length === 0;
 	visErDuIJobb = visArbeidsforhold! ? true : visErDuIJobb;
 	return (
-		<DigisosSkjemaSteg steg={DigisosSteg.arbeidbolk}>
+		<DigisosSkjemaSteg steg={DigisosSteg.arbeidbolk} ikon={<Koffert/>}>
 			<Arbeidsforhold/>
 			{!visErDuIJobb && (
 				<Jobb/>

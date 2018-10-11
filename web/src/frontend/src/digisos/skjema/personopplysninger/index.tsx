@@ -26,7 +26,7 @@ import {
 	Faktum
 } from "../../../nav-soknad/types";
 import Ella from "../../../nav-soknad/components/svg/Ella";
-import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
+import William from "../../../nav-soknad/components/svg/illustrasjoner/William";
 
 interface StateProps {
 	visPersonaliaFraTPSfeatureToggle: boolean;
@@ -45,7 +45,7 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 			return (
 				<DigisosSkjemaSteg
 					steg={DigisosSteg.kontakt}
-					ikon={<Ella visBakgrundsSirkel={true}  bakgrundsFarge={DigisosFarge.NAV_GRONN_LIGHTEN_40}/>}
+					ikon={<William/>}
 				>
 					<SporsmalFaktum faktumKey="kontakt.system.personalia" style="system">
 						<Personalia fakta={this.props.fakta} />

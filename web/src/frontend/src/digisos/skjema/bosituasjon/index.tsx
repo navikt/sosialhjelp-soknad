@@ -14,6 +14,7 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 
 import { State } from "../../redux/reducers";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
+import BoligIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/BoligIllustrasjon";
 
 class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	render() {
@@ -22,7 +23,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const annen = radioCheckKeys("bosituasjon.annet.botype");
 		const antall = inputKeys("bosituasjon.antallpersoner");
 		return (
-			<DigisosSkjemaSteg steg={DigisosSteg.bosituasjonbolk}>
+			<DigisosSkjemaSteg steg={DigisosSteg.bosituasjonbolk} ikon={<BoligIllustrasjon/>}>
 				<SporsmalFaktum faktumKey={bosituasjon.faktum}>
 					<RadioFaktum
 						id="bosituasjon_radio_eier"

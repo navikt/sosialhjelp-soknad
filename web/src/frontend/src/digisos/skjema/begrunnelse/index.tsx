@@ -5,15 +5,14 @@ import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import Ella from "../../../nav-soknad/components/svg/Ella";
-import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
+import SnakkebobleIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SnakkebobleIllustrasjon";
 
 const MAX_CHARS = 500;
 
 const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 	<DigisosSkjemaSteg
 		steg={DigisosSteg.begrunnelsebolk}
-		ikon={<Ella visBakgrundsSirkel={true} bakgrundsFarge={DigisosFarge.NAV_GRONN_LIGHTEN_40}/>}
+		ikon={<SnakkebobleIllustrasjon/>}
 	>
 		<SporsmalFaktum faktumKey="begrunnelse.hvorfor">
 			<TextareaFaktum

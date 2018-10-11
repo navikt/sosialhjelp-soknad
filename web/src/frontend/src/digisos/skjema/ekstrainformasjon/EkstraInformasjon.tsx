@@ -14,6 +14,7 @@ import { Faktum } from "../../../nav-soknad/types";
 import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
+import SkjemaIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SkjemaIllustrasjon";
 
 /** For å kunne sjekke om bruker har besvart noen av de
  * spørsmålene som trigger oppfølgingsspørsmål på denne side,
@@ -129,7 +130,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 		return (
 			<LoadContainer restStatus={restStatus}>
 				<div className="steg-ekstrainformasjon">
-					<DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk}>
+					<DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk} ikon={<SkjemaIllustrasjon/>}>
 						<div className="steg-ekstrainformasjon__blokk">
 							{melding}
 						</div>
