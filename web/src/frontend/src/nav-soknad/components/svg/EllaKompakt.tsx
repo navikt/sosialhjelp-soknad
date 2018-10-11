@@ -15,41 +15,41 @@ class EllaKompakt extends React.Component<OwnProps, {}> {
 			<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="64" height="64"
 			     viewBox="0 0 64 64" >
 				<defs>
-					<circle id="a" cx="32" cy="32" r="32"/>
-					<circle id="c" cx="32" cy="32" r="32"/>
-					<path id="e"
+					<circle id="ella_kompakt_a" cx="32" cy="32" r="32"/>
+					<circle id="ella_kompakt_c" cx="32" cy="32" r="32"/>
+					<path id="ella_kompakt_e"
 					      d="M21.396 0c11.773.019 21.3 10.784 21.279 24.045-.017 11.159.021 24.463-20.406 24.834-.153.006-.316.006-.473.009-.16.002-.312.009-.476.009-.213 0-.37-.01-.538-.01-.15-.005-.305-.005-.451-.01C-.096 48.44-.016 35.136 0 23.976.064 10.717 9.625-.018 21.396 0z"/>
-					<path id="g"
+					<path id="ella_kompakt_g"
 					      d="M22.395 0h-6.722C12.048 0 0 8.22 0 15.703v19.688h45V15.703C45 8.22 32.742 0 29.118 0h-6.723z"/>
 				</defs>
 				<g fill="none" fillRule="evenodd" className={"ella__" + bakgrundsFarge}>
-					<mask id="b" fill="#fff">
-						<use xlinkHref="#a"/>
+					<mask id="ella_kompakt_b" fill="#fff">
+						<use xlinkHref="#ella_kompakt_a"/>
 					</mask>
-					<use fill="#FFD399" xlinkHref="#a" className="bakgrunnsSirkel"/>
-					<g mask="url(#b)">
+					<use fill="#FFD399" xlinkHref="#ella_kompakt_a" className="bakgrunnsSirkel"/>
+					<g mask="url(#ella_kompakt_b)">
 						<g transform="translate(0 .8)">
-							<mask id="d" fill="#fff">
-								<use xlinkHref="#c"/>
+							<mask id="ella_kompakt_d" fill="#fff">
+								<use xlinkHref="#ella_kompakt_c"/>
 							</mask>
-							<g mask="url(#d)">
+							<g mask="url(#ella_kompakt_d)">
 								<g transform="translate(10.353 4.126)">
-									<mask id="f" fill="#fff">
-										<use xlinkHref="#e"/>
+									<mask id="ella_kompakt_f" fill="#fff">
+										<use xlinkHref="#ella_kompakt_e"/>
 									</mask>
-									<use fill="#F5B773" xlinkHref="#e"/>
-									<g fill="#3E3832" mask="url(#f)">
+									<use fill="#F5B773" xlinkHref="#ella_kompakt_e"/>
+									<g fill="#3E3832" mask="url(#ella_kompakt_f)">
 										<path d="M-8.235-9.9h57v65h-57z"/>
 									</g>
 								</g>
 								<path fill="#E7E5E2"
 								      d="M21.136 48.155c.845 1.34 3.218 24.878 10.34 24.878 7.124 0 10.34-23.976 10.34-25.224-10.907-6.196-20.68.346-20.68.346z"/>
 								<g transform="translate(9.555 47.56)">
-									<mask id="h" fill="#fff">
-										<use xlinkHref="#g"/>
+									<mask id="ella_kompakt_h" fill="#fff">
+										<use xlinkHref="#ella_kompakt_g"/>
 									</mask>
-									<use fill="#D8A25D" xlinkHref="#g"/>
-									<g mask="url(#h)">
+									<use fill="#D8A25D" xlinkHref="#ella_kompakt_g"/>
+									<g mask="url(#ella_kompakt_h)">
 										<path fill="#0C5472" d="M-27.5 58.283h105v-80h-105z"/>
 									</g>
 								</g>

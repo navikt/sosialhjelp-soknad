@@ -16,7 +16,6 @@ interface OwnProps {
 
 interface State {
 	vises: boolean;
-	mobilvisning: boolean;
 }
 
 export enum InformasjonspanelIkon {
@@ -30,38 +29,31 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 	constructor(props: OwnProps) {
 		super(props);
 		this.state = {
-			vises: false,
-			mobilvisning: erMobilVisning()
+			vises: false
 		};
-	}
-
-	updateDimensions() {
-		if (this.state.mobilvisning !== erMobilVisning()) {
-			this.setState({mobilvisning: erMobilVisning()});
-		}
 	}
 
 	componentDidMount() {
 		setTimeout(() => {
 			this.setState({vises: true});
 		}, 200);
-		this.updateDimensions();
-		window.addEventListener("resize", this.updateDimensions.bind(this));
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener("resize", this.updateDimensions.bind(this));
 	}
 
 	renderIkon() {
 		const iconSize = erMobilVisning() ? 64 : 80;
 		switch (this.props.ikon){
 			case InformasjonspanelIkon.ELLA: {
-				if (iconSize === 64) {
-					return <EllaKompakt bakgrundsFarge={this.props.farge}/>;
-				} else {
-					return <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
-				}
+				return (
+					<div>
+						<div className="ikke_mobilvennlig_ikon">
+							<Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+						</div>
+
+						<div className="mobilvennlig_ikon">
+							<EllaKompakt bakgrundsFarge={this.props.farge}/>
+						</div>
+					</div>
+				);
 			}
 			case InformasjonspanelIkon.BREVKONVOLUTT: {
 				return <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>

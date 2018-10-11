@@ -92,6 +92,26 @@
 	}
 }
 
+.mobilvennlig_ikon {
+  display: none;
+}
+
+.ikke_mobilvennlig_ikon {
+  display: inline-block;
+}
+
+@media @mobile {
+
+  .mobilvennlig_ikon {
+	display: inline-block;
+  }
+
+  .ikke_mobilvennlig_ikon {
+	display: none;
+  }
+
+}
+
 .skjema-informasjonspanel.skjema-informasjonspanel-navGronnLighten40 {
 	border: solid 2px @navGronnLighten40;
 }
