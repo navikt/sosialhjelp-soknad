@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 import {
 	AdresseKategori, ErrorFarge,
 	HentSoknadsmottakerAction,
@@ -85,21 +85,28 @@ function* lagreSoknadsmottakerOgOppdaterStatus(
 	}
 }
 
+function* harEndretOppholdsadressevalg(oppholdsadressevalg: any): any {
+	const state = yield select();
+	const oppholdsadressevalgFaktum = finnFaktum("kontakt.system.oppholdsadresse.valg", state.fakta.data);
+	return oppholdsadressevalgFaktum.value !== oppholdsadressevalg;
+}
+
 function* fetchOgSettSoknadsmottakerOgOppdaterStatus(
 		brukerBehandlingId: any,
 		oppholdsadressevalg: any,
 		soknadsmottakerFaktum: Faktum): any {
 	const url = `soknadsmottaker/${brukerBehandlingId}?valg=${oppholdsadressevalg}`;
 	const response = yield call(fetchToJson, url);
+	
+	if (yield harEndretOppholdsadressevalg(oppholdsadressevalg)) {
+		return null;
+	}
+
 	if (response && response.toString().length > 0) {
 		const soknadsmottakere = response.filter((item: any) => item != null);
 		yield put(settSoknadsmottakere(soknadsmottakere));
 		if (soknadsmottakere.length === 1) {
 			const soknadsmottaker = soknadsmottakere[0];
-			if (soknadsmottaker == null) {
-				console.error("Søknadsmottaker mangler");
-				throw Error("Mangler soknadsmottaker");
-			}
 			yield* lagreSoknadsmottakerOgOppdaterStatus(soknadsmottaker, soknadsmottakerFaktum);
 		}
 	} else {

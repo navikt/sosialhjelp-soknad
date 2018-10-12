@@ -16,7 +16,6 @@ import {
 	SoknadsMottakerStatus,
 	hentSoknadsmottakerAction,
 	AdresseKategori,
-	settAdresseKategori,
 	settSoknadsmottakerStatus,
 	ErrorFarge,
 	settErrorFarge
@@ -54,7 +53,6 @@ interface OwnProps {
 	valgtAdresse: Adresse | null;
 	soknadsmottaker: any; // Soknadsmottaker
 	soknadsmottakerStatus: SoknadsMottakerStatus;
-	adresseKategori: AdresseKategori;
 	errorFarge: ErrorFarge;
 	soknadsmottakere: any[];
 }
@@ -145,7 +143,6 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 	}
 
 	brukFolkeregistrertAdresse() {
-		this.props.dispatch(settAdresseKategori(AdresseKategori.FOLKEREGISTRERT));
 		const oppholdsadressevalg = "folkeregistrert";
 		const adresseKategori = AdresseKategori.FOLKEREGISTRERT;
 		this.settAdresseOgSoknadsmottaker(null, oppholdsadressevalg, adresseKategori);
@@ -296,7 +293,6 @@ export default connect((state: State, props: any) => {
 		valgtAdresse: state.oppholdsadresse.valgtAdresse,
 		soknadsmottaker: state.oppholdsadresse.soknadsmottaker,
 		soknadsmottakerStatus: state.oppholdsadresse.soknadsmottakerStatus,
-		adresseKategori: state.oppholdsadresse.adresseKategori,
 		errorFarge: state.oppholdsadresse.errorFarge,
 		soknadsmottakere: state.oppholdsadresse.soknadsmottakere
 
