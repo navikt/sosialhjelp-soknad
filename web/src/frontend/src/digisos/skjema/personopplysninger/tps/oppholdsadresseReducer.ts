@@ -39,7 +39,6 @@ export interface OppholdsAdresseState {
 	valgtAdresse: Adresse | null;
 	soknadsmottaker: any;
 	soknadsmottakerStatus: SoknadsMottakerStatus;
-	adresseKategori: AdresseKategori;
 	errorFarge: ErrorFarge;
 	soknadsmottakere: any[];
 }
@@ -48,7 +47,6 @@ const initialState: OppholdsAdresseState = {
 	valgtAdresse: null,
 	soknadsmottaker: null,
 	soknadsmottakerStatus: SoknadsMottakerStatus.IKKE_VALGT,
-	adresseKategori: AdresseKategori.IKKE_VALGT,
 	errorFarge: ErrorFarge.IKKE_VALGT,
 	soknadsmottakere: []
 };
@@ -75,12 +73,6 @@ const oppholdsadresseReducer: Reducer<OppholdsAdresseState, any> = (
 			return {
 				...state,
 				soknadsmottakerStatus: action.status
-			};
-		}
-		case OppholdsadresseActionTypeKeys.SETT_ADRESSE_KATEGORI: {
-			return {
-				...state,
-				adresseKategori: action.adresseKategori
 			};
 		}
 		case OppholdsadresseActionTypeKeys.SETT_ERROR_FARGE: {
@@ -111,13 +103,6 @@ export const settSoknadsmottakerStatus = (status: SoknadsMottakerStatus): any =>
 	return {
 		type: OppholdsadresseActionTypeKeys.SETT_SOKNADSMOTTAKER_STATUS,
 		status
-	};
-};
-
-export const settAdresseKategori = (adresseKategori: AdresseKategori): any => {
-	return {
-		type: OppholdsadresseActionTypeKeys.SETT_ADRESSE_KATEGORI,
-		adresseKategori
 	};
 };
 
