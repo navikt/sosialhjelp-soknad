@@ -8,6 +8,7 @@ import { State } from "../../../redux/reducers";
 import { finnFaktum } from "../../../../nav-soknad/utils";
 import { velgSoknadsmottaker } from "./oppholdsadresseReducer";
 import { getIntlTextOrKey } from "../../../../nav-soknad/utils/intlUtils";
+import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
 
 interface OwnProps {
 	soknadsmottakere: any[];
@@ -21,6 +22,7 @@ type Props = OwnProps & InjectedIntlProps & DispatchProps;
 class VelgSoknadsmottaker extends React.Component<Props, {}> {
 
 	velgNavKontor(event: any) {
+		this.props.dispatch(setFaktumValideringsfeil(null, "soknadsmottaker"));
 		const enhetsId = event.target.value;
 		const valgtSoknadsmottaker = this.props.soknadsmottakere.find(
 			(item: any) => item.enhetsId === enhetsId);

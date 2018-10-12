@@ -1,5 +1,5 @@
 import {
-	default as oppholdsadresseReducer, ErrorFarge,
+	default as oppholdsadresseReducer,
 	OppholdsadresseActionTypeKeys,
 	OppholdsAdresseState,
 	SoknadsMottakerStatus
@@ -12,7 +12,6 @@ describe("oppholdsadresse", () => {
 		valgtAdresse: null,
 		soknadsmottaker: null,
 		soknadsmottakerStatus: SoknadsMottakerStatus.IKKE_VALGT,
-		errorFarge: ErrorFarge.IKKE_VALGT,
 		soknadsmottakere: []
 	};
 

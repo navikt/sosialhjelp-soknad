@@ -1,9 +1,9 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import {
-	AdresseKategori, ErrorFarge,
+	AdresseKategori,
 	HentSoknadsmottakerAction,
-	OppholdsadresseActionTypeKeys, settErrorFarge, settSoknadsmottakere,
+	OppholdsadresseActionTypeKeys, settSoknadsmottakere,
 	settSoknadsmottakerStatus, SoknadsMottakerStatus, VelgSoknadsmottakerAction
 } from "./oppholdsadresseReducer";
 import { navigerTilServerfeil } from "../../../../nav-soknad/redux/navigasjon/navigasjonActions";
@@ -166,7 +166,6 @@ function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): 
 				yield* updateIfChanged(brukerValgFaktum, "true");
 			} else {
 				yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.IKKE_VALGT));
-				yield put(settErrorFarge(ErrorFarge.IKKE_VALGT));
 				yield* updateIfChanged(brukerValgFaktum, "false");
 				return null;
 			}

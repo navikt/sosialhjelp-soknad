@@ -16,11 +16,10 @@ import {
 	SoknadsMottakerStatus,
 	hentSoknadsmottakerAction,
 	AdresseKategori,
-	settSoknadsmottakerStatus,
-	ErrorFarge,
-	settErrorFarge
+	settSoknadsmottakerStatus
 } from "./oppholdsadresseReducer";
 import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
+import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
 import VelgSoknadsmottaker from "./VelgSoknadsmottaker";
 import FinnNavKontorProgressIndikator from "./FinnNavKontorProgressIndikator";
 import { getIntlTextOrKey } from "../../../../nav-soknad/utils/intlUtils";
@@ -53,7 +52,6 @@ interface OwnProps {
 	valgtAdresse: Adresse | null;
 	soknadsmottaker: any; // Soknadsmottaker
 	soknadsmottakerStatus: SoknadsMottakerStatus;
-	errorFarge: ErrorFarge;
 	soknadsmottakere: any[];
 }
 
@@ -132,6 +130,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 	}
 
 	settAdresseOgSoknadsmottaker(adresse: Adresse, oppholdsadressevalg: string, adresseKategori: AdresseKategori ) {
+		this.props.dispatch(setFaktumValideringsfeil(null, "soknadsmottaker"));
 		this.props.dispatch(settSoknadsmottakerStatus(SoknadsMottakerStatus.IKKE_VALGT));
 		this.props.dispatch(hentSoknadsmottakerAction(
 			this.props.brukerBehandlingId,
@@ -188,12 +187,10 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 		return (
 			<div className="sosialhjelp-oppholdsadresse">
 				<SporsmalFaktum
-					className={this.props.errorFarge === ErrorFarge.UGYLDIG ? "oppholdsadresse-harFeil " : ""}
 					faktumKey="soknadsmottaker"
 					noValidateOnBlur={true}
 					validerFunc={[ (value) => {
 						if (this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.GYLDIG) {
-							this.props.dispatch(settErrorFarge(ErrorFarge.UGYLDIG));
 							return ValideringActionKey.PAKREVD;
 						}
 						return null;
@@ -293,7 +290,6 @@ export default connect((state: State, props: any) => {
 		valgtAdresse: state.oppholdsadresse.valgtAdresse,
 		soknadsmottaker: state.oppholdsadresse.soknadsmottaker,
 		soknadsmottakerStatus: state.oppholdsadresse.soknadsmottakerStatus,
-		errorFarge: state.oppholdsadresse.errorFarge,
 		soknadsmottakere: state.oppholdsadresse.soknadsmottakere
 
 	};
