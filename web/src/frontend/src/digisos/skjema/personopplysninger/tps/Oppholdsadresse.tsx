@@ -242,7 +242,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 						deaktiverLagring={true}
 						onChange={() => this.brukSoknadAdresse()}
 						value="soknad"/>
-					<div className="skjema-sporsmal--jaNeiSporsmal__advarsel">
+					<div className="skjema-sporsmal--jaNeiSporsmal">
 						<Underskjema
 							visible={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "soknad"}
 						>
