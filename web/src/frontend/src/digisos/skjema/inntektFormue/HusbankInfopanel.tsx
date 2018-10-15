@@ -1,8 +1,9 @@
 import * as React from "react";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
-import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
 import { finnFaktum } from "../../../nav-soknad/utils";
-import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import InfoPanel from "../../../nav-soknad/components/infopanel";
+import InformasjonspanelTo, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanelTo";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 
 class HusbankInfopanel extends React.Component<FaktumComponentProps & InjectedIntlProps, any> {
@@ -14,13 +15,19 @@ class HusbankInfopanel extends React.Component<FaktumComponentProps & InjectedIn
 			mottarBostotte = bostotteFaktum.value;
 		}
 		return (
-			<Informasjonspanel
-				synlig={mottarBostotte === "false"}
-				ikon={InformasjonspanelIkon.ELLA}
-				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+
+			<InfoPanel
+				open={mottarBostotte === "false"}
 			>
-				<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
-			</Informasjonspanel>
+				<InformasjonspanelTo
+					farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+					ikon={InformasjonspanelIkon.ELLA}
+				>
+					<span>Content ...</span>
+				</InformasjonspanelTo>
+			</InfoPanel>
+
+
 		);
 	}
 }

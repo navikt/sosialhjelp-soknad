@@ -5,7 +5,6 @@ import Panel, {PanelAction } from "./panel";
 
 interface OwnProps {
 	children?: any;
-	initialState: CollapseState;
 	open: boolean;
 }
 
