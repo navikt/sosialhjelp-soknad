@@ -27,6 +27,9 @@ import {
 } from "../../../nav-soknad/types";
 import Ella from "../../../nav-soknad/components/svg/Ella";
 import William from "../../../nav-soknad/components/svg/illustrasjoner/William";
+import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
+import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
+import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 
 // interface StateProps {
 // 	visPersonaliaFraTPSfeatureToggle: boolean;
@@ -48,7 +51,15 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 					steg={DigisosSteg.kontakt}
 					ikon={<William/>}
 				>
-					<h1>Debug: {this.props.gjenopptattSoknad ? "gjenopptattSoknad = true" : "gjenopptattSoknad = false"}</h1>
+					{this.props.gjenopptattSoknad && (
+						<Informasjonspanel
+							synlig={true}
+							ikon={InformasjonspanelIkon.ELLA}
+							farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+						>
+							Gjør oppmerksom på at søknad på nett kan ha blitt oppdatert siden sist gang du var inne.
+						</Informasjonspanel>
+					)}
 					<SporsmalFaktum faktumKey="kontakt.system.personalia" style="system">
 						<Personalia fakta={this.props.fakta} />
 					</SporsmalFaktum>
@@ -136,7 +147,8 @@ const mapStateToProps = (state: State) => ({
 	visPersonaliaFraTPSfeatureToggle:
 	state.featuretoggles.data[FeatureToggles.viseTpsPersonalia] === "true",
 	fakta: state.fakta.data,
-	paabegyntSoknad: state.soknad.gjenopptattSoknad
+	gjenopptattSoknad: state.soknad.gjenopptattSoknad,
+
 });
 
 export default connect<{}, {}, Props>(

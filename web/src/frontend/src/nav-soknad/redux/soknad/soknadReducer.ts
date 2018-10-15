@@ -30,8 +30,7 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultS
 		case SoknadActionTypeKeys.START_SOKNAD_OK:
 			return {
 				...state,
-				startSoknadPending: false,
-				gjenopptattSoknad: false
+				startSoknadPending: false
 			};
 		case SoknadActionTypeKeys.AVBRYT_SOKNAD:
 			return {
@@ -67,7 +66,8 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultS
 					...state.data,
 					brukerBehandlingId: action.brukerBehandlingId
 				},
-				restStatus: REST_STATUS.OK
+				restStatus: REST_STATUS.OK,
+				gjenopptattSoknad: false
 			};
 		case SoknadActionTypeKeys.HENT_SOKNAD:
 			return {
