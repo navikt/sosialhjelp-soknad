@@ -8,6 +8,7 @@ import SivilstatusTPS from "./SivilstatusTPS";
 import { Faktum } from "../../../nav-soknad/types";
 import { finnFaktum } from "../../../nav-soknad/utils";
 import Familierelasjoner from "./Familierelasjoner";
+import FamilieIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/FamilieIllustrasjon";
 
 class Familie extends React.Component<FaktumComponentProps, {}> {
 
@@ -17,7 +18,7 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 		const ektefelleFaktum: Faktum = finnFaktum("system.familie.sivilstatus.gift.ektefelle", fakta);
 
 		return (
-			<DigisosSkjemaSteg steg={DigisosSteg.familiebolk}>
+			<DigisosSkjemaSteg steg={DigisosSteg.familiebolk} ikon={<FamilieIllustrasjon />}>
 				{
 					sivilstatusFaktum.value === "gift" &&
 					<SivilstatusTPS sivilstatusFaktum={sivilstatusFaktum} ektefelleFaktum={ektefelleFaktum}/>

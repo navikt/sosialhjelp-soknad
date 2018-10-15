@@ -55,7 +55,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 	renderHilsen(): React.ReactNode {
 		if (this.state.fornavn && this.state.fornavn.length > 0) {
 			return (
-				<h3>
+				<h3 className="digisos-snakkeboble-tittel">
 					<FormattedHTMLMessage id="informasjon.hilsen.hei" values={{fornavn: this.state.fornavn}}/>
 				</h3>);
 		}
