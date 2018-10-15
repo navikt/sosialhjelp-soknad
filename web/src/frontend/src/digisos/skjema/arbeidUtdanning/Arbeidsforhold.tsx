@@ -20,7 +20,7 @@ type Props = FaktumComponentProps & StateProps & InjectedIntlProps;
 const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, visArbeidsforhold, intl }) => {
 
 	if (!visArbeidsforhold) {
-		return <div />;
+		return <div/>;
 	}
 
 	const removeSecurityAddedArbeidsforhold = (af: any) => {
@@ -28,42 +28,44 @@ const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, visArbeidsforh
 	};
 	const alleArbeidsforhold: Faktum[] = finnFakta("arbeidsforhold", fakta).filter(removeSecurityAddedArbeidsforhold);
 
-	return <SporsmalFaktum faktumKey="arbeidsforhold" style="system">
-		<SysteminfoMedSkjema>
-			<h4 className="skjema-sporsmal__infotekst__tittel">
-				<FormattedMessage id="arbeidsforhold.infotekst"/>
-			</h4>
-			{(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (
-				<p>
-					<FormattedMessage id="arbeidsforhold.ingen"/>
-				</p>
-			)}
-			{alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
-				<ul className={"arbeidsgiverliste"}>
-					{alleArbeidsforhold.map((arbeidsforhold: Faktum) =>
-						<li key={arbeidsforhold.faktumId} className="arbeidsgiverliste__arbeidsgiver">
-							<ArbeidsforholdDetaljer
-								arbeidsforhold={arbeidsforhold}
-							/>
-						</li>
-					)}
-				</ul>
-			)}
-			<TextareaFaktum
-				id="opplysninger_arbeidsituasjon_kommentarer"
-				faktumKey="opplysninger.arbeidsituasjon.kommentarer"
-				placeholder={intl.formatMessage({
-					id: "arbeidsforhold.kommentar.placeholder"
-				})}
-			/>
-		</SysteminfoMedSkjema>
-	</SporsmalFaktum>;
+	return (
+		<SporsmalFaktum faktumKey="arbeidsforhold" style="system">
+			<SysteminfoMedSkjema>
+				<h4 className="skjema-sporsmal__infotekst__tittel">
+					<FormattedMessage id="arbeidsforhold.infotekst"/>
+				</h4>
+				{(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (
+					<p>
+						<FormattedMessage id="arbeidsforhold.ingen"/>
+					</p>
+				)}
+				{alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
+					<ul className={"arbeidsgiverliste"}>
+						{alleArbeidsforhold.map((arbeidsforhold: Faktum) =>
+							<li key={arbeidsforhold.faktumId} className="arbeidsgiverliste__arbeidsgiver">
+								<ArbeidsforholdDetaljer
+									arbeidsforhold={arbeidsforhold}
+								/>
+							</li>
+						)}
+					</ul>
+				)}
+				<TextareaFaktum
+					id="opplysninger_arbeidsituasjon_kommentarer"
+					faktumKey="opplysninger.arbeidsituasjon.kommentarer"
+					placeholder={intl.formatMessage({
+						id: "arbeidsforhold.kommentar.placeholder"
+					})}
+				/>
+			</SysteminfoMedSkjema>
+		</SporsmalFaktum>
+	);
 };
 
 export default connect((state: State, {}) => {
 	return {
 		fakta: state.fakta.data,
 		visArbeidsforhold:
-		state.featuretoggles.data[FeatureToggles.arbeidsforhold] === "true",
+			state.featuretoggles.data[ FeatureToggles.arbeidsforhold ] === "true",
 	};
 })(injectIntl(Arbeidsforhold));
