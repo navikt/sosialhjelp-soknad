@@ -24,6 +24,7 @@
 @import "../components/svg/ella.less";
 @import "../components/infopanel/infopanel.less";
 @import "../components/infopanel/infoboksdesign.less";
+@import "../components/animasjoner/ellablunk/ellablunk.less";
 
 body {
 	overflow-y: scroll;
@@ -61,22 +62,7 @@ body {
 }
 
 .skjema__stegindikator {
-	margin-bottom: 3rem;
-}
-
-.tittel-strek {
-	position: relative;
-	padding-bottom: 2em;
-	&:after {
-		.tittel-strek-after();
-		background-color: @navMorkGra;
-	}
-	@media print {
-		padding-bottom: 2mm;
-		&:after {
-			display: none;
-		}
-	}
+	margin-bottom: 2rem;
 }
 
 .detaljeliste {
@@ -96,12 +82,12 @@ body {
 		}
 	}
 	&__tittel {
-		font-weight: normal;
-		color: @navGra60;
+		font-weight: bold;
+	  	font-size: 16px;
 		padding-right: 0.5rem;
 	}
 	&__verdi {
-		font-weight: 700;
+
 	}
 }
 

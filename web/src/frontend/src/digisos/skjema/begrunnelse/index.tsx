@@ -5,18 +5,21 @@ import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+import SnakkebobleIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SnakkebobleIllustrasjon";
 
 const MAX_CHARS = 500;
 
 const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
-	<DigisosSkjemaSteg steg={DigisosSteg.begrunnelsebolk}>
+	<DigisosSkjemaSteg
+		steg={DigisosSteg.begrunnelsebolk}
+		ikon={<SnakkebobleIllustrasjon/>}
+	>
 		<SporsmalFaktum faktumKey="begrunnelse.hvorfor">
 			<TextareaFaktum
 				id="begrunnelse_soknad_textarea"
 				placeholder={intl.formatMessage({
 					id: "begrunnelse.hvorfor.placeholder"
 				})}
-				textareaClass="skjema-textarea--large"
 				faktumKey="begrunnelse.hvorfor"
 				labelId="begrunnelse.hvorfor.label"
 				maxLength={MAX_CHARS}
@@ -30,7 +33,6 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 					id: "begrunnelse.hva.placeholder"
 				})}
 				validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
-				textareaClass="skjema-textarea--large"
 				faktumKey="begrunnelse.hva"
 				labelId="begrunnelse.hva.label"
 				maxLength={MAX_CHARS}

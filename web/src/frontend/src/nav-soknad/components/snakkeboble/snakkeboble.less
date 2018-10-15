@@ -10,6 +10,17 @@
   position: relative;
 }
 
+@media @mobile {
+  .digisos-snakkeboble {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
+.digisos-snakkeboble-tittel {
+  text-transform: uppercase;
+}
+
 .digisos-snakkeboble-innhold {
   display: block;
   max-width: 390px;
@@ -20,7 +31,7 @@
   font-size: 16px;
   line-height: 1.38;
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
 .digisos-snakkeboble-pil {
@@ -31,6 +42,7 @@
   height: 3rem;
   background-color: #cde7d8;
   transform: rotate(90deg) skew(36deg);
+  z-index: 2;
 
   @media screen and (max-width: 390px ) {
     right: 17vw;

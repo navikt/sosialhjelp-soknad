@@ -3,6 +3,9 @@ import { Collapse } from "react-collapse";
 import Ella from "../svg/Ella";
 import Brevkonvolutt from "../svg/Brevkonvolutt";
 import {DigisosFarge} from "../svg/DigisosFarger";
+import Hensyn from "../svg/Hensyn";
+import { erMobilVisning } from "../../utils/domUtils";
+import EllaKompakt from "../svg/EllaKompakt";
 
 interface OwnProps {
 	farge: DigisosFarge;
@@ -17,7 +20,8 @@ interface State {
 
 export enum InformasjonspanelIkon {
 	ELLA = "ella",
-	BREVKONVOLUTT = "brevkonvolutt"
+	BREVKONVOLUTT = "brevkonvolutt",
+	HENSYN = "hensyn"
 }
 
 class Informasjonspanel extends React.Component<OwnProps, State> {
@@ -36,16 +40,29 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 	}
 
 	renderIkon() {
-
+		const iconSize = erMobilVisning() ? 64 : 80;
 		switch (this.props.ikon){
-			case "ella": {
-				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
+			case InformasjonspanelIkon.ELLA: {
+				return (
+					<div>
+						<div className="ikke_mobilvennlig_ikon">
+							<Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+						</div>
+
+						<div className="mobilvennlig_ikon">
+							<EllaKompakt bakgrundsFarge={this.props.farge}/>
+						</div>
+					</div>
+				);
 			}
-			case "brevkonvolutt": {
-				return <Brevkonvolutt size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+			case InformasjonspanelIkon.BREVKONVOLUTT: {
+				return <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+			}
+			case InformasjonspanelIkon.HENSYN: {
+				return <Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
 			}
 			default: {
-				return <Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
+				return <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
 			}
 		}
 	}

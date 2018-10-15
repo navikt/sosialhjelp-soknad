@@ -21,12 +21,15 @@
 	padding: 1.5rem @skjemaMarg @sporsmalBottomPadding @skjemaMarg;
 	border-radius: 4px;
 	background-color: @white;
+
 	&:focus {
 		.focus-outline();
 	}
 	&--noBottomPadding {
 		padding-bottom: 0;
 	}
+
+
 	&--systeminfo {
 		padding-bottom: 0;
 		.skjema-sporsmal--noBottomPadding .skjema-sporsmal:last-child {
@@ -81,23 +84,43 @@
 
 .skjema-steg {
 	text-align: left;
+
 	&__feiloppsummering {
 		.panel--feiloppsummering {
 			margin-bottom: 4rem;
 		}
 	}
+
+  	&__ikon {
+	  display: block;
+	  text-align: center;
+	  margin-bottom: 1rem;
+	}
+
 	&__tittel {
+	  	text-align: center;
 		margin-top: 0;
 		margin-bottom: 1rem;
+	  	padding: 0 @skjemaMarg 0 @skjemaMarg;
+	  	padding: 0 @skjemaMarg 0 @skjemaMarg;
+
+	  	@media @mobile {
+		  padding: 0 @skjemaMargMobil 0 @skjemaMargMobil;
+		  padding: 0 @skjemaMargMobil 0 @skjemaMargMobil;
+		}
+
 		&:focus {
 			outline: none;
 		}
 	}
+
 	.skjema-sporsmal {
 		margin-bottom: 1rem;
+
 		.skjema-sporsmal {
 			margin-bottom: 0;
 		}
+
 	}
 }
 

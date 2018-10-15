@@ -15,3 +15,13 @@ export function erDev(): boolean {
 export const now = (): number => {
 	return new Date().getTime();
 };
+
+export const formaterIsoDato = (dato: string): string => {
+	if (dato) {
+		const aar = dato.slice(0, 4);
+		const maaned = dato.slice(5, 7);
+		const dag = dato.slice(8);
+		return `${dag}.${maaned}.${aar}`;
+	}
+	return ""
+};

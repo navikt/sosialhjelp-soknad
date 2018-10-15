@@ -1,5 +1,23 @@
-@bakgrunn: @navBodyGraa;
-@ramme: @navGra20;
+@bakgrunn: @white;
+@ramme: @white;
+
+.skjema-sporsmal--jaNeiSporsmal .underskjema__boks {
+  background-color: @navLysGra;
+  margin-left: @skjemaMarg;
+  margin-right: @skjemaMarg;
+  border-radius: 4px;
+}
+
+.skjema-sporsmal--jaNeiSporsmal .underskjema__innhold:before {
+  background-color: @navLysGra !important;
+}
+
+@media @mobile {
+  .skjema-sporsmal--jaNeiSporsmal .underskjema__boks {
+	margin-left: @skjemaMargMobil;
+	margin-right: @skjemaMargMobil;
+  }
+}
 
 .underskjema {
 	padding-top: 0.8rem;
@@ -29,6 +47,7 @@
 		border: 1px solid @ramme;
 		background-color: @bakgrunn;
 		position: relative;
+
 		@media @mobile {
 			padding: @skjemaMargMobil @skjemaMargMobil @skjemaMargMobil*1.5
 				@skjemaMargMobil;
@@ -64,7 +83,7 @@
 			border-right: 1px solid @ramme;
 			box-sizing: border-box;
 			top: 0px;
-			left: 29px;
+			left: 14px;
 			@media @mobile {
 				left: 16px;
 			}
@@ -72,7 +91,7 @@
 	}
 }
 
-/** 
+/**
 * Nivå 2+n underskjema
 * Fjern border og bytt pil til strek - juster margin
 */

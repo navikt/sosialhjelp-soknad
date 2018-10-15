@@ -19,9 +19,9 @@ export const DetaljelisteElement: React.StatelessComponent<ElementProps> = ({
 			<strong className="detaljeliste__tittel" key="tittel">
 				{tittel}:
 			</strong>
-			<div className={"detaljeliste__verdi"} key="verdi">
+			<span className={"detaljeliste__verdi"} key="verdi">
 				{verdi}
-			</div>
+			</span>
 		</li>
 	);
 };

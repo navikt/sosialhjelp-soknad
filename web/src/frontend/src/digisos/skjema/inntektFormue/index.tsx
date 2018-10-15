@@ -9,17 +9,19 @@ import Utbetaling from "./Utbetaling";
 import { State } from "../../redux/reducers";
 import NavYtelser from "./NavYtelser";
 import HusbankInfopanel from "./HusbankInfopanel";
+import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
+import Penger from "../../../nav-soknad/components/svg/illustrasjoner/Penger";
 
-class InntektFormue extends React.Component<FaktumComponentProps, any> {
+class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps, any> {
 	render() {
 		const { fakta } = this.props;
 		return (
-			<DigisosSkjemaSteg steg={DigisosSteg.inntektbolk}>
+			<DigisosSkjemaSteg steg={DigisosSteg.inntektbolk} ikon={<Penger/>}>
 				<NavYtelser fakta={fakta}/>
 				<Bostotte />
 				<HusbankInfopanel fakta={fakta}/>
 				<Eiendeler fakta={fakta} />
-				<Bankinnskudd fakta={fakta} />
+				<Bankinnskudd fakta={fakta} dispatch={this.props.dispatch}/>
 				<Utbetaling fakta={fakta} />
 			</DigisosSkjemaSteg>
 		);
