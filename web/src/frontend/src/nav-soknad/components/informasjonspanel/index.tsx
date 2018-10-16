@@ -12,6 +12,7 @@ interface OwnProps {
 	children?: any;
 	synlig?: boolean;
 	ikon: InformasjonspanelIkon;
+	className?: string;
 }
 
 interface State {
@@ -71,7 +72,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 		const styleClassName = "skjema-informasjonspanel-" + this.props.farge;
 
 		return (
-			<div className="skjema-informasjonspanel-wrapper">
+			<div className={"skjema-informasjonspanel-wrapper " + this.props.className}>
 				<div
 					className={
 						"skjema-informasjonspanel " + styleClassName

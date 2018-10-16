@@ -1,3 +1,5 @@
+@marginUnderSporsmal: 3.5rem;
+
 .skjema-content {
 	margin: 0 auto;
 	max-width: 640px;
@@ -11,8 +13,9 @@
 	legend {
 		padding-right: @skjemaMarg + 10px; // pga.hjelpetekst
 		padding-left: 0;
-		margin-bottom: 1rem;
-
+		margin-bottom: 22px;
+		font-weight: 700;
+		font-size: 1.5rem;
 	}
 }
 
@@ -24,9 +27,11 @@
 .skjema-sporsmal {
 	position: relative;
 	display: block;
-	padding: 1.5rem @skjemaMarg @sporsmalBottomPadding @skjemaMarg;
+	// padding: 1.5rem @skjemaMarg @sporsmalBottomPadding @skjemaMarg;
+	padding: 0 @skjemaMarg 0 @skjemaMarg;
 	border-radius: 4px;
-	background-color: @white;
+	border: 1px dotted red;
+	// background-color: @white;
 
 	&:focus {
 		.focus-outline();
@@ -108,13 +113,14 @@
 	  	text-align: center;
 		margin-top: 0;
 		margin-bottom: 1rem;
-	  	padding: 0 @skjemaMarg 0 @skjemaMarg;
-	  	padding: 0 @skjemaMarg 0 @skjemaMarg;
 
-	  	@media @mobile {
-		  padding: 0 @skjemaMargMobil 0 @skjemaMargMobil;
-		  padding: 0 @skjemaMargMobil 0 @skjemaMargMobil;
-		}
+	  	//padding: 0 @skjemaMarg 0 @skjemaMarg;
+	  	//padding: 0 @skjemaMarg 0 @skjemaMarg;
+        //
+	  	//@media @mobile {
+		//  padding: 0 @skjemaMargMobil 0 @skjemaMargMobil;
+		//  padding: 0 @skjemaMargMobil 0 @skjemaMargMobil;
+		//}
 
 		&:focus {
 			outline: none;
@@ -122,7 +128,7 @@
 	}
 
 	.skjema-sporsmal {
-		margin-bottom: 1rem;
+		margin-bottom: @marginUnderSporsmal;
 
 		.skjema-sporsmal {
 			margin-bottom: 0;
@@ -145,4 +151,8 @@
 }
 :not(output):-moz-ui-invalid:-moz-focusring:not:focus {
 	box-shadow: none;
+}
+
+.luftUnderSporsmal {
+	margin-bottom: @marginUnderSporsmal;
 }

@@ -28,7 +28,7 @@ const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	}
 
 	return (
-		<SporsmalFaktum faktumKey="kontakt.system.telefoninfo" style="system">
+		<SporsmalFaktum faktumKey="kontakt.system.telefoninfo" style="system" >
 			<SysteminfoFaktum
 				faktumKey="kontakt.telefon.brukerendrettoggle"
 				skjema={<Skjema />}

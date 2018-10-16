@@ -124,6 +124,7 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 					(<Informasjonspanel
 						farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 						ikon={InformasjonspanelIkon.ELLA}
+						className="luftUnderSporsmal"
 					>
 						<h4 className="skjema-sporsmal__infotekst__tittel">
 							<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel"/>

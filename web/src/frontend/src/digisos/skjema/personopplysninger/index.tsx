@@ -47,10 +47,10 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 					steg={DigisosSteg.kontakt}
 					ikon={<William/>}
 				>
-					<SporsmalFaktum faktumKey="kontakt.system.personalia" style="system">
+					<SporsmalFaktum faktumKey="kontakt.system.personalia" style="system" legendClassName="skjema-fieldset-large-bold">
 						<Personalia fakta={this.props.fakta} />
 					</SporsmalFaktum>
-					<SporsmalFaktum faktumKey="kontakt.system.kontaktinfo" style="system">
+					<SporsmalFaktum faktumKey="kontakt.system.kontaktinfo" style="system" legendClassName="skjema-fieldset-large-bold">
 						<Adresseinfo fakta={this.props.fakta} />
 					</SporsmalFaktum>
 					<Telefoninfo fakta={this.props.fakta} />
