@@ -57,7 +57,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 							ikon={InformasjonspanelIkon.ELLA}
 							farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 						>
-							Gjør oppmerksom på at søknad på nett kan ha blitt oppdatert siden sist gang du var inne.
+							Vær oppmerksom på at søknaden på nett kan ha blitt oppdatert siden sist gang du var inne.
 						</Informasjonspanel>
 					)}
 					<SporsmalFaktum faktumKey="kontakt.system.personalia" style="system">
