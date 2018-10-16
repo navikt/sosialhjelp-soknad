@@ -33,7 +33,7 @@ class Familierelasjoner extends React.Component<Props, {}> {
 			);
         } else {
 	        return (
-		        <SporsmalFaktum faktumKey={"familierelasjon.faktum"} style="system">
+		        <SporsmalFaktum faktumKey={"familierelasjon.faktum"} style="system" legendClassName="skjema-fieldset-large-bold">
 			        <div><FormattedHTMLMessage id="familierelasjon.ingress" values={{antallBarn}}/></div>
 			        <SysteminfoMedSkjema>
 				        <SystemregistrerteBarn barnFakta={barnFakta} />

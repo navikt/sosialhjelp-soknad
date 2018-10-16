@@ -17,6 +17,7 @@ export interface Props {
 	feil?: Feil;
 	feilkode?: string;
 	tekster: SporsmalFaktumTekst;
+	legendClassName?: string;
 }
 
 class Sporsmal extends React.Component<Props, {}> {
@@ -48,6 +49,7 @@ class Sporsmal extends React.Component<Props, {}> {
 					<fieldset className={cls}>
 						<legend
 							id={legendId}
+							className={this.props.legendClassName || ""}
 						>
 							{sporsmal}
 							<SporsmalHjelpetekst tekster={tekster} legendId={legendId}/>
