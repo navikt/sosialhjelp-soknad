@@ -53,7 +53,6 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 				>
 					{this.props.gjenopptattSoknad && (
 						<Informasjonspanel
-							synlig={true}
 							ikon={InformasjonspanelIkon.ELLA}
 							farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 						>
