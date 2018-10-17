@@ -27,7 +27,7 @@
   }
 }
 
-.skjema-sporsmal--jaNeiSporsmal__advarsel {
+.skjema__feilomrade--harFeil .skjema-sporsmal--jaNeiSporsmal {
 
   .underskjema__boks {
 	background-color: @navRosa;
@@ -43,7 +43,7 @@
 }
 
 @media @mobile {
-  .skjema-sporsmal--jaNeiSporsmal__advarsel {
+  .skjema__feilomrade--harFeil .skjema-sporsmal--jaNeiSporsmal {
 
 	.underskjema__boks {
 	  margin-left: 1rem;
@@ -60,6 +60,17 @@
 	  margin-right: @skjemaMargMobil;
 	}
   }
+}
+
+.skjema__feilomrade--harFeil .underskjema__boks {
+	border: 1px solid @redError;
+}
+
+.skjema__feilomrade--harFeil .underskjema--arrow {
+	.underskjema__innhold:before {
+		border-top: 1px solid @redError;
+		border-right: 1px solid @redError;
+	}
 }
 
 .underskjema {
