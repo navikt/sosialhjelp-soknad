@@ -52,7 +52,7 @@ class Bankinnskudd extends React.Component<Props, {}> {
 		const hvilkeInnskudd = radioCheckKeys("inntekt.bankinnskudd.true.type");
 		const hvilkeInnskuddAnnet = "inntekt.bankinnskudd.true.type.annet";
 		return (
-			<SporsmalFaktum faktumKey={hvilkeInnskudd.faktum}>
+			<SporsmalFaktum faktumKey={hvilkeInnskudd.faktum} className="luftUnderFemRem">
 				{this.innskuddstyper.map((innskuddstype: string) => {
 					const id = "bankinnskudd_" + innskuddstype + "_checkbox";
 					return (
