@@ -187,6 +187,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 		return (
 			<div className="sosialhjelp-oppholdsadresse">
 				<SporsmalFaktum
+					id="soknadsmottaker"
 					faktumKey="soknadsmottaker"
 					noValidateOnBlur={true}
 					validerFunc={[ (value) => {

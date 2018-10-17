@@ -8,6 +8,7 @@ import {
 } from "./FaktumComponent";
 
 export interface OwnProps {
+	id?: string;
 	faktumKey: string;
 	children: React.ReactNode;
 	visible?: boolean;
