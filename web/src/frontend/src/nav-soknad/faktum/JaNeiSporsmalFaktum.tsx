@@ -25,6 +25,8 @@ interface OwnProps {
 	/** Om faktumet skal være synlig eller ikke */
 	visible?: boolean;
 	id?: string;
+	legendClassName?: string;
+	className?:string;
 }
 type Props = OwnProps & FaktumComponentProps;
 
@@ -83,6 +85,8 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 			<SporsmalFaktum
 				{...this.props}
 				style={visSkjema ? "jaNeiSporsmal" : "normal"}
+				legendClassName={this.props.legendClassName}
+				className={this.props.className}
 			>
 				<ValgMedUnderskjema
 					underskjema={ children ?

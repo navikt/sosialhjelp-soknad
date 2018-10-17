@@ -15,6 +15,7 @@ export interface OwnProps {
 	style?: SporsmalStyle;
 	tittelRenderer?: (title: string) => React.ReactNode;
 	legendClassName?: string;
+	className?: string;
 }
 
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -66,6 +67,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 		if (visible === false) {
 			return null;
 		}
+
 		return (
 			<Sporsmal
 				feil={this.harValidering() ? this.props.getFeil(intl) : null}
@@ -76,6 +78,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 				visible={visible}
 				tittelRenderer={tittelRenderer}
 				legendClassName={this.props.legendClassName || ""}
+				className={this.props.className}
 			>
 				{children}
 			</Sporsmal>

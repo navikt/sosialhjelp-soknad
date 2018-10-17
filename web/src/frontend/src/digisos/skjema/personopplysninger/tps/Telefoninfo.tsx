@@ -14,8 +14,8 @@ interface Props {
 }
 
 const Skjema: React.StatelessComponent<{}> = () => (
-	<SporsmalFaktum faktumKey="kontakt.telefon">
-		<TelefonFaktum faktumKey="kontakt.telefon" id="kontakt_telefon" maxLength={8} />
+	<SporsmalFaktum faktumKey="kontakt.telefon" className="luftUnderFemRem legendTittelStorBold">
+		<TelefonFaktum faktumKey="kontakt.telefon" id="kontakt_telefon" maxLength={8} className="normalTekst"/>
 	</SporsmalFaktum>
 );
 
@@ -28,7 +28,7 @@ const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	}
 
 	return (
-		<SporsmalFaktum faktumKey="kontakt.system.telefoninfo" style="system" >
+		<SporsmalFaktum faktumKey="kontakt.system.telefoninfo" style="system" className="luftUnderFemRem">
 			<SysteminfoFaktum
 				faktumKey="kontakt.telefon.brukerendrettoggle"
 				skjema={<Skjema />}

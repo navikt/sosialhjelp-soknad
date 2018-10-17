@@ -103,7 +103,7 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 
 		return (
 			<div>
-				<SporsmalFaktum faktumKey="system.familie.sivilstatus" style="system" legendClassName="skjema-fieldset-large-bold">
+				<SporsmalFaktum faktumKey="system.familie.sivilstatus" style="system" legendClassName="skjema-fieldset-large-bold" className="luftOverForsteUndertittel">
 					<div>
 						<FormattedMessage id="system.familie.sivilstatus"/>
 					</div>

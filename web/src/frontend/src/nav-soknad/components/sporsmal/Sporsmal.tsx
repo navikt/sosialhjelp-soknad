@@ -18,6 +18,7 @@ export interface Props {
 	feilkode?: string;
 	tekster: SporsmalFaktumTekst;
 	legendClassName?: string;
+	className?: string;
 }
 
 class Sporsmal extends React.Component<Props, {}> {
@@ -39,9 +40,10 @@ class Sporsmal extends React.Component<Props, {}> {
 		const sporsmal = this.props.tittelRenderer
 			? this.props.tittelRenderer(tekster.sporsmal)
 			: tekster.sporsmal;
+
 		return (
 			<div
-				className={sporsmalCls}
+				className={sporsmalCls + " " + this.props.className}
 				onBlur={this.props.handleOnBlur}
 				aria-labelledby={legendId}
 			>
@@ -54,7 +56,9 @@ class Sporsmal extends React.Component<Props, {}> {
 							{sporsmal}
 							<SporsmalHjelpetekst tekster={tekster} legendId={legendId}/>
 						</legend>
-						<div className="skjema-sporsmal__innhold">{children}</div>
+						<div className="skjema-sporsmal__innhold">
+							{children}
+						</div>
 					</fieldset>
 				</SkjemaGruppe>
 			</div>

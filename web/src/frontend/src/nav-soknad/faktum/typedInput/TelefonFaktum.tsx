@@ -13,6 +13,7 @@ const TelefonFaktum: React.StatelessComponent<Props> = (props: Props) => {
 			maxLength={props.maxLength || 8}
 			bredde={props.bredde || "S"}
 			validerFunc={validerFunc}
+			className="skjemaelement__enLinje185bredde"
 		/>
 	);
 };

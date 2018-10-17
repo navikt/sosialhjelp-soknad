@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Textarea } from "nav-frontend-skjema";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { getInputFaktumTekst, getIntlTextOrKey } from "../utils";
+import { getIntlTextOrKey } from "../utils";
 import {
 	faktumComponent,
 	InjectedFaktumComponentProps
@@ -56,7 +56,6 @@ class TextareaFaktum extends React.Component<Props, {}> {
 
 	render() {
 		const {
-			faktumKey,
 			property,
 			labelId,
 			disabled,
@@ -65,15 +64,15 @@ class TextareaFaktum extends React.Component<Props, {}> {
 			required,
 			intl
 		} = this.props;
-		const tekster = getInputFaktumTekst(intl, faktumKey, property);
 		const verdi =
 			(property
 				? this.props.getPropertyVerdi()
 				: this.props.getFaktumVerdi()) || "";
+
 		return (
 			<Textarea
 				id={this.props.id ? this.props.id : this.props.faktumKey + "_textarea"}
-				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
+				label={labelId ? getIntlTextOrKey(intl, labelId) : ""}
 				placeholder={this.props.placeholder}
 				value={verdi}
 				name={this.props.getName()}

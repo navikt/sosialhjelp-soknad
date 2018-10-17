@@ -100,9 +100,8 @@ export default class Barn extends React.Component<Props, {}> {
 								property="grad"
 								maxLength={3}
 								kunHeltall={true}
-								bredde="XS"
+								bredde="L"
 							/>
-							<span className="prosenttegn">%</span>
 						</SporsmalFaktum>
 					</JaNeiSporsmalFaktum>
 					{visFjernBarn && (

@@ -47,7 +47,7 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 		if (utbetalingerFeilet && utbetalingerFeilet[VALUE] !== "true") {
 			return (
 
-				<SporsmalFaktum faktumKey="navytelser" style="system">
+				<SporsmalFaktum faktumKey="navytelser" style="system" className="luftUnderFemRem">
 					<SysteminfoMedSkjema>
 						<h4 className="skjema-sporsmal__infotekst__tittel">
 							<FormattedMessage id="utbetalinger.sporsmal"/>
