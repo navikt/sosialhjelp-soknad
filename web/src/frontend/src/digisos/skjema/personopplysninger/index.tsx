@@ -30,6 +30,7 @@ import William from "../../../nav-soknad/components/svg/illustrasjoner/William";
 import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
+import { FormattedMessage } from "react-intl";
 
 // interface StateProps {
 // 	visPersonaliaFraTPSfeatureToggle: boolean;
@@ -56,7 +57,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 							ikon={InformasjonspanelIkon.ELLA}
 							farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 						>
-							Vær oppmerksom på at søknaden på nett kan ha blitt oppdatert siden sist gang du var inne.
+							<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
 						</Informasjonspanel>
 					)}
 					<SporsmalFaktum faktumKey="kontakt.system.personalia" style="system">
