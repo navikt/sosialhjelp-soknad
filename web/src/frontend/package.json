@@ -26,9 +26,9 @@
 		"nav-frontend-spinner": "^0.1.21",
 		"nav-frontend-typografi": "^1.0.12",
 		"node-less-chokidar": "^0.3.1",
+		"prop-types": "^15.6.2",
 		"react": "16.2.0",
 		"react-autocomplete": "^1.8.1",
-		"prop-types": "^15.6.2",
 		"react-collapse": "^4.0.3",
 		"react-document-title": "^2.0.3",
 		"react-dom": "^16.2.0",
@@ -47,7 +47,8 @@
 		"redux-devtools-extension": "^2.13.2",
 		"redux-logger": "^3.0.6",
 		"redux-saga": "^0.15.6",
-		"redux-thunk": "2.2.0"
+		"redux-thunk": "2.2.0",
+		"update": "^0.7.4"
 	},
 	"devDependencies": {
 		"@types/classnames": "^2.2.0",
