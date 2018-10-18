@@ -13,6 +13,10 @@
   }
 }
 
+.navAutcomplete > div {
+  width: 100%;
+}
+
 .navAutcomplete input {
   padding: 0.45rem;
   background-color: white;
@@ -29,8 +33,8 @@
     border-color: #0067C5;
   }
 
-  @media @mobile {
-    width: 80vw;
+  @media only screen and (max-width: 544px) {
+    width: 100%;
   }
 
 }
@@ -40,17 +44,22 @@
   left: 365px;
   top: 6px;
 
-  @media @mobile {
-    left: 72vw;
+  @media only screen and (max-width: 544px) {
+    left: initial;
+    right: 0.5rem;
   }
 }
 
 .menu {
   position: absolute;
   box-sizing: border-box;
-  width: 100%;
+  width: 25rem;
   border: 1px solid @navGra40;
   z-index: 1;
+
+  @media only screen and (max-width: 544px) {
+    width: 100%;
+  }
 }
 
 .item {
