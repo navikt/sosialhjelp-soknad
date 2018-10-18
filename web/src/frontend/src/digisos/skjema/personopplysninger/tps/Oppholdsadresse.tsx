@@ -199,19 +199,20 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 				>
 					{Object.getOwnPropertyNames(folkeregistrertAdresseFaktum.properties).length !== 0 && (
 						<span>
-
-
 							<RadioFaktum
 								id="oppholdsadresse_folkeregistrert"
 								faktumKey="kontakt.system.oppholdsadresse.valg"
 								value="folkeregistrert"
 								deaktiverLagring={true}
 								onChange={() => this.brukFolkeregistrertAdresse()}
+								visSpinner={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "folkeregistrert"
+										&& this.props.soknadsmottakere.length === 0
+										&& this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.UGYLDIG
+										&& this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.MANGLER_NAV_KONTOR}
 								label={
-									<div>
+									<div className="finnNavKontor__label">
 										<FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
 										<AdresseVisning faktum={folkeregistrertAdresseFaktum}/>
-
 									</div>
 								}
 							/>
@@ -221,16 +222,13 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 									visible={this.props.soknadsmottakere.length > 1 && getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "folkeregistrert"}
 								>
 									<div className="utvidetAddresseSok">
-
 										<VelgSoknadsmottaker
 											label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgKontor")}
 											fakta={this.props.fakta}
 										/>
-
 									</div>
 								</Underskjema>
 							</div>
-
 						</span>
 					)}
 					{Object.getOwnPropertyNames(adresseFaktum.properties).length !== 0

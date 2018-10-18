@@ -8,6 +8,7 @@ import {
 	InjectedFaktumComponentProps
 } from "./FaktumComponent";
 import { CheckboxFaktumTekst } from "../types/index";
+import NavFrontendSpinner from "nav-frontend-spinner";
 
 interface OwnProps {
 	value: string;
@@ -18,6 +19,7 @@ interface OwnProps {
 	onChange?: any;
 	visPanel?: boolean;
 	className?: string;
+	visSpinner?: boolean;
 }
 
 type RadioFaktumProps = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -94,12 +96,15 @@ class RadioFaktum extends React.Component<RadioFaktumProps, {}> {
 
 	render() {
 		const visPanel = (this.props.visPanel != null ? this.props.visPanel : true);
-		const { className } = this.props;
+		const { className, visSpinner } = this.props;
 		const onChange = this.determineOnChange();
 		
 		let classNames = "inputPanel " + className;
 		if (this.checked()) {
 			classNames += " inputPanel__checked";
+		}
+		if (visSpinner) {
+			classNames += " inputPanel--disabled";
 		}
 		if(visPanel) {
 			return (
@@ -108,6 +113,7 @@ class RadioFaktum extends React.Component<RadioFaktumProps, {}> {
 					onClick={() => onChange()}
 				>
 					{this.renderRadio()}
+					{visSpinner && <div className="inputPanel__spinner"><NavFrontendSpinner type="XL" /></div>}
 				</div>
 			);
 		} else {
