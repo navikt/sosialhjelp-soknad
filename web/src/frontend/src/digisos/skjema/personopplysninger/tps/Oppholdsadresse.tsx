@@ -266,12 +266,16 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 						</span>
 
 					)}
-					<RadioFaktum
-						id="oppholdsadresse_soknad"
-						faktumKey="kontakt.system.oppholdsadresse.valg"
-						deaktiverLagring={true}
-						onChange={() => this.brukSoknadAdresse()}
-						value="soknad"/>
+
+					<span>
+						<RadioFaktum
+							id="oppholdsadresse_soknad"
+							faktumKey="kontakt.system.oppholdsadresse.valg"
+							deaktiverLagring={true}
+							onChange={() => this.brukSoknadAdresse()}
+							value="soknad"
+						/>
+					</span>
 					<div className="skjema-sporsmal--jaNeiSporsmal">
 						<Underskjema
 							visible={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "soknad"}
