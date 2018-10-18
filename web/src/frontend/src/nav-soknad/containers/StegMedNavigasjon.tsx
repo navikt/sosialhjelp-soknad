@@ -37,6 +37,7 @@ interface OwnProps {
 	stegKey: string;
 	skjemaConfig: SkjemaConfig;
 	pending?: boolean;
+	ikon?: React.ReactNode;
 }
 
 interface InjectedRouterProps {
@@ -172,6 +173,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 								/>
 							</div>
 						) : null}
+						<div className="skjema-steg__ikon">
+							{this.props.ikon}
+						</div>
 						<div
 							className="skjema-steg__tittel"
 							tabIndex={-1}

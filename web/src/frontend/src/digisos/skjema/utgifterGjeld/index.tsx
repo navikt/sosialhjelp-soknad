@@ -16,6 +16,7 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
+import KredittkortIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/KredittkortIllustrasjon";
 
 class UtgifterGjeld extends React.Component<
 	FaktumComponentProps & DispatchProps & InjectedIntlProps,
@@ -29,7 +30,7 @@ class UtgifterGjeld extends React.Component<
 		const barneUtgifter = radioCheckKeys("utgifter.barn.true.utgifter");
 
 		return (
-			<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk}>
+			<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk} ikon={<KredittkortIllustrasjon/>}>
 				<JaNeiSporsmalFaktum faktumKey={harBoutgifter.faktum}>
 					<SporsmalFaktum faktumKey={boUtgifter.faktum}>
 						<CheckboxFaktum

@@ -16,7 +16,8 @@ export const defaultState: SoknadState = {
 	data: {
 		brukerBehandlingId: "",
 		fakta: []
-	}
+	},
+	gjenopptattSoknad: true
 };
 
 const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultState, action) => {
@@ -65,7 +66,8 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultS
 					...state.data,
 					brukerBehandlingId: action.brukerBehandlingId
 				},
-				restStatus: REST_STATUS.OK
+				restStatus: REST_STATUS.OK,
+				gjenopptattSoknad: false
 			};
 		case SoknadActionTypeKeys.HENT_SOKNAD:
 			return {

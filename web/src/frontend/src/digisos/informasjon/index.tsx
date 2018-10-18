@@ -53,7 +53,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 	renderHilsen(): React.ReactNode {
 		if (this.state.fornavn && this.state.fornavn.length > 0) {
 			return (
-				<h3>
+				<h3 className="digisos-snakkeboble-tittel">
 					<FormattedHTMLMessage id="informasjon.hilsen.hei" values={{fornavn: this.state.fornavn}}/>
 				</h3>);
 		}
@@ -145,7 +145,6 @@ export default connect((state: State) => ({
 	harTilgang: state.tilgang.harTilgang,
 	sperrekode: state.tilgang.sperrekode,
 	soknadErLive: state.featuretoggles.data[FeatureToggles.soknadErLive],
-	visVelgBosted:
-	state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
+	visVelgBosted: state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
 	startSoknadPending: state.soknad.startSoknadPending
 }))(injectIntl(Informasjon));

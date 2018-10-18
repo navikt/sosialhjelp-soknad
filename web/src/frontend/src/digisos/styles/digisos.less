@@ -45,3 +45,21 @@ body {
 .varsler-display {
   z-index: 2 !important;
 }
+
+.kun_desktop {
+  display: inline-block;
+}
+
+.kun_mobil {
+  display: none;
+}
+
+@media @mobile {
+  .kun_desktop {
+	display: none;
+  }
+
+  .kun_mobil {
+	display: inline-block;
+  }
+}
