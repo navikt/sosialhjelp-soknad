@@ -61,6 +61,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 		}
 		return null;
 	}
+
 	startSoknad() {
 		this.props.dispatch(lesKommuner());
 		this.props.dispatch(
@@ -149,7 +150,6 @@ export default connect((state: State) => ({
 	harTilgang: state.tilgang.harTilgang,
 	sperrekode: state.tilgang.sperrekode,
 	soknadErLive: state.featuretoggles.data[FeatureToggles.soknadErLive],
-	visVelgBosted:
-	state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
+	visVelgBosted: state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
 	startSoknadPending: state.soknad.startSoknadPending
 }))(injectIntl(Informasjon));
