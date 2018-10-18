@@ -198,20 +198,40 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 					} ]}
 				>
 					{Object.getOwnPropertyNames(folkeregistrertAdresseFaktum.properties).length !== 0 && (
-						<RadioFaktum
-							id="oppholdsadresse_folkeregistrert"
-							faktumKey="kontakt.system.oppholdsadresse.valg"
-							value="folkeregistrert"
-							deaktiverLagring={true}
-							onChange={() => this.brukFolkeregistrertAdresse()}
-							label={
-								<div>
-									<FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
-									<AdresseVisning faktum={folkeregistrertAdresseFaktum}/>
+						<span>
 
-								</div>
-							}
-						/>
+
+							<RadioFaktum
+								id="oppholdsadresse_folkeregistrert"
+								faktumKey="kontakt.system.oppholdsadresse.valg"
+								value="folkeregistrert"
+								deaktiverLagring={true}
+								onChange={() => this.brukFolkeregistrertAdresse()}
+								label={
+									<div>
+										<FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
+										<AdresseVisning faktum={folkeregistrertAdresseFaktum}/>
+
+									</div>
+								}
+							/>
+
+							<div className="skjema-sporsmal--jaNeiSporsmal">
+								<Underskjema
+									visible={this.props.soknadsmottakere.length > 1 && getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "folkeregistrert"}
+								>
+									<div className="utvidetAddresseSok">
+
+										<VelgSoknadsmottaker
+											label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgKontor")}
+											fakta={this.props.fakta}
+										/>
+
+									</div>
+								</Underskjema>
+							</div>
+
+						</span>
 					)}
 					{Object.getOwnPropertyNames(adresseFaktum.properties).length !== 0
 					&& (adresseFaktum.properties as AdresseProperties).kilde !== "folkeregister" && (
@@ -252,13 +272,14 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 										onValgtVerdi={(adresse: any) => this.handleVelgAutocompleteAdresse(adresse)}
 										fakta={this.props.fakta}
 									/>
+									<VelgSoknadsmottaker
+										label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgKontor")}
+										fakta={this.props.fakta}
+									/>
+
 								</SporsmalFaktum>
 							</div>
 						</Underskjema>
-						<VelgSoknadsmottaker
-							label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgKontor")}
-							fakta={this.props.fakta}
-						/>
 
 						<FinnNavKontorProgressIndikator
 							label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.finnerKontor")}
