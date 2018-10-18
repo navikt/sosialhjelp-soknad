@@ -3,7 +3,7 @@ import * as React from "react";
 import JaNeiSporsmalFaktum from "../../../nav-soknad/faktum/JaNeiSporsmalFaktum";
 
 const Bostotte: React.StatelessComponent = () => (
-	<JaNeiSporsmalFaktum faktumKey="inntekt.bostotte"/>
+	<JaNeiSporsmalFaktum faktumKey="inntekt.bostotte" className="boldVanligTekst"/>
 );
 
 export default Bostotte;

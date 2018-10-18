@@ -77,6 +77,7 @@ const SystemregistrerteBarn: React.StatelessComponent<Props> = ({ barnFakta }) =
 									faktumKey: "system.familie.barn.true.barn",
 									faktumId: barn.faktumId
 								}}
+								className="boldVanligTekst"
 							/>
 						</div>)
 					}

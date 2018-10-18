@@ -22,7 +22,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeEiendeler = radioCheckKeys("inntekt.eierandeler.true.type");
 		const hvilkeEiendelerAnnet = "inntekt.eierandeler.true.type.annet";
 		return (
-			<JaNeiSporsmalFaktum faktumKey={eiendeler.faktum} className="luftUnderFireRem">
+			<JaNeiSporsmalFaktum faktumKey={eiendeler.faktum} className="luftUnderFireRem boldVanligTekst">
 				<SporsmalFaktum faktumKey={hvilkeEiendeler.faktum}>
 					<CheckboxFaktum
 						id="eiendeler_bolig_checkbox"

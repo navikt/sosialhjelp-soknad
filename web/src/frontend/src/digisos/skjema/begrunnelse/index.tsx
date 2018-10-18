@@ -16,7 +16,7 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 	>
 		<SporsmalFaktum
 			faktumKey="begrunnelse.hvorfor"
-			className="luftOverForsteUndertittel liteLuftMellomSpsm"
+			className="luftOverForsteUndertittel liteLuftMellomSpsm boldVanligTekst"
 			legendClassName="normalTekstUndertittel"
 		>
 			<TextareaFaktum
@@ -31,7 +31,7 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 		</SporsmalFaktum>
 		<SporsmalFaktum
 			faktumKey="begrunnelse.hva"
-			className="luftUnderFireRem"
+			className="luftUnderFireRem boldVanligTekst"
 			legendClassName="normalTekstUndertittel"
 		>
 			<TextareaFaktum
