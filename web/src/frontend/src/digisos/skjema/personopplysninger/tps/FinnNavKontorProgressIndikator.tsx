@@ -27,8 +27,8 @@ class FinnNavKontorProgressIndikator extends React.Component<Props, {}> {
 			antallSoknadsmottakere === 0 &&
 			this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.UGYLDIG &&
 			this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.MANGLER_NAV_KONTOR;
-		if (visProgressIndikator) {
-			return (<div>{this.props.label} <NavFrontendSpinner type="XS" /></div>);
+		if (true || visProgressIndikator) {
+			return (<div className="finnNavKontor">{this.props.label} <NavFrontendSpinner type="XS" /></div>);
 		} else {
 			return null;
 		}
