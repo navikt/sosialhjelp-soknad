@@ -233,19 +233,38 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 					)}
 					{Object.getOwnPropertyNames(adresseFaktum.properties).length !== 0
 					&& (adresseFaktum.properties as AdresseProperties).kilde !== "folkeregister" && (
-						<RadioFaktum
-							id="oppholdsadresse_midlertidig"
-							faktumKey="kontakt.system.oppholdsadresse.valg"
-							value="midlertidig"
-							deaktiverLagring={true}
-							onChange={() => this.brukMidlertidigAdresse()}
-							label={
-								<div>
-									<FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
-									<AdresseVisning faktum={adresseFaktum}/>
-								</div>
-							}
-						/>
+						<span>
+							<RadioFaktum
+								id="oppholdsadresse_midlertidig"
+								faktumKey="kontakt.system.oppholdsadresse.valg"
+								value="midlertidig"
+								deaktiverLagring={true}
+								onChange={() => this.brukMidlertidigAdresse()}
+								visSpinner={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "midlertidig"
+									&& this.props.soknadsmottakere.length === 0
+									&& this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.UGYLDIG
+									&& this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.MANGLER_NAV_KONTOR}
+								label={
+									<div>
+										<FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
+										<AdresseVisning faktum={adresseFaktum}/>
+									</div>
+								}
+							/>
+							<div className="skjema-sporsmal--jaNeiSporsmal">
+								<Underskjema
+									visible={this.props.soknadsmottakere.length > 1 && getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "midlertidig"}
+								>
+									<div className="utvidetAddresseSok">
+										<VelgSoknadsmottaker
+											label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgKontor")}
+											fakta={this.props.fakta}
+										/>
+									</div>
+								</Underskjema>
+							</div>
+						</span>
+
 					)}
 					<RadioFaktum
 						id="oppholdsadresse_soknad"
