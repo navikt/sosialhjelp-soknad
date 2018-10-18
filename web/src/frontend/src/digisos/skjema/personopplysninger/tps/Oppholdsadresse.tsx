@@ -240,35 +240,6 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 								value="midlertidig"
 								deaktiverLagring={true}
 								onChange={() => this.brukMidlertidigAdresse()}
-								label={
-									<div>
-										<FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
-										<AdresseVisning faktum={adresseFaktum}/>
-									</div>
-								}
-							/>
-							<div className="skjema-sporsmal--jaNeiSporsmal">
-								<Underskjema
-									visible={this.props.soknadsmottakere.length > 1 && getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "midlertidig"}
-								>
-									<div className="utvidetAddresseSok">
-
-										<VelgSoknadsmottaker
-											label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgKontor")}
-											fakta={this.props.fakta}
-										/>
-
-									</div>
-								</Underskjema>
-							</div>
-						</span>
-						<span>
-							<RadioFaktum
-								id="oppholdsadresse_midlertidig"
-								faktumKey="kontakt.system.oppholdsadresse.valg"
-								value="midlertidig"
-								deaktiverLagring={true}
-								onChange={() => this.brukMidlertidigAdresse()}
 								visSpinner={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "midlertidig"
 									&& this.props.soknadsmottakere.length === 0
 									&& this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.UGYLDIG
