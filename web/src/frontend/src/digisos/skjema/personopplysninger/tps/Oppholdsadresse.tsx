@@ -206,9 +206,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 							onChange={() => this.brukFolkeregistrertAdresse()}
 							label={
 								<div>
-									<div className="detaljeliste__element adresse-tittel">
-										<FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
-									</div>
+									<FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
 									<AdresseVisning faktum={folkeregistrertAdresseFaktum}/>
 
 								</div>
@@ -225,11 +223,8 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 							onChange={() => this.brukMidlertidigAdresse()}
 							label={
 								<div>
-									<div className="adresse-tittel">
-										<FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
-									</div>
+									<FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
 									<AdresseVisning faktum={adresseFaktum}/>
-
 								</div>
 							}
 						/>
