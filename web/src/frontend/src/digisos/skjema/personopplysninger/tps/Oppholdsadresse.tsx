@@ -21,7 +21,7 @@ import {
 import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
 import VelgSoknadsmottaker from "./VelgSoknadsmottaker";
-import FinnNavKontorProgressIndikator from "./FinnNavKontorProgressIndikator";
+import FinnNavKontorSpinner from "./FinnNavKontorSpinner";
 import { getIntlTextOrKey } from "../../../../nav-soknad/utils/intlUtils";
 
 export interface Adresse {
@@ -294,7 +294,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 										fakta={this.props.fakta}
 									/>
 
-									<FinnNavKontorProgressIndikator
+									<FinnNavKontorSpinner
 										label={getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.finnerKontor")}
 										fakta={this.props.fakta}
 									/>

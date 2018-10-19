@@ -18,12 +18,13 @@ interface OwnProps {
 
 type Props = OwnProps & InjectedIntlProps & DispatchProps;
 
-class FinnNavKontorProgressIndikator extends React.Component<Props, {}> {
+class FinnNavKontorSpinner extends React.Component<Props, {}> {
 
 	render() {
 		const antallSoknadsmottakere = this.props.soknadsmottakere.length;
 		const visProgressIndikator: boolean =
 			antallSoknadsmottakere === 0 &&
+			this.props.status !== AdresseAutocompleteStatus.INITIELL &&
 			this.props.status !== AdresseAutocompleteStatus.ADRESSE_UGYLDIG &&
 			this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.UGYLDIG &&
 			this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.MANGLER_NAV_KONTOR;
@@ -43,4 +44,4 @@ export default connect((state: State, props: any) => {
 		soknadsmottakere: state.oppholdsadresse.soknadsmottakere
 
 	};
-})(injectIntl(FinnNavKontorProgressIndikator));
+})(injectIntl(FinnNavKontorSpinner));
