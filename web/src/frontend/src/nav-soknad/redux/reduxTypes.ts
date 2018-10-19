@@ -55,4 +55,5 @@ export interface SoknadState {
 		synlig: boolean;
 		destinasjon: AVBRYT_DESTINASJON;
 	};
+	gjenopptattSoknad: boolean;
 }
