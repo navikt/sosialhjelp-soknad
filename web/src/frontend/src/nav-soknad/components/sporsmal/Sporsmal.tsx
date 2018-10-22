@@ -8,6 +8,7 @@ import SporsmalHjelpetekst from "./SporsmalHjelpetekst";
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
 
 export interface Props {
+	id?: string;
 	children: React.ReactNode;
 	visible?: boolean;
 	htmlRef?: (c: any) => HTMLElement;
@@ -23,7 +24,7 @@ export interface Props {
 
 class Sporsmal extends React.Component<Props, {}> {
 	render() {
-		const { visible, children, feil, feilkode, tekster } = this.props;
+		const { id, visible, children, feil, feilkode, tekster } = this.props;
 		if (visible === false) {
 			return null;
 		}
@@ -43,6 +44,7 @@ class Sporsmal extends React.Component<Props, {}> {
 
 		return (
 			<div
+				id={id}
 				className={sporsmalCls + " " + this.props.className}
 				onBlur={this.props.handleOnBlur}
 				aria-labelledby={legendId}

@@ -1,0 +1,80 @@
+.navAutcomplete {
+  position: relative;
+
+
+  &__spinner {
+    display: block;
+    padding-top: 4px;
+    padding-left: 6px;
+  }
+
+  .menu {
+    z-index: 5;
+  }
+}
+
+.navAutcomplete > div {
+  width: 100%;
+}
+
+.navAutcomplete input {
+  padding: 0.45rem;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid #B7B1A9;
+  box-sizing: border-box;
+  width: 25rem;
+
+  &:focus {
+    .focus-outline();
+  }
+
+  &:hover {
+    border-color: #0067C5;
+  }
+
+  @media only screen and (max-width: 565px) {
+    width: 100%;
+  }
+
+}
+
+.valideringsStatus {
+  position: absolute;
+  left: 365px;
+  top: 6px;
+
+  @media only screen and (max-width: 565px) {
+    left: initial;
+    right: 0.5rem;
+  }
+}
+
+.menu {
+  position: absolute;
+  box-sizing: border-box;
+  width: 25rem;
+  border: 1px solid @navGra40;
+  z-index: 1;
+
+  @media only screen and (max-width: 565px) {
+    width: 100%;
+  }
+}
+
+.item {
+  padding: 2px 6px;
+  cursor: default;
+  background-color: white;
+}
+
+.item-highlighted {
+  color: white;
+  background-color: @navBlaLighten20;
+}
+
+.item-header {
+  background-color: #eeeeee;
+  color: #454545;
+  font-weight: bold;
+}

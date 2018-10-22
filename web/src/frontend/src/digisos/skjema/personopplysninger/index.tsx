@@ -18,7 +18,6 @@ import {
 } from "../../../nav-soknad/utils";
 import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
 import Personalia from "./tps/Personalia";
-import Adresseinfo from "./tps/Adresseinfo";
 import Telefoninfo from "./tps/Telefoninfo";
 import Bankinformasjon from "./tps/Bankinformasjon";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
@@ -31,6 +30,7 @@ import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjo
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 import { FormattedMessage } from "react-intl";
+import Oppholdsadresse from "./tps/Oppholdsadresse";
 
 // interface StateProps {
 // 	visPersonaliaFraTPSfeatureToggle: boolean;
@@ -68,9 +68,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 					>
 						<Personalia fakta={this.props.fakta} />
 					</SporsmalFaktum>
-					<SporsmalFaktum faktumKey="kontakt.system.kontaktinfo" style="system" legendClassName="skjema-fieldset-large-bold" className="luftUnderFemRem">
-						<Adresseinfo fakta={this.props.fakta} />
-					</SporsmalFaktum>
+					<Oppholdsadresse fakta={this.props.fakta} />
 					<Telefoninfo fakta={this.props.fakta} />
 					<Bankinformasjon fakta={this.props.fakta} onHarIkkeKontonummer={(verdi: string) => {
 						this.oppdaterHarIkkeKontonummer(this.props.fakta, verdi, this.props.dispatch);
