@@ -16,8 +16,14 @@ interface Props {
 {/*</SporsmalFaktum>*/}
 
 
+// const Skjema: React.StatelessComponent<{}> = () => (
+// 		<TelefonFaktum faktumKey="kontakt.telefon" id="kontakt_telefon" maxLength={8} className="normalTekst"/>
+// );
+
 const Skjema: React.StatelessComponent<{}> = () => (
-		<TelefonFaktum faktumKey="kontakt.telefon" id="kontakt_telefon" maxLength={8} className="normalTekst"/>
+	<SporsmalFaktum faktumKey="kontakt.telefon" className="luftUnderFemRem legendTittelStorBold">
+		<TelefonFaktum faktumKey="kontakt.telefon" id="kontakt_telefon" maxLength={8} />
+	</SporsmalFaktum>
 );
 
 const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
