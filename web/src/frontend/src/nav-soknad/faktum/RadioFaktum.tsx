@@ -124,10 +124,8 @@ class RadioFaktum extends React.Component<RadioFaktumProps, {}> {
 					className={classNames}
 					onClick={() => onChange()}
 				>
-					<div className="radio-button-wrapper">
-						{this.renderRadio()}
-						{visSpinner && <div className="inputPanel__spinner"><NavFrontendSpinner type="M" /></div>}
-					</div>
+					{this.renderRadio()}
+					{visSpinner && <div className="inputPanel__spinner"><NavFrontendSpinner type="M" /></div>}
 				</div>
 			);
 		} else {
