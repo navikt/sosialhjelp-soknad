@@ -13,6 +13,7 @@ interface OwnProps {
 	synlig?: boolean;
 	ikon: InformasjonspanelIkon;
 	className?: string;
+	wrapperClassName?: string;
 }
 
 interface State {
@@ -97,7 +98,9 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 					isOpened={isOpened}
 					className="react-collapse-konfigurering"
 				>
-					{this.renderContent(true)}
+					<div className={"react-collapse-wrapper"}>
+							{this.renderContent(true)}
+					</div>
 				</Collapse>
 			);
 		}

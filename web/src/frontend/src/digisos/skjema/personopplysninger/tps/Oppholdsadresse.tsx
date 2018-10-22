@@ -217,10 +217,10 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 									</div>
 								}
 							/>
-
 							<div className="skjema-sporsmal--jaNeiSporsmal">
 								<Underskjema
 									visible={this.props.soknadsmottakere.length > 1 && getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "folkeregistrert"}
+									collapsable={true}
 								>
 									<div className="utvidetAddresseSok">
 										<VelgSoknadsmottaker
