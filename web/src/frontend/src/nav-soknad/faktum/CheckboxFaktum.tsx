@@ -101,7 +101,9 @@ class CheckboxFaktum extends React.Component<CheckboxFaktumProps, {checked: bool
 					className={classNames}
 					onClick={(evt: any) => this.onChange(evt)}
 				>
-					{this.renderCheckbox()}
+					<div className="inputPanel__checkbox_wrapper ">
+						{this.renderCheckbox()}
+					</div>
 				</div>
 			);
 		} else {
