@@ -61,9 +61,9 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 
 		return (
 			<div>
-				<h4 className="skjema-sporsmal__infotekst__tittel">
-					<FormattedMessage id="system.familie.sivilstatus.infotekst"/>
-				</h4>
+				{/*<h4 className="skjema-sporsmal__infotekst__tittel">*/}
+					{/*<FormattedMessage id="system.familie.sivilstatus.infotekst"/>*/}
+				{/*</h4>*/}
 				<Detaljeliste>
 					{
 						ektefelleFaktum.properties[FORNAVN] &&
@@ -104,18 +104,21 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 		return (
 			<div>
 				<SporsmalFaktum faktumKey="system.familie.sivilstatus" style="system" legendClassName="skjema-fieldset-large-bold" className="luftOverForsteUndertittel">
-					<div>
+					<div className="luftUnderSkjemaElement">
 						<FormattedMessage id="system.familie.sivilstatus"/>
 					</div>
 					<div>
-						<Detaljeliste>
-							<DetaljelisteElement
-								tittel={
-									<FormattedMessage id="system.familie.sivilstatus.label"/>
-								}
-								verdi={<FormattedMessage id="familie.sivilstatus.gift"/>}
-							/>
-						</Detaljeliste>
+						{/*<Detaljeliste>*/}
+							{/*<DetaljelisteElement*/}
+								{/*tittel={*/}
+									{/*<FormattedMessage id="system.familie.sivilstatus.label"/>*/}
+								{/*}*/}
+								{/*verdi={<FormattedMessage id="familie.sivilstatus.gift"/>}*/}
+							{/*/>*/}
+						{/*/Detaljeliste>*/}
+						<div className="luftUnderSkjemaElement boldVanligTekst">
+							<FormattedMessage id="system.familie.sivilstatus.label" />
+						</div>
 						{ this.renderEktefelleInformasjon(ektefelleFaktum) }
 					</div>
 				</SporsmalFaktum>

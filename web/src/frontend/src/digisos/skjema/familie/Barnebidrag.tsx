@@ -9,7 +9,7 @@ class Barnebidrag extends React.Component<{}, {}> {
 		const barnebidrag = radioCheckKeys("familie.barn.true.barnebidrag");
 		return (
 			<div className="blokk barnebidrag">
-				<SporsmalFaktum faktumKey={barnebidrag.faktum}>
+				<SporsmalFaktum faktumKey={barnebidrag.faktum} className="boldVanligTekst">
 					<RadioFaktum id="familie_barnebidrag_radio_betaler" faktumKey={barnebidrag.faktum} value="betaler" />
 					<RadioFaktum id="familie_barnebidrag_radio_mottar" faktumKey={barnebidrag.faktum} value="mottar" />
 					<RadioFaktum id="familie_barnebidrag_radio_begge" faktumKey={barnebidrag.faktum} value="begge" />

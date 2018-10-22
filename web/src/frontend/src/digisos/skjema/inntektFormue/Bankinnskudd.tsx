@@ -62,6 +62,7 @@ class Bankinnskudd extends React.Component<Props, {}> {
 							faktumKey={createCheckboxFaktumKey(
 								hvilkeInnskudd.faktum, innskuddstype
 							)}
+							className="wolden"
 						/>)
 				})}
 				<NivaTreSkjema

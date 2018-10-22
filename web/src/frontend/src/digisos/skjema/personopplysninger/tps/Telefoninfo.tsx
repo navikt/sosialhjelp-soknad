@@ -12,11 +12,12 @@ import Detaljeliste, {
 interface Props {
 	fakta: Faktum[];
 }
+{/*<SporsmalFaktum faktumKey="kontakt.telefon" className="luftUnderFemRem legendTittelStorBold">*/}
+{/*</SporsmalFaktum>*/}
+
 
 const Skjema: React.StatelessComponent<{}> = () => (
-	<SporsmalFaktum faktumKey="kontakt.telefon" className="luftUnderFemRem legendTittelStorBold">
 		<TelefonFaktum faktumKey="kontakt.telefon" id="kontakt_telefon" maxLength={8} className="normalTekst"/>
-	</SporsmalFaktum>
 );
 
 const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
@@ -28,7 +29,7 @@ const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	}
 
 	return (
-		<SporsmalFaktum faktumKey="kontakt.system.telefoninfo" style="system" className="luftUnderFemRem">
+		<SporsmalFaktum faktumKey="kontakt.system.telefoninfo" style="system" className="luftUnderFemRem boldOverskrift">
 			<SysteminfoFaktum
 				faktumKey="kontakt.telefon.brukerendrettoggle"
 				skjema={<Skjema />}

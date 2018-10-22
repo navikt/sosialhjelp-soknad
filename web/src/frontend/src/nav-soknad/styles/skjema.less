@@ -158,38 +158,54 @@
 	Fjerner default rød ramme på skjema-elementer som her påkrevd
 */
 :not(output):-moz-ui-invalid {
-	box-shadow: none;
+  box-shadow: none;
 }
+
 :not(output):-moz-ui-invalid:-moz-focusring:not:focus {
-	box-shadow: none;
+  box-shadow: none;
 }
 
 .luftUnderSporsmal {
-	margin-bottom: @marginUnderSporsmal;
+  margin-bottom: @marginUnderSporsmal;
 }
 
 .luftOverForsteUndertittel {
-	margin-top: 2.5rem;
+  margin-top: 2.5rem;
 }
 
 .luftUnderFireRem {
-	margin-bottom: 4rem;
+  margin-bottom: 4rem;
 }
 
 .luftUnderFemRem {
-	margin-bottom: 5rem;
+  margin-bottom: 5rem;
 }
 
 .liteLuftMellomSpsm {
-	margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 .boldVanligTekst {
-	legend {
-		font-weight: 700;
-	}
+  legend {
+    font-weight: 700;
+  }
+
+  span {
+    font-weight: 700;
+  }
+
+  label {
+    font-weight: 700;
+  }
 }
 
 .luftOverEnRem {
-	margin-top: 1rem;
+  margin-top: 1rem;
+}
+
+.boldOverskrift {
+  legend {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
 }

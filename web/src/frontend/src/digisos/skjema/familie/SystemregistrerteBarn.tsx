@@ -61,6 +61,7 @@ const SystemregistrerteBarn: React.StatelessComponent<Props> = ({ barnFakta }) =
 									maxLength={3}
 									kunHeltall={true}
 									bredde="L"
+									className="boldVanligTekst"
 								/>
 							</div>
 						</div>)
