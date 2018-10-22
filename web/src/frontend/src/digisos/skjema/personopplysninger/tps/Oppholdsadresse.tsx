@@ -196,6 +196,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 						}
 						return null;
 					} ]}
+					className="boldOverskrift"
 				>
 					{Object.getOwnPropertyNames(folkeregistrertAdresseFaktum.properties).length !== 0 && (
 						<span>
