@@ -53,12 +53,14 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 					ikon={<William/>}
 				>
 					{this.props.gjenopptattSoknad && (
-						<Informasjonspanel
-							ikon={InformasjonspanelIkon.ELLA}
-							farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
-						>
-							<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
-						</Informasjonspanel>
+						<div className="luftOverForsteUndertittel">
+							<Informasjonspanel
+								ikon={InformasjonspanelIkon.ELLA}
+								farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+							>
+								<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
+							</Informasjonspanel>
+						</div>
 					)}
 					<SporsmalFaktum
 						faktumKey="kontakt.system.personalia"
