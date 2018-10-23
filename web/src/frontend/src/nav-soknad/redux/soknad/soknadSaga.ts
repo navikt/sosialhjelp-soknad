@@ -90,12 +90,11 @@ function* opprettFaktumUtenParentHvisDetMangler(fakta: any, key: string): any {
 function* oppdaterSoknadSaga(soknad: Soknad): SagaIterator {
 	const fakta = updateFaktaMedLagretVerdi(soknad.fakta);
 	yield put(setFakta(fakta));
+	yield put(hentSoknadOk(soknad));
 
 	// Kompatibilitetskode (for pre-adressesøksdata, 24.10.2018):
 	yield* opprettFaktumUtenParentHvisDetMangler(fakta, "kontakt.system.oppholdsadresse.valg");
 	yield* opprettFaktumUtenParentHvisDetMangler(fakta, "soknadsmottaker");
-
-	yield put(hentSoknadOk(soknad));
 }
 
 function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
