@@ -288,6 +288,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 										getIntlTextOrKey(this.props.intl,
 											"kontakt.system.oppholdsadresse.hvorOppholder")
 									}
+									className="boldVanligTekst"
 								>
 									<AdresseAutocomplete
 										adresseFaktum={adressesokAdresseFaktum}
