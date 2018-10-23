@@ -14,13 +14,15 @@ class HusbankInfopanel extends React.Component<FaktumComponentProps & InjectedIn
 			mottarBostotte = bostotteFaktum.value;
 		}
 		return (
-			<Informasjonspanel
-				synlig={mottarBostotte === "false"}
-				ikon={InformasjonspanelIkon.ELLA}
-				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
-			>
-				<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
-			</Informasjonspanel>
+			<div className="luftUnderFireRem">
+				<Informasjonspanel
+					synlig={mottarBostotte === "false"}
+					ikon={InformasjonspanelIkon.ELLA}
+					farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+				>
+					<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
+				</Informasjonspanel>
+			</div>
 		);
 	}
 }
