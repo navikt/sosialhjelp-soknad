@@ -27,7 +27,7 @@ class Familierelasjoner extends React.Component<Props, {}> {
 	    const antallBarn = barnFakta.length;
         if (antallBarn === 0) {
             return (
-				<SporsmalFaktum faktumKey={"familierelasjon.faktum"}>
+				<SporsmalFaktum faktumKey={"familierelasjon.faktum"} legendClassName="skjema-fieldset-large-bold">
 					<p><FormattedMessage id="familierelasjon.ingen_registrerte_barn"/></p>
 				</SporsmalFaktum>
 			);
