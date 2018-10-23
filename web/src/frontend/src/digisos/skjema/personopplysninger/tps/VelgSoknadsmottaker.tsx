@@ -31,6 +31,9 @@ class VelgSoknadsmottaker extends React.Component<Props, {}> {
 
 	render() {
 		const valgtSoknadsmottaker = finnFaktum("soknadsmottaker", this.props.fakta);
+		if (valgtSoknadsmottaker == null) {
+			return null;
+		}
 		const ENHETSID = "enhetsId";
 		const enhetsId = valgtSoknadsmottaker.properties[ENHETSID] || "velg";
 		const antallSoknadsmottakere = this.props.soknadsmottakere.length;
