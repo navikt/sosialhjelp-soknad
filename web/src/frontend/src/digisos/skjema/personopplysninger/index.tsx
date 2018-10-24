@@ -27,19 +27,24 @@ import {
 } from "../../../nav-soknad/types";
 import Ella from "../../../nav-soknad/components/svg/Ella";
 import William from "../../../nav-soknad/components/svg/illustrasjoner/William";
+import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
+import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
+import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
+import { FormattedMessage } from "react-intl";
 
-interface StateProps {
-	visPersonaliaFraTPSfeatureToggle: boolean;
-}
+// interface StateProps {
+// 	visPersonaliaFraTPSfeatureToggle: boolean;
+// }
 
-interface StateProps {
+interface OwnProps {
 	visPersonaliaFraTPSfeatureToggle: boolean;
 	hentVedleggsForventning?: (fakta: any) => void;
+	gjenopptattSoknad: boolean;
 }
 
-export type Props = StateProps & FaktumComponentProps & DispatchProps;
+export type Props = OwnProps & FaktumComponentProps & DispatchProps;
 
-class Personopplysninger extends React.Component<Props, StateProps> {
+class Personopplysninger extends React.Component<Props, OwnProps> {
 	render() {
 		if (this.props.visPersonaliaFraTPSfeatureToggle) {
 			return (
@@ -47,6 +52,14 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 					steg={DigisosSteg.kontakt}
 					ikon={<William/>}
 				>
+					{this.props.gjenopptattSoknad && (
+						<Informasjonspanel
+							ikon={InformasjonspanelIkon.ELLA}
+							farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+						>
+							<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
+						</Informasjonspanel>
+					)}
 					<SporsmalFaktum faktumKey="kontakt.system.personalia" style="system">
 						<Personalia fakta={this.props.fakta} />
 					</SporsmalFaktum>
@@ -133,7 +146,9 @@ class Personopplysninger extends React.Component<Props, StateProps> {
 const mapStateToProps = (state: State) => ({
 	visPersonaliaFraTPSfeatureToggle:
 	state.featuretoggles.data[FeatureToggles.viseTpsPersonalia] === "true",
-	fakta: state.fakta.data
+	fakta: state.fakta.data,
+	gjenopptattSoknad: state.soknad.gjenopptattSoknad,
+
 });
 
 export default connect<{}, {}, Props>(
