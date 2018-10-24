@@ -45,6 +45,8 @@ export interface Props {
 	ignorert?: boolean;
 	/** Om verdien er hentet gjennom integrasjon og ikke skal kunne endres */
 	systemverdi?: boolean;
+
+	deaktiverLagring?: boolean;
 }
 
 interface InjectedProps {
@@ -256,9 +258,13 @@ export const faktumComponent = (defProps?: { property: string }) => <
 
 		setFaktumVerdiOgLagre(verdi: string, property?: string) {
 			const res = this.validerOgOppdaterFaktum(verdi, property);
-			this.props.dispatch(setFaktum(res.faktum));
+			if (!(this.props.deaktiverLagring !== null && this.props.deaktiverLagring === true )) {
+				this.props.dispatch(setFaktum(res.faktum));
+			}
 			if (!res.feilkode) {
-				this.props.dispatch(lagreFaktum(res.faktum));
+				if (!(this.props.deaktiverLagring !== null && this.props.deaktiverLagring === true )) {
+					this.props.dispatch(lagreFaktum(res.faktum));
+				}
 			}
 			this.props.dispatch(
 				setFaktumValideringsfeil(
@@ -288,6 +294,9 @@ export const faktumComponent = (defProps?: { property: string }) => <
 		}
 
 		lagreFaktum(): Promise<any> {
+			if (this.props.deaktiverLagring !== null && this.props.deaktiverLagring === true ) {
+				return null;
+			}
 			return this.props.dispatch(lagreFaktum(this.faktum()));
 		}
 

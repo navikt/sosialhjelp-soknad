@@ -83,7 +83,7 @@ function getPropertyKey(property?: string) {
 export function getFaktumVerdi(fakta: Faktum[], key: string): string {
 	const faktum = finnFaktum(key, fakta);
 	if (!faktum) {
-		throw Error(`Kunne ikke finne faktum: [${key}]`);
+		return null;
 	}
 	return faktum.value;
 }
@@ -151,6 +151,7 @@ export function finnFaktum(
 			// tslint:disable-next-line
 			console.log("Faktum ikke funnet: " + faktumKey);
 		}
+		return null;
 	}
 	return faktum[0];
 }

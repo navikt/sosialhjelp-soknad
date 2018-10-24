@@ -28,6 +28,7 @@ function* hentTeksterSaga(): SagaIterator {
 			fetchToJson,
 			"informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp"
 		);
+
 		const visNokler = yield call(urlInneholderVistekster);
 		const tekster = visNokler ? leggNoklerPaaLedetekster(response) : response;
 		yield put(hentetTekster(tekster));

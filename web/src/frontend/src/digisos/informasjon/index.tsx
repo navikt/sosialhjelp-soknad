@@ -8,18 +8,16 @@ import { Element } from "nav-frontend-typografi";
 import Knapp from "nav-frontend-knapper";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
-import { tilBostedEllerStartSoknad } from "../../nav-soknad/redux/navigasjon/navigasjonActions";
 import { FeatureToggles } from "../../featureToggles";
-import { Horten } from "../data/kommuner";
 import IkkeTilgang from "./IkkeTilgang";
 import { TilgangSperrekode } from "../../nav-soknad/redux/tilgang/tilgangTypes";
-import { lesKommuner } from "../../nav-soknad/redux/kommuner/kommuneActions";
 import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
 import Personopplysninger from "./Personopplysninger";
 import { fetchToJson } from "../../nav-soknad/utils/rest-utils";
 import { loggFeil } from "../../nav-soknad/redux/navlogger/navloggerActions";
 import { Panel } from "nav-frontend-paneler";
 import Banner from "../../nav-soknad/components/banner/Banner";
+import { opprettSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import EllaBlunk from "../../nav-soknad/components/animasjoner/ellablunk";
 
@@ -63,10 +61,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 	}
 
 	startSoknad() {
-		this.props.dispatch(lesKommuner());
-		this.props.dispatch(
-			tilBostedEllerStartSoknad(this.props.visVelgBosted ? null : Horten)
-		);
+		this.props.dispatch(opprettSoknad(this.props.intl));
 	}
 
 	render() {
