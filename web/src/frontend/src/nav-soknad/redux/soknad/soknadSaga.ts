@@ -8,8 +8,7 @@ import {
 } from "../../utils/rest-utils";
 import {
 	finnFaktum,
-	oppdaterFaktumMedProperties,
-	oppdaterFaktumMedVerdier
+	oppdaterFaktumMedProperties, oppdaterFaktumMedVerdier
 } from "../../utils";
 import { updateFaktaMedLagretVerdi } from "../fakta/faktaUtils";
 import {
@@ -17,8 +16,7 @@ import {
 	HentSoknadAction,
 	SendSoknadAction,
 	SlettSoknadAction,
-	SoknadActionTypeKeys,
-	StartSoknadAction
+	SoknadActionTypeKeys, StartSoknadAction
 } from "./soknadActionTypes";
 import {
 	navigerTilDittNav,
@@ -27,7 +25,9 @@ import {
 	tilStart,
 	tilSteg
 } from "../navigasjon/navigasjonActions";
-import { lagreFaktum, resetFakta, setFakta } from "../fakta/faktaActions";
+import { opprettFaktumSaga } from "../fakta/faktaSaga";
+import { lagreFaktum, resetFakta, setFakta, opprettFaktum } from "../fakta/faktaActions";
+import { OpprettFaktum, OpprettFaktumType } from "../fakta/faktaTypes";
 import { Faktum, Infofaktum, Soknad } from "../../types";
 import { SoknadAppState } from "../reduxTypes";
 
@@ -49,13 +49,18 @@ export interface OpprettSoknadResponse {
 
 function* opprettSoknadSaga(): SagaIterator {
 	try {
+		yield put(resetSoknad());
+		yield put(resetFakta());
 		const response: OpprettSoknadResponse = yield call(
 			fetchPost,
 			"soknader",
 			JSON.stringify({ soknadType: SKJEMAID })
 		);
 		yield put(opprettSoknadOk(response.brukerBehandlingId));
-		return response.brukerBehandlingId;
+		const hentAction = { brukerBehandlingId: response.brukerBehandlingId } as HentSoknadAction;
+		yield call(hentSoknadSaga, hentAction);
+		yield put(startSoknadOk()); // TODO Rename metode navn
+		yield put(tilSteg(1));
 	} catch (reason) {
 		yield put(navigerTilServerfeil());
 	}
@@ -75,16 +80,25 @@ function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
 	}
 }
 
+function* opprettFaktumUtenParentHvisDetMangler(fakta: any, key: string): any {
+	const faktum = finnFaktum(key, fakta);
+	if (faktum == null) {
+		yield* opprettFaktumSaga(opprettFaktum({key} as OpprettFaktumType) as OpprettFaktum) as any;
+	}
+}
+
 function* oppdaterSoknadSaga(soknad: Soknad): SagaIterator {
 	const fakta = updateFaktaMedLagretVerdi(soknad.fakta);
 	yield put(setFakta(fakta));
 	yield put(hentSoknadOk(soknad));
+
+	// Kompatibilitetskode (for pre-adressesøksdata, 24.10.2018):
+	yield* opprettFaktumUtenParentHvisDetMangler(fakta, "kontakt.system.oppholdsadresse.valg");
+	yield* opprettFaktumUtenParentHvisDetMangler(fakta, "soknadsmottaker");
 }
 
 function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
 	try {
-		yield put(resetSoknad());
-		yield put(resetFakta());
 		const id = yield call(opprettSoknadSaga);
 		const hentAction = { brukerBehandlingId: id } as HentSoknadAction;
 		const soknad = yield call(hentSoknadSaga, hentAction);

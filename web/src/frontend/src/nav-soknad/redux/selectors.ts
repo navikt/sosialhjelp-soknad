@@ -14,9 +14,12 @@ const selectSynligFaktaData = (state: { synligefakta: SynligeFaktaState }) => st
 
 const selectFaktaData = (state: { fakta: FaktumState }) => state.fakta.data;
 
+const selectFakta = (state: { fakta: FaktumState }) => state.fakta;
+
 export {
 	selectBrukerBehandlingId,
 	selectSynligFaktaData,
 	selectFaktaData,
-	selectProgresjonFaktum
+	selectProgresjonFaktum,
+	selectFakta
 };

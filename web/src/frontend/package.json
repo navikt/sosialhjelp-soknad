@@ -8,6 +8,7 @@
 		"enzyme-adapter-react-16": "^1.1.0",
 		"express-fileupload": "^0.3.0",
 		"history": "^4.7.2",
+		"input-autocomplete": "^1.0.7",
 		"intl": "^1.2.5",
 		"lodash.throttle": "^4.1.1",
 		"nav-frontend-alertstriper": "^0.2.18",
@@ -26,7 +27,8 @@
 		"nav-frontend-typografi": "^1.0.12",
 		"node-less-chokidar": "^0.3.1",
 		"prop-types": "^15.6.2",
-		"react": "^16.2.0",
+		"react": "16.2.0",
+		"react-autocomplete": "^1.8.1",
 		"react-collapse": "^4.0.3",
 		"react-document-title": "^2.0.3",
 		"react-dom": "^16.5.2",
@@ -45,7 +47,8 @@
 		"redux-devtools-extension": "^2.13.2",
 		"redux-logger": "^3.0.6",
 		"redux-saga": "^0.15.6",
-		"redux-thunk": "2.2.0"
+		"redux-thunk": "2.2.0",
+		"update": "^0.7.4"
 	},
 	"devDependencies": {
 		"@types/classnames": "^2.2.0",
@@ -119,7 +122,8 @@
 		"start-js": "react-scripts-ts start",
 		"start": "npm-run-all -p build-css watch-css start-js mock-backend stylelint:watch",
 		"build": "npm run stylelint && npm run build-css && react-scripts-ts build && node ./scripts/flytt-filer-til-webapp.js && node versjoner-prodfiler.js",
-		"test": "npm run build-css && react-scripts-ts test --env=jsdom",
+		"test": "npm run build-css && react-scripts-ts test --env=jsdom --setupTestFrameworkScriptFile=raf/polyfill",
+		"tdd": "npm run build-css && react-scripts-ts test --watch --watchAll --env=jsdom --setupTestFrameworkScriptFile=raf/polyfill",
 		"prettier": "prettier-eslint \"src/**/*(*.less|*.tsx|*.ts|*.css|*.json)\"",
 		"prettier:update": "prettier-eslint --write \"src/**/*(*.css|*.tsx|*.ts|*.css|*.json)\"",
 		"stylelint": "stylelint \"src/digisos/digisos.less\" --syntax less",
