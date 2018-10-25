@@ -23,7 +23,6 @@ import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/validerin
 import VelgSoknadsmottaker from "./VelgSoknadsmottaker";
 import FinnNavKontorSpinner from "./FinnNavKontorSpinner";
 import { getIntlTextOrKey } from "../../../../nav-soknad/utils/intlUtils";
-import {loggInfo} from "../../../../nav-soknad/redux/navlogger/navloggerActions";
 
 export interface Adresse {
 	"adresse": null | string;
@@ -143,25 +142,18 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 	}
 
 	brukFolkeregistrertAdresse() {
-		this.props.dispatch(loggInfo("klikk--FOLKEREGISTRERT"));
-
 		const oppholdsadressevalg = "folkeregistrert";
 		const adresseKategori = AdresseKategori.FOLKEREGISTRERT;
 		this.settAdresseOgSoknadsmottaker(null, oppholdsadressevalg, adresseKategori);
 	}
 
 	brukMidlertidigAdresse() {
-		this.props.dispatch(loggInfo("klikk--MIDLERTIDIG"));
-
 		const oppholdsadressevalg = "midlertidig";
 		const adresseKategori = AdresseKategori.MIDLERTIDIG;
 		this.settAdresseOgSoknadsmottaker(null, oppholdsadressevalg, adresseKategori);
 	}
 
 	brukSoknadAdresse() {
-
-		this.props.dispatch(loggInfo("klikk--ADRESSEAUTOCOMPLETE"));
-
 		const adresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
 		const GATENAVN = "gatenavn";
 		const Oppholdsadressevalg = "soknad";
