@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Collapse } from "react-collapse";
-import Panel, {PanelAction } from "./panel";
+import Panel, {PanelAction } from "./fadeCollapsePanel";
 
 
 interface OwnProps {
@@ -10,7 +10,6 @@ interface OwnProps {
 
 interface State {
 	collapseState: CollapseState;
-	vises: boolean;
 }
 
 export enum CollapseState {
@@ -21,13 +20,12 @@ export enum CollapseState {
 }
 
 
-class InfoPanel extends React.Component<OwnProps, State> {
+class FadeCollapse extends React.Component<OwnProps, State> {
 
 	constructor(props: OwnProps) {
 		super(props);
 		this.state = {
 			collapseState: CollapseState.COLLAPSED,
-			vises: false
 		};
 	}
 
@@ -65,15 +63,11 @@ class InfoPanel extends React.Component<OwnProps, State> {
 		let isOpened = false;
 		let panelAction: PanelAction = PanelAction.NO_OPERATION;
 
-		const margin: string = this.state.collapseState === CollapseState.EXPANDED ||
-						this.state.collapseState === CollapseState.CONTENT_FADED_IN ?
-						"add-margin-smoothly" : "remove-margin-smoothly";
-
 		if (open){
 			switch (this.state.collapseState){
 				case CollapseState.COLLAPSED: {
 					isOpened = true;
-					panelAction = PanelAction.FADE_IN;
+					panelAction = PanelAction.FADE_OUT;
 					break;
 				}
 				case CollapseState.EXPANDED: {
@@ -120,7 +114,7 @@ class InfoPanel extends React.Component<OwnProps, State> {
 		return (
 				<Collapse
 					isOpened={isOpened}
-					className={"infopanel react-collapse-konfigurering " + margin }
+					className={"fadeCollapse" }
 					onRest={() => this.handleOnRest(isOpened)}
 				>
 					<Panel
@@ -137,4 +131,4 @@ class InfoPanel extends React.Component<OwnProps, State> {
 	}
 }
 
-export default InfoPanel;
+export default FadeCollapse;

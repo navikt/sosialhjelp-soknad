@@ -1,10 +1,10 @@
 import * as React from "react";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { finnFaktum } from "../../../nav-soknad/utils";
-import { InjectedIntlProps, injectIntl } from "react-intl";
-import InfoPanel from "../../../nav-soknad/components/infopanel";
+import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import InformasjonspanelTo, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanelTo";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
+import FadeCollapse from "../../../nav-soknad/components/fadecollapse";
 
 class HusbankInfopanel extends React.Component<FaktumComponentProps & InjectedIntlProps, any> {
 	render() {
@@ -15,19 +15,16 @@ class HusbankInfopanel extends React.Component<FaktumComponentProps & InjectedIn
 			mottarBostotte = bostotteFaktum.value;
 		}
 		return (
-
-			<InfoPanel
+			<FadeCollapse
 				open={mottarBostotte === "false"}
 			>
 				<InformasjonspanelTo
 					farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 					ikon={InformasjonspanelIkon.ELLA}
 				>
-					<span>Content ...</span>
+					<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
 				</InformasjonspanelTo>
-			</InfoPanel>
-
-
+			</FadeCollapse>
 		);
 	}
 }

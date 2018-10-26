@@ -12,24 +12,13 @@ interface OwnProps {
 	ikon: InformasjonspanelIkon;
 }
 
-interface State {
-	vises: boolean;
-}
-
 export enum InformasjonspanelIkon {
 	ELLA = "ella",
 	BREVKONVOLUTT = "brevkonvolutt",
 	HENSYN = "hensyn"
 }
 
-class InformasjonspanelTo extends React.Component<OwnProps, State> {
-
-	constructor(props: OwnProps) {
-		super(props);
-		this.state = {
-			vises: false
-		};
-	}
+class InformasjonspanelTo extends React.Component<OwnProps, {}> {
 
 	renderIkon() {
 		const iconSize = erMobilVisning() ? 64 : 80;
@@ -60,19 +49,12 @@ class InformasjonspanelTo extends React.Component<OwnProps, State> {
 	}
 
 	render() {
-		const styleClassName = "skjema-informasjonspanel-" + this.props.farge;
 
 		return (
-
-			<div className="skjema-informasjonspanel-wrapper">
-				<div
-					className={
-						"skjema-informasjonspanel " + styleClassName
-						+ " skjema-informasjonspanel__synlig"
-					}
-				>
-					<div>{this.renderIkon()}</div>
-					<span>{this.props.children}</span>
+			<div className="informasjonspanelToWrapper">
+				<div className="informasjonspanelTo">
+					<div className="informasjonspanelTo__ikon">{this.renderIkon()}</div>
+					<span className="informasjonspanelTo__tekst">{this.props.children}</span>
 				</div>
 			</div>
 		)
