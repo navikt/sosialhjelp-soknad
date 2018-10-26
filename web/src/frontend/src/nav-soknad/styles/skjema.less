@@ -8,7 +8,6 @@
 	padding: 0;
 	margin: 0;
 	legend {
-		padding-right: @skjemaMarg + 10px; // pga.hjelpetekst
 		padding-left: 0;
 		margin-bottom: 1rem;
 		font-weight: 600;
@@ -40,6 +39,11 @@
 	@media @mobile {
 		padding-left: @skjemaMargMobil;
 		padding-right: @skjemaMargMobil;
+	}
+
+	.skjema__feilomrade--harFeil {
+		box-shadow: 0 0 0 0.5rem @pinkErrorBg;
+		border-radius: 1px;
 	}
 
 	.skjema__feilomrade--harFeil:last-child {

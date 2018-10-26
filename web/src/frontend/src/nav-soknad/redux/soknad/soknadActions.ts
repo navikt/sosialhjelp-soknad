@@ -21,14 +21,10 @@ export function startSoknadOk() {
 }
 
 export function opprettSoknad(
-	kommuneId: string,
-	bydelId: string,
 	intl: InjectedIntl
 ) {
 	return {
 		type: SoknadActionTypeKeys.OPPRETT_SOKNAD,
-		kommuneId,
-		bydelId,
 		intl
 	};
 }

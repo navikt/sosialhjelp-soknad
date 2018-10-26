@@ -92,6 +92,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 		} else {
 			return (
 				<Collapse
+					id="info-panel-collapse"
 					isOpened={isOpened}
 					className="react-collapse-konfigurering"
 				>
