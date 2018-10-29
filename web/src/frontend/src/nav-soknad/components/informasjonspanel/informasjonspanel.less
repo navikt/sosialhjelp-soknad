@@ -1,6 +1,5 @@
 .informasjonspanel {
   border-radius: 8px;
-  //border: solid 2px #ffd399;
   min-height: 80px;
   display: flex;
   align-items: center;
@@ -36,31 +35,24 @@
   padding-bottom: 5rem;
 }
 
-@media screen and (max-width: 740px ) {
-
-  .skjema-informasjonspanel {
-    margin-left: 1.0rem;
-  }
-}
-
-.mobilvennlig_ikon {
+.informasjonspanel__mobilvennlig_ikon {
   display: none;
 }
 
-.ikke_mobilvennlig_ikon {
+.informasjonspanel__ikke_mobilvennlig_ikon {
   display: inline-block;
   transform: translate(-40px);
 }
 
 @media @mobile {
 
-  .mobilvennlig_ikon {
+  .informasjonspanel__mobilvennlig_ikon {
     display: inline-block;
     height: 64px;
     transform: translate(-32px);
   }
 
-  .ikke_mobilvennlig_ikon {
+  .informasjonspanel__ikke_mobilvennlig_ikon {
     display: none;
   }
 }

@@ -36,10 +36,10 @@ class Informasjonspanel extends React.Component<OwnProps, {}> {
 
 		return (
 			<div>
-				<div className="ikke_mobilvennlig_ikon">
+				<div className="informasjonspanel__ikke_mobilvennlig_ikon">
 					{ ikon }
 				</div>
-				<div className="mobilvennlig_ikon">
+				<div className="informasjonspanel__mobilvennlig_ikon">
 					{ mobilikon }
 				</div>
 			</div>
