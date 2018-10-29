@@ -23,28 +23,28 @@ class Informasjonspanel extends React.Component<OwnProps, {}> {
 	renderIkon() {
 		const iconSize = erMobilVisning() ? 64 : 80;
 
-		let ikon = <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
-		let mobilikon = <EllaKompakt bakgrundsFarge={this.props.farge}/>;
+		let ikon = (<Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
+		let mobilikon = (<EllaKompakt bakgrundsFarge={this.props.farge}/>);
 
 		switch (this.props.ikon){
 			case InformasjonspanelIkon.BREVKONVOLUTT: {
-				ikon =  <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
-				mobilikon = ikon
+				ikon =  (<Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
+				mobilikon = ikon;
 			}
 			case InformasjonspanelIkon.HENSYN: {
-				ikon = <Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
-				mobilikon = ikon
+				ikon = (<Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
+				mobilikon = ikon;
 			}
 		}
 
 		return (
 			<div>
 				<div className="ikke_mobilvennlig_ikon">
-					{{ ikon }}
+					{ ikon }
 				</div>
 
 				<div className="mobilvennlig_ikon">
-					{{ mobilikon }}
+					{ mobilikon }
 				</div>
 			</div>
 		)
@@ -53,10 +53,10 @@ class Informasjonspanel extends React.Component<OwnProps, {}> {
 	render() {
 
 		return (
-			<div className="informasjonspanelToWrapper">
-				<div className="informasjonspanelTo">
-					<div className="informasjonspanelTo__ikon">{this.renderIkon()}</div>
-					<span className="informasjonspanelTo__tekst">{this.props.children}</span>
+			<div className="informasjonspanelWrapper">
+				<div className="informasjonspanel">
+					{this.renderIkon()}
+					<span className="informasjonspanel__tekst">{this.props.children}</span>
 				</div>
 			</div>
 		)

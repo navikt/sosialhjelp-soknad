@@ -1,4 +1,4 @@
-.informasjonspanelTo {
+.informasjonspanel {
   border-radius: 8px;
   border: solid 2px #ffd399;
   min-height: 80px;
@@ -10,34 +10,41 @@
   padding-bottom: 2rem;
 }
 
-.informasjonspanelTo__ikon {
-  height: 80px;
-  transform: translate(-40px);
-}
-
-.informasjonspanelTo__tekst {
+.informasjonspanel__tekst {
   transform: translate(-23px);
   padding-right: 20px;
 }
 
-.informasjonspanelToWrapper {
+.informasjonspanelWrapper {
   padding-bottom: 5rem;
 }
 
+@media screen and (max-width: 740px ) {
 
-//
-//&>div {
-//  position: absolute;
-//  left: 0;
-//  top: 50%;
-//  transform: translate(-50%, -50%);
-//
-//  &>img {
-//    position: absolute;
-//    left: 50%;
-//    top: 50%;
-//    transform: translate(-50%, -40%);
-//    height: 4.5rem;
-//  }
-//
-//}
+  .skjema-informasjonspanel {
+    margin-left: 1.0rem;
+  }
+}
+
+.mobilvennlig_ikon {
+  display: none;
+}
+
+.ikke_mobilvennlig_ikon {
+  display: inline-block;
+  height: 80px;
+  transform: translate(-40px);
+}
+
+@media @mobile {
+
+  .mobilvennlig_ikon {
+    display: inline-block;
+    height: 64px;
+    transform: translate(-32px);
+  }
+
+  .ikke_mobilvennlig_ikon {
+    display: none;
+  }
+}
