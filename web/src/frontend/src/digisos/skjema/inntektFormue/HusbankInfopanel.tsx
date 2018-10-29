@@ -2,7 +2,7 @@ import * as React from "react";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { finnFaktum } from "../../../nav-soknad/utils";
 import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
-import InformasjonspanelTo, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanelTo";
+import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import FadeCollapse from "../../../nav-soknad/components/fadecollapse";
 
@@ -18,12 +18,12 @@ class HusbankInfopanel extends React.Component<FaktumComponentProps & InjectedIn
 			<FadeCollapse
 				open={mottarBostotte === "false"}
 			>
-				<InformasjonspanelTo
+				<Informasjonspanel
 					farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 					ikon={InformasjonspanelIkon.ELLA}
 				>
 					<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
-				</InformasjonspanelTo>
+				</Informasjonspanel>
 			</FadeCollapse>
 		);
 	}

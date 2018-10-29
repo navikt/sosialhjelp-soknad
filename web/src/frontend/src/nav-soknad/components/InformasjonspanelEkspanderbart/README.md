@@ -3,9 +3,9 @@
 Vises panel med runde hjørner og ikon.
 
 ```jsx harmony
-<Informasjonspanel>
+<InformasjonspanelEkspanderbart>
   Denne teksten havner i et panel med runde hjørner og ikon.
-</Informasjonspanel>
+</InformasjonspanelEkspanderbart>
 ```
 
 # Props
@@ -19,19 +19,19 @@ så trigges en animasjon som ekspanderer og fader in panelet.
 
 Kan være en react node:
 ```jsx harmony
-<Informasjonspanel
+<InformasjonspanelEkspanderbart
     icon={<img src="/soknadsosialhjelp/statisk/bilder/illustrasjon_ella.svg"/>}
 >
   Innhold.
-</Informasjonspanel>
+</InformasjonspanelEkspanderbart>
 ```
 En streng:
 ```jsx harmony
-<Informasjonspanel
+<InformasjonspanelEkspanderbart
     icon="illustrasjon_ella.svg"
 >
   Innhold.
-</Informasjonspanel>
+</InformasjonspanelEkspanderbart>
 ```
 
 Hvis ikke satt, så vises default ikon.

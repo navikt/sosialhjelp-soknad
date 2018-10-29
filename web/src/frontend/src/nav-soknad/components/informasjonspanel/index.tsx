@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Collapse } from "react-collapse";
 import Ella from "../svg/Ella";
 import Brevkonvolutt from "../svg/Brevkonvolutt";
 import {DigisosFarge} from "../svg/DigisosFarger";
@@ -10,12 +9,7 @@ import EllaKompakt from "../svg/EllaKompakt";
 interface OwnProps {
 	farge: DigisosFarge;
 	children?: any;
-	synlig?: boolean;
 	ikon: InformasjonspanelIkon;
-}
-
-interface State {
-	vises: boolean;
 }
 
 export enum InformasjonspanelIkon {
@@ -24,82 +18,48 @@ export enum InformasjonspanelIkon {
 	HENSYN = "hensyn"
 }
 
-class Informasjonspanel extends React.Component<OwnProps, State> {
-
-	constructor(props: OwnProps) {
-		super(props);
-		this.state = {
-			vises: false
-		};
-	}
-
-	componentDidMount() {
-		setTimeout(() => {
-			this.setState({vises: true});
-		}, 200);
-	}
+class Informasjonspanel extends React.Component<OwnProps, {}> {
 
 	renderIkon() {
 		const iconSize = erMobilVisning() ? 64 : 80;
-		switch (this.props.ikon){
-			case InformasjonspanelIkon.ELLA: {
-				return (
-					<div>
-						<div className="ikke_mobilvennlig_ikon">
-							<Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
-						</div>
 
-						<div className="mobilvennlig_ikon">
-							<EllaKompakt bakgrundsFarge={this.props.farge}/>
-						</div>
-					</div>
-				);
-			}
+		let ikon = <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
+		let mobilikon = <EllaKompakt bakgrundsFarge={this.props.farge}/>;
+
+		switch (this.props.ikon){
 			case InformasjonspanelIkon.BREVKONVOLUTT: {
-				return <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+				ikon =  <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+				mobilikon = ikon
 			}
 			case InformasjonspanelIkon.HENSYN: {
-				return <Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
-			}
-			default: {
-				return <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
+				ikon = <Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+				mobilikon = ikon
 			}
 		}
-	}
-
-	renderContent(fadeIn: boolean) {
-		const styleClassName = "skjema-informasjonspanel-" + this.props.farge;
 
 		return (
-			<div className="skjema-informasjonspanel-wrapper">
-				<div
-					className={
-						"skjema-informasjonspanel " + styleClassName
-						+ (this.props.synlig || fadeIn === false ? " skjema-informasjonspanel__synlig" : "")
-					}
-				>
-					<div>{this.renderIkon()}</div>
-					<span>{this.props.children}</span>
+			<div>
+				<div className="ikke_mobilvennlig_ikon">
+					{{ ikon }}
+				</div>
+
+				<div className="mobilvennlig_ikon">
+					{{ mobilikon }}
 				</div>
 			</div>
-		);
+		)
 	}
 
 	render() {
-		const isOpened = this.state.vises && this.props.synlig;
-		if (typeof isOpened === "undefined") {
-			return this.renderContent(false);
-		} else {
-			return (
-				<Collapse
-					id="info-panel-collapse"
-					isOpened={isOpened}
-					className="react-collapse-konfigurering"
-				>
-					{this.renderContent(true)}
-				</Collapse>
-			);
-		}
+
+		return (
+			<div className="informasjonspanelToWrapper">
+				<div className="informasjonspanelTo">
+					<div className="informasjonspanelTo__ikon">{this.renderIkon()}</div>
+					<span className="informasjonspanelTo__tekst">{this.props.children}</span>
+				</div>
+			</div>
+		)
 	}
 
 }

@@ -27,10 +27,9 @@ import {
 } from "../../../nav-soknad/types";
 import Ella from "../../../nav-soknad/components/svg/Ella";
 import William from "../../../nav-soknad/components/svg/illustrasjoner/William";
-import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
-import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 import { FormattedMessage } from "react-intl";
+import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/InformasjonspanelEkspanderbart";
 
 // interface StateProps {
 // 	visPersonaliaFraTPSfeatureToggle: boolean;
@@ -53,12 +52,12 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 					ikon={<William/>}
 				>
 					{this.props.gjenopptattSoknad && (
-						<Informasjonspanel
+						<InformasjonspanelEkspanderbart
 							ikon={InformasjonspanelIkon.ELLA}
 							farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 						>
 							<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
-						</Informasjonspanel>
+						</InformasjonspanelEkspanderbart>
 					)}
 					<SporsmalFaktum faktumKey="kontakt.system.personalia" style="system">
 						<Personalia fakta={this.props.fakta} />

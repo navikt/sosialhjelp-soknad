@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Collapse } from "react-collapse";
 import Ella from "../svg/Ella";
 import Brevkonvolutt from "../svg/Brevkonvolutt";
 import {DigisosFarge} from "../svg/DigisosFarger";
@@ -9,7 +10,12 @@ import EllaKompakt from "../svg/EllaKompakt";
 interface OwnProps {
 	farge: DigisosFarge;
 	children?: any;
+	synlig?: boolean;
 	ikon: InformasjonspanelIkon;
+}
+
+interface State {
+	vises: boolean;
 }
 
 export enum InformasjonspanelIkon {
@@ -18,7 +24,20 @@ export enum InformasjonspanelIkon {
 	HENSYN = "hensyn"
 }
 
-class InformasjonspanelTo extends React.Component<OwnProps, {}> {
+class InformasjonspanelEkspanderbart extends React.Component<OwnProps, State> {
+
+	constructor(props: OwnProps) {
+		super(props);
+		this.state = {
+			vises: false
+		};
+	}
+
+	componentDidMount() {
+		setTimeout(() => {
+			this.setState({vises: true});
+		}, 200);
+	}
 
 	renderIkon() {
 		const iconSize = erMobilVisning() ? 64 : 80;
@@ -48,18 +67,41 @@ class InformasjonspanelTo extends React.Component<OwnProps, {}> {
 		}
 	}
 
-	render() {
+	renderContent(fadeIn: boolean) {
+		const styleClassName = "skjema-informasjonspanelEkspanderbart-" + this.props.farge;
 
 		return (
-			<div className="informasjonspanelToWrapper">
-				<div className="informasjonspanelTo">
-					<div className="informasjonspanelTo__ikon">{this.renderIkon()}</div>
-					<span className="informasjonspanelTo__tekst">{this.props.children}</span>
+			<div className="skjema-informasjonspanelEkspanderbart-wrapper">
+				<div
+					className={
+						"skjema-informasjonspanelEkspanderbart " + styleClassName
+						+ (this.props.synlig || fadeIn === false ? " skjema-informasjonspanelEkspanderbart__synlig" : "")
+					}
+				>
+					<div>{this.renderIkon()}</div>
+					<span>{this.props.children}</span>
 				</div>
 			</div>
-		)
+		);
+	}
+
+	render() {
+		const isOpened = this.state.vises && this.props.synlig;
+		if (typeof isOpened === "undefined") {
+			return this.renderContent(false);
+		} else {
+			return (
+				<Collapse
+					id="info-panel-collapse"
+					isOpened={isOpened}
+					className="react-collapse-konfigurering"
+				>
+					{this.renderContent(true)}
+				</Collapse>
+			);
+		}
 	}
 
 }
 
-export default InformasjonspanelTo;
+export default InformasjonspanelEkspanderbart;

@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 import RadioFaktum from "../../../nav-soknad/faktum/RadioFaktum";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import Ektefelle from "./Ektefelle";
-import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
+import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/InformasjonspanelEkspanderbart";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 
 
@@ -39,7 +39,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 					<RadioFaktum id="sivilstatus_skilt_radio" faktumKey={sivilstatus.faktum} value="skilt"/>
 					<RadioFaktum id="sivilstatus_separert_radio" faktumKey={sivilstatus.faktum} value="separert"/>
 				</SporsmalFaktum>
-				<Informasjonspanel
+				<InformasjonspanelEkspanderbart
 					synlig={ status }
 					farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 					ikon={InformasjonspanelIkon.ELLA}
@@ -48,7 +48,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 						<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel"/>
 					</h4>
 					<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tekst"/>
-				</Informasjonspanel>
+				</InformasjonspanelEkspanderbart>
 			</div>
 		);
 	}

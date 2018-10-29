@@ -1,0 +1,134 @@
+.skjema-informasjonspanelEkspanderbart {
+	position: relative;
+	border-radius: 0.5rem;
+	background-color: @white;
+	padding: 2rem 1.5rem 2rem 3.5rem;
+	margin-bottom: 1rem;
+  	margin-top: 2rem;
+	transition: opacity 0.5s;
+  	opacity: 0;
+
+	animation-name: fjernInfoPanel;
+	animation-delay: 0.5s;
+	animation-duration: 0.01s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+
+  	.skjema-sporsmal__infotekst__tittel {
+	  margin-top: 0;
+	}
+
+	&>div {
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translate(-50%, -50%);
+
+		&>img {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -40%);
+			height: 4.5rem;
+		}
+
+	}
+
+  	&__synlig {
+		opacity: 1.0;
+
+		animation-name: visInfoPanel;
+		animation-delay: 0.5s;
+		animation-duration: 0.01s;
+		animation-fill-mode: forwards;
+		animation-iteration-count: 1;
+		animation-timing-function: ease;
+
+	  	&>div {
+		  opacity: 1.0;
+		}
+	}
+}
+
+@keyframes visInfoPanel {
+	100% {
+		height: initial;
+	}
+}
+
+@keyframes fjernInfoPanel {
+	100% {
+		height: 0;
+	}
+}
+
+.react-collapse-konfigurering {
+	overflow: visible !important;
+}
+
+.skjema-informasjonspanelEkspanderbart-wrapper {
+  display: block;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+@media @mobile {
+  .skjema-informasjonspanelEkspanderbart-wrapper {
+	margin-left: 1rem;
+	margin-right: 1rem;
+  }
+
+  .skjema-informasjonspanelEkspanderbart {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+  }
+}
+
+@media screen and (max-width: 740px ) {
+
+	.skjema-informasjonspanelEkspanderbart {
+	  margin-left: 1.0rem;
+	}
+}
+
+.mobilvennlig_ikon {
+  display: none;
+}
+
+.ikke_mobilvennlig_ikon {
+  display: inline-block;
+}
+
+@media @mobile {
+
+  .mobilvennlig_ikon {
+	display: inline-block;
+  }
+
+  .ikke_mobilvennlig_ikon {
+	display: none;
+  }
+
+}
+
+.skjema-informasjonspanelEkspanderbart.skjema-informasjonspanelEkspanderbart-navGronnLighten40 {
+	border: solid 2px @navGronnLighten40;
+}
+
+.skjema-informasjonspanelEkspanderbart.skjema-informasjonspanelEkspanderbart-navGronnLighten60 {
+	border: solid 2px @navGronnLighten60;
+}
+
+.skjema-informasjonspanelEkspanderbart.skjema-informasjonspanelEkspanderbart-navOransjeLighten40 {
+	border: solid 2px @navOransjeLighten40;
+}
+
+.skjema-informasjonspanelEkspanderbart.skjema-informasjonspanelEkspanderbart-redError {
+	border: solid 2px @redError;
+}
+
+
+
+
+

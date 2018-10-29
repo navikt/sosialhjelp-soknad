@@ -4,10 +4,10 @@ import { FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl }
 import { State } from "../../redux/reducers";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { setVisSamtykkeInfo } from "../../../nav-soknad/redux/init/initActions";
-import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel/index";
 import { finnValgtEnhetsNavn, NavEnhet } from "../../data/kommuner";
 import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
+import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/InformasjonspanelEkspanderbart";
 
 interface StateProps {
 	fakta: Faktum[];
@@ -24,7 +24,7 @@ class InformasjonsBoks extends React.Component<Props, {}> {
 		const valgtEnhetsNavn = finnValgtEnhetsNavn(this.props.fakta, this.props.navEnheter);
 
 		return (
-			<Informasjonspanel
+			<InformasjonspanelEkspanderbart
 				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 				ikon={InformasjonspanelIkon.BREVKONVOLUTT}
 			>
@@ -37,7 +37,7 @@ class InformasjonsBoks extends React.Component<Props, {}> {
 						}}>
 						<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke"/>
 					</a>
-			</Informasjonspanel>
+			</InformasjonspanelEkspanderbart>
 		);
 	}
 }

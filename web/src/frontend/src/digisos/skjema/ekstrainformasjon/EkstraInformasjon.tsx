@@ -11,9 +11,8 @@ import { byggBelopOgVedleggStruktur } from "../../redux/synligefakta/synligeFakt
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 import { getIntlText, harBrukerBesvartFaktum } from "../../../nav-soknad/utils";
 import { Faktum } from "../../../nav-soknad/types";
-import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
+import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/InformasjonspanelEkspanderbart";
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
-import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 import SkjemaIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SkjemaIllustrasjon";
 
 /** For å kunne sjekke om bruker har besvart noen av de
@@ -75,23 +74,23 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 
 	renderIkkeBesvart() {
 		return (
-			<Informasjonspanel
+			<InformasjonspanelEkspanderbart
 				ikon={InformasjonspanelIkon.HENSYN}
 				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 			>
 				<FormattedHTMLMessage id="opplysninger.ikkebesvart.melding"/>
-			</Informasjonspanel>
+			</InformasjonspanelEkspanderbart>
 			);
 	}
 
 	renderInfoMelding() {
 		return (
-			<Informasjonspanel
+			<InformasjonspanelEkspanderbart
 				ikon={InformasjonspanelIkon.HENSYN}
 				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 			>
 				<FormattedHTMLMessage id="opplysninger.informasjon"/>
-			</Informasjonspanel>
+			</InformasjonspanelEkspanderbart>
 		);
 	}
 

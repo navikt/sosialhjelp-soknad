@@ -1,5 +1,5 @@
 import * as React from "react";
-import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
+import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/InformasjonspanelEkspanderbart";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { Faktum } from "../../../nav-soknad/types";
@@ -121,7 +121,7 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 				</SporsmalFaktum>
 				{ ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] &&
 				  ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] !== "true" &&
-					(<Informasjonspanel
+					(<InformasjonspanelEkspanderbart
 						farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 						ikon={InformasjonspanelIkon.ELLA}
 					>
@@ -129,7 +129,7 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 							<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel"/>
 						</h4>
 						<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tekst"/>
-					</Informasjonspanel>)
+					</InformasjonspanelEkspanderbart>)
 				}
 			</div>
 		);

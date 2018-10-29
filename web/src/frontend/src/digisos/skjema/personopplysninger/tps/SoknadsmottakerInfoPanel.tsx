@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SoknadsMottakerStatus } from "./oppholdsadresseReducer";
-import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
+import InformasjonspanelEkspanderbart, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Faktum } from "../../../../nav-soknad/types";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
@@ -29,12 +29,12 @@ const SoknadsmottakerInfoPanel: React.StatelessComponent<SoknadsmottakerInfoProp
 			+ faktum.properties[KOMMUNENAVN]
 			+ " Kommune.";
 		return (
-			<Informasjonspanel
+			<InformasjonspanelEkspanderbart
 				ikon={InformasjonspanelIkon.BREVKONVOLUTT}
 				farge={farge}
 			>
 				{tekst}
-			</Informasjonspanel>
+			</InformasjonspanelEkspanderbart>
 		);
 	} else if (soknadsmottakerStatus === SoknadsMottakerStatus.UGYLDIG) {
 
@@ -42,24 +42,24 @@ const SoknadsmottakerInfoPanel: React.StatelessComponent<SoknadsmottakerInfoProp
 		tekst = "Søknaden er ikke tilgjengelig digitalt i din kommune. Ta kontakt direkte med ditt NAV-kontor.";
 		// TODO: Legg til link senere.
 		return (
-			<Informasjonspanel
+			<InformasjonspanelEkspanderbart
 				ikon={InformasjonspanelIkon.BREVKONVOLUTT}
 				farge={farge}
 			>
 				{tekst}
-			</Informasjonspanel>
+			</InformasjonspanelEkspanderbart>
 		);
 	}  else if (soknadsmottakerStatus === SoknadsMottakerStatus.MANGLER_NAV_KONTOR) {
 		
 				farge = DigisosFarge.RED_ERROR;
 				tekst = "Kan ikke finne NAV-kontor for angitt adresse. Rett eventuelle feil i adressen eller ta direkte kontakt med ditt lokale NAV-kontor.";
 				return (
-					<Informasjonspanel
+					<InformasjonspanelEkspanderbart
 						ikon={InformasjonspanelIkon.BREVKONVOLUTT}
 						farge={farge}
 					>
 						{tekst}
-					</Informasjonspanel>
+					</InformasjonspanelEkspanderbart>
 				);
 			}
 	return null;
