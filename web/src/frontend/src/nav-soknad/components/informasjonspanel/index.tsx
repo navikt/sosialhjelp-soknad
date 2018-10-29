@@ -3,8 +3,6 @@ import Ella from "../svg/Ella";
 import Brevkonvolutt from "../svg/Brevkonvolutt";
 import {DigisosFarge} from "../svg/DigisosFarger";
 import Hensyn from "../svg/Hensyn";
-import { erMobilVisning } from "../../utils/domUtils";
-import EllaKompakt from "../svg/EllaKompakt";
 
 interface OwnProps {
 	farge: DigisosFarge;
@@ -21,19 +19,18 @@ export enum InformasjonspanelIkon {
 class Informasjonspanel extends React.Component<OwnProps, {}> {
 
 	renderIkon() {
-		const iconSize = erMobilVisning() ? 64 : 80;
 
-		let ikon = (<Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
-		let mobilikon = (<EllaKompakt bakgrundsFarge={this.props.farge}/>);
+		let ikon = (<Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
+		let mobilikon = (<Ella size={64} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
 
 		switch (this.props.ikon){
 			case InformasjonspanelIkon.BREVKONVOLUTT: {
-				ikon =  (<Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
-				mobilikon = ikon;
+				ikon =  (<Brevkonvolutt size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
+				mobilikon = (<Brevkonvolutt size={64} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
 			}
 			case InformasjonspanelIkon.HENSYN: {
-				ikon = (<Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
-				mobilikon = ikon;
+				ikon = (<Hensyn size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
+				mobilikon = (<Hensyn size={64} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
 			}
 		}
 
@@ -42,7 +39,6 @@ class Informasjonspanel extends React.Component<OwnProps, {}> {
 				<div className="ikke_mobilvennlig_ikon">
 					{ ikon }
 				</div>
-
 				<div className="mobilvennlig_ikon">
 					{ mobilikon }
 				</div>
@@ -52,9 +48,13 @@ class Informasjonspanel extends React.Component<OwnProps, {}> {
 
 	render() {
 
+		const informasjonspanelClassName = this.props.farge ?
+			"informasjonspanel informasjonspanel__" + this.props.farge :
+			"informasjonspanel informasjonspanel__navGronnLighten40";
+
 		return (
 			<div className="informasjonspanelWrapper">
-				<div className="informasjonspanel">
+				<div className={informasjonspanelClassName}>
 					{this.renderIkon()}
 					<span className="informasjonspanel__tekst">{this.props.children}</span>
 				</div>
