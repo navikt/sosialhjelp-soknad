@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FormattedMessage, FormattedHTMLMessage, injectIntl } from "react-intl";
+import { FormattedHTMLMessage, injectIntl } from "react-intl";
 import {Faktum} from "../../../nav-soknad/types";
 import {State} from "../../redux/reducers";
 import {connect} from "react-redux";
@@ -28,7 +28,7 @@ class Familierelasjoner extends React.Component<Props, {}> {
         if (antallBarn === 0) {
             return (
 				<SporsmalFaktum faktumKey={"familierelasjon.faktum"}>
-					<p><FormattedMessage id="familierelasjon.ingen_registrerte_barn"/></p>
+					<p><FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn"/></p>
 				</SporsmalFaktum>
 			);
         } else {

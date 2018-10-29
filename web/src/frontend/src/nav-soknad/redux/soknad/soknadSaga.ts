@@ -25,7 +25,9 @@ import {
 	tilStart,
 	tilSteg
 } from "../navigasjon/navigasjonActions";
-import { lagreFaktum, resetFakta, setFakta } from "../fakta/faktaActions";
+import { opprettFaktumSaga } from "../fakta/faktaSaga";
+import { lagreFaktum, resetFakta, setFakta, opprettFaktum } from "../fakta/faktaActions";
+import { OpprettFaktum, OpprettFaktumType } from "../fakta/faktaTypes";
 import { Faktum, Infofaktum, Soknad } from "../../types";
 import { SoknadAppState } from "../reduxTypes";
 
@@ -78,10 +80,21 @@ function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
 	}
 }
 
+function* opprettFaktumUtenParentHvisDetMangler(fakta: any, key: string): any {
+	const faktum = finnFaktum(key, fakta);
+	if (faktum == null) {
+		yield* opprettFaktumSaga(opprettFaktum({key} as OpprettFaktumType) as OpprettFaktum) as any;
+	}
+}
+
 function* oppdaterSoknadSaga(soknad: Soknad): SagaIterator {
 	const fakta = updateFaktaMedLagretVerdi(soknad.fakta);
 	yield put(setFakta(fakta));
 	yield put(hentSoknadOk(soknad));
+
+	// Kompatibilitetskode (for pre-adressesøksdata, 24.10.2018):
+	yield* opprettFaktumUtenParentHvisDetMangler(fakta, "kontakt.system.oppholdsadresse.valg");
+	yield* opprettFaktumUtenParentHvisDetMangler(fakta, "soknadsmottaker");
 }
 
 function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
