@@ -11,7 +11,7 @@ import { byggBelopOgVedleggStruktur } from "../../redux/synligefakta/synligeFakt
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 import { getIntlText, harBrukerBesvartFaktum } from "../../../nav-soknad/utils";
 import { Faktum } from "../../../nav-soknad/types";
-import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/InformasjonspanelEkspanderbart";
+import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanelEkspanderbart";
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import SkjemaIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SkjemaIllustrasjon";
 

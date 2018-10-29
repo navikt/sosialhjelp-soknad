@@ -7,7 +7,7 @@ import { setVisSamtykkeInfo } from "../../../nav-soknad/redux/init/initActions";
 import { finnValgtEnhetsNavn, NavEnhet } from "../../data/kommuner";
 import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
-import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/InformasjonspanelEkspanderbart";
+import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanelEkspanderbart";
 
 interface StateProps {
 	fakta: Faktum[];

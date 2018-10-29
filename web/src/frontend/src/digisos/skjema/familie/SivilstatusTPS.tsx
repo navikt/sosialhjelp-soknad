@@ -1,5 +1,5 @@
 import * as React from "react";
-import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/InformasjonspanelEkspanderbart";
+import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanelEkspanderbart";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { Faktum } from "../../../nav-soknad/types";

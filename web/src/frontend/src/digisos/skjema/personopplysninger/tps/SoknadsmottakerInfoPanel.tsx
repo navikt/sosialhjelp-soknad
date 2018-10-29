@@ -1,9 +1,9 @@
 import * as React from "react";
 import { SoknadsMottakerStatus } from "./oppholdsadresseReducer";
-import InformasjonspanelEkspanderbart, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Faktum } from "../../../../nav-soknad/types";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
+import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanelEkspanderbart";
 
 interface SoknadsmottakerInfoOwnProps {
 	soknadsmottakerStatus: string;

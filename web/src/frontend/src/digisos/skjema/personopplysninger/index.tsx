@@ -29,7 +29,7 @@ import Ella from "../../../nav-soknad/components/svg/Ella";
 import William from "../../../nav-soknad/components/svg/illustrasjoner/William";
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import { FormattedMessage } from "react-intl";
-import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/InformasjonspanelEkspanderbart";
+import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanelEkspanderbart";
 
 // interface StateProps {
 // 	visPersonaliaFraTPSfeatureToggle: boolean;
