@@ -10,6 +10,7 @@ import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import {finnFakta} from "../../../nav-soknad/utils/faktumUtils";
 import SystemregistrerteBarn from "./SystemregistrerteBarn";
 import Barnebidrag from "./Barnebidrag";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 interface StateProps {
     fakta: Faktum[];
@@ -33,8 +34,8 @@ class Familierelasjoner extends React.Component<Props, {}> {
 			);
         } else {
 	        return (
-		        <SporsmalFaktum faktumKey={"familierelasjon.faktum"} style="system">
-			        <div className="luftUnderSkjemaElement">
+		        <SporsmalFaktum faktumKey={"familierelasjon.faktum"} style="system" legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
+			        <div>
 				        <FormattedHTMLMessage id="familierelasjon.ingress" values={{antallBarn}}/>
 			        </div>
 			        <SysteminfoMedSkjema>
