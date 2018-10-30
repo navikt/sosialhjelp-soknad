@@ -110,7 +110,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 						{skjemaOppsummering}
 					</div>
 
-					<div className="infopanel-oppsummering">
+					<div className="infopanel-oppsummering skjema-sporsmal">
 						<InformasjonsBoks/>
 					</div>
 

@@ -18,14 +18,16 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
 		const { fakta } = this.props;
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.inntektbolk} ikon={<Penger/>}>
-				<h2 className="skjema-sporsmal skjema-sporsmal--systeminfo">
+				<h2 className="overskrift">
 					<FormattedHTMLMessage id="opplysninger.inntekt.undertittel"/>
 				</h2>
 				<NavYtelser fakta={fakta}/>
-				<Bostotte />
-				<HusbankInfopanel fakta={fakta}/>
+				<div className="skjema-sporsmal">
+					<Bostotte />
+					<HusbankInfopanel fakta={fakta}/>
+				</div>
 				<Utbetaling fakta={fakta} />
-				<h2 className="skjema-sporsmal skjema-sporsmal--systeminfo">
+				<h2 className="overskrift">
 					<FormattedHTMLMessage id="opplysninger.formue.undertittel"/>
 				</h2>
 				<Bankinnskudd fakta={fakta} dispatch={this.props.dispatch}/>

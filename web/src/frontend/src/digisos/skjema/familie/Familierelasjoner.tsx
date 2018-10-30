@@ -34,7 +34,7 @@ class Familierelasjoner extends React.Component<Props, {}> {
 			);
         } else {
 	        return (
-		        <SporsmalFaktum faktumKey={"familierelasjon.faktum"} style="system" legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
+		        <SporsmalFaktum faktumKey={"familierelasjon.faktum"} style="system" legendTittelStyle={LegendTittleStyle.DEFAULT}>
 			        <div>
 				        <FormattedHTMLMessage id="familierelasjon.ingress" values={{antallBarn}}/>
 			        </div>

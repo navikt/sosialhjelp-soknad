@@ -4,6 +4,7 @@ import Detaljeliste, { DetaljelisteElement } from "../../../nav-soknad/component
 import { FormattedMessage } from "react-intl";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import JaNeiSporsmalFaktum from "../../../nav-soknad/faktum/JaNeiSporsmalFaktum";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 interface Props {
 	barnFakta: any;
@@ -77,6 +78,7 @@ const SystemregistrerteBarn: React.StatelessComponent<Props> = ({ barnFakta }) =
 									faktumKey: "system.familie.barn.true.barn",
 									faktumId: barn.faktumId
 								}}
+								legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 							/>
 						</div>)
 					}
