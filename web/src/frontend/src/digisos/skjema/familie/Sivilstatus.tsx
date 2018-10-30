@@ -19,7 +19,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 		const status = sivilstatusFaktum.value === "gift";
 
 		return (
-			<div>
+			<div className="skjema-sporsmal">
 				<SporsmalFaktum faktumKey={sivilstatus.faktum}>
 					<RadioFaktum id="sivilstatus_gift_radio" faktumKey={sivilstatus.faktum} value="gift"/>
 					<div className="skjema-sporsmal--jaNeiSporsmal">

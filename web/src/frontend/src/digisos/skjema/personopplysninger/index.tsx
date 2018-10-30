@@ -53,7 +53,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 					ikon={<William/>}
 				>
 					{this.props.gjenopptattSoknad && (
-						<div>
+						<div className="skjema-sporsmal">
 							<Informasjonspanel
 								ikon={InformasjonspanelIkon.ELLA}
 								farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
