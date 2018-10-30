@@ -17,7 +17,7 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 	>
 		<SporsmalFaktum
 			faktumKey="begrunnelse.hvorfor"
-			legendTittelStyle={LegendTittleStyle.NORMAL}
+			legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 		>
 			<TextareaFaktum
 				id="begrunnelse_soknad_textarea"
@@ -31,7 +31,7 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 		</SporsmalFaktum>
 		<SporsmalFaktum
 			faktumKey="begrunnelse.hva"
-			legendTittelStyle={LegendTittleStyle.NORMAL}
+			legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 		>
 			<TextareaFaktum
 				id="hva_sokes_det_om_textarea"

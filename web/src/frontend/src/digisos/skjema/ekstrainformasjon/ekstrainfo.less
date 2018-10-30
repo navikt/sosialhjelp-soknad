@@ -1,6 +1,11 @@
 .steg-ekstrainformasjon {
   &__blokk {
     padding: 0 @skjemaMarg 0 @skjemaMarg;
+
+    @media @mobile {
+      padding-left: @skjemaMargMobil;
+      padding-right: @skjemaMargMobil;
+    }
   }
 
   .skjema-progresjonsblokk {
