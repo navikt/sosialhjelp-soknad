@@ -10,6 +10,7 @@ export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
 export enum LegendTittleStyle {
 	DEFAULT = "skjema-fieldset--legend-title-default",
 	NORMAL = "skjema-fieldset--legend-title-normal-tekst",
+	FET_NORMAL = "skjema-fieldset--legend-title-normal-fet"
 }
 
 export interface Props {

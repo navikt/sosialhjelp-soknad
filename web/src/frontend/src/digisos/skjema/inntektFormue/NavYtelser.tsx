@@ -6,6 +6,7 @@ import SysteminfoMedSkjema from "../../../nav-soknad/components/systeminfoMedSkj
 import { finnFakta, getFaktumPropertyVerdi } from "../../../nav-soknad/utils/faktumUtils";
 import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
 import {finnFaktum} from "../../../nav-soknad/utils";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 
@@ -47,7 +48,7 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 		if (utbetalingerFeilet && utbetalingerFeilet[VALUE] !== "true") {
 			return (
 
-				<SporsmalFaktum faktumKey="navytelser" style="system">
+				<SporsmalFaktum faktumKey="navytelser" style="system" legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
 					<SysteminfoMedSkjema>
 						<h4 className="skjema-sporsmal__infotekst__tittel">
 							<FormattedMessage id="utbetalinger.sporsmal"/>

@@ -16,6 +16,7 @@ import { DispatchProps, SoknadAppState } from "../../../nav-soknad/redux/reduxTy
 import { connect } from "react-redux";
 import { Faktum } from "../../../nav-soknad/types";
 import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 type Props = FaktumComponentProps & DispatchProps;
 
@@ -52,7 +53,7 @@ class Bankinnskudd extends React.Component<Props, {}> {
 		const hvilkeInnskudd = radioCheckKeys("inntekt.bankinnskudd.true.type");
 		const hvilkeInnskuddAnnet = "inntekt.bankinnskudd.true.type.annet";
 		return (
-			<SporsmalFaktum faktumKey={hvilkeInnskudd.faktum}>
+			<SporsmalFaktum faktumKey={hvilkeInnskudd.faktum} legendTittelStyle={LegendTittleStyle.NORMAL}>
 				{this.innskuddstyper.map((innskuddstype: string) => {
 					const id = "bankinnskudd_" + innskuddstype + "_checkbox";
 					return (

@@ -14,6 +14,7 @@ import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import InputFaktum from "../../../nav-soknad/faktum/InputFaktum";
 import { Vedlegg, VedleggProps } from "../../../nav-soknad/redux/vedlegg/vedleggTypes";
 import VedleggComponent from "./vedlegg/Vedlegg";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 interface Props {
 	faktumstruktur: FaktumStruktur;
@@ -143,7 +144,7 @@ class Opplysning extends React.Component<AllProps, {}> {
 		);
 
 		return (
-			<SporsmalFaktum faktumKey={faktumstruktur.id} key={faktumstruktur.id}>
+			<SporsmalFaktum faktumKey={faktumstruktur.id} key={faktumstruktur.id} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
 				<Container fluid={true} className="container--noPadding">
 					{rader}
 				</Container>
