@@ -31,7 +31,7 @@ class UtgifterGjeld extends React.Component<
 
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk} ikon={<KredittkortIllustrasjon/>}>
-				<JaNeiSporsmalFaktum faktumKey={harBoutgifter.faktum} className="luftOverForsteUndertittel luftUnderFemRem boldVanligTekst">
+				<JaNeiSporsmalFaktum faktumKey={harBoutgifter.faktum}>
 					<SporsmalFaktum faktumKey={boUtgifter.faktum}>
 						<CheckboxFaktum
 							id="boutgifter_husleie_checkbox"
@@ -74,7 +74,6 @@ class UtgifterGjeld extends React.Component<
 				<JaNeiSporsmalFaktum
 					faktumKey={harUtgifterBarn.faktum}
 					visible={getFaktumVerdi(fakta, "system.familie.barn") !== "false"}
-					className="luftUnderFireRem boldVanligTekst"
 				>
 					<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
 						<CheckboxFaktum

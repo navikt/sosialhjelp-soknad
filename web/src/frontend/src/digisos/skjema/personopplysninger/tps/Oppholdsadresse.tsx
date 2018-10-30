@@ -185,7 +185,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 		const adressesokAdresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
 
 		return (
-			<div className="sosialhjelp-oppholdsadresse luftUnderFemRem">
+			<div className="sosialhjelp-oppholdsadresse">
 				<SporsmalFaktum
 					id="soknadsmottaker"
 					faktumKey="soknadsmottaker"
@@ -196,7 +196,6 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 						}
 						return null;
 					} ]}
-					className="boldOverskrift"
 				>
 					{Object.getOwnPropertyNames(folkeregistrertAdresseFaktum.properties).length !== 0 && (
 						<span>
@@ -288,7 +287,6 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 										getIntlTextOrKey(this.props.intl,
 											"kontakt.system.oppholdsadresse.hvorOppholder")
 									}
-									className="boldVanligTekst"
 								>
 									<AdresseAutocomplete
 										adresseFaktum={adressesokAdresseFaktum}

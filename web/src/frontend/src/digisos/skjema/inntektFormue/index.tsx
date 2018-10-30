@@ -18,7 +18,7 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
 		const { fakta } = this.props;
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.inntektbolk} ikon={<Penger/>}>
-				<h2 className="skjema-sporsmal skjema-sporsmal--systeminfo luftOverForsteUndertittel">
+				<h2 className="skjema-sporsmal skjema-sporsmal--systeminfo">
 					<FormattedHTMLMessage id="opplysninger.inntekt.undertittel"/>
 				</h2>
 				<NavYtelser fakta={fakta}/>

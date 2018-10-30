@@ -1,156 +1,153 @@
-@marginUnderSporsmal: 5rem;
-
 .skjema-content {
-	margin: 0 auto;
-	max-width: 640px;
-	font-size: 1rem;
+  margin: 0 auto;
+  max-width: 640px;
+  font-size: 1rem;
 }
 
 .skjema-fieldset {
-	border: none;
-	padding: 0;
-	margin: 0;
-	legend {
-		padding-right: @skjemaMarg + 10px; // pga.hjelpetekst
-		padding-left: 0;
-		margin-bottom: 22px;
-		//font-weight: 700;
-		//font-size: 1.5rem;
-		//line-height: 1.75rem;
-	}
+  border: none;
+  padding: 0;
+  margin: 0;
+
+  legend {
+    padding-right: @skjemaMarg + 10px; // pga.hjelpetekst
+    padding-left: 0;
+    margin-bottom: 1rem;
+  }
+
+  &--legend-title-default {
+    legend {
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+  }
+
+  &--legend-title-normal-tekst {
+
+    legend {
+      font-size: 1rem;
+    }
+  }
 
 }
-
-.skjema-fieldset {
-	legend.normalTekstUndertittel {
-		//border: 1px dotted red;
-		margin-bottom: 0;
-	}
-}
-
-.skjema-fieldset-large-bold {
-	font-weight: 700;
-	font-size: 1.5rem;
-}
-
-//padding: 0 @skjemaMarg 0 @skjemaMarg;
 
 .skjema-sporsmal {
-	position: relative;
-	display: block;
-	// padding: 1.5rem @skjemaMarg @sporsmalBottomPadding @skjemaMarg;
-	padding: 0 @skjemaMarg 0 @skjemaMarg;
-	border-radius: 4px;
-	//border: 1px dotted red;
-	background-color: @white;
+  position: relative;
+  display: block;
+  padding: 0 @skjemaMarg 0 @skjemaMarg;
+  border-radius: 4px;
+  background-color: @white;
 
-	&:focus {
-		.focus-outline();
-	}
-	&--noBottomPadding {
-		padding-bottom: 0;
-	}
+  &:focus {
+    .focus-outline();
+  }
+  &--noBottomPadding {
+    padding-bottom: 0;
+  }
 
+  &--systeminfo {
+    padding-bottom: 0;
+    margin-bottom: @skjemaMargXL;
 
-	&--systeminfo {
-		padding-bottom: 0;
-		.skjema-sporsmal--noBottomPadding .skjema-sporsmal:last-child {
-			margin-bottom: 1rem;
-		}
-	}
+    .skjema-sporsmal--noBottomPadding .skjema-sporsmal:last-child {
+      margin-bottom: @skjemaMargXL;
+    }
+  }
 
-	@media @mobile {
-		padding-left: @skjemaMargMobil;
-		padding-right: @skjemaMargMobil;
-	}
+  @media @mobile {
+    padding-left: @skjemaMargMobil;
+    padding-right: @skjemaMargMobil;
+  }
 
-	.skjema__feilomrade--harFeil {
-		box-shadow: 0 0 0 0.5rem @pinkErrorBg;
-		border-radius: 1px;
-	}
+  .skjema__feilomrade--harFeil {
+    box-shadow: 0 0 0 0.5rem @pinkErrorBg;
+    border-radius: 1px;
+  }
 
-	.skjema__feilomrade--harFeil:last-child {
-		margin-bottom: 0;
-	}
+  .skjema__feilomrade--harFeil:last-child {
+    margin-bottom: 0;
+  }
 
-	// Underspørsmål (.skjema-sporsmal .skjema-sporsmal)
-	.skjema-sporsmal {
-		padding: 0;
-		border-radius: 0;
-		background-color: transparent;
+  // Underspørsmål (.skjema-sporsmal .skjema-sporsmal)
+  .skjema-sporsmal {
+    padding: 0;
+    border-radius: 0;
+    background-color: transparent;
 
-		&:focus {
-			border-radius: 4px;
-			margin-left: -4px;
-			padding-left: 4px;
-		}
-		.skjema-sporsmal__innhold {
-			padding: 0;
-		}
-		> .skjemaelement:last-child {
-			margin-bottom: 0;
-		}
-	}
+    &:focus {
+      border-radius: 4px;
+      margin-left: -4px;
+      padding-left: 4px;
+    }
+    .skjema-sporsmal__innhold {
+      padding: 0;
+    }
+    > .skjemaelement:last-child {
+      margin-bottom: 0;
+    }
+  }
 
-	&__tittel {
-		font-size: 1em;
-		font-weight: 600;
-	}
+  //&__tittel {
+  //	font-size: 1rem;
+  //	font-weight: 600;
+  //}
 
-	&__infotekst {
-		margin: 13px 0 0 0;
-	  	display: block;
-	  	font-weight: normal;
-		font-size: 1rem;
-		line-height: 1.375rem;
+  &__infotekst {
+    margin: 13px 0 0 0;
+    display: block;
+    font-weight: normal;
+    font-size: 1rem;
+    line-height: 1.375rem;
 
-		&__tittel {
-			margin: 1rem 0 1rem 0;
-		}
-	}
+    &__tittel {
+      margin: 1rem 0 1rem 0;
+    }
+  }
 
 }
 
 .skjema-steg {
-	text-align: left;
+  text-align: left;
 
-	&__feiloppsummering {
-		.panel--feiloppsummering {
-			margin-bottom: 4rem;
-		}
-	}
+  &__feiloppsummering {
+    .panel--feiloppsummering {
+      margin-bottom: 4rem;
+    }
+  }
 
-  	&__ikon {
-	  display: block;
-	  text-align: center;
-	  margin-bottom: 1rem;
-	}
+  &__ikon {
+    display: block;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
 
-	&__tittel {
-	  	text-align: center;
-		margin-top: 0;
+  &__tittel {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+    padding: 0 @skjemaMarg 0 @skjemaMarg;
+    padding: 0 @skjemaMarg 0 @skjemaMarg;
 
-	  	//padding: 0 @skjemaMarg 0 @skjemaMarg;
-	  	//padding: 0 @skjemaMarg 0 @skjemaMarg;
-        //
-	  	//@media @mobile {
-		//  padding: 0 @skjemaMargMobil 0 @skjemaMargMobil;
-		//  padding: 0 @skjemaMargMobil 0 @skjemaMargMobil;
-		//}
+    @media @mobile {
+      padding: 0 @skjemaMargMobil 0 @skjemaMargMobil;
+      padding: 0 @skjemaMargMobil 0 @skjemaMargMobil;
+    }
 
-		&:focus {
-			outline: none;
-		}
-	}
+    &:focus {
+      outline: none;
+    }
+  }
 
-	.skjema-sporsmal {
-		//margin-bottom: @marginUnderSporsmal;
+  .skjema-sporsmal {
+    margin-bottom: @skjemaMargXL;
 
-		.skjema-sporsmal {
-			margin-bottom: 0;
-		}
+    border: 1px dotted red;
 
-	}
+    .skjema-sporsmal {
+      margin-bottom: 0;
+    }
+
+  }
 }
 
 .hjelpetekst {
@@ -170,49 +167,6 @@
   box-shadow: none;
 }
 
-.luftUnderSporsmal {
-  margin-bottom: @marginUnderSporsmal;
-}
-
-.luftOverForsteUndertittel {
-  margin-top: 2.5rem;
-}
-
-.luftUnderFireRem {
-  margin-bottom: 4rem;
-}
-
-.luftUnderFemRem {
-  margin-bottom: 5rem;
-}
-
-.liteLuftMellomSpsm {
-  margin-bottom: 2rem;
-}
 
 
-.boldVanligTekst {
-  legend {
-    font-weight: 700;
-    font-size: 1rem !important;
-  }
 
-  //span {
-  //  font-weight: 700;
-  //}
-  //
-  //label {
-  //  font-weight: 700;
-  //}
-}
-
-.luftOverEnRem {
-  margin-top: 1rem;
-}
-
-.boldOverskrift {
-  legend {
-    font-size: 1.5rem;
-    font-weight: 700;
-  }
-}

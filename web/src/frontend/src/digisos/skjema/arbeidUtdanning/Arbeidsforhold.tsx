@@ -28,7 +28,7 @@ const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, visArbeidsforh
 	};
 	const alleArbeidsforhold: Faktum[] = finnFakta("arbeidsforhold", fakta).filter(removeSecurityAddedArbeidsforhold);
 
-	return <SporsmalFaktum faktumKey="arbeidsforhold" style="system" legendClassName="skjema-fieldset-large-bold" className="luftOverForsteUndertittel luftUnderFemRem">
+	return <SporsmalFaktum faktumKey="arbeidsforhold" style="system">
 		<SysteminfoMedSkjema>
 			<FormattedMessage id="arbeidsforhold.infotekst"/>
 			{(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (

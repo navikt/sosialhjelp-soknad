@@ -24,7 +24,7 @@ export const Skjema: React.StatelessComponent<Props> = ({ fakta, onHarIkkeKonton
 		getFaktumVerdi(fakta, "kontakt.kontonummer.harikke")
 	);
 	return (
-		<SporsmalFaktum faktumKey="kontakt.kontonummer" className="luftUnderFireRem legendTittelStorBold">
+		<SporsmalFaktum faktumKey="kontakt.kontonummer">
 			<KontonummerFaktum
 				className="luftUnderSkjemaElement"
 				id="kontakt_kontonummer_number_input"

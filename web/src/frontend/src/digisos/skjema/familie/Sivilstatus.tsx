@@ -20,7 +20,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 
 		return (
 			<div>
-				<SporsmalFaktum faktumKey={sivilstatus.faktum} legendClassName="skjema-fieldset-large-bold">
+				<SporsmalFaktum faktumKey={sivilstatus.faktum}>
 					<RadioFaktum id="sivilstatus_gift_radio" faktumKey={sivilstatus.faktum} value="gift"/>
 					<div className="skjema-sporsmal--jaNeiSporsmal">
 						<Underskjema

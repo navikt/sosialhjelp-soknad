@@ -86,7 +86,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 
 	renderInfoMelding() {
 		return (
-			<div className="luftOverForsteUndertittel">
+			<div>
 				<Informasjonspanel
 					ikon={InformasjonspanelIkon.HENSYN}
 					farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}

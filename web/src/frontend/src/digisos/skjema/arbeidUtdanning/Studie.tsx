@@ -9,8 +9,8 @@ const Studie: React.StatelessComponent = () => {
 	const studie = radioCheckKeys("dinsituasjon.studerer");
 	const studerer = radioCheckKeys("dinsituasjon.studerer.true.grad");
 	return (
-		<JaNeiSporsmalFaktum faktumKey={studie.faktum} legendClassName="skjema-fieldset-large-bold" className="luftUnderFireRem">
-			<SporsmalFaktum faktumKey={studerer.faktum} className="skjema-sporsmal__radio">
+		<JaNeiSporsmalFaktum faktumKey={studie.faktum}>
+			<SporsmalFaktum faktumKey={studerer.faktum}>
 				<RadioFaktum
 					id="studerer_radio_heltid"
 					faktumKey={studerer.faktum}

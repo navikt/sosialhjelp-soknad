@@ -6,6 +6,7 @@ import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import SnakkebobleIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SnakkebobleIllustrasjon";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 const MAX_CHARS = 500;
 
@@ -16,8 +17,7 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 	>
 		<SporsmalFaktum
 			faktumKey="begrunnelse.hvorfor"
-			className="luftOverForsteUndertittel liteLuftMellomSpsm boldVanligTekst"
-			legendClassName="normalTekstUndertittel"
+			legendTittelStyle={LegendTittleStyle.NORMAL}
 		>
 			<TextareaFaktum
 				id="begrunnelse_soknad_textarea"
@@ -31,8 +31,7 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 		</SporsmalFaktum>
 		<SporsmalFaktum
 			faktumKey="begrunnelse.hva"
-			className="luftUnderFireRem boldVanligTekst"
-			legendClassName="normalTekstUndertittel"
+			legendTittelStyle={LegendTittleStyle.NORMAL}
 		>
 			<TextareaFaktum
 				id="hva_sokes_det_om_textarea"

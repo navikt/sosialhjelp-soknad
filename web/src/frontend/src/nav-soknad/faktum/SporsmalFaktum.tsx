@@ -1,7 +1,7 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getFaktumSporsmalTekst } from "../utils";
-import Sporsmal, { SporsmalStyle } from "../components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle, SporsmalStyle} from "../components/sporsmal/Sporsmal";
 import {
 	faktumComponent,
 	InjectedFaktumComponentProps
@@ -16,8 +16,7 @@ export interface OwnProps {
 	style?: SporsmalStyle;
 	tittelRenderer?: (title: string) => React.ReactNode;
 	noValidateOnBlur?: boolean;
-	className?: string;
-	legendClassName?: string;
+	legendTittelStyle?: LegendTittleStyle;
 }
 
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -65,7 +64,6 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 			faktumKey,
 			intl,
 			children,
-			className
 		} = this.props;
 		if (visible === false) {
 			return null;
@@ -73,7 +71,6 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 
 		return (
 			<Sporsmal
-				className={className}
 				feil={this.harValidering() ? this.props.getFeil(intl) : null}
 				handleOnBlur={this.handleOnBlur}
 				style={style}
@@ -81,7 +78,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 				tekster={getFaktumSporsmalTekst(intl, faktumKey)}
 				visible={visible}
 				tittelRenderer={tittelRenderer}
-				legendClassName={this.props.legendClassName || ""}
+				legendTittelStyle={this.props.legendTittelStyle || LegendTittleStyle.DEFAULT}
 			>
 				{children}
 			</Sporsmal>

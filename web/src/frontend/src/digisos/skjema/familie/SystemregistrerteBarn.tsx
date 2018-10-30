@@ -61,7 +61,6 @@ const SystemregistrerteBarn: React.StatelessComponent<Props> = ({ barnFakta }) =
 									maxLength={3}
 									kunHeltall={true}
 									bredde="L"
-									className="boldVanligTekst"
 								/>
 							</div>
 						</div>)
@@ -78,7 +77,6 @@ const SystemregistrerteBarn: React.StatelessComponent<Props> = ({ barnFakta }) =
 									faktumKey: "system.familie.barn.true.barn",
 									faktumId: barn.faktumId
 								}}
-								className="boldVanligTekst"
 							/>
 						</div>)
 					}

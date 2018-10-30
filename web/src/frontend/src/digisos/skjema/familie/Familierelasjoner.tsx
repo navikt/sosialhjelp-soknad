@@ -27,13 +27,13 @@ class Familierelasjoner extends React.Component<Props, {}> {
 	    const antallBarn = barnFakta.length;
         if (antallBarn === 0) {
             return (
-				<SporsmalFaktum faktumKey={"familierelasjon.faktum"} legendClassName="skjema-fieldset-large-bold">
+				<SporsmalFaktum faktumKey={"familierelasjon.faktum"}>
 					<p><FormattedMessage id="familierelasjon.ingen_registrerte_barn"/></p>
 				</SporsmalFaktum>
 			);
         } else {
 	        return (
-		        <SporsmalFaktum faktumKey={"familierelasjon.faktum"} style="system" legendClassName="skjema-fieldset-large-bold">
+		        <SporsmalFaktum faktumKey={"familierelasjon.faktum"} style="system">
 			        <div className="luftUnderSkjemaElement">
 				        <FormattedHTMLMessage id="familierelasjon.ingress" values={{antallBarn}}/>
 			        </div>

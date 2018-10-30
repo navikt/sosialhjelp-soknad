@@ -106,11 +106,11 @@ class OppsummeringView extends React.Component<Props, {}> {
 		return (
 			<LoadContainer restStatus={this.props.restStatus}>
 				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
-					<div className="luftOverForsteUndertittel">
+					<div>
 						{skjemaOppsummering}
 					</div>
 
-					<div className="infopanel-oppsummering luftUnderFireRem">
+					<div className="infopanel-oppsummering">
 						<InformasjonsBoks/>
 					</div>
 

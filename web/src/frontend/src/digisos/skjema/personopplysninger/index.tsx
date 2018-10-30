@@ -53,7 +53,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 					ikon={<William/>}
 				>
 					{this.props.gjenopptattSoknad && (
-						<div className="luftOverForsteUndertittel">
+						<div>
 							<Informasjonspanel
 								ikon={InformasjonspanelIkon.ELLA}
 								farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
@@ -65,8 +65,6 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 					<SporsmalFaktum
 						faktumKey="kontakt.system.personalia"
 						style="system"
-						legendClassName="skjema-fieldset-large-bold"
-						className="luftUnderFemRem luftOverForsteUndertittel"
 					>
 						<Personalia fakta={this.props.fakta} />
 					</SporsmalFaktum>

@@ -103,22 +103,12 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 
 		return (
 			<div>
-				<SporsmalFaktum faktumKey="system.familie.sivilstatus" style="system" legendClassName="skjema-fieldset-large-bold" className="luftOverForsteUndertittel liteLuftMellomSpsm">
+				<SporsmalFaktum faktumKey="system.familie.sivilstatus" style="system">
 					<div className="luftUnderSkjemaElement">
 						<FormattedMessage id="system.familie.sivilstatus"/>
 					</div>
 					<div>
-						{/*<Detaljeliste>*/}
-							{/*<DetaljelisteElement*/}
-								{/*tittel={*/}
-									{/*<FormattedMessage id="system.familie.sivilstatus.label"/>*/}
-								{/*}*/}
-								{/*verdi={<FormattedMessage id="familie.sivilstatus.gift"/>}*/}
-							{/*/>*/}
-						{/*/Detaljeliste>*/}
-						<div className="luftUnderSkjemaElement boldVanligTekst">
-							<FormattedMessage id="system.familie.sivilstatus.label" />
-						</div>
+						<FormattedMessage id="system.familie.sivilstatus.label" />
 						{ this.renderEktefelleInformasjon(ektefelleFaktum) }
 					</div>
 				</SporsmalFaktum>
@@ -127,7 +117,6 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 					(<Informasjonspanel
 						farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 						ikon={InformasjonspanelIkon.ELLA}
-						className="luftUnderSporsmal"
 					>
 						<h4 className="skjema-sporsmal__infotekst__tittel">
 							<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel"/>
