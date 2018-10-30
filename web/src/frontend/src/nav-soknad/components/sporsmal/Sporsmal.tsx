@@ -62,7 +62,9 @@ class Sporsmal extends React.Component<Props, {}> {
 							{sporsmal}
 							<SporsmalHjelpetekst tekster={tekster} legendId={legendId}/>
 						</legend>
-						<div className="skjema-sporsmal__innhold">{children}</div>
+						<div className="skjema-sporsmal__innhold">
+							{children}
+						</div>
 					</fieldset>
 				</SkjemaGruppe>
 			</div>
