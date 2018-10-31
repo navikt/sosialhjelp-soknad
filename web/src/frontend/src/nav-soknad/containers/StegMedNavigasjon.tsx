@@ -90,6 +90,14 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		}
 	}
 
+	loggAdresseTypeTilGrafana(){
+		const typeAdresseFaktum: Faktum = finnFaktum("kontakt.system.oppholdsadresse.valg", this.props.fakta);
+		const VALUE = "value";
+		if (typeAdresseFaktum && typeAdresseFaktum[VALUE]){
+			this.props.dispatch(loggInfo("klikk--" + typeAdresseFaktum[VALUE]));
+		}
+	}
+
 	sendSoknad(brukerBehandlingId: string) {
 		this.props.dispatch(sendSoknad(brukerBehandlingId));
 	}
@@ -97,13 +105,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
 		if (aktivtSteg.type === SkjemaStegType.oppsummering) {
 			if (this.props.oppsummeringBekreftet) {
-
-				const typeAdresseFaktum: Faktum = finnFaktum("kontakt.system.oppholdsadresse.valg", this.props.fakta);
-				const VALUE = "value";
-				if (typeAdresseFaktum && typeAdresseFaktum[VALUE]){
-					this.props.dispatch(loggInfo("klikk--" + typeAdresseFaktum[VALUE]));
-				}
-
+				this.loggAdresseTypeTilGrafana();
 				this.sendSoknad(brukerBehandlingId);
 			} else {
 				this.props.dispatch(setVisBekreftMangler(true));
