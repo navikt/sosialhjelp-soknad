@@ -66,6 +66,7 @@ class TextareaFaktum extends React.Component<Props, {}> {
 			intl
 		} = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey, property);
+		console.warn(tekster);
 		const verdi =
 			(property
 				? this.props.getPropertyVerdi()
@@ -73,7 +74,7 @@ class TextareaFaktum extends React.Component<Props, {}> {
 		return (
 			<Textarea
 				id={this.props.id ? this.props.id : this.props.faktumKey + "_textarea"}
-				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
+				label={labelId ? getIntlTextOrKey(intl, labelId) : null}
 				placeholder={this.props.placeholder}
 				value={verdi}
 				name={this.props.getName()}
