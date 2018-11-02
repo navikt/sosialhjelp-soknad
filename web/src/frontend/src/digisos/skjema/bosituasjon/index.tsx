@@ -25,7 +25,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const antall = inputKeys("bosituasjon.antallpersoner");
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.bosituasjonbolk} ikon={<BoligIllustrasjon/>}>
-				<SporsmalFaktum faktumKey={bosituasjon.faktum}>
+				<SporsmalFaktum faktumKey={bosituasjon.faktum} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
 					<RadioFaktum
 						id="bosituasjon_radio_eier"
 						faktumKey={bosituasjon.faktum}
@@ -96,7 +96,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						</Underskjema>
 					</div>
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey={antall.faktum}>
+				<SporsmalFaktum faktumKey={antall.faktum} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
 					<BelopFaktum
 						faktumKey={antall.faktum}
 						maxLength={2}

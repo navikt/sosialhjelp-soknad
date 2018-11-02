@@ -60,7 +60,8 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 		}
 
 		return (
-			<div>
+			<div className="sivilstatus__ektefelleinfo">
+
 				{/*<h4 className="skjema-sporsmal__infotekst__tittel">*/}
 					{/*<FormattedMessage id="system.familie.sivilstatus.infotekst"/>*/}
 				{/*</h4>*/}
@@ -102,12 +103,12 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 		const IKKETILGANGTILEKTEFELLE = "ikketilgangtilektefelle";
 
 		return (
-			<div>
+			<div className="sivilstatus skjema-sporsmal">
 				<SporsmalFaktum faktumKey="system.familie.sivilstatus" style="system">
-					<div className="luftUnderSkjemaElement">
+					<div className="sivilstatus__infotekst">
 						<FormattedMessage id="system.familie.sivilstatus"/>
 					</div>
-					<div>
+					<div className="sivilstatus__giftlabel">
 						<FormattedMessage id="system.familie.sivilstatus.label" />
 						{ this.renderEktefelleInformasjon(ektefelleFaktum) }
 					</div>
