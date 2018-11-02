@@ -72,12 +72,8 @@ class TextareaFaktum extends React.Component<Props, {}> {
 				? this.props.getPropertyVerdi()
 				: this.props.getFaktumVerdi()) || "";
 
-		let label = null;
-		if (this.props.hideLabel) {
-			label = null;
-		} else {
-			label = labelId ? getIntlTextOrKey(intl, labelId) : tekster.label
-		}
+		let label = labelId ? getIntlTextOrKey(intl, labelId) : tekster.label;
+		label = this.props.hideLabel ? "" : label;
 
 		return (
 			<Textarea
