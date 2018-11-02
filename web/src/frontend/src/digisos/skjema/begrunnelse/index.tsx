@@ -24,6 +24,7 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 				validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
 				faktumKey="begrunnelse.hva"
 				maxLength={MAX_CHARS}
+				hideLabel={true}
 			/>
 		</SporsmalFaktum>
 		<SporsmalFaktum faktumKey="begrunnelse.hvorfor">
@@ -35,6 +36,7 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 				faktumKey="begrunnelse.hvorfor"
 				maxLength={MAX_CHARS}
 				validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
+				hideLabel={true}
 			/>
 		</SporsmalFaktum>
 	</DigisosSkjemaSteg>
