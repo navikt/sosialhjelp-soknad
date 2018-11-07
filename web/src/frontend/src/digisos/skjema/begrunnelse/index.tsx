@@ -15,20 +15,7 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 		steg={DigisosSteg.begrunnelsebolk}
 		ikon={<SnakkebobleIllustrasjon/>}
 	>
-		<SporsmalFaktum
-			faktumKey="begrunnelse.hvorfor"
-			legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-		>
-			<TextareaFaktum
-				id="begrunnelse_soknad_textarea"
-				placeholder={intl.formatMessage({
-					id: "begrunnelse.hvorfor.placeholder"
-				})}
-				faktumKey="begrunnelse.hvorfor"
-				maxLength={MAX_CHARS}
-				validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
-			/>
-		</SporsmalFaktum>
+
 		<SporsmalFaktum
 			faktumKey="begrunnelse.hva"
 			legendTittelStyle={LegendTittleStyle.FET_NORMAL}
@@ -40,7 +27,23 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 				})}
 				validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
 				faktumKey="begrunnelse.hva"
+				labelId="begrunnelse.hva.label"
 				maxLength={MAX_CHARS}
+			/>
+		</SporsmalFaktum>
+		<SporsmalFaktum
+			faktumKey="begrunnelse.hvorfor"
+            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+		>
+			<TextareaFaktum
+				id="begrunnelse_soknad_textarea"
+				placeholder={intl.formatMessage({
+					id: "begrunnelse.hvorfor.placeholder"
+				})}
+				faktumKey="begrunnelse.hvorfor"
+				maxLength={MAX_CHARS}
+				validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
+				hideLabel={true}
 			/>
 		</SporsmalFaktum>
 	</DigisosSkjemaSteg>

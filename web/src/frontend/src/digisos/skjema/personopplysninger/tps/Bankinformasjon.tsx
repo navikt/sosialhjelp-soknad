@@ -26,7 +26,6 @@ export const Skjema: React.StatelessComponent<Props> = ({ fakta, onHarIkkeKonton
 	return (
 		<SporsmalFaktum faktumKey="kontakt.kontonummer">
 			<KontonummerFaktum
-				className="luftUnderSkjemaElement"
 				id="kontakt_kontonummer_number_input"
 				faktumKey="kontakt.kontonummer"
 				disabled={brukerHarIkkeKontonummer}
@@ -37,6 +36,7 @@ export const Skjema: React.StatelessComponent<Props> = ({ fakta, onHarIkkeKonton
 				faktumKey="kontakt.kontonummer.harikke"
 				onChange={onHarIkkeKontonummer}
 				className="inputPanelPadding"
+				visPanel={false}
 			/>
 		</SporsmalFaktum>
 	);
