@@ -6,7 +6,6 @@ import {
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { State } from "../../redux/reducers";
-import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import { downloadAttachedFile } from "../../../nav-soknad/utils/rest-utils";
 import { REST_STATUS } from "../../../nav-soknad/types";
 import { MargIkoner } from "./margIkoner";
@@ -94,9 +93,13 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 								key={fil.filId}
 								onClickHoyreIkon={() => this.removeFile(fil.filId, vedleggId)}
 							>
-								<Lenkeknapp onClick={() => downloadAttachedFile(lastNedUrl)}>
+								<a
+									className="lenke"
+									title="Last ned vedlegg"
+									onClick={() => downloadAttachedFile(lastNedUrl)}
+								>
 									{fil.filnavn}
-								</Lenkeknapp>
+								</a>
 							</AvsnittMedMarger>
 						);
 					}
