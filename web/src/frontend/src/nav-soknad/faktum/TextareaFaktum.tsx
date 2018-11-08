@@ -88,6 +88,7 @@ class TextareaFaktum extends React.Component<Props, {}> {
 			/>
 		);
 	}
+
 }
 
 export default injectIntl(faktumComponent()(TextareaFaktum));
