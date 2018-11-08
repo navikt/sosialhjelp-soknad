@@ -96,6 +96,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 								<a
 									className="lenke"
 									title="Last ned vedlegg"
+									href="#"
 									onClick={() => downloadAttachedFile(lastNedUrl)}
 								>
 									{fil.filnavn}
