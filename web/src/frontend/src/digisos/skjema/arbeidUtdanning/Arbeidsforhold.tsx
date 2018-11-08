@@ -30,7 +30,9 @@ const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, visArbeidsforh
 
 	return <SporsmalFaktum faktumKey="arbeidsforhold" style="system">
 		<SysteminfoMedSkjema>
-			<FormattedMessage id="arbeidsforhold.infotekst"/>
+			<div className="skjema-sporsmal__tittel">
+				<FormattedMessage id="arbeidsforhold.infotekst"/>
+			</div>
 			{(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (
 				<p>
 					<FormattedMessage id="arbeidsforhold.ingen"/>
@@ -47,7 +49,7 @@ const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, visArbeidsforh
 					)}
 				</ul>
 			)}
-			<FormattedMessage id="opplysninger.arbeidsituasjon.kommentarer.label"/>
+			{/*<FormattedMessage id="opplysninger.arbeidsituasjon.kommentarer.label"/>*/}
 			<TextareaFaktum
 				id="opplysninger_arbeidsituasjon_kommentarer"
 				faktumKey="opplysninger.arbeidsituasjon.kommentarer"

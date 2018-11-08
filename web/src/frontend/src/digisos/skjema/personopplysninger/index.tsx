@@ -76,6 +76,8 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 				</DigisosSkjemaSteg>
 			);
 		}
+
+		/* BEGIN: yyy. Kan dette slettes? */
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}  ikon={<Ella visBakgrundsSirkel={true}/>}>
@@ -88,6 +90,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 				<JaNeiSporsmalFaktum faktumKey={statsborger.faktum} />
 			</DigisosSkjemaSteg>
 		);
+		/* END: yyy. */
 	}
 
 	/* BEGIN: XXX: Bør flyttes til backend: */
