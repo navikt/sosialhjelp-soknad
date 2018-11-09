@@ -10,12 +10,15 @@ import { Faktum } from "../../../nav-soknad/types";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import ArbeidsforholdDetaljer from "./ArbeidsforholdDetaljer";
 import { FeatureToggles } from "../../../featureToggles";
+import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
 interface StateProps {
 	visArbeidsforhold: boolean;
 }
 
 type Props = FaktumComponentProps & StateProps & InjectedIntlProps;
+
+const MAX_CHARS = 500;
 
 const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, visArbeidsforhold, intl }) => {
 
@@ -55,6 +58,8 @@ const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, visArbeidsforh
 				placeholder={intl.formatMessage({
 					id: "arbeidsforhold.kommentar.placeholder"
 				})}
+				maxLength={MAX_CHARS}
+				validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
 			/>
 		</SysteminfoMedSkjema>
 	</SporsmalFaktum>;
