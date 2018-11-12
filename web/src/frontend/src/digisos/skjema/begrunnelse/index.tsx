@@ -33,7 +33,7 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 		</SporsmalFaktum>
 		<SporsmalFaktum
 			faktumKey="begrunnelse.hvorfor"
-            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+			legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 		>
 			<TextareaFaktum
 				id="begrunnelse_soknad_textarea"
