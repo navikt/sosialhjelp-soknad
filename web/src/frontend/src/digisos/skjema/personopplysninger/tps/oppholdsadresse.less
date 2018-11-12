@@ -4,6 +4,7 @@
         margin: 0 0 0 0;
     }
     .underskjema {
+        margin-top: 6px;
         padding-bottom: 0;
     }
     .skjemaelement {
@@ -26,12 +27,25 @@
   	.adresse-tittel {
 	  font-weight: 600;
 	}
+
+    .skjema-sporsmal {
+
+        .skjema__feilomrade--harFeil {
+            background-color: transparent;
+            box-shadow: none;
+            -webkit-box-shadow: none;
+
+            .inputPanel {
+                border: 1px solid #BA3A26;
+                background-color: #fbf5f4;
+            }
+        }
+
+    }
+
 }
 
 .sosialhjelp-oppholdsadresse {
-    //span {
-    //    display: block;
-    //}
 
     .inputPanel {
         padding: 1rem 1rem 0 1rem;
@@ -44,11 +58,6 @@
     background-color: rgba(0, 103, 197, 0.1);
 }
 
-.oppholdsadresse-harFeil {
-    background-color: @pinkErrorBg !important;
-}
-
-
 .velgNavKontorDropDown {
   margin-top: 1rem;
   width: 25rem;
@@ -56,3 +65,4 @@
     width: 100%;
   }
 }
+
