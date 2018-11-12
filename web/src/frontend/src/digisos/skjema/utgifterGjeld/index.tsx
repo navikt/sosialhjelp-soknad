@@ -17,6 +17,7 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
 import KredittkortIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/KredittkortIllustrasjon";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 class UtgifterGjeld extends React.Component<
 	FaktumComponentProps & DispatchProps & InjectedIntlProps,
@@ -31,7 +32,10 @@ class UtgifterGjeld extends React.Component<
 
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk} ikon={<KredittkortIllustrasjon/>}>
-				<JaNeiSporsmalFaktum faktumKey={harBoutgifter.faktum}>
+				<JaNeiSporsmalFaktum
+					faktumKey={harBoutgifter.faktum}
+					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+				>
 					<SporsmalFaktum faktumKey={boUtgifter.faktum}>
 						<CheckboxFaktum
 							id="boutgifter_husleie_checkbox"
@@ -74,6 +78,7 @@ class UtgifterGjeld extends React.Component<
 				<JaNeiSporsmalFaktum
 					faktumKey={harUtgifterBarn.faktum}
 					visible={getFaktumVerdi(fakta, "system.familie.barn") !== "false"}
+					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 				>
 					<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
 						<CheckboxFaktum

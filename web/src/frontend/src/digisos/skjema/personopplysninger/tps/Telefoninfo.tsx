@@ -14,9 +14,7 @@ interface Props {
 }
 
 const Skjema: React.StatelessComponent<{}> = () => (
-	<SporsmalFaktum faktumKey="kontakt.telefon">
-		<TelefonFaktum faktumKey="kontakt.telefon" id="kontakt_telefon" maxLength={8} />
-	</SporsmalFaktum>
+		<TelefonFaktum faktumKey="kontakt.telefon" id="kontakt_telefon" maxLength={8} className="skjemaelement--uten-luft"/>
 );
 
 const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
@@ -24,7 +22,11 @@ const Telefoninfo: React.StatelessComponent<Props & InjectedIntlProps> = ({
 	intl
 }) => {
 	if (!harFaktumVerdi(fakta, "kontakt.system.telefon")) {
-		return <Skjema />;
+		return (
+			<SporsmalFaktum faktumKey="kontakt.telefon">
+				<Skjema />
+			</SporsmalFaktum>
+		);
 	}
 
 	return (

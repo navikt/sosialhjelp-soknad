@@ -2,10 +2,9 @@ import * as React from "react";
 import { formaterIsoDato } from "../../../nav-soknad/utils";
 import Detaljeliste, { DetaljelisteElement } from "../../../nav-soknad/components/detaljeliste";
 import { FormattedMessage } from "react-intl";
-import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import BelopFaktum from "../../../nav-soknad/faktum/typedInput/BelopFaktum";
 import JaNeiSporsmalFaktum from "../../../nav-soknad/faktum/JaNeiSporsmalFaktum";
-import {inputKeys} from "../../../nav-soknad/utils/faktumUtils";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 interface Props {
 	barnFakta: any;
@@ -30,8 +29,6 @@ const SystemregistrerteBarn: React.StatelessComponent<Props> = ({ barnFakta }) =
 		const datoFormatert = formaterIsoDato(fodselsDato);
 		const FOLKEREGISTRERTVERDI = barn.properties[FOLKEREGISTRERT] === "true" ? "Ja" : "Nei";
 		const sisteListeElement: boolean =  (index + 1 ===  barnFakta.length);
-        const faktumKey = barn.key;
-        const hvormye = inputKeys(`${faktumKey}.grad`);
 
 		if (barn.properties[IKKETILGANGTILBARN] && barn.properties[IKKETILGANGTILBARN] === "true") {
 			return null;
@@ -57,18 +54,15 @@ const SystemregistrerteBarn: React.StatelessComponent<Props> = ({ barnFakta }) =
 					{ barn.properties[FOLKEREGISTRERT] && barn.properties[FOLKEREGISTRERT] === "false" && (
 						<div>
 							<div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
-								<SporsmalFaktum faktumKey={hvormye.faktum}>
-									<BelopFaktum
-										id={idSamvaersgrad}
-										faktumKey={'system.familie.barn.true.barn'}
-										faktumId={barn.faktumId}
-										property="grad"
-										maxLength={3}
-										kunHeltall={true}
-										bredde="XS"
-									/>
-									<span className="prosenttegn">%</span>
-								</SporsmalFaktum>
+								<BelopFaktum
+									id={idSamvaersgrad}
+									faktumKey={'system.familie.barn.true.barn'}
+									faktumId={barn.faktumId}
+									property="grad"
+									maxLength={3}
+									kunHeltall={true}
+									bredde="L"
+								/>
 							</div>
 						</div>)
 					}
@@ -84,6 +78,7 @@ const SystemregistrerteBarn: React.StatelessComponent<Props> = ({ barnFakta }) =
 									faktumKey: "system.familie.barn.true.barn",
 									faktumId: barn.faktumId
 								}}
+								legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 							/>
 						</div>)
 					}

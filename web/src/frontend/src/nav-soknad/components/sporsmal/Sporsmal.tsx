@@ -7,6 +7,12 @@ import SporsmalHjelpetekst from "./SporsmalHjelpetekst";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
 
+export enum LegendTittleStyle {
+	DEFAULT = "skjema-fieldset--legend-title-default",
+	NORMAL = "skjema-fieldset--legend-title-normal-tekst",
+	FET_NORMAL = "skjema-fieldset--legend-title-normal-fet"
+}
+
 export interface Props {
 	id?: string;
 	children: React.ReactNode;
@@ -18,7 +24,7 @@ export interface Props {
 	feil?: Feil;
 	feilkode?: string;
 	tekster: SporsmalFaktumTekst;
-	className?: string;
+	legendTittelStyle?: LegendTittleStyle;
 }
 
 class Sporsmal extends React.Component<Props, {}> {
@@ -36,6 +42,7 @@ class Sporsmal extends React.Component<Props, {}> {
 		const cls = classNames("skjema-fieldset", {
 			"skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined
 		});
+		const legendCls = this.props.legendTittelStyle ? this.props.legendTittelStyle : LegendTittleStyle.DEFAULT;
 		const legendId = cuid();
 		const sporsmal = this.props.tittelRenderer
 			? this.props.tittelRenderer(tekster.sporsmal)
@@ -43,19 +50,21 @@ class Sporsmal extends React.Component<Props, {}> {
 		return (
 			<div
 				id={id}
-				className={sporsmalCls + " " + this.props.className}
+				className={sporsmalCls}
 				onBlur={this.props.handleOnBlur}
 				aria-labelledby={legendId}
 			>
 				<SkjemaGruppe feil={feil}>
-					<fieldset className={cls}>
+					<fieldset className={cls + " " + legendCls}>
 						<legend
 							id={legendId}
 						>
 							{sporsmal}
 							<SporsmalHjelpetekst tekster={tekster} legendId={legendId}/>
 						</legend>
-						<div className="skjema-sporsmal__innhold">{children}</div>
+						<div className="skjema-sporsmal__innhold">
+							{children}
+						</div>
 					</fieldset>
 				</SkjemaGruppe>
 			</div>

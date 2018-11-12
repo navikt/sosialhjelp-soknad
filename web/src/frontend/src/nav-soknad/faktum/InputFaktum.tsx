@@ -22,6 +22,7 @@ export interface OwnProps extends FaktumComponentProps {
 	type?: InputTypes;
 	inputRef?: (c: any) => HTMLInputElement;
 	id?: string;
+	className?: string;
 }
 
 export type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -38,14 +39,14 @@ class InputFaktum extends React.Component<Props, {}> {
 			intl,
 			maxLength = DEFAULT_MAX_LENGTH,
 			bredde,
-			property
+			property,
 		} = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey, property);
 		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
 		return (
 			<Input
 				id={id}
-				className="input--xxl faktumInput"
+				className={"input--xxl faktumInput " + (this.props.className ? this.props.className : "") }
 				inputRef={(c: any) =>
 					this.props.inputRef ? this.props.inputRef(c) : null}
 				type={type}

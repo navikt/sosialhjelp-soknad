@@ -191,7 +191,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 							tabIndex={-1}
 							ref={c => (this.stegTittel = c)}
 						>
-							<Innholdstittel>{stegTittel}</Innholdstittel>
+							<Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
 						</div>
 						{children}
 						<Knapperad

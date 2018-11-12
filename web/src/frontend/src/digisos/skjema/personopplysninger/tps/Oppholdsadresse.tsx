@@ -23,6 +23,7 @@ import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/validerin
 import VelgSoknadsmottaker from "./VelgSoknadsmottaker";
 import FinnNavKontorSpinner from "./FinnNavKontorSpinner";
 import { getIntlTextOrKey } from "../../../../nav-soknad/utils/intlUtils";
+import {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 
 export interface Adresse {
 	"adresse": null | string;
@@ -185,7 +186,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 		const adressesokAdresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
 
 		return (
-			<div className="sosialhjelp-oppholdsadresse">
+			<div className="sosialhjelp-oppholdsadresse skjema-sporsmal">
 				<SporsmalFaktum
 					id="soknadsmottaker"
 					faktumKey="soknadsmottaker"
@@ -216,10 +217,10 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 									</div>
 								}
 							/>
-
 							<div className="skjema-sporsmal--jaNeiSporsmal">
 								<Underskjema
 									visible={this.props.soknadsmottakere.length > 1 && getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "folkeregistrert"}
+									collapsable={true}
 								>
 									<div className="utvidetAddresseSok">
 										<VelgSoknadsmottaker
@@ -287,6 +288,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 										getIntlTextOrKey(this.props.intl,
 											"kontakt.system.oppholdsadresse.hvorOppholder")
 									}
+									legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 								>
 									<AdresseAutocomplete
 										adresseFaktum={adressesokAdresseFaktum}

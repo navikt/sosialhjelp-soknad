@@ -15,6 +15,7 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 import { State } from "../../redux/reducers";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import BoligIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/BoligIllustrasjon";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	render() {
@@ -24,7 +25,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const antall = inputKeys("bosituasjon.antallpersoner");
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.bosituasjonbolk} ikon={<BoligIllustrasjon/>}>
-				<SporsmalFaktum faktumKey={bosituasjon.faktum}>
+				<SporsmalFaktum faktumKey={bosituasjon.faktum} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
 					<RadioFaktum
 						id="bosituasjon_radio_eier"
 						faktumKey={bosituasjon.faktum}
@@ -58,6 +59,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 							<SporsmalFaktum
 								faktumKey={annen.faktum}
 								style="system"
+								legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 							>
 								{/*TODO opprette checkboxgruppefaktumet*/}
 								<RadioFaktum
@@ -94,7 +96,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 						</Underskjema>
 					</div>
 				</SporsmalFaktum>
-				<SporsmalFaktum faktumKey={antall.faktum}>
+				<SporsmalFaktum faktumKey={antall.faktum} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
 					<BelopFaktum
 						faktumKey={antall.faktum}
 						maxLength={2}
