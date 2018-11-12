@@ -77,7 +77,6 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 			);
 		}
 
-		/* BEGIN: yyy. Kan dette slettes? */
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}  ikon={<Ella visBakgrundsSirkel={true}/>}>
@@ -90,10 +89,8 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 				<JaNeiSporsmalFaktum faktumKey={statsborger.faktum} />
 			</DigisosSkjemaSteg>
 		);
-		/* END: yyy. */
 	}
 
-	/* BEGIN: XXX: Bør flyttes til backend: */
 	componentDidMount() {
 		if (this.props.visPersonaliaFraTPSfeatureToggle) {
 			if (!harFaktumVerdi(this.props.fakta, "kontakt.system.telefon")) {
@@ -146,7 +143,6 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 			lagreFaktum(brukerEndret)
 		);
 	}
-	/* END: XXX: Bør flyttes til backend. */
 }
 
 const mapStateToProps = (state: State) => ({

@@ -61,10 +61,6 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 
 		return (
 			<div className="sivilstatus__ektefelleinfo">
-
-				{/*<h4 className="skjema-sporsmal__infotekst__tittel">*/}
-					{/*<FormattedMessage id="system.familie.sivilstatus.infotekst"/>*/}
-				{/*</h4>*/}
 				<Detaljeliste>
 					{
 						ektefelleFaktum.properties[FORNAVN] &&
