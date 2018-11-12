@@ -86,12 +86,14 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 
 	renderInfoMelding() {
 		return (
-			<Informasjonspanel
-				ikon={InformasjonspanelIkon.HENSYN}
-				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
-			>
-				<FormattedHTMLMessage id="opplysninger.informasjon"/>
-			</Informasjonspanel>
+			<div>
+				<Informasjonspanel
+					ikon={InformasjonspanelIkon.HENSYN}
+					farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+				>
+					<FormattedHTMLMessage id="opplysninger.informasjon"/>
+				</Informasjonspanel>
+			</div>
 		);
 	}
 

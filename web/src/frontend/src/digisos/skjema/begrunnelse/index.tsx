@@ -6,6 +6,7 @@ import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import SnakkebobleIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SnakkebobleIllustrasjon";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 const MAX_CHARS = 500;
 
@@ -15,7 +16,10 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 		ikon={<SnakkebobleIllustrasjon/>}
 	>
 
-		<SporsmalFaktum faktumKey="begrunnelse.hva">
+		<SporsmalFaktum
+			faktumKey="begrunnelse.hva"
+			legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+		>
 			<TextareaFaktum
 				id="hva_sokes_det_om_textarea"
 				placeholder={intl.formatMessage({
@@ -23,10 +27,14 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 				})}
 				validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
 				faktumKey="begrunnelse.hva"
+				labelId="begrunnelse.hva.label"
 				maxLength={MAX_CHARS}
 			/>
 		</SporsmalFaktum>
-		<SporsmalFaktum faktumKey="begrunnelse.hvorfor">
+		<SporsmalFaktum
+			faktumKey="begrunnelse.hvorfor"
+			legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+		>
 			<TextareaFaktum
 				id="begrunnelse_soknad_textarea"
 				placeholder={intl.formatMessage({

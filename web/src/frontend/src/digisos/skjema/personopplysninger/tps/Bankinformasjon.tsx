@@ -1,12 +1,12 @@
 import * as React from "react";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import {FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import SysteminfoFaktum from "../../../../nav-soknad/faktum/SysteminfoFaktum";
 import {
 	faktumIsSelected,
 	getFaktumVerdi,
 	harFaktumVerdi
 } from "../../../../nav-soknad/utils";
-import { Faktum } from "../../../../nav-soknad/types";
+import {Faktum} from "../../../../nav-soknad/types";
 import Detaljeliste, {
 	DetaljelisteElement
 } from "../../../../nav-soknad/components/detaljeliste";
@@ -19,12 +19,12 @@ interface Props {
 	onHarIkkeKontonummer: (s: string) => void;
 }
 
-export const Skjema: React.StatelessComponent<Props> = ({ fakta, onHarIkkeKontonummer }) => {
+export const Skjema: React.StatelessComponent<Props> = ({fakta, onHarIkkeKontonummer}) => {
 	const brukerHarIkkeKontonummer = faktumIsSelected(
 		getFaktumVerdi(fakta, "kontakt.kontonummer.harikke")
 	);
 	return (
-		<SporsmalFaktum faktumKey="kontakt.kontonummer">
+		<div>
 			<KontonummerFaktum
 				id="kontakt_kontonummer_number_input"
 				faktumKey="kontakt.kontonummer"
@@ -35,19 +35,20 @@ export const Skjema: React.StatelessComponent<Props> = ({ fakta, onHarIkkeKonton
 				id="kontakt_kontonummer_har_ikke_checkbox"
 				faktumKey="kontakt.kontonummer.harikke"
 				onChange={onHarIkkeKontonummer}
-				visPanel={false}
 			/>
-		</SporsmalFaktum>
+		</div>
 	);
 };
 
-const BankinformasjonTPS: React.StatelessComponent<
-	Props & InjectedIntlProps
-> = ({ fakta, onHarIkkeKontonummer, intl }) => {
+const BankinformasjonTPS: React.StatelessComponent<Props & InjectedIntlProps> = ({fakta, onHarIkkeKontonummer, intl}) => {
 	const systemKontonummerKey = "kontakt.system.kontonummer";
 
 	if (!harFaktumVerdi(fakta, systemKontonummerKey)) {
-		return <Skjema fakta={fakta} onHarIkkeKontonummer={onHarIkkeKontonummer} />;
+		return (
+			<SporsmalFaktum faktumKey="kontakt.kontonummer">
+				<Skjema fakta={fakta} onHarIkkeKontonummer={onHarIkkeKontonummer}/>
+			</SporsmalFaktum>
+		)
 	} else {
 		return (
 			<SporsmalFaktum faktumKey="kontakt.system.kontonummer" style="system">
@@ -56,12 +57,12 @@ const BankinformasjonTPS: React.StatelessComponent<
 					endreLabel={intl.formatMessage({
 						id: "kontakt.system.kontonummer.endreknapp.label"
 					})}
-					skjema={<Skjema fakta={fakta} onHarIkkeKontonummer={onHarIkkeKontonummer} />}
+					skjema={<Skjema fakta={fakta} onHarIkkeKontonummer={onHarIkkeKontonummer}/>}
 				>
 					<Detaljeliste>
 						<DetaljelisteElement
 							tittel={
-								<FormattedMessage id="kontakt.system.kontonummer.label" />
+								<FormattedMessage id="kontakt.system.kontonummer.label"/>
 							}
 							verdi={getFaktumVerdi(fakta, systemKontonummerKey)}
 						/>
