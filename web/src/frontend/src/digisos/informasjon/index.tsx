@@ -19,7 +19,8 @@ import { Panel } from "nav-frontend-paneler";
 import Banner from "../../nav-soknad/components/banner/Banner";
 import { opprettSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
-import EllaBlunk from "../../nav-soknad/components/animasjoner/ellablunk";
+import Ella from "../../nav-soknad/components/svg/Ella";
+import {DigisosFarge} from "../../nav-soknad/components/svg/DigisosFarger";
 
 interface StateProps {
 	harTilgang: boolean;
@@ -89,7 +90,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 										{this.renderHilsen()}
 										<FormattedMessage id="informasjon.hilsen.tittel"/>
 									</Snakkeboble>
-									<EllaBlunk hoyde={175} />
+									<Ella visBakgrundsSirkel={true} size={175} bakgrundsFarge={DigisosFarge.NAV_GRONN_LIGHTEN_40} />
 								</span>
 
 								<Panel className="informasjon-viktig">

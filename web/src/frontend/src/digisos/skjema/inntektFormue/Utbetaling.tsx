@@ -14,6 +14,7 @@ import {
 } from "../../../nav-soknad/utils";
 import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -22,7 +23,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeUtbetalinger = radioCheckKeys("inntekt.inntekter.true.type");
 		const hvilkeUtbetalingerAnnet = "inntekt.inntekter.true.type.annet";
 		return (
-			<JaNeiSporsmalFaktum faktumKey={utbetaling.faktum}>
+			<JaNeiSporsmalFaktum faktumKey={utbetaling.faktum} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
 				<SporsmalFaktum faktumKey={hvilkeUtbetalinger.faktum}>
 					<CheckboxFaktum
 						id="utbetalinger_utbytte_checkbox"

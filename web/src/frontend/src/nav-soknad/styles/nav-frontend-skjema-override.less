@@ -8,8 +8,10 @@
 		margin-top: -5px;
 		margin-left: -5px;
 	}
-  	&__input {
-	  border-radius: 8px;
+
+	&__input {
+		border-radius: 8px;
+		border: solid 1px #b7b1a9;
 	}
 }
 
@@ -24,6 +26,7 @@
 	  padding-left: 34px;
 	  min-height: 26px;
 	  line-height: 24px;
+
 	  &:before {
 		width: 24px;
 		height: 24px;
@@ -31,6 +34,13 @@
 	  }
 	}
   }
+}
+
+.skjemaelement__input {
+	& .input--s {
+		width: 185px;
+		height: 54px;
+	}
 }
 
 @media @mobile {
@@ -65,9 +75,8 @@
   border-radius: 0.5rem;
   display: block;
   cursor: pointer;
-  padding: 1rem 1rem 0.3rem 1rem;
+  padding: 1rem 1rem 1rem 1rem;
   position: relative;
-  margin-bottom: 1rem;
 
   &:hover {
 	border: 1px solid @navBla;
@@ -154,4 +163,21 @@
 	color: darkgray;
   }
 
+}
+
+.inputPanel {
+  .skjemaelement--horisontal {
+	margin-bottom: 0;
+  }
+}
+
+.skjemaelement--uten-luft {
+	margin-bottom: 0;
+}
+
+.last-opp-vedlegg-knapp {
+	@media @mobile {
+		padding-left: @skjemaMargMobil;
+		padding-right: @skjemaMargMobil;
+	}
 }

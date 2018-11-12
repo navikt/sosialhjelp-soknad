@@ -19,7 +19,6 @@ import {
 import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
 import Personalia from "./tps/Personalia";
 import Telefoninfo from "./tps/Telefoninfo";
-import Oppholdsadresse from "./tps/Oppholdsadresse";
 import Bankinformasjon from "./tps/Bankinformasjon";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import {
@@ -31,6 +30,7 @@ import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjo
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 import { FormattedMessage } from "react-intl";
+import Oppholdsadresse from "./tps/Oppholdsadresse";
 
 // interface StateProps {
 // 	visPersonaliaFraTPSfeatureToggle: boolean;
@@ -53,14 +53,19 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 					ikon={<William/>}
 				>
 					{this.props.gjenopptattSoknad && (
-						<Informasjonspanel
-							ikon={InformasjonspanelIkon.ELLA}
-							farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
-						>
-							<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
-						</Informasjonspanel>
+						<div className="skjema-sporsmal">
+							<Informasjonspanel
+								ikon={InformasjonspanelIkon.ELLA}
+								farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+							>
+								<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
+							</Informasjonspanel>
+						</div>
 					)}
-					<SporsmalFaktum faktumKey="kontakt.system.personalia" style="system">
+					<SporsmalFaktum
+						faktumKey="kontakt.system.personalia"
+						style="system"
+					>
 						<Personalia fakta={this.props.fakta} />
 					</SporsmalFaktum>
 					<Oppholdsadresse fakta={this.props.fakta} />
@@ -71,6 +76,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 				</DigisosSkjemaSteg>
 			);
 		}
+
 		const statsborger = radioCheckKeys("kontakt.statsborger");
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.kontakt}  ikon={<Ella visBakgrundsSirkel={true}/>}>
@@ -85,7 +91,6 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 		);
 	}
 
-	/* BEGIN: XXX: Bør flyttes til backend: */
 	componentDidMount() {
 		if (this.props.visPersonaliaFraTPSfeatureToggle) {
 			if (!harFaktumVerdi(this.props.fakta, "kontakt.system.telefon")) {
@@ -138,7 +143,6 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 			lagreFaktum(brukerEndret)
 		);
 	}
-	/* END: XXX: Bør flyttes til backend. */
 }
 
 const mapStateToProps = (state: State) => ({

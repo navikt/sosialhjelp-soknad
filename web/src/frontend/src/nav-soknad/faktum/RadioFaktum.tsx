@@ -90,10 +90,22 @@ class RadioFaktum extends React.Component<RadioFaktumProps, {}> {
 					this.determineLabel(id, faktumKey, tekster, value)
 				}
 			/>
-
 		);
 	}
 
+	renderMockRadio() {
+		const { faktumKey, value, property, intl } = this.props;
+
+		const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
+		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
+
+		return (
+			<div className="radio-button-wrapper">
+				{this.determineLabel(id, faktumKey, tekster, value)}
+			</div>
+
+		);
+	}
 	render() {
 		const visPanel = (this.props.visPanel != null ? this.props.visPanel : true);
 		const { className, visSpinner } = this.props;

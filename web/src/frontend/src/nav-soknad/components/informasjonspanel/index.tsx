@@ -12,6 +12,8 @@ interface OwnProps {
 	children?: any;
 	synlig?: boolean;
 	ikon: InformasjonspanelIkon;
+	className?: string;
+	wrapperClassName?: string;
 }
 
 interface State {
@@ -71,7 +73,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 		const styleClassName = "skjema-informasjonspanel-" + this.props.farge;
 
 		return (
-			<div className="skjema-informasjonspanel-wrapper">
+			<div className={"skjema-informasjonspanel-wrapper " + this.props.className}>
 				<div
 					className={
 						"skjema-informasjonspanel " + styleClassName
@@ -96,7 +98,9 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 					isOpened={isOpened}
 					className="react-collapse-konfigurering"
 				>
-					{this.renderContent(true)}
+					<div className={"react-collapse-wrapper"}>
+							{this.renderContent(true)}
+					</div>
 				</Collapse>
 			);
 		}
