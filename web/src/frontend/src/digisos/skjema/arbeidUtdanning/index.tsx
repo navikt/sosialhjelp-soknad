@@ -10,6 +10,7 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 import { finnFakta } from "../../../nav-soknad/utils";
 import { Faktum } from "../../../nav-soknad/types";
 import Koffert from "../../../nav-soknad/components/svg/illustrasjoner/Koffert";
+import { FormattedHTMLMessage } from "react-intl";
 
 interface StateProps {
 	visArbeidsforhold: boolean;
@@ -25,6 +26,9 @@ const ArbeidOgUtdanning: React.StatelessComponent<FaktumComponentProps & StatePr
 			{!visErDuIJobb && (
 				<Jobb/>
 			)}
+			<h2 className="overskrift">
+				<FormattedHTMLMessage id="arbeid.dinsituasjon.studerer.undertittel"/>
+			</h2>
 			<Studie/>
 		</DigisosSkjemaSteg>
 	);
