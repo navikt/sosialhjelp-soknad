@@ -217,7 +217,8 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 									</div>
 								}
 							/>
-							<div className="skjema-sporsmal--jaNeiSporsmal">
+
+							<div className="skjema-sporsmal--jaNeiSporsmal ikke-juridisk-tekst">
 								<Underskjema
 									visible={this.props.soknadsmottakere.length > 1 && getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "folkeregistrert"}
 									collapsable={true}
@@ -234,7 +235,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 					)}
 					{Object.getOwnPropertyNames(adresseFaktum.properties).length !== 0
 					&& (adresseFaktum.properties as AdresseProperties).kilde !== "folkeregister" && (
-						<span>
+						<span className="ikke-juridisk-tekst">
 							<RadioFaktum
 								id="oppholdsadresse_midlertidig"
 								faktumKey="kontakt.system.oppholdsadresse.valg"
@@ -268,7 +269,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 
 					)}
 
-					<span>
+					<span className="ikke-juridisk-tekst">
 						<RadioFaktum
 							id="oppholdsadresse_soknad"
 							faktumKey="kontakt.system.oppholdsadresse.valg"
@@ -281,7 +282,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 						<Underskjema
 							visible={getFaktumVerdi(fakta, "kontakt.system.oppholdsadresse.valg") === "soknad"}
 						>
-							<div className="utvidetAddresseSok">
+							<div className="utvidetAddresseSok ikke-juridisk-tekst">
 								<SporsmalFaktum
 									faktumKey="kontakt.system.kontaktinfo"
 									tittelRenderer={() =>
@@ -311,10 +312,12 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 						</Underskjema>
 					</div>
 				</SporsmalFaktum>
-				<SoknadsmottakerInfoPanel
-					soknadsmottakerStatus={this.props.soknadsmottakerStatus}
-					soknadsmottakerFaktum={finnFaktum("soknadsmottaker", this.props.fakta)}
-				/>
+				<span className="ikke-juridisk-tekst">
+					<SoknadsmottakerInfoPanel
+						soknadsmottakerStatus={this.props.soknadsmottakerStatus}
+						soknadsmottakerFaktum={finnFaktum("soknadsmottaker", this.props.fakta)}
+					/>
+				</span>
 			</div>
 		);
 	}
