@@ -114,13 +114,16 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 				)}
 
 				<AvsnittMedMarger>
-					{this.props.ettersendelseAktivert && (<Knapp
+					{this.props.ettersendelseAktivert && (
+						<Knapp
 							spinner={this.props.ettersendStatus === REST_STATUS.PENDING}
 							disabled={this.props.ettersendStatus === REST_STATUS.PENDING}
 							type="hoved"
 							htmlType="submit"
-							onClick={() => this.sendEttersendelse()}>
-						<FormattedMessage id="ettersendelse.knapp.tittel"/>
+							onClick={() => this.sendEttersendelse()}
+							title="Ettersend vedlegg"
+						>
+							<FormattedMessage id="ettersendelse.knapp.tittel"/>
 						</Knapp>
 					)}
 				</AvsnittMedMarger>

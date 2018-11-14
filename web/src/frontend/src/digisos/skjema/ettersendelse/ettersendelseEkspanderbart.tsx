@@ -15,6 +15,7 @@ interface Props {
 interface State {
 	ekspandert: boolean;
 	vedleggSendt: boolean;
+	renderInnhold: boolean;
 }
 
 class EttersendelseEkspanderbart extends React.Component<Props, State> {
@@ -23,7 +24,8 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 		super(props);
 		this.state = {
 			ekspandert: false,
-			vedleggSendt: false
+			vedleggSendt: false,
+			renderInnhold: false
 		};
 	}
 
@@ -36,6 +38,11 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 			this.setState({vedleggSendt: false});
 			this.props.onEttersendelse();
 		}
+
+		if (this.state.renderInnhold !== this.state.ekspandert ) {
+			this.setState({renderInnhold: this.state.ekspandert});
+		}
+
 	}
 
 	onEttersendelse() {
@@ -72,18 +79,21 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 					className={"ettersendelse__vedlegg " +
 					(this.state.ekspandert ? "ettersendelse__vedlegg__ekspandert " : " ")}
 				>
-					<AvsnittMedMarger>
-						{!this.props.kunGenerellDokumentasjon && this.props.ettersendelseAktivert &&
-						(<FormattedHTMLMessage id="ettersendelse.mangler_info"/>)}
-						{!this.props.ettersendelseAktivert &&
-						(<FormattedHTMLMessage id="ettersendelse.mangler_info_manuell"/>)}
-					</AvsnittMedMarger>
+					{ this.state.renderInnhold && (
+						<>
+							<AvsnittMedMarger>
+								{!this.props.kunGenerellDokumentasjon && this.props.ettersendelseAktivert &&
+								(<FormattedHTMLMessage id="ettersendelse.mangler_info"/>)}
+								{!this.props.ettersendelseAktivert &&
+								(<FormattedHTMLMessage id="ettersendelse.mangler_info_manuell"/>)}
+							</AvsnittMedMarger>
 
-					<EttersendelseVedleggListe
-						ettersendelseAktivert={this.props.ettersendelseAktivert}
-						onEttersendelse={() => this.onEttersendelse()}
-					/>
-
+							<EttersendelseVedleggListe
+								ettersendelseAktivert={this.props.ettersendelseAktivert}
+								onEttersendelse={() => this.onEttersendelse()}
+							/>
+						</>
+					)}
 				</Collapse>
 
 			</span>
