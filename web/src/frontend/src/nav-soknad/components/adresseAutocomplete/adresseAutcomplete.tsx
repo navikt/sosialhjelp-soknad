@@ -288,7 +288,12 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 
 	renderMenu(children: any): React.ReactNode {
 		return (
-			<div className="menu" onClick={(event: any) => this.handleItemClickInEdgeBrowser(event)}>
+			<div
+				className="menu"
+				role="listbox"
+				id="owned_listbox"
+				onClick={(event: any) => this.handleItemClickInEdgeBrowser(event)}
+			>
 				{children}
 			</div>
 		);
@@ -297,17 +302,17 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 	getRenderItem(item: any, isHighlighted: any) {
 		if (this.props.status === AdresseAutocompleteStatus.ADRESSE_OK) {
 			return (
-				<div
+				<a
 					className={`item ${isHighlighted ? "item-highlighted" : ""}`}
 					key={Math.random()}
-				>{this.formaterAdresseString(item)}</div>
+				>{this.formaterAdresseString(item)}</a>
 			);
 		} else {
 			return (
-				<div
+				<a
 					className={`item ${isHighlighted ? "item-highlighted" : ""}`}
 					key={Math.random()}
-				>{this.formaterAdresseString(item)}</div>
+				>{this.formaterAdresseString(item)}</a>
 			);
 		}
 	}
@@ -336,6 +341,7 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 					inputProps={{
 						id: "states-autocomplete",
 						placeholder: "",
+						"aria-owns": "owned_listbox",
 						onBlur: () => this.handleInputBlur(),
 						onFocus: () => this.handleInputFocus()
 					}}
