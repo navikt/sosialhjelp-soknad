@@ -93,10 +93,19 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 			</div>)
 	}
 
+	renderSivilstatusLabel(ikkeTilgangTilEktefelle: any){
+		let formattedMessageId: string ="system.familie.sivilstatus.label";
+		if (ikkeTilgangTilEktefelle && ikkeTilgangTilEktefelle === "true"){
+			formattedMessageId = "system.familie.sivilstatus.ikkeTilgang.label";
+		}
+		return <FormattedMessage id={formattedMessageId} />
+	}
+
 	render() {
 
 		const ektefelleFaktum: Faktum = this.props.ektefelleFaktum;
 		const IKKETILGANGTILEKTEFELLE = "ikketilgangtilektefelle";
+		const ikkeTilgangTilEktefelle = ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE];
 
 		return (
 			<div className="sivilstatus skjema-sporsmal">
@@ -105,7 +114,7 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 						<FormattedMessage id="system.familie.sivilstatus"/>
 					</div>
 					<div className="sivilstatus__giftlabel">
-						<FormattedMessage id="system.familie.sivilstatus.label" />
+						{ this.renderSivilstatusLabel(ikkeTilgangTilEktefelle) }
 						{ this.renderEktefelleInformasjon(ektefelleFaktum) }
 					</div>
 				</SporsmalFaktum>
