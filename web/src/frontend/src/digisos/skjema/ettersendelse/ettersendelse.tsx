@@ -110,7 +110,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 			return !(item.skjemaNummer === "annet" && item.skjemanummerTillegg === "annet");
 		}).length;
 	}
-
+//fjernes
 	isEttersendelseAktivert() {
 		if (this.props.originalSoknad != null && this.props.originalSoknad.orgnummer != null) {
 			const navEnhet = getNavEnhetMedOrgnr(this.props.navEnheter, this.props.originalSoknad.orgnummer);
