@@ -34,6 +34,10 @@
     border-color: #0067C5;
   }
 
+  &::-ms-clear {
+    display: none; // Skjul krysset for å tømme input feltet i IE/Edge
+  }
+
   @media only screen and (max-width: 565px) {
     width: 100%;
   }
