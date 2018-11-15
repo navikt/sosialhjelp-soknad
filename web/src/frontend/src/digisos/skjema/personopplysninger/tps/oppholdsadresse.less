@@ -3,6 +3,10 @@
   .detaljeliste__element {
     margin: 0 0 0 0;
   }
+  .underskjema {
+	margin-top: 6px;
+	padding-bottom: 0;
+  }
   .skjemaelement {
     padding-bottom: 0.5rem;
   }
@@ -19,6 +23,21 @@
 
   .adresse-tittel {
     font-weight: 600;
+  }
+
+
+  .skjema-sporsmal {
+
+	.skjema__feilomrade--harFeil {
+	  background-color: transparent;
+	  box-shadow: none;
+	  -webkit-box-shadow: none;
+
+	  .inputPanel {
+		border: 1px solid #BA3A26;
+		background-color: #fbf5f4;
+	  }
+	}
   }
 }
 
@@ -43,5 +62,11 @@
   width: 25rem;
   @media only screen and (max-width: 565px) {
     width: 100%;
+  }
+}
+
+.sosialhjelp-oppholdsadresse {
+  .skjema-sporsmal ~ .skjema-informasjonspanel-wrapper {
+	margin-top: 1rem;
   }
 }
