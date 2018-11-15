@@ -137,13 +137,23 @@ function* updateIfChanged(faktum: Faktum, value: string): any {
 
 function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): SagaIterator {
 	try {
+
 		const adresse = action.adresse;
-
 		const brukerValgFaktum = finnFaktum("kontakt.adresse.brukerendrettoggle", action.fakta);
-
 		const oppholdsadresseFaktum = finnFaktum("kontakt.system.oppholdsadresse.valg", action.fakta);
+
 		let adresseFaktum = finnFaktum("kontakt.adresse.bruker", action.fakta);
 		let soknadsmottakerFaktum = finnFaktum("soknadsmottaker", action.fakta);
+
+		let kjorSoknadsmottaker: boolean = false;
+
+		const VALUE = "value";
+		console.warn("i frontend: " + action.adresseKategori.toString().toUpperCase() + ". i Faktumtre: " + oppholdsadresseFaktum[VALUE].toString().toUpperCase());
+		if (action.adresseKategori.toString().toUpperCase() !== oppholdsadresseFaktum[VALUE].toString().toUpperCase()){
+			console.warn("DE ER FORSKJELLIGE");
+			kjorSoknadsmottaker = true
+		}
+
 
 		const KOMMUNENUMMER = "kommunenummer";
 		if (soknadsmottakerFaktum.properties[KOMMUNENUMMER] != null) {
@@ -173,10 +183,13 @@ function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): 
 			yield* updateIfChanged(brukerValgFaktum, "false");
 		}
 
-		yield* fetchOgSettSoknadsmottakerOgOppdaterStatus(
-			action.brukerBehandlingId,
-			action.oppholdsadressevalg,
-			soknadsmottakerFaktum);
+		if (kjorSoknadsmottaker){
+			yield* fetchOgSettSoknadsmottakerOgOppdaterStatus(
+				action.brukerBehandlingId,
+				action.oppholdsadressevalg,
+				soknadsmottakerFaktum);
+		}
+
 	} catch (reason) {
 		yield put(loggFeil("Hent soknadsmottaker feilet: " + reason.toString()));
 		yield put(navigerTilServerfeil());
