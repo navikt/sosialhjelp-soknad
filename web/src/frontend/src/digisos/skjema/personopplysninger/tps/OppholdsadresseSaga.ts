@@ -148,12 +148,11 @@ function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): 
 		let kjorSoknadsmottaker: boolean = false;
 
 		const VALUE = "value";
-		console.warn("i frontend: " + action.adresseKategori.toString().toUpperCase() + ". i Faktumtre: " + oppholdsadresseFaktum[VALUE].toString().toUpperCase());
-		if (action.adresseKategori.toString().toUpperCase() !== oppholdsadresseFaktum[VALUE].toString().toUpperCase()){
-			console.warn("DE ER FORSKJELLIGE");
+		if (!oppholdsadresseFaktum[VALUE]){
+			kjorSoknadsmottaker = true
+		} else if (action.adresseKategori.toString().toUpperCase() !== oppholdsadresseFaktum[VALUE].toString().toUpperCase()){
 			kjorSoknadsmottaker = true
 		}
-
 
 		const KOMMUNENUMMER = "kommunenummer";
 		if (soknadsmottakerFaktum.properties[KOMMUNENUMMER] != null) {
