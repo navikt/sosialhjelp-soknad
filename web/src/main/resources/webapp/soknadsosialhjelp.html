@@ -25,6 +25,7 @@
 	    window[ 'adrum-start-time' ] = new Date().getTime();
 
 	    (function (config) {
+	    	    console.warn("Konfigurerer adrum logging.");
 			    var appKey = "";
 			    var url = window.location.href;
 			    if (url.indexOf("tjenester-q1.nav.no") > -1) {
@@ -51,6 +52,7 @@
 	    )(window[ 'adrum-config' ] || (window[ 'adrum-config' ] = {}));
 
 	    if (window.location.href.indexOf("tjenester.nav.no") > -1) {
+	    	console.warn("Setter opp adrum logging.");
 		    document.write(unescape('%3Cscript') + "src='https://jsagent.nav.no/adrum/adrum.js' " + " type='text/javascript' charset='UTF-8'" + unescape('%3E%3C/script%3E'));
 	    } else {
 		    if ('https:' === document.location.protocol) {
