@@ -30,7 +30,7 @@ class IntlProvider extends React.Component<Props, {}> {
 		this.props.dispatch(hentTilgang());
 		this.props.dispatch(hentTekster());
 		this.props.dispatch(hentMiljovariabler());
-		this.props.dispatch(lesKommuner()); // TODO Fjern denne?
+		this.props.dispatch(lesKommuner());
 	}
 
 	render() {
