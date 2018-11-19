@@ -21,11 +21,11 @@
                 <div id="root"></div>
             </div>
         </main>
-    <script>
+    <script type="text/javascript">
 	    window[ 'adrum-start-time' ] = new Date().getTime();
 
 	    (function (config) {
-	    	    console.warn("Konfigurerer adrum logging.");
+			    console.warn("Konfigurerer adrum logging.");
 			    var appKey = "";
 			    var url = window.location.href;
 			    if (url.indexOf("tjenester-q1.nav.no") > -1) {
@@ -52,13 +52,15 @@
 	    )(window[ 'adrum-config' ] || (window[ 'adrum-config' ] = {}));
 
 	    if (window.location.href.indexOf("tjenester.nav.no") > -1) {
-	    	console.warn("Setter opp adrum logging.");
+		    console.warn("Setter opp adrum logging 1.");
 		    document.write(unescape('%3Cscript') + "src='https://jsagent.nav.no/adrum/adrum.js' " + " type='text/javascript' charset='UTF-8'" + unescape('%3E%3C/script%3E'));
 	    } else {
 		    if ('https:' === document.location.protocol) {
+			    console.warn("Setter opp adrum logging 2.");
 			    document.write(unescape('%3Cscript') + " src='https://jsagent.adeo.no/adrum/adrum.js' " + " type='text/javascript' charset='UTF-8'" + unescape('%3E%3C/script%3E'));
 		    }
 		    else {
+			    console.warn("Setter opp adrum logging 3.");
 			    document.write(unescape('%3Cscript') + " src='http://jsagent.adeo.no/adrum/adrum.js' " + " type='text/javascript' charset='UTF-8'" + unescape('%3E%3C/script%3E'));
 		    }
 	    }
