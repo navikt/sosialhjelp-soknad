@@ -27,10 +27,6 @@ describe("initSaga", () => {
 			});
 			expect(saga.next()).toEqual({
 				done: false,
-				value: put(hentFeatureToggles())
-			});
-			expect(saga.next()).toEqual({
-				done: false,
 				value: put(hentTilgang())
 			});
 			expect(saga.next()).toEqual({
@@ -56,14 +52,6 @@ describe("initSaga", () => {
 		it("loadsTekster", () => {
 			const saga = isAllDataLoaded({
 				type: LedeteksterActionTypeKeys.OK
-			});
-			expect(saga.next(actions)).toEqual({
-				done: true
-			});
-		});
-		it("loadsFeaturetoggles", () => {
-			const saga = isAllDataLoaded({
-				type: FeatureTogglesActionTypeKeys.OK
 			});
 			expect(saga.next(actions)).toEqual({
 				done: true
