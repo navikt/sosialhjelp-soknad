@@ -5,15 +5,12 @@ import { hentTilgang } from "../tilgang/tilgangActions";
 import { MiljovariablerActionTypeKeys } from "../miljovariabler/miljovariablerTypes";
 import { LedeteksterActionTypeKeys } from "../ledetekster/ledeteksterTypes";
 import { TilgangActionTypeKeys } from "../tilgang/tilgangTypes";
-
 import { InitActionTypeKeys } from "./initTypes";
 import { initFeilet, initFerdig } from "./initActions";
 import { FeatureTogglesActionTypeKeys } from "../featuretoggles/featureTogglesTypes";
-import { hentFeatureToggles } from "../featuretoggles/featureTogglesActions";
 
 export let initActions = [
 	TilgangActionTypeKeys.OK,
-	FeatureTogglesActionTypeKeys.OK,
 	MiljovariablerActionTypeKeys.OK,
 	LedeteksterActionTypeKeys.OK
 ];
@@ -27,7 +24,6 @@ export const initFeiletActions = [
 
 function* startInit(): IterableIterator<any> {
 	yield put(hentMiljovariabler());
-	yield put(hentFeatureToggles());
 	yield put(hentTilgang());
 	yield put(hentTekster());
 }

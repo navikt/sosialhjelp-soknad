@@ -10,7 +10,6 @@ import { hentMiljovariabler } from "./nav-soknad/redux/miljovariabler/miljovaria
 import { hentTekster } from "./nav-soknad/redux/ledetekster/ledeteksterActions";
 import { hentTilgang } from "./nav-soknad/redux/tilgang/tilgangActions";
 import { REST_STATUS } from "./nav-soknad/types";
-import { hentFeatureToggles } from "./nav-soknad/redux/featuretoggles/featureTogglesActions";
 import { lesKommuner } from "./nav-soknad/redux/kommuner/kommuneActions";
 
 addLocaleData(nb);
@@ -31,8 +30,7 @@ class IntlProvider extends React.Component<Props, {}> {
 		this.props.dispatch(hentTilgang());
 		this.props.dispatch(hentTekster());
 		this.props.dispatch(hentMiljovariabler());
-		this.props.dispatch(hentFeatureToggles());
-		this.props.dispatch(lesKommuner());
+		this.props.dispatch(lesKommuner()); // TODO Fjern denne?
 	}
 
 	render() {
