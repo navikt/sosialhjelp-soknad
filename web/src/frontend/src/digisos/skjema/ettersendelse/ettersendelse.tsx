@@ -13,8 +13,6 @@ import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
 import { MargIkoner } from "./margIkoner";
-import { getNavEnhetMedOrgnr, NavEnhet } from "../../data/kommuner";
-import { lesKommuner } from "../../../nav-soknad/redux/kommuner/kommuneActions";
 import { visToppMeny } from "../../../nav-soknad/utils/domUtils";
 
 interface OwnProps {
@@ -24,7 +22,6 @@ interface OwnProps {
 	restStatus: REST_STATUS;
 	originalSoknad: any;
 	ettersendelser: any;
-	navEnheter: NavEnhet[];
 }
 
 type Props = OwnProps & SynligeFaktaProps & DispatchProps & InjectedIntlProps;
@@ -49,7 +46,6 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 		const brukerbehandlingskjedeId = this.lesBrukerbehandlingskjedeId();
 		this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
 		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
-		this.props.dispatch(lesKommuner());
 	}
 
 	lesBrukerbehandlingskjedeId() {
@@ -110,13 +106,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	}
 
 	isEttersendelseAktivert() {
-		if (this.props.originalSoknad != null && this.props.originalSoknad.orgnummer != null) {
-			const navEnhet = getNavEnhetMedOrgnr(this.props.navEnheter, this.props.originalSoknad.orgnummer);
-			if (navEnhet != null && navEnhet.features.ettersendelse) {
-				return true;
-			}
-		}
-		return false;
+		return this.props.originalSoknad != null && this.props.originalSoknad.orgnummer != null;
 	}
 
 	render() {
@@ -209,7 +199,6 @@ export default connect((state: State, {}) => {
 		brukerbehandlingId: state.ettersendelse.brukerbehandlingId,
 		originalSoknad: state.ettersendelse.innsendte.originalSoknad,
 		ettersendelser: state.ettersendelse.innsendte.ettersendelser,
-		restStatus: state.ettersendelse.restStatus,
-		navEnheter: state.kommuner.data
+		restStatus: state.ettersendelse.restStatus
 	};
 })(injectIntl(Ettersendelse));
