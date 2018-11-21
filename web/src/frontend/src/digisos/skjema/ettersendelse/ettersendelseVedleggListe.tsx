@@ -6,12 +6,8 @@ import Knapp from "nav-frontend-knapper";
 import { FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
-import { FeatureToggles } from "../../../featureToggles";
 import { State as ReduxState } from "../../redux/reducers";
-import {
-	// lagEttersendelse, lesEttersendelser,
-	sendEttersendelse
-} from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
+import { sendEttersendelse } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 
 interface OwnProps {
 	ettersendelseAktivert: boolean;
@@ -21,7 +17,6 @@ interface OwnProps {
 interface StateProps {
 	opplastingStatus: REST_STATUS;
 	manglendeVedlegg: any[];
-	visEttersendelse: boolean;
 	brukerbehandlingskjedeId: string;
 	brukerbehandlingId: string;
 	ettersendStatus: REST_STATUS;
@@ -136,7 +131,6 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 export default connect<{}, {}, OwnProps>((state: ReduxState, {}) => {
 	return {
 		brukerbehandlingskjedeId: state.soknad.data.brukerBehandlingId,
-		visEttersendelse: state.featuretoggles.data[ FeatureToggles.ettersendvedlegg ] === "true",
 		manglendeVedlegg: state.ettersendelse.data,
 		brukerbehandlingId: state.ettersendelse.brukerbehandlingId,
 		opplastingStatus: state.ettersendelse.opplastingStatus,
