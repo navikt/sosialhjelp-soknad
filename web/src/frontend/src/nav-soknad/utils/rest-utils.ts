@@ -3,7 +3,7 @@ import { REST_FEIL } from "../types/restFeilTypes";
 
 export function erDev(): boolean {
 	const url = window.location.href;
-	return (url.indexOf("localhost:3000") > 0 || url.indexOf(".devillo.no:3000") > 0 );
+	return (url.indexOf("localhost:3000") > 0 || url.indexOf("devillo.no:3000") > 0);
 }
 
 export function kjorerJetty(): boolean {

@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { DispatchProps } from "../../redux/reduxTypes";
 import { AdresseAutocompleteStatus, settStatus, settValgtAdresse, settVerdi } from "./adresseAutocompleteReducer";
 import { finnFaktum } from "../../utils";
+import SearchIllustration from "../svg/SearchIllustration";
 
 const Autocomplete = require("react-autocomplete");
 
@@ -48,6 +49,7 @@ interface StateProps {
 	antallAktiveSok: number;
 	sokPostponed: boolean;
 	open: boolean;
+	focus: boolean;
 }
 
 interface OwnProps {
@@ -72,6 +74,7 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 			antallAktiveSok: 0,
 			sokPostponed: false,
 			open: false,
+			focus: false
 		};
 
 		const adresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
@@ -253,11 +256,16 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 		);
 	}
 
+	handleInputFocus() {
+		this.setState({focus: true});
+	}
+
 	handleInputBlur() {
 		if (this.state.adresser.length === 1){
 			const chosenItem = this.state.adresser[0];
 			this.handleSelect(chosenItem.adresse, chosenItem);
 		}
+		this.setState({focus: false});
 	}
 
 	/*
@@ -280,7 +288,12 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 
 	renderMenu(children: any): React.ReactNode {
 		return (
-			<div className="menu" onClick={(event: any) => this.handleItemClickInEdgeBrowser(event)}>
+			<div
+				className="menu"
+				role="listbox"
+				id="owned_listbox"
+				onClick={(event: any) => this.handleItemClickInEdgeBrowser(event)}
+			>
 				{children}
 			</div>
 		);
@@ -289,17 +302,17 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 	getRenderItem(item: any, isHighlighted: any) {
 		if (this.props.status === AdresseAutocompleteStatus.ADRESSE_OK) {
 			return (
-				<div
+				<a
 					className={`item ${isHighlighted ? "item-highlighted" : ""}`}
 					key={Math.random()}
-				>{this.formaterAdresseString(item)}</div>
+				>{this.formaterAdresseString(item)}</a>
 			);
 		} else {
 			return (
-				<div
+				<a
 					className={`item ${isHighlighted ? "item-highlighted" : ""}`}
 					key={Math.random()}
-				>{this.formaterAdresseString(item)}</div>
+				>{this.formaterAdresseString(item)}</a>
 			);
 		}
 	}
@@ -328,7 +341,9 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 					inputProps={{
 						id: "states-autocomplete",
 						placeholder: "",
-						onBlur: () => this.handleInputBlur()
+						"aria-owns": "owned_listbox",
+						onBlur: () => this.handleInputBlur(),
+						onFocus: () => this.handleInputFocus()
 					}}
 					wrapperStyle={{position: "relative", display: "inline-block"}}
 					items={this.state.adresser}
@@ -346,10 +361,21 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 						<FormattedMessage id="autocomplete.husnummer"/>
 					</p>)
 				}
-				{this.props.status === AdresseAutocompleteStatus.ADRESSE_UGYLDIG &&
-					(<p className="skjemaelement__feilmelding">
+				{this.state.focus && this.state.adresser.length === 0 && this.props.status === AdresseAutocompleteStatus.ADRESSE_UGYLDIG &&
+					(
+						<div className="menu menu--feilmelding">
+							<SearchIllustration />
+							<br/>
+							<FormattedMessage id="autocomplete.ugyldig"/>
+						</div>
+					)
+				}
+				{!this.state.focus && this.state.adresser.length === 0 && this.props.status === AdresseAutocompleteStatus.ADRESSE_UGYLDIG &&
+				(
+					<p className="skjemaelement__feilmelding">
 						<FormattedMessage id="autocomplete.ugyldig"/>
-					</p>)
+					</p>
+				)
 				}
 			</div>
 		);

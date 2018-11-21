@@ -14,6 +14,7 @@ interface OwnProps {
 	maxLength?: number;
 	id?: string;
 	placeholder?: string;
+	hideLabel?: boolean;
 }
 
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -70,10 +71,14 @@ class TextareaFaktum extends React.Component<Props, {}> {
 			(property
 				? this.props.getPropertyVerdi()
 				: this.props.getFaktumVerdi()) || "";
+
+		let label = labelId ? getIntlTextOrKey(intl, labelId) : tekster.label;
+		label = this.props.hideLabel ? "" : label;
+
 		return (
 			<Textarea
 				id={this.props.id ? this.props.id : this.props.faktumKey + "_textarea"}
-				label={labelId ? getIntlTextOrKey(intl, labelId) : tekster.label}
+				label={label}
 				placeholder={this.props.placeholder}
 				value={verdi}
 				name={this.props.getName()}

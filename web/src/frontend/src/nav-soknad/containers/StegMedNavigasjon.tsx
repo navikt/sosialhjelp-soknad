@@ -15,7 +15,7 @@ import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
 import { SkjemaConfig, SkjemaStegType, SkjemaSteg, Faktum } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
-import { getProgresjonFaktum } from "../utils";
+import {finnFaktum, getProgresjonFaktum} from "../utils";
 import { setVisBekreftMangler } from "../redux/oppsummering/oppsummeringActions";
 import {
 	clearFaktaValideringsfeil,
@@ -27,6 +27,7 @@ import { validerAlleFaktum } from "../validering/utils";
 import { getIntlTextOrKey, scrollToTop } from "../utils";
 import { avbrytSoknad, sendSoknad } from "../redux/soknad/soknadActions";
 import { gaVidere, gaTilbake } from "../redux/navigasjon/navigasjonActions";
+import {loggInfo} from "../redux/navlogger/navloggerActions";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -89,6 +90,14 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		}
 	}
 
+	loggAdresseTypeTilGrafana(){
+		const typeAdresseFaktum: Faktum = finnFaktum("kontakt.system.oppholdsadresse.valg", this.props.fakta);
+		const VALUE = "value";
+		if (typeAdresseFaktum && typeAdresseFaktum[VALUE]){
+			this.props.dispatch(loggInfo("klikk--" + typeAdresseFaktum[VALUE]));
+		}
+	}
+
 	sendSoknad(brukerBehandlingId: string) {
 		this.props.dispatch(sendSoknad(brukerBehandlingId));
 	}
@@ -96,6 +105,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
 		if (aktivtSteg.type === SkjemaStegType.oppsummering) {
 			if (this.props.oppsummeringBekreftet) {
+				this.loggAdresseTypeTilGrafana();
 				this.sendSoknad(brukerBehandlingId);
 			} else {
 				this.props.dispatch(setVisBekreftMangler(true));
@@ -181,7 +191,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 							tabIndex={-1}
 							ref={c => (this.stegTittel = c)}
 						>
-							<Innholdstittel>{stegTittel}</Innholdstittel>
+							<Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
 						</div>
 						{children}
 						<Knapperad

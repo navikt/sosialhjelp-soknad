@@ -60,10 +60,7 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 		}
 
 		return (
-			<div>
-				<h4 className="skjema-sporsmal__infotekst__tittel">
-					<FormattedMessage id="system.familie.sivilstatus.infotekst"/>
-				</h4>
+			<div className="sivilstatus__ektefelleinfo">
 				<Detaljeliste>
 					{
 						ektefelleFaktum.properties[FORNAVN] &&
@@ -96,26 +93,28 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 			</div>)
 	}
 
+	renderSivilstatusLabel(ikkeTilgangTilEktefelle: any){
+		let formattedMessageId: string ="system.familie.sivilstatus.label";
+		if (ikkeTilgangTilEktefelle && ikkeTilgangTilEktefelle === "true"){
+			formattedMessageId = "system.familie.sivilstatus.ikkeTilgang.label";
+		}
+		return <FormattedMessage id={formattedMessageId} />
+	}
+
 	render() {
 
 		const ektefelleFaktum: Faktum = this.props.ektefelleFaktum;
 		const IKKETILGANGTILEKTEFELLE = "ikketilgangtilektefelle";
+		const ikkeTilgangTilEktefelle = ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE];
 
 		return (
-			<div>
+			<div className="sivilstatus skjema-sporsmal">
 				<SporsmalFaktum faktumKey="system.familie.sivilstatus" style="system">
-					<div>
+					<div className="sivilstatus__infotekst">
 						<FormattedMessage id="system.familie.sivilstatus"/>
 					</div>
-					<div>
-						<Detaljeliste>
-							<DetaljelisteElement
-								tittel={
-									<FormattedMessage id="system.familie.sivilstatus.label"/>
-								}
-								verdi={<FormattedMessage id="familie.sivilstatus.gift"/>}
-							/>
-						</Detaljeliste>
+					<div className="sivilstatus__giftlabel">
+						{ this.renderSivilstatusLabel(ikkeTilgangTilEktefelle) }
 						{ this.renderEktefelleInformasjon(ektefelleFaktum) }
 					</div>
 				</SporsmalFaktum>

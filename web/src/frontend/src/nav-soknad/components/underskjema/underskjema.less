@@ -13,6 +13,11 @@
   .underskjema__innhold:before {
 	background-color: @navLysGra !important;
   }
+  
+  .underskjema__innhold {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+  }
 
 }
 
@@ -30,14 +35,14 @@
 .skjema__feilomrade--harFeil .skjema-sporsmal--jaNeiSporsmal {
 
   .underskjema__boks {
-	background-color: @navRosa;
+	background-color: #fbf5f4;
 	margin-left: @skjemaMarg;
 	margin-right: @skjemaMarg;
 	border-radius: 4px;
   }
 
   .underskjema__innhold:before {
-	background-color: @navRosa !important;
+	background-color: #fbf5f4 !important;
   }
 
 }
@@ -73,8 +78,12 @@
 	}
 }
 
+
+.skjema-sporsmal__innhold .inputPanel {
+	margin-bottom: 1rem;
+}
+
 .underskjema {
-  padding-top: 0.8rem;
   padding-bottom: 1rem;
   transition: opacity 1s;
 
@@ -96,11 +105,9 @@
 	margin-top: -1px;
   }
 
-  &__boks {
-	padding: 2rem @skjemaMarg;
-	border: 1px solid @ramme;
-	background-color: @bakgrunn;
-	position: relative;
+	&__boks {
+		padding: 0 @skjemaMarg 0 @skjemaMarg;
+		position: relative;
 
 	@media @mobile {
 	  padding: @skjemaMargMobil @skjemaMargMobil @skjemaMargMobil*1.5
@@ -122,6 +129,13 @@
 	  padding-bottom: 1rem;
 	}
   }
+
+	&--system {
+		.sirkelbakgrunnema__boks {
+			padding-top: 1rem;
+			padding-bottom: 1rem;
+		}
+	}
 
   &--arrow {
 	.underskjema__innhold:before {
@@ -145,10 +159,6 @@
   }
 }
 
-/**
-* Nivå 2+n underskjema
-* Fjern border og bytt pil til strek - juster margin
-*/
 .underskjema {
   .underskjema {
 	padding-top: 0;

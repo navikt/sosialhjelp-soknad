@@ -9,6 +9,7 @@ import Underskjema from "../../../nav-soknad/components/underskjema";
 import Ektefelle from "./Ektefelle";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 
 class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
@@ -19,7 +20,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 		const status = sivilstatusFaktum.value === "gift";
 
 		return (
-			<div>
+			<div className="skjema-sporsmal">
 				<SporsmalFaktum faktumKey={sivilstatus.faktum}>
 					<RadioFaktum id="sivilstatus_gift_radio" faktumKey={sivilstatus.faktum} value="gift"/>
 					<div className="skjema-sporsmal--jaNeiSporsmal">
@@ -27,7 +28,7 @@ class Sivilstatus extends React.Component<FaktumComponentProps, {}> {
 							visible={getFaktumVerdi(fakta, sivilstatus.faktum) === "gift"}
 							arrow={true}
 						>
-							<SporsmalFaktum faktumKey="familie.sivilstatus.gift.ektefelle">
+							<SporsmalFaktum faktumKey="familie.sivilstatus.gift.ektefelle" legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
 								<Ektefelle fakta={fakta} />
 							</SporsmalFaktum>
 

@@ -9,63 +9,54 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 import { Faktum } from "../../../nav-soknad/types";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import ArbeidsforholdDetaljer from "./ArbeidsforholdDetaljer";
-import { FeatureToggles } from "../../../featureToggles";
+import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
-interface StateProps {
-	visArbeidsforhold: boolean;
-}
+type Props = FaktumComponentProps & InjectedIntlProps;
 
-type Props = FaktumComponentProps & StateProps & InjectedIntlProps;
+const MAX_CHARS = 500;
 
-const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, visArbeidsforhold, intl }) => {
-
-	if (!visArbeidsforhold) {
-		return <div/>;
-	}
-
+const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, intl }) => {
 	const removeSecurityAddedArbeidsforhold = (af: any) => {
 		return Object.getOwnPropertyNames(af.properties).length > 0;
 	};
 	const alleArbeidsforhold: Faktum[] = finnFakta("arbeidsforhold", fakta).filter(removeSecurityAddedArbeidsforhold);
 
-	return (
-		<SporsmalFaktum faktumKey="arbeidsforhold" style="system">
-			<SysteminfoMedSkjema>
-				<h4 className="skjema-sporsmal__infotekst__tittel">
-					<FormattedMessage id="arbeidsforhold.infotekst"/>
-				</h4>
-				{(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (
-					<p>
-						<FormattedMessage id="arbeidsforhold.ingen"/>
-					</p>
-				)}
-				{alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
-					<ul className={"arbeidsgiverliste"}>
-						{alleArbeidsforhold.map((arbeidsforhold: Faktum) =>
-							<li key={arbeidsforhold.faktumId} className="arbeidsgiverliste__arbeidsgiver">
-								<ArbeidsforholdDetaljer
-									arbeidsforhold={arbeidsforhold}
-								/>
-							</li>
-						)}
-					</ul>
-				)}
-				<TextareaFaktum
-					id="opplysninger_arbeidsituasjon_kommentarer"
-					faktumKey="opplysninger.arbeidsituasjon.kommentarer"
-					placeholder={intl.formatMessage({
-						id: "arbeidsforhold.kommentar.placeholder"
-					})}
-				/>
-			</SysteminfoMedSkjema>
-		</SporsmalFaktum>
-	);
+	return <SporsmalFaktum faktumKey="arbeidsforhold" style="system">
+		<SysteminfoMedSkjema>
+			<div className="skjema-sporsmal__tittel">
+				<FormattedMessage id="arbeidsforhold.infotekst"/>
+			</div>
+			{(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (
+				<p>
+					<FormattedMessage id="arbeidsforhold.ingen"/>
+				</p>
+			)}
+			{alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
+				<ul className={"arbeidsgiverliste"}>
+					{alleArbeidsforhold.map((arbeidsforhold: Faktum) =>
+						<li key={arbeidsforhold.faktumId} className="arbeidsgiverliste__arbeidsgiver">
+							<ArbeidsforholdDetaljer
+								arbeidsforhold={arbeidsforhold}
+							/>
+						</li>
+					)}
+				</ul>
+			)}
+			<TextareaFaktum
+				id="opplysninger_arbeidsituasjon_kommentarer"
+				faktumKey="opplysninger.arbeidsituasjon.kommentarer"
+				placeholder={intl.formatMessage({
+					id: "arbeidsforhold.kommentar.placeholder"
+				})}
+				maxLength={MAX_CHARS}
+				validerFunc={[getMaksLengdeFunc(MAX_CHARS)]}
+			/>
+		</SysteminfoMedSkjema>
+	</SporsmalFaktum>;
 };
 
 export default connect((state: State, {}) => {
 	return {
-		fakta: state.fakta.data,
-		visArbeidsforhold:
-			state.featuretoggles.data[ FeatureToggles.arbeidsforhold ] === "true",
+		fakta: state.fakta.data
 	};
 })(injectIntl(Arbeidsforhold));
