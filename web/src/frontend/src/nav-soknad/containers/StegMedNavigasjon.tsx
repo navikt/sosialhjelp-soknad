@@ -176,6 +176,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						{!erOppsummering ? (
 							<div className="skjema__stegindikator">
 								<StegIndikator
+									dispatch={this.props.dispatch}
 									aktivtSteg={aktivtStegConfig.stegnummer}
 									steg={synligeSteg.map(s => ({
 										tittel: intl.formatMessage({ id: `${s.key}.tittel` })

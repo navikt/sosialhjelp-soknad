@@ -120,6 +120,7 @@ fieldset {
 	}
 	.stegindikator {
 		&__steg {
+		  	cursor: pointer;
 			&:not(&--aktiv) {
 				zoom: 0.8;
 				vertical-align: middle;
@@ -139,6 +140,18 @@ fieldset {
 			}
 		}
 	}
+}
+
+.stegindikator {
+  &__steg {
+	cursor: pointer;
+	border-radius: 50%;
+  }
+  &__steg:hover {
+	background-color: @navMorkGra;
+	color: @navLysGra;
+
+  }
 }
 
 .ikon-sirkel-gul {
