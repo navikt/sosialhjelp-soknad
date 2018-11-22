@@ -5,13 +5,12 @@ import { State } from "../../redux/reducers";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { setVisSamtykkeInfo } from "../../../nav-soknad/redux/init/initActions";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel/index";
-import { finnValgtEnhetsNavn, NavEnhet } from "../../data/kommuner";
+import { finnValgtEnhetsNavn } from "../../data/kommuner";
 import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 
 interface StateProps {
 	fakta: Faktum[];
-	navEnheter: NavEnhet[];
 }
 
 type Props = DispatchProps &
@@ -21,7 +20,7 @@ type Props = DispatchProps &
 class InformasjonsBoks extends React.Component<Props, {}> {
 
 	render() {
-		const valgtEnhetsNavn = finnValgtEnhetsNavn(this.props.fakta, this.props.navEnheter);
+		const valgtEnhetsNavn = finnValgtEnhetsNavn(this.props.fakta);
 
 		return (
 			<Informasjonspanel
@@ -44,7 +43,6 @@ class InformasjonsBoks extends React.Component<Props, {}> {
 
 export default connect((state: State, props: any) => {
 	return {
-		fakta: state.fakta.data,
-		navEnheter: state.kommuner.data
+		fakta: state.fakta.data
 	};
 })(injectIntl(InformasjonsBoks));
