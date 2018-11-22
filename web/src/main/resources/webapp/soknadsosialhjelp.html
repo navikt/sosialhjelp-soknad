@@ -49,18 +49,10 @@
 			    config.spa = {"spa2": true};
 		    }
 	    )(window[ 'adrum-config' ] || (window[ 'adrum-config' ] = {}));
-
-	    let jsagentUrl = "//jsagent.nav.no/adrum/adrum.js";
-	    if (!window.location.href.indexOf("tjenester.nav.no") > -1) {
-		    jsagentUrl = '//jsagent.adeo.no/adrum/adrum.js';
-        }
-	    const jsagent = document.createElement("script");
-	    jsagent.src = jsagentUrl;
-	    jsagent.type = 'text/javascript';
-	    jsagent.charset = 'UTF-8';
-	    jsagent.async = true;
-	    document.head.appendChild(jsagent);
     </script>
+    <script type="text/javascript" src="//jsagent.adeo.no/adrum/adrum.js"></script>
+	<script type="text/javascript" src="//jsagent.nav.no/adrum/adrum.js"></script>
+
     <script type="text/javascript" src="/soknadsosialhjelp/statisk/js/main.js?rev=@version"></script>
     {{fragment.footer}}
 </div>
