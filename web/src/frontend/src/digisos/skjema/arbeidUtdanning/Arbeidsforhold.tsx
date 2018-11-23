@@ -9,23 +9,13 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 import { Faktum } from "../../../nav-soknad/types";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import ArbeidsforholdDetaljer from "./ArbeidsforholdDetaljer";
-import { FeatureToggles } from "../../../featureToggles";
 import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 
-interface StateProps {
-	visArbeidsforhold: boolean;
-}
-
-type Props = FaktumComponentProps & StateProps & InjectedIntlProps;
+type Props = FaktumComponentProps & InjectedIntlProps;
 
 const MAX_CHARS = 500;
 
-const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, visArbeidsforhold, intl }) => {
-
-	if (!visArbeidsforhold) {
-		return <div />;
-	}
-
+const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, intl }) => {
 	const removeSecurityAddedArbeidsforhold = (af: any) => {
 		return Object.getOwnPropertyNames(af.properties).length > 0;
 	};
@@ -67,8 +57,6 @@ const Arbeidsforhold: React.StatelessComponent<Props> = ({ fakta, visArbeidsforh
 
 export default connect((state: State, {}) => {
 	return {
-		fakta: state.fakta.data,
-		visArbeidsforhold:
-		state.featuretoggles.data[FeatureToggles.arbeidsforhold] === "true",
+		fakta: state.fakta.data
 	};
 })(injectIntl(Arbeidsforhold));

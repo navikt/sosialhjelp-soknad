@@ -186,7 +186,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 		const adressesokAdresseFaktum = finnFaktum("kontakt.adresse.bruker", this.props.fakta);
 
 		return (
-			<div className="sosialhjelp-oppholdsadresse skjema-sporsmal">
+			<div className="sosialhjelp-oppholdsadresse skjema-sporsmal" id="soknadsmottaker">
 				<SporsmalFaktum
 					id="soknadsmottaker"
 					faktumKey="soknadsmottaker"

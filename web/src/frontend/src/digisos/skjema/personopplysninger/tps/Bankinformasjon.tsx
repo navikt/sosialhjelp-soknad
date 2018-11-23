@@ -51,7 +51,7 @@ const BankinformasjonTPS: React.StatelessComponent<Props & InjectedIntlProps> = 
 		)
 	} else {
 		return (
-			<SporsmalFaktum faktumKey="kontakt.system.kontonummer" style="system">
+			<SporsmalFaktum id="kontakt_kontonummer" faktumKey="kontakt.system.kontonummer" style="system">
 				<SysteminfoFaktum
 					faktumKey="kontakt.kontonummer.brukerendrettoggle"
 					endreLabel={intl.formatMessage({
