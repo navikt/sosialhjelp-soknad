@@ -12,7 +12,6 @@ import {
 	resetSoknad,
 	startSoknad
 } from "../../nav-soknad/redux/soknad/soknadActions";
-import { NavEnhet } from "../data/kommuner";
 import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
 
 const DocumentTitle = require("react-document-title"); // tslint:disable-line
@@ -21,7 +20,6 @@ interface StateProps {
 	soknadRestStatus: string;
 	faktaRestStatus: string;
 	startSoknadPending: boolean;
-	navEnheter: NavEnhet[];
 	kommunerRestStatus: REST_STATUS;
 }
 
@@ -73,8 +71,6 @@ export default connect((state: State, props: any) => {
 	return {
 		soknadRestStatus: state.soknad.restStatus,
 		startSoknadPending: state.soknad.startSoknadPending,
-		faktaRestStatus: state.fakta.restStatus,
-		navEnheter: state.kommuner.data,
-		kommunerRestStatus: state.kommuner.restStatus
+		faktaRestStatus: state.fakta.restStatus
 	};
 })(injectIntl(Start));

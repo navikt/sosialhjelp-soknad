@@ -131,7 +131,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 							hoyreIkon={MargIkoner.PRINTER}
 							onClickHoyreIkon={() => this.skrivUt()}
 						>
-							<h3><FormattedHTMLMessage id="ettersendelse.soknad_sendt"/> {originalSoknad.navenhet}</h3>
+							<h3><FormattedHTMLMessage id="ettersendelse.soknad_sendt"/> {originalSoknad.navenhet} kommune</h3>
 							<p>Innsendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}</p>
 						</AvsnittMedMarger>
 					)}

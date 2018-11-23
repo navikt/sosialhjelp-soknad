@@ -325,8 +325,6 @@ export default connect((state: State, props: any) => {
 		adresseliste: state.soknad.restStatus,
 		startSoknadPending: state.soknad.startSoknadPending,
 		faktaRestStatus: state.fakta.restStatus,
-		navEnheter: state.kommuner.data,
-		kommunerRestStatus: state.kommuner.restStatus,
 		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
 		valgtAdresse: state.oppholdsadresse.valgtAdresse,
 		soknadsmottaker: state.oppholdsadresse.soknadsmottaker,

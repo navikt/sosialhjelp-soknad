@@ -4,7 +4,6 @@ import {
 	getHistoryLength,
 	navigateTo,
 	tilbakeEllerForsidenSaga,
-	tilBostedEllerStartSoknadSaga,
 	tilFinnDittNavKontorSaga,
 	tilServerfeilSaga,
 	tilStegSaga
@@ -12,7 +11,6 @@ import {
 import { call, put, select, take } from "redux-saga/effects";
 import {
 	GaVidere,
-	NavigasjonActionTypes,
 	Sider,
 	TilSteg
 } from "./navigasjonTypes";
@@ -24,8 +22,7 @@ import { Faktum } from "../../types/navSoknadTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
 import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
-import { startSoknad, settAvbrytSoknadSjekk } from "../soknad/soknadActions";
-import { Horten } from "../../../digisos/data/kommuner";
+import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 
 const ferdig = (saga: SagaIterator) => {
 	expect(saga.next()).toEqual({
@@ -213,33 +210,6 @@ describe("navigasjonSaga", () => {
 			});
 		});
 
-		it("ferdig", () => ferdig(saga));
-	});
-
-	describe("skalGåTilBostedEllerStarteSoknad - Horten", () => {
-		const saga = tilBostedEllerStartSoknadSaga({
-			valgtKommune: Horten,
-			type: NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD
-		});
-		it("starter søknad for horten", () => {
-			expect(saga.next()).toEqual({
-				done: false,
-				value: put(startSoknad("horten"))
-			});
-		});
-		it("ferdig", () => ferdig(saga));
-	});
-
-	describe("skalGåTilBostedEllerStarteSoknad - til bosted", () => {
-		const saga = tilBostedEllerStartSoknadSaga({
-			type: NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD
-		});
-		it("starter søknad for horten", () => {
-			expect(saga.next()).toEqual({
-				done: false,
-				value: put(push(Sider.BOSTED))
-			});
-		});
 		it("ferdig", () => ferdig(saga));
 	});
 
