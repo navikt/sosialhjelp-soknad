@@ -24,7 +24,7 @@ function finnValgtEnhetsNavn(fakta: Faktum[]): string {
 	if (soknadsmottakerFaktum && soknadsmottakerFaktum.properties &&
 		soknadsmottakerFaktum.properties[ENHETSNAVN] && soknadsmottakerFaktum.properties[KOMMUNENAVN]) {
 		return soknadsmottakerFaktum.properties[ENHETSNAVN] +
-			", "  + soknadsmottakerFaktum.properties[KOMMUNENAVN] + " Kommune.";
+			", "  + soknadsmottakerFaktum.properties[KOMMUNENAVN] + " kommune";
 	}
 	return "";
 }
