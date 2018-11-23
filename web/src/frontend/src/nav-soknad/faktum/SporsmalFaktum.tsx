@@ -1,19 +1,22 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getFaktumSporsmalTekst } from "../utils";
-import Sporsmal, { SporsmalStyle } from "../components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle, SporsmalStyle} from "../components/sporsmal/Sporsmal";
 import {
 	faktumComponent,
 	InjectedFaktumComponentProps
 } from "./FaktumComponent";
 
 export interface OwnProps {
+	id?: string;
 	faktumKey: string;
 	children: React.ReactNode;
 	visible?: boolean;
 	htmlRef?: (c: any) => HTMLElement;
 	style?: SporsmalStyle;
 	tittelRenderer?: (title: string) => React.ReactNode;
+	noValidateOnBlur?: boolean;
+	legendTittelStyle?: LegendTittleStyle;
 }
 
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -43,7 +46,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 	}
 
 	handleOnBlur(evt: any) {
-		if (this.harValidering()) {
+		if (this.harValidering() && !this.props.noValidateOnBlur) {
 			setTimeout(() => {
 				if (this.mounted) {
 					this.props.validerFaktum();
@@ -60,11 +63,12 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 			htmlRef,
 			faktumKey,
 			intl,
-			children
+			children,
 		} = this.props;
 		if (visible === false) {
 			return null;
 		}
+
 		return (
 			<Sporsmal
 				feil={this.harValidering() ? this.props.getFeil(intl) : null}
@@ -74,6 +78,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 				tekster={getFaktumSporsmalTekst(intl, faktumKey)}
 				visible={visible}
 				tittelRenderer={tittelRenderer}
+				legendTittelStyle={this.props.legendTittelStyle || LegendTittleStyle.DEFAULT}
 			>
 				{children}
 			</Sporsmal>

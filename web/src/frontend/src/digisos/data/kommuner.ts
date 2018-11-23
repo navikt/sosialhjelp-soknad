@@ -52,6 +52,13 @@ function getNavEnhetMedOrgnr(navEnheter: NavEnhet[], orgnr: string): NavEnhet {
 }
 
 function finnValgtEnhetsNavn(fakta: Faktum[], navEnheter:  NavEnhet[]) {
+	const soknadsmottaker: Faktum = finnFaktum("soknadsmottaker", fakta);
+	if (soknadsmottaker != null) {
+		const ENHETSNAVN = "enhetsnavn"
+		const KOMMUNENAVN = "kommunenavn"
+		return soknadsmottaker.properties[ENHETSNAVN] + ", " + soknadsmottaker.properties[KOMMUNENAVN] + " kommune";
+	}
+
 	const kommune: Faktum = finnFaktum("personalia.kommune", fakta);
 
 	if (kommune) {

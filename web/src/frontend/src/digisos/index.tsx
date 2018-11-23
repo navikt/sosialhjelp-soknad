@@ -5,7 +5,6 @@ import SideIkkeFunnet from "../nav-soknad/containers/SideIkkeFunnet";
 import ServerFeil from "../nav-soknad/containers/ServerFeil";
 import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
 import { erSkjemaside } from "../nav-soknad/utils/navigasjonUtils";
-
 import Informasjon from "./informasjon";
 import Start from "./start";
 import SkjemaRouter from "./skjema/";
@@ -18,9 +17,11 @@ import Ettersendelse from "./skjema/ettersendelse/ettersendelse";
  *
  */
 class App extends React.Component<InjectedIntlProps, {}> {
+
 	componentDidMount() {
 		(NavFrontendModal as any).setAppElement("#root");
 	}
+
 	render() {
 		const ettersendelse = (window.location.pathname.match(/ettersendelse$/) != null);
 		const informasjon = (window.location.pathname.match(/informasjon$/) != null);

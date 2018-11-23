@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { State } from "../../redux/reducers";
-import Infoblokk from "../../../nav-soknad/components/infoblokk/index";
 import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { SynligeFaktaProps } from "../../redux/synligefakta/synligeFaktaTypes";
 import InformasjonBolk from "./InformasjonBolk";
@@ -12,6 +11,10 @@ import { byggBelopOgVedleggStruktur } from "../../redux/synligefakta/synligeFakt
 import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 import { getIntlText, harBrukerBesvartFaktum } from "../../../nav-soknad/utils";
 import { Faktum } from "../../../nav-soknad/types";
+import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
+import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
+import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
+import SkjemaIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SkjemaIllustrasjon";
 
 /** For å kunne sjekke om bruker har besvart noen av de
  * spørsmålene som trigger oppfølgingsspørsmål på denne side,
@@ -72,32 +75,24 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 
 	renderIkkeBesvart() {
 		return (
-			<div className="skjema-content">
-				<div className="ekstrainfo-melding">
-					<Infoblokk
-						brukSystemtittel={true}
-						tittel={this.props.intl.formatMessage({
-							id: "opplysninger.ikkebesvart.tittel"
-						})}
-						ikon="advarsel"
-					>
-						<div className="blokk-m">
-							<FormattedHTMLMessage id="opplysninger.ikkebesvart.melding"/>
-						</div>
-					</Infoblokk>
-				</div>
-			</div>
-		);
+			<Informasjonspanel
+				ikon={InformasjonspanelIkon.HENSYN}
+				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+			>
+				<FormattedHTMLMessage id="opplysninger.ikkebesvart.melding"/>
+			</Informasjonspanel>
+			);
 	}
 
 	renderInfoMelding() {
 		return (
-			<div className="skjema-content">
-				<div className="ekstrainfo-melding">
-					<Infoblokk>
-						<FormattedHTMLMessage id="opplysninger.informasjon"/>
-					</Infoblokk>
-				</div>
+			<div>
+				<Informasjonspanel
+					ikon={InformasjonspanelIkon.HENSYN}
+					farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+				>
+					<FormattedHTMLMessage id="opplysninger.informasjon"/>
+				</Informasjonspanel>
 			</div>
 		);
 	}
@@ -137,8 +132,10 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 		return (
 			<LoadContainer restStatus={restStatus}>
 				<div className="steg-ekstrainformasjon">
-					<DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk}>
-						{melding}
+					<DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk} ikon={<SkjemaIllustrasjon/>}>
+						<div className="steg-ekstrainformasjon__blokk">
+							{melding}
+						</div>
 						{content}
 					</DigisosSkjemaSteg>
 				</div>

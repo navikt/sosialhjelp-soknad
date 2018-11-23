@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { State } from "../../redux/reducers";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
-
 import Sivilstatus from "./Sivilstatus";
-import HarBarn from "./HarBarn";
 import SivilstatusTPS from "./SivilstatusTPS";
 import { Faktum } from "../../../nav-soknad/types";
 import { finnFaktum } from "../../../nav-soknad/utils";
+import Familierelasjoner from "./Familierelasjoner";
+import FamilieIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/FamilieIllustrasjon";
 
 class Familie extends React.Component<FaktumComponentProps, {}> {
 
@@ -18,7 +18,7 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 		const ektefelleFaktum: Faktum = finnFaktum("system.familie.sivilstatus.gift.ektefelle", fakta);
 
 		return (
-			<DigisosSkjemaSteg steg={DigisosSteg.familiebolk}>
+			<DigisosSkjemaSteg steg={DigisosSteg.familiebolk} ikon={<FamilieIllustrasjon />}>
 				{
 					sivilstatusFaktum.value === "gift" &&
 					<SivilstatusTPS sivilstatusFaktum={sivilstatusFaktum} ektefelleFaktum={ektefelleFaktum}/>
@@ -27,7 +27,7 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 					sivilstatusFaktum.value !== "gift" &&
 					<Sivilstatus fakta={fakta} />
 				}
-				<HarBarn />
+				<Familierelasjoner />
 			</DigisosSkjemaSteg>
 		);
 	}

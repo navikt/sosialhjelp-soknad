@@ -1,13 +1,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { SoknadAppState } from "../redux/reduxTypes";
-
 import ValgMedUnderskjema from "../components/valgMedUnderskjema";
 import RadioFaktum from "../faktum/RadioFaktum";
 import Underskjema from "../components/underskjema";
 import { FaktumComponentProps } from "../redux/fakta/faktaTypes";
-
 import SporsmalFaktum from "./SporsmalFaktum";
+import { LegendTittleStyle } from "../components/sporsmal/Sporsmal";
+import { getFaktumVerdi, getPropertyVerdi, radioCheckKeys } from "../utils";
+import { erMobilVisning } from "../utils/domUtils";
+
 
 interface OwnProps {
 	/** Nøkkel til spørsmålets faktum */
@@ -25,10 +27,11 @@ interface OwnProps {
 	/** Om faktumet skal være synlig eller ikke */
 	visible?: boolean;
 	id?: string;
+	legendTittelStyle?: LegendTittleStyle;
 }
+
 type Props = OwnProps & FaktumComponentProps;
 
-import { getFaktumVerdi, getPropertyVerdi, radioCheckKeys } from "../utils";
 
 class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 	render() {
@@ -76,19 +79,44 @@ class JaNeiSporsmalFaktum extends React.Component<Props, {}> {
 			idRadioNei = idRadioNei.replace(/__/g, "_");
 		}
 
+		const mobilVisning = erMobilVisning();
+
 		return (
 			<SporsmalFaktum
 				{...this.props}
 				style={visSkjema ? "jaNeiSporsmal" : "normal"}
+				legendTittelStyle={this.props.legendTittelStyle || LegendTittleStyle.DEFAULT}
 			>
 				<ValgMedUnderskjema
-					underskjema={
-						<Underskjema visible={visSkjema}>{children}</Underskjema>
+					underskjema={ children ?
+						<Underskjema visible={visSkjema}>{children}</Underskjema> : <span/>
 					}
 				>
-					<RadioFaktum id={idRadioJa} {...radioProps} value="true" />
-					<RadioFaktum id={idRadioNei} {...radioProps} value="false" />
+					<RadioFaktum
+						{...radioProps}
+						id={idRadioJa}
+						value="true"
+						className="inputPanel__smal"
+					/>
+					{!mobilVisning && (
+						<RadioFaktum
+							{...radioProps}
+							id={idRadioNei}
+							value="false"
+							className="inputPanel__smal"
+						/>
+					) }
 				</ValgMedUnderskjema>
+				{mobilVisning && (
+					<RadioFaktum
+						{...radioProps}
+						id={idRadioNei}
+						value="false"
+						className={
+							"inputPanel__smal inputPanel__mobil--nei " +
+							visSkjema ? "inputPanel__mobil--uten-underSkjema" : ""}
+					/>
+				) }
 			</SporsmalFaktum>
 		);
 	}

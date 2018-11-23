@@ -16,6 +16,8 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
+import KredittkortIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/KredittkortIllustrasjon";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 class UtgifterGjeld extends React.Component<
 	FaktumComponentProps & DispatchProps & InjectedIntlProps,
@@ -23,21 +25,22 @@ class UtgifterGjeld extends React.Component<
 > {
 	render() {
 		const { fakta } = this.props;
-
 		const harBoutgifter = radioCheckKeys("utgifter.boutgift");
 		const boUtgifter = radioCheckKeys(`${harBoutgifter.faktum}.true.type`);
-
 		const harUtgifterBarn = radioCheckKeys("utgifter.barn");
 		const barneUtgifter = radioCheckKeys("utgifter.barn.true.utgifter");
 
 		return (
-			<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk}>
-				<JaNeiSporsmalFaktum faktumKey={harBoutgifter.faktum}>
+			<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk} ikon={<KredittkortIllustrasjon/>}>
+				<JaNeiSporsmalFaktum
+					faktumKey={harBoutgifter.faktum}
+					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+				>
 					<SporsmalFaktum faktumKey={boUtgifter.faktum}>
 						<CheckboxFaktum
 							id="boutgifter_husleie_checkbox"
 							faktumKey={createCheckboxFaktumKey(boUtgifter.faktum, "husleie")}
-						/>
+							/>
 						<CheckboxFaktum
 							id="boutgifter_strom_checkbox"
 							faktumKey={createCheckboxFaktumKey(boUtgifter.faktum, "strom")}
@@ -74,7 +77,8 @@ class UtgifterGjeld extends React.Component<
 				</JaNeiSporsmalFaktum>
 				<JaNeiSporsmalFaktum
 					faktumKey={harUtgifterBarn.faktum}
-					visible={getFaktumVerdi(fakta, "familie.barn") !== "false"}
+					visible={getFaktumVerdi(fakta, "system.familie.barn") !== "false"}
+					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 				>
 					<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
 						<CheckboxFaktum

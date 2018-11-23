@@ -6,13 +6,13 @@ import Barneinfo from "./Barneinfo";
 import Barnebidrag from "./Barnebidrag";
 
 const HarBarn: React.StatelessComponent = () => {
-	const barn = radioCheckKeys("familie.barn");
+	const barn = radioCheckKeys("system.familie.barn");
 
 	return (
 		<JaNeiSporsmalFaktum faktumKey={barn.faktum}>
 			<Barnebidrag />
 			<Barneinfo
-				faktumKey="familie.barn.true.barn"
+				faktumKey="system.familie.barn.true.barn"
 				parentFaktumKey={barn.faktum}
 				nummer={1}
 			/>

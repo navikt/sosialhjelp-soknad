@@ -3,7 +3,6 @@
 	border-radius: 0.5rem;
 	background-color: @white;
 	padding: 2rem 1.5rem 2rem 3.5rem;
-	margin-bottom: 1rem;
 	transition: opacity 0.5s;
   	opacity: 0;
 
@@ -13,6 +12,11 @@
 	animation-fill-mode: forwards;
 	animation-iteration-count: 1;
 	animation-timing-function: ease;
+
+  	.skjema-sporsmal__infotekst__tittel {
+	  margin-top: 0;
+	  margin-bottom: 0;
+	}
 
 	&>div {
 		position: absolute;
@@ -62,22 +66,51 @@
 	overflow: visible !important;
 }
 
+.react-collapse-wrapper {
+	padding-bottom: 1rem;
+}
+
 .skjema-informasjonspanel-wrapper {
   display: block;
-  border-top: 1px solid @navBodyGraa;
-  border-bottom: 1px solid @navBodyGraa;
+}
+
+@media @mobile {
+  .skjema-informasjonspanel-wrapper {
+	margin-left: 1rem;
+	margin-right: 1rem;
+  }
+
+  .skjema-informasjonspanel {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+  }
 }
 
 @media screen and (max-width: 740px ) {
-  .skjema-informasjonspanel {
-	padding: 3.5rem 1.5rem 2rem 1.5rem;
-	margin-top: 3rem;
 
-	& > div {
-	  left: 50%;
-	  top: 0;
+	.skjema-informasjonspanel {
+	  margin-left: 1.0rem;
 	}
+}
+
+.mobilvennlig_ikon {
+  display: none;
+}
+
+.ikke_mobilvennlig_ikon {
+  display: inline-block;
+}
+
+@media @mobile {
+
+  .mobilvennlig_ikon {
+	display: inline-block;
   }
+
+  .ikke_mobilvennlig_ikon {
+	display: none;
+  }
+
 }
 
 .skjema-informasjonspanel.skjema-informasjonspanel-navGronnLighten40 {

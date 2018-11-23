@@ -16,6 +16,7 @@ import { DispatchProps, SoknadAppState } from "../../../nav-soknad/redux/reduxTy
 import { connect } from "react-redux";
 import { Faktum } from "../../../nav-soknad/types";
 import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 type Props = FaktumComponentProps & DispatchProps;
 
@@ -23,15 +24,15 @@ class Bankinnskudd extends React.Component<Props, {}> {
 
 	innskuddstyper = ["brukskonto", "sparekonto", "bsu", "livsforsikring", "aksjer", "annet"];
 
-	harBankinnskudd(): boolean {
+	harBankinnskuddVerdi(): string {
 		const faktumKey = "inntekt.bankinnskudd.true.type.";
 		let faktum: Faktum;
-		let harBankinnskudd = false;
+		let harBankinnskudd = null;
 		this.innskuddstyper.map((innskuddstype: string) => {
 			faktum = finnFaktum(faktumKey + innskuddstype, this.props.fakta);
 			const value = faktum ? faktum.value : "";
 			if (value === "true") {
-				harBankinnskudd = true;
+				harBankinnskudd = "true";
 			}
 		});
 		return harBankinnskudd;
@@ -40,7 +41,7 @@ class Bankinnskudd extends React.Component<Props, {}> {
 	componentDidUpdate() {
 		const harBankinnskuddFaktum = finnFaktum("inntekt.bankinnskudd", this.props.fakta);
 		const lagretVerdi = harBankinnskuddFaktum.value;
-		const utledetVerdi = this.harBankinnskudd().toString();
+		const utledetVerdi = this.harBankinnskuddVerdi();
 		if (lagretVerdi !== utledetVerdi) {
 			harBankinnskuddFaktum.value = utledetVerdi;
 			this.props.dispatch(lagreFaktum(harBankinnskuddFaktum));
@@ -52,7 +53,7 @@ class Bankinnskudd extends React.Component<Props, {}> {
 		const hvilkeInnskudd = radioCheckKeys("inntekt.bankinnskudd.true.type");
 		const hvilkeInnskuddAnnet = "inntekt.bankinnskudd.true.type.annet";
 		return (
-			<SporsmalFaktum faktumKey={hvilkeInnskudd.faktum}>
+			<SporsmalFaktum faktumKey={hvilkeInnskudd.faktum} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
 				{this.innskuddstyper.map((innskuddstype: string) => {
 					const id = "bankinnskudd_" + innskuddstype + "_checkbox";
 					return (

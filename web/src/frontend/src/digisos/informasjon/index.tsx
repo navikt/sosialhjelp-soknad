@@ -8,27 +8,23 @@ import { Element } from "nav-frontend-typografi";
 import Knapp from "nav-frontend-knapper";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
-import { tilBostedEllerStartSoknad } from "../../nav-soknad/redux/navigasjon/navigasjonActions";
-import { FeatureToggles } from "../../featureToggles";
-import { Horten } from "../data/kommuner";
 import IkkeTilgang from "./IkkeTilgang";
 import { TilgangSperrekode } from "../../nav-soknad/redux/tilgang/tilgangTypes";
-import { lesKommuner } from "../../nav-soknad/redux/kommuner/kommuneActions";
 import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
 import Personopplysninger from "./Personopplysninger";
 import { fetchToJson } from "../../nav-soknad/utils/rest-utils";
 import { loggFeil } from "../../nav-soknad/redux/navlogger/navloggerActions";
 import { Panel } from "nav-frontend-paneler";
 import Banner from "../../nav-soknad/components/banner/Banner";
+import { opprettSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
-import EllaBlunk from "../../nav-soknad/components/animasjoner/ellablunk";
+import Ella from "../../nav-soknad/components/svg/Ella";
+import {DigisosFarge} from "../../nav-soknad/components/svg/DigisosFarger";
 
 interface StateProps {
 	harTilgang: boolean;
 	sperrekode: TilgangSperrekode;
-	soknadErLive: string;
 	startSoknadPending: boolean;
-	visVelgBosted: boolean;
 }
 
 type Props = StateProps & InjectedIntlProps & RouterProps & DispatchProps;
@@ -55,17 +51,15 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 	renderHilsen(): React.ReactNode {
 		if (this.state.fornavn && this.state.fornavn.length > 0) {
 			return (
-				<h3>
+				<h3 className="digisos-snakkeboble-tittel">
 					<FormattedHTMLMessage id="informasjon.hilsen.hei" values={{fornavn: this.state.fornavn}}/>
 				</h3>);
 		}
 		return null;
 	}
+
 	startSoknad() {
-		this.props.dispatch(lesKommuner());
-		this.props.dispatch(
-			tilBostedEllerStartSoknad(this.props.visVelgBosted ? null : Horten)
-		);
+		this.props.dispatch(opprettSoknad(this.props.intl));
 	}
 
 	render() {
@@ -73,7 +67,6 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 			intl,
 			harTilgang,
 			startSoknadPending,
-			soknadErLive,
 			sperrekode
 		} = this.props;
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
@@ -84,7 +77,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 					<FormattedMessage id="skjema.tittel" />
 				</Banner>
 				<DocumentTitle title={title}/>
-				{soknadErLive === "true" && harTilgang ? (
+				{harTilgang ? (
 					<span>
 						<div>
 							<div className="skjema-content informasjon-innhold">
@@ -93,7 +86,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 										{this.renderHilsen()}
 										<FormattedMessage id="informasjon.hilsen.tittel"/>
 									</Snakkeboble>
-									<EllaBlunk hoyde={175} />
+									<Ella visBakgrundsSirkel={true} size={175} bakgrundsFarge={DigisosFarge.NAV_GRONN_LIGHTEN_40} />
 								</span>
 
 								<Panel className="informasjon-viktig">
@@ -119,7 +112,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 								<Personopplysninger/>
 							</div>
 
-							<div className="skjema-content">
+							<div className="skjema-content" style={{border: "1px solid transparent"}}>
 								<span className="informasjon-start-knapp">
 									<Knapp
 										id="start_soknad_button"
@@ -148,8 +141,5 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 export default connect((state: State) => ({
 	harTilgang: state.tilgang.harTilgang,
 	sperrekode: state.tilgang.sperrekode,
-	soknadErLive: state.featuretoggles.data[FeatureToggles.soknadErLive],
-	visVelgBosted:
-	state.featuretoggles.data[FeatureToggles.visVelgBosted] === "true",
 	startSoknadPending: state.soknad.startSoknadPending
 }))(injectIntl(Informasjon));

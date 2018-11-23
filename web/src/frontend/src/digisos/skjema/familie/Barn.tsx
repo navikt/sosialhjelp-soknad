@@ -79,6 +79,7 @@ export default class Barn extends React.Component<Props, {}> {
 						faktumId={faktumId}
 						ref={c => (this.personFaktum = c)}
 					/>
+					<br/>
 					<JaNeiSporsmalFaktum
 						id={idBorSammen}
 						faktumKey={`${faktumKey}.borsammen`}
@@ -90,6 +91,7 @@ export default class Barn extends React.Component<Props, {}> {
 							faktumId
 						}}
 					>
+						<br/>
 						<SporsmalFaktum faktumKey={hvormye.faktum}>
 							<BelopFaktum
 								id={idSamvaersgrad}
@@ -98,9 +100,8 @@ export default class Barn extends React.Component<Props, {}> {
 								property="grad"
 								maxLength={3}
 								kunHeltall={true}
-								bredde="XS"
+								bredde="L"
 							/>
-							<span className="prosenttegn">%</span>
 						</SporsmalFaktum>
 					</JaNeiSporsmalFaktum>
 					{visFjernBarn && (

@@ -12,8 +12,6 @@ import {
 	resetSoknad,
 	startSoknad
 } from "../../nav-soknad/redux/soknad/soknadActions";
-
-import Bosted from "./Bosted";
 import { NavEnhet } from "../data/kommuner";
 import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
 
@@ -28,6 +26,8 @@ interface StateProps {
 }
 
 type Props = StateProps & InjectedIntlProps & DispatchProps;
+
+// TODO Fjerne denne komponenten?
 
 class Start extends React.Component<Props, {}> {
 	constructor(props: Props) {
@@ -62,12 +62,6 @@ class Start extends React.Component<Props, {}> {
 						<p className="blokk-l">
 							{getIntlTextOrKey(intl, "personalia.informasjon")}
 						</p>
-						<Bosted
-							onStartSoknad={this.startSoknad}
-							startSoknadPending={this.props.startSoknadPending}
-							navEnheter={this.props.navEnheter}
-							kommunerRestStatus={this.props.kommunerRestStatus}
-						/>
 					</div>
 				</span>
 			</DocumentTitle>
