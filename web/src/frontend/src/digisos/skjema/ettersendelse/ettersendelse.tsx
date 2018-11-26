@@ -14,6 +14,10 @@ import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
 import { MargIkoner } from "./margIkoner";
 import { visToppMeny } from "../../../nav-soknad/utils/domUtils";
+import { EttersendelseFeilkode } from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
+import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
+import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
+import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 
 interface OwnProps {
 	manglendeVedlegg: any[];
@@ -22,6 +26,7 @@ interface OwnProps {
 	restStatus: REST_STATUS;
 	originalSoknad: any;
 	ettersendelser: any;
+	feilKode: string;
 }
 
 type Props = OwnProps & SynligeFaktaProps & DispatchProps & InjectedIntlProps;
@@ -115,6 +120,9 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 		const datoManglendeVedlegg = this.manglendeVedleggDato();
 		const ettersendelseAktivert = this.isEttersendelseAktivert();
 
+		const opprettNyEttersendelseFeilet: boolean =
+			this.props.feilKode === EttersendelseFeilkode.NY_ETTERSENDELSE_FEILET;
+
 		return (
 			<div className="ettersendelse">
 				<BannerEttersendelse>
@@ -160,21 +168,34 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 						}
 					)}
 
-					<EttersendelseEkspanderbart
-						kunGenerellDokumentasjon={antallManglendeVedlegg === 0}
-						ettersendelseAktivert={ettersendelseAktivert}
-						onEttersendelse={() => this.onEttersendelseSendt()}
-					>
-						{antallManglendeVedlegg > 0 && (
-							<span>
-								<h3>{antallManglendeVedlegg} vedlegg mangler</h3>
+					{opprettNyEttersendelseFeilet && (
+						<AvsnittMedMarger>
+							<Informasjonspanel
+								synlig={true}
+								ikon={InformasjonspanelIkon.HENSYN}
+								farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+							>
+								<FormattedHTMLMessage id="ettersendelse.ikke.mulig" />
+							</Informasjonspanel>
+						</AvsnittMedMarger>
+					)}
+					{!opprettNyEttersendelseFeilet && (
+						<EttersendelseEkspanderbart
+							kunGenerellDokumentasjon={antallManglendeVedlegg === 0}
+							ettersendelseAktivert={ettersendelseAktivert}
+							onEttersendelse={() => this.onEttersendelseSendt()}
+						>
+							{antallManglendeVedlegg > 0 && (
+								<span>
+								<h3>{antallManglendeVedlegg} <FormattedHTMLMessage id="ettersendelse.vedlegg.mangler" /></h3>
 								<div>{datoManglendeVedlegg}</div>
 							</span>
-						)}
-						{antallManglendeVedlegg === 0 && (
-							<h3>Last opp generell dokumentasjon</h3>
-						)}
-					</EttersendelseEkspanderbart>
+							)}
+							{antallManglendeVedlegg === 0 && (
+								<h3><FormattedHTMLMessage id="ettersendelse.generell.dokumentasjon" /></h3>
+							)}
+						</EttersendelseEkspanderbart>
+					)}
 
 					<AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>
 						<h3><FormattedHTMLMessage id="ettersendelse.samtale.tittel" /></h3>
@@ -199,6 +220,7 @@ export default connect((state: State, {}) => {
 		brukerbehandlingId: state.ettersendelse.brukerbehandlingId,
 		originalSoknad: state.ettersendelse.innsendte.originalSoknad,
 		ettersendelser: state.ettersendelse.innsendte.ettersendelser,
-		restStatus: state.ettersendelse.restStatus
+		restStatus: state.ettersendelse.restStatus,
+		feilKode: state.ettersendelse.feilKode
 	};
 })(injectIntl(Ettersendelse));

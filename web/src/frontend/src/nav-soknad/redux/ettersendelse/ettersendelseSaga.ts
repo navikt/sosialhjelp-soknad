@@ -8,8 +8,13 @@ import {
 	SlettEttersendtVedleggAction, SendEttersendelseAction, LesEttersendelserAction
 } from "./ettersendelseTypes";
 import {
-	lesEttersendelsesVedlegg, lastOppEttersendtVedleggOk,
-	lesEttersendteVedlegg, lagEttersendelseOk, settEttersendelser, lastOppEttersendelseFeilet
+	lesEttersendelsesVedlegg,
+	lastOppEttersendtVedleggOk,
+	lesEttersendteVedlegg,
+	lagEttersendelseOk,
+	settEttersendelser,
+	lastOppEttersendelseFeilet,
+	opprettEttersendelseFeilet
 } from "./ettersendelseActions";
 import { loggFeil } from "../navlogger/navloggerActions";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
@@ -23,8 +28,8 @@ function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIter
 			yield put(lesEttersendelsesVedlegg(response.brukerBehandlingId));
 		}
 	} catch (reason) {
-		yield put(loggFeil("Lag ettersendelse feilet: " + reason.toString()));
-		yield put(navigerTilServerfeil());
+		yield put(loggFeil("Opprett ettersendelse feilet: " + reason.toString()));
+		yield put(opprettEttersendelseFeilet(action.brukerbehandlingId));
 	}
 }
 

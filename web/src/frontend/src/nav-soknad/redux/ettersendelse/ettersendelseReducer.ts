@@ -1,5 +1,10 @@
 import { REST_STATUS } from "../../types/restTypes";
-import { EttersendelseActionTypeKeys, EttersendelseActionTypes, EttersendelseState } from "./ettersendelseTypes";
+import {
+	EttersendelseActionTypeKeys,
+	EttersendelseActionTypes,
+	EttersendelseFeilkode,
+	EttersendelseState
+} from "./ettersendelseTypes";
 import { Reducer } from "../reduxTypes";
 
 const initialState: EttersendelseState = {
@@ -25,6 +30,13 @@ const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes
 			return {
 				...state,
 				brukerbehandlingId: action.brukerbehandlingId
+			};
+		}
+		case EttersendelseActionTypeKeys.NY_FEILET: {
+			return {
+				...state,
+				brukerbehandlingId: action.brukerbehandlingId,
+				feilKode: EttersendelseFeilkode.NY_ETTERSENDELSE_FEILET
 			};
 		}
 		case EttersendelseActionTypeKeys.LAST_OPP: {
