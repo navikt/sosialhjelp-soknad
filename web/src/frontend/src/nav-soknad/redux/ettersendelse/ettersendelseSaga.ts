@@ -16,7 +16,7 @@ import {
 	lastOppEttersendelseFeilet,
 	opprettEttersendelseFeilet
 } from "./ettersendelseActions";
-import { loggFeil } from "../navlogger/navloggerActions";
+import { loggFeil, loggInfo } from "../navlogger/navloggerActions";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIterator {
@@ -28,7 +28,7 @@ function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIter
 			yield put(lesEttersendelsesVedlegg(response.brukerBehandlingId));
 		}
 	} catch (reason) {
-		yield put(loggFeil("Opprett ettersendelse feilet: " + reason.toString()));
+		yield put(loggInfo("Opprett ettersendelse feilet: " + reason.toString()));
 		yield put(opprettEttersendelseFeilet(action.brukerbehandlingId));
 	}
 }
