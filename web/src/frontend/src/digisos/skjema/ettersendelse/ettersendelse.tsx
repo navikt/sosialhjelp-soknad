@@ -171,7 +171,6 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 					{opprettNyEttersendelseFeilet && (
 						<AvsnittMedMarger>
 							<Informasjonspanel
-								synlig={true}
 								ikon={InformasjonspanelIkon.HENSYN}
 								farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
 							>
