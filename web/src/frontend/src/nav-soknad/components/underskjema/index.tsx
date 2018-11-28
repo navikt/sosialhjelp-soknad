@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as classNames from "classnames";
-import { Collapse } from "react-collapse";
+import { UnmountClosed } from "react-collapse";
 import { loggFeil } from "../../redux/navlogger/navloggerActions";
 
 interface UnderskjemaProps extends React.Props<any> {
@@ -45,13 +45,13 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
 	}
 	if (collapsable) {
 		return (
-			<Collapse
+			<UnmountClosed
 				isOpened={visible}
 				className="underskjema__wrapper"
 				hasNestedCollapse={true}
 			>
 				{content}
-			</Collapse>
+			</UnmountClosed>
 		);
 	}
 	return <div className="underskjema__wrapper">{renderContent()}</div>;

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Collapse } from "react-collapse";
+import { UnmountClosed } from "react-collapse";
 import { FormattedHTMLMessage } from "react-intl";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import { MargIkoner } from "./margIkoner";
@@ -73,7 +73,7 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 					</AvsnittMedMarger>
 				) }
 
-				<Collapse
+				<UnmountClosed
 					isOpened={this.state.ekspandert }
 					onRest={() => this.onAnimasjonFerdig()}
 					className={"ettersendelse__vedlegg " +
@@ -94,7 +94,7 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 							/>
 						</>
 					)}
-				</Collapse>
+				</UnmountClosed>
 
 			</span>
 		);

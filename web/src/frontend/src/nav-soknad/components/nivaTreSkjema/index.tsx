@@ -1,6 +1,6 @@
 import * as React from "react";
 import { loggFeil } from "../../redux/navlogger/navloggerActions";
-import { Collapse } from "react-collapse";
+import { UnmountClosed } from "react-collapse";
 
 type Sizes = "small" | "large";
 
@@ -64,9 +64,9 @@ class NivaTreSkjema extends React.Component<Props, State> {
 		}
 		if (this.state.animate === true) {
 			return (
-				<Collapse isOpened={visible} className="underskjemaWrapper">
+				<UnmountClosed isOpened={visible} className="underskjemaWrapper">
 					{content}
-				</Collapse>
+				</UnmountClosed>
 			);
 		}
 		if (!visible) {
