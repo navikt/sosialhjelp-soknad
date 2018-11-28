@@ -2,6 +2,7 @@ import { REST_STATUS } from "../../types/restTypes";
 
 export enum EttersendelseActionTypeKeys {
 	NY = "ettersendelse/NY",
+	NY_FEILET = "ettersendelse/NY_FEILET",
 	NY_OK = "ettersendelse/NY_OK",
 	LAST_OPP = "ettersendelse/LAST_OPP",
 	LAST_OPP_PENDING = "ettersendelse/LAST_OPP_PENDING",
@@ -33,6 +34,10 @@ export enum EttersendelseActionTypeKeys {
 	OTHER_ACTION = "__any_other_action_type__"
 }
 
+export enum EttersendelseFeilkode {
+	NY_ETTERSENDELSE_FEILET = "NY_ETTERSENDELSE_FEILET"
+}
+
 export interface EttersendteVedleggState {
 	data: any[];
 	restStatus: REST_STATUS;
@@ -41,6 +46,11 @@ export interface EttersendteVedleggState {
 
 export interface OpprettEttersendelseAction {
 	type: EttersendelseActionTypeKeys.NY;
+	brukerbehandlingId: string;
+}
+
+export interface OpprettEttersendelseFeiletAction {
+	type: EttersendelseActionTypeKeys.NY_FEILET;
 	brukerbehandlingId: string;
 }
 
@@ -85,6 +95,7 @@ export interface LesEttersendelserOkAction {
 }
 export type EttersendelseActionTypes =
 	OpprettEttersendelseAction
+	| OpprettEttersendelseFeiletAction
 	| LagEttersendelseOkAction
 	| LastOppEttersendelseAction
 	| LastOppEttersendelseOkAction
