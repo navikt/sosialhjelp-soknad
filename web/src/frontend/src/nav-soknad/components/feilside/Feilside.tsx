@@ -3,6 +3,7 @@ import { Knapp } from "nav-frontend-knapper";
 import { Innholdstittel } from "nav-frontend-typografi";
 import DocumentTitle from "react-document-title";
 import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
+import AppHeader from "../appHeader/AppHeader";
 
 export interface FeilsideProps {
 	tittel?: string;
@@ -27,6 +28,7 @@ const FeilSide: React.StatelessComponent<FeilsideProps> = ({
 }) => {
 	return (
 		<div className="feilside skjema-content">
+			<AppHeader/>
 			<DocumentTitle title={"Feilside - " + document.location.hostname} />
 			<div className="feilside__ikon">
 				<UtropstegnSirkelGraIkon />
