@@ -15,11 +15,11 @@ import Personopplysninger from "./Personopplysninger";
 import { fetchToJson } from "../../nav-soknad/utils/rest-utils";
 import { loggFeil } from "../../nav-soknad/redux/navlogger/navloggerActions";
 import { Panel } from "nav-frontend-paneler";
-import Banner from "../../nav-soknad/components/banner/Banner";
 import { opprettSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import Ella from "../../nav-soknad/components/svg/Ella";
 import {DigisosFarge} from "../../nav-soknad/components/svg/DigisosFarger";
+import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 
 interface StateProps {
 	harTilgang: boolean;
@@ -72,10 +72,8 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 
 		return (
-			<div className="ettersendelse informasjon-side">
-				<Banner>
-					<FormattedMessage id="skjema.tittel" />
-				</Banner>
+			<div className="informasjon-side">
+				<AppBanner/>
 				<DocumentTitle title={title}/>
 				{harTilgang ? (
 					<span>
