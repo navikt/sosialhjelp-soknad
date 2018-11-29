@@ -13,7 +13,7 @@ class Brevkonvolutt extends React.Component<OwnProps, {}> {
 	render(){
 		const height = this.props.size || 60;
 		const width = this.props.size || 60;
-		const bakgrundsFarge = this.props.bakgrundsFarge || DigisosFarge.NAV_GRONN_LIGHTEN_60;
+		const bakgrundsFarge = this.props.bakgrundsFarge || DigisosFarge.SUKSESS;
 		const showBackgroundCircle: boolean = this.props.visBakgrundsSirkel;
 
 		return(

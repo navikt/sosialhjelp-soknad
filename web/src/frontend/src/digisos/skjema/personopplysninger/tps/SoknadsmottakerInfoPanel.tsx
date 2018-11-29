@@ -16,7 +16,7 @@ const SoknadsmottakerInfoPanel: React.StatelessComponent<SoknadsmottakerInfoProp
 	soknadsmottakerStatus,
 	soknadsmottakerFaktum
 }) => {
-	let farge: DigisosFarge = DigisosFarge.NAV_GRONN_LIGHTEN_60;
+	let farge: DigisosFarge = DigisosFarge.SUKSESS;
 	let tekst: any = "";
 	const KOMMUNENAVN = "kommunenavn";
 	const ENHETSNAVN = "enhetsnavn";
@@ -38,7 +38,7 @@ const SoknadsmottakerInfoPanel: React.StatelessComponent<SoknadsmottakerInfoProp
 		);
 	} else if (soknadsmottakerStatus === SoknadsMottakerStatus.UGYLDIG) {
 
-		farge = DigisosFarge.RED_ERROR;
+		farge = DigisosFarge.FEIL;
 		tekst = "Søknaden er ikke tilgjengelig digitalt i din kommune. Ta kontakt direkte med ditt NAV-kontor.";
 		// TODO: Legg til link senere.
 		return (
@@ -51,7 +51,7 @@ const SoknadsmottakerInfoPanel: React.StatelessComponent<SoknadsmottakerInfoProp
 		);
 	}  else if (soknadsmottakerStatus === SoknadsMottakerStatus.MANGLER_NAV_KONTOR) {
 		
-				farge = DigisosFarge.RED_ERROR;
+				farge = DigisosFarge.FEIL;
 				tekst = "Kan ikke finne NAV-kontor for angitt adresse. Rett eventuelle feil i adressen eller ta direkte kontakt med ditt lokale NAV-kontor.";
 				return (
 					<Informasjonspanel
