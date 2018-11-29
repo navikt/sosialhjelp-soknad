@@ -1,14 +1,10 @@
 import * as React from "react";
-// import { RouterProps, withRouter, Redirect, matchPath } from "react-router";
 import { RouterProps, withRouter } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Location } from "history";
 import { connect } from "react-redux";
 import DocumentTitle from "react-document-title";
-
 import { Innholdstittel } from "nav-frontend-typografi";
-
-import AppTittel from "../components/apptittel/AppTittel";
 import ApplikasjonsfeilDialog from "../containers/ApplikasjonsfeilDialog";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import StegIndikator from "../components/stegIndikator";
@@ -23,11 +19,11 @@ import {
 } from "../redux/valideringActions";
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { validerAlleFaktum } from "../validering/utils";
-// import { getIntlTextOrKey, scrollToTop, getStegUrl } from "../utils";
 import { getIntlTextOrKey, scrollToTop } from "../utils";
 import { avbrytSoknad, sendSoknad } from "../redux/soknad/soknadActions";
 import { gaVidere, gaTilbake } from "../redux/navigasjon/navigasjonActions";
 import {loggInfo} from "../redux/navlogger/navloggerActions";
+import AppBanner from "../components/appHeader/AppHeader";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -68,11 +64,6 @@ type Props = OwnProps &
 	InjectedRouterProps &
 	InjectedIntlProps &
 	DispatchProps;
-
-// interface UrlParams {
-// 	brukerbehandlingId: string;
-// 	steg: string;
-// }
 
 class StegMedNavigasjon extends React.Component<Props, {}> {
 	stegTittel: HTMLElement;
@@ -131,7 +122,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	}
 
 	render() {
-		// const { skjemaConfig, intl, children, progresjon } = this.props;
 		const { skjemaConfig, intl, children } = this.props;
 		const aktivtStegConfig = skjemaConfig.steg.find(
 			s => s.key === this.props.stegKey
@@ -147,22 +137,12 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 			s => s.type === SkjemaStegType.skjema
 		);
 
-		/*
-			const localMatch = matchPath(this.props.location.pathname, {
-				path: "/skjema/:brukerbehandlingId/:steg"
-			});
-			const { steg } = localMatch.params as UrlParams;
-			const maksSteg = progresjon;
-		if (parseInt(steg, 10) > maksSteg && location.hash.indexOf("force") < 0) {
-			return <Redirect to={getStegUrl(brukerBehandlingId, maksSteg)} />;
-		}
-		*/
-
 		return (
-			<div>
+			<div className="app-digisos informasjon-side">
+				<AppBanner/>
 				<ApplikasjonsfeilDialog />
 				<DocumentTitle title={`${stegTittel} - ${documentTitle}`} />
-				<AppTittel />
+
 				<div className="skjema-steg skjema-content">
 					<div className="skjema-steg__feiloppsummering">
 						<Feiloppsummering

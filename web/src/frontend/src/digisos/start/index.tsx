@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { State } from "../redux/reducers";
 import { REST_STATUS } from "../../nav-soknad/types";
-import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
+import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import { getIntlTextOrKey, scrollToTop } from "../../nav-soknad/utils";
 import ServerFeil from "../../nav-soknad/containers/ServerFeil";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
@@ -55,7 +55,7 @@ class Start extends React.Component<Props, {}> {
 		return (
 			<DocumentTitle title={title}>
 				<span>
-					<AppTittel />
+					<AppBanner />
 					<div className="skjema-content">
 						<p className="blokk-l">
 							{getIntlTextOrKey(intl, "personalia.informasjon")}

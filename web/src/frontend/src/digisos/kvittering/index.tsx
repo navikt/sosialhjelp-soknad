@@ -8,10 +8,9 @@ import { Undertittel } from "nav-frontend-typografi";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import { State } from "../redux/reducers";
 import { scrollToTop } from "../../nav-soknad/utils";
-import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
+import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
-// import { hentKvittering } from "../../nav-soknad/redux/soknad/soknadActions";
 import { REST_STATUS, Kvittering } from "../../nav-soknad/types";
 import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
 import Vedleggsliste from "../../nav-soknad/components/vedlegg/Veleggsliste";
@@ -76,9 +75,6 @@ class KvitteringView extends React.Component<KvitteringProps, {}> {
 
 	componentDidMount() {
 		scrollToTop();
-		// this.props.dispatch(
-		// 	hentKvittering(this.props.match.params.brukerBehandlingId)
-		// );
 	}
 
 	render() {
@@ -90,7 +86,7 @@ class KvitteringView extends React.Component<KvitteringProps, {}> {
 			<LoadContainer restStatus={restStatus}>
 				{kvittering && (
 					<div>
-						<AppTittel />
+						<AppBanner />
 						<div className="kvittering skjema-content">
 							<div className="blokk-xl">
 								<Panel className="blokk-xxs">
@@ -128,6 +124,6 @@ export default connect((state: State, props: any): StateProps => {
 	return {
 		kvittering: state.soknad.kvittering,
 		oppsummering: harOppsummering ? state.oppsummering.oppsummering : null,
-		restStatus: REST_STATUS.OK // state.soknad.restStatus
+		restStatus: REST_STATUS.OK
 	};
 })(injectIntl(withRouter(KvitteringView as any) as any));
