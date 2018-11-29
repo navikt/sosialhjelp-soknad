@@ -17,7 +17,7 @@ class Brevkonvolutt extends React.Component<OwnProps, {}> {
 		const showBackgroundCircle: boolean = this.props.visBakgrundsSirkel;
 
 		return(
-			<svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 100 100" className={"brevkonvolutt__" + bakgrundsFarge}>
+			<svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 100 100" className={"brevkonvolutt--" + bakgrundsFarge}>
 				<g>
 					<rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
 				</g>
