@@ -172,7 +172,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 						<AvsnittMedMarger>
 							<Informasjonspanel
 								ikon={InformasjonspanelIkon.HENSYN}
-								farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+								farge={DigisosFarge.VIKTIG}
 							>
 								<FormattedHTMLMessage id="ettersendelse.ikke.mulig" />
 							</Informasjonspanel>

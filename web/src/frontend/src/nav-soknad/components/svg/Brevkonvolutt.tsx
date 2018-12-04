@@ -13,11 +13,11 @@ class Brevkonvolutt extends React.Component<OwnProps, {}> {
 	render(){
 		const height = this.props.size || 60;
 		const width = this.props.size || 60;
-		const bakgrundsFarge = this.props.bakgrundsFarge || DigisosFarge.NAV_GRONN_LIGHTEN_60;
+		const bakgrundsFarge = this.props.bakgrundsFarge || DigisosFarge.SUKSESS;
 		const showBackgroundCircle: boolean = this.props.visBakgrundsSirkel;
 
 		return(
-			<svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 100 100" className={"brevkonvolutt__" + bakgrundsFarge}>
+			<svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 100 100" className={"brevkonvolutt--" + bakgrundsFarge}>
 				<g>
 					<rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
 				</g>

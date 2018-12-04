@@ -74,7 +74,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 					<div className="skjema-sporsmal">
 						<Informasjonspanel
 							ikon={InformasjonspanelIkon.ELLA}
-							farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+							farge={DigisosFarge.VIKTIG}
 						>
 							<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
 						</Informasjonspanel>

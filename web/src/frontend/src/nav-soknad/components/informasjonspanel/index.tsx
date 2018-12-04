@@ -70,7 +70,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 	}
 
 	renderContent(fadeIn: boolean) {
-		const styleClassName = "skjema-informasjonspanel-" + this.props.farge;
+		const styleClassName = "skjema-informasjonspanel--" + this.props.farge;
 
 		return (
 			<div className={"skjema-informasjonspanel-wrapper " + this.props.className}>

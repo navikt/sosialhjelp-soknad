@@ -121,7 +121,7 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 				{ ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] &&
 				  ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] !== "true" &&
 					(<Informasjonspanel
-						farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+						farge={DigisosFarge.VIKTIG}
 						ikon={InformasjonspanelIkon.ELLA}
 					>
 						<h4 className="skjema-sporsmal__infotekst__tittel">

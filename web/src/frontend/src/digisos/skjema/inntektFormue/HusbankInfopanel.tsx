@@ -17,7 +17,7 @@ class HusbankInfopanel extends React.Component<FaktumComponentProps & InjectedIn
 			<Informasjonspanel
 				synlig={mottarBostotte === "false"}
 				ikon={InformasjonspanelIkon.ELLA}
-				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+				farge={DigisosFarge.VIKTIG}
 			>
 				<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
 			</Informasjonspanel>
