@@ -151,6 +151,7 @@
                                     <mainClass>no.nav.sbl.soknadsosialhjelp.StartJetty</mainClass>
                                 </transformer>
                             </transformers>
+                            <finalName>soknadsosialhjelp</finalName>
                         </configuration>
                     </execution>
                 </executions>
