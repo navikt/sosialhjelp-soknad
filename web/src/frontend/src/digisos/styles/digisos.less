@@ -77,3 +77,25 @@ body {
   }
 }
 
+// Styling lagt på for å få radiopanelgruppe til å ha samme utseende som NAS's guideline app
+.inputPanel__label {
+  margin-left: 2rem;
+}
+
+.inputPanel--checked {
+  background-color: rgba(0, 103, 197, 0.2) !important;
+  border: 1px solid transparent !important;
+}
+
+.radioPanel.inputPanel--checked:hover:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) {
+  background-color: rgba(0, 103, 197, 0.2);
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+
+.soknadsosialhjelp .radioknapp:checked + .skjemaelement__label:before {
+  border: 1px solid #0067C5;
+  // background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zd…A3bDIuMTU4IDIuMTU4IDcuMTQ3LTYuNjdhLjUuNSAwIDEgMSAuNjgzLjczMXoiLz48L3N2Zz4=");
+}
+

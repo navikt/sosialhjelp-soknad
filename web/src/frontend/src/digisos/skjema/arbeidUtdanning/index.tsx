@@ -10,6 +10,7 @@ import { finnFakta } from "../../../nav-soknad/utils";
 import { Faktum } from "../../../nav-soknad/types";
 import Koffert from "../../../nav-soknad/components/svg/illustrasjoner/Koffert";
 import { FormattedHTMLMessage } from "react-intl";
+import RadioSpike from "./RadioSpike";
 
 const ArbeidOgUtdanning: React.StatelessComponent<FaktumComponentProps & {}> = ({fakta}) => {
 	const alleArbeidsforhold: Faktum[] = finnFakta("arbeidsforhold", fakta);
@@ -23,6 +24,7 @@ const ArbeidOgUtdanning: React.StatelessComponent<FaktumComponentProps & {}> = (
 			<h2 className="overskrift">
 				<FormattedHTMLMessage id="arbeid.dinsituasjon.studerer.undertittel"/>
 			</h2>
+			<RadioSpike/>
 			<Studie/>
 		</DigisosSkjemaSteg>
 	);
