@@ -136,18 +136,19 @@ function* updateIfChanged(faktum: Faktum, value: string): any {
 }
 
 function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): SagaIterator {
+	let errorDescription = "nil";
 	try {
 		const adresse = action.adresse;
-
 		const brukerValgFaktum = finnFaktum("kontakt.adresse.brukerendrettoggle", action.fakta);
-
 		const oppholdsadresseFaktum = finnFaktum("kontakt.system.oppholdsadresse.valg", action.fakta);
 		let adresseFaktum = finnFaktum("kontakt.adresse.bruker", action.fakta);
 		let soknadsmottakerFaktum = finnFaktum("soknadsmottaker", action.fakta);
 
 		const KOMMUNENUMMER = "kommunenummer";
 		if (soknadsmottakerFaktum.properties[KOMMUNENUMMER] != null) {
+			errorDescription = "null ut søknadsmottakerfaktum";
 			soknadsmottakerFaktum = nullUtSoknadsmottakerFaktum(soknadsmottakerFaktum);
+			errorDescription = "lagre faktum";
 			yield* lagreFaktumSaga(lagreFaktum(soknadsmottakerFaktum) as LagreFaktum) as any;
 		}
 
@@ -156,29 +157,38 @@ function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): 
 			return null;
 		}
 
+		errorDescription = "oppdater oppholdsadresse";
 		yield* updateIfChanged(oppholdsadresseFaktum, newOppholdsadresseFaktumValue);
+		errorDescription = "sett søknadsmottaker";
 		yield put(settSoknadsmottakere([]));
 
 		if (action.adresseKategori === AdresseKategori.SOKNAD) {
 			if (adresse) {
+				errorDescription = "oppdater adresse";
 				adresseFaktum = oppdaterAdresse(adresseFaktum, adresse);
+				errorDescription = "lagre adresse faktum";
 				yield* lagreFaktumSaga(lagreFaktum(adresseFaktum) as LagreFaktum) as any;
+				errorDescription = "oppdater brukerValgFaktum 1";
 				yield* updateIfChanged(brukerValgFaktum, "true");
 			} else {
+				errorDescription = "oppdater settSoknadsmottakerStatus";
 				yield put(settSoknadsmottakerStatus(SoknadsMottakerStatus.IKKE_VALGT));
+				errorDescription = "oppdater brukerValgFaktum 2";
 				yield* updateIfChanged(brukerValgFaktum, "false");
 				return null;
 			}
 		} else {
+			errorDescription = "oppdater brukerValgFaktum 3";
 			yield* updateIfChanged(brukerValgFaktum, "false");
 		}
 
+		errorDescription = "sett soknadsmottaker og opdater dtatus";
 		yield* fetchOgSettSoknadsmottakerOgOppdaterStatus(
 			action.brukerBehandlingId,
 			action.oppholdsadressevalg,
 			soknadsmottakerFaktum);
 	} catch (reason) {
-		yield put(loggFeil("Hent soknadsmottaker feilet: " + reason.toString()));
+		yield put(loggFeil("Hent soknadsmottaker feilet: " + errorDescription + " :" + reason.toString()));
 		yield put(navigerTilServerfeil());
 	}
 }
