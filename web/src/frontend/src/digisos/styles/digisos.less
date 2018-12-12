@@ -93,9 +93,14 @@ body {
   box-shadow: none;
 }
 
+// På mouseover, fyll radioknapper og sjekkbokser med blå bakgrunnsfarge
+.inputPanel:hover:not(.inputPanel__checked) {
 
-.soknadsosialhjelp .radioknapp:checked + .skjemaelement__label:before {
-  border: 1px solid #0067C5;
-  // background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zd…A3bDIuMTU4IDIuMTU4IDcuMTQ3LTYuNjdhLjUuNSAwIDEgMSAuNjgzLjczMXoiLz48L3N2Zz4=");
+  .radioknapp + .skjemaelement__label:before {
+	border: 12px solid #99c2e8;
+  }
+
+  .checkboks + .skjemaelement__label:before {
+	border: 12px solid #99c2e8;
+  }
 }
-
