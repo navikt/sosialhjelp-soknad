@@ -1,0 +1,149 @@
+{
+  "person": {
+    "diskresjonskode": null,
+    "bankkonto": null,
+    "bostedsadresse": {
+      "strukturertAdresse": {
+        "landkode": {
+          "value": "NOR",
+          "kodeRef": null,
+          "kodeverksRef": "http:\/\/nav.no\/kodeverk\/Kodeverk\/Landkoder"
+        },
+        "tilleggsadresse": null,
+        "tilleggsadresseType": null,
+        "poststed": {
+          "value": "0360",
+          "kodeRef": null,
+          "kodeverksRef": "http:\/\/nav.no\/kodeverk\/Kodeverk\/Postnummer"
+        },
+        "bolignummer": null,
+        "kommunenummer": "0301",
+        "gatenummer": null,
+        "gatenavn": "ARNOLD HAUKELANDS PLASS",
+        "husnummer": 10,
+        "husbokstav": null
+      },
+      "endringstidspunkt": {
+        "weekOfWeekyear": 34,
+        "millisOfSecond": 0,
+        "secondOfMinute": 0,
+        "year": 2018,
+        "era": 1,
+        "dayOfMonth": 23,
+        "dayOfWeek": 4,
+        "dayOfYear": 235,
+        "monthOfYear": 8,
+        "yearOfCentury": 18,
+        "yearOfEra": 2018,
+        "centuryOfEra": 20,
+        "weekyear": 2018,
+        "hourOfDay": 0,
+        "minuteOfHour": 0,
+        "millisOfDay": 0,
+        "secondOfDay": 0,
+        "minuteOfDay": 0,
+        "zone": {
+          "fixed": false,
+          "uncachedZone": {
+            "fixed": false,
+            "cachable": true,
+            "id": "Europe\/Belgrade"
+          },
+          "id": "Europe\/Belgrade"
+        },
+        "millis": 1534975200000,
+        "chronology": {
+          "zone": {
+            "fixed": false,
+            "uncachedZone": {
+              "fixed": false,
+              "cachable": true,
+              "id": "Europe\/Belgrade"
+            },
+            "id": "Europe\/Belgrade"
+          }
+        },
+        "equalNow": false,
+        "afterNow": false,
+        "beforeNow": true
+      },
+      "endretAv": "AJOURHD",
+      "endringstype": "ENDRET"
+    },
+    "ident": {
+      "ident": "01116110969",
+      "type": {
+        "value": "fnr",
+        "kodeRef": null,
+        "kodeverksRef": "http:\/\/nav.no\/kodeverk\/Kodeverk\/Personidenter"
+      }
+    },
+    "personnavn": {
+      "etternavn": "FAMILIE 9",
+      "fornavn": "TORMOD",
+      "mellomnavn": "ROY",
+      "sammensattNavn": "FAMILIE 9 TORMOD ROY",
+      "endringstidspunkt": {
+        "weekOfWeekyear": 34,
+        "millisOfSecond": 0,
+        "secondOfMinute": 0,
+        "year": 2018,
+        "era": 1,
+        "dayOfMonth": 23,
+        "dayOfWeek": 4,
+        "dayOfYear": 235,
+        "monthOfYear": 8,
+        "yearOfCentury": 18,
+        "yearOfEra": 2018,
+        "centuryOfEra": 20,
+        "weekyear": 2018,
+        "hourOfDay": 0,
+        "minuteOfHour": 0,
+        "millisOfDay": 0,
+        "secondOfDay": 0,
+        "minuteOfDay": 0,
+        "zone": {
+          "fixed": false,
+          "uncachedZone": {
+            "fixed": false,
+            "cachable": true,
+            "id": "Europe\/Belgrade"
+          },
+          "id": "Europe\/Belgrade"
+        },
+        "millis": 1534975200000,
+        "chronology": {
+          "zone": {
+            "fixed": false,
+            "uncachedZone": {
+              "fixed": false,
+              "cachable": true,
+              "id": "Europe\/Belgrade"
+            },
+            "id": "Europe\/Belgrade"
+          }
+        },
+        "equalNow": false,
+        "afterNow": false,
+        "beforeNow": true
+      },
+      "endretAv": "AJOURHD",
+      "endringstype": "ENDRET"
+    },
+    "postadresse": null,
+    "gjeldendePostadresseType": {
+      "value": "BOSTEDSADRESSE",
+      "kodeRef": null,
+      "kodeverksRef": "http:\/\/nav.no\/kodeverk\/Kodeverk\/Postadressetyper"
+    },
+    "elektroniskKommunikasjonskanal": [
+
+    ],
+    "midlertidigPostadresse": null,
+    "preferanser": {
+      "maalform": null,
+      "elektroniskKorrespondanse": false,
+      "foretrukketElektroniskKommunikasjonskanal": null
+    }
+  }
+}
