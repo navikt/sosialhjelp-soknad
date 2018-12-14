@@ -4,9 +4,9 @@ const Banner: React.StatelessComponent<{ children: React.ReactNode } & {}> = ({ 
 	return (
 		<div className="banner">
 			<div className="blokk-center">
-				<div className="banner__tittel">
+				<h1 className="banner__tittel">
 					{children}
-				</div>
+				</h1>
 			</div>
 		</div>
 	);
