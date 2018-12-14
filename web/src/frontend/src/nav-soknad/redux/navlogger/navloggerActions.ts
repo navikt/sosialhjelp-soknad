@@ -37,6 +37,7 @@ const createLogEntry = (message: string, level: NavLogLevel): NavLogEntry => {
 };
 
 const loggException = (errorMessage: string, url: string, line?: number, column?: number, error?: any): NavloggerActionTypes => {
+	const stacktrace = error.hasOwnProperty("stack") ? "\nStacktrace" + error.stack : "";
 	const logEntry: NavLogEntry = {
 		level: NavLogLevel.ERROR,
 		userAgent: window.navigator.userAgent,
@@ -44,7 +45,7 @@ const loggException = (errorMessage: string, url: string, line?: number, column?
 		message: errorMessage,
 		jsFileUrl: url,
 		lineNumber: line,
-		error
+		error: stacktrace
 	};
 	if (column) {
 		logEntry.columnNumber = column;
