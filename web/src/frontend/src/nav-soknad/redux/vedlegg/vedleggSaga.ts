@@ -50,7 +50,9 @@ function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 			feilKode = response[ID];
 		}
 		yield put(lastOppVedleggFeilet(action.belopFaktumId, feilKode));
-		yield put(loggFeil("Last opp vedlegg feilet: " + reason.toString()));
+		if (feilKode !== "opplasting.feilmelding.feiltype") {
+			yield put(loggFeil("Last opp vedlegg feilet: " + reason.toString()));
+		}
 	}
 }
 
