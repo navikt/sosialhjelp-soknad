@@ -174,7 +174,7 @@ class AdresseAutocomplete extends React.Component<Props, StateProps> {
 				this.executePostponedSearch();
 				return;
 			}
-			fetchToJson("informasjon/adressesok?sokestreng=" + value)
+			fetchToJson("informasjon/adressesok?sokestreng=" + encodeURI(value))
 				.then((response: any) => {
 					this.setState({adresser: this.removeDuplicatesAfterTransform(response, this.formaterAdresseString).slice(0, 8)});
 					this.setState({antallAktiveSok: this.state.antallAktiveSok - 1});
