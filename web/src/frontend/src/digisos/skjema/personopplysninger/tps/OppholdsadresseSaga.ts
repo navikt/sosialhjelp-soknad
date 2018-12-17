@@ -178,7 +178,8 @@ function* lagreAdresseOgSoknadsmottakerSaga(action: HentSoknadsmottakerAction): 
 			action.oppholdsadressevalg,
 			soknadsmottakerFaktum);
 	} catch (reason) {
-		yield put(loggFeil("Hent soknadsmottaker feilet: " + reason.toString()));
+		const stacktrace = reason.hasOwnProperty("stack") ? "\nStacktrace" + reason.stack : "";
+		yield put(loggFeil("Hent soknadsmottaker feilet: " + reason.toString() + stacktrace));
 		yield put(navigerTilServerfeil());
 	}
 }
