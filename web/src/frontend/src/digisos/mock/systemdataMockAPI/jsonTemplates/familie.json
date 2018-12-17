@@ -209,15 +209,7 @@
     }
   },
   "kjoenn": null,
-  "personnavn": {
-    "etternavn": "Artanis",
-    "fornavn": "Hierarch",
-    "mellomnavn": "SC",
-    "sammensattNavn": null,
-    "endringstidspunkt": null,
-    "endretAv": null,
-    "endringstype": null
-  },
+  "personnavn": null,
   "personstatus": null,
   "postadresse": null,
   "doedsdato": null,

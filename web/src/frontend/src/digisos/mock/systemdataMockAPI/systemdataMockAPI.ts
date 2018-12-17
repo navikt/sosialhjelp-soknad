@@ -32,6 +32,7 @@ const BANKKONTO: string = "bankkonto";
 const VERDI: string = "verdi";
 const ARBEIDSFORHOLD: string = "arbeidsforhold";
 const ORGANISASJON: string = "organisasjon";
+const PERSONNAVN: string = "personnavn";
 
 
 export enum Valg {
@@ -42,6 +43,21 @@ export enum Valg {
 
 
 export const SystemdataMockAPI = {
+
+	"settNavn" : (fornavn: string, mellomnavn: string, etternavn: string) => {
+		const navnObject: object =
+		{
+			"etternavn": etternavn,
+			"fornavn": fornavn,
+			"mellomnavn": mellomnavn,
+			"sammensattNavn": null,
+			"endringstidspunkt": null,
+			"endretAv": null,
+			"endringstype": null
+		};
+
+		familie[PERSONNAVN] = navnObject;
+	},
 
 	"settMidlertidigPostadresse" : (valg: Valg, midlertidigPostadresseEgendefinertValue: object) => {
 		if (valg === Valg.Default){
@@ -146,9 +162,11 @@ export const SystemdataMockAPI = {
 	"send" : () => {
 		harSystemregistrertTelefonnummer ? settMockData(endpoints.telefon, telefon) : clearMockData(endpoints.telefon);
 
+		settMockData(endpoints.familie, familie);
 		settMockData(endpoints.brukerprofil, brukerprofil);
 		settMockData(endpoints.arbeid, arbeid);
 		settMockData(endpoints.organisasjon, organisasjon);
+
 	},
 
 	"NoOp" : () => {

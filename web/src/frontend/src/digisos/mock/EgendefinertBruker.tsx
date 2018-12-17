@@ -88,9 +88,12 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 
 
 	start(){
+
+		SystemdataMockAPI.settNavn(this.state.fornavn, this.state.mellomnavn, this.state.etternavn);
 		SystemdataMockAPI.settTelefonnummer(this.state.telefonnummer, this.state.telefonnummer_value);
 		SystemdataMockAPI.settBankkontonummer(this.state.bankkonto, this.state.bankkonto_value);
-		SystemdataMockAPI.settMidlertidigPostadresse(this.state.midlertidigPostadresse, this.state.midlertidigPostadresseEgendefinertValue)
+		SystemdataMockAPI.settMidlertidigPostadresse(this.state.midlertidigPostadresse, this.state.midlertidigPostadresseEgendefinertValue);
+
 
 		this.state.arbeidsforhold_liste.forEach((forhold: NyttArbeidsforholdObject, key: number) => {
 			if (forhold.type === ArbeidsforholdType.NAVN){
