@@ -4,7 +4,7 @@ import "whatwg-fetch";
 import {getApiBaseUrl, getCookie} from "../../nav-soknad/utils/rest-utils";
 import {tilStart} from "../../nav-soknad/redux/navigasjon/navigasjonActions";
 
-import endpoints from "./endpoints.json";
+import endpoints from "./systemdataMockAPI/endpoints.json";
 
 
 import JimDescription from "./jsonPredefinedPeople/jim/description.json";
