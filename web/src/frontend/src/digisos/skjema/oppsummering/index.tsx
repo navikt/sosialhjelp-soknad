@@ -18,6 +18,7 @@ import { getIntlTextOrKey } from "../../../nav-soknad/utils/intlUtils";
 import { Link } from "react-router-dom";
 import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
 import InformasjonsBoks from "./InformasjonsBoks";
+// import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
 
 interface StateProps {
 	oppsummering: Oppsummering;
@@ -32,10 +33,18 @@ type Props = FaktumComponentProps &
 	StateProps &
 	InjectedIntlProps;
 
-class OppsummeringView extends React.Component<Props, {}> {
+class OppsummeringView extends React.Component<Props, {focus: boolean}> {
+
 	constructor(props: Props) {
 		super(props);
 		this.getOppsummering = this.getOppsummering.bind(this);
+		this.state = {
+			focus: false
+		}
+	}
+
+	onBekreftFocus(value: boolean) {
+		this.setState({focus: value})
 	}
 
 	componentDidMount() {
@@ -114,9 +123,34 @@ class OppsummeringView extends React.Component<Props, {}> {
 						<InformasjonsBoks/>
 					</div>
 
+
+					{/*<BekreftCheckboksPanel*/}
+						{/*label={bekreftOpplysninger}*/}
+						{/*checked={this.props.bekreftet}*/}
+						{/*onChange={() => this.props.dispatch(bekreftOppsummering())}*/}
+						{/*className={this.props.visBekreftMangler ? " bekreftCheckboksPanel--feil " : ""}*/}
+					{/*>*/}
+							{/*<FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger"/>*/}
+
+
+					{/*</BekreftCheckboksPanel>*/}
+					
+					{/*<div role="alert" aria-live="assertive">*/}
+						{/*<div className="skjemaelement__feilmelding">Du må bekrefte før søknaden kan sendes inn.*/}
+						{/*</div>*/}
+					{/*</div>*/}
+
+					{/*<p>&nbsp;</p>*/}
+
+
 					<div className="bekreftOpplysningerPanel blokk-xs bolk">
-						<div className={classNames + " bekreftCheckboksPanel-innhold " +
-							(this.props.bekreftet ? " bekreftOpplysningerPanel__checked " : " ")}
+						<div
+							className={classNames + " bekreftCheckboksPanel-innhold " +
+								(this.props.bekreftet ? " bekreftOpplysningerPanel__checked " : " ") +
+								(this.state.focus ? " bekreftOpplysningerPanel--focus " : " ")
+							}
+							onFocus={() => this.onBekreftFocus(true)}
+							onBlur={() => this.onBekreftFocus(false)}
 						>
 							<p style={{marginTop: "0"}}>
 								<FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger"/>

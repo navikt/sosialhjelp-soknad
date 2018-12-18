@@ -27,7 +27,7 @@
 		"nav-frontend-typografi": "^1.0.12",
 		"node-less-chokidar": "^0.3.1",
 		"prop-types": "^15.6.2",
-		"react": "^16.6.0",
+		"react": "^16.6.3",
 		"react-autocomplete": "^1.8.1",
 		"react-collapse": "^4.0.3",
 		"react-document-title": "^2.0.3",

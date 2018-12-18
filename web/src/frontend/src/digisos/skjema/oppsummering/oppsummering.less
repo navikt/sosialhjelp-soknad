@@ -1,5 +1,6 @@
 @vpad: 2rem;
 
+// Eldre versjon kopiert fra nav-frontend-moduler
 .infopanel-oppsummering {
   margin-top: 2rem;
 }
@@ -7,19 +8,96 @@
 .bekreftOpplysningerPanel {
   margin-left: 2rem;
   margin-right: 2rem;
+  box-shadow: 0 0 0 2px transparent;
+  border: 1px solid transparent;
+}
+
+.bekreftOpplysningerPanel--focus {
+  box-shadow: 0 0 0 2px #ffbd66;
+  border: 1px solid transparent;
 }
 
 .bekreftOpplysningerPanel__checked {
   background-color: #cde7d8 !important;
   border-color: #cde7d8 !important;
+  transition: all linear 100ms;
 
   .skjemaelement__label:before {
+	  // background-color: @navGronn !important;;
 	  background-color: #6ab889 !important;
 	  border-color: transparent !important;
 	  background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3L…41LDEuNi0wLjEsMi4xbDAsMEw1LDkuNkM0LjcsOS45LDQuNCwxMCw0LDEweiIvPjwvc3ZnPg==");
   }
 
 }
+
+//// Kopiert fra nav-frontend-moduler:
+//.bekreftCheckboksPanel--focus {
+//  box-shadow: 0 0 0 2px #ffbd66;
+//}
+//
+////
+//
+//.bekreftCheckboksPanel--feil {
+//  background-color: @navRosa !important;
+//}
+//
+//.bekreftCheckboksPanel {
+//
+//  background-color: @orangeFocusLighten80;
+//  border-color: @orangeFocusLighten80;
+//  cursor: unset;
+//  transition: all linear 100ms;
+//  padding: 1rem;
+//  margin-left: 2rem;
+//  margin-right: 2rem;
+//  border-radius: 8px;
+//
+//  .bekreftCheckboksPanel-innhold {
+//	margin-bottom: 1rem;
+//	margin-left: -2rem;
+//  }
+//
+//  .skjemaelement {
+//	padding-top: 1rem;
+//  }
+//
+//  &--checked {
+//	background-color: @navGronnLighten80;
+//	border-color: @navGronnLighten80;
+//
+//	.skjemaelement__label:before {
+//	  background-color: #6ab889 !important;
+//	  // background-color: @navGronn !important;
+//	  border-color: transparent !important;
+//	  background-image: @bekreftCheckedSvg;
+//	}
+//
+//  }
+//
+//  .skjemaelement__label {
+//
+//	padding-top: 0.5rem;
+//	padding-bottom: 0.5rem;
+//	padding-right: 0.5rem;
+//
+//	&:before {
+//	  position: absolute;
+//	  top: 0.5rem;
+//	  left: 0;
+//	  border-radius: 4px;
+//	  background-color: @orangeFocusLighten80;
+//	  border-color: @orangeFocus;
+//	}
+//
+//	&:hover {
+//	  &:before:not(--checked) {
+//		background-color: @orangeFocus;
+//	  }
+//	}
+//  }
+//}
+
 
 @media @mobile {
   .bekreftOpplysningerPanel {
