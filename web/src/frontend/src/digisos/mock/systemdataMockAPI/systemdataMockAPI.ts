@@ -1,5 +1,5 @@
 import endpoints from "./endpoints.json";
-import {clearMockData, settMockData} from "./mockRestUtils";
+import { settMockData} from "./mockRestUtils";
 
 import adresserJSON from "./jsonTemplates/adresser.json";
 import arbeidJSON from "./jsonTemplates/arbeid.json";
@@ -23,8 +23,6 @@ const telefon: object = telefonJSON;
 const utbetaling: object = utbetalingJSON;
 
 const midlertidigPostadresse: object = midlertidigPostadresseJSON;
-
-let harSystemregistrertTelefonnummer: boolean = false;
 
 const PERSON: string = "person";
 const MIDLERTIDIGPOSTADRESSE: string = "midlertidigPostadresse";
@@ -69,16 +67,20 @@ export const SystemdataMockAPI = {
 		}
 	},
 
-	"settTelefonnummer" : (harSystemregistrertTelefonnummerInput: boolean, telefonnummer: string) => {
+	"settTelefonnummer" : (telefonnummer: string | null) => {
+		if (typeof telefonnummer === "undefined") {
+			throw new Error("Mangler telefonnummer (men det er lov å sette eksplisitt til null).")
+		}
 		telefon[VERDI] = telefonnummer;
-		harSystemregistrertTelefonnummer = harSystemregistrertTelefonnummerInput;
 	},
 
-	"settBankkontonummer" : (harSystemregistrertBankkontonummer: boolean, bankkontonummer: string) => {
+	"settBankkontonummer" : (bankkontonummer: string | null) => {
 
-		harSystemregistrertBankkontonummer
-			? brukerprofil[PERSON][BANKKONTO] = { "bankkonto" : { "bankkontonummer": bankkontonummer} }
-			: brukerprofil[PERSON][BANKKONTO] = null;
+		if (bankkontonummer !== null){
+			brukerprofil[PERSON][BANKKONTO] = { "bankkonto" : { "bankkontonummer": bankkontonummer} }
+		} else {
+			brukerprofil[PERSON][BANKKONTO] = null;
+		}
 	},
 
 	"settArbeidsforholdMedArbeidsgivernummer" : (startDato: string, sluttDato: string, stillingsProsent: string, arbeidsgiverNummer: string, arbeidsgiverNavn: string ) => {
@@ -160,8 +162,7 @@ export const SystemdataMockAPI = {
 	},
 
 	"send" : () => {
-		harSystemregistrertTelefonnummer ? settMockData(endpoints.telefon, telefon) : clearMockData(endpoints.telefon);
-
+		settMockData(endpoints.telefon, telefon);
 		settMockData(endpoints.familie, familie);
 		settMockData(endpoints.brukerprofil, brukerprofil);
 		settMockData(endpoints.arbeid, arbeid);
@@ -176,7 +177,6 @@ export const SystemdataMockAPI = {
 		console.warn(norg);
 		console.warn(organisasjon);
 		console.warn(utbetaling);
-
 		console.warn(midlertidigPostadresse);
 	}
 };

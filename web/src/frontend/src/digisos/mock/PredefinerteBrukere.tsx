@@ -27,13 +27,6 @@ class PredefinerteBrukere extends React.Component<Props, {}> {
 		super(props);
 	}
 
-	componentDidMount() {
-		const mockdataName = "systemdataMock";
-		window[mockdataName] =  (melding: string) => {
-			console.warn("My life, for Aiur. Melding: " + melding);
-			return "Returned from window function";
-		};
-	}
 
 	settMockData(path: string, payload: object) {
 		const url = getApiBaseUrl() + "internal/mock/tjeneste/" + path;

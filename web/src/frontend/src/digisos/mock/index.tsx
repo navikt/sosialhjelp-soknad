@@ -6,6 +6,7 @@ import "whatwg-fetch";
 
 import PredefinerteBrukere from "./PredefinerteBrukere";
 import EgendefinertBruker from "./EgendefinertBruker";
+import {SystemdataMockAPI} from "./systemdataMockAPI/systemdataMockAPI";
 
 
 export interface PersonJsonData {
@@ -38,6 +39,18 @@ export interface StateProps {
 type Props = StateProps & DispatchProps;
 
 class Mock extends React.Component<Props, {}> {
+
+	componentDidMount() {
+		const mockdataName = "systemdataMock";
+		window[mockdataName] = SystemdataMockAPI;
+
+		/*
+		window[mockdataName] =  (melding: string) => {
+			document.getElementById("root").innerHTML = "okok" + melding;
+		};
+		*/
+	}
+
 	render() {
 		return (
 			<div>

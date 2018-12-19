@@ -9,7 +9,7 @@ import {SystemdataMockAPI, Valg} from "./systemdataMockAPI/systemdataMockAPI";
 import NyttArbeidsforhold, {
 	ArbeidsforholdType,
 	NyttArbeidsforholdObject
-} from "./systemdataMockAPI/mockComponents/nyttArbeidsforhold";
+} from "./mockComponents/nyttArbeidsforhold";
 
 
 interface StateProps {
@@ -90,8 +90,9 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 	start(){
 
 		SystemdataMockAPI.settNavn(this.state.fornavn, this.state.mellomnavn, this.state.etternavn);
-		SystemdataMockAPI.settTelefonnummer(this.state.telefonnummer, this.state.telefonnummer_value);
-		SystemdataMockAPI.settBankkontonummer(this.state.bankkonto, this.state.bankkonto_value);
+
+		SystemdataMockAPI.settTelefonnummer(this.state.telefonnummer ? this.state.telefonnummer_value : null);
+		SystemdataMockAPI.settBankkontonummer(this.state.bankkonto ? this.state.bankkonto_value : null);
 		SystemdataMockAPI.settMidlertidigPostadresse(this.state.midlertidigPostadresse, this.state.midlertidigPostadresseEgendefinertValue);
 
 
