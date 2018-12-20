@@ -82,8 +82,11 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
 			yield put(lesEttersendteVedlegg(response));
 		}
 	} catch (reason) {
-		yield put(lastOppEttersendelseFeilet(reason.toString(), action.vedleggId.toString()));
-		yield put(loggFeil("Last opp vedlegg for ettersendelse feilet: " + reason.toString()));
+		const errorMsg = reason.toString();
+		yield put(lastOppEttersendelseFeilet(errorMsg, action.vedleggId.toString()));
+		if ( errorMsg.match(/Unsupported Media Type|Entity Too Large/) === null ) {
+			yield put(loggFeil("Last opp vedlegg for ettersendelse feilet: " + errorMsg));
+		}
 	}
 }
 
