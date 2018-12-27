@@ -5,19 +5,18 @@ import {State} from "../redux/reducers";
 import {Input, Radio} from "nav-frontend-skjema";
 import {Collapse} from "react-collapse";
 import {tilStart} from "../../nav-soknad/redux/navigasjon/navigasjonActions";
-import {SystemdataMockAPI, Valg} from "./systemdataMockAPI/systemdataMockAPI";
 import NyttArbeidsforhold, {
 	ArbeidsforholdType,
 	NyttArbeidsforholdObject
 } from "./mockComponents/nyttArbeidsforhold";
+import {getDkifJson, settTelefonnummer} from "soknadsosialhjelp-systemdatamock";
+// import { settMockData } from "./mockRestUtils/mockRestUtils";
 
 
 interface StateProps {
 	fornavn: string;
 	mellomnavn: string;
 	etternavn: string;
-	midlertidigPostadresse: Valg;
-	midlertidigPostadresseEgendefinertValue: object;
 	telefonnummer: boolean;
 	telefonnummer_value: string;
 	bankkonto: boolean;
@@ -37,8 +36,6 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 			fornavn: "Jim",
 			mellomnavn: "",
 			etternavn: "Raynor",
-			midlertidigPostadresse: Valg.Nei,
-			midlertidigPostadresseEgendefinertValue: {},
 			telefonnummer: false,
 			telefonnummer_value: "99887766",
 			bankkonto: false,
@@ -69,8 +66,8 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 		return(
 			<div>
 				<div>{ key + 1 }</div>
-				<div>Start dato: { forhold.startDato}</div>
-				<div>Slutt dato: { forhold.sluttDato}</div>
+				<div>Start dato: { forhold.startDato }</div>
+				<div>Slutt dato: { forhold.sluttDato }</div>
 				<div>Stillingsprosent: { forhold.stillingsProsent}</div>
 				<div>
 					{ forhold.type === ArbeidsforholdType.NAVN && <div>Navn: { forhold.navn}, Arbeidsgivernummer: {forhold.arbeidsgivernummer}</div>}
@@ -89,42 +86,52 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 
 	start(){
 
-		SystemdataMockAPI.settNavn(this.state.fornavn, this.state.mellomnavn, this.state.etternavn);
-
-		SystemdataMockAPI.settTelefonnummer(this.state.telefonnummer ? this.state.telefonnummer_value : null);
-		SystemdataMockAPI.settBankkontonummer(this.state.bankkonto ? this.state.bankkonto_value : null);
-		SystemdataMockAPI.settMidlertidigPostadresse(this.state.midlertidigPostadresse, this.state.midlertidigPostadresseEgendefinertValue);
 
 
-		this.state.arbeidsforhold_liste.forEach((forhold: NyttArbeidsforholdObject, key: number) => {
-			if (forhold.type === ArbeidsforholdType.NAVN){
-				SystemdataMockAPI.settArbeidsforholdMedArbeidsgivernummer(
-					forhold.startDato,
-					forhold.sluttDato,
-					forhold.stillingsProsent,
-					forhold.arbeidsgivernummer,
-					forhold.navn
-				)
-			}
-			if (forhold.type === ArbeidsforholdType.IDENT){
-				SystemdataMockAPI.settArbeidsforholdMedIdent(
-					forhold.startDato,
-					forhold.sluttDato,
-					forhold.stillingsProsent,
-					forhold.ident
-				)
-			}
-			if (forhold.type === ArbeidsforholdType.ORGANISASJON){
-				SystemdataMockAPI.settArbeidsforholdMedOrganisasjonsnummer(
-					forhold.startDato,
-					forhold.sluttDato,
-					forhold.stillingsProsent,
-					forhold.orgnummer
-				)
-			}
-		});
 
-		SystemdataMockAPI.send();
+		settTelefonnummer("99887766");
+		const dkifJson = getDkifJson();
+
+		console.warn(dkifJson);
+
+		// SystemdataMockAPI.settNavn(this.state.fornavn, this.state.mellomnavn, this.state.etternavn);
+		//
+		// SystemdataMockAPI.settTelefonnummer(this.state.telefonnummer ? this.state.telefonnummer_value : null);
+		// SystemdataMockAPI.settBankkontonummer(this.state.bankkonto ? this.state.bankkonto_value : null);
+		// SystemdataMockAPI.settMidlertidigPostadresse(this.state.midlertidigPostadresse, this.state.midlertidigPostadresseEgendefinertValue);
+		//
+		//
+		// this.state.arbeidsforhold_liste.forEach((forhold: NyttArbeidsforholdObject, key: number) => {
+		// 	if (forhold.type === ArbeidsforholdType.NAVN){
+		// 		SystemdataMockAPI.settArbeidsforholdMedArbeidsgivernummer(
+		// 			forhold.startDato,
+		// 			forhold.sluttDato,
+		// 			forhold.stillingsProsent,
+		// 			forhold.arbeidsgivernummer,
+		// 			forhold.navn
+		// 		)
+		// 	}
+		// 	if (forhold.type === ArbeidsforholdType.IDENT){
+		// 		SystemdataMockAPI.settArbeidsforholdMedIdent(
+		// 			forhold.startDato,
+		// 			forhold.sluttDato,
+		// 			forhold.stillingsProsent,
+		// 			forhold.ident
+		// 		)
+		// 	}
+		// 	if (forhold.type === ArbeidsforholdType.ORGANISASJON){
+		// 		SystemdataMockAPI.settArbeidsforholdMedOrganisasjonsnummer(
+		// 			forhold.startDato,
+		// 			forhold.sluttDato,
+		// 			forhold.stillingsProsent,
+		// 			forhold.orgnummer
+		// 		)
+		// 	}
+		// });
+		//
+		// SystemdataMockAPI.send();
+
+
 
 		this.props.dispatch(tilStart());
 	}
@@ -139,12 +146,12 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 				<Input onChange={(evt: any) => this.setState({mellomnavn: evt.target.value})} className="mock-input-felt" label="Mellomnavn" value={this.state.mellomnavn} />
 				<Input onChange={(evt: any) => this.setState({etternavn: evt.target.value})} className="mock-input-felt" label="Etternavn" value={this.state.etternavn} />
 
-				<div>
-					Midlertidig Adresse:
-					<Radio onChange={() => this.setState({midlertidigPostadresse: Valg.Nei})} label='Nei' name='midlertidigPostadresse' value={'nei'} defaultChecked={true} />
-					<Radio onChange={() => this.setState({midlertidigPostadresse: Valg.Default})} label='Ja, defaultadresse' name='midlertidigPostadresse' value={'default'} />
+				{/*<div>*/}
+					{/*Midlertidig Adresse:*/}
+					{/*<Radio onChange={() => this.setState({midlertidigPostadresse: Valg.Nei})} label='Nei' name='midlertidigPostadresse' value={'nei'} defaultChecked={true} />*/}
+					{/*<Radio onChange={() => this.setState({midlertidigPostadresse: Valg.Default})} label='Ja, defaultadresse' name='midlertidigPostadresse' value={'default'} />*/}
 
-				</div>
+				{/*</div>*/}
 
 				<div>
 					Telefonnummer:
