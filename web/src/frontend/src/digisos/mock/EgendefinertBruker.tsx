@@ -9,8 +9,8 @@ import NyttArbeidsforhold, {
 	ArbeidsforholdType,
 	NyttArbeidsforholdObject
 } from "./mockComponents/nyttArbeidsforhold";
-import {getDkifJson, settTelefonnummer} from "soknadsosialhjelp-systemdatamock";
-// import { settMockData } from "./mockRestUtils/mockRestUtils";
+import * as systemdatamock from "soknadsosialhjelp-systemdatamock";
+import {settMockData} from "./mockRestUtils/mockRestUtils";
 
 
 interface StateProps {
@@ -86,50 +86,8 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 
 	start(){
 
-
-
-
-		settTelefonnummer("99887766");
-		const dkifJson = getDkifJson();
-
-		console.warn(dkifJson);
-
-		// SystemdataMockAPI.settNavn(this.state.fornavn, this.state.mellomnavn, this.state.etternavn);
-		//
-		// SystemdataMockAPI.settTelefonnummer(this.state.telefonnummer ? this.state.telefonnummer_value : null);
-		// SystemdataMockAPI.settBankkontonummer(this.state.bankkonto ? this.state.bankkonto_value : null);
-		// SystemdataMockAPI.settMidlertidigPostadresse(this.state.midlertidigPostadresse, this.state.midlertidigPostadresseEgendefinertValue);
-		//
-		//
-		// this.state.arbeidsforhold_liste.forEach((forhold: NyttArbeidsforholdObject, key: number) => {
-		// 	if (forhold.type === ArbeidsforholdType.NAVN){
-		// 		SystemdataMockAPI.settArbeidsforholdMedArbeidsgivernummer(
-		// 			forhold.startDato,
-		// 			forhold.sluttDato,
-		// 			forhold.stillingsProsent,
-		// 			forhold.arbeidsgivernummer,
-		// 			forhold.navn
-		// 		)
-		// 	}
-		// 	if (forhold.type === ArbeidsforholdType.IDENT){
-		// 		SystemdataMockAPI.settArbeidsforholdMedIdent(
-		// 			forhold.startDato,
-		// 			forhold.sluttDato,
-		// 			forhold.stillingsProsent,
-		// 			forhold.ident
-		// 		)
-		// 	}
-		// 	if (forhold.type === ArbeidsforholdType.ORGANISASJON){
-		// 		SystemdataMockAPI.settArbeidsforholdMedOrganisasjonsnummer(
-		// 			forhold.startDato,
-		// 			forhold.sluttDato,
-		// 			forhold.stillingsProsent,
-		// 			forhold.orgnummer
-		// 		)
-		// 	}
-		// });
-		//
-		// SystemdataMockAPI.send();
+		systemdatamock.settTelefonnummer(this.state.telefonnummer_value);
+		settMockData(systemdatamock.getTelefonPath(), systemdatamock.getTelefonJson());
 
 
 

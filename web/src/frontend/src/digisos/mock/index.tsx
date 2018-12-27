@@ -3,11 +3,8 @@ import { connect } from "react-redux";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import "whatwg-fetch";
 
-
-import PredefinerteBrukere from "./PredefinerteBrukere";
+// import PredefinerteBrukere from "./PredefinerteBrukere";
 import EgendefinertBruker from "./EgendefinertBruker";
-import {SystemdataMockAPI} from "./systemdataMockAPI/systemdataMockAPI";
-
 
 export interface PersonJsonData {
 	"adresser" : object;
@@ -40,27 +37,16 @@ type Props = StateProps & DispatchProps;
 
 class Mock extends React.Component<Props, {}> {
 
-	componentDidMount() {
-		const mockdataName = "systemdataMock";
-		window[mockdataName] = SystemdataMockAPI;
-
-		/*
-		window[mockdataName] =  (melding: string) => {
-			document.getElementById("root").innerHTML = "okok" + melding;
-		};
-		*/
-	}
-
 	render() {
 		return (
 			<div>
 				<div className="mock-body">
 					<EgendefinertBruker />
 				</div>
-				<p className="sectionBreak" />
-				<div className="mock-predefinerte-brukere-bolk">
-					<PredefinerteBrukere />
-				</div>
+				{/*<p className="sectionBreak" />*/}
+				{/*<div className="mock-predefinerte-brukere-bolk">*/}
+					{/*<PredefinerteBrukere />*/}
+				{/*</div>*/}
 			</div>
 		);
 	}
