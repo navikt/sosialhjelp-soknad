@@ -3,31 +3,7 @@ import { connect } from "react-redux";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import "whatwg-fetch";
 
-// import PredefinerteBrukere from "./PredefinerteBrukere";
 import EgendefinertBruker from "./EgendefinertBruker";
-
-export interface PersonJsonData {
-	"adresser" : object;
-	"arbeid" : object;
-	"brukerprofil": object;
-	"familie": object;
-	"norg": object;
-	"organisasjon": object;
-	"telefon": object;
-	"utbetaling": object;
-}
-
-export interface PersonJsonDescription {
-	"name": string;
-	"adresser": string;
-	"telefon" :  string;
-	"bankkonto":  string;
-	"arbeid":  string;
-	"gift": string;
-	"barn":  string;
-	"utbetalinger":  string;
-}
-
 
 export interface StateProps {
 	router: any
@@ -43,10 +19,6 @@ class Mock extends React.Component<Props, {}> {
 				<div className="mock-body">
 					<EgendefinertBruker />
 				</div>
-				{/*<p className="sectionBreak" />*/}
-				{/*<div className="mock-predefinerte-brukere-bolk">*/}
-					{/*<PredefinerteBrukere />*/}
-				{/*</div>*/}
 			</div>
 		);
 	}

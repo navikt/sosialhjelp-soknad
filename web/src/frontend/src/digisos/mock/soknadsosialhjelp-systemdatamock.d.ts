@@ -2,11 +2,14 @@ declare module "soknadsosialhjelp-systemdatamock" {
 
 	export function settNavn(fornavn: string , mellomnavn: string, etternavn: string): void;
 	export function settMidlertidigPostadresse(midlertidigPostadresseEgendefinertValue: string): void;
-	export function settTelefonnummer(x: string): void;
+	export function settTelefonnummer(telefonnummer: string): void;
 	export function settBankkontonummer(bankkontonummer: string) : void;
 	export function settArbeidsforholdMedArbeidsgivernummer(startDato:string, sluttDato:string, stillingsProsent:string, arbeidsgiverNummer:string , arbeidsgiverNavn:string ): void;
 	export function settArbeidsforholdMedIdent(startDato: string, sluttDato: string , stillingsProsent:string , ident:string ) : void;
 	export function settArbeidsforholdMedOrganisasjonsnummer( startDato: string, sluttDato: string, stillingsProsent:string, orgnummer:string ): void;
+	export function clearArbeidsforhold(): void;
+	export function settOrganisasjon(orgnummer: string, navn: string) : void;
+	export function clearOrganisasjon() : void;
 
 	export function getAdresserPath(): string;
 	export function getAdresserJson(): object;

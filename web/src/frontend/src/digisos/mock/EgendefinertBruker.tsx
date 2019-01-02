@@ -10,7 +10,7 @@ import NyttArbeidsforhold, {
 	NyttArbeidsforholdObject
 } from "./mockComponents/nyttArbeidsforhold";
 import * as systemdatamock from "soknadsosialhjelp-systemdatamock";
-import {settMockData} from "./mockRestUtils/mockRestUtils";
+import { settMockData } from "./mockRestUtils/mockRestUtils";
 
 
 interface StateProps {
@@ -21,6 +21,9 @@ interface StateProps {
 	telefonnummer_value: string;
 	bankkonto: boolean;
 	bankkonto_value: string;
+	organisasjon: boolean;
+	organisasjon_orgnummer: string,
+	organisasjon_navn: string,
 	arbeidsforhold: boolean;
 	arbeidsforhold_liste: NyttArbeidsforholdObject[];
 }
@@ -40,6 +43,9 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 			telefonnummer_value: "99887766",
 			bankkonto: false,
 			bankkonto_value: "12345678903",
+			organisasjon: false,
+			organisasjon_orgnummer: "123",
+			organisasjon_navn: "Team Liquid",
 			arbeidsforhold: false,
 			arbeidsforhold_liste: []
 		}
@@ -63,7 +69,7 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 
 	renderForholdRad(forhold: NyttArbeidsforholdObject, key: number){
 
-		return(
+		return (
 			<div>
 				<div>{ key + 1 }</div>
 				<div>Start dato: { forhold.startDato }</div>
@@ -80,14 +86,71 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 					this.setState({arbeidsforhold_liste: list})
 				}}>x</button>
 			</div>
-			)
+		)
 	}
 
 
 	start(){
 
-		systemdatamock.settTelefonnummer(this.state.telefonnummer_value);
+		console.warn(this.state.bankkonto_value);
+
+		// Sett navn
+		systemdatamock.settNavn(this.state.fornavn, this.state.mellomnavn, this.state.etternavn);
+
+		// Sett adresse
+
+		// Sett telefonnummer
+		if (this.state.telefonnummer){
+			systemdatamock.settTelefonnummer(this.state.telefonnummer_value);
+		} else {
+			systemdatamock.settTelefonnummer(null);
+		}
+
+		// Sett bankkonto
+		if (this.state.bankkonto){
+			systemdatamock.settBankkontonummer(this.state.bankkonto_value);
+		} else {
+			systemdatamock.settBankkontonummer(null);
+		}
+
+		// Sett organisasjon
+		if (this.state.organisasjon){
+			systemdatamock.settOrganisasjon(this.state.organisasjon_orgnummer, this.state.organisasjon_navn);
+		} else {
+			systemdatamock.clearOrganisasjon();
+		}
+
+
+		// Sett arbeidsforhold
+		if (this.state.arbeidsforhold){
+			if (this.state.arbeidsforhold_liste.length > 0){
+				this.state.arbeidsforhold_liste.forEach((forhold: NyttArbeidsforholdObject, key: number) => {
+					if (forhold.type === ArbeidsforholdType.NAVN){
+						systemdatamock.settArbeidsforholdMedArbeidsgivernummer(forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.arbeidsgivernummer, forhold.navn);
+					}
+					if (forhold.type === ArbeidsforholdType.IDENT){
+						systemdatamock.settArbeidsforholdMedIdent(forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.ident);
+					}
+					if (forhold.type === ArbeidsforholdType.ORGANISASJON){
+						systemdatamock.settArbeidsforholdMedOrganisasjonsnummer(forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.orgnummer);
+					}
+				})
+			}
+		} else {
+			systemdatamock.clearArbeidsforhold();
+		}
+
+		// Sett familie
+
+		// Sett utbetalinger
+
+
+		// Send alt
 		settMockData(systemdatamock.getTelefonPath(), systemdatamock.getTelefonJson());
+		settMockData(systemdatamock.getFamiliePath(), systemdatamock.getFamilieJson());
+		settMockData(systemdatamock.getBrukerprofilPath(), systemdatamock.getBrukerprofilJson());
+		settMockData(systemdatamock.getOrganisasjonPath(), systemdatamock.getOrganisasjonJson());
+		settMockData(systemdatamock.getArbeidPath(), systemdatamock.getArbeidJson());
 
 
 
@@ -108,7 +171,6 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 					{/*Midlertidig Adresse:*/}
 					{/*<Radio onChange={() => this.setState({midlertidigPostadresse: Valg.Nei})} label='Nei' name='midlertidigPostadresse' value={'nei'} defaultChecked={true} />*/}
 					{/*<Radio onChange={() => this.setState({midlertidigPostadresse: Valg.Default})} label='Ja, defaultadresse' name='midlertidigPostadresse' value={'default'} />*/}
-
 				{/*</div>*/}
 
 				<div>
@@ -133,6 +195,21 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 					</div>
 				</Collapse>
 
+				{/*Organisasjon*/}
+				<div>
+					Organisasjon:
+					<Radio onChange={() => this.setState({organisasjon: false})} label="Nei" name="organisasjon" value={'nei'} defaultChecked={true} />
+					<Radio onChange={() => this.setState({organisasjon: true})} label='Ja' name='organisasjon' value={'ja'} />
+				</div>
+				<Collapse isOpened={this.state.organisasjon}>
+					<div className='mock-collapse-body'>
+						<Input label='orgnummer' onChange={(evt:any) => this.setState({organisasjon_orgnummer: evt.target.value})} value={this.state.organisasjon_orgnummer} />
+						<Input label='navn' onChange={(evt:any) => this.setState({organisasjon_navn: evt.target.value})} value={this.state.organisasjon_navn} />
+					</div>
+				</Collapse>
+
+
+				{/*Arbeidsforhold*/}
 				<div className="mock-view-bolk">
 					<div>
 						Arbeidsforhold:
@@ -141,16 +218,10 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 					</div>
 					<Collapse isOpened={this.state.arbeidsforhold}>
 						<div>Liste over arbeidsforhold som er lagt til. </div>
-
 						{ this.settInnListeOverArbeidsforhold()}
-
-
-
 						<NyttArbeidsforhold onLeggTilNyttArbeidsforhold={(nyttArbeidsForhold: NyttArbeidsforholdObject) => this.handleLeggTilNyttArbeidsforhold(nyttArbeidsForhold)}/>
 					</Collapse>
 				</div>
-
-
 
 
 				<button onClick={() => this.start()} className="mock-egendefinert-GO">GO!</button>
