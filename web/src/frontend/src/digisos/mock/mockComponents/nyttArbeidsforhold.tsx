@@ -67,6 +67,7 @@ class NyttArbeidsforhold extends React.Component<Props, State> {
 		};
 
 		this.props.onLeggTilNyttArbeidsforhold(nyttArbeidsforholdObject);
+		this.setState({isOpened: false})
 	}
 
 

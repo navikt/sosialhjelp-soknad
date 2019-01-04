@@ -11,6 +11,7 @@ import NyttArbeidsforhold, {
 } from "./mockComponents/nyttArbeidsforhold";
 import * as systemdatamock from "soknadsosialhjelp-systemdatamock";
 import { settMockData } from "./mockRestUtils/mockRestUtils";
+import {NyttBarn, NyttBarnObject} from "./mockComponents/nyttBarn";
 
 
 interface StateProps {
@@ -22,10 +23,20 @@ interface StateProps {
 	bankkonto: boolean;
 	bankkonto_value: string;
 	organisasjon: boolean;
-	organisasjon_orgnummer: string,
-	organisasjon_navn: string,
+	organisasjon_orgnummer: string;
+	organisasjon_navn: string;
 	arbeidsforhold: boolean;
 	arbeidsforhold_liste: NyttArbeidsforholdObject[];
+	ektefelle: boolean;
+	ektefelle_foedselsnummer: string;
+	ektefelle_fornavn: string;
+	ektefelle_mellomnavn: string;
+	ektefelle_etternavn: string;
+	ektefelle_foedselsdato: string;
+	ektefelle_medSammeBostedsadresse: boolean;
+	ektefelle_medKode: string;
+	barn: boolean;
+	barn_liste: NyttBarnObject[];
 }
 
 type Props = StateProps & DispatchProps;
@@ -36,9 +47,9 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 	constructor(props: Props){
 		super(props);
 		this.state = {
-			fornavn: "Jim",
+			fornavn: "Han",
 			mellomnavn: "",
-			etternavn: "Raynor",
+			etternavn: "Solo",
 			telefonnummer: false,
 			telefonnummer_value: "99887766",
 			bankkonto: false,
@@ -47,7 +58,17 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 			organisasjon_orgnummer: "123",
 			organisasjon_navn: "Team Liquid",
 			arbeidsforhold: false,
-			arbeidsforhold_liste: []
+			arbeidsforhold_liste: [],
+			ektefelle: false,
+			ektefelle_foedselsnummer: "01017066655",
+			ektefelle_fornavn: "Leia",
+			ektefelle_mellomnavn: "",
+			ektefelle_etternavn: "Skywalker",
+			ektefelle_foedselsdato: "1970-01-01",
+			ektefelle_medSammeBostedsadresse: true,
+			ektefelle_medKode: "",
+			barn: false,
+			barn_liste: []
 		}
 	}
 
@@ -66,6 +87,8 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 			<div>{ a }</div>
 		)
 	}
+
+
 
 	renderForholdRad(forhold: NyttArbeidsforholdObject, key: number){
 
@@ -89,6 +112,42 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 		)
 	}
 
+	handleLeggTilNyttBarn(nyttBarn: NyttBarnObject){
+		const barn_liste = this.state.barn_liste;
+		barn_liste.push(nyttBarn);
+		this.setState({barn_liste})
+	}
+
+	settInnListeOverBarn(){
+		const a: any = [];
+		this.state.barn_liste.forEach((barn: NyttBarnObject, key: number) => {
+			a.push(<div key={key}>{this.renderBarnRad(barn, key)} </div>)
+		});
+		return (
+			<div>{ a }</div>
+		)
+	}
+
+	renderBarnRad(barn: NyttBarnObject, key: number){
+
+		return (
+			<div>
+				<div>{ key + 1 }</div>
+				<div>Fødselsnummer: { barn.ident }</div>
+				<div>Fornavn: { barn.fornavn }</div>
+				<div>Mellomnavn: { barn.mellomnavn }</div>
+				<div>Etternavn: { barn.etternavn }</div>
+				{ barn.sammeBostedsadresse && <div>samme bostedsadresse</div>}
+				{ !barn.sammeBostedsadresse && <div>ikke samme bostedsadresse</div>}
+				{ barn.doedsdato && <div>Har doedsdato: {barn.doedsdato_value}</div> }
+				<button onClick={() => {
+					const list: NyttBarnObject[] = this.state.barn_liste;
+					list.splice(key, key);
+					this.setState({barn_liste: list})
+				}}>x</button>
+			</div>
+		)
+	}
 
 	start(){
 
@@ -138,7 +197,65 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 			systemdatamock.clearArbeidsforhold();
 		}
 
-		// Sett familie
+		// Sett ektefelle
+		if(this.state.ektefelle){
+
+			if (this.state.ektefelle_medKode.length > 0) {
+				if (this.state.ektefelle_medKode === "6"){
+					systemdatamock.settEktefelleMedKodeSeks(
+						this.state.ektefelle_foedselsnummer,
+						this.state.ektefelle_fornavn,
+						this.state.ektefelle_mellomnavn,
+						this.state.ektefelle_etternavn,
+						this.state.ektefelle_foedselsdato
+					)
+				}
+				if (this.state.ektefelle_medKode === "7"){
+					systemdatamock.settEktefelleMedKodeSyv(
+						this.state.ektefelle_foedselsnummer,
+						this.state.ektefelle_fornavn,
+						this.state.ektefelle_mellomnavn,
+						this.state.ektefelle_etternavn,
+						this.state.ektefelle_foedselsdato
+					)
+				}
+
+			} else {
+				if (this.state.ektefelle_medSammeBostedsadresse) {
+					systemdatamock.settEktefelleMedSammeBostedsadresse(
+						this.state.ektefelle_foedselsnummer,
+						this.state.ektefelle_fornavn,
+						this.state.ektefelle_mellomnavn,
+						this.state.ektefelle_etternavn,
+						this.state.ektefelle_foedselsdato
+						)
+				} else {
+					systemdatamock.settEktefelleUtenSammeBostedsadresse(
+						this.state.ektefelle_foedselsnummer,
+						this.state.ektefelle_fornavn,
+						this.state.ektefelle_mellomnavn,
+						this.state.ektefelle_etternavn,
+						this.state.ektefelle_foedselsdato
+					)
+				}
+			}
+		}
+
+
+		// Sett barn
+		if(this.state.barn){
+			this.state.barn_liste.forEach((barn: NyttBarnObject, key: number) => {
+				if (barn.doedsdato){
+					systemdatamock.settBarnMedDoedsdato(barn.ident, barn.fornavn, barn.mellomnavn, barn.etternavn, barn.doedsdato_value);
+				} else {
+					if (barn.sammeBostedsadresse){
+						systemdatamock.settBarnSameBostedsadresse(barn.ident, barn.fornavn, barn.mellomnavn, barn.etternavn);
+					} else {
+						systemdatamock.settBarnIkkeSameBostedsadresse(barn.ident, barn.fornavn, barn.mellomnavn, barn.etternavn);
+					}
+				}
+			})
+		}
 
 
 		// Sett utbetalinger
@@ -223,9 +340,44 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 				</div>
 
 				{/*Ektefelle / Partner */}
+				<div>
+					<div>Ektefelle</div>
+					<div>
+						<Radio onChange={() => this.setState({ektefelle: false})} label='Nei' name='ektefelle' value={'nei'} defaultChecked={true} />
+						<Radio onChange={() => this.setState({ektefelle: true})} label='Ja' name='ektefelle' value={'ja'} />
+					</div>
+					<Collapse isOpened={this.state.ektefelle}>
+						<Input label='fødselsnummer' onChange={(evt: any) => this.setState({ektefelle_foedselsnummer: evt.target.value})} value={this.state.ektefelle_foedselsnummer}/>
+						<Input label='fornavn' onChange={(evt: any) => this.setState({ektefelle_fornavn: evt.target.value})} value={this.state.ektefelle_fornavn}/>
+						<Input label='mellomnavn' onChange={(evt: any) => this.setState({ektefelle_mellomnavn: evt.target.value})} value={this.state.ektefelle_mellomnavn}/>
+						<Input label='etternavn' onChange={(evt: any) => this.setState({ektefelle_etternavn: evt.target.value})} value={this.state.ektefelle_etternavn}/>
+						<Input label='fødselsdato' onChange={(evt: any) => this.setState({ektefelle_foedselsdato: evt.target.value})} value={this.state.ektefelle_foedselsdato}/>
+						Har samme bostedsadresse:
+						<Radio onChange={() => this.setState({ektefelle_medSammeBostedsadresse: true})} label='Ja' name='samme_bostedsadresse' value={'ja'} defaultChecked={true} />
+						<Radio onChange={() => this.setState({ektefelle_medSammeBostedsadresse: false})} label='Nei' name='samme_bostedsadresse' value={'nei'} />
+						Har kode 6 eller 7
+						<Radio onChange={() => this.setState({ektefelle_medKode: ""})} label='Nei' name='diskresjonskode' value={''} defaultChecked={true}/>
+						<Radio onChange={() => this.setState({ektefelle_medKode: "6"})} label='6' name='diskresjonskode' value={'6'} />
+						<Radio onChange={() => this.setState({ektefelle_medKode: "7"})} label='7' name='diskresjonskode' value={'7'} />
+
+					</Collapse>
+				</div>
 
 
 				{/*Barn*/}
+				<div className="mock-view-bolk">
+					<div>
+						Barn:
+						<Radio onChange={() => this.setState({barn: false})} label='Nei' name='barn' value={'nei'} defaultChecked={true} />
+						<Radio onChange={() => this.setState({barn: true})} label='Ja' name='barn' value={'ja'} />
+					</div>
+					<Collapse isOpened={this.state.barn}>
+						<div>Liste over barn som er lagt til. </div>
+						{ this.settInnListeOverBarn()}
+						<NyttBarn onLeggTilNyttBarn={(nyttBarn: NyttBarnObject) => this.handleLeggTilNyttBarn(nyttBarn)}/>
+					</Collapse>
+				</div>
+
 
 
 				<button onClick={() => this.start()} className="mock-egendefinert-GO">GO!</button>
