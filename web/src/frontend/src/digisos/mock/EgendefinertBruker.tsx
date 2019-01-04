@@ -92,8 +92,6 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 
 	start(){
 
-		console.warn(this.state.bankkonto_value);
-
 		// Sett navn
 		systemdatamock.settNavn(this.state.fornavn, this.state.mellomnavn, this.state.etternavn);
 
@@ -141,6 +139,7 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 		}
 
 		// Sett familie
+
 
 		// Sett utbetalinger
 
@@ -222,6 +221,11 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 						<NyttArbeidsforhold onLeggTilNyttArbeidsforhold={(nyttArbeidsForhold: NyttArbeidsforholdObject) => this.handleLeggTilNyttArbeidsforhold(nyttArbeidsForhold)}/>
 					</Collapse>
 				</div>
+
+				{/*Ektefelle / Partner */}
+
+
+				{/*Barn*/}
 
 
 				<button onClick={() => this.start()} className="mock-egendefinert-GO">GO!</button>

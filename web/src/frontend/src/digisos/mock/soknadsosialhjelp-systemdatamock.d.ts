@@ -10,6 +10,12 @@ declare module "soknadsosialhjelp-systemdatamock" {
 	export function clearArbeidsforhold(): void;
 	export function settOrganisasjon(orgnummer: string, navn: string) : void;
 	export function clearOrganisasjon() : void;
+	export function settEktefelleMedSammeBostedsadresse(ident: string, fornavn: string, mellomnavn: string, etternavn: string, foedselsdato: string): void;
+	export function settEktefelleUtenSammeBostedsadresse(ident: string, fornavn: string, mellomnavn: string, etternavn: string, foedselsdato: string): void;
+	export function settBarnSameBostedsadresse(ident: string, fornavn: string, mellomnavn: string, etternavn: string): void;
+	export function settBarnIkkeSameBostedsadresse(ident: string, fornavn: string, mellomnavn:string, etternavn:string): void;
+	export function settBarnMedDoedsdato(ident: string, fornavn: string, mellomnavn: string, etternavn: string, doedsdato: string): void;
+	export function clearFamilieforhold(): void;
 
 	export function getAdresserPath(): string;
 	export function getAdresserJson(): object;
