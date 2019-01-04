@@ -24,6 +24,7 @@ import VelgSoknadsmottaker from "./VelgSoknadsmottaker";
 import FinnNavKontorSpinner from "./FinnNavKontorSpinner";
 import { getIntlTextOrKey } from "../../../../nav-soknad/utils/intlUtils";
 import {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import { FormattedHTMLMessage } from "react-intl";
 
 export interface Adresse {
 	"adresse": null | string;
@@ -290,6 +291,7 @@ class Oppholdsadresse extends React.Component<Props, {}> {
 									}
 									legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 								>
+									<FormattedHTMLMessage id="kontakt.system.kontaktinfo.infotekst.ekstratekst"/>
 									<AdresseAutocomplete
 										adresseFaktum={adressesokAdresseFaktum}
 										onValgtVerdi={(adresse: any) => this.handleVelgAutocompleteAdresse(adresse)}

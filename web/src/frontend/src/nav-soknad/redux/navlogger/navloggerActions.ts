@@ -36,14 +36,16 @@ const createLogEntry = (message: string, level: NavLogLevel): NavLogEntry => {
 	};
 };
 
-const loggException = (errorMessage: string, url: string, line?: number, column?: number): NavloggerActionTypes => {
+const loggException = (errorMessage: string, url: string, line?: number, column?: number, error?: any): NavloggerActionTypes => {
+	const stacktrace = error.hasOwnProperty("stack") ? "\nStacktrace" + error.stack : "";
 	const logEntry: NavLogEntry = {
 		level: NavLogLevel.ERROR,
 		userAgent: window.navigator.userAgent,
 		url: document.location.href,
 		message: errorMessage,
 		jsFileUrl: url,
-		lineNumber: line
+		lineNumber: line,
+		error: stacktrace
 	};
 	if (column) {
 		logEntry.columnNumber = column;

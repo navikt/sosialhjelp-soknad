@@ -4,7 +4,6 @@ import { RouterProps } from "react-router";
 import { FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl, } from "react-intl";
 import DocumentTitle from "react-document-title";
 import { State } from "../redux/reducers";
-import { Element } from "nav-frontend-typografi";
 import Knapp from "nav-frontend-knapper";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
@@ -88,17 +87,18 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 								</span>
 
 								<Panel className="informasjon-viktig">
-									<Element>
+									<h2 className="typo-element">
 										<FormattedMessage id="informasjon.start.undertittel"/>
-									</Element>
+									</h2>
 
 									<p className="blokk-s">
 										<FormattedHTMLMessage id="informasjon.start.tekst"/>
 									</p>
 
-									<Element>
+									<h2 className="typo-element">
 										<FormattedMessage id="informasjon.nodsituasjon.undertittel"/>
-									</Element>
+									</h2>
+
 									<p className="blokk-s">
 										<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst"/>
 									</p>
