@@ -26,6 +26,9 @@ declare module "soknadsosialhjelp-systemdatamock" {
 	export function settBarnMedDoedsdato(ident: string, fornavn: string, mellomnavn: string, etternavn: string, doedsdato: string): void;
 	export function clearFamilieforhold(): void;
 
+	export function settUtbetalingerBarnetrygd(): void;
+	export function settUtbetalingerOnkelSkruePenger(): void;
+
 	export function getAdresserPath(): string;
 	export function getAdresserJson(): object;
 	export function getNorgPath(): string;

@@ -37,6 +37,7 @@ interface StateProps {
 	ektefelle_medKode: string;
 	barn: boolean;
 	barn_liste: NyttBarnObject[];
+	utbetalinger: string;
 }
 
 type Props = StateProps & DispatchProps;
@@ -68,7 +69,8 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 			ektefelle_medSammeBostedsadresse: true,
 			ektefelle_medKode: "",
 			barn: false,
-			barn_liste: []
+			barn_liste: [],
+			utbetalinger: "ingen"
 		}
 	}
 
@@ -259,6 +261,16 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 
 
 		// Sett utbetalinger
+		if(this.state.utbetalinger === 'barn'){
+			systemdatamock.settUtbetalingerBarnetrygd();
+		}
+		if(this.state.utbetalinger === 'onkel'){
+			systemdatamock.settUtbetalingerOnkelSkruePenger();
+		}
+		if(this.state.utbetalinger === 'begge'){
+			systemdatamock.settUtbetalingerBarnetrygd();
+			systemdatamock.settUtbetalingerOnkelSkruePenger();
+		}
 
 
 		// Send alt
@@ -267,6 +279,7 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 		settMockData(systemdatamock.getBrukerprofilPath(), systemdatamock.getBrukerprofilJson());
 		settMockData(systemdatamock.getOrganisasjonPath(), systemdatamock.getOrganisasjonJson());
 		settMockData(systemdatamock.getArbeidPath(), systemdatamock.getArbeidJson());
+		settMockData(systemdatamock.getUtbetalingPath(), systemdatamock.getUtbetalingJson());
 
 
 
@@ -377,6 +390,16 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 						<NyttBarn onLeggTilNyttBarn={(nyttBarn: NyttBarnObject) => this.handleLeggTilNyttBarn(nyttBarn)}/>
 					</Collapse>
 				</div>
+
+				{/*Utbetalinger*/}
+				<div>
+					Utbetalinger:
+					<Radio onChange={() => this.setState({utbetalinger: 'ingen'})} label={'Ingen'} name={'utbetalinger'} value={'ingen'} defaultChecked={true}/>
+					<Radio onChange={() => this.setState({utbetalinger: 'barn'})} label={'Barnetrygd'} name={'utbetalinger'} value={'barnetrygd'}/>
+					<Radio onChange={() => this.setState({utbetalinger: 'onkel'})} label={'Onkel Skrue Penger'} name={'utbetalinger'} value={'onkel'}/>
+					<Radio onChange={() => this.setState({utbetalinger: 'begge'})} label={'Barnetrygd og Onkel Skrue Penger'} name={'utbetalinger'} value={'begge'}/>
+				</div>
+
 
 
 
