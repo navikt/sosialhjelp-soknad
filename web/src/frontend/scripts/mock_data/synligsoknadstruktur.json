@@ -723,7 +723,7 @@
 		}
 	},
 	{
-		"id": "opplysninger.inntekt.inntekter.forsikringsutbetalinger",
+		"id": "opplysninger.inntekt.inntekter.forsikring",
 		"type": "composite",
 		"panel": null,
 		"dependOn": {
@@ -764,7 +764,7 @@
 		"constraints": [
 			{
 				"faktumStruktur": {
-					"id": "inntekt.inntekter.true.type.forsikringsutbetalinger",
+					"id": "inntekt.inntekter.true.type.forsikring",
 					"type": "bool",
 					"panel": null,
 					"dependOn": {
@@ -829,11 +829,11 @@
 		}
 	},
 	{
-		"id": "opplysninger.inntekt.inntekter.forsikringsutbetalinger.vedlegg",
+		"id": "opplysninger.inntekt.inntekter.forsikring.vedlegg",
 		"type": "hidden",
 		"panel": null,
 		"dependOn": {
-			"id": "opplysninger.inntekt.inntekter.forsikringsutbetalinger",
+			"id": "opplysninger.inntekt.inntekter.forsikring",
 			"type": "composite",
 			"panel": null,
 			"dependOn": {
@@ -874,7 +874,7 @@
 			"constraints": [
 				{
 					"faktumStruktur": {
-						"id": "inntekt.inntekter.true.type.forsikringsutbetalinger",
+						"id": "inntekt.inntekter.true.type.forsikring",
 						"type": "bool",
 						"panel": null,
 						"dependOn": {
@@ -953,7 +953,7 @@
 		}
 	},
 	{
-		"id": "opplysninger.inntekt.inntekter.annet",
+		"id": "opplysninger.inntekt.inntekter.annen",
 		"type": "composite",
 		"panel": null,
 		"dependOn": {
@@ -994,7 +994,7 @@
 		"constraints": [
 			{
 				"faktumStruktur": {
-					"id": "inntekt.inntekter.true.type.annet",
+					"id": "inntekt.inntekter.true.type.annen",
 					"type": "bool",
 					"panel": null,
 					"dependOn": {
@@ -1059,11 +1059,11 @@
 		}
 	},
 	{
-		"id": "opplysninger.inntekt.inntekter.annet.vedlegg",
+		"id": "opplysninger.inntekt.inntekter.annen.vedlegg",
 		"type": "hidden",
 		"panel": null,
 		"dependOn": {
-			"id": "opplysninger.inntekt.inntekter.annet",
+			"id": "opplysninger.inntekt.inntekter.annen",
 			"type": "composite",
 			"panel": null,
 			"dependOn": {
@@ -1104,7 +1104,7 @@
 			"constraints": [
 				{
 					"faktumStruktur": {
-						"id": "inntekt.inntekter.true.type.annet",
+						"id": "inntekt.inntekter.true.type.annen",
 						"type": "bool",
 						"panel": null,
 						"dependOn": {

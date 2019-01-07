@@ -49,7 +49,7 @@ class UtgifterGjeld extends React.Component<
 							id="boutgifter_kommunale_avgifter_checkbox"
 							faktumKey={createCheckboxFaktumKey(
 								boUtgifter.faktum,
-								"kommunaleavgifter"
+								"kommunalAvgift"
 							)}
 						/>
 						<CheckboxFaktum
@@ -70,7 +70,7 @@ class UtgifterGjeld extends React.Component<
 							id="boutgifter_andre_utgifter_checkbox"
 							faktumKey={createCheckboxFaktumKey(
 								boUtgifter.faktum,
-								"andreutgifter"
+								"annenBoutgift"
 							)}
 						/>
 					</SporsmalFaktum>
@@ -82,10 +82,10 @@ class UtgifterGjeld extends React.Component<
 				>
 					<SporsmalFaktum faktumKey={barneUtgifter.faktum}>
 						<CheckboxFaktum
-							id="utgifter_barn_fritidsaktivitet_checkbox"
+							id="utgifter_barn_barnFritidsaktiviteter_checkbox"
 							faktumKey={createCheckboxFaktumKey(
 								barneUtgifter.faktum,
-								"fritidsaktivitet"
+								"barnFritidsaktiviteter"
 							)}
 						/>
 						<CheckboxFaktum
@@ -100,15 +100,15 @@ class UtgifterGjeld extends React.Component<
 							faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "sfo")}
 						/>
 						<CheckboxFaktum
-							id="utgifter_barn_tannbehandling_checkbox"
+							id="utgifter_barn_barnTannregulering_checkbox"
 							faktumKey={createCheckboxFaktumKey(
 								barneUtgifter.faktum,
-								"tannbehandling"
+								"barnTannregulering"
 							)}
 						/>
 						<CheckboxFaktum
-							id="utgifter_barn_annet_checkbox"
-							faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "annet")}
+							id="utgifter_barn_annenBarneutgift_checkbox"
+							faktumKey={createCheckboxFaktumKey(barneUtgifter.faktum, "annenBarneutgift")}
 						/>
 					</SporsmalFaktum>
 				</JaNeiSporsmalFaktum>

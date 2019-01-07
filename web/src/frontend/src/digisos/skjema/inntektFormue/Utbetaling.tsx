@@ -21,7 +21,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 		const { fakta } = this.props;
 		const utbetaling = radioCheckKeys("inntekt.inntekter");
 		const hvilkeUtbetalinger = radioCheckKeys("inntekt.inntekter.true.type");
-		const hvilkeUtbetalingerAnnet = "inntekt.inntekter.true.type.annet";
+		const hvilkeUtbetalingerAnnet = "inntekt.inntekter.true.type.annen";
 		return (
 			<JaNeiSporsmalFaktum faktumKey={utbetaling.faktum} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
 				<SporsmalFaktum faktumKey={hvilkeUtbetalinger.faktum}>
@@ -40,17 +40,17 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 						)}
 					/>
 					<CheckboxFaktum
-						id="utbetalinger_forsikringsutbetalinger_checkbox"
+						id="utbetalinger_forsikring_checkbox"
 						faktumKey={createCheckboxFaktumKey(
 							hvilkeUtbetalinger.faktum,
-							"forsikringsutbetalinger"
+							"forsikring"
 						)}
 					/>
 					<CheckboxFaktum
-						id="utbetalinger_annet_checkbox"
+						id="utbetalinger_annen_checkbox"
 						faktumKey={createCheckboxFaktumKey(
 							hvilkeUtbetalinger.faktum,
-							"annet"
+							"annen"
 						)}
 					/>
 					<NivaTreSkjema
@@ -58,7 +58,7 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 						size="small"
 					>
 						<TextareaFaktum
-							id="utbetalinger_annet_textarea"
+							id="utbetalinger_annen_textarea"
 							faktumKey={`${hvilkeUtbetalingerAnnet}.true.beskrivelse`}
 							maxLength={400}
 							validerFunc={[getMaksLengdeFunc(400)]}

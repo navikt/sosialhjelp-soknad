@@ -22,7 +22,7 @@ type Props = FaktumComponentProps & DispatchProps;
 
 class Bankinnskudd extends React.Component<Props, {}> {
 
-	innskuddstyper = ["brukskonto", "sparekonto", "bsu", "livsforsikring", "aksjer", "annet"];
+	innskuddstyper = ["brukskonto", "sparekonto", "bsu", "livsforsikringssparedel", "verdipapirer", "belop"];
 
 	harBankinnskuddVerdi(): string {
 		const faktumKey = "inntekt.bankinnskudd.true.type.";
