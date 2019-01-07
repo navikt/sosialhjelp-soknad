@@ -4,7 +4,6 @@ import { RouterProps } from "react-router";
 import { FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl, } from "react-intl";
 import DocumentTitle from "react-document-title";
 import { State } from "../redux/reducers";
-import { Element } from "nav-frontend-typografi";
 import Knapp from "nav-frontend-knapper";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
@@ -15,11 +14,11 @@ import Personopplysninger from "./Personopplysninger";
 import { fetchToJson } from "../../nav-soknad/utils/rest-utils";
 import { loggFeil } from "../../nav-soknad/redux/navlogger/navloggerActions";
 import { Panel } from "nav-frontend-paneler";
-import Banner from "../../nav-soknad/components/banner/Banner";
 import { opprettSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import Ella from "../../nav-soknad/components/svg/Ella";
 import {DigisosFarge} from "../../nav-soknad/components/svg/DigisosFarger";
+import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 
 interface StateProps {
 	harTilgang: boolean;
@@ -72,10 +71,8 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 		const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 
 		return (
-			<div className="ettersendelse informasjon-side">
-				<Banner>
-					<FormattedMessage id="skjema.tittel" />
-				</Banner>
+			<div className="informasjon-side">
+				<AppBanner/>
 				<DocumentTitle title={title}/>
 				{harTilgang ? (
 					<span>
@@ -86,21 +83,22 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 										{this.renderHilsen()}
 										<FormattedMessage id="informasjon.hilsen.tittel"/>
 									</Snakkeboble>
-									<Ella visBakgrundsSirkel={true} size={175} bakgrundsFarge={DigisosFarge.NAV_GRONN_LIGHTEN_40} />
+									<Ella visBakgrundsSirkel={true} size={175} bakgrundsFarge={DigisosFarge.SUKSESS} />
 								</span>
 
 								<Panel className="informasjon-viktig">
-									<Element>
+									<h2 className="typo-element">
 										<FormattedMessage id="informasjon.start.undertittel"/>
-									</Element>
+									</h2>
 
 									<p className="blokk-s">
 										<FormattedHTMLMessage id="informasjon.start.tekst"/>
 									</p>
 
-									<Element>
+									<h2 className="typo-element">
 										<FormattedMessage id="informasjon.nodsituasjon.undertittel"/>
-									</Element>
+									</h2>
+
 									<p className="blokk-s">
 										<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst"/>
 									</p>

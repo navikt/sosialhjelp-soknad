@@ -12,4 +12,5 @@ declare module "react-collapse" {
 	}
 
 	export class Collapse extends React.Component<CollapseProps, {}> {}
+	export class UnmountClosed extends React.Component<CollapseProps, {}> {}
 }

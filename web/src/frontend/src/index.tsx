@@ -61,8 +61,8 @@ function configureStore() {
 
 const store = configureStore();
 
-window.onerror = (errorMessage, url, line, column) => {
-	store.dispatch(loggException(errorMessage.toString(), url, line, column));
+window.onerror = (errorMessage, url, line, column, error) => {
+	store.dispatch(loggException(errorMessage.toString(), url, line, column, error));
 };
 
 ReactDOM.render(

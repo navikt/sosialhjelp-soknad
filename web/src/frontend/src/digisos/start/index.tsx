@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { State } from "../redux/reducers";
 import { REST_STATUS } from "../../nav-soknad/types";
-import AppTittel from "../../nav-soknad/components/apptittel/AppTittel";
+import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import { getIntlTextOrKey, scrollToTop } from "../../nav-soknad/utils";
 import ServerFeil from "../../nav-soknad/containers/ServerFeil";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
@@ -12,7 +12,6 @@ import {
 	resetSoknad,
 	startSoknad
 } from "../../nav-soknad/redux/soknad/soknadActions";
-import { NavEnhet } from "../data/kommuner";
 import { skjulToppMeny } from "../../nav-soknad/utils/domUtils";
 
 const DocumentTitle = require("react-document-title"); // tslint:disable-line
@@ -21,7 +20,6 @@ interface StateProps {
 	soknadRestStatus: string;
 	faktaRestStatus: string;
 	startSoknadPending: boolean;
-	navEnheter: NavEnhet[];
 	kommunerRestStatus: REST_STATUS;
 }
 
@@ -57,7 +55,7 @@ class Start extends React.Component<Props, {}> {
 		return (
 			<DocumentTitle title={title}>
 				<span>
-					<AppTittel />
+					<AppBanner />
 					<div className="skjema-content">
 						<p className="blokk-l">
 							{getIntlTextOrKey(intl, "personalia.informasjon")}
@@ -73,8 +71,6 @@ export default connect((state: State, props: any) => {
 	return {
 		soknadRestStatus: state.soknad.restStatus,
 		startSoknadPending: state.soknad.startSoknadPending,
-		faktaRestStatus: state.fakta.restStatus,
-		navEnheter: state.kommuner.data,
-		kommunerRestStatus: state.kommuner.restStatus
+		faktaRestStatus: state.fakta.restStatus
 	};
 })(injectIntl(Start));

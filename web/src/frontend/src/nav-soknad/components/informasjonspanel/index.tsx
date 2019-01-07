@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Collapse } from "react-collapse";
+import { UnmountClosed } from "react-collapse";
 import Ella from "../svg/Ella";
 import Brevkonvolutt from "../svg/Brevkonvolutt";
 import {DigisosFarge} from "../svg/DigisosFarger";
@@ -70,7 +70,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 	}
 
 	renderContent(fadeIn: boolean) {
-		const styleClassName = "skjema-informasjonspanel-" + this.props.farge;
+		const styleClassName = "skjema-informasjonspanel--" + this.props.farge;
 
 		return (
 			<div className={"skjema-informasjonspanel-wrapper " + this.props.className}>
@@ -93,7 +93,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 			return this.renderContent(false);
 		} else {
 			return (
-				<Collapse
+				<UnmountClosed
 					id="info-panel-collapse"
 					isOpened={isOpened}
 					className="react-collapse-konfigurering"
@@ -101,7 +101,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 					<div className={"react-collapse-wrapper"}>
 							{this.renderContent(true)}
 					</div>
-				</Collapse>
+				</UnmountClosed>
 			);
 		}
 	}

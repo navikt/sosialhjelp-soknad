@@ -39,7 +39,7 @@ class App extends React.Component<InjectedIntlProps, {}> {
 					/>
 				</Switch>
 			{!ettersendelse && !informasjon && (
-				<div className="app-digisos container">
+				<span>
 					<Switch>
 						<Route path={`/bosted`} exact={true} component={Start} />
 						<Route
@@ -67,7 +67,7 @@ class App extends React.Component<InjectedIntlProps, {}> {
 					/>
 					<AvbrytSoknad />
 					{this.props.children}
-				</div>
+				</span>
 			)}
 			</span>
 		);

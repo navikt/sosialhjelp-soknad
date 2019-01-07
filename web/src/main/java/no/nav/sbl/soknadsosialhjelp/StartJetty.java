@@ -1,16 +1,12 @@
 package no.nav.sbl.soknadsosialhjelp;
 
-import static no.nav.modig.lang.collections.FactoryUtils.gotKeypress;
-import static no.nav.modig.lang.collections.RunnableUtils.first;
-import static no.nav.modig.lang.collections.RunnableUtils.waitFor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import no.nav.sbl.soknadsosialhjelp.duplicated.Jetty;
 
 public class StartJetty {
-    public static final int PORT = 8080;
+    private static final int PORT = 8080;
     private static final Logger logger = LoggerFactory.getLogger(StartJetty.class);
 
     public static void main(String[] args) throws Exception {
@@ -24,7 +20,10 @@ public class StartJetty {
                 .port(PORT)
                 .buildJetty();
         logger.info("http://127.0.0.1:" + PORT + "/soknadsosialhjelp/informasjon");
-        jetty.startAnd(first(waitFor(gotKeypress())).then(jetty.stop));
+
+        Runtime.getRuntime().addShutdownHook(new ShutdownHook(jetty));
+
+        jetty.start();
     }
 
     private static void configureLocalConfig() {

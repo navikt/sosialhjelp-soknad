@@ -22,7 +22,7 @@ class EllaKompakt extends React.Component<OwnProps, {}> {
 					<path id="ella_kompakt_g"
 					      d="M22.395 0h-6.722C12.048 0 0 8.22 0 15.703v19.688h45V15.703C45 8.22 32.742 0 29.118 0h-6.723z"/>
 				</defs>
-				<g fill="none" fillRule="evenodd" className={"ella__" + bakgrundsFarge}>
+				<g fill="none" fillRule="evenodd" className={"ella--" + bakgrundsFarge}>
 					<mask id="ella_kompakt_b" fill="#fff">
 						<use xlinkHref="#ella_kompakt_a"/>
 					</mask>

@@ -16,6 +16,13 @@ const opprettEttersendelse = (brukerbehandlingId: string): EttersendelseActionTy
 	};
 };
 
+const opprettEttersendelseFeilet = (brukerbehandlingId: string): EttersendelseActionTypes => {
+	return {
+		type: EttersendelseActionTypeKeys.NY_FEILET,
+		brukerbehandlingId
+	};
+};
+
 const lastOppEttersendelseVedlegg = (
 	vedleggId: number,
 	formData: FormData
@@ -86,6 +93,7 @@ const settEttersendelser = (ettersendelser: any) => {
 
 export {
 	opprettEttersendelse,
+	opprettEttersendelseFeilet,
 	lagEttersendelseOk,
 	lesEttersendelsesVedlegg,
 	lastOppEttersendelseVedlegg,

@@ -77,7 +77,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 		return (
 			<Informasjonspanel
 				ikon={InformasjonspanelIkon.HENSYN}
-				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+				farge={DigisosFarge.VIKTIG}
 			>
 				<FormattedHTMLMessage id="opplysninger.ikkebesvart.melding"/>
 			</Informasjonspanel>
@@ -89,7 +89,7 @@ class EkstraInformasjon extends React.Component<Props, {}> {
 			<div>
 				<Informasjonspanel
 					ikon={InformasjonspanelIkon.HENSYN}
-					farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+					farge={DigisosFarge.VIKTIG}
 				>
 					<FormattedHTMLMessage id="opplysninger.informasjon"/>
 				</Informasjonspanel>

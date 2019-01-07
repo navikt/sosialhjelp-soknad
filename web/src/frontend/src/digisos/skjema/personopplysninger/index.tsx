@@ -33,39 +33,6 @@ interface OwnProps {
 export type Props = OwnProps & FaktumComponentProps & DispatchProps;
 
 class Personopplysninger extends React.Component<Props, OwnProps> {
-	render() {
-		return (
-			<DigisosSkjemaSteg
-				steg={DigisosSteg.kontakt}
-				ikon={<William/>}
-			>
-				{this.props.gjenopptattSoknad && (
-					<div className="skjema-sporsmal">
-						<Informasjonspanel
-							ikon={InformasjonspanelIkon.ELLA}
-							farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
-						>
-							<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
-						</Informasjonspanel>
-					</div>
-				)}
-				<SporsmalFaktum
-					faktumKey="kontakt.system.personalia"
-					style="system"
-				>
-				<Personalia fakta={this.props.fakta} />
-				</SporsmalFaktum>
-				<Oppholdsadresse fakta={this.props.fakta} />
-				<Telefoninfo fakta={this.props.fakta} />
-				<Bankinformasjon
-					fakta={this.props.fakta}
-					onHarIkkeKontonummer={(verdi: string) => {
-						this.oppdaterHarIkkeKontonummer(this.props.fakta, verdi, this.props.dispatch);
-					}}
-				/>
-			</DigisosSkjemaSteg>
-		);
-	}
 
 	componentDidMount() {
 		if (!harFaktumVerdi(this.props.fakta, "kontakt.system.telefon")) {
@@ -95,6 +62,40 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 				this.oppdaterFaktumPropertyVerdi(fakta, "kontakt.kontonummer.brukerendrettoggle", "harikke", "false", dispatch);
 			}
 		}
+	}
+
+	render() {
+		return (
+			<DigisosSkjemaSteg
+				steg={DigisosSteg.kontakt}
+				ikon={<William/>}
+			>
+				{this.props.gjenopptattSoknad && (
+					<div className="skjema-sporsmal">
+						<Informasjonspanel
+							ikon={InformasjonspanelIkon.ELLA}
+							farge={DigisosFarge.VIKTIG}
+						>
+							<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
+						</Informasjonspanel>
+					</div>
+				)}
+				<SporsmalFaktum
+					faktumKey="kontakt.system.personalia"
+					style="system"
+				>
+					<Personalia fakta={this.props.fakta} />
+				</SporsmalFaktum>
+				<Oppholdsadresse fakta={this.props.fakta} />
+				<Telefoninfo fakta={this.props.fakta} />
+				<Bankinformasjon
+					fakta={this.props.fakta}
+					onHarIkkeKontonummer={(verdi: string) => {
+						this.oppdaterHarIkkeKontonummer(this.props.fakta, verdi, this.props.dispatch);
+					}}
+				/>
+			</DigisosSkjemaSteg>
+		);
 	}
 
 	private oppdaterFaktumVerdi(fakta: Faktum[], faktumKey: string, verdi: string, dispatch: Dispatch) {
