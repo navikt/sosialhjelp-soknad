@@ -971,7 +971,7 @@
 			"faktumId": 455,
 			"soknadId": 3,
 			"parrentFaktum": 450,
-			"key": "utgifter.boutgift.true.type.boliglanAvdrag",
+			"key": "utgifter.boutgift.true.type.avdraglaan",
 			"value": null,
 			"faktumEgenskaper": [],
 			"properties": {},

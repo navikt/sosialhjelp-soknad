@@ -858,7 +858,7 @@ const soknad: Soknad = {
 			faktumId: 73,
 			soknadId: 1,
 			parrentFaktum: 68,
-			key: "utgifter.boutgift.true.type.boliglanAvdrag",
+			key: "utgifter.boutgift.true.type.avdraglaan",
 			value: null,
 			faktumEgenskaper: [],
 			properties: {},

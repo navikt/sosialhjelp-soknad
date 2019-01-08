@@ -46,7 +46,7 @@ const okonomiskeFaktumKeys = [
 	"utgifter.boutgift.true.type.strom",
 	"utgifter.boutgift.true.type.kommunalAvgift",
 	"utgifter.boutgift.true.type.oppvarming",
-	"utgifter.boutgift.true.type.boliglanAvdrag",
+	"utgifter.boutgift.true.type.avdraglaan",
 	"utgifter.boutgift.true.type.annenBoutgift",
 	"utgifter.barn.true.utgifter.barnFritidsaktiviteter",
 	"utgifter.barn.true.utgifter.barnehage",
