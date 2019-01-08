@@ -83,17 +83,19 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 	settInnListeOverArbeidsforhold(){
 		const a: any = [];
 		this.state.arbeidsforhold_liste.forEach((forhold: NyttArbeidsforholdObject, key: number) => {
-			a.push(<div key={key}>{ this.renderForholdRad(forhold, key) }</div>)
+			a.push(<div className="mock-thing" key={key}>{ this.renderForholdRad(forhold, key) }</div>)
 		});
-		return (
-			<div>{ a }</div>
-		)
+
+		if (a.length === 0){
+			return (<div className="mock-listOfThings">...</div>)
+		}
+
+		return (<div className="mock-listOfThings">{ a }</div>)
 	}
 
 
 
 	renderForholdRad(forhold: NyttArbeidsforholdObject, key: number){
-
 		return (
 			<div>
 				<div>{ key + 1 }</div>
@@ -302,98 +304,127 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 					{/*<Radio onChange={() => this.setState({midlertidigPostadresse: Valg.Default})} label='Ja, defaultadresse' name='midlertidigPostadresse' value={'default'} />*/}
 				{/*</div>*/}
 
-				<div>
-					Telefonnummer:
-					<Radio onChange={() => this.setState({telefonnummer: false})} label='Nei' name='telefonnummer' value={'nei'} defaultChecked={true} />
-					<Radio onChange={() => this.setState({telefonnummer: true})} label='Ja' name='telefonnummer' value={'ja'} />
-				</div>
-				<Collapse isOpened={this.state.telefonnummer}>
-					<div className="mock-collapse-body">
-						<Input onChange={(evt: any) => this.setState({telefonnummer_value: evt.target.value})} type="tel" label="" value={this.state.telefonnummer_value} />
+				<div className="mock-block-tittel">Telefonnummer:</div>
+				<div className="mock-block">
+					<div>
+						<Radio onChange={() => this.setState({telefonnummer: false})} label='Nei' name='telefonnummer' value={'nei'} defaultChecked={true} />
+						<Radio onChange={() => this.setState({telefonnummer: true})} label='Ja' name='telefonnummer' value={'ja'} />
 					</div>
-				</Collapse>
-
-				<div>
-					Bankkontonummer:
-					<Radio onChange={() => this.setState({bankkonto: false})} label='Nei' name='bankkonto' value={'nei'} defaultChecked={true} />
-					<Radio onChange={() => this.setState({bankkonto: true})} label='Ja' name='bankkonto' value={'ja'} />
+					<Collapse className="mock-block-collapse" isOpened={this.state.telefonnummer}>
+						<div className="mock-collapse-body">
+							<label>Telefonnummer: </label>
+							<input className="mock-input-felt" onChange={(evt: any) => this.setState({telefonnummer_value: evt.target.value})} type="tel" value={this.state.telefonnummer_value} />
+						</div>
+					</Collapse>
 				</div>
-				<Collapse isOpened={this.state.bankkonto}>
-					<div className="mock-collapse-body">
-						<Input onChange={(evt: any) => this.setState({bankkonto_value: evt.target.value})} label="" value={this.state.bankkonto_value} />
-					</div>
-				</Collapse>
 
-				{/*Organisasjon*/}
-				<div>
-					Organisasjon:
+				<div className="mock-block-tittel">Bankkontonummer:</div>
+				<div className="mock-block">
+					<div>
+						<Radio onChange={() => this.setState({bankkonto: false})} label='Nei' name='bankkonto' value={'nei'} defaultChecked={true} />
+						<Radio onChange={() => this.setState({bankkonto: true})} label='Ja' name='bankkonto' value={'ja'} />
+					</div>
+					<Collapse className="mock-block-collapse" isOpened={this.state.bankkonto}>
+						<div className="mock-collapse-body">
+							<label>Bankkontonummer: </label>
+							<input onChange={(evt: any) => this.setState({bankkonto_value: evt.target.value})} value={this.state.bankkonto_value} />
+						</div>
+					</Collapse>
+				</div>
+
+				<div className="mock-block-tittel">Organisasjon:</div>
+				<div className="mock-block">
 					<Radio onChange={() => this.setState({organisasjon: false})} label="Nei" name="organisasjon" value={'nei'} defaultChecked={true} />
 					<Radio onChange={() => this.setState({organisasjon: true})} label='Ja' name='organisasjon' value={'ja'} />
+					<Collapse className="mock-block-collapse" isOpened={this.state.organisasjon}>
+						<div className='mock-collapse-body'>
+							<div>
+								<label>orgnummer: </label>
+								<input onChange={(evt:any) => this.setState({organisasjon_orgnummer: evt.target.value})} value={this.state.organisasjon_orgnummer} />
+							</div>
+							<div>
+								<label>navn</label>
+								<input onChange={(evt:any) => this.setState({organisasjon_navn: evt.target.value})} value={this.state.organisasjon_navn} />
+							</div>
+						</div>
+					</Collapse>
 				</div>
-				<Collapse isOpened={this.state.organisasjon}>
-					<div className='mock-collapse-body'>
-						<Input label='orgnummer' onChange={(evt:any) => this.setState({organisasjon_orgnummer: evt.target.value})} value={this.state.organisasjon_orgnummer} />
-						<Input label='navn' onChange={(evt:any) => this.setState({organisasjon_navn: evt.target.value})} value={this.state.organisasjon_navn} />
-					</div>
-				</Collapse>
 
 
-				{/*Arbeidsforhold*/}
-				<div className="mock-view-bolk">
+				<div className="mock-block-tittel">Arbeidsforhold:</div>
+				<div className="mock-block">
 					<div>
-						Arbeidsforhold:
 						<Radio onChange={() => this.setState({arbeidsforhold: false})} label='Nei' name='arbeidsforhold' value={'nei'} defaultChecked={true} />
 						<Radio onChange={() => this.setState({arbeidsforhold: true})} label='Ja' name='arbeidsforhold' value={'ja'} />
 					</div>
-					<Collapse isOpened={this.state.arbeidsforhold}>
-						<div>Liste over arbeidsforhold som er lagt til. </div>
+					<Collapse className="mock-block-collapse" isOpened={this.state.arbeidsforhold}>
+						<div className="mock-listOfThings-tittel">Liste over arbeidsforhold som er lagt til. </div>
 						{ this.settInnListeOverArbeidsforhold()}
 						<NyttArbeidsforhold onLeggTilNyttArbeidsforhold={(nyttArbeidsForhold: NyttArbeidsforholdObject) => this.handleLeggTilNyttArbeidsforhold(nyttArbeidsForhold)}/>
 					</Collapse>
 				</div>
 
-				{/*Ektefelle / Partner */}
-				<div>
-					<div>Ektefelle</div>
-					<div>
-						<Radio onChange={() => this.setState({ektefelle: false})} label='Nei' name='ektefelle' value={'nei'} defaultChecked={true} />
-						<Radio onChange={() => this.setState({ektefelle: true})} label='Ja' name='ektefelle' value={'ja'} />
-					</div>
-					<Collapse isOpened={this.state.ektefelle}>
-						<Input label='fødselsnummer' onChange={(evt: any) => this.setState({ektefelle_foedselsnummer: evt.target.value})} value={this.state.ektefelle_foedselsnummer}/>
-						<Input label='fornavn' onChange={(evt: any) => this.setState({ektefelle_fornavn: evt.target.value})} value={this.state.ektefelle_fornavn}/>
-						<Input label='mellomnavn' onChange={(evt: any) => this.setState({ektefelle_mellomnavn: evt.target.value})} value={this.state.ektefelle_mellomnavn}/>
-						<Input label='etternavn' onChange={(evt: any) => this.setState({ektefelle_etternavn: evt.target.value})} value={this.state.ektefelle_etternavn}/>
-						<Input label='fødselsdato' onChange={(evt: any) => this.setState({ektefelle_foedselsdato: evt.target.value})} value={this.state.ektefelle_foedselsdato}/>
-						Har samme bostedsadresse:
-						<Radio onChange={() => this.setState({ektefelle_medSammeBostedsadresse: true})} label='Ja' name='samme_bostedsadresse' value={'ja'} defaultChecked={true} />
-						<Radio onChange={() => this.setState({ektefelle_medSammeBostedsadresse: false})} label='Nei' name='samme_bostedsadresse' value={'nei'} />
-						Har kode 6 eller 7
-						<Radio onChange={() => this.setState({ektefelle_medKode: ""})} label='Nei' name='diskresjonskode' value={''} defaultChecked={true}/>
-						<Radio onChange={() => this.setState({ektefelle_medKode: "6"})} label='6' name='diskresjonskode' value={'6'} />
-						<Radio onChange={() => this.setState({ektefelle_medKode: "7"})} label='7' name='diskresjonskode' value={'7'} />
 
+				<div className="mock-block-tittel">Ektefelle:</div>
+				<div className="mock-block">
+					<Radio onChange={() => this.setState({ektefelle: false})} label='Nei' name='ektefelle' value={'nei'} defaultChecked={true} />
+					<Radio onChange={() => this.setState({ektefelle: true})} label='Ja' name='ektefelle' value={'ja'} />
+					<Collapse className="mock-block-collapse" isOpened={this.state.ektefelle}>
+						<div className="mock-labelNinput">
+							<label className="mock-label">fødselsnummer</label>
+							<input onChange={(evt: any) => this.setState({ektefelle_foedselsnummer: evt.target.value})} value={this.state.ektefelle_foedselsnummer}/>
+						</div>
+						<div className="mock-labelNinput">
+							<label className="mock-label">fornavn</label>
+							<input onChange={(evt: any) => this.setState({ektefelle_fornavn: evt.target.value})} value={this.state.ektefelle_fornavn}/>
+						</div>
+						<div className="mock-labelNinput">
+							<label className="mock-label">mellomnavn</label>
+							<input onChange={(evt: any) => this.setState({ektefelle_mellomnavn: evt.target.value})} value={this.state.ektefelle_mellomnavn}/>
+						</div>
+						<div className="mock-labelNinput">
+							<label className="mock-label">etternavn</label>
+							<input onChange={(evt: any) => this.setState({ektefelle_etternavn: evt.target.value})} value={this.state.ektefelle_etternavn}/>
+						</div>
+						<div className="mock-labelNinput">
+							<label className="mock-label">fødselsdato</label>
+							<input onChange={(evt: any) => this.setState({ektefelle_foedselsdato: evt.target.value})} value={this.state.ektefelle_foedselsdato}/>
+						</div>
+						<div className="mock-radiogroup">
+							<div className="mock-block-tittel">
+								Har samme bostedsadresse:
+							</div>
+							<div className="mock-radiogroup">
+								<Radio onChange={() => this.setState({ektefelle_medSammeBostedsadresse: true})} label='Ja' name='samme_bostedsadresse' value={'ja'} defaultChecked={true} />
+								<Radio onChange={() => this.setState({ektefelle_medSammeBostedsadresse: false})} label='Nei' name='samme_bostedsadresse' value={'nei'} />
+							</div>
+						</div>
+						<div className="mock-radiogroup">
+							<div>
+								Har kode 6 eller 7
+							</div>
+							<div className="mock-radiogroup">
+								<Radio onChange={() => this.setState({ektefelle_medKode: ""})} label='Nei' name='diskresjonskode' value={''} defaultChecked={true}/>
+								<Radio onChange={() => this.setState({ektefelle_medKode: "6"})} label='6' name='diskresjonskode' value={'6'} />
+								<Radio onChange={() => this.setState({ektefelle_medKode: "7"})} label='7' name='diskresjonskode' value={'7'} />
+							</div>
+						</div>
 					</Collapse>
 				</div>
 
-
-				{/*Barn*/}
-				<div className="mock-view-bolk">
-					<div>
-						Barn:
-						<Radio onChange={() => this.setState({barn: false})} label='Nei' name='barn' value={'nei'} defaultChecked={true} />
-						<Radio onChange={() => this.setState({barn: true})} label='Ja' name='barn' value={'ja'} />
-					</div>
-					<Collapse isOpened={this.state.barn}>
+				<div className="mock-block-tittel">Barn: </div>
+				<div className="mock-block">
+					<Radio onChange={() => this.setState({barn: false})} label='Nei' name='barn' value={'nei'} defaultChecked={true} />
+					<Radio onChange={() => this.setState({barn: true})} label='Ja' name='barn' value={'ja'} />
+					<Collapse className="mock-block-collapse" isOpened={this.state.barn}>
 						<div>Liste over barn som er lagt til. </div>
 						{ this.settInnListeOverBarn()}
 						<NyttBarn onLeggTilNyttBarn={(nyttBarn: NyttBarnObject) => this.handleLeggTilNyttBarn(nyttBarn)}/>
 					</Collapse>
 				</div>
 
-				{/*Utbetalinger*/}
-				<div>
-					Utbetalinger:
+				<div className="mock-block-tittel">Utbetalinger: </div>
+				<div className="mock-block">
 					<Radio onChange={() => this.setState({utbetalinger: 'ingen'})} label={'Ingen'} name={'utbetalinger'} value={'ingen'} defaultChecked={true}/>
 					<Radio onChange={() => this.setState({utbetalinger: 'barn'})} label={'Barnetrygd'} name={'utbetalinger'} value={'barnetrygd'}/>
 					<Radio onChange={() => this.setState({utbetalinger: 'onkel'})} label={'Onkel Skrue Penger'} name={'utbetalinger'} value={'onkel'}/>

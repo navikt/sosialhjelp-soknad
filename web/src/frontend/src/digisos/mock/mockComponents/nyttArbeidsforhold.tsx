@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Input, Select} from "nav-frontend-skjema";
+import { Select } from "nav-frontend-skjema";
 
 interface Props {
 	onLeggTilNyttArbeidsforhold: (data: any) => void;
@@ -75,45 +75,62 @@ class NyttArbeidsforhold extends React.Component<Props, State> {
 		if (this.state.isOpened) {
 			return (
 				<div>
-					Legg til nytt arbeidsforhold:
-					<Input onChange={(evt: any) => this.setState({startDato: evt.target.value})} className="mock-input-felt" label="Startdato" value={this.state.startDato} />
-					<Input onChange={(evt: any) => this.setState({sluttDato: evt.target.value})} className="mock-input-felt" label="Sluttdato" value={this.state.sluttDato} />
-					<Input onChange={(evt: any) => this.setState({stillingsProsent: evt.target.value})} className="mock-input-felt" label="Stillingsprosent" value={this.state.stillingsProsent} />
-
-					<Select label='Velg type arbeidsforhold' onChange={(event: any) => this.setState({type: event.target.value})}>
-						<option value={ArbeidsforholdType.NAVN} key={ArbeidsforholdType.NAVN}>
-							Arbeidsgiver med navn og arbeidsgivernummer
-						</option>
-						<option value={ArbeidsforholdType.IDENT} key={ArbeidsforholdType.IDENT}>
-							Arbeidsgiver med ident
-						</option>
-						<option value={ArbeidsforholdType.ORGANISASJON} key={ArbeidsforholdType.ORGANISASJON}>
-							Arbeidsgiver med orgnummer
-						</option>
-					</Select>
-
-					{ this.state.type === ArbeidsforholdType.NAVN &&
+					<div className="mock-newThing-tittel">Legg til nytt arbeidsforhold:</div>
+					<div className="mock-newThing">
 						<div>
-							<Input onChange={(evt: any) => this.setState({navn: evt.target.value})} className="mock-input-felt" label="Navn" value={this.state.navn} />
-							<Input onChange={(evt: any) => this.setState({arbeidsgivernummer: evt.target.value})} className="mock-input-felt" label="Arbeidsgivernummer" value={this.state.arbeidsgivernummer} />
+							<label className="mock-label">Startdato: </label>
+							<input onChange={(evt: any) => this.setState({startDato: evt.target.value})} className="mock-input-felt" value={this.state.startDato} />
 						</div>
-					}
-
-					{ this.state.type === ArbeidsforholdType.IDENT &&
 						<div>
-							<Input onChange={(evt: any) => this.setState({ident: evt.target.value})} className="mock-input-felt" label="Arbeidsgivernummer" value={this.state.ident} />
+							<label className="mock-label">Sluttdato: </label>
+							<input onChange={(evt: any) => this.setState({sluttDato: evt.target.value})} className="mock-input-felt" value={this.state.sluttDato} />
 						</div>
-					}
-
-					{ this.state.type === ArbeidsforholdType.ORGANISASJON &&
 						<div>
-							<Input onChange={(evt: any) => this.setState({orgnummer: evt.target.value})} className="mock-input-felt" label="Orgnummer" value={this.state.orgnummer} />
+							<label className="mock-label">Stillingsprosent: </label>
+							<input onChange={(evt: any) => this.setState({stillingsProsent: evt.target.value})} className="mock-input-felt" value={this.state.stillingsProsent} />
 						</div>
-					}
 
+						<Select label='Velg type arbeidsforhold' onChange={(event: any) => this.setState({type: event.target.value})}>
+							<option value={ArbeidsforholdType.NAVN} key={ArbeidsforholdType.NAVN}>
+								Arbeidsgiver med navn og arbeidsgivernummer
+							</option>
+							<option value={ArbeidsforholdType.IDENT} key={ArbeidsforholdType.IDENT}>
+								Arbeidsgiver med ident
+							</option>
+							<option value={ArbeidsforholdType.ORGANISASJON} key={ArbeidsforholdType.ORGANISASJON}>
+								Arbeidsgiver med orgnummer
+							</option>
+						</Select>
 
-					<button onClick={() => this.lagreNyttArbeidsforhold()}>Ok</button>
-					<button onClick={() => this.setState({isOpened: false})}>Avbryt</button>
+						{ this.state.type === ArbeidsforholdType.NAVN &&
+							<div>
+								<div>
+									<label className="mock-label">Navn: </label>
+									<input onChange={(evt: any) => this.setState({navn: evt.target.value})} className="mock-input-felt" value={this.state.navn} />
+								</div>
+								<div>
+									<label className="mock-label">Arbeidsgivernummer: </label>
+									<input onChange={(evt: any) => this.setState({arbeidsgivernummer: evt.target.value})} className="mock-input-felt" value={this.state.arbeidsgivernummer} />
+								</div>
+							</div>
+						}
+
+						{ this.state.type === ArbeidsforholdType.IDENT &&
+							<div>
+								<label className="mock-label">Ident: </label>
+								<input onChange={(evt: any) => this.setState({ident: evt.target.value})} className="mock-input-felt" value={this.state.ident} />
+							</div>
+						}
+
+						{ this.state.type === ArbeidsforholdType.ORGANISASJON &&
+							<div>
+								<label className="mock-label">Orgnummer </label>
+								<input onChange={(evt: any) => this.setState({orgnummer: evt.target.value})} className="mock-input-felt" value={this.state.orgnummer} />
+							</div>
+						}
+						<button onClick={() => this.lagreNyttArbeidsforhold()}>Legg til</button>
+						<button onClick={() => this.setState({isOpened: false})}>Avbryt</button>
+					</div>
 				</div>
 
 			)
