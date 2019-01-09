@@ -1,4 +1,4 @@
-declare module "soknadsosialhjelp-systemdatamock" {
+declare module "soknadsosialhjelp-mocksystemdata" {
 
 	export function settNavn(fornavn: string , mellomnavn: string, etternavn: string): void;
 
