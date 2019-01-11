@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Select } from "nav-frontend-skjema";
 import {Collapse} from "react-collapse";
+import MockInput from "./mockInput";
 
 interface Props {
 	onLeggTilNyttArbeidsforhold: (data: any) => void;
@@ -73,24 +74,18 @@ class NyttArbeidsforhold extends React.Component<Props, State> {
 
 
 	render(){
+
+		const plussButtonClassname = this.state.isOpened ? "mock-hide" : "mock-show";
+
 		return (
 			<div>
 				<Collapse isOpened={this.state.isOpened}>
-					<div>
+					<div className="mock-newThingWrapper">
 						<div className="mock-newThing-tittel">Legg til nytt arbeidsforhold:</div>
-						<div className="mock-newThing">
-							<div>
-								<label className="mock-label">Startdato: </label>
-								<input onChange={(evt: any) => this.setState({startDato: evt.target.value})} className="mock-input-felt" value={this.state.startDato} />
-							</div>
-							<div>
-								<label className="mock-label">Sluttdato: </label>
-								<input onChange={(evt: any) => this.setState({sluttDato: evt.target.value})} className="mock-input-felt" value={this.state.sluttDato} />
-							</div>
-							<div>
-								<label className="mock-label">Stillingsprosent: </label>
-								<input onChange={(evt: any) => this.setState({stillingsProsent: evt.target.value})} className="mock-input-felt" value={this.state.stillingsProsent} />
-							</div>
+						<div className="mock-newThing-body">
+							<MockInput label="Startdato:" onChange={(evt: any) => this.setState({startDato: evt.target.value})} value={this.state.startDato}/>
+							<MockInput label="Sluttdato:" onChange={(evt: any) => this.setState({sluttDato: evt.target.value})} value={this.state.sluttDato}/>
+							<MockInput label="Stillingsprosent:" onChange={(evt: any) => this.setState({stillingsProsent: evt.target.value})} value={this.state.stillingsProsent}/>
 
 							<Select label='Velg type arbeidsforhold' onChange={(event: any) => this.setState({type: event.target.value})}>
 								<option value={ArbeidsforholdType.NAVN} key={ArbeidsforholdType.NAVN}>
@@ -106,28 +101,20 @@ class NyttArbeidsforhold extends React.Component<Props, State> {
 
 							{ this.state.type === ArbeidsforholdType.NAVN &&
 								<div>
-									<div>
-										<label className="mock-label">Navn: </label>
-										<input onChange={(evt: any) => this.setState({navn: evt.target.value})} className="mock-input-felt" value={this.state.navn} />
-									</div>
-									<div>
-										<label className="mock-label">Arbeidsgivernummer: </label>
-										<input onChange={(evt: any) => this.setState({arbeidsgivernummer: evt.target.value})} className="mock-input-felt" value={this.state.arbeidsgivernummer} />
-									</div>
+									<MockInput label="Navn:" onChange={(evt: any) => this.setState({navn: evt.target.value})} value={this.state.navn}/>
+									<MockInput label="Arbeidsgivernummer:" onChange={(evt: any) => this.setState({arbeidsgivernummer: evt.target.value})} value={this.state.arbeidsgivernummer}/>
 								</div>
 							}
 
 							{ this.state.type === ArbeidsforholdType.IDENT &&
 								<div>
-									<label className="mock-label">Ident: </label>
-									<input onChange={(evt: any) => this.setState({ident: evt.target.value})} className="mock-input-felt" value={this.state.ident} />
+									<MockInput label="Ident:" onChange={(evt: any) => this.setState({ident: evt.target.value})} value={this.state.ident}/>
 								</div>
 							}
 
 							{ this.state.type === ArbeidsforholdType.ORGANISASJON &&
 								<div>
-									<label className="mock-label">Orgnummer </label>
-									<input onChange={(evt: any) => this.setState({orgnummer: evt.target.value})} className="mock-input-felt" value={this.state.orgnummer} />
+									<MockInput label="Orgnummer:" onChange={(evt: any) => this.setState({orgnummer: evt.target.value})} value={this.state.orgnummer}/>
 								</div>
 							}
 							<button onClick={() => this.lagreNyttArbeidsforhold()}>Legg til</button>
@@ -135,7 +122,7 @@ class NyttArbeidsforhold extends React.Component<Props, State> {
 						</div>
 					</div>
 				</Collapse>
-				<button onClick={() => this.setState({isOpened: true})}>+</button>
+				<button className={plussButtonClassname} onClick={() => this.setState({isOpened: true})}>+</button>
 			</div>
 
 		);

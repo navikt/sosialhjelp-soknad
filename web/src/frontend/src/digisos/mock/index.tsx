@@ -15,10 +15,8 @@ class Mock extends React.Component<Props, {}> {
 
 	render() {
 		return (
-			<div>
-				<div className="mock-body">
-					<EgendefinertBruker />
-				</div>
+			<div className="mock-body">
+				<EgendefinertBruker />
 			</div>
 		);
 	}
