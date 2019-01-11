@@ -14,6 +14,7 @@ import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
 import Personalia from "./tps/Personalia";
 import Telefoninfo from "./tps/Telefoninfo";
 import Bankinformasjon from "./tps/Bankinformasjon";
+import BankinformasjonIkkeFaktum from "./bankinfo/Bankinformasjon";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import {
 	Faktum
@@ -94,6 +95,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 						this.oppdaterHarIkkeKontonummer(this.props.fakta, verdi, this.props.dispatch);
 					}}
 				/>
+				<BankinformasjonIkkeFaktum />
 			</DigisosSkjemaSteg>
 		);
 	}
