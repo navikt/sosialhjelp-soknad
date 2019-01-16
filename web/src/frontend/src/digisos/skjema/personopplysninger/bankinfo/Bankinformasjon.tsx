@@ -1,92 +1,162 @@
 import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { DispatchProps } from "../../../../nav-soknad/redux/reduxTypes";
-import { lesBankinfoAction, oppdaterBankinfoAction } from "./bankinfoReducer";
 import { connect } from "react-redux";
 import { State } from "../../../redux/reducers";
-import { Input } from "nav-frontend-skjema";
+import { Checkbox, Feil, Input } from "nav-frontend-skjema";
+import { fetchPut, fetchToJson } from "../../../../nav-soknad/utils/rest-utils";
+import { ValideringActionKey, Valideringsfeil } from "../../../../nav-soknad/validering/types";
+import { erKontonummer } from "../../../../nav-soknad/validering/valideringer";
+import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
+import { InjectedIntl, InjectedIntlProps, injectIntl } from "react-intl";
+import { navigerTilServerfeil } from "../../../../nav-soknad/redux/navigasjon/navigasjonActions";
+import { oppdaterSoknadsdata } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
 interface OwnProps {
-	kontonummer?: string | null;
+	brukerBehandlingId?: string;
+	bankinformasjon?: null | BankinformasjonType;
+	feil?: any;
 }
 
-interface BankinformasjonState {
+interface BankinformasjonType {
+	brukerdefinert: boolean;
+	systemverdi: string | null;
 	verdi: string;
+	harIkkeKonto: boolean;
 }
 
-type Props = OwnProps & DispatchProps;
+type Props = OwnProps & DispatchProps & InjectedIntlProps;
 
-class Bankinformasjon extends React.Component<Props, BankinformasjonState> {
+class Bankinformasjon extends React.Component<Props, {}> {
 
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-			verdi: this.props.kontonummer ? this.props.kontonummer : ""
-		}
-	}
+	FAKTUM_KEY_KONTONUMMER = "kontakt.kontonummer";
 
 	componentDidMount(): void {
-		this.props.dispatch(lesBankinfoAction());
+		this.nullstillValideringsfeil();
+		const url = `soknader/${this.props.brukerBehandlingId}/personalia/kontonummer`;
+		fetchToJson(url).then((response: BankinformasjonType) => {
+			this.props.dispatch(oppdaterSoknadsdata({bankinformasjon: response}));
+		}).catch(() => {
+			this.props.dispatch(navigerTilServerfeil());
+		});
 	}
 
-	componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<BankinformasjonState>, snapshot?: any): void {
-		if (prevProps.kontonummer !== this.props.kontonummer && this.props.kontonummer !== null) {
-			this.setState({verdi: this.props.kontonummer})
+	lagreDersomGyldig(verdi: string) {
+		if(verdi !== "") {
+			const valideringActionKey: ValideringActionKey = erKontonummer(verdi);
+			if (valideringActionKey) {
+				const valideringsfeil: Valideringsfeil = {
+					faktumKey: this.FAKTUM_KEY_KONTONUMMER,
+					feilkode: valideringActionKey
+				};
+				this.props.dispatch(setFaktumValideringsfeil(valideringsfeil, this.FAKTUM_KEY_KONTONUMMER));
+			} else {
+				const bankinformasjon: BankinformasjonType = {
+					...this.props.bankinformasjon,
+					...{systemverdi: verdi, verdi}
+				};
+				this.oppdaterBankinformasjon(bankinformasjon);
+				this.nullstillValideringsfeil();
+			}
+		} else {
+			this.nullstillValideringsfeil();
 		}
 	}
 
-	onChange(verdi: string) {
-		this.setState({verdi})
+	oppdaterBankinformasjon(bankinformasjon: BankinformasjonType): void {
+		const url = `soknader/${this.props.brukerBehandlingId}/personalia/kontonummer`;
+		fetchPut(url, JSON.stringify(bankinformasjon)).then(() => {
+			this.props.dispatch(oppdaterSoknadsdata({bankinformasjon}));
+		}).catch(() => {
+			this.props.dispatch(navigerTilServerfeil());
+		});
 	}
 
-	// Work-in-progress: Trenger en valideringsfunksjon for å sjekke at kontonummer er gyldig
-	// checkDigit11(n: string, x: number): number {
-	// 	let l = n.length, i = 0, j = (l%8), v = 0;
-	// 	for(i = 0, l = l-1; i < l; i++) {
-	// 		v += parseInt(n[i], 10) * j;
-	// 		j = (j === 2) ? 9 : --j;
-	// 	}
-	// 	return v = (v%11 < 2) ? (x || 0) : (11 - (v%11));
-	// };
+	nullstillValideringsfeil() {
+		this.props.dispatch(setFaktumValideringsfeil(null, this.FAKTUM_KEY_KONTONUMMER));
+	}
 
-	lagreDersomGyldig() {
-		console.warn("Debug: Lagre dersom gyldig: ");
-		// TODO Valider
-		this.props.dispatch(oppdaterBankinfoAction(this.state.verdi));
+	getFeil(intl: InjectedIntl): Feil {
+		const feilkode = this.props.feil.find(
+			(f: Valideringsfeil) => f.faktumKey === this.FAKTUM_KEY_KONTONUMMER
+		);
+		return !feilkode ? null : {
+			feilmelding: intl.formatHTMLMessage({ id: feilkode.feilkode })
+		};
+	}
+
+	onChangeInput(verdi: string) {
+		this.props.dispatch(oppdaterSoknadsdata({
+			bankinformasjon: {...this.props.bankinformasjon, ...{verdi}}
+		}));
+	}
+
+	onChangeCheckboks(event: any): void {
+		let harIkkeKontonummer: boolean = false;
+		const { bankinformasjon } = this.props;
+		if (bankinformasjon !== null && bankinformasjon.harIkkeKonto !== null) {
+			harIkkeKontonummer = !bankinformasjon.harIkkeKonto;
+		}
+		if (harIkkeKontonummer) {
+			this.nullstillValideringsfeil();
+		}
+		const oppdatertBankinformasjon: BankinformasjonType =
+			{...bankinformasjon, ...{harIkkeKonto: harIkkeKontonummer}};
+		// Oppdater redux state så bruker ikke må vente til server respons før checkboks verdi blir oppdatert
+		this.props.dispatch(oppdaterSoknadsdata({oppdatertBankinformasjon}));
+		this.oppdaterBankinformasjon(oppdatertBankinformasjon);
+		event.preventDefault();
 	}
 
 	render() {
-		let {kontonummer} = this.props;
-		if (!kontonummer) {
-			kontonummer = "";
+		const { bankinformasjon, intl } = this.props;
+		let kontonummer = "";
+		let harIkkeKontonummer: boolean = false;
+		if (bankinformasjon) {
+			if (bankinformasjon.harIkkeKonto !== null) {
+				harIkkeKontonummer = bankinformasjon.harIkkeKonto;
+			}
+			if (bankinformasjon.verdi !== null && !harIkkeKontonummer) {
+				kontonummer = bankinformasjon.verdi;
+			}
 		}
 		return (
 			<Sporsmal tekster={{sporsmal: "Kontonummer"}}>
-				<p>
-					<b> Test av ny bankinfo komponent utenfor faktumtreet. {this.props.kontonummer}</b>
-				</p>
 				<div>
 					<Input
 						id="bankinfo_konto"
 						className={"input--xxl faktumInput " }
-						// type={type}
 						autoComplete="off"
 						name={name}
-						// disabled={disabled}
-						value={this.state.verdi}
-						onChange={(evt: any) => this.onChange(evt.target.value) }
-						onBlur={() => this.lagreDersomGyldig()}
-						label={"Kontonummer (11 siffer)"}
-						// feil={this.props.getFeil(intl)}
+						disabled={harIkkeKontonummer}
+						value={kontonummer}
+						onChange={(evt: any) => this.onChangeInput(evt.target.value) }
+						onBlur={(event) => this.lagreDersomGyldig(event.target.value)}
+						label={intl.formatHTMLMessage({ id: "kontakt.kontonummer.label" })}
+						feil={this.getFeil(intl)}
 						maxLength={13}
 						bredde={"S"}
-						// pattern={pattern}
-						// required={required}
-						// step={step}
 						noValidate={
 							true /* Unngå at nettleser validerer og evt. fjerner verdien */
 						}
 					/>
+					<div
+						className={"inputPanel " + (harIkkeKontonummer ? " inputPanel__checked" : " ")}
+						onClick={(event: any) => this.onChangeCheckboks(event)}
+					>
+						<Checkbox
+							id="kontakt_kontonummer_har_ikke_checkbox_2"
+							name="kontakt_kontonummer_har_ikke_checkbox_2"
+							checked={harIkkeKontonummer}
+							onChange={(event: any) => this.onChangeCheckboks(event)}
+
+							label={
+								<div>
+									{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
+								</div>
+							}
+						/>
+					</div>
 				</div>
 			</Sporsmal>
 		);
@@ -95,9 +165,11 @@ class Bankinformasjon extends React.Component<Props, BankinformasjonState> {
 }
 
 const mapStateToProps = (state: State) => ({
-	kontonummer: state.bankinfo.verdi
+	brukerBehandlingId: state.soknad.data.brukerBehandlingId,
+	feil: state.validering.feil,
+	bankinformasjon: state.soknadsdata.bankinformasjon
 });
 
 export default connect<{}, {}, OwnProps>(
 	mapStateToProps
-)(Bankinformasjon);
+)(injectIntl(Bankinformasjon));

@@ -13,7 +13,6 @@ import featureTogglesSaga from "./nav-soknad/redux/featuretoggles/featureToggles
 import vedleggSaga from "./nav-soknad/redux/vedlegg/vedleggSaga";
 import ettersendelseSaga from "./nav-soknad/redux/ettersendelse/ettersendelseSaga";
 import oppholdsadresseSaga from "./digisos/skjema/personopplysninger/tps/OppholdsadresseSaga";
-import bankinfoSaga from "./digisos/skjema/personopplysninger/bankinfo/bankinfoSaga";
 
 export default function* rootSaga() {
 	yield all([
@@ -30,7 +29,6 @@ export default function* rootSaga() {
 		soknadSaga(),
 		vedleggSaga(),
 		ettersendelseSaga(),
-		oppholdsadresseSaga(),
-		bankinfoSaga()
+		oppholdsadresseSaga()
 	]);
 }
