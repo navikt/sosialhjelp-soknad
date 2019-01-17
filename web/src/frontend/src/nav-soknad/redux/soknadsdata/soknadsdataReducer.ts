@@ -1,25 +1,12 @@
 import { Reducer } from "../reduxTypes";
+import { Bankinformasjon, initialBankinfoState } from "./bankinformasjonService";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER"
 }
 
-export interface BankinfoState {
-	brukerdefinert: boolean;
-	systemverdi: "" | "true" | "false";
-	verdi: string | null;
-	harIkkeKonto: boolean | null;
-}
-
-const initialBankinfoState: BankinfoState = {
-	brukerdefinert: true,
-	systemverdi: "",
-	verdi: "",
-	harIkkeKonto: null
-};
-
 export interface SoknadsdataState {
-	bankinformasjon: BankinfoState;
+	bankinformasjon: Bankinformasjon;
 }
 
 const initialState: SoknadsdataState = {
@@ -42,7 +29,7 @@ const SoknadsdataReducer: Reducer<SoknadsdataState, any> = (
 	}
 };
 
-export const oppdaterSoknadsdata = (verdi: any): any => {
+export const oppdaterSoknadsdataAction = (verdi: any): any => {
 	return {
 		type: SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA,
 		verdi

@@ -4,25 +4,21 @@ import { DispatchProps } from "../../../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { State } from "../../../redux/reducers";
 import { Checkbox, Feil, Input } from "nav-frontend-skjema";
-import { fetchPut, fetchToJson } from "../../../../nav-soknad/utils/rest-utils";
 import { ValideringActionKey, Valideringsfeil } from "../../../../nav-soknad/validering/types";
 import { erKontonummer } from "../../../../nav-soknad/validering/valideringer";
 import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
 import { InjectedIntl, InjectedIntlProps, injectIntl } from "react-intl";
-import { navigerTilServerfeil } from "../../../../nav-soknad/redux/navigasjon/navigasjonActions";
-import { oppdaterSoknadsdata } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {
+	hentBankinformasjon,
+	Bankinformasjon as BankinformasjonType,
+	oppdaterBankinformasjon
+} from "../../../../nav-soknad/redux/soknadsdata/bankinformasjonService";
+import { oppdaterSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
 interface OwnProps {
 	brukerBehandlingId?: string;
 	bankinformasjon?: null | BankinformasjonType;
 	feil?: any;
-}
-
-interface BankinformasjonType {
-	brukerdefinert: boolean;
-	systemverdi: string | null;
-	verdi: string;
-	harIkkeKonto: boolean;
 }
 
 type Props = OwnProps & DispatchProps & InjectedIntlProps;
@@ -33,12 +29,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
 		this.nullstillValideringsfeil();
-		const url = `soknader/${this.props.brukerBehandlingId}/personalia/kontonummer`;
-		fetchToJson(url).then((response: BankinformasjonType) => {
-			this.props.dispatch(oppdaterSoknadsdata({bankinformasjon: response}));
-		}).catch(() => {
-			this.props.dispatch(navigerTilServerfeil());
-		});
+		hentBankinformasjon(this.props.brukerBehandlingId, this.props.dispatch);
 	}
 
 	lagreDersomGyldig(verdi: string) {
@@ -64,29 +55,20 @@ class Bankinformasjon extends React.Component<Props, {}> {
 	}
 
 	oppdaterBankinformasjon(bankinformasjon: BankinformasjonType): void {
-		const url = `soknader/${this.props.brukerBehandlingId}/personalia/kontonummer`;
-		fetchPut(url, JSON.stringify(bankinformasjon)).then(() => {
-			this.props.dispatch(oppdaterSoknadsdata({bankinformasjon}));
-		}).catch(() => {
-			this.props.dispatch(navigerTilServerfeil());
-		});
+		oppdaterBankinformasjon(this.props.brukerBehandlingId, bankinformasjon, this.props.dispatch);
 	}
 
-	nullstillValideringsfeil() {
+	nullstillValideringsfeil = () => {
 		this.props.dispatch(setFaktumValideringsfeil(null, this.FAKTUM_KEY_KONTONUMMER));
-	}
+	};
 
 	getFeil(intl: InjectedIntl): Feil {
-		const feilkode = this.props.feil.find(
-			(f: Valideringsfeil) => f.faktumKey === this.FAKTUM_KEY_KONTONUMMER
-		);
-		return !feilkode ? null : {
-			feilmelding: intl.formatHTMLMessage({ id: feilkode.feilkode })
-		};
+		const feilkode = this.props.feil.find( (f: Valideringsfeil) => f.faktumKey === this.FAKTUM_KEY_KONTONUMMER);
+		return !feilkode ? null : {feilmelding: intl.formatHTMLMessage({ id: feilkode.feilkode })};
 	}
 
 	onChangeInput(verdi: string) {
-		this.props.dispatch(oppdaterSoknadsdata({
+		this.props.dispatch(oppdaterSoknadsdataAction({
 			bankinformasjon: {...this.props.bankinformasjon, ...{verdi}}
 		}));
 	}
@@ -102,8 +84,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 		}
 		const oppdatertBankinformasjon: BankinformasjonType =
 			{...bankinformasjon, ...{harIkkeKonto: harIkkeKontonummer}};
-		// Oppdater redux state så bruker ikke må vente til server respons før checkboks verdi blir oppdatert
-		this.props.dispatch(oppdaterSoknadsdata({oppdatertBankinformasjon}));
+		this.props.dispatch(oppdaterSoknadsdataAction({oppdatertBankinformasjon}));
 		this.oppdaterBankinformasjon(oppdatertBankinformasjon);
 		event.preventDefault();
 	}
