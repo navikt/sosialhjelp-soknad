@@ -9,10 +9,10 @@ import { erKontonummer } from "../../../../nav-soknad/validering/valideringer";
 import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
 import { InjectedIntl, InjectedIntlProps, injectIntl } from "react-intl";
 import {
-	hentBankinformasjon,
 	Bankinformasjon as BankinformasjonType,
-	oppdaterBankinformasjon
-} from "../../../../nav-soknad/redux/soknadsdata/bankinformasjonService";
+	hentBankinformasjonAction,
+	oppdaterBankinformasjonAction
+} from "../../../../nav-soknad/redux/soknadsdata/bankinformasjonActions";
 import { oppdaterSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
 interface OwnProps {
@@ -29,7 +29,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
 		this.nullstillValideringsfeil();
-		hentBankinformasjon(this.props.brukerBehandlingId, this.props.dispatch);
+		this.props.dispatch(hentBankinformasjonAction(this.props.brukerBehandlingId));
 	}
 
 	lagreDersomGyldig(verdi: string) {
@@ -55,7 +55,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 	}
 
 	oppdaterBankinformasjon(bankinformasjon: BankinformasjonType): void {
-		oppdaterBankinformasjon(this.props.brukerBehandlingId, bankinformasjon, this.props.dispatch);
+		this.props.dispatch(oppdaterBankinformasjonAction(this.props.brukerBehandlingId, bankinformasjon ));
 	}
 
 	nullstillValideringsfeil = () => {

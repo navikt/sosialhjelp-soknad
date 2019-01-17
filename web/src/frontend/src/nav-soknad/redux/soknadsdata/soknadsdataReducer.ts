@@ -1,5 +1,5 @@
 import { Reducer } from "../reduxTypes";
-import { Bankinformasjon, initialBankinfoState } from "./bankinformasjonService";
+import { Bankinformasjon, initialBankinfoState } from "./bankinformasjonActions";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER"
