@@ -6,7 +6,8 @@ export enum Sider {
 	FINN_DITT_NAV_KONTOR = "https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Relatert+informasjon/finn-ditt-nav-kontor--353421",
 	SERVERFEIL = "/serverfeil",
 	START = "/informasjon",
-	BOSTED = "/bosted"
+	BOSTED = "/bosted",
+	MOCK = "/mock"
 }
 
 export enum NavigasjonActionTypes {
@@ -20,7 +21,8 @@ export enum NavigasjonActionTypes {
 	TIL_SERVERFEIL = "navigasjon/TIL_SERVERFEIL",
 	TIL_BOSTED = "navigasjon/TIL_BOSTED",
 	TIL_BOSTED_ELLER_START_SOKNAD = "navigasjon/TIL_BOSTED_ELLER_START_SOKNAD",
-	TIL_KVITTERING = "navigasjon/TIL_KVITTERING"
+	TIL_KVITTERING = "navigasjon/TIL_KVITTERING",
+	TIL_MOCK = "navigasjon/TIL_MOCK"
 }
 
 export type NavigasjonActions =
@@ -34,7 +36,8 @@ export type NavigasjonActions =
 	| TilBosted
 	| TilDittNav
 	| TilKvittering
-	| TilBostedEllerStartSoknad;
+	| TilBostedEllerStartSoknad
+	| TilMock;
 
 export interface TilServerfeil {
 	type: NavigasjonActionTypes.TIL_SERVERFEIL;
@@ -83,4 +86,8 @@ export interface TilDittNav {
 export interface TilKvittering {
 	type: NavigasjonActionTypes.TIL_KVITTERING;
 	brukerbehandlingId: string;
+}
+
+export interface TilMock {
+	type: NavigasjonActionTypes.TIL_MOCK;
 }

@@ -7,6 +7,7 @@ import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
 import { erSkjemaside } from "../nav-soknad/utils/navigasjonUtils";
 import Informasjon from "./informasjon";
 import Mock from "./mock";
+import MockLogin from "./mocklogin";
 import Start from "./start";
 import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
@@ -27,6 +28,7 @@ class App extends React.Component<InjectedIntlProps, {}> {
 		const ettersendelse = (window.location.pathname.match(/ettersendelse$/) != null);
 		const informasjon = (window.location.pathname.match(/informasjon$/) != null);
 		const mock = (window.location.pathname.match(/mock$/) != null);
+		const mocklogin = (window.location.pathname.match(/mock-login$/) != null);
 
 		return (
 			<span>
@@ -45,8 +47,13 @@ class App extends React.Component<InjectedIntlProps, {}> {
 						exact={true}
 						component={Mock}
 					/>
+					<Route
+						path={`/mock-login`}
+						exact={true}
+						component={MockLogin}
+					/>
 				</Switch>
-			{!ettersendelse && !informasjon && !mock && (
+			{!ettersendelse && !informasjon && !mock && !mocklogin && (
 				<span>
 					<Switch>
 						<Route path={`/bosted`} exact={true} component={Start} />
