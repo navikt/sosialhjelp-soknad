@@ -7,13 +7,16 @@ import { Checkbox, Feil, Input } from "nav-frontend-skjema";
 import { ValideringActionKey, Valideringsfeil } from "../../../../nav-soknad/validering/types";
 import { erKontonummer } from "../../../../nav-soknad/validering/valideringer";
 import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
-import { InjectedIntl, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage, InjectedIntl, InjectedIntlProps, injectIntl } from "react-intl";
 import {
 	Bankinformasjon as BankinformasjonType,
 	hentBankinformasjonAction,
 	oppdaterBankinformasjonAction
 } from "../../../../nav-soknad/redux/soknadsdata/bankinformasjonActions";
 import { oppdaterSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import Lenkeknapp from "../../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
+import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
+import Underskjema from "../../../../nav-soknad/components/underskjema";
 
 interface OwnProps {
 	brukerBehandlingId?: string;
@@ -28,7 +31,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 	FAKTUM_KEY_KONTONUMMER = "kontakt.kontonummer";
 
 	componentDidMount(): void {
-		this.nullstillValideringsfeil();
+		this.nullstillBankinfoValideringsfeil();
 		this.props.dispatch(hentBankinformasjonAction(this.props.brukerBehandlingId));
 	}
 
@@ -44,13 +47,13 @@ class Bankinformasjon extends React.Component<Props, {}> {
 			} else {
 				const bankinformasjon: BankinformasjonType = {
 					...this.props.bankinformasjon,
-					...{systemverdi: verdi, verdi}
+					...{verdi}
 				};
 				this.oppdaterBankinformasjon(bankinformasjon);
-				this.nullstillValideringsfeil();
+				this.nullstillBankinfoValideringsfeil();
 			}
 		} else {
-			this.nullstillValideringsfeil();
+			this.nullstillBankinfoValideringsfeil();
 		}
 	}
 
@@ -58,7 +61,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 		this.props.dispatch(oppdaterBankinformasjonAction(this.props.brukerBehandlingId, bankinformasjon ));
 	}
 
-	nullstillValideringsfeil = () => {
+	nullstillBankinfoValideringsfeil = () => {
 		this.props.dispatch(setFaktumValideringsfeil(null, this.FAKTUM_KEY_KONTONUMMER));
 	};
 
@@ -80,13 +83,17 @@ class Bankinformasjon extends React.Component<Props, {}> {
 			harIkkeKontonummer = !bankinformasjon.harIkkeKonto;
 		}
 		if (harIkkeKontonummer) {
-			this.nullstillValideringsfeil();
+			this.nullstillBankinfoValideringsfeil();
 		}
 		const oppdatertBankinformasjon: BankinformasjonType =
 			{...bankinformasjon, ...{harIkkeKonto: harIkkeKontonummer}};
 		this.props.dispatch(oppdaterSoknadsdataAction({oppdatertBankinformasjon}));
 		this.oppdaterBankinformasjon(oppdatertBankinformasjon);
 		event.preventDefault();
+	}
+
+	endreKontoBrukerdefinert(brukerdefinert: boolean) {
+		this.oppdaterBankinformasjon({...this.props.bankinformasjon, ...{brukerdefinert}});
 	}
 
 	render() {
@@ -101,44 +108,89 @@ class Bankinformasjon extends React.Component<Props, {}> {
 				kontonummer = bankinformasjon.verdi;
 			}
 		}
-		return (
-			<Sporsmal tekster={{sporsmal: "Kontonummer"}}>
-				<div>
-					<Input
-						id="bankinfo_konto"
-						className={"input--xxl faktumInput " }
-						autoComplete="off"
-						name={name}
-						disabled={harIkkeKontonummer}
-						value={kontonummer}
-						onChange={(evt: any) => this.onChangeInput(evt.target.value) }
-						onBlur={(event) => this.lagreDersomGyldig(event.target.value)}
-						label={intl.formatHTMLMessage({ id: "kontakt.kontonummer.label" })}
-						feil={this.getFeil(intl)}
-						maxLength={13}
-						bredde={"S"}
-						noValidate={
-							true /* Unngå at nettleser validerer og evt. fjerner verdien */
-						}
-					/>
-					<div
-						className={"inputPanel " + (harIkkeKontonummer ? " inputPanel__checked" : " ")}
-						onClick={(event: any) => this.onChangeCheckboks(event)}
-					>
-						<Checkbox
-							id="kontakt_kontonummer_har_ikke_checkbox_2"
-							name="kontakt_kontonummer_har_ikke_checkbox_2"
-							checked={harIkkeKontonummer}
-							onChange={(event: any) => this.onChangeCheckboks(event)}
 
-							label={
-								<div>
-									{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
-								</div>
+		if (!bankinformasjon) {
+			return (<span />);
+		}
+
+		const infotekst = bankinformasjon.systemverdi ?
+			intl.formatMessage({id: "kontakt.system.kontonummer.infotekst.tekst"}) : null;
+		return (
+			<Sporsmal tekster={{sporsmal: "Kontonummer", infotekst: {tittel: null, tekst: infotekst}}}>
+				{bankinformasjon.systemverdi && (
+					<div className="systeminfoMedSkjema__info">
+						<Underskjema
+							arrow={false}
+							visible={true}
+							collapsable={false}
+							style="system"
+						>
+							<Detaljeliste>
+								<DetaljelisteElement
+									tittel={
+										<FormattedMessage id="kontakt.system.kontonummer.label"/>
+									}
+									verdi={bankinformasjon.systemverdi}
+								/>
+							</Detaljeliste>
+						</Underskjema>
+					</div>
+				)}
+				{!bankinformasjon.brukerdefinert && (
+					<Lenkeknapp
+						onClick={() => this.endreKontoBrukerdefinert(true)}
+						id={"endre_lenke"}
+					>
+						{intl.formatMessage({
+							id: "kontakt.system.kontonummer.endreknapp.label"
+						})}
+					</Lenkeknapp>
+				)}
+				{bankinformasjon.brukerdefinert && (
+					<span>
+						<Input
+							id="bankinfo_konto"
+							className={"input--xxl faktumInput " }
+							autoComplete="off"
+							name={name}
+							disabled={harIkkeKontonummer}
+							value={kontonummer}
+							onChange={(evt: any) => this.onChangeInput(evt.target.value) }
+							onBlur={(event) => this.lagreDersomGyldig(event.target.value)}
+							label={intl.formatHTMLMessage({ id: "kontakt.kontonummer.label" })}
+							feil={this.getFeil(intl)}
+							maxLength={13}
+							bredde={"S"}
+							noValidate={
+								true /* Unngå at nettleser validerer og evt. fjerner verdien */
 							}
 						/>
-					</div>
-				</div>
+						<div
+							className={"inputPanel " + (harIkkeKontonummer ? " inputPanel__checked" : " ")}
+							onClick={(event: any) => this.onChangeCheckboks(event)}
+						>
+							<Checkbox
+								id="kontakt_kontonummer_har_ikke_checkbox_2"
+								name="kontakt_kontonummer_har_ikke_checkbox_2"
+								checked={harIkkeKontonummer}
+								onChange={(event: any) => this.onChangeCheckboks(event)}
+								label={
+									<div>
+										{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
+									</div>
+								}
+							/>
+						</div>
+					</span>
+				)}
+				{bankinformasjon.brukerdefinert && bankinformasjon.systemverdi && (
+					<Lenkeknapp
+						onClick={() => this.endreKontoBrukerdefinert(false)}
+						id={"angre_lenke"}
+					>
+						{intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"})}
+					</Lenkeknapp>
+				)}
 			</Sporsmal>
 		);
 	}

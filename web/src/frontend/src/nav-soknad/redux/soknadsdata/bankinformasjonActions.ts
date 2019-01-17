@@ -1,6 +1,7 @@
 import { fetchPut, fetchToJson } from "../../utils/rest-utils";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 import { oppdaterSoknadsdataAction } from "./soknadsdataReducer";
+import { Dispatch } from "../reduxTypes";
 
 export interface Bankinformasjon {
 	brukerdefinert: boolean;
@@ -19,7 +20,7 @@ export const initialBankinfoState: Bankinformasjon = {
 const bankinfoUrl = (brukerBehandlingId: string): string => `soknader/${brukerBehandlingId}/personalia/kontonummer`;
 
 export const hentBankinformasjonAction = (brukerBehandlingId: string) => {
-	return (dispatch: any) => {
+	return (dispatch: Dispatch) => {
 		fetchToJson(bankinfoUrl(brukerBehandlingId)).then((response: Bankinformasjon) => {
 			dispatch(oppdaterSoknadsdataAction({bankinformasjon: response}));
 		}).catch(() => {
@@ -29,7 +30,7 @@ export const hentBankinformasjonAction = (brukerBehandlingId: string) => {
 };
 
 export const oppdaterBankinformasjonAction = (brukerBehandlingId: string, bankinformasjon: Bankinformasjon): any => {
-	return (dispatch: any) => {
+	return (dispatch: Dispatch) => {
 		fetchPut(bankinfoUrl(brukerBehandlingId), JSON.stringify(bankinformasjon)).then(() => {
 			dispatch(oppdaterSoknadsdataAction({ bankinformasjon }));
 		}).catch(() => {
