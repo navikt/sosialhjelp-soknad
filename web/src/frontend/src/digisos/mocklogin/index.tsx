@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import "whatwg-fetch";
 import { tilMock } from "../../nav-soknad/redux/navigasjon/navigasjonActions";
-import {getApiBaseUrl, getCookie} from "../../nav-soknad/utils/rest-utils";
+import {fetchPost} from "../../nav-soknad/utils/rest-utils";
 
 
 export interface StateProps {
@@ -14,24 +14,6 @@ type Props = StateProps & DispatchProps;
 
 interface State {
 	uid: string;
-}
-
-function mockLogin(payload: object, uid: string) {
-	const url = getApiBaseUrl() + "internal/mock/tjeneste/uid";
-	const OPTIONS: RequestInit = {
-		headers: new Headers({
-			"accept": "application/json, text/plain, */*",
-			"Content-Type": "application/json",
-			"X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API")
-		}),
-		method: "POST",
-		credentials: "include",
-		body: JSON.stringify(payload)
-	};
-	return fetch(url, OPTIONS)
-		.then((response: Response) => {
-			return ;
-		});
 }
 
 class MockLogin extends React.Component<Props, State> {
@@ -47,7 +29,7 @@ class MockLogin extends React.Component<Props, State> {
 		const uidObject = {
 			uid: this.state.uid
 		};
-		mockLogin(uidObject, this.state.uid).then(() => {
+		fetchPost("internal/mock/tjeneste/uid", JSON.stringify(uidObject)).then(() => {
 			console.warn("aksjfdb");
 			this.props.dispatch(tilMock());
 		})

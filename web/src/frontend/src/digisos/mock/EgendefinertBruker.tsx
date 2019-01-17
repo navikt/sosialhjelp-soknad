@@ -10,10 +10,10 @@ import NyttArbeidsforhold, {
 	NyttArbeidsforholdObject
 } from "./mockComponents/nyttArbeidsforhold";
 import * as systemdatamock from "soknadsosialhjelp-mocksystemdata";
-import { settMockData } from "./mockRestUtils/mockRestUtils";
 import {NyttBarn, NyttBarnObject} from "./mockComponents/nyttBarn";
 import MockDataBolkWrapper from "./mockComponents/mockDataBolkWrapper";
 import MockInput from "./mockComponents/mockInput";
+import {fetchPost} from "../../nav-soknad/utils/rest-utils";
 
 
 interface StateProps {
@@ -282,15 +282,14 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 		}
 
 
-		// Send alt
-		settMockData(systemdatamock.getTelefonPath(), systemdatamock.getTelefonJson());
-		settMockData(systemdatamock.getFamiliePath(), systemdatamock.getFamilieJson());
-		settMockData(systemdatamock.getBrukerprofilPath(), systemdatamock.getBrukerprofilJson());
-		settMockData(systemdatamock.getOrganisasjonPath(), systemdatamock.getOrganisasjonJson());
-		settMockData(systemdatamock.getArbeidPath(), systemdatamock.getArbeidJson());
-		settMockData(systemdatamock.getUtbetalingPath(), systemdatamock.getUtbetalingJson());
+		// fetchPost("internal/mock/tjeneste/" + path, JSON.stringify(payload));
 
-
+		fetchPost("internal/mock/tjeneste/" + systemdatamock.getTelefonPath(), JSON.stringify(systemdatamock.getTelefonJson()));
+		fetchPost("internal/mock/tjeneste/" + systemdatamock.getFamiliePath(), JSON.stringify(systemdatamock.getFamilieJson()));
+		fetchPost("internal/mock/tjeneste/" + systemdatamock.getBrukerprofilPath(), JSON.stringify(systemdatamock.getBrukerprofilJson()));
+		fetchPost("internal/mock/tjeneste/" + systemdatamock.getOrganisasjonPath(), JSON.stringify(systemdatamock.getOrganisasjonJson()));
+		fetchPost("internal/mock/tjeneste/" + systemdatamock.getArbeidPath(), JSON.stringify(systemdatamock.getArbeidJson()));
+		fetchPost("internal/mock/tjeneste/" + systemdatamock.getUtbetalingPath(), JSON.stringify(systemdatamock.getUtbetalingJson()));
 
 		this.props.dispatch(tilStart());
 	}
