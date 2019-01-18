@@ -27,6 +27,7 @@
         <url-pattern>/bosted/*</url-pattern>
         <url-pattern>/kvittering/*</url-pattern>
         <url-pattern>/mock/*</url-pattern>
+        <url-pattern>/mock-login/*</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -44,6 +45,7 @@
         <url-pattern>/bosted/*</url-pattern>
         <url-pattern>/kvittering/*</url-pattern>
         <url-pattern>/mock/*</url-pattern>
+        <url-pattern>/mock-login/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
