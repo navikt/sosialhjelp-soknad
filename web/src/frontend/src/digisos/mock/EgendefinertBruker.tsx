@@ -14,6 +14,7 @@ import {NyttBarn, NyttBarnObject} from "./mockComponents/nyttBarn";
 import MockDataBolkWrapper from "./mockComponents/mockDataBolkWrapper";
 import MockInput from "./mockComponents/mockInput";
 import {fetchPost} from "../../nav-soknad/utils/rest-utils";
+import NavFrontendSpinner from "nav-frontend-spinner";
 
 
 interface StateProps {
@@ -40,6 +41,7 @@ interface StateProps {
 	barn: boolean;
 	barn_liste: NyttBarnObject[];
 	utbetalinger: string;
+	loading: boolean;
 }
 
 type Props = StateProps & DispatchProps;
@@ -72,7 +74,8 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 			ektefelle_medKode: "",
 			barn: false,
 			barn_liste: [],
-			utbetalinger: "ingen"
+			utbetalinger: "ingen",
+			loading: false
 		}
 	}
 
@@ -279,6 +282,7 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 			systemdatamock.settUtbetalingerOnkelSkruePenger();
 		}
 
+		this.setState({loading: true});
 		Promise.all([
 			fetchPost("internal/mock/tjeneste/" + systemdatamock.getTelefonPath(), JSON.stringify(systemdatamock.getTelefonJson())),
 			fetchPost("internal/mock/tjeneste/" + systemdatamock.getFamiliePath(), JSON.stringify(systemdatamock.getFamilieJson())),
@@ -394,7 +398,17 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 					<Radio onChange={() => this.setState({utbetalinger: 'begge'})} label={'Barnetrygd og Onkel Skrue Penger'} name={'utbetalinger'} value={'begge'}/>
 				</MockDataBolkWrapper>
 
-				<button onClick={() => this.start()} className="mock-egendefinert-GO">GO!</button>
+				{ !this.state.loading &&
+					<div>
+						<button onClick={() => this.start()} className="mock-egendefinert-GO">GO!</button>
+					</div>
+				}
+				{ this.state.loading &&
+					<div>
+						<button className="mock-egendefinert-GO-loading">GO!</button>
+						<NavFrontendSpinner type="XS" />
+					</div>
+				}
 			</div>
 		)
 	}
