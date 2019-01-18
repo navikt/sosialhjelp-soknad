@@ -14,9 +14,8 @@ import {
 	oppdaterBankinformasjonAction
 } from "../../../../nav-soknad/redux/soknadsdata/bankinformasjonActions";
 import { oppdaterSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import Lenkeknapp from "../../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
-import Underskjema from "../../../../nav-soknad/components/underskjema";
+import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 
 interface OwnProps {
 	brukerBehandlingId?: string;
@@ -36,7 +35,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 	}
 
 	lagreDersomGyldig(verdi: string) {
-		if(verdi !== "") {
+		if (verdi !== "") {
 			const valideringActionKey: ValideringActionKey = erKontonummer(verdi);
 			if (valideringActionKey) {
 				const valideringsfeil: Valideringsfeil = {
@@ -47,7 +46,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 			} else {
 				const bankinformasjon: BankinformasjonType = {
 					...this.props.bankinformasjon,
-					...{verdi}
+					...{ verdi }
 				};
 				this.oppdaterBankinformasjon(bankinformasjon);
 				this.nullstillBankinfoValideringsfeil();
@@ -58,7 +57,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 	}
 
 	oppdaterBankinformasjon(bankinformasjon: BankinformasjonType): void {
-		this.props.dispatch(oppdaterBankinformasjonAction(this.props.brukerBehandlingId, bankinformasjon ));
+		this.props.dispatch(oppdaterBankinformasjonAction(this.props.brukerBehandlingId, bankinformasjon));
 	}
 
 	nullstillBankinfoValideringsfeil = () => {
@@ -66,13 +65,13 @@ class Bankinformasjon extends React.Component<Props, {}> {
 	};
 
 	getFeil(intl: InjectedIntl): Feil {
-		const feilkode = this.props.feil.find( (f: Valideringsfeil) => f.faktumKey === this.FAKTUM_KEY_KONTONUMMER);
-		return !feilkode ? null : {feilmelding: intl.formatHTMLMessage({ id: feilkode.feilkode })};
+		const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === this.FAKTUM_KEY_KONTONUMMER);
+		return !feilkode ? null : { feilmelding: intl.formatHTMLMessage({ id: feilkode.feilkode }) };
 	}
 
 	onChangeInput(verdi: string) {
 		this.props.dispatch(oppdaterSoknadsdataAction({
-			bankinformasjon: {...this.props.bankinformasjon, ...{verdi}}
+			bankinformasjon: { ...this.props.bankinformasjon, ...{ verdi } }
 		}));
 	}
 
@@ -86,14 +85,14 @@ class Bankinformasjon extends React.Component<Props, {}> {
 			this.nullstillBankinfoValideringsfeil();
 		}
 		const oppdatertBankinformasjon: BankinformasjonType =
-			{...bankinformasjon, ...{harIkkeKonto: harIkkeKontonummer}};
-		this.props.dispatch(oppdaterSoknadsdataAction({oppdatertBankinformasjon}));
+			{ ...bankinformasjon, ...{ harIkkeKonto: harIkkeKontonummer } };
+		this.props.dispatch(oppdaterSoknadsdataAction({ oppdatertBankinformasjon }));
 		this.oppdaterBankinformasjon(oppdatertBankinformasjon);
 		event.preventDefault();
 	}
 
 	endreKontoBrukerdefinert(brukerdefinert: boolean) {
-		this.oppdaterBankinformasjon({...this.props.bankinformasjon, ...{brukerdefinert}});
+		this.oppdaterBankinformasjon({ ...this.props.bankinformasjon, ...{ brukerdefinert } });
 	}
 
 	render() {
@@ -110,87 +109,76 @@ class Bankinformasjon extends React.Component<Props, {}> {
 		}
 
 		if (!bankinformasjon) {
-			return (<span />);
+			return (<span/>);
 		}
 
 		const infotekst = bankinformasjon.systemverdi ?
-			intl.formatMessage({id: "kontakt.system.kontonummer.infotekst.tekst"}) : null;
+			intl.formatMessage({ id: "kontakt.system.kontonummer.infotekst.tekst" }) : null;
+
+		const skjemaErSynlig = bankinformasjon.brukerdefinert;
 		return (
-			<Sporsmal tekster={{sporsmal: "Kontonummer", infotekst: {tittel: null, tekst: infotekst}}}>
-				{bankinformasjon.systemverdi && (
-					<div className="systeminfoMedSkjema">
-						<Underskjema
-							arrow={false}
-							visible={true}
-							collapsable={false}
-							style="system"
-						>
-							<Detaljeliste>
-								<DetaljelisteElement
-									tittel={
-										<FormattedMessage id="kontakt.system.kontonummer.label"/>
-									}
-									verdi={bankinformasjon.systemverdi}
-								/>
-							</Detaljeliste>
-							{!bankinformasjon.brukerdefinert && (
-								<Lenkeknapp
-									onClick={() => this.endreKontoBrukerdefinert(true)}
-									id={"endre_lenke"}
-								>
-									{intl.formatMessage({
-										id: "kontakt.system.kontonummer.endreknapp.label"
-									})}
-								</Lenkeknapp>
-							)}
-						</Underskjema>
-					</div>
-				)}
-				{bankinformasjon.brukerdefinert && (
-					<span>
-						<Input
-							id="bankinfo_konto"
-							className={"input--xxl faktumInput " }
-							autoComplete="off"
-							name={name}
-							disabled={harIkkeKontonummer}
-							value={kontonummer}
-							onChange={(evt: any) => this.onChangeInput(evt.target.value) }
-							onBlur={(event) => this.lagreDersomGyldig(event.target.value)}
-							label={intl.formatHTMLMessage({ id: "kontakt.kontonummer.label" })}
-							feil={this.getFeil(intl)}
-							maxLength={13}
-							bredde={"S"}
-							noValidate={
-								true /* Unngå at nettleser validerer og evt. fjerner verdien */
-							}
-						/>
-						<div
-							className={"inputPanel " + (harIkkeKontonummer ? " inputPanel__checked" : " ")}
-							onClick={(event: any) => this.onChangeCheckboks(event)}
-						>
-							<Checkbox
-								id="kontakt_kontonummer_har_ikke_checkbox_2"
-								name="kontakt_kontonummer_har_ikke_checkbox_2"
-								checked={harIkkeKontonummer}
-								onChange={(event: any) => this.onChangeCheckboks(event)}
-								label={
-									<div>
-										{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
-									</div>
+			<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
+				<SysteminfoMedSkjema
+					skjemaErSynlig={skjemaErSynlig}
+					onVisSkjema={() => this.endreKontoBrukerdefinert(true)}
+					onSkjulSkjema={() => this.endreKontoBrukerdefinert(false)}
+					endreLabel={
+						intl.formatMessage({
+							id: "kontakt.system.kontonummer.endreknapp.label"
+						})
+					}
+					avbrytLabel={
+						intl.formatMessage({
+							id: "systeminfo.avbrytendringknapp.label"
+						})
+					}
+					skjema={(
+						<span>
+							<Input
+								id="bankinfo_konto"
+								className={"input--xxl faktumInput "}
+								autoComplete="off"
+								name={name}
+								disabled={harIkkeKontonummer}
+								value={kontonummer}
+								onChange={(evt: any) => this.onChangeInput(evt.target.value)}
+								onBlur={(event) => this.lagreDersomGyldig(event.target.value)}
+								label={intl.formatHTMLMessage({ id: "kontakt.kontonummer.label" })}
+								feil={this.getFeil(intl)}
+								maxLength={13}
+								bredde={"S"}
+								noValidate={
+									true /* Unngå at nettleser validerer og evt. fjerner verdien */
 								}
 							/>
-						</div>
-					</span>
-				)}
-				{bankinformasjon.brukerdefinert && bankinformasjon.systemverdi && (
-					<Lenkeknapp
-						onClick={() => this.endreKontoBrukerdefinert(false)}
-						id={"angre_lenke"}
-					>
-						{intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"})}
-					</Lenkeknapp>
-				)}
+							<div
+								className={"inputPanel " + (harIkkeKontonummer ? " inputPanel__checked" : " ")}
+								onClick={(event: any) => this.onChangeCheckboks(event)}
+							>
+								<Checkbox
+									id="kontakt_kontonummer_har_ikke_checkbox_2"
+									name="kontakt_kontonummer_har_ikke_checkbox_2"
+									checked={harIkkeKontonummer}
+									onChange={(event: any) => this.onChangeCheckboks(event)}
+									label={
+										<div>
+											{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
+										</div>
+									}
+								/>
+							</div>
+						</span>
+					)}
+				>
+					<Detaljeliste>
+						<DetaljelisteElement
+							tittel={
+								<FormattedMessage id="kontakt.system.kontonummer.label"/>
+							}
+							verdi={bankinformasjon.systemverdi}
+						/>
+					</Detaljeliste>
+				</SysteminfoMedSkjema>
 			</Sporsmal>
 		);
 	}
