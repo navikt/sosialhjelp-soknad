@@ -118,7 +118,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 		return (
 			<Sporsmal tekster={{sporsmal: "Kontonummer", infotekst: {tittel: null, tekst: infotekst}}}>
 				{bankinformasjon.systemverdi && (
-					<div className="systeminfoMedSkjema__info">
+					<div className="systeminfoMedSkjema">
 						<Underskjema
 							arrow={false}
 							visible={true}
@@ -133,18 +133,18 @@ class Bankinformasjon extends React.Component<Props, {}> {
 									verdi={bankinformasjon.systemverdi}
 								/>
 							</Detaljeliste>
+							{!bankinformasjon.brukerdefinert && (
+								<Lenkeknapp
+									onClick={() => this.endreKontoBrukerdefinert(true)}
+									id={"endre_lenke"}
+								>
+									{intl.formatMessage({
+										id: "kontakt.system.kontonummer.endreknapp.label"
+									})}
+								</Lenkeknapp>
+							)}
 						</Underskjema>
 					</div>
-				)}
-				{!bankinformasjon.brukerdefinert && (
-					<Lenkeknapp
-						onClick={() => this.endreKontoBrukerdefinert(true)}
-						id={"endre_lenke"}
-					>
-						{intl.formatMessage({
-							id: "kontakt.system.kontonummer.endreknapp.label"
-						})}
-					</Lenkeknapp>
 				)}
 				{bankinformasjon.brukerdefinert && (
 					<span>
