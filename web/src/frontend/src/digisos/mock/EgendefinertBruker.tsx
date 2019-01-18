@@ -252,7 +252,6 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 			}
 		}
 
-
 		// Sett barn
 		if(this.state.barn){
 			this.state.barn_liste.forEach((barn: NyttBarnObject, key: number) => {
@@ -268,7 +267,6 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 			})
 		}
 
-
 		// Sett utbetalinger
 		if(this.state.utbetalinger === 'barn'){
 			systemdatamock.settUtbetalingerBarnetrygd();
@@ -281,17 +279,16 @@ class EgendefinertBruker extends React.Component<Props,StateProps> {
 			systemdatamock.settUtbetalingerOnkelSkruePenger();
 		}
 
-
-		// fetchPost("internal/mock/tjeneste/" + path, JSON.stringify(payload));
-
-		fetchPost("internal/mock/tjeneste/" + systemdatamock.getTelefonPath(), JSON.stringify(systemdatamock.getTelefonJson()));
-		fetchPost("internal/mock/tjeneste/" + systemdatamock.getFamiliePath(), JSON.stringify(systemdatamock.getFamilieJson()));
-		fetchPost("internal/mock/tjeneste/" + systemdatamock.getBrukerprofilPath(), JSON.stringify(systemdatamock.getBrukerprofilJson()));
-		fetchPost("internal/mock/tjeneste/" + systemdatamock.getOrganisasjonPath(), JSON.stringify(systemdatamock.getOrganisasjonJson()));
-		fetchPost("internal/mock/tjeneste/" + systemdatamock.getArbeidPath(), JSON.stringify(systemdatamock.getArbeidJson()));
-		fetchPost("internal/mock/tjeneste/" + systemdatamock.getUtbetalingPath(), JSON.stringify(systemdatamock.getUtbetalingJson()));
-
-		this.props.dispatch(tilStart());
+		Promise.all([
+			fetchPost("internal/mock/tjeneste/" + systemdatamock.getTelefonPath(), JSON.stringify(systemdatamock.getTelefonJson())),
+			fetchPost("internal/mock/tjeneste/" + systemdatamock.getFamiliePath(), JSON.stringify(systemdatamock.getFamilieJson())),
+			fetchPost("internal/mock/tjeneste/" + systemdatamock.getBrukerprofilPath(), JSON.stringify(systemdatamock.getBrukerprofilJson())),
+			fetchPost("internal/mock/tjeneste/" + systemdatamock.getOrganisasjonPath(), JSON.stringify(systemdatamock.getOrganisasjonJson())),
+			fetchPost("internal/mock/tjeneste/" + systemdatamock.getArbeidPath(), JSON.stringify(systemdatamock.getArbeidJson())),
+			fetchPost("internal/mock/tjeneste/" + systemdatamock.getUtbetalingPath(), JSON.stringify(systemdatamock.getUtbetalingJson()))
+		]).then(() => {
+			this.props.dispatch(tilStart());
+		});
 	}
 
 	render(){
