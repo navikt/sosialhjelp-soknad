@@ -118,6 +118,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 		const skjemaErSynlig = bankinformasjon.brukerdefinert;
 		return (
 			<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
+				<b style={{color: "red"}}>Ny komponent.</b>
 				<SysteminfoMedSkjema
 					skjemaErSynlig={skjemaErSynlig}
 					onVisSkjema={() => this.endreKontoBrukerdefinert(true)}
