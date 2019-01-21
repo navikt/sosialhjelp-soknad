@@ -1,7 +1,7 @@
-import { fetchPut, fetchToJson } from "../../utils/rest-utils";
-import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
-import { oppdaterSoknadsdataAction } from "./soknadsdataReducer";
-import { Dispatch } from "../reduxTypes";
+import { Dispatch } from "../../../../nav-soknad/redux/reduxTypes";
+import { oppdaterSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { navigerTilServerfeil } from "../../../../nav-soknad/redux/navigasjon/navigasjonActions";
+import { fetchPut, fetchToJson } from "../../../../nav-soknad/utils/rest-utils";
 
 export interface Bankinformasjon {
 	brukerdefinert: boolean;
@@ -29,7 +29,7 @@ export const hentBankinformasjonAction = (brukerBehandlingId: string) => {
 	}
 };
 
-export const oppdaterBankinformasjonAction = (brukerBehandlingId: string, bankinformasjon: Bankinformasjon): any => {
+export const oppdaterBankinformasjonAction = (brukerBehandlingId: string, bankinformasjon: Bankinformasjon) => {
 	return (dispatch: Dispatch) => {
 		fetchPut(bankinfoUrl(brukerBehandlingId), JSON.stringify(bankinformasjon)).then(() => {
 			dispatch(oppdaterSoknadsdataAction({ bankinformasjon }));

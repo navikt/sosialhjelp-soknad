@@ -1,5 +1,8 @@
 import { Reducer } from "../reduxTypes";
-import { Bankinformasjon, initialBankinfoState } from "./bankinformasjonActions";
+import {
+	Bankinformasjon,
+	initialBankinfoState
+} from "../../../digisos/skjema/personopplysninger/bankinfo/bankinformasjonActions";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER"
