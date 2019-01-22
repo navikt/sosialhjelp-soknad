@@ -1,6 +1,5 @@
 import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { DispatchProps } from "../../../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { State } from "../../../redux/reducers";
 import { Checkbox, Feil, Input } from "nav-frontend-skjema";
@@ -28,7 +27,7 @@ interface OwnProps {
 	oppdaterSoknadsdata?: (verdi: any) => void;
 }
 
-type Props = OwnProps & DispatchProps & InjectedIntlProps;
+type Props = OwnProps & InjectedIntlProps;
 
 const FAKTUM_KEY_KONTONUMMER = "kontakt.kontonummer";
 
@@ -193,7 +192,7 @@ const mapStateToProps = (state: State) => ({
 	bankinformasjon: state.soknadsdata.bankinformasjon
 });
 
-const mapDispatchToprops = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: any) => ({
 	nullstillBankinfoValideringsfeil: () => {
 		dispatch(setFaktumValideringsfeil(null, FAKTUM_KEY_KONTONUMMER))
 	},
@@ -211,7 +210,9 @@ const mapDispatchToprops = (dispatch: any) => ({
 	}
 });
 
+export {Bankinformasjon as BankinformasjonView};
+
 export default connect<{}, {}, OwnProps>(
 	mapStateToProps,
-	mapDispatchToprops
+	mapDispatchToProps
 )(injectIntl(Bankinformasjon));
