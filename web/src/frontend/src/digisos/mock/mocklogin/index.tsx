@@ -1,9 +1,9 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
+import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import "whatwg-fetch";
-import { tilMock } from "../../nav-soknad/redux/navigasjon/navigasjonActions";
-import {fetchPost} from "../../nav-soknad/utils/rest-utils";
+import { tilMock } from "../../../nav-soknad/redux/navigasjon/navigasjonActions";
+import {fetchPost} from "../../../nav-soknad/utils/rest-utils";
 import NavFrontendSpinner from "nav-frontend-spinner";
 
 
@@ -43,8 +43,11 @@ class MockLogin extends React.Component<Props, State> {
 		return (
 			<div className="mock-body">
 				<div className="mock-login-wrapper">
+					<div className="advarsel-block">
+						DETTE ER KUN FOR TESTING! Data du legger inn her er tilgjengelig for alle. Ikke legg inn noe sensitiv informasjon!
+					</div>
 					<h2>Mock Login</h2>
-					<div>Sett et tilfeldig fødselsnummer (11 siffer) som du vil logge inn på. Ikke bruk ditt eget. Bare putt inn 11 helt tilfeldige siffer.</div>
+					<div>Velg en tilfeldig ID</div>
 					<input value={this.state.uid} onChange={(evt: any) => this.setState({uid: evt.target.value})}  />
 					{ !this.state.loading &&
 					<div>

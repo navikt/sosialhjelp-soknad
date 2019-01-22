@@ -26,8 +26,7 @@ declare module "soknadsosialhjelp-mocksystemdata" {
 	export function settBarnMedDoedsdato(ident: string, fornavn: string, mellomnavn: string, etternavn: string, doedsdato: string): void;
 	export function clearFamilieforhold(): void;
 
-	export function settUtbetalingerBarnetrygd(): void;
-	export function settUtbetalingerOnkelSkruePenger(): void;
+	export function leggTilUtbetaling(periodeFom: string, periodeTom: string, posteringsdato:string, utbetalingsdato: string, forfallsdato: string): void;
 
 	export function getAdresserPath(): string;
 	export function getAdresserJson(): object;

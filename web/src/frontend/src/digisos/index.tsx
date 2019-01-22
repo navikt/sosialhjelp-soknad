@@ -6,8 +6,8 @@ import ServerFeil from "../nav-soknad/containers/ServerFeil";
 import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
 import { erSkjemaside } from "../nav-soknad/utils/navigasjonUtils";
 import Informasjon from "./informasjon";
-import Mock from "./mock";
-import MockLogin from "./mocklogin";
+import MockBruker from "./mock/mockbruker";
+import MockLogin from "./mock/mocklogin";
 import Start from "./start";
 import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
@@ -45,7 +45,7 @@ class App extends React.Component<InjectedIntlProps, {}> {
 					<Route
 						path={`/mock`}
 						exact={true}
-						component={Mock}
+						component={MockBruker}
 					/>
 					<Route
 						path={`/mock-login`}

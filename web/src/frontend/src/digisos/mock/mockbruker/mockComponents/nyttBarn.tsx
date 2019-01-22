@@ -106,7 +106,5 @@ export class NyttBarn extends React.Component<Props, State>{
 				<button className={ buttonClassName } onClick={() => this.setState({isOpened: true})}>+</button>
 			</div>
 		)
-
 	}
-
 }
