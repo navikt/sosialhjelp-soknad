@@ -6,7 +6,7 @@ import { Checkbox, Feil, Input } from "nav-frontend-skjema";
 import { ValideringActionKey, Valideringsfeil } from "../../../../nav-soknad/validering/types";
 import { erKontonummer } from "../../../../nav-soknad/validering/valideringer";
 import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
-import { FormattedMessage, InjectedIntl, InjectedIntlProps, injectIntl } from "react-intl";
+import { InjectedIntl, InjectedIntlProps, injectIntl } from "react-intl";
 import {
 	Bankinformasjon as BankinformasjonType,
 	hentBankinformasjonAction,
@@ -115,7 +115,25 @@ class Bankinformasjon extends React.Component<Props, {}> {
 		const infotekst = bankinformasjon.systemverdi ?
 			intl.formatMessage({ id: "kontakt.system.kontonummer.infotekst.tekst" }) : null;
 
-		const skjemaErSynlig = bankinformasjon.brukerdefinert;
+		const skjemaErSynlig: boolean = (
+			bankinformasjon.systemverdi === null ||
+			bankinformasjon.brukerdefinert === true
+		);
+
+		let endreLabel = intl.formatMessage({
+			id: "kontakt.system.kontonummer.endreknapp.label"
+		});
+
+		let avbrytLabel: string = intl.formatMessage({
+			id: "systeminfo.avbrytendringknapp.label"
+		});
+
+
+		if(this.props.bankinformasjon.systemverdi === null && skjemaErSynlig) {
+			endreLabel = null;
+			avbrytLabel = null;
+		}
+
 		return (
 			<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
 				<b style={{color: "red"}}>Ny komponent.</b>
@@ -123,16 +141,9 @@ class Bankinformasjon extends React.Component<Props, {}> {
 					skjemaErSynlig={skjemaErSynlig}
 					onVisSkjema={() => this.endreKontoBrukerdefinert(true)}
 					onSkjulSkjema={() => this.endreKontoBrukerdefinert(false)}
-					endreLabel={
-						intl.formatMessage({
-							id: "kontakt.system.kontonummer.endreknapp.label"
-						})
-					}
-					avbrytLabel={
-						intl.formatMessage({
-							id: "systeminfo.avbrytendringknapp.label"
-						})
-					}
+					endreLabel={endreLabel}
+					avbrytLabel={avbrytLabel}
+
 					skjema={(
 						<span>
 							<Input
@@ -174,7 +185,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 					<Detaljeliste>
 						<DetaljelisteElement
 							tittel={
-								<FormattedMessage id="kontakt.system.kontonummer.label"/>
+								intl.formatHTMLMessage({ id: "kontakt.system.kontonummer.label" })
 							}
 							verdi={bankinformasjon.systemverdi}
 						/>
