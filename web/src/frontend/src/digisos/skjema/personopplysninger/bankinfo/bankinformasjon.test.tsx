@@ -1,10 +1,9 @@
 import * as React from "react";
-import { configEnzyme, setupReactIntl } from "../../../../nav-soknad/utils/unitTestUtils";
+import { configEnzyme, harCheckboks, harInputfelt, setupReactIntl } from "../../../../nav-soknad/utils/unitTestUtils";
 import { Bankinformasjon } from "./bankinformasjonActions";
 import { BankinformasjonView } from "./Bankinformasjon";
-import { ReactWrapper } from "enzyme";
 
-describe("Bankinformasjon komponent", () => {
+describe("Bankinformasjon react komponent", () => {
 
 	configEnzyme();
 	const intlMessages: any = {
@@ -17,10 +16,7 @@ describe("Bankinformasjon komponent", () => {
 	};
 	const mountWithIntl = setupReactIntl(intlMessages);
 
-	const harCheckboks = (wrapper: ReactWrapper) => wrapper.find('input[type="checkbox"]').length > 0;
-	const harInputfelt = (wrapper: ReactWrapper) => wrapper.find('input[type="text"]').length > 0;
-
-	it("vis skjema men ikke vis angreknapp hvis systemverdi er null", () => {
+	it("Vis skjema, men ikke vis angreknapp, hvis systemverdi er null", () => {
 		const tomBankinformasjon: Bankinformasjon = {
 			"brukerdefinert": false,
 			"systemverdi": null,
@@ -41,13 +37,11 @@ describe("Bankinformasjon komponent", () => {
 
 		expect(harCheckboks(wrapper)).toBeTruthy();
 		expect(harInputfelt(wrapper)).toBeTruthy();
-		expect(wrapper.find(".checkboks").length).toEqual(1);
-		expect(wrapper.find(".input--s").length).toEqual(1);
 		expect(wrapper.html()).not.toContain("Endre");
 		expect(wrapper.html()).not.toContain("Angre");
 	});
 
-	it("ikke vis skjema hvis systemverdi er satt", () => {
+	it("Ikke vis skjema hvis systemverdi er satt", () => {
 		const tomBankinformasjon: Bankinformasjon = {
 			"brukerdefinert": false,
 			"systemverdi": "12345678903",
@@ -72,7 +66,7 @@ describe("Bankinformasjon komponent", () => {
 		expect(wrapper.html()).not.toContain("Angre");
 	});
 
-	it("brukerdefinert er true og systemverdi satt", () => {
+	it("Vis skjema hvis brukerdefinert er true og systemverdi satt", () => {
 		const bankinformasjon: Bankinformasjon = {
 			"brukerdefinert": true,
 			"systemverdi": "12345678903",

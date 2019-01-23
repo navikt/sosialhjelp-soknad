@@ -4,6 +4,7 @@ import { IntlProvider } from "react-intl";
 import { ReactElement } from "react";
 import * as React from "react";
 import { mount } from "enzyme";
+import { ReactWrapper } from "enzyme";
 
 export const configEnzyme = () => {
 	Enzyme.configure({ adapter: new Adapter() });
@@ -31,3 +32,7 @@ export const setupReactIntl = (intlMessages: any) => {
 	};
 	return mountWithIntl;
 };
+
+export const harCheckboks = (wrapper: ReactWrapper) => wrapper.find('input[type="checkbox"]').length > 0;
+
+export const harInputfelt = (wrapper: ReactWrapper) => wrapper.find('input[type="text"]').length > 0;
