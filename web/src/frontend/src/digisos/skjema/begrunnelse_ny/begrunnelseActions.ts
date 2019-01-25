@@ -1,7 +1,7 @@
 import {
 	fetchPutSoknadsdataAction,
 	fetchSoknadsdataAction
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
+} from "../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
 
 export interface Begrunnelse {
 	hvaSokesOm: string;

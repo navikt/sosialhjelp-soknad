@@ -7,7 +7,7 @@ import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import SnakkebobleIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SnakkebobleIllustrasjon";
 import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import BegrunnelseSkjema from "../personopplysninger/begrunnelse/Begrunnelse";
+import BegrunnelseSkjema from "../begrunnelse_ny/Begrunnelse";
 
 const MAX_CHARS = 500;
 

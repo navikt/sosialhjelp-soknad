@@ -3,10 +3,7 @@ import {
 	Bankinformasjon,
 	initialBankinfoState
 } from "../../../digisos/skjema/personopplysninger/bankinfo/bankinformasjonActions";
-import {
-	Begrunnelse,
-	initialBegrunnelseState
-} from "../../../digisos/skjema/personopplysninger/begrunnelse/begrunnelseActions";
+import { Begrunnelse, initialBegrunnelseState } from "../../../digisos/skjema/begrunnelse_ny/begrunnelseActions";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER"

@@ -1,20 +1,20 @@
+import * as React from "react";
+import { connect } from "react-redux";
+import { Feil } from "nav-frontend-skjema";
 import {
 	Begrunnelse as BegrunnelseType,
 	hentBegrunnelsenAction,
 	oppdaterBegrunnelseAction
 } from "./begrunnelseActions";
-import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
-import { maksLengde } from "../../../../nav-soknad/validering/valideringer";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
-import { State } from "../../../redux/reducers";
-import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
-import { ValideringActionKey, Valideringsfeil } from "../../../../nav-soknad/validering/types";
-import { oppdaterSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import { connect } from "react-redux";
-import { Feil } from "nav-frontend-skjema";
+import { ValideringActionKey, Valideringsfeil } from "../../../nav-soknad/validering/types";
+import { maksLengde } from "../../../nav-soknad/validering/valideringer";
+import Sporsmal, { LegendTittleStyle } from "../../../nav-soknad/components/sporsmal/Sporsmal";
+import { getFaktumSporsmalTekst } from "../../../nav-soknad/utils";
+import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
+import { setFaktumValideringsfeil } from "../../../nav-soknad/redux/valideringActions";
+import { oppdaterSoknadsdataAction } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { State } from "../../redux/reducers";
 
 interface OwnProps {
 	brukerBehandlingId?: string;
@@ -27,13 +27,13 @@ interface OwnProps {
 	feil?: any;
 }
 
-type Props = OwnProps & InjectedIntlProps;
-
 const MAX_CHARS = 500;
 const FAKTUM_KEY_HVA = "begrunnelse.hva";
 const FAKTUM_KEY_HVORFOR = "begrunnelse.hvorfor";
 const HVA_SOKES_OM = "hvaSokesOm";
 const HVORFOR_SOKE = "hvorforSoke";
+
+type Props = OwnProps & InjectedIntlProps;
 
 class BegrunnelseSkjema extends React.Component<Props, {}> {
 
@@ -54,7 +54,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 	lagreHvisGyldig() {
 		const { hvaSokesOm, hvorforSoke } = this.props.begrunnelse;
 		const feilmeldingHva: ValideringActionKey = this.validerTekstfeltVerdi(hvaSokesOm, FAKTUM_KEY_HVA);
-		const feilmeldingHvorfor: ValideringActionKey = this.validerTekstfeltVerdi(hvaSokesOm, FAKTUM_KEY_HVORFOR);
+		const feilmeldingHvorfor: ValideringActionKey = this.validerTekstfeltVerdi(hvorforSoke, FAKTUM_KEY_HVORFOR);
 
 		if (!feilmeldingHva && !feilmeldingHvorfor) {
 			const begrunnelse: BegrunnelseType = {hvaSokesOm, hvorforSoke};
@@ -149,7 +149,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 	}
 });
 
-export {BegrunnelseSkjema as BegrunnelseView};
+export {BegrunnelseSkjema as BegrunnelseSkjema};
 
 export default connect<{}, {}, OwnProps>(
 	mapStateToProps,

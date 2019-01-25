@@ -19,7 +19,6 @@ interface OwnProps {
 	getName: () => string;
 	value?: string;
 	getFeil: (intl: InjectedIntl) => Feil;
-	// validerFunc: (value: string) => ValideringActionKey;
 	onChange?: (event: any) => any;
 	onBlur?: () => void;
 }
