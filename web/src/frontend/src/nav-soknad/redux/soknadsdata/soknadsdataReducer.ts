@@ -3,6 +3,10 @@ import {
 	Bankinformasjon,
 	initialBankinfoState
 } from "../../../digisos/skjema/personopplysninger/bankinfo/bankinformasjonActions";
+import {
+	Begrunnelse,
+	initialBegrunnelseState
+} from "../../../digisos/skjema/personopplysninger/begrunnelse/begrunnelseActions";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER"
@@ -10,10 +14,12 @@ export enum SoknadsdataActionTypeKeys {
 
 export interface SoknadsdataState {
 	bankinformasjon: Bankinformasjon;
+	begrunnelse: Begrunnelse;
 }
 
 const initialState: SoknadsdataState = {
-	bankinformasjon: initialBankinfoState
+	bankinformasjon: initialBankinfoState,
+	begrunnelse: initialBegrunnelseState
 };
 
 const SoknadsdataReducer: Reducer<SoknadsdataState, any> = (

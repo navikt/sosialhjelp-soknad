@@ -7,6 +7,7 @@ import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import SnakkebobleIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SnakkebobleIllustrasjon";
 import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
+import BegrunnelseSkjema from "../personopplysninger/begrunnelse/Begrunnelse";
 
 const MAX_CHARS = 500;
 
@@ -46,6 +47,7 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 				hideLabel={true}
 			/>
 		</SporsmalFaktum>
+		<BegrunnelseSkjema />
 	</DigisosSkjemaSteg>
 );
 
