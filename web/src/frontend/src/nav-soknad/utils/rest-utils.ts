@@ -7,6 +7,7 @@ import {Sider} from "../redux/navigasjon/navigasjonTypes";
 
 export const hostAdresseProd = 'tjenester.nav.no';
 export const hostAdresseTest = 'tjenester-q0.nav.no';
+export const hostAdresseTestNais = 'soknadsosialhjelp-q0.nais.oera-q.local';
 export const hostAdresseLocal = 'localhost:3000';
 
 export const loginServiceUrlProd = 'https://loginservice.nav.no/login';
@@ -61,13 +62,12 @@ export function getLoginServiceUrl(): string {
 	if (host === hostAdresseProd) {
 		return loginServiceUrlProd + redirectParam;
 	}
-	if (host === hostAdresseTest){
+	if (host === hostAdresseTest || host === hostAdresseTestNais){
 		return loginServiceUrlTest + redirectParam;
 	}
 	if (host === hostAdresseLocal) {
 		return loginServiceUrlLocal + redirectParam;
 	}
-
 
 	loggFeil("host er feil / ukjent. Host: " + host);
 
