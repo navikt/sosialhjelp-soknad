@@ -39,6 +39,9 @@ export function getApiBaseUrl(): string {
 	if (location.href.indexOf("localhost:8080") >= 0) {
 		return "http://localhost:8181/soknadsosialhjelp-server/";
 	}
+	if (location.origin.indexOf("nais.oera") >= 0) {
+		return location.origin.replace("soknadsosialhjelp", "soknadsosialhjelp-server") + "/soknadsosialhjelp-server/";
+	}
 	return kjorerJetty() ? "http://127.0.0.1:8181/soknadsosialhjelp-server/" : "/soknadsosialhjelp-server/";
 }
 
@@ -90,6 +93,12 @@ export function getLoginServiceLogoutUrl(){
 	return null;
 }
 
+
+
+function determineCredentialsParameter() {
+	return location.origin.indexOf("nais.oera") || erDev() ? "include" : "same-origin";
+}
+
 function getServletBaseUrl(): string {
 	if (erDev()) {
 		// Kjør mot lokal jetty
@@ -104,7 +113,7 @@ export function downloadAttachedFile(urlPath: string): void {
 	window.open(filUrl);
 }
 
-export const MED_CREDENTIALS: RequestInit = { credentials: "same-origin" };
+export const MED_CREDENTIALS: RequestInit = { credentials: determineCredentialsParameter() };
 
 enum RequestMethod {
 	GET = "GET",
@@ -123,7 +132,7 @@ const serverRequest = (method: string, urlPath: string, body: string) => {
 	const OPTIONS: RequestInit = {
 		headers: getHeaders(),
 		method,
-		credentials: "same-origin",
+		credentials: determineCredentialsParameter(),
 		body: body ? body : undefined
 	};
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
@@ -147,7 +156,7 @@ export function fetchDelete(urlPath: string) {
 	const OPTIONS: RequestInit = {
 		headers: getHeaders(),
 		method: RequestMethod.DELETE,
-		credentials: "same-origin"
+		credentials: determineCredentialsParameter()
 	};
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS).then(sjekkStatuskode);
 }
@@ -156,7 +165,7 @@ export function fetchOppsummering(urlPath: string) {
 	const OPTIONS: RequestInit = {
 		headers: new Headers({"accept": "application/vnd.oppsummering+html"}),
 		method: "GET",
-		credentials: "same-origin"
+		credentials: determineCredentialsParameter()
 	};
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
@@ -173,7 +182,7 @@ export function fetchKvittering(urlPath: string) {
 			"X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API")
 		}),
 		method: "GET",
-		credentials: "same-origin"
+		credentials: determineCredentialsParameter()
 	};
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
@@ -186,7 +195,7 @@ export function fetchFeatureToggles() {
 	const OPTIONS: RequestInit = {
 		headers: getHeaders(),
 		method: "GET",
-		credentials: "same-origin"
+		credentials: determineCredentialsParameter()
 	};
 	return fetch(getServletBaseUrl() + "api/feature", OPTIONS)
 		.then(sjekkStatuskode)
@@ -200,7 +209,7 @@ let generateUploadOptions = function (formData: FormData) {
 			"accept": "application/json, text/plain, */*"
 		}),
 		method: "POST",
-		credentials: "same-origin",
+		credentials: determineCredentialsParameter(),
 		body: formData
 	};
 	return UPLOAD_OPTIONS;
