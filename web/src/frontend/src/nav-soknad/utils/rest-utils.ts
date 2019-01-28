@@ -1,5 +1,22 @@
 /* tslint:disable */
 import { REST_FEIL } from "../types/restFeilTypes";
+import {loggFeil} from "../redux/navlogger/navloggerActions";
+import {put} from "redux-saga/effects";
+import {push} from "react-router-redux";
+import {Sider} from "../redux/navigasjon/navigasjonTypes";
+
+export const hostAdresseProd = 'tjenester.nav.no';
+export const hostAdresseTest = 'tjenester-q0.nav.no';
+export const hostAdresseLocal = 'localhost:3000';
+
+export const loginServiceUrlProd = 'https://loginservice.nav.no/login';
+export const loginServiceUrlTest = 'https://loginservice-q.nav.no/login';
+export const loginServiceUrlLocal = 'http://localhost:8181/soknadsosialhjelp-server/local/cookie';
+
+export const loginServiceLogoutUrlProd = 'https://loginservice.nav.no/slo';
+export const loginServiceLogoutUrlTest = 'https://loginservice-q.nav.no/slo';
+export const loginServiceLogoutUrlLocal = 'http://localhost:8181/soknadsosialhjelp-server/local/slo';
+
 
 export function erDev(): boolean {
 	const url = window.location.href;
@@ -23,6 +40,54 @@ export function getApiBaseUrl(): string {
 		return "http://localhost:8181/soknadsosialhjelp-server/";
 	}
 	return kjorerJetty() ? "http://127.0.0.1:8181/soknadsosialhjelp-server/" : "/soknadsosialhjelp-server/";
+}
+
+
+
+export function getLoginServiceUrl(): string {
+
+	const host = window.location.host;
+
+	const currentHost = window.location.host;
+	const linkPath = "/soknadsosialhjelp/link";
+	const gotoParameter = "?goto=" + window.location.pathname;
+	const redirectPath = "http://" + currentHost + linkPath + gotoParameter;
+	const redirectParam = '?redirect=' + redirectPath;
+
+
+	if (host === hostAdresseProd) {
+		return loginServiceUrlProd + redirectParam;
+	}
+	if (host === hostAdresseTest){
+		return loginServiceUrlTest + redirectParam;
+	}
+	if (host === hostAdresseLocal) {
+		return loginServiceUrlLocal + redirectParam;
+	}
+
+
+	loggFeil("host er feil / ukjent. Host: " + host);
+
+	return null;
+
+}
+
+export function getLoginServiceLogoutUrl(){
+	const host = window.location.host;
+
+	if (host === hostAdresseProd) {
+		return loginServiceLogoutUrlProd;
+	}
+	if (host === hostAdresseTest){
+		return loginServiceLogoutUrlTest;
+	}
+	if (host === hostAdresseLocal) {
+		return loginServiceLogoutUrlLocal;
+	}
+
+	loggFeil("host er feil / ukjent. Host: " + host);
+
+	return null;
 }
 
 function getServletBaseUrl(): string {
@@ -160,6 +225,18 @@ export function toJson<T>(response: Response): Promise<T> {
 }
 
 function sjekkStatuskode(response: Response) {
+
+	if (response.status === 401){
+
+		let href = window.location.href;
+		let url =new URL(href);
+
+		if(url.pathname !== '/soknadsosialhjelp/link'){
+			window.location.href = getLoginServiceUrl();
+		} else {
+			put(push(Sider.SERVERFEIL));
+		}
+	}
 	if (response.status >= 200 && response.status < 300) {
 		return response;
 	}

@@ -7,6 +7,7 @@ import Nedtelling from "./Nedtelling";
 import LoggetUt from "./LoggetUt";
 import { REST_STATUS } from "../../types/restTypes";
 import { now } from "../../utils/index";
+import {getLoginServiceLogoutUrl} from "../../utils/rest-utils";
 
 interface State {
 	utloggingsTidspunkt: number;
@@ -104,7 +105,8 @@ class TimeoutBox extends React.Component<Props, State> {
 							onContinueClick={() => {
 								this.onContinueClick();
 							}}
-							utloggingsUrl="/esso/logout"
+							// utloggingsUrl="/esso/logout"
+							utloggingsUrl={ getLoginServiceLogoutUrl()}
 						/>
 					)}
 					{visLoggetUt && (
