@@ -26,6 +26,7 @@
         <url-pattern>/informasjon/*</url-pattern>
         <url-pattern>/bosted/*</url-pattern>
         <url-pattern>/kvittering/*</url-pattern>
+        <url-pattern>/link</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -42,6 +43,7 @@
         <url-pattern>/informasjon/*</url-pattern>
         <url-pattern>/bosted/*</url-pattern>
         <url-pattern>/kvittering/*</url-pattern>
+        <url-pattern>/link</url-pattern>
     </servlet-mapping>
 
     <servlet>
