@@ -16,7 +16,7 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 		steg={DigisosSteg.begrunnelsebolk}
 		ikon={<SnakkebobleIllustrasjon/>}
 	>
-
+		<BegrunnelseSkjema />
 		<SporsmalFaktum
 			faktumKey="begrunnelse.hva"
 			legendTittelStyle={LegendTittleStyle.FET_NORMAL}
@@ -47,7 +47,6 @@ const Begrunnelse: React.StatelessComponent<InjectedIntlProps> = ({intl}) => (
 				hideLabel={true}
 			/>
 		</SporsmalFaktum>
-		<BegrunnelseSkjema />
 	</DigisosSkjemaSteg>
 );
 

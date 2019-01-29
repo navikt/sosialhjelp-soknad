@@ -4,6 +4,7 @@ import {
 	initialBankinfoState
 } from "../../../digisos/skjema/personopplysninger/bankinfo/bankinformasjonActions";
 import { Begrunnelse, initialBegrunnelseState } from "../../../digisos/skjema/begrunnelse_ny/begrunnelseActions";
+import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningActions";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER"
@@ -12,11 +13,13 @@ export enum SoknadsdataActionTypeKeys {
 export interface SoknadsdataState {
 	bankinformasjon: Bankinformasjon;
 	begrunnelse: Begrunnelse;
+	utdanning: Utdanning;
 }
 
 const initialState: SoknadsdataState = {
 	bankinformasjon: initialBankinfoState,
-	begrunnelse: initialBegrunnelseState
+	begrunnelse: initialBegrunnelseState,
+	utdanning: initialUtdanningState
 };
 
 const SoknadsdataReducer: Reducer<SoknadsdataState, any> = (

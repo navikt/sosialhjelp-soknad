@@ -16,6 +16,12 @@ import { setFaktumValideringsfeil } from "../../../nav-soknad/redux/valideringAc
 import { oppdaterSoknadsdataAction } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { State } from "../../redux/reducers";
 
+const MAX_CHARS = 500;
+const FAKTUM_KEY_HVA = "begrunnelse.hva";
+const FAKTUM_KEY_HVORFOR = "begrunnelse.hvorfor";
+const HVA_SOKES_OM = "hvaSokesOm";
+const HVORFOR_SOKE = "hvorforSoke";
+
 interface OwnProps {
 	brukerBehandlingId?: string;
 	begrunnelse?: null | BegrunnelseType;
@@ -26,12 +32,6 @@ interface OwnProps {
 	oppdaterSoknadsdata?: (verdi: any) => void;
 	feil?: any;
 }
-
-const MAX_CHARS = 500;
-const FAKTUM_KEY_HVA = "begrunnelse.hva";
-const FAKTUM_KEY_HVORFOR = "begrunnelse.hvorfor";
-const HVA_SOKES_OM = "hvaSokesOm";
-const HVORFOR_SOKE = "hvorforSoke";
 
 type Props = OwnProps & InjectedIntlProps;
 

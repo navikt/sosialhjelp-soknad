@@ -89,13 +89,13 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 				</SporsmalFaktum>
 				<Oppholdsadresse fakta={this.props.fakta} />
 				<Telefoninfo fakta={this.props.fakta} />
+				<BankinformasjonIkkeFaktum />
 				<Bankinformasjon
 					fakta={this.props.fakta}
 					onHarIkkeKontonummer={(verdi: string) => {
 						this.oppdaterHarIkkeKontonummer(this.props.fakta, verdi, this.props.dispatch);
 					}}
 				/>
-				<BankinformasjonIkkeFaktum />
 			</DigisosSkjemaSteg>
 		);
 	}

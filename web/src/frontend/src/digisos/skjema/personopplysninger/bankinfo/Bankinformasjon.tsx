@@ -112,8 +112,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 			return (<span/>);
 		}
 
-		const infotekst = bankinformasjon.systemverdi ?
-			intl.formatMessage({ id: "kontakt.system.kontonummer.infotekst.tekst" }) : null;
+		const infotekst = intl.formatMessage({ id: "kontakt.kontonummer.infotekst.tekst" });
 
 		const skjemaErSynlig: boolean = (
 			bankinformasjon.systemverdi === null ||
@@ -135,63 +134,63 @@ class Bankinformasjon extends React.Component<Props, {}> {
 		}
 
 		return (
-			<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
-				<b style={{color: "red"}}>Ny komponent.</b>
-				<SysteminfoMedSkjema
-					skjemaErSynlig={skjemaErSynlig}
-					onVisSkjema={() => this.endreKontoBrukerdefinert(true)}
-					onSkjulSkjema={() => this.endreKontoBrukerdefinert(false)}
-					endreLabel={endreLabel}
-					avbrytLabel={avbrytLabel}
-
-					skjema={(
-						<span>
-							<Input
-								id="bankinfo_konto"
-								className={"input--xxl faktumInput "}
-								autoComplete="off"
-								name={name}
-								disabled={harIkkeKontonummer}
-								value={kontonummer}
-								onChange={(evt: any) => this.onChangeInput(evt.target.value)}
-								onBlur={(event) => this.lagreDersomGyldig(event.target.value)}
-								label={intl.formatHTMLMessage({ id: "kontakt.kontonummer.label" })}
-								feil={this.getFeil(intl)}
-								maxLength={13}
-								bredde={"S"}
-								noValidate={
-									true /* Unngå at nettleser validerer og evt. fjerner verdien */
-								}
-							/>
-							<div
-								className={"inputPanel " + (harIkkeKontonummer ? " inputPanel__checked" : " ")}
-								onClick={(event: any) => this.onChangeCheckboks(event)}
-							>
-								<Checkbox
-									id="kontakt_kontonummer_har_ikke_checkbox_2"
-									name="kontakt_kontonummer_har_ikke_checkbox_2"
-									checked={harIkkeKontonummer}
-									onChange={(event: any) => this.onChangeCheckboks(event)}
-									label={
-										<div>
-											{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
-										</div>
+			<div style={{ border: "3px dotted red", display: "block" }}>
+				<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
+					<SysteminfoMedSkjema
+						skjemaErSynlig={skjemaErSynlig}
+						onVisSkjema={() => this.endreKontoBrukerdefinert(true)}
+						onSkjulSkjema={() => this.endreKontoBrukerdefinert(false)}
+						endreLabel={endreLabel}
+						avbrytLabel={avbrytLabel}
+						skjema={(
+							<div>
+								<Input
+									id="bankinfo_konto"
+									className={"input--xxl faktumInput "}
+									autoComplete="off"
+									name={name}
+									disabled={harIkkeKontonummer}
+									value={kontonummer}
+									onChange={(evt: any) => this.onChangeInput(evt.target.value)}
+									onBlur={(event) => this.lagreDersomGyldig(event.target.value)}
+									label={intl.formatHTMLMessage({ id: "kontakt.kontonummer.label" })}
+									feil={this.getFeil(intl)}
+									maxLength={13}
+									bredde={"S"}
+									noValidate={
+										true /* Unngå at nettleser validerer og evt. fjerner verdien */
 									}
 								/>
+								<div
+									className={"inputPanel " + (harIkkeKontonummer ? " inputPanel__checked" : " ")}
+									onClick={(event: any) => this.onChangeCheckboks(event)}
+								>
+									<Checkbox
+										id="kontakt_kontonummer_har_ikke_checkbox_2"
+										name="kontakt_kontonummer_har_ikke_checkbox_2"
+										checked={harIkkeKontonummer}
+										onChange={(event: any) => this.onChangeCheckboks(event)}
+										label={
+											<div>
+												{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
+											</div>
+										}
+									/>
+								</div>
 							</div>
-						</span>
-					)}
-				>
-					<Detaljeliste>
-						<DetaljelisteElement
-							tittel={
-								intl.formatHTMLMessage({ id: "kontakt.system.kontonummer.label" })
-							}
-							verdi={bankinformasjon.systemverdi}
-						/>
-					</Detaljeliste>
-				</SysteminfoMedSkjema>
-			</Sporsmal>
+						)}
+					>
+						<Detaljeliste>
+							<DetaljelisteElement
+								tittel={
+									intl.formatHTMLMessage({ id: "kontakt.system.kontonummer.label" })
+								}
+								verdi={bankinformasjon.systemverdi}
+							/>
+						</Detaljeliste>
+					</SysteminfoMedSkjema>
+				</Sporsmal>
+			</div>
 		);
 	}
 
