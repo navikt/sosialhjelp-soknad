@@ -46,18 +46,17 @@ export function getApiBaseUrl(): string {
 	return kjorerJetty() ? "http://127.0.0.1:8181/soknadsosialhjelp-server/" : "/soknadsosialhjelp-server/";
 }
 
-
+export function getRedirectPathname(): string {
+	return '/soknadsosialhjelp/link';
+}
 
 export function getLoginServiceUrl(): string {
 
 	const host = window.location.host;
-
-	const currentHost = window.location.host;
-	const linkPath = "/soknadsosialhjelp/link";
+	const currentOrigin = window.location.origin;
 	const gotoParameter = "?goto=" + window.location.pathname;
-	const redirectPath = "http://" + currentHost + linkPath + gotoParameter;
+	const redirectPath = currentOrigin + getRedirectPathname() + gotoParameter;
 	const redirectParam = '?redirect=' + redirectPath;
-
 
 	if (host === hostAdresseProd) {
 		return loginServiceUrlProd + redirectParam;
@@ -70,9 +69,7 @@ export function getLoginServiceUrl(): string {
 	}
 
 	loggFeil("host er feil / ukjent. Host: " + host);
-
 	return null;
-
 }
 
 export function getLoginServiceLogoutUrl(){
@@ -81,7 +78,7 @@ export function getLoginServiceLogoutUrl(){
 	if (host === hostAdresseProd) {
 		return loginServiceLogoutUrlProd;
 	}
-	if (host === hostAdresseTest){
+	if (host === hostAdresseTest || hostAdresseTestNais){
 		return loginServiceLogoutUrlTest;
 	}
 	if (host === hostAdresseLocal) {
@@ -236,11 +233,7 @@ export function toJson<T>(response: Response): Promise<T> {
 function sjekkStatuskode(response: Response) {
 
 	if (response.status === 401){
-
-		let href = window.location.href;
-		let url =new URL(href);
-
-		if(url.pathname !== '/soknadsosialhjelp/link'){
+		if(window.location.pathname !== getRedirectPathname()){
 			window.location.href = getLoginServiceUrl();
 		} else {
 			put(push(Sider.SERVERFEIL));
