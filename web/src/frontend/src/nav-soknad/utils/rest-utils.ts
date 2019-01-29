@@ -69,7 +69,7 @@ export function getLoginServiceUrl(): string {
 	}
 
 	loggFeil("host er feil / ukjent. Host: " + host);
-	return null;
+	return loginServiceUrlProd + redirectParam;
 }
 
 export function getLoginServiceLogoutUrl(){
@@ -87,7 +87,7 @@ export function getLoginServiceLogoutUrl(){
 
 	loggFeil("host er feil / ukjent. Host: " + host);
 
-	return null;
+	return loginServiceLogoutUrlProd;
 }
 
 
