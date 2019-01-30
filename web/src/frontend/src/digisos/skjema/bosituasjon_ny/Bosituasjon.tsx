@@ -5,7 +5,7 @@ import { getFaktumSporsmalTekst } from "../../../nav-soknad/utils";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import { Bosituasjon, hentBosituasjonAction, oppdaterBosituasjonAction } from "./bosituasjonActions";
-import { ValideringActionKey, Valideringsfeil } from "../../../nav-soknad/validering/types";
+import { Valideringsfeil } from "../../../nav-soknad/validering/types";
 import { State } from "../../redux/reducers";
 import { setFaktumValideringsfeil } from "../../../nav-soknad/redux/valideringActions";
 import { oppdaterSoknadsdataAction } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
@@ -124,9 +124,7 @@ class BosituasjonView extends React.Component<Props, OwnState> {
 
 	onBlurAntall() {
 		const { antallPersoner } = this.state;
-		let valideringActionKey = erTall(antallPersoner, true);
-		const valideringsfeil: Valideringsfeil = lagValideringsfeil(valideringActionKey, FAKTUM_KEY_ANTALL);
-		this.props.setFaktumValideringsfeil(valideringsfeil, FAKTUM_KEY_ANTALL);
+		const valideringsfeil = this.validerAntallPersoner(antallPersoner);
 
 		if (!valideringsfeil) {
 			const { brukerBehandlingId, bosituasjon } = this.props;
@@ -134,6 +132,13 @@ class BosituasjonView extends React.Component<Props, OwnState> {
 			const oppdatertBosituasjon: Bosituasjon = {botype, antallPersoner};
 			this.props.oppdaterBosituasjon(brukerBehandlingId, oppdatertBosituasjon);
 		}
+	}
+
+	private validerAntallPersoner(antallPersoner: string | null) {
+		const valideringActionKey = erTall(antallPersoner, true);
+		const valideringsfeil: Valideringsfeil = lagValideringsfeil(valideringActionKey, FAKTUM_KEY_ANTALL);
+		this.props.setFaktumValideringsfeil(valideringsfeil, FAKTUM_KEY_ANTALL);
+		return valideringsfeil;
 	}
 
 	onChangeAntall(verdi: string) {
