@@ -20,7 +20,7 @@ function leggNoklerPaaLedetekster(data: object) {
 	return tekster;
 }
 
-function* hentTeksterSaga(): SagaIterator {
+function* hentTeksterSaga(): any{
 	try {
 		yield put(henterTekster());
 		// TODO: Burde lage egen funksjon som holder på url-string

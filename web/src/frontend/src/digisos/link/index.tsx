@@ -4,8 +4,8 @@ import {State} from "../redux/reducers";
 import {InjectedIntlProps, injectIntl} from "react-intl";
 import {SynligeFaktaProps} from "../redux/synligefakta/synligeFaktaTypes";
 import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
-import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
-import {REST_STATUS} from "../../nav-soknad/types";
+import {setAuthenticated} from "../../nav-soknad/redux/authentication/authenticationActions";
+import NavFrontendSpinner from "nav-frontend-spinner";
 
 type Props = SynligeFaktaProps & DispatchProps & InjectedIntlProps;
 
@@ -20,6 +20,7 @@ class Link extends React.Component<Props, {visSpinner: boolean}> {
 	}
 
 	componentDidMount(){
+		this.props.dispatch(setAuthenticated);
 		const url = new URL(window.location.href);
 		const goto = url.searchParams.get("goto");
 		location.href = location.origin + goto;
@@ -27,7 +28,9 @@ class Link extends React.Component<Props, {visSpinner: boolean}> {
 
 	render(){
 		return(
-			<LoadContainer restStatus={REST_STATUS.PENDING} />
+			<div className="application-spinner">
+				<NavFrontendSpinner type="XXL" />
+			</div>
 		)
 	}
 }

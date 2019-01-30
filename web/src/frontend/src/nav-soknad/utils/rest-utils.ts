@@ -4,6 +4,7 @@ import {loggFeil} from "../redux/navlogger/navloggerActions";
 import {put} from "redux-saga/effects";
 import {push} from "react-router-redux";
 import {Sider} from "../redux/navigasjon/navigasjonTypes";
+import {setUnauthenticated} from "../redux/authentication/authenticationActions";
 
 export const hostAdresseProd = 'tjenester.nav.no';
 export const hostAdresseTest = 'tjenester-q0.nav.no';
@@ -228,6 +229,9 @@ export function toJson<T>(response: Response): Promise<T> {
 	if (response.status === 204) {
 		return response.text() as Promise<any>;
 	}
+	if (response.status === 401) {
+		return response.text() as Promise<any>;
+	}
 	return response.json();
 }
 
@@ -235,12 +239,15 @@ function sjekkStatuskode(response: Response) {
 
 	if (response.status === 401){
 		if(window.location.pathname !== getRedirectPathname()){
+			put(setUnauthenticated());
 			window.location.href = getLoginServiceUrl();
 		} else {
 			put(push(Sider.SERVERFEIL));
 		}
+		return response;
 	}
 	if (response.status >= 200 && response.status < 300) {
+
 		return response;
 	}
 	throw new Error(response.statusText);
