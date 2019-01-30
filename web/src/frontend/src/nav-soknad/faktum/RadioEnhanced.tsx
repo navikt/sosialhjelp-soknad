@@ -17,10 +17,9 @@ interface OwnProps {
 	visPanel?: boolean;
 	className?: string;
 	visSpinner?: boolean;
-
 	property?: any; // TODO: Slette?
 	required?: boolean;
-	getName: () => string;
+	getName?: () => string;
 }
 
 type RadioFaktumProps = OwnProps & InjectedIntlProps;
@@ -43,7 +42,7 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
 	}
 
 	defaultOnChange(value: string, property: string) {
-		console.warn("debug: defaultOnChang");
+		console.warn("debug: defaultOnChange()");
 		// this.props.setFaktumVerdiOgLagre(value, property)
 	}
 
@@ -68,19 +67,18 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
 
 		const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
 		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
+		const name = this.props.getName ? this.props.getName() : this.props.faktumKey + "-" + this.props.value;
 
 		return (
 			<Radio
 				className="soknadsosialhjelp"
 				id={id}
-				name={this.props.getName()}
+				name={name}
 				checked={this.checked()}
 				disabled={disabled}
-				// value={value}
 				value={"false"}
 				required={required}
 				onChange={(evt: any) => {
-					// this.props.setFaktumVerdiOgLagre(value, property);
 					if (onChange != null) {
 						onChange(evt);
 					}
@@ -94,10 +92,8 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
 
 	renderMockRadio() {
 		const { faktumKey, value, property, intl } = this.props;
-
 		const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
 		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
-
 		return (
 			<div className="radio-button-wrapper">
 				{this.determineLabel(id, faktumKey, tekster, value)}
@@ -110,7 +106,6 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
 		const visPanel = (this.props.visPanel != null ? this.props.visPanel : true);
 		const { className, visSpinner } = this.props;
 		const onChange = this.determineOnChange();
-		
 		let classNames = "inputPanel " + className;
 		if (this.checked()) {
 			classNames += " inputPanel__checked";

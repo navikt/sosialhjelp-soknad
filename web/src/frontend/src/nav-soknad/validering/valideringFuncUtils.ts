@@ -1,3 +1,5 @@
+import { ValideringActionKey, Valideringsfeil } from "./types";
+
 export const mod11Kontroll = (verdi: string) => {
 	let controlNumber = 2;
 	let sumForMod = 0;
@@ -23,3 +25,16 @@ export const konverterFdatoTilDato = (dato: string): Date => {
 	}
 	return d;
 };
+
+export const lagValideringsfeil = (valideringActionKey: ValideringActionKey, faktumKey: string): Valideringsfeil => {
+	if (valideringActionKey) {
+		const valideringsfeil: Valideringsfeil = {
+			faktumKey,
+			feilkode: valideringActionKey
+		};
+		return valideringsfeil;
+	} else {
+		return null;
+	}
+};
+

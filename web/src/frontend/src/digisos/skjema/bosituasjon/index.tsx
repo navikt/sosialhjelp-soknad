@@ -16,6 +16,7 @@ import { State } from "../../redux/reducers";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import BoligIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/BoligIllustrasjon";
 import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
+import BosituasjonView from "../bosituasjon_ny/Bosituasjon";
 
 class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 	render() {
@@ -25,6 +26,7 @@ class Bosituasjon extends React.Component<FaktumComponentProps, any> {
 		const antall = inputKeys("bosituasjon.antallpersoner");
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.bosituasjonbolk} ikon={<BoligIllustrasjon/>}>
+				<BosituasjonView />
 				<SporsmalFaktum faktumKey={bosituasjon.faktum} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
 					<RadioFaktum
 						id="bosituasjon_radio_eier"
