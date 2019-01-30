@@ -66,6 +66,8 @@ describe("test av valideringsfunksjoner", () => {
 			expect(validate.erTelefonnummer("12345678")).toBeUndefined();
 			expect(validate.erTelefonnummer("123 45 678")).toBeUndefined();
 			expect(validate.erTelefonnummer("+47 123 45 678")).toBeUndefined();
+
+			expect(validate.erTelefonnummer("91852967")).toBeUndefined();
 		});
 	});
 });

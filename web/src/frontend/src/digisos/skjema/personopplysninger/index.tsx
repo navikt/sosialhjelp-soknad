@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { State } from "../../redux/reducers";
 import { DispatchProps, Dispatch } from "../../../nav-soknad/redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
-import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import {
 	harFaktumVerdi,
 	finnFaktum,
@@ -11,7 +10,6 @@ import {
 	getFaktumVerdi
 } from "../../../nav-soknad/utils";
 import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
-import Personalia from "./tps/Personalia";
 import Telefoninfo from "./tps/Telefoninfo";
 import Bankinformasjon from "./tps/Bankinformasjon";
 import BankinformasjonIkkeFaktum from "./bankinfo/Bankinformasjon";
@@ -24,7 +22,7 @@ import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjo
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 import { FormattedMessage } from "react-intl";
-import Oppholdsadresse from "./tps/Oppholdsadresse";
+import Telefon from "./telefon/Telefon";
 
 interface OwnProps {
 	hentVedleggsForventning?: (fakta: any) => void;
@@ -81,13 +79,14 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 						</Informasjonspanel>
 					</div>
 				)}
-				<SporsmalFaktum
-					faktumKey="kontakt.system.personalia"
-					style="system"
-				>
-					<Personalia fakta={this.props.fakta} />
-				</SporsmalFaktum>
-				<Oppholdsadresse fakta={this.props.fakta} />
+				{/*<SporsmalFaktum*/}
+					{/*faktumKey="kontakt.system.personalia"*/}
+					{/*style="system"*/}
+				{/*>*/}
+					{/*<Personalia fakta={this.props.fakta} />*/}
+				{/*</SporsmalFaktum>*/}
+				{/*<Oppholdsadresse fakta={this.props.fakta} />*/}
+				<Telefon />
 				<Telefoninfo fakta={this.props.fakta} />
 				<BankinformasjonIkkeFaktum />
 				<Bankinformasjon

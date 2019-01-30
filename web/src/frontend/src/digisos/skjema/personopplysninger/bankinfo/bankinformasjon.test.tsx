@@ -12,6 +12,7 @@ describe("Bankinformasjon react komponent", () => {
 		"kontakt.kontonummer.label": "Kontonummer",
 		"kontakt.kontonummer.harikke": "har ikke",
 		"kontakt.system.kontonummer.infotekst.tekst": "Infotekst",
+		"kontakt.kontonummer.infotekst.tekst": "Mer infotekst",
 		"kontakt.system.kontonummer.label": "Systemkontonummer"
 	};
 	const mountWithIntl = setupReactIntl(intlMessages);
