@@ -16,6 +16,7 @@ import { Feil } from "nav-frontend-skjema";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_TELEFONINFO = "kontakt.system.telefoninfo";
+const LANDKODE = "+47";
 
 interface OwnProps {
 	brukerBehandlingId?: string;
@@ -49,12 +50,22 @@ class TelefonView extends React.Component<Props, OwnState> {
 		this.props.hentTelefonnummer(this.props.brukerBehandlingId);
 	}
 
+	componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<OwnState>, snapshot?: any): void {
+		if(this.props.telefonnummer.verdi !== prevProps.telefonnummer.verdi) {
+			this.setState({verdi: this.props.telefonnummer.verdi.replace("+47","")});
+		}
+		if(this.props.telefonnummer.brukerdefinert !== prevProps.telefonnummer.brukerdefinert &&
+			this.props.telefonnummer.brukerdefinert === true ) {
+			this.setState({synligSkjema: true});
+		}
+	}
+
 	visSkjema(verdi: boolean) {
 		this.setState({synligSkjema: verdi});
 		const telefonnummer: Telefonnummer = {
 			brukerdefinert: verdi,
 			systemverdi: this.props.telefonnummer.systemverdi,
-			verdi: this.state.verdi
+			verdi: LANDKODE + this.state.verdi
 		};
 		this.props.oppdaterTelefonnummer(this.props.brukerBehandlingId, telefonnummer);
 	}
@@ -67,7 +78,9 @@ class TelefonView extends React.Component<Props, OwnState> {
 		if(this.state.verdi === "") {
 			this.props.setFaktumValideringsfeil(null, FAKTUM_KEY_TELEFON);
 		} else {
-			const valideringActionKey: ValideringActionKey = erTelefonnummer(this.state.verdi);
+			let verdi = this.state.verdi;
+			verdi = verdi.replace(/ +/, "");
+			const valideringActionKey: ValideringActionKey = erTelefonnummer(verdi);
 			if(valideringActionKey) {
 				const valideringsfeil: Valideringsfeil = {
 					faktumKey: FAKTUM_KEY_TELEFON,
@@ -78,21 +91,12 @@ class TelefonView extends React.Component<Props, OwnState> {
 				const telefonnummer: Telefonnummer = {
 					brukerdefinert: true,
 					systemverdi: this.props.telefonnummer.systemverdi,
-					verdi: this.state.verdi
+					verdi: LANDKODE + verdi
 				};
 				this.props.oppdaterTelefonnummer(this.props.brukerBehandlingId, telefonnummer);
 				this.setState({dirtyFlag: false});
+				this.props.setFaktumValideringsfeil(null, FAKTUM_KEY_TELEFON);
 			}
-		}
-	}
-
-	componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<OwnState>, snapshot?: any): void {
-		if(this.props.telefonnummer.verdi !== prevProps.telefonnummer.verdi) {
-			this.setState({verdi: this.props.telefonnummer.verdi});
-		}
-		if(this.props.telefonnummer.brukerdefinert !== prevProps.telefonnummer.brukerdefinert &&
-			this.props.telefonnummer.brukerdefinert === true ) {
-			this.setState({synligSkjema: true});
 		}
 	}
 
