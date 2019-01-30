@@ -4,7 +4,7 @@ import {loggFeil} from "../redux/navlogger/navloggerActions";
 import {put} from "redux-saga/effects";
 import {push} from "react-router-redux";
 import {Sider} from "../redux/navigasjon/navigasjonTypes";
-import {setUnauthenticated} from "../redux/authentication/authenticationActions";
+import {setAuthenticated, setUnauthenticated} from "../redux/authentication/authenticationActions";
 
 export const hostAdresseProd = 'tjenester.nav.no';
 export const hostAdresseTest = 'tjenester-q0.nav.no';
@@ -247,7 +247,7 @@ function sjekkStatuskode(response: Response) {
 		return response;
 	}
 	if (response.status >= 200 && response.status < 300) {
-
+		put(setAuthenticated());
 		return response;
 	}
 	throw new Error(response.statusText);

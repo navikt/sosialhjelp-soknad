@@ -9,7 +9,7 @@ const { SET_AUTHENTICATED, SET_UNAUTHENTICATED, AUTHENTICATE_USER } = Authentica
 
 
 const initialState: AuthenticationState = {
-	status: AUTHENTICATION_STATUS.AUTHENTICATED,
+	status: AUTHENTICATION_STATUS.UNAUTHENTICATED,
 };
 
 export default (state: AuthenticationState = initialState, action: AuthenticationActionTypes) => {
