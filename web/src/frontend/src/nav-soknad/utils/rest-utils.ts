@@ -67,7 +67,16 @@ const serverRequestOnce = (method: string, urlPath: string, body: string) => {
 		.then(toJson);
 };
 
-// Gjenta serverkall som feiler 6 ganger
+/* serverRequest():
+ *
+ *  - Gjenta serverkall som feiler inntil 6 ganger før det kastes exception
+ *  - Ikke gjenta det samme PUT, POST eller DELETE hvis under 2 sekuder
+ *    siden forrige gang
+ */
+
+let prevFetch: any = null;
+let lastFetch: number = 0;
+
 export const serverRequest = (method: string, urlPath: string, body: string, retries = 6) => {
 	const OPTIONS: RequestInit = {
 		headers: getHeaders(),
@@ -75,6 +84,20 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
 		credentials: "same-origin",
 		body: body ? body : undefined
 	};
+
+	if( method !== RequestMethod.GET ) {
+		const gjentattServerkall: boolean = (JSON.stringify({urlPath, body}) === JSON.stringify(prevFetch));
+		if (gjentattServerkall) {
+			const millisekunder = Date.now() - lastFetch;
+			const sekunderSidenForrige = Math.floor(millisekunder/1000);
+			if(sekunderSidenForrige < 3) {
+				return new Promise(() => {});
+			}
+		}
+		lastFetch = Date.now();
+		prevFetch = {urlPath, body};
+	}
+
 	const promise = new Promise((resolve, reject) => {
 		fetch(getApiBaseUrl() + urlPath, OPTIONS)
 			.then((response: Response) => {

@@ -58,7 +58,7 @@ class BosituasjonView extends React.Component<Props, OwnState> {
 		this.state = {
 			valgtBosituasjon: null,
 			annetValg: null,
-			antallPersoner: ""
+			antallPersoner: "",
 		}
 	}
 
