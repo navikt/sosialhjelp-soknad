@@ -54,7 +54,8 @@ const getHeaders = () => {return new Headers({
 	"accept": "application/json, text/plain, */*"
 })};
 
-const serverRequest = (method: string, urlPath: string, body: string) => {
+// @ts-ignore
+const serverRequestOnce = (method: string, urlPath: string, body: string) => {
 	const OPTIONS: RequestInit = {
 		headers: getHeaders(),
 		method,
@@ -64,6 +65,37 @@ const serverRequest = (method: string, urlPath: string, body: string) => {
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
 		.then(toJson);
+};
+
+// Gjenta serverkall som feiler 6 ganger
+export const serverRequest = (method: string, urlPath: string, body: string, retries = 6) => {
+	const OPTIONS: RequestInit = {
+		headers: getHeaders(),
+		method,
+		credentials: "same-origin",
+		body: body ? body : undefined
+	};
+	const promise = new Promise((resolve, reject) => {
+		fetch(getApiBaseUrl() + urlPath, OPTIONS)
+			.then((response: Response) => {
+				if (response.status === 409) {
+					if (retries === 0) {
+						throw new Error(response.statusText);
+					}
+					setTimeout(() => {
+						serverRequest(method, urlPath, body, retries - 1)
+							.then((data: any) => resolve(data))
+							.catch((reason: any) => reject(reason))
+					}, 100 * (7 - retries));
+
+				} else {
+					sjekkStatuskode(response);
+					resolve(toJson(response));
+				}
+			})
+			.catch((reason: any) => reject(reason));
+	});
+	return promise;
 };
 
 export function fetchToJson(urlPath: string) {

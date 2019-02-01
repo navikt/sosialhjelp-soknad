@@ -134,7 +134,7 @@ class BosituasjonView extends React.Component<Props, OwnState> {
 		}
 	}
 
-	private validerAntallPersoner(antallPersoner: string | null) {
+	validerAntallPersoner(antallPersoner: string | null) {
 		const valideringActionKey = erTall(antallPersoner, true);
 		const valideringsfeil: Valideringsfeil = lagValideringsfeil(valideringActionKey, FAKTUM_KEY_ANTALL);
 		this.props.setFaktumValideringsfeil(valideringsfeil, FAKTUM_KEY_ANTALL);
