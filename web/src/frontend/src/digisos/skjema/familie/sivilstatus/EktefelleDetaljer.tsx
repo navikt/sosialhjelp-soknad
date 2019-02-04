@@ -18,7 +18,7 @@ interface OwnProps {
 
 type Props = OwnProps & InjectedIntlProps;
 
-class SivilstatusView extends React.Component<Props, {}> {
+class EktefelleDetaljer extends React.Component<Props, {}> {
 
 	componentDidMount() {
 		this.props.hentSivilstatus(this.props.brukerBehandlingId);
@@ -67,6 +67,7 @@ class SivilstatusView extends React.Component<Props, {}> {
 		);
 	}
 
+	// TODO: Flytt ut denne
 	formaterDato(fodselsDato: string) {
 		if (fodselsDato) {
 			const aar = fodselsDato.slice(0, 4);
@@ -128,4 +129,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 export default connect<{}, {}, OwnProps>(
 	mapStateToProps,
 	mapDispatchToProps
-)(injectIntl(SivilstatusView));
+)(injectIntl(EktefelleDetaljer));
