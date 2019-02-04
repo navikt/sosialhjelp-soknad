@@ -25,11 +25,11 @@ class SivilstatusView extends React.Component<Props, {}> {
 	}
 
 	renderSivilstatusLabel(ektefelleHarDiskresjonskode: boolean): any {
-		let formattedMessageId: string ="system.familie.sivilstatus.label";
-		if (ektefelleHarDiskresjonskode && ektefelleHarDiskresjonskode === true){
+		let formattedMessageId: string = "system.familie.sivilstatus.label";
+		if (ektefelleHarDiskresjonskode && ektefelleHarDiskresjonskode === true) {
 			formattedMessageId = "system.familie.sivilstatus.ikkeTilgang.label";
 		}
-		return <FormattedMessage id={formattedMessageId} />
+		return <FormattedMessage id={formattedMessageId}/>
 	}
 
 	renderEktefelleInformasjon() {
@@ -38,35 +38,37 @@ class SivilstatusView extends React.Component<Props, {}> {
 
 		return (
 			<div className="sivilstatus__ektefelleinfo">
-					{ektefelle && ektefelle.navn && ektefelle.navn.fulltNavn && (
-						<Detaljeliste>
-							<DetaljelisteElement
-								tittel={<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.navn"/>}
-								verdi={ ektefelle.navn.fulltNavn }
-							/>
-							<DetaljelisteElement
-								tittel={<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.fodselsdato"/>}
-								verdi={ this.formaterDato(ektefelle.fodselsdato) }
-							/>
-							<DetaljelisteElement
-								tittel={
-									<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.folkereg"/>
-								}
-								verdi={
-									(sivilstatus.folkeregistrertMedEktefelle === true ?
-										<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.folkeregistrertsammen.true"/> :
-										<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.folkeregistrertsammen.false"/>
-									)
-								}
-							/>
-						</Detaljeliste>
-					)}
+				{ektefelle && ektefelle.navn && ektefelle.navn.fulltNavn && (
+					<Detaljeliste>
+						<DetaljelisteElement
+							tittel={<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.navn"/>}
+							verdi={ektefelle.navn.fulltNavn}
+						/>
+						<DetaljelisteElement
+							tittel={<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.fodselsdato"/>}
+							verdi={this.formaterDato(ektefelle.fodselsdato)}
+						/>
+						<DetaljelisteElement
+							tittel={
+								<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.folkereg"/>
+							}
+							verdi={
+								(sivilstatus.folkeregistrertMedEktefelle === true ?
+										<FormattedMessage
+											id="system.familie.sivilstatus.gift.ektefelle.folkeregistrertsammen.true"/> :
+										<FormattedMessage
+											id="system.familie.sivilstatus.gift.ektefelle.folkeregistrertsammen.false"/>
+								)
+							}
+						/>
+					</Detaljeliste>
+				)}
 			</div>
 		);
 	}
 
-	formaterDato(fodselsDato: string){
-		if (fodselsDato){
+	formaterDato(fodselsDato: string) {
+		if (fodselsDato) {
 			const aar = fodselsDato.slice(0, 4);
 			const maaned = fodselsDato.slice(5, 7);
 			const dag = fodselsDato.slice(8);
@@ -76,7 +78,7 @@ class SivilstatusView extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const {intl, sivilstatus} = this.props;
+		const { intl, sivilstatus } = this.props;
 		const ektefelleHarDiskresjonskode: boolean = sivilstatus.ektefelleHarDiskresjonskode;
 
 		return (
@@ -84,14 +86,14 @@ class SivilstatusView extends React.Component<Props, {}> {
 				<div className="sivilstatus skjema-sporsmal">
 					<Sporsmal
 						tekster={getFaktumSporsmalTekst(intl, "system.familie.sivilstatus")}
-					    style="system"
+						style="system"
 					>
 						<div className="sivilstatus__infotekst">
 							<FormattedMessage id="system.familie.sivilstatus"/>
 						</div>
 						<div className="sivilstatus__giftlabel">
-							{ this.renderSivilstatusLabel(ektefelleHarDiskresjonskode) }
-							{ this.renderEktefelleInformasjon() }
+							{this.renderSivilstatusLabel(ektefelleHarDiskresjonskode)}
+							{this.renderEktefelleInformasjon()}
 						</div>
 					</Sporsmal>
 					{ektefelleHarDiskresjonskode !== true && (
