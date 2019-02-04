@@ -8,7 +8,7 @@ export interface Bosituasjon {
 	"antallPersoner": null | string;
 }
 
-export const initialBosituasjon: Bosituasjon = {
+export const initialBosituasjonState: Bosituasjon = {
 	"botype": null,
 	"antallPersoner": null
 };

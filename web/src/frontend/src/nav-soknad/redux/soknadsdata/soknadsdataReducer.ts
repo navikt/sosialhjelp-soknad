@@ -9,7 +9,8 @@ import {
 	initialTelefonnummerState,
 	Telefonnummer
 } from "../../../digisos/skjema/personopplysninger/telefon/telefonActions";
-import { Bosituasjon, initialBosituasjon } from "../../../digisos/skjema/bosituasjon_ny/bosituasjonActions";
+import { Bosituasjon, initialBosituasjonState } from "../../../digisos/skjema/bosituasjon_ny/bosituasjonActions";
+import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidActions";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER"
@@ -21,6 +22,7 @@ export interface SoknadsdataState {
 	utdanning: Utdanning;
 	telefonnummer: Telefonnummer;
 	bosituasjon: Bosituasjon;
+	arbeid: Arbeid;
 }
 
 const initialState: SoknadsdataState = {
@@ -28,7 +30,8 @@ const initialState: SoknadsdataState = {
 	begrunnelse: initialBegrunnelseState,
 	utdanning: initialUtdanningState,
 	telefonnummer: initialTelefonnummerState,
-	bosituasjon: initialBosituasjon
+	bosituasjon: initialBosituasjonState,
+	arbeid: initialArbeidState
 };
 
 const SoknadsdataReducer: Reducer<SoknadsdataState, any> = (

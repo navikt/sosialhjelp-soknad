@@ -11,12 +11,14 @@ import { Faktum } from "../../../nav-soknad/types";
 import Koffert from "../../../nav-soknad/components/svg/illustrasjoner/Koffert";
 import { FormattedHTMLMessage } from "react-intl";
 import Utdanning from "./utdanning/Utdanning";
+import Arbeid from "./arbeid/Arbeid";
 
 const ArbeidOgUtdanning: React.StatelessComponent<FaktumComponentProps & {}> = ({fakta}) => {
 	const alleArbeidsforhold: Faktum[] = finnFakta("arbeidsforhold", fakta);
 	const harArbeidsforhold = alleArbeidsforhold && alleArbeidsforhold.length > 0;
 	return (
 		<DigisosSkjemaSteg steg={DigisosSteg.arbeidbolk} ikon={<Koffert/>}>
+			<Arbeid/>
 			<Arbeidsforhold/>
 			{!harArbeidsforhold && (
 				<Jobb/>
