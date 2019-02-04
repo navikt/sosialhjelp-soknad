@@ -35,29 +35,29 @@ class SivilstatusView extends React.Component<Props, {}> {
 	renderEktefelleInformasjon() {
 		const { sivilstatus } = this.props;
 		const ektefelle: Ektefelle = sivilstatus.ektefelle;
-
+		const INTL_ID_EKTEFELLE = "system.familie.sivilstatus.gift.ektefelle";
 		return (
 			<div className="sivilstatus__ektefelleinfo">
 				{ektefelle && ektefelle.navn && ektefelle.navn.fulltNavn && (
 					<Detaljeliste>
 						<DetaljelisteElement
-							tittel={<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.navn"/>}
+							tittel={<FormattedMessage id={INTL_ID_EKTEFELLE + ".navn"}/>}
 							verdi={ektefelle.navn.fulltNavn}
 						/>
 						<DetaljelisteElement
-							tittel={<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.fodselsdato"/>}
+							tittel={<FormattedMessage id={INTL_ID_EKTEFELLE + ".fodselsdato"}/>}
 							verdi={this.formaterDato(ektefelle.fodselsdato)}
 						/>
 						<DetaljelisteElement
 							tittel={
-								<FormattedMessage id="system.familie.sivilstatus.gift.ektefelle.folkereg"/>
+								<FormattedMessage id={INTL_ID_EKTEFELLE + ".folkereg"}/>
 							}
 							verdi={
 								(sivilstatus.folkeregistrertMedEktefelle === true ?
 										<FormattedMessage
-											id="system.familie.sivilstatus.gift.ektefelle.folkeregistrertsammen.true"/> :
+											id={INTL_ID_EKTEFELLE + ".folkeregistrertsammen.true"}/> :
 										<FormattedMessage
-											id="system.familie.sivilstatus.gift.ektefelle.folkeregistrertsammen.false"/>
+											id={INTL_ID_EKTEFELLE + ".folkeregistrertsammen.false"}/>
 								)
 							}
 						/>
