@@ -16,7 +16,7 @@ export interface Navn {
 	fulltNavn?: string;
 }
 
-export interface Ektefelle {
+export interface Person {
 	navn: Navn;
 	fodselsdato: null | string;
 	personIdentifikator: string;
@@ -25,7 +25,7 @@ export interface Ektefelle {
 export interface Sivilstatus {
 	kildeErSystem: boolean;
 	sivilstatus: Status;
-	ektefelle?: Ektefelle;
+	ektefelle?: Person;
 	ektefelleHarDiskresjonskode?: boolean;
 	folkeregistrertMedEktefelle?: boolean;
 	borSammenMed?: boolean;

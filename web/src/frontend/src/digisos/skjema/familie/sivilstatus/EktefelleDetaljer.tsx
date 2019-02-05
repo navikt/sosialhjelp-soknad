@@ -1,11 +1,11 @@
-import { Ektefelle, Sivilstatus, SIVILSTATUS_STI } from "./FamilieTypes";
+import { Person, Sivilstatus, SIVILSTATUS_STI } from "./FamilieTypes";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import * as React from "react";
 import { State } from "../../../redux/reducers";
 import { connect } from "react-redux";
 import { fetchSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
+import { formaterIsoDato, getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
@@ -34,7 +34,7 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 
 	renderEktefelleInformasjon() {
 		const { sivilstatus } = this.props;
-		const ektefelle: Ektefelle = sivilstatus.ektefelle;
+		const ektefelle: Person = sivilstatus.ektefelle;
 		const INTL_ID_EKTEFELLE = "system.familie.sivilstatus.gift.ektefelle";
 		return (
 			<div className="sivilstatus__ektefelleinfo">
@@ -46,7 +46,7 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 						/>
 						<DetaljelisteElement
 							tittel={<FormattedMessage id={INTL_ID_EKTEFELLE + ".fodselsdato"}/>}
-							verdi={this.formaterDato(ektefelle.fodselsdato)}
+							verdi={formaterIsoDato(ektefelle.fodselsdato)}
 						/>
 						<DetaljelisteElement
 							tittel={
@@ -65,17 +65,6 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 				)}
 			</div>
 		);
-	}
-
-	// TODO: Flytt ut denne
-	formaterDato(fodselsDato: string) {
-		if (fodselsDato) {
-			const aar = fodselsDato.slice(0, 4);
-			const maaned = fodselsDato.slice(5, 7);
-			const dag = fodselsDato.slice(8);
-			return `${dag}.${maaned}.${aar}`;
-		}
-		return "";
 	}
 
 	render() {

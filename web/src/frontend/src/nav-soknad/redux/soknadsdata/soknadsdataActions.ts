@@ -33,12 +33,13 @@ export function fetchPutSoknadsdataAction(brukerBehandlingId: string, sti: strin
 /*
  * safeSet - Opprett element i object ut fra sti hvis det ikke finnes.
  *
- * let soknadsdata = {};
- * soknadsdata = safeSet(soknadsdata, 'familie/sivilstatus/status/barn', {navn: "Doffen"});
- * => { familie: { sivilstatus: { status: {barn: {navn: 'Doffen' } } } }
- * 'familie/barn/0' => {familie: {barn : [12]
+ * safeSet( {}, 'familie/sivilstatus/status/barn', {navn: "Doffen"});
+ *  => { familie: { sivilstatus: { status: {barn: {navn: 'Doffen' } } } }
+ *
+ * safeSet( {}, 'familie/barn/0', {navn: "Doffen"})
+ *  => {familie: {barn : [{navn: "Doffen"}]
  */
-const safeSet = (obj: any, path: string, value: any): any => {
+export const safeSet = (obj: any, path: string, value: any): any => {
 	obj = typeof obj === 'object' ? obj : {};
 	const keys = Array.isArray(path) ? path : path.split('/');
 	let curStep = obj;
