@@ -92,10 +92,9 @@ describe("Bankinformasjon react komponent", () => {
 		expect(wrapper.html()).toContain("Angre");
 
 		const DISABLED = "disabled";
+
 		expect(wrapper.find(".input--s").first().getElement().props[DISABLED]).toBeFalsy();
-
 		wrapper.setProps({bankinformasjon: {...bankinformasjon, ...{"harIkkeKonto": true}}});
-
 		expect(wrapper.find(".input--s").first().getElement().props[DISABLED]).toBeTruthy();
 	});
 });

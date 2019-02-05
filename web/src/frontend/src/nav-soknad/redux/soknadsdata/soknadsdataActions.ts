@@ -34,8 +34,9 @@ export function fetchPutSoknadsdataAction(brukerBehandlingId: string, sti: strin
  * safeSet - Opprett element i object ut fra sti hvis det ikke finnes.
  *
  * let soknadsdata = {};
- * soknadsdata = safeSet(soknadsdata, 'familie/sivilstatus', {status: "gift"});
- * => { familie: { sivilstatus: { status: 'gift' } } }
+ * soknadsdata = safeSet(soknadsdata, 'familie/sivilstatus/status/barn', {navn: "Doffen"});
+ * => { familie: { sivilstatus: { status: {barn: {navn: 'Doffen' } } } }
+ * 'familie/barn/0' => {familie: {barn : [12]
  */
 const safeSet = (obj: any, path: string, value: any): any => {
 	obj = typeof obj === 'object' ? obj : {};
