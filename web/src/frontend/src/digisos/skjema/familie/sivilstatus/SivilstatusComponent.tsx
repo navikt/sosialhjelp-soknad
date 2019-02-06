@@ -2,7 +2,10 @@ import { Person, Sivilstatus, SIVILSTATUS_STI, Status } from "./FamilieTypes";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import * as React from "react";
 import { State } from "../../../redux/reducers";
-import { fetchSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
+import {
+	fetchPutSoknadsdataAction,
+	fetchSoknadsdataAction
+} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
 import { connect } from "react-redux";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
@@ -10,16 +13,16 @@ import Underskjema from "../../../../nav-soknad/components/underskjema";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
 import PersonSkjema from "../../../../nav-soknad/faktum/PersonSkjema";
+import { oppdaterSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
 interface OwnProps {
 	brukerBehandlingId?: string;
 	sivilstatus?: Sivilstatus;
 	hentSivilstatus?: (brukerBehandlingId: string) => void;
+	lagreSivilstatus?: (brukerBehandlingId: string, sivilstatus: Sivilstatus) => void;
+	oppdaterSoknadsdata?: (verdi: any) => void;
 }
 
-interface OwnState {
-	sivilstatus?: Sivilstatus;
-}
 
 type Props = OwnProps & InjectedIntlProps;
 
@@ -44,33 +47,33 @@ const SivilstatusRadioknapp: React.FunctionComponent<RadioProps> = ({verdi, id, 
 	);
 };
 
-class SivilstatusComponent extends React.Component<Props, OwnState> {
-
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-			sivilstatus: null
-		}
-	}
+class SivilstatusComponent extends React.Component<Props, {}> {
 
 	componentDidMount() {
 		this.props.hentSivilstatus(this.props.brukerBehandlingId);
 	}
 
-	componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<OwnState>) {
-		if (this.props.sivilstatus !== prevProps.sivilstatus) {
-			this.setState({sivilstatus: this.props.sivilstatus});
-		}
+	onChangePerson(person: Person) {
+		console.warn("onChange: " + JSON.stringify(person, null, 4));
+		this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
 	}
 
-	onClickSivilstatus(verdi: null | Status) {
-		const sivilstatus = {...{sivilstatus: {sivilstatus: verdi}}, ...this.state.sivilstatus};
-		this.setState({sivilstatus});
+	onClickSivilstatus(verdi: Status) {
+		const sivilstatus = {...this.props.sivilstatus};
+		sivilstatus.sivilstatus = verdi;
+		this.props.oppdaterSoknadsdata({
+			familie: { sivilstatus }
+		});
+		this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
 	}
 
 	onClickBorSammen(verdi: boolean) {
-		const sivilstatus = {...{sivilstatus: {borSammenMed: verdi}}, ...this.state.sivilstatus};
-		this.setState({sivilstatus});
+		const sivilstatus = {...this.props.sivilstatus};
+		sivilstatus.borSammenMed = verdi;
+		this.props.oppdaterSoknadsdata({
+			familie: { sivilstatus }
+		});
+		this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
 	}
 
 	render() {
@@ -98,11 +101,13 @@ class SivilstatusComponent extends React.Component<Props, OwnState> {
 									<div>
 										<div className="blokk-s">
 											<PersonSkjema
-												id="ektefelle" // TODO Sjekk denne
+												id="ektefelle"
 												person={this.props.sivilstatus.ektefelle}
+												sivilstatus={this.props.sivilstatus}
 												onChange={(person: Person) => {
-													console.warn(JSON.stringify(person, null, 4));
+													this.onChangePerson(person)
 												}}
+												oppdaterSoknadsdata={this.props.oppdaterSoknadsdata}
 											/>
 										</div>
 									</div>
@@ -178,6 +183,12 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = (dispatch: any) => ({
 	hentSivilstatus: (brukerBehandlingId: string) => {
 		dispatch(fetchSoknadsdataAction(brukerBehandlingId, SIVILSTATUS_STI));
+	},
+	oppdaterSoknadsdata: (data: any) => {
+		dispatch(oppdaterSoknadsdataAction(data))
+	},
+	lagreSivilstatus: (brukerbehandlingId: string, sivilstatus: Sivilstatus) => {
+		dispatch(fetchPutSoknadsdataAction(brukerbehandlingId, SIVILSTATUS_STI, sivilstatus));
 	}
 });
 

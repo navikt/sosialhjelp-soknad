@@ -10,7 +10,7 @@ export function fetchSoknadsdataAction(brukerBehandlingId: string, sti: string) 
 		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
 			// const soknadsdata = {};
 			// soknadsdata[sti] = response;
-			const soknadsdata = safeSet({}, sti, response);
+			const soknadsdata = setPath({}, sti, response);
 			dispatch(oppdaterSoknadsdataAction(soknadsdata));
 		}).catch(() => {
 			dispatch(navigerTilServerfeil());
@@ -31,15 +31,15 @@ export function fetchPutSoknadsdataAction(brukerBehandlingId: string, sti: strin
 }
 
 /*
- * safeSet - Opprett element i object ut fra sti hvis det ikke finnes.
+ * setPath - Opprett element i object ut fra sti hvis det ikke finnes.
  *
- * safeSet( {}, 'familie/sivilstatus/status/barn', {navn: "Doffen"});
+ * setPath( {}, 'familie/sivilstatus/status/barn', {navn: "Doffen"});
  *  => { familie: { sivilstatus: { status: {barn: {navn: 'Doffen' } } } }
  *
- * safeSet( {}, 'familie/barn/0', {navn: "Doffen"})
+ * setPath( {}, 'familie/barn/0', {navn: "Doffen"})
  *  => {familie: {barn : [{navn: "Doffen"}]
  */
-export const safeSet = (obj: any, path: string, value: any): any => {
+export const setPath = (obj: any, path: string, value: any): any => {
 	obj = typeof obj === 'object' ? obj : {};
 	const keys = Array.isArray(path) ? path : path.split('/');
 	let curStep = obj;

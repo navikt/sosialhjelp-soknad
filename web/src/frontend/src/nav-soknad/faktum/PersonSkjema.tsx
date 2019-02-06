@@ -1,13 +1,15 @@
 import * as React from "react";
 import { Column, Container, Row } from "nav-frontend-grid";
 import InputEnhanced from "./InputEnhanced";
-import { Person } from "../../digisos/skjema/familie/sivilstatus/FamilieTypes";
-import { safeSet } from "../redux/soknadsdata/soknadsdataActions";
+import { Person, Sivilstatus } from "../../digisos/skjema/familie/sivilstatus/FamilieTypes";
+import { setPath } from "../redux/soknadsdata/soknadsdataActions";
 
 interface OwnProps {
-	person?: Person
+	person?: Person;
+	sivilstatus?: Sivilstatus;
 	id?: string;
 	onChange?: (person: Person) => void;
+	oppdaterSoknadsdata?: (verdi: any) => void;
 	// faktumKey: string;
 	// faktumId?: number;
 	// validering?: {
@@ -30,17 +32,17 @@ interface OwnProps {
 // 		ingenVerdi}, fødselsdato: ${props.fdato || ingenVerdi}`;
 // };
 
-interface State {
-	person: Person;
-}
+// interface State {
+// 	person: Person;
+// }
 
-class PersonSkjema extends React.Component<OwnProps, State> {
+class PersonSkjema extends React.Component<OwnProps, {}> {
 	navnInput: HTMLInputElement;
 
 	constructor(props: OwnProps) {
 		super(props);
 		this.focus = this.focus.bind(this);
-		this.state = { person: this.props.person }
+		// this.state = { person: this.props.person }
 	}
 
 	focus() {
@@ -48,23 +50,55 @@ class PersonSkjema extends React.Component<OwnProps, State> {
 	}
 
 	oppdaterTekstfelt(sti: string, verdi: any) {
-		const oppdatertPerson = {...this.state.person };
-		safeSet(oppdatertPerson, sti, verdi);
-		this.setState({person: oppdatertPerson});
+		const person = {...this.props.person };
+		setPath(person, sti, verdi); // Bedre med spread...
+		const sivilstatus = {...this.props.sivilstatus};
+		sivilstatus.ektefelle = person;
+
+		// this.setState({person: oppdatertPerson});
+
+		// const person = {...this.props.person};
+		// sivilstatus.borSammenMed = verdi;
+		this.props.oppdaterSoknadsdata({
+			familie: {sivilstatus}
+		});
 	}
 
 
 	validerOgLagre() {
 		// TODO Håndter valideringsregler
-		this.props.onChange(this.state.person);
+		this.props.onChange(this.props.sivilstatus.ektefelle);
 	}
 
 	render() {
 		const { id, person } = this.props;
-		let personIdentifikator: string = person && person.personIdentifikator;
-		if (personIdentifikator && personIdentifikator.length === 11) {
-			personIdentifikator = personIdentifikator.slice(6, 11);
+
+		let fornavn: string = "";
+		let mellomnavn: string = "";
+		let etternavn: string = "";
+		let fodselsdato: string = "";
+		let personIdentifikator: string = "";
+
+		if (person) {
+			if (person.navn) {
+				if (person.navn.fornavn) {
+					fornavn = person.navn.fornavn;
+				}
+				if (person.navn.mellomnavn) {
+					mellomnavn = person.navn.mellomnavn;
+				}
+				if (person.navn.etternavn) {
+					etternavn = person.navn.etternavn;
+				}
+			}
+			if (person.fodselsdato) {
+				fodselsdato = person.fodselsdato;
+			}
+			if (person.personIdentifikator) {
+				personIdentifikator = person.personIdentifikator;
+			}
 		}
+
 		return (
 			<div className="personskjema">
 				<Container fluid={true} className="container--noPadding">
@@ -76,7 +110,7 @@ class PersonSkjema extends React.Component<OwnProps, State> {
 								id={id + "_fornavn_input"}
 								inputRef={c => (this.navnInput = c)}
 								maxLength={100}
-								verdi={person && person.navn.fornavn}
+								verdi={fornavn}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("navn/fornavn", verdi)}
 								onBlur={() => this.validerOgLagre()}
 								faktumKey="familie.sivilstatus.gift.ektefelle.fornavn"
@@ -100,7 +134,7 @@ class PersonSkjema extends React.Component<OwnProps, State> {
 								id={id + "_mellomnavn_input"}
 								inputRef={c => (this.navnInput = c)}
 								maxLength={100}
-								verdi={person && person.navn.mellomnavn}
+								verdi={mellomnavn}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("navn/mellomnavn", verdi)}
 								onBlur={() => this.validerOgLagre()}
 								faktumKey="familie.sivilstatus.gift.ektefelle.mellomnavn"
@@ -124,7 +158,7 @@ class PersonSkjema extends React.Component<OwnProps, State> {
 								id={id + "_etternavn_input"}
 								inputRef={c => (this.navnInput = c)}
 								maxLength={100}
-								verdi={this.state.person && this.state.person.navn.etternavn}
+								verdi={etternavn}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("navn/etternavn", verdi)}
 								onBlur={() => this.validerOgLagre()}
 								faktumKey="familie.sivilstatus.gift.ektefelle.etternavn"
@@ -147,9 +181,9 @@ class PersonSkjema extends React.Component<OwnProps, State> {
 								getFeil={() => null}
 								id={id + "_fodselsdato_input"}
 								inputRef={c => (this.navnInput = c)}
-								maxLength={8}
-								pattern={"\\d*"}
-								verdi={person && person.fodselsdato}
+								// maxLength={8}
+								// pattern={"\\d*"}
+								verdi={fodselsdato}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("fodselsdato", verdi)}
 								bredde="S"
 								onBlur={() => this.validerOgLagre()}
