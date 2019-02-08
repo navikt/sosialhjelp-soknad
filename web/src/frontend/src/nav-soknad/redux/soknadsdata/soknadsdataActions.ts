@@ -1,33 +1,60 @@
 import { Dispatch } from "../reduxTypes";
 import { fetchPut, fetchToJson } from "../../utils/rest-utils";
-import { oppdaterSoknadsdataAction } from "./soknadsdataReducer";
+import { oppdaterSoknadsdataState, SoknadsdataType } from "./soknadsdataReducer";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 
 const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `soknader/${brukerBehandlingId}/${sti}`;
 
+// // TODO Deprecated ... slett
 export function fetchSoknadsdataAction(brukerBehandlingId: string, sti: string) {
 	return (dispatch: Dispatch) => {
 		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
-			// const soknadsdata = {};
-			// soknadsdata[sti] = response;
 			const soknadsdata = setPath({}, sti, response);
-			dispatch(oppdaterSoknadsdataAction(soknadsdata));
+			dispatch(oppdaterSoknadsdataState(soknadsdata));
 		}).catch(() => {
 			dispatch(navigerTilServerfeil());
 		});
 	}
 }
 
-export function fetchPutSoknadsdataAction(brukerBehandlingId: string, sti: string, soknadsdata: any) {
+export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	return (dispatch: Dispatch) => {
-		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata)).then(() => {
-			const payload: any = {};
-			payload[sti] = soknadsdata;
-			dispatch(oppdaterSoknadsdataAction(payload));
+		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
+			const soknadsdata = setPath({}, sti, response);
+			dispatch(oppdaterSoknadsdataState(soknadsdata));
 		}).catch(() => {
 			dispatch(navigerTilServerfeil());
 		});
 	}
+}
+
+// TODO Deprecated...slett
+export function fetchPutSoknadsdataAction(brukerBehandlingId: string, sti: string, soknadsdata: any) { // TODO: Sett type til SoknadsdataType
+	return (dispatch: Dispatch) => {
+		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata)).then(() => {
+			const payload: any = {};
+			payload[sti] = soknadsdata;
+			dispatch(oppdaterSoknadsdataState(payload));
+		}).catch(() => {
+			dispatch(navigerTilServerfeil());
+		});
+	}
+}
+
+export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknadsdata: any) {
+	return (dispatch: Dispatch) => {
+		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata)).then(() => {
+			const payload: any = {};
+			payload[sti] = soknadsdata;
+			dispatch(oppdaterSoknadsdataState(payload));
+		}).catch(() => {
+			dispatch(navigerTilServerfeil());
+		});
+	}
+}
+
+export function lagreSoknadsdataTypet(brukerBehandlingId: string, sti: string, soknadsdata: SoknadsdataType) {
+	return lagreSoknadsdata(brukerBehandlingId, sti, soknadsdata);
 }
 
 /*

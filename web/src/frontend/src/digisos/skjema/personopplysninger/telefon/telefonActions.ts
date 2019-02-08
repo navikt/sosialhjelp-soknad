@@ -1,6 +1,6 @@
 import { Dispatch } from "../../../../nav-soknad/redux/reduxTypes";
 import { fetchPut, fetchToJson } from "../../../../nav-soknad/utils/rest-utils";
-import { oppdaterSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { oppdaterSoknadsdataState } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { navigerTilServerfeil } from "../../../../nav-soknad/redux/navigasjon/navigasjonActions";
 
 export interface Telefonnummer {
@@ -20,7 +20,7 @@ const bankinfoUrl = (brukerBehandlingId: string): string => `soknader/${brukerBe
 export const hentTelefonnummerAction = (brukerBehandlingId: string) => {
 	return (dispatch: Dispatch) => {
 		fetchToJson(bankinfoUrl(brukerBehandlingId)).then((response: Telefonnummer) => {
-			dispatch(oppdaterSoknadsdataAction({telefonnummer: response}));
+			dispatch(oppdaterSoknadsdataState({telefonnummer: response}));
 		}).catch(() => {
 			dispatch(navigerTilServerfeil());
 		});
@@ -30,7 +30,7 @@ export const hentTelefonnummerAction = (brukerBehandlingId: string) => {
 export const oppdaterTelefonnummerAction = (brukerBehandlingId: string, telefonnummer: Telefonnummer) => {
 	return (dispatch: Dispatch) => {
 		fetchPut(bankinfoUrl(brukerBehandlingId), JSON.stringify(telefonnummer)).then(() => {
-			dispatch(oppdaterSoknadsdataAction({ telefonnummer }));
+			dispatch(oppdaterSoknadsdataState({ telefonnummer }));
 		}).catch(() => {
 			dispatch(navigerTilServerfeil());
 		});

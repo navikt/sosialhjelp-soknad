@@ -1,7 +1,8 @@
 import { configEnzyme, setupShallowReactIntl } from "../../../nav-soknad/utils/unitTestUtils";
-import { Begrunnelse } from "./begrunnelseActions";
-import { BegrunnelseSkjema }from "./Begrunnelse";
+import { Begrunnelse } from "./begrunnelseTypes";
+import { BegrunnelseSkjema } from "./Begrunnelse";
 import * as React from "react";
+import { initialSoknadsdataState, Soknadsdata } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
 describe("Begrunnelse visningskomponent", () => {
 
@@ -21,13 +22,16 @@ describe("Begrunnelse visningskomponent", () => {
 			hvaSokesOm: "",
 			hvorforSoke: ""
 		};
+		const soknadsdata: Soknadsdata = initialSoknadsdataState;
+		soknadsdata.begrunnelse = begrunnelseState;
 
 		const wrapper = shallowWithIntl(
 			<BegrunnelseSkjema
-				begrunnelse={begrunnelseState}
+				soknadsdata={soknadsdata}
 				brukerBehandlingId="110000001"
-				nullstillValideringsfeil={() => null}
-				hentBegrunnelse={() => null}
+				// nullstillValideringsfeil={() => null}
+				hentSoknadsdata={() => null}
+				setValideringsfeil={() => null}
 				intl={null}
 			/>);
 

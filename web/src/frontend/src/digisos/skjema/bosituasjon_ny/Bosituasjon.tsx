@@ -8,7 +8,7 @@ import { Bosituasjon, hentBosituasjonAction, oppdaterBosituasjonAction } from ".
 import { Valideringsfeil } from "../../../nav-soknad/validering/types";
 import { State } from "../../redux/reducers";
 import { setFaktumValideringsfeil } from "../../../nav-soknad/redux/valideringActions";
-import { oppdaterSoknadsdataAction } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { oppdaterSoknadsdataState } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { connect } from "react-redux";
 import { Feil } from "nav-frontend-skjema";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
@@ -222,7 +222,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 		dispatch(oppdaterBosituasjonAction(brukerBehandlingId, bosituasjon));
 	},
 	oppdaterSoknadsdata: (data: any) => {
-		dispatch(oppdaterSoknadsdataAction(data))
+		dispatch(oppdaterSoknadsdataState(data))
 	},
 	nullstillValideringsfeil: (faktumKey: string) => {
 		dispatch(setFaktumValideringsfeil(null, faktumKey));

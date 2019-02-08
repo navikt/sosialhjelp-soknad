@@ -8,7 +8,7 @@ import { State } from "../../../redux/reducers";
 import { Utdanning as UtdanningType} from "./utdanningActions";
 import { Valideringsfeil } from "../../../../nav-soknad/validering/types";
 import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
-import { oppdaterSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { oppdaterSoknadsdataState } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { connect } from "react-redux";
 import { hentUtdanningAction, oppdaterUtdanningAction } from "./utdanningActions";
 
@@ -105,7 +105,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 		dispatch(oppdaterUtdanningAction(brukerBehandlingId, Utdanning));
 	},
 	oppdaterSoknadsdata: (data: any) => {
-		dispatch(oppdaterSoknadsdataAction(data))
+		dispatch(oppdaterSoknadsdataState(data))
 	},
 	nullstillValideringsfeil: (faktumKey: string) => {
 		dispatch(setFaktumValideringsfeil(null, faktumKey));

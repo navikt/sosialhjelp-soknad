@@ -35,11 +35,22 @@ export interface Familie {
 	sivilstatus: Sivilstatus
 }
 
-const initialSivilstatusState = {
+const initialSivilstatusState: Sivilstatus = {
 	kildeErSystem: false,
 	sivilstatus: Status.UGIFT
 };
 
 export const initialFamilieStatus = {
 	sivilstatus: initialSivilstatusState
+};
+
+export const initialPerson: Person = {
+	navn: {
+		fornavn: "",
+		mellomnavn: "",
+		etternavn: "",
+		fulltNavn: null
+	},
+	fodselsdato: null,
+	personIdentifikator: null
 };

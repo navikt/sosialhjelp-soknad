@@ -3,6 +3,9 @@ import { Feil, Textarea } from "nav-frontend-skjema";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { getInputFaktumTekst, getIntlTextOrKey } from "../utils";
 import InjectedIntl = ReactIntl.InjectedIntl;
+import { Valideringsfeil } from "../validering/types";
+import { State } from "../../digisos/redux/reducers";
+import { connect } from "react-redux";
 
 interface OwnProps {
 	labelId?: string;
@@ -16,11 +19,12 @@ interface OwnProps {
 	faktumKey: string;
 	property?: string;
 	faktumId?: number;
-	getName: () => string;
+	getName?: () => string;
 	value?: string;
-	getFeil: (intl: InjectedIntl) => Feil;
+	getFeil?: (intl: InjectedIntl) => Feil; // Fjern
 	onChange?: (event: any) => any;
 	onBlur?: () => void;
+	feil?: any; // Type??
 }
 
 type Props = OwnProps & InjectedIntlProps;
@@ -61,6 +65,16 @@ class TextareaEnhanced extends React.Component<Props, {}> {
 		);
 	}
 
+	getName(): string {
+		return `${this.props.faktumKey}`.replace(/\./g, "_");
+	}
+
+	getFeil(): Feil {
+		const { faktumKey } = this.props;
+		const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey);
+		return !feilkode ? null : { feilmelding: this.props.intl.formatHTMLMessage({ id: feilkode.feilkode }) };
+	}
+
 	render() {
 		const {
 			labelId,
@@ -83,11 +97,11 @@ class TextareaEnhanced extends React.Component<Props, {}> {
 				label={label}
 				placeholder={this.props.placeholder}
 				value={value}
-				name={this.props.getName()}
+				name={this.getName()}
 				disabled={disabled}
 				onChange={this.handleOnChange}
 				onBlur={this.handleOnBlur}
-				feil={this.props.getFeil(intl)}
+				feil={this.getFeil()}
 				maxLength={maxLength || 400}
 				textareaClass={textareaClass || "skjema-texarea--normal"}
 				tellerTekst={this.tellerTekst}
@@ -97,4 +111,10 @@ class TextareaEnhanced extends React.Component<Props, {}> {
 	}
 }
 
-export default injectIntl(TextareaEnhanced);
+const mapStateToProps = (state: State) => ({
+	feil: state.validering.feil,
+});
+
+export default connect<{}, {}, OwnProps>(
+	mapStateToProps
+)(injectIntl(TextareaEnhanced));

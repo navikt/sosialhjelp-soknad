@@ -6,7 +6,10 @@ import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
 import Sporsmal  from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { State } from "../../../redux/reducers";
 import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
-import { oppdaterSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {
+	oppdaterSoknadsdataState,
+	SoknadsdataType
+} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import { Arbeid, Arbeidsforhold, hentArbeidAction, oppdaterArbeidAction } from "./arbeidActions";
 import ArbeidDetaljer from "./ArbeidDetaljer";
@@ -18,7 +21,7 @@ interface OwnProps {
 	brukerBehandlingId?: string;
 	arbeid?: Arbeid;
 	hentArbeid?: (brukerBehandlingId: string) => void;
-	oppdaterArbeid?: (brukerBehandlingId: string, Arbeid: Arbeid) => void;
+	oppdaterArbeid?: (brukerBehandlingId: string, SoknadsdataType: Arbeid) => void;
 	setFaktumValideringsfeil?: (valideringsfeil: Valideringsfeil, faktumKey: string) => void;
 	nullstillValideringsfeil?: (faktumKey: string) => void;
 	feil?: any;
@@ -144,11 +147,11 @@ const mapDispatchToProps = (dispatch: any) => ({
 	setFaktumValideringsfeil: (valideringsfeil: Valideringsfeil, faktumKey: string) => {
 		dispatch(setFaktumValideringsfeil(valideringsfeil, faktumKey))
 	},
-	oppdaterArbeid: (brukerBehandlingId: string, arbeid: Arbeid) => {
+	oppdaterArbeid: (brukerBehandlingId: string, arbeid: SoknadsdataType) => {
 		dispatch(oppdaterArbeidAction(brukerBehandlingId, arbeid));
 	},
 	oppdaterSoknadsdata: (data: any) => {
-		dispatch(oppdaterSoknadsdataAction(data))
+		dispatch(oppdaterSoknadsdataState(data))
 	},
 	nullstillValideringsfeil: (faktumKey: string) => {
 		dispatch(setFaktumValideringsfeil(null, faktumKey));

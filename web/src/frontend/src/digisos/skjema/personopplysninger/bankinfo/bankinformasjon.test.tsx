@@ -1,7 +1,8 @@
 import * as React from "react";
 import { configEnzyme, harCheckboks, harInputfelt, setupReactIntl } from "../../../../nav-soknad/utils/unitTestUtils";
-import { Bankinformasjon } from "./bankinformasjonActions";
+import { Kontonummer } from "./KontonummerType";
 import { BankinformasjonView } from "./Bankinformasjon";
+import { initialSoknadsdataState } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
 describe("Bankinformasjon react komponent", () => {
 
@@ -18,20 +19,21 @@ describe("Bankinformasjon react komponent", () => {
 	const mountWithIntl = setupReactIntl(intlMessages);
 
 	it("Vis skjema, men ikke vis angreknapp, hvis systemverdi er null", () => {
-		const tomBankinformasjon: Bankinformasjon = {
+		const tomBankinformasjon: Kontonummer = {
 			"brukerdefinert": false,
 			"systemverdi": null,
 			"verdi": null,
 			"harIkkeKonto": null
 		};
 
+		const soknadsdata = initialSoknadsdataState;
+		soknadsdata.personalia.kontonummer = tomBankinformasjon;
 		const wrapper = mountWithIntl(
 			<BankinformasjonView
 				brukerBehandlingId="110000001"
-				bankinformasjon={tomBankinformasjon}
-				nullstillBankinfoValideringsfeil={() => null}
-				hentBankinformasjon={() => null}
-				feil={[]}
+				soknadsdata={soknadsdata}
+				setValideringsfeil={() => null}
+				hentSoknadsdata={() => null}
 				intl={null}
 			/>
 		);
@@ -43,20 +45,20 @@ describe("Bankinformasjon react komponent", () => {
 	});
 
 	it("Ikke vis skjema hvis systemverdi er satt", () => {
-		const tomBankinformasjon: Bankinformasjon = {
+		const tomBankinformasjon: Kontonummer = {
 			"brukerdefinert": false,
 			"systemverdi": "12345678903",
 			"verdi": null,
 			"harIkkeKonto": null
 		};
-
+		const soknadsdata = initialSoknadsdataState;
+		soknadsdata.personalia.kontonummer = tomBankinformasjon;
 		const wrapper = mountWithIntl(
 			<BankinformasjonView
 				brukerBehandlingId="110000001"
-				bankinformasjon={tomBankinformasjon}
-				nullstillBankinfoValideringsfeil={() => null}
-				hentBankinformasjon={() => null}
-				feil={[]}
+				soknadsdata={soknadsdata}
+				setValideringsfeil={() => null}
+				hentSoknadsdata={() => null}
 				intl={null}
 			/>
 		);
@@ -68,20 +70,20 @@ describe("Bankinformasjon react komponent", () => {
 	});
 
 	it("Vis skjema hvis brukerdefinert er true og systemverdi satt", () => {
-		const bankinformasjon: Bankinformasjon = {
+		const bankinformasjon: Kontonummer = {
 			"brukerdefinert": true,
 			"systemverdi": "12345678903",
 			"verdi": null,
 			"harIkkeKonto": null
 		};
-
+		const soknadsdata = initialSoknadsdataState;
+		soknadsdata.personalia.kontonummer = bankinformasjon;
 		const wrapper = mountWithIntl(
 			<BankinformasjonView
 				brukerBehandlingId="110000001"
-				bankinformasjon={bankinformasjon}
-				nullstillBankinfoValideringsfeil={() => null}
-				hentBankinformasjon={() => null}
-				feil={[]}
+				soknadsdata={soknadsdata}
+				setValideringsfeil={() => null}
+				hentSoknadsdata={() => null}
 				intl={null}
 			/>
 		);

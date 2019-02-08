@@ -1,30 +1,19 @@
-import { Person, Sivilstatus, SIVILSTATUS_STI, Status } from "./FamilieTypes";
+import { Familie, initialPerson, Person, SIVILSTATUS_STI, Status } from "./FamilieTypes";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import * as React from "react";
-import { State } from "../../../redux/reducers";
-import {
-	fetchPutSoknadsdataAction,
-	fetchSoknadsdataAction
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
-import { connect } from "react-redux";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
 import PersonSkjema from "../../../../nav-soknad/faktum/PersonSkjema";
-import { oppdaterSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
-interface OwnProps {
-	brukerBehandlingId?: string;
-	sivilstatus?: Sivilstatus;
-	hentSivilstatus?: (brukerBehandlingId: string) => void;
-	lagreSivilstatus?: (brukerBehandlingId: string, sivilstatus: Sivilstatus) => void;
-	oppdaterSoknadsdata?: (verdi: any) => void;
-}
+import {
+	connectSoknadsdataContainer,
+	SoknadsdataContainerProps
+} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 
-
-type Props = OwnProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 interface RadioProps {
 	id?: string;
@@ -50,35 +39,52 @@ const SivilstatusRadioknapp: React.FunctionComponent<RadioProps> = ({verdi, id, 
 class SivilstatusComponent extends React.Component<Props, {}> {
 
 	componentDidMount() {
-		this.props.hentSivilstatus(this.props.brukerBehandlingId);
+		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SIVILSTATUS_STI);
+		// this.props.hentSivilstatus(this.props.brukerBehandlingId);
 	}
 
 	onChangePerson(person: Person) {
+		const { brukerBehandlingId } = this.props;
 		console.warn("onChange: " + JSON.stringify(person, null, 4));
-		this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
+		// this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
+		this.props.lagreSoknadsdata(brukerBehandlingId, SIVILSTATUS_STI, this.props.soknadsdata.familie);
 	}
 
 	onClickSivilstatus(verdi: Status) {
-		const sivilstatus = {...this.props.sivilstatus};
+		const { brukerBehandlingId } = this.props;
+		const sivilstatus = this.props.soknadsdata.familie.sivilstatus;
+		console.warn("sivilstatus før oppdatering: ");
+		console.warn(JSON.stringify(sivilstatus, null, 4));
+
 		sivilstatus.sivilstatus = verdi;
-		this.props.oppdaterSoknadsdata({
+		if (verdi === Status.GIFT && sivilstatus.ektefelle === null) {
+			sivilstatus.ektefelle = initialPerson;
+			console.warn(JSON.stringify(sivilstatus, null, 4));
+		}
+		this.props.oppdaterSoknadsdataState({
 			familie: { sivilstatus }
 		});
-		this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
+		// this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
+		this.props.lagreSoknadsdata(brukerBehandlingId, SIVILSTATUS_STI, this.props.soknadsdata.familie);
 	}
 
 	onClickBorSammen(verdi: boolean) {
-		const sivilstatus = {...this.props.sivilstatus};
+		const { brukerBehandlingId } = this.props;
+		const sivilstatus = this.props.soknadsdata.familie.sivilstatus;
+		// const sivilstatus = {...this.props.sivilstatus};
 		sivilstatus.borSammenMed = verdi;
-		this.props.oppdaterSoknadsdata({
+		this.props.oppdaterSoknadsdataState({
 			familie: { sivilstatus }
 		});
-		this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
+		this.props.lagreSoknadsdata(brukerBehandlingId, SIVILSTATUS_STI, this.props.soknadsdata.familie);
+		// this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
 	}
 
 	render() {
-		const sivilstatus = this.props.sivilstatus ? this.props.sivilstatus.sivilstatus : null;
-		const borSammenMed = this.props.sivilstatus ? this.props.sivilstatus.borSammenMed : null;
+		const familie: Familie = this.props.soknadsdata.familie;
+		const sivilstatus = (familie && familie.sivilstatus) ? familie.sivilstatus.sivilstatus : null;
+		// const borSammenMed = this.props.sivilstatus ? this.props.sivilstatus.borSammenMed : null;
+		const borSammenMed = familie ? familie.sivilstatus.borSammenMed : null;
 
 		return (
 			<div style={{ border: "3px dotted red", display: "block" }}>
@@ -102,12 +108,12 @@ class SivilstatusComponent extends React.Component<Props, {}> {
 										<div className="blokk-s">
 											<PersonSkjema
 												id="ektefelle"
-												person={this.props.sivilstatus.ektefelle}
-												sivilstatus={this.props.sivilstatus}
+												person={this.props.soknadsdata.familie.sivilstatus.ektefelle}
+												sivilstatus={this.props.soknadsdata.familie.sivilstatus}
 												onChange={(person: Person) => {
 													this.onChangePerson(person)
 												}}
-												oppdaterSoknadsdata={this.props.oppdaterSoknadsdata}
+												oppdaterSoknadsdata={this.props.oppdaterSoknadsdataState}
 											/>
 										</div>
 									</div>
@@ -118,7 +124,7 @@ class SivilstatusComponent extends React.Component<Props, {}> {
 											id={"sivilstatus_gift_bor_sammen_radio_ja"}
 											faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
 											value="true"
-											checked={this.props.sivilstatus.borSammenMed === true}
+											checked={borSammenMed === true}
 											onChange={() => this.onClickBorSammen(true)}
 										/>
 										<RadioEnhanced
@@ -174,25 +180,4 @@ class SivilstatusComponent extends React.Component<Props, {}> {
 	}
 }
 
-const mapStateToProps = (state: State) => ({
-	brukerBehandlingId: state.soknad.data.brukerBehandlingId,
-	feil: state.validering.feil,
-	sivilstatus: state.soknadsdata.familie.sivilstatus
-});
-
-const mapDispatchToProps = (dispatch: any) => ({
-	hentSivilstatus: (brukerBehandlingId: string) => {
-		dispatch(fetchSoknadsdataAction(brukerBehandlingId, SIVILSTATUS_STI));
-	},
-	oppdaterSoknadsdata: (data: any) => {
-		dispatch(oppdaterSoknadsdataAction(data))
-	},
-	lagreSivilstatus: (brukerbehandlingId: string, sivilstatus: Sivilstatus) => {
-		dispatch(fetchPutSoknadsdataAction(brukerbehandlingId, SIVILSTATUS_STI, sivilstatus));
-	}
-});
-
-export default connect<{}, {}, OwnProps>(
-	mapStateToProps,
-	mapDispatchToProps
-)(injectIntl(SivilstatusComponent));
+export default connectSoknadsdataContainer(injectIntl(SivilstatusComponent));

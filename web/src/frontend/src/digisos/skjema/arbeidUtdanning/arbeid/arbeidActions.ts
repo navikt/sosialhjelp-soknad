@@ -2,6 +2,7 @@ import {
 	fetchPutSoknadsdataAction,
 	fetchSoknadsdataAction
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
+import { SoknadsdataType } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
 export interface Arbeidsforhold {
 	"arbeidsgivernavn": string,
@@ -28,6 +29,6 @@ export const hentArbeidAction = (brukerBehandlingId: string) => {
 	return fetchSoknadsdataAction(brukerBehandlingId, ARBEID_STI);
 };
 
-export const oppdaterArbeidAction = (brukerbehandlingId: string, arbeid: Arbeid) => {
+export const oppdaterArbeidAction = (brukerbehandlingId: string, arbeid: SoknadsdataType) => {
 	return fetchPutSoknadsdataAction(brukerbehandlingId, ARBEID_STI, arbeid);
 };

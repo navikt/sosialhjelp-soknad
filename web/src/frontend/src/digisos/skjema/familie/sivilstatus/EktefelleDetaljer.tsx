@@ -1,9 +1,8 @@
-import { Person, Sivilstatus, SIVILSTATUS_STI } from "./FamilieTypes";
+import { Person, Sivilstatus  } from "./FamilieTypes";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import * as React from "react";
 import { State } from "../../../redux/reducers";
 import { connect } from "react-redux";
-import { fetchSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { formaterIsoDato, getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
@@ -20,9 +19,9 @@ type Props = OwnProps & InjectedIntlProps;
 
 class EktefelleDetaljer extends React.Component<Props, {}> {
 
-	componentDidMount() {
-		this.props.hentSivilstatus(this.props.brukerBehandlingId);
-	}
+	// componentDidMount() {
+	// 	this.props.hentSivilstatus(this.props.brukerBehandlingId);
+	// }
 
 	renderSivilstatusLabel(ektefelleHarDiskresjonskode: boolean): any {
 		let formattedMessageId: string = "system.familie.sivilstatus.label";
@@ -109,13 +108,12 @@ const mapStateToProps = (state: State) => ({
 	sivilstatus: state.soknadsdata.familie.sivilstatus
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-	hentSivilstatus: (brukerBehandlingId: string) => {
-		dispatch(fetchSoknadsdataAction(brukerBehandlingId, SIVILSTATUS_STI));
-	}
-});
+// const mapDispatchToProps = (dispatch: any) => ({
+// 	hentSivilstatus: (brukerBehandlingId: string) => {
+// 		dispatch(fetchSoknadsdataAction(brukerBehandlingId, SIVILSTATUS_STI));
+// 	}
+// });
 
 export default connect<{}, {}, OwnProps>(
-	mapStateToProps,
-	mapDispatchToProps
+	mapStateToProps
 )(injectIntl(EktefelleDetaljer));

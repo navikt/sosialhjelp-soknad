@@ -6,7 +6,7 @@ import { hentTelefonnummerAction, oppdaterTelefonnummerAction, Telefonnummer } f
 import { State } from "../../../redux/reducers";
 import { ValideringActionKey, Valideringsfeil } from "../../../../nav-soknad/validering/types";
 import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
-import { oppdaterSoknadsdataAction } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { oppdaterSoknadsdataState } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { connect } from "react-redux";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
@@ -171,7 +171,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 		dispatch(oppdaterTelefonnummerAction(brukerBehandlingId, telefonnummer));
 	},
 	oppdaterSoknadsdata: (data: any) => {
-		dispatch(oppdaterSoknadsdataAction(data))
+		dispatch(oppdaterSoknadsdataState(data))
 	},
 	nullstillValideringsfeil: (faktumKey: string) => {
 		dispatch(setFaktumValideringsfeil(null, faktumKey));
