@@ -417,12 +417,12 @@ class MockBruker extends React.Component<Props,StateProps> {
 
 					{ !this.state.loading &&
 					<div>
-						<button onClick={() => this.start()} className="mock-egendefinert-GO">GO!</button>
+						<button onClick={() => this.start()} className="mock-egendefinert-GO">Start testen</button>
 					</div>
 					}
 					{ this.state.loading &&
 					<div>
-						<button className="mock-egendefinert-GO-loading">GO!</button>
+						<button className="mock-egendefinert-GO-loading">Start testen</button>
 						<NavFrontendSpinner type="XS" />
 					</div>
 					}
