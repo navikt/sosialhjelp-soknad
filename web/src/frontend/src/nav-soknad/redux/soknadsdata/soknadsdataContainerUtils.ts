@@ -22,7 +22,25 @@ export interface SoknadsdataContainerProps {
 	oppdaterSoknadsdataState?: (soknadsdata: SoknadsdataActionVerdi) => void;
 }
 
-// Hvis valideringsfeil er endret, eksekver callback. For å unngå at valideringsfeil dispatches uten grunn:
+export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerProps>(
+	(state: State) => ({
+		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
+		soknadsdata: state.soknadsdata,
+		feil: state.validering.feil
+	}),
+	{
+		hentSoknadsdata,
+		lagreSoknadsdata,
+		oppdaterSoknadsdataState,
+		setValideringsfeil
+	}
+);
+
+/*
+ * Utilities
+ */
+
+// Hvis valideringsfeil er endret, eksekver callback. For å unngå at valideringsfeil dispatches uten grunn.
 export const onEndretValideringsfeil = (
 	nyFeilkode: ValideringActionKey,
 	faktumKey: string,
@@ -40,17 +58,3 @@ export const onEndretValideringsfeil = (
 		callback();
 	}
 };
-
-export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerProps>(
-	(state: State) => ({
-		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
-		soknadsdata: state.soknadsdata,
-		feil: state.validering.feil
-	}),
-	{
-		hentSoknadsdata,
-		lagreSoknadsdata,
-		oppdaterSoknadsdataState,
-		setValideringsfeil
-	}
-);

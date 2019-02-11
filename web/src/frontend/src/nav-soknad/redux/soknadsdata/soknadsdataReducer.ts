@@ -3,7 +3,6 @@ import {
 	initialKontonummerState, Kontonummer
 } from "../../../digisos/skjema/personopplysninger/bankinfo/KontonummerType";
 import { Begrunnelse, initialBegrunnelseState } from "../../../digisos/skjema/begrunnelse_ny/begrunnelseTypes";
-import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningActions";
 import {
 	initialTelefonnummerState,
 	Telefonnummer
@@ -13,6 +12,7 @@ import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdann
 import {
 	Familie, initialFamilieStatus,
 } from "../../../digisos/skjema/familie/sivilstatus/FamilieTypes";
+import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER"
@@ -21,7 +21,8 @@ export enum SoknadsdataActionTypeKeys {
 // Sti brukes både til url og datasti under soknadsdata i redux:
 export enum SoknadsSti {
 	BEGRUNNELSE = "begrunnelse",
-	BANKINFORMASJON = "personalia/kontonummer"
+	BANKINFORMASJON = "personalia/kontonummer",
+	UTDANNING = "utdanning"
 }
 
 export interface Personalia {

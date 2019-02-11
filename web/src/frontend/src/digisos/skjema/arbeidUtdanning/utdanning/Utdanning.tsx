@@ -1,59 +1,44 @@
 import * as React from "react";
-import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
-import { State } from "../../../redux/reducers";
-import { Utdanning as UtdanningType} from "./utdanningActions";
-import { Valideringsfeil } from "../../../../nav-soknad/validering/types";
-import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
-import { oppdaterSoknadsdataState } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import { connect } from "react-redux";
-import { hentUtdanningAction, oppdaterUtdanningAction } from "./utdanningActions";
+import {
+	connectSoknadsdataContainer,
+	SoknadsdataContainerProps
+} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
 const FAKTUM_STUDIER = "dinsituasjon.studerer";
 const FAKTUM_STUDERER = "dinsituasjon.studerer.true.grad";
 
-interface OwnProps {
-	brukerBehandlingId?: string;
-	utdanning?: null | UtdanningType;
-	hentUtdanning?: (brukerBehandlingId: string) => void;
-	oppdaterUtdanning?: (brukerBehandlingId: string, Utdanning: UtdanningType) => void;
-	nullstillValideringsfeil?: (faktumKey: string) => void;
-	setFaktumValideringsfeil?: (valideringsfeil: Valideringsfeil, faktumKey: string) => void;
-	oppdaterSoknadsdata?: (verdi: any) => void;
-	feil?: any;
-	
-}
-
-type Props = OwnProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps  & InjectedIntlProps;
 
 class UtdanningView extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
-		this.props.hentUtdanning(this.props.brukerBehandlingId);
+		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.UTDANNING);
 	}
 
 	handleClickJaNeiSpsm(verdi: boolean) {
-		const utdanning: UtdanningType = {
-			erStudent: verdi,
-			studengradErHeltid: this.props.utdanning.studengradErHeltid
-			// studengradErHeltid: verdi === false ? null : this.props.utdanning.studengradErHeltid // Nullstille?
-		};
-		this.props.oppdaterUtdanning(this.props.brukerBehandlingId, utdanning);
+		const {brukerBehandlingId, soknadsdata} = this.props;
+		const utdanning = soknadsdata.utdanning;
+		utdanning.erStudent = verdi;
+		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTDANNING, utdanning);
 	}
 
 	handleClickHeltidDeltid(verdi: boolean) {
-		const utdanning: UtdanningType = {
-			erStudent: this.props.utdanning.erStudent,
-			studengradErHeltid: verdi
-		};
-		this.props.oppdaterUtdanning(this.props.brukerBehandlingId, utdanning);
+		const {brukerBehandlingId, soknadsdata} = this.props;
+		const utdanning = soknadsdata.utdanning;
+		utdanning.studengradErHeltid = verdi;
+		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTDANNING, utdanning);
 	}
 
 	render() {
-		const {erStudent, studengradErHeltid} = this.props.utdanning;
+		const {soknadsdata} = this.props;
+		const utdanning = soknadsdata.utdanning;
+		const {erStudent, studengradErHeltid} = utdanning;
 		return (
 			<div style={{ border: "3px dotted red", display: "block" }}>
 				<JaNeiSporsmal
@@ -61,6 +46,7 @@ class UtdanningView extends React.Component<Props, {}> {
 					faktumKey={FAKTUM_STUDIER}
 					verdi={erStudent}
 					onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
+					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 				>
 					<Sporsmal
 						tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_STUDERER)}
@@ -88,33 +74,4 @@ class UtdanningView extends React.Component<Props, {}> {
 	}
 }
 
-const mapStateToProps = (state: State) => ({
-	brukerBehandlingId: state.soknad.data.brukerBehandlingId,
-	feil: state.validering.feil,
-	utdanning: state.soknadsdata.utdanning
-});
-
-const mapDispatchToProps = (dispatch: any) => ({
-	hentUtdanning: (brukerBehandlingId: string) => {
-		dispatch(hentUtdanningAction(brukerBehandlingId))
-	},
-	setFaktumValideringsfeil: (valideringsfeil: Valideringsfeil, faktumKey: string) => {
-		dispatch(setFaktumValideringsfeil(valideringsfeil, faktumKey))
-	},
-	oppdaterUtdanning: (brukerBehandlingId: string, Utdanning: UtdanningType) => {
-		dispatch(oppdaterUtdanningAction(brukerBehandlingId, Utdanning));
-	},
-	oppdaterSoknadsdata: (data: any) => {
-		dispatch(oppdaterSoknadsdataState(data))
-	},
-	nullstillValideringsfeil: (faktumKey: string) => {
-		dispatch(setFaktumValideringsfeil(null, faktumKey));
-	}
-});
-
-export {UtdanningView};
-
-export default connect<{}, {}, OwnProps>(
-	mapStateToProps,
-	mapDispatchToProps
-)(injectIntl(UtdanningView));
+export default connectSoknadsdataContainer(injectIntl(UtdanningView));
