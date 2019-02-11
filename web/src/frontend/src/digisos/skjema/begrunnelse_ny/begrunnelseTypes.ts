@@ -8,4 +8,4 @@ export const initialBegrunnelseState: Begrunnelse = {
 	hvorforSoke: ""
 };
 
-export const BEGRUNNELSE_STI = "begrunnelse";
+// export const BEGRUNNELSE_STI = "begrunnelse";

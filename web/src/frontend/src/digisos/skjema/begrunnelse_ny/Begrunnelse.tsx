@@ -10,7 +10,7 @@ import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
 
 import { setPath } from "../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
 import {
-	connectSoknadsdataContainer,
+	connectSoknadsdataContainer, onEndretValideringsfeil,
 	SoknadsdataContainerProps
 } from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
@@ -28,12 +28,13 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 	componentDidMount(): void {
 		this.props.setValideringsfeil(null, FAKTUM_KEY_HVA);
 		this.props.setValideringsfeil(null, FAKTUM_KEY_HVORFOR);
+
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BEGRUNNELSE);
 	}
 
 	onChange(value: string, key: string) {
 		const { soknadsdata } = this.props;
-		this.props.oppdaterSoknadsdataState(setPath(soknadsdata, `begrunnelse/${key}`, value))
+		this.props.oppdaterSoknadsdataState(setPath(soknadsdata, `${SoknadsSti.BEGRUNNELSE}/${key}`, value))
 	}
 
 	lagreHvisGyldig() {
@@ -50,7 +51,9 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 
 	validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
 		const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
-		this.props.setValideringsfeil(feilkode, faktumKey);
+		onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
+			this.props.setValideringsfeil(feilkode, faktumKey);
+		});
 		return feilkode;
 	}
 
