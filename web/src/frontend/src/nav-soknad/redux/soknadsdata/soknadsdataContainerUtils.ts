@@ -5,13 +5,14 @@ import { hentSoknadsdata, lagreSoknadsdata } from "./soknadsdataActions";
 import { setValideringsfeil } from "../valideringActions";
 import { oppdaterSoknadsdataState, Soknadsdata, SoknadsdataActionVerdi, SoknadsdataType } from "./soknadsdataReducer";
 
-// Properties og redux koblinger som brukes for å lese og endre søknadsdata
+/*
+ * Properties og redux koblinger som er felles for komponenter i søknadsskjemaet.
+ */
 
 export interface SoknadsdataContainerProps {
 	// Props:
 	soknadsdata?: null | Soknadsdata;
 	brukerBehandlingId?: string;
-	// feil?: ValideringState;
 	feil?: Valideringsfeil[];
 
 	// Funksjoner:
@@ -21,11 +22,15 @@ export interface SoknadsdataContainerProps {
 	oppdaterSoknadsdataState?: (soknadsdata: SoknadsdataActionVerdi) => void;
 }
 
-// Dispatch ny endring av valideringsfeil hvis nødvending
-// Dispatch ny endring av valideringsfeil hvis nødvending
-export const onEndretValideringsfeil = (nyFeilkode: ValideringActionKey, faktumKey: string, feil: Valideringsfeil[], callback: () => void) => {
+// Hvis valideringsfeil er endret, eksekver callback. For å unngå at valideringsfeil dispatches uten grunn:
+export const onEndretValideringsfeil = (
+	nyFeilkode: ValideringActionKey,
+	faktumKey: string,
+	feil: Valideringsfeil[],
+	callback: () => void) =>
+{
 	let eksisterendeFeil: Valideringsfeil;
-	if ( feil ) {
+	if (feil) {
 		eksisterendeFeil = feil.find((valideringsfeil: Valideringsfeil) =>
 			valideringsfeil.faktumKey === faktumKey);
 	}
@@ -33,7 +38,6 @@ export const onEndretValideringsfeil = (nyFeilkode: ValideringActionKey, faktumK
 		eksisterendeFeil.feilkode : undefined;
 	if (eksisterendeFeilkode !== nyFeilkode) {
 		callback();
-		// this.props.setValideringsfeil(nyFeilkode, faktumKey);
 	}
 };
 
