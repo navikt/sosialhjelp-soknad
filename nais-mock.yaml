@@ -10,7 +10,7 @@ spec:
   port: 8080
   ingresses:
   - "https://sosialhjelp-test.nais.io/soknad"
-  - "https://sosialhjelp-test.dev-sbs.nais.io"
+  - "https://sosialhjelp-test.dev-sbs.nais.io/soknad"
   prometheus:
     enabled: true
     path: /prometheus
