@@ -1,94 +1,61 @@
 import * as React from "react";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
-import { connect } from "react-redux";
-import { ValideringActionKey, Valideringsfeil } from "../../../../nav-soknad/validering/types";
+import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
 import Sporsmal  from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { State } from "../../../redux/reducers";
-import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
-import {
-	oppdaterSoknadsdataState,
-	SoknadsdataType
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
-import { Arbeid, Arbeidsforhold, hentArbeidAction, oppdaterArbeidAction } from "./arbeidActions";
 import ArbeidDetaljer from "./ArbeidDetaljer";
-import { Feil } from "nav-frontend-skjema";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import { maksLengde } from "../../../../nav-soknad/validering/valideringer";
+import {
+	connectSoknadsdataContainer, onEndretValideringsfeil,
+	SoknadsdataContainerProps
+} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { Arbeidsforhold } from "./arbeidTypes";
 
-interface OwnProps {
-	brukerBehandlingId?: string;
-	arbeid?: Arbeid;
-	hentArbeid?: (brukerBehandlingId: string) => void;
-	oppdaterArbeid?: (brukerBehandlingId: string, SoknadsdataType: Arbeid) => void;
-	setFaktumValideringsfeil?: (valideringsfeil: Valideringsfeil, faktumKey: string) => void;
-	nullstillValideringsfeil?: (faktumKey: string) => void;
-	feil?: any;
-}
-
-interface OwnState {
-	kommentarTilArbeidsforhold: null | string;
-}
-
-type Props = OwnProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 const MAX_CHARS = 500;
-
 const FAKTUM_KEY_KOMMENTARER = "opplysninger.arbeidsituasjon.kommentarer";
 
-class ArbeidView extends React.Component<Props, OwnState> {
-
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-			kommentarTilArbeidsforhold: ""
-		}
-	}
+class ArbeidView extends React.Component<Props, {}> {
 
 	componentDidMount() {
-		this.props.hentArbeid(this.props.brukerBehandlingId);
-		this.props.nullstillValideringsfeil(FAKTUM_KEY_KOMMENTARER);
-	}
-
-	componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<OwnState>, snapshot?: any): void {
-		if (this.props.arbeid.kommentarTilArbeidsforhold !== prevProps.arbeid.kommentarTilArbeidsforhold) {
-			this.setState({kommentarTilArbeidsforhold: this.props.arbeid.kommentarTilArbeidsforhold});
-		}
-	}
-
-	getFeil(faktumKey: string): Feil {
-		const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey);
-		return !feilkode ? null : { feilmelding: this.props.intl.formatHTMLMessage({ id: feilkode.feilkode }) };
+		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ARBEID);
+		this.props.setValideringsfeil(null, FAKTUM_KEY_KOMMENTARER);
 	}
 
 	onChange(verdi: string) {
-		this.setState({kommentarTilArbeidsforhold: verdi});
+		const { soknadsdata } = this.props;
+		const arbeid = soknadsdata.arbeid;
+		arbeid.kommentarTilArbeidsforhold = verdi;
+		this.props.oppdaterSoknadsdataState(soknadsdata);
 	}
 
 	lagreHvisGyldig() {
-		const { kommentarTilArbeidsforhold } = this.state;
-		const feilmeldingKommentar: ValideringActionKey = this.validerTekstfeltVerdi(kommentarTilArbeidsforhold, FAKTUM_KEY_KOMMENTARER);
-		if (!feilmeldingKommentar) {
-			this.props.oppdaterArbeid(this.props.brukerBehandlingId, {kommentarTilArbeidsforhold});
+		const { soknadsdata, brukerBehandlingId } = this.props;
+		const arbeid = soknadsdata.arbeid;
+		const kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
+		const feilkode: ValideringActionKey = this.validerTekstfeltVerdi(kommentarTilArbeidsforhold, FAKTUM_KEY_KOMMENTARER);
+		if (!feilkode) {
+			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ARBEID, arbeid);
 		}
 	}
 
 	validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
 		const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
-		if (feilkode) {
-			const valideringsfeil: Valideringsfeil = {faktumKey,feilkode};
-			this.props.setFaktumValideringsfeil(valideringsfeil, faktumKey);
-		} else {
-			this.props.nullstillValideringsfeil(faktumKey);
-		}
+		onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
+			this.props.setValideringsfeil(feilkode, faktumKey);
+		});
 		return feilkode;
 	}
 
 	render() {
-		const { arbeid, intl } = this.props;
+		const { soknadsdata, intl } = this.props;
+		const arbeid = soknadsdata.arbeid;
 		const alleArbeidsforhold = arbeid ? arbeid.arbeidsforhold : null;
-
+		const kommentarTilArbeidsforhold = arbeid && arbeid.kommentarTilArbeidsforhold ? arbeid.kommentarTilArbeidsforhold : "";
 		return (
 			<div style={{ border: "3px dotted red", display: "block" }}>
 				<Sporsmal
@@ -106,7 +73,7 @@ class ArbeidView extends React.Component<Props, OwnState> {
 						)}
 						{alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
 							<ul className={"arbeidsgiverliste"}>
-								{alleArbeidsforhold.map((arbeidsforhold: Arbeidsforhold, index) =>
+								{alleArbeidsforhold.map((arbeidsforhold: Arbeidsforhold, index: any) =>
 									<li key={index} className="arbeidsgiverliste__arbeidsgiver">
 										<ArbeidDetaljer arbeidsforhold={arbeidsforhold} />
 									</li>
@@ -123,9 +90,7 @@ class ArbeidView extends React.Component<Props, OwnState> {
 							faktumKey={FAKTUM_KEY_KOMMENTARER}
 							labelId={FAKTUM_KEY_KOMMENTARER + ".label"}
 							maxLength={MAX_CHARS}
-							value={this.state.kommentarTilArbeidsforhold}
-							getFeil={() => this.getFeil(FAKTUM_KEY_KOMMENTARER)}
-							getName={() => FAKTUM_KEY_KOMMENTARER}
+							value={kommentarTilArbeidsforhold}
 						/>
 					</SysteminfoMedSkjema>
 				</Sporsmal>
@@ -134,33 +99,6 @@ class ArbeidView extends React.Component<Props, OwnState> {
 	}
 }
 
-const mapStateToProps = (state: State) => ({
-	brukerBehandlingId: state.soknad.data.brukerBehandlingId,
-	feil: state.validering.feil,
-	arbeid: state.soknadsdata.arbeid
-});
-
-const mapDispatchToProps = (dispatch: any) => ({
-	hentArbeid: (brukerBehandlingId: string) => {
-		dispatch(hentArbeidAction(brukerBehandlingId))
-	},
-	setFaktumValideringsfeil: (valideringsfeil: Valideringsfeil, faktumKey: string) => {
-		dispatch(setFaktumValideringsfeil(valideringsfeil, faktumKey))
-	},
-	oppdaterArbeid: (brukerBehandlingId: string, arbeid: SoknadsdataType) => {
-		dispatch(oppdaterArbeidAction(brukerBehandlingId, arbeid));
-	},
-	oppdaterSoknadsdata: (data: any) => {
-		dispatch(oppdaterSoknadsdataState(data))
-	},
-	nullstillValideringsfeil: (faktumKey: string) => {
-		dispatch(setFaktumValideringsfeil(null, faktumKey));
-	}
-});
-
 export {ArbeidView};
 
-export default connect<{}, {}, OwnProps>(
-	mapStateToProps,
-	mapDispatchToProps
-)(injectIntl(ArbeidView));
+export default connectSoknadsdataContainer(injectIntl(ArbeidView));

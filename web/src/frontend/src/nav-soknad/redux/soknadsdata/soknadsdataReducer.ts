@@ -8,20 +8,25 @@ import {
 	Telefonnummer
 } from "../../../digisos/skjema/personopplysninger/telefon/telefonActions";
 import { Bosituasjon, initialBosituasjonState } from "../../../digisos/skjema/bosituasjon_ny/bosituasjonActions";
-import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidActions";
 import {
 	Familie, initialFamilieStatus,
 } from "../../../digisos/skjema/familie/sivilstatus/FamilieTypes";
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
+import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER"
 }
 
-// Sti brukes både til url og datasti under soknadsdata i redux:
+/*
+ * Sti for REST endepunkter og redux state datastruktur:
+ * Eksempel: Kontonummer hentes fra REST endepunktet "http://..../123/personalia/kontonummer"
+ * og legges på redux state state.soknadsdata.personalia.kontonummer
+ */
 export enum SoknadsSti {
-	BEGRUNNELSE = "begrunnelse",
+	ARBEID = "arbeid",
 	BANKINFORMASJON = "personalia/kontonummer",
+	BEGRUNNELSE = "begrunnelse",
 	UTDANNING = "utdanning"
 }
 
@@ -32,18 +37,6 @@ export interface Personalia {
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState
 };
-
-// TODO Denne og interfacet under er duplikat...
-export interface SoknadsdataState {
-	// bankinformasjon: Bankinformasjon;
-	personalia: Personalia;
-	begrunnelse: Begrunnelse;
-	utdanning: Utdanning;
-	telefonnummer: Telefonnummer;
-	bosituasjon: Bosituasjon;
-	arbeid: Arbeid;
-	familie: Familie;
-}
 
 export interface Soknadsdata {
 	personalia: Personalia;
@@ -79,7 +72,7 @@ interface SoknadsdataActionType {
 	verdi: SoknadsdataActionVerdi
 }
 
-export const initialSoknadsdataState: SoknadsdataState = {
+export const initialSoknadsdataState: Soknadsdata = {
 	personalia: initialPersonaliaState,
 	begrunnelse: initialBegrunnelseState,
 	utdanning: initialUtdanningState,

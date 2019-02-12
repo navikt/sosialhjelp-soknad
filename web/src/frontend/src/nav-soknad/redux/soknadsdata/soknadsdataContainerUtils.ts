@@ -40,7 +40,7 @@ export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerP
  * Utilities
  */
 
-// Hvis valideringsfeil er endret, eksekver callback. For å unngå at valideringsfeil dispatches uten grunn.
+// For å unngå til at man dispatcher samme identiske feilmelding flere ganger, kan denne funksjonen brukes:
 export const onEndretValideringsfeil = (
 	nyFeilkode: ValideringActionKey,
 	faktumKey: string,

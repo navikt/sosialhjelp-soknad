@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
-import { Arbeidsforhold } from "./arbeidActions";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
+import { Arbeidsforhold } from "./arbeidTypes";
 
 const ArbeidDetaljer: React.FunctionComponent<{ arbeidsforhold: Arbeidsforhold }> = ({ arbeidsforhold }) => {
 	const { arbeidsgivernavn, stillingsprosent, stillingstypeErHeltid, fom, tom } = arbeidsforhold;

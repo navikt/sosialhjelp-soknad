@@ -15,15 +15,13 @@ import { OppholdsAdresseState } from "../../digisos/skjema/personopplysninger/tp
 import {
 	AdresseAutocompleteState
 } from "../components/adresseAutocomplete/adresseAutocompleteReducer";
-import { SoknadsdataState } from "./soknadsdata/soknadsdataReducer";
+import { Soknadsdata } from "./soknadsdata/soknadsdataReducer";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
 
 export type Dispatch = (action: any) => Promise<any>;
-
 export type SoknadDispatch<AT> = (action: AT) => void;
-
 export type Reducer<S, AT> = (state: S, action: AT) => S;
 
 export interface DispatchProps {
@@ -44,7 +42,7 @@ export interface SoknadAppState {
 	ettersendelse: EttersendelseState;
 	oppholdsadresse: OppholdsAdresseState;
 	adresseAutocomplete: AdresseAutocompleteState;
-	soknadsdata: SoknadsdataState;
+	soknadsdata: Soknadsdata;
 	init: InitState;
 }
 
