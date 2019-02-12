@@ -80,7 +80,6 @@ class Bankinformasjon extends React.Component<Props, {}> {
 			kontonummer.systemverdi === null ||
 			kontonummer.brukerdefinert === true
 		);
-
 		const infotekst = intl.formatMessage({ id: "kontakt.kontonummer.infotekst.tekst" });
 		let endreLabel = intl.formatMessage({id: "kontakt.system.kontonummer.endreknapp.label"});
 		let avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
@@ -88,6 +87,12 @@ class Bankinformasjon extends React.Component<Props, {}> {
 			endreLabel = null;
 			avbrytLabel = null;
 		}
+
+		const harIkkeKonto: boolean = (kontonummer && kontonummer.harIkkeKonto) ? true : false;
+		const kontonummerVerdi: string = (kontonummer && kontonummer.verdi && harIkkeKonto === false) ?
+			kontonummer.verdi : "";
+
+
 		return (
 			<div style={{ border: "3px dotted red", display: "block" }}>
 				<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
@@ -100,31 +105,26 @@ class Bankinformasjon extends React.Component<Props, {}> {
 						skjema={(
 							<div>
 								<InputEnhanced
-									faktumKey="kontakt.kontnumer"
+									faktumKey="kontakt.kontonummer"
 									id="bankinfo_konto"
 									className={"input--xxl faktumInput "}
-									inputRef={c => (this.kontonummerInput = c)} // For å få sett fokus ved feil???
-									// autoComplete="off"
-									// disabled={kontonummer.harIkkeKonto ? true : false} // TODO Denne må tilbake
-									verdi={kontonummer.verdi ? kontonummer.verdi : ""}
+									inputRef={c => (this.kontonummerInput = c)}
+									disabled={harIkkeKonto}
+									verdi={kontonummerVerdi}
 									required={false}
 									onChange={(evt: any) => this.onChangeInput(evt.target.value)}
 									onBlur={() => this.lagreDersomGyldig()}
-									// label={intl.formatHTMLMessage({ id: "kontakt.kontonummer.label" })}
 									maxLength={13}
 									bredde={"S"}
-									// noValidate={
-									// 	true /* Unngå at nettleser validerer og evt. fjerner verdien */
-									// }
 								/>
 								<div
-									className={"inputPanel " + (kontonummer.harIkkeKonto ? " inputPanel__checked" : " ")}
+									className={"inputPanel " + (harIkkeKonto ? " inputPanel__checked" : " ")}
 									onClick={(event: any) => this.onChangeCheckboks(event)}
 								>
 									<Checkbox
 										id="kontakt_kontonummer_har_ikke_checkbox"
 										name="kontakt_kontonummer_har_ikke_checkbox"
-										checked={kontonummer.harIkkeKonto ? true : false}
+										checked={harIkkeKonto}
 										onChange={(event: any) => this.onChangeCheckboks(event)}
 										label={
 											<div>

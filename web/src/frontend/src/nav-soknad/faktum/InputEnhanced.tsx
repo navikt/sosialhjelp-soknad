@@ -64,11 +64,8 @@ class InputEnhanced extends React.Component<Props, {}> {
 			<Input
 				id={id}
 				className={"input--xxl faktumInput  " + (this.props.className ? this.props.className : "") }
-				inputRef={(c: any) => {
-					console.warn("todo inputRef");
-				}
-					// this.props.inputRef ? this.props.inputRef(c) : null} // DENNE MÅ PÅ PLASS
-				}
+				inputRef={(c: any) =>
+					this.props.inputRef ? this.props.inputRef(c) : null}
 				type={type}
 				autoComplete="off"
 				name={this.getName()}

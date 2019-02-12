@@ -37,7 +37,7 @@ class ArbeidView extends React.Component<Props, {}> {
 		const { soknadsdata, brukerBehandlingId } = this.props;
 		const arbeid = soknadsdata.arbeid;
 		const kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
-		const feilkode: ValideringActionKey = this.validerTekstfeltVerdi(kommentarTilArbeidsforhold, FAKTUM_KEY_KOMMENTARER);
+		const feilkode = this.validerTekstfeltVerdi(kommentarTilArbeidsforhold, FAKTUM_KEY_KOMMENTARER);
 		if (!feilkode) {
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ARBEID, arbeid);
 		}
@@ -54,8 +54,16 @@ class ArbeidView extends React.Component<Props, {}> {
 	render() {
 		const { soknadsdata, intl } = this.props;
 		const arbeid = soknadsdata.arbeid;
-		const alleArbeidsforhold = arbeid ? arbeid.arbeidsforhold : null;
-		const kommentarTilArbeidsforhold = arbeid && arbeid.kommentarTilArbeidsforhold ? arbeid.kommentarTilArbeidsforhold : "";
+		let alleArbeidsforhold: Arbeidsforhold[] = null;
+		let kommentarTilArbeidsforhold = "";
+		if (arbeid) {
+			if (arbeid.kommentarTilArbeidsforhold) {
+				kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
+			}
+			if (arbeid.arbeidsforhold) {
+				alleArbeidsforhold = arbeid.arbeidsforhold;
+			}
+		}
 		return (
 			<div style={{ border: "3px dotted red", display: "block" }}>
 				<Sporsmal
