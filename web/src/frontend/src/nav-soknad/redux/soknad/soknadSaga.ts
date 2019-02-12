@@ -4,9 +4,9 @@ import {
 	fetchDelete,
 	fetchKvittering,
 	fetchPost,
-	fetchToJson
+	fetchToJson, getApiBaseUrl
 } from "../../utils/rest-utils";
-import { finnFaktum, oppdaterFaktumMedVerdier } from "../../utils";
+import {erMockMiljoEllerDev, finnFaktum, oppdaterFaktumMedVerdier} from "../../utils";
 import { updateFaktaMedLagretVerdi } from "../fakta/faktaUtils";
 import {
 	HentKvitteringAction,
@@ -144,6 +144,13 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
 			`soknader/${action.brukerBehandlingId}/actions/send`,
 			JSON.stringify({ behandlingsId: action.brukerBehandlingId })
 		);
+
+		if (erMockMiljoEllerDev()) {
+			window.open(getApiBaseUrl()
+				+ "/internal/mock/tjeneste/downloadzip/"
+				+ action.brukerBehandlingId);
+		}
+
 		yield put(sendSoknadOk(action.brukerBehandlingId));
 		yield put(navigerTilKvittering(action.brukerBehandlingId));
 	} catch (reason) {

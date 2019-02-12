@@ -12,6 +12,14 @@ export function erDev(): boolean {
 	return (url.indexOf("localhost:3000") > 0 || url.indexOf("devillo.no:3000") > 0);
 }
 
+export function erMockMiljoEllerDev(): boolean {
+	const url = window.location.href;
+	if (erDev()){
+		return true;
+	}
+	return (url.indexOf("sosialhjelp-test.dev-sbs.nais.io") > 0 || url.indexOf("soknadsosialhjelp-t1.nais.oera") > 0);
+}
+
 export const now = (): number => {
 	return new Date().getTime();
 };
