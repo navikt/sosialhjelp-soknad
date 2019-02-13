@@ -147,7 +147,7 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
 
 		if (erMockMiljoEllerDev()) {
 			window.open(getApiBaseUrl()
-				+ "/internal/mock/tjeneste/downloadzip/"
+				+ "internal/mock/tjeneste/downloadzip/"
 				+ action.brukerBehandlingId);
 		}
 
