@@ -39,6 +39,13 @@ class MockLogin extends React.Component<Props, State> {
 		})
 	}
 
+	keyPress(e: any){
+
+		if (e.key === "Enter"){
+			document.getElementById("login-button").click();
+		}
+	}
+
 	render() {
 		return (
 			<div className="mock-body">
@@ -48,10 +55,10 @@ class MockLogin extends React.Component<Props, State> {
 					</div>
 					<h2>Mock Login</h2>
 					<div>Velg en tilfeldig ID</div>
-					<input value={this.state.uid} onChange={(evt: any) => this.setState({uid: evt.target.value})}  />
+					<input onKeyPress={this.keyPress} value={this.state.uid} onChange={(evt: any) => this.setState({uid: evt.target.value})}  />
 					{ !this.state.loading &&
 					<div>
-						<button onClick={() => this.loginOgGaTilMockSide()} className="mock-egendefinert-GO">Login</button>
+						<button id="login-button" onClick={() => this.loginOgGaTilMockSide()} className="mock-egendefinert-GO">Login</button>
 					</div>
 					}
 					{ this.state.loading &&
