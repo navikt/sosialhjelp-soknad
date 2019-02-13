@@ -146,9 +146,9 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
 		);
 
 		if (erMockMiljoEllerDev()) {
-			window.open(getApiBaseUrl()
-				+ "internal/mock/tjeneste/downloadzip/"
-				+ action.brukerBehandlingId);
+			const url = getApiBaseUrl() + "internal/mock/tjeneste/downloadzip/" + action.brukerBehandlingId
+			window.open(url);
+			console.warn("PRØVER Å LASTE NED ZIP FILE HER I FRA: " + url);
 		}
 
 		yield put(sendSoknadOk(action.brukerBehandlingId));
