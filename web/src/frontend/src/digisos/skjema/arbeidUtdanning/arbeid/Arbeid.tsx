@@ -96,7 +96,6 @@ class ArbeidView extends React.Component<Props, {}> {
 							onChange={(evt: any) => this.onChange(evt.target.value)}
 							onBlur={() => this.lagreHvisGyldig()}
 							faktumKey={FAKTUM_KEY_KOMMENTARER}
-							labelId={FAKTUM_KEY_KOMMENTARER + ".label"}
 							maxLength={MAX_CHARS}
 							value={kommentarTilArbeidsforhold}
 						/>

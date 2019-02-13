@@ -1,4 +1,4 @@
-import { Familie, initialPerson, Person, SIVILSTATUS_STI, Status } from "./FamilieTypes";
+import { Familie, Person, SIVILSTATUS_STI, Status } from "./FamilieTypes";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import * as React from "react";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -51,40 +51,41 @@ class SivilstatusComponent extends React.Component<Props, {}> {
 	}
 
 	onClickSivilstatus(verdi: Status) {
-		const { brukerBehandlingId } = this.props;
+		// const { brukerBehandlingId } = this.props;
 		const sivilstatus = this.props.soknadsdata.familie.sivilstatus;
 		console.warn("sivilstatus før oppdatering: ");
 		console.warn(JSON.stringify(sivilstatus, null, 4));
 
-		sivilstatus.sivilstatus = verdi;
-		if (verdi === Status.GIFT && sivilstatus.ektefelle === null) {
-			sivilstatus.ektefelle = initialPerson;
-			console.warn(JSON.stringify(sivilstatus, null, 4));
-		}
-		this.props.oppdaterSoknadsdataState({
-			familie: { sivilstatus }
-		});
-		// this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
-		this.props.lagreSoknadsdata(brukerBehandlingId, SIVILSTATUS_STI, this.props.soknadsdata.familie);
+		// sivilstatus.sivilstatus = verdi;
+		// if (verdi === Status.GIFT && sivilstatus.ektefelle === null) {
+		// 	sivilstatus.ektefelle = initialPerson;
+		// 	console.warn(JSON.stringify(sivilstatus, null, 4));
+		// }
+		// this.props.oppdaterSoknadsdataState({
+		// 	familie: { sivilstatus }
+		// });
+		// // this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
+		// this.props.lagreSoknadsdata(brukerBehandlingId, SIVILSTATUS_STI, this.props.soknadsdata.familie);
 	}
 
 	onClickBorSammen(verdi: boolean) {
 		const { brukerBehandlingId } = this.props;
 		const sivilstatus = this.props.soknadsdata.familie.sivilstatus;
+		console.warn(brukerBehandlingId + JSON.stringify(sivilstatus, null, 4));
 		// const sivilstatus = {...this.props.sivilstatus};
-		sivilstatus.borSammenMed = verdi;
-		this.props.oppdaterSoknadsdataState({
-			familie: { sivilstatus }
-		});
-		this.props.lagreSoknadsdata(brukerBehandlingId, SIVILSTATUS_STI, this.props.soknadsdata.familie);
-		// this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
+		// sivilstatus.borSammenMed = verdi;
+		// this.props.oppdaterSoknadsdataState({
+		// 	familie: { sivilstatus }
+		// });
+		// this.props.lagreSoknadsdata(brukerBehandlingId, SIVILSTATUS_STI, this.props.soknadsdata.familie);
+		// // this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
 	}
 
 	render() {
 		const familie: Familie = this.props.soknadsdata.familie;
 		const sivilstatus = (familie && familie.sivilstatus) ? familie.sivilstatus.sivilstatus : null;
 		// const borSammenMed = this.props.sivilstatus ? this.props.sivilstatus.borSammenMed : null;
-		const borSammenMed = familie ? familie.sivilstatus.borSammenMed : null;
+		const borSammenMed = familie && familie.sivilstatus && familie.sivilstatus.ektefelle ? familie.sivilstatus.ektefelle.borSammenMed : null;
 
 		return (
 			<div style={{ border: "3px dotted red", display: "block" }}>

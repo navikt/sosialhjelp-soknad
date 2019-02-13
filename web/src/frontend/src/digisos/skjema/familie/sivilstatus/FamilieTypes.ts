@@ -19,7 +19,8 @@ export interface Navn {
 export interface Person {
 	navn: Navn;
 	fodselsdato: null | string;
-	personIdentifikator: string;
+	personnummer: string;
+	borSammenMed?: boolean;
 }
 
 export interface Sivilstatus {
@@ -28,7 +29,6 @@ export interface Sivilstatus {
 	ektefelle?: Person;
 	ektefelleHarDiskresjonskode?: boolean;
 	folkeregistrertMedEktefelle?: boolean;
-	borSammenMed?: boolean;
 }
 
 export interface Familie {
@@ -52,5 +52,5 @@ export const initialPerson: Person = {
 		fulltNavn: null
 	},
 	fodselsdato: null,
-	personIdentifikator: null
+	personnummer: null
 };

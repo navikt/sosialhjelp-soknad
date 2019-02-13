@@ -28,7 +28,6 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 	componentDidMount(): void {
 		this.props.setValideringsfeil(null, FAKTUM_KEY_HVA);
 		this.props.setValideringsfeil(null, FAKTUM_KEY_HVORFOR);
-
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BEGRUNNELSE);
 	}
 

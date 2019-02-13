@@ -4,16 +4,16 @@ import Sporsmal, { LegendTittleStyle } from "../../../nav-soknad/components/spor
 import { getFaktumSporsmalTekst } from "../../../nav-soknad/utils";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../nav-soknad/components/underskjema";
-import { Bosituasjon, hentBosituasjonAction, oppdaterBosituasjonAction } from "./bosituasjonActions";
-import { Valideringsfeil } from "../../../nav-soknad/validering/types";
-import { State } from "../../redux/reducers";
-import { setFaktumValideringsfeil } from "../../../nav-soknad/redux/valideringActions";
-import { oppdaterSoknadsdataState } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import { connect } from "react-redux";
-import { Feil } from "nav-frontend-skjema";
+import { Bosituasjon } from "./bosituasjonTypes";
+import { ValideringActionKey } from "../../../nav-soknad/validering/types";
+import { SoknadsSti } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import { erTall } from "../../../nav-soknad/validering/valideringer";
-import { lagValideringsfeil } from "../../../nav-soknad/validering/valideringFuncUtils";
+import {
+	connectSoknadsdataContainer, onEndretValideringsfeil,
+	SoknadsdataContainerProps
+} from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+import { setPath } from "../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -34,72 +34,33 @@ enum Annetvalg {
 	krisesenter = "annet.botype.krisesenter"
 }
 
-interface OwnProps {
-	brukerBehandlingId?: string;
-	bosituasjon?: Bosituasjon;
-	hentBosituasjon?: (brukerBehandlingId: string) => void;
-	oppdaterBosituasjon?: (brukerBehandlingId: string, bosituasjon: Bosituasjon) => void;
-	setFaktumValideringsfeil?: (valideringsfeil: Valideringsfeil, faktumKey: string) => void;
-	feil?: any;
-}
+type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
-interface OwnState {
-	valgtBosituasjon: null | string;
-	annetValg: null | string;
-	antallPersoner: null | string;
-}
-
-type Props = OwnProps & InjectedIntlProps;
-
-class BosituasjonView extends React.Component<Props, OwnState> {
-
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-			valgtBosituasjon: null,
-			annetValg: null,
-			antallPersoner: "",
-		}
-	}
+class BosituasjonView extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
-		this.props.hentBosituasjon(this.props.brukerBehandlingId);
-	}
-
-	componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<OwnState>, snapshot?: any): void {
-		const { bosituasjon } = this.props;
-		if (bosituasjon && bosituasjon.botype !== prevProps.bosituasjon.botype) {
-			const botype = bosituasjon.botype;
-			if (Bosituasjonsvalg[botype]) {
-				this.setState({valgtBosituasjon: botype});
-			}
-			if (Annetvalg[botype]) {
-				this.setState({
-					valgtBosituasjon: Bosituasjonsvalg.annet,
-					annetValg: "annet.botype." + botype});
-			}
-		}
-		if (bosituasjon && bosituasjon.antallPersoner !== prevProps.bosituasjon.antallPersoner) {
-			this.setState({antallPersoner: bosituasjon.antallPersoner});
-		}
+		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BOSITUASJON);
 	}
 
 	handleRadioClick(verdi: string): void {
 		const botype = verdi.replace("annet.botype.","");
-		const { brukerBehandlingId, bosituasjon } = this.props;
+		const { soknadsdata, brukerBehandlingId } = this.props;
+		const bosituasjon = soknadsdata.bosituasjon;
 		const antallPersoner = bosituasjon ? bosituasjon.antallPersoner: null;
 		const oppdatertBosituasjon: Bosituasjon = {botype, antallPersoner};
-		this.props.oppdaterBosituasjon(brukerBehandlingId, oppdatertBosituasjon);
-		if (Bosituasjonsvalg[verdi]) {
-			this.setState({valgtBosituasjon: verdi});
-		}
-		if(Annetvalg[botype]) {
-			this.setState({annetValg: verdi});
+		if (verdi === Bosituasjonsvalg.annet) {
+			const oppdaterteSoknadsdata = setPath(soknadsdata, `${SoknadsSti.BOSITUASJON}`, oppdatertBosituasjon);
+			this.props.oppdaterSoknadsdataState(oppdaterteSoknadsdata);
+		} else {
+			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, oppdatertBosituasjon);
 		}
 	}
 
 	erValgt(verdi: string): boolean {
-		return this.state.valgtBosituasjon === verdi || this.state.annetValg === verdi;
+		verdi = verdi.replace("annet.botype.","");
+		const { soknadsdata } = this.props;
+		const { botype } = soknadsdata.bosituasjon;
+		return botype === verdi;
 	}
 
 	renderRadioknapp(id: string) {
@@ -115,40 +76,37 @@ class BosituasjonView extends React.Component<Props, OwnState> {
 		/>);
 	}
 
-	getFeil(): Feil {
-		const intl = this.props.intl;
-		const faktumKey = FAKTUM_KEY_ANTALL;
-		const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey);
-		return !feilkode ? null : { feilmelding: intl.formatHTMLMessage({ id: feilkode.feilkode }) };
-	}
-
 	onBlurAntall() {
-		const { antallPersoner } = this.state;
+		const { brukerBehandlingId, soknadsdata } = this.props;
+		const { botype, antallPersoner } = soknadsdata.bosituasjon;
 		const valideringsfeil = this.validerAntallPersoner(antallPersoner);
-
 		if (!valideringsfeil) {
-			const { brukerBehandlingId, bosituasjon } = this.props;
-			const botype = bosituasjon.botype;
 			const oppdatertBosituasjon: Bosituasjon = {botype, antallPersoner};
-			this.props.oppdaterBosituasjon(brukerBehandlingId, oppdatertBosituasjon);
+			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, oppdatertBosituasjon);
 		}
 	}
 
 	validerAntallPersoner(antallPersoner: string | null) {
-		const valideringActionKey = erTall(antallPersoner, true);
-		const valideringsfeil: Valideringsfeil = lagValideringsfeil(valideringActionKey, FAKTUM_KEY_ANTALL);
-		this.props.setFaktumValideringsfeil(valideringsfeil, FAKTUM_KEY_ANTALL);
-		return valideringsfeil;
+		const feilkode: ValideringActionKey = erTall(antallPersoner, true);
+		onEndretValideringsfeil(feilkode, FAKTUM_KEY_ANTALL, this.props.feil, () => {
+			this.props.setValideringsfeil(feilkode, FAKTUM_KEY_ANTALL);
+		});
+		return feilkode;
 	}
 
 	onChangeAntall(verdi: string) {
-		this.setState({antallPersoner: verdi})
+		const { soknadsdata } = this.props;
+		const oppdaterteSoknadsdata = setPath(soknadsdata, `${SoknadsSti.BOSITUASJON}/antallPersoner`, verdi);
+		this.props.oppdaterSoknadsdataState(oppdaterteSoknadsdata);
 	}
 
 	render() {
-		const { bosituasjon } = this.props;
-		const synligUnderskjema: boolean = (this.erValgt(Bosituasjonsvalg.annet) ||
-			(bosituasjon && Annetvalg[bosituasjon.botype])) ? true : false;
+		const bosituasjon: Bosituasjon = this.props.soknadsdata.bosituasjon;
+		let synligUnderskjema: boolean = false;
+		if (this.erValgt(Bosituasjonsvalg.annet) || Annetvalg[bosituasjon.botype]) {
+			synligUnderskjema = true;
+		}
+		const antallPersoner = bosituasjon.antallPersoner ? bosituasjon.antallPersoner : "";
 		return (
 			<div style={{ border: "3px dotted red", display: "block" }}>
 				<Sporsmal
@@ -190,13 +148,12 @@ class BosituasjonView extends React.Component<Props, OwnState> {
 						pattern="\\d*"
 						bredde={"XS"}
 						className="skjemaelement__enLinje185bredde"
-						verdi={this.state.antallPersoner}
+						verdi={antallPersoner}
 						onChange={(verdi: string) => this.onChangeAntall(verdi)}
 						onBlur={() => this.onBlurAntall()}
 						getName={() => FAKTUM_KEY_ANTALL}
 						faktumKey={FAKTUM_KEY_ANTALL}
 						required={false}
-						getFeil={() => this.getFeil()}
 					/>
 				</Sporsmal>
 			</div>
@@ -205,33 +162,4 @@ class BosituasjonView extends React.Component<Props, OwnState> {
 
 }
 
-const mapStateToProps = (state: State) => ({
-	brukerBehandlingId: state.soknad.data.brukerBehandlingId,
-	feil: state.validering.feil,
-	bosituasjon: state.soknadsdata.bosituasjon
-});
-
-const mapDispatchToProps = (dispatch: any) => ({
-	hentBosituasjon: (brukerBehandlingId: string) => {
-		dispatch(hentBosituasjonAction(brukerBehandlingId))
-	},
-	setFaktumValideringsfeil: (valideringsfeil: Valideringsfeil, faktumKey: string) => {
-		dispatch(setFaktumValideringsfeil(valideringsfeil, faktumKey))
-	},
-	oppdaterBosituasjon: (brukerBehandlingId: string, bosituasjon: Bosituasjon) => {
-		dispatch(oppdaterBosituasjonAction(brukerBehandlingId, bosituasjon));
-	},
-	oppdaterSoknadsdata: (data: any) => {
-		dispatch(oppdaterSoknadsdataState(data))
-	},
-	nullstillValideringsfeil: (faktumKey: string) => {
-		dispatch(setFaktumValideringsfeil(null, faktumKey));
-	}
-});
-
-export {BosituasjonView};
-
-export default connect<{}, {}, OwnProps>(
-	mapStateToProps,
-	mapDispatchToProps
-)(injectIntl(BosituasjonView));
+export default connectSoknadsdataContainer(injectIntl(BosituasjonView));

@@ -7,7 +7,7 @@ import {
 	initialTelefonnummerState,
 	Telefonnummer
 } from "../../../digisos/skjema/personopplysninger/telefon/telefonActions";
-import { Bosituasjon, initialBosituasjonState } from "../../../digisos/skjema/bosituasjon_ny/bosituasjonActions";
+import { Bosituasjon, initialBosituasjonState } from "../../../digisos/skjema/bosituasjon_ny/bosituasjonTypes";
 import {
 	Familie, initialFamilieStatus,
 } from "../../../digisos/skjema/familie/sivilstatus/FamilieTypes";
@@ -27,7 +27,8 @@ export enum SoknadsSti {
 	ARBEID = "arbeid",
 	BANKINFORMASJON = "personalia/kontonummer",
 	BEGRUNNELSE = "begrunnelse",
-	UTDANNING = "utdanning"
+	UTDANNING = "utdanning",
+	BOSITUASJON = "bosituasjon"
 }
 
 export interface Personalia {

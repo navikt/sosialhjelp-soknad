@@ -94,8 +94,8 @@ class PersonSkjema extends React.Component<OwnProps, {}> {
 			if (person.fodselsdato) {
 				fodselsdato = person.fodselsdato;
 			}
-			if (person.personIdentifikator) {
-				personIdentifikator = person.personIdentifikator;
+			if (person.personnummer) {
+				personIdentifikator = person.personnummer;
 			}
 		}
 

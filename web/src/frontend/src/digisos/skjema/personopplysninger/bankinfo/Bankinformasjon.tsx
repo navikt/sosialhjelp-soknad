@@ -8,7 +8,7 @@ import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdata
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import { setPath } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
-import { Kontonummer } from "./KontonummerType";
+import { initialKontonummerState, Kontonummer } from "./KontonummerType";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
@@ -20,7 +20,7 @@ type Props = SoknadsdataContainerProps & InjectedIntlProps;
 const FAKTUM_KEY_KONTONUMMER = "kontakt.kontonummer";
 
 class Bankinformasjon extends React.Component<Props, {}> {
-	kontonummerInput: HTMLInputElement;
+	// kontonummerInput: HTMLInputElement;
 
 	componentDidMount(): void {
 		this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
@@ -57,7 +57,11 @@ class Bankinformasjon extends React.Component<Props, {}> {
 	}
 
 	onChangeInput(verdi: string) {
-		const kontonummer: Kontonummer = this.getKontonummer();
+		const { soknadsdata } = this.props;
+		let kontonummer: Kontonummer = initialKontonummerState;
+		if (soknadsdata && soknadsdata.personalia && soknadsdata.personalia.kontonummer) {
+			kontonummer = soknadsdata.personalia.kontonummer;
+		}
 		kontonummer.verdi = verdi;
 		this.props.oppdaterSoknadsdataState(setPath(this.props.soknadsdata, SoknadsSti.BANKINFORMASJON, kontonummer));
 	}
@@ -88,11 +92,12 @@ class Bankinformasjon extends React.Component<Props, {}> {
 			avbrytLabel = null;
 		}
 
-		const harIkkeKonto: boolean = (kontonummer && kontonummer.harIkkeKonto) ? true : false;
-		const kontonummerVerdi: string = (kontonummer && kontonummer.verdi && harIkkeKonto === false) ?
-			kontonummer.verdi : "";
-
-
+		const harIkkeKonto: boolean = false; // (kontonummer && kontonummer.harIkkeKonto) ? true : false; // TODO Legg  tilbake
+		const kontonummerVerdi: string = "";
+		if (kontonummer && kontonummer.verdi && harIkkeKonto === false) {
+			// kontonummerVerdi = kontonummer.verdi;
+			console.warn("kontonummerVerdi: " + JSON.stringify(kontonummer, null, 4));
+		}
 		return (
 			<div style={{ border: "3px dotted red", display: "block" }}>
 				<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
@@ -108,7 +113,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 									faktumKey="kontakt.kontonummer"
 									id="bankinfo_konto"
 									className={"input--xxl faktumInput "}
-									inputRef={c => (this.kontonummerInput = c)}
+									// inputRef={c => (this.kontonummerInput = c)}
 									disabled={harIkkeKonto}
 									verdi={kontonummerVerdi}
 									required={false}
