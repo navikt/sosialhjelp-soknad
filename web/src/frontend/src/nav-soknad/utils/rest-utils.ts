@@ -1,5 +1,6 @@
 /* tslint:disable */
 import { REST_FEIL } from "../types/restFeilTypes";
+import {erMockMiljoEllerDev} from "./index";
 
 export function erDev(): boolean {
 	const url = window.location.href;
@@ -195,4 +196,11 @@ export function detekterInternFeilKode(feilKode: string): string {
 		internFeilKode = REST_FEIL.FEIL_FILTPYE;
 	}
 	return internFeilKode;
+}
+
+export function lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(brukerbehandlingId: string) {
+	if (erMockMiljoEllerDev()) {
+		const url = getApiBaseUrl() + "internal/mock/tjeneste/downloadzip/" + brukerbehandlingId;
+		window.open(url);
+	}
 }

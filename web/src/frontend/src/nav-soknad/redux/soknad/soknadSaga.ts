@@ -4,9 +4,9 @@ import {
 	fetchDelete,
 	fetchKvittering,
 	fetchPost,
-	fetchToJson, getApiBaseUrl
+	fetchToJson, lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
 } from "../../utils/rest-utils";
-import {erMockMiljoEllerDev, finnFaktum, oppdaterFaktumMedVerdier} from "../../utils";
+import { finnFaktum, oppdaterFaktumMedVerdier} from "../../utils";
 import { updateFaktaMedLagretVerdi } from "../fakta/faktaUtils";
 import {
 	HentKvitteringAction,
@@ -144,13 +144,7 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
 			`soknader/${action.brukerBehandlingId}/actions/send`,
 			JSON.stringify({ behandlingsId: action.brukerBehandlingId })
 		);
-
-		if (erMockMiljoEllerDev()) {
-			const url = getApiBaseUrl() + "internal/mock/tjeneste/downloadzip/" + action.brukerBehandlingId
-			window.open(url);
-			console.warn("PRØVER Å LASTE NED ZIP FILE HER I FRA: " + url);
-		}
-
+		lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.brukerBehandlingId);
 		yield put(sendSoknadOk(action.brukerBehandlingId));
 		yield put(navigerTilKvittering(action.brukerBehandlingId));
 	} catch (reason) {
