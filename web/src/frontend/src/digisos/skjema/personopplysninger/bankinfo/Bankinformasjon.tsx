@@ -28,13 +28,15 @@ class Bankinformasjon extends React.Component<Props, {}> {
 	}
 
 	lagreDersomGyldig() {
-		const kontonummer: Kontonummer = this.getKontonummer();
-		if (kontonummer.verdi !== "") {
-			const feilkode: ValideringActionKey = erKontonummer(kontonummer.verdi);
+		const { soknadsdata } = this.props;
+		// const kontonummer: Kontonummer = this.getKontonummer();
+		const personalia = soknadsdata.personalia;
+		if (personalia.kontonummer.verdi !== "") {
+			const feilkode: ValideringActionKey = erKontonummer(personalia.kontonummer.verdi);
 			if (feilkode) {
 				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER);
 			} else {
-				this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
+				this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, personalia);
 				this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
 			}
 		} else {
@@ -47,7 +49,10 @@ class Bankinformasjon extends React.Component<Props, {}> {
 	}
 
 	lagreKontonummer(kontonummer: Kontonummer): void {
-		this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
+		const { soknadsdata } = this.props;
+		const personalia = soknadsdata.personalia;
+		personalia.kontonummer = kontonummer;
+		this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, personalia);
 	}
 
 	endreKontoBrukerdefinert(brukerdefinert: boolean) {
@@ -84,6 +89,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 			kontonummer.systemverdi === null ||
 			kontonummer.brukerdefinert === true
 		);
+
 		const infotekst = intl.formatMessage({ id: "kontakt.kontonummer.infotekst.tekst" });
 		let endreLabel = intl.formatMessage({id: "kontakt.system.kontonummer.endreknapp.label"});
 		let avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});

@@ -5,36 +5,17 @@ import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 
 const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `soknader/${brukerBehandlingId}/${sti}`;
 
-// // TODO Deprecated ... slett
-export function fetchSoknadsdataAction(brukerBehandlingId: string, sti: string) {
-	return (dispatch: Dispatch) => {
-		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
-			const soknadsdata = setPath({}, sti, response);
-			dispatch(oppdaterSoknadsdataState(soknadsdata));
-		}).catch(() => {
-			dispatch(navigerTilServerfeil());
-		});
-	}
-}
-
 export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	return (dispatch: Dispatch) => {
 		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
+			// if (sti.match(/\//)) {
+			// 	// sti = sti.split(/\//)
+			// 	// sti = sti.split('/').splice(1,1).join("");
+			// 	sti = sti.replace('/', ".");
+			// }
 			const soknadsdata = setPath({}, sti, response);
+			console.warn(JSON.stringify(soknadsdata, null, 4));
 			dispatch(oppdaterSoknadsdataState(soknadsdata));
-		}).catch(() => {
-			dispatch(navigerTilServerfeil());
-		});
-	}
-}
-
-// TODO Deprecated...slett
-export function fetchPutSoknadsdataAction(brukerBehandlingId: string, sti: string, soknadsdata: any) { // TODO: Sett type til SoknadsdataType
-	return (dispatch: Dispatch) => {
-		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata)).then(() => {
-			const payload: any = {};
-			payload[sti] = soknadsdata;
-			dispatch(oppdaterSoknadsdataState(payload));
 		}).catch(() => {
 			dispatch(navigerTilServerfeil());
 		});

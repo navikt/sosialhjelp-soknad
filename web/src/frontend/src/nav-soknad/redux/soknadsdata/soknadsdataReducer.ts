@@ -6,7 +6,7 @@ import { Begrunnelse, initialBegrunnelseState } from "../../../digisos/skjema/be
 import {
 	initialTelefonnummerState,
 	Telefonnummer
-} from "../../../digisos/skjema/personopplysninger/telefon/telefonActions";
+} from "../../../digisos/skjema/personopplysninger/telefon/telefonTypes";
 import { Bosituasjon, initialBosituasjonState } from "../../../digisos/skjema/bosituasjon_ny/bosituasjonTypes";
 import {
 	Familie, initialFamilieStatus,
@@ -15,7 +15,8 @@ import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeid
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
 
 export enum SoknadsdataActionTypeKeys {
-	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER"
+	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
+	OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI"
 }
 
 /*
@@ -27,60 +28,65 @@ export enum SoknadsSti {
 	ARBEID = "arbeid",
 	BANKINFORMASJON = "personalia/kontonummer",
 	BEGRUNNELSE = "begrunnelse",
+	BOSITUASJON = "bosituasjon",
 	UTDANNING = "utdanning",
-	BOSITUASJON = "bosituasjon"
+	TELEFONNUMMER = "personalia/telefonnummer"
 }
 
 export interface Personalia {
 	kontonummer: Kontonummer;
+	telefonnummer: Telefonnummer;
 }
 
 export const initialPersonaliaState: Personalia = {
-	kontonummer: initialKontonummerState
+	kontonummer: initialKontonummerState,
+	telefonnummer: initialTelefonnummerState
 };
 
 export interface Soknadsdata {
-	personalia: Personalia;
-	begrunnelse: Begrunnelse;
-	utdanning: Utdanning;
-	telefonnummer: Telefonnummer;
-	bosituasjon: Bosituasjon;
 	arbeid: Arbeid;
+	begrunnelse: Begrunnelse;
+	bosituasjon: Bosituasjon;
 	familie: Familie;
+	utdanning: Utdanning;
+	// telefonnummer: Telefonnummer;
+	personalia: Personalia;
 }
 
 export interface SoknadsdataActionVerdi {
-	// bankinformasjon?: Bankinformasjon
-	begrunnelse?: Begrunnelse,
-	utdanning?: Utdanning,
-	telefonnummer?: Telefonnummer,
-	bosituasjon?: Bosituasjon,
 	arbeid?: Arbeid,
+	// bankinformasjon?: Bankinformasjon
+	bosituasjon?: Bosituasjon,
+	begrunnelse?: Begrunnelse,
 	familie?: Familie
+	utdanning?: Utdanning,
+	// telefonnummer?: Telefonnummer,
+	personalia: Personalia;
 }
 
 export type SoknadsdataType =
-	Personalia
+	Arbeid
 	| Begrunnelse
+	| Bosituasjon
+	| Familie
 	| Utdanning
 	| Telefonnummer
-	| Bosituasjon
-	| Arbeid
-	| Familie;
+	| Personalia;
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
-	verdi: SoknadsdataActionVerdi
+	verdi: SoknadsdataActionVerdi,
+	sti?: SoknadsSti
 }
 
 export const initialSoknadsdataState: Soknadsdata = {
-	personalia: initialPersonaliaState,
-	begrunnelse: initialBegrunnelseState,
-	utdanning: initialUtdanningState,
-	telefonnummer: initialTelefonnummerState,
-	bosituasjon: initialBosituasjonState,
 	arbeid: initialArbeidState,
-	familie: initialFamilieStatus
+	begrunnelse: initialBegrunnelseState,
+	bosituasjon: initialBosituasjonState,
+	familie: initialFamilieStatus,
+	utdanning: initialUtdanningState,
+	// telefonnummer: initialTelefonnummerState,
+	personalia: initialPersonaliaState
 };
 
 const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (
@@ -102,6 +108,14 @@ const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (
 export const oppdaterSoknadsdataState = (verdi: SoknadsdataActionVerdi): SoknadsdataActionType => {
 	return {
 		type: SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA,
+		verdi
+	}
+};
+
+export const oppdaterSoknadsdataSti = (verdi: SoknadsdataActionVerdi, sti: SoknadsSti): SoknadsdataActionType => {
+	return {
+		type: SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI,
+		sti,
 		verdi
 	}
 };
