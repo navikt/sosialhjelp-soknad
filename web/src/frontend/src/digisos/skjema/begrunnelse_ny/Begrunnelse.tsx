@@ -7,8 +7,6 @@ import { ValideringActionKey } from "../../../nav-soknad/validering/types";
 import { maksLengde } from "../../../nav-soknad/validering/valideringer";
 import Sporsmal, { LegendTittleStyle } from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
-
-import { setPath } from "../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
 import {
 	connectSoknadsdataContainer, onEndretValideringsfeil,
 	SoknadsdataContainerProps
@@ -33,7 +31,8 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 
 	onChange(value: string, key: string) {
 		const { soknadsdata } = this.props;
-		this.props.oppdaterSoknadsdataState(setPath(soknadsdata, `${SoknadsSti.BEGRUNNELSE}/${key}`, value))
+		soknadsdata.begrunnelse[key]  = value;
+		this.props.oppdaterSoknadsdataState(soknadsdata);
 	}
 
 	lagreHvisGyldig() {

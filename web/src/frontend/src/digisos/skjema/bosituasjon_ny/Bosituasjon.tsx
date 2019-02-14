@@ -13,7 +13,6 @@ import {
 	connectSoknadsdataContainer, onEndretValideringsfeil,
 	SoknadsdataContainerProps
 } from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { setPath } from "../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -43,16 +42,14 @@ class BosituasjonView extends React.Component<Props, {}> {
 	}
 
 	handleRadioClick(verdi: string): void {
-		const botype = verdi.replace("annet.botype.","");
 		const { soknadsdata, brukerBehandlingId } = this.props;
+		const botype = verdi.replace("annet.botype.","");
 		const bosituasjon = soknadsdata.bosituasjon;
-		const antallPersoner = bosituasjon ? bosituasjon.antallPersoner: null;
-		const oppdatertBosituasjon: Bosituasjon = {botype, antallPersoner};
+		bosituasjon.botype = botype;
 		if (verdi === Bosituasjonsvalg.annet) {
-			const oppdaterteSoknadsdata = setPath(soknadsdata, `${SoknadsSti.BOSITUASJON}`, oppdatertBosituasjon);
-			this.props.oppdaterSoknadsdataState(oppdaterteSoknadsdata);
+			this.props.oppdaterSoknadsdataState(soknadsdata);
 		} else {
-			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, oppdatertBosituasjon);
+			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, bosituasjon);
 		}
 	}
 
@@ -96,8 +93,9 @@ class BosituasjonView extends React.Component<Props, {}> {
 
 	onChangeAntall(verdi: string) {
 		const { soknadsdata } = this.props;
-		const oppdaterteSoknadsdata = setPath(soknadsdata, `${SoknadsSti.BOSITUASJON}/antallPersoner`, verdi);
-		this.props.oppdaterSoknadsdataState(oppdaterteSoknadsdata);
+		const bosituasjon = soknadsdata.bosituasjon;
+		bosituasjon.antallPersoner = verdi;
+		this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
 	}
 
 	render() {

@@ -10,7 +10,6 @@ import { finnFaktum } from "../../../nav-soknad/utils";
 import Familierelasjoner from "./Familierelasjoner";
 import FamilieIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/FamilieIllustrasjon";
 import EktefelleDetaljer from "./sivilstatus/EktefelleDetaljer";
-import SivilstatusComponent from "./sivilstatus/SivilstatusComponent";
 
 class Familie extends React.Component<FaktumComponentProps, {}> {
 
@@ -37,7 +36,7 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 					sivilstatusFaktum.value !== "gift" &&
 					(
 						<span>
-							<SivilstatusComponent />
+							{/*<SivilstatusComponent />*/}
 							<Sivilstatus fakta={fakta} />
 						</span>
 						)
