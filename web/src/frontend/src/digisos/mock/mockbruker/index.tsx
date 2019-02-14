@@ -19,7 +19,7 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import "whatwg-fetch";
 
 
-interface StateProps {
+interface OwnState {
 	fornavn: string;
 	mellomnavn: string;
 	etternavn: string;
@@ -51,10 +51,14 @@ interface StateProps {
 	loading: boolean;
 }
 
-type Props = StateProps & DispatchProps;
+interface StoreProps {
+	mock_ident: string;
+}
+
+type Props = StoreProps & DispatchProps;
 
 
-class MockBruker extends React.Component<Props,StateProps> {
+class MockBruker extends React.Component<Props,OwnState> {
 
 	constructor(props: Props){
 		super(props);
@@ -179,6 +183,9 @@ class MockBruker extends React.Component<Props,StateProps> {
 
 		// Sett navn
 		mocksystemdata.settNavn(this.state.fornavn, this.state.mellomnavn, this.state.etternavn);
+
+		// Sett ident
+		mocksystemdata.settIdent(this.props.mock_ident);
 
 		// Sett adresse
 
@@ -436,7 +443,7 @@ class MockBruker extends React.Component<Props,StateProps> {
 
 export default connect((state: State, props: any) => {
 	return {
-
+		mock_ident: state.mockData.ident
 	};
 })(MockBruker);
 

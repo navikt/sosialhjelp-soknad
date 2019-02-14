@@ -1,10 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
+import {DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import "whatwg-fetch";
 import { tilMock } from "../../../nav-soknad/redux/navigasjon/navigasjonActions";
 import {fetchPost} from "../../../nav-soknad/utils/rest-utils";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import {settMockIdent} from "../mockReducer";
 
 
 export interface StateProps {
@@ -33,14 +34,13 @@ class MockLogin extends React.Component<Props, State> {
 		const uidObject = {
 			uid: this.state.uid
 		};
+		this.props.dispatch(settMockIdent(this.state.uid));
 		fetchPost("internal/mock/tjeneste/uid", JSON.stringify(uidObject)).then(() => {
-			console.warn("aksjfdb");
 			this.props.dispatch(tilMock());
 		})
 	}
 
 	keyPress(e: any){
-
 		if (e.key === "Enter"){
 			document.getElementById("login-button").click();
 		}

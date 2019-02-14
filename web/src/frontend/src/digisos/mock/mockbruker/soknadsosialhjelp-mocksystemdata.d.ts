@@ -2,6 +2,8 @@ declare module "soknadsosialhjelp-mocksystemdata" {
 
 	export function settNavn(fornavn: string , mellomnavn: string, etternavn: string): void;
 
+	export function settIdent(ident: string): void;
+
 	export function settMidlertidigPostadresse(midlertidigPostadresseEgendefinertValue: string): void;
 
 	export function settTelefonnummer(telefonnummer: string): void;

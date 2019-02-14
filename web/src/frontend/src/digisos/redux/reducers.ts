@@ -18,6 +18,7 @@ import VedleggReducer from "../../nav-soknad/redux/vedlegg/vedleggReducer";
 import EttersendelseReducer from "../../nav-soknad/redux/ettersendelse/ettersendelseReducer";
 import OppholdsadresseReducer from "../skjema/personopplysninger/tps/oppholdsadresseReducer";
 import AdresseAutocompleteReducer from "../../nav-soknad/components/adresseAutocomplete/adresseAutocompleteReducer";
+import MockReducer from "../mock/mockReducer";
 
 export interface State extends SoknadAppState {
 	synligefakta: SynligeFaktaState;
@@ -39,7 +40,8 @@ const reducers = combineReducers({
 	ettersendelse: EttersendelseReducer,
 	oppholdsadresse: OppholdsadresseReducer,
 	adresseAutocomplete: AdresseAutocompleteReducer,
-	init: InitReducer
+	init: InitReducer,
+	mockData: MockReducer
 });
 
 export default reducers;
