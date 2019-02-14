@@ -9,8 +9,8 @@
 
 ## Reactkomponenter
 
-Komponenter som trenger å tilgang til å lese og skrive søknadsdata til server, kan benytte 
-`SoknadsdataContainerProps` og `connectSoknadsdataContainer` slik: 
+Komponenter som trenger å tilgang til å lese og skrive søknadsdata til server, benytter samme propTypes,  
+`SoknadsdataContainerProps`, og `connectSoknadsdataContainer()` i stedet for vanlig `connect()`: 
 
 ```typescript jsx
 class Begrunnelse extends React.Component<SoknadsdataContainerProps, {}> {
@@ -21,30 +21,29 @@ export default connectSoknadsdataContainer(injectIntl(Begrunnelse));
 ```
 
 Dette gir komponenten tilgang til å gjøre GET og PUT kall mot søknadsdata API'et til backenden.
-Kall mot `this.props.hentSoknadsdata(id, 'familie/sivilstatus')`, gjør at the dispatches et redux event, 
-gjøres et fetch kall mot url sti `id +'familie/sivilstatus'` og dataene som kommer fra server legges
+Kall mot `this.props.hentSoknadsdata(1001, 'familie/sivilstatus')`, gjør at the dispatches et redux event, 
+gjøres et fetch kall mot url sti `1001/familie/sivilstatus'` og dataene som kommer fra server legges
 på redux' state under `soknadsdata.familie.sivilstatus`.
 
 ```typescript jsx
-this.props.hentSoknadsdata?: (brukerBehandlingId: string, urlPath: string) => void;
-this.props.lagreSoknadsdata?: (brukerBehandlingId: string, urlPath: string, soknadsdata: SoknadsdataType) => void;
+this.props.hentSoknadsdata(brukerBehandlingId, urlPath);
+this.props.lagreSoknadsdata(brukerBehandlingId, urlPath, data);
 ```
 
 Alle søknadsdata ligger på redux' state:
 ```typescript jsx
-this.props.soknadsdata?: null | Soknadsdata;
-this.props.brukerBehandlingId?: string;
+this.props.soknadsdata;
 ```
 
 Søknadsdata på redux' state kan oppdateres slik:
 ```typescript jsx
-this.props.oppdaterSoknadsdataState?: (soknadsdata: SoknadsdataActionVerdi) => void;
+this.props.oppdaterSoknadsdataSti(stringSoknadsSti.TELEFONNUMMER, telefonnummer);
 ```
 
 Feilmeldinger legges på redux' state med:
 ```typescript jsx
 const feilkode: ValideringActionKey = maksLengde(inputVerdi, MAX_CHARS);
-this.props.setValideringsfeil?: (feilkode: ValideringActionKey, faktumKey: string) => void;
+this.props.setValideringsfeil(feilkode, faktumKey);
 ```
 
 ## Endring av server API
