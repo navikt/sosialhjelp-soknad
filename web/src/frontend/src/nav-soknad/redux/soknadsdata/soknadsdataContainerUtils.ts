@@ -3,7 +3,13 @@ import { connect } from "react-redux";
 import { State } from "../../../digisos/redux/reducers";
 import { hentSoknadsdata, lagreSoknadsdata } from "./soknadsdataActions";
 import { setValideringsfeil } from "../valideringActions";
-import { oppdaterSoknadsdataState, Soknadsdata, SoknadsdataActionVerdi, SoknadsdataType } from "./soknadsdataReducer";
+import {
+	oppdaterSoknadsdataState,
+	oppdaterSoknadsdataSti,
+	Soknadsdata,
+	SoknadsdataActionVerdi,
+	SoknadsdataType
+} from "./soknadsdataReducer";
 
 /*
  * Properties og redux koblinger som er felles for komponenter i søknadsskjemaet.
@@ -20,6 +26,7 @@ export interface SoknadsdataContainerProps {
 	lagreSoknadsdata?: (brukerBehandlingId: string, urlPath: string, soknadsdata: SoknadsdataType) => void;
 	setValideringsfeil?: (feilkode: ValideringActionKey, faktumKey: string) => void;
 	oppdaterSoknadsdataState?: (soknadsdata: SoknadsdataActionVerdi) => void;
+	oppdaterSoknadsdataSti?: (sti: string, soknadsdata: SoknadsdataType) => void;
 }
 
 export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerProps>(
@@ -32,6 +39,7 @@ export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerP
 		hentSoknadsdata,
 		lagreSoknadsdata,
 		oppdaterSoknadsdataState,
+		oppdaterSoknadsdataSti,
 		setValideringsfeil
 	}
 );

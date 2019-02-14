@@ -12,7 +12,6 @@ import {
 import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
 import Telefoninfo from "./tps/Telefoninfo";
 import Bankinformasjon from "./tps/Bankinformasjon";
-import BankinformasjonIkkeFaktum from "./bankinfo/Bankinformasjon";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import {
 	Faktum
@@ -22,10 +21,11 @@ import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjo
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 import { FormattedMessage } from "react-intl";
-import Telefon from "./telefon/Telefon";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Oppholdsadresse from "./tps/Oppholdsadresse";
 import Personalia from "./tps/Personalia";
+import Telefon from "./telefon/Telefon";
+import BankinformasjonIkkeFaktum from "./bankinfo/Bankinformasjon";
 
 interface OwnProps {
 	hentVedleggsForventning?: (fakta: any) => void;

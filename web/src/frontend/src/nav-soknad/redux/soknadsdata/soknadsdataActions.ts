@@ -1,6 +1,6 @@
 import { Dispatch } from "../reduxTypes";
 import { fetchPut, fetchToJson } from "../../utils/rest-utils";
-import { oppdaterSoknadsdataState, SoknadsdataType } from "./soknadsdataReducer";
+import { oppdaterSoknadsdataSti, SoknadsdataType } from "./soknadsdataReducer";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 
 const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `soknader/${brukerBehandlingId}/${sti}`;
@@ -8,14 +8,7 @@ const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `sok
 export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	return (dispatch: Dispatch) => {
 		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
-			// if (sti.match(/\//)) {
-			// 	// sti = sti.split(/\//)
-			// 	// sti = sti.split('/').splice(1,1).join("");
-			// 	sti = sti.replace('/', ".");
-			// }
-			const soknadsdata = setPath({}, sti, response);
-			console.warn(JSON.stringify(soknadsdata, null, 4));
-			dispatch(oppdaterSoknadsdataState(soknadsdata));
+			dispatch(oppdaterSoknadsdataSti(sti, response));
 		}).catch(() => {
 			dispatch(navigerTilServerfeil());
 		});
@@ -25,9 +18,7 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknadsdata: any) {
 	return (dispatch: Dispatch) => {
 		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata)).then(() => {
-			const payload: any = {};
-			payload[sti] = soknadsdata;
-			dispatch(oppdaterSoknadsdataState(payload));
+			dispatch(oppdaterSoknadsdataSti(sti, soknadsdata));
 		}).catch(() => {
 			dispatch(navigerTilServerfeil());
 		});

@@ -12,7 +12,6 @@ import {
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import { setPath } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_TELEFONINFO = "kontakt.system.telefoninfo";
@@ -28,14 +27,16 @@ class TelefonView extends React.Component<Props, {}> {
 
 	setBrukerdefinert(verdi: boolean) {
 		const { soknadsdata } = this.props;
-		const reduxSti: string = `${SoknadsSti.TELEFONNUMMER}/brukerdefinert`;
-		this.props.oppdaterSoknadsdataState(setPath(soknadsdata, reduxSti, verdi));
+		const telefonnummer = soknadsdata.personalia.telefonnummer;
+		telefonnummer.brukerdefinert = verdi;
+		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
 	}
 
 	onChange(verdi: any) {
 		const { soknadsdata } = this.props;
-		const reduxSti: string = `${SoknadsSti.TELEFONNUMMER}/verdi`;
-		this.props.oppdaterSoknadsdataState(setPath(soknadsdata, reduxSti, verdi));
+		const telefonnummer = soknadsdata.personalia.telefonnummer;
+		telefonnummer.verdi = verdi;
+		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
 	}
 
 	onBlur() {
@@ -48,8 +49,9 @@ class TelefonView extends React.Component<Props, {}> {
 		} else {
 			const feilkode: ValideringActionKey = this.validerTelefonnummer(this.fjernLandkode(verdi));
 			if (!feilkode) {
-				soknadsdata.personalia.telefonnummer.verdi = LANDKODE + this.fjernLandkode(soknadsdata.personalia.telefonnummer.verdi);
-				this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, soknadsdata.personalia.telefonnummer);
+				const telefonnummer = soknadsdata.personalia.telefonnummer;
+				telefonnummer.verdi = LANDKODE + this.fjernLandkode(soknadsdata.personalia.telefonnummer.verdi);
+				this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
 			}
 		}
 	}
@@ -69,11 +71,8 @@ class TelefonView extends React.Component<Props, {}> {
 	render() {
 		const {intl, soknadsdata } = this.props;
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
-		console.warn(JSON.stringify(telefonnummer, null, 4));
-
 		const endreLabel = intl.formatMessage({ id: "kontakt.system.telefon.endreknapp.label"});
 		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
-
 		const verdi = (telefonnummer && telefonnummer.verdi) ? this.fjernLandkode(telefonnummer.verdi) : "";
 		const brukerdefinert = telefonnummer ? telefonnummer.brukerdefinert : false;
 		const systemverdi = telefonnummer ? telefonnummer.systemverdi : "";

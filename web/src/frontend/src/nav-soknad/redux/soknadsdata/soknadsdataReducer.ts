@@ -13,6 +13,7 @@ import {
 } from "../../../digisos/skjema/familie/sivilstatus/FamilieTypes";
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
+import { setPath } from "./soknadsdataActions";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -34,8 +35,8 @@ export enum SoknadsSti {
 }
 
 export interface Personalia {
-	kontonummer: Kontonummer;
-	telefonnummer: Telefonnummer;
+	kontonummer?: Kontonummer;
+	telefonnummer?: Telefonnummer;
 }
 
 export const initialPersonaliaState: Personalia = {
@@ -75,8 +76,8 @@ export type SoknadsdataType =
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
-	verdi: SoknadsdataActionVerdi,
-	sti?: SoknadsSti
+	verdi: SoknadsdataActionVerdi | SoknadsdataType,
+	sti?: string
 }
 
 export const initialSoknadsdataState: Soknadsdata = {
@@ -100,6 +101,11 @@ const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (
 				...action.verdi
 			};
 		}
+		case SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI: {
+			return {
+				...setPath(state, action.sti, action.verdi)
+			};
+		}
 		default:
 			return state;
 	}
@@ -112,7 +118,7 @@ export const oppdaterSoknadsdataState = (verdi: SoknadsdataActionVerdi): Soknads
 	}
 };
 
-export const oppdaterSoknadsdataSti = (verdi: SoknadsdataActionVerdi, sti: SoknadsSti): SoknadsdataActionType => {
+export const oppdaterSoknadsdataSti = (sti: string, verdi: SoknadsdataType): SoknadsdataActionType => {
 	return {
 		type: SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI,
 		sti,
