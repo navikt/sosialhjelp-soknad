@@ -27,8 +27,9 @@ class Bankinformasjon extends React.Component<Props, {}> {
 
 	lagreDersomGyldig() {
 		const { soknadsdata } = this.props;
-		const kontonummer = soknadsdata.personalia.kontonummer;
-		if (kontonummer.verdi !== "") {
+		const kontonummer = {...soknadsdata.personalia.kontonummer};
+		if (kontonummer.verdi !== null && kontonummer.verdi !== "") {
+			kontonummer.verdi = kontonummer.verdi.replace(/[ \.]/g,"");
 			const feilkode: ValideringActionKey = erKontonummer(kontonummer.verdi);
 			if (feilkode) {
 				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER);

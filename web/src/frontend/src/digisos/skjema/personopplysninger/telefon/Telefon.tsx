@@ -14,7 +14,7 @@ import {
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
-const FAKTUM_KEY_TELEFONINFO = "kontakt.system.telefoninfo";
+const FAKTUM_KEY_SYSTEM_TELEFON = "kontakt.system.telefoninfo";
 const LANDKODE = "+47";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
@@ -41,16 +41,19 @@ class TelefonView extends React.Component<Props, {}> {
 
 	onBlur() {
 		const { soknadsdata, brukerBehandlingId } = this.props;
-		const { verdi } = soknadsdata.personalia.telefonnummer;
-		if(verdi === "") {
+		const telefonnummer = {...soknadsdata.personalia.telefonnummer};
+		let verdi = telefonnummer.verdi;
+		if(verdi === "" || verdi === null) {
 			onEndretValideringsfeil(null, FAKTUM_KEY_TELEFON, this.props.feil, () => {
 				this.props.setValideringsfeil(null, FAKTUM_KEY_TELEFON);
 			});
 		} else {
-			const feilkode: ValideringActionKey = this.validerTelefonnummer(this.fjernLandkode(verdi));
+			verdi = this.fjernLandkode(verdi);
+			verdi = verdi.replace(/[ \.]/g,"");
+			telefonnummer.verdi = verdi;
+			const feilkode: ValideringActionKey = this.validerTelefonnummer(verdi);
 			if (!feilkode) {
-				const telefonnummer = soknadsdata.personalia.telefonnummer;
-				telefonnummer.verdi = LANDKODE + this.fjernLandkode(soknadsdata.personalia.telefonnummer.verdi);
+				telefonnummer.verdi = LANDKODE + this.fjernLandkode(telefonnummer.verdi);
 				this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
 			}
 		}
@@ -65,7 +68,7 @@ class TelefonView extends React.Component<Props, {}> {
 	}
 
 	fjernLandkode(telefonnummer: string) {
-		return telefonnummer.replace( /^\+47/, "");
+		return telefonnummer && telefonnummer.replace( /^\+47/, "");
 	}
 
 	render() {
@@ -76,11 +79,12 @@ class TelefonView extends React.Component<Props, {}> {
 		const verdi = (telefonnummer && telefonnummer.verdi) ? this.fjernLandkode(telefonnummer.verdi) : "";
 		const brukerdefinert = telefonnummer ? telefonnummer.brukerdefinert : false;
 		const systemverdi = telefonnummer ? telefonnummer.systemverdi : "";
+		const faktumKey = telefonnummer.systemverdi === null ? FAKTUM_KEY_TELEFON : FAKTUM_KEY_SYSTEM_TELEFON;
 
 		return (
 			<div style={{ border: "3px dotted red", display: "block" }}>
 				<Sporsmal
-					tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_KEY_TELEFONINFO)}
+					tekster={getFaktumSporsmalTekst(this.props.intl, faktumKey)}
 				>
 					<SysteminfoMedSkjema
 						skjemaErSynlig={brukerdefinert}
