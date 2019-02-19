@@ -25,6 +25,7 @@ class UtdanningView extends React.Component<Props, {}> {
 		const {brukerBehandlingId, soknadsdata} = this.props;
 		const utdanning = soknadsdata.utdanning;
 		utdanning.erStudent = verdi;
+		this.props.oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning);
 		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTDANNING, utdanning);
 	}
 
@@ -32,6 +33,7 @@ class UtdanningView extends React.Component<Props, {}> {
 		const {brukerBehandlingId, soknadsdata} = this.props;
 		const utdanning = soknadsdata.utdanning;
 		utdanning.studengradErHeltid = verdi;
+		this.props.oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning);
 		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTDANNING, utdanning);
 	}
 

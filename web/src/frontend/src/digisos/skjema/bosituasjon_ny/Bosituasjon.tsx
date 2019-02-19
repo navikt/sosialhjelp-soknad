@@ -49,6 +49,7 @@ class BosituasjonView extends React.Component<Props, {}> {
 		if (verdi === Bosituasjonsvalg.annet) {
 			this.props.oppdaterSoknadsdataState(soknadsdata);
 		} else {
+			this.props.oppdaterSoknadsdataState(soknadsdata);
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, bosituasjon);
 		}
 	}
@@ -80,6 +81,7 @@ class BosituasjonView extends React.Component<Props, {}> {
 		if (!valideringsfeil) {
 			const oppdatertBosituasjon: Bosituasjon = {botype, antallPersoner};
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, oppdatertBosituasjon);
+			this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, oppdatertBosituasjon);
 		}
 	}
 
