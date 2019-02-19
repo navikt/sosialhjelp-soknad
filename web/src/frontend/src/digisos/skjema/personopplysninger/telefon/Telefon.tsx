@@ -82,42 +82,40 @@ class TelefonView extends React.Component<Props, {}> {
 		const faktumKey = telefonnummer.systemverdi === null ? FAKTUM_KEY_TELEFON : FAKTUM_KEY_SYSTEM_TELEFON;
 
 		return (
-			<div style={{ border: "3px dotted red", display: "block" }}>
-				<Sporsmal
-					tekster={getFaktumSporsmalTekst(this.props.intl, faktumKey)}
+			<Sporsmal
+				tekster={getFaktumSporsmalTekst(this.props.intl, faktumKey)}
+			>
+				<SysteminfoMedSkjema
+					skjemaErSynlig={brukerdefinert}
+					onVisSkjema={() => this.setBrukerdefinert(true)}
+					onSkjulSkjema={() => this.setBrukerdefinert(false)}
+					endreLabel={endreLabel}
+					avbrytLabel={avbrytLabel}
+					skjema={(
+						<InputEnhanced
+							type="tel"
+							maxLength={14}
+							bredde={"S"}
+							className="skjemaelement__enLinje185bredde"
+							verdi={verdi}
+							onChange={(input: string) => this.onChange(input)}
+							onBlur={() => this.onBlur()}
+							getName={() => FAKTUM_KEY_TELEFON}
+							faktumKey={FAKTUM_KEY_TELEFON}
+							required={false}
+						/>
+					)}
 				>
-					<SysteminfoMedSkjema
-						skjemaErSynlig={brukerdefinert}
-						onVisSkjema={() => this.setBrukerdefinert(true)}
-						onSkjulSkjema={() => this.setBrukerdefinert(false)}
-						endreLabel={endreLabel}
-						avbrytLabel={avbrytLabel}
-						skjema={(
-							<InputEnhanced
-								type="tel"
-								maxLength={14}
-								bredde={"S"}
-								className="skjemaelement__enLinje185bredde"
-								verdi={verdi}
-								onChange={(input: string) => this.onChange(input)}
-								onBlur={() => this.onBlur()}
-								getName={() => FAKTUM_KEY_TELEFON}
-								faktumKey={FAKTUM_KEY_TELEFON}
-								required={false}
-							/>
-						)}
-					>
-						<Detaljeliste>
-							<DetaljelisteElement
-								tittel={
-									intl.formatHTMLMessage({ id: "kontakt.system.telefon.label" })
-								}
-								verdi={systemverdi}
-							/>
-						</Detaljeliste>
-					</SysteminfoMedSkjema>
-				</Sporsmal>
-			</div>
+					<Detaljeliste>
+						<DetaljelisteElement
+							tittel={
+								intl.formatHTMLMessage({ id: "kontakt.system.telefon.label" })
+							}
+							verdi={systemverdi}
+						/>
+					</Detaljeliste>
+				</SysteminfoMedSkjema>
+			</Sporsmal>
 		);
 	}
 

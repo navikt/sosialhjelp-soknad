@@ -10,8 +10,6 @@ import {
 	getFaktumVerdi
 } from "../../../nav-soknad/utils";
 import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
-import Telefoninfo from "./tps/Telefoninfo";
-import Bankinformasjon from "./tps/Bankinformasjon";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import {
 	Faktum
@@ -25,7 +23,7 @@ import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Oppholdsadresse from "./tps/Oppholdsadresse";
 import Personalia from "./tps/Personalia";
 import Telefon from "./telefon/Telefon";
-import BankinformasjonIkkeFaktum from "./bankinfo/Bankinformasjon";
+import Bankinformasjon from "./bankinfo/Bankinformasjon";
 
 interface OwnProps {
 	hentVedleggsForventning?: (fakta: any) => void;
@@ -90,14 +88,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 				</SporsmalFaktum>
 				<Oppholdsadresse fakta={this.props.fakta} />
 				<Telefon />
-				<Telefoninfo fakta={this.props.fakta} />
-				<BankinformasjonIkkeFaktum />
-				<Bankinformasjon
-					fakta={this.props.fakta}
-					onHarIkkeKontonummer={(verdi: string) => {
-						this.oppdaterHarIkkeKontonummer(this.props.fakta, verdi, this.props.dispatch);
-					}}
-				/>
+				<Bankinformasjon />
 			</DigisosSkjemaSteg>
 		);
 	}

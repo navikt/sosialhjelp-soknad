@@ -67,6 +67,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 		const harIkkeKonto = kontonummer.harIkkeKonto ? true : false;
 		kontonummer.harIkkeKonto = !harIkkeKonto;
 		this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
+		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
 		event.preventDefault();
 	}
 
@@ -95,58 +96,56 @@ class Bankinformasjon extends React.Component<Props, {}> {
 			kontonummerVerdi = kontonummer.verdi;
 		}
 		return (
-			<div style={{ border: "3px dotted red", display: "block" }}>
-				<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
-					<SysteminfoMedSkjema
-						skjemaErSynlig={skjemaErSynlig}
-						onVisSkjema={() => this.endreKontoBrukerdefinert(true)}
-						onSkjulSkjema={() => this.endreKontoBrukerdefinert(false)}
-						endreLabel={endreLabel}
-						avbrytLabel={avbrytLabel}
-						skjema={(
-							<div>
-								<InputEnhanced
-									faktumKey="kontakt.kontonummer"
-									id="bankinfo_konto"
-									className={"input--xxl faktumInput "}
-									disabled={harIkkeKonto}
-									verdi={kontonummerVerdi}
-									required={false}
-									onChange={(input: string) => this.onChangeInput(input)}
-									onBlur={() => this.lagreDersomGyldig()}
-									maxLength={13}
-									bredde={"S"}
-								/>
-								<div
-									className={"inputPanel " + (harIkkeKonto ? " inputPanel__checked" : " ")}
-									onClick={(event: any) => this.onChangeCheckboks(event)}
-								>
-									<Checkbox
-										id="kontakt_kontonummer_har_ikke_checkbox"
-										name="kontakt_kontonummer_har_ikke_checkbox"
-										checked={harIkkeKonto}
-										onChange={(event: any) => this.onChangeCheckboks(event)}
-										label={
-											<div>
-												{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
-											</div>
-										}
-									/>
-								</div>
-							</div>
-						)}
-					>
-						<Detaljeliste>
-							<DetaljelisteElement
-								tittel={
-									intl.formatHTMLMessage({ id: "kontakt.system.kontonummer.label" })
-								}
-								verdi={kontonummer.systemverdi}
+			<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
+				<SysteminfoMedSkjema
+					skjemaErSynlig={skjemaErSynlig}
+					onVisSkjema={() => this.endreKontoBrukerdefinert(true)}
+					onSkjulSkjema={() => this.endreKontoBrukerdefinert(false)}
+					endreLabel={endreLabel}
+					avbrytLabel={avbrytLabel}
+					skjema={(
+						<div>
+							<InputEnhanced
+								faktumKey="kontakt.kontonummer"
+								id="bankinfo_konto"
+								className={"input--xxl faktumInput "}
+								disabled={harIkkeKonto}
+								verdi={kontonummerVerdi}
+								required={false}
+								onChange={(input: string) => this.onChangeInput(input)}
+								onBlur={() => this.lagreDersomGyldig()}
+								maxLength={13}
+								bredde={"S"}
 							/>
-						</Detaljeliste>
-					</SysteminfoMedSkjema>
-				</Sporsmal>
-			</div>
+							<div
+								className={"inputPanel " + (harIkkeKonto ? " inputPanel__checked" : " ")}
+								onClick={(event: any) => this.onChangeCheckboks(event)}
+							>
+								<Checkbox
+									id="kontakt_kontonummer_har_ikke_checkbox"
+									name="kontakt_kontonummer_har_ikke_checkbox"
+									checked={harIkkeKonto}
+									onChange={(event: any) => this.onChangeCheckboks(event)}
+									label={
+										<div>
+											{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
+										</div>
+									}
+								/>
+							</div>
+						</div>
+					)}
+				>
+					<Detaljeliste>
+						<DetaljelisteElement
+							tittel={
+								intl.formatHTMLMessage({ id: "kontakt.system.kontonummer.label" })
+							}
+							verdi={kontonummer.systemverdi}
+						/>
+					</Detaljeliste>
+				</SysteminfoMedSkjema>
+			</Sporsmal>
 		);
 	}
 

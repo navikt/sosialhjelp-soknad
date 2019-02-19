@@ -108,7 +108,7 @@ class BosituasjonView extends React.Component<Props, {}> {
 		}
 		const antallPersoner = bosituasjon.antallPersoner ? bosituasjon.antallPersoner : "";
 		return (
-			<div style={{ border: "3px dotted red", display: "block" }}>
+			<div>
 				<Sporsmal
 					tekster={getFaktumSporsmalTekst(this.props.intl, "bosituasjon")}
 					legendTittelStyle={LegendTittleStyle.FET_NORMAL}

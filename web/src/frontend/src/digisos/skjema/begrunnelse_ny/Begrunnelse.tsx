@@ -59,7 +59,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 		const { intl, soknadsdata } = this.props;
 		const begrunnelse = soknadsdata.begrunnelse;
 		return (
-			<div style={{ border: "3px dotted red" }}>
+			<div>
 				<Sporsmal
 					sprakNokkel={FAKTUM_KEY_HVA}
 					legendTittelStyle={LegendTittleStyle.FET_NORMAL}

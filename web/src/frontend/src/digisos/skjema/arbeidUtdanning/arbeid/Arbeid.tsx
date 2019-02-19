@@ -65,43 +65,41 @@ class ArbeidView extends React.Component<Props, {}> {
 			}
 		}
 		return (
-			<div style={{ border: "3px dotted red", display: "block" }}>
-				<Sporsmal
-					tekster={getFaktumSporsmalTekst(intl, "arbeidsforhold")}
-					style="system"
-				>
-					<SysteminfoMedSkjema>
-						<div className="skjema-sporsmal__tittel">
-							<FormattedMessage id="arbeidsforhold.infotekst"/>
-						</div>
-						{(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (
-							<p>
-								<FormattedMessage id="arbeidsforhold.ingen"/>
-							</p>
-						)}
-						{alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
-							<ul className={"arbeidsgiverliste"}>
-								{alleArbeidsforhold.map((arbeidsforhold: Arbeidsforhold, index: any) =>
-									<li key={index} className="arbeidsgiverliste__arbeidsgiver">
-										<ArbeidDetaljer arbeidsforhold={arbeidsforhold} />
-									</li>
-								)}
-							</ul>
-						)}
-						<TextareaEnhanced
-							id="begrunnelse_soknad_textarea"
-							placeholder={intl.formatMessage({
-								id: "begrunnelse.hvorfor.placeholder"
-							})}
-							onChange={(evt: any) => this.onChange(evt.target.value)}
-							onBlur={() => this.lagreHvisGyldig()}
-							faktumKey={FAKTUM_KEY_KOMMENTARER}
-							maxLength={MAX_CHARS}
-							value={kommentarTilArbeidsforhold}
-						/>
-					</SysteminfoMedSkjema>
-				</Sporsmal>
-			</div>
+			<Sporsmal
+				tekster={getFaktumSporsmalTekst(intl, "arbeidsforhold")}
+				style="system"
+			>
+				<SysteminfoMedSkjema>
+					<div className="skjema-sporsmal__tittel">
+						<FormattedMessage id="arbeidsforhold.infotekst"/>
+					</div>
+					{(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (
+						<p>
+							<FormattedMessage id="arbeidsforhold.ingen"/>
+						</p>
+					)}
+					{alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
+						<ul className={"arbeidsgiverliste"}>
+							{alleArbeidsforhold.map((arbeidsforhold: Arbeidsforhold, index: any) =>
+								<li key={index} className="arbeidsgiverliste__arbeidsgiver">
+									<ArbeidDetaljer arbeidsforhold={arbeidsforhold} />
+								</li>
+							)}
+						</ul>
+					)}
+					<TextareaEnhanced
+						id="begrunnelse_soknad_textarea"
+						placeholder={intl.formatMessage({
+							id: "begrunnelse.hvorfor.placeholder"
+						})}
+						onChange={(evt: any) => this.onChange(evt.target.value)}
+						onBlur={() => this.lagreHvisGyldig()}
+						faktumKey={FAKTUM_KEY_KOMMENTARER}
+						maxLength={MAX_CHARS}
+						value={kommentarTilArbeidsforhold}
+					/>
+				</SysteminfoMedSkjema>
+			</Sporsmal>
 		);
 	}
 }
