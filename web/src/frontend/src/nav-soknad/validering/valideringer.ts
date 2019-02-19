@@ -38,6 +38,7 @@ export function erTelefonnummer(value: string): ValideringActionKey {
 	if (
 		typeof value !== "string" ||
 		value.length < 8 ||
+		value.length > 8 ||
 		(value.length === 8 && !/^[0-9]{8}$/i.test(value))
 	) {
 		return ValideringActionKey.ER_TELEFONNUMMER;

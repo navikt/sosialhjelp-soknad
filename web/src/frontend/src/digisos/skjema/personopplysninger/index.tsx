@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { State } from "../../redux/reducers";
 import { DispatchProps, Dispatch } from "../../../nav-soknad/redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
-import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import {
 	harFaktumVerdi,
 	finnFaktum,
@@ -11,9 +10,6 @@ import {
 	getFaktumVerdi
 } from "../../../nav-soknad/utils";
 import { lagreFaktum } from "../../../nav-soknad/redux/fakta/faktaActions";
-import Personalia from "./tps/Personalia";
-import Telefoninfo from "./tps/Telefoninfo";
-import Bankinformasjon from "./tps/Bankinformasjon";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import {
 	Faktum
@@ -23,7 +19,11 @@ import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjo
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 import { FormattedMessage } from "react-intl";
+import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import Oppholdsadresse from "./tps/Oppholdsadresse";
+import Personalia from "./tps/Personalia";
+import Telefon from "./telefon/Telefon";
+import Bankinformasjon from "./bankinfo/Bankinformasjon";
 
 interface OwnProps {
 	hentVedleggsForventning?: (fakta: any) => void;
@@ -87,13 +87,8 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 					<Personalia fakta={this.props.fakta} />
 				</SporsmalFaktum>
 				<Oppholdsadresse fakta={this.props.fakta} />
-				<Telefoninfo fakta={this.props.fakta} />
-				<Bankinformasjon
-					fakta={this.props.fakta}
-					onHarIkkeKontonummer={(verdi: string) => {
-						this.oppdaterHarIkkeKontonummer(this.props.fakta, verdi, this.props.dispatch);
-					}}
-				/>
+				<Telefon />
+				<Bankinformasjon />
 			</DigisosSkjemaSteg>
 		);
 	}
