@@ -10,9 +10,9 @@ declare module "soknadsosialhjelp-mocksystemdata" {
 
 	export function settBankkontonummer(bankkontonummer: string) : void;
 
-	export function settArbeidsforholdMedArbeidsgivernummer(startDato:string, sluttDato:string, stillingsProsent:string, arbeidsgiverNummer:string , arbeidsgiverNavn:string ): void;
-	export function settArbeidsforholdMedIdent(startDato: string, sluttDato: string , stillingsProsent:string , ident:string ) : void;
-	export function settArbeidsforholdMedOrganisasjonsnummer( startDato: string, sluttDato: string, stillingsProsent:string, orgnummer:string ): void;
+	export function settArbeidsforholdMedArbeidsgivernummer(id:string, startDato:string, sluttDato:string, stillingsProsent:string, arbeidsgiverNummer:string , arbeidsgiverNavn:string ): void;
+	export function settArbeidsforholdMedIdent(id:string, startDato: string, sluttDato: string , stillingsProsent:string , ident:string ) : void;
+	export function settArbeidsforholdMedOrganisasjonsnummer(id:string, startDato: string, sluttDato: string, stillingsProsent:string, orgnummer:string ): void;
 	export function clearArbeidsforhold(): void;
 
 	export function settOrganisasjon(orgnummer: string, navn: string) : void;
@@ -23,8 +23,8 @@ declare module "soknadsosialhjelp-mocksystemdata" {
 	export function settEktefelleMedKodeSeks(ident: string, fornavn: string, mellomnavn: string, etternavn: string, foedselsdato: string): void;
 	export function settEktefelleMedKodeSyv(ident: string, fornavn: string, mellomnavn: string, etternavn: string, foedselsdato: string): void;
 
-	export function settBarnSameBostedsadresse(ident: string, fornavn: string, mellomnavn: string, etternavn: string): void;
-	export function settBarnIkkeSameBostedsadresse(ident: string, fornavn: string, mellomnavn:string, etternavn:string): void;
+	export function settBarnSammeBostedsadresse(ident: string, fornavn: string, mellomnavn: string, etternavn: string): void;
+	export function settBarnIkkeSammeBostedsadresse(ident: string, fornavn: string, mellomnavn:string, etternavn:string): void;
 	export function settBarnMedDoedsdato(ident: string, fornavn: string, mellomnavn: string, etternavn: string, doedsdato: string): void;
 	export function clearFamilieforhold(): void;
 

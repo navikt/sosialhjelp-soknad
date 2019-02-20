@@ -171,7 +171,7 @@ class MockBruker extends React.Component<Props,OwnState> {
 				{ barn.doedsdato && <div>Har doedsdato: {barn.doedsdato_value}</div> }
 				<button onClick={() => {
 					const list: NyttBarnObject[] = this.state.barn_liste;
-					list.splice(key, key);
+					list.splice(key, 1);
 					this.setState({barn_liste: list})
 				}}>x</button>
 			</div>
@@ -216,13 +216,13 @@ class MockBruker extends React.Component<Props,OwnState> {
 			if (this.state.arbeidsforhold_liste.length > 0){
 				this.state.arbeidsforhold_liste.forEach((forhold: NyttArbeidsforholdObject, key: number) => {
 					if (forhold.type === ArbeidsforholdType.NAVN){
-						mocksystemdata.settArbeidsforholdMedArbeidsgivernummer(forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.arbeidsgivernummer, forhold.navn);
+						mocksystemdata.settArbeidsforholdMedArbeidsgivernummer(forhold.id, forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.arbeidsgivernummer, forhold.navn);
 					}
 					if (forhold.type === ArbeidsforholdType.IDENT){
-						mocksystemdata.settArbeidsforholdMedIdent(forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.ident);
+						mocksystemdata.settArbeidsforholdMedIdent(forhold.id, forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.ident);
 					}
 					if (forhold.type === ArbeidsforholdType.ORGANISASJON){
-						mocksystemdata.settArbeidsforholdMedOrganisasjonsnummer(forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.orgnummer);
+						mocksystemdata.settArbeidsforholdMedOrganisasjonsnummer(forhold.id, forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.orgnummer);
 					}
 				})
 			}
@@ -281,9 +281,9 @@ class MockBruker extends React.Component<Props,OwnState> {
 					mocksystemdata.settBarnMedDoedsdato(barn.ident, barn.fornavn, barn.mellomnavn, barn.etternavn, barn.doedsdato_value);
 				} else {
 					if (barn.sammeBostedsadresse){
-						mocksystemdata.settBarnSameBostedsadresse(barn.ident, barn.fornavn, barn.mellomnavn, barn.etternavn);
+						mocksystemdata.settBarnSammeBostedsadresse(barn.ident, barn.fornavn, barn.mellomnavn, barn.etternavn);
 					} else {
-						mocksystemdata.settBarnIkkeSameBostedsadresse(barn.ident, barn.fornavn, barn.mellomnavn, barn.etternavn);
+						mocksystemdata.settBarnIkkeSammeBostedsadresse(barn.ident, barn.fornavn, barn.mellomnavn, barn.etternavn);
 					}
 				}
 			})
@@ -300,6 +300,7 @@ class MockBruker extends React.Component<Props,OwnState> {
 			)
 		}
 
+
 		this.setState({loading: true});
 		Promise.all([
 			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getTelefonPath(), JSON.stringify(mocksystemdata.getTelefonJson())),
@@ -311,6 +312,7 @@ class MockBruker extends React.Component<Props,OwnState> {
 		]).then(() => {
 			this.props.dispatch(tilStart());
 		});
+
 	}
 
 	render(){

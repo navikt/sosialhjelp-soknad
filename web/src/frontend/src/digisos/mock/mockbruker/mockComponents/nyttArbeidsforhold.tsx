@@ -10,6 +10,7 @@ interface Props {
 interface State {
 	isOpened: boolean,
 	type: ArbeidsforholdType,
+	id: string
 	startDato: string,
 	sluttDato: string,
 	stillingsProsent: string,
@@ -28,6 +29,7 @@ export enum ArbeidsforholdType {
 
 export interface NyttArbeidsforholdObject {
 	"type" : string,
+	"id": string
 	"startDato": string,
 	"sluttDato": string,
 	"stillingsProsent": string,
@@ -45,11 +47,12 @@ class NyttArbeidsforhold extends React.Component<Props, State> {
 		this.state = {
 			isOpened: false,
 			type: ArbeidsforholdType.NAVN,
+			id: "1",
 			startDato: "2018-01-01",
 			sluttDato: "2018-02-01",
 			stillingsProsent: "100",
 			navn: "Historisk arbeidsgiver",
-			arbeidsgivernummer: "arbeidsgivernummer",
+			arbeidsgivernummer: "1337",
 			ident: "12345678901",
 			orgnummer: "123"
 		}
@@ -59,6 +62,7 @@ class NyttArbeidsforhold extends React.Component<Props, State> {
 
 		const nyttArbeidsforholdObject: NyttArbeidsforholdObject = {
 			"type" : this.state.type,
+			"id" : this.state.id,
 			"startDato": this.state.startDato,
 			"sluttDato": this.state.sluttDato,
 			"stillingsProsent": this.state.stillingsProsent,
@@ -83,6 +87,7 @@ class NyttArbeidsforhold extends React.Component<Props, State> {
 					<div className="mock-newThingWrapper">
 						<div className="mock-newThing-tittel">Legg til nytt arbeidsforhold:</div>
 						<div className="mock-newThing-body">
+							<MockInput label="Id:" onChange={(evt: any) => this.setState({id: evt.target.value})} value={this.state.id}/>
 							<MockInput label="Startdato:" onChange={(evt: any) => this.setState({startDato: evt.target.value})} value={this.state.startDato}/>
 							<MockInput label="Sluttdato:" onChange={(evt: any) => this.setState({sluttDato: evt.target.value})} value={this.state.sluttDato}/>
 							<MockInput label="Stillingsprosent:" onChange={(evt: any) => this.setState({stillingsProsent: evt.target.value})} value={this.state.stillingsProsent}/>
