@@ -6,10 +6,11 @@ import org.slf4j.LoggerFactory;
 import no.nav.sbl.soknadsosialhjelp.duplicated.Jetty;
 
 public class StartJetty {
-    private static final int PORT = 8080;
+    private static final int  PORT = isRunningOnHeroku() ? Integer.parseInt(System.getenv("PORT")) : 8080;
+
     private static final Logger logger = LoggerFactory.getLogger(StartJetty.class);
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         if (isRunningOnNais()) {
             mapNaisProperties();
         } else  {
@@ -54,6 +55,10 @@ public class StartJetty {
 
     private static boolean isRunningOnNais() {
         return determineEnvironment() != null;
+    }
+
+    public static boolean isRunningOnHeroku(){
+        return System.getenv("HEROKU") != null && Boolean.parseBoolean(System.getenv("HEROKU"));
     }
 
     private static String determineEnvironment() {

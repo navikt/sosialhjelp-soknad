@@ -17,7 +17,11 @@ export function erMockMiljoEllerDev(): boolean {
 	if (erDev()){
 		return true;
 	}
-	return (url.indexOf("sosialhjelp-test.dev-sbs.nais.io") > 0 || url.indexOf("soknadsosialhjelp-t1.nais.oera") > 0);
+	return (
+		url.indexOf("sosialhjelp-test.dev-sbs.nais.io") > 0 ||
+		url.indexOf("soknadsosialhjelp-t1.nais.oera") > 0 ||
+		url.indexOf("heroku") > 0
+	);
 }
 
 export const now = (): number => {

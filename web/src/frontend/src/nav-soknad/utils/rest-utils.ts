@@ -26,11 +26,14 @@ export function getApiBaseUrl(): string {
 	if (location.origin.indexOf("nais.oera") >= 0) {
 		return location.origin.replace("soknadsosialhjelp", "soknadsosialhjelp-server") + "/soknadsosialhjelp-server/";
 	}
+	if (location.origin.indexOf("heroku") >= 0) {
+		return location.origin.replace("sosialhjelp-test", "sosialhjelp-api-test") + "/soknadsosialhjelp-server/";
+	}
 	return kjorerJetty() ? "http://127.0.0.1:8181/soknadsosialhjelp-server/" : "/soknadsosialhjelp-server/";
 }
 
 function determineCredentialsParameter() {
-	return location.origin.indexOf("nais.oera") || erDev() ? "include" : "same-origin";
+	return location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin";
 }
 
 function getServletBaseUrl(): string {
