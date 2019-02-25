@@ -4,8 +4,7 @@ import {State} from "../redux/reducers";
 import {InjectedIntlProps, injectIntl} from "react-intl";
 import {SynligeFaktaProps} from "../redux/synligefakta/synligeFaktaTypes";
 import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
-import {setAuthenticated} from "../../nav-soknad/redux/authentication/authenticationActions";
-import NavFrontendSpinner from "nav-frontend-spinner";
+import {Redirect} from "react-router";
 
 type Props = SynligeFaktaProps & DispatchProps & InjectedIntlProps;
 
@@ -19,17 +18,16 @@ class Link extends React.Component<Props, {visSpinner: boolean}> {
 		};
 	}
 
-	componentDidMount(){
-		this.props.dispatch(setAuthenticated);
-		const url = new URL(window.location.href);
-		const goto = url.searchParams.get("goto");
-		location.href = location.origin + goto;
-	}
-
 	render(){
+		const url = new URL(window.location.href);
+		let urlPath = url.searchParams.get("goto");
+		const contextPath = "soknadsosialhjelp";
+		const regexp = new RegExp("/" + contextPath);
+		urlPath = urlPath.replace(regexp,"");
+
 		return(
 			<div className="application-spinner">
-				<NavFrontendSpinner type="XXL" />
+				<Redirect to={urlPath}/>
 			</div>
 		)
 	}

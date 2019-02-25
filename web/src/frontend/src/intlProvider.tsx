@@ -70,6 +70,5 @@ export default connect((state: SoknadAppState) => {
 	return {
 		ledetekster: state.ledetekster,
 		initRestStatus: state.init.restStatus,
-		authenticationStatus: state.authentication.status
 	};
 })(IntlProvider);
