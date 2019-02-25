@@ -5,8 +5,11 @@ import org.slf4j.LoggerFactory;
 
 import no.nav.sbl.soknadsosialhjelp.duplicated.Jetty;
 
+import java.io.File;
+
 public class StartJetty {
     private static final int  PORT = isRunningOnHeroku() ? Integer.parseInt(System.getenv("PORT")) : 8080;
+    private static final File overrideWebXmlFile = isRunningOnHeroku() ? new File("./web/target/classes/webapp/WEB-INF/heroku-web.xml") : null;
 
     private static final Logger logger = LoggerFactory.getLogger(StartJetty.class);
 
@@ -18,6 +21,7 @@ public class StartJetty {
         }
         Jetty jetty = new Jetty.JettyBuilder()
                 .at("/soknadsosialhjelp")
+                .overrideWebXml(overrideWebXmlFile)
                 .port(PORT)
                 .buildJetty();
         logger.info("http://127.0.0.1:" + PORT + "/soknadsosialhjelp/informasjon");
