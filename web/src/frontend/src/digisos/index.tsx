@@ -42,7 +42,7 @@ class App extends React.Component<InjectedIntlProps, {}> {
 					<Route
 						path={`/undersokelse`}
 						exact={true}
-						component={() => <div/>}
+						component={() => <div style={{height: "67vh"}}/>}
 					/>
 				</Switch>
 			{!ettersendelse && !informasjon && !undersokelse && (
