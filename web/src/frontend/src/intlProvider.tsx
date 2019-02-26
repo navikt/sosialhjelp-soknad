@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {LedetekstState} from "./nav-soknad/redux/ledetekster/ledeteksterTypes";
 import {DispatchProps, SoknadAppState} from "./nav-soknad/redux/reduxTypes";
 import Feilside from "./nav-soknad/components/feilside/Feilside";
-import {AUTHENTICATION_STATUS, REST_STATUS} from "./nav-soknad/types";
+import {REST_STATUS} from "./nav-soknad/types";
 import {authenticateUser} from "./nav-soknad/redux/authentication/authenticationActions";
 
 addLocaleData(nb);
@@ -18,7 +18,7 @@ interface IntlProviderProps {
 interface StateProps {
 	ledetekster: LedetekstState;
 	initRestStatus: REST_STATUS;
-	authenticationStatus: AUTHENTICATION_STATUS;
+	linkVisited: boolean;
 }
 
 type Props = StateProps & IntlProviderProps & DispatchProps;
@@ -27,7 +27,7 @@ type Props = StateProps & IntlProviderProps & DispatchProps;
 class IntlProvider extends React.Component<Props, {}> {
 
 	componentDidMount() {
-		this.props.dispatch(authenticateUser(this.props.authenticationStatus));
+		this.props.dispatch(authenticateUser());
 	}
 
 
@@ -70,5 +70,6 @@ export default connect((state: SoknadAppState) => {
 	return {
 		ledetekster: state.ledetekster,
 		initRestStatus: state.init.restStatus,
+		linkVisited: state.authentication.linkVisited
 	};
 })(IntlProvider);

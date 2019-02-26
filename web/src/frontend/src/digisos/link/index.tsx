@@ -1,24 +1,30 @@
 import * as React from 'react';
 import {connect} from "react-redux";
-import {State} from "../redux/reducers";
-import {InjectedIntlProps, injectIntl} from "react-intl";
-import {SynligeFaktaProps} from "../redux/synligefakta/synligeFaktaTypes";
-import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
+import {DispatchProps, SoknadAppState} from "../../nav-soknad/redux/reduxTypes";
 import {Redirect} from "react-router";
+import {LedetekstState} from "../../nav-soknad/redux/ledetekster/ledeteksterTypes";
+import {REST_STATUS} from "../../nav-soknad/types";
+import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
 
-type Props = SynligeFaktaProps & DispatchProps & InjectedIntlProps;
+interface IntlProviderProps {
+	children: React.ReactNode;
+}
 
+interface StateProps {
+	ledetekster: LedetekstState;
+	initRestStatus: REST_STATUS;
+	linkVisited: boolean;
+}
 
-class Link extends React.Component<Props, {visSpinner: boolean}> {
+type Props = StateProps & DispatchProps & IntlProviderProps;
 
-	constructor(props: Props){
-		super(props);
-		this.state = {
-			visSpinner: true
-		};
-	}
+class Link extends React.Component<Props, {}> {
+
 
 	render(){
+
+		this.props.dispatch(setLinkVisited());
+
 		const url = new URL(window.location.href);
 		let urlPath = url.searchParams.get("goto");
 		const contextPath = "soknadsosialhjelp";
@@ -33,8 +39,8 @@ class Link extends React.Component<Props, {visSpinner: boolean}> {
 	}
 }
 
-export default connect((state: State, {}) => {
+export default connect((state: SoknadAppState) => {
 	return {
-
+		linkVisited: state.authentication.linkVisited,
 	};
-})(injectIntl(Link));
+})(Link);

@@ -59,7 +59,7 @@ function configureStore() {
 	return createdStore;
 }
 
-const store = configureStore();
+export const store = configureStore();
 
 window.onerror = (errorMessage, url, line, column, error) => {
 	store.dispatch(loggException(errorMessage.toString(), url, line, column, error));

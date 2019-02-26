@@ -4,10 +4,14 @@ import {loggFeil} from "../redux/navlogger/navloggerActions";
 import {put} from "redux-saga/effects";
 import {push} from "react-router-redux";
 import {Sider} from "../redux/navigasjon/navigasjonTypes";
+import { store } from '../../index';
+
 
 export const hostAdresseProd = 'tjenester.nav.no';
 export const hostAdresseTest = 'tjenester-q0.nav.no';
-export const hostAdresseTestNais = 'soknadsosialhjelp-q0.nais.oera-q.local';
+export const hostAdresseTestNaist1 = 'soknadsosialhjelp-t1.nais.oera-q.local';
+export const hostAdresseTestNaisq0 = 'soknadsosialhjelp-q0.nais.oera-q.local';
+export const hostAdresseTestNaisq1 = 'soknadsosialhjelp-q1.nais.oera-q.local';
 export const hostAdresseLocal = 'localhost:3000';
 export const hostAdresseLocalJetty = 'localhost:8080';
 
@@ -18,7 +22,6 @@ export const loginServiceUrlLocal = 'http://localhost:8181/soknadsosialhjelp-ser
 export const loginServiceLogoutUrlProd = 'https://loginservice.nav.no/slo';
 export const loginServiceLogoutUrlTest = 'https://loginservice-q.nav.no/slo';
 export const loginServiceLogoutUrlLocal = 'http://localhost:8181/soknadsosialhjelp-server/local/slo';
-
 
 export function erDev(): boolean {
 	const url = window.location.href;
@@ -62,7 +65,11 @@ export function getLoginServiceUrl(): string {
 	if (host === hostAdresseProd) {
 		return loginServiceUrlProd + redirectParam;
 	}
-	if (host === hostAdresseTest || host === hostAdresseTestNais){
+	if (host === hostAdresseTest ||
+		host === hostAdresseTestNaist1 ||
+		host === hostAdresseTestNaisq0 ||
+		host === hostAdresseTestNaisq1
+	){
 		return loginServiceUrlTest + redirectParam;
 	}
 	if (host === hostAdresseLocal || hostAdresseLocalJetty) {
@@ -79,7 +86,11 @@ export function getLoginServiceLogoutUrl(){
 	if (host === hostAdresseProd) {
 		return loginServiceLogoutUrlProd;
 	}
-	if (host === hostAdresseTest || hostAdresseTestNais){
+	if (host === hostAdresseTest ||
+		host === hostAdresseTestNaist1 ||
+		host === hostAdresseTestNaisq0 ||
+		host === hostAdresseTestNaisq1
+	){
 		return loginServiceLogoutUrlTest;
 	}
 	if (host === hostAdresseLocal) {
@@ -127,6 +138,7 @@ const getHeaders = () => {return new Headers({
 })};
 
 const serverRequest = (method: string, urlPath: string, body: string) => {
+
 	const OPTIONS: RequestInit = {
 		headers: getHeaders(),
 		method,
@@ -236,9 +248,15 @@ export function toJson<T>(response: Response): Promise<T> {
 
 function sjekkStatuskode(response: Response) {
 
+	const AUTHENTICATION = "authentication";
+	const LINK_VISITED = "linkVisited";
+	let linkVisited: boolean = store.getState()[AUTHENTICATION][LINK_VISITED];
+
 	if (response.status === 401){
 		if(window.location.pathname !== getRedirectPathname()){
-			window.location.href = getLoginServiceUrl();
+			if (!linkVisited){
+				window.location.href = getLoginServiceUrl();
+			}
 		} else {
 			put(push(Sider.SERVERFEIL));
 		}
@@ -273,3 +291,6 @@ export function detekterInternFeilKode(feilKode: string): string {
 	}
 	return internFeilKode;
 }
+
+
+
