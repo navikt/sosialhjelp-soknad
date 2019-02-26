@@ -19,6 +19,7 @@ interface StateProps {
 	ledetekster: LedetekstState;
 	initRestStatus: REST_STATUS;
 	linkVisited: boolean;
+	harTilgang: boolean;
 }
 
 type Props = StateProps & IntlProviderProps & DispatchProps;
@@ -37,7 +38,9 @@ class IntlProvider extends React.Component<Props, {}> {
 		const locale = "nb";
 
 		if (initRestStatus === REST_STATUS.INITIALISERT ||
-			initRestStatus === REST_STATUS.PENDING) {
+			initRestStatus === REST_STATUS.PENDING ||
+			(!this.props.harTilgang && !this.props.linkVisited)
+		) {
 			children = (
 				<div className="application-spinner">
 					<NavFrontendSpinner type="XXL" />
@@ -70,6 +73,7 @@ export default connect((state: SoknadAppState) => {
 	return {
 		ledetekster: state.ledetekster,
 		initRestStatus: state.init.restStatus,
-		linkVisited: state.authentication.linkVisited
+		linkVisited: state.authentication.linkVisited,
+		harTilgang: state.tilgang.harTilgang
 	};
 })(IntlProvider);
