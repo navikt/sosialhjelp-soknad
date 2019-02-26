@@ -25,6 +25,9 @@ public class StartJetty {
                 .port(PORT)
                 .buildJetty();
         logger.info("http://127.0.0.1:" + PORT + "/soknadsosialhjelp/informasjon");
+        if (isRunningOnHeroku()){
+            logger.info("Is running on Heroku, with port : " + PORT);
+        }
 
         Runtime.getRuntime().addShutdownHook(new ShutdownHook(jetty));
 
