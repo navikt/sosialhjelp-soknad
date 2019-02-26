@@ -130,6 +130,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 					onSkjulSkjema={() => this.endreKontoBrukerdefinert(false)}
 					endreLabel={endreLabel}
 					avbrytLabel={avbrytLabel}
+					focus={false}
 					skjema={(
 						<div>
 							<InputEnhanced

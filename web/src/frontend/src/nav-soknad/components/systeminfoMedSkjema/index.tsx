@@ -19,6 +19,9 @@ interface Props {
 	avbrytLabel?: string;
 	/** Om skjema skal vises eller ikke */
 	skjemaErSynlig?: boolean;
+
+	/* Disable "auto focus" */
+	focus?: boolean;
 }
 
 class SysteminfoMedSkjema extends React.Component<Props> {
@@ -33,13 +36,18 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 
 	componentWillReceiveProps(nextProps: Props) {
 		if (!this.props.skjemaErSynlig && nextProps.skjemaErSynlig) {
-			this.focusFunc = () => {
-				focusOnFirstElement(this.skjema);
-			};
+			if (this.props.focus !== false) {
+				this.focusFunc = () => {
+					focusOnFirstElement(this.skjema);
+				};
+			}
+
 		} else if (this.props.skjemaErSynlig && !nextProps.skjemaErSynlig) {
-			this.focusFunc = () => {
-				(findDOMNode(this.visSkjemaKnapp) as HTMLElement).focus();
-			};
+			if (this.props.focus !== false) {
+				this.focusFunc = () => {
+					(findDOMNode(this.visSkjemaKnapp) as HTMLElement).focus();
+				};
+			}
 		}
 	}
 

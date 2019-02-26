@@ -37,10 +37,6 @@ class TelefonView extends React.Component<Props, {}> {
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 		telefonnummer.verdi = verdi;
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
-
-		// verdi = this.fjernLandkode(verdi);
-		// verdi = verdi.replace(/[ \.]/g,"");
-		/* this.validerTelefonnummer(verdi); */
 	}
 
 	onBlur() {
@@ -80,7 +76,6 @@ class TelefonView extends React.Component<Props, {}> {
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 		const endreLabel = intl.formatMessage({ id: "kontakt.system.telefon.endreknapp.label"});
 		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
-		// const verdi = (telefonnummer && telefonnummer.verdi) ? this.fjernLandkode(telefonnummer.verdi) : "";
 		const verdi = (telefonnummer && telefonnummer.verdi) ? telefonnummer.verdi : "";
 		const brukerdefinert = telefonnummer ? telefonnummer.brukerdefinert : false;
 		const systemverdi = telefonnummer ? telefonnummer.systemverdi : "";
@@ -96,6 +91,7 @@ class TelefonView extends React.Component<Props, {}> {
 					onSkjulSkjema={() => this.setBrukerdefinert(false)}
 					endreLabel={endreLabel}
 					avbrytLabel={avbrytLabel}
+					focus={false}
 					skjema={(
 						<InputEnhanced
 							type="tel"
