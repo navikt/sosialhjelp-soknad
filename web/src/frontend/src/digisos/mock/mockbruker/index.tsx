@@ -374,11 +374,9 @@ class MockBruker extends React.Component<Props,OwnState> {
 						<Radio onChange={() => this.setState({ektefelle: true})} label='Ja' name='ektefelle' value={'ja'} />
 						<Collapse className="mock-block-collapse" isOpened={this.state.ektefelle}>
 
-							<MockInput label="Fødselsnummer:" onChange={(evt: any) => this.setState({ektefelle_foedselsnummer: evt.target.value})} value={this.state.ektefelle_foedselsnummer}/>
 							<MockInput label="Fornavn:" onChange={(evt: any) => this.setState({ektefelle_fornavn: evt.target.value})} value={this.state.ektefelle_fornavn}/>
 							<MockInput label="Mellomnavn:" onChange={(evt: any) => this.setState({ektefelle_mellomnavn: evt.target.value})} value={this.state.ektefelle_mellomnavn}/>
 							<MockInput label="Etternavn:" onChange={(evt: any) => this.setState({ektefelle_etternavn: evt.target.value})} value={this.state.ektefelle_etternavn}/>
-							<MockInput label="Fødselsdato:" onChange={(evt: any) => this.setState({ektefelle_foedselsdato: evt.target.value})} value={this.state.ektefelle_foedselsdato}/>
 
 							<div className="mock-radiogroup">
 								<div className="mock-block-tittel">

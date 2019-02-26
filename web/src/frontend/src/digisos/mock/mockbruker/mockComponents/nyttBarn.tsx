@@ -73,7 +73,6 @@ export class NyttBarn extends React.Component<Props, State>{
 					<div className="mock-newThingWrapper">
 						<div className="mock-newThing-tittel">Legg til nytt barn:</div>
 						<div className="mock-newThing-body">
-							<MockInput label="Fødselsnummer:" onChange={(evt: any) => this.setState({ident: evt.target.value})} value={this.state.ident}/>
 
 							<MockInput label="Fornavn:" onChange={(evt: any) => this.setState({fornavn: evt.target.value})} value={this.state.fornavn}/>
 
