@@ -27,12 +27,12 @@ class Bankinformasjon extends React.Component<Props, {}> {
 
 	onBlur() {
 		const { soknadsdata } = this.props;
-		const kontonummer = {...soknadsdata.personalia.kontonummer};
+		let kontonummer = {...soknadsdata.personalia.kontonummer};
 		let feilkode: ValideringActionKey = null;
 		if (kontonummer.verdi !== null && kontonummer.verdi !== "") {
 			feilkode = this.validerKontonummer(kontonummer.verdi);
 			if (!feilkode) {
-				kontonummer.verdi = kontonummer.verdi.replace(/[ \.]/g,"");
+				kontonummer = this.vaskKontonummerStrenger(kontonummer);
 				this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
 			}
 		} else {
@@ -51,18 +51,17 @@ class Bankinformasjon extends React.Component<Props, {}> {
 		return feilkode;
 	}
 
-	getKontonummer(): Kontonummer {
-		return this.props.soknadsdata.personalia.kontonummer;
-	}
-
 	endreKontoBrukerdefinert(brukerdefinert: boolean) {
-		const kontonummer: Kontonummer = this.getKontonummer();
+		const { soknadsdata } = this.props;
+		let kontonummer: Kontonummer = {...soknadsdata.personalia.kontonummer};
 		kontonummer.brukerdefinert = brukerdefinert;
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
 		const feilkode: ValideringActionKey = this.validerKontonummer(kontonummer.verdi);
 		if (!feilkode) {
-			kontonummer.verdi = kontonummer.verdi.replace(/[ \.]/g,"");
-			kontonummer.systemverdi = kontonummer.systemverdi.replace(/[ \.]/g,"");
+			kontonummer = this.vaskKontonummerStrenger(kontonummer);
+			if(kontonummer.brukerdefinert === false) {
+				kontonummer.verdi = null;
+			}
 			this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
 		}
 	}
@@ -75,21 +74,29 @@ class Bankinformasjon extends React.Component<Props, {}> {
 		}
 		kontonummer.verdi = verdi;
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
-		// this.validerKontonummer(verdi);
 	}
 
 	onChangeCheckboks(event: any): void {
-		const kontonummer: Kontonummer = this.getKontonummer();
+		const { soknadsdata } = this.props;
+		let kontonummer: Kontonummer = {...soknadsdata.personalia.kontonummer};
 		const harIkkeKonto = kontonummer.harIkkeKonto ? true : false;
 		kontonummer.harIkkeKonto = !harIkkeKonto;
-		this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
+		kontonummer = this.vaskKontonummerStrenger(kontonummer);
+		this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
 		event.preventDefault();
 	}
 
+	vaskKontonummerStrenger(kontonummer: Kontonummer) {
+		const kontonummerClone = {...kontonummer};
+		kontonummerClone.verdi = kontonummerClone.verdi.replace(/[ \.]/g, "");
+		kontonummerClone.systemverdi = kontonummerClone.systemverdi.replace(/[ \.]/g, "");
+		return kontonummerClone;
+	}
+
 	render() {
-		const { intl } = this.props;
-		const kontonummer: Kontonummer = this.getKontonummer();
+		const { intl, soknadsdata } = this.props;
+		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
 		if (!kontonummer) {
 			return (<span/>);
 		}
