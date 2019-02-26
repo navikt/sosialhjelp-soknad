@@ -89,8 +89,12 @@ class Bankinformasjon extends React.Component<Props, {}> {
 
 	vaskKontonummerStrenger(kontonummer: Kontonummer) {
 		const kontonummerClone = {...kontonummer};
-		kontonummerClone.verdi = kontonummerClone.verdi.replace(/[ \.]/g, "");
-		kontonummerClone.systemverdi = kontonummerClone.systemverdi.replace(/[ \.]/g, "");
+		if (kontonummerClone.verdi !== null && kontonummerClone.verdi.length > 1) {
+			kontonummerClone.verdi = kontonummerClone.verdi.replace(/[ \.]/g, "");
+		}
+		if (kontonummerClone.systemverdi !== null && kontonummerClone.systemverdi.length > 1) {
+			kontonummerClone.systemverdi = kontonummerClone.systemverdi.replace(/[ \.]/g, "");
+		}
 		return kontonummerClone;
 	}
 
