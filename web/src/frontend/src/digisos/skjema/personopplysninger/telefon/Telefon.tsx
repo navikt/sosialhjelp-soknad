@@ -82,11 +82,12 @@ class TelefonView extends React.Component<Props, {}> {
 		const {intl, soknadsdata } = this.props;
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 		const endreLabel = intl.formatMessage({ id: "kontakt.system.telefon.endreknapp.label"});
-		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
 		const verdi = (telefonnummer && telefonnummer.verdi) ? telefonnummer.verdi : "";
 		const brukerdefinert = telefonnummer ? telefonnummer.brukerdefinert : false;
 		const systemverdi = telefonnummer ? telefonnummer.systemverdi : "";
 		const faktumKey = telefonnummer.systemverdi === null ? FAKTUM_KEY_TELEFON : FAKTUM_KEY_SYSTEM_TELEFON;
+		const avbrytLabel: string = systemverdi === null ?
+			null : intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
 
 		return (
 			<Sporsmal
