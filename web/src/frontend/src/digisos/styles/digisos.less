@@ -9,11 +9,14 @@
 @import "../skjema/ekstrainformasjon/vedlegg/slettIkon.less";
 @import "../skjema/ekstrainformasjon/vedlegg/vedleggsliste.less";
 @import "../skjema/familie/barn.less";
+@import "../skjema/familie/sivilstatus.less";
 @import "../skjema/inntektFormue/navytelser.less";
 @import "../skjema/oppsummering/oppsummering.less";
 @import "../skjema/personopplysninger/tps/oppholdsadresse.less";
 @import "../skjema/ettersendelse/ettersendelse.less";
 @import "../skjema/ettersendelse/bannerEttersendelse.less";
+
+
 
 @navRosa: #f3e3e3;
 
@@ -22,14 +25,10 @@ body {
 }
 
 .app-digisos {
-	text-align: center;
-	padding-bottom: 10em;
-	&__title {
-		margin-bottom: 3rem;
-		margin-top: 1.5rem;
-		@media @mobile {
-			margin-bottom: 1.5rem;
-		}
+	padding-bottom: 10rem;
+
+  	@media @mobile {
+	  padding-bottom: 4rem;
 	}
 }
 
@@ -38,8 +37,7 @@ body {
 }
 
 .hidden-topnavsection {
-  height: 0;
-  opacity: 0;
+  display: none;
 }
 
 .varsler-display {
@@ -64,6 +62,11 @@ body {
   }
 }
 
+.inputPanelPadding {
+	height: 3.5rem;
+}
+
+
 .finnNavKontor {
   display: flex;
   align-items: center;
@@ -74,3 +77,45 @@ body {
   }
 }
 
+// Styling lagt på for å få radiopanelgruppe til å ha samme utseende som NAVs guideline app
+.inputPanel__label {
+  margin-left: 2rem;
+}
+
+.inputPanel--checked {
+  background-color: rgba(0, 103, 197, 0.2) !important;
+  border: 1px solid transparent !important;
+}
+
+.radioPanel.inputPanel--checked:hover:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) {
+  background-color: rgba(0, 103, 197, 0.2);
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+// På mouseover, fyll radioknapper og sjekkbokser med blå bakgrunnsfarge
+.inputPanel:hover:not(.inputPanel__checked) {
+
+  .radioknapp + .skjemaelement__label:before {
+	border: 12px solid #99c2e8;
+  }
+
+  .checkboks + .skjemaelement__label:before {
+	border: 12px solid #99c2e8;
+  }
+}
+
+.skjema__feilomrade--harFeil {
+
+  .inputPanel:hover:not(.inputPanel__checked) {
+
+	.radioknapp + .skjemaelement__label:before {
+	  border: 12px solid #ba3a26;
+	}
+
+	.checkboks + .skjemaelement__label:before {
+	  border: 12px solid #ba3a26;
+	}
+  }
+
+}

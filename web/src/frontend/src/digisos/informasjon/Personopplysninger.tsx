@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
 import { State } from "../redux/reducers";
 import BehandlingAvPersonopplysningerModal from "./BehandlingAvPersonopplysningerModal";
-import { Element, Undertittel } from "nav-frontend-typografi";
+import { Undertittel } from "nav-frontend-typografi";
 
 type Props = InjectedIntlProps & DispatchProps;
 
@@ -24,10 +24,10 @@ class Personopplysninger extends React.Component<Props, {}> {
 							<div className="ikon">
 								<img src="/soknadsosialhjelp/statisk/bilder/ikon_papirstabel.svg"/>
 							</div>
-							<div className="innhold">
-								<Element>
+								<div className="innhold">
+								<h3 className="typo-element">
 									<FormattedMessage id="informasjon.tekster.personopplysninger.innhenting.tittel"/>
-								</Element>
+								</h3>
 								<FormattedMessage id="informasjon.tekster.personopplysninger.innhenting.tekst"/>
 							</div>
 						</div>
@@ -36,9 +36,9 @@ class Personopplysninger extends React.Component<Props, {}> {
 								<img src="/soknadsosialhjelp/statisk/bilder/ikon_blyanter.svg"/>
 							</div>
 							<div className="innhold">
-								<Element>
+								<h3 className="typo-element">
 									<FormattedMessage id="informasjon.tekster.personopplysninger.fordusender.tittel"/>
-								</Element>
+								</h3>
 								<FormattedMessage id="informasjon.tekster.personopplysninger.fordusender.tekst"/>
 							</div>
 						</div>
@@ -47,9 +47,9 @@ class Personopplysninger extends React.Component<Props, {}> {
 								<img src="/soknadsosialhjelp/statisk/bilder/ikon_brevkonvolutt.svg"/>
 							</div>
 							<div className="innhold">
-								<Element>
+								<h3 className="typo-element">
 									<FormattedMessage id="informasjon.tekster.personopplysninger.ettersendt.tittel"/>
-								</Element>
+								</h3>
 								<FormattedMessage id="informasjon.tekster.personopplysninger.ettersendt.tekst"/>
 							</div>
 						</div>
@@ -59,18 +59,20 @@ class Personopplysninger extends React.Component<Props, {}> {
 								<img src="/soknadsosialhjelp/statisk/bilder/ikon_ark.svg"/>
 							</div>
 							<div className="innhold">
-								<Element>
+								<h3 className="typo-element">
 									<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.tittel"/>
-								</Element>
+								</h3>
 								<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.tekst"/>
-								&nbsp;<a
-								className="lenke"
-								onClick={() => {
-									this.props.dispatch(setVisSamtykkeInfo(true));
-								}}
-							>
-								<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke"/>
-							</a>
+								&nbsp;
+								<a
+									className="lenke"
+									href="#"
+									onClick={() => {
+										this.props.dispatch(setVisSamtykkeInfo(true));
+									}}
+								>
+									<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke"/>
+								</a>
 							</div>
 						</div>
 

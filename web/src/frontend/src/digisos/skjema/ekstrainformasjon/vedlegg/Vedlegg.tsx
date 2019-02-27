@@ -8,6 +8,7 @@ import LastOppVedlegg from "./LastOppVedlegg";
 import { Faktum } from "../../../../nav-soknad/types/navSoknadTypes";
 import { Checkbox } from "nav-frontend-skjema";
 import { vedleggAlleredeSendt } from "../../../../nav-soknad/redux/vedlegg/vedleggActions";
+import { REST_STATUS } from "../../../../nav-soknad/types";
 
 interface Props {
 	vedlegg: Vedlegg[];
@@ -37,9 +38,12 @@ class VedleggComponent extends React.Component<AllProps, {}> {
 				/>;
 			});
 		const vedleggsKey = `vedlegg.${vedlegg[ 0 ].skjemaNummer}.${vedlegg[ 0 ].skjemanummerTillegg}.tittel`;
-		const disabledAlleredeLastetOppCheckbox = this.props.vedlegg[ 0 ].innsendingsvalg === "LastetOpp";
 		const disableLastOppVedleggKnapp = this.props.vedlegg[ 0 ].innsendingsvalg === "VedleggAlleredeSendt";
-
+		const gjeldende = belopFaktum.faktumId === this.props.sistEndredeFaktumId;
+		const blirLastetOpp = gjeldende && this.props.opplastingStatus === REST_STATUS.PENDING;
+		const disabledAlleredeLastetOppCheckbox = blirLastetOpp ||
+			this.props.vedlegg[ 0 ].innsendingsvalg === "LastetOpp";
+		
 		return (
 			<div className="">
 				<p>

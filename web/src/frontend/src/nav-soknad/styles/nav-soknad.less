@@ -28,6 +28,12 @@
 
 
 @import "../components/animasjoner/ellablunk/ellablunk.less";
+@import "../components/banner/banner.less";
+
+// Nav farger
+@navSuksessFarge: #9BD0B0;
+@navViktigFarge: #FFD399;
+@navFeilFarge: #E3B0A8;
 
 body {
 	overflow-y: scroll;
@@ -74,15 +80,16 @@ fieldset {
 }
 
 .detaljeliste {
+
+	margin-top: 0;
     display: flex;
     flex-wrap: wrap;
-	margin: 0;
 	list-style: none;
 	padding-left: 0;
   	-webkit-padding-start: 0;
 	&__element {
 		padding: 0;
-		margin: 0 0 0.2em 0;
+		margin: 0 0 0 0;
 	  	display: flex;
 	  	width: 100%;
 		&--spaced {
@@ -103,7 +110,7 @@ fieldset {
   list-style-type: none;
   padding-left: 0;
   -webkit-padding-start: 0;
-  margin-top: 2rem;
+  margin-top: 1rem;
 
   &__arbeidsgiver {
 	margin-bottom: 2rem;

@@ -5,7 +5,6 @@ import * as React from "react";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { SynligeFaktaProps } from "../../redux/synligefakta/synligeFaktaTypes";
 import BannerEttersendelse from "./bannerEttersendelse";
-import { FeatureToggles } from "../../../featureToggles";
 import {
 	lesEttersendelser, opprettEttersendelse,
 	sendEttersendelse
@@ -14,19 +13,20 @@ import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
 import { MargIkoner } from "./margIkoner";
-import { getNavEnhetMedOrgnr, NavEnhet } from "../../data/kommuner";
-import { lesKommuner } from "../../../nav-soknad/redux/kommuner/kommuneActions";
 import { visToppMeny } from "../../../nav-soknad/utils/domUtils";
+import { EttersendelseFeilkode } from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
+import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
+import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
+import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 
 interface OwnProps {
-	visEttersendelse: boolean;
 	manglendeVedlegg: any[];
 	brukerbehandlingskjedeId: string;
 	brukerbehandlingId: string;
 	restStatus: REST_STATUS;
 	originalSoknad: any;
 	ettersendelser: any;
-	navEnheter: NavEnhet[];
+	feilKode: string;
 }
 
 type Props = OwnProps & SynligeFaktaProps & DispatchProps & InjectedIntlProps;
@@ -51,7 +51,6 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 		const brukerbehandlingskjedeId = this.lesBrukerbehandlingskjedeId();
 		this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
 		this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
-		this.props.dispatch(lesKommuner());
 	}
 
 	lesBrukerbehandlingskjedeId() {
@@ -112,78 +111,74 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 	}
 
 	isEttersendelseAktivert() {
-		if (this.props.originalSoknad != null && this.props.originalSoknad.orgnummer != null) {
-			const navEnhet = getNavEnhetMedOrgnr(this.props.navEnheter, this.props.originalSoknad.orgnummer);
-			if (navEnhet != null && navEnhet.features.ettersendelse) {
-				return true;
-			}
-		}
-		return false;
+		return this.props.originalSoknad != null && this.props.originalSoknad.orgnummer != null;
 	}
 
 	render() {
-		const { originalSoknad, ettersendelser, visEttersendelse } = this.props;
-		const visEttersendeFeatureToggle = visEttersendelse && (visEttersendelse === true);
+		const { originalSoknad, ettersendelser } = this.props;
 		const antallManglendeVedlegg = this.antallManglendeVedlegg();
 		const datoManglendeVedlegg = this.manglendeVedleggDato();
 		const ettersendelseAktivert = this.isEttersendelseAktivert();
 
+		const opprettNyEttersendelseFeilet: boolean =
+			this.props.feilKode === EttersendelseFeilkode.NY_ETTERSENDELSE_FEILET;
+
 		return (
 			<div className="ettersendelse">
-
 				<BannerEttersendelse>
 					<FormattedMessage id="applikasjon.sidetittel"/>
 				</BannerEttersendelse>
+				<div className="blokk-center panel ettersendelse__panel">
+					<p className="ettersendelse ingress">
+						<FormattedHTMLMessage id="ettersendelse.ingress"/>
+					</p>
 
-				{!visEttersendeFeatureToggle && (
-					<div className="blokk-center">
-						<p className="ettersendelse ingress">
-							<FormattedHTMLMessage id="ettersendelse.ikke_tilgjengelig"/>
-						</p>
-					</div>
-				)}
+					{originalSoknad && (
+						<AvsnittMedMarger
+							venstreIkon={MargIkoner.OK}
+							hoyreIkon={MargIkoner.PRINTER}
+							onClickHoyreIkon={() => this.skrivUt()}
+						>
+							<h3><FormattedHTMLMessage id="ettersendelse.soknad_sendt"/> {originalSoknad.navenhet} kommune</h3>
+							<p>Innsendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}</p>
+						</AvsnittMedMarger>
+					)}
 
-				{visEttersendeFeatureToggle && (
-					<div className="blokk-center panel ettersendelse__panel">
-						<p className="ettersendelse ingress">
-							<FormattedHTMLMessage id="ettersendelse.ingress"/>
-						</p>
+					{ettersendelser && ettersendelser.length > 0 && ettersendelser.map((ettersendelse: any) => {
+							return (
+								<AvsnittMedMarger
+									venstreIkon={MargIkoner.OK}
+									key={ettersendelse.behandlingsId}
+								>
+									<h3>
+										{ettersendelse.innsendteVedlegg.length} &nbsp;
+										<FormattedHTMLMessage id="ettersendelse.vedlegg_sendt"/></h3>
+									<p>
+										<FormattedHTMLMessage
+											id="ettersendelse.dato_tid"
+											values={
+												{
+													dato: ettersendelse.innsendtDato,
+													tid: ettersendelse.innsendtTidspunkt
+												}}
+										/>
+									</p>
+								</AvsnittMedMarger>
+							);
+						}
+					)}
 
-						{originalSoknad && (
-							<AvsnittMedMarger
-								venstreIkon={MargIkoner.OK}
-								hoyreIkon={MargIkoner.PRINTER}
-								onClickHoyreIkon={() => this.skrivUt()}
+					{opprettNyEttersendelseFeilet && (
+						<AvsnittMedMarger>
+							<Informasjonspanel
+								ikon={InformasjonspanelIkon.HENSYN}
+								farge={DigisosFarge.VIKTIG}
 							>
-								<h3><FormattedHTMLMessage id="ettersendelse.soknad_sendt"/> {originalSoknad.navenhet}</h3>
-								<p>Innsendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}</p>
-							</AvsnittMedMarger>
-						)}
-
-						{ettersendelser && ettersendelser.length > 0 && ettersendelser.map((ettersendelse: any) => {
-								return (
-									<AvsnittMedMarger
-										venstreIkon={MargIkoner.OK}
-										key={ettersendelse.behandlingsId}
-									>
-										<h3>
-											{ettersendelse.innsendteVedlegg.length} &nbsp;
-											<FormattedHTMLMessage id="ettersendelse.vedlegg_sendt"/></h3>
-										<p>
-											<FormattedHTMLMessage
-												id="ettersendelse.dato_tid"
-												values={
-													{
-														dato: ettersendelse.innsendtDato,
-														tid: ettersendelse.innsendtTidspunkt
-													}}
-											/>
-										</p>
-									</AvsnittMedMarger>
-								);
-							}
-						)}
-
+								<FormattedHTMLMessage id="ettersendelse.ikke.mulig" />
+							</Informasjonspanel>
+						</AvsnittMedMarger>
+					)}
+					{!opprettNyEttersendelseFeilet && (
 						<EttersendelseEkspanderbart
 							kunGenerellDokumentasjon={antallManglendeVedlegg === 0}
 							ettersendelseAktivert={ettersendelseAktivert}
@@ -191,27 +186,27 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 						>
 							{antallManglendeVedlegg > 0 && (
 								<span>
-									<h3>{antallManglendeVedlegg} vedlegg mangler</h3>
-									<div>{datoManglendeVedlegg}</div>
-								</span>
+								<h3>{antallManglendeVedlegg} <FormattedHTMLMessage id="ettersendelse.vedlegg.mangler" /></h3>
+								<div>{datoManglendeVedlegg}</div>
+							</span>
 							)}
 							{antallManglendeVedlegg === 0 && (
-								<h3>Last opp generell dokumentasjon</h3>
+								<h3><FormattedHTMLMessage id="ettersendelse.generell.dokumentasjon" /></h3>
 							)}
 						</EttersendelseEkspanderbart>
+					)}
 
-						<AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>
-							<h3><FormattedHTMLMessage id="ettersendelse.samtale.tittel" /></h3>
-							<p><FormattedHTMLMessage id="ettersendelse.samtale.info" /></p>
-						</AvsnittMedMarger>
+					<AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>
+						<h3><FormattedHTMLMessage id="ettersendelse.samtale.tittel" /></h3>
+						<p><FormattedHTMLMessage id="ettersendelse.samtale.info" /></p>
+					</AvsnittMedMarger>
 
-						<AvsnittMedMarger venstreIkon={MargIkoner.KONVOLUTT}>
-							<h3><FormattedHTMLMessage id="ettersendelse.vedtak.tittel" /></h3>
-							<p><FormattedHTMLMessage id="ettersendelse.vedtak.info" /></p>
-						</AvsnittMedMarger>
+					<AvsnittMedMarger venstreIkon={MargIkoner.KONVOLUTT}>
+						<h3><FormattedHTMLMessage id="ettersendelse.vedtak.tittel" /></h3>
+						<p><FormattedHTMLMessage id="ettersendelse.vedtak.info" /></p>
+					</AvsnittMedMarger>
 
-					</div>
-				)}
+				</div>
 			</div>
 		);
 	}
@@ -220,12 +215,11 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 export default connect((state: State, {}) => {
 	return {
 		brukerbehandlingskjedeId: state.soknad.data.brukerBehandlingId,
-		visEttersendelse: state.featuretoggles.data[ FeatureToggles.ettersendvedlegg ] === "true",
 		manglendeVedlegg: state.ettersendelse.data,
 		brukerbehandlingId: state.ettersendelse.brukerbehandlingId,
 		originalSoknad: state.ettersendelse.innsendte.originalSoknad,
 		ettersendelser: state.ettersendelse.innsendte.ettersendelser,
 		restStatus: state.ettersendelse.restStatus,
-		navEnheter: state.kommuner.data
+		feilKode: state.ettersendelse.feilKode
 	};
 })(injectIntl(Ettersendelse));

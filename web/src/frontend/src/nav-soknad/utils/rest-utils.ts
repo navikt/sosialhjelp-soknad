@@ -3,7 +3,7 @@ import { REST_FEIL } from "../types/restFeilTypes";
 
 export function erDev(): boolean {
 	const url = window.location.href;
-	return url.indexOf("localhost:3000") > 0;
+	return (url.indexOf("localhost:3000") > 0 || url.indexOf("devillo.no:3000") > 0);
 }
 
 export function kjorerJetty(): boolean {
@@ -54,7 +54,8 @@ const getHeaders = () => {return new Headers({
 	"accept": "application/json, text/plain, */*"
 })};
 
-const serverRequest = (method: string, urlPath: string, body: string) => {
+// @ts-ignore
+const serverRequestOnce = (method: string, urlPath: string, body: string) => {
 	const OPTIONS: RequestInit = {
 		headers: getHeaders(),
 		method,
@@ -64,6 +65,60 @@ const serverRequest = (method: string, urlPath: string, body: string) => {
 	return fetch(getApiBaseUrl() + urlPath, OPTIONS)
 		.then(sjekkStatuskode)
 		.then(toJson);
+};
+
+/* serverRequest():
+ *
+ *  - Gjenta serverkall som feiler inntil 6 ganger før det kastes exception
+ *  - Ikke gjenta det samme PUT, POST eller DELETE hvis under 2 sekuder
+ *    siden forrige gang
+ */
+
+let prevFetch: any = null;
+let lastFetch: number = 0;
+
+export const serverRequest = (method: string, urlPath: string, body: string, retries = 6) => {
+	const OPTIONS: RequestInit = {
+		headers: getHeaders(),
+		method,
+		credentials: "same-origin",
+		body: body ? body : undefined
+	};
+
+	if( method !== RequestMethod.GET ) {
+		const gjentattServerkall: boolean = (JSON.stringify({urlPath, body}) === JSON.stringify(prevFetch));
+		if (gjentattServerkall) {
+			const millisekunder = Date.now() - lastFetch;
+			const sekunderSidenForrige = Math.floor(millisekunder/1000);
+			if(sekunderSidenForrige < 3) {
+				return new Promise(() => {});
+			}
+		}
+		lastFetch = Date.now();
+		prevFetch = {urlPath, body};
+	}
+
+	const promise = new Promise((resolve, reject) => {
+		fetch(getApiBaseUrl() + urlPath, OPTIONS)
+			.then((response: Response) => {
+				if (response.status === 409) {
+					if (retries === 0) {
+						throw new Error(response.statusText);
+					}
+					setTimeout(() => {
+						serverRequest(method, urlPath, body, retries - 1)
+							.then((data: any) => resolve(data))
+							.catch((reason: any) => reject(reason))
+					}, 100 * (7 - retries));
+
+				} else {
+					sjekkStatuskode(response);
+					resolve(toJson(response));
+				}
+			})
+			.catch((reason: any) => reject(reason));
+	});
+	return promise;
 };
 
 export function fetchToJson(urlPath: string) {

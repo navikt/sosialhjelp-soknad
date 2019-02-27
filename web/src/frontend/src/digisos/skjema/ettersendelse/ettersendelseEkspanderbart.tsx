@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Collapse } from "react-collapse";
+import { UnmountClosed } from "react-collapse";
 import { FormattedHTMLMessage } from "react-intl";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import { MargIkoner } from "./margIkoner";
@@ -15,6 +15,7 @@ interface Props {
 interface State {
 	ekspandert: boolean;
 	vedleggSendt: boolean;
+	renderInnhold: boolean;
 }
 
 class EttersendelseEkspanderbart extends React.Component<Props, State> {
@@ -23,7 +24,8 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 		super(props);
 		this.state = {
 			ekspandert: false,
-			vedleggSendt: false
+			vedleggSendt: false,
+			renderInnhold: false
 		};
 	}
 
@@ -36,6 +38,11 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 			this.setState({vedleggSendt: false});
 			this.props.onEttersendelse();
 		}
+
+		if (this.state.renderInnhold !== this.state.ekspandert ) {
+			this.setState({renderInnhold: this.state.ekspandert});
+		}
+
 	}
 
 	onEttersendelse() {
@@ -66,25 +73,28 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 					</AvsnittMedMarger>
 				) }
 
-				<Collapse
+				<UnmountClosed
 					isOpened={this.state.ekspandert }
 					onRest={() => this.onAnimasjonFerdig()}
 					className={"ettersendelse__vedlegg " +
 					(this.state.ekspandert ? "ettersendelse__vedlegg__ekspandert " : " ")}
 				>
-					<AvsnittMedMarger>
-						{!this.props.kunGenerellDokumentasjon && this.props.ettersendelseAktivert &&
-						(<FormattedHTMLMessage id="ettersendelse.mangler_info"/>)}
-						{!this.props.ettersendelseAktivert &&
-						(<FormattedHTMLMessage id="ettersendelse.mangler_info_manuell"/>)}
-					</AvsnittMedMarger>
+					{ this.state.renderInnhold && (
+						<>
+							<AvsnittMedMarger>
+								{!this.props.kunGenerellDokumentasjon && this.props.ettersendelseAktivert &&
+								(<FormattedHTMLMessage id="ettersendelse.mangler_info"/>)}
+								{!this.props.ettersendelseAktivert &&
+								(<FormattedHTMLMessage id="ettersendelse.mangler_info_manuell"/>)}
+							</AvsnittMedMarger>
 
-					<EttersendelseVedleggListe
-						ettersendelseAktivert={this.props.ettersendelseAktivert}
-						onEttersendelse={() => this.onEttersendelse()}
-					/>
-
-				</Collapse>
+							<EttersendelseVedleggListe
+								ettersendelseAktivert={this.props.ettersendelseAktivert}
+								onEttersendelse={() => this.onEttersendelse()}
+							/>
+						</>
+					)}
+				</UnmountClosed>
 
 			</span>
 		);

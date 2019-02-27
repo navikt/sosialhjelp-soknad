@@ -10,8 +10,6 @@ import { initFerdig, initFeilet } from "./initActions";
 import { hentMiljovariabler } from "../miljovariabler/miljovariablerActions";
 import { hentTekster } from "../ledetekster/ledeteksterActions";
 import { hentTilgang } from "../tilgang/tilgangActions";
-import { hentFeatureToggles } from "../featuretoggles/featureTogglesActions";
-import { FeatureTogglesActionTypeKeys } from "../featuretoggles/featureTogglesTypes";
 import { MiljovariablerActionTypeKeys } from "../miljovariabler/miljovariablerTypes";
 import { LedeteksterActionTypeKeys } from "../ledetekster/ledeteksterTypes";
 import { TilgangActionTypeKeys } from "../tilgang/tilgangTypes";
@@ -24,10 +22,6 @@ describe("initSaga", () => {
 			expect(saga.next()).toEqual({
 				done: false,
 				value: put(hentMiljovariabler())
-			});
-			expect(saga.next()).toEqual({
-				done: false,
-				value: put(hentFeatureToggles())
 			});
 			expect(saga.next()).toEqual({
 				done: false,
@@ -56,14 +50,6 @@ describe("initSaga", () => {
 		it("loadsTekster", () => {
 			const saga = isAllDataLoaded({
 				type: LedeteksterActionTypeKeys.OK
-			});
-			expect(saga.next(actions)).toEqual({
-				done: true
-			});
-		});
-		it("loadsFeaturetoggles", () => {
-			const saga = isAllDataLoaded({
-				type: FeatureTogglesActionTypeKeys.OK
 			});
 			expect(saga.next(actions)).toEqual({
 				done: true

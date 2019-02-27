@@ -1,13 +1,23 @@
 import * as React from "react";
+import { UnmountClosed } from "react-collapse";
 import Ella from "../svg/Ella";
 import Brevkonvolutt from "../svg/Brevkonvolutt";
 import {DigisosFarge} from "../svg/DigisosFarger";
 import Hensyn from "../svg/Hensyn";
+import { erMobilVisning } from "../../utils/domUtils";
+import EllaKompakt from "../svg/EllaKompakt";
 
 interface OwnProps {
 	farge: DigisosFarge;
 	children?: any;
+	synlig?: boolean;
 	ikon: InformasjonspanelIkon;
+	className?: string;
+	wrapperClassName?: string;
+}
+
+interface State {
+	vises: boolean;
 }
 
 export enum InformasjonspanelIkon {
@@ -16,50 +26,84 @@ export enum InformasjonspanelIkon {
 	HENSYN = "hensyn"
 }
 
-class Informasjonspanel extends React.Component<OwnProps, {}> {
+class Informasjonspanel extends React.Component<OwnProps, State> {
+
+	constructor(props: OwnProps) {
+		super(props);
+		this.state = {
+			vises: false
+		};
+	}
+
+	componentDidMount() {
+		setTimeout(() => {
+			this.setState({vises: true});
+		}, 200);
+	}
 
 	renderIkon() {
-
-		let ikon = (<Ella size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
-		let mobilikon = (<Ella size={64} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
-
+		const iconSize = erMobilVisning() ? 64 : 80;
 		switch (this.props.ikon){
+			case InformasjonspanelIkon.ELLA: {
+				return (
+					<div>
+						<div className="ikke_mobilvennlig_ikon">
+							<Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+						</div>
+
+						<div className="mobilvennlig_ikon">
+							<EllaKompakt bakgrundsFarge={this.props.farge}/>
+						</div>
+					</div>
+				);
+			}
 			case InformasjonspanelIkon.BREVKONVOLUTT: {
-				ikon =  (<Brevkonvolutt size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
-				mobilikon = (<Brevkonvolutt size={64} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
+				return <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
 			}
 			case InformasjonspanelIkon.HENSYN: {
-				ikon = (<Hensyn size={80} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
-				mobilikon = (<Hensyn size={64} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>);
+				return <Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+			}
+			default: {
+				return <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
 			}
 		}
+	}
+
+	renderContent(fadeIn: boolean) {
+		const styleClassName = "skjema-informasjonspanel--" + this.props.farge;
 
 		return (
-			<div>
-				<div className="informasjonspanel__ikke_mobilvennlig_ikon">
-					{ ikon }
-				</div>
-				<div className="informasjonspanel__mobilvennlig_ikon">
-					{ mobilikon }
+			<div className={"skjema-informasjonspanel-wrapper " + this.props.className}>
+				<div
+					className={
+						"skjema-informasjonspanel " + styleClassName
+						+ (this.props.synlig || fadeIn === false ? " skjema-informasjonspanel__synlig" : "")
+					}
+				>
+					<div>{this.renderIkon()}</div>
+					<span>{this.props.children}</span>
 				</div>
 			</div>
-		)
+		);
 	}
 
 	render() {
-
-		const informasjonspanelClassName = this.props.farge ?
-			"informasjonspanel informasjonspanel__" + this.props.farge :
-			"informasjonspanel informasjonspanel__navGronnLighten40";
-
-		return (
-			<div className="informasjonspanelWrapper">
-				<div className={informasjonspanelClassName}>
-					{this.renderIkon()}
-					<span className="informasjonspanel__tekst">{this.props.children}</span>
-				</div>
-			</div>
-		)
+		const isOpened = this.state.vises && this.props.synlig;
+		if (typeof isOpened === "undefined") {
+			return this.renderContent(false);
+		} else {
+			return (
+				<UnmountClosed
+					id="info-panel-collapse"
+					isOpened={isOpened}
+					className="react-collapse-konfigurering"
+				>
+					<div className={"react-collapse-wrapper"}>
+							{this.renderContent(true)}
+					</div>
+				</UnmountClosed>
+			);
+		}
 	}
 
 }

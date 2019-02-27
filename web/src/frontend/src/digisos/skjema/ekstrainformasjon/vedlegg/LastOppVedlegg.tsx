@@ -91,6 +91,7 @@ class LastOppVedlegg extends React.Component<AllProps, State> {
 					onClick={() => {
 						this.leggTilVedleggKnapp.click();
 					}}
+					className="last-opp-vedlegg-knapp"
 				>
 					+ <FormattedMessage id="opplysninger.vedlegg.knapp.tekst"/>
 				</Knapp>

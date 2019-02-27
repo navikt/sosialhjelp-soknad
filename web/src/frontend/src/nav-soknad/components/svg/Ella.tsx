@@ -20,7 +20,7 @@ class Ella extends React.Component<OwnProps, {}> {
 
 		return (
 			<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" preserveAspectRatio="none"
-			     width={width} height={height} viewBox="0 0 175 175"  className={"ella__" + bakgrundsFarge}>
+			     width={width} height={height} viewBox="0 0 175 175"  className={"ella--" + bakgrundsFarge}>
 				<defs>
 					{ showBackgroundCircle &&
 						<path className="bakgrunnsSirkel"

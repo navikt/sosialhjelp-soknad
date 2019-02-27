@@ -12,6 +12,7 @@ export interface NavLogEntry {
 	lineNumber?: any;
 	columnNumber?: any;
 	userAgent?: string;
+	error?: any;
 }
 
 export enum ActionTypeKeys {

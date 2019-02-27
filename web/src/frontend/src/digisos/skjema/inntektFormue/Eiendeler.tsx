@@ -14,6 +14,7 @@ import {
 } from "../../../nav-soknad/utils";
 import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
 class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 	render() {
@@ -22,7 +23,7 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeEiendeler = radioCheckKeys("inntekt.eierandeler.true.type");
 		const hvilkeEiendelerAnnet = "inntekt.eierandeler.true.type.annet";
 		return (
-			<JaNeiSporsmalFaktum faktumKey={eiendeler.faktum}>
+			<JaNeiSporsmalFaktum faktumKey={eiendeler.faktum} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
 				<SporsmalFaktum faktumKey={hvilkeEiendeler.faktum}>
 					<CheckboxFaktum
 						id="eiendeler_bolig_checkbox"

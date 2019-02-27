@@ -25,6 +25,8 @@ class App extends React.Component<InjectedIntlProps, {}> {
 	render() {
 		const ettersendelse = (window.location.pathname.match(/ettersendelse$/) != null);
 		const informasjon = (window.location.pathname.match(/informasjon$/) != null);
+		const undersokelse = (window.location.pathname.match(/undersokelse$/) != null);
+		
 		return (
 			<span>
 				<Switch>
@@ -37,9 +39,14 @@ class App extends React.Component<InjectedIntlProps, {}> {
 						exact={true}
 						component={Informasjon}
 					/>
+					<Route
+						path={`/undersokelse`}
+						exact={true}
+						component={() => <div style={{height: "67vh"}}/>}
+					/>
 				</Switch>
-			{!ettersendelse && !informasjon && (
-				<div className="app-digisos container">
+			{!ettersendelse && !informasjon && !undersokelse && (
+				<span>
 					<Switch>
 						<Route path={`/bosted`} exact={true} component={Start} />
 						<Route
@@ -67,7 +74,7 @@ class App extends React.Component<InjectedIntlProps, {}> {
 					/>
 					<AvbrytSoknad />
 					{this.props.children}
-				</div>
+				</span>
 			)}
 			</span>
 		);

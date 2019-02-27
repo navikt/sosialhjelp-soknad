@@ -1,5 +1,5 @@
 import * as React from "react";
-import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanelEkspanderbart";
+import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { Faktum } from "../../../nav-soknad/types";
@@ -60,10 +60,7 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 		}
 
 		return (
-			<div>
-				<h4 className="skjema-sporsmal__infotekst__tittel">
-					<FormattedMessage id="system.familie.sivilstatus.infotekst"/>
-				</h4>
+			<div className="sivilstatus__ektefelleinfo">
 				<Detaljeliste>
 					{
 						ektefelleFaktum.properties[FORNAVN] &&
@@ -96,40 +93,42 @@ class SivilstatusTPS extends React.Component<Props, {}> {
 			</div>)
 	}
 
+	renderSivilstatusLabel(ikkeTilgangTilEktefelle: any){
+		let formattedMessageId: string ="system.familie.sivilstatus.label";
+		if (ikkeTilgangTilEktefelle && ikkeTilgangTilEktefelle === "true"){
+			formattedMessageId = "system.familie.sivilstatus.ikkeTilgang.label";
+		}
+		return <FormattedMessage id={formattedMessageId} />
+	}
+
 	render() {
 
 		const ektefelleFaktum: Faktum = this.props.ektefelleFaktum;
 		const IKKETILGANGTILEKTEFELLE = "ikketilgangtilektefelle";
+		const ikkeTilgangTilEktefelle = ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE];
 
 		return (
-			<div>
+			<div className="sivilstatus skjema-sporsmal">
 				<SporsmalFaktum faktumKey="system.familie.sivilstatus" style="system">
-					<div>
+					<div className="sivilstatus__infotekst">
 						<FormattedMessage id="system.familie.sivilstatus"/>
 					</div>
-					<div>
-						<Detaljeliste>
-							<DetaljelisteElement
-								tittel={
-									<FormattedMessage id="system.familie.sivilstatus.label"/>
-								}
-								verdi={<FormattedMessage id="familie.sivilstatus.gift"/>}
-							/>
-						</Detaljeliste>
+					<div className="sivilstatus__giftlabel">
+						{ this.renderSivilstatusLabel(ikkeTilgangTilEktefelle) }
 						{ this.renderEktefelleInformasjon(ektefelleFaktum) }
 					</div>
 				</SporsmalFaktum>
 				{ ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] &&
 				  ektefelleFaktum.properties[IKKETILGANGTILEKTEFELLE] !== "true" &&
-					(<InformasjonspanelEkspanderbart
-						farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+					(<Informasjonspanel
+						farge={DigisosFarge.VIKTIG}
 						ikon={InformasjonspanelIkon.ELLA}
 					>
 						<h4 className="skjema-sporsmal__infotekst__tittel">
 							<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel"/>
 						</h4>
 						<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tekst"/>
-					</InformasjonspanelEkspanderbart>)
+					</Informasjonspanel>)
 				}
 			</div>
 		);

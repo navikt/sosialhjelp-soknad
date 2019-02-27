@@ -11,19 +11,17 @@ import { InitState } from "./init/initTypes";
 import { FeatureTogglesApiType } from "./featuretoggles/featureTogglesTypes";
 import { VedleggState } from "./vedlegg/vedleggTypes";
 import { EttersendelseState } from "./ettersendelse/ettersendelseTypes";
-import { KommunerState } from "./kommuner/kommunerTypes";
 import { OppholdsAdresseState } from "../../digisos/skjema/personopplysninger/tps/oppholdsadresseReducer";
 import {
 	AdresseAutocompleteState
 } from "../components/adresseAutocomplete/adresseAutocompleteReducer";
+import { Soknadsdata } from "./soknadsdata/soknadsdataReducer";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
 
 export type Dispatch = (action: any) => Promise<any>;
-
 export type SoknadDispatch<AT> = (action: AT) => void;
-
 export type Reducer<S, AT> = (state: S, action: AT) => S;
 
 export interface DispatchProps {
@@ -42,9 +40,9 @@ export interface SoknadAppState {
 	vedlegg: VedleggState;
 	ledetekster: LedetekstState;
 	ettersendelse: EttersendelseState;
-	kommuner: KommunerState;
 	oppholdsadresse: OppholdsAdresseState;
 	adresseAutocomplete: AdresseAutocompleteState;
+	soknadsdata: Soknadsdata;
 	init: InitState;
 }
 

@@ -13,7 +13,7 @@ class Hensyn extends React.Component<OwnProps, {}> {
 	render(){
 		const height = this.props.size || 60;
 		const width = this.props.size || 60;
-		const bakgrundsFarge = this.props.bakgrundsFarge || DigisosFarge.NAV_GRONN_LIGHTEN_60;
+		const bakgrundsFarge = this.props.bakgrundsFarge || DigisosFarge.SUKSESS;
 
 		return(
 			<svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 80 80" className={"brevkonvolutt__" + bakgrundsFarge}>

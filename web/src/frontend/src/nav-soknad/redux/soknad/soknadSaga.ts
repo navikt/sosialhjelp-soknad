@@ -1,15 +1,12 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, select, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import {
 	fetchDelete,
 	fetchKvittering,
 	fetchPost,
 	fetchToJson
 } from "../../utils/rest-utils";
-import {
-	finnFaktum,
-	oppdaterFaktumMedProperties, oppdaterFaktumMedVerdier
-} from "../../utils";
+import { finnFaktum, oppdaterFaktumMedVerdier } from "../../utils";
 import { updateFaktaMedLagretVerdi } from "../fakta/faktaUtils";
 import {
 	HentKvitteringAction,
@@ -28,8 +25,7 @@ import {
 import { opprettFaktumSaga } from "../fakta/faktaSaga";
 import { lagreFaktum, resetFakta, setFakta, opprettFaktum } from "../fakta/faktaActions";
 import { OpprettFaktum, OpprettFaktumType } from "../fakta/faktaTypes";
-import { Faktum, Infofaktum, Soknad } from "../../types";
-import { SoknadAppState } from "../reduxTypes";
+import { Soknad } from "../../types";
 
 import {
 	hentKvitteringOk,
@@ -143,20 +139,6 @@ function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
 
 function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
 	try {
-		const infofaktum: Infofaktum = yield select(
-			(state: SoknadAppState) => state.soknad.infofaktum
-		);
-		const fakta: Faktum[] = yield select(
-			(state: SoknadAppState) => state.fakta.data
-		);
-		yield put(
-			lagreFaktum(
-				oppdaterFaktumMedProperties(
-					finnFaktum(infofaktum.faktumKey, fakta),
-					infofaktum.properties
-				)
-			)
-		);
 		yield call(
 			fetchPost,
 			`soknader/${action.brukerBehandlingId}/actions/send`,

@@ -4,14 +4,13 @@ import { FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl }
 import { State } from "../../redux/reducers";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { setVisSamtykkeInfo } from "../../../nav-soknad/redux/init/initActions";
-import { finnValgtEnhetsNavn, NavEnhet } from "../../data/kommuner";
+import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel/index";
+import { finnValgtEnhetsNavn } from "../../data/kommuner";
 import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
-import InformasjonspanelEkspanderbart, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanelEkspanderbart";
 
 interface StateProps {
 	fakta: Faktum[];
-	navEnheter: NavEnhet[];
 }
 
 type Props = DispatchProps &
@@ -21,11 +20,11 @@ type Props = DispatchProps &
 class InformasjonsBoks extends React.Component<Props, {}> {
 
 	render() {
-		const valgtEnhetsNavn = finnValgtEnhetsNavn(this.props.fakta, this.props.navEnheter);
+		const valgtEnhetsNavn = finnValgtEnhetsNavn(this.props.fakta);
 
 		return (
-			<InformasjonspanelEkspanderbart
-				farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
+			<Informasjonspanel
+				farge={DigisosFarge.VIKTIG}
 				ikon={InformasjonspanelIkon.BREVKONVOLUTT}
 			>
 				<FormattedHTMLMessage id="soknasosialhjelp.oppsummering.hvorsendes" values={{navkontor: valgtEnhetsNavn}}/>
@@ -37,14 +36,13 @@ class InformasjonsBoks extends React.Component<Props, {}> {
 						}}>
 						<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke"/>
 					</a>
-			</InformasjonspanelEkspanderbart>
+			</Informasjonspanel>
 		);
 	}
 }
 
 export default connect((state: State, props: any) => {
 	return {
-		fakta: state.fakta.data,
-		navEnheter: state.kommuner.data
+		fakta: state.fakta.data
 	};
 })(injectIntl(InformasjonsBoks));
