@@ -39,6 +39,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 			onEndretValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER, this.props.feil, () => {
 				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER);
 			});
+			this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
 		}
 	}
 
