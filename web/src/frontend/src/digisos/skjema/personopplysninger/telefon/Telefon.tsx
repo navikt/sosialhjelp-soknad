@@ -34,7 +34,14 @@ class TelefonView extends React.Component<Props, {}> {
 		}
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
 		const oppdatertTelefon = {...telefonnummer};
-		oppdatertTelefon.verdi = LANDKODE + this.fjernLandkode(oppdatertTelefon.verdi);
+		if (oppdatertTelefon.verdi !== null && oppdatertTelefon.verdi.length > 1) {
+			oppdatertTelefon.verdi = LANDKODE + this.fjernLandkode(oppdatertTelefon.verdi);
+		} else {
+			oppdatertTelefon.verdi = null;
+		}
+		if (oppdatertTelefon.brukerdefinert === true) {
+			oppdatertTelefon.verdi = null;
+		}
 		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, oppdatertTelefon);
 	}
 
@@ -53,6 +60,7 @@ class TelefonView extends React.Component<Props, {}> {
 			onEndretValideringsfeil(null, FAKTUM_KEY_TELEFON, this.props.feil, () => {
 				this.props.setValideringsfeil(null, FAKTUM_KEY_TELEFON);
 			});
+			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
 		} else {
 			verdi = this.fjernLandkode(verdi);
 			verdi = verdi.replace(/[ \.]/g,"");
@@ -86,8 +94,7 @@ class TelefonView extends React.Component<Props, {}> {
 		const brukerdefinert = telefonnummer ? telefonnummer.brukerdefinert : false;
 		const systemverdi = telefonnummer ? telefonnummer.systemverdi : "";
 		const faktumKey = telefonnummer.systemverdi === null ? FAKTUM_KEY_TELEFON : FAKTUM_KEY_SYSTEM_TELEFON;
-		const avbrytLabel: string = systemverdi === null ?
-			null : intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
+		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
 
 		return (
 			<Sporsmal
