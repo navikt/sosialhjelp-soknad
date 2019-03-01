@@ -16,10 +16,10 @@ public class StartJetty {
             configureLocalConfig();
         }
         Jetty jetty = new Jetty.JettyBuilder()
-                .at("/soknadsosialhjelp")
+                .at("/sosialhjelp/soknad")
                 .port(PORT)
                 .buildJetty();
-        logger.info("http://127.0.0.1:" + PORT + "/soknadsosialhjelp/informasjon");
+        logger.info("http://127.0.0.1:" + PORT + "/sosialhjelp/soknad/informasjon");
 
         Runtime.getRuntime().addShutdownHook(new ShutdownHook(jetty));
 

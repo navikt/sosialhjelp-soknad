@@ -9,19 +9,19 @@ import { store } from '../../index';
 
 export const hostAdresseProd = 'tjenester.nav.no';
 export const hostAdresseTest = 'tjenester-q0.nav.no';
-export const hostAdresseTestNaist1 = 'soknadsosialhjelp-t1.nais.oera-q.local';
-export const hostAdresseTestNaisq0 = 'soknadsosialhjelp-q0.nais.oera-q.local';
-export const hostAdresseTestNaisq1 = 'soknadsosialhjelp-q1.nais.oera-q.local';
+export const hostAdresseTestNaist1 = 'sosialhjelp-soknad-t1.nais.oera-q.local';
+export const hostAdresseTestNaisq0 = 'sosialhjelp-soknad-q0.nais.oera-q.local';
+export const hostAdresseTestNaisq1 = 'sosialhjelp-soknad-q1.nais.oera-q.local';
 export const hostAdresseLocal = 'localhost:3000';
 export const hostAdresseLocalJetty = 'localhost:8080';
 
 export const loginServiceUrlProd = 'https://loginservice.nav.no/login';
 export const loginServiceUrlTest = 'https://loginservice-q.nav.no/login';
-export const loginServiceUrlLocal = 'http://localhost:8181/soknadsosialhjelp-server/local/cookie';
+export const loginServiceUrlLocal = 'http://localhost:8181/sosialhjelp/soknad-api/local/cookie';
 
 export const loginServiceLogoutUrlProd = 'https://loginservice.nav.no/slo';
 export const loginServiceLogoutUrlTest = 'https://loginservice-q.nav.no/slo';
-export const loginServiceLogoutUrlLocal = 'http://localhost:8181/soknadsosialhjelp-server/local/slo';
+export const loginServiceLogoutUrlLocal = 'http://localhost:8181/sosialhjelp/soknad-api/local/slo';
 
 export function erDev(): boolean {
 	const url = window.location.href;
@@ -35,23 +35,24 @@ export function kjorerJetty(): boolean {
 
 export function getApiBaseUrl(): string {
 	if (erDev()) {
-		// Kjør mot lokal soknadsosialhjelp-server:
-		return "http://localhost:8181/soknadsosialhjelp-server/";
+		// Kjør mot lokal sosialhjelp-soknad-api:
+		return "http://localhost:8181/sosialhjelp/soknad-api/";
 
 		// Kjør mot lokal mock backend:
 		// return "http://localhost:3001/sendsoknad/";
 	}
 	if (location.href.indexOf("localhost:8080") >= 0) {
-		return "http://localhost:8181/soknadsosialhjelp-server/";
+		return "http://localhost:8181/sosialhjelp/soknad-api/";
 	}
+	return kjorerJetty() ? "http://127.0.0.1:8181/sosialhjelp/soknad-api/" : "/sosialhjelp/soknad-api/";
 	if (location.origin.indexOf("nais.oera") >= 0) {
-		return location.origin.replace("soknadsosialhjelp", "soknadsosialhjelp-server") + "/soknadsosialhjelp-server/";
+		return location.origin.replace("soknad", "soknad-api") + "/sosialhjelp/soknad-api/";
 	}
-	return kjorerJetty() ? "http://127.0.0.1:8181/soknadsosialhjelp-server/" : "/soknadsosialhjelp-server/";
+	return kjorerJetty() ? "http://127.0.0.1:8181/sosialhjelp/soknad-api/" : "/sosialhjelp/soknad-api/";
 }
 
 export function getRedirectPathname(): string {
-	return '/soknadsosialhjelp/link';
+	return '/sosialhjelp/soknad/link';
 }
 
 export function getLoginServiceUrl(): string {
@@ -111,10 +112,10 @@ function determineCredentialsParameter() {
 function getServletBaseUrl(): string {
 	if (erDev()) {
 		// Kjør mot lokal jetty
-		// return "http://localhost:8189/soknadsosialhjelp/";
+		// return "http://localhost:8189/sosialhjelp/soknad/";
 		return "http://localhost:3001/sendsoknad/";
 	}
-	return "/soknadsosialhjelp/";
+	return "/sosialhjelp/soknad/";
 }
 
 export function downloadAttachedFile(urlPath: string): void {
@@ -291,6 +292,3 @@ export function detekterInternFeilKode(feilKode: string): string {
 	}
 	return internFeilKode;
 }
-
-
-

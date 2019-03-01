@@ -32,7 +32,7 @@ const history = createHistory({
 			callback(true);
 		}
 	},
-	basename: "soknadsosialhjelp"
+	basename: "sosialhjelp/soknad"
 });
 
 const logger = createLogger({

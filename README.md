@@ -25,7 +25,7 @@ Forutsetter at man har tilgang til git repository tilgjengelig på internt nett 
 * `mvn clean install -Ddev` - bygger tekstfilene. Slår samme alle tekstfilene til lokal fil i temp folder.
 * Start no.nav.sbl.dialogarena.StartSoknadJetty fra IntelliJ - Starter reel backend
 * Start no.nav.sbl.soknadsosialhjelp.StartJetty fra IntelliJ - Starter frontend server
-* Åpne `http://localhost:8189/soknadsosialhjelp/informasjon` i nettleser
+* Åpne `http://localhost:8189/sosialhjelp/soknad/informasjon` i nettleser
  
  ## Kjøring mot sendsoknad backend i stedet for mock backend
  
@@ -50,7 +50,7 @@ Forutsetter at man har tilgang til git repository tilgjengelig på internt nett 
  ```
  * `cd soknadsosialhjelp/web/src/frontend && npm start`
 
- * Åpne `http://localhost:3000/soknadsosialhjelp/informasjon` i nettelseren
+ * Åpne `http://localhost:3000/sosialhjelp/soknad/informasjon` i nettelseren
      
  ## Tekster
  

@@ -23,7 +23,7 @@
 	},
 	"test_settings": {
 		"default": {
-			"launch_url": "https://tjenester-t6.nav.no/soknadsosialhjelp/informasjon",
+			"launch_url": "https://tjenester-t6.nav.no/sosialhjelp/soknad/informasjon",
 			"login": false,
 			"selenium_port": 4444,
 			"timeout": 1000,

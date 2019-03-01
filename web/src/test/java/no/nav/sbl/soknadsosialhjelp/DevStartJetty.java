@@ -20,10 +20,10 @@ public class DevStartJetty {
         TestCertificates.setupKeyAndTrustStore();
         configureLocalConfig();
         Jetty jetty = usingWar(new File("web/src/main/resources/webapp"))
-                .at("/soknadsosialhjelp")
+                .at("/sosialhjelp/soknad")
                 .port(PORT)
                 .buildJetty();
-        logger.info("http://127.0.0.1:" + PORT + "/soknadsosialhjelp/app/start");
+        logger.info("http://127.0.0.1:" + PORT + "/sosialhjelp/soknad/app/start");
         jetty.startAnd(first(waitFor(gotKeypress())).then(jetty.stop));
     }
 

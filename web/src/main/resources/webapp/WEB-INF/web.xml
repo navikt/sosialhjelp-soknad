@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
-    <display-name>soknadsosialhjelp</display-name>
+    <display-name>sosialhjelp-soknad</display-name>
 
     <session-config>
         <session-timeout>30</session-timeout>
