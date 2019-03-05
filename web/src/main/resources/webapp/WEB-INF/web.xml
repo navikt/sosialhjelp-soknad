@@ -28,6 +28,7 @@
         <url-pattern>/kvittering/*</url-pattern>
         <url-pattern>/mock/*</url-pattern>
         <url-pattern>/mock-login/*</url-pattern>
+        <url-pattern>/undersokelse/*</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -46,6 +47,7 @@
         <url-pattern>/kvittering/*</url-pattern>
         <url-pattern>/mock/*</url-pattern>
         <url-pattern>/mock-login/*</url-pattern>
+        <url-pattern>/undersokelse/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

@@ -1,5 +1,5 @@
 import { ValideringActionTypeKeys } from "./valideringActionTypes";
-import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
+import { FaktumValideringsregler, ValideringActionKey, Valideringsfeil } from "../validering/types";
 
 export function setFaktaValideringsfeil(valideringsfeil: Valideringsfeil[]) {
 	return {
@@ -34,6 +34,11 @@ export function unregisterFaktumValidering(
 		property,
 		faktumId
 	};
+}
+
+export function setValideringsfeil(feilkode: ValideringActionKey, faktumKey: string) {
+	const valideringsfeil: Valideringsfeil = feilkode ?  {faktumKey, feilkode} : null;
+	return setFaktumValideringsfeil(valideringsfeil, faktumKey);
 }
 
 export function setFaktumValideringsfeil(

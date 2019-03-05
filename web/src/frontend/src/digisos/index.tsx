@@ -30,6 +30,8 @@ class App extends React.Component<InjectedIntlProps, {}> {
 		const mock = (window.location.pathname.match(/mock$/) != null);
 		const mocklogin = (window.location.pathname.match(/mock-login$/) != null);
 
+		const undersokelse = (window.location.pathname.match(/undersokelse$/) != null);
+
 		return (
 			<span>
 				<Switch>
@@ -52,8 +54,13 @@ class App extends React.Component<InjectedIntlProps, {}> {
 						exact={true}
 						component={MockLogin}
 					/>
+					<Route
+						path={`/undersokelse`}
+						exact={true}
+						component={() => <div style={{height: "67vh"}}/>}
+					/>
 				</Switch>
-			{!ettersendelse && !informasjon && !mock && !mocklogin && (
+			{!ettersendelse && !informasjon && !mock && !mocklogin && !undersokelse && (
 				<span>
 					<Switch>
 						<Route path={`/bosted`} exact={true} component={Start} />

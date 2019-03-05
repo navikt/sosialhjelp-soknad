@@ -16,14 +16,13 @@ import {
 	AdresseAutocompleteState
 } from "../components/adresseAutocomplete/adresseAutocompleteReducer";
 import {MockState} from "../../digisos/mock/mockReducer";
+import { Soknadsdata } from "./soknadsdata/soknadsdataReducer";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
 
 export type Dispatch = (action: any) => Promise<any>;
-
 export type SoknadDispatch<AT> = (action: AT) => void;
-
 export type Reducer<S, AT> = (state: S, action: AT) => S;
 
 export interface DispatchProps {
@@ -44,6 +43,7 @@ export interface SoknadAppState {
 	ettersendelse: EttersendelseState;
 	oppholdsadresse: OppholdsAdresseState;
 	adresseAutocomplete: AdresseAutocompleteState;
+	soknadsdata: Soknadsdata;
 	init: InitState;
 	mockData: MockState;
 }
