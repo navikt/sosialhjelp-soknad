@@ -40,7 +40,7 @@ export default class VedleggsFil extends React.Component<AllProps, {}> {
 						<AriaText>Slett {vedlegg.filnavn}</AriaText>
 						<SVG
 							className="vedleggsliste__slett_ikon"
-							src="/soknadsosialhjelp/statisk/bilder/ikon_trashcan.svg"
+							src="/sosialhjelp/soknad/statisk/bilder/ikon_trashcan.svg"
 						/>
 					</button>
 				</span>

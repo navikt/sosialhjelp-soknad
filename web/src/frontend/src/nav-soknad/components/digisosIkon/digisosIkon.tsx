@@ -27,7 +27,7 @@ const DigisosIkon: React.StatelessComponent<Props & {}> = ({className, navn, sty
 		return (
 			<SVG style={style}
 			     className={className || ""}
-			     src={"/soknadsosialhjelp/statisk/bilder/ikon_" + navn + ".svg"}
+			     src={"/sosialhjelp/soknad/statisk/bilder/ikon_" + navn + ".svg"}
 			/>
 		);
 	}

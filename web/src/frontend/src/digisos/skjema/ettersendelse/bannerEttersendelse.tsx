@@ -17,7 +17,7 @@ const BannerEttersendelse: React.StatelessComponent<{ children: React.ReactNode 
 					</span>
 					<SVG
 						className="banner-ettersendelse__ettersendelse__innhold__laptop"
-						src={"/soknadsosialhjelp/statisk/bilder/illustrasjon_laptop.svg"}
+						src={"/sosialhjelp/soknad/statisk/bilder/illustrasjon_laptop.svg"}
 					/>
 				</div>
 			</div>

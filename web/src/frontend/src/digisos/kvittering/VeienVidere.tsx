@@ -38,7 +38,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 		<Panel className="panel--noPadding">
 			<div className="panelIllustrasjon">
 				<img
-					src="/soknadsosialhjelp/statisk/bilder/kvittering-illustrasjon.svg"
+					src="/sosialhjelp/soknad/statisk/bilder/kvittering-illustrasjon.svg"
 					alt=""
 					className="kvittering-illustration"
 				/>
@@ -46,7 +46,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 			<div className="panel-padding">
 				<div className="blokk-xl">
 					<Avsnitt
-						icon="/soknadsosialhjelp/statisk/bilder/snakkebobler.svg"
+						icon="/sosialhjelp/soknad/statisk/bilder/snakkebobler.svg"
 						tittelId="kvittering.samtale.tittel"
 						tekstId="kvittering.samtale.tekst"
 					/>
@@ -54,7 +54,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 
 				<div className="blokk-xl">
 					<Avsnitt
-						icon="/soknadsosialhjelp/statisk/bilder/kalender.svg"
+						icon="/sosialhjelp/soknad/statisk/bilder/kalender.svg"
 						tittelId="kvittering.saksbehandling.tittel"
 						tekstId="kvittering.saksbehandling.tekst"
 					/>
@@ -62,7 +62,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 
 				<div className="blokk-xl">
 					<Avsnitt
-						icon="/soknadsosialhjelp/statisk/bilder/person.svg"
+						icon="/sosialhjelp/soknad/statisk/bilder/person.svg"
 						tittelId="kvittering.situasjon.tittel"
 						tekstId="kvittering.situasjon.tekst"
 					/>
