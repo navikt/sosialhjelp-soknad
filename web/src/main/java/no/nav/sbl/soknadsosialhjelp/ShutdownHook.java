@@ -24,13 +24,13 @@ public class ShutdownHook extends Thread {
         @Override
         public void run() {
             try {
-                LOGGER.info("shutdown initialized, allowing incoming requests for 5 seconds before continuing (soknadsosialhjelp)");
+                LOGGER.info("shutdown initialized, allowing incoming requests for 5 seconds before continuing (sosialhjelp-soknad)");
                 Thread.sleep(5000L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            LOGGER.info("shutting down server (soknadsosialhjelp)");
+            LOGGER.info("shutting down server (sosialhjelp-soknad)");
             jetty.stop.run();
             LOGGER.info("shutdown ok");
         }

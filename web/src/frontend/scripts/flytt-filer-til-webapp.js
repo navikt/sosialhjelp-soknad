@@ -14,7 +14,7 @@ function copyFile(srcFile, outFile) {
 }
 
 function kopierSVG() {
-	const bildefolder = [".", "build", "soknadsosialhjelp", "statisk", "bilder"];
+	const bildefolder = [".", "build", "sosialhjelp", "soknad", "statisk", "bilder"];
 
 	fs.readdir(bildefolder.join(path.sep), function(err, files) {
 		var mainFile = files[0];
