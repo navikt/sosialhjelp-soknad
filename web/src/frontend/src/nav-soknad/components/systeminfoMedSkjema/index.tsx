@@ -69,7 +69,7 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 						{skjema}
 					</div>
 				) : null}
-				{!skjemaErSynlig && this.props.endreLabel && (
+				{!skjemaErSynlig && endreLabel && (
 					<Lenkeknapp
 						ref={c => (this.visSkjemaKnapp = c)}
 						onClick={this.props.onVisSkjema}
@@ -78,7 +78,7 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 						{endreLabel}
 					</Lenkeknapp>
 				)}
-				{skjemaErSynlig && this.props.avbrytLabel && (
+				{skjemaErSynlig && avbrytLabel && (
 					<div className="systeminfoMedSkjema__skjulSkjemaKnapp">
 						<Lenkeknapp
 							onClick={this.props.onSkjulSkjema}

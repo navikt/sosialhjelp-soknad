@@ -18,7 +18,7 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknadsdata: any) {
 	return (dispatch: Dispatch) => {
 		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata)).then(() => {
-			// dispatch(oppdaterSoknadsdataSti(sti, soknadsdata));
+			// vellykket restkall
 		}).catch(() => {
 			dispatch(navigerTilServerfeil());
 		});

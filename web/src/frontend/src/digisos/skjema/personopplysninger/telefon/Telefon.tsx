@@ -26,10 +26,10 @@ class TelefonView extends React.Component<Props, {}> {
 	}
 
 	setBrukerdefinert(verdi: boolean) {
-		const { soknadsdata } = this.props;
+		const { soknadsdata, brukerBehandlingId } = this.props;
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 		telefonnummer.brukerdefinert = verdi;
-		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
+		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
 	}
 
 	onChange(verdi: any) {
@@ -43,6 +43,7 @@ class TelefonView extends React.Component<Props, {}> {
 		const { soknadsdata, brukerBehandlingId } = this.props;
 		const telefonnummer = {...soknadsdata.personalia.telefonnummer};
 		let verdi = telefonnummer.verdi;
+		let feilkode: ValideringActionKey = null;
 		if(verdi === "" || verdi === null) {
 			onEndretValideringsfeil(null, FAKTUM_KEY_TELEFON, this.props.feil, () => {
 				this.props.setValideringsfeil(null, FAKTUM_KEY_TELEFON);
@@ -51,19 +52,21 @@ class TelefonView extends React.Component<Props, {}> {
 			verdi = this.fjernLandkode(verdi);
 			verdi = verdi.replace(/[ \.]/g,"");
 			telefonnummer.verdi = verdi;
-			const feilkode: ValideringActionKey = this.validerTelefonnummer(verdi);
-			if (!feilkode) {
-				telefonnummer.verdi = LANDKODE + this.fjernLandkode(telefonnummer.verdi);
-				this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
-			}
+			feilkode = this.validerTelefonnummer(verdi);
+		}
+		if (!feilkode) {
+			telefonnummer.verdi = LANDKODE + this.fjernLandkode(telefonnummer.verdi);
+			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
 		}
 	}
 
 	validerTelefonnummer(verdi: string): ValideringActionKey {
 		const feilkode: ValideringActionKey = erTelefonnummer(verdi);
-		onEndretValideringsfeil(feilkode, FAKTUM_KEY_TELEFON, this.props.feil, () => {
-			this.props.setValideringsfeil(feilkode, FAKTUM_KEY_TELEFON);
-		});
+		if (verdi !== ""){
+			onEndretValideringsfeil(feilkode, FAKTUM_KEY_TELEFON, this.props.feil, () => {
+				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_TELEFON);
+			});
+		}
 		return feilkode;
 	}
 
@@ -81,44 +84,70 @@ class TelefonView extends React.Component<Props, {}> {
 		const systemverdi = telefonnummer ? telefonnummer.systemverdi : "";
 		const faktumKey = telefonnummer.systemverdi === null ? FAKTUM_KEY_TELEFON : FAKTUM_KEY_SYSTEM_TELEFON;
 
-		return (
-			<Sporsmal
-				tekster={getFaktumSporsmalTekst(this.props.intl, faktumKey)}
-			>
-				<SysteminfoMedSkjema
-					skjemaErSynlig={brukerdefinert}
-					onVisSkjema={() => this.setBrukerdefinert(true)}
-					onSkjulSkjema={() => this.setBrukerdefinert(false)}
-					endreLabel={endreLabel}
-					avbrytLabel={avbrytLabel}
-					skjema={(
-						<InputEnhanced
-							type="tel"
-							maxLength={14}
-							bredde={"S"}
-							className="skjemaelement__enLinje185bredde"
-							verdi={verdi}
-							onChange={(input: string) => this.onChange(input)}
-							onBlur={() => this.onBlur()}
-							getName={() => FAKTUM_KEY_TELEFON}
-							faktumKey={FAKTUM_KEY_TELEFON}
-							required={false}
-						/>
-					)}
-				>
-					<Detaljeliste>
-						<DetaljelisteElement
-							tittel={
-								intl.formatHTMLMessage({ id: "kontakt.system.telefon.label" })
-							}
-							verdi={systemverdi}
-						/>
-					</Detaljeliste>
-				</SysteminfoMedSkjema>
-			</Sporsmal>
-		);
-	}
+		switch (systemverdi) {
+			case null: {
+				return (
+					<Sporsmal
+						tekster={getFaktumSporsmalTekst(this.props.intl, faktumKey)}
+					>
+							<InputEnhanced
+								type="tel"
+								maxLength={14}
+								bredde={"S"}
+								className="skjemaelement__enLinje185bredde"
+								verdi={verdi}
+								onChange={(input: string) => this.onChange(input)}
+								onBlur={() => this.onBlur()}
+								getName={() => FAKTUM_KEY_TELEFON}
+								faktumKey={FAKTUM_KEY_TELEFON}
+								required={false}
+							/>
+					</Sporsmal>
+					)
+			}
+			default: {
+				return (
 
+					<Sporsmal
+						tekster={getFaktumSporsmalTekst(this.props.intl, faktumKey)}
+					>
+						<SysteminfoMedSkjema
+							skjemaErSynlig={brukerdefinert}
+							onVisSkjema={() => this.setBrukerdefinert(true)}
+							onSkjulSkjema={() => this.setBrukerdefinert(false)}
+							endreLabel={endreLabel}
+							avbrytLabel={avbrytLabel}
+							skjema={(
+								<InputEnhanced
+									type="tel"
+									maxLength={14}
+									bredde={"S"}
+									className="skjemaelement__enLinje185bredde"
+									verdi={verdi}
+									onChange={(input: string) => this.onChange(input)}
+									onBlur={() => this.onBlur()}
+									getName={() => FAKTUM_KEY_TELEFON}
+									faktumKey={FAKTUM_KEY_TELEFON}
+									required={false}
+								/>
+							)}
+						>
+							<Detaljeliste>
+								<DetaljelisteElement
+									tittel={
+										intl.formatHTMLMessage({id: "kontakt.system.telefon.label"})
+									}
+									verdi={systemverdi}
+								/>
+							</Detaljeliste>
+						</SysteminfoMedSkjema>
+					</Sporsmal>
+
+				);
+			}
+		}
+
+	}
 }
 
 export default connectSoknadsdataContainer(injectIntl(TelefonView));
