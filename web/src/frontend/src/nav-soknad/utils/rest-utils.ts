@@ -44,7 +44,6 @@ export function getApiBaseUrl(): string {
 	if (location.href.indexOf("localhost:8080") >= 0) {
 		return "http://localhost:8181/sosialhjelp/soknad-api/";
 	}
-	return kjorerJetty() ? "http://127.0.0.1:8181/sosialhjelp/soknad-api/" : "/sosialhjelp/soknad-api/";
 	if (location.origin.indexOf("nais.oera") >= 0) {
 		return location.origin.replace("soknad", "soknad-api") + "/sosialhjelp/soknad-api/";
 	}
