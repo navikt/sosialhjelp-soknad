@@ -7,8 +7,8 @@ import {Sider} from "../redux/navigasjon/navigasjonTypes";
 import { store } from '../../index';
 
 
-export const hostAdresseProd = 'tjenester.nav.no';
-export const hostAdresseTest = 'tjenester-q0.nav.no';
+export const hostAdresseProd = 'www.nav.no';
+export const hostAdresseTest = 'www-q0.nav.no';
 export const hostAdresseTestNaist1 = 'sosialhjelp-soknad-t1.nais.oera-q.local';
 export const hostAdresseTestNaisq0 = 'sosialhjelp-soknad-q0.nais.oera-q.local';
 export const hostAdresseTestNaisq1 = 'sosialhjelp-soknad-q1.nais.oera-q.local';
