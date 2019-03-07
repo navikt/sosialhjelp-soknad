@@ -30,12 +30,14 @@ class TelefonView extends React.Component<Props, {}> {
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 		telefonnummer.brukerdefinert = verdi;
 		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
+		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
 	}
 
 	onChange(verdi: any) {
 		const { soknadsdata } = this.props;
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 		telefonnummer.verdi = verdi;
+		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
 	}
 
@@ -44,6 +46,7 @@ class TelefonView extends React.Component<Props, {}> {
 		const telefonnummer = {...soknadsdata.personalia.telefonnummer};
 		let verdi = telefonnummer.verdi;
 		let feilkode: ValideringActionKey = null;
+
 		if(verdi === "" || verdi === null) {
 			onEndretValideringsfeil(null, FAKTUM_KEY_TELEFON, this.props.feil, () => {
 				this.props.setValideringsfeil(null, FAKTUM_KEY_TELEFON);
@@ -54,8 +57,11 @@ class TelefonView extends React.Component<Props, {}> {
 			telefonnummer.verdi = verdi;
 			feilkode = this.validerTelefonnummer(verdi);
 		}
+
 		if (!feilkode) {
-			telefonnummer.verdi = LANDKODE + this.fjernLandkode(telefonnummer.verdi);
+			if (telefonnummer.verdi !== null && telefonnummer.verdi !== "") {
+				telefonnummer.verdi = LANDKODE + this.fjernLandkode(telefonnummer.verdi);
+			}
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
 		}
 	}
