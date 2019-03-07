@@ -50,7 +50,7 @@ export interface Soknadsdata {
 	bosituasjon: Bosituasjon;
 	familie: Familie;
 	utdanning: Utdanning;
-	// telefonnummer: Telefonnummer;
+	telefonnummer: Telefonnummer;
 	personalia: Personalia;
 }
 
@@ -61,7 +61,7 @@ export interface SoknadsdataActionVerdi {
 	begrunnelse?: Begrunnelse,
 	familie?: Familie
 	utdanning?: Utdanning,
-	// telefonnummer?: Telefonnummer,
+	telefonnummer?: Telefonnummer,
 	personalia: Personalia;
 }
 
@@ -86,7 +86,7 @@ export const initialSoknadsdataState: Soknadsdata = {
 	bosituasjon: initialBosituasjonState,
 	familie: initialFamilieStatus,
 	utdanning: initialUtdanningState,
-	// telefonnummer: initialTelefonnummerState,
+	telefonnummer: initialTelefonnummerState,
 	personalia: initialPersonaliaState
 };
 

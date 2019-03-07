@@ -64,9 +64,11 @@ class TelefonView extends React.Component<Props, {}> {
 
 		if (!feilkode) {
 			if (telefonnummer.verdi !== null && telefonnummer.verdi !== "") {
-				telefonnummer.verdi = LANDKODE + this.fjernLandkode(telefonnummer.verdi);
+				telefonnummer.verdi = LANDKODE + this.fjernLandkode(verdi);
 			}
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
+		} else {
+			// gjør slik at det ikke går ann å gå til neste side
 		}
 	}
 
@@ -81,7 +83,9 @@ class TelefonView extends React.Component<Props, {}> {
 	}
 
 	fjernLandkode(telefonnummer: string) {
-		return telefonnummer && telefonnummer.replace( /^\+47/, "");
+		telefonnummer = telefonnummer.replace( /^\+47/, "");
+		telefonnummer = telefonnummer.replace( /^0047/, "");
+		return telefonnummer;
 	}
 
 	render() {
@@ -89,8 +93,8 @@ class TelefonView extends React.Component<Props, {}> {
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 		const endreLabel = intl.formatMessage({ id: "kontakt.system.telefon.endreknapp.label"});
 		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
-		const verdi = (telefonnummer && telefonnummer.verdi) ? this.fjernLandkode(telefonnummer.verdi) : "";
 		const brukerdefinert = telefonnummer ? telefonnummer.brukerdefinert : false;
+		const verdi = telefonnummer && telefonnummer.verdi ? telefonnummer.verdi : "";
 		const systemverdi = telefonnummer ? telefonnummer.systemverdi : "";
 		const faktumKey = telefonnummer.systemverdi === null ? FAKTUM_KEY_TELEFON : FAKTUM_KEY_SYSTEM_TELEFON;
 
