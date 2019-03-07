@@ -12,6 +12,7 @@ import {
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {Telefonnummer} from "./telefonTypes";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_SYSTEM_TELEFON = "kontakt.system.telefoninfo";
@@ -29,7 +30,7 @@ class TelefonView extends React.Component<Props, {}> {
 		const { soknadsdata, brukerBehandlingId } = this.props;
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 		telefonnummer.brukerdefinert = verdi;
-		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
+		this.forberedOgSendTelefonnummer(telefonnummer, brukerBehandlingId);
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
 	}
 
@@ -38,12 +39,15 @@ class TelefonView extends React.Component<Props, {}> {
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 		telefonnummer.verdi = verdi;
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
-		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
 	}
 
 	onBlur() {
 		const { soknadsdata, brukerBehandlingId } = this.props;
 		const telefonnummer = {...soknadsdata.personalia.telefonnummer};
+		this.forberedOgSendTelefonnummer(telefonnummer, brukerBehandlingId);
+	}
+
+	forberedOgSendTelefonnummer(telefonnummer: Telefonnummer, brukerBehandlingId: string){
 		let verdi = telefonnummer.verdi;
 		let feilkode: ValideringActionKey = null;
 
