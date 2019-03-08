@@ -30,6 +30,7 @@ class TelefonView extends React.Component<Props, {}> {
 		const { soknadsdata, brukerBehandlingId } = this.props;
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 		telefonnummer.brukerdefinert = verdi;
+		telefonnummer.brukerutfyltVerdi = null;
 		this.forberedOgSendTelefonnummer(telefonnummer, brukerBehandlingId);
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
 	}

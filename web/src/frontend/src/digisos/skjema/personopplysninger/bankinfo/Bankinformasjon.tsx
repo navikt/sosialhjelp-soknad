@@ -62,6 +62,7 @@ class Bankinformasjon extends React.Component<Props, {}> {
 		kontonummer.brukerdefinert = brukerdefinert;
 
 		kontonummer.brukerutfyltVerdi = "";
+		kontonummer.harIkkeKonto = false;
 
 		this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
