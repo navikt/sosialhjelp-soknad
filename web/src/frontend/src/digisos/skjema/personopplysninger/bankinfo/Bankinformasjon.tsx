@@ -7,7 +7,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
-import { initialKontonummerState, Kontonummer } from "./KontonummerType";
+import { Kontonummer } from "./KontonummerType";
 import {
 	connectSoknadsdataContainer, onEndretValideringsfeil,
 	SoknadsdataContainerProps
@@ -27,14 +27,18 @@ class Bankinformasjon extends React.Component<Props, {}> {
 
 	onBlur() {
 		const { soknadsdata } = this.props;
-		let kontonummer = {...soknadsdata.personalia.kontonummer};
+		let kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
+
 		let feilkode: ValideringActionKey = null;
+
 		if (kontonummer.verdi !== null && kontonummer.verdi !== "") {
+
 			feilkode = this.validerKontonummer(kontonummer.verdi);
 			if (!feilkode) {
-				kontonummer = this.vaskKontonummerStrenger(kontonummer);
+				kontonummer = this.vaskKontonummerVerdi(kontonummer);
 				this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
 			}
+
 		} else {
 			onEndretValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER, this.props.feil, () => {
 				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER);
@@ -54,47 +58,48 @@ class Bankinformasjon extends React.Component<Props, {}> {
 
 	endreKontoBrukerdefinert(brukerdefinert: boolean) {
 		const { soknadsdata } = this.props;
-		let kontonummer: Kontonummer = {...soknadsdata.personalia.kontonummer};
+		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
 		kontonummer.brukerdefinert = brukerdefinert;
+
+		kontonummer.verdi = "";
+		
+		this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
-		const feilkode: ValideringActionKey = this.validerKontonummer(kontonummer.verdi);
-		if (!feilkode) {
-			kontonummer = this.vaskKontonummerStrenger(kontonummer);
-			if(kontonummer.brukerdefinert === false) {
-				kontonummer.verdi = null;
-			}
-			this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
-		}
+
+		// const feilkode: ValideringActionKey = this.validerKontonummer(kontonummer.verdi);
+
+		this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
+
 	}
 
 	onChangeInput(verdi: string) {
+		this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
 		const { soknadsdata } = this.props;
-		let kontonummer: Kontonummer = initialKontonummerState;
-		if (soknadsdata && soknadsdata.personalia && soknadsdata.personalia.kontonummer) {
-			kontonummer = soknadsdata.personalia.kontonummer;
-		}
+		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
 		kontonummer.verdi = verdi;
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
 	}
 
 	onChangeCheckboks(event: any): void {
 		const { soknadsdata } = this.props;
-		let kontonummer: Kontonummer = {...soknadsdata.personalia.kontonummer};
-		const harIkkeKonto = kontonummer.harIkkeKonto ? true : false;
-		kontonummer.harIkkeKonto = !harIkkeKonto;
+		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
+		kontonummer.harIkkeKonto = !kontonummer.harIkkeKonto;
+
+		if (kontonummer.harIkkeKonto) {
+			this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
+			kontonummer.verdi = "";
+		}
+
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
-		kontonummer = this.vaskKontonummerStrenger(kontonummer);
 		this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
+
 		event.preventDefault();
 	}
 
-	vaskKontonummerStrenger(kontonummer: Kontonummer) {
+	vaskKontonummerVerdi(kontonummer: Kontonummer) {
 		const kontonummerClone = {...kontonummer};
 		if (kontonummerClone.verdi !== null && kontonummerClone.verdi.length > 1) {
-			kontonummerClone.verdi = kontonummerClone.verdi.replace(/[ \.]/g, "");
-		}
-		if (kontonummerClone.systemverdi !== null && kontonummerClone.systemverdi.length > 1) {
-			kontonummerClone.systemverdi = kontonummerClone.systemverdi.replace(/[ \.]/g, "");
+			kontonummerClone.verdi = kontonummerClone.verdi.replace(/\D/g, "");
 		}
 		return kontonummerClone;
 	}
@@ -102,44 +107,24 @@ class Bankinformasjon extends React.Component<Props, {}> {
 	render() {
 		const { intl, soknadsdata } = this.props;
 		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
-		if (!kontonummer) {
-			return (<span/>);
-		}
-		const skjemaErSynlig: boolean = (
-			kontonummer.systemverdi === null ||
-			kontonummer.brukerdefinert === true
-		);
+		const infotekst:string = intl.formatMessage({ id: "kontakt.kontonummer.infotekst.tekst" });
+		const endreLabel:string = intl.formatMessage({id: "kontakt.system.kontonummer.endreknapp.label"});
+		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
 
-		const infotekst = intl.formatMessage({ id: "kontakt.kontonummer.infotekst.tekst" });
-		let endreLabel = intl.formatMessage({id: "kontakt.system.kontonummer.endreknapp.label"});
-		let avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
-		if(kontonummer.systemverdi === null && skjemaErSynlig) {
-			endreLabel = null;
-			avbrytLabel = null;
-		}
+		const inputVerdi: string = kontonummer && kontonummer.verdi ? kontonummer.verdi : "";
 
-		const harIkkeKonto: boolean = (kontonummer && kontonummer.harIkkeKonto) ? true : false;
-		let kontonummerVerdi: string = "";
-		if (kontonummer && kontonummer.verdi && harIkkeKonto === false) {
-			kontonummerVerdi = kontonummer.verdi;
-		}
-		return (
-			<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
-				<SysteminfoMedSkjema
-					skjemaErSynlig={skjemaErSynlig}
-					onVisSkjema={() => this.endreKontoBrukerdefinert(true)}
-					onSkjulSkjema={() => this.endreKontoBrukerdefinert(false)}
-					endreLabel={endreLabel}
-					avbrytLabel={avbrytLabel}
-					focus={false}
-					skjema={(
+
+		switch(kontonummer.systemverdi){
+			case null: {
+				return (
+					<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
 						<div>
 							<InputEnhanced
 								faktumKey="kontakt.kontonummer"
 								id="bankinfo_konto"
 								className={"input--xxl faktumInput "}
-								disabled={harIkkeKonto}
-								verdi={kontonummerVerdi}
+								disabled={kontonummer.harIkkeKonto}
+								verdi={inputVerdi}
 								required={false}
 								onChange={(input: string) => this.onChangeInput(input)}
 								onBlur={() => this.onBlur()}
@@ -147,13 +132,13 @@ class Bankinformasjon extends React.Component<Props, {}> {
 								bredde={"S"}
 							/>
 							<div
-								className={"inputPanel " + (harIkkeKonto ? " inputPanel__checked" : " ")}
+								className={"inputPanel " + (kontonummer.harIkkeKonto ? " inputPanel__checked" : " ")}
 								onClick={(event: any) => this.onChangeCheckboks(event)}
 							>
 								<Checkbox
 									id="kontakt_kontonummer_har_ikke_checkbox"
 									name="kontakt_kontonummer_har_ikke_checkbox"
-									checked={harIkkeKonto}
+									checked={kontonummer.harIkkeKonto}
 									onChange={(event: any) => this.onChangeCheckboks(event)}
 									label={
 										<div>
@@ -163,21 +148,66 @@ class Bankinformasjon extends React.Component<Props, {}> {
 								/>
 							</div>
 						</div>
-					)}
-				>
-					<Detaljeliste>
-						<DetaljelisteElement
-							tittel={
-								intl.formatHTMLMessage({ id: "kontakt.system.kontonummer.label" })
-							}
-							verdi={kontonummer.systemverdi}
-						/>
-					</Detaljeliste>
-				</SysteminfoMedSkjema>
-			</Sporsmal>
-		);
+					</Sporsmal>
+				);
+			}
+			default: {
+				return (
+					<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
+						<SysteminfoMedSkjema
+							skjemaErSynlig={kontonummer.brukerdefinert}
+							onVisSkjema={() => this.endreKontoBrukerdefinert(true)}
+							onSkjulSkjema={() => this.endreKontoBrukerdefinert(false)}
+							endreLabel={endreLabel}
+							avbrytLabel={avbrytLabel}
+							focus={false}
+							skjema={(
+								<div>
+									<InputEnhanced
+										faktumKey="kontakt.kontonummer"
+										id="bankinfo_konto"
+										className={"input--xxl faktumInput "}
+										disabled={kontonummer.harIkkeKonto}
+										verdi={inputVerdi}
+										required={false}
+										onChange={(input: string) => this.onChangeInput(input)}
+										onBlur={() => this.onBlur()}
+										maxLength={13}
+										bredde={"S"}
+									/>
+									<div
+										className={"inputPanel " + (kontonummer.harIkkeKonto ? " inputPanel__checked" : " ")}
+										onClick={(event: any) => this.onChangeCheckboks(event)}
+									>
+										<Checkbox
+											id="kontakt_kontonummer_har_ikke_checkbox"
+											name="kontakt_kontonummer_har_ikke_checkbox"
+											checked={kontonummer.harIkkeKonto}
+											onChange={(event: any) => this.onChangeCheckboks(event)}
+											label={
+												<div>
+													{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
+												</div>
+											}
+										/>
+									</div>
+								</div>
+							)}
+						>
+							<Detaljeliste>
+								<DetaljelisteElement
+									tittel={
+										intl.formatHTMLMessage({ id: "kontakt.system.kontonummer.label" })
+									}
+									verdi={kontonummer.systemverdi}
+								/>
+							</Detaljeliste>
+						</SysteminfoMedSkjema>
+					</Sporsmal>
+				);
+			}
+		}
 	}
-
 }
 
 export {Bankinformasjon as BankinformasjonView};
