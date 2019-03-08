@@ -19,7 +19,7 @@ describe("Telefon react komponent", () => {
 		soknadsdata.personalia.telefonnummer = {
 			brukerdefinert: false,
 			systemverdi: "12345678",
-			verdi: null
+			brukerutfyltVerdi: null
 		};
 		const wrapper = mount(
 			<TestContext messages={intlMessages}>
@@ -40,7 +40,7 @@ describe("Telefon react komponent", () => {
 		soknadsdata.personalia.telefonnummer = {
 			brukerdefinert: true,
 			systemverdi: null,
-			verdi: "12345678"
+			brukerutfyltVerdi: "12345678"
 		};
 		const wrapper = mount(
 			<TestContext messages={intlMessages}>

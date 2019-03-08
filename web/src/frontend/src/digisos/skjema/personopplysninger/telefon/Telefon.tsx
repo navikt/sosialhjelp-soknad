@@ -37,7 +37,7 @@ class TelefonView extends React.Component<Props, {}> {
 	onChange(verdi: any) {
 		const { soknadsdata } = this.props;
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
-		telefonnummer.verdi = verdi;
+		telefonnummer.brukerutfyltVerdi = verdi;
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
 	}
 
@@ -48,7 +48,7 @@ class TelefonView extends React.Component<Props, {}> {
 	}
 
 	forberedOgSendTelefonnummer(telefonnummer: Telefonnummer, brukerBehandlingId: string){
-		let verdi = telefonnummer.verdi;
+		let verdi = telefonnummer.brukerutfyltVerdi;
 		let feilkode: ValideringActionKey = null;
 
 		if(verdi === "" || verdi === null) {
@@ -58,13 +58,13 @@ class TelefonView extends React.Component<Props, {}> {
 		} else {
 			verdi = this.fjernLandkode(verdi);
 			verdi = verdi.replace(/[ \.]/g,"");
-			telefonnummer.verdi = verdi;
+			telefonnummer.brukerutfyltVerdi = verdi;
 			feilkode = this.validerTelefonnummer(verdi);
 		}
 
 		if (!feilkode) {
-			if (telefonnummer.verdi !== null && telefonnummer.verdi !== "") {
-				telefonnummer.verdi = LANDKODE + this.fjernLandkode(verdi);
+			if (telefonnummer.brukerutfyltVerdi !== null && telefonnummer.brukerutfyltVerdi !== "") {
+				telefonnummer.brukerutfyltVerdi = LANDKODE + this.fjernLandkode(verdi);
 			}
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
 		} else {
@@ -94,7 +94,7 @@ class TelefonView extends React.Component<Props, {}> {
 		const endreLabel = intl.formatMessage({ id: "kontakt.system.telefon.endreknapp.label"});
 		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
 		const brukerdefinert = telefonnummer ? telefonnummer.brukerdefinert : false;
-		const verdi = telefonnummer && telefonnummer.verdi ? telefonnummer.verdi : "";
+		const verdi = telefonnummer && telefonnummer.brukerutfyltVerdi ? telefonnummer.brukerutfyltVerdi : "";
 		const systemverdi = telefonnummer ? telefonnummer.systemverdi : "";
 		const faktumKey = telefonnummer.systemverdi === null ? FAKTUM_KEY_TELEFON : FAKTUM_KEY_SYSTEM_TELEFON;
 
