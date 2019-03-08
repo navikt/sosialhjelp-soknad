@@ -70,6 +70,12 @@ const oppholdsadresseReducer: Reducer<OppholdsAdresseState, any> = (
 				soknadsmottakere: action.soknadsmottakere
 			};
 		}
+		case OppholdsadresseActionTypeKeys.VELG_SOKNADSMOTTAKER: {
+			return {
+				...state,
+				soknadsmottaker: action.soknadsmottaker
+			}
+		}
 		default:
 			return state;
 	}

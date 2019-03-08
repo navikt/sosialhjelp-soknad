@@ -5,7 +5,6 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { DispatchProps } from "../../../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { State } from "../../../redux/reducers";
-import { finnFaktum } from "../../../../nav-soknad/utils";
 import { velgSoknadsmottaker } from "./oppholdsadresseReducer";
 import { getIntlTextOrKey } from "../../../../nav-soknad/utils/intlUtils";
 import { setFaktumValideringsfeil } from "../../../../nav-soknad/redux/valideringActions";
@@ -30,27 +29,24 @@ class VelgSoknadsmottaker extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const valgtSoknadsmottaker = finnFaktum("soknadsmottaker", this.props.fakta);
-		if (valgtSoknadsmottaker == null) {
-			return null;
-		}
+		const {soknadsmottaker, soknadsmottakere, label, intl} = this.props;
 		const ENHETSID = "enhetsId";
-		const enhetsId = valgtSoknadsmottaker.properties[ENHETSID] || "velg";
-		const antallSoknadsmottakere = this.props.soknadsmottakere.length;
+		const enhetsId = soknadsmottaker && soknadsmottaker[ENHETSID] || "velg";
+		const antallSoknadsmottakere = soknadsmottakere.length;
 		if (antallSoknadsmottakere < 2) {
 			return null;
 		} else {
 			return (
 				<Select
 					className="velgNavKontorDropDown"
-					label={this.props.label}
+					label={label}
 					onChange={(event: any) => this.velgNavKontor(event)}
 					value={enhetsId}
 				>
 					<option value="velg" key="velg" disabled={true}>
-						{getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgMottaker")}
+						{getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.velgMottaker")}
 					</option>
-					{this.props.soknadsmottakere.map((item: any, index: number) => {
+					{soknadsmottakere.map((item: any, index: number) => {
 						return (
 							<option value={item.enhetsId} key={Math.random() * 10000}>
 								{item.enhetsnavn}
