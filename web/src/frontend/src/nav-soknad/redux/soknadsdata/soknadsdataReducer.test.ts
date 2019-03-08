@@ -20,12 +20,11 @@ describe("søknadsdata reducer", () => {
 		const kontonummerData = {
 			brukerdefinert: true,
 			systemverdi: "1111",
-			verdi: "222",
+			brukerutfyltVerdi: "222",
 			harIkkeKonto: false
 		};
 		const state2 = SoknadsdataReducer(state1, oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummerData));
-		expect(state2.personalia.kontonummer.verdi).toEqual(kontonummerData.verdi);
+		expect(state2.personalia.kontonummer.brukerutfyltVerdi).toEqual(kontonummerData.brukerutfyltVerdi);
 		expect(state2.personalia.telefonnummer.verdi).toEqual(telefonnummerData.verdi);
 	});
-
 });

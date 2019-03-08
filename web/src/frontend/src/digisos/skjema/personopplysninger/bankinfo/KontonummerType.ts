@@ -1,13 +1,13 @@
 export interface Kontonummer {
 	brukerdefinert: boolean;
 	systemverdi: string | null;
-	verdi: string | null;
+	brukerutfyltVerdi: string | null;
 	harIkkeKonto: boolean | null;
 }
 
 export const initialKontonummerState: Kontonummer = {
 	brukerdefinert: false,
 	systemverdi: null,
-	verdi: null,
+	brukerutfyltVerdi: null,
 	harIkkeKonto: null
 };

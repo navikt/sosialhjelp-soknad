@@ -68,6 +68,7 @@ export type SoknadsdataType =
 	| Bosituasjon
 	| Familie
 	| Utdanning
+	| Kontonummer
 	| Telefonnummer
 	| Personalia;
 
