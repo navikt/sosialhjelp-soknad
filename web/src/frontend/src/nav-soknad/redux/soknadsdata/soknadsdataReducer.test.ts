@@ -10,22 +10,21 @@ describe("søknadsdata reducer", () => {
 		const telefonnummerData = {
 			"brukerdefinert": true,
 			"systemverdi": "+4798765432",
-			"verdi": "+4791852968"
+			"brukerutfyltVerdi": "+4791852968"
 		};
 		const action = oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummerData);
 		const state1 = reducer(initialSoknadsdataState, action);
 
-		expect(state1.personalia.telefonnummer.verdi).toEqual(telefonnummerData.verdi);
+		expect(state1.personalia.telefonnummer.brukerutfyltVerdi).toEqual(telefonnummerData.brukerutfyltVerdi);
 
 		const kontonummerData = {
 			brukerdefinert: true,
 			systemverdi: "1111",
-			verdi: "222",
+			brukerutfyltVerdi: "222",
 			harIkkeKonto: false
 		};
 		const state2 = SoknadsdataReducer(state1, oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummerData));
-		expect(state2.personalia.kontonummer.verdi).toEqual(kontonummerData.verdi);
-		expect(state2.personalia.telefonnummer.verdi).toEqual(telefonnummerData.verdi);
+		expect(state2.personalia.kontonummer.brukerutfyltVerdi).toEqual(kontonummerData.brukerutfyltVerdi);
+		expect(state2.personalia.telefonnummer.brukerutfyltVerdi).toEqual(telefonnummerData.brukerutfyltVerdi);
 	});
-
 });

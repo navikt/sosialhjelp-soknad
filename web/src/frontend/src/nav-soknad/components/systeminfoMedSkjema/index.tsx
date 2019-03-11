@@ -19,6 +19,9 @@ interface Props {
 	avbrytLabel?: string;
 	/** Om skjema skal vises eller ikke */
 	skjemaErSynlig?: boolean;
+
+	/* Disable "auto focus" */
+	focus?: boolean;
 }
 
 class SysteminfoMedSkjema extends React.Component<Props> {
@@ -33,13 +36,18 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 
 	componentWillReceiveProps(nextProps: Props) {
 		if (!this.props.skjemaErSynlig && nextProps.skjemaErSynlig) {
-			this.focusFunc = () => {
-				focusOnFirstElement(this.skjema);
-			};
+			if (this.props.focus !== false) {
+				this.focusFunc = () => {
+					focusOnFirstElement(this.skjema);
+				};
+			}
+
 		} else if (this.props.skjemaErSynlig && !nextProps.skjemaErSynlig) {
-			this.focusFunc = () => {
-				(findDOMNode(this.visSkjemaKnapp) as HTMLElement).focus();
-			};
+			if (this.props.focus !== false) {
+				this.focusFunc = () => {
+					(findDOMNode(this.visSkjemaKnapp) as HTMLElement).focus();
+				};
+			}
 		}
 	}
 
@@ -69,7 +77,7 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 						{skjema}
 					</div>
 				) : null}
-				{!skjemaErSynlig && this.props.endreLabel && (
+				{!skjemaErSynlig && endreLabel && (
 					<Lenkeknapp
 						ref={c => (this.visSkjemaKnapp = c)}
 						onClick={this.props.onVisSkjema}
@@ -78,7 +86,7 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 						{endreLabel}
 					</Lenkeknapp>
 				)}
-				{skjemaErSynlig && this.props.avbrytLabel && (
+				{skjemaErSynlig && avbrytLabel && (
 					<div className="systeminfoMedSkjema__skjulSkjemaKnapp">
 						<Lenkeknapp
 							onClick={this.props.onSkjulSkjema}

@@ -26,7 +26,7 @@ describe("Bankinformasjon react komponent", () => {
 		const tomBankinformasjon: Kontonummer = {
 			"brukerdefinert": false,
 			"systemverdi": null,
-			"verdi": null,
+			"brukerutfyltVerdi": null,
 			"harIkkeKonto": null
 		};
 
@@ -54,7 +54,7 @@ describe("Bankinformasjon react komponent", () => {
 		const tomBankinformasjon: Kontonummer = {
 			"brukerdefinert": false,
 			"systemverdi": "12345678903",
-			"verdi": null,
+			"brukerutfyltVerdi": null,
 			"harIkkeKonto": null
 		};
 		const soknadsdata = initialSoknadsdataState;
@@ -81,7 +81,7 @@ describe("Bankinformasjon react komponent", () => {
 		const bankinformasjon: Kontonummer = {
 			"brukerdefinert": true,
 			"systemverdi": "12345678903",
-			"verdi": null,
+			"brukerutfyltVerdi": null,
 			"harIkkeKonto": null
 		};
 		const soknadsdata = initialSoknadsdataState;
