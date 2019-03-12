@@ -44,7 +44,7 @@ class BosituasjonView extends React.Component<Props, {}> {
 	handleRadioClick(verdi: string): void {
 		const { soknadsdata, brukerBehandlingId } = this.props;
 		const bosituasjon = soknadsdata.bosituasjon;
-		if (verdi.indexOf("annet.botype.") !== -1){
+		if (verdi && verdi.indexOf("annet.botype.") !== -1){
 			const botype = verdi.replace("annet.botype.","");
 			bosituasjon.botype = botype;
 			this.props.oppdaterSoknadsdataState(soknadsdata);
