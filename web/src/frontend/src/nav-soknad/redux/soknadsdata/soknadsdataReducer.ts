@@ -14,6 +14,11 @@ import {
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
 import { setPath } from "./soknadsdataActions";
+import {
+	AdresseKategori,
+	Adresser,
+	initialAdresserState
+} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -31,17 +36,20 @@ export enum SoknadsSti {
 	BEGRUNNELSE = "begrunnelse",
 	BOSITUASJON = "bosituasjon",
 	UTDANNING = "utdanning",
-	TELEFONNUMMER = "personalia/telefonnummer"
+	TELEFONNUMMER = "personalia/telefonnummer",
+	ADRESSER = "personalia/adresser"
 }
 
 export interface Personalia {
 	kontonummer?: Kontonummer;
 	telefonnummer?: Telefonnummer;
+	adresser?: Adresser;
 }
 
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
-	telefonnummer: initialTelefonnummerState
+	telefonnummer: initialTelefonnummerState,
+	adresser: initialAdresserState
 };
 
 export interface Soknadsdata {
@@ -62,6 +70,10 @@ export interface SoknadsdataActionVerdi {
 	personalia: Personalia;
 }
 
+export interface AdresseValg {
+	valg: AdresseKategori;
+}
+
 export type SoknadsdataType =
 	Arbeid
 	| Begrunnelse
@@ -70,7 +82,9 @@ export type SoknadsdataType =
 	| Utdanning
 	| Kontonummer
 	| Telefonnummer
-	| Personalia;
+	| Personalia
+	| Adresser
+	| AdresseValg;
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,

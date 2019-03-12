@@ -15,11 +15,20 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	}
 }
 
-export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknadsdata: any) {
+export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknadsdata: any, responseHandler?: (response: any) => void) {
 	return (dispatch: Dispatch) => {
-		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata)).catch(() => {
-			dispatch(navigerTilServerfeil());
-		});
+		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata))
+			.then((response: any) => {
+				if (responseHandler) {
+					responseHandler(response);
+				}
+				// console.warn("sti: " + sti);
+				// console.warn("PUT response: " + JSON.stringify(response, null, 4));
+				// dispatch(oppdaterSoknadsdataSti(sti, response));
+			})
+			.catch(() => {
+				dispatch(navigerTilServerfeil());
+			});
 	}
 }
 
