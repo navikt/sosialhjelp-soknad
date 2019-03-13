@@ -90,7 +90,9 @@ export function getLoginServiceLogoutUrl(){
 	if (host === hostAdresseProd) {
 		return loginServiceLogoutUrlProd;
 	}
-	if (host === hostAdresseTest ||
+	if (host === hostAdresseTestt1 ||
+		host === hostAdresseTestq0 ||
+		host === hostAdresseTestq1 ||
 		host === hostAdresseTestNaist1 ||
 		host === hostAdresseTestNaisq0 ||
 		host === hostAdresseTestNaisq1
