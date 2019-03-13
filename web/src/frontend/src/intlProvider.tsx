@@ -39,7 +39,7 @@ class IntlProvider extends React.Component<Props, {}> {
 
 		if (initRestStatus === REST_STATUS.INITIALISERT ||
 			initRestStatus === REST_STATUS.PENDING ||
-			(!this.props.harTilgang && !this.props.linkVisited)
+			!this.props.harTilgang
 		) {
 			children = (
 				<div className="application-spinner">

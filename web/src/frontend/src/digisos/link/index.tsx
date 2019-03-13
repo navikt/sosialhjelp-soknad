@@ -20,11 +20,13 @@ type Props = StateProps & DispatchProps & IntlProviderProps;
 
 class Link extends React.Component<Props, {}> {
 
+	constructor(props: Props){
+		super(props);
+		this.props.dispatch(setLinkVisited());
+	}
+
 
 	render(){
-
-		this.props.dispatch(setLinkVisited());
-
 		const url = new URL(window.location.href);
 		let urlPath = url.searchParams.get("goto");
 		const contextPath = "sosialhjelp/soknad";
