@@ -5,6 +5,7 @@ import {Redirect} from "react-router";
 import {LedetekstState} from "../../nav-soknad/redux/ledetekster/ledeteksterTypes";
 import {REST_STATUS} from "../../nav-soknad/types";
 import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
+import {loggFeil} from "../../nav-soknad/redux/navlogger/navloggerActions";
 
 interface IntlProviderProps {
 	children: React.ReactNode;
@@ -34,6 +35,10 @@ class Link extends React.Component<Props, {}> {
 		urlPath = urlPath.replace(regexp,"");
 		const validationRegexp = new RegExp("^([a-zA-Z]*[/]*)*$")
 		const isValidPath = validationRegexp.test(urlPath);
+
+		if (!isValidPath){
+			loggFeil("Ulovlig goto parameter: " + urlPath);
+		}
 
 		return(
 			<div className="application-spinner">
