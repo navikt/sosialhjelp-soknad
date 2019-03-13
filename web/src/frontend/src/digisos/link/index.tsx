@@ -33,7 +33,7 @@ class Link extends React.Component<Props, {}> {
 		const contextPath = "sosialhjelp/soknad";
 		const regexp = new RegExp("/" + contextPath);
 		urlPath = urlPath.replace(regexp,"");
-		const validationRegexp = new RegExp("^([a-zA-Z]*[/]*)*$")
+		const validationRegexp = new RegExp("^([a-zA-Z]*[/]*[0-9]*)*$")
 		const isValidPath = validationRegexp.test(urlPath);
 
 		if (!isValidPath){
