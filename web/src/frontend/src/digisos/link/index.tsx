@@ -32,10 +32,12 @@ class Link extends React.Component<Props, {}> {
 		const contextPath = "sosialhjelp/soknad";
 		const regexp = new RegExp("/" + contextPath);
 		urlPath = urlPath.replace(regexp,"");
+		const validationRegexp = new RegExp("^([a-zA-Z]*[/]*)*$")
+		const isValidPath = validationRegexp.test(urlPath);
 
 		return(
 			<div className="application-spinner">
-				<Redirect to={urlPath}/>
+				<Redirect to={isValidPath ? urlPath : "/serverfeil"}/>
 			</div>
 		)
 	}
