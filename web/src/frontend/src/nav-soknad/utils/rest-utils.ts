@@ -8,7 +8,9 @@ import { store } from '../../index';
 
 
 export const hostAdresseProd = 'www.nav.no';
-export const hostAdresseTest = 'www-q0.nav.no';
+export const hostAdresseTestt1 = 'www-t1.nav.no';
+export const hostAdresseTestq0 = 'www-q0.nav.no';
+export const hostAdresseTestq1 = 'www-q1.nav.no';
 export const hostAdresseTestNaist1 = 'sosialhjelp-soknad-t1.nais.oera-q.local';
 export const hostAdresseTestNaisq0 = 'sosialhjelp-soknad-q0.nais.oera-q.local';
 export const hostAdresseTestNaisq1 = 'sosialhjelp-soknad-q1.nais.oera-q.local';
@@ -65,7 +67,9 @@ export function getLoginServiceUrl(): string {
 	if (host === hostAdresseProd) {
 		return loginServiceUrlProd + redirectParam;
 	}
-	if (host === hostAdresseTest ||
+	if (host === hostAdresseTestt1 ||
+		host === hostAdresseTestq0 ||
+		host === hostAdresseTestq1 ||
 		host === hostAdresseTestNaist1 ||
 		host === hostAdresseTestNaisq0 ||
 		host === hostAdresseTestNaisq1
