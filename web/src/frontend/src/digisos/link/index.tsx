@@ -42,6 +42,7 @@ class Link extends React.Component<Props, {}> {
 
 		return(
 			<div className="application-spinner">
+				Test: Er på Link siden
 				<Redirect to={isValidPath ? urlPath : "/serverfeil"}/>
 			</div>
 		)
