@@ -51,7 +51,7 @@ class Link extends React.Component<Props, {}> {
 
 		return(
 			<div>
-				<Redirect to={"/serverfeil"}/>
+				<Redirect to={"/informasjon"}/>
 			</div>
 		)
 	}
