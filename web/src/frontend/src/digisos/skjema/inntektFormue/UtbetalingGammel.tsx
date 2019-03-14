@@ -24,7 +24,6 @@ class BankinnskuddGammel extends React.Component<FaktumComponentProps, {}> {
 		const hvilkeUtbetalingerAnnet = "inntekt.inntekter.true.type.annet";
 		return (
 			<JaNeiSporsmalFaktum faktumKey={utbetaling.faktum} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
-				Utbetaling!
 				<SporsmalFaktum faktumKey={hvilkeUtbetalinger.faktum}>
 					<CheckboxFaktum
 						id="utbetalinger_utbytte_checkbox"

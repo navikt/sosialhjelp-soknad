@@ -15,6 +15,10 @@ import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeid
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
 import { setPath } from "./soknadsdataActions";
 import {Bostotte, initialBostotteState} from "../../../digisos/skjema/inntektFormue/bostotte/bostotteTypes";
+import {
+	initialUtbetalingerState,
+	Utbetalinger
+} from "../../../digisos/skjema/inntektFormue/Utbetalinger/utbetalingerTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -33,7 +37,8 @@ export enum SoknadsSti {
 	BOSITUASJON = "bosituasjon",
 	UTDANNING = "utdanning",
 	TELEFONNUMMER = "personalia/telefonnummer",
-	BOSTOTTE = "inntekt/bostotte"
+	BOSTOTTE = "inntekt/bostotte",
+	UTBETALINGER = "inntekt/utbetalinger"
 }
 
 export interface Personalia {
@@ -42,7 +47,8 @@ export interface Personalia {
 }
 
 export interface Inntekt {
-	bostotte?: Bostotte
+	bostotte?: Bostotte;
+	utbetalinger?: Utbetalinger;
 }
 
 export const initialPersonaliaState: Personalia = {
@@ -51,7 +57,8 @@ export const initialPersonaliaState: Personalia = {
 };
 
 export const initialInntektState: Inntekt = {
-	bostotte: initialBostotteState
+	bostotte: initialBostotteState,
+	utbetalinger: initialUtbetalingerState
 };
 
 export interface Soknadsdata {

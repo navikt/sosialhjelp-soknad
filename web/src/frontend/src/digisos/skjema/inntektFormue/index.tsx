@@ -25,7 +25,7 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
 				<NavYtelser fakta={fakta}/>
 				<Bostotte />
 				<UtbetalingGammel fakta={fakta} />
-				<Utbetalinger/>
+				<Utbetalinger />
 				<h2 className="overskrift">
 					<FormattedHTMLMessage id="opplysninger.formue.undertittel"/>
 				</h2>
