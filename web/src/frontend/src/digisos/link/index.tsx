@@ -5,7 +5,7 @@ import {Redirect} from "react-router";
 import {LedetekstState} from "../../nav-soknad/redux/ledetekster/ledeteksterTypes";
 import {REST_STATUS} from "../../nav-soknad/types";
 import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
-import {loggFeil} from "../../nav-soknad/redux/navlogger/navloggerActions";
+import {loggFeil, loggInfo} from "../../nav-soknad/redux/navlogger/navloggerActions";
 
 interface IntlProviderProps {
 	children: React.ReactNode;
@@ -32,18 +32,26 @@ class Link extends React.Component<Props, {}> {
 		let urlPath = url.searchParams.get("goto");
 		const contextPath = "sosialhjelp/soknad";
 		const regexp = new RegExp("/" + contextPath);
-		urlPath = urlPath.replace(regexp,"");
-		const validationRegexp = new RegExp("^([a-zA-Z]*[/]*[0-9]*)*$")
-		const isValidPath = validationRegexp.test(urlPath);
 
-		if (!isValidPath){
-			loggFeil("Ulovlig goto parameter: " + urlPath);
+		if (urlPath){
+			urlPath = urlPath.replace(regexp,"");
+			const validationRegexp = new RegExp("^([a-zA-Z]*[/]*[0-9]*)*$")
+			const isValidPath = validationRegexp.test(urlPath);
+			loggInfo("goto parameter: " + urlPath);
+			if (!isValidPath){
+				loggFeil("Ulovlig goto parameter: " + urlPath);
+			}
+			return(
+				<div className="application-spinner">
+					Test: Er på Link siden
+					<Redirect to={isValidPath ? urlPath : "/serverfeil"}/>
+				</div>
+			)
 		}
 
 		return(
-			<div className="application-spinner">
-				Test: Er på Link siden
-				<Redirect to={isValidPath ? urlPath : "/serverfeil"}/>
+			<div>
+				<Redirect to={"/serverfeil"}/>
 			</div>
 		)
 	}
