@@ -5,11 +5,15 @@ import org.slf4j.LoggerFactory;
 
 import no.nav.sbl.soknadsosialhjelp.duplicated.Jetty;
 
+import java.io.File;
+
 public class StartJetty {
-    private static final int PORT = 8080;
+    private static final int  PORT = isRunningOnHeroku() ? Integer.parseInt(System.getenv("PORT")) : 8080;
+    private static final File overrideWebXmlFile = isRunningOnHeroku() ? new File("./web/target/classes/webapp/WEB-INF/heroku-web.xml") : null;
+
     private static final Logger logger = LoggerFactory.getLogger(StartJetty.class);
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         if (isRunningOnNais()) {
             mapNaisProperties();
         } else  {
@@ -17,9 +21,13 @@ public class StartJetty {
         }
         Jetty jetty = new Jetty.JettyBuilder()
                 .at("/soknadsosialhjelp")
+                .overrideWebXml(overrideWebXmlFile)
                 .port(PORT)
                 .buildJetty();
         logger.info("http://127.0.0.1:" + PORT + "/soknadsosialhjelp/informasjon");
+        if (isRunningOnHeroku()){
+            logger.info("Is running on Heroku, with port : " + PORT);
+        }
 
         Runtime.getRuntime().addShutdownHook(new ShutdownHook(jetty));
 
@@ -54,6 +62,10 @@ public class StartJetty {
 
     private static boolean isRunningOnNais() {
         return determineEnvironment() != null;
+    }
+
+    public static boolean isRunningOnHeroku(){
+        return System.getenv("HEROKU") != null && Boolean.parseBoolean(System.getenv("HEROKU"));
     }
 
     private static String determineEnvironment() {

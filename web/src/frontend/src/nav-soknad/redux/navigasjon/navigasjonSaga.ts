@@ -44,6 +44,10 @@ function* tilStartSaga(): SagaIterator {
 	yield put(push(Sider.START));
 }
 
+function* tilMockSaga(): SagaIterator {
+	yield put(push(Sider.MOCK));
+}
+
 function* tilBostedEllerStartSoknadSaga(
 	action: TilBostedEllerStartSoknad
 ): SagaIterator {
@@ -119,6 +123,7 @@ function* navigasjonSaga(): SagaIterator {
 	yield takeEvery(NavigasjonActionTypes.TIL_START, tilStartSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_BOSTED, tilBostedSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_DITT_NAV, tilDittNav);
+	yield takeEvery(NavigasjonActionTypes.TIL_MOCK, tilMockSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilKvittering);
 	yield takeEvery(
 		NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD,
