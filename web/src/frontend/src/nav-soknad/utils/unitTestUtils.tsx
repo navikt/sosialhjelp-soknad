@@ -68,7 +68,10 @@ export const setupShallowReactIntl = (intlMessages: any) => {
 
 export const harCheckboks = (wrapper: ReactWrapper) => wrapper.find('input[type="checkbox"]').length > 0;
 
-export const harInputfelt = (wrapper: ReactWrapper) => wrapper.find('input[type="text"]').length > 0;
+export const harInputfelt = (wrapper: ReactWrapper, type?: string) => {
+	const inputType = type ? type : "text";
+	return wrapper.find('input[type="' + inputType + '"]').length > 0;
+};
 
 export const createMockIntl = (messages: any) => {
 	const intl: any = {};

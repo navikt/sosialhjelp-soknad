@@ -104,10 +104,12 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 			return;
 		}
 
-		const valideringsfeil = validerAlleFaktum(
+		let valideringsfeil: Valideringsfeil[] = validerAlleFaktum(
 			this.props.fakta,
 			this.props.valideringer
 		);
+		valideringsfeil = [...valideringsfeil, ...this.props.valideringsfeil];
+
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
 			this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
