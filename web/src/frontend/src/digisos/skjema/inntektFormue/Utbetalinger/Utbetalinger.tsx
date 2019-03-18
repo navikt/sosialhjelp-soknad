@@ -3,17 +3,16 @@ import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Utbetalinger} from "./utbetalingerTypes";
-import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
-import {Bostotte} from "../bostotte/bostotteTypes";
+import CheckboxEnhanced from "../../../../nav-soknad/faktum/CheckboxEnhanced";
 
-
-const FAKTUM_UTBETALINGER = "inntekt.inntekter";
+// const MAX_CHARS = 500;
+const UTBETALINGER = "inntekt.inntekter";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -25,83 +24,120 @@ export class UtbetalingerView extends React.Component<Props, {}>{
 	}
 
 	componentDidMount(): void {
+		console.warn("Component did mount");
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.UTBETALINGER);
 	}
 
 	handleClickJaNeiSpsm(verdi: boolean){
+		console.warn("handle klikk ja nei");
 		const {brukerBehandlingId, soknadsdata} = this.props;
-		const utbetalinger: Bostotte = soknadsdata.inntekt.utbetalinger;
+		const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
 		utbetalinger.bekreftelse = verdi;
+		if (!verdi){
+			utbetalinger.salg = false;
+			utbetalinger.utbytte = false;
+			utbetalinger.forsikring = false;
+			utbetalinger.annet = false;
+			utbetalinger.beskrivelseAvAnnet = "";
+		}
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
 		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
 	}
 
 	handleClickRadio(idToToggle: string){
-		const IDTOTOGGLE: string = idToToggle;
+		console.warn("handle click radio: " + idToToggle);
 		const {brukerBehandlingId, soknadsdata} = this.props;
-		const utbetalinger: Bostotte = soknadsdata.inntekt.utbetalinger;
-		utbetalinger[IDTOTOGGLE] = !utbetalinger[IDTOTOGGLE];
+		const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
+		utbetalinger[idToToggle] = !utbetalinger[idToToggle];
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
 		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
 	}
 
-	// "bekreftelse" : null | boolean;
-	// "utbytte" : boolean;
-	// "salg" : boolean;
-	// "forsikring" : boolean;
-	// "annet" : boolean;
-	// "beskrivelseAvAnnet" : string;
+    onChangeAnnet(value: string){
+        console.warn("onChange input value : " + value);
+        const { soknadsdata} = this.props;
+        const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
+        utbetalinger.beskrivelseAvAnnet = value;
+        this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
+    }
+
+	onBlurAnnet(){
+        const {brukerBehandlingId, soknadsdata} = this.props;
+        const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
+        console.warn("onBlur save beskrivelseAvAnnet:" + utbetalinger.beskrivelseAvAnnet);
+        this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
+        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
+	}
+
 
 	render(){
 
 		const { soknadsdata } = this.props;
 
 		const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-		console.warn(utbetalinger);
 
 		return(
 			<JaNeiSporsmal
-				tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_UTBETALINGER)}
-				faktumKey={"inntekt.inntekter"}
+				tekster={getFaktumSporsmalTekst(this.props.intl, UTBETALINGER)}
+				faktumKey={UTBETALINGER}
 				verdi={utbetalinger.bekreftelse}
 				onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
 				legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 			>
 				<Sporsmal
-					tekster={getFaktumSporsmalTekst(this.props.intl, "inntekt.inntekter.true.type")}
+					tekster={getFaktumSporsmalTekst(this.props.intl, UTBETALINGER + ".true.type")}
 				>
-					<RadioEnhanced
-						getName={() => "utbytte"}
-						id="utbytte"
-						faktumKey={"inntekt.inntekter.true.type"}
-						value="utbytte"
-						checked={ utbetalinger.utbytte === true}
-						onChange={() => this.handleClickRadio("utbytte")}
-					/>
-					<RadioEnhanced
-						getName={() => "salg"}
-						id="salg"
-						faktumKey={"inntekt.inntekter.true.type"}
-						value="salg"
-						checked={ utbetalinger.salg === true}
-						onChange={() => this.handleClickRadio("salg")}
-					/>
-					<RadioEnhanced
-						getName={() => "forsikringsutbetalinger"}
-						id="forsikringsutbetalinger"
-						faktumKey={"inntekt.inntekter.true.type"}
-						value="forsikringsutbetalinger"
-						checked={ utbetalinger.forsikring === true}
-						onChange={() => this.handleClickRadio("forsikring")}
-					/>
-					<RadioEnhanced
-						getName={() => "annet"}
-						id="annet"
-						faktumKey={"inntekt.inntekter.true.type"}
-						value="annet"
-						checked={ utbetalinger.annet === true}
-						onChange={() => this.handleClickRadio("annet")}
-					/>
+                    <CheckboxEnhanced
+                        id = {"utbetalinger_utbytte_checkbox"}
+						name = {"utbytte"}
+						checked = {utbetalinger && utbetalinger.utbytte ? utbetalinger.utbytte : false}
+						disabled = {false}
+						label = {<FormattedHTMLMessage id={UTBETALINGER + ".true.type.utbytte"}/>}
+						visPanel = {true}
+						onClick = {() => this.handleClickRadio("utbytte")}
+                    />
+                    {/*<CheckboxEnhanced*/}
+                        {/*id = {"utbetalinger_salg_checkbox"}*/}
+                        {/*name = {"salg"}*/}
+                        {/*checked = {utbetalinger && utbetalinger.salg ? utbetalinger.salg : false}*/}
+                        {/*disabled = {false}*/}
+                        {/*label = {<FormattedHTMLMessage id={UTBETALINGER + ".true.type.salg"}/>}*/}
+                        {/*visPanel = {true}*/}
+                        {/*onClick = {() => this.handleClickRadio("salg")}*/}
+                    {/*/>*/}
+                    {/*<CheckboxEnhanced*/}
+                        {/*id = {"utbetalinger_forsikring_checkbox"}*/}
+                        {/*name = {"forsikring"}*/}
+                        {/*checked = {utbetalinger && utbetalinger.forsikring ? utbetalinger.forsikring : false}*/}
+                        {/*disabled = {false}*/}
+                        {/*label = {<FormattedHTMLMessage id={UTBETALINGER + ".true.type.forsikring"}/>}*/}
+                        {/*visPanel = {true}*/}
+                        {/*onClick = {() => this.handleClickRadio("forsikring")}*/}
+                    {/*/>*/}
+                    {/*<CheckboxEnhanced*/}
+                        {/*id = {"utbetalinger_annet_checkbox"}*/}
+                        {/*name = {"annet"}*/}
+                        {/*checked = {utbetalinger && utbetalinger.annet ? utbetalinger.annet : false}*/}
+                        {/*disabled = {false}*/}
+                        {/*label = {<FormattedHTMLMessage id={UTBETALINGER + ".true.type.annet"}/>}*/}
+                        {/*visPanel = {true}*/}
+                        {/*onClick = {() => this.handleClickRadio("annet")}*/}
+                    {/*/>*/}
+                    {/*<NivaTreSkjema*/}
+                        {/*visible={utbetalinger.bekreftelse && utbetalinger.annet}*/}
+                        {/*size="small"*/}
+                    {/*>*/}
+						{/*<TextareaEnhanced*/}
+							{/*id="utbetalinger_annet_textarea"*/}
+							{/*placeholder=""*/}
+							{/*onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}*/}
+							{/*onBlur={() => this.onBlurAnnet()}*/}
+							{/*faktumKey=""*/}
+							{/*labelId={ UTBETALINGER + ".true.type.annet.true.beskrivelse.label"}*/}
+							{/*maxLength={MAX_CHARS}*/}
+							{/*value={utbetalinger.beskrivelseAvAnnet}*/}
+						{/*/>*/}
+					{/*</NivaTreSkjema>*/}
 				</Sporsmal>
 			</JaNeiSporsmal>
 		)

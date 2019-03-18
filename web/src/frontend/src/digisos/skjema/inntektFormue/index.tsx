@@ -4,7 +4,6 @@ import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import Eiendeler from "./Eiendeler";
 import Bankinnskudd from "./Bankinnskudd";
-import UtbetalingGammel from "./UtbetalingGammel";
 import { State } from "../../redux/reducers";
 import NavYtelser from "./NavYtelser";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
@@ -24,7 +23,6 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
 				</h2>
 				<NavYtelser fakta={fakta}/>
 				<Bostotte />
-				<UtbetalingGammel fakta={fakta} />
 				<Utbetalinger />
 				<h2 className="overskrift">
 					<FormattedHTMLMessage id="opplysninger.formue.undertittel"/>
