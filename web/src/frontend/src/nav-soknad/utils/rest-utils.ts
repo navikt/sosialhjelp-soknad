@@ -92,7 +92,7 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
 	const OPTIONS: RequestInit = {
 		headers: getHeaders(),
 		method,
-		credentials: "same-origin",
+		credentials: determineCredentialsParameter(),
 		body: body ? body : undefined
 	};
 
