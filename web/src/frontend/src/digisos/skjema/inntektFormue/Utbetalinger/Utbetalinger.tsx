@@ -59,7 +59,7 @@ export class UtbetalingerView extends React.Component<Props, {}> {
         this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
     }
 
-    onBlurAnnet() {
+    onBlurTekstfeltAnnet() {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
         this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
@@ -89,7 +89,6 @@ export class UtbetalingerView extends React.Component<Props, {}> {
                         id={"utbetalinger_utbytte_checkbox"}
                         name={"utbytte"}
                         checked={utbetalinger && utbetalinger.utbytte ? utbetalinger.utbytte : false}
-                        disabled={false}
                         label={<FormattedHTMLMessage id={UTBETALINGER + ".true.type.utbytte"}/>}
                         onClick={() => this.handleClickRadio("utbytte")}
                     />
@@ -97,7 +96,6 @@ export class UtbetalingerView extends React.Component<Props, {}> {
                         id={"utbetalinger_salg_checkbox"}
                         name={"salg"}
                         checked={utbetalinger && utbetalinger.salg ? utbetalinger.salg : false}
-                        disabled={false}
                         label={<FormattedHTMLMessage id={UTBETALINGER + ".true.type.salg"}/>}
                         onClick={() => this.handleClickRadio("salg")}
                     />
@@ -105,7 +103,6 @@ export class UtbetalingerView extends React.Component<Props, {}> {
                         id={"utbetalinger_forsikring_checkbox"}
                         name={"forsikring"}
                         checked={utbetalinger && utbetalinger.forsikring ? utbetalinger.forsikring : false}
-                        disabled={false}
                         label={<FormattedHTMLMessage id={UTBETALINGER + ".true.type.forsikring"}/>}
                         onClick={() => this.handleClickRadio("forsikring")}
                     />
@@ -113,7 +110,6 @@ export class UtbetalingerView extends React.Component<Props, {}> {
                         id={"utbetalinger_annet_checkbox"}
                         name={"annet"}
                         checked={utbetalinger && utbetalinger.annet ? utbetalinger.annet : false}
-                        disabled={false}
                         label={<FormattedHTMLMessage id={UTBETALINGER + ".true.type.annet"}/>}
                         onClick={() => this.handleClickRadio("annet")}
                     />
@@ -125,7 +121,7 @@ export class UtbetalingerView extends React.Component<Props, {}> {
                             id="utbetalinger_annet_textarea"
                             placeholder=""
                             onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}
-                            onBlur={() => this.onBlurAnnet()}
+                            onBlur={() => this.onBlurTekstfeltAnnet()}
                             faktumKey=""
                             labelId={UTBETALINGER + ".true.type.annet.true.beskrivelse.label"}
                             maxLength={MAX_CHARS}
