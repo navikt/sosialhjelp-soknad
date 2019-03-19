@@ -84,6 +84,7 @@ export class UtbetalingerView extends React.Component<Props, {}>{
 				<Sporsmal
 					tekster={getFaktumSporsmalTekst(this.props.intl, UTBETALINGER + ".true.type")}
 				>
+
                     <CheckboxPanel
                         id = {"utbetalinger_utbytte_checkbox"}
 						name = {"utbytte"}

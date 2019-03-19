@@ -7,23 +7,32 @@ interface OwnProps {
     id: string;
     name: string;
     checked: boolean;
-    disabled: boolean;
-    label: any;
-    onClick: (s: string) => void;
-    required?: boolean;
+    disabled?: boolean;
     className?: string;
-    feilkode?: string;
+    label: React.ReactNode | any;
+    onClick: (checked: boolean) => void;
 }
 
+type CheckboxPanelProps = OwnProps & InjectedIntlProps;
 
-type CheckboxFaktumProps = OwnProps & InjectedIntlProps;
 
+class CheckboxPanel extends React.Component<CheckboxPanelProps, {checked: boolean}> {
 
-class CheckboxPanel extends React.Component<CheckboxFaktumProps, {checked: boolean}> {
+    onChange(evt: any) {
+        const checked = !this.props.checked;
+        this.props.onClick(checked);
+        evt.preventDefault();
+    }
+
+    onClick(evt: any) {
+        evt.preventDefault();
+    }
 
     render() {
-        const { id, name, checked, disabled, required, onClick, label, className } = this.props;
+        const {id, name, checked, disabled, className, label } = this.props;
+
         let classNames = "inputPanel " + (className ? className : "");
+
         if (checked) {
             classNames += " inputPanel__checked";
         }
@@ -31,7 +40,7 @@ class CheckboxPanel extends React.Component<CheckboxFaktumProps, {checked: boole
         return (
             <div
                 className={classNames}
-                onClick={(evt:any) => onClick(evt)}
+                onClick={(evt: any) => this.onChange(evt)}
             >
                 <div className="inputPanel__checkbox_wrapper ">
                     <Checkbox
@@ -39,12 +48,13 @@ class CheckboxPanel extends React.Component<CheckboxFaktumProps, {checked: boole
                         name={name}
                         checked={checked}
                         disabled={disabled}
-                        required={required}
+                        onChange={(evt: any) => this.onClick(evt)}
                         label={label}
                     />
                 </div>
             </div>
         );
+
     }
 }
 
