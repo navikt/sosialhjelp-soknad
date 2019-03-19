@@ -1,3 +1,10 @@
+export interface NavEnhet {
+	orgnr: string;
+	enhetsnavn: string;
+	kommunenavn: string;
+	valgt: boolean
+}
+
 export enum AdresseKategori {
 	FOLKEREGISTRERT = "folkeregistrert",
 	MIDLERTIDIG = "midlertidig",
@@ -6,8 +13,8 @@ export enum AdresseKategori {
 
 export enum AdresseType {
 	GATEADRESSE = "gateadresse",
-	MATRIKKELADRESSE = "matrikkeladresse", // TODO Test med mock matrikkel adresse
-	USTRUKTURERT = "ustrukturert" // TODO Test med mock ustrukturert adresse
+	MATRIKKELADRESSE = "matrikkeladresse",
+	USTRUKTURERT = "ustrukturert"
 }
 
 export interface Matrikkeladresse {
@@ -40,7 +47,6 @@ export interface UstrukturertAdresse {
 
 export interface AdresseElement {
 	type: AdresseType;
-	valg: null | string;
 	gateadresse: null | Gateadresse;
 	matrikkeladresse: null | Matrikkeladresse;
 	ustrukturert: null | UstrukturertAdresse;
@@ -57,7 +63,6 @@ export const initialAdresserState: Adresser = {
 	valg: null,
 	folkeregistrert: {
 		type: AdresseType.GATEADRESSE,
-		valg: null,
 		gateadresse: {
 			type: AdresseType.GATEADRESSE,
 			landkode: null,
@@ -75,7 +80,6 @@ export const initialAdresserState: Adresser = {
 	},
 	midlertidig: {
 		type: AdresseType.GATEADRESSE,
-		valg: null,
 		gateadresse: {
 			type: AdresseType.GATEADRESSE,
 			landkode: null,

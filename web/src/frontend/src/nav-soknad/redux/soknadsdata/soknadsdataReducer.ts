@@ -17,7 +17,7 @@ import { setPath } from "./soknadsdataActions";
 import {
 	AdresseKategori,
 	Adresser,
-	initialAdresserState
+	initialAdresserState, NavEnhet
 } from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
 export enum SoknadsdataActionTypeKeys {
@@ -37,19 +37,22 @@ export enum SoknadsSti {
 	BOSITUASJON = "bosituasjon",
 	UTDANNING = "utdanning",
 	TELEFONNUMMER = "personalia/telefonnummer",
-	ADRESSER = "personalia/adresser"
+	ADRESSER = "personalia/adresser",
+	NAV_ENHETER = "personalia/navEnheter"
 }
 
 export interface Personalia {
 	kontonummer?: Kontonummer;
 	telefonnummer?: Telefonnummer;
 	adresser?: Adresser;
+	navEnheter?: NavEnhet[];
 }
 
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
 	telefonnummer: initialTelefonnummerState,
-	adresser: initialAdresserState
+	adresser: initialAdresserState,
+	navEnheter: []
 };
 
 export interface Soknadsdata {
@@ -84,7 +87,8 @@ export type SoknadsdataType =
 	| Telefonnummer
 	| Personalia
 	| Adresser
-	| AdresseValg;
+	| AdresseValg
+	| NavEnhet[];
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,

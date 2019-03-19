@@ -28,7 +28,7 @@ export interface Adresse {
 }
 
 interface OwnProps {
-	onVelgVerdi: (adresse: Adresse) => void;
+	onVelgAnnenAdresse: (adresse: Adresse) => void;
 	valgtAdresse?: string;
 }
 
@@ -79,7 +79,7 @@ class AdresseTypeahead extends React.Component<Props, StateProps> {
 			}
 			valgtAdresse.husnummer = husnummer;
 			valgtAdresse.husbokstav = husbokstav;
-			this.props.onVelgVerdi(valgtAdresse);
+			this.props.onVelgAnnenAdresse(valgtAdresse);
 		}
 		if(value.length < 4) {
 			this.setState({
@@ -115,7 +115,7 @@ class AdresseTypeahead extends React.Component<Props, StateProps> {
 			status, value: verdi,
 			valgtAdresse: adresse
 		});
-		this.props.onVelgVerdi(adresse);
+		this.props.onVelgAnnenAdresse(adresse);
 
 		if (!adresse.husnummer) {
 			this.setState({
@@ -139,7 +139,7 @@ class AdresseTypeahead extends React.Component<Props, StateProps> {
 	}
 
 	invalidateFetch(value: string) {
-		this.props.onVelgVerdi(null);
+		this.props.onVelgAnnenAdresse(null);
 		this.setState({
 			status: AdresseTypeaheadStatus.ADRESSE_UGYLDIG,
 			value

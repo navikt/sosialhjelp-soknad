@@ -5,127 +5,173 @@ import {
 import { FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import * as React from "react";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import { getFaktumSporsmalTekst, getIntlTextOrKey } from "../../../../nav-soknad/utils";
+import { getIntlTextOrKey } from "../../../../nav-soknad/utils";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import AdresseDetaljer from "./AdresseDetaljer";
-import { AdresseKategori } from "./AdresseTypes";
+import { AdresseKategori, Gateadresse, NavEnhet } from "./AdresseTypes";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 import AdresseTypeahead, { Adresse } from "./AdresseTypeahead";
+import SoknadsmottakerVelger from "./SoknadsmottakerVelger";
+import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
+import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
+import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
+import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
+
+function formaterSoknadsadresse(soknadAdresse: Gateadresse) {
+	let formatertSoknadAdresse = "";
+	if (soknadAdresse) {
+		formatertSoknadAdresse =
+			(soknadAdresse.gatenavn ? soknadAdresse.gatenavn : "") + " " +
+			(soknadAdresse.husnummer ? soknadAdresse.husnummer : "") + " " +
+			(soknadAdresse.husbokstav ? soknadAdresse.husbokstav : "") + ", " +
+			soknadAdresse.postnummer + " " + soknadAdresse.poststed;
+		formatertSoknadAdresse.replace(/  /, " ");
+	}
+	return formatertSoknadAdresse;
+}
 
 class AdresseView extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ADRESSER);
+		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.NAV_ENHETER);
+
 	}
 
 	onClickRadio(adresseKategori: AdresseKategori) {
-		const { soknadsdata, brukerBehandlingId } = this.props;
+		const { soknadsdata, brukerBehandlingId, oppdaterSoknadsdataSti, lagreSoknadsdata } = this.props;
 		const adresser = soknadsdata.personalia.adresser;
 		adresser.valg = adresseKategori;
-		this.props.oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
-		if (adresseKategori !== AdresseKategori.SOKNAD) {
+		oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
+		if (adresseKategori === AdresseKategori.SOKNAD) {
+			oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, []);
+		} else {
 			const payload = {"valg": adresseKategori};
-			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (response: any) => {
-				console.warn("Debbug: PUT response: " + JSON.stringify(response, null, 4));
+			lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
+				oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
 			});
 		}
 	}
 
-	/*
-	export interface Adresse {
-	"adresse": null | string;
-	"husnummer": null | string;
-	"husbokstav": null | string;
-	"kommunenummer": null | string;
-	"kommunenavn": null | string;
-	"postnummer": null | string;
-	"poststed": null | string;
-	"geografiskTilknytning": null | string;
-	"gatekode": null | string;
-	"bydel": null | string;
-	"type": null | string;
-	 */
 	velgAnnenAdresse(adresse: Adresse) {
-		const { brukerBehandlingId } = this.props;
-		console.warn("Adresse: typeahead: velgVerdi() " + JSON.stringify(adresse, null, 4));
-		const payload = {
-			"valg": "soknad",
-			"type": "gateadresse",
-			"gateadresse": {
-				"type": "gateadresse",
-				"kommunenummer": adresse.kommunenummer,
-				"postnummer": adresse.postnummer,
-				"poststed": adresse.poststed,
-				"gatenavn": adresse.adresse,
-				"husnummer": adresse.husnummer,
-				"husbokstav": adresse.husbokstav
+		const { brukerBehandlingId, lagreSoknadsdata } = this.props;
+		if (adresse) {
+			const payload = {
+				"valg": "soknad",
+				"soknad": {
+					"type": "gateadresse",
+					"gateadresse": {
+						"kommunenummer": adresse.kommunenummer,
+						"postnummer": adresse.postnummer,
+						"poststed": adresse.poststed,
+						"gatenavn": adresse.adresse,
+						"husnummer": adresse.husnummer,
+						"husbokstav": adresse.husbokstav
+					}
+				}
+			};
+			lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
+				this.props.oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
+			});
+		}
+	}
+
+	onVelgSoknadsmottaker(valgtNavEnhet: NavEnhet) {
+		const { brukerBehandlingId, soknadsdata, lagreSoknadsdata } = this.props;
+		valgtNavEnhet.valgt = true;
+		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
+		const navEnheter = soknadsdata.personalia.navEnheter;
+		navEnheter.map((navEnhet: NavEnhet) => {
+			if (navEnhet.orgnr === valgtNavEnhet.orgnr) {
+				navEnhet.valgt = true;
 			}
-		};
-		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (response: any) => {
-			console.warn("Debbug: PUT response: " + JSON.stringify(response, null, 4));
 		});
+		this.props.oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
+	}
+
+	soknadsmottakerStatus(): SoknadsMottakerStatus {
+		const { soknadsdata } = this.props;
+		const navEnheter = soknadsdata.personalia.navEnheter;
+		const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet ) => navEnhet.valgt);
+		if (valgtNavEnhet || navEnheter.length === 1) {
+			return SoknadsMottakerStatus.GYLDIG;
+		}
+		return	SoknadsMottakerStatus.IKKE_VALGT;
 	}
 
 	render() {
 		const { soknadsdata } = this.props;
 		const adresser = soknadsdata.personalia.adresser;
+		const navEnheter = soknadsdata.personalia.navEnheter;
+		const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet ) => navEnhet.valgt);
 		const folkeregistrertAdresse = adresser && adresser.folkeregistrert &&  adresser.folkeregistrert.gateadresse;
 		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
-		const soknadAdresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
-		let formatertSoknadAdresse = "";
-		if (soknadAdresse) {
-			formatertSoknadAdresse = soknadAdresse.gatenavn +
-			" " + soknadAdresse.husnummer +
-			" " +
-			soknadAdresse.husbokstav + ", " +
-			soknadAdresse.postnummer + " " + soknadAdresse.poststed;
-		}
+		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
+		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
 
 		return (
 			<div className="sosialhjelp-oppholdsadresse skjema-sporsmal" id="soknadsmottaker"
 			     style={{border: "2px dotted red"}}
 			>
-				<Sporsmal
-					tekster={getFaktumSporsmalTekst(this.props.intl, "soknadsmottaker")}
-					// noValidateOnBlur={true} // TODO Legg på denne?
-					// validerFunc={[ (value) => {
-					// 	// TODO Legg på sjekk på at adresse er valgt!
-					// 	// if (this.props.soknadsmottakerStatus !== SoknadsMottakerStatus.GYLDIG) {
-					// 	// 	return ValideringActionKey.PAKREVD;
-					// 	// }
-					// 	return null;
-					// } ]}
+				<SporsmalFaktum
+					id="soknadsmottaker"
+					faktumKey="soknadsmottaker"
+					noValidateOnBlur={true}
+					validerFunc={[ (value) => {
+						if (this.soknadsmottakerStatus() !== SoknadsMottakerStatus.GYLDIG) {
+							return ValideringActionKey.PAKREVD;
+						}
+						return null;
+					} ]}
 				>
 					{folkeregistrertAdresse && (
-						<RadioEnhanced
-							id="oppholdsadresse_folkeregistrert"
-							value="folkeregistrert"
-							onChange={() => this.onClickRadio(AdresseKategori.FOLKEREGISTRERT)}
-							checked={adresser.valg === AdresseKategori.FOLKEREGISTRERT}
-							label={
-								<div className="finnNavKontor__label">
-									<FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
-									<AdresseDetaljer adresse={folkeregistrertAdresse}/>
-								</div>
-							}
-						/>
+						<span>
+							<RadioEnhanced
+								id="oppholdsadresse_folkeregistrert"
+								value="folkeregistrert"
+								onChange={() => this.onClickRadio(AdresseKategori.FOLKEREGISTRERT)}
+								checked={adresser.valg === AdresseKategori.FOLKEREGISTRERT}
+								label={
+									<div className="finnNavKontor__label">
+										<FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
+										<AdresseDetaljer adresse={folkeregistrertAdresse}/>
+									</div>
+								}
+							/>
+							<SoknadsmottakerVelger
+								label={getIntlTextOrKey(this.props.intl,
+									"kontakt.system.oppholdsadresse.velgKontor")}
+								navEnheter={navEnheter}
+								visible={adresser.valg === AdresseKategori.FOLKEREGISTRERT}
+								onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}
+							/>
+						</span>
 					)}
 					{midlertidigAdresse && (
-						<RadioEnhanced
-							id="oppholdsadresse_midlertidig"
-							value="midlertidig"
-							onChange={() => this.onClickRadio(AdresseKategori.MIDLERTIDIG)}
-							checked={adresser.valg === AdresseKategori.MIDLERTIDIG}
-							label={
-								<div className="finnNavKontor__label">
-									<FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
-									<AdresseDetaljer adresse={midlertidigAdresse}/>
-								</div>
-							}
-						/>
+						<span>
+							<RadioEnhanced
+								id="oppholdsadresse_midlertidig"
+								value="midlertidig"
+								onChange={() => this.onClickRadio(AdresseKategori.MIDLERTIDIG)}
+								checked={adresser.valg === AdresseKategori.MIDLERTIDIG}
+								label={
+									<div className="finnNavKontor__label">
+										<FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
+										<AdresseDetaljer adresse={midlertidigAdresse}/>
+									</div>
+								}
+							/>
+							<SoknadsmottakerVelger
+								label={getIntlTextOrKey(this.props.intl,
+									"kontakt.system.oppholdsadresse.velgKontor")}
+								navEnheter={navEnheter}
+								visible={adresser.valg === AdresseKategori.MIDLERTIDIG}
+								onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}
+							/>
+						</span>
 					)}
 					<RadioEnhanced
 						id="oppholdsadresse_soknad"
@@ -154,14 +200,27 @@ class AdresseView extends React.Component<Props, {}> {
 									<FormattedHTMLMessage id="kontakt.system.kontaktinfo.infotekst.ekstratekst"/>
 									<AdresseTypeahead
 										valgtAdresse={formatertSoknadAdresse}
-										onVelgVerdi={(adresse: Adresse) => this.velgAnnenAdresse(adresse)}
+										onVelgAnnenAdresse={(adresse: Adresse) => this.velgAnnenAdresse(adresse)}
 									/>
-
 								</Sporsmal>
+								<SoknadsmottakerVelger
+									label={getIntlTextOrKey(this.props.intl,
+										"kontakt.system.oppholdsadresse.velgKontor")}
+									ikkeVisPanel={true}
+									navEnheter={navEnheter}
+									visible={adresser.valg === AdresseKategori.SOKNAD}
+									onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}
+								/>
+
 							</div>
 						</Underskjema>
 					</div>
-				</Sporsmal>
+				</SporsmalFaktum>
+				<SoknadsmottakerInfo
+					soknadsmottakerStatus={this.soknadsmottakerStatus()}
+					enhetsnavn={valgtNavEnhet && valgtNavEnhet.enhetsnavn}
+					kommunenavn={valgtNavEnhet && valgtNavEnhet.kommunenavn}
+					/>
 			</div>);
 	}
 }

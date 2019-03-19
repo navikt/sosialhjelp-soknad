@@ -6,6 +6,9 @@ import { SporsmalFaktumTekst } from "../../types";
 import SporsmalHjelpetekst from "./SporsmalHjelpetekst";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { getFaktumSporsmalTekst } from "../../utils";
+import { FaktumValideringFunc } from "../../validering/types";
+// import { registerFaktumValidering } from "../../redux/valideringActions";
+// import { validerFaktum } from "../../validering/utils";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
 
@@ -28,11 +31,65 @@ export interface OwnProps {
 	tekster?: SporsmalFaktumTekst;
 	sprakNokkel?: string;
 	legendTittelStyle?: LegendTittleStyle;
+	faktumKey?: string;
+
+	/** Array med valideringsfunksjoner som skal brukes ved validering */
+	validerFunc?: FaktumValideringFunc[];
+	/** Påkrevd validering legges til i validerFunc array dersom true */
+	required?: boolean;
+	/** Ikke valider ved onBlur */
+	noValidateOnBlur?: boolean;
 }
 
 type Props = OwnProps & InjectedIntlProps;
 
 class Sporsmal extends React.Component<Props, {}> {
+	// mounted: boolean;
+	//
+	// componentDidMount() {
+	// 	// registerFaktumValidering({
+	// 	// 	faktumKey: this.props.faktumKey,
+	// 	// 	property: this.props.property,
+	// 	// 	faktumId: this.props.faktumId,
+	// 	// 	valideringer
+	// 	// })
+	// 	this.mounted = true;
+	// }
+	//
+	// componentWillUnmount() {
+	// 	this.mounted = false;
+	// }
+	//
+	// harValidering() {
+	// 	return (
+	// 		this.props.required ||
+	// 		(this.props.validerFunc && this.props.validerFunc.length > 0)
+	// 	);
+	// }
+	//
+	// handleOnBlur(evt: any) {
+	// 	console.warn("debug: sporsmal onBlur");
+	// 	debugger;
+	// 	// if (this.harValidering() && !this.props.noValidateOnBlur) {
+	// 	if (this.harValidering()) {
+	// 		setTimeout(() => {
+	// 			if (this.mounted) {
+	// 				this.valider();
+	// 			}
+	// 		}, 0);
+	// 	}
+	// }
+	//
+	// valider() {
+	// 	console.warn("Debug: kjører validering ");
+	// 	console.warn("feilmelding: " + this.props.faktumKey);
+	// 	// const feilkode = validerFaktum({
+	// 	// 	faktum,
+	// 	// 	property,
+	// 	// 	valideringsregler: this.props.valideringsregler
+	// 	// });
+	// }
+
 	render() {
 		const { id, visible, children, feil, feilkode, tekster, intl, sprakNokkel } = this.props;
 		const ledeTekster: SporsmalFaktumTekst = tekster ? tekster :
@@ -58,7 +115,7 @@ class Sporsmal extends React.Component<Props, {}> {
 			<div
 				id={id}
 				className={sporsmalCls}
-				onBlur={this.props.handleOnBlur}
+				// onBlur={(evt: any) => this.handleOnBlur(evt)}
 				aria-labelledby={legendId}
 			>
 				<SkjemaGruppe feil={feil}>
