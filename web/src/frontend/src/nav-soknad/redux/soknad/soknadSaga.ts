@@ -4,9 +4,9 @@ import {
 	fetchDelete,
 	fetchKvittering,
 	fetchPost,
-	fetchToJson
+	fetchToJson, lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
 } from "../../utils/rest-utils";
-import { finnFaktum, oppdaterFaktumMedVerdier } from "../../utils";
+import { finnFaktum, oppdaterFaktumMedVerdier} from "../../utils";
 import { updateFaktaMedLagretVerdi } from "../fakta/faktaUtils";
 import {
 	HentKvitteringAction,
@@ -144,6 +144,7 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
 			`soknader/${action.brukerBehandlingId}/actions/send`,
 			JSON.stringify({ behandlingsId: action.brukerBehandlingId })
 		);
+		lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.brukerBehandlingId);
 		yield put(sendSoknadOk(action.brukerBehandlingId));
 		yield put(navigerTilKvittering(action.brukerBehandlingId));
 	} catch (reason) {

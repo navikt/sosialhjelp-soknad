@@ -16,27 +16,12 @@
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
 
-    <filter>
-        <filter-name>decoratorFilter</filter-name>
-        <filter-class>no.nav.sbl.soknadsosialhjelp.Dekoratorer</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>decoratorFilter</filter-name>
-        <url-pattern>/skjema/*</url-pattern>
-        <url-pattern>/informasjon/*</url-pattern>
-        <url-pattern>/bosted/*</url-pattern>
-        <url-pattern>/kvittering/*</url-pattern>
-        <url-pattern>/mock/*</url-pattern>
-        <url-pattern>/mock-login/*</url-pattern>
-        <url-pattern>/undersokelse/*</url-pattern>
-    </filter-mapping>
-
     <servlet>
         <servlet-name>routingNySoknadsosialhjelp</servlet-name>
         <servlet-class>no.nav.sbl.soknadsosialhjelp.Routing</servlet-class>
         <init-param>
             <param-name>applicationFile</param-name>
-            <param-value>soknadsosialhjelp-built.html</param-value>
+            <param-value>soknadsosialhjelp-heroku-built.html</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
@@ -47,7 +32,6 @@
         <url-pattern>/kvittering/*</url-pattern>
         <url-pattern>/mock/*</url-pattern>
         <url-pattern>/mock-login/*</url-pattern>
-        <url-pattern>/undersokelse/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
