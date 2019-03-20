@@ -57,7 +57,7 @@ class AdresseView extends React.Component<Props, {}> {
 	}
 
 	velgAnnenAdresse(adresse: Adresse) {
-		const { brukerBehandlingId, lagreSoknadsdata } = this.props;
+		const { brukerBehandlingId, lagreSoknadsdata, oppdaterSoknadsdataSti } = this.props;
 		if (adresse) {
 			const payload = {
 				"valg": "soknad",
@@ -74,13 +74,13 @@ class AdresseView extends React.Component<Props, {}> {
 				}
 			};
 			lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
-				this.props.oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
+				oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
 			});
 		}
 	}
 
 	onVelgSoknadsmottaker(valgtNavEnhet: NavEnhet) {
-		const { brukerBehandlingId, soknadsdata, lagreSoknadsdata } = this.props;
+		const { brukerBehandlingId, soknadsdata, lagreSoknadsdata, oppdaterSoknadsdataSti } = this.props;
 		valgtNavEnhet.valgt = true;
 		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
 		const navEnheter = soknadsdata.personalia.navEnheter;
@@ -89,7 +89,7 @@ class AdresseView extends React.Component<Props, {}> {
 				navEnhet.valgt = true;
 			}
 		});
-		this.props.oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
+		oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
 	}
 
 	soknadsmottakerStatus(): SoknadsMottakerStatus {
@@ -107,6 +107,7 @@ class AdresseView extends React.Component<Props, {}> {
 		const adresser = soknadsdata.personalia.adresser;
 		const navEnheter = soknadsdata.personalia.navEnheter;
 		const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet ) => navEnhet.valgt);
+
 		const folkeregistrertAdresse = adresser && adresser.folkeregistrert &&  adresser.folkeregistrert.gateadresse;
 		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
 		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
@@ -145,7 +146,7 @@ class AdresseView extends React.Component<Props, {}> {
 								label={getIntlTextOrKey(this.props.intl,
 									"kontakt.system.oppholdsadresse.velgKontor")}
 								navEnheter={navEnheter}
-								visible={adresser.valg === AdresseKategori.FOLKEREGISTRERT}
+								visible={adresser.valg === AdresseKategori.FOLKEREGISTRERT && navEnheter.length > 1}
 								onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}
 							/>
 						</span>
@@ -168,7 +169,7 @@ class AdresseView extends React.Component<Props, {}> {
 								label={getIntlTextOrKey(this.props.intl,
 									"kontakt.system.oppholdsadresse.velgKontor")}
 								navEnheter={navEnheter}
-								visible={adresser.valg === AdresseKategori.MIDLERTIDIG}
+								visible={adresser.valg === AdresseKategori.MIDLERTIDIG && navEnheter.length > 1}
 								onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}
 							/>
 						</span>
@@ -203,14 +204,16 @@ class AdresseView extends React.Component<Props, {}> {
 										onVelgAnnenAdresse={(adresse: Adresse) => this.velgAnnenAdresse(adresse)}
 									/>
 								</Sporsmal>
-								<SoknadsmottakerVelger
-									label={getIntlTextOrKey(this.props.intl,
-										"kontakt.system.oppholdsadresse.velgKontor")}
-									ikkeVisPanel={true}
-									navEnheter={navEnheter}
-									visible={adresser.valg === AdresseKategori.SOKNAD}
-									onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}
-								/>
+								{navEnheter.length > 1 && (
+									<SoknadsmottakerVelger
+										label={getIntlTextOrKey(this.props.intl,
+											"kontakt.system.oppholdsadresse.velgKontor")}
+										ikkeVisPanel={true}
+										navEnheter={navEnheter}
+										visible={adresser.valg === AdresseKategori.SOKNAD}
+										onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}
+									/>
+								)}
 
 							</div>
 						</Underskjema>
