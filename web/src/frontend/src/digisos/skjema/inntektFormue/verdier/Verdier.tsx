@@ -67,7 +67,7 @@ export class VerdierView extends React.Component<Props, {}> {
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         return (
             <CheckboxPanel
-                id={"verdier_annet_checkbox"}
+                id={"verdier_" + navn + "_checkbox"}
                 name={navn}
                 checked={verdier && verdier[navn] ? verdier[navn] : false}
                 label={<FormattedHTMLMessage id={Verdier + ".true.type." + navn}/>}
