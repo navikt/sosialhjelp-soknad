@@ -14,6 +14,11 @@ import {
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
 import { setPath } from "./soknadsdataActions";
+import {Bostotte, initialBostotteState} from "../../../digisos/skjema/inntektFormue/bostotte/bostotteTypes";
+import {
+	initialUtbetalingerState,
+	Utbetalinger
+} from "../../../digisos/skjema/inntektFormue/Utbetalinger/utbetalingerTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -31,7 +36,9 @@ export enum SoknadsSti {
 	BEGRUNNELSE = "begrunnelse",
 	BOSITUASJON = "bosituasjon",
 	UTDANNING = "utdanning",
-	TELEFONNUMMER = "personalia/telefonnummer"
+	TELEFONNUMMER = "personalia/telefonnummer",
+	BOSTOTTE = "inntekt/bostotte",
+	UTBETALINGER = "inntekt/utbetalinger"
 }
 
 export interface Personalia {
@@ -39,9 +46,19 @@ export interface Personalia {
 	telefonnummer?: Telefonnummer;
 }
 
+export interface Inntekt {
+	bostotte?: Bostotte;
+	utbetalinger?: Utbetalinger;
+}
+
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
 	telefonnummer: initialTelefonnummerState
+};
+
+export const initialInntektState: Inntekt = {
+	bostotte: initialBostotteState,
+	utbetalinger: initialUtbetalingerState
 };
 
 export interface Soknadsdata {
@@ -51,6 +68,7 @@ export interface Soknadsdata {
 	familie: Familie;
 	utdanning: Utdanning;
 	personalia: Personalia;
+	inntekt: Inntekt
 }
 
 export interface SoknadsdataActionVerdi {
@@ -60,6 +78,7 @@ export interface SoknadsdataActionVerdi {
 	familie?: Familie
 	utdanning?: Utdanning,
 	personalia: Personalia;
+	inntekt?: Inntekt
 }
 
 export type SoknadsdataType =
@@ -70,7 +89,8 @@ export type SoknadsdataType =
 	| Utdanning
 	| Kontonummer
 	| Telefonnummer
-	| Personalia;
+	| Personalia
+	| Bostotte
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
@@ -84,7 +104,8 @@ export const initialSoknadsdataState: Soknadsdata = {
 	bosituasjon: initialBosituasjonState,
 	familie: initialFamilieStatus,
 	utdanning: initialUtdanningState,
-	personalia: initialPersonaliaState
+	personalia: initialPersonaliaState,
+	inntekt: initialInntektState
 };
 
 const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (
