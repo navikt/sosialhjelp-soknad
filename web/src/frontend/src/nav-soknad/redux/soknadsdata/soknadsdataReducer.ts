@@ -23,6 +23,10 @@ import {
 	initialVerdierState,
 	Verdier
 } from "../../../digisos/skjema/inntektFormue/verdier/VerdierTypes";
+import {
+	initialFormueState,
+	Formue
+} from "../../../digisos/skjema/inntektFormue/formue/FormueTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -43,7 +47,8 @@ export enum SoknadsSti {
 	TELEFONNUMMER = "personalia/telefonnummer",
 	BOSTOTTE = "inntekt/bostotte",
 	UTBETALINGER = "inntekt/utbetalinger",
-	VERDIER = "inntekt/verdier"
+	VERDIER = "inntekt/verdier",
+	FORMUE = "inntekt/formue"
 }
 
 export interface Personalia {
@@ -54,6 +59,7 @@ export interface Personalia {
 export interface Inntekt {
 	bostotte?: Bostotte;
 	utbetalinger?: Utbetalinger;
+	formue?: Formue;
 	verdier?: Verdier;
 }
 
@@ -65,6 +71,7 @@ export const initialPersonaliaState: Personalia = {
 export const initialInntektState: Inntekt = {
 	bostotte: initialBostotteState,
 	utbetalinger: initialUtbetalingerState,
+	formue: initialFormueState,
 	verdier: initialVerdierState
 };
 
@@ -98,6 +105,7 @@ export type SoknadsdataType =
 	| Telefonnummer
 	| Personalia
 	| Bostotte
+	| Formue
 	| Verdier;
 
 interface SoknadsdataActionType {

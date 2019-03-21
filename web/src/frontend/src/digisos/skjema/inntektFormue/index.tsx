@@ -2,7 +2,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
-import Bankinnskudd from "./Bankinnskudd";
 import { State } from "../../redux/reducers";
 import NavYtelser from "./NavYtelser";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
@@ -11,6 +10,7 @@ import { FormattedHTMLMessage } from "react-intl";
 import Bostotte from "./bostotte/Bostotte";
 import Utbetalinger from "./Utbetalinger/Utbetalinger";
 import Verdier from "./verdier/Verdier";
+import Formue from "./formue/Formue";
 
 class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps, any> {
 	render() {
@@ -26,7 +26,7 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
 				<h2 className="overskrift">
 					<FormattedHTMLMessage id="opplysninger.formue.undertittel"/>
 				</h2>
-				<Bankinnskudd fakta={fakta} dispatch={this.props.dispatch}/>
+				<Formue />
 				<Verdier />
 			</DigisosSkjemaSteg>
 		);
