@@ -18,12 +18,7 @@ const Verdier = "inntekt.eierandeler";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
-
 export class VerdierView extends React.Component<Props, {}> {
-
-    constructor(props: Props) {
-        super(props);
-    }
 
     componentDidMount(): void {
         this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.VERDIER);
@@ -67,13 +62,23 @@ export class VerdierView extends React.Component<Props, {}> {
         this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
     }
 
+    renderCheckBox(navn: string) {
+        const {soknadsdata} = this.props;
+        const verdier: Verdier = soknadsdata.inntekt.verdier;
+        return (
+            <CheckboxPanel
+                id={"verdier_annet_checkbox"}
+                name={navn}
+                checked={verdier && verdier[navn] ? verdier[navn] : false}
+                label={<FormattedHTMLMessage id={Verdier + ".true.type." + navn}/>}
+                onClick={() => this.handleClickRadio(navn)}
+            />
+        )
+    }
 
     render() {
-
         const {soknadsdata} = this.props;
-
         const verdier: Verdier = soknadsdata.inntekt.verdier;
-
         return (
             <JaNeiSporsmal
                 tekster={getFaktumSporsmalTekst(this.props.intl, Verdier)}
@@ -85,42 +90,11 @@ export class VerdierView extends React.Component<Props, {}> {
                 <Sporsmal
                     tekster={getFaktumSporsmalTekst(this.props.intl, Verdier + ".true.type")}
                 >
-
-                    <CheckboxPanel
-                        id={"verdier_bolig_checkbox"}
-                        name={"bolig"}
-                        checked={verdier && verdier.bolig ? verdier.bolig : false}
-                        label={<FormattedHTMLMessage id={Verdier + ".true.type.bolig"}/>}
-                        onClick={() => this.handleClickRadio("bolig")}
-                    />
-                    <CheckboxPanel
-                        id={"verdier_campingvogn_checkbox"}
-                        name={"campingvogn"}
-                        checked={verdier && verdier.campingvogn ? verdier.campingvogn : false}
-                        label={<FormattedHTMLMessage id={Verdier + ".true.type.campingvogn"}/>}
-                        onClick={() => this.handleClickRadio("campingvogn")}
-                    />
-                    <CheckboxPanel
-                        id={"verdier_kjoretoy_checkbox"}
-                        name={"kjoretoy"}
-                        checked={verdier && verdier.kjoretoy ? verdier.kjoretoy : false}
-                        label={<FormattedHTMLMessage id={Verdier + ".true.type.kjoretoy"}/>}
-                        onClick={() => this.handleClickRadio("kjoretoy")}
-                    />
-                    <CheckboxPanel
-                        id={"verdier_fritidseiendom_checkbox"}
-                        name={"fritidseiendom"}
-                        checked={verdier && verdier.fritidseiendom ? verdier.fritidseiendom : false}
-                        label={<FormattedHTMLMessage id={Verdier + ".true.type.fritidseiendom"}/>}
-                        onClick={() => this.handleClickRadio("fritidseiendom")}
-                    />
-                    <CheckboxPanel
-                        id={"verdier_annet_checkbox"}
-                        name={"annet"}
-                        checked={verdier && verdier.annet ? verdier.annet : false}
-                        label={<FormattedHTMLMessage id={Verdier + ".true.type.annet"}/>}
-                        onClick={() => this.handleClickRadio("annet")}
-                    />
+                    {this.renderCheckBox("bolig")}
+                    {this.renderCheckBox("campingvogn")}
+                    {this.renderCheckBox("kjoretoy")}
+                    {this.renderCheckBox("fritidseiendom")}
+                    {this.renderCheckBox("annet")}
                     <NivaTreSkjema
                         visible={verdier.bekreftelse && verdier.annet}
                         size="small"
