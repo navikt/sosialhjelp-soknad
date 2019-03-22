@@ -1,4 +1,5 @@
 import { Adresse } from "./AdresseTypeahead";
+import { Gateadresse } from "./AdresseTypes";
 
 export const enum AdresseTypeaheadStatus {
 	INITIELL = "INITIELL",
@@ -32,6 +33,19 @@ const formaterAdresseString = (adresse: Adresse) => {
 		console.warn("error: " + error);
 	}
 	return returverdi;
+};
+
+const formaterSoknadsadresse = (soknadAdresse: Gateadresse) => {
+	let formatertSoknadAdresse = "";
+	if (soknadAdresse) {
+		formatertSoknadAdresse =
+			(soknadAdresse.gatenavn ? soknadAdresse.gatenavn : "") + " " +
+			(soknadAdresse.husnummer ? soknadAdresse.husnummer : "") + " " +
+			(soknadAdresse.husbokstav ? soknadAdresse.husbokstav : "") + ", " +
+			soknadAdresse.postnummer + " " + soknadAdresse.poststed;
+		formatertSoknadAdresse.replace(/  /, " ");
+	}
+	return formatertSoknadAdresse;
 };
 
 const removeDuplicatesAfterTransform = (myArray: any[], transform: (item: any) => any) => {
@@ -68,4 +82,10 @@ const ekstraherHusnummerHusbokstav = (inntastetAdresse: string ): any => {
 	};
 };
 
-export { formaterAdresseString, removeDuplicatesAfterTransform, setCaretPosition, ekstraherHusnummerHusbokstav };
+export {
+	formaterAdresseString,
+	removeDuplicatesAfterTransform,
+	setCaretPosition,
+	ekstraherHusnummerHusbokstav,
+	formaterSoknadsadresse
+};

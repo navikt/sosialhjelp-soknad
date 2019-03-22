@@ -17,21 +17,9 @@ import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
+import { formaterSoknadsadresse } from "./AdresseUtils";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
-
-function formaterSoknadsadresse(soknadAdresse: Gateadresse) {
-	let formatertSoknadAdresse = "";
-	if (soknadAdresse) {
-		formatertSoknadAdresse =
-			(soknadAdresse.gatenavn ? soknadAdresse.gatenavn : "") + " " +
-			(soknadAdresse.husnummer ? soknadAdresse.husnummer : "") + " " +
-			(soknadAdresse.husbokstav ? soknadAdresse.husbokstav : "") + ", " +
-			soknadAdresse.postnummer + " " + soknadAdresse.poststed;
-		formatertSoknadAdresse.replace(/  /, " ");
-	}
-	return formatertSoknadAdresse;
-}
 
 class AdresseView extends React.Component<Props, {}> {
 
@@ -51,6 +39,11 @@ class AdresseView extends React.Component<Props, {}> {
 		} else {
 			const payload = {"valg": adresseKategori};
 			lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
+				if (navEnheter.length === 1) {
+					const valgtNavEnhet: NavEnhet = navEnheter[0];
+					valgtNavEnhet.valgt = true;
+					lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
+				}
 				oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
 			});
 		}
@@ -74,6 +67,11 @@ class AdresseView extends React.Component<Props, {}> {
 				}
 			};
 			lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
+				if (navEnheter.length === 1) {
+					const valgtNavEnhet: NavEnhet = navEnheter[0];
+					valgtNavEnhet.valgt = true;
+					lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
+				}
 				oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
 			});
 		}
