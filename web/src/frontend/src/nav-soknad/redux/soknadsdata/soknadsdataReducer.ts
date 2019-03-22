@@ -14,6 +14,11 @@ import {
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
 import { setPath } from "./soknadsdataActions";
+import {
+    OkonomiskeOpplysninger
+} from "../../../digisos/skjema/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {initialOkonomiskeOpplysninger} from "../../../digisos/skjema/okonomiskeOpplysninger/okonomiskeOpplysningerStruktur";
+
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -31,7 +36,8 @@ export enum SoknadsSti {
 	BEGRUNNELSE = "begrunnelse",
 	BOSITUASJON = "bosituasjon",
 	UTDANNING = "utdanning",
-	TELEFONNUMMER = "personalia/telefonnummer"
+	TELEFONNUMMER = "personalia/telefonnummer",
+	OKONOMISKE_OPPLYSNINGER = "okonomiskeOpplysninger"
 }
 
 export interface Personalia {
@@ -51,26 +57,29 @@ export interface Soknadsdata {
 	familie: Familie;
 	utdanning: Utdanning;
 	personalia: Personalia;
+	okonomiskeOpplysninger: OkonomiskeOpplysninger;
 }
 
 export interface SoknadsdataActionVerdi {
-	arbeid?: Arbeid,
-	bosituasjon?: Bosituasjon,
-	begrunnelse?: Begrunnelse,
-	familie?: Familie
-	utdanning?: Utdanning,
+	arbeid?: Arbeid;
+	bosituasjon?: Bosituasjon;
+	begrunnelse?: Begrunnelse;
+	familie?: Familie;
+	utdanning?: Utdanning;
 	personalia: Personalia;
+	okonomiskeOpplysninger: OkonomiskeOpplysninger;
 }
 
-export type SoknadsdataType =
-	Arbeid
+export type SoknadsdataType
+	= Arbeid
 	| Begrunnelse
 	| Bosituasjon
 	| Familie
 	| Utdanning
 	| Kontonummer
 	| Telefonnummer
-	| Personalia;
+	| Personalia
+	| OkonomiskeOpplysninger
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
@@ -84,7 +93,8 @@ export const initialSoknadsdataState: Soknadsdata = {
 	bosituasjon: initialBosituasjonState,
 	familie: initialFamilieStatus,
 	utdanning: initialUtdanningState,
-	personalia: initialPersonaliaState
+	personalia: initialPersonaliaState,
+	okonomiskeOpplysninger: initialOkonomiskeOpplysninger
 };
 
 const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (
