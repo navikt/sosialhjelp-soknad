@@ -8,11 +8,13 @@ import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMed
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import { erTelefonnummer } from "../../../../nav-soknad/validering/valideringer";
 import {
-	connectSoknadsdataContainer, onEndretValideringsfeil,
+	connectSoknadsdataContainer,
+	onEndretValideringsfeil,
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import {Telefonnummer} from "./telefonTypes";
+import { Telefonnummer } from "./telefonTypes";
+import { REST_STATUS } from "../../../../nav-soknad/types";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_SYSTEM_TELEFON = "kontakt.system.telefoninfo";
@@ -99,6 +101,11 @@ class TelefonView extends React.Component<Props, {}> {
 		const systemverdi = telefonnummer ? telefonnummer.systemverdi : "";
 		const faktumKey = telefonnummer.systemverdi === null ? FAKTUM_KEY_TELEFON : FAKTUM_KEY_SYSTEM_TELEFON;
 
+		const restStatus = soknadsdata.restStatus.personalia.telefonnummer;
+		console.warn("restSTATUS => " + restStatus);
+		if(restStatus === REST_STATUS.PENDING) {
+			return <div><h1>pending....</h1></div>
+		}
 		switch (systemverdi) {
 			case null: {
 				return (

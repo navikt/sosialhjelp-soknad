@@ -1,15 +1,23 @@
 import { Dispatch } from "../reduxTypes";
 import { fetchPut, fetchToJson } from "../../utils/rest-utils";
-import { oppdaterSoknadsdataSti, SoknadsdataType } from "./soknadsdataReducer";
+import {
+	oppdaterSoknadsdataSti,
+	settRestStatus,
+	SoknadsdataType
+} from "./soknadsdataReducer";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
+import { REST_STATUS } from "../../types";
 
 const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `soknader/${brukerBehandlingId}/${sti}`;
 
 export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	return (dispatch: Dispatch) => {
+		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
 		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
 			dispatch(oppdaterSoknadsdataSti(sti, response));
+			dispatch(settRestStatus(sti, REST_STATUS.OK));
 		}).catch(() => {
+			dispatch(settRestStatus(sti, REST_STATUS.FEILET));
 			dispatch(navigerTilServerfeil());
 		});
 	}
@@ -27,8 +35,14 @@ export function lagreSoknadsdataTypet(brukerBehandlingId: string, sti: string, s
 	return lagreSoknadsdata(brukerBehandlingId, sti, soknadsdata);
 }
 
+
+
 /*
- * setPath - Opprett element i object ut fra sti hvis det ikke finnes.
+ * setPath - Oppdater sti i datastruktur.
+ *
+ *  F.eks. setPath("familie/sivilstatus/barn", {navn: 'Doffen'})
+ *
+ * Oppretter element i object ut fra sti hvis det ikke finnes.
  *
  * setPath( {}, 'familie/sivilstatus/status/barn', {navn: "Doffen"});
  *  => { familie: { sivilstatus: { status: {barn: {navn: 'Doffen' } } } }

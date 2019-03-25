@@ -6,10 +6,12 @@ import { setValideringsfeil } from "../valideringActions";
 import {
 	oppdaterSoknadsdataState,
 	oppdaterSoknadsdataSti,
+	settRestStatus,
 	Soknadsdata,
 	SoknadsdataActionVerdi,
 	SoknadsdataType
 } from "./soknadsdataReducer";
+import { REST_STATUS } from "../../types";
 
 /*
  * Properties og redux koblinger som er felles for komponenter i søknadsskjemaet.
@@ -27,6 +29,7 @@ export interface SoknadsdataContainerProps {
 	setValideringsfeil?: (feilkode: ValideringActionKey, faktumKey: string) => void;
 	oppdaterSoknadsdataState?: (soknadsdata: SoknadsdataActionVerdi) => void;
 	oppdaterSoknadsdataSti?: (sti: string, soknadsdata: SoknadsdataType) => void;
+	settRestStatus?: (sti: string, restStatus: REST_STATUS) => void;
 }
 
 export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerProps>(
@@ -40,7 +43,8 @@ export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerP
 		lagreSoknadsdata,
 		oppdaterSoknadsdataState,
 		oppdaterSoknadsdataSti,
-		setValideringsfeil
+		setValideringsfeil,
+		settRestStatus
 	}
 );
 
@@ -48,7 +52,7 @@ export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerP
  * Utilities
  */
 
-// For å unngå til at man dispatcher samme identiske feilmelding flere ganger, kan denne funksjonen brukes:
+// For å unngå at man dispatcher samme identiske feilmelding flere ganger, kan denne funksjonen brukes:
 export const onEndretValideringsfeil = (
 	nyFeilkode: ValideringActionKey,
 	faktumKey: string,
