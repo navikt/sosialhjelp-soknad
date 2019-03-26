@@ -261,16 +261,36 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
             // "raderType" : RaderStruktur;
             // "vedlegg" : Vedlegg | null;
 
+            {/*<Gruppe*/}
+                {/*key={GruppeEnum.ARBEID}*/}
+                {/*tittel={"ARBEID"}*/}
+                {/*vedleggsListe={gruppeArbeid}*/}
+            {/*/>*/}
+
 
             return(
                 <div>
-                    <Gruppe key={GruppeEnum.ARBEID} tittel={"ARBEID"} vedleggsListe={gruppeArbeid}/>
-                    <Gruppe key={GruppeEnum.FAMILIE} tittel={"FAMILIE"} vedleggsListe={gruppeFamilie}/>
-                    <Gruppe key={GruppeEnum.BOSITUASJON} tittel={"BOSITUASJON"} vedleggsListe={gruppeBosituasjon}/>
-                    <Gruppe key={GruppeEnum.INNTEKT} tittel={"INNTEKT"} vedleggsListe={gruppeInntekt}/>
-                    <Gruppe key={GruppeEnum.UTGIFTER} tittel={"UTGIFTER"} vedleggsListe={gruppeUtgifter}/>
-                    <Gruppe key={GruppeEnum.GENERELLE_VEDLEGG} tittel={"GENERELLE VEDLEGG"} vedleggsListe={gruppeGenerelleVedlegg}/>
-                    <Gruppe key={GruppeEnum.ANDRE_UTGIFTER} tittel={"ANDRE UTGIFTER"} vedleggsListe={gruppeAndreUtgifter}/>
+                    { gruppeArbeid && gruppeArbeid.length > 0 &&
+                       <Gruppe key={GruppeEnum.ARBEID} tittel={"ARBEID"}  vedleggsListe={gruppeArbeid} />
+                    }
+                    { gruppeFamilie && gruppeFamilie.length > 0 &&
+                        <Gruppe key={GruppeEnum.FAMILIE} tittel={"FAMILIE"} vedleggsListe={gruppeFamilie}/>
+                    }
+                    { gruppeBosituasjon && gruppeBosituasjon.length > 0 &&
+                        <Gruppe key={GruppeEnum.BOSITUASJON} tittel={"BOSITUASJON"} vedleggsListe={gruppeBosituasjon}/>
+                    }
+                    { gruppeInntekt && gruppeInntekt.length > 0 &&
+                        <Gruppe key={GruppeEnum.INNTEKT} tittel={"INNTEKT"} vedleggsListe={gruppeInntekt}/>
+                    }
+                    { gruppeUtgifter && gruppeUtgifter.length > 0 &&
+                        <Gruppe key={GruppeEnum.UTGIFTER} tittel={"UTGIFTER"} vedleggsListe={gruppeUtgifter}/>
+                    }
+                    { gruppeGenerelleVedlegg && gruppeGenerelleVedlegg.length > 0 &&
+                        <Gruppe key={GruppeEnum.GENERELLE_VEDLEGG} tittel={"GENERELLE VEDLEGG"} vedleggsListe={gruppeGenerelleVedlegg}/>
+                    }
+                    { gruppeAndreUtgifter && gruppeAndreUtgifter.length > 0 &&
+                        <Gruppe key={GruppeEnum.ANDRE_UTGIFTER} tittel={"ANDRE UTGIFTER"} vedleggsListe={gruppeAndreUtgifter}/>
+                    }
                 </div>
             )
 

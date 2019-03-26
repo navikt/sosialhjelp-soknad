@@ -184,13 +184,13 @@ export enum VedleggStatus {
 // --------------------------------------
 export type RaderStruktur
     = {}
-    | RadMedBeloep
-    | RaderMedBeloep
+    | RadMedBelop
+    | RaderMedBelop
     | RaderMedBruttoOgNetto
     | RaderMedAvdragOgRenter
-    | RaderMedBeskrivelseOgBeloep;
+    | RaderMedBeskrivelseOgBelop;
 
-export interface RadMedBeloep {
+export interface RadMedBelop {
     "beloep" : number;
 }
 
@@ -204,13 +204,13 @@ export interface RadMedAvdragOgRenter {
     "renter" : number;
 }
 
-export interface RadMedBeskrivelseOgBeloep {
+export interface RadMedBeskrivelseOgBelop {
     "beskrivelse" : string;
     "beloep" : number;
 }
 
-export interface RaderMedBeloep {
-    "rader" : RadMedBeloep[];
+export interface RaderMedBelop {
+    "rader" : RadMedBelop[];
 }
 
 export interface RaderMedBruttoOgNetto {
@@ -221,8 +221,8 @@ export interface RaderMedAvdragOgRenter {
     "rader" : RadMedAvdragOgRenter;
 }
 
-export interface RaderMedBeskrivelseOgBeloep {
-    "rader" : RadMedBeskrivelseOgBeloep;
+export interface RaderMedBeskrivelseOgBelop {
+    "rader" : RadMedBeskrivelseOgBelop;
 }
 // --------------------------------------
 
