@@ -19,6 +19,7 @@ const SoknadsmottakerInfo: React.FunctionComponent<SoknadsmottakerInfoProps> = (
 }) => {
 	let farge: DigisosFarge = DigisosFarge.SUKSESS;
 	let tekst: any = "";
+	console.warn("soknadsmottakerInfo.status: " + soknadsmottakerStatus);
 
 	if (soknadsmottakerStatus === SoknadsMottakerStatus.GYLDIG) {
 		tekst = "Søknaden vil bli sendt til: "

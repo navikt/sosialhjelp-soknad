@@ -53,7 +53,7 @@ export interface AdresseElement {
 }
 
 export interface Adresser {
-	valg: null |string;
+	valg: AdresseKategori | null;
 	folkeregistrert: AdresseElement;
 	midlertidig: AdresseElement;
 	soknad: null | AdresseElement;
