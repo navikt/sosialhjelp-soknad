@@ -1,4 +1,4 @@
-import { Familie, Person, SIVILSTATUS_STI, Status } from "./FamilieTypes";
+import { Familie, initialPerson, Person, Status } from "./FamilieTypes";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import * as React from "react";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -12,6 +12,7 @@ import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -42,23 +43,36 @@ const SivilstatusRadioknapp: React.FunctionComponent<RadioProps> = ({verdi, id, 
  */
 class SivilstatusComponent extends React.Component<Props, {}> {
 
-	componentDidMount() {
-		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SIVILSTATUS_STI);
-		// this.props.hentSivilstatus(this.props.brukerBehandlingId);
-	}
+	// componentDidMount() {
+	// 	this.props.hentSoknadsdata(this.props.brukerBehandlingId, SIVILSTATUS_STI);
+	// 	// this.props.hentSivilstatus(this.props.brukerBehandlingId);
+	// }
 
 	onChangePerson(person: Person) {
-		const { brukerBehandlingId } = this.props;
-		console.warn("onChange: " + JSON.stringify(person, null, 4));
+		// const { brukerBehandlingId } = this.props;
+		console.warn("onChangPersone: " + JSON.stringify(person, null, 4));
 		// this.props.lagreSivilstatus(this.props.brukerBehandlingId, this.props.sivilstatus);
-		this.props.lagreSoknadsdata(brukerBehandlingId, SIVILSTATUS_STI, this.props.soknadsdata.familie);
+		// this.props.lagreSoknadsdata(brukerBehandlingId, SIVILSTATUS_STI, this.props.soknadsdata.familie);
 	}
 
 	onClickSivilstatus(verdi: Status) {
-		// const { brukerBehandlingId } = this.props;
-		const sivilstatus = this.props.soknadsdata.familie.sivilstatus;
-		console.warn("sivilstatus før oppdatering: ");
-		console.warn(JSON.stringify(sivilstatus, null, 4));
+		const {oppdaterSoknadsdataSti, brukerBehandlingId, lagreSoknadsdata} = this.props;
+		let payload = {};
+		if (verdi !== Status.GIFT) {
+			payload = {
+				"kildeErSystem": false,
+				"sivilstatus": verdi
+			};
+		} else {
+			console.warn("Gift...");
+			payload = {
+				"kildeErSystem": false,
+				"sivilstatus": Status.GIFT,
+				"ektefelle": initialPerson
+			};
+		}
+		oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, payload);
+		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.SIVILSTATUS, payload);
 
 		// sivilstatus.sivilstatus = verdi;
 		// if (verdi === Status.GIFT && sivilstatus.ektefelle === null) {
@@ -86,7 +100,13 @@ class SivilstatusComponent extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const familie: Familie = this.props.soknadsdata.familie;
+		const {soknadsdata} = this.props;
+		const familie: Familie = soknadsdata.familie;
+
+		if (familie) {
+			console.warn("Sivilstatuscomponent: " + JSON.stringify(familie.sivilstatus, null, 4));
+		}
+
 		const sivilstatus = (familie && familie.sivilstatus) ? familie.sivilstatus.sivilstatus : null;
 		const borSammenMed = familie && familie.sivilstatus && familie.sivilstatus.ektefelle ? familie.sivilstatus.borSammenMed : null;
 

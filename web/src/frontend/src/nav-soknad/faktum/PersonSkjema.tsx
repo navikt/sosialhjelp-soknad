@@ -37,16 +37,17 @@ interface OwnProps {
 // }
 
 class PersonSkjema extends React.Component<OwnProps, {}> {
+
 	navnInput: HTMLInputElement;
 
 	constructor(props: OwnProps) {
 		super(props);
-		this.focus = this.focus.bind(this);
+		this.focus = this.focus.bind(this); // TODO Trengs dette?
 		// this.state = { person: this.props.person }
 	}
 
 	focus() {
-		this.navnInput.focus();
+		this.navnInput.focus(); // TODO Trengs dette?
 	}
 
 	oppdaterTekstfelt(sti: string, verdi: any) {

@@ -1,5 +1,3 @@
-export const SIVILSTATUS_STI = "familie/sivilstatus";
-
 export enum Status {
 	GIFT = "gift",
 	UGIFT = "ugift",

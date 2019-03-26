@@ -9,7 +9,7 @@ import {
 } from "../../../digisos/skjema/personopplysninger/telefon/telefonTypes";
 import { Bosituasjon, initialBosituasjonState } from "../../../digisos/skjema/bosituasjon_ny/bosituasjonTypes";
 import {
-	Familie, initialFamilieStatus,
+	Familie, initialFamilieStatus, Sivilstatus,
 } from "../../../digisos/skjema/familie/sivilstatus/FamilieTypes";
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
@@ -71,7 +71,8 @@ export type SoknadsdataType =
 	| Utdanning
 	| Kontonummer
 	| Telefonnummer
-	| Personalia;
+	| Personalia
+	| Sivilstatus;
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,

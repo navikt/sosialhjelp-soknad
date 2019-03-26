@@ -5,10 +5,11 @@ import {
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import { Person, Sivilstatus } from "./FamilieTypes";
+import { Person, Sivilstatus, Status } from "./FamilieTypes";
 import Detaljeliste from "./EktefelleDetaljer";
 import { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import { formaterIsoDato } from "../../../../nav-soknad/utils";
+import SivilstatusComponent from "./SivilstatusComponent";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -53,10 +54,13 @@ class DinSivilstatusView extends React.Component<Props, {}> {
 
 	render() {
 		const { soknadsdata } = this.props;
-		const ektefelle: Person = soknadsdata.familie.sivilstatus.ektefelle;
 		const sivilstatus: Sivilstatus = soknadsdata.familie.sivilstatus;
-
-		return this.renderEktefelleInfo(ektefelle, sivilstatus);
+		if (sivilstatus && sivilstatus.sivilstatus === Status.GIFT && sivilstatus.kildeErSystem === true) {
+			const ektefelle: Person = soknadsdata.familie.sivilstatus.ektefelle;
+			return this.renderEktefelleInfo(ektefelle, sivilstatus);
+		} else {
+			return (<SivilstatusComponent/>);
+		} 
 	}
 }
 
