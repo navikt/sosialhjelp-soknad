@@ -20,15 +20,16 @@ export interface Person {
 	navn: Navn;
 	fodselsdato: null | string;
 	personnummer: string;
-	borSammenMed?: boolean;
+
 }
 
 export interface Sivilstatus {
 	kildeErSystem: boolean;
 	sivilstatus: Status;
 	ektefelle?: Person;
-	ektefelleHarDiskresjonskode?: boolean;
-	folkeregistrertMedEktefelle?: boolean;
+	harDiskresjonskode?: boolean;
+	borSammenMed?: boolean;
+	erFolkeregistrertSammen?: boolean;
 }
 
 export interface Familie {

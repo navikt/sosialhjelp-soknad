@@ -52,7 +52,7 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 								<FormattedMessage id={INTL_ID_EKTEFELLE + ".folkereg"}/>
 							}
 							verdi={
-								(sivilstatus.folkeregistrertMedEktefelle === true ?
+								(sivilstatus.erFolkeregistrertSammen === true ?
 										<FormattedMessage
 											id={INTL_ID_EKTEFELLE + ".folkeregistrertsammen.true"}/> :
 										<FormattedMessage
@@ -68,7 +68,7 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 
 	render() {
 		const { intl, sivilstatus } = this.props;
-		const ektefelleHarDiskresjonskode: boolean = sivilstatus.ektefelleHarDiskresjonskode;
+		const harDiskresjonskode: boolean = sivilstatus.harDiskresjonskode;
 
 		return (
 			<div style={{ border: "3px dotted red", display: "block" }}>
@@ -81,11 +81,11 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 							<FormattedMessage id="system.familie.sivilstatus"/>
 						</div>
 						<div className="sivilstatus__giftlabel">
-							{this.renderSivilstatusLabel(ektefelleHarDiskresjonskode)}
+							{this.renderSivilstatusLabel(harDiskresjonskode)}
 							{this.renderEktefelleInformasjon()}
 						</div>
 					</Sporsmal>
-					{ektefelleHarDiskresjonskode !== true && (
+					{harDiskresjonskode !== true && (
 						<Informasjonspanel
 							farge={DigisosFarge.VIKTIG}
 							ikon={InformasjonspanelIkon.ELLA}

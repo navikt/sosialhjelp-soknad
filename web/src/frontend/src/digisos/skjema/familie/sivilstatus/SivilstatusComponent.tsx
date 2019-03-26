@@ -36,6 +36,10 @@ const SivilstatusRadioknapp: React.FunctionComponent<RadioProps> = ({verdi, id, 
 	);
 };
 
+/*
+ * Redigering av silvilstatus.
+ *
+ */
 class SivilstatusComponent extends React.Component<Props, {}> {
 
 	componentDidMount() {
@@ -84,8 +88,7 @@ class SivilstatusComponent extends React.Component<Props, {}> {
 	render() {
 		const familie: Familie = this.props.soknadsdata.familie;
 		const sivilstatus = (familie && familie.sivilstatus) ? familie.sivilstatus.sivilstatus : null;
-		// const borSammenMed = this.props.sivilstatus ? this.props.sivilstatus.borSammenMed : null;
-		const borSammenMed = familie && familie.sivilstatus && familie.sivilstatus.ektefelle ? familie.sivilstatus.ektefelle.borSammenMed : null;
+		const borSammenMed = familie && familie.sivilstatus && familie.sivilstatus.ektefelle ? familie.sivilstatus.borSammenMed : null;
 
 		return (
 			<div style={{ border: "3px dotted red", display: "block" }}>

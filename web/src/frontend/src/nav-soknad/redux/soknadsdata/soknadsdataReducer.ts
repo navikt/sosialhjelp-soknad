@@ -31,7 +31,8 @@ export enum SoknadsSti {
 	BEGRUNNELSE = "begrunnelse",
 	BOSITUASJON = "bosituasjon",
 	UTDANNING = "utdanning",
-	TELEFONNUMMER = "personalia/telefonnummer"
+	TELEFONNUMMER = "personalia/telefonnummer",
+	SIVILSTATUS = "familie/sivilstatus"
 }
 
 export interface Personalia {
