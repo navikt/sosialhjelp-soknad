@@ -24,7 +24,6 @@ import Personalia from "./tps/Personalia";
 import Telefon from "./telefon/Telefon";
 import Bankinformasjon from "./bankinfo/Bankinformasjon";
 import Adresse from "./adresse/Adresse";
-import Oppholdsadresse from "./tps/Oppholdsadresse";
 
 interface OwnProps {
 	hentVedleggsForventning?: (fakta: any) => void;
@@ -88,7 +87,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 					<Personalia fakta={this.props.fakta} />
 				</SporsmalFaktum>
 				<Adresse/>
-				<Oppholdsadresse fakta={this.props.fakta} />
+				{/*<Oppholdsadresse fakta={this.props.fakta} />*/}
 				<Telefon />
 				<Bankinformasjon />
 			</DigisosSkjemaSteg>
