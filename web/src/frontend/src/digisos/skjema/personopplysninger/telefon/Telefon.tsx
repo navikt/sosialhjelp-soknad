@@ -69,7 +69,7 @@ class TelefonView extends React.Component<Props, {}> {
 			}
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
 		} else {
-			// gjør slik at det ikke går ann å gå til neste side
+			// TODO Ikke la bruker gå til neste trinn.
 		}
 	}
 

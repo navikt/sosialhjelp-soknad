@@ -21,7 +21,7 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.familiebolk} ikon={<FamilieIllustrasjon />}>
 				<DinSivilstatus/>
-				{/*<SivilstatusComponent />*/}
+
 				{
 					sivilstatusFaktum.value === "gift" &&
 					(
@@ -38,7 +38,6 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 					sivilstatusFaktum.value !== "gift" &&
 					(
 						<span>
-							{/*<SivilstatusComponent />*/}
 							<Sivilstatus fakta={fakta} />
 						</span>
 						)

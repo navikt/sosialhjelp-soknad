@@ -48,7 +48,7 @@ export const initialPerson: Person = {
 		fornavn: "",
 		mellomnavn: "",
 		etternavn: "",
-		fulltNavn: null
+		fulltNavn: ""
 	},
 	fodselsdato: null,
 	personnummer: null
