@@ -9,6 +9,7 @@ import { Faktum } from "../../../nav-soknad/types";
 import { finnFaktum } from "../../../nav-soknad/utils";
 import Familierelasjoner from "./Familierelasjoner";
 import FamilieIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/FamilieIllustrasjon";
+import ForsorgerPlikt from "./forsorgerplikt/ForsorgerPlikt";
 
 class Familie extends React.Component<FaktumComponentProps, {}> {
 
@@ -40,6 +41,7 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 						</span>
 						)
 				}
+				<ForsorgerPlikt />
 				<Familierelasjoner />
 			</DigisosSkjemaSteg>
 		);

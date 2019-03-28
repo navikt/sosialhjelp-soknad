@@ -1,3 +1,5 @@
+import { ForsorgerPlikt, initialForsorgerPlikt } from "../forsorgerplikt/ForsorgerPliktTypes";
+
 export const SIVILSTATUS_STI = "familie/sivilstatus";
 
 export enum Status {
@@ -32,7 +34,8 @@ export interface Sivilstatus {
 }
 
 export interface Familie {
-	sivilstatus: Sivilstatus
+	sivilstatus: Sivilstatus;
+	forsorgerplikt: ForsorgerPlikt;
 }
 
 const initialSivilstatusState: Sivilstatus = {
@@ -40,8 +43,9 @@ const initialSivilstatusState: Sivilstatus = {
 	sivilstatus: Status.UGIFT
 };
 
-export const initialFamilieStatus = {
-	sivilstatus: initialSivilstatusState
+export const initialFamilieStatus: Familie = {
+	sivilstatus: initialSivilstatusState,
+	forsorgerplikt: initialForsorgerPlikt
 };
 
 export const initialPerson: Person = {

@@ -14,6 +14,7 @@ import {
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
 import { setPath } from "./soknadsdataActions";
+import { ForsorgerPlikt } from "../../../digisos/skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -31,7 +32,8 @@ export enum SoknadsSti {
 	BEGRUNNELSE = "begrunnelse",
 	BOSITUASJON = "bosituasjon",
 	UTDANNING = "utdanning",
-	TELEFONNUMMER = "personalia/telefonnummer"
+	TELEFONNUMMER = "personalia/telefonnummer",
+	FORSORGERPLIKT = "familie/forsorgerplikt"
 }
 
 export interface Personalia {
@@ -70,7 +72,8 @@ export type SoknadsdataType =
 	| Utdanning
 	| Kontonummer
 	| Telefonnummer
-	| Personalia;
+	| Personalia
+	| ForsorgerPlikt;
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
