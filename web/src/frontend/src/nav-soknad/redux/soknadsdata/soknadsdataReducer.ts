@@ -38,8 +38,7 @@ export enum SoknadsSti {
 	UTDANNING = "utdanning",
 	TELEFONNUMMER = "personalia/telefonnummer",
 	FORSORGERPLIKT = "familie/forsorgerplikt",
-	BASIS_PERSONALIA = "personalia/basisPersonalia"
-	TELEFONNUMMER = "personalia/telefonnummer",
+	BASIS_PERSONALIA = "personalia/basisPersonalia",
 	SIVILSTATUS = "familie/sivilstatus"
 }
 
@@ -82,8 +81,7 @@ export type SoknadsdataType =
 	| Kontonummer
 	| Telefonnummer
 	| Personalia
-	| ForsorgerPlikt;
-	| Personalia
+	| ForsorgerPlikt
 	| Sivilstatus;
 
 interface SoknadsdataActionType {
