@@ -62,6 +62,9 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
 
 		const mobilVisning = erMobilVisning();
 
+		if (this.props.visible === false) {
+			return null;
+		}
 		return (
 			<Sporsmal
 				tekster={this.props.tekster}
