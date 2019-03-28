@@ -66,6 +66,19 @@ export class UtbetalingerView extends React.Component<Props, {}> {
         this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
     }
 
+    renderCheckBox(navn: string, textKey: string) {
+        const {soknadsdata} = this.props;
+        const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
+        return (
+            <CheckboxPanel
+                id={"boutgifter_" + navn + "_checkbox"}
+                name={navn}
+                checked={utbetalinger && utbetalinger[navn] ? utbetalinger[navn] : false}
+                label={<FormattedHTMLMessage id={UTBETALINGER + ".true.type." + textKey}/>}
+                onClick={() => this.handleClickRadio(navn)}
+            />
+        )
+    }
 
     render() {
 
@@ -84,35 +97,10 @@ export class UtbetalingerView extends React.Component<Props, {}> {
                 <Sporsmal
                     tekster={getFaktumSporsmalTekst(this.props.intl, UTBETALINGER + ".true.type")}
                 >
-
-                    <CheckboxPanel
-                        id={"utbetalinger_utbytte_checkbox"}
-                        name={"utbytte"}
-                        checked={utbetalinger && utbetalinger.utbytte ? utbetalinger.utbytte : false}
-                        label={<FormattedHTMLMessage id={UTBETALINGER + ".true.type.utbytte"}/>}
-                        onClick={() => this.handleClickRadio("utbytte")}
-                    />
-                    <CheckboxPanel
-                        id={"utbetalinger_salg_checkbox"}
-                        name={"salg"}
-                        checked={utbetalinger && utbetalinger.salg ? utbetalinger.salg : false}
-                        label={<FormattedHTMLMessage id={UTBETALINGER + ".true.type.salg"}/>}
-                        onClick={() => this.handleClickRadio("salg")}
-                    />
-                    <CheckboxPanel
-                        id={"utbetalinger_forsikring_checkbox"}
-                        name={"forsikring"}
-                        checked={utbetalinger && utbetalinger.forsikring ? utbetalinger.forsikring : false}
-                        label={<FormattedHTMLMessage id={UTBETALINGER + ".true.type.forsikring"}/>}
-                        onClick={() => this.handleClickRadio("forsikring")}
-                    />
-                    <CheckboxPanel
-                        id={"utbetalinger_annet_checkbox"}
-                        name={"annet"}
-                        checked={utbetalinger && utbetalinger.annet ? utbetalinger.annet : false}
-                        label={<FormattedHTMLMessage id={UTBETALINGER + ".true.type.annet"}/>}
-                        onClick={() => this.handleClickRadio("annet")}
-                    />
+                    {this.renderCheckBox("utbytte", "utbytte")}
+                    {this.renderCheckBox("salg", "salg")}
+                    {this.renderCheckBox("forsikring", "forsikring")}
+                    {this.renderCheckBox("annet", "annet")}
                     <NivaTreSkjema
                         visible={utbetalinger.bekreftelse && utbetalinger.annet}
                         size="small"

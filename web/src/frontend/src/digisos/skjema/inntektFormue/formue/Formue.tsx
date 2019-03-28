@@ -13,7 +13,7 @@ import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
 
 const MAX_CHARS = 500;
-const Formue = "inntekt.bankinnskudd";
+const FORMUE = "inntekt.bankinnskudd";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -53,7 +53,7 @@ export class FormueView extends React.Component<Props, {}> {
                 id={"formue_" + navn + "_checkbox"}
                 name={navn}
                 checked={formue && formue[navn] ? formue[navn] : false}
-                label={<FormattedHTMLMessage id={Formue + ".true.type." + navn}/>}
+                label={<FormattedHTMLMessage id={FORMUE + ".true.type." + navn}/>}
                 onClick={() => this.handleClickRadio(navn)}
             />
         )
@@ -64,7 +64,7 @@ export class FormueView extends React.Component<Props, {}> {
         const formue: Formue = soknadsdata.inntekt.formue;
         return (
             <Sporsmal
-                tekster={getFaktumSporsmalTekst(this.props.intl, Formue + ".true.type")}
+                tekster={getFaktumSporsmalTekst(this.props.intl, FORMUE + ".true.type")}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 {this.renderCheckBox("brukskonto")}
@@ -83,7 +83,7 @@ export class FormueView extends React.Component<Props, {}> {
                         onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}
                         onBlur={() => this.onBlurTekstfeltAnnet()}
                         faktumKey=""
-                        labelId={Formue + ".true.type.annet.true.beskrivelse.label"}
+                        labelId={FORMUE + ".true.type.annet.true.beskrivelse.label"}
                         maxLength={MAX_CHARS}
                         value={formue.beskrivelseAvAnnet}
                     />

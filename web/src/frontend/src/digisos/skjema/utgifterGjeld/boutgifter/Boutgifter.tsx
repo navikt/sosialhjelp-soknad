@@ -10,7 +10,7 @@ import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Boutgifter} from "./BoutgifterTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
-const Boutgifter = "utgifter.boutgift";
+const BOUTGIFTER = "utgifter.boutgift";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -44,7 +44,7 @@ export class BoutgifterView extends React.Component<Props, {}> {
         this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOUTGIFTER, boutgifter);
     }
 
-    renderCheckBox(navn: string) {
+    renderCheckBox(navn: string, textKey: string) {
         const {soknadsdata} = this.props;
         const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
         return (
@@ -52,7 +52,7 @@ export class BoutgifterView extends React.Component<Props, {}> {
                 id={"boutgifter_" + navn + "_checkbox"}
                 name={navn}
                 checked={boutgifter && boutgifter[navn] ? boutgifter[navn] : false}
-                label={<FormattedHTMLMessage id={Boutgifter + ".true.type." + navn}/>}
+                label={<FormattedHTMLMessage id={BOUTGIFTER + ".true.type." + textKey}/>}
                 onClick={() => this.handleClickRadio(navn)}
             />
         )
@@ -63,33 +63,21 @@ export class BoutgifterView extends React.Component<Props, {}> {
         const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
         return (
             <JaNeiSporsmal
-                tekster={getFaktumSporsmalTekst(this.props.intl, Boutgifter)}
-                faktumKey={Boutgifter}
+                tekster={getFaktumSporsmalTekst(this.props.intl, BOUTGIFTER)}
+                faktumKey={BOUTGIFTER}
                 verdi={boutgifter.bekreftelse}
                 onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, Boutgifter + ".true.type")}
+                    tekster={getFaktumSporsmalTekst(this.props.intl, BOUTGIFTER + ".true.type")}
                 >
-                    {this.renderCheckBox("husleie")}
-                    {this.renderCheckBox("strom")}
-                    {this.renderCheckBox("kommunalAvgift")}
-                    {this.renderCheckBox("oppvarming")}
-                    <CheckboxPanel
-                        id={"boutgifter_boliglan_checkbox"}
-                        name={"boliglan"}
-                        checked={boutgifter && boutgifter.boliglan ? boutgifter.boliglan : false}
-                        label={<FormattedHTMLMessage id={Boutgifter + ".true.type.avdraglaan"}/>}
-                        onClick={() => this.handleClickRadio("boliglan")}
-                    />
-                    <CheckboxPanel
-                        id={"boutgifter_annet_checkbox"}
-                        name={"annet"}
-                        checked={boutgifter && boutgifter.annet ? boutgifter.annet : false}
-                        label={<FormattedHTMLMessage id={Boutgifter + ".true.type.andreutgifter"}/>}
-                        onClick={() => this.handleClickRadio("annet")}
-                    />
+                    {this.renderCheckBox("husleie", "husleie")}
+                    {this.renderCheckBox("strom", "strom")}
+                    {this.renderCheckBox("kommunalAvgift", "kommunalAvgift")}
+                    {this.renderCheckBox("oppvarming", "oppvarming")}
+                    {this.renderCheckBox("boliglan", "avdraglaan")}
+                    {this.renderCheckBox("annet", "andreutgifter")}
                 </Sporsmal>
             </JaNeiSporsmal>
         )

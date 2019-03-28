@@ -10,6 +10,7 @@ import { State } from "../../redux/reducers";
 import KredittkortIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/KredittkortIllustrasjon";
 
 import Boutgifter from "./boutgifter/Boutgifter";
+import Barneutgifter from "./barneutgifter/Barneutgifter";
 
 class UtgifterGjeld extends React.Component<
 	FaktumComponentProps & DispatchProps & InjectedIntlProps,
@@ -18,7 +19,12 @@ class UtgifterGjeld extends React.Component<
 	render() {
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk} ikon={<KredittkortIllustrasjon/>}>
-				<Boutgifter />
+				<div style={{border: "3px dotted green"}}>
+					<Boutgifter />
+				</div>
+				<div style={{border: "3px dotted green"}}>
+					<Barneutgifter />
+				</div>
 			</DigisosSkjemaSteg>
 		);
 	}

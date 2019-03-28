@@ -31,6 +31,10 @@ import {
 	initialBoutgifterState,
 	Boutgifter
 } from "../../../digisos/skjema/utgifterGjeld/boutgifter/BoutgifterTypes";
+import {
+	initialBarneutgifterState,
+	Barneutgifter
+} from "../../../digisos/skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -53,7 +57,8 @@ export enum SoknadsSti {
 	UTBETALINGER = "inntekt/utbetalinger",
 	VERDIER = "inntekt/verdier",
 	FORMUE = "inntekt/formue",
-	BOUTGIFTER = "utgifter/boutgifter"
+	BOUTGIFTER = "utgifter/boutgifter",
+	BARNEUTGIFTER = "utgifter/barneutgifter"
 }
 
 export interface Personalia {
@@ -70,6 +75,8 @@ export interface Inntekt {
 
 export interface Utgifter {
 	boutgifter?: Boutgifter;
+	barneutgifter?: Barneutgifter;
+
 }
 
 export const initialPersonaliaState: Personalia = {
@@ -85,7 +92,8 @@ export const initialInntektState: Inntekt = {
 };
 
 export const initialUtgifterState: Utgifter = {
-	boutgifter: initialBoutgifterState
+	boutgifter: initialBoutgifterState,
+	barneutgifter: initialBarneutgifterState
 };
 
 export interface Soknadsdata {
