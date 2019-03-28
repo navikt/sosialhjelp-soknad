@@ -18,7 +18,15 @@ class BasisPersonaliaView extends React.Component<Props, {}> {
 	render() {
 		const {soknadsdata} = this.props;
 		const basisPersonalia = soknadsdata.personalia.basisPersonalia;
-		const statsborgerskap = basisPersonalia && basisPersonalia.statsborgerskap;
+		let statsborgerskap = basisPersonalia && basisPersonalia.statsborgerskap;
+		let statsborgerskapVisning = <span className="tekst-capitalize">{statsborgerskap}</span>;
+		if (statsborgerskap === "XXX" || statsborgerskap === "xxx"){
+			statsborgerskap = "Statsløs";
+			statsborgerskapVisning = <span>{statsborgerskap}</span>;
+		} else if (statsborgerskap === "???" || statsborgerskap === null){
+			statsborgerskap = "Vi har ikke opplysninger om ditt statsborgerskap";
+			statsborgerskapVisning = <span>{statsborgerskap}</span>;
+		}
 
 		return (
 			<div style={{border: "3px dotted red"}}>
@@ -42,7 +50,7 @@ class BasisPersonaliaView extends React.Component<Props, {}> {
 									tittel={
 										<FormattedMessage id="kontakt.system.personalia.statsborgerskap" />
 									}
-									verdi={<span className="tekst-capitalize">{statsborgerskap}</span>}
+									verdi={statsborgerskapVisning}
 								/>
 							)}
 						</Detaljeliste>
