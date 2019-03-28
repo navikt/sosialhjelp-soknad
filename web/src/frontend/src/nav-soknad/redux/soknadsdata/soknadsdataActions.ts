@@ -8,6 +8,16 @@ const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `sok
 export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	return (dispatch: Dispatch) => {
 		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
+
+			// For å simulere ulike typer testdata fra server, kan man her skrive kode som:
+			// if(sti === SoknadsSti.FORSORGERPLIKT){
+			// 	response = {
+			// 		ansvar: [],
+			// 		barnebidrag: null,
+			// 		harForsorgerplikt: false
+			// 	}
+			// }
+
 			dispatch(oppdaterSoknadsdataSti(sti, response));
 		}).catch(() => {
 			dispatch(navigerTilServerfeil());

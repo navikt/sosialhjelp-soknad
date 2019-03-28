@@ -25,7 +25,7 @@ class ForsorgerPliktView extends React.Component<Props, {}> {
 		return (
 			<div style={{ border: "3px dotted red" }}>
 				{ansvar && antallBarn === 0 && (
-					<Sporsmal sprakNokkel="familierelasjon">
+					<Sporsmal sprakNokkel="familierelasjon.faktum">
 						<p><FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn"/></p>
 					</Sporsmal>
 				)}
