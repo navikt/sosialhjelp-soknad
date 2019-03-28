@@ -27,6 +27,10 @@ import {
 	initialFormueState,
 	Formue
 } from "../../../digisos/skjema/inntektFormue/formue/FormueTypes";
+import {
+	initialBoutgifterState,
+	Boutgifter
+} from "../../../digisos/skjema/utgifterGjeld/boutgifter/BoutgifterTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -48,7 +52,8 @@ export enum SoknadsSti {
 	BOSTOTTE = "inntekt/bostotte",
 	UTBETALINGER = "inntekt/utbetalinger",
 	VERDIER = "inntekt/verdier",
-	FORMUE = "inntekt/formue"
+	FORMUE = "inntekt/formue",
+	BOUTGIFTER = "utgifter/boutgifter"
 }
 
 export interface Personalia {
@@ -63,6 +68,10 @@ export interface Inntekt {
 	verdier?: Verdier;
 }
 
+export interface Utgifter {
+	boutgifter?: Boutgifter;
+}
+
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
 	telefonnummer: initialTelefonnummerState
@@ -75,6 +84,10 @@ export const initialInntektState: Inntekt = {
 	verdier: initialVerdierState
 };
 
+export const initialUtgifterState: Utgifter = {
+	boutgifter: initialBoutgifterState
+};
+
 export interface Soknadsdata {
 	arbeid: Arbeid;
 	begrunnelse: Begrunnelse;
@@ -82,7 +95,8 @@ export interface Soknadsdata {
 	familie: Familie;
 	utdanning: Utdanning;
 	personalia: Personalia;
-	inntekt: Inntekt
+	inntekt: Inntekt;
+	utgifter: Utgifter;
 }
 
 export interface SoknadsdataActionVerdi {
@@ -92,7 +106,8 @@ export interface SoknadsdataActionVerdi {
 	familie?: Familie
 	utdanning?: Utdanning,
 	personalia: Personalia;
-	inntekt?: Inntekt
+	inntekt?: Inntekt,
+	utgifter?: Utgifter
 }
 
 export type SoknadsdataType =
@@ -106,7 +121,8 @@ export type SoknadsdataType =
 	| Personalia
 	| Bostotte
 	| Formue
-	| Verdier;
+	| Verdier
+	| Utgifter;
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
@@ -121,7 +137,8 @@ export const initialSoknadsdataState: Soknadsdata = {
 	familie: initialFamilieStatus,
 	utdanning: initialUtdanningState,
 	personalia: initialPersonaliaState,
-	inntekt: initialInntektState
+	inntekt: initialInntektState,
+	utgifter: initialUtgifterState
 };
 
 const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (
