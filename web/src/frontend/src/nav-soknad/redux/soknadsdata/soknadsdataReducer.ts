@@ -67,8 +67,7 @@ export enum SoknadsSti {
 	BASIS_PERSONALIA = "personalia/basisPersonalia",
 	SIVILSTATUS = "familie/sivilstatus",
 	ADRESSER = "personalia/adresser",
-	NAV_ENHETER = "personalia/navEnheter"
-	TELEFONNUMMER = "personalia/telefonnummer",
+	NAV_ENHETER = "personalia/navEnheter",
 	BOSTOTTE = "inntekt/bostotte",
 	UTBETALINGER = "inntekt/utbetalinger",
 	VERDIER = "inntekt/verdier",
@@ -157,8 +156,7 @@ export type SoknadsdataType =
 	| Sivilstatus
 	| Adresser
 	| AdresseValg
-	| NavEnhet[];
-	| Personalia
+	| NavEnhet[]
 	| Bostotte
 	| Formue
 	| Verdier
