@@ -9,7 +9,7 @@ import {
 } from "../../../digisos/skjema/personopplysninger/telefon/telefonTypes";
 import { Bosituasjon, initialBosituasjonState } from "../../../digisos/skjema/bosituasjon_ny/bosituasjonTypes";
 import {
-	Familie, initialFamilieStatus,
+	Familie, initialFamilieStatus, Sivilstatus,
 } from "../../../digisos/skjema/familie/sivilstatus/FamilieTypes";
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
@@ -39,6 +39,8 @@ export enum SoknadsSti {
 	TELEFONNUMMER = "personalia/telefonnummer",
 	FORSORGERPLIKT = "familie/forsorgerplikt",
 	BASIS_PERSONALIA = "personalia/basisPersonalia"
+	TELEFONNUMMER = "personalia/telefonnummer",
+	SIVILSTATUS = "familie/sivilstatus"
 }
 
 export interface Personalia {
@@ -81,6 +83,8 @@ export type SoknadsdataType =
 	| Telefonnummer
 	| Personalia
 	| ForsorgerPlikt;
+	| Personalia
+	| Sivilstatus;
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
