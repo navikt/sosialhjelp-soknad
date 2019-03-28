@@ -44,8 +44,7 @@ export enum SoknadsSti {
 	TELEFONNUMMER = "personalia/telefonnummer",
 	FORSORGERPLIKT = "familie/forsorgerplikt",
 	BASIS_PERSONALIA = "personalia/basisPersonalia",
-	SIVILSTATUS = "familie/sivilstatus"
-	TELEFONNUMMER = "personalia/telefonnummer",
+	SIVILSTATUS = "familie/sivilstatus",
 	ADRESSER = "personalia/adresser",
 	NAV_ENHETER = "personalia/navEnheter"
 }
@@ -61,8 +60,7 @@ export interface Personalia {
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
 	telefonnummer: initialTelefonnummerState,
-	basisPersonalia: initialBasisPersonalia
-	telefonnummer: initialTelefonnummerState,
+	basisPersonalia: initialBasisPersonalia,
 	adresser: initialAdresserState,
 	navEnheter: []
 };
@@ -99,8 +97,7 @@ export type SoknadsdataType =
 	| Telefonnummer
 	| Personalia
 	| ForsorgerPlikt
-	| Sivilstatus;
-	| Personalia
+	| Sivilstatus
 	| Adresser
 	| AdresseValg
 	| NavEnhet[];
