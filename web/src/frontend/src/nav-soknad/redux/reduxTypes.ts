@@ -17,6 +17,7 @@ import {
 } from "../components/adresseAutocomplete/adresseAutocompleteReducer";
 import {MockState} from "../../digisos/mock/mockReducer";
 import { Soknadsdata } from "./soknadsdata/soknadsdataReducer";
+import {OkonomiskeOpplysningerModel} from "./okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -46,6 +47,7 @@ export interface SoknadAppState {
 	soknadsdata: Soknadsdata;
 	init: InitState;
 	mockData: MockState;
+	okonomiskeOpplysninger: OkonomiskeOpplysningerModel;
 }
 
 export interface SoknadState {

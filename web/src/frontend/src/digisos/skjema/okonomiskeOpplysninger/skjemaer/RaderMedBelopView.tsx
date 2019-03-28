@@ -1,28 +1,33 @@
-import {Row} from "nav-frontend-grid";
-import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import * as React from "react";
-import {VedleggBeriket} from "../okonomiskeOpplysningerTypes";
+import {
+    VedleggRad
+} from "../../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import RadMedBelopView from "./RadMedBelopView";
 
 export interface RaderMedBelopProps {
-    vedleggBeriket: VedleggBeriket;
+    rader: VedleggRad[]
 }
+
+// TODO: parseStringToInt. Gi feil hvis ugyldig belop.
 
 class RaderMedBelopView extends React.Component<RaderMedBelopProps, {}>{
 
     render(){
 
-        const { vedleggBeriket } = this.props;
+        const { rader } = this.props;
+
+        const innhold: JSX.Element[] = rader.map((radMedBelop: VedleggRad, index: number) => {
+            return(
+                <div key={index} className="container--noPadding container-fluid">
+                    <RadMedBelopView rowKey={"1"} belop={123} onChange={(verdi: any) => console.warn(verdi)} onBlur={() => console.warn("ajkfhb")} textKey={"askdjfb"}/>
+                </div>
+            )
+        });
 
         return(
-            <Row key={vedleggBeriket.type} className="opplysning__row">
-                <InputEnhanced
-                    onChange={() => console.warn("onchange input felt..")}
-                    faktumKey={"opplysninger.arbeid.jobb.bruttolonn"}
-                    verdi={"VERDI PÅ DEN RADEN"}
-                    onBlur={() => console.warn("blurring...")}
-                    required={false}
-                />
-            </Row>
+            <div>
+                { innhold }
+            </div>
         )
     }
 }

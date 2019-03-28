@@ -14,10 +14,6 @@ import {
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
 import { setPath } from "./soknadsdataActions";
-import {
-    OkonomiskeOpplysninger
-} from "../../../digisos/skjema/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
-import {initialOkonomiskeOpplysninger} from "../../../digisos/skjema/okonomiskeOpplysninger/okonomiskeOpplysningerStruktur";
 
 
 export enum SoknadsdataActionTypeKeys {
@@ -36,8 +32,7 @@ export enum SoknadsSti {
 	BEGRUNNELSE = "begrunnelse",
 	BOSITUASJON = "bosituasjon",
 	UTDANNING = "utdanning",
-	TELEFONNUMMER = "personalia/telefonnummer",
-	OKONOMISKE_OPPLYSNINGER = "okonomiskeOpplysninger"
+	TELEFONNUMMER = "personalia/telefonnummer"
 }
 
 export interface Personalia {
@@ -57,7 +52,6 @@ export interface Soknadsdata {
 	familie: Familie;
 	utdanning: Utdanning;
 	personalia: Personalia;
-	okonomiskeOpplysninger: OkonomiskeOpplysninger;
 }
 
 export interface SoknadsdataActionVerdi {
@@ -67,7 +61,6 @@ export interface SoknadsdataActionVerdi {
 	familie?: Familie;
 	utdanning?: Utdanning;
 	personalia: Personalia;
-	okonomiskeOpplysninger: OkonomiskeOpplysninger;
 }
 
 export type SoknadsdataType
@@ -79,7 +72,6 @@ export type SoknadsdataType
 	| Kontonummer
 	| Telefonnummer
 	| Personalia
-	| OkonomiskeOpplysninger
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
@@ -94,7 +86,6 @@ export const initialSoknadsdataState: Soknadsdata = {
 	familie: initialFamilieStatus,
 	utdanning: initialUtdanningState,
 	personalia: initialPersonaliaState,
-	okonomiskeOpplysninger: initialOkonomiskeOpplysninger
 };
 
 const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (

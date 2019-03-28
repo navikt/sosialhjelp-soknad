@@ -1,50 +1,37 @@
-import {Row} from "nav-frontend-grid";
-import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import * as React from "react";
-import {VedleggBeriket} from "../okonomiskeOpplysningerTypes";
+import {Column, Row} from "nav-frontend-grid";
+import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 
 export interface RadMedBelopProps {
-    vedleggBeriket: VedleggBeriket;
-    onChange: (vedleggBeriket: VedleggBeriket) => void;
+    rowKey: string;
+    belop: number;
+    onChange: (belop: number) => void;
+    onBlur: () => void;
+    textKey: string
 }
+
+// TODO: parseStringToInt. Gi feil hvis ugyldig belop.
 
 class RadMedBelopView extends React.Component<RadMedBelopProps, {}>{
 
-    // MÅ KUN VÆRE LOV MED 0-9. IKKE BOKSTAVER
-    handleChange(input: string){
-        console.warn(input);
-
-        const { vedleggBeriket } = this.props;
-
-        vedleggBeriket.rader[0].belop = parseInt(input, 0);
-
-        this.props.onChange(vedleggBeriket);
-    }
-
     render(){
 
-        const { vedleggBeriket } = this.props;
-
-        if(vedleggBeriket && vedleggBeriket.rader && vedleggBeriket.rader[0]){
-            return(
-                <Row key={vedleggBeriket.type} className="opplysning__row">
-                    <InputEnhanced
-                        onChange={(input) => this.handleChange(input)}
-                        faktumKey={"opplysninger.arbeid.jobb.bruttolonn"}
-                        verdi={
-                            vedleggBeriket.rader[0].belop ?
-                                vedleggBeriket.rader[0].belop.toString() :
-                                ""
-                        }
-                        onBlur={() => console.warn("blurring...")}
-                        required={false}
-                    />
-                </Row>
-            )
-        }
+        const { rowKey, belop, onChange, onBlur, textKey } = this.props;
 
         return(
-            <div>Belop er NUUUUUULLLL</div>
+            <div className="container--noPadding container-fluid">
+                <Row key={rowKey} className="opplysning__row">
+                    <Column xs={"12"} md={"6"}/>
+                        <InputEnhanced
+                            onChange={(input) => onChange(parseInt(input, 10))}
+                            onBlur={() => onBlur()}
+                            faktumKey={textKey}
+                            verdi={belop ? belop.toString() : ""}
+                            required={false}
+                            bredde={"S"}
+                        />
+                </Row>
+            </div>
         )
     }
 }

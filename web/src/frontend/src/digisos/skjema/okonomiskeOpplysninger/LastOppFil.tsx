@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Knapp } from "nav-frontend-knapper";
-import {VedleggBeriket} from "./okonomiskeOpplysningerTypes";
 import { FormattedHTMLMessage } from "react-intl";
+import {OkonomiskOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 
 
 export interface OwnProps {
-	vedleggBeriket: VedleggBeriket;
+	okonomiskOpplysning: OkonomiskOpplysning;
 	isDisabled: boolean;
 	visSpinner: boolean;
 }

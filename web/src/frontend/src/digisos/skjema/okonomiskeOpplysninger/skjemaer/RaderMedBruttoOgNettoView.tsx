@@ -1,20 +1,20 @@
 import {Row} from "nav-frontend-grid";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import * as React from "react";
-import {VedleggBeriket} from "../okonomiskeOpplysningerTypes";
+import {OkonomiskOpplysning} from "../../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 
 export interface RaderMedBruttoOgNettoProps {
-    vedleggBeriket: VedleggBeriket;
+    okonomiskOpplysning: OkonomiskOpplysning;
 }
 
 class RaderMedBruttoOgNettoView extends React.Component<RaderMedBruttoOgNettoProps, {}>{
 
     render(){
 
-        const { vedleggBeriket } = this.props;
+        const { okonomiskOpplysning } = this.props;
 
         return(
-            <Row key={vedleggBeriket.type} className="opplysning__row">
+            <Row key={okonomiskOpplysning.type} className="opplysning__row">
                 <InputEnhanced
                     onChange={() => console.warn("onchange input felt..")}
                     faktumKey={"opplysninger.arbeid.jobb.bruttolonn"}

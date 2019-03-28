@@ -1,299 +1,68 @@
 import * as React from "react";
+import {connect} from "react-redux";
 import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import SkjemaIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SkjemaIllustrasjon";
-import {
-    connectSoknadsdataContainer,
-    SoknadsdataContainerProps
-} from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {Soknadsdata, SoknadsSti} from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+
+
 import NavFrontendSpinner from "nav-frontend-spinner";
 import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
+import Gruppe from "./Gruppe";
 import {
     GruppeEnum,
-    OkonomiskeOpplysninger,
-    RadType,
-    VedleggBeriket,
-    VedleggType
-} from "./okonomiskeOpplysningerTypes";
-import Gruppe from "./Gruppe";
+    Grupper,
+    OkonomiskeOpplysningerModel
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
+import {hentOkonomiskeOpplysninger} from "../../../nav-soknad/redux/okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
+import {RestStatus} from "../../../nav-soknad/types";
 
 
-interface StoreProps {
-    soknadsdata: Soknadsdata;
+export interface StoreToProps {
+    okonomiskeOpplysninger: OkonomiskeOpplysningerModel;
+    behandlingsId: string;
 }
 
 
-type Props = StoreProps & SoknadsdataContainerProps  & InjectedIntlProps
+type Props = StoreToProps & InjectedIntlProps & DispatchProps;
 
 class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
 
 
     componentDidMount(){
-        const { brukerBehandlingId } = this.props;
-        this.props.hentSoknadsdata(brukerBehandlingId, SoknadsSti.OKONOMISKE_OPPLYSNINGER);
+        const { behandlingsId } = this.props;
+        this.props.dispatch(hentOkonomiskeOpplysninger(behandlingsId))
     }
 
 
-    renderIkkeBesvart() {
-        return (
-            <Informasjonspanel
-                ikon={InformasjonspanelIkon.HENSYN}
-                farge={DigisosFarge.VIKTIG}
-            >
-                <FormattedHTMLMessage id="opplysninger.ikkebesvart.melding"/>
-            </Informasjonspanel>
-        );
-    }
+    renderGrupper(grupper: Grupper){
 
-    renderInfoMelding() {
-        return (
-            <div>
-                <Informasjonspanel
-                    ikon={InformasjonspanelIkon.HENSYN}
-                    farge={DigisosFarge.VIKTIG}
-                >
-                    <FormattedHTMLMessage id="opplysninger.informasjon"/>
-                </Informasjonspanel>
-            </div>
-        );
-    }
+        if (grupper){
 
-
-    // String -> RaderStruktur
-    settRadType(vedleggsType: VedleggType){
-        switch (vedleggsType) {
-            case VedleggType.LONNSLIPP_ARBEID : {
-                return RadType.RADER_MED_BRUTTO_OG_NETTO;
-            }
-            case VedleggType.SLUTTOPPGJOR_ARBEID : {
-                return RadType.RADER_MED_BRUTTO_OG_NETTO;
-            }
-            case VedleggType.STUDENT_VEDTAK : {
-                return RadType.RAD_MED_BELOP;
-            }
-            case VedleggType.BARNEBIDRAG_BETALER : {
-                return RadType.RAD_MED_BELOP;
-            }
-            case VedleggType.BARNEBIDRAG_MOTTAR : {
-                return RadType.RAD_MED_BELOP;
-            }
-            case VedleggType.SAMVARSAVTALE_BARN : {
-                return RadType.NOTHING;
-            }
-            case VedleggType.HUSLEIEKONTRAKT_HUSLEIEKONTRAKT : {
-                return RadType.NOTHING;
-            }
-            case VedleggType.HUSLEIEKONTRAKT_KOMMUNAL : {
-                return RadType.NOTHING;
-            }
-            case VedleggType.BOSTOTTE_VEDTAK : {
-                return RadType.RAD_MED_BELOP;
-            }
-            case VedleggType.KONTOOVERSIKT_BRUKSKONTO : {
-                return RadType.RADER_MED_BELOP;
-            }
-            case VedleggType.KONTOOVERSIKT_BSU : {
-                return RadType.RADER_MED_BELOP;
-            }
-            case VedleggType.KONTOOVERSIKT_SPAREKONTO : {
-                return RadType.RADER_MED_BELOP;
-            }
-            case VedleggType.KONTOOVERSIKT_LIVSFORSIKRING : {
-                return RadType.RADER_MED_BELOP;
-            }
-            case VedleggType.KONTOOVERSIKT_AKSJER : {
-                return RadType.RADER_MED_BELOP;
-            }
-            case VedleggType.KONTOOVERSIKT_ANNET : {
-                return RadType.RADER_MED_BELOP;
-            }
-            case VedleggType.DOKUMENTASJON_UTBYTTE : {
-                return RadType.RADER_MED_BELOP;
-            }
-            case VedleggType.SALGSOPPGJOR_EIENDOM : {
-                return RadType.RADER_MED_BELOP;
-            }
-            case VedleggType.DOKUMENTASJON_FORSIKRINGSUTBETALING : {
-                return RadType.RADER_MED_BELOP;
-            }
-            case VedleggType.DOKUMENTASJON_ANNETINNTEKTER : {
-                return RadType.RADER_MED_BELOP;
-            }
-            case VedleggType.FAKTURA_HUSLEIE : {
-                return RadType.RAD_MED_BELOP;
-            }
-            case VedleggType.FAKTURA_STROM : {
-                return RadType.RAD_MED_BELOP;
-            }
-            case VedleggType.FAKTURA_KOMMUNALEAVGIFTER : {
-                return RadType.RAD_MED_BELOP;
-            }
-            case VedleggType.FAKTURA_OPPVARMING : {
-                return RadType.RAD_MED_BELOP;
-            }
-            case VedleggType.NEDBETALINGSPLAN_AVDRAGLAAN : {
-                return RadType.RADER_MED_AVDRAG_OG_RENTER;
-            }
-            case VedleggType.DOKUMENTASJON_ANNETBOUTGIFT : {
-                return RadType.RADER_MED_BESKRIVELSE_OG_BELOP;
-            }
-            case VedleggType.FAKTURA_FRITIDSAKTIVITET : {
-                return RadType.RADER_MED_BESKRIVELSE_OG_BELOP;
-            }
-            case VedleggType.FAKTURA_BARNEHAGE : {
-                return RadType.RADER_MED_BELOP;
-            }
-            case VedleggType.FAKTURA_SFO : {
-                return RadType.RADER_MED_BELOP;
-            }
-            case VedleggType.FAKTURA_TANNBEHANDLING : {
-                return RadType.RADER_MED_BELOP;
-            }
-            case VedleggType.FAKTURA_ANNETBARNUTGIFT : {
-                return RadType.RADER_MED_BESKRIVELSE_OG_BELOP;
-            }
-            case VedleggType.SKATTEMELDING_SKATTEMELDING : {
-                return RadType.NOTHING;
-            }
-            case VedleggType.ANNET_ANNET : {
-                return RadType.RADER_MED_BESKRIVELSE_OG_BELOP;
-            }
-            default : {
-                return RadType.NOTHING
-            }
-        }
-    }
-
-    renderVedleggBolkListe(okonomiskeOpplysninger: OkonomiskeOpplysninger){
-
-        if (okonomiskeOpplysninger){
-
-
-
-            const beriketOO: VedleggBeriket[] = okonomiskeOpplysninger.okonomiskeOpplysninger.map((vedlegg, index, array) => {
-                return {
-                    "type" : vedlegg.type,
-                    "gruppe" : vedlegg.gruppe,
-                    "rader" : vedlegg.rader,
-                    "vedleggStatus": vedlegg.vedleggStatus,
-                    "filer" : vedlegg.filer,
-                    "slettet" : false,
-                    "radType" : this.settRadType(vedlegg.type),
-                }
-            });
-
-            const beriketSlettet: VedleggBeriket[] = okonomiskeOpplysninger.slettedeVedlegg.map((vedlegg, index, array) => {
-                return {
-                    "type" : vedlegg.type,
-                    "gruppe" : vedlegg.gruppe,
-                    "rader" : vedlegg.rader,
-                    "vedleggStatus": vedlegg.vedleggStatus,
-                    "filer" : vedlegg.filer,
-                    "slettet" : true,
-                    "radType" : this.settRadType(vedlegg.type),
-                }
-            });
-
-            const alleVedlegg: VedleggBeriket[] = beriketOO.concat(beriketSlettet);
-
-
-
-            const gruppeArbeid: VedleggBeriket[] = [];
-            const gruppeFamilie: VedleggBeriket[] = [];
-            const gruppeBosituasjon: VedleggBeriket[] = [];
-            const gruppeInntekt: VedleggBeriket[] = [];
-            const gruppeUtgifter: VedleggBeriket[] = [];
-            const gruppeGenerelleVedlegg: VedleggBeriket[] = [];
-            const gruppeAndreUtgifter: VedleggBeriket[] = [];
-            const gruppeUkjent: VedleggBeriket[] = [];
-
-
-            alleVedlegg.forEach((vedlegg: VedleggBeriket) => {
-                switch(vedlegg.gruppe){
-                    case GruppeEnum.ARBEID:{
-                        gruppeArbeid.push(vedlegg);
-                        break;
-                    }
-                    case GruppeEnum.FAMILIE:{
-                        gruppeFamilie.push(vedlegg);
-                        break;
-                    }
-                    case GruppeEnum.BOSITUASJON:{
-                        gruppeBosituasjon.push(vedlegg);
-                        break;
-                    }
-                    case GruppeEnum.INNTEKT:{
-                        gruppeInntekt.push(vedlegg);
-                        break;
-                    }
-                    case GruppeEnum.UTGIFTER:{
-                        gruppeUtgifter.push(vedlegg);
-                        break;
-                    }
-                    case GruppeEnum.GENERELLE_VEDLEGG:{
-                        gruppeGenerelleVedlegg.push(vedlegg);
-                        break;
-                    }
-                    case GruppeEnum.ANDRE_UTGIFTER:{
-                        gruppeAndreUtgifter.push(vedlegg);
-                        break;
-                    }
-                    default: {
-                        gruppeUkjent.push(vedlegg);
-                        console.warn(`An unkown group!!! Log to kibana. Group: ${vedlegg.gruppe}`);
-                        break;
-                    }
-                }
-            });
-
-            // Fra Vedlegg
-            // "type": string;
-            // "gruppe": GruppeEnum;
-            // "rader": VedleggRad[];
-            // "vedleggStatus": string;
-            // "filer": Fil[]
-
-            // Til OpplysningStruktur
-            // "inOkonomiskeOpplysninger" : boolean;
-            // "inSlettede" : boolean;
-            // "raderType" : RaderStruktur;
-            // "vedlegg" : Vedlegg | null;
-
-            {/*<Gruppe*/}
-                {/*key={GruppeEnum.ARBEID}*/}
-                {/*tittel={"ARBEID"}*/}
-                {/*vedleggsListe={gruppeArbeid}*/}
-            {/*/>*/}
-
+            const {
+                gruppeArbeid,
+                gruppeFamilie,
+                gruppeBosituasjon,
+                gruppeInntekt,
+                gruppeUtgifter,
+                gruppeGenerelleVedlegg,
+                gruppeAndreUtgifter,
+                gruppeUkjent
+            } = grupper;
 
             return(
                 <div>
-                    { gruppeArbeid && gruppeArbeid.length > 0 &&
-                       <Gruppe key={GruppeEnum.ARBEID} tittel={"ARBEID"}  vedleggsListe={gruppeArbeid} />
-                    }
-                    { gruppeFamilie && gruppeFamilie.length > 0 &&
-                        <Gruppe key={GruppeEnum.FAMILIE} tittel={"FAMILIE"} vedleggsListe={gruppeFamilie}/>
-                    }
-                    { gruppeBosituasjon && gruppeBosituasjon.length > 0 &&
-                        <Gruppe key={GruppeEnum.BOSITUASJON} tittel={"BOSITUASJON"} vedleggsListe={gruppeBosituasjon}/>
-                    }
-                    { gruppeInntekt && gruppeInntekt.length > 0 &&
-                        <Gruppe key={GruppeEnum.INNTEKT} tittel={"INNTEKT"} vedleggsListe={gruppeInntekt}/>
-                    }
-                    { gruppeUtgifter && gruppeUtgifter.length > 0 &&
-                        <Gruppe key={GruppeEnum.UTGIFTER} tittel={"UTGIFTER"} vedleggsListe={gruppeUtgifter}/>
-                    }
-                    { gruppeGenerelleVedlegg && gruppeGenerelleVedlegg.length > 0 &&
-                        <Gruppe key={GruppeEnum.GENERELLE_VEDLEGG} tittel={"GENERELLE VEDLEGG"} vedleggsListe={gruppeGenerelleVedlegg}/>
-                    }
-                    { gruppeAndreUtgifter && gruppeAndreUtgifter.length > 0 &&
-                        <Gruppe key={GruppeEnum.ANDRE_UTGIFTER} tittel={"ANDRE UTGIFTER"} vedleggsListe={gruppeAndreUtgifter}/>
-                    }
+                    <Gruppe key={GruppeEnum.ARBEID} tittel={"ARBEID"} gruppe={gruppeArbeid}/>
+                    <Gruppe key={GruppeEnum.FAMILIE} tittel={"FAMILIE"} gruppe={gruppeFamilie}/>
+                    <Gruppe key={GruppeEnum.BOSITUASJON} tittel={"BOSITUASJON"} gruppe={gruppeBosituasjon}/>
+                    <Gruppe key={GruppeEnum.INNTEKT} tittel={"INNTEKT"} gruppe={gruppeInntekt}/>
+                    <Gruppe key={GruppeEnum.UTGIFTER} tittel={"UTGIFTER"} gruppe={gruppeUtgifter}/>
+                    <Gruppe key={GruppeEnum.GENERELLE_VEDLEGG} tittel={"GENERELLE VEDLEGG"} gruppe={gruppeGenerelleVedlegg}/>
+                    <Gruppe key={GruppeEnum.ANDRE_UTGIFTER} tittel={"ANDRE UTGIFTER"} gruppe={gruppeAndreUtgifter}/>
+                    <Gruppe key={GruppeEnum.UKJENT} tittel={"UKJENT"} gruppe={gruppeUkjent}/>
                 </div>
             )
-
         }
 
         return null;
@@ -304,38 +73,59 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
 
 
     render() {
+        const { restStatus, grupper, backendData } = this.props.okonomiskeOpplysninger;
 
-        const { okonomiskeOpplysninger } = this.props.soknadsdata;
+        const ikkeBesvartMeldingSkalVises = backendData && backendData.okonomiskeOpplysninger.length < 3;
 
-
-        if (!okonomiskeOpplysninger){
-            return(
-                <div className="application-spinner">
-                    <NavFrontendSpinner type="XXL" />
+        const infoMelding: JSX.Element = (
+                <div className="steg-ekstrainformasjon__blokk">
+                    <Informasjonspanel
+                        ikon={InformasjonspanelIkon.HENSYN}
+                        farge={DigisosFarge.VIKTIG}
+                    >
+                        <FormattedHTMLMessage id="opplysninger.informasjon"/>
+                    </Informasjonspanel>
                 </div>
-            )
+        );
+
+        const ikkeBesvartMelding: JSX.Element = (
+                <div className="steg-ekstrainformasjon__blokk">
+                    <Informasjonspanel
+                        ikon={InformasjonspanelIkon.HENSYN}
+                        farge={DigisosFarge.VIKTIG}
+                    >
+                        <FormattedHTMLMessage id="opplysninger.ikkebesvart.melding"/>
+                    </Informasjonspanel>
+                </div>
+        );
+
+        if (restStatus === RestStatus.SUCCESS){
+            return (
+                <div className="steg-ekstrainformasjon">
+                    <DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk} ikon={<SkjemaIllustrasjon/>}>
+                        { !ikkeBesvartMeldingSkalVises && infoMelding }
+                        { ikkeBesvartMeldingSkalVises && ikkeBesvartMelding }
+                        { this.renderGrupper(grupper)}
+                    </DigisosSkjemaSteg>
+                </div>
+            );
         }
 
-        return (
-            <div className="steg-ekstrainformasjon">
-                <DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk} ikon={<SkjemaIllustrasjon/>}>
-                    <div className="steg-ekstrainformasjon__blokk">
-                        { this.renderInfoMelding() }
-                    </div>
-                    <div>
-                        <FormattedHTMLMessage id={"inntekt.bankinnskudd.true.type.annet"}/>
-                        My life, for Aiur.
-                    </div>
-                    <div className="steg-ekstrainformasjon__blokk">
-                        { this.renderIkkeBesvart() }
-                    </div>
-                    <div className="steg-ekstrainformasjon__blokk">
-                        { this.renderVedleggBolkListe(okonomiskeOpplysninger)}
-                    </div>
-                </DigisosSkjemaSteg>
+        return(
+            <div className="application-spinner">
+                <NavFrontendSpinner type="XXL" />
             </div>
-        );
+        )
     }
 }
 
-export default connectSoknadsdataContainer(injectIntl(OkonomiskeOpplysningerView));
+
+export default connect<StoreToProps, {}, {}>(
+    (state: SoknadAppState) => {
+        return {
+            okonomiskeOpplysninger: state.okonomiskeOpplysninger,
+            behandlingsId: state.soknad.data.brukerBehandlingId
+        };
+    }
+)(injectIntl(OkonomiskeOpplysningerView));
+

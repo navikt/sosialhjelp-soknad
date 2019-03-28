@@ -1,9 +1,9 @@
 import * as React from "react";
-import {Vedlegg} from "./okonomiskeOpplysningerTypes";
 import Skjemapanel from "../../../nav-soknad/components/skjemapanel";
+import {OkonomiskOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 
 interface OwnProps {
-    vedlegg: Vedlegg;
+    okonomiskOpplysning: OkonomiskOpplysning;
 }
 
 type Props = OwnProps
@@ -12,9 +12,9 @@ class VedleggBoksTest extends React.Component<Props, {}>{
 
     render(){
 
-        const { vedlegg } = this.props;
+        const { okonomiskOpplysning } = this.props;
 
-        const tabell = vedlegg.rader.map((rad, idx) => {
+        const tabell = okonomiskOpplysning.rader.map((rad, idx) => {
            return (
                <div key={idx}>{`Dette er en rad: ${idx}`}</div>
            )
@@ -28,8 +28,8 @@ class VedleggBoksTest extends React.Component<Props, {}>{
                 </div>
                 <div className="skjema-progresjonsblokk__sporsmal">
                     <div>vedleggsboks</div>
-                    <div>{ vedlegg.gruppe }</div>
-                    <div>{ vedlegg.type }</div>
+                    <div>{ okonomiskOpplysning.gruppe }</div>
+                    <div>{ okonomiskOpplysning.type }</div>
                     <div>{ tabell }</div>
                 </div>
             </Skjemapanel>

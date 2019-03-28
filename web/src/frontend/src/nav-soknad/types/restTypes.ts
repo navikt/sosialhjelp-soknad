@@ -4,3 +4,10 @@ export enum REST_STATUS {
 	PENDING = "PENDING",
 	INITIALISERT = "INITIALISERT"
 }
+
+export enum RestStatus {
+	NOT_ASKED = "NOT_ASKED",
+	LOADING = "LOADING",
+	SUCCESS = "SUCCESS",
+	FAILURE = "FAILURE"
+}

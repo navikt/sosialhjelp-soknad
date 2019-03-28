@@ -9,10 +9,10 @@ import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import LastOppVedlegg from "../ekstrainformasjon/vedlegg/LastOppVedlegg";
 import {Checkbox} from "nav-frontend-skjema";
 import { FormattedHTMLMessage } from "react-intl";
-import {Vedlegg} from "./okonomiskeOpplysningerTypes";
+import {OkonomiskOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 
 interface OwnProps {
-    vedlegg: Vedlegg;
+    okonomiskOpplysning: OkonomiskOpplysning;
 }
 
 type Props = OwnProps & InjectedIntlProps;
@@ -86,7 +86,7 @@ class VedleggOpplysning extends React.Component<Props, {}> {
     }
 
     render() {
-        const { vedlegg, intl } = this.props;
+        const { okonomiskOpplysning, intl } = this.props;
 
         const tittel: string = intl.formatMessage({id: "opplysninger.ekstrainfo.utgifter"});
         const tekst: string = intl.formatMessage({ id: "opplysninger.ekstrainfo.utgifter" });
@@ -94,7 +94,7 @@ class VedleggOpplysning extends React.Component<Props, {}> {
         const leggTilTekst: string = intl.formatMessage({ id: "opplysninger.leggtil" });
         const slettTekst: string = intl.formatMessage({ id: "opplysninger.fjern" });
         console.warn(slettTekst);
-        console.warn(vedlegg);
+        console.warn(okonomiskOpplysning);
 
 
         const leggTilKnapp = (

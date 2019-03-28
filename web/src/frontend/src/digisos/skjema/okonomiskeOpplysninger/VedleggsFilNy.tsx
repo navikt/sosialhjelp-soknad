@@ -1,9 +1,9 @@
 import * as React from "react";
 import SVG from "react-inlinesvg";
-import {Fil } from "./okonomiskeOpplysningerTypes";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
 import AriaText from "../../../nav-soknad/components/aria/AriaText";
+import {Fil} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 
 interface Props {
 	fil: Fil;

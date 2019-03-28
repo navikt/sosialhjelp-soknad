@@ -1,46 +1,62 @@
 import * as React from "react";
-import {Fil, RadType, VedleggBeriket} from "./okonomiskeOpplysningerTypes";
 import Skjemapanel from "../../../nav-soknad/components/skjemapanel";
 import {Checkbox, Input} from "nav-frontend-skjema";
 import OpplastetVedlegg from "./VedleggsFilNy";
 import LastOppFil from "./LastOppFil";
-import {FormattedHTMLMessage} from "react-intl";
+import {FormattedHTMLMessage, injectIntl} from "react-intl";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadMedBelopView from "./skjemaer/RadMedBelopView";
+import {connect} from "react-redux";
+import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
+import {StoreToProps} from "./index";
+import InjectedIntlProps = ReactIntl.InjectedIntlProps;
+import {
+    lagreOpplysning,
+    updateOpplysning
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
+import {
+    Fil,
+    OkonomiskOpplysning,
+    RadType
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {
+    getTextKeyForType,
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
+import RaderMedBelopView from "./skjemaer/RaderMedBelopView";
 
 export interface OwnProps {
     key: string;
     tittel: string;
-    vedleggsListe: VedleggBeriket[];
+    gruppe: OkonomiskOpplysning[];
 }
 
-type Props = OwnProps;
 
-class Gruppe extends React.Component<Props, {}> {
+type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
 
-    handleChangePaVedlegg(vedleggBeriketUpdated: VedleggBeriket) {
-        console.warn(vedleggBeriketUpdated);
-    }
+class GruppeView extends React.Component<Props, {}> {
 
-    renderTabell(vedleggBeriket: VedleggBeriket) {
-        switch (vedleggBeriket.radType) {
+
+    renderTabell(okonomiskOpplysning: OkonomiskOpplysning) {
+        switch (okonomiskOpplysning.radType) {
             case RadType.RAD_MED_BELOP : {
                 return (
                     <RadMedBelopView
-                        vedleggBeriket={vedleggBeriket}
-                        onChange={
-                            (vedleggBeriketUpdated: VedleggBeriket) => {
-                                this.handleChangePaVedlegg(vedleggBeriketUpdated)
-                            }
-                        }
+                        rowKey={okonomiskOpplysning.type}
+                        belop={okonomiskOpplysning.rader[0].belop}
+                        onChange={(belop) => {
+                            okonomiskOpplysning.rader[0].belop = belop;
+                            this.props.dispatch(updateOpplysning(okonomiskOpplysning))
+                        }}
+                        onBlur={() => this.props.dispatch(lagreOpplysning(this.props.behandlingsId, okonomiskOpplysning))}
+                        textKey={getTextKeyForType(okonomiskOpplysning.type)}
                     />
                 );
             }
             case RadType.RADER_MED_BELOP : {
                 return (
-                    <div>
-                        <Input label={"RADER MED BELOP"}/>
-                    </div>
+                    <RaderMedBelopView
+                        rader={okonomiskOpplysning.rader}
+                    />
                 );
             }
             case RadType.RADER_MED_BRUTTO_OG_NETTO : {
@@ -81,9 +97,9 @@ class Gruppe extends React.Component<Props, {}> {
         }
     }
 
-    renderOpplastingAvVedleggSeksjon(vedleggberiket: VedleggBeriket) {
+    renderOpplastingAvVedleggSeksjon(okonomiskOpplysning: OkonomiskOpplysning) {
 
-        const vedleggListe = vedleggberiket.filer
+        const vedleggListe = okonomiskOpplysning.filer
             .map(fil => {
                 return <OpplastetVedlegg key={fil.uuid} fil={fil} onSlett={() => this.slettVedlegg(fil)}/>
             });
@@ -92,10 +108,10 @@ class Gruppe extends React.Component<Props, {}> {
         return (
             <div>
                 {vedleggListe}
-                <LastOppFil vedleggBeriket={vedleggberiket} isDisabled={false} visSpinner={true}/>
+                <LastOppFil okonomiskOpplysning={okonomiskOpplysning} isDisabled={false} visSpinner={true}/>
                 <Checkbox
                     label={<FormattedHTMLMessage id={"opplysninger.vedlegg.alleredelastetopp"}/>}
-                    id={vedleggberiket.type + "_allerede_lastet_opp_checkbox"}
+                    id={okonomiskOpplysning.type + "_allerede_lastet_opp_checkbox"}
                     className={"vedleggLastetOppCheckbox " + " checkboks--disabled"}
                     onChange={(event: any) => this.handleAlleredeLastetOpp(event)}
                     checked={true}
@@ -114,50 +130,51 @@ class Gruppe extends React.Component<Props, {}> {
     }
 
 
-    beriketVedleggToReact(vedleggBeriket: VedleggBeriket) {
+    okonomiskOpplysningToReact(okonomiskOpplysning: OkonomiskOpplysning) {
 
         return (
             <div className="skjema-progresjonsblokk__sporsmal">
-                <div>vedleggsboks</div>
-                <div>type : {vedleggBeriket.type}</div>
-                <div>gruppe : {vedleggBeriket.gruppe}</div>
-                <div>vedleggStatus: {vedleggBeriket.vedleggStatus}</div>
-                <div>slettet : {vedleggBeriket.slettet}</div>
-                <div>radType : {vedleggBeriket.radType}</div>
-                <div>------------</div>
                 <Sporsmal sprakNokkel={"opplysninger.arbeid.jobb"} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
-                    {this.renderTabell(vedleggBeriket)}
-                    {this.renderOpplastingAvVedleggSeksjon(vedleggBeriket)}
+                    {this.renderTabell(okonomiskOpplysning)}
+                    {this.renderOpplastingAvVedleggSeksjon(okonomiskOpplysning)}
                 </Sporsmal>
             </div>
         )
     }
 
 
-    renderGruppeInnhold(vedleggsListe: VedleggBeriket[]) {
-        return vedleggsListe.map((vedlegg) => {
-            return this.beriketVedleggToReact(vedlegg);
+    renderGruppeInnhold(gruppe: OkonomiskOpplysning[]) {
+        return gruppe.map((okonomiskOpplysning: OkonomiskOpplysning, index: number) => {
+            return this.okonomiskOpplysningToReact(okonomiskOpplysning);
         });
     }
 
     render() {
 
-        const {key, tittel, vedleggsListe} = this.props;
+        const {key, tittel, gruppe} = this.props;
+
+        if (gruppe && gruppe.length === 0) {
+            return null;
+        }
 
         return (
-            <div className="steg-ekstrainformasjon__blokk">
-                <Skjemapanel className="skjema-progresjonsblokk">
-                    <div className="skjema-progresjonsblokk__head">
-                        <h3>{tittel}</h3>
-                        <p>{key}</p>
-                    </div>
-
-                    {this.renderGruppeInnhold(vedleggsListe)}
-
-                </Skjemapanel>
-            </div>
+            <Skjemapanel className="skjema-progresjonsblokk">
+                <div className="skjema-progresjonsblokk__head">
+                    <h3>{tittel}</h3>
+                    <p>{key}</p>
+                </div>
+                {this.renderGruppeInnhold(gruppe)}
+            </Skjemapanel>
         )
     }
 }
 
-export default Gruppe;
+export default connect<StoreToProps, {}, OwnProps>(
+    (state: SoknadAppState) => {
+        return {
+            okonomiskeOpplysninger: state.okonomiskeOpplysninger,
+            behandlingsId: state.soknad.data.brukerBehandlingId
+        };
+    }
+)(injectIntl(GruppeView));
+

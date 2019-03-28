@@ -2,12 +2,13 @@ import {Row} from "nav-frontend-grid";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import * as React from "react";
 import {
-    VedleggBeriket,
+    OkonomiskOpplysning,
     VedleggRad
-} from "../okonomiskeOpplysningerTypes";
+} from "../../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+
 
 export interface Props {
-    vedleggBeriket: VedleggBeriket;
+    okonomiskOpplysning: OkonomiskOpplysning;
 }
 
 class RaderMedBeskrivelseOgBelopView extends React.Component<Props, {}>{
@@ -22,14 +23,14 @@ class RaderMedBeskrivelseOgBelopView extends React.Component<Props, {}>{
 
     render(){
 
-        const { vedleggBeriket } = this.props;
-        const rader = vedleggBeriket.rader;
+        const { okonomiskOpplysning } = this.props;
+        const rader = okonomiskOpplysning.rader;
 
         return(
             <div>
                 { rader.map((rad: VedleggRad, index: number) => {
                     return(
-                        <Row key={`${vedleggBeriket.type}_${index}`} className="opplysning__row">
+                        <Row key={`${okonomiskOpplysning.type}_${index}`} className="opplysning__row">
                             <InputEnhanced
                                 onChange={() => this.onChange()}
                                 onBlur={() => this.onBlur()}
