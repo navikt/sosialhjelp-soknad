@@ -20,11 +20,11 @@ import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 import { FormattedMessage } from "react-intl";
 import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import Oppholdsadresse from "./tps/Oppholdsadresse";
 import Personalia from "./tps/Personalia";
 import Telefon from "./telefon/Telefon";
 import Bankinformasjon from "./bankinfo/Bankinformasjon";
 import BasisPersonalia from "./personalia/BasisPersonalia";
+import Adresse from "./adresse/Adresse";
 
 interface OwnProps {
 	hentVedleggsForventning?: (fakta: any) => void;
@@ -88,7 +88,8 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 				>
 					<Personalia fakta={this.props.fakta} />
 				</SporsmalFaktum>
-				<Oppholdsadresse fakta={this.props.fakta} />
+				<Adresse/>
+				{/*<Oppholdsadresse fakta={this.props.fakta} />*/}
 				<Telefon />
 				<Bankinformasjon />
 			</DigisosSkjemaSteg>

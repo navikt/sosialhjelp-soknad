@@ -6,7 +6,7 @@ export interface ElementProps {
 	skjulDersomTomVerdi?: boolean;
 }
 
-export const DetaljelisteElement: React.StatelessComponent<ElementProps> = ({
+export const DetaljelisteElement: React.FunctionComponent<ElementProps> = ({
 	tittel,
 	verdi,
 	skjulDersomTomVerdi = true
@@ -30,7 +30,7 @@ interface Props {
 	children: React.ReactNode;
 }
 
-const Detaljeliste: React.StatelessComponent<Props> = ({ children }) => (
+const Detaljeliste: React.FunctionComponent<Props> = ({ children }) => (
 	<ul className="detaljeliste">{children}</ul>
 );
 

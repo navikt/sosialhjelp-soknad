@@ -23,7 +23,8 @@ export interface SoknadsdataContainerProps {
 
 	// Funksjoner:
 	hentSoknadsdata?: (brukerBehandlingId: string, urlPath: string) => void;
-	lagreSoknadsdata?: (brukerBehandlingId: string, urlPath: string, soknadsdata: SoknadsdataType) => void;
+	// lagreSoknadsdata?: (brukerBehandlingId: string, urlPath: string, soknadsdata: SoknadsdataType, responseHandler?: (response: any) => void) => void;
+	lagreSoknadsdata?: (brukerBehandlingId: string, urlPath: string, soknadsdata: any, responseHandler?: (response: any) => void) => void;
 	setValideringsfeil?: (feilkode: ValideringActionKey, faktumKey: string) => void;
 	oppdaterSoknadsdataState?: (soknadsdata: SoknadsdataActionVerdi) => void;
 	oppdaterSoknadsdataSti?: (sti: string, soknadsdata: SoknadsdataType) => void;

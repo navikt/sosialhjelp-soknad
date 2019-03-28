@@ -19,6 +19,11 @@ import {
 	BasisPersonalia,
 	initialBasisPersonalia
 } from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
+import {
+	AdresseKategori,
+	Adresser,
+	initialAdresserState, NavEnhet
+} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -40,18 +45,26 @@ export enum SoknadsSti {
 	FORSORGERPLIKT = "familie/forsorgerplikt",
 	BASIS_PERSONALIA = "personalia/basisPersonalia",
 	SIVILSTATUS = "familie/sivilstatus"
+	TELEFONNUMMER = "personalia/telefonnummer",
+	ADRESSER = "personalia/adresser",
+	NAV_ENHETER = "personalia/navEnheter"
 }
 
 export interface Personalia {
 	kontonummer?: Kontonummer;
 	telefonnummer?: Telefonnummer;
 	basisPersonalia?: BasisPersonalia;
+	adresser?: Adresser;
+	navEnheter?: NavEnhet[];
 }
 
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
 	telefonnummer: initialTelefonnummerState,
 	basisPersonalia: initialBasisPersonalia
+	telefonnummer: initialTelefonnummerState,
+	adresser: initialAdresserState,
+	navEnheter: []
 };
 
 export interface Soknadsdata {
@@ -72,6 +85,10 @@ export interface SoknadsdataActionVerdi {
 	personalia: Personalia;
 }
 
+export interface AdresseValg {
+	valg: AdresseKategori;
+}
+
 export type SoknadsdataType =
 	Arbeid
 	| Begrunnelse
@@ -83,6 +100,10 @@ export type SoknadsdataType =
 	| Personalia
 	| ForsorgerPlikt
 	| Sivilstatus;
+	| Personalia
+	| Adresser
+	| AdresseValg
+	| NavEnhet[];
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
