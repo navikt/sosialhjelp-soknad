@@ -24,6 +24,27 @@ import {
 	Adresser,
 	initialAdresserState, NavEnhet
 } from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
+import {Bostotte, initialBostotteState} from "../../../digisos/skjema/inntektFormue/bostotte/bostotteTypes";
+import {
+	initialUtbetalingerState,
+	Utbetalinger
+} from "../../../digisos/skjema/inntektFormue/Utbetalinger/utbetalingerTypes";
+import {
+	initialVerdierState,
+	Verdier
+} from "../../../digisos/skjema/inntektFormue/verdier/VerdierTypes";
+import {
+	initialFormueState,
+	Formue
+} from "../../../digisos/skjema/inntektFormue/formue/FormueTypes";
+import {
+	initialBoutgifterState,
+	Boutgifter
+} from "../../../digisos/skjema/utgifterGjeld/boutgifter/BoutgifterTypes";
+import {
+	initialBarneutgifterState,
+	Barneutgifter
+} from "../../../digisos/skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -47,6 +68,13 @@ export enum SoknadsSti {
 	SIVILSTATUS = "familie/sivilstatus",
 	ADRESSER = "personalia/adresser",
 	NAV_ENHETER = "personalia/navEnheter"
+	TELEFONNUMMER = "personalia/telefonnummer",
+	BOSTOTTE = "inntekt/bostotte",
+	UTBETALINGER = "inntekt/utbetalinger",
+	VERDIER = "inntekt/verdier",
+	FORMUE = "inntekt/formue",
+	BOUTGIFTER = "utgifter/boutgifter",
+	BARNEUTGIFTER = "utgifter/barneutgifter"
 }
 
 export interface Personalia {
@@ -57,12 +85,37 @@ export interface Personalia {
 	navEnheter?: NavEnhet[];
 }
 
+export interface Inntekt {
+	bostotte?: Bostotte;
+	utbetalinger?: Utbetalinger;
+	formue?: Formue;
+	verdier?: Verdier;
+}
+
+export interface Utgifter {
+	boutgifter?: Boutgifter;
+	barneutgifter?: Barneutgifter;
+
+}
+
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
 	telefonnummer: initialTelefonnummerState,
 	basisPersonalia: initialBasisPersonalia,
 	adresser: initialAdresserState,
 	navEnheter: []
+};
+
+export const initialInntektState: Inntekt = {
+	bostotte: initialBostotteState,
+	utbetalinger: initialUtbetalingerState,
+	formue: initialFormueState,
+	verdier: initialVerdierState
+};
+
+export const initialUtgifterState: Utgifter = {
+	boutgifter: initialBoutgifterState,
+	barneutgifter: initialBarneutgifterState
 };
 
 export interface Soknadsdata {
@@ -72,6 +125,8 @@ export interface Soknadsdata {
 	familie: Familie;
 	utdanning: Utdanning;
 	personalia: Personalia;
+	inntekt: Inntekt;
+	utgifter: Utgifter;
 }
 
 export interface SoknadsdataActionVerdi {
@@ -81,6 +136,8 @@ export interface SoknadsdataActionVerdi {
 	familie?: Familie
 	utdanning?: Utdanning,
 	personalia: Personalia;
+	inntekt?: Inntekt,
+	utgifter?: Utgifter
 }
 
 export interface AdresseValg {
@@ -101,6 +158,11 @@ export type SoknadsdataType =
 	| Adresser
 	| AdresseValg
 	| NavEnhet[];
+	| Personalia
+	| Bostotte
+	| Formue
+	| Verdier
+	| Utgifter;
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
@@ -114,7 +176,9 @@ export const initialSoknadsdataState: Soknadsdata = {
 	bosituasjon: initialBosituasjonState,
 	familie: initialFamilieStatus,
 	utdanning: initialUtdanningState,
-	personalia: initialPersonaliaState
+	personalia: initialPersonaliaState,
+	inntekt: initialInntektState,
+	utgifter: initialUtgifterState
 };
 
 const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (

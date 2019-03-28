@@ -20,7 +20,7 @@ import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsma
 
 type Props = FaktumComponentProps & DispatchProps;
 
-class Bankinnskudd extends React.Component<Props, {}> {
+class BankinnskuddGammel extends React.Component<Props, {}> {
 
 	innskuddstyper = ["brukskonto", "sparekonto", "bsu", "livsforsikring", "aksjer", "annet"];
 
@@ -85,4 +85,4 @@ export default connect<{}, {}, Props>((state: SoknadAppState) => {
 	return {
 		fakta: state.fakta.data
 	};
-})(Bankinnskudd);
+})(BankinnskuddGammel);
