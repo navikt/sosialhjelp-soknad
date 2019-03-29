@@ -41,7 +41,6 @@ export class FormueView extends React.Component<Props, {}> {
     onBlurTekstfeltAnnet() {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const formue: Formue = soknadsdata.inntekt.formue;
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue);
         this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORMUE, formue);
     }
 
