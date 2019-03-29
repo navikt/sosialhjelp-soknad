@@ -32,7 +32,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 	onChange(value: string, key: string) {
 		const { soknadsdata } = this.props;
 		soknadsdata.begrunnelse[key]  = value;
-		this.props.oppdaterSoknadsdataState(soknadsdata);
+		this.props.oppdaterSoknadsdataSti(SoknadsSti.BEGRUNNELSE, soknadsdata.begrunnelse);
 	}
 
 	lagreHvisGyldig() {
