@@ -8,11 +8,12 @@ import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMed
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import { erTelefonnummer } from "../../../../nav-soknad/validering/valideringer";
 import {
-	connectSoknadsdataContainer, onEndretValideringsfeil,
+	connectSoknadsdataContainer,
+	onEndretValideringsfeil,
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import {Telefonnummer} from "./telefonTypes";
+import { Telefonnummer } from "./telefonTypes";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_SYSTEM_TELEFON = "kontakt.system.telefoninfo";
