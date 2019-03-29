@@ -22,9 +22,6 @@ export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknad
 				if (responseHandler) {
 					responseHandler(response);
 				}
-				// console.warn("sti: " + sti);
-				// console.warn("PUT response: " + JSON.stringify(response, null, 4));
-				// dispatch(oppdaterSoknadsdataSti(sti, response));
 			})
 			.catch(() => {
 				dispatch(navigerTilServerfeil());

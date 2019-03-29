@@ -13,7 +13,7 @@ import { AdresseKategori, Gateadresse, NavEnhet } from "./AdresseTypes";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 import AdresseTypeahead, { Adresse } from "./AdresseTypeahead";
 import SoknadsmottakerVelger from "./SoknadsmottakerVelger";
-import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
+import { ValideringActionKey, Valideringsfeil } from "../../../../nav-soknad/validering/types";
 import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
@@ -23,16 +23,19 @@ type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 class AdresseView extends React.Component<Props, {}> {
 
+	FAKTUM_KEY = "soknadsmottaker";
+
 	componentDidMount(): void {
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ADRESSER);
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.NAV_ENHETER);
 	}
 
 	onClickRadio(adresseKategori: AdresseKategori) {
-		const { soknadsdata, oppdaterSoknadsdataSti } = this.props;
+		const { soknadsdata, oppdaterSoknadsdataSti, lagreSoknadsdata, brukerBehandlingId } = this.props;
 		const adresser = soknadsdata.personalia.adresser;
 		adresser.valg = adresseKategori;
 		oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
+		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, adresser);
 		if (adresseKategori === AdresseKategori.SOKNAD) {
 			oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, []);
 			const soknad: any = {
@@ -43,6 +46,7 @@ class AdresseView extends React.Component<Props, {}> {
 
 			};
 			oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad);
+			lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, adresser);
 		} else {
 			const payload = {"valg": adresseKategori};
 			this.lagreAdresseValg(payload);
@@ -56,6 +60,7 @@ class AdresseView extends React.Component<Props, {}> {
 				const valgtNavEnhet: NavEnhet = navEnheter[0];
 				valgtNavEnhet.valgt = true;
 				lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
+				this.slettEventuelleValideringsfeil();
 			}
 			oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
 		});
@@ -111,13 +116,24 @@ class AdresseView extends React.Component<Props, {}> {
 			}
 		});
 		oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
+		this.slettEventuelleValideringsfeil();
 	}
 
+	slettEventuelleValideringsfeil() {
+		const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === this.FAKTUM_KEY);
+		if (feilkode) {
+			this.props.setValideringsfeil(null, this.FAKTUM_KEY);
+		}
+	}
 	soknadsmottakerStatus(): SoknadsMottakerStatus {
 		const { soknadsdata } = this.props;
 		const navEnheter = soknadsdata.personalia.navEnheter;
 		const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet ) => navEnhet.valgt);
 		const adresser = soknadsdata.personalia.adresser;
+
+		if (valgtNavEnhet || navEnheter.length === 1) {
+			return SoknadsMottakerStatus.GYLDIG;
+		}
 		if (adresser.valg ) {
 			if (adresser.valg === AdresseKategori.MIDLERTIDIG || adresser.valg === AdresseKategori.FOLKEREGISTRERT ) {
 				if (navEnheter.length === 0) {
@@ -129,9 +145,6 @@ class AdresseView extends React.Component<Props, {}> {
 					return SoknadsMottakerStatus.UGYLDIG;
 				}
 			}
-		}
-		if (valgtNavEnhet || navEnheter.length === 1) {
-			return SoknadsMottakerStatus.GYLDIG;
 		}
 		return	SoknadsMottakerStatus.IKKE_VALGT;
 	}
@@ -145,13 +158,14 @@ class AdresseView extends React.Component<Props, {}> {
 		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
 		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
 		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
+
 		return (
 			<div className="sosialhjelp-oppholdsadresse skjema-sporsmal" id="soknadsmottaker"
 			     style={{border: "2px dotted red"}}
 			>
 				<SporsmalFaktum
 					id="soknadsmottaker"
-					faktumKey="soknadsmottaker"
+					faktumKey={this.FAKTUM_KEY}
 					noValidateOnBlur={true}
 					validerFunc={[ (value) => {
 						if (this.soknadsmottakerStatus() !== SoknadsMottakerStatus.GYLDIG) {
