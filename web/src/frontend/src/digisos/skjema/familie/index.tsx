@@ -20,7 +20,6 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.familiebolk} ikon={<FamilieIllustrasjon />}>
 				<DinSivilstatus/>
-
 				{/*{*/}
 					{/*sivilstatusFaktum.value === "gift" &&*/}
 					{/*(*/}
