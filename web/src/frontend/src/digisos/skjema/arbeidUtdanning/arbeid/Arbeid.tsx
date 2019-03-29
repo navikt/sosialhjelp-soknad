@@ -30,7 +30,7 @@ class ArbeidView extends React.Component<Props, {}> {
 		const { soknadsdata } = this.props;
 		const arbeid = soknadsdata.arbeid;
 		arbeid.kommentarTilArbeidsforhold = verdi;
-		this.props.oppdaterSoknadsdataState(soknadsdata);
+		this.props.oppdaterSoknadsdataSti(SoknadsSti.ARBEID, arbeid);
 	}
 
 	lagreHvisGyldig() {
