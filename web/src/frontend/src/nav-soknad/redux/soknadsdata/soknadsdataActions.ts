@@ -22,18 +22,20 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	}
 }
 
-export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknadsdata: any, responseHandler?: (response: any) => void) {
+export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknadsdata: SoknadsdataType, responseHandler?: (response: any) => void) {
 	return (dispatch: Dispatch) => {
 		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
-		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata)).catch(() => {
-			dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-			dispatch(navigerTilServerfeil());
-		}).then((response: any) => {
-			dispatch(settRestStatus(sti, REST_STATUS.OK));
-			if(responseHandler) {
-				responseHandler(response);
-			}
-		});
+		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata))
+			.then((response: any) => {
+				dispatch(settRestStatus(sti, REST_STATUS.OK));
+				if (responseHandler) {
+					responseHandler(response);
+				}
+			})
+			.catch(() => {
+				dispatch(settRestStatus(sti, REST_STATUS.FEILET));
+				dispatch(navigerTilServerfeil());
+			});
 	}
 }
 
