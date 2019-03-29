@@ -47,12 +47,12 @@ class BosituasjonView extends React.Component<Props, {}> {
 		if (verdi && verdi.indexOf("annet.botype.") !== -1){
 			const botype = verdi.replace("annet.botype.","");
 			bosituasjon.botype = botype;
-			this.props.oppdaterSoknadsdataState(soknadsdata);
+			this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, bosituasjon);
 		} else {
 			const botype = verdi;
 			bosituasjon.botype = botype;
-			this.props.oppdaterSoknadsdataState(soknadsdata);
+			this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, bosituasjon);
 		}
 	}
