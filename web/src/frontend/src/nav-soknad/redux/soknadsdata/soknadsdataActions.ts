@@ -2,8 +2,7 @@ import { Dispatch } from "../reduxTypes";
 import { fetchPut, fetchToJson } from "../../utils/rest-utils";
 import {
 	oppdaterSoknadsdataSti,
-	settRestStatus,
-	SoknadsdataType
+	settRestStatus
 } from "./soknadsdataReducer";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 import { REST_STATUS } from "../../types";
@@ -24,7 +23,6 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 }
 
 export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknadsdata: any, responseHandler?: (response: any) => void) {
-export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknadsdata: SoknadsdataType) {
 	return (dispatch: Dispatch) => {
 		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
 		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata)).catch(() => {
@@ -32,14 +30,12 @@ export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknad
 			dispatch(navigerTilServerfeil());
 		}).then((response: any) => {
 			dispatch(settRestStatus(sti, REST_STATUS.OK));
+			if(responseHandler) {
+				responseHandler(response);
+			}
 		});
 	}
 }
-
-export function lagreSoknadsdataTypet(brukerBehandlingId: string, sti: string, soknadsdata: SoknadsdataType) {
-	return lagreSoknadsdata(brukerBehandlingId, sti, soknadsdata);
-}
-
 
 
 /*
