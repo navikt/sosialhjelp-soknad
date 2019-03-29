@@ -46,6 +46,7 @@ import {
 	Barneutgifter
 } from "../../../digisos/skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
 import { REST_STATUS } from "../../types";
+import { ForsorgerPlikt } from "../../../digisos/skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
