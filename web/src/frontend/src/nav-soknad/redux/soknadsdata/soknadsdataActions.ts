@@ -2,7 +2,7 @@ import { Dispatch } from "../reduxTypes";
 import { fetchPut, fetchToJson } from "../../utils/rest-utils";
 import {
 	oppdaterSoknadsdataSti,
-	settRestStatus
+	settRestStatus, SoknadsdataType
 } from "./soknadsdataReducer";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 import { REST_STATUS } from "../../types";
