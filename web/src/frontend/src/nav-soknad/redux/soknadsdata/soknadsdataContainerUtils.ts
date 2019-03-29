@@ -4,11 +4,9 @@ import { State } from "../../../digisos/redux/reducers";
 import { hentSoknadsdata, lagreSoknadsdata } from "./soknadsdataActions";
 import { setValideringsfeil } from "../valideringActions";
 import {
-	oppdaterSoknadsdataState,
 	oppdaterSoknadsdataSti,
 	settRestStatus,
 	Soknadsdata,
-	SoknadsdataActionVerdi,
 	SoknadsdataType
 } from "./soknadsdataReducer";
 import { REST_STATUS } from "../../types";
@@ -27,7 +25,6 @@ export interface SoknadsdataContainerProps {
 	hentSoknadsdata?: (brukerBehandlingId: string, urlPath: string) => void;
 	lagreSoknadsdata?: (brukerBehandlingId: string, urlPath: string, soknadsdata: SoknadsdataType) => void;
 	setValideringsfeil?: (feilkode: ValideringActionKey, faktumKey: string) => void;
-	oppdaterSoknadsdataState?: (soknadsdata: SoknadsdataActionVerdi) => void;
 	oppdaterSoknadsdataSti?: (sti: string, soknadsdata: SoknadsdataType) => void;
 	settRestStatus?: (sti: string, restStatus: REST_STATUS) => void;
 }
@@ -41,7 +38,6 @@ export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerP
 	{
 		hentSoknadsdata,
 		lagreSoknadsdata,
-		oppdaterSoknadsdataState,
 		oppdaterSoknadsdataSti,
 		setValideringsfeil,
 		settRestStatus

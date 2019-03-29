@@ -23,10 +23,14 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	}
 }
 
-export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknadsdata: any) {
+export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknadsdata: SoknadsdataType) {
 	return (dispatch: Dispatch) => {
+		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
 		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata)).catch(() => {
+			dispatch(settRestStatus(sti, REST_STATUS.FEILET));
 			dispatch(navigerTilServerfeil());
+		}).then((response: any) => {
+			dispatch(settRestStatus(sti, REST_STATUS.OK));
 		});
 	}
 }

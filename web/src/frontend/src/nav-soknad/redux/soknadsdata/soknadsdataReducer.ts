@@ -104,12 +104,6 @@ const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (
 	action
 ): any => {
 	switch (action.type) {
-		case SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA: {
-			return {
-				...state,
-				...action.verdi
-			};
-		}
 		case SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI: {
 			return {
 				...setPath(state, action.sti, action.verdi)
@@ -130,13 +124,6 @@ export const settRestStatus = (sti: string, restStatus: REST_STATUS): Soknadsdat
 		type: SoknadsdataActionTypeKeys.SETT_REST_STATUS,
 		sti,
 		restStatus
-	}
-};
-
-export const oppdaterSoknadsdataState = (verdi: SoknadsdataActionVerdi): SoknadsdataActionType => {
-	return {
-		type: SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA,
-		verdi
 	}
 };
 
