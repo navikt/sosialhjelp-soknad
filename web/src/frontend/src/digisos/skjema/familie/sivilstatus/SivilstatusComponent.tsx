@@ -83,9 +83,8 @@ class SivilstatusComponent extends React.Component<Props, {}> {
 
 	render() {
 		const familie: Familie = this.props.soknadsdata.familie;
-		const sivilstatus = (familie && familie.sivilstatus) ? familie.sivilstatus.sivilstatus : null;
-		// const borSammenMed = this.props.sivilstatus ? this.props.sivilstatus.borSammenMed : null;
-		const borSammenMed = familie && familie.sivilstatus && familie.sivilstatus.ektefelle ? familie.sivilstatus.ektefelle.borSammenMed : null;
+		const sivilstatus = (familie && familie.sivilstatus) ? familie.sivilstatus.sivilstatus : "";
+		const borSammenMed = (familie && familie.sivilstatus && familie.sivilstatus.ektefelle) ? familie.sivilstatus.ektefelle.borSammenMed : null;
 
 		return (
 			<div style={{ border: "3px dotted red", display: "block" }}>
@@ -114,7 +113,7 @@ class SivilstatusComponent extends React.Component<Props, {}> {
 												onChange={(person: Person) => {
 													this.onChangePerson(person)
 												}}
-												oppdaterSoknadsdata={this.props.oppdaterSoknadsdataState}
+												// oppdaterSoknadsdata={this.props.oppdaterSoknadsdataState}
 											/>
 										</div>
 									</div>

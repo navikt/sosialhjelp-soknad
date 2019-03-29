@@ -19,10 +19,14 @@ import {
 	Adresser,
 	initialAdresserState, NavEnhet
 } from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
+import { REST_STATUS } from "../../types";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
-	OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI"
+	OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI",
+	SETT_REST_STATUS = "soknadsdata/SETT_REST_STATUS",
+	START_REST_KALL = "soknadsdata/START_REST_KALL",
+	STOPP_REST_KALL = "soknadsdata/STOPP_REST_KALL"
 }
 
 /*
@@ -62,6 +66,7 @@ export interface Soknadsdata {
 	familie: Familie;
 	utdanning: Utdanning;
 	personalia: Personalia;
+	restStatus: any;
 }
 
 export interface SoknadsdataActionVerdi {
@@ -92,8 +97,9 @@ export type SoknadsdataType =
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
-	verdi: SoknadsdataActionVerdi | SoknadsdataType,
-	sti?: string
+	verdi?: SoknadsdataActionVerdi | SoknadsdataType,
+	sti?: string,
+	restStatus?: string
 }
 
 export const initialSoknadsdataState: Soknadsdata = {
@@ -102,7 +108,13 @@ export const initialSoknadsdataState: Soknadsdata = {
 	bosituasjon: initialBosituasjonState,
 	familie: initialFamilieStatus,
 	utdanning: initialUtdanningState,
-	personalia: initialPersonaliaState
+	personalia: initialPersonaliaState,
+	restStatus: {
+		personalia: {
+			telefonnummer: REST_STATUS.INITIALISERT,
+			kontonummer: REST_STATUS.INITIALISERT
+		}
+	}
 };
 
 const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (
@@ -110,26 +122,26 @@ const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (
 	action
 ): any => {
 	switch (action.type) {
-		case SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA: {
-			return {
-				...state,
-				...action.verdi
-			};
-		}
 		case SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI: {
 			return {
 				...setPath(state, action.sti, action.verdi)
 			};
+		}
+		case SoknadsdataActionTypeKeys.SETT_REST_STATUS: {
+			return {
+				...setPath(state, "restStatus/" + action.sti, action.restStatus)
+			}
 		}
 		default:
 			return state;
 	}
 };
 
-export const oppdaterSoknadsdataState = (verdi: SoknadsdataActionVerdi): SoknadsdataActionType => {
+export const settRestStatus = (sti: string, restStatus: REST_STATUS): SoknadsdataActionType => {
 	return {
-		type: SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA,
-		verdi
+		type: SoknadsdataActionTypeKeys.SETT_REST_STATUS,
+		sti,
+		restStatus
 	}
 };
 
