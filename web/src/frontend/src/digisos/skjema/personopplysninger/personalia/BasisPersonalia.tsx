@@ -29,34 +29,32 @@ class BasisPersonaliaView extends React.Component<Props, {}> {
 		}
 
 		return (
-			<div style={{border: "3px dotted red"}}>
-				<SporsmalFaktum
-					faktumKey="kontakt.system.personalia"
-					style="system"
-				>
-					{basisPersonalia && (
-						<Detaljeliste>
+			<SporsmalFaktum
+				faktumKey="kontakt.system.personalia"
+				style="system"
+			>
+				{basisPersonalia && (
+					<Detaljeliste>
+						<DetaljelisteElement
+							tittel={<FormattedMessage id="kontakt.system.personalia.navn" />}
+							verdi={basisPersonalia.navn.fulltNavn}
+						/>
+						<DetaljelisteElement
+							skjulDersomTomVerdi={true}
+							tittel={<FormattedMessage id="kontakt.system.personalia.fnr" />}
+							verdi={basisPersonalia.fodselsnummer}
+						/>
+						{statsborgerskap && (
 							<DetaljelisteElement
-								tittel={<FormattedMessage id="kontakt.system.personalia.navn" />}
-								verdi={basisPersonalia.navn.fulltNavn}
+								tittel={
+									<FormattedMessage id="kontakt.system.personalia.statsborgerskap" />
+								}
+								verdi={statsborgerskapVisning}
 							/>
-							<DetaljelisteElement
-								skjulDersomTomVerdi={true}
-								tittel={<FormattedMessage id="kontakt.system.personalia.fnr" />}
-								verdi={basisPersonalia.fodselsnummer}
-							/>
-							{statsborgerskap && (
-								<DetaljelisteElement
-									tittel={
-										<FormattedMessage id="kontakt.system.personalia.statsborgerskap" />
-									}
-									verdi={statsborgerskapVisning}
-								/>
-							)}
-						</Detaljeliste>
-					)}
-				</SporsmalFaktum>
-			</div>
+						)}
+					</Detaljeliste>
+				)}
+			</SporsmalFaktum>
 		);
 	}
 }
