@@ -6,6 +6,8 @@ import ServerFeil from "../nav-soknad/containers/ServerFeil";
 import TimeoutBox from "../nav-soknad/components/timeoutbox/TimeoutBox";
 import { erSkjemaside } from "../nav-soknad/utils/navigasjonUtils";
 import Informasjon from "./informasjon";
+import MockBruker from "./mock/mockbruker";
+import MockLogin from "./mock/mocklogin";
 import Start from "./start";
 import SkjemaRouter from "./skjema/";
 import Kvittering from "./kvittering";
@@ -26,6 +28,11 @@ class App extends React.Component<InjectedIntlProps, {}> {
 	render() {
 		const ettersendelse = (window.location.pathname.match(/ettersendelse$/) != null);
 		const informasjon = (window.location.pathname.match(/informasjon$/) != null);
+		const mock = (window.location.pathname.match(/mock$/) != null);
+		const mocklogin = (window.location.pathname.match(/mock-login$/) != null);
+
+		const undersokelse = (window.location.pathname.match(/undersokelse$/) != null);
+
 		const link = (window.location.pathname.match(/link$/) != null);
 		return (
 			<span>
@@ -44,8 +51,23 @@ class App extends React.Component<InjectedIntlProps, {}> {
 						exact={true}
 						component={Link}
 					/>
+					<Route
+						path={`/mock`}
+						exact={true}
+						component={MockBruker}
+					/>
+					<Route
+						path={`/mock-login`}
+						exact={true}
+						component={MockLogin}
+					/>
+					<Route
+						path={`/undersokelse`}
+						exact={true}
+						component={() => <div style={{height: "67vh"}}/>}
+					/>
 				</Switch>
-			{!ettersendelse && !informasjon && !link && (
+			{!ettersendelse && !informasjon && !link && !mock && !mocklogin && !undersokelse && (
 				<span>
 					<Switch>
 						<Route path={`/bosted`} exact={true} component={Start} />
