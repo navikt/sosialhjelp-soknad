@@ -21,38 +21,6 @@
                 <div id="root"></div>
             </div>
         </main>
-    <script type="text/javascript">
-	    window[ 'adrum-start-time' ] = new Date().getTime();
-
-	    (function (config) {
-			    var appKey = "";
-			    var url = window.location.href;
-			    if (url.indexOf("tjenester-q1.nav.no") > -1) {
-				    appKey = 'EUM-AAB-AVT';
-			    }
-			    else if (url.indexOf("tjenester.nav.no") > -1) {
-				    appKey = 'EUM-AAB-AVS';
-			    }
-			    config.appKey = appKey;
-			    if (url.indexOf("tjenester.nav.no") > -1) {
-				    config.beaconUrlHttp = 'http://eumgw.nav.no';
-				    config.beaconUrlHttps = 'https://eumgw.nav.no';
-				    config.adrumExtUrlHttp = 'http://jsagent.nav.no';
-				    config.adrumExtUrlHttps = 'https://jsagent.nav.no';
-			    } else {
-				    config.beaconUrlHttp = 'http://eumgw.adeo.no';
-				    config.beaconUrlHttps = 'https://eumgw.adeo.no';
-				    config.adrumExtUrlHttp = 'http://jsagent.adeo.no';
-				    config.adrumExtUrlHttps = 'https://jsagent.adeo.no';
-			    }
-			    config.xd = {enable: false};
-			    config.spa = {"spa2": true};
-		    }
-	    )(window[ 'adrum-config' ] || (window[ 'adrum-config' ] = {}));
-    </script>
-    <script type="text/javascript" src="//jsagent.adeo.no/adrum/adrum.js"></script>
-	<script type="text/javascript" src="//jsagent.nav.no/adrum/adrum.js"></script>
-
     <script type="text/javascript" src="/sosialhjelp/soknad/statisk/js/main.js?rev=@version"></script>
     {{fragment.footer}}
 </div>

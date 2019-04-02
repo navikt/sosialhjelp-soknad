@@ -19,9 +19,12 @@ import EttersendelseReducer from "../../nav-soknad/redux/ettersendelse/ettersend
 import OppholdsadresseReducer from "../skjema/personopplysninger/tps/oppholdsadresseReducer";
 import AdresseAutocompleteReducer from "../../nav-soknad/components/adresseAutocomplete/adresseAutocompleteReducer";
 import AuthenticationReducer from "../../nav-soknad/redux/authentication/authenticationReducer";
+import MockReducer from "../mock/mockReducer";
+import SoknadsdataReducer from "../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
 export interface State extends SoknadAppState {
 	synligefakta: SynligeFaktaState;
+	bankinfo: any; // TODO Erstatt any med ny SoknadState
 }
 
 const reducers = combineReducers({
@@ -41,7 +44,9 @@ const reducers = combineReducers({
 	oppholdsadresse: OppholdsadresseReducer,
 	adresseAutocomplete: AdresseAutocompleteReducer,
 	init: InitReducer,
-	authentication: AuthenticationReducer
+	authentication: AuthenticationReducer,
+	mockData: MockReducer,
+	soknadsdata: SoknadsdataReducer
 });
 
 export default reducers;

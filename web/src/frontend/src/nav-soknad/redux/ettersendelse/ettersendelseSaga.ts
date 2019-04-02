@@ -1,7 +1,14 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { fetchDelete, fetchToJson, fetchPost, fetchUpload, toJson } from "../../utils/rest-utils";
+import {
+	fetchDelete,
+	fetchToJson,
+	fetchPost,
+	fetchUpload,
+	toJson,
+	lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
+} from "../../utils/rest-utils";
 import {
 	EttersendelseActionTypeKeys, OpprettEttersendelseAction,
 	LastOppEttersendtVedleggAction, LesEttersendelsesVedleggAction,
@@ -90,11 +97,14 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
 	}
 }
 
+
+
 function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
 	try {
 		yield put({type: EttersendelseActionTypeKeys.ETTERSEND_PENDING});
 		const url = `soknader/${action.brukerbehandlingId}/actions/send`;
 		yield call(fetchPost, url, JSON.stringify({}));
+		lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.brukerbehandlingId);
 		yield put({type: EttersendelseActionTypeKeys.ETTERSEND_OK});
 	} catch (reason) {
 		yield put(loggFeil("Send ettersendelse feilet: " + reason.toString()));

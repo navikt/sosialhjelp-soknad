@@ -26,6 +26,9 @@
         <url-pattern>/informasjon/*</url-pattern>
         <url-pattern>/bosted/*</url-pattern>
         <url-pattern>/kvittering/*</url-pattern>
+        <url-pattern>/mock/*</url-pattern>
+        <url-pattern>/mock-login/*</url-pattern>
+        <url-pattern>/undersokelse/*</url-pattern>
         <url-pattern>/link</url-pattern>
     </filter-mapping>
 
@@ -44,6 +47,9 @@
         <url-pattern>/bosted/*</url-pattern>
         <url-pattern>/kvittering/*</url-pattern>
         <url-pattern>/link</url-pattern>
+        <url-pattern>/mock/*</url-pattern>
+        <url-pattern>/mock-login/*</url-pattern>
+        <url-pattern>/undersokelse/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

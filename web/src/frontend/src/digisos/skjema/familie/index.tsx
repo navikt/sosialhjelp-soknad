@@ -21,11 +21,24 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 			<DigisosSkjemaSteg steg={DigisosSteg.familiebolk} ikon={<FamilieIllustrasjon />}>
 				{
 					sivilstatusFaktum.value === "gift" &&
-					<SivilstatusTPS sivilstatusFaktum={sivilstatusFaktum} ektefelleFaktum={ektefelleFaktum}/>
+					(
+						<span>
+							{/*<EktefelleDetaljer/>*/}
+							<SivilstatusTPS
+								sivilstatusFaktum={sivilstatusFaktum}
+								ektefelleFaktum={ektefelleFaktum}
+							/>
+						</span>
+					)
 				}
 				{
 					sivilstatusFaktum.value !== "gift" &&
-					<Sivilstatus fakta={fakta} />
+					(
+						<span>
+							{/*<SivilstatusComponent />*/}
+							<Sivilstatus fakta={fakta} />
+						</span>
+						)
 				}
 				<Familierelasjoner />
 			</DigisosSkjemaSteg>

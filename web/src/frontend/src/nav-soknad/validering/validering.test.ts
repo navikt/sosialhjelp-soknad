@@ -1,71 +1,76 @@
-import * as validate from "./valideringer";
+import * as validering from "./valideringer";
 import { ValideringActionKey } from "./types";
+import forventAt from "./forventAt";
 
 describe("test av valideringsfunksjoner", () => {
 	it("skal validere påkrevd", () => {
-		expect(validate.pakrevd(undefined)).toBe(ValideringActionKey.PAKREVD);
-		expect(validate.pakrevd(null)).toBe(ValideringActionKey.PAKREVD);
-		expect(validate.pakrevd("")).toBe(ValideringActionKey.PAKREVD);
-		expect(validate.pakrevd(" ")).toBeUndefined();
-		expect(validate.pakrevd("123")).toBeUndefined();
-		expect(validate.pakrevd("123")).toBeUndefined();
+		forventAt(validering.pakrevd(undefined)).girFeilmelding(ValideringActionKey.PAKREVD);
+		forventAt(validering.pakrevd(null)).girFeilmelding(ValideringActionKey.PAKREVD);
+		forventAt(validering.pakrevd("")).girFeilmelding(ValideringActionKey.PAKREVD);
+		forventAt(validering.pakrevd(" ")).validerer();
+		forventAt(validering.pakrevd("123")).validerer();
+		forventAt(validering.pakrevd("123")).validerer();
 	});
 	it("skal validere minimumslengde", () => {
-		expect(validate.minLengde(null, 2)).toBe(ValideringActionKey.MIN_LENGDE);
-		expect(validate.minLengde("2", 2)).toBe(ValideringActionKey.MIN_LENGDE);
-		expect(validate.minLengde("22", 2)).toBeUndefined();
-		expect(validate.minLengde("223", 2)).toBeUndefined();
+		forventAt(validering.minLengde(null, 2)).girFeilmelding(ValideringActionKey.MIN_LENGDE);
+		forventAt(validering.minLengde("2", 2)).girFeilmelding(ValideringActionKey.MIN_LENGDE);
+		forventAt(validering.minLengde("22", 2)).validerer();
+		forventAt(validering.minLengde("223", 2)).validerer();
 	});
 	it("skal validere maksLengde", () => {
-		// expect(validate.maksLengde(null, 2)).toBe(ValideringKey.MAX_LENGDE);
-		expect(validate.maksLengde("223", 2)).toBe(ValideringActionKey.MAX_LENGDE);
-		expect(validate.maksLengde("22", 2)).toBeUndefined();
-		expect(validate.maksLengde("3", 2)).toBeUndefined();
+		// forventAt(validering.maksLengde(null, 2)).girFeilmelding(ValideringKey.MAX_LENGDE);
+		forventAt(validering.maksLengde("223", 2)).girFeilmelding(ValideringActionKey.MAX_LENGDE);
+		forventAt(validering.maksLengde("22", 2)).validerer();
+		forventAt(validering.maksLengde("3", 2)).validerer();
 	});
 	it("skal validere erTall", () => {
-		expect(validate.erTall(null)).toBe(ValideringActionKey.ER_TALL);
-		expect(validate.erTall(undefined)).toBe(ValideringActionKey.ER_TALL);
-		expect(validate.erTall("a1")).toBe(ValideringActionKey.ER_TALL);
-		expect(validate.erTall("1")).toBeUndefined();
-		expect(validate.erTall("121324")).toBeUndefined();
+		forventAt(validering.erTall(null)).girFeilmelding(ValideringActionKey.ER_TALL);
+		forventAt(validering.erTall(undefined)).girFeilmelding(ValideringActionKey.ER_TALL);
+		forventAt(validering.erTall("a1")).girFeilmelding(ValideringActionKey.ER_TALL);
+		forventAt(validering.erTall("1")).validerer();
+		forventAt(validering.erTall("121324")).validerer();
 	});
 	describe("kontonummer", () => {
 		it("skal ikke kunne være mindre enn 11 tegn", () => {
-			expect(validate.erKontonummer(null)).toBe(
+			forventAt(validering.erKontonummer(null)).girFeilmelding(
 				ValideringActionKey.ER_KONTONUMMER
 			);
-			expect(validate.erKontonummer("null")).toBe(
+			forventAt(validering.erKontonummer("null")).girFeilmelding(
 				ValideringActionKey.ER_KONTONUMMER
 			);
-			expect(validate.erKontonummer("1234567890")).toBe(
+			forventAt(validering.erKontonummer("1234567890")).girFeilmelding(
 				ValideringActionKey.ER_KONTONUMMER
 			);
 		});
 		it("Skal ikke være over 13 tegn", () => {
-			expect(validate.erKontonummer("12331212340")).toBeUndefined();
-			expect(validate.erKontonummer("123312123455")).toBe(
+			forventAt(validering.erKontonummer("12331212340")).validerer();
+			forventAt(validering.erKontonummer("123312123455")).girFeilmelding(
 				ValideringActionKey.ER_KONTONUMMER
 			);
 		});
 		it("skal kun inneholde gyldige tegn", () => {
-			expect(validate.erKontonummer("1233.12.12340")).toBeUndefined();
-			expect(validate.erKontonummer("1233 12 12340")).toBeUndefined();
-			expect(validate.erKontonummer("1234 12,12345")).toBe(
+			forventAt(validering.erKontonummer("1233.12.12340")).validerer();
+			forventAt(validering.erKontonummer("1233 12 12340")).validerer();
+			forventAt(validering.erKontonummer("1234 12,12345")).girFeilmelding(
 				ValideringActionKey.ER_KONTONUMMER
 			);
 		});
 	});
 	describe("telefonnummer", () => {
 		it("skal ikke være under 8 tegn", () => {
-			expect(validate.erTelefonnummer(null)).toBe(
-				ValideringActionKey.ER_TELEFONNUMMER
-			);
-			expect(validate.erTelefonnummer("1234567")).toBe(
-				ValideringActionKey.ER_TELEFONNUMMER
-			);
-			expect(validate.erTelefonnummer("12345678")).toBeUndefined();
-			expect(validate.erTelefonnummer("123 45 678")).toBeUndefined();
-			expect(validate.erTelefonnummer("+47 123 45 678")).toBeUndefined();
+			forventAt(validering.erTelefonnummer(null))
+				.girFeilmelding(ValideringActionKey.ER_TELEFONNUMMER);
+			forventAt(validering.erTelefonnummer("12345678")).validerer();
+			forventAt(validering.erTelefonnummer("123 45 678"))
+				.girFeilmelding(ValideringActionKey.ER_TELEFONNUMMER);
+			forventAt(validering.erTelefonnummer("+47 123 45 678"))
+				.girFeilmelding(ValideringActionKey.ER_TELEFONNUMMER);
+			forventAt(validering.erTelefonnummer("+47 123 45 678"))
+				.girFeilmelding(ValideringActionKey.ER_TELEFONNUMMER);
+			forventAt(validering.erTelefonnummer("91852967")).validerer();
+			forventAt(validering.erTelefonnummer("91852967")).validerer();
+			forventAt(validering.erTelefonnummer("+47 123 45 678"))
+				.girFeilmelding(ValideringActionKey.ER_TELEFONNUMMER);
 		});
 	});
 });
