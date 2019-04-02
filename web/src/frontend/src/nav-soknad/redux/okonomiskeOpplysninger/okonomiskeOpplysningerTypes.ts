@@ -127,10 +127,21 @@ export enum RadType {
     NOTHING = "nothing"
 }
 
+export enum InputType {
+    BESKRIVELSE = "beskrivelse",
+    BELOP = "belop",
+    BRUTTO = "brutto",
+    NETTO = "netto",
+    AVDRAG = "avdrag",
+    RENTER = "renter"
+}
+
 
 export interface VedleggRad {
     "beskrivelse": string;
     "belop": number;
+    "brutto": number;
+    "netto": number;
     "avdrag": number;
     "renter": number;
 }
@@ -176,109 +187,3 @@ export interface RaderMedBeskrivelseOgBelop {
 }
 // --------------------------------------
 
-
-
-
-// const okonomiskeFaktumKeys = [
-//     "dinsituasjon.jobb",
-//     "dinsituasjon.studerer",
-//     "familie.barn.true.barnebidrag",
-//     "bosituasjon",
-//     "inntekt.bostotte",
-//     "inntekt.eierandeler.true.type.bolig",
-//     "inntekt.eierandeler.true.type.kjoretoy",
-//     "inntekt.eierandeler.true.type.campingvogn",
-//     "inntekt.eierandeler.true.type.fritidseiendom",
-//     "inntekt.eierandeler.true.type.annet",
-//     "inntekt.bankinnskudd.true.type.brukskonto",
-//     "inntekt.bankinnskudd.true.type.bsu",
-//     "inntekt.bankinnskudd.true.type.sparekonto",
-//     "inntekt.bankinnskudd.true.type.livsforsikring",
-//     "inntekt.bankinnskudd.true.type.aksjer",
-//     "inntekt.bankinnskudd.true.type.annet",
-//     "inntekt.inntekter.true.type.utbytte",
-//     "inntekt.inntekter.true.type.salg",
-//     "inntekt.inntekter.true.type.forsikringsutbetalinger",
-//     "inntekt.inntekter.true.type.annet",
-//     "utgifter.boutgift.true.type.husleie",
-//     "utgifter.boutgift.true.type.strom",
-//     "utgifter.boutgift.true.type.kommunaleavgifter",
-//     "utgifter.boutgift.true.type.oppvarming",
-//     "utgifter.boutgift.true.type.avdraglaan",
-//     "utgifter.boutgift.true.type.andreutgifter",
-//     "utgifter.barn.true.utgifter.fritidsaktivitet",
-//     "utgifter.barn.true.utgifter.barnehage",
-//     "utgifter.barn.true.utgifter.sfo",
-//     "utgifter.barn.true.utgifter.tannbehandling",
-//     "utgifter.barn.true.utgifter.annet"
-// ];
-
-
-
-//
-// export interface GruppeArbeid {
-//     "lonnslipp|arbeid" : MaybeOpplysningStruktur;
-//     "sluttoppgjor|arbeid" : MaybeOpplysningStruktur;
-//     "student|vedtak" : MaybeOpplysningStruktur;
-// }
-//
-// export interface GruppeFamilie {
-//     "barnebidrag|betaler" : MaybeOpplysningStruktur;
-//     "barnebidrag|mottar" : MaybeOpplysningStruktur;
-//     "samvarsavtale|barn" : MaybeOpplysningStruktur;
-// }
-//
-// export interface GruppeBosituasjon {
-//     "husleiekontrakt|husleiekontrakt" : MaybeOpplysningStruktur;
-//     "husleiekontrakt|kommunal" : MaybeOpplysningStruktur;
-// }
-//
-// export interface GruppeInntekt {
-//     "bostotte|vedtak" : MaybeOpplysningStruktur; // - {belop}
-//     "kontooversikt|brukskonto" : MaybeOpplysningStruktur; //- [{belop}, ...]
-//     "kontooversikt|bsu" : MaybeOpplysningStruktur; //- [{belop}, ...]
-//     "kontooversikt|sparekonto" : MaybeOpplysningStruktur; //- [{belop}, ...]
-//     "kontooversikt|livsforsikring" : MaybeOpplysningStruktur; //- [{belop}, ...]
-//     "kontooversikt|aksjer" : MaybeOpplysningStruktur; //- [{belop}, ...]
-//     "kontooversikt|annet" : MaybeOpplysningStruktur; //- [{belop}, ...]
-//     "dokumentasjon|utbytte" : MaybeOpplysningStruktur; //- [{belop}, ...]
-//     "salgsoppgjor|eiendom" : MaybeOpplysningStruktur; //- [{belop}, ...]
-//     "dokumentasjon|forsikringsutbetaling" : MaybeOpplysningStruktur; //- [{belop}, ...]
-//     "dokumentasjon|annetinntekter" : MaybeOpplysningStruktur; //- [{belop}, ...]
-// }
-//
-// export interface GruppeUtgifter {
-//     "faktura|husleie" : MaybeOpplysningStruktur;// - {belop}
-//     "faktura|strom" : MaybeOpplysningStruktur;// - {belop}
-//     "faktura|kommunaleavgifter" : MaybeOpplysningStruktur;// - {belop}
-//     "faktura|oppvarming" : MaybeOpplysningStruktur;// - {belop}
-//     "nedbetalingsplan|avdraglaan" : MaybeOpplysningStruktur;// - [{avdrag, renter}, ...]
-//     "dokumentasjon|annetboutgift" : MaybeOpplysningStruktur;// - [{beskrivelse, belop}, ...]
-//     "faktura|fritidsaktivitet" : MaybeOpplysningStruktur;// - [{beskrivelse, belop}, ...]
-//     "faktura|barnehage" : MaybeOpplysningStruktur;// - [{belop}, ...]
-//     "faktura|sfo" : MaybeOpplysningStruktur;// - [{belop}, ...]
-//     "faktura|tannbehandling" : MaybeOpplysningStruktur;// - [{belop}, ...]
-//     "faktura|annetbarnutgift" : MaybeOpplysningStruktur;// - [{beskrivelse, belop}, ...]
-//     "annet|annet" : MaybeOpplysningStruktur;// - [{beskrivelse, belop}, ...]
-// }
-//
-// export interface GruppeGenerelleVedlegg {
-//     "skattemelding|skattemelding" : MaybeOpplysningStruktur;  //- nothing
-// }
-//
-// export interface GruppeAndreUtgifter {
-//     "annet|annet" : MaybeOpplysningStruktur;//- [{beskrivelse, belop}, ...]
-// }
-
-
-
-// // --------------------------------------
-// // RADER
-// // --------------------------------------
-// export type RaderStruktur
-//     = {}
-//     | RadMedBelop
-//     | RaderMedBelop
-//     | RaderMedBruttoOgNetto
-//     | RaderMedAvdragOgRenter
-//     | RaderMedBeskrivelseOgBelop;

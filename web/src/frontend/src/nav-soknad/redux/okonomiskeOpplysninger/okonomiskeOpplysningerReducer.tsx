@@ -7,8 +7,7 @@ import {
 } from "./okonomiskeOpplysningerTypes";
 import {RestStatus} from "../../types";
 import {
-    generateGrupperFromBackendData,
-    updateOkonomiskOpplysning
+    generateGrupperFromBackendData, updateOkonomiskOpplysning,
 } from "./okonomiskeOpplysningerUtils";
 
 
@@ -34,7 +33,7 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
         case OkonomiskeOpplysningerActionTypeKeys.OPPDATER_OKONOMISK_OPPLYSNING: {
 
             const grupperUpdated: Grupper = updateOkonomiskOpplysning(state.grupper, action.okonomiskOpplysning);
-
+            debugger;
             return {
                 ...state,
                 restStatus: state.restStatus,

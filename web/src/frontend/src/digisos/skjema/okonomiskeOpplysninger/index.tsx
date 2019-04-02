@@ -11,7 +11,6 @@ import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import Gruppe from "./Gruppe";
 import {
     GruppeEnum,
-    Grupper,
     OkonomiskeOpplysningerModel
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
@@ -35,45 +34,40 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
         this.props.dispatch(hentOkonomiskeOpplysninger(behandlingsId))
     }
 
+    renderGrupper(){
 
-    renderGrupper(grupper: Grupper){
-
-        if (grupper){
-
-            const {
-                gruppeArbeid,
-                gruppeFamilie,
-                gruppeBosituasjon,
-                gruppeInntekt,
-                gruppeUtgifter,
-                gruppeGenerelleVedlegg,
-                gruppeAndreUtgifter,
-                gruppeUkjent
-            } = grupper;
-
-            return(
-                <div>
-                    <Gruppe key={GruppeEnum.ARBEID} tittel={"ARBEID"} gruppe={gruppeArbeid}/>
-                    <Gruppe key={GruppeEnum.FAMILIE} tittel={"FAMILIE"} gruppe={gruppeFamilie}/>
-                    <Gruppe key={GruppeEnum.BOSITUASJON} tittel={"BOSITUASJON"} gruppe={gruppeBosituasjon}/>
-                    <Gruppe key={GruppeEnum.INNTEKT} tittel={"INNTEKT"} gruppe={gruppeInntekt}/>
-                    <Gruppe key={GruppeEnum.UTGIFTER} tittel={"UTGIFTER"} gruppe={gruppeUtgifter}/>
-                    <Gruppe key={GruppeEnum.GENERELLE_VEDLEGG} tittel={"GENERELLE VEDLEGG"} gruppe={gruppeGenerelleVedlegg}/>
-                    <Gruppe key={GruppeEnum.ANDRE_UTGIFTER} tittel={"ANDRE UTGIFTER"} gruppe={gruppeAndreUtgifter}/>
-                    <Gruppe key={GruppeEnum.UKJENT} tittel={"UKJENT"} gruppe={gruppeUkjent}/>
-                </div>
-            )
+        if(!this.props.okonomiskeOpplysninger.grupper){
+            return null;
         }
 
-        return null;
+        const {
+            gruppeArbeid,
+            gruppeFamilie,
+            gruppeBosituasjon,
+            gruppeInntekt,
+            gruppeUtgifter,
+            gruppeGenerelleVedlegg,
+            gruppeAndreUtgifter,
+            gruppeUkjent
+        } = this.props.okonomiskeOpplysninger.grupper;
+
+        return(
+            <div>
+                <Gruppe key={GruppeEnum.ARBEID} tittel={"ARBEID"} gruppe={gruppeArbeid}/>
+                <Gruppe key={GruppeEnum.FAMILIE} tittel={"FAMILIE"} gruppe={gruppeFamilie}/>
+                <Gruppe key={GruppeEnum.BOSITUASJON} tittel={"BOSITUASJON"} gruppe={gruppeBosituasjon}/>
+                <Gruppe key={GruppeEnum.INNTEKT} tittel={"INNTEKT"} gruppe={gruppeInntekt}/>
+                <Gruppe key={GruppeEnum.UTGIFTER} tittel={"UTGIFTER"} gruppe={gruppeUtgifter}/>
+                <Gruppe key={GruppeEnum.GENERELLE_VEDLEGG} tittel={"GENERELLE VEDLEGG"} gruppe={gruppeGenerelleVedlegg}/>
+                <Gruppe key={GruppeEnum.ANDRE_UTGIFTER} tittel={"ANDRE UTGIFTER"} gruppe={gruppeAndreUtgifter}/>
+                <Gruppe key={GruppeEnum.UKJENT} tittel={"UKJENT"} gruppe={gruppeUkjent}/>
+            </div>
+        )
     }
 
 
-
-
-
     render() {
-        const { restStatus, grupper, backendData } = this.props.okonomiskeOpplysninger;
+        const { restStatus, backendData } = this.props.okonomiskeOpplysninger;
 
         const ikkeBesvartMeldingSkalVises = backendData && backendData.okonomiskeOpplysninger.length < 3;
 
@@ -105,7 +99,7 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
                     <DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk} ikon={<SkjemaIllustrasjon/>}>
                         { !ikkeBesvartMeldingSkalVises && infoMelding }
                         { ikkeBesvartMeldingSkalVises && ikkeBesvartMelding }
-                        { this.renderGrupper(grupper)}
+                        { this.renderGrupper()}
                     </DigisosSkjemaSteg>
                 </div>
             );

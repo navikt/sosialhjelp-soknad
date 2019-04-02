@@ -13,7 +13,7 @@ import {
 } from "../../../digisos/skjema/familie/sivilstatus/FamilieTypes";
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
-import { setPath } from "./soknadsdataActions";
+// import { setPath } from "./soknadsdataActions";
 
 
 export enum SoknadsdataActionTypeKeys {
@@ -100,9 +100,10 @@ const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (
 			};
 		}
 		case SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI: {
-			return {
-				...setPath(state, action.sti, action.verdi)
-			};
+			return state;
+			// return {
+			// 	...setPath(state, action.sti, action.verdi)
+			// };
 		}
 		default:
 			return state;
