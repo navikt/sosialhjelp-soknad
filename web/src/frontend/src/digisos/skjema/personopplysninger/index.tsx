@@ -19,8 +19,6 @@ import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjo
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 import { FormattedMessage } from "react-intl";
-import SporsmalFaktum from "../../../nav-soknad/faktum/SporsmalFaktum";
-import Personalia from "./tps/Personalia";
 import Telefon from "./telefon/Telefon";
 import Bankinformasjon from "./bankinfo/Bankinformasjon";
 import Adresse from "./adresse/Adresse";
@@ -82,14 +80,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 					</div>
 				)}
 				<BasisPersonalia/>
-				<SporsmalFaktum
-					faktumKey="kontakt.system.personalia"
-					style="system"
-				>
-					<Personalia fakta={this.props.fakta} />
-				</SporsmalFaktum>
 				<Adresse/>
-				{/*<Oppholdsadresse fakta={this.props.fakta} />*/}
 				<Telefon />
 				<Bankinformasjon />
 			</DigisosSkjemaSteg>

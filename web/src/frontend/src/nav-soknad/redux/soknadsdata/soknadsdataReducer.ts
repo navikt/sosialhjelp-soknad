@@ -106,6 +106,16 @@ interface SoknadsdataActionType {
 	restStatus?: string
 }
 
+const initialSoknadsdataRestStatus = {
+	personalia: {
+		telefonnummer: REST_STATUS.INITIALISERT,
+		kontonummer: REST_STATUS.INITIALISERT,
+		basisPersonalia: REST_STATUS.INITIALISERT,
+		adresser: REST_STATUS.INITIALISERT,
+		navEnheter: REST_STATUS.INITIALISERT
+	}
+};
+
 export const initialSoknadsdataState: Soknadsdata = {
 	arbeid: initialArbeidState,
 	begrunnelse: initialBegrunnelseState,
@@ -113,12 +123,7 @@ export const initialSoknadsdataState: Soknadsdata = {
 	familie: initialFamilieStatus,
 	utdanning: initialUtdanningState,
 	personalia: initialPersonaliaState,
-	restStatus: {
-		personalia: {
-			telefonnummer: REST_STATUS.INITIALISERT,
-			kontonummer: REST_STATUS.INITIALISERT
-		}
-	}
+	restStatus: initialSoknadsdataRestStatus
 };
 
 const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (

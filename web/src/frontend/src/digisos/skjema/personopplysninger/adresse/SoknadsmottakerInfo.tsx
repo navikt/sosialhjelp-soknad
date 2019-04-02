@@ -8,6 +8,7 @@ interface SoknadsmottakerInfoOwnProps {
 	soknadsmottakerStatus: string;
 	enhetsnavn?: string;
 	kommunenavn?: string;
+	synlig?: boolean;
 }
 
 type SoknadsmottakerInfoProps = InjectedIntlProps & SoknadsmottakerInfoOwnProps;
@@ -15,11 +16,15 @@ type SoknadsmottakerInfoProps = InjectedIntlProps & SoknadsmottakerInfoOwnProps;
 const SoknadsmottakerInfo: React.FunctionComponent<SoknadsmottakerInfoProps> = ({
 	soknadsmottakerStatus,
 	enhetsnavn,
-	kommunenavn
+	kommunenavn,
+	synlig
 }) => {
 	let farge: DigisosFarge = DigisosFarge.SUKSESS;
 	let tekst: any = "";
 
+	if (synlig === false ) {
+		return null;
+	}
 	if (soknadsmottakerStatus === SoknadsMottakerStatus.GYLDIG) {
 		tekst = "Søknaden vil bli sendt til: "
 			+ enhetsnavn
