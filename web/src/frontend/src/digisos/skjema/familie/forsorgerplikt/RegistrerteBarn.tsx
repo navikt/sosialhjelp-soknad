@@ -67,6 +67,7 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 								{barnet.erFolkeregistrertSammen && (
 									<div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
 										<JaNeiSporsmal
+											id={"barn_radio_" + index}
 											tekster={getFaktumSporsmalTekst(this.props.intl, "system.familie.barn.true.barn.deltbosted")}
 											faktumKey={"system.familie.barn.true.barn.deltbosted"}
 											verdi={barnet.harDeltBosted}
