@@ -45,14 +45,15 @@ import {
 	initialBarneutgifterState,
 	Barneutgifter
 } from "../../../digisos/skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
+import {
+	BasisPersonalia,
+	initialBasisPersonalia
+} from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import { REST_STATUS } from "../../types";
 
 export enum SoknadsdataActionTypeKeys {
-	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
 	OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI",
-	SETT_REST_STATUS = "soknadsdata/SETT_REST_STATUS",
-	START_REST_KALL = "soknadsdata/START_REST_KALL",
-	STOPP_REST_KALL = "soknadsdata/STOPP_REST_KALL"
+	SETT_REST_STATUS = "soknadsdata/SETT_REST_STATUS"
 }
 
 /*
@@ -99,6 +100,7 @@ export interface Utgifter {
 	boutgifter?: Boutgifter;
 	barneutgifter?: Barneutgifter;
 
+	basisPersonalia?: BasisPersonalia;
 }
 
 export const initialPersonaliaState: Personalia = {
@@ -119,6 +121,8 @@ export const initialInntektState: Inntekt = {
 export const initialUtgifterState: Utgifter = {
 	boutgifter: initialBoutgifterState,
 	barneutgifter: initialBarneutgifterState
+	navEnheter: [],
+	basisPersonalia: initialBasisPersonalia
 };
 
 export interface Soknadsdata {
@@ -174,6 +178,16 @@ interface SoknadsdataActionType {
 	restStatus?: string
 }
 
+const initialSoknadsdataRestStatus = {
+	personalia: {
+		telefonnummer: REST_STATUS.INITIALISERT,
+		kontonummer: REST_STATUS.INITIALISERT,
+		basisPersonalia: REST_STATUS.INITIALISERT,
+		adresser: REST_STATUS.INITIALISERT,
+		navEnheter: REST_STATUS.INITIALISERT
+	}
+};
+
 export const initialSoknadsdataState: Soknadsdata = {
 	arbeid: initialArbeidState,
 	begrunnelse: initialBegrunnelseState,
@@ -183,12 +197,7 @@ export const initialSoknadsdataState: Soknadsdata = {
 	personalia: initialPersonaliaState,
 	inntekt: initialInntektState,
 	utgifter: initialUtgifterState,
-	restStatus: {
-		personalia: {
-			telefonnummer: REST_STATUS.INITIALISERT,
-			kontonummer: REST_STATUS.INITIALISERT
-		}
-	}
+	restStatus: initialSoknadsdataRestStatus
 };
 
 const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (

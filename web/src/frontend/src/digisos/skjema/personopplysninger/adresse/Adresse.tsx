@@ -18,6 +18,7 @@ import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
 import { formaterSoknadsadresse } from "./AdresseUtils";
+import { REST_STATUS } from "../../../../nav-soknad/types";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -35,7 +36,6 @@ class AdresseView extends React.Component<Props, {}> {
 		const adresser = soknadsdata.personalia.adresser;
 		adresser.valg = adresseKategori;
 		oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
-		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, adresser);
 		if (adresseKategori === AdresseKategori.SOKNAD) {
 			oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, []);
 			const soknad: any = {
@@ -46,8 +46,8 @@ class AdresseView extends React.Component<Props, {}> {
 
 			};
 			oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad);
-			lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, adresser);
 		} else {
+			lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, adresser);
 			const payload = {"valg": adresseKategori};
 			this.lagreAdresseValg(payload);
 		}
@@ -158,6 +158,7 @@ class AdresseView extends React.Component<Props, {}> {
 		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
 		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
 		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
+		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
 
 		return (
 			<div className="sosialhjelp-oppholdsadresse skjema-sporsmal" id="soknadsmottaker"
@@ -266,10 +267,11 @@ class AdresseView extends React.Component<Props, {}> {
 					</div>
 				</SporsmalFaktum>
 				<SoknadsmottakerInfo
+					synlig={restStatus !== REST_STATUS.PENDING}
 					soknadsmottakerStatus={this.soknadsmottakerStatus()}
 					enhetsnavn={valgtNavEnhet && valgtNavEnhet.enhetsnavn}
 					kommunenavn={valgtNavEnhet && valgtNavEnhet.kommunenavn}
-					/>
+				/>
 			</div>);
 	}
 }

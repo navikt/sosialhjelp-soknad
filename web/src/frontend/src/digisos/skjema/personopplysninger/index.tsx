@@ -21,8 +21,8 @@ import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel"
 import { FormattedMessage } from "react-intl";
 import Telefon from "./telefon/Telefon";
 import Bankinformasjon from "./bankinfo/Bankinformasjon";
-import BasisPersonalia from "./personalia/BasisPersonalia";
 import Adresse from "./adresse/Adresse";
+import BasisPersonalia from "./personalia/BasisPersonalia";
 
 interface OwnProps {
 	hentVedleggsForventning?: (fakta: any) => void;
@@ -81,7 +81,6 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 				)}
 				<BasisPersonalia/>
 				<Adresse/>
-				{/*<Oppholdsadresse fakta={this.props.fakta} />*/}
 				<Telefon />
 				<Bankinformasjon />
 			</DigisosSkjemaSteg>

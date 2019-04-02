@@ -33,7 +33,7 @@ export interface SoknadsdataContainerProps {
 export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerProps>(
 	(state: State) => ({
 		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
-		soknadsdata: state.soknadsdata,
+		soknadsdata: JSON.parse(JSON.stringify(state.soknadsdata)),
 		feil: state.validering.feil
 	}),
 	{
