@@ -21,10 +21,6 @@ type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 export class UtbetalingerView extends React.Component<Props, {}> {
 
-    constructor(props: Props) {
-        super(props);
-    }
-
     componentDidMount(): void {
         this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.UTBETALINGER);
     }
@@ -62,7 +58,6 @@ export class UtbetalingerView extends React.Component<Props, {}> {
     onBlurTekstfeltAnnet() {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
         this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
     }
 

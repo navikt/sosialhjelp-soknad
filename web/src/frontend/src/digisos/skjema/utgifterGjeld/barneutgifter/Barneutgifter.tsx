@@ -70,7 +70,7 @@ export class BarneutgifterView extends React.Component<Props, {}> {
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, Barneutgifter + ".true.type")}
+                    tekster={getFaktumSporsmalTekst(this.props.intl, Barneutgifter + ".true.utgifter")}
                 >
                     {this.renderCheckBox("fritidsaktiviteter", "fritidsaktivitet")}
                     {this.renderCheckBox("barnehage", "barnehage")}

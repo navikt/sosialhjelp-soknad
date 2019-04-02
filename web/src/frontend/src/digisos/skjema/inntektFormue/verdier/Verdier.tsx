@@ -58,7 +58,6 @@ export class VerdierView extends React.Component<Props, {}> {
     onBlurTekstfeltAnnet() {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier);
         this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
     }
 
