@@ -10,7 +10,7 @@ import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/comp
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import Gruppe from "./Gruppe";
 import {
-    GruppeEnum,
+    OpplysningGruppe,
     OkonomiskeOpplysningerModel
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
@@ -53,14 +53,14 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
 
         return(
             <div>
-                <Gruppe key={GruppeEnum.ARBEID} tittel={"ARBEID"} gruppe={gruppeArbeid}/>
-                <Gruppe key={GruppeEnum.FAMILIE} tittel={"FAMILIE"} gruppe={gruppeFamilie}/>
-                <Gruppe key={GruppeEnum.BOSITUASJON} tittel={"BOSITUASJON"} gruppe={gruppeBosituasjon}/>
-                <Gruppe key={GruppeEnum.INNTEKT} tittel={"INNTEKT"} gruppe={gruppeInntekt}/>
-                <Gruppe key={GruppeEnum.UTGIFTER} tittel={"UTGIFTER"} gruppe={gruppeUtgifter}/>
-                <Gruppe key={GruppeEnum.GENERELLE_VEDLEGG} tittel={"GENERELLE VEDLEGG"} gruppe={gruppeGenerelleVedlegg}/>
-                <Gruppe key={GruppeEnum.ANDRE_UTGIFTER} tittel={"ANDRE UTGIFTER"} gruppe={gruppeAndreUtgifter}/>
-                <Gruppe key={GruppeEnum.UKJENT} tittel={"UKJENT"} gruppe={gruppeUkjent}/>
+                <Gruppe key={OpplysningGruppe.ARBEID} tittel={"ARBEID"} gruppe={gruppeArbeid}/>
+                <Gruppe key={OpplysningGruppe.FAMILIE} tittel={"FAMILIE"} gruppe={gruppeFamilie}/>
+                <Gruppe key={OpplysningGruppe.BOSITUASJON} tittel={"BOSITUASJON"} gruppe={gruppeBosituasjon}/>
+                <Gruppe key={OpplysningGruppe.INNTEKT} tittel={"INNTEKT"} gruppe={gruppeInntekt}/>
+                <Gruppe key={OpplysningGruppe.UTGIFTER} tittel={"UTGIFTER"} gruppe={gruppeUtgifter}/>
+                <Gruppe key={OpplysningGruppe.GENERELLE_VEDLEGG} tittel={"GENERELLE VEDLEGG"} gruppe={gruppeGenerelleVedlegg}/>
+                <Gruppe key={OpplysningGruppe.ANDRE_UTGIFTER} tittel={"ANDRE UTGIFTER"} gruppe={gruppeAndreUtgifter}/>
+                <Gruppe key={OpplysningGruppe.UKJENT} tittel={"UKJENT"} gruppe={gruppeUkjent}/>
             </div>
         )
     }

@@ -1,9 +1,9 @@
 import * as React from "react";
 import Skjemapanel from "../../../nav-soknad/components/skjemapanel";
-import {OkonomiskOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {Opplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 
 interface OwnProps {
-    okonomiskOpplysning: OkonomiskOpplysning;
+    okonomiskOpplysning: Opplysning;
 }
 
 type Props = OwnProps

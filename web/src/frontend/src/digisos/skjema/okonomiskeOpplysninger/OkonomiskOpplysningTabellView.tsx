@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {
     InputType,
-    OkonomiskOpplysning,
+    Opplysning,
     RadType,
-    VedleggRad
+    OpplysningRad
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 import {StoreToProps} from "./index";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
@@ -23,7 +23,7 @@ import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 
 
 interface OwnProps {
-    okonomiskOpplysning: OkonomiskOpplysning;
+    opplysning: Opplysning;
     gruppeIndex: number;
 }
 
@@ -45,49 +45,53 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
             case InputType.RENTER: { value = parseInt(input, 10); break;}
             default: {break;}
         }
-        const { okonomiskOpplysning } = this.props;
-
-        const okonomiskOpplysningUpdated = {...okonomiskOpplysning};
-        okonomiskOpplysningUpdated.rader[radIndex][inputFelt] = value;
-        debugger;
-        this.props.dispatch(updateOpplysning(okonomiskOpplysning));
-
+        const { opplysning } = this.props;
+        const opplysningUpdated: Opplysning = { ...opplysning };
+        const raderUpdated: OpplysningRad[] = opplysning.rader.map((e) => ({...e}));
+        raderUpdated[radIndex][inputFelt] = value;
+        opplysningUpdated.rader = raderUpdated;
+        this.props.dispatch(updateOpplysning(opplysningUpdated));
     }
 
     handleBlur(){
-        const { behandlingsId, okonomiskOpplysning } = this.props;
-        console.warn(behandlingsId + " " + okonomiskOpplysning);
-        // this.props.dispatch(lagreOpplysning(behandlingsId, okonomiskOpplysning));
+        const { behandlingsId, opplysning } = this.props;
+        this.props.dispatch(lagreOpplysning(behandlingsId, opplysning));
     }
 
     handleLeggTilRad(){
-        const { okonomiskOpplysning } = this.props;
-        okonomiskOpplysning.rader.push(getTomVedleggRad());
-        this.props.dispatch(updateOpplysning(okonomiskOpplysning));
+        const { opplysning } = this.props;
+        const opplysningUpdated: Opplysning = { ...opplysning };
+        const raderUpdated: OpplysningRad[] = opplysning.rader.map(e => ({ ...e }));
+        raderUpdated.push(getTomVedleggRad());
+        opplysningUpdated.rader = raderUpdated;
+        this.props.dispatch(updateOpplysning(opplysningUpdated));
     }
 
     handleFjernRad(index: number){
-        const { behandlingsId, okonomiskOpplysning } = this.props;
-        okonomiskOpplysning.rader.splice(index, 1);
-        this.props.dispatch(updateOpplysning(okonomiskOpplysning));
-        this.props.dispatch(lagreOpplysning(behandlingsId, okonomiskOpplysning));
+        const { behandlingsId, opplysning } = this.props;
+        const opplysningUpdated: Opplysning = { ...opplysning };
+        const raderUpdated: OpplysningRad[] = opplysning.rader.map(e => ({...e}));
+        raderUpdated.splice(index, 1);
+        opplysningUpdated.rader = raderUpdated;
+        this.props.dispatch(updateOpplysning(opplysningUpdated));
+        this.props.dispatch(lagreOpplysning(behandlingsId, opplysningUpdated));
     }
 
     render(){
-        const { okonomiskOpplysning, gruppeIndex } = this.props;
+        const { opplysning, gruppeIndex } = this.props;
 
 
-        const innhold: JSX.Element[] = okonomiskOpplysning.rader.map((vedleggRad: VedleggRad, radIndex: number) => {
+        const innhold: JSX.Element[] = opplysning.rader.map((vedleggRad: OpplysningRad, radIndex: number) => {
 
             const skalViseFjerneRadKnapp = radIndex > 0;
 
-            const skalViseBeskrivelse: boolean = okonomiskOpplysning.radType === RadType.RADER_MED_BESKRIVELSE_OG_BELOP;
+            const skalViseBeskrivelse: boolean = opplysning.radType === RadType.RADER_MED_BESKRIVELSE_OG_BELOP;
             const skalViseBelop: boolean =
-                okonomiskOpplysning.radType === RadType.RAD_MED_BELOP ||
-                okonomiskOpplysning.radType ===RadType.RADER_MED_BELOP ||
-                okonomiskOpplysning.radType ===RadType.RADER_MED_BESKRIVELSE_OG_BELOP;
-            const skalViseBruttoOgNetto: boolean = okonomiskOpplysning.radType === RadType.RADER_MED_BRUTTO_OG_NETTO;
-            const skalViseAvdragOgRenter: boolean = okonomiskOpplysning.radType === RadType.RADER_MED_AVDRAG_OG_RENTER;
+                opplysning.radType === RadType.RAD_MED_BELOP ||
+                opplysning.radType ===RadType.RADER_MED_BELOP ||
+                opplysning.radType ===RadType.RADER_MED_BESKRIVELSE_OG_BELOP;
+            const skalViseBruttoOgNetto: boolean = opplysning.radType === RadType.RADER_MED_BRUTTO_OG_NETTO;
+            const skalViseAvdragOgRenter: boolean = opplysning.radType === RadType.RADER_MED_AVDRAG_OG_RENTER;
 
             return (
                 <Row key={radIndex} className="opplysning__row">
@@ -101,7 +105,7 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                                 verdi={vedleggRad.beskrivelse ? vedleggRad.beskrivelse : ""}
                                 required={false}
                                 bredde={"S"}
-                                faktumKey={getTextKeyForType(okonomiskOpplysning.type) + ".beskrivelse"}
+                                faktumKey={getTextKeyForType(opplysning.type) + ".beskrivelse"}
                             />
                         </Column>
                     }
@@ -112,7 +116,7 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                                 id="belop"
                                 onChange={(input) => this.handleChange(input, radIndex, InputType.BELOP)}
                                 onBlur={() => this.handleBlur()}
-                                faktumKey={getTextKeyForType(okonomiskOpplysning.type) + ".utbetaling"}
+                                faktumKey={getTextKeyForType(opplysning.type) + ".utbetaling"}
                                 verdi={vedleggRad.belop ? vedleggRad.belop.toString() : ""}
                                 required={false}
                                 bredde={"S"}
@@ -125,7 +129,7 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                                 id="brutto"
                                 onChange={(input) => this.handleChange(input, radIndex, InputType.BRUTTO)}
                                 onBlur={() => this.handleBlur()}
-                                faktumKey={getTextKeyForType(okonomiskOpplysning.type)}
+                                faktumKey={getTextKeyForType(opplysning.type)}
                                 verdi={vedleggRad.brutto? vedleggRad.brutto.toString() : ""}
                                 required={false}
                                 bredde={"S"}
@@ -138,7 +142,7 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                                 id="netto"
                                 onChange={(input) => this.handleChange(input, radIndex, InputType.NETTO)}
                                 onBlur={() => this.handleBlur()}
-                                faktumKey={getTextKeyForType(okonomiskOpplysning.type)}
+                                faktumKey={getTextKeyForType(opplysning.type)}
                                 verdi={vedleggRad.netto ? vedleggRad.netto.toString() : ""}
                                 required={false}
                                 bredde={"S"}
@@ -151,7 +155,7 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                                 id="avdrag"
                                 onChange={(input) => this.handleChange(input, radIndex, InputType.AVDRAG)}
                                 onBlur={() => this.handleBlur()}
-                                faktumKey={getTextKeyForType(okonomiskOpplysning.type)}
+                                faktumKey={getTextKeyForType(opplysning.type)}
                                 verdi={vedleggRad.avdrag ? vedleggRad.avdrag.toString() : ""}
                                 required={false}
                                 bredde={"S"}
@@ -164,7 +168,7 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                                 id="renter"
                                 onChange={(input) => this.handleChange(input, radIndex, InputType.RENTER)}
                                 onBlur={() => this.handleBlur()}
-                                faktumKey={getTextKeyForType(okonomiskOpplysning.type)}
+                                faktumKey={getTextKeyForType(opplysning.type)}
                                 verdi={vedleggRad.renter ? vedleggRad.renter.toString() : ""}
                                 required={false}
                                 bredde={"S"}
@@ -187,8 +191,8 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
             <div className="container--noPadding container-fluid">
                 { innhold }
                 {
-                    okonomiskOpplysning.radType !== RadType.NOTHING &&
-                    okonomiskOpplysning.radType !== RadType.RAD_MED_BELOP &&
+                    opplysning.radType !== RadType.NOTHING &&
+                    opplysning.radType !== RadType.RAD_MED_BELOP &&
                     <Lenkeknapp onClick={() => this.handleLeggTilRad()} style="add" id={ gruppeIndex + "_link"}>
                         Legg til
                     </Lenkeknapp>

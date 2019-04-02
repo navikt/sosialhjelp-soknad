@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import {OkonomiskOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {Opplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 import {connect} from "react-redux";
 import {StoreToProps} from "./index";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
@@ -11,7 +11,7 @@ import {getTextKeyForType} from "../../../nav-soknad/redux/okonomiskeOpplysninge
 
 
 interface OwnProps {
-    okonomiskOpplysning: OkonomiskOpplysning;
+    okonomiskOpplysning: Opplysning;
     gruppeIndex: number;
 }
 
@@ -30,7 +30,7 @@ class OkonomiskOpplysningView extends React.Component<Props, {}>{
                 <Sporsmal sprakNokkel={getTextKeyForType(okonomiskOpplysning.type)} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
                     <OkonomiskOpplysningTabellView
                         gruppeIndex={gruppeIndex}
-                        okonomiskOpplysning={okonomiskOpplysning}
+                        opplysning={okonomiskOpplysning}
                     />
                     <OkonomiskOpplysningVedleggView
                         okonomiskOpplysning={okonomiskOpplysning}

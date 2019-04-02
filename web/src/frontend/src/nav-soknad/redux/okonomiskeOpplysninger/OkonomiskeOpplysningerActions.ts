@@ -4,7 +4,7 @@ import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {
     OkonomiskeOpplysningerAction,
     OkonomiskeOpplysningerActionTypeKeys, OkonomiskeOpplysningerBackend,
-    OkonomiskOpplysning, OkonomiskOpplysningBackend
+    Opplysning, OkonomiskOpplysningBackend
 } from "./okonomiskeOpplysningerTypes";
 import {getOkonomomiskeOpplysningerUrl, transformToBackendOpplysning} from "./okonomiskeOpplysningerUtils";
 
@@ -17,12 +17,23 @@ export const gotDataFromBackend  = (response: OkonomiskeOpplysningerBackend): Ok
     }
 };
 
-export const updateOpplysning = (okonomiskOpplysning: OkonomiskOpplysning): OkonomiskeOpplysningerAction => {
+export const updateOpplysning = (okonomiskOpplysning: Opplysning): OkonomiskeOpplysningerAction => {
     return {
         type: OkonomiskeOpplysningerActionTypeKeys.OPPDATER_OKONOMISK_OPPLYSNING,
         okonomiskOpplysning
     }
 };
+
+// export const updateFieldInOpplysning = (verdi: string, opplysningGruppe: any, opplysningType: OpplysningType, gruppe: OpplysningGruppe): OkonomiskeOpplysningerAction => {
+//     return {
+//         type: OkonomiskeOpplysningerActionTypeKeys.UPDATE_FIELD_IN_OPPLYSNING,
+//         verdi,
+//         opplysningGruppe,
+//         opplysningType,
+//         opplysningRadIndex,
+//         opplysning
+//     }
+// };
 
 
 export function hentOkonomiskeOpplysninger(behandlingsId: string) {
@@ -36,7 +47,7 @@ export function hentOkonomiskeOpplysninger(behandlingsId: string) {
     }
 }
 
-export function lagreOpplysning(behandlingsId: string, okonomiskOpplysning: OkonomiskOpplysning) {
+export function lagreOpplysning(behandlingsId: string, okonomiskOpplysning: Opplysning) {
 
     const okonomiskOpplysningBackend: OkonomiskOpplysningBackend = transformToBackendOpplysning(okonomiskOpplysning);
 

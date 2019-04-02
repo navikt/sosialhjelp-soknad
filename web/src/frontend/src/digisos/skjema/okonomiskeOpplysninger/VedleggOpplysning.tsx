@@ -9,10 +9,10 @@ import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import LastOppVedlegg from "../ekstrainformasjon/vedlegg/LastOppVedlegg";
 import {Checkbox} from "nav-frontend-skjema";
 import { FormattedHTMLMessage } from "react-intl";
-import {OkonomiskOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {Opplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 
 interface OwnProps {
-    okonomiskOpplysning: OkonomiskOpplysning;
+    okonomiskOpplysning: Opplysning;
 }
 
 type Props = OwnProps & InjectedIntlProps;

@@ -14,18 +14,18 @@ export interface OkonomiskeOpplysningerBackend {
 }
 
 export interface OkonomiskOpplysningBackend {
-    type: Type;
-    gruppe: GruppeEnum;
-    rader: VedleggRad[];
+    type: OpplysningType;
+    gruppe: OpplysningGruppe;
+    rader: OpplysningRad[];
     vedleggStatus: VedleggStatus;
     filer: Fil[]
 }
 
 
-export interface OkonomiskOpplysning {
-    type: Type;
-    gruppe: GruppeEnum | null;
-    rader: VedleggRad[];
+export interface Opplysning {
+    type: OpplysningType;
+    gruppe: OpplysningGruppe | null;
+    rader: OpplysningRad[];
     vedleggStatus: VedleggStatus;
     filer: Fil[];
     slettet: boolean;
@@ -33,21 +33,22 @@ export interface OkonomiskOpplysning {
 }
 
 export interface Grupper {
-    gruppeArbeid: OkonomiskOpplysning[];
-    gruppeFamilie: OkonomiskOpplysning[];
-    gruppeBosituasjon: OkonomiskOpplysning[];
-    gruppeInntekt: OkonomiskOpplysning[];
-    gruppeUtgifter: OkonomiskOpplysning[];
-    gruppeGenerelleVedlegg: OkonomiskOpplysning[];
-    gruppeAndreUtgifter: OkonomiskOpplysning[];
-    gruppeUkjent: OkonomiskOpplysning[];
+    gruppeArbeid: Opplysning[];
+    gruppeFamilie: Opplysning[];
+    gruppeBosituasjon: Opplysning[];
+    gruppeInntekt: Opplysning[];
+    gruppeUtgifter: Opplysning[];
+    gruppeGenerelleVedlegg: Opplysning[];
+    gruppeAndreUtgifter: Opplysning[];
+    gruppeUkjent: Opplysning[];
 }
 
 
 // ACTION TYPES
 export enum OkonomiskeOpplysningerActionTypeKeys {
     GOT_DATA_FROM_BACKEND = "okonomiskeOpplysninger/GOT_DATA_FROM_BACKEND",
-    OPPDATER_OKONOMISK_OPPLYSNING = "OPPDATER_OKONOMISK_OPPLYSNING"
+    OPPDATER_OKONOMISK_OPPLYSNING = "okonomiskeOpplysninger/OPPDATER_OKONOMISK_OPPLYSNING",
+    UPDATE_FIELD_IN_OPPLYSNING = "okonomiskeOpplysninger/UPDATE_FIELD_IN_OPPLYSNING"
 }
 
 export interface GotDataFromBackend {
@@ -57,16 +58,25 @@ export interface GotDataFromBackend {
 
 export interface UpdateOpplysning {
     type: OkonomiskeOpplysningerActionTypeKeys.OPPDATER_OKONOMISK_OPPLYSNING;
-    okonomiskOpplysning: OkonomiskOpplysning;
+    okonomiskOpplysning: Opplysning;
+}
+
+export interface UpdateFieldInOpplysning {
+    type: OkonomiskeOpplysningerActionTypeKeys.UPDATE_FIELD_IN_OPPLYSNING;
+    verdi: string;
+    feltType: string;
+    opplysningType: OpplysningType;
+    gruppe: OpplysningGruppe;
 }
 
 export type OkonomiskeOpplysningerAction
     = GotDataFromBackend
     | UpdateOpplysning
+    | UpdateFieldInOpplysning
 
 
 // MAPPING
-export enum GruppeEnum {
+export enum OpplysningGruppe {
     ARBEID = "arbeid",
     FAMILIE = "familie",
     BOSITUASJON = "bosituasjon",
@@ -77,7 +87,7 @@ export enum GruppeEnum {
     UKJENT = "ukjent"
 }
 
-export enum Type {
+export enum OpplysningType {
     LONNSLIPP_ARBEID = "lonnslipp|arbeid", // RADER_MED_BRUTTO_OG_NETTO
     SLUTTOPPGJOR_ARBEID = "sluttoppgjor|arbeid", // RADER_MED_BRUTTO_OG_NETTO
     STUDENT_VEDTAK = "student|vedtak", // RAD_MED_BELOP
@@ -137,7 +147,7 @@ export enum InputType {
 }
 
 
-export interface VedleggRad {
+export interface OpplysningRad {
     "beskrivelse": string;
     "belop": number;
     "brutto": number;

@@ -6,14 +6,14 @@ import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxType
 import {StoreToProps} from "./index";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {
-    OkonomiskOpplysning,
+    Opplysning,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 import OkonomiskOpplysningView from "./OkonomiskOpplysningView";
 
 export interface OwnProps {
     key: string;
     tittel: string;
-    gruppe: OkonomiskOpplysning[];
+    gruppe: Opplysning[];
 }
 
 
@@ -21,8 +21,8 @@ type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
 
 class GruppeView extends React.Component<Props, {}> {
 
-    renderGruppeInnhold(gruppe: OkonomiskOpplysning[]) {
-        return gruppe.map((okonomiskOpplysning: OkonomiskOpplysning, gruppeIndex: number) => {
+    renderGruppeInnhold(gruppe: Opplysning[]) {
+        return gruppe.map((okonomiskOpplysning: Opplysning, gruppeIndex: number) => {
             return (
                 <OkonomiskOpplysningView
                     key={gruppeIndex}

@@ -32,8 +32,10 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
         }
         case OkonomiskeOpplysningerActionTypeKeys.OPPDATER_OKONOMISK_OPPLYSNING: {
 
-            const grupperUpdated: Grupper = updateOkonomiskOpplysning(state.grupper, action.okonomiskOpplysning);
             debugger;
+
+            const grupperUpdated: Grupper = updateOkonomiskOpplysning(state.grupper, action.okonomiskOpplysning);
+
             return {
                 ...state,
                 restStatus: state.restStatus,

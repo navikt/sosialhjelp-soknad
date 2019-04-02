@@ -2,7 +2,7 @@ import * as React from 'react';
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import {StoreToProps} from "./index";
-import {OkonomiskOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {Opplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 import {connect} from "react-redux";
 import OpplastetVedlegg from "./VedleggsFilNy";
 import LastOppFil from "./LastOppFil";
@@ -10,7 +10,7 @@ import {Checkbox} from "nav-frontend-skjema";
 import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
 
 interface OwnProps {
-    okonomiskOpplysning: OkonomiskOpplysning;
+    okonomiskOpplysning: Opplysning;
     gruppeIndex: number;
 }
 
@@ -28,7 +28,7 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
     }
 
 
-    renderOpplastingAvVedleggSeksjon(okonomiskOpplysning: OkonomiskOpplysning) {
+    renderOpplastingAvVedleggSeksjon(okonomiskOpplysning: Opplysning) {
         const vedleggListe = okonomiskOpplysning.filer
             .map(fil => {
                 return <OpplastetVedlegg key={fil.uuid} fil={fil} onSlett={() => this.slettVedlegg(fil)}/>
