@@ -19,14 +19,15 @@ import {
 	Adresser,
 	initialAdresserState, NavEnhet
 } from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
+import {
+	BasisPersonalia,
+	initialBasisPersonalia
+} from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import { REST_STATUS } from "../../types";
 
 export enum SoknadsdataActionTypeKeys {
-	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
 	OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI",
-	SETT_REST_STATUS = "soknadsdata/SETT_REST_STATUS",
-	START_REST_KALL = "soknadsdata/START_REST_KALL",
-	STOPP_REST_KALL = "soknadsdata/STOPP_REST_KALL"
+	SETT_REST_STATUS = "soknadsdata/SETT_REST_STATUS"
 }
 
 /*
@@ -42,7 +43,8 @@ export enum SoknadsSti {
 	UTDANNING = "utdanning",
 	TELEFONNUMMER = "personalia/telefonnummer",
 	ADRESSER = "personalia/adresser",
-	NAV_ENHETER = "personalia/navEnheter"
+	NAV_ENHETER = "personalia/navEnheter",
+	BASIS_PERSONALIA = "personalia/basisPersonalia"
 }
 
 export interface Personalia {
@@ -50,13 +52,15 @@ export interface Personalia {
 	telefonnummer?: Telefonnummer;
 	adresser?: Adresser;
 	navEnheter?: NavEnhet[];
+	basisPersonalia?: BasisPersonalia;
 }
 
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
 	telefonnummer: initialTelefonnummerState,
 	adresser: initialAdresserState,
-	navEnheter: []
+	navEnheter: [],
+	basisPersonalia: initialBasisPersonalia
 };
 
 export interface Soknadsdata {
