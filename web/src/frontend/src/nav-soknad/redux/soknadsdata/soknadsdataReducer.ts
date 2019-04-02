@@ -14,6 +14,10 @@ import {
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
 import { setPath } from "./soknadsdataActions";
+import {
+	BasisPersonalia,
+	initialBasisPersonalia
+} from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import { REST_STATUS } from "../../types";
 import { ForsorgerPlikt } from "../../../digisos/skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 
@@ -37,17 +41,20 @@ export enum SoknadsSti {
 	BOSITUASJON = "bosituasjon",
 	UTDANNING = "utdanning",
 	TELEFONNUMMER = "personalia/telefonnummer",
+	BASIS_PERSONALIA = "personalia/basisPersonalia",
 	FORSORGERPLIKT = "familie/forsorgerplikt"
 }
 
 export interface Personalia {
 	kontonummer?: Kontonummer;
 	telefonnummer?: Telefonnummer;
+	basisPersonalia?: BasisPersonalia;
 }
 
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
-	telefonnummer: initialTelefonnummerState
+	telefonnummer: initialTelefonnummerState,
+	basisPersonalia: initialBasisPersonalia
 };
 
 export interface Soknadsdata {
