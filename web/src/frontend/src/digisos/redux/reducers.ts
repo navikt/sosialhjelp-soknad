@@ -45,7 +45,6 @@ const reducers = combineReducers({
 	adresseAutocomplete: AdresseAutocompleteReducer,
 	init: InitReducer,
 	authentication: AuthenticationReducer,
-	init: InitReducer,
 	mockData: MockReducer,
 	soknadsdata: SoknadsdataReducer
 });
