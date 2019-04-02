@@ -16,10 +16,6 @@ import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdann
 import { setPath } from "./soknadsdataActions";
 import { ForsorgerPlikt } from "../../../digisos/skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 import {
-	BasisPersonalia,
-	initialBasisPersonalia
-} from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
-import {
 	AdresseKategori,
 	Adresser,
 	initialAdresserState, NavEnhet
@@ -99,7 +95,6 @@ export interface Inntekt {
 export interface Utgifter {
 	boutgifter?: Boutgifter;
 	barneutgifter?: Barneutgifter;
-
 	basisPersonalia?: BasisPersonalia;
 }
 
@@ -120,8 +115,7 @@ export const initialInntektState: Inntekt = {
 
 export const initialUtgifterState: Utgifter = {
 	boutgifter: initialBoutgifterState,
-	barneutgifter: initialBarneutgifterState
-	navEnheter: [],
+	barneutgifter: initialBarneutgifterState,
 	basisPersonalia: initialBasisPersonalia
 };
 
