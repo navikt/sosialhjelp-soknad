@@ -28,8 +28,8 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
     }
 
 
-    renderOpplastingAvVedleggSeksjon(okonomiskOpplysning: Opplysning) {
-        const vedleggListe = okonomiskOpplysning.filer
+    renderOpplastingAvVedleggSeksjon(opplysning: Opplysning) {
+        const vedleggListe = opplysning.filer
             .map(fil => {
                 return <OpplastetVedlegg key={fil.uuid} fil={fil} onSlett={() => this.slettVedlegg(fil)}/>
             });
@@ -46,10 +46,15 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
                     {vedleggListe}
                 </div>
                 {vedleggListe}
-                <LastOppFil okonomiskOpplysning={okonomiskOpplysning} isDisabled={false} visSpinner={true}/>
+                <LastOppFil
+                    opplysning={opplysning}
+                    gruppeIndex={this.props.gruppeIndex}
+                    isDisabled={false}
+                    visSpinner={true}
+                />
                 <Checkbox
                     label={<FormattedHTMLMessage id={"opplysninger.vedlegg.alleredelastetopp"}/>}
-                    id={okonomiskOpplysning.type + "_allerede_lastet_opp_checkbox"}
+                    id={opplysning.type + "_allerede_lastet_opp_checkbox"}
                     className={"vedleggLastetOppCheckbox " + " checkboks--disabled"}
                     onChange={(event: any) => this.handleAlleredeLastetOpp(event)}
                     checked={true}

@@ -1,59 +1,76 @@
 import * as React from "react";
 import { Knapp } from "nav-frontend-knapper";
-import { FormattedHTMLMessage } from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
 import {Opplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {connect} from "react-redux";
+import {StoreToProps} from "./index";
+import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
+import InjectedIntlProps = ReactIntl.InjectedIntlProps;
+import {lastOppFil} from "../../../nav-soknad/redux/fil/filActions";
 
 
-export interface OwnProps {
-	okonomiskOpplysning: Opplysning;
-	isDisabled: boolean;
-	visSpinner: boolean;
+interface OwnProps {
+    opplysning: Opplysning;
+    gruppeIndex: number;
+    isDisabled: boolean;
+    visSpinner: boolean;
 }
 
 
-class LastOppFil extends React.Component<OwnProps, {}> {
+type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
+
+
+
+class LastOppFil extends React.Component<Props, {}> {
 	leggTilVedleggKnapp: HTMLInputElement;
 
-	constructor(props: OwnProps) {
+	constructor(props: Props) {
 		super(props);
 		this.state = {
 			sisteBrukteFilnavn: ""
 		};
 	}
 
-    handleFileUpload(files: any){
-		console.warn("bruker den skulft input tingen");
-	}
-
+    handleFileUpload(files: FileList) {
+        if (files.length !== 1) {
+            return;
+        }
+        const formData = new FormData();
+        formData.append("file", files[0], files[0].name);
+        this.setState({sisteBrukteFilnavn: files[0].name});
+        debugger;
+        this.props.dispatch(lastOppFil(formData, this.props.behandlingsId, this.props.opplysning.type));
+        this.leggTilVedleggKnapp.value = null;
+    }
 
 	render() {
 
-		const { isDisabled, visSpinner } = this.props;
+		const { isDisabled, visSpinner, opplysning } = this.props;
 
 		return (
 			<div>
-				<Knapp
-					id={"1"}
-					type="standard"
-					htmlType="button"
-					disabled={isDisabled}
-					spinner={visSpinner}
-					onClick={() => {
-						console.warn("LAST OPP VEDLEGG.... åpne fil browser etc...");;
-					}}
-					className="last-opp-vedlegg-knapp"
-				>
-					<FormattedHTMLMessage id="opplysninger.vedlegg.knapp.tekst"/>
-				</Knapp>
-				<input
-					id={"skult_input_1"}
-					ref={c => this.leggTilVedleggKnapp = c}
-					onChange={(e) => this.handleFileUpload(e.target.files)}
-					type="file"
-					className="visuallyhidden"
-					tabIndex={-1}
-					accept="image/jpeg,image/png,application/pdf"
-				/>
+                <Knapp
+                    id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
+                    type="standard"
+                    htmlType="button"
+                    disabled={isDisabled}
+                    spinner={visSpinner}
+                    onClick={() => {
+                        this.leggTilVedleggKnapp.click();
+                    }}
+                    className="last-opp-vedlegg-knapp"
+                >
+                    + <FormattedMessage id="opplysninger.vedlegg.knapp.tekst"/>
+                </Knapp>
+                <input
+                    id={opplysning.type.replace(/\./g, "_") + "_skjult_upload_input"}
+                    ref={c => this.leggTilVedleggKnapp = c}
+                    onChange={(e) => this.handleFileUpload(e.target.files)}
+                    type="file"
+                    className="visuallyhidden"
+                    tabIndex={-1}
+                    accept="image/jpeg,image/png,application/pdf"
+                />
 
 				<div role="alert" aria-live="assertive">
 					<div className="skjemaelement__feilmelding">
@@ -65,4 +82,12 @@ class LastOppFil extends React.Component<OwnProps, {}> {
 	}
 }
 
-export default LastOppFil;
+
+export default connect<StoreToProps, {}, OwnProps>(
+    (state: SoknadAppState) => {
+        return {
+            okonomiskeOpplysninger: state.okonomiskeOpplysninger,
+            behandlingsId: state.soknad.data.brukerBehandlingId
+        };
+    }
+)(LastOppFil);
