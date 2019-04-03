@@ -24,6 +24,7 @@ import Oppholdsadresse from "./tps/Oppholdsadresse";
 import Personalia from "./tps/Personalia";
 import Telefon from "./telefon/Telefon";
 import Bankinformasjon from "./bankinfo/Bankinformasjon";
+import BasisPersonalia from "./personalia/BasisPersonalia";
 
 interface OwnProps {
 	hentVedleggsForventning?: (fakta: any) => void;
@@ -80,6 +81,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 						</Informasjonspanel>
 					</div>
 				)}
+				<BasisPersonalia/>
 				<SporsmalFaktum
 					faktumKey="kontakt.system.personalia"
 					style="system"

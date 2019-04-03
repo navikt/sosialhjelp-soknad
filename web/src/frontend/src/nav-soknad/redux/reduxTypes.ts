@@ -15,6 +15,7 @@ import { OppholdsAdresseState } from "../../digisos/skjema/personopplysninger/tp
 import {
 	AdresseAutocompleteState
 } from "../components/adresseAutocomplete/adresseAutocompleteReducer";
+import {MockState} from "../../digisos/mock/mockReducer";
 import { Soknadsdata } from "./soknadsdata/soknadsdataReducer";
 
 export * from "./fakta/faktaActionTypes";
@@ -44,6 +45,7 @@ export interface SoknadAppState {
 	adresseAutocomplete: AdresseAutocompleteState;
 	soknadsdata: Soknadsdata;
 	init: InitState;
+	mockData: MockState;
 }
 
 export interface SoknadState {
