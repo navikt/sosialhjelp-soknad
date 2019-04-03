@@ -17,6 +17,7 @@ export interface OwnProps {
 	tittelRenderer?: (title: string) => React.ReactNode;
 	noValidateOnBlur?: boolean;
 	legendTittelStyle?: LegendTittleStyle;
+	visLedetekst?: boolean;
 }
 
 type Props = OwnProps & InjectedFaktumComponentProps & InjectedIntlProps;
@@ -64,6 +65,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 			faktumKey,
 			intl,
 			children,
+			visLedetekst
 		} = this.props;
 		if (visible === false) {
 			return null;
@@ -78,6 +80,7 @@ class SporsmalFaktum extends React.Component<Props, {}> {
 				tekster={getFaktumSporsmalTekst(intl, faktumKey)}
 				visible={visible}
 				tittelRenderer={tittelRenderer}
+				visLedetekst={visLedetekst}
 				legendTittelStyle={this.props.legendTittelStyle || LegendTittleStyle.DEFAULT}
 			>
 				{children}

@@ -31,6 +31,7 @@ export interface OwnProps {
 	tekster?: SporsmalFaktumTekst;
 	sprakNokkel?: string;
 	legendTittelStyle?: LegendTittleStyle;
+	visLedetekst?: boolean;
 	faktumKey?: string;
 
 	/** Array med valideringsfunksjoner som skal brukes ved validering */
@@ -91,7 +92,7 @@ class Sporsmal extends React.Component<Props, {}> {
 	// }
 
 	render() {
-		const { id, visible, children, feil, feilkode, tekster, intl, sprakNokkel } = this.props;
+		const { id, visible, children, feil, feilkode, tekster, intl, sprakNokkel, visLedetekst } = this.props;
 		const ledeTekster: SporsmalFaktumTekst = tekster ? tekster :
 			getFaktumSporsmalTekst(intl, sprakNokkel );
 		if (visible === false) {
@@ -115,7 +116,7 @@ class Sporsmal extends React.Component<Props, {}> {
 			<div
 				id={id}
 				className={sporsmalCls}
-				// onBlur={(evt: any) => this.handleOnBlur(evt)}
+				onBlur={this.props.handleOnBlur}
 				aria-labelledby={legendId}
 			>
 				<SkjemaGruppe feil={feil}>
@@ -124,7 +125,9 @@ class Sporsmal extends React.Component<Props, {}> {
 							id={legendId}
 						>
 							{sporsmal}
-							<SporsmalHjelpetekst tekster={ledeTekster} legendId={legendId}/>
+							{visLedetekst !== false && (
+								<SporsmalHjelpetekst tekster={ledeTekster} legendId={legendId}/>
+							)}
 						</legend>
 						<div className="skjema-sporsmal__innhold">
 							{children}
