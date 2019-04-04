@@ -3,10 +3,6 @@ import { connect } from "react-redux";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { State } from "../../redux/reducers";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
-import Sivilstatus from "./Sivilstatus";
-import SivilstatusTPS from "./SivilstatusTPS";
-import { Faktum } from "../../../nav-soknad/types";
-import { finnFaktum } from "../../../nav-soknad/utils";
 import Familierelasjoner from "./Familierelasjoner";
 import FamilieIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/FamilieIllustrasjon";
 import DinSivilstatus from "./sivilstatus/DinSivilstatus";
@@ -14,34 +10,9 @@ import DinSivilstatus from "./sivilstatus/DinSivilstatus";
 class Familie extends React.Component<FaktumComponentProps, {}> {
 
 	render() {
-		const { fakta } = this.props;
-		const sivilstatusFaktum: Faktum = finnFaktum("system.familie.sivilstatus", fakta);
-		const ektefelleFaktum: Faktum = finnFaktum("system.familie.sivilstatus.gift.ektefelle", fakta);
-
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.familiebolk} ikon={<FamilieIllustrasjon />}>
 				<DinSivilstatus/>
-
-				{
-					sivilstatusFaktum.value === "gift" &&
-					(
-						<span>
-							{/*<EktefelleDetaljer/>*/}
-							<SivilstatusTPS
-								sivilstatusFaktum={sivilstatusFaktum}
-								ektefelleFaktum={ektefelleFaktum}
-							/>
-						</span>
-					)
-				}
-				{
-					sivilstatusFaktum.value !== "gift" &&
-					(
-						<span>
-							<Sivilstatus fakta={fakta} />
-						</span>
-						)
-				}
 				<Familierelasjoner />
 			</DigisosSkjemaSteg>
 		);

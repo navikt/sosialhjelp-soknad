@@ -72,86 +72,84 @@ class SivilstatusComponent extends React.Component<Props, {}> {
 		const borSammenMed = (familie && familie.sivilstatus) ? familie.sivilstatus.borSammenMed : null;
 
 		return (
-			<div style={{ border: "3px dotted red", display: "block" }}>
-				<div className="skjema-sporsmal">
-					<Sporsmal sprakNokkel="familie.sivilstatus">
-						<SivilstatusRadioknapp
-							verdi={Status.GIFT}
-							checked={sivilstatus === Status.GIFT}
-							onClick={(verdi) => this.onClickSivilstatus(verdi)}
-						/>
-						<div className="skjema-sporsmal--jaNeiSporsmal">
-							<Underskjema
-								visible={sivilstatus === Status.GIFT}
-								arrow={true}
-							>
-								<Sporsmal
-									sprakNokkel="familie.sivilstatus.gift.ektefelle"
-									legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-								>
-									<div>
-										<div className="blokk-s">
-											<PersonSkjema/>
-										</div>
-									</div>
-									<Sporsmal
-										sprakNokkel="familie.sivilstatus.gift.ektefelle.borsammen"
-									>
-										<RadioEnhanced
-											id={"sivilstatus_gift_bor_sammen_radio_ja"}
-											faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
-											value="true"
-											checked={borSammenMed === true}
-											onChange={() => this.onClickBorSammen(true)}
-										/>
-										<RadioEnhanced
-											id={"sivilstatus_gift_bor_sammen_radio_nei"}
-											faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
-											value="false"
-											checked={borSammenMed === false}
-											onChange={() => this.onClickBorSammen(false)}
-										/>
-									</Sporsmal>
-								</Sporsmal>
-							</Underskjema>
-						</div>
-						<SivilstatusRadioknapp
-							verdi={Status.UGIFT}
-							checked={sivilstatus === Status.UGIFT}
-							onClick={(verdi) => this.onClickSivilstatus(verdi)}
-						/>
-						<SivilstatusRadioknapp
-							verdi={Status.SAMBOER}
-							checked={sivilstatus === Status.SAMBOER}
-							onClick={(verdi) => this.onClickSivilstatus(verdi)}
-						/>
-						<SivilstatusRadioknapp
-							verdi={Status.ENKE}
-							checked={sivilstatus === Status.ENKE}
-							onClick={(verdi) => this.onClickSivilstatus(verdi)}
-						/>
-						<SivilstatusRadioknapp
-							verdi={Status.SKILT}
-							checked={sivilstatus === Status.SKILT}
-							onClick={(verdi) => this.onClickSivilstatus(verdi)}
-						/>
-						<SivilstatusRadioknapp
-							verdi={Status.SEPARERT}
-							checked={sivilstatus === Status.SEPARERT}
-							onClick={(verdi) => this.onClickSivilstatus(verdi)}
-						/>
-					</Sporsmal>
-					<Informasjonspanel
-						synlig={ sivilstatus === Status.GIFT }
-						farge={DigisosFarge.VIKTIG}
-						ikon={InformasjonspanelIkon.ELLA}
+			<div className="skjema-sporsmal">
+				<Sporsmal sprakNokkel="familie.sivilstatus">
+					<SivilstatusRadioknapp
+						verdi={Status.GIFT}
+						checked={sivilstatus === Status.GIFT}
+						onClick={(verdi) => this.onClickSivilstatus(verdi)}
+					/>
+					<div className="skjema-sporsmal--jaNeiSporsmal">
+						<Underskjema
+							visible={sivilstatus === Status.GIFT}
+							arrow={true}
 						>
-						<h4 className="skjema-sporsmal__infotekst__tittel">
-							<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel"/>
-						</h4>
-						<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tekst"/>
-					</Informasjonspanel>
-				</div>
+							<Sporsmal
+								sprakNokkel="familie.sivilstatus.gift.ektefelle"
+								legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+							>
+								<div>
+									<div className="blokk-s">
+										<PersonSkjema/>
+									</div>
+								</div>
+								<Sporsmal
+									sprakNokkel="familie.sivilstatus.gift.ektefelle.borsammen"
+								>
+									<RadioEnhanced
+										id={"sivilstatus_gift_bor_sammen_radio_ja"}
+										faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
+										value="true"
+										checked={borSammenMed === true}
+										onChange={() => this.onClickBorSammen(true)}
+									/>
+									<RadioEnhanced
+										id={"sivilstatus_gift_bor_sammen_radio_nei"}
+										faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
+										value="false"
+										checked={borSammenMed === false}
+										onChange={() => this.onClickBorSammen(false)}
+									/>
+								</Sporsmal>
+							</Sporsmal>
+						</Underskjema>
+					</div>
+					<SivilstatusRadioknapp
+						verdi={Status.UGIFT}
+						checked={sivilstatus === Status.UGIFT}
+						onClick={(verdi) => this.onClickSivilstatus(verdi)}
+					/>
+					<SivilstatusRadioknapp
+						verdi={Status.SAMBOER}
+						checked={sivilstatus === Status.SAMBOER}
+						onClick={(verdi) => this.onClickSivilstatus(verdi)}
+					/>
+					<SivilstatusRadioknapp
+						verdi={Status.ENKE}
+						checked={sivilstatus === Status.ENKE}
+						onClick={(verdi) => this.onClickSivilstatus(verdi)}
+					/>
+					<SivilstatusRadioknapp
+						verdi={Status.SKILT}
+						checked={sivilstatus === Status.SKILT}
+						onClick={(verdi) => this.onClickSivilstatus(verdi)}
+					/>
+					<SivilstatusRadioknapp
+						verdi={Status.SEPARERT}
+						checked={sivilstatus === Status.SEPARERT}
+						onClick={(verdi) => this.onClickSivilstatus(verdi)}
+					/>
+				</Sporsmal>
+				<Informasjonspanel
+					synlig={ sivilstatus === Status.GIFT }
+					farge={DigisosFarge.VIKTIG}
+					ikon={InformasjonspanelIkon.ELLA}
+					>
+					<h4 className="skjema-sporsmal__infotekst__tittel">
+						<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel"/>
+					</h4>
+					<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tekst"/>
+				</Informasjonspanel>
 			</div>
 		)
 	}

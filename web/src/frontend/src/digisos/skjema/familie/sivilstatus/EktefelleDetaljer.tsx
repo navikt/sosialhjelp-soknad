@@ -64,34 +64,31 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 		const { soknadsdata, intl } = this.props;
 		const sivilstatus: Sivilstatus = soknadsdata.familie.sivilstatus;
 		const harDiskresjonskode: boolean = sivilstatus.harDiskresjonskode;
-
 		return (
-			<div style={{ border: "3px dotted red", display: "block" }}>
-				<div className="sivilstatus skjema-sporsmal">
-					<Sporsmal
-						tekster={getFaktumSporsmalTekst(intl, "system.familie.sivilstatus")}
-						style="system"
+			<div className="sivilstatus skjema-sporsmal">
+				<Sporsmal
+					tekster={getFaktumSporsmalTekst(intl, "system.familie.sivilstatus")}
+					style="system"
+				>
+					<div className="sivilstatus__infotekst">
+						<FormattedMessage id="system.familie.sivilstatus"/>
+					</div>
+					<div className="sivilstatus__giftlabel">
+						{this.renderSivilstatusLabel(harDiskresjonskode)}
+						{this.renderEktefelleInformasjon()}
+					</div>
+				</Sporsmal>
+				{harDiskresjonskode !== true && (
+					<Informasjonspanel
+						farge={DigisosFarge.VIKTIG}
+						ikon={InformasjonspanelIkon.ELLA}
 					>
-						<div className="sivilstatus__infotekst">
-							<FormattedMessage id="system.familie.sivilstatus"/>
-						</div>
-						<div className="sivilstatus__giftlabel">
-							{this.renderSivilstatusLabel(harDiskresjonskode)}
-							{this.renderEktefelleInformasjon()}
-						</div>
-					</Sporsmal>
-					{harDiskresjonskode !== true && (
-						<Informasjonspanel
-							farge={DigisosFarge.VIKTIG}
-							ikon={InformasjonspanelIkon.ELLA}
-						>
-							<h4 className="skjema-sporsmal__infotekst__tittel">
-								<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel"/>
-							</h4>
-							<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tekst"/>
-						</Informasjonspanel>
-					)}
-				</div>
+						<h4 className="skjema-sporsmal__infotekst__tittel">
+							<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel"/>
+						</h4>
+						<FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tekst"/>
+					</Informasjonspanel>
+				)}
 			</div>
 		);
 	}
