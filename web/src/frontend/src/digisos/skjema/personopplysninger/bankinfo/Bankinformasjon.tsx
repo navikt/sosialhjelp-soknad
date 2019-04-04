@@ -5,20 +5,37 @@ import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import { erKontonummer } from "../../../../nav-soknad/validering/valideringer";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import { Kontonummer } from "./KontonummerType";
 import {
-	connectSoknadsdataContainer, onEndretValideringsfeil,
+	connectSoknadsdataContainer,
+	onEndretValideringsfeil,
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
+import { REST_STATUS } from "../../../../nav-soknad/types";
+import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
+import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 const FAKTUM_KEY_KONTONUMMER = "kontakt.kontonummer";
 
-class Bankinformasjon extends React.Component<Props, {}> {
+class Bankinformasjon extends React.Component<Props, {oppstartsModus: boolean}> {
+
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			oppstartsModus: true
+		}
+	}
+
+	componentWillUpdate(nextProps: Readonly<Props>) {
+		const restStatus = nextProps.soknadsdata.restStatus.personalia.kontonummer;
+		if (this.state.oppstartsModus === true && restStatus === REST_STATUS.OK) {
+			this.setState({oppstartsModus: false});
+		}
+	}
 
 	componentDidMount(): void {
 		this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
@@ -28,17 +45,13 @@ class Bankinformasjon extends React.Component<Props, {}> {
 	onBlur() {
 		const { soknadsdata } = this.props;
 		let kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
-
 		let feilkode: ValideringActionKey = null;
-
 		if (kontonummer.brukerutfyltVerdi !== null && kontonummer.brukerutfyltVerdi !== "") {
-
 			feilkode = this.validerKontonummer(kontonummer.brukerutfyltVerdi);
 			if (!feilkode) {
 				kontonummer = this.vaskKontonummerVerdi(kontonummer);
 				this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
 			}
-
 		} else {
 			onEndretValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER, this.props.feil, () => {
 				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER);
@@ -60,17 +73,11 @@ class Bankinformasjon extends React.Component<Props, {}> {
 		const { soknadsdata } = this.props;
 		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
 		kontonummer.brukerdefinert = brukerdefinert;
-
 		kontonummer.brukerutfyltVerdi = "";
 		kontonummer.harIkkeKonto = false;
-
 		this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
-
-		// const feilkode: ValideringActionKey = this.validerKontonummer(kontonummer.brukerutfyltVerdi);
-
 		this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
-
 	}
 
 	onChangeInput(brukerutfyltVerdi: string) {
@@ -85,15 +92,12 @@ class Bankinformasjon extends React.Component<Props, {}> {
 		const { soknadsdata } = this.props;
 		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
 		kontonummer.harIkkeKonto = !kontonummer.harIkkeKonto;
-
 		if (kontonummer.harIkkeKonto) {
 			this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
 			kontonummer.brukerutfyltVerdi = "";
 		}
-
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
 		this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
-
 		event.preventDefault();
 	}
 
@@ -108,12 +112,22 @@ class Bankinformasjon extends React.Component<Props, {}> {
 	render() {
 		const { intl, soknadsdata } = this.props;
 		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
-		const infotekst:string = intl.formatMessage({ id: "kontakt.kontonummer.infotekst.tekst" });
-		const endreLabel:string = intl.formatMessage({id: "kontakt.system.kontonummer.endreknapp.label"});
+		const endreLabel: string = intl.formatMessage({id: "kontakt.system.kontonummer.endreknapp.label"});
 		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
-
 		const inputVerdi: string = kontonummer && kontonummer.brukerutfyltVerdi ? kontonummer.brukerutfyltVerdi : "";
+		let infotekst: string = intl.formatMessage({ id: "kontakt.system.personalia.infotekst.tekst" });
 
+		if (kontonummer.brukerdefinert) {
+			infotekst = intl.formatMessage({ id: "kontakt.kontonummer.infotekst.tekst" });
+		}
+
+		if(this.state.oppstartsModus) {
+			return (
+				<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: null } }}>
+					<TextPlaceholder lines={3}/>
+				</Sporsmal>
+			);
+		}
 
 		switch(kontonummer.systemverdi){
 			case null: {
@@ -195,14 +209,16 @@ class Bankinformasjon extends React.Component<Props, {}> {
 								</div>
 							)}
 						>
-							<Detaljeliste>
-								<DetaljelisteElement
-									tittel={
-										intl.formatHTMLMessage({ id: "kontakt.system.kontonummer.label" })
-									}
-									verdi={kontonummer.systemverdi}
-								/>
-							</Detaljeliste>
+							{!kontonummer.brukerdefinert && (
+								<Detaljeliste>
+									<DetaljelisteElement
+										tittel={
+											intl.formatHTMLMessage({ id: "kontakt.system.kontonummer.label" })
+										}
+										verdi={kontonummer.systemverdi}
+									/>
+								</Detaljeliste>
+							)}
 						</SysteminfoMedSkjema>
 					</Sporsmal>
 				);
