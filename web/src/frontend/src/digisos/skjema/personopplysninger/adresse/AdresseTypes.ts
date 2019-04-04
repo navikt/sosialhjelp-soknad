@@ -78,22 +78,6 @@ export const initialAdresserState: Adresser = {
 		matrikkeladresse: null,
 		ustrukturert: null
 	},
-	midlertidig: {
-		type: AdresseType.GATEADRESSE,
-		gateadresse: {
-			type: AdresseType.GATEADRESSE,
-			landkode: null,
-			kommunenummer: "",
-			adresselinjer: [],
-			bolignummer: "",
-			postnummer: "",
-			poststed: "",
-			gatenavn: "",
-			husnummer: "",
-			husbokstav: ""
-		},
-		matrikkeladresse: null,
-		ustrukturert: null
-	},
+	midlertidig: null,
 	soknad: null
 };

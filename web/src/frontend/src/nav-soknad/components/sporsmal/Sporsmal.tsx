@@ -39,6 +39,8 @@ export interface OwnProps {
 	required?: boolean;
 	/** Ikke valider ved onBlur */
 	noValidateOnBlur?: boolean;
+
+	visLedetekst?: boolean;
 }
 
 type Props = OwnProps & InjectedIntlProps;
@@ -91,7 +93,7 @@ class Sporsmal extends React.Component<Props, {}> {
 	// }
 
 	render() {
-		const { id, visible, children, feil, feilkode, tekster, intl, sprakNokkel } = this.props;
+		const { id, visible, children, feil, feilkode, tekster, intl, sprakNokkel, visLedetekst } = this.props;
 		const ledeTekster: SporsmalFaktumTekst = tekster ? tekster :
 			getFaktumSporsmalTekst(intl, sprakNokkel );
 		if (visible === false) {
@@ -124,7 +126,9 @@ class Sporsmal extends React.Component<Props, {}> {
 							id={legendId}
 						>
 							{sporsmal}
-							<SporsmalHjelpetekst tekster={ledeTekster} legendId={legendId}/>
+							{visLedetekst !== false && (
+								<SporsmalHjelpetekst tekster={ledeTekster} legendId={legendId}/>
+							) }
 						</legend>
 						<div className="skjema-sporsmal__innhold">
 							{children}
