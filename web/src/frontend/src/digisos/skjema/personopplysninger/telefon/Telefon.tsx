@@ -96,7 +96,7 @@ class TelefonView extends React.Component<Props, {}> {
 		const brukerdefinert = telefonnummer ? telefonnummer.brukerdefinert : false;
 		const verdi = telefonnummer && telefonnummer.brukerutfyltVerdi ? telefonnummer.brukerutfyltVerdi : "";
 		const systemverdi = telefonnummer ? telefonnummer.systemverdi : "";
-		const faktumKey = telefonnummer.systemverdi === "" ? FAKTUM_KEY_TELEFON : FAKTUM_KEY_SYSTEM_TELEFON;
+		const faktumKey = telefonnummer.brukerdefinert ? FAKTUM_KEY_TELEFON : FAKTUM_KEY_SYSTEM_TELEFON;
 
 		switch (systemverdi) {
 			case null: {
