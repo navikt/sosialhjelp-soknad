@@ -7,6 +7,9 @@ import * as React from "react";
 import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
+import { REST_STATUS } from "../../../../nav-soknad/types";
+
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 class BasisPersonaliaView extends React.Component<Props, {}> {
@@ -27,36 +30,40 @@ class BasisPersonaliaView extends React.Component<Props, {}> {
 			statsborgerskap = "Vi har ikke opplysninger om ditt statsborgerskap";
 			statsborgerskapVisning = <span>{statsborgerskap}</span>;
 		}
+		const restStatus = soknadsdata.restStatus.personalia.basisPersonalia;
+		const visAnimerteStreker = restStatus !== REST_STATUS.OK;
 
 		return (
-			<div style={{border: "3px dotted red"}}>
-				<SporsmalFaktum
-					faktumKey="kontakt.system.personalia"
-					style="system"
-				>
-					{basisPersonalia && (
-						<Detaljeliste>
+			<SporsmalFaktum
+				faktumKey="kontakt.system.personalia"
+				style="system"
+				visLedetekst={visAnimerteStreker !== true}
+			>
+				{visAnimerteStreker !== true && basisPersonalia && (
+					<Detaljeliste>
+						<DetaljelisteElement
+							tittel={<FormattedMessage id="kontakt.system.personalia.navn" />}
+							verdi={basisPersonalia.navn.fulltNavn}
+						/>
+						<DetaljelisteElement
+							skjulDersomTomVerdi={true}
+							tittel={<FormattedMessage id="kontakt.system.personalia.fnr" />}
+							verdi={basisPersonalia.fodselsnummer}
+						/>
+						{statsborgerskap && (
 							<DetaljelisteElement
-								tittel={<FormattedMessage id="kontakt.system.personalia.navn" />}
-								verdi={basisPersonalia.navn.fulltNavn}
+								tittel={
+									<FormattedMessage id="kontakt.system.personalia.statsborgerskap" />
+								}
+								verdi={statsborgerskapVisning}
 							/>
-							<DetaljelisteElement
-								skjulDersomTomVerdi={true}
-								tittel={<FormattedMessage id="kontakt.system.personalia.fnr" />}
-								verdi={basisPersonalia.fodselsnummer}
-							/>
-							{statsborgerskap && (
-								<DetaljelisteElement
-									tittel={
-										<FormattedMessage id="kontakt.system.personalia.statsborgerskap" />
-									}
-									verdi={statsborgerskapVisning}
-								/>
-							)}
-						</Detaljeliste>
-					)}
-				</SporsmalFaktum>
-			</div>
+						)}
+					</Detaljeliste>
+				)}
+				{visAnimerteStreker && (
+					<TextPlaceholder lines={3} />
+				)}
+			</SporsmalFaktum>
 		);
 	}
 }
