@@ -9,7 +9,7 @@ export enum FilActionTypeKeys {
 	// NYTT_VEDLEGG = "vedlegg/NYTT_VEDLEGG",
 	// OPPDATERT_VEDLEGG = "vedlegg/OPPDATERT_VEDLEGG",
 	//
-	// START_SLETT_VEDLEGG = "vedlegg/START_SLETT_VEDLEGG",
+	START_SLETT_FIL = "fil/START_SLETT_FIL",
 	// SLETT_VEDLEGG = "vedlegg/SLETT_VEDLEGG",
 	// SLETT_VEDLEGG_OK = "vedlegg/SLETT_VEDLEGG_OK",
 	//
@@ -27,7 +27,7 @@ export type FilActionTypes
 	// | LastOppVedleggFeiletAction
 	// | OppdatertVedleggAction
 	// | NyttVedleggAction
-	// | StartSlettVedleggAction
+	| StartSlettFilAction
 	// | SlettVedleggAction
 	// | SlettVedleggOkAction
 	// | HentVedleggsForventningOk
@@ -64,12 +64,11 @@ export interface LastOppFilAction {
 // 	fakta: Faktum[];
 // }
 //
-// export interface StartSlettVedleggAction {
-// 	type: VedleggActionTypeKeys.START_SLETT_VEDLEGG;
-// 	vedleggId: number;
-// 	vedleggsFaktumId: number;
-// 	belopFaktumId: number;
-// }
+export interface StartSlettFilAction {
+	type: FilActionTypeKeys.START_SLETT_FIL;
+	behandlingsId: string;
+	vedleggId: string;
+}
 //
 // export interface SlettVedleggAction {
 // 	type: VedleggActionTypeKeys.SLETT_VEDLEGG;

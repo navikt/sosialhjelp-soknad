@@ -24,7 +24,8 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
     }
 
     slettVedlegg(fil: any){
-        console.warn("Slett vedlegg");
+        console.warn("Slett vedlegg: ");
+        console.warn(fil);
     }
 
 

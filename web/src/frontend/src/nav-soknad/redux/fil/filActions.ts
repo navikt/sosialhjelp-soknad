@@ -44,18 +44,16 @@ const lastOppFil = (
 // 	};
 // };
 //
-// const startSlettVedlegg = (
-// 	vedleggId: number,
-// 	vedleggsFaktumId: number,
-// 	belopFaktumId: number
-// ): VedleggActionTypes => {
-// 	return {
-// 		type: VedleggActionTypeKeys.START_SLETT_VEDLEGG,
-// 		vedleggId,
-// 		vedleggsFaktumId,
-// 		belopFaktumId
-// 	};
-// };
+const startSlettFil = (
+    behandlingsId: string,
+	vedleggId: string
+):  FilActionTypes => {
+	return {
+		type: FilActionTypeKeys.START_SLETT_FIL,
+		behandlingsId,
+		vedleggId
+	};
+};
 //
 // const slettVedlegg = (
 // 	vedleggId: number
@@ -96,7 +94,8 @@ const lastOppFil = (
 // };
 
 export {
-	lastOppFil
+	lastOppFil,
+	startSlettFil
 	// lastOppVedlegg,
 	// lastOppVedleggOk,
 	// lastOppVedleggFeilet,
@@ -106,7 +105,6 @@ export {
 	//
 	// hentVedleggsForventningOk,
 	//
-	// startSlettVedlegg,
 	// slettVedlegg,
 	// slettVedleggOk,
 	// vedleggAlleredeSendt,

@@ -38,7 +38,6 @@ class LastOppFil extends React.Component<Props, {}> {
         const formData = new FormData();
         formData.append("file", files[0], files[0].name);
         this.setState({sisteBrukteFilnavn: files[0].name});
-        debugger;
         this.props.dispatch(lastOppFil(formData, this.props.behandlingsId, this.props.opplysning.type));
         this.leggTilVedleggKnapp.value = null;
     }
