@@ -31,7 +31,6 @@ export interface OwnProps {
 	tekster?: SporsmalFaktumTekst;
 	sprakNokkel?: string;
 	legendTittelStyle?: LegendTittleStyle;
-	visLedetekst?: boolean;
 	faktumKey?: string;
 
 	/** Array med valideringsfunksjoner som skal brukes ved validering */
@@ -40,6 +39,8 @@ export interface OwnProps {
 	required?: boolean;
 	/** Ikke valider ved onBlur */
 	noValidateOnBlur?: boolean;
+
+	visLedetekst?: boolean;
 }
 
 type Props = OwnProps & InjectedIntlProps;

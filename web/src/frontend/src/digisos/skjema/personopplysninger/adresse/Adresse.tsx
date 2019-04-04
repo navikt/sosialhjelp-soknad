@@ -19,12 +19,31 @@ import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
 import { formaterSoknadsadresse } from "./AdresseUtils";
 import { REST_STATUS } from "../../../../nav-soknad/types";
+import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
-class AdresseView extends React.Component<Props, {}> {
+interface State {
+	oppstartsModus: boolean
+}
+
+class AdresseView extends React.Component<Props, State> {
 
 	FAKTUM_KEY = "soknadsmottaker";
+
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			oppstartsModus: true
+		};
+	}
+
+	componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any): void {
+		const restStatus: REST_STATUS = prevProps.soknadsdata.restStatus.personalia.adresser;
+		if (restStatus === REST_STATUS.OK && this.state.oppstartsModus === true) {
+			this.setState({oppstartsModus: false});
+		}
+	}
 
 	componentDidMount(): void {
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ADRESSER);
@@ -33,6 +52,10 @@ class AdresseView extends React.Component<Props, {}> {
 
 	onClickRadio(adresseKategori: AdresseKategori) {
 		const { soknadsdata, oppdaterSoknadsdataSti, lagreSoknadsdata, brukerBehandlingId } = this.props;
+		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
+		if (restStatus === REST_STATUS.INITIALISERT || restStatus === REST_STATUS.PENDING){
+			return;
+		}
 		const adresser = soknadsdata.personalia.adresser;
 		adresser.valg = adresseKategori;
 		oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
@@ -151,6 +174,7 @@ class AdresseView extends React.Component<Props, {}> {
 
 	render() {
 		const { soknadsdata } = this.props;
+		const { oppstartsModus } = this.state;
 		const adresser = soknadsdata.personalia.adresser;
 		const navEnheter = soknadsdata.personalia.navEnheter;
 		const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet ) => navEnhet.valgt);
@@ -159,7 +183,26 @@ class AdresseView extends React.Component<Props, {}> {
 		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
 		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
 		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
+		const visSoknadsmottakerInfo: boolean = (restStatus === REST_STATUS.OK) ? true : false;
 
+		let folkeregistrertAdresseLabel = null;
+		let annenAdresseLabel = null;
+		if (oppstartsModus) {
+			folkeregistrertAdresseLabel = (<TextPlaceholder lines={3}/>);
+			annenAdresseLabel = (<TextPlaceholder lines={3}/>);
+		} else {
+			folkeregistrertAdresseLabel = (
+				<div className="finnNavKontor__label">
+					<FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
+					<AdresseDetaljer adresse={folkeregistrertAdresse}/>
+				</div>
+			);
+			annenAdresseLabel = (
+				<div className="finnNavKontor__label">
+					<FormattedMessage id="kontakt.system.oppholdsadresse.valg.soknad" />
+				</div>
+			);
+		}
 		return (
 			<div className="sosialhjelp-oppholdsadresse skjema-sporsmal" id="soknadsmottaker"
 			     style={{border: "2px dotted red"}}
@@ -182,12 +225,7 @@ class AdresseView extends React.Component<Props, {}> {
 								value="folkeregistrert"
 								onChange={() => this.onClickRadio(AdresseKategori.FOLKEREGISTRERT)}
 								checked={adresser.valg === AdresseKategori.FOLKEREGISTRERT}
-								label={
-									<div className="finnNavKontor__label">
-										<FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
-										<AdresseDetaljer adresse={folkeregistrertAdresse}/>
-									</div>
-								}
+								label={folkeregistrertAdresseLabel}
 							/>
 							<SoknadsmottakerVelger
 								label={getIntlTextOrKey(this.props.intl,
@@ -226,11 +264,7 @@ class AdresseView extends React.Component<Props, {}> {
 						value="soknad"
 						onChange={() => this.onClickRadio(AdresseKategori.SOKNAD)}
 						checked={adresser.valg === AdresseKategori.SOKNAD}
-						label={
-							<div className="finnNavKontor__label">
-								<FormattedMessage id="kontakt.system.oppholdsadresse.valg.soknad" />
-							</div>
-						}
+						label={annenAdresseLabel}
 					/>
 					<div className="skjema-sporsmal--jaNeiSporsmal">
 						<Underskjema visible={adresser.valg === AdresseKategori.SOKNAD}>
@@ -267,7 +301,7 @@ class AdresseView extends React.Component<Props, {}> {
 					</div>
 				</SporsmalFaktum>
 				<SoknadsmottakerInfo
-					synlig={restStatus !== REST_STATUS.PENDING}
+					synlig={visSoknadsmottakerInfo}
 					soknadsmottakerStatus={this.soknadsmottakerStatus()}
 					enhetsnavn={valgtNavEnhet && valgtNavEnhet.enhetsnavn}
 					kommunenavn={valgtNavEnhet && valgtNavEnhet.kommunenavn}
