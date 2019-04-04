@@ -33,6 +33,7 @@ describe("Telefon react komponent", () => {
 		);
 
 		expect(harInputfelt(wrapper, "tel")).toBeFalsy();
+		wrapper.unmount();
 	});
 
 	it("vise inputfelt", () => {
@@ -54,6 +55,7 @@ describe("Telefon react komponent", () => {
 		);
 
 		expect(harInputfelt(wrapper, "tel")).toBeTruthy();
+		wrapper.unmount();
 	});
 
 });
