@@ -14,6 +14,21 @@
 	animation-duration: 1200ms;
 	animation-iteration-count: infinite;
 	animation-timing-function: ease-in-out;
+
+	&__narrow {
+	  width: 55%;
+	}
+
+	&__short_delay {
+	  -webkit-animation-delay: 300ms;
+	  animation-delay: 300ms;
+	}
+
+	&__long_delay {
+	  -webkit-animation-delay: 600ms;
+	  animation-delay: 600ms;
+	}
+
   }
 
   /* Safari 4.0 - 8.0 */
@@ -34,17 +49,6 @@
 	50% {
 	  background-color: #DFDEDA;
 	}
-  }
-
-  .bar1 {
-	-webkit-animation-delay: 300ms;
-	animation-delay: 300ms;
-  }
-
-  .bar2 {
-	width: 55%;
-	-webkit-animation-delay: 600ms;
-	animation-delay: 600ms;
   }
 
 }
