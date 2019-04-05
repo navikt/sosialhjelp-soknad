@@ -16,7 +16,7 @@ import {Column, Row} from "nav-frontend-grid";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {
     lagreOpplysning,
-    updateOpplysning
+    updateOpplysning, validerFeltIOpplysning
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
@@ -35,27 +35,24 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
 
 
     handleChange(input: string, radIndex: number, inputFelt: InputType){
-        let value: string | number | null = null;
-        switch(inputFelt){
-            case InputType.BESKRIVELSE: { value = input; break;}
-            case InputType.BELOP: { value = parseInt(input, 10); break;}
-            case InputType.BRUTTO: { value = parseInt(input, 10); break;}
-            case InputType.NETTO: { value = parseInt(input, 10); break;}
-            case InputType.AVDRAG: { value = parseInt(input, 10); break;}
-            case InputType.RENTER: { value = parseInt(input, 10); break;}
-            default: {break;}
-        }
+
+        // if has feil i dette input feltet already:
+        // valider input
+
         const { opplysning } = this.props;
         const opplysningUpdated: Opplysning = { ...opplysning };
         const raderUpdated: OpplysningRad[] = opplysning.rader.map((e) => ({...e}));
-        raderUpdated[radIndex][inputFelt] = value;
+        raderUpdated[radIndex][inputFelt] = input;
         opplysningUpdated.rader = raderUpdated;
         this.props.dispatch(updateOpplysning(opplysningUpdated));
     }
 
-    handleBlur(){
-        const { behandlingsId, opplysning } = this.props;
-        this.props.dispatch(lagreOpplysning(behandlingsId, opplysning));
+    handleBlur(radIndex: number, inputFelt: InputType){
+        const { opplysning } = this.props;
+        this.props.dispatch(validerFeltIOpplysning(opplysning, radIndex, inputFelt));
+        // this.props.dispatch(lagreOpplysning(behandlingsId, opplysning));
+        console.warn(radIndex);
+        console.warn(inputFelt);
     }
 
     handleLeggTilRad(){
@@ -92,6 +89,8 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                 opplysning.radType ===RadType.RADER_MED_BESKRIVELSE_OG_BELOP;
             const skalViseBruttoOgNetto: boolean = opplysning.radType === RadType.RADER_MED_BRUTTO_OG_NETTO;
             const skalViseAvdragOgRenter: boolean = opplysning.radType === RadType.RADER_MED_AVDRAG_OG_RENTER;
+            const textKeyForOpplysningType = getTextKeyForType(opplysning.type);
+
 
             return (
                 <Row key={radIndex} className="opplysning__row">
@@ -101,11 +100,11 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                             <InputEnhanced
                                 id="beskrivelse"
                                 onChange={(input) => this.handleChange(input, radIndex, InputType.BESKRIVELSE)}
-                                onBlur={() => this.handleBlur()}
+                                onBlur={() => this.handleBlur(radIndex, InputType.BESKRIVELSE)}
                                 verdi={vedleggRad.beskrivelse ? vedleggRad.beskrivelse : ""}
                                 required={false}
                                 bredde={"S"}
-                                faktumKey={getTextKeyForType(opplysning.type) + ".beskrivelse"}
+                                faktumKey={textKeyForOpplysningType + ".beskrivelse"}
                             />
                         </Column>
                     }
@@ -115,9 +114,9 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                             <InputEnhanced
                                 id="belop"
                                 onChange={(input) => this.handleChange(input, radIndex, InputType.BELOP)}
-                                onBlur={() => this.handleBlur()}
-                                faktumKey={getTextKeyForType(opplysning.type) + ".utbetaling"}
-                                verdi={vedleggRad.belop ? vedleggRad.belop.toString() : ""}
+                                onBlur={() => this.handleBlur(radIndex, InputType.BELOP)}
+                                faktumKey={textKeyForOpplysningType + ".belop"}
+                                verdi={vedleggRad.belop ? vedleggRad.belop : ""}
                                 required={false}
                                 bredde={"S"}
                             />
@@ -128,9 +127,9 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                             <InputEnhanced
                                 id="brutto"
                                 onChange={(input) => this.handleChange(input, radIndex, InputType.BRUTTO)}
-                                onBlur={() => this.handleBlur()}
-                                faktumKey={getTextKeyForType(opplysning.type)}
-                                verdi={vedleggRad.brutto? vedleggRad.brutto.toString() : ""}
+                                onBlur={() => this.handleBlur(radIndex, InputType.BRUTTO)}
+                                faktumKey={textKeyForOpplysningType + ".brutto"}
+                                verdi={vedleggRad.brutto? vedleggRad.brutto : ""}
                                 required={false}
                                 bredde={"S"}
                             />
@@ -141,9 +140,9 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                             <InputEnhanced
                                 id="netto"
                                 onChange={(input) => this.handleChange(input, radIndex, InputType.NETTO)}
-                                onBlur={() => this.handleBlur()}
-                                faktumKey={getTextKeyForType(opplysning.type)}
-                                verdi={vedleggRad.netto ? vedleggRad.netto.toString() : ""}
+                                onBlur={() => this.handleBlur(radIndex, InputType.NETTO)}
+                                faktumKey={textKeyForOpplysningType + ".netto"}
+                                verdi={vedleggRad.netto ? vedleggRad.netto : ""}
                                 required={false}
                                 bredde={"S"}
                             />
@@ -154,9 +153,9 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                             <InputEnhanced
                                 id="avdrag"
                                 onChange={(input) => this.handleChange(input, radIndex, InputType.AVDRAG)}
-                                onBlur={() => this.handleBlur()}
-                                faktumKey={getTextKeyForType(opplysning.type)}
-                                verdi={vedleggRad.avdrag ? vedleggRad.avdrag.toString() : ""}
+                                onBlur={() => this.handleBlur(radIndex, InputType.AVDRAG)}
+                                faktumKey={textKeyForOpplysningType + ".avdrag"}
+                                verdi={vedleggRad.avdrag ? vedleggRad.avdrag : ""}
                                 required={false}
                                 bredde={"S"}
                             />
@@ -167,9 +166,9 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                             <InputEnhanced
                                 id="renter"
                                 onChange={(input) => this.handleChange(input, radIndex, InputType.RENTER)}
-                                onBlur={() => this.handleBlur()}
-                                faktumKey={getTextKeyForType(opplysning.type)}
-                                verdi={vedleggRad.renter ? vedleggRad.renter.toString() : ""}
+                                onBlur={() => this.handleBlur(radIndex, InputType.RENTER)}
+                                faktumKey={textKeyForOpplysningType + ".renter"}
+                                verdi={vedleggRad.renter ? vedleggRad.renter : ""}
                                 required={false}
                                 bredde={"S"}
                             />

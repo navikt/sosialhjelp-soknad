@@ -56,6 +56,7 @@ interface StateProps {
 	valideringsfeil?: Valideringsfeil[];
 	stegValidertCounter?: number;
 	oppsummeringBekreftet?: boolean;
+    fodselsnummer: string;
 }
 
 type Props = OwnProps &
@@ -89,6 +90,11 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		}
 	}
 
+	loggAdresseBucketsTilKibana(){
+
+		console.warn("Fodslesnummer: " + this.props.fodselsnummer);
+	}
+
 	sendSoknad(brukerBehandlingId: string) {
 		this.props.dispatch(sendSoknad(brukerBehandlingId));
 	}
@@ -97,6 +103,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		if (aktivtSteg.type === SkjemaStegType.oppsummering) {
 			if (this.props.oppsummeringBekreftet) {
 				this.loggAdresseTypeTilGrafana();
+				this.loggAdresseBucketsTilKibana();
 				this.sendSoknad(brukerBehandlingId);
 			} else {
 				this.props.dispatch(setVisBekreftMangler(true));
@@ -211,7 +218,8 @@ const mapStateToProps = (state: SoknadAppState): StateProps => {
 		valideringer: state.validering.valideringsregler,
 		visFeilmeldinger: state.validering.visValideringsfeil,
 		valideringsfeil: state.validering.feil,
-		stegValidertCounter: state.validering.stegValidertCounter
+		stegValidertCounter: state.validering.stegValidertCounter,
+		fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer
 	};
 };
 

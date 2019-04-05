@@ -31,21 +31,24 @@ export const updateOkonomiskOpplysning = (
 
     switch(okonomiskOpplysning.gruppe){
         case OpplysningGruppe.ARBEID : {
-            grupper.gruppeArbeid.map((element: Opplysning): Opplysning => {
+            const gruppeArbeidUpdated = grupper.gruppeArbeid.map((element: Opplysning): Opplysning => {
                 return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
             });
+            grupper.gruppeArbeid = gruppeArbeidUpdated;
             return grupper;
         }
         case OpplysningGruppe.FAMILIE : {
-            grupper.gruppeFamilie.map((element: Opplysning): Opplysning => {
+            const gruppeFamilieUpdated = grupper.gruppeFamilie.map((element: Opplysning): Opplysning => {
                 return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
             });
+            grupper.gruppeFamilie = gruppeFamilieUpdated;
             return grupper;
         }
         case OpplysningGruppe.BOSITUASJON : {
-            grupper.gruppeBosituasjon.map((element: Opplysning): Opplysning => {
+            const gruppeBosituasjonUpdated = grupper.gruppeBosituasjon.map((element: Opplysning): Opplysning => {
                 return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
             });
+            grupper.gruppeBosituasjon = gruppeBosituasjonUpdated;
             return grupper;
         }
         case OpplysningGruppe.INNTEKT : {
@@ -56,27 +59,31 @@ export const updateOkonomiskOpplysning = (
             return grupper;
         }
         case OpplysningGruppe.UTGIFTER : {
-            grupper.gruppeUtgifter.map((element: Opplysning): Opplysning => {
+            const gruppeUtgifterUpdated = grupper.gruppeUtgifter.map((element: Opplysning): Opplysning => {
                 return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
             });
+            grupper.gruppeUtgifter = gruppeUtgifterUpdated;
             return grupper;
         }
         case OpplysningGruppe.GENERELLE_VEDLEGG : {
-            grupper.gruppeGenerelleVedlegg.map((element: Opplysning): Opplysning => {
+            const gruppeGenerelleVedleggUpdated = grupper.gruppeGenerelleVedlegg.map((element: Opplysning): Opplysning => {
                 return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
             });
+            grupper.gruppeGenerelleVedlegg = gruppeGenerelleVedleggUpdated;
             return grupper;
         }
         case OpplysningGruppe.ANDRE_UTGIFTER : {
-            grupper.gruppeAndreUtgifter.map((element: Opplysning): Opplysning => {
+            const gruppeAndreUtgifterUpdated =  grupper.gruppeAndreUtgifter.map((element: Opplysning): Opplysning => {
                 return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
             });
+            grupper.gruppeAndreUtgifter = gruppeAndreUtgifterUpdated;
             return grupper;
         }
         case OpplysningGruppe.UKJENT : {
-            grupper.gruppeUkjent.map((element: Opplysning): Opplysning => {
+            const gruppeUkjentUpdated = grupper.gruppeUkjent.map((element: Opplysning): Opplysning => {
                 return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
             });
+            grupper.gruppeUkjent = gruppeUkjentUpdated;
             return grupper;
         }
         default: {
@@ -132,7 +139,6 @@ export const generateGrupperFromBackendData = (okonomiskeOpplysnigerBackend: Oko
     const alleOkonomiskeOpplysninger: Opplysning[] = okonomiskeOpplysningerAktive.concat(okonomiskeOpplysningerSlettede);
 
 
-
     const gruppeArbeid: Opplysning[] = [];
     const gruppeFamilie: Opplysning[] = [];
     const gruppeBosituasjon: Opplysning[] = [];
@@ -141,7 +147,6 @@ export const generateGrupperFromBackendData = (okonomiskeOpplysnigerBackend: Oko
     const gruppeGenerelleVedlegg: Opplysning[] = [];
     const gruppeAndreUtgifter: Opplysning[] = [];
     const gruppeUkjent: Opplysning[] = [];
-
 
 
     alleOkonomiskeOpplysninger.forEach((okonomiskOpplysning: Opplysning) => {
@@ -315,6 +320,20 @@ export function getRadType(type: OpplysningType){
 
 // TEKST RELATERT
 
+export const getGruppeTittelKey: (opplysningGruppe: OpplysningGruppe) => string = (opplysningGruppe: OpplysningGruppe) => {
+    switch(opplysningGruppe) {
+        case OpplysningGruppe.ARBEID: {return "opplysninger.arbeid"}
+        case OpplysningGruppe.FAMILIE: {return "opplysninger.familiesituasjon"}
+        case OpplysningGruppe.BOSITUASJON: {return "opplysninger.bosituasjon"}
+        case OpplysningGruppe.INNTEKT: {return "opplysninger.inntekt"}
+        case OpplysningGruppe.UTGIFTER: {return "opplysninger.utgifter"}
+        case OpplysningGruppe.GENERELLE_VEDLEGG: {return "opplysninger.generell"}
+        case OpplysningGruppe.ANDRE_UTGIFTER: {return "opplysninger.ekstrainfo"}
+        case OpplysningGruppe.UKJENT: {return "opplysninger.ukjent"}
+        default: {return "unknown group tittle"}
+    }
+};
+
 export const getTextKeyForType: (type: string) => string = (type: string) => {
     return typeToTextKeyMap[type] ? typeToTextKeyMap[type] : "unknown type";
 };
@@ -325,10 +344,10 @@ const typeToTextKeyMap = {
     "student|vedtak" : "opplysninger.arbeid.student",
     "barnebidrag|betaler" : "opplysninger.familiesituasjon.barnebidrag.betaler",
     "barnebidrag|mottar" : "opplysninger.familiesituasjon.barnebidrag.mottar",
-    "samvarsavtale|barn" : "",
+    "samvarsavtale|barn" : "opplysninger.familiesituasjon.barn.samvarsavtale",
     "husleiekontrakt|husleiekontrakt" : "",
     "husleiekontrakt|kommunal" : "opplysninger.bosituasjon.kommunal",
-    "bostotte|vedtak" : "opplysninger.inntekt.bostotte.utbetaling",
+    "bostotte|vedtak" : "opplysninger.inntekt.bostotte",
     "kontooversikt|brukskonto" : "opplysninger.inntekt.bankinnskudd.brukskonto",
     "kontooversikt|bsu" : "opplysninger.inntekt.bankinnskudd.bsu",
     "kontooversikt|sparekonto" : "opplysninger.inntekt.bankinnskudd.sparekonto",
@@ -340,9 +359,9 @@ const typeToTextKeyMap = {
     "dokumentasjon|forsikringsutbetaling" : "opplysninger.inntekt.inntekter.forsikringsutbetalinger",
     "dokumentasjon|annetinntekter" : "opplysninger.inntekt.inntekter.annet",
     "faktura|husleie" : "opplysninger.utgifter.boutgift.husleie",
-    "faktura|strom" : "opplysninger.utgifter.boutgift.strom.sisteregning",
-    "faktura|kommunaleavgifter" : "opplysninger.utgifter.boutgift.kommunaleavgifter.sisteregning",
-    "faktura|oppvarming" : "opplysninger.utgifter.boutgift.oppvarming.sisteregning",
+    "faktura|strom" : "opplysninger.utgifter.boutgift.strom",
+    "faktura|kommunaleavgifter" : "opplysninger.utgifter.boutgift.kommunaleavgifter",
+    "faktura|oppvarming" : "opplysninger.utgifter.boutgift.oppvarming",
     "nedbetalingsplan|avdraglaan" : "opplysninger.utgifter.boutgift.avdraglaan",
     "dokumentasjon|annetboutgift" : "opplysninger.utgifter.boutgift.andreutgifter",
     "faktura|fritidsaktivitet" : "opplysninger.utgifter.barn.fritidsaktivitet",
@@ -352,6 +371,45 @@ const typeToTextKeyMap = {
     "faktura|annetbarnutgift" : "opplysninger.utgifter.barn.annet",
     "skattemelding|skattemelding" : "opplysninger.generell.skattemelding",
     "annet|annet" : "opplysninger.ekstrainfo.utgifter"
+};
+
+export const getTextKeyForVedleggType: (type: string) => string = (type: string) => {
+    return vedleggTypeToTextKeyMap[type] ? vedleggTypeToTextKeyMap[type] : "unknown type";
+};
+
+const vedleggTypeToTextKeyMap = {
+    "lonnslipp|arbeid" : "mangler",
+    "sluttoppgjor|arbeid" : "vedlegg.sluttoppgjor.arbeid",
+    "student|vedtak" : "vedlegg.student.vedtak",
+    "barnebidrag|betaler" : "vedlegg.barnebidrag.betaler",
+    "barnebidrag|mottar" : "vedlegg.barnebidrag.mottar",
+    "samvarsavtale|barn" : "vedlegg.samvarsavtale.barn",
+    "husleiekontrakt|husleiekontrakt" : "mangler",
+    "husleiekontrakt|kommunal" : "vedlegg.husleiekontrakt.kommunal",
+    "bostotte|vedtak" : "vedlegg.bostotte.vedtak",
+    "kontooversikt|brukskonto" : "vedlegg.kontooversikt.brukskonto",
+    "kontooversikt|bsu" : "vedlegg.kontooversikt.bsu",
+    "kontooversikt|sparekonto" : "vedlegg.kontooversikt.sparekonto",
+    "kontooversikt|livsforsikring" : "vedlegg.kontooversikt.livsforsikring",
+    "kontooversikt|aksjer" : "vedlegg.kontooversikt.aksjer",
+    "kontooversikt|annet" : "vedlegg.kontooversikt.annet",
+    "dokumentasjon|utbytte" : "vedlegg.dokumentasjon.utbytte",
+    "salgsoppgjor|eiendom" : "vedlegg.salgsoppgjor.eiendom",
+    "dokumentasjon|forsikringsutbetaling" : "vedlegg.dokumentasjon.forsikringsutbetaling",
+    "dokumentasjon|annetinntekter" : "vedlegg.dokumentasjon.annetinntekter",
+    "faktura|husleie" : "vedlegg.faktura.husleie",
+    "faktura|strom" : "vedlegg.faktura.strom",
+    "faktura|kommunaleavgifter" : "vedlegg.faktura.kommunaleavgifter",
+    "faktura|oppvarming" : "vedlegg.faktura.oppvarming",
+    "nedbetalingsplan|avdraglaan" : "vedlegg.nedbetalingsplan.avdraglaan",
+    "dokumentasjon|annetboutgift" : "vedlegg.dokumentasjon.annetboutgift",
+    "faktura|fritidsaktivitet" : "vedlegg.faktura.fritidsaktivitet",
+    "faktura|barnehage" : "vedlegg.faktura.barnehage",
+    "faktura|sfo" : "vedlegg.faktura.sfo",
+    "faktura|tannbehandling" : "vedlegg.faktura.tannbehandling",
+    "faktura|annetbarnutgift" : "vedlegg.faktura.annetbarnutgift",
+    "skattemelding|skattemelding" : "vedlegg.skattemelding.skattemelding",
+    "annet|annet" : "vedlegg.annet.annet"
 };
 
 export const getTomVedleggRad: () => OpplysningRad = () => {

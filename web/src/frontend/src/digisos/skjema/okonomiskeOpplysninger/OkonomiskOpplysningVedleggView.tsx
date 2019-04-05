@@ -8,6 +8,9 @@ import OpplastetVedlegg from "./VedleggsFilNy";
 import LastOppFil from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
 import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
+import {
+    getTextKeyForVedleggType
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 
 interface OwnProps {
     okonomiskOpplysning: Opplysning;
@@ -30,18 +33,18 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
 
 
     renderOpplastingAvVedleggSeksjon(opplysning: Opplysning) {
+
+        const tittelKey = getTextKeyForVedleggType(this.props.okonomiskOpplysning.type) + ".tittel";
+
         const vedleggListe = opplysning.filer
             .map(fil => {
                 return <OpplastetVedlegg key={fil.uuid} fil={fil} onSlett={() => this.slettVedlegg(fil)}/>
             });
 
-
-
         return (
             <div>
-
                 <p>
-                    <FormattedMessage id={"Vedleggs Key"}/>
+                    <FormattedMessage id={tittelKey}/>
                 </p>
                 <div className="vedleggsliste">
                     {vedleggListe}

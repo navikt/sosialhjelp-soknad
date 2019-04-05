@@ -32,14 +32,19 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
         }
         case OkonomiskeOpplysningerActionTypeKeys.OPPDATER_OKONOMISK_OPPLYSNING: {
 
-            debugger;
-
             const grupperUpdated: Grupper = updateOkonomiskOpplysning(state.grupper, action.okonomiskOpplysning);
 
             return {
                 ...state,
                 restStatus: state.restStatus,
                 grupper : grupperUpdated
+            }
+        }
+        case OkonomiskeOpplysningerActionTypeKeys.VALIDER_FELT_I_OPPLYSNING: {
+
+
+            return {
+                ...state,
             }
         }
         default:

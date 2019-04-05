@@ -73,7 +73,7 @@ class LastOppFil extends React.Component<Props, {}> {
 
 				<div role="alert" aria-live="assertive">
 					<div className="skjemaelement__feilmelding">
-						<FormattedHTMLMessage id={"feil.opplasting.av.vedleggsfil"}/>
+						<FormattedHTMLMessage id={"fil.feil.kryptert"}/>
 					</div>
 				</div>
 			</div>

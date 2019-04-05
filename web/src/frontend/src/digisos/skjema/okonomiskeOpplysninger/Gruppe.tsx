@@ -1,18 +1,18 @@
 import * as React from "react";
 import Skjemapanel from "../../../nav-soknad/components/skjemapanel";
-import { injectIntl } from "react-intl";
+import { FormattedHTMLMessage, injectIntl } from "react-intl";
 import {connect} from "react-redux";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import {StoreToProps} from "./index";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {
-    Opplysning,
+    Opplysning, OpplysningGruppe,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 import OkonomiskOpplysningView from "./OkonomiskOpplysningView";
+import {getGruppeTittelKey} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 
 export interface OwnProps {
-    key: string;
-    tittel: string;
+    opplysningGruppeKey: OpplysningGruppe;
     gruppe: Opplysning[];
 }
 
@@ -35,7 +35,9 @@ class GruppeView extends React.Component<Props, {}> {
 
     render() {
 
-        const {key, tittel, gruppe} = this.props;
+        const {opplysningGruppeKey, gruppe} = this.props;
+
+        const gruppeTittelKey = getGruppeTittelKey(opplysningGruppeKey);
 
         if (gruppe && gruppe.length === 0) {
             return null;
@@ -44,8 +46,7 @@ class GruppeView extends React.Component<Props, {}> {
         return (
             <Skjemapanel className="skjema-progresjonsblokk">
                 <div className="skjema-progresjonsblokk__head">
-                    <h3>{tittel}</h3>
-                    <p>{key}</p>
+                    <h3><FormattedHTMLMessage id={gruppeTittelKey + ".sporsmal"}/> </h3>
                 </div>
                 { this.renderGruppeInnhold(gruppe) }
             </Skjemapanel>

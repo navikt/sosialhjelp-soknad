@@ -23,6 +23,40 @@ export interface StoreToProps {
     behandlingsId: string;
 }
 
+// const okonomiskeFaktumKeys = [
+//     "dinsituasjon.jobb",
+//     "dinsituasjon.studerer",
+//     "familie.barn.true.barnebidrag",
+//     "bosituasjon",
+//     "inntekt.bostotte",
+//     "inntekt.eierandeler.true.type.bolig",
+//     "inntekt.eierandeler.true.type.kjoretoy",
+//     "inntekt.eierandeler.true.type.campingvogn",
+//     "inntekt.eierandeler.true.type.fritidseiendom",
+//     "inntekt.eierandeler.true.type.annet",
+//     "inntekt.bankinnskudd.true.type.brukskonto",
+//     "inntekt.bankinnskudd.true.type.bsu",
+//     "inntekt.bankinnskudd.true.type.sparekonto",
+//     "inntekt.bankinnskudd.true.type.livsforsikring",
+//     "inntekt.bankinnskudd.true.type.aksjer",
+//     "inntekt.bankinnskudd.true.type.annet",
+//     "inntekt.inntekter.true.type.utbytte",
+//     "inntekt.inntekter.true.type.salg",
+//     "inntekt.inntekter.true.type.forsikringsutbetalinger",
+//     "inntekt.inntekter.true.type.annet",
+//     "utgifter.boutgift.true.type.husleie",
+//     "utgifter.boutgift.true.type.strom",
+//     "utgifter.boutgift.true.type.kommunaleavgifter",
+//     "utgifter.boutgift.true.type.oppvarming",
+//     "utgifter.boutgift.true.type.avdraglaan",
+//     "utgifter.boutgift.true.type.andreutgifter",
+//     "utgifter.barn.true.utgifter.fritidsaktivitet",
+//     "utgifter.barn.true.utgifter.barnehage",
+//     "utgifter.barn.true.utgifter.sfo",
+//     "utgifter.barn.true.utgifter.tannbehandling",
+//     "utgifter.barn.true.utgifter.annet"
+// ]; 31
+
 
 type Props = StoreToProps & InjectedIntlProps & DispatchProps;
 
@@ -53,14 +87,14 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
 
         return(
             <div>
-                <Gruppe key={OpplysningGruppe.ARBEID} tittel={"ARBEID"} gruppe={gruppeArbeid}/>
-                <Gruppe key={OpplysningGruppe.FAMILIE} tittel={"FAMILIE"} gruppe={gruppeFamilie}/>
-                <Gruppe key={OpplysningGruppe.BOSITUASJON} tittel={"BOSITUASJON"} gruppe={gruppeBosituasjon}/>
-                <Gruppe key={OpplysningGruppe.INNTEKT} tittel={"INNTEKT"} gruppe={gruppeInntekt}/>
-                <Gruppe key={OpplysningGruppe.UTGIFTER} tittel={"UTGIFTER"} gruppe={gruppeUtgifter}/>
-                <Gruppe key={OpplysningGruppe.GENERELLE_VEDLEGG} tittel={"GENERELLE VEDLEGG"} gruppe={gruppeGenerelleVedlegg}/>
-                <Gruppe key={OpplysningGruppe.ANDRE_UTGIFTER} tittel={"ANDRE UTGIFTER"} gruppe={gruppeAndreUtgifter}/>
-                <Gruppe key={OpplysningGruppe.UKJENT} tittel={"UKJENT"} gruppe={gruppeUkjent}/>
+                <Gruppe opplysningGruppeKey={OpplysningGruppe.ARBEID} gruppe={gruppeArbeid}/>
+                <Gruppe opplysningGruppeKey={OpplysningGruppe.FAMILIE} gruppe={gruppeFamilie}/>
+                <Gruppe opplysningGruppeKey={OpplysningGruppe.BOSITUASJON} gruppe={gruppeBosituasjon}/>
+                <Gruppe opplysningGruppeKey={OpplysningGruppe.INNTEKT} gruppe={gruppeInntekt}/>
+                <Gruppe opplysningGruppeKey={OpplysningGruppe.UTGIFTER} gruppe={gruppeUtgifter}/>
+                <Gruppe opplysningGruppeKey={OpplysningGruppe.GENERELLE_VEDLEGG} gruppe={gruppeGenerelleVedlegg}/>
+                <Gruppe opplysningGruppeKey={OpplysningGruppe.ANDRE_UTGIFTER} gruppe={gruppeAndreUtgifter}/>
+                <Gruppe opplysningGruppeKey={OpplysningGruppe.UKJENT} gruppe={gruppeUkjent}/>
             </div>
         )
     }

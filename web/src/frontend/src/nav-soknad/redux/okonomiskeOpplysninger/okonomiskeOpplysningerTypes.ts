@@ -48,7 +48,7 @@ export interface Grupper {
 export enum OkonomiskeOpplysningerActionTypeKeys {
     GOT_DATA_FROM_BACKEND = "okonomiskeOpplysninger/GOT_DATA_FROM_BACKEND",
     OPPDATER_OKONOMISK_OPPLYSNING = "okonomiskeOpplysninger/OPPDATER_OKONOMISK_OPPLYSNING",
-    UPDATE_FIELD_IN_OPPLYSNING = "okonomiskeOpplysninger/UPDATE_FIELD_IN_OPPLYSNING"
+    VALIDER_FELT_I_OPPLYSNING = "okonomiskeOpplysninger/VALIDER_FELT_I_OPPLYSNING"
 }
 
 export interface GotDataFromBackend {
@@ -61,18 +61,18 @@ export interface UpdateOpplysning {
     okonomiskOpplysning: Opplysning;
 }
 
-export interface UpdateFieldInOpplysning {
-    type: OkonomiskeOpplysningerActionTypeKeys.UPDATE_FIELD_IN_OPPLYSNING;
-    verdi: string;
-    feltType: string;
-    opplysningType: OpplysningType;
-    gruppe: OpplysningGruppe;
+export interface ValiderFeltIOpplysning {
+    type: OkonomiskeOpplysningerActionTypeKeys.VALIDER_FELT_I_OPPLYSNING;
+    opplysning: Opplysning;
+    radindex: number;
+    felt: string;
 }
+
 
 export type OkonomiskeOpplysningerAction
     = GotDataFromBackend
     | UpdateOpplysning
-    | UpdateFieldInOpplysning
+    | ValiderFeltIOpplysning
 
 
 // MAPPING
@@ -149,11 +149,11 @@ export enum InputType {
 
 export interface OpplysningRad {
     "beskrivelse": string;
-    "belop": number;
-    "brutto": number;
-    "netto": number;
-    "avdrag": number;
-    "renter": number;
+    "belop": string;
+    "brutto": string;
+    "netto": string;
+    "avdrag": string;
+    "renter": string;
 }
 
 export interface Fil {

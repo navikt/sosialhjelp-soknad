@@ -12,7 +12,7 @@ const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `sok
 
 export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	return (dispatch: Dispatch) => {
-		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
+			dispatch(settRestStatus(sti, REST_STATUS.PENDING));
 		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
 			dispatch(oppdaterSoknadsdataSti(sti, response));
 			dispatch(settRestStatus(sti, REST_STATUS.OK));

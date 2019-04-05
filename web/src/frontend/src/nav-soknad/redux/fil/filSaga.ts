@@ -48,7 +48,6 @@ function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
 //
 function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
 	try {
-		debugger;
         const url = `opplastetVedlegg/${action.behandlingsId}/${action.vedleggId}`;
         const promise = yield call(fetchDelete, url);
 		const vedlegg = yield call(toJson, promise);

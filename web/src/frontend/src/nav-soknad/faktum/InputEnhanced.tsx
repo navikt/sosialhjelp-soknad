@@ -26,6 +26,7 @@ export interface OwnProps {
 	onChange: (verdi: string) => void;
 	getName?: () => string;
 	faktumKey: string;
+	faktumIndex?: number;
 	required: boolean;
 	feil?: any;
 	getFeil?: () => Feil;
@@ -41,7 +42,13 @@ class InputEnhanced extends React.Component<Props, {}> {
 
 	// TODO Dra ut til EnhancedComponentUtils.ts
 	getFeil(): Feil {
-		const { faktumKey } = this.props;
+		const { faktumKey, faktumIndex } = this.props;
+
+		console.warn(faktumIndex);
+		// if (faktumIndex){
+        //     const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey + faktumIndex.toString());
+        //     return !feilkode ? null : { feilmelding: this.props.intl.formatHTMLMessage({ id: feilkode.feilkode }) };
+		// }
 		const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey);
 		return !feilkode ? null : { feilmelding: this.props.intl.formatHTMLMessage({ id: feilkode.feilkode }) };
 	}

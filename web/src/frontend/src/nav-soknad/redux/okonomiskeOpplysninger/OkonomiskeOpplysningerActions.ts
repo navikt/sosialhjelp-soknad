@@ -3,11 +3,12 @@ import {fetchPut, fetchToJson} from "../../utils/rest-utils";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {
     OkonomiskeOpplysningerAction,
-    OkonomiskeOpplysningerActionTypeKeys, OkonomiskeOpplysningerBackend,
-    Opplysning, OkonomiskOpplysningBackend
+    OkonomiskeOpplysningerActionTypeKeys,
+    OkonomiskeOpplysningerBackend,
+    OkonomiskOpplysningBackend,
+    Opplysning
 } from "./okonomiskeOpplysningerTypes";
 import {getOkonomomiskeOpplysningerUrl, transformToBackendOpplysning} from "./okonomiskeOpplysningerUtils";
-
 
 
 export const gotDataFromBackend  = (response: OkonomiskeOpplysningerBackend): OkonomiskeOpplysningerAction => {
@@ -21,6 +22,15 @@ export const updateOpplysning = (okonomiskOpplysning: Opplysning): OkonomiskeOpp
     return {
         type: OkonomiskeOpplysningerActionTypeKeys.OPPDATER_OKONOMISK_OPPLYSNING,
         okonomiskOpplysning
+    }
+};
+
+export const validerFeltIOpplysning = (opplysning: Opplysning, radindex: number, felt: string): OkonomiskeOpplysningerAction => {
+    return {
+        type: OkonomiskeOpplysningerActionTypeKeys.VALIDER_FELT_I_OPPLYSNING,
+        opplysning,
+        radindex,
+        felt
     }
 };
 
