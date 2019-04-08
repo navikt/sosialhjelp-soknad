@@ -17,10 +17,7 @@ type Props = SoknadsdataContainerProps & InjectedIntlProps;
 class ForsorgerPliktView extends React.Component<Props, {}> {
 
 	componentDidMount() {
-		setTimeout(() => {
-			this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.FORSORGERPLIKT);
-		}, 4000);
-
+		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.FORSORGERPLIKT);
 	}
 
 	render() {
