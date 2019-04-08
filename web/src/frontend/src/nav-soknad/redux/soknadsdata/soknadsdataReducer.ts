@@ -35,6 +35,10 @@ import {
 	initialBarneutgifterState,
 	Barneutgifter
 } from "../../../digisos/skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
+import {
+	BasisPersonalia,
+	initialBasisPersonalia
+} from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import { REST_STATUS } from "../../types";
 
 export enum SoknadsdataActionTypeKeys {
@@ -62,12 +66,14 @@ export enum SoknadsSti {
 	VERDIER = "inntekt/verdier",
 	FORMUE = "inntekt/formue",
 	BOUTGIFTER = "utgifter/boutgifter",
-	BARNEUTGIFTER = "utgifter/barneutgifter"
+	BARNEUTGIFTER = "utgifter/barneutgifter",
+	BASIS_PERSONALIA = "personalia/basisPersonalia"
 }
 
 export interface Personalia {
 	kontonummer?: Kontonummer;
 	telefonnummer?: Telefonnummer;
+	basisPersonalia?: BasisPersonalia;
 }
 
 export interface Inntekt {
@@ -85,7 +91,8 @@ export interface Utgifter {
 
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
-	telefonnummer: initialTelefonnummerState
+	telefonnummer: initialTelefonnummerState,
+	basisPersonalia: initialBasisPersonalia
 };
 
 export const initialInntektState: Inntekt = {
@@ -156,7 +163,8 @@ export const initialSoknadsdataState: Soknadsdata = {
 	restStatus: {
 		personalia: {
 			telefonnummer: REST_STATUS.INITIALISERT,
-			kontonummer: REST_STATUS.INITIALISERT
+			kontonummer: REST_STATUS.INITIALISERT,
+			basisPersonalia: REST_STATUS.INITIALISERT
 		}
 	}
 };
