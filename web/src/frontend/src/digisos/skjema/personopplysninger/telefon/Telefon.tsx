@@ -69,8 +69,6 @@ class TelefonView extends React.Component<Props, {}> {
 				telefonnummer.brukerutfyltVerdi = LANDKODE + this.fjernLandkode(verdi);
 			}
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
-		} else {
-			// TODO Ikke la bruker gå til neste trinn.
 		}
 	}
 
