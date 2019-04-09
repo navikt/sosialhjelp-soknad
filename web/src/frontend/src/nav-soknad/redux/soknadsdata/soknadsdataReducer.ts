@@ -169,6 +169,7 @@ export const initialSoknadsdataState: Soknadsdata = {
 		},
 		inntekt: {
 			bostotte: REST_STATUS.INITIALISERT,
+			utbetalinger: REST_STATUS.INITIALISERT,
 			verdier: REST_STATUS.INITIALISERT
 		},
 		oppdaterVedlegg: REST_STATUS.INITIALISERT

@@ -11,7 +11,6 @@ import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdata
 import { Bostotte } from "./bostotteTypes";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
-import { fetchToJson } from "../../../../nav-soknad/utils/rest-utils";
 import { REST_STATUS } from "../../../../nav-soknad/types";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte";
@@ -19,8 +18,7 @@ const FAKTUM_BOSTOTTE = "inntekt.bostotte";
 type Props = SoknadsdataContainerProps  & InjectedIntlProps;
 
 interface State {
-	vedleggPending: boolean,
-	bostottePending: boolean
+	pending: boolean
 }
 
 class BostotteView extends React.Component<Props, State> {
@@ -28,38 +26,27 @@ class BostotteView extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			vedleggPending: true,
-			bostottePending: true
+			pending: true
 		}
 	}
 
-	componentDidMount(): void {
-		const {brukerBehandlingId} = this.props;
-		fetchToJson("sosialhjelpvedlegg/oppdaterVedlegg/" + brukerBehandlingId)
-			.then((response: any) => {
-				this.props.settRestStatus(SoknadsSti.OPPDATER_VEDLEGG, REST_STATUS.OK)
-			});
+	componentDidMount() {
+		const {hentSoknadsdata, brukerBehandlingId} = this.props;
+		hentSoknadsdata(brukerBehandlingId, SoknadsSti.BOSTOTTE);
 	}
 
 	componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-		const {soknadsdata, brukerBehandlingId} = prevProps;
-		const restStatusOppdaterVedlegg = soknadsdata.restStatus.oppdaterVedlegg;
-		const restStatusInntektBostotte = soknadsdata.restStatus.inntekt.bostotte;
-		if (this.state.vedleggPending === true) {
-			if (restStatusOppdaterVedlegg === REST_STATUS.OK) {
-				this.props.hentSoknadsdata(brukerBehandlingId, SoknadsSti.BOSTOTTE);
-				this.setState({vedleggPending: false});
-			}
-		} else {
-			if (prevState.bostottePending === true && restStatusInntektBostotte === REST_STATUS.OK ) {
-				this.setState({bostottePending: false});
+		if (this.state.pending) {
+			if (this.props.soknadsdata.restStatus.inntekt.bostotte === REST_STATUS.OK) {
+				this.setState({pending: false});
 			}
 		}
 	}
 
 	handleClickJaNeiSpsm(verdi: boolean) {
-		if(!this.state.bostottePending) {
-			const {brukerBehandlingId, soknadsdata} = this.props;
+		const {brukerBehandlingId, soknadsdata} = this.props;
+		const restStatus = soknadsdata.restStatus.inntekt.bostotte;
+		if(restStatus === REST_STATUS.OK) {
 			const bostotte: Bostotte = soknadsdata.inntekt.bostotte;
 			bostotte.bekreftelse = verdi;
 			this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSTOTTE, bostotte);
@@ -73,7 +60,7 @@ class BostotteView extends React.Component<Props, State> {
 		return (
 			<div className="skjema-sporsmal">
 				<JaNeiSporsmal
-					visPlaceholder={this.state.bostottePending}
+					visPlaceholder={this.state.pending}
 					tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_BOSTOTTE)}
 					faktumKey={FAKTUM_BOSTOTTE}
 					verdi={bostotte.bekreftelse}

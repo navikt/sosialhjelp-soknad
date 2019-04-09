@@ -20,7 +20,7 @@ const Verdier = "inntekt.eierandeler";
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 interface State {
-    vedleggPending: boolean
+    pending: boolean
 }
 
 export class VerdierView extends React.Component<Props, State> {
@@ -28,15 +28,18 @@ export class VerdierView extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            vedleggPending: true
+            pending: true
         }
     }
 
+    componentDidMount() {
+        this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.VERDIER);
+    }
+
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-        if (this.state.vedleggPending) {
-            if (this.props.soknadsdata.restStatus.oppdaterVedlegg === REST_STATUS.OK) {
-                this.setState({vedleggPending: false});
-                this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.VERDIER);
+        if (this.state.pending) {
+            if (this.props.soknadsdata.restStatus.inntekt.verdier === REST_STATUS.OK) {
+                this.setState({pending: false});
             }
         }
     }
@@ -44,8 +47,7 @@ export class VerdierView extends React.Component<Props, State> {
     handleClickJaNeiSpsm(verdi: boolean) {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const restStatus = soknadsdata.restStatus.inntekt.verdier;
-        if (!this.state.vedleggPending && restStatus === REST_STATUS.OK) {
-            console.warn("klikk klikk");
+        if (!this.state.pending && restStatus === REST_STATUS.OK) {
             const verdier: Verdier = soknadsdata.inntekt.verdier;
             verdier.bekreftelse = verdi;
             if (!verdi) {
@@ -102,7 +104,7 @@ export class VerdierView extends React.Component<Props, State> {
         const restStatus = soknadsdata.restStatus.inntekt.verdier;
         return (
             <JaNeiSporsmal
-                visPlaceholder={this.state.vedleggPending || restStatus !== REST_STATUS.OK}
+                visPlaceholder={this.state.pending && restStatus !== REST_STATUS.OK}
                 tekster={getFaktumSporsmalTekst(this.props.intl, Verdier)}
                 faktumKey={Verdier}
                 verdi={verdier.bekreftelse}

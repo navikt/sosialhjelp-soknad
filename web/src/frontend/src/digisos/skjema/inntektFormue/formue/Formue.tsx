@@ -20,7 +20,7 @@ const FORMUE = "inntekt.bankinnskudd";
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 interface State {
-    vedleggPending: boolean
+    pending: boolean
 }
 
 export class FormueView extends React.Component<Props, State> {
@@ -28,15 +28,18 @@ export class FormueView extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            vedleggPending: true
+            pending: true
         }
     }
 
+    componentDidMount() {
+        this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.FORMUE);
+    }
+
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-        if (this.state.vedleggPending) {
-            if (this.props.soknadsdata.restStatus.oppdaterVedlegg === REST_STATUS.OK) {
-                this.setState({vedleggPending: false});
-                this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.FORMUE);
+        if (this.state.pending) {
+            if (this.props.soknadsdata.restStatus.inntekt.formue === REST_STATUS.OK) {
+                this.setState({pending: false});
             }
         }
     }
@@ -44,7 +47,7 @@ export class FormueView extends React.Component<Props, State> {
     handleClickCheckbox(idToToggle: string) {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const restStatus = soknadsdata.restStatus.inntekt.formue;
-        if (!this.state.vedleggPending && restStatus === REST_STATUS.OK) {
+        if (!this.state.pending && restStatus === REST_STATUS.OK) {
             const formue: Formue = soknadsdata.inntekt.formue;
             formue[idToToggle] = !formue[idToToggle];
             this.props.oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue);
@@ -68,10 +71,8 @@ export class FormueView extends React.Component<Props, State> {
     renderCheckBox(navn: string) {
         const {soknadsdata} = this.props;
         const formue: Formue = soknadsdata.inntekt.formue;
-        const restStatus = soknadsdata.restStatus.inntekt.formue;
-
         let label: React.ReactNode;
-        if (this.state.vedleggPending && restStatus !== REST_STATUS.OK) {
+        if (this.state.pending) {
             label = <TextPlaceholder lines={1} style={{marginTop: "0.2rem"}}/>
         } else {
             label = <FormattedHTMLMessage id={FORMUE + ".true.type." + navn}/>

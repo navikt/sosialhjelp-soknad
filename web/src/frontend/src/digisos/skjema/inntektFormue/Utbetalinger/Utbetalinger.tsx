@@ -20,7 +20,7 @@ const UTBETALINGER = "inntekt.inntekter";
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 interface State {
-    vedleggPending: boolean
+    pending: boolean
 }
 
 export class UtbetalingerView extends React.Component<Props, State> {
@@ -28,22 +28,27 @@ export class UtbetalingerView extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            vedleggPending: true
+            pending: true
         }
     }
 
+    componentDidMount() {
+        const {hentSoknadsdata, brukerBehandlingId} = this.props;
+        hentSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER);
+    }
+
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-        if (this.state.vedleggPending) {
-            if (this.props.soknadsdata.restStatus.oppdaterVedlegg === REST_STATUS.OK) {
-                this.setState({vedleggPending: false});
-                this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.UTBETALINGER);
+        if (this.state.pending) {
+            if (this.props.soknadsdata.restStatus.inntekt.utbetalinger === REST_STATUS.OK) {
+                this.setState({pending: false});
             }
         }
     }
 
     handleClickJaNeiSpsm(verdi: boolean) {
-        if(!this.state.vedleggPending) {
-            const {brukerBehandlingId, soknadsdata} = this.props;
+        const {brukerBehandlingId, soknadsdata} = this.props;
+        const restStatus = soknadsdata.restStatus.inntekt.utbetalinger;
+        if(restStatus === REST_STATUS.OK) {
             const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
             utbetalinger.bekreftelse = verdi;
             if (!verdi) {
@@ -98,7 +103,7 @@ export class UtbetalingerView extends React.Component<Props, State> {
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
         return (
             <JaNeiSporsmal
-                visPlaceholder={this.state.vedleggPending}
+                visPlaceholder={this.state.pending}
                 tekster={getFaktumSporsmalTekst(this.props.intl, UTBETALINGER)}
                 faktumKey={UTBETALINGER}
                 verdi={utbetalinger.bekreftelse}
