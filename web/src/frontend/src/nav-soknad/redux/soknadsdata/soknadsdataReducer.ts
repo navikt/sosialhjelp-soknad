@@ -67,8 +67,7 @@ export enum SoknadsSti {
 	FORMUE = "inntekt/formue",
 	BOUTGIFTER = "utgifter/boutgifter",
 	BARNEUTGIFTER = "utgifter/barneutgifter",
-	BASIS_PERSONALIA = "personalia/basisPersonalia",
-	OPPDATER_VEDLEGG = "oppdaterVedlegg"
+	BASIS_PERSONALIA = "personalia/basisPersonalia"
 }
 
 export interface Personalia {
