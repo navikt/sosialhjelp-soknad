@@ -11,24 +11,45 @@ import {Formue} from "./FormueTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
+import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
+import { REST_STATUS } from "../../../../nav-soknad/types";
 
 const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
-export class FormueView extends React.Component<Props, {}> {
+interface State {
+    vedleggPending: boolean
+}
 
-    componentDidMount(): void {
-        this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.FORMUE);
+export class FormueView extends React.Component<Props, State> {
+
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            vedleggPending: true
+        }
     }
 
-    handleClickRadio(idToToggle: string) {
+    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
+        if (this.state.vedleggPending) {
+            if (this.props.soknadsdata.restStatus.oppdaterVedlegg === REST_STATUS.OK) {
+                this.setState({vedleggPending: false});
+                this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.FORMUE);
+            }
+        }
+    }
+
+    handleClickCheckbox(idToToggle: string) {
         const {brukerBehandlingId, soknadsdata} = this.props;
-        const formue: Formue = soknadsdata.inntekt.formue;
-        formue[idToToggle] = !formue[idToToggle];
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue);
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORMUE, formue);
+        const restStatus = soknadsdata.restStatus.inntekt.formue;
+        if (!this.state.vedleggPending && restStatus === REST_STATUS.OK) {
+            const formue: Formue = soknadsdata.inntekt.formue;
+            formue[idToToggle] = !formue[idToToggle];
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue);
+            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORMUE, formue);
+        }
     }
 
     onChangeAnnet(value: string) {
@@ -47,13 +68,21 @@ export class FormueView extends React.Component<Props, {}> {
     renderCheckBox(navn: string) {
         const {soknadsdata} = this.props;
         const formue: Formue = soknadsdata.inntekt.formue;
+        const restStatus = soknadsdata.restStatus.inntekt.formue;
+
+        let label: React.ReactNode;
+        if (this.state.vedleggPending && restStatus !== REST_STATUS.OK) {
+            label = <TextPlaceholder lines={1} style={{marginTop: "0.2rem"}}/>
+        } else {
+            label = <FormattedHTMLMessage id={FORMUE + ".true.type." + navn}/>
+        }
         return (
             <CheckboxPanel
                 id={"formue_" + navn + "_checkbox"}
                 name={navn}
                 checked={formue && formue[navn] ? formue[navn] : false}
-                label={<FormattedHTMLMessage id={FORMUE + ".true.type." + navn}/>}
-                onClick={() => this.handleClickRadio(navn)}
+                label={label}
+                onClick={() => this.handleClickCheckbox(navn)}
             />
         )
     }

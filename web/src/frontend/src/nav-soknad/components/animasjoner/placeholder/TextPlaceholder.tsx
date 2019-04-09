@@ -1,7 +1,8 @@
 import * as React from "react";
 
 interface Props {
-	lines?: number
+	lines?: number,
+	style?: object
 }
 
 const bars = (lines: number): React.ReactNode[] => {
@@ -25,8 +26,8 @@ const bars = (lines: number): React.ReactNode[] => {
 	return divs;
 };
 
-const TextPlaceholder: React.FunctionComponent<Props> = ({ lines = 3 }) => (
-	<div className="loaderBar">
+const TextPlaceholder: React.FunctionComponent<Props> = ({ lines = 3, style }) => (
+	<div className="loaderBar" style={style}>
 		{bars(lines)}
 	</div>
 );

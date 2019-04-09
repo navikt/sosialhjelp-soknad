@@ -3,41 +3,59 @@ import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
-import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
-import {Utbetalinger} from "./utbetalingerTypes";
+import { Utbetalinger } from "./utbetalingerTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
+import { REST_STATUS } from "../../../../nav-soknad/types";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
+interface State {
+    vedleggPending: boolean
+}
 
-export class UtbetalingerView extends React.Component<Props, {}> {
+export class UtbetalingerView extends React.Component<Props, State> {
 
-    componentDidMount(): void {
-        this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.UTBETALINGER);
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            vedleggPending: true
+        }
+    }
+
+    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
+        if (this.state.vedleggPending) {
+            if (this.props.soknadsdata.restStatus.oppdaterVedlegg === REST_STATUS.OK) {
+                this.setState({vedleggPending: false});
+                this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.UTBETALINGER);
+            }
+        }
     }
 
     handleClickJaNeiSpsm(verdi: boolean) {
-        const {brukerBehandlingId, soknadsdata} = this.props;
-        const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-        utbetalinger.bekreftelse = verdi;
-        if (!verdi) {
-            utbetalinger.salg = false;
-            utbetalinger.utbytte = false;
-            utbetalinger.forsikring = false;
-            utbetalinger.annet = false;
-            utbetalinger.beskrivelseAvAnnet = "";
+        if(!this.state.vedleggPending) {
+            const {brukerBehandlingId, soknadsdata} = this.props;
+            const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
+            utbetalinger.bekreftelse = verdi;
+            if (!verdi) {
+                utbetalinger.salg = false;
+                utbetalinger.utbytte = false;
+                utbetalinger.forsikring = false;
+                utbetalinger.annet = false;
+                utbetalinger.beskrivelseAvAnnet = "";
+            }
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
+            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
         }
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
     }
 
     handleClickRadio(idToToggle: string) {
@@ -76,13 +94,11 @@ export class UtbetalingerView extends React.Component<Props, {}> {
     }
 
     render() {
-
         const {soknadsdata} = this.props;
-
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-
         return (
             <JaNeiSporsmal
+                visPlaceholder={this.state.vedleggPending}
                 tekster={getFaktumSporsmalTekst(this.props.intl, UTBETALINGER)}
                 faktumKey={UTBETALINGER}
                 verdi={utbetalinger.bekreftelse}

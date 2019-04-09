@@ -3,41 +3,62 @@ import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
-import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
-import {Verdier} from "./VerdierTypes";
+import { Verdier } from "./VerdierTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
+import { REST_STATUS } from "../../../../nav-soknad/types";
 
 const MAX_CHARS = 500;
 const Verdier = "inntekt.eierandeler";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
-export class VerdierView extends React.Component<Props, {}> {
+interface State {
+    vedleggPending: boolean
+}
 
-    componentDidMount(): void {
-        this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.VERDIER);
+export class VerdierView extends React.Component<Props, State> {
+
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            vedleggPending: true
+        }
+    }
+
+    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
+        if (this.state.vedleggPending) {
+            if (this.props.soknadsdata.restStatus.oppdaterVedlegg === REST_STATUS.OK) {
+                this.setState({vedleggPending: false});
+                this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.VERDIER);
+            }
+        }
     }
 
     handleClickJaNeiSpsm(verdi: boolean) {
         const {brukerBehandlingId, soknadsdata} = this.props;
-        const verdier: Verdier = soknadsdata.inntekt.verdier;
-        verdier.bekreftelse = verdi;
-        if (!verdi) {
-            verdier.bolig = false;
-            verdier.campingvogn = false;
-            verdier.kjoretoy = false;
-            verdier.fritidseiendom = false;
-            verdier.annet = false;
-            verdier.beskrivelseAvAnnet = "";
+        const restStatus = soknadsdata.restStatus.inntekt.verdier;
+        if (!this.state.vedleggPending && restStatus === REST_STATUS.OK) {
+            console.warn("klikk klikk");
+            const verdier: Verdier = soknadsdata.inntekt.verdier;
+            verdier.bekreftelse = verdi;
+            if (!verdi) {
+                verdier.bolig = false;
+                verdier.campingvogn = false;
+                verdier.kjoretoy = false;
+                verdier.fritidseiendom = false;
+                verdier.annet = false;
+                verdier.beskrivelseAvAnnet = "";
+            }
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier);
+            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
         }
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier);
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
     }
 
     handleClickRadio(idToToggle: string) {
@@ -78,8 +99,10 @@ export class VerdierView extends React.Component<Props, {}> {
     render() {
         const {soknadsdata} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
+        const restStatus = soknadsdata.restStatus.inntekt.verdier;
         return (
             <JaNeiSporsmal
+                visPlaceholder={this.state.vedleggPending || restStatus !== REST_STATUS.OK}
                 tekster={getFaktumSporsmalTekst(this.props.intl, Verdier)}
                 faktumKey={Verdier}
                 verdi={verdier.bekreftelse}
@@ -114,6 +137,5 @@ export class VerdierView extends React.Component<Props, {}> {
         )
     }
 }
-
 
 export default connectSoknadsdataContainer(injectIntl(VerdierView));

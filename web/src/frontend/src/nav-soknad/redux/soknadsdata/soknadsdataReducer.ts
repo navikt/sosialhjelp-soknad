@@ -67,7 +67,8 @@ export enum SoknadsSti {
 	FORMUE = "inntekt/formue",
 	BOUTGIFTER = "utgifter/boutgifter",
 	BARNEUTGIFTER = "utgifter/barneutgifter",
-	BASIS_PERSONALIA = "personalia/basisPersonalia"
+	BASIS_PERSONALIA = "personalia/basisPersonalia",
+	OPPDATER_VEDLEGG = "oppdaterVedlegg"
 }
 
 export interface Personalia {
@@ -165,7 +166,12 @@ export const initialSoknadsdataState: Soknadsdata = {
 			telefonnummer: REST_STATUS.INITIALISERT,
 			kontonummer: REST_STATUS.INITIALISERT,
 			basisPersonalia: REST_STATUS.INITIALISERT
-		}
+		},
+		inntekt: {
+			bostotte: REST_STATUS.INITIALISERT,
+			verdier: REST_STATUS.INITIALISERT
+		},
+		oppdaterVedlegg: REST_STATUS.INITIALISERT
 	}
 };
 
