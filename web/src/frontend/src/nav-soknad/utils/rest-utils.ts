@@ -4,7 +4,6 @@ import {loggFeil} from "../redux/navlogger/navloggerActions";
 import {put} from "redux-saga/effects";
 import {push} from "react-router-redux";
 import {Sider} from "../redux/navigasjon/navigasjonTypes";
-import { store } from '../../index';
 import {erMockMiljoEllerDev} from "./index";
 
 
@@ -25,6 +24,7 @@ export const loginServiceUrlLocal = 'http://localhost:8181/sosialhjelp/soknad-ap
 export const loginServiceLogoutUrlProd = 'https://loginservice.nav.no/slo';
 export const loginServiceLogoutUrlTest = 'https://loginservice-q.nav.no/slo';
 export const loginServiceLogoutUrlLocal = 'http://localhost:8181/sosialhjelp/soknad-api/local/slo';
+
 
 export function erDev(): boolean {
 	const url = window.location.href;
@@ -310,13 +310,11 @@ export function toJson<T>(response: Response): Promise<T> {
 
 function sjekkStatuskode(response: Response) {
 
-	const AUTHENTICATION = "authentication";
-	const LINK_VISITED = "linkVisited";
-	let linkVisited: boolean = store.getState()[AUTHENTICATION][LINK_VISITED];
+	const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
 
 	if (response.status === 401){
 		if(window.location.pathname !== getRedirectPathname()){
-			if (!linkVisited){
+			if (!window[AUTH_LINK_VISITED]) {
 				window.location.href = getLoginServiceUrl();
 			}
 		} else {
