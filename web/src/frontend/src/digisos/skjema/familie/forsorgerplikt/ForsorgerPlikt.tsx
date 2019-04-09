@@ -14,19 +14,36 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
-class ForsorgerPliktView extends React.Component<Props, {}> {
+interface State {
+	pending: boolean
+}
+
+class ForsorgerPliktView extends React.Component<Props, State> {
+
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			pending: true
+		}
+	}
 
 	componentDidMount() {
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.FORSORGERPLIKT);
+	}
+
+	componentWillUpdate(nextProps: Readonly<Props>, nextState: Readonly<State>, nextContext: any) {
+		const restStatus = this.props.soknadsdata.restStatus.familie.forsorgerplikt;
+		if (this.state.pending && restStatus === REST_STATUS.OK) {
+			this.setState({pending: false});
+		}
 	}
 
 	render() {
 		const { soknadsdata } = this.props;
 		const ansvar = soknadsdata.familie.forsorgerplikt.ansvar;
 		const antallBarn = ansvar.length;
-		const restStatus = soknadsdata.restStatus.familie.forsorgerplikt;
 
-		if (restStatus === REST_STATUS.INITIALISERT || restStatus === REST_STATUS.PENDING) {
+		if (this.state.pending) {
 			return (
 				<Sporsmal sprakNokkel="familierelasjon.faktum">
 					<TextPlaceholder style={{marginTop: "1rem"}}/>

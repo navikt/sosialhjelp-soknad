@@ -1,3 +1,5 @@
+// import { ForsorgerPlikt, initialForsorgerPlikt } from "../forsorgerplikt/ForsorgerPliktTypes";
+
 import { ForsorgerPlikt, initialForsorgerPlikt } from "../forsorgerplikt/ForsorgerPliktTypes";
 
 export const SIVILSTATUS_STI = "familie/sivilstatus";
