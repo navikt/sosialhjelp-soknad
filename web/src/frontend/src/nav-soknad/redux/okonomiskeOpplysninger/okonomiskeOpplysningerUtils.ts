@@ -1,10 +1,13 @@
 import {
-    OpplysningGruppe,
     Grupper,
     OkonomiskeOpplysningerBackend,
-    Opplysning, OkonomiskOpplysningBackend,
-    RadType,
-    OpplysningType, OpplysningRad
+    OkonomiskeOpplysningerModel,
+    OkonomiskOpplysningBackend,
+    Opplysning,
+    OpplysningGruppe,
+    OpplysningRad,
+    OpplysningType,
+    RadType
 } from "./okonomiskeOpplysningerTypes";
 
 
@@ -121,6 +124,7 @@ export const generateGrupperFromBackendData = (okonomiskeOpplysnigerBackend: Oko
             "filer" : okonomiskOpplysningBackend.filer,
             "slettet" : false,
             "radType" : getRadType(okonomiskOpplysningBackend.type),
+            "pendingLasterOppFil" : false
         }
     });
 
@@ -133,6 +137,7 @@ export const generateGrupperFromBackendData = (okonomiskeOpplysnigerBackend: Oko
             "filer" : vedlegg.filer,
             "slettet" : true,
             "radType" : getRadType(vedlegg.type),
+            "pendingLasterOppFil" : false
         }
     });
 
@@ -422,6 +427,29 @@ export const getTomVedleggRad: () => OpplysningRad = () => {
         "renter": null
     }
 };
+
+
+export const getOpplysningByOpplysningTypeAndGruppe = (
+        state: OkonomiskeOpplysningerModel,
+        opplysningType: OpplysningType,
+        opplysningGruppe: OpplysningGruppe
+): Opplysning => {
+
+    switch (opplysningGruppe) {
+
+        case OpplysningGruppe.ARBEID: {return state.grupper.gruppeArbeid.find((o) => o.type === opplysningType)}
+        case OpplysningGruppe.FAMILIE: {return state.grupper.gruppeFamilie.find((o) => o.type === opplysningType)}
+        case OpplysningGruppe.BOSITUASJON: {return state.grupper.gruppeBosituasjon.find((o) => o.type === opplysningType)}
+        case OpplysningGruppe.INNTEKT: {return state.grupper.gruppeInntekt.find((o) => o.type === opplysningType)}
+        case OpplysningGruppe.UTGIFTER: {return state.grupper.gruppeUtgifter.find((o) => o.type === opplysningType)}
+        case OpplysningGruppe.GENERELLE_VEDLEGG: {return state.grupper.gruppeGenerelleVedlegg.find((o) => o.type === opplysningType)}
+        case OpplysningGruppe.ANDRE_UTGIFTER: {return state.grupper.gruppeAndreUtgifter.find((o) => o.type === opplysningType)}
+        case OpplysningGruppe.UKJENT: {return state.grupper.gruppeUkjent.find((o) => o.type === opplysningType)}
+        default: return null;
+    }
+};
+
+
 
 
 

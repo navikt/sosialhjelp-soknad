@@ -7,7 +7,9 @@ import {
 } from "./okonomiskeOpplysningerTypes";
 import {RestStatus} from "../../types";
 import {
-    generateGrupperFromBackendData, updateOkonomiskOpplysning,
+    generateGrupperFromBackendData,
+    getOpplysningByOpplysningTypeAndGruppe,
+    updateOkonomiskOpplysning,
 } from "./okonomiskeOpplysningerUtils";
 
 
@@ -40,11 +42,32 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
                 grupper : grupperUpdated
             }
         }
-        case OkonomiskeOpplysningerActionTypeKeys.VALIDER_FELT_I_OPPLYSNING: {
+        case OkonomiskeOpplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING: {
+            const { opplysningType, opplysningGruppe } = action;
 
+            const opplysning = getOpplysningByOpplysningTypeAndGruppe(state, opplysningType, opplysningGruppe);
+
+            const opplysningUpdated = {...opplysning };
+            opplysningUpdated.pendingLasterOppFil = true;
+            const grupperUpdated: Grupper = updateOkonomiskOpplysning(state.grupper, opplysningUpdated);
 
             return {
                 ...state,
+                grupper: grupperUpdated
+            }
+        }
+        case OkonomiskeOpplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING: {
+            const { opplysningType, opplysningGruppe } = action;
+
+            const opplysning = getOpplysningByOpplysningTypeAndGruppe(state, opplysningType, opplysningGruppe);
+
+            const opplysningUpdated = {...opplysning };
+            opplysningUpdated.pendingLasterOppFil = false;
+            const grupperUpdated: Grupper = updateOkonomiskOpplysning(state.grupper, opplysningUpdated);
+
+            return {
+                ...state,
+                grupper: grupperUpdated
             }
         }
         default:

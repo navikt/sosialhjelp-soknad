@@ -32,13 +32,14 @@ class LastOppFil extends React.Component<Props, {}> {
 	}
 
     handleFileUpload(files: FileList) {
+	    const { opplysning } = this.props;
         if (files.length !== 1) {
             return;
         }
         const formData = new FormData();
         formData.append("file", files[0], files[0].name);
         this.setState({sisteBrukteFilnavn: files[0].name});
-        this.props.dispatch(lastOppFil(formData, this.props.behandlingsId, this.props.opplysning.type));
+        this.props.dispatch(lastOppFil(opplysning, formData, this.props.behandlingsId, this.props.opplysning.type));
         this.leggTilVedleggKnapp.value = null;
     }
 

@@ -1,17 +1,19 @@
 import * as React from 'react';
-import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import {StoreToProps} from "./index";
-import {Fil, Opplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {
+    Fil,
+    Opplysning,
+    VedleggStatus
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 import {connect} from "react-redux";
 import OpplastetVedlegg from "./VedleggsFilNy";
 import LastOppFil from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
 import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
-import {
-    getTextKeyForVedleggType
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
+import {getTextKeyForVedleggType} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 import {startSlettFil} from "../../../nav-soknad/redux/fil/filActions";
+import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 
 interface OwnProps {
     okonomiskOpplysning: Opplysning;
@@ -28,8 +30,8 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
     }
 
     slettVedlegg(fil: Fil){
-        const { behandlingsId } = this.props;
-        this.props.dispatch(startSlettFil(behandlingsId, fil.uuid))
+        const { behandlingsId, okonomiskOpplysning } = this.props;
+        this.props.dispatch(startSlettFil(behandlingsId, fil, okonomiskOpplysning, okonomiskOpplysning.type))
     }
 
 
@@ -42,6 +44,8 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
                 return <OpplastetVedlegg key={fil.uuid} fil={fil} onSlett={() => this.slettVedlegg(fil)}/>
             });
 
+        const textDisabledClassName = opplysning.vedleggStatus === VedleggStatus.LASTET_OPP ? " checkboks--disabled" : "";
+
         return (
             <div>
                 <p>
@@ -53,16 +57,16 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
                 <LastOppFil
                     opplysning={opplysning}
                     gruppeIndex={this.props.gruppeIndex}
-                    isDisabled={false}
-                    visSpinner={true}
+                    isDisabled={opplysning.pendingLasterOppFil || opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
+                    visSpinner={opplysning.pendingLasterOppFil}
                 />
                 <Checkbox
                     label={<FormattedHTMLMessage id={"opplysninger.vedlegg.alleredelastetopp"}/>}
                     id={opplysning.type + "_allerede_lastet_opp_checkbox"}
-                    className={"vedleggLastetOppCheckbox " + " checkboks--disabled"}
+                    className={"vedleggLastetOppCheckbox " + textDisabledClassName}
                     onChange={(event: any) => this.handleAlleredeLastetOpp(event)}
-                    checked={true}
-                    disabled={false}
+                    checked={opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
+                    disabled={opplysning.vedleggStatus === VedleggStatus.LASTET_OPP}
                 />
             </div>
         )

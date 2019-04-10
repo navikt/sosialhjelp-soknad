@@ -30,6 +30,7 @@ export interface Opplysning {
     filer: Fil[];
     slettet: boolean;
     radType: RadType;
+    pendingLasterOppFil: boolean;
 }
 
 export interface Grupper {
@@ -45,15 +46,17 @@ export interface Grupper {
 
 
 // ACTION TYPES
+export type OkonomiskeOpplysningerAction
+    = GotDataFromBackend
+    | UpdateOpplysning
+    | SettPendingPaFilOpplasting
+    | SettFerdigPaFilOpplasting
+
 export enum OkonomiskeOpplysningerActionTypeKeys {
     GOT_DATA_FROM_BACKEND = "okonomiskeOpplysninger/GOT_DATA_FROM_BACKEND",
     OPPDATER_OKONOMISK_OPPLYSNING = "okonomiskeOpplysninger/OPPDATER_OKONOMISK_OPPLYSNING",
-    VALIDER_FELT_I_OPPLYSNING = "okonomiskeOpplysninger/VALIDER_FELT_I_OPPLYSNING"
-}
-
-export interface GotDataFromBackend {
-    type: OkonomiskeOpplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND;
-    backendData: OkonomiskeOpplysningerBackend;
+    SETT_PENDING_PA_FIL_OPPLASTING = "okonomiskeOpplysninger/SETT_PENDING_PA_FIL_OPPLASTING",
+    SETT_FERDIG_PA_FIL_OPPLASTING = "okonomiskeOpplysninger/SETT_FERDIG_PA_FIL_OPPLASTING"
 }
 
 export interface UpdateOpplysning {
@@ -61,18 +64,22 @@ export interface UpdateOpplysning {
     okonomiskOpplysning: Opplysning;
 }
 
-export interface ValiderFeltIOpplysning {
-    type: OkonomiskeOpplysningerActionTypeKeys.VALIDER_FELT_I_OPPLYSNING;
-    opplysning: Opplysning;
-    radindex: number;
-    felt: string;
+export interface GotDataFromBackend {
+    type: OkonomiskeOpplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND;
+    backendData: OkonomiskeOpplysningerBackend;
 }
 
+export interface SettPendingPaFilOpplasting {
+    type: OkonomiskeOpplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING;
+    opplysningType: OpplysningType;
+    opplysningGruppe: OpplysningGruppe;
+}
 
-export type OkonomiskeOpplysningerAction
-    = GotDataFromBackend
-    | UpdateOpplysning
-    | ValiderFeltIOpplysning
+export interface SettFerdigPaFilOpplasting {
+    type: OkonomiskeOpplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING;
+    opplysningType: OpplysningType;
+    opplysningGruppe: OpplysningGruppe;
+}
 
 
 // MAPPING

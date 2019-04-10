@@ -6,7 +6,7 @@ import {
     OkonomiskeOpplysningerActionTypeKeys,
     OkonomiskeOpplysningerBackend,
     OkonomiskOpplysningBackend,
-    Opplysning
+    Opplysning, OpplysningGruppe, OpplysningType
 } from "./okonomiskeOpplysningerTypes";
 import {getOkonomomiskeOpplysningerUrl, transformToBackendOpplysning} from "./okonomiskeOpplysningerUtils";
 
@@ -25,25 +25,24 @@ export const updateOpplysning = (okonomiskOpplysning: Opplysning): OkonomiskeOpp
     }
 };
 
-export const validerFeltIOpplysning = (opplysning: Opplysning, radindex: number, felt: string): OkonomiskeOpplysningerAction => {
+export const settPendingPaFilOpplasting = (opplysningType: OpplysningType, opplysningGruppe: OpplysningGruppe): OkonomiskeOpplysningerAction => {
     return {
-        type: OkonomiskeOpplysningerActionTypeKeys.VALIDER_FELT_I_OPPLYSNING,
-        opplysning,
-        radindex,
-        felt
+        type: OkonomiskeOpplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING,
+        opplysningType,
+        opplysningGruppe
     }
 };
 
-// export const updateFieldInOpplysning = (verdi: string, opplysningGruppe: any, opplysningType: OpplysningType, gruppe: OpplysningGruppe): OkonomiskeOpplysningerAction => {
-//     return {
-//         type: OkonomiskeOpplysningerActionTypeKeys.UPDATE_FIELD_IN_OPPLYSNING,
-//         verdi,
-//         opplysningGruppe,
-//         opplysningType,
-//         opplysningRadIndex,
-//         opplysning
-//     }
-// };
+export const settFerdigPaFilOpplasting = (opplysningType: OpplysningType, opplysningGruppe: OpplysningGruppe): OkonomiskeOpplysningerAction => {
+    return {
+        type: OkonomiskeOpplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING,
+        opplysningType,
+        opplysningGruppe
+    }
+};
+
+
+
 
 
 export function hentOkonomiskeOpplysninger(behandlingsId: string) {

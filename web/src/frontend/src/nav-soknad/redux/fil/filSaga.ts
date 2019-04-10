@@ -3,87 +3,76 @@ import {SagaIterator} from "redux-saga";
 import {
     fetchDelete,
     fetchUpload,
-    toJson
 } from "../../utils/rest-utils";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {lastOppVedleggOk, slettVedleggOk} from "../vedlegg/vedleggActions";
 import {loggFeil} from "../navlogger/navloggerActions";
+import {
+    settFerdigPaFilOpplasting,
+    settPendingPaFilOpplasting, updateOpplysning
+} from "../okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
+import {Fil, Opplysning} from "../okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 
 
 
 function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
 	const url = `opplastetVedlegg/${action.behandlingsId}/${action.opplysningType}`;
 
-	let response: any = "";
+	yield put(settPendingPaFilOpplasting(action.opplysningType, action.opplysning.gruppe));
+
+	let response: Fil =
+		{
+        	"filNavn": "",
+    		"uuid": ""
+		};
+
 	try {
 		response = yield call(fetchUpload, url, action.formData);
-		console.warn("FetcbUpload ok. Response: " + response);
-		yield put(lastOppVedleggOk());
-		// if (response.nyForventning) {
-		// 	yield put(opprettetFaktum(response.faktum));
-		// 	const fakta = yield select(selectFaktaData);
-		// 	yield put(nyttVedlegg(response.vedlegg, fakta));
-		// } else {
-		// 	const fakta = yield select(selectFaktaData);
-		// 	yield put(oppdatertVedlegg(response.vedlegg, fakta));
-		// }
+		const filerUpdated: Fil[] = action.opplysning.filer.map((fil: Fil) => ({...fil}));
+		filerUpdated.push(response);
+		const opplysning: Opplysning = action.opplysning;
+		const opplysningUpdated: Opplysning = {...opplysning};
+		opplysningUpdated.filer = filerUpdated;
+		yield put(updateOpplysning(opplysningUpdated));
+        yield put(settFerdigPaFilOpplasting(action.opplysningType, action.opplysning.gruppe));
 	} catch (reason) {
-		// let feilKode: string = detekterInternFeilKode(reason.toString());
-		//
-		// // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
-		// response = yield call(fetchUploadIgnoreErrors, url, action.formData);
-		// const ID = "id";
-		// if (response && response[ID]) {
-		// 	feilKode = response[ID];
-		// }
-		// // yield put(lastOppVedleggFeilet(action.belopFaktumId, feilKode));
-		// if (feilKode !== "opplasting.feilmelding.feiltype") {
-		// 	yield put(loggFeil("Last opp vedlegg feilet: " + reason.toString()));
-		// }
 		console.warn("Feil ved opplasting av fil: " + reason.toString());
-	}
+        yield put(settFerdigPaFilOpplasting(action.opplysningType, action.opplysning.gruppe));
+    }
 }
 //
 function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
-	try {
-        const url = `opplastetVedlegg/${action.behandlingsId}/${action.vedleggId}`;
-        const promise = yield call(fetchDelete, url);
-		const vedlegg = yield call(toJson, promise);
-		console.warn(vedlegg);
-		console.warn("Sletta vedlegg med UUID: " + action.vedleggId);
 
-		// TODO:
-		// if success => update Opplysning ved å fjerne den fila fra fillisten
+    yield put(settPendingPaFilOpplasting(action.opplysningType, action.opplysning.gruppe));
 
-		yield put(slettVedleggOk());
+    try {
+        const url = `opplastetVedlegg/${action.behandlingsId}/${action.fil.uuid}`;
+        yield call(fetchDelete, url);
+
+
+        const filerUpdated = action.opplysning.filer.filter((fil: Fil) => {
+        	return fil.uuid !== action.fil.uuid;
+		});
+
+        const opplysning: Opplysning = action.opplysning;
+        const opplysningUpdated: Opplysning = {...opplysning};
+        opplysningUpdated.filer = filerUpdated;
+        yield put(updateOpplysning(opplysningUpdated));
+        yield put(settFerdigPaFilOpplasting(action.opplysningType, action.opplysning.gruppe));
+
 	} catch (reason) {
 		yield put(loggFeil("Slett vedlegg feilet: " + reason));
 
 		// TODO:
 		// Burde kanskje gjøre noe annet enn dette?
-		// yield put(navigerTilServerfeil());
+		yield put(navigerTilServerfeil());
 	}
 }
-//
-// function* vedleggAlleredeSendt(action: VedleggAlleredeSendtAction): SagaIterator {
-// 	try {
-// 		const url = `vedlegg/${action.vedlegg[0].vedleggId}`;
-// 		yield call(fetchPut, url, JSON.stringify(action.vedlegg[0]));
-// 		yield put(vedleggAlleredeSendtOk(action.vedlegg));
-// 	} catch (reason) {
-// 		yield put(loggFeil("Oppdatering vedleggstatus feilet: " + reason));
-// 		yield put(navigerTilServerfeil());
-// 	}
 
 
 function* filSaga(): SagaIterator {
 	yield takeEvery(FilActionTypeKeys.LAST_OPP, lastOppFilSaga);
 	yield takeEvery(FilActionTypeKeys.START_SLETT_FIL, slettFilSaga);
-	// yield takeEvery(VedleggActionTypeKeys.VEDLEGG_ALLEREDE_SENDT, vedleggAlleredeSendt);
 }
-//
-// export {
-// 	hentVedleggsForventningSaga
-// };
 
 export default filSaga;
