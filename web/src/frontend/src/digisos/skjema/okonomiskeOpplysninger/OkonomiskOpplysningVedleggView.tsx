@@ -26,7 +26,7 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
 
 
     handleAlleredeLastetOpp(event: any){
-        console.warn("Handle allerede lastet opp vedlegg");
+        console.warn(event);
     }
 
     slettVedlegg(fil: Fil){
@@ -66,7 +66,7 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
                     className={"vedleggLastetOppCheckbox " + textDisabledClassName}
                     onChange={(event: any) => this.handleAlleredeLastetOpp(event)}
                     checked={opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
-                    disabled={opplysning.vedleggStatus === VedleggStatus.LASTET_OPP}
+                    disabled={opplysning.filer.length > 0}
                 />
             </div>
         )
