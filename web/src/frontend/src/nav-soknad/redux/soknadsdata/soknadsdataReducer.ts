@@ -23,8 +23,7 @@ import {
 	Verdier
 } from "../../../digisos/skjema/inntektFormue/verdier/VerdierTypes";
 import {
-	initialFormueState,
-	Formue
+	Formue, initialFormueState
 } from "../../../digisos/skjema/inntektFormue/formue/FormueTypes";
 import {
 	initialBoutgifterState,
@@ -46,9 +45,10 @@ import {
 import { REST_STATUS } from "../../types";
 import { Barnebidrag, ForsorgerPlikt } from "../../../digisos/skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 import {
-    initialSysteminntekter,
-    Systeminntekter
-} from "../../../digisos/skjema/inntektFormue/navytelser/navYtelserTypes";
+    initialSkattbarInntektState,
+    SkattbarInntekt
+} from "../../../digisos/skjema/inntektFormue/inntektTypes";
+import {Systeminntekter, initialSysteminntekter} from "../../../digisos/skjema/inntektFormue/navytelser/navYtelserTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -81,7 +81,26 @@ export enum SoknadsSti {
 	SIVILSTATUS = "familie/sivilstatus",
 	BASIS_PERSONALIA = "personalia/basisPersonalia",
 	FORSORGERPLIKT = "familie/forsorgerplikt",
-	INNTEKT_SYSTEMDATA = "inntekt/systemdata"
+	INNTEKT_SYSTEMDATA = "inntekt/systemdata",
+    SKATTBARINNTEKT = "inntekt/skattbarinntektogforskuddstrekk"
+}
+
+export interface Inntekt {
+	skattbarinntektogforskuddstrekk: SkattbarInntekt;
+	bostotte: Bostotte;
+	utbetalinger: Utbetalinger;
+	formue: Formue;
+	verdier: Verdier;
+	systemdata: Systeminntekter;
+}
+
+export const initialInntektState: Inntekt = {
+	skattbarinntektogforskuddstrekk: initialSkattbarInntektState,
+	bostotte: initialBostotteState,
+	utbetalinger: initialUtbetalingerState,
+	formue: initialFormueState,
+	verdier: initialVerdierState,
+	systemdata: initialSysteminntekter
 }
 
 export interface Personalia {
@@ -90,14 +109,6 @@ export interface Personalia {
 	adresser: Adresser;
 	navEnheter: NavEnhet[];
 	basisPersonalia: BasisPersonalia;
-}
-
-export interface Inntekt {
-	bostotte: Bostotte;
-	utbetalinger: Utbetalinger;
-	formue: Formue;
-	verdier: Verdier;
-	systemdata: Systeminntekter;
 }
 
 export interface Utgifter {
@@ -112,14 +123,6 @@ export const initialPersonaliaState: Personalia = {
 	adresser: initialAdresserState,
 	navEnheter: [],
 	basisPersonalia: initialBasisPersonalia
-};
-
-export const initialInntektState: Inntekt = {
-	bostotte: initialBostotteState,
-	utbetalinger: initialUtbetalingerState,
-	formue: initialFormueState,
-	verdier: initialVerdierState,
-	systemdata: initialSysteminntekter
 };
 
 export const initialUtgifterState: Utgifter = {
@@ -169,7 +172,6 @@ export type SoknadsdataType
 	| Bostotte
 	| Formue
 	| Verdier
-	| Systeminntekter
 	| Utgifter
 	| Adresser
 	| AdresseValg
