@@ -1,10 +1,8 @@
 import {FilActionTypeKeys, LastOppFilAction, StartSlettFilAction} from "./filTypes";
 import {SagaIterator} from "redux-saga";
 import {
-    detekterInternFeilKode,
     fetchDelete,
     fetchUpload,
-    fetchUploadIgnoreErrors,
     toJson
 } from "../../utils/rest-utils";
 import {call, put, takeEvery} from "redux-saga/effects";
@@ -14,12 +12,12 @@ import {loggFeil} from "../navlogger/navloggerActions";
 
 
 function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
-	const url = `soknader/opplastetVedlegg/${action.behandlingsId}/${action.opplysningType}`;
+	const url = `opplastetVedlegg/${action.behandlingsId}/${action.opplysningType}`;
 
 	let response: any = "";
 	try {
 		response = yield call(fetchUpload, url, action.formData);
-		console.warn(response);
+		console.warn("FetcbUpload ok. Response: " + response);
 		yield put(lastOppVedleggOk());
 		// if (response.nyForventning) {
 		// 	yield put(opprettetFaktum(response.faktum));
@@ -30,19 +28,19 @@ function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
 		// 	yield put(oppdatertVedlegg(response.vedlegg, fakta));
 		// }
 	} catch (reason) {
-		let feilKode: string = detekterInternFeilKode(reason.toString());
+		// let feilKode: string = detekterInternFeilKode(reason.toString());
 		//
 		// // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
-		response = yield call(fetchUploadIgnoreErrors, url, action.formData);
-		const ID = "id";
-		if (response && response[ID]) {
-			feilKode = response[ID];
-		}
-		// yield put(lastOppVedleggFeilet(action.belopFaktumId, feilKode));
-		if (feilKode !== "opplasting.feilmelding.feiltype") {
-			yield put(loggFeil("Last opp vedlegg feilet: " + reason.toString()));
-		}
-		console.warn("Feil ved opplasting av fil.");
+		// response = yield call(fetchUploadIgnoreErrors, url, action.formData);
+		// const ID = "id";
+		// if (response && response[ID]) {
+		// 	feilKode = response[ID];
+		// }
+		// // yield put(lastOppVedleggFeilet(action.belopFaktumId, feilKode));
+		// if (feilKode !== "opplasting.feilmelding.feiltype") {
+		// 	yield put(loggFeil("Last opp vedlegg feilet: " + reason.toString()));
+		// }
+		console.warn("Feil ved opplasting av fil: " + reason.toString());
 	}
 }
 //
@@ -52,11 +50,11 @@ function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
         const promise = yield call(fetchDelete, url);
 		const vedlegg = yield call(toJson, promise);
 		console.warn(vedlegg);
+		console.warn("Sletta vedlegg med UUID: " + action.vedleggId);
 
 		// TODO:
+		// if success => update Opplysning ved å fjerne den fila fra fillisten
 
-		// if delete successful => fjerne fil fra økonomiskOpplysning. Som burde være lignende:
-		// 	yield put(slettVedlegg(action.vedleggId));
 		yield put(slettVedleggOk());
 	} catch (reason) {
 		yield put(loggFeil("Slett vedlegg feilet: " + reason));

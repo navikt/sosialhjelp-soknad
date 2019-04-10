@@ -2,7 +2,7 @@ import * as React from 'react';
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import {StoreToProps} from "./index";
-import {Opplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {Fil, Opplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 import {connect} from "react-redux";
 import OpplastetVedlegg from "./VedleggsFilNy";
 import LastOppFil from "./LastOppFil";
@@ -11,6 +11,7 @@ import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
 import {
     getTextKeyForVedleggType
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
+import {startSlettFil} from "../../../nav-soknad/redux/fil/filActions";
 
 interface OwnProps {
     okonomiskOpplysning: Opplysning;
@@ -26,9 +27,9 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
         console.warn("Handle allerede lastet opp vedlegg");
     }
 
-    slettVedlegg(fil: any){
-        console.warn("Slett vedlegg: ");
-        console.warn(fil);
+    slettVedlegg(fil: Fil){
+        const { behandlingsId } = this.props;
+        this.props.dispatch(startSlettFil(behandlingsId, fil.uuid))
     }
 
 
@@ -49,7 +50,6 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
                 <div className="vedleggsliste">
                     {vedleggListe}
                 </div>
-                {vedleggListe}
                 <LastOppFil
                     opplysning={opplysning}
                     gruppeIndex={this.props.gruppeIndex}
