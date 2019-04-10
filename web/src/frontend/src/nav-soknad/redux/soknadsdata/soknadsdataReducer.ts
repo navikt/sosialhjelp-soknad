@@ -39,6 +39,10 @@ import {
 	BasisPersonalia,
 	initialBasisPersonalia
 } from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
+import {
+	initialSkattbarInntektState,
+	SkattbarInntekt
+} from "../../../digisos/skjema/inntektFormue/inntektTypes";
 import { REST_STATUS } from "../../types";
 
 export enum SoknadsdataActionTypeKeys {
@@ -68,7 +72,8 @@ export enum SoknadsSti {
 	BOUTGIFTER = "utgifter/boutgifter",
 	BARNEUTGIFTER = "utgifter/barneutgifter",
 	SIVILSTATUS = "familie/sivilstatus",
-	BASIS_PERSONALIA = "personalia/basisPersonalia"
+	BASIS_PERSONALIA = "personalia/basisPersonalia",
+	SKATTBARINNTEKT = "inntekt/skattbarinntektogforskuddstrekk"
 }
 
 export interface Personalia {
@@ -82,6 +87,7 @@ export interface Inntekt {
 	utbetalinger?: Utbetalinger;
 	formue?: Formue;
 	verdier?: Verdier;
+	skattbarinntektogforskuddstrekk: SkattbarInntekt;
 }
 
 export interface Utgifter {
@@ -100,7 +106,8 @@ export const initialInntektState: Inntekt = {
 	bostotte: initialBostotteState,
 	utbetalinger: initialUtbetalingerState,
 	formue: initialFormueState,
-	verdier: initialVerdierState
+	verdier: initialVerdierState,
+	skattbarinntektogforskuddstrekk: initialSkattbarInntektState
 };
 
 export const initialUtgifterState: Utgifter = {

@@ -11,6 +11,7 @@ import Bostotte from "./bostotte/Bostotte";
 import Utbetalinger from "./Utbetalinger/Utbetalinger";
 import Verdier from "./verdier/Verdier";
 import Formue from "./formue/Formue";
+import SkattbarInntekt from "./SkattbarInntekt";
 
 class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps, any> {
 	render() {
@@ -21,13 +22,14 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
 					<FormattedHTMLMessage id="opplysninger.inntekt.undertittel"/>
 				</h2>
 				<NavYtelser fakta={fakta}/>
-					<Bostotte />
-					<Utbetalinger />
-					<h2 className="overskrift">
-						<FormattedHTMLMessage id="opplysninger.formue.undertittel"/>
-					</h2>
-					<Formue />
-					<Verdier />
+				<SkattbarInntekt/>
+                <Bostotte />
+                <Utbetalinger />
+                <h2 className="overskrift">
+                    <FormattedHTMLMessage id="opplysninger.formue.undertittel"/>
+                </h2>
+                <Formue />
+                <Verdier />
 			</DigisosSkjemaSteg>
 		);
 	}
