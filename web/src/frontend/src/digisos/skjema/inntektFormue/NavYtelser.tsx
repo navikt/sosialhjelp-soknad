@@ -17,7 +17,7 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 
 		const utbetaltMelding = <span><FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/></span>;
 
-		return utbetalinger.map(utbetaling => {
+		return utbetalinger.filter(utbetaling => getFaktumPropertyVerdi(utbetaling, "kildeType") === "nav").map(utbetaling => {
 			const id = getFaktumPropertyVerdi(utbetaling, "id");
 			const type = getFaktumPropertyVerdi(utbetaling, "type");
 			const dato = getFaktumPropertyVerdi(utbetaling, "utbetalingsDato");

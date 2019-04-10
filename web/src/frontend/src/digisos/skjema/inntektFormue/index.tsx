@@ -12,6 +12,7 @@ import HusbankInfopanel from "./HusbankInfopanel";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import Penger from "../../../nav-soknad/components/svg/illustrasjoner/Penger";
 import { FormattedHTMLMessage } from "react-intl";
+import SkattbarInntekt from "./SkattbarInntekt";
 
 class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps, any> {
 	render() {
@@ -22,6 +23,7 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
 					<FormattedHTMLMessage id="opplysninger.inntekt.undertittel"/>
 				</h2>
 				<NavYtelser fakta={fakta}/>
+				<SkattbarInntekt/>
 				<div className="skjema-sporsmal">
 					<Bostotte />
 					<HusbankInfopanel fakta={fakta}/>

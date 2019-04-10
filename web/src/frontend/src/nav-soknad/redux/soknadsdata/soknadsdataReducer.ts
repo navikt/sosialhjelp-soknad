@@ -19,6 +19,10 @@ import {
 	initialBasisPersonalia
 } from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import { REST_STATUS } from "../../types";
+import {
+	initialSkattbarInntektState,
+	SkattbarInntekt
+} from "../../../digisos/skjema/inntektFormue/inntektTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -40,7 +44,16 @@ export enum SoknadsSti {
 	BOSITUASJON = "bosituasjon",
 	UTDANNING = "utdanning",
 	TELEFONNUMMER = "personalia/telefonnummer",
+	SKATTBARINNTEKT = "inntekt/skattbarinntektogforskuddstrekk",
 	BASIS_PERSONALIA = "personalia/basisPersonalia"
+}
+
+export interface Inntekt {
+	skattbarinntektogforskuddstrekk: SkattbarInntekt;
+}
+
+export const initialInntektState: Inntekt = {
+	skattbarinntektogforskuddstrekk: initialSkattbarInntektState
 }
 
 export interface Personalia {
@@ -62,6 +75,7 @@ export interface Soknadsdata {
 	familie: Familie;
 	utdanning: Utdanning;
 	personalia: Personalia;
+	inntekt: Inntekt;
 	restStatus: any;
 }
 
@@ -98,6 +112,7 @@ export const initialSoknadsdataState: Soknadsdata = {
 	familie: initialFamilieStatus,
 	utdanning: initialUtdanningState,
 	personalia: initialPersonaliaState,
+	inntekt: initialInntektState,
 	restStatus: {
 		personalia: {
 			telefonnummer: REST_STATUS.INITIALISERT,
