@@ -90,11 +90,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		}
 	}
 
-	loggAdresseBucketsTilKibana(){
-
-		console.warn("Fodslesnummer: " + this.props.fodselsnummer);
-	}
-
 	sendSoknad(brukerBehandlingId: string) {
 		this.props.dispatch(sendSoknad(brukerBehandlingId));
 	}
@@ -103,7 +98,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		if (aktivtSteg.type === SkjemaStegType.oppsummering) {
 			if (this.props.oppsummeringBekreftet) {
 				this.loggAdresseTypeTilGrafana();
-				this.loggAdresseBucketsTilKibana();
 				this.sendSoknad(brukerBehandlingId);
 			} else {
 				this.props.dispatch(setVisBekreftMangler(true));
