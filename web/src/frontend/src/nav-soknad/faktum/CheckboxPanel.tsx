@@ -30,13 +30,10 @@ class CheckboxPanel extends React.Component<CheckboxPanelProps, {checked: boolea
 
     render() {
         const {id, name, checked, disabled, className, label } = this.props;
-
         let classNames = "inputPanel " + (className ? className : "");
-
         if (checked) {
             classNames += " inputPanel__checked";
         }
-
         return (
             <div
                 className={classNames}

@@ -21,6 +21,7 @@ interface Props {
 
 	verdi: null | boolean;
 	onChange?: (verdi: boolean) => void;
+	visPlaceholder?: boolean;
 }
 
 class JaNeiSporsmal extends React.Component<Props, {}> {
@@ -84,8 +85,9 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
 						checked={verdi && verdi === true}
 						className="inputPanel__smal"
 						onChange={() => this.handleOnChange(true)}
-
+						visPlaceholder={this.props.visPlaceholder}
 					/>
+
 					{!mobilVisning && (
 						<RadioEnhanced
 							faktumKey={this.props.faktumKey}
@@ -95,6 +97,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
 							getName={() =>  idRadioNei}
 							onChange={() => this.handleOnChange(false)}
 							className="inputPanel__smal"
+							visPlaceholder={this.props.visPlaceholder}
 						/>
 					) }
 				</ValgMedUnderskjema>
@@ -109,6 +112,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
 						className={
 							"inputPanel__smal inputPanel__mobil--nei " +
 							visUnderSkjema ? "inputPanel__mobil--uten-underSkjema" : ""}
+						visPlaceholder={this.props.visPlaceholder}
 					/>
 				) }
 			</Sporsmal>

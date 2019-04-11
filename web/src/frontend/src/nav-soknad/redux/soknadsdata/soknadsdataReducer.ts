@@ -9,7 +9,7 @@ import {
 } from "../../../digisos/skjema/personopplysninger/telefon/telefonTypes";
 import { Bosituasjon, initialBosituasjonState } from "../../../digisos/skjema/bosituasjon_ny/bosituasjonTypes";
 import {
-	Familie, initialFamilieStatus,
+	Familie, initialFamilieStatus, Sivilstatus,
 } from "../../../digisos/skjema/familie/sivilstatus/FamilieTypes";
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
@@ -67,6 +67,7 @@ export enum SoknadsSti {
 	FORMUE = "inntekt/formue",
 	BOUTGIFTER = "utgifter/boutgifter",
 	BARNEUTGIFTER = "utgifter/barneutgifter",
+	SIVILSTATUS = "familie/sivilstatus",
 	BASIS_PERSONALIA = "personalia/basisPersonalia"
 }
 
@@ -139,6 +140,7 @@ export type SoknadsdataType =
 	| Kontonummer
 	| Telefonnummer
 	| Personalia
+	| Sivilstatus
 	| Bostotte
 	| Formue
 	| Verdier
@@ -165,6 +167,11 @@ export const initialSoknadsdataState: Soknadsdata = {
 			telefonnummer: REST_STATUS.INITIALISERT,
 			kontonummer: REST_STATUS.INITIALISERT,
 			basisPersonalia: REST_STATUS.INITIALISERT
+		},
+		inntekt: {
+			bostotte: REST_STATUS.INITIALISERT,
+			utbetalinger: REST_STATUS.INITIALISERT,
+			verdier: REST_STATUS.INITIALISERT
 		}
 	}
 };
