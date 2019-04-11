@@ -1,24 +1,24 @@
 export interface SkattbarInntekt {
 	"samletInntekt": number,
 	"samletTrekk": number,
-	"lonn": Utbetaling[],
-	"pensjonEllerTrygd": Utbetaling[],
-	"lottOgPartInnenfiske": Utbetaling[]
+	"organisasjoner": Organisasjon[]
+}
+
+export interface Organisasjon {
+	"utbetalinger": Utbetaling[],
+	"organisasjonsnavn": string,
+	"orgnr": string,
+	"fom": null | string,
+	"tom": null | string
 }
 
 export interface Utbetaling {
-	"fom": string,
-	"tom": string,
-	"organisasjon": string,
-	"orgnr": string,
-	"trekkpliktig": number,
-	"forskuddstrekk": null | number
+	"belop": number,
+	"tittel": string
 }
 
 export const initialSkattbarInntektState: SkattbarInntekt = {
 	"samletInntekt": 0.0,
 	"samletTrekk": 0.0,
-	"lonn": [],
-	"pensjonEllerTrygd": [],
-	"lottOgPartInnenfiske": []
+	"organisasjoner": []
 };
