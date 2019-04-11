@@ -27,6 +27,9 @@ export class FormueView extends React.Component<Props, {}> {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const formue: Formue = soknadsdata.inntekt.formue;
         formue[idToToggle] = !formue[idToToggle];
+        if (!formue.annet){
+            formue.beskrivelseAvAnnet = "";
+        }
         this.props.oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue);
         this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORMUE, formue);
     }

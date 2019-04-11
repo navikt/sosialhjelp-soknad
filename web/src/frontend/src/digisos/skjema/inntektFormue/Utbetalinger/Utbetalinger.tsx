@@ -44,6 +44,9 @@ export class UtbetalingerView extends React.Component<Props, {}> {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
         utbetalinger[idToToggle] = !utbetalinger[idToToggle];
+        if (!utbetalinger.bekreftelse || !utbetalinger.annet){
+            utbetalinger.beskrivelseAvAnnet = "";
+        }
         this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
         this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
     }

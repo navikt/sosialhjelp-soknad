@@ -44,6 +44,9 @@ export class VerdierView extends React.Component<Props, {}> {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         verdier[idToToggle] = !verdier[idToToggle];
+        if (!verdier.bekreftelse || !verdier.annet){
+            verdier.beskrivelseAvAnnet = "";
+        }
         this.props.oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier);
         this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
     }
