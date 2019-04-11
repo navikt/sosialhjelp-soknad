@@ -1,15 +1,25 @@
 import {Fil, Opplysning, OpplysningType} from "../okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {REST_STATUS} from "../../types";
+import {REST_FEIL} from "../../types/restFeilTypes";
+
+
+export interface FilState {
+    opplastingStatus: REST_STATUS;
+    feilKode: REST_FEIL | null;
+}
 
 
 export enum FilActionTypeKeys {
 	LAST_OPP = "fil/LAST_OPP",
 	START_SLETT_FIL = "fil/START_SLETT_FIL",
+    LAST_OPP_FEILET = "fil/LAST_OPP_FEILET"
 }
 
 
 export type FilActionTypes
 	= LastOppFilAction
 	| StartSlettFilAction
+	| LastOppFilFeilet
 
 export interface LastOppFilAction {
 	type: FilActionTypeKeys.LAST_OPP;
@@ -19,6 +29,13 @@ export interface LastOppFilAction {
 	opplysningType: OpplysningType
 }
 
+export interface LastOppFilFeilet {
+    type: FilActionTypeKeys.LAST_OPP_FEILET;
+    opplysningType: OpplysningType;
+    feilKode: REST_FEIL;
+}
+
+
 
 export interface StartSlettFilAction {
 	type: FilActionTypeKeys.START_SLETT_FIL;
@@ -27,3 +44,4 @@ export interface StartSlettFilAction {
 	opplysning: Opplysning;
 	opplysningType: OpplysningType;
 }
+

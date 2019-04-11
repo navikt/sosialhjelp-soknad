@@ -21,6 +21,7 @@ import AdresseAutocompleteReducer from "../../nav-soknad/components/adresseAutoc
 import MockReducer from "../mock/mockReducer";
 import SoknadsdataReducer from "../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import OkonomiskeOpplysningerReducer from "../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerReducer";
+import FilReducer from "../../nav-soknad/redux/fil/filReducer";
 
 export interface State extends SoknadAppState {
 	synligefakta: SynligeFaktaState;
@@ -46,7 +47,8 @@ const reducers = combineReducers({
 	init: InitReducer,
 	mockData: MockReducer,
 	soknadsdata: SoknadsdataReducer,
-	okonomiskeOpplysninger: OkonomiskeOpplysningerReducer
+	okonomiskeOpplysninger: OkonomiskeOpplysningerReducer,
+	filopplasting: FilReducer
 });
 
 export default reducers;

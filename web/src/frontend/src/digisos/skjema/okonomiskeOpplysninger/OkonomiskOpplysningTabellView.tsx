@@ -9,13 +9,13 @@ import {StoreToProps} from "./index";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import {connect} from "react-redux";
 import {
-    getTextKeyForType,
+    getKeyForOpplysningType,
     getTomVedleggRad
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 import {Column, Row} from "nav-frontend-grid";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {
-    lagreOpplysning,
+    lagreOpplysningHvisGyldigAction,
     updateOpplysning,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
@@ -63,36 +63,16 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
     }
 
     handleBlur(radIndex: number, inputFelt: InputType, key: string){
-        const { opplysning } = this.props;
+        const { behandlingsId, opplysning, feil } = this.props;
 
-        let fikkValideringsfeil: boolean = false;
+        const input = opplysning.rader[radIndex][inputFelt];
 
-        const sisteOppdaterteFelt = opplysning.rader[radIndex][inputFelt];
-
-        if (inputFelt !== "beskrivelse" && sisteOppdaterteFelt !== "" && erTall(sisteOppdaterteFelt)){
+        if (inputFelt !== "beskrivelse" && input !== "" && erTall(input)){
             this.props.dispatch(setValideringsfeil(ValideringActionKey.ER_TALL, key));
-            fikkValideringsfeil = true;
+            this.props.dispatch(updateOpplysning(opplysning))
+        } else {
+            this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysning, feil));
         }
-
-        if (!fikkValideringsfeil){
-            this.lagreOpplysningHvisIngenValideringsfeil(opplysning);
-        }
-
-        // switch (inputFelt) {
-        //     case InputType.BESKRIVELSE: {
-        //         this.props.dispatch(lagreOpplysning(behandlingsId, opplysning));
-        //         break;
-        //     }
-        //     default: {
-        //         if (!erTall()){
-        //             this.props.dispatch(lagreOpplysning(behandlingsId, opplysning));
-        //         } else {
-        //             console.warn("setter valideringsfeil");
-        //             this.props.dispatch(setValideringsfeil(ValideringActionKey.ER_TALL, key));
-        //         }
-        //         break;
-        //     }
-        // }
     }
 
     handleLeggTilRad(){
@@ -106,36 +86,33 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
 
     handleFjernRad(radIndex: number, valideringsKey: string){
 
+        const { behandlingsId, opplysning, feil } = this.props;
 
-        const { opplysning } = this.props;
         const opplysningUpdated: Opplysning = { ...opplysning };
         const raderUpdated: OpplysningRad[] = opplysning.rader.map(e => ({...e}));
         raderUpdated.splice(radIndex, 1);
         opplysningUpdated.rader = raderUpdated;
 
-        this.props.dispatch(updateOpplysning(opplysningUpdated));
+        // TODO: Burde gjøres annerledes? Dette er for å klone feil fra store og oppdatere den før opplysningSaga...
+        const feilUpdated = feil.filter(f => (
+                f.faktumKey !== valideringsKey + ".beskrivelse" + radIndex &&
+                f.faktumKey !== valideringsKey + ".belop" + radIndex &&
+                f.faktumKey !== valideringsKey + ".brutto" + radIndex &&
+                f.faktumKey !== valideringsKey + ".netto" + radIndex &&
+                f.faktumKey !== valideringsKey + ".avdrag" + radIndex &&
+                f.faktumKey !== valideringsKey + ".renter" + radIndex)
+        );
 
-        this.lagreOpplysningHvisIngenValideringsfeil(opplysningUpdated);
 
+        this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feilUpdated));
+
+        // TODO: Bør gjøres annerledes?? Dette er for å oppdatere store
         this.props.dispatch(setValideringsfeil(null, valideringsKey + ".beskrivelse" + radIndex));
         this.props.dispatch(setValideringsfeil(null, valideringsKey + ".belop" + radIndex));
         this.props.dispatch(setValideringsfeil(null, valideringsKey + ".brutto" + radIndex));
         this.props.dispatch(setValideringsfeil(null, valideringsKey + ".netto" + radIndex));
         this.props.dispatch(setValideringsfeil(null, valideringsKey + ".avdrag" + radIndex));
         this.props.dispatch(setValideringsfeil(null, valideringsKey + ".renter" + radIndex));
-    }
-
-    lagreOpplysningHvisIngenValideringsfeil(opplysningUpdated: Opplysning){
-
-        const { opplysning, behandlingsId, feil} = this.props;
-
-        const opplysningKey = getTextKeyForType(opplysning.type);
-        const gjenverendeFeil = feil.filter((f: Valideringsfeil) => {
-            return f.faktumKey.indexOf(opplysningKey) > -1;
-        });
-        if (gjenverendeFeil.length === 0 ){
-            this.props.dispatch(lagreOpplysning(behandlingsId, opplysningUpdated));
-        }
     }
 
     render(){
@@ -153,7 +130,7 @@ class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
                 opplysning.radType ===RadType.RADER_MED_BESKRIVELSE_OG_BELOP;
             const skalViseBruttoOgNetto: boolean = opplysning.radType === RadType.RADER_MED_BRUTTO_OG_NETTO;
             const skalViseAvdragOgRenter: boolean = opplysning.radType === RadType.RADER_MED_AVDRAG_OG_RENTER;
-            const textKeyForOpplysningType = getTextKeyForType(opplysning.type);
+            const textKeyForOpplysningType = getKeyForOpplysningType(opplysning.type);
 
 
             return (

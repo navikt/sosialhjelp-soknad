@@ -14,6 +14,9 @@ import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
 import {getTextKeyForVedleggType} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 import {startSlettFil} from "../../../nav-soknad/redux/fil/filActions";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
+import {
+    lagreOpplysningHvisGyldigAction,
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
 
 interface OwnProps {
     okonomiskOpplysning: Opplysning;
@@ -26,7 +29,18 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
 
 
     handleAlleredeLastetOpp(event: any){
-        console.warn(event);
+
+        const { okonomiskOpplysning, behandlingsId, feil } = this.props;
+
+        const opplysningUpdated = {... okonomiskOpplysning};
+
+        if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND){
+            opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
+        } else {
+            opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
+        }
+
+        this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feil));
     }
 
     slettVedlegg(fil: Fil){
@@ -44,7 +58,7 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
                 return <OpplastetVedlegg key={fil.uuid} fil={fil} onSlett={() => this.slettVedlegg(fil)}/>
             });
 
-        const textDisabledClassName = opplysning.vedleggStatus === VedleggStatus.LASTET_OPP ? " checkboks--disabled" : "";
+        const textDisabledClassName = opplysning.filer.length > 0 ? " checkboks--disabled" : "";
 
         return (
             <div>
@@ -66,7 +80,7 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
                     className={"vedleggLastetOppCheckbox " + textDisabledClassName}
                     onChange={(event: any) => this.handleAlleredeLastetOpp(event)}
                     checked={opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
-                    disabled={opplysning.filer.length > 0}
+                    disabled={opplysning.filer.length > 0 || opplysning.pendingLasterOppFil}
                 />
             </div>
         )
@@ -88,7 +102,8 @@ export default connect<StoreToProps, {}, OwnProps>(
     (state: SoknadAppState) => {
         return {
             okonomiskeOpplysninger: state.okonomiskeOpplysninger,
-            behandlingsId: state.soknad.data.brukerBehandlingId
+            behandlingsId: state.soknad.data.brukerBehandlingId,
+            feil: state.validering.feil
         }
     }
 )(OkonomiskOpplysningVedleggView);

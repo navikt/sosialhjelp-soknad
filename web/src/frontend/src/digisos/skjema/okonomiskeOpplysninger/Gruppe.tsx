@@ -58,7 +58,8 @@ export default connect<StoreToProps, {}, OwnProps>(
     (state: SoknadAppState) => {
         return {
             okonomiskeOpplysninger: state.okonomiskeOpplysninger,
-            behandlingsId: state.soknad.data.brukerBehandlingId
+            behandlingsId: state.soknad.data.brukerBehandlingId,
+            feil: state.validering.feil
         };
     }
 )(injectIntl(GruppeView));

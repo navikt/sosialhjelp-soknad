@@ -16,11 +16,13 @@ import {
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import {hentOkonomiskeOpplysninger} from "../../../nav-soknad/redux/okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
 import {RestStatus} from "../../../nav-soknad/types";
+import {Valideringsfeil} from "../../../nav-soknad/validering/types";
 
 
 export interface StoreToProps {
     okonomiskeOpplysninger: OkonomiskeOpplysningerModel;
     behandlingsId: string;
+    feil: Valideringsfeil[];
 }
 
 // const okonomiskeFaktumKeys = [
@@ -152,7 +154,8 @@ export default connect<StoreToProps, {}, {}>(
     (state: SoknadAppState) => {
         return {
             okonomiskeOpplysninger: state.okonomiskeOpplysninger,
-            behandlingsId: state.soknad.data.brukerBehandlingId
+            behandlingsId: state.soknad.data.brukerBehandlingId,
+            feil: state.validering.feil
         };
     }
 )(injectIntl(OkonomiskeOpplysningerView));

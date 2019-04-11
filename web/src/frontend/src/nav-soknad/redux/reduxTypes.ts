@@ -18,6 +18,7 @@ import {
 import {MockState} from "../../digisos/mock/mockReducer";
 import { Soknadsdata } from "./soknadsdata/soknadsdataReducer";
 import {OkonomiskeOpplysningerModel} from "./okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {FilState} from "./fil/filTypes";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -48,6 +49,7 @@ export interface SoknadAppState {
 	init: InitState;
 	mockData: MockState;
 	okonomiskeOpplysninger: OkonomiskeOpplysningerModel;
+    filopplasting: FilState
 }
 
 export interface SoknadState {

@@ -3,7 +3,8 @@ import {
     Grupper,
     OkonomiskeOpplysningerAction,
     OkonomiskeOpplysningerActionTypeKeys,
-    OkonomiskeOpplysningerModel
+    OkonomiskeOpplysningerModel,
+    VedleggStatus
 } from "./okonomiskeOpplysningerTypes";
 import {RestStatus} from "../../types";
 import {
@@ -42,6 +43,9 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
                 grupper : grupperUpdated
             }
         }
+
+
+
         case OkonomiskeOpplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING: {
             const { opplysningType, opplysningGruppe } = action;
 
@@ -70,6 +74,26 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
                 grupper: grupperUpdated
             }
         }
+
+
+
+        case OkonomiskeOpplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP: {
+            const { opplysningType, opplysningGruppe } = action;
+            const opplysning = getOpplysningByOpplysningTypeAndGruppe(state, opplysningType, opplysningGruppe);
+            const opplysningUpdated = {...opplysning};
+            if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND){
+                opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
+            } else {
+                opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
+            }
+            const grupperUpdated: Grupper = updateOkonomiskOpplysning(state.grupper, opplysningUpdated);
+            return {
+                ...state,
+                grupper: grupperUpdated
+            }
+        }
+
+
         default:
             return state;
     }

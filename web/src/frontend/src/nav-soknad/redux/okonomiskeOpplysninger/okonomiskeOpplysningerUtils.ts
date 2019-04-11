@@ -17,11 +17,7 @@ export function getOkonomomiskeOpplysningerUrl(behandlingsId: string) {
     )
 }
 
-// function vedleggUrl(vedleggId: string) {
-//     return (
-//         `/vedlegg/${vedleggId}`
-//     )
-// }
+
 
 
 
@@ -339,7 +335,7 @@ export const getGruppeTittelKey: (opplysningGruppe: OpplysningGruppe) => string 
     }
 };
 
-export const getTextKeyForType: (type: string) => string = (type: string) => {
+export const getKeyForOpplysningType: (type: string) => string = (type: string) => {
     return typeToTextKeyMap[type] ? typeToTextKeyMap[type] : "unknown type";
 };
 

@@ -1,5 +1,6 @@
 import {Fil, Opplysning, OpplysningType} from "../okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 import {FilActionTypeKeys, FilActionTypes} from "./filTypes";
+import {REST_FEIL} from "../../types/restFeilTypes";
 
 const lastOppFil = (
 	opplysning: Opplysning,
@@ -16,6 +17,14 @@ const lastOppFil = (
 	};
 };
 
+
+const lastOppFilFeilet = (opplysningType: OpplysningType, feilKode: REST_FEIL): FilActionTypes => {
+    return {
+        type: FilActionTypeKeys.LAST_OPP_FEILET,
+        opplysningType,
+        feilKode
+    };
+};
 
 const startSlettFil = (
     behandlingsId: string,
@@ -34,5 +43,6 @@ const startSlettFil = (
 
 export {
 	lastOppFil,
-	startSlettFil
+	startSlettFil,
+	lastOppFilFeilet
 };

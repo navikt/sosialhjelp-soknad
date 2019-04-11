@@ -7,7 +7,7 @@ import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxType
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import OkonomiskOpplysningTabellView from "./OkonomiskOpplysningTabellView";
 import OkonomiskOpplysningVedleggView from "./OkonomiskOpplysningVedleggView";
-import {getTextKeyForType} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
+import {getKeyForOpplysningType} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 
 
 interface OwnProps {
@@ -27,7 +27,7 @@ class OkonomiskOpplysningView extends React.Component<Props, {}>{
 
         return(
             <div className="skjema-progresjonsblokk__sporsmal">
-                <Sporsmal sprakNokkel={getTextKeyForType(okonomiskOpplysning.type)} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
+                <Sporsmal sprakNokkel={getKeyForOpplysningType(okonomiskOpplysning.type)} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
                     <OkonomiskOpplysningTabellView
                         gruppeIndex={gruppeIndex}
                         opplysning={okonomiskOpplysning}
@@ -46,7 +46,8 @@ export default connect<StoreToProps, {}, OwnProps>(
     (state: SoknadAppState) => {
         return {
             okonomiskeOpplysninger: state.okonomiskeOpplysninger,
-            behandlingsId: state.soknad.data.brukerBehandlingId
+            behandlingsId: state.soknad.data.brukerBehandlingId,
+            feil: state.validering.feil
         };
     }
 )(OkonomiskOpplysningView);

@@ -1,14 +1,16 @@
 import {Dispatch} from "../reduxTypes";
-import {fetchPut, fetchToJson} from "../../utils/rest-utils";
+import {fetchToJson} from "../../utils/rest-utils";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {
     OkonomiskeOpplysningerAction,
     OkonomiskeOpplysningerActionTypeKeys,
     OkonomiskeOpplysningerBackend,
-    OkonomiskOpplysningBackend,
-    Opplysning, OpplysningGruppe, OpplysningType
+    Opplysning,
+    OpplysningGruppe,
+    OpplysningType
 } from "./okonomiskeOpplysningerTypes";
-import {getOkonomomiskeOpplysningerUrl, transformToBackendOpplysning} from "./okonomiskeOpplysningerUtils";
+import {getOkonomomiskeOpplysningerUrl} from "./okonomiskeOpplysningerUtils";
+import {Valideringsfeil} from "../../validering/types";
 
 
 export const gotDataFromBackend  = (response: OkonomiskeOpplysningerBackend): OkonomiskeOpplysningerAction => {
@@ -41,8 +43,13 @@ export const settFerdigPaFilOpplasting = (opplysningType: OpplysningType, opplys
     }
 };
 
-
-
+export const settOpplysningsFilAlleredeLastetOpp = (opplysningType: OpplysningType, opplysningGruppe: OpplysningGruppe) => {
+    return {
+        type: OkonomiskeOpplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP,
+        opplysningType,
+        opplysningGruppe
+    }
+};
 
 
 export function hentOkonomiskeOpplysninger(behandlingsId: string) {
@@ -56,15 +63,27 @@ export function hentOkonomiskeOpplysninger(behandlingsId: string) {
     }
 }
 
-export function lagreOpplysning(behandlingsId: string, okonomiskOpplysning: Opplysning) {
+// export function lagreOpplysning(behandlingsId: string, okonomiskOpplysning: Opplysning) {
+//
+//     const okonomiskOpplysningBackend: OkonomiskOpplysningBackend = transformToBackendOpplysning(okonomiskOpplysning);
+//
+//     return (dispatch: Dispatch) => {
+//         fetchPut(getOkonomomiskeOpplysningerUrl(behandlingsId), JSON.stringify(okonomiskOpplysningBackend))
+//             .catch(() => {
+//                 dispatch(navigerTilServerfeil());
+//             });
+//     }
+// }
 
-    const okonomiskOpplysningBackend: OkonomiskOpplysningBackend = transformToBackendOpplysning(okonomiskOpplysning);
-
-    return (dispatch: Dispatch) => {
-        fetchPut(getOkonomomiskeOpplysningerUrl(behandlingsId), JSON.stringify(okonomiskOpplysningBackend))
-            .catch(() => {
-                dispatch(navigerTilServerfeil());
-            });
+export const lagreOpplysningHvisGyldigAction = (
+    behandlingsId: string,
+    opplysning: Opplysning,
+    feil: Valideringsfeil[]
+): OkonomiskeOpplysningerAction => {
+    return {
+        type: OkonomiskeOpplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG,
+        behandlingsId,
+        opplysning,
+        feil
     }
-}
-
+};

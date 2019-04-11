@@ -1,4 +1,5 @@
 import {RestStatus} from "../../types";
+import {Valideringsfeil} from "../../validering/types";
 
 
 // TYPES
@@ -51,12 +52,16 @@ export type OkonomiskeOpplysningerAction
     | UpdateOpplysning
     | SettPendingPaFilOpplasting
     | SettFerdigPaFilOpplasting
+    | SettOpplysningsFilAlleredeLastetOpp
+    | LagreOpplysningHvisGyldig
 
 export enum OkonomiskeOpplysningerActionTypeKeys {
     GOT_DATA_FROM_BACKEND = "okonomiskeOpplysninger/GOT_DATA_FROM_BACKEND",
     OPPDATER_OKONOMISK_OPPLYSNING = "okonomiskeOpplysninger/OPPDATER_OKONOMISK_OPPLYSNING",
     SETT_PENDING_PA_FIL_OPPLASTING = "okonomiskeOpplysninger/SETT_PENDING_PA_FIL_OPPLASTING",
-    SETT_FERDIG_PA_FIL_OPPLASTING = "okonomiskeOpplysninger/SETT_FERDIG_PA_FIL_OPPLASTING"
+    SETT_FERDIG_PA_FIL_OPPLASTING = "okonomiskeOpplysninger/SETT_FERDIG_PA_FIL_OPPLASTING",
+    SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP = "okonomiskeOpplysninger/SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP",
+    LAGRE_OPPLYSNING_HVIS_GYLDIG = "okonomiskeOpplysninger/LAGRE_OPPLYSNING_HVIS_GYLDIG"
 }
 
 export interface UpdateOpplysning {
@@ -80,6 +85,21 @@ export interface SettFerdigPaFilOpplasting {
     opplysningType: OpplysningType;
     opplysningGruppe: OpplysningGruppe;
 }
+
+export interface SettOpplysningsFilAlleredeLastetOpp {
+    type: OkonomiskeOpplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP;
+    opplysningType: OpplysningType;
+    opplysningGruppe: OpplysningGruppe;
+}
+
+export interface LagreOpplysningHvisGyldig {
+    type: OkonomiskeOpplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG;
+    behandlingsId: string;
+    opplysning: Opplysning;
+    feil: Valideringsfeil[];
+}
+
+
 
 
 // MAPPING

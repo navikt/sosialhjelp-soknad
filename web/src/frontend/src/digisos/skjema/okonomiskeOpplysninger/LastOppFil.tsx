@@ -1,13 +1,23 @@
 import * as React from "react";
 import { Knapp } from "nav-frontend-knapper";
-import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
-import {Opplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import { FormattedMessage} from "react-intl";
+import {
+    OkonomiskeOpplysningerModel,
+    Opplysning
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 import {connect} from "react-redux";
-import {StoreToProps} from "./index";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {lastOppFil} from "../../../nav-soknad/redux/fil/filActions";
+import {FilState} from "../../../nav-soknad/redux/fil/filTypes";
+import {Valideringsfeil} from "../../../nav-soknad/validering/types";
 
+export interface StoreToProps {
+    okonomiskeOpplysninger: OkonomiskeOpplysningerModel;
+    behandlingsId: string;
+    feil: Valideringsfeil[];
+    filopplasting: FilState
+}
 
 interface OwnProps {
     opplysning: Opplysning;
@@ -15,7 +25,6 @@ interface OwnProps {
     isDisabled: boolean;
     visSpinner: boolean;
 }
-
 
 type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
 
@@ -43,9 +52,40 @@ class LastOppFil extends React.Component<Props, {}> {
         this.leggTilVedleggKnapp.value = null;
     }
 
+    // renderFeilmelding() {
+    //     const forStorFilFeil: boolean = this.props.filopplasting.feilKode && this.props.feilKode === REST_FEIL.FOR_STOR_FIL;
+    //     const feilFiltype: boolean = this.props.feilKode && this.props.feilKode === REST_FEIL.FEIL_FILTPYE;
+    //     const kryptertFilFeil: boolean = this.props.feilKode && this.props.feilKode === REST_FEIL.KRYPTERT_FIL;
+    //     const signertFilFeil: boolean = this.props.feilKode && this.props.feilKode === REST_FEIL.SIGNERT_FIL;
+    //     const annenFeil = !forStorFilFeil && !feilFiltype && !kryptertFilFeil && !signertFilFeil;
+    //
+    //     return (
+    //         <div className="skjemaelement__feilmelding">
+    //             {forStorFilFeil && (
+    //                 <FormattedMessage id="fil.for.stor"/>
+    //             )}
+    //             {feilFiltype && (
+    //                 <FormattedMessage id="fil.feil.format"/>
+    //             )}
+    //             {kryptertFilFeil && (
+    //                 <FormattedMessage id="fil.feil.kryptert"/>
+    //             )}
+    //             {signertFilFeil && (
+    //                 <FormattedMessage id="fil.feil.signert"/>
+    //             )}
+    //             {annenFeil && (
+    //                 <FormattedMessage id="opplysninger.vedlegg.ugyldig"/>
+    //             )}
+    //             &nbsp; sett inn filnavn
+    //         </div>
+    //     );
+    // }
+
 	render() {
 
 		const { isDisabled, visSpinner, opplysning } = this.props;
+
+		const gjeldende = true;
 
 		return (
 			<div>
@@ -72,11 +112,14 @@ class LastOppFil extends React.Component<Props, {}> {
                     accept="image/jpeg,image/png,application/pdf"
                 />
 
-				<div role="alert" aria-live="assertive">
-					<div className="skjemaelement__feilmelding">
-						<FormattedHTMLMessage id={"fil.feil.kryptert"}/>
-					</div>
-				</div>
+                <div role="alert" aria-live="assertive">
+                    { gjeldende && (
+                        <div className="skjemaelement__feilmelding">
+                            {/*{this.renderFeilmelding()}*/}
+                            { this.props.filopplasting.feilKode }
+                        </div>
+                    )}
+                </div>
 			</div>
 		);
 	}
@@ -87,7 +130,9 @@ export default connect<StoreToProps, {}, OwnProps>(
     (state: SoknadAppState) => {
         return {
             okonomiskeOpplysninger: state.okonomiskeOpplysninger,
-            behandlingsId: state.soknad.data.brukerBehandlingId
+            behandlingsId: state.soknad.data.brukerBehandlingId,
+            feil: state.validering.feil,
+            filopplasting: state.filopplasting
         };
     }
 )(LastOppFil);
