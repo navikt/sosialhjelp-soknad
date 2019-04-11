@@ -12,6 +12,13 @@ type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 class SkattbarInntekt extends React.Component<Props, {}> {
 
+	private static renderUtbetaling(key: string, value: number) {
+		return (<div className="utbetaling">
+			<span><FormattedMessage id={key}/>:</span>
+			<span className="verdi detaljeliste__verdi"><FormattedNumber value={value}/> kr</span>
+		</div>)
+	}
+
 	componentDidMount(): void {
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.SKATTBARINNTEKT);
 	}
@@ -19,33 +26,28 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 	render() {
 		const {intl, soknadsdata} = this.props;
 		const skattbarInntekt = soknadsdata.inntekt.skattbarinntektogforskuddstrekk;
+		const title = getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.undertittel");
+		const oppsummering = getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.oppsummering")
+
 		const organisasjoner = skattbarInntekt.organisasjoner.map(organisasjon => {
-			const utbetalinger = organisasjon.utbetalinger.map( utbetaling => {
-				return (<div key="FIXME" className="utbetaling blokk-s">
-					<span><FormattedMessage id={utbetaling.tittel}/>:</span>
-					<span className="verdi detaljeliste__verdi"><FormattedNumber value={utbetaling.belop}/> kr</span>
-				</div>)
-			});
-			return (<div key={organisasjon.orgnr} className="utbetaling blokk-s">
-				<h4>{organisasjon.organisasjonsnavn}</h4>
-				<div> Fra {organisasjon.fom} til {organisasjon.tom}</div>
-				{utbetalinger}
+			return (<div key={organisasjon.orgnr} className="utbetaling">
+				<div className="blokk-s">
+					<h4 className="blokk-null">{organisasjon.organisasjonsnavn}</h4>
+					<div> Fra {organisasjon.fom} til {organisasjon.tom}</div>
+				</div>
+				{organisasjon.utbetalinger.map(utbetaling => {
+					return SkattbarInntekt.renderUtbetaling(utbetaling.tittel, utbetaling.belop)
+				})}
 			</div>)
 		});
-		const title = getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.undertittel");
 
-		return (<Ekspanderbartpanel apen={true} tittel={title}>
-			<FormattedMessage id="utbetalinger.inntekt.skattbar.oppsummering"/>
+		return (<Ekspanderbartpanel className="ekspanderbartPanel--skattbarInntekt" apen={true} tittel={title}>
 
-			<div className="utbetalinger">
-				<div className="utbetaling blokk-s">
-					<span><FormattedMessage id="utbetalinger.inntekt.skattbar.samlet.inntekt"/>:</span>
-					<span className="verdi detaljeliste__verdi"><FormattedNumber value={skattbarInntekt.samletInntekt}/> kr</span>
-				</div>
-				<div className="utbetaling blokk-s">
-					<span><FormattedMessage id="utbetalinger.inntekt.skattbar.samlet.trekk"/>:</span>
-					<span className="verdi detaljeliste__verdi"><FormattedNumber value={skattbarInntekt.samletTrekk}/> kr</span>
-				</div>
+			<div className="blokk-s">{oppsummering}</div>
+
+			<div className="utbetalinger blokk-s">
+				{SkattbarInntekt.renderUtbetaling("utbetalinger.inntekt.skattbar.samlet.inntekt", skattbarInntekt.samletInntekt)}
+				{SkattbarInntekt.renderUtbetaling("utbetalinger.inntekt.skattbar.samlet.trekk", skattbarInntekt.samletTrekk)}
 			</div>
 
 			<div className="utbetalinger">{organisasjoner}</div>
