@@ -10,3 +10,18 @@
     }
   }
 }
+
+/** Veldig spesifikk overrid enn så lenge */
+.ekspanderbartPanel--skattbarInntekt {
+  padding-bottom: @sporsmalBottomPadding;
+  .ekspanderbartPanel {
+    &__hode, &__innhold {
+      padding-left: @skjemaMarg;
+      padding-right: @skjemaMarg;
+      @media @mobile {
+        padding-left: @skjemaMarg/2;
+        padding-right: @skjemaMarg/2;
+      }
+    }
+  }
+}
