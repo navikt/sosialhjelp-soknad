@@ -31,8 +31,7 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 			return (<div/>);
 		}
 		const skattbarInntekt = skattbareInntekter[0];
-		const title = getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.undertittel");
-		const oppsummering = getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.oppsummering")
+		const undertittel = getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.undertittel");
 
 		const organisasjoner = skattbarInntekt.organisasjoner.map(organisasjon => {
 			const fom = <FormattedDate value={organisasjon.fom!}/>;
@@ -54,9 +53,11 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 			</div>)
 		});
 
-		return (<Ekspanderbartpanel className="ekspanderbartPanel--skattbarInntekt skjemaelement__input" apen={true} tittel={title}>
+		return (<Ekspanderbartpanel className="ekspanderbartPanel--skattbarInntekt skjemaelement__input" apen={true} tittel={undertittel}>
 
-			<div className="blokk-s">{oppsummering}</div>
+			<div className="blokk-s">
+				<FormattedMessage id="utbetalinger.inntekt.skattbar.oppsummering" values={{antall:organisasjoner.length}} />
+			</div>
 
 			<div className="utbetalinger blokk-s">
 				{SkattbarInntekt.renderUtbetaling("utbetalinger.inntekt.skattbar.samlet.inntekt", skattbarInntekt.samletInntekt)}
