@@ -49,7 +49,7 @@ export enum SoknadsSti {
 }
 
 export interface Inntekt {
-	skattbarinntektogforskuddstrekk: SkattbarInntekt;
+	skattbarinntektogforskuddstrekk: SkattbarInntekt[];
 }
 
 export const initialInntektState: Inntekt = {
