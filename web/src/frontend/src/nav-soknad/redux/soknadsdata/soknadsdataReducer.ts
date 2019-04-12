@@ -105,6 +105,9 @@ export const initialSoknadsdataState: Soknadsdata = {
 			telefonnummer: REST_STATUS.INITIALISERT,
 			kontonummer: REST_STATUS.INITIALISERT,
 			basisPersonalia: REST_STATUS.INITIALISERT
+		},
+		familie: {
+			sivilstatus: REST_STATUS.INITIALISERT
 		}
 	}
 };
