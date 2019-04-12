@@ -87,7 +87,7 @@ export interface Inntekt {
 	utbetalinger?: Utbetalinger;
 	formue?: Formue;
 	verdier?: Verdier;
-	skattbarinntektogforskuddstrekk: SkattbarInntekt;
+	skattbarinntektogforskuddstrekk: SkattbarInntekt[];
 }
 
 export interface Utgifter {
