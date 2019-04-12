@@ -53,7 +53,7 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 			</div>)
 		});
 
-		return (<Ekspanderbartpanel className="ekspanderbartPanel--skattbarInntekt skjemaelement__input" apen={true} tittel={undertittel}>
+		return (<Ekspanderbartpanel className="ekspanderbartPanel--skattbarInntekt ekspanderbartPanel--border" apen={true} tittel={undertittel}>
 
 			<div className="blokk-s">
 				<FormattedMessage id="utbetalinger.inntekt.skattbar.oppsummering" values={{antall:organisasjoner.length}} />
