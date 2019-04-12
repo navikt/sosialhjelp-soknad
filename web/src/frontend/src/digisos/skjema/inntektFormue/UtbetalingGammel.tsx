@@ -16,7 +16,7 @@ import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
-class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
+class BankinnskuddGammel extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
 		const utbetaling = radioCheckKeys("inntekt.inntekter");
@@ -70,4 +70,4 @@ class Bankinnskudd extends React.Component<FaktumComponentProps, {}> {
 	}
 }
 
-export default Bankinnskudd;
+export default BankinnskuddGammel;
