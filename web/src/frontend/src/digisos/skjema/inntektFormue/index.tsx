@@ -12,6 +12,7 @@ import HusbankInfopanel from "./HusbankInfopanel";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import Penger from "../../../nav-soknad/components/svg/illustrasjoner/Penger";
 import { FormattedHTMLMessage } from "react-intl";
+import HusbankInfopanelFadeCollapse from "./HusbankInfopanelFadeCollapse";
 
 class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps, any> {
 	render() {
@@ -22,14 +23,18 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
 					<FormattedHTMLMessage id="opplysninger.inntekt.undertittel"/>
 				</h2>
 				<NavYtelser fakta={fakta}/>
-				<div className="skjema-sporsmal">
-					<Bostotte />
-					<HusbankInfopanel fakta={fakta}/>
-				</div>
+                <div className="skjema-sporsmal">
+                    <Bostotte />
+                    <HusbankInfopanelFadeCollapse fakta={fakta}/>
+                </div>
 				<Utbetaling fakta={fakta} />
 				<h2 className="overskrift">
 					<FormattedHTMLMessage id="opplysninger.formue.undertittel"/>
 				</h2>
+				<div className="skjema-sporsmal">
+					<Bostotte />
+					<HusbankInfopanel fakta={fakta}/>
+				</div>
 				<Bankinnskudd fakta={fakta} dispatch={this.props.dispatch}/>
 				<Eiendeler fakta={fakta} />
 			</DigisosSkjemaSteg>
