@@ -19,7 +19,10 @@ class Barnebidrag extends React.Component<Props, {}> {
 		const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
 		forsorgerplikt.barnebidrag = verdi;
 		oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+		const payload  = {
+			"barnebidrag": verdi
+		};
+		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, payload);
 	}
 
 	renderRadio(verdi: string) {

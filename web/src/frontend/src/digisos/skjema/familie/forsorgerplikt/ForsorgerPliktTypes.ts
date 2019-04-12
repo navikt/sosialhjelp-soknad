@@ -20,6 +20,10 @@ export interface ForsorgerPlikt {
 	ansvar: Barn[];
 }
 
+export interface Barnebidrag {
+	barnebidrag: string;
+}
+
 export const initialForsorgerPlikt: ForsorgerPlikt = {
 	harForsorgerplikt: false,
 	barnebidrag: null,

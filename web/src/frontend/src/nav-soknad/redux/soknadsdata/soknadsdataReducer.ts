@@ -40,7 +40,7 @@ import {
 	initialBasisPersonalia
 } from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import { REST_STATUS } from "../../types";
-import { ForsorgerPlikt } from "../../../digisos/skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
+import { Barnebidrag, ForsorgerPlikt } from "../../../digisos/skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -144,6 +144,7 @@ export type SoknadsdataType =
 	| Personalia
 	| Sivilstatus
 	| ForsorgerPlikt
+	| Barnebidrag
 	| Sivilstatus
 	| Bostotte
 	| Formue
@@ -181,6 +182,7 @@ export const initialSoknadsdataState: Soknadsdata = {
 			verdier: REST_STATUS.INITIALISERT
 		}
 	}
+
 };
 
 const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (
