@@ -52,40 +52,9 @@ class LastOppFil extends React.Component<Props, {}> {
         this.leggTilVedleggKnapp.value = null;
     }
 
-    // renderFeilmelding() {
-    //     const forStorFilFeil: boolean = this.props.filopplasting.feilKode && this.props.feilKode === REST_FEIL.FOR_STOR_FIL;
-    //     const feilFiltype: boolean = this.props.feilKode && this.props.feilKode === REST_FEIL.FEIL_FILTPYE;
-    //     const kryptertFilFeil: boolean = this.props.feilKode && this.props.feilKode === REST_FEIL.KRYPTERT_FIL;
-    //     const signertFilFeil: boolean = this.props.feilKode && this.props.feilKode === REST_FEIL.SIGNERT_FIL;
-    //     const annenFeil = !forStorFilFeil && !feilFiltype && !kryptertFilFeil && !signertFilFeil;
-    //
-    //     return (
-    //         <div className="skjemaelement__feilmelding">
-    //             {forStorFilFeil && (
-    //                 <FormattedMessage id="fil.for.stor"/>
-    //             )}
-    //             {feilFiltype && (
-    //                 <FormattedMessage id="fil.feil.format"/>
-    //             )}
-    //             {kryptertFilFeil && (
-    //                 <FormattedMessage id="fil.feil.kryptert"/>
-    //             )}
-    //             {signertFilFeil && (
-    //                 <FormattedMessage id="fil.feil.signert"/>
-    //             )}
-    //             {annenFeil && (
-    //                 <FormattedMessage id="opplysninger.vedlegg.ugyldig"/>
-    //             )}
-    //             &nbsp; sett inn filnavn
-    //         </div>
-    //     );
-    // }
-
 	render() {
 
 		const { isDisabled, visSpinner, opplysning } = this.props;
-
-		const gjeldende = true;
 
 		return (
 			<div>
@@ -113,12 +82,9 @@ class LastOppFil extends React.Component<Props, {}> {
                 />
 
                 <div role="alert" aria-live="assertive">
-                    { gjeldende && (
-                        <div className="skjemaelement__feilmelding">
-                            {/*{this.renderFeilmelding()}*/}
-                            { this.props.filopplasting.feilKode }
-                        </div>
-                    )}
+                    <div className="skjemaelement__feilmelding">
+                        {this.props.filopplasting.feilKode && <FormattedMessage id={this.props.filopplasting.feilKode}/>}
+                    </div>
                 </div>
 			</div>
 		);
