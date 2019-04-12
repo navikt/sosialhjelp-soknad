@@ -16,7 +16,7 @@ import { getMaksLengdeFunc } from "../../../nav-soknad/validering/valideringer";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
-class Eiendeler extends React.Component<FaktumComponentProps, {}> {
+class EiendelerGammel extends React.Component<FaktumComponentProps, {}> {
 	render() {
 		const { fakta } = this.props;
 		const eiendeler = radioCheckKeys("inntekt.eierandeler");
@@ -71,4 +71,4 @@ class Eiendeler extends React.Component<FaktumComponentProps, {}> {
 	}
 }
 
-export default Eiendeler;
+export default EiendelerGammel;
