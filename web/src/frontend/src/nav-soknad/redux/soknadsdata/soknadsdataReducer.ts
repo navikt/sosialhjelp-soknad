@@ -86,7 +86,7 @@ export enum SoknadsSti {
 }
 
 export interface Inntekt {
-	skattbarinntektogforskuddstrekk: SkattbarInntekt;
+	skattbarinntektogforskuddstrekk: SkattbarInntekt[];
 	bostotte: Bostotte;
 	utbetalinger: Utbetalinger;
 	formue: Formue;

@@ -1,3 +1,5 @@
+@import "../../../nav-soknad/styles/variables.less";
+
 .utbetalinger {
 
   .utbetaling {
@@ -13,14 +15,17 @@
 
 /** Veldig spesifikk overrid enn så lenge */
 .ekspanderbartPanel--skattbarInntekt {
-  padding-bottom: @sporsmalBottomPadding;
+  margin-bottom: @skjemaMargXL;
   .ekspanderbartPanel {
+    &__heading, .typo-undertittel h4 {
+      font-size: 1rem;
+      font-weight: bold;
+      padding-bottom: 0;
+    }
     &__hode, &__innhold {
-      padding-left: @skjemaMarg;
-      padding-right: @skjemaMarg;
+      padding: 0.5rem @skjemaMarg 0 @skjemaMarg;
       @media @mobile {
-        padding-left: @skjemaMarg/2;
-        padding-right: @skjemaMarg/2;
+        padding: 0.5rem @skjemaMarg/2 0 @skjemaMarg/2;
       }
     }
   }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormattedMessage, FormattedNumber, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedMessage, FormattedNumber, FormattedDate, InjectedIntlProps, injectIntl} from "react-intl";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
@@ -25,23 +25,36 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 
 	render() {
 		const {intl, soknadsdata} = this.props;
-		const skattbarInntekt = soknadsdata.inntekt.skattbarinntektogforskuddstrekk;
+		// TODO: Håndter flere måneder med skattbar inntekt
+		const skattbareInntekter = soknadsdata.inntekt.skattbarinntektogforskuddstrekk;
+		if (skattbareInntekter.length < 1) {
+			return (<div/>);
+		}
+		const skattbarInntekt = skattbareInntekter[0];
 		const title = getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.undertittel");
 		const oppsummering = getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.oppsummering")
 
 		const organisasjoner = skattbarInntekt.organisasjoner.map(organisasjon => {
-			return (<div key={organisasjon.orgnr} className="utbetaling">
+			const fom = <FormattedDate value={organisasjon.fom!}/>;
+			const tom = <FormattedDate value={organisasjon.tom!}/>;
+			const lenkeSti = `https://skatt.skatteetaten.no/web/innsynamelding/inntekt/${organisasjon.orgnr}
+								?year=${organisasjon.tom!.slice(0, 4)}&month=${organisasjon.tom!.slice(5, 7)}`;
+
+			return (<div key={organisasjon.orgnr} className="utbetaling blokk-s">
 				<div className="blokk-s">
 					<h4 className="blokk-null">{organisasjon.organisasjonsnavn}</h4>
-					<div> Fra {organisasjon.fom} til {organisasjon.tom}</div>
+					<div>Fra {fom} til {tom}</div>
 				</div>
+				<div className="blokk-xs">
 				{organisasjon.utbetalinger.map(utbetaling => {
 					return SkattbarInntekt.renderUtbetaling(utbetaling.tittel, utbetaling.belop)
 				})}
+				</div>
+				<a className="blokk-s" href={lenkeSti}>Se detaljer hos Skatteetaten.</a>
 			</div>)
 		});
 
-		return (<Ekspanderbartpanel className="ekspanderbartPanel--skattbarInntekt" apen={true} tittel={title}>
+		return (<Ekspanderbartpanel className="ekspanderbartPanel--skattbarInntekt skjemaelement__input" apen={true} tittel={title}>
 
 			<div className="blokk-s">{oppsummering}</div>
 

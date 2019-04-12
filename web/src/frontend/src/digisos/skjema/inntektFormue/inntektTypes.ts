@@ -17,8 +17,4 @@ export interface Utbetaling {
 	"tittel": string
 }
 
-export const initialSkattbarInntektState: SkattbarInntekt = {
-	"samletInntekt": 0.0,
-	"samletTrekk": 0.0,
-	"organisasjoner": []
-};
+export const initialSkattbarInntektState: SkattbarInntekt[] = [];
