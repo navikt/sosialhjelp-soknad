@@ -7,6 +7,9 @@ import * as React from "react";
 import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
+import { REST_STATUS } from "../../../../nav-soknad/types";
+
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 class BasisPersonaliaView extends React.Component<Props, {}> {
@@ -27,13 +30,16 @@ class BasisPersonaliaView extends React.Component<Props, {}> {
 			statsborgerskap = "Vi har ikke opplysninger om ditt statsborgerskap";
 			statsborgerskapVisning = <span>{statsborgerskap}</span>;
 		}
+		const restStatus = soknadsdata.restStatus.personalia.basisPersonalia;
+		const visAnimerteStreker = restStatus !== REST_STATUS.OK;
 
 		return (
 			<SporsmalFaktum
 				faktumKey="kontakt.system.personalia"
 				style="system"
+				visLedetekst={visAnimerteStreker !== true}
 			>
-				{basisPersonalia && (
+				{visAnimerteStreker !== true && basisPersonalia && (
 					<Detaljeliste>
 						<DetaljelisteElement
 							tittel={<FormattedMessage id="kontakt.system.personalia.navn" />}
@@ -53,6 +59,9 @@ class BasisPersonaliaView extends React.Component<Props, {}> {
 							/>
 						)}
 					</Detaljeliste>
+				)}
+				{visAnimerteStreker && (
+					<TextPlaceholder lines={3} />
 				)}
 			</SporsmalFaktum>
 		);
