@@ -168,6 +168,9 @@ export const initialSoknadsdataState: Soknadsdata = {
 			kontonummer: REST_STATUS.INITIALISERT,
 			basisPersonalia: REST_STATUS.INITIALISERT
 		},
+		familie: {
+			sivilstatus: REST_STATUS.INITIALISERT
+		},
 		inntekt: {
 			bostotte: REST_STATUS.INITIALISERT,
 			utbetalinger: REST_STATUS.INITIALISERT,
