@@ -19,12 +19,8 @@ class UtgifterGjeld extends React.Component<
 	render() {
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk} ikon={<KredittkortIllustrasjon/>}>
-				<div style={{border: "3px dotted green"}}>
-					<Boutgifter />
-				</div>
-				<div style={{border: "3px dotted green"}}>
-					<Barneutgifter />
-				</div>
+				<Boutgifter />
+				<Barneutgifter />
 			</DigisosSkjemaSteg>
 		);
 	}
