@@ -1,5 +1,5 @@
 import {
-    Grupper,
+    Grupper, MaybeOpplysning,
     OkonomiskeOpplysningerBackend,
     OkonomiskeOpplysningerModel,
     OkonomiskOpplysningBackend,
@@ -445,6 +445,94 @@ export const getOpplysningByOpplysningTypeAndGruppe = (
     }
 };
 
+const opplysningsRekkefolge = [
+    "lonnslipp|arbeid",
+    "sluttoppgjor|arbeid",
+    "student|vedtak",
+    "barnebidrag|betaler",
+    "barnebidrag|mottar",
+    "samvarsavtale|barn",
+    "husleiekontrakt|husleiekontrakt",
+    "husleiekontrakt|kommunal",
+    "bostotte|vedtak",
+    "kontooversikt|brukskonto",
+    "kontooversikt|bsu",
+    "kontooversikt|sparekonto",
+    "kontooversikt|livsforsikring",
+    "kontooversikt|aksjer",
+    "kontooversikt|annet",
+    "dokumentasjon|utbytte",
+    "salgsoppgjor|eiendom",
+    "dokumentasjon|forsikringsutbetaling",
+    "dokumentasjon|annetinntekter",
+    "faktura|husleie",
+    "faktura|strom",
+    "faktura|kommunaleavgifter",
+    "faktura|oppvarming",
+    "nedbetalingsplan|avdraglaan",
+    "dokumentasjon|annetboutgift",
+    "faktura|fritidsaktivitet",
+    "faktura|barnehage",
+    "faktura|sfo",
+    "faktura|tannbehandling",
+    "faktura|annetbarnutgift",
+    "skattemelding|skattemelding",
+    "annet|annet"
+];
+
+
+export const getSortertListeAvMaybeOpplysning = (backendData: OkonomiskeOpplysningerBackend): MaybeOpplysning[] => {
+
+    const { okonomiskeOpplysninger, slettedeVedlegg } = backendData;
+    const okonomiskeOpplysningerAktive: Opplysning[] = okonomiskeOpplysninger.map((okonomiskOpplysningBackend: OkonomiskOpplysningBackend) => {
+        return backendOpplysningToOpplysning(okonomiskOpplysningBackend, false)
+    });
+
+    const okonomiskeOpplysningerSlettede: Opplysning[] = slettedeVedlegg.map((okonomiskOpplysningBackend: OkonomiskOpplysningBackend) => {
+        return backendOpplysningToOpplysning(okonomiskOpplysningBackend, true)
+    });
+
+    const alleOpplysninger: Opplysning[] = okonomiskeOpplysningerAktive.concat(okonomiskeOpplysningerSlettede);
+
+    return sorterOpplysninger(alleOpplysninger, opplysningsRekkefolge)
+};
+
+const backendOpplysningToOpplysning = (opplysningBackend: OkonomiskOpplysningBackend, erSlettet: boolean): Opplysning => {
+    return {
+        "type" : opplysningBackend.type,
+        "gruppe" : opplysningBackend.gruppe,
+        "rader" : opplysningBackend.rader,
+        "vedleggStatus": opplysningBackend.vedleggStatus,
+        "filer" : opplysningBackend.filer,
+        "slettet" : erSlettet,
+        "radType" : getRadType(opplysningBackend.type),
+        "pendingLasterOppFil" : false
+    }
+};
+
+
+function sorterOpplysninger(usortertListe: Opplysning[], rekkefolge: string[] ){
+
+    const sortert: MaybeOpplysning[] = [];
+    sortert.fill(null, 0, rekkefolge.length - 1);
+
+    for (const opplysning of usortertListe){
+        let erPlassertISortertListe = false;
+        let n = 0;
+        while (erPlassertISortertListe === false){
+            if (n > rekkefolge.length - 1){
+                console.error("Opplysningen mangler i typeoversikten: ");
+                console.warn(opplysning);
+                erPlassertISortertListe = true;
+            } else if (opplysning.type === rekkefolge[n]) {
+                sortert[n] = opplysning;
+                erPlassertISortertListe = true;
+            }
+            n += 1;
+        }
+    }
+    return sortert;
+}
 
 
 

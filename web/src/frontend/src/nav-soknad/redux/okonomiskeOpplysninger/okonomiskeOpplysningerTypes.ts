@@ -7,7 +7,11 @@ export interface OkonomiskeOpplysningerModel {
     restStatus: RestStatus;
     backendData: OkonomiskeOpplysningerBackend | null;
     grupper: Grupper | null;
+    opplysningerSortert: MaybeOpplysning[]
 }
+
+export type MaybeOpplysning = Opplysning | null;
+
 
 export interface OkonomiskeOpplysningerBackend {
     okonomiskeOpplysninger: OkonomiskOpplysningBackend[];

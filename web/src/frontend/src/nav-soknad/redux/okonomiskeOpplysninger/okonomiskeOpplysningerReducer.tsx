@@ -9,7 +9,7 @@ import {
 import {RestStatus} from "../../types";
 import {
     generateGrupperFromBackendData,
-    getOpplysningByOpplysningTypeAndGruppe,
+    getOpplysningByOpplysningTypeAndGruppe, getSortertListeAvMaybeOpplysning,
     updateOkonomiskOpplysning,
 } from "./okonomiskeOpplysningerUtils";
 
@@ -17,7 +17,8 @@ import {
 export const initialOkonomiskeOpplysningerModel: OkonomiskeOpplysningerModel = {
     restStatus: RestStatus.NOT_ASKED,
     backendData: null,
-    grupper: null
+    grupper: null,
+    opplysningerSortert: []
 };
 
 const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, OkonomiskeOpplysningerAction> = (
@@ -26,11 +27,15 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
 ) => {
     switch (action.type) {
         case OkonomiskeOpplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND: {
+
+            const sortert = getSortertListeAvMaybeOpplysning(action.backendData);
+
             return {
                 ...state,
                 restStatus: RestStatus.SUCCESS,
                 backendData: action.backendData,
-                grupper: generateGrupperFromBackendData(action.backendData)
+                grupper: generateGrupperFromBackendData(action.backendData),
+                opplysningerSortert: sortert
             };
         }
         case OkonomiskeOpplysningerActionTypeKeys.OPPDATER_OKONOMISK_OPPLYSNING: {
