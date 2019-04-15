@@ -15,7 +15,9 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 	private static renderUtbetaling(key: string, value: number) {
 		return (<div className="utbetaling">
 			<span><FormattedMessage id={key}/>:</span>
-			<span className="verdi detaljeliste__verdi"><FormattedNumber value={value}/> kr</span>
+			<span className="verdi detaljeliste__verdi">
+				<FormattedNumber value={value} minimumFractionDigits={2} maximumFractionDigits={2}/> kr
+			</span>
 		</div>)
 	}
 
@@ -39,7 +41,7 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 			const lenkeSti = `https://skatt.skatteetaten.no/web/innsynamelding/inntekt/${organisasjon.orgnr}
 								?year=${organisasjon.tom!.slice(0, 4)}&month=${organisasjon.tom!.slice(5, 7)}`;
 
-			return (<div key={organisasjon.orgnr} className="utbetaling blokk-s">
+			return (<div key={organisasjon.orgnr} className="utbetaling blokk">
 				<div className="blokk-s">
 					<h4 className="blokk-null">{organisasjon.organisasjonsnavn}</h4>
 					<div>Fra {fom} til {tom}</div>
