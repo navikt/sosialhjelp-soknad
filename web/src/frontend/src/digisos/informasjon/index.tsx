@@ -16,8 +16,6 @@ import { loggFeil } from "../../nav-soknad/redux/navlogger/navloggerActions";
 import { Panel } from "nav-frontend-paneler";
 import { opprettSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
-import Ella from "../../nav-soknad/components/svg/Ella";
-import {DigisosFarge} from "../../nav-soknad/components/svg/DigisosFarger";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 
 interface StateProps {
@@ -83,7 +81,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 										{this.renderHilsen()}
 										<FormattedMessage id="informasjon.hilsen.tittel"/>
 									</Snakkeboble>
-									<Ella visBakgrundsSirkel={true} size={175} bakgrundsFarge={DigisosFarge.SUKSESS} />
+									<img src="/soknadsosialhjelp/statisk/bilder/ella_blunk.svg" alt="" />
 								</span>
 
 								<Panel className="informasjon-viktig">
