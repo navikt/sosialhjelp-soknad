@@ -6,8 +6,7 @@ import {Valideringsfeil} from "../../validering/types";
 export interface OkonomiskeOpplysningerModel {
     restStatus: RestStatus;
     backendData: OkonomiskeOpplysningerBackend | null;
-    grupper: Grupper | null;
-    opplysningerSortert: MaybeOpplysning[]
+    opplysningerSortert: Opplysning[]
 }
 
 export type MaybeOpplysning = Opplysning | null;
@@ -81,19 +80,16 @@ export interface GotDataFromBackend {
 export interface SettPendingPaFilOpplasting {
     type: OkonomiskeOpplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING;
     opplysningType: OpplysningType;
-    opplysningGruppe: OpplysningGruppe;
 }
 
 export interface SettFerdigPaFilOpplasting {
     type: OkonomiskeOpplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING;
     opplysningType: OpplysningType;
-    opplysningGruppe: OpplysningGruppe;
 }
 
 export interface SettOpplysningsFilAlleredeLastetOpp {
     type: OkonomiskeOpplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP;
     opplysningType: OpplysningType;
-    opplysningGruppe: OpplysningGruppe;
 }
 
 export interface LagreOpplysningHvisGyldig {

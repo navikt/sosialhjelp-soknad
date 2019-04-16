@@ -6,7 +6,6 @@ import {
     OkonomiskeOpplysningerActionTypeKeys,
     OkonomiskeOpplysningerBackend,
     Opplysning,
-    OpplysningGruppe,
     OpplysningType
 } from "./okonomiskeOpplysningerTypes";
 import {getOkonomomiskeOpplysningerUrl} from "./okonomiskeOpplysningerUtils";
@@ -27,27 +26,24 @@ export const updateOpplysning = (okonomiskOpplysning: Opplysning): OkonomiskeOpp
     }
 };
 
-export const settPendingPaFilOpplasting = (opplysningType: OpplysningType, opplysningGruppe: OpplysningGruppe): OkonomiskeOpplysningerAction => {
+export const settPendingPaFilOpplasting = (opplysningType: OpplysningType): OkonomiskeOpplysningerAction => {
     return {
         type: OkonomiskeOpplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING,
         opplysningType,
-        opplysningGruppe
     }
 };
 
-export const settFerdigPaFilOpplasting = (opplysningType: OpplysningType, opplysningGruppe: OpplysningGruppe): OkonomiskeOpplysningerAction => {
+export const settFerdigPaFilOpplasting = (opplysningType: OpplysningType): OkonomiskeOpplysningerAction => {
     return {
         type: OkonomiskeOpplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING,
         opplysningType,
-        opplysningGruppe
     }
 };
 
-export const settOpplysningsFilAlleredeLastetOpp = (opplysningType: OpplysningType, opplysningGruppe: OpplysningGruppe) => {
+export const settOpplysningsFilAlleredeLastetOpp = (opplysningType: OpplysningType) => {
     return {
         type: OkonomiskeOpplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP,
         opplysningType,
-        opplysningGruppe
     }
 };
 
@@ -63,17 +59,6 @@ export function hentOkonomiskeOpplysninger(behandlingsId: string) {
     }
 }
 
-// export function lagreOpplysning(behandlingsId: string, okonomiskOpplysning: Opplysning) {
-//
-//     const okonomiskOpplysningBackend: OkonomiskOpplysningBackend = transformToBackendOpplysning(okonomiskOpplysning);
-//
-//     return (dispatch: Dispatch) => {
-//         fetchPut(getOkonomomiskeOpplysningerUrl(behandlingsId), JSON.stringify(okonomiskOpplysningBackend))
-//             .catch(() => {
-//                 dispatch(navigerTilServerfeil());
-//             });
-//     }
-// }
 
 export const lagreOpplysningHvisGyldigAction = (
     behandlingsId: string,

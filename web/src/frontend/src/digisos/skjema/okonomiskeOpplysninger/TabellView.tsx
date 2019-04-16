@@ -1,11 +1,10 @@
 import * as React from 'react';
 import {
-    InputType,
+    InputType, OkonomiskeOpplysningerModel,
     Opplysning,
     OpplysningRad,
     RadType
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
-import {StoreToProps} from "./index";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import {connect} from "react-redux";
 import {
@@ -31,11 +30,17 @@ interface OwnProps {
     feil?: Valideringsfeil[];
 }
 
+interface StoreToProps {
+    okonomiskeOpplysninger: OkonomiskeOpplysningerModel;
+    behandlingsId: string;
+    feil: Valideringsfeil[];
+}
+
 
 type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
 
 
-class OkonomiskOpplysningTabellView extends React.Component<Props, {}>{
+class TabellView extends React.Component<Props, {}>{
 
 
     handleChange(input: string, radIndex: number, inputFelt: InputType, key: string){
@@ -260,4 +265,4 @@ export default connect<StoreToProps, {}, OwnProps>(
             feil: state.validering.feil,
         };
     }
-)(OkonomiskOpplysningTabellView);
+)(TabellView);

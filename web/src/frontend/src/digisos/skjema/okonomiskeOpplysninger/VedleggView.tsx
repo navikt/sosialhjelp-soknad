@@ -1,31 +1,37 @@
 import * as React from 'react';
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
-import {StoreToProps} from "./index";
 import {
     Fil,
     Opplysning,
     VedleggStatus
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
 import {connect} from "react-redux";
-import OpplastetVedlegg from "./VedleggsFilNy";
 import LastOppFil from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
 import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
-import {getTextKeyForVedleggType} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
+import {
+    getKeyForOpplysningType,
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 import {startSlettFil} from "../../../nav-soknad/redux/fil/filActions";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {
     lagreOpplysningHvisGyldigAction,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
+import {Valideringsfeil} from "../../../nav-soknad/validering/types";
+import OpplastetVedlegg from "./OpplastetVedlegg";
 
 interface OwnProps {
     okonomiskOpplysning: Opplysning;
-    gruppeIndex: number;
+}
+
+interface StoreToProps {
+    behandlingsId: string;
+    feil: Valideringsfeil[];
 }
 
 type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps
 
-class OkonomiskOpplysningVedleggView extends React.Component<Props>{
+class VedleggView extends React.Component<Props>{
 
 
     handleAlleredeLastetOpp(event: any){
@@ -51,7 +57,7 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
 
     renderOpplastingAvVedleggSeksjon(opplysning: Opplysning) {
 
-        const tittelKey = getTextKeyForVedleggType(this.props.okonomiskOpplysning.type) + ".tittel";
+        const tittelKey = getKeyForOpplysningType(this.props.okonomiskOpplysning.type) + ".vedlegg.sporsmal.tittel";
 
         const vedleggListe = opplysning.filer
             .map(fil => {
@@ -70,7 +76,6 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
                 </div>
                 <LastOppFil
                     opplysning={opplysning}
-                    gruppeIndex={this.props.gruppeIndex}
                     isDisabled={opplysning.pendingLasterOppFil || opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
                     visSpinner={opplysning.pendingLasterOppFil}
                 />
@@ -101,9 +106,8 @@ class OkonomiskOpplysningVedleggView extends React.Component<Props>{
 export default connect<StoreToProps, {}, OwnProps>(
     (state: SoknadAppState) => {
         return {
-            okonomiskeOpplysninger: state.okonomiskeOpplysninger,
             behandlingsId: state.soknad.data.brukerBehandlingId,
             feil: state.validering.feil
         }
     }
-)(OkonomiskOpplysningVedleggView);
+)(VedleggView);

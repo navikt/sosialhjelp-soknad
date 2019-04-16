@@ -15,9 +15,14 @@ import {REST_FEIL} from "../../types/restFeilTypes";
 
 
 function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
-	const url = `opplastetVedlegg/${action.behandlingsId}/${action.opplysningType}`;
 
-	yield put(settPendingPaFilOpplasting(action.opplysningType, action.opplysning.gruppe));
+	const {behandlingsId, formData, opplysning} = action;
+
+	console.warn(opplysning.type);
+	yield put(settPendingPaFilOpplasting(opplysning.type));
+
+	const url = `opplastetVedlegg/${behandlingsId}/${opplysning.type}`;
+
 
 	let response: Fil =
 		{
@@ -26,30 +31,28 @@ function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
 		};
 
 	try {
-		response = yield call(fetchUpload, url, action.formData);
-		const filerUpdated: Fil[] = action.opplysning.filer.map((fil: Fil) => ({...fil}));
+		response = yield call(fetchUpload, url, formData);
+		const filerUpdated: Fil[] = opplysning.filer.map((fil: Fil) => ({...fil}));
 		filerUpdated.push(response);
-		const opplysning: Opplysning = action.opplysning;
 		const opplysningUpdated: Opplysning = {...opplysning};
 		opplysningUpdated.filer = filerUpdated;
 		yield put(updateOpplysning(opplysningUpdated));
-        yield put(settFerdigPaFilOpplasting(action.opplysningType, action.opplysning.gruppe));
+        yield put(settFerdigPaFilOpplasting(opplysning.type));
 	} catch (reason) {
 
         let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
 
         // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
-        response = yield call(fetchUploadIgnoreErrors, url, action.formData);
+        response = yield call(fetchUploadIgnoreErrors, url, formData);
         const ID = "id";
         if (response && response[ID]) {
             feilKode = response[ID];
         }
-        yield put(lastOppFilFeilet(action.opplysningType, feilKode));
+        yield put(lastOppFilFeilet(opplysning.type, feilKode));
         if (feilKode !== REST_FEIL.KRYPTERT_FIL && feilKode !== REST_FEIL.SIGNERT_FIL) {
             yield put(loggFeil("Last opp vedlegg feilet: " + reason.toString()));
         }
-		console.warn("Feil ved opplasting av fil: " + reason.toString());
-        yield put(settFerdigPaFilOpplasting(action.opplysningType, action.opplysning.gruppe));
+        yield put(settFerdigPaFilOpplasting(opplysning.type));
     }
 }
 
@@ -67,22 +70,23 @@ export function detekterInternFeilKode(feilKode: REST_FEIL): REST_FEIL {
 
 function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
 
-    yield put(settPendingPaFilOpplasting(action.opplysningType, action.opplysning.gruppe));
+    const { behandlingsId, fil, opplysning, opplysningType} = action;
+
+    yield put(settPendingPaFilOpplasting(opplysningType));
 
     try {
-        const url = `opplastetVedlegg/${action.behandlingsId}/${action.fil.uuid}`;
+        const url = `opplastetVedlegg/${behandlingsId}/${fil.uuid}`;
         yield call(fetchDelete, url);
 
 
-        const filerUpdated = action.opplysning.filer.filter((fil: Fil) => {
-        	return fil.uuid !== action.fil.uuid;
+        const filerUpdated = opplysning.filer.filter((f: Fil) => {
+        	return f.uuid !== fil.uuid;
 		});
 
-        const opplysning: Opplysning = action.opplysning;
         const opplysningUpdated: Opplysning = {...opplysning};
         opplysningUpdated.filer = filerUpdated;
         yield put(updateOpplysning(opplysningUpdated));
-        yield put(settFerdigPaFilOpplasting(action.opplysningType, action.opplysning.gruppe));
+        yield put(settFerdigPaFilOpplasting(opplysningType));
 
 	} catch (reason) {
 		yield put(loggFeil("Slett vedlegg feilet: " + reason));

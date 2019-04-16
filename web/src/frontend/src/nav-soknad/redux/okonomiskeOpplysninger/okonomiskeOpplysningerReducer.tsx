@@ -1,23 +1,21 @@
 import {Reducer} from "../reduxTypes";
 import {
-    Grupper,
     OkonomiskeOpplysningerAction,
     OkonomiskeOpplysningerActionTypeKeys,
-    OkonomiskeOpplysningerModel,
+    OkonomiskeOpplysningerModel, Opplysning,
     VedleggStatus
 } from "./okonomiskeOpplysningerTypes";
 import {RestStatus} from "../../types";
 import {
-    generateGrupperFromBackendData,
-    getOpplysningByOpplysningTypeAndGruppe, getSortertListeAvMaybeOpplysning,
-    updateOkonomiskOpplysning,
+    getOpplysningByOpplysningType,
+    getSortertListeAvMaybeOpplysning,
+    updateSortertOpplysning,
 } from "./okonomiskeOpplysningerUtils";
 
 
 export const initialOkonomiskeOpplysningerModel: OkonomiskeOpplysningerModel = {
     restStatus: RestStatus.NOT_ASKED,
     backendData: null,
-    grupper: null,
     opplysningerSortert: []
 };
 
@@ -34,70 +32,63 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
                 ...state,
                 restStatus: RestStatus.SUCCESS,
                 backendData: action.backendData,
-                grupper: generateGrupperFromBackendData(action.backendData),
                 opplysningerSortert: sortert
             };
         }
         case OkonomiskeOpplysningerActionTypeKeys.OPPDATER_OKONOMISK_OPPLYSNING: {
 
-            const grupperUpdated: Grupper = updateOkonomiskOpplysning(state.grupper, action.okonomiskOpplysning);
+            const opplysningerSortertUpdated = updateSortertOpplysning(state.opplysningerSortert, action.okonomiskOpplysning);
 
             return {
                 ...state,
                 restStatus: state.restStatus,
-                grupper : grupperUpdated
+                opplysningerSortert : opplysningerSortertUpdated
             }
         }
 
 
 
         case OkonomiskeOpplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING: {
-            const { opplysningType, opplysningGruppe } = action;
-
-            const opplysning = getOpplysningByOpplysningTypeAndGruppe(state, opplysningType, opplysningGruppe);
-
+            const { opplysningType } = action;
+            const opplysning = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
             const opplysningUpdated = {...opplysning };
             opplysningUpdated.pendingLasterOppFil = true;
-            const grupperUpdated: Grupper = updateOkonomiskOpplysning(state.grupper, opplysningUpdated);
+            const opplysningerSortertUpdated: Opplysning[] = updateSortertOpplysning(state.opplysningerSortert, opplysningUpdated);
 
             return {
                 ...state,
-                grupper: grupperUpdated
+                opplysningerSortert: opplysningerSortertUpdated
             }
         }
         case OkonomiskeOpplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING: {
-            const { opplysningType, opplysningGruppe } = action;
+            const { opplysningType } = action;
 
-            const opplysning = getOpplysningByOpplysningTypeAndGruppe(state, opplysningType, opplysningGruppe);
+            const opplysning = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
 
             const opplysningUpdated = {...opplysning };
             opplysningUpdated.pendingLasterOppFil = false;
-            const grupperUpdated: Grupper = updateOkonomiskOpplysning(state.grupper, opplysningUpdated);
+            const opplysningerSortertUpdated: Opplysning[] = updateSortertOpplysning(state.opplysningerSortert, opplysningUpdated);
 
             return {
                 ...state,
-                grupper: grupperUpdated
+                opplysningerSortert: opplysningerSortertUpdated
             }
         }
-
-
-
         case OkonomiskeOpplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP: {
-            const { opplysningType, opplysningGruppe } = action;
-            const opplysning = getOpplysningByOpplysningTypeAndGruppe(state, opplysningType, opplysningGruppe);
+            const { opplysningType } = action;
+            const opplysning = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
             const opplysningUpdated = {...opplysning};
             if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND){
                 opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
             } else {
                 opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
             }
-            const grupperUpdated: Grupper = updateOkonomiskOpplysning(state.grupper, opplysningUpdated);
+            const opplysningerSortertUpdated: Opplysning[] = updateSortertOpplysning(state.opplysningerSortert, opplysningUpdated);
             return {
                 ...state,
-                grupper: grupperUpdated
+                opplysningerSortert: opplysningerSortertUpdated
             }
         }
-
 
         default:
             return state;

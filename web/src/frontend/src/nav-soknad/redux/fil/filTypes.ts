@@ -26,7 +26,6 @@ export interface LastOppFilAction {
 	opplysning: Opplysning;
 	formData: FormData;
 	behandlingsId: string;
-	opplysningType: OpplysningType
 }
 
 export interface LastOppFilFeilet {

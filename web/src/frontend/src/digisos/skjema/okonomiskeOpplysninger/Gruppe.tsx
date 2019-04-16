@@ -3,17 +3,25 @@ import Skjemapanel from "../../../nav-soknad/components/skjemapanel";
 import { FormattedHTMLMessage, injectIntl } from "react-intl";
 import {connect} from "react-redux";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
-import {StoreToProps} from "./index";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {
+    OkonomiskeOpplysningerModel,
     Opplysning, OpplysningGruppe,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
-import OkonomiskOpplysningView from "./OkonomiskOpplysningView";
 import {getGruppeTittelKey} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
+import {Valideringsfeil} from "../../../nav-soknad/validering/types";
+import OpplysningView from "./OpplysningView";
 
 export interface OwnProps {
-    opplysningGruppeKey: OpplysningGruppe;
+    key: OpplysningGruppe;
+    gruppeKey: OpplysningGruppe;
     gruppe: Opplysning[];
+}
+
+interface StoreToProps {
+    okonomiskeOpplysninger: OkonomiskeOpplysningerModel;
+    behandlingsId: string;
+    feil: Valideringsfeil[];
 }
 
 
@@ -22,22 +30,23 @@ type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
 class GruppeView extends React.Component<Props, {}> {
 
     renderGruppeInnhold(gruppe: Opplysning[]) {
-        return gruppe.map((okonomiskOpplysning: Opplysning, gruppeIndex: number) => {
+        const gruppeInnhold = gruppe.map((okonomiskOpplysning: Opplysning, gruppeIndex: number) => {
             return (
-                <OkonomiskOpplysningView
+                <OpplysningView
                     key={gruppeIndex}
                     okonomiskOpplysning={okonomiskOpplysning}
                     gruppeIndex={gruppeIndex}
                 />
             )
         });
+        return gruppeInnhold;
     }
 
     render() {
 
-        const {opplysningGruppeKey, gruppe} = this.props;
+        const {gruppeKey, gruppe} = this.props;
 
-        const gruppeTittelKey = getGruppeTittelKey(opplysningGruppeKey);
+        const gruppeTittelKey = getGruppeTittelKey(gruppeKey);
 
         if (gruppe && gruppe.length === 0) {
             return null;

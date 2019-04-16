@@ -1,7 +1,6 @@
 import {
-    Grupper, MaybeOpplysning,
+    MaybeOpplysning,
     OkonomiskeOpplysningerBackend,
-    OkonomiskeOpplysningerModel,
     OkonomiskOpplysningBackend,
     Opplysning,
     OpplysningGruppe,
@@ -9,6 +8,7 @@ import {
     OpplysningType,
     RadType
 } from "./okonomiskeOpplysningerTypes";
+import {opplysningsRekkefolge} from "./opplysningerConfig";
 
 
 export function getOkonomomiskeOpplysningerUrl(behandlingsId: string) {
@@ -18,192 +18,13 @@ export function getOkonomomiskeOpplysningerUrl(behandlingsId: string) {
 }
 
 
-
-
-
-
-// Grupper -> Opplysning -> Grupper
-export const updateOkonomiskOpplysning = (
-    grupper: Grupper,
-    okonomiskOpplysning: Opplysning
-): Grupper => {
-
-    switch(okonomiskOpplysning.gruppe){
-        case OpplysningGruppe.ARBEID : {
-            const gruppeArbeidUpdated = grupper.gruppeArbeid.map((element: Opplysning): Opplysning => {
-                return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
-            });
-            grupper.gruppeArbeid = gruppeArbeidUpdated;
-            return grupper;
-        }
-        case OpplysningGruppe.FAMILIE : {
-            const gruppeFamilieUpdated = grupper.gruppeFamilie.map((element: Opplysning): Opplysning => {
-                return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
-            });
-            grupper.gruppeFamilie = gruppeFamilieUpdated;
-            return grupper;
-        }
-        case OpplysningGruppe.BOSITUASJON : {
-            const gruppeBosituasjonUpdated = grupper.gruppeBosituasjon.map((element: Opplysning): Opplysning => {
-                return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
-            });
-            grupper.gruppeBosituasjon = gruppeBosituasjonUpdated;
-            return grupper;
-        }
-        case OpplysningGruppe.INNTEKT : {
-            const gruppeInntekt: Opplysning[] = grupper.gruppeInntekt.map((element: Opplysning): Opplysning => {
-                return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
-            });
-            grupper.gruppeInntekt = gruppeInntekt;
-            return grupper;
-        }
-        case OpplysningGruppe.UTGIFTER : {
-            const gruppeUtgifterUpdated = grupper.gruppeUtgifter.map((element: Opplysning): Opplysning => {
-                return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
-            });
-            grupper.gruppeUtgifter = gruppeUtgifterUpdated;
-            return grupper;
-        }
-        case OpplysningGruppe.GENERELLE_VEDLEGG : {
-            const gruppeGenerelleVedleggUpdated = grupper.gruppeGenerelleVedlegg.map((element: Opplysning): Opplysning => {
-                return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
-            });
-            grupper.gruppeGenerelleVedlegg = gruppeGenerelleVedleggUpdated;
-            return grupper;
-        }
-        case OpplysningGruppe.ANDRE_UTGIFTER : {
-            const gruppeAndreUtgifterUpdated =  grupper.gruppeAndreUtgifter.map((element: Opplysning): Opplysning => {
-                return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
-            });
-            grupper.gruppeAndreUtgifter = gruppeAndreUtgifterUpdated;
-            return grupper;
-        }
-        case OpplysningGruppe.UKJENT : {
-            const gruppeUkjentUpdated = grupper.gruppeUkjent.map((element: Opplysning): Opplysning => {
-                return element.type === okonomiskOpplysning.type ? okonomiskOpplysning : element;
-            });
-            grupper.gruppeUkjent = gruppeUkjentUpdated;
-            return grupper;
-        }
-        default: {
-            return grupper;
-        }
-    }
-};
-
-// Opplysning -> Grupper -> Gruppe
-export const getGruppeForOkonomiskOpplysning = (okonomiskOpplysning: Opplysning, grupper: Grupper) => {
-    switch(okonomiskOpplysning.gruppe){
-        case OpplysningGruppe.ARBEID: { return grupper.gruppeArbeid}
-        case OpplysningGruppe.FAMILIE: { return grupper.gruppeFamilie}
-        case OpplysningGruppe.BOSITUASJON: { return grupper.gruppeBosituasjon}
-        case OpplysningGruppe.INNTEKT: { return grupper.gruppeInntekt}
-        case OpplysningGruppe.UTGIFTER: { return grupper.gruppeUtgifter}
-        case OpplysningGruppe.GENERELLE_VEDLEGG: { return grupper.gruppeGenerelleVedlegg}
-        case OpplysningGruppe.ANDRE_UTGIFTER: { return grupper.gruppeAndreUtgifter}
-        case OpplysningGruppe.UKJENT: { return grupper.gruppeUkjent}
-        default: return null;
-    }
+export const updateSortertOpplysning = (opplysninger: Opplysning[], opplysningUpdated: Opplysning) => {
+    return opplysninger.map((o) => {
+        return o.type === opplysningUpdated.type ? opplysningUpdated : o;
+    })
 };
 
 
-
-// OkonomiskeOpplysningerBackend -> Grupper
-export const generateGrupperFromBackendData = (okonomiskeOpplysnigerBackend: OkonomiskeOpplysningerBackend): Grupper => {
-
-    const okonomiskeOpplysningerAktive: Opplysning[] = okonomiskeOpplysnigerBackend.okonomiskeOpplysninger.map((okonomiskOpplysningBackend: OkonomiskOpplysningBackend) => {
-        return {
-            "type" : okonomiskOpplysningBackend.type,
-            "gruppe" : okonomiskOpplysningBackend.gruppe,
-            "rader" : okonomiskOpplysningBackend.rader,
-            "vedleggStatus": okonomiskOpplysningBackend.vedleggStatus,
-            "filer" : okonomiskOpplysningBackend.filer,
-            "slettet" : false,
-            "radType" : getRadType(okonomiskOpplysningBackend.type),
-            "pendingLasterOppFil" : false
-        }
-    });
-
-    const okonomiskeOpplysningerSlettede: Opplysning[] = okonomiskeOpplysnigerBackend.slettedeVedlegg.map((vedlegg, index, array) => {
-        return {
-            "type" : vedlegg.type,
-            "gruppe" : vedlegg.gruppe,
-            "rader" : vedlegg.rader,
-            "vedleggStatus": vedlegg.vedleggStatus,
-            "filer" : vedlegg.filer,
-            "slettet" : true,
-            "radType" : getRadType(vedlegg.type),
-            "pendingLasterOppFil" : false
-        }
-    });
-
-    const alleOkonomiskeOpplysninger: Opplysning[] = okonomiskeOpplysningerAktive.concat(okonomiskeOpplysningerSlettede);
-
-
-    const gruppeArbeid: Opplysning[] = [];
-    const gruppeFamilie: Opplysning[] = [];
-    const gruppeBosituasjon: Opplysning[] = [];
-    const gruppeInntekt: Opplysning[] = [];
-    const gruppeUtgifter: Opplysning[] = [];
-    const gruppeGenerelleVedlegg: Opplysning[] = [];
-    const gruppeAndreUtgifter: Opplysning[] = [];
-    const gruppeUkjent: Opplysning[] = [];
-
-
-    alleOkonomiskeOpplysninger.forEach((okonomiskOpplysning: Opplysning) => {
-        switch(okonomiskOpplysning.gruppe){
-            case OpplysningGruppe.ARBEID:{
-                gruppeArbeid.push(okonomiskOpplysning);
-                break;
-            }
-            case OpplysningGruppe.FAMILIE:{
-                gruppeFamilie.push(okonomiskOpplysning);
-                break;
-            }
-            case OpplysningGruppe.BOSITUASJON:{
-                gruppeBosituasjon.push(okonomiskOpplysning);
-                break;
-            }
-            case OpplysningGruppe.INNTEKT:{
-                gruppeInntekt.push(okonomiskOpplysning);
-                break;
-            }
-            case OpplysningGruppe.UTGIFTER:{
-                gruppeUtgifter.push(okonomiskOpplysning);
-                break;
-            }
-            case OpplysningGruppe.GENERELLE_VEDLEGG:{
-                gruppeGenerelleVedlegg.push(okonomiskOpplysning);
-                break;
-            }
-            case OpplysningGruppe.ANDRE_UTGIFTER:{
-                gruppeAndreUtgifter.push(okonomiskOpplysning);
-                break;
-            }
-            default: {
-                gruppeUkjent.push(okonomiskOpplysning);
-                console.warn(`An unkown group!!! Log to kibana. Group: ${okonomiskOpplysning.gruppe}`);
-                break;
-            }
-        }
-    });
-
-    const grupper: Grupper = {
-        gruppeArbeid,
-        gruppeFamilie,
-        gruppeBosituasjon,
-        gruppeInntekt,
-        gruppeUtgifter,
-        gruppeGenerelleVedlegg,
-        gruppeAndreUtgifter,
-        gruppeUkjent
-    };
-
-    return grupper;
-};
-
-
-// Opplysning -> OkonomiskOpplysningBackend
 export const transformToBackendOpplysning = (okonomiskOpplysning: Opplysning): OkonomiskOpplysningBackend => {
     return {
         type: okonomiskOpplysning.type,
@@ -214,7 +35,7 @@ export const transformToBackendOpplysning = (okonomiskOpplysning: Opplysning): O
     };
 };
 
-// String -> RaderStruktur
+
 export function getRadType(type: OpplysningType){
     switch (type) {
         case OpplysningType.LONNSLIPP_ARBEID : {
@@ -320,7 +141,6 @@ export function getRadType(type: OpplysningType){
 }
 
 // TEKST RELATERT
-
 export const getGruppeTittelKey: (opplysningGruppe: OpplysningGruppe) => string = (opplysningGruppe: OpplysningGruppe) => {
     switch(opplysningGruppe) {
         case OpplysningGruppe.ARBEID: {return "opplysninger.arbeid"}
@@ -374,44 +194,6 @@ const typeToTextKeyMap = {
     "annet|annet" : "opplysninger.ekstrainfo.utgifter"
 };
 
-export const getTextKeyForVedleggType: (type: string) => string = (type: string) => {
-    return vedleggTypeToTextKeyMap[type] ? vedleggTypeToTextKeyMap[type] : "unknown type";
-};
-
-const vedleggTypeToTextKeyMap = {
-    "lonnslipp|arbeid" : "mangler",
-    "sluttoppgjor|arbeid" : "vedlegg.sluttoppgjor.arbeid",
-    "student|vedtak" : "vedlegg.student.vedtak",
-    "barnebidrag|betaler" : "vedlegg.barnebidrag.betaler",
-    "barnebidrag|mottar" : "vedlegg.barnebidrag.mottar",
-    "samvarsavtale|barn" : "vedlegg.samvarsavtale.barn",
-    "husleiekontrakt|husleiekontrakt" : "mangler",
-    "husleiekontrakt|kommunal" : "vedlegg.husleiekontrakt.kommunal",
-    "bostotte|vedtak" : "vedlegg.bostotte.vedtak",
-    "kontooversikt|brukskonto" : "vedlegg.kontooversikt.brukskonto",
-    "kontooversikt|bsu" : "vedlegg.kontooversikt.bsu",
-    "kontooversikt|sparekonto" : "vedlegg.kontooversikt.sparekonto",
-    "kontooversikt|livsforsikring" : "vedlegg.kontooversikt.livsforsikring",
-    "kontooversikt|aksjer" : "vedlegg.kontooversikt.aksjer",
-    "kontooversikt|annet" : "vedlegg.kontooversikt.annet",
-    "dokumentasjon|utbytte" : "vedlegg.dokumentasjon.utbytte",
-    "salgsoppgjor|eiendom" : "vedlegg.salgsoppgjor.eiendom",
-    "dokumentasjon|forsikringsutbetaling" : "vedlegg.dokumentasjon.forsikringsutbetaling",
-    "dokumentasjon|annetinntekter" : "vedlegg.dokumentasjon.annetinntekter",
-    "faktura|husleie" : "vedlegg.faktura.husleie",
-    "faktura|strom" : "vedlegg.faktura.strom",
-    "faktura|kommunaleavgifter" : "vedlegg.faktura.kommunaleavgifter",
-    "faktura|oppvarming" : "vedlegg.faktura.oppvarming",
-    "nedbetalingsplan|avdraglaan" : "vedlegg.nedbetalingsplan.avdraglaan",
-    "dokumentasjon|annetboutgift" : "vedlegg.dokumentasjon.annetboutgift",
-    "faktura|fritidsaktivitet" : "vedlegg.faktura.fritidsaktivitet",
-    "faktura|barnehage" : "vedlegg.faktura.barnehage",
-    "faktura|sfo" : "vedlegg.faktura.sfo",
-    "faktura|tannbehandling" : "vedlegg.faktura.tannbehandling",
-    "faktura|annetbarnutgift" : "vedlegg.faktura.annetbarnutgift",
-    "skattemelding|skattemelding" : "vedlegg.skattemelding.skattemelding",
-    "annet|annet" : "vedlegg.annet.annet"
-};
 
 export const getTomVedleggRad: () => OpplysningRad = () => {
     return {
@@ -425,63 +207,16 @@ export const getTomVedleggRad: () => OpplysningRad = () => {
 };
 
 
-export const getOpplysningByOpplysningTypeAndGruppe = (
-        state: OkonomiskeOpplysningerModel,
-        opplysningType: OpplysningType,
-        opplysningGruppe: OpplysningGruppe
-): Opplysning => {
-
-    switch (opplysningGruppe) {
-
-        case OpplysningGruppe.ARBEID: {return state.grupper.gruppeArbeid.find((o) => o.type === opplysningType)}
-        case OpplysningGruppe.FAMILIE: {return state.grupper.gruppeFamilie.find((o) => o.type === opplysningType)}
-        case OpplysningGruppe.BOSITUASJON: {return state.grupper.gruppeBosituasjon.find((o) => o.type === opplysningType)}
-        case OpplysningGruppe.INNTEKT: {return state.grupper.gruppeInntekt.find((o) => o.type === opplysningType)}
-        case OpplysningGruppe.UTGIFTER: {return state.grupper.gruppeUtgifter.find((o) => o.type === opplysningType)}
-        case OpplysningGruppe.GENERELLE_VEDLEGG: {return state.grupper.gruppeGenerelleVedlegg.find((o) => o.type === opplysningType)}
-        case OpplysningGruppe.ANDRE_UTGIFTER: {return state.grupper.gruppeAndreUtgifter.find((o) => o.type === opplysningType)}
-        case OpplysningGruppe.UKJENT: {return state.grupper.gruppeUkjent.find((o) => o.type === opplysningType)}
-        default: return null;
-    }
+export const getOpplysningByOpplysningType = (opplysningerSortert: Opplysning[], opplysningType: OpplysningType) => {
+    return opplysningerSortert.find((o: Opplysning) => {
+        return o.type && o.type === opplysningType;
+    });
 };
 
-const opplysningsRekkefolge = [
-    "lonnslipp|arbeid",
-    "sluttoppgjor|arbeid",
-    "student|vedtak",
-    "barnebidrag|betaler",
-    "barnebidrag|mottar",
-    "samvarsavtale|barn",
-    "husleiekontrakt|husleiekontrakt",
-    "husleiekontrakt|kommunal",
-    "bostotte|vedtak",
-    "kontooversikt|brukskonto",
-    "kontooversikt|bsu",
-    "kontooversikt|sparekonto",
-    "kontooversikt|livsforsikring",
-    "kontooversikt|aksjer",
-    "kontooversikt|annet",
-    "dokumentasjon|utbytte",
-    "salgsoppgjor|eiendom",
-    "dokumentasjon|forsikringsutbetaling",
-    "dokumentasjon|annetinntekter",
-    "faktura|husleie",
-    "faktura|strom",
-    "faktura|kommunaleavgifter",
-    "faktura|oppvarming",
-    "nedbetalingsplan|avdraglaan",
-    "dokumentasjon|annetboutgift",
-    "faktura|fritidsaktivitet",
-    "faktura|barnehage",
-    "faktura|sfo",
-    "faktura|tannbehandling",
-    "faktura|annetbarnutgift",
-    "skattemelding|skattemelding",
-    "annet|annet"
-];
 
 
-export const getSortertListeAvMaybeOpplysning = (backendData: OkonomiskeOpplysningerBackend): MaybeOpplysning[] => {
+
+export const getSortertListeAvMaybeOpplysning = (backendData: OkonomiskeOpplysningerBackend): Opplysning[] => {
 
     const { okonomiskeOpplysninger, slettedeVedlegg } = backendData;
     const okonomiskeOpplysningerAktive: Opplysning[] = okonomiskeOpplysninger.map((okonomiskOpplysningBackend: OkonomiskOpplysningBackend) => {
@@ -495,6 +230,7 @@ export const getSortertListeAvMaybeOpplysning = (backendData: OkonomiskeOpplysni
     const alleOpplysninger: Opplysning[] = okonomiskeOpplysningerAktive.concat(okonomiskeOpplysningerSlettede);
 
     return sorterOpplysninger(alleOpplysninger, opplysningsRekkefolge)
+        .filter((o:Opplysning) => o !== null);
 };
 
 const backendOpplysningToOpplysning = (opplysningBackend: OkonomiskOpplysningBackend, erSlettet: boolean): Opplysning => {
