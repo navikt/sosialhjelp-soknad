@@ -3,8 +3,6 @@ import {connect} from "react-redux";
 import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import SkjemaIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SkjemaIllustrasjon";
-
-
 import NavFrontendSpinner from "nav-frontend-spinner";
 import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
@@ -91,11 +89,11 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
             );
         }
 
-        return(
+        return (
             <div className="application-spinner">
                 <NavFrontendSpinner type="XXL" />
             </div>
-        )
+        );
     }
 }
 

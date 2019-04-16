@@ -17,13 +17,11 @@ export function getOkonomomiskeOpplysningerUrl(behandlingsId: string) {
     )
 }
 
-
 export const updateSortertOpplysning = (opplysninger: Opplysning[], opplysningUpdated: Opplysning) => {
     return opplysninger.map((o) => {
         return o.type === opplysningUpdated.type ? opplysningUpdated : o;
     })
 };
-
 
 export const transformToBackendOpplysning = (okonomiskOpplysning: Opplysning): OkonomiskOpplysningBackend => {
     return {
@@ -34,7 +32,6 @@ export const transformToBackendOpplysning = (okonomiskOpplysning: Opplysning): O
         filer: okonomiskOpplysning.filer
     };
 };
-
 
 export function getRadType(type: OpplysningType){
     switch (type) {
@@ -194,7 +191,6 @@ const typeToTextKeyMap = {
     "annet|annet" : "opplysninger.ekstrainfo.utgifter"
 };
 
-
 export const getTomVedleggRad: () => OpplysningRad = () => {
     return {
         "beskrivelse": null,
@@ -206,15 +202,11 @@ export const getTomVedleggRad: () => OpplysningRad = () => {
     }
 };
 
-
 export const getOpplysningByOpplysningType = (opplysningerSortert: Opplysning[], opplysningType: OpplysningType) => {
     return opplysningerSortert.find((o: Opplysning) => {
         return o.type && o.type === opplysningType;
     });
 };
-
-
-
 
 export const getSortertListeAvMaybeOpplysning = (backendData: OkonomiskeOpplysningerBackend): Opplysning[] => {
 
@@ -246,7 +238,6 @@ const backendOpplysningToOpplysning = (opplysningBackend: OkonomiskOpplysningBac
     }
 };
 
-
 function sorterOpplysninger(usortertListe: Opplysning[], rekkefolge: string[] ){
 
     const sortert: MaybeOpplysning[] = [];
@@ -269,7 +260,3 @@ function sorterOpplysninger(usortertListe: Opplysning[], rekkefolge: string[] ){
     }
     return sortert;
 }
-
-
-
-

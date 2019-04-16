@@ -34,7 +34,7 @@ class GruppeView extends React.Component<Props, {}> {
             return (
                 <OpplysningView
                     key={gruppeIndex}
-                    okonomiskOpplysning={okonomiskOpplysning}
+                    opplysning={okonomiskOpplysning}
                     gruppeIndex={gruppeIndex}
                 />
             )
@@ -43,11 +43,8 @@ class GruppeView extends React.Component<Props, {}> {
     }
 
     render() {
-
         const {gruppeKey, gruppe} = this.props;
-
         const gruppeTittelKey = getGruppeTittelKey(gruppeKey);
-
         if (gruppe && gruppe.length === 0) {
             return null;
         }
@@ -59,7 +56,7 @@ class GruppeView extends React.Component<Props, {}> {
                 </div>
                 { this.renderGruppeInnhold(gruppe) }
             </Skjemapanel>
-        )
+        );
     }
 }
 

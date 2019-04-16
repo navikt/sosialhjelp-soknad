@@ -6,10 +6,11 @@ import {
 import {getKeyForOpplysningType} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 import TabellView from "./TabellView";
 import VedleggView from "./VedleggView";
+import VedleggSlettet from "./vedleggSlettet";
 
 
 interface OwnProps {
-    okonomiskOpplysning: Opplysning;
+    opplysning: Opplysning;
     gruppeIndex: number;
 }
 
@@ -20,27 +21,23 @@ class OpplysningView extends React.Component<Props, {}>{
 
     render(){
 
-        const { okonomiskOpplysning, gruppeIndex } = this.props;
+        const { opplysning, gruppeIndex } = this.props;
 
-        // TODO: FULLFØR VIEWET
-        if (okonomiskOpplysning.slettet){
+        if (opplysning.slettet){
             return (
-                <div>
-                    <div>Vedlegg slettet</div>
-                    <div>{ okonomiskOpplysning.type }</div>
-                </div>
-            )
+                <VedleggSlettet opplysning={opplysning}/>
+            );
         }
 
         return(
             <div className="skjema-progresjonsblokk__sporsmal">
-                <Sporsmal sprakNokkel={getKeyForOpplysningType(okonomiskOpplysning.type)} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
+                <Sporsmal sprakNokkel={getKeyForOpplysningType(opplysning.type)} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
                     <TabellView
-                        opplysning={okonomiskOpplysning}
+                        opplysning={opplysning}
                         gruppeIndex={gruppeIndex}
                     />
                     <VedleggView
-                        okonomiskOpplysning={okonomiskOpplysning}
+                        okonomiskOpplysning={opplysning}
                     />
                 </Sporsmal>
             </div>

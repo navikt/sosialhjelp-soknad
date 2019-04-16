@@ -2,7 +2,6 @@ import {RestStatus} from "../../types";
 import {Valideringsfeil} from "../../validering/types";
 
 
-// TYPES
 export interface OkonomiskeOpplysningerModel {
     restStatus: RestStatus;
     backendData: OkonomiskeOpplysningerBackend | null;
@@ -35,17 +34,6 @@ export interface Opplysning {
     slettet: boolean;
     radType: RadType;
     pendingLasterOppFil: boolean;
-}
-
-export interface Grupper {
-    gruppeArbeid: Opplysning[];
-    gruppeFamilie: Opplysning[];
-    gruppeBosituasjon: Opplysning[];
-    gruppeInntekt: Opplysning[];
-    gruppeUtgifter: Opplysning[];
-    gruppeGenerelleVedlegg: Opplysning[];
-    gruppeAndreUtgifter: Opplysning[];
-    gruppeUkjent: Opplysning[];
 }
 
 
@@ -98,8 +86,6 @@ export interface LagreOpplysningHvisGyldig {
     opplysning: Opplysning;
     feil: Valideringsfeil[];
 }
-
-
 
 
 // MAPPING
@@ -187,40 +173,3 @@ export interface Fil {
     "filNavn": string;
     "uuid": string;
 }
-
-export interface RadMedBelop {
-    "beloep" : number;
-}
-
-export interface RadMedBruttoOgNetto {
-    "brutto" : number;
-    "netto" : number;
-}
-
-export interface RadMedAvdragOgRenter {
-    "avdrag" : number;
-    "renter" : number;
-}
-
-export interface RadMedBeskrivelseOgBelop {
-    "beskrivelse" : string;
-    "beloep" : number;
-}
-
-export interface RaderMedBelop {
-    "rader" : RadMedBelop[];
-}
-
-export interface RaderMedBruttoOgNetto {
-    "rader" : RadMedBruttoOgNetto;
-}
-
-export interface RaderMedAvdragOgRenter {
-    "rader" : RadMedAvdragOgRenter;
-}
-
-export interface RaderMedBeskrivelseOgBelop {
-    "rader" : RadMedBeskrivelseOgBelop;
-}
-// --------------------------------------
-

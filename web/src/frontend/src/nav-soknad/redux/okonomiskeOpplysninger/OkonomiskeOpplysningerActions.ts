@@ -40,14 +40,6 @@ export const settFerdigPaFilOpplasting = (opplysningType: OpplysningType): Okono
     }
 };
 
-export const settOpplysningsFilAlleredeLastetOpp = (opplysningType: OpplysningType) => {
-    return {
-        type: OkonomiskeOpplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP,
-        opplysningType,
-    }
-};
-
-
 export function hentOkonomiskeOpplysninger(behandlingsId: string) {
     return (dispatch: Dispatch) => {
         fetchToJson(getOkonomomiskeOpplysningerUrl(behandlingsId))
@@ -58,7 +50,6 @@ export function hentOkonomiskeOpplysninger(behandlingsId: string) {
         });
     }
 }
-
 
 export const lagreOpplysningHvisGyldigAction = (
     behandlingsId: string,

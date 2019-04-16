@@ -23,8 +23,6 @@ function getFeilForOpplysning(feil: Valideringsfeil[], opplysningTextKey: string
 function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
 
     const { behandlingsId, opplysning, feil } = action;
-
-
     const opplysningKey: string = getKeyForOpplysningType(opplysning.type);
     const feilForOpplysning = getFeilForOpplysning(feil, opplysningKey);
 
