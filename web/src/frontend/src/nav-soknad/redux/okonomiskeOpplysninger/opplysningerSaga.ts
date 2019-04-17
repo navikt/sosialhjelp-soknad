@@ -26,6 +26,8 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
     const opplysningKey: string = getKeyForOpplysningType(opplysning.type);
     const feilForOpplysning = getFeilForOpplysning(feil, opplysningKey);
 
+    yield put(updateOpplysning(opplysning));
+
     if (feilForOpplysning.length === 0 ){
         try {
             yield call(
@@ -37,7 +39,6 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
             yield put(navigerTilServerfeil());
         }
     }
-    yield put(updateOpplysning(opplysning))
 }
 
 

@@ -227,16 +227,14 @@ class TabellView extends React.Component<Props, {}>{
                         </Column>
                     }
 
-                    <Column xs={"12"} md={"6"}>
-                        { skalViseFjerneRadKnapp &&
-                            <Lenkeknapp
-                                onClick={() => {this.handleFjernRad(radIndex, textKeyForOpplysningType)}}
-                                id={radIndex + "_fjern_lenke"}
-                            >
-                                Fjern
-                            </Lenkeknapp>
-                        }
-                    </Column>
+                    { skalViseFjerneRadKnapp &&
+                        <Lenkeknapp
+                            onClick={() => {this.handleFjernRad(radIndex, textKeyForOpplysningType)}}
+                            id={radIndex + "_fjern_lenke"}
+                        >
+                            Fjern
+                        </Lenkeknapp>
+                    }
                 </Row>
                 )
         });

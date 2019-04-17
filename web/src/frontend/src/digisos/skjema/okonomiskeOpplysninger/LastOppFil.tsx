@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Knapp } from "nav-frontend-knapper";
-import { FormattedMessage} from "react-intl";
+import {Knapp} from "nav-frontend-knapper";
+import {FormattedMessage} from "react-intl";
 import {
     Opplysning
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
@@ -24,20 +24,19 @@ interface OwnProps {
 type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
 
 
-
 class LastOppFil extends React.Component<Props, {}> {
-	leggTilVedleggKnapp: HTMLInputElement;
+    leggTilVedleggKnapp: HTMLInputElement;
 
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-			sisteBrukteFilnavn: ""
-		};
-	}
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            sisteBrukteFilnavn: ""
+        };
+    }
 
     handleFileUpload(files: FileList) {
-	    const { behandlingsId, opplysning } = this.props;
-	    this.props.dispatch(lastOppFilFeilet(opplysning.type, null));
+        const {behandlingsId, opplysning} = this.props;
+        this.props.dispatch(lastOppFilFeilet(opplysning.type, null));
         if (files.length !== 1) {
             return;
         }
@@ -48,12 +47,12 @@ class LastOppFil extends React.Component<Props, {}> {
         this.leggTilVedleggKnapp.value = null;
     }
 
-	render() {
+    render() {
 
-		const { isDisabled, visSpinner, opplysning, filopplasting } = this.props;
+        const {isDisabled, visSpinner, opplysning, filopplasting} = this.props;
 
-		return (
-			<div>
+        return (
+            <div>
                 <Knapp
                     id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
                     type="standard"
@@ -79,14 +78,14 @@ class LastOppFil extends React.Component<Props, {}> {
 
                 <div role="alert" aria-live="assertive">
                     <div className="skjemaelement__feilmelding">
-                        { filopplasting.feilKode &&
-                            <FormattedMessage id={filopplasting.feilKode}/>
+                        {filopplasting.feilKode &&
+                        <FormattedMessage id={filopplasting.feilKode}/>
                         }
                     </div>
                 </div>
-			</div>
-		);
-	}
+            </div>
+        );
+    }
 }
 
 
