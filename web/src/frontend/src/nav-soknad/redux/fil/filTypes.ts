@@ -10,22 +10,22 @@ export interface FilState {
 
 
 export enum FilActionTypeKeys {
-	LAST_OPP = "fil/LAST_OPP",
-	START_SLETT_FIL = "fil/START_SLETT_FIL",
+    LAST_OPP = "fil/LAST_OPP",
+    START_SLETT_FIL = "fil/START_SLETT_FIL",
     LAST_OPP_FEILET = "fil/LAST_OPP_FEILET"
 }
 
 
 export type FilActionTypes
-	= LastOppFilAction
-	| StartSlettFilAction
-	| LastOppFilFeilet
+    = LastOppFilAction
+    | StartSlettFilAction
+    | LastOppFilFeilet
 
 export interface LastOppFilAction {
-	type: FilActionTypeKeys.LAST_OPP;
-	opplysning: Opplysning;
-	formData: FormData;
-	behandlingsId: string;
+    type: FilActionTypeKeys.LAST_OPP;
+    opplysning: Opplysning;
+    formData: FormData;
+    behandlingsId: string;
 }
 
 export interface LastOppFilFeilet {
@@ -35,12 +35,11 @@ export interface LastOppFilFeilet {
 }
 
 
-
 export interface StartSlettFilAction {
-	type: FilActionTypeKeys.START_SLETT_FIL;
-	behandlingsId: string;
-	fil: Fil;
-	opplysning: Opplysning;
-	opplysningType: OpplysningType;
+    type: FilActionTypeKeys.START_SLETT_FIL;
+    behandlingsId: string;
+    fil: Fil;
+    opplysning: Opplysning;
+    opplysningType: OpplysningType;
 }
 

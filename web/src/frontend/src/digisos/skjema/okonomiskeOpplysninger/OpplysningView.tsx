@@ -19,20 +19,20 @@ interface OwnProps {
 type Props = OwnProps;
 
 
-class OpplysningView extends React.Component<Props, {}>{
+class OpplysningView extends React.Component<Props, {}> {
 
-    render(){
+    render() {
 
-        const { opplysning, gruppeIndex } = this.props;
+        const {opplysning, gruppeIndex} = this.props;
         const opplysningSpc = getSpcForOpplysning(opplysning.type);
 
-        if (opplysning.slettet){
+        if (opplysning.slettet) {
             return (
                 <VedleggSlettet opplysning={opplysning}/>
             );
         }
 
-        return(
+        return (
             <div className="skjema-progresjonsblokk__sporsmal">
                 <Sporsmal sprakNokkel={opplysningSpc.textKey} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
                     <TabellView

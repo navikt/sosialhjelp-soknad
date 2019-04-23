@@ -56,7 +56,7 @@ interface StateProps {
 	valideringsfeil?: Valideringsfeil[];
 	stegValidertCounter?: number;
 	oppsummeringBekreftet?: boolean;
-    fodselsnummer: string;
+	fodselsnummer: string;
 }
 
 type Props = OwnProps &

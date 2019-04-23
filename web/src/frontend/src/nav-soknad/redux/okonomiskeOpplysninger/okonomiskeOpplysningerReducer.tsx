@@ -40,13 +40,13 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
             return {
                 ...state,
                 restStatus: state.restStatus,
-                opplysningerSortert : opplysningerSortertUpdated
+                opplysningerSortert: opplysningerSortertUpdated
             };
         }
         case OkonomiskeOpplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING: {
-            const { opplysningType } = action;
+            const {opplysningType} = action;
             const opplysning = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
-            const opplysningUpdated = {...opplysning };
+            const opplysningUpdated = {...opplysning};
             opplysningUpdated.pendingLasterOppFil = true;
             const opplysningerSortertUpdated: Opplysning[] = updateSortertOpplysning(state.opplysningerSortert, opplysningUpdated);
 
@@ -56,9 +56,9 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
             };
         }
         case OkonomiskeOpplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING: {
-            const { opplysningType } = action;
+            const {opplysningType} = action;
             const opplysning = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
-            const opplysningUpdated = {...opplysning };
+            const opplysningUpdated = {...opplysning};
             opplysningUpdated.pendingLasterOppFil = false;
             const opplysningerSortertUpdated: Opplysning[] = updateSortertOpplysning(state.opplysningerSortert, opplysningUpdated);
 
@@ -68,10 +68,10 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
             };
         }
         case OkonomiskeOpplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP: {
-            const { opplysningType } = action;
+            const {opplysningType} = action;
             const opplysning = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
             const opplysningUpdated = {...opplysning};
-            if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND){
+            if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
                 opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
             } else {
                 opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;

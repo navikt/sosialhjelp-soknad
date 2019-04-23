@@ -29,16 +29,16 @@ interface StoreToProps {
 
 type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps
 
-class VedleggView extends React.Component<Props>{
+class VedleggView extends React.Component<Props> {
 
 
-    handleAlleredeLastetOpp(event: any){
+    handleAlleredeLastetOpp(event: any) {
 
-        const { okonomiskOpplysning, behandlingsId, feil } = this.props;
+        const {okonomiskOpplysning, behandlingsId, feil} = this.props;
 
-        const opplysningUpdated = {... okonomiskOpplysning};
+        const opplysningUpdated = {...okonomiskOpplysning};
 
-        if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND){
+        if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
             opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
         } else {
             opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
@@ -47,8 +47,8 @@ class VedleggView extends React.Component<Props>{
         this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feil));
     }
 
-    slettVedlegg(fil: Fil){
-        const { behandlingsId, okonomiskOpplysning } = this.props;
+    slettVedlegg(fil: Fil) {
+        const {behandlingsId, okonomiskOpplysning} = this.props;
         this.props.dispatch(startSlettFil(behandlingsId, fil, okonomiskOpplysning, okonomiskOpplysning.type))
     }
 
@@ -91,13 +91,13 @@ class VedleggView extends React.Component<Props>{
         )
     }
 
-    render(){
+    render() {
 
-        const { okonomiskOpplysning } = this.props;
+        const {okonomiskOpplysning} = this.props;
 
-        return(
+        return (
             <div>
-                { this.renderOpplastingAvVedleggSeksjon(okonomiskOpplysning)}
+                {this.renderOpplastingAvVedleggSeksjon(okonomiskOpplysning)}
             </div>
         )
     }

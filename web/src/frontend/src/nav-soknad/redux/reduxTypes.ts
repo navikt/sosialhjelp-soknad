@@ -49,7 +49,7 @@ export interface SoknadAppState {
 	init: InitState;
 	mockData: MockState;
 	okonomiskeOpplysninger: OkonomiskeOpplysningerModel;
-    filopplasting: FilState
+	filopplasting: FilState
 }
 
 export interface SoknadState {

@@ -28,20 +28,20 @@ type Props = StoreToProps & InjectedIntlProps & DispatchProps;
 class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
 
 
-    componentDidMount(){
-        const { behandlingsId } = this.props;
+    componentDidMount() {
+        const {behandlingsId} = this.props;
         this.props.dispatch(hentOkonomiskeOpplysninger(behandlingsId))
     }
 
-    renderGrupper(){
+    renderGrupper() {
 
-        const { opplysningerSortert } = this.props.okonomiskeOpplysninger;
+        const {opplysningerSortert} = this.props.okonomiskeOpplysninger;
 
         const grupperView = gruppeRekkefolge.map((opplysningGruppe: OpplysningGruppe) => {
             const opplysningerIGruppe: Opplysning[] = opplysningerSortert.filter((o: Opplysning) => {
                 return o.gruppe === opplysningGruppe;
             });
-            if (opplysningerIGruppe.length === 0 ){
+            if (opplysningerIGruppe.length === 0) {
                 return null;
             }
             return (<Gruppe key={opplysningGruppe} gruppeKey={opplysningGruppe} gruppe={opplysningerIGruppe}/>);
@@ -51,39 +51,39 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
     }
 
     render() {
-        const { restStatus, backendData } = this.props.okonomiskeOpplysninger;
+        const {restStatus, backendData} = this.props.okonomiskeOpplysninger;
 
         const ikkeBesvartMeldingSkalVises = backendData && backendData.okonomiskeOpplysninger.length < 3;
 
         const infoMelding: JSX.Element = (
-                <div className="steg-ekstrainformasjon__blokk">
-                    <Informasjonspanel
-                        ikon={InformasjonspanelIkon.HENSYN}
-                        farge={DigisosFarge.VIKTIG}
-                    >
-                        <FormattedHTMLMessage id="opplysninger.informasjon"/>
-                    </Informasjonspanel>
-                </div>
+            <div className="steg-ekstrainformasjon__blokk">
+                <Informasjonspanel
+                    ikon={InformasjonspanelIkon.HENSYN}
+                    farge={DigisosFarge.VIKTIG}
+                >
+                    <FormattedHTMLMessage id="opplysninger.informasjon"/>
+                </Informasjonspanel>
+            </div>
         );
 
         const ikkeBesvartMelding: JSX.Element = (
-                <div className="steg-ekstrainformasjon__blokk">
-                    <Informasjonspanel
-                        ikon={InformasjonspanelIkon.HENSYN}
-                        farge={DigisosFarge.VIKTIG}
-                    >
-                        <FormattedHTMLMessage id="opplysninger.ikkebesvart.melding"/>
-                    </Informasjonspanel>
-                </div>
+            <div className="steg-ekstrainformasjon__blokk">
+                <Informasjonspanel
+                    ikon={InformasjonspanelIkon.HENSYN}
+                    farge={DigisosFarge.VIKTIG}
+                >
+                    <FormattedHTMLMessage id="opplysninger.ikkebesvart.melding"/>
+                </Informasjonspanel>
+            </div>
         );
 
-        if (restStatus === RestStatus.SUCCESS){
+        if (restStatus === RestStatus.SUCCESS) {
             return (
                 <div className="steg-ekstrainformasjon">
                     <DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk} ikon={<SkjemaIllustrasjon/>}>
-                        { !ikkeBesvartMeldingSkalVises && infoMelding }
-                        { ikkeBesvartMeldingSkalVises && ikkeBesvartMelding }
-                        { this.renderGrupper()}
+                        {!ikkeBesvartMeldingSkalVises && infoMelding}
+                        {ikkeBesvartMeldingSkalVises && ikkeBesvartMelding}
+                        {this.renderGrupper()}
                     </DigisosSkjemaSteg>
                 </div>
             );
@@ -91,7 +91,7 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
 
         return (
             <div className="application-spinner">
-                <NavFrontendSpinner type="XXL" />
+                <NavFrontendSpinner type="XXL"/>
             </div>
         );
     }

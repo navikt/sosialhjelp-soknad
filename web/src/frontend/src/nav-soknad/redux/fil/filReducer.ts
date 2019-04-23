@@ -1,5 +1,5 @@
-import { REST_STATUS } from "../../types/restTypes";
-import { Reducer } from "../reduxTypes";
+import {REST_STATUS} from "../../types/restTypes";
+import {Reducer} from "../reduxTypes";
 import {FilActionTypeKeys, FilActionTypes, FilState} from "./filTypes";
 
 const initialState: FilState = {

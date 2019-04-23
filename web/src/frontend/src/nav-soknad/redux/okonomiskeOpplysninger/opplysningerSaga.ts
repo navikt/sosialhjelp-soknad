@@ -22,14 +22,14 @@ function getFeilForOpplysning(feil: Valideringsfeil[], opplysningTextKey: string
 
 function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
 
-    const { behandlingsId, opplysning, feil } = action;
+    const {behandlingsId, opplysning, feil} = action;
     const opplysningerSpc = getSpcForOpplysning(opplysning.type);
     const opplysningKey: string = opplysningerSpc.textKey;
     const feilForOpplysning = getFeilForOpplysning(feil, opplysningKey);
 
     yield put(updateOpplysning(opplysning));
 
-    if (feilForOpplysning.length === 0 ){
+    if (feilForOpplysning.length === 0) {
         try {
             yield call(
                 fetchPut,

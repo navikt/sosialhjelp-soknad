@@ -4,7 +4,7 @@ import {
     getSpcForOpplysning
 } from "../../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
-import { InjectedIntlProps, injectIntl} from "react-intl";
+import {InjectedIntlProps, injectIntl} from "react-intl";
 
 interface OwnProps {
     opplysning: Opplysning
@@ -28,7 +28,7 @@ const VedleggSlettet: React.FC<Props> = (props: Props) => {
                     </div>
                 </div>
                 <div className="vedlegg_slettet_tekst">
-                    { intlTextOrKey }
+                    {intlTextOrKey}
                 </div>
             </div>
         </div>

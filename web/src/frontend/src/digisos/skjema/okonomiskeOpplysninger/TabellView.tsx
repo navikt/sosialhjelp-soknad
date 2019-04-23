@@ -52,8 +52,8 @@ class TabellView extends React.Component<Props, {}> {
         raderUpdated[radIndex][inputFelt] = input;
         opplysningUpdated.rader = raderUpdated;
 
-        if (inputFelt !== InputType.BESKRIVELSE){
-            if(!erTall(input) || input === ""){
+        if (inputFelt !== InputType.BESKRIVELSE) {
+            if (!erTall(input) || input === "") {
                 this.props.dispatch(setValideringsfeil(null, key));
             }
         }

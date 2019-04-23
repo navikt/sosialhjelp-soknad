@@ -1,6 +1,6 @@
 import {FilActionTypeKeys, LastOppFilAction, StartSlettFilAction} from "./filTypes";
 import {SagaIterator} from "redux-saga";
-import { fetchDelete, fetchUpload, fetchUploadIgnoreErrors,} from "../../utils/rest-utils";
+import {fetchDelete, fetchUpload, fetchUploadIgnoreErrors,} from "../../utils/rest-utils";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {loggFeil} from "../navlogger/navloggerActions";
 import {
@@ -16,29 +16,29 @@ import {REST_FEIL} from "../../types/restFeilTypes";
 
 function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
 
-	const {behandlingsId, formData, opplysning} = action;
+    const {behandlingsId, formData, opplysning} = action;
 
-	console.warn(opplysning.type);
-	yield put(settPendingPaFilOpplasting(opplysning.type));
+    console.warn(opplysning.type);
+    yield put(settPendingPaFilOpplasting(opplysning.type));
 
-	const url = `opplastetVedlegg/${behandlingsId}/${opplysning.type}`;
+    const url = `opplastetVedlegg/${behandlingsId}/${opplysning.type}`;
 
 
-	let response: Fil =
-		{
-        	"filNavn": "",
-    		"uuid": ""
-		};
+    let response: Fil =
+        {
+            "filNavn": "",
+            "uuid": ""
+        };
 
-	try {
-		response = yield call(fetchUpload, url, formData);
-		const filerUpdated: Fil[] = opplysning.filer.map((fil: Fil) => ({...fil}));
-		filerUpdated.push(response);
-		const opplysningUpdated: Opplysning = {...opplysning};
-		opplysningUpdated.filer = filerUpdated;
-		yield put(updateOpplysning(opplysningUpdated));
+    try {
+        response = yield call(fetchUpload, url, formData);
+        const filerUpdated: Fil[] = opplysning.filer.map((fil: Fil) => ({...fil}));
+        filerUpdated.push(response);
+        const opplysningUpdated: Opplysning = {...opplysning};
+        opplysningUpdated.filer = filerUpdated;
+        yield put(updateOpplysning(opplysningUpdated));
         yield put(settFerdigPaFilOpplasting(opplysning.type));
-	} catch (reason) {
+    } catch (reason) {
 
         let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
 
@@ -70,7 +70,7 @@ export function detekterInternFeilKode(feilKode: REST_FEIL): REST_FEIL {
 
 function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
 
-    const { behandlingsId, fil, opplysning, opplysningType} = action;
+    const {behandlingsId, fil, opplysning, opplysningType} = action;
 
     yield put(settPendingPaFilOpplasting(opplysningType));
 
@@ -80,27 +80,27 @@ function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
 
 
         const filerUpdated = opplysning.filer.filter((f: Fil) => {
-        	return f.uuid !== fil.uuid;
-		});
+            return f.uuid !== fil.uuid;
+        });
 
         const opplysningUpdated: Opplysning = {...opplysning};
         opplysningUpdated.filer = filerUpdated;
         yield put(updateOpplysning(opplysningUpdated));
         yield put(settFerdigPaFilOpplasting(opplysningType));
 
-	} catch (reason) {
-		yield put(loggFeil("Slett vedlegg feilet: " + reason));
+    } catch (reason) {
+        yield put(loggFeil("Slett vedlegg feilet: " + reason));
 
-		// TODO:
-		// Burde kanskje gjøre noe annet enn dette?
-		yield put(navigerTilServerfeil());
-	}
+        // TODO:
+        // Burde kanskje gjøre noe annet enn dette?
+        yield put(navigerTilServerfeil());
+    }
 }
 
 
 function* filSaga(): SagaIterator {
-	yield takeEvery(FilActionTypeKeys.LAST_OPP, lastOppFilSaga);
-	yield takeEvery(FilActionTypeKeys.START_SLETT_FIL, slettFilSaga);
+    yield takeEvery(FilActionTypeKeys.LAST_OPP, lastOppFilSaga);
+    yield takeEvery(FilActionTypeKeys.START_SLETT_FIL, slettFilSaga);
 }
 
 export default filSaga;

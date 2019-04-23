@@ -1,6 +1,6 @@
 import * as React from "react";
 import Skjemapanel from "../../../nav-soknad/components/skjemapanel";
-import { FormattedHTMLMessage, injectIntl } from "react-intl";
+import {FormattedHTMLMessage, injectIntl} from "react-intl";
 import {connect} from "react-redux";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
@@ -52,9 +52,9 @@ class GruppeView extends React.Component<Props, {}> {
         return (
             <Skjemapanel className="skjema-progresjonsblokk">
                 <div className="skjema-progresjonsblokk__head">
-                    <h3><FormattedHTMLMessage id={gruppeTittelKey + ".sporsmal"}/> </h3>
+                    <h3><FormattedHTMLMessage id={gruppeTittelKey + ".sporsmal"}/></h3>
                 </div>
-                { this.renderGruppeInnhold(gruppe) }
+                {this.renderGruppeInnhold(gruppe)}
             </Skjemapanel>
         );
     }

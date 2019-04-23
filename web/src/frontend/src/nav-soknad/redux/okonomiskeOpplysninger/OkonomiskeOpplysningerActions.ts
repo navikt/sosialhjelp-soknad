@@ -12,7 +12,7 @@ import {getOkonomomiskeOpplysningerUrl} from "./okonomiskeOpplysningerUtils";
 import {Valideringsfeil} from "../../validering/types";
 
 
-export const gotDataFromBackend  = (response: OkonomiskeOpplysningerBackend): OkonomiskeOpplysningerAction => {
+export const gotDataFromBackend = (response: OkonomiskeOpplysningerBackend): OkonomiskeOpplysningerAction => {
     return {
         type: OkonomiskeOpplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND,
         backendData: response
