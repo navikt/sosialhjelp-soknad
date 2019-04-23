@@ -18,7 +18,6 @@ export enum AdresseType {
 }
 
 export interface Matrikkeladresse {
-	type: AdresseType.MATRIKKELADRESSE;
 	kommunenummer: string;
 	gaardsnummer: string;
 	bruksnummer: string;
@@ -28,7 +27,6 @@ export interface Matrikkeladresse {
 }
 
 export interface Gateadresse {
-	type: AdresseType.GATEADRESSE;
 	landkode: null;
 	kommunenummer: string;
 	adresselinjer: string[];
@@ -64,7 +62,6 @@ export const initialAdresserState: Adresser = {
 	folkeregistrert: {
 		type: AdresseType.GATEADRESSE,
 		gateadresse: {
-			type: AdresseType.GATEADRESSE,
 			landkode: null,
 			kommunenummer: "",
 			adresselinjer: [],

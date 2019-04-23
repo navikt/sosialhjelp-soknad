@@ -21,7 +21,11 @@ import { formaterSoknadsadresse } from "./AdresseUtils";
 import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+interface OwnProps {
+	disableLoadingAnimation?: boolean;
+}
+
+type Props = SoknadsdataContainerProps & InjectedIntlProps & OwnProps;
 
 interface State {
 	oppstartsModus: boolean
@@ -34,7 +38,7 @@ class AdresseView extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			oppstartsModus: true
+			oppstartsModus: props.disableLoadingAnimation === true ? false : true
 		};
 	}
 
@@ -51,6 +55,7 @@ class AdresseView extends React.Component<Props, State> {
 	}
 
 	onClickRadio(adresseKategori: AdresseKategori) {
+		// console.warn("onClickRadio");
 		// const { soknadsdata, oppdaterSoknadsdataSti, lagreSoknadsdata, brukerBehandlingId } = this.props;
 		const { soknadsdata, oppdaterSoknadsdataSti } = this.props;
 		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
@@ -180,6 +185,7 @@ class AdresseView extends React.Component<Props, State> {
 		const { oppstartsModus } = this.state;
 		const adresser = soknadsdata.personalia.adresser;
 		const navEnheter = soknadsdata.personalia.navEnheter;
+
 		const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet ) => navEnhet.valgt);
 		const folkeregistrertAdresse = adresser && adresser.folkeregistrert &&  adresser.folkeregistrert.gateadresse;
 		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
@@ -187,8 +193,6 @@ class AdresseView extends React.Component<Props, State> {
 		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
 		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
 		const visSoknadsmottakerInfo: boolean = (restStatus === REST_STATUS.OK) ? true : false;
-
-		console.warn("oppstartsModus: " + oppstartsModus);
 
 		let folkeregistrertAdresseLabel = null;
 		let annenAdresseLabel = null;
