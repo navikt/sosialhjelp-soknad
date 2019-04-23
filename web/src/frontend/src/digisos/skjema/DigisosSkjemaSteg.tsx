@@ -1,95 +1,95 @@
 import * as React from "react";
 
 import StegMedNavigasjon from "../../nav-soknad/containers/StegMedNavigasjon";
-import { SkjemaConfig, SkjemaStegType } from "../../nav-soknad/types";
+import {SkjemaConfig, SkjemaStegType} from "../../nav-soknad/types";
 
 export enum DigisosSteg {
-	kontakt = "kontakt",
-	arbeidbolk = "arbeidbolk",
-	familiebolk = "familiebolk",
-	begrunnelsebolk = "begrunnelsebolk",
-	bosituasjonbolk = "bosituasjonbolk",
-	inntektbolk = "inntektbolk",
-	utgifterbolk = "utgifterbolk",
-	opplysningerbolk = "opplysningerbolk",
+    kontakt = "kontakt",
+    arbeidbolk = "arbeidbolk",
+    familiebolk = "familiebolk",
+    begrunnelsebolk = "begrunnelsebolk",
+    bosituasjonbolk = "bosituasjonbolk",
+    inntektbolk = "inntektbolk",
+    utgifterbolk = "utgifterbolk",
+    opplysningerbolk = "opplysningerbolk",
     okonomiskeOpplysninger = "okonomiskeOpplysninger",
-	oppsummering = "oppsummering"
+    oppsummering = "oppsummering"
 }
 
 export const digisosSkjemaConfig: SkjemaConfig = {
-	tittelId: "applikasjon.sidetittel",
-	skjemanavn: "digisos",
-	steg: [
-		{
-			key: DigisosSteg.kontakt,
-			stegnummer: 1,
-			type: SkjemaStegType.skjema
-		},
-		{
-			key: DigisosSteg.begrunnelsebolk,
-			stegnummer: 2,
-			type: SkjemaStegType.skjema
-		},
-		{
-			key: DigisosSteg.arbeidbolk,
-			stegnummer: 3,
-			type: SkjemaStegType.skjema
-		},
-		{
-			key: DigisosSteg.familiebolk,
-			stegnummer: 4,
-			type: SkjemaStegType.skjema
-		},
-		{
-			key: DigisosSteg.bosituasjonbolk,
-			stegnummer: 5,
-			type: SkjemaStegType.skjema
-		},
-		{
-			key: DigisosSteg.inntektbolk,
-			stegnummer: 6,
-			type: SkjemaStegType.skjema
-		},
-		{
-			key: DigisosSteg.utgifterbolk,
-			stegnummer: 7,
-			type: SkjemaStegType.skjema
-		},
-		{
-			key: DigisosSteg.opplysningerbolk,
-			stegnummer: 8,
-			type: SkjemaStegType.ekstrainfo
-		},
-		{
+    tittelId: "applikasjon.sidetittel",
+    skjemanavn: "digisos",
+    steg: [
+        {
+            key: DigisosSteg.kontakt,
+            stegnummer: 1,
+            type: SkjemaStegType.skjema
+        },
+        {
+            key: DigisosSteg.begrunnelsebolk,
+            stegnummer: 2,
+            type: SkjemaStegType.skjema
+        },
+        {
+            key: DigisosSteg.arbeidbolk,
+            stegnummer: 3,
+            type: SkjemaStegType.skjema
+        },
+        {
+            key: DigisosSteg.familiebolk,
+            stegnummer: 4,
+            type: SkjemaStegType.skjema
+        },
+        {
+            key: DigisosSteg.bosituasjonbolk,
+            stegnummer: 5,
+            type: SkjemaStegType.skjema
+        },
+        {
+            key: DigisosSteg.inntektbolk,
+            stegnummer: 6,
+            type: SkjemaStegType.skjema
+        },
+        {
+            key: DigisosSteg.utgifterbolk,
+            stegnummer: 7,
+            type: SkjemaStegType.skjema
+        },
+        {
+            key: DigisosSteg.opplysningerbolk,
+            stegnummer: 8,
+            type: SkjemaStegType.ekstrainfo
+        },
+        {
             key: DigisosSteg.okonomiskeOpplysninger,
             stegnummer: 9,
             type: SkjemaStegType.ekstrainfo
         },
-		{
-			key: DigisosSteg.oppsummering,
-			stegnummer: 10,
-			type: SkjemaStegType.oppsummering
-		}
-	]
+        {
+            key: DigisosSteg.oppsummering,
+            stegnummer: 10,
+            type: SkjemaStegType.oppsummering
+        }
+    ]
 };
 
 interface Props {
-	steg: string;
-	ikon?: React.ReactNode;
+    steg: string;
+    ikon?: React.ReactNode;
 }
 
 class DigisosSkjemaSteg extends React.Component<Props, {}> {
-	render() {
-		return (
-			<StegMedNavigasjon
-				skjemaConfig={digisosSkjemaConfig}
-				stegKey={this.props.steg}
-				ikon={this.props.ikon}
-			>
-				{this.props.children}
-			</StegMedNavigasjon>
-		);
-	}
+    render() {
+        return (
+            <StegMedNavigasjon
+                skjemaConfig={digisosSkjemaConfig}
+                stegKey={this.props.steg}
+                ikon={this.props.ikon}
+            >
+                {this.props.children}
+            </StegMedNavigasjon>
+        );
+    }
 }
 
 export default DigisosSkjemaSteg;
