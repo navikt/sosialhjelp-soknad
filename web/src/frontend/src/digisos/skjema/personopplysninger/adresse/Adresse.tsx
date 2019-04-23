@@ -51,7 +51,8 @@ class AdresseView extends React.Component<Props, State> {
 	}
 
 	onClickRadio(adresseKategori: AdresseKategori) {
-		const { soknadsdata, oppdaterSoknadsdataSti, lagreSoknadsdata, brukerBehandlingId } = this.props;
+		// const { soknadsdata, oppdaterSoknadsdataSti, lagreSoknadsdata, brukerBehandlingId } = this.props;
+		const { soknadsdata, oppdaterSoknadsdataSti } = this.props;
 		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
 		if (restStatus === REST_STATUS.INITIALISERT || restStatus === REST_STATUS.PENDING){
 			return;
@@ -70,8 +71,9 @@ class AdresseView extends React.Component<Props, State> {
 			};
 			oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad);
 		} else {
-			lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, adresser);
-			const payload = {"valg": adresseKategori};
+			// lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, adresser);
+			// console.warn("debug 1: " + JSON.stringify(adresser, null, 4));
+			const payload = adresser; // {"valg": adresseKategori};
 			this.lagreAdresseValg(payload);
 		}
 	}
@@ -83,6 +85,7 @@ class AdresseView extends React.Component<Props, State> {
 				const valgtNavEnhet: NavEnhet = navEnheter[0];
 				valgtNavEnhet.valgt = true;
 				lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
+				console.warn("debug 2: " + SoknadsSti.NAV_ENHETER + ": " + JSON.stringify(valgtNavEnhet, null, 4));
 				this.slettEventuelleValideringsfeil();
 			}
 			oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
@@ -184,6 +187,8 @@ class AdresseView extends React.Component<Props, State> {
 		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
 		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
 		const visSoknadsmottakerInfo: boolean = (restStatus === REST_STATUS.OK) ? true : false;
+
+		console.warn("oppstartsModus: " + oppstartsModus);
 
 		let folkeregistrertAdresseLabel = null;
 		let annenAdresseLabel = null;
