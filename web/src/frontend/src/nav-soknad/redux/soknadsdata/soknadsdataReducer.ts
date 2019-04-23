@@ -14,6 +14,27 @@ import {
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
 import { setPath } from "./soknadsdataActions";
+import {Bostotte, initialBostotteState} from "../../../digisos/skjema/inntektFormue/bostotte/bostotteTypes";
+import {
+	initialUtbetalingerState,
+	Utbetalinger
+} from "../../../digisos/skjema/inntektFormue/Utbetalinger/utbetalingerTypes";
+import {
+	initialVerdierState,
+	Verdier
+} from "../../../digisos/skjema/inntektFormue/verdier/VerdierTypes";
+import {
+	initialFormueState,
+	Formue
+} from "../../../digisos/skjema/inntektFormue/formue/FormueTypes";
+import {
+	initialBoutgifterState,
+	Boutgifter
+} from "../../../digisos/skjema/utgifterGjeld/boutgifter/BoutgifterTypes";
+import {
+	initialBarneutgifterState,
+	Barneutgifter
+} from "../../../digisos/skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
 import {
 	AdresseKategori,
 	Adresser,
@@ -24,10 +45,14 @@ import {
 	initialBasisPersonalia
 } from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import { REST_STATUS } from "../../types";
+import { Barnebidrag, ForsorgerPlikt } from "../../../digisos/skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 
 export enum SoknadsdataActionTypeKeys {
+	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
 	OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI",
-	SETT_REST_STATUS = "soknadsdata/SETT_REST_STATUS"
+	SETT_REST_STATUS = "soknadsdata/SETT_REST_STATUS",
+	START_REST_KALL = "soknadsdata/START_REST_KALL",
+	STOPP_REST_KALL = "soknadsdata/STOPP_REST_KALL"
 }
 
 /*
@@ -42,10 +67,17 @@ export enum SoknadsSti {
 	BOSITUASJON = "bosituasjon",
 	UTDANNING = "utdanning",
 	TELEFONNUMMER = "personalia/telefonnummer",
+	BOSTOTTE = "inntekt/bostotte",
+	UTBETALINGER = "inntekt/utbetalinger",
+	VERDIER = "inntekt/verdier",
+	FORMUE = "inntekt/formue",
+	BOUTGIFTER = "utgifter/boutgifter",
+	BARNEUTGIFTER = "utgifter/barneutgifter",
 	ADRESSER = "personalia/adresser",
 	NAV_ENHETER = "personalia/navEnheter",
 	SIVILSTATUS = "familie/sivilstatus",
-	BASIS_PERSONALIA = "personalia/basisPersonalia"
+	BASIS_PERSONALIA = "personalia/basisPersonalia",
+	FORSORGERPLIKT = "familie/forsorgerplikt"
 }
 
 export interface Personalia {
@@ -56,12 +88,37 @@ export interface Personalia {
 	basisPersonalia?: BasisPersonalia;
 }
 
+export interface Inntekt {
+	bostotte?: Bostotte;
+	utbetalinger?: Utbetalinger;
+	formue?: Formue;
+	verdier?: Verdier;
+}
+
+export interface Utgifter {
+	boutgifter?: Boutgifter;
+	barneutgifter?: Barneutgifter;
+
+}
+
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
 	telefonnummer: initialTelefonnummerState,
 	adresser: initialAdresserState,
 	navEnheter: [],
 	basisPersonalia: initialBasisPersonalia
+};
+
+export const initialInntektState: Inntekt = {
+	bostotte: initialBostotteState,
+	utbetalinger: initialUtbetalingerState,
+	formue: initialFormueState,
+	verdier: initialVerdierState
+};
+
+export const initialUtgifterState: Utgifter = {
+	boutgifter: initialBoutgifterState,
+	barneutgifter: initialBarneutgifterState
 };
 
 export interface Soknadsdata {
@@ -71,6 +128,8 @@ export interface Soknadsdata {
 	familie: Familie;
 	utdanning: Utdanning;
 	personalia: Personalia;
+	inntekt: Inntekt;
+	utgifter: Utgifter;
 	restStatus: any;
 }
 
@@ -81,6 +140,8 @@ export interface SoknadsdataActionVerdi {
 	familie?: Familie
 	utdanning?: Utdanning,
 	personalia: Personalia;
+	inntekt?: Inntekt,
+	utgifter?: Utgifter
 }
 
 export interface AdresseValg {
@@ -96,10 +157,16 @@ export type SoknadsdataType =
 	| Kontonummer
 	| Telefonnummer
 	| Personalia
+	| Sivilstatus
+	| ForsorgerPlikt
+	| Barnebidrag
+	| Bostotte
+	| Formue
+	| Verdier
+	| Utgifter
 	| Adresser
 	| AdresseValg
-	| NavEnhet[]
-	| Sivilstatus;
+	| NavEnhet[];
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
@@ -115,6 +182,15 @@ const initialSoknadsdataRestStatus = {
 		basisPersonalia: REST_STATUS.INITIALISERT,
 		adresser: REST_STATUS.INITIALISERT,
 		navEnheter: REST_STATUS.INITIALISERT
+	},
+	familie: {
+		sivilstatus: REST_STATUS.INITIALISERT,
+		forsorgerplikt: REST_STATUS.INITIALISERT
+	},
+	inntekt: {
+		bostotte: REST_STATUS.INITIALISERT,
+		utbetalinger: REST_STATUS.INITIALISERT,
+		verdier: REST_STATUS.INITIALISERT
 	}
 };
 
@@ -125,6 +201,8 @@ export const initialSoknadsdataState: Soknadsdata = {
 	familie: initialFamilieStatus,
 	utdanning: initialUtdanningState,
 	personalia: initialPersonaliaState,
+	inntekt: initialInntektState,
+	utgifter: initialUtgifterState,
 	restStatus: initialSoknadsdataRestStatus
 };
 

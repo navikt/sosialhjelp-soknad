@@ -14,6 +14,16 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	return (dispatch: Dispatch) => {
 		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
 		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
+
+			// For å simulere ulike typer testdata fra server, kan man her skrive kode som:
+			// if(sti === SoknadsSti.FORSORGERPLIKT){
+			// 	response = {
+			// 		ansvar: [],
+			// 		barnebidrag: null,
+			// 		harForsorgerplikt: false
+			// 	}
+			// }
+
 			dispatch(oppdaterSoknadsdataSti(sti, response));
 			dispatch(settRestStatus(sti, REST_STATUS.OK));
 		}).catch(() => {
