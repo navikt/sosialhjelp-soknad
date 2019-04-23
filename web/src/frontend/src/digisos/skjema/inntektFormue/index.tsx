@@ -23,13 +23,13 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
 				</h2>
 				<NavYtelser fakta={fakta}/>
 				<SkattbarInntekt/>
-                <Bostotte />
-                <Utbetalinger />
-                <h2 className="overskrift">
-                    <FormattedHTMLMessage id="opplysninger.formue.undertittel"/>
-                </h2>
-                <Formue />
-                <Verdier />
+				<Bostotte />
+				<Utbetalinger />
+				<h2 className="overskrift">
+					<FormattedHTMLMessage id="opplysninger.formue.undertittel"/>
+				</h2>
+				<Formue />
+				<Verdier />
 			</DigisosSkjemaSteg>
 		);
 	}

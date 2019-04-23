@@ -17,24 +17,26 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 
 		const utbetaltMelding = <span><FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/></span>;
 
-		return utbetalinger.filter(utbetaling => getFaktumPropertyVerdi(utbetaling, "kildeType") === "nav").map(utbetaling => {
-			const id = getFaktumPropertyVerdi(utbetaling, "id");
-			const type = getFaktumPropertyVerdi(utbetaling, "type");
-			const dato = getFaktumPropertyVerdi(utbetaling, "utbetalingsDato");
+		return utbetalinger
+			.filter(utbetaling => getFaktumPropertyVerdi(utbetaling, "kildeType") === "nav")
+			.map(utbetaling => {
+				const id = getFaktumPropertyVerdi(utbetaling, "id");
+				const type = getFaktumPropertyVerdi(utbetaling, "type");
+				const dato = getFaktumPropertyVerdi(utbetaling, "utbetalingsDato");
 
-			const aar = dato.slice(0, 4);
-			const maaned = dato.slice(5, 7);
-			const dag = dato.slice(8);
+				const aar = dato.slice(0, 4);
+				const maaned = dato.slice(5, 7);
+				const dag = dato.slice(8);
 
-			const belop = getFaktumPropertyVerdi(utbetaling, "netto");
+				const belop = getFaktumPropertyVerdi(utbetaling, "netto");
 
-			return (
-				<div key={id} className="utbetaling blokk-s">
-					<div>{type}<span className="verdi detaljeliste__verdi">{belop}</span></div>
-					<div>{utbetaltMelding} {dag}.{maaned}.{aar}</div>
-				</div>
-			);
-		});
+				return (
+					<div key={id} className="utbetaling blokk-s">
+						<div>{type}<span className="verdi detaljeliste__verdi">{belop}</span></div>
+						<div>{utbetaltMelding} {dag}.{maaned}.{aar}</div>
+					</div>
+				);
+			});
 	}
 
 	render() {
