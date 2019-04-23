@@ -10,7 +10,7 @@ import Gruppe from "./Gruppe";
 import {
     OpplysningGruppe,
     OkonomiskeOpplysningerModel, Opplysning
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import {hentOkonomiskeOpplysninger} from "../../../nav-soknad/redux/okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
 import {RestStatus} from "../../../nav-soknad/types";

@@ -7,7 +7,7 @@ import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {
     OkonomiskeOpplysningerModel,
     Opplysning, OpplysningGruppe,
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {getGruppeTittelKey} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 import {Valideringsfeil} from "../../../nav-soknad/validering/types";
 import OpplysningView from "./OpplysningView";

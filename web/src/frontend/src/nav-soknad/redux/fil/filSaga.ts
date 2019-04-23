@@ -8,7 +8,7 @@ import {
     settPendingPaFilOpplasting,
     updateOpplysning
 } from "../okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
-import {Fil, Opplysning} from "../okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {Fil, Opplysning} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {lastOppFilFeilet} from "./filActions";
 import {REST_FEIL} from "../../types/restFeilTypes";

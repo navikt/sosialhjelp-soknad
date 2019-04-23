@@ -3,7 +3,7 @@ import {Knapp} from "nav-frontend-knapper";
 import {FormattedMessage} from "react-intl";
 import {
     Opplysning
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {connect} from "react-redux";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;

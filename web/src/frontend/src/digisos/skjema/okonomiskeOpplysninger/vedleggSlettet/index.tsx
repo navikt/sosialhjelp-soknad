@@ -1,6 +1,8 @@
 import * as React from 'react';
-import {Opplysning} from "../../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
-import {getKeyForOpplysningType} from "../../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
+import {Opplysning} from "../../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+import {
+    getSpcForOpplysning
+} from "../../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import { InjectedIntlProps, injectIntl} from "react-intl";
 
@@ -12,7 +14,8 @@ type Props = OwnProps & InjectedIntlProps;
 
 const VedleggSlettet: React.FC<Props> = (props: Props) => {
 
-    const textKey = getKeyForOpplysningType(props.opplysning.type);
+    const opplysningSpc = getSpcForOpplysning(props.opplysning.type);
+    const textKey = opplysningSpc.textKey + ".slettet";
 
     const intlTextOrKey = getIntlTextOrKey(props.intl, textKey);
 
@@ -26,7 +29,6 @@ const VedleggSlettet: React.FC<Props> = (props: Props) => {
                 </div>
                 <div className="vedlegg_slettet_tekst">
                     { intlTextOrKey }
-                    Vi har slettet vedlegget for { props.opplysning.type } fordi du ikke lenger har svart at du har { props.opplysning.type }
                 </div>
             </div>
         </div>

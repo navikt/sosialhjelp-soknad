@@ -1,12 +1,12 @@
 import {
     LagreOpplysningHvisGyldig,
     OkonomiskeOpplysningerActionTypeKeys,
-} from "./okonomiskeOpplysningerTypes";
+} from "./opplysningerTypes";
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {
-    getOkonomomiskeOpplysningerUrl,
-    getKeyForOpplysningType, transformToBackendOpplysning,
+    getOkonomomiskeOpplysningerUrl, getSpcForOpplysning,
+    transformToBackendOpplysning,
 } from "./okonomiskeOpplysningerUtils";
 import {fetchPut} from "../../utils/rest-utils";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
@@ -23,7 +23,8 @@ function getFeilForOpplysning(feil: Valideringsfeil[], opplysningTextKey: string
 function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
 
     const { behandlingsId, opplysning, feil } = action;
-    const opplysningKey: string = getKeyForOpplysningType(opplysning.type);
+    const opplysningerSpc = getSpcForOpplysning(opplysning.type);
+    const opplysningKey: string = opplysningerSpc.textKey;
     const feilForOpplysning = getFeilForOpplysning(feil, opplysningKey);
 
     yield put(updateOpplysning(opplysning));

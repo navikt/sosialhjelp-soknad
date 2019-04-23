@@ -32,10 +32,22 @@ export interface Opplysning {
     vedleggStatus: VedleggStatus;
     filer: Fil[];
     slettet: boolean;
-    radType: RadType;
+    radInnhold: InputType[];
     pendingLasterOppFil: boolean;
 }
 
+export interface OpplysningSpc {
+    type: OpplysningType;
+    antallRader: AntallRader;
+    radInnhold: InputType[];
+    textKey: string;
+}
+
+export enum AntallRader {
+    INGEN = "ingen",
+    EN = "en",
+    FLERE = "flere"
+}
 
 // ACTION TYPES
 export type OkonomiskeOpplysningerAction

@@ -1,4 +1,4 @@
-import {Fil, Opplysning, OpplysningType} from "../okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {Fil, Opplysning, OpplysningType} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {REST_STATUS} from "../../types";
 import {REST_FEIL} from "../../types/restFeilTypes";
 

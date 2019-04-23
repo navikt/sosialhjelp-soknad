@@ -2,8 +2,10 @@ import * as React from 'react';
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {
     Opplysning
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
-import {getKeyForOpplysningType} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+import {
+    getSpcForOpplysning
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 import TabellView from "./TabellView";
 import VedleggView from "./VedleggView";
 import VedleggSlettet from "./vedleggSlettet";
@@ -22,6 +24,7 @@ class OpplysningView extends React.Component<Props, {}>{
     render(){
 
         const { opplysning, gruppeIndex } = this.props;
+        const opplysningSpc = getSpcForOpplysning(opplysning.type);
 
         if (opplysning.slettet){
             return (
@@ -31,7 +34,7 @@ class OpplysningView extends React.Component<Props, {}>{
 
         return(
             <div className="skjema-progresjonsblokk__sporsmal">
-                <Sporsmal sprakNokkel={getKeyForOpplysningType(opplysning.type)} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
+                <Sporsmal sprakNokkel={opplysningSpc.textKey} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
                     <TabellView
                         opplysning={opplysning}
                         gruppeIndex={gruppeIndex}

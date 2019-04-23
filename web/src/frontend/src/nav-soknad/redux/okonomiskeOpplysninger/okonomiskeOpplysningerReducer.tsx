@@ -4,11 +4,11 @@ import {
     OkonomiskeOpplysningerActionTypeKeys,
     OkonomiskeOpplysningerModel, Opplysning,
     VedleggStatus
-} from "./okonomiskeOpplysningerTypes";
+} from "./opplysningerTypes";
 import {RestStatus} from "../../types";
 import {
     getOpplysningByOpplysningType,
-    getSortertListeAvMaybeOpplysning,
+    getSortertListeAvOpplysninger,
     updateSortertOpplysning,
 } from "./okonomiskeOpplysningerUtils";
 
@@ -25,7 +25,7 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
 ) => {
     switch (action.type) {
         case OkonomiskeOpplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND: {
-            const sortert = getSortertListeAvMaybeOpplysning(action.backendData);
+            const sortert = getSortertListeAvOpplysninger(action.backendData);
 
             return {
                 ...state,

@@ -4,14 +4,11 @@ import {
     Fil,
     Opplysning,
     VedleggStatus
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {connect} from "react-redux";
 import LastOppFil from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
 import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
-import {
-    getKeyForOpplysningType,
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 import {startSlettFil} from "../../../nav-soknad/redux/fil/filActions";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {
@@ -19,6 +16,7 @@ import {
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
 import {Valideringsfeil} from "../../../nav-soknad/validering/types";
 import OpplastetVedlegg from "./OpplastetVedlegg";
+import {getSpcForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
 
 interface OwnProps {
     okonomiskOpplysning: Opplysning;
@@ -57,7 +55,9 @@ class VedleggView extends React.Component<Props>{
 
     renderOpplastingAvVedleggSeksjon(opplysning: Opplysning) {
 
-        const tittelKey = getKeyForOpplysningType(this.props.okonomiskOpplysning.type) + ".vedlegg.sporsmal.tittel";
+        const opplysningSpc = getSpcForOpplysning(opplysning.type);
+
+        const tittelKey = opplysningSpc.textKey + ".vedlegg.sporsmal.tittel";
 
         const vedleggListe = opplysning.filer
             .map(fil => {

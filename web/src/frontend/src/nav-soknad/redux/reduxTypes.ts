@@ -17,7 +17,7 @@ import {
 } from "../components/adresseAutocomplete/adresseAutocompleteReducer";
 import {MockState} from "../../digisos/mock/mockReducer";
 import { Soknadsdata } from "./soknadsdata/soknadsdataReducer";
-import {OkonomiskeOpplysningerModel} from "./okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {OkonomiskeOpplysningerModel} from "./okonomiskeOpplysninger/opplysningerTypes";
 import {FilState} from "./fil/filTypes";
 
 export * from "./fakta/faktaActionTypes";

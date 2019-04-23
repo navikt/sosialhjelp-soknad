@@ -7,7 +7,7 @@ import {
     OkonomiskeOpplysningerBackend,
     Opplysning,
     OpplysningType
-} from "./okonomiskeOpplysningerTypes";
+} from "./opplysningerTypes";
 import {getOkonomomiskeOpplysningerUrl} from "./okonomiskeOpplysningerUtils";
 import {Valideringsfeil} from "../../validering/types";
 

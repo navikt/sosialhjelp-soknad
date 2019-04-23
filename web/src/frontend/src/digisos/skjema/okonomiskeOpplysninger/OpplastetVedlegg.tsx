@@ -3,7 +3,7 @@ import SVG from "react-inlinesvg";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
 import AriaText from "../../../nav-soknad/components/aria/AriaText";
-import {Fil} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerTypes";
+import {Fil} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 
 interface Props {
 	fil: Fil;
