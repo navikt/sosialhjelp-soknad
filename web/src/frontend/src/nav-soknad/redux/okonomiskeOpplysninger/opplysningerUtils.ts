@@ -1,7 +1,7 @@
 import {
     MaybeOpplysning,
-    OkonomiskeOpplysningerBackend,
-    OkonomiskOpplysningBackend,
+    OpplysningerBackend,
+    OpplysningBackend,
     Opplysning,
     OpplysningGruppe,
     OpplysningRad,
@@ -11,7 +11,7 @@ import {
 import {opplysningsRekkefolgeOgSpc} from "./opplysningerConfig";
 
 
-export function getOkonomomiskeOpplysningerUrl(behandlingsId: string) {
+export function getOpplysningerUrl(behandlingsId: string) {
     return (
         `soknader/${behandlingsId}/okonomiskeOpplysninger`
     )
@@ -23,13 +23,13 @@ export const updateSortertOpplysning = (opplysninger: Opplysning[], opplysningUp
     })
 };
 
-export const transformToBackendOpplysning = (okonomiskOpplysning: Opplysning): OkonomiskOpplysningBackend => {
+export const transformToBackendOpplysning = (opplysning: Opplysning): OpplysningBackend => {
     return {
-        type: okonomiskOpplysning.type,
-        gruppe: okonomiskOpplysning.gruppe,
-        rader: okonomiskOpplysning.rader,
-        vedleggStatus: okonomiskOpplysning.vedleggStatus,
-        filer: okonomiskOpplysning.filer
+        type: opplysning.type,
+        gruppe: opplysning.gruppe,
+        rader: opplysning.rader,
+        vedleggStatus: opplysning.vedleggStatus,
+        filer: opplysning.filer
     };
 };
 
@@ -85,18 +85,18 @@ export const getOpplysningByOpplysningType = (opplysningerSortert: Opplysning[],
     });
 };
 
-export const getSortertListeAvOpplysninger = (backendData: OkonomiskeOpplysningerBackend): Opplysning[] => {
+export const getSortertListeAvOpplysninger = (backendData: OpplysningerBackend): Opplysning[] => {
 
     const {okonomiskeOpplysninger, slettedeVedlegg} = backendData;
-    const okonomiskeOpplysningerAktive: Opplysning[] = okonomiskeOpplysninger.map((okonomiskOpplysningBackend: OkonomiskOpplysningBackend) => {
-        return backendOpplysningToOpplysning(okonomiskOpplysningBackend, false)
+    const opplysningerAktive: Opplysning[] = okonomiskeOpplysninger.map((opplysningBackend: OpplysningBackend) => {
+        return backendOpplysningToOpplysning(opplysningBackend, false)
     });
 
-    const okonomiskeOpplysningerSlettede: Opplysning[] = slettedeVedlegg.map((okonomiskOpplysningBackend: OkonomiskOpplysningBackend) => {
-        return backendOpplysningToOpplysning(okonomiskOpplysningBackend, true)
+    const opplysningerSlettede: Opplysning[] = slettedeVedlegg.map((opplysningBackend: OpplysningBackend) => {
+        return backendOpplysningToOpplysning(opplysningBackend, true)
     });
 
-    const alleOpplysninger: Opplysning[] = okonomiskeOpplysningerAktive.concat(okonomiskeOpplysningerSlettede);
+    const alleOpplysninger: Opplysning[] = opplysningerAktive.concat(opplysningerSlettede);
 
     return sorterOpplysninger(alleOpplysninger, opplysningsRekkefolgeOgSpc)
         .filter((o: Opplysning) => o !== null);
@@ -109,7 +109,7 @@ export const getSpcForOpplysning = (opplysningType: OpplysningType) => {
     return opplysningSpcs[0];
 };
 
-const backendOpplysningToOpplysning = (opplysningBackend: OkonomiskOpplysningBackend, erSlettet: boolean): Opplysning => {
+const backendOpplysningToOpplysning = (opplysningBackend: OpplysningBackend, erSlettet: boolean): Opplysning => {
     return {
         "type": opplysningBackend.type,
         "gruppe": opplysningBackend.gruppe,

@@ -2,21 +2,21 @@ import {RestStatus} from "../../types";
 import {Valideringsfeil} from "../../validering/types";
 
 
-export interface OkonomiskeOpplysningerModel {
+export interface OpplysningerModel {
     restStatus: RestStatus;
-    backendData: OkonomiskeOpplysningerBackend | null;
+    backendData: OpplysningerBackend | null;
     opplysningerSortert: Opplysning[]
 }
 
 export type MaybeOpplysning = Opplysning | null;
 
 
-export interface OkonomiskeOpplysningerBackend {
-    okonomiskeOpplysninger: OkonomiskOpplysningBackend[];
-    slettedeVedlegg: OkonomiskOpplysningBackend[];
+export interface OpplysningerBackend {
+    okonomiskeOpplysninger: OpplysningBackend[];
+    slettedeVedlegg: OpplysningBackend[];
 }
 
-export interface OkonomiskOpplysningBackend {
+export interface OpplysningBackend {
     type: OpplysningType;
     gruppe: OpplysningGruppe;
     rader: OpplysningRad[];
@@ -50,7 +50,7 @@ export enum AntallRader {
 }
 
 // ACTION TYPES
-export type OkonomiskeOpplysningerAction
+export type opplysningerAction
     = GotDataFromBackend
     | UpdateOpplysning
     | SettPendingPaFilOpplasting
@@ -58,9 +58,9 @@ export type OkonomiskeOpplysningerAction
     | SettOpplysningsFilAlleredeLastetOpp
     | LagreOpplysningHvisGyldig
 
-export enum OkonomiskeOpplysningerActionTypeKeys {
+export enum opplysningerActionTypeKeys {
     GOT_DATA_FROM_BACKEND = "okonomiskeOpplysninger/GOT_DATA_FROM_BACKEND",
-    OPPDATER_OKONOMISK_OPPLYSNING = "okonomiskeOpplysninger/OPPDATER_OKONOMISK_OPPLYSNING",
+    OPPDATER_OPPLYSNING = "okonomiskeOpplysninger/OPPDATER_OPPLYSNING",
     SETT_PENDING_PA_FIL_OPPLASTING = "okonomiskeOpplysninger/SETT_PENDING_PA_FIL_OPPLASTING",
     SETT_FERDIG_PA_FIL_OPPLASTING = "okonomiskeOpplysninger/SETT_FERDIG_PA_FIL_OPPLASTING",
     SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP = "okonomiskeOpplysninger/SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP",
@@ -68,32 +68,32 @@ export enum OkonomiskeOpplysningerActionTypeKeys {
 }
 
 export interface UpdateOpplysning {
-    type: OkonomiskeOpplysningerActionTypeKeys.OPPDATER_OKONOMISK_OPPLYSNING;
-    okonomiskOpplysning: Opplysning;
+    type: opplysningerActionTypeKeys.OPPDATER_OPPLYSNING;
+    opplysning: Opplysning;
 }
 
 export interface GotDataFromBackend {
-    type: OkonomiskeOpplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND;
-    backendData: OkonomiskeOpplysningerBackend;
+    type: opplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND;
+    backendData: OpplysningerBackend;
 }
 
 export interface SettPendingPaFilOpplasting {
-    type: OkonomiskeOpplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING;
+    type: opplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING;
     opplysningType: OpplysningType;
 }
 
 export interface SettFerdigPaFilOpplasting {
-    type: OkonomiskeOpplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING;
+    type: opplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING;
     opplysningType: OpplysningType;
 }
 
 export interface SettOpplysningsFilAlleredeLastetOpp {
-    type: OkonomiskeOpplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP;
+    type: opplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP;
     opplysningType: OpplysningType;
 }
 
 export interface LagreOpplysningHvisGyldig {
-    type: OkonomiskeOpplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG;
+    type: opplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG;
     behandlingsId: string;
     opplysning: Opplysning;
     feil: Valideringsfeil[];
@@ -148,18 +148,8 @@ export enum OpplysningType {
 }
 
 export enum VedleggStatus {
-    LASTET_OPP = "LastetOpp",
     VEDLEGGALLEREDESEND = "VedleggAlleredeSendt",
     VEDLEGG_KREVES = "VedleggKreves"
-}
-
-export enum RadType {
-    RAD_MED_BELOP = "RadMedBelop",
-    RADER_MED_BELOP = "RaderMedBelop",
-    RADER_MED_BRUTTO_OG_NETTO = "RaderMedBruttoOgNetto",
-    RADER_MED_AVDRAG_OG_RENTER = "RaderMedAvdragOgRenter",
-    RADER_MED_BESKRIVELSE_OG_BELOP = "RaderMedBeskrivelseOgBelop",
-    NOTHING = "nothing"
 }
 
 export enum InputType {

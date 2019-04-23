@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Opplysning} from "../../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {
     getSpcForOpplysning
-} from "../../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
+} from "../../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {InjectedIntlProps, injectIntl} from "react-intl";
 

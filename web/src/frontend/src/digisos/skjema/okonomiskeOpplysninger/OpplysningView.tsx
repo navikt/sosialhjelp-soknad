@@ -5,7 +5,7 @@ import {
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {
     getSpcForOpplysning
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
 import TabellView from "./TabellView";
 import VedleggView from "./VedleggView";
 import VedleggSlettet from "./vedleggSlettet";
@@ -16,10 +16,8 @@ interface OwnProps {
     gruppeIndex: number;
 }
 
-type Props = OwnProps;
 
-
-class OpplysningView extends React.Component<Props, {}> {
+class OpplysningView extends React.Component<OwnProps, {}> {
 
     render() {
 

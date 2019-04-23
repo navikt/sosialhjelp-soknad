@@ -5,23 +5,21 @@ import {connect} from "react-redux";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {
-    OkonomiskeOpplysningerModel,
+    OpplysningerModel,
     Opplysning, OpplysningGruppe,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
-import {getGruppeTittelKey} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
-import {Valideringsfeil} from "../../../nav-soknad/validering/types";
+import {getGruppeTittelKey} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
 import OpplysningView from "./OpplysningView";
 
 export interface OwnProps {
     key: OpplysningGruppe;
-    gruppeKey: OpplysningGruppe;
+    gruppeKey: OpplysningGruppe
     gruppe: Opplysning[];
 }
 
 interface StoreToProps {
-    okonomiskeOpplysninger: OkonomiskeOpplysningerModel;
+    okonomiskeOpplysninger: OpplysningerModel;
     behandlingsId: string;
-    feil: Valideringsfeil[];
 }
 
 
@@ -65,7 +63,6 @@ export default connect<StoreToProps, {}, OwnProps>(
         return {
             okonomiskeOpplysninger: state.okonomiskeOpplysninger,
             behandlingsId: state.soknad.data.brukerBehandlingId,
-            feil: state.validering.feil
         };
     }
 )(injectIntl(GruppeView));

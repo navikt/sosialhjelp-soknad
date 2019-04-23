@@ -1,8 +1,8 @@
 import {Reducer} from "../reduxTypes";
 import {
-    OkonomiskeOpplysningerAction,
-    OkonomiskeOpplysningerActionTypeKeys,
-    OkonomiskeOpplysningerModel, Opplysning,
+    opplysningerAction,
+    opplysningerActionTypeKeys,
+    OpplysningerModel, Opplysning,
     VedleggStatus
 } from "./opplysningerTypes";
 import {RestStatus} from "../../types";
@@ -10,21 +10,21 @@ import {
     getOpplysningByOpplysningType,
     getSortertListeAvOpplysninger,
     updateSortertOpplysning,
-} from "./okonomiskeOpplysningerUtils";
+} from "./opplysningerUtils";
 
 
-export const initialOkonomiskeOpplysningerModel: OkonomiskeOpplysningerModel = {
+export const initialOpplysningerModel: OpplysningerModel = {
     restStatus: RestStatus.NOT_ASKED,
     backendData: null,
     opplysningerSortert: []
 };
 
-const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, OkonomiskeOpplysningerAction> = (
-    state: OkonomiskeOpplysningerModel = initialOkonomiskeOpplysningerModel,
-    action: OkonomiskeOpplysningerAction
+const OpplysningerReducer: Reducer<OpplysningerModel, opplysningerAction> = (
+    state: OpplysningerModel = initialOpplysningerModel,
+    action: opplysningerAction
 ) => {
     switch (action.type) {
-        case OkonomiskeOpplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND: {
+        case opplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND: {
             const sortert = getSortertListeAvOpplysninger(action.backendData);
 
             return {
@@ -34,8 +34,8 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
                 opplysningerSortert: sortert
             };
         }
-        case OkonomiskeOpplysningerActionTypeKeys.OPPDATER_OKONOMISK_OPPLYSNING: {
-            const opplysningerSortertUpdated = updateSortertOpplysning(state.opplysningerSortert, action.okonomiskOpplysning);
+        case opplysningerActionTypeKeys.OPPDATER_OPPLYSNING: {
+            const opplysningerSortertUpdated = updateSortertOpplysning(state.opplysningerSortert, action.opplysning);
 
             return {
                 ...state,
@@ -43,7 +43,7 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
                 opplysningerSortert: opplysningerSortertUpdated
             };
         }
-        case OkonomiskeOpplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING: {
+        case opplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING: {
             const {opplysningType} = action;
             const opplysning = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
             const opplysningUpdated = {...opplysning};
@@ -55,7 +55,7 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
                 opplysningerSortert: opplysningerSortertUpdated
             };
         }
-        case OkonomiskeOpplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING: {
+        case opplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING: {
             const {opplysningType} = action;
             const opplysning = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
             const opplysningUpdated = {...opplysning};
@@ -67,7 +67,7 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
                 opplysningerSortert: opplysningerSortertUpdated
             };
         }
-        case OkonomiskeOpplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP: {
+        case opplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP: {
             const {opplysningType} = action;
             const opplysning = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
             const opplysningUpdated = {...opplysning};
@@ -88,5 +88,5 @@ const OkonomiskeOpplysningerReducer: Reducer<OkonomiskeOpplysningerModel, Okonom
     }
 };
 
-export default OkonomiskeOpplysningerReducer;
+export default OpplysningerReducer;
 

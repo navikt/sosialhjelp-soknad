@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
     AntallRader,
     InputType,
-    OkonomiskeOpplysningerModel,
+    OpplysningerModel,
     Opplysning,
     OpplysningRad,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
@@ -11,13 +11,13 @@ import {connect} from "react-redux";
 import {
     getSpcForOpplysning,
     getTomVedleggRad
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
 import {Column, Row} from "nav-frontend-grid";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {
     lagreOpplysningHvisGyldigAction,
     updateOpplysning,
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerActions";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import {setValideringsfeil} from "../../../nav-soknad/redux/valideringActions";
 import {ValideringActionKey, Valideringsfeil} from "../../../nav-soknad/validering/types";
@@ -33,7 +33,7 @@ interface OwnProps {
 }
 
 interface StoreToProps {
-    okonomiskeOpplysninger: OkonomiskeOpplysningerModel;
+    okonomiskeOpplysninger: OpplysningerModel;
     behandlingsId: string;
     feil: Valideringsfeil[];
 }
@@ -130,7 +130,7 @@ class TabellView extends React.Component<Props, {}> {
         const innhold: JSX.Element[] = opplysning.rader.map((vedleggRad: OpplysningRad, radIndex: number) => {
 
             const skalViseFjerneRadKnapp = radIndex > 0;
-            const inputs = opplysningSpc.radInnhold.map((inputType: InputType, index: number) => {
+            const inputs = opplysningSpc.radInnhold.map((inputType: InputType) => {
 
                 const key: string = `${textKey}.${inputType}.${radIndex}`;
                 const text: string = `${textKey}.${inputType}`;

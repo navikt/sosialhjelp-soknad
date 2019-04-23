@@ -13,10 +13,10 @@ import {startSlettFil} from "../../../nav-soknad/redux/fil/filActions";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {
     lagreOpplysningHvisGyldigAction,
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
+} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerActions";
 import {Valideringsfeil} from "../../../nav-soknad/validering/types";
 import OpplastetVedlegg from "./OpplastetVedlegg";
-import {getSpcForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerUtils";
+import {getSpcForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
 
 interface OwnProps {
     okonomiskOpplysning: Opplysning;

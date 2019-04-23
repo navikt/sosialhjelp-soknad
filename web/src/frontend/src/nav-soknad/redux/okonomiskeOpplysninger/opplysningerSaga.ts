@@ -1,17 +1,17 @@
 import {
     LagreOpplysningHvisGyldig,
-    OkonomiskeOpplysningerActionTypeKeys
+    opplysningerActionTypeKeys
 } from "./opplysningerTypes";
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {
-    getOkonomomiskeOpplysningerUrl, getSpcForOpplysning,
+    getOpplysningerUrl, getSpcForOpplysning,
     transformToBackendOpplysning,
-} from "./okonomiskeOpplysningerUtils";
+} from "./opplysningerUtils";
 import {fetchPut} from "../../utils/rest-utils";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {Valideringsfeil} from "../../validering/types";
-import {updateOpplysning} from "./OkonomiskeOpplysningerActions";
+import {updateOpplysning} from "./opplysningerActions";
 
 
 export function getFeilForOpplysning(feil: Valideringsfeil[], opplysningTextKey: string) {
@@ -33,7 +33,7 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
         try {
             yield call(
                 fetchPut,
-                getOkonomomiskeOpplysningerUrl(behandlingsId),
+                getOpplysningerUrl(behandlingsId),
                 JSON.stringify(transformToBackendOpplysning(opplysning))
             );
         } catch (e) {
@@ -42,9 +42,8 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
     }
 }
 
-
 function* opplysningerSaga(): SagaIterator {
-    yield takeEvery(OkonomiskeOpplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG, lagreOpplysningHvisGyldigSaga);
+    yield takeEvery(opplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG, lagreOpplysningHvisGyldigSaga);
 }
 
 export default opplysningerSaga;

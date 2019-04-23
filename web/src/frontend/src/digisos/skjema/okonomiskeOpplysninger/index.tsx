@@ -9,16 +9,16 @@ import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import Gruppe from "./Gruppe";
 import {
     OpplysningGruppe,
-    OkonomiskeOpplysningerModel, Opplysning
+    OpplysningerModel, Opplysning
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
-import {hentOkonomiskeOpplysninger} from "../../../nav-soknad/redux/okonomiskeOpplysninger/OkonomiskeOpplysningerActions";
+import {hentOpplysninger} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerActions";
 import {RestStatus} from "../../../nav-soknad/types";
 import {gruppeRekkefolge} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerConfig";
 
 
 interface StoreToProps {
-    okonomiskeOpplysninger: OkonomiskeOpplysningerModel;
+    okonomiskeOpplysninger: OpplysningerModel;
     behandlingsId: string;
 }
 
@@ -30,7 +30,7 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
 
     componentDidMount() {
         const {behandlingsId} = this.props;
-        this.props.dispatch(hentOkonomiskeOpplysninger(behandlingsId))
+        this.props.dispatch(hentOpplysninger(behandlingsId))
     }
 
     renderGrupper() {
@@ -96,7 +96,6 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
         );
     }
 }
-
 
 export default connect<StoreToProps, {}, {}>(
     (state: SoknadAppState) => {

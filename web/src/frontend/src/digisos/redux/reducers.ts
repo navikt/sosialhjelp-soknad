@@ -20,7 +20,7 @@ import OppholdsadresseReducer from "../skjema/personopplysninger/tps/oppholdsadr
 import AdresseAutocompleteReducer from "../../nav-soknad/components/adresseAutocomplete/adresseAutocompleteReducer";
 import MockReducer from "../mock/mockReducer";
 import SoknadsdataReducer from "../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import OkonomiskeOpplysningerReducer from "../../nav-soknad/redux/okonomiskeOpplysninger/okonomiskeOpplysningerReducer";
+import OpplysningerReducer from "../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerReducer";
 import FilReducer from "../../nav-soknad/redux/fil/filReducer";
 
 export interface State extends SoknadAppState {
@@ -47,7 +47,7 @@ const reducers = combineReducers({
 	init: InitReducer,
 	mockData: MockReducer,
 	soknadsdata: SoknadsdataReducer,
-	okonomiskeOpplysninger: OkonomiskeOpplysningerReducer,
+	okonomiskeOpplysninger: OpplysningerReducer,
 	filopplasting: FilReducer
 });
 

@@ -1,4 +1,4 @@
-import {AntallRader, InputType, OpplysningSpc, OpplysningType} from "./opplysningerTypes";
+import {AntallRader, InputType, OpplysningGruppe, OpplysningSpc, OpplysningType} from "./opplysningerTypes";
 
 export const opplysningsRekkefolgeOgSpc: OpplysningSpc[] = [
     { type: OpplysningType.LONNSLIPP_ARBEID, antallRader: AntallRader.FLERE, radInnhold: [InputType.BRUTTO, InputType.NETTO], textKey: "opplysninger.arbeid.jobb"},
@@ -35,14 +35,13 @@ export const opplysningsRekkefolgeOgSpc: OpplysningSpc[] = [
     { type: OpplysningType.ANNET_ANNET, antallRader: AntallRader.FLERE, radInnhold: [InputType.BESKRIVELSE, InputType.BELOP], textKey: "opplysninger.ekstrainfo.utgifter"} // RADER_MED_BESKRIVELSE_OG_BELOP
 ];
 
-export const gruppeRekkefolge: string[] = [
-    "arbeid",
-    "familie",
-    "bosituasjon",
-    "inntekt",
-    "utgifter",
-    "generelle vedlegg",
-    "andre utgifter",
-    "ukjent"
+export const gruppeRekkefolge: OpplysningGruppe[] = [
+    OpplysningGruppe.ARBEID,
+    OpplysningGruppe.FAMILIE,
+    OpplysningGruppe.BOSITUASJON,
+    OpplysningGruppe.INNTEKT,
+    OpplysningGruppe.UTGIFTER,
+    OpplysningGruppe.GENERELLE_VEDLEGG,
+    OpplysningGruppe.ANDRE_UTGIFTER,
 ];
 
