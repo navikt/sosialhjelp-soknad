@@ -23,6 +23,7 @@ import {setValideringsfeil} from "../../../nav-soknad/redux/valideringActions";
 import {ValideringActionKey, Valideringsfeil} from "../../../nav-soknad/validering/types";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
+import {getFeilForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerSaga";
 
 
 interface OwnProps {
@@ -91,6 +92,22 @@ class TabellView extends React.Component<Props, {}> {
         raderUpdated.splice(radIndex, 1);
         opplysningUpdated.rader = raderUpdated;
 
+        // Fjern alle feil for opplysning
+        const feilForOpplysning = getFeilForOpplysning(feil, valideringsKey);
+        feilForOpplysning.map((f: Valideringsfeil) => {
+           this.props.dispatch(setValideringsfeil(null, f.faktumKey));
+        });
+
+        // Sjekk alle inputfelter for feil
+        opplysningUpdated.rader.map((rad: OpplysningRad, index: number) => {
+            Object.keys(rad).map((key: InputType) => {
+                if(key !== "beskrivelse" && rad[key] && rad[key] !== "" && erTall(rad[key])){
+                    const validationKey: string = `${getSpcForOpplysning(opplysning.type).textKey}.${key}.${index}`;
+                    this.props.dispatch(setValideringsfeil(ValideringActionKey.ER_TALL, validationKey));
+                }
+            });
+        });
+
         const feilUpdated = feil.filter(f => (
             f.faktumKey !== valideringsKey + ".beskrivelse." + radIndex &&
             f.faktumKey !== valideringsKey + ".belop." + radIndex &&
@@ -102,12 +119,6 @@ class TabellView extends React.Component<Props, {}> {
 
         this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feilUpdated));
 
-        this.props.dispatch(setValideringsfeil(null, valideringsKey + ".beskrivelse." + radIndex));
-        this.props.dispatch(setValideringsfeil(null, valideringsKey + ".belop." + radIndex));
-        this.props.dispatch(setValideringsfeil(null, valideringsKey + ".brutto." + radIndex));
-        this.props.dispatch(setValideringsfeil(null, valideringsKey + ".netto." + radIndex));
-        this.props.dispatch(setValideringsfeil(null, valideringsKey + ".avdrag." + radIndex));
-        this.props.dispatch(setValideringsfeil(null, valideringsKey + ".renter." + radIndex));
     }
 
     render() {

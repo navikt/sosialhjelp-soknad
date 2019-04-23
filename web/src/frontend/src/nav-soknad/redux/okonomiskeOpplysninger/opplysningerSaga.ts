@@ -1,6 +1,6 @@
 import {
     LagreOpplysningHvisGyldig,
-    OkonomiskeOpplysningerActionTypeKeys,
+    OkonomiskeOpplysningerActionTypeKeys
 } from "./opplysningerTypes";
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
@@ -14,7 +14,7 @@ import {Valideringsfeil} from "../../validering/types";
 import {updateOpplysning} from "./OkonomiskeOpplysningerActions";
 
 
-function getFeilForOpplysning(feil: Valideringsfeil[], opplysningTextKey: string) {
+export function getFeilForOpplysning(feil: Valideringsfeil[], opplysningTextKey: string) {
     return feil.filter((f: Valideringsfeil) => {
         return f.faktumKey.indexOf(opplysningTextKey) > -1;
     });
