@@ -145,7 +145,6 @@ export type SoknadsdataType =
 	| Sivilstatus
 	| ForsorgerPlikt
 	| Barnebidrag
-	| Sivilstatus
 	| Bostotte
 	| Formue
 	| Verdier
@@ -172,6 +171,9 @@ export const initialSoknadsdataState: Soknadsdata = {
 			telefonnummer: REST_STATUS.INITIALISERT,
 			kontonummer: REST_STATUS.INITIALISERT,
 			basisPersonalia: REST_STATUS.INITIALISERT
+		},
+		familie: {
+			sivilstatus: REST_STATUS.INITIALISERT
 		},
 		familie: {
 			forsorgerplikt: REST_STATUS.INITIALISERT
