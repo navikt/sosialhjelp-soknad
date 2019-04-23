@@ -1,11 +1,16 @@
 import * as React from "react";
 import {
-	configEnzyme, createMockIntl, harCheckboks, harInputfelt, TestContext
+	configEnzyme,
+	createMockIntl,
+	harCheckboks,
+	harInputfelt,
+	TestContext
 } from "../../../../nav-soknad/utils/unitTestUtils";
 import { Kontonummer } from "./KontonummerType";
 import { BankinformasjonView } from "./Bankinformasjon";
 import { initialSoknadsdataState } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { mount } from "enzyme";
+// const pretty = require('pretty'); // Formatter html: pretty(html)
 
 describe("Bankinformasjon react komponent", () => {
 
@@ -41,9 +46,11 @@ describe("Bankinformasjon react komponent", () => {
 					setValideringsfeil={() => null}
 					hentSoknadsdata={() => null}
 					intl={intl}
+					disableLoadingAnimation={true}
 				/>
 			</TestContext>
 		);
+
 		expect(harCheckboks(wrapper)).toBeTruthy();
 		expect(harInputfelt(wrapper)).toBeFalsy();
 		expect(wrapper.html()).not.toContain("Endre");
@@ -67,6 +74,7 @@ describe("Bankinformasjon react komponent", () => {
 					setValideringsfeil={() => null}
 					hentSoknadsdata={() => null}
 					intl={intl}
+					disableLoadingAnimation={true}
 				/>
 			</TestContext>
 		);
@@ -94,6 +102,7 @@ describe("Bankinformasjon react komponent", () => {
 					setValideringsfeil={() => null}
 					hentSoknadsdata={() => null}
 					intl={intl}
+					disableLoadingAnimation={true}
 				/>
 			</TestContext>
 		);
@@ -102,11 +111,7 @@ describe("Bankinformasjon react komponent", () => {
 		expect(harInputfelt(wrapper)).toBeFalsy();
 		expect(wrapper.html()).not.toContain("Endre");
 		expect(wrapper.html()).toContain("Angre");
-
 		const DISABLED = "disabled";
-
 		expect(wrapper.find(".input--s").first().getElement().props[DISABLED]).toBeFalsy();
-		// wrapper.setProps({bankinformasjon: {...bankinformasjon, ...{"harIkkeKonto": true}}});
-		// expect(wrapper.find(".input--s").first().getElement().props[DISABLED]).toBeTruthy();
 	});
 });

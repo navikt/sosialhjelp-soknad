@@ -17,7 +17,11 @@ import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+interface OwnProps {
+	disableLoadingAnimation?: boolean;
+}
+
+type Props = SoknadsdataContainerProps & InjectedIntlProps & OwnProps;
 
 const FAKTUM_KEY_KONTONUMMER = "kontakt.kontonummer";
 
@@ -37,7 +41,7 @@ class Bankinformasjon extends React.Component<Props, {oppstartsModus: boolean}> 
 		}
 	}
 
-	componentDidMount(): void {
+	componentDidMount() {
 		this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON)
 	}
@@ -121,7 +125,7 @@ class Bankinformasjon extends React.Component<Props, {oppstartsModus: boolean}> 
 			infotekst = intl.formatMessage({ id: "kontakt.kontonummer.infotekst.tekst" });
 		}
 
-		if(this.state.oppstartsModus) {
+		if(this.state.oppstartsModus && this.props.disableLoadingAnimation !== true) {
 			return (
 				<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: null } }}>
 					<TextPlaceholder lines={3}/>
