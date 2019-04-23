@@ -40,6 +40,7 @@ import {
 	initialBasisPersonalia
 } from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import { REST_STATUS } from "../../types";
+import { Barnebidrag, ForsorgerPlikt } from "../../../digisos/skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -68,7 +69,8 @@ export enum SoknadsSti {
 	BOUTGIFTER = "utgifter/boutgifter",
 	BARNEUTGIFTER = "utgifter/barneutgifter",
 	SIVILSTATUS = "familie/sivilstatus",
-	BASIS_PERSONALIA = "personalia/basisPersonalia"
+	BASIS_PERSONALIA = "personalia/basisPersonalia",
+	FORSORGERPLIKT = "familie/forsorgerplikt"
 }
 
 export interface Personalia {
@@ -141,6 +143,8 @@ export type SoknadsdataType =
 	| Telefonnummer
 	| Personalia
 	| Sivilstatus
+	| ForsorgerPlikt
+	| Barnebidrag
 	| Bostotte
 	| Formue
 	| Verdier
@@ -169,7 +173,8 @@ export const initialSoknadsdataState: Soknadsdata = {
 			basisPersonalia: REST_STATUS.INITIALISERT
 		},
 		familie: {
-			sivilstatus: REST_STATUS.INITIALISERT
+			sivilstatus: REST_STATUS.INITIALISERT,
+			forsorgerplikt: REST_STATUS.INITIALISERT
 		},
 		inntekt: {
 			bostotte: REST_STATUS.INITIALISERT,
@@ -177,6 +182,7 @@ export const initialSoknadsdataState: Soknadsdata = {
 			verdier: REST_STATUS.INITIALISERT
 		}
 	}
+
 };
 
 const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (
