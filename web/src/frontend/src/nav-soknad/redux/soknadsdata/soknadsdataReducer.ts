@@ -173,9 +173,7 @@ export const initialSoknadsdataState: Soknadsdata = {
 			basisPersonalia: REST_STATUS.INITIALISERT
 		},
 		familie: {
-			sivilstatus: REST_STATUS.INITIALISERT
-		},
-		familie: {
+			sivilstatus: REST_STATUS.INITIALISERT,
 			forsorgerplikt: REST_STATUS.INITIALISERT
 		},
 		inntekt: {
