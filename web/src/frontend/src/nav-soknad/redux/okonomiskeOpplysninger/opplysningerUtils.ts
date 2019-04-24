@@ -33,8 +33,6 @@ export const transformToBackendOpplysning = (opplysning: Opplysning): Opplysning
     };
 };
 
-
-// TEKST RELATERT
 export const getGruppeTittelKey: (opplysningGruppe: OpplysningGruppe) => string = (opplysningGruppe: OpplysningGruppe) => {
     switch (opplysningGruppe) {
         case OpplysningGruppe.ARBEID: {
@@ -66,7 +64,6 @@ export const getGruppeTittelKey: (opplysningGruppe: OpplysningGruppe) => string 
         }
     }
 };
-
 
 export const getTomVedleggRad: () => OpplysningRad = () => {
     return {
@@ -132,8 +129,6 @@ function sorterOpplysninger(usortertListe: Opplysning[], rekkefolge: OpplysningS
         let n = 0;
         while (erPlassertISortertListe === false) {
             if (n > rekkefolge.length - 1) {
-                console.error("Opplysningen mangler i typeoversikten: ");
-                console.warn(opplysning);
                 erPlassertISortertListe = true;
             } else if (opplysning.type === rekkefolge[n].type) {
                 sortert[n] = opplysning;

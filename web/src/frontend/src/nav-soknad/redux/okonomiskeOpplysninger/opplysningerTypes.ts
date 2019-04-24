@@ -10,7 +10,6 @@ export interface OpplysningerModel {
 
 export type MaybeOpplysning = Opplysning | null;
 
-
 export interface OpplysningerBackend {
     okonomiskeOpplysninger: OpplysningBackend[];
     slettedeVedlegg: OpplysningBackend[];
@@ -23,7 +22,6 @@ export interface OpplysningBackend {
     vedleggStatus: VedleggStatus;
     filer: Fil[]
 }
-
 
 export interface Opplysning {
     type: OpplysningType;
@@ -49,7 +47,6 @@ export enum AntallRader {
     FLERE = "flere"
 }
 
-// ACTION TYPES
 export type opplysningerAction
     = GotDataFromBackend
     | UpdateOpplysning
@@ -99,8 +96,6 @@ export interface LagreOpplysningHvisGyldig {
     feil: Valideringsfeil[];
 }
 
-
-// MAPPING
 export enum OpplysningGruppe {
     ARBEID = "arbeid",
     FAMILIE = "familie",
@@ -160,7 +155,6 @@ export enum InputType {
     AVDRAG = "avdrag",
     RENTER = "renter"
 }
-
 
 export interface OpplysningRad {
     "beskrivelse": string;

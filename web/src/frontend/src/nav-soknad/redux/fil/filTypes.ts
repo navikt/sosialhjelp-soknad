@@ -9,13 +9,11 @@ export interface FilState {
     opplysningtype: OpplysningType;
 }
 
-
 export enum FilActionTypeKeys {
     LAST_OPP = "fil/LAST_OPP",
     START_SLETT_FIL = "fil/START_SLETT_FIL",
     LAST_OPP_FEILET = "fil/LAST_OPP_FEILET"
 }
-
 
 export type FilActionTypes
     = LastOppFilAction
@@ -35,7 +33,6 @@ export interface LastOppFilFeilet {
     feilKode: REST_FEIL;
 }
 
-
 export interface StartSlettFilAction {
     type: FilActionTypeKeys.START_SLETT_FIL;
     behandlingsId: string;
@@ -43,4 +40,3 @@ export interface StartSlettFilAction {
     opplysning: Opplysning;
     opplysningType: OpplysningType;
 }
-

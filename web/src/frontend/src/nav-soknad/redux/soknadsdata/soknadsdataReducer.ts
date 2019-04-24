@@ -40,7 +40,6 @@ import {
 	initialBasisPersonalia
 } from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import { REST_STATUS } from "../../types";
-// import { setPath } from "./soknadsdataActions";
 
 
 export enum SoknadsdataActionTypeKeys {

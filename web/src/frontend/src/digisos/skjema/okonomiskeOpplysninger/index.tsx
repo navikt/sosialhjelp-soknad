@@ -34,7 +34,6 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
     }
 
     renderGrupper() {
-
         const {opplysningerSortert} = this.props.okonomiskeOpplysninger;
 
         const grupperView = gruppeRekkefolge.map((opplysningGruppe: OpplysningGruppe) => {
@@ -52,9 +51,7 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
 
     render() {
         const {restStatus, backendData} = this.props.okonomiskeOpplysninger;
-
         const ikkeBesvartMeldingSkalVises = backendData && backendData.okonomiskeOpplysninger.length < 3;
-
         const infoMelding: JSX.Element = (
             <div className="steg-ekstrainformasjon__blokk">
                 <Informasjonspanel
@@ -65,7 +62,6 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
                 </Informasjonspanel>
             </div>
         );
-
         const ikkeBesvartMelding: JSX.Element = (
             <div className="steg-ekstrainformasjon__blokk">
                 <Informasjonspanel

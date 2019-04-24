@@ -33,9 +33,7 @@ class VedleggView extends React.Component<Props> {
 
 
     handleAlleredeLastetOpp(event: any) {
-
         const {okonomiskOpplysning, behandlingsId, feil} = this.props;
-
         const opplysningUpdated = {...okonomiskOpplysning};
 
         if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
@@ -52,11 +50,8 @@ class VedleggView extends React.Component<Props> {
         this.props.dispatch(startSlettFil(behandlingsId, fil, okonomiskOpplysning, okonomiskOpplysning.type))
     }
 
-
     renderOpplastingAvVedleggSeksjon(opplysning: Opplysning) {
-
         const opplysningSpc = getSpcForOpplysning(opplysning.type);
-
         const tittelKey = opplysningSpc.textKey + ".vedlegg.sporsmal.tittel";
 
         const vedleggListe = opplysning.filer
@@ -92,7 +87,6 @@ class VedleggView extends React.Component<Props> {
     }
 
     render() {
-
         const {okonomiskOpplysning} = this.props;
 
         return (

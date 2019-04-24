@@ -2,7 +2,7 @@ import {AntallRader, InputType, OpplysningGruppe, OpplysningSpc, OpplysningType}
 
 export const opplysningsRekkefolgeOgSpc: OpplysningSpc[] = [
     { type: OpplysningType.LONNSLIPP_ARBEID, antallRader: AntallRader.FLERE, radInnhold: [InputType.BRUTTO, InputType.NETTO], textKey: "opplysninger.arbeid.jobb"},
-    { type: OpplysningType.SLUTTOPPGJOR_ARBEID, antallRader: AntallRader.FLERE, radInnhold: [InputType.BRUTTO, InputType.NETTO], textKey: "opplysninger.arbeid.avsluttet"}, // RADER_MED_BRUTTO_OG_NETTO
+    { type: OpplysningType.SLUTTOPPGJOR_ARBEID, antallRader: AntallRader.FLERE, radInnhold: [InputType.BELOP], textKey: "opplysninger.arbeid.avsluttet"}, // RADER_MED_BRUTTO_OG_NETTO
     { type: OpplysningType.STUDENT_VEDTAK, antallRader: AntallRader.EN, radInnhold: [InputType.BELOP], textKey: "opplysninger.arbeid.student"}, // RAD_MED_BELOP
     { type: OpplysningType.BARNEBIDRAG_BETALER, antallRader: AntallRader.EN, radInnhold: [InputType.BELOP], textKey: "opplysninger.familiesituasjon.barnebidrag.betaler"}, // RAD_MED_BELOP
     { type: OpplysningType.BARNEBIDRAG_MOTTAR, antallRader: AntallRader.EN, radInnhold: [InputType.BELOP], textKey: "opplysninger.familiesituasjon.barnebidrag.mottar"}, // RAD_MED_BELOP

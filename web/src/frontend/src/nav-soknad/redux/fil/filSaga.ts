@@ -17,12 +17,9 @@ import {REST_FEIL} from "../../types/restFeilTypes";
 function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
 
     const {behandlingsId, formData, opplysning} = action;
-
-    console.warn(opplysning.type);
-    yield put(settPendingPaFilOpplasting(opplysning.type));
-
     const url = `opplastetVedlegg/${behandlingsId}/${opplysning.type}`;
 
+    yield put(settPendingPaFilOpplasting(opplysning.type));
 
     let response: Fil =
         {
@@ -41,7 +38,6 @@ function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
     } catch (reason) {
 
         let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
-
         // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
         response = yield call(fetchUploadIgnoreErrors, url, formData);
         const ID = "id";
@@ -67,7 +63,6 @@ export function detekterInternFeilKode(feilKode: REST_FEIL): REST_FEIL {
     return internFeilKode;
 }
 
-
 function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
 
     const {behandlingsId, fil, opplysning, opplysningType} = action;
@@ -77,7 +72,6 @@ function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
     try {
         const url = `opplastetVedlegg/${behandlingsId}/${fil.uuid}`;
         yield call(fetchDelete, url);
-
 
         const filerUpdated = opplysning.filer.filter((f: Fil) => {
             return f.uuid !== fil.uuid;
@@ -90,13 +84,9 @@ function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
 
     } catch (reason) {
         yield put(loggFeil("Slett vedlegg feilet: " + reason));
-
-        // TODO:
-        // Burde kanskje gjøre noe annet enn dette?
         yield put(navigerTilServerfeil());
     }
 }
-
 
 function* filSaga(): SagaIterator {
     yield takeEvery(FilActionTypeKeys.LAST_OPP, lastOppFilSaga);

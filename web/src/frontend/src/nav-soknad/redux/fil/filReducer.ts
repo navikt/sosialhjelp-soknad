@@ -31,7 +31,6 @@ const FilReducer: Reducer<FilState, FilActionTypes> = (
         default:
             return state;
     }
-
 };
 
 export default FilReducer;

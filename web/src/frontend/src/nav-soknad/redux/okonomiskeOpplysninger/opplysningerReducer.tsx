@@ -89,4 +89,3 @@ const OpplysningerReducer: Reducer<OpplysningerModel, opplysningerAction> = (
 };
 
 export default OpplysningerReducer;
-

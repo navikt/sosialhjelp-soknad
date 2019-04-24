@@ -46,7 +46,6 @@ class TabellView extends React.Component<Props, {}> {
 
 
     handleChange(input: string, radIndex: number, inputFelt: InputType, key: string) {
-
         const {opplysning} = this.props;
         const opplysningUpdated: Opplysning = {...opplysning};
         const raderUpdated: OpplysningRad[] = opplysning.rader.map((e) => ({...e}));
@@ -63,7 +62,6 @@ class TabellView extends React.Component<Props, {}> {
 
     handleBlur(radIndex: number, inputFelt: InputType, key: string) {
         const {behandlingsId, opplysning, feil} = this.props;
-
         const input = opplysning.rader[radIndex][inputFelt];
 
         if (inputFelt !== "beskrivelse" && input && input !== "" && erTall(input)) {
@@ -84,22 +82,15 @@ class TabellView extends React.Component<Props, {}> {
     }
 
     handleFjernRad(radIndex: number, valideringsKey: string) {
-
         const {behandlingsId, opplysning, feil} = this.props;
-
         const opplysningUpdated: Opplysning = {...opplysning};
         const raderUpdated: OpplysningRad[] = opplysning.rader.map(e => ({...e}));
         raderUpdated.splice(radIndex, 1);
         opplysningUpdated.rader = raderUpdated;
-
         this.fjernAlleFeilForOpplysning(feil, valideringsKey);
-
         this.validerAlleInputfelterPaOpplysning(opplysningUpdated, opplysning);
-
         const feilUpdated = this.getOppdatertListeAvFeil(feil, valideringsKey, radIndex);
-
         this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feilUpdated));
-
     }
 
     getOppdatertListeAvFeil(feil: Valideringsfeil[], valideringsKey: string, radIndex: number) {
@@ -139,10 +130,8 @@ class TabellView extends React.Component<Props, {}> {
         const textKey = opplysningSpc.textKey;
 
         const innhold: JSX.Element[] = opplysning.rader.map((vedleggRad: OpplysningRad, radIndex: number) => {
-
             const skalViseFjerneRadKnapp = radIndex > 0;
             const inputs = opplysningSpc.radInnhold.map((inputType: InputType) => {
-
                 const key: string = `${textKey}.${inputType}.${radIndex}`;
                 const text: string = `${textKey}.${inputType}`;
 

@@ -15,7 +15,6 @@ const lastOppFil = (
     };
 };
 
-
 const lastOppFilFeilet = (opplysningType: OpplysningType, feilKode: REST_FEIL): FilActionTypes => {
     return {
         type: FilActionTypeKeys.LAST_OPP_FEILET,
