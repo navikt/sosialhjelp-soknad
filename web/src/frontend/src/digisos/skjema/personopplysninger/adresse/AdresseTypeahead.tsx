@@ -147,7 +147,6 @@ class AdresseTypeahead extends React.Component<Props, StateProps> {
 	}
 
 	shouldFetch(value: string) {
-		console.warn("debug: value.length: " + value.length);
 		return value.length >= 3;
 	}
 

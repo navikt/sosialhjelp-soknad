@@ -85,6 +85,7 @@ class AdresseView extends React.Component<Props, State> {
 	lagreAdresseValg(payload: any) {
 		const { brukerBehandlingId, oppdaterSoknadsdataSti, lagreSoknadsdata } = this.props;
 		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
+			navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
 			if (navEnheter.length === 1) {
 				const valgtNavEnhet: NavEnhet = navEnheter[0];
 				valgtNavEnhet.valgt = true;

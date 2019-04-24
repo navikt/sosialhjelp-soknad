@@ -40,6 +40,10 @@ export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknad
 			.then((response: any) => {
 				dispatch(settRestStatus(sti, REST_STATUS.OK));
 				if (responseHandler) {
+					// For å simulere response fra adresse, kan man skrive:
+					// if (sti === SoknadsSti.ADRESSER) {
+					// 	response = [{"orgnr":null,"enhetsnavn":"NAV Ålesund","kommunenavn":"Ålesund","valgt":false}];
+					// }
 					responseHandler(response);
 				}
 			})
