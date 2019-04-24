@@ -22,16 +22,20 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 			const type = getFaktumPropertyVerdi(utbetaling, "type");
 			const dato = getFaktumPropertyVerdi(utbetaling, "utbetalingsDato");
 
-			const aar = dato.slice(0, 4);
-			const maaned = dato.slice(5, 7);
-			const dag = dato.slice(8);
+			let utbetaltDato = "";
+			if (dato !== null && dato.length > 6) {
+				const aar = dato.slice(0, 4);
+				const maaned = dato.slice(5, 7);
+				const dag = dato.slice(8);
+				utbetaltDato = `${dag}.${maaned}.${aar}`;
+			}
 
 			const belop = getFaktumPropertyVerdi(utbetaling, "netto");
 
 			return (
 				<div key={id} className="utbetaling blokk-s">
 					<div>{type}<span className="verdi detaljeliste__verdi">{belop}</span></div>
-					<div>{utbetaltMelding} {dag}.{maaned}.{aar}</div>
+					<div>{utbetaltMelding} {utbetaltDato}</div>
 				</div>
 			);
 		});
