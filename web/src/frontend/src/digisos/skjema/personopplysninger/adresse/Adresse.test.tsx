@@ -73,14 +73,16 @@ describe("Adresse react komponent", () => {
 			</TestContext>);
 		const radioKnapper = wrapper.find(".inputPanel");
 		expect(radioKnapper.length).toBe(2);
+
 		const valgteRadioKnapper = wrapper.find(".inputPanel__checked");
 		expect(valgteRadioKnapper.length).toBe(1);
-		const navEnhetElement = wrapper.find(".selectContainer");
-		expect(navEnhetElement.length).toBe(0);
+
+		const navEnhetListeElement = wrapper.find(".selectContainer");
+		expect(navEnhetListeElement.length).toBe(0);
 		wrapper.unmount();
 	});
 
-	it("bør håndtere happy case med folkevalgt adresse", () => {
+	it("bør vise nedtrekksmeny med nav-enheter", () => {
 		const wrapper = mount(
 			<TestContext messages={intlMessages}>
 				<AdresseView

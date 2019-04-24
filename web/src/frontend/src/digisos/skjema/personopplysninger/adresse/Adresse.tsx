@@ -42,21 +42,23 @@ class AdresseView extends React.Component<Props, State> {
 		};
 	}
 
-	componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any): void {
+	componentDidMount() {
+		const { soknadsdata } = this.props;
+		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
+		if (restStatus === REST_STATUS.INITIALISERT) {
+			this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ADRESSER);
+			this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.NAV_ENHETER);
+		}
+	}
+
+	componentDidUpdate(prevProps: Readonly<Props>) {
 		const restStatus: REST_STATUS = prevProps.soknadsdata.restStatus.personalia.adresser;
 		if (restStatus === REST_STATUS.OK && this.state.oppstartsModus === true) {
 			this.setState({oppstartsModus: false});
 		}
 	}
 
-	componentDidMount(): void {
-		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ADRESSER);
-		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.NAV_ENHETER);
-	}
-
 	onClickRadio(adresseKategori: AdresseKategori) {
-		// console.warn("onClickRadio");
-		// const { soknadsdata, oppdaterSoknadsdataSti, lagreSoknadsdata, brukerBehandlingId } = this.props;
 		const { soknadsdata, oppdaterSoknadsdataSti } = this.props;
 		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
 		if (restStatus === REST_STATUS.INITIALISERT || restStatus === REST_STATUS.PENDING){
@@ -76,10 +78,7 @@ class AdresseView extends React.Component<Props, State> {
 			};
 			oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad);
 		} else {
-			// lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, adresser);
-			// console.warn("debug 1: " + JSON.stringify(adresser, null, 4));
-			const payload = adresser; // {"valg": adresseKategori};
-			this.lagreAdresseValg(payload);
+			this.lagreAdresseValg(adresser);
 		}
 	}
 
@@ -90,7 +89,6 @@ class AdresseView extends React.Component<Props, State> {
 				const valgtNavEnhet: NavEnhet = navEnheter[0];
 				valgtNavEnhet.valgt = true;
 				lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
-				console.warn("debug 2: " + SoknadsSti.NAV_ENHETER + ": " + JSON.stringify(valgtNavEnhet, null, 4));
 				this.slettEventuelleValideringsfeil();
 			}
 			oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
@@ -182,7 +180,11 @@ class AdresseView extends React.Component<Props, State> {
 
 	render() {
 		const { soknadsdata } = this.props;
-		const { oppstartsModus } = this.state;
+		let { oppstartsModus } = this.state;
+		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
+		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+			oppstartsModus = false;
+		}
 		const adresser = soknadsdata.personalia.adresser;
 		const navEnheter = soknadsdata.personalia.navEnheter;
 
@@ -191,7 +193,7 @@ class AdresseView extends React.Component<Props, State> {
 		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
 		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
 		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
-		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
+
 		const visSoknadsmottakerInfo: boolean = (restStatus === REST_STATUS.OK) ? true : false;
 
 		let folkeregistrertAdresseLabel = null;

@@ -66,7 +66,7 @@ class AdresseTypeahead extends React.Component<Props, StateProps> {
 	}
 
 	handleChange(event: any, value: string) {
-		let shouldFetch: boolean = this.shouldFetch(value);
+		let shouldFetch: boolean = true; // this.shouldFetch(value);
 		this.setState({value});
 		const {valgtAdresse} = this.state;
 		if (valgtAdresse) {
@@ -147,6 +147,7 @@ class AdresseTypeahead extends React.Component<Props, StateProps> {
 	}
 
 	shouldFetch(value: string) {
+		console.warn("debug: value.length: " + value.length);
 		return value.length >= 3;
 	}
 

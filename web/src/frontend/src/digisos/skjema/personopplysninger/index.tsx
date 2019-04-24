@@ -64,21 +64,23 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 	}
 
 	render() {
+		console.warn("this.props.gjenopptattSoknad: " + this.props.gjenopptattSoknad);
+		const gjennopptattSoknadInfoPanel = (
+			<div className="skjema-sporsmal">
+				<Informasjonspanel
+					ikon={InformasjonspanelIkon.ELLA}
+					farge={DigisosFarge.VIKTIG}
+				>
+					<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
+				</Informasjonspanel>
+			</div>);
+
 		return (
 			<DigisosSkjemaSteg
 				steg={DigisosSteg.kontakt}
 				ikon={<William/>}
 			>
-				{this.props.gjenopptattSoknad && (
-					<div className="skjema-sporsmal">
-						<Informasjonspanel
-							ikon={InformasjonspanelIkon.ELLA}
-							farge={DigisosFarge.VIKTIG}
-						>
-							<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
-						</Informasjonspanel>
-					</div>
-				)}
+				{this.props.gjenopptattSoknad && (gjennopptattSoknadInfoPanel)}
 				<BasisPersonalia/>
 				<Adresse/>
 				<Telefon />
