@@ -27,13 +27,6 @@ type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
 class LastOppFil extends React.Component<Props, {}> {
     leggTilVedleggKnapp: HTMLInputElement;
 
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            sisteBrukteFilnavn: ""
-        };
-    }
-
     handleFileUpload(files: FileList) {
         const {behandlingsId, opplysning} = this.props;
         this.props.dispatch(lastOppFilFeilet(opplysning.type, null));
@@ -42,7 +35,6 @@ class LastOppFil extends React.Component<Props, {}> {
         }
         const formData = new FormData();
         formData.append("file", files[0], files[0].name);
-        this.setState({sisteBrukteFilnavn: files[0].name});
         this.props.dispatch(lastOppFil(opplysning, formData, behandlingsId));
         this.leggTilVedleggKnapp.value = null;
     }
@@ -78,7 +70,7 @@ class LastOppFil extends React.Component<Props, {}> {
 
                 <div role="alert" aria-live="assertive">
                     <div className="skjemaelement__feilmelding">
-                        {filopplasting.feilKode &&
+                        {filopplasting.feilKode && filopplasting.opplysningtype === opplysning.type &&
                         <FormattedMessage id={filopplasting.feilKode}/>
                         }
                     </div>

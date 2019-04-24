@@ -4,7 +4,8 @@ import {FilActionTypeKeys, FilActionTypes, FilState} from "./filTypes";
 
 const initialState: FilState = {
     opplastingStatus: REST_STATUS.OK,
-    feilKode: null
+    feilKode: null,
+    opplysningtype: null
 };
 
 const FilReducer: Reducer<FilState, FilActionTypes> = (
@@ -16,13 +17,15 @@ const FilReducer: Reducer<FilState, FilActionTypes> = (
             return {
                 ...state,
                 opplastingStatus: REST_STATUS.PENDING,
+                feilKode: null,
             };
         }
         case FilActionTypeKeys.LAST_OPP_FEILET: {
             return {
                 ...state,
                 opplastingStatus: REST_STATUS.FEILET,
-                feilKode: action.feilKode
+                feilKode: action.feilKode,
+                opplysningtype: action.opplysningType
             };
         }
         default:

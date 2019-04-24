@@ -6,6 +6,7 @@ import {REST_FEIL} from "../../types/restFeilTypes";
 export interface FilState {
     opplastingStatus: REST_STATUS;
     feilKode: REST_FEIL | null;
+    opplysningtype: OpplysningType;
 }
 
 
