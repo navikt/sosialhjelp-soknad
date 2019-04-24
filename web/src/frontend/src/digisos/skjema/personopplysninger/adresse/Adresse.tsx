@@ -215,9 +215,7 @@ class AdresseView extends React.Component<Props, State> {
 			);
 		}
 		return (
-			<div className="sosialhjelp-oppholdsadresse skjema-sporsmal" id="soknadsmottaker"
-			     style={{border: "2px dotted red"}}
-			>
+			<div className="sosialhjelp-oppholdsadresse skjema-sporsmal" id="soknadsmottaker">
 				<SporsmalFaktum
 					id="soknadsmottaker"
 					faktumKey={this.FAKTUM_KEY}

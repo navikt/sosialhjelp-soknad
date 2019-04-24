@@ -64,7 +64,6 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 	}
 
 	render() {
-		console.warn("this.props.gjenopptattSoknad: " + this.props.gjenopptattSoknad);
 		const gjennopptattSoknadInfoPanel = (
 			<div className="skjema-sporsmal">
 				<Informasjonspanel
