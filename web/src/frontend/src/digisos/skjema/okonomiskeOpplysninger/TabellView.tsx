@@ -92,22 +92,17 @@ class TabellView extends React.Component<Props, {}> {
         raderUpdated.splice(radIndex, 1);
         opplysningUpdated.rader = raderUpdated;
 
-        // Fjern alle feil for opplysning
-        const feilForOpplysning = getFeilForOpplysning(feil, valideringsKey);
-        feilForOpplysning.map((f: Valideringsfeil) => {
-           this.props.dispatch(setValideringsfeil(null, f.faktumKey));
-        });
+        this.fjernAlleFeilForOpplysning(feil, valideringsKey);
 
-        // Sjekk alle inputfelter for feil
-        opplysningUpdated.rader.map((rad: OpplysningRad, index: number) => {
-            Object.keys(rad).map((key: InputType) => {
-                if(key !== "beskrivelse" && rad[key] && rad[key] !== "" && erTall(rad[key])){
-                    const validationKey: string = `${getSpcForOpplysning(opplysning.type).textKey}.${key}.${index}`;
-                    this.props.dispatch(setValideringsfeil(ValideringActionKey.ER_TALL, validationKey));
-                }
-            });
-        });
+        this.validerAlleInputfelterPaOpplysning(opplysningUpdated, opplysning);
 
+        const feilUpdated = this.getOppdatertListeAvFeil(feil, valideringsKey, radIndex);
+
+        this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feilUpdated));
+
+    }
+
+    getOppdatertListeAvFeil(feil: Valideringsfeil[], valideringsKey: string, radIndex: number) {
         const feilUpdated = feil.filter(f => (
             f.faktumKey !== valideringsKey + ".beskrivelse." + radIndex &&
             f.faktumKey !== valideringsKey + ".belop." + radIndex &&
@@ -116,9 +111,25 @@ class TabellView extends React.Component<Props, {}> {
             f.faktumKey !== valideringsKey + ".avdrag." + radIndex &&
             f.faktumKey !== valideringsKey + ".renter." + radIndex)
         );
+        return feilUpdated;
+    }
 
-        this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feilUpdated));
+    validerAlleInputfelterPaOpplysning(opplysningUpdated: Opplysning, opplysning: Opplysning) {
+        opplysningUpdated.rader.map((rad: OpplysningRad, index: number) => {
+            Object.keys(rad).map((key: InputType) => {
+                if (key !== "beskrivelse" && rad[key] && rad[key] !== "" && erTall(rad[key])) {
+                    const validationKey: string = `${getSpcForOpplysning(opplysning.type).textKey}.${key}.${index}`;
+                    this.props.dispatch(setValideringsfeil(ValideringActionKey.ER_TALL, validationKey));
+                }
+            });
+        });
+    }
 
+    fjernAlleFeilForOpplysning(feil: Valideringsfeil[], valideringsKey: string) {
+        const feilForOpplysning = getFeilForOpplysning(feil, valideringsKey);
+        feilForOpplysning.map((f: Valideringsfeil) => {
+            this.props.dispatch(setValideringsfeil(null, f.faktumKey));
+        });
     }
 
     render() {

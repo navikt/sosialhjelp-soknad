@@ -24,24 +24,24 @@ export default class OpplastetVedlegg extends React.Component<AllProps, {}> {
 
         return (
             <div className="vedleggsliste__vedlegg">
-				<span className="vedleggsliste__filnavn">
-					<Lenkeknapp onClick={() => downloadAttachedFile(lastNedUrl)}>
-						{fil.filNavn}
-					</Lenkeknapp>
-				</span>
+                <span className="vedleggsliste__filnavn">
+                    <Lenkeknapp onClick={() => downloadAttachedFile(lastNedUrl)}>
+                        {fil.filNavn}
+                    </Lenkeknapp>
+                </span>
                 <span className="vedleggsliste__slett_ikon">
-					<button
+                    <button
                         type="button"
                         className="vedleggsliste__kunSkjermleser_knapp"
                         onClick={() => this.handleSlett(fil)}
                     >
-						<AriaText>Slett {fil.filNavn}</AriaText>
-						<SVG
+                        <AriaText>Slett {fil.filNavn}</AriaText>
+                        <SVG
                             className="vedleggsliste__slett_ikon"
                             src="/soknadsosialhjelp/statisk/bilder/ikon_trashcan.svg"
                         />
-					</button>
-				</span>
+                    </button>
+                </span>
             </div>
         );
     }
