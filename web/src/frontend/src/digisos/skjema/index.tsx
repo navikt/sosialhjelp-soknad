@@ -16,7 +16,7 @@ import Steg4 from "./familie";
 import Steg5 from "./bosituasjon";
 import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
-import Steg8 from "./okonomiskeOpplysninger/index";
+import Steg8 from "./okonomiskeOpplysninger";
 import Oppsummering from "./oppsummering";
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
 import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
