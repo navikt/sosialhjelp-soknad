@@ -18,7 +18,7 @@ const FAKTUM_BOSTOTTE = "inntekt.bostotte";
 type Props = SoknadsdataContainerProps  & InjectedIntlProps;
 
 interface State {
-	pending: boolean
+	oppstartsModus: boolean
 }
 
 class BostotteView extends React.Component<Props, State> {
@@ -26,7 +26,7 @@ class BostotteView extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			pending: true
+			oppstartsModus: true
 		}
 	}
 
@@ -36,9 +36,9 @@ class BostotteView extends React.Component<Props, State> {
 	}
 
 	componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-		if (this.state.pending) {
+		if (this.state.oppstartsModus) {
 			if (this.props.soknadsdata.restStatus.inntekt.bostotte === REST_STATUS.OK) {
-				this.setState({pending: false});
+				this.setState({oppstartsModus: false});
 			}
 		}
 	}
@@ -57,10 +57,15 @@ class BostotteView extends React.Component<Props, State> {
 	render() {
 		const {soknadsdata} = this.props;
 		const bostotte : Bostotte = soknadsdata.inntekt.bostotte;
+		const restStatus = soknadsdata.restStatus.inntekt.bostotte;
+		let oppstartsModus = this.state.oppstartsModus;
+		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+			oppstartsModus = false;
+		}
 		return (
 			<div className="skjema-sporsmal">
 				<JaNeiSporsmal
-					visPlaceholder={this.state.pending}
+					visPlaceholder={oppstartsModus}
 					tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_BOSTOTTE)}
 					faktumKey={FAKTUM_BOSTOTTE}
 					verdi={bostotte.bekreftelse}
