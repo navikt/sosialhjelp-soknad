@@ -89,6 +89,9 @@ class BosituasjonView extends React.Component<Props, {}> {
 	}
 
 	validerAntallPersoner(antallPersoner: string | null) {
+		if (antallPersoner.length === 0) {
+			return null;
+		}
 		const feilkode: ValideringActionKey = erTall(antallPersoner, true);
 		onEndretValideringsfeil(feilkode, FAKTUM_KEY_ANTALL, this.props.feil, () => {
 			this.props.setValideringsfeil(feilkode, FAKTUM_KEY_ANTALL);
