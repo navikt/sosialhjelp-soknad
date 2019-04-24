@@ -180,24 +180,22 @@ class AdresseView extends React.Component<Props, State> {
 
 	render() {
 		const { soknadsdata } = this.props;
-		let { oppstartsModus } = this.state;
 		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
-		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
-			oppstartsModus = false;
-		}
 		const adresser = soknadsdata.personalia.adresser;
 		const navEnheter = soknadsdata.personalia.navEnheter;
-
 		const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet ) => navEnhet.valgt);
 		const folkeregistrertAdresse = adresser && adresser.folkeregistrert &&  adresser.folkeregistrert.gateadresse;
 		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
 		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
 		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
-
 		const visSoknadsmottakerInfo: boolean = (restStatus === REST_STATUS.OK) ? true : false;
 
 		let folkeregistrertAdresseLabel = null;
 		let annenAdresseLabel = null;
+		let { oppstartsModus } = this.state;
+		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+			oppstartsModus = false;
+		}
 		if (oppstartsModus) {
 			folkeregistrertAdresseLabel = (<TextPlaceholder lines={3}/>);
 			annenAdresseLabel = (<TextPlaceholder lines={3}/>);
