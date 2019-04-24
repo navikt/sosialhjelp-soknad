@@ -146,14 +146,14 @@ class TelefonView extends React.Component<Props, {}> {
 								/>
 							)}
 						>
-							<Detaljeliste>
+							{!brukerdefinert && (<Detaljeliste>
 								<DetaljelisteElement
 									tittel={
 										intl.formatHTMLMessage({id: "kontakt.system.telefon.label"})
 									}
 									verdi={systemverdi}
 								/>
-							</Detaljeliste>
+							</Detaljeliste>)}
 						</SysteminfoMedSkjema>
 					</Sporsmal>
 
