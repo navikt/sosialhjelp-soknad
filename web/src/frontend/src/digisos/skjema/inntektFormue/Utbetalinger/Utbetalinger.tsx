@@ -20,7 +20,7 @@ const UTBETALINGER = "inntekt.inntekter";
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 interface State {
-    pending: boolean
+    oppstartsModus: boolean
 }
 
 export class UtbetalingerView extends React.Component<Props, State> {
@@ -28,7 +28,7 @@ export class UtbetalingerView extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            pending: true
+            oppstartsModus: true
         }
     }
 
@@ -38,9 +38,9 @@ export class UtbetalingerView extends React.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-        if (this.state.pending) {
+        if (this.state.oppstartsModus) {
             if (this.props.soknadsdata.restStatus.inntekt.utbetalinger === REST_STATUS.OK) {
-                this.setState({pending: false});
+                this.setState({oppstartsModus: false});
             }
         }
     }
@@ -104,9 +104,14 @@ export class UtbetalingerView extends React.Component<Props, State> {
     render() {
         const {soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
+        const restStatus = soknadsdata.restStatus.inntekt.utbetalinger;
+        let oppstartsModus = this.state.oppstartsModus;
+        if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+            oppstartsModus = false;
+        }
         return (
             <JaNeiSporsmal
-                visPlaceholder={this.state.pending}
+                visPlaceholder={oppstartsModus}
                 tekster={getFaktumSporsmalTekst(this.props.intl, UTBETALINGER)}
                 faktumKey={UTBETALINGER}
                 verdi={utbetalinger.bekreftelse}

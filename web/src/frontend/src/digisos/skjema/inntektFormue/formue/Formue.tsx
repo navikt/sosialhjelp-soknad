@@ -20,7 +20,7 @@ const FORMUE = "inntekt.bankinnskudd";
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 interface State {
-    pending: boolean
+    oppstartsModus: boolean
 }
 
 export class FormueView extends React.Component<Props, State> {
@@ -28,7 +28,7 @@ export class FormueView extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            pending: true
+            oppstartsModus: true
         }
     }
 
@@ -37,9 +37,9 @@ export class FormueView extends React.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-        if (this.state.pending) {
+        if (this.state.oppstartsModus) {
             if (this.props.soknadsdata.restStatus.inntekt.formue === REST_STATUS.OK) {
-                this.setState({pending: false});
+                this.setState({oppstartsModus: false});
             }
         }
     }
@@ -47,7 +47,7 @@ export class FormueView extends React.Component<Props, State> {
     handleClickCheckbox(idToToggle: string) {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const restStatus = soknadsdata.restStatus.inntekt.formue;
-        if (!this.state.pending && restStatus === REST_STATUS.OK) {
+        if (!this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
             const formue: Formue = soknadsdata.inntekt.formue;
             formue[idToToggle] = !formue[idToToggle];
             if (!formue.annet){
@@ -75,7 +75,12 @@ export class FormueView extends React.Component<Props, State> {
         const {soknadsdata} = this.props;
         const formue: Formue = soknadsdata.inntekt.formue;
         let label: React.ReactNode;
-        if (this.state.pending) {
+        let oppstartsModus = this.state.oppstartsModus;
+        const restStatus = soknadsdata.restStatus.inntekt.formue;
+        if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+            oppstartsModus = false;
+        }
+        if (oppstartsModus) {
             label = <TextPlaceholder lines={1} style={{marginTop: "0.2rem"}}/>
         } else {
             label = <FormattedHTMLMessage id={FORMUE + ".true.type." + navn}/>

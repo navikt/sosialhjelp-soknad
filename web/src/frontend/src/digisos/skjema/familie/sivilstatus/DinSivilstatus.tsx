@@ -15,7 +15,7 @@ import { REST_STATUS } from "../../../../nav-soknad/types";
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 interface State {
-	pending: boolean;
+	oppstartsModus: boolean;
 }
 
 class DinSivilstatusView extends React.Component<Props, State> {
@@ -23,7 +23,7 @@ class DinSivilstatusView extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			pending: true
+			oppstartsModus: true
 		};
 	}
 
@@ -34,15 +34,20 @@ class DinSivilstatusView extends React.Component<Props, State> {
 	componentWillUpdate() {
 		const { soknadsdata } = this.props;
 		const restStatus = soknadsdata.restStatus.familie.sivilstatus;
-		if (this.state.pending && restStatus === REST_STATUS.OK) {
-			this.setState({ pending: false });
+		if (this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
+			this.setState({ oppstartsModus: false });
 		}
 	}
 
 	render() {
 		const { soknadsdata } = this.props;
 		const sivilstatus: Sivilstatus = soknadsdata.familie.sivilstatus;
-		if (this.state.pending) {
+		let oppstartsModus = this.state.oppstartsModus;
+		const restStatus = soknadsdata.restStatus.familie.sivilstatus;
+		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+			oppstartsModus = false;
+		}
+		if (oppstartsModus) {
 			return (
 				<div className="skjema-sporsmal">
 					<Sporsmal sprakNokkel="familie.sivilstatus">
