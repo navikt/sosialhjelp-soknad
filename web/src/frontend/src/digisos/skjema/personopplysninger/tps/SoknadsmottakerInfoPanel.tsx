@@ -1,9 +1,9 @@
 import * as React from "react";
-import { SoknadsMottakerStatus } from "./oppholdsadresseReducer";
-import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
-import { InjectedIntlProps, injectIntl } from "react-intl";
-import { Faktum } from "../../../../nav-soknad/types";
-import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
+import {SoknadsMottakerStatus} from "./oppholdsadresseReducer";
+import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
+import {InjectedIntlProps, injectIntl} from "react-intl";
+import {Faktum} from "../../../../nav-soknad/types";
+import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
 
 interface SoknadsmottakerInfoOwnProps {
 	soknadsmottakerStatus: string;
@@ -27,7 +27,7 @@ const SoknadsmottakerInfoPanel: React.StatelessComponent<SoknadsmottakerInfoProp
 			+ faktum.properties[ENHETSNAVN]
 			+ ", "
 			+ faktum.properties[KOMMUNENAVN]
-			+ " Kommune.";
+			+ " kommune.";
 		return (
 			<Informasjonspanel
 				ikon={InformasjonspanelIkon.BREVKONVOLUTT}
