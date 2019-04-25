@@ -83,7 +83,7 @@ class AdresseTypeahead extends React.Component<Props, StateProps> {
 			this.props.onVelgAnnenAdresse(valgtAdresse);
 		}
 
-		if(value.length < 4) {
+		if(value.length === 0) {
 			if (this.props.onNullstill) {
 				this.props.onNullstill();
 			}
