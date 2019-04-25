@@ -30,6 +30,7 @@ export interface Adresse {
 interface OwnProps {
 	onVelgAnnenAdresse: (adresse: Adresse) => void;
 	valgtAdresse?: string;
+	onNullstill?: () => void;
 }
 
 interface StateProps {
@@ -81,10 +82,15 @@ class AdresseTypeahead extends React.Component<Props, StateProps> {
 			valgtAdresse.husbokstav = husbokstav;
 			this.props.onVelgAnnenAdresse(valgtAdresse);
 		}
+
 		if(value.length < 4) {
+			if (this.props.onNullstill) {
+				this.props.onNullstill();
+			}
 			this.setState({
 				status: AdresseTypeaheadStatus.INITIELL,
-				valgtAdresse: null
+				valgtAdresse: null,
+				adresser: []
 			});
 		}
 
@@ -210,7 +216,7 @@ class AdresseTypeahead extends React.Component<Props, StateProps> {
 	}
 
 	//
-    // Hack for å få museklikk på trefflisten i autocomplete til å fanges opp i Edge nettleser.
+    // Hack for å få museklikk på trefflisten i autocomplete til å fanges opp i Microsofts Edge nettleser.
     //
 	handleItemClickInEdgeBrowser(event: any) {
 		const items: HTMLCollection = document.getElementsByClassName("item-highlighted");

@@ -155,6 +155,7 @@ class AdresseView extends React.Component<Props, State> {
 			this.props.setValideringsfeil(null, this.FAKTUM_KEY);
 		}
 	}
+
 	soknadsmottakerStatus(): SoknadsMottakerStatus {
 		const { soknadsdata } = this.props;
 		const navEnheter = soknadsdata.personalia.navEnheter;
@@ -176,7 +177,15 @@ class AdresseView extends React.Component<Props, State> {
 				}
 			}
 		}
-		return	SoknadsMottakerStatus.IKKE_VALGT;
+		return SoknadsMottakerStatus.IKKE_VALGT;
+	}
+
+	nullstillAdresseTypeahead() {
+		const { soknadsdata, oppdaterSoknadsdataSti } = this.props;
+		const adresser = soknadsdata.personalia.adresser;
+		adresser.soknad.gateadresse = null;
+		oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, []);
+		oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
 	}
 
 	render() {
@@ -189,7 +198,9 @@ class AdresseView extends React.Component<Props, State> {
 		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
 		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
 		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
-		const visSoknadsmottakerInfo: boolean = (restStatus === REST_STATUS.OK) ? true : false;
+
+
+		// const visSoknadsmottakerInfo: boolean = (restStatus === REST_STATUS.OK) ? true : false;
 
 		let folkeregistrertAdresseLabel = null;
 		let annenAdresseLabel = null;
@@ -289,6 +300,7 @@ class AdresseView extends React.Component<Props, State> {
 									</div>
 									<FormattedHTMLMessage id="kontakt.system.kontaktinfo.infotekst.ekstratekst"/>
 									<AdresseTypeahead
+										onNullstill={() => this.nullstillAdresseTypeahead()}
 										valgtAdresse={formatertSoknadAdresse}
 										onVelgAnnenAdresse={(adresse: Adresse) => this.velgAnnenAdresse(adresse)}
 									/>
@@ -309,11 +321,20 @@ class AdresseView extends React.Component<Props, State> {
 					</div>
 				</SporsmalFaktum>
 				<SoknadsmottakerInfo
-					synlig={visSoknadsmottakerInfo}
+					// synlig={visSoknadsmottakerInfo}
+					synlig={this.soknadsmottakerStatus() !== SoknadsMottakerStatus.IKKE_VALGT}
 					soknadsmottakerStatus={this.soknadsmottakerStatus()}
 					enhetsnavn={valgtNavEnhet && valgtNavEnhet.enhetsnavn}
 					kommunenavn={valgtNavEnhet && valgtNavEnhet.kommunenavn}
 				/>
+
+				{/*<div>*/}
+				{/*	<b>Debug: </b>*/}
+				{/*	<pre>1 navEnehter: {JSON.stringify(this.props.soknadsdata.personalia.navEnheter, null, 4)}</pre>*/}
+				{/*	<pre>2 mottakerStatus: {this.soknadsmottakerStatus()}</pre>*/}
+				{/*	/!*<pre>3 adresser: {JSON.stringify(this.props.soknadsdata.personalia.adresser, null, 4)}</pre>*!/*/}
+				{/*</div>*/}
+
 			</div>);
 	}
 }
