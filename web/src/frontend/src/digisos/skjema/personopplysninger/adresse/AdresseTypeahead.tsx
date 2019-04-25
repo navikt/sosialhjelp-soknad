@@ -90,7 +90,15 @@ class AdresseTypeahead extends React.Component<Props, StateProps> {
 			this.setState({
 				status: AdresseTypeaheadStatus.INITIELL,
 				valgtAdresse: null,
-				adresser: []
+				adresser: [],
+
+				cursorPosisjon: 0,
+				valueIsValid: undefined,
+				antallAktiveSok: 0,
+				sokPostponed: false,
+				open: false,
+				focus: false,
+				value: ""
 			});
 		}
 
