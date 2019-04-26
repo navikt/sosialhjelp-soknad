@@ -148,6 +148,7 @@ class BosituasjonView extends React.Component<Props, {}> {
 					tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_KEY_ANTALL)}
 					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 				>
+					asdf
 					<InputEnhanced
 						type="tel"
 						maxLength={2}
