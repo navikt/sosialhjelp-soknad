@@ -2,8 +2,8 @@ import * as React from 'react';
 import {
     AntallRader,
     InputType,
-    OpplysningerModel,
     Opplysning,
+    OpplysningerModel,
     OpplysningRad,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
@@ -22,8 +22,8 @@ import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import {setValideringsfeil} from "../../../nav-soknad/redux/valideringActions";
 import {ValideringActionKey, Valideringsfeil} from "../../../nav-soknad/validering/types";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
-import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {getFeilForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerSaga";
+import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 
 
 interface OwnProps {
@@ -143,7 +143,7 @@ class TabellView extends React.Component<Props, {}> {
                             onBlur={() => this.handleBlur(radIndex, inputType, key)}
                             verdi={vedleggRad[inputType] ? vedleggRad[inputType] : ""}
                             required={false}
-                            bredde={"S"}
+                            bredde={inputType === InputType.BESKRIVELSE ? "L" : "S"}
                             faktumKey={text}
                             faktumIndex={radIndex}
                         />

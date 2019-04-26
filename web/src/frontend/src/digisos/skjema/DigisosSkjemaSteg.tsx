@@ -11,7 +11,7 @@ export enum DigisosSteg {
     bosituasjonbolk = "bosituasjonbolk",
     inntektbolk = "inntektbolk",
     utgifterbolk = "utgifterbolk",
-    opplysningerbolk = "okonomiskeOpplysninger",
+    opplysningerbolk = "opplysningerbolk",
     oppsummering = "oppsummering"
 }
 
