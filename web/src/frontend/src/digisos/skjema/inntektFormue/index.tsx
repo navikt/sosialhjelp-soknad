@@ -10,7 +10,7 @@ import Bostotte from "./bostotte/Bostotte";
 import Utbetalinger from "./Utbetalinger/Utbetalinger";
 import Verdier from "./verdier/Verdier";
 import Formue from "./formue/Formue";
-import NavYtelserNy from "./navytelser/NavYtelser";
+import NavYtelser from "./navytelser/NavYtelser";
 
 class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps, any> {
     render() {
@@ -19,7 +19,7 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
                 <h2 className="overskrift">
                     <FormattedHTMLMessage id="opplysninger.inntekt.undertittel"/>
                 </h2>
-                <NavYtelserNy/>
+                <NavYtelser/>
                 <Bostotte/>
                 <Utbetalinger/>
                 <h2 className="overskrift">
