@@ -36,9 +36,8 @@ class NavYtelserView extends React.Component<Props, {}> {
         const utbetaltMelding = <span><FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/></span>;
 
         const utbetalingerView = utbetalinger.map((utbetaling, index) => {
-
-            const type = utbetaling.inntektType;
-            const formattedDato: any = <FormattedDate value={utbetaling.utbetalingsdato}/>
+            const type: string = utbetaling.inntektType;
+            const formattedDato = <FormattedDate value={utbetaling.utbetalingsdato}/>
             const belop = <FormattedNumber value={utbetaling.belop} style="decimal" minimumFractionDigits={2}/>;
 
             return (
@@ -54,12 +53,9 @@ class NavYtelserView extends React.Component<Props, {}> {
 
     render() {
         const {soknadsdata} = this.props;
-
         const {systeminntekter} = soknadsdata.inntekt.systemdata;
-
         const restStatus = soknadsdata.restStatus.inntekt.systemdata;
         const visAnimerteStreker = restStatus !== REST_STATUS.OK;
-
         const harUtbetalinger: boolean = systeminntekter && systeminntekter.length > 0;
 
         if (!visAnimerteStreker) {
