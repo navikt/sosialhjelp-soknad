@@ -9,9 +9,9 @@ import { getIntlTextOrKey } from "../../../../nav-soknad/utils";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import AdresseDetaljer from "./AdresseDetaljer";
-import { AdresseKategori, Gateadresse, NavEnhet } from "./AdresseTypes";
+import { AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet } from "./AdresseTypes";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
-import AdresseTypeahead, { Adresse } from "./AdresseTypeahead";
+
 import SoknadsmottakerVelger from "./SoknadsmottakerVelger";
 import { ValideringActionKey, Valideringsfeil } from "../../../../nav-soknad/validering/types";
 import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
@@ -20,6 +20,9 @@ import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
 import { formaterSoknadsadresse } from "./AdresseUtils";
 import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
+
+import AdresseTypeahead from "./AdresseTypeahead";
+
 
 interface OwnProps {
 	disableLoadingAnimation?: boolean;
@@ -96,7 +99,7 @@ class AdresseView extends React.Component<Props, State> {
 		});
 	}
 
-	velgAnnenAdresse(adresse: Adresse) {
+	velgAnnenAdresse(adresse: AdressesokTreff) {
 		const { oppdaterSoknadsdataSti } = this.props;
 		if (adresse) {
 			const payload = {
@@ -161,7 +164,6 @@ class AdresseView extends React.Component<Props, State> {
 		const navEnheter = soknadsdata.personalia.navEnheter;
 		const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet ) => navEnhet.valgt);
 		const adresser = soknadsdata.personalia.adresser;
-
 		if (valgtNavEnhet || navEnheter.length === 1) {
 			return SoknadsMottakerStatus.GYLDIG;
 		}
@@ -188,6 +190,12 @@ class AdresseView extends React.Component<Props, State> {
 		oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
 	}
 
+	vissoknadsmottakerStatus(): boolean {
+		const { soknadsdata} = this.props;
+		const navEnheter = soknadsdata.personalia.navEnheter;
+		return navEnheter.length > 0 && this.soknadsmottakerStatus() !== SoknadsMottakerStatus.IKKE_VALGT;
+	}
+
 	render() {
 		const { soknadsdata } = this.props;
 		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
@@ -198,9 +206,6 @@ class AdresseView extends React.Component<Props, State> {
 		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
 		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
 		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
-
-
-		// const visSoknadsmottakerInfo: boolean = (restStatus === REST_STATUS.OK) ? true : false;
 
 		let folkeregistrertAdresseLabel = null;
 		let annenAdresseLabel = null;
@@ -302,7 +307,7 @@ class AdresseView extends React.Component<Props, State> {
 									<AdresseTypeahead
 										onNullstill={() => this.nullstillAdresseTypeahead()}
 										valgtAdresse={formatertSoknadAdresse}
-										onVelgAnnenAdresse={(adresse: Adresse) => this.velgAnnenAdresse(adresse)}
+										onVelgAnnenAdresse={(adresse: AdressesokTreff) => this.velgAnnenAdresse(adresse)}
 									/>
 								</Sporsmal>
 								{navEnheter.length > 1 && (
@@ -321,22 +326,14 @@ class AdresseView extends React.Component<Props, State> {
 					</div>
 				</SporsmalFaktum>
 				<SoknadsmottakerInfo
-					// synlig={visSoknadsmottakerInfo}
-					synlig={this.soknadsmottakerStatus() !== SoknadsMottakerStatus.IKKE_VALGT}
+					synlig={this.vissoknadsmottakerStatus()}
 					soknadsmottakerStatus={this.soknadsmottakerStatus()}
 					enhetsnavn={valgtNavEnhet && valgtNavEnhet.enhetsnavn}
 					kommunenavn={valgtNavEnhet && valgtNavEnhet.kommunenavn}
 				/>
-
-				{/*<div>*/}
-				{/*	<b>Debug: </b>*/}
-				{/*	<pre>1 navEnehter: {JSON.stringify(this.props.soknadsdata.personalia.navEnheter, null, 4)}</pre>*/}
-				{/*	<pre>2 mottakerStatus: {this.soknadsmottakerStatus()}</pre>*/}
-				{/*	/!*<pre>3 adresser: {JSON.stringify(this.props.soknadsdata.personalia.adresser, null, 4)}</pre>*!/*/}
-				{/*</div>*/}
-
 			</div>);
 	}
+
 }
 
 export {AdresseView};

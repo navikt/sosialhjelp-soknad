@@ -47,7 +47,7 @@ const lagSoknadsdata = (options?: any) => {
 	return soknadsdata;
 };
 
-describe("Adresse react komponent", () => {
+describe("AdressesokTreff react komponent", () => {
 
 	configEnzyme();
 

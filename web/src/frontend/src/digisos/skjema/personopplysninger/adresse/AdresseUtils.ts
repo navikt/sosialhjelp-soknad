@@ -1,5 +1,4 @@
-import { Adresse } from "./AdresseTypeahead";
-import { Gateadresse } from "./AdresseTypes";
+import { AdressesokTreff, Gateadresse } from "./AdresseTypes";
 
 export const enum AdresseTypeaheadStatus {
 	INITIELL = "INITIELL",
@@ -10,7 +9,7 @@ export const enum AdresseTypeaheadStatus {
 	HUSNUMMER_IKKE_SATT = "HUSNUMMER_IKKE_SATT"
 }
 
-const formaterAdresseString = (adresse: Adresse) => {
+const formaterAdresseString = (adresse: AdressesokTreff) => {
 	let returverdi = adresse.adresse;
 	const husbokstav: string = adresse.husbokstav != null ? adresse.husbokstav : "";
 	try {
@@ -68,6 +67,15 @@ const setCaretPosition = (ctrl: any, pos: number) => {
 	}
 };
 
+const beregnTekstfeltMarkorPosisjon = (adresse: AdressesokTreff) => {
+	const husbokstav = adresse.husbokstav ? adresse.husbokstav : "";
+	return adresse.husnummer ?
+		(adresse.adresse.length +
+			adresse.husnummer.length +
+			husbokstav.length + 1)
+		: (adresse.adresse.length + 1);
+};
+
 const ekstraherHusnummerHusbokstav = (inntastetAdresse: string ): any => {
 	const matches = inntastetAdresse.match(/ *(\d+) *([^0-9 ]*) *,/);
 	if(matches) {
@@ -87,5 +95,6 @@ export {
 	removeDuplicatesAfterTransform,
 	setCaretPosition,
 	ekstraherHusnummerHusbokstav,
-	formaterSoknadsadresse
+	formaterSoknadsadresse,
+	beregnTekstfeltMarkorPosisjon
 };
