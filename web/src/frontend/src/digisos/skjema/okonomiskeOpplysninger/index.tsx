@@ -22,12 +22,10 @@ interface StoreToProps {
     behandlingsId: string;
 }
 
-
 type Props = StoreToProps & InjectedIntlProps & DispatchProps;
 
 class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
-
-
+    
     componentDidMount() {
         const {behandlingsId} = this.props;
         this.props.dispatch(hentOpplysninger(behandlingsId))

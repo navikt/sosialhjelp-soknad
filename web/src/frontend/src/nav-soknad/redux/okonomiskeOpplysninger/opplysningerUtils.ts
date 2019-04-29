@@ -10,7 +10,6 @@ import {
 } from "./opplysningerTypes";
 import {opplysningsRekkefolgeOgSpc} from "./opplysningerConfig";
 
-
 export function getOpplysningerUrl(behandlingsId: string) {
     return (
         `soknader/${behandlingsId}/okonomiskeOpplysninger`

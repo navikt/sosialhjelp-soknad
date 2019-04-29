@@ -43,7 +43,7 @@ const OpplysningerReducer: Reducer<OpplysningerModel, opplysningerAction> = (
                 opplysningerSortert: opplysningerSortertUpdated
             };
         }
-        case opplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING: {
+        case opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_PENDING: {
             const {opplysningType} = action;
             const opplysning = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
             const opplysningUpdated = {...opplysning};
@@ -55,7 +55,7 @@ const OpplysningerReducer: Reducer<OpplysningerModel, opplysningerAction> = (
                 opplysningerSortert: opplysningerSortertUpdated
             };
         }
-        case opplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING: {
+        case opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_FERDIG: {
             const {opplysningType} = action;
             const opplysning = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
             const opplysningUpdated = {...opplysning};

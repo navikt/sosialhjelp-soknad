@@ -58,8 +58,8 @@ export type opplysningerAction
 export enum opplysningerActionTypeKeys {
     GOT_DATA_FROM_BACKEND = "okonomiskeOpplysninger/GOT_DATA_FROM_BACKEND",
     OPPDATER_OPPLYSNING = "okonomiskeOpplysninger/OPPDATER_OPPLYSNING",
-    SETT_PENDING_PA_FIL_OPPLASTING = "okonomiskeOpplysninger/SETT_PENDING_PA_FIL_OPPLASTING",
-    SETT_FERDIG_PA_FIL_OPPLASTING = "okonomiskeOpplysninger/SETT_FERDIG_PA_FIL_OPPLASTING",
+    SETT_FIL_OPPLASTING_PENDING = "okonomiskeOpplysninger/SETT_FIL_OPPLASTING_PENDING",
+    SETT_FIL_OPPLASTING_FERDIG = "okonomiskeOpplysninger/SETT_FIL_OPPLASTING_FERDIG",
     SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP = "okonomiskeOpplysninger/SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP",
     LAGRE_OPPLYSNING_HVIS_GYLDIG = "okonomiskeOpplysninger/LAGRE_OPPLYSNING_HVIS_GYLDIG"
 }
@@ -75,12 +75,12 @@ export interface GotDataFromBackend {
 }
 
 export interface SettPendingPaFilOpplasting {
-    type: opplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING;
+    type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_PENDING;
     opplysningType: OpplysningType;
 }
 
 export interface SettFerdigPaFilOpplasting {
-    type: opplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING;
+    type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_FERDIG;
     opplysningType: OpplysningType;
 }
 

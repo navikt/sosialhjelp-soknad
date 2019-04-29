@@ -26,16 +26,16 @@ export const updateOpplysning = (opplysning: Opplysning): opplysningerAction => 
     }
 };
 
-export const settPendingPaFilOpplasting = (opplysningType: OpplysningType): opplysningerAction => {
+export const settFilOpplastingPending = (opplysningType: OpplysningType): opplysningerAction => {
     return {
-        type: opplysningerActionTypeKeys.SETT_PENDING_PA_FIL_OPPLASTING,
+        type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_PENDING,
         opplysningType,
     }
 };
 
-export const settFerdigPaFilOpplasting = (opplysningType: OpplysningType): opplysningerAction => {
+export const settFilOpplastingFerdig = (opplysningType: OpplysningType): opplysningerAction => {
     return {
-        type: opplysningerActionTypeKeys.SETT_FERDIG_PA_FIL_OPPLASTING,
+        type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_FERDIG,
         opplysningType,
     }
 };

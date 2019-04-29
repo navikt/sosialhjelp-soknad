@@ -31,7 +31,6 @@ type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps
 
 class VedleggView extends React.Component<Props> {
 
-
     handleAlleredeLastetOpp(event: any) {
         const {okonomiskOpplysning, behandlingsId, feil} = this.props;
         const opplysningUpdated = {...okonomiskOpplysning};

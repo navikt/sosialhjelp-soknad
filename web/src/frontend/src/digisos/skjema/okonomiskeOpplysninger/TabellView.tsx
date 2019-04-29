@@ -38,7 +38,6 @@ interface StoreToProps {
     feil: Valideringsfeil[];
 }
 
-
 type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
 
 export const erGyldigTall = (input: string) : boolean => {
@@ -47,7 +46,6 @@ export const erGyldigTall = (input: string) : boolean => {
 
 
 class TabellView extends React.Component<Props, {}> {
-
 
     handleChange(input: string, radIndex: number, inputFelt: InputType, key: string) {
         const {opplysning} = this.props;

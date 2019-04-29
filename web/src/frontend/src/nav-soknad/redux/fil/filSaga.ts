@@ -4,8 +4,8 @@ import {fetchDelete, fetchUpload, fetchUploadIgnoreErrors,} from "../../utils/re
 import {call, put, takeEvery} from "redux-saga/effects";
 import {loggFeil} from "../navlogger/navloggerActions";
 import {
-    settFerdigPaFilOpplasting,
-    settPendingPaFilOpplasting,
+    settFilOpplastingFerdig,
+    settFilOpplastingPending,
     updateOpplysning
 } from "../okonomiskeOpplysninger/opplysningerActions";
 import {Fil, Opplysning} from "../okonomiskeOpplysninger/opplysningerTypes";
@@ -19,7 +19,7 @@ function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
     const {behandlingsId, formData, opplysning} = action;
     const url = `opplastetVedlegg/${behandlingsId}/${opplysning.type}`;
 
-    yield put(settPendingPaFilOpplasting(opplysning.type));
+    yield put(settFilOpplastingPending(opplysning.type));
 
     let response: Fil =
         {
@@ -34,7 +34,7 @@ function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
         const opplysningUpdated: Opplysning = {...opplysning};
         opplysningUpdated.filer = filerUpdated;
         yield put(updateOpplysning(opplysningUpdated));
-        yield put(settFerdigPaFilOpplasting(opplysning.type));
+        yield put(settFilOpplastingFerdig(opplysning.type));
     } catch (reason) {
 
         let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
@@ -48,7 +48,7 @@ function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
         if (feilKode !== REST_FEIL.KRYPTERT_FIL && feilKode !== REST_FEIL.SIGNERT_FIL) {
             yield put(loggFeil("Last opp vedlegg feilet: " + reason.toString()));
         }
-        yield put(settFerdigPaFilOpplasting(opplysning.type));
+        yield put(settFilOpplastingFerdig(opplysning.type));
     }
 }
 
@@ -67,7 +67,7 @@ function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
 
     const {behandlingsId, fil, opplysning, opplysningType} = action;
 
-    yield put(settPendingPaFilOpplasting(opplysningType));
+    yield put(settFilOpplastingPending(opplysningType));
 
     try {
         const url = `opplastetVedlegg/${behandlingsId}/${fil.uuid}`;
@@ -80,7 +80,7 @@ function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
         const opplysningUpdated: Opplysning = {...opplysning};
         opplysningUpdated.filer = filerUpdated;
         yield put(updateOpplysning(opplysningUpdated));
-        yield put(settFerdigPaFilOpplasting(opplysningType));
+        yield put(settFilOpplastingFerdig(opplysningType));
 
     } catch (reason) {
         yield put(loggFeil("Slett vedlegg feilet: " + reason));
