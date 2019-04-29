@@ -41,6 +41,10 @@ interface StoreToProps {
 
 type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
 
+export const erGyldigTall = (input: string) : boolean => {
+    return !erTall(input, true) && parseInt(input, 10) < 2147483648;
+};
+
 
 class TabellView extends React.Component<Props, {}> {
 
@@ -53,7 +57,7 @@ class TabellView extends React.Component<Props, {}> {
         opplysningUpdated.rader = raderUpdated;
 
         if (inputFelt !== InputType.BESKRIVELSE) {
-            if (!erTall(input) || input === "") {
+            if (erGyldigTall(input) || input === "") {
                 this.props.dispatch(setValideringsfeil(null, key));
             }
         }
@@ -64,7 +68,7 @@ class TabellView extends React.Component<Props, {}> {
         const {behandlingsId, opplysning, feil} = this.props;
         const input = opplysning.rader[radIndex][inputFelt];
 
-        if (inputFelt !== "beskrivelse" && input && input !== "" && erTall(input)) {
+        if (inputFelt !== "beskrivelse" && input && input !== "" && !erGyldigTall(input)) {
             this.props.dispatch(setValideringsfeil(ValideringActionKey.ER_TALL, key));
             this.props.dispatch(updateOpplysning(opplysning))
         } else {

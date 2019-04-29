@@ -18,9 +18,9 @@ export function getOpplysningerUrl(behandlingsId: string) {
 }
 
 export const updateSortertOpplysning = (opplysninger: Opplysning[], opplysningUpdated: Opplysning) => {
-    return opplysninger.map((o) => {
-        return o.type === opplysningUpdated.type ? opplysningUpdated : o;
-    })
+    const index =  opplysninger.findIndex(o => o.type === opplysningUpdated.type);
+    opplysninger[index] = opplysningUpdated;
+    return opplysninger;
 };
 
 export const transformToBackendOpplysning = (opplysning: Opplysning): OpplysningBackend => {
