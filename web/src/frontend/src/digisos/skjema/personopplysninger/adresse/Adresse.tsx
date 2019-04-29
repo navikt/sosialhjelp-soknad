@@ -194,10 +194,12 @@ class AdresseView extends React.Component<Props, State> {
 		const { soknadsdata} = this.props;
 		const navEnheter = soknadsdata.personalia.navEnheter;
 		const soknadsmottakerStatus: SoknadsMottakerStatus = this.soknadsmottakerStatus();
-		console.warn("soknadsmottakerStatus : " + soknadsmottakerStatus);
-		console.warn("restStatus navEnheter : " + soknadsdata.restStatus.personalia.navEnheter);
-		console.warn("restStatus adresser   : " + soknadsdata.restStatus.personalia.adresser);
-		console.warn("------------------");
+		//
+		// console.warn("soknadsmottakerStatus : " + soknadsmottakerStatus);
+		// console.warn("restStatus navEnheter : " + soknadsdata.restStatus.personalia.navEnheter);
+		// console.warn("restStatus adresser   : " + soknadsdata.restStatus.personalia.adresser);
+		// console.warn("------------------");
+		// return navEnheter.length > 0 && soknadsmottakerStatus !== SoknadsMottakerStatus.IKKE_VALGT;
 		return navEnheter.length > 0 && soknadsmottakerStatus !== SoknadsMottakerStatus.IKKE_VALGT;
 	}
 
