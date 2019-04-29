@@ -52,7 +52,7 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 						return SkattbarInntekt.renderUtbetaling(utbetaling.tittel, utbetaling.belop)
 					})}
 					</div>
-					<a className="blokk-s" href={lenkeSti}>Se detaljer hos Skatteetaten.</a>
+					<a className="blokk-s" href={lenkeSti} target={`skatteetaten_${organisasjon.orgnr}`}>Se detaljer hos Skatteetaten.</a>
 				</div>
 			)
 		});
