@@ -159,6 +159,14 @@ class AdresseView extends React.Component<Props, State> {
 		}
 	}
 
+	nullstillAdresseTypeahead() {
+		const { soknadsdata, oppdaterSoknadsdataSti } = this.props;
+		const adresser = soknadsdata.personalia.adresser;
+		adresser.soknad.gateadresse = null;
+		oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, []);
+		oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
+	}
+
 	soknadsmottakerStatus(): SoknadsMottakerStatus {
 		const { soknadsdata } = this.props;
 		const navEnheter = soknadsdata.personalia.navEnheter;
@@ -182,18 +190,13 @@ class AdresseView extends React.Component<Props, State> {
 		return SoknadsMottakerStatus.IKKE_VALGT;
 	}
 
-	nullstillAdresseTypeahead() {
-		const { soknadsdata, oppdaterSoknadsdataSti } = this.props;
-		const adresser = soknadsdata.personalia.adresser;
-		adresser.soknad.gateadresse = null;
-		oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, []);
-		oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
-	}
-
 	vissoknadsmottakerStatus(): boolean {
 		const { soknadsdata} = this.props;
 		const navEnheter = soknadsdata.personalia.navEnheter;
-		return navEnheter.length > 0 && this.soknadsmottakerStatus() !== SoknadsMottakerStatus.IKKE_VALGT;
+		const soknadsmottakerStatus: SoknadsMottakerStatus = this.soknadsmottakerStatus();
+		console.warn("soknadsmottakerStatus : " + soknadsmottakerStatus);
+		console.warn("restStatus:           : " + soknadsdata.restStatus.personalia.navEnheter);
+		return navEnheter.length > 0 && soknadsmottakerStatus !== SoknadsMottakerStatus.IKKE_VALGT;
 	}
 
 	render() {
