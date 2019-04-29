@@ -190,12 +190,14 @@ class AdresseView extends React.Component<Props, State> {
 		return SoknadsMottakerStatus.IKKE_VALGT;
 	}
 
-	vissoknadsmottakerStatus(): boolean {
+	visSoknadsmottakerStatus(): boolean {
 		const { soknadsdata} = this.props;
 		const navEnheter = soknadsdata.personalia.navEnheter;
 		const soknadsmottakerStatus: SoknadsMottakerStatus = this.soknadsmottakerStatus();
 		console.warn("soknadsmottakerStatus : " + soknadsmottakerStatus);
-		console.warn("restStatus:           : " + soknadsdata.restStatus.personalia.navEnheter);
+		console.warn("restStatus navEnheter : " + soknadsdata.restStatus.personalia.navEnheter);
+		console.warn("restStatus adresser   : " + soknadsdata.restStatus.personalia.adresser);
+		console.warn("------------------");
 		return navEnheter.length > 0 && soknadsmottakerStatus !== SoknadsMottakerStatus.IKKE_VALGT;
 	}
 
@@ -329,7 +331,7 @@ class AdresseView extends React.Component<Props, State> {
 					</div>
 				</SporsmalFaktum>
 				<SoknadsmottakerInfo
-					synlig={this.vissoknadsmottakerStatus()}
+					synlig={this.visSoknadsmottakerStatus()}
 					soknadsmottakerStatus={this.soknadsmottakerStatus()}
 					enhetsnavn={valgtNavEnhet && valgtNavEnhet.enhetsnavn}
 					kommunenavn={valgtNavEnhet && valgtNavEnhet.kommunenavn}
