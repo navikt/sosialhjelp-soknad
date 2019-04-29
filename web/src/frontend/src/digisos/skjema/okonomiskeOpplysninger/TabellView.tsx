@@ -112,7 +112,7 @@ class TabellView extends React.Component<Props, {}> {
     validerAlleInputfelterPaOpplysning(opplysningUpdated: Opplysning, opplysning: Opplysning) {
         opplysningUpdated.rader.map((rad: OpplysningRad, index: number) => {
             Object.keys(rad).map((key: InputType) => {
-                if (key !== "beskrivelse" && rad[key] && rad[key] !== "" && erTall(rad[key])) {
+                if (key !== "beskrivelse" && rad[key] && rad[key] !== "" && !erGyldigTall(rad[key])) {
                     const validationKey: string = `${getSpcForOpplysning(opplysning.type).textKey}.${key}.${index}`;
                     this.props.dispatch(setValideringsfeil(ValideringActionKey.ER_TALL, validationKey));
                 }
@@ -138,11 +138,12 @@ class TabellView extends React.Component<Props, {}> {
             const inputs = opplysningSpc.radInnhold.map((inputType: InputType) => {
                 const key: string = `${textKey}.${inputType}.${radIndex}`;
                 const text: string = `${textKey}.${inputType}`;
+                const id: string = key.replace(/\./gi, '_');
 
                 return (
                     <Column xs={"12"} md={"6"} key={key}>
                         <InputEnhanced
-                            id={inputType}
+                            id={id}
                             onChange={(input) => this.handleChange(input, radIndex, inputType, key)}
                             onBlur={() => this.handleBlur(radIndex, inputType, key)}
                             verdi={vedleggRad[inputType] ? vedleggRad[inputType] : ""}
