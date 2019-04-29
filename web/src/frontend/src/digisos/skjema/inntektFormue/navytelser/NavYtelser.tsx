@@ -21,7 +21,6 @@ import {REST_STATUS} from "../../../../nav-soknad/types";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
-
 class NavYtelserView extends React.Component<Props, {}> {
 
     componentDidMount() {
