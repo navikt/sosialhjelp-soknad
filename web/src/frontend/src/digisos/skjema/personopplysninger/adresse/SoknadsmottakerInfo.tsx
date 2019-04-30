@@ -2,35 +2,47 @@ import * as React from "react";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
+import {
+	connectSoknadsdataContainer,
+	SoknadsdataContainerProps
+} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+import { NavEnhet } from "./AdresseTypes";
 import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
+import { soknadsmottakerStatus } from "./AdresseUtils";
 
-interface SoknadsmottakerInfoOwnProps {
-	soknadsmottakerStatus: string;
-	enhetsnavn?: string;
-	kommunenavn?: string;
-	synlig?: boolean;
-}
+type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
-type SoknadsmottakerInfoProps = InjectedIntlProps & SoknadsmottakerInfoOwnProps;
-
-class SoknadsmottakerInfo extends React.Component<SoknadsmottakerInfoProps, {}> {
+class SoknadsmottakerInfo extends React.Component<Props, {}> {
 
 	render() {
-		const {	soknadsmottakerStatus, enhetsnavn, kommunenavn, synlig } = this.props;
-		let erSynlig: boolean = synlig;
+		const { soknadsdata } = this.props;
+		const navEnheter = soknadsdata.personalia.navEnheter;
+		const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt);
+		let enhetsnavn = "";
+		let kommunenavn = "";
+		if (valgtNavEnhet) {
+			enhetsnavn = valgtNavEnhet.enhetsnavn;
+			kommunenavn = valgtNavEnhet.kommunenavn;
+		}
+		let erSynlig: boolean = true;
 		let farge: DigisosFarge = DigisosFarge.SUKSESS;
-		let tekst: any = "";
-		if (soknadsmottakerStatus === SoknadsMottakerStatus.GYLDIG) {
+		let tekst: string = "";
+		const mottakerStatus = soknadsmottakerStatus(soknadsdata);
+		if (mottakerStatus === SoknadsMottakerStatus.GYLDIG) {
 			tekst = `Søknaden vil bli sendt til: ${enhetsnavn}, ${kommunenavn} Kommune.`;
-		} else if (soknadsmottakerStatus === SoknadsMottakerStatus.UGYLDIG) {
+		} else if (mottakerStatus === SoknadsMottakerStatus.UGYLDIG) {
 			farge = DigisosFarge.FEIL;
 			tekst = "Søknaden er ikke tilgjengelig digitalt i din kommune. Ta kontakt direkte med ditt NAV-kontor.";
-		} else if (soknadsmottakerStatus === SoknadsMottakerStatus.MANGLER_NAV_KONTOR) {
+		} else if (mottakerStatus === SoknadsMottakerStatus.MANGLER_NAV_KONTOR) {
 			farge = DigisosFarge.FEIL;
 			tekst = "Kan ikke finne NAV-kontor for angitt adresse. Rett eventuelle feil i adressen eller ta direkte kontakt med ditt lokale NAV-kontor.";
 		} else if (erSynlig === true) {
 			erSynlig = false;
 		}
+		if (navEnheter && navEnheter.length === 0) {
+			erSynlig = false;
+		}
+
 		return (
 			<Informasjonspanel
 				ikon={InformasjonspanelIkon.BREVKONVOLUTT}
@@ -39,9 +51,10 @@ class SoknadsmottakerInfo extends React.Component<SoknadsmottakerInfoProps, {}> 
 			>
 				{tekst}
 			</Informasjonspanel>
-		);	}
+		);
+	}
 
 }
 
-export default injectIntl(SoknadsmottakerInfo);
+export default connectSoknadsdataContainer(injectIntl(SoknadsmottakerInfo));
 

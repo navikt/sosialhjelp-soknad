@@ -1,4 +1,6 @@
-import { AdressesokTreff, Gateadresse } from "./AdresseTypes";
+import { AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet } from "./AdresseTypes";
+import { Soknadsdata } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
 
 export const enum AdresseTypeaheadStatus {
 	INITIELL = "INITIELL",
@@ -90,11 +92,34 @@ const ekstraherHusnummerHusbokstav = (inntastetAdresse: string ): any => {
 	};
 };
 
+const soknadsmottakerStatus = (soknadsdata: Soknadsdata): SoknadsMottakerStatus => {
+	const navEnheter = soknadsdata.personalia.navEnheter;
+	const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt);
+	const adresser = soknadsdata.personalia.adresser;
+	if (valgtNavEnhet || navEnheter.length === 1) {
+		return SoknadsMottakerStatus.GYLDIG;
+	}
+	if (adresser.valg) {
+		if (adresser.valg === AdresseKategori.MIDLERTIDIG || adresser.valg === AdresseKategori.FOLKEREGISTRERT) {
+			if (navEnheter.length === 0) {
+				return SoknadsMottakerStatus.UGYLDIG;
+			}
+		}
+		if (adresser.valg === AdresseKategori.SOKNAD) {
+			if (adresser.soknad && navEnheter.length === 0 && adresser.soknad.gateadresse !== null) {
+				return SoknadsMottakerStatus.UGYLDIG;
+			}
+		}
+	}
+	return SoknadsMottakerStatus.IKKE_VALGT;
+};
+
 export {
 	formaterAdresseString,
 	removeDuplicatesAfterTransform,
 	setCaretPosition,
 	ekstraherHusnummerHusbokstav,
 	formaterSoknadsadresse,
-	beregnTekstfeltMarkorPosisjon
+	beregnTekstfeltMarkorPosisjon,
+	soknadsmottakerStatus
 };

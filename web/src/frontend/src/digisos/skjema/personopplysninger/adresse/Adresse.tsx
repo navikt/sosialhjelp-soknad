@@ -17,12 +17,10 @@ import { ValideringActionKey, Valideringsfeil } from "../../../../nav-soknad/val
 import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
-import { formaterSoknadsadresse } from "./AdresseUtils";
+import { formaterSoknadsadresse, soknadsmottakerStatus } from "./AdresseUtils";
 import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-
 import AdresseTypeahead from "./AdresseTypeahead";
-
 
 interface OwnProps {
 	disableLoadingAnimation?: boolean;
@@ -57,14 +55,14 @@ class AdresseView extends React.Component<Props, State> {
 	componentDidUpdate(prevProps: Readonly<Props>) {
 		const restStatus: REST_STATUS = prevProps.soknadsdata.restStatus.personalia.adresser;
 		if (restStatus === REST_STATUS.OK && this.state.oppstartsModus === true) {
-			this.setState({oppstartsModus: false});
+			this.setState({ oppstartsModus: false });
 		}
 	}
 
 	onClickRadio(adresseKategori: AdresseKategori) {
 		const { soknadsdata, oppdaterSoknadsdataSti } = this.props;
 		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
-		if (restStatus === REST_STATUS.INITIALISERT || restStatus === REST_STATUS.PENDING){
+		if (restStatus === REST_STATUS.INITIALISERT || restStatus === REST_STATUS.PENDING) {
 			return;
 		}
 		const adresser = soknadsdata.personalia.adresser;
@@ -90,7 +88,7 @@ class AdresseView extends React.Component<Props, State> {
 		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
 			navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
 			if (navEnheter.length === 1) {
-				const valgtNavEnhet: NavEnhet = navEnheter[0];
+				const valgtNavEnhet: NavEnhet = navEnheter[ 0 ];
 				valgtNavEnhet.valgt = true;
 				lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
 				this.slettEventuelleValideringsfeil();
@@ -142,10 +140,13 @@ class AdresseView extends React.Component<Props, State> {
 		const { brukerBehandlingId, soknadsdata, lagreSoknadsdata, oppdaterSoknadsdataSti } = this.props;
 		valgtNavEnhet.valgt = true;
 		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
+
 		const navEnheter = soknadsdata.personalia.navEnheter;
 		navEnheter.map((navEnhet: NavEnhet) => {
 			if (navEnhet.orgnr === valgtNavEnhet.orgnr) {
 				navEnhet.valgt = true;
+			} else {
+				navEnhet.valgt = false;
 			}
 		});
 		oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
@@ -167,52 +168,16 @@ class AdresseView extends React.Component<Props, State> {
 		oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
 	}
 
-	soknadsmottakerStatus(): SoknadsMottakerStatus {
-		const { soknadsdata } = this.props;
-		const navEnheter = soknadsdata.personalia.navEnheter;
-		const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet ) => navEnhet.valgt);
-		const adresser = soknadsdata.personalia.adresser;
-		if (valgtNavEnhet || navEnheter.length === 1) {
-			return SoknadsMottakerStatus.GYLDIG;
-		}
-		if (adresser.valg ) {
-			if (adresser.valg === AdresseKategori.MIDLERTIDIG || adresser.valg === AdresseKategori.FOLKEREGISTRERT ) {
-				if (navEnheter.length === 0) {
-					return SoknadsMottakerStatus.UGYLDIG;
-				}
-			}
-			if (adresser.valg === AdresseKategori.SOKNAD) {
-				if (adresser.soknad && navEnheter.length === 0 && adresser.soknad.gateadresse !== null) {
-					return SoknadsMottakerStatus.UGYLDIG;
-				}
-			}
-		}
-		return SoknadsMottakerStatus.IKKE_VALGT;
-	}
-
-	visSoknadsmottakerStatus(): boolean {
-		// const { soknadsdata} = this.props;
-		// const navEnheter = soknadsdata.personalia.navEnheter;
-		const soknadsmottakerStatus: SoknadsMottakerStatus = this.soknadsmottakerStatus();
-		//
-		// console.warn("soknadsmottakerStatus : " + soknadsmottakerStatus);
-		// console.warn("restStatus navEnheter : " + soknadsdata.restStatus.personalia.navEnheter);
-		// console.warn("restStatus adresser   : " + soknadsdata.restStatus.personalia.adresser);
-		// console.warn("------------------");
-		// return navEnheter.length > 0 && soknadsmottakerStatus !== SoknadsMottakerStatus.IKKE_VALGT;
-		return soknadsmottakerStatus !== SoknadsMottakerStatus.IKKE_VALGT;
-	}
-
 	render() {
 		const { soknadsdata } = this.props;
 		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
 		const adresser = soknadsdata.personalia.adresser;
 		const navEnheter = soknadsdata.personalia.navEnheter;
-		const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet ) => navEnhet.valgt);
-		const folkeregistrertAdresse = adresser && adresser.folkeregistrert &&  adresser.folkeregistrert.gateadresse;
+		const folkeregistrertAdresse = adresser && adresser.folkeregistrert && adresser.folkeregistrert.gateadresse;
 		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
 		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
 		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
+		const mottakerStatus = soknadsmottakerStatus(soknadsdata);
 
 		let folkeregistrertAdresseLabel = null;
 		let annenAdresseLabel = null;
@@ -232,7 +197,7 @@ class AdresseView extends React.Component<Props, State> {
 			);
 			annenAdresseLabel = (
 				<div className="finnNavKontor__label">
-					<FormattedMessage id="kontakt.system.oppholdsadresse.valg.soknad" />
+					<FormattedMessage id="kontakt.system.oppholdsadresse.valg.soknad"/>
 				</div>
 			);
 		}
@@ -243,7 +208,7 @@ class AdresseView extends React.Component<Props, State> {
 					faktumKey={this.FAKTUM_KEY}
 					noValidateOnBlur={true}
 					validerFunc={[ (value) => {
-						if (this.soknadsmottakerStatus() !== SoknadsMottakerStatus.GYLDIG) {
+						if (mottakerStatus !== SoknadsMottakerStatus.GYLDIG) {
 							return ValideringActionKey.PAKREVD;
 						}
 						return null;
@@ -276,7 +241,7 @@ class AdresseView extends React.Component<Props, State> {
 								checked={adresser.valg === AdresseKategori.MIDLERTIDIG}
 								label={
 									<div className="finnNavKontor__label">
-										<FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
+										<FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse"/>
 										<AdresseDetaljer adresse={midlertidigAdresse}/>
 									</div>
 								}
@@ -307,7 +272,7 @@ class AdresseView extends React.Component<Props, State> {
 									}
 									legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 								>
-									<div style={{marginBottom: "1rem"}}>
+									<div style={{ marginBottom: "1rem" }}>
 										<FormattedHTMLMessage id="kontakt.system.kontaktinfo.infotekst.tekst"/>
 									</div>
 									<FormattedHTMLMessage id="kontakt.system.kontaktinfo.infotekst.ekstratekst"/>
@@ -327,22 +292,16 @@ class AdresseView extends React.Component<Props, State> {
 										onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}
 									/>
 								)}
-
 							</div>
 						</Underskjema>
 					</div>
 				</SporsmalFaktum>
-				<SoknadsmottakerInfo
-					synlig={this.visSoknadsmottakerStatus()}
-					soknadsmottakerStatus={this.soknadsmottakerStatus()}
-					enhetsnavn={valgtNavEnhet && valgtNavEnhet.enhetsnavn}
-					kommunenavn={valgtNavEnhet && valgtNavEnhet.kommunenavn}
-				/>
+				<SoknadsmottakerInfo/>
 			</div>);
 	}
 
 }
 
-export {AdresseView};
+export { AdresseView };
 
 export default connectSoknadsdataContainer(injectIntl(AdresseView));
