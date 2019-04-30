@@ -1,0 +1,172 @@
+.vedlegg_mangler_avsnitt:focus {
+  box-shadow: 0 0 0px 3px @orangeFocus;
+  outline: none;
+  border-radius: 4px;
+}
+
+.vedlegg_mangler_avsnitt:hover {
+  color: @navDypBla;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.vedlegg_mangler_avsnitt__kollaps:hover {
+  box-shadow: @navGra40 0 2px 1px 0;
+}
+
+.ettersendelse {
+
+  &.maincontent {
+	display: block;
+	padding-top: 0;
+	padding-bottom: 0;
+  }
+
+  &.ingress {
+	font-size: 20px;
+  }
+
+  &__ikon {
+	display: inline-block;
+	width: 26px;
+	height: 26px;
+  }
+
+  &__chevron {
+	cursor: pointer;
+	margin-right: 7px;
+  }
+
+  &__panel {
+	margin-top: 1rem;
+	padding-top: 0.1rem;
+	margin-bottom: 1rem;
+
+	@media @mobile {
+	  margin-top: 0;
+	  margin-bottom: 0;
+	}
+  }
+
+  &__vedlegg {
+	opacity: 0;
+	transition: opacity 1s;
+	transition-delay: 0.2s;
+
+	&__ekspandert {
+	  opacity: 1;
+	}
+
+	&__innhold {
+	  padding-bottom: 0.5rem;
+	  padding-right: 0.5rem;
+	  padding-top: 0.5rem;
+	}
+
+	&__feil {
+	  display: block;
+	  background: @navRosa;
+	  border-radius: 8px;
+	}
+  }
+
+  &_bunntekst {
+	margin-top: 1rem;
+  }
+}
+
+.blokk-center {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.avsnitt_med_marger {
+  display: flex;
+  width: 100%;
+
+  &__klikkbar {
+	text-decoration: none;
+	cursor: pointer;
+	color: rgb(62, 56, 50);
+	border-radius: 4px;
+  }
+
+  &__klikkbar:hover {
+	box-shadow: @navGra40 0 2px 1px 0;
+  }
+
+}
+
+.venstremarg {
+  flex-direction: row;
+  width: 55px;
+  min-width: 35px;
+  padding-left: 4px;
+}
+
+.venstremarg svg {
+  margin-top: 7px;
+  margin-left: 1px;
+}
+
+.hoyremarg {
+  flex-direction: row;
+  width: 40px;
+  display: block;
+
+  &__ikon {
+	height: 36px;
+	text-align: center;
+	color: @navBla;
+	padding-top: 3px;
+	padding-left: 4px;
+	border-radius: 4px;
+
+	&__klikkbart {
+	  cursor: pointer;
+	}
+
+  }
+
+  &__ikon__hover:hover {
+	box-shadow: @navGra40 0 2px 1px 0;
+  }
+
+  &__spinner {
+	margin-right: 4px;
+  }
+}
+
+.avsnitt {
+  flex-direction: row;
+  width: 540px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+
+  &_knapp {
+
+  }
+
+  @media @mobile {
+	margin-bottom: 20px;
+  }
+
+  h3 {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 1rem;
+  }
+
+  p {
+	margin-top: 0;
+	margin-bottom: 0;
+  }
+
+}
+
+.trashcan {
+  padding-left: 2px;
+}

@@ -91,8 +91,8 @@ export interface LesEttersendelserAction {
 
 export interface LesEttersendelserOkAction {
 	type: EttersendelseActionTypeKeys.LES_ETTERSENDELSER_OK;
+	ettersendelser: any;
 }
-
 export type EttersendelseActionTypes =
 	OpprettEttersendelseAction
 	| OpprettEttersendelseFeiletAction

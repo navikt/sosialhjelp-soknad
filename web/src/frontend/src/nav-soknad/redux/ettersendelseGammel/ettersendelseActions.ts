@@ -84,9 +84,10 @@ const lesEttersendelser = (brukerbehandlingId: string): EttersendelseActionTypes
 	};
 };
 
-const settEttersendelser = () => {
+const settEttersendelser = (ettersendelser: any) => {
 	return {
 		type: EttersendelseActionTypeKeys.LES_ETTERSENDELSER_OK,
+		ettersendelser
 	};
 };
 

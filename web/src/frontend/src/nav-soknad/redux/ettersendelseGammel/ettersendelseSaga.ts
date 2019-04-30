@@ -28,7 +28,7 @@ import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIterator {
 	try {
-		const url = `soknader/opprettSoknad?ettersendTil=${action.brukerbehandlingId}`;
+		const url = `soknader?ettersendTil=${action.brukerbehandlingId}`;
 		const response = yield call(fetchPost, url, JSON.stringify({}));
 		if (response) {
 			yield put(lagEttersendelseOk(response.brukerBehandlingId));
@@ -42,7 +42,11 @@ function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIter
 
 function* lesEttersendelserSaga(action: LesEttersendelserAction): SagaIterator {
 	try {
-		yield put(settEttersendelser());
+		const url = `ettersendelse/innsendte/${action.brukerbehandlingId}`;
+		const response = yield call(fetchToJson, url);
+		if (response) {
+			yield put(settEttersendelser(response));
+		}
 	} catch (reason) {
 		yield put(loggFeil("Les ettersendelser feilet: " + reason.toString()));
 		yield put(navigerTilServerfeil());
@@ -51,7 +55,7 @@ function* lesEttersendelserSaga(action: LesEttersendelserAction): SagaIterator {
 
 function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction): SagaIterator {
 	try {
-		const url = `ettersendelse/ettersendteVedlegg/${action.brukerbehandlingId}`;
+		const url = `ettersendelse/vedlegg/${action.brukerbehandlingId}`;
 		const response = yield call(fetchToJson, url);
 		if (response) {
 			yield put(lesEttersendteVedlegg(response));

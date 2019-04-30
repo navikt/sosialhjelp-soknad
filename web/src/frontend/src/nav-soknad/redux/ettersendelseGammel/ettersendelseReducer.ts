@@ -86,7 +86,8 @@ const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes
 		case EttersendelseActionTypeKeys.LES_ETTERSENDELSER_OK: {
 			return {
 				...state,
-				restStatus: REST_STATUS.OK
+				restStatus: REST_STATUS.OK,
+				innsendte: action.ettersendelser
 			};
 		}
 		default:
