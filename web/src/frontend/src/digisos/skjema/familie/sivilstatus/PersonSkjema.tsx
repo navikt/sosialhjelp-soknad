@@ -32,7 +32,10 @@ class PersonSkjema extends React.Component<Props, {}> {
 		this.navnInput.focus();
 	}
 
-	oppdaterTekstfelt(sti: string, verdi: any) {
+	oppdaterTekstfelt(sti: string, verdi: string) {
+		if(verdi.length === 0) {
+			verdi = null;
+		}
 		const { soknadsdata, oppdaterSoknadsdataSti } = this.props;
 		const sivilstatus = soknadsdata.familie.sivilstatus;
 		const ektefelle = sivilstatus.ektefelle;
@@ -45,6 +48,13 @@ class PersonSkjema extends React.Component<Props, {}> {
 		const sivilstatus = soknadsdata.familie.sivilstatus;
 		let feilkodeFodselsdato = null;
 		let fodselsdato = sivilstatus.ektefelle.fodselsdato;
+
+		if (sivilstatus.ektefelle.fodselsdato === "") {
+			sivilstatus.ektefelle.fodselsdato = null;
+		}
+		if (sivilstatus.ektefelle.personnummer === "") {
+			sivilstatus.ektefelle.personnummer = null;
+		}
 		if (fodselsdato && fodselsdato !== "") {
 			fodselsdato = konverterFdatoFraServer(fodselsdato);
 			feilkodeFodselsdato = fdato(fodselsdato);
@@ -107,7 +117,6 @@ class PersonSkjema extends React.Component<Props, {}> {
 								getName={() => id + "_mellomnavn_input"}
 								getFeil={() => null}
 								id={id + "_mellomnavn_input"}
-								// inputRef={c => (this.navnInput = c)}
 								maxLength={100}
 								verdi={ektefelle.navn.mellomnavn}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("navn/mellomnavn", verdi)}
@@ -123,7 +132,6 @@ class PersonSkjema extends React.Component<Props, {}> {
 								getName={() => id + "_etternavn_input"}
 								getFeil={() => null}
 								id={id + "_etternavn_input"}
-								// inputRef={c => (this.navnInput = c)}
 								maxLength={100}
 								verdi={ektefelle.navn.etternavn}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("navn/etternavn", verdi)}
@@ -139,9 +147,6 @@ class PersonSkjema extends React.Component<Props, {}> {
 								getName={() => id + "_fodselsdato_input"}
 								getFeil={() => null}
 								id={id + "_fodselsdato_input"}
-								// inputRef={c => (this.navnInput = c)}
-								// maxLength={8}
-								// pattern={"\\d*"}
 								verdi={fodselsdato}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("fodselsdato", verdi)}
 								bredde="S"
@@ -157,7 +162,6 @@ class PersonSkjema extends React.Component<Props, {}> {
 								getName={() => id + "_personnummer_input"}
 								getFeil={() => null}
 								id={id + "_personnummer_input"}
-								// inputRef={c => (this.navnInput = c)}
 								maxLength={5}
 								minLength={5}
 								pattern={"\\d*"}
