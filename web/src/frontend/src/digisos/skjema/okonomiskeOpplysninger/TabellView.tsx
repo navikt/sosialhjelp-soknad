@@ -149,6 +149,7 @@ class TabellView extends React.Component<Props, {}> {
                             bredde={inputType === InputType.BESKRIVELSE ? "L" : "S"}
                             faktumKey={text}
                             faktumIndex={radIndex}
+                            maxLength={8}
                         />
                     </Column>
                 )
