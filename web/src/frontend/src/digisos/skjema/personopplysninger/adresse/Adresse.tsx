@@ -168,6 +168,10 @@ class AdresseView extends React.Component<Props, State> {
 		oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
 	}
 
+	soknadsmottakerStatus(): SoknadsMottakerStatus {
+		return soknadsmottakerStatus(this.props.soknadsdata);
+	}
+
 	render() {
 		const { soknadsdata } = this.props;
 		const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
@@ -177,7 +181,6 @@ class AdresseView extends React.Component<Props, State> {
 		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
 		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
 		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
-		const mottakerStatus = soknadsmottakerStatus(soknadsdata);
 
 		let folkeregistrertAdresseLabel = null;
 		let annenAdresseLabel = null;
@@ -208,7 +211,7 @@ class AdresseView extends React.Component<Props, State> {
 					faktumKey={this.FAKTUM_KEY}
 					noValidateOnBlur={true}
 					validerFunc={[ (value) => {
-						if (mottakerStatus !== SoknadsMottakerStatus.GYLDIG) {
+						if (this.soknadsmottakerStatus() !== SoknadsMottakerStatus.GYLDIG) {
 							return ValideringActionKey.PAKREVD;
 						}
 						return null;
