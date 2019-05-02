@@ -46,51 +46,6 @@ export interface OwnProps {
 type Props = OwnProps & InjectedIntlProps;
 
 class Sporsmal extends React.Component<Props, {}> {
-	// mounted: boolean;
-	//
-	// componentDidMount() {
-	// 	// registerFaktumValidering({
-	// 	// 	faktumKey: this.props.faktumKey,
-	// 	// 	property: this.props.property,
-	// 	// 	faktumId: this.props.faktumId,
-	// 	// 	valideringer
-	// 	// })
-	// 	this.mounted = true;
-	// }
-	//
-	// componentWillUnmount() {
-	// 	this.mounted = false;
-	// }
-	//
-	// harValidering() {
-	// 	return (
-	// 		this.props.required ||
-	// 		(this.props.validerFunc && this.props.validerFunc.length > 0)
-	// 	);
-	// }
-	//
-	// handleOnBlur(evt: any) {
-	// 	console.warn("debug: sporsmal onBlur");
-	// 	debugger;
-	// 	// if (this.harValidering() && !this.props.noValidateOnBlur) {
-	// 	if (this.harValidering()) {
-	// 		setTimeout(() => {
-	// 			if (this.mounted) {
-	// 				this.valider();
-	// 			}
-	// 		}, 0);
-	// 	}
-	// }
-	//
-	// valider() {
-	// 	console.warn("Debug: kjører validering ");
-	// 	console.warn("feilmelding: " + this.props.faktumKey);
-	// 	// const feilkode = validerFaktum({
-	// 	// 	faktum,
-	// 	// 	property,
-	// 	// 	valideringsregler: this.props.valideringsregler
-	// 	// });
-	// }
 
 	render() {
 		const { id, visible, children, feil, feilkode, tekster, intl, sprakNokkel, visLedetekst } = this.props;

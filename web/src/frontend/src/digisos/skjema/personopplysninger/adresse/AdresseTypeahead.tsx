@@ -26,7 +26,6 @@ interface State {
 	timeout: any;
 	status: string;
 	cursorPosisjon: number;
-
 }
 
 class AdresseTypeahead extends React.Component<Props, State> {
