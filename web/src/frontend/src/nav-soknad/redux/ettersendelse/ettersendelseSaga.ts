@@ -6,7 +6,6 @@ import {
 	fetchToJson,
 	fetchPost,
 	fetchUpload,
-	toJson,
 	lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
 } from "../../utils/rest-utils";
 import {
@@ -15,16 +14,17 @@ import {
 	SlettEttersendtVedleggAction, SendEttersendelseAction, LesEttersendelserAction
 } from "./ettersendelseTypes";
 import {
-	lesEttersendelsesVedlegg,
-	lastOppEttersendtVedleggOk,
-	lesEttersendteVedlegg,
-	lagEttersendelseOk,
-	settEttersendelser,
-	lastOppEttersendelseFeilet,
-	opprettEttersendelseFeilet
+    lesEttersendelsesVedlegg,
+    lastOppEttersendtVedleggOk,
+    lesEttersendteVedlegg,
+    lagEttersendelseOk,
+    settEttersendelser,
+    lastOppEttersendelseFeilet,
+    opprettEttersendelseFeilet, filLastetOpp, slettEttersendtVedleggOk
 } from "./ettersendelseActions";
 import { loggFeil, loggInfo } from "../navlogger/navloggerActions";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
+import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
 
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIterator {
 	try {
@@ -41,12 +41,16 @@ function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIter
 }
 
 function* lesEttersendelserSaga(action: LesEttersendelserAction): SagaIterator {
-	try {
-		yield put(settEttersendelser());
-	} catch (reason) {
-		yield put(loggFeil("Les ettersendelser feilet: " + reason.toString()));
-		yield put(navigerTilServerfeil());
-	}
+    try {
+        const url = `ettersendelse/innsendte/${action.brukerbehandlingId}`;
+        const response = yield call(fetchToJson, url);
+        if (response) {
+            yield put(settEttersendelser(response));
+        }
+    } catch (reason) {
+        yield put(loggFeil("Les ettersendelser feilet: " + reason.toString()));
+        yield put(navigerTilServerfeil());
+    }
 }
 
 function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction): SagaIterator {
@@ -63,13 +67,14 @@ function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction): 
 }
 
 function* slettEttersendelsesVedleggSaga(action: SlettEttersendtVedleggAction): SagaIterator {
+
+    const { behandlingsId, filUuid, opplysningType } = action;
+
 	try {
-		const url = `ettersendelse/vedlegg/${action.vedleggId}?filId=${action.filId}`;
-		const promise = yield call(fetchDelete, url);
-		const response = yield call(toJson, promise);
-		if (response) {
-			yield put(lesEttersendteVedlegg(response));
-		}
+		// const url = `ettersendelse/vedlegg/${action.vedleggId}?filId=${action.filId}`;
+        const url = `opplastetVedlegg/${behandlingsId}/${filUuid}`;
+        yield call(fetchDelete, url);
+        yield put(slettEttersendtVedleggOk(filUuid, opplysningType));
 	} catch (reason) {
 		yield put(loggFeil("Slett ettersendt vedlegg feilet: " + reason));
 		yield put(navigerTilServerfeil());
@@ -77,23 +82,30 @@ function* slettEttersendelsesVedleggSaga(action: SlettEttersendtVedleggAction): 
 }
 
 function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggAction): SagaIterator {
-	try {
-		const url = `ettersendelse/vedlegg/${action.vedleggId}`;
-		const response: any = yield call(fetchUpload, url, action.formData);
+    const {behandlingsId, opplysningType, formData} = action;
+
+    let response: Fil =
+        {
+            "filNavn": "",
+            "uuid": ""
+        };
+
+    try {
+		// const url = `ettersendelse/vedlegg/${action.vedleggId}`;
+		const url = `opplastetVedlegg/${behandlingsId}/${opplysningType}`;
+		response = yield call(fetchUpload, url, formData);
 		yield put(lastOppEttersendtVedleggOk());
 		if (response) {
-			yield put(lesEttersendteVedlegg(response));
+			yield put(filLastetOpp(opplysningType, response));
 		}
 	} catch (reason) {
 		const errorMsg = reason.toString();
-		yield put(lastOppEttersendelseFeilet(errorMsg, action.vedleggId.toString()));
+		yield put(lastOppEttersendelseFeilet(errorMsg, opplysningType.toString()));
 		if ( errorMsg.match(/Unsupported Media Type|Entity Too Large/) === null ) {
 			yield put(loggFeil("Last opp vedlegg for ettersendelse feilet: " + errorMsg));
 		}
 	}
 }
-
-
 
 function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
 	try {

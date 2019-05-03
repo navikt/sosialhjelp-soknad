@@ -14,13 +14,16 @@ import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
 import {MargIkoner} from "./margIkoner";
 import {visToppMeny} from "../../../nav-soknad/utils/domUtils";
-import {EttersendelseFeilkode} from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
+import {
+    EttersendelseFeilkode,
+    EttersendelseVedleggBackend
+} from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
 import {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 
 interface OwnProps {
-    manglendeVedlegg: any[];
+    manglendeVedlegg: EttersendelseVedleggBackend[];
     brukerbehandlingskjedeId: string;
     brukerbehandlingId: string;
     restStatus: REST_STATUS;
@@ -125,7 +128,6 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
         return (
             <div className="ettersendelse">
-                NYYYYYYYYYYY!!!!!!
                 <BannerEttersendelse>
                     <FormattedMessage id="applikasjon.sidetittel"/>
                 </BannerEttersendelse>
@@ -188,10 +190,8 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                         >
                             {antallManglendeVedlegg > 0 && (
                                 <span>
-                                    asdf
                                     <h3>{antallManglendeVedlegg} <FormattedHTMLMessage
                                         id="ettersendelse.vedlegg.mangler"/></h3>
-                                    asdf
                                     <div>{datoManglendeVedlegg}</div>
                                 </span>
                             )}
