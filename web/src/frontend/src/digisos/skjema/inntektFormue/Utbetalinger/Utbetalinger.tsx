@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-    connectSoknadsdataContainer,
+    connectSoknadsdataContainer, onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
@@ -13,6 +13,8 @@ import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
 import { REST_STATUS } from "../../../../nav-soknad/types";
+import {ValideringActionKey} from "../../../../nav-soknad/validering/types";
+import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";
@@ -84,7 +86,20 @@ export class UtbetalingerView extends React.Component<Props, State> {
     onBlurTekstfeltAnnet() {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
+        const beskrivelseAvAnnet = utbetalinger.beskrivelseAvAnnet;
+        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, UTBETALINGER);
+
+        if (!feilmeldingAnnet) {
+            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
+        }
+    }
+
+    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
+        const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
+        onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
+            this.props.setValideringsfeil(feilkode, faktumKey);
+        });
+        return feilkode;
     }
 
     renderCheckBox(navn: string, textKey: string) {
