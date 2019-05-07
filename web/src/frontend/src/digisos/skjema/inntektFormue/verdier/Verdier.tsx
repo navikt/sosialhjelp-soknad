@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-    connectSoknadsdataContainer,
+    connectSoknadsdataContainer, onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
@@ -13,9 +13,12 @@ import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
 import { REST_STATUS } from "../../../../nav-soknad/types";
+import {ValideringActionKey} from "../../../../nav-soknad/validering/types";
+import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 
 const MAX_CHARS = 500;
-const Verdier = "inntekt.eierandeler";
+const VERDIER = "inntekt.eierandeler";
+const VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY = VERDIER + "verdier.annet.textarea";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -84,7 +87,20 @@ export class VerdierView extends React.Component<Props, State> {
     onBlurTekstfeltAnnet() {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
+        const beskrivelseAvAnnet = verdier.beskrivelseAvAnnet;
+        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
+
+        if (!feilmeldingAnnet) {
+            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
+        }
+    }
+
+    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
+        const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
+        onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
+            this.props.setValideringsfeil(feilkode, faktumKey);
+        });
+        return feilkode;
     }
 
     renderCheckBox(navn: string) {
@@ -95,7 +111,7 @@ export class VerdierView extends React.Component<Props, State> {
                 id={"verdier_" + navn + "_checkbox"}
                 name={navn}
                 checked={verdier && verdier[navn] ? verdier[navn] : false}
-                label={<FormattedHTMLMessage id={Verdier + ".true.type." + navn}/>}
+                label={<FormattedHTMLMessage id={VERDIER + ".true.type." + navn}/>}
                 onClick={() => this.handleClickRadio(navn)}
             />
         )
@@ -108,14 +124,14 @@ export class VerdierView extends React.Component<Props, State> {
         return (
             <JaNeiSporsmal
                 visPlaceholder={this.state.pending && restStatus !== REST_STATUS.OK}
-                tekster={getFaktumSporsmalTekst(this.props.intl, Verdier)}
-                faktumKey={Verdier}
+                tekster={getFaktumSporsmalTekst(this.props.intl, VERDIER)}
+                faktumKey={VERDIER}
                 verdi={verdier.bekreftelse}
                 onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, Verdier + ".true.type")}
+                    tekster={getFaktumSporsmalTekst(this.props.intl, VERDIER + ".true.type")}
                 >
                     {this.renderCheckBox("bolig")}
                     {this.renderCheckBox("campingvogn")}
@@ -131,8 +147,8 @@ export class VerdierView extends React.Component<Props, State> {
                             placeholder=""
                             onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}
                             onBlur={() => this.onBlurTekstfeltAnnet()}
-                            faktumKey=""
-                            labelId={Verdier + ".true.type.annet.true.beskrivelse.label"}
+                            faktumKey={VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY}
+                            labelId={VERDIER + ".true.type.annet.true.beskrivelse.label"}
                             maxLength={MAX_CHARS}
                             value={verdier.beskrivelseAvAnnet}
                         />

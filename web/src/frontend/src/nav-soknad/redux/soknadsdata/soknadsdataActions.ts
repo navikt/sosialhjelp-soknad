@@ -23,7 +23,6 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 			// 		harForsorgerplikt: false
 			// 	}
 			// }
-
 			dispatch(oppdaterSoknadsdataSti(sti, response));
 			dispatch(settRestStatus(sti, REST_STATUS.OK));
 		}).catch(() => {

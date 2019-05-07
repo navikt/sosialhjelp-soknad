@@ -46,6 +46,10 @@ import {
 } from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import { REST_STATUS } from "../../types";
 import { Barnebidrag, ForsorgerPlikt } from "../../../digisos/skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
+import {
+    initialSysteminntekter,
+    Systeminntekter
+} from "../../../digisos/skjema/inntektFormue/navytelser/navYtelserTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -77,7 +81,8 @@ export enum SoknadsSti {
 	NAV_ENHETER = "personalia/navEnheter",
 	SIVILSTATUS = "familie/sivilstatus",
 	BASIS_PERSONALIA = "personalia/basisPersonalia",
-	FORSORGERPLIKT = "familie/forsorgerplikt"
+	FORSORGERPLIKT = "familie/forsorgerplikt",
+	INNTEKT_SYSTEMDATA = "inntekt/systemdata"
 }
 
 export interface Personalia {
@@ -93,6 +98,7 @@ export interface Inntekt {
 	utbetalinger?: Utbetalinger;
 	formue?: Formue;
 	verdier?: Verdier;
+	systemdata?: Systeminntekter;
 }
 
 export interface Utgifter {
@@ -113,7 +119,8 @@ export const initialInntektState: Inntekt = {
 	bostotte: initialBostotteState,
 	utbetalinger: initialUtbetalingerState,
 	formue: initialFormueState,
-	verdier: initialVerdierState
+	verdier: initialVerdierState,
+	systemdata: initialSysteminntekter
 };
 
 export const initialUtgifterState: Utgifter = {
@@ -163,6 +170,7 @@ export type SoknadsdataType =
 	| Bostotte
 	| Formue
 	| Verdier
+	| Systeminntekter
 	| Utgifter
 	| Adresser
 	| AdresseValg
