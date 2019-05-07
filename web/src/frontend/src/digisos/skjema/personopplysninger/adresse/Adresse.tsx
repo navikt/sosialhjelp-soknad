@@ -30,7 +30,7 @@ type Props = SoknadsdataContainerProps & InjectedIntlProps & OwnProps;
 
 interface State {
 	oppstartsModus: boolean,
-	settAnnenAdressePending: boolean
+	settAdressePending: boolean
 }
 
 class AdresseView extends React.Component<Props, State> {
@@ -41,7 +41,7 @@ class AdresseView extends React.Component<Props, State> {
 		super(props);
 		this.state = {
 			oppstartsModus: props.disableLoadingAnimation === true ? false : true,
-			settAnnenAdressePending: false
+			settAdressePending: false
 		};
 	}
 
@@ -87,9 +87,8 @@ class AdresseView extends React.Component<Props, State> {
 
 	lagreAdresseValg(payload: any) {
 		const { brukerBehandlingId, oppdaterSoknadsdataSti, lagreSoknadsdata } = this.props;
-		if (payload.valg === "soknad") {
-			this.setState({settAnnenAdressePending: true});
-		}
+		this.setState({settAdressePending: true});
+
 		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
 			navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
 			if (navEnheter.length === 1) {
@@ -99,9 +98,7 @@ class AdresseView extends React.Component<Props, State> {
 				this.slettEventuelleValideringsfeil();
 			}
 			oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
-			if (payload.valg === "soknad") {
-				this.setState({settAnnenAdressePending: false});
-			}
+			this.setState({settAdressePending: false});
 		});
 	}
 
@@ -307,7 +304,7 @@ class AdresseView extends React.Component<Props, State> {
 						</Underskjema>
 					</div>
 				</SporsmalFaktum>
-				<SoknadsmottakerInfo skjul={this.state.settAnnenAdressePending} />
+				<SoknadsmottakerInfo skjul={this.state.settAdressePending} />
 			</div>);
 	}
 
