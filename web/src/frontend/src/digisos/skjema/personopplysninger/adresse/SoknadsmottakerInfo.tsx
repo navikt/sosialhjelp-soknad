@@ -29,7 +29,7 @@ class SoknadsmottakerInfo extends React.Component<Props, {}> {
 		let tekst: string = "";
 		const mottakerStatus = soknadsmottakerStatus(soknadsdata);
 		if (mottakerStatus === SoknadsMottakerStatus.GYLDIG) {
-			tekst = `Søknaden vil bli sendt til: ${enhetsnavn}, ${kommunenavn} Kommune.`;
+			tekst = `Søknaden vil bli sendt til: ${enhetsnavn}, ${kommunenavn} kommune.`;
 		} else if (mottakerStatus === SoknadsMottakerStatus.UGYLDIG) {
 			farge = DigisosFarge.FEIL;
 			tekst = "Søknaden er ikke tilgjengelig digitalt i din kommune. Ta kontakt direkte med ditt NAV-kontor.";
