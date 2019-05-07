@@ -1,0 +1,10 @@
+FROM node:8
+
+WORKDIR /app
+
+COPY web/src/frontend/build/ /app/
+COPY heroku.js /app/
+
+RUN npm install express
+
+CMD ["node", "heroku.js"]
