@@ -39,7 +39,7 @@ class SoknadsmottakerInfo extends React.Component<Props, {}> {
 		} else if (erSynlig === true) {
 			erSynlig = false;
 		}
-		if (navEnheter && navEnheter.length === 0) {
+		if (this.props.skjul === true) {
 			erSynlig = false;
 		}
 
@@ -53,8 +53,6 @@ class SoknadsmottakerInfo extends React.Component<Props, {}> {
 			</Informasjonspanel>
 		);
 	}
-
 }
 
 export default connectSoknadsdataContainer(injectIntl(SoknadsmottakerInfo));
-

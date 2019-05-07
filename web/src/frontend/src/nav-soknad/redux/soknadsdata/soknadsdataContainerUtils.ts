@@ -28,6 +28,7 @@ export interface SoknadsdataContainerProps {
 	setValideringsfeil?: (feilkode: ValideringActionKey, faktumKey: string) => void;
 	oppdaterSoknadsdataSti?: (sti: string, soknadsdata: SoknadsdataType) => void;
 	settRestStatus?: (sti: string, restStatus: REST_STATUS) => void;
+	skjul?: boolean;
 }
 
 export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerProps>(

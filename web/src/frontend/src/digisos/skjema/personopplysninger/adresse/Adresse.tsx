@@ -15,12 +15,12 @@ import Underskjema from "../../../../nav-soknad/components/underskjema";
 import SoknadsmottakerVelger from "./SoknadsmottakerVelger";
 import { ValideringActionKey, Valideringsfeil } from "../../../../nav-soknad/validering/types";
 import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
-import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
 import { formaterSoknadsadresse, soknadsmottakerStatus } from "./AdresseUtils";
 import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import AdresseTypeahead from "./AdresseTypeahead";
+import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 
 interface OwnProps {
 	disableLoadingAnimation?: boolean;
@@ -29,7 +29,8 @@ interface OwnProps {
 type Props = SoknadsdataContainerProps & InjectedIntlProps & OwnProps;
 
 interface State {
-	oppstartsModus: boolean
+	oppstartsModus: boolean,
+	settAnnenAdressePending: boolean
 }
 
 class AdresseView extends React.Component<Props, State> {
@@ -39,7 +40,8 @@ class AdresseView extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			oppstartsModus: props.disableLoadingAnimation === true ? false : true
+			oppstartsModus: props.disableLoadingAnimation === true ? false : true,
+			settAnnenAdressePending: false
 		};
 	}
 
@@ -85,6 +87,9 @@ class AdresseView extends React.Component<Props, State> {
 
 	lagreAdresseValg(payload: any) {
 		const { brukerBehandlingId, oppdaterSoknadsdataSti, lagreSoknadsdata } = this.props;
+		if (payload.valg === "soknad") {
+			this.setState({settAnnenAdressePending: true});
+		}
 		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
 			navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
 			if (navEnheter.length === 1) {
@@ -94,6 +99,9 @@ class AdresseView extends React.Component<Props, State> {
 				this.slettEventuelleValideringsfeil();
 			}
 			oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
+			if (payload.valg === "soknad") {
+				this.setState({settAnnenAdressePending: false});
+			}
 		});
 	}
 
@@ -299,7 +307,7 @@ class AdresseView extends React.Component<Props, State> {
 						</Underskjema>
 					</div>
 				</SporsmalFaktum>
-				<SoknadsmottakerInfo/>
+				<SoknadsmottakerInfo skjul={this.state.settAnnenAdressePending} />
 			</div>);
 	}
 
