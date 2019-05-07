@@ -15,6 +15,7 @@ import { mount } from "enzyme";
 describe("Bankinformasjon react komponent", () => {
 
 	configEnzyme();
+
 	const intlMessages: any = {
 		"kontakt.system.kontonummer.endreknapp.label": "Endre",
 		"systeminfo.avbrytendringknapp.label": "Angre",

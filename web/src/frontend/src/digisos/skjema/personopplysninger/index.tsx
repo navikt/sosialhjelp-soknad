@@ -19,9 +19,9 @@ import { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjo
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 import { FormattedMessage } from "react-intl";
-import Oppholdsadresse from "./tps/Oppholdsadresse";
 import Telefon from "./telefon/Telefon";
 import Bankinformasjon from "./bankinfo/Bankinformasjon";
+import Adresse from "./adresse/Adresse";
 import BasisPersonalia from "./personalia/BasisPersonalia";
 
 interface OwnProps {
@@ -64,23 +64,24 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 	}
 
 	render() {
+		const gjennopptattSoknadInfoPanel = (
+			<div className="skjema-sporsmal">
+				<Informasjonspanel
+					ikon={InformasjonspanelIkon.ELLA}
+					farge={DigisosFarge.VIKTIG}
+				>
+					<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
+				</Informasjonspanel>
+			</div>);
+
 		return (
 			<DigisosSkjemaSteg
 				steg={DigisosSteg.kontakt}
 				ikon={<William/>}
 			>
-				{this.props.gjenopptattSoknad && (
-					<div className="skjema-sporsmal">
-						<Informasjonspanel
-							ikon={InformasjonspanelIkon.ELLA}
-							farge={DigisosFarge.VIKTIG}
-						>
-							<FormattedMessage id="applikasjon.advarsel.gjenopptatt"/>
-						</Informasjonspanel>
-					</div>
-				)}
+				{this.props.gjenopptattSoknad && (gjennopptattSoknadInfoPanel)}
 				<BasisPersonalia/>
-				<Oppholdsadresse fakta={this.props.fakta} />
+				<Adresse/>
 				<Telefon />
 				<Bankinformasjon />
 			</DigisosSkjemaSteg>

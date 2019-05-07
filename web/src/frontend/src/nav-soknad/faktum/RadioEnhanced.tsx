@@ -78,7 +78,7 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
 				name={name}
 				checked={this.checked()}
 				disabled={disabled}
-				value={"false"}
+				value={value}
 				required={required}
 				onChange={(evt: any) => {
 					if (onChange != null) {

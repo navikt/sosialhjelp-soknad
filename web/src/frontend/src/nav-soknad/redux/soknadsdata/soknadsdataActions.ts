@@ -32,22 +32,26 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	}
 }
 
-export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknadsdata: SoknadsdataType) {
+export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknadsdata: SoknadsdataType, responseHandler?: (response: any) => void) {
 	return (dispatch: Dispatch) => {
 		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
-		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata)).catch(() => {
-			dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-			dispatch(navigerTilServerfeil());
-		}).then((response: any) => {
-			dispatch(settRestStatus(sti, REST_STATUS.OK));
-		});
+		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata))
+			.then((response: any) => {
+				dispatch(settRestStatus(sti, REST_STATUS.OK));
+				if (responseHandler) {
+					// For å simulere response fra adresse, kan man skrive:
+					// if (sti === SoknadsSti.ADRESSER) {
+					// 	response = [{"orgnr":null,"enhetsnavn":"NAV Ålesund","kommunenavn":"Ålesund","valgt":false}];
+					// }
+					responseHandler(response);
+				}
+			})
+			.catch(() => {
+				dispatch(settRestStatus(sti, REST_STATUS.FEILET));
+				dispatch(navigerTilServerfeil());
+			});
 	}
 }
-
-export function lagreSoknadsdataTypet(brukerBehandlingId: string, sti: string, soknadsdata: SoknadsdataType) {
-	return lagreSoknadsdata(brukerBehandlingId, sti, soknadsdata);
-}
-
 
 
 /*
