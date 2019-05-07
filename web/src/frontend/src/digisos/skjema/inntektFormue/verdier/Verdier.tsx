@@ -18,6 +18,7 @@ import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 
 const MAX_CHARS = 500;
 const VERDIER = "inntekt.eierandeler";
+const VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY = VERDIER + "verdier.annet.textarea";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -87,7 +88,7 @@ export class VerdierView extends React.Component<Props, State> {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         const beskrivelseAvAnnet = verdier.beskrivelseAvAnnet;
-        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER);
+        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
 
         if (!feilmeldingAnnet) {
             this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
@@ -146,7 +147,7 @@ export class VerdierView extends React.Component<Props, State> {
                             placeholder=""
                             onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}
                             onBlur={() => this.onBlurTekstfeltAnnet()}
-                            faktumKey=""
+                            faktumKey={VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY}
                             labelId={VERDIER + ".true.type.annet.true.beskrivelse.label"}
                             maxLength={MAX_CHARS}
                             value={verdier.beskrivelseAvAnnet}

@@ -18,6 +18,7 @@ import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 
 const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
+const FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY = FORMUE + "formue.annet.textarea";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -71,7 +72,7 @@ export class FormueView extends React.Component<Props, State> {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const formue: Formue = soknadsdata.inntekt.formue;
         const beskrivelseAvAnnet = formue.beskrivelseAvAnnet;
-        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, FORMUE);
+        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY);
 
         if (!feilmeldingAnnet) {
             this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORMUE, formue);
@@ -134,7 +135,7 @@ export class FormueView extends React.Component<Props, State> {
                         placeholder=""
                         onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}
                         onBlur={() => this.onBlurTekstfeltAnnet()}
-                        faktumKey=""
+                        faktumKey={FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY}
                         labelId={FORMUE + ".true.type.annet.true.beskrivelse.label"}
                         maxLength={MAX_CHARS}
                         value={formue.beskrivelseAvAnnet}
