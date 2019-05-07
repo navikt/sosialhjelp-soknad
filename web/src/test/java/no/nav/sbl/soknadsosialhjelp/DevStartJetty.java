@@ -13,7 +13,7 @@ import static no.nav.modig.lang.collections.RunnableUtils.waitFor;
 import static no.nav.sbl.dialogarena.common.jetty.Jetty.usingWar;
 
 public class DevStartJetty {
-    public static final int PORT = 8080;
+    public static final int PORT = isRunningOnHeroku() ? Integer.parseInt(System.getenv("PORT")) : 8080;
     private static final Logger logger = LoggerFactory.getLogger(DevStartJetty.class);
 
     public static void main(String[] args) throws Exception {
@@ -35,4 +35,7 @@ public class DevStartJetty {
         System.setProperty("suspender.password", "pass");
     }
 
+    public static boolean isRunningOnHeroku(){
+        return System.getenv("HEROKU") != null && Boolean.parseBoolean(System.getenv("HEROKU"));
+    }
 }

@@ -4,4 +4,6 @@ WORKDIR /app
 
 COPY /web/target/soknadsosialhjelp.jar /app/app.jar
 
+ENV HEROKU=true
+
 CMD ["/bin/sh", "start.sh"]
