@@ -51,7 +51,39 @@ Forutsetter at man har tilgang til git repository tilgjengelig på internt nett 
  * `cd soknadsosialhjelp/web/src/frontend && npm start`
 
  * Åpne `http://localhost:3000/soknadsosialhjelp/informasjon` i nettelseren
-     
+
+ ## Deploy til testmiljø på Heroku
+
+ Forutsetter at [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) er installert og at man har opprettet
+ og autentisert mot egen Heroku-konto:
+
+ ```bash
+ heroku auth:login
+ heroku container:login
+```
+
+ For å opprette applikasjon og deploye til Heroku:
+
+ ```bash
+ heroku create en-kul-ny-feature
+ ./heroku-build.sh
+ ```
+  
+ Hvis applikasjonen allerede eksisterer i Heroku, kan app name angis ved deploy:
+ 
+ ```bash
+ ./heroku-build.sh --app-name=en-kul-ny-feature
+ ``` 
+ 
+ Eventuelt kan applikasjonen settes som en git remote:
+ 
+ ```bash
+ git remote add heroku https://git.heroku.com/en-kul-ny-feature.git
+ ```
+ 
+ Etter deploy vil applikasjonen være tilgjengelig på `https://www.digisos-test.com/en-kul-ny-feature/soknadsosialhjelp/`.
+ (Forutsetter at backend `en-kul-ny-feature-server` er deployet.)
+ 
  ## Tekster
  
  Tekstene ligger i repoert `soknadsosialhjelp-tekster` med felles byggejobb på `cisbl.devillo.no`. Tekstendringer blir automatisk
