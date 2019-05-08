@@ -144,7 +144,8 @@ export enum OpplysningType {
 
 export enum VedleggStatus {
     VEDLEGGALLEREDESEND = "VedleggAlleredeSendt",
-    VEDLEGG_KREVES = "VedleggKreves"
+    VEDLEGG_KREVES = "VedleggKreves",
+    LASTET_OPP = "LastetOpp"
 }
 
 export enum InputType {
