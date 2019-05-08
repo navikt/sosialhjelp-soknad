@@ -109,7 +109,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
     antallManglendeVedlegg() {
         return this.props.manglendeVedlegg.filter((item: any) => {
-            return !(item.skjemaNummer === "annet" && item.skjemanummerTillegg === "annet");
+            return !(item.type === "annet|annet");
         }).length;
     }
 
