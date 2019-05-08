@@ -31,22 +31,22 @@ class NavYtelserView extends React.Component<Props, {}> {
         if (utbetalinger == null || utbetalinger.length === 0) {
             return <FormattedMessage id="utbetalinger.ingen.true"/>;
         }
-
         const utbetaltMelding = <span><FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/></span>;
-
         const utbetalingerView = utbetalinger.map((utbetaling, index) => {
             const type: string = utbetaling.inntektType;
-            const formattedDato = <FormattedDate value={utbetaling.utbetalingsdato}/>
+            const utbetalingsdato: string = utbetaling.utbetalingsdato;
+            let formattedDato = null;
+            if (utbetalingsdato && utbetalingsdato.length > 9) {
+                formattedDato = <FormattedDate value={utbetaling.utbetalingsdato}/>
+            }
             const belop = <FormattedNumber value={utbetaling.belop} style="decimal" minimumFractionDigits={2}/>;
-
             return (
                 <div key={index} className="utbetaling blokk-s">
                     <div>{type}<span className="verdi detaljeliste__verdi">{belop}</span></div>
-                    <div>{utbetaltMelding} {formattedDato}</div>
+                    {formattedDato && (<div>{utbetaltMelding} {formattedDato}</div>)}
                 </div>
             );
         });
-
         return utbetalingerView;
     }
 
