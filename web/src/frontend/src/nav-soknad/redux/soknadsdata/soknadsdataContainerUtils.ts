@@ -23,16 +23,18 @@ export interface SoknadsdataContainerProps {
 
 	// Funksjoner:
 	hentSoknadsdata?: (brukerBehandlingId: string, urlPath: string) => void;
-	lagreSoknadsdata?: (brukerBehandlingId: string, urlPath: string, soknadsdata: SoknadsdataType) => void;
+	// lagreSoknadsdata?: (brukerBehandlingId: string, urlPath: string, soknadsdata: SoknadsdataType, responseHandler?: (response: any) => void) => void;
+	lagreSoknadsdata?: (brukerBehandlingId: string, urlPath: string, soknadsdata: any, responseHandler?: (response: any) => void) => void;
 	setValideringsfeil?: (feilkode: ValideringActionKey, faktumKey: string) => void;
 	oppdaterSoknadsdataSti?: (sti: string, soknadsdata: SoknadsdataType) => void;
 	settRestStatus?: (sti: string, restStatus: REST_STATUS) => void;
+	skjul?: boolean;
 }
 
 export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerProps>(
 	(state: State) => ({
 		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
-		soknadsdata: state.soknadsdata,
+		soknadsdata: JSON.parse(JSON.stringify(state.soknadsdata)),
 		feil: state.validering.feil
 	}),
 	{

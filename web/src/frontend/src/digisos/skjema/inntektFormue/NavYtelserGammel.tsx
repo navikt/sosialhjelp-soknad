@@ -8,7 +8,7 @@ import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
 import {finnFaktum} from "../../../nav-soknad/utils";
 import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
-class NavYtelser extends React.Component<FaktumComponentProps, {}> {
+class NavYtelserGammel extends React.Component<FaktumComponentProps, {}> {
 
 	renderUtbetalinger(utbetalinger: Faktum[]) {
 		if (utbetalinger == null || utbetalinger.length === 0) {
@@ -75,4 +75,4 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 	}
 }
 
-export default NavYtelser;
+export default NavYtelserGammel;

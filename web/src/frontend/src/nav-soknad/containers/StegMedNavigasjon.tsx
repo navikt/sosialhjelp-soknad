@@ -110,6 +110,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 			this.props.valideringer
 		);
 		valideringsfeil = [...valideringsfeil, ...this.props.valideringsfeil];
+		valideringsfeil = this.fjernDuplikateValideringsfeil(valideringsfeil);
 
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
@@ -117,6 +118,28 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		} else {
 			this.props.dispatch(setFaktaValideringsfeil(valideringsfeil));
 		}
+	}
+
+	fjernDuplikateValideringsfeil(valideringsfeil: Valideringsfeil[]) {
+		let forrigeValideringsfeil: Valideringsfeil = null;
+		let duplikatIndex = null;
+		valideringsfeil.forEach((feil: Valideringsfeil, index: number) => {
+			if (forrigeValideringsfeil !== null &&
+				feil.faktumKey === forrigeValideringsfeil.faktumKey &&
+				feil.feilkode === forrigeValideringsfeil.feilkode) {
+				duplikatIndex = index;
+				this.fjernValideringsfeil(valideringsfeil, index);
+			}
+			forrigeValideringsfeil = feil;
+		});
+		if (duplikatIndex) {
+			valideringsfeil = this.fjernValideringsfeil(valideringsfeil, duplikatIndex);
+		}
+		return valideringsfeil;
+	}
+
+	fjernValideringsfeil(items: Valideringsfeil[], i: number): Valideringsfeil[] {
+		return items.slice(0, i-1).concat(items.slice(i, items.length));
 	}
 
 	handleGaTilbake(aktivtSteg: number) {
