@@ -93,8 +93,6 @@ const OppsummeringReducer: Reducer<OppsummeringState,
                 visBekreftMangler: action.visBekreftMangler
             };
         case OppsummeringActionTypeKeys.SET_ER_SYSTEMDATA_ENDRET: {
-            console.warn("Er systemdata endret:");
-            console.warn(action.erSystemdataEndret);
             return {
                 ...state,
                 erSystemdataEndret: action.erSystemdataEndret ? ErSystemdataEndret.YES : ErSystemdataEndret.NO

@@ -117,15 +117,14 @@ class OppsummeringView extends React.Component<Props, {}> {
                 <DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
 
                     {erSystemdataEndret === ErSystemdataEndret.YES &&
-                    <div className="infopanel-oppsummering skjema-sporsmal">
-                        <Informasjonspanel
-                            farge={DigisosFarge.VIKTIG}
-                            ikon={InformasjonspanelIkon.BREVKONVOLUTT}
-                        >
-                            NAV har mottatt oppdaterte opplynisninger om din situasjon. Vennligst gå tilbake i søknaden
-                            for å se over endringene.
-                        </Informasjonspanel>
-                    </div>
+                        <div className="infopanel-oppsummering skjema-sporsmal">
+                            <Informasjonspanel
+                                farge={DigisosFarge.VIKTIG}
+                                ikon={InformasjonspanelIkon.BREVKONVOLUTT}
+                            >
+                                <FormattedMessage id="oppsummering.systemdataendret.true"/>
+                            </Informasjonspanel>
+                        </div>
                     }
 
                     <div>
