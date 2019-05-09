@@ -2,7 +2,10 @@ FROM navikt/java:8
 
 WORKDIR /app
 
-COPY /web/target/soknadsosialhjelp.jar /app/app.jar
+COPY web/target/soknadsosialhjelp.jar /app/app.jar
+
+# FIXME
+COPY ./web/target/classes/webapp/WEB-INF/heroku-web.xml /app/web/target/classes/webapp/WEB-INF/heroku-web.xml
 
 ENV HEROKU=true
 
