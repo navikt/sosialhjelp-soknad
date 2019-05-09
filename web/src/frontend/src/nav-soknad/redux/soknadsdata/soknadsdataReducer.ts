@@ -174,7 +174,8 @@ export type SoknadsdataType =
 	| Utgifter
 	| Adresser
 	| AdresseValg
-	| NavEnhet[];
+	| NavEnhet[]
+	| REST_STATUS;
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
@@ -189,7 +190,8 @@ const initialSoknadsdataRestStatus = {
 		kontonummer: REST_STATUS.INITIALISERT,
 		basisPersonalia: REST_STATUS.INITIALISERT,
 		adresser: REST_STATUS.INITIALISERT,
-		navEnheter: REST_STATUS.INITIALISERT
+		navEnheter: REST_STATUS.INITIALISERT,
+		adresseNavEnheter: REST_STATUS.INITIALISERT
 	},
 	familie: {
 		sivilstatus: REST_STATUS.INITIALISERT,

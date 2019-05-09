@@ -18,24 +18,35 @@ import { getIntlTextOrKey } from "../../../nav-soknad/utils/intlUtils";
 import { Link } from "react-router-dom";
 import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
 import InformasjonsBoks from "./InformasjonsBoks";
+import { Soknadsdata } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import Adresse from "../personopplysninger/adresse/Adresse";
+import { NavEnhet } from "../personopplysninger/adresse/AdresseTypes";
 
-interface StateProps {
+interface OwnProps {
 	oppsummering: Oppsummering;
 	bekreftet: boolean;
 	visBekreftMangler: boolean;
 	restStatus: REST_STATUS;
 	brukerbehandlingId: number;
+	soknadsdata?: null | Soknadsdata;
 }
 
+interface OwnState {
+	manglerSoknadsmottaker: boolean;
+}
 type Props = FaktumComponentProps &
 	DispatchProps &
-	StateProps &
+	OwnProps &
 	InjectedIntlProps;
 
-class OppsummeringView extends React.Component<Props, {}> {
+class OppsummeringView extends React.Component<Props, OwnState> {
+
 	constructor(props: Props) {
 		super(props);
 		this.getOppsummering = this.getOppsummering.bind(this);
+		this.state = {
+			manglerSoknadsmottaker: false
+		}
 	}
 
 	componentDidMount() {
@@ -57,6 +68,14 @@ class OppsummeringView extends React.Component<Props, {}> {
 				}
 			})
 		);
+
+		const {soknadsdata} = this.props;
+		const navEnheter = soknadsdata.personalia.navEnheter;
+		const valg = soknadsdata.personalia.adresser.valg;
+		const manglerSoknadsmottaker = (valg === null || navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt) === null);
+		if (manglerSoknadsmottaker === true) {
+			this.setState({manglerSoknadsmottaker: true});
+		}
 	}
 
 	getOppsummering() {
@@ -67,6 +86,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 
 	render() {
 		const {oppsummering, brukerbehandlingId, intl} = this.props;
+		const {manglerSoknadsmottaker} = this.state;
 
 		const bolker = oppsummering
 			? this.props.oppsummering.bolker.map((bolk, idx) => (
@@ -106,14 +126,13 @@ class OppsummeringView extends React.Component<Props, {}> {
 		return (
 			<LoadContainer restStatus={this.props.restStatus}>
 				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
+					{manglerSoknadsmottaker && (<Adresse/>)}
 					<div>
 						{skjemaOppsummering}
 					</div>
-
 					<div className="infopanel-oppsummering skjema-sporsmal">
 						<InformasjonsBoks/>
 					</div>
-
 					<div className="bekreftOpplysningerPanel blokk-xs bolk">
 						<div className={classNames + " bekreftCheckboksPanel-innhold " +
 							(this.props.bekreftet ? " bekreftOpplysningerPanel__checked " : " ")}
@@ -153,6 +172,7 @@ export default connect((state: State, props: any) => {
 		bekreftet: state.oppsummering.bekreftet,
 		visBekreftMangler: state.oppsummering.visBekreftMangler,
 		restStatus: state.oppsummering.restStatus,
-		brukerbehandlingId: state.soknad.data.brukerBehandlingId
+		brukerbehandlingId: state.soknad.data.brukerBehandlingId,
+		soknadsdata: JSON.parse(JSON.stringify(state.soknadsdata))
 	};
 })(injectIntl(OppsummeringView));

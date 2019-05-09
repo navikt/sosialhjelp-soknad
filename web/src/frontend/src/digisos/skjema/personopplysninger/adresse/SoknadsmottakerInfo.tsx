@@ -9,6 +9,7 @@ import {
 import { NavEnhet } from "./AdresseTypes";
 import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
 import { soknadsmottakerStatus } from "./AdresseUtils";
+import { REST_STATUS } from "../../../../nav-soknad/types";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -39,18 +40,20 @@ class SoknadsmottakerInfo extends React.Component<Props, {}> {
 		} else if (erSynlig === true) {
 			erSynlig = false;
 		}
-		if (this.props.skjul === true) {
+		if (soknadsdata.restStatus.personalia.adresseNavEnheter === REST_STATUS.PENDING) {
 			erSynlig = false;
 		}
 
 		return (
-			<Informasjonspanel
-				ikon={InformasjonspanelIkon.BREVKONVOLUTT}
-				farge={farge}
-				synlig={erSynlig}
-			>
-				{tekst}
-			</Informasjonspanel>
+			<span>
+				{erSynlig && (<Informasjonspanel
+					ikon={InformasjonspanelIkon.BREVKONVOLUTT}
+					farge={farge}
+					synlig={erSynlig}
+				>
+					{tekst}
+				</Informasjonspanel>)}
+			</span>
 		);
 	}
 }
