@@ -36,12 +36,20 @@ import {
 	Barneutgifter
 } from "../../../digisos/skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
 import {
+	AdresseKategori,
+	Adresser,
+	initialAdresserState, NavEnhet
+} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
+import {
 	BasisPersonalia,
 	initialBasisPersonalia
 } from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import { REST_STATUS } from "../../types";
 import { Barnebidrag, ForsorgerPlikt } from "../../../digisos/skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
-
+import {
+    initialSysteminntekter,
+    Systeminntekter
+} from "../../../digisos/skjema/inntektFormue/navytelser/navYtelserTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -69,14 +77,19 @@ export enum SoknadsSti {
 	FORMUE = "inntekt/formue",
 	BOUTGIFTER = "utgifter/boutgifter",
 	BARNEUTGIFTER = "utgifter/barneutgifter",
+	ADRESSER = "personalia/adresser",
+	NAV_ENHETER = "personalia/navEnheter",
 	SIVILSTATUS = "familie/sivilstatus",
 	BASIS_PERSONALIA = "personalia/basisPersonalia",
-	FORSORGERPLIKT = "familie/forsorgerplikt"
+	FORSORGERPLIKT = "familie/forsorgerplikt",
+	INNTEKT_SYSTEMDATA = "inntekt/systemdata"
 }
 
 export interface Personalia {
 	kontonummer?: Kontonummer;
 	telefonnummer?: Telefonnummer;
+	adresser?: Adresser;
+	navEnheter?: NavEnhet[];
 	basisPersonalia?: BasisPersonalia;
 }
 
@@ -85,6 +98,7 @@ export interface Inntekt {
 	utbetalinger?: Utbetalinger;
 	formue?: Formue;
 	verdier?: Verdier;
+	systemdata?: Systeminntekter;
 }
 
 export interface Utgifter {
@@ -96,6 +110,8 @@ export interface Utgifter {
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
 	telefonnummer: initialTelefonnummerState,
+	adresser: initialAdresserState,
+	navEnheter: [],
 	basisPersonalia: initialBasisPersonalia
 };
 
@@ -103,7 +119,8 @@ export const initialInntektState: Inntekt = {
 	bostotte: initialBostotteState,
 	utbetalinger: initialUtbetalingerState,
 	formue: initialFormueState,
-	verdier: initialVerdierState
+	verdier: initialVerdierState,
+	systemdata: initialSysteminntekter
 };
 
 export const initialUtgifterState: Utgifter = {
@@ -134,6 +151,10 @@ export interface SoknadsdataActionVerdi {
 	utgifter?: Utgifter;
 }
 
+export interface AdresseValg {
+	valg: AdresseKategori;
+}
+
 export type SoknadsdataType
 	= Arbeid
 	| Begrunnelse
@@ -149,7 +170,11 @@ export type SoknadsdataType
 	| Bostotte
 	| Formue
 	| Verdier
-	| Utgifter;
+	| Systeminntekter
+	| Utgifter
+	| Adresser
+	| AdresseValg
+	| NavEnhet[];
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
@@ -157,6 +182,25 @@ interface SoknadsdataActionType {
 	sti?: string,
 	restStatus?: string
 }
+
+const initialSoknadsdataRestStatus = {
+	personalia: {
+		telefonnummer: REST_STATUS.INITIALISERT,
+		kontonummer: REST_STATUS.INITIALISERT,
+		basisPersonalia: REST_STATUS.INITIALISERT,
+		adresser: REST_STATUS.INITIALISERT,
+		navEnheter: REST_STATUS.INITIALISERT
+	},
+	familie: {
+		sivilstatus: REST_STATUS.INITIALISERT,
+		forsorgerplikt: REST_STATUS.INITIALISERT
+	},
+	inntekt: {
+		bostotte: REST_STATUS.INITIALISERT,
+		utbetalinger: REST_STATUS.INITIALISERT,
+		verdier: REST_STATUS.INITIALISERT
+	}
+};
 
 export const initialSoknadsdataState: Soknadsdata = {
 	arbeid: initialArbeidState,
@@ -167,23 +211,7 @@ export const initialSoknadsdataState: Soknadsdata = {
 	personalia: initialPersonaliaState,
 	inntekt: initialInntektState,
 	utgifter: initialUtgifterState,
-	restStatus: {
-		personalia: {
-			telefonnummer: REST_STATUS.INITIALISERT,
-			kontonummer: REST_STATUS.INITIALISERT,
-			basisPersonalia: REST_STATUS.INITIALISERT
-		},
-		familie: {
-			sivilstatus: REST_STATUS.INITIALISERT,
-			forsorgerplikt: REST_STATUS.INITIALISERT
-		},
-		inntekt: {
-			bostotte: REST_STATUS.INITIALISERT,
-			utbetalinger: REST_STATUS.INITIALISERT,
-			verdier: REST_STATUS.INITIALISERT
-		}
-	}
-
+	restStatus: initialSoknadsdataRestStatus
 };
 
 const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (

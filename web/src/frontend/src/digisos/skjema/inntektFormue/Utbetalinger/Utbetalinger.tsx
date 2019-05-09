@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-    connectSoknadsdataContainer,
+    connectSoknadsdataContainer, onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
@@ -13,9 +13,13 @@ import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
 import { REST_STATUS } from "../../../../nav-soknad/types";
+import {ValideringActionKey} from "../../../../nav-soknad/validering/types";
+import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";
+const TEXT_AREA_ANNET_FAKTUM_KEY = UTBETALINGER + "utbetalinger.annet.textarea";
+
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -84,7 +88,20 @@ export class UtbetalingerView extends React.Component<Props, State> {
     onBlurTekstfeltAnnet() {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
+        const beskrivelseAvAnnet = utbetalinger.beskrivelseAvAnnet;
+        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, TEXT_AREA_ANNET_FAKTUM_KEY);
+
+        if (!feilmeldingAnnet) {
+            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
+        }
+    }
+
+    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
+        const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
+        onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
+            this.props.setValideringsfeil(feilkode, faktumKey);
+        });
+        return feilkode;
     }
 
     renderCheckBox(navn: string, textKey: string) {
@@ -105,6 +122,7 @@ export class UtbetalingerView extends React.Component<Props, State> {
         const {soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
         const restStatus = soknadsdata.restStatus.inntekt.utbetalinger;
+        const textAreaId = "utbetalinger_annet_textarea";
         let oppstartsModus = this.state.oppstartsModus;
         if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
             oppstartsModus = false;
@@ -130,11 +148,11 @@ export class UtbetalingerView extends React.Component<Props, State> {
                         size="small"
                     >
                         <TextareaEnhanced
-                            id="utbetalinger_annet_textarea"
+                            id={textAreaId}
                             placeholder=""
                             onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}
                             onBlur={() => this.onBlurTekstfeltAnnet()}
-                            faktumKey=""
+                            faktumKey={TEXT_AREA_ANNET_FAKTUM_KEY}
                             labelId={UTBETALINGER + ".true.type.annet.true.beskrivelse.label"}
                             maxLength={MAX_CHARS}
                             value={utbetalinger.beskrivelseAvAnnet}
