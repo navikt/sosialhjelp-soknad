@@ -91,7 +91,6 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
         };
 
     try {
-		// const url = `ettersendelse/vedlegg/${action.vedleggId}`;
 		const url = `opplastetVedlegg/${behandlingsId}/${opplysningType}`;
 		response = yield call(fetchUpload, url, formData);
 		yield put(lastOppEttersendtVedleggOk());
@@ -114,6 +113,7 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
 		yield call(fetchPost, url, JSON.stringify({}));
 		lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.brukerbehandlingId);
 		yield put({type: EttersendelseActionTypeKeys.ETTERSEND_OK});
+		yield put(lastOppEttersendtVedleggOk());
 	} catch (reason) {
 		yield put(loggFeil("Send ettersendelse feilet: " + reason.toString()));
 		yield put(navigerTilServerfeil());
