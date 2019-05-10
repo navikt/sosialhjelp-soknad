@@ -10,6 +10,7 @@ import {
 	SoknadsdataType
 } from "./soknadsdataReducer";
 import { REST_STATUS } from "../../types";
+import { setVisSamtykkeInfo } from "../init/initActions";
 
 /*
  * Properties og redux koblinger som er felles for komponenter i søknadsskjemaet.
@@ -29,6 +30,7 @@ export interface SoknadsdataContainerProps {
 	oppdaterSoknadsdataSti?: (sti: string, soknadsdata: SoknadsdataType) => void;
 	settRestStatus?: (sti: string, restStatus: REST_STATUS) => void;
 	skjul?: boolean;
+	setVisSamtykkeInfo?: (vis: boolean) => void;
 }
 
 export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerProps>(
@@ -42,7 +44,8 @@ export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerP
 		lagreSoknadsdata,
 		oppdaterSoknadsdataSti,
 		setValideringsfeil,
-		settRestStatus
+		settRestStatus,
+		setVisSamtykkeInfo
 	}
 );
 
