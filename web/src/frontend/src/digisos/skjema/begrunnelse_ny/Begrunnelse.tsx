@@ -13,7 +13,7 @@ import {
 } from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
-const MAX_CHARS_BEGRUNNELSE = 699;
+const MAX_CHARS_BEGRUNNELSE = 600;
 const MAX_CHARS = 500;
 const FAKTUM_KEY_HVA = "begrunnelse.hva";
 const FAKTUM_KEY_HVORFOR = "begrunnelse.hvorfor";

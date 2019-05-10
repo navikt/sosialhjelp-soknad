@@ -8,7 +8,7 @@ import {
     settFilOpplastingPending,
     updateOpplysning
 } from "../okonomiskeOpplysninger/opplysningerActions";
-import {Fil, Opplysning} from "../okonomiskeOpplysninger/opplysningerTypes";
+import {Fil, Opplysning, VedleggStatus} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {lastOppFilFeilet} from "./filActions";
 import {REST_FEIL} from "../../types/restFeilTypes";
@@ -33,6 +33,7 @@ function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
         filerUpdated.push(response);
         const opplysningUpdated: Opplysning = {...opplysning};
         opplysningUpdated.filer = filerUpdated;
+        opplysningUpdated.vedleggStatus = VedleggStatus.LASTET_OPP;
         yield put(updateOpplysning(opplysningUpdated));
         yield put(settFilOpplastingFerdig(opplysning.type));
     } catch (reason) {
@@ -79,6 +80,11 @@ function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
 
         const opplysningUpdated: Opplysning = {...opplysning};
         opplysningUpdated.filer = filerUpdated;
+
+        if (opplysningUpdated.filer.length === 0) {
+            opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
+        }
+
         yield put(updateOpplysning(opplysningUpdated));
         yield put(settFilOpplastingFerdig(opplysningType));
 
