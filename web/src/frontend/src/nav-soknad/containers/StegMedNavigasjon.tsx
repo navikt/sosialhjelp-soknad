@@ -35,6 +35,7 @@ interface OwnProps {
 	skjemaConfig: SkjemaConfig;
 	pending?: boolean;
 	ikon?: React.ReactNode;
+	gaVidereDisabled?: boolean;
 }
 
 interface InjectedRouterProps {
@@ -209,6 +210,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 							}
 							gaVidere={() =>
 								this.handleGaVidere(aktivtStegConfig, brukerBehandlingId)}
+							gaVidereDisabled={this.props.gaVidereDisabled}
 							gaTilbake={
 								aktivtStegConfig.stegnummer > 1
 									? () => this.handleGaTilbake(aktivtStegConfig.stegnummer)

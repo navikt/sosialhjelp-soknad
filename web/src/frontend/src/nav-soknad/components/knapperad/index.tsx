@@ -5,6 +5,7 @@ import { Knapp } from "nav-frontend-knapper";
 
 interface Props {
 	gaViderePending?: boolean;
+	gaVidereDisabled?: boolean;
 	gaVidereLabel?: string;
 	gaVidere?: () => void;
 	gaTilbake?: () => void;
@@ -13,10 +14,11 @@ interface Props {
 
 class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 	render() {
-		const { gaVidere, gaTilbake, avbryt, gaVidereLabel, intl } = this.props;
+		const { gaVidere, gaVidereDisabled, gaTilbake, avbryt, gaVidereLabel, intl } = this.props;
 		return (
 			<div className="skjema-knapperad ikke-juridisk-tekst">
 				<Knapp
+					disabled={gaVidereDisabled}
 					id="gaa_videre_button"
 					type="hoved"
 					htmlType="button"

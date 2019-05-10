@@ -70,6 +70,7 @@ export const digisosSkjemaConfig: SkjemaConfig = {
 interface Props {
     steg: string;
     ikon?: React.ReactNode;
+    gaVidereDisabled?: boolean;
 }
 
 class DigisosSkjemaSteg extends React.Component<Props, {}> {
@@ -79,6 +80,7 @@ class DigisosSkjemaSteg extends React.Component<Props, {}> {
                 skjemaConfig={digisosSkjemaConfig}
                 stegKey={this.props.steg}
                 ikon={this.props.ikon}
+                gaVidereDisabled={this.props.gaVidereDisabled}
             >
                 {this.props.children}
             </StegMedNavigasjon>

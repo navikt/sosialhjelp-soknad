@@ -33,6 +33,7 @@ interface OwnProps {
 
 interface OwnState {
 	manglerSoknadsmottaker: boolean;
+	soknadsmottakerSatt: boolean;
 }
 type Props = FaktumComponentProps &
 	DispatchProps &
@@ -45,7 +46,8 @@ class OppsummeringView extends React.Component<Props, OwnState> {
 		super(props);
 		this.getOppsummering = this.getOppsummering.bind(this);
 		this.state = {
-			manglerSoknadsmottaker: false
+			manglerSoknadsmottaker: false,
+			soknadsmottakerSatt: false
 		}
 	}
 
@@ -75,6 +77,17 @@ class OppsummeringView extends React.Component<Props, OwnState> {
 		const manglerSoknadsmottaker = (valg === null || navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt) === null);
 		if (manglerSoknadsmottaker === true) {
 			this.setState({manglerSoknadsmottaker: true});
+		} else {
+			this.setState({soknadsmottakerSatt: true});
+		}
+	}
+
+	componentDidUpdate(prevProps: any) {
+		const {soknadsdata} = this.props;
+		const navEnheter = soknadsdata.personalia.navEnheter;
+		const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt);
+		if (this.state.manglerSoknadsmottaker === true && this.state.soknadsmottakerSatt === false && valgtNavEnhet) {
+			this.setState({soknadsmottakerSatt: true});
 		}
 	}
 
@@ -125,7 +138,7 @@ class OppsummeringView extends React.Component<Props, OwnState> {
 		}
 		return (
 			<LoadContainer restStatus={this.props.restStatus}>
-				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
+				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering} 	gaVidereDisabled={this.state.soknadsmottakerSatt === false}>
 					{manglerSoknadsmottaker && (<Adresse/>)}
 					<div>
 						{skjemaOppsummering}
