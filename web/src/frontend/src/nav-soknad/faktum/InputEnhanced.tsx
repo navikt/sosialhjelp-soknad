@@ -4,7 +4,7 @@ import { Feil, Input, InputBredde } from "nav-frontend-skjema";
 import { getInputFaktumTekst } from "../utils";
 import { State } from "../../digisos/redux/reducers";
 import { connect } from "react-redux";
-import { Valideringsfeil } from "../validering/types";
+import {getFeil} from "../utils/enhancedComponentUtils";
 
 export type InputTypes = "text" | "number" | "email" | "tel";
 
@@ -26,6 +26,7 @@ export interface OwnProps {
 	onChange: (verdi: string) => void;
 	getName?: () => string;
 	faktumKey: string;
+	faktumIndex?: number;
 	required: boolean;
 	feil?: any;
 	getFeil?: () => Feil;
@@ -39,16 +40,10 @@ class InputEnhanced extends React.Component<Props, {}> {
 		return `${this.props.faktumKey}`.replace(/\./g, "_");
 	}
 
-	// TODO Dra ut til EnhancedComponentUtils.ts
-	getFeil(): Feil {
-		const { faktumKey } = this.props;
-		const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey);
-		return !feilkode ? null : { feilmelding: this.props.intl.formatHTMLMessage({ id: feilkode.feilkode }) };
-	}
-
 	render() {
 		const {
 			faktumKey,
+			faktumIndex,
 			type,
 			disabled,
 			pattern,
@@ -56,7 +51,8 @@ class InputEnhanced extends React.Component<Props, {}> {
 			step,
 			intl,
 			maxLength = DEFAULT_MAX_LENGTH,
-			bredde
+			bredde,
+			feil
 		} = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey );
 		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
@@ -75,7 +71,7 @@ class InputEnhanced extends React.Component<Props, {}> {
 				onBlur={() => this.props.onBlur()}
 				label={tekster.label}
 				placeholder={tekster.pattern}
-				feil={this.getFeil()}
+				feil={getFeil(feil, intl, faktumKey, faktumIndex)}
 				maxLength={maxLength}
 				bredde={bredde}
 				pattern={pattern}

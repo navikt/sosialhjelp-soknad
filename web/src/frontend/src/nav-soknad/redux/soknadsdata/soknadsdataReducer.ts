@@ -141,22 +141,22 @@ export interface Soknadsdata {
 }
 
 export interface SoknadsdataActionVerdi {
-	arbeid?: Arbeid,
-	bosituasjon?: Bosituasjon,
-	begrunnelse?: Begrunnelse,
-	familie?: Familie
-	utdanning?: Utdanning,
+	arbeid?: Arbeid;
+	bosituasjon?: Bosituasjon;
+	begrunnelse?: Begrunnelse;
+	familie?: Familie;
+	utdanning?: Utdanning;
 	personalia: Personalia;
-	inntekt?: Inntekt,
-	utgifter?: Utgifter
+	inntekt?: Inntekt;
+	utgifter?: Utgifter;
 }
 
 export interface AdresseValg {
 	valg: AdresseKategori;
 }
 
-export type SoknadsdataType =
-	Arbeid
+export type SoknadsdataType
+	= Arbeid
 	| Begrunnelse
 	| Bosituasjon
 	| Familie

@@ -56,6 +56,7 @@ interface StateProps {
 	valideringsfeil?: Valideringsfeil[];
 	stegValidertCounter?: number;
 	oppsummeringBekreftet?: boolean;
+	fodselsnummer: string;
 }
 
 type Props = OwnProps &
@@ -234,7 +235,8 @@ const mapStateToProps = (state: SoknadAppState): StateProps => {
 		valideringer: state.validering.valideringsregler,
 		visFeilmeldinger: state.validering.visValideringsfeil,
 		valideringsfeil: state.validering.feil,
-		stegValidertCounter: state.validering.stegValidertCounter
+		stegValidertCounter: state.validering.stegValidertCounter,
+		fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer
 	};
 };
 

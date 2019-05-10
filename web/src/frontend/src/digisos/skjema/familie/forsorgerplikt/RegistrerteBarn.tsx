@@ -82,7 +82,7 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 											getName={() => "barn" + index + "_samvaersgrad"}
 											id={"barn" + index + "_samvaersgrad"}
 											maxLength={3}
-											verdi={barnet.samvarsgrad ? barnet.samvarsgrad.toString() : ""}
+											verdi={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
 											onChange={(verdi: string) => this.onChangeSamvaersgrad(verdi, index)}
 											onBlur={() => this.onBlur()}
 											faktumKey="system.familie.barn.true.barn.grad"
