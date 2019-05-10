@@ -56,6 +56,14 @@ class InputEnhanced extends React.Component<Props, {}> {
 		} = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey );
 		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
+		let valideringsFeil;
+		try {
+			valideringsFeil = getFeil(feil, intl, faktumKey, faktumIndex);
+		} catch (e) {
+			console.warn("valideringsfeil: " + e);
+			valideringsFeil = {tittel: "Ukjent feil",feilmelding: "Ukjent feil"};
+		}
+
 		return (
 			<Input
 				id={id}
@@ -71,7 +79,7 @@ class InputEnhanced extends React.Component<Props, {}> {
 				onBlur={() => this.props.onBlur()}
 				label={tekster.label}
 				placeholder={tekster.pattern}
-				feil={getFeil(feil, intl, faktumKey, faktumIndex)}
+				feil={valideringsFeil}
 				maxLength={maxLength}
 				bredde={bredde}
 				pattern={pattern}
