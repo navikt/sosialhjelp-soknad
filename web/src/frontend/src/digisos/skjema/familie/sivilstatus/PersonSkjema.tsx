@@ -10,6 +10,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { fdato, maksLengde, minLengde } from "../../../../nav-soknad/validering/valideringer";
 import { konverterFdatoFraServer, konverterFdatoTilServer } from "./datoUtils";
+import { verdiEllerTomStreng } from "../../../../nav-soknad/validering/utils";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -103,7 +104,7 @@ class PersonSkjema extends React.Component<Props, {}> {
 								id={id + "_fornavn_input"}
 								inputRef={c => (this.navnInput = c)}
 								maxLength={100}
-								verdi={ektefelle.navn.fornavn}
+								verdi={verdiEllerTomStreng(ektefelle.navn.fornavn)}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("navn/fornavn", verdi)}
 								onBlur={() => this.onBlur()}
 								faktumKey="familie.sivilstatus.gift.ektefelle.fornavn"
@@ -118,7 +119,7 @@ class PersonSkjema extends React.Component<Props, {}> {
 								getFeil={() => null}
 								id={id + "_mellomnavn_input"}
 								maxLength={100}
-								verdi={ektefelle.navn.mellomnavn}
+								verdi={verdiEllerTomStreng(ektefelle.navn.mellomnavn)}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("navn/mellomnavn", verdi)}
 								onBlur={() => this.onBlur()}
 								faktumKey="familie.sivilstatus.gift.ektefelle.mellomnavn"
@@ -133,7 +134,7 @@ class PersonSkjema extends React.Component<Props, {}> {
 								getFeil={() => null}
 								id={id + "_etternavn_input"}
 								maxLength={100}
-								verdi={ektefelle.navn.etternavn}
+								verdi={verdiEllerTomStreng(ektefelle.navn.etternavn)}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("navn/etternavn", verdi)}
 								onBlur={() => this.onBlur()}
 								faktumKey="familie.sivilstatus.gift.ektefelle.etternavn"

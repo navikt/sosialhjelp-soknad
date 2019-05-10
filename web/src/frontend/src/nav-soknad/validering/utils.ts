@@ -70,3 +70,7 @@ export function validerAlleFaktum(
 	});
 	return valideringsfeil;
 }
+
+export function verdiEllerTomStreng(verdi: string): string {
+	return verdi ? verdi : "";
+}
