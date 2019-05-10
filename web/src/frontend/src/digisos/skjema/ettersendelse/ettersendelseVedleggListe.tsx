@@ -76,8 +76,9 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                 (this.state.advarselManglerVedlegg ? "ettersendelse__vedlegg__feil " : "")}
             >
                 {this.props.manglendeVedlegg && this.props.manglendeVedlegg.map((vedlegg: EttersendelseVedleggBackend) => {
-                    const tittelKey = getSpcForOpplysning(vedlegg.type).textKey + ".vedlegg.sporsmal.tittel";
-                    const infoKey = getSpcForOpplysning(vedlegg.type).textKey + ".vedlegg.sporsmal.info";
+                    const spc = getSpcForOpplysning(vedlegg.type);
+                    const tittelKey = spc ? spc.textKey + ".vedlegg.sporsmal.tittel" : "";
+                    const infoKey = spc ? spc.textKey + ".vedlegg.sporsmal.info" : "";
                     let info;
                     if (!!this.props.intl.messages[infoKey]) {
                         info = this.props.intl.formatMessage({id: infoKey});
