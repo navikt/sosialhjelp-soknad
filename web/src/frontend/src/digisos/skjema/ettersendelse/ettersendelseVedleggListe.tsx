@@ -80,7 +80,7 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                     const tittelKey = spc ? spc.textKey + ".vedlegg.sporsmal.tittel" : "";
                     const infoKey = spc ? spc.textKey + ".vedlegg.sporsmal.info" : "";
                     let info;
-                    if (!!this.props.intl.messages[infoKey]) {
+                    if (infoKey && !!this.props.intl.messages[infoKey]) {
                         info = this.props.intl.formatMessage({id: infoKey});
                     }
                     if (!this.props.ettersendelseAktivert
@@ -96,7 +96,7 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                             restStatus={this.props.opplastingStatus}
                             feilKode={this.props.feiletVedleggId === vedlegg.type ? this.props.feilKode : null}
                         >
-                            <h3><FormattedMessage id={tittelKey}/></h3>
+                            {tittelKey && <h3><FormattedMessage id={tittelKey}/></h3>}
                             {info && (<p>{info}</p>)}
                         </EttersendelseVedlegg>);
                 })}
