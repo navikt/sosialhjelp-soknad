@@ -39,15 +39,8 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
 			verdi
 		} = this.props;
 
-		/** Sjekk om komponenten har children og dermed skal vise skjema når ja er valtg */
 		const harUnderSkjema = children !== undefined;
-		/** Hent ut true/false verdien fra faktumet, eller fra property på jaNeiPropFaktum dersom det er satt */
-		// const jaNeiVerdi = verdi;
-		/** Vis kun skjema dersom komponenten har fått inn skjema og at ja er valgt */
 		const visUnderSkjema = harUnderSkjema && verdi === true;
-			// (harSkjema && (skjemaTilhorerValg === "ja" && jaNeiVerdi === "true")) ||
-			// (skjemaTilhorerValg === "nei" && jaNeiVerdi === "false");
-		/** Variabel som holder i properties for radioFaktumene */
 
 		let idRadioJa: string = null;
 		let idRadioNei: string = null;
@@ -69,7 +62,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
 		return (
 			<Sporsmal
 				tekster={this.props.tekster}
-				style={visUnderSkjema ? "jaNeiSporsmal" : "normal"}
+				style={harUnderSkjema ? "jaNeiSporsmal" : "normal"}
 				legendTittelStyle={this.props.legendTittelStyle || LegendTittleStyle.DEFAULT}
 			>
 				<ValgMedUnderskjema
