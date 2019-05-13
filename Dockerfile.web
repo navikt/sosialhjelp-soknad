@@ -1,12 +1,13 @@
-FROM navikt/java:8
+FROM node:8
 
 WORKDIR /app
 
-COPY web/target/soknadsosialhjelp.jar /app/app.jar
+COPY web/src/frontend/build/ /app/
+COPY heroku.js /app/
 
-# FIXME
-COPY ./web/target/classes/webapp/WEB-INF/heroku-web.xml /app/web/target/classes/webapp/WEB-INF/heroku-web.xml
+RUN npm install express
 
 ENV HEROKU=true
+ENV APP=fleskesvor
 
-CMD ["/bin/sh", "start.sh"]
+CMD ["node", "heroku.js"]
