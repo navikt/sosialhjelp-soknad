@@ -48,7 +48,7 @@ const reducers = combineReducers({
 	mockData: MockReducer,
 	soknadsdata: SoknadsdataReducer,
 	okonomiskeOpplysninger: OpplysningerReducer,
-	filopplasting: FilReducer,
+	filopplasting: FilReducer
 });
 
 export default reducers;
