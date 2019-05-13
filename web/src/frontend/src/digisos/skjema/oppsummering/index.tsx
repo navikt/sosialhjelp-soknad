@@ -17,10 +17,10 @@ import { settInfofaktum } from "../../../nav-soknad/redux/soknad/soknadActions";
 import { getIntlTextOrKey } from "../../../nav-soknad/utils/intlUtils";
 import { Link } from "react-router-dom";
 import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
-import InformasjonsBoks from "./InformasjonsBoks";
 import { Soknadsdata } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import Adresse from "../personopplysninger/adresse/Adresse";
 import { NavEnhet } from "../personopplysninger/adresse/AdresseTypes";
+import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
 
 interface OwnProps {
 	oppsummering: Oppsummering;
@@ -86,6 +86,7 @@ class OppsummeringView extends React.Component<Props, OwnState> {
 		const {soknadsdata} = this.props;
 		const navEnheter = soknadsdata.personalia.navEnheter;
 		const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt);
+		console.warn("valgtNavEnhet: " + JSON.stringify(valgtNavEnhet, null, 4));
 		if (this.state.manglerSoknadsmottaker === true && this.state.soknadsmottakerSatt === false && valgtNavEnhet) {
 			this.setState({soknadsmottakerSatt: true});
 		}
@@ -100,6 +101,7 @@ class OppsummeringView extends React.Component<Props, OwnState> {
 	render() {
 		const {oppsummering, brukerbehandlingId, intl} = this.props;
 		const {manglerSoknadsmottaker} = this.state;
+		console.warn("this.state.manglerSoknadsmottaker: " + JSON.stringify(manglerSoknadsmottaker, null, 4));
 
 		const bolker = oppsummering
 			? this.props.oppsummering.bolker.map((bolk, idx) => (
@@ -144,7 +146,7 @@ class OppsummeringView extends React.Component<Props, OwnState> {
 						{skjemaOppsummering}
 					</div>
 					<div className="infopanel-oppsummering skjema-sporsmal">
-						<InformasjonsBoks/>
+						<SoknadsmottakerInfoPanel/>
 					</div>
 					<div className="bekreftOpplysningerPanel blokk-xs bolk">
 						<div className={classNames + " bekreftCheckboksPanel-innhold " +
