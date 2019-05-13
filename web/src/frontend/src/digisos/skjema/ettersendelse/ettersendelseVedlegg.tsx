@@ -101,8 +101,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 				</AvsnittMedMarger>
 
 				{this.props.vedlegg && this.props.vedlegg.filer.map((fil: Fil) => {
-						// TODO: ER DENNE RIKTIG?
-						const lastNedUrl = `sosialhjelpvedlegg/${fil.uuid}/fil`;
+						const lastNedUrl = `opplastetVedlegg/${fil.uuid}/fil`;
 						return (
 							<AvsnittMedMarger
 								hoyreIkon={MargIkoner.SØPPELBØTTE}
