@@ -89,7 +89,7 @@ class BosituasjonView extends React.Component<Props, {}> {
 	}
 
 	validerAntallPersoner(antallPersoner: string | null) {
-		if (antallPersoner.length === 0) {
+		if (!antallPersoner || antallPersoner.length === 0) {
 			return null;
 		}
 		const feilkode: ValideringActionKey = erTall(antallPersoner, true);
