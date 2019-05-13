@@ -2,39 +2,32 @@ import * as React from "react";
 import {
 	lastOppEttersendelseVedlegg,
 	slettEttersendtVedlegg
-} from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
-import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
+} from "../../../nav-soknad/redux/ettersendelseGammel/ettersendelseActions";
+import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
+import { State } from "../../redux/reducers";
 import { downloadAttachedFile } from "../../../nav-soknad/utils/rest-utils";
 import { REST_STATUS } from "../../../nav-soknad/types";
 import { MargIkoner } from "./margIkoner";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { REST_FEIL } from "../../../nav-soknad/types/restFeilTypes";
-import {
-    EttersendelseState,
-    EttersendelseVedleggBackend
-} from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
-import {Fil, OpplysningType} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 
 interface OwnProps {
 	ettersendelseAktivert: boolean;
 	children: React.ReactNode;
-	vedlegg: EttersendelseVedleggBackend;
+	vedlegg?: any;
 	restStatus?: string;
 	feilKode?: string;
 	dispatch?: any;
-}
-
-interface StoreToProps {
-    ettersendelse: EttersendelseState;
+	feiletVedleggId?: string;
 }
 
 interface OwnState {
 	filnavn: string;
 }
 
-export type Props = OwnProps & DispatchProps & InjectedIntlProps & StoreToProps;
+export type Props = OwnProps & DispatchProps & InjectedIntlProps;
 
 class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
@@ -48,34 +41,26 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 		};
 	}
 
-	removeFile(filId: string, opplysningType: OpplysningType) {
-		const { brukerbehandlingId } = this.props.ettersendelse;
-		this.props.dispatch(slettEttersendtVedlegg(brukerbehandlingId, filId, opplysningType));
+	removeFile(filId: string, vedleggId: string) {
+		this.props.dispatch(slettEttersendtVedlegg(vedleggId, filId));
 	}
 
 	handleFileUpload(files: FileList) {
-        const {ettersendelse, vedlegg} = this.props;
-        // this.props.dispatch(lastOppFilFeilet(opplysning.type, null));
-
-		const { brukerbehandlingId } = ettersendelse;
-
 		if (files.length !== 1) {
 			return;
 		}
 		const formData = new FormData();
 		formData.append("file", files[ 0 ], files[ 0 ].name);
 		this.setState({filnavn: files[ 0 ].name});
-		this.props.dispatch(lastOppEttersendelseVedlegg(brukerbehandlingId, vedlegg.type, formData));
+		const vedleggId = this.props.vedlegg.vedleggId;
+		this.props.dispatch(lastOppEttersendelseVedlegg(vedleggId, formData));
 		this.leggTilVedleggKnapp.value = "";
 	}
 
 	render() {
-
-		const { ettersendelse, vedlegg} = this.props;
-
-		const { feiletVedleggId } = ettersendelse;
-
-		const opplastingsFeil: boolean = this.props.restStatus === REST_STATUS.FEILET && feiletVedleggId === vedlegg.type;
+		const vedleggId = this.props.vedlegg.vedleggId;
+		const opplastingsFeil: boolean = this.props.restStatus === REST_STATUS.FEILET &&
+			this.props.feiletVedleggId === vedleggId.toString();
 
 		const visFilForStorFeilmelding: boolean = opplastingsFeil &&
 			this.props.feilKode === REST_FEIL.FOR_STOR_FIL;
@@ -100,14 +85,13 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 					/>
 				</AvsnittMedMarger>
 
-				{this.props.vedlegg && this.props.vedlegg.filer.map((fil: Fil) => {
-						// TODO: ER DENNE RIKTIG?
-						const lastNedUrl = `sosialhjelpvedlegg/${fil.uuid}/fil`;
+				{this.props.vedlegg && this.props.vedlegg.filer.map((fil: any) => {
+						const lastNedUrl = `sosialhjelpvedlegg/${fil.filId}/fil`;
 						return (
 							<AvsnittMedMarger
 								hoyreIkon={MargIkoner.SØPPELBØTTE}
-								key={fil.uuid}
-								onClickHoyreIkon={() => this.removeFile(fil.uuid, this.props.vedlegg.type)}
+								key={fil.filId}
+								onClickHoyreIkon={() => this.removeFile(fil.filId, vedleggId)}
 							>
 								<a
 									className="lenke"
@@ -115,7 +99,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 									href="#"
 									onClick={() => downloadAttachedFile(lastNedUrl)}
 								>
-									{fil.filNavn}
+									{fil.filnavn}
 								</a>
 							</AvsnittMedMarger>
 						);
@@ -144,16 +128,10 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 						</span>
 					</AvsnittMedMarger>
 				)}
+
 			</span>
 		);
 	}
 }
 
-export default connect<StoreToProps, {}, OwnProps>(
-    (state: SoknadAppState) => {
-        return {
-            feil: state.validering.feil,
-			ettersendelse: state.ettersendelse
-        };
-    }
-)((injectIntl(EttersendelseVedlegg)));
+export default connect<{}, {}, OwnProps>((state: State) => ({}))(injectIntl(EttersendelseVedlegg));

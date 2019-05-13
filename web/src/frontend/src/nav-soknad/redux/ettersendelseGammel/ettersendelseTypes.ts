@@ -1,9 +1,4 @@
 import { REST_STATUS } from "../../types/restTypes";
-import {
-    Fil,
-    OpplysningType,
-    VedleggStatus
-} from "../okonomiskeOpplysninger/opplysningerTypes";
 
 export enum EttersendelseActionTypeKeys {
 	NY = "ettersendelse/NY",
@@ -36,35 +31,18 @@ export enum EttersendelseActionTypeKeys {
 	ETTERSEND_OK = "ettersendelse/ETTERSEND_OK",
 
 	INIT = "ettersendelse/INIT",
-	OTHER_ACTION = "__any_other_action_type__",
-
-    FIL_OPPLASTING_OK = "ettersendelse/FIL_OPPLASTING_OK"
+	OTHER_ACTION = "__any_other_action_type__"
 }
-
-export type EttersendelseActionTypes
-	= OpprettEttersendelseAction
-    | OpprettEttersendelseFeiletAction
-    | LagEttersendelseOkAction
-    | LastOppEttersendelseAction
-    | LastOppEttersendelseOkAction
-    | LastOppEttersendelseFeiletAction
-    | LesEttersendteVedleggAction
-    | SlettEttersendtVedleggAction
-    | SlettEttersendtVedleggOkAction
-    | LesEttersendelsesVedleggAction
-    | SendEttersendelseAction
-    | SendEttersendelsePendingAction
-    | SendEttersendelseOkAction
-    | LesEttersendelserAction
-    | LesEttersendelserOkAction
-    | OtherAction
-    | FilOpplastingOk
 
 export enum EttersendelseFeilkode {
 	NY_ETTERSENDELSE_FEILET = "NY_ETTERSENDELSE_FEILET"
 }
 
-
+export interface EttersendteVedleggState {
+	data: any[];
+	restStatus: REST_STATUS;
+	opplastingStatus: REST_STATUS;
+}
 
 export interface OpprettEttersendelseAction {
 	type: EttersendelseActionTypeKeys.NY;
@@ -89,25 +67,16 @@ export interface SendEttersendelseOkAction {
 	type: EttersendelseActionTypeKeys.ETTERSEND_OK;
 }
 
-// TODO: DENNE BRUKES
 export interface LastOppEttersendtVedleggAction {
 	type: EttersendelseActionTypeKeys.LAST_OPP;
-	behandlingsId: string;
-	opplysningType: OpplysningType;
+	vedleggId: number;
 	formData: FormData;
 }
 
 export interface SlettEttersendtVedleggAction {
 	type: EttersendelseActionTypeKeys.SLETT_VEDLEGG;
-	behandlingsId: string;
-	filUuid: string;
-	opplysningType: OpplysningType;
-}
-
-export interface SlettEttersendtVedleggOkAction {
-    type: EttersendelseActionTypeKeys.SLETT_VEDLEGG_OK;
-    filUuid: string;
-    opplysningType: OpplysningType;
+	vedleggId: string;
+	filId: string;
 }
 
 export interface LesEttersendelsesVedleggAction {
@@ -122,19 +91,28 @@ export interface LesEttersendelserAction {
 
 export interface LesEttersendelserOkAction {
 	type: EttersendelseActionTypeKeys.LES_ETTERSENDELSER_OK;
-    ettersendelser: any;
+	ettersendelser: any;
 }
+export type EttersendelseActionTypes =
+	OpprettEttersendelseAction
+	| OpprettEttersendelseFeiletAction
+	| LagEttersendelseOkAction
+	| LastOppEttersendelseAction
+	| LastOppEttersendelseOkAction
+	| LastOppEttersendelseFeiletAction
+	| LessEttersendteVedleggAction
+	| SlettEttersendtVedleggAction
+	| LesEttersendelsesVedleggAction
+	| SendEttersendelseAction
+	| SendEttersendelsePendingAction
+	| SendEttersendelseOkAction
+	| LesEttersendelserAction
+	| LesEttersendelserOkAction
+	| OtherAction;
 
-
-export interface LesEttersendteVedleggAction {
+interface LessEttersendteVedleggAction {
 	type: EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG_OK;
-    manglendeVedleggsListe: EttersendelseVedleggBackend[];
-}
-
-export interface FilOpplastingOk {
-    type: EttersendelseActionTypeKeys.FIL_OPPLASTING_OK,
-    opplysningType: OpplysningType;
-    fil: Fil;
+	vedlegg: any;
 }
 
 export interface LastOppEttersendelseAction {
@@ -163,11 +141,8 @@ export interface OtherAction {
 }
 
 export interface EttersendelseState {
-	data: EttersendelseVedleggBackend[];
-	innsendte: {
-        originalSoknad: OrginalSoknad | null;
-        ettersendelser: any[];
-    };
+	data: any[];
+	innsendte: any;
 	restStatus: REST_STATUS;
 	opplastingStatus: REST_STATUS;
 	ettersendStatus: REST_STATUS;
@@ -175,23 +150,3 @@ export interface EttersendelseState {
 	feilKode: string;
 	feiletVedleggId: string;
 }
-
-export interface EttersendelseVedleggBackend {
-    type: OpplysningType;
-    vedleggStatus: VedleggStatus;
-    filer: Fil[]
-}
-
-export interface OrginalSoknad {
-	behandlingsId: string;
-	innsendtDato: string;
-	innsendtTidspunkt: string;
-	innsendteVedlegg: any [];
-	ikkeInnsendteVedlegg: any[];
-	navenhet: string;
-	orgnummer: string;
-}
-
-// export interface Ettersendelser {
-//
-// }

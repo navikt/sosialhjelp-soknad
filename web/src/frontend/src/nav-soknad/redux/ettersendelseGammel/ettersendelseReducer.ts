@@ -1,12 +1,11 @@
-import {REST_STATUS} from "../../types/restTypes";
+import { REST_STATUS } from "../../types/restTypes";
 import {
-    EttersendelseActionTypeKeys,
-    EttersendelseActionTypes,
-    EttersendelseFeilkode,
-    EttersendelseState, EttersendelseVedleggBackend
+	EttersendelseActionTypeKeys,
+	EttersendelseActionTypes,
+	EttersendelseFeilkode,
+	EttersendelseState
 } from "./ettersendelseTypes";
-import {Reducer} from "../reduxTypes";
-import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
+import { Reducer } from "../reduxTypes";
 
 const initialState: EttersendelseState = {
 	restStatus: REST_STATUS.INITIALISERT,
@@ -60,45 +59,10 @@ const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes
 				opplastingStatus: REST_STATUS.OK
 			};
 		}
-        case EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG_OK: {
-            return {
-                ...state,
-                data: action.manglendeVedleggsListe
-            };
-        }
-		case EttersendelseActionTypeKeys.FIL_OPPLASTING_OK: {
-
-			const dataUpdated = state.data.map((vedlegg) => {
-				if (vedlegg.type === action.opplysningType){
-					vedlegg.filer.push(action.fil);
-				}
-				return vedlegg;
-			});
-
+		case EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG_OK: {
 			return {
 				...state,
-				data: dataUpdated
-			};
-		}
-		case EttersendelseActionTypeKeys.SLETT_VEDLEGG_OK: {
-
-			const { filUuid, opplysningType } = action;
-
-			const dataUpdated = state.data.map((vedlegg: EttersendelseVedleggBackend) => {
-				if (vedlegg.type === opplysningType){
-					const filListeUpdated: Fil[] = vedlegg.filer.filter((fil: Fil) => {
-						return fil.uuid !== filUuid;
-					});
-					vedlegg.filer = filListeUpdated;
-					return vedlegg;
-				} else {
-					return vedlegg;
-				}
-			});
-
-			return {
-				...state,
-				data: dataUpdated
+				data: action.vedlegg
 			};
 		}
 		case EttersendelseActionTypeKeys.ETTERSEND_PENDING: {
@@ -123,8 +87,8 @@ const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes
 			return {
 				...state,
 				restStatus: REST_STATUS.OK,
-                innsendte: action.ettersendelser
-            };
+				innsendte: action.ettersendelser
+			};
 		}
 		default:
 			return state;
