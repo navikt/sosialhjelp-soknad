@@ -30,6 +30,8 @@ interface State {
 
 class AdresseTypeahead extends React.Component<Props, State> {
 
+	mouseClick: boolean;
+
 	constructor(props: Props) {
 		super(props);
 		this.state = {
@@ -81,21 +83,28 @@ class AdresseTypeahead extends React.Component<Props, State> {
 			});
 	}
 
-	onSelect(verdi: string, adresse: AdressesokTreff) {
-		const status = adresse.husnummer ?
-			AdresseTypeaheadStatus.ADRESSE_OK :
-			AdresseTypeaheadStatus.HUSNUMMER_IKKE_SATT;
-		this.setState({status,verdi});
-		this.props.onVelgAnnenAdresse(adresse);
-		if (!adresse.husnummer) {
-			this.setState({
-				cursorPosisjon: beregnTekstfeltMarkorPosisjon(adresse),
-				adresser: []
-			});
+	onSelect(verdi: string, adresse: AdressesokTreff, mouseClick: boolean) {
+		if(mouseClick === true) {
+			this.mouseClick = true;
+		}
+		if (this.mouseClick === true && mouseClick === false) {
+			console.warn("Warning: both click and select event detected.");
 		} else {
-			this.setState({
-				adresser: []
-			});
+			const status = adresse.husnummer ?
+				AdresseTypeaheadStatus.ADRESSE_OK :
+				AdresseTypeaheadStatus.HUSNUMMER_IKKE_SATT;
+			this.setState({status,verdi});
+			this.props.onVelgAnnenAdresse(adresse);
+			if (!adresse.husnummer) {
+				this.setState({
+					cursorPosisjon: beregnTekstfeltMarkorPosisjon(adresse),
+					adresser: []
+				});
+			} else {
+				this.setState({
+					adresser: []
+				});
+			}
 		}
 	}
 
@@ -108,7 +117,7 @@ class AdresseTypeahead extends React.Component<Props, State> {
 				return formaterAdresseString(adresse) === valgtTekststreng;
 			});
 			if (valgtAdresse) {
-				this.onSelect(valgtTekststreng, valgtAdresse);
+				this.onSelect(valgtTekststreng, valgtAdresse, true);
 			}
 			event.preventDefault();
 		}
@@ -161,7 +170,7 @@ class AdresseTypeahead extends React.Component<Props, State> {
 					items={adresser}
 					getItemValue={(item: any) => formaterAdresseString(item)}
 					onChange={(event: any, value: string) => this.onChange(event, value)}
-					onSelect={(value: any, item: any) => this.onSelect(value, item)}
+					onSelect={(value: any, item: any) => this.onSelect(value, item, false)}
 					renderMenu={(children: any) => this.renderMenu(children)}
 					renderItem={(item: any, isHighlighted: any) => this.renderItem(item, isHighlighted)}
 					autoHighlight={true}
