@@ -102,7 +102,10 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
 			const millisekunder = Date.now() - lastFetch;
 			const sekunderSidenForrige = Math.floor(millisekunder/1000);
 			if(sekunderSidenForrige < 3) {
-				return new Promise(() => {});
+				const promise = new Promise((resolve, reject) => {
+					resolve("GJENTATT_KALL");
+				});
+				return promise;
 			}
 		}
 		lastFetch = Date.now();

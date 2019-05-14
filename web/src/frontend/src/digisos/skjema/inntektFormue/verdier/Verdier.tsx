@@ -23,7 +23,7 @@ const VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY = VERDIER + "verdier.annet.textarea";
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 interface State {
-    pending: boolean
+    oppstartsModus: boolean
 }
 
 export class VerdierView extends React.Component<Props, State> {
@@ -31,7 +31,7 @@ export class VerdierView extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            pending: true
+            oppstartsModus: true
         }
     }
 
@@ -40,9 +40,9 @@ export class VerdierView extends React.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-        if (this.state.pending) {
+        if (this.state.oppstartsModus) {
             if (this.props.soknadsdata.restStatus.inntekt.verdier === REST_STATUS.OK) {
-                this.setState({pending: false});
+                this.setState({oppstartsModus: false});
             }
         }
     }
@@ -50,7 +50,8 @@ export class VerdierView extends React.Component<Props, State> {
     handleClickJaNeiSpsm(verdi: boolean) {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const restStatus = soknadsdata.restStatus.inntekt.verdier;
-        if (!this.state.pending && restStatus === REST_STATUS.OK) {
+
+        if (!this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
             const verdier: Verdier = soknadsdata.inntekt.verdier;
             verdier.bekreftelse = verdi;
             if (!verdi) {
@@ -123,7 +124,7 @@ export class VerdierView extends React.Component<Props, State> {
         const restStatus = soknadsdata.restStatus.inntekt.verdier;
         return (
             <JaNeiSporsmal
-                visPlaceholder={this.state.pending && restStatus !== REST_STATUS.OK}
+                visPlaceholder={this.state.oppstartsModus && restStatus !== REST_STATUS.OK}
                 tekster={getFaktumSporsmalTekst(this.props.intl, VERDIER)}
                 faktumKey={VERDIER}
                 verdi={verdier.bekreftelse}
