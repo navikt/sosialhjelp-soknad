@@ -88,7 +88,7 @@ class AdresseTypeahead extends React.Component<Props, State> {
 			this.mouseClick = true;
 		}
 		if (this.mouseClick === true && mouseClick === false) {
-			console.warn("Warning: both click and select event detected.");
+			// console.warn("Warning: both click and select events detected.");
 		} else {
 			const status = adresse.husnummer ?
 				AdresseTypeaheadStatus.ADRESSE_OK :
