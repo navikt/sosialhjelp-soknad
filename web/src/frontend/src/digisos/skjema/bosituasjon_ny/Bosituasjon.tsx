@@ -112,7 +112,9 @@ class BosituasjonView extends React.Component<Props, {}> {
 		if (this.erValgt(Bosituasjonsvalg.annet) || Annetvalg[bosituasjon.botype]) {
 			synligUnderskjema = true;
 		}
-		const antallPersoner = bosituasjon.antallPersoner ? bosituasjon.antallPersoner : "";
+
+		const antallPersoner = bosituasjon.antallPersoner !== null && bosituasjon.antallPersoner !== undefined ? bosituasjon.antallPersoner : "";
+
 		return (
 			<div>
 				<Sporsmal
