@@ -57,33 +57,28 @@ class NavYtelserView extends React.Component<Props, {}> {
         const visAnimerteStreker = restStatus !== REST_STATUS.OK;
         const harUtbetalinger: boolean = systeminntekter && systeminntekter.length > 0;
 
-        if (!visAnimerteStreker) {
-            return (
-                <SporsmalFaktum faktumKey="navytelser" style="system" legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
-                    <SysteminfoMedSkjema>
-                        <h4 className="skjema-sporsmal__infotekst__tittel">
-                            <FormattedMessage id="utbetalinger.sporsmal"/>
-                        </h4>
-                        { harUtbetalinger &&
-                        <div className="utbetalinger">
-                            {this.renderUtbetalinger(systeminntekter)}
-                            <FormattedHTMLMessage id="utbetalinger.infotekst.tekst"/>
-                        </div>
-                        }
-                        {!harUtbetalinger &&
-                            <FormattedHTMLMessage id="utbetalinger.ingen.true"/>
-                        }
-                    </SysteminfoMedSkjema>
-                </SporsmalFaktum>
-            )
-        }
         return (
-            <SporsmalFaktum faktumKey="navytelser" style="system" legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
-                {visAnimerteStreker && (
-                    <TextPlaceholder lines={3}/>
-                )}
+            <SporsmalFaktum faktumKey="navytelser.tittel" style="system"
+                            legendTittelStyle={LegendTittleStyle.FET_NORMAL} visLedetekst={true}>
+                {!visAnimerteStreker &&
+                <SysteminfoMedSkjema>
+                    {harUtbetalinger &&
+                    <div className="utbetalinger">
+                        {this.renderUtbetalinger(systeminntekter)}
+                        <FormattedHTMLMessage id="utbetalinger.infotekst.tekst"/>
+                    </div>
+                    }
+                    {!harUtbetalinger &&
+                    <FormattedHTMLMessage id="utbetalinger.ingen.true"/>
+                    }
+                </SysteminfoMedSkjema>
+
+                }
+                {visAnimerteStreker &&
+                <TextPlaceholder lines={3}/>
+                }
             </SporsmalFaktum>
-        );
+        )
     }
 }
 
