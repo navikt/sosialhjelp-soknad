@@ -86,6 +86,7 @@ const serverRequestOnce = (method: string, urlPath: string, body: string) => {
  */
 
 let prevFetch: any = null;
+let prevResponse: any = null;
 let lastFetch: number = 0;
 
 export const serverRequest = (method: string, urlPath: string, body: string, retries = 6) => {
@@ -103,7 +104,7 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
 			const sekunderSidenForrige = Math.floor(millisekunder/1000);
 			if(sekunderSidenForrige < 3) {
 				const promise = new Promise((resolve, reject) => {
-					resolve("GJENTATT_KALL");
+					resolve(prevResponse);
 				});
 				return promise;
 			}
@@ -121,7 +122,10 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
 					}
 					setTimeout(() => {
 						serverRequest(method, urlPath, body, retries - 1)
-							.then((data: any) => resolve(data))
+							.then((data: any) => {
+                                prevResponse = data;
+								resolve(data);
+                            })
 							.catch((reason: any) => reject(reason))
 					}, 100 * (7 - retries));
 
