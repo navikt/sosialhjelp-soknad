@@ -113,7 +113,7 @@ class BosituasjonView extends React.Component<Props, {}> {
 			synligUnderskjema = true;
 		}
 
-		const antallPersoner = bosituasjon.antallPersoner !== null && bosituasjon.antallPersoner !== undefined ? bosituasjon.antallPersoner : "";
+		const antallPersoner = bosituasjon.antallPersoner != null ? bosituasjon.antallPersoner : "";
 
 		return (
 			<div>
