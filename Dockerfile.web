@@ -8,6 +8,5 @@ COPY heroku.js /app/
 RUN npm install express
 
 ENV HEROKU=true
-ENV APP=fleskesvor
 
 CMD ["node", "heroku.js"]

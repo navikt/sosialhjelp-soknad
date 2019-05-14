@@ -32,7 +32,7 @@ const history = createHistory({
 			callback(true);
 		}
 	},
-	basename: window.location.pathname.replace(/^\/(([^/]+\/)?soknadsosialhjelp).+/, "$1")
+	basename: window.location.pathname.replace(/^\/(([^/]+\/)?soknadsosialhjelp).+$/, "$1")
 });
 
 const logger = createLogger({
