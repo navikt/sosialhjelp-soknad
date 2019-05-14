@@ -101,7 +101,7 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
 		const errorMsg = reason.toString();
 		yield put(lastOppEttersendelseFeilet(errorMsg, opplysningType.toString()));
 		if ( errorMsg.match(/Unsupported Media Type|Entity Too Large/) === null ) {
-			yield put(loggFeil("Last opp vedlegg for ettersendelse feilet: " + errorMsg));
+			yield put(loggInfo("Last opp vedlegg for ettersendelse feilet: " + errorMsg));
 		}
 	}
 }
