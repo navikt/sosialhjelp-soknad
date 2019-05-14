@@ -7,8 +7,6 @@ import SporsmalHjelpetekst from "./SporsmalHjelpetekst";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { getFaktumSporsmalTekst } from "../../utils";
 import { FaktumValideringFunc } from "../../validering/types";
-// import { registerFaktumValidering } from "../../redux/valideringActions";
-// import { validerFaktum } from "../../validering/utils";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
 
