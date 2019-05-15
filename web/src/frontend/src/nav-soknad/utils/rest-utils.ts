@@ -87,9 +87,6 @@ const serverRequestOnce = (method: string, urlPath: string, body: string) => {
  *    siden forrige gang
  */
 
-let prevFetch: any = null;
-let prevResponse: any = null;
-let lastFetch: number = 0;
 
 export const serverRequest = (method: string, urlPath: string, body: string, retries = 6) => {
     const OPTIONS: RequestInit = {
@@ -98,21 +95,6 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
         credentials: determineCredentialsParameter(),
         body: body ? body : undefined
     };
-
-    if (method !== RequestMethod.GET) {
-        const gjentattServerkall: boolean = (JSON.stringify({urlPath, body}) === JSON.stringify(prevFetch));
-        if (gjentattServerkall) {
-            const millisekunder = Date.now() - lastFetch;
-            const sekunderSidenForrige = Math.floor(millisekunder / 1000);
-            if (sekunderSidenForrige < 3) {
-                return new Promise((resolve) => {
-                    resolve(prevResponse);
-                });
-            }
-        }
-        lastFetch = Date.now();
-        prevFetch = {urlPath, body};
-    }
 
     return new Promise((resolve, reject) => {
         fetch(getApiBaseUrl() + urlPath, OPTIONS)
@@ -124,7 +106,6 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
                     setTimeout(() => {
                         serverRequest(method, urlPath, body, retries - 1)
                             .then((data: any) => {
-                                prevResponse = data;
                                 resolve(data);
                             })
                             .catch((reason: any) => reject(reason))
@@ -133,7 +114,6 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
                 } else {
                     sjekkStatuskode(response);
                     const jsonResponse = toJson(response);
-                    prevResponse = jsonResponse;
                     resolve(jsonResponse);
                 }
             })
