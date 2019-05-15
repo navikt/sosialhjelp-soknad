@@ -105,17 +105,16 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
             const millisekunder = Date.now() - lastFetch;
             const sekunderSidenForrige = Math.floor(millisekunder / 1000);
             if (sekunderSidenForrige < 3) {
-                const promise = new Promise((resolve, reject) => {
+                return new Promise((resolve) => {
                     resolve(prevResponse);
                 });
-                return promise;
             }
         }
         lastFetch = Date.now();
         prevFetch = {urlPath, body};
     }
 
-    const promise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         fetch(getApiBaseUrl() + urlPath, OPTIONS)
             .then((response: Response) => {
                 if (response.status === 409) {
@@ -133,12 +132,13 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
 
                 } else {
                     sjekkStatuskode(response);
-                    resolve(toJson(response));
+                    const jsonResponse = toJson(response);
+                    prevResponse = jsonResponse;
+                    resolve(jsonResponse);
                 }
             })
             .catch((reason: any) => reject(reason));
     });
-    return promise;
 };
 
 export function fetchToJson(urlPath: string) {

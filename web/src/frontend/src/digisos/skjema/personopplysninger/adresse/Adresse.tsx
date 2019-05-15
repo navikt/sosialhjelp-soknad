@@ -90,15 +90,17 @@ class AdresseView extends React.Component<Props, State> {
 		this.setState({settAdressePending: true});
 
 		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
-			navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
-			if (navEnheter.length === 1) {
-				const valgtNavEnhet: NavEnhet = navEnheter[ 0 ];
-				valgtNavEnhet.valgt = true;
-				lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
-				this.slettEventuelleValideringsfeil();
-			}
-			oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
-			this.setState({settAdressePending: false});
+		    if (navEnheter != null){
+                navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
+                if (navEnheter.length === 1) {
+                    const valgtNavEnhet: NavEnhet = navEnheter[ 0 ];
+                    valgtNavEnhet.valgt = true;
+                    lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
+                    this.slettEventuelleValideringsfeil();
+                }
+                oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
+                this.setState({settAdressePending: false});
+            }
 		});
 	}
 
