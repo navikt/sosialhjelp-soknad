@@ -7,6 +7,8 @@ import {
 } from "./soknadsdataReducer";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 import { REST_STATUS } from "../../types";
+import {put} from "redux-saga/effects";
+import {loggFeil} from "../navlogger/navloggerActions";
 
 const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `soknader/${brukerBehandlingId}/${sti}`;
 
@@ -25,7 +27,9 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 			// }
 			dispatch(oppdaterSoknadsdataSti(sti, response));
 			dispatch(settRestStatus(sti, REST_STATUS.OK));
-		}).catch(() => {
+		}).catch((reason) => {
+            const stacktrace = reason.hasOwnProperty("stack") ? "\nStacktrace" + reason.stack : "";
+            put(loggFeil("Lagring av soknadsdata feilet: " + reason.toString() + stacktrace));
 			dispatch(settRestStatus(sti, REST_STATUS.FEILET));
 			dispatch(navigerTilServerfeil());
 		});
@@ -46,7 +50,9 @@ export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknad
 					responseHandler(response);
 				}
 			})
-			.catch(() => {
+			.catch((reason) => {
+				const stacktrace = reason.hasOwnProperty("stack") ? "\nStacktrace" + reason.stack : "";
+				put(loggFeil("Lagring av soknadsdata feilet: " + reason.toString() + stacktrace));
 				dispatch(settRestStatus(sti, REST_STATUS.FEILET));
 				dispatch(navigerTilServerfeil());
 			});
