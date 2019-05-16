@@ -54,9 +54,17 @@
         <servlet-name>featureServlet</servlet-name>
         <servlet-class>no.nav.sbl.soknadsosialhjelp.FeatureServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>kommunenummer</servlet-name>
+        <servlet-class>no.nav.sbl.soknadsosialhjelp.Kommunenummer</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>featureServlet</servlet-name>
         <url-pattern>/api/feature</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>kommunenummer</servlet-name>
+        <url-pattern>/api/kommunenummer</url-pattern>
     </servlet-mapping>
 
     <servlet>
