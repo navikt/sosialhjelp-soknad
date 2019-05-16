@@ -57,19 +57,10 @@ class SivilstatusComponent extends React.Component<Props, {}> {
 		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.SIVILSTATUS, payload);
 	}
 
-	onClickBorSammen(verdi: boolean) {
-		const { brukerBehandlingId, soknadsdata, oppdaterSoknadsdataSti, lagreSoknadsdata } = this.props;
-		const sivilstatus = soknadsdata.familie.sivilstatus;
-		sivilstatus.borSammenMed = verdi;
-		oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus);
-		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.SIVILSTATUS, sivilstatus);
-	}
-
 	render() {
 		const {soknadsdata} = this.props;
 		const familie: Familie = soknadsdata.familie;
 		const sivilstatus = (familie && familie.sivilstatus) ? familie.sivilstatus.sivilstatus : null;
-		const borSammenMed = (familie && familie.sivilstatus) ? familie.sivilstatus.borSammenMed : null;
 
 		return (
 			<div className="skjema-sporsmal">
@@ -93,24 +84,6 @@ class SivilstatusComponent extends React.Component<Props, {}> {
 										<PersonSkjema/>
 									</div>
 								</div>
-								<Sporsmal
-									sprakNokkel="familie.sivilstatus.gift.ektefelle.borsammen"
-								>
-									<RadioEnhanced
-										id={"sivilstatus_gift_bor_sammen_radio_ja"}
-										faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
-										value="true"
-										checked={borSammenMed === true}
-										onChange={() => this.onClickBorSammen(true)}
-									/>
-									<RadioEnhanced
-										id={"sivilstatus_gift_bor_sammen_radio_nei"}
-										faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
-										value="false"
-										checked={borSammenMed === false}
-										onChange={() => this.onClickBorSammen(false)}
-									/>
-								</Sporsmal>
 							</Sporsmal>
 						</Underskjema>
 					</div>
