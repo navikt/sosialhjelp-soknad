@@ -46,6 +46,7 @@ export function hentOpplysninger(behandlingsId: string) {
     return (dispatch: Dispatch) => {
         fetchToJson(getOpplysningerUrl(behandlingsId))
             .then((response: OpplysningerBackend) => {
+                put(loggFeil("Sjekk at logging fungerer. slettFilSaga"));
                 dispatch(gotDataFromBackend(response));
             }).catch((reason) => {
             put(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));

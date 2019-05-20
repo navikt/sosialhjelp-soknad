@@ -16,8 +16,10 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	return (dispatch: Dispatch) => {
 		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
 		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
+            put(loggFeil("Sjekk at logging fungerer. Response: " + response));
 
-			// For å simulere ulike typer testdata fra server, kan man her skrive kode som:
+
+            // For å simulere ulike typer testdata fra server, kan man her skrive kode som:
 			// if(sti === SoknadsSti.FORSORGERPLIKT){
 			// 	response = {
 			// 		ansvar: [],
@@ -40,7 +42,9 @@ export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknad
 		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
 		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata))
 			.then((response: any) => {
-				dispatch(settRestStatus(sti, REST_STATUS.OK));
+                put(loggFeil("Sjekk at logging fungerer. Response: " + response));
+
+                dispatch(settRestStatus(sti, REST_STATUS.OK));
 				if (responseHandler) {
 					// For å simulere response fra adresse, kan man skrive:
 					// if (sti === SoknadsSti.ADRESSER) {
