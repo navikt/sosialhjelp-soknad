@@ -97,6 +97,7 @@ export interface LagreOpplysningHvisGyldig {
 }
 
 export enum OpplysningGruppe {
+    STATSBORGERSKAP = "statsborgerskap",
     ARBEID = "arbeid",
     FAMILIE = "familie",
     BOSITUASJON = "bosituasjon",

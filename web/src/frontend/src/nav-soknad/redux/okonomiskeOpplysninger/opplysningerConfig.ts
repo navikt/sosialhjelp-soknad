@@ -36,6 +36,7 @@ export const opplysningsRekkefolgeOgSpc: OpplysningSpc[] = [
 ];
 
 export const gruppeRekkefolge: OpplysningGruppe[] = [
+    OpplysningGruppe.STATSBORGERSKAP,
     OpplysningGruppe.ARBEID,
     OpplysningGruppe.FAMILIE,
     OpplysningGruppe.BOSITUASJON,
