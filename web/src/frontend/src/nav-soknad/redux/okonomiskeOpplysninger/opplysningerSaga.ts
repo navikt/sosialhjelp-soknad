@@ -12,6 +12,7 @@ import {fetchPut} from "../../utils/rest-utils";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {Valideringsfeil} from "../../validering/types";
 import {updateOpplysning} from "./opplysningerActions";
+import {loggFeil} from "../navlogger/navloggerActions";
 
 
 export function getFeilForOpplysning(feil: Valideringsfeil[], opplysningTextKey: string) {
@@ -37,6 +38,7 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
                 JSON.stringify(transformToBackendOpplysning(opplysning))
             );
         } catch (e) {
+            yield put(loggFeil("Lagring av økonomisk opplysning feilet. Reason: " + e));
             yield put(navigerTilServerfeil());
         }
     }

@@ -73,8 +73,6 @@ function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
     try {
         const url = `opplastetVedlegg/${behandlingsId}/${fil.uuid}`;
         yield call(fetchDelete, url);
-        put(loggFeil("Sjekk at logging fungerer. slettFilSaga"));
-
 
         const filerUpdated = opplysning.filer.filter((f: Fil) => {
             return f.uuid !== fil.uuid;

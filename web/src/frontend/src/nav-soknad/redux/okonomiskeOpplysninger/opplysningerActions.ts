@@ -10,7 +10,6 @@ import {
 } from "./opplysningerTypes";
 import {getOpplysningerUrl} from "./opplysningerUtils";
 import {Valideringsfeil} from "../../validering/types";
-import {put} from "redux-saga/effects";
 import {loggFeil} from "../navlogger/navloggerActions";
 
 
@@ -46,10 +45,9 @@ export function hentOpplysninger(behandlingsId: string) {
     return (dispatch: Dispatch) => {
         fetchToJson(getOpplysningerUrl(behandlingsId))
             .then((response: OpplysningerBackend) => {
-                put(loggFeil("Sjekk at logging fungerer. slettFilSaga"));
                 dispatch(gotDataFromBackend(response));
             }).catch((reason) => {
-            put(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));
+            dispatch(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));
             dispatch(navigerTilServerfeil());
         });
     }
