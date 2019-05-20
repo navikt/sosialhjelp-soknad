@@ -1,12 +1,12 @@
 import {
     MaybeOpplysning,
-    OpplysningerBackend,
-    OpplysningBackend,
     Opplysning,
+    OpplysningBackend,
+    OpplysningerBackend,
     OpplysningGruppe,
     OpplysningRad,
-    OpplysningType,
-    OpplysningSpc
+    OpplysningSpc,
+    OpplysningType
 } from "./opplysningerTypes";
 import {opplysningsRekkefolgeOgSpc} from "./opplysningerConfig";
 
@@ -17,7 +17,7 @@ export function getOpplysningerUrl(behandlingsId: string) {
 }
 
 export const updateSortertOpplysning = (opplysninger: Opplysning[], opplysningUpdated: Opplysning) => {
-    const index =  opplysninger.findIndex(o => o.type === opplysningUpdated.type);
+    const index = opplysninger.findIndex(o => o.type === opplysningUpdated.type);
     opplysninger[index] = opplysningUpdated;
     return opplysninger;
 };
@@ -34,6 +34,9 @@ export const transformToBackendOpplysning = (opplysning: Opplysning): Opplysning
 
 export const getGruppeTittelKey: (opplysningGruppe: OpplysningGruppe) => string = (opplysningGruppe: OpplysningGruppe) => {
     switch (opplysningGruppe) {
+        case OpplysningGruppe.STATSBORGERSKAP: {
+            return "opplysninger.statsborgerskap"
+        }
         case OpplysningGruppe.ARBEID: {
             return "opplysninger.arbeid"
         }
@@ -114,7 +117,7 @@ const backendOpplysningToOpplysning = (opplysningBackend: OpplysningBackend, erS
         "vedleggStatus": opplysningBackend.vedleggStatus,
         "filer": opplysningBackend.filer,
         "slettet": erSlettet,
-        "radInnhold": getSpcForOpplysning(opplysningBackend.type) &&  getSpcForOpplysning(opplysningBackend.type).radInnhold ? getSpcForOpplysning(opplysningBackend.type).radInnhold : [],
+        "radInnhold": getSpcForOpplysning(opplysningBackend.type) && getSpcForOpplysning(opplysningBackend.type).radInnhold ? getSpcForOpplysning(opplysningBackend.type).radInnhold : [],
         "pendingLasterOppFil": false
     }
 };
