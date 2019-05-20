@@ -10,6 +10,7 @@ import {
 } from "./opplysningerTypes";
 import {getOpplysningerUrl} from "./opplysningerUtils";
 import {Valideringsfeil} from "../../validering/types";
+import {loggFeil} from "../navlogger/navloggerActions";
 
 
 export const gotDataFromBackend = (response: OpplysningerBackend): opplysningerAction => {
@@ -45,7 +46,8 @@ export function hentOpplysninger(behandlingsId: string) {
         fetchToJson(getOpplysningerUrl(behandlingsId))
             .then((response: OpplysningerBackend) => {
                 dispatch(gotDataFromBackend(response));
-            }).catch(() => {
+            }).catch((reason) => {
+            dispatch(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));
             dispatch(navigerTilServerfeil());
         });
     }
