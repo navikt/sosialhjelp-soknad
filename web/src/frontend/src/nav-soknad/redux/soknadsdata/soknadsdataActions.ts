@@ -28,8 +28,7 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 			dispatch(oppdaterSoknadsdataSti(sti, response));
 			dispatch(settRestStatus(sti, REST_STATUS.OK));
 		}).catch((reason) => {
-            const stacktrace = reason.hasOwnProperty("stack") ? "\nStacktrace" + reason.stack : "";
-            put(loggFeil("Lagring av soknadsdata feilet: " + reason.toString() + stacktrace));
+            put(loggFeil("Henting av soknadsdata feilet: " + reason));
 			dispatch(settRestStatus(sti, REST_STATUS.FEILET));
 			dispatch(navigerTilServerfeil());
 		});
@@ -51,8 +50,7 @@ export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknad
 				}
 			})
 			.catch((reason) => {
-				const stacktrace = reason.hasOwnProperty("stack") ? "\nStacktrace" + reason.stack : "";
-				put(loggFeil("Lagring av soknadsdata feilet: " + reason.toString() + stacktrace));
+				put(loggFeil("Lagring av soknadsdata feilet: " + reason));
 				dispatch(settRestStatus(sti, REST_STATUS.FEILET));
 				dispatch(navigerTilServerfeil());
 			});
