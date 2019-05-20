@@ -1,4 +1,4 @@
-export const konverterFdatoFraServer = (dato: string): string => {
+export const konverterFraISODato = (dato: string): string => {
 	if (!dato) {
 		return dato;
 	}
@@ -10,7 +10,7 @@ export const konverterFdatoFraServer = (dato: string): string => {
 	}
 };
 
-export const konverterFdatoTilServer = (dato: string): string => {
+export const konverterTilISODato = (dato: string): string => {
 	if(dato.split("-").length > 1) {
 		return dato;
 	} else {
