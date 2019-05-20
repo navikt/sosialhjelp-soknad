@@ -102,6 +102,7 @@ export const getSpcForOpplysning = (opplysningType: OpplysningType) => {
     const opplysningSpcs = opplysningsRekkefolgeOgSpc.filter((oSpc: OpplysningSpc) => {
         return oSpc.type === opplysningType;
     });
+
     return opplysningSpcs[0];
 };
 
@@ -113,7 +114,7 @@ const backendOpplysningToOpplysning = (opplysningBackend: OpplysningBackend, erS
         "vedleggStatus": opplysningBackend.vedleggStatus,
         "filer": opplysningBackend.filer,
         "slettet": erSlettet,
-        "radInnhold": getSpcForOpplysning(opplysningBackend.type).radInnhold,
+        "radInnhold": getSpcForOpplysning(opplysningBackend.type) &&  getSpcForOpplysning(opplysningBackend.type).radInnhold ? getSpcForOpplysning(opplysningBackend.type).radInnhold : [],
         "pendingLasterOppFil": false
     }
 };
