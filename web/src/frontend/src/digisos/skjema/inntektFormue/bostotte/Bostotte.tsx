@@ -1,6 +1,5 @@
 import * as React from "react";
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
 import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
@@ -54,6 +53,11 @@ class BostotteView extends React.Component<Props, State> {
 		}
 	}
 
+	intl(id: string): string {
+		const { intl } = this.props;
+		return intl.formatMessage({ id });
+	}
+
 	render() {
 		const {soknadsdata} = this.props;
 		const bostotte : Bostotte = soknadsdata.inntekt.bostotte;
@@ -62,11 +66,13 @@ class BostotteView extends React.Component<Props, State> {
 		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
 			oppstartsModus = false;
 		}
+		const tekster = {"sporsmal": this.intl(FAKTUM_BOSTOTTE + ".sporsmal")};
+
 		return (
 			<div className="skjema-sporsmal">
 				<JaNeiSporsmal
 					visPlaceholder={oppstartsModus}
-					tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_BOSTOTTE)}
+					tekster={tekster}
 					faktumKey={FAKTUM_BOSTOTTE}
 					verdi={bostotte.bekreftelse}
 					onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
@@ -83,5 +89,7 @@ class BostotteView extends React.Component<Props, State> {
 		);
 	}
 }
+
+export {BostotteView};
 
 export default connectSoknadsdataContainer(injectIntl(BostotteView));

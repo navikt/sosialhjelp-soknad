@@ -19,7 +19,11 @@ import {Systeminntekt} from "./navYtelserTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {REST_STATUS} from "../../../../nav-soknad/types";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+interface OwnProps {
+    disableLoadingAnimation?: boolean;
+}
+
+type Props = OwnProps & SoknadsdataContainerProps & InjectedIntlProps;
 
 class NavYtelserView extends React.Component<Props, {}> {
 
@@ -39,7 +43,11 @@ class NavYtelserView extends React.Component<Props, {}> {
             if (utbetalingsdato && utbetalingsdato.length > 9) {
                 formattedDato = <FormattedDate value={utbetaling.utbetalingsdato}/>
             }
-            const belop = <FormattedNumber value={utbetaling.belop} style="decimal" minimumFractionDigits={2}/>;
+            let numeriskBelop: number = utbetaling.belop;
+            if (utbetaling.belop === null) {
+                numeriskBelop = 0;
+            }
+            const belop = <FormattedNumber value={numeriskBelop} style="decimal" minimumFractionDigits={2}/>;
             return (
                 <div key={index} className="utbetaling blokk-s">
                     <div>{type}<span className="verdi detaljeliste__verdi">{belop}</span></div>
@@ -54,33 +62,37 @@ class NavYtelserView extends React.Component<Props, {}> {
         const {soknadsdata} = this.props;
         const {systeminntekter} = soknadsdata.inntekt.systemdata;
         const restStatus = soknadsdata.restStatus.inntekt.systemdata;
-        const visAnimerteStreker = restStatus !== REST_STATUS.OK;
+        const visAnimerteStreker = restStatus !== REST_STATUS.OK && this.props.disableLoadingAnimation !== true;
         const harUtbetalinger: boolean = systeminntekter && systeminntekter.length > 0;
 
         return (
-            <SporsmalFaktum faktumKey="navytelser.tittel" style="system"
-                            legendTittelStyle={LegendTittleStyle.FET_NORMAL} visLedetekst={true}>
+            <SporsmalFaktum
+                faktumKey="navytelser.tittel"
+                style="system"
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL} visLedetekst={true}
+            >
                 {!visAnimerteStreker &&
-                <SysteminfoMedSkjema>
-                    {harUtbetalinger &&
-                    <div className="utbetalinger">
-                        {this.renderUtbetalinger(systeminntekter)}
-                        <FormattedHTMLMessage id="utbetalinger.infotekst.tekst"/>
-                    </div>
-                    }
-                    {!harUtbetalinger &&
-                    <FormattedHTMLMessage id="utbetalinger.ingen.true"/>
-                    }
-                </SysteminfoMedSkjema>
-
+                    <SysteminfoMedSkjema>
+                        {harUtbetalinger &&
+                        <div className="utbetalinger">
+                            {this.renderUtbetalinger(systeminntekter)}
+                            <FormattedHTMLMessage id="utbetalinger.infotekst.tekst"/>
+                        </div>
+                        }
+                        {!harUtbetalinger &&
+                        <FormattedHTMLMessage id="utbetalinger.ingen.true"/>
+                        }
+                    </SysteminfoMedSkjema>
                 }
                 {visAnimerteStreker &&
-                <TextPlaceholder lines={3}/>
+                    <TextPlaceholder lines={3}/>
                 }
             </SporsmalFaktum>
         )
     }
 }
+
+export { NavYtelserView };
 
 export default connectSoknadsdataContainer(injectIntl(NavYtelserView));
 
