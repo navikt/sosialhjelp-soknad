@@ -8,7 +8,7 @@ import {
 	tilServerfeilSaga,
 	tilStegSaga
 } from "./navigasjonSaga";
-import { call, put, select, take } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import {
 	GaVidere,
 	Sider,
