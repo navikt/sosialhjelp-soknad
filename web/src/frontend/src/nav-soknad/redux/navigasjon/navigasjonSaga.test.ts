@@ -17,10 +17,9 @@ import {
 import { goBack, push } from "react-router-redux";
 import { SagaIterator } from "redux-saga";
 import { gaVidere, tilSteg } from "./navigasjonActions";
-import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
+import { setFaktum } from "../fakta/faktaActions";
 import { Faktum } from "../../types/navSoknadTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
-import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 
@@ -139,6 +138,7 @@ describe("navigasjonSaga", () => {
 		const action = gaVidere(1);
 		const saga = gaVidereSaga(action as GaVidere);
 
+
 		it("select selectProgresjonFaktum", () => {
 			expect(saga.next(false)).toEqual({
 				done: false,
@@ -157,20 +157,6 @@ describe("navigasjonSaga", () => {
 			expect(saga.next(oppdatertFaktum)).toEqual({
 				done: false,
 				value: put(setFaktum(oppdatertFaktum))
-			});
-		});
-
-		it("put lagreFaktum", () => {
-			expect(saga.next()).toEqual({
-				done: false,
-				value: put(lagreFaktum(oppdatertFaktum))
-			});
-		});
-
-		it("take LAGRET_FAKTUM", () => {
-			expect(saga.next()).toEqual({
-				done: false,
-				value: take([FaktumActionTypeKeys.LAGRET_FAKTUM])
 			});
 		});
 

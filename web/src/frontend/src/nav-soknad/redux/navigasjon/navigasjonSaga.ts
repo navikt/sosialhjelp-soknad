@@ -1,4 +1,4 @@
-import { call, put, select, take, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { goBack, push } from "react-router-redux";
 import {
@@ -12,8 +12,8 @@ import {
 	TilSteg
 } from "./navigasjonTypes";
 import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
-import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
-import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
+import { setFaktum } from "../fakta/faktaActions";
+
 import { tilStart, tilSteg } from "./navigasjonActions";
 import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import { SoknadAppState } from "../reduxTypes";
@@ -82,8 +82,6 @@ function* gaVidereSaga(action: GaVidere): SagaIterator {
 			`${action.stegnummer + 1}`
 		);
 		yield put(setFaktum(faktum));
-		yield put(lagreFaktum(faktum));
-		yield take([FaktumActionTypeKeys.LAGRET_FAKTUM]);
 	}
 	yield put(tilSteg(action.stegnummer + 1));
 }

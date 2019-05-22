@@ -44,7 +44,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 }
 
 const mapStateToProps = (state: State) => ({
-	gjenopptattSoknad: state.soknad.gjenopptattSoknad,
+	gjenopptattSoknad: state.soknad.gjenopptattSoknad
 });
 
 export default connect<{}, {}, Props>(
