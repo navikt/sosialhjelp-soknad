@@ -4,8 +4,8 @@ import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
 import { State } from "../redux/reducers";
-import BehandlingAvPersonopplysningerModal from "./BehandlingAvPersonopplysningerModal";
 import { Undertittel } from "nav-frontend-typografi";
+import RettigheterModalView from "./RettigheterModal";
 
 type Props = InjectedIntlProps & DispatchProps;
 
@@ -75,14 +75,12 @@ class Personopplysninger extends React.Component<Props, {}> {
 								</a>
 							</div>
 						</div>
-
 					<p>
 						<FormattedMessage id="informasjon.tekster.personopplysninger.sporsmal"/>
 					</p>
 
 				</div>
-
-				<BehandlingAvPersonopplysningerModal/>
+				<RettigheterModalView />
 			</div>
 		);
 	}

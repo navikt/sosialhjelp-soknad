@@ -3,21 +3,18 @@ import { connect } from "react-redux";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { Checkbox } from "nav-frontend-skjema";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
-
 import { REST_STATUS } from "../../../nav-soknad/types";
 import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
-import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { bekreftOppsummering, hentOppsummering, } from "../../../nav-soknad/redux/oppsummering/oppsummeringActions";
 import { Oppsummering } from "../../../nav-soknad/redux/oppsummering/oppsummeringTypes";
-
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import { State } from "../../redux/reducers";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { settInfofaktum } from "../../../nav-soknad/redux/soknad/soknadActions";
 import { getIntlTextOrKey } from "../../../nav-soknad/utils/intlUtils";
 import { Link } from "react-router-dom";
-import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
 import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
+import RettigheterModalView from "../../informasjon/RettigheterModal";
 
 interface StateProps {
 	oppsummering: Oppsummering;
@@ -27,12 +24,10 @@ interface StateProps {
 	brukerbehandlingId: number;
 }
 
-type Props = FaktumComponentProps &
-	DispatchProps &
-	StateProps &
-	InjectedIntlProps;
+type Props = DispatchProps & StateProps & InjectedIntlProps;
 
 class OppsummeringView extends React.Component<Props, {}> {
+
 	constructor(props: Props) {
 		super(props);
 		this.getOppsummering = this.getOppsummering.bind(this);
@@ -78,10 +73,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 									className="lenke"
 									to={`/skjema/${brukerbehandlingId}/${idx + 1}`}
 								>
-									{getIntlTextOrKey(
-										this.props.intl,
-										"oppsummering.gatilbake"
-									)}
+									{getIntlTextOrKey(intl, "oppsummering.gatilbake")}
 								</Link>
 							</div>
 							<div dangerouslySetInnerHTML={{__html: bolk.html}}/>
@@ -139,7 +131,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 							/>
 						</div>
 					</div>
-					<BehandlingAvPersonopplysningerModal/>
+					<RettigheterModalView />
 				</DigisosSkjemaSteg>
 			</LoadContainer>
 		);
