@@ -2,7 +2,7 @@ import {FilActionTypeKeys, LastOppFilAction, StartSlettFilAction} from "./filTyp
 import {SagaIterator} from "redux-saga";
 import {fetchDelete, fetchUpload, fetchUploadIgnoreErrors,} from "../../utils/rest-utils";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {loggFeil} from "../navlogger/navloggerActions";
+import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {
     settFilOpplastingFerdig,
     settFilOpplastingPending,
@@ -47,7 +47,7 @@ function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
         }
         yield put(lastOppFilFeilet(opplysning.type, feilKode));
         if (feilKode !== REST_FEIL.KRYPTERT_FIL && feilKode !== REST_FEIL.SIGNERT_FIL) {
-            yield put(loggFeil("Last opp vedlegg feilet: " + reason.toString()));
+            yield put(loggInfo("Last opp vedlegg feilet: " + reason.toString()));
         }
         yield put(settFilOpplastingFerdig(opplysning.type));
     }
