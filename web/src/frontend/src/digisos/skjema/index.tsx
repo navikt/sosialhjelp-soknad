@@ -20,9 +20,8 @@ import Steg8 from "./okonomiskeOpplysninger";
 import Oppsummering from "./oppsummering";
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
 import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
-import {Faktum} from "../../nav-soknad/types";
+import { Faktum, REST_STATUS } from "../../nav-soknad/types";
 import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
-import {hentSoknad} from "../../nav-soknad/redux/soknad/soknadActions";
 import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 
@@ -48,25 +47,19 @@ type Props = OwnProps & StateProps & RouterProps & DispatchProps;
 
 class SkjemaRouter extends React.Component<Props, {}> {
 
-    componentWillMount() {
-        if (this.props.brukerbehandlingId && this.props.fakta.length <= 1) {
-            this.props.dispatch(hentSoknad(this.props.brukerbehandlingId));
-        }
-    }
-
     componentDidMount() {
         skjulToppMeny();
     }
 
     render() {
-        const {gyldigUrl, restStatus} = this.props;
+        const {gyldigUrl} = this.props;
 
         if (!gyldigUrl) {
             return <SideIkkeFunnet/>;
         }
         const path = "/skjema/:brukerBehandlingId";
         return (
-            <LoadContainer restStatus={restStatus}>
+            <LoadContainer restStatus={REST_STATUS.OK}>
                 <Switch>
                     <Route path={`${path}/1`} component={Steg1}/>
                     <Route path={`${path}/2`} component={Steg2}/>

@@ -11,7 +11,7 @@ import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
 import { SkjemaConfig, SkjemaStegType, SkjemaSteg, Faktum } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
-import {finnFaktum, getProgresjonFaktum} from "../utils";
+import {finnFaktum} from "../utils";
 import { setVisBekreftMangler } from "../redux/oppsummering/oppsummeringActions";
 import {
 	clearFaktaValideringsfeil,
@@ -223,12 +223,21 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	}
 }
 
+function lesStegFraUrl(): number {
+	const path = window.location.pathname;
+	const matches = path.match(/\/skjema\/([^\/]+)\/(\d+)$/);
+	if (!matches || matches.length !== 3) {
+		return 1;
+	}
+	const steg = matches[ 2 ];
+	const progresjon = parseInt(steg, 10);
+	return progresjon;
+}
+
 const mapStateToProps = (state: SoknadAppState): StateProps => {
-	const faktum = getProgresjonFaktum(state.fakta.data);
-	const progresjon = parseInt((faktum.value || 1) as string, 10);
 	return {
 		fakta: state.fakta.data,
-		progresjon,
+		progresjon: lesStegFraUrl(),
 		nextButtonPending:
 			state.fakta.progresjonPending || state.soknad.sendSoknadPending,
 		oppsummeringBekreftet: state.oppsummering.bekreftet,
