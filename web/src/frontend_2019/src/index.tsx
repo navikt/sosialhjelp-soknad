@@ -1,5 +1,4 @@
 import * as React from "react";
-import './index.css';
 import {Provider} from "react-redux";
 import * as ReactDOM from "react-dom";
 import { ConnectedRouter } from 'connected-react-router';
@@ -13,7 +12,7 @@ window.onerror = (errorMessage, url, line, column, error) => {
     // store.dispatch(loggException(errorMessage.toString(), url, line, column, error));
 };
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
     return (
         <Provider store={store}>
             {/*<IntlProvider>*/}
