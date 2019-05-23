@@ -29,7 +29,11 @@ export function getApiBaseUrl(): string {
     if (location.origin.indexOf("heroku") >= 0) {
         return location.origin.replace("sosialhjelp-test", "sosialhjelp-api-test") + "/soknadsosialhjelp-server/";
     }
-    return kjorerJetty() ? "http://127.0.0.1:8181/soknadsosialhjelp-server/" : "/soknadsosialhjelp-server/";
+	return kjorerJetty() ? "http://127.0.0.1:8181/soknadsosialhjelp-server/" : getApiAbsoluteUrl();
+}
+
+function getApiAbsoluteUrl() {
+	return window.location.pathname.replace(/^(\/([^/]+\/)?soknadsosialhjelp).+$/, "$1-server/")
 }
 
 function determineCredentialsParameter() {
