@@ -97,6 +97,7 @@ export interface LagreOpplysningHvisGyldig {
 }
 
 export enum OpplysningGruppe {
+    STATSBORGERSKAP = "statsborgerskap",
     ARBEID = "arbeid",
     FAMILIE = "familie",
     BOSITUASJON = "bosituasjon",
@@ -139,6 +140,7 @@ export enum OpplysningType {
     FAKTURA_TANNBEHANDLING = "faktura|tannbehandling", // RADER_MED_BELOP
     FAKTURA_ANNETBARNUTGIFT = "faktura|annetbarnutgift", // RADER_MED_BESKRIVELSE_OG_BELOP
     SKATTEMELDING_SKATTEMELDING = "skattemelding|skattemelding", // NOTHING
+    OPPHOLDSTILLATEL_OPPHOLDSTILLATEL= "oppholdstillatel|oppholdstillatel",
     ANNET_ANNET = "annet|annet", // RADER_MED_BESKRIVELSE_OG_BELOP
 }
 

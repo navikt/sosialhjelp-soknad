@@ -13,7 +13,7 @@ import {
 	hentVedleggsForventningOk, lastOppVedleggFeilet, lastOppVedleggOk, nyttVedlegg,
 	oppdatertVedlegg, slettVedlegg, slettVedleggOk, vedleggAlleredeSendtOk
 } from "./vedleggActions";
-import { loggFeil } from "../../../nav-soknad/redux/navlogger/navloggerActions";
+import {loggAdvarsel, loggFeil} from "../../../nav-soknad/redux/navlogger/navloggerActions";
 import { selectFaktaData } from "../selectors";
 import { opprettetFaktum, slettFaktumLokalt } from "../fakta/faktaActions";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
@@ -51,7 +51,7 @@ function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 		}
 		yield put(lastOppVedleggFeilet(action.belopFaktumId, feilKode));
 		if (feilKode !== "opplasting.feilmelding.feiltype") {
-			yield put(loggFeil("Last opp vedlegg feilet: " + reason.toString()));
+			yield put(loggAdvarsel("Last opp vedlegg feilet: " + reason.toString()));
 		}
 	}
 }

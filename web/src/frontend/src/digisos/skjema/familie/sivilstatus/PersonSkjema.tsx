@@ -9,7 +9,10 @@ import {
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { fdato, maksLengde, minLengde } from "../../../../nav-soknad/validering/valideringer";
-import { konverterFdatoFraServer, konverterFdatoTilServer } from "./datoUtils";
+import { konverterFraISODato, konverterTilISODato } from "./datoUtils";
+import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
+import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import { Familie } from "./FamilieTypes";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -56,12 +59,12 @@ class PersonSkjema extends React.Component<Props, {}> {
 			sivilstatus.ektefelle.personnummer = null;
 		}
 		if (fodselsdato && fodselsdato !== "") {
-			fodselsdato = konverterFdatoFraServer(fodselsdato);
+			fodselsdato = konverterFraISODato(fodselsdato);
 			feilkodeFodselsdato = fdato(fodselsdato);
 			const faktumKey = "familie.sivilstatus.gift.ektefelle.fnr";
 			setValideringsfeil(feilkodeFodselsdato, faktumKey);
 			if (!feilkodeFodselsdato && sivilstatus.ektefelle) {
-				sivilstatus.ektefelle.fodselsdato = konverterFdatoTilServer(sivilstatus.ektefelle.fodselsdato);
+				sivilstatus.ektefelle.fodselsdato = konverterTilISODato(sivilstatus.ektefelle.fodselsdato);
 			}
 		}
 		const personnummer = sivilstatus.ektefelle.personnummer;
@@ -79,6 +82,14 @@ class PersonSkjema extends React.Component<Props, {}> {
 		}
 	}
 
+	onClickBorSammen(verdi: boolean) {
+		const { soknadsdata, oppdaterSoknadsdataSti } = this.props;
+		const sivilstatus = soknadsdata.familie.sivilstatus;
+		sivilstatus.borSammenMed = verdi;
+		oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus);
+		this.onBlur();
+	}
+
 	render() {
 		const {soknadsdata} = this.props;
 		const ektefelle = soknadsdata.familie.sivilstatus.ektefelle;
@@ -86,11 +97,14 @@ class PersonSkjema extends React.Component<Props, {}> {
 			return <div className="personskjema"/>;
 		}
 		const id = "ektefelle";
-		const fodselsdato = konverterFdatoFraServer(ektefelle.fodselsdato) || "";
+		const fodselsdato = konverterFraISODato(ektefelle.fodselsdato) || "";
 		if (!ektefelle.personnummer) {
 			ektefelle.personnummer = "";
 		}
 		const personnummer = ektefelle.personnummer || "";
+
+		const familie: Familie = soknadsdata.familie;
+		const borSammenMed = (familie && familie.sivilstatus) ? familie.sivilstatus.borSammenMed : null;
 
 		return (
 			<div className="personskjema">
@@ -175,6 +189,27 @@ class PersonSkjema extends React.Component<Props, {}> {
 						</Column>
 					</Row>
 				</Container>
+
+				<Sporsmal
+					sprakNokkel="familie.sivilstatus.gift.ektefelle.borsammen"
+				>
+					<RadioEnhanced
+						id={"sivilstatus_gift_bor_sammen_radio_ja"}
+						faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
+						value="true"
+						checked={borSammenMed === true}
+						onChange={() => this.onClickBorSammen(true)}
+					/>
+					<RadioEnhanced
+						id={"sivilstatus_gift_bor_sammen_radio_nei"}
+						faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
+						value="false"
+						checked={borSammenMed === false}
+						onChange={() => this.onClickBorSammen(false)}
+					/>
+				</Sporsmal>
+
+
 			</div>
 		);
 	}

@@ -32,10 +32,12 @@ export const opplysningsRekkefolgeOgSpc: OpplysningSpc[] = [
     { type: OpplysningType.FAKTURA_TANNBEHANDLING, antallRader: AntallRader.FLERE, radInnhold: [InputType.BELOP], textKey: "opplysninger.utgifter.barn.tannbehandling"}, // RADER_MED_BELOP
     { type: OpplysningType.FAKTURA_ANNETBARNUTGIFT, antallRader: AntallRader.FLERE, radInnhold: [InputType.BESKRIVELSE, InputType.BELOP], textKey: "opplysninger.utgifter.barn.annet"}, // RADER_MED_BESKRIVELSE_OG_BELOP
     { type: OpplysningType.SKATTEMELDING_SKATTEMELDING, antallRader: AntallRader.INGEN, radInnhold: [], textKey: "opplysninger.generell.skattemelding"}, // NOTHING
+    { type: OpplysningType.OPPHOLDSTILLATEL_OPPHOLDSTILLATEL, antallRader: AntallRader.INGEN, radInnhold: [], textKey: "opplysninger.oppholdstillatelse.oppholdstillatelse"}, // INGEN
     { type: OpplysningType.ANNET_ANNET, antallRader: AntallRader.FLERE, radInnhold: [InputType.BESKRIVELSE, InputType.BELOP], textKey: "opplysninger.ekstrainfo.utgifter"} // RADER_MED_BESKRIVELSE_OG_BELOP
 ];
 
 export const gruppeRekkefolge: OpplysningGruppe[] = [
+    OpplysningGruppe.STATSBORGERSKAP,
     OpplysningGruppe.ARBEID,
     OpplysningGruppe.FAMILIE,
     OpplysningGruppe.BOSITUASJON,

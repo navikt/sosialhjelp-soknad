@@ -7,6 +7,7 @@ import {
 } from "./soknadsdataReducer";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 import { REST_STATUS } from "../../types";
+import {loggFeil} from "../navlogger/navloggerActions";
 
 const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `soknader/${brukerBehandlingId}/${sti}`;
 
@@ -14,8 +15,7 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	return (dispatch: Dispatch) => {
 		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
 		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
-
-			// For å simulere ulike typer testdata fra server, kan man her skrive kode som:
+            // For å simulere ulike typer testdata fra server, kan man her skrive kode som:
 			// if(sti === SoknadsSti.FORSORGERPLIKT){
 			// 	response = {
 			// 		ansvar: [],
@@ -23,9 +23,10 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 			// 		harForsorgerplikt: false
 			// 	}
 			// }
-			dispatch(oppdaterSoknadsdataSti(sti, response));
+            dispatch(oppdaterSoknadsdataSti(sti, response));
 			dispatch(settRestStatus(sti, REST_STATUS.OK));
-		}).catch(() => {
+		}).catch((reason) => {
+            dispatch(loggFeil("Henting av soknadsdata feilet: " + reason));
 			dispatch(settRestStatus(sti, REST_STATUS.FEILET));
 			dispatch(navigerTilServerfeil());
 		});
@@ -37,7 +38,7 @@ export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknad
 		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
 		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata))
 			.then((response: any) => {
-				dispatch(settRestStatus(sti, REST_STATUS.OK));
+                dispatch(settRestStatus(sti, REST_STATUS.OK));
 				if (responseHandler) {
 					// For å simulere response fra adresse, kan man skrive:
 					// if (sti === SoknadsSti.ADRESSER) {
@@ -46,7 +47,8 @@ export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknad
 					responseHandler(response);
 				}
 			})
-			.catch(() => {
+			.catch((reason) => {
+				dispatch(loggFeil("Lagring av soknadsdata feilet: " + reason));
 				dispatch(settRestStatus(sti, REST_STATUS.FEILET));
 				dispatch(navigerTilServerfeil());
 			});
