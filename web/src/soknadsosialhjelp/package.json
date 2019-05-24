@@ -2,8 +2,9 @@
   "name": "soknadsosialhjelp",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
+  "devDependencies": {
     "@craco/craco": "^5.2.1",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/history": "^4.7.2",
     "@types/jest": "24.0.13",
     "@types/node": "12.0.2",
@@ -11,20 +12,31 @@
     "@types/react-dom": "16.8.4",
     "@types/react-redux": "^7.0.9",
     "@types/react-router": "^5.0.1",
-    "connected-react-router": "^6.4.0",
+    "@types/react-router-dom": "^4.3.3",
+    "typescript": "3.4.5",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.13.1",
     "core-js": "^3.1.2",
     "craco-less": "^1.7.0",
-    "history": "^4.9.0",
     "less-plugin-npm-import": "^2.1.0",
+    "react-scripts": "3.0.1"
+  },
+  "dependencies": {
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
+    "connected-react-router": "^6.4.0",
+    "history": "^4.9.0",
+    "prettier": "^1.17.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-redux": "^6.0.1",
+    "react-redux": "^7.0.3",
     "react-router": "^5.0.0",
-    "react-scripts": "3.0.1",
+    "react-router-dom": "^5.0.0",
     "redux-saga": "^1.0.2",
-    "typescript": "3.4.5"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
+    "mock-backend": "node scripts/mock_backend",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",

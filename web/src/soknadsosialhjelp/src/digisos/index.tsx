@@ -1,18 +1,16 @@
 import React from 'react';
 import {Provider} from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
-
-import RootRouter from "./routing/RootRouter";
 import configureStore, {history} from "./store/configureStore";
+import App from "./view/App";
 
 const store = configureStore();
-
 
 const Index: React.FC = () => {
   return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <RootRouter />
+          <App />
           {/*// TODO TimeoutBox. Kan ikke være her. Ikke felles for alle sidene*/}
           {/*// TODO AvbrytSoknad*/}
         </ConnectedRouter>
