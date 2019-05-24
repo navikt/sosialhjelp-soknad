@@ -1,6 +1,6 @@
 import {Route, Switch} from "react-router";
 import * as React from "react";
-import Informasjon from "../app/informasjon";
+import Informasjon from "../view/informasjon";
 
 const RootRouter: React.FC = () => {
     return (

@@ -2,13 +2,13 @@ import React from 'react';
 import {Provider} from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 
-import RootRouter from "../routing/RootRouter";
-import configureStore, {history} from "../store/configureStore";
+import RootRouter from "./routing/RootRouter";
+import configureStore, {history} from "./store/configureStore";
 
 const store = configureStore();
 
 
-const App: React.FC = () => {
+const Index: React.FC = () => {
   return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
@@ -20,4 +20,4 @@ const App: React.FC = () => {
   );
 }
 
-export default App;
+export default Index;
