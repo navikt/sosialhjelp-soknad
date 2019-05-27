@@ -161,6 +161,8 @@ class PersonSkjema extends React.Component<Props, {}> {
 								getName={() => id + "_fodselsdato_input"}
 								getFeil={() => null}
 								id={id + "_fodselsdato_input"}
+								maxLength={8}
+								minLength={8}
 								verdi={fodselsdato}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("fodselsdato", verdi)}
 								bredde="S"
