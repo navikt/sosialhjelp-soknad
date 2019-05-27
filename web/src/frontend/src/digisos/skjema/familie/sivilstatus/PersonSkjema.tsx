@@ -8,7 +8,7 @@ import {
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import { fdato, maksLengde, minLengde } from "../../../../nav-soknad/validering/valideringer";
+import {erTall, fdato, maksLengde, minLengde} from "../../../../nav-soknad/validering/valideringer";
 import { konverterFraISODato, konverterTilISODato } from "./datoUtils";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -74,6 +74,9 @@ class PersonSkjema extends React.Component<Props, {}> {
 			const faktumKeyPersonnummer = "familie.sivilstatus.gift.ektefelle.pnr";
 			if (!feilkodePersonnummer) {
 				feilkodePersonnummer = maksLengde(personnummer, 5);
+			}
+			if (!feilkodePersonnummer) {
+				feilkodePersonnummer = erTall(personnummer, true);
 			}
 			setValideringsfeil(feilkodePersonnummer, faktumKeyPersonnummer);
 		}
@@ -180,7 +183,6 @@ class PersonSkjema extends React.Component<Props, {}> {
 								id={id + "_personnummer_input"}
 								maxLength={5}
 								minLength={5}
-								pattern={"\\d*"}
 								verdi={personnummer}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("personnummer", verdi)}
 								bredde="S"
