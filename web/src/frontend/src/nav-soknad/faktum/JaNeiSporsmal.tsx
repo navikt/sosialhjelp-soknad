@@ -27,7 +27,6 @@ interface Props {
 class JaNeiSporsmal extends React.Component<Props, {}> {
 
 	handleOnChange(verdi: any): void {
-		console.warn("Klikk JaNei...");
 		if(this.props.onChange) {
 			this.props.onChange(verdi);
 		}
