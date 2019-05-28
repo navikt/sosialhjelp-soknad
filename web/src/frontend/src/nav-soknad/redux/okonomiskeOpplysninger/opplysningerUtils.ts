@@ -9,6 +9,8 @@ import {
     OpplysningType
 } from "./opplysningerTypes";
 import {opplysningsRekkefolgeOgSpc} from "./opplysningerConfig";
+import {loggErrorToServer} from "../../utils/loggerUtils";
+import {NavLogEntry, NavLogLevel} from "../navlogger/navloggerTypes";
 
 export function getOpplysningerUrl(behandlingsId: string) {
     return (
@@ -98,13 +100,22 @@ export const getSortertListeAvOpplysninger = (backendData: OpplysningerBackend):
     const alleOpplysninger: Opplysning[] = opplysningerAktive.concat(opplysningerSlettede);
 
     return sorterOpplysninger(alleOpplysninger, opplysningsRekkefolgeOgSpc)
-        .filter((o: Opplysning) => o !== null);
+        .filter((o: MaybeOpplysning) => o !== null);
 };
 
-export const getSpcForOpplysning = (opplysningType: OpplysningType) => {
+export const getSpcForOpplysning = (opplysningType: OpplysningType): OpplysningSpc | undefined => {
     const opplysningSpcs = opplysningsRekkefolgeOgSpc.filter((oSpc: OpplysningSpc) => {
         return oSpc.type === opplysningType;
     });
+
+    if (opplysningSpcs && opplysningSpcs.length === 0){
+        const navLogEntry: NavLogEntry = {
+            level: NavLogLevel.ERROR,
+            message: `Spc ikke funnet for opplysning med type: \"${opplysningType}\"`,
+            jsFileUrl: "opplysningerUtils.js",
+        };
+        loggErrorToServer(navLogEntry);
+    }
 
     return opplysningSpcs[0];
 };
@@ -133,6 +144,13 @@ function sorterOpplysninger(usortertListe: Opplysning[], rekkefolge: OpplysningS
         while (erPlassertISortertListe === false) {
             if (n > rekkefolge.length - 1) {
                 erPlassertISortertListe = true;
+
+                const navLogEntry: NavLogEntry = {
+                    level: NavLogLevel.ERROR,
+                    message: `Ukjent okonomisk opplysning oppdaget. Okonomisk opplysning med type \"${opplysning.type}\" mottatt fra backend`,
+                    jsFileUrl: "opplysningerUtils.js",
+                };
+                loggErrorToServer(navLogEntry);
             } else if (opplysning.type === rekkefolge[n].type) {
                 sortert[n] = opplysning;
                 erPlassertISortertListe = true;

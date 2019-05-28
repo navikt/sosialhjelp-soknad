@@ -2,7 +2,7 @@ import * as React from 'react';
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import {
     Fil,
-    Opplysning,
+    Opplysning, OpplysningSpc,
     VedleggStatus
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {connect} from "react-redux";
@@ -50,8 +50,8 @@ class VedleggView extends React.Component<Props> {
     }
 
     renderOpplastingAvVedleggSeksjon(opplysning: Opplysning) {
-        const opplysningSpc = getSpcForOpplysning(opplysning.type);
-        const tittelKey = opplysningSpc.textKey + ".vedlegg.sporsmal.tittel";
+        const opplysningSpc: OpplysningSpc | undefined = getSpcForOpplysning(opplysning.type);
+        const tittelKey = opplysningSpc && opplysningSpc.textKey ? opplysningSpc.textKey + ".vedlegg.sporsmal.tittel" : "";
 
         const vedleggListe = opplysning.filer
             .map(fil => {

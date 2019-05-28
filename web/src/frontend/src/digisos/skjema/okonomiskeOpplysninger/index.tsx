@@ -16,7 +16,6 @@ import {hentOpplysninger} from "../../../nav-soknad/redux/okonomiskeOpplysninger
 import {RestStatus} from "../../../nav-soknad/types";
 import {gruppeRekkefolge} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerConfig";
 
-
 interface StoreToProps {
     okonomiskeOpplysninger: OpplysningerModel;
     behandlingsId: string;
@@ -31,7 +30,7 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
         this.props.dispatch(hentOpplysninger(behandlingsId))
     }
 
-    renderGrupper() {
+    renderGrupper(): JSX.Element[] {
         const {opplysningerSortert} = this.props.okonomiskeOpplysninger;
 
         const grupperView = gruppeRekkefolge.map((opplysningGruppe: OpplysningGruppe) => {
@@ -49,7 +48,10 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
 
     render() {
         const {restStatus, backendData} = this.props.okonomiskeOpplysninger;
-        const ikkeBesvartMeldingSkalVises = backendData && backendData.okonomiskeOpplysninger.length < 3;
+        const ikkeBesvartMeldingSkalVises: boolean =
+            backendData &&
+            backendData.okonomiskeOpplysninger &&
+            backendData.okonomiskeOpplysninger.length < 3;
         const infoMelding: JSX.Element = (
             <div className="steg-ekstrainformasjon__blokk">
                 <Informasjonspanel

@@ -36,6 +36,7 @@ import {
 	slettSoknadOk,
 	startSoknadOk
 } from "./soknadActions";
+import {loggFeil} from "../navlogger/navloggerActions";
 
 export const SKJEMAID = "NAV 35-18.01";
 
@@ -58,6 +59,7 @@ function* opprettSoknadSaga(): SagaIterator {
 		yield put(startSoknadOk()); // TODO Rename metode navn
 		yield put(tilSteg(1));
 	} catch (reason) {
+		yield put(loggFeil("opprett soknad saga feilet: " + reason));
 		yield put(navigerTilServerfeil());
 	}
 }
@@ -72,6 +74,7 @@ function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
 		yield call(oppdaterSoknadSaga, soknad);
 		return soknad;
 	} catch (reason) {
+		yield put(loggFeil("hent soknad saga feilet: " + reason));
 		yield put(navigerTilServerfeil());
 	}
 }
@@ -119,6 +122,7 @@ function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
 		yield put(startSoknadOk());
 		yield put(tilSteg(1));
 	} catch (reason) {
+		yield put(loggFeil("start soknad saga feilet: " + reason));
 		yield put(navigerTilServerfeil());
 	}
 }
@@ -133,6 +137,7 @@ function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
 			yield put(navigerTilDittNav());
 		}
 	} catch (reason) {
+		yield put(loggFeil("slett soknad saga feilet: " + reason));
 		yield put(navigerTilServerfeil());
 	}
 }
@@ -148,6 +153,7 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
 		yield put(sendSoknadOk(action.brukerBehandlingId));
 		yield put(navigerTilKvittering(action.brukerBehandlingId));
 	} catch (reason) {
+		yield put(loggFeil("send soknad saga feilet: " + reason));
 		yield put(navigerTilServerfeil());
 	}
 }
@@ -160,6 +166,7 @@ function* hentKvitteringSaga(action: HentKvitteringAction): SagaIterator {
 		);
 		yield put(hentKvitteringOk(kvittering));
 	} catch (reason) {
+		yield put(loggFeil("hent kvittering saga feilet: " + reason));
 		yield put(navigerTilServerfeil());
 	}
 }
