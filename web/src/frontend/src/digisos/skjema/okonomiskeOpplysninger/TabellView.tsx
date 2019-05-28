@@ -5,6 +5,7 @@ import {
     Opplysning,
     OpplysningerModel,
     OpplysningRad,
+    OpplysningSpc,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
 import {connect} from "react-redux";
@@ -128,12 +129,12 @@ class TabellView extends React.Component<Props, {}> {
     render() {
         const {opplysning, gruppeIndex} = this.props;
 
-        const opplysningSpc = getSpcForOpplysning(opplysning.type);
-        const textKey = opplysningSpc.textKey;
+        const opplysningSpc: OpplysningSpc | undefined = getSpcForOpplysning(opplysning.type);
+        const textKey = opplysningSpc.textKey ? opplysningSpc.textKey : "";
 
         const innhold: JSX.Element[] = opplysning.rader.map((vedleggRad: OpplysningRad, radIndex: number) => {
             const skalViseFjerneRadKnapp = radIndex > 0;
-            const inputs = opplysningSpc.radInnhold.map((inputType: InputType) => {
+            const inputs = opplysningSpc ? opplysningSpc.radInnhold.map((inputType: InputType) => {
                 const key: string = `${textKey}.${inputType}.${radIndex}`;
                 const text: string = `${textKey}.${inputType}`;
                 const id: string = key.replace(/\./gi, '_');
@@ -153,7 +154,7 @@ class TabellView extends React.Component<Props, {}> {
                         />
                     </Column>
                 )
-            });
+            }) : null;
 
             return (
                 <Row key={radIndex} className="opplysning__row">
@@ -173,17 +174,20 @@ class TabellView extends React.Component<Props, {}> {
             )
         });
 
-        return (
-            <div className="container--noPadding container-fluid">
-                {innhold}
-                {
-                    opplysningSpc.antallRader === AntallRader.FLERE &&
-                    <Lenkeknapp onClick={() => this.handleLeggTilRad()} style="add" id={gruppeIndex + "_link"}>
-                        Legg til
-                    </Lenkeknapp>
-                }
-            </div>
-        )
+        if (innhold){
+            return (
+                <div className="container--noPadding container-fluid">
+                    {innhold}
+                    {
+                        opplysningSpc && opplysningSpc.antallRader === AntallRader.FLERE &&
+                        <Lenkeknapp onClick={() => this.handleLeggTilRad()} style="add" id={gruppeIndex + "_link"}>
+                            Legg til
+                        </Lenkeknapp>
+                    }
+                </div>
+            )
+        }
+        return null;
     }
 }
 
