@@ -32,7 +32,7 @@ const history = createHistory({
 			callback(true);
 		}
 	},
-	basename: window.location.pathname.replace(/^\/(([^/]+\/)?soknadsosialhjelp).+$/, "$1")
+	basename: getAbsoluteBasename()
 });
 
 const logger = createLogger({
@@ -40,6 +40,13 @@ const logger = createLogger({
 });
 
 const visReduxLogger = false;
+
+/**
+ * Resolves basename in a pathname independent way
+ */
+function getAbsoluteBasename() {
+	return window.location.pathname.replace(/^\/(([^/]+\/)?soknadsosialhjelp).+$/, "$1")
+}
 
 function configureStore() {
 	/* tslint:disable */
