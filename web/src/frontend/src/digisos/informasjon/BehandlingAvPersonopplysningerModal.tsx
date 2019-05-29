@@ -7,7 +7,6 @@ import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
 import { State } from "../redux/reducers";
 import { Knapp } from "nav-frontend-knapper";
 import { Faktum } from "../../nav-soknad/types/navSoknadTypes";
-import { finnValgtEnhetsNavn } from "../data/kommuner";
 
 interface StateProps {
 	fakta: Faktum[];
@@ -19,13 +18,14 @@ type Props = StateProps & InjectedIntlProps & DispatchProps;
 class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 
 	getText() {
-		let valgtEnhetsNavn = finnValgtEnhetsNavn(this.props.fakta);
-		if (!valgtEnhetsNavn) {
-			valgtEnhetsNavn = "$1";
-		}
-		let text = this.props.intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"];
-		text = text.replace(/{navkontor:(.*)}/g, valgtEnhetsNavn);
-		return text;
+		return "";
+		// let valgtEnhetsNavn = finnValgtEnhetsNavn(this.props.fakta);
+		// if (!valgtEnhetsNavn) {
+		// 	valgtEnhetsNavn = "$1";
+		// }
+		// let text = this.props.intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"];
+		// text = text.replace(/{navkontor:(.*)}/g, valgtEnhetsNavn);
+		// return text;
 	}
 
 	render() {

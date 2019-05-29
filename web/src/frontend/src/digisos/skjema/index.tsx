@@ -19,10 +19,7 @@ import Steg7 from "./utgifterGjeld";
 import Steg8 from "./okonomiskeOpplysninger";
 import Oppsummering from "./oppsummering";
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
-import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
-import {Faktum} from "../../nav-soknad/types";
 import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
-import {hentSoknad} from "../../nav-soknad/redux/soknad/soknadActions";
 import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 
@@ -32,7 +29,6 @@ interface OwnProps {
 }
 
 interface StateProps {
-    fakta: Faktum[];
     restStatus: string;
     gyldigUrl: boolean;
     steg: string;
@@ -48,25 +44,25 @@ type Props = OwnProps & StateProps & RouterProps & DispatchProps;
 
 class SkjemaRouter extends React.Component<Props, {}> {
 
-    componentWillMount() {
-        if (this.props.brukerbehandlingId && this.props.fakta.length <= 1) {
-            this.props.dispatch(hentSoknad(this.props.brukerbehandlingId));
-        }
-    }
+    // componentWillMount() {
+    //     if (this.props.brukerbehandlingId) {
+    //         this.props.dispatch(hentSoknad(this.props.brukerbehandlingId));
+    //     }
+    // }
 
     componentDidMount() {
         skjulToppMeny();
     }
 
     render() {
-        const {gyldigUrl, restStatus} = this.props;
+        const {gyldigUrl} = this.props;
 
         if (!gyldigUrl) {
             return <SideIkkeFunnet/>;
         }
         const path = "/skjema/:brukerBehandlingId";
         return (
-            <LoadContainer restStatus={restStatus}>
+            <div>
                 <Switch>
                     <Route path={`${path}/1`} component={Steg1}/>
                     <Route path={`${path}/2`} component={Steg2}/>
@@ -79,7 +75,7 @@ class SkjemaRouter extends React.Component<Props, {}> {
                     <Route path={`${path}/9`} component={Oppsummering}/>
                     <Route component={SideIkkeFunnet}/>
                 </Switch>
-            </LoadContainer>
+            </div>
         );
     }
 }
@@ -93,7 +89,6 @@ const mapStateToProps = (
     });
     const {steg, brukerbehandlingId} = match.params as UrlParams;
     return {
-        fakta: state.fakta.data,
         restStatus: state.soknad.restStatus,
         steg,
         brukerbehandlingId,
