@@ -11,6 +11,7 @@ import {
 } from "./soknadsdataReducer";
 import { REST_STATUS } from "../../types";
 import { setVisSamtykkeInfo } from "../init/initActions";
+import { lesBrukerbehandlingsId } from "../../utils";
 
 /*
  * Properties og redux koblinger som er felles for komponenter i søknadsskjemaet.
@@ -35,7 +36,7 @@ export interface SoknadsdataContainerProps {
 
 export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerProps>(
 	(state: State) => ({
-		brukerBehandlingId: state.soknad.data.brukerBehandlingId,
+		brukerBehandlingId: lesBrukerbehandlingsId(),
 		soknadsdata: JSON.parse(JSON.stringify(state.soknadsdata)),
 		feil: state.validering.feil
 	}),

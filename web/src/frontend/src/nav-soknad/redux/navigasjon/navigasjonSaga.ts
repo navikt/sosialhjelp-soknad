@@ -1,4 +1,4 @@
-import { call, put, select, take, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { goBack, push } from "react-router-redux";
 import {
@@ -11,14 +11,12 @@ import {
 	TilKvittering,
 	TilSteg
 } from "./navigasjonTypes";
-import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
-import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
-import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
 import { tilStart, tilSteg } from "./navigasjonActions";
 import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import { SoknadAppState } from "../reduxTypes";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 import { startSoknad } from "../soknad/soknadActions";
+import { lesBrukerbehandlingsId } from "../../utils";
 
 const getHistoryLength = () => window.history.length;
 const navigateTo = (path: string) => (window.location.href = path);
@@ -68,23 +66,27 @@ function* tilbakeEllerForsidenSaga(): SagaIterator {
 }
 
 function* tilStegSaga(action: TilSteg): SagaIterator {
-	const behandlingsId = yield select(selectBrukerBehandlingId);
+	let behandlingsId = lesBrukerbehandlingsId();
+	if (!behandlingsId) {
+		behandlingsId = yield select(selectBrukerBehandlingId);
+	}
 	yield put(push(`/skjema/${behandlingsId}/${action.stegnummer}`));
 }
 
 function* gaVidereSaga(action: GaVidere): SagaIterator {
-	const progresjonFaktum = yield select(selectProgresjonFaktum);
-	const progresjonFaktumVerdi = parseInt(progresjonFaktum.value || 1, 10);
-	if (progresjonFaktumVerdi === action.stegnummer) {
-		const faktum = yield call(
-			oppdaterFaktumMedVerdier,
-			progresjonFaktum,
-			`${action.stegnummer + 1}`
-		);
-		yield put(setFaktum(faktum));
-		yield put(lagreFaktum(faktum));
-		yield take([FaktumActionTypeKeys.LAGRET_FAKTUM]);
-	}
+	// const progresjonFaktum = yield select(selectProgresjonFaktum);
+
+	// const progresjonFaktumVerdi = 2; // parseInt(progresjonFaktum.value || 1, 10);
+	// if (progresjonFaktumVerdi === action.stegnummer) {
+	// 	// const faktum = yield call(
+	// 	// 	oppdaterFaktumMedVerdier,
+	// 	// 	progresjonFaktum,
+	// 	// 	`${action.stegnummer + 1}`
+	// 	// );
+	// 	// yield put(setFaktum(faktum));
+	// 	// yield put(lagreFaktum(faktum));
+	// 	// yield take([FaktumActionTypeKeys.LAGRET_FAKTUM]);
+	// }
 	yield put(tilSteg(action.stegnummer + 1));
 }
 

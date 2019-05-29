@@ -4,13 +4,12 @@ import {
 	fetchDelete,
 	fetchKvittering,
 	fetchPost,
-	fetchToJson, lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
+	lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
 } from "../../utils/rest-utils";
-import { finnFaktum, oppdaterFaktumMedVerdier} from "../../utils";
+import { finnFaktum } from "../../utils";
 import { updateFaktaMedLagretVerdi } from "../fakta/faktaUtils";
 import {
 	HentKvitteringAction,
-	HentSoknadAction,
 	SendSoknadAction,
 	SlettSoknadAction,
 	SoknadActionTypeKeys, StartSoknadAction
@@ -23,7 +22,7 @@ import {
 	tilSteg
 } from "../navigasjon/navigasjonActions";
 import { opprettFaktumSaga } from "../fakta/faktaSaga";
-import { lagreFaktum, resetFakta, setFakta, opprettFaktum } from "../fakta/faktaActions";
+import { resetFakta, setFakta, opprettFaktum } from "../fakta/faktaActions";
 import { OpprettFaktum, OpprettFaktumType } from "../fakta/faktaTypes";
 import { Soknad } from "../../types";
 
@@ -54,8 +53,8 @@ function* opprettSoknadSaga(): SagaIterator {
 			JSON.stringify({ soknadType: SKJEMAID })
 		);
 		yield put(opprettSoknadOk(response.brukerBehandlingId));
-		const hentAction = { brukerBehandlingId: response.brukerBehandlingId } as HentSoknadAction;
-		yield call(hentSoknadSaga, hentAction);
+		// const hentAction = { brukerBehandlingId: response.brukerBehandlingId } as HentSoknadAction;
+		// yield call(hentSoknadSaga, hentAction);
 		yield put(startSoknadOk()); // TODO Rename metode navn
 		yield put(tilSteg(1));
 	} catch (reason) {
@@ -64,20 +63,20 @@ function* opprettSoknadSaga(): SagaIterator {
 	}
 }
 
-function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
-	try {
-		const soknad: Soknad = yield call(
-			fetchToJson,
-			`soknader/${action.brukerBehandlingId}`,
-			null
-		);
-		yield call(oppdaterSoknadSaga, soknad);
-		return soknad;
-	} catch (reason) {
-		yield put(loggFeil("hent soknad saga feilet: " + reason));
-		yield put(navigerTilServerfeil());
-	}
-}
+// function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
+// 	try {
+// 		const soknad: Soknad = yield call(
+// 			fetchToJson,
+// 			`soknader/${action.brukerBehandlingId}`,
+// 			null
+// 		);
+// 		yield call(oppdaterSoknadSaga, soknad);
+// 		return soknad;
+// 	} catch (reason) {
+// 		yield put(loggFeil("hent soknad saga feilet: " + reason));
+// 		yield put(navigerTilServerfeil());
+// 	}
+// }
 
 function* opprettFaktumUtenParentHvisDetMangler(fakta: any, key: string): any {
 	const faktum = finnFaktum(key, fakta);
@@ -98,27 +97,27 @@ function* oppdaterSoknadSaga(soknad: Soknad): SagaIterator {
 
 function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
 	try {
-		const id = yield call(opprettSoknadSaga);
-		const hentAction = { brukerBehandlingId: id } as HentSoknadAction;
-		const soknad = yield call(hentSoknadSaga, hentAction);
-		yield put(
-			lagreFaktum(
-				oppdaterFaktumMedVerdier(
-					finnFaktum("personalia.kommune", soknad.fakta),
-					action.kommune
-				)
-			)
-		);
-		if (action.bydel) {
-			yield put(
-				lagreFaktum(
-					oppdaterFaktumMedVerdier(
-						finnFaktum("personalia.bydel", soknad.fakta),
-						action.bydel
-					)
-				)
-			);
-		}
+		// const id = yield call(opprettSoknadSaga);
+		// const hentAction = { brukerBehandlingId: id } as HentSoknadAction;
+		// const soknad = yield call(hentSoknadSaga, hentAction);
+		// yield put(
+		// 	lagreFaktum(
+		// 		oppdaterFaktumMedVerdier(
+		// 			finnFaktum("personalia.kommune", soknad.fakta),
+		// 			action.kommune
+		// 		)
+		// 	)
+		// );
+		// if (action.bydel) {
+		// 	yield put(
+		// 		lagreFaktum(
+		// 			oppdaterFaktumMedVerdier(
+		// 				finnFaktum("personalia.bydel", soknad.fakta),
+		// 				action.bydel
+		// 			)
+		// 		)
+		// 	);
+		// }
 		yield put(startSoknadOk());
 		yield put(tilSteg(1));
 	} catch (reason) {
@@ -173,7 +172,6 @@ function* hentKvitteringSaga(action: HentKvitteringAction): SagaIterator {
 
 export {
 	opprettSoknadSaga,
-	hentSoknadSaga,
 	oppdaterSoknadSaga,
 	startSoknadSaga,
 	sendSoknadSaga,
@@ -184,7 +182,7 @@ export {
 function* soknadSaga(): SagaIterator {
 	yield takeEvery(SoknadActionTypeKeys.START_SOKNAD, startSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.OPPRETT_SOKNAD, opprettSoknadSaga);
-	yield takeEvery(SoknadActionTypeKeys.HENT_SOKNAD, hentSoknadSaga);
+	// yield takeEvery(SoknadActionTypeKeys.HENT_SOKNAD, hentSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.SLETT_SOKNAD, slettSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.SEND_SOKNAD, sendSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.HENT_KVITTERING, hentKvitteringSaga);
