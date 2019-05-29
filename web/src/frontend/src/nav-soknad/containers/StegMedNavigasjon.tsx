@@ -14,10 +14,8 @@ import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
 import { setVisBekreftMangler } from "../redux/oppsummering/oppsummeringActions";
 import {
 	clearFaktaValideringsfeil,
-	setFaktaValideringsfeil
 } from "../redux/valideringActions";
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
-import { validerAlleFaktum } from "../validering/utils";
 import { getIntlTextOrKey, scrollToTop } from "../utils";
 import { avbrytSoknad, sendSoknad } from "../redux/soknad/soknadActions";
 import { gaVidere, gaTilbake } from "../redux/navigasjon/navigasjonActions";
@@ -102,19 +100,21 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 			return;
 		}
 
-		let valideringsfeil: Valideringsfeil[] = validerAlleFaktum(
-			this.props.fakta,
-			this.props.valideringer
-		);
-		valideringsfeil = [...valideringsfeil, ...this.props.valideringsfeil];
-		valideringsfeil = this.fjernDuplikateValideringsfeil(valideringsfeil);
+		this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
 
-		if (valideringsfeil.length === 0) {
-			this.props.dispatch(clearFaktaValideringsfeil());
-			this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
-		} else {
-			this.props.dispatch(setFaktaValideringsfeil(valideringsfeil));
-		}
+		// let valideringsfeil: Valideringsfeil[] = validerAlleFaktum(
+		// 	this.props.fakta,
+		// 	this.props.valideringer
+		// );
+		// valideringsfeil = [...valideringsfeil, ...this.props.valideringsfeil];
+		// valideringsfeil = this.fjernDuplikateValideringsfeil(valideringsfeil);
+		//
+		// if (valideringsfeil.length === 0) {
+		// 	this.props.dispatch(clearFaktaValideringsfeil());
+		// 	this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
+		// } else {
+		// 	this.props.dispatch(setFaktaValideringsfeil(valideringsfeil));
+		// }
 	}
 
 	fjernDuplikateValideringsfeil(valideringsfeil: Valideringsfeil[]) {
