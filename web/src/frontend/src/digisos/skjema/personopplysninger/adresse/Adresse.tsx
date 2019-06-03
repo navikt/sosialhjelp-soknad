@@ -21,6 +21,8 @@ import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import AdresseTypeahead from "./AdresseTypeahead";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
+import MatrikkelAdresse from "./MatrikkelAdresse";
+import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 
 interface OwnProps {
 	disableLoadingAnimation?: boolean;
@@ -188,7 +190,9 @@ class AdresseView extends React.Component<Props, State> {
 		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
 		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
 		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
-
+		const matrikkelAdresse = adresser && adresser.folkeregistrert && adresser.folkeregistrert.matrikkeladresse;
+		const gnrBnr: string = (matrikkelAdresse && matrikkelAdresse.gaardsnummer ? matrikkelAdresse.gaardsnummer : "") +
+			(matrikkelAdresse && matrikkelAdresse.bruksnummer ? " / " + matrikkelAdresse.bruksnummer : "");
 		let folkeregistrertAdresseLabel = null;
 		let annenAdresseLabel = null;
 		let { oppstartsModus } = this.state;
@@ -208,6 +212,22 @@ class AdresseView extends React.Component<Props, State> {
 			annenAdresseLabel = (
 				<div className="finnNavKontor__label">
 					<FormattedMessage id="kontakt.system.oppholdsadresse.valg.soknad"/>
+				</div>
+			);
+		}
+
+		let matrikkelAdresseLabel = null;
+		if (matrikkelAdresse) {
+			matrikkelAdresseLabel = (
+				<div className="finnNavKontor__label">
+					{/*TODO: Legg inn i språkfil i react-intl*/}
+					<span>Folkeregistrert adresse</span>
+					<Detaljeliste>
+						<DetaljelisteElement
+							tittel={"Gårds- og bruksnummer"}
+							verdi={gnrBnr}
+						/>
+					</Detaljeliste>
 				</div>
 			);
 		}
@@ -240,6 +260,18 @@ class AdresseView extends React.Component<Props, State> {
 								visible={adresser.valg === AdresseKategori.FOLKEREGISTRERT && navEnheter.length > 1}
 								onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}
 							/>
+						</span>
+					)}
+					{matrikkelAdresse && (
+						<span>
+							<RadioEnhanced
+								id="oppholdsadresse_folkeregistrert"
+								value="folkeregistrert"
+								onChange={() => this.onClickRadio(AdresseKategori.FOLKEREGISTRERT)}
+								checked={adresser.valg === AdresseKategori.FOLKEREGISTRERT}
+								label={matrikkelAdresseLabel}
+							/>
+							<MatrikkelAdresse visible={matrikkelAdresse && adresser.valg === AdresseKategori.FOLKEREGISTRERT}/>
 						</span>
 					)}
 					{midlertidigAdresse && (
