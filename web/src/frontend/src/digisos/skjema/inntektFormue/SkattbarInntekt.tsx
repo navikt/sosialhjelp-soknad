@@ -49,7 +49,15 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 					</div>
 					<div className="blokk-xs">
 					{organisasjon.utbetalinger.map(utbetaling => {
-						return SkattbarInntekt.renderUtbetaling(utbetaling.tittel, utbetaling.belop)
+						const utbetalinger = [];
+						if (utbetaling.brutto) {
+							utbetalinger.push(SkattbarInntekt.renderUtbetaling("Bruttoinntekt", utbetaling.brutto));
+						}
+						if (utbetaling.forskuddstrekk) {
+							utbetalinger.push(SkattbarInntekt.renderUtbetaling("Forskuddstrekk", utbetaling.forskuddstrekk));
+						}
+
+						return utbetalinger;
 					})}
 					</div>
 					<a className="blokk-s" href={lenkeSti} target={`skatteetaten_${organisasjon.orgnr}`}>Se detaljer hos Skatteetaten.</a>
@@ -62,15 +70,6 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 
 				<div className="blokk-s">
 					<FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse"/>
-				</div>
-
-				<div className="blokk-s">
-					<FormattedMessage id="utbetalinger.inntekt.skattbar.oppsummering" values={{antall:organisasjoner.length}} />
-				</div>
-
-				<div className="utbetalinger blokk-s">
-					{SkattbarInntekt.renderUtbetaling("utbetalinger.inntekt.skattbar.samlet.inntekt", skattbarInntekt.samletInntekt)}
-					{SkattbarInntekt.renderUtbetaling("utbetalinger.inntekt.skattbar.samlet.trekk", skattbarInntekt.samletTrekk)}
 				</div>
 
 				<div className="utbetalinger">{organisasjoner}</div>
