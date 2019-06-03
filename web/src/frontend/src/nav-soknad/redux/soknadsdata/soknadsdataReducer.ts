@@ -126,8 +126,7 @@ export const initialInntektState: Inntekt = {
 	utbetalinger: initialUtbetalingerState,
 	formue: initialFormueState,
 	verdier: initialVerdierState,
-	skattbarinntektogforskuddstrekk: initialSkattbarInntektState
-	verdier: initialVerdierState,
+	skattbarinntektogforskuddstrekk: initialSkattbarInntektState,
 	systemdata: initialSysteminntekter
 };
 
