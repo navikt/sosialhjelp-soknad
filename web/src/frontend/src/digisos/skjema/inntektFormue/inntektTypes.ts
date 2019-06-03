@@ -1,6 +1,4 @@
 export interface SkattbarInntekt {
-	"samletInntekt": number,
-	"samletTrekk": number,
 	"organisasjoner": Organisasjon[]
 }
 
@@ -13,7 +11,8 @@ export interface Organisasjon {
 }
 
 export interface Utbetaling {
-	"belop": number,
+	"brutto": number,
+	"forskuddstrekk": number,
 	"tittel": string
 }
 
