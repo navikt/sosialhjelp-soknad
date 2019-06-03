@@ -56,6 +56,7 @@ interface StateProps {
 	valideringsfeil?: Valideringsfeil[];
 	stegValidertCounter?: number;
 	oppsummeringBekreftet?: boolean;
+	fodselsnummer: string;
 }
 
 type Props = OwnProps &
@@ -109,6 +110,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 			this.props.valideringer
 		);
 		valideringsfeil = [...valideringsfeil, ...this.props.valideringsfeil];
+		valideringsfeil = this.fjernDuplikateValideringsfeil(valideringsfeil);
 
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
@@ -116,6 +118,28 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		} else {
 			this.props.dispatch(setFaktaValideringsfeil(valideringsfeil));
 		}
+	}
+
+	fjernDuplikateValideringsfeil(valideringsfeil: Valideringsfeil[]) {
+		let forrigeValideringsfeil: Valideringsfeil = null;
+		let duplikatIndex = null;
+		valideringsfeil.forEach((feil: Valideringsfeil, index: number) => {
+			if (forrigeValideringsfeil !== null &&
+				feil.faktumKey === forrigeValideringsfeil.faktumKey &&
+				feil.feilkode === forrigeValideringsfeil.feilkode) {
+				duplikatIndex = index;
+				this.fjernValideringsfeil(valideringsfeil, index);
+			}
+			forrigeValideringsfeil = feil;
+		});
+		if (duplikatIndex) {
+			valideringsfeil = this.fjernValideringsfeil(valideringsfeil, duplikatIndex);
+		}
+		return valideringsfeil;
+	}
+
+	fjernValideringsfeil(items: Valideringsfeil[], i: number): Valideringsfeil[] {
+		return items.slice(0, i-1).concat(items.slice(i, items.length));
 	}
 
 	handleGaTilbake(aktivtSteg: number) {
@@ -211,7 +235,8 @@ const mapStateToProps = (state: SoknadAppState): StateProps => {
 		valideringer: state.validering.valideringsregler,
 		visFeilmeldinger: state.validering.visValideringsfeil,
 		valideringsfeil: state.validering.feil,
-		stegValidertCounter: state.validering.stegValidertCounter
+		stegValidertCounter: state.validering.stegValidertCounter,
+		fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer
 	};
 };
 

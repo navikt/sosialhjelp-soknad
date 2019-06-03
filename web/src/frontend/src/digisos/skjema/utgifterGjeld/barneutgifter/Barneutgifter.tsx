@@ -10,7 +10,8 @@ import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Barneutgifter} from "./BarneutgifterTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
-const Barneutgifter = "utgifter.barn";
+
+const BarneutgifterKey = "utgifter.barn";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -51,7 +52,7 @@ export class BarneutgifterView extends React.Component<Props, {}> {
                 id={"barneutgifter_" + navn + "_checkbox"}
                 name={navn}
                 checked={barneutgifter && barneutgifter[navn] ? barneutgifter[navn] : false}
-                label={<FormattedHTMLMessage id={Barneutgifter + ".true.utgifter." + textKey}/>}
+                label={<FormattedHTMLMessage id={BarneutgifterKey + ".true.utgifter." + textKey}/>}
                 onClick={() => this.handleClickRadio(navn)}
             />
         )
@@ -62,15 +63,15 @@ export class BarneutgifterView extends React.Component<Props, {}> {
         const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
         return (
             <JaNeiSporsmal
-                tekster={getFaktumSporsmalTekst(this.props.intl, Barneutgifter)}
+                tekster={getFaktumSporsmalTekst(this.props.intl, BarneutgifterKey)}
                 visible={barneutgifter.harForsorgerplikt}
-                faktumKey={Barneutgifter}
+                faktumKey={BarneutgifterKey}
                 verdi={barneutgifter.bekreftelse}
                 onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, Barneutgifter + ".true.utgifter")}
+                    tekster={getFaktumSporsmalTekst(this.props.intl, BarneutgifterKey + ".true.utgifter")}
                 >
                     {this.renderCheckBox("fritidsaktiviteter", "fritidsaktivitet")}
                     {this.renderCheckBox("barnehage", "barnehage")}

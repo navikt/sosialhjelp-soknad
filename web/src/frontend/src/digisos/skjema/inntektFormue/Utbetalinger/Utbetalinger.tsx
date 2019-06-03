@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-    connectSoknadsdataContainer,
+    connectSoknadsdataContainer, onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
@@ -13,14 +13,18 @@ import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
 import { REST_STATUS } from "../../../../nav-soknad/types";
+import {ValideringActionKey} from "../../../../nav-soknad/validering/types";
+import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";
+const TEXT_AREA_ANNET_FAKTUM_KEY = UTBETALINGER + "utbetalinger.annet.textarea";
+
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 interface State {
-    pending: boolean
+    oppstartsModus: boolean
 }
 
 export class UtbetalingerView extends React.Component<Props, State> {
@@ -28,7 +32,7 @@ export class UtbetalingerView extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            pending: true
+            oppstartsModus: true
         }
     }
 
@@ -38,9 +42,9 @@ export class UtbetalingerView extends React.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-        if (this.state.pending) {
+        if (this.state.oppstartsModus) {
             if (this.props.soknadsdata.restStatus.inntekt.utbetalinger === REST_STATUS.OK) {
-                this.setState({pending: false});
+                this.setState({oppstartsModus: false});
             }
         }
     }
@@ -84,7 +88,20 @@ export class UtbetalingerView extends React.Component<Props, State> {
     onBlurTekstfeltAnnet() {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
+        const beskrivelseAvAnnet = utbetalinger.beskrivelseAvAnnet;
+        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, TEXT_AREA_ANNET_FAKTUM_KEY);
+
+        if (!feilmeldingAnnet) {
+            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
+        }
+    }
+
+    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
+        const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
+        onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
+            this.props.setValideringsfeil(feilkode, faktumKey);
+        });
+        return feilkode;
     }
 
     renderCheckBox(navn: string, textKey: string) {
@@ -104,9 +121,15 @@ export class UtbetalingerView extends React.Component<Props, State> {
     render() {
         const {soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
+        const restStatus = soknadsdata.restStatus.inntekt.utbetalinger;
+        const textAreaId = "utbetalinger_annet_textarea";
+        let oppstartsModus = this.state.oppstartsModus;
+        if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+            oppstartsModus = false;
+        }
         return (
             <JaNeiSporsmal
-                visPlaceholder={this.state.pending}
+                visPlaceholder={oppstartsModus}
                 tekster={getFaktumSporsmalTekst(this.props.intl, UTBETALINGER)}
                 faktumKey={UTBETALINGER}
                 verdi={utbetalinger.bekreftelse}
@@ -125,11 +148,11 @@ export class UtbetalingerView extends React.Component<Props, State> {
                         size="small"
                     >
                         <TextareaEnhanced
-                            id="utbetalinger_annet_textarea"
+                            id={textAreaId}
                             placeholder=""
                             onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}
                             onBlur={() => this.onBlurTekstfeltAnnet()}
-                            faktumKey=""
+                            faktumKey={TEXT_AREA_ANNET_FAKTUM_KEY}
                             labelId={UTBETALINGER + ".true.type.annet.true.beskrivelse.label"}
                             maxLength={MAX_CHARS}
                             value={utbetalinger.beskrivelseAvAnnet}

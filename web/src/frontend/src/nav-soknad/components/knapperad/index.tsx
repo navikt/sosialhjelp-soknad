@@ -22,6 +22,7 @@ class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 					htmlType="button"
 					onClick={gaVidere}
 					spinner={this.props.gaViderePending}
+					disabled={this.props.gaViderePending}
 				>
 					{gaVidereLabel
 						? gaVidereLabel

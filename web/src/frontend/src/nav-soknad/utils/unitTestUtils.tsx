@@ -15,6 +15,7 @@ import { routerMiddleware } from "react-router-redux";
 import reducers from "../../digisos/redux/reducers";
 import sagas from "../../rootSaga";
 import { Provider } from "react-redux";
+const prettier = require("prettier");
 
 export const configEnzyme = () => {
 	Enzyme.configure({ adapter: new Adapter() });
@@ -87,6 +88,7 @@ export const createMockIntl = (messages: any) => {
 	intl.formatMessage = (verdi: IntlFormat): string => {
 		return messages[ verdi.id ];
 	};
+
 	return intl;
 };
 
@@ -118,4 +120,8 @@ export const TestContext: React.FunctionComponent<{messages: any, children: Reac
 			</IntlProvider>
 		</Provider>
 	);
+};
+
+export const pretty = (html: string) => {
+	return prettier.format(html, {parser: "html"})
 };

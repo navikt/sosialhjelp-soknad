@@ -1,12 +1,26 @@
-import { EttersendelseActionTypeKeys, EttersendelseActionTypes } from "./ettersendelseTypes";
+import {
+    EttersendelseActionTypeKeys,
+    EttersendelseActionTypes, EttersendelseVedleggBackend,
+    LastOppEttersendtVedleggAction, SlettEttersendtVedleggAction, SlettEttersendtVedleggOkAction
+} from "./ettersendelseTypes";
 import { detekterInternFeilKode } from "../../utils/rest-utils";
+import {Fil, OpplysningType} from "../okonomiskeOpplysninger/opplysningerTypes";
 
-const slettEttersendtVedlegg = (vedleggId: string, filId: string): EttersendelseActionTypes => {
-	return {
-		type: EttersendelseActionTypeKeys.SLETT_VEDLEGG,
-		vedleggId,
-		filId
-	};
+const slettEttersendtVedlegg = (behandlingsId: string, filUuid: string, opplysningType: OpplysningType): SlettEttersendtVedleggAction => {
+    return {
+        type: EttersendelseActionTypeKeys.SLETT_VEDLEGG,
+        behandlingsId,
+        filUuid,
+		opplysningType
+    };
+};
+
+const slettEttersendtVedleggOk = (filUuid: string, opplysningType: OpplysningType): SlettEttersendtVedleggOkAction => {
+    return {
+        type: EttersendelseActionTypeKeys.SLETT_VEDLEGG_OK,
+        filUuid,
+		opplysningType
+    };
 };
 
 const opprettEttersendelse = (brukerbehandlingId: string): EttersendelseActionTypes => {
@@ -24,12 +38,14 @@ const opprettEttersendelseFeilet = (brukerbehandlingId: string): EttersendelseAc
 };
 
 const lastOppEttersendelseVedlegg = (
-	vedleggId: number,
+	behandlingsId: string,
+	opplysningType: OpplysningType,
 	formData: FormData
-): EttersendelseActionTypes => {
+): LastOppEttersendtVedleggAction => {
 	return {
-		type: EttersendelseActionTypeKeys.LAST_OPP,
-		vedleggId,
+        type: EttersendelseActionTypeKeys.LAST_OPP,
+		behandlingsId,
+		opplysningType,
 		formData
 	};
 };
@@ -56,11 +72,19 @@ const lastOppEttersendelseFeilet = (feilKode: string, vedleggId: string): Etters
 	};
 };
 
-const lesEttersendteVedlegg = (vedlegg: any) => {
-	return {
-		type: EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG_OK,
-		vedlegg
-	};
+const lesEttersendteVedlegg = (manglendeVedleggsListe: EttersendelseVedleggBackend[]) => {
+    return {
+        type: EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG_OK,
+		manglendeVedleggsListe
+    };
+};
+
+const filLastetOpp = (opplysningType: OpplysningType, fil: Fil) => {
+    return {
+        type: EttersendelseActionTypeKeys.FIL_OPPLASTING_OK,
+        opplysningType,
+        fil
+    };
 };
 
 const lesEttersendelsesVedlegg = (brukerbehandlingId: string): EttersendelseActionTypes => {
@@ -87,8 +111,8 @@ const lesEttersendelser = (brukerbehandlingId: string): EttersendelseActionTypes
 const settEttersendelser = (ettersendelser: any) => {
 	return {
 		type: EttersendelseActionTypeKeys.LES_ETTERSENDELSER_OK,
-		ettersendelser
-	};
+        ettersendelser
+    };
 };
 
 export {
@@ -103,5 +127,7 @@ export {
 	lesEttersendteVedlegg,
 	lesEttersendelser,
 	sendEttersendelse,
-	settEttersendelser
+	settEttersendelser,
+	filLastetOpp,
+    slettEttersendtVedleggOk
 };

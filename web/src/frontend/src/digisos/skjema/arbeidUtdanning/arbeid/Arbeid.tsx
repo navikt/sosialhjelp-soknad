@@ -13,17 +13,38 @@ import {
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { Arbeidsforhold } from "./arbeidTypes";
+import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
+import {REST_STATUS} from "../../../../nav-soknad/types";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 const MAX_CHARS = 500;
 const FAKTUM_KEY_KOMMENTARER = "opplysninger.arbeidsituasjon.kommentarer";
 
-class ArbeidView extends React.Component<Props, {}> {
+interface State {
+	oppstartsModus: boolean;
+}
+
+class ArbeidView extends React.Component<Props, State> {
+
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			oppstartsModus: true
+		};
+	}
 
 	componentDidMount() {
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ARBEID);
 		this.props.setValideringsfeil(null, FAKTUM_KEY_KOMMENTARER);
+	}
+
+	componentWillUpdate() {
+		const { soknadsdata } = this.props;
+		const restStatus = soknadsdata.restStatus.arbeid;
+		if (this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
+			this.setState({ oppstartsModus: false });
+		}
 	}
 
 	onChange(verdi: string) {
@@ -63,6 +84,20 @@ class ArbeidView extends React.Component<Props, {}> {
 			if (arbeid.arbeidsforhold) {
 				alleArbeidsforhold = arbeid.arbeidsforhold;
 			}
+		}
+		let oppstartsModus = this.state.oppstartsModus;
+		const restStatus = soknadsdata.restStatus.arbeid;
+		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+			oppstartsModus = false;
+		}
+		if (oppstartsModus) {
+			return (
+				<div className="skjema-sporsmal">
+					<Sporsmal sprakNokkel="arbeidsforhold" style="system">
+						<TextPlaceholder lines={6}/>
+					</Sporsmal>
+				</div>
+			)
 		}
 		return (
 			<Sporsmal

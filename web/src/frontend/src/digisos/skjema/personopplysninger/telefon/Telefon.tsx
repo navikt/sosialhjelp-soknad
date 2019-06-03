@@ -1,6 +1,5 @@
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
@@ -88,21 +87,31 @@ class TelefonView extends React.Component<Props, {}> {
 		return telefonnummer;
 	}
 
+	intl(id: string): string {
+		const { intl } = this.props;
+		return intl.formatMessage({ id });
+	}
+
 	render() {
 		const {intl, soknadsdata } = this.props;
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
-		const endreLabel = intl.formatMessage({ id: "kontakt.system.telefon.endreknapp.label"});
-		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
+
 		const brukerdefinert = telefonnummer ? telefonnummer.brukerdefinert : false;
 		const verdi = telefonnummer && telefonnummer.brukerutfyltVerdi ? telefonnummer.brukerutfyltVerdi : "";
 		const systemverdi = telefonnummer ? telefonnummer.systemverdi : "";
+
+
 		const faktumKey = telefonnummer.brukerdefinert ? FAKTUM_KEY_TELEFON : FAKTUM_KEY_SYSTEM_TELEFON;
+		const endreLabel = this.intl("kontakt.system.telefon.endreknapp.label");
+		const avbrytLabel = this.intl("systeminfo.avbrytendringknapp.label");
+		const infotekst = this.intl(faktumKey + ".infotekst.tekst");
+		const sporsmal = this.intl(faktumKey + ".sporsmal");
 
 		switch (systemverdi) {
 			case null: {
 				return (
 					<Sporsmal
-						tekster={getFaktumSporsmalTekst(this.props.intl, faktumKey)}
+						tekster={{sporsmal, infotekst: { tittel: null, tekst: infotekst }}}
 					>
 							<InputEnhanced
 								type="tel"
@@ -123,7 +132,7 @@ class TelefonView extends React.Component<Props, {}> {
 				return (
 
 					<Sporsmal
-						tekster={getFaktumSporsmalTekst(this.props.intl, faktumKey)}
+						tekster={{sporsmal, infotekst: { tittel: null, tekst: infotekst }}}
 					>
 						<SysteminfoMedSkjema
 							skjemaErSynlig={brukerdefinert}
@@ -146,14 +155,14 @@ class TelefonView extends React.Component<Props, {}> {
 								/>
 							)}
 						>
-							<Detaljeliste>
+							{!brukerdefinert && (<Detaljeliste>
 								<DetaljelisteElement
 									tittel={
 										intl.formatHTMLMessage({id: "kontakt.system.telefon.label"})
 									}
 									verdi={systemverdi}
 								/>
-							</Detaljeliste>
+							</Detaljeliste>)}
 						</SysteminfoMedSkjema>
 					</Sporsmal>
 

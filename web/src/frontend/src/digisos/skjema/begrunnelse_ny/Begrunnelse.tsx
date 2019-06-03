@@ -13,6 +13,7 @@ import {
 } from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
+const MAX_CHARS_BEGRUNNELSE = 600;
 const MAX_CHARS = 500;
 const FAKTUM_KEY_HVA = "begrunnelse.hva";
 const FAKTUM_KEY_HVORFOR = "begrunnelse.hvorfor";
@@ -38,8 +39,8 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 	lagreHvisGyldig() {
 		const { soknadsdata, brukerBehandlingId } = this.props;
 		const { hvaSokesOm, hvorforSoke } = soknadsdata.begrunnelse;
-		const feilmeldingHva: ValideringActionKey = this.validerTekstfeltVerdi(hvaSokesOm, FAKTUM_KEY_HVA);
-		const feilmeldingHvorfor: ValideringActionKey = this.validerTekstfeltVerdi(hvorforSoke, FAKTUM_KEY_HVORFOR);
+		const feilmeldingHva: ValideringActionKey = this.validerTekstfeltVerdi(hvaSokesOm, FAKTUM_KEY_HVA, MAX_CHARS);
+		const feilmeldingHvorfor: ValideringActionKey = this.validerTekstfeltVerdi(hvorforSoke, FAKTUM_KEY_HVORFOR, MAX_CHARS_BEGRUNNELSE);
 
 		if (!feilmeldingHva && !feilmeldingHvorfor) {
 			const begrunnelse: BegrunnelseType = {hvaSokesOm, hvorforSoke};
@@ -47,8 +48,8 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 		}
 	}
 
-	validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
-		const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
+    validerTekstfeltVerdi(verdi: string, faktumKey: string, max: number): ValideringActionKey {
+		const feilkode: ValideringActionKey = maksLengde(verdi, max);
 		onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
 			this.props.setValideringsfeil(feilkode, faktumKey);
 		});
@@ -91,7 +92,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 						faktumKey="begrunnelse.hvorfor"
 						labelId="begrunnelse.hvorfor.label"
 						hideLabel={true}
-						maxLength={MAX_CHARS}
+						maxLength={MAX_CHARS_BEGRUNNELSE}
 						value={begrunnelse.hvorforSoke}
 					/>
 				</Sporsmal>

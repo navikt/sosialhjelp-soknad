@@ -2,10 +2,17 @@ import { InjectedIntl } from "react-intl";
 import { Infotekst } from "../types/faktumTextTypes";
 
 export function intlHasKey(intl: InjectedIntl, key: string) {
+	if (!intl.messages) {
+		return false;
+	}
 	return intl.messages[key] !== undefined;
 }
 
-export function getIntlText(intl: InjectedIntl, key?: string) {
+export function getIntlText(intl?: InjectedIntl, key?: string) {
+	if (!intl) {
+		return key;
+	}
+
 	if (!key) {
 		return undefined;
 	}
@@ -15,6 +22,9 @@ export function getIntlText(intl: InjectedIntl, key?: string) {
 }
 
 export function getIntlTextOrKey(intl: InjectedIntl, key: string): string {
+	if(typeof intl === "undefined") {
+		return key;
+	}
 	const tekst = getIntlText(intl, key);
 	return tekst || key;
 }

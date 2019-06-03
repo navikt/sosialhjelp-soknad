@@ -17,7 +17,7 @@ import { settInfofaktum } from "../../../nav-soknad/redux/soknad/soknadActions";
 import { getIntlTextOrKey } from "../../../nav-soknad/utils/intlUtils";
 import { Link } from "react-router-dom";
 import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
-import InformasjonsBoks from "./InformasjonsBoks";
+import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
 
 interface StateProps {
 	oppsummering: Oppsummering;
@@ -111,7 +111,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 					</div>
 
 					<div className="infopanel-oppsummering skjema-sporsmal">
-						<InformasjonsBoks/>
+						<SoknadsmottakerInfoPanel />
 					</div>
 
 					<div className="bekreftOpplysningerPanel blokk-xs bolk">

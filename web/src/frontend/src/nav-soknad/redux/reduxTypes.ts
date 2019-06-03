@@ -10,13 +10,15 @@ import { AVBRYT_DESTINASJON } from "./soknad/soknadActionTypes";
 import { InitState } from "./init/initTypes";
 import { FeatureTogglesApiType } from "./featuretoggles/featureTogglesTypes";
 import { VedleggState } from "./vedlegg/vedleggTypes";
-import { EttersendelseState } from "./ettersendelse/ettersendelseTypes";
+import { EttersendelseState } from "./ettersendelseGammel/ettersendelseTypes";
 import { OppholdsAdresseState } from "../../digisos/skjema/personopplysninger/tps/oppholdsadresseReducer";
 import {
 	AdresseAutocompleteState
 } from "../components/adresseAutocomplete/adresseAutocompleteReducer";
 import {MockState} from "../../digisos/mock/mockReducer";
 import { Soknadsdata } from "./soknadsdata/soknadsdataReducer";
+import {OpplysningerModel} from "./okonomiskeOpplysninger/opplysningerTypes";
+import {FilState} from "./fil/filTypes";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -46,6 +48,8 @@ export interface SoknadAppState {
 	soknadsdata: Soknadsdata;
 	init: InitState;
 	mockData: MockState;
+	okonomiskeOpplysninger: OpplysningerModel;
+	filopplasting: FilState
 }
 
 export interface SoknadState {

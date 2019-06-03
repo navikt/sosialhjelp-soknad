@@ -8,7 +8,7 @@ import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
 import {finnFaktum} from "../../../nav-soknad/utils";
 import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 
-class NavYtelser extends React.Component<FaktumComponentProps, {}> {
+class NavYtelserGammel extends React.Component<FaktumComponentProps, {}> {
 
 	renderUtbetalinger(utbetalinger: Faktum[]) {
 		if (utbetalinger == null || utbetalinger.length === 0) {
@@ -24,19 +24,23 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 				const type = getFaktumPropertyVerdi(utbetaling, "type");
 				const dato = getFaktumPropertyVerdi(utbetaling, "utbetalingsDato");
 
+			let utbetaltDato = "";
+			if (dato !== null && dato.length > 6) {
 				const aar = dato.slice(0, 4);
 				const maaned = dato.slice(5, 7);
 				const dag = dato.slice(8);
+				utbetaltDato = `${dag}.${maaned}.${aar}`;
+			}
 
-				const belop = getFaktumPropertyVerdi(utbetaling, "netto");
+			const belop = getFaktumPropertyVerdi(utbetaling, "netto");
 
-				return (
-					<div key={id} className="utbetaling blokk-s">
-						<div>{type}<span className="verdi detaljeliste__verdi">{belop}</span></div>
-						<div>{utbetaltMelding} {dag}.{maaned}.{aar}</div>
-					</div>
-				);
-			});
+			return (
+				<div key={id} className="utbetaling blokk-s">
+					<div>{type}<span className="verdi detaljeliste__verdi">{belop}</span></div>
+					<div>{utbetaltMelding} {utbetaltDato}</div>
+				</div>
+			);
+		});
 	}
 
 	render() {
@@ -73,4 +77,4 @@ class NavYtelser extends React.Component<FaktumComponentProps, {}> {
 	}
 }
 
-export default NavYtelser;
+export default NavYtelserGammel;

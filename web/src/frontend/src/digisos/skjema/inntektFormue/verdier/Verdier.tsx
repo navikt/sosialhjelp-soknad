@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-    connectSoknadsdataContainer,
+    connectSoknadsdataContainer, onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
@@ -13,14 +13,17 @@ import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
 import { REST_STATUS } from "../../../../nav-soknad/types";
+import {ValideringActionKey} from "../../../../nav-soknad/validering/types";
+import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 
 const MAX_CHARS = 500;
-const Verdier = "inntekt.eierandeler";
+const VERDIER = "inntekt.eierandeler";
+const VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY = VERDIER + "verdier.annet.textarea";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 interface State {
-    pending: boolean
+    oppstartsModus: boolean
 }
 
 export class VerdierView extends React.Component<Props, State> {
@@ -28,7 +31,7 @@ export class VerdierView extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            pending: true
+            oppstartsModus: true
         }
     }
 
@@ -37,9 +40,9 @@ export class VerdierView extends React.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-        if (this.state.pending) {
+        if (this.state.oppstartsModus) {
             if (this.props.soknadsdata.restStatus.inntekt.verdier === REST_STATUS.OK) {
-                this.setState({pending: false});
+                this.setState({oppstartsModus: false});
             }
         }
     }
@@ -47,7 +50,8 @@ export class VerdierView extends React.Component<Props, State> {
     handleClickJaNeiSpsm(verdi: boolean) {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const restStatus = soknadsdata.restStatus.inntekt.verdier;
-        if (!this.state.pending && restStatus === REST_STATUS.OK) {
+
+        if (!this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
             const verdier: Verdier = soknadsdata.inntekt.verdier;
             verdier.bekreftelse = verdi;
             if (!verdi) {
@@ -84,7 +88,20 @@ export class VerdierView extends React.Component<Props, State> {
     onBlurTekstfeltAnnet() {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
+        const beskrivelseAvAnnet = verdier.beskrivelseAvAnnet;
+        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
+
+        if (!feilmeldingAnnet) {
+            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
+        }
+    }
+
+    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
+        const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
+        onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
+            this.props.setValideringsfeil(feilkode, faktumKey);
+        });
+        return feilkode;
     }
 
     renderCheckBox(navn: string) {
@@ -95,7 +112,7 @@ export class VerdierView extends React.Component<Props, State> {
                 id={"verdier_" + navn + "_checkbox"}
                 name={navn}
                 checked={verdier && verdier[navn] ? verdier[navn] : false}
-                label={<FormattedHTMLMessage id={Verdier + ".true.type." + navn}/>}
+                label={<FormattedHTMLMessage id={VERDIER + ".true.type." + navn}/>}
                 onClick={() => this.handleClickRadio(navn)}
             />
         )
@@ -107,15 +124,15 @@ export class VerdierView extends React.Component<Props, State> {
         const restStatus = soknadsdata.restStatus.inntekt.verdier;
         return (
             <JaNeiSporsmal
-                visPlaceholder={this.state.pending && restStatus !== REST_STATUS.OK}
-                tekster={getFaktumSporsmalTekst(this.props.intl, Verdier)}
-                faktumKey={Verdier}
+                visPlaceholder={this.state.oppstartsModus && restStatus !== REST_STATUS.OK}
+                tekster={getFaktumSporsmalTekst(this.props.intl, VERDIER)}
+                faktumKey={VERDIER}
                 verdi={verdier.bekreftelse}
                 onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, Verdier + ".true.type")}
+                    tekster={getFaktumSporsmalTekst(this.props.intl, VERDIER + ".true.type")}
                 >
                     {this.renderCheckBox("bolig")}
                     {this.renderCheckBox("campingvogn")}
@@ -131,8 +148,8 @@ export class VerdierView extends React.Component<Props, State> {
                             placeholder=""
                             onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}
                             onBlur={() => this.onBlurTekstfeltAnnet()}
-                            faktumKey=""
-                            labelId={Verdier + ".true.type.annet.true.beskrivelse.label"}
+                            faktumKey={VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY}
+                            labelId={VERDIER + ".true.type.annet.true.beskrivelse.label"}
                             maxLength={MAX_CHARS}
                             value={verdier.beskrivelseAvAnnet}
                         />

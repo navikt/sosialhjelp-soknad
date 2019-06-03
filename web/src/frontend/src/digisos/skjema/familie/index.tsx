@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import { State } from "../../redux/reducers";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
-import Familierelasjoner from "./Familierelasjoner";
 import FamilieIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/FamilieIllustrasjon";
+import ForsorgerPlikt from "./forsorgerplikt/ForsorgerPlikt";
 import DinSivilstatus from "./sivilstatus/DinSivilstatus";
 
 class Familie extends React.Component<FaktumComponentProps, {}> {
@@ -13,7 +13,7 @@ class Familie extends React.Component<FaktumComponentProps, {}> {
 		return (
 			<DigisosSkjemaSteg steg={DigisosSteg.familiebolk} ikon={<FamilieIllustrasjon />}>
 				<DinSivilstatus/>
-				<Familierelasjoner />
+				<ForsorgerPlikt  />
 			</DigisosSkjemaSteg>
 		);
 	}

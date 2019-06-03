@@ -8,8 +8,11 @@ import {
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import { fdato, maksLengde, minLengde } from "../../../../nav-soknad/validering/valideringer";
-import { konverterFdatoFraServer, konverterFdatoTilServer } from "./datoUtils";
+import {erTall, fdato, maksLengde, minLengde} from "../../../../nav-soknad/validering/valideringer";
+import { konverterFraISODato, konverterTilISODato } from "./datoUtils";
+import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
+import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import { Familie } from "./FamilieTypes";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -32,7 +35,10 @@ class PersonSkjema extends React.Component<Props, {}> {
 		this.navnInput.focus();
 	}
 
-	oppdaterTekstfelt(sti: string, verdi: any) {
+	oppdaterTekstfelt(sti: string, verdi: string) {
+		if(verdi.length === 0) {
+			verdi = null;
+		}
 		const { soknadsdata, oppdaterSoknadsdataSti } = this.props;
 		const sivilstatus = soknadsdata.familie.sivilstatus;
 		const ektefelle = sivilstatus.ektefelle;
@@ -45,13 +51,20 @@ class PersonSkjema extends React.Component<Props, {}> {
 		const sivilstatus = soknadsdata.familie.sivilstatus;
 		let feilkodeFodselsdato = null;
 		let fodselsdato = sivilstatus.ektefelle.fodselsdato;
+
+		if (sivilstatus.ektefelle.fodselsdato === "") {
+			sivilstatus.ektefelle.fodselsdato = null;
+		}
+		if (sivilstatus.ektefelle.personnummer === "") {
+			sivilstatus.ektefelle.personnummer = null;
+		}
 		if (fodselsdato && fodselsdato !== "") {
-			fodselsdato = konverterFdatoFraServer(fodselsdato);
+			fodselsdato = konverterFraISODato(fodselsdato);
 			feilkodeFodselsdato = fdato(fodselsdato);
 			const faktumKey = "familie.sivilstatus.gift.ektefelle.fnr";
 			setValideringsfeil(feilkodeFodselsdato, faktumKey);
 			if (!feilkodeFodselsdato && sivilstatus.ektefelle) {
-				sivilstatus.ektefelle.fodselsdato = konverterFdatoTilServer(sivilstatus.ektefelle.fodselsdato);
+				sivilstatus.ektefelle.fodselsdato = konverterTilISODato(sivilstatus.ektefelle.fodselsdato);
 			}
 		}
 		const personnummer = sivilstatus.ektefelle.personnummer;
@@ -62,11 +75,22 @@ class PersonSkjema extends React.Component<Props, {}> {
 			if (!feilkodePersonnummer) {
 				feilkodePersonnummer = maksLengde(personnummer, 5);
 			}
+			if (!feilkodePersonnummer) {
+				feilkodePersonnummer = erTall(personnummer, true);
+			}
 			setValideringsfeil(feilkodePersonnummer, faktumKeyPersonnummer);
 		}
 		if (!feilkodeFodselsdato && !feilkodePersonnummer) {
 			lagreSoknadsdata(brukerBehandlingId, SoknadsSti.SIVILSTATUS, sivilstatus);
 		}
+	}
+
+	onClickBorSammen(verdi: boolean) {
+		const { soknadsdata, oppdaterSoknadsdataSti } = this.props;
+		const sivilstatus = soknadsdata.familie.sivilstatus;
+		sivilstatus.borSammenMed = verdi;
+		oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus);
+		this.onBlur();
 	}
 
 	render() {
@@ -76,11 +100,14 @@ class PersonSkjema extends React.Component<Props, {}> {
 			return <div className="personskjema"/>;
 		}
 		const id = "ektefelle";
-		const fodselsdato = konverterFdatoFraServer(ektefelle.fodselsdato) || "";
+		const fodselsdato = konverterFraISODato(ektefelle.fodselsdato) || "";
 		if (!ektefelle.personnummer) {
 			ektefelle.personnummer = "";
 		}
 		const personnummer = ektefelle.personnummer || "";
+
+		const familie: Familie = soknadsdata.familie;
+		const borSammenMed = (familie && familie.sivilstatus) ? familie.sivilstatus.borSammenMed : null;
 
 		return (
 			<div className="personskjema">
@@ -107,7 +134,6 @@ class PersonSkjema extends React.Component<Props, {}> {
 								getName={() => id + "_mellomnavn_input"}
 								getFeil={() => null}
 								id={id + "_mellomnavn_input"}
-								// inputRef={c => (this.navnInput = c)}
 								maxLength={100}
 								verdi={ektefelle.navn.mellomnavn}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("navn/mellomnavn", verdi)}
@@ -123,7 +149,6 @@ class PersonSkjema extends React.Component<Props, {}> {
 								getName={() => id + "_etternavn_input"}
 								getFeil={() => null}
 								id={id + "_etternavn_input"}
-								// inputRef={c => (this.navnInput = c)}
 								maxLength={100}
 								verdi={ektefelle.navn.etternavn}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("navn/etternavn", verdi)}
@@ -139,9 +164,8 @@ class PersonSkjema extends React.Component<Props, {}> {
 								getName={() => id + "_fodselsdato_input"}
 								getFeil={() => null}
 								id={id + "_fodselsdato_input"}
-								// inputRef={c => (this.navnInput = c)}
-								// maxLength={8}
-								// pattern={"\\d*"}
+								maxLength={8}
+								minLength={8}
 								verdi={fodselsdato}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("fodselsdato", verdi)}
 								bredde="S"
@@ -157,10 +181,8 @@ class PersonSkjema extends React.Component<Props, {}> {
 								getName={() => id + "_personnummer_input"}
 								getFeil={() => null}
 								id={id + "_personnummer_input"}
-								// inputRef={c => (this.navnInput = c)}
 								maxLength={5}
 								minLength={5}
-								pattern={"\\d*"}
 								verdi={personnummer}
 								onChange={(verdi: string) => this.oppdaterTekstfelt("personnummer", verdi)}
 								bredde="S"
@@ -171,6 +193,27 @@ class PersonSkjema extends React.Component<Props, {}> {
 						</Column>
 					</Row>
 				</Container>
+
+				<Sporsmal
+					sprakNokkel="familie.sivilstatus.gift.ektefelle.borsammen"
+				>
+					<RadioEnhanced
+						id={"sivilstatus_gift_bor_sammen_radio_ja"}
+						faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
+						value="true"
+						checked={borSammenMed === true}
+						onChange={() => this.onClickBorSammen(true)}
+					/>
+					<RadioEnhanced
+						id={"sivilstatus_gift_bor_sammen_radio_nei"}
+						faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
+						value="false"
+						checked={borSammenMed === false}
+						onChange={() => this.onClickBorSammen(false)}
+					/>
+				</Sporsmal>
+
+
 			</div>
 		);
 	}

@@ -57,7 +57,8 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultS
 		case SoknadActionTypeKeys.OPPRETT_SOKNAD:
 			return {
 				...state,
-				restStatus: REST_STATUS.PENDING
+				restStatus: REST_STATUS.PENDING,
+				startSoknadPending: true
 			};
 		case SoknadActionTypeKeys.OPPRETT_SOKNAD_OK:
 			return {

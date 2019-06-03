@@ -36,6 +36,11 @@ import {
 	Barneutgifter
 } from "../../../digisos/skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
 import {
+	AdresseKategori,
+	Adresser,
+	initialAdresserState, NavEnhet
+} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
+import {
 	BasisPersonalia,
 	initialBasisPersonalia
 } from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
@@ -44,6 +49,11 @@ import {
 	SkattbarInntekt
 } from "../../../digisos/skjema/inntektFormue/inntektTypes";
 import { REST_STATUS } from "../../types";
+import { Barnebidrag, ForsorgerPlikt } from "../../../digisos/skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
+import {
+    initialSysteminntekter,
+    Systeminntekter
+} from "../../../digisos/skjema/inntektFormue/navytelser/navYtelserTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -71,14 +81,20 @@ export enum SoknadsSti {
 	FORMUE = "inntekt/formue",
 	BOUTGIFTER = "utgifter/boutgifter",
 	BARNEUTGIFTER = "utgifter/barneutgifter",
+	ADRESSER = "personalia/adresser",
+	NAV_ENHETER = "personalia/navEnheter",
 	SIVILSTATUS = "familie/sivilstatus",
+	SKATTBARINNTEKT = "inntekt/skattbarinntektogforskuddstrekk",
 	BASIS_PERSONALIA = "personalia/basisPersonalia",
-	SKATTBARINNTEKT = "inntekt/skattbarinntektogforskuddstrekk"
+	FORSORGERPLIKT = "familie/forsorgerplikt",
+	INNTEKT_SYSTEMDATA = "inntekt/systemdata"
 }
 
 export interface Personalia {
 	kontonummer?: Kontonummer;
 	telefonnummer?: Telefonnummer;
+	adresser?: Adresser;
+	navEnheter?: NavEnhet[];
 	basisPersonalia?: BasisPersonalia;
 }
 
@@ -88,6 +104,7 @@ export interface Inntekt {
 	formue?: Formue;
 	verdier?: Verdier;
 	skattbarinntektogforskuddstrekk: SkattbarInntekt[];
+	systemdata?: Systeminntekter;
 }
 
 export interface Utgifter {
@@ -99,6 +116,8 @@ export interface Utgifter {
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
 	telefonnummer: initialTelefonnummerState,
+	adresser: initialAdresserState,
+	navEnheter: [],
 	basisPersonalia: initialBasisPersonalia
 };
 
@@ -108,6 +127,8 @@ export const initialInntektState: Inntekt = {
 	formue: initialFormueState,
 	verdier: initialVerdierState,
 	skattbarinntektogforskuddstrekk: initialSkattbarInntektState
+	verdier: initialVerdierState,
+	systemdata: initialSysteminntekter
 };
 
 export const initialUtgifterState: Utgifter = {
@@ -128,18 +149,22 @@ export interface Soknadsdata {
 }
 
 export interface SoknadsdataActionVerdi {
-	arbeid?: Arbeid,
-	bosituasjon?: Bosituasjon,
-	begrunnelse?: Begrunnelse,
-	familie?: Familie
-	utdanning?: Utdanning,
+	arbeid?: Arbeid;
+	bosituasjon?: Bosituasjon;
+	begrunnelse?: Begrunnelse;
+	familie?: Familie;
+	utdanning?: Utdanning;
 	personalia: Personalia;
-	inntekt?: Inntekt,
-	utgifter?: Utgifter
+	inntekt?: Inntekt;
+	utgifter?: Utgifter;
 }
 
-export type SoknadsdataType =
-	Arbeid
+export interface AdresseValg {
+	valg: AdresseKategori;
+}
+
+export type SoknadsdataType
+	= Arbeid
 	| Begrunnelse
 	| Bosituasjon
 	| Familie
@@ -148,10 +173,16 @@ export type SoknadsdataType =
 	| Telefonnummer
 	| Personalia
 	| Sivilstatus
+	| ForsorgerPlikt
+	| Barnebidrag
 	| Bostotte
 	| Formue
 	| Verdier
-	| Utgifter;
+	| Systeminntekter
+	| Utgifter
+	| Adresser
+	| AdresseValg
+	| NavEnhet[];
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
@@ -159,6 +190,25 @@ interface SoknadsdataActionType {
 	sti?: string,
 	restStatus?: string
 }
+
+const initialSoknadsdataRestStatus = {
+	personalia: {
+		telefonnummer: REST_STATUS.INITIALISERT,
+		kontonummer: REST_STATUS.INITIALISERT,
+		basisPersonalia: REST_STATUS.INITIALISERT,
+		adresser: REST_STATUS.INITIALISERT,
+		navEnheter: REST_STATUS.INITIALISERT
+	},
+	familie: {
+		sivilstatus: REST_STATUS.INITIALISERT,
+		forsorgerplikt: REST_STATUS.INITIALISERT
+	},
+	inntekt: {
+		bostotte: REST_STATUS.INITIALISERT,
+		utbetalinger: REST_STATUS.INITIALISERT,
+		verdier: REST_STATUS.INITIALISERT
+	}
+};
 
 export const initialSoknadsdataState: Soknadsdata = {
 	arbeid: initialArbeidState,
@@ -169,21 +219,7 @@ export const initialSoknadsdataState: Soknadsdata = {
 	personalia: initialPersonaliaState,
 	inntekt: initialInntektState,
 	utgifter: initialUtgifterState,
-	restStatus: {
-		personalia: {
-			telefonnummer: REST_STATUS.INITIALISERT,
-			kontonummer: REST_STATUS.INITIALISERT,
-			basisPersonalia: REST_STATUS.INITIALISERT
-		},
-		familie: {
-			sivilstatus: REST_STATUS.INITIALISERT
-		},
-		inntekt: {
-			bostotte: REST_STATUS.INITIALISERT,
-			utbetalinger: REST_STATUS.INITIALISERT,
-			verdier: REST_STATUS.INITIALISERT
-		}
-	}
+	restStatus: initialSoknadsdataRestStatus
 };
 
 const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (

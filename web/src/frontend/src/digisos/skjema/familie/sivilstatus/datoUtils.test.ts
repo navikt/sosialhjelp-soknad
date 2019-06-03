@@ -1,4 +1,4 @@
-import { konverterFdatoFraServer, konverterFdatoTilServer } from "./datoUtils";
+import { konverterFraISODato, konverterTilISODato } from "./datoUtils";
 
 describe("konvertering av dato", () => {
 
@@ -6,18 +6,18 @@ describe("konvertering av dato", () => {
 	const localFormat: string = "19061976";
 
 	it("should convert from format used on server", () => {
-		expect(konverterFdatoFraServer(serverFormat)).toEqual("19061976");
-		expect(konverterFdatoFraServer("19061976")).toEqual("19061976");
-		expect(konverterFdatoFraServer("1906")).toEqual("1906");
-		expect(konverterFdatoFraServer("")).toEqual("");
-		expect(konverterFdatoFraServer(null)).toEqual(null);
+		expect(konverterFraISODato(serverFormat)).toEqual("19061976");
+		expect(konverterFraISODato("19061976")).toEqual("19061976");
+		expect(konverterFraISODato("1906")).toEqual("1906");
+		expect(konverterFraISODato("")).toEqual("");
+		expect(konverterFraISODato(null)).toEqual(null);
 	});
 
 	it("should convert to format used on server", () => {
-		expect(konverterFdatoTilServer(localFormat)).toEqual(serverFormat);
-		expect(konverterFdatoTilServer(serverFormat)).toEqual(serverFormat);
-		expect(konverterFdatoFraServer("1976-06")).toEqual("1976-06");
-		expect(konverterFdatoFraServer(null)).toEqual(null);
+		expect(konverterTilISODato(localFormat)).toEqual(serverFormat);
+		expect(konverterTilISODato(serverFormat)).toEqual(serverFormat);
+		expect(konverterFraISODato("1976-06")).toEqual("1976-06");
+		expect(konverterFraISODato(null)).toEqual(null);
 	});
 
 });
