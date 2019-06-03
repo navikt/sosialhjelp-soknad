@@ -15,7 +15,9 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 	private static renderUtbetaling(key: string, value: number) {
 		return (<div className="utbetaling">
 			<span><FormattedMessage id={key}/>:</span>
-			<span className="verdi detaljeliste__verdi"><FormattedNumber value={value}/> kr</span>
+			<span className="verdi detaljeliste__verdi">
+				<FormattedNumber value={value} minimumFractionDigits={2} maximumFractionDigits={2}/> kr
+			</span>
 		</div>)
 	}
 
@@ -25,7 +27,7 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 
 	render() {
 		const {intl, soknadsdata} = this.props;
-		// TODO: Håndter flere måneder med skattbar inntekt
+		// TODO DIGISOS-1175: Håndter flere måneder med skattbar inntekt
 		const skattbareInntekter = soknadsdata.inntekt.skattbarinntektogforskuddstrekk;
 		if (skattbareInntekter.length < 1) {
 			return (<div/>);
@@ -39,34 +41,42 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 			const lenkeSti = `https://skatt.skatteetaten.no/web/innsynamelding/inntekt/${organisasjon.orgnr}
 								?year=${organisasjon.tom.slice(0, 4)}&month=${organisasjon.tom.slice(5, 7)}`;
 
-			return (<div key={organisasjon.orgnr} className="utbetaling blokk-s">
-				<div className="blokk-s">
-					<h4 className="blokk-null">{organisasjon.organisasjonsnavn}</h4>
-					<div>Fra {fom} til {tom}</div>
+			return (
+				<div key={organisasjon.orgnr} className="utbetaling blokk">
+					<div className="blokk-s">
+						<h4 className="blokk-null">{organisasjon.organisasjonsnavn}</h4>
+						<div>Fra {fom} til {tom}</div>
+					</div>
+					<div className="blokk-xs">
+					{organisasjon.utbetalinger.map(utbetaling => {
+						return SkattbarInntekt.renderUtbetaling(utbetaling.tittel, utbetaling.belop)
+					})}
+					</div>
+					<a className="blokk-s" href={lenkeSti} target={`skatteetaten_${organisasjon.orgnr}`}>Se detaljer hos Skatteetaten.</a>
 				</div>
-				<div className="blokk-xs">
-				{organisasjon.utbetalinger.map(utbetaling => {
-					return SkattbarInntekt.renderUtbetaling(utbetaling.tittel, utbetaling.belop)
-				})}
-				</div>
-				<a className="blokk-s" href={lenkeSti}>Se detaljer hos Skatteetaten.</a>
-			</div>)
+			)
 		});
 
-		return (<Ekspanderbartpanel className="ekspanderbartPanel--skattbarInntekt ekspanderbartPanel--border" apen={true} tittel={undertittel}>
+		return (
+			<Ekspanderbartpanel className="ekspanderbartPanel--skattbarInntekt ekspanderbartPanel--border" apen={true} tittel={undertittel}>
 
-			<div className="blokk-s">
-				<FormattedMessage id="utbetalinger.inntekt.skattbar.oppsummering" values={{antall:organisasjoner.length}} />
-			</div>
+				<div className="blokk-s">
+					<FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse"/>
+				</div>
 
-			<div className="utbetalinger blokk-s">
-				{SkattbarInntekt.renderUtbetaling("utbetalinger.inntekt.skattbar.samlet.inntekt", skattbarInntekt.samletInntekt)}
-				{SkattbarInntekt.renderUtbetaling("utbetalinger.inntekt.skattbar.samlet.trekk", skattbarInntekt.samletTrekk)}
-			</div>
+				<div className="blokk-s">
+					<FormattedMessage id="utbetalinger.inntekt.skattbar.oppsummering" values={{antall:organisasjoner.length}} />
+				</div>
 
-			<div className="utbetalinger">{organisasjoner}</div>
+				<div className="utbetalinger blokk-s">
+					{SkattbarInntekt.renderUtbetaling("utbetalinger.inntekt.skattbar.samlet.inntekt", skattbarInntekt.samletInntekt)}
+					{SkattbarInntekt.renderUtbetaling("utbetalinger.inntekt.skattbar.samlet.trekk", skattbarInntekt.samletTrekk)}
+				</div>
 
-			</Ekspanderbartpanel>);
+				<div className="utbetalinger">{organisasjoner}</div>
+
+			</Ekspanderbartpanel>
+		);
 	}
 }
 

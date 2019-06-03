@@ -1,10 +1,11 @@
 import * as React from "react";
 import { Radio } from "nav-frontend-skjema";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
 import { getRadioFaktumTekst } from "../utils";
 import { CheckboxFaktumTekst } from "../types/index";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import TextPlaceholder from "../components/animasjoner/placeholder/TextPlaceholder";
+import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
 
 interface OwnProps {
 	value: string;
@@ -20,6 +21,7 @@ interface OwnProps {
 	property?: any; // TODO: Slette?
 	required?: boolean;
 	getName?: () => string;
+	visPlaceholder?: boolean;
 }
 
 type RadioFaktumProps = OwnProps & InjectedIntlProps;
@@ -30,6 +32,9 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
 	}
 
 	determineLabel(id: string, faktumKey: string, tekster: CheckboxFaktumTekst, value: string) {
+		if (this.props.visPlaceholder) {
+			return <TextPlaceholder lines={1} style={{marginTop: "4px", width: "4rem"}}/>
+		}
 		if (this.props.label != null) {
 			return this.props.label;
 		}
@@ -42,8 +47,7 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
 	}
 
 	defaultOnChange(value: string, property: string) {
-		console.warn("debug: defaultOnChange()");
-		// this.props.setFaktumVerdiOgLagre(value, property)
+		console.warn("defaultOnChange()");
 	}
 
 	checked(): boolean {
@@ -64,11 +68,9 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
 	renderRadio() {
 		const { faktumKey, value, disabled, property, required, intl } = this.props;
 		const onChange = this.determineOnChange();
-
 		const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
 		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
 		const name = this.props.getName ? this.props.getName() : this.props.faktumKey + "-" + this.props.value;
-
 		return (
 			<Radio
 				className="soknadsosialhjelp"

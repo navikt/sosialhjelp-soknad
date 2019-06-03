@@ -9,20 +9,41 @@ import {
 } from "../../../digisos/skjema/personopplysninger/telefon/telefonTypes";
 import { Bosituasjon, initialBosituasjonState } from "../../../digisos/skjema/bosituasjon_ny/bosituasjonTypes";
 import {
-	Familie, initialFamilieStatus,
+	Familie, initialFamilieStatus, Sivilstatus,
 } from "../../../digisos/skjema/familie/sivilstatus/FamilieTypes";
 import { initialUtdanningState, Utdanning } from "../../../digisos/skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import { Arbeid, initialArbeidState } from "../../../digisos/skjema/arbeidUtdanning/arbeid/arbeidTypes";
 import { setPath } from "./soknadsdataActions";
+import {Bostotte, initialBostotteState} from "../../../digisos/skjema/inntektFormue/bostotte/bostotteTypes";
+import {
+	initialUtbetalingerState,
+	Utbetalinger
+} from "../../../digisos/skjema/inntektFormue/Utbetalinger/utbetalingerTypes";
+import {
+	initialVerdierState,
+	Verdier
+} from "../../../digisos/skjema/inntektFormue/verdier/VerdierTypes";
+import {
+	initialFormueState,
+	Formue
+} from "../../../digisos/skjema/inntektFormue/formue/FormueTypes";
+import {
+	initialBoutgifterState,
+	Boutgifter
+} from "../../../digisos/skjema/utgifterGjeld/boutgifter/BoutgifterTypes";
+import {
+	initialBarneutgifterState,
+	Barneutgifter
+} from "../../../digisos/skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
 import {
 	BasisPersonalia,
 	initialBasisPersonalia
 } from "../../../digisos/skjema/personopplysninger/personalia/BasisPersonaliaTypes";
-import { REST_STATUS } from "../../types";
 import {
 	initialSkattbarInntektState,
 	SkattbarInntekt
 } from "../../../digisos/skjema/inntektFormue/inntektTypes";
+import { REST_STATUS } from "../../types";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -44,16 +65,15 @@ export enum SoknadsSti {
 	BOSITUASJON = "bosituasjon",
 	UTDANNING = "utdanning",
 	TELEFONNUMMER = "personalia/telefonnummer",
-	SKATTBARINNTEKT = "inntekt/skattbarinntektogforskuddstrekk",
-	BASIS_PERSONALIA = "personalia/basisPersonalia"
-}
-
-export interface Inntekt {
-	skattbarinntektogforskuddstrekk: SkattbarInntekt[];
-}
-
-export const initialInntektState: Inntekt = {
-	skattbarinntektogforskuddstrekk: initialSkattbarInntektState
+	BOSTOTTE = "inntekt/bostotte",
+	UTBETALINGER = "inntekt/utbetalinger",
+	VERDIER = "inntekt/verdier",
+	FORMUE = "inntekt/formue",
+	BOUTGIFTER = "utgifter/boutgifter",
+	BARNEUTGIFTER = "utgifter/barneutgifter",
+	SIVILSTATUS = "familie/sivilstatus",
+	BASIS_PERSONALIA = "personalia/basisPersonalia",
+	SKATTBARINNTEKT = "inntekt/skattbarinntektogforskuddstrekk"
 }
 
 export interface Personalia {
@@ -62,10 +82,37 @@ export interface Personalia {
 	basisPersonalia?: BasisPersonalia;
 }
 
+export interface Inntekt {
+	bostotte?: Bostotte;
+	utbetalinger?: Utbetalinger;
+	formue?: Formue;
+	verdier?: Verdier;
+	skattbarinntektogforskuddstrekk: SkattbarInntekt[];
+}
+
+export interface Utgifter {
+	boutgifter?: Boutgifter;
+	barneutgifter?: Barneutgifter;
+
+}
+
 export const initialPersonaliaState: Personalia = {
 	kontonummer: initialKontonummerState,
 	telefonnummer: initialTelefonnummerState,
 	basisPersonalia: initialBasisPersonalia
+};
+
+export const initialInntektState: Inntekt = {
+	bostotte: initialBostotteState,
+	utbetalinger: initialUtbetalingerState,
+	formue: initialFormueState,
+	verdier: initialVerdierState,
+	skattbarinntektogforskuddstrekk: initialSkattbarInntektState
+};
+
+export const initialUtgifterState: Utgifter = {
+	boutgifter: initialBoutgifterState,
+	barneutgifter: initialBarneutgifterState
 };
 
 export interface Soknadsdata {
@@ -76,6 +123,7 @@ export interface Soknadsdata {
 	utdanning: Utdanning;
 	personalia: Personalia;
 	inntekt: Inntekt;
+	utgifter: Utgifter;
 	restStatus: any;
 }
 
@@ -86,6 +134,8 @@ export interface SoknadsdataActionVerdi {
 	familie?: Familie
 	utdanning?: Utdanning,
 	personalia: Personalia;
+	inntekt?: Inntekt,
+	utgifter?: Utgifter
 }
 
 export type SoknadsdataType =
@@ -96,7 +146,12 @@ export type SoknadsdataType =
 	| Utdanning
 	| Kontonummer
 	| Telefonnummer
-	| Personalia;
+	| Personalia
+	| Sivilstatus
+	| Bostotte
+	| Formue
+	| Verdier
+	| Utgifter;
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
@@ -113,11 +168,20 @@ export const initialSoknadsdataState: Soknadsdata = {
 	utdanning: initialUtdanningState,
 	personalia: initialPersonaliaState,
 	inntekt: initialInntektState,
+	utgifter: initialUtgifterState,
 	restStatus: {
 		personalia: {
 			telefonnummer: REST_STATUS.INITIALISERT,
 			kontonummer: REST_STATUS.INITIALISERT,
 			basisPersonalia: REST_STATUS.INITIALISERT
+		},
+		familie: {
+			sivilstatus: REST_STATUS.INITIALISERT
+		},
+		inntekt: {
+			bostotte: REST_STATUS.INITIALISERT,
+			utbetalinger: REST_STATUS.INITIALISERT,
+			verdier: REST_STATUS.INITIALISERT
 		}
 	}
 };
