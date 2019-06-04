@@ -19,6 +19,7 @@ import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import { SoknadAppState } from "../reduxTypes";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 import { startSoknad } from "../soknad/soknadActions";
+import { lesKommunenrFraUrl } from "../../utils";
 
 const getHistoryLength = () => window.history.length;
 const navigateTo = (path: string) => (window.location.href = path);
@@ -69,7 +70,12 @@ function* tilbakeEllerForsidenSaga(): SagaIterator {
 
 function* tilStegSaga(action: TilSteg): SagaIterator {
 	const behandlingsId = yield select(selectBrukerBehandlingId);
-	yield put(push(`/skjema/${behandlingsId}/${action.stegnummer}`));
+	let url = `/skjema/${behandlingsId}/${action.stegnummer}`;
+	const kommunenr = lesKommunenrFraUrl();
+	if (kommunenr) {
+		url = url + '?kommunenr=' + kommunenr;
+	}
+	yield put(push(url));
 }
 
 function* gaVidereSaga(action: GaVidere): SagaIterator {

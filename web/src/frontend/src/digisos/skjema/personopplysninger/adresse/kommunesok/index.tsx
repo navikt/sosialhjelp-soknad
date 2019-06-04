@@ -2,14 +2,13 @@ import * as React from "react";
 import KommuneTilNavEnhetMapper from "./KommuneTilNavEnhetMapper";
 import alleKommuner from "./alleKommuner";
 import DigisosIkon from "../../../../../nav-soknad/components/digisosIkon/digisosIkon";
-import SoknadsmottakerVelger from "../SoknadsmottakerVelger";
-import { getIntlTextOrKey } from "../../../../../nav-soknad/utils";
-import { NavEnhet } from "../AdresseTypes";
+import { lesKommunenrFraUrl } from "../../../../../nav-soknad/utils";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
 } from "../../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+import { getApiBaseUrl } from "../../../../../nav-soknad/utils/rest-utils";
 
 const Autocomplete = require("react-autocomplete");
 
@@ -52,6 +51,7 @@ class KommunesokView extends React.Component<Props, State> {
 		this.internalIsMounted = true;
 		this.lesInnTilgjengeligeKommuner();
 		this.lesInnAlleKommuner();
+		this.settValgtKommuneFraUrlParam();
 	}
 
 	componentWillUnmount() {
@@ -65,37 +65,54 @@ class KommunesokView extends React.Component<Props, State> {
 		fetch(url)
 			.then((res: any) => res.json())
 			.then((data: any) => {
-				const CONTAINED_ITEMS = "containeditems";
-				const DESCRIPTION = "description";
-				const LABEL = "label";
-				const STATUS = "status";
-				const kommuner: any[] = [];
-				const responseData = data[CONTAINED_ITEMS].filter((item: any) => item[STATUS] === "Gyldig");
-				responseData.map((item: any) => {
-					kommuner.push({
-						id: item[LABEL],
-						navn: item[DESCRIPTION]
-					});
-				});
-
-				kommuner.sort((a: Kommune, b: Kommune) => {
-					if (a.navn > b.navn) {
-						return 1;
-					} else if (a.navn < b.navn) {
-						return -1;
-					} else {
-						return 0;
-					}
-				});
+				const kommuner = this.parseAlleKommunerData(data);
 				if (this.internalIsMounted) {
 					console.warn("Debug: Full liste over kommuner lest inn.");
 					this.setState({ alleKommuner: kommuner });
+					this.settValgtKommuneFraUrlParam();
 				}
 				// console.warn(JSON.stringify(kommuner, null, 4));
 			})
 			.catch((error: any) => {
 				console.warn('Feil ved innlesning av full kommuneliste:', error);
 			});
+	}
+
+	settValgtKommuneFraUrlParam() {
+		const kommunenr = lesKommunenrFraUrl();
+		const valgtKommune = this.state.alleKommuner.find((item: Kommune) => {
+			const itemKommunenr = parseInt(item.id.toString(),10).toString();
+			return itemKommunenr === parseInt(kommunenr, 10).toString();
+		});
+		console.warn("valgtKommune: " + JSON.stringify(valgtKommune, null, 4));
+		if (valgtKommune) {
+			this.handleSelect(null, valgtKommune);
+		}
+	}
+
+	parseAlleKommunerData(data: any) {
+		const kommuner: any[] = [];
+		const CONTAINED_ITEMS = "containeditems";
+		const DESCRIPTION = "description";
+		const LABEL = "label";
+		const STATUS = "status";
+		const responseData = data[ CONTAINED_ITEMS ].filter((item: any) => item[ STATUS ] === "Gyldig");
+		responseData.map((item: any) => {
+			kommuner.push({
+				id: item[ LABEL ],
+				navn: item[ DESCRIPTION ]
+			});
+		});
+		kommuner.sort((a: Kommune, b: Kommune) => {
+			if (a.navn > b.navn) {
+				return 1;
+			} else if (a.navn < b.navn) {
+				return -1;
+			} else {
+				return 0;
+			}
+		});
+		return kommuner;
 	}
 
 	lesInnTilgjengeligeKommuner() {
@@ -107,7 +124,7 @@ class KommunesokView extends React.Component<Props, State> {
 		}
 
 		// Skal gå mot https://tjenester.nav.no/soknadsosialhjelp-server/informasjon/tilgjengelige_kommuner i prod
-		fetch("/soknadsosialhjelp-server/informasjon/tilgjengelige_kommuner")
+		fetch(getApiBaseUrl() + "informasjon/tilgjengelige_kommuner")
 			.then((res: any) => res.json())
 			.then((data: any) => {
 				if (this.internalIsMounted) {
@@ -144,14 +161,24 @@ class KommunesokView extends React.Component<Props, State> {
 			kommuneHarSoknad,
 			visManglerKommuneFeilmelding: false
 		});
-	}
 
-	kommuneIdQueryParam(): string {
-		const matches = window.location.href.match(/kommunenr=(\d+)$/);
-		if( matches &&  matches.length > 1) {
-			return matches[1];
-		}
-		return null;
+
+		// Gjør kall mot rest endepunkt som returnerer alle søknadsmottakere i en gitt kommune
+		console.warn("Hente liste fra nytt REST endepunkt");
+		fetch(getApiBaseUrl() + "informasjon/kommunesok?kommunenr=" + item.id)
+			.then((res: any) => res.json())
+			.then((data: any) => {
+				if (this.internalIsMounted) {
+					console.warn("===> Debug: tilgjengelige navEnheter i kommune lest inn");
+					console.warn(JSON.stringify(data, null, 4));
+					// this.setState({ tilgjengeligeKommuner: data});
+				} else {
+					console.warn("Advarsel. Kommunesok ikke montert feil.");
+				}
+			})
+			.catch((error: any) => {
+				console.warn('Feil ved innlesing av påkoblede kommuner:', error);
+			});
 	}
 
 	visIkon() {
@@ -162,9 +189,9 @@ class KommunesokView extends React.Component<Props, State> {
 		);
 	}
 
-	onVelgSoknadsmottaker(navEnhet: any) {
-		console.warn("TODO onVelgSoknadsmottaker: " + JSON.stringify(navEnhet, null, 4));
-	}
+	// onVelgSoknadsmottaker(navEnhet: any) {
+	// 	console.warn("onVelgSoknadsmottaker: " + JSON.stringify(navEnhet, null, 4));
+	// }
 
 	renderMenu(children: any): React.ReactNode {
 		return (
@@ -189,23 +216,23 @@ class KommunesokView extends React.Component<Props, State> {
 
 	render() {
 		const autocompleteClassName = this.state.visManglerKommuneFeilmelding ? "navAutcomplete__feil" : "";
-		const placeholderTekst = "Søk etter kommune";
-		const manglerKommuneFeilmelding = "Du må velge en kommune før du kan gå videre.";
+		const placeholderTekst = this.props.intl.formatMessage({ id: "matrikkel.sok.placeholder"});
+		const manglerKommuneFeilmelding = this.props.intl.formatMessage({ id: "matrikkel.mangler.kommune"});
 
-		const navEnheter = [
-			{
-				"orgnr": "910230158",
-				"enhetsnavn": "NAV Bergenhus",
-				"kommunenavn": "Bergen",
-				"valgt": false
-			},
-			{
-				"orgnr": "910230964",
-				"enhetsnavn": "NAV Årstad",
-				"kommunenavn": "Bergen",
-				"valgt": false
-			}
-		];
+		// const navEnheter = [
+		// 	{
+		// 		"orgnr": "910230158",
+		// 		"enhetsnavn": "NAV Bergenhus",
+		// 		"kommunenavn": "Bergen",
+		// 		"valgt": false
+		// 	},
+		// 	{
+		// 		"orgnr": "910230964",
+		// 		"enhetsnavn": "NAV Årstad",
+		// 		"kommunenavn": "Bergen",
+		// 		"valgt": false
+		// 	}
+		// ];
 
 		return (
 			<div>
@@ -233,24 +260,24 @@ class KommunesokView extends React.Component<Props, State> {
 						{manglerKommuneFeilmelding}
 					</p>
 				)}
-				{this.state.valgtKommuneId && (
-					<div>
-						<b>Debug:</b>
-						<pre>Kommune: {this.state.valgtKommuneNavn} / {this.state.valgtKommuneId}</pre>
-						<pre>Søknad tilgjengelig: {JSON.stringify(this.state.kommuneHarSoknad, null, 4)}</pre>
-						{navEnheter.length > 1 && (
-							<SoknadsmottakerVelger
-								label={getIntlTextOrKey(this.props.intl,
-									"kontakt.system.oppholdsadresse.velgKontor")}
-								ikkeVisPanel={true}
-								navEnheter={navEnheter}
-								visible={true}
-								onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}
-							/>
-						)}
+				{/*{this.state.valgtKommuneId && (*/}
+				{/*	<div>*/}
+				{/*		<b>Debug:</b>*/}
+				{/*		<pre>Kommune: {this.state.valgtKommuneNavn} / {this.state.valgtKommuneId}</pre>*/}
+				{/*		<pre>Søknad tilgjengelig: {JSON.stringify(this.state.kommuneHarSoknad, null, 4)}</pre>*/}
+				{/*		{navEnheter.length > 1 && (*/}
+				{/*			<SoknadsmottakerVelger*/}
+				{/*				label={getIntlTextOrKey(this.props.intl,*/}
+				{/*					"kontakt.system.oppholdsadresse.velgKontor")}*/}
+				{/*				ikkeVisPanel={true}*/}
+				{/*				navEnheter={navEnheter}*/}
+				{/*				visible={true}*/}
+				{/*				onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}*/}
+				{/*			/>*/}
+				{/*		)}*/}
 
-					</div>
-				)}
+				{/*	</div>*/}
+				{/*)}*/}
 			</div>
 		);
 	}

@@ -193,6 +193,8 @@ class AdresseView extends React.Component<Props, State> {
 		const matrikkelAdresse = adresser && adresser.folkeregistrert && adresser.folkeregistrert.matrikkeladresse;
 		const gnrBnr: string = (matrikkelAdresse && matrikkelAdresse.gaardsnummer ? matrikkelAdresse.gaardsnummer : "") +
 			(matrikkelAdresse && matrikkelAdresse.bruksnummer ? " / " + matrikkelAdresse.bruksnummer : "");
+		const matrikkelKommune: string = matrikkelAdresse && matrikkelAdresse.kommunenummer;
+
 		let folkeregistrertAdresseLabel = null;
 		let annenAdresseLabel = null;
 		let { oppstartsModus } = this.state;
@@ -220,12 +222,15 @@ class AdresseView extends React.Component<Props, State> {
 		if (matrikkelAdresse) {
 			matrikkelAdresseLabel = (
 				<div className="finnNavKontor__label">
-					{/*TODO: Legg inn i språkfil i react-intl*/}
-					<span>Folkeregistrert adresse</span>
+					<FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
 					<Detaljeliste>
 						<DetaljelisteElement
-							tittel={"Gårds- og bruksnummer"}
+							tittel={<FormattedMessage id="matrikkel.gnrbnr" />}
 							verdi={gnrBnr}
+						/>
+						<DetaljelisteElement
+							tittel={<FormattedMessage id="matrikkel.kommunenr" />}
+							verdi={matrikkelKommune}
 						/>
 					</Detaljeliste>
 				</div>
@@ -271,7 +276,7 @@ class AdresseView extends React.Component<Props, State> {
 								checked={adresser.valg === AdresseKategori.FOLKEREGISTRERT}
 								label={matrikkelAdresseLabel}
 							/>
-							<MatrikkelAdresse visible={matrikkelAdresse && adresser.valg === AdresseKategori.FOLKEREGISTRERT}/>
+							<MatrikkelAdresse kommunenr={matrikkelKommune} visible={matrikkelAdresse && adresser.valg === AdresseKategori.FOLKEREGISTRERT}/>
 						</span>
 					)}
 					{midlertidigAdresse && (

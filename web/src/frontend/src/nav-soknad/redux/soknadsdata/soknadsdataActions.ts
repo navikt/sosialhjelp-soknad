@@ -18,17 +18,15 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 
 			// Simuler respons fra backend med matrikkeladresse:
 			if(sti.match(/personalia\/adresser/)){
-				// console.warn("===> sti: " + sti);
-				// console.warn(JSON.stringify(response, null, 4));
 				response = {
 					"valg": null,
 					"folkeregistrert": {
 						"type": "matrikkeladresse",
 						"gateadresse": null,
 						"matrikkeladresse": {
-							kommunenummer: null,
-							gaardsnummer: "42000",
-							bruksnummer: "0001",
+							kommunenummer: "0301",
+							gaardsnummer: "180",
+							bruksnummer: "45",
 							festenummer: null,
 							seksjonsnummer: null,
 							undernummer: null
@@ -39,6 +37,7 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 					"soknad": null
 				}
 			}
+
             // For å simulere ulike typer testdata fra server, kan man her skrive kode som:
 			// if(sti === SoknadsSti.FORSORGERPLIKT){
 			// 	response = {
