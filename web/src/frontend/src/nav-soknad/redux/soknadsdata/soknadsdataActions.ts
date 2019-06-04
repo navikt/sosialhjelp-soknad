@@ -26,26 +26,26 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 			// }
 
 			// Simuler respons fra backend med matrikkeladresse:
-			// if(sti.match(/personalia\/adresser/)){
-			// 	response = {
-			// 		"valg": null,
-			// 		"folkeregistrert": {
-			// 			"type": "matrikkeladresse",
-			// 			"gateadresse": null,
-			// 			"matrikkeladresse": {
-			// 				kommunenummer: "0301",
-			// 				gaardsnummer: "180",
-			// 				bruksnummer: "45",
-			// 				festenummer: null,
-			// 				seksjonsnummer: null,
-			// 				undernummer: null
-			// 			},
-			// 			"ustrukturert": null
-			// 		},
-			// 		"midlertidig": null,
-			// 		"soknad": null
-			// 	}
-			// }
+			if(sti.match(/personalia\/adresser/)){
+				response = {
+					"valg": null,
+					"folkeregistrert": {
+						"type": "matrikkeladresse",
+						"gateadresse": null,
+						"matrikkeladresse": {
+							kommunenummer: "0301",
+							gaardsnummer: "180",
+							bruksnummer: "45",
+							festenummer: null,
+							seksjonsnummer: null,
+							undernummer: null
+						},
+						"ustrukturert": null
+					},
+					"midlertidig": null,
+					"soknad": null
+				}
+			}
 
 			dispatch(oppdaterSoknadsdataSti(sti, response));
 			dispatch(settRestStatus(sti, REST_STATUS.OK));

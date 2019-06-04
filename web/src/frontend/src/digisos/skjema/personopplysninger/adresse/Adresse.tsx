@@ -21,7 +21,6 @@ import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import AdresseTypeahead from "./AdresseTypeahead";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
-import MatrikkelAdresse from "./MatrikkelAdresse";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 
 interface OwnProps {
@@ -267,7 +266,7 @@ class AdresseView extends React.Component<Props, State> {
 						</span>
 					)}
 					{matrikkelAdresse && (
-						<span>
+						<div>
 							<RadioEnhanced
 								id="oppholdsadresse_folkeregistrert"
 								value="folkeregistrert"
@@ -275,8 +274,21 @@ class AdresseView extends React.Component<Props, State> {
 								checked={adresser.valg === AdresseKategori.FOLKEREGISTRERT}
 								label={matrikkelAdresseLabel}
 							/>
-							<MatrikkelAdresse kommunenr={matrikkelKommune} visible={matrikkelAdresse && adresser.valg === AdresseKategori.FOLKEREGISTRERT}/>
-						</span>
+							<div className="skjema-sporsmal--jaNeiSporsmal">
+								<Underskjema
+									visible={adresser.valg === AdresseKategori.FOLKEREGISTRERT && navEnheter.length > 1}
+									collapsable={true}
+								>
+									<SoknadsmottakerVelger
+										label={getIntlTextOrKey(this.props.intl,
+											"kontakt.system.oppholdsadresse.velgKontor")}
+										navEnheter={navEnheter}
+										visible={adresser.valg === AdresseKategori.FOLKEREGISTRERT && navEnheter.length > 1}
+										onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}
+									/>
+								</Underskjema>
+							</div>
+						</div>
 					)}
 					{midlertidigAdresse && (
 						<span>
