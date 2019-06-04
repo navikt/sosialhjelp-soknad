@@ -16,7 +16,6 @@ import ApplikasjonsfeilReducer from "../../nav-soknad/redux/applikasjonsfeil/app
 import InitReducer from "../../nav-soknad/redux/init/initReducer";
 import VedleggReducer from "../../nav-soknad/redux/vedlegg/vedleggReducer";
 import EttersendelseReducer from "../../nav-soknad/redux/ettersendelse/ettersendelseReducer";
-import OppholdsadresseReducer from "../skjema/personopplysninger/tps/oppholdsadresseReducer";
 import AdresseAutocompleteReducer from "../../nav-soknad/components/adresseAutocomplete/adresseAutocompleteReducer";
 import MockReducer from "../mock/mockReducer";
 import SoknadsdataReducer from "../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
@@ -42,7 +41,6 @@ const reducers = combineReducers({
 	featuretoggles: FeatureTogglesReducer,
 	applikasjonsfeil: ApplikasjonsfeilReducer,
 	ettersendelse: EttersendelseReducer,
-	oppholdsadresse: OppholdsadresseReducer,
 	adresseAutocomplete: AdresseAutocompleteReducer,
 	init: InitReducer,
 	mockData: MockReducer,

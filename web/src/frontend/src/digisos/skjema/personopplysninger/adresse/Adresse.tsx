@@ -13,8 +13,7 @@ import { AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet } from "./Adres
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 
 import SoknadsmottakerVelger from "./SoknadsmottakerVelger";
-import { ValideringActionKey, Valideringsfeil } from "../../../../nav-soknad/validering/types";
-import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
+import { Valideringsfeil } from "../../../../nav-soknad/validering/types";
 import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
 import { formaterSoknadsadresse, soknadsmottakerStatus } from "./AdresseUtils";
 import { REST_STATUS } from "../../../../nav-soknad/types";
@@ -213,16 +212,10 @@ class AdresseView extends React.Component<Props, State> {
 		}
 		return (
 			<div className="sosialhjelp-oppholdsadresse skjema-sporsmal" id="soknadsmottaker">
-				<SporsmalFaktum
+				<Sporsmal
 					id="soknadsmottaker"
 					faktumKey={this.FAKTUM_KEY}
 					noValidateOnBlur={true}
-					validerFunc={[ (value) => {
-						if (this.soknadsmottakerStatus() !== SoknadsMottakerStatus.GYLDIG) {
-							return ValideringActionKey.PAKREVD;
-						}
-						return null;
-					} ]}
 				>
 					{folkeregistrertAdresse && (
 						<span>
@@ -305,7 +298,7 @@ class AdresseView extends React.Component<Props, State> {
 							</div>
 						</Underskjema>
 					</div>
-				</SporsmalFaktum>
+				</Sporsmal>
 				<SoknadsmottakerInfo skjul={this.state.settAdressePending} />
 			</div>);
 	}

@@ -70,7 +70,6 @@ class Sporsmal extends React.Component<Props, {}> {
 			<div
 				id={id}
 				className={sporsmalCls}
-				// onBlur={(evt: any) => this.handleOnBlur(evt)}
 				aria-labelledby={legendId}
 			>
 				<SkjemaGruppe feil={feil}>

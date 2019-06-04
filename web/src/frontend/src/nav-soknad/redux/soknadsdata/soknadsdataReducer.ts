@@ -2,12 +2,12 @@ import { Reducer } from "../reduxTypes";
 import {
 	initialKontonummerState, Kontonummer
 } from "../../../digisos/skjema/personopplysninger/bankinfo/KontonummerType";
-import { Begrunnelse, initialBegrunnelseState } from "../../../digisos/skjema/begrunnelse_ny/begrunnelseTypes";
+import { Begrunnelse, initialBegrunnelseState } from "../../../digisos/skjema/begrunnelse/begrunnelseTypes";
 import {
 	initialTelefonnummerState,
 	Telefonnummer
 } from "../../../digisos/skjema/personopplysninger/telefon/telefonTypes";
-import { Bosituasjon, initialBosituasjonState } from "../../../digisos/skjema/bosituasjon_ny/bosituasjonTypes";
+import { Bosituasjon, initialBosituasjonState } from "../../../digisos/skjema/bosituasjon/bosituasjonTypes";
 import {
 	Familie, initialFamilieStatus, Sivilstatus,
 } from "../../../digisos/skjema/familie/sivilstatus/FamilieTypes";

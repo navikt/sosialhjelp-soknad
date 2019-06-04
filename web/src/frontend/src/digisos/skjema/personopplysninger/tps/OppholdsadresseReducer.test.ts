@@ -1,10 +1,10 @@
 import {
+	Adresse,
 	default as oppholdsadresseReducer,
 	OppholdsadresseActionTypeKeys,
 	OppholdsAdresseState,
 	SoknadsMottakerStatus
 } from "./oppholdsadresseReducer";
-import {Adresse} from "./Oppholdsadresse";
 
 describe("oppholdsadresse", () => {
 

@@ -9,21 +9,20 @@ import ApplikasjonsfeilDialog from "../containers/ApplikasjonsfeilDialog";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
-import { SkjemaConfig, SkjemaStegType, SkjemaSteg, Faktum } from "../types";
+import { SkjemaConfig, SkjemaStegType, SkjemaSteg } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
-import {finnFaktum, getProgresjonFaktum} from "../utils";
 import { setVisBekreftMangler } from "../redux/oppsummering/oppsummeringActions";
 import {
 	clearFaktaValideringsfeil,
 	setFaktaValideringsfeil
 } from "../redux/valideringActions";
 import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
-import { validerAlleFaktum } from "../validering/utils";
 import { getIntlTextOrKey, scrollToTop } from "../utils";
 import { avbrytSoknad, sendSoknad } from "../redux/soknad/soknadActions";
 import { gaVidere, gaTilbake } from "../redux/navigasjon/navigasjonActions";
 import {loggInfo} from "../redux/navlogger/navloggerActions";
 import AppBanner from "../components/appHeader/AppHeader";
+import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -48,8 +47,6 @@ interface InjectedRouterProps {
 }
 
 interface StateProps {
-	fakta: Faktum[];
-	progresjon: number;
 	nextButtonPending?: boolean;
 	valideringer: FaktumValideringsregler[];
 	visFeilmeldinger?: boolean;
@@ -57,6 +54,7 @@ interface StateProps {
 	stegValidertCounter?: number;
 	oppsummeringBekreftet?: boolean;
 	fodselsnummer: string;
+	soknadsdata: Soknadsdata;
 }
 
 type Props = OwnProps &
@@ -83,10 +81,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	}
 
 	loggAdresseTypeTilGrafana(){
-		const typeAdresseFaktum: Faktum = finnFaktum("kontakt.system.oppholdsadresse.valg", this.props.fakta);
-		const VALUE = "value";
-		if (typeAdresseFaktum && typeAdresseFaktum[VALUE]){
-			this.props.dispatch(loggInfo("klikk--" + typeAdresseFaktum[VALUE]));
+		const adresseTypeValg = this.props.soknadsdata.personalia.adresser.valg;
+		if (adresseTypeValg){
+			this.props.dispatch(loggInfo("klikk--" + adresseTypeValg));
 		}
 	}
 
@@ -105,12 +102,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 			return;
 		}
 
-		let valideringsfeil: Valideringsfeil[] = validerAlleFaktum(
-			this.props.fakta,
-			this.props.valideringer
-		);
-		valideringsfeil = [...valideringsfeil, ...this.props.valideringsfeil];
-		valideringsfeil = this.fjernDuplikateValideringsfeil(valideringsfeil);
+		const valideringsfeil = this.props.valideringsfeil;
 
 		if (valideringsfeil.length === 0) {
 			this.props.dispatch(clearFaktaValideringsfeil());
@@ -120,27 +112,27 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		}
 	}
 
-	fjernDuplikateValideringsfeil(valideringsfeil: Valideringsfeil[]) {
-		let forrigeValideringsfeil: Valideringsfeil = null;
-		let duplikatIndex = null;
-		valideringsfeil.forEach((feil: Valideringsfeil, index: number) => {
-			if (forrigeValideringsfeil !== null &&
-				feil.faktumKey === forrigeValideringsfeil.faktumKey &&
-				feil.feilkode === forrigeValideringsfeil.feilkode) {
-				duplikatIndex = index;
-				this.fjernValideringsfeil(valideringsfeil, index);
-			}
-			forrigeValideringsfeil = feil;
-		});
-		if (duplikatIndex) {
-			valideringsfeil = this.fjernValideringsfeil(valideringsfeil, duplikatIndex);
-		}
-		return valideringsfeil;
-	}
-
-	fjernValideringsfeil(items: Valideringsfeil[], i: number): Valideringsfeil[] {
-		return items.slice(0, i-1).concat(items.slice(i, items.length));
-	}
+	// fjernDuplikateValideringsfeil(valideringsfeil: Valideringsfeil[]) {
+	// 	let forrigeValideringsfeil: Valideringsfeil = null;
+	// 	let duplikatIndex = null;
+	// 	valideringsfeil.forEach((feil: Valideringsfeil, index: number) => {
+	// 		if (forrigeValideringsfeil !== null &&
+	// 			feil.faktumKey === forrigeValideringsfeil.faktumKey &&
+	// 			feil.feilkode === forrigeValideringsfeil.feilkode) {
+	// 			duplikatIndex = index;
+	// 			this.fjernValideringsfeil(valideringsfeil, index);
+	// 		}
+	// 		forrigeValideringsfeil = feil;
+	// 	});
+	// 	if (duplikatIndex) {
+	// 		valideringsfeil = this.fjernValideringsfeil(valideringsfeil, duplikatIndex);
+	// 	}
+	// 	return valideringsfeil;
+	// }
+	//
+	// fjernValideringsfeil(items: Valideringsfeil[], i: number): Valideringsfeil[] {
+	// 	return items.slice(0, i-1).concat(items.slice(i, items.length));
+	// }
 
 	handleGaTilbake(aktivtSteg: number) {
 		this.props.dispatch(clearFaktaValideringsfeil());
@@ -224,19 +216,15 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 }
 
 const mapStateToProps = (state: SoknadAppState): StateProps => {
-	const faktum = getProgresjonFaktum(state.fakta.data);
-	const progresjon = parseInt((faktum.value || 1) as string, 10);
 	return {
-		fakta: state.fakta.data,
-		progresjon,
-		nextButtonPending:
-			state.fakta.progresjonPending || state.soknad.sendSoknadPending,
+		nextButtonPending: false, // TODO: Må settes til true ved første trykke på send søknad
 		oppsummeringBekreftet: state.oppsummering.bekreftet,
 		valideringer: state.validering.valideringsregler,
 		visFeilmeldinger: state.validering.visValideringsfeil,
 		valideringsfeil: state.validering.feil,
 		stegValidertCounter: state.validering.stegValidertCounter,
-		fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer
+		fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer,
+		soknadsdata: state.soknadsdata
 	};
 };
 

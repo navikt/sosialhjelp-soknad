@@ -7,9 +7,8 @@ import {
     injectIntl,
     InjectedIntlProps
 } from "react-intl";
-import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema/index";
-import {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {
     connectSoknadsdataContainer,
@@ -58,7 +57,7 @@ class NavYtelserView extends React.Component<Props, {}> {
         const harUtbetalinger: boolean = systeminntekter && systeminntekter.length > 0;
 
         return (
-            <SporsmalFaktum faktumKey="navytelser.tittel" style="system"
+            <Sporsmal faktumKey="navytelser.tittel" style="system"
                             legendTittelStyle={LegendTittleStyle.FET_NORMAL} visLedetekst={true}>
                 {!visAnimerteStreker &&
                 <SysteminfoMedSkjema>
@@ -77,7 +76,7 @@ class NavYtelserView extends React.Component<Props, {}> {
                 {visAnimerteStreker &&
                 <TextPlaceholder lines={3}/>
                 }
-            </SporsmalFaktum>
+            </Sporsmal>
         )
     }
 }

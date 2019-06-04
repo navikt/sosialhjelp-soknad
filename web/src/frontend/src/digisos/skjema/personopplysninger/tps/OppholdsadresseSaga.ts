@@ -1,6 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import {
+	Adresse,
 	AdresseKategori,
 	HentSoknadsmottakerAction,
 	OppholdsadresseActionTypeKeys, settSoknadsmottakere,
@@ -12,7 +13,6 @@ import { fetchToJson } from "../../../../nav-soknad/utils/rest-utils";
 import { finnFaktum, oppdaterFaktumMedVerdier } from "../../../../nav-soknad/utils";
 import { lagreFaktum } from "../../../../nav-soknad/redux/fakta/faktaActions";
 import { Faktum } from "../../../../nav-soknad/types";
-import { Adresse } from "./Oppholdsadresse";
 import { lagreFaktumSaga } from "../../../../nav-soknad/redux/fakta/faktaSaga";
 import { LagreFaktum } from "../../../../nav-soknad/redux/fakta/faktaTypes";
 
