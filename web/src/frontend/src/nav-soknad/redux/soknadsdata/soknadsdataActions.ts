@@ -16,28 +16,6 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
 		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
 
-			// Simuler respons fra backend med matrikkeladresse:
-			if(sti.match(/personalia\/adresser/)){
-				response = {
-					"valg": null,
-					"folkeregistrert": {
-						"type": "matrikkeladresse",
-						"gateadresse": null,
-						"matrikkeladresse": {
-							kommunenummer: "0301",
-							gaardsnummer: "180",
-							bruksnummer: "45",
-							festenummer: null,
-							seksjonsnummer: null,
-							undernummer: null
-						},
-						"ustrukturert": null
-					},
-					"midlertidig": null,
-					"soknad": null
-				}
-			}
-
             // For å simulere ulike typer testdata fra server, kan man her skrive kode som:
 			// if(sti === SoknadsSti.FORSORGERPLIKT){
 			// 	response = {
