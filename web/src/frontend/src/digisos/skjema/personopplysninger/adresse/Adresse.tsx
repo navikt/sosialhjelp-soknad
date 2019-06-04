@@ -90,7 +90,6 @@ class AdresseView extends React.Component<Props, State> {
     lagreAdresseValg(payload: any) {
         const {brukerBehandlingId, oppdaterSoknadsdataSti, lagreSoknadsdata} = this.props;
         this.setState({settAdressePending: true});
-
         lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
             if (Array.isArray(navEnheter)) {
                 navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
