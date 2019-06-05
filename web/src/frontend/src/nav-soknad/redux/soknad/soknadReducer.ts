@@ -82,7 +82,8 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultS
 			return {
 				...state,
 				data: { brukerBehandlingId, fakta},
-				restStatus: REST_STATUS.OK
+				restStatus: REST_STATUS.OK,
+				behandlingsId: action.data.brukerBehandlingId
 			};
 		case SoknadActionTypeKeys.SEND_SOKNAD:
 			return {

@@ -23,6 +23,8 @@ import {Faktum} from "../../nav-soknad/types";
 import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
 import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
+import {hentSoknadOk} from "../../nav-soknad/redux/soknad/soknadActions";
+import NavFrontendSpinner from "nav-frontend-spinner";
 
 interface OwnProps {
     match: any;
@@ -35,6 +37,7 @@ interface StateProps {
     gyldigUrl: boolean;
     steg: string;
     brukerbehandlingId: string;
+    behandingsIdPaStore: string;
 }
 
 interface UrlParams {
@@ -49,29 +52,42 @@ class SkjemaRouter extends React.Component<Props, {}> {
 
     componentDidMount() {
         skjulToppMeny();
+        this.props.dispatch(hentSoknadOk({brukerBehandlingId: this.props.brukerbehandlingId, fakta: []}))
     }
 
     render() {
-        const {gyldigUrl} = this.props;
 
-        if (!gyldigUrl) {
-            return <SideIkkeFunnet/>;
+        const { behandingsIdPaStore } = this.props;
+
+        if (behandingsIdPaStore && behandingsIdPaStore !== ""){
+            const {gyldigUrl} = this.props;
+
+            if (!gyldigUrl) {
+                return <SideIkkeFunnet/>;
+            }
+            const path = "/skjema/:brukerBehandlingId";
+            return (
+                <Switch>
+                    <Route path={`${path}/1`} component={Steg1}/>
+                    <Route path={`${path}/2`} component={Steg2}/>
+                    <Route path={`${path}/3`} component={Steg3}/>
+                    <Route path={`${path}/4`} component={Steg4}/>
+                    <Route path={`${path}/5`} component={Steg5}/>
+                    <Route path={`${path}/6`} component={Steg6}/>
+                    <Route path={`${path}/7`} component={Steg7}/>
+                    <Route path={`${path}/8`} component={Steg8}/>
+                    <Route path={`${path}/9`} component={Oppsummering}/>
+                    <Route component={SideIkkeFunnet}/>
+                </Switch>
+            );
         }
-        const path = "/skjema/:brukerBehandlingId";
+
         return (
-            <Switch>
-                <Route path={`${path}/1`} component={Steg1}/>
-                <Route path={`${path}/2`} component={Steg2}/>
-                <Route path={`${path}/3`} component={Steg3}/>
-                <Route path={`${path}/4`} component={Steg4}/>
-                <Route path={`${path}/5`} component={Steg5}/>
-                <Route path={`${path}/6`} component={Steg6}/>
-                <Route path={`${path}/7`} component={Steg7}/>
-                <Route path={`${path}/8`} component={Steg8}/>
-                <Route path={`${path}/9`} component={Oppsummering}/>
-                <Route component={SideIkkeFunnet}/>
-            </Switch>
-        );
+            <div className="application-spinner">
+                <NavFrontendSpinner type="XXL" />
+            </div>
+        )
+
     }
 }
 
@@ -88,7 +104,8 @@ const mapStateToProps = (
         restStatus: state.soknad.restStatus,
         steg,
         brukerbehandlingId,
-        gyldigUrl: brukerbehandlingId !== undefined && steg !== undefined
+        gyldigUrl: brukerbehandlingId !== undefined && steg !== undefined,
+        behandingsIdPaStore: state.soknad.behandlingsId
     };
 };
 

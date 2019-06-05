@@ -94,6 +94,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
 		if (aktivtSteg.type === SkjemaStegType.oppsummering) {
 			if (this.props.oppsummeringBekreftet) {
+				// this.props.dispatch
 				this.loggAdresseTypeTilGrafana();
 				this.sendSoknad(brukerBehandlingId);
 			} else {
@@ -217,7 +218,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 const mapStateToProps = (state: SoknadAppState): StateProps => {
 	return {
-		nextButtonPending: false, // TODO: Må settes til true ved første trykke på send søknad
+		nextButtonPending: state.soknad.sendSoknadPending,
 		oppsummeringBekreftet: state.oppsummering.bekreftet,
 		valideringer: state.validering.valideringsregler,
 		visFeilmeldinger: state.validering.visValideringsfeil,
