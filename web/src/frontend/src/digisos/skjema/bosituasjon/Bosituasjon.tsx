@@ -12,7 +12,7 @@ import {
 	connectSoknadsdataContainer, onEndretValideringsfeil,
 	SoknadsdataContainerProps
 } from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {ValideringsfeilType} from "../../../nav-soknad/redux/valideringActionTypes";
+import {ValideringsFeilKode} from "../../../nav-soknad/redux/valideringActionTypes";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -92,7 +92,7 @@ class BosituasjonView extends React.Component<Props, {}> {
 		if (!antallPersoner || antallPersoner.length === 0) {
 			return null;
 		}
-		const feilkode: ValideringsfeilType = erTall(antallPersoner, true);
+		const feilkode: ValideringsFeilKode = erTall(antallPersoner, true);
 		onEndretValideringsfeil(feilkode, FAKTUM_KEY_ANTALL, this.props.feil, () => {
 			this.props.setValideringsfeil(feilkode, FAKTUM_KEY_ANTALL);
 		});

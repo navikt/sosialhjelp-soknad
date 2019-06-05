@@ -1,4 +1,4 @@
-import {Valideringsfeil, ValideringsfeilType} from "../redux/valideringActionTypes";
+import {Valideringsfeil, ValideringsFeilKode} from "../redux/valideringActionTypes";
 
 export const mod11Kontroll = (verdi: string) => {
 	let controlNumber = 2;
@@ -26,11 +26,11 @@ export const konverterFdatoTilDato = (dato: string): Date => {
 	return d;
 };
 
-export const lagValideringsfeil = (valideringActionKey: ValideringsfeilType, faktumKey: string): Valideringsfeil => {
+export const lagValideringsfeil = (valideringActionKey: ValideringsFeilKode, faktumKey: string): Valideringsfeil => {
 	if (valideringActionKey) {
 		const valideringsfeil: Valideringsfeil = {
 			faktumKey,
-			valideringsfeilType: valideringActionKey
+			feilkode: valideringActionKey
 		};
 		return valideringsfeil;
 	} else {

@@ -15,7 +15,7 @@ import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
-import {ValideringsfeilType} from "../../../../nav-soknad/redux/valideringActionTypes";
+import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
 
 interface OwnProps {
 	disableLoadingAnimation?: boolean;
@@ -53,27 +53,29 @@ class Bankinformasjon extends React.Component<Props, State> {
 	onBlur() {
 		const { soknadsdata } = this.props;
 		let kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
-		let feilkode: ValideringsfeilType = null;
 		if (kontonummer.brukerutfyltVerdi !== null && kontonummer.brukerutfyltVerdi !== "") {
-			feilkode = this.validerKontonummer(kontonummer.brukerutfyltVerdi);
+			const feilkode: ValideringsFeilKode = this.validerKontonummer(kontonummer.brukerutfyltVerdi);
 			if (!feilkode) {
 				kontonummer = this.vaskKontonummerVerdi(kontonummer);
 				this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
+				this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
 			}
 		} else {
-			onEndretValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER, this.props.feil, () => {
-				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER);
-			});
+			this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
 			this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
 		}
 	}
 
-	validerKontonummer(brukerutfyltVerdi: string): ValideringsfeilType {
+	validerKontonummer(brukerutfyltVerdi: string): ValideringsFeilKode {
 		brukerutfyltVerdi = brukerutfyltVerdi.replace(/[ \.]/g,"");
-		const feilkode: ValideringsfeilType = erKontonummer(brukerutfyltVerdi);
-		onEndretValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER, this.props.feil, () => {
-			this.props.setValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER);
-		});
+		const feilkode: ValideringsFeilKode | undefined = erKontonummer(brukerutfyltVerdi);
+		if(feilkode !== undefined){
+			onEndretValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER, this.props.feil, () => {
+				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER);
+			});
+		} else {
+			this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
+		}
 		return feilkode;
 	}
 
@@ -83,9 +85,9 @@ class Bankinformasjon extends React.Component<Props, State> {
 		kontonummer.brukerdefinert = brukerdefinert;
 		kontonummer.brukerutfyltVerdi = "";
 		kontonummer.harIkkeKonto = false;
-		this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
 		this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
+		this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
 	}
 
 	onChangeInput(brukerutfyltVerdi: string) {

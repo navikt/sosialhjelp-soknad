@@ -97,10 +97,10 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 			return;
 		}
 
-
 		const { feil } = this.props.validering;
 
 		if (feil.length === 0) {
+			this.props.dispatch(clearAllValideringsfeil());
 			this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
 		} else {
 			this.props.dispatch(visValideringsfeilPanel());

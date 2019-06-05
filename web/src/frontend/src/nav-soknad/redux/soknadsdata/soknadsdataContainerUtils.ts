@@ -10,7 +10,7 @@ import {
 } from "./soknadsdataReducer";
 import {REST_STATUS} from "../../types";
 import {setVisSamtykkeInfo} from "../init/initActions";
-import {Valideringsfeil, ValideringsfeilType} from "../valideringActionTypes";
+import {Valideringsfeil, ValideringsFeilKode} from "../valideringActionTypes";
 
 /*
  * Properties og redux koblinger som er felles for komponenter i søknadsskjemaet.
@@ -30,7 +30,7 @@ export interface SoknadsdataContainerProps {
     settRestStatus?: (sti: string, restStatus: REST_STATUS) => void;
     skjul?: boolean;
     setVisSamtykkeInfo?: (vis: boolean) => void;
-    setValideringsfeil?: (feilkode: ValideringsfeilType, faktumKey: string) => void;
+    setValideringsfeil?: (feilkode: ValideringsFeilKode, faktumKey: string) => void;
     clearValideringsfeil?: (faktumKey: string) => void;
 }
 
@@ -57,7 +57,7 @@ export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerP
 
 // For å unngå at man dispatcher samme identiske feilmelding flere ganger, kan denne funksjonen brukes:
 export const onEndretValideringsfeil = (
-    nyFeilkode: ValideringsfeilType,
+    nyFeilkode: ValideringsFeilKode,
     faktumKey: string,
     feil: Valideringsfeil[],
     callback: () => void) => {
@@ -66,8 +66,8 @@ export const onEndretValideringsfeil = (
         eksisterendeFeil = feil.find((valideringsfeil: Valideringsfeil) =>
             valideringsfeil.faktumKey === faktumKey);
     }
-    const eksisterendeFeilkode: string = (eksisterendeFeil && eksisterendeFeil.valideringsfeilType) ?
-        eksisterendeFeil.valideringsfeilType : undefined;
+    const eksisterendeFeilkode: string = (eksisterendeFeil && eksisterendeFeil.feilkode) ?
+        eksisterendeFeil.feilkode : undefined;
     if (eksisterendeFeilkode !== nyFeilkode) {
         callback();
     }

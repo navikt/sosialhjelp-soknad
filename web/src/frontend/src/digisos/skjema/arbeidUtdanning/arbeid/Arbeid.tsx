@@ -14,7 +14,7 @@ import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdata
 import { Arbeidsforhold } from "./arbeidTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {REST_STATUS} from "../../../../nav-soknad/types";
-import {ValideringsfeilType} from "../../../../nav-soknad/redux/valideringActionTypes";
+import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -64,8 +64,8 @@ class ArbeidView extends React.Component<Props, State> {
 		}
 	}
 
-	validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsfeilType {
-		const feilkode: ValideringsfeilType = maksLengde(verdi, MAX_CHARS);
+	validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode {
+		const feilkode: ValideringsFeilKode = maksLengde(verdi, MAX_CHARS);
 		onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
 			this.props.setValideringsfeil(feilkode, faktumKey);
 		});

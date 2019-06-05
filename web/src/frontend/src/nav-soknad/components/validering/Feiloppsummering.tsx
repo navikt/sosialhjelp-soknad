@@ -11,7 +11,10 @@ const scrollToFaktum = (
 ) => {
 	evt.stopPropagation();
 	evt.preventDefault();
-	const element: HTMLElement = document.getElementById(faktumKey);
+
+	const faktumKeyUpdated: string = faktumKey.replace(/\./g, "_");
+
+	const element: HTMLElement = document.getElementById(faktumKeyUpdated);
 	if (element) {
 		scrollToElement(element.id);
 		element.focus();
@@ -20,7 +23,7 @@ const scrollToFaktum = (
 
 const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 	faktumKey,
-	valideringsfeilType
+	feilkode
 }) => {
 	return (
 		<li className="feiloppsummering__feil">
@@ -28,7 +31,7 @@ const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 				href={`#`}
 				onClick={evt => scrollToFaktum(evt, faktumKey)}
 			>
-				<FormattedMessage id={valideringsfeilType}/>
+				<FormattedMessage id={feilkode}/>
 			</a>
 		</li>
 	);

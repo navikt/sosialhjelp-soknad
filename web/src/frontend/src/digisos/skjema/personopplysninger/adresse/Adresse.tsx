@@ -216,6 +216,7 @@ class AdresseView extends React.Component<Props, State> {
                     id="soknadsmottaker"
                     faktumKey={this.FAKTUM_KEY}
                     noValidateOnBlur={true}
+                    sprakNokkel="soknadsmottaker"
                 >
                     {folkeregistrertAdresse && (
                         <span>

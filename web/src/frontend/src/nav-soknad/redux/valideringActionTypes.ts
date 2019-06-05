@@ -36,7 +36,7 @@ export type ValideringActionTypes =
 	| ClearAllValideringsfeilAction
 
 
-export enum ValideringsfeilType {
+export enum ValideringsFeilKode {
 	PAKREVD = "validering.pakrevd",
 	MIN_LENGDE = "validering.minLengde",
 	MAX_LENGDE = "validering.maksLengde",
@@ -49,5 +49,5 @@ export enum ValideringsfeilType {
 
 export interface Valideringsfeil {
 	faktumKey: string;
-	valideringsfeilType: ValideringsfeilType
+	feilkode: ValideringsFeilKode
 }

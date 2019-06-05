@@ -7,12 +7,11 @@ import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import { erTelefonnummer } from "../../../../nav-soknad/validering/valideringer";
 import {
 	connectSoknadsdataContainer,
-	onEndretValideringsfeil,
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { Telefonnummer } from "./telefonTypes";
-import {ValideringsfeilType} from "../../../../nav-soknad/redux/valideringActionTypes";
+import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_SYSTEM_TELEFON = "kontakt.system.telefoninfo";
@@ -39,6 +38,7 @@ class TelefonView extends React.Component<Props, {}> {
 		const { soknadsdata } = this.props;
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 		telefonnummer.brukerutfyltVerdi = verdi;
+		this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
 	}
 
@@ -50,12 +50,10 @@ class TelefonView extends React.Component<Props, {}> {
 
 	forberedOgSendTelefonnummer(telefonnummer: Telefonnummer, brukerBehandlingId: string){
 		let verdi = telefonnummer.brukerutfyltVerdi;
-		let feilkode: ValideringsfeilType = null;
+		let feilkode: ValideringsFeilKode = null;
 
 		if(verdi === "" || verdi === null) {
-			onEndretValideringsfeil(null, FAKTUM_KEY_TELEFON, this.props.feil, () => {
-				this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
-			});
+			this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
 		} else {
 			verdi = this.fjernLandkode(verdi);
 			verdi = verdi.replace(/[ \.]/g,"");
@@ -71,12 +69,14 @@ class TelefonView extends React.Component<Props, {}> {
 		}
 	}
 
-	validerTelefonnummer(verdi: string): ValideringsfeilType {
-		const feilkode: ValideringsfeilType = erTelefonnummer(verdi);
-		if (verdi !== ""){
-			onEndretValideringsfeil(feilkode, FAKTUM_KEY_TELEFON, this.props.feil, () => {
+	validerTelefonnummer(verdi: string): ValideringsFeilKode {
+		const feilkode: ValideringsFeilKode = erTelefonnummer(verdi);
+		if (verdi !== "" && feilkode){
+			// onEndretValideringsfeil(feilkode, FAKTUM_KEY_TELEFON, this.props.feil, () => {
 				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_TELEFON);
-			});
+			// });
+		} else {
+			this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
 		}
 		return feilkode;
 	}

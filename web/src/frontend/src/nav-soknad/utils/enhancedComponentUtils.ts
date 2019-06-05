@@ -6,10 +6,10 @@ export function getFeil(feil: Valideringsfeil[], intl: InjectedIntl, faktumKey: 
     if (feil && feil.length > 0) {
         if (faktumIndex != null) {
             const feilkode = feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey + "." + faktumIndex.toString());
-            return !feilkode ? null : {feilmelding: intl.formatHTMLMessage({id: feilkode.valideringsfeilType})};
+            return !feilkode ? null : {feilmelding: intl.formatHTMLMessage({id: feilkode.feilkode})};
         } else {
             const feilkode = feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey);
-            return !feilkode ? null : {feilmelding: intl.formatHTMLMessage({id: feilkode.valideringsfeilType})};
+            return !feilkode ? null : {feilmelding: intl.formatHTMLMessage({id: feilkode.feilkode})};
         }
     }
     return null;

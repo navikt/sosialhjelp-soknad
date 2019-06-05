@@ -11,7 +11,7 @@ import {
     DispatchProps,
     SoknadAppState,
     Valideringsfeil,
-    ValideringsfeilType
+    ValideringsFeilKode
 } from "../../../nav-soknad/redux/reduxTypes";
 import {connect} from "react-redux";
 import {
@@ -72,7 +72,7 @@ class TabellView extends React.Component<Props, {}> {
         const input = opplysning.rader[radIndex][inputFelt];
 
         if (inputFelt !== "beskrivelse" && input && input !== "" && !erGyldigTall(input)) {
-            this.props.dispatch(setValideringsfeil(ValideringsfeilType.ER_TALL, key));
+            this.props.dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, key));
             this.props.dispatch(updateOpplysning(opplysning))
         } else {
             this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysning, feil));
@@ -117,7 +117,7 @@ class TabellView extends React.Component<Props, {}> {
             Object.keys(rad).map((key: InputType) => {
                 if (key !== "beskrivelse" && rad[key] && rad[key] !== "" && !erGyldigTall(rad[key])) {
                     const validationKey: string = `${getSpcForOpplysning(opplysning.type).textKey}.${key}.${index}`;
-                    this.props.dispatch(setValideringsfeil(ValideringsfeilType.ER_TALL, validationKey));
+                    this.props.dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, validationKey));
                 }
             });
         });

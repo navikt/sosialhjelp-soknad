@@ -38,6 +38,7 @@ class BasisPersonaliaView extends React.Component<Props, {}> {
 				faktumKey="kontakt.system.personalia"
 				style="system"
 				visLedetekst={visAnimerteStreker !== true}
+				sprakNokkel="kontakt.system.personalia"
 			>
 				{visAnimerteStreker !== true && basisPersonalia && (
 					<Detaljeliste>
