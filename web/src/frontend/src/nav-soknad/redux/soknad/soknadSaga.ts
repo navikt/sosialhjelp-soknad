@@ -41,7 +41,6 @@ function* opprettSoknadSaga(): SagaIterator {
 	try {
 		yield put(resetSoknad());
 
-		// TODO: Dette kallet må alltid gjøres ved reload av siden. Hvis ikke får ikke soknadsdata behandlingsId, og urlen blir gal.
 		const response: OpprettSoknadResponse = yield call(
 			fetchPost,
 			"soknader",

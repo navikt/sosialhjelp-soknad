@@ -65,5 +65,6 @@ export interface SoknadState {
 		synlig: boolean;
 		destinasjon: AVBRYT_DESTINASJON;
 	};
+	behandlingsId: string;
 	gjenopptattSoknad: boolean;
 }
