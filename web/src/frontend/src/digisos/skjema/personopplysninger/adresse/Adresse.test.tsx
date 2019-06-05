@@ -69,6 +69,7 @@ describe("AdressesokTreff react komponent", () => {
 					hentSoknadsdata={() => null}
 					intl={intl}
 					disableLoadingAnimation={true}
+					dispatch={null}
 				/>
 			</TestContext>);
 		const radioKnapper = wrapper.find(".inputPanel");
@@ -92,6 +93,7 @@ describe("AdressesokTreff react komponent", () => {
 					hentSoknadsdata={() => null}
 					intl={intl}
 					disableLoadingAnimation={true}
+					dispatch={null}
 				/>
 			</TestContext>);
 

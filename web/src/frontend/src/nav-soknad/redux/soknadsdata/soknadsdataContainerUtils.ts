@@ -1,8 +1,8 @@
-import { ValideringActionKey, Valideringsfeil } from "../../validering/types";
+import {FaktumValideringsregler, ValideringActionKey, Valideringsfeil} from "../../validering/types";
 import { connect } from "react-redux";
 import { State } from "../../../digisos/redux/reducers";
 import { hentSoknadsdata, lagreSoknadsdata } from "./soknadsdataActions";
-import { setValideringsfeil } from "../valideringActions";
+import {registerFaktumValidering, setValideringsfeil} from "../valideringActions";
 import {
 	oppdaterSoknadsdataSti,
 	settRestStatus,
@@ -27,6 +27,7 @@ export interface SoknadsdataContainerProps {
 	// lagreSoknadsdata?: (brukerBehandlingId: string, urlPath: string, soknadsdata: SoknadsdataType, responseHandler?: (response: any) => void) => void;
 	lagreSoknadsdata?: (brukerBehandlingId: string, urlPath: string, soknadsdata: any, responseHandler?: (response: any) => void) => void;
 	setValideringsfeil?: (feilkode: ValideringActionKey, faktumKey: string) => void;
+	registerFaktumValidering?: (faktumValidering: FaktumValideringsregler) => void;
 	oppdaterSoknadsdataSti?: (sti: string, soknadsdata: SoknadsdataType) => void;
 	settRestStatus?: (sti: string, restStatus: REST_STATUS) => void;
 	skjul?: boolean;
@@ -44,6 +45,7 @@ export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerP
 		lagreSoknadsdata,
 		oppdaterSoknadsdataSti,
 		setValideringsfeil,
+		registerFaktumValidering,
 		settRestStatus,
 		setVisSamtykkeInfo
 	}
