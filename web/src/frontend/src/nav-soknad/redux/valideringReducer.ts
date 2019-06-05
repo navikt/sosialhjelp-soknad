@@ -58,6 +58,7 @@ const valideringReducer: Reducer<ValideringState, ValideringActionTypes> = (
             return {
                 ...state,
                 feil: feilUpdated,
+                visValideringsfeil: feilUpdated.length === 0 ? false : state.visValideringsfeil
             };
         }
         case ValideringActionTypeKeys.CLEAR_ALL_VALIDERINGSFEIL: {

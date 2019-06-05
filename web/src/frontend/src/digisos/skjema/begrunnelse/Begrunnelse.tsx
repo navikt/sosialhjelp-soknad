@@ -34,6 +34,13 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 		const { soknadsdata } = this.props;
 		soknadsdata.begrunnelse[key]  = value;
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BEGRUNNELSE, soknadsdata.begrunnelse);
+
+		if (key === HVA_SOKES_OM){
+			this.validerTekstfeltVerdi(value, FAKTUM_KEY_HVA, MAX_CHARS);
+		}
+		if (key === HVORFOR_SOKE) {
+			this.validerTekstfeltVerdi(value, FAKTUM_KEY_HVORFOR, MAX_CHARS_BEGRUNNELSE);
+		}
 	}
 
 	lagreHvisGyldig() {
@@ -48,10 +55,14 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 		}
 	}
 
-    validerTekstfeltVerdi(verdi: string, faktumKey: string, max: number): ValideringsFeilKode {
-		const feilkode: ValideringsFeilKode = maksLengde(verdi, max);
+    validerTekstfeltVerdi(verdi: string, faktumKey: string, max: number): ValideringsFeilKode | undefined {
+		const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, max);
 		onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
-			this.props.setValideringsfeil(feilkode, faktumKey);
+			if (feilkode){
+				this.props.setValideringsfeil(feilkode, faktumKey);
+			} else {
+				this.props.clearValideringsfeil(faktumKey);
+			}
 		});
 		return feilkode;
 	}
@@ -59,6 +70,8 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 	render() {
 		const { intl, soknadsdata } = this.props;
 		const begrunnelse = soknadsdata.begrunnelse;
+		const faktumKeyHvaId = FAKTUM_KEY_HVA.replace(/\./g, "_");
+		const faktumKeyHvorforId = FAKTUM_KEY_HVORFOR.replace(/\./g, "_");
 		return (
 			<div>
 				<Sporsmal
@@ -66,7 +79,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 				>
 					<TextareaEnhanced
-						id="hva_sokes_det_om_textarea"
+						id={faktumKeyHvaId}
 						placeholder={intl.formatMessage({
 							id: "begrunnelse.hva.placeholder"
 						})}
@@ -83,7 +96,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 				>
 					<TextareaEnhanced
-						id="begrunnelse_soknad_textarea"
+						id={faktumKeyHvorforId}
 						placeholder={intl.formatMessage({
 							id: "begrunnelse.hvorfor.placeholder"
 						})}

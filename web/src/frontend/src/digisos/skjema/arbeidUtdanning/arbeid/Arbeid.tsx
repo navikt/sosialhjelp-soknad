@@ -52,22 +52,27 @@ class ArbeidView extends React.Component<Props, State> {
 		const arbeid = soknadsdata.arbeid;
 		arbeid.kommentarTilArbeidsforhold = verdi;
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.ARBEID, arbeid);
+		this.validerTekstfeltVerdi(verdi, FAKTUM_KEY_KOMMENTARER);
 	}
 
 	lagreHvisGyldig() {
 		const { soknadsdata, brukerBehandlingId } = this.props;
 		const arbeid = soknadsdata.arbeid;
 		const kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
-		const feilkode = this.validerTekstfeltVerdi(kommentarTilArbeidsforhold, FAKTUM_KEY_KOMMENTARER);
+		const feilkode: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(kommentarTilArbeidsforhold, FAKTUM_KEY_KOMMENTARER);
 		if (!feilkode) {
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ARBEID, arbeid);
 		}
 	}
 
 	validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode {
-		const feilkode: ValideringsFeilKode = maksLengde(verdi, MAX_CHARS);
+		const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
 		onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
-			this.props.setValideringsfeil(feilkode, faktumKey);
+			if (feilkode){
+				this.props.setValideringsfeil(feilkode, faktumKey);
+			} else {
+				this.props.clearValideringsfeil(faktumKey);
+			}
 		});
 		return feilkode;
 	}
@@ -77,6 +82,7 @@ class ArbeidView extends React.Component<Props, State> {
 		const arbeid = soknadsdata.arbeid;
 		let alleArbeidsforhold: Arbeidsforhold[] = null;
 		let kommentarTilArbeidsforhold = "";
+		const faktumKommentarerId = FAKTUM_KEY_KOMMENTARER.replace(/\./g, "_");
 		if (arbeid) {
 			if (arbeid.kommentarTilArbeidsforhold) {
 				kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
@@ -123,7 +129,7 @@ class ArbeidView extends React.Component<Props, State> {
 						</ul>
 					)}
 					<TextareaEnhanced
-						id="begrunnelse_soknad_textarea"
+						id={faktumKommentarerId}
 						placeholder={intl.formatMessage({
 							id: "begrunnelse.hvorfor.placeholder"
 						})}

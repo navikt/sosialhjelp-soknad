@@ -57,11 +57,10 @@ class InputEnhanced extends React.Component<Props, {}> {
 			feil
 		} = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey );
-		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
 
 		return (
 			<Input
-				id={id}
+				id={faktumKey}
 				className={"input--xxl faktumInput  " + (this.props.className ? this.props.className : "") }
 				// inputRef={(c: any) =>
 				// 	this.props.inputRef ? this.props.inputRef(c) : null}

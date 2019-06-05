@@ -128,7 +128,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 		let infotekst: string = intl.formatMessage({ id: "kontakt.system.personalia.infotekst.tekst" });
 
 		if (kontonummer.brukerdefinert) {
-			infotekst = intl.formatMessage({ id: "kontakt.kontonummer.infotekst.tekst" });
+			infotekst = intl.formatMessage({ id: FAKTUM_KEY_KONTONUMMER + ".infotekst.tekst" });
 		}
 		const restStatus = soknadsdata.restStatus.personalia.kontonummer;
 		let oppstartsModus = this.state.oppstartsModus;
@@ -149,7 +149,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 					<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
 						<div>
 							<InputEnhanced
-								faktumKey="kontakt.kontonummer"
+								faktumKey={FAKTUM_KEY_KONTONUMMER}
 								id="bankinfo_konto"
 								className={"input--xxl faktumInput "}
 								disabled={kontonummer.harIkkeKonto}
@@ -171,7 +171,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 									onChange={(event: any) => this.onChangeCheckboks(event)}
 									label={
 										<div>
-											{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
+											{intl.formatHTMLMessage({ id: FAKTUM_KEY_KONTONUMMER + ".harikke" })}
 										</div>
 									}
 								/>
@@ -181,8 +181,12 @@ class Bankinformasjon extends React.Component<Props, State> {
 				);
 			}
 			default: {
+				const faktumKeyFormatted = FAKTUM_KEY_KONTONUMMER.replace(/\./g, "_");
 				return (
-					<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
+					<Sporsmal
+						faktumKey={ FAKTUM_KEY_KONTONUMMER }
+						tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}
+					>
 						<SysteminfoMedSkjema
 							skjemaErSynlig={kontonummer.brukerdefinert}
 							onVisSkjema={() => this.endreKontoBrukerdefinert(true)}
@@ -191,10 +195,10 @@ class Bankinformasjon extends React.Component<Props, State> {
 							avbrytLabel={avbrytLabel}
 							focus={false}
 							skjema={(
-								<div>
+								<div id={faktumKeyFormatted}>
 									<InputEnhanced
-										faktumKey="kontakt.kontonummer"
-										id="bankinfo_konto"
+										faktumKey={FAKTUM_KEY_KONTONUMMER}
+										id={FAKTUM_KEY_KONTONUMMER}
 										className={"input--xxl faktumInput "}
 										disabled={kontonummer.harIkkeKonto}
 										verdi={inputVerdi}
@@ -215,7 +219,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 											onChange={(event: any) => this.onChangeCheckboks(event)}
 											label={
 												<div>
-													{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
+													{intl.formatHTMLMessage({ id: FAKTUM_KEY_KONTONUMMER + ".harikke" })}
 												</div>
 											}
 										/>
@@ -227,7 +231,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 								<Detaljeliste>
 									<DetaljelisteElement
 										tittel={
-											intl.formatHTMLMessage({ id: "kontakt.system.kontonummer.label" })
+											intl.formatHTMLMessage({ id: FAKTUM_KEY_KONTONUMMER + ".kontonummer.label" })
 										}
 										verdi={kontonummer.systemverdi}
 									/>

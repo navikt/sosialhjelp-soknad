@@ -13,6 +13,8 @@ const scrollToFaktum = (
 	evt.preventDefault();
 
 	const faktumKeyUpdated: string = faktumKey.replace(/\./g, "_");
+	console.warn("faktumKey: " + faktumKey);
+	console.warn("faktumKeyUpdated: " + faktumKeyUpdated);
 
 	const element: HTMLElement = document.getElementById(faktumKeyUpdated);
 	if (element) {
@@ -51,7 +53,8 @@ class Feiloppsummering extends React.Component<Props, {}> {
 	componentDidUpdate(prevProps: Props) {
 		if (
 			this.props.visFeilliste &&
-			this.props.valideringsfeil.length > 0
+			this.props.valideringsfeil.length > 0 &&
+			this.props.visFeilliste !== prevProps.visFeilliste
 		) {
 			scrollToElement(COMP_ID);
 			this.oppsummering.focus();
