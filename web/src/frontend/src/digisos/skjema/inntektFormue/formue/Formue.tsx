@@ -13,8 +13,8 @@ import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import { REST_STATUS } from "../../../../nav-soknad/types";
-import {ValideringActionKey} from "../../../../nav-soknad/validering/types";
 import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
+import {ValideringsfeilType} from "../../../../nav-soknad/redux/valideringActionTypes";
 
 const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
@@ -72,15 +72,15 @@ export class FormueView extends React.Component<Props, State> {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const formue: Formue = soknadsdata.inntekt.formue;
         const beskrivelseAvAnnet = formue.beskrivelseAvAnnet;
-        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY);
+        const feilmeldingAnnet: ValideringsfeilType = this.validerTekstfeltVerdi(beskrivelseAvAnnet, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY);
 
         if (!feilmeldingAnnet) {
             this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORMUE, formue);
         }
     }
 
-    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
-        const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
+    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsfeilType {
+        const feilkode: ValideringsfeilType = maksLengde(verdi, MAX_CHARS);
         onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
             this.props.setValideringsfeil(feilkode, faktumKey);
         });

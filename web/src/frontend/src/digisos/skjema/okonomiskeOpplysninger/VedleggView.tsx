@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
+import {DispatchProps, SoknadAppState, Valideringsfeil} from "../../../nav-soknad/redux/reduxTypes";
 import {
     Fil,
     Opplysning, OpplysningSpc,
@@ -14,7 +14,6 @@ import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import {
     lagreOpplysningHvisGyldigAction,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerActions";
-import {Valideringsfeil} from "../../../nav-soknad/validering/types";
 import OpplastetVedlegg from "./OpplastetVedlegg";
 import {getSpcForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
 

@@ -3,7 +3,6 @@ import {
 	Begrunnelse as BegrunnelseType,
 } from "./begrunnelseTypes";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { ValideringActionKey } from "../../../nav-soknad/validering/types";
 import { maksLengde } from "../../../nav-soknad/validering/valideringer";
 import Sporsmal, { LegendTittleStyle } from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
@@ -12,6 +11,7 @@ import {
 	SoknadsdataContainerProps
 } from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {ValideringsfeilType} from "../../../nav-soknad/redux/valideringActionTypes";
 
 const MAX_CHARS_BEGRUNNELSE = 600;
 const MAX_CHARS = 500;
@@ -25,8 +25,8 @@ type Props = SoknadsdataContainerProps & InjectedIntlProps;
 class BegrunnelseSkjema extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
-		this.props.setValideringsfeil(null, FAKTUM_KEY_HVA);
-		this.props.setValideringsfeil(null, FAKTUM_KEY_HVORFOR);
+		this.props.clearValideringsfeil(FAKTUM_KEY_HVA);
+		this.props.clearValideringsfeil(FAKTUM_KEY_HVORFOR);
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BEGRUNNELSE);
 	}
 
@@ -39,8 +39,8 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 	lagreHvisGyldig() {
 		const { soknadsdata, brukerBehandlingId } = this.props;
 		const { hvaSokesOm, hvorforSoke } = soknadsdata.begrunnelse;
-		const feilmeldingHva: ValideringActionKey = this.validerTekstfeltVerdi(hvaSokesOm, FAKTUM_KEY_HVA, MAX_CHARS);
-		const feilmeldingHvorfor: ValideringActionKey = this.validerTekstfeltVerdi(hvorforSoke, FAKTUM_KEY_HVORFOR, MAX_CHARS_BEGRUNNELSE);
+		const feilmeldingHva: ValideringsfeilType = this.validerTekstfeltVerdi(hvaSokesOm, FAKTUM_KEY_HVA, MAX_CHARS);
+		const feilmeldingHvorfor: ValideringsfeilType = this.validerTekstfeltVerdi(hvorforSoke, FAKTUM_KEY_HVORFOR, MAX_CHARS_BEGRUNNELSE);
 
 		if (!feilmeldingHva && !feilmeldingHvorfor) {
 			const begrunnelse: BegrunnelseType = {hvaSokesOm, hvorforSoke};
@@ -48,8 +48,8 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 		}
 	}
 
-    validerTekstfeltVerdi(verdi: string, faktumKey: string, max: number): ValideringActionKey {
-		const feilkode: ValideringActionKey = maksLengde(verdi, max);
+    validerTekstfeltVerdi(verdi: string, faktumKey: string, max: number): ValideringsfeilType {
+		const feilkode: ValideringsfeilType = maksLengde(verdi, max);
 		onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
 			this.props.setValideringsfeil(feilkode, faktumKey);
 		});

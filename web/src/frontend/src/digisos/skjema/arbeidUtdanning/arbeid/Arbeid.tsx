@@ -1,6 +1,5 @@
 import * as React from "react";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
-import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
 import Sporsmal  from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
@@ -15,6 +14,7 @@ import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdata
 import { Arbeidsforhold } from "./arbeidTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {REST_STATUS} from "../../../../nav-soknad/types";
+import {ValideringsfeilType} from "../../../../nav-soknad/redux/valideringActionTypes";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -36,7 +36,7 @@ class ArbeidView extends React.Component<Props, State> {
 
 	componentDidMount() {
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ARBEID);
-		this.props.setValideringsfeil(null, FAKTUM_KEY_KOMMENTARER);
+		this.props.clearValideringsfeil(FAKTUM_KEY_KOMMENTARER);
 	}
 
 	componentWillUpdate() {
@@ -64,8 +64,8 @@ class ArbeidView extends React.Component<Props, State> {
 		}
 	}
 
-	validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
-		const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
+	validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsfeilType {
+		const feilkode: ValideringsfeilType = maksLengde(verdi, MAX_CHARS);
 		onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
 			this.props.setValideringsfeil(feilkode, faktumKey);
 		});

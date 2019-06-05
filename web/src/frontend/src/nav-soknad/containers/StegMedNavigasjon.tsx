@@ -12,17 +12,14 @@ import Knapperad from "../components/knapperad";
 import { SkjemaConfig, SkjemaStegType, SkjemaSteg } from "../types";
 import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
 import { setVisBekreftMangler } from "../redux/oppsummering/oppsummeringActions";
-import {
-	clearFaktaValideringsfeil,
-	setFaktaValideringsfeil
-} from "../redux/valideringActions";
-import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
 import { getIntlTextOrKey, scrollToTop } from "../utils";
 import { avbrytSoknad, sendSoknad } from "../redux/soknad/soknadActions";
 import { gaVidere, gaTilbake } from "../redux/navigasjon/navigasjonActions";
 import {loggInfo} from "../redux/navlogger/navloggerActions";
 import AppBanner from "../components/appHeader/AppHeader";
 import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
+import {clearAllValideringsfeil, visValideringsfeilPanel} from "../redux/valideringActions";
+import {ValideringState} from "../redux/valideringReducer";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -47,11 +44,8 @@ interface InjectedRouterProps {
 }
 
 interface StateProps {
+	validering: ValideringState;
 	nextButtonPending?: boolean;
-	valideringer: FaktumValideringsregler[];
-	visFeilmeldinger?: boolean;
-	valideringsfeil?: Valideringsfeil[];
-	stegValidertCounter?: number;
 	oppsummeringBekreftet?: boolean;
 	fodselsnummer: string;
 	soknadsdata: Soknadsdata;
@@ -103,45 +97,24 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 			return;
 		}
 
-		const valideringsfeil = this.props.valideringsfeil;
 
-		if (valideringsfeil.length === 0) {
-			this.props.dispatch(clearFaktaValideringsfeil());
+		const { feil } = this.props.validering;
+
+		if (feil.length === 0) {
 			this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
 		} else {
-			this.props.dispatch(setFaktaValideringsfeil(valideringsfeil));
+			this.props.dispatch(visValideringsfeilPanel());
 		}
 	}
 
-	// fjernDuplikateValideringsfeil(valideringsfeil: Valideringsfeil[]) {
-	// 	let forrigeValideringsfeil: Valideringsfeil = null;
-	// 	let duplikatIndex = null;
-	// 	valideringsfeil.forEach((feil: Valideringsfeil, index: number) => {
-	// 		if (forrigeValideringsfeil !== null &&
-	// 			feil.faktumKey === forrigeValideringsfeil.faktumKey &&
-	// 			feil.feilkode === forrigeValideringsfeil.feilkode) {
-	// 			duplikatIndex = index;
-	// 			this.fjernValideringsfeil(valideringsfeil, index);
-	// 		}
-	// 		forrigeValideringsfeil = feil;
-	// 	});
-	// 	if (duplikatIndex) {
-	// 		valideringsfeil = this.fjernValideringsfeil(valideringsfeil, duplikatIndex);
-	// 	}
-	// 	return valideringsfeil;
-	// }
-	//
-	// fjernValideringsfeil(items: Valideringsfeil[], i: number): Valideringsfeil[] {
-	// 	return items.slice(0, i-1).concat(items.slice(i, items.length));
-	// }
 
 	handleGaTilbake(aktivtSteg: number) {
-		this.props.dispatch(clearFaktaValideringsfeil());
+		this.props.dispatch(clearAllValideringsfeil());
 		this.props.dispatch(gaTilbake(aktivtSteg));
 	}
 
 	render() {
-		const { skjemaConfig, intl, children } = this.props;
+		const { skjemaConfig, intl, children, validering } = this.props;
 		const aktivtStegConfig = skjemaConfig.steg.find(
 			s => s.key === this.props.stegKey
 		);
@@ -156,6 +129,8 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 			s => s.type === SkjemaStegType.skjema
 		);
 
+		const { feil, visValideringsfeil} = validering;
+
 		return (
 			<div className="app-digisos informasjon-side">
 				<AppBanner/>
@@ -166,9 +141,8 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 					<div className="skjema-steg__feiloppsummering">
 						<Feiloppsummering
 							skjemanavn={this.props.skjemaConfig.skjemanavn}
-							valideringsfeil={this.props.valideringsfeil}
-							stegValidertCounter={this.props.stegValidertCounter}
-							visFeilliste={this.props.visFeilmeldinger}
+							valideringsfeil={feil}
+							visFeilliste={visValideringsfeil}
 						/>
 					</div>
 					<form id="soknadsskjema" onSubmit={stopEvent}>
@@ -218,12 +192,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 const mapStateToProps = (state: SoknadAppState): StateProps => {
 	return {
+		validering: state.validering,
 		nextButtonPending: state.soknad.sendSoknadPending,
 		oppsummeringBekreftet: state.oppsummering.bekreftet,
-		valideringer: state.validering.valideringsregler,
-		visFeilmeldinger: state.validering.visValideringsfeil,
-		valideringsfeil: state.validering.feil,
-		stegValidertCounter: state.validering.stegValidertCounter,
 		fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer,
 		soknadsdata: state.soknadsdata
 	};

@@ -7,7 +7,12 @@ import {
     OpplysningRad,
     OpplysningSpc,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
-import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
+import {
+    DispatchProps,
+    SoknadAppState,
+    Valideringsfeil,
+    ValideringsfeilType
+} from "../../../nav-soknad/redux/reduxTypes";
 import {connect} from "react-redux";
 import {
     getSpcForOpplysning,
@@ -20,8 +25,7 @@ import {
     updateOpplysning,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerActions";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
-import {setValideringsfeil} from "../../../nav-soknad/redux/valideringActions";
-import {ValideringActionKey, Valideringsfeil} from "../../../nav-soknad/validering/types";
+import {clearValideringsfeil, setValideringsfeil} from "../../../nav-soknad/redux/valideringActions";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
 import {getFeilForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerSaga";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
@@ -57,7 +61,7 @@ class TabellView extends React.Component<Props, {}> {
 
         if (inputFelt !== InputType.BESKRIVELSE) {
             if (erGyldigTall(input) || input === "") {
-                this.props.dispatch(setValideringsfeil(null, key));
+                this.props.dispatch(clearValideringsfeil(key));
             }
         }
         this.props.dispatch(updateOpplysning(opplysningUpdated));
@@ -68,7 +72,7 @@ class TabellView extends React.Component<Props, {}> {
         const input = opplysning.rader[radIndex][inputFelt];
 
         if (inputFelt !== "beskrivelse" && input && input !== "" && !erGyldigTall(input)) {
-            this.props.dispatch(setValideringsfeil(ValideringActionKey.ER_TALL, key));
+            this.props.dispatch(setValideringsfeil(ValideringsfeilType.ER_TALL, key));
             this.props.dispatch(updateOpplysning(opplysning))
         } else {
             this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysning, feil));
@@ -113,7 +117,7 @@ class TabellView extends React.Component<Props, {}> {
             Object.keys(rad).map((key: InputType) => {
                 if (key !== "beskrivelse" && rad[key] && rad[key] !== "" && !erGyldigTall(rad[key])) {
                     const validationKey: string = `${getSpcForOpplysning(opplysning.type).textKey}.${key}.${index}`;
-                    this.props.dispatch(setValideringsfeil(ValideringActionKey.ER_TALL, validationKey));
+                    this.props.dispatch(setValideringsfeil(ValideringsfeilType.ER_TALL, validationKey));
                 }
             });
         });
@@ -122,7 +126,7 @@ class TabellView extends React.Component<Props, {}> {
     fjernAlleFeilForOpplysning(feil: Valideringsfeil[], valideringsKey: string) {
         const feilForOpplysning = getFeilForOpplysning(feil, valideringsKey);
         feilForOpplysning.map((f: Valideringsfeil) => {
-            this.props.dispatch(setValideringsfeil(null, f.faktumKey));
+            this.props.dispatch(clearValideringsfeil(f.faktumKey));
         });
     }
 

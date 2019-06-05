@@ -13,8 +13,8 @@ import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
 import { REST_STATUS } from "../../../../nav-soknad/types";
-import {ValideringActionKey} from "../../../../nav-soknad/validering/types";
 import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
+import {ValideringsfeilType} from "../../../../nav-soknad/redux/valideringActionTypes";
 
 const MAX_CHARS = 500;
 const VERDIER = "inntekt.eierandeler";
@@ -89,15 +89,15 @@ export class VerdierView extends React.Component<Props, State> {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         const beskrivelseAvAnnet = verdier.beskrivelseAvAnnet;
-        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
+        const feilmeldingAnnet: ValideringsfeilType = this.validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
 
         if (!feilmeldingAnnet) {
             this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
         }
     }
 
-    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
-        const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
+    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsfeilType {
+        const feilkode: ValideringsfeilType = maksLengde(verdi, MAX_CHARS);
         onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
             this.props.setValideringsfeil(feilkode, faktumKey);
         });

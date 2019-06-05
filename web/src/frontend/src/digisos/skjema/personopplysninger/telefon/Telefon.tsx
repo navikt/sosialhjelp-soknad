@@ -1,7 +1,6 @@
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
@@ -13,6 +12,7 @@ import {
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { Telefonnummer } from "./telefonTypes";
+import {ValideringsfeilType} from "../../../../nav-soknad/redux/valideringActionTypes";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_SYSTEM_TELEFON = "kontakt.system.telefoninfo";
@@ -50,11 +50,11 @@ class TelefonView extends React.Component<Props, {}> {
 
 	forberedOgSendTelefonnummer(telefonnummer: Telefonnummer, brukerBehandlingId: string){
 		let verdi = telefonnummer.brukerutfyltVerdi;
-		let feilkode: ValideringActionKey = null;
+		let feilkode: ValideringsfeilType = null;
 
 		if(verdi === "" || verdi === null) {
 			onEndretValideringsfeil(null, FAKTUM_KEY_TELEFON, this.props.feil, () => {
-				this.props.setValideringsfeil(null, FAKTUM_KEY_TELEFON);
+				this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
 			});
 		} else {
 			verdi = this.fjernLandkode(verdi);
@@ -71,8 +71,8 @@ class TelefonView extends React.Component<Props, {}> {
 		}
 	}
 
-	validerTelefonnummer(verdi: string): ValideringActionKey {
-		const feilkode: ValideringActionKey = erTelefonnummer(verdi);
+	validerTelefonnummer(verdi: string): ValideringsfeilType {
+		const feilkode: ValideringsfeilType = erTelefonnummer(verdi);
 		if (verdi !== ""){
 			onEndretValideringsfeil(feilkode, FAKTUM_KEY_TELEFON, this.props.feil, () => {
 				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_TELEFON);

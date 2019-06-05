@@ -13,14 +13,13 @@ import {AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet} from "./Adresse
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 
 import SoknadsmottakerVelger from "./SoknadsmottakerVelger";
-import {ValideringActionKey, Valideringsfeil} from "../../../../nav-soknad/validering/types";
 import {SoknadsMottakerStatus} from "../tps/oppholdsadresseReducer";
 import {formaterSoknadsadresse, soknadsmottakerStatus} from "./AdresseUtils";
 import {REST_STATUS} from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import AdresseTypeahead from "./AdresseTypeahead";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
-import {DispatchProps} from "../../../../nav-soknad/redux/reduxTypes";
+import {DispatchProps, Valideringsfeil} from "../../../../nav-soknad/redux/reduxTypes";
 
 interface OwnProps {
     disableLoadingAnimation?: boolean;
@@ -46,17 +45,6 @@ class AdresseView extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-
-        this.props.registerFaktumValidering({
-            faktumKey: this.FAKTUM_KEY,
-            valideringer: [(value) => {
-                if (this.soknadsmottakerStatus() !== SoknadsMottakerStatus.GYLDIG) {
-                    return ValideringActionKey.PAKREVD;
-                }
-                return null;
-            }]
-        });
-
         const {soknadsdata} = this.props;
         const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
         if (restStatus === REST_STATUS.INITIALISERT) {
@@ -174,7 +162,7 @@ class AdresseView extends React.Component<Props, State> {
     slettEventuelleValideringsfeil() {
         const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === this.FAKTUM_KEY);
         if (feilkode) {
-            this.props.setValideringsfeil(null, this.FAKTUM_KEY);
+            this.props.clearValideringsfeil(this.FAKTUM_KEY);
         }
     }
 

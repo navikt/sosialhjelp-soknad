@@ -5,12 +5,20 @@ import { getInputFaktumTekst } from "../utils";
 import { State } from "../../digisos/redux/reducers";
 import { connect } from "react-redux";
 import {getFeil} from "../utils/enhancedComponentUtils";
+import {Valideringsfeil} from "../redux/valideringActionTypes";
 
 export type InputTypes = "text" | "number" | "email" | "tel";
 
 const DEFAULT_MAX_LENGTH = 50;
 
 export interface OwnProps {
+	verdi: string;
+	feil?: Valideringsfeil[];
+	onChange: (verdi: string) => void;
+	onBlur: () => void;
+	faktumKey: string;
+	required: boolean;
+
 	disabled?: boolean;
 	pattern?: string;
 	maxLength?: number;
@@ -21,14 +29,8 @@ export interface OwnProps {
 	inputRef?: (c: any) => HTMLInputElement;
 	id?: string;
 	className?: string;
-	verdi: string;
-	onBlur: () => void;
-	onChange: (verdi: string) => void;
 	getName?: () => string;
-	faktumKey: string;
 	faktumIndex?: number;
-	required: boolean;
-	feil?: any;
 	getFeil?: () => Feil;
 }
 
@@ -56,6 +58,7 @@ class InputEnhanced extends React.Component<Props, {}> {
 		} = this.props;
 		const tekster = getInputFaktumTekst(intl, faktumKey );
 		const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
+
 		return (
 			<Input
 				id={id}

@@ -6,7 +6,6 @@ import { SporsmalFaktumTekst } from "../../types";
 import SporsmalHjelpetekst from "./SporsmalHjelpetekst";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { getFaktumSporsmalTekst } from "../../utils";
-import { FaktumValideringFunc } from "../../validering/types";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
 
@@ -30,14 +29,8 @@ export interface OwnProps {
 	sprakNokkel?: string;
 	legendTittelStyle?: LegendTittleStyle;
 	faktumKey?: string;
-
-	/** Array med valideringsfunksjoner som skal brukes ved validering */
-	validerFunc?: FaktumValideringFunc[];
-	/** Påkrevd validering legges til i validerFunc array dersom true */
 	required?: boolean;
-	/** Ikke valider ved onBlur */
 	noValidateOnBlur?: boolean;
-
 	visLedetekst?: boolean;
 }
 

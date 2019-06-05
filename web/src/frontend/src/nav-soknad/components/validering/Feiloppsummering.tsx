@@ -1,24 +1,9 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import { Undertittel } from "nav-frontend-typografi";
-import { Valideringsfeil } from "../../validering/types";
 import { scrollToElement } from "../../utils";
+import {Valideringsfeil} from "../../redux/valideringActionTypes";
 
-// const getElementFromFaktumKey = (
-// 	faktumKey: string,
-// 	property?: string,
-// 	faktumId?: number
-// ): HTMLElement => {
-// 	const id = getFaktumElementName(faktumKey, property, faktumId);
-// 	if (document.getElementById(id)) {
-// 		return document.getElementById(id);
-// 	}
-// 	const namedElements = document.getElementsByName(id);
-// 	if (namedElements && namedElements.length > 0) {
-// 		return namedElements[0];
-// 	}
-// 	return null;
-// };
 
 const scrollToFaktum = (
 	evt: React.MouseEvent<any>,
@@ -35,7 +20,7 @@ const scrollToFaktum = (
 
 const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 	faktumKey,
-	feilkode
+	valideringsfeilType
 }) => {
 	return (
 		<li className="feiloppsummering__feil">
@@ -43,7 +28,7 @@ const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 				href={`#`}
 				onClick={evt => scrollToFaktum(evt, faktumKey)}
 			>
-				<FormattedMessage id={feilkode} />
+				<FormattedMessage id={valideringsfeilType}/>
 			</a>
 		</li>
 	);
@@ -52,7 +37,6 @@ const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 interface Props {
 	skjemanavn: string;
 	visFeilliste?: boolean;
-	stegValidertCounter?: number;
 	valideringsfeil?: Valideringsfeil[];
 }
 
@@ -64,8 +48,7 @@ class Feiloppsummering extends React.Component<Props, {}> {
 	componentDidUpdate(prevProps: Props) {
 		if (
 			this.props.visFeilliste &&
-			this.props.valideringsfeil.length > 0 &&
-			this.props.stegValidertCounter > prevProps.stegValidertCounter
+			this.props.valideringsfeil.length > 0
 		) {
 			scrollToElement(COMP_ID);
 			this.oppsummering.focus();

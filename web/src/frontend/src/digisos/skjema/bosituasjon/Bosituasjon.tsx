@@ -5,7 +5,6 @@ import { getFaktumSporsmalTekst } from "../../../nav-soknad/utils";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import { Bosituasjon } from "./bosituasjonTypes";
-import { ValideringActionKey } from "../../../nav-soknad/validering/types";
 import { SoknadsSti } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import { erTall } from "../../../nav-soknad/validering/valideringer";
@@ -13,6 +12,7 @@ import {
 	connectSoknadsdataContainer, onEndretValideringsfeil,
 	SoknadsdataContainerProps
 } from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+import {ValideringsfeilType} from "../../../nav-soknad/redux/valideringActionTypes";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -92,7 +92,7 @@ class BosituasjonView extends React.Component<Props, {}> {
 		if (!antallPersoner || antallPersoner.length === 0) {
 			return null;
 		}
-		const feilkode: ValideringActionKey = erTall(antallPersoner, true);
+		const feilkode: ValideringsfeilType = erTall(antallPersoner, true);
 		onEndretValideringsfeil(feilkode, FAKTUM_KEY_ANTALL, this.props.feil, () => {
 			this.props.setValideringsfeil(feilkode, FAKTUM_KEY_ANTALL);
 		});
@@ -162,6 +162,7 @@ class BosituasjonView extends React.Component<Props, {}> {
 						getName={() => FAKTUM_KEY_ANTALL}
 						faktumKey={FAKTUM_KEY_ANTALL}
 						required={false}
+						feil={this.props.feil}
 					/>
 				</Sporsmal>
 			</div>
