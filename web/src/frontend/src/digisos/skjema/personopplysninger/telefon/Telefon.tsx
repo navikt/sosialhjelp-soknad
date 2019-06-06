@@ -12,6 +12,7 @@ import {
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { Telefonnummer } from "./telefonTypes";
 import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
+import {replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_SYSTEM_TELEFON = "kontakt.system.telefoninfo";
@@ -106,6 +107,7 @@ class TelefonView extends React.Component<Props, {}> {
 		const avbrytLabel = this.intl("systeminfo.avbrytendringknapp.label");
 		const infotekst = this.intl(faktumKey + ".infotekst.tekst");
 		const sporsmal = this.intl(faktumKey + ".sporsmal");
+		const faktumKeyTelefonId = replaceDotWithUnderscore(FAKTUM_KEY_TELEFON);
 
 		switch (systemverdi) {
 			case null: {
@@ -114,6 +116,7 @@ class TelefonView extends React.Component<Props, {}> {
 						tekster={{sporsmal, infotekst: { tittel: null, tekst: infotekst }}}
 					>
 							<InputEnhanced
+								id={faktumKeyTelefonId}
 								type="tel"
 								maxLength={14}
 								bredde={"S"}
@@ -142,6 +145,7 @@ class TelefonView extends React.Component<Props, {}> {
 							avbrytLabel={avbrytLabel}
 							skjema={(
 								<InputEnhanced
+									id={faktumKeyTelefonId}
 									type="tel"
 									maxLength={14}
 									bredde={"S"}

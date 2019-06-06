@@ -12,6 +12,7 @@ import {
 } from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {ValideringsFeilKode} from "../../../nav-soknad/redux/valideringActionTypes";
+import {replaceDotWithUnderscore} from "../../../nav-soknad/utils";
 
 const MAX_CHARS_BEGRUNNELSE = 600;
 const MAX_CHARS = 500;
@@ -58,11 +59,9 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
     validerTekstfeltVerdi(verdi: string, faktumKey: string, max: number): ValideringsFeilKode | undefined {
 		const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, max);
 		onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
-			if (feilkode){
-				this.props.setValideringsfeil(feilkode, faktumKey);
-			} else {
+			( feilkode ) ?
+				this.props.setValideringsfeil(feilkode, faktumKey) :
 				this.props.clearValideringsfeil(faktumKey);
-			}
 		});
 		return feilkode;
 	}
@@ -70,8 +69,8 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 	render() {
 		const { intl, soknadsdata } = this.props;
 		const begrunnelse = soknadsdata.begrunnelse;
-		const faktumKeyHvaId = FAKTUM_KEY_HVA.replace(/\./g, "_");
-		const faktumKeyHvorforId = FAKTUM_KEY_HVORFOR.replace(/\./g, "_");
+		const faktumKeyHvaId = replaceDotWithUnderscore(FAKTUM_KEY_HVA);
+		const faktumKeyHvorforId = replaceDotWithUnderscore(FAKTUM_KEY_HVORFOR)
 		return (
 			<div>
 				<Sporsmal

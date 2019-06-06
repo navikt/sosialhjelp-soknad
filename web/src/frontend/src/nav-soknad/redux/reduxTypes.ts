@@ -11,10 +11,6 @@ import { InitState } from "./init/initTypes";
 import { FeatureTogglesApiType } from "./featuretoggles/featureTogglesTypes";
 import { VedleggState } from "./vedlegg/vedleggTypes";
 import { EttersendelseState } from "./ettersendelseGammel/ettersendelseTypes";
-import { OppholdsAdresseState } from "../../digisos/skjema/personopplysninger/tps/oppholdsadresseReducer";
-import {
-	AdresseAutocompleteState
-} from "../components/adresseAutocomplete/adresseAutocompleteReducer";
 import {MockState} from "../../digisos/mock/mockReducer";
 import { Soknadsdata } from "./soknadsdata/soknadsdataReducer";
 import {OpplysningerModel} from "./okonomiskeOpplysninger/opplysningerTypes";
@@ -43,8 +39,6 @@ export interface SoknadAppState {
 	vedlegg: VedleggState;
 	ledetekster: LedetekstState;
 	ettersendelse: EttersendelseState;
-	oppholdsadresse: OppholdsAdresseState;
-	adresseAutocomplete: AdresseAutocompleteState;
 	soknadsdata: Soknadsdata;
 	init: InitState;
 	mockData: MockState;

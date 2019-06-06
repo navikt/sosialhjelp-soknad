@@ -6,7 +6,6 @@ import {
 	GaVidere,
 	NavigasjonActionTypes,
 	Sider,
-	TilBostedEllerStartSoknad,
 	TilDittNav,
 	TilKvittering,
 	TilSteg
@@ -15,7 +14,6 @@ import { tilStart, tilSteg } from "./navigasjonActions";
 import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import { SoknadAppState } from "../reduxTypes";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
-import { startSoknad } from "../soknad/soknadActions";
 
 const getHistoryLength = () => window.history.length;
 const navigateTo = (path: string) => (window.location.href = path);
@@ -33,26 +31,12 @@ function* tilServerfeilSaga(): SagaIterator {
 	yield put(settAvbrytSoknadSjekk(true));
 }
 
-function* tilBostedSaga(): SagaIterator {
-	yield put(push(Sider.BOSTED));
-}
-
 function* tilStartSaga(): SagaIterator {
 	yield put(push(Sider.START));
 }
 
 function* tilMockSaga(): SagaIterator {
 	yield put(push(Sider.MOCK));
-}
-
-function* tilBostedEllerStartSoknadSaga(
-	action: TilBostedEllerStartSoknad
-): SagaIterator {
-	if (action.valgtKommune) {
-		yield put(startSoknad(action.valgtKommune.id));
-	} else {
-		yield put(push(Sider.BOSTED));
-	}
 }
 
 function* tilbakeEllerForsidenSaga(): SagaIterator {
@@ -106,14 +90,9 @@ function* navigasjonSaga(): SagaIterator {
 		tilbakeEllerForsidenSaga
 	);
 	yield takeEvery(NavigasjonActionTypes.TIL_START, tilStartSaga);
-	yield takeEvery(NavigasjonActionTypes.TIL_BOSTED, tilBostedSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_DITT_NAV, tilDittNav);
 	yield takeEvery(NavigasjonActionTypes.TIL_MOCK, tilMockSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilKvittering);
-	yield takeEvery(
-		NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD,
-		tilBostedEllerStartSoknadSaga
-	);
 }
 
 export {
@@ -125,9 +104,7 @@ export {
 	tilFinnDittNavKontorSaga,
 	tilKvittering,
 	tilServerfeilSaga,
-	tilStegSaga,
-	tilBostedEllerStartSoknadSaga,
-	tilBostedSaga
+	tilStegSaga
 };
 
 export default navigasjonSaga;

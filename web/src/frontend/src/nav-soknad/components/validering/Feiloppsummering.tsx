@@ -11,11 +11,7 @@ const scrollToFaktum = (
 ) => {
 	evt.stopPropagation();
 	evt.preventDefault();
-
 	const faktumKeyUpdated: string = faktumKey.replace(/\./g, "_");
-	console.warn("faktumKey: " + faktumKey);
-	console.warn("faktumKeyUpdated: " + faktumKeyUpdated);
-
 	const element: HTMLElement = document.getElementById(faktumKeyUpdated);
 	if (element) {
 		scrollToElement(element.id);

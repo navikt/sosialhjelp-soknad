@@ -56,3 +56,7 @@ function getIkkeTomIntlText(intl: InjectedIntl, key?: string) {
 function intlTextIkkeTom(intl: InjectedIntl, key: string) {
 	return intl.messages[key] !== undefined && intl.messages[key] !== "";
 }
+
+export const replaceDotWithUnderscore = (verdi: string): string => {
+	return verdi.replace(/\./g, "_");
+};

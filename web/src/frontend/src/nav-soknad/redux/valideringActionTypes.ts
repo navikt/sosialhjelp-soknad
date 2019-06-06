@@ -44,7 +44,8 @@ export enum ValideringsFeilKode {
 	ER_TELEFONNUMMER = "validering.erTelefonnummer",
 	ER_KONTONUMMER = "validering.erKontonummer",
 	ER_FDATO = "validering.erFdato",
-	ER_FDATO_ETTER_IDAG = "validering.erFdatoEtterIdag"
+	ER_FDATO_ETTER_IDAG = "validering.erFdatoEtterIdag",
+	SOKNADSMOTTAKER_PAKREVD = "soknadsmottaker.feilmelding"
 }
 
 export interface Valideringsfeil {

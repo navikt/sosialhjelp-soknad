@@ -1,25 +1,26 @@
 import * as React from "react";
-import { RouterProps, withRouter } from "react-router";
-import { InjectedIntlProps, injectIntl } from "react-intl";
-import { Location } from "history";
-import { connect } from "react-redux";
+import {RouterProps, withRouter} from "react-router";
+import {InjectedIntlProps, injectIntl} from "react-intl";
+import {Location} from "history";
+import {connect} from "react-redux";
 import DocumentTitle from "react-document-title";
-import { Innholdstittel } from "nav-frontend-typografi";
+import {Innholdstittel} from "nav-frontend-typografi";
 import ApplikasjonsfeilDialog from "../containers/ApplikasjonsfeilDialog";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
-import { SkjemaConfig, SkjemaStegType, SkjemaSteg } from "../types";
-import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
-import { setVisBekreftMangler } from "../redux/oppsummering/oppsummeringActions";
-import { getIntlTextOrKey, scrollToTop } from "../utils";
-import { avbrytSoknad, sendSoknad } from "../redux/soknad/soknadActions";
-import { gaVidere, gaTilbake } from "../redux/navigasjon/navigasjonActions";
+import {SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../types";
+import {DispatchProps, SoknadAppState, ValideringsFeilKode} from "../redux/reduxTypes";
+import {setVisBekreftMangler} from "../redux/oppsummering/oppsummeringActions";
+import {getIntlTextOrKey, scrollToTop} from "../utils";
+import {avbrytSoknad, sendSoknad} from "../redux/soknad/soknadActions";
+import {gaTilbake, gaVidere} from "../redux/navigasjon/navigasjonActions";
 import {loggInfo} from "../redux/navlogger/navloggerActions";
 import AppBanner from "../components/appHeader/AppHeader";
 import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
-import {clearAllValideringsfeil, visValideringsfeilPanel} from "../redux/valideringActions";
+import {clearAllValideringsfeil, setValideringsfeil, visValideringsfeilPanel} from "../redux/valideringActions";
 import {ValideringState} from "../redux/valideringReducer";
+import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -72,6 +73,22 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		if (this.stegTittel) {
 			this.stegTittel.focus();
 		}
+		this.sjekkOmSoknadsmottakerManglerPaaOppsummering();
+	}
+
+	sjekkOmSoknadsmottakerManglerPaaOppsummering() {
+		const { skjemaConfig} = this.props;
+		const aktivtStegConfig = skjemaConfig.steg.find(
+			s => s.key === this.props.stegKey
+		);
+		if(aktivtStegConfig.stegnummer === 9 ) {
+			const soknadsMottaker = this.finnSoknadsMottaker();
+			if(typeof soknadsMottaker === 'undefined') {
+				this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
+				this.props.dispatch(visValideringsfeilPanel());
+				this.props.dispatch(gaVidere(0));
+			}
+		}
 	}
 
 	loggAdresseTypeTilGrafana(){
@@ -88,7 +105,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
 		if (aktivtSteg.type === SkjemaStegType.oppsummering) {
 			if (this.props.oppsummeringBekreftet) {
-				// this.props.dispatch
 				this.loggAdresseTypeTilGrafana();
 				this.sendSoknad(brukerBehandlingId);
 			} else {
@@ -99,14 +115,24 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 		const { feil } = this.props.validering;
 
-		if (feil.length === 0) {
-			this.props.dispatch(clearAllValideringsfeil());
-			this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
-		} else {
+		const valgtNavEnhet = this.finnSoknadsMottaker();
+		if(aktivtSteg.stegnummer === 1 && !valgtNavEnhet) {
+			this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
 			this.props.dispatch(visValideringsfeilPanel());
+		} else {
+			if (feil.length === 0) {
+				this.props.dispatch(clearAllValideringsfeil());
+				this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
+			} else {
+				this.props.dispatch(visValideringsfeilPanel());
+			}
 		}
 	}
 
+	finnSoknadsMottaker() {
+		const valgtNavEnhet: NavEnhet | undefined = this.props.soknadsdata.personalia.navEnheter.find((navenhet: NavEnhet) => navenhet.valgt);
+		return valgtNavEnhet;
+	}
 
 	handleGaTilbake(aktivtSteg: number) {
 		this.props.dispatch(clearAllValideringsfeil());
@@ -128,6 +154,10 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		const synligeSteg = skjemaConfig.steg.filter(
 			s => s.type === SkjemaStegType.skjema
 		);
+
+
+
+
 
 		const { feil, visValideringsfeil} = validering;
 

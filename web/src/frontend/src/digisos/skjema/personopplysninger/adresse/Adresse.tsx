@@ -9,11 +9,10 @@ import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import AdresseDetaljer from "./AdresseDetaljer";
-import {AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet} from "./AdresseTypes";
+import {AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet, SoknadsMottakerStatus} from "./AdresseTypes";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 
 import SoknadsmottakerVelger from "./SoknadsmottakerVelger";
-import {SoknadsMottakerStatus} from "../tps/oppholdsadresseReducer";
 import {formaterSoknadsadresse, soknadsmottakerStatus} from "./AdresseUtils";
 import {REST_STATUS} from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
@@ -210,6 +209,9 @@ class AdresseView extends React.Component<Props, State> {
                 </div>
             );
         }
+        const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === this.FAKTUM_KEY);
+        const feilmelding = this.props.intl.formatMessage({id: "soknadsmottaker.feilmelding"});
+
         return (
             <div className="sosialhjelp-oppholdsadresse skjema-sporsmal" id="soknadsmottaker">
                 <Sporsmal
@@ -217,6 +219,7 @@ class AdresseView extends React.Component<Props, State> {
                     faktumKey={this.FAKTUM_KEY}
                     noValidateOnBlur={true}
                     sprakNokkel="soknadsmottaker"
+                    feil={feilkode ? {feilmelding} : null}
                 >
                     {folkeregistrertAdresse && (
                         <span>

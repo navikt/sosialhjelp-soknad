@@ -6,12 +6,12 @@ import { connect } from "react-redux";
 import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
 import { State } from "../redux/reducers";
 import { Knapp } from "nav-frontend-knapper";
-import { Faktum } from "../../nav-soknad/types/navSoknadTypes";
 import { finnValgtEnhetsNavn } from "../data/kommuner";
+import {Soknadsdata} from "../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
 interface StateProps {
-	fakta: Faktum[];
 	modalSynlig: boolean;
+	soknadsdata: Soknadsdata;
 }
 
 type Props = StateProps & InjectedIntlProps & DispatchProps;
@@ -19,7 +19,7 @@ type Props = StateProps & InjectedIntlProps & DispatchProps;
 class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 
 	getText() {
-		let valgtEnhetsNavn = finnValgtEnhetsNavn(this.props.fakta);
+		let valgtEnhetsNavn = finnValgtEnhetsNavn(this.props.soknadsdata);
 		if (!valgtEnhetsNavn) {
 			valgtEnhetsNavn = "$1";
 		}
@@ -60,7 +60,7 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 
 export default connect((state: State, props: any): StateProps => {
 	return {
-		fakta: state.fakta.data,
-		modalSynlig: state.init.visSamtykkeInfo
+		modalSynlig: state.init.visSamtykkeInfo,
+		soknadsdata: state.soknadsdata
 	};
 })(injectIntl(BehandlingAvPersonopplysningerModal));

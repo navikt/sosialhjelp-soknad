@@ -16,6 +16,7 @@ import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
+import {replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 
 interface OwnProps {
 	disableLoadingAnimation?: boolean;
@@ -125,6 +126,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 		const endreLabel: string = intl.formatMessage({id: "kontakt.system.kontonummer.endreknapp.label"});
 		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
 		const inputVerdi: string = kontonummer && kontonummer.brukerutfyltVerdi ? kontonummer.brukerutfyltVerdi : "";
+		const faktumKeyKontonummerId: string = replaceDotWithUnderscore(FAKTUM_KEY_KONTONUMMER);
 		let infotekst: string = intl.formatMessage({ id: "kontakt.system.personalia.infotekst.tekst" });
 
 		if (kontonummer.brukerdefinert) {
@@ -150,7 +152,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 						<div>
 							<InputEnhanced
 								faktumKey={FAKTUM_KEY_KONTONUMMER}
-								id="bankinfo_konto"
+								id={faktumKeyKontonummerId}
 								className={"input--xxl faktumInput "}
 								disabled={kontonummer.harIkkeKonto}
 								verdi={inputVerdi}
@@ -198,7 +200,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 								<div id={faktumKeyFormatted}>
 									<InputEnhanced
 										faktumKey={FAKTUM_KEY_KONTONUMMER}
-										id={FAKTUM_KEY_KONTONUMMER}
+										id={faktumKeyKontonummerId}
 										className={"input--xxl faktumInput "}
 										disabled={kontonummer.harIkkeKonto}
 										verdi={inputVerdi}
@@ -231,7 +233,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 								<Detaljeliste>
 									<DetaljelisteElement
 										tittel={
-											intl.formatHTMLMessage({ id: FAKTUM_KEY_KONTONUMMER + ".kontonummer.label" })
+											intl.formatHTMLMessage({ id: FAKTUM_KEY_KONTONUMMER + ".label" })
 										}
 										verdi={kontonummer.systemverdi}
 									/>
