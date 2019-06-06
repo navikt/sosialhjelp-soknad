@@ -20,6 +20,8 @@ import {REST_STATUS} from "../../../../nav-soknad/types";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
+const FAKTUM_KEY_NAV_YTELSER = "navytelser";
+
 class NavYtelserView extends React.Component<Props, {}> {
 
     componentDidMount() {
@@ -57,8 +59,13 @@ class NavYtelserView extends React.Component<Props, {}> {
         const harUtbetalinger: boolean = systeminntekter && systeminntekter.length > 0;
 
         return (
-            <Sporsmal faktumKey="navytelser.tittel" style="system"
-                            legendTittelStyle={LegendTittleStyle.FET_NORMAL} visLedetekst={true}>
+            <Sporsmal
+                faktumKey= { FAKTUM_KEY_NAV_YTELSER + ".tittel" }
+                sprakNokkel={FAKTUM_KEY_NAV_YTELSER}
+                style="system"
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+                visLedetekst={true}
+            >
                 {!visAnimerteStreker &&
                 <SysteminfoMedSkjema>
                     {harUtbetalinger &&
