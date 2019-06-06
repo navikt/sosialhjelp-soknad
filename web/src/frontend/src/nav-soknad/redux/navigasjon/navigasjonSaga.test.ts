@@ -1,6 +1,5 @@
 import "raf/polyfill";
 import {
-	gaVidereSaga,
 	getHistoryLength,
 	navigateTo,
 	tilbakeEllerForsidenSaga,
@@ -8,20 +7,15 @@ import {
 	tilServerfeilSaga,
 	tilStegSaga
 } from "./navigasjonSaga";
-import { call, put, select, take } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import {
-	GaVidere,
 	Sider,
 	TilSteg
 } from "./navigasjonTypes";
 import { goBack, push } from "react-router-redux";
 import { SagaIterator } from "redux-saga";
-import { gaVidere, tilSteg } from "./navigasjonActions";
-import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
-import { Faktum } from "../../types/navSoknadTypes";
-import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
-import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
-import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
+import { tilSteg } from "./navigasjonActions";
+import { selectBrukerBehandlingId } from "../selectors";
 import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 
 const ferdig = (saga: SagaIterator) => {
