@@ -1,10 +1,7 @@
-import { InjectedIntl } from "react-intl";
-import {
-	SoknadActionTypeKeys,
-	SoknadActionTypes,
-	AVBRYT_DESTINASJON
-} from "./soknadActionTypes";
-import { Soknad, Kvittering, Infofaktum } from "../../types";
+import {InjectedIntl} from "react-intl";
+import {AVBRYT_DESTINASJON, SoknadActionTypeKeys, SoknadActionTypes} from "./soknadActionTypes";
+import {Infofaktum, Kvittering, Soknad} from "../../types";
+import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
 export function startSoknad(kommune: string, bydel?: string) {
 	return {
@@ -162,4 +159,18 @@ export function settAvbrytSoknadSjekk(aktiv: boolean): SoknadActionTypes {
 		type: SoknadActionTypeKeys.SETT_AVBRYT_SOKNAD_SJEKK,
 		aktiv
 	};
+}
+
+export function finnOgOppdaterSoknadsmottakerStatus(brukerbehandlingId: string): SoknadActionTypes {
+	return {
+		type: SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS,
+		brukerbehandlingId
+	}
+}
+
+export function oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker: NavEnhet): SoknadActionTypes {
+	return {
+		type: SoknadActionTypeKeys.OPPDATER_SOKNADSMOTTAKER_STATUS,
+		valgtSoknadsmottaker
+	}
 }

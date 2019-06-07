@@ -73,22 +73,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		if (this.stegTittel) {
 			this.stegTittel.focus();
 		}
-		this.sjekkOmSoknadsmottakerManglerPaaOppsummering();
-	}
-
-	sjekkOmSoknadsmottakerManglerPaaOppsummering() {
-		const { skjemaConfig} = this.props;
-		const aktivtStegConfig = skjemaConfig.steg.find(
-			s => s.key === this.props.stegKey
-		);
-		if(aktivtStegConfig.stegnummer === 9 ) {
-			const soknadsMottaker = this.finnSoknadsMottaker();
-			if(typeof soknadsMottaker === 'undefined') {
-				this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
-				this.props.dispatch(visValideringsfeilPanel());
-				this.props.dispatch(gaVidere(0));
-			}
-		}
 	}
 
 	loggAdresseTypeTilGrafana(){

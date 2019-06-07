@@ -6,7 +6,7 @@ import { Infofaktum, Kvittering, REST_STATUS, Soknad } from "../types";
 import { ApplikasjonsfeilState } from "./applikasjonsfeil/applikasjonsfeilReducer";
 import { TilgangState } from "./tilgang/tilgangTypes";
 import { LedetekstState } from "./ledetekster/ledeteksterTypes";
-import { AVBRYT_DESTINASJON } from "./soknad/soknadActionTypes";
+import {AVBRYT_DESTINASJON} from "./soknad/soknadActionTypes";
 import { InitState } from "./init/initTypes";
 import { FeatureTogglesApiType } from "./featuretoggles/featureTogglesTypes";
 import { VedleggState } from "./vedlegg/vedleggTypes";
@@ -15,6 +15,7 @@ import {MockState} from "../../digisos/mock/mockReducer";
 import { Soknadsdata } from "./soknadsdata/soknadsdataReducer";
 import {OpplysningerModel} from "./okonomiskeOpplysninger/opplysningerTypes";
 import {FilState} from "./fil/filTypes";
+import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -61,4 +62,5 @@ export interface SoknadState {
 	};
 	behandlingsId: string;
 	gjenopptattSoknad: boolean;
+	valgtSoknadsmottaker: NavEnhet | undefined;
 }

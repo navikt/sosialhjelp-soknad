@@ -1,7 +1,7 @@
-import { REST_STATUS } from "../../types";
-import { Reducer, SoknadState } from "../reduxTypes";
+import {REST_STATUS} from "../../types";
+import {Reducer, SoknadState} from "../reduxTypes";
 
-import { SoknadActionTypes, SoknadActionTypeKeys } from "./soknadActionTypes";
+import {SoknadActionTypeKeys, SoknadActionTypes} from "./soknadActionTypes";
 
 export const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
@@ -18,7 +18,8 @@ export const defaultState: SoknadState = {
 		fakta: []
 	},
 	behandlingsId: "",
-	gjenopptattSoknad: true
+	gjenopptattSoknad: true,
+	valgtSoknadsmottaker: undefined,
 };
 
 const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultState, action) => {
@@ -125,6 +126,17 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultS
 			return {
 				...state,
 				avbrytSoknadSjekkAktiv: action.aktiv
+			};
+		case SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS: {
+			return {
+				...state
+			}
+		}
+		case SoknadActionTypeKeys.OPPDATER_SOKNADSMOTTAKER_STATUS:
+			const { valgtSoknadsmottaker } = action;
+			return {
+				...state,
+				valgtSoknadsmottaker
 			};
 		default:
 			return state;

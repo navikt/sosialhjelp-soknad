@@ -3,10 +3,11 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import {
 	fetchDelete,
 	fetchKvittering,
-	fetchPost,
+	fetchPost, fetchToJson,
 	lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
 } from "../../utils/rest-utils";
 import {
+	FinnOgOppdaterSoknadsmottakerStatus,
 	HentKvitteringAction,
 	SendSoknadAction,
 	SlettSoknadAction,
@@ -22,7 +23,7 @@ import {
 import { Soknad } from "../../types";
 
 import {
-	hentKvitteringOk,
+	hentKvitteringOk, oppdaterSoknadsmottakerStatus,
 	opprettSoknadOk,
 	resetSoknad,
 	sendSoknadOk,
@@ -30,6 +31,8 @@ import {
 	startSoknadOk
 } from "./soknadActions";
 import {loggFeil} from "../navlogger/navloggerActions";
+import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
+import {push} from "react-router-redux";
 
 export const SKJEMAID = "NAV 35-18.01";
 
@@ -57,29 +60,6 @@ function* opprettSoknadSaga(): SagaIterator {
 	}
 }
 
-// function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
-// 	try {
-// 		// const soknad: Soknad = yield call(
-// 		// 	fetchToJson,
-// 		// 	`soknader/${action.brukerBehandlingId}`,
-// 		// 	null
-// 		// );
-// 		// yield call(oppdaterSoknadSaga, soknad);
-// 		// yield put(hentSoknadOk(soknad));
-// 		// return soknad;
-// 	} catch (reason) {
-// 		yield put(loggFeil("hent soknad saga feilet: " + reason));
-// 		yield put(navigerTilServerfeil());
-// 	}
-// }
-
-// function* opprettFaktumUtenParentHvisDetMangler(fakta: any, key: string): any {
-// 	const faktum = finnFaktum(key, fakta);
-// 	if (faktum == null) {
-// 		yield* opprettFaktumSaga(opprettFaktum({key} as OpprettFaktumType) as OpprettFaktum) as any;
-// 	}
-// }
-
 function* oppdaterSoknadSaga(soknad: Soknad): SagaIterator {
 	// const fakta = updateFaktaMedLagretVerdi(soknad.fakta);
 	// yield put(setFakta(fakta));
@@ -92,28 +72,6 @@ function* oppdaterSoknadSaga(soknad: Soknad): SagaIterator {
 
 function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
 	try {
-		const behandlingsId = yield call(opprettSoknadSaga);
-		// const hentAction = { brukerBehandlingId: id } as HentSoknadAction;
-		// const soknad = yield call(hentSoknadSaga, hentAction);
-		// yield put(
-		// 	lagreFaktum(
-		// 		oppdaterFaktumMedVerdier(
-		// 			finnFaktum("personalia.kommune", soknad.fakta),
-		// 			action.kommune
-		// 		)
-		// 	)
-		// );
-		// if (action.bydel) {
-		// 	yield put(
-		// 		lagreFaktum(
-		// 			oppdaterFaktumMedVerdier(
-		// 				finnFaktum("personalia.bydel", soknad.fakta),
-		// 				action.bydel
-		// 			)
-		// 		)
-		// 	);
-		// }
-		console.warn("TODO: Lagre brukerbehandlingsId på store: " + behandlingsId);
 		yield put(startSoknadOk());
 		yield put(tilSteg(1));
 	} catch (reason) {
@@ -166,9 +124,28 @@ function* hentKvitteringSaga(action: HentKvitteringAction): SagaIterator {
 	}
 }
 
+function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsmottakerStatus): SagaIterator {
+	const { brukerbehandlingId} = action;
+	const sti = "personalia/navEnheter";
+
+	try {
+		const navenheter: NavEnhet[] = yield call(fetchToJson, `soknader/${brukerbehandlingId}/${sti}`);
+		const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find((n: NavEnhet) => n.valgt);
+		if (!valgtSoknadsmottaker){
+			console.warn("Soknadsmottaker er ikke satt. Sender bruker tilbake til steg 1.");
+			yield put(push(`/skjema/${brukerbehandlingId}/1`));
+		} else {
+			yield put(oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker));
+		}
+	} catch(e) {
+		console.warn(e);
+		put(push(`/skjema/${brukerbehandlingId}/2`));
+
+	}
+}
+
 export {
 	opprettSoknadSaga,
-	// hentSoknadSaga,
 	oppdaterSoknadSaga,
 	startSoknadSaga,
 	sendSoknadSaga,
@@ -179,10 +156,10 @@ export {
 function* soknadSaga(): SagaIterator {
 	yield takeEvery(SoknadActionTypeKeys.START_SOKNAD, startSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.OPPRETT_SOKNAD, opprettSoknadSaga);
-	// yield takeEvery(SoknadActionTypeKeys.HENT_SOKNAD, hentSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.SLETT_SOKNAD, slettSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.SEND_SOKNAD, sendSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.HENT_KVITTERING, hentKvitteringSaga);
+	yield takeEvery(SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS, finnOgOppdaterSoknadsmottakerStatusSaga);
 }
 
 export default soknadSaga;
