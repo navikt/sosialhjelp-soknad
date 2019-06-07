@@ -1,6 +1,6 @@
 import {InjectedIntl} from "react-intl";
 import {AVBRYT_DESTINASJON, SoknadActionTypeKeys, SoknadActionTypes} from "./soknadActionTypes";
-import {Infofaktum, Kvittering, Soknad} from "../../types";
+import {Infofaktum, Kvittering} from "../../types";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
 export function startSoknad(kommune: string, bydel?: string) {
@@ -47,10 +47,11 @@ export function hentSoknad(brukerBehandlingId: string): SoknadActionTypes {
 	};
 }
 
-export function hentSoknadOk(data: Soknad): SoknadActionTypes {
+export function hentSoknadOk(xsrfCookieReceived: boolean, brukerBehandlingId: string): SoknadActionTypes {
 	return {
 		type: SoknadActionTypeKeys.HENT_SOKNAD_OK,
-		data
+		xsrfCookieReceived,
+		brukerBehandlingId
 	};
 }
 

@@ -1,4 +1,4 @@
-import { Soknad, Kvittering, Infofaktum } from "../../types/navSoknadTypes";
+import { Kvittering, Infofaktum } from "../../types/navSoknadTypes";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
 export enum SoknadActionTypeKeys {
@@ -105,7 +105,8 @@ export interface HentSoknadAction {
 
 export interface HentSoknaOkAction {
 	type: SoknadActionTypeKeys.HENT_SOKNAD_OK;
-	data: Soknad;
+	xsrfCookieReceived: boolean;
+	brukerBehandlingId: string;
 }
 
 export interface HentSoknadFeiletAction {

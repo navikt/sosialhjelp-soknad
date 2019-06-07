@@ -79,12 +79,12 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultS
 				restStatus: REST_STATUS.PENDING
 			};
 		case SoknadActionTypeKeys.HENT_SOKNAD_OK:
-			const { brukerBehandlingId, fakta } = action.data;
+			const { xsrfCookieReceived, brukerBehandlingId } = action;
 			return {
 				...state,
-				data: { brukerBehandlingId, fakta},
-				restStatus: REST_STATUS.OK,
-				behandlingsId: action.data.brukerBehandlingId
+				data: { brukerBehandlingId, fakta: []},
+				restStatus: xsrfCookieReceived ? REST_STATUS.OK : REST_STATUS.FEILET,
+				behandlingsId: action.brukerBehandlingId
 			};
 		case SoknadActionTypeKeys.SEND_SOKNAD:
 			return {

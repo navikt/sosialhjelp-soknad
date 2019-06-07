@@ -8,7 +8,7 @@ import {
 } from "../../utils/rest-utils";
 import {
 	FinnOgOppdaterSoknadsmottakerStatus,
-	HentKvitteringAction,
+	HentKvitteringAction, HentSoknadAction,
 	SendSoknadAction,
 	SlettSoknadAction,
 	SoknadActionTypeKeys, StartSoknadAction
@@ -20,10 +20,9 @@ import {
 	tilStart,
 	tilSteg
 } from "../navigasjon/navigasjonActions";
-import { Soknad } from "../../types";
 
 import {
-	hentKvitteringOk, oppdaterSoknadsmottakerStatus,
+	hentKvitteringOk, hentSoknadOk, oppdaterSoknadsmottakerStatus,
 	opprettSoknadOk,
 	resetSoknad,
 	sendSoknadOk,
@@ -56,14 +55,19 @@ function* opprettSoknadSaga(): SagaIterator {
 	}
 }
 
-function* oppdaterSoknadSaga(soknad: Soknad): SagaIterator {
-	// const fakta = updateFaktaMedLagretVerdi(soknad.fakta);
-	// yield put(setFakta(fakta));
-	// yield put(hentSoknadOk(soknad));
-
-	// Kompatibilitetskode (for pre-adressesøksdata, 24.10.2018):
-	// yield* opprettFaktumUtenParentHvisDetMangler(fakta, "kontakt.system.oppholdsadresse.valg");
-	// yield* opprettFaktumUtenParentHvisDetMangler(fakta, "soknadsmottaker");
+function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
+	try {
+		const xsrfCookieIsOk: boolean = yield call(
+			fetchToJson,
+			`soknader/${action.brukerBehandlingId}/xsrfCookie`,
+			null
+		);
+		console.warn("XsrfToken mottatt: " + xsrfCookieIsOk);
+		yield put(hentSoknadOk(xsrfCookieIsOk, action.brukerBehandlingId));
+	} catch (reason) {
+		yield put(loggFeil("hent soknad saga feilet: " + reason));
+		yield put(navigerTilServerfeil());
+	}
 }
 
 function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
@@ -140,7 +144,6 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
 
 export {
 	opprettSoknadSaga,
-	oppdaterSoknadSaga,
 	startSoknadSaga,
 	sendSoknadSaga,
 	hentKvitteringSaga,
@@ -150,6 +153,7 @@ export {
 function* soknadSaga(): SagaIterator {
 	yield takeEvery(SoknadActionTypeKeys.START_SOKNAD, startSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.OPPRETT_SOKNAD, opprettSoknadSaga);
+	yield takeEvery(SoknadActionTypeKeys.HENT_SOKNAD, hentSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.SLETT_SOKNAD, slettSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.SEND_SOKNAD, sendSoknadSaga);
 	yield takeEvery(SoknadActionTypeKeys.HENT_KVITTERING, hentKvitteringSaga);

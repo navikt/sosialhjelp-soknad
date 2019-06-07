@@ -23,7 +23,7 @@ import {Faktum} from "../../nav-soknad/types";
 import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
 import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
-import {hentSoknadOk} from "../../nav-soknad/redux/soknad/soknadActions";
+import {hentSoknad} from "../../nav-soknad/redux/soknad/soknadActions";
 import NavFrontendSpinner from "nav-frontend-spinner";
 
 interface OwnProps {
@@ -49,10 +49,14 @@ type Props = OwnProps & StateProps & RouterProps & DispatchProps;
 
 class SkjemaRouter extends React.Component<Props, {}> {
 
+    componentWillMount() {
+        if (this.props.brukerbehandlingId && this.props.fakta.length <= 1) {
+            this.props.dispatch(hentSoknad(this.props.brukerbehandlingId));
+        }
+    }
 
     componentDidMount() {
         skjulToppMeny();
-        this.props.dispatch(hentSoknadOk({brukerBehandlingId: this.props.brukerbehandlingId, fakta: []}))
     }
 
     render() {
