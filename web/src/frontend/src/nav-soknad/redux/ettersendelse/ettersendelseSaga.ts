@@ -28,8 +28,8 @@ import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
 
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIterator {
 	try {
-		const url = `soknader?ettersendTil=${action.brukerbehandlingId}`;
-		const response = yield call(fetchPost, url, JSON.stringify({}));
+		const url = `soknader/opprettSoknad?ettersendTil=${action.brukerbehandlingId}`;
+		const response = yield call(fetchPost, url, null);
 		if (response) {
 			yield put(lagEttersendelseOk(response.brukerBehandlingId));
 			yield put(lesEttersendelsesVedlegg(response.brukerBehandlingId));
