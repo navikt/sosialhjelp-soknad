@@ -157,7 +157,6 @@ class OppsummeringView extends React.Component<Props, {}> {
 			</LoadContainer>
 		);
 	}
-
 }
 
 export default connect((state: State, props: any) => {

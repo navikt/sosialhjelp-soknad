@@ -11,6 +11,7 @@ import {
 import {REST_STATUS} from "../../types";
 import {setVisSamtykkeInfo} from "../init/initActions";
 import {Valideringsfeil, ValideringsFeilKode} from "../valideringActionTypes";
+import {SoknadState} from "../reduxTypes";
 
 /*
  * Properties og redux koblinger som er felles for komponenter i søknadsskjemaet.
@@ -18,6 +19,7 @@ import {Valideringsfeil, ValideringsFeilKode} from "../valideringActionTypes";
 
 export interface SoknadsdataContainerProps {
     // Props:
+    soknad?: SoknadState
     soknadsdata?: null | Soknadsdata;
     brukerBehandlingId?: string;
     feil?: Valideringsfeil[];
@@ -36,6 +38,7 @@ export interface SoknadsdataContainerProps {
 
 export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerProps>(
     (state: State) => ({
+        soknad: state.soknad,
         brukerBehandlingId: state.soknad.behandlingsId,
         soknadsdata: JSON.parse(JSON.stringify(state.soknadsdata)),
         feil: state.validering.feil

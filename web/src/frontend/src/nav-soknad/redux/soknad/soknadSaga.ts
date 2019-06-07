@@ -33,8 +33,7 @@ import {
 import {loggFeil} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {push} from "react-router-redux";
-
-export const SKJEMAID = "NAV 35-18.01";
+import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
 
 export interface OpprettSoknadResponse {
 	brukerBehandlingId: string;
@@ -46,12 +45,9 @@ function* opprettSoknadSaga(): SagaIterator {
 
 		const response: OpprettSoknadResponse = yield call(
 			fetchPost,
-			"soknader",
-			JSON.stringify({ soknadType: SKJEMAID })
+			"soknader/opprettSoknad", null
 		);
 		yield put(opprettSoknadOk(response.brukerBehandlingId));
-		// const hentAction = { brukerBehandlingId: response.brukerBehandlingId } as HentSoknadAction;
-		// yield call(hentSoknadSaga, hentAction);
 		yield put(startSoknadOk()); // TODO Rename metode navn
 		yield put(tilSteg(1));
 	} catch (reason) {
@@ -126,10 +122,9 @@ function* hentKvitteringSaga(action: HentKvitteringAction): SagaIterator {
 
 function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsmottakerStatus): SagaIterator {
 	const { brukerbehandlingId} = action;
-	const sti = "personalia/navEnheter";
 
 	try {
-		const navenheter: NavEnhet[] = yield call(fetchToJson, `soknader/${brukerbehandlingId}/${sti}`);
+		const navenheter: NavEnhet[] = yield call(fetchToJson, `soknader/${brukerbehandlingId}/${SoknadsSti.NAV_ENHETER}`);
 		const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find((n: NavEnhet) => n.valgt);
 		if (!valgtSoknadsmottaker){
 			console.warn("Soknadsmottaker er ikke satt. Sender bruker tilbake til steg 1.");
@@ -138,9 +133,8 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
 			yield put(oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker));
 		}
 	} catch(e) {
-		console.warn(e);
-		put(push(`/skjema/${brukerbehandlingId}/2`));
-
+		yield call(loggFeil, "feil i finnOgOppdaterSoknadsmottakerStatusSaga på side 9. Sender brukeren tilbake til steg 1 og håper dette i blir en infinite loop. Error message: " + e);
+		yield put(push(`/skjema/${brukerbehandlingId}/2`));
 	}
 }
 
