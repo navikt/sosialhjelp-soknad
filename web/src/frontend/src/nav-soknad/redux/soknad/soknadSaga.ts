@@ -62,7 +62,6 @@ function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
 			`soknader/${action.brukerBehandlingId}/xsrfCookie`,
 			null
 		);
-		console.warn("XsrfToken mottatt: " + xsrfCookieIsOk);
 		yield put(hentSoknadOk(xsrfCookieIsOk, action.brukerBehandlingId));
 	} catch (reason) {
 		yield put(loggFeil("hent soknad saga feilet: " + reason));
@@ -131,7 +130,6 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
 		const navenheter: NavEnhet[] = yield call(fetchToJson, `soknader/${brukerbehandlingId}/${SoknadsSti.NAV_ENHETER}`);
 		const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find((n: NavEnhet) => n.valgt);
 		if (!valgtSoknadsmottaker){
-			console.warn("Soknadsmottaker er ikke satt. Sender bruker tilbake til steg 1.");
 			yield put(push(`/skjema/${brukerbehandlingId}/1`));
 		} else {
 			yield put(oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker));
