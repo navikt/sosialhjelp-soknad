@@ -18,6 +18,7 @@ import {REST_STATUS} from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import AdresseTypeahead from "./AdresseTypeahead";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
+import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import {DispatchProps, Valideringsfeil} from "../../../../nav-soknad/redux/reduxTypes";
 
 interface OwnProps {
@@ -86,7 +87,6 @@ class AdresseView extends React.Component<Props, State> {
     lagreAdresseValg(payload: any) {
         const {brukerBehandlingId, oppdaterSoknadsdataSti, lagreSoknadsdata} = this.props;
         this.setState({settAdressePending: true});
-
         lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
             if (Array.isArray(navEnheter)) {
                 navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
@@ -179,13 +179,18 @@ class AdresseView extends React.Component<Props, State> {
 
     render() {
         const {soknadsdata} = this.props;
+
         const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
-        const adresser = soknadsdata.personalia.adresser;
-        const navEnheter = soknadsdata.personalia.navEnheter;
-        const folkeregistrertAdresse = adresser && adresser.folkeregistrert && adresser.folkeregistrert.gateadresse;
-        const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
-        const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
-        const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
+		const adresser = soknadsdata.personalia.adresser;
+		const navEnheter = soknadsdata.personalia.navEnheter;
+		const folkeregistrertAdresse = adresser && adresser.folkeregistrert && adresser.folkeregistrert.gateadresse;
+		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
+		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
+		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
+		const matrikkelAdresse = adresser && adresser.folkeregistrert && adresser.folkeregistrert.matrikkeladresse;
+		const gnrBnr: string = (matrikkelAdresse && matrikkelAdresse.gaardsnummer ? matrikkelAdresse.gaardsnummer : "") +
+			(matrikkelAdresse && matrikkelAdresse.bruksnummer ? " / " + matrikkelAdresse.bruksnummer : "");
+		const matrikkelKommune: string = matrikkelAdresse && matrikkelAdresse.kommunenummer;
 
         let folkeregistrertAdresseLabel = null;
         let annenAdresseLabel = null;
@@ -209,6 +214,26 @@ class AdresseView extends React.Component<Props, State> {
                 </div>
             );
         }
+
+        let matrikkelAdresseLabel = null;
+        if (matrikkelAdresse) {
+            matrikkelAdresseLabel = (
+                <div className="finnNavKontor__label">
+                    <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
+                    <Detaljeliste>
+                        <DetaljelisteElement
+                            tittel={<FormattedMessage id="matrikkel.gnrbnr" />}
+                            verdi={gnrBnr}
+                        />
+                        <DetaljelisteElement
+                            tittel={<FormattedMessage id="matrikkel.kommunenr" />}
+                            verdi={matrikkelKommune}
+                        />
+                    </Detaljeliste>
+                </div>
+            );
+        }
+
         const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === this.FAKTUM_KEY);
         const feilmelding = this.props.intl.formatMessage({id: "soknadsmottaker.feilmelding"});
 
@@ -238,6 +263,31 @@ class AdresseView extends React.Component<Props, State> {
                                 onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}
                             />
 						</span>
+                    )}
+                    {matrikkelAdresse && (
+                        <div>
+                            <RadioEnhanced
+                                id="oppholdsadresse_folkeregistrert"
+                                value="folkeregistrert"
+                                onChange={() => this.onClickRadio(AdresseKategori.FOLKEREGISTRERT)}
+                                checked={adresser.valg === AdresseKategori.FOLKEREGISTRERT}
+                                label={matrikkelAdresseLabel}
+                            />
+                            <div className="skjema-sporsmal--jaNeiSporsmal">
+                                <Underskjema
+                                    visible={adresser.valg === AdresseKategori.FOLKEREGISTRERT && navEnheter.length > 1}
+                                    collapsable={true}
+                                >
+                                    <SoknadsmottakerVelger
+                                        label={getIntlTextOrKey(this.props.intl,
+                                            "kontakt.system.oppholdsadresse.velgKontor")}
+                                        navEnheter={navEnheter}
+                                        visible={adresser.valg === AdresseKategori.FOLKEREGISTRERT && navEnheter.length > 1}
+                                        onVelgSoknadsmottaker={(navEnhet: NavEnhet) => this.onVelgSoknadsmottaker(navEnhet)}
+                                    />
+                                </Underskjema>
+                            </div>
+                        </div>
                     )}
                     {midlertidigAdresse && (
                         <span>
