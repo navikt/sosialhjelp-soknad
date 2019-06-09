@@ -1,4 +1,4 @@
-import { call, put, select, take, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { goBack, push } from "react-router-redux";
 import {
@@ -6,19 +6,14 @@ import {
 	GaVidere,
 	NavigasjonActionTypes,
 	Sider,
-	TilBostedEllerStartSoknad,
 	TilDittNav,
 	TilKvittering,
 	TilSteg
 } from "./navigasjonTypes";
-import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
-import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
-import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
 import { tilStart, tilSteg } from "./navigasjonActions";
 import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import { SoknadAppState } from "../reduxTypes";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
-import { startSoknad } from "../soknad/soknadActions";
 import { lesKommunenrFraUrl } from "../../utils";
 
 const getHistoryLength = () => window.history.length;
