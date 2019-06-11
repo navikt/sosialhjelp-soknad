@@ -6,6 +6,7 @@ import { downloadAttachedFile } from "../../../../nav-soknad/utils/rest-utils";
 import AriaText from "../../../../nav-soknad/components/aria/AriaText";
 import SVG from "react-inlinesvg";
 import { startSlettVedlegg } from "../../../../nav-soknad/redux/vedlegg/vedleggActions";
+import {getAbsoluteBasename} from "../../../../index";
 
 interface Props {
 	vedlegg: Vedlegg;
@@ -40,7 +41,7 @@ export default class VedleggsFil extends React.Component<AllProps, {}> {
 						<AriaText>Slett {vedlegg.filnavn}</AriaText>
 						<SVG
 							className="vedleggsliste__slett_ikon"
-							src="/soknadsosialhjelp/statisk/bilder/ikon_trashcan.svg"
+							src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_trashcan.svg`}
 						/>
 					</button>
 				</span>

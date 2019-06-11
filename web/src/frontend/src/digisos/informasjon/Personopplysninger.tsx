@@ -6,6 +6,7 @@ import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
 import { State } from "../redux/reducers";
 import BehandlingAvPersonopplysningerModal from "./BehandlingAvPersonopplysningerModal";
 import { Undertittel } from "nav-frontend-typografi";
+import {getAbsoluteBasename} from "../../index";
 
 type Props = InjectedIntlProps & DispatchProps;
 
@@ -22,7 +23,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 
 						<div className="personopplysning-blokk blokk-s">
 							<div className="ikon">
-								<img src="/soknadsosialhjelp/statisk/bilder/ikon_papirstabel.svg"/>
+								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_papirstabel.svg`}/>
 							</div>
 								<div className="innhold">
 								<h3 className="typo-element">
@@ -33,7 +34,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 						</div>
 						<div className="personopplysning-blokk blokk-s">
 							<div className="ikon">
-								<img src="/soknadsosialhjelp/statisk/bilder/ikon_blyanter.svg"/>
+								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_blyanter.svg`}/>
 							</div>
 							<div className="innhold">
 								<h3 className="typo-element">
@@ -44,7 +45,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 						</div>
 						<div className="personopplysning-blokk blokk-s">
 							<div className="ikon">
-								<img src="/soknadsosialhjelp/statisk/bilder/ikon_brevkonvolutt.svg"/>
+								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_brevkonvolutt.svg`}/>
 							</div>
 							<div className="innhold">
 								<h3 className="typo-element">
@@ -56,7 +57,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 
 						<div className="personopplysning-blokk blokk-m">
 							<div className="ikon">
-								<img src="/soknadsosialhjelp/statisk/bilder/ikon_ark.svg"/>
+								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_ark.svg`}/>
 							</div>
 							<div className="innhold">
 								<h3 className="typo-element">

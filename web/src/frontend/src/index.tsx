@@ -44,7 +44,7 @@ const visReduxLogger = false;
 /**
  * Resolves basename in a pathname independent way
  */
-function getAbsoluteBasename() {
+export function getAbsoluteBasename() {
 	return window.location.pathname.replace(/^\/(([^/]+\/)?soknadsosialhjelp).+$/, "$1")
 }
 
