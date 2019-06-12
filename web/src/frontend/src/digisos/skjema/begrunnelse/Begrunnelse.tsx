@@ -14,7 +14,7 @@ import { SoknadsSti } from "../../../nav-soknad/redux/soknadsdata/soknadsdataRed
 import {ValideringsFeilKode} from "../../../nav-soknad/redux/valideringActionTypes";
 import {replaceDotWithUnderscore} from "../../../nav-soknad/utils";
 
-const MAX_CHARS_BEGRUNNELSE = 600;
+const MAX_CHARS_BEGRUNNELSE = 800;
 const MAX_CHARS = 500;
 const FAKTUM_KEY_HVA = "begrunnelse.hva";
 const FAKTUM_KEY_HVORFOR = "begrunnelse.hvorfor";
