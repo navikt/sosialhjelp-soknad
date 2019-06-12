@@ -141,7 +141,7 @@ export class FormueView extends React.Component<Props, State> {
                         faktumKey={FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY}
                         labelId={FORMUE + ".true.type.annet.true.beskrivelse.label"}
                         maxLength={MAX_CHARS}
-                        value={formue.beskrivelseAvAnnet}
+                        value={formue.beskrivelseAvAnnet ? formue.beskrivelseAvAnnet : ""}
                     />
                 </NivaTreSkjema>
             </Sporsmal>

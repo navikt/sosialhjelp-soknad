@@ -137,7 +137,7 @@ class ArbeidView extends React.Component<Props, State> {
 						onBlur={() => this.lagreHvisGyldig()}
 						faktumKey={FAKTUM_KEY_KOMMENTARER}
 						maxLength={MAX_CHARS}
-						value={kommentarTilArbeidsforhold}
+						value={kommentarTilArbeidsforhold ? kommentarTilArbeidsforhold : ""}
 					/>
 				</SysteminfoMedSkjema>
 			</Sporsmal>

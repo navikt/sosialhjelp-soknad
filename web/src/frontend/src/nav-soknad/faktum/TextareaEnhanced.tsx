@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import {Valideringsfeil} from "../redux/valideringActionTypes";
 
 interface OwnProps {
+	value: string;
 	labelId?: string;
 	disabled?: boolean;
 	textareaClass?: string;
@@ -20,7 +21,6 @@ interface OwnProps {
 	property?: string;
 	faktumId?: number;
 	getName?: () => string;
-	value?: string;
 	getFeil?: (intl: InjectedIntl) => Feil; // Fjern
 	onChange?: (event: any) => any;
 	onBlur?: () => void;

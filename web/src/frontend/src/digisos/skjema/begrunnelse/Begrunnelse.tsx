@@ -87,7 +87,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 						faktumKey="begrunnelse.hva"
 						labelId="begrunnelse.hva.label"
 						maxLength={MAX_CHARS}
-						value={begrunnelse.hvaSokesOm}
+						value={begrunnelse.hvaSokesOm ? begrunnelse.hvaSokesOm : ""}
 					/>
 				</Sporsmal>
 				<Sporsmal
@@ -105,7 +105,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 						labelId="begrunnelse.hvorfor.label"
 						hideLabel={true}
 						maxLength={MAX_CHARS_BEGRUNNELSE}
-						value={begrunnelse.hvorforSoke}
+						value={begrunnelse.hvorforSoke ? begrunnelse.hvorforSoke : ""}
 					/>
 				</Sporsmal>
 			</div>

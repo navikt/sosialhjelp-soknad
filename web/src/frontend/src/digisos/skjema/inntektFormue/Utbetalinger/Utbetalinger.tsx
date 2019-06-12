@@ -157,7 +157,7 @@ export class UtbetalingerView extends React.Component<Props, State> {
                             faktumKey={TEXT_AREA_ANNET_FAKTUM_KEY}
                             labelId={UTBETALINGER + ".true.type.annet.true.beskrivelse.label"}
                             maxLength={MAX_CHARS}
-                            value={utbetalinger.beskrivelseAvAnnet}
+                            value={utbetalinger.beskrivelseAvAnnet ? utbetalinger.beskrivelseAvAnnet : ""}
                         />
                     </NivaTreSkjema>
                 </Sporsmal>
