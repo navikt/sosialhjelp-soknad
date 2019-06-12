@@ -3,7 +3,6 @@ import {
 	Begrunnelse as BegrunnelseType,
 } from "./begrunnelseTypes";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { ValideringActionKey } from "../../../nav-soknad/validering/types";
 import { maksLengde } from "../../../nav-soknad/validering/valideringer";
 import Sporsmal, { LegendTittleStyle } from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
@@ -12,6 +11,8 @@ import {
 	SoknadsdataContainerProps
 } from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {ValideringsFeilKode} from "../../../nav-soknad/redux/valideringActionTypes";
+import {replaceDotWithUnderscore} from "../../../nav-soknad/utils";
 
 const MAX_CHARS_BEGRUNNELSE = 600;
 const MAX_CHARS = 500;
@@ -25,8 +26,8 @@ type Props = SoknadsdataContainerProps & InjectedIntlProps;
 class BegrunnelseSkjema extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
-		this.props.setValideringsfeil(null, FAKTUM_KEY_HVA);
-		this.props.setValideringsfeil(null, FAKTUM_KEY_HVORFOR);
+		this.props.clearValideringsfeil(FAKTUM_KEY_HVA);
+		this.props.clearValideringsfeil(FAKTUM_KEY_HVORFOR);
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BEGRUNNELSE);
 	}
 
@@ -34,13 +35,20 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 		const { soknadsdata } = this.props;
 		soknadsdata.begrunnelse[key]  = value;
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BEGRUNNELSE, soknadsdata.begrunnelse);
+
+		if (key === HVA_SOKES_OM){
+			this.validerTekstfeltVerdi(value, FAKTUM_KEY_HVA, MAX_CHARS);
+		}
+		if (key === HVORFOR_SOKE) {
+			this.validerTekstfeltVerdi(value, FAKTUM_KEY_HVORFOR, MAX_CHARS_BEGRUNNELSE);
+		}
 	}
 
 	lagreHvisGyldig() {
 		const { soknadsdata, brukerBehandlingId } = this.props;
 		const { hvaSokesOm, hvorforSoke } = soknadsdata.begrunnelse;
-		const feilmeldingHva: ValideringActionKey = this.validerTekstfeltVerdi(hvaSokesOm, FAKTUM_KEY_HVA, MAX_CHARS);
-		const feilmeldingHvorfor: ValideringActionKey = this.validerTekstfeltVerdi(hvorforSoke, FAKTUM_KEY_HVORFOR, MAX_CHARS_BEGRUNNELSE);
+		const feilmeldingHva: ValideringsFeilKode = this.validerTekstfeltVerdi(hvaSokesOm, FAKTUM_KEY_HVA, MAX_CHARS);
+		const feilmeldingHvorfor: ValideringsFeilKode = this.validerTekstfeltVerdi(hvorforSoke, FAKTUM_KEY_HVORFOR, MAX_CHARS_BEGRUNNELSE);
 
 		if (!feilmeldingHva && !feilmeldingHvorfor) {
 			const begrunnelse: BegrunnelseType = {hvaSokesOm, hvorforSoke};
@@ -48,10 +56,12 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 		}
 	}
 
-    validerTekstfeltVerdi(verdi: string, faktumKey: string, max: number): ValideringActionKey {
-		const feilkode: ValideringActionKey = maksLengde(verdi, max);
+    validerTekstfeltVerdi(verdi: string, faktumKey: string, max: number): ValideringsFeilKode | undefined {
+		const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, max);
 		onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
-			this.props.setValideringsfeil(feilkode, faktumKey);
+			( feilkode ) ?
+				this.props.setValideringsfeil(feilkode, faktumKey) :
+				this.props.clearValideringsfeil(faktumKey);
 		});
 		return feilkode;
 	}
@@ -59,6 +69,8 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 	render() {
 		const { intl, soknadsdata } = this.props;
 		const begrunnelse = soknadsdata.begrunnelse;
+		const faktumKeyHvaId = replaceDotWithUnderscore(FAKTUM_KEY_HVA);
+		const faktumKeyHvorforId = replaceDotWithUnderscore(FAKTUM_KEY_HVORFOR)
 		return (
 			<div>
 				<Sporsmal
@@ -66,7 +78,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 				>
 					<TextareaEnhanced
-						id="hva_sokes_det_om_textarea"
+						id={faktumKeyHvaId}
 						placeholder={intl.formatMessage({
 							id: "begrunnelse.hva.placeholder"
 						})}
@@ -83,7 +95,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 				>
 					<TextareaEnhanced
-						id="begrunnelse_soknad_textarea"
+						id={faktumKeyHvorforId}
 						placeholder={intl.formatMessage({
 							id: "begrunnelse.hvorfor.placeholder"
 						})}

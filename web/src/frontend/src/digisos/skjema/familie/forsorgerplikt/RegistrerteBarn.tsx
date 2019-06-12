@@ -87,6 +87,7 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 											onBlur={() => this.onBlur()}
 											faktumKey="system.familie.barn.true.barn.grad"
 											required={false}
+											feil={this.props.feil}
 										/>
 									</div>
 								)}

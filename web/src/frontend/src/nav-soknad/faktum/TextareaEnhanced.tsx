@@ -3,9 +3,9 @@ import { Feil, Textarea } from "nav-frontend-skjema";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { getInputFaktumTekst, getIntlTextOrKey } from "../utils";
 import InjectedIntl = ReactIntl.InjectedIntl;
-import { Valideringsfeil } from "../validering/types";
 import { State } from "../../digisos/redux/reducers";
 import { connect } from "react-redux";
+import {Valideringsfeil} from "../redux/valideringActionTypes";
 
 interface OwnProps {
 	labelId?: string;

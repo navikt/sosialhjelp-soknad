@@ -1,4 +1,4 @@
-import { call, put, select, take, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { goBack, push } from "react-router-redux";
 import {
@@ -6,19 +6,14 @@ import {
 	GaVidere,
 	NavigasjonActionTypes,
 	Sider,
-	TilBostedEllerStartSoknad,
 	TilDittNav,
 	TilKvittering,
 	TilSteg
 } from "./navigasjonTypes";
-import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
-import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
-import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
 import { tilStart, tilSteg } from "./navigasjonActions";
 import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import { SoknadAppState } from "../reduxTypes";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
-import { startSoknad } from "../soknad/soknadActions";
 import { lesKommunenrFraUrl } from "../../utils";
 
 const getHistoryLength = () => window.history.length;
@@ -37,26 +32,12 @@ function* tilServerfeilSaga(): SagaIterator {
 	yield put(settAvbrytSoknadSjekk(true));
 }
 
-function* tilBostedSaga(): SagaIterator {
-	yield put(push(Sider.BOSTED));
-}
-
 function* tilStartSaga(): SagaIterator {
 	yield put(push(Sider.START));
 }
 
 function* tilMockSaga(): SagaIterator {
 	yield put(push(Sider.MOCK));
-}
-
-function* tilBostedEllerStartSoknadSaga(
-	action: TilBostedEllerStartSoknad
-): SagaIterator {
-	if (action.valgtKommune) {
-		yield put(startSoknad(action.valgtKommune.id));
-	} else {
-		yield put(push(Sider.BOSTED));
-	}
 }
 
 function* tilbakeEllerForsidenSaga(): SagaIterator {
@@ -79,18 +60,6 @@ function* tilStegSaga(action: TilSteg): SagaIterator {
 }
 
 function* gaVidereSaga(action: GaVidere): SagaIterator {
-	const progresjonFaktum = yield select(selectProgresjonFaktum);
-	const progresjonFaktumVerdi = parseInt(progresjonFaktum.value || 1, 10);
-	if (progresjonFaktumVerdi === action.stegnummer) {
-		const faktum = yield call(
-			oppdaterFaktumMedVerdier,
-			progresjonFaktum,
-			`${action.stegnummer + 1}`
-		);
-		yield put(setFaktum(faktum));
-		yield put(lagreFaktum(faktum));
-		yield take([FaktumActionTypeKeys.LAGRET_FAKTUM]);
-	}
 	yield put(tilSteg(action.stegnummer + 1));
 }
 
@@ -127,14 +96,9 @@ function* navigasjonSaga(): SagaIterator {
 		tilbakeEllerForsidenSaga
 	);
 	yield takeEvery(NavigasjonActionTypes.TIL_START, tilStartSaga);
-	yield takeEvery(NavigasjonActionTypes.TIL_BOSTED, tilBostedSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_DITT_NAV, tilDittNav);
 	yield takeEvery(NavigasjonActionTypes.TIL_MOCK, tilMockSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilKvittering);
-	yield takeEvery(
-		NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD,
-		tilBostedEllerStartSoknadSaga
-	);
 }
 
 export {
@@ -146,9 +110,7 @@ export {
 	tilFinnDittNavKontorSaga,
 	tilKvittering,
 	tilServerfeilSaga,
-	tilStegSaga,
-	tilBostedEllerStartSoknadSaga,
-	tilBostedSaga
+	tilStegSaga
 };
 
 export default navigasjonSaga;

@@ -1,4 +1,5 @@
-import { Soknad, Kvittering, Infofaktum } from "../../types/navSoknadTypes";
+import { Kvittering, Infofaktum } from "../../types/navSoknadTypes";
+import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
 export enum SoknadActionTypeKeys {
 	START_SOKNAD = "soknad/START_SOKNAD",
@@ -26,7 +27,9 @@ export enum SoknadActionTypeKeys {
 	SEND_SOKNAD_OK = "soknad/SEND_SOKNAD_OK",
 	SEND_SOKNAD_FEILET = "soknad/SEND_SOKNAD_FEILET",
 	SETT_INFOFAKTUM = "soknad/SETT_INFOFAKTUM",
-	SETT_AVBRYT_SOKNAD_SJEKK = "navigasjon/SETT_AVBRYT_SOKNAD_SJEKK"
+	SETT_AVBRYT_SOKNAD_SJEKK = "navigasjon/SETT_AVBRYT_SOKNAD_SJEKK",
+	FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS = "soknad/FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS",
+	OPPDATER_SOKNADSMOTTAKER_STATUS = "soknad/OPPDATER_SOKNADSMOTTAKER_STATUS"
 }
 
 export type AVBRYT_DESTINASJON = "START" | "MINSIDE";
@@ -57,7 +60,19 @@ export type SoknadActionTypes =
 	| SlettSoknadOkAction
 	| SlettSoknadFeiletAction
 	| SettInfofaktumAction
-	| SettAvbrytSoknadSjekk;
+	| SettAvbrytSoknadSjekk
+	| FinnOgOppdaterSoknadsmottakerStatus
+	| OppdaterSoknadsmottakerStatus
+
+export interface FinnOgOppdaterSoknadsmottakerStatus {
+	type: SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS,
+	brukerbehandlingId: string
+}
+
+export interface OppdaterSoknadsmottakerStatus {
+	type: SoknadActionTypeKeys.OPPDATER_SOKNADSMOTTAKER_STATUS,
+	valgtSoknadsmottaker: NavEnhet
+}
 
 export interface StartSoknadAction {
 	type: SoknadActionTypeKeys.START_SOKNAD;
@@ -90,7 +105,8 @@ export interface HentSoknadAction {
 
 export interface HentSoknaOkAction {
 	type: SoknadActionTypeKeys.HENT_SOKNAD_OK;
-	data: Soknad;
+	xsrfCookieReceived: boolean;
+	brukerBehandlingId: string;
 }
 
 export interface HentSoknadFeiletAction {

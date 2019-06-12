@@ -10,9 +10,9 @@ import {
 } from "./opplysningerUtils";
 import {fetchPut} from "../../utils/rest-utils";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
-import {Valideringsfeil} from "../../validering/types";
 import {updateOpplysning} from "./opplysningerActions";
 import {loggFeil} from "../navlogger/navloggerActions";
+import {Valideringsfeil} from "../valideringActionTypes";
 
 
 export function getFeilForOpplysning(feil: Valideringsfeil[], opplysningTextKey: string) {

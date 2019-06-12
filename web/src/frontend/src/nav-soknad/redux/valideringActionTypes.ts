@@ -1,50 +1,54 @@
-import { FaktumValideringsregler, Valideringsfeil } from "../validering/types";
-
 export enum ValideringActionTypeKeys {
-	SET_FAKTA_VALIDERINGSFEIL = "validering/SET_FAKTA_VALIDERINGSFEIL",
-	CLEAR_FAKTA_VALIDERINGSFEIL = "validering/CLEAR_FAKTA_VALIDERINGSFEIL",
-	SET_FAKTUM_VALIDERINGSFEIL = "validering/SET_FAKTUM_VALIDERINGSFEIL",
-	CLEAR_FAKTUM_VALIDERINGSFEIL = "validering/CLEAR_FAKTUM_VALIDERINGSFEIL",
-	REGISTER_FAKTUM_VALIDERING = "validering/REGISTER_FAKTUM_VALIDERING",
-	UNREGISTER_FAKTUM_VALIDERING = "validering/UNREGISTER_FAKTUM_VALIDERING",
-	SET_PROGRESJON = "validering/PROGRESJON"
+	VIS_VALIDERINGSFEIL_PANEL = "validering/VIS_VALIDERINGSFEIL_PANEL",
+	SKJUL_VALIDERINGSFEIL_PANEL = "validering/SKJUL_VALIDERINGSFEIL_PANEL",
+	SET_VALIDERINGSFEIL = "validering/SET_VALIDERINGSFEIL",
+	CLEAR_VALIDERINGSFEIL = "validering/CLEAR_VALIDERINGSFEIL",
+	CLEAR_ALL_VALIDERINGSFEIL = "validering/CLEAR_ALL_VALIDERINGSFEIL",
 }
 
-export interface SetFaktaValideringsfeilAction {
-	type: ValideringActionTypeKeys.SET_FAKTA_VALIDERINGSFEIL;
-	valideringsfeil: Valideringsfeil[];
+export interface VisValideringsfeilPanelAction {
+	type: ValideringActionTypeKeys.VIS_VALIDERINGSFEIL_PANEL
 }
 
-export interface ClearFaktaValideringsfeilAction {
-	type: ValideringActionTypeKeys.CLEAR_FAKTA_VALIDERINGSFEIL;
-	faktumKey: string;
-	property?: string;
-	faktumId?: number;
+export interface SkjulValideringsfeilPanelAction {
+	type: ValideringActionTypeKeys.SKJUL_VALIDERINGSFEIL_PANEL
 }
 
-export interface RegisterFaktumValideringAction {
-	type: ValideringActionTypeKeys.REGISTER_FAKTUM_VALIDERING;
-	faktumValidering: FaktumValideringsregler;
-}
-
-export interface UnregisterFaktumValideringAction {
-	type: ValideringActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING;
-	faktumKey: string;
-	property?: string;
-	faktumId?: number;
-}
-
-export interface SetFaktumValideringsfeilAction {
-	type: ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL;
-	faktumKey: string;
-	property?: string;
-	faktumId?: number;
+export interface SetValideringsfeilAction {
+	type: ValideringActionTypeKeys.SET_VALIDERINGSFEIL;
 	valideringsfeil: Valideringsfeil;
 }
 
+export interface ClearValideringsfeilAction {
+	type: ValideringActionTypeKeys.CLEAR_VALIDERINGSFEIL;
+	faktumKey: string;
+}
+
+export interface ClearAllValideringsfeilAction {
+	type: ValideringActionTypeKeys.CLEAR_ALL_VALIDERINGSFEIL
+}
+
 export type ValideringActionTypes =
-	| SetFaktaValideringsfeilAction
-	| ClearFaktaValideringsfeilAction
-	| RegisterFaktumValideringAction
-	| UnregisterFaktumValideringAction
-	| SetFaktumValideringsfeilAction;
+	| VisValideringsfeilPanelAction
+	| SkjulValideringsfeilPanelAction
+	| SetValideringsfeilAction
+	| ClearValideringsfeilAction
+	| ClearAllValideringsfeilAction
+
+
+export enum ValideringsFeilKode {
+	PAKREVD = "validering.pakrevd",
+	MIN_LENGDE = "validering.minLengde",
+	MAX_LENGDE = "validering.maksLengde",
+	ER_TALL = "validering.erTall",
+	ER_TELEFONNUMMER = "validering.erTelefonnummer",
+	ER_KONTONUMMER = "validering.erKontonummer",
+	ER_FDATO = "validering.erFdato",
+	ER_FDATO_ETTER_IDAG = "validering.erFdatoEtterIdag",
+	SOKNADSMOTTAKER_PAKREVD = "soknadsmottaker.feilmelding"
+}
+
+export interface Valideringsfeil {
+	faktumKey: string;
+	feilkode: ValideringsFeilKode
+}

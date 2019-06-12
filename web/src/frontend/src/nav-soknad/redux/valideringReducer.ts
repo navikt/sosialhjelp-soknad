@@ -1,175 +1,75 @@
-import { Reducer } from "./reduxTypes";
-import {
-	ValideringActionTypes,
-	ValideringActionTypeKeys
-} from "./valideringActionTypes";
-import {
-	FaktumValideringsregler,
-	Valideringsfeil,
-	FaktumValideringKey
-} from "../validering/types";
+import {Reducer, ValideringActionTypeKeys, Valideringsfeil} from "./reduxTypes";
+import {ValideringActionTypes} from "./valideringActionTypes";
 
 export interface ValideringState {
-	/** Alle valideringsfeil som finnes for registrerte regler */
-	feil: Valideringsfeil[];
-	/** Alle registrerte valideringsregler */
-	valideringsregler?: FaktumValideringsregler[];
-	/** Om feiloppsummering skal vises */
-	visValideringsfeil?: boolean;
-	/** Økes hver gang hele steget valideres - brukes til å fokusere på oppsummering */
-	stegValidertCounter?: number;
+    feil: Valideringsfeil[];
+    visValideringsfeil: boolean;
 }
 
 const defaultState: ValideringState = {
-	feil: [] as Valideringsfeil[],
-	valideringsregler: [],
-	visValideringsfeil: false,
-	stegValidertCounter: 0
+    feil: [],
+    visValideringsfeil: false,
 };
 
-const finnIndex = (
-	faktumValideringKeys: FaktumValideringKey[],
-	faktumKey: string,
-	property: string,
-	faktumId: number
-) => {
-	return faktumValideringKeys.findIndex(
-		valideringKey =>
-			valideringKey.faktumKey === faktumKey &&
-			(property
-				? valideringKey.property === property
-				: valideringKey.property === undefined) &&
-			(faktumId
-				? valideringKey.faktumId === faktumId
-				: valideringKey.faktumId === undefined)
-	);
-};
-
-const registerFaktumValidering = (
-	valideringsregler: FaktumValideringsregler[],
-	faktumValidering: FaktumValideringsregler
-) => {
-	const idx = finnIndex(
-		valideringsregler,
-		faktumValidering.faktumKey,
-		faktumValidering.property,
-		faktumValidering.faktumId
-	);
-
-	if (idx === -1) {
-		return [...valideringsregler, faktumValidering];
-	}
-	return [
-		...valideringsregler.slice(0, idx),
-		faktumValidering,
-		...valideringsregler.slice(idx + 1)
-	];
-};
-
-const unregisterFaktumValidering = (
-	valideringsregler: FaktumValideringsregler[],
-	faktumKey: string,
-	property?: string,
-	faktumId?: number
-) => {
-	const idx = finnIndex(valideringsregler, faktumKey, property, faktumId);
-	if (idx === -1) {
-		return valideringsregler;
-	}
-	return [
-		...valideringsregler.slice(0, idx),
-		...valideringsregler.slice(idx + 1)
-	];
-};
-
-const setFaktumValideringsfeil = (
-	feil: Valideringsfeil[],
-	faktumValideringfeil: Valideringsfeil,
-	faktumKey: string,
-	property?: string,
-	faktumId?: number
-) => {
-	if (!faktumValideringfeil) {
-		/** Returner alle andre feil */
-		const filtrerte = feil.filter(v => {
-			return (
-				v.faktumKey !== faktumKey ||
-				v.faktumId !== faktumId ||
-				v.property !== property
-			);
-		});
-		return filtrerte;
-	}
-	const idx = finnIndex(feil, faktumKey, property, faktumId);
-	if (idx === -1) {
-		return feil.concat(faktumValideringfeil);
-	}
-	// For å ivareta samme rekkefølge på feilmeldingene i oppsummeringen
-	return [...feil.slice(0, idx), faktumValideringfeil, ...feil.slice(idx + 1)];
-};
 
 const valideringReducer: Reducer<ValideringState, ValideringActionTypes> = (
-	state = defaultState,
-	action
+    state = defaultState,
+    action
 ): ValideringState => {
-	switch (action.type) {
-		case ValideringActionTypeKeys.REGISTER_FAKTUM_VALIDERING:
-			return {
-				...state,
-				valideringsregler: registerFaktumValidering(
-					state.valideringsregler,
-					action.faktumValidering
-				)
-			};
-		case ValideringActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING:
-			return {
-				...state,
-				valideringsregler: unregisterFaktumValidering(
-					state.valideringsregler,
-					action.faktumKey,
-					action.property,
-					action.faktumId
-				),
-				feil: setFaktumValideringsfeil(
-					state.feil,
-					null,
-					action.faktumKey,
-					action.property,
-					action.faktumId
-				)
-			};
-		case ValideringActionTypeKeys.SET_FAKTA_VALIDERINGSFEIL:
-			return {
-				...state,
-				feil: action.valideringsfeil,
-				visValideringsfeil: true,
-				stegValidertCounter: state.stegValidertCounter + 1
-			};
-		case ValideringActionTypeKeys.CLEAR_FAKTA_VALIDERINGSFEIL:
-			return {
-				...state,
-				feil: [],
-				visValideringsfeil: false
-			};
-		case ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL:
-			const feil = setFaktumValideringsfeil(
-				state.feil,
-				action.valideringsfeil,
-				action.faktumKey,
-				action.property,
-				action.faktumId
-			);
-			const visValideringsfeil = state.visValideringsfeil
-				? feil.length > 0
-				: state.visValideringsfeil;
-			return {
-				...state,
-				feil,
-				visValideringsfeil
-			};
-		default:
-			return state;
-	}
+    switch (action.type) {
+        case ValideringActionTypeKeys.VIS_VALIDERINGSFEIL_PANEL:
+            return {
+                ...state,
+                visValideringsfeil: true
+            };
+        case ValideringActionTypeKeys.SKJUL_VALIDERINGSFEIL_PANEL:
+            return {
+                ...state,
+                visValideringsfeil: false
+            };
+        case ValideringActionTypeKeys.SET_VALIDERINGSFEIL: {
+            const previousFeil: Valideringsfeil[] = state.feil;
+            const nyFeilSomSkalRegistreres = action.valideringsfeil;
+            const feilUpdated: Valideringsfeil[] = previousFeil.map((f) => f);
+            if (
+                nyFeilSomSkalRegistreres &&
+                nyFeilSomSkalRegistreres.faktumKey &&
+                nyFeilSomSkalRegistreres.faktumKey !== "" &&
+                nyFeilSomSkalRegistreres.feilkode
+            ) {
+                const feilAlledeRegistrert: Valideringsfeil | undefined = previousFeil.find((f) =>
+                    f.faktumKey === nyFeilSomSkalRegistreres.faktumKey &&
+                    f.feilkode === nyFeilSomSkalRegistreres.feilkode
+                );
+                if (feilAlledeRegistrert === undefined) {
+                    feilUpdated.push(nyFeilSomSkalRegistreres);
+                }
+            }
+            return {
+                ...state,
+                feil: feilUpdated,
+            };
+        }
+        case ValideringActionTypeKeys.CLEAR_VALIDERINGSFEIL: {
+            const feil: Valideringsfeil[] = state.feil;
+            const feilUpdated: Valideringsfeil[] = feil.filter((f) => {
+                return f.faktumKey !== action.faktumKey;
+            });
+            return {
+                ...state,
+                feil: feilUpdated,
+                visValideringsfeil: feilUpdated.length === 0 ? false : state.visValideringsfeil
+            };
+        }
+        case ValideringActionTypeKeys.CLEAR_ALL_VALIDERINGSFEIL: {
+            return {
+                ...state,
+                feil: [],
+            }
+        }
+        default:
+            return state;
+    }
 };
 
 export default valideringReducer;

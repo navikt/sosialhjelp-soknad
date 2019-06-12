@@ -3,18 +3,18 @@ import {
     connectSoknadsdataContainer, onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
+import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
-import { Verdier } from "./VerdierTypes";
+import {Verdier} from "./VerdierTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
-import { REST_STATUS } from "../../../../nav-soknad/types";
-import {ValideringActionKey} from "../../../../nav-soknad/validering/types";
+import {REST_STATUS} from "../../../../nav-soknad/types";
 import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
+import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
 
 const MAX_CHARS = 500;
 const VERDIER = "inntekt.eierandeler";
@@ -71,7 +71,7 @@ export class VerdierView extends React.Component<Props, State> {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         verdier[idToToggle] = !verdier[idToToggle];
-        if (!verdier.bekreftelse || !verdier.annet){
+        if (!verdier.bekreftelse || !verdier.annet) {
             verdier.beskrivelseAvAnnet = "";
         }
         this.props.oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier);
@@ -83,23 +83,26 @@ export class VerdierView extends React.Component<Props, State> {
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         verdier.beskrivelseAvAnnet = value;
         this.props.oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier);
+        this.validerTekstfeltVerdi(value, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
     }
 
     onBlurTekstfeltAnnet() {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         const beskrivelseAvAnnet = verdier.beskrivelseAvAnnet;
-        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
+        const feilmeldingAnnet: ValideringsFeilKode = this.validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
 
         if (!feilmeldingAnnet) {
             this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
         }
     }
 
-    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
-        const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
+    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode {
+        const feilkode: ValideringsFeilKode = maksLengde(verdi, MAX_CHARS);
         onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
-            this.props.setValideringsfeil(feilkode, faktumKey);
+            (feilkode) ?
+                this.props.setValideringsfeil(feilkode, faktumKey) :
+                this.props.clearValideringsfeil(faktumKey);
         });
         return feilkode;
     }
@@ -144,7 +147,7 @@ export class VerdierView extends React.Component<Props, State> {
                         size="small"
                     >
                         <TextareaEnhanced
-                            id="verdier_annet_textarea"
+                            id={replaceDotWithUnderscore(VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY)}
                             placeholder=""
                             onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}
                             onBlur={() => this.onBlurTekstfeltAnnet()}

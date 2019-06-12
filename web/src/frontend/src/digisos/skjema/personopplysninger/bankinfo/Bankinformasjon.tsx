@@ -1,7 +1,6 @@
 import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { Checkbox } from "nav-frontend-skjema";
-import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import { erKontonummer } from "../../../../nav-soknad/validering/valideringer";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
@@ -16,6 +15,8 @@ import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
+import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
+import {replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 
 interface OwnProps {
 	disableLoadingAnimation?: boolean;
@@ -46,34 +47,36 @@ class Bankinformasjon extends React.Component<Props, State> {
 	}
 
 	componentDidMount() {
-		this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
+		this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON)
 	}
 
 	onBlur() {
 		const { soknadsdata } = this.props;
 		let kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
-		let feilkode: ValideringActionKey = null;
 		if (kontonummer.brukerutfyltVerdi !== null && kontonummer.brukerutfyltVerdi !== "") {
-			feilkode = this.validerKontonummer(kontonummer.brukerutfyltVerdi);
+			const feilkode: ValideringsFeilKode = this.validerKontonummer(kontonummer.brukerutfyltVerdi);
 			if (!feilkode) {
 				kontonummer = this.vaskKontonummerVerdi(kontonummer);
 				this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
+				this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
 			}
 		} else {
-			onEndretValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER, this.props.feil, () => {
-				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER);
-			});
+			this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
 			this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
 		}
 	}
 
-	validerKontonummer(brukerutfyltVerdi: string): ValideringActionKey {
+	validerKontonummer(brukerutfyltVerdi: string): ValideringsFeilKode {
 		brukerutfyltVerdi = brukerutfyltVerdi.replace(/[ \.]/g,"");
-		const feilkode: ValideringActionKey = erKontonummer(brukerutfyltVerdi);
-		onEndretValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER, this.props.feil, () => {
-			this.props.setValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER);
-		});
+		const feilkode: ValideringsFeilKode | undefined = erKontonummer(brukerutfyltVerdi);
+		if(feilkode !== undefined){
+			onEndretValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER, this.props.feil, () => {
+				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER);
+			});
+		} else {
+			this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
+		}
 		return feilkode;
 	}
 
@@ -83,13 +86,13 @@ class Bankinformasjon extends React.Component<Props, State> {
 		kontonummer.brukerdefinert = brukerdefinert;
 		kontonummer.brukerutfyltVerdi = "";
 		kontonummer.harIkkeKonto = false;
-		this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
 		this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
+		this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
 	}
 
 	onChangeInput(brukerutfyltVerdi: string) {
-		this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
+		this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
 		const { soknadsdata } = this.props;
 		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
 		kontonummer.brukerutfyltVerdi = brukerutfyltVerdi;
@@ -101,7 +104,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
 		kontonummer.harIkkeKonto = !kontonummer.harIkkeKonto;
 		if (kontonummer.harIkkeKonto) {
-			this.props.setValideringsfeil(null, FAKTUM_KEY_KONTONUMMER);
+			this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
 			kontonummer.brukerutfyltVerdi = "";
 		}
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
@@ -123,10 +126,11 @@ class Bankinformasjon extends React.Component<Props, State> {
 		const endreLabel: string = intl.formatMessage({id: "kontakt.system.kontonummer.endreknapp.label"});
 		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
 		const inputVerdi: string = kontonummer && kontonummer.brukerutfyltVerdi ? kontonummer.brukerutfyltVerdi : "";
+		const faktumKeyKontonummerId: string = replaceDotWithUnderscore(FAKTUM_KEY_KONTONUMMER);
 		let infotekst: string = intl.formatMessage({ id: "kontakt.system.personalia.infotekst.tekst" });
 
 		if (kontonummer.brukerdefinert) {
-			infotekst = intl.formatMessage({ id: "kontakt.kontonummer.infotekst.tekst" });
+			infotekst = intl.formatMessage({ id: FAKTUM_KEY_KONTONUMMER + ".infotekst.tekst" });
 		}
 		const restStatus = soknadsdata.restStatus.personalia.kontonummer;
 		let oppstartsModus = this.state.oppstartsModus;
@@ -147,8 +151,8 @@ class Bankinformasjon extends React.Component<Props, State> {
 					<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
 						<div>
 							<InputEnhanced
-								faktumKey="kontakt.kontonummer"
-								id="bankinfo_konto"
+								faktumKey={FAKTUM_KEY_KONTONUMMER}
+								id={faktumKeyKontonummerId}
 								className={"input--xxl faktumInput "}
 								disabled={kontonummer.harIkkeKonto}
 								verdi={inputVerdi}
@@ -169,7 +173,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 									onChange={(event: any) => this.onChangeCheckboks(event)}
 									label={
 										<div>
-											{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
+											{intl.formatHTMLMessage({ id: FAKTUM_KEY_KONTONUMMER + ".harikke" })}
 										</div>
 									}
 								/>
@@ -179,8 +183,12 @@ class Bankinformasjon extends React.Component<Props, State> {
 				);
 			}
 			default: {
+				const faktumKeyFormatted = FAKTUM_KEY_KONTONUMMER.replace(/\./g, "_");
 				return (
-					<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
+					<Sporsmal
+						faktumKey={ FAKTUM_KEY_KONTONUMMER }
+						tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}
+					>
 						<SysteminfoMedSkjema
 							skjemaErSynlig={kontonummer.brukerdefinert}
 							onVisSkjema={() => this.endreKontoBrukerdefinert(true)}
@@ -189,10 +197,10 @@ class Bankinformasjon extends React.Component<Props, State> {
 							avbrytLabel={avbrytLabel}
 							focus={false}
 							skjema={(
-								<div>
+								<div id={faktumKeyFormatted}>
 									<InputEnhanced
-										faktumKey="kontakt.kontonummer"
-										id="bankinfo_konto"
+										faktumKey={FAKTUM_KEY_KONTONUMMER}
+										id={faktumKeyKontonummerId}
 										className={"input--xxl faktumInput "}
 										disabled={kontonummer.harIkkeKonto}
 										verdi={inputVerdi}
@@ -213,7 +221,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 											onChange={(event: any) => this.onChangeCheckboks(event)}
 											label={
 												<div>
-													{intl.formatHTMLMessage({ id: "kontakt.kontonummer.harikke" })}
+													{intl.formatHTMLMessage({ id: FAKTUM_KEY_KONTONUMMER + ".harikke" })}
 												</div>
 											}
 										/>
@@ -225,7 +233,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 								<Detaljeliste>
 									<DetaljelisteElement
 										tittel={
-											intl.formatHTMLMessage({ id: "kontakt.system.kontonummer.label" })
+											intl.formatHTMLMessage({ id: FAKTUM_KEY_KONTONUMMER + ".label" })
 										}
 										verdi={kontonummer.systemverdi}
 									/>

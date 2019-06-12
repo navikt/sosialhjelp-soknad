@@ -1,54 +1,47 @@
-import { ValideringActionKey } from "./types";
 import { mod11Kontroll, konverterFdatoTilDato } from "./valideringFuncUtils";
+import {ValideringsFeilKode} from "../redux/valideringActionTypes";
 
-export function pakrevd(value: string): ValideringActionKey {
+export function pakrevd(value: string): ValideringsFeilKode | undefined {
 	return typeof value === "string" && value.length > 0
 		? undefined
-		: ValideringActionKey.PAKREVD;
+		: ValideringsFeilKode.PAKREVD;
 }
 
-export function minLengde(value: string, min: number): ValideringActionKey {
+export function minLengde(value: string, min: number): ValideringsFeilKode | undefined {
 	return typeof value === "string" && value.length >= min
 		? undefined
-		: ValideringActionKey.MIN_LENGDE;
+		: ValideringsFeilKode.MIN_LENGDE;
 }
 
-export function maksLengde(value: string, max: number): ValideringActionKey {
+export function maksLengde(value: string, max: number): ValideringsFeilKode | undefined {
 	if (typeof value !== "string") {
 		return undefined;
 	}
 	return typeof value === "string" && value.length <= max
 		? undefined
-		: ValideringActionKey.MAX_LENGDE;
+		: ValideringsFeilKode.MAX_LENGDE;
 }
 
-export function getMaksLengdeFunc(max: number) {
-	return (value: string): ValideringActionKey => maksLengde(value, max);
-}
-
-export function erTall(
-	value: string,
-	kunHeltall?: boolean
-): ValideringActionKey {
+export function erTall(value: string, kunHeltall?: boolean): ValideringsFeilKode | undefined {
 	const reg = kunHeltall ? /^[0-9]*$/i : /^[0-9,\.]*$/i;
-	return value && reg.test(value) ? undefined : ValideringActionKey.ER_TALL;
+	return value && reg.test(value) ? undefined : ValideringsFeilKode.ER_TALL;
 }
 
-export function erTelefonnummer(value: string): ValideringActionKey {
+export function erTelefonnummer(value: string): ValideringsFeilKode | undefined {
 	if (
 		typeof value !== "string" ||
 		value.length < 8 ||
 		value.length > 8 ||
 		(value.length === 8 && !/^[0-9]{8}$/i.test(value))
 	) {
-		return ValideringActionKey.ER_TELEFONNUMMER;
+		return ValideringsFeilKode.ER_TELEFONNUMMER;
 	}
 	return undefined;
 }
 
-export function erKontonummer(value: string): ValideringActionKey {
+export function erKontonummer(value: string): ValideringsFeilKode | undefined {
 	if (!value || typeof value !== "string") {
-		return ValideringActionKey.ER_KONTONUMMER;
+		return ValideringsFeilKode.ER_KONTONUMMER;
 	}
 	const kontonummer = value.replace(/\.|\ /g, "");
 	if (
@@ -58,21 +51,21 @@ export function erKontonummer(value: string): ValideringActionKey {
 			mod11Kontroll(kontonummer)
 		)
 	) {
-		return ValideringActionKey.ER_KONTONUMMER;
+		return ValideringsFeilKode.ER_KONTONUMMER;
 	}
 	return undefined;
 }
 
 /** Validerer ddmmåååå - fødselsdato i fødselsnummeret */
-export function fdato(dato: string): ValideringActionKey {
+export function fdato(dato: string): ValideringsFeilKode | undefined {
 	if (!dato || typeof dato !== "string" || !dato.match(/[0-9]{8}/)) {
-		return ValideringActionKey.ER_FDATO;
+		return ValideringsFeilKode.ER_FDATO;
 	}
 	const d = konverterFdatoTilDato(dato);
 	if (!d) {
-		return ValideringActionKey.ER_FDATO;
+		return ValideringsFeilKode.ER_FDATO;
 	} else if (d.getTime() > new Date().getTime()) {
-		return ValideringActionKey.ER_FDATO_ETTER_IDAG;
+		return ValideringsFeilKode.ER_FDATO_ETTER_IDAG;
 	}
 	return undefined;
 }

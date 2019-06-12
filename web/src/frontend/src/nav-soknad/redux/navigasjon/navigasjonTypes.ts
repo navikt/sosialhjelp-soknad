@@ -1,5 +1,3 @@
-import { NavEnhet } from "../../../digisos/data/kommuner";
-
 export enum Sider {
 	FORSIDEN = "https://www.nav.no",
 	/* tslint:disable-next-line */
@@ -19,8 +17,6 @@ export enum NavigasjonActionTypes {
 	GA_VIDERE = "navigasjon/GA_VIDERE",
 	GA_TILBAKE = "navigasjon/GA_TILBAKE",
 	TIL_SERVERFEIL = "navigasjon/TIL_SERVERFEIL",
-	TIL_BOSTED = "navigasjon/TIL_BOSTED",
-	TIL_BOSTED_ELLER_START_SOKNAD = "navigasjon/TIL_BOSTED_ELLER_START_SOKNAD",
 	TIL_KVITTERING = "navigasjon/TIL_KVITTERING",
 	TIL_MOCK = "navigasjon/TIL_MOCK"
 }
@@ -33,10 +29,8 @@ export type NavigasjonActions =
 	| TilFinnDittNavKontor
 	| TilbakeEllerForsiden
 	| GaVidere
-	| TilBosted
 	| TilDittNav
 	| TilKvittering
-	| TilBostedEllerStartSoknad
 	| TilMock;
 
 export interface TilServerfeil {
@@ -68,15 +62,6 @@ export interface TilFinnDittNavKontor {
 
 export interface TilbakeEllerForsiden {
 	type: NavigasjonActionTypes.TILBAKE_ELLER_FORSIDEN;
-}
-
-export interface TilBosted {
-	type: NavigasjonActionTypes.TIL_BOSTED;
-}
-
-export interface TilBostedEllerStartSoknad {
-	type: NavigasjonActionTypes.TIL_BOSTED_ELLER_START_SOKNAD;
-	valgtKommune?: NavEnhet;
 }
 
 export interface TilDittNav {

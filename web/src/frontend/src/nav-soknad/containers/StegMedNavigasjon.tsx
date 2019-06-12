@@ -1,29 +1,26 @@
 import * as React from "react";
-import { RouterProps, withRouter } from "react-router";
-import { InjectedIntlProps, injectIntl } from "react-intl";
-import { Location } from "history";
-import { connect } from "react-redux";
+import {RouterProps, withRouter} from "react-router";
+import {InjectedIntlProps, injectIntl} from "react-intl";
+import {Location} from "history";
+import {connect} from "react-redux";
 import DocumentTitle from "react-document-title";
-import { Innholdstittel } from "nav-frontend-typografi";
+import {Innholdstittel} from "nav-frontend-typografi";
 import ApplikasjonsfeilDialog from "../containers/ApplikasjonsfeilDialog";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
-import { SkjemaConfig, SkjemaStegType, SkjemaSteg, Faktum } from "../types";
-import { DispatchProps, SoknadAppState } from "../redux/reduxTypes";
-import {finnFaktum, getProgresjonFaktum} from "../utils";
-import { setVisBekreftMangler } from "../redux/oppsummering/oppsummeringActions";
-import {
-	clearFaktaValideringsfeil,
-	setFaktaValideringsfeil
-} from "../redux/valideringActions";
-import { Valideringsfeil, FaktumValideringsregler } from "../validering/types";
-import { validerAlleFaktum } from "../validering/utils";
-import { getIntlTextOrKey, scrollToTop } from "../utils";
-import { avbrytSoknad, sendSoknad } from "../redux/soknad/soknadActions";
-import { gaVidere, gaTilbake } from "../redux/navigasjon/navigasjonActions";
+import {SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../types";
+import {DispatchProps, SoknadAppState, ValideringsFeilKode} from "../redux/reduxTypes";
+import {setVisBekreftMangler} from "../redux/oppsummering/oppsummeringActions";
+import {getIntlTextOrKey, scrollToTop} from "../utils";
+import {avbrytSoknad, sendSoknad} from "../redux/soknad/soknadActions";
+import {gaTilbake, gaVidere} from "../redux/navigasjon/navigasjonActions";
 import {loggInfo} from "../redux/navlogger/navloggerActions";
 import AppBanner from "../components/appHeader/AppHeader";
+import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
+import {clearAllValideringsfeil, setValideringsfeil, visValideringsfeilPanel} from "../redux/valideringActions";
+import {ValideringState} from "../redux/valideringReducer";
+import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -48,15 +45,11 @@ interface InjectedRouterProps {
 }
 
 interface StateProps {
-	fakta: Faktum[];
-	progresjon: number;
+	validering: ValideringState;
 	nextButtonPending?: boolean;
-	valideringer: FaktumValideringsregler[];
-	visFeilmeldinger?: boolean;
-	valideringsfeil?: Valideringsfeil[];
-	stegValidertCounter?: number;
 	oppsummeringBekreftet?: boolean;
 	fodselsnummer: string;
+	soknadsdata: Soknadsdata;
 }
 
 type Props = OwnProps &
@@ -83,10 +76,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	}
 
 	loggAdresseTypeTilGrafana(){
-		const typeAdresseFaktum: Faktum = finnFaktum("kontakt.system.oppholdsadresse.valg", this.props.fakta);
-		const VALUE = "value";
-		if (typeAdresseFaktum && typeAdresseFaktum[VALUE]){
-			this.props.dispatch(loggInfo("klikk--" + typeAdresseFaktum[VALUE]));
+		const adresseTypeValg = this.props.soknadsdata.personalia.adresser.valg;
+		if (adresseTypeValg){
+			this.props.dispatch(loggInfo("klikk--" + adresseTypeValg));
 		}
 	}
 
@@ -105,50 +97,34 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 			return;
 		}
 
-		let valideringsfeil: Valideringsfeil[] = validerAlleFaktum(
-			this.props.fakta,
-			this.props.valideringer
-		);
-		valideringsfeil = [...valideringsfeil, ...this.props.valideringsfeil];
-		valideringsfeil = this.fjernDuplikateValideringsfeil(valideringsfeil);
+		const { feil } = this.props.validering;
 
-		if (valideringsfeil.length === 0) {
-			this.props.dispatch(clearFaktaValideringsfeil());
-			this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
+		const valgtNavEnhet = this.finnSoknadsMottaker();
+		if(aktivtSteg.stegnummer === 1 && !valgtNavEnhet) {
+			this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
+			this.props.dispatch(visValideringsfeilPanel());
 		} else {
-			this.props.dispatch(setFaktaValideringsfeil(valideringsfeil));
-		}
-	}
-
-	fjernDuplikateValideringsfeil(valideringsfeil: Valideringsfeil[]) {
-		let forrigeValideringsfeil: Valideringsfeil = null;
-		let duplikatIndex = null;
-		valideringsfeil.forEach((feil: Valideringsfeil, index: number) => {
-			if (forrigeValideringsfeil !== null &&
-				feil.faktumKey === forrigeValideringsfeil.faktumKey &&
-				feil.feilkode === forrigeValideringsfeil.feilkode) {
-				duplikatIndex = index;
-				this.fjernValideringsfeil(valideringsfeil, index);
+			if (feil.length === 0) {
+				this.props.dispatch(clearAllValideringsfeil());
+				this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
+			} else {
+				this.props.dispatch(visValideringsfeilPanel());
 			}
-			forrigeValideringsfeil = feil;
-		});
-		if (duplikatIndex) {
-			valideringsfeil = this.fjernValideringsfeil(valideringsfeil, duplikatIndex);
 		}
-		return valideringsfeil;
 	}
 
-	fjernValideringsfeil(items: Valideringsfeil[], i: number): Valideringsfeil[] {
-		return items.slice(0, i-1).concat(items.slice(i, items.length));
+	finnSoknadsMottaker() {
+		const valgtNavEnhet: NavEnhet | undefined = this.props.soknadsdata.personalia.navEnheter.find((navenhet: NavEnhet) => navenhet.valgt);
+		return valgtNavEnhet;
 	}
 
 	handleGaTilbake(aktivtSteg: number) {
-		this.props.dispatch(clearFaktaValideringsfeil());
+		this.props.dispatch(clearAllValideringsfeil());
 		this.props.dispatch(gaTilbake(aktivtSteg));
 	}
 
 	render() {
-		const { skjemaConfig, intl, children } = this.props;
+		const { skjemaConfig, intl, children, validering } = this.props;
 		const aktivtStegConfig = skjemaConfig.steg.find(
 			s => s.key === this.props.stegKey
 		);
@@ -163,6 +139,12 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 			s => s.type === SkjemaStegType.skjema
 		);
 
+
+
+
+
+		const { feil, visValideringsfeil} = validering;
+
 		return (
 			<div className="app-digisos informasjon-side">
 				<AppBanner/>
@@ -173,9 +155,8 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 					<div className="skjema-steg__feiloppsummering">
 						<Feiloppsummering
 							skjemanavn={this.props.skjemaConfig.skjemanavn}
-							valideringsfeil={this.props.valideringsfeil}
-							stegValidertCounter={this.props.stegValidertCounter}
-							visFeilliste={this.props.visFeilmeldinger}
+							valideringsfeil={feil}
+							visFeilliste={visValideringsfeil}
 						/>
 					</div>
 					<form id="soknadsskjema" onSubmit={stopEvent}>
@@ -224,19 +205,12 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 }
 
 const mapStateToProps = (state: SoknadAppState): StateProps => {
-	const faktum = getProgresjonFaktum(state.fakta.data);
-	const progresjon = parseInt((faktum.value || 1) as string, 10);
 	return {
-		fakta: state.fakta.data,
-		progresjon,
-		nextButtonPending:
-			state.fakta.progresjonPending || state.soknad.sendSoknadPending,
+		validering: state.validering,
+		nextButtonPending: state.soknad.sendSoknadPending,
 		oppsummeringBekreftet: state.oppsummering.bekreftet,
-		valideringer: state.validering.valideringsregler,
-		visFeilmeldinger: state.validering.visValideringsfeil,
-		valideringsfeil: state.validering.feil,
-		stegValidertCounter: state.validering.stegValidertCounter,
-		fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer
+		fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer,
+		soknadsdata: state.soknadsdata
 	};
 };
 

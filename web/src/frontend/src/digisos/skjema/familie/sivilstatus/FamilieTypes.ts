@@ -1,63 +1,59 @@
-// import { ForsorgerPlikt, initialForsorgerPlikt } from "../forsorgerplikt/ForsorgerPliktTypes";
-
-import { ForsorgerPlikt, initialForsorgerPlikt } from "../forsorgerplikt/ForsorgerPliktTypes";
-
-export const SIVILSTATUS_STI = "familie/sivilstatus";
+import {ForsorgerPlikt, initialForsorgerPlikt} from "../forsorgerplikt/ForsorgerPliktTypes";
 
 export enum Status {
-	GIFT = "gift",
-	UGIFT = "ugift",
-	SAMBOER = "samboer",
-	ENKE = "enke",
-	SKILT = "skilt",
-	SEPARERT = "separert"
+    GIFT = "gift",
+    UGIFT = "ugift",
+    SAMBOER = "samboer",
+    ENKE = "enke",
+    SKILT = "skilt",
+    SEPARERT = "separert"
 }
 
 export interface Navn {
-	fornavn: string;
-	mellomnavn?: string;
-	etternavn: string;
-	fulltNavn?: string;
+    fornavn: string;
+    mellomnavn?: string;
+    etternavn: string;
+    fulltNavn?: string;
 }
 
 export interface Person {
-	navn: Navn;
-	fodselsdato: null | string;
-	personnummer: string;
+    navn: Navn;
+    fodselsdato: null | string;
+    personnummer: string;
 
 }
 
 export interface Sivilstatus {
-	kildeErSystem: boolean;
-	sivilstatus: Status;
-	ektefelle?: Person;
-	harDiskresjonskode?: boolean;
-	borSammenMed?: boolean;
-	erFolkeregistrertSammen?: boolean;
+    kildeErSystem: boolean;
+    sivilstatus: Status;
+    ektefelle?: Person;
+    harDiskresjonskode?: boolean;
+    borSammenMed?: boolean;
+    erFolkeregistrertSammen?: boolean;
 }
 
 export interface Familie {
-	sivilstatus: Sivilstatus;
-	forsorgerplikt: ForsorgerPlikt;
+    sivilstatus: Sivilstatus;
+    forsorgerplikt: ForsorgerPlikt;
 }
 
 const initialSivilstatusState: Sivilstatus = {
-	kildeErSystem: false,
-	sivilstatus: Status.UGIFT
+    kildeErSystem: false,
+    sivilstatus: Status.UGIFT
 };
 
 export const initialFamilieStatus: Familie = {
-	sivilstatus: initialSivilstatusState,
-	forsorgerplikt: initialForsorgerPlikt
+    sivilstatus: initialSivilstatusState,
+    forsorgerplikt: initialForsorgerPlikt
 };
 
 export const initialPerson: Person = {
-	navn: {
-		fornavn: "",
-		mellomnavn: "",
-		etternavn: "",
-		fulltNavn: ""
-	},
-	fodselsdato: null,
-	personnummer: null
+    navn: {
+        fornavn: "",
+        mellomnavn: "",
+        etternavn: "",
+        fulltNavn: ""
+    },
+    fodselsdato: null,
+    personnummer: null
 };

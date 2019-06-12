@@ -1,7 +1,7 @@
-import { REST_STATUS } from "../../types";
-import { Reducer, SoknadState } from "../reduxTypes";
+import {REST_STATUS} from "../../types";
+import {Reducer, SoknadState} from "../reduxTypes";
 
-import { SoknadActionTypes, SoknadActionTypeKeys } from "./soknadActionTypes";
+import {SoknadActionTypeKeys, SoknadActionTypes} from "./soknadActionTypes";
 
 export const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
@@ -17,7 +17,9 @@ export const defaultState: SoknadState = {
 		brukerBehandlingId: "",
 		fakta: []
 	},
-	gjenopptattSoknad: true
+	behandlingsId: "",
+	gjenopptattSoknad: true,
+	valgtSoknadsmottaker: undefined,
 };
 
 const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultState, action) => {
@@ -68,7 +70,8 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultS
 					brukerBehandlingId: action.brukerBehandlingId
 				},
 				restStatus: REST_STATUS.OK,
-				gjenopptattSoknad: false
+				gjenopptattSoknad: false,
+				behandlingsId: action.brukerBehandlingId
 			};
 		case SoknadActionTypeKeys.HENT_SOKNAD:
 			return {
@@ -76,11 +79,12 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultS
 				restStatus: REST_STATUS.PENDING
 			};
 		case SoknadActionTypeKeys.HENT_SOKNAD_OK:
-			const { brukerBehandlingId, fakta } = action.data;
+			const { xsrfCookieReceived, brukerBehandlingId } = action;
 			return {
 				...state,
-				data: { brukerBehandlingId, fakta},
-				restStatus: REST_STATUS.OK
+				data: { brukerBehandlingId, fakta: []},
+				restStatus: xsrfCookieReceived ? REST_STATUS.OK : REST_STATUS.FEILET,
+				behandlingsId: action.brukerBehandlingId
 			};
 		case SoknadActionTypeKeys.SEND_SOKNAD:
 			return {
@@ -122,6 +126,17 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultS
 			return {
 				...state,
 				avbrytSoknadSjekkAktiv: action.aktiv
+			};
+		case SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS: {
+			return {
+				...state
+			}
+		}
+		case SoknadActionTypeKeys.OPPDATER_SOKNADSMOTTAKER_STATUS:
+			const { valgtSoknadsmottaker } = action;
+			return {
+				...state,
+				valgtSoknadsmottaker
 			};
 		default:
 			return state;
