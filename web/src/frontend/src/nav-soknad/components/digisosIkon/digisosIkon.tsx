@@ -1,6 +1,7 @@
 import * as React from "react";
 import SVG from "react-inlinesvg";
 import SearchAddress from "./SearchAddress";
+import {getAbsoluteBasename} from "../../../index";
 
 export type ikoner =
 	| "lastOpp"
@@ -27,7 +28,7 @@ const DigisosIkon: React.StatelessComponent<Props & {}> = ({className, navn, sty
 		return (
 			<SVG style={style}
 			     className={className || ""}
-			     src={"/soknadsosialhjelp/statisk/bilder/ikon_" + navn + ".svg"}
+			     src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_${navn}.svg`}
 			/>
 		);
 	}

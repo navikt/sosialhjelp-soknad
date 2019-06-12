@@ -3,6 +3,7 @@ import { FormattedHTMLMessage, FormattedMessage } from "react-intl";
 import { Panel } from "nav-frontend-paneler";
 import { Innholdstittel, Undertittel } from "nav-frontend-typografi";
 import SVG from "../../nav-soknad/components/svg/SVGImage";
+import {getAbsoluteBasename} from "../../index";
 
 interface Props {
 	prop?: any;
@@ -38,7 +39,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 		<Panel className="panel--noPadding">
 			<div className="panelIllustrasjon">
 				<img
-					src="/soknadsosialhjelp/statisk/bilder/kvittering-illustrasjon.svg"
+					src={`/${getAbsoluteBasename()}/statisk/bilder/kvittering-illustrasjon.svg`}
 					alt=""
 					className="kvittering-illustration"
 				/>
@@ -46,7 +47,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 			<div className="panel-padding">
 				<div className="blokk-xl">
 					<Avsnitt
-						icon="/soknadsosialhjelp/statisk/bilder/snakkebobler.svg"
+						icon={`/${getAbsoluteBasename()}/statisk/bilder/snakkebobler.svg`}
 						tittelId="kvittering.samtale.tittel"
 						tekstId="kvittering.samtale.tekst"
 					/>
@@ -54,7 +55,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 
 				<div className="blokk-xl">
 					<Avsnitt
-						icon="/soknadsosialhjelp/statisk/bilder/kalender.svg"
+						icon={`/${getAbsoluteBasename()}/statisk/bilder/kalender.svg`}
 						tittelId="kvittering.saksbehandling.tittel"
 						tekstId="kvittering.saksbehandling.tekst"
 					/>
@@ -62,7 +63,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 
 				<div className="blokk-xl">
 					<Avsnitt
-						icon="/soknadsosialhjelp/statisk/bilder/person.svg"
+						icon={`/${getAbsoluteBasename()}/statisk/bilder/person.svg`}
 						tittelId="kvittering.situasjon.tittel"
 						tekstId="kvittering.situasjon.tekst"
 					/>

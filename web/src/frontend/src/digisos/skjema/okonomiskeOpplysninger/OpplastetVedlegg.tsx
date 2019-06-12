@@ -4,6 +4,7 @@ import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
 import AriaText from "../../../nav-soknad/components/aria/AriaText";
 import {Fil} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+import {getAbsoluteBasename} from "../../../index";
 
 interface Props {
     fil: Fil;
@@ -38,7 +39,7 @@ export default class OpplastetVedlegg extends React.Component<AllProps, {}> {
                         <AriaText>Slett {fil.filNavn}</AriaText>
                         <SVG
                             className="vedleggsliste__slett_ikon"
-                            src="/soknadsosialhjelp/statisk/bilder/ikon_trashcan.svg"
+                            src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_trashcan.svg`}
                         />
                     </button>
                 </span>
