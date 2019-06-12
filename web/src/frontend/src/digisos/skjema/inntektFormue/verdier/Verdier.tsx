@@ -154,7 +154,7 @@ export class VerdierView extends React.Component<Props, State> {
                             faktumKey={VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY}
                             labelId={VERDIER + ".true.type.annet.true.beskrivelse.label"}
                             maxLength={MAX_CHARS}
-                            value={verdier.beskrivelseAvAnnet}
+                            value={verdier.beskrivelseAvAnnet ? verdier.beskrivelseAvAnnet : "" }
                         />
                     </NivaTreSkjema>
                 </Sporsmal>
