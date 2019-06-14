@@ -1,5 +1,5 @@
 /* tslint:disable */
-import { REST_FEIL } from "../types/restFeilTypes";
+import {REST_FEIL} from "../types/restFeilTypes";
 import {loggFeil} from "../redux/navlogger/navloggerActions";
 import {put} from "redux-saga/effects";
 import {push} from "react-router-redux";
@@ -63,12 +63,8 @@ export function getRedirectPathname(): string {
 }
 
 export function getLoginServiceUrl(): string {
-
 	const host = window.location.host;
-	const currentOrigin = window.location.origin;
-	const gotoParameter = "?goto=" + window.location.pathname;
-	const redirectPath = currentOrigin + getRedirectPathname() + gotoParameter;
-	const redirectParam = '?redirect=' + redirectPath;
+    const redirectParam = getRedirectPath()
 
 	if (host === hostAdresseProd) {
 		return loginServiceUrlProd + redirectParam;
@@ -86,6 +82,13 @@ export function getLoginServiceUrl(): string {
 
 	loggFeil("host er feil / ukjent. Host: " + host);
 	return loginServiceUrlProd + redirectParam;
+}
+
+export function getRedirectPath(): string {
+	const currentOrigin = window.location.origin;
+	const gotoParameter = "?goto=" + window.location.pathname;
+	const redirectPath = currentOrigin + getRedirectPathname() + gotoParameter;
+	return '?redirect=' + redirectPath;
 }
 
 export function getLoginServiceLogoutUrl(){
@@ -311,7 +314,9 @@ function sjekkStatuskode(response: Response) {
 	if (response.status === 401){
 		if(window.location.pathname !== getRedirectPathname()){
 			if (!linkVisited){
-				window.location.href = getLoginServiceUrl();
+				response.json().then(r => {
+					window.location.href = r.loginUrl + getRedirectPath();
+				});
 			}
 		} else {
 			put(push(Sider.SERVERFEIL));
