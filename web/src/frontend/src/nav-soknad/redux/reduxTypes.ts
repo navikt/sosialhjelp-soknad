@@ -16,6 +16,7 @@ import {OpplysningerModel} from "./okonomiskeOpplysninger/opplysningerTypes";
 import {FilState} from "./fil/filTypes";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {EttersendelseState} from "./ettersendelse/ettersendelseTypes";
+import {AuthenticationState} from "./authentication/authenticationTypes";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -44,7 +45,8 @@ export interface SoknadAppState {
     init: InitState;
     mockData: MockState;
     okonomiskeOpplysninger: OpplysningerModel;
-    filopplasting: FilState
+    filopplasting: FilState;
+    authentication: AuthenticationState;
 }
 
 export interface SoknadState {

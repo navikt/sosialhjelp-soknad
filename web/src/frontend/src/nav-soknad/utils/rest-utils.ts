@@ -1,5 +1,8 @@
 /* tslint:disable */
 import {REST_FEIL} from "../types/restFeilTypes";
+import {put} from "redux-saga/effects";
+import {push} from "react-router-redux";
+import {Sider} from "../redux/navigasjon/navigasjonTypes";
 import {erMockMiljoEllerDev} from "./index";
 
 export function erDev(): boolean {
@@ -41,6 +44,17 @@ function getAbsoluteApiUrl() {
 
 function determineCredentialsParameter() {
     return location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin";
+}
+
+export function getRedirectPathname(): string {
+    return '/soknadsosialhjelp/link';
+}
+
+export function getRedirectPath(): string {
+    const currentOrigin = window.location.origin;
+    const gotoParameter = "?goto=" + window.location.pathname;
+    const redirectPath = currentOrigin + getRedirectPathname() + gotoParameter;
+    return '?redirect=' + redirectPath;
 }
 
 function getServletBaseUrl(): string {
@@ -222,6 +236,20 @@ export function toJson<T>(response: Response): Promise<T> {
 }
 
 function sjekkStatuskode(response: Response) {
+    const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
+
+    if (response.status === 401){
+        if(window.location.pathname !== getRedirectPathname()){
+            if (!window[AUTH_LINK_VISITED]) {
+                response.json().then(r => {
+                    window.location.href = r.loginUrl + getRedirectPath();
+                });
+            }
+        } else {
+            put(push(Sider.SERVERFEIL));
+        }
+        return response;
+    }
     if (response.status >= 200 && response.status < 300) {
         return response;
     }

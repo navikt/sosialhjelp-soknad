@@ -20,6 +20,7 @@ import MockReducer from "../mock/mockReducer";
 import SoknadsdataReducer from "../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import OpplysningerReducer from "../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerReducer";
 import FilReducer from "../../nav-soknad/redux/fil/filReducer";
+import AuthenticationReducer from "../../nav-soknad/redux/authentication/authenticationReducer";
 
 export interface State extends SoknadAppState {
 	synligefakta: SynligeFaktaState;
@@ -44,7 +45,8 @@ const reducers = combineReducers({
 	mockData: MockReducer,
 	soknadsdata: SoknadsdataReducer,
 	okonomiskeOpplysninger: OpplysningerReducer,
-	filopplasting: FilReducer
+	filopplasting: FilReducer,
+	authentication: AuthenticationReducer
 });
 
 export default reducers;
