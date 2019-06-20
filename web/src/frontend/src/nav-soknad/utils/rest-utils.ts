@@ -40,7 +40,11 @@ function getAbsoluteApiUrl() {
 }
 
 function determineCredentialsParameter() {
-    return location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin";
+    return location.origin.indexOf("nais.oera") || erDev() || isRunningOnTjenesterInAnyEnvironment() || "heroku" ? "include" : "same-origin";
+}
+
+function isRunningOnTjenesterInAnyEnvironment() {
+    return location.origin.indexOf("tjenester") && location.origin.indexOf("nav.no")
 }
 
 function getServletBaseUrl(): string {
