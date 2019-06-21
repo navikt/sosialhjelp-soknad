@@ -283,7 +283,6 @@ export function detekterInternFeilKode(feilKode: string): string {
 export function lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(brukerbehandlingId: string) {
     if (erMockMiljoEllerDev()) {
         const url = getApiBaseUrl() + "internal/mock/tjeneste/downloadzip/" + brukerbehandlingId;
-        // window.open(url);
-        console.warn(url);
+        window.open(url);
     }
 }
