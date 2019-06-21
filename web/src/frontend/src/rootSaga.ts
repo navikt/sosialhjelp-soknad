@@ -14,6 +14,7 @@ import vedleggSaga from "./nav-soknad/redux/vedlegg/vedleggSaga";
 import ettersendelseSaga from "./nav-soknad/redux/ettersendelse/ettersendelseSaga";
 import filSaga from "./nav-soknad/redux/fil/filSaga";
 import opplysningerSaga from "./nav-soknad/redux/okonomiskeOpplysninger/opplysningerSaga";
+import authenticationSaga from "./nav-soknad/redux/authentication/authenticationSaga";
 
 export default function* rootSaga() {
 	yield all([
@@ -32,5 +33,6 @@ export default function* rootSaga() {
 		vedleggSaga(),
 		opplysningerSaga(),
 		ettersendelseSaga(),
+		authenticationSaga(),
 	]);
 }

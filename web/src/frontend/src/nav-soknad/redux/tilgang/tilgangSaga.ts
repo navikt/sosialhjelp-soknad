@@ -7,7 +7,7 @@ import {
 	hentTilgangFeilet
 } from "./tilgangActions";
 
-function* hentTilgangSaga(): IterableIterator<any> {
+export function* hentTilgangSaga(): any {
 	try {
 		yield put(henterTilgang());
 		const response: TilgangApiResponse = yield call(
