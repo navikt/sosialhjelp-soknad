@@ -17,6 +17,7 @@ import { Panel } from "nav-frontend-paneler";
 import { opprettSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
+import {getAbsoluteBasename} from "../../index";
 
 interface StateProps {
 	harTilgang: boolean;
@@ -37,7 +38,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 
 	componentDidMount() {
 		skjulToppMeny();
-		fetchToJson("informasjon/personalia").then((result: any) => {
+		fetchToJson("informasjon/fornavn").then((result: any) => {
 			const FORNAVN = "fornavn";
 			this.setState({fornavn: result[FORNAVN]});
 		}).catch((e: any) => {
@@ -81,7 +82,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 										{this.renderHilsen()}
 										<FormattedMessage id="informasjon.hilsen.tittel"/>
 									</Snakkeboble>
-									<img src="/soknadsosialhjelp/statisk/bilder/ella_blunk.svg" alt="" />
+									<img src={`/${getAbsoluteBasename()}/statisk/bilder/ella_blunk.svg`} alt="" />
 								</span>
 
 								<Panel className="informasjon-viktig">

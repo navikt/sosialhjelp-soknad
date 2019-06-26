@@ -3,18 +3,18 @@ import {
     connectSoknadsdataContainer, onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
+import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
-import { Utbetalinger } from "./utbetalingerTypes";
+import {Utbetalinger} from "./utbetalingerTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
-import { REST_STATUS } from "../../../../nav-soknad/types";
-import {ValideringActionKey} from "../../../../nav-soknad/validering/types";
+import {REST_STATUS} from "../../../../nav-soknad/types";
 import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
+import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";
@@ -52,7 +52,7 @@ export class UtbetalingerView extends React.Component<Props, State> {
     handleClickJaNeiSpsm(verdi: boolean) {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const restStatus = soknadsdata.restStatus.inntekt.utbetalinger;
-        if(restStatus === REST_STATUS.OK) {
+        if (restStatus === REST_STATUS.OK) {
             const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
             utbetalinger.bekreftelse = verdi;
             if (!verdi) {
@@ -71,7 +71,7 @@ export class UtbetalingerView extends React.Component<Props, State> {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
         utbetalinger[idToToggle] = !utbetalinger[idToToggle];
-        if (!utbetalinger.bekreftelse || !utbetalinger.annet){
+        if (!utbetalinger.bekreftelse || !utbetalinger.annet) {
             utbetalinger.beskrivelseAvAnnet = "";
         }
         this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
@@ -83,23 +83,26 @@ export class UtbetalingerView extends React.Component<Props, State> {
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
         utbetalinger.beskrivelseAvAnnet = value;
         this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
+        this.validerTekstfeltVerdi(value, TEXT_AREA_ANNET_FAKTUM_KEY);
     }
 
     onBlurTekstfeltAnnet() {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
         const beskrivelseAvAnnet = utbetalinger.beskrivelseAvAnnet;
-        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, TEXT_AREA_ANNET_FAKTUM_KEY);
+        const feilmeldingAnnet: ValideringsFeilKode = this.validerTekstfeltVerdi(beskrivelseAvAnnet, TEXT_AREA_ANNET_FAKTUM_KEY);
 
         if (!feilmeldingAnnet) {
             this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
         }
     }
 
-    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
-        const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
+    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode {
+        const feilkode: ValideringsFeilKode = maksLengde(verdi, MAX_CHARS);
         onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
-            this.props.setValideringsfeil(feilkode, faktumKey);
+            (feilkode) ?
+                this.props.setValideringsfeil(feilkode, faktumKey) :
+                this.props.clearValideringsfeil(faktumKey);
         });
         return feilkode;
     }
@@ -122,7 +125,6 @@ export class UtbetalingerView extends React.Component<Props, State> {
         const {soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
         const restStatus = soknadsdata.restStatus.inntekt.utbetalinger;
-        const textAreaId = "utbetalinger_annet_textarea";
         let oppstartsModus = this.state.oppstartsModus;
         if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
             oppstartsModus = false;
@@ -148,14 +150,14 @@ export class UtbetalingerView extends React.Component<Props, State> {
                         size="small"
                     >
                         <TextareaEnhanced
-                            id={textAreaId}
+                            id={replaceDotWithUnderscore(TEXT_AREA_ANNET_FAKTUM_KEY)}
                             placeholder=""
                             onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}
                             onBlur={() => this.onBlurTekstfeltAnnet()}
                             faktumKey={TEXT_AREA_ANNET_FAKTUM_KEY}
                             labelId={UTBETALINGER + ".true.type.annet.true.beskrivelse.label"}
                             maxLength={MAX_CHARS}
-                            value={utbetalinger.beskrivelseAvAnnet}
+                            value={utbetalinger.beskrivelseAvAnnet ? utbetalinger.beskrivelseAvAnnet : ""}
                         />
                     </NivaTreSkjema>
                 </Sporsmal>

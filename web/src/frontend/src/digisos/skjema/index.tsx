@@ -19,12 +19,12 @@ import Steg7 from "./utgifterGjeld";
 import Steg8 from "./okonomiskeOpplysninger";
 import Oppsummering from "./oppsummering";
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
-import LoadContainer from "../../nav-soknad/components/loadContainer/LoadContainer";
 import {Faktum} from "../../nav-soknad/types";
 import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
-import {hentSoknad} from "../../nav-soknad/redux/soknad/soknadActions";
 import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
+import {hentSoknad} from "../../nav-soknad/redux/soknad/soknadActions";
+import NavFrontendSpinner from "nav-frontend-spinner";
 
 interface OwnProps {
     match: any;
@@ -37,6 +37,7 @@ interface StateProps {
     gyldigUrl: boolean;
     steg: string;
     brukerbehandlingId: string;
+    behandingsIdPaStore: string;
 }
 
 interface UrlParams {
@@ -59,14 +60,17 @@ class SkjemaRouter extends React.Component<Props, {}> {
     }
 
     render() {
-        const {gyldigUrl, restStatus} = this.props;
 
-        if (!gyldigUrl) {
-            return <SideIkkeFunnet/>;
-        }
-        const path = "/skjema/:brukerBehandlingId";
-        return (
-            <LoadContainer restStatus={restStatus}>
+        const { behandingsIdPaStore } = this.props;
+
+        if (behandingsIdPaStore && behandingsIdPaStore !== ""){
+            const {gyldigUrl} = this.props;
+
+            if (!gyldigUrl) {
+                return <SideIkkeFunnet/>;
+            }
+            const path = "/skjema/:brukerBehandlingId";
+            return (
                 <Switch>
                     <Route path={`${path}/1`} component={Steg1}/>
                     <Route path={`${path}/2`} component={Steg2}/>
@@ -79,8 +83,15 @@ class SkjemaRouter extends React.Component<Props, {}> {
                     <Route path={`${path}/9`} component={Oppsummering}/>
                     <Route component={SideIkkeFunnet}/>
                 </Switch>
-            </LoadContainer>
-        );
+            );
+        }
+
+        return (
+            <div className="application-spinner">
+                <NavFrontendSpinner type="XXL" />
+            </div>
+        )
+
     }
 }
 
@@ -97,7 +108,8 @@ const mapStateToProps = (
         restStatus: state.soknad.restStatus,
         steg,
         brukerbehandlingId,
-        gyldigUrl: brukerbehandlingId !== undefined && steg !== undefined
+        gyldigUrl: brukerbehandlingId !== undefined && steg !== undefined,
+        behandingsIdPaStore: state.soknad.behandlingsId
     };
 };
 

@@ -1,4 +1,4 @@
-import {Dispatch} from "../reduxTypes";
+import {Dispatch, Valideringsfeil} from "../reduxTypes";
 import {fetchToJson} from "../../utils/rest-utils";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {
@@ -9,7 +9,6 @@ import {
     OpplysningType
 } from "./opplysningerTypes";
 import {getOpplysningerUrl} from "./opplysningerUtils";
-import {Valideringsfeil} from "../../validering/types";
 import {loggFeil} from "../navlogger/navloggerActions";
 
 

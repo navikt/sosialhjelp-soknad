@@ -1,36 +1,19 @@
-import { Faktum } from "../../nav-soknad/types/navSoknadTypes";
-import { finnFaktum } from "../../nav-soknad/utils/faktumUtils";
+import {Soknadsdata} from "../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {NavEnhet} from "../skjema/personopplysninger/adresse/AdresseTypes";
 
-const enum EnhetsType {
-	KOMMUNE = "KOMMUNE",
-	BYDEL = "BYDEL"
+function finnSoknadsMottaker(soknadsdata: Soknadsdata) {
+	const valgtNavEnhet: NavEnhet | undefined = soknadsdata.personalia.navEnheter.find((navenhet: NavEnhet) => navenhet.valgt);
+	return valgtNavEnhet;
 }
 
-interface NavEnhet {
-	id: string;
-	orgnr: string;
-	navn: string;
-	kommuneId?: string;
-	fulltNavn: string;
-	type: EnhetsType;
-	features: any;
-}
-
-function finnValgtEnhetsNavn(fakta: Faktum[]): string {
-	const KOMMUNENAVN = "kommunenavn";
-	const ENHETSNAVN = "enhetsnavn";
-
-	const soknadsmottakerFaktum: Faktum = finnFaktum("soknadsmottaker", fakta);
-	if (soknadsmottakerFaktum && soknadsmottakerFaktum.properties &&
-		soknadsmottakerFaktum.properties[ENHETSNAVN] && soknadsmottakerFaktum.properties[KOMMUNENAVN]) {
-		return soknadsmottakerFaktum.properties[ENHETSNAVN] +
-			", "  + soknadsmottakerFaktum.properties[KOMMUNENAVN] + " kommune";
+function finnValgtEnhetsNavn(soknadsdata: Soknadsdata): string {
+	const soknadsmottaker = finnSoknadsMottaker(soknadsdata);
+	if (typeof soknadsmottaker !== 'undefined') {
+		return soknadsmottaker.enhetsnavn + ", " + soknadsmottaker.kommunenavn + " kommune";
 	}
 	return "";
 }
 
 export {
-	EnhetsType,
-	NavEnhet,
 	finnValgtEnhetsNavn
 };

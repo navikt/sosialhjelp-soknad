@@ -1,6 +1,5 @@
 import {RestStatus} from "../../types";
-import {Valideringsfeil} from "../../validering/types";
-
+import {Valideringsfeil} from "../valideringActionTypes";
 
 export interface OpplysningerModel {
     restStatus: RestStatus;

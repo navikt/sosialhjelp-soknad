@@ -7,9 +7,8 @@ import {
     injectIntl,
     InjectedIntlProps
 } from "react-intl";
-import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema/index";
-import {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {
     connectSoknadsdataContainer,
@@ -20,6 +19,8 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import {REST_STATUS} from "../../../../nav-soknad/types";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
+
+const FAKTUM_KEY_NAV_YTELSER = "navytelser";
 
 class NavYtelserView extends React.Component<Props, {}> {
 
@@ -58,8 +59,13 @@ class NavYtelserView extends React.Component<Props, {}> {
         const harUtbetalinger: boolean = systeminntekter && systeminntekter.length > 0;
 
         return (
-            <SporsmalFaktum faktumKey="navytelser.tittel" style="system"
-                            legendTittelStyle={LegendTittleStyle.FET_NORMAL} visLedetekst={true}>
+            <Sporsmal
+                faktumKey= { FAKTUM_KEY_NAV_YTELSER + ".tittel" }
+                sprakNokkel={FAKTUM_KEY_NAV_YTELSER}
+                style="system"
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+                visLedetekst={true}
+            >
                 {!visAnimerteStreker &&
                 <SysteminfoMedSkjema>
                     {harUtbetalinger &&
@@ -77,7 +83,7 @@ class NavYtelserView extends React.Component<Props, {}> {
                 {visAnimerteStreker &&
                 <TextPlaceholder lines={3}/>
                 }
-            </SporsmalFaktum>
+            </Sporsmal>
         )
     }
 }

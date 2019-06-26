@@ -1,6 +1,7 @@
 import * as React from "react";
 import SVG from "react-inlinesvg";
 import EllaForfra from "../../../nav-soknad/components/svg/EllaForfra";
+import {getAbsoluteBasename} from "../../../index";
 
 const BannerEttersendelse: React.StatelessComponent<{ children: React.ReactNode } & {}> = ({ children }) => {
 	return (
@@ -17,7 +18,7 @@ const BannerEttersendelse: React.StatelessComponent<{ children: React.ReactNode 
 					</span>
 					<SVG
 						className="banner-ettersendelse__ettersendelse__innhold__laptop"
-						src={"/soknadsosialhjelp/statisk/bilder/illustrasjon_laptop.svg"}
+						src={`/${getAbsoluteBasename()}/statisk/bilder/illustrasjon_laptop.svg`}
 					/>
 				</div>
 			</div>

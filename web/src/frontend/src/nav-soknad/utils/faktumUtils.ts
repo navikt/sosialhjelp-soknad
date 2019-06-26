@@ -10,24 +10,6 @@ import {
 
 import { getIntlTextOrKey, getIntlInfoTekst, getIntlHjelpeTekst, getIntlText } from "./intlUtils";
 
-export const radioCheckKeys = (key: string) => ({
-	faktum: `${key}`,
-	sporsmal: `${key}.sporsmal`,
-	hjelpetekst: `${key}.hjelpetekst`
-});
-
-export const inputKeys = (key: string) => ({
-	faktum: `${key}`,
-	sporsmal: `${key}.sporsmal`,
-	pattern: `${key}.pattern`,
-	hoyretekst: `${key}.hoyretekst`,
-	venstretekst: `${key}.venstretekst`
-});
-
-export function faktumIsSelected(value: string) {
-	return value === "true";
-}
-
 export function getFaktumSporsmalTekst(
 	intl: InjectedIntl,
 	key: string
@@ -88,15 +70,6 @@ export function getFaktumVerdi(fakta: Faktum[], key: string): string {
 	return faktum.value;
 }
 
-export function harFaktumVerdi(fakta: Faktum[], key: string): boolean {
-	const faktum = finnFaktum(key, fakta);
-	return faktum && faktum.value && faktum.value !== "";
-}
-
-export function eksistererFaktum(fakta: Faktum[], key: string): boolean {
-	return finnFaktum(key, fakta) != null;
-}
-
 export function getPropertyVerdi(
 	fakta: any,
 	key: string,
@@ -111,12 +84,6 @@ export function getFaktumPropertyVerdi(faktum: Faktum, property: string) {
 	return faktum ? faktum.properties[property] : "";
 }
 
-export function oppdaterFaktumMedProperties(
-	faktum: Faktum,
-	properties: object
-): Faktum {
-	return { ...faktum, properties: { ...properties } };
-}
 
 export function oppdaterFaktumMedVerdier(
 	faktum: Faktum,
@@ -156,13 +123,6 @@ export function finnFaktum(
 	return faktum[0];
 }
 
-export function getProgresjonFaktum(fakta: Faktum[]) {
-	return finnFaktum("progresjon", fakta);
-}
-
-export function getPersonaliaFaktum(fakta: Faktum[]) {
-	return finnFaktum("personalia", fakta);
-}
 
 export function finnFaktumMedId(
 	faktumKey: string,
@@ -174,21 +134,3 @@ export function finnFaktumMedId(
 	})[0];
 }
 
-export function finnFakta(faktumKey: string, fakta: Faktum[]): Faktum[] {
-	return fakta.filter(faktum => faktum.key === faktumKey);
-}
-
-export function harBrukerBesvartFaktum(fakta: Faktum[], faktaKeys: string[]) {
-	const besvarte = faktaKeys.filter(key => {
-		const faktum = finnFaktum(key, fakta);
-		if (faktum) {
-			return (
-				faktum.value !== undefined &&
-				faktum.value !== null &&
-				faktum.value !== ""
-			);
-		}
-		return false;
-	});
-	return besvarte.length > 0;
-}

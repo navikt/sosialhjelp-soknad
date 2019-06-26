@@ -1,6 +1,5 @@
 import "raf/polyfill";
 import {
-	gaVidereSaga,
 	getHistoryLength,
 	navigateTo,
 	tilbakeEllerForsidenSaga,
@@ -8,20 +7,15 @@ import {
 	tilServerfeilSaga,
 	tilStegSaga
 } from "./navigasjonSaga";
-import { call, put, select, take } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import {
-	GaVidere,
 	Sider,
 	TilSteg
 } from "./navigasjonTypes";
 import { goBack, push } from "react-router-redux";
 import { SagaIterator } from "redux-saga";
-import { gaVidere, tilSteg } from "./navigasjonActions";
-import { lagreFaktum, setFaktum } from "../fakta/faktaActions";
-import { Faktum } from "../../types/navSoknadTypes";
-import { oppdaterFaktumMedVerdier } from "../../utils/faktumUtils";
-import { FaktumActionTypeKeys } from "../fakta/faktaActionTypes";
-import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
+import { tilSteg } from "./navigasjonActions";
+import { selectBrukerBehandlingId } from "../selectors";
 import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 
 const ferdig = (saga: SagaIterator) => {
@@ -117,100 +111,6 @@ describe("navigasjonSaga", () => {
 				value: put(push("/skjema/id1234/1"))
 			});
 		});
-	});
-
-	describe("gaVidereSaga - lagreFaktum", () => {
-		const progresjonFaktum: Faktum = {
-			faktumId: 1,
-			value: "1",
-			soknadId: 1,
-			parrentFaktum: null,
-			key: "progresjon",
-			properties: []
-		};
-		const oppdatertFaktum: Faktum = {
-			faktumId: 1,
-			value: "2",
-			soknadId: 1,
-			parrentFaktum: null,
-			key: "progresjon",
-			properties: []
-		};
-		const action = gaVidere(1);
-		const saga = gaVidereSaga(action as GaVidere);
-
-		it("select selectProgresjonFaktum", () => {
-			expect(saga.next(false)).toEqual({
-				done: false,
-				value: select(selectProgresjonFaktum)
-			});
-		});
-
-		it("call oppdaterFaktumMedVerdier", () => {
-			expect(saga.next(progresjonFaktum)).toEqual({
-				done: false,
-				value: call(oppdaterFaktumMedVerdier, progresjonFaktum, "2")
-			});
-		});
-
-		it("put setFaktum", () => {
-			expect(saga.next(oppdatertFaktum)).toEqual({
-				done: false,
-				value: put(setFaktum(oppdatertFaktum))
-			});
-		});
-
-		it("put lagreFaktum", () => {
-			expect(saga.next()).toEqual({
-				done: false,
-				value: put(lagreFaktum(oppdatertFaktum))
-			});
-		});
-
-		it("take LAGRET_FAKTUM", () => {
-			expect(saga.next()).toEqual({
-				done: false,
-				value: take([FaktumActionTypeKeys.LAGRET_FAKTUM])
-			});
-		});
-
-		it("put tilSteg", () => {
-			expect(saga.next()).toEqual({
-				done: false,
-				value: put(tilSteg(2))
-			});
-		});
-
-		it("ferdig", () => ferdig(saga));
-	});
-
-	describe("gaVidereSaga - hopp over lagreFaktum", () => {
-		const progresjonFaktum: Faktum = {
-			faktumId: 1,
-			value: "2",
-			soknadId: 1,
-			parrentFaktum: null,
-			key: "progresjon",
-			properties: []
-		};
-		const action = gaVidere(1);
-		const saga = gaVidereSaga(action as GaVidere);
-
-		it("select selectProgresjonFaktum", () => {
-			expect(saga.next()).toEqual({
-				done: false,
-				value: select(selectProgresjonFaktum)
-			});
-		});
-
-		it("put tilSteg", () => {
-			expect(saga.next(progresjonFaktum)).toEqual({
-				done: false,
-				value: put(tilSteg(2))
-			});
-		});
-
-		it("ferdig", () => ferdig(saga));
 	});
 
 });

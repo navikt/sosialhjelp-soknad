@@ -4,11 +4,11 @@ import {
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
-import SporsmalFaktum from "../../../../nav-soknad/faktum/SporsmalFaktum";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
+import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -34,10 +34,11 @@ class BasisPersonaliaView extends React.Component<Props, {}> {
 		const visAnimerteStreker = restStatus !== REST_STATUS.OK;
 
 		return (
-			<SporsmalFaktum
+			<Sporsmal
 				faktumKey="kontakt.system.personalia"
 				style="system"
 				visLedetekst={visAnimerteStreker !== true}
+				sprakNokkel="kontakt.system.personalia"
 			>
 				{visAnimerteStreker !== true && basisPersonalia && (
 					<Detaljeliste>
@@ -63,7 +64,7 @@ class BasisPersonaliaView extends React.Component<Props, {}> {
 				{visAnimerteStreker && (
 					<TextPlaceholder lines={3} />
 				)}
-			</SporsmalFaktum>
+			</Sporsmal>
 		);
 	}
 }

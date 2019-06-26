@@ -1,6 +1,5 @@
 import * as React from "react";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
-import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
 import Sporsmal  from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
@@ -15,6 +14,7 @@ import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdata
 import { Arbeidsforhold } from "./arbeidTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {REST_STATUS} from "../../../../nav-soknad/types";
+import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -36,7 +36,7 @@ class ArbeidView extends React.Component<Props, State> {
 
 	componentDidMount() {
 		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ARBEID);
-		this.props.setValideringsfeil(null, FAKTUM_KEY_KOMMENTARER);
+		this.props.clearValideringsfeil(FAKTUM_KEY_KOMMENTARER);
 	}
 
 	componentWillUpdate() {
@@ -52,22 +52,27 @@ class ArbeidView extends React.Component<Props, State> {
 		const arbeid = soknadsdata.arbeid;
 		arbeid.kommentarTilArbeidsforhold = verdi;
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.ARBEID, arbeid);
+		this.validerTekstfeltVerdi(verdi, FAKTUM_KEY_KOMMENTARER);
 	}
 
 	lagreHvisGyldig() {
 		const { soknadsdata, brukerBehandlingId } = this.props;
 		const arbeid = soknadsdata.arbeid;
 		const kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
-		const feilkode = this.validerTekstfeltVerdi(kommentarTilArbeidsforhold, FAKTUM_KEY_KOMMENTARER);
+		const feilkode: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(kommentarTilArbeidsforhold, FAKTUM_KEY_KOMMENTARER);
 		if (!feilkode) {
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ARBEID, arbeid);
 		}
 	}
 
-	validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
-		const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
+	validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode {
+		const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
 		onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
-			this.props.setValideringsfeil(feilkode, faktumKey);
+			if (feilkode){
+				this.props.setValideringsfeil(feilkode, faktumKey);
+			} else {
+				this.props.clearValideringsfeil(faktumKey);
+			}
 		});
 		return feilkode;
 	}
@@ -77,6 +82,7 @@ class ArbeidView extends React.Component<Props, State> {
 		const arbeid = soknadsdata.arbeid;
 		let alleArbeidsforhold: Arbeidsforhold[] = null;
 		let kommentarTilArbeidsforhold = "";
+		const faktumKommentarerId = FAKTUM_KEY_KOMMENTARER.replace(/\./g, "_");
 		if (arbeid) {
 			if (arbeid.kommentarTilArbeidsforhold) {
 				kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
@@ -123,7 +129,7 @@ class ArbeidView extends React.Component<Props, State> {
 						</ul>
 					)}
 					<TextareaEnhanced
-						id="begrunnelse_soknad_textarea"
+						id={faktumKommentarerId}
 						placeholder={intl.formatMessage({
 							id: "begrunnelse.hvorfor.placeholder"
 						})}
@@ -131,7 +137,7 @@ class ArbeidView extends React.Component<Props, State> {
 						onBlur={() => this.lagreHvisGyldig()}
 						faktumKey={FAKTUM_KEY_KOMMENTARER}
 						maxLength={MAX_CHARS}
-						value={kommentarTilArbeidsforhold}
+						value={kommentarTilArbeidsforhold ? kommentarTilArbeidsforhold : ""}
 					/>
 				</SysteminfoMedSkjema>
 			</Sporsmal>

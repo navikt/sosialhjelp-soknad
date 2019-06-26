@@ -16,12 +16,11 @@ import ApplikasjonsfeilReducer from "../../nav-soknad/redux/applikasjonsfeil/app
 import InitReducer from "../../nav-soknad/redux/init/initReducer";
 import VedleggReducer from "../../nav-soknad/redux/vedlegg/vedleggReducer";
 import EttersendelseReducer from "../../nav-soknad/redux/ettersendelse/ettersendelseReducer";
-import OppholdsadresseReducer from "../skjema/personopplysninger/tps/oppholdsadresseReducer";
-import AdresseAutocompleteReducer from "../../nav-soknad/components/adresseAutocomplete/adresseAutocompleteReducer";
 import MockReducer from "../mock/mockReducer";
 import SoknadsdataReducer from "../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import OpplysningerReducer from "../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerReducer";
 import FilReducer from "../../nav-soknad/redux/fil/filReducer";
+import AuthenticationReducer from "../../nav-soknad/redux/authentication/authenticationReducer";
 
 export interface State extends SoknadAppState {
 	synligefakta: SynligeFaktaState;
@@ -42,13 +41,12 @@ const reducers = combineReducers({
 	featuretoggles: FeatureTogglesReducer,
 	applikasjonsfeil: ApplikasjonsfeilReducer,
 	ettersendelse: EttersendelseReducer,
-	oppholdsadresse: OppholdsadresseReducer,
-	adresseAutocomplete: AdresseAutocompleteReducer,
 	init: InitReducer,
 	mockData: MockReducer,
 	soknadsdata: SoknadsdataReducer,
 	okonomiskeOpplysninger: OpplysningerReducer,
-	filopplasting: FilReducer
+	filopplasting: FilReducer,
+	authentication: AuthenticationReducer
 });
 
 export default reducers;

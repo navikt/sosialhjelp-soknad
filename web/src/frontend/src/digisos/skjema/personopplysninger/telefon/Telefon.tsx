@@ -1,18 +1,18 @@
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { ValideringActionKey } from "../../../../nav-soknad/validering/types";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import { erTelefonnummer } from "../../../../nav-soknad/validering/valideringer";
 import {
 	connectSoknadsdataContainer,
-	onEndretValideringsfeil,
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { Telefonnummer } from "./telefonTypes";
+import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
+import {replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_SYSTEM_TELEFON = "kontakt.system.telefoninfo";
@@ -39,6 +39,7 @@ class TelefonView extends React.Component<Props, {}> {
 		const { soknadsdata } = this.props;
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 		telefonnummer.brukerutfyltVerdi = verdi;
+		this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
 	}
 
@@ -50,12 +51,10 @@ class TelefonView extends React.Component<Props, {}> {
 
 	forberedOgSendTelefonnummer(telefonnummer: Telefonnummer, brukerBehandlingId: string){
 		let verdi = telefonnummer.brukerutfyltVerdi;
-		let feilkode: ValideringActionKey = null;
+		let feilkode: ValideringsFeilKode = null;
 
 		if(verdi === "" || verdi === null) {
-			onEndretValideringsfeil(null, FAKTUM_KEY_TELEFON, this.props.feil, () => {
-				this.props.setValideringsfeil(null, FAKTUM_KEY_TELEFON);
-			});
+			this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
 		} else {
 			verdi = this.fjernLandkode(verdi);
 			verdi = verdi.replace(/[ \.]/g,"");
@@ -71,12 +70,14 @@ class TelefonView extends React.Component<Props, {}> {
 		}
 	}
 
-	validerTelefonnummer(verdi: string): ValideringActionKey {
-		const feilkode: ValideringActionKey = erTelefonnummer(verdi);
-		if (verdi !== ""){
-			onEndretValideringsfeil(feilkode, FAKTUM_KEY_TELEFON, this.props.feil, () => {
+	validerTelefonnummer(verdi: string): ValideringsFeilKode {
+		const feilkode: ValideringsFeilKode = erTelefonnummer(verdi);
+		if (verdi !== "" && feilkode){
+			// onEndretValideringsfeil(feilkode, FAKTUM_KEY_TELEFON, this.props.feil, () => {
 				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_TELEFON);
-			});
+			// });
+		} else {
+			this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
 		}
 		return feilkode;
 	}
@@ -106,6 +107,7 @@ class TelefonView extends React.Component<Props, {}> {
 		const avbrytLabel = this.intl("systeminfo.avbrytendringknapp.label");
 		const infotekst = this.intl(faktumKey + ".infotekst.tekst");
 		const sporsmal = this.intl(faktumKey + ".sporsmal");
+		const faktumKeyTelefonId = replaceDotWithUnderscore(FAKTUM_KEY_TELEFON);
 
 		switch (systemverdi) {
 			case null: {
@@ -114,6 +116,7 @@ class TelefonView extends React.Component<Props, {}> {
 						tekster={{sporsmal, infotekst: { tittel: null, tekst: infotekst }}}
 					>
 							<InputEnhanced
+								id={faktumKeyTelefonId}
 								type="tel"
 								maxLength={14}
 								bredde={"S"}
@@ -142,6 +145,7 @@ class TelefonView extends React.Component<Props, {}> {
 							avbrytLabel={avbrytLabel}
 							skjema={(
 								<InputEnhanced
+									id={faktumKeyTelefonId}
 									type="tel"
 									maxLength={14}
 									bredde={"S"}

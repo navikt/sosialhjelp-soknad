@@ -6,15 +6,15 @@ import {
 import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import {Formue} from "./FormueTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import { REST_STATUS } from "../../../../nav-soknad/types";
-import {ValideringActionKey} from "../../../../nav-soknad/validering/types";
+import {REST_STATUS} from "../../../../nav-soknad/types";
 import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
+import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
 
 const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
@@ -53,7 +53,7 @@ export class FormueView extends React.Component<Props, State> {
         if (!this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
             const formue: Formue = soknadsdata.inntekt.formue;
             formue[idToToggle] = !formue[idToToggle];
-            if (!formue.annet){
+            if (!formue.annet) {
                 formue.beskrivelseAvAnnet = "";
             }
             this.props.oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue);
@@ -66,23 +66,26 @@ export class FormueView extends React.Component<Props, State> {
         const formue: Formue = soknadsdata.inntekt.formue;
         formue.beskrivelseAvAnnet = value;
         this.props.oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue);
+        this.validerTekstfeltVerdi(value, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY)
     }
 
     onBlurTekstfeltAnnet() {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const formue: Formue = soknadsdata.inntekt.formue;
         const beskrivelseAvAnnet = formue.beskrivelseAvAnnet;
-        const feilmeldingAnnet: ValideringActionKey = this.validerTekstfeltVerdi(beskrivelseAvAnnet, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY);
+        const feilmeldingAnnet: ValideringsFeilKode = this.validerTekstfeltVerdi(beskrivelseAvAnnet, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY);
 
         if (!feilmeldingAnnet) {
             this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORMUE, formue);
         }
     }
 
-    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringActionKey {
-        const feilkode: ValideringActionKey = maksLengde(verdi, MAX_CHARS);
+    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode {
+        const feilkode: ValideringsFeilKode = maksLengde(verdi, MAX_CHARS);
         onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
-            this.props.setValideringsfeil(feilkode, faktumKey);
+            (feilkode) ?
+                this.props.setValideringsfeil(feilkode, faktumKey) :
+                this.props.clearValideringsfeil(faktumKey);
         });
         return feilkode;
     }
@@ -131,14 +134,14 @@ export class FormueView extends React.Component<Props, State> {
                     size="small"
                 >
                     <TextareaEnhanced
-                        id="formue_annet_textarea"
+                        id={replaceDotWithUnderscore(FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY)}
                         placeholder=""
                         onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}
                         onBlur={() => this.onBlurTekstfeltAnnet()}
                         faktumKey={FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY}
                         labelId={FORMUE + ".true.type.annet.true.beskrivelse.label"}
                         maxLength={MAX_CHARS}
-                        value={formue.beskrivelseAvAnnet}
+                        value={formue.beskrivelseAvAnnet ? formue.beskrivelseAvAnnet : ""}
                     />
                 </NivaTreSkjema>
             </Sporsmal>

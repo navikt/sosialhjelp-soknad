@@ -27,6 +27,7 @@ export enum InformasjonspanelIkon {
 }
 
 class Informasjonspanel extends React.Component<OwnProps, State> {
+	panelIsMounted: boolean = false;
 
 	constructor(props: OwnProps) {
 		super(props);
@@ -36,9 +37,16 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 	}
 
 	componentDidMount() {
+		this.panelIsMounted = true;
 		setTimeout(() => {
-			this.setState({vises: true});
+			if (this.panelIsMounted) {
+				this.setState({vises: true});
+			}
 		}, 200);
+	}
+
+	componentWillUnmount(): void {
+		this.panelIsMounted = false;
 	}
 
 	renderIkon() {

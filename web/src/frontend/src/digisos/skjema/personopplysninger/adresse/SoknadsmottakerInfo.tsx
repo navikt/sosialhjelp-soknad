@@ -6,8 +6,7 @@ import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { NavEnhet } from "./AdresseTypes";
-import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
+import {NavEnhet, SoknadsMottakerStatus} from "./AdresseTypes";
 import { soknadsmottakerStatus } from "./AdresseUtils";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;

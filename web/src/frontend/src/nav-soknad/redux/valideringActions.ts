@@ -1,57 +1,40 @@
-import { ValideringActionTypeKeys } from "./valideringActionTypes";
-import { FaktumValideringsregler, ValideringActionKey, Valideringsfeil } from "../validering/types";
+import {
+	ClearAllValideringsfeilAction,
+	ClearValideringsfeilAction,
+	SetValideringsfeilAction,
+	SkjulValideringsfeilPanelAction,
+	ValideringActionTypeKeys,
+	ValideringsFeilKode, VisValideringsfeilPanelAction
+} from "./valideringActionTypes";
 
-export function setFaktaValideringsfeil(valideringsfeil: Valideringsfeil[]) {
+export function visValideringsfeilPanel(): VisValideringsfeilPanelAction{
 	return {
-		type: ValideringActionTypeKeys.SET_FAKTA_VALIDERINGSFEIL,
-		valideringsfeil
+		type: ValideringActionTypeKeys.VIS_VALIDERINGSFEIL_PANEL
+	}
+}
+
+export function skjulValideringsfeilPanel(): SkjulValideringsfeilPanelAction{
+	return {
+		type: ValideringActionTypeKeys.SKJUL_VALIDERINGSFEIL_PANEL
+	}
+}
+
+export function setValideringsfeil(feilkode: ValideringsFeilKode, faktumKey: string): SetValideringsfeilAction {
+	return {
+		type: ValideringActionTypeKeys.SET_VALIDERINGSFEIL,
+		valideringsfeil: {faktumKey, feilkode}
 	};
 }
 
-export function clearFaktaValideringsfeil() {
+export function clearValideringsfeil(faktumKey: string): ClearValideringsfeilAction {
 	return {
-		type: ValideringActionTypeKeys.CLEAR_FAKTA_VALIDERINGSFEIL
+		type: ValideringActionTypeKeys.CLEAR_VALIDERINGSFEIL,
+		faktumKey
 	};
 }
 
-export function registerFaktumValidering(
-	faktumValidering: FaktumValideringsregler
-) {
+export function clearAllValideringsfeil(): ClearAllValideringsfeilAction {
 	return {
-		type: ValideringActionTypeKeys.REGISTER_FAKTUM_VALIDERING,
-		faktumValidering
-	};
-}
-
-export function unregisterFaktumValidering(
-	faktumKey: string,
-	property: string,
-	faktumId: number
-) {
-	return {
-		type: ValideringActionTypeKeys.UNREGISTER_FAKTUM_VALIDERING,
-		faktumKey,
-		property,
-		faktumId
-	};
-}
-
-export function setValideringsfeil(feilkode: ValideringActionKey, faktumKey: string) {
-	const valideringsfeil: Valideringsfeil = feilkode ?  {faktumKey, feilkode} : null;
-	return setFaktumValideringsfeil(valideringsfeil, faktumKey);
-}
-
-export function setFaktumValideringsfeil(
-	valideringsfeil: Valideringsfeil,
-	faktumKey: string,
-	property?: string,
-	faktumId?: number
-) {
-	return {
-		type: ValideringActionTypeKeys.SET_FAKTUM_VALIDERINGSFEIL,
-		faktumKey,
-		property,
-		faktumId,
-		valideringsfeil
-	};
+		type: ValideringActionTypeKeys.CLEAR_ALL_VALIDERINGSFEIL
+	}
 }

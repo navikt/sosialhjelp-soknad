@@ -1,6 +1,5 @@
-import { AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet } from "./AdresseTypes";
+import {AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet, SoknadsMottakerStatus} from "./AdresseTypes";
 import { Soknadsdata } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import { SoknadsMottakerStatus } from "../tps/oppholdsadresseReducer";
 
 export const enum AdresseTypeaheadStatus {
 	INITIELL = "INITIELL",

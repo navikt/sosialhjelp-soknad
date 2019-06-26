@@ -4,7 +4,7 @@ import ServerFeil from "../../containers/ServerFeil";
 import { REST_STATUS } from "../../types";
 
 interface Props {
-	restStatus: string;
+	restStatus: REST_STATUS;
 	contentRenderer?: () => React.ReactNode;
 }
 
