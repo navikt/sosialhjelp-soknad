@@ -215,7 +215,7 @@ class TabellView extends React.Component<Props, {}> {
                     {innhold}
                     {
                         opplysningSpc && opplysningSpc.antallRader === AntallRader.FLERE &&
-                        <Lenkeknapp onClick={() => this.handleLeggTilRad()} style="add" id={gruppeIndex + "_link"}>
+                        <Lenkeknapp onClick={() => this.handleLeggTilRad()} stil="add" id={gruppeIndex + "_link"}>
                             Legg til
                         </Lenkeknapp>
                     }

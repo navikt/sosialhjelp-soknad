@@ -23,14 +23,14 @@ class SoknadsmottakerInfoPanel  extends React.Component<Props, {}> {
 				>
 					<FormattedHTMLMessage id="soknasosialhjelp.oppsummering.hvorsendes" values={{navkontor: valgtEnhetsNavn}}/>
 					<br/><br/>
-					<a
+					<button
 						className="lenke"
 						onClick={() => {
 							this.props.setVisSamtykkeInfo(true);
 						}}
 					>
 						<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke"/>
-					</a>
+					</button>
 				</Informasjonspanel>
 			);
 		} else {

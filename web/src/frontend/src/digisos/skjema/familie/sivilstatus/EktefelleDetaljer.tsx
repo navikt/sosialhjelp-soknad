@@ -70,7 +70,7 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 			<div className="sivilstatus skjema-sporsmal">
 				<Sporsmal
 					tekster={getFaktumSporsmalTekst(intl, "system.familie.sivilstatus")}
-					style="system"
+					stil="system"
 				>
 					<div className="sivilstatus__infotekst">
 						<FormattedMessage id="system.familie.sivilstatus"/>

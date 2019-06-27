@@ -106,7 +106,7 @@ class ArbeidView extends React.Component<Props, State> {
 		if (oppstartsModus) {
 			return (
 				<div className="skjema-sporsmal">
-					<Sporsmal sprakNokkel="arbeidsforhold" style={style}>
+					<Sporsmal sprakNokkel="arbeidsforhold" stil={style}>
 						<TextPlaceholder lines={6}/>
 					</Sporsmal>
 				</div>
@@ -115,7 +115,7 @@ class ArbeidView extends React.Component<Props, State> {
 		return (
 			<Sporsmal
 				tekster={getFaktumSporsmalTekst(intl, "arbeidsforhold")}
-				style="system"
+				stil="system"
 			>
 				<SysteminfoMedSkjema>
 					<div className="skjema-sporsmal__tittel">

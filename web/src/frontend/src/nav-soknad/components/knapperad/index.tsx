@@ -36,13 +36,12 @@ class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 					{getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
 				</Knapp>
 				<span id="avbryt_link">
-					<a
-						href="#"
+					<button
 						className="lenke"
 						onClick={this.props.gaViderePending ? undefined : avbryt}
 					>
 						{getIntlTextOrKey(intl, "skjema.knapper.avbryt")}
-					</a>
+					</button>
 				</span>
 			</div>
 		);

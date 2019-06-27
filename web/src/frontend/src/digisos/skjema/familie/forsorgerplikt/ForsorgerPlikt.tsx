@@ -65,7 +65,7 @@ class ForsorgerPliktView extends React.Component<Props, State> {
 			return (
 				<Sporsmal
 					sprakNokkel="familierelasjon.faktum"
-					style="system"
+					stil="system"
 					legendTittelStyle={LegendTittleStyle.DEFAULT}
 				>
 					<FormattedHTMLMessage id="familierelasjon.ingress" values={{ antallBarn }}/>
