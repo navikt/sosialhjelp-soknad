@@ -113,8 +113,8 @@ class TabellView extends React.Component<Props, {}> {
     }
 
     validerAlleInputfelterPaOpplysning(opplysningUpdated: Opplysning, opplysning: Opplysning) {
-        opplysningUpdated.rader.map((rad: OpplysningRad, index: number) => {
-            Object.keys(rad).map((key: string) => {
+        opplysningUpdated.rader.forEach((rad: OpplysningRad, index: number) => {
+            Object.keys(rad).forEach((key: string) => {
                 switch(key){
                     case InputType.BELOP: {
                         this.setValideringsfeilHvisUgyldigTall(InputType.BELOP, rad[InputType.BELOP], opplysning, index);
@@ -156,7 +156,7 @@ class TabellView extends React.Component<Props, {}> {
 
     fjernAlleFeilForOpplysning(feil: Valideringsfeil[], valideringsKey: string) {
         const feilForOpplysning = getFeilForOpplysning(feil, valideringsKey);
-        feilForOpplysning.map((f: Valideringsfeil) => {
+        feilForOpplysning.forEach((f: Valideringsfeil) => {
             this.props.dispatch(clearValideringsfeil(f.faktumKey));
         });
     }

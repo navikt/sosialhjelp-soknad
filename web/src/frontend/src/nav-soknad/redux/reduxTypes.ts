@@ -15,7 +15,7 @@ import {OpplysningerModel} from "./okonomiskeOpplysninger/opplysningerTypes";
 import {FilState} from "./fil/filTypes";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {EttersendelseState} from "./ettersendelse/ettersendelseTypes";
-import {RouterState} from "react-router-redux";
+import {RouterState} from "connected-react-router";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";

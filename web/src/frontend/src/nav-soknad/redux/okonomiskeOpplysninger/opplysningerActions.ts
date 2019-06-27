@@ -2,7 +2,7 @@ import {Dispatch, Valideringsfeil} from "../reduxTypes";
 import {fetchToJson} from "../../utils/rest-utils";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {
-    opplysningerAction,
+    OpplysningerAction,
     opplysningerActionTypeKeys,
     OpplysningerBackend,
     Opplysning,
@@ -12,28 +12,28 @@ import {getOpplysningerUrl} from "./opplysningerUtils";
 import {loggFeil} from "../navlogger/navloggerActions";
 
 
-export const gotDataFromBackend = (response: OpplysningerBackend): opplysningerAction => {
+export const gotDataFromBackend = (response: OpplysningerBackend): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND,
         backendData: response
     }
 };
 
-export const updateOpplysning = (opplysning: Opplysning): opplysningerAction => {
+export const updateOpplysning = (opplysning: Opplysning): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.OPPDATER_OPPLYSNING,
         opplysning
     }
 };
 
-export const settFilOpplastingPending = (opplysningType: OpplysningType): opplysningerAction => {
+export const settFilOpplastingPending = (opplysningType: OpplysningType): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_PENDING,
         opplysningType,
     }
 };
 
-export const settFilOpplastingFerdig = (opplysningType: OpplysningType): opplysningerAction => {
+export const settFilOpplastingFerdig = (opplysningType: OpplysningType): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_FERDIG,
         opplysningType,
@@ -56,7 +56,7 @@ export const lagreOpplysningHvisGyldigAction = (
     behandlingsId: string,
     opplysning: Opplysning,
     feil: Valideringsfeil[]
-): opplysningerAction => {
+): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG,
         behandlingsId,

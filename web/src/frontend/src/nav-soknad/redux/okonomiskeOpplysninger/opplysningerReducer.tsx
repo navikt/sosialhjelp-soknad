@@ -1,5 +1,5 @@
 import {
-    opplysningerAction,
+    OpplysningerAction,
     opplysningerActionTypeKeys,
     OpplysningerModel, Opplysning,
     VedleggStatus
@@ -18,9 +18,9 @@ export const initialOpplysningerModel: OpplysningerModel = {
     opplysningerSortert: []
 };
 
-export default (
+export const opplysningerReducer = (
     state: OpplysningerModel = initialOpplysningerModel,
-    action: opplysningerAction
+    action: OpplysningerAction
 ) => {
     switch (action.type) {
         case opplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND: {
@@ -54,8 +54,9 @@ export default (
                     ...state,
                     opplysningerSortert: opplysningerSortertUpdated
                 };
+            } else {
+                return state
             }
-            break;
         }
         case opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_FERDIG: {
             const {opplysningType} = action;
@@ -69,8 +70,9 @@ export default (
                     ...state,
                     opplysningerSortert: opplysningerSortertUpdated
                 };
+            } else {
+                return state
             }
-            break;
         }
         case opplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP: {
             const {opplysningType} = action;
@@ -88,8 +90,9 @@ export default (
                     ...state,
                     opplysningerSortert: opplysningerSortertUpdated
                 };
+            } else {
+                return state
             }
-            break;
         }
         default:
             return state;

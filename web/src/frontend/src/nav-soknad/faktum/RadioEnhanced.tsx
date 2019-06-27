@@ -26,9 +26,6 @@ interface OwnProps {
 type RadioFaktumProps = OwnProps & InjectedIntlProps;
 
 class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
-    constructor(props: RadioFaktumProps) {
-        super(props);
-    }
 
     determineLabel(id: string, faktumKey: string, tekster: CheckboxFaktumTekst, value: string) {
         if (this.props.visPlaceholder) {

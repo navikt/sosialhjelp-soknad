@@ -60,7 +60,7 @@ class Feiloppsummering extends React.Component<Props, {}> {
 
 	render() {
 		const { valideringsfeil } = this.props;
-		if (valideringsfeil && valideringsfeil.length === 0 || !this.props.visFeilliste) {
+		if (valideringsfeil && (valideringsfeil.length === 0 || !this.props.visFeilliste)) {
 			return null;
 		}
 		return (

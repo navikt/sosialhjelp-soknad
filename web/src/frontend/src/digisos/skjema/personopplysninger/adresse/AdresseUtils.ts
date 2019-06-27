@@ -43,7 +43,7 @@ const formaterSoknadsadresse = (soknadAdresse: Gateadresse | null) => {
             (soknadAdresse.husnummer ? soknadAdresse.husnummer : "") + " " +
             (soknadAdresse.husbokstav ? soknadAdresse.husbokstav : "") + ", " +
             soknadAdresse.postnummer + " " + soknadAdresse.poststed;
-        formatertSoknadAdresse.replace(/  /, " ");
+        formatertSoknadAdresse.replace(/ /, " ");
     }
     return formatertSoknadAdresse;
 };

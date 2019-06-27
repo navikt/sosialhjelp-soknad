@@ -13,7 +13,7 @@ const defaultState: ApplikasjonsfeilState = {
 	visDialog: false
 };
 
-export default (state: ApplikasjonsfeilState = defaultState, action: ApplikasjonsfeilActionTypes) => {
+export const applikasjonsfeilReducer = (state: ApplikasjonsfeilState = defaultState, action: ApplikasjonsfeilActionTypes) => {
 	switch (action.type) {
 		case ApplikasjonsfeilActionTypeKeys.SET_APPLIKASJONSFEIL:
 			return {

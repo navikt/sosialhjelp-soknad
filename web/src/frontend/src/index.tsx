@@ -30,6 +30,7 @@ import {visSoknadAlleredeSendtPrompt} from "./nav-soknad/redux/ettersendelse/ett
 const history = require('history').createBrowserHistory({
     getUserConfirmation: (msg: any, callback: (flag: boolean) => void) => {
         if (msg === NAVIGASJONSPROMT.SKJEMA) {
+
             // @ts-ignore
             const soknad: SoknadState = store.getState().soknad;
             if (soknad.data.brukerBehandlingId && soknad.avbrytSoknadSjekkAktiv) {
@@ -76,7 +77,7 @@ function configureStore() {
         ? applyMiddleware(thunk, saga, logger, routerMiddleware(history))
         : applyMiddleware(thunk, saga, routerMiddleware(history));
     const createdStore = createStore(
-        reducers,
+        reducers(history),
         composeEnhancers(middleware),
     );
     saga.run(sagas);
