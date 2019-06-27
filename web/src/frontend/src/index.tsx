@@ -8,27 +8,18 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import {createStore, applyMiddleware, compose} from "redux";
-import {createLogger} from "redux-logger";
-
-
-
-
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
+import {createLogger} from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 
-import IntlProvider from "./intlProvider";
+import {ConnectedRouter, routerMiddleware} from 'connected-react-router';
 
 import reducers from "./digisos/redux/reducers";
-
 import sagas from "./rootSaga"
-
-
-import {loggException} from "./nav-soknad/redux/navlogger/navloggerActions";
-
-
-
+import IntlProvider from "./intlProvider";
 import App from "./digisos";
+import {loggException} from "./nav-soknad/redux/navlogger/navloggerActions";
 import {erDev} from "./nav-soknad/utils/rest-utils";
 import {avbrytSoknad} from "./nav-soknad/redux/soknad/soknadActions";
 import {SoknadState} from "./nav-soknad/redux/reduxTypes";
