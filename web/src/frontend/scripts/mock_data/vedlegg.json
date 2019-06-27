@@ -1,0 +1,21 @@
+[
+	{
+		"vedleggId": 15,
+		"soknadId": 3,
+		"faktumId": 581,
+		"skjemaNummer": "dokumentasjon",
+		"skjemanummerTillegg": "annetinntekter",
+		"innsendingsvalg": "VedleggKreves",
+		"opprinneligInnsendingsvalg": null,
+		"navn": "",
+		"storrelse": 0,
+		"antallSider": 0,
+		"opprettetDato": null,
+		"fillagerReferanse": "b59431f2-9f29-4d9f-9f21-bf407e7cdf62",
+		"urls": {},
+		"tittel": null,
+		"aarsak": null,
+		"filnavn": null,
+		"mimetype": null
+	}
+]
