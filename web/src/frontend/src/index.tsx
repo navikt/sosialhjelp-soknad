@@ -21,8 +21,6 @@ import IntlProvider from "./intlProvider";
 
 import reducers from "./digisos/redux/reducers";
 
-import {ConnectedRouter, routerMiddleware} from "react-router-redux";
-
 import sagas from "./rootSaga"
 
 
