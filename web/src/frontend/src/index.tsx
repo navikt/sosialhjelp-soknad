@@ -30,6 +30,7 @@ import {visSoknadAlleredeSendtPrompt} from "./nav-soknad/redux/ettersendelse/ett
 const history = require('history').createBrowserHistory({
     getUserConfirmation: (msg: any, callback: (flag: boolean) => void) => {
         if (msg === NAVIGASJONSPROMT.SKJEMA) {
+            // @ts-ignore
             const soknad: SoknadState = store.getState().soknad;
             if (soknad.data.brukerBehandlingId && soknad.avbrytSoknadSjekkAktiv) {
                 store.dispatch(avbrytSoknad("START"));
@@ -52,24 +53,25 @@ const logger = createLogger({
     collapsed: true
 });
 
-const visReduxLogger = false;
 
 /**
  * Resolves basename in a pathname independent way
  */
 export function getAbsoluteBasename() {
+    // @ts-ignore
     return window.location.pathname.replace(/^\/(([^/]+\/)?soknadsosialhjelp).+$/, "$1")
 }
 
-interface WindowType {
-    new(): Window;
-    prototype: Window;
-}
+const visReduxLogger = true;
 
 function configureStore() {
     // @ts-ignore
-    const composeEnhancers = erDev() ? (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose) : compose;
+    const w : any = window as any;
+
+    const composeEnhancers = erDev() ? (w.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose) : compose;
+
     const saga = createSagaMiddleware();
+
     const middleware = (erDev() && visReduxLogger)
         ? applyMiddleware(thunk, saga, logger, routerMiddleware(history))
         : applyMiddleware(thunk, saga, routerMiddleware(history));
@@ -84,7 +86,12 @@ function configureStore() {
 const store = configureStore();
 
 window.onerror = (errorMessage, url, line, column, error) => {
-    store.dispatch(loggException(errorMessage.toString(), url ? url : "", line, column, error));
+    store.dispatch(
+        loggException(typeof errorMessage === "string" ?
+            errorMessage :
+            "Why is typeof errorMessage Event?", url ? url : "", line, column, error
+        )
+    );
 };
 
 ReactDOM.render(

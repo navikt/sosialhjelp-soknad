@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-import {routerReducer, RouterState} from "react-router-redux";
 import ValideringReducer, {ValideringState} from "../../nav-soknad/redux/valideringReducer";
 import SoknadReducer from "../../nav-soknad/redux/soknad/soknadReducer";
 import OppsummeringReducer, {OppsummeringState} from "../../nav-soknad/redux/oppsummering/oppsummeringReducer";
@@ -25,6 +24,7 @@ import {EttersendelseState} from "../../nav-soknad/redux/ettersendelse/ettersend
 import {InitState} from "../../nav-soknad/redux/init/initTypes";
 import {OpplysningerModel} from "../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {FilState} from "../../nav-soknad/redux/fil/filTypes";
+import {RouterState} from "connected-react-router";
 
 
 export interface State {
