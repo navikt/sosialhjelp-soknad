@@ -75,19 +75,6 @@ const getHeaders = () => {
     })
 };
 
-// @ts-ignore
-const serverRequestOnce = (method: string, urlPath: string, body: string) => {
-    const OPTIONS: RequestInit = {
-        headers: getHeaders(),
-        method,
-        credentials: determineCredentialsParameter(),
-        body: body ? body : undefined
-    };
-    return fetch(getApiBaseUrl() + urlPath, OPTIONS)
-        .then(sjekkStatuskode)
-        .then(toJson);
-};
-
 /* serverRequest():
  *
  *  - Gjenta serverkall som feiler inntil 6 ganger før det kastes exception

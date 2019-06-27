@@ -1,5 +1,4 @@
 import { InjectedIntl } from "react-intl";
-import { erDev } from "../utils";
 import {
 	CheckboxFaktumTekst,
 	SporsmalFaktumTekst,

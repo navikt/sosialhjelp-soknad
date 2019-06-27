@@ -31,8 +31,8 @@ import {
 } from "./soknadActions";
 import {loggFeil} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
-import {push} from "react-router-redux";
 import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
+import {push} from "connected-react-router";
 
 export interface OpprettSoknadResponse {
     brukerBehandlingId: string;
