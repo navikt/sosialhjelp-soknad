@@ -7,7 +7,7 @@ const initialState: FilState = {
     opplysningtype: null
 };
 
-export default (
+export const filReducer = (
     state: FilState = initialState,
     action: FilActionTypes
 ): FilState => {

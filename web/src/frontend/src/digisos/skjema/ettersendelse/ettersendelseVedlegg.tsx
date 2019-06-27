@@ -3,7 +3,7 @@ import {
 	lastOppEttersendelseVedlegg,
 	slettEttersendtVedlegg
 } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
-import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
+import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { downloadAttachedFile } from "../../../nav-soknad/utils/rest-utils";
 import { REST_STATUS } from "../../../nav-soknad/types";

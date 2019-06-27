@@ -8,29 +8,18 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import {createStore, applyMiddleware, compose} from "redux";
-import {createLogger} from "redux-logger";
-
-
-
-
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
+import {createLogger} from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 
-import IntlProvider from "./intlProvider";
+import {ConnectedRouter, routerMiddleware} from 'connected-react-router';
 
 import reducers from "./digisos/redux/reducers";
-
-import {ConnectedRouter, routerMiddleware} from "react-router-redux";
-
 import sagas from "./rootSaga"
-
-
-import {loggException} from "./nav-soknad/redux/navlogger/navloggerActions";
-
-
-
+import IntlProvider from "./intlProvider";
 import App from "./digisos";
+import {loggException} from "./nav-soknad/redux/navlogger/navloggerActions";
 import {erDev} from "./nav-soknad/utils/rest-utils";
 import {avbrytSoknad} from "./nav-soknad/redux/soknad/soknadActions";
 import {SoknadState} from "./nav-soknad/redux/reduxTypes";
@@ -41,6 +30,8 @@ import {visSoknadAlleredeSendtPrompt} from "./nav-soknad/redux/ettersendelse/ett
 const history = require('history').createBrowserHistory({
     getUserConfirmation: (msg: any, callback: (flag: boolean) => void) => {
         if (msg === NAVIGASJONSPROMT.SKJEMA) {
+
+            // @ts-ignore
             const soknad: SoknadState = store.getState().soknad;
             if (soknad.data.brukerBehandlingId && soknad.avbrytSoknadSjekkAktiv) {
                 store.dispatch(avbrytSoknad("START"));
@@ -63,29 +54,30 @@ const logger = createLogger({
     collapsed: true
 });
 
-const visReduxLogger = false;
 
 /**
  * Resolves basename in a pathname independent way
  */
 export function getAbsoluteBasename() {
+    // @ts-ignore
     return window.location.pathname.replace(/^\/(([^/]+\/)?soknadsosialhjelp).+$/, "$1")
 }
 
-interface WindowType {
-    new(): Window;
-    prototype: Window;
-}
+const visReduxLogger = true;
 
 function configureStore() {
     // @ts-ignore
-    const composeEnhancers = erDev() ? (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose) : compose;
+    const w : any = window as any;
+
+    const composeEnhancers = erDev() ? (w.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose) : compose;
+
     const saga = createSagaMiddleware();
+
     const middleware = (erDev() && visReduxLogger)
         ? applyMiddleware(thunk, saga, logger, routerMiddleware(history))
         : applyMiddleware(thunk, saga, routerMiddleware(history));
     const createdStore = createStore(
-        reducers,
+        reducers(history),
         composeEnhancers(middleware),
     );
     saga.run(sagas);
@@ -95,7 +87,12 @@ function configureStore() {
 const store = configureStore();
 
 window.onerror = (errorMessage, url, line, column, error) => {
-    store.dispatch(loggException(errorMessage.toString(), url ? url : "", line, column, error));
+    store.dispatch(
+        loggException(typeof errorMessage === "string" ?
+            errorMessage :
+            "Why is typeof errorMessage Event?", url ? url : "", line, column, error
+        )
+    );
 };
 
 ReactDOM.render(

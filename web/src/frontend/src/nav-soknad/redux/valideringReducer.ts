@@ -11,8 +11,7 @@ const defaultState: ValideringState = {
     visValideringsfeil: false,
 };
 
-
-export default (
+export const valideringsReducer = (
     state: ValideringState = defaultState,
     action: ValideringActionTypes
 ): ValideringState => {

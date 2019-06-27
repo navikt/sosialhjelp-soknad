@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
-import Sporsmal  from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {SporsmalStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import ArbeidDetaljer from "./ArbeidDetaljer";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
@@ -102,10 +102,11 @@ class ArbeidView extends React.Component<Props, State> {
 		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
 			oppstartsModus = false;
 		}
+		const style: SporsmalStyle = "system";
 		if (oppstartsModus) {
 			return (
 				<div className="skjema-sporsmal">
-					<Sporsmal sprakNokkel="arbeidsforhold" style={"system"}>
+					<Sporsmal sprakNokkel="arbeidsforhold" style={style}>
 						<TextPlaceholder lines={6}/>
 					</Sporsmal>
 				</div>

@@ -1,6 +1,5 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import { goBack, push } from "react-router-redux";
 import {
 	GaTilbake,
 	GaVidere,
@@ -15,6 +14,7 @@ import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import { SoknadAppState } from "../reduxTypes";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 import { lesKommunenrFraUrl } from "../../utils";
+import {goBack, push} from "connected-react-router";
 
 const getHistoryLength = () => window.history.length;
 const navigateTo = (path: string) => (window.location.href = path);
