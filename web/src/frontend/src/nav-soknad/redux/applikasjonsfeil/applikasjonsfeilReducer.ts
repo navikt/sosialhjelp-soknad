@@ -1,4 +1,3 @@
-import { Reducer } from "../reduxTypes";
 import {
 	ApplikasjonsfeilActionTypes,
 	ApplikasjonsfeilActionTypeKeys
@@ -14,10 +13,7 @@ const defaultState: ApplikasjonsfeilState = {
 	visDialog: false
 };
 
-const applikasjonsfeilReducer: Reducer<
-	ApplikasjonsfeilState,
-	ApplikasjonsfeilActionTypes
-> = (state = defaultState, action) => {
+export default (state: ApplikasjonsfeilState = defaultState, action: ApplikasjonsfeilActionTypes) => {
 	switch (action.type) {
 		case ApplikasjonsfeilActionTypeKeys.SET_APPLIKASJONSFEIL:
 			return {
@@ -35,5 +31,3 @@ const applikasjonsfeilReducer: Reducer<
 			return state;
 	}
 };
-
-export default applikasjonsfeilReducer;

@@ -43,9 +43,9 @@ export const settFilOpplastingFerdig = (opplysningType: OpplysningType): opplysn
 export function hentOpplysninger(behandlingsId: string) {
     return (dispatch: Dispatch) => {
         fetchToJson(getOpplysningerUrl(behandlingsId))
-            .then((response: OpplysningerBackend) => {
+            .then((response: any) => {
                 dispatch(gotDataFromBackend(response));
-            }).catch((reason) => {
+            }).catch((reason: any) => {
             dispatch(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));
             dispatch(navigerTilServerfeil());
         });

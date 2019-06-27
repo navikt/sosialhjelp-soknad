@@ -1,5 +1,4 @@
 import * as React from "react";
-import SVG from "react-inlinesvg";
 import EllaForfra from "../../../nav-soknad/components/svg/EllaForfra";
 import {getAbsoluteBasename} from "../../../index";
 
@@ -16,10 +15,7 @@ const BannerEttersendelse: React.StatelessComponent<{ children: React.ReactNode 
 					<span className="banner-ettersendelse__ettersendelse__innhold__ella_forfra">
 						<EllaForfra />
 					</span>
-					<SVG
-						className="banner-ettersendelse__ettersendelse__innhold__laptop"
-						src={`/${getAbsoluteBasename()}/statisk/bilder/illustrasjon_laptop.svg`}
-					/>
+					<img src={`/${getAbsoluteBasename()}/statisk/bilder/illustrasjon_laptop.svg`} alt={""} />
 				</div>
 			</div>
 		</div>

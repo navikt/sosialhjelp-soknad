@@ -27,7 +27,7 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 
 			dispatch(oppdaterSoknadsdataSti(sti, response));
 			dispatch(settRestStatus(sti, REST_STATUS.OK));
-		}).catch((reason) => {
+		}).catch((reason: any) => {
             dispatch(loggFeil("Henting av soknadsdata feilet: " + reason));
 			dispatch(settRestStatus(sti, REST_STATUS.FEILET));
 			dispatch(navigerTilServerfeil());

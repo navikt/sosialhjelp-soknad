@@ -19,7 +19,6 @@ import Steg7 from "./utgifterGjeld";
 import Steg8 from "./okonomiskeOpplysninger";
 import Oppsummering from "./oppsummering";
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
-import {Faktum} from "../../nav-soknad/types";
 import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
 import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
@@ -32,7 +31,6 @@ interface OwnProps {
 }
 
 interface StateProps {
-    fakta: Faktum[];
     restStatus: string;
     gyldigUrl: boolean;
     steg: string;
@@ -50,7 +48,7 @@ type Props = OwnProps & StateProps & RouterProps & DispatchProps;
 class SkjemaRouter extends React.Component<Props, {}> {
 
     componentWillMount() {
-        if (this.props.brukerbehandlingId && this.props.fakta.length <= 1) {
+        if (this.props.brukerbehandlingId) {
             this.props.dispatch(hentSoknad(this.props.brukerbehandlingId));
         }
     }
@@ -102,15 +100,24 @@ const mapStateToProps = (
     const match = matchPath(props.location.pathname, {
         path: "/skjema/:brukerbehandlingId/:steg"
     });
-    const {steg, brukerbehandlingId} = match.params as UrlParams;
-    return {
-        fakta: state.fakta.data,
-        restStatus: state.soknad.restStatus,
-        steg,
-        brukerbehandlingId,
-        gyldigUrl: brukerbehandlingId !== undefined && steg !== undefined,
-        behandingsIdPaStore: state.soknad.behandlingsId
-    };
+    if (match){
+        const {steg, brukerbehandlingId} = match.params as UrlParams;
+        return {
+            restStatus: state.soknad.restStatus,
+            steg,
+            brukerbehandlingId,
+            gyldigUrl: brukerbehandlingId !== undefined && steg !== undefined,
+            behandingsIdPaStore: state.soknad.behandlingsId
+        };
+    } else {
+        return {
+            restStatus: state.soknad.restStatus,
+            steg: "1",
+            brukerbehandlingId: "42",
+            gyldigUrl: false,
+            behandingsIdPaStore: state.soknad.behandlingsId
+        };
+    }
 };
 
 export default connect(mapStateToProps)(withRouter(SkjemaRouter) as any);

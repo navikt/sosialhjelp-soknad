@@ -17,3 +17,14 @@ export const initialBarneutgifterState: Barneutgifter = {
     "tannregulering" : false,
     "annet" : false
 };
+
+export enum BarneutgifterKeys {
+    HARFORSORGERPLIKT = "harForsorgerplikt",
+    BEKREFTELSE = "bekreftelse",
+    FRITIDSAKTIVITETER = "fritidsaktiviteter",
+    BARNEHAGE = "barnehage",
+    SFO = "sfo",
+    TANNREGULERING = "tannregulering",
+    ANNET = "annet"
+}
+

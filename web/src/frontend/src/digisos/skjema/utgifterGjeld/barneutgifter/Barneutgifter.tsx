@@ -8,7 +8,7 @@ import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataRe
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
-import {Barneutgifter} from "./BarneutgifterTypes";
+import {Barneutgifter, BarneutgifterKeys} from "./BarneutgifterTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 
 const BarneutgifterKey = "utgifter.barn";
@@ -36,7 +36,7 @@ export class BarneutgifterView extends React.Component<Props, {}> {
         this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BARNEUTGIFTER, barneutgifter);
     }
 
-    handleClickRadio(idToToggle: string) {
+    handleClickRadio(idToToggle: BarneutgifterKeys) {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
         barneutgifter[idToToggle] = !barneutgifter[idToToggle];
@@ -44,14 +44,18 @@ export class BarneutgifterView extends React.Component<Props, {}> {
         this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BARNEUTGIFTER, barneutgifter);
     }
 
-    renderCheckBox(navn: string, textKey: string) {
+    renderCheckBox(navn: BarneutgifterKeys, textKey: string) {
         const {soknadsdata} = this.props;
         const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
+
+        const barneutgifterElement: boolean | null = barneutgifter[navn];
+        const isChecked: boolean = barneutgifterElement ? barneutgifterElement : false;
+
         return (
             <CheckboxPanel
                 id={"barneutgifter_" + navn + "_checkbox"}
                 name={navn}
-                checked={barneutgifter && barneutgifter[navn] ? barneutgifter[navn] : false}
+                checked={isChecked}
                 label={<FormattedHTMLMessage id={BarneutgifterKey + ".true.utgifter." + textKey}/>}
                 onClick={() => this.handleClickRadio(navn)}
             />
@@ -73,11 +77,11 @@ export class BarneutgifterView extends React.Component<Props, {}> {
                 <Sporsmal
                     tekster={getFaktumSporsmalTekst(this.props.intl, BarneutgifterKey + ".true.utgifter")}
                 >
-                    {this.renderCheckBox("fritidsaktiviteter", "fritidsaktivitet")}
-                    {this.renderCheckBox("barnehage", "barnehage")}
-                    {this.renderCheckBox("sfo", "sfo")}
-                    {this.renderCheckBox("tannregulering", "tannbehandling")}
-                    {this.renderCheckBox("annet", "annet")}
+                    {this.renderCheckBox(BarneutgifterKeys.FRITIDSAKTIVITETER, BarneutgifterKeys.FRITIDSAKTIVITETER)}
+                    {this.renderCheckBox(BarneutgifterKeys.BARNEHAGE, BarneutgifterKeys.BARNEHAGE)}
+                    {this.renderCheckBox(BarneutgifterKeys.SFO, BarneutgifterKeys.SFO)}
+                    {this.renderCheckBox(BarneutgifterKeys.TANNREGULERING, BarneutgifterKeys.TANNREGULERING)}
+                    {this.renderCheckBox(BarneutgifterKeys.ANNET, BarneutgifterKeys.ANNET)}
                 </Sporsmal>
             </JaNeiSporsmal>
         )

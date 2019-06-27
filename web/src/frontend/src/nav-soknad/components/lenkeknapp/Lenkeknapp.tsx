@@ -14,6 +14,7 @@ const baseClassName = "lenkeknapp";
 class Lenkeknapp extends React.Component<Props> {
 	render() {
 		const { onClick, children, style, skjermleserLabel } = this.props;
+		// @ts-ignore
 		const className = classNames(
 			"lenke",
 			baseClassName,

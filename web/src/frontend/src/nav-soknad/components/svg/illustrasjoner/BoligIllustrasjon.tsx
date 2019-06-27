@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const BoligIllustrasjon: React.StatelessComponent<{}> = ({}) => {
+const BoligIllustrasjon: React.FC = () => {
 	return (
 		<div>
 			<svg

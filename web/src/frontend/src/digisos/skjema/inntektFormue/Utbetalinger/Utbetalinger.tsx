@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
-    connectSoknadsdataContainer, onEndretValideringsfeil,
+    connectSoknadsdataContainer,
+    onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
@@ -8,7 +9,7 @@ import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataRe
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
-import {Utbetalinger} from "./utbetalingerTypes";
+import {Utbetalinger, UtbetalingerKeys} from "./utbetalingerTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
@@ -67,10 +68,10 @@ export class UtbetalingerView extends React.Component<Props, State> {
         }
     }
 
-    handleClickRadio(idToToggle: string) {
+    handleClickRadio(idToToggle: UtbetalingerKeys) {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-        utbetalinger[idToToggle] = !utbetalinger[idToToggle];
+        utbetalinger[idToToggle]= !utbetalinger[idToToggle];
         if (!utbetalinger.bekreftelse || !utbetalinger.annet) {
             utbetalinger.beskrivelseAvAnnet = "";
         }
@@ -90,15 +91,15 @@ export class UtbetalingerView extends React.Component<Props, State> {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
         const beskrivelseAvAnnet = utbetalinger.beskrivelseAvAnnet;
-        const feilmeldingAnnet: ValideringsFeilKode = this.validerTekstfeltVerdi(beskrivelseAvAnnet, TEXT_AREA_ANNET_FAKTUM_KEY);
+        const feilmeldingAnnet: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(beskrivelseAvAnnet, TEXT_AREA_ANNET_FAKTUM_KEY);
 
         if (!feilmeldingAnnet) {
             this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
         }
     }
 
-    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode {
-        const feilkode: ValideringsFeilKode = maksLengde(verdi, MAX_CHARS);
+    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode | undefined {
+        const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
         onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
             (feilkode) ?
                 this.props.setValideringsfeil(feilkode, faktumKey) :
@@ -107,18 +108,25 @@ export class UtbetalingerView extends React.Component<Props, State> {
         return feilkode;
     }
 
-    renderCheckBox(navn: string, textKey: string) {
+    renderCheckBox(navn: UtbetalingerKeys, textKey: string) {
         const {soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-        return (
-            <CheckboxPanel
-                id={"boutgifter_" + navn + "_checkbox"}
-                name={navn}
-                checked={utbetalinger && utbetalinger[navn] ? utbetalinger[navn] : false}
-                label={<FormattedHTMLMessage id={UTBETALINGER + ".true.type." + textKey}/>}
-                onClick={() => this.handleClickRadio(navn)}
-            />
-        )
+
+        if (typeof utbetalinger[navn] === "boolean"){
+
+            const isChecked: boolean = !!(utbetalinger[navn] && (utbetalinger[navn] === true));
+
+            return (
+                <CheckboxPanel
+                    id={"boutgifter_" + navn + "_checkbox"}
+                    name={navn}
+                    checked={isChecked}
+                    label={<FormattedHTMLMessage id={UTBETALINGER + ".true.type." + textKey}/>}
+                    onClick={() => this.handleClickRadio(navn)}
+                />
+            )
+        }
+
     }
 
     render() {
@@ -141,12 +149,12 @@ export class UtbetalingerView extends React.Component<Props, State> {
                 <Sporsmal
                     tekster={getFaktumSporsmalTekst(this.props.intl, UTBETALINGER + ".true.type")}
                 >
-                    {this.renderCheckBox("utbytte", "utbytte")}
-                    {this.renderCheckBox("salg", "salg")}
-                    {this.renderCheckBox("forsikring", "forsikring")}
-                    {this.renderCheckBox("annet", "annet")}
+                    {this.renderCheckBox(UtbetalingerKeys.UTBYTTE, UtbetalingerKeys.UTBYTTE)}
+                    {this.renderCheckBox(UtbetalingerKeys.SALG, UtbetalingerKeys.SALG)}
+                    {this.renderCheckBox(UtbetalingerKeys.FORSIKRING, UtbetalingerKeys.FORSIKRING)}
+                    {this.renderCheckBox(UtbetalingerKeys.ANNET, UtbetalingerKeys.ANNET)}
                     <NivaTreSkjema
-                        visible={utbetalinger.bekreftelse && utbetalinger.annet}
+                        visible={!!(utbetalinger.bekreftelse && utbetalinger.annet)}
                         size="small"
                     >
                         <TextareaEnhanced

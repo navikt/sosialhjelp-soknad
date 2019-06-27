@@ -42,7 +42,10 @@ class MockLogin extends React.Component<Props, State> {
 
 	keyPress(e: any){
 		if (e.key === "Enter"){
-			document.getElementById("login-button").click();
+			let elementById: HTMLElement | null = document.getElementById("login-button");
+			if (elementById) {
+				elementById.click()
+			}
 		}
 	}
 

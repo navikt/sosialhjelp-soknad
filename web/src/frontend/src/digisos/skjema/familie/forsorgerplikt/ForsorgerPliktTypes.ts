@@ -16,7 +16,7 @@ export interface Barn {
 
 export interface ForsorgerPlikt {
 	harForsorgerplikt: boolean;
-	barnebidrag: string;
+	barnebidrag: string | null;
 	ansvar: Barn[];
 }
 

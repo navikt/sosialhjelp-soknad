@@ -32,7 +32,7 @@ class OpplysningView extends React.Component<OwnProps, {}> {
 
         return (
             <div className="skjema-progresjonsblokk__sporsmal">
-                <Sporsmal sprakNokkel={opplysningSpc.textKey} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
+                <Sporsmal sprakNokkel={opplysningSpc && opplysningSpc.textKey ? opplysningSpc.textKey : ""} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
                     <TabellView
                         opplysning={opplysning}
                         gruppeIndex={gruppeIndex}

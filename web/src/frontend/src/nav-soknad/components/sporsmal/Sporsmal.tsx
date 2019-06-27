@@ -41,20 +41,24 @@ class Sporsmal extends React.Component<Props, {}> {
 	render() {
 		const { id, visible, children, feil, feilkode, tekster, intl, sprakNokkel, visLedetekst } = this.props;
 		const ledeTekster: SporsmalFaktumTekst = tekster ? tekster :
-			getFaktumSporsmalTekst(intl, sprakNokkel );
+			getFaktumSporsmalTekst(intl, sprakNokkel ? sprakNokkel : "" );
 		if (visible === false) {
 			return null;
 		}
+		// @ts-ignore
 		const sporsmalCls = classNames("skjema-sporsmal", {
 			"skjema-sporsmal--noBottomPadding":
 				this.props.style === "system" || this.props.style === "jaNeiSporsmal",
 			"skjema-sporsmal--systeminfo": this.props.style === "system",
 			"skjema-sporsmal--jaNeiSporsmal": this.props.style === "jaNeiSporsmal"
 		});
+		// @ts-ignore
 		const cls = classNames("skjema-fieldset", {
 			"skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined
 		});
+
 		const legendCls = this.props.legendTittelStyle ? this.props.legendTittelStyle : LegendTittleStyle.DEFAULT;
+		// @ts-ignore
 		const legendId = cuid();
 		const sporsmal = this.props.tittelRenderer
 			? this.props.tittelRenderer(ledeTekster.sporsmal)

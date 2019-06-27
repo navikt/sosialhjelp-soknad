@@ -1,8 +1,11 @@
 import {Soknadsdata} from "../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {NavEnhet} from "../skjema/personopplysninger/adresse/AdresseTypes";
 
-function finnSoknadsMottaker(soknadsdata: Soknadsdata) {
-	const valgtNavEnhet: NavEnhet | undefined = soknadsdata.personalia.navEnheter.find((navenhet: NavEnhet) => navenhet.valgt);
+function finnSoknadsMottaker(soknadsdata: Soknadsdata): NavEnhet | undefined {
+	let valgtNavEnhet: NavEnhet | undefined = undefined;
+	if (soknadsdata.personalia.navEnheter){
+		valgtNavEnhet = soknadsdata.personalia.navEnheter.find((navenhet: NavEnhet) => navenhet.valgt);
+	}
 	return valgtNavEnhet;
 }
 

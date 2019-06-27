@@ -21,7 +21,7 @@ class ApplikasjonsfeilDialog extends React.Component<Props, {}> {
 			<Dialog
 				isOpen={this.props.visDialog}
 				icon="advarsel-trekant"
-				overskrift={this.props.visDialog ? this.props.feil.tittel : ""}
+				overskrift={this.props.visDialog && this.props.feil ? this.props.feil.tittel : ""}
 				dialogtittel={
 					this.props.visDialog
 						? this.props.intl.formatMessage({
@@ -32,7 +32,7 @@ class ApplikasjonsfeilDialog extends React.Component<Props, {}> {
 				okLabel="ok"
 				onClose={() => this.props.dispatch(clearApplikasjonsfeil())}
 			>
-				{this.props.visDialog ? this.props.feil.innhold : ""}
+				{this.props.visDialog && this.props.feil ? this.props.feil.innhold : ""}
 			</Dialog>
 		);
 	}
@@ -45,6 +45,6 @@ const mapStateToProps = (state: SoknadAppState): StateProps => {
 	};
 };
 
-export default connect<StateProps, {}, {}>(mapStateToProps)(
+export default connect(mapStateToProps)(
 	injectIntl(ApplikasjonsfeilDialog)
 );

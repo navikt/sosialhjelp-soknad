@@ -51,27 +51,27 @@ class TelefonView extends React.Component<Props, {}> {
 
 	forberedOgSendTelefonnummer(telefonnummer: Telefonnummer, brukerBehandlingId: string){
 		let verdi = telefonnummer.brukerutfyltVerdi;
-		let feilkode: ValideringsFeilKode = null;
+		let feilkode: ValideringsFeilKode | undefined = undefined;
 
 		if(verdi === "" || verdi === null) {
 			this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
 		} else {
 			verdi = this.fjernLandkode(verdi);
-			verdi = verdi.replace(/[ \.]/g,"");
+			verdi = verdi.replace(/[.]/g,"");
 			telefonnummer.brukerutfyltVerdi = verdi;
 			feilkode = this.validerTelefonnummer(verdi);
 		}
 
 		if (!feilkode) {
 			if (telefonnummer.brukerutfyltVerdi !== null && telefonnummer.brukerutfyltVerdi !== "") {
-				telefonnummer.brukerutfyltVerdi = LANDKODE + this.fjernLandkode(verdi);
+				telefonnummer.brukerutfyltVerdi = LANDKODE + this.fjernLandkode(telefonnummer.brukerutfyltVerdi);
 			}
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
 		}
 	}
 
-	validerTelefonnummer(verdi: string): ValideringsFeilKode {
-		const feilkode: ValideringsFeilKode = erTelefonnummer(verdi);
+	validerTelefonnummer(verdi: string): ValideringsFeilKode | undefined {
+		const feilkode: ValideringsFeilKode | undefined = erTelefonnummer(verdi);
 		if (verdi !== "" && feilkode){
 			// onEndretValideringsfeil(feilkode, FAKTUM_KEY_TELEFON, this.props.feil, () => {
 				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_TELEFON);
@@ -113,7 +113,7 @@ class TelefonView extends React.Component<Props, {}> {
 			case null: {
 				return (
 					<Sporsmal
-						tekster={{sporsmal, infotekst: { tittel: null, tekst: infotekst }}}
+						tekster={{sporsmal, infotekst: { tittel: undefined, tekst: infotekst }}}
 					>
 							<InputEnhanced
 								id={faktumKeyTelefonId}
@@ -135,10 +135,10 @@ class TelefonView extends React.Component<Props, {}> {
 				return (
 
 					<Sporsmal
-						tekster={{sporsmal, infotekst: { tittel: null, tekst: infotekst }}}
+						tekster={{sporsmal, infotekst: { tittel: undefined, tekst: infotekst }}}
 					>
 						<SysteminfoMedSkjema
-							skjemaErSynlig={brukerdefinert}
+							skjemaErSynlig={brukerdefinert ? brukerdefinert : false}
 							onVisSkjema={() => this.setBrukerdefinert(true)}
 							onSkjulSkjema={() => this.setBrukerdefinert(false)}
 							endreLabel={endreLabel}

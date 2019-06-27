@@ -18,7 +18,6 @@ class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 			<div className="skjema-knapperad ikke-juridisk-tekst">
 				<Knapp
 					id="gaa_videre_button"
-					type="hoved"
 					htmlType="button"
 					onClick={gaVidere}
 					spinner={this.props.gaViderePending}
@@ -30,7 +29,6 @@ class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 				</Knapp>
 				<Knapp
 					id="gaa_tilbake_button"
-					type="standard"
 					htmlType="button"
 					onClick={gaTilbake}
 					disabled={this.props.gaViderePending || !this.props.gaTilbake}
@@ -41,7 +39,7 @@ class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 					<a
 						href="#"
 						className="lenke"
-						onClick={this.props.gaViderePending ? null : avbryt}
+						onClick={this.props.gaViderePending ? undefined : avbryt}
 					>
 						{getIntlTextOrKey(intl, "skjema.knapper.avbryt")}
 					</a>

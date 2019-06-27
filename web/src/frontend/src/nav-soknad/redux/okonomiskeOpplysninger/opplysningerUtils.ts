@@ -1,5 +1,5 @@
 import {
-    MaybeOpplysning,
+    InputType,
     Opplysning,
     OpplysningBackend,
     OpplysningerBackend,
@@ -27,7 +27,7 @@ export const updateSortertOpplysning = (opplysninger: Opplysning[], opplysningUp
 export const transformToBackendOpplysning = (opplysning: Opplysning): OpplysningBackend => {
     return {
         type: opplysning.type,
-        gruppe: opplysning.gruppe,
+        gruppe: opplysning.gruppe ? opplysning.gruppe : OpplysningGruppe.UKJENT,
         rader: opplysning.rader,
         vedleggStatus: opplysning.vedleggStatus,
         filer: opplysning.filer
@@ -71,12 +71,12 @@ export const getGruppeTittelKey: (opplysningGruppe: OpplysningGruppe) => string 
 
 export const getTomVedleggRad: () => OpplysningRad = () => {
     return {
-        "beskrivelse": null,
-        "belop": null,
-        "brutto": null,
-        "netto": null,
-        "avdrag": null,
-        "renter": null
+        beskrivelse: "",
+        belop: "",
+        brutto: "",
+        netto: "",
+        avdrag: "",
+        renter: ""
     }
 };
 
@@ -96,12 +96,23 @@ export const getSortertListeAvOpplysninger = (backendData: OpplysningerBackend):
     const opplysningerSlettede: Opplysning[] = slettedeVedlegg.map((opplysningBackend: OpplysningBackend) => {
         return backendOpplysningToOpplysning(opplysningBackend, true)
     });
-
     const alleOpplysninger: Opplysning[] = opplysningerAktive.concat(opplysningerSlettede);
-
-    return sorterOpplysninger(alleOpplysninger, opplysningsRekkefolgeOgSpc)
-        .filter((o: MaybeOpplysning) => o !== null);
+    const opplysningerSortert: MaybeOpplysning[] = sorterOpplysninger(alleOpplysninger, opplysningsRekkefolgeOgSpc);
+    const opplysningerSortertOgNullsFiltrertBort: Opplysning[] = filterOutNullValuesFromList(opplysningerSortert);
+    return opplysningerSortertOgNullsFiltrertBort;
 };
+
+const filterOutNullValuesFromList = (list: MaybeOpplysning[]): Opplysning[] => {
+    const listUtenNulls: Opplysning[] = [];
+
+    list.forEach((maybeOpplysning: MaybeOpplysning) => {
+        if (maybeOpplysning){
+            listUtenNulls.push(maybeOpplysning);
+        }
+    });
+
+    return listUtenNulls;
+}
 
 export const getSpcForOpplysning = (opplysningType: OpplysningType): OpplysningSpc | undefined => {
     const opplysningSpcs = opplysningsRekkefolgeOgSpc.filter((oSpc: OpplysningSpc) => {
@@ -111,7 +122,7 @@ export const getSpcForOpplysning = (opplysningType: OpplysningType): OpplysningS
     if (opplysningSpcs && opplysningSpcs.length === 0){
         const navLogEntry: NavLogEntry = {
             level: NavLogLevel.ERROR,
-            message: `Spc ikke funnet for opplysning med type: \"${opplysningType}\"`,
+            message: `Spc ikke funnet for opplysning med type: "${opplysningType}"`,
             jsFileUrl: "opplysningerUtils.js",
         };
         loggErrorToServer(navLogEntry);
@@ -121,19 +132,29 @@ export const getSpcForOpplysning = (opplysningType: OpplysningType): OpplysningS
 };
 
 const backendOpplysningToOpplysning = (opplysningBackend: OpplysningBackend, erSlettet: boolean): Opplysning => {
+
+    const spc: OpplysningSpc | undefined = getSpcForOpplysning(opplysningBackend.type);
+
+    let radInnhold_: InputType[] = [];
+    if (spc){
+        radInnhold_ = spc.radInnhold;
+    }
+
     return {
-        "type": opplysningBackend.type,
-        "gruppe": opplysningBackend.gruppe,
-        "rader": opplysningBackend.rader,
-        "vedleggStatus": opplysningBackend.vedleggStatus,
-        "filer": opplysningBackend.filer,
-        "slettet": erSlettet,
-        "radInnhold": getSpcForOpplysning(opplysningBackend.type) && getSpcForOpplysning(opplysningBackend.type).radInnhold ? getSpcForOpplysning(opplysningBackend.type).radInnhold : [],
-        "pendingLasterOppFil": false
+        type: opplysningBackend.type,
+        gruppe: opplysningBackend.gruppe,
+        rader: opplysningBackend.rader,
+        vedleggStatus: opplysningBackend.vedleggStatus,
+        filer: opplysningBackend.filer,
+        slettet: erSlettet,
+        radInnhold: radInnhold_,
+        pendingLasterOppFil: false
     }
 };
 
-function sorterOpplysninger(usortertListe: Opplysning[], rekkefolge: OpplysningSpc[]) {
+type MaybeOpplysning = Opplysning | null;
+
+function sorterOpplysninger(usortertListe: Opplysning[], rekkefolge: OpplysningSpc[]): MaybeOpplysning[] {
 
     const sortert: MaybeOpplysning[] = [];
     sortert.fill(null, 0, rekkefolge.length - 1);
@@ -147,7 +168,7 @@ function sorterOpplysninger(usortertListe: Opplysning[], rekkefolge: OpplysningS
 
                 const navLogEntry: NavLogEntry = {
                     level: NavLogLevel.ERROR,
-                    message: `Ukjent okonomisk opplysning oppdaget. Okonomisk opplysning med type \"${opplysning.type}\" mottatt fra backend`,
+                    message: `Ukjent okonomisk opplysning oppdaget. Okonomisk opplysning med type "${opplysning.type}" mottatt fra backend`,
                     jsFileUrl: "opplysningerUtils.js",
                 };
                 loggErrorToServer(navLogEntry);

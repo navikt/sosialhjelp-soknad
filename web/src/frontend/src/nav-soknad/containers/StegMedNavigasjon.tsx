@@ -1,5 +1,5 @@
 import * as React from "react";
-import {RouterProps, withRouter} from "react-router";
+import {RouteComponentProps, RouterProps, withRouter} from "react-router";
 import {InjectedIntlProps, injectIntl} from "react-intl";
 import {Location} from "history";
 import {connect} from "react-redux";
@@ -10,7 +10,7 @@ import Feiloppsummering from "../components/validering/Feiloppsummering";
 import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
 import {SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../types";
-import {DispatchProps, SoknadAppState, ValideringsFeilKode} from "../redux/reduxTypes";
+import {DispatchProps, ValideringsFeilKode} from "../redux/reduxTypes";
 import {setVisBekreftMangler} from "../redux/oppsummering/oppsummeringActions";
 import {getIntlTextOrKey, scrollToTop} from "../utils";
 import {avbrytSoknad, sendSoknad} from "../redux/soknad/soknadActions";
@@ -21,6 +21,7 @@ import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
 import {clearAllValideringsfeil, setValideringsfeil, visValideringsfeilPanel} from "../redux/valideringActions";
 import {ValideringState} from "../redux/valideringReducer";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
+import {State} from "../../digisos/redux/reducers";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -57,10 +58,10 @@ type Props = OwnProps &
 	RouterProps &
 	InjectedRouterProps &
 	InjectedIntlProps &
-	DispatchProps;
+	DispatchProps & RouteComponentProps;
 
 class StegMedNavigasjon extends React.Component<Props, {}> {
-	stegTittel: HTMLElement;
+	stegTittel!: HTMLElement;
 
 	constructor(props: Props) {
 		super(props);
@@ -129,8 +130,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 			s => s.key === this.props.stegKey
 		);
 		const brukerBehandlingId = this.props.match.params.brukerBehandlingId;
-		const erOppsummering =
-			aktivtStegConfig.type === SkjemaStegType.oppsummering;
+		const erOppsummering: boolean = aktivtStegConfig ? aktivtStegConfig.type === SkjemaStegType.oppsummering : false;
 		const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
 		const documentTitle = intl.formatMessage({
 			id: this.props.skjemaConfig.tittelId
@@ -138,10 +138,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 		const synligeSteg = skjemaConfig.steg.filter(
 			s => s.type === SkjemaStegType.skjema
 		);
-
-
-
-
 
 		const { feil, visValideringsfeil} = validering;
 
@@ -163,7 +159,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						{!erOppsummering ? (
 							<div className="skjema__stegindikator">
 								<StegIndikator
-									aktivtSteg={aktivtStegConfig.stegnummer}
+									aktivtSteg={aktivtStegConfig ? aktivtStegConfig.stegnummer : 1}
 									steg={synligeSteg.map(s => ({
 										tittel: intl.formatMessage({ id: `${s.key}.tittel` })
 									}))}
@@ -176,27 +172,29 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 						<div
 							className="skjema-steg__tittel"
 							tabIndex={-1}
-							ref={c => (this.stegTittel = c)}
+							ref={c => { if(c){this.stegTittel = c }}}
 						>
 							<Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
 						</div>
 						{children}
-						<Knapperad
-							gaViderePending={this.props.nextButtonPending}
-							gaVidereLabel={
-								erOppsummering
-									? getIntlTextOrKey(intl, "skjema.knapper.send")
-									: undefined
-							}
-							gaVidere={() =>
-								this.handleGaVidere(aktivtStegConfig, brukerBehandlingId)}
-							gaTilbake={
-								aktivtStegConfig.stegnummer > 1
-									? () => this.handleGaTilbake(aktivtStegConfig.stegnummer)
-									: null
-							}
-							avbryt={() => this.props.dispatch(avbrytSoknad())}
-						/>
+						{ aktivtStegConfig &&
+							<Knapperad
+								gaViderePending={this.props.nextButtonPending}
+								gaVidereLabel={
+									erOppsummering
+										? getIntlTextOrKey(intl, "skjema.knapper.send")
+										: undefined
+								}
+								gaVidere={() =>
+									this.handleGaVidere(aktivtStegConfig, brukerBehandlingId)}
+								gaTilbake={
+									aktivtStegConfig.stegnummer > 1
+										? () => this.handleGaTilbake(aktivtStegConfig.stegnummer)
+										: undefined
+								}
+								avbryt={() => this.props.dispatch(avbrytSoknad())}
+							/>
+						}
 					</form>
 				</div>
 			</div>
@@ -204,7 +202,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 	}
 }
 
-const mapStateToProps = (state: SoknadAppState): StateProps => {
+export default connect((state: State) => {
 	return {
 		validering: state.validering,
 		nextButtonPending: state.soknad.sendSoknadPending,
@@ -212,6 +210,4 @@ const mapStateToProps = (state: SoknadAppState): StateProps => {
 		fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer,
 		soknadsdata: state.soknadsdata
 	};
-};
-
-export default connect<StateProps, {}, OwnProps>(mapStateToProps)(injectIntl(withRouter(StegMedNavigasjon as any) as any) as any);
+})(injectIntl(withRouter(StegMedNavigasjon)));

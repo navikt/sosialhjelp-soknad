@@ -1,5 +1,4 @@
 import {connect} from "react-redux";
-import {State} from "../../../digisos/redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "./soknadsdataActions";
 import {clearValideringsfeil, setValideringsfeil} from "../valideringActions";
 import {
@@ -12,31 +11,34 @@ import {REST_STATUS} from "../../types";
 import {setVisSamtykkeInfo} from "../init/initActions";
 import {Valideringsfeil, ValideringsFeilKode} from "../valideringActionTypes";
 import {SoknadState} from "../reduxTypes";
+import {State} from "../../../digisos/redux/reducers";
 
 /*
  * Properties og redux koblinger som er felles for komponenter i søknadsskjemaet.
  */
 
+
 export interface SoknadsdataContainerProps {
-    // Props:
-    soknad?: SoknadState
-    soknadsdata?: null | Soknadsdata;
-    brukerBehandlingId?: string;
-    feil?: Valideringsfeil[];
+    // Egne props
+    skjul?: boolean;
+
+    // PropsMappedFromStore:
+    soknad: SoknadState
+    soknadsdata: Soknadsdata;
+    brukerBehandlingId: string;
+    feil: Valideringsfeil[];
 
     // Funksjoner:
-    hentSoknadsdata?: (brukerBehandlingId: string, urlPath: string) => void;
-    // lagreSoknadsdata?: (brukerBehandlingId: string, urlPath: string, soknadsdata: SoknadsdataType, responseHandler?: (response: any) => void) => void;
-    lagreSoknadsdata?: (brukerBehandlingId: string, urlPath: string, soknadsdata: any, responseHandler?: (response: any) => void) => void;
-    oppdaterSoknadsdataSti?: (sti: string, soknadsdata: SoknadsdataType) => void;
-    settRestStatus?: (sti: string, restStatus: REST_STATUS) => void;
-    skjul?: boolean;
-    setVisSamtykkeInfo?: (vis: boolean) => void;
-    setValideringsfeil?: (feilkode: ValideringsFeilKode, faktumKey: string) => void;
-    clearValideringsfeil?: (faktumKey: string) => void;
+    hentSoknadsdata: (brukerBehandlingId: string, urlPath: string) => void;
+    lagreSoknadsdata: (brukerBehandlingId: string, urlPath: string, soknadsdata: any, responseHandler?: (response: any) => void) => void;
+    oppdaterSoknadsdataSti: (sti: string, soknadsdata: SoknadsdataType) => void;
+    settRestStatus: (sti: string, restStatus: REST_STATUS) => void;
+    setVisSamtykkeInfo: (vis: boolean) => void;
+    setValideringsfeil: (feilkode: ValideringsFeilKode, faktumKey: string) => void;
+    clearValideringsfeil: (faktumKey: string) => void;
 }
 
-export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerProps>(
+export const connectSoknadsdataContainer = connect(
     (state: State) => ({
         soknad: state.soknad,
         brukerBehandlingId: state.soknad.behandlingsId,
@@ -60,16 +62,16 @@ export const connectSoknadsdataContainer = connect<{}, {}, SoknadsdataContainerP
 
 // For å unngå at man dispatcher samme identiske feilmelding flere ganger, kan denne funksjonen brukes:
 export const onEndretValideringsfeil = (
-    nyFeilkode: ValideringsFeilKode,
+    nyFeilkode: ValideringsFeilKode | undefined,
     faktumKey: string,
     feil: Valideringsfeil[],
     callback: () => void) => {
-    let eksisterendeFeil: Valideringsfeil;
+    let eksisterendeFeil: Valideringsfeil | undefined;
     if (feil) {
         eksisterendeFeil = feil.find((valideringsfeil: Valideringsfeil) =>
             valideringsfeil.faktumKey === faktumKey);
     }
-    const eksisterendeFeilkode: string = (eksisterendeFeil && eksisterendeFeil.feilkode) ?
+    const eksisterendeFeilkode: string | undefined = (eksisterendeFeil && eksisterendeFeil.feilkode) ?
         eksisterendeFeil.feilkode : undefined;
     if (eksisterendeFeilkode !== nyFeilkode) {
         callback();

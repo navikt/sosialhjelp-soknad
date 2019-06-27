@@ -9,7 +9,6 @@ import {
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {
     DispatchProps,
-    SoknadAppState,
     Valideringsfeil,
     ValideringsFeilKode
 } from "../../../nav-soknad/redux/reduxTypes";
@@ -28,8 +27,9 @@ import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import {clearValideringsfeil, setValideringsfeil} from "../../../nav-soknad/redux/valideringActions";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
 import {getFeilForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerSaga";
-import InjectedIntlProps = ReactIntl.InjectedIntlProps;
-
+import {InjectedIntlProps} from "react-intl";
+import {State} from "../../redux/reducers";
+import { injectIntl} from "react-intl";
 
 interface OwnProps {
     opplysning: Opplysning;
@@ -114,13 +114,44 @@ class TabellView extends React.Component<Props, {}> {
 
     validerAlleInputfelterPaOpplysning(opplysningUpdated: Opplysning, opplysning: Opplysning) {
         opplysningUpdated.rader.map((rad: OpplysningRad, index: number) => {
-            Object.keys(rad).map((key: InputType) => {
-                if (key !== "beskrivelse" && rad[key] && rad[key] !== "" && !erGyldigTall(rad[key])) {
-                    const validationKey: string = `${getSpcForOpplysning(opplysning.type).textKey}.${key}.${index}`;
-                    this.props.dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, validationKey));
+            Object.keys(rad).map((key: string) => {
+                switch(key){
+                    case InputType.BELOP: {
+                        this.setValideringsfeilHvisUgyldigTall(InputType.BELOP, rad[InputType.BELOP], opplysning, index);
+                        break;
+                    }
+                    case InputType.BRUTTO: {
+                        this.setValideringsfeilHvisUgyldigTall(InputType.BRUTTO, rad[InputType.BRUTTO], opplysning, index);
+                        break;
+                    }
+                    case InputType.NETTO: {
+                        this.setValideringsfeilHvisUgyldigTall(InputType.NETTO, rad[InputType.NETTO], opplysning, index);
+                        break;
+                    }
+                    case InputType.AVDRAG: {
+                        this.setValideringsfeilHvisUgyldigTall(InputType.AVDRAG, rad[InputType.AVDRAG], opplysning, index);
+                        break;
+                    }
+                    case InputType.RENTER: {
+                        this.setValideringsfeilHvisUgyldigTall(InputType.RENTER, rad[InputType.RENTER], opplysning, index);
+                        break;
+                    }
+                    default: {
+
+                    }
                 }
             });
         });
+    }
+
+    setValideringsfeilHvisUgyldigTall(key: InputType, value: string, opplysning: Opplysning, index: number){
+        const spc: OpplysningSpc | undefined = getSpcForOpplysning(opplysning.type);
+        if (spc){
+            if (value !== "" && !erGyldigTall(value)) {
+                const validationKey: string = `${spc.textKey}.${key}.${index}`;
+                this.props.dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, validationKey));
+            }
+        }
     }
 
     fjernAlleFeilForOpplysning(feil: Valideringsfeil[], valideringsKey: string) {
@@ -134,7 +165,7 @@ class TabellView extends React.Component<Props, {}> {
         const {opplysning, gruppeIndex} = this.props;
 
         const opplysningSpc: OpplysningSpc | undefined = getSpcForOpplysning(opplysning.type);
-        const textKey = opplysningSpc.textKey ? opplysningSpc.textKey : "";
+        const textKey = opplysningSpc ? opplysningSpc.textKey : "";
 
         const innhold: JSX.Element[] = opplysning.rader.map((vedleggRad: OpplysningRad, radIndex: number) => {
             const skalViseFjerneRadKnapp = radIndex > 0;
@@ -147,7 +178,7 @@ class TabellView extends React.Component<Props, {}> {
                     <Column xs={"12"} md={"6"} key={key}>
                         <InputEnhanced
                             id={id}
-                            onChange={(input) => this.handleChange(input, radIndex, inputType, key)}
+                            onChange={(input: string) => this.handleChange(input, radIndex, inputType, key)}
                             onBlur={() => this.handleBlur(radIndex, inputType, key)}
                             verdi={vedleggRad[inputType] ? vedleggRad[inputType] : ""}
                             required={false}
@@ -195,12 +226,12 @@ class TabellView extends React.Component<Props, {}> {
     }
 }
 
-export default connect<StoreToProps, {}, OwnProps>(
-    (state: SoknadAppState) => {
+export default connect(
+    (state: State) => {
         return {
             okonomiskeOpplysninger: state.okonomiskeOpplysninger,
             behandlingsId: state.soknad.data.brukerBehandlingId,
             feil: state.validering.feil,
         };
     }
-)(TabellView);
+)(injectIntl(TabellView));

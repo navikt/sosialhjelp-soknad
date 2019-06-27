@@ -1,14 +1,14 @@
 import * as React from "react";
 import {Knapp} from "nav-frontend-knapper";
-import {FormattedMessage} from "react-intl";
-import {
-    Opplysning
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+import {FormattedMessage, InjectedIntlProps} from "react-intl";
+import {Opplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {connect} from "react-redux";
-import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
-import InjectedIntlProps = ReactIntl.InjectedIntlProps;
+import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import {lastOppFil, lastOppFilFeilet} from "../../../nav-soknad/redux/fil/filActions";
 import {FilState} from "../../../nav-soknad/redux/fil/filTypes";
+import {REST_FEIL} from "../../../nav-soknad/types/restFeilTypes";
+import {State} from "../../redux/reducers";
+import {injectIntl} from "react-intl";
 
 interface StoreToProps {
     behandlingsId: string;
@@ -25,18 +25,18 @@ type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
 
 
 class LastOppFil extends React.Component<Props, {}> {
-    leggTilVedleggKnapp: HTMLInputElement;
+    leggTilVedleggKnapp!: HTMLInputElement;
 
     handleFileUpload(files: FileList) {
         const {behandlingsId, opplysning} = this.props;
-        this.props.dispatch(lastOppFilFeilet(opplysning.type, null));
+        this.props.dispatch(lastOppFilFeilet(opplysning.type, REST_FEIL.FEIL_FILTPYE));
         if (files.length !== 1) {
             return;
         }
         const formData = new FormData();
         formData.append("file", files[0], files[0].name);
         this.props.dispatch(lastOppFil(opplysning, formData, behandlingsId));
-        this.leggTilVedleggKnapp.value = null;
+        this.leggTilVedleggKnapp.value = "";
     }
 
     render() {
@@ -47,7 +47,6 @@ class LastOppFil extends React.Component<Props, {}> {
             <div>
                 <Knapp
                     id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
-                    type="standard"
                     htmlType="button"
                     disabled={isDisabled}
                     spinner={visSpinner}
@@ -60,8 +59,16 @@ class LastOppFil extends React.Component<Props, {}> {
                 </Knapp>
                 <input
                     id={opplysning.type.replace(/\./g, "_") + "_skjult_upload_input"}
-                    ref={c => this.leggTilVedleggKnapp = c}
-                    onChange={(e) => this.handleFileUpload(e.target.files)}
+                    ref={c => {
+                        if (c) {
+                            this.leggTilVedleggKnapp = c
+                        }
+                    }}
+                    onChange={(e) => {
+                        if (e.target.files) {
+                            this.handleFileUpload(e.target.files)
+                        }
+                    }}
                     type="file"
                     className="visuallyhidden"
                     tabIndex={-1}
@@ -81,11 +88,11 @@ class LastOppFil extends React.Component<Props, {}> {
 }
 
 
-export default connect<StoreToProps, {}, OwnProps>(
-    (state: SoknadAppState) => {
+export default connect(
+    (state: State) => {
         return {
             behandlingsId: state.soknad.data.brukerBehandlingId,
             filopplasting: state.filopplasting
         };
     }
-)(LastOppFil);
+)(injectIntl(LastOppFil));

@@ -1,5 +1,4 @@
 import {ValideringState} from "./valideringReducer";
-import {FaktumState} from "./fakta/faktaReducer";
 import {MiljovariablerApiType} from "./miljovariabler/miljovariablerTypes";
 import {OppsummeringState} from "./oppsummering/oppsummeringReducer";
 import {Infofaktum, Kvittering, REST_STATUS, Soknad} from "../types";
@@ -16,7 +15,7 @@ import {OpplysningerModel} from "./okonomiskeOpplysninger/opplysningerTypes";
 import {FilState} from "./fil/filTypes";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {EttersendelseState} from "./ettersendelse/ettersendelseTypes";
-import {AuthenticationState} from "./authentication/authenticationTypes";
+import {RouterState} from "react-router-redux";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -30,37 +29,36 @@ export interface DispatchProps {
 }
 
 export interface SoknadAppState {
+    router: RouterState;
     soknad: SoknadState;
-    fakta: FaktumState;
-    validering: ValideringState;
     oppsummering: OppsummeringState;
-    applikasjonsfeil: ApplikasjonsfeilState;
-    miljovariabler: MiljovariablerApiType;
-    featuretoggles: FeatureTogglesApiType;
+    validering: ValideringState;
+    ledetekster: LedetekstState;
     tilgang: TilgangState;
     vedlegg: VedleggState;
-    ledetekster: LedetekstState;
+    miljovariabler: MiljovariablerApiType;
+    featuretoggles: FeatureTogglesApiType;
+    applikasjonsfeil: ApplikasjonsfeilState;
     ettersendelse: EttersendelseState;
-    soknadsdata: Soknadsdata;
     init: InitState;
     mockData: MockState;
+    soknadsdata: Soknadsdata;
     okonomiskeOpplysninger: OpplysningerModel;
     filopplasting: FilState;
-    authentication: AuthenticationState;
 }
 
 export interface SoknadState {
     restStatus: REST_STATUS;
     data: Soknad;
     /** Faktum som lagrer informasjon presentert på infosiden */
-    infofaktum?: Infofaktum;
+    infofaktum: Infofaktum | null;
     kvittering?: Kvittering;
     sendSoknadPending: boolean;
     startSoknadPending: boolean;
     avbrytSoknadSjekkAktiv: boolean;
     avbrytDialog: {
         synlig: boolean;
-        destinasjon: AVBRYT_DESTINASJON;
+        destinasjon: AVBRYT_DESTINASJON | null | undefined;
     };
     behandlingsId: string;
     gjenopptattSoknad: boolean;

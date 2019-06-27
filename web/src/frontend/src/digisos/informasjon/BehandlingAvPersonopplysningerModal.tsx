@@ -4,10 +4,10 @@ import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
-import { State } from "../redux/reducers";
 import { Knapp } from "nav-frontend-knapper";
 import { finnValgtEnhetsNavn } from "../data/kommuner";
 import {Soknadsdata} from "../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {State} from "../redux/reducers";
 
 interface StateProps {
 	modalSynlig: boolean;
@@ -47,7 +47,7 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 
 				<div className="timeoutbox__knapperad">
 					<Knapp
-						type="standard"
+						htmlType="button"
 						onClick={() => this.props.dispatch(setVisSamtykkeInfo(false))}
 					>
 						<FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"}/>
@@ -58,7 +58,7 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 	}
 }
 
-export default connect((state: State, props: any): StateProps => {
+export default connect((state: State): StateProps => {
 	return {
 		modalSynlig: state.init.visSamtykkeInfo,
 		soknadsdata: state.soknadsdata

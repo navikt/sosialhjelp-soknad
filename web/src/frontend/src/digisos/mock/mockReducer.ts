@@ -1,15 +1,12 @@
-import {Reducer} from "../../nav-soknad/redux/reduxTypes";
-
+export enum MockActionTypeKeys {
+	SETT_IDENT = "mock/SETT_IDENT"
+}
 
 export function settMockIdent(ident: string) {
 	return {
 		type: MockActionTypeKeys.SETT_IDENT,
 		ident
 	};
-}
-
-export enum MockActionTypeKeys {
-	SETT_IDENT = "mock/SETT_IDENT"
 }
 
 export type MockActionTypes = SettIdentAction
@@ -27,7 +24,7 @@ export const defaultState: MockState = {
 	ident: "007"
 };
 
-const mockReducer: Reducer<MockState, MockActionTypes> = (state = defaultState, action) => {
+export default (state: MockState = defaultState, action: MockActionTypes) => {
 	switch (action.type) {
 		case MockActionTypeKeys.SETT_IDENT:
 			return {
@@ -38,6 +35,3 @@ const mockReducer: Reducer<MockState, MockActionTypes> = (state = defaultState, 
 			return state;
 	}
 };
-
-
-export default mockReducer;

@@ -1,5 +1,5 @@
 import {REST_STATUS} from "../../types";
-import {Reducer, SoknadState} from "../reduxTypes";
+import {SoknadState} from "../reduxTypes";
 
 import {SoknadActionTypeKeys, SoknadActionTypes} from "./soknadActionTypes";
 
@@ -22,7 +22,7 @@ export const defaultState: SoknadState = {
 	valgtSoknadsmottaker: undefined,
 };
 
-const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultState, action) => {
+export default (state: SoknadState = defaultState, action: SoknadActionTypes) => {
 	switch (action.type) {
 		case SoknadActionTypeKeys.START_SOKNAD:
 			return {
@@ -143,4 +143,3 @@ const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultS
 	}
 };
 
-export default soknadReducer;

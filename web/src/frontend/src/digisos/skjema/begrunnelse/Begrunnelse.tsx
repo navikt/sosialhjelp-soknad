@@ -33,7 +33,12 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 
 	onChange(value: string, key: string) {
 		const { soknadsdata } = this.props;
-		soknadsdata.begrunnelse[key]  = value;
+		if (key === HVA_SOKES_OM){
+			soknadsdata.begrunnelse.hvaSokesOm = value;
+		}
+		if (key === HVORFOR_SOKE){
+			soknadsdata.begrunnelse.hvorforSoke = value;
+		}
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BEGRUNNELSE, soknadsdata.begrunnelse);
 
 		if (key === HVA_SOKES_OM){
@@ -47,8 +52,8 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 	lagreHvisGyldig() {
 		const { soknadsdata, brukerBehandlingId } = this.props;
 		const { hvaSokesOm, hvorforSoke } = soknadsdata.begrunnelse;
-		const feilmeldingHva: ValideringsFeilKode = this.validerTekstfeltVerdi(hvaSokesOm, FAKTUM_KEY_HVA, MAX_CHARS);
-		const feilmeldingHvorfor: ValideringsFeilKode = this.validerTekstfeltVerdi(hvorforSoke, FAKTUM_KEY_HVORFOR, MAX_CHARS_BEGRUNNELSE);
+		const feilmeldingHva: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(hvaSokesOm, FAKTUM_KEY_HVA, MAX_CHARS);
+		const feilmeldingHvorfor: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(hvorforSoke, FAKTUM_KEY_HVORFOR, MAX_CHARS_BEGRUNNELSE);
 
 		if (!feilmeldingHva && !feilmeldingHvorfor) {
 			const begrunnelse: BegrunnelseType = {hvaSokesOm, hvorforSoke};
