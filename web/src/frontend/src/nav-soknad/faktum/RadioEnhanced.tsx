@@ -47,7 +47,7 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
 
     checked(): boolean {
         const {checked} = this.props;
-        return (checked && checked === true) ? true : false;
+        return !!(checked);
     }
 
     handleOnClick(event: any) {
@@ -59,8 +59,8 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
 
     renderRadio() {
         const {faktumKey, value, disabled, property, required, intl} = this.props;
-        const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
-        const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
+        const tekster = getRadioFaktumTekst(intl, faktumKey ? faktumKey : "", value, property);
+        const id = this.props.id ? this.props.id : (faktumKey ? faktumKey.replace(/\./g, "_") : "");
         const name = this.props.getName ? this.props.getName() : this.props.faktumKey + "-" + this.props.value;
         return (
             <Radio
@@ -72,7 +72,7 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
                 value={value}
                 required={required}
                 label={
-                    this.determineLabel(id, faktumKey, tekster, value)
+                    this.determineLabel(id, faktumKey ? faktumKey : "", tekster, value)
                 }
                 readOnly={true}
             />
@@ -81,11 +81,11 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
 
     renderMockRadio() {
         const {faktumKey, value, property, intl} = this.props;
-        const tekster = getRadioFaktumTekst(intl, faktumKey, value, property);
-        const id = this.props.id ? this.props.id : faktumKey.replace(/\./g, "_");
+        const tekster = getRadioFaktumTekst(intl, faktumKey ? faktumKey : "", value, property);
+        const id = this.props.id ? this.props.id : ( faktumKey ? faktumKey.replace(/\./g, "_") : "");
         return (
             <div className="radio-button-wrapper">
-                {this.determineLabel(id, faktumKey, tekster, value)}
+                {this.determineLabel(id, faktumKey ? faktumKey : "", tekster, value)}
             </div>
 
         );

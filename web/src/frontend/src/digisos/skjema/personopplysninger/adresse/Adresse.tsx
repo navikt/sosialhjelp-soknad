@@ -19,13 +19,13 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import AdresseTypeahead from "./AdresseTypeahead";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
-import {DispatchProps, Valideringsfeil} from "../../../../nav-soknad/redux/reduxTypes";
+import {Valideringsfeil} from "../../../../nav-soknad/redux/reduxTypes";
 
 interface OwnProps {
     disableLoadingAnimation?: boolean;
 }
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps & OwnProps & DispatchProps;
+type Props = SoknadsdataContainerProps & InjectedIntlProps & OwnProps;
 
 interface State {
     oppstartsModus: boolean,
@@ -153,6 +153,7 @@ class AdresseView extends React.Component<Props, State> {
             } else {
                 navEnhet.valgt = false;
             }
+            return navEnhet
         });
         oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
         this.slettEventuelleValideringsfeil();
@@ -168,7 +169,9 @@ class AdresseView extends React.Component<Props, State> {
     nullstillAdresseTypeahead() {
         const {soknadsdata, oppdaterSoknadsdataSti} = this.props;
         const adresser = soknadsdata.personalia.adresser;
-        adresser.soknad.gateadresse = null;
+        if (adresser.soknad){
+            adresser.soknad.gateadresse = null;
+        }
         oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, []);
         oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
     }
@@ -185,12 +188,12 @@ class AdresseView extends React.Component<Props, State> {
 		const navEnheter = soknadsdata.personalia.navEnheter;
 		const folkeregistrertAdresse = adresser && adresser.folkeregistrert && adresser.folkeregistrert.gateadresse;
 		const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
-		const soknadAdresse: Gateadresse = adresser && adresser.soknad && adresser.soknad.gateadresse;
+		const soknadAdresse: Gateadresse | null = adresser && adresser.soknad && adresser.soknad.gateadresse;
 		const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
 		const matrikkelAdresse = adresser && adresser.folkeregistrert && adresser.folkeregistrert.matrikkeladresse;
 		const gnrBnr: string = (matrikkelAdresse && matrikkelAdresse.gaardsnummer ? matrikkelAdresse.gaardsnummer : "") +
 			(matrikkelAdresse && matrikkelAdresse.bruksnummer ? " / " + matrikkelAdresse.bruksnummer : "");
-		const matrikkelKommune: string = matrikkelAdresse && matrikkelAdresse.kommunenummer;
+		const matrikkelKommune: string | null = matrikkelAdresse && matrikkelAdresse.kommunenummer;
 
         let folkeregistrertAdresseLabel = null;
         let annenAdresseLabel = null;
@@ -205,7 +208,7 @@ class AdresseView extends React.Component<Props, State> {
             folkeregistrertAdresseLabel = (
                 <div className="finnNavKontor__label">
                     <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
-                    <AdresseDetaljer adresse={folkeregistrertAdresse}/>
+                    { folkeregistrertAdresse && <AdresseDetaljer adresse={folkeregistrertAdresse}/> }
                 </div>
             );
             annenAdresseLabel = (
@@ -234,7 +237,7 @@ class AdresseView extends React.Component<Props, State> {
             );
         }
 
-        const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === this.FAKTUM_KEY);
+        const feilkode: Valideringsfeil | undefined = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === this.FAKTUM_KEY);
         const feilmelding = this.props.intl.formatMessage({id: "soknadsmottaker.feilmelding"});
 
         return (
@@ -244,7 +247,7 @@ class AdresseView extends React.Component<Props, State> {
                     faktumKey={this.FAKTUM_KEY}
                     noValidateOnBlur={true}
                     sprakNokkel="soknadsmottaker"
-                    feil={feilkode ? {feilmelding} : null}
+                    feil={feilkode ? {feilmelding} : undefined}
                 >
                     {folkeregistrertAdresse && (
                         <span>
@@ -356,7 +359,6 @@ class AdresseView extends React.Component<Props, State> {
                 <SoknadsmottakerInfo skjul={this.state.settAdressePending}/>
             </div>);
     }
-
 }
 
 export {AdresseView};

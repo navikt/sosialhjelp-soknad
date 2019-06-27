@@ -31,6 +31,7 @@ class AriaStatus extends React.Component<AriaStatusProps, any> {
 		atomic: true,
 		live: "assertive",
 		role: "status",
+		// @ts-ignore
 		id: cuid()
 	};
 
@@ -38,11 +39,16 @@ class AriaStatus extends React.Component<AriaStatusProps, any> {
 		if (!this.props.status && !this.props.children) {
 			return null;
 		}
+
+		// @ts-ignore
+		let s: string = classNames({
+			kunSkjermleser: !this.props.visible
+		});
+
 		return (
 			<div
-				className={classNames({
-					kunSkjermleser: !this.props.visible
-				})}
+				// @TS-ignore
+				className={s}
 				id={this.props.id}
 				role={this.props.role}
 				aria-atomic={this.props.atomic}

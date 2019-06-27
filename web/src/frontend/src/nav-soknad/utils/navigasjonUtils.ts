@@ -20,7 +20,7 @@ export function erSkjemaEllerEttersendelseSide(pathname: string): boolean {
 	);
 }
 
-export const lesKommunenrFraUrl = (): string => {
+export const lesKommunenrFraUrl = (): string | null => {
 	const matches = window.location.href.match(/kommunenr=(\d+)$/);
 	if( matches &&  matches.length > 1) {
 		return matches[1];

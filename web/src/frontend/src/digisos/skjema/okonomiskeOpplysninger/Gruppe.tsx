@@ -2,14 +2,15 @@ import * as React from "react";
 import Skjemapanel from "../../../nav-soknad/components/skjemapanel";
 import {FormattedHTMLMessage, injectIntl} from "react-intl";
 import {connect} from "react-redux";
-import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
-import InjectedIntlProps = ReactIntl.InjectedIntlProps;
+import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import {
     OpplysningerModel,
     Opplysning, OpplysningGruppe,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {getGruppeTittelKey} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
 import OpplysningView from "./OpplysningView";
+import { InjectedIntlProps} from "react-intl";
+import {State} from "../../redux/reducers";
 
 export interface OwnProps {
     key: OpplysningGruppe;
@@ -58,8 +59,8 @@ class GruppeView extends React.Component<Props, {}> {
     }
 }
 
-export default connect<StoreToProps, {}, OwnProps>(
-    (state: SoknadAppState) => {
+export default connect(
+    (state: State) => {
         return {
             okonomiskeOpplysninger: state.okonomiskeOpplysninger,
             behandlingsId: state.soknad.data.brukerBehandlingId,

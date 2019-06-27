@@ -22,7 +22,7 @@ const FAKTUM_KEY_PERSONNUMMER = FAKTUM_KEY + ".pnr";
 
 class PersonSkjema extends React.Component<Props, {}> {
 
-    navnInput: HTMLInputElement;
+    navnInput!: HTMLInputElement;
 
     constructor(props: Props) {
         super(props);
@@ -39,7 +39,7 @@ class PersonSkjema extends React.Component<Props, {}> {
         this.navnInput.focus();
     }
 
-    oppdaterTekstfelt(sti: string, verdi: string) {
+    oppdaterTekstfelt(sti: string, verdi: string | null) {
         this.props.clearValideringsfeil(FAKTUM_KEY_FNR);
         this.props.clearValideringsfeil(FAKTUM_KEY_PERSONNUMMER);
         if (verdi && verdi.length === 0) {
@@ -56,12 +56,12 @@ class PersonSkjema extends React.Component<Props, {}> {
         const {soknadsdata, lagreSoknadsdata, brukerBehandlingId} = this.props;
         const sivilstatus = soknadsdata.familie.sivilstatus;
         let feilkodeFodselsdato = null;
-        let fodselsdato = sivilstatus.ektefelle.fodselsdato;
+        let fodselsdato: string | null = sivilstatus.ektefelle ? sivilstatus.ektefelle.fodselsdato : null;
 
-        if (sivilstatus.ektefelle.fodselsdato === "") {
+        if (sivilstatus.ektefelle && sivilstatus.ektefelle.fodselsdato === "") {
             sivilstatus.ektefelle.fodselsdato = null;
         }
-        if (sivilstatus.ektefelle.personnummer === "") {
+        if (sivilstatus.ektefelle && sivilstatus.ektefelle.personnummer === "") {
             sivilstatus.ektefelle.personnummer = null;
         }
         if (fodselsdato && fodselsdato !== "") {
@@ -71,13 +71,13 @@ class PersonSkjema extends React.Component<Props, {}> {
                 this.props.setValideringsfeil(feilkodeFodselsdato, FAKTUM_KEY_FNR) :
                 this.props.clearValideringsfeil(FAKTUM_KEY_FNR);
 
-            if (!feilkodeFodselsdato && sivilstatus.ektefelle) {
+            if (!feilkodeFodselsdato && sivilstatus.ektefelle && sivilstatus.ektefelle.fodselsdato) {
                 sivilstatus.ektefelle.fodselsdato = konverterTilISODato(sivilstatus.ektefelle.fodselsdato);
             }
         } else {
             this.props.clearValideringsfeil(FAKTUM_KEY_FNR);
         }
-        const personnummer = sivilstatus.ektefelle.personnummer;
+        const personnummer: string | null = sivilstatus.ektefelle ? sivilstatus.ektefelle.personnummer : null;
         let feilkodePersonnummer = null;
         if (personnummer && personnummer !== "") {
             feilkodePersonnummer = minLengde(personnummer, 5);
@@ -113,7 +113,7 @@ class PersonSkjema extends React.Component<Props, {}> {
         if (!ektefelle) {
             return <div className="personskjema"/>;
         }
-        const fodselsdato = konverterFraISODato(ektefelle.fodselsdato) || "";
+        const fodselsdato = ektefelle.fodselsdato ? konverterFraISODato(ektefelle.fodselsdato) : "";
         if (!ektefelle.personnummer) {
             ektefelle.personnummer = "";
         }
@@ -129,9 +129,8 @@ class PersonSkjema extends React.Component<Props, {}> {
                         <Column xs="12">
                             <InputEnhanced
                                 getName={() => FAKTUM_KEY + "_fornavn_input"}
-                                getFeil={() => null}
                                 id={FAKTUM_KEY + "_fornavn_input"}
-                                inputRef={c => (this.navnInput = c)}
+                                inputRef={ (c: any) => (this.navnInput = c)}
                                 maxLength={100}
                                 verdi={ektefelle.navn.fornavn}
                                 onChange={(verdi: string) => this.oppdaterTekstfelt("navn/fornavn", verdi)}
@@ -145,10 +144,9 @@ class PersonSkjema extends React.Component<Props, {}> {
                         <Column xs="12">
                             <InputEnhanced
                                 getName={() => FAKTUM_KEY + "_mellomnavn_input"}
-                                getFeil={() => null}
                                 id={FAKTUM_KEY + "_mellomnavn_input"}
                                 maxLength={100}
-                                verdi={ektefelle.navn.mellomnavn}
+                                verdi={ektefelle.navn.mellomnavn ? ektefelle.navn.mellomnavn : ""}
                                 onChange={(verdi: string) => this.oppdaterTekstfelt("navn/mellomnavn", verdi)}
                                 onBlur={() => this.onBlur()}
                                 faktumKey="familie.sivilstatus.gift.ektefelle.mellomnavn"
@@ -160,7 +158,6 @@ class PersonSkjema extends React.Component<Props, {}> {
                         <Column xs="12">
                             <InputEnhanced
                                 getName={() => FAKTUM_KEY + "_etternavn_input"}
-                                getFeil={() => null}
                                 id={FAKTUM_KEY + "_etternavn_input"}
                                 maxLength={100}
                                 verdi={ektefelle.navn.etternavn}
@@ -175,7 +172,6 @@ class PersonSkjema extends React.Component<Props, {}> {
                         <Column xs="12">
                             <InputEnhanced
                                 getName={() => FAKTUM_KEY_FNR}
-                                getFeil={() => null}
                                 id={FAKTUM_KEY_FNR}
                                 maxLength={8}
                                 minLength={8}
@@ -192,7 +188,6 @@ class PersonSkjema extends React.Component<Props, {}> {
                         <Column xs="12">
                             <InputEnhanced
                                 getName={() => FAKTUM_KEY_PERSONNUMMER}
-                                getFeil={() => null}
                                 id={FAKTUM_KEY_PERSONNUMMER}
                                 maxLength={5}
                                 minLength={5}

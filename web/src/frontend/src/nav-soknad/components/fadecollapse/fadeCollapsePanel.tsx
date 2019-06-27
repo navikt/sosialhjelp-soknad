@@ -31,11 +31,13 @@ class FadeCollapsePanel extends React.Component<OwnProps, OwnState> {
 		}
 	}
 
-	componentDidUpdate(){
+	componentDidUpdate() {
 
 		if (this.props.panelAction === PanelAction.FADE_IN && this.state.currentAction !== PanelAction.FADE_IN){
 
-			this.props.onFinishedFadingIn();
+			if (this.props.onFinishedFadingIn){
+				this.props.onFinishedFadingIn();
+			}
 			this.setState({
 				currentAction: PanelAction.FADE_IN
 			})
@@ -43,7 +45,9 @@ class FadeCollapsePanel extends React.Component<OwnProps, OwnState> {
 
 		if (this.props.panelAction === PanelAction.FADE_OUT && this.state.currentAction !== PanelAction.FADE_OUT){
 			setTimeout(()=> {
-				this.props.onFinishedFadingOut();
+				if(this.props.onFinishedFadingOut){
+					this.props.onFinishedFadingOut();
+				}
 				this.setState({
 					currentAction: PanelAction.FADE_OUT
 				})

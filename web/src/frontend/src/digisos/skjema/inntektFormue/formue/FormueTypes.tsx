@@ -17,3 +17,13 @@ export const initialFormueState: Formue = {
     "annet" : false,
     "beskrivelseAvAnnet" : ""
 };
+
+export enum FormueId {
+    BRUKSKONTO = "brukskonto",
+    SPAREKONTO = "sparekonto",
+    BSU = "bsu",
+    LIVSFORSIKRING = "livsforsikring",
+    VERDIPAPIRER = "verdipapirer",
+    ANNET = "annet",
+    BESKRIVELSEAVANNET = "beskrivelseAvAnnet"
+}

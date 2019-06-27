@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const FamilieIllustrasjon: React.StatelessComponent<{}> = ({}) => {
+const FamilieIllustrasjon: React.FC = () => {
 	return (
 		<div>
 			<svg

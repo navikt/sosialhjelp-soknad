@@ -3,7 +3,6 @@ import {InjectedIntlProps, injectIntl, FormattedMessage, FormattedHTMLMessage} f
 import {State} from "../../redux/reducers";
 import * as React from "react";
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
-import {SynligeFaktaProps} from "../../redux/synligefakta/synligeFaktaTypes";
 import BannerEttersendelse from "./bannerEttersendelse";
 import {
     lesEttersendelser, opprettEttersendelse,
@@ -25,14 +24,14 @@ import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel"
 interface OwnProps {
     manglendeVedlegg: EttersendelseVedleggBackend[];
     brukerbehandlingskjedeId: string;
-    brukerbehandlingId: string;
+    brukerbehandlingId: string | null;
     restStatus: REST_STATUS;
     originalSoknad: any;
     ettersendelser: any;
     feilKode: string;
 }
 
-type Props = OwnProps & SynligeFaktaProps & DispatchProps & InjectedIntlProps;
+type Props = OwnProps & DispatchProps & InjectedIntlProps;
 
 interface OwnState {
     vedleggEkspandert: boolean;
@@ -74,8 +73,10 @@ class Ettersendelse extends React.Component<Props, OwnState> {
     sendEttersendelse() {
         const antallOpplastedeFiler = this.antallOpplastedeFiler();
         this.setState({advarselManglerVedlegg: (antallOpplastedeFiler === 0)});
-        if (antallOpplastedeFiler > 0) {
-            this.props.dispatch(sendEttersendelse(this.props.brukerbehandlingId));
+        if (this.props.brukerbehandlingId){
+            if (antallOpplastedeFiler > 0) {
+                this.props.dispatch(sendEttersendelse(this.props.brukerbehandlingId));
+            }
         }
     }
 
@@ -217,7 +218,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
     }
 }
 
-export default connect((state: State, {}) => {
+export default connect((state: State) => {
     return {
         brukerbehandlingskjedeId: state.soknad.data.brukerBehandlingId,
         manglendeVedlegg: state.ettersendelse.data,

@@ -1,8 +1,0 @@
-{
-	"rules": {
-		"selector-max-id": 0,
-		"max-empty-lines": 2,
-		"color-no-invalid-hex": true,
-		"unit-whitelist": ["em", "rem", "%", "s", "px", "pt", "mm", "cm", "deg"]
-	}
-}

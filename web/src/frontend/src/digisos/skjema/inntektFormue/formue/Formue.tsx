@@ -1,13 +1,14 @@
 import * as React from 'react';
 import {
-    connectSoknadsdataContainer, onEndretValideringsfeil,
+    connectSoknadsdataContainer,
+    onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
-import {Formue} from "./FormueTypes";
+import {Formue, FormueId} from "./FormueTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
@@ -47,13 +48,15 @@ export class FormueView extends React.Component<Props, State> {
         }
     }
 
-    handleClickCheckbox(idToToggle: string) {
+    handleClickCheckbox(idToToggle: FormueId) {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const restStatus = soknadsdata.restStatus.inntekt.formue;
         if (!this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
             const formue: Formue = soknadsdata.inntekt.formue;
+
             formue[idToToggle] = !formue[idToToggle];
-            if (!formue.annet) {
+
+            if (formue && !formue.annet) {
                 formue.beskrivelseAvAnnet = "";
             }
             this.props.oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue);
@@ -63,25 +66,28 @@ export class FormueView extends React.Component<Props, State> {
 
     onChangeAnnet(value: string) {
         const {soknadsdata} = this.props;
-        const formue: Formue = soknadsdata.inntekt.formue;
-        formue.beskrivelseAvAnnet = value;
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue);
+        const formue: Formue | undefined = soknadsdata.inntekt.formue;
+        if (formue){
+            formue.beskrivelseAvAnnet = value;
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue);
+        }
         this.validerTekstfeltVerdi(value, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY)
     }
 
     onBlurTekstfeltAnnet() {
         const {brukerBehandlingId, soknadsdata} = this.props;
-        const formue: Formue = soknadsdata.inntekt.formue;
-        const beskrivelseAvAnnet = formue.beskrivelseAvAnnet;
-        const feilmeldingAnnet: ValideringsFeilKode = this.validerTekstfeltVerdi(beskrivelseAvAnnet, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY);
-
-        if (!feilmeldingAnnet) {
-            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORMUE, formue);
+        const formue: Formue | undefined = soknadsdata.inntekt.formue;
+        if (formue){
+            const beskrivelseAvAnnet = formue.beskrivelseAvAnnet;
+            const feilmeldingAnnet: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(beskrivelseAvAnnet, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY);
+            if (!feilmeldingAnnet) {
+                this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORMUE, formue);
+            }
         }
     }
 
-    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode {
-        const feilkode: ValideringsFeilKode = maksLengde(verdi, MAX_CHARS);
+    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode | undefined {
+        const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
         onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
             (feilkode) ?
                 this.props.setValideringsfeil(feilkode, faktumKey) :
@@ -90,13 +96,13 @@ export class FormueView extends React.Component<Props, State> {
         return feilkode;
     }
 
-    renderCheckBox(navn: string) {
+    renderCheckBox(navn: FormueId) {
         const {soknadsdata} = this.props;
         const formue: Formue = soknadsdata.inntekt.formue;
         let label: React.ReactNode;
         let oppstartsModus = this.state.oppstartsModus;
         const restStatus = soknadsdata.restStatus.inntekt.formue;
-        if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+        if (oppstartsModus && restStatus === REST_STATUS.OK) {
             oppstartsModus = false;
         }
         if (oppstartsModus) {
@@ -104,11 +110,12 @@ export class FormueView extends React.Component<Props, State> {
         } else {
             label = <FormattedHTMLMessage id={FORMUE + ".true.type." + navn}/>
         }
+
         return (
             <CheckboxPanel
                 id={"formue_" + navn + "_checkbox"}
                 name={navn}
-                checked={formue && formue[navn] ? formue[navn] : false}
+                checked={!!(formue[navn])}
                 label={label}
                 onClick={() => this.handleClickCheckbox(navn)}
             />
@@ -117,20 +124,20 @@ export class FormueView extends React.Component<Props, State> {
 
     render() {
         const {soknadsdata} = this.props;
-        const formue: Formue = soknadsdata.inntekt.formue;
+        const formue: Formue | undefined = soknadsdata.inntekt.formue;
         return (
             <Sporsmal
                 tekster={getFaktumSporsmalTekst(this.props.intl, FORMUE + ".true.type")}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
-                {this.renderCheckBox("brukskonto")}
-                {this.renderCheckBox("sparekonto")}
-                {this.renderCheckBox("bsu")}
-                {this.renderCheckBox("livsforsikring")}
-                {this.renderCheckBox("verdipapirer")}
-                {this.renderCheckBox("annet")}
+                {this.renderCheckBox(FormueId.BRUKSKONTO)}
+                {this.renderCheckBox(FormueId.SPAREKONTO )}
+                {this.renderCheckBox(FormueId.BSU)}
+                {this.renderCheckBox(FormueId.LIVSFORSIKRING)}
+                {this.renderCheckBox(FormueId.VERDIPAPIRER)}
+                {this.renderCheckBox(FormueId.ANNET)}
                 <NivaTreSkjema
-                    visible={formue.annet}
+                    visible={formue !== undefined && formue.annet}
                     size="small"
                 >
                     <TextareaEnhanced
@@ -141,7 +148,7 @@ export class FormueView extends React.Component<Props, State> {
                         faktumKey={FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY}
                         labelId={FORMUE + ".true.type.annet.true.beskrivelse.label"}
                         maxLength={MAX_CHARS}
-                        value={formue.beskrivelseAvAnnet ? formue.beskrivelseAvAnnet : ""}
+                        value={formue && formue.beskrivelseAvAnnet ? formue.beskrivelseAvAnnet : ""}
                     />
                 </NivaTreSkjema>
             </Sporsmal>

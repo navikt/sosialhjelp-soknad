@@ -8,7 +8,7 @@ import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataRe
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
-import {Verdier} from "./VerdierTypes";
+import {Verdier, VerdierKeys} from "./VerdierTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
@@ -67,7 +67,7 @@ export class VerdierView extends React.Component<Props, State> {
         }
     }
 
-    handleClickRadio(idToToggle: string) {
+    handleClickRadio(idToToggle: VerdierKeys) {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         verdier[idToToggle] = !verdier[idToToggle];
@@ -90,15 +90,15 @@ export class VerdierView extends React.Component<Props, State> {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         const beskrivelseAvAnnet = verdier.beskrivelseAvAnnet;
-        const feilmeldingAnnet: ValideringsFeilKode = this.validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
+        const feilmeldingAnnet: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
 
         if (!feilmeldingAnnet) {
             this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
         }
     }
 
-    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode {
-        const feilkode: ValideringsFeilKode = maksLengde(verdi, MAX_CHARS);
+    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode | undefined {
+        const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
         onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
             (feilkode) ?
                 this.props.setValideringsfeil(feilkode, faktumKey) :
@@ -107,14 +107,14 @@ export class VerdierView extends React.Component<Props, State> {
         return feilkode;
     }
 
-    renderCheckBox(navn: string) {
+    renderCheckBox(navn: VerdierKeys) {
         const {soknadsdata} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         return (
             <CheckboxPanel
                 id={"verdier_" + navn + "_checkbox"}
                 name={navn}
-                checked={verdier && verdier[navn] ? verdier[navn] : false}
+                checked={!!(verdier[navn])}
                 label={<FormattedHTMLMessage id={VERDIER + ".true.type." + navn}/>}
                 onClick={() => this.handleClickRadio(navn)}
             />
@@ -137,13 +137,13 @@ export class VerdierView extends React.Component<Props, State> {
                 <Sporsmal
                     tekster={getFaktumSporsmalTekst(this.props.intl, VERDIER + ".true.type")}
                 >
-                    {this.renderCheckBox("bolig")}
-                    {this.renderCheckBox("campingvogn")}
-                    {this.renderCheckBox("kjoretoy")}
-                    {this.renderCheckBox("fritidseiendom")}
-                    {this.renderCheckBox("annet")}
+                    {this.renderCheckBox(VerdierKeys.BOLIG)}
+                    {this.renderCheckBox(VerdierKeys.CAMPINGVOGN)}
+                    {this.renderCheckBox(VerdierKeys.KJORETOY)}
+                    {this.renderCheckBox(VerdierKeys.FRITIDSEIENDOM)}
+                    {this.renderCheckBox(VerdierKeys.ANNET)}
                     <NivaTreSkjema
-                        visible={verdier.bekreftelse && verdier.annet}
+                        visible={!!(verdier.bekreftelse && verdier.annet)}
                         size="small"
                     >
                         <TextareaEnhanced

@@ -17,3 +17,13 @@ export const initialBoutgifterState: Boutgifter = {
     "boliglan" : false,
     "annet" : false
 };
+
+export enum BoutgifterKeys {
+    BEKREFTELSE = "bekreftelse",
+    HUSLEIE = "husleie",
+    STROM = "strom",
+    KOMMUNALAVGIFT = "kommunalAvgift",
+    OPPVARMING = "oppvarming",
+    BOLIGLAN = "boliglan",
+    ANNET = "annet",
+}

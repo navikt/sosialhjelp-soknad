@@ -9,6 +9,7 @@ const Skjemapanel: React.StatelessComponent<PanelProps> = (
 ) => (
 	<Panel
 		{...props}
+		// @ts-ignore
 		className={classNames("skjema-skjemapanel", props.className)}
 	/>
 );

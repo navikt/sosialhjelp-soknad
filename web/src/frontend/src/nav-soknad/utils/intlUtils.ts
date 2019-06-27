@@ -48,8 +48,8 @@ export function getIntlHjelpeTekst(
 }
 
 function getIkkeTomIntlText(intl: InjectedIntl, key?: string) {
-	return intlTextIkkeTom(intl, key)
-		? intl.formatHTMLMessage({ id: key })
+	return intlTextIkkeTom(intl, key ? key : "")
+		? intl.formatHTMLMessage({ id: key ? key : "" })
 		: undefined;
 }
 

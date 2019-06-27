@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const Koffert: React.StatelessComponent<{}> = ({}) => {
+const Koffert: React.FC = () => {
 	return (
 		<div>
 			<svg width={100} height={100} className="kun_desktop">

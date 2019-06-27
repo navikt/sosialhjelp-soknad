@@ -13,11 +13,11 @@ const DEFAULT_MAX_LENGTH = 50;
 
 export interface OwnProps {
     verdi: string;
-    feil?: Valideringsfeil[];
     onChange: (verdi: string) => void;
     onBlur: () => void;
     faktumKey: string;
     required: boolean;
+    feil: Valideringsfeil[]
 
     disabled?: boolean;
     pattern?: string;
@@ -58,12 +58,12 @@ class InputEnhanced extends React.Component<Props, {}> {
         } = this.props;
         const tekster = getInputFaktumTekst(intl, faktumKey);
 
+        const feil_: Feil | undefined = getFeil(feil, intl, faktumKey, faktumIndex);
+
         return (
             <Input
                 id={this.props.id ? replaceDotWithUnderscore(this.props.id) : faktumKey}
                 className={"input--xxl faktumInput  " + (this.props.className ? this.props.className : "")}
-                // inputRef={(c: any) =>
-                // 	this.props.inputRef ? this.props.inputRef(c) : null}
                 type={type}
                 autoComplete="off"
                 name={this.getName()}
@@ -73,7 +73,7 @@ class InputEnhanced extends React.Component<Props, {}> {
                 onBlur={() => this.props.onBlur()}
                 label={tekster.label}
                 placeholder={tekster.pattern}
-                feil={getFeil(feil, intl, faktumKey, faktumIndex)}
+                feil={feil_}
                 maxLength={maxLength}
                 bredde={bredde}
                 pattern={pattern}
@@ -91,6 +91,6 @@ const mapStateToProps = (state: State) => ({
     feil: state.validering.feil,
 });
 
-export default connect<{}, {}, OwnProps>(
+export default connect(
     mapStateToProps
 )(injectIntl(InputEnhanced));

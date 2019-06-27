@@ -42,7 +42,9 @@ function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
         // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
         response = yield call(fetchUploadIgnoreErrors, url, formData);
         const ID = "id";
+        // @ts-ignore
         if (response && response[ID]) {
+            // @ts-ignore
             feilKode = response[ID];
         }
         yield put(lastOppFilFeilet(opplysning.type, feilKode));
