@@ -6,7 +6,7 @@ import { loggFeil } from "../../redux/navlogger/navloggerActions";
 interface UnderskjemaProps extends React.Props<any> {
 	visible?: boolean;
 	arrow?: boolean;
-	style?: "default" | "system";
+	stil?: "default" | "system";
 	collapsable?: boolean;
 	children: React.ReactNode;
 }
@@ -14,19 +14,19 @@ interface UnderskjemaProps extends React.Props<any> {
 const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
 	visible,
 	arrow = true,
-	style = "default",
+	stil = "default",
 	collapsable = true,
 	children
 }) => {
 	// @ts-ignore
 	const cls = classNames(
 		"underskjema",
-		`underskjema--${style}`,
+		`underskjema--${stil}`,
 		{
 			"underskjema--arrow": arrow,
 			"underskjema--noPadding": !collapsable
 		},
-		style
+		stil
 	);
 	const renderContent = () => (
 		<div className={cls}>

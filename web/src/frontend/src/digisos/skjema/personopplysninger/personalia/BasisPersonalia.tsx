@@ -36,7 +36,7 @@ class BasisPersonaliaView extends React.Component<Props, {}> {
 		return (
 			<Sporsmal
 				faktumKey="kontakt.system.personalia"
-				style={"system"}
+				stil={"system"}
 				visLedetekst={visAnimerteStreker !== true}
 				sprakNokkel="kontakt.system.personalia"
 			>

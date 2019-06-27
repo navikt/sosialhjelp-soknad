@@ -5,7 +5,7 @@ import * as classNames from "classnames";
 interface Props {
 	children: string;
 	onClick: () => void;
-	style?: "add";
+	stil?: "add";
 	skjermleserLabel?: string;
 	id?: string;
 }
@@ -13,12 +13,12 @@ const baseClassName = "lenkeknapp";
 
 class Lenkeknapp extends React.Component<Props> {
 	render() {
-		const { onClick, children, style, skjermleserLabel } = this.props;
+		const { onClick, children, stil, skjermleserLabel } = this.props;
 		// @ts-ignore
 		const className = classNames(
 			"lenke",
 			baseClassName,
-			style ? `${baseClassName}--${style}` : null
+			stil ? `${baseClassName}--${stil}` : null
 		);
 		return (
 			<button id={this.props.id} onClick={onClick} className={className} type="button">

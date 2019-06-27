@@ -63,7 +63,7 @@ export function getAbsoluteBasename() {
     return window.location.pathname.replace(/^\/(([^/]+\/)?soknadsosialhjelp).+$/, "$1")
 }
 
-const visReduxLogger = true;
+const visReduxLogger = false;
 
 function configureStore() {
     // @ts-ignore
