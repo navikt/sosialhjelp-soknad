@@ -1,5 +1,4 @@
 import * as React from "react";
-import SVG from "react-inlinesvg";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
 import AriaText from "../../../nav-soknad/components/aria/AriaText";
@@ -37,10 +36,7 @@ export default class OpplastetVedlegg extends React.Component<AllProps, {}> {
                         onClick={() => this.handleSlett(fil)}
                     >
                         <AriaText>Slett {fil.filNavn}</AriaText>
-                        <SVG
-                            className="vedleggsliste__slett_ikon"
-                            src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_trashcan.svg`}
-                        />
+                        <img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_trashcan.svg`} alt={""} />
                     </button>
                 </span>
             </div>

@@ -1,8 +1,5 @@
 /* tslint:disable */
 import {REST_FEIL} from "../types/restFeilTypes";
-import {put} from "redux-saga/effects";
-import {push} from "react-router-redux";
-import {Sider} from "../redux/navigasjon/navigasjonTypes";
 import {erMockMiljoEllerDev} from "./index";
 
 export function erDev(): boolean {
@@ -23,14 +20,14 @@ export function getApiBaseUrl(): string {
         // Kjør mot lokal mock backend:
         // return "http://localhost:3001/sendsoknad/";
     }
-    if (location.href.indexOf("localhost:8080") >= 0) {
+    if (window.location.href.indexOf("localhost:8080") >= 0) {
         return "http://localhost:8181/soknadsosialhjelp-server/";
     }
-    if (location.origin.indexOf("nais.oera") >= 0) {
-        return location.origin.replace("soknadsosialhjelp", "soknadsosialhjelp-server") + "/soknadsosialhjelp-server/";
+    if (window.location.origin.indexOf("nais.oera") >= 0) {
+        return window.location.origin.replace("soknadsosialhjelp", "soknadsosialhjelp-server") + "/soknadsosialhjelp-server/";
     }
-    if (location.origin.indexOf("heroku") >= 0) {
-        return location.origin.replace("sosialhjelp-test", "sosialhjelp-api-test") + "/soknadsosialhjelp-server/";
+    if (window.location.origin.indexOf("heroku") >= 0) {
+        return window.location.origin.replace("sosialhjelp-test", "sosialhjelp-api-test") + "/soknadsosialhjelp-server/";
     }
 	return kjorerJetty() ? "http://127.0.0.1:8181/soknadsosialhjelp-server/" : getAbsoluteApiUrl();
 }
@@ -43,18 +40,7 @@ function getAbsoluteApiUrl() {
 }
 
 function determineCredentialsParameter() {
-    return location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin";
-}
-
-export function getRedirectPathname(): string {
-    return '/soknadsosialhjelp/link';
-}
-
-export function getRedirectPath(): string {
-    const currentOrigin = window.location.origin;
-    const gotoParameter = "?goto=" + window.location.pathname;
-    const redirectPath = currentOrigin + getRedirectPathname() + gotoParameter;
-    return '?redirect=' + redirectPath;
+    return window.location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin";
 }
 
 function getServletBaseUrl(): string {
@@ -81,6 +67,7 @@ enum RequestMethod {
 }
 
 const getHeaders = () => {
+    //@ts-ignore
     return new Headers({
         "Content-Type": "application/json",
         "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
@@ -143,7 +130,7 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
 };
 
 export function fetchToJson(urlPath: string) {
-    return serverRequest(RequestMethod.GET, urlPath, null);
+    return serverRequest(RequestMethod.GET, urlPath, "");
 }
 
 export function fetchPut(urlPath: string, body: string) {
@@ -178,6 +165,7 @@ export function fetchOppsummering(urlPath: string) {
 
 export function fetchKvittering(urlPath: string) {
     const OPTIONS: RequestInit = {
+        //@ts-ignore
         headers: new Headers({
             "accept": "application/vnd.kvitteringforinnsendtsoknad+json",
             "Content-Type": "application/json",
@@ -206,6 +194,7 @@ export function fetchFeatureToggles() {
 
 let generateUploadOptions = function (formData: FormData) {
     const UPLOAD_OPTIONS: RequestInit = {
+        //@ts-ignore
         headers: new Headers({
             "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
             "accept": "application/json, text/plain, */*"
@@ -236,20 +225,6 @@ export function toJson<T>(response: Response): Promise<T> {
 }
 
 function sjekkStatuskode(response: Response) {
-    const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
-
-    if (response.status === 401){
-        if(window.location.pathname !== getRedirectPathname()){
-            if (!window[AUTH_LINK_VISITED]) {
-                response.json().then(r => {
-                    window.location.href = r.loginUrl + getRedirectPath();
-                });
-            }
-        } else {
-            put(push(Sider.SERVERFEIL));
-        }
-        return response;
-    }
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
@@ -260,10 +235,8 @@ export function getCookie(name: string) {
     const value = "; " + document.cookie;
     const parts = value.split("; " + name + "=");
     if (parts.length === 2) {
-        return parts
-            .pop()
-            .split(";")
-            .shift();
+        let partsPopped: string | undefined = parts.pop();
+        return partsPopped ? partsPopped.split(";").shift() : "null";
     } else {
         return "null";
     }
@@ -283,6 +256,7 @@ export function detekterInternFeilKode(feilKode: string): string {
 export function lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(brukerbehandlingId: string) {
     if (erMockMiljoEllerDev()) {
         const url = getApiBaseUrl() + "internal/mock/tjeneste/downloadzip/" + brukerbehandlingId;
-        window.open(url);
+        // window.open(url);
+        console.warn(url);
     }
 }

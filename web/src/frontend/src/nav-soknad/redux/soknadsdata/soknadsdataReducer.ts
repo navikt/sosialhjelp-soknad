@@ -1,4 +1,3 @@
-import { Reducer } from "../reduxTypes";
 import {
 	initialKontonummerState, Kontonummer
 } from "../../../digisos/skjema/personopplysninger/bankinfo/KontonummerType";
@@ -86,24 +85,24 @@ export enum SoknadsSti {
 }
 
 export interface Personalia {
-	kontonummer?: Kontonummer;
-	telefonnummer?: Telefonnummer;
-	adresser?: Adresser;
-	navEnheter?: NavEnhet[];
-	basisPersonalia?: BasisPersonalia;
+	kontonummer: Kontonummer;
+	telefonnummer: Telefonnummer;
+	adresser: Adresser;
+	navEnheter: NavEnhet[];
+	basisPersonalia: BasisPersonalia;
 }
 
 export interface Inntekt {
-	bostotte?: Bostotte;
-	utbetalinger?: Utbetalinger;
-	formue?: Formue;
-	verdier?: Verdier;
-	systemdata?: Systeminntekter;
+	bostotte: Bostotte;
+	utbetalinger: Utbetalinger;
+	formue: Formue;
+	verdier: Verdier;
+	systemdata: Systeminntekter;
 }
 
 export interface Utgifter {
-	boutgifter?: Boutgifter;
-	barneutgifter?: Barneutgifter;
+	boutgifter: Boutgifter;
+	barneutgifter: Barneutgifter;
 
 }
 
@@ -141,14 +140,14 @@ export interface Soknadsdata {
 }
 
 export interface SoknadsdataActionVerdi {
-	arbeid?: Arbeid;
-	bosituasjon?: Bosituasjon;
-	begrunnelse?: Begrunnelse;
-	familie?: Familie;
-	utdanning?: Utdanning;
+	arbeid: Arbeid;
+	bosituasjon: Bosituasjon;
+	begrunnelse: Begrunnelse;
+	familie: Familie;
+	utdanning: Utdanning;
 	personalia: Personalia;
-	inntekt?: Inntekt;
-	utgifter?: Utgifter;
+	inntekt: Inntekt;
+	utgifter: Utgifter;
 }
 
 export interface AdresseValg {
@@ -179,7 +178,7 @@ export type SoknadsdataType
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
 	verdi?: SoknadsdataActionVerdi | SoknadsdataType,
-	sti?: string,
+	sti: string,
 	restStatus?: string
 }
 
@@ -214,9 +213,9 @@ export const initialSoknadsdataState: Soknadsdata = {
 	restStatus: initialSoknadsdataRestStatus
 };
 
-const SoknadsdataReducer: Reducer<Soknadsdata, SoknadsdataActionType> = (
-	state = initialSoknadsdataState,
-	action
+export default (
+	state: Soknadsdata = initialSoknadsdataState,
+	action: SoknadsdataActionType
 ): any => {
 	switch (action.type) {
 		case SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI: {
@@ -249,5 +248,3 @@ export const oppdaterSoknadsdataSti = (sti: string, verdi: SoknadsdataType): Sok
 		verdi
 	}
 };
-
-export default SoknadsdataReducer;

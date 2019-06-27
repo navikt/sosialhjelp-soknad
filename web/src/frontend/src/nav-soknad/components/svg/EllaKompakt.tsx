@@ -8,7 +8,7 @@ interface OwnProps {
 class EllaKompakt extends React.Component<OwnProps, {}> {
 
 	render() {
-		const bakgrundsFarge: DigisosFarge = this.props.bakgrundsFarge;
+		const bakgrundsFarge: DigisosFarge | undefined = this.props.bakgrundsFarge;
 
 		return (
 

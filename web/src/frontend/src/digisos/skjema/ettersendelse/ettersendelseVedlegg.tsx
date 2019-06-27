@@ -16,6 +16,7 @@ import {
     EttersendelseVedleggBackend
 } from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
 import {Fil, OpplysningType} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+import {State} from "../../redux/reducers";
 
 interface OwnProps {
 	ettersendelseAktivert: boolean;
@@ -31,14 +32,14 @@ interface StoreToProps {
 }
 
 interface OwnState {
-	filnavn: string;
+	filnavn: string | null;
 }
 
 export type Props = OwnProps & DispatchProps & InjectedIntlProps & StoreToProps;
 
 class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
-	leggTilVedleggKnapp: HTMLInputElement;
+	leggTilVedleggKnapp!: HTMLInputElement | null;
 
 	constructor(props: Props) {
 		super(props);
@@ -50,23 +51,33 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
 	removeFile(filId: string, opplysningType: OpplysningType) {
 		const { brukerbehandlingId } = this.props.ettersendelse;
-		this.props.dispatch(slettEttersendtVedlegg(brukerbehandlingId, filId, opplysningType));
+		if (brukerbehandlingId) {
+			this.props.dispatch(slettEttersendtVedlegg(brukerbehandlingId, filId, opplysningType));
+		}
 	}
 
-	handleFileUpload(files: FileList) {
+	handleFileUpload(files: FileList | null) {
         const {ettersendelse, vedlegg} = this.props;
         // this.props.dispatch(lastOppFilFeilet(opplysning.type, null));
 
 		const { brukerbehandlingId } = ettersendelse;
 
+		if (!files){
+			return;
+		}
 		if (files.length !== 1) {
 			return;
 		}
 		const formData = new FormData();
+
 		formData.append("file", files[ 0 ], files[ 0 ].name);
 		this.setState({filnavn: files[ 0 ].name});
-		this.props.dispatch(lastOppEttersendelseVedlegg(brukerbehandlingId, vedlegg.type, formData));
-		this.leggTilVedleggKnapp.value = "";
+		if (brukerbehandlingId){
+			this.props.dispatch(lastOppEttersendelseVedlegg(brukerbehandlingId, vedlegg.type, formData));
+		}
+		if (this.leggTilVedleggKnapp){
+			this.leggTilVedleggKnapp.value = "";
+		}
 	}
 
 	render() {
@@ -86,8 +97,11 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 		return (
 			<span className={opplastingsFeil ? "ettersendelse__vedlegg__feil" : ""}>
 				<AvsnittMedMarger
-					hoyreIkon={this.props.ettersendelseAktivert && MargIkoner.LAST_OPP}
-					onClickHoyreIkon={() => this.props.ettersendelseAktivert && this.leggTilVedleggKnapp.click()}
+					hoyreIkon={this.props.ettersendelseAktivert ? MargIkoner.LAST_OPP : undefined}
+					onClickHoyreIkon={() =>
+						this.props.ettersendelseAktivert &&
+						this.leggTilVedleggKnapp &&
+						this.leggTilVedleggKnapp.click()}
 				>
 					{this.props.children}
 					<input
@@ -128,7 +142,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 				)}
 
 				{opplastingsFeil && (
-					<AvsnittMedMarger key={this.state.filnavn}>
+					<AvsnittMedMarger key={this.state.filnavn ? this.state.filnavn : undefined}>
 						<span className="skjema__feilmelding">
 							"{this.state.filnavn}" &nbsp;
 							{visFilForStorFeilmelding && (
@@ -148,8 +162,8 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 	}
 }
 
-export default connect<StoreToProps, {}, OwnProps>(
-    (state: SoknadAppState) => {
+export default connect(
+    (state: State) => {
         return {
             feil: state.validering.feil,
 			ettersendelse: state.ettersendelse

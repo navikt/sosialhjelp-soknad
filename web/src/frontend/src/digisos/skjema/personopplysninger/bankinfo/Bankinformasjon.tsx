@@ -41,7 +41,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 
 	componentWillUpdate(nextProps: Readonly<Props>) {
 		const restStatus = nextProps.soknadsdata.restStatus.personalia.kontonummer;
-		if (this.state.oppstartsModus === true && restStatus === REST_STATUS.OK) {
+		if (this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
 			this.setState({oppstartsModus: false});
 		}
 	}
@@ -55,7 +55,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 		const { soknadsdata } = this.props;
 		let kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
 		if (kontonummer.brukerutfyltVerdi !== null && kontonummer.brukerutfyltVerdi !== "") {
-			const feilkode: ValideringsFeilKode = this.validerKontonummer(kontonummer.brukerutfyltVerdi);
+			const feilkode: ValideringsFeilKode | undefined = this.validerKontonummer(kontonummer.brukerutfyltVerdi);
 			if (!feilkode) {
 				kontonummer = this.vaskKontonummerVerdi(kontonummer);
 				this.props.lagreSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BANKINFORMASJON, kontonummer);
@@ -67,8 +67,8 @@ class Bankinformasjon extends React.Component<Props, State> {
 		}
 	}
 
-	validerKontonummer(brukerutfyltVerdi: string): ValideringsFeilKode {
-		brukerutfyltVerdi = brukerutfyltVerdi.replace(/[ \.]/g,"");
+	validerKontonummer(brukerutfyltVerdi: string): ValideringsFeilKode | undefined {
+		brukerutfyltVerdi = brukerutfyltVerdi.replace(/[.]/g,"");
 		const feilkode: ValideringsFeilKode | undefined = erKontonummer(brukerutfyltVerdi);
 		if(feilkode !== undefined){
 			onEndretValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER, this.props.feil, () => {
@@ -139,7 +139,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 		}
 		if(oppstartsModus && this.props.disableLoadingAnimation !== true) {
 			return (
-				<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: null } }}>
+				<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: undefined, tekst: undefined } }}>
 					<TextPlaceholder lines={3}/>
 				</Sporsmal>
 			);
@@ -148,13 +148,13 @@ class Bankinformasjon extends React.Component<Props, State> {
 		switch(kontonummer.systemverdi){
 			case null: {
 				return (
-					<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}>
+					<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: undefined, tekst: infotekst } }}>
 						<div>
 							<InputEnhanced
 								faktumKey={FAKTUM_KEY_KONTONUMMER}
 								id={faktumKeyKontonummerId}
 								className={"input--xxl faktumInput "}
-								disabled={kontonummer.harIkkeKonto}
+								disabled={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : undefined}
 								verdi={inputVerdi}
 								required={false}
 								onChange={(input: string) => this.onChangeInput(input)}
@@ -169,7 +169,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 								<Checkbox
 									id="kontakt_kontonummer_har_ikke_checkbox"
 									name="kontakt_kontonummer_har_ikke_checkbox"
-									checked={kontonummer.harIkkeKonto}
+									checked={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : undefined}
 									onChange={(event: any) => this.onChangeCheckboks(event)}
 									label={
 										<div>
@@ -187,7 +187,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 				return (
 					<Sporsmal
 						faktumKey={ FAKTUM_KEY_KONTONUMMER }
-						tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: null, tekst: infotekst } }}
+						tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: undefined, tekst: infotekst } }}
 					>
 						<SysteminfoMedSkjema
 							skjemaErSynlig={kontonummer.brukerdefinert}
@@ -202,7 +202,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 										faktumKey={FAKTUM_KEY_KONTONUMMER}
 										id={faktumKeyKontonummerId}
 										className={"input--xxl faktumInput "}
-										disabled={kontonummer.harIkkeKonto}
+										disabled={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : undefined}
 										verdi={inputVerdi}
 										required={false}
 										onChange={(input: string) => this.onChangeInput(input)}
@@ -217,7 +217,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 										<Checkbox
 											id="kontakt_kontonummer_har_ikke_checkbox"
 											name="kontakt_kontonummer_har_ikke_checkbox"
-											checked={kontonummer.harIkkeKonto}
+											checked={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : undefined}
 											onChange={(event: any) => this.onChangeCheckboks(event)}
 											label={
 												<div>

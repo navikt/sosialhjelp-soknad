@@ -38,6 +38,7 @@ const StatusTekst: React.StatelessComponent<StegProps> = (props: StegProps) => {
 };
 
 export const Steg: React.StatelessComponent<StegProps> = (props: StegProps) => {
+	// @ts-ignore
 	const className = classNames("stegindikator__steg", {
 		"stegindikator__steg--aktiv": props.aktivtSteg === props.steg,
 		"stegindikator__steg--inaktiv": props.aktivtSteg < props.steg

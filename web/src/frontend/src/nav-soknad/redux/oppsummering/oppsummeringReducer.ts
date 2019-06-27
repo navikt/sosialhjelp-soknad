@@ -1,4 +1,3 @@
-import { Reducer } from "../reduxTypes";
 import { REST_STATUS } from "../../types";
 import {
 	OppsummeringActionTypeKeys,
@@ -8,7 +7,7 @@ import {
 } from "./oppsummeringTypes";
 
 export interface OppsummeringState {
-	oppsummering?: Oppsummering;
+	oppsummering: Oppsummering | null;
 	bekreftet?: boolean;
 	visBekreftMangler?: boolean;
 	restStatus: REST_STATUS;
@@ -16,13 +15,13 @@ export interface OppsummeringState {
 }
 
 const defaultState: OppsummeringState = {
-	oppsummering: undefined,
+	oppsummering: null,
 	bekreftet: false,
 	visBekreftMangler: false,
 	restStatus: REST_STATUS.INITIALISERT
 };
 
-const hentUtBody = (html: string): string => {
+const hentUtBody = (html: string): string | null => {
 	if (!html) {
 		return null;
 	}
@@ -34,16 +33,18 @@ const hentUtBody = (html: string): string => {
 const hentUtOppsummering = (html: string): Oppsummering => {
 	const body = hentUtBody(html);
 	const el = document.createElement("div");
-	el.innerHTML = body;
+	el.innerHTML = body ? body : "";
 	let signatur = "";
 	let bolker: OppsummeringBolk[] = [];
 	try {
-		signatur = el.querySelector(".js-signatur").innerHTML;
+		const signatur_ = el.querySelector(".js-signatur");
+		signatur = signatur_ ? signatur_.innerHTML : "";
 		const htmlBolker = Array.from(el.querySelectorAll(".js-bolk"));
 		bolker  = htmlBolker
 			.map(htmlBolk => {
+				const tittel_ = htmlBolk.querySelector("h2");
 				return {
-					tittel: htmlBolk.querySelector("h2").innerText,
+					tittel:  tittel_ ? tittel_.innerText : "",
 					html: htmlBolk.innerHTML.substr(htmlBolk.innerHTML.indexOf("</h2>") + 5)
 				};
 			})
@@ -58,10 +59,7 @@ const hentUtOppsummering = (html: string): Oppsummering => {
 	};
 };
 
-const OppsummeringReducer: Reducer<
-	OppsummeringState,
-	OppsummeringActionTypes
-> = (state = defaultState, action): OppsummeringState => {
+export default (state: OppsummeringState = defaultState, action: OppsummeringActionTypes): OppsummeringState => {
 	switch (action.type) {
 		case OppsummeringActionTypeKeys.HENT_OPPSUMMERING:
 			return {
@@ -95,5 +93,3 @@ const OppsummeringReducer: Reducer<
 			return state;
 	}
 };
-
-export default OppsummeringReducer;

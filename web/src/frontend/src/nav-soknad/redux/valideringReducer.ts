@@ -1,4 +1,4 @@
-import {Reducer, ValideringActionTypeKeys, Valideringsfeil} from "./reduxTypes";
+import {ValideringActionTypeKeys, Valideringsfeil} from "./reduxTypes";
 import {ValideringActionTypes} from "./valideringActionTypes";
 
 export interface ValideringState {
@@ -12,9 +12,9 @@ const defaultState: ValideringState = {
 };
 
 
-const valideringReducer: Reducer<ValideringState, ValideringActionTypes> = (
-    state = defaultState,
-    action
+export default (
+    state: ValideringState = defaultState,
+    action: ValideringActionTypes
 ): ValideringState => {
     switch (action.type) {
         case ValideringActionTypeKeys.VIS_VALIDERINGSFEIL_PANEL:
@@ -71,5 +71,3 @@ const valideringReducer: Reducer<ValideringState, ValideringActionTypes> = (
             return state;
     }
 };
-
-export default valideringReducer;

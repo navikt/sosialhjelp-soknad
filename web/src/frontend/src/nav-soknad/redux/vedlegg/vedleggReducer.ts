@@ -1,7 +1,6 @@
 import { Vedlegg, VedleggActionTypeKeys, VedleggActionTypes, VedleggState, } from "./vedleggTypes";
 import { REST_STATUS } from "../../types/restTypes";
 import { Faktum } from "../../types/navSoknadTypes";
-import { Reducer } from "../reduxTypes";
 
 const initialState: VedleggState = {
 	restStatus: REST_STATUS.INITIALISERT,
@@ -11,9 +10,9 @@ const initialState: VedleggState = {
 	feilKode: ""
 };
 
-const VedleggReducer: Reducer<VedleggState, VedleggActionTypes> = (
-	state = initialState,
-	action
+export default (
+	state: VedleggState = initialState,
+	action: VedleggActionTypes
 ): VedleggState => {
 	switch (action.type) {
 		case VedleggActionTypeKeys.LAST_OPP: {
@@ -113,12 +112,12 @@ const VedleggReducer: Reducer<VedleggState, VedleggActionTypes> = (
 
 };
 
-export default VedleggReducer;
-
 function leggFaktumPaVedleggStruktur(vedlegg: Vedlegg, fakta: Faktum[]) {
 	const vedleggFaktum = fakta.filter((f: Faktum) => {
 		return f.faktumId === vedlegg.faktumId;
 	})[0];
-	vedlegg.belopFaktumId = vedleggFaktum.parrentFaktum;
+	if (vedleggFaktum.parrentFaktum){
+		vedlegg.belopFaktumId = vedleggFaktum.parrentFaktum;
+	}
 	return vedlegg;
 }

@@ -1,7 +1,7 @@
 import { InitActionTypeKeys, InitActionTypes, InitState } from "./initTypes";
+import { REST_STATUS } from "../../types";
 
 const { OK, START, FEILET } = InitActionTypeKeys;
-import { REST_STATUS } from "../../types";
 
 const initialState: InitState = {
 	restStatus: REST_STATUS.INITIALISERT,

@@ -16,7 +16,8 @@ type Props = OwnProps & InjectedIntlProps;
 const VedleggSlettet: React.FC<Props> = (props: Props) => {
 
     const opplysningSpc = getSpcForOpplysning(props.opplysning.type);
-    const textKey = opplysningSpc.textKey + ".slettet";
+    const textKeyBase = opplysningSpc ? opplysningSpc.textKey : "";
+    const textKey = textKeyBase + ".slettet";
     const intlTextOrKey = getIntlTextOrKey(props.intl, textKey);
 
     return (

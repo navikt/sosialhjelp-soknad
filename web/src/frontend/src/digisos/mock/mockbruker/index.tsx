@@ -193,14 +193,14 @@ class MockBruker extends React.Component<Props,OwnState> {
 		if (this.state.telefonnummer){
 			mocksystemdata.settTelefonnummer(this.state.telefonnummer_value);
 		} else {
-			mocksystemdata.settTelefonnummer(null);
+			mocksystemdata.settTelefonnummer("");
 		}
 
 		// Sett bankkonto
 		if (this.state.bankkonto){
 			mocksystemdata.settBankkontonummer(this.state.bankkonto_value);
 		} else {
-			mocksystemdata.settBankkontonummer(null);
+			mocksystemdata.settBankkontonummer("");
 		}
 
 		// Sett organisasjon

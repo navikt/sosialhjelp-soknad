@@ -5,7 +5,6 @@ import {
     EttersendelseFeilkode,
     EttersendelseState, EttersendelseVedleggBackend
 } from "./ettersendelseTypes";
-import {Reducer} from "../reduxTypes";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
 
 const initialState: EttersendelseState = {
@@ -23,9 +22,9 @@ const initialState: EttersendelseState = {
     visSoknadAlleredeSendtPromt: false,
 };
 
-const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes> = (
-    state = initialState,
-    action
+export default (
+    state: EttersendelseState = initialState,
+    action: EttersendelseActionTypes
 ): EttersendelseState => {
     switch (action.type) {
         case EttersendelseActionTypeKeys.NY_OK: {
@@ -137,5 +136,3 @@ const ettersendelseReducer: Reducer<EttersendelseState, EttersendelseActionTypes
             return state;
     }
 };
-
-export default ettersendelseReducer;

@@ -30,7 +30,7 @@ interface State {
 
 class AdresseTypeahead extends React.Component<Props, State> {
 
-	mouseClick: boolean;
+	mouseClick!: boolean;
 
 	constructor(props: Props) {
 		super(props);
@@ -112,7 +112,8 @@ class AdresseTypeahead extends React.Component<Props, State> {
 		const items: HTMLCollection = document.getElementsByClassName("item-highlighted");
 		if (items && items[0]) {
 			const INNER_TEXT = "innerText";
-			const valgtTekststreng = items[0][INNER_TEXT];
+			let item_: any = items[0];
+			const valgtTekststreng = item_[INNER_TEXT] ? item_[INNER_TEXT] : "";
 			const valgtAdresse = this.state.adresser.find((adresse: AdressesokTreff) => {
 				return formaterAdresseString(adresse) === valgtTekststreng;
 			});

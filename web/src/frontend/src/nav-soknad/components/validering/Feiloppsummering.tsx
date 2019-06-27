@@ -12,7 +12,7 @@ const scrollToFaktum = (
 	evt.stopPropagation();
 	evt.preventDefault();
 	const faktumKeyUpdated: string = faktumKey.replace(/\./g, "_");
-	const element: HTMLElement = document.getElementById(faktumKeyUpdated);
+	const element: HTMLElement | null = document.getElementById(faktumKeyUpdated);
 	if (element) {
 		scrollToElement(element.id);
 		element.focus();
@@ -44,11 +44,12 @@ interface Props {
 const COMP_ID = "skjema-feiloppsummering";
 
 class Feiloppsummering extends React.Component<Props, {}> {
-	oppsummering: HTMLDivElement;
+	oppsummering!: HTMLDivElement;
 
 	componentDidUpdate(prevProps: Props) {
 		if (
 			this.props.visFeilliste &&
+			this.props.valideringsfeil &&
 			this.props.valideringsfeil.length > 0 &&
 			this.props.visFeilliste !== prevProps.visFeilliste
 		) {
@@ -59,7 +60,7 @@ class Feiloppsummering extends React.Component<Props, {}> {
 
 	render() {
 		const { valideringsfeil } = this.props;
-		if (valideringsfeil.length === 0 || !this.props.visFeilliste) {
+		if (valideringsfeil && valideringsfeil.length === 0 || !this.props.visFeilliste) {
 			return null;
 		}
 		return (
@@ -67,13 +68,13 @@ class Feiloppsummering extends React.Component<Props, {}> {
 				id={COMP_ID}
 				className="panel panel--feiloppsummering"
 				tabIndex={-1}
-				ref={c => (this.oppsummering = c)}
+				ref={c => { if(c){this.oppsummering = c}}}
 			>
 				<Undertittel className="feiloppsummering__tittel blokk-s">
-					Det er {valideringsfeil.length} feil i skjemaet
+					Det er {valideringsfeil ? valideringsfeil.length : 1} feil i skjemaet
 				</Undertittel>
 				<ul className="feiloppsummering__liste">
-					{valideringsfeil.map((feilmld, index) => (
+					{valideringsfeil && valideringsfeil.map((feilmld, index) => (
 						<FeillisteMelding key={index} {...feilmld} />
 					))}
 				</ul>

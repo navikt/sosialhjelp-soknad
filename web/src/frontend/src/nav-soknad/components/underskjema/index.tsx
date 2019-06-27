@@ -18,6 +18,7 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
 	collapsable = true,
 	children
 }) => {
+	// @ts-ignore
 	const cls = classNames(
 		"underskjema",
 		`underskjema--${style}`,
@@ -46,7 +47,7 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
 	if (collapsable) {
 		return (
 			<UnmountClosed
-				isOpened={visible}
+				isOpened={visible ? visible : false}
 				className="underskjema__wrapper"
 				hasNestedCollapse={true}
 			>

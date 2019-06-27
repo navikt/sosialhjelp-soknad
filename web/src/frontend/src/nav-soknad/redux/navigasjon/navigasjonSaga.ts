@@ -72,9 +72,8 @@ function* gaTilbakeSaga(action: GaTilbake): SagaIterator {
 }
 
 function* tilDittNav(action: TilDittNav): SagaIterator {
-	const url = yield select(
-		(state: SoknadAppState) => state.miljovariabler.data["dittnav.link.url"]
-	);
+	// @ts-ignore
+	const url = yield select((state: SoknadAppState) => state.miljovariabler.data["dittnav.link.url"]);
 	yield call(navigateTo, url);
 }
 

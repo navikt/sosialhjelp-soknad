@@ -15,12 +15,13 @@ const urlInneholderVistekster = () =>
 function leggNoklerPaaLedetekster(data: object) {
 	const tekster = {};
 	Object.keys(data).forEach(key => {
+		// @ts-ignore
 		tekster[key] = `${data[key]} [${key}]`;
 	});
 	return tekster;
 }
 
-function* hentTeksterSaga(): any {
+function* hentTeksterSaga(): SagaIterator {
 	try {
 		yield put(henterTekster());
 		// TODO: Burde lage egen funksjon som holder på url-string

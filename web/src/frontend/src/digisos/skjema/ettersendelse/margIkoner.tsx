@@ -18,7 +18,7 @@ enum MargIkoner {
 	LAST_OPP = "LAST_OPP"
 }
 
-const MargIkon: React.StatelessComponent<{ ikon: MargIkoner }> = ({ ikon }) => {
+const MargIkon: React.FC<{ ikon: MargIkoner }> = ({ ikon }) => {
 	switch (ikon) {
 		case MargIkoner.ADVARSEL:
 			return <DigisosIkon navn="advarselSirkel" className="ettersendelse__ikon"/>;

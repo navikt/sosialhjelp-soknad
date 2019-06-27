@@ -47,16 +47,18 @@ class BostotteView extends React.Component<Props, State> {
 		const {brukerBehandlingId, soknadsdata} = this.props;
 		const restStatus = soknadsdata.restStatus.inntekt.bostotte;
 		if(restStatus === REST_STATUS.OK) {
-			const bostotte: Bostotte = soknadsdata.inntekt.bostotte;
-			bostotte.bekreftelse = verdi;
-			this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSTOTTE, bostotte);
-			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSTOTTE, bostotte);
+			const bostotte: Bostotte | undefined = soknadsdata.inntekt.bostotte;
+			if(bostotte){
+				bostotte.bekreftelse = verdi;
+				this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSTOTTE, bostotte);
+				this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSTOTTE, bostotte);
+			}
 		}
 	}
 
 	render() {
 		const {soknadsdata} = this.props;
-		const bostotte : Bostotte = soknadsdata.inntekt.bostotte;
+		const bostotte: Bostotte | undefined = soknadsdata.inntekt.bostotte;
 		const restStatus = soknadsdata.restStatus.inntekt.bostotte;
 		let oppstartsModus = this.state.oppstartsModus;
 		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
@@ -68,12 +70,12 @@ class BostotteView extends React.Component<Props, State> {
 					visPlaceholder={oppstartsModus}
 					tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_BOSTOTTE)}
 					faktumKey={FAKTUM_BOSTOTTE}
-					verdi={bostotte.bekreftelse}
+					verdi={bostotte ? bostotte.bekreftelse : null}
 					onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
 					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 				/>
 				<Informasjonspanel
-					synlig={bostotte.bekreftelse === false}
+					synlig={bostotte && bostotte.bekreftelse === false}
 					ikon={InformasjonspanelIkon.ELLA}
 					farge={DigisosFarge.VIKTIG}
 				>

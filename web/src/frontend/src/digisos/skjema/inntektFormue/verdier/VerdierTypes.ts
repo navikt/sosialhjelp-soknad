@@ -17,3 +17,13 @@ export const initialVerdierState: Verdier = {
     "annet" : false,
     "beskrivelseAvAnnet" : ""
 };
+
+export enum VerdierKeys {
+    BEKREFTELSE = "bekreftelse",
+    BOLIG = "bolig",
+    CAMPINGVOGN = "campingvogn",
+    KJORETOY = "kjoretoy",
+    FRITIDSEIENDOM = "fritidseiendom",
+    ANNET = "annet",
+    BESKRIVELSEAVANNET = "beskrivelseAvAnnet",
+}

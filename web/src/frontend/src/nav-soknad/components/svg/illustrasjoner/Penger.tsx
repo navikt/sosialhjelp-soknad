@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const Penger: React.StatelessComponent<{}> = ({}) => {
+const Penger: React.FC = () => {
 	return (
 		<div>
 			<svg width={100} height={100} className="kun_desktop">

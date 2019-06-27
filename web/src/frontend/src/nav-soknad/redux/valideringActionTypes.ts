@@ -50,5 +50,5 @@ export enum ValideringsFeilKode {
 
 export interface Valideringsfeil {
 	faktumKey: string;
-	feilkode: ValideringsFeilKode
+	feilkode: ValideringsFeilKode;
 }
