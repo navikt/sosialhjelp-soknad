@@ -40,7 +40,7 @@ class NavYtelserView extends React.Component<Props, {}> {
             if (utbetalingsdato && utbetalingsdato.length > 9) {
                 formattedDato = <FormattedDate value={utbetaling.utbetalingsdato}/>
             }
-            const belop = <FormattedNumber value={utbetaling.belop} style="decimal" minimumFractionDigits={2}/>;
+            const belop = <FormattedNumber value={utbetaling.belop} format="decimal" minimumFractionDigits={2}/>;
             return (
                 <div key={index} className="utbetaling blokk-s">
                     <div>{type}<span className="verdi detaljeliste__verdi">{belop}</span></div>
@@ -62,7 +62,7 @@ class NavYtelserView extends React.Component<Props, {}> {
             <Sporsmal
                 faktumKey= { FAKTUM_KEY_NAV_YTELSER + ".tittel" }
                 sprakNokkel={FAKTUM_KEY_NAV_YTELSER}
-                style="system"
+                stil="system"
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                 visLedetekst={true}
             >

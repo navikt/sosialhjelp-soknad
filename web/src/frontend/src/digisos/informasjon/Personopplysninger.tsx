@@ -65,15 +65,14 @@ class Personopplysninger extends React.Component<Props, {}> {
 								</h3>
 								<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.tekst"/>
 								&nbsp;
-								<a
+								<button
 									className="lenke"
-									href="#"
 									onClick={() => {
 										this.props.dispatch(setVisSamtykkeInfo(true));
 									}}
 								>
 									<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke"/>
-								</a>
+								</button>
 							</div>
 						</div>
 

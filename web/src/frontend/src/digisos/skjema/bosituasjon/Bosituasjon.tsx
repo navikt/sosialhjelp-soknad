@@ -143,7 +143,7 @@ class BosituasjonView extends React.Component<Props, {}> {
                             <Sporsmal
                                 tekster={getFaktumSporsmalTekst(this.props.intl, "bosituasjon")}
                                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                                style="system"
+                                stil="system"
                             >
                                 {this.renderRadioknapp(Annetvalg.foreldre)}
                                 {this.renderRadioknapp(Annetvalg.familie)}

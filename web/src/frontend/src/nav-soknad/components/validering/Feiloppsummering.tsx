@@ -25,12 +25,11 @@ const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 }) => {
 	return (
 		<li className="feiloppsummering__feil">
-			<a
-				href={`#`}
+			<button
 				onClick={evt => scrollToFaktum(evt, faktumKey)}
 			>
 				<FormattedMessage id={feilkode}/>
-			</a>
+			</button>
 		</li>
 	);
 };

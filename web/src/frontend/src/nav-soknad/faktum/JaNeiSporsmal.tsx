@@ -57,7 +57,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
         return (
             <Sporsmal
                 tekster={this.props.tekster}
-                style={harUnderSkjema ? "jaNeiSporsmal" : "normal"}
+                stil={harUnderSkjema ? "jaNeiSporsmal" : "normal"}
                 legendTittelStyle={this.props.legendTittelStyle || LegendTittleStyle.DEFAULT}
             >
                 <ValgMedUnderskjema

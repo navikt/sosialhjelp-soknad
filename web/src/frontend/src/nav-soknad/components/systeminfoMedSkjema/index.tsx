@@ -114,7 +114,7 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 					arrow={false}
 					visible={true}
 					collapsable={false}
-					style="system"
+					stil="system"
 				>
 					<div className="systeminfoMedSkjema__info">{children}</div>
 					{this.renderSkjema()}

@@ -55,14 +55,13 @@ const AvsnittMedMarger: React.StatelessComponent<Props> = (
 		{hoyreIkon && (
 			<span>
 					{onClickHoyreIkon && (
-						<a
-							href="#"
+						<button
 							className="hoyremarg hoyremarg__ikon hoyremarg__ikon__klikkbart hoyremarg__ikon__hover"
 							onClick={() => onClickHoyreIkon()}
 							title={ ikonTitleText(hoyreIkon) }
 						>
 							<MargIkon ikon={hoyreIkon}/>
-						</a>
+						</button>
 					)}
 				{!onClickHoyreIkon && (
 					<div className="hoyremarg hoyremarg__ikon">
@@ -77,14 +76,13 @@ const AvsnittMedMarger: React.StatelessComponent<Props> = (
 
 	if (onClick ) {
 		return (
-			<a
-				href="#"
+			<button
 				className="avsnitt_med_marger avsnitt_med_marger__klikkbar"
 				onClick={() => handleOnClick()}
 				title="Vedlegg"
 			>
 				{content}
-			</a>
+			</button>
 		);
 	} else {
 		return (

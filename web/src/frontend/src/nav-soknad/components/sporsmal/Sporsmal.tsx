@@ -20,7 +20,7 @@ export interface OwnProps {
 	children: React.ReactNode;
 	visible?: boolean;
 	htmlRef?: (c: any) => HTMLElement;
-	style?: SporsmalStyle;
+	stil?: SporsmalStyle;
 	tittelRenderer?: (title: string) => React.ReactNode;
 	handleOnBlur?: (evt: any) => void;
 	feil?: Feil;
@@ -48,9 +48,9 @@ class Sporsmal extends React.Component<Props, {}> {
 		// @ts-ignore
 		const sporsmalCls = classNames("skjema-sporsmal", {
 			"skjema-sporsmal--noBottomPadding":
-				this.props.style === "system" || this.props.style === "jaNeiSporsmal",
-			"skjema-sporsmal--systeminfo": this.props.style === "system",
-			"skjema-sporsmal--jaNeiSporsmal": this.props.style === "jaNeiSporsmal"
+				this.props.stil === "system" || this.props.stil === "jaNeiSporsmal",
+			"skjema-sporsmal--systeminfo": this.props.stil === "system",
+			"skjema-sporsmal--jaNeiSporsmal": this.props.stil === "jaNeiSporsmal"
 		});
 		// @ts-ignore
 		const cls = classNames("skjema-fieldset", {
