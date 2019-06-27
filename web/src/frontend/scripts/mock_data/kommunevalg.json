@@ -1,0 +1,65 @@
+[
+	{
+		"id": "horten",
+		"navn": "Horten",
+		"kommuneId": null,
+		"fulltNavn": "NAV Horten",
+		"type": "KOMMUNE"
+	},
+	{
+		"id": "bergenhus",
+		"navn": "Bergenhus",
+		"kommuneId": "bergen",
+		"fulltNavn": "NAV Bergenhus, Bergen kommune",
+		"type": "BYDEL"
+	},
+	{
+		"id": "ytrebygda",
+		"navn": "Ytrebygda",
+		"kommuneId": "bergen",
+		"fulltNavn": "NAV Ytrebygda, Bergen kommune",
+		"type": "BYDEL"
+	},
+	{
+		"id": "frogner",
+		"navn": "Frogner",
+		"kommuneId": "oslo",
+		"fulltNavn": "NAV Frogner, Oslo kommune",
+		"type": "BYDEL"
+	},
+	{
+		"id": "askoy",
+		"navn": "Askøy",
+		"kommuneId": null,
+		"fulltNavn": "NAV Askøy",
+		"type": "KOMMUNE"
+	},
+	{
+		"id": "grunerlokka",
+		"navn": "Grünerløkka",
+		"kommuneId": "oslo",
+		"fulltNavn": "NAV Grünerløkka, Oslo kommune",
+		"type": "BYDEL"
+	},
+	{
+		"id": "grorud",
+		"navn": "Grorud",
+		"kommuneId": "oslo",
+		"fulltNavn": "NAV Grorud, Oslo kommune",
+		"type": "BYDEL"
+	},
+	{
+		"id": "oslo",
+		"navn": "Oslo",
+		"kommuneId": null,
+		"fulltNavn": null,
+		"type": "KOMMUNE"
+	},
+	{
+		"id": "bergen",
+		"navn": "Bergen",
+		"kommuneId": null,
+		"fulltNavn": null,
+		"type": "KOMMUNE"
+	}
+]
