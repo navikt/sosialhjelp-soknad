@@ -29,8 +29,10 @@ function kopierSVG() {
 
 
 function kopierRessurs(mainFile, folder) {
+	if (mainFile.split(".").length > 3)
+		return;
 	var fileending = mainFile.split(".")[2];
-	var filename = mainFile.split(".")[0];
+	var filename = mainFile.split(".")[0] || "js";
 	var srcFile = [".", "build", "static", folder, mainFile];
 	var outFile = [
 		"..",
@@ -75,7 +77,9 @@ function kopierStatisk() {
 			fs.readdir(dir.join(path.sep), function(err, files) {
 				files.forEach( (file) => {
 					kopierRessurs(file, folder)
-				})
+				});
+				// kopierRessurs(files[0], folder);
+				// kopierRessurs(files[2], folder);
 			});
 		});
 	});
