@@ -29,10 +29,9 @@ function kopierSVG() {
 
 
 function kopierRessurs(mainFile, folder) {
-	if (mainFile.split(".").length > 3)
-		return;
-	var fileending = mainFile.split(".")[2];
-	var filename = mainFile.split(".")[0] || "js";
+	var newFile = mainFile.split(".")
+		.filter((value) => { return value != "chunk" })
+		.join(".");
 	var srcFile = [".", "build", "static", folder, mainFile];
 	var outFile = [
 		"..",
@@ -41,7 +40,7 @@ function kopierRessurs(mainFile, folder) {
 		"webapp",
 		"statisk",
 		folder,
-		filename + "." + fileending
+		newFile
 	];
 	fsextra.copy(srcFile.join(path.sep), outFile.join(path.sep), function (
 		err
@@ -60,9 +59,7 @@ function kopierRessurs(mainFile, folder) {
 				"../main/resources/webapp/statisk/" +
 				folder +
 				"/" +
-				filename +
-				"." +
-				fileending
+				newFile
 			);
 		}
 	});
