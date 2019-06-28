@@ -62,6 +62,7 @@ Forutsetter at man har tilgang til git repository tilgjengelig på internt nett 
  heroku container:login
 ```
 
+ Forutsetter at [Docker](https://docs.docker.com/docker-for-mac/install/) er installert:
  For å opprette applikasjon og deploye til Heroku:
 
  ```bash
