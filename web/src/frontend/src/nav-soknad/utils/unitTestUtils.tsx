@@ -123,7 +123,3 @@ export const TestContext: React.FunctionComponent<{ messages: any, children: Rea
         </Provider>
     );
 };
-
-export const pretty = (html: string) => {
-    return prettier.format(html, {parser: "html"})
-};

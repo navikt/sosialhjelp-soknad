@@ -12,11 +12,11 @@ import {
 	Sider,
 	TilSteg
 } from "./navigasjonTypes";
-import { goBack, push } from "react-router-redux";
 import { SagaIterator } from "redux-saga";
 import { tilSteg } from "./navigasjonActions";
 import { selectBrukerBehandlingId } from "../selectors";
 import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
+import {goBack, push} from "connected-react-router";
 
 const ferdig = (saga: SagaIterator) => {
 	expect(saga.next()).toEqual({
