@@ -17,6 +17,7 @@ import AvbrytSoknad from "../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 import NavFrontendModal from "nav-frontend-modal";
 import Ettersendelse from "./skjema/ettersendelse/ettersendelse";
 import SoknadAlleredeSendtPromt from "../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";
+import Link from "./link";
 
 /** Setter globalt hvilket appElement react-modal skal bruke når modal dialog vises
  *
@@ -34,6 +35,7 @@ class App extends React.Component<InjectedIntlProps, {}> {
         const mock = (window.location.pathname.match(/mock$/) != null);
         const mocklogin = (window.location.pathname.match(/mock-login$/) != null);
         const undersokelse = (window.location.pathname.match(/undersokelse$/) != null);
+        const link = (window.location.pathname.match(/link$/) != null);
 
         return (
             <span>
@@ -46,6 +48,11 @@ class App extends React.Component<InjectedIntlProps, {}> {
                         path={`/informasjon`}
                         exact={true}
                         component={Informasjon}
+                    />
+					<Route
+                        path={`/link`}
+                        exact={true}
+                        component={Link}
                     />
 					<Route
                         path={`/mock`}
@@ -70,7 +77,7 @@ class App extends React.Component<InjectedIntlProps, {}> {
                     <Route path={`/serverfeil`} component={ServerFeil}/>
                     <Route component={SideIkkeFunnet}/>
 				</Switch>
-                {!ettersendelse && !informasjon && !mock && !mocklogin && !undersokelse && (
+                {!ettersendelse && !informasjon && !link && !mock && !mocklogin && !undersokelse && (
                     <span>
 					<Prompt
                         message={loc =>
@@ -87,7 +94,7 @@ class App extends React.Component<InjectedIntlProps, {}> {
                         {this.props.children}
 				</span>
                 )}
-                {!skjema && !informasjon && !mock && !mocklogin && !undersokelse && (
+                {!skjema && !informasjon && !link && !mock && !mocklogin && !undersokelse && (
                     <span>
                     <Prompt
                         message={loc =>

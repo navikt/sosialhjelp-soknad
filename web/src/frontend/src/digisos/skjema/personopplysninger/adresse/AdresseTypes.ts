@@ -14,6 +14,7 @@ export interface AdressesokTreff {
 
 export interface NavEnhet {
 	orgnr: string;
+	enhetsnr: string;
 	enhetsnavn: string;
 	kommunenavn: string;
 	valgt: boolean

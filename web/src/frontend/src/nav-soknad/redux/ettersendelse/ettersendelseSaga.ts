@@ -94,6 +94,7 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
         const url = `opplastetVedlegg/${behandlingsId}/${opplysningType}`;
         response = yield call(fetchUpload, url, formData);
         yield put(lastOppEttersendtVedleggOk());
+        yield put(loggInfo("GlemmeSendKnappStatistikk. Vedlegg lastet opp. BehandingsId: " + behandlingsId));
         if (response) {
             yield put(filLastetOpp(opplysningType, response));
         }
@@ -112,6 +113,7 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
         const url = `soknader/${action.brukerbehandlingId}/actions/send`;
         yield call(fetchPost, url, JSON.stringify({}));
         lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.brukerbehandlingId);
+        yield put(loggInfo("GlemmeSendKnappStatistikk. Ettersendelse sendt. BehandingsId: " + action.brukerbehandlingId));
         yield put({type: EttersendelseActionTypeKeys.ETTERSEND_OK});
         yield put(lastOppEttersendtVedleggOk());
     } catch (reason) {

@@ -1,6 +1,8 @@
-/* tslint:disable */
 import {REST_FEIL} from "../types/restFeilTypes";
 import {erMockMiljoEllerDev} from "./index";
+import {push} from "connected-react-router";
+import {Sider} from "../redux/navigasjon/navigasjonTypes";
+import { put } from 'redux-saga/effects';
 
 export function erDev(): boolean {
     const url = window.location.href;
@@ -43,6 +45,17 @@ function determineCredentialsParameter() {
     return window.location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin";
 }
 
+export function getRedirectPathname(): string {
+    return '/soknadsosialhjelp/link';
+}
+
+export function getRedirectPath(): string {
+    const currentOrigin = window.location.origin;
+    const gotoParameter = "?goto=" + window.location.pathname;
+    const redirectPath = currentOrigin + getRedirectPathname() + gotoParameter;
+    return '?redirect=' + redirectPath;
+}
+
 function getServletBaseUrl(): string {
     if (erDev()) {
         // Kjør mot lokal jetty
@@ -73,7 +86,7 @@ const getHeaders = () => {
         "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
         "accept": "application/json, text/plain, */*"
     })
-};
+}
 
 /* serverRequest():
  *
@@ -114,7 +127,7 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
             })
             .catch((reason: any) => reject(reason));
     });
-};
+}
 
 export function fetchToJson(urlPath: string) {
     return serverRequest(RequestMethod.GET, urlPath, "");
@@ -191,7 +204,7 @@ let generateUploadOptions = function (formData: FormData) {
         body: formData
     };
     return UPLOAD_OPTIONS;
-};
+}
 
 export function fetchUpload(urlPath: string, formData: FormData) {
     return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData))
@@ -212,6 +225,21 @@ export function toJson<T>(response: Response): Promise<T> {
 }
 
 function sjekkStatuskode(response: Response) {
+    const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
+
+    if (response.status === 401){
+        if(window.location.pathname !== getRedirectPathname()){
+            // @ts-ignore
+            if (!window[AUTH_LINK_VISITED]) {
+                response.json().then(r => {
+                    window.location.href = r.loginUrl + getRedirectPath();
+                });
+            }
+        } else {
+            put(push(Sider.SERVERFEIL));
+        }
+        return response;
+    }
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
@@ -243,7 +271,6 @@ export function detekterInternFeilKode(feilKode: string): string {
 export function lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(brukerbehandlingId: string) {
     if (erMockMiljoEllerDev()) {
         const url = getApiBaseUrl() + "internal/mock/tjeneste/downloadzip/" + brukerbehandlingId;
-        // window.open(url);
-        console.warn(url);
+        window.open(url);
     }
 }

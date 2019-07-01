@@ -8,7 +8,7 @@ import {
 } from "./miljovariablerActions";
 import { loggFeil } from "../../../nav-soknad/redux/navlogger/navloggerActions";
 
-function* hentMiljovariablerSaga(): SagaIterator {
+export function* hentMiljovariablerSaga(): SagaIterator {
 	try {
 		yield put(henterMiljovariabler());
 		const response = yield call(fetchToJson, "informasjon/miljovariabler");

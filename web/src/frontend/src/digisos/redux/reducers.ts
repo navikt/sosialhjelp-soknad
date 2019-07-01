@@ -25,6 +25,8 @@ import {InitState} from "../../nav-soknad/redux/init/initTypes";
 import {OpplysningerModel} from "../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {FilState} from "../../nav-soknad/redux/fil/filTypes";
 import {connectRouter, RouterState} from "connected-react-router";
+import AuthenticationReducer from "../../nav-soknad/redux/authentication/authenticationReducer";
+import {AuthenticationState} from "../../nav-soknad/redux/authentication/authenticationTypes";
 
 
 export interface State {
@@ -44,6 +46,7 @@ export interface State {
 	soknadsdata: Soknadsdata;
 	okonomiskeOpplysninger: OpplysningerModel;
 	filopplasting: FilState;
+	authentication: AuthenticationState;
 }
 
 export default (history: any) => combineReducers({
@@ -62,5 +65,6 @@ export default (history: any) => combineReducers({
 	mockData: MockReducer,
 	soknadsdata: SoknadsdataReducer,
 	okonomiskeOpplysninger: opplysningerReducer,
-	filopplasting: filReducer
+	filopplasting: filReducer,
+	authentication: AuthenticationReducer
 });

@@ -39,7 +39,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 
 	componentDidMount() {
 		skjulToppMeny();
-		fetchToJson("informasjon/personalia").then((result: any) => {
+		fetchToJson("informasjon/fornavn").then((result: any) => {
 			const FORNAVN = "fornavn";
 			this.setState({fornavn: result[FORNAVN]});
 		}).catch((e: any) => {
