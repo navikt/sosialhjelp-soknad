@@ -89,7 +89,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build && node ./scripts/flytt-filer-til-webapp.js && node ./versjoner-prodfiler.js",
+    "build": "craco build && node scripts/flytt-filer-til-webapp.js && node scripts/versjoner-prodfiler.js",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
