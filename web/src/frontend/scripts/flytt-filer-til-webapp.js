@@ -30,7 +30,7 @@ function kopierSVG() {
 
 function kopierRessurs(mainFile, folder) {
 	var newFile = mainFile.split(".")
-		.filter((value) => { return value != "chunk" })
+		// .filter((value) => { return value != "chunk" })
 		.join(".");
 	var srcFile = [".", "build", "static", folder, mainFile];
 	var outFile = [
