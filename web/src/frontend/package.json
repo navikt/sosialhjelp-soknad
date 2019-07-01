@@ -44,6 +44,7 @@
     "nav-frontend-stegindikator-style": "^1.0.21",
     "nav-frontend-typografi": "^2.0.12",
     "nav-frontend-typografi-style": "^1.0.13",
+    "pad-left": "^2.1.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-autocomplete": "^1.8.1",
