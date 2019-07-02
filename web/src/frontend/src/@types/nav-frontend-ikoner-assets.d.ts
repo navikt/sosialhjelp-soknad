@@ -3,12 +3,14 @@ declare module 'nav-frontend-ikoner-assets' {
 
 	export type icons =
 		| 'advarsel-sirkel'
+		| 'advarsel-sirkel-fyll'
 		| 'advarsel-trekant'
 		| 'advarsel-trekant-fylt'
 		| 'alarm'
 		| 'alarm-ny'
 		| 'arbeidsgiver'
 		| 'feil-sirkel-fylt'
+		| 'feil-sirkel-fyll'
 		| 'help-circle'
 		| 'help-circle_hover'
 		| 'info-sirkel'
@@ -19,6 +21,7 @@ declare module 'nav-frontend-ikoner-assets' {
 		| 'nav-ansatt'
 		| 'ok-sirkel'
 		| 'ok-sirkel-fylt'
+		| 'ok-sirkel-fyll'
 		| 'spinner'
 		| 'spinner-negativ'
 		| 'spinner-stroke'

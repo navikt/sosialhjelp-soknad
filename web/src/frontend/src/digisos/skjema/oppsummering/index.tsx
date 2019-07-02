@@ -1,7 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
-import {Checkbox} from "nav-frontend-skjema";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 import {REST_STATUS} from "../../../nav-soknad/types";
 import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
@@ -100,11 +99,6 @@ class OppsummeringView extends React.Component<Props, {}> {
 		const bekreftOpplysninger: string = intl.formatMessage({
 			id: "soknadsosialhjelp.oppsummering.harLestSamtykker"
 		});
-
-		let classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
-		if (this.props.visBekreftMangler) {
-			classNames += " skjema-oppsummering__bekreft___feil";
-		}
 
 		let restStatusUpdated = restStatus;
 		if(!this.props.valgtSoknadsmottaker){

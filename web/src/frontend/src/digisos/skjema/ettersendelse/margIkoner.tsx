@@ -21,9 +21,9 @@ enum MargIkoner {
 const MargIkon: React.FC<{ ikon: MargIkoner }> = ({ ikon }) => {
 	switch (ikon) {
 		case MargIkoner.ADVARSEL:
-			return <DigisosIkon navn="advarselSirkel" className="ettersendelse__ikon"/>;
+			return <Icon kind="advarsel-sirkel-fyll" className="ettersendelse__ikon"/>;
 		case MargIkoner.OK:
-			return <Icon kind="stegindikator__hake" className="ettersendelse__ikon"/>;
+			return <Icon kind='ok-sirkel-fyll' className="ettersendelse__ikon"/>;
 		case MargIkoner.PRINTER:
 			return (<DigisosIkon
 				navn="printer"

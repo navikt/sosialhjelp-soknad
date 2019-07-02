@@ -8,7 +8,7 @@ import MockBruker from "./mock/mockbruker";
 import MockLogin from "./mock/mocklogin";
 import SkjemaRouter from "./skjema/";
 import NavFrontendModal from "nav-frontend-modal";
-import Ettersendelse from "./skjema/ettersendelse/ettersendelse";
+import Ettersendelse from "./skjema/ettersendelse";
 import Link from "./link";
 
 /** Setter globalt hvilket appElement react-modal skal bruke når modal dialog vises
