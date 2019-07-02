@@ -25,196 +25,221 @@ import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
 //import {StegindikatorStegProps} from "nav-frontend-stegindikator/lib/stegindikator-steg";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
-	evt.stopPropagation();
-	evt.preventDefault();
+    evt.stopPropagation();
+    evt.preventDefault();
 };
 
 interface OwnProps {
-	stegKey: string;
-	skjemaConfig: SkjemaConfig;
-	pending?: boolean;
-	ikon?: React.ReactNode;
+    stegKey: string;
+    skjemaConfig: SkjemaConfig;
+    pending?: boolean;
+    ikon?: React.ReactNode;
 }
 
 interface InjectedRouterProps {
-	location: Location;
-	match: {
-		params: {
-			brukerBehandlingId: string;
-		};
-		url: string;
-	};
+    location: Location;
+    match: {
+        params: {
+            brukerBehandlingId: string;
+        };
+        url: string;
+    };
 }
 
 interface StateProps {
-	validering: ValideringState;
-	nextButtonPending?: boolean;
-	oppsummeringBekreftet?: boolean;
-	fodselsnummer: string;
-	soknadsdata: Soknadsdata;
+    validering: ValideringState;
+    nextButtonPending?: boolean;
+    oppsummeringBekreftet?: boolean;
+    fodselsnummer: string;
+    soknadsdata: Soknadsdata;
 }
 
 type Props = OwnProps &
-	StateProps &
-	RouterProps &
-	InjectedRouterProps &
-	InjectedIntlProps &
-	DispatchProps & RouteComponentProps;
+    StateProps &
+    RouterProps &
+    InjectedRouterProps &
+    InjectedIntlProps &
+    DispatchProps & RouteComponentProps;
 
 class StegMedNavigasjon extends React.Component<Props, {}> {
-	stegTittel!: HTMLElement;
+    stegTittel!: HTMLElement;
 
-	constructor(props: Props) {
-		super(props);
-		this.handleGaVidere = this.handleGaVidere.bind(this);
-		this.sendSoknad = this.sendSoknad.bind(this);
-	}
+    constructor(props: Props) {
+        super(props);
+        this.handleGaVidere = this.handleGaVidere.bind(this);
+        this.sendSoknad = this.sendSoknad.bind(this);
+    }
 
-	componentDidMount() {
-		scrollToTop();
-		if (this.stegTittel) {
-			this.stegTittel.focus();
-		}
-	}
+    componentDidMount() {
+        scrollToTop();
+        if (this.stegTittel) {
+            this.stegTittel.focus();
+        }
+    }
 
-	loggAdresseTypeTilGrafana(){
-		const adresseTypeValg = this.props.soknadsdata.personalia.adresser.valg;
-		if (adresseTypeValg){
-			this.props.dispatch(loggInfo("klikk--" + adresseTypeValg));
-		}
-	}
+    loggAdresseTypeTilGrafana() {
+        const adresseTypeValg = this.props.soknadsdata.personalia.adresser.valg;
+        if (adresseTypeValg) {
+            this.props.dispatch(loggInfo("klikk--" + adresseTypeValg));
+        }
+    }
 
-	sendSoknad(brukerBehandlingId: string) {
-		this.props.dispatch(sendSoknad(brukerBehandlingId));
-	}
+    sendSoknad(brukerBehandlingId: string) {
+        this.props.dispatch(sendSoknad(brukerBehandlingId));
+    }
 
-	handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
-		if (aktivtSteg.type === SkjemaStegType.oppsummering) {
-			if (this.props.oppsummeringBekreftet) {
-				this.loggAdresseTypeTilGrafana();
-				this.sendSoknad(brukerBehandlingId);
-			} else {
-				this.props.dispatch(setVisBekreftMangler(true));
-			}
-			return;
-		}
+    handleGaTilSkjemaSteg(aktivtSteg: SkjemaSteg | undefined, steg: number) {
+        if (aktivtSteg) {
+            const {feil} = this.props.validering;
 
-		const { feil } = this.props.validering;
+            const valgtNavEnhet = this.finnSoknadsMottaker();
+            if (aktivtSteg.stegnummer === 1 && !valgtNavEnhet) {
+                this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
+                this.props.dispatch(visValideringsfeilPanel());
+            } else {
+                if (feil.length === 0) {
+                    this.props.dispatch(clearAllValideringsfeil());
+                    this.props.dispatch(tilSteg(steg));
+                } else {
+                    this.props.dispatch(visValideringsfeilPanel());
+                }
+            }
+        }
+    }
 
-		const valgtNavEnhet = this.finnSoknadsMottaker();
-		if(aktivtSteg.stegnummer === 1 && !valgtNavEnhet) {
-			this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
-			this.props.dispatch(visValideringsfeilPanel());
-		} else {
-			if (feil.length === 0) {
-				this.props.dispatch(clearAllValideringsfeil());
-				this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
-			} else {
-				this.props.dispatch(visValideringsfeilPanel());
-			}
-		}
-	}
+    handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
+        if (aktivtSteg.type === SkjemaStegType.oppsummering) {
+            if (this.props.oppsummeringBekreftet) {
+                this.loggAdresseTypeTilGrafana();
+                this.sendSoknad(brukerBehandlingId);
+            } else {
+                this.props.dispatch(setVisBekreftMangler(true));
+            }
+            return;
+        }
 
-	finnSoknadsMottaker() {
-		const valgtNavEnhet: NavEnhet | undefined = this.props.soknadsdata.personalia.navEnheter.find((navenhet: NavEnhet) => navenhet.valgt);
-		return valgtNavEnhet;
-	}
+        const {feil} = this.props.validering;
 
-	handleGaTilbake(aktivtSteg: number) {
-		this.props.dispatch(clearAllValideringsfeil());
-		this.props.dispatch(gaTilbake(aktivtSteg));
-	}
+        const valgtNavEnhet = this.finnSoknadsMottaker();
+        if (aktivtSteg.stegnummer === 1 && !valgtNavEnhet) {
+            this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
+            this.props.dispatch(visValideringsfeilPanel());
+        } else {
+            if (feil.length === 0) {
+                this.props.dispatch(clearAllValideringsfeil());
+                this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
+            } else {
+                this.props.dispatch(visValideringsfeilPanel());
+            }
+        }
+    }
 
-	render() {
-		const { skjemaConfig, intl, children, validering } = this.props;
-		const aktivtStegConfig = skjemaConfig.steg.find(
-			s => s.key === this.props.stegKey
-		);
-		const brukerBehandlingId = this.props.match.params.brukerBehandlingId;
-		const erOppsummering: boolean = aktivtStegConfig ? aktivtStegConfig.type === SkjemaStegType.oppsummering : false;
-		const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
-		const documentTitle = intl.formatMessage({
-			id: this.props.skjemaConfig.tittelId
-		});
-		const synligeSteg = skjemaConfig.steg.filter(
-			s => s.type === SkjemaStegType.skjema
-		);
+    finnSoknadsMottaker() {
+        const valgtNavEnhet: NavEnhet | undefined = this.props.soknadsdata.personalia.navEnheter.find((navenhet: NavEnhet) => navenhet.valgt);
+        return valgtNavEnhet;
+    }
 
-		const { feil, visValideringsfeil} = validering;
+    handleGaTilbake(aktivtSteg: number) {
+        this.props.dispatch(clearAllValideringsfeil());
+        this.props.dispatch(gaTilbake(aktivtSteg));
+    }
 
-		return (
-			<div className="app-digisos informasjon-side">
-				<AppBanner/>
-				<ApplikasjonsfeilDialog />
-				<DocumentTitle title={`${stegTittel} - ${documentTitle}`} />
+    render() {
+        const {skjemaConfig, intl, children, validering} = this.props;
+        const aktivtStegConfig: SkjemaSteg | undefined = skjemaConfig.steg.find(
+            s => s.key === this.props.stegKey
+        );
+        const brukerBehandlingId = this.props.match.params.brukerBehandlingId;
+        const erOppsummering: boolean = aktivtStegConfig ? aktivtStegConfig.type === SkjemaStegType.oppsummering : false;
+        const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
+        const documentTitle = intl.formatMessage({
+            id: this.props.skjemaConfig.tittelId
+        });
+        const synligeSteg = skjemaConfig.steg.filter(
+            s => s.type === SkjemaStegType.skjema
+        );
 
-				<div className="skjema-steg skjema-content">
-					<div className="skjema-steg__feiloppsummering">
-						<Feiloppsummering
-							skjemanavn={this.props.skjemaConfig.skjemanavn}
-							valideringsfeil={feil}
-							visFeilliste={visValideringsfeil}
-						/>
-					</div>
-					<form id="soknadsskjema" onSubmit={stopEvent}>
-						{!erOppsummering ? (
-							<div className="skjema__stegindikator">
-								<Stegindikator
-									autoResponsiv={true}
-									kompakt={false}
-									aktivtSteg={aktivtStegConfig ? aktivtStegConfig.stegnummer - 1 : 0}
-									steg={synligeSteg.map( (s) => {
-										return {
-											label: intl.formatMessage({id: `${s.key}.tittel`}),
-											index: s.stegnummer,
-										}
-									})}
-									onChange={(s: number) => this.props.dispatch(tilSteg(s +1))}
-								/>
-							</div>
-						) : null}
-						<div className="skjema-steg__ikon">
-							{this.props.ikon}
-						</div>
-						<div
-							className="skjema-steg__tittel"
-							tabIndex={-1}
-							ref={c => { if(c){this.stegTittel = c }}}
-						>
-							<Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
-						</div>
-						{children}
-						{ aktivtStegConfig &&
-							<Knapperad
-								gaViderePending={this.props.nextButtonPending}
-								gaVidereLabel={
-									erOppsummering
-										? getIntlTextOrKey(intl, "skjema.knapper.send")
-										: undefined
-								}
-								gaVidere={() =>
-									this.handleGaVidere(aktivtStegConfig, brukerBehandlingId)}
-								gaTilbake={
-									aktivtStegConfig.stegnummer > 1
-										? () => this.handleGaTilbake(aktivtStegConfig.stegnummer)
-										: undefined
-								}
-								avbryt={() => this.props.dispatch(avbrytSoknad())}
-							/>
-						}
-					</form>
-				</div>
-			</div>
-		);
-	}
+        const {feil, visValideringsfeil} = validering;
+
+        const aktivtSteg: number = aktivtStegConfig ? aktivtStegConfig.stegnummer - 1 : 0;
+
+        return (
+            <div className="app-digisos informasjon-side">
+                <AppBanner/>
+                <ApplikasjonsfeilDialog/>
+                <DocumentTitle title={`${stegTittel} - ${documentTitle}`}/>
+
+                <div className="skjema-steg skjema-content">
+                    <div className="skjema-steg__feiloppsummering">
+                        <Feiloppsummering
+                            skjemanavn={this.props.skjemaConfig.skjemanavn}
+                            valideringsfeil={feil}
+                            visFeilliste={visValideringsfeil}
+                        />
+                    </div>
+                    <form id="soknadsskjema" onSubmit={stopEvent}>
+                        {!erOppsummering ? (
+                            <div className="skjema__stegindikator">
+                                <Stegindikator
+                                    autoResponsiv={true}
+                                    kompakt={false}
+                                    aktivtSteg={aktivtSteg}
+                                    steg={synligeSteg.map((s) => {
+                                        return {
+                                            label: intl.formatMessage({id: `${s.key}.tittel`}),
+                                            index: s.stegnummer,
+                                        }
+                                    })}
+                                    onChange={(s: number) => this.handleGaTilSkjemaSteg(aktivtStegConfig, s + 1)}
+                                />
+                            </div>
+                        ) : null}
+                        <div className="skjema-steg__ikon">
+                            {this.props.ikon}
+                        </div>
+                        <div
+                            className="skjema-steg__tittel"
+                            tabIndex={-1}
+                            ref={c => {
+                                if (c) {
+                                    this.stegTittel = c
+                                }
+                            }}
+                        >
+                            <Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
+                        </div>
+                        {children}
+                        {aktivtStegConfig &&
+                        <Knapperad
+                            gaViderePending={this.props.nextButtonPending}
+                            gaVidereLabel={
+                                erOppsummering
+                                    ? getIntlTextOrKey(intl, "skjema.knapper.send")
+                                    : undefined
+                            }
+                            gaVidere={() =>
+                                this.handleGaVidere(aktivtStegConfig, brukerBehandlingId)}
+                            gaTilbake={
+                                aktivtStegConfig.stegnummer > 1
+                                    ? () => this.handleGaTilbake(aktivtStegConfig.stegnummer)
+                                    : undefined
+                            }
+                            avbryt={() => this.props.dispatch(avbrytSoknad())}
+                        />
+                        }
+                    </form>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default connect((state: State) => {
-	return {
-		validering: state.validering,
-		nextButtonPending: state.soknad.sendSoknadPending,
-		oppsummeringBekreftet: state.oppsummering.bekreftet,
-		fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer,
-		soknadsdata: state.soknadsdata
-	};
+    return {
+        validering: state.validering,
+        nextButtonPending: state.soknad.sendSoknadPending,
+        oppsummeringBekreftet: state.oppsummering.bekreftet,
+        fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer,
+        soknadsdata: state.soknadsdata
+    };
 })(injectIntl(withRouter(StegMedNavigasjon)));
