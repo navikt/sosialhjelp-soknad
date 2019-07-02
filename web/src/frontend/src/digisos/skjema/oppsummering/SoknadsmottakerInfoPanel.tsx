@@ -24,7 +24,7 @@ class SoknadsmottakerInfoPanel  extends React.Component<Props, {}> {
 					<FormattedHTMLMessage id="soknasosialhjelp.oppsummering.hvorsendes" values={{navkontor: valgtEnhetsNavn}}/>
 					<br/><br/>
 					<button
-						className="lenke"
+						className="linkbutton linkbutton--normal"
 						onClick={() => {
 							this.props.setVisSamtykkeInfo(true);
 						}}

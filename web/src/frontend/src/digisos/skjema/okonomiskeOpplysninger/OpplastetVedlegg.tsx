@@ -32,7 +32,7 @@ export default class OpplastetVedlegg extends React.Component<AllProps, {}> {
                 <span className="vedleggsliste__slett_ikon">
                     <button
                         type="button"
-                        className="vedleggsliste__kunSkjermleser_knapp"
+                        className=" linkbutton linkbutton--normal"
                         onClick={() => this.handleSlett(fil)}
                     >
                         <AriaText>Slett {fil.filNavn}</AriaText>
