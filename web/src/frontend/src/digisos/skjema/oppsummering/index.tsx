@@ -1,7 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
-import {Checkbox} from "nav-frontend-skjema";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 import {REST_STATUS} from "../../../nav-soknad/types";
 import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
@@ -17,6 +16,7 @@ import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvP
 import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
 import {Soknadsdata} from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {NavEnhet} from "../personopplysninger/adresse/AdresseTypes";
+import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
 
 interface StateProps {
 	oppsummering: Oppsummering | null;
@@ -100,11 +100,6 @@ class OppsummeringView extends React.Component<Props, {}> {
 			id: "soknadsosialhjelp.oppsummering.harLestSamtykker"
 		});
 
-		let classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
-		if (this.props.visBekreftMangler) {
-			classNames += " skjema-oppsummering__bekreft___feil";
-		}
-
 		let restStatusUpdated = restStatus;
 		if(!this.props.valgtSoknadsmottaker){
 			restStatusUpdated = REST_STATUS.PENDING
@@ -122,29 +117,24 @@ class OppsummeringView extends React.Component<Props, {}> {
 					</div>
 
 					<div className="bekreftOpplysningerPanel blokk-xs bolk">
-						<div className={classNames + " bekreftCheckboksPanel-innhold " +
-							(this.props.bekreftet ? " bekreftOpplysningerPanel__checked " : " ")}
+						<BekreftCheckboksPanel
+							label={bekreftOpplysninger}
+							checked={this.props.bekreftet ? this.props.bekreftet : false}
+							onChange={() => this.props.dispatch(bekreftOppsummering())}
+							feil={
+								this.props.visBekreftMangler
+									? {
+										feilmelding: intl.formatHTMLMessage({
+											id: "oppsummering.feilmelding.bekreftmangler"
+										})
+									}
+									: undefined
+							}
 						>
 							<p style={{marginTop: "0"}}>
 								<FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger"/>
 							</p>
-
-							<Checkbox
-								id="bekreft_oppsummering_checkbox"
-								label={bekreftOpplysninger}
-								checked={this.props.bekreftet}
-								feil={
-									this.props.visBekreftMangler
-										? {
-											feilmelding: intl.formatHTMLMessage({
-												id: "oppsummering.feilmelding.bekreftmangler"
-											})
-										}
-										: undefined
-								}
-								onChange={() => this.props.dispatch(bekreftOppsummering())}
-							/>
-						</div>
+						</BekreftCheckboksPanel>
 					</div>
 					<BehandlingAvPersonopplysningerModal/>
 				</DigisosSkjemaSteg>

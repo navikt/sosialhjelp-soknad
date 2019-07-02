@@ -26,6 +26,7 @@ const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({
 	return (
 		<li className="feiloppsummering__feil">
 			<button
+				className={"linkbutton linkbutton--validering"}
 				onClick={evt => scrollToFaktum(evt, faktumKey)}
 			>
 				<FormattedMessage id={feilkode}/>
