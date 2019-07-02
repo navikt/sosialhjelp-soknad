@@ -6,7 +6,7 @@ import {FormattedHTMLMessage} from "react-intl";
 import Utdanning from "./utdanning/Utdanning";
 import Arbeid from "./arbeid/Arbeid";
 
-const ArbeidOgUtdanning: React.StatelessComponent<FaktumComponentProps & {}> = () => {
+const ArbeidOgUtdanning: React.FC<FaktumComponentProps & {}> = () => {
 	return (
 		<DigisosSkjemaSteg steg={DigisosSteg.arbeidbolk} ikon={<Koffert/>}>
 			<Arbeid/>

@@ -7,14 +7,13 @@ import DocumentTitle from "react-document-title";
 import {Innholdstittel} from "nav-frontend-typografi";
 import ApplikasjonsfeilDialog from "../containers/ApplikasjonsfeilDialog";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
-import StegIndikator from "../components/stegIndikator";
 import Knapperad from "../components/knapperad";
 import {SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../types";
 import {DispatchProps, ValideringsFeilKode} from "../redux/reduxTypes";
 import {setVisBekreftMangler} from "../redux/oppsummering/oppsummeringActions";
 import {getIntlTextOrKey, scrollToTop} from "../utils";
 import {avbrytSoknad, sendSoknad} from "../redux/soknad/soknadActions";
-import {gaTilbake, gaVidere} from "../redux/navigasjon/navigasjonActions";
+import {gaTilbake, gaVidere, tilSteg} from "../redux/navigasjon/navigasjonActions";
 import {loggInfo} from "../redux/navlogger/navloggerActions";
 import AppBanner from "../components/appHeader/AppHeader";
 import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
@@ -22,6 +21,8 @@ import {clearAllValideringsfeil, setValideringsfeil, visValideringsfeilPanel} fr
 import {ValideringState} from "../redux/valideringReducer";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {State} from "../../digisos/redux/reducers";
+import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
+//import {StegindikatorStegProps} from "nav-frontend-stegindikator/lib/stegindikator-steg";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
 	evt.stopPropagation();
@@ -158,11 +159,17 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 					<form id="soknadsskjema" onSubmit={stopEvent}>
 						{!erOppsummering ? (
 							<div className="skjema__stegindikator">
-								<StegIndikator
-									aktivtSteg={aktivtStegConfig ? aktivtStegConfig.stegnummer : 1}
-									steg={synligeSteg.map(s => ({
-										tittel: intl.formatMessage({ id: `${s.key}.tittel` })
-									}))}
+								<Stegindikator
+									autoResponsiv={true}
+									kompakt={false}
+									aktivtSteg={aktivtStegConfig ? aktivtStegConfig.stegnummer - 1 : 0}
+									steg={synligeSteg.map( (s) => {
+										return {
+											label: intl.formatMessage({id: `${s.key}.tittel`}),
+											index: s.stegnummer,
+										}
+									})}
+									onChange={(s: number) => this.props.dispatch(tilSteg(s +1))}
 								/>
 							</div>
 						) : null}

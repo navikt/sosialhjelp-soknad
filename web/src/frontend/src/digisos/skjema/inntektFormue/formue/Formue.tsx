@@ -54,7 +54,10 @@ export class FormueView extends React.Component<Props, State> {
         if (!this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
             const formue: Formue = soknadsdata.inntekt.formue;
 
-            formue[idToToggle] = !formue[idToToggle];
+            let formueElement: boolean | string = formue[idToToggle];
+            if (typeof formueElement === 'boolean'){
+                formue[idToToggle] = !formueElement;
+            }
 
             if (formue && !formue.annet) {
                 formue.beskrivelseAvAnnet = "";
