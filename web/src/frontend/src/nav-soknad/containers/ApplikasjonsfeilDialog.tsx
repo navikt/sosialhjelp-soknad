@@ -20,7 +20,7 @@ class ApplikasjonsfeilDialog extends React.Component<Props, {}> {
 		return (
 			<Dialog
 				isOpen={this.props.visDialog}
-				icon="advarsel-trekant"
+				icon="advarsel-sirkel-fyll"
 				overskrift={this.props.visDialog && this.props.feil ? this.props.feil.tittel : ""}
 				dialogtittel={
 					this.props.visDialog

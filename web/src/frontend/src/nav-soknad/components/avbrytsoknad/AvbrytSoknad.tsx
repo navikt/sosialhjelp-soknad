@@ -57,6 +57,7 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 				closeButton={false}
 				onRequestClose={() => this.onFortsett()}
 				shouldCloseOnOverlayClick={true}
+				style={{overflow: "visible"}}
 			>
 				<div className="avbrytmodal">
 					<div className="avbrytmodal__infoikon_wrapper">

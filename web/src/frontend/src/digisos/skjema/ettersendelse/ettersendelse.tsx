@@ -20,6 +20,9 @@ import {
 import {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
+import {Prompt} from "react-router";
+import {erEttersendelseSide, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
+import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";
 
 interface OwnProps {
     manglendeVedlegg: EttersendelseVedleggBackend[];
@@ -213,6 +216,16 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                     </AvsnittMedMarger>
 
                 </div>
+                <span>
+                    <Prompt
+                        message={loc =>
+                            erEttersendelseSide(loc.pathname)
+                                ? true
+                                : NAVIGASJONSPROMT.ETTERSENDELSE
+                        }
+                    />
+                    <SoknadAlleredeSendtPromt/>
+                </span>
             </div>
         );
     }

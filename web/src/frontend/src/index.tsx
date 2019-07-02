@@ -29,9 +29,9 @@ import {visSoknadAlleredeSendtPrompt} from "./nav-soknad/redux/ettersendelse/ett
 
 const history = require('history').createBrowserHistory({
     getUserConfirmation: (msg: any, callback: (flag: boolean) => void) => {
+
         if (msg === NAVIGASJONSPROMT.SKJEMA) {
 
-            // @ts-ignore
             const soknad: SoknadState = store.getState().soknad;
             if (soknad.data.brukerBehandlingId && soknad.avbrytSoknadSjekkAktiv) {
                 store.dispatch(avbrytSoknad("START"));
@@ -66,7 +66,6 @@ export function getAbsoluteBasename() {
 const visReduxLogger = false;
 
 function configureStore() {
-    // @ts-ignore
     const w : any = window as any;
 
     const composeEnhancers = erDev() ? (w.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose) : compose;

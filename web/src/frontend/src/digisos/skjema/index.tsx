@@ -4,7 +4,7 @@ import {
     RouterProps,
     Switch,
     withRouter,
-    matchPath
+    matchPath, Prompt
 } from "react-router";
 import {Location} from "history";
 import {connect} from "react-redux";
@@ -24,6 +24,9 @@ import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 import {hentSoknad} from "../../nav-soknad/redux/soknad/soknadActions";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import {erSkjemaEllerEttersendelseSide, NAVIGASJONSPROMT} from "../../nav-soknad/utils";
+import TimeoutBox from "../../nav-soknad/components/timeoutbox/TimeoutBox";
+import AvbrytSoknad from "../../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 
 interface OwnProps {
     match: any;
@@ -69,18 +72,32 @@ class SkjemaRouter extends React.Component<Props, {}> {
             }
             const path = "/skjema/:brukerBehandlingId";
             return (
-                <Switch>
-                    <Route path={`${path}/1`} component={Steg1}/>
-                    <Route path={`${path}/2`} component={Steg2}/>
-                    <Route path={`${path}/3`} component={Steg3}/>
-                    <Route path={`${path}/4`} component={Steg4}/>
-                    <Route path={`${path}/5`} component={Steg5}/>
-                    <Route path={`${path}/6`} component={Steg6}/>
-                    <Route path={`${path}/7`} component={Steg7}/>
-                    <Route path={`${path}/8`} component={Steg8}/>
-                    <Route path={`${path}/9`} component={Oppsummering}/>
-                    <Route component={SideIkkeFunnet}/>
-                </Switch>
+                <>
+                    <Switch>
+                        <Route path={`${path}/1`} component={Steg1}/>
+                        <Route path={`${path}/2`} component={Steg2}/>
+                        <Route path={`${path}/3`} component={Steg3}/>
+                        <Route path={`${path}/4`} component={Steg4}/>
+                        <Route path={`${path}/5`} component={Steg5}/>
+                        <Route path={`${path}/6`} component={Steg6}/>
+                        <Route path={`${path}/7`} component={Steg7}/>
+                        <Route path={`${path}/8`} component={Steg8}/>
+                        <Route path={`${path}/9`} component={Oppsummering}/>
+                        <Route component={SideIkkeFunnet}/>
+                    </Switch>
+                    <Prompt
+                        message={loc =>
+                            erSkjemaEllerEttersendelseSide(loc.pathname)
+                                ? true
+                                : NAVIGASJONSPROMT.SKJEMA
+                        }
+                    />
+                    <TimeoutBox
+                        sessionDurationInMinutes={30}
+                        showWarningerAfterMinutes={25}
+                    />
+                    <AvbrytSoknad/>
+                </>
             );
         }
 
