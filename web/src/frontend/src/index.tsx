@@ -2,7 +2,7 @@ import "whatwg-fetch";
 import "babel-polyfill";
 import "intl";
 import "intl/locale-data/jsonp/nb-NO.js";
-import "./index.css";
+import './index.less';
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
