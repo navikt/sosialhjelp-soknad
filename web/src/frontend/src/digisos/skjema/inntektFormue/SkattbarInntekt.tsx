@@ -5,8 +5,9 @@ import {
 	SoknadsdataContainerProps
 } from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import {SoknadsSti} from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
+import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
+import {Panel} from "nav-frontend-paneler";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -29,12 +30,19 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 		const {intl, soknadsdata} = this.props;
 		// TODO DIGISOS-1175: Håndter flere måneder med skattbar inntekt
 		const skattbareInntekter = soknadsdata.inntekt.skattbarinntektogforskuddstrekk;
-		if (skattbareInntekter.length < 1) {
-			return (<div/>);
-		}
-		const skattbarInntekt = skattbareInntekter[0];
-		const undertittel = getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.undertittel");
 
+		const tittel = getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.tittel");
+
+		if (skattbareInntekter.length < 1) {
+			return (<Panel>
+				<div>
+					<h4>{tittel}</h4>
+					<FormattedMessage id="utbetalinger.inntekt.skattbar.ingen"/>
+				</div>
+			</Panel>)
+		}
+
+		const skattbarInntekt = skattbareInntekter[0];
 		const organisasjoner = skattbarInntekt.organisasjoner.map(organisasjon => {
 			const fom = <FormattedDate value={organisasjon.fom!}/>;
 			const tom = <FormattedDate value={organisasjon.tom!}/>;
@@ -66,15 +74,14 @@ class SkattbarInntekt extends React.Component<Props, {}> {
 		});
 
 		return (
-			<Ekspanderbartpanel className="ekspanderbartPanel--skattbarInntekt ekspanderbartPanel--border" apen={true} tittel={undertittel}>
-
-				<div className="blokk-s">
+			<EkspanderbartpanelBase heading={
+				<div>
+					<h4>{tittel}</h4>
 					<FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse"/>
 				</div>
-
+			} border={true}>
 				<div className="utbetalinger">{organisasjoner}</div>
-
-			</Ekspanderbartpanel>
+			</EkspanderbartpanelBase>
 		);
 	}
 }

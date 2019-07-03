@@ -23,7 +23,8 @@ import {
 	Verdier
 } from "../../../digisos/skjema/inntektFormue/verdier/VerdierTypes";
 import {
-	Formue, initialFormueState
+	initialFormueState,
+	Formue
 } from "../../../digisos/skjema/inntektFormue/formue/FormueTypes";
 import {
 	initialBoutgifterState,

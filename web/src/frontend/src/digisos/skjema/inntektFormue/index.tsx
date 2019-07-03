@@ -18,8 +18,8 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
                 <h2 className="overskrift">
                     <FormattedHTMLMessage id="opplysninger.inntekt.undertittel"/>
                 </h2>
-                <NavYtelser/>
                 <SkattbarInntekt/>
+                <NavYtelser/>
                 <Bostotte/>
                 <Utbetalinger/>
                 <h2 className="overskrift">
