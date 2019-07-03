@@ -141,17 +141,17 @@ class AdresseTypeahead extends React.Component<Props, State> {
 		const { status } = this.state;
 		if (status === AdresseTypeaheadStatus.ADRESSE_OK) {
 			return (
-				<a
+				<div
 					className={`item ${isHighlighted ? "item-highlighted" : ""}`}
 					key={Math.random()}
-				>{formaterAdresseString(item)}</a>
+				>{formaterAdresseString(item)}</div>
 			);
 		} else {
 			return (
-				<a
+				<div
 					className={`item ${isHighlighted ? "item-highlighted" : ""}`}
 					key={Math.random()}
-				>{formaterAdresseString(item)}</a>
+				>{formaterAdresseString(item)}</div>
 			);
 		}
 	}
