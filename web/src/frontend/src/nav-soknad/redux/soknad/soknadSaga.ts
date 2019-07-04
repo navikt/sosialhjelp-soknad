@@ -31,8 +31,8 @@ import {
 } from "./soknadActions";
 import {loggFeil} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
-import {push} from "react-router-redux";
 import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
+import {push} from "connected-react-router";
 
 export interface OpprettSoknadResponse {
     brukerBehandlingId: string;
@@ -44,7 +44,7 @@ function* opprettSoknadSaga(): SagaIterator {
 
         const response: OpprettSoknadResponse = yield call(
             fetchPost,
-            "soknader/opprettSoknad", null
+            "soknader/opprettSoknad", ""
         );
         yield put(opprettSoknadOk(response.brukerBehandlingId));
         yield put(startSoknadOk()); // TODO Rename metode navn
@@ -59,8 +59,7 @@ function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
     try {
         const xsrfCookieIsOk: boolean = yield call(
             fetchToJson,
-            `soknader/${action.brukerBehandlingId}/xsrfCookie`,
-            null
+            `soknader/${action.brukerBehandlingId}/xsrfCookie`
         );
         yield put(hentSoknadOk(xsrfCookieIsOk, action.brukerBehandlingId));
     } catch (reason) {

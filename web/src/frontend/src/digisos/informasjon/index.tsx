@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { RouterProps } from "react-router";
 import { FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl, } from "react-intl";
 import DocumentTitle from "react-document-title";
-import { State } from "../redux/reducers";
 import Knapp from "nav-frontend-knapper";
 import { getIntlTextOrKey } from "../../nav-soknad/utils/intlUtils";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
@@ -18,10 +17,12 @@ import { opprettSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import {getAbsoluteBasename} from "../../index";
+import {State} from "../redux/reducers";
+
 
 interface StateProps {
 	harTilgang: boolean;
-	sperrekode: TilgangSperrekode;
+	sperrekode: TilgangSperrekode | undefined;
 	startSoknadPending: boolean;
 }
 
@@ -126,7 +127,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 					</span>
 				) : (
 					<div className="skjema-content">
-						<IkkeTilgang sperrekode={sperrekode}/>
+						<IkkeTilgang sperrekode={sperrekode ? sperrekode : "pilot"}/>
 					</div>
 				)}
 			</div>

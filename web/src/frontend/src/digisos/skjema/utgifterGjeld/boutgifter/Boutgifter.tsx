@@ -8,8 +8,9 @@ import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataRe
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
-import {Boutgifter} from "./BoutgifterTypes";
+import {Boutgifter, BoutgifterKeys} from "./BoutgifterTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
+
 const BOUTGIFTER = "utgifter.boutgift";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
@@ -36,7 +37,7 @@ export class BoutgifterView extends React.Component<Props, {}> {
         this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOUTGIFTER, boutgifter);
     }
 
-    handleClickRadio(idToToggle: string) {
+    handleClickRadio(idToToggle: BoutgifterKeys) {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
         boutgifter[idToToggle] = !boutgifter[idToToggle];
@@ -44,14 +45,18 @@ export class BoutgifterView extends React.Component<Props, {}> {
         this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOUTGIFTER, boutgifter);
     }
 
-    renderCheckBox(navn: string, textKey: string) {
+    renderCheckBox(navn: BoutgifterKeys, textKey: string) {
         const {soknadsdata} = this.props;
         const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
+
+        const boutgifterElement: boolean | null = boutgifter[navn];
+        const isChecked: boolean = boutgifterElement ? boutgifterElement : false;
+
         return (
             <CheckboxPanel
                 id={"boutgifter_" + navn + "_checkbox"}
                 name={navn}
-                checked={boutgifter && boutgifter[navn] ? boutgifter[navn] : false}
+                checked={isChecked}
                 label={<FormattedHTMLMessage id={BOUTGIFTER + ".true.type." + textKey}/>}
                 onClick={() => this.handleClickRadio(navn)}
             />
@@ -72,12 +77,12 @@ export class BoutgifterView extends React.Component<Props, {}> {
                 <Sporsmal
                     tekster={getFaktumSporsmalTekst(this.props.intl, BOUTGIFTER + ".true.type")}
                 >
-                    {this.renderCheckBox("husleie", "husleie")}
-                    {this.renderCheckBox("strom", "strom")}
-                    {this.renderCheckBox("kommunalAvgift", "kommunalAvgift")}
-                    {this.renderCheckBox("oppvarming", "oppvarming")}
-                    {this.renderCheckBox("boliglan", "avdraglaan")}
-                    {this.renderCheckBox("annet", "andreutgifter")}
+                    {this.renderCheckBox(BoutgifterKeys.HUSLEIE, BoutgifterKeys.HUSLEIE)}
+                    {this.renderCheckBox(BoutgifterKeys.STROM, BoutgifterKeys.STROM)}
+                    {this.renderCheckBox(BoutgifterKeys.KOMMUNALAVGIFT, BoutgifterKeys.KOMMUNALAVGIFT)}
+                    {this.renderCheckBox(BoutgifterKeys.OPPVARMING, BoutgifterKeys.OPPVARMING)}
+                    {this.renderCheckBox(BoutgifterKeys.BOLIGLAN, BoutgifterKeys.BOLIGLAN)}
+                    {this.renderCheckBox(BoutgifterKeys.ANNET, "andreutgifter")}
                 </Sporsmal>
             </JaNeiSporsmal>
         )

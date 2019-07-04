@@ -65,16 +65,18 @@ class BosituasjonView extends React.Component<Props, {}> {
     }
 
     renderRadioknapp(id: string) {
-        if (Annetvalg[id] && !this.erValgt(Bosituasjonsvalg.annet)) {
+        if (Object.keys(Annetvalg).find(s => s === id) && !this.erValgt(Bosituasjonsvalg.annet)) {
             return null;
         }
-        return (<RadioEnhanced
-            id={"bosituasjon_radio_" + id}
-            faktumKey="bosituasjon"
-            value={id}
-            checked={this.erValgt(id)}
-            onChange={() => this.handleRadioClick(id)}
-        />);
+        return (
+            <RadioEnhanced
+                id={"bosituasjon_radio_" + id}
+                faktumKey="bosituasjon"
+                value={id}
+                checked={this.erValgt(id)}
+                onChange={() => this.handleRadioClick(id)}
+            />
+        );
     }
 
     onBlurAntall() {
@@ -93,7 +95,7 @@ class BosituasjonView extends React.Component<Props, {}> {
         if (!antallPersoner || antallPersoner.length === 0) {
             return null;
         }
-        const feilkode: ValideringsFeilKode = erTall(antallPersoner, true);
+        const feilkode: ValideringsFeilKode | undefined = erTall(antallPersoner, true);
         onEndretValideringsfeil(feilkode, FAKTUM_KEY_ANTALL, this.props.feil, () => {
             (feilkode) ?
                 this.props.setValideringsfeil(feilkode, FAKTUM_KEY_ANTALL) :
@@ -113,7 +115,10 @@ class BosituasjonView extends React.Component<Props, {}> {
     render() {
         const bosituasjon: Bosituasjon = this.props.soknadsdata.bosituasjon;
         let synligUnderskjema: boolean = false;
-        if (this.erValgt(Bosituasjonsvalg.annet) || Annetvalg[bosituasjon.botype]) {
+        if (
+            this.erValgt(Bosituasjonsvalg.annet) ||
+            Object.keys(Annetvalg).find(v => v === bosituasjon.botype)
+        ) {
             synligUnderskjema = true;
         }
 
@@ -138,7 +143,7 @@ class BosituasjonView extends React.Component<Props, {}> {
                             <Sporsmal
                                 tekster={getFaktumSporsmalTekst(this.props.intl, "bosituasjon")}
                                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                                style="system"
+                                stil="system"
                             >
                                 {this.renderRadioknapp(Annetvalg.foreldre)}
                                 {this.renderRadioknapp(Annetvalg.familie)}
@@ -167,7 +172,6 @@ class BosituasjonView extends React.Component<Props, {}> {
                         getName={() => FAKTUM_KEY_ANTALL}
                         faktumKey={FAKTUM_KEY_ANTALL}
                         required={false}
-                        feil={this.props.feil}
                     />
                 </Sporsmal>
             </div>

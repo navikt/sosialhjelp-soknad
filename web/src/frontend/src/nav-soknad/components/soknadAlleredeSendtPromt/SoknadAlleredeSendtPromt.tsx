@@ -32,7 +32,7 @@ class SoknadAlleredeSendtPromt extends React.Component<Props, {}> {
             >
                 <div className="avbrytmodal">
                     <div className="avbrytmodal__infoikon_wrapper">
-                        <img src="/soknadsosialhjelp/statisk/bilder/ikon_ark.svg"/>
+                        <img src="/soknadsosialhjelp/statisk/bilder/ikon_ark.svg" alt={""}/>
                     </div>
 
                     <Innholdstittel className="blokk-s avbrytmodal__overskrift">

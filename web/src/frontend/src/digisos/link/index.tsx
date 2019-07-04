@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {connect} from "react-redux";
-import {DispatchProps, SoknadAppState} from "../../nav-soknad/redux/reduxTypes";
+import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
 import {Redirect} from "react-router";
 import {LedetekstState} from "../../nav-soknad/redux/ledetekster/ledeteksterTypes";
 import {REST_STATUS} from "../../nav-soknad/types";
 import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
+import {State} from "../redux/reducers";
 
 interface IntlProviderProps {
 	children: React.ReactNode;
@@ -20,7 +21,6 @@ type Props = StateProps & DispatchProps & IntlProviderProps;
 
 class Link extends React.Component<Props, {}> {
 
-
 	render(){
 
 		this.props.dispatch(setLinkVisited());
@@ -29,7 +29,7 @@ class Link extends React.Component<Props, {}> {
 		let urlPath = url.searchParams.get("goto");
 		const contextPath = "soknadsosialhjelp";
 		const regexp = new RegExp("/" + contextPath);
-		urlPath = urlPath.replace(regexp,"");
+		urlPath = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
 
 		return(
 			<div className="application-spinner">
@@ -39,7 +39,7 @@ class Link extends React.Component<Props, {}> {
 	}
 }
 
-export default connect((state: SoknadAppState) => {
+export default connect((state: State) => {
 	return {
 		linkVisited: state.authentication.linkVisited,
 	};

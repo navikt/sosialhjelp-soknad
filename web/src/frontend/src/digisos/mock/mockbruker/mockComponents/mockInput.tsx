@@ -7,11 +7,6 @@ interface Props {
 }
 
 class MockInput extends React.Component<Props, {}>{
-	constructor(props: Props) {
-		super(props);
-
-	}
-
 	render(){
 		return(
 			<div className="mock-input">

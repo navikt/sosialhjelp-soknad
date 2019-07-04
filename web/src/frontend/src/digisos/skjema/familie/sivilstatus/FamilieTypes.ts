@@ -19,7 +19,7 @@ export interface Navn {
 export interface Person {
     navn: Navn;
     fodselsdato: null | string;
-    personnummer: string;
+    personnummer: string | null;
 
 }
 

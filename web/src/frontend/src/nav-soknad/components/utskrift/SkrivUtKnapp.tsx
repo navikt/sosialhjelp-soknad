@@ -22,9 +22,10 @@ function updateDocumentClass(active: boolean) {
 }
 
 class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
-	printTimeoutId: number;
 
-	constructor(props: SkrivUtKnappProps) {
+	printTimeoutId: number | null = null;
+
+	constructor(props: SkrivUtKnappProps){
 		super(props);
 		this.print = this.print.bind(this);
 		this.reset = this.reset.bind(this);
@@ -67,7 +68,6 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
 		return (
 			<div>
 				<Knapp
-					type="standard"
 					htmlType="button"
 					onClick={() =>
 						this.setState({

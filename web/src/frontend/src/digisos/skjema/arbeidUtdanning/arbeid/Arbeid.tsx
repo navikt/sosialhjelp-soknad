@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
-import Sporsmal  from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {SporsmalStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import ArbeidDetaljer from "./ArbeidDetaljer";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
@@ -35,8 +35,10 @@ class ArbeidView extends React.Component<Props, State> {
 	}
 
 	componentDidMount() {
-		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ARBEID);
-		this.props.clearValideringsfeil(FAKTUM_KEY_KOMMENTARER);
+		if (this.props.brukerBehandlingId){
+			this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ARBEID);
+			this.props.clearValideringsfeil(FAKTUM_KEY_KOMMENTARER);
+		}
 	}
 
 	componentWillUpdate() {
@@ -59,13 +61,17 @@ class ArbeidView extends React.Component<Props, State> {
 		const { soknadsdata, brukerBehandlingId } = this.props;
 		const arbeid = soknadsdata.arbeid;
 		const kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
-		const feilkode: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(kommentarTilArbeidsforhold, FAKTUM_KEY_KOMMENTARER);
+		const feilkode: ValideringsFeilKode | undefined =
+			this.validerTekstfeltVerdi(
+				kommentarTilArbeidsforhold ? kommentarTilArbeidsforhold : "",
+				FAKTUM_KEY_KOMMENTARER
+			);
 		if (!feilkode) {
 			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ARBEID, arbeid);
 		}
 	}
 
-	validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode {
+	validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode | undefined {
 		const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
 		onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
 			if (feilkode){
@@ -80,7 +86,7 @@ class ArbeidView extends React.Component<Props, State> {
 	render() {
 		const { soknadsdata, intl } = this.props;
 		const arbeid = soknadsdata.arbeid;
-		let alleArbeidsforhold: Arbeidsforhold[] = null;
+		let alleArbeidsforhold: Arbeidsforhold[] | null = null;
 		let kommentarTilArbeidsforhold = "";
 		const faktumKommentarerId = FAKTUM_KEY_KOMMENTARER.replace(/\./g, "_");
 		if (arbeid) {
@@ -96,10 +102,11 @@ class ArbeidView extends React.Component<Props, State> {
 		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
 			oppstartsModus = false;
 		}
+		const style: SporsmalStyle = "system";
 		if (oppstartsModus) {
 			return (
 				<div className="skjema-sporsmal">
-					<Sporsmal sprakNokkel="arbeidsforhold" style="system">
+					<Sporsmal sprakNokkel="arbeidsforhold" stil={style}>
 						<TextPlaceholder lines={6}/>
 					</Sporsmal>
 				</div>
@@ -108,7 +115,7 @@ class ArbeidView extends React.Component<Props, State> {
 		return (
 			<Sporsmal
 				tekster={getFaktumSporsmalTekst(intl, "arbeidsforhold")}
-				style="system"
+				stil="system"
 			>
 				<SysteminfoMedSkjema>
 					<div className="skjema-sporsmal__tittel">

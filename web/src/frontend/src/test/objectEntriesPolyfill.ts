@@ -6,6 +6,7 @@ const polyfillObjectEntries = () => {
 			const resArray = new Array(i);
 
 			while (i--) {
+				// @ts-ignore
 				resArray[i] = [ownProps[i], obj[ownProps[i]]];
 			}
 			return resArray;

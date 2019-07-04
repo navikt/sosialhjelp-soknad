@@ -1,8 +1,6 @@
 import * as React from "react";
 import {DigisosFarge} from "./DigisosFarger";
 
-/* tslint:disable */
-
 interface OwnProps {
 	size?: number;
 	visBakgrundsSirkel: boolean;
@@ -15,7 +13,7 @@ class Ella extends React.Component<OwnProps, {}> {
 
 		const height = this.props.size || 80;
 		const width = this.props.size || 80;
-		const bakgrundsFarge: DigisosFarge = this.props.bakgrundsFarge;
+		const bakgrundsFarge: DigisosFarge | undefined = this.props.bakgrundsFarge;
 		const showBackgroundCircle: boolean = this.props.visBakgrundsSirkel;
 
 		return (

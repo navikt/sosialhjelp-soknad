@@ -23,7 +23,7 @@ export function maksLengde(value: string, max: number): ValideringsFeilKode | un
 }
 
 export function erTall(value: string, kunHeltall?: boolean): ValideringsFeilKode | undefined {
-	const reg = kunHeltall ? /^[0-9]*$/i : /^[0-9,\.]*$/i;
+	const reg = kunHeltall ? /^[0-9]*$/i : /^[0-9,]*$/i;
 	return value && reg.test(value) ? undefined : ValideringsFeilKode.ER_TALL;
 }
 
@@ -43,7 +43,7 @@ export function erKontonummer(value: string): ValideringsFeilKode | undefined {
 	if (!value || typeof value !== "string") {
 		return ValideringsFeilKode.ER_KONTONUMMER;
 	}
-	const kontonummer = value.replace(/\.|\ /g, "");
+	const kontonummer = value.replace(/\.| /g, "");
 	if (
 		kontonummer.length !== 11 ||
 		!(

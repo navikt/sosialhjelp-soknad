@@ -40,7 +40,7 @@ export interface OtherAction {
 
 export interface TilgangState {
 	harTilgang: boolean;
-	sperrekode: TilgangSperrekode;
+	sperrekode: TilgangSperrekode | undefined;
 	status: TilgangActionTypeKeys;
 }
 

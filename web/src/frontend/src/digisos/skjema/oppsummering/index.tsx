@@ -1,15 +1,11 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
-import {Checkbox} from "nav-frontend-skjema";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
-
 import {REST_STATUS} from "../../../nav-soknad/types";
 import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
-import {FaktumComponentProps} from "../../../nav-soknad/redux/fakta/faktaTypes";
 import {bekreftOppsummering, hentOppsummering,} from "../../../nav-soknad/redux/oppsummering/oppsummeringActions";
 import {Oppsummering} from "../../../nav-soknad/redux/oppsummering/oppsummeringTypes";
-
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import {State} from "../../redux/reducers";
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
@@ -20,21 +16,19 @@ import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvP
 import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
 import {Soknadsdata} from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {NavEnhet} from "../personopplysninger/adresse/AdresseTypes";
+import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
 
 interface StateProps {
-	oppsummering: Oppsummering;
-	bekreftet: boolean;
-	visBekreftMangler: boolean;
+	oppsummering: Oppsummering | null;
+	bekreftet: boolean | undefined;
+	visBekreftMangler: boolean | undefined;
 	restStatus: REST_STATUS;
 	brukerbehandlingId: string;
 	soknadsdata: Soknadsdata;
-	valgtSoknadsmottaker: NavEnhet;
+	valgtSoknadsmottaker: NavEnhet | undefined;
 }
 
-type Props = FaktumComponentProps &
-	DispatchProps &
-	StateProps &
-	InjectedIntlProps;
+type Props = DispatchProps & StateProps & InjectedIntlProps;
 
 class OppsummeringView extends React.Component<Props, {}> {
 	constructor(props: Props) {
@@ -76,13 +70,12 @@ class OppsummeringView extends React.Component<Props, {}> {
 
 
 		const bolker = oppsummering
-			? this.props.oppsummering.bolker.map((bolk, idx) => (
+			? oppsummering.bolker.map((bolk, idx) => (
 				<div className="blokk-xs bolk" key={idx}>
 					<EkspanderbartPanel tittel={bolk.tittel} apen={false}>
 						<div>
 							<div className="bolk__rediger">
 								<Link
-									className="lenke"
 									to={`/skjema/${brukerbehandlingId}/${idx + 1}`}
 								>
 									{getIntlTextOrKey(
@@ -106,11 +99,6 @@ class OppsummeringView extends React.Component<Props, {}> {
 			id: "soknadsosialhjelp.oppsummering.harLestSamtykker"
 		});
 
-		let classNames = "ekspanderbartPanel skjema-oppsummering__bekreft";
-		if (this.props.visBekreftMangler) {
-			classNames += " skjema-oppsummering__bekreft___feil";
-		}
-
 		let restStatusUpdated = restStatus;
 		if(!this.props.valgtSoknadsmottaker){
 			restStatusUpdated = REST_STATUS.PENDING
@@ -128,29 +116,24 @@ class OppsummeringView extends React.Component<Props, {}> {
 					</div>
 
 					<div className="bekreftOpplysningerPanel blokk-xs bolk">
-						<div className={classNames + " bekreftCheckboksPanel-innhold " +
-							(this.props.bekreftet ? " bekreftOpplysningerPanel__checked " : " ")}
+						<BekreftCheckboksPanel
+							label={bekreftOpplysninger}
+							checked={this.props.bekreftet ? this.props.bekreftet : false}
+							onChange={() => this.props.dispatch(bekreftOppsummering())}
+							feil={
+								this.props.visBekreftMangler
+									? {
+										feilmelding: intl.formatHTMLMessage({
+											id: "oppsummering.feilmelding.bekreftmangler"
+										})
+									}
+									: undefined
+							}
 						>
 							<p style={{marginTop: "0"}}>
 								<FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger"/>
 							</p>
-
-							<Checkbox
-								id="bekreft_oppsummering_checkbox"
-								label={bekreftOpplysninger}
-								checked={this.props.bekreftet}
-								feil={
-									this.props.visBekreftMangler
-										? {
-											feilmelding: intl.formatHTMLMessage({
-												id: "oppsummering.feilmelding.bekreftmangler"
-											})
-										}
-										: null
-								}
-								onChange={() => this.props.dispatch(bekreftOppsummering())}
-							/>
-						</div>
+						</BekreftCheckboksPanel>
 					</div>
 					<BehandlingAvPersonopplysningerModal/>
 				</DigisosSkjemaSteg>
@@ -159,7 +142,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 	}
 }
 
-export default connect((state: State, props: any) => {
+export default connect((state: State) => {
 	return {
 		oppsummering: state.oppsummering.oppsummering,
 		bekreftet: state.oppsummering.bekreftet,

@@ -1,4 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
+import { SagaIterator } from "redux-saga";
 import { fetchToJson } from "../../../nav-soknad/utils/rest-utils";
 import { MiljovariablerActionTypeKeys } from "./miljovariablerTypes";
 import {
@@ -7,7 +8,7 @@ import {
 } from "./miljovariablerActions";
 import { loggFeil } from "../../../nav-soknad/redux/navlogger/navloggerActions";
 
-export function* hentMiljovariablerSaga(): any {
+export function* hentMiljovariablerSaga(): SagaIterator {
 	try {
 		yield put(henterMiljovariabler());
 		const response = yield call(fetchToJson, "informasjon/miljovariabler");
@@ -19,7 +20,7 @@ export function* hentMiljovariablerSaga(): any {
 	}
 }
 
-function* miljovariablerSaga(): any {
+function* miljovariablerSaga(): SagaIterator {
 	yield takeEvery(MiljovariablerActionTypeKeys.INIT, hentMiljovariablerSaga);
 }
 

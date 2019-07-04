@@ -1,9 +1,8 @@
-/* tslint:disable */
 import {REST_FEIL} from "../types/restFeilTypes";
-import {put} from "redux-saga/effects";
-import {push} from "react-router-redux";
-import {Sider} from "../redux/navigasjon/navigasjonTypes";
 import {erMockMiljoEllerDev} from "./index";
+import {push} from "connected-react-router";
+import {Sider} from "../redux/navigasjon/navigasjonTypes";
+import { put } from 'redux-saga/effects';
 
 export function erDev(): boolean {
     const url = window.location.href;
@@ -23,14 +22,14 @@ export function getApiBaseUrl(): string {
         // Kjør mot lokal mock backend:
         // return "http://localhost:3001/sendsoknad/";
     }
-    if (location.href.indexOf("localhost:8080") >= 0) {
+    if (window.location.href.indexOf("localhost:8080") >= 0) {
         return "http://localhost:8181/soknadsosialhjelp-server/";
     }
-    if (location.origin.indexOf("nais.oera") >= 0) {
-        return location.origin.replace("soknadsosialhjelp", "soknadsosialhjelp-server") + "/soknadsosialhjelp-server/";
+    if (window.location.origin.indexOf("nais.oera") >= 0) {
+        return window.location.origin.replace("soknadsosialhjelp", "soknadsosialhjelp-server") + "/soknadsosialhjelp-server/";
     }
-    if (location.origin.indexOf("heroku") >= 0) {
-        return location.origin.replace("sosialhjelp-test", "sosialhjelp-api-test") + "/soknadsosialhjelp-server/";
+    if (window.location.origin.indexOf("heroku") >= 0) {
+        return window.location.origin.replace("sosialhjelp-test", "sosialhjelp-api-test") + "/soknadsosialhjelp-server/";
     }
 	return kjorerJetty() ? "http://127.0.0.1:8181/soknadsosialhjelp-server/" : getAbsoluteApiUrl();
 }
@@ -43,7 +42,7 @@ function getAbsoluteApiUrl() {
 }
 
 function determineCredentialsParameter() {
-    return location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin";
+    return window.location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin";
 }
 
 export function getRedirectPathname(): string {
@@ -81,25 +80,13 @@ enum RequestMethod {
 }
 
 const getHeaders = () => {
+    //@ts-ignore
     return new Headers({
         "Content-Type": "application/json",
         "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
         "accept": "application/json, text/plain, */*"
     })
-};
-
-// @ts-ignore
-const serverRequestOnce = (method: string, urlPath: string, body: string) => {
-    const OPTIONS: RequestInit = {
-        headers: getHeaders(),
-        method,
-        credentials: determineCredentialsParameter(),
-        body: body ? body : undefined
-    };
-    return fetch(getApiBaseUrl() + urlPath, OPTIONS)
-        .then(sjekkStatuskode)
-        .then(toJson);
-};
+}
 
 /* serverRequest():
  *
@@ -140,10 +127,10 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
             })
             .catch((reason: any) => reject(reason));
     });
-};
+}
 
 export function fetchToJson(urlPath: string) {
-    return serverRequest(RequestMethod.GET, urlPath, null);
+    return serverRequest(RequestMethod.GET, urlPath, "");
 }
 
 export function fetchPut(urlPath: string, body: string) {
@@ -178,6 +165,7 @@ export function fetchOppsummering(urlPath: string) {
 
 export function fetchKvittering(urlPath: string) {
     const OPTIONS: RequestInit = {
+        //@ts-ignore
         headers: new Headers({
             "accept": "application/vnd.kvitteringforinnsendtsoknad+json",
             "Content-Type": "application/json",
@@ -206,6 +194,7 @@ export function fetchFeatureToggles() {
 
 let generateUploadOptions = function (formData: FormData) {
     const UPLOAD_OPTIONS: RequestInit = {
+        //@ts-ignore
         headers: new Headers({
             "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
             "accept": "application/json, text/plain, */*"
@@ -215,7 +204,7 @@ let generateUploadOptions = function (formData: FormData) {
         body: formData
     };
     return UPLOAD_OPTIONS;
-};
+}
 
 export function fetchUpload(urlPath: string, formData: FormData) {
     return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData))
@@ -240,6 +229,7 @@ function sjekkStatuskode(response: Response) {
 
     if (response.status === 401){
         if(window.location.pathname !== getRedirectPathname()){
+            // @ts-ignore
             if (!window[AUTH_LINK_VISITED]) {
                 response.json().then(r => {
                     window.location.href = r.loginUrl + getRedirectPath();
@@ -260,10 +250,8 @@ export function getCookie(name: string) {
     const value = "; " + document.cookie;
     const parts = value.split("; " + name + "=");
     if (parts.length === 2) {
-        return parts
-            .pop()
-            .split(";")
-            .shift();
+        let partsPopped: string | undefined = parts.pop();
+        return partsPopped ? partsPopped.split(";").shift() : "null";
     } else {
         return "null";
     }

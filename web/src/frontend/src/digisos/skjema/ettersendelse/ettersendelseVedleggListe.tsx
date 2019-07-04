@@ -6,7 +6,7 @@ import Knapp from "nav-frontend-knapper";
 import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import {connect} from "react-redux";
-import {State as ReduxState} from "../../redux/reducers";
+import {State} from "../../redux/reducers";
 import {sendEttersendelse} from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 import {EttersendelseVedleggBackend} from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
 import {getSpcForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
@@ -20,7 +20,7 @@ interface StateProps {
     opplastingStatus: REST_STATUS;
     manglendeVedlegg: EttersendelseVedleggBackend[];
     brukerbehandlingskjedeId: string;
-    brukerbehandlingId: string;
+    brukerbehandlingId: string | null;
     ettersendStatus: REST_STATUS;
     feilKode: string;
     feiletVedleggId: string;
@@ -48,7 +48,9 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
         this.setState({advarselManglerVedlegg: (antallOpplastedeFiler === 0)});
         if (antallOpplastedeFiler > 0) {
             const brukerbehandlingId = this.props.brukerbehandlingId;
-            this.props.dispatch(sendEttersendelse(brukerbehandlingId));
+            if (brukerbehandlingId){
+                this.props.dispatch(sendEttersendelse(brukerbehandlingId));
+            }
         }
     }
 
@@ -60,7 +62,9 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 
     componentDidUpdate(prevProps: Props) {
         if (prevProps.ettersendStatus === REST_STATUS.PENDING && this.props.ettersendStatus === REST_STATUS.OK) {
-            this.props.onEttersendelse();
+            if (this.props.onEttersendelse){
+                this.props.onEttersendelse();
+            }
         }
         if (this.state.advarselManglerVedlegg &&
             this.props.manglendeVedlegg &&
@@ -90,11 +94,10 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                     return (
                         <EttersendelseVedlegg
                             ettersendelseAktivert={this.props.ettersendelseAktivert}
-                            dispatch={this.props.dispatch}
                             vedlegg={vedlegg}
                             key={vedlegg.type}
                             restStatus={this.props.opplastingStatus}
-                            feilKode={this.props.feiletVedleggId === vedlegg.type ? this.props.feilKode : null}
+                            feilKode={this.props.feiletVedleggId === vedlegg.type ? this.props.feilKode : undefined}
                         >
                             {tittelKey && <h3><FormattedMessage id={tittelKey}/></h3>}
                             {info && (<p>{info}</p>)}
@@ -129,7 +132,7 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
     }
 }
 
-export default connect<{}, {}, OwnProps>((state: ReduxState, {}) => {
+export default connect((state: State) => {
     return {
         brukerbehandlingskjedeId: state.soknad.data.brukerBehandlingId,
         manglendeVedlegg: state.ettersendelse.data,

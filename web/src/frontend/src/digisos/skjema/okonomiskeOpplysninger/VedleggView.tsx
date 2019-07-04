@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {DispatchProps, SoknadAppState, Valideringsfeil} from "../../../nav-soknad/redux/reduxTypes";
+import {DispatchProps, Valideringsfeil} from "../../../nav-soknad/redux/reduxTypes";
 import {
     Fil,
     Opplysning, OpplysningSpc,
@@ -10,12 +10,14 @@ import LastOppFil from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
 import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
 import {startSlettFil} from "../../../nav-soknad/redux/fil/filActions";
-import InjectedIntlProps = ReactIntl.InjectedIntlProps;
+import {InjectedIntlProps} from "react-intl";
 import {
     lagreOpplysningHvisGyldigAction,
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerActions";
 import OpplastetVedlegg from "./OpplastetVedlegg";
 import {getSpcForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
+import {State} from "../../redux/reducers";
+import {injectIntl} from "react-intl";
 
 interface OwnProps {
     okonomiskOpplysning: Opplysning;
@@ -95,11 +97,11 @@ class VedleggView extends React.Component<Props> {
     }
 }
 
-export default connect<StoreToProps, {}, OwnProps>(
-    (state: SoknadAppState) => {
+export default connect(
+    (state: State) => {
         return {
             behandlingsId: state.soknad.data.brukerBehandlingId,
             feil: state.validering.feil
         }
     }
-)(VedleggView);
+)(injectIntl(VedleggView));

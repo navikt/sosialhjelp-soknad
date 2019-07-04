@@ -159,12 +159,12 @@ export interface EttersendelseState {
     data: EttersendelseVedleggBackend[];
     innsendte: {
         originalSoknad: OrginalSoknad | null;
-        ettersendelser: any[];
+        ettersendelser: any[] | null;
     };
     restStatus: REST_STATUS;
     opplastingStatus: REST_STATUS;
     ettersendStatus: REST_STATUS;
-    brukerbehandlingId: string;
+    brukerbehandlingId: string | null;
     feilKode: string;
     feiletVedleggId: string;
     visSoknadAlleredeSendtPromt: boolean;

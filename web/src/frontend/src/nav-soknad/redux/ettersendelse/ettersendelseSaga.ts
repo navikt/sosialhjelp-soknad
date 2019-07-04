@@ -29,7 +29,7 @@ import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIterator {
     try {
         const url = `soknader/opprettSoknad?ettersendTil=${action.brukerbehandlingId}`;
-        const response = yield call(fetchPost, url, null);
+        const response = yield call(fetchPost, url, "");
         if (response) {
             yield put(lagEttersendelseOk(response.brukerBehandlingId));
             yield put(lesEttersendelsesVedlegg(response.brukerBehandlingId));

@@ -25,9 +25,9 @@ interface Props {
 }
 
 class SysteminfoMedSkjema extends React.Component<Props> {
-	skjema: HTMLElement;
-	visSkjemaKnapp: Lenkeknapp;
-	focusFunc: () => void;
+	skjema!: HTMLElement;
+	visSkjemaKnapp!: Lenkeknapp;
+	focusFunc!: () => void;
 
 	constructor(props: Props) {
 		super(props);
@@ -54,12 +54,17 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 	componentDidUpdate() {
 		if (this.focusFunc) {
 			this.focusFunc();
+			// @ts-ignore
 			this.focusFunc = null;
 		}
 	}
 
 	labelToId(str: string) {
 		return str.replace(/\s+/g, "_").toLowerCase();
+	}
+
+	handleVoid(){
+		console.warn("onClick");
 	}
 
 	renderSkjema() {
@@ -72,16 +77,16 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 				{skjemaErSynlig ? (
 					<div
 						className="systeminfoMedSkjema__skjema"
-						ref={c => (this.skjema = c)}
+						ref={c => { if (c){this.skjema = c}}}
 					>
 						{skjema}
 					</div>
 				) : null}
 				{!skjemaErSynlig && endreLabel && (
 					<Lenkeknapp
-						ref={c => (this.visSkjemaKnapp = c)}
-						onClick={this.props.onVisSkjema}
-						id={this.labelToId(this.props.endreLabel) + "_lenke"}
+						ref={c => { if (c){this.visSkjemaKnapp = c}}}
+						onClick={this.props.onVisSkjema ? this.props.onVisSkjema : this.handleVoid}
+						id={this.labelToId(this.props.endreLabel ? this.props.endreLabel : "") + "_lenke"}
 					>
 						{endreLabel}
 					</Lenkeknapp>
@@ -89,8 +94,8 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 				{skjemaErSynlig && avbrytLabel && (
 					<div className="systeminfoMedSkjema__skjulSkjemaKnapp">
 						<Lenkeknapp
-							onClick={this.props.onSkjulSkjema}
-							id={this.labelToId(this.props.avbrytLabel) + "_lenke"}
+							onClick={this.props.onSkjulSkjema ? this.props.onSkjulSkjema : this.handleVoid}
+							id={this.labelToId(this.props.avbrytLabel ? this.props.avbrytLabel : "") + "_lenke"}
 						>
 							{avbrytLabel}
 						</Lenkeknapp>
@@ -109,7 +114,7 @@ class SysteminfoMedSkjema extends React.Component<Props> {
 					arrow={false}
 					visible={true}
 					collapsable={false}
-					style="system"
+					stil="system"
 				>
 					<div className="systeminfoMedSkjema__info">{children}</div>
 					{this.renderSkjema()}

@@ -45,46 +45,46 @@ const AvsnittMedMarger: React.StatelessComponent<Props> = (
 		}
 	}
 
-	const content = <>
-		<div className="venstremarg">
-			{venstreIkon && (<MargIkon ikon={venstreIkon}/>)}
-		</div>
-		<div className="avsnitt">
-			{children}
-		</div>
-		{hoyreIkon && (
-			<span>
-					{onClickHoyreIkon && (
-						<a
-							href="#"
-							className="hoyremarg hoyremarg__ikon hoyremarg__ikon__klikkbart hoyremarg__ikon__hover"
-							onClick={() => onClickHoyreIkon()}
-							title={ ikonTitleText(hoyreIkon) }
-						>
+	const content =
+		<>
+			<div className="venstremarg">
+				{venstreIkon && (<MargIkon ikon={venstreIkon}/>)}
+			</div>
+			<div className="avsnitt">
+				{children}
+			</div>
+			{hoyreIkon && (
+				<span>
+						{onClickHoyreIkon && (
+							<button
+								className="hoyremarg hoyremarg__ikon hoyremarg__ikon__klikkbart hoyremarg__ikon__hover"
+								onClick={() => onClickHoyreIkon()}
+								title={ ikonTitleText(hoyreIkon) }
+							>
+								<MargIkon ikon={hoyreIkon}/>
+							</button>
+						)}
+					{!onClickHoyreIkon && (
+						<div className="hoyremarg hoyremarg__ikon">
 							<MargIkon ikon={hoyreIkon}/>
-						</a>
+						</div>
 					)}
-				{!onClickHoyreIkon && (
-					<div className="hoyremarg hoyremarg__ikon">
-						<MargIkon ikon={hoyreIkon}/>
-					</div>
-				)}
-				</span>
-		)}
-		{!hoyreIkon && (
-			<div className="hoyremarg"/>
-		)}</>;
+					</span>
+			)}
+			{!hoyreIkon && (
+				<div className="hoyremarg"/>
+			)}
+		</>;
 
 	if (onClick ) {
 		return (
-			<a
-				href="#"
+			<button
 				className="avsnitt_med_marger avsnitt_med_marger__klikkbar"
 				onClick={() => handleOnClick()}
 				title="Vedlegg"
 			>
 				{content}
-			</a>
+			</button>
 		);
 	} else {
 		return (

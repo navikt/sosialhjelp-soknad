@@ -12,7 +12,7 @@ import {getAbsoluteBasename} from "../../../index";
 
 interface StateProps {
 	avbrytDialogSynlig: boolean;
-	destinasjon: AVBRYT_DESTINASJON;
+	destinasjon: AVBRYT_DESTINASJON | null | undefined;
 	brukerBehandlingId: string;
 }
 
@@ -31,7 +31,7 @@ const TEKSTNOKLER_NAVIGASJON = {
 class AvbrytSoknad extends React.Component<Props, {}> {
 	onAvbryt() {
 		this.props.dispatch(
-			slettSoknad(this.props.brukerBehandlingId, this.props.destinasjon)
+			slettSoknad(this.props.brukerBehandlingId, this.props.destinasjon ? this.props.destinasjon : "MINSIDE")
 		);
 	}
 
@@ -57,10 +57,11 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 				closeButton={false}
 				onRequestClose={() => this.onFortsett()}
 				shouldCloseOnOverlayClick={true}
+				style={{overflow: "visible"}}
 			>
 				<div className="avbrytmodal">
 					<div className="avbrytmodal__infoikon_wrapper">
-						<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_ark.svg`}/>
+						<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_ark.svg`} alt={""}/>
 					</div>
 
 					<Innholdstittel className="blokk-s avbrytmodal__overskrift">
@@ -75,7 +76,7 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 						>
 							<FormattedMessage id={"avbryt.fortsettsenere"} />
 						</Hovedknapp>
-						<Knapp onClick={() => this.onAvbryt()} type="standard" className="avbrytmodal__slettknapp">
+						<Knapp onClick={() => this.onAvbryt()} className="avbrytmodal__slettknapp">
 							<FormattedMessage id={"avbryt.slett"} />
 						</Knapp>
 					</div>

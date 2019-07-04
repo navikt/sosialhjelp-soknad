@@ -8,7 +8,7 @@ const { OK, PENDING, FEILET, INIT } = TilgangActionTypeKeys;
 
 const initialState: TilgangState = {
 	harTilgang: false,
-	sperrekode: null,
+	sperrekode: undefined,
 	status: INIT
 };
 

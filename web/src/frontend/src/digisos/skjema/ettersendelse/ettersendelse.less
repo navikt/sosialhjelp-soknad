@@ -32,6 +32,10 @@
 	height: 26px;
   }
 
+  &__ikon-vedleggmangler {
+    transform: translate(-40px);
+  }
+
   &__chevron {
 	cursor: pointer;
 	margin-right: 7px;
@@ -86,12 +90,14 @@
 .avsnitt_med_marger {
   display: flex;
   width: 100%;
+  background-color: @white;
 
   &__klikkbar {
 	text-decoration: none;
 	cursor: pointer;
 	color: rgb(62, 56, 50);
 	border-radius: 4px;
+    padding: 0;
   }
 
   &__klikkbar:hover {
@@ -105,6 +111,7 @@
   width: 55px;
   min-width: 35px;
   padding-left: 4px;
+  text-align: left;
 }
 
 .venstremarg svg {
@@ -121,12 +128,14 @@
 	height: 36px;
 	text-align: center;
 	color: @navBla;
+    background-color: @white;
 	padding-top: 3px;
 	padding-left: 4px;
 	border-radius: 4px;
 
 	&__klikkbart {
 	  cursor: pointer;
+      border: none;
 	}
 
   }
@@ -145,6 +154,7 @@
   width: 540px;
   margin-top: 8px;
   margin-bottom: 8px;
+  text-align: left;
 
   &_knapp {
 

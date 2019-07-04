@@ -1,4 +1,4 @@
-import { Familie, initialPerson, Status } from "./FamilieTypes";
+import {Familie, initialPerson, Status} from "./FamilieTypes";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import * as React from "react";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -40,21 +40,21 @@ class SivilstatusComponent extends React.Component<Props, {}> {
 
 	onClickSivilstatus(verdi: Status) {
 		const {oppdaterSoknadsdataSti, brukerBehandlingId, lagreSoknadsdata} = this.props;
-		let payload = {};
+		let sivilstatus = this.props.soknadsdata.familie.sivilstatus;
 		if (verdi !== Status.GIFT) {
-			payload = {
+			sivilstatus = {
 				"kildeErSystem": false,
 				"sivilstatus": verdi
 			};
 		} else {
-			payload = {
+			sivilstatus = {
 				"kildeErSystem": false,
 				"sivilstatus": Status.GIFT,
 				"ektefelle": initialPerson
 			};
 		}
-		oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, payload);
-		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.SIVILSTATUS, payload);
+		oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus);
+		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.SIVILSTATUS, sivilstatus);
 	}
 
 	render() {

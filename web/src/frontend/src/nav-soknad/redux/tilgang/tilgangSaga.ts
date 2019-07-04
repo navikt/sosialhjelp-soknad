@@ -7,7 +7,7 @@ import {
 	hentTilgangFeilet
 } from "./tilgangActions";
 
-export function* hentTilgangSaga(): any {
+function* hentTilgangSaga() {
 	try {
 		yield put(henterTilgang());
 		const response: TilgangApiResponse = yield call(

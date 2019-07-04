@@ -11,7 +11,7 @@ import {
     OpplysningGruppe,
     OpplysningerModel, Opplysning
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
-import {DispatchProps, SoknadAppState} from "../../../nav-soknad/redux/reduxTypes";
+import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import {hentOpplysninger} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerActions";
 import {RestStatus} from "../../../nav-soknad/types";
 import {gruppeRekkefolge} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerConfig";
@@ -21,16 +21,18 @@ interface StoreToProps {
     behandlingsId: string;
 }
 
+type MaybeJsxElement = JSX.Element | null;
+
 type Props = StoreToProps & InjectedIntlProps & DispatchProps;
 
 class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
-    
+
     componentDidMount() {
         const {behandlingsId} = this.props;
         this.props.dispatch(hentOpplysninger(behandlingsId))
     }
 
-    renderGrupper(): JSX.Element[] {
+    renderGrupper(): MaybeJsxElement[] {
         const {opplysningerSortert} = this.props.okonomiskeOpplysninger;
 
         const grupperView = gruppeRekkefolge.map((opplysningGruppe: OpplysningGruppe) => {
@@ -48,7 +50,7 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
 
     render() {
         const {restStatus, backendData} = this.props.okonomiskeOpplysninger;
-        const ikkeBesvartMeldingSkalVises: boolean =
+        const ikkeBesvartMeldingSkalVises: boolean | null =
             backendData &&
             backendData.okonomiskeOpplysninger &&
             backendData.okonomiskeOpplysninger.length < 3;
@@ -93,8 +95,8 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
     }
 }
 
-export default connect<StoreToProps, {}, {}>(
-    (state: SoknadAppState) => {
+export default connect<any, {}, {}>(
+    (state: any) => {
         return {
             okonomiskeOpplysninger: state.okonomiskeOpplysninger,
             behandlingsId: state.soknad.data.brukerBehandlingId,

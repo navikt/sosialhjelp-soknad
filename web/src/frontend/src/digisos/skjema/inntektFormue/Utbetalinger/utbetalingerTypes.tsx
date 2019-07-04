@@ -15,3 +15,12 @@ export const initialUtbetalingerState: Utbetalinger = {
 	"annet" : false,
 	"beskrivelseAvAnnet" : ""
 };
+
+export enum UtbetalingerKeys {
+	BEKREFTELSE = "bekreftelse",
+	UTBYTTE = "utbytte",
+	SALG = "salg",
+	FORSIKRING = "forsikring",
+	ANNET = "annet",
+	BESKRIVELSEAVANNET = "beskrivelseAvAnnet",
+}

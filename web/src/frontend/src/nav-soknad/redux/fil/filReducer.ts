@@ -1,5 +1,4 @@
 import {REST_STATUS} from "../../types/restTypes";
-import {Reducer} from "../reduxTypes";
 import {FilActionTypeKeys, FilActionTypes, FilState} from "./filTypes";
 
 const initialState: FilState = {
@@ -8,9 +7,9 @@ const initialState: FilState = {
     opplysningtype: null
 };
 
-const FilReducer: Reducer<FilState, FilActionTypes> = (
-    state = initialState,
-    action
+export const filReducer = (
+    state: FilState = initialState,
+    action: FilActionTypes
 ): FilState => {
     switch (action.type) {
         case FilActionTypeKeys.LAST_OPP: {
@@ -32,5 +31,3 @@ const FilReducer: Reducer<FilState, FilActionTypes> = (
             return state;
     }
 };
-
-export default FilReducer;

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getIntlTextOrKey } from "../../utils/intlUtils";
-import { Knapp } from "nav-frontend-knapper";
+import {Flatknapp, Hovedknapp, Knapp} from "nav-frontend-knapper";
 
 interface Props {
 	gaViderePending?: boolean;
@@ -16,9 +16,8 @@ class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 		const { gaVidere, gaTilbake, avbryt, gaVidereLabel, intl } = this.props;
 		return (
 			<div className="skjema-knapperad ikke-juridisk-tekst">
-				<Knapp
+				<Hovedknapp
 					id="gaa_videre_button"
-					type="hoved"
 					htmlType="button"
 					onClick={gaVidere}
 					spinner={this.props.gaViderePending}
@@ -27,25 +26,20 @@ class SkjemaKnapperad extends React.Component<Props & InjectedIntlProps, {}> {
 					{gaVidereLabel
 						? gaVidereLabel
 						: getIntlTextOrKey(intl, "skjema.knapper.gaavidere")}
-				</Knapp>
+				</Hovedknapp>
 				<Knapp
 					id="gaa_tilbake_button"
-					type="standard"
 					htmlType="button"
 					onClick={gaTilbake}
 					disabled={this.props.gaViderePending || !this.props.gaTilbake}
 				>
 					{getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
 				</Knapp>
-				<span id="avbryt_link">
-					<a
-						href="#"
-						className="lenke"
-						onClick={this.props.gaViderePending ? null : avbryt}
-					>
-						{getIntlTextOrKey(intl, "skjema.knapper.avbryt")}
-					</a>
-				</span>
+				<Flatknapp
+					onClick={this.props.gaViderePending ? undefined : avbryt}
+				>
+					{getIntlTextOrKey(intl, "skjema.knapper.avbryt")}
+				</Flatknapp>
 			</div>
 		);
 	}

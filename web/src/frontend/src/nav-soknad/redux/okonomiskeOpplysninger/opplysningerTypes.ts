@@ -46,7 +46,7 @@ export enum AntallRader {
     FLERE = "flere"
 }
 
-export type opplysningerAction
+export type OpplysningerAction
     = GotDataFromBackend
     | UpdateOpplysning
     | SettPendingPaFilOpplasting

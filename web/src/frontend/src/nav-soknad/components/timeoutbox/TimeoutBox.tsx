@@ -122,6 +122,6 @@ class TimeoutBox extends React.Component<Props, State> {
 
 export default connect((state: any, props: any) => {
 	return {
-		restStatus: state.fakta.restStatus
+		restStatus: state.fakta && state.fakta.restStatus ? state.fakta.restStatus : REST_STATUS.INITIALISERT
 	};
 })(injectIntl(TimeoutBox));

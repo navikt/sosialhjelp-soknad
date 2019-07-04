@@ -18,7 +18,7 @@ type Props = OwnProps & InjectedIntlProps;
 class SoknadsmottakerVelger extends React.Component<Props,{}> {
 
 	velgNavKontor(event: any) {
-		this.props.navEnheter.map((soknadsmottaker: NavEnhet) => {
+		this.props.navEnheter.forEach((soknadsmottaker: NavEnhet) => {
 			if (event.target.value === soknadsmottaker.orgnr) {
 				this.props.onVelgSoknadsmottaker(soknadsmottaker)
 			}
@@ -29,7 +29,7 @@ class SoknadsmottakerVelger extends React.Component<Props,{}> {
 		const {navEnheter, ikkeVisPanel} = this.props;
 		let orgnr = "velg";
 		if (navEnheter) {
-			navEnheter.map((soknadsmottaker: NavEnhet) => {
+			navEnheter.forEach((soknadsmottaker: NavEnhet) => {
 				if (soknadsmottaker.valgt) {
 					orgnr = soknadsmottaker.orgnr;
 				}

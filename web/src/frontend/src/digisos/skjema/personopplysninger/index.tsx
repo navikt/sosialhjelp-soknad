@@ -49,11 +49,10 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 }
 
 const mapStateToProps = (state: State) => ({
-	fakta: state.fakta.data,
 	gjenopptattSoknad: state.soknad.gjenopptattSoknad,
 
 });
 
-export default connect<{}, {}, Props>(
+export default connect(
 	mapStateToProps
 )(Personopplysninger);

@@ -16,7 +16,7 @@ type Props = SoknadsdataContainerProps & InjectedIntlProps;
 class EktefelleDetaljer extends React.Component<Props, {}> {
 
 
-	renderSivilstatusLabel(ektefelleHarDiskresjonskode: boolean): any {
+	renderSivilstatusLabel(ektefelleHarDiskresjonskode: boolean | undefined) {
 		let formattedMessageId: string = "system.familie.sivilstatus.label";
 		if (ektefelleHarDiskresjonskode && ektefelleHarDiskresjonskode === true) {
 			formattedMessageId = "system.familie.sivilstatus.ikkeTilgang.label";
@@ -27,7 +27,7 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 	renderEktefelleInformasjon() {
 		const { soknadsdata } = this.props;
 		const sivilstatus: Sivilstatus = soknadsdata.familie.sivilstatus;
-		const ektefelle: Person = sivilstatus.ektefelle;
+		const ektefelle: Person | undefined = sivilstatus.ektefelle;
 		const INTL_ID_EKTEFELLE = "system.familie.sivilstatus.gift.ektefelle";
 		return (
 			<div className="sivilstatus__ektefelleinfo">
@@ -37,10 +37,12 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 							tittel={<FormattedMessage id={INTL_ID_EKTEFELLE + ".navn"}/>}
 							verdi={ektefelle.navn.fulltNavn}
 						/>
-						<DetaljelisteElement
-							tittel={<FormattedMessage id={INTL_ID_EKTEFELLE + ".fodselsdato"}/>}
-							verdi={formaterIsoDato(ektefelle.fodselsdato)}
-						/>
+						{ ektefelle.fodselsdato &&
+							<DetaljelisteElement
+								tittel={<FormattedMessage id={INTL_ID_EKTEFELLE + ".fodselsdato"}/>}
+								verdi={formaterIsoDato(ektefelle.fodselsdato)}
+							/>
+						}
 						<DetaljelisteElement
 							tittel={
 								<FormattedMessage id={INTL_ID_EKTEFELLE + ".folkereg"}/>
@@ -63,12 +65,12 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 	render() {
 		const { soknadsdata, intl } = this.props;
 		const sivilstatus: Sivilstatus = soknadsdata.familie.sivilstatus;
-		const harDiskresjonskode: boolean = sivilstatus.harDiskresjonskode;
+		const harDiskresjonskode: boolean | undefined = sivilstatus.harDiskresjonskode;
 		return (
 			<div className="sivilstatus skjema-sporsmal">
 				<Sporsmal
 					tekster={getFaktumSporsmalTekst(intl, "system.familie.sivilstatus")}
-					style="system"
+					stil="system"
 				>
 					<div className="sivilstatus__infotekst">
 						<FormattedMessage id="system.familie.sivilstatus"/>

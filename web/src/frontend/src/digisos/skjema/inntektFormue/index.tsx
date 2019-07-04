@@ -1,8 +1,6 @@
 import * as React from "react";
-import {connect} from "react-redux";
 import {FaktumComponentProps} from "../../../nav-soknad/redux/fakta/faktaTypes";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
-import {State} from "../../redux/reducers";
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import Penger from "../../../nav-soknad/components/svg/illustrasjoner/Penger";
 import {FormattedHTMLMessage} from "react-intl";
@@ -32,8 +30,4 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
     }
 }
 
-export default connect((state: State, props: any) => {
-    return {
-        fakta: state.fakta.data
-    };
-})(InntektFormue);
+export default InntektFormue;

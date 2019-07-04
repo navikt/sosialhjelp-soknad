@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const SnakkebobleIllustrasjon: React.StatelessComponent<{}> = ({}) => {
+const SnakkebobleIllustrasjon: React.FC = () => {
 	return (
 		<div>
 			<svg width={100} height={100} className="kun_desktop">

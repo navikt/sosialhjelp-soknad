@@ -23,7 +23,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 
 						<div className="personopplysning-blokk blokk-s">
 							<div className="ikon">
-								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_papirstabel.svg`}/>
+								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_papirstabel.svg`} alt={""}/>
 							</div>
 								<div className="innhold">
 								<h3 className="typo-element">
@@ -34,7 +34,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 						</div>
 						<div className="personopplysning-blokk blokk-s">
 							<div className="ikon">
-								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_blyanter.svg`}/>
+								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_blyanter.svg`} alt={""}/>
 							</div>
 							<div className="innhold">
 								<h3 className="typo-element">
@@ -45,7 +45,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 						</div>
 						<div className="personopplysning-blokk blokk-s">
 							<div className="ikon">
-								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_brevkonvolutt.svg`}/>
+								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_brevkonvolutt.svg`} alt={""}/>
 							</div>
 							<div className="innhold">
 								<h3 className="typo-element">
@@ -57,7 +57,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 
 						<div className="personopplysning-blokk blokk-m">
 							<div className="ikon">
-								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_ark.svg`}/>
+								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_ark.svg`} alt={""}/>
 							</div>
 							<div className="innhold">
 								<h3 className="typo-element">
@@ -65,15 +65,14 @@ class Personopplysninger extends React.Component<Props, {}> {
 								</h3>
 								<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.tekst"/>
 								&nbsp;
-								<a
-									className="lenke"
-									href="#"
+								<button
+									className="linkbutton linkbutton--normal"
 									onClick={() => {
 										this.props.dispatch(setVisSamtykkeInfo(true));
 									}}
 								>
 									<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke"/>
-								</a>
+								</button>
 							</div>
 						</div>
 
