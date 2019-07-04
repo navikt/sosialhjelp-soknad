@@ -4,9 +4,8 @@ import {FormattedMessage, InjectedIntlProps} from "react-intl";
 import {Opplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {connect} from "react-redux";
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
-import {lastOppFil, lastOppFilFeilet} from "../../../nav-soknad/redux/fil/filActions";
+import {lastOppFil} from "../../../nav-soknad/redux/fil/filActions";
 import {FilState} from "../../../nav-soknad/redux/fil/filTypes";
-import {REST_FEIL} from "../../../nav-soknad/types/restFeilTypes";
 import {State} from "../../redux/reducers";
 import {injectIntl} from "react-intl";
 
@@ -29,7 +28,6 @@ class LastOppFil extends React.Component<Props, {}> {
 
     handleFileUpload(files: FileList) {
         const {behandlingsId, opplysning} = this.props;
-        this.props.dispatch(lastOppFilFeilet(opplysning.type, REST_FEIL.FEIL_FILTPYE));
         if (files.length !== 1) {
             return;
         }
