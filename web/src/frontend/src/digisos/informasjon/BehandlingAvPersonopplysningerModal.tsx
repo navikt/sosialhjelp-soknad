@@ -45,7 +45,7 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 					<div dangerouslySetInnerHTML={{__html: this.getText()}}/>
 				</div>
 
-				<div className="timeoutbox__knapperad">
+				<div className="behandlingAvPersonopplysningerModal--lukke-knapp">
 					<Knapp
 						htmlType="button"
 						onClick={() => this.props.dispatch(setVisSamtykkeInfo(false))}

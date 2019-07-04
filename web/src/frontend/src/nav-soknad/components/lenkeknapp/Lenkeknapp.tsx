@@ -16,7 +16,7 @@ class Lenkeknapp extends React.Component<Props> {
 		const { onClick, children, stil, skjermleserLabel } = this.props;
 		// @ts-ignore
 		const className = classNames(
-			"lenke",
+			"linkbutton linkbutton--normal",
 			baseClassName,
 			stil ? `${baseClassName}--${stil}` : null
 		);
