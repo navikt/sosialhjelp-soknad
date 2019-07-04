@@ -76,7 +76,6 @@ class OppsummeringView extends React.Component<Props, {}> {
 						<div>
 							<div className="bolk__rediger">
 								<Link
-									className={"linkbutton linkbutton--normal"}
 									to={`/skjema/${brukerbehandlingId}/${idx + 1}`}
 								>
 									{getIntlTextOrKey(
