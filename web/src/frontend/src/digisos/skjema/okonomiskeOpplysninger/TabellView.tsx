@@ -147,7 +147,7 @@ class TabellView extends React.Component<Props, {}> {
     setValideringsfeilHvisUgyldigTall(key: InputType, value: string, opplysning: Opplysning, index: number){
         const spc: OpplysningSpc | undefined = getSpcForOpplysning(opplysning.type);
         if (spc){
-            if (value !== "" && !erGyldigTall(value)) {
+            if (value !== null && value !== "" && !erGyldigTall(value)) {
                 const validationKey: string = `${spc.textKey}.${key}.${index}`;
                 this.props.dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, validationKey));
             }
