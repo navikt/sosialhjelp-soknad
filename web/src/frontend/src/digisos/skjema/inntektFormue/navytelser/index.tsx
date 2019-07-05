@@ -7,8 +7,6 @@ import {
     injectIntl,
     InjectedIntlProps
 } from "react-intl";
-import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema/index";
-import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {
     connectSoknadsdataContainer,
