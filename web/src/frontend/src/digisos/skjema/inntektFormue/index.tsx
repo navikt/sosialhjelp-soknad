@@ -5,11 +5,11 @@ import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import Penger from "../../../nav-soknad/components/svg/illustrasjoner/Penger";
 import {FormattedHTMLMessage} from "react-intl";
 import Bostotte from "./bostotte/Bostotte";
-import Utbetalinger from "./Utbetalinger/Utbetalinger";
+import Utbetalinger from "./utbetalinger";
 import Verdier from "./verdier/Verdier";
 import Formue from "./formue/Formue";
-import NavYtelser from "./navytelser/NavYtelser";
-import SkattbarInntekt from "./SkattbarInntekt";
+import NavYtelser from "./navytelser";
+import SkattbarInntekt from "./skattbarInntekt";
 
 class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps, any> {
     render() {

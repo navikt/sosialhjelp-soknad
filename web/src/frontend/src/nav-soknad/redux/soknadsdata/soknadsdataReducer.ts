@@ -17,7 +17,7 @@ import {Bostotte, initialBostotteState} from "../../../digisos/skjema/inntektFor
 import {
 	initialUtbetalingerState,
 	Utbetalinger
-} from "../../../digisos/skjema/inntektFormue/Utbetalinger/utbetalingerTypes";
+} from "../../../digisos/skjema/inntektFormue/utbetalinger/utbetalingerTypes";
 import {
 	initialVerdierState,
 	Verdier
@@ -48,7 +48,7 @@ import { Barnebidrag, ForsorgerPlikt } from "../../../digisos/skjema/familie/for
 import {
     initialSkattbarInntektState,
     SkattbarInntekt
-} from "../../../digisos/skjema/inntektFormue/inntektTypes";
+} from "../../../digisos/skjema/inntektFormue/skattbarInntekt/inntektTypes";
 import {Systeminntekter, initialSysteminntekter} from "../../../digisos/skjema/inntektFormue/navytelser/navYtelserTypes";
 
 export enum SoknadsdataActionTypeKeys {
