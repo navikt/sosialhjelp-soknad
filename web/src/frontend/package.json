@@ -67,7 +67,8 @@
     "redux-thunk": "^2.3.0",
     "soknadsosialhjelp-mocksystemdata": "^1.0.13",
     "typescript": "3.4.5",
-    "whatwg-fetch": "^3.0.0"
+    "whatwg-fetch": "^3.0.0",
+    "snyk": "^1.192.3"
   },
   "devDependencies": {
     "@craco/craco": "^5.2.3",
@@ -92,7 +93,9 @@
     "start": "craco start",
     "build": "craco build && node scripts/flytt-filer-til-webapp.js && node scripts/versjoner-prodfiler.js",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -108,5 +111,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "snyk": true
 }
