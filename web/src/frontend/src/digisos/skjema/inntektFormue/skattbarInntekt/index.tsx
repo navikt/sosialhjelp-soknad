@@ -7,7 +7,6 @@ import {
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
-import {Panel} from "nav-frontend-paneler";
 import {SkjemaGruppe} from "nav-frontend-skjema";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {REST_STATUS} from "../../../../nav-soknad/types";
