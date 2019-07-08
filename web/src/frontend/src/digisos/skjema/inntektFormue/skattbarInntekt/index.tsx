@@ -81,30 +81,31 @@ class Skatt extends React.Component<Props, {}> {
 		return (
 			<SkjemaGruppe className={"skjema-sporsmal"}>
 				{!visAnimerteStreker && harSkattbareInntekter && (
-								<EkspanderbartpanelBase
-									heading={
-										<div>
-											<h4>{tittel}</h4>
-											<FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse"/>
-										</div>
-									}
-									border={true}
-									ariaTittel={intl.formatMessage({id: "utbetalinger.inntekt.skattbar.beskrivelse"})}
-								>
-									<div className="utbetalinger">{organisasjoner}</div>
-								</EkspanderbartpanelBase>
-					)
+					<EkspanderbartpanelBase
+						heading={
+							<div>
+								<h4>{tittel}</h4>
+								<FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse"/>
+							</div>
+						}
+						border={true}
+						ariaTittel={intl.formatMessage({id: "utbetalinger.inntekt.skattbar.beskrivelse"})}
+					>
+						<div className="utbetalinger">{organisasjoner}</div>
+					</EkspanderbartpanelBase>)
 				}
 				{!visAnimerteStreker && !harSkattbareInntekter && (
-						<Panel>
+					<EkspanderbartpanelBase
+						heading={
 							<div>
 								<h4>{tittel}</h4>
 								<FormattedMessage id="utbetalinger.inntekt.skattbar.ingen"/>
 							</div>
-						</Panel>
-					)
+						}
+						border={true}
+						ariaTittel={intl.formatMessage({id: "utbetalinger.inntekt.skattbar.beskrivelse"})}
+					/>)
 				}
-
 				{ visAnimerteStreker &&
 					<TextPlaceholder lines={3}/>
 				}
