@@ -17,7 +17,6 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import {REST_STATUS} from "../../../../nav-soknad/types";
 import {SkjemaGruppe} from "nav-frontend-skjema";
 import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
-import {Panel} from "nav-frontend-paneler";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -91,23 +90,25 @@ class NavYtelserView extends React.Component<Props, {}> {
                             </div>
                         }
                         border={true}
-                        ariaTittel={this.props.intl.formatMessage({id: "utbetalinger.inntekt.skattbar.beskrivelse"})}
+                        ariaTittel={this.props.intl.formatMessage({id: "navytelser.infotekst.tekst"})}
                     >
                         <div className="utbetalinger">
                             {navYtelserJsx}
                             <FormattedHTMLMessage id="utbetalinger.infotekst.tekst"/>
                         </div>
-                    </EkspanderbartpanelBase>
-                )
+                    </EkspanderbartpanelBase>)
                 }
                 {!visAnimerteStreker && !harNavytelser && (
-                    <Panel>
-                        <div>
-                            <h4>{tittel}</h4>
-                            <FormattedMessage id="utbetalinger.inntekt.skattbar.ingen"/>
-                        </div>
-                    </Panel>
-                )
+                    <EkspanderbartpanelBase
+                        heading={
+                            <div>
+                                <h4>{tittel}</h4>
+                                <FormattedMessage id="utbetalinger.ingen.true"/>
+                            </div>
+                        }
+                        border={true}
+                        ariaTittel={this.props.intl.formatMessage({id: "navytelser.infotekst.tekst"})}
+                    />)
                 }
 
                 {visAnimerteStreker &&
