@@ -17,6 +17,7 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import {REST_STATUS} from "../../../../nav-soknad/types";
 import {SkjemaGruppe} from "nav-frontend-skjema";
 import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
+import {Panel} from "nav-frontend-paneler";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -99,16 +100,15 @@ class NavYtelserView extends React.Component<Props, {}> {
                     </EkspanderbartpanelBase>)
                 }
                 {!visAnimerteStreker && !harNavytelser && (
-                    <EkspanderbartpanelBase
-                        heading={
-                            <div>
-                                <h4>{tittel}</h4>
-                                <FormattedMessage id="utbetalinger.ingen.true"/>
-                            </div>
-                        }
+                    <Panel
                         border={true}
-                        ariaTittel={this.props.intl.formatMessage({id: "navytelser.infotekst.tekst"})}
-                    />)
+                        className={"ytelser_panel"}
+                    >
+                        <div>
+                            <h4>{tittel}</h4>
+                            <FormattedMessage id="utbetalinger.ingen.true"/>
+                        </div>
+                    </Panel>)
                 }
 
                 {visAnimerteStreker &&

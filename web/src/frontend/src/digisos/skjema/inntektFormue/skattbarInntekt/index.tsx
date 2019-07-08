@@ -11,6 +11,7 @@ import {SkjemaGruppe} from "nav-frontend-skjema";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {REST_STATUS} from "../../../../nav-soknad/types";
 import {Organisasjon, SkattbarInntekt} from "./inntektTypes";
+import {Panel} from "nav-frontend-paneler";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -94,16 +95,15 @@ class Skatt extends React.Component<Props, {}> {
 					</EkspanderbartpanelBase>)
 				}
 				{!visAnimerteStreker && !harSkattbareInntekter && (
-					<EkspanderbartpanelBase
-						heading={
-							<div>
-								<h4>{tittel}</h4>
-								<FormattedMessage id="utbetalinger.inntekt.skattbar.ingen"/>
-							</div>
-						}
+					<Panel
 						border={true}
-						ariaTittel={intl.formatMessage({id: "utbetalinger.inntekt.skattbar.beskrivelse"})}
-					/>)
+						className={"ytelser_panel"}
+					>
+						<div>
+							<h4>{tittel}</h4>
+							<FormattedMessage id="utbetalinger.inntekt.skattbar.ingen"/>
+						</div>
+					</Panel>)
 				}
 				{ visAnimerteStreker &&
 					<TextPlaceholder lines={3}/>
