@@ -15,9 +15,8 @@ import {
 import {Systeminntekt} from "./navYtelserTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {REST_STATUS} from "../../../../nav-soknad/types";
-import {SkjemaGruppe} from "nav-frontend-skjema";
-import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
 import {Panel} from "nav-frontend-paneler";
+import Lesmerpanel from "nav-frontend-lesmerpanel";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -81,23 +80,25 @@ class NavYtelserView extends React.Component<Props, {}> {
         const tittel: JSX.Element = <h4><FormattedMessage id="navytelser.sporsmal"/></h4>;
 
         return (
-            <SkjemaGruppe className={"skjema-sporsmal"}>
+            <div className={"skatt-wrapper"}>
                 {!visAnimerteStreker && harNavytelser && (
-                    <EkspanderbartpanelBase
-                        heading={
+                    <Lesmerpanel
+                        apneTekst={"Se detaljer"}
+                        lukkTekst={"Lukk"}
+                        intro={
                             <div>
                                 {tittel}
                                 <FormattedHTMLMessage id={"navytelser.infotekst.tekst"}/>
                             </div>
                         }
                         border={true}
-                        ariaTittel={this.props.intl.formatMessage({id: "navytelser.infotekst.tekst"})}
+                        className={"ytelser_panel"}
                     >
                         <div className="utbetalinger">
                             {navYtelserJsx}
                             <FormattedHTMLMessage id="utbetalinger.infotekst.tekst"/>
                         </div>
-                    </EkspanderbartpanelBase>)
+                    </Lesmerpanel>)
                 }
                 {!visAnimerteStreker && !harNavytelser && (
                     <Panel
@@ -114,7 +115,7 @@ class NavYtelserView extends React.Component<Props, {}> {
                 {visAnimerteStreker &&
                 <TextPlaceholder lines={3}/>
                 }
-            </SkjemaGruppe>
+            </div>
         )
     }
 }
