@@ -123,7 +123,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 								onClickHoyreIkon={() => this.removeFile(fil.uuid, this.props.vedlegg.type)}
 							>
 								<button
-									className="lenke"
+									className="linkbutton linkbutton--normal"
 									title="Last ned vedlegg"
 									onClick={() => downloadAttachedFile(lastNedUrl)}
 								>
