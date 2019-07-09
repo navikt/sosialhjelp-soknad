@@ -31,6 +31,8 @@
     "nav-frontend-knapper": "^1.0.30",
     "nav-frontend-knapper-style": "^0.3.26",
     "nav-frontend-lenker-style": "^0.2.20",
+    "nav-frontend-lesmerpanel": "0.0.29",
+    "nav-frontend-lesmerpanel-style": "0.0.25",
     "nav-frontend-lukknapp": "^1.0.21",
     "nav-frontend-lukknapp-style": "^0.2.19",
     "nav-frontend-modal": "^1.0.28",
