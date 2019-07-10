@@ -92,7 +92,6 @@ class NavYtelserView extends React.Component<Props, {}> {
                             </div>
                         }
                         border={true}
-                        className={"ytelser_panel"}
                     >
                         <div className="utbetalinger">
                             {navYtelserJsx}
