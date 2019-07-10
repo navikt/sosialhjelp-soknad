@@ -1,11 +1,10 @@
 import * as React from "react";
-import { Panel } from "nav-frontend-paneler";
+import {Panel, PanelBaseProps} from "nav-frontend-paneler";
 import * as classNames from "classnames";
 
-import { PanelProps } from "nav-frontend-paneler";
 
-const Skjemapanel: React.StatelessComponent<PanelProps> = (
-	props: PanelProps
+const Skjemapanel: React.FC<PanelBaseProps> = (
+	props: PanelBaseProps
 ) => (
 	<Panel
 		{...props}

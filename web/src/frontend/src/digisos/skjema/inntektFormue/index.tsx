@@ -5,10 +5,12 @@ import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import Penger from "../../../nav-soknad/components/svg/illustrasjoner/Penger";
 import {FormattedHTMLMessage} from "react-intl";
 import Bostotte from "./bostotte/Bostotte";
-import Utbetalinger from "./Utbetalinger/Utbetalinger";
+import Utbetalinger from "./utbetalinger";
 import Verdier from "./verdier/Verdier";
 import Formue from "./formue/Formue";
-import NavYtelser from "./navytelser/NavYtelser";
+import NavYtelser from "./navytelser";
+import SkattbarInntekt from "./skattbarInntekt";
+import {SkjemaGruppe} from "nav-frontend-skjema";
 
 class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps, any> {
     render() {
@@ -17,7 +19,10 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
                 <h2 className="overskrift">
                     <FormattedHTMLMessage id="opplysninger.inntekt.undertittel"/>
                 </h2>
-                <NavYtelser/>
+                <SkjemaGruppe className={"skjema-sporsmal"}>
+                    <SkattbarInntekt/>
+                    <NavYtelser/>
+                </SkjemaGruppe>
                 <Bostotte/>
                 <Utbetalinger/>
                 <h2 className="overskrift">
