@@ -26,7 +26,9 @@ export enum SoknadActionTypeKeys {
 	SEND_SOKNAD_OK = "soknad/SEND_SOKNAD_OK",
 	SEND_SOKNAD_FEILET = "soknad/SEND_SOKNAD_FEILET",
 	SETT_INFOFAKTUM = "soknad/SETT_INFOFAKTUM",
-	SETT_AVBRYT_SOKNAD_SJEKK = "navigasjon/SETT_AVBRYT_SOKNAD_SJEKK"
+	SETT_AVBRYT_SOKNAD_SJEKK = "navigasjon/SETT_AVBRYT_SOKNAD_SJEKK",
+	GET_ER_SYSTEMDATA_ENDRET = "soknad/GET_ER_SYSTEMDATA_ENDRET",
+	SET_ER_SYSTEMDATA_ENDRET = "soknad/SET_ER_SYSTEMDATA_ENDRET"
 }
 
 export type AVBRYT_DESTINASJON = "START" | "MINSIDE";
@@ -57,7 +59,9 @@ export type SoknadActionTypes =
 	| SlettSoknadOkAction
 	| SlettSoknadFeiletAction
 	| SettInfofaktumAction
-	| SettAvbrytSoknadSjekk;
+	| SettAvbrytSoknadSjekk
+	| GetErSystemdataEndret
+	| SetErSystemdataEndret;
 
 export interface StartSoknadAction {
 	type: SoknadActionTypeKeys.START_SOKNAD;
@@ -173,4 +177,20 @@ export interface SettInfofaktumAction {
 export interface SettAvbrytSoknadSjekk {
 	type: SoknadActionTypeKeys.SETT_AVBRYT_SOKNAD_SJEKK;
 	aktiv: boolean;
+}
+
+export interface GetErSystemdataEndret {
+	type: SoknadActionTypeKeys.GET_ER_SYSTEMDATA_ENDRET;
+}
+
+export interface SetErSystemdataEndret {
+	type: SoknadActionTypeKeys.SET_ER_SYSTEMDATA_ENDRET;
+	erSystemdataEndret: boolean;
+}
+
+
+export const enum ErSystemdataEndret {
+	YES = "YES",
+	NO = "NO",
+	NOT_ASKED = "NOT_ASKED"
 }

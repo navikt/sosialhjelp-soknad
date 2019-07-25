@@ -19,6 +19,7 @@ import {MockState} from "../../digisos/mock/mockReducer";
 import { Soknadsdata } from "./soknadsdata/soknadsdataReducer";
 import {OpplysningerModel} from "./okonomiskeOpplysninger/opplysningerTypes";
 import {FilState} from "./fil/filTypes";
+import {ErSystemdataEndret} from "./oppsummering/oppsummeringTypes";
 
 export * from "./fakta/faktaActionTypes";
 export * from "./valideringActionTypes";
@@ -66,4 +67,5 @@ export interface SoknadState {
 		destinasjon: AVBRYT_DESTINASJON;
 	};
 	gjenopptattSoknad: boolean;
+	erSystemdataEndret: ErSystemdataEndret;
 }

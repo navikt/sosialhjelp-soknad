@@ -5,6 +5,7 @@ import {
 	AVBRYT_DESTINASJON
 } from "./soknadActionTypes";
 import { Soknad, Kvittering, Infofaktum } from "../../types";
+import {OppsummeringActionTypeKeys, OppsummeringActionTypes} from "../oppsummering/oppsummeringTypes";
 
 export function startSoknad(kommune: string, bydel?: string) {
 	return {
@@ -163,3 +164,16 @@ export function settAvbrytSoknadSjekk(aktiv: boolean): SoknadActionTypes {
 		aktiv
 	};
 }
+
+export const getErSystemdataEndret = (): OppsummeringActionTypes => {
+	return {
+		type: OppsummeringActionTypeKeys.GET_ER_SYSTEMDATA_ENDRET
+	};
+};
+
+export const setErSystemdataEndret = (erSystemdataEndret: boolean): OppsummeringActionTypes => {
+	return {
+		type: OppsummeringActionTypeKeys.SET_ER_SYSTEMDATA_ENDRET,
+		erSystemdataEndret
+	}
+};

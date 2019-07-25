@@ -2,6 +2,7 @@ import { REST_STATUS } from "../../types";
 import { Reducer, SoknadState } from "../reduxTypes";
 
 import { SoknadActionTypes, SoknadActionTypeKeys } from "./soknadActionTypes";
+import {ErSystemdataEndret} from "../oppsummering/oppsummeringTypes";
 
 export const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
@@ -17,7 +18,8 @@ export const defaultState: SoknadState = {
 		brukerBehandlingId: "",
 		fakta: []
 	},
-	gjenopptattSoknad: true
+	gjenopptattSoknad: true,
+	erSystemdataEndret: ErSystemdataEndret.NOT_ASKED
 };
 
 const soknadReducer: Reducer<SoknadState, SoknadActionTypes> = (state = defaultState, action) => {
