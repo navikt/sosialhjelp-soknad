@@ -5,7 +5,7 @@ const port = process.env.PORT
 
 app.get("*/static/*", (req, res) => {
   //let path = req.params[0].replace("/soknadsosialhjelp/", "");
-  console.log(`static ${req.path}`)
+  console.log(`request path: ${req.path}. serving: ${path.resolve(__dirname, "build/static", req.params[1])}`)
   //console.dir(req)
   res.sendFile(path.resolve(__dirname, "static", req.params[1]))
 })
