@@ -1,7 +1,7 @@
-var express = require('express');
-var app = express();
-var path = require('path');
-const port = process.env.PORT;
+var express = require('express')
+var app = express()
+var path = require('path')
+const port = process.env.PORT
 
 app.get("*/static/*", (req, res) => {
   //let path = req.params[0].replace("/soknadsosialhjelp/", "");
