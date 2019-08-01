@@ -10,6 +10,7 @@ FROM node as node-image
 WORKDIR /app
 COPY --from=node-builder /source/build /app
 COPY heroku.js /app
+COPY web/src/frontend/heroku-index.html /app/index.html
 
 RUN npm install express && echo "har installert express. skal se node modules" && ls -la && pwd
 
