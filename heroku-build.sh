@@ -63,8 +63,8 @@ function heroku_login {
 }
 
 function deploy_to_heroku {
-    #heroku container:push --recursive -a $APP_NAME
-    git push heroku $APP_NAME
+    heroku container:push --recursive -a $APP_NAME
+    #git push heroku $APP_NAME
     heroku container:release web -a $APP_NAME
 }
 

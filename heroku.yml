@@ -1,3 +1,3 @@
 build:
   docker:
-    web: DockerfileHeroku
+    web: Dockerfile.web
