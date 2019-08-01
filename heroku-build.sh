@@ -46,28 +46,9 @@ function get_heroku_app_name {
     APP_NAME=$(echo -n $heroku_repo | sed -E 's#^.*/(.*)\.git$#\1#')
 }
 
-#function go_to_project_root {
-#    cd $PROJECT_ROOT
-#}
-#
-#function go_to_frontend_root {
-#    cd "$PROJECT_ROOT/web/src/frontend"
-#}
-#
-#function build_project {
-#    npm run build
-#}
-#
-#function heroku_login {
-#    heroku auth:login
-#    heroku container:login
-#}
-
 function deploy_to_heroku {
-    #heroku container:push --recursive -a $APP_NAME
     heroku stack:set container -a $APP_NAME
     git push $APP_NAME $BRANCH_NAME:master
-    #heroku container:release web -a $APP_NAME
 }
 
 if [ -z "$APP_NAME" ]; then
@@ -78,7 +59,4 @@ if [[ ! $(git remote | grep $APP_NAME) ]]; then
     git remote add $APP_NAME https://git.heroku.com/$APP_NAME.git
 fi
 
-#go_to_frontend_root
-#build_project
-#go_to_project_root
 deploy_to_heroku
