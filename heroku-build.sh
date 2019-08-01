@@ -74,6 +74,10 @@ if [ -z "$APP_NAME" ]; then
     get_heroku_app_name
 fi
 
+if [[ ! $(git remote | grep $APP_NAME) ]]; then
+    git remote add $APP_NAME https://git.heroku.com/$APP_NAME.git
+fi
+
 #go_to_frontend_root
 #build_project
 #go_to_project_root
