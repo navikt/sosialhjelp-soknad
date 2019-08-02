@@ -14,17 +14,13 @@ target
 *.classpath
 *.DS_Store
 
-consumer/*.pdf
-test.pdf
 
 node_modules/
+build/
 
-**/webapp/css/**/*
-**/webapp/img/**/*
-**/webapp/js/**/*
-web/src/main/webapp/soknadsosialhjelp-built.html
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-web/src/main/resources/webapp/soknadsosialhjelp-built.html
-web/src/main/resources/webapp/soknadsosialhjelp-heroku-built.html
-web/src/main/resources/webapp/statisk/
-
+debug.log
+chromedriver.log

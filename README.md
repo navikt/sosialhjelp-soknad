@@ -5,7 +5,7 @@ Frontend for søknad om sosialhjelp.
 
 ## Kjøring lokalt mot lokal utviklingsbackend
 
-Kan gjøres av alle. Kjører mot (mock backend)
+Kjører mot (mock backend)
 
 * `cd web/src/frontend` 
 * `npm install` 
