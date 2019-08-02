@@ -1,0 +1,25 @@
+version: 2.1
+
+jobs:
+  bygg:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Bygger Docker image
+          command:
+            docker build -t "navikt/soknadsosialhjelp:${CIRCLE_SHA1}" .
+      - run:
+          name: Pusher Docker image
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_LOGIN" --password-stdin
+            docker push "navikt/soknadsosialhjelp:${CIRCLE_SHA1}"
+
+workflows:
+  version: 2.1
+  bygg-image:
+    jobs:
+      - bygg:
+          context: NAIS deployment
