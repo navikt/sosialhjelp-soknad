@@ -28,6 +28,8 @@ export enum SoknadActionTypeKeys {
 	SEND_SOKNAD_FEILET = "soknad/SEND_SOKNAD_FEILET",
 	SETT_INFOFAKTUM = "soknad/SETT_INFOFAKTUM",
 	SETT_AVBRYT_SOKNAD_SJEKK = "navigasjon/SETT_AVBRYT_SOKNAD_SJEKK",
+	GET_ER_SYSTEMDATA_ENDRET = "soknad/GET_ER_SYSTEMDATA_ENDRET",
+	SET_ER_SYSTEMDATA_ENDRET = "soknad/SET_ER_SYSTEMDATA_ENDRET",
 	FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS = "soknad/FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS",
 	OPPDATER_SOKNADSMOTTAKER_STATUS = "soknad/OPPDATER_SOKNADSMOTTAKER_STATUS"
 }
@@ -63,6 +65,9 @@ export type SoknadActionTypes =
 	| SettAvbrytSoknadSjekk
 	| FinnOgOppdaterSoknadsmottakerStatus
 	| OppdaterSoknadsmottakerStatus
+	| SettAvbrytSoknadSjekk
+	| GetErSystemdataEndret
+	| SetErSystemdataEndret
 
 export interface FinnOgOppdaterSoknadsmottakerStatus {
 	type: SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS,
@@ -189,4 +194,20 @@ export interface SettInfofaktumAction {
 export interface SettAvbrytSoknadSjekk {
 	type: SoknadActionTypeKeys.SETT_AVBRYT_SOKNAD_SJEKK;
 	aktiv: boolean;
+}
+
+export interface GetErSystemdataEndret {
+	type: SoknadActionTypeKeys.GET_ER_SYSTEMDATA_ENDRET;
+}
+
+export interface SetErSystemdataEndret {
+	type: SoknadActionTypeKeys.SET_ER_SYSTEMDATA_ENDRET;
+	erSystemdataEndret: boolean;
+}
+
+
+export enum ErSystemdataEndret {
+	YES = "YES",
+	NO = "NO",
+	NOT_ASKED = "NOT_ASKED"
 }

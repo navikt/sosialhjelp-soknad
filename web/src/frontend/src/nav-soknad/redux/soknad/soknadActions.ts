@@ -175,3 +175,16 @@ export function oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker: NavEnhet): S
 		valgtSoknadsmottaker
 	}
 }
+
+export const getErSystemdataEndret = (): SoknadActionTypes => {
+	return {
+		type: SoknadActionTypeKeys.GET_ER_SYSTEMDATA_ENDRET
+	};
+};
+
+export const setErSystemdataEndret = (erSystemdataEndret: boolean): SoknadActionTypes => {
+	return {
+		type: SoknadActionTypeKeys.SET_ER_SYSTEMDATA_ENDRET,
+		erSystemdataEndret
+	}
+};

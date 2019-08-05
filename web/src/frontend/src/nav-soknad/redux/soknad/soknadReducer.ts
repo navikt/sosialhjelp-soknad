@@ -1,7 +1,7 @@
 import {REST_STATUS} from "../../types";
 import {SoknadState} from "../reduxTypes";
 
-import {SoknadActionTypeKeys, SoknadActionTypes} from "./soknadActionTypes";
+import {ErSystemdataEndret, SoknadActionTypeKeys, SoknadActionTypes} from "./soknadActionTypes";
 
 export const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
@@ -19,7 +19,8 @@ export const defaultState: SoknadState = {
 	},
 	behandlingsId: "",
 	gjenopptattSoknad: true,
-	valgtSoknadsmottaker: undefined,
+	erSystemdataEndret: ErSystemdataEndret.NOT_ASKED,
+	valgtSoknadsmottaker: undefined
 };
 
 export default (state: SoknadState = defaultState, action: SoknadActionTypes) => {
