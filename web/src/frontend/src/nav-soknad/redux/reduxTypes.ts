@@ -62,6 +62,7 @@ export interface SoknadState {
     };
     behandlingsId: string;
     gjenopptattSoknad: boolean;
+    skalSjekkeOmSystemdataErEndret: boolean;
     erSystemdataEndret: ErSystemdataEndret;
     valgtSoknadsmottaker: NavEnhet | undefined;
 }

@@ -19,6 +19,7 @@ export const defaultState: SoknadState = {
 	},
 	behandlingsId: "",
 	gjenopptattSoknad: true,
+	skalSjekkeOmSystemdataErEndret: true,
 	erSystemdataEndret: ErSystemdataEndret.NOT_ASKED,
 	valgtSoknadsmottaker: undefined
 };
@@ -72,6 +73,7 @@ export default (state: SoknadState = defaultState, action: SoknadActionTypes) =>
 				},
 				restStatus: REST_STATUS.OK,
 				gjenopptattSoknad: false,
+				skalSjekkeOmSystemdataErEndret: false,
 				behandlingsId: action.brukerBehandlingId
 			};
 		case SoknadActionTypeKeys.HENT_SOKNAD:
@@ -139,6 +141,13 @@ export default (state: SoknadState = defaultState, action: SoknadActionTypes) =>
 				...state,
 				valgtSoknadsmottaker
 			};
+		case SoknadActionTypeKeys.SET_ER_SYSTEMDATA_ENDRET: {
+			return {
+				...state,
+				erSystemdataEndret: action.erSystemdataEndret ? ErSystemdataEndret.YES : ErSystemdataEndret.NO,
+				skalSjekkeOmSystemdataErEndret: false
+			}
+		}
 		default:
 			return state;
 	}
