@@ -10,7 +10,7 @@ jobs:
       - run:
           name: Bygger Docker image
           command:
-            docker build -t "navikt/soknadsosialhjelp:${CIRCLE_SHA1}" .
+            docker build -t "navikt/soknadsosialhjelp:${CIRCLE_SHA1}" -f Dockerfile.circle .
       - run:
           name: Pusher Docker image
           command: |
