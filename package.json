@@ -96,6 +96,7 @@
     "test": "craco test",
     "eject": "react-scripts eject"
   },
+  "homepage": "soknadsosialhjelp",
   "eslintConfig": {
     "extends": "react-app"
   },
