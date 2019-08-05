@@ -10,12 +10,12 @@ jobs:
       - run:
           name: Bygger Docker image
           command:
-            docker build -t "navikt/soknadsosialhjelp:${CIRCLE_SHA1}" -f Dockerfile.circle .
+            docker build -t "navikt/sosialhjelp-soknad:${CIRCLE_SHA1}" -f Dockerfile.circle .
       - run:
           name: Pusher Docker image
           command: |
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_LOGIN" --password-stdin
-            docker push "navikt/soknadsosialhjelp:${CIRCLE_SHA1}"
+            echo "$DEPLOYMENT_PASSWORD" | docker login -u "$DEPLOYMENT_USERNAME" --password-stdin docker.pkg.github.com
+            docker push "navikt/sosialhjelp-soknad:${CIRCLE_SHA1}"
 
 workflows:
   version: 2.1
