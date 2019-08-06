@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Sosialhjelp",
+  "name": "Soknad om økonomisk sosialhjelp",
   "icons": [
     {
       "src": "favicon.ico",
