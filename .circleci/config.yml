@@ -16,7 +16,7 @@ jobs:
           name: Pusher Docker image
           command: |
             echo "$DEPLOYMENT_PASSWORD" | docker login -u "$DEPLOYMENT_USERNAME" --password-stdin docker.pkg.github.com
-            docker push "navikt/sosialhjelp-soknad:${CIRCLE_SHA1}"
+            docker push "docker.pkg.github.com/navikt/sosialhjelp-soknad:${CIRCLE_SHA1}"
 
 workflows:
   version: 2.1
