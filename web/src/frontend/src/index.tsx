@@ -60,7 +60,7 @@ const logger = createLogger({
  */
 export function getAbsoluteBasename() {
     // @ts-ignore
-    return window.location.pathname.replace(/^\/((.+?\/)?soknadsosialhjelp).+$/, "/$1")
+    return window.location.pathname.replace(/^\/(?:-\/)?(([^/]+\/)?soknadsosialhjelp).+$/, "/$1");
 }
 
 const visReduxLogger = false;
