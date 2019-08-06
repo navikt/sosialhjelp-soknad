@@ -6,7 +6,8 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
-#      - setup_remote_docker
+      - setup_remote_docker
+          docker_layer_caching: true
       - run:
           name: Bygger Docker image
           command:
