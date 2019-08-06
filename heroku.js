@@ -10,12 +10,12 @@ app.get("*/static/*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "static", req.params[1]))
 })
 
-app.get("/soknadsosialhjelp/statisk/*", (req, res) => {
+app.get("*/soknadsosialhjelp/statisk/*", (req, res) => {
   console.log(`statisk ${req.path}`)
-  res.sendFile(path.resolve(__dirname, "soknadsosialhjelp/statisk", req.params[0]))
+  res.sendFile(path.resolve(__dirname, "soknadsosialhjelp/statisk", req.params[1]))
 })
 
-app.get("/soknadsosialhjelp/*", (req, res) => {
+app.get("*/soknadsosialhjelp/*", (req, res) => {
   console.log(`route  ${req.path}`)
   res.sendFile(path.resolve(__dirname, "index.html"))
 })
