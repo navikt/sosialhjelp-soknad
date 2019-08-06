@@ -1,12 +1,12 @@
 version: 2.1
 
 jobs:
-  bygg:
+  build:
     docker:
       - image: circleci/node:10
     steps:
       - checkout
-      - setup_remote_docker
+#      - setup_remote_docker
       - run:
           name: Bygger Docker image
           command:
@@ -19,7 +19,10 @@ jobs:
 
 workflows:
   version: 2.1
-  bygg-image:
+  build_and_deploy:
     jobs:
-      - bygg:
-          context: NAIS deployment
+      - build
+#      - release:
+#          requires:
+#            - build
+
