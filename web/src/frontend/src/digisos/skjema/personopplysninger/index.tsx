@@ -35,7 +35,8 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 
 	render() {
 		const { erGjenopptattSoknad, erSystemdataEndret, skalSjekkeOmSystemdataErEndret } = this.props;
-		const gjennopptattSoknadInfoPanel = (
+		const skjulGjenopptattInfoPanel = true;
+		const gjenopptattSoknadInfoPanel = (
 			<div className="skjema-sporsmal">
 				<Informasjonspanel
 					ikon={InformasjonspanelIkon.ELLA}
@@ -67,7 +68,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 				steg={DigisosSteg.kontakt}
 				ikon={<William/>}
 			>
-				{erGjenopptattSoknad && erSystemdataEndret === ErSystemdataEndret.NO && (gjennopptattSoknadInfoPanel)}
+				{!skjulGjenopptattInfoPanel && erGjenopptattSoknad && erSystemdataEndret === ErSystemdataEndret.NO && (gjenopptattSoknadInfoPanel)}
 				{erSystemdataEndret === ErSystemdataEndret.YES && (systemdataEndretInfoPanel)}
 				<BasisPersonalia/>
 				<Adresse/>
