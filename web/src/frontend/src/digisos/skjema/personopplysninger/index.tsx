@@ -18,7 +18,7 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 
 interface OwnProps {
 	hentVedleggsForventning?: (fakta: any) => void;
-	gjenopptattSoknad: boolean;
+	erGjenopptattSoknad: boolean;
 	skalSjekkeOmSystemdataErEndret: boolean;
 	erSystemdataEndret: ErSystemdataEndret;
 }
@@ -34,7 +34,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 	}
 
 	render() {
-		const { erSystemdataEndret, skalSjekkeOmSystemdataErEndret } = this.props;
+		const { erGjenopptattSoknad, erSystemdataEndret, skalSjekkeOmSystemdataErEndret } = this.props;
 		const gjennopptattSoknadInfoPanel = (
 			<div className="skjema-sporsmal">
 				<Informasjonspanel
@@ -67,7 +67,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 				steg={DigisosSteg.kontakt}
 				ikon={<William/>}
 			>
-				{this.props.gjenopptattSoknad && erSystemdataEndret === ErSystemdataEndret.NO && (gjennopptattSoknadInfoPanel)}
+				{erGjenopptattSoknad && erSystemdataEndret === ErSystemdataEndret.NO && (gjennopptattSoknadInfoPanel)}
 				{erSystemdataEndret === ErSystemdataEndret.YES && (systemdataEndretInfoPanel)}
 				<BasisPersonalia/>
 				<Adresse/>
@@ -79,7 +79,7 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 }
 
 const mapStateToProps = (state: State) => ({
-	gjenopptattSoknad: state.soknad.gjenopptattSoknad,
+	erGjenopptattSoknad: state.soknad.erGjenopptattSoknad,
 	skalSjekkeOmSystemdataErEndret: state.soknad.skalSjekkeOmSystemdataErEndret,
 	erSystemdataEndret: state.soknad.erSystemdataEndret
 });

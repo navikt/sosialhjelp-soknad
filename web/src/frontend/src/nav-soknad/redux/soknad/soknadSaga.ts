@@ -29,7 +29,7 @@ import {
     slettSoknadOk,
     startSoknadOk
 } from "./soknadActions";
-import {loggFeil} from "../navlogger/navloggerActions";
+import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
 import {push} from "connected-react-router";
@@ -146,12 +146,12 @@ function* getErSystemdataEndretSaga() {
         const urlPath = `soknader/${behandlingsID}/erSystemdataEndret`;
         const response = yield fetchToJson(urlPath);
         if (response) {
-            console.log("Systemdata var endret for brukeren.")
+            yield put(loggInfo("Systemdata var endret for brukeren."));
         }
         yield put(setErSystemdataEndret(response));
-    } catch (e) {
+    } catch (reason) {
         yield put(setErSystemdataEndret(false));
-        console.warn("getErSystemdataEndretSaga feilet: " + e.toString());
+        yield put(loggFeil("getErSystemdataEndretSaga feilet: " + reason));
     }
 }
 

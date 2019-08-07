@@ -61,7 +61,7 @@ export interface SoknadState {
         destinasjon: AVBRYT_DESTINASJON | null | undefined;
     };
     behandlingsId: string;
-    gjenopptattSoknad: boolean;
+    erGjenopptattSoknad: boolean;
     skalSjekkeOmSystemdataErEndret: boolean;
     erSystemdataEndret: ErSystemdataEndret;
     valgtSoknadsmottaker: NavEnhet | undefined;

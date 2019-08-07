@@ -18,7 +18,7 @@ export const defaultState: SoknadState = {
 		fakta: []
 	},
 	behandlingsId: "",
-	gjenopptattSoknad: true,
+	erGjenopptattSoknad: true,
 	skalSjekkeOmSystemdataErEndret: true,
 	erSystemdataEndret: ErSystemdataEndret.NOT_ASKED,
 	valgtSoknadsmottaker: undefined
@@ -72,7 +72,7 @@ export default (state: SoknadState = defaultState, action: SoknadActionTypes) =>
 					brukerBehandlingId: action.brukerBehandlingId
 				},
 				restStatus: REST_STATUS.OK,
-				gjenopptattSoknad: false,
+				erGjenopptattSoknad: false,
 				skalSjekkeOmSystemdataErEndret: false,
 				behandlingsId: action.brukerBehandlingId
 			};

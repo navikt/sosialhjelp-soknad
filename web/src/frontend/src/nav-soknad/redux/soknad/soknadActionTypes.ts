@@ -65,7 +65,6 @@ export type SoknadActionTypes =
 	| SettAvbrytSoknadSjekk
 	| FinnOgOppdaterSoknadsmottakerStatus
 	| OppdaterSoknadsmottakerStatus
-	| SettAvbrytSoknadSjekk
 	| GetErSystemdataEndret
 	| SetErSystemdataEndret
 
@@ -204,7 +203,6 @@ export interface SetErSystemdataEndret {
 	type: SoknadActionTypeKeys.SET_ER_SYSTEMDATA_ENDRET;
 	erSystemdataEndret: boolean;
 }
-
 
 export enum ErSystemdataEndret {
 	YES = "YES",
