@@ -2,7 +2,7 @@
   "name": "sosialhjelp-soknad",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "/soknadsosialhjelp",
   "dependencies": {
     "@types/react-inlinesvg": "^0.8.1",
     "babel-polyfill": "^6.26.0",
