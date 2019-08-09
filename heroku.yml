@@ -2,4 +2,4 @@ build:
   docker:
     web: Dockerfile.heroku
   config:
-    HEROKU_APP_NAME: #{process.env.HEROKU_APP_NAME}
+    HEROKU_APP_NAME: "vises-dette-hvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
