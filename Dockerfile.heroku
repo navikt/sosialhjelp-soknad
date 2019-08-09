@@ -1,7 +1,8 @@
 FROM node as node-builder
 
 ARG HEROKU_APP_NAME
-RUN echo "-------------------------------------HEROKU_APP_NAME er: $HEROKU_APP_NAME"
+ENV app_name=&HEROKU_APP_NAME
+RUN echo "-------------------------------------HEROKU_APP_NAME er: $app_name"
 RUN printenv
 #ADD / /source
 #WORKDIR /source

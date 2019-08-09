@@ -1,5 +1,5 @@
 build:
   docker:
     web: Dockerfile.heroku
-  config:
-    HEROKU_APP_NAME: "variabel som er definert i heroku yaml"
+#  config:
+#    HEROKU_APP_NAME: "variabel som er definert i heroku yaml"
