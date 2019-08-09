@@ -2,6 +2,7 @@ FROM node as node-builder
 
 ARG HEROKU_APP_NAME
 RUN echo "-------------------------------------HEROKU_APP_NAME er: $HEROKU_APP_NAME"
+RUN printenv
 #ADD / /source
 #WORKDIR /source
 #ENV CI=true
