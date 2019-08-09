@@ -1,14 +1,15 @@
 import {connect} from "react-redux";
-import {InjectedIntlProps, injectIntl, FormattedMessage, FormattedHTMLMessage} from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import {State} from "../../redux/reducers";
 import * as React from "react";
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import BannerEttersendelse from "./bannerEttersendelse";
 import {
-    lesEttersendelser, opprettEttersendelse,
+    lesEttersendelser,
+    opprettEttersendelse,
     sendEttersendelse
 } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
-import {REST_STATUS} from "../../../nav-soknad/types/restTypes";
+import {REST_STATUS} from "../../../nav-soknad/types";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
 import {MargIkoner} from "./margIkoner";
@@ -17,9 +18,8 @@ import {
     EttersendelseFeilkode,
     EttersendelseVedleggBackend
 } from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
-import {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
-import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
 import {Prompt} from "react-router";
 import {erEttersendelseSide, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
 import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";

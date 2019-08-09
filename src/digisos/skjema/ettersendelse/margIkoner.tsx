@@ -3,6 +3,7 @@ import Icon from "nav-frontend-ikoner-assets";
 import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon";
 import NavFrontendChevron from "nav-frontend-chevron";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import DigisosIkonKonvolutt from "../../../nav-soknad/components/digisosIkon/digisosKonvolutt";
 
 enum MargIkoner {
 	OK = "OK",
@@ -38,7 +39,7 @@ const MargIkon: React.FC<{ ikon: MargIkoner }> = ({ ikon }) => {
 		case MargIkoner.SPINNER:
 			return <NavFrontendSpinner type="XS" />;
 		case MargIkoner.KONVOLUTT:
-			return <DigisosIkon navn="konvolutt" className="ettersendelse__ikon"/>;
+			return <DigisosIkonKonvolutt size={"23"}/>;
 		case MargIkoner.SØPPELBØTTE:
 			return (<DigisosIkon
 					navn="trashcan"

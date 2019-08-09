@@ -12,7 +12,7 @@ app.get("*/static/*", (req, res) => {
 
 app.get("/soknadsosialhjelp/statisk/*", (req, res) => {
   console.log(`statisk ${req.path}`)
-  res.sendFile(path.resolve(__dirname, "soknadsosialhjelp/statisk", req.params[0]))
+  res.sendFile(path.resolve(__dirname, "statisk", req.params[0]))
 })
 
 app.get("/soknadsosialhjelp/*", (req, res) => {

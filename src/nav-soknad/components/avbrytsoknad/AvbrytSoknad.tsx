@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { DispatchProps, SoknadAppState } from "../../redux/reduxTypes";
 import { AVBRYT_DESTINASJON } from "../../redux/soknad/soknadActionTypes";
 import { navigerTilDittNav } from "../../redux/navigasjon/navigasjonActions";
-import {getAbsoluteBasename} from "../../../index";
+import {getContextPathForStaticContent} from "../../../configuration";
 
 interface StateProps {
 	avbrytDialogSynlig: boolean;
@@ -61,7 +61,7 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 			>
 				<div className="avbrytmodal">
 					<div className="avbrytmodal__infoikon_wrapper">
-						<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_ark.svg`} alt={""}/>
+						<img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""}/>
 					</div>
 
 					<Innholdstittel className="blokk-s avbrytmodal__overskrift">

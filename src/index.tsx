@@ -25,6 +25,7 @@ import {avbrytSoknad} from "./nav-soknad/redux/soknad/soknadActions";
 import {SoknadState} from "./nav-soknad/redux/reduxTypes";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
 import {visSoknadAlleredeSendtPrompt} from "./nav-soknad/redux/ettersendelse/ettersendelseActions";
+import {getContextPathBasename} from "./configuration";
 
 
 const history = require('history').createBrowserHistory({
@@ -47,21 +48,13 @@ const history = require('history').createBrowserHistory({
             callback(true);
         }
     },
-    basename: getAbsoluteBasename()
+    basename: getContextPathBasename()
 });
 
 const logger = createLogger({
     collapsed: true
 });
 
-
-/**
- * Resolves basename in a pathname independent way
- */
-export function getAbsoluteBasename() {
-    // @ts-ignore
-    return window.location.pathname.replace(/^\/(([^/]+\/)?soknadsosialhjelp).+$/, "$1")
-}
 
 const visReduxLogger = false;
 

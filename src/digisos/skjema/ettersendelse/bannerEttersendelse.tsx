@@ -1,6 +1,6 @@
 import * as React from "react";
 import EllaForfra from "../../../nav-soknad/components/svg/EllaForfra";
-import {getAbsoluteBasename} from "../../../index";
+import {getContextPathForStaticContent} from "../../../configuration";
 
 const BannerEttersendelse: React.StatelessComponent<{ children: React.ReactNode } & {}> = ({ children }) => {
 	return (
@@ -14,8 +14,8 @@ const BannerEttersendelse: React.StatelessComponent<{ children: React.ReactNode 
 					</div>
 					<span className="banner-ettersendelse__ettersendelse__innhold__ella_forfra">
 						<EllaForfra />
+						<img src={`${getContextPathForStaticContent()}/statisk/bilder/illustrasjon_laptop.svg`} alt={""} />
 					</span>
-					<img src={`/${getAbsoluteBasename()}/statisk/bilder/illustrasjon_laptop.svg`} alt={""} />
 				</div>
 			</div>
 		</div>

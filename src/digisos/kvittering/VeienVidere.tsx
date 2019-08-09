@@ -3,7 +3,7 @@ import { FormattedHTMLMessage, FormattedMessage } from "react-intl";
 import { Panel } from "nav-frontend-paneler";
 import { Innholdstittel, Undertittel } from "nav-frontend-typografi";
 import SVG from "../../nav-soknad/components/svg/SVGImage";
-import {getAbsoluteBasename} from "../../index";
+import {getContextPathForStaticContent} from "../../configuration";
 
 interface Props {
 	prop?: any;
@@ -39,7 +39,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 		<Panel className="panel--noPadding">
 			<div className="panelIllustrasjon">
 				<img
-					src={`/${getAbsoluteBasename()}/statisk/bilder/kvittering-illustrasjon.svg`}
+					src={`${getContextPathForStaticContent()}/statisk/bilder/kvittering-illustrasjon.svg`}
 					alt=""
 					className="kvittering-illustration"
 				/>
@@ -47,7 +47,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 			<div className="panel-padding">
 				<div className="blokk-xl">
 					<Avsnitt
-						icon={`/${getAbsoluteBasename()}/statisk/bilder/snakkebobler.svg`}
+						icon={`${getContextPathForStaticContent()}/statisk/bilder/snakkebobler.svg`}
 						tittelId="kvittering.samtale.tittel"
 						tekstId="kvittering.samtale.tekst"
 					/>
@@ -55,7 +55,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 
 				<div className="blokk-xl">
 					<Avsnitt
-						icon={`/${getAbsoluteBasename()}/statisk/bilder/kalender.svg`}
+						icon={`${getContextPathForStaticContent()}/statisk/bilder/kalender.svg`}
 						tittelId="kvittering.saksbehandling.tittel"
 						tekstId="kvittering.saksbehandling.tekst"
 					/>
@@ -63,7 +63,7 @@ const VeienVidere: React.StatelessComponent<Props> = (props: Props) => (
 
 				<div className="blokk-xl">
 					<Avsnitt
-						icon={`/${getAbsoluteBasename()}/statisk/bilder/person.svg`}
+						icon={`${getContextPathForStaticContent()}/statisk/bilder/person.svg`}
 						tittelId="kvittering.situasjon.tittel"
 						tekstId="kvittering.situasjon.tekst"
 					/>
