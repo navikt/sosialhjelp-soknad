@@ -48,6 +48,7 @@ function get_heroku_app_name {
 
 function deploy_to_heroku {
     heroku stack:set container -a $APP_NAME
+    # TODO Sjekk om vi trenger denne: heroku labs:enable runtime-dyno-metadata -a $APP_NAME
     git push $APP_NAME $BRANCH_NAME:master
 }
 
