@@ -9,9 +9,9 @@ FROM node as node-image
 
 WORKDIR /app
 COPY --from=node-builder /source/build /app
-RUN echo "Fra config yaml, variable test: $test"
 COPY heroku.js /app
 COPY heroku-index.html /app/index.html
+RUN node configure-heroku-index.js
 
 RUN npm install express
 
