@@ -1,5 +1,5 @@
 import {SagaIterator} from "redux-saga";
-import {call, put, takeEvery} from "redux-saga/effects";
+import {call, put, takeEvery, select} from "redux-saga/effects";
 import {
     fetchDelete,
     fetchKvittering,
@@ -25,14 +25,15 @@ import {
     hentKvitteringOk, hentSoknadOk, oppdaterSoknadsmottakerStatus,
     opprettSoknadOk,
     resetSoknad,
-    sendSoknadOk,
+    sendSoknadOk, setErSystemdataEndret,
     slettSoknadOk,
     startSoknadOk
 } from "./soknadActions";
-import {loggFeil} from "../navlogger/navloggerActions";
+import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
 import {push} from "connected-react-router";
+import {selectBrukerBehandlingId} from "../selectors";
 
 export interface OpprettSoknadResponse {
     brukerBehandlingId: string;
@@ -139,6 +140,21 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
     }
 }
 
+function* getErSystemdataEndretSaga() {
+    try {
+        const behandlingsID = yield select(selectBrukerBehandlingId);
+        const urlPath = `soknader/${behandlingsID}/erSystemdataEndret`;
+        const response = yield fetchToJson(urlPath);
+        if (response) {
+            yield put(loggInfo("Systemdata var endret for brukeren."));
+        }
+        yield put(setErSystemdataEndret(response));
+    } catch (reason) {
+        yield put(setErSystemdataEndret(false));
+        yield put(loggFeil("getErSystemdataEndretSaga feilet: " + reason));
+    }
+}
+
 export {
     opprettSoknadSaga,
     startSoknadSaga,
@@ -155,6 +171,7 @@ function* soknadSaga(): SagaIterator {
     yield takeEvery(SoknadActionTypeKeys.SEND_SOKNAD, sendSoknadSaga);
     yield takeEvery(SoknadActionTypeKeys.HENT_KVITTERING, hentKvitteringSaga);
     yield takeEvery(SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS, finnOgOppdaterSoknadsmottakerStatusSaga);
+    yield takeEvery(SoknadActionTypeKeys.GET_ER_SYSTEMDATA_ENDRET, getErSystemdataEndretSaga);
 }
 
 export default soknadSaga;

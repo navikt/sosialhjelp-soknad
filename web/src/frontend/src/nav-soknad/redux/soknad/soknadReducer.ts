@@ -1,7 +1,7 @@
 import {REST_STATUS} from "../../types";
 import {SoknadState} from "../reduxTypes";
 
-import {SoknadActionTypeKeys, SoknadActionTypes} from "./soknadActionTypes";
+import {ErSystemdataEndret, SoknadActionTypeKeys, SoknadActionTypes} from "./soknadActionTypes";
 
 export const defaultState: SoknadState = {
 	restStatus: REST_STATUS.INITIALISERT,
@@ -18,8 +18,10 @@ export const defaultState: SoknadState = {
 		fakta: []
 	},
 	behandlingsId: "",
-	gjenopptattSoknad: true,
-	valgtSoknadsmottaker: undefined,
+	erGjenopptattSoknad: true,
+	skalSjekkeOmSystemdataErEndret: true,
+	erSystemdataEndret: ErSystemdataEndret.NOT_ASKED,
+	valgtSoknadsmottaker: undefined
 };
 
 export default (state: SoknadState = defaultState, action: SoknadActionTypes) => {
@@ -70,7 +72,8 @@ export default (state: SoknadState = defaultState, action: SoknadActionTypes) =>
 					brukerBehandlingId: action.brukerBehandlingId
 				},
 				restStatus: REST_STATUS.OK,
-				gjenopptattSoknad: false,
+				erGjenopptattSoknad: false,
+				skalSjekkeOmSystemdataErEndret: false,
 				behandlingsId: action.brukerBehandlingId
 			};
 		case SoknadActionTypeKeys.HENT_SOKNAD:
@@ -138,6 +141,13 @@ export default (state: SoknadState = defaultState, action: SoknadActionTypes) =>
 				...state,
 				valgtSoknadsmottaker
 			};
+		case SoknadActionTypeKeys.SET_ER_SYSTEMDATA_ENDRET: {
+			return {
+				...state,
+				erSystemdataEndret: action.erSystemdataEndret ? ErSystemdataEndret.YES : ErSystemdataEndret.NO,
+				skalSjekkeOmSystemdataErEndret: false
+			}
+		}
 		default:
 			return state;
 	}

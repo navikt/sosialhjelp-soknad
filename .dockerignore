@@ -1,0 +1,17 @@
+# Ignore all files by default
+*
+
+# White list only the required files
+
+!heroku.js
+#!build/
+!src/
+!public/
+
+!package.json
+!package-lock.json
+!nais.yaml
+!craco.config.js
+!build
+!heroku.js
+!web/

@@ -5,7 +5,7 @@ import {Infofaktum, Kvittering, REST_STATUS, Soknad} from "../types";
 import {ApplikasjonsfeilState} from "./applikasjonsfeil/applikasjonsfeilReducer";
 import {TilgangState} from "./tilgang/tilgangTypes";
 import {LedetekstState} from "./ledetekster/ledeteksterTypes";
-import {AVBRYT_DESTINASJON} from "./soknad/soknadActionTypes";
+import {AVBRYT_DESTINASJON, ErSystemdataEndret} from "./soknad/soknadActionTypes";
 import {InitState} from "./init/initTypes";
 import {FeatureTogglesApiType} from "./featuretoggles/featureTogglesTypes";
 import {VedleggState} from "./vedlegg/vedleggTypes";
@@ -61,6 +61,8 @@ export interface SoknadState {
         destinasjon: AVBRYT_DESTINASJON | null | undefined;
     };
     behandlingsId: string;
-    gjenopptattSoknad: boolean;
+    erGjenopptattSoknad: boolean;
+    skalSjekkeOmSystemdataErEndret: boolean;
+    erSystemdataEndret: ErSystemdataEndret;
     valgtSoknadsmottaker: NavEnhet | undefined;
 }
