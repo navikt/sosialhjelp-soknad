@@ -47,7 +47,7 @@ class Skatt extends React.Component<Props, {}> {
             const organisasjonerJSX: JSX.Element[] = skattbarInntekt.organisasjoner.map((organisasjon: Organisasjon) => {
                 const fom = <FormattedDate value={organisasjon.fom!}/>;
                 const tom = <FormattedDate value={organisasjon.tom!}/>;
-                const lenkeSti = `https://skatt.skatteetaten.no/web/innsynamelding/inntekt/${organisasjon.orgnr}
+                const lenkeSti = `https://skatt.skatteetaten.no/web/innsynamelding/inntekt${organisasjon.orgnr ? "/" + organisasjon.orgnr : ""}
 									?year=${organisasjon.tom!.slice(0, 4)}&month=${organisasjon.tom!.slice(5, 7)}`;
 
                 return (
