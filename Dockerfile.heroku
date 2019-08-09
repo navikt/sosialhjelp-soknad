@@ -12,7 +12,7 @@ COPY --from=node-builder /source/build /app
 COPY heroku.js /app
 COPY heroku-index.html /app/index.html
 COPY configure-heroku-index.js /app
-RUN node configure-heroku-index.js
+RUN echo $HEROKU_APP_NAME && node configure-heroku-index.js
 
 RUN npm install express
 
