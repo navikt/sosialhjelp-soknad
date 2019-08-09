@@ -1,5 +1,6 @@
 FROM node as node-builder
 
+ARG HEROKU_APP_NAME
 ADD / /source
 WORKDIR /source
 RUN echo "-------------------------------------HEROKU_APP_NAME er: $HEROKU_APP_NAME"
