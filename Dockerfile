@@ -8,5 +8,5 @@ FROM navikt/pus-decorator
 ENV APPLICATION_NAME=soknadsosialhjelp
 ENV HEADER_TYPE=WITH_MENU
 ENV FOOTER_TYPE=WITHOUT_ALPHABET
-ENV CONTEXT_PATH=/soknadsosialhjelp/
+ENV CONTEXT_PATH=/
 COPY --from=node-builder /source/build /app
