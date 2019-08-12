@@ -83,7 +83,7 @@ class Informasjon extends React.Component<Props, {fornavn: string}> {
 										{this.renderHilsen()}
 										<FormattedMessage id="informasjon.hilsen.tittel"/>
 									</Snakkeboble>
-									<img src={`/${getAbsoluteBasename()}/statisk/bilder/ella_blunk.svg`} alt="" />
+									<img src={`/statisk/bilder/ella_blunk.svg`} alt="" />
 								</span>
 
 								<Panel className="informasjon-viktig">
