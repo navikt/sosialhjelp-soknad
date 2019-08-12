@@ -5,7 +5,7 @@ import {
 } from "../../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {InjectedIntlProps, injectIntl} from "react-intl";
-import {getAbsoluteBasename} from "../../../../index";
+import {getContextPathForStaticContent} from "../../../../configuration";
 
 interface OwnProps {
     opplysning: Opplysning
@@ -25,7 +25,7 @@ const VedleggSlettet: React.FC<Props> = (props: Props) => {
             <div className="vedlegg_slettet_boks">
                 <div className="vedlegg_slettet_ikon">
                     <div className="vedlegg_slettet_border">
-                        <img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_reportProblemCircle.svg`} alt=""/>
+                        <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_reportProblemCircle.svg`} alt=""/>
                     </div>
                 </div>
                 <div className="vedlegg_slettet_tekst">

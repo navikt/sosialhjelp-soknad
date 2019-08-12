@@ -9,6 +9,11 @@ export function erDev(): boolean {
     return (url.indexOf("localhost:3000") > 0 || url.indexOf("devillo.no:3000") > 0);
 }
 
+export function erHerokuFeatureBranch(): boolean {
+    const url = window.location.href;
+    return url.indexOf("digisos-test") > 0
+}
+
 export function kjorerJetty(): boolean {
     const url = window.location.href;
     return url.indexOf(":8189") > 0;

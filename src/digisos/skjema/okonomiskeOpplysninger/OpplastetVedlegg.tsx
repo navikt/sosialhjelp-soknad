@@ -3,7 +3,7 @@ import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
 import AriaText from "../../../nav-soknad/components/aria/AriaText";
 import {Fil} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
-import {getAbsoluteBasename} from "../../../index";
+import {getContextPathForStaticContent} from "../../../configuration";
 
 interface Props {
     fil: Fil;
@@ -36,7 +36,7 @@ export default class OpplastetVedlegg extends React.Component<AllProps, {}> {
                         onClick={() => this.handleSlett(fil)}
                     >
                         <AriaText>Slett {fil.filNavn}</AriaText>
-                        <img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_trashcan.svg`} alt={""} />
+                        <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_trashcan.svg`} alt={""} />
                     </button>
                 </span>
             </div>

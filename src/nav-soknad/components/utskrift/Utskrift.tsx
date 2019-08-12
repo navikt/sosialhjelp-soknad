@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Sidetittel } from "nav-frontend-typografi";
+import {baseContextPath} from "../../../configuration";
 
 /**
  * Innhold som legges her er skjult på skjerm, men vises på utskrift
@@ -33,7 +34,7 @@ const Utskrift: React.StatelessComponent<Props> = props => {
 		<div className="utskrift" role="presentation">
 			<div className="utskrift__hode">
 				<img
-					src="/soknadsosialhjelp/statisk/bilder/nav-logo.png"
+					src={`/${baseContextPath}/statisk/bilder/nav-logo.png`}
 					alt=""
 					width="90"
 					height="56"

@@ -6,7 +6,7 @@ import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
 import { State } from "../redux/reducers";
 import BehandlingAvPersonopplysningerModal from "./BehandlingAvPersonopplysningerModal";
 import { Undertittel } from "nav-frontend-typografi";
-import {getAbsoluteBasename} from "../../index";
+import {getContextPathForStaticContent} from "../../configuration";
 
 type Props = InjectedIntlProps & DispatchProps;
 
@@ -23,7 +23,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 
 						<div className="personopplysning-blokk blokk-s">
 							<div className="ikon">
-								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_papirstabel.svg`} alt={""}/>
+								<img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_papirstabel.svg`} alt={""}/>
 							</div>
 								<div className="innhold">
 								<h3 className="typo-element">
@@ -34,7 +34,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 						</div>
 						<div className="personopplysning-blokk blokk-s">
 							<div className="ikon">
-								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_blyanter.svg`} alt={""}/>
+								<img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_blyanter.svg`} alt={""}/>
 							</div>
 							<div className="innhold">
 								<h3 className="typo-element">
@@ -45,7 +45,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 						</div>
 						<div className="personopplysning-blokk blokk-s">
 							<div className="ikon">
-								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_brevkonvolutt.svg`} alt={""}/>
+								<img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_brevkonvolutt.svg`} alt={""}/>
 							</div>
 							<div className="innhold">
 								<h3 className="typo-element">
@@ -57,7 +57,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 
 						<div className="personopplysning-blokk blokk-m">
 							<div className="ikon">
-								<img src={`/${getAbsoluteBasename()}/statisk/bilder/ikon_ark.svg`} alt={""}/>
+								<img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""}/>
 							</div>
 							<div className="innhold">
 								<h3 className="typo-element">

@@ -5,6 +5,7 @@ import {FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import {connect} from "react-redux";
 import {DispatchProps, SoknadAppState} from "../../redux/reduxTypes";
 import {visSoknadAlleredeSendtPrompt} from "../../redux/ettersendelse/ettersendelseActions";
+import {getContextPathForStaticContent} from "../../../configuration";
 
 interface StateProps {
     brukerBehandlingId: string;
@@ -32,7 +33,7 @@ class SoknadAlleredeSendtPromt extends React.Component<Props, {}> {
             >
                 <div className="avbrytmodal">
                     <div className="avbrytmodal__infoikon_wrapper">
-                        <img src="/soknadsosialhjelp/statisk/bilder/ikon_ark.svg" alt={""}/>
+                        <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""}/>
                     </div>
 
                     <Innholdstittel className="blokk-s avbrytmodal__overskrift">
