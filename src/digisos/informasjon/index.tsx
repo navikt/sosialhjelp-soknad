@@ -16,7 +16,6 @@ import { Panel } from "nav-frontend-paneler";
 import { opprettSoknad } from "../../nav-soknad/redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
-import {getAbsoluteBasename} from "../../index";
 import {State} from "../redux/reducers";
 
 
