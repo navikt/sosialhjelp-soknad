@@ -2,7 +2,14 @@ import {REST_FEIL} from "../types/restFeilTypes";
 import {erMockMiljoEllerDev} from "./index";
 import {push} from "connected-react-router";
 import {Sider} from "../redux/navigasjon/navigasjonTypes";
-import { put } from 'redux-saga/effects';
+import {put} from 'redux-saga/effects';
+import {
+    API_CONTEXT_PATH,
+    CONTEXT_PATH,
+    getRedirectPathname,
+    HEROKU_API_MASTER_APP_NAME,
+    HEROKU_MASTER_APP_NAME
+} from "../../configuration";
 
 export function erDev(): boolean {
     const url = window.location.href;
@@ -17,36 +24,29 @@ export function kjorerJetty(): boolean {
 export function getApiBaseUrl(): string {
     if (erDev()) {
         // Kjør mot lokal soknadsosialhjelp-server:
-        return "http://localhost:8181/soknadsosialhjelp-server/";
+        return `http://localhost:8181/${API_CONTEXT_PATH}/`;
 
         // Kjør mot lokal mock backend:
         // return "http://localhost:3001/sendsoknad/";
     }
     if (window.location.href.indexOf("localhost:8080") >= 0) {
-        return "http://localhost:8181/soknadsosialhjelp-server/";
+        return `http://localhost:8181/${API_CONTEXT_PATH}/`;
     }
     if (window.location.origin.indexOf("nais.oera") >= 0) {
-        return window.location.origin.replace("soknadsosialhjelp", "soknadsosialhjelp-server") + "/soknadsosialhjelp-server/";
+        return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${API_CONTEXT_PATH}/`;
     }
     if (window.location.origin.indexOf("heroku") >= 0) {
-        return window.location.origin.replace("sosialhjelp-test", "sosialhjelp-api-test") + "/soknadsosialhjelp-server/";
+        return window.location.origin.replace(`${HEROKU_MASTER_APP_NAME}`, `${HEROKU_API_MASTER_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
     }
-	return kjorerJetty() ? "http://127.0.0.1:8181/soknadsosialhjelp-server/" : getAbsoluteApiUrl();
+	return kjorerJetty() ? `http://127.0.0.1:8181/${API_CONTEXT_PATH}/` : getAbsoluteApiUrl();
 }
 
-/**
- * Resolves API URL in a pathname independent way
- */
 function getAbsoluteApiUrl() {
-	return window.location.pathname.replace(/^(\/([^/]+\/)?soknadsosialhjelp).+$/, "$1-server/")
+	return window.location.pathname.replace(`/^(\/([^/]+\/)?${CONTEXT_PATH}).+$/`, "$1-server/")
 }
 
 function determineCredentialsParameter() {
     return window.location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin";
-}
-
-export function getRedirectPathname(): string {
-    return '/soknadsosialhjelp/link';
 }
 
 export function getRedirectPath(): string {
@@ -58,11 +58,9 @@ export function getRedirectPath(): string {
 
 function getServletBaseUrl(): string {
     if (erDev()) {
-        // Kjør mot lokal jetty
-        // return "http://localhost:8189/soknadsosialhjelp/";
         return "http://localhost:3001/sendsoknad/";
     }
-    return "/soknadsosialhjelp/";
+    return `/${CONTEXT_PATH}/`;
 }
 
 export function downloadAttachedFile(urlPath: string): void {
@@ -86,15 +84,7 @@ const getHeaders = () => {
         "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
         "accept": "application/json, text/plain, */*"
     })
-}
-
-/* serverRequest():
- *
- *  - Gjenta serverkall som feiler inntil 6 ganger før det kastes exception
- *  - Ikke gjenta det samme PUT, POST eller DELETE hvis under 2 sekuder
- *    siden forrige gang
- */
-
+};
 
 export const serverRequest = (method: string, urlPath: string, body: string, retries = 6) => {
     const OPTIONS: RequestInit = {
