@@ -14,11 +14,13 @@ export function getContextPathForStaticContent() {
     } else {
         return `/${baseContextPath}`
     }
-    // return window.location.pathname.replace(`/^\/(([^/]+\/)?${baseContextPath}).+$/`, "$1")
 }
 
 export function getContextPathBasename() {
     // @ts-ignore
-    // return window.location.pathname.replace(`/^\/(([^/]+\/)?${baseContextPath}).+$/`, "$1")
-    return baseContextPath
+    // return window.location.pathname.replace(`/^/(([^/]+/)?${baseContextPath}).+$/`, "$1")
+
+    // return window.location.pathname.replace( /^\/(([^/]+\/)?soknadsosialhjelp).+$/, "/$1");
+    return window.location.pathname.replace( /(.+soknadsosialhjelp)(.+)/, "$1");
+    // return "/soknadsosialhjelp"
 }

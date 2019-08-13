@@ -56,7 +56,6 @@ const logger = createLogger({
 });
 
 
-
 const visReduxLogger = false;
 
 function configureStore() {
