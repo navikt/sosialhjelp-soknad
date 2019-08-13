@@ -9,8 +9,8 @@ export function getContextPathForStaticContent() {
 
     if (erDev()){
         return "";
-    } else if (erHerokuFeatureBranch()){
-        return ""
+    } else if (erHerokuFeatureBranch(window.location.pathname)){
+        return window.location.pathname.replace(/^(.+?soknadsosialhjelp)(.+)$/, "$1")
     } else {
         return `/${baseContextPath}`
     }
