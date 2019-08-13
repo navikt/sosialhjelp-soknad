@@ -5,16 +5,12 @@ export const baseContextPath = "soknadsosialhjelp";
 /**
  * Resolves basename in a pathname independent way
  */
-export function getContextPathForStaticContent() {
+export const getContextPathForStaticContent = (): string => {
+    const context_path = window.location.pathname.replace(/^(.+?soknadsosialhjelp)(.+)$/, "$1");
+    return erDev() ? "" : context_path
+};
 
-    if (erDev()){
-        return "";
-    } else if (erHerokuFeatureBranch(window.location.pathname)){
-        return window.location.pathname.replace(/^(.+?soknadsosialhjelp)(.+)$/, "$1")
-    } else {
-        return `/${baseContextPath}`
-    }
-}
+
 
 export function getContextPathBasename() {
     // @ts-ignore
