@@ -9,11 +9,6 @@ export function erDev(): boolean {
     return (url.indexOf("localhost:3000") > 0 || url.indexOf("devillo.no:3000") > 0);
 }
 
-export function erHerokuFeatureBranch(path: string): boolean {
-    const app_name: string | null = path.replace(/^(.+)?(\/soknadsosialhjelp)(.+)$/, "$1");
-    return app_name.length > 0;
-}
-
 export function kjorerJetty(): boolean {
     const url = window.location.href;
     return url.indexOf(":8189") > 0;

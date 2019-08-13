@@ -1,16 +1,18 @@
-import {erDev, erHerokuFeatureBranch} from "../nav-soknad/utils/rest-utils";
+import {erDev} from "../nav-soknad/utils/rest-utils";
 
 export const baseContextPath = "soknadsosialhjelp";
 
-/**
- * Resolves basename in a pathname independent way
- */
+
+
+
 export const getContextPathForStaticContent = (): string => {
-    const context_path = window.location.pathname.replace(/^(.+?soknadsosialhjelp)(.+)$/, "$1");
+    const context_path = getContextPathFromWindowLocation(window.location.pathname);
     return erDev() ? "" : context_path
 };
 
-
+export const getContextPathFromWindowLocation = (pathname: string ): string => {
+    return pathname.replace(/^(.+?soknadsosialhjelp)(.+)$/, "$1")
+};
 
 export function getContextPathBasename() {
     // @ts-ignore
