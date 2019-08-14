@@ -23,7 +23,6 @@ import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import {Prompt} from "react-router";
 import {erEttersendelseSide, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
 import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";
-import DigisosIkonKonvolutt from "../../../nav-soknad/components/digisosIkon/digisosKonvolutt";
 
 interface OwnProps {
     manglendeVedlegg: EttersendelseVedleggBackend[];
