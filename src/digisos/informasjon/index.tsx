@@ -4,7 +4,7 @@ import {RouterProps} from "react-router";
 import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl,} from "react-intl";
 import DocumentTitle from "react-document-title";
 import Knapp from "nav-frontend-knapper";
-import {getIntlTextOrKey} from "../../nav-soknad/utils/intlUtils";
+import {getIntlTextOrKey} from "../../nav-soknad/utils";
 import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
 import IkkeTilgang from "./IkkeTilgang";
 import {TilgangSperrekode} from "../../nav-soknad/redux/tilgang/tilgangTypes";
