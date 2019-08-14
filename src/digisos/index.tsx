@@ -62,6 +62,7 @@ class App extends React.Component<InjectedIntlProps, {}> {
                     <Route path={`/serverfeil`} component={ServerFeil}/>
                     <Route component={SideIkkeFunnet}/>
 				</Switch>
+
 			</span>
         );
     }

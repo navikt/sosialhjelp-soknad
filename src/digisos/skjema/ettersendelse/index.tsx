@@ -9,7 +9,7 @@ import {
     opprettEttersendelse,
     sendEttersendelse
 } from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
-import {REST_STATUS} from "../../../nav-soknad/types/restTypes";
+import {REST_STATUS} from "../../../nav-soknad/types";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
 import {MargIkoner} from "./margIkoner";
@@ -23,6 +23,7 @@ import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import {Prompt} from "react-router";
 import {erEttersendelseSide, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
 import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";
+import DigisosIkonKonvolutt from "../../../nav-soknad/components/digisosIkon/digisosKonvolutt";
 
 interface OwnProps {
     manglendeVedlegg: EttersendelseVedleggBackend[];
@@ -214,7 +215,6 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                         <h3><FormattedHTMLMessage id="ettersendelse.vedtak.tittel"/></h3>
                         <p><FormattedHTMLMessage id="ettersendelse.vedtak.info"/></p>
                     </AvsnittMedMarger>
-
 
                 </div>
                 <span>
