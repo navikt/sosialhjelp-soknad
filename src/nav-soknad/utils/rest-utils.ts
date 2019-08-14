@@ -42,7 +42,7 @@ export function getApiBaseUrl(): string {
 }
 
 function getAbsoluteApiUrl() {
-	return window.location.pathname.replace(`/^(/([^/]+/)?${CONTEXT_PATH}).+$/`, "$1-server/")
+	return window.location.pathname.replace(/^(.+soknadsosialhjelp)(.+)$/, "$1-server/")
 }
 
 function determineCredentialsParameter() {
