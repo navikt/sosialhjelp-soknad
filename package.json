@@ -89,12 +89,16 @@
     "@types/react-router-dom": "^4.3.4",
     "@types/react-scroll": "^1.5.4",
     "@types/redux-logger": "^3.0.7",
-    "replace": "^1.1.0"
+    "replace": "^1.1.0",
+    "testcafe": "^1.1.4",
+    "testcafe-browser-provider-saucelabs": "^1.7.0",
+    "testcafe-reporter-xunit": "^2.1.0"
   },
   "scripts": {
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
+    "testcafe": "testcafe \"saucelabs:Chrome@beta:Windows 10\" testcafe/**/* -r xunit:/tmp/test-results/res.xml",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
