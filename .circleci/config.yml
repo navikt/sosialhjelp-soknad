@@ -1,5 +1,4 @@
 version: 2.1
-
 orbs:
   sauce-connect: saucelabs/sauce-connect@1.0.1
 jobs:
@@ -31,15 +30,40 @@ jobs:
             docker push $DOCKER_TAG
   testcafe:
     docker:
+      # specify the version you desire here
       - image: circleci/node:10.14-browsers
-    steps:
-      - checkout
-      - run:
-          name: Install
-          command: npm install
-      - run:
-          name: Run testcafe tests
-          command: npm run testcafe
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+      working_directory: ~/repo
+
+      steps:
+        - checkout
+
+
+        # Download and cache dependencies
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
+
+        - run: npm install
+
+        - save_cache:
+            paths:
+              - node_modules
+            key: v1-dependencies-{{ checksum "package.json" }}
+
+        # run tests!
+        - run: npm testcafe
+
+        - store_test_results:
+            path: /tmp/test-results
+
 
 workflows:
   version: 2.1
