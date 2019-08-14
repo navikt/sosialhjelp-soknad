@@ -98,7 +98,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "testcafe": "testcafe \"saucelabs:Chrome@beta:Windows 10\" testcafe/**/* -r xunit:/tmp/test-results/res.xml",
+    "testcafe": "testcafe chrome testcafe/**/* -r xunit:/tmp/test-results/res.xml",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
