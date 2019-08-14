@@ -31,7 +31,7 @@ jobs:
             docker push $DOCKER_TAG
   testcafe:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:10.14-browsers
     steps:
       - checkout
       - run:
