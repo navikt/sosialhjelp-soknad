@@ -41,8 +41,12 @@ export function getApiBaseUrl(): string {
 	return kjorerJetty() ? `http://127.0.0.1:8181/${API_CONTEXT_PATH}/` : getAbsoluteApiUrl();
 }
 
-function getAbsoluteApiUrl() {
-	return window.location.pathname.replace(/^(.+soknadsosialhjelp)(.+)$/, "$1-server/")
+export function getAbsoluteApiUrl() {
+    return getAbsoluteApiUrlRegex(window.location.pathname);
+}
+
+export function getAbsoluteApiUrlRegex(pathname: string){
+    return pathname.replace(/^(.+soknadsosialhjelp)(.+)$/, "$1-server/")
 }
 
 function determineCredentialsParameter() {
