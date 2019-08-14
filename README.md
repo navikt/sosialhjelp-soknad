@@ -37,7 +37,7 @@ I stedet for npm er det mulig å bruke yarn.
  ```
  * `cd soknadsosialhjelp/web/src/frontend && npm start`
 
- * Åpne `http://localhost:3000/soknadsosialhjelp/informasjon` i nettelseren
+ * Åpne `http://localhost:3000/soknadsosialhjelp/informasjon` i nettelseren.
 
  ## Deploy til testmiljø på Heroku
 
