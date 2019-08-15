@@ -1566,8 +1566,8 @@
 	"vedlegg": [],
 	"journalforendeEnhet": null,
 	"soknadPrefix": "soknadsosialhjelp",
-	"soknadUrl": "http://127.0.0.1:8189/soknadsosialhjelp/app",
-	"fortsettSoknadUrl": "http://127.0.0.1:8189/soknadsosialhjelp/app",
+	"soknadUrl": "http://127.0.0.1:8189/sosialhjelp/soknad/app",
+	"fortsettSoknadUrl": "http://127.0.0.1:8189/sosialhjelp/soknad/app",
 	"stegliste": [
 		{
 			"url": "informasjonsside",

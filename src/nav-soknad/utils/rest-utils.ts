@@ -23,7 +23,7 @@ export function kjorerJetty(): boolean {
 
 export function getApiBaseUrl(): string {
     if (erDev()) {
-        // Kjør mot lokal soknadsosialhjelp-server:
+        // Kjør mot lokal sosialhjelp-soknad-api:
         return `http://localhost:8181/${API_CONTEXT_PATH}/`;
 
         // Kjør mot lokal mock backend:
@@ -46,7 +46,7 @@ export function getAbsoluteApiUrl() {
 }
 
 export function getAbsoluteApiUrlRegex(pathname: string){
-    return pathname.replace(/^(.+soknadsosialhjelp)(.+)$/, "$1-server/")
+    return pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/")
 }
 
 function determineCredentialsParameter() {

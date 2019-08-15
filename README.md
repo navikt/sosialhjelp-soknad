@@ -37,7 +37,7 @@ I stedet for npm er det mulig å bruke yarn.
  ```
  * `cd soknadsosialhjelp/web/src/frontend && npm start`
 
- * Åpne `http://localhost:3000/soknadsosialhjelp/informasjon` i nettelseren.
+ * Åpne `http://localhost:3000/sosialhjelp/soknad/informasjon` i nettelseren.
 
  ## Deploy til testmiljø på Heroku
 
@@ -77,7 +77,7 @@ I stedet for npm er det mulig å bruke yarn.
  git remote add heroku https://git.heroku.com/en-kul-ny-feature.git
  ```
  
- Etter deploy vil applikasjonen være tilgjengelig på `https://www.digisos-test.com/en-kul-ny-feature/soknadsosialhjelp/`.
+ Etter deploy vil applikasjonen være tilgjengelig på `https://www.digisos-test.com/en-kul-ny-feature/sosialhjelp/soknad/`.
  (Forutsetter at backend `en-kul-ny-feature-server` er deployet.)
  
  ## Tekster
