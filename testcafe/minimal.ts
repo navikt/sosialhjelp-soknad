@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe';
 
 fixture `Minimal`
-    .page `https://sosialhjelp-test.herokuapp.com/soknadsosialhjelp/mock-login`;
+    .page `https://www.digisos-test.com/soknadsosialhjelp/mock-login`;
 
 test('Grønt løp', async t => {
     await t
