@@ -6,7 +6,7 @@ import {
     fetchGet,
     fetchPost,
     fetchUpload,
-    lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
+    lastNedForsendelseSomZipFilHvisMockMiljoEllerDev, responseToJson, sjekkStatusKodeSaga, statusCodeOk
 } from "../../utils/rest-utils";
 import {
     EttersendelseActionTypeKeys, OpprettEttersendelseAction,
@@ -26,13 +26,18 @@ import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
 
-function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIterator {
+function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
     try {
         const url = `soknader/opprettSoknad?ettersendTil=${action.brukerbehandlingId}`;
-        const response = yield call(fetchPost, url, "");
-        if (response) {
-            yield put(lagEttersendelseOk(response.brukerBehandlingId));
-            yield put(lesEttersendelsesVedlegg(response.brukerBehandlingId));
+        const response: Response = yield call(fetchPost, url, "");
+
+        yield sjekkStatusKodeSaga(response);
+        if (statusCodeOk(response)){
+            const jsonResponse = yield responseToJson(response);
+            if (jsonResponse) {
+                yield put(lagEttersendelseOk(jsonResponse.brukerBehandlingId));
+                yield put(lesEttersendelsesVedlegg(jsonResponse.brukerBehandlingId));
+            }
         }
     } catch (reason) {
         yield put(loggInfo("Opprett ettersendelse feilet: " + reason.toString()));
@@ -40,12 +45,17 @@ function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIter
     }
 }
 
-function* lesEttersendelserSaga(action: LesEttersendelserAction): SagaIterator {
+function* lesEttersendelserSaga(action: LesEttersendelserAction) {
     try {
         const url = `ettersendelse/innsendte/${action.brukerbehandlingId}`;
         const response = yield call(fetchGet, url);
-        if (response) {
-            yield put(settEttersendelser(response));
+        yield sjekkStatusKodeSaga(response);
+        if (statusCodeOk(response)){
+            const jsonResponse = yield responseToJson(response);
+
+            if (jsonResponse) {
+                yield put(settEttersendelser(jsonResponse));
+            }
         }
     } catch (reason) {
         yield put(loggFeil("Les ettersendelser feilet: " + reason.toString()));
@@ -53,12 +63,17 @@ function* lesEttersendelserSaga(action: LesEttersendelserAction): SagaIterator {
     }
 }
 
-function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction): SagaIterator {
+function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction) {
     try {
         const url = `ettersendelse/ettersendteVedlegg/${action.brukerbehandlingId}`;
         const response = yield call(fetchGet, url);
-        if (response) {
-            yield put(lesEttersendteVedlegg(response));
+
+        yield sjekkStatusKodeSaga(response);
+        if (statusCodeOk(response)) {
+            const jsonResponse = yield responseToJson(response);
+            if (jsonResponse) {
+                yield put(lesEttersendteVedlegg(jsonResponse));
+            }
         }
     } catch (reason) {
         yield put(loggFeil("Lese ettersendte vedlegg feilet: " + reason.toString()));
@@ -93,6 +108,7 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
     try {
         const url = `opplastetVedlegg/${behandlingsId}/${opplysningType}`;
         response = yield call(fetchUpload, url, formData);
+        // FIXME: MANGLER DENNE (OG SIKKERT MERE TING ANDRE STEDER)
         yield put(lastOppEttersendtVedleggOk());
         yield put(loggInfo("GlemmeSendKnappStatistikk. Vedlegg lastet opp. BehandingsId: " + behandlingsId));
         if (response) {
