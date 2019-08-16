@@ -17,7 +17,7 @@ app.get("/soknadsosialhjelp/statisk/*", (req, res) => {
 
 app.get("/soknadsosialhjelp/*", (req, res) => {
   console.log(`route  ${req.path}`)
-  res.sendFile(path.resolve(__dirname, "EllaBlunk.less.html"))
+  res.sendFile(path.resolve(__dirname, "index.html"))
 })
 
 app.listen(port, (req, res) => {
