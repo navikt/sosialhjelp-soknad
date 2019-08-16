@@ -1,14 +1,19 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import { OppsummeringActionTypeKeys } from "./oppsummeringTypes";
 import { selectBrukerBehandlingId } from "../selectors";
-import { fetchOppsummering } from "../../utils/rest-utils";
+import {fetchOppsummering, responseToText, sjekkStatusKodeSaga, statusCodeOk} from "../../utils/rest-utils";
 import { hentOppsumeringFeilet, setOppsumering } from "./oppsummeringActions";
 
 function* hentOppsummeringSaga() {
 	try {
 		const behandlingsID = yield select(selectBrukerBehandlingId);
-		const response = yield call( fetchOppsummering, `soknader/${behandlingsID}/` );
-		yield put(setOppsumering(response));
+		const response: Response = yield call( fetchOppsummering, `soknader/${behandlingsID}/` );
+
+		yield* sjekkStatusKodeSaga(response);
+		if (statusCodeOk(response)){
+			const responseText: string = yield responseToText(response);
+			yield put(setOppsumering(responseText));
+		}
 	} catch (reason) {
 		yield put(hentOppsumeringFeilet(reason));
 	}
