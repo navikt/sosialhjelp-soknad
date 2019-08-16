@@ -87,18 +87,21 @@ class AdresseView extends React.Component<Props, State> {
     lagreAdresseValg(payload: any) {
         const {brukerBehandlingId, oppdaterSoknadsdataSti, lagreSoknadsdata} = this.props;
         this.setState({settAdressePending: true});
-        lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
-            if (Array.isArray(navEnheter)) {
-                navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
-                if (navEnheter.length === 1) {
-                    const valgtNavEnhet: NavEnhet = navEnheter[0];
-                    valgtNavEnhet.valgt = true;
-                    lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
-                    this.slettEventuelleValideringsfeil();
+        lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (response: Response) => {
+            response.json().then((navEnheter: NavEnhet[]) => {
+                if (Array.isArray(navEnheter)) {
+                    navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
+                    if (navEnheter.length === 1) {
+                        const valgtNavEnhet: NavEnhet = navEnheter[0];
+                        valgtNavEnhet.valgt = true;
+                        lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
+                        this.slettEventuelleValideringsfeil();
+                    }
+                    oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
+                    this.setState({settAdressePending: false});
                 }
-                oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
-                this.setState({settAdressePending: false});
-            }
+            })
+
         });
     }
 
@@ -198,7 +201,7 @@ class AdresseView extends React.Component<Props, State> {
         let folkeregistrertAdresseLabel = null;
         let annenAdresseLabel = null;
         let {oppstartsModus} = this.state;
-        if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+        if (oppstartsModus && restStatus === REST_STATUS.OK) {
             oppstartsModus = false;
         }
         if (oppstartsModus) {

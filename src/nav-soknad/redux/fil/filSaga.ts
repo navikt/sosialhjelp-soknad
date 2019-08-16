@@ -1,6 +1,12 @@
 import {FilActionTypeKeys, LastOppFilAction, StartSlettFilAction} from "./filTypes";
 import {SagaIterator} from "redux-saga";
-import {fetchDelete, fetchUpload, fetchUploadIgnoreErrors,} from "../../utils/rest-utils";
+import {
+    fetchDelete,
+    fetchUpload,
+    fetchUploadIgnoreErrors, responseToJson,
+    sjekkStatusKodeSaga,
+    statusCodeOk,
+} from "../../utils/rest-utils";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {
@@ -12,40 +18,51 @@ import {Fil, Opplysning, VedleggStatus} from "../okonomiskeOpplysninger/opplysni
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {lastOppFilFeilet} from "./filActions";
 import {REST_FEIL} from "../../types/restFeilTypes";
+import {TilgangApiResponse} from "../tilgang/tilgangTypes";
+import {hentetTilgang} from "../tilgang/tilgangActions";
 
 
-function* lastOppFilSaga(action: LastOppFilAction): SagaIterator {
+function* lastOppFilSaga(action: LastOppFilAction) {
 
     const {behandlingsId, formData, opplysning} = action;
     const url = `opplastetVedlegg/${behandlingsId}/${opplysning.type}`;
 
     yield put(settFilOpplastingPending(opplysning.type));
 
-    let response: Fil =
+    let jsonResponse: Fil =
         {
             "filNavn": "",
             "uuid": ""
         };
 
     try {
-        response = yield call(fetchUpload, url, formData);
-        const filerUpdated: Fil[] = opplysning.filer.map((fil: Fil) => ({...fil}));
-        filerUpdated.push(response);
-        const opplysningUpdated: Opplysning = {...opplysning};
-        opplysningUpdated.filer = filerUpdated;
-        opplysningUpdated.vedleggStatus = VedleggStatus.LASTET_OPP;
-        yield put(updateOpplysning(opplysningUpdated));
-        yield put(settFilOpplastingFerdig(opplysning.type));
+        const response: Response = yield call(fetchUpload, url, formData)
+
+        yield sjekkStatusKodeSaga(response);
+        if(statusCodeOk(response)){
+            const tilgangApiResponse: TilgangApiResponse = yield responseToJson(response);
+            yield put(hentetTilgang(tilgangApiResponse.harTilgang, tilgangApiResponse.sperrekode));
+
+            const filerUpdated: Fil[] = opplysning.filer.map((fil: Fil) => ({...fil}));
+            jsonResponse = yield responseToJson(response);
+            filerUpdated.push(jsonResponse);
+            const opplysningUpdated: Opplysning = {...opplysning};
+            opplysningUpdated.filer = filerUpdated;
+            opplysningUpdated.vedleggStatus = VedleggStatus.LASTET_OPP;
+            yield put(updateOpplysning(opplysningUpdated));
+            yield put(settFilOpplastingFerdig(opplysning.type));
+        }
     } catch (reason) {
 
         let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
         // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
-        response = yield call(fetchUploadIgnoreErrors, url, formData);
+        const responseSecond: Response = yield call(fetchUploadIgnoreErrors, url, formData);
+        jsonResponse = yield responseToJson(responseSecond);
         const ID = "id";
         // @ts-ignore
-        if (response && response[ID]) {
+        if (jsonResponse && jsonResponse[ID]) {
             // @ts-ignore
-            feilKode = response[ID];
+            feilKode = jsonResponse[ID];
         }
         yield put(lastOppFilFeilet(opplysning.type, feilKode));
         if (feilKode !== REST_FEIL.KRYPTERT_FIL && feilKode !== REST_FEIL.SIGNERT_FIL) {

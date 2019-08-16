@@ -4,6 +4,8 @@ import {SoknadState} from "../reduxTypes";
 import {ErSystemdataEndret, SoknadActionTypeKeys, SoknadActionTypes} from "./soknadActionTypes";
 
 export const defaultState: SoknadState = {
+	showLargeSpinner: true,
+	showFeilside: false,
 	restStatus: REST_STATUS.INITIALISERT,
 	sendSoknadPending: false,
 	startSoknadPending: false,

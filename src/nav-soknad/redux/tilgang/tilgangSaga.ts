@@ -1,20 +1,22 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { TilgangActionTypeKeys, TilgangApiResponse } from "./tilgangTypes";
-import { fetchToJson } from "../../utils/rest-utils";
+import {TilgangActionTypeKeys, TilgangApiResponse} from "./tilgangTypes";
+import {fetchGet, responseToJson, sjekkStatusKodeSaga, statusCodeOk} from "../../utils/rest-utils";
 import {
-	henterTilgang,
-	hentetTilgang,
-	hentTilgangFeilet
+	henterTilgang, hentetTilgang, hentTilgangFeilet,
 } from "./tilgangActions";
 
-function* hentTilgangSaga() {
+export function* hentTilgangSaga() {
 	try {
 		yield put(henterTilgang());
-		const response: TilgangApiResponse = yield call(
-			fetchToJson,
+		const response: Response = yield call(
+			fetchGet,
 			"informasjon/utslagskriterier/sosialhjelp"
 		);
-		yield put(hentetTilgang(response.harTilgang, response.sperrekode));
+		yield* sjekkStatusKodeSaga(response);
+		if(statusCodeOk(response)){
+			const tilgangApiResponse: TilgangApiResponse = yield responseToJson(response);
+			yield put(hentetTilgang(tilgangApiResponse.harTilgang, tilgangApiResponse.sperrekode));
+		}
 	} catch (reason) {
 		yield put(hentTilgangFeilet(reason));
 	}

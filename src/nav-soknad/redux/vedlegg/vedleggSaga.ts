@@ -2,7 +2,7 @@ import { call, put, select, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import {
 	detekterInternFeilKode,
-	fetchDelete, fetchPut, fetchToJson, fetchUpload, fetchUploadIgnoreErrors,
+	fetchDelete, fetchPut, fetchGet, fetchUpload, fetchUploadIgnoreErrors,
 	toJson
 } from "../../utils/rest-utils";
 import {
@@ -20,7 +20,7 @@ import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 
 function* hentVedleggsForventningSaga(behandlingsId: string): SagaIterator {
 	const url = `soknader/${behandlingsId}/vedlegg`;
-	const response = yield call(fetchToJson, url);
+	const response = yield call(fetchGet, url);
 	const fakta = yield select(selectFaktaData);
 	yield put(hentVedleggsForventningOk(response, fakta));
 }

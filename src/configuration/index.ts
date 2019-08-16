@@ -26,5 +26,5 @@ export function getContextPathBasename() {
 }
 
 export function getRedirectPathname(): string {
-    return '/sosialhjelp/soknad/link';
+    return `/${CONTEXT_PATH}/link`;
 }
