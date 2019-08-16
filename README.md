@@ -5,27 +5,14 @@ Frontend for søknad om sosialhjelp.
 
 ## Kjøring lokalt mot lokal utviklingsbackend
 
-Kan gjøres av alle. Kjører mot (mock backend)
+Kjører mot (mock backend)
 
-* `cd web/src/frontend` 
 * `npm install` 
 * `npm start` - Starter webpack server og mock backend utviklet i node express.
 * `npm test` - Kjør enhetstestene
 * `npm test -- -u` - Oppdatert snapshotfilen som snapshottestene tester mot for lokal utvikling. 
 
 I stedet for npm er det mulig å bruke yarn.
- 
-## Kjøring via jetty
-
-Forutsetter at man har tilgang til git repository tilgjengelig på internt nett hos NAV.
-
-* `cd web/src/frontend` 
-* `npm build` - bygger filer til buildmappen som videre blir kopiert til webappmappen
-* `cd soknadsosialhjelp-tekster`
-* `mvn clean install -Ddev` - bygger tekstfilene. Slår samme alle tekstfilene til lokal fil i temp folder.
-* Start no.nav.sbl.dialogarena.StartSoknadJetty fra IntelliJ - Starter reel backend
-* Start no.nav.sbl.soknadsosialhjelp.StartJetty fra IntelliJ - Starter frontend server
-* Åpne `http://localhost:8189/soknadsosialhjelp/informasjon` i nettleser
  
  ## Kjøring mot sendsoknad backend i stedet for mock backend
  
@@ -50,13 +37,13 @@ Forutsetter at man har tilgang til git repository tilgjengelig på internt nett 
  ```
  * `cd soknadsosialhjelp/web/src/frontend && npm start`
 
- * Åpne `http://localhost:3000/soknadsosialhjelp/informasjon` i nettelseren
+ * Åpne `http://localhost:3000/soknadsosialhjelp/informasjon` i nettleseren.
 
  ## Deploy til testmiljø på Heroku
 
  Forutsetter at [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) er installert og at man har opprettet
  og autentisert mot egen Heroku-konto:
-
+ 
  ```bash
  heroku auth:login
  heroku container:login
@@ -67,7 +54,10 @@ Forutsetter at man har tilgang til git repository tilgjengelig på internt nett 
 
  ```bash
  heroku create en-kul-ny-feature
- ./heroku-build.sh
+ git add .
+ git commit -m "[WIP]"
+
+ ./heroku-build.sh -a=en-kul-ny-feature
  ```
   
  Hvis applikasjonen allerede eksisterer i Heroku, kan app name angis ved deploy:
@@ -87,7 +77,7 @@ Forutsetter at man har tilgang til git repository tilgjengelig på internt nett 
  
  ## Tekster
  
- Tekstene ligger i repoert `soknadsosialhjelp-tekster` med felles byggejobb på `cisbl.devillo.no`. Tekstendringer blir automatisk
+ Tekstene ligger i repoet `sosialhjelp-soknad-server` med felles byggejobb på `cisbl.devillo.no`. Tekstendringer blir automatisk
  deployet til miljø som er konfigurert opp i byggejobben. I tillegg har man en mocket tekstfil for lokal utvikling, men endringer
  gjort i denne må synces til teksterrepoet for å bli brukt i miljøene.
  

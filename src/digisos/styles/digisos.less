@@ -1,0 +1,165 @@
+/**
+    App spesic styling
+*/
+
+@import "../kvittering/kvittering.less";
+@import "../informasjon/personopplysninger.less";
+@import "../informasjon/informasjon.less";
+@import "../skjema/ekstrainformasjon/ekstrainfo.less";
+@import "../skjema/ekstrainformasjon/vedlegg/slettIkon.less";
+@import "../skjema/ekstrainformasjon/vedlegg/vedleggsliste.less";
+@import "../skjema/familie/barn.less";
+@import "../skjema/familie/sivilstatus.less";
+@import "../skjema/inntektFormue/navytelser.less";
+@import "../skjema/oppsummering/oppsummering.less";
+@import "../skjema/personopplysninger/tps/oppholdsadresse.less";
+@import "../skjema/ettersendelse/ettersendelse.less";
+@import "../skjema/ettersendelse/bannerEttersendelse.less";
+@import "../mock/mock.less";
+@import "../skjema/okonomiskeOpplysninger/vedleggSlettet/vedleggSlettet.less";
+@import "../skjema/personopplysninger/adresse/adresseTypeahead.less";
+
+@navRosa: #f3e3e3;
+
+body {
+  background-color: @white;
+}
+
+.app-digisos {
+	padding-bottom: 10rem;
+
+  	@media @mobile {
+	  padding-bottom: 4rem;
+	}
+}
+
+.ekstrainfo-melding {
+	margin-bottom: 2rem;
+}
+
+.hidden-topnavsection {
+  display: none;
+}
+
+.varsler-display {
+  z-index: 2 !important;
+}
+
+.kun_desktop {
+  display: inline-block;
+}
+
+.kun_mobil {
+  display: none;
+}
+
+@media @mobile {
+  .kun_desktop {
+	display: none;
+  }
+
+  .kun_mobil {
+	display: inline-block;
+  }
+}
+
+.inputPanelPadding {
+	height: 3.5rem;
+}
+
+
+.finnNavKontor {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+
+  svg {
+	margin-left: 0.5rem;
+  }
+}
+
+// Styling lagt på for å få radiopanelgruppe til å ha samme utseende som NAVs guideline app
+.inputPanel__label {
+  margin-left: 2rem;
+}
+
+.inputPanel--checked {
+  background-color: rgba(0, 103, 197, 0.2) !important;
+  border: 1px solid transparent !important;
+}
+
+.radioPanel.inputPanel--checked:hover:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) {
+  background-color: rgba(0, 103, 197, 0.2);
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+// På mouseover, fyll radioknapper og sjekkbokser med blå bakgrunnsfarge
+.inputPanel:hover:not(.inputPanel__checked) {
+
+  .radioknapp + .skjemaelement__label:before {
+	border: 12px solid #99c2e8;
+  }
+
+  .checkboks + .skjemaelement__label:before {
+	border: 12px solid #99c2e8;
+  }
+}
+
+.skjema__feilomrade--harFeil {
+
+  .inputPanel:hover:not(.inputPanel__checked) {
+
+	.radioknapp + .skjemaelement__label:before {
+	  border: 12px solid #ba3a26;
+	}
+
+	.checkboks + .skjemaelement__label:before {
+	  border: 12px solid #ba3a26;
+	}
+  }
+
+}
+
+.linkbutton {
+  align-items: normal;
+  background-color: rgba(0,0,0,0);
+  border-color: rgb(0, 0, 238);
+  border-style: none;
+  box-sizing: content-box;
+  cursor: pointer;
+  display: inline;
+  font: inherit;
+  height: auto;
+  padding: 0;
+  perspective-origin: 0 0;
+  text-align: start;
+  text-decoration: underline;
+  transform-origin: 0 0;
+  width: auto;
+  -moz-appearance: none;
+  -webkit-logical-height: 1em; /* Chrome ignores auto, so we have to use this hack to set the correct height  */
+  -webkit-logical-width: auto; /* Chrome ignores auto, but here for completeness */
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.linkbutton--normal {
+  color: rgb(0, 0, 238);
+}
+
+.linkbutton--validering {
+  color: @white;
+}
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
