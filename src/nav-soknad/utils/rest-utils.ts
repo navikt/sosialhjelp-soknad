@@ -217,30 +217,6 @@ export const responseToText = (response: Response) => {
     });
 };
 
-// export const sjekkStatuskode: Response = (statuskode: string): any {
-//     const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
-//
-//     if (response.status === 401){
-//         if(window.location.pathname !== getRedirectPathname()){
-//             // @ts-ignore
-//             if (!window[AUTH_LINK_VISITED]) {
-//                 response.json().then(r => {
-//                     window.location.href = r.loginUrl + getRedirectPath();
-//                     // return {status: "401 UNAUTHORIZED"}
-//                 });
-//             }
-//         } else {
-//             put(push(Sider.SERVERFEIL));
-//         }
-//         return response;
-//     }
-//     if (response.status >= 200 && response.status < 300) {
-//         return response;
-//     }
-//     return response;
-//     // throw new Error(response.statusText);
-// }
-
 export const statusCodeOk = (response: Response): boolean => response.status >= 200 && response.status < 300;
 
 export const getCookie = (name: string): string => {

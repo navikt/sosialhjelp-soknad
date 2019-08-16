@@ -1,5 +1,5 @@
 import {Dispatch, Valideringsfeil} from "../reduxTypes";
-import {fetchGet, responseToJson, sjekkStatusKodeSaga, statusCodeOk} from "../../utils/rest-utils";
+import {fetchGet, sjekkStatusKodeSaga, statusCodeOk} from "../../utils/rest-utils";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {
     OpplysningerAction,
@@ -10,9 +10,6 @@ import {
 } from "./opplysningerTypes";
 import {getOpplysningerUrl} from "./opplysningerUtils";
 import {loggFeil} from "../navlogger/navloggerActions";
-import {TilgangApiResponse} from "../tilgang/tilgangTypes";
-import {hentetTilgang} from "../tilgang/tilgangActions";
-
 
 export const gotDataFromBackend = (response: OpplysningerBackend): OpplysningerAction => {
     return {

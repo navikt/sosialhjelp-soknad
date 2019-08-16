@@ -15,7 +15,7 @@ interface StateProps {
 class LargeSpinnerContainer extends React.Component<StateProps, {}> {
 
     render() {
-        let { children, showLargeSpinner, showFeilside, restStatus } = this.props;
+        let { children, showFeilside, restStatus } = this.props;
 
         if (showFeilside) {
             /** I og med tekstressurser ikke er tilgjengelig, må tekster hardkodes */
