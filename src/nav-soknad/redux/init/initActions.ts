@@ -24,3 +24,10 @@ export function setVisSamtykkeInfo(visSamtykkeInfo: boolean): InitActionTypes {
 		visSamtykkeInfo
 	};
 }
+
+export function lagreFornavnPaStore(fornavn: string): InitActionTypes {
+	return {
+		type: InitActionTypeKeys.LAGRE_FORNAVN_PA_STORE,
+		fornavn
+	}
+}

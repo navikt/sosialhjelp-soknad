@@ -10,48 +10,36 @@ import IkkeTilgang from "./IkkeTilgang";
 import {TilgangSperrekode} from "../../nav-soknad/redux/tilgang/tilgangTypes";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 import Personopplysninger from "./Personopplysninger";
-import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
-import {loggFeil} from "../../nav-soknad/redux/navlogger/navloggerActions";
 import {Panel} from "nav-frontend-paneler";
 import {opprettSoknad} from "../../nav-soknad/redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import {State} from "../redux/reducers";
-import {getContextPathForStaticContent} from "../../configuration";
+import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 
 
 interface StateProps {
     harTilgang: boolean;
     sperrekode: TilgangSperrekode | undefined;
     startSoknadPending: boolean;
+    fornavn: string | undefined;
 }
+
+
 
 type Props = StateProps & InjectedIntlProps & RouterProps & DispatchProps;
 
-class Informasjon extends React.Component<Props, { fornavn: string }> {
-
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            fornavn: ""
-        };
-    }
+class Informasjon extends React.Component<Props, {}> {
 
     componentDidMount() {
         skjulToppMeny();
-        fetchToJson("informasjon/fornavn").then((result: any) => {
-            const FORNAVN = "fornavn";
-            this.setState({fornavn: result[FORNAVN]});
-        }).catch((e: any) => {
-            loggFeil("Feil ved uthenting av personalia: " + e.toString());
-        });
     }
 
     renderHilsen(): React.ReactNode {
-        if (this.state.fornavn && this.state.fornavn.length > 0) {
+        if (this.props.fornavn && this.props.fornavn.length > 0) {
             return (
                 <h3 className="digisos-snakkeboble-tittel">
-                    <FormattedHTMLMessage id="informasjon.hilsen.hei" values={{fornavn: this.state.fornavn}}/>
+                    <FormattedHTMLMessage id="informasjon.hilsen.hei" values={{fornavn: this.props.fornavn}}/>
                 </h3>);
         }
         return null;
@@ -83,8 +71,7 @@ class Informasjon extends React.Component<Props, { fornavn: string }> {
 										{this.renderHilsen()}
                                         <FormattedMessage id="informasjon.hilsen.tittel"/>
 									</Snakkeboble>
-									<img src={`${getContextPathForStaticContent()}/statisk/bilder/ella_blunk.svg`}
-                                         alt=""/>
+									<EllaBlunk size={"175"}/>
 								</span>
 
 								<Panel className="informasjon-viktig">
@@ -140,5 +127,6 @@ class Informasjon extends React.Component<Props, { fornavn: string }> {
 export default connect((state: State) => ({
     harTilgang: state.tilgang.harTilgang,
     sperrekode: state.tilgang.sperrekode,
-    startSoknadPending: state.soknad.startSoknadPending
+    startSoknadPending: state.soknad.startSoknadPending,
+    fornavn: state.init.fornavn
 }))(injectIntl(Informasjon));

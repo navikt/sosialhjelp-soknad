@@ -1,17 +1,21 @@
-import { put, takeEvery } from "redux-saga/effects";
-import { hentMiljovariabler } from "../miljovariabler/miljovariablerActions";
-import { hentTekster } from "../ledetekster/ledeteksterActions";
-import { hentTilgang } from "../tilgang/tilgangActions";
+import { put, takeEvery, call} from "redux-saga/effects";
 import { MiljovariablerActionTypeKeys } from "../miljovariabler/miljovariablerTypes";
 import { LedeteksterActionTypeKeys } from "../ledetekster/ledeteksterTypes";
 import { TilgangActionTypeKeys } from "../tilgang/tilgangTypes";
 import { InitActionTypeKeys } from "./initTypes";
-import { initFeilet, initFerdig } from "./initActions";
+import {initFeilet, initFerdig, lagreFornavnPaStore} from "./initActions";
+import {hentMiljovariablerSaga} from "../miljovariabler/miljoVariablerSaga";
+import {hentTilgangSaga} from "../tilgang/tilgangSaga";
+import {hentTeksterSaga} from "../ledetekster/ledeteksterSaga";
+import {loggFeil} from "../navlogger/navloggerActions";
+import {fetchGet} from "../../utils/rest-utils";
+
 
 export let initActions = [
 	TilgangActionTypeKeys.OK,
 	MiljovariablerActionTypeKeys.OK,
-	LedeteksterActionTypeKeys.OK
+	LedeteksterActionTypeKeys.OK,
+	InitActionTypeKeys.LAGRE_FORNAVN_PA_STORE
 ];
 
 export const initFeiletActions = [
@@ -21,9 +25,27 @@ export const initFeiletActions = [
 ];
 
 function* startInit(): IterableIterator<any> {
-	yield put(hentMiljovariabler());
-	yield put(hentTilgang());
-	yield put(hentTekster());
+	yield* hentTilgangSaga();
+	yield* hentMiljovariablerSaga();
+	yield* hentTeksterSaga();
+	yield* getFornavnSaga();
+}
+
+interface FornavnApi {
+	fornavn: string;
+}
+
+function* getFornavnSaga(): IterableIterator<any> {
+	try {
+		let response: Response = yield call(fetchGet, "informasjon/fornavn" );
+
+		const jsonResponse: FornavnApi = yield new Promise((resolve, reject) => {
+			resolve(response.json());
+		});
+		yield put(lagreFornavnPaStore(jsonResponse.fornavn))
+	} catch (e) {
+		yield put(loggFeil("Error catchet i getFornavnSaga. Error: " + e.toString()))
+	}
 }
 
 function* isAllDataLoaded(action: any): IterableIterator<any> {

@@ -3,7 +3,7 @@ import {call, put, takeEvery} from "redux-saga/effects";
 
 import {
     fetchDelete,
-    fetchToJson,
+    fetchGet,
     fetchPost,
     fetchUpload,
     lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
@@ -43,7 +43,7 @@ function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIter
 function* lesEttersendelserSaga(action: LesEttersendelserAction): SagaIterator {
     try {
         const url = `ettersendelse/innsendte/${action.brukerbehandlingId}`;
-        const response = yield call(fetchToJson, url);
+        const response = yield call(fetchGet, url);
         if (response) {
             yield put(settEttersendelser(response));
         }
@@ -56,7 +56,7 @@ function* lesEttersendelserSaga(action: LesEttersendelserAction): SagaIterator {
 function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction): SagaIterator {
     try {
         const url = `ettersendelse/ettersendteVedlegg/${action.brukerbehandlingId}`;
-        const response = yield call(fetchToJson, url);
+        const response = yield call(fetchGet, url);
         if (response) {
             yield put(lesEttersendteVedlegg(response));
         }

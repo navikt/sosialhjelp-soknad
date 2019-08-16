@@ -81,16 +81,16 @@ enum RequestMethod {
     DELETE = "DELETE"
 }
 
-const getHeaders = () => {
-    //@ts-ignore
-    return new Headers({
+const getHeaders = (): Headers => {
+    const headersRecord: Record<string, string> = {
         "Content-Type": "application/json",
         "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
         "accept": "application/json, text/plain, */*"
-    })
+    };
+    return new Headers(headersRecord)
 };
 
-export const serverRequest = (method: string, urlPath: string, body: string, retries = 6) => {
+export const serverRequest = (method: string, urlPath: string, body: string, retries = 6): Promise<Response> => {
     const OPTIONS: RequestInit = {
         headers: getHeaders(),
         method,
@@ -101,65 +101,40 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
     return new Promise((resolve, reject) => {
         fetch(getApiBaseUrl() + urlPath, OPTIONS)
             .then((response: Response) => {
-                if (response.status === 409) {
-                    if (retries === 0) {
-                        throw new Error(response.statusText);
-                    }
-                    setTimeout(() => {
-                        serverRequest(method, urlPath, body, retries - 1)
-                            .then((data: any) => {
-                                resolve(data);
-                            })
-                            .catch((reason: any) => reject(reason))
-                    }, 100 * (7 - retries));
-
-                } else {
-                    sjekkStatuskode(response);
-                    const jsonResponse = toJson(response);
-                    resolve(jsonResponse);
-                }
+                resolve(response);
             })
-            .catch((reason: any) => reject(reason));
+            .catch((reason: string) => {
+                reject(reason)
+            });
     });
-}
+};
 
-export function fetchToJson(urlPath: string) {
-    return serverRequest(RequestMethod.GET, urlPath, "");
-}
+export const fetchGet = (urlPath: string): Promise<Response> => serverRequest(RequestMethod.GET, urlPath, "");
 
-export function fetchPut(urlPath: string, body: string) {
-    return serverRequest(RequestMethod.PUT, urlPath, body);
-}
+export const fetchPut = (urlPath: string, body: string): Promise<Response> => serverRequest(RequestMethod.PUT, urlPath, body);
 
-export function fetchPost(urlPath: string, body: string) {
-    return serverRequest(RequestMethod.POST, urlPath, body);
-}
+export const fetchPost = (urlPath: string, body: string): Promise<Response> => serverRequest(RequestMethod.POST, urlPath, body);
 
-export function fetchDelete(urlPath: string) {
+export const fetchDelete = (urlPath: string): Promise<Response> => {
     const OPTIONS: RequestInit = {
         headers: getHeaders(),
         method: RequestMethod.DELETE,
         credentials: determineCredentialsParameter()
     };
-    return fetch(getApiBaseUrl() + urlPath, OPTIONS).then(sjekkStatuskode);
-}
+    return fetch(getApiBaseUrl() + urlPath, OPTIONS);
+};
 
-export function fetchOppsummering(urlPath: string) {
+export const fetchOppsummering = (urlPath: string): Promise<Response> => {
     const OPTIONS: RequestInit = {
         headers: new Headers({"accept": "application/vnd.oppsummering+html"}),
         method: "GET",
         credentials: determineCredentialsParameter()
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS)
-        .then(sjekkStatuskode)
-        .then((response: Response) => {
-            return response.text();
-        });
-}
+};
 
-export function fetchKvittering(urlPath: string) {
+export const fetchKvittering = (urlPath: string): Promise<Response> => {
     const OPTIONS: RequestInit = {
-        //@ts-ignore
         headers: new Headers({
             "accept": "application/vnd.kvitteringforinnsendtsoknad+json",
             "Content-Type": "application/json",
@@ -169,11 +144,7 @@ export function fetchKvittering(urlPath: string) {
         credentials: determineCredentialsParameter()
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS)
-        .then(sjekkStatuskode)
-        .then((response: Response) => {
-            return response.json();
-        });
-}
+};
 
 export function fetchFeatureToggles() {
     const OPTIONS: RequestInit = {
@@ -182,13 +153,10 @@ export function fetchFeatureToggles() {
         credentials: determineCredentialsParameter()
     };
     return fetch(getServletBaseUrl() + "api/feature", OPTIONS)
-        .then(sjekkStatuskode)
-        .then(toJson);
 }
 
-let generateUploadOptions = function (formData: FormData) {
+export const generateUploadOptions = (formData: FormData) => {
     const UPLOAD_OPTIONS: RequestInit = {
-        //@ts-ignore
         headers: new Headers({
             "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
             "accept": "application/json, text/plain, */*"
@@ -198,18 +166,15 @@ let generateUploadOptions = function (formData: FormData) {
         body: formData
     };
     return UPLOAD_OPTIONS;
-}
+};
 
-export function fetchUpload(urlPath: string, formData: FormData) {
+export const fetchUpload = (urlPath: string, formData: FormData): Promise<Response> => {
     return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData))
-        .then(sjekkStatuskode)
-        .then(toJson);
-}
+};
 
-export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData) {
+export const fetchUploadIgnoreErrors = (urlPath: string, formData: FormData): Promise<Response> => {
     return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData))
-        .then(toJson);
-}
+};
 
 export function toJson<T>(response: Response): Promise<T> {
     if (response.status === 204) {
@@ -218,7 +183,7 @@ export function toJson<T>(response: Response): Promise<T> {
     return response.json();
 }
 
-function sjekkStatuskode(response: Response) {
+export function* sjekkStatusKodeSaga(response: Response): IterableIterator<any> {
     const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
 
     if (response.status === 401){
@@ -230,7 +195,7 @@ function sjekkStatuskode(response: Response) {
                 });
             }
         } else {
-            put(push(Sider.SERVERFEIL));
+            yield put(push(Sider.SERVERFEIL));
         }
         return response;
     }
@@ -240,16 +205,59 @@ function sjekkStatuskode(response: Response) {
     throw new Error(response.statusText);
 }
 
-export function getCookie(name: string) {
+export const responseToJson = (response: Response) => {
+    return new Promise((resolve, reject) => {
+        resolve(response.json())
+    });
+};
+
+export const responseToText = (response: Response) => {
+    return new Promise((resolve, reject) => {
+        resolve(response.text())
+    });
+};
+
+// export const sjekkStatuskode: Response = (statuskode: string): any {
+//     const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
+//
+//     if (response.status === 401){
+//         if(window.location.pathname !== getRedirectPathname()){
+//             // @ts-ignore
+//             if (!window[AUTH_LINK_VISITED]) {
+//                 response.json().then(r => {
+//                     window.location.href = r.loginUrl + getRedirectPath();
+//                     // return {status: "401 UNAUTHORIZED"}
+//                 });
+//             }
+//         } else {
+//             put(push(Sider.SERVERFEIL));
+//         }
+//         return response;
+//     }
+//     if (response.status >= 200 && response.status < 300) {
+//         return response;
+//     }
+//     return response;
+//     // throw new Error(response.statusText);
+// }
+
+export const statusCodeOk = (response: Response): boolean => response.status >= 200 && response.status < 300;
+
+export const getCookie = (name: string): string => {
     const value = "; " + document.cookie;
     const parts = value.split("; " + name + "=");
     if (parts.length === 2) {
         let partsPopped: string | undefined = parts.pop();
-        return partsPopped ? partsPopped.split(";").shift() : "null";
+        if (partsPopped){
+            const partsPoppedSplitAndShift = partsPopped.split(";").shift();
+            return  partsPoppedSplitAndShift ? partsPoppedSplitAndShift : "null"
+        } else {
+            return "null"
+        }
     } else {
         return "null";
     }
-}
+};
 
 export function detekterInternFeilKode(feilKode: string): string {
     let internFeilKode = feilKode;

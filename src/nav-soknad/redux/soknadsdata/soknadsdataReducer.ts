@@ -180,7 +180,7 @@ export type SoknadsdataType
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
-	verdi?: SoknadsdataActionVerdi | SoknadsdataType,
+	verdi?: SoknadsdataActionVerdi | SoknadsdataType | null,
 	sti: string,
 	restStatus?: string
 }
@@ -244,7 +244,7 @@ export const settRestStatus = (sti: string, restStatus: REST_STATUS): Soknadsdat
 	}
 };
 
-export const oppdaterSoknadsdataSti = (sti: string, verdi: SoknadsdataType): SoknadsdataActionType => {
+export const oppdaterSoknadsdataSti = (sti: string, verdi: SoknadsdataType | null): SoknadsdataActionType => {
 	return {
 		type: SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI,
 		sti,
