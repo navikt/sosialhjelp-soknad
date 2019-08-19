@@ -1,5 +1,5 @@
 import { Dispatch } from "../reduxTypes";
-import {fetchPut, fetchGet, sjekkStatusKodeSaga, statusCodeOk} from "../../utils/rest-utils";
+import {fetchPut, fetchToJson, HttpStatus} from "../../utils/rest-utils";
 import {
 	oppdaterSoknadsdataSti,
 	settRestStatus,
@@ -7,14 +7,14 @@ import {
 } from "./soknadsdataReducer";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 import { REST_STATUS } from "../../types";
-import {loggFeil} from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
 
 const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `soknader/${brukerBehandlingId}/${sti}`;
 
 export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	return (dispatch: Dispatch) => {
 		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
-		fetchGet(soknadsdataUrl(brukerBehandlingId, sti)).then((response: Response) => {
+		fetchToJson(soknadsdataUrl(brukerBehandlingId, sti)).then((response: any) => {
 
 			// For å simulere ulike typer testdata fra server, kan man her skrive kode som:
 			// if(sti === SoknadsSti.FORSORGERPLIKT){
@@ -25,24 +25,16 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 			// 	}
 			// }
 
-			sjekkStatusKodeSaga(response);
-			if(statusCodeOk(response)){
-				if (response.status === 204){
-					response.text().then(responseText => {
-						dispatch(oppdaterSoknadsdataSti(sti, null));
-						dispatch(settRestStatus(sti, REST_STATUS.OK));
-					});
-				} else{
-					response.json().then((responseJson) => {
-						dispatch(oppdaterSoknadsdataSti(sti, responseJson));
-						dispatch(settRestStatus(sti, REST_STATUS.OK));
-					})
-				}
-			}
+			dispatch(oppdaterSoknadsdataSti(sti, response));
+			dispatch(settRestStatus(sti, REST_STATUS.OK));
 		}).catch((reason: any) => {
-            dispatch(loggFeil("Henting av soknadsdata feilet: " + reason));
-			dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-			dispatch(navigerTilServerfeil());
+			if (reason.message === HttpStatus.UNAUTHORIZED){
+				dispatch(loggAdvarsel("hentSoknadsdata: " + reason));
+			} else {
+				dispatch(loggFeil("Henting av soknadsdata feilet: " + reason));
+				dispatch(settRestStatus(sti, REST_STATUS.FEILET));
+				dispatch(navigerTilServerfeil());
+			}
 		});
 	}
 }
@@ -51,20 +43,24 @@ export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknad
 	return (dispatch: Dispatch) => {
 		dispatch(settRestStatus(sti, REST_STATUS.PENDING));
 		fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata))
-			.then((response: Response) => {
+			.then((response: any) => {
                 dispatch(settRestStatus(sti, REST_STATUS.OK));
 				if (responseHandler) {
 					// For å simulere response fra adresse, kan man skrive:
 					// if (sti === SoknadsSti.ADRESSER) {
 					// 	response = [{"orgnr":null,"enhetsnavn":"NAV Ålesund","kommunenavn":"Ålesund","valgt":false}];
-					//
+					// }
 					responseHandler(response);
 				}
 			})
 			.catch((reason) => {
-				dispatch(loggFeil("Lagring av soknadsdata feilet: " + reason));
-				dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-				dispatch(navigerTilServerfeil());
+				if (reason.message === HttpStatus.UNAUTHORIZED){
+					dispatch(loggAdvarsel("lagreSoknadsdata: " + reason));
+				} else {
+					dispatch(loggFeil("Lagring av soknadsdata feilet: " + reason));
+					dispatch(settRestStatus(sti, REST_STATUS.FEILET));
+					dispatch(navigerTilServerfeil());
+				}
 			});
 	}
 }

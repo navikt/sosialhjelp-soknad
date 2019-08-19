@@ -8,7 +8,7 @@ import {hentMiljovariablerSaga} from "../miljovariabler/miljoVariablerSaga";
 import {hentTilgangSaga} from "../tilgang/tilgangSaga";
 import {hentTeksterSaga} from "../ledetekster/ledeteksterSaga";
 import {loggFeil} from "../navlogger/navloggerActions";
-import {fetchGet} from "../../utils/rest-utils";
+import {fetchToJson} from "../../utils/rest-utils";
 
 
 export let initActions = [
@@ -37,12 +37,8 @@ interface FornavnApi {
 
 function* getFornavnSaga(): IterableIterator<any> {
 	try {
-		let response: Response = yield call(fetchGet, "informasjon/fornavn" );
-
-		const jsonResponse: FornavnApi = yield new Promise((resolve, reject) => {
-			resolve(response.json());
-		});
-		yield put(lagreFornavnPaStore(jsonResponse.fornavn))
+		let response: FornavnApi = yield call(fetchToJson, "informasjon/fornavn" );
+		yield put(lagreFornavnPaStore(response.fornavn))
 	} catch (e) {
 		yield put(loggFeil("Error catchet i getFornavnSaga. Error: " + e.toString()))
 	}
