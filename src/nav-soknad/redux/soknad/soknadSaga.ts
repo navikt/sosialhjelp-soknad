@@ -3,8 +3,8 @@ import {call, put, takeEvery, select} from "redux-saga/effects";
 import {
     fetchDelete,
     fetchKvittering,
-    fetchPost, fetchGet,
-    lastNedForsendelseSomZipFilHvisMockMiljoEllerDev, sjekkStatusKodeSaga, statusCodeOk, responseToJson, responseToText
+    fetchPost, fetchToJson, HttpStatus,
+    lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
 } from "../../utils/rest-utils";
 import {
     FinnOgOppdaterSoknadsmottakerStatus,
@@ -29,12 +29,11 @@ import {
     slettSoknadOk,
     startSoknadOk
 } from "./soknadActions";
-import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
 import {push} from "connected-react-router";
 import {selectBrukerBehandlingId} from "../selectors";
-import {Kvittering} from "../../types";
 
 export interface OpprettSoknadResponse {
     brukerBehandlingId: string;
@@ -44,41 +43,37 @@ function* opprettSoknadSaga() {
     try {
         yield put(resetSoknad());
 
-        const response: Response = yield call(
+        const response: OpprettSoknadResponse = yield call(
             fetchPost,
             "soknader/opprettSoknad", ""
         );
-
-
-        yield* sjekkStatusKodeSaga(response);
-        if(statusCodeOk(response)){
-            const opprettSoknadResponse: OpprettSoknadResponse = yield responseToJson(response);
-            yield put(opprettSoknadOk(opprettSoknadResponse.brukerBehandlingId));
-            yield put(startSoknadOk()); // TODO Rename metode navn
-            yield put(tilSteg(1));
-        }
-
+        yield put(opprettSoknadOk(response.brukerBehandlingId));
+        yield put(startSoknadOk()); // TODO Rename metode navn
+        yield put(tilSteg(1));
     } catch (reason) {
-        yield put(loggFeil("opprett soknad saga feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("opprettSoknadSaga: " + reason));
+        } else {
+            yield put(loggFeil("opprett soknad saga feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
 function* hentSoknadSaga(action: HentSoknadAction) {
     try {
-        const response: Response = yield call(
-            fetchGet,
+        const xsrfCookieIsOk: boolean = yield call(
+            fetchToJson,
             `soknader/${action.brukerBehandlingId}/xsrfCookie`
         );
-
-        yield* sjekkStatusKodeSaga(response);
-        if(statusCodeOk(response)) {
-            const xsrfCookieIsOk: boolean = yield responseToText(response);
-            yield put(hentSoknadOk(xsrfCookieIsOk, action.brukerBehandlingId));
-        }
+        yield put(hentSoknadOk(xsrfCookieIsOk, action.brukerBehandlingId));
     } catch (reason) {
-        yield put(loggFeil("hent soknad saga feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("hentSoknadsdata: " + reason));
+        } else {
+            yield put(loggFeil("hent soknad saga feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
@@ -87,8 +82,12 @@ function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
         yield put(startSoknadOk());
         yield put(tilSteg(1));
     } catch (reason) {
-        yield put(loggFeil("start soknad saga feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("startSoknadSaga: " + reason));
+        } else {
+            yield put(loggFeil("start soknad saga feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
@@ -102,8 +101,12 @@ function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
             yield put(navigerTilDittNav());
         }
     } catch (reason) {
-        yield put(loggFeil("slett soknad saga feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("slettSoknadSaga: " + reason));
+        } else {
+            yield put(loggFeil("slett soknad saga feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
@@ -118,28 +121,29 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
         yield put(sendSoknadOk(action.brukerBehandlingId));
         yield put(navigerTilKvittering(action.brukerBehandlingId));
     } catch (reason) {
-        yield put(loggFeil("send soknad saga feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("sendSoknadSaga: " + reason));
+        } else {
+            yield put(loggFeil("send soknad saga feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
 function* hentKvitteringSaga(action: HentKvitteringAction) {
     try {
-        const response: Response = yield call(
+        const kvittering = yield call(
             fetchKvittering,
             "soknader/" + action.brukerBehandlingId + "?sprak=nb_NO"
         );
-
-        yield* sjekkStatusKodeSaga(response);
-        if(statusCodeOk(response)) {
-            const kvittering: Kvittering = yield responseToJson(response);
-
-            yield put(hentKvitteringOk(kvittering));
-
-        }
+        yield put(hentKvitteringOk(kvittering));
     } catch (reason) {
-        yield put(loggFeil("hent kvittering saga feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("hentKvitteringSaga: " + reason));
+        } else {
+            yield put(loggFeil("hent kvittering saga feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
@@ -147,21 +151,20 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
     const {brukerbehandlingId} = action;
 
     try {
-        const response: Response = yield call(fetchGet, `soknader/${brukerbehandlingId}/${SoknadsSti.NAV_ENHETER}`);
-
-        yield* sjekkStatusKodeSaga(response);
-        if(statusCodeOk(response)) {
-            const navenheter: NavEnhet[] = yield responseToJson(response);
-            const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find((n: NavEnhet) => n.valgt);
-            if (!valgtSoknadsmottaker) {
-                yield put(push(`/skjema/${brukerbehandlingId}/1`));
-            } else {
-                yield put(oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker));
-            }
+        const navenheter: NavEnhet[] = yield call(fetchToJson, `soknader/${brukerbehandlingId}/${SoknadsSti.NAV_ENHETER}`);
+        const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find((n: NavEnhet) => n.valgt);
+        if (!valgtSoknadsmottaker) {
+            yield put(push(`/skjema/${brukerbehandlingId}/1`));
+        } else {
+            yield put(oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker));
         }
-    } catch (e) {
-        yield call(loggFeil, "feil i finnOgOppdaterSoknadsmottakerStatusSaga på side 9. Sender brukeren tilbake til steg 1 og håper dette i blir en infinite loop. Error message: " + e);
-        yield put(push(`/skjema/${brukerbehandlingId}/2`));
+    } catch (reason) {
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("finnOgOppdaterSoknadsmottakerStatusSaga: " + reason));
+        } else {
+            yield call(loggFeil, "feil i finnOgOppdaterSoknadsmottakerStatusSaga på side 9. Sender brukeren tilbake til steg 1 og håper dette i blir en infinite loop. Error message: " + reason);
+            yield put(push(`/skjema/${brukerbehandlingId}/2`));
+        }
     }
 }
 
@@ -169,19 +172,17 @@ function* getErSystemdataEndretSaga() {
     try {
         const behandlingsID = yield select(selectBrukerBehandlingId);
         const urlPath = `soknader/${behandlingsID}/erSystemdataEndret`;
-        const response: Response = yield fetchGet(urlPath);
-
-        yield* sjekkStatusKodeSaga(response);
-        if(statusCodeOk(response)) {
-            const erSystemdataEndret: boolean = yield responseToText(response);
-            if (erSystemdataEndret) {
-                yield put(loggInfo("Systemdata var endret for brukeren."));
-            }
-            yield put(setErSystemdataEndret(erSystemdataEndret));
+        const response = yield fetchToJson(urlPath);
+        if (response) {
+            yield put(loggInfo("Systemdata var endret for brukeren."));
         }
     } catch (reason) {
-        yield put(setErSystemdataEndret(false));
-        yield put(loggFeil("getErSystemdataEndretSaga feilet: " + reason));
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("getErSystemdataEndretSaga: " + reason));
+        } else {
+            yield put(setErSystemdataEndret(false));
+            yield put(loggFeil("getErSystemdataEndretSaga feilet: " + reason));
+        }
     }
 }
 

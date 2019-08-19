@@ -26,7 +26,6 @@ import {SoknadState} from "./nav-soknad/redux/reduxTypes";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
 import {visSoknadAlleredeSendtPrompt} from "./nav-soknad/redux/ettersendelse/ettersendelseActions";
 import {getContextPathBasename} from "./configuration";
-import LargeSpinnerContainer from "./digisos/LargeSpinnerContainer";
 
 
 const history = require('history').createBrowserHistory({
@@ -91,11 +90,9 @@ window.onerror = (errorMessage, url, line, column, error) => {
 ReactDOM.render(
     <Provider store={store}>
         <IntlProvider>
-            <LargeSpinnerContainer>
-                <ConnectedRouter history={history}>
-                    <App />
-                </ConnectedRouter>
-            </LargeSpinnerContainer>
+            <ConnectedRouter history={history}>
+                <App />
+            </ConnectedRouter>
         </IntlProvider>
     </Provider>,
     document.getElementById("root") as HTMLElement

@@ -11,6 +11,7 @@ import {
     HEROKU_MASTER_APP_NAME
 } from "../../configuration";
 
+
 export function erDev(): boolean {
     const url = window.location.href;
     return (url.indexOf("localhost:3000") > 0 || url.indexOf("devillo.no:3000") > 0);
@@ -90,7 +91,11 @@ const getHeaders = (): Headers => {
     return new Headers(headersRecord)
 };
 
-export const serverRequest = (method: string, urlPath: string, body: string, retries = 6): Promise<Response> => {
+export enum HttpStatus {
+    UNAUTHORIZED = "unauthorized"
+}
+
+export const serverRequest = (method: string, urlPath: string, body: string, retries = 6) => {
     const OPTIONS: RequestInit = {
         headers: getHeaders(),
         method,
@@ -101,21 +106,45 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
     return new Promise((resolve, reject) => {
         fetch(getApiBaseUrl() + urlPath, OPTIONS)
             .then((response: Response) => {
-                resolve(response);
+                if (response.status === 409) {
+                    if (retries === 0) {
+                        throw new Error(response.statusText);
+                    }
+                    setTimeout(() => {
+                        serverRequest(method, urlPath, body, retries - 1)
+                            .then((data: any) => {
+                                resolve(data);
+                            })
+                            .catch((reason: any) => reject(reason))
+                    }, 100 * (7 - retries));
+
+                } else {
+                    const statusKode = sjekkStatuskode(response);
+                    if (statusKode >= 200 && statusKode < 300) {
+                        const jsonResponse = toJson(response);
+                        resolve(jsonResponse);
+                    } else {
+                        throw new Error(HttpStatus.UNAUTHORIZED)
+                    }
+                }
             })
-            .catch((reason: string) => {
-                reject(reason)
-            });
+            .catch((reason: any) => reject(reason));
     });
 };
 
-export const fetchGet = (urlPath: string): Promise<Response> => serverRequest(RequestMethod.GET, urlPath, "");
+export function fetchToJson(urlPath: string) {
+    return serverRequest(RequestMethod.GET, urlPath, "");
+}
 
-export const fetchPut = (urlPath: string, body: string): Promise<Response> => serverRequest(RequestMethod.PUT, urlPath, body);
+export function fetchPut(urlPath: string, body: string) {
+    return serverRequest(RequestMethod.PUT, urlPath, body);
+}
 
-export const fetchPost = (urlPath: string, body: string): Promise<Response> => serverRequest(RequestMethod.POST, urlPath, body);
+export function fetchPost(urlPath: string, body: string) {
+    return serverRequest(RequestMethod.POST, urlPath, body);
+}
 
-export const fetchDelete = (urlPath: string): Promise<Response> => {
+export function fetchDelete(urlPath: string) {
     const OPTIONS: RequestInit = {
         headers: getHeaders(),
         method: RequestMethod.DELETE,
@@ -124,16 +153,24 @@ export const fetchDelete = (urlPath: string): Promise<Response> => {
     return fetch(getApiBaseUrl() + urlPath, OPTIONS);
 };
 
-export const fetchOppsummering = (urlPath: string): Promise<Response> => {
+export function fetchOppsummering(urlPath: string) {
     const OPTIONS: RequestInit = {
         headers: new Headers({"accept": "application/vnd.oppsummering+html"}),
         method: "GET",
         credentials: determineCredentialsParameter()
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS)
-};
+        .then((response: Response) => {
+            const statusKode: number = sjekkStatuskode(response);
+            if (statusKode >= 200 && statusKode < 300) {
+                return response.text();
+            } else {
+                throw new Error(HttpStatus.UNAUTHORIZED)
+            }
+        });
+}
 
-export const fetchKvittering = (urlPath: string): Promise<Response> => {
+export function fetchKvittering(urlPath: string) {
     const OPTIONS: RequestInit = {
         headers: new Headers({
             "accept": "application/vnd.kvitteringforinnsendtsoknad+json",
@@ -144,7 +181,15 @@ export const fetchKvittering = (urlPath: string): Promise<Response> => {
         credentials: determineCredentialsParameter()
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS)
-};
+        .then((response: Response) => {
+            const statusKode: number = sjekkStatuskode(response);
+            if (statusKode >= 200 && statusKode < 300) {
+                return response.json();
+            } else {
+                throw new Error(HttpStatus.UNAUTHORIZED)
+            }
+        });
+}
 
 export function fetchFeatureToggles() {
     const OPTIONS: RequestInit = {
@@ -153,9 +198,28 @@ export function fetchFeatureToggles() {
         credentials: determineCredentialsParameter()
     };
     return fetch(getServletBaseUrl() + "api/feature", OPTIONS)
+        .then((response: Response) => {
+            const statusKode: number = sjekkStatuskode(response);
+            if (statusKode >= 200 && statusKode < 300) {
+                return response.json();
+            } else {
+                throw new Error(HttpStatus.UNAUTHORIZED)
+            }
+        });
 }
 
-export const generateUploadOptions = (formData: FormData) => {
+// FIXME: KANSKJE JEG KAN BRUKE DENNE SENRE.
+// export const getJsonOrRedirectIfUnauthorizedAndThrowError = (response: Response) => {
+//     const statusKode: number = sjekkStatuskode(response);
+//     if (statusKode >= 200 && statusKode < 300) {
+//         return response.json();
+//     } else {
+//         throw new Error(HttpStatus.UNAUTHORIZED)
+//     }
+// };
+
+
+let generateUploadOptions = function (formData: FormData) {
     const UPLOAD_OPTIONS: RequestInit = {
         headers: new Headers({
             "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
@@ -168,13 +232,18 @@ export const generateUploadOptions = (formData: FormData) => {
     return UPLOAD_OPTIONS;
 };
 
-export const fetchUpload = (urlPath: string, formData: FormData): Promise<Response> => {
+export function fetchUpload(urlPath: string, formData: FormData) {
     return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData))
-};
+        .then((response) => {
+            sjekkStatuskode(response);
+            return toJson(response)
+        });
+}
 
-export const fetchUploadIgnoreErrors = (urlPath: string, formData: FormData): Promise<Response> => {
+export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData) {
     return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData))
-};
+        .then(toJson);
+}
 
 export function toJson<T>(response: Response): Promise<T> {
     if (response.status === 204) {
@@ -183,7 +252,7 @@ export function toJson<T>(response: Response): Promise<T> {
     return response.json();
 }
 
-export function* sjekkStatusKodeSaga(response: Response): IterableIterator<any> {
+function sjekkStatuskode(response: Response): number {
     const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
 
     if (response.status === 401){
@@ -195,31 +264,17 @@ export function* sjekkStatusKodeSaga(response: Response): IterableIterator<any> 
                 });
             }
         } else {
-            yield put(push(Sider.SERVERFEIL));
+            put(push(Sider.SERVERFEIL));
         }
-        return response;
+        return 401;
     }
     if (response.status >= 200 && response.status < 300) {
-        return response;
+        return response.status;
     }
     throw new Error(response.statusText);
 }
 
-export const responseToJson = (response: Response) => {
-    return new Promise((resolve, reject) => {
-        resolve(response.json())
-    });
-};
-
-export const responseToText = (response: Response) => {
-    return new Promise((resolve, reject) => {
-        resolve(response.text())
-    });
-};
-
-export const statusCodeOk = (response: Response): boolean => response.status >= 200 && response.status < 300;
-
-export const getCookie = (name: string): string => {
+export function getCookie(name: string) {
     const value = "; " + document.cookie;
     const parts = value.split("; " + name + "=");
     if (parts.length === 2) {

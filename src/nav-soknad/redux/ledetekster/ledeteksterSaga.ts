@@ -1,13 +1,13 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { LedeteksterActionTypeKeys } from "./ledeteksterTypes";
-import { fetchGet } from "../../utils/rest-utils";
+import {fetchToJson, HttpStatus} from "../../utils/rest-utils";
 import {
 	henterTekster,
 	hentetTekster,
 	hentTeksterFeilet
 } from "./ledeteksterActions";
 import { SagaIterator } from "redux-saga";
-import { loggFeil } from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
 
 const urlInneholderVistekster = () =>
 	window.location.search.match(/vistekster=true/) !== null;
@@ -21,27 +21,26 @@ function leggNoklerPaaLedetekster(data: object) {
 	return tekster;
 }
 
-function* hentTeksterSaga() {
+function* hentTeksterSaga(): SagaIterator {
 	try {
 		yield put(henterTekster());
 		// TODO: Burde lage egen funksjon som holder på url-string
 		const response = yield call(
-			fetchGet,
+			fetchToJson,
 			"informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp"
 		);
 
-		const jsonResponse = yield new Promise((resolve, reject) => {
-			resolve(response.json());
-		});
-
- 		const visNokler = yield call(urlInneholderVistekster);
-		const tekster = visNokler ? leggNoklerPaaLedetekster(jsonResponse) : jsonResponse;
+		const visNokler = yield call(urlInneholderVistekster);
+		const tekster = visNokler ? leggNoklerPaaLedetekster(response) : response;
 		yield put(hentetTekster(tekster));
 	} catch (reason) {
-		yield put(
-			loggFeil("Problemer med å hente ledetekster: " + reason.toString())
-		);
-		yield put(hentTeksterFeilet(reason));
+		if (reason.message === HttpStatus.UNAUTHORIZED){
+			console.warn("hentTeksterSaga: " + reason.toString());
+			yield put(loggAdvarsel("hentTeksterSaga: " + reason));
+		} else {
+			yield put(loggFeil("Problemer med å hente ledetekster: " + reason.toString()));
+			yield put(hentTeksterFeilet(reason));
+		}
 	}
 }
 

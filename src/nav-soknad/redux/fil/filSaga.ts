@@ -1,14 +1,8 @@
 import {FilActionTypeKeys, LastOppFilAction, StartSlettFilAction} from "./filTypes";
 import {SagaIterator} from "redux-saga";
-import {
-    fetchDelete,
-    fetchUpload,
-    fetchUploadIgnoreErrors, responseToJson,
-    sjekkStatusKodeSaga,
-    statusCodeOk,
-} from "../../utils/rest-utils";
+import {fetchDelete, fetchUpload, fetchUploadIgnoreErrors, HttpStatus,} from "../../utils/rest-utils";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {
     settFilOpplastingFerdig,
     settFilOpplastingPending,
@@ -18,8 +12,6 @@ import {Fil, Opplysning, VedleggStatus} from "../okonomiskeOpplysninger/opplysni
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {lastOppFilFeilet} from "./filActions";
 import {REST_FEIL} from "../../types/restFeilTypes";
-import {TilgangApiResponse} from "../tilgang/tilgangTypes";
-import {hentetTilgang} from "../tilgang/tilgangActions";
 
 
 function* lastOppFilSaga(action: LastOppFilAction) {
@@ -29,46 +21,40 @@ function* lastOppFilSaga(action: LastOppFilAction) {
 
     yield put(settFilOpplastingPending(opplysning.type));
 
-    let jsonResponse: Fil =
+    let response: Fil =
         {
             "filNavn": "",
             "uuid": ""
         };
 
     try {
-        const response: Response = yield call(fetchUpload, url, formData)
-
-        yield sjekkStatusKodeSaga(response);
-        if(statusCodeOk(response)){
-            const tilgangApiResponse: TilgangApiResponse = yield responseToJson(response);
-            yield put(hentetTilgang(tilgangApiResponse.harTilgang, tilgangApiResponse.sperrekode));
-
-            const filerUpdated: Fil[] = opplysning.filer.map((fil: Fil) => ({...fil}));
-            jsonResponse = yield responseToJson(response);
-            filerUpdated.push(jsonResponse);
-            const opplysningUpdated: Opplysning = {...opplysning};
-            opplysningUpdated.filer = filerUpdated;
-            opplysningUpdated.vedleggStatus = VedleggStatus.LASTET_OPP;
-            yield put(updateOpplysning(opplysningUpdated));
+        response = yield call(fetchUpload, url, formData);
+        const filerUpdated: Fil[] = opplysning.filer.map((fil: Fil) => ({...fil}));
+        filerUpdated.push(response);
+        const opplysningUpdated: Opplysning = {...opplysning};
+        opplysningUpdated.filer = filerUpdated;
+        opplysningUpdated.vedleggStatus = VedleggStatus.LASTET_OPP;
+        yield put(updateOpplysning(opplysningUpdated));
+        yield put(settFilOpplastingFerdig(opplysning.type));
+    } catch (reason) {
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("lastOppFilSaga: " + reason));
+        } else {
+            let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
+            // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
+            response = yield call(fetchUploadIgnoreErrors, url, formData);
+            const ID = "id";
+            // @ts-ignore
+            if (response && response[ID]) {
+                // @ts-ignore
+                feilKode = response[ID];
+            }
+            yield put(lastOppFilFeilet(opplysning.type, feilKode));
+            if (feilKode !== REST_FEIL.KRYPTERT_FIL && feilKode !== REST_FEIL.SIGNERT_FIL) {
+                yield put(loggInfo("Last opp vedlegg feilet: " + reason.toString()));
+            }
             yield put(settFilOpplastingFerdig(opplysning.type));
         }
-    } catch (reason) {
-
-        let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
-        // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
-        const responseSecond: Response = yield call(fetchUploadIgnoreErrors, url, formData);
-        jsonResponse = yield responseToJson(responseSecond);
-        const ID = "id";
-        // @ts-ignore
-        if (jsonResponse && jsonResponse[ID]) {
-            // @ts-ignore
-            feilKode = jsonResponse[ID];
-        }
-        yield put(lastOppFilFeilet(opplysning.type, feilKode));
-        if (feilKode !== REST_FEIL.KRYPTERT_FIL && feilKode !== REST_FEIL.SIGNERT_FIL) {
-            yield put(loggInfo("Last opp vedlegg feilet: " + reason.toString()));
-        }
-        yield put(settFilOpplastingFerdig(opplysning.type));
     }
 }
 
@@ -108,8 +94,12 @@ function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
         yield put(settFilOpplastingFerdig(opplysningType));
 
     } catch (reason) {
-        yield put(loggFeil("Slett vedlegg feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("slettFilSaga: " + reason));
+        } else {
+            yield put(loggFeil("Slett vedlegg feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 

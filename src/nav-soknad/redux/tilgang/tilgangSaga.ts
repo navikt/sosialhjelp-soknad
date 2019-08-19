@@ -1,24 +1,28 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import {TilgangActionTypeKeys, TilgangApiResponse} from "./tilgangTypes";
-import {fetchGet, responseToJson, sjekkStatusKodeSaga, statusCodeOk} from "../../utils/rest-utils";
+import { TilgangActionTypeKeys, TilgangApiResponse } from "./tilgangTypes";
+import {fetchToJson, HttpStatus} from "../../utils/rest-utils";
 import {
-	henterTilgang, hentetTilgang, hentTilgangFeilet,
+	henterTilgang,
+	hentetTilgang,
+	hentTilgangFeilet
 } from "./tilgangActions";
+import {loggAdvarsel} from "../navlogger/navloggerActions";
 
 export function* hentTilgangSaga() {
 	try {
 		yield put(henterTilgang());
-		const response: Response = yield call(
-			fetchGet,
+		const response: TilgangApiResponse = yield call(
+			fetchToJson,
 			"informasjon/utslagskriterier/sosialhjelp"
 		);
-		yield* sjekkStatusKodeSaga(response);
-		if(statusCodeOk(response)){
-			const tilgangApiResponse: TilgangApiResponse = yield responseToJson(response);
-			yield put(hentetTilgang(tilgangApiResponse.harTilgang, tilgangApiResponse.sperrekode));
-		}
+		yield put(hentetTilgang(response.harTilgang, response.sperrekode));
 	} catch (reason) {
-		yield put(hentTilgangFeilet(reason));
+		if (reason.message === HttpStatus.UNAUTHORIZED){
+			console.warn("hentTilgangSaga: " + reason.toString());
+			yield put(loggAdvarsel("hentTilgangSaga: " + reason));
+		} else {
+			yield put(hentTilgangFeilet(reason));
+		}
 	}
 }
 

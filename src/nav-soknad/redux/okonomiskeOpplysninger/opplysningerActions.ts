@@ -1,5 +1,4 @@
 import {Dispatch, Valideringsfeil} from "../reduxTypes";
-import {fetchGet, sjekkStatusKodeSaga, statusCodeOk} from "../../utils/rest-utils";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {
     OpplysningerAction,
@@ -9,7 +8,8 @@ import {
     OpplysningType
 } from "./opplysningerTypes";
 import {getOpplysningerUrl} from "./opplysningerUtils";
-import {loggFeil} from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
+import {fetchToJson, HttpStatus} from "../../utils/rest-utils";
 
 export const gotDataFromBackend = (response: OpplysningerBackend): OpplysningerAction => {
     return {
@@ -41,20 +41,19 @@ export const settFilOpplastingFerdig = (opplysningType: OpplysningType): Opplysn
 
 export function hentOpplysninger(behandlingsId: string) {
     return (dispatch: Dispatch) => {
-        fetchGet(getOpplysningerUrl(behandlingsId))
-            .then((response: Response) => {
-                sjekkStatusKodeSaga(response);
-                if(statusCodeOk(response)){
-                    if (response.status === 200){
-                        response.json().then(jsonResponse => {
-                            dispatch(gotDataFromBackend(jsonResponse));
-                        })
-                    }
+        fetchToJson(getOpplysningerUrl(behandlingsId))
+            .then((response: any) => {
+                dispatch(gotDataFromBackend(response));
+            })
+            .catch((reason: any) => {
+                if (reason.message === HttpStatus.UNAUTHORIZED){
+                    console.warn("hentTilgangSaga: " + reason.toString());
+                    dispatch(loggAdvarsel("hentTilgangSaga: " + reason));
+                } else {
+                    dispatch(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));
+                    dispatch(navigerTilServerfeil());
                 }
-            }).catch((reason: any) => {
-            dispatch(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));
-            dispatch(navigerTilServerfeil());
-        });
+            });
     }
 }
 
