@@ -1,7 +1,7 @@
 import { hentTeksterSaga, leggNoklerPaaLedetekster, urlInneholderVistekster } from "./ledeteksterSaga";
 import { henterTekster, hentetTekster, hentTeksterFeilet } from "./ledeteksterActions";
 import { call, put } from "redux-saga/effects";
-import { fetchGet } from "../../utils/rest-utils";
+import { fetchToJson } from "../../utils/rest-utils";
 import { loggFeil } from "../navlogger/navloggerActions";
 
 describe("ledeteksterSaga", () => {
@@ -24,7 +24,7 @@ describe("ledeteksterSaga", () => {
 		it("fetch tekster", () => {
 			expect(saga.next()).toEqual({
 				done: false,
-				value: call(fetchGet, "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp")
+				value: call(fetchToJson, "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp")
 			});
 		});
 
@@ -77,14 +77,16 @@ describe("ledeteksterSaga", () => {
 
 	describe("hentTeksterSaga - feilflyt", () => {
 		const saga = hentTeksterSaga();
-		const reason = "Serverfeil";
+		const reason = "unauthorized";
 		saga.next();
 
 		it("put hentTekstFeiler", () => {
-			expect(saga.throw(reason)).toEqual({
-				done: false,
-				value: put(loggFeil("Problemer med å hente ledetekster: " + reason.toString()))
-			});
+			if (saga && saga.throw){
+				expect(saga.throw(reason)).toEqual({
+					done: false,
+					value: put(loggFeil("Problemer med å hente ledetekster: " + reason.toString()))
+				});
+			}
 		});
 
 		it("er ferdig", () => {
