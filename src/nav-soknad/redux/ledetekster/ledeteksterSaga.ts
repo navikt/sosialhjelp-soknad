@@ -35,7 +35,6 @@ function* hentTeksterSaga(): SagaIterator {
 		yield put(hentetTekster(tekster));
 	} catch (reason) {
 		if (reason.message === HttpStatus.UNAUTHORIZED){
-			console.warn("hentTeksterSaga: " + reason.toString());
 			yield put(loggAdvarsel("hentTeksterSaga: " + reason));
 		} else {
 			yield put(loggFeil("Problemer med å hente ledetekster: " + reason.toString()));

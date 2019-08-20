@@ -1,8 +1,5 @@
 import {REST_FEIL} from "../types/restFeilTypes";
 import {erMockMiljoEllerDev} from "./index";
-import {push} from "connected-react-router";
-import {Sider} from "../redux/navigasjon/navigasjonTypes";
-import {put} from 'redux-saga/effects';
 import {
     API_CONTEXT_PATH,
     CONTEXT_PATH,
@@ -119,7 +116,7 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
                     }, 100 * (7 - retries));
 
                 } else {
-                    const statusKode = sjekkStatuskode(response);
+                    const statusKode = verifyStatusSuccessOrRedirect(response);
                     if (statusKode >= 200 && statusKode < 300) {
                         const jsonResponse = toJson(response);
                         resolve(jsonResponse);
@@ -150,8 +147,15 @@ export function fetchDelete(urlPath: string) {
         method: RequestMethod.DELETE,
         credentials: determineCredentialsParameter()
     };
-    return fetch(getApiBaseUrl() + urlPath, OPTIONS);
-};
+    return fetch(getApiBaseUrl() + urlPath, OPTIONS).then((response: Response) => {
+        const statusKode: number = verifyStatusSuccessOrRedirect(response);
+        if (statusKode >= 200 && statusKode < 300) {
+            return response.text();
+        } else {
+            throw new Error(HttpStatus.UNAUTHORIZED)
+        }
+    });
+}
 
 export function fetchOppsummering(urlPath: string) {
     const OPTIONS: RequestInit = {
@@ -161,7 +165,7 @@ export function fetchOppsummering(urlPath: string) {
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS)
         .then((response: Response) => {
-            const statusKode: number = sjekkStatuskode(response);
+            const statusKode: number = verifyStatusSuccessOrRedirect(response);
             if (statusKode >= 200 && statusKode < 300) {
                 return response.text();
             } else {
@@ -182,7 +186,7 @@ export function fetchKvittering(urlPath: string) {
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS)
         .then((response: Response) => {
-            const statusKode: number = sjekkStatuskode(response);
+            const statusKode: number = verifyStatusSuccessOrRedirect(response);
             if (statusKode >= 200 && statusKode < 300) {
                 return response.json();
             } else {
@@ -199,7 +203,7 @@ export function fetchFeatureToggles() {
     };
     return fetch(getServletBaseUrl() + "api/feature", OPTIONS)
         .then((response: Response) => {
-            const statusKode: number = sjekkStatuskode(response);
+            const statusKode: number = verifyStatusSuccessOrRedirect(response);
             if (statusKode >= 200 && statusKode < 300) {
                 return response.json();
             } else {
@@ -210,7 +214,7 @@ export function fetchFeatureToggles() {
 
 // FIXME: KANSKJE JEG KAN BRUKE DENNE SENRE.
 // export const getJsonOrRedirectIfUnauthorizedAndThrowError = (response: Response) => {
-//     const statusKode: number = sjekkStatuskode(response);
+//     const statusKode: number = verifyStatusSuccessOrRedirect(response);
 //     if (statusKode >= 200 && statusKode < 300) {
 //         return response.json();
 //     } else {
@@ -235,8 +239,12 @@ let generateUploadOptions = function (formData: FormData) {
 export function fetchUpload(urlPath: string, formData: FormData) {
     return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData))
         .then((response) => {
-            sjekkStatuskode(response);
-            return toJson(response)
+            const statusKode: number = verifyStatusSuccessOrRedirect(response);
+            if (statusKode >= 200 && statusKode < 300) {
+                return toJson(response)
+            } else {
+                throw new Error(HttpStatus.UNAUTHORIZED)
+            }
         });
 }
 
@@ -252,7 +260,7 @@ export function toJson<T>(response: Response): Promise<T> {
     return response.json();
 }
 
-function sjekkStatuskode(response: Response): number {
+function verifyStatusSuccessOrRedirect(response: Response): number {
     const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
 
     if (response.status === 401){
@@ -262,9 +270,10 @@ function sjekkStatuskode(response: Response): number {
                 response.json().then(r => {
                     window.location.href = r.loginUrl + getRedirectPath();
                 });
+            } else {
+                // @ts-ignore
+                window[AUTH_LINK_VISITED] = false;
             }
-        } else {
-            put(push(Sider.SERVERFEIL));
         }
         return 401;
     }
