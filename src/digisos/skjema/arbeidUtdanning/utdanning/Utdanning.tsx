@@ -1,7 +1,7 @@
 import * as React from "react";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import {
@@ -9,9 +9,15 @@ import {
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
+import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
 
 const FAKTUM_STUDIER = "dinsituasjon.studerer";
 const FAKTUM_STUDERER = "dinsituasjon.studerer.true.grad";
+
+const STUDERER_INFO_TITTEL = "dinsituasjon.studerer.true.info.tittel";
+const STUDERER_INFO_DEL1 = "dinsituasjon.studerer.true.info.1";
+const STUDERER_INFO_DEL2 = "dinsituasjon.studerer.true.info.2";
 
 type Props = SoknadsdataContainerProps  & InjectedIntlProps;
 
@@ -69,6 +75,20 @@ class UtdanningView extends React.Component<Props, {}> {
 						onChange={() => this.handleClickHeltidDeltid(false)}
 					/>
 				</Sporsmal>
+				<Informasjonspanel
+					synlig={erStudent === true}
+					ikon={InformasjonspanelIkon.ELLA}
+					farge={DigisosFarge.VIKTIG}
+				>
+					<div className="skjema-sporsmal__tittel">
+						<FormattedMessage id={STUDERER_INFO_TITTEL}/>
+					</div>
+					<p>
+						<FormattedHTMLMessage id={STUDERER_INFO_DEL1}/>
+					</p>
+					<p/>
+					<FormattedHTMLMessage id={STUDERER_INFO_DEL2}/>
+				</Informasjonspanel>
 			</JaNeiSporsmal>
 		);
 	}
