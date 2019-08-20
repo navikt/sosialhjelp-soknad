@@ -47,7 +47,6 @@ export function hentOpplysninger(behandlingsId: string) {
             })
             .catch((reason: any) => {
                 if (reason.message === HttpStatus.UNAUTHORIZED){
-                    console.warn("hentTilgangSaga: " + reason.toString());
                     dispatch(loggAdvarsel("hentTilgangSaga: " + reason));
                 } else {
                     dispatch(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));

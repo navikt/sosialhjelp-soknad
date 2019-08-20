@@ -8,10 +8,10 @@ import {
     getOpplysningerUrl, getSpcForOpplysning,
     transformToBackendOpplysning,
 } from "./opplysningerUtils";
-import {fetchPut} from "../../utils/rest-utils";
+import {fetchPut, HttpStatus} from "../../utils/rest-utils";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {updateOpplysning} from "./opplysningerActions";
-import {loggFeil} from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
 import {Valideringsfeil} from "../valideringActionTypes";
 
 
@@ -39,9 +39,13 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
                     getOpplysningerUrl(behandlingsId),
                     JSON.stringify(transformToBackendOpplysning(opplysning))
                 );
-            } catch (e) {
-                yield put(loggFeil("Lagring av økonomisk opplysning feilet. Reason: " + e));
-                yield put(navigerTilServerfeil());
+            } catch (reason) {
+                if (reason.message === HttpStatus.UNAUTHORIZED){
+                    yield put(loggAdvarsel("hentTilgangSaga: " + reason));
+                } else {
+                    yield put(loggFeil("Lagring av økonomisk opplysning feilet. Reason: " + reason));
+                    yield put(navigerTilServerfeil());
+                }
             }
         }
     } else {

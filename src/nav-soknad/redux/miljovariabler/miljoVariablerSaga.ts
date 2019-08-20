@@ -15,7 +15,6 @@ export function* hentMiljovariablerSaga() {
 		yield put(mottattMiljovariabler(response));
 	} catch (reason) {
 		if (reason.message === HttpStatus.UNAUTHORIZED){
-			console.warn("hentMiljøvariablerSaga: " + reason.toString());
 			yield put(loggAdvarsel("hentMiljøvariablerSaga: " + reason));
 		} else {
 			yield put(loggFeil("Problemer med å hente miljøvariabler: " + reason.toString()));

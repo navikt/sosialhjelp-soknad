@@ -176,6 +176,7 @@ function* getErSystemdataEndretSaga() {
         if (response) {
             yield put(loggInfo("Systemdata var endret for brukeren."));
         }
+        yield put(setErSystemdataEndret(response));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED){
             yield put(loggAdvarsel("getErSystemdataEndretSaga: " + reason));

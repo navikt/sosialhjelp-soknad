@@ -38,7 +38,7 @@ interface FornavnApi {
 function* getFornavnSaga(): IterableIterator<any> {
 	try {
 		let response: FornavnApi = yield call(fetchToJson, "informasjon/fornavn" );
-		yield put(lagreFornavnPaStore(response.fornavn))
+		yield put(lagreFornavnPaStore(response.fornavn));
 	} catch (e) {
 		yield put(loggFeil("Error catchet i getFornavnSaga. Error: " + e.toString()))
 	}

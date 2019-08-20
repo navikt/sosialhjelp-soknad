@@ -18,7 +18,6 @@ export function* hentTilgangSaga() {
 		yield put(hentetTilgang(response.harTilgang, response.sperrekode));
 	} catch (reason) {
 		if (reason.message === HttpStatus.UNAUTHORIZED){
-			console.warn("hentTilgangSaga: " + reason.toString());
 			yield put(loggAdvarsel("hentTilgangSaga: " + reason));
 		} else {
 			yield put(hentTilgangFeilet(reason));
