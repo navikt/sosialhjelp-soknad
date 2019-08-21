@@ -1,4 +1,4 @@
-image: docker.adeo.no:5000/soknadsosialhjelp
+image: docker.adeo.no:5000/sosialhjelp-soknad
 team: digisos
 prometheus:
   enabled: true
