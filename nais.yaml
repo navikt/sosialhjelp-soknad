@@ -28,3 +28,5 @@ fasitResources:
     resourceType: baseurl
   - alias: suspender
     resourceType: credential
+  - alias: loadbalancer:sosialhjelp-soknad
+    resourceType: LoadBalancerConfig
