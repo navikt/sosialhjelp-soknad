@@ -48,12 +48,18 @@ class BosituasjonView extends React.Component<Props, {}> {
             const botype = verdi.replace("annet.botype.", "");
             bosituasjon.botype = botype;
             this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
-            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, bosituasjon);
+            const valideringsfeil = this.validerAntallPersoner(bosituasjon.antallPersoner);
+            if (!valideringsfeil) {
+                this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, bosituasjon);
+            }
         } else {
             const botype = verdi;
             bosituasjon.botype = botype;
             this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
-            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, bosituasjon);
+            const valideringsfeil = this.validerAntallPersoner(bosituasjon.antallPersoner);
+            if (!valideringsfeil) {
+                this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, bosituasjon);
+            }
         }
     }
 
