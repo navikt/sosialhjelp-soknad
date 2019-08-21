@@ -1,17 +1,17 @@
-image: docker.adeo.no:5000/sosialhjelp-soknad
+image: docker.adeo.no:5000/soknadsosialhjelp
 team: digisos
 prometheus:
   enabled: true
   path: /prometheus
 healthcheck:
   liveness:
-    path: /sosialhjelp/soknad/
+    path: /sosialhjelp/soknad/internal/isAlive
     initialDelay: 5
     timeout: 1
     periodSeconds: 10
     failureThreshold: 10
   readiness:
-    path: /sosialhjelp/soknad/
+    path: /sosialhjelp/soknad/internal/isAlive
     initialDelay: 5
     timeout: 1
 resources:

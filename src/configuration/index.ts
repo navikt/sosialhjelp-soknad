@@ -16,14 +16,7 @@ export const getContextPathFromWindowLocation = (pathname: string ): string => {
     return pathname.replace(/^(.+?sosialhjelp\/soknad)(.+)$/, "$1")
 };
 
-export function getContextPathBasename() {
-    // @ts-ignore
-    // return window.location.pathname.replace(`/^/(([^/]+/)?${CONTEXT_PATH}).+$/`, "$1")
-
-    // return window.location.pathname.replace( /^\/(([^/]+\/)?sosialhjelp\/soknad).+$/, "/$1");
-    return window.location.pathname.replace( /(.+sosialhjelp\/soknad)(.+)/, "$1");
-    // return "/sosialhjelp/soknad"
-}
+export const getContextPathBasename = (): string => getContextPathFromWindowLocation(window.location.pathname);
 
 export function getRedirectPathname(): string {
     return `/${CONTEXT_PATH}/link`;

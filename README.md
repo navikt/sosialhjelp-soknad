@@ -37,17 +37,13 @@ I stedet for npm er det mulig å bruke yarn.
  ```
  * `cd soknadsosialhjelp/web/src/frontend && npm start`
 
- * Åpne `http://localhost:3000/sosialhjelp/soknad/informasjon` i nettelseren.
+ * Åpne `http://localhost:3000/sosialhjelp/soknad/informasjon` i nettleseren.
 
  ## Deploy til testmiljø på Heroku
 
  Forutsetter at [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) er installert og at man har opprettet
  og autentisert mot egen Heroku-konto:
  
- For å få det til å virke på "en-kul-ny-feature" så må man endre heroku-index.html. I alle script taggene må 
- "create en-kul-ny-feature" legges til i path'en. Ellers vil js og css filene hentes fra 
- digisos-test.com/soknadsosialhjelp istede :( . F eks src="/en-kul-ny-feature/soknad..."
-
  ```bash
  heroku auth:login
  heroku container:login
@@ -60,7 +56,6 @@ I stedet for npm er det mulig å bruke yarn.
  heroku create en-kul-ny-feature
  git add .
  git commit -m "[WIP]"
- git push
 
  ./heroku-build.sh -a=en-kul-ny-feature
  ```
