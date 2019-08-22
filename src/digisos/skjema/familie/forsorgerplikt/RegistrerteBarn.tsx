@@ -48,50 +48,48 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 			<div>
 				{barn.map((barnet: Barn, index: number) =>
 					<div key={index} className={(index + 1 === barn.length) ? "barn barn_siste_liste_element" : "barn"}>
-						{!barnet.harDiskresjonskode && (
-							<Detaljeliste>
-								<DetaljelisteElement
-									tittel={<span><FormattedMessage id="kontakt.system.personalia.navn"/></span>}
-									verdi={barnet.barn.navn.fulltNavn}
-								/>
-								<DetaljelisteElement
-									tittel={<span><FormattedMessage id="familierelasjon.fodselsdato"/></span>}
-									verdi={barnet.barn.fodselsdato}
-								/>
-								<DetaljelisteElement
-									tittel={(
-										<span><FormattedMessage id="familierelasjon.samme_folkeregistrerte_adresse"/></span>
-									)}
-									verdi={barnet.erFolkeregistrertSammen ? "Ja" : "Nei"}
-								/>
-								{barnet.erFolkeregistrertSammen && (
-									<div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
-										<JaNeiSporsmal
-											id={"barn_radio_" + index}
-											tekster={getFaktumSporsmalTekst(this.props.intl, "system.familie.barn.true.barn.deltbosted")}
-											faktumKey={"system.familie.barn.true.barn.deltbosted"}
-											verdi={barnet.harDeltBosted}
-											onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi, index)}
-											legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-										/>
-									</div>
+						<Detaljeliste>
+							<DetaljelisteElement
+								tittel={<span><FormattedMessage id="kontakt.system.personalia.navn"/></span>}
+								verdi={barnet.barn.navn.fulltNavn}
+							/>
+							<DetaljelisteElement
+								tittel={<span><FormattedMessage id="familierelasjon.fodselsdato"/></span>}
+								verdi={barnet.barn.fodselsdato}
+							/>
+							<DetaljelisteElement
+								tittel={(
+									<span><FormattedMessage id="familierelasjon.samme_folkeregistrerte_adresse"/></span>
 								)}
-								{!barnet.erFolkeregistrertSammen && (
-									<div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
-										<InputEnhanced
-											getName={() => "barn" + index + "_samvaersgrad"}
-											id={"barn" + index + "_samvaersgrad"}
-											maxLength={3}
-											verdi={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
-											onChange={(verdi: string) => this.onChangeSamvaersgrad(verdi, index)}
-											onBlur={() => this.onBlur()}
-											faktumKey="system.familie.barn.true.barn.grad"
-											required={false}
-										/>
-									</div>
-								)}
-							</Detaljeliste>
-						)}
+								verdi={barnet.erFolkeregistrertSammen ? "Ja" : "Nei"}
+							/>
+							{barnet.erFolkeregistrertSammen && (
+								<div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
+									<JaNeiSporsmal
+										id={"barn_radio_" + index}
+										tekster={getFaktumSporsmalTekst(this.props.intl, "system.familie.barn.true.barn.deltbosted")}
+										faktumKey={"system.familie.barn.true.barn.deltbosted"}
+										verdi={barnet.harDeltBosted}
+										onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi, index)}
+										legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+									/>
+								</div>
+							)}
+							{!barnet.erFolkeregistrertSammen && (
+								<div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
+									<InputEnhanced
+										getName={() => "barn" + index + "_samvaersgrad"}
+										id={"barn" + index + "_samvaersgrad"}
+										maxLength={3}
+										verdi={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
+										onChange={(verdi: string) => this.onChangeSamvaersgrad(verdi, index)}
+										onBlur={() => this.onBlur()}
+										faktumKey="system.familie.barn.true.barn.grad"
+										required={false}
+									/>
+								</div>
+							)}
+						</Detaljeliste>
 					</div>
 				)}
 			</div>

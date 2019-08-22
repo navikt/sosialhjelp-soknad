@@ -7,7 +7,6 @@ export interface Barn {
 		personnummer: string;
 		fodselsnummer: string;
 	},
-	harDiskresjonskode: boolean;
 	borSammenMed: null | boolean;
 	erFolkeregistrertSammen: boolean;
 	harDeltBosted: boolean;
