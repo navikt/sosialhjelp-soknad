@@ -15,9 +15,9 @@ import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger"
 const FAKTUM_STUDIER = "dinsituasjon.studerer";
 const FAKTUM_STUDERER = "dinsituasjon.studerer.true.grad";
 
-const STUDERER_INFO_TITTEL = "dinsituasjon.studerer.true.info.tittel";
-const STUDERER_INFO_DEL1 = "dinsituasjon.studerer.true.info.1";
-const STUDERER_INFO_DEL2 = "dinsituasjon.studerer.true.info.2";
+const STUDERER_INFO_TITTEL = "informasjon.student.studielan.tittel";
+const STUDERER_INFO_DEL1 = "informasjon.student.studielan.1";
+const STUDERER_INFO_DEL2 = "informasjon.student.studielan.2";
 
 type Props = SoknadsdataContainerProps  & InjectedIntlProps;
 
