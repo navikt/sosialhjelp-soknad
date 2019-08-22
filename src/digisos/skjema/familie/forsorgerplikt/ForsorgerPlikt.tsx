@@ -11,6 +11,7 @@ import Barnebidrag from "./Barnebidrag";
 import RegistrerteBarn from "./RegistrerteBarn";
 import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
+import BrukerregistrerteBarn from "./BrukerregistrerteBarn";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -71,13 +72,14 @@ class ForsorgerPliktView extends React.Component<Props, State> {
 					<FormattedHTMLMessage id="familierelasjon.ingress" values={{ antallBarn }}/>
 					<SysteminfoMedSkjema>
 						<RegistrerteBarn/>
+						<BrukerregistrerteBarn/>
 						<Barnebidrag/>
 					</SysteminfoMedSkjema>
 				</Sporsmal>
 			);
 		}
 		return (
-			<div/>
+			<BrukerregistrerteBarn/>
 		);
 	}
 }

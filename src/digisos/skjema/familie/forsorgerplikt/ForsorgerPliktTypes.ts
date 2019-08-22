@@ -3,13 +3,13 @@ import { Navn } from "../sivilstatus/FamilieTypes";
 export interface Barn {
 	barn: {
 		navn: Navn;
-		fodselsdato: string;
-		personnummer: string;
-		fodselsnummer: string;
+		fodselsdato: null | string;
+		personnummer: null | string;
+		fodselsnummer: null | string;
 	},
 	borSammenMed: null | boolean;
 	erFolkeregistrertSammen: boolean;
-	harDeltBosted: boolean;
+	harDeltBosted: null | boolean;
 	samvarsgrad: null | number;
 }
 
@@ -17,6 +17,7 @@ export interface ForsorgerPlikt {
 	harForsorgerplikt: boolean;
 	barnebidrag: string | null;
 	ansvar: Barn[];
+	brukerregistrertAnsvar: Barn[];
 }
 
 export interface Barnebidrag {
@@ -26,5 +27,6 @@ export interface Barnebidrag {
 export const initialForsorgerPlikt: ForsorgerPlikt = {
 	harForsorgerplikt: false,
 	barnebidrag: null,
-	ansvar: []
+	ansvar: [],
+	brukerregistrertAnsvar: []
 };
