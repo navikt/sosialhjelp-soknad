@@ -59,6 +59,7 @@ class ForsorgerPliktView extends React.Component<Props, State> {
 			return (
 				<Sporsmal sprakNokkel="familierelasjon.faktum">
 					<p><FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn"/></p>
+					<BrukerregistrerteBarn/>
 				</Sporsmal>
 			);
 		}
@@ -79,7 +80,7 @@ class ForsorgerPliktView extends React.Component<Props, State> {
 			);
 		}
 		return (
-			<BrukerregistrerteBarn/>
+			<div/>
 		);
 	}
 }
