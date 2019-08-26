@@ -100,7 +100,7 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
     };
 
     oppdaterTekstfelt(sti: string, verdi: string | null, barnIndex: number) {
-        this.props.clearValideringsfeil(TEXT_KEY_FNR);
+        this.props.clearValideringsfeil(TEXT_KEY_FNR + barnIndex);
         if (verdi && verdi.length === 0) {
             verdi = null;
         }
@@ -127,7 +127,7 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
         const {soknadsdata, oppdaterSoknadsdataSti} = this.props;
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barnet = forsorgerplikt.brukerregistrertAnsvar[barnIndex];
-        barnet.samvarsgrad = parseInt(verdi,10);
+        barnet.samvarsgrad = parseInt(verdi, 10);
         oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
         this.onBlur();
     }
@@ -137,28 +137,34 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barn: Barn[] = forsorgerplikt.brukerregistrertAnsvar;
         let feilkodeFodselsdato = null;
-        for (const barnet of barn) {
+        let ingenFeilKoder = true;
+        for (let i = 0; i < barn.length; i++) {
+            let barnet = barn[i];
             let fodselsdato: string | null = barnet.barn.fodselsdato;
+            console.warn(barnet.barn.fodselsdato);
 
-            if (fodselsdato && fodselsdato === "") {
-                fodselsdato = null;
+            if (fodselsdato === "") {
+                barnet.barn.fodselsdato = null;
             }
             if (fodselsdato && fodselsdato !== "") {
                 fodselsdato = konverterFraISODato(fodselsdato);
                 feilkodeFodselsdato = fdato(fodselsdato);
-                (feilkodeFodselsdato) ?
-                    this.props.setValideringsfeil(feilkodeFodselsdato, TEXT_KEY_FNR) :
-                    this.props.clearValideringsfeil(TEXT_KEY_FNR);
+                if (feilkodeFodselsdato) {
+                    this.props.setValideringsfeil(feilkodeFodselsdato, TEXT_KEY_FNR + i);
+                    ingenFeilKoder = false;
+                } else {
+                    this.props.clearValideringsfeil(TEXT_KEY_FNR + i);
+                }
 
                 if (!feilkodeFodselsdato && fodselsdato) {
                     fodselsdato = konverterTilISODato(fodselsdato);
                     barnet.barn.fodselsdato = fodselsdato;
                 }
             } else {
-                this.props.clearValideringsfeil(TEXT_KEY_FNR);
+                this.props.clearValideringsfeil(TEXT_KEY_FNR + i);
             }
         }
-        if (!feilkodeFodselsdato) {
+        if (ingenFeilKoder) {
             lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
         }
     }
@@ -232,15 +238,16 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
                                             <Row>
                                                 <Column xs="12">
                                                     <InputEnhanced
-                                                        getName={() => TEXT_KEY_FNR}
-                                                        id={TEXT_KEY_FNR}
+                                                        getName={() => TEXT_KEY_FNR + index}
+                                                        id={TEXT_KEY_FNR + index}
                                                         maxLength={8}
                                                         minLength={8}
                                                         verdi={barnet.barn.fodselsdato ? konverterFraISODato(barnet.barn.fodselsdato) : ""}
                                                         onChange={(verdi: string) => this.oppdaterTekstfelt("fodselsdato", verdi, index)}
                                                         bredde="S"
                                                         onBlur={() => this.onBlur()}
-                                                        faktumKey={TEXT_KEY_FNR}
+                                                        faktumKey={TEXT_KEY_FNR + index}
+                                                        textKey={TEXT_KEY_FNR}
                                                         required={true}
                                                     />
                                                 </Column>
@@ -254,7 +261,8 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
                                                     faktumKey={"familie.barn.true.barn.borsammen"}
                                                     verdi={barnet.borSammenMed}
                                                     onChange={(verdi: boolean) => this.onClickBorSammen(verdi, index)}
-                                                    legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+                                                    legendTittelStyle={LegendTittleStyle.NORMAL}
+
                                                 />
                                             </div>
                                             {barnet.borSammenMed === false && (

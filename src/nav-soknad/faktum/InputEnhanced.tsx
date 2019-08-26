@@ -16,6 +16,7 @@ export interface OwnProps {
     onChange: (verdi: string) => void;
     onBlur: () => void;
     faktumKey: string;
+    textKey?: string;
     required: boolean;
     feil: Valideringsfeil[]
 
@@ -45,6 +46,7 @@ class InputEnhanced extends React.Component<Props, {}> {
     render() {
         const {
             faktumKey,
+            textKey,
             faktumIndex,
             type,
             disabled,
@@ -56,7 +58,7 @@ class InputEnhanced extends React.Component<Props, {}> {
             bredde,
             feil
         } = this.props;
-        const tekster = getInputFaktumTekst(intl, faktumKey);
+        const tekster = getInputFaktumTekst(intl, textKey ? textKey : faktumKey);
 
         const feil_: Feil | undefined = getFeil(feil, intl, faktumKey, faktumIndex);
 
