@@ -137,28 +137,27 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barn: Barn[] = forsorgerplikt.brukerregistrertAnsvar;
         let feilkodeFodselsdato = null;
-        {barn.map((barnet: Barn, index: number) => {
-                let fodselsdato: string | null = barnet.barn.fodselsdato;
+        for (const barnet of barn) {
+            let fodselsdato: string | null = barnet.barn.fodselsdato;
 
-                if (fodselsdato && fodselsdato === "") {
-                    fodselsdato = null;
-                }
-                if (fodselsdato && fodselsdato !== "") {
-                    fodselsdato = konverterFraISODato(fodselsdato);
-                    feilkodeFodselsdato = fdato(fodselsdato);
-                    (feilkodeFodselsdato) ?
-                        this.props.setValideringsfeil(feilkodeFodselsdato, TEXT_KEY_FNR) :
-                        this.props.clearValideringsfeil(TEXT_KEY_FNR);
-
-                    if (!feilkodeFodselsdato && fodselsdato) {
-                        fodselsdato = konverterTilISODato(fodselsdato);
-                        barnet.barn.fodselsdato = fodselsdato;
-                    }
-                } else {
-                    this.props.clearValideringsfeil(TEXT_KEY_FNR);
-                }
+            if (fodselsdato && fodselsdato === "") {
+                fodselsdato = null;
             }
-        )}
+            if (fodselsdato && fodselsdato !== "") {
+                fodselsdato = konverterFraISODato(fodselsdato);
+                feilkodeFodselsdato = fdato(fodselsdato);
+                (feilkodeFodselsdato) ?
+                    this.props.setValideringsfeil(feilkodeFodselsdato, TEXT_KEY_FNR) :
+                    this.props.clearValideringsfeil(TEXT_KEY_FNR);
+
+                if (!feilkodeFodselsdato && fodselsdato) {
+                    fodselsdato = konverterTilISODato(fodselsdato);
+                    barnet.barn.fodselsdato = fodselsdato;
+                }
+            } else {
+                this.props.clearValideringsfeil(TEXT_KEY_FNR);
+            }
+        }
         if (!feilkodeFodselsdato) {
             lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
         }
