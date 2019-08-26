@@ -116,6 +116,9 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barnet = forsorgerplikt.brukerregistrertAnsvar[barnIndex];
         barnet.borSammenMed = verdi;
+        if (!verdi) {
+            barnet.samvarsgrad = null;
+        }
         oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
         this.onBlur();
     }
