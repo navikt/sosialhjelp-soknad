@@ -63,7 +63,6 @@ class StudielanView extends React.Component<Props, State> {
 	render() {
 		const {soknadsdata} = this.props;
 		const studielan: Studielan | undefined = soknadsdata.inntekt.studielan;
-		const skalVises: boolean = studielan.skalVises;
 		const restStatus = soknadsdata.restStatus.inntekt.studielan;
 		let oppstartsModus = this.state.oppstartsModus;
 		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
@@ -92,11 +91,11 @@ class StudielanView extends React.Component<Props, State> {
 				<FormattedHTMLMessage id={STUDERER_INFO_DEL2}/>
 			</Informasjonspanel>
 		</div>);
-		return (
-			<div>
-				{skalVises && studielanSporsmal}
-			</div>
-		);
+		if (typeof studielan !== 'undefined' && studielan.skalVises) {
+			return studielanSporsmal;
+		} else {
+			return null;
+		}
 	}
 }
 
