@@ -1,9 +1,20 @@
-image: docker.adeo.no:5000/soknadsosialhjelp
-team: digisos
-prometheus:
-  enabled: true
-  path: /prometheus
-healthcheck:
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: soknadsosialhjelp
+  namespace: {{namespace}}
+  labels:
+    team: digisos
+spec:
+  image: docker.pkg.github.com/navikt/soknadsosialhjelp/soknadsosialhjelp:{{version}}
+  port: 8080
+  ingresses:
+{{#each ingresses}}
+    - "{{this}}"
+{{/each}}
+  prometheus:
+    enabled: true
+    path: /prometheus
   liveness:
     path: /soknadsosialhjelp/internal/isAlive
     initialDelay: 5
@@ -14,17 +25,15 @@ healthcheck:
     path: /soknadsosialhjelp/internal/isAlive
     initialDelay: 5
     timeout: 1
-resources:
-  limits:
-    cpu: 1
-    memory: 512Mi
-  requests:
-    memory: 512Mi 
-fasitResources:
-  used:
-  - alias: appres.cms
-    resourceType: baseurl
-  - alias: soknadsapi
-    resourceType: baseurl
-  - alias: suspender
-    resourceType: credential
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 512Mi
+    requests:
+      memory: 512Mi
+  replicas:
+    min: 2
+    max: 2
+  env:
+    - name: APPRES_CMS_URL
+      value: {{appresCmsUrl}}
