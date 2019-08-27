@@ -22,11 +22,18 @@ import {ValideringState} from "../redux/valideringReducer";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {State} from "../../digisos/redux/reducers";
 import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
-//import {StegindikatorStegProps} from "nav-frontend-stegindikator/lib/stegindikator-steg";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
     evt.preventDefault();
+};
+
+const stopKeyCodeEvent = (evt: any) => {
+    const key = evt.key;
+    if (key === 'Enter'){
+        evt.stopPropagation();
+        evt.preventDefault();
+    }
 };
 
 interface OwnProps {
@@ -177,7 +184,10 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                             visFeilliste={visValideringsfeil}
                         />
                     </div>
-                    <form id="soknadsskjema" onSubmit={stopEvent}>
+                    <form id="soknadsskjema"
+                          onSubmit={stopEvent}
+                          onKeyPress={stopKeyCodeEvent}
+                    >
                         {!erOppsummering ? (
                             <div className="skjema__stegindikator">
                                 <Stegindikator
