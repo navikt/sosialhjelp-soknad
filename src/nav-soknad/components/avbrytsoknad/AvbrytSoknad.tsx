@@ -5,10 +5,11 @@ import { Hovedknapp, Knapp } from "nav-frontend-knapper";
 import { fortsettSoknad, slettSoknad } from "../../redux/soknad/soknadActions";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
-import { DispatchProps, SoknadAppState } from "../../redux/reduxTypes";
+import {DispatchProps} from "../../redux/reduxTypes";
 import { AVBRYT_DESTINASJON } from "../../redux/soknad/soknadActionTypes";
 import { navigerTilDittNav } from "../../redux/navigasjon/navigasjonActions";
 import {getContextPathForStaticContent} from "../../../configuration";
+import {State} from "../../../digisos/redux/reducers";
 
 interface StateProps {
 	avbrytDialogSynlig: boolean;
@@ -86,7 +87,7 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 	}
 }
 
-export default connect((state: SoknadAppState, props: any): StateProps => {
+export default connect((state: State, props: any): StateProps => {
 	return {
 		avbrytDialogSynlig: state.soknad.avbrytDialog.synlig,
 		destinasjon: state.soknad.avbrytDialog.destinasjon,

@@ -1,11 +1,12 @@
-import { InitActionTypeKeys, InitActionTypes, InitState } from "./initTypes";
-import { REST_STATUS } from "../../types";
+import {InitActionTypeKeys, InitActionTypes, InitState} from "./initTypes";
+import {REST_STATUS} from "../../types";
 
 const { OK, START, FEILET } = InitActionTypeKeys;
 
 const initialState: InitState = {
 	restStatus: REST_STATUS.INITIALISERT,
-	visSamtykkeInfo: false
+	visSamtykkeInfo: false,
+	fornavn: undefined
 };
 
 export default (state: InitState = initialState, action: InitActionTypes) => {
@@ -22,6 +23,8 @@ export default (state: InitState = initialState, action: InitActionTypes) => {
 				...state,
 				visSamtykkeInfo: action.visSamtykkeInfo,
 			};
+		case InitActionTypeKeys.LAGRE_FORNAVN_PA_STORE:
+			return {...state, fornavn: action.fornavn};
 		default:
 			return state;
 	}

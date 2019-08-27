@@ -1,13 +1,13 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { LedeteksterActionTypeKeys } from "./ledeteksterTypes";
-import { fetchToJson } from "../../utils/rest-utils";
+import {fetchToJson, HttpStatus} from "../../utils/rest-utils";
 import {
 	henterTekster,
 	hentetTekster,
 	hentTeksterFeilet
 } from "./ledeteksterActions";
 import { SagaIterator } from "redux-saga";
-import { loggFeil } from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
 
 const urlInneholderVistekster = () =>
 	window.location.search.match(/vistekster=true/) !== null;
@@ -34,10 +34,12 @@ function* hentTeksterSaga(): SagaIterator {
 		const tekster = visNokler ? leggNoklerPaaLedetekster(response) : response;
 		yield put(hentetTekster(tekster));
 	} catch (reason) {
-		yield put(
-			loggFeil("Problemer med å hente ledetekster: " + reason.toString())
-		);
-		yield put(hentTeksterFeilet(reason));
+		if (reason.message === HttpStatus.UNAUTHORIZED){
+			yield put(loggAdvarsel("hentTeksterSaga: " + reason));
+		} else {
+			yield put(loggFeil("Problemer med å hente ledetekster: " + reason.toString()));
+			yield put(hentTeksterFeilet(reason));
+		}
 	}
 }
 

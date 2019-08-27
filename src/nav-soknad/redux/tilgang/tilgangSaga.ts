@@ -1,13 +1,14 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { TilgangActionTypeKeys, TilgangApiResponse } from "./tilgangTypes";
-import { fetchToJson } from "../../utils/rest-utils";
+import {fetchToJson, HttpStatus} from "../../utils/rest-utils";
 import {
 	henterTilgang,
 	hentetTilgang,
 	hentTilgangFeilet
 } from "./tilgangActions";
+import {loggAdvarsel} from "../navlogger/navloggerActions";
 
-function* hentTilgangSaga() {
+export function* hentTilgangSaga() {
 	try {
 		yield put(henterTilgang());
 		const response: TilgangApiResponse = yield call(
@@ -16,7 +17,11 @@ function* hentTilgangSaga() {
 		);
 		yield put(hentetTilgang(response.harTilgang, response.sperrekode));
 	} catch (reason) {
-		yield put(hentTilgangFeilet(reason));
+		if (reason.message === HttpStatus.UNAUTHORIZED){
+			yield put(loggAdvarsel("hentTilgangSaga: " + reason));
+		} else {
+			yield put(hentTilgangFeilet(reason));
+		}
 	}
 }
 

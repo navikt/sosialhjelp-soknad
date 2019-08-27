@@ -11,7 +11,6 @@ import {
 } from "./navigasjonTypes";
 import { tilStart, tilSteg } from "./navigasjonActions";
 import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
-import { SoknadAppState } from "../reduxTypes";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 import { lesKommunenrFraUrl } from "../../utils";
 import {goBack, push} from "connected-react-router";

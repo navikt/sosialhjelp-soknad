@@ -1,7 +1,7 @@
 import {erDev} from "../nav-soknad/utils/rest-utils";
 
-export const CONTEXT_PATH = "soknadsosialhjelp";
-export const API_CONTEXT_PATH = "soknadsosialhjelp-server";
+export const CONTEXT_PATH = "sosialhjelp/soknad";
+export const API_CONTEXT_PATH = "sosialhjelp/soknad-api";
 export const HEROKU_MASTER_APP_NAME = "sosialhjelp-test";
 export const HEROKU_API_MASTER_APP_NAME = "sosialhjelp-api-test";
 
@@ -13,11 +13,11 @@ export const getContextPathForStaticContent = (): string => {
 };
 
 export const getContextPathFromWindowLocation = (pathname: string ): string => {
-    return pathname.replace(/^(.+?soknadsosialhjelp)(.+)$/, "$1")
+    return pathname.replace(/^(.+?sosialhjelp\/soknad)(.+)$/, "$1")
 };
 
 export const getContextPathBasename = (): string => getContextPathFromWindowLocation(window.location.pathname);
 
 export function getRedirectPathname(): string {
-    return '/soknadsosialhjelp/link';
+    return `/${CONTEXT_PATH}/link`;
 }

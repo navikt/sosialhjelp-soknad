@@ -3,9 +3,10 @@ import NavFrontendModal from "nav-frontend-modal";
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
 import {FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import {connect} from "react-redux";
-import {DispatchProps, SoknadAppState} from "../../redux/reduxTypes";
+import {DispatchProps} from "../../redux/reduxTypes";
 import {visSoknadAlleredeSendtPrompt} from "../../redux/ettersendelse/ettersendelseActions";
 import {getContextPathForStaticContent} from "../../../configuration";
+import {State} from "../../../digisos/redux/reducers";
 
 interface StateProps {
     brukerBehandlingId: string;
@@ -48,7 +49,7 @@ class SoknadAlleredeSendtPromt extends React.Component<Props, {}> {
     }
 }
 
-export default connect((state: SoknadAppState, props: any): StateProps => {
+export default connect((state: State, props: any): StateProps => {
     return {
         brukerBehandlingId: state.soknad.data.brukerBehandlingId,
         visPrompt: state.ettersendelse.visSoknadAlleredeSendtPromt

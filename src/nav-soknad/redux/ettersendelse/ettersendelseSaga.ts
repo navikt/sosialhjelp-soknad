@@ -6,7 +6,7 @@ import {
     fetchToJson,
     fetchPost,
     fetchUpload,
-    lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
+    lastNedForsendelseSomZipFilHvisMockMiljoEllerDev, HttpStatus
 } from "../../utils/rest-utils";
 import {
     EttersendelseActionTypeKeys, OpprettEttersendelseAction,
@@ -22,11 +22,11 @@ import {
     lastOppEttersendelseFeilet,
     opprettEttersendelseFeilet, filLastetOpp, slettEttersendtVedleggOk
 } from "./ettersendelseActions";
-import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
 
-function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIterator {
+function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
     try {
         const url = `soknader/opprettSoknad?ettersendTil=${action.brukerbehandlingId}`;
         const response = yield call(fetchPost, url, "");
@@ -35,12 +35,16 @@ function* opprettEttersendelseSaga(action: OpprettEttersendelseAction): SagaIter
             yield put(lesEttersendelsesVedlegg(response.brukerBehandlingId));
         }
     } catch (reason) {
-        yield put(loggInfo("Opprett ettersendelse feilet: " + reason.toString()));
-        yield put(opprettEttersendelseFeilet(action.brukerbehandlingId));
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("opprettEttersendelseSaga: " + reason));
+        } else {
+            yield put(loggInfo("Opprett ettersendelse feilet: " + reason.toString()));
+            yield put(opprettEttersendelseFeilet(action.brukerbehandlingId));
+        }
     }
 }
 
-function* lesEttersendelserSaga(action: LesEttersendelserAction): SagaIterator {
+function* lesEttersendelserSaga(action: LesEttersendelserAction) {
     try {
         const url = `ettersendelse/innsendte/${action.brukerbehandlingId}`;
         const response = yield call(fetchToJson, url);
@@ -48,12 +52,16 @@ function* lesEttersendelserSaga(action: LesEttersendelserAction): SagaIterator {
             yield put(settEttersendelser(response));
         }
     } catch (reason) {
-        yield put(loggFeil("Les ettersendelser feilet: " + reason.toString()));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("lesEttersendelserSaga: " + reason));
+        } else {
+            yield put(loggFeil("Les ettersendelser feilet: " + reason.toString()));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
-function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction): SagaIterator {
+function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction) {
     try {
         const url = `ettersendelse/ettersendteVedlegg/${action.brukerbehandlingId}`;
         const response = yield call(fetchToJson, url);
@@ -61,8 +69,12 @@ function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction): 
             yield put(lesEttersendteVedlegg(response));
         }
     } catch (reason) {
-        yield put(loggFeil("Lese ettersendte vedlegg feilet: " + reason.toString()));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("lesEttersendelsesVedleggSaga: " + reason));
+        } else {
+            yield put(loggFeil("Lese ettersendte vedlegg feilet: " + reason.toString()));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
@@ -76,8 +88,12 @@ function* slettEttersendelsesVedleggSaga(action: SlettEttersendtVedleggAction): 
         yield call(fetchDelete, url);
         yield put(slettEttersendtVedleggOk(filUuid, opplysningType));
     } catch (reason) {
-        yield put(loggFeil("Slett ettersendt vedlegg feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("slettEttersendelsesVedleggSaga: " + reason));
+        } else {
+            yield put(loggFeil("Slett ettersendt vedlegg feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
@@ -99,10 +115,14 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
             yield put(filLastetOpp(opplysningType, response));
         }
     } catch (reason) {
-        const errorMsg = reason.toString();
-        yield put(lastOppEttersendelseFeilet(errorMsg, opplysningType.toString()));
-        if (errorMsg.match(/Unsupported Media Type|Entity Too Large/) === null) {
-            yield put(loggInfo("Last opp vedlegg for ettersendelse feilet: " + errorMsg));
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("lastOppEttersendelsesVedleggSaga: " + reason));
+        } else {
+            const errorMsg = reason.toString();
+            yield put(lastOppEttersendelseFeilet(errorMsg, opplysningType.toString()));
+            if (errorMsg.match(/Unsupported Media Type|Entity Too Large/) === null) {
+                yield put(loggInfo("Last opp vedlegg for ettersendelse feilet: " + errorMsg));
+            }
         }
     }
 }
@@ -117,8 +137,12 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
         yield put({type: EttersendelseActionTypeKeys.ETTERSEND_OK});
         yield put(lastOppEttersendtVedleggOk());
     } catch (reason) {
-        yield put(loggFeil("Send ettersendelse feilet: " + reason.toString()));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("sendEttersendelseSaga: " + reason));
+        } else {
+            yield put(loggFeil("Send ettersendelse feilet: " + reason.toString()));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 

@@ -1,22 +1,24 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
-import { fetchToJson } from "../../utils/rest-utils";
+import {fetchToJson, HttpStatus} from "../../utils/rest-utils";
 import { MiljovariablerActionTypeKeys } from "./miljovariablerTypes";
 import {
 	henterMiljovariabler,
 	mottattMiljovariabler
 } from "./miljovariablerActions";
-import { loggFeil } from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
 
-export function* hentMiljovariablerSaga(): SagaIterator {
+export function* hentMiljovariablerSaga() {
 	try {
 		yield put(henterMiljovariabler());
 		const response = yield call(fetchToJson, "informasjon/miljovariabler");
 		yield put(mottattMiljovariabler(response));
 	} catch (reason) {
-		yield put(
-			loggFeil("Problemer med å hente miljøvariabler: " + reason.toString())
-		);
+		if (reason.message === HttpStatus.UNAUTHORIZED){
+			yield put(loggAdvarsel("hentMiljøvariablerSaga: " + reason));
+		} else {
+			yield put(loggFeil("Problemer med å hente miljøvariabler: " + reason.toString()));
+		}
 	}
 }
 

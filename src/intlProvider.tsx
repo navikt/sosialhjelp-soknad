@@ -6,11 +6,9 @@ import { connect } from "react-redux";
 import { LedetekstState } from "./nav-soknad/redux/ledetekster/ledeteksterTypes";
 import { DispatchProps } from "./nav-soknad/redux/reduxTypes";
 import Feilside from "./nav-soknad/components/feilside/Feilside";
-import { hentMiljovariabler } from "./nav-soknad/redux/miljovariabler/miljovariablerActions";
-import { hentTekster } from "./nav-soknad/redux/ledetekster/ledeteksterActions";
-import { hentTilgang } from "./nav-soknad/redux/tilgang/tilgangActions";
 import { REST_STATUS } from "./nav-soknad/types";
 import {State} from "./digisos/redux/reducers";
+import {initStart} from "./nav-soknad/redux/init/initActions";
 
 addLocaleData(nb);
 
@@ -27,9 +25,7 @@ type Props = StateProps & IntlProviderProps & DispatchProps;
 
 class IntlProvider extends React.Component<Props, {}> {
 	componentDidMount() {
-		this.props.dispatch(hentTilgang());
-		this.props.dispatch(hentTekster());
-		this.props.dispatch(hentMiljovariabler());
+		this.props.dispatch(initStart());
 	}
 
 	render() {
