@@ -3,7 +3,7 @@ import {REST_STATUS} from "../../../nav-soknad/types/restTypes";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
 import Knapp from "nav-frontend-knapper";
-import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage, useIntl} from "react-intl";
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import {connect} from "react-redux";
 import {State} from "../../redux/reducers";
@@ -26,7 +26,7 @@ interface StateProps {
     feiletVedleggId: string;
 }
 
-type Props = OwnProps & StateProps & DispatchProps & InjectedIntlProps;
+type Props = OwnProps & StateProps & DispatchProps;
 
 interface OwnState {
     vedleggEkspandert: boolean;
@@ -74,6 +74,7 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
     }
 
     render() {
+        const intl = useIntl();
         return (
             <div
                 className={"ettersendelse__vedlegg__innhold " +
@@ -84,8 +85,8 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                     const tittelKey = spc ? spc.textKey + ".vedlegg.sporsmal.tittel" : "";
                     const infoKey = spc ? spc.textKey + ".vedlegg.sporsmal.info" : "";
                     let info;
-                    if (infoKey && !!this.props.intl.messages[infoKey]) {
-                        info = this.props.intl.formatMessage({id: infoKey});
+                    if (infoKey && !!intl.messages[infoKey]) {
+                        info = intl.formatMessage({id: infoKey});
                     }
                     if (!this.props.ettersendelseAktivert
                         && vedlegg.type === "annet|annet") {
@@ -142,4 +143,4 @@ export default connect((state: State) => {
         feilKode: state.ettersendelse.feilKode,
         feiletVedleggId: state.ettersendelse.feiletVedleggId
     };
-})(injectIntl(EttersendelseVedleggListe));
+})(EttersendelseVedleggListe);

@@ -27,9 +27,7 @@ import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import {clearValideringsfeil, setValideringsfeil} from "../../../nav-soknad/redux/valideringActions";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
 import {getFeilForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerSaga";
-import {InjectedIntlProps} from "react-intl";
 import {State} from "../../redux/reducers";
-import { injectIntl} from "react-intl";
 
 interface OwnProps {
     opplysning: Opplysning;
@@ -43,7 +41,7 @@ interface StoreToProps {
     feil: Valideringsfeil[];
 }
 
-type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
+type Props = OwnProps & StoreToProps & DispatchProps;
 
 export const erGyldigTall = (input: string) : boolean => {
     return !erTall(input, true) && parseInt(input, 10) < 2147483648;
@@ -234,4 +232,4 @@ export default connect(
             feil: state.validering.feil,
         };
     }
-)(injectIntl(TabellView));
+)(TabellView);

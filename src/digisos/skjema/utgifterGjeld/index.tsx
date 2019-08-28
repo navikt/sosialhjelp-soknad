@@ -1,5 +1,4 @@
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
 import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
@@ -8,7 +7,7 @@ import Boutgifter from "./boutgifter/Boutgifter";
 import Barneutgifter from "./barneutgifter/Barneutgifter";
 
 class UtgifterGjeld extends React.Component<
-	FaktumComponentProps & DispatchProps & InjectedIntlProps,
+	FaktumComponentProps & DispatchProps,
 	any
 > {
 	render() {
@@ -21,4 +20,4 @@ class UtgifterGjeld extends React.Component<
 	}
 }
 
-export default injectIntl(UtgifterGjeld);
+export default UtgifterGjeld;

@@ -3,7 +3,7 @@ import NavFrontendModal from "nav-frontend-modal";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp, Knapp } from "nav-frontend-knapper";
 import { fortsettSoknad, slettSoknad } from "../../redux/soknad/soknadActions";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
 import {DispatchProps} from "../../redux/reduxTypes";
 import { AVBRYT_DESTINASJON } from "../../redux/soknad/soknadActionTypes";
@@ -17,7 +17,7 @@ interface StateProps {
 	brukerBehandlingId: string;
 }
 
-type Props = StateProps & InjectedIntlProps & DispatchProps;
+type Props = StateProps & DispatchProps;
 
 const TEKSTNOKLER_VANLIG = {
 	overskrift: "avbryt.overskrift",
@@ -50,11 +50,11 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 				? TEKSTNOKLER_VANLIG
 				: TEKSTNOKLER_NAVIGASJON
 		};
-
+		const intl = useIntl();
 		return (
 			<NavFrontendModal
 				isOpen={this.props.avbrytDialogSynlig || false}
-				contentLabel={this.props.intl.formatMessage({ id: "avbryt.avbryt" })}
+				contentLabel={intl.formatMessage({ id: "avbryt.avbryt" })}
 				closeButton={false}
 				onRequestClose={() => this.onFortsett()}
 				shouldCloseOnOverlayClick={true}
@@ -73,11 +73,16 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 					</Normaltekst>
 					<div className="timeoutbox__knapperad">
 						<Hovedknapp
+							type="hoved"
 							onClick={() => this.onFortsettSenere()}
 						>
 							<FormattedMessage id={"avbryt.fortsettsenere"} />
 						</Hovedknapp>
-						<Knapp onClick={() => this.onAvbryt()} className="avbrytmodal__slettknapp">
+						<Knapp
+							type="hoved"
+							onClick={() => this.onAvbryt()}
+							className="avbrytmodal__slettknapp"
+						>
 							<FormattedMessage id={"avbryt.slett"} />
 						</Knapp>
 					</div>
@@ -93,4 +98,4 @@ export default connect((state: State, props: any): StateProps => {
 		destinasjon: state.soknad.avbrytDialog.destinasjon,
 		brukerBehandlingId: state.soknad.data.brukerBehandlingId
 	};
-})(injectIntl(AvbrytSoknad));
+})(AvbrytSoknad);

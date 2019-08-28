@@ -1,4 +1,4 @@
-import {InjectedIntl} from "react-intl";
+import {IntlShape} from "react-intl";
 import {AVBRYT_DESTINASJON, SoknadActionTypeKeys, SoknadActionTypes} from "./soknadActionTypes";
 import {Infofaktum, Kvittering} from "../../types";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
@@ -18,7 +18,7 @@ export function startSoknadOk() {
 }
 
 export function opprettSoknad(
-	intl: InjectedIntl
+	intl: IntlShape
 ) {
 	return {
 		type: SoknadActionTypeKeys.OPPRETT_SOKNAD,

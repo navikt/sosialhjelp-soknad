@@ -2,7 +2,7 @@ import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { Checkbox } from "nav-frontend-skjema";
 import { erKontonummer } from "../../../../nav-soknad/validering/valideringer";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import { Kontonummer } from "./KontonummerType";
@@ -26,7 +26,7 @@ interface State {
 	oppstartsModus: boolean
 }
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps & OwnProps;
+type Props = SoknadsdataContainerProps & OwnProps;
 
 const FAKTUM_KEY_KONTONUMMER = "kontakt.kontonummer";
 
@@ -121,7 +121,8 @@ class Bankinformasjon extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { intl, soknadsdata } = this.props;
+		const { soknadsdata } = this.props;
+		const intl = useIntl();
 		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
 		const endreLabel: string = intl.formatMessage({id: "kontakt.system.kontonummer.endreknapp.label"});
 		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
@@ -249,4 +250,4 @@ class Bankinformasjon extends React.Component<Props, State> {
 
 export {Bankinformasjon as BankinformasjonView};
 
-export default connectSoknadsdataContainer(injectIntl(Bankinformasjon));
+export default connectSoknadsdataContainer(Bankinformasjon);

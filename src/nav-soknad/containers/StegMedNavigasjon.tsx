@@ -1,6 +1,6 @@
 import * as React from "react";
 import {RouteComponentProps, RouterProps, withRouter} from "react-router";
-import {InjectedIntlProps, injectIntl} from "react-intl";
+import {useIntl} from "react-intl";
 import {Location} from "history";
 import {connect} from "react-redux";
 import DocumentTitle from "react-document-title";
@@ -22,7 +22,6 @@ import {ValideringState} from "../redux/valideringReducer";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {State} from "../../digisos/redux/reducers";
 import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
-//import {StegindikatorStegProps} from "nav-frontend-stegindikator/lib/stegindikator-steg";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -58,7 +57,6 @@ type Props = OwnProps &
     StateProps &
     RouterProps &
     InjectedRouterProps &
-    InjectedIntlProps &
     DispatchProps & RouteComponentProps;
 
 class StegMedNavigasjon extends React.Component<Props, {}> {
@@ -145,7 +143,8 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
     }
 
     render() {
-        const {skjemaConfig, intl, children, validering} = this.props;
+        const {skjemaConfig, children, validering} = this.props;
+        const intl = useIntl();
         const aktivtStegConfig: SkjemaSteg | undefined = skjemaConfig.steg.find(
             s => s.key === this.props.stegKey
         );
@@ -242,4 +241,4 @@ export default connect((state: State) => {
         fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer,
         soknadsdata: state.soknadsdata
     };
-})(injectIntl(withRouter(StegMedNavigasjon)));
+})(withRouter(StegMedNavigasjon));

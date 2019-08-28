@@ -2,7 +2,7 @@ import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage, useIntl} from "react-intl";
 import * as React from "react";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
@@ -25,7 +25,7 @@ interface OwnProps {
     disableLoadingAnimation?: boolean;
 }
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps & OwnProps;
+type Props = SoknadsdataContainerProps & OwnProps;
 
 interface State {
     oppstartsModus: boolean,
@@ -182,7 +182,7 @@ class AdresseView extends React.Component<Props, State> {
 
     render() {
         const {soknadsdata} = this.props;
-
+        const intl = useIntl();
         const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
 		const adresser = soknadsdata.personalia.adresser;
 		const navEnheter = soknadsdata.personalia.navEnheter;
@@ -238,7 +238,7 @@ class AdresseView extends React.Component<Props, State> {
         }
 
         const feilkode: Valideringsfeil | undefined = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === this.FAKTUM_KEY);
-        const feilmelding = this.props.intl.formatMessage({id: "soknadsmottaker.feilmelding"});
+        const feilmelding = intl.formatMessage({id: "soknadsmottaker.feilmelding"});
 
         return (
             <div className="sosialhjelp-oppholdsadresse skjema-sporsmal" id="soknadsmottaker">
@@ -259,7 +259,7 @@ class AdresseView extends React.Component<Props, State> {
                                 label={folkeregistrertAdresseLabel}
                             />
 							<SoknadsmottakerVelger
-                                label={getIntlTextOrKey(this.props.intl,
+                                label={getIntlTextOrKey(intl,
                                     "kontakt.system.oppholdsadresse.velgKontor")}
                                 navEnheter={navEnheter}
                                 visible={adresser.valg === AdresseKategori.FOLKEREGISTRERT && navEnheter.length > 1}
@@ -282,7 +282,7 @@ class AdresseView extends React.Component<Props, State> {
                                     collapsable={true}
                                 >
                                     <SoknadsmottakerVelger
-                                        label={getIntlTextOrKey(this.props.intl,
+                                        label={getIntlTextOrKey(intl,
                                             "kontakt.system.oppholdsadresse.velgKontor")}
                                         navEnheter={navEnheter}
                                         visible={adresser.valg === AdresseKategori.FOLKEREGISTRERT && navEnheter.length > 1}
@@ -307,7 +307,7 @@ class AdresseView extends React.Component<Props, State> {
                                 }
                             />
 							<SoknadsmottakerVelger
-                                label={getIntlTextOrKey(this.props.intl,
+                                label={getIntlTextOrKey(intl,
                                     "kontakt.system.oppholdsadresse.velgKontor")}
                                 navEnheter={navEnheter}
                                 visible={adresser.valg === AdresseKategori.MIDLERTIDIG && navEnheter.length > 1}
@@ -327,7 +327,7 @@ class AdresseView extends React.Component<Props, State> {
                             <div className="utvidetAddresseSok">
                                 <Sporsmal
                                     tittelRenderer={() =>
-                                        getIntlTextOrKey(this.props.intl,
+                                        getIntlTextOrKey(intl,
                                             "kontakt.system.oppholdsadresse.hvorOppholder")
                                     }
                                     legendTittelStyle={LegendTittleStyle.FET_NORMAL}
@@ -344,7 +344,7 @@ class AdresseView extends React.Component<Props, State> {
                                 </Sporsmal>
                                 {navEnheter.length > 1 && (
                                     <SoknadsmottakerVelger
-                                        label={getIntlTextOrKey(this.props.intl,
+                                        label={getIntlTextOrKey(intl,
                                             "kontakt.system.oppholdsadresse.velgKontor")}
                                         ikkeVisPanel={true}
                                         navEnheter={navEnheter}
@@ -363,4 +363,4 @@ class AdresseView extends React.Component<Props, State> {
 
 export {AdresseView};
 
-export default connectSoknadsdataContainer(injectIntl(AdresseView));
+export default connectSoknadsdataContainer(AdresseView);

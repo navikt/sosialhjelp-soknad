@@ -2,7 +2,7 @@ import * as React from "react";
 import {
 	Begrunnelse as BegrunnelseType,
 } from "./begrunnelseTypes";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { maksLengde } from "../../../nav-soknad/validering/valideringer";
 import Sporsmal, { LegendTittleStyle } from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
@@ -21,7 +21,7 @@ const FAKTUM_KEY_HVORFOR = "begrunnelse.hvorfor";
 const HVA_SOKES_OM = "hvaSokesOm";
 const HVORFOR_SOKE = "hvorforSoke";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps;
 
 class BegrunnelseSkjema extends React.Component<Props, {}> {
 
@@ -72,7 +72,8 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const { intl, soknadsdata } = this.props;
+		const intl = useIntl();
+		const { soknadsdata } = this.props;
 		const begrunnelse = soknadsdata.begrunnelse;
 		const faktumKeyHvaId = replaceDotWithUnderscore(FAKTUM_KEY_HVA);
 		const faktumKeyHvorforId = replaceDotWithUnderscore(FAKTUM_KEY_HVORFOR)
@@ -120,4 +121,4 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 
 export { BegrunnelseSkjema };
 
-export default connectSoknadsdataContainer(injectIntl(BegrunnelseSkjema));
+export default connectSoknadsdataContainer(BegrunnelseSkjema);

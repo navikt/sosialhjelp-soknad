@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { Knapp } from "nav-frontend-knapper";
 import DOMPortal from "./DOMPortal";
 import Utskrift from "./Utskrift";
@@ -74,6 +73,7 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
 							active: !this.state.active
 						})
 					}
+					type="standard"
 				>
 					{this.props.children}
 				</Knapp>

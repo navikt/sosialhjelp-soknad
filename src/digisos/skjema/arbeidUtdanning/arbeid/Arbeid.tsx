@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
 import Sporsmal, {SporsmalStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
@@ -16,7 +16,7 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import {REST_STATUS} from "../../../../nav-soknad/types";
 import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps;
 
 const MAX_CHARS = 500;
 const FAKTUM_KEY_KOMMENTARER = "opplysninger.arbeidsituasjon.kommentarer";
@@ -84,7 +84,8 @@ class ArbeidView extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { soknadsdata, intl } = this.props;
+		const intl = useIntl();
+		const { soknadsdata } = this.props;
 		const arbeid = soknadsdata.arbeid;
 		let alleArbeidsforhold: Arbeidsforhold[] | null = null;
 		let kommentarTilArbeidsforhold = "";
@@ -154,4 +155,4 @@ class ArbeidView extends React.Component<Props, State> {
 
 export {ArbeidView};
 
-export default connectSoknadsdataContainer(injectIntl(ArbeidView));
+export default connectSoknadsdataContainer(ArbeidView);

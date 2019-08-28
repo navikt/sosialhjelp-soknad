@@ -41,7 +41,7 @@ const FeilSide: React.StatelessComponent<FeilsideProps> = ({
 					<div className="feilside__feilkode">Feilkode {feilkode}</div>
 				) : null}
 				{visKnapp ? (
-					<Knapp htmlType="button" onClick={onClick}>
+					<Knapp type="hoved" htmlType="button" onClick={onClick}>
 						{knappTekst}
 					</Knapp>
 				) : null}

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import NavFrontendModal from "nav-frontend-modal";
 
 import Nedtelling from "./Nedtelling";
@@ -22,7 +22,7 @@ interface OwnProps {
 	restStatus: string;
 }
 
-type Props = OwnProps & InjectedIntlProps;
+type Props = OwnProps;
 
 class TimeoutBox extends React.Component<Props, State> {
 	constructor(props: Props) {
@@ -91,10 +91,11 @@ class TimeoutBox extends React.Component<Props, State> {
 
 	render() {
 		const { visAdvarsel, visLoggetUt } = this.state;
+		const intl = useIntl();
 		return (
 			<NavFrontendModal
 				isOpen={visAdvarsel || visLoggetUt}
-				contentLabel={this.props.intl.formatMessage({ id: "timeout.fortsett" })}
+				contentLabel={intl.formatMessage({ id: "timeout.fortsett" })}
 				closeButton={false}
 				onRequestClose={() => null}
 			>
@@ -124,4 +125,4 @@ export default connect((state: any, props: any) => {
 	return {
 		restStatus: state.fakta && state.fakta.restStatus ? state.fakta.restStatus : REST_STATUS.INITIALISERT
 	};
-})(injectIntl(TimeoutBox));
+})(TimeoutBox);

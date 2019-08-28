@@ -1,6 +1,6 @@
 import * as React from "react";
 import Skjemapanel from "../../../nav-soknad/components/skjemapanel";
-import {FormattedHTMLMessage, injectIntl} from "react-intl";
+import {FormattedHTMLMessage} from "react-intl";
 import {connect} from "react-redux";
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import {
@@ -9,7 +9,6 @@ import {
 } from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {getGruppeTittelKey} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
 import OpplysningView from "./OpplysningView";
-import { InjectedIntlProps} from "react-intl";
 import {State} from "../../redux/reducers";
 
 export interface OwnProps {
@@ -24,7 +23,7 @@ interface StoreToProps {
 }
 
 
-type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
+type Props = OwnProps & StoreToProps & DispatchProps;
 
 class GruppeView extends React.Component<Props, {}> {
 
@@ -66,5 +65,5 @@ export default connect(
             behandlingsId: state.soknad.data.brukerBehandlingId,
         };
     }
-)(injectIntl(GruppeView));
+)(GruppeView);
 

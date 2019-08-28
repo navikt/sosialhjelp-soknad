@@ -3,17 +3,15 @@ import { TilgangSperrekode } from "../../nav-soknad/redux/tilgang/tilgangTypes";
 import Infoblokk from "../../nav-soknad/components/infoblokk";
 import {
 	FormattedHTMLMessage,
-	InjectedIntlProps,
-	injectIntl
+	useIntl
 } from "react-intl";
 
 interface Props {
 	sperrekode: TilgangSperrekode;
 }
 
-const IkkeTilgangInformasjon: React.StatelessComponent<
-	Props & InjectedIntlProps
-> = ({ sperrekode, intl }) => {
+const IkkeTilgangInformasjon: React.StatelessComponent<Props> = ({ sperrekode }) => {
+	const intl = useIntl();
 	if (sperrekode && sperrekode === "bruker") {
 		return (
 			<Infoblokk
@@ -39,4 +37,4 @@ const IkkeTilgangInformasjon: React.StatelessComponent<
 	}
 };
 
-export default injectIntl(IkkeTilgangInformasjon);
+export default IkkeTilgangInformasjon;

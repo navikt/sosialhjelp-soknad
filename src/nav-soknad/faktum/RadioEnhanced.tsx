@@ -1,13 +1,13 @@
 import * as React from "react";
 import {Radio} from "nav-frontend-skjema";
-import {injectIntl, InjectedIntlProps} from "react-intl";
+import {useIntl} from "react-intl";
 import {getRadioFaktumTekst} from "../utils";
 import {CheckboxFaktumTekst} from "../types";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import TextPlaceholder from "../components/animasjoner/placeholder/TextPlaceholder";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
 
-interface OwnProps {
+interface Props {
     value: string;
     checked?: null | boolean;
     faktumKey?: string;
@@ -23,9 +23,7 @@ interface OwnProps {
     visPlaceholder?: boolean;
 }
 
-type RadioFaktumProps = OwnProps & InjectedIntlProps;
-
-class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
+class RadioEnhanced extends React.Component<Props, {}> {
 
     determineLabel(id: string, faktumKey: string, tekster: CheckboxFaktumTekst, value: string) {
         if (this.props.visPlaceholder) {
@@ -55,7 +53,8 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
     }
 
     renderRadio() {
-        const {faktumKey, value, disabled, property, required, intl} = this.props;
+        const {faktumKey, value, disabled, property, required} = this.props;
+        const intl = useIntl();
         const tekster = getRadioFaktumTekst(intl, faktumKey ? faktumKey : "", value, property);
         const id = this.props.id ? this.props.id : (faktumKey ? faktumKey.replace(/\./g, "_") : "");
         const name = this.props.getName ? this.props.getName() : this.props.faktumKey + "-" + this.props.value;
@@ -77,7 +76,8 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
     }
 
     renderMockRadio() {
-        const {faktumKey, value, property, intl} = this.props;
+        const {faktumKey, value, property} = this.props;
+        const intl = useIntl();
         const tekster = getRadioFaktumTekst(intl, faktumKey ? faktumKey : "", value, property);
         const id = this.props.id ? this.props.id : ( faktumKey ? faktumKey.replace(/\./g, "_") : "");
         return (
@@ -111,4 +111,4 @@ class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
     }
 }
 
-export default injectIntl(RadioEnhanced);
+export default RadioEnhanced;

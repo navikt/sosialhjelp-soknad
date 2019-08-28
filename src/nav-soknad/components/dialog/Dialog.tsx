@@ -39,7 +39,7 @@ const Dialog: React.StatelessComponent<Props> = ({
 			</div>
 			<div className="nav-soknad-dialog__content">{children}</div>
 			<div className="nav-soknad-dialog__knapperad">
-				<Hovedknapp onClick={onClose}>{okLabel}</Hovedknapp>
+				<Hovedknapp type="hoved" onClick={onClose}>{okLabel}</Hovedknapp>
 			</div>
 		</div>
 	</NavFrontendModal>

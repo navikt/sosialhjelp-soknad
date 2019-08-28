@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
 import {State} from "../../redux/reducers";
 import * as React from "react";
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
@@ -34,7 +34,7 @@ interface OwnProps {
     feilKode: string;
 }
 
-type Props = OwnProps & DispatchProps & InjectedIntlProps;
+type Props = OwnProps & DispatchProps;
 
 interface OwnState {
     vedleggEkspandert: boolean;
@@ -241,4 +241,4 @@ export default connect((state: State) => {
         restStatus: state.ettersendelse.restStatus,
         feilKode: state.ettersendelse.feilKode
     };
-})(injectIntl(Ettersendelse));
+})(Ettersendelse);

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormattedMessage, FormattedNumber, FormattedDate, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedMessage, FormattedNumber, FormattedDate, useIntl, IntlShape } from "react-intl";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
@@ -12,7 +12,7 @@ import {Organisasjon, SkattbarInntekt} from "./inntektTypes";
 import {Panel} from "nav-frontend-paneler";
 import Lesmerpanel from 'nav-frontend-lesmerpanel';
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps;
 
 class Skatt extends React.Component<Props, {}> {
 
@@ -32,7 +32,8 @@ class Skatt extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const {intl, soknadsdata} = this.props;
+		const intl: IntlShape = useIntl();
+		const {soknadsdata} = this.props;
 		const restStatus = soknadsdata.restStatus.inntekt.skattbarinntektogforskuddstrekk;
 		const visAnimerteStreker = restStatus !== REST_STATUS.OK;
 
@@ -113,4 +114,4 @@ class Skatt extends React.Component<Props, {}> {
 
 export {Skatt};
 
-export default connectSoknadsdataContainer(injectIntl(Skatt));
+export default connectSoknadsdataContainer(Skatt);

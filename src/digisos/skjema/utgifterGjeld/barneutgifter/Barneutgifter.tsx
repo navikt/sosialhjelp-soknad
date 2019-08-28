@@ -3,7 +3,7 @@ import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedHTMLMessage, useIntl} from "react-intl";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
@@ -13,7 +13,7 @@ import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 
 const BarneutgifterKey = "utgifter.barn";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps;
 
 export class BarneutgifterView extends React.Component<Props, {}> {
 
@@ -64,10 +64,11 @@ export class BarneutgifterView extends React.Component<Props, {}> {
 
     render() {
         const {soknadsdata} = this.props;
+        const intl = useIntl();
         const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
         return (
             <JaNeiSporsmal
-                tekster={getFaktumSporsmalTekst(this.props.intl, BarneutgifterKey)}
+                tekster={getFaktumSporsmalTekst(intl, BarneutgifterKey)}
                 visible={barneutgifter.harForsorgerplikt}
                 faktumKey={BarneutgifterKey}
                 verdi={barneutgifter.bekreftelse}
@@ -75,7 +76,7 @@ export class BarneutgifterView extends React.Component<Props, {}> {
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, BarneutgifterKey + ".true.utgifter")}
+                    tekster={getFaktumSporsmalTekst(intl, BarneutgifterKey + ".true.utgifter")}
                 >
                     {this.renderCheckBox(BarneutgifterKeys.FRITIDSAKTIVITETER, BarneutgifterKeys.FRITIDSAKTIVITETER)}
                     {this.renderCheckBox(BarneutgifterKeys.BARNEHAGE, BarneutgifterKeys.BARNEHAGE)}
@@ -89,4 +90,4 @@ export class BarneutgifterView extends React.Component<Props, {}> {
 }
 
 
-export default connectSoknadsdataContainer(injectIntl(BarneutgifterView));
+export default connectSoknadsdataContainer(BarneutgifterView);

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {InjectedIntlProps, injectIntl} from "react-intl";
+import {useIntl} from "react-intl";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
@@ -33,7 +33,7 @@ enum Annetvalg {
     krisesenter = "annet.botype.krisesenter"
 }
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps;
 
 class BosituasjonView extends React.Component<Props, {}> {
 
@@ -119,6 +119,7 @@ class BosituasjonView extends React.Component<Props, {}> {
     }
 
     render() {
+        const intl = useIntl();
         const bosituasjon: Bosituasjon = this.props.soknadsdata.bosituasjon;
         let synligUnderskjema: boolean = false;
         if (
@@ -133,7 +134,7 @@ class BosituasjonView extends React.Component<Props, {}> {
         return (
             <div>
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, "bosituasjon")}
+                    tekster={getFaktumSporsmalTekst(intl, "bosituasjon")}
                     legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                 >
                     {this.renderRadioknapp(Bosituasjonsvalg.eier)}
@@ -147,7 +148,7 @@ class BosituasjonView extends React.Component<Props, {}> {
                             arrow={true}
                         >
                             <Sporsmal
-                                tekster={getFaktumSporsmalTekst(this.props.intl, "bosituasjon")}
+                                tekster={getFaktumSporsmalTekst(intl, "bosituasjon")}
                                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                                 stil="system"
                             >
@@ -162,7 +163,7 @@ class BosituasjonView extends React.Component<Props, {}> {
                     </div>
                 </Sporsmal>
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_KEY_ANTALL)}
+                    tekster={getFaktumSporsmalTekst(intl, FAKTUM_KEY_ANTALL)}
                     legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                 >
                     <InputEnhanced
@@ -186,4 +187,4 @@ class BosituasjonView extends React.Component<Props, {}> {
 
 }
 
-export default connectSoknadsdataContainer(injectIntl(BosituasjonView));
+export default connectSoknadsdataContainer(BosituasjonView);

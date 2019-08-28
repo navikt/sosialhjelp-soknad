@@ -1,7 +1,7 @@
 import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
-import {FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import {connect} from "react-redux";
 import {DispatchProps} from "../../redux/reduxTypes";
 import {visSoknadAlleredeSendtPrompt} from "../../redux/ettersendelse/ettersendelseActions";
@@ -13,7 +13,7 @@ interface StateProps {
     visPrompt: boolean;
 }
 
-type Props = StateProps & InjectedIntlProps & DispatchProps;
+type Props = StateProps & DispatchProps;
 
 const KEY = "visSoknadAlleredeSendtPrompt";
 
@@ -23,11 +23,11 @@ class SoknadAlleredeSendtPromt extends React.Component<Props, {}> {
     }
 
     render() {
-
+        const intl = useIntl();
         return (
             <NavFrontendModal
                 isOpen={this.props.visPrompt}
-                contentLabel={this.props.intl.formatMessage({id: "avbryt.avbryt"})}
+                contentLabel={intl.formatMessage({id: "avbryt.avbryt"})}
                 closeButton={true}
                 onRequestClose={() => this.onClose()}
                 shouldCloseOnOverlayClick={true}
@@ -54,4 +54,4 @@ export default connect((state: State, props: any): StateProps => {
         brukerBehandlingId: state.soknad.data.brukerBehandlingId,
         visPrompt: state.ettersendelse.visSoknadAlleredeSendtPromt
     };
-})(injectIntl(SoknadAlleredeSendtPromt));
+})(SoknadAlleredeSendtPromt);

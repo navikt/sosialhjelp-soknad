@@ -18,7 +18,7 @@ const LoggetUt: React.StatelessComponent<Props> = props => {
 				<FormattedMessage id={"timeout.utlopt"} />
 			</Normaltekst>
 			<div className="timeoutbox__knapperad">
-				<Hovedknapp onClick={props.onLoginAgainClick}>
+				<Hovedknapp onClick={props.onLoginAgainClick} type="hoved">
 					<FormattedMessage id={"timeout.logginn"} />
 				</Hovedknapp>
 			</div>

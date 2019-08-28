@@ -1,5 +1,5 @@
 import {Familie, initialPerson, Status} from "./FamilieTypes";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import * as React from "react";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
@@ -13,7 +13,7 @@ import {
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps;
 
 interface RadioProps {
 	id?: string;
@@ -128,4 +128,4 @@ class SivilstatusComponent extends React.Component<Props, {}> {
 	}
 }
 
-export default connectSoknadsdataContainer(injectIntl(SivilstatusComponent));
+export default connectSoknadsdataContainer(SivilstatusComponent);

@@ -1,5 +1,5 @@
 import { Person, Sivilstatus } from "./FamilieTypes";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { formaterIsoDato, getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
@@ -11,10 +11,7 @@ import {
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
-
-class EktefelleDetaljer extends React.Component<Props, {}> {
-
+class EktefelleDetaljer extends React.Component<SoknadsdataContainerProps, {}> {
 
 	renderSivilstatusLabel(ektefelleHarDiskresjonskode: boolean | undefined) {
 		let formattedMessageId: string = "system.familie.sivilstatus.label";
@@ -63,7 +60,8 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const { soknadsdata, intl } = this.props;
+		const intl = useIntl();
+		const { soknadsdata } = this.props;
 		const sivilstatus: Sivilstatus = soknadsdata.familie.sivilstatus;
 		const harDiskresjonskode: boolean | undefined = sivilstatus.harDiskresjonskode;
 		return (
@@ -96,4 +94,4 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 	}
 }
 
-export default connectSoknadsdataContainer(injectIntl(EktefelleDetaljer));
+export default connectSoknadsdataContainer(EktefelleDetaljer);

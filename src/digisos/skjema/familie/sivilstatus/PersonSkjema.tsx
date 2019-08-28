@@ -6,7 +6,6 @@ import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {InjectedIntlProps, injectIntl} from "react-intl";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {erTall, fdato, maksLengde, minLengde} from "../../../../nav-soknad/validering/valideringer";
 import {konverterFraISODato, konverterTilISODato} from "./datoUtils";
@@ -14,7 +13,7 @@ import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {Familie} from "./FamilieTypes";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps;
 
 const FAKTUM_KEY = "familie.sivilstatus.gift.ektefelle";
 const FAKTUM_KEY_FNR = FAKTUM_KEY + ".fnr";
@@ -227,4 +226,4 @@ class PersonSkjema extends React.Component<Props, {}> {
     }
 }
 
-export default connectSoknadsdataContainer(injectIntl(PersonSkjema));
+export default connectSoknadsdataContainer(PersonSkjema);

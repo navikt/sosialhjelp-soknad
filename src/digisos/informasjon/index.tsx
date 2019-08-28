@@ -1,7 +1,7 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {RouterProps} from "react-router";
-import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl,} from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage, useIntl} from "react-intl";
 import DocumentTitle from "react-document-title";
 import Knapp from "nav-frontend-knapper";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
@@ -27,9 +27,11 @@ interface StateProps {
 
 
 
-type Props = StateProps & InjectedIntlProps & RouterProps & DispatchProps;
+type Props = StateProps & RouterProps & DispatchProps;
 
 class Informasjon extends React.Component<Props, {}> {
+
+    intl = useIntl();
 
     componentDidMount() {
         skjulToppMeny();
@@ -46,16 +48,16 @@ class Informasjon extends React.Component<Props, {}> {
     }
 
     startSoknad() {
-        this.props.dispatch(opprettSoknad(this.props.intl));
+        this.props.dispatch(opprettSoknad(this.intl));
     }
 
     render() {
         const {
-            intl,
             harTilgang,
             startSoknadPending,
             sperrekode
         } = this.props;
+        const { intl } = this;
         const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 
         return (
@@ -129,4 +131,4 @@ export default connect((state: State) => ({
     sperrekode: state.tilgang.sperrekode,
     startSoknadPending: state.soknad.startSoknadPending,
     fornavn: state.init.fornavn
-}))(injectIntl(Informasjon));
+}))(Informasjon);
