@@ -11,7 +11,7 @@ interface Props {
 	onClick: () => NavigasjonActions;
 }
 
-const ServerFeil: React.StatelessComponent<Props> = ({onClick}) => {
+const ServerFeil: React.FC<Props> = ({onClick}) => {
 	const intl = useIntl();
 	return (
 		<Feilside

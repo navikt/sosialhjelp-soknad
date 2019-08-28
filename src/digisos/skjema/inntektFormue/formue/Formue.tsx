@@ -4,10 +4,10 @@ import {
     onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, useIntl} from "react-intl";
+import { FormattedHTMLMessage, injectIntl } from "react-intl";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import {Formue, FormueId} from "./FormueTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
@@ -21,7 +21,7 @@ const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
 const FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY = FORMUE + "formue.annet.textarea";
 
-type Props = SoknadsdataContainerProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 interface State {
     oppstartsModus: boolean
@@ -127,8 +127,7 @@ export class FormueView extends React.Component<Props, State> {
     }
 
     render() {
-        const intl = useIntl();
-        const {soknadsdata} = this.props;
+        const {soknadsdata, intl} = this.props;
         const formue: Formue | undefined = soknadsdata.inntekt.formue;
         return (
             <Sporsmal
@@ -162,4 +161,4 @@ export class FormueView extends React.Component<Props, State> {
 }
 
 
-export default connectSoknadsdataContainer(FormueView);
+export default connectSoknadsdataContainer(injectIntl(FormueView));

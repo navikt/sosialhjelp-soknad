@@ -1,7 +1,7 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {RouterProps} from "react-router";
-import {FormattedHTMLMessage, FormattedMessage, useIntl} from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage, injectIntl, IntlShape} from "react-intl";
 import DocumentTitle from "react-document-title";
 import Knapp from "nav-frontend-knapper";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
@@ -17,21 +17,17 @@ import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import {State} from "../redux/reducers";
 import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 
-
 interface StateProps {
     harTilgang: boolean;
     sperrekode: TilgangSperrekode | undefined;
     startSoknadPending: boolean;
     fornavn: string | undefined;
+    intl: IntlShape;
 }
-
-
 
 type Props = StateProps & RouterProps & DispatchProps;
 
 class Informasjon extends React.Component<Props, {}> {
-
-    intl = useIntl();
 
     componentDidMount() {
         skjulToppMeny();
@@ -48,16 +44,16 @@ class Informasjon extends React.Component<Props, {}> {
     }
 
     startSoknad() {
-        this.props.dispatch(opprettSoknad(this.intl));
+        this.props.dispatch(opprettSoknad(this.props.intl));
     }
 
     render() {
         const {
+            intl,
             harTilgang,
             startSoknadPending,
             sperrekode
         } = this.props;
-        const { intl } = this;
         const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 
         return (
@@ -131,4 +127,4 @@ export default connect((state: State) => ({
     sperrekode: state.tilgang.sperrekode,
     startSoknadPending: state.soknad.startSoknadPending,
     fornavn: state.init.fornavn
-}))(Informasjon);
+}))(injectIntl(Informasjon));

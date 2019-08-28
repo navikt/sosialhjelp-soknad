@@ -3,13 +3,14 @@ import {REST_STATUS} from "../../../nav-soknad/types/restTypes";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
 import Knapp from "nav-frontend-knapper";
-import {FormattedHTMLMessage, FormattedMessage, useIntl} from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage, injectIntl} from "react-intl";
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import {connect} from "react-redux";
 import {State} from "../../redux/reducers";
 import {sendEttersendelse} from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 import {EttersendelseVedleggBackend} from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
 import {getSpcForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
+import {IntlProps} from "../../../nav-soknad/utils";
 
 interface OwnProps {
     ettersendelseAktivert: boolean;
@@ -26,7 +27,7 @@ interface StateProps {
     feiletVedleggId: string;
 }
 
-type Props = OwnProps & StateProps & DispatchProps;
+type Props = OwnProps & StateProps & DispatchProps & IntlProps;
 
 interface OwnState {
     vedleggEkspandert: boolean;
@@ -74,7 +75,6 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
     }
 
     render() {
-        const intl = useIntl();
         return (
             <div
                 className={"ettersendelse__vedlegg__innhold " +
@@ -85,8 +85,8 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                     const tittelKey = spc ? spc.textKey + ".vedlegg.sporsmal.tittel" : "";
                     const infoKey = spc ? spc.textKey + ".vedlegg.sporsmal.info" : "";
                     let info;
-                    if (infoKey && !!intl.messages[infoKey]) {
-                        info = intl.formatMessage({id: infoKey});
+                    if (infoKey && !!this.props.intl.messages[infoKey]) {
+                        info = this.props.intl.formatMessage({id: infoKey});
                     }
                     if (!this.props.ettersendelseAktivert
                         && vedlegg.type === "annet|annet") {
@@ -143,4 +143,4 @@ export default connect((state: State) => {
         feilKode: state.ettersendelse.feilKode,
         feiletVedleggId: state.ettersendelse.feiletVedleggId
     };
-})(EttersendelseVedleggListe);
+})(injectIntl(EttersendelseVedleggListe));

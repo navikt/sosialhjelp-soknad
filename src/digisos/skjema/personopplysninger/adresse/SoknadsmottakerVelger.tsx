@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Select } from "nav-frontend-skjema";
-import { getIntlTextOrKey } from "../../../../nav-soknad/utils";
-import { useIntl } from "react-intl";
+import {getIntlTextOrKey, IntlProps} from "../../../../nav-soknad/utils";
+import { injectIntl } from "react-intl";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 import { NavEnhet } from "./AdresseTypes";
 
@@ -13,7 +13,7 @@ interface OwnProps {
 	onVelgSoknadsmottaker: (soknadsmottaker: NavEnhet) => void;
 }
 
-type Props = OwnProps;
+type Props = OwnProps & IntlProps;
 
 class SoknadsmottakerVelger extends React.Component<Props,{}> {
 
@@ -26,8 +26,7 @@ class SoknadsmottakerVelger extends React.Component<Props,{}> {
 	}
 
 	render() {
-		const {navEnheter, ikkeVisPanel} = this.props;
-		const intl = useIntl();
+		const {navEnheter, ikkeVisPanel, intl} = this.props;
 		let orgnr = "velg";
 		if (navEnheter) {
 			navEnheter.forEach((soknadsmottaker: NavEnhet) => {
@@ -74,4 +73,4 @@ class SoknadsmottakerVelger extends React.Component<Props,{}> {
 	}
 }
 
-export default SoknadsmottakerVelger;
+export default injectIntl(SoknadsmottakerVelger);

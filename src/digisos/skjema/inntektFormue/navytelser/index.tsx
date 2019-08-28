@@ -74,7 +74,6 @@ class NavYtelserView extends React.Component<Props, {}> {
             );
         });
 
-
         const tittel: JSX.Element = <h4><FormattedMessage id="navytelser.sporsmal"/></h4>;
 
         return (
@@ -103,7 +102,7 @@ class NavYtelserView extends React.Component<Props, {}> {
                         className={"ytelser_panel"}
                     >
                         <div>
-                            <h4>{tittel}</h4>
+                            {tittel}
                             <FormattedMessage id="utbetalinger.ingen.true"/>
                         </div>
                     </Panel>)

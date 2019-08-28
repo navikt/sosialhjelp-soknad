@@ -1,7 +1,7 @@
 import * as React from "react";
-import {useIntl} from "react-intl";
+import {injectIntl} from "react-intl";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../nav-soknad/utils";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import {Bosituasjon} from "./bosituasjonTypes";
@@ -33,7 +33,7 @@ enum Annetvalg {
     krisesenter = "annet.botype.krisesenter"
 }
 
-type Props = SoknadsdataContainerProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 class BosituasjonView extends React.Component<Props, {}> {
 
@@ -119,7 +119,6 @@ class BosituasjonView extends React.Component<Props, {}> {
     }
 
     render() {
-        const intl = useIntl();
         const bosituasjon: Bosituasjon = this.props.soknadsdata.bosituasjon;
         let synligUnderskjema: boolean = false;
         if (
@@ -134,7 +133,7 @@ class BosituasjonView extends React.Component<Props, {}> {
         return (
             <div>
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(intl, "bosituasjon")}
+                    tekster={getFaktumSporsmalTekst(this.props.intl, "bosituasjon")}
                     legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                 >
                     {this.renderRadioknapp(Bosituasjonsvalg.eier)}
@@ -148,7 +147,7 @@ class BosituasjonView extends React.Component<Props, {}> {
                             arrow={true}
                         >
                             <Sporsmal
-                                tekster={getFaktumSporsmalTekst(intl, "bosituasjon")}
+                                tekster={getFaktumSporsmalTekst(this.props.intl, "bosituasjon")}
                                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                                 stil="system"
                             >
@@ -163,7 +162,7 @@ class BosituasjonView extends React.Component<Props, {}> {
                     </div>
                 </Sporsmal>
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(intl, FAKTUM_KEY_ANTALL)}
+                    tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_KEY_ANTALL)}
                     legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                 >
                     <InputEnhanced
@@ -187,4 +186,4 @@ class BosituasjonView extends React.Component<Props, {}> {
 
 }
 
-export default connectSoknadsdataContainer(BosituasjonView);
+export default connectSoknadsdataContainer(injectIntl(BosituasjonView));

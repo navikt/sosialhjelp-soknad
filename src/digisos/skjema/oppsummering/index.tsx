@@ -1,6 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import {FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage, injectIntl} from "react-intl";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 import {REST_STATUS} from "../../../nav-soknad/types";
 import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
@@ -17,6 +17,7 @@ import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
 import {Soknadsdata} from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {NavEnhet} from "../personopplysninger/adresse/AdresseTypes";
 import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
+import {IntlProps} from "../../../nav-soknad/utils";
 
 interface StateProps {
 	oppsummering: Oppsummering | null;
@@ -28,7 +29,7 @@ interface StateProps {
 	valgtSoknadsmottaker: NavEnhet | undefined;
 }
 
-type Props = DispatchProps & StateProps;
+type Props = DispatchProps & StateProps & IntlProps;
 
 class OppsummeringView extends React.Component<Props, {}> {
 	constructor(props: Props) {
@@ -37,7 +38,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 	}
 
 	componentDidMount() {
-		const intl = useIntl();
+		const intl = this.props.intl;
 		this.props.dispatch(finnOgOppdaterSoknadsmottakerStatus(this.props.brukerbehandlingId));
 		this.props.dispatch(hentOppsummering());
 		this.props.dispatch(
@@ -66,8 +67,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const {oppsummering, brukerbehandlingId, restStatus} = this.props;
-		const intl = useIntl();
+		const {oppsummering, brukerbehandlingId, restStatus, intl} = this.props;
 		const bolker = oppsummering
 			? oppsummering.bolker.map((bolk, idx) => (
 				<div className="blokk-xs bolk" key={idx}>
@@ -151,4 +151,4 @@ export default connect((state: State) => {
 		valgtSoknadsmottaker: state.soknad.valgtSoknadsmottaker,
 		soknadsdata: state.soknadsdata
 	};
-})(OppsummeringView);
+})(injectIntl(OppsummeringView));

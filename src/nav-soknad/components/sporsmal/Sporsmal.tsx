@@ -4,8 +4,8 @@ import * as classNames from "classnames";
 import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
 import { SporsmalFaktumTekst } from "../../types";
 import SporsmalHjelpetekst from "./SporsmalHjelpetekst";
-import { useIntl } from "react-intl";
-import { getFaktumSporsmalTekst } from "../../utils";
+import { injectIntl } from "react-intl";
+import {getFaktumSporsmalTekst, IntlProps} from "../../utils";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
 
@@ -34,13 +34,12 @@ export interface OwnProps {
 	visLedetekst?: boolean;
 }
 
-type Props = OwnProps;
+type Props = OwnProps & IntlProps;
 
 class Sporsmal extends React.Component<Props, {}> {
 
 	render() {
-		const { id, visible, children, feil, feilkode, tekster, sprakNokkel, visLedetekst } = this.props;
-		const intl = useIntl();
+		const { id, visible, children, feil, feilkode, tekster, intl, sprakNokkel, visLedetekst } = this.props;
 		const ledeTekster: SporsmalFaktumTekst = tekster ? tekster :
 			getFaktumSporsmalTekst(intl, sprakNokkel ? sprakNokkel : "" );
 		if (visible === false) {
@@ -90,4 +89,4 @@ class Sporsmal extends React.Component<Props, {}> {
 	}
 }
 
-export default Sporsmal;
+export default injectIntl(Sporsmal);

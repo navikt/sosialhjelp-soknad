@@ -1,19 +1,20 @@
 import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
-import {FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage, injectIntl} from "react-intl";
 import {connect} from "react-redux";
 import {DispatchProps} from "../../redux/reduxTypes";
 import {visSoknadAlleredeSendtPrompt} from "../../redux/ettersendelse/ettersendelseActions";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
+import {IntlProps} from "../../utils";
 
 interface StateProps {
     brukerBehandlingId: string;
     visPrompt: boolean;
 }
 
-type Props = StateProps & DispatchProps;
+type Props = StateProps & DispatchProps & IntlProps;
 
 const KEY = "visSoknadAlleredeSendtPrompt";
 
@@ -23,7 +24,7 @@ class SoknadAlleredeSendtPromt extends React.Component<Props, {}> {
     }
 
     render() {
-        const intl = useIntl();
+        const intl = this.props.intl;
         return (
             <NavFrontendModal
                 isOpen={this.props.visPrompt}
@@ -54,4 +55,4 @@ export default connect((state: State, props: any): StateProps => {
         brukerBehandlingId: state.soknad.data.brukerBehandlingId,
         visPrompt: state.ettersendelse.visSoknadAlleredeSendtPromt
     };
-})(SoknadAlleredeSendtPromt);
+})(injectIntl(SoknadAlleredeSendtPromt));

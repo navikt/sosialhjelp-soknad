@@ -1,7 +1,7 @@
 import * as React from "react";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
-import { useIntl } from "react-intl";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
+import { injectIntl } from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import {
@@ -13,7 +13,7 @@ import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdata
 const FAKTUM_STUDIER = "dinsituasjon.studerer";
 const FAKTUM_STUDERER = "dinsituasjon.studerer.true.grad";
 
-type Props = SoknadsdataContainerProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 class UtdanningView extends React.Component<Props, {}> {
 
@@ -38,20 +38,19 @@ class UtdanningView extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const intl = useIntl();
 		const {soknadsdata} = this.props;
 		const utdanning = soknadsdata.utdanning;
 		const {erStudent, studengradErHeltid} = utdanning;
 		return (
 			<JaNeiSporsmal
-				tekster={getFaktumSporsmalTekst(intl, FAKTUM_STUDIER)}
+				tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_STUDIER)}
 				faktumKey={FAKTUM_STUDIER}
 				verdi={erStudent}
 				onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
 				legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 			>
 				<Sporsmal
-					tekster={getFaktumSporsmalTekst(intl, FAKTUM_STUDERER)}
+					tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_STUDERER)}
 				>
 					<RadioEnhanced
 						getName={() => "studerer_radio_heltid"}
@@ -75,4 +74,4 @@ class UtdanningView extends React.Component<Props, {}> {
 	}
 }
 
-export default connectSoknadsdataContainer(UtdanningView);
+export default connectSoknadsdataContainer(injectIntl(UtdanningView));

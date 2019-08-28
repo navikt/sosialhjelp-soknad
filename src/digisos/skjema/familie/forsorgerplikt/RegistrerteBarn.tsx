@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Barn } from "./ForsorgerPliktTypes";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, injectIntl } from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {
 	connectSoknadsdataContainer,
@@ -12,7 +12,7 @@ import {
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 
-type Props = SoknadsdataContainerProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 class RegistrerteBarn extends React.Component<Props, {}> {
 
@@ -40,7 +40,6 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const intl = useIntl();
 		const {soknadsdata} = this.props;
 		const barn = soknadsdata.familie.forsorgerplikt.ansvar;
 
@@ -68,7 +67,7 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 									<div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
 										<JaNeiSporsmal
 											id={"barn_radio_" + index}
-											tekster={getFaktumSporsmalTekst(intl, "system.familie.barn.true.barn.deltbosted")}
+											tekster={getFaktumSporsmalTekst(this.props.intl, "system.familie.barn.true.barn.deltbosted")}
 											faktumKey={"system.familie.barn.true.barn.deltbosted"}
 											verdi={barnet.harDeltBosted}
 											onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi, index)}
@@ -100,5 +99,5 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 
 }
 
-export default connectSoknadsdataContainer(RegistrerteBarn);
+export default connectSoknadsdataContainer(injectIntl(RegistrerteBarn));
 

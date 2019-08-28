@@ -1,4 +1,5 @@
 import * as React from "react";
+import { injectIntl } from "react-intl";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
@@ -11,14 +12,13 @@ import {
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import { Telefonnummer } from "./telefonTypes";
 import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
-import {replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
-import { useIntl } from "react-intl";
+import {IntlProps, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_SYSTEM_TELEFON = "kontakt.system.telefoninfo";
 const LANDKODE = "+47";
 
-type Props = SoknadsdataContainerProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 class TelefonView extends React.Component<Props, {}> {
 
@@ -89,13 +89,12 @@ class TelefonView extends React.Component<Props, {}> {
 	}
 
 	intl(id: string): string {
-		const intl = useIntl();
+		const { intl } = this.props;
 		return intl.formatMessage({ id });
 	}
 
 	render() {
-		const {soknadsdata } = this.props;
-		const intl = useIntl();
+		const {intl, soknadsdata } = this.props;
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 
 		const brukerdefinert = telefonnummer ? telefonnummer.brukerdefinert : false;
@@ -180,4 +179,4 @@ class TelefonView extends React.Component<Props, {}> {
 
 export {TelefonView};
 
-export default connectSoknadsdataContainer(TelefonView);
+export default connectSoknadsdataContainer(injectIntl(TelefonView));

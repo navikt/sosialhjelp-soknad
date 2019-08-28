@@ -9,7 +9,7 @@ interface Props {
 	onClick: () => NavigasjonActions;
 }
 
-const IkkeFunnet: React.StatelessComponent<Props> = ({onClick}) => {
+const IkkeFunnet: React.FC<Props> = ({onClick}) => {
 	const intl = useIntl();
 	return (
 		<Feilside onClick={onClick} visKnapp={true}>

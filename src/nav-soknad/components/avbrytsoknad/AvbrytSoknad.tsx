@@ -3,13 +3,14 @@ import NavFrontendModal from "nav-frontend-modal";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp, Knapp } from "nav-frontend-knapper";
 import { fortsettSoknad, slettSoknad } from "../../redux/soknad/soknadActions";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import {DispatchProps} from "../../redux/reduxTypes";
 import { AVBRYT_DESTINASJON } from "../../redux/soknad/soknadActionTypes";
 import { navigerTilDittNav } from "../../redux/navigasjon/navigasjonActions";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
+import {IntlProps} from "../../utils";
 
 interface StateProps {
 	avbrytDialogSynlig: boolean;
@@ -17,7 +18,7 @@ interface StateProps {
 	brukerBehandlingId: string;
 }
 
-type Props = StateProps & DispatchProps;
+type Props = StateProps & DispatchProps & IntlProps;
 
 const TEKSTNOKLER_VANLIG = {
 	overskrift: "avbryt.overskrift",
@@ -50,7 +51,7 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 				? TEKSTNOKLER_VANLIG
 				: TEKSTNOKLER_NAVIGASJON
 		};
-		const intl = useIntl();
+		const intl = this.props.intl;
 		return (
 			<NavFrontendModal
 				isOpen={this.props.avbrytDialogSynlig || false}
@@ -98,4 +99,4 @@ export default connect((state: State, props: any): StateProps => {
 		destinasjon: state.soknad.avbrytDialog.destinasjon,
 		brukerBehandlingId: state.soknad.data.brukerBehandlingId
 	};
-})(AvbrytSoknad);
+})(injectIntl(AvbrytSoknad));

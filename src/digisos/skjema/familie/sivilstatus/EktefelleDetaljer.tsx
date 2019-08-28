@@ -1,8 +1,8 @@
 import { Person, Sivilstatus } from "./FamilieTypes";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, injectIntl } from "react-intl";
 import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { formaterIsoDato, getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
+import {formaterIsoDato, getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
@@ -11,7 +11,9 @@ import {
 	SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
 
-class EktefelleDetaljer extends React.Component<SoknadsdataContainerProps, {}> {
+type Props = SoknadsdataContainerProps & IntlProps;
+
+class EktefelleDetaljer extends React.Component<Props, {}> {
 
 	renderSivilstatusLabel(ektefelleHarDiskresjonskode: boolean | undefined) {
 		let formattedMessageId: string = "system.familie.sivilstatus.label";
@@ -60,8 +62,7 @@ class EktefelleDetaljer extends React.Component<SoknadsdataContainerProps, {}> {
 	}
 
 	render() {
-		const intl = useIntl();
-		const { soknadsdata } = this.props;
+		const { soknadsdata, intl } = this.props;
 		const sivilstatus: Sivilstatus = soknadsdata.familie.sivilstatus;
 		const harDiskresjonskode: boolean | undefined = sivilstatus.harDiskresjonskode;
 		return (
@@ -94,4 +95,4 @@ class EktefelleDetaljer extends React.Component<SoknadsdataContainerProps, {}> {
 	}
 }
 
-export default connectSoknadsdataContainer(EktefelleDetaljer);
+export default connectSoknadsdataContainer(injectIntl(EktefelleDetaljer));

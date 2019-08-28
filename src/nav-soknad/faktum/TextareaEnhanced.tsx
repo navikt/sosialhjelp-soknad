@@ -1,12 +1,12 @@
 import * as React from "react";
 import {Feil, Textarea} from "nav-frontend-skjema";
-import {useIntl, IntlShape} from "react-intl";
-import {getInputFaktumTekst, getIntlTextOrKey} from "../utils";
+import {injectIntl, IntlShape} from "react-intl";
+import {getInputFaktumTekst, getIntlTextOrKey, IntlProps} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {connect} from "react-redux";
 import {Valideringsfeil} from "../redux/valideringActionTypes";
 
-interface Props {
+interface OwnProps {
     value: string;
     labelId?: string;
     disabled?: boolean;
@@ -25,6 +25,8 @@ interface Props {
     onBlur?: () => void;
     feil?: any; // Type??
 }
+
+type Props = OwnProps & IntlProps;
 
 class TextareaEnhanced extends React.Component<Props, {}> {
     constructor(props: Props) {
@@ -47,7 +49,7 @@ class TextareaEnhanced extends React.Component<Props, {}> {
     }
 
     tellerTekst(antallTegn: number, maxLength: number): string {
-        const intl = useIntl();
+        const intl = this.props.intl;
         const antallTegnIgjen = maxLength - antallTegn;
         if (antallTegnIgjen > 25) {
             return "";
@@ -72,8 +74,8 @@ class TextareaEnhanced extends React.Component<Props, {}> {
     }
 
     getFeil(): Feil | null {
-        const {faktumKey} = this.props;
-        const intl = useIntl();
+        const {faktumKey, intl} = this.props;
+
         const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey);
         return !feilkode ? null : {feilmelding: intl.formatHTMLMessage({id: feilkode.feilkode})};
     }
@@ -86,9 +88,9 @@ class TextareaEnhanced extends React.Component<Props, {}> {
             maxLength,
             faktumKey,
             property,
-            value
+            value,
+            intl
         } = this.props;
-        const intl = useIntl();
         const tekster = getInputFaktumTekst(intl, faktumKey, property);
         let label = labelId ? getIntlTextOrKey(intl, labelId) : tekster.label;
         label = this.props.hideLabel ? "" : label;
@@ -117,4 +119,4 @@ const mapStateToProps = (state: State) => ({
     feil: state.validering.feil,
 });
 
-export default connect(mapStateToProps)(TextareaEnhanced);
+export default connect(mapStateToProps)(injectIntl(TextareaEnhanced));

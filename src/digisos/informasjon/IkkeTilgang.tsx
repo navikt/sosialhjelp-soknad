@@ -10,7 +10,7 @@ interface Props {
 	sperrekode: TilgangSperrekode;
 }
 
-const IkkeTilgangInformasjon: React.StatelessComponent<Props> = ({ sperrekode }) => {
+const IkkeTilgangInformasjon: React.FC<Props> = ({ sperrekode }) => {
 	const intl = useIntl();
 	if (sperrekode && sperrekode === "bruker") {
 		return (

@@ -3,17 +3,17 @@ import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, useIntl} from "react-intl";
+import {FormattedHTMLMessage, injectIntl} from "react-intl";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Boutgifter, BoutgifterKeys} from "./BoutgifterTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
-type Props = SoknadsdataContainerProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 export class BoutgifterView extends React.Component<Props, {}> {
 
@@ -64,8 +64,7 @@ export class BoutgifterView extends React.Component<Props, {}> {
     }
 
     render() {
-        const {soknadsdata} = this.props;
-        const intl = useIntl();
+        const {soknadsdata, intl} = this.props;
         const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
         return (
             <JaNeiSporsmal
@@ -91,4 +90,4 @@ export class BoutgifterView extends React.Component<Props, {}> {
 }
 
 
-export default connectSoknadsdataContainer(BoutgifterView);
+export default connectSoknadsdataContainer(injectIntl(BoutgifterView));

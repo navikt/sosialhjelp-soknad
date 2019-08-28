@@ -1,7 +1,7 @@
 import * as React from "react";
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
-import { FormattedHTMLMessage, useIntl } from "react-intl";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
+import { FormattedHTMLMessage, injectIntl } from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
 	connectSoknadsdataContainer,
@@ -15,7 +15,7 @@ import { REST_STATUS } from "../../../../nav-soknad/types";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte";
 
-type Props = SoknadsdataContainerProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 interface State {
 	oppstartsModus: boolean
@@ -57,7 +57,6 @@ class BostotteView extends React.Component<Props, State> {
 	}
 
 	render() {
-		const intl = useIntl();
 		const {soknadsdata} = this.props;
 		const bostotte: Bostotte | undefined = soknadsdata.inntekt.bostotte;
 		const restStatus = soknadsdata.restStatus.inntekt.bostotte;
@@ -69,7 +68,7 @@ class BostotteView extends React.Component<Props, State> {
 			<div className="skjema-sporsmal">
 				<JaNeiSporsmal
 					visPlaceholder={oppstartsModus}
-					tekster={getFaktumSporsmalTekst(intl, FAKTUM_BOSTOTTE)}
+					tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_BOSTOTTE)}
 					faktumKey={FAKTUM_BOSTOTTE}
 					verdi={bostotte ? bostotte.bekreftelse : null}
 					onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
@@ -87,4 +86,4 @@ class BostotteView extends React.Component<Props, State> {
 	}
 }
 
-export default connectSoknadsdataContainer(BostotteView);
+export default connectSoknadsdataContainer(injectIntl(BostotteView));

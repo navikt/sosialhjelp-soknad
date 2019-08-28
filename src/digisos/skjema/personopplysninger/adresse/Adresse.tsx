@@ -2,10 +2,10 @@ import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, FormattedMessage, useIntl} from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage, injectIntl} from "react-intl";
 import * as React from "react";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
+import {getIntlTextOrKey, IntlProps} from "../../../../nav-soknad/utils";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import AdresseDetaljer from "./AdresseDetaljer";
@@ -25,7 +25,7 @@ interface OwnProps {
     disableLoadingAnimation?: boolean;
 }
 
-type Props = SoknadsdataContainerProps & OwnProps;
+type Props = SoknadsdataContainerProps & OwnProps & IntlProps;
 
 interface State {
     oppstartsModus: boolean,
@@ -181,8 +181,7 @@ class AdresseView extends React.Component<Props, State> {
     }
 
     render() {
-        const {soknadsdata} = this.props;
-        const intl = useIntl();
+        const {soknadsdata, intl} = this.props;
         const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
 		const adresser = soknadsdata.personalia.adresser;
 		const navEnheter = soknadsdata.personalia.navEnheter;
@@ -363,4 +362,4 @@ class AdresseView extends React.Component<Props, State> {
 
 export {AdresseView};
 
-export default connectSoknadsdataContainer(AdresseView);
+export default connectSoknadsdataContainer(injectIntl(AdresseView));

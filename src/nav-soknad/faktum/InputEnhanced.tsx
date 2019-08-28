@@ -1,7 +1,7 @@
 import * as React from "react";
-import {useIntl} from "react-intl";
+import {injectIntl} from "react-intl";
 import {Feil, Input, InputBredde} from "nav-frontend-skjema";
-import {getInputFaktumTekst, replaceDotWithUnderscore} from "../utils";
+import {getInputFaktumTekst, IntlProps, replaceDotWithUnderscore} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {connect} from "react-redux";
 import {getFeil} from "../utils/enhancedComponentUtils";
@@ -34,7 +34,7 @@ export interface Props {
     getFeil?: () => Feil;
 }
 
-class InputEnhanced extends React.Component<Props, {}> {
+class InputEnhanced extends React.Component<Props & IntlProps, {}> {
 
     getName(): string {
         return `${this.props.faktumKey}`.replace(/\./g, "_");
@@ -53,7 +53,7 @@ class InputEnhanced extends React.Component<Props, {}> {
             bredde,
             feil
         } = this.props;
-        const intl = useIntl();
+        const intl = this.props.intl;
         const tekster = getInputFaktumTekst(intl, faktumKey);
         const feil_: Feil | undefined = getFeil(feil, intl, faktumKey, faktumIndex);
         return (
@@ -87,4 +87,4 @@ const mapStateToProps = (state: State) => ({
     feil: state.validering.feil,
 });
 
-export default connect(mapStateToProps)(InputEnhanced);
+export default connect(mapStateToProps)(injectIntl(InputEnhanced));

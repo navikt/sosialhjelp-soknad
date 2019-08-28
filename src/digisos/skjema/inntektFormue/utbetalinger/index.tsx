@@ -4,10 +4,10 @@ import {
     onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, useIntl} from "react-intl";
+import {FormattedHTMLMessage, injectIntl} from "react-intl";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Utbetalinger, UtbetalingerKeys} from "./utbetalingerTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
@@ -22,7 +22,7 @@ const UTBETALINGER = "inntekt.inntekter";
 const TEXT_AREA_ANNET_FAKTUM_KEY = UTBETALINGER + "utbetalinger.annet.textarea";
 
 
-type Props = SoknadsdataContainerProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 interface State {
     oppstartsModus: boolean
@@ -133,8 +133,7 @@ export class UtbetalingerView extends React.Component<Props, State> {
     }
 
     render() {
-        const intl = useIntl();
-        const {soknadsdata} = this.props;
+        const {soknadsdata, intl} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
         const restStatus = soknadsdata.restStatus.inntekt.utbetalinger;
         let oppstartsModus = this.state.oppstartsModus;
@@ -179,4 +178,4 @@ export class UtbetalingerView extends React.Component<Props, State> {
 }
 
 
-export default connectSoknadsdataContainer(UtbetalingerView);
+export default connectSoknadsdataContainer(injectIntl(UtbetalingerView));

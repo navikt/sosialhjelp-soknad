@@ -3,10 +3,10 @@ import {
     connectSoknadsdataContainer, onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, useIntl} from "react-intl";
+import {FormattedHTMLMessage, injectIntl} from "react-intl";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Verdier, VerdierKeys} from "./VerdierTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
@@ -20,7 +20,7 @@ const MAX_CHARS = 500;
 const VERDIER = "inntekt.eierandeler";
 const VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY = VERDIER + "verdier.annet.textarea";
 
-type Props = SoknadsdataContainerProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 interface State {
     oppstartsModus: boolean
@@ -125,8 +125,7 @@ export class VerdierView extends React.Component<Props, State> {
     }
 
     render() {
-        const intl = useIntl();
-        const {soknadsdata} = this.props;
+        const {soknadsdata, intl} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         const restStatus = soknadsdata.restStatus.inntekt.verdier;
         return (
@@ -167,4 +166,4 @@ export class VerdierView extends React.Component<Props, State> {
     }
 }
 
-export default connectSoknadsdataContainer(VerdierView);
+export default connectSoknadsdataContainer(injectIntl(VerdierView));
