@@ -18,7 +18,7 @@ I stedet for npm er det mulig å bruke yarn.
  
  * `cd soknadsosialhjelp-tekster && mvn clean install -Ddev` - bygger tekstfilene.
  * Start no.nav.sbl.dialogarena.StartSoknadJetty fra IntelliJ - Starter reel backend
- * Legg inn url til sendsokand i nav-soknad/utils/rest-utils.ts:
+ * Legg inn url til sendsokand i nav-soknad/utils/rest-utils.ts: test1
  
  ```javascript
     export function getApiBaseUrl(): string {
