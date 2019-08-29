@@ -1,7 +1,7 @@
 import * as React from "react";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import {InjectedIntlProps, injectIntl} from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import {
@@ -42,34 +42,36 @@ class UtdanningView extends React.Component<Props, {}> {
 		const utdanning = soknadsdata.utdanning;
 		const {erStudent, studengradErHeltid} = utdanning;
 		return (
-			<JaNeiSporsmal
-				tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_STUDIER)}
-				faktumKey={FAKTUM_STUDIER}
-				verdi={erStudent}
-				onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
-				legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-			>
-				<Sporsmal
-					tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_STUDERER)}
+			<div className="skjema-sporsmal">
+				<JaNeiSporsmal
+					tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_STUDIER)}
+					faktumKey={FAKTUM_STUDIER}
+					verdi={erStudent}
+					onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
+					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 				>
-					<RadioEnhanced
-						getName={() => "studerer_radio_heltid"}
-						id="studerer_radio_heltid"
-						faktumKey={FAKTUM_STUDERER}
-						value="heltid"
-						checked={studengradErHeltid !== null && studengradErHeltid === true}
-						onChange={() => this.handleClickHeltidDeltid(true)}
-					/>
-					<RadioEnhanced
-						getName={() => "studerer_radio_deltid"}
-						id="studerer_radio_deltid"
-						faktumKey={FAKTUM_STUDERER}
-						value="deltid"
-						checked={studengradErHeltid !== null && studengradErHeltid === false}
-						onChange={() => this.handleClickHeltidDeltid(false)}
-					/>
-				</Sporsmal>
-			</JaNeiSporsmal>
+					<Sporsmal
+						tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_STUDERER)}
+					>
+						<RadioEnhanced
+							getName={() => "studerer_radio_heltid"}
+							id="studerer_radio_heltid"
+							faktumKey={FAKTUM_STUDERER}
+							value="heltid"
+							checked={studengradErHeltid !== null && studengradErHeltid === true}
+							onChange={() => this.handleClickHeltidDeltid(true)}
+						/>
+						<RadioEnhanced
+							getName={() => "studerer_radio_deltid"}
+							id="studerer_radio_deltid"
+							faktumKey={FAKTUM_STUDERER}
+							value="deltid"
+							checked={studengradErHeltid !== null && studengradErHeltid === false}
+							onChange={() => this.handleClickHeltidDeltid(false)}
+						/>
+					</Sporsmal>
+				</JaNeiSporsmal>
+			</div>
 		);
 	}
 }
