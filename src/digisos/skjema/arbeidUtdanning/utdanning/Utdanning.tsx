@@ -42,36 +42,34 @@ class UtdanningView extends React.Component<Props, {}> {
 		const utdanning = soknadsdata.utdanning;
 		const {erStudent, studengradErHeltid} = utdanning;
 		return (
-			<div className="skjema-sporsmal">
-				<JaNeiSporsmal
-					tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_STUDIER)}
-					faktumKey={FAKTUM_STUDIER}
-					verdi={erStudent}
-					onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
-					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+			<JaNeiSporsmal
+				tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_STUDIER)}
+				faktumKey={FAKTUM_STUDIER}
+				verdi={erStudent}
+				onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
+				legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+			>
+				<Sporsmal
+					tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_STUDERER)}
 				>
-					<Sporsmal
-						tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_STUDERER)}
-					>
-						<RadioEnhanced
-							getName={() => "studerer_radio_heltid"}
-							id="studerer_radio_heltid"
-							faktumKey={FAKTUM_STUDERER}
-							value="heltid"
-							checked={studengradErHeltid !== null && studengradErHeltid === true}
-							onChange={() => this.handleClickHeltidDeltid(true)}
-						/>
-						<RadioEnhanced
-							getName={() => "studerer_radio_deltid"}
-							id="studerer_radio_deltid"
-							faktumKey={FAKTUM_STUDERER}
-							value="deltid"
-							checked={studengradErHeltid !== null && studengradErHeltid === false}
-							onChange={() => this.handleClickHeltidDeltid(false)}
-						/>
-					</Sporsmal>
-				</JaNeiSporsmal>
-			</div>
+					<RadioEnhanced
+						getName={() => "studerer_radio_heltid"}
+						id="studerer_radio_heltid"
+						faktumKey={FAKTUM_STUDERER}
+						value="heltid"
+						checked={studengradErHeltid !== null && studengradErHeltid === true}
+						onChange={() => this.handleClickHeltidDeltid(true)}
+					/>
+					<RadioEnhanced
+						getName={() => "studerer_radio_deltid"}
+						id="studerer_radio_deltid"
+						faktumKey={FAKTUM_STUDERER}
+						value="deltid"
+						checked={studengradErHeltid !== null && studengradErHeltid === false}
+						onChange={() => this.handleClickHeltidDeltid(false)}
+					/>
+				</Sporsmal>
+			</JaNeiSporsmal>
 		);
 	}
 }
