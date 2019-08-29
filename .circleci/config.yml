@@ -37,6 +37,7 @@ jobs:
           command: |
             set -eo pipefail
             git clone https://github.com/navikt/sosialhjelp-tester.git
+            cd sosialhjelp-tester
             git checkout feature/circleci-test
 
             npm install
