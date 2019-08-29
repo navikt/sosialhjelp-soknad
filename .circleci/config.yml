@@ -28,11 +28,26 @@ jobs:
             echo $DOCKER_TAG
             docker push $DOCKER_TAG
 
+  browser-test:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - run:
+          name: Run browser tests
+          command: |
+            set -eo pipefail
+            git clone https://github.com/navikt/sosialhjelp-tester.git
+            git checkout feature/circleci-test
+
+            npm install
+            npm test
+
 workflows:
   version: 2.1
   build_and_deploy:
     jobs:
-      - build
+#      - build
+      - browser-test
 #      - release:
 #          requires:
 #            - build
