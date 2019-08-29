@@ -81,3 +81,28 @@ jobs:
             export VERSION=1.0_${GIT_COMMIT_DATE}_${GIT_COMMIT_HASH}
 
             deployment-cli deploy create --cluster=prod-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${VERSION} --vars=nais/prod/default.json
+
+  browser-test:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - run:
+          name: Run browser tests
+          command: |
+            set -eo pipefail
+            git clone https://github.com/navikt/sosialhjelp-tester.git
+            git checkout feature/circleci-test
+
+            npm install
+            npm test
+
+workflows:
+  version: 2.1
+  build_and_deploy:
+    jobs:
+#      - build
+      - browser-test
+#      - release:
+#          requires:
+#            - build
+
