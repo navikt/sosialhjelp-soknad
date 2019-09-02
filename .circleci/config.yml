@@ -63,6 +63,9 @@ workflows:
       - browser-test:
           requires:
             - release
+          filters:
+            branches:
+              only: master
 #      - release:
 #          requires:
 #            - build
