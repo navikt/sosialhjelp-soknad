@@ -54,18 +54,15 @@ workflows:
   build_and_deploy:
     jobs:
       - build
-      - browser-test:
+      - release:
           requires:
-            - release
+            - build
           filters:
             branches:
               only: master
       - browser-test:
           requires:
             - release
-          filters:
-            branches:
-              only: master
 #      - release:
 #          requires:
 #            - build
