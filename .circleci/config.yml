@@ -34,7 +34,9 @@ jobs:
     steps:
       - run:
           name: Do nothing
-          command: echo "Hello, World!" # TODO: Deploy to Heroku
+          command: |
+            echo "Hello, World!" # TODO: Deploy to Heroku
+            echo "SAUCE-variables: |$SAUCE_USERNAME|$SAUCE_HOST_API|"
 
   browser-test:
     docker:
