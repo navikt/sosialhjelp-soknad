@@ -37,7 +37,7 @@ jobs:
           name: Release on Heroku
           command: |
             # HEROKU_USERNAME must be URL encoded, eg. joachim.liepelt%40nav.no
-            git remote add heroku https://$HEROKU_USERNAME:$HEROKU_AUTH_TOKEN@git.heroku.com/$CIRCLE_PROJECT_REPONAME.git
+            git remote add heroku https://$HEROKU_USERNAME:$HEROKU_AUTH_TOKEN@git.heroku.com/fleskesvor.git
             git push heroku $CIRCLE_BRANCH:master
 
   browser-test:
@@ -50,6 +50,7 @@ jobs:
             set -eo pipefail
             git clone https://github.com/navikt/sosialhjelp-tester.git
             cd sosialhjelp-tester
+            git co feature/circleci-test
 
             npm install
             npm run saucelabs-soknad
@@ -67,7 +68,7 @@ workflows:
             - build
           filters:
             branches:
-              only: master
+              only: feature/circleci-test
       - browser-test:
           requires:
             - release
