@@ -6,9 +6,9 @@ import {
 	formaterAdresseString,
 	removeDuplicatesAfterTransform, setCaretPosition
 } from "./AdresseUtils";
-import { fetchToJson } from "../../../../nav-soknad/utils/rest-utils";
 import { AdressesokTreff } from "./AdresseTypes";
 import AdressesokIkon from "./AdressesokIkon";
+import {fetchToJson} from "../../../../nav-soknad/utils/rest-utils";
 
 const Autocomplete = require("react-autocomplete");
 

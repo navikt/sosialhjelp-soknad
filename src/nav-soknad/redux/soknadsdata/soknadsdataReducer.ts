@@ -50,6 +50,7 @@ import {
     SkattbarInntekt
 } from "../../../digisos/skjema/inntektFormue/skattbarInntekt/inntektTypes";
 import {Systeminntekter, initialSysteminntekter} from "../../../digisos/skjema/inntektFormue/navytelser/navYtelserTypes";
+import {Studielan, initialStudielanState} from "../../../digisos/skjema/inntektFormue/studielan/StudielanTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -72,6 +73,7 @@ export enum SoknadsSti {
 	UTDANNING = "utdanning",
 	TELEFONNUMMER = "personalia/telefonnummer",
 	BOSTOTTE = "inntekt/bostotte",
+	STUDIELAN = "inntekt/studielan",
 	UTBETALINGER = "inntekt/utbetalinger",
 	VERDIER = "inntekt/verdier",
 	FORMUE = "inntekt/formue",
@@ -89,6 +91,7 @@ export enum SoknadsSti {
 export interface Inntekt {
 	skattbarinntektogforskuddstrekk: SkattbarInntekt[];
 	bostotte: Bostotte;
+	studielan: Studielan;
 	utbetalinger: Utbetalinger;
 	formue: Formue;
 	verdier: Verdier;
@@ -98,6 +101,7 @@ export interface Inntekt {
 export const initialInntektState: Inntekt = {
 	skattbarinntektogforskuddstrekk: initialSkattbarInntektState,
 	bostotte: initialBostotteState,
+	studielan: initialStudielanState,
 	utbetalinger: initialUtbetalingerState,
 	formue: initialFormueState,
 	verdier: initialVerdierState,
@@ -171,6 +175,7 @@ export type SoknadsdataType
 	| ForsorgerPlikt
 	| Barnebidrag
 	| Bostotte
+	| Studielan
 	| Formue
 	| Verdier
 	| Utgifter
@@ -180,7 +185,7 @@ export type SoknadsdataType
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
-	verdi?: SoknadsdataActionVerdi | SoknadsdataType,
+	verdi?: SoknadsdataActionVerdi | SoknadsdataType | null,
 	sti: string,
 	restStatus?: string
 }
@@ -199,6 +204,7 @@ const initialSoknadsdataRestStatus = {
 	},
 	inntekt: {
 		bostotte: REST_STATUS.INITIALISERT,
+		studielan: REST_STATUS.INITIALISERT,
 		utbetalinger: REST_STATUS.INITIALISERT,
 		verdier: REST_STATUS.INITIALISERT
 	}
@@ -244,7 +250,7 @@ export const settRestStatus = (sti: string, restStatus: REST_STATUS): Soknadsdat
 	}
 };
 
-export const oppdaterSoknadsdataSti = (sti: string, verdi: SoknadsdataType): SoknadsdataActionType => {
+export const oppdaterSoknadsdataSti = (sti: string, verdi: SoknadsdataType | null): SoknadsdataActionType => {
 	return {
 		type: SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI,
 		sti,

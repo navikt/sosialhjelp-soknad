@@ -77,14 +77,16 @@ describe("ledeteksterSaga", () => {
 
 	describe("hentTeksterSaga - feilflyt", () => {
 		const saga = hentTeksterSaga();
-		const reason = "Serverfeil";
+		const reason = "unauthorized";
 		saga.next();
 
 		it("put hentTekstFeiler", () => {
-			expect(saga.throw(reason)).toEqual({
-				done: false,
-				value: put(loggFeil("Problemer med å hente ledetekster: " + reason.toString()))
-			});
+			if (saga && saga.throw){
+				expect(saga.throw(reason)).toEqual({
+					done: false,
+					value: put(loggFeil("Problemer med å hente ledetekster: " + reason.toString()))
+				});
+			}
 		});
 
 		it("er ferdig", () => {

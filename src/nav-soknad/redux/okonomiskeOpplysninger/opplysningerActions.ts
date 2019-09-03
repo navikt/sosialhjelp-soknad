@@ -1,5 +1,4 @@
 import {Dispatch, Valideringsfeil} from "../reduxTypes";
-import {fetchToJson} from "../../utils/rest-utils";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {
     OpplysningerAction,
@@ -9,8 +8,8 @@ import {
     OpplysningType
 } from "./opplysningerTypes";
 import {getOpplysningerUrl} from "./opplysningerUtils";
-import {loggFeil} from "../navlogger/navloggerActions";
-
+import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
+import {fetchToJson, HttpStatus} from "../../utils/rest-utils";
 
 export const gotDataFromBackend = (response: OpplysningerBackend): OpplysningerAction => {
     return {
@@ -45,10 +44,15 @@ export function hentOpplysninger(behandlingsId: string) {
         fetchToJson(getOpplysningerUrl(behandlingsId))
             .then((response: any) => {
                 dispatch(gotDataFromBackend(response));
-            }).catch((reason: any) => {
-            dispatch(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));
-            dispatch(navigerTilServerfeil());
-        });
+            })
+            .catch((reason: any) => {
+                if (reason.message === HttpStatus.UNAUTHORIZED){
+                    dispatch(loggAdvarsel("hentTilgangSaga: " + reason));
+                } else {
+                    dispatch(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));
+                    dispatch(navigerTilServerfeil());
+                }
+            });
     }
 }
 

@@ -3,7 +3,7 @@ import {call, put, takeEvery, select} from "redux-saga/effects";
 import {
     fetchDelete,
     fetchKvittering,
-    fetchPost, fetchToJson,
+    fetchPost, fetchToJson, HttpStatus,
     lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
 } from "../../utils/rest-utils";
 import {
@@ -29,7 +29,7 @@ import {
     slettSoknadOk,
     startSoknadOk
 } from "./soknadActions";
-import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
 import {push} from "connected-react-router";
@@ -39,7 +39,7 @@ export interface OpprettSoknadResponse {
     brukerBehandlingId: string;
 }
 
-function* opprettSoknadSaga(): SagaIterator {
+function* opprettSoknadSaga() {
     try {
         yield put(resetSoknad());
 
@@ -51,12 +51,16 @@ function* opprettSoknadSaga(): SagaIterator {
         yield put(startSoknadOk()); // TODO Rename metode navn
         yield put(tilSteg(1));
     } catch (reason) {
-        yield put(loggFeil("opprett soknad saga feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("opprettSoknadSaga: " + reason));
+        } else {
+            yield put(loggFeil("opprett soknad saga feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
-function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
+function* hentSoknadSaga(action: HentSoknadAction) {
     try {
         const xsrfCookieIsOk: boolean = yield call(
             fetchToJson,
@@ -64,8 +68,12 @@ function* hentSoknadSaga(action: HentSoknadAction): SagaIterator {
         );
         yield put(hentSoknadOk(xsrfCookieIsOk, action.brukerBehandlingId));
     } catch (reason) {
-        yield put(loggFeil("hent soknad saga feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("hentSoknadsdata: " + reason));
+        } else {
+            yield put(loggFeil("hent soknad saga feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
@@ -74,8 +82,12 @@ function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
         yield put(startSoknadOk());
         yield put(tilSteg(1));
     } catch (reason) {
-        yield put(loggFeil("start soknad saga feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("startSoknadSaga: " + reason));
+        } else {
+            yield put(loggFeil("start soknad saga feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
@@ -89,8 +101,12 @@ function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
             yield put(navigerTilDittNav());
         }
     } catch (reason) {
-        yield put(loggFeil("slett soknad saga feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("slettSoknadSaga: " + reason));
+        } else {
+            yield put(loggFeil("slett soknad saga feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
@@ -105,12 +121,16 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
         yield put(sendSoknadOk(action.brukerBehandlingId));
         yield put(navigerTilKvittering(action.brukerBehandlingId));
     } catch (reason) {
-        yield put(loggFeil("send soknad saga feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("sendSoknadSaga: " + reason));
+        } else {
+            yield put(loggFeil("send soknad saga feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
-function* hentKvitteringSaga(action: HentKvitteringAction): SagaIterator {
+function* hentKvitteringSaga(action: HentKvitteringAction) {
     try {
         const kvittering = yield call(
             fetchKvittering,
@@ -118,12 +138,16 @@ function* hentKvitteringSaga(action: HentKvitteringAction): SagaIterator {
         );
         yield put(hentKvitteringOk(kvittering));
     } catch (reason) {
-        yield put(loggFeil("hent kvittering saga feilet: " + reason));
-        yield put(navigerTilServerfeil());
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("hentKvitteringSaga: " + reason));
+        } else {
+            yield put(loggFeil("hent kvittering saga feilet: " + reason));
+            yield put(navigerTilServerfeil());
+        }
     }
 }
 
-function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsmottakerStatus): SagaIterator {
+function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsmottakerStatus) {
     const {brukerbehandlingId} = action;
 
     try {
@@ -134,9 +158,13 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
         } else {
             yield put(oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker));
         }
-    } catch (e) {
-        yield call(loggFeil, "feil i finnOgOppdaterSoknadsmottakerStatusSaga på side 9. Sender brukeren tilbake til steg 1 og håper dette i blir en infinite loop. Error message: " + e);
-        yield put(push(`/skjema/${brukerbehandlingId}/2`));
+    } catch (reason) {
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("finnOgOppdaterSoknadsmottakerStatusSaga: " + reason));
+        } else {
+            yield call(loggFeil, "feil i finnOgOppdaterSoknadsmottakerStatusSaga på side 9. Sender brukeren tilbake til steg 1 og håper dette i blir en infinite loop. Error message: " + reason);
+            yield put(push(`/skjema/${brukerbehandlingId}/2`));
+        }
     }
 }
 
@@ -150,8 +178,12 @@ function* getErSystemdataEndretSaga() {
         }
         yield put(setErSystemdataEndret(response));
     } catch (reason) {
-        yield put(setErSystemdataEndret(false));
-        yield put(loggFeil("getErSystemdataEndretSaga feilet: " + reason));
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            yield put(loggAdvarsel("getErSystemdataEndretSaga: " + reason));
+        } else {
+            yield put(setErSystemdataEndret(false));
+            yield put(loggFeil("getErSystemdataEndretSaga feilet: " + reason));
+        }
     }
 }
 

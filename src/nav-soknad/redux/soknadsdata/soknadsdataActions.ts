@@ -1,5 +1,5 @@
 import { Dispatch } from "../reduxTypes";
-import { fetchPut, fetchToJson } from "../../utils/rest-utils";
+import {fetchPut, fetchToJson, HttpStatus} from "../../utils/rest-utils";
 import {
 	oppdaterSoknadsdataSti,
 	settRestStatus,
@@ -7,7 +7,7 @@ import {
 } from "./soknadsdataReducer";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 import { REST_STATUS } from "../../types";
-import {loggFeil} from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
 
 const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `soknader/${brukerBehandlingId}/${sti}`;
 
@@ -28,9 +28,13 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 			dispatch(oppdaterSoknadsdataSti(sti, response));
 			dispatch(settRestStatus(sti, REST_STATUS.OK));
 		}).catch((reason: any) => {
-            dispatch(loggFeil("Henting av soknadsdata feilet: " + reason));
-			dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-			dispatch(navigerTilServerfeil());
+			if (reason.message === HttpStatus.UNAUTHORIZED){
+				dispatch(loggAdvarsel("hentSoknadsdata: " + reason));
+			} else {
+				dispatch(loggFeil("Henting av soknadsdata feilet: " + reason));
+				dispatch(settRestStatus(sti, REST_STATUS.FEILET));
+				dispatch(navigerTilServerfeil());
+			}
 		});
 	}
 }
@@ -50,9 +54,13 @@ export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknad
 				}
 			})
 			.catch((reason) => {
-				dispatch(loggFeil("Lagring av soknadsdata feilet: " + reason));
-				dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-				dispatch(navigerTilServerfeil());
+				if (reason.message === HttpStatus.UNAUTHORIZED){
+					dispatch(loggAdvarsel("lagreSoknadsdata: " + reason));
+				} else {
+					dispatch(loggFeil("Lagring av soknadsdata feilet: " + reason));
+					dispatch(settRestStatus(sti, REST_STATUS.FEILET));
+					dispatch(navigerTilServerfeil());
+				}
 			});
 	}
 }

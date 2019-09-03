@@ -1,8 +1,5 @@
 import {REST_FEIL} from "../types/restFeilTypes";
 import {erMockMiljoEllerDev} from "./index";
-import {push} from "connected-react-router";
-import {Sider} from "../redux/navigasjon/navigasjonTypes";
-import {put} from 'redux-saga/effects';
 import {
     API_CONTEXT_PATH,
     CONTEXT_PATH,
@@ -10,6 +7,7 @@ import {
     HEROKU_API_MASTER_APP_NAME,
     HEROKU_MASTER_APP_NAME
 } from "../../configuration";
+
 
 export function erDev(): boolean {
     const url = window.location.href;
@@ -23,7 +21,7 @@ export function kjorerJetty(): boolean {
 
 export function getApiBaseUrl(): string {
     if (erDev()) {
-        // Kjør mot lokal soknadsosialhjelp-server:
+        // Kjør mot lokal sosialhjelp-soknad-api:
         return `http://localhost:8181/${API_CONTEXT_PATH}/`;
 
         // Kjør mot lokal mock backend:
@@ -46,7 +44,7 @@ export function getAbsoluteApiUrl() {
 }
 
 export function getAbsoluteApiUrlRegex(pathname: string){
-    return pathname.replace(/^(.+soknadsosialhjelp)(.+)$/, "$1-server/")
+    return pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/")
 }
 
 function determineCredentialsParameter() {
@@ -81,14 +79,18 @@ enum RequestMethod {
     DELETE = "DELETE"
 }
 
-const getHeaders = () => {
-    //@ts-ignore
-    return new Headers({
+const getHeaders = (): Headers => {
+    const headersRecord: Record<string, string> = {
         "Content-Type": "application/json",
         "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
         "accept": "application/json, text/plain, */*"
-    })
+    };
+    return new Headers(headersRecord)
 };
+
+export enum HttpStatus {
+    UNAUTHORIZED = "unauthorized"
+}
 
 export const serverRequest = (method: string, urlPath: string, body: string, retries = 6) => {
     const OPTIONS: RequestInit = {
@@ -114,14 +116,18 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
                     }, 100 * (7 - retries));
 
                 } else {
-                    sjekkStatuskode(response);
-                    const jsonResponse = toJson(response);
-                    resolve(jsonResponse);
+                    const statusKode = verifyStatusSuccessOrRedirect(response);
+                    if (statusKode >= 200 && statusKode < 300) {
+                        const jsonResponse = toJson(response);
+                        resolve(jsonResponse);
+                    } else {
+                        throw new Error(HttpStatus.UNAUTHORIZED)
+                    }
                 }
             })
             .catch((reason: any) => reject(reason));
     });
-}
+};
 
 export function fetchToJson(urlPath: string) {
     return serverRequest(RequestMethod.GET, urlPath, "");
@@ -141,7 +147,14 @@ export function fetchDelete(urlPath: string) {
         method: RequestMethod.DELETE,
         credentials: determineCredentialsParameter()
     };
-    return fetch(getApiBaseUrl() + urlPath, OPTIONS).then(sjekkStatuskode);
+    return fetch(getApiBaseUrl() + urlPath, OPTIONS).then((response: Response) => {
+        const statusKode: number = verifyStatusSuccessOrRedirect(response);
+        if (statusKode >= 200 && statusKode < 300) {
+            return response.text();
+        } else {
+            throw new Error(HttpStatus.UNAUTHORIZED)
+        }
+    });
 }
 
 export function fetchOppsummering(urlPath: string) {
@@ -151,15 +164,18 @@ export function fetchOppsummering(urlPath: string) {
         credentials: determineCredentialsParameter()
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS)
-        .then(sjekkStatuskode)
         .then((response: Response) => {
-            return response.text();
+            const statusKode: number = verifyStatusSuccessOrRedirect(response);
+            if (statusKode >= 200 && statusKode < 300) {
+                return response.text();
+            } else {
+                throw new Error(HttpStatus.UNAUTHORIZED)
+            }
         });
 }
 
 export function fetchKvittering(urlPath: string) {
     const OPTIONS: RequestInit = {
-        //@ts-ignore
         headers: new Headers({
             "accept": "application/vnd.kvitteringforinnsendtsoknad+json",
             "Content-Type": "application/json",
@@ -169,9 +185,13 @@ export function fetchKvittering(urlPath: string) {
         credentials: determineCredentialsParameter()
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS)
-        .then(sjekkStatuskode)
         .then((response: Response) => {
-            return response.json();
+            const statusKode: number = verifyStatusSuccessOrRedirect(response);
+            if (statusKode >= 200 && statusKode < 300) {
+                return response.json();
+            } else {
+                throw new Error(HttpStatus.UNAUTHORIZED)
+            }
         });
 }
 
@@ -182,13 +202,29 @@ export function fetchFeatureToggles() {
         credentials: determineCredentialsParameter()
     };
     return fetch(getServletBaseUrl() + "api/feature", OPTIONS)
-        .then(sjekkStatuskode)
-        .then(toJson);
+        .then((response: Response) => {
+            const statusKode: number = verifyStatusSuccessOrRedirect(response);
+            if (statusKode >= 200 && statusKode < 300) {
+                return response.json();
+            } else {
+                throw new Error(HttpStatus.UNAUTHORIZED)
+            }
+        });
 }
+
+// FIXME: KANSKJE JEG KAN BRUKE DENNE SENRE.
+// export const getJsonOrRedirectIfUnauthorizedAndThrowError = (response: Response) => {
+//     const statusKode: number = verifyStatusSuccessOrRedirect(response);
+//     if (statusKode >= 200 && statusKode < 300) {
+//         return response.json();
+//     } else {
+//         throw new Error(HttpStatus.UNAUTHORIZED)
+//     }
+// };
+
 
 let generateUploadOptions = function (formData: FormData) {
     const UPLOAD_OPTIONS: RequestInit = {
-        //@ts-ignore
         headers: new Headers({
             "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
             "accept": "application/json, text/plain, */*"
@@ -198,12 +234,18 @@ let generateUploadOptions = function (formData: FormData) {
         body: formData
     };
     return UPLOAD_OPTIONS;
-}
+};
 
 export function fetchUpload(urlPath: string, formData: FormData) {
     return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData))
-        .then(sjekkStatuskode)
-        .then(toJson);
+        .then((response) => {
+            const statusKode: number = verifyStatusSuccessOrRedirect(response);
+            if (statusKode >= 200 && statusKode < 300) {
+                return toJson(response)
+            } else {
+                throw new Error(HttpStatus.UNAUTHORIZED)
+            }
+        });
 }
 
 export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData) {
@@ -218,7 +260,7 @@ export function toJson<T>(response: Response): Promise<T> {
     return response.json();
 }
 
-function sjekkStatuskode(response: Response) {
+function verifyStatusSuccessOrRedirect(response: Response): number {
     const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
 
     if (response.status === 401){
@@ -228,14 +270,15 @@ function sjekkStatuskode(response: Response) {
                 response.json().then(r => {
                     window.location.href = r.loginUrl + getRedirectPath();
                 });
+            } else {
+                // @ts-ignore
+                window[AUTH_LINK_VISITED] = false;
             }
-        } else {
-            put(push(Sider.SERVERFEIL));
         }
-        return response;
+        return 401;
     }
     if (response.status >= 200 && response.status < 300) {
-        return response;
+        return response.status;
     }
     throw new Error(response.statusText);
 }
@@ -245,11 +288,16 @@ export function getCookie(name: string) {
     const parts = value.split("; " + name + "=");
     if (parts.length === 2) {
         let partsPopped: string | undefined = parts.pop();
-        return partsPopped ? partsPopped.split(";").shift() : "null";
+        if (partsPopped){
+            const partsPoppedSplitAndShift = partsPopped.split(";").shift();
+            return  partsPoppedSplitAndShift ? partsPoppedSplitAndShift : "null"
+        } else {
+            return "null"
+        }
     } else {
         return "null";
     }
-}
+};
 
 export function detekterInternFeilKode(feilKode: string): string {
     let internFeilKode = feilKode;

@@ -15,13 +15,13 @@ spec:
     enabled: true
     path: /prometheus
   liveness:
-    path: /soknadsosialhjelp/internal/isAlive
+    path: /sosialhjelp/soknad/internal/isAlive
     initialDelay: 60
     timeout: 1
     periodSeconds: 10
     failureThreshold: 10
   readiness:
-    path: /soknadsosialhjelp/internal/isAlive
+    path: /sosialhjelp/soknad/internal/isAlive
     initialDelay: 60
     timeout: 1
   resources:

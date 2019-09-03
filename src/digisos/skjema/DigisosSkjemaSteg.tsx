@@ -57,7 +57,7 @@ export const digisosSkjemaConfig: SkjemaConfig = {
         {
             key: DigisosSteg.opplysningerbolk,
             stegnummer: 8,
-            type: SkjemaStegType.ekstrainfo
+            type: SkjemaStegType.skjema
         },
         {
             key: DigisosSteg.oppsummering,

@@ -6,13 +6,15 @@ export enum InitActionTypeKeys {
 	OK = "init/OK",
 	FEILET = "init/FEILET",
 	SET_VIS_SAMTYKKE_INFO = "init/SET_VIS_SAMTYKKE_INFO",
+	LAGRE_FORNAVN_PA_STORE="init/LAGRE_FORNAVN_PA_STORE"
 }
 
-export type InitActionTypes =
-	StartAction
+export type InitActionTypes
+	= StartAction
 	| FerdigAction
 	| FeiletAction
-	| VisSamtykkeInfoAction;
+	| VisSamtykkeInfoAction
+	| LagreFornavnPaStoreAction
 
 interface StartAction {
 	type: InitActionTypeKeys.START;
@@ -31,7 +33,13 @@ interface VisSamtykkeInfoAction {
 	visSamtykkeInfo: boolean;
 }
 
+interface LagreFornavnPaStoreAction {
+	type: InitActionTypeKeys.LAGRE_FORNAVN_PA_STORE;
+	fornavn: string;
+}
+
 export interface InitState {
 	restStatus: REST_STATUS;
 	visSamtykkeInfo: boolean;
+	fornavn: string | undefined;
 }

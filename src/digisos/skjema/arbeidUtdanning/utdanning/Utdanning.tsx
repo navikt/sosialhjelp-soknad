@@ -1,7 +1,7 @@
 import * as React from "react";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import {InjectedIntlProps, injectIntl} from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import {

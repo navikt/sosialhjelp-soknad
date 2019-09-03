@@ -27,7 +27,7 @@ class Link extends React.Component<Props, {}> {
 
 		const url = new URL(window.location.href);
 		let urlPath = url.searchParams.get("goto");
-		const contextPath = "soknadsosialhjelp";
+		const contextPath = "sosialhjelp/soknad";
 		const regexp = new RegExp("/" + contextPath);
 		urlPath = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
 
