@@ -30,7 +30,7 @@ jobs:
 
   release:
     docker:
-      - image: bash
+      - image: alpine/git
     steps:
       - run:
           name: Release on Heroku
