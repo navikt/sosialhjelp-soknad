@@ -32,6 +32,7 @@ jobs:
     docker:
       - image: alpine/git
     steps:
+      - checkout
       - run:
           name: Release on Heroku
           command: |
