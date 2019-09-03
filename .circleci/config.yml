@@ -33,9 +33,10 @@ jobs:
       - image: bash
     steps:
       - run:
-          name: Do nothing
+          name: Release on Heroku
           command: |
-            echo "Hello, World!" # TODO: Deploy to Heroku
+            git remote add heroku https://git.heroku.com/fleskesvor.git
+            git push heroku feature/circleci-test:master
 
   browser-test:
     docker:
