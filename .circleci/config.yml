@@ -37,7 +37,7 @@ jobs:
           name: Release on Heroku
           command: |
             git remote add heroku https://eivindkn%40gmail.com:$HEROKU_AUTH_TOKEN@git.heroku.com/fleskesvor.git
-            git push heroku feature/circleci-test:master
+            git push heroku feature/circleci-test:master --force
 
   browser-test:
     docker:
