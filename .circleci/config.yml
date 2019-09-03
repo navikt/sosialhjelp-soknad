@@ -68,7 +68,4 @@ workflows:
       - browser-test:
           requires:
             - release
-#      - release:
-#          requires:
-#            - build
 
