@@ -37,6 +37,7 @@ jobs:
           name: Release on Heroku
           command: |
             git remote add heroku https://git.heroku.com/fleskesvor.git
+            git config user.name digisos-ci
             git push heroku feature/circleci-test:master
 
   browser-test:
