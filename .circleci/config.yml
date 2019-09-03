@@ -17,25 +17,28 @@ jobs:
             echo $VERSION > ./VERSION.txt
 
             echo "export DOCKER_TAG=\"docker.pkg.github.com/navikt/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME:$VERSION\"" >> $BASH_ENV
-#      - run:
-#          name: Bygger Docker image
-#          command:
-#            docker build -t $DOCKER_TAG -f Dockerfile.circle .
-#      - run:
-#          name: Pusher Docker image
-#          command: |
-#            echo "$DEPLOYMENT_PASSWORD" | docker login -u "$DEPLOYMENT_USERNAME" --password-stdin docker.pkg.github.com
-#            echo $DOCKER_TAG
-#            docker push $DOCKER_TAG
+      - run:
+          name: Bygger Docker image
+          command:
+            docker build -t $DOCKER_TAG -f Dockerfile.circle .
+      - run:
+          name: Pusher Docker image
+          command: |
+            echo "$DEPLOYMENT_PASSWORD" | docker login -u "$DEPLOYMENT_USERNAME" --password-stdin docker.pkg.github.com
+            echo $DOCKER_TAG
+            docker push $DOCKER_TAG
 
   release:
     docker:
-      - image: bash
+      - image: alpine/git
     steps:
+      - checkout
       - run:
-          name: Do nothing
+          name: Release on Heroku
           command: |
-            echo "Hello, World!" # TODO: Deploy to Heroku
+            # HEROKU_USERNAME must be URL encoded, eg. joachim.liepelt%40nav.no
+            git remote add heroku https://$HEROKU_USERNAME:$HEROKU_AUTH_TOKEN@git.heroku.com/$CIRCLE_PROJECT_REPONAME.git
+            git push heroku $CIRCLE_BRANCH:master
 
   browser-test:
     docker:
@@ -47,7 +50,6 @@ jobs:
             set -eo pipefail
             git clone https://github.com/navikt/sosialhjelp-tester.git
             cd sosialhjelp-tester
-            git checkout feature/circleci-test
 
             npm install
             npm run saucelabs-soknad
@@ -65,7 +67,7 @@ workflows:
             - build
           filters:
             branches:
-              only: feature/circleci-test
+              only: master
       - browser-test:
           requires:
             - release
