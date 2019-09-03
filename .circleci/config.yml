@@ -36,8 +36,9 @@ jobs:
       - run:
           name: Release on Heroku
           command: |
+#           FIXME: Replace "fleskesvor" with $CIRCLE_PROJECT_REPONAME
             git remote add heroku https://eivindkn%40gmail.com:$HEROKU_AUTH_TOKEN@git.heroku.com/fleskesvor.git
-            git push heroku feature/circleci-test:master --force
+            git push heroku $CIRCLE_BRANCH:master --force
 
   browser-test:
     docker:
