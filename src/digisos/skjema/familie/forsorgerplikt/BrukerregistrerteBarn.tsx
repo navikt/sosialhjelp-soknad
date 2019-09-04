@@ -130,6 +130,15 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
         this.onBlur();
     }
 
+    handleClickJaNeiSpsm(verdi: boolean, barnIndex: number) {
+        const {soknadsdata, oppdaterSoknadsdataSti} = this.props;
+        const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
+        const barnet = forsorgerplikt.brukerregistrertAnsvar[barnIndex];
+        barnet.harDeltBosted = verdi;
+        oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+        this.onBlur();
+    }
+
     onChangeSamvaersgrad(verdi: string, barnIndex: number) {
         const {soknadsdata, oppdaterSoknadsdataSti} = this.props;
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
@@ -272,6 +281,18 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
 
                                                 />
                                             </div>
+                                            {barnet.borSammenMed === true && (
+                                                <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
+                                                    <JaNeiSporsmal
+                                                        id={"brukerregistrert_barn" + index + "_deltbosted"}
+                                                        tekster={getFaktumSporsmalTekst(this.props.intl, "system.familie.barn.true.barn.deltbosted")}
+                                                        faktumKey={"system.familie.barn.true.barn.deltbosted"}
+                                                        verdi={barnet.harDeltBosted}
+                                                        onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi, index)}
+                                                        legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+                                                    />
+                                                </div>
+                                            )}
                                             {barnet.borSammenMed === false && (
                                                 <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
                                                     <InputEnhanced
