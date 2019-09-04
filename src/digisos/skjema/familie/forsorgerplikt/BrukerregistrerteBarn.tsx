@@ -122,12 +122,14 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
         const {soknadsdata, oppdaterSoknadsdataSti} = this.props;
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barnet = forsorgerplikt.brukerregistrertAnsvar[barnIndex];
-        barnet.borSammenMed = verdi;
-        if (!verdi) {
+        if (verdi !== barnet.borSammenMed) {
+            barnet.harDeltBosted = null;
             barnet.samvarsgrad = null;
+            barnet.borSammenMed = verdi;
+
+            oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+            this.onBlur();
         }
-        oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-        this.onBlur();
     }
 
     handleClickJaNeiSpsm(verdi: boolean, barnIndex: number) {
