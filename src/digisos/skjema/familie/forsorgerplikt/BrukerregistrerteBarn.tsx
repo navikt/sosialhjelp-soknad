@@ -78,7 +78,11 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
         brukerregistrerteAnsvar.splice(radIndex, 1);
         oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
         this.fjernSisteSynligBarnRadFraState();
-        lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+
+        let lengthOfBarnValideringsfeil = this.props.feil.filter(feil => feil.faktumKey.startsWith(TEXT_KEY_FNR)).length;
+        if (!lengthOfBarnValideringsfeil || lengthOfBarnValideringsfeil === 0){
+            lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+        }
     }
 
     endreSynligBarnState(index: number, bool: boolean) {
@@ -196,6 +200,7 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
                 sprakNokkel="familierelasjon.faktum.leggtil"
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
+
                 <div className="skjema-legg-til-barn">
                     {barn.map((barnet: Barn, index: number) =>
                         <Underskjema
@@ -203,6 +208,18 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
                             arrow={false}
                             key={index}
                         >
+                            <div className="steg-ekstrainformasjon">
+                                <Row className="opplysning__row">
+                                    <Lenkeknapp
+                                        onClick={() => {
+                                            this.handleFjernBarn(index)
+                                        }}
+                                        id={index + "_fjern_brukerregistrert_barn_lenke"}
+                                    >
+                                        Slett informasjon
+                                    </Lenkeknapp>
+                                </Row>
+                            </div>
                             <Sporsmal
                                 sprakNokkel={TEXT_KEY}
                                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
@@ -310,14 +327,6 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
                                                 </div>
                                             )}
                                         </Detaljeliste>
-                                        <Lenkeknapp
-                                            onClick={() => {
-                                                this.handleFjernBarn(index)
-                                            }}
-                                            id={index + "_fjern_brukerregistrert_barn_lenke"}
-                                        >
-                                            Slett informasjon
-                                        </Lenkeknapp>
                                     </div>
                                 </div>
                             </Sporsmal>
