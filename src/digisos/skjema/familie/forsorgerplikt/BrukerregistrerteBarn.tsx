@@ -78,9 +78,14 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
         brukerregistrerteAnsvar.splice(radIndex, 1);
         oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
         this.fjernSisteSynligBarnRadFraState();
+        this.lagreSoknadsdataDersomIngenFeilkoder();
+    }
 
+    private lagreSoknadsdataDersomIngenFeilkoder() {
+        const {soknadsdata, lagreSoknadsdata, brukerBehandlingId} = this.props;
+        const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         let lengthOfBarnValideringsfeil = this.props.feil.filter(feil => feil.faktumKey.startsWith(TEXT_KEY_FNR)).length;
-        if (!lengthOfBarnValideringsfeil || lengthOfBarnValideringsfeil === 0){
+        if (!lengthOfBarnValideringsfeil || lengthOfBarnValideringsfeil === 0) {
             lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
         }
     }
@@ -132,17 +137,17 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
             barnet.borSammenMed = verdi;
 
             oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-            this.onBlur();
+            this.lagreSoknadsdataDersomIngenFeilkoder();
         }
     }
 
-    handleClickJaNeiSpsm(verdi: boolean, barnIndex: number) {
+    onClickHarDeltBosted(verdi: boolean, barnIndex: number) {
         const {soknadsdata, oppdaterSoknadsdataSti} = this.props;
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barnet = forsorgerplikt.brukerregistrertAnsvar[barnIndex];
         barnet.harDeltBosted = verdi;
         oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-        this.onBlur();
+        this.lagreSoknadsdataDersomIngenFeilkoder();
     }
 
     onChangeSamvaersgrad(verdi: string, barnIndex: number) {
@@ -151,7 +156,7 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
         const barnet = forsorgerplikt.brukerregistrertAnsvar[barnIndex];
         barnet.samvarsgrad = parseInt(verdi, 10);
         oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-        this.onBlur();
+        this.lagreSoknadsdataDersomIngenFeilkoder();
     }
 
     onBlur() {
@@ -305,7 +310,7 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
                                                         tekster={getFaktumSporsmalTekst(this.props.intl, "familie.barn.true.barn.deltbosted")}
                                                         faktumKey={"familie.barn.true.barn.deltbosted"}
                                                         verdi={barnet.harDeltBosted}
-                                                        onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi, index)}
+                                                        onChange={(verdi: boolean) => this.onClickHarDeltBosted(verdi, index)}
                                                         legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                                                     />
                                                 </div>
