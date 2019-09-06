@@ -304,8 +304,8 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
                                                 <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
                                                     <JaNeiSporsmal
                                                         id={"brukerregistrert_barn" + index + "_deltbosted"}
-                                                        tekster={getFaktumSporsmalTekst(this.props.intl, "system.familie.barn.true.barn.deltbosted")}
-                                                        faktumKey={"system.familie.barn.true.barn.deltbosted"}
+                                                        tekster={getFaktumSporsmalTekst(this.props.intl, "familie.barn.true.barn.deltbosted")}
+                                                        faktumKey={"familie.barn.true.barn.deltbosted"}
                                                         verdi={barnet.harDeltBosted}
                                                         onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi, index)}
                                                         legendTittelStyle={LegendTittleStyle.FET_NORMAL}
