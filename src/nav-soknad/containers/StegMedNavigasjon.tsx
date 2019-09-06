@@ -23,6 +23,11 @@ import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseT
 import {State} from "../../digisos/redux/reducers";
 import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
 
+const stopEvent = (evt: React.FormEvent<any>) => {
+    evt.stopPropagation();
+    evt.preventDefault();
+};
+
 const stopKeyCodeEvent = (evt: any) => {
     const key = evt.key;
     if (key === 'Enter'){
@@ -180,6 +185,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                         />
                     </div>
                     <form id="soknadsskjema"
+                          onSubmit={stopEvent}
                           onKeyPress={stopKeyCodeEvent}
                     >
                         {!erOppsummering ? (
