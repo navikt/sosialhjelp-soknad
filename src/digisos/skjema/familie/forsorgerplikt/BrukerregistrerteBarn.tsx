@@ -163,8 +163,6 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
         for (let i = 0; i < barn.length; i++) {
             let barnet = barn[i];
             let fodselsdato: string | null = barnet.barn.fodselsdato;
-            console.warn(barnet.barn.fodselsdato);
-
             if (fodselsdato === "") {
                 barnet.barn.fodselsdato = null;
             }
