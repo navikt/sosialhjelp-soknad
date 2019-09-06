@@ -10,10 +10,9 @@ FROM node as node-image
 WORKDIR /app
 COPY --from=node-builder /source/build /app
 COPY heroku.js /app
+COPY set-resource-path.sh /app
 COPY heroku-index.html /app/index.html
 
 RUN npm install express
 
-# TODO Legg til logikk for master vs. feature branch
-#CMD sed -i 's!sosialhjelp/soknad!'$HEROKU_APP_NAME'/sosialhjelp/soknad!g' index.html && node heroku.js
-CMD ["node", "heroku.js"]
+CMD ./set-resource-path.sh && node heroku.js
