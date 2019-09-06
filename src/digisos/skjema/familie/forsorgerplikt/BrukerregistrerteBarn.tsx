@@ -65,7 +65,7 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
     }
 
     handleFjernBarn(radIndex: number) {
-        const {soknadsdata, oppdaterSoknadsdataSti, lagreSoknadsdata, brukerBehandlingId} = this.props;
+        const {soknadsdata, oppdaterSoknadsdataSti} = this.props;
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const brukerregistrerteAnsvar = forsorgerplikt.brukerregistrertAnsvar;
         const antallBrukerregistrerteBarn = brukerregistrerteAnsvar.length;
@@ -78,7 +78,7 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
         brukerregistrerteAnsvar.splice(radIndex, 1);
         oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
         this.fjernSisteSynligBarnRadFraState();
-        this.lagreSoknadsdataDersomIngenFeilkoder();
+        this.onBlur();
     }
 
     private lagreSoknadsdataDersomIngenFeilkoder() {
