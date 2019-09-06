@@ -11,6 +11,7 @@ import Formue from "./formue/Formue";
 import NavYtelser from "./navytelser";
 import SkattbarInntekt from "./skattbarInntekt";
 import {SkjemaGruppe} from "nav-frontend-skjema";
+import Studielan from "./studielan/Studielan";
 
 class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps, any> {
     render() {
@@ -23,6 +24,7 @@ class InntektFormue extends React.Component<FaktumComponentProps & DispatchProps
                     <SkattbarInntekt/>
                     <NavYtelser/>
                 </SkjemaGruppe>
+                <Studielan/>
                 <Bostotte/>
                 <Utbetalinger/>
                 <h2 className="overskrift">
