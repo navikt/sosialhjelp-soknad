@@ -1,0 +1,9 @@
+{
+  "namespace": "q0",
+  "ingresses": [
+    "https://sosialhjelp-soknad-q0.nais.oera-q.local/",
+    "https://tjenester-q0.nav.no/sosialhjelp-soknad",
+    "https://www-q0.nav.no/sosialhjelp/soknad"
+  ],
+  "appresCmsUrl": "https://appres-q0.nav.no"
+}
