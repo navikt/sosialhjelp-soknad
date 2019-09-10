@@ -23,11 +23,14 @@ jobs:
       - run:
           name: Create tag and release
           command: |
-            export GIT_COMMIT_MESSAGE=$(git log --format=%B -n 1 | sed ':a;N;$!ba;s/\n/\\n/g')
+            GIT_COMMIT_MESSAGE=$(git log --format=%B -n 1 | sed ':a;N;$!ba;s/\n/\\n/g')
             echo $DIGISOS_KEY | tr '_' '\n' > digisos.key
 
             GH_TOKEN=$(generate-installation-token.sh `generate-jwt.sh digisos.key $DIGISOS_APPID`)
             rm digisos.key
+
+            GIT_TAG=$(create-artifact-version.sh)
+            echo "-p |$CIRCLE_PROJECT_REPONAME| -t |$GIT_TAG| -c |$CIRCLE_SHA1| -m |$GIT_COMMIT_MESSAGE| -a |$GH_TOKEN|"
 
             create-github-release.sh -p $CIRCLE_PROJECT_REPONAME -t $GIT_TAG \
                 -c $CIRCLE_SHA1 -m $GIT_COMMIT_MESSAGE -a $GH_TOKEN
