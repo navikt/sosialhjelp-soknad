@@ -29,13 +29,10 @@ jobs:
             GH_TOKEN=$(generate-installation-token.sh `generate-jwt.sh digisos.key $DIGISOS_APPID`)
             rm digisos.key
 
-            GIT_TAG=$(create-artifact-version.sh)
-            echo "-p |$CIRCLE_PROJECT_REPONAME| -t |$GIT_TAG| -c |$CIRCLE_SHA1| -m |$GIT_COMMIT_MESSAGE| -a |$GH_TOKEN|"
-
-            create-github-release.sh -p $CIRCLE_PROJECT_REPONAME -t $GIT_TAG \
+            create-github-release.sh -p $CIRCLE_PROJECT_REPONAME -t $(create-artifact-version.sh) \
                 -c $CIRCLE_SHA1 -m $GIT_COMMIT_MESSAGE -a $GH_TOKEN
       - run:
-          name: Bygger Docker image
+          name: Bygger Docker image $(eval echo ${GIT_TAG})
           command:
             docker build -t $DOCKER_TAG -f Dockerfile.circle .
       - run:
@@ -56,6 +53,23 @@ jobs:
             # HEROKU_USERNAME must be URL encoded, eg. joachim.liepelt%40nav.no
             git remote add heroku https://$HEROKU_USERNAME:$HEROKU_AUTH_TOKEN@git.heroku.com/$CIRCLE_PROJECT_REPONAME.git
             git push heroku $CIRCLE_BRANCH:master
+
+  browser-test:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - run:
+          name: Run browser tests
+          command: |
+            set -eo pipefail
+            git clone https://github.com/navikt/sosialhjelp-tester.git
+            cd sosialhjelp-tester
+
+            npm install
+            npm run saucelabs-soknad
+
+      - store_test_results:
+          path: /tmp/test-results
 
   deploy_miljo:
     docker:
@@ -84,23 +98,6 @@ jobs:
             VERSION=$(sosialhjelp-ci/bin/create-artifact-version.sh)
 
             deployment-cli deploy create --cluster=prod-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${VERSION} --vars=nais/prod/default.json
-
-  browser-test:
-    docker:
-      - image: circleci/node:10
-    steps:
-      - run:
-          name: Run browser tests
-          command: |
-            set -eo pipefail
-            git clone https://github.com/navikt/sosialhjelp-tester.git
-            cd sosialhjelp-tester
-
-            npm install
-            npm run saucelabs-soknad
-
-      - store_test_results:
-          path: /tmp/test-results
 
 workflows:
   version: 2
