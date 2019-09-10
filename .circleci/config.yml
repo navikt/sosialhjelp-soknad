@@ -32,7 +32,7 @@ jobs:
             create-github-release.sh -p $CIRCLE_PROJECT_REPONAME -t $(create-artifact-version.sh) \
                 -c $CIRCLE_SHA1 -m $GIT_COMMIT_MESSAGE -a $GH_TOKEN
       - run:
-          name: Bygger Docker image $(eval echo ${GIT_TAG})
+          name: Bygger Docker image
           command:
             docker build -t $DOCKER_TAG -f Dockerfile.circle .
       - run:
@@ -109,7 +109,7 @@ workflows:
             - build
           filters:
             branches:
-              only: master
+              only: feature/circleci-test
       - browser-test:
           requires:
             - release
