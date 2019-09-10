@@ -26,8 +26,13 @@ jobs:
             GIT_COMMIT_MESSAGE=$(git log --format=%B -n 1 | sed ':a;N;$!ba;s/\n/\\n/g')
             echo $DIGISOS_KEY | tr '_' '\n' > digisos.key
 
+            echo "DIGISOS_APPID |$DIGISOS_APPID|"
+            cat digisos.key
+
             GH_TOKEN=$(generate-installation-token.sh `generate-jwt.sh digisos.key $DIGISOS_APPID`)
             rm digisos.key
+
+            echo "GH_TOKEN |$GH_TOKEN|"
 
             create-github-release.sh -p $CIRCLE_PROJECT_REPONAME -t $(create-artifact-version.sh) \
                 -c $CIRCLE_SHA1 -m $GIT_COMMIT_MESSAGE -a $GH_TOKEN
