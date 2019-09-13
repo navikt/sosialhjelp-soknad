@@ -35,7 +35,7 @@ jobs:
       - run:
           name: Bygger Docker image
           command:
-            docker build -t $DOCKER_TAG -f Dockerfile.circle .
+            docker build -t $DOCKER_TAG .
       - run:
           name: Pusher Docker image
           command: |

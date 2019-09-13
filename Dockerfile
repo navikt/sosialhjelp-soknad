@@ -1,4 +1,4 @@
-FROM docker.adeo.no:5000/pus/node as node-builder
+FROM node as node-builder
 ADD / /source
 WORKDIR /source
 ENV CI=true
