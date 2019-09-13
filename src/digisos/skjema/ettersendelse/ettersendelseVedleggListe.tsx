@@ -79,6 +79,7 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                 className={"ettersendelse__vedlegg__innhold " +
                 (this.state.advarselManglerVedlegg ? "ettersendelse__vedlegg__feil " : "")}
             >
+
                 {this.props.manglendeVedlegg && this.props.manglendeVedlegg.map((vedlegg: EttersendelseVedleggBackend) => {
                     const spc = getSpcForOpplysning(vedlegg.type);
                     const tittelKey = spc ? spc.textKey + ".vedlegg.sporsmal.tittel" : "";
@@ -112,7 +113,8 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                     </AvsnittMedMarger>
                 )}
 
-                <AvsnittMedMarger>
+                <AvsnittMedMarger className="ettersendelse_send_vedlegg_knapp_wrapper" >
+                    <br/>
                     {this.props.ettersendelseAktivert && (
                         <Knapp
                             spinner={this.props.ettersendStatus === REST_STATUS.PENDING}
@@ -122,7 +124,7 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                             onClick={() => this.sendEttersendelse()}
                             title="Ettersend vedlegg"
                         >
-                            <FormattedMessage id="ettersendelse.knapp.tittel"/>
+                            Send vedlegg
                         </Knapp>
                     )}
                 </AvsnittMedMarger>

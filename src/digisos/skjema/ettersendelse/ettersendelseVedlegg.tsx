@@ -7,7 +7,7 @@ import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { downloadAttachedFile } from "../../../nav-soknad/utils/rest-utils";
 import { REST_STATUS } from "../../../nav-soknad/types";
-import { MargIkoner } from "./margIkoner";
+import {MargIkon, MargIkoner} from "./margIkoner";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { REST_FEIL } from "../../../nav-soknad/types/restFeilTypes";
@@ -17,6 +17,8 @@ import {
 } from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
 import {Fil, OpplysningType} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {State} from "../../redux/reducers";
+import Knapp from "nav-frontend-knapper";
+import PaperclipIcon from "../../../nav-soknad/components/digisosIkon/paperclipIcon";
 
 interface OwnProps {
 	ettersendelseAktivert: boolean;
@@ -58,10 +60,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
 	handleFileUpload(files: FileList | null) {
         const {ettersendelse, vedlegg} = this.props;
-        // this.props.dispatch(lastOppFilFeilet(opplysning.type, null));
-
 		const { brukerbehandlingId } = ettersendelse;
-
 		if (!files){
 			return;
 		}
@@ -69,7 +68,6 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 			return;
 		}
 		const formData = new FormData();
-
 		formData.append("file", files[ 0 ], files[ 0 ].name);
 		this.setState({filnavn: files[ 0 ].name});
 		if (brukerbehandlingId){
@@ -81,27 +79,18 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 	}
 
 	render() {
-
 		const { ettersendelse, vedlegg} = this.props;
-
 		const { feiletVedleggId } = ettersendelse;
-
-		const opplastingsFeil: boolean = this.props.restStatus === REST_STATUS.FEILET && feiletVedleggId === vedlegg.type;
-
+		const opplastingsFeil: boolean = this.props.restStatus === REST_STATUS.FEILET &&
+			feiletVedleggId === vedlegg.type;
 		const visFilForStorFeilmelding: boolean = opplastingsFeil &&
 			this.props.feilKode === REST_FEIL.FOR_STOR_FIL;
-
 		const visFeilFiltypeFeilmelding: boolean = opplastingsFeil &&
 			this.props.feilKode === REST_FEIL.FEIL_FILTPYE;
 
 		return (
-			<span className={opplastingsFeil ? "ettersendelse__vedlegg__feil" : ""}>
-				<AvsnittMedMarger
-					hoyreIkon={this.props.ettersendelseAktivert ? MargIkoner.LAST_OPP : undefined}
-					onClickHoyreIkon={() =>
-						this.props.ettersendelseAktivert &&
-						this.leggTilVedleggKnapp &&
-						this.leggTilVedleggKnapp.click()}
+			<span className={"ettersendelse__vedlegg__wrapper " + (opplastingsFeil ? "ettersendelse__vedlegg__feil" : "")}>
+				<AvsnittMedMarger className="vedleggsliste__detalj"
 				>
 					{this.props.children}
 					<input
@@ -112,27 +101,46 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 						tabIndex={-1}
 						accept="image/jpeg,image/png,application/pdf"
 					/>
-				</AvsnittMedMarger>
-
-				{this.props.vedlegg && this.props.vedlegg.filer.map((fil: Fil) => {
-						const lastNedUrl = `opplastetVedlegg/${fil.uuid}/fil`;
-						return (
-							<AvsnittMedMarger
-								hoyreIkon={MargIkoner.SØPPELBØTTE}
-								key={fil.uuid}
-								onClickHoyreIkon={() => this.removeFile(fil.uuid, this.props.vedlegg.type)}
-							>
-								<button
-									className="linkbutton linkbutton--normal"
-									title="Last ned vedlegg"
-									onClick={() => downloadAttachedFile(lastNedUrl)}
+					{this.props.vedlegg && this.props.vedlegg.filer.map((fil: Fil) => {
+							const lastNedUrl = `opplastetVedlegg/${fil.uuid}/fil`;
+							return (
+								<div
+									key={fil.uuid}
+									className="vedleggsliste__filnavn_wrapper"
 								>
-									{fil.filNavn}
-								</button>
-							</AvsnittMedMarger>
-						);
-					}
-				)}
+									<button
+										className="linkbutton linkbutton--normal vedleggsliste__filnavn"
+										title="Last ned vedlegg"
+										onClick={() => downloadAttachedFile(lastNedUrl)}
+									>
+										<PaperclipIcon />
+										{fil.filNavn}
+									</button>
+									<button
+										className="linkbutton linkbutton--normal vedleggsliste__fil_slett"
+										title="Slett vedlegg"
+										onClick={() => this.removeFile(fil.uuid, this.props.vedlegg.type)}
+									>
+										Fjern
+										<MargIkon ikon={MargIkoner.SØPPELBØTTE}/>
+									</button>
+								</div>
+							);
+						}
+					)}
+					<Knapp
+						type="standard"
+						spinner={this.props.restStatus === REST_STATUS.PENDING}
+						autoDisableVedSpinner={true}
+						onClick={() =>
+							this.props.ettersendelseAktivert &&
+							this.leggTilVedleggKnapp &&
+							this.leggTilVedleggKnapp.click()
+						}
+					>
+						Velg vedlegg
+					</Knapp>
+				</AvsnittMedMarger>
 
 				{this.state.filnavn && this.props.restStatus === REST_STATUS.PENDING && (
 					<AvsnittMedMarger hoyreIkon={MargIkoner.SPINNER} key={this.state.filnavn}>

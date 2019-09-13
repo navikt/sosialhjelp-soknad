@@ -69,10 +69,6 @@ class Ettersendelse extends React.Component<Props, OwnState> {
         return brukerbehandlingskjedeId;
     }
 
-    toggleVedlegg() {
-        this.setState({vedleggEkspandert: !this.state.vedleggEkspandert});
-    }
-
     sendEttersendelse() {
         const antallOpplastedeFiler = this.antallOpplastedeFiler();
         this.setState({advarselManglerVedlegg: (antallOpplastedeFiler === 0)});
@@ -177,7 +173,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                     )}
 
                     {opprettNyEttersendelseFeilet && (
-                        <AvsnittMedMarger>
+                        <AvsnittMedMarger className="ettersendelse__vedlegg__header">
                             <Informasjonspanel
                                 ikon={InformasjonspanelIkon.HENSYN}
                                 farge={DigisosFarge.VIKTIG}
