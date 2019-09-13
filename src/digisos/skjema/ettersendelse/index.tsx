@@ -190,8 +190,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                         >
                             {antallManglendeVedlegg > 0 && (
                                 <span>
-                                    <h3>{antallManglendeVedlegg} <FormattedHTMLMessage
-                                        id="ettersendelse.vedlegg.mangler"/></h3>
+                                    <h3>Vedlegg mangler</h3>
                                     <div>{datoManglendeVedlegg}</div>
                                 </span>
                             )}
