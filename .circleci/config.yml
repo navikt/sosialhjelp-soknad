@@ -9,6 +9,10 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
+          name: GitHub package registry login
+          command: |
+            echo "$DEPLOYMENT_PASSWORD" | docker login -u "$DEPLOYMENT_USERNAME" --password-stdin docker.pkg.github.com
+      - run:
           name: Checkout CI scripts
           command: |
             git clone https://github.com/navikt/github-apps-support.git
@@ -35,7 +39,6 @@ jobs:
       - run:
           name: Pusher Docker image
           command: |
-            echo "$DEPLOYMENT_PASSWORD" | docker login -u "$DEPLOYMENT_USERNAME" --password-stdin docker.pkg.github.com
             echo $DOCKER_TAG
             docker push $DOCKER_TAG
 
