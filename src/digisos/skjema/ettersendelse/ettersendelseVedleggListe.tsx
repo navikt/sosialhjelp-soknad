@@ -120,7 +120,7 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                     <br/>
                     {this.props.ettersendelseAktivert && (
                         <Knapp
-                            spinner={this.props.ettersendStatus === REST_STATUS.PENDING}
+                            spinner={false} // this.props.ettersendStatus === REST_STATUS.PENDING}
                             disabled={this.props.ettersendStatus === REST_STATUS.PENDING || this.props.opplastingStatus === REST_STATUS.PENDING}
                             type="hoved"
                             htmlType="submit"
