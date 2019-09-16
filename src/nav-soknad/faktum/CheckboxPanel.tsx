@@ -1,9 +1,8 @@
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
 import { Checkbox } from "nav-frontend-skjema";
 
 
-interface OwnProps {
+interface Props {
     id: string;
     name: string;
     checked: boolean;
@@ -13,10 +12,7 @@ interface OwnProps {
     onClick: (checked: boolean) => void;
 }
 
-type CheckboxPanelProps = OwnProps & InjectedIntlProps;
-
-
-class CheckboxPanel extends React.Component<CheckboxPanelProps, {checked: boolean}> {
+class CheckboxPanel extends React.Component<Props, {checked: boolean}> {
 
     onChange(evt: any) {
         const checked = !this.props.checked;
@@ -55,4 +51,4 @@ class CheckboxPanel extends React.Component<CheckboxPanelProps, {checked: boolea
     }
 }
 
-export default injectIntl(CheckboxPanel);
+export default CheckboxPanel;

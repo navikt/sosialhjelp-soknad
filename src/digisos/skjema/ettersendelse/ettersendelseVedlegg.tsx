@@ -9,7 +9,7 @@ import { downloadAttachedFile } from "../../../nav-soknad/utils/rest-utils";
 import { REST_STATUS } from "../../../nav-soknad/types";
 import {MargIkon, MargIkoner} from "./margIkoner";
 import AvsnittMedMarger from "./avsnittMedMarger";
-import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { REST_FEIL } from "../../../nav-soknad/types/restFeilTypes";
 import {
     EttersendelseState,
@@ -37,7 +37,7 @@ interface OwnState {
 	filnavn: string | null;
 }
 
-export type Props = OwnProps & DispatchProps & InjectedIntlProps & StoreToProps;
+export type Props = OwnProps & DispatchProps & StoreToProps;
 
 class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
@@ -176,4 +176,4 @@ export default connect(
 			ettersendelse: state.ettersendelse
         };
     }
-)((injectIntl(EttersendelseVedlegg)));
+)((EttersendelseVedlegg));

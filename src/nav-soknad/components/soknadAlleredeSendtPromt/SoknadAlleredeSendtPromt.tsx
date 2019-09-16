@@ -1,19 +1,20 @@
 import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
-import {FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedMessage, injectIntl} from "react-intl";
 import {connect} from "react-redux";
 import {DispatchProps} from "../../redux/reduxTypes";
 import {visSoknadAlleredeSendtPrompt} from "../../redux/ettersendelse/ettersendelseActions";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
+import {IntlProps} from "../../utils";
 
 interface StateProps {
     brukerBehandlingId: string;
     visPrompt: boolean;
 }
 
-type Props = StateProps & InjectedIntlProps & DispatchProps;
+type Props = StateProps & DispatchProps & IntlProps;
 
 const KEY = "visSoknadAlleredeSendtPrompt";
 
@@ -23,11 +24,11 @@ class SoknadAlleredeSendtPromt extends React.Component<Props, {}> {
     }
 
     render() {
-
+        const intl = this.props.intl;
         return (
             <NavFrontendModal
                 isOpen={this.props.visPrompt}
-                contentLabel={this.props.intl.formatMessage({id: "avbryt.avbryt"})}
+                contentLabel={intl.formatMessage({id: "avbryt.avbryt"})}
                 closeButton={true}
                 onRequestClose={() => this.onClose()}
                 shouldCloseOnOverlayClick={true}

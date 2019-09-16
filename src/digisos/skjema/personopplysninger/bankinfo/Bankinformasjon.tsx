@@ -2,7 +2,7 @@ import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { Checkbox } from "nav-frontend-skjema";
 import { erKontonummer } from "../../../../nav-soknad/validering/valideringer";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { injectIntl } from "react-intl";
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import { Kontonummer } from "./KontonummerType";
@@ -16,7 +16,7 @@ import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
-import {replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
+import {IntlProps, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 
 interface OwnProps {
 	disableLoadingAnimation?: boolean;
@@ -26,7 +26,7 @@ interface State {
 	oppstartsModus: boolean
 }
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps & OwnProps;
+type Props = SoknadsdataContainerProps & OwnProps & IntlProps;
 
 const FAKTUM_KEY_KONTONUMMER = "kontakt.kontonummer";
 
@@ -121,7 +121,7 @@ class Bankinformasjon extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { intl, soknadsdata } = this.props;
+		const { soknadsdata, intl } = this.props;
 		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
 		const endreLabel: string = intl.formatMessage({id: "kontakt.system.kontonummer.endreknapp.label"});
 		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});

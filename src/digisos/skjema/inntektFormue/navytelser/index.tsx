@@ -3,9 +3,7 @@ import {
     FormattedMessage,
     FormattedHTMLMessage,
     FormattedDate,
-    FormattedNumber,
-    injectIntl,
-    InjectedIntlProps
+    FormattedNumber
 } from "react-intl";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {
@@ -18,7 +16,7 @@ import {REST_STATUS} from "../../../../nav-soknad/types";
 import {Panel} from "nav-frontend-paneler";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps;
 
 class NavYtelserView extends React.Component<Props, {}> {
 
@@ -76,7 +74,6 @@ class NavYtelserView extends React.Component<Props, {}> {
             );
         });
 
-
         const tittel: JSX.Element = <h4><FormattedMessage id="navytelser.sporsmal"/></h4>;
 
         return (
@@ -105,7 +102,7 @@ class NavYtelserView extends React.Component<Props, {}> {
                         className={"ytelser_panel"}
                     >
                         <div>
-                            <h4>{tittel}</h4>
+                            {tittel}
                             <FormattedMessage id="utbetalinger.ingen.true"/>
                         </div>
                     </Panel>)
@@ -119,5 +116,5 @@ class NavYtelserView extends React.Component<Props, {}> {
     }
 }
 
-export default connectSoknadsdataContainer(injectIntl(NavYtelserView));
+export default connectSoknadsdataContainer(NavYtelserView);
 

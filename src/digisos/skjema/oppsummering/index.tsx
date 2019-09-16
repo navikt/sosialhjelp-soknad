@@ -1,6 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import {FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedMessage, injectIntl} from "react-intl";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 import {REST_STATUS} from "../../../nav-soknad/types";
 import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
@@ -17,6 +17,7 @@ import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
 import {Soknadsdata} from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {NavEnhet} from "../personopplysninger/adresse/AdresseTypes";
 import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
+import {IntlProps} from "../../../nav-soknad/utils";
 
 interface StateProps {
 	oppsummering: Oppsummering | null;
@@ -28,7 +29,7 @@ interface StateProps {
 	valgtSoknadsmottaker: NavEnhet | undefined;
 }
 
-type Props = DispatchProps & StateProps & InjectedIntlProps;
+type Props = DispatchProps & StateProps & IntlProps;
 
 class OppsummeringView extends React.Component<Props, {}> {
 	constructor(props: Props) {
@@ -37,20 +38,21 @@ class OppsummeringView extends React.Component<Props, {}> {
 	}
 
 	componentDidMount() {
+		const intl = this.props.intl;
 		this.props.dispatch(finnOgOppdaterSoknadsmottakerStatus(this.props.brukerbehandlingId));
 		this.props.dispatch(hentOppsummering());
 		this.props.dispatch(
 			settInfofaktum({
 				faktumKey: "informasjon.tekster",
 				properties: {
-					"1": getIntlTextOrKey(this.props.intl, "informasjon.start.tittel"),
-					"2": getIntlTextOrKey(this.props.intl, "informasjon.start.tekst"),
+					"1": getIntlTextOrKey(intl, "informasjon.start.tittel"),
+					"2": getIntlTextOrKey(intl, "informasjon.start.tekst"),
 					"3": getIntlTextOrKey(
-						this.props.intl,
+						intl,
 						"informasjon.nodsituasjon.undertittel"
 					),
 					"4": getIntlTextOrKey(
-						this.props.intl,
+						intl,
 						"informasjon.nodsituasjon.tekst"
 					)
 				}
@@ -65,10 +67,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const {oppsummering, brukerbehandlingId, intl, restStatus} = this.props;
-
-
-
+		const {oppsummering, brukerbehandlingId, restStatus, intl} = this.props;
 		const bolker = oppsummering
 			? oppsummering.bolker.map((bolk, idx) => (
 				<div className="blokk-xs bolk" key={idx}>
@@ -79,7 +78,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 									to={`/skjema/${brukerbehandlingId}/${idx + 1}`}
 								>
 									{getIntlTextOrKey(
-										this.props.intl,
+										intl,
 										"oppsummering.gatilbake"
 									)}
 								</Link>

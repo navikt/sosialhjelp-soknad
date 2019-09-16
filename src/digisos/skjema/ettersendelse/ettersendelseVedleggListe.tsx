@@ -3,13 +3,14 @@ import {REST_STATUS} from "../../../nav-soknad/types/restTypes";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
 import Knapp from "nav-frontend-knapper";
-import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage, injectIntl} from "react-intl";
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import {connect} from "react-redux";
 import {State} from "../../redux/reducers";
 import {sendEttersendelse} from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 import {EttersendelseVedleggBackend} from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
 import {getSpcForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
+import {IntlProps} from "../../../nav-soknad/utils";
 
 interface OwnProps {
     ettersendelseAktivert: boolean;
@@ -26,7 +27,7 @@ interface StateProps {
     feiletVedleggId: string;
 }
 
-type Props = OwnProps & StateProps & DispatchProps & InjectedIntlProps;
+type Props = OwnProps & StateProps & DispatchProps & IntlProps;
 
 interface OwnState {
     vedleggEkspandert: boolean;

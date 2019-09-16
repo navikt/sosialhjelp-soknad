@@ -1,6 +1,5 @@
 import * as React from "react";
-import { addLocaleData, IntlProvider as Provider } from "react-intl";
-import * as nb from "react-intl/locale-data/nb";
+import { IntlProvider as Provider } from "react-intl";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { connect } from "react-redux";
 import { LedetekstState } from "./nav-soknad/redux/ledetekster/ledeteksterTypes";
@@ -9,8 +8,6 @@ import Feilside from "./nav-soknad/components/feilside/Feilside";
 import { REST_STATUS } from "./nav-soknad/types";
 import {State} from "./digisos/redux/reducers";
 import {initStart} from "./nav-soknad/redux/init/initActions";
-
-addLocaleData(nb);
 
 interface IntlProviderProps {
 	children: React.ReactNode;

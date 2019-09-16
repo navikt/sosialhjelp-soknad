@@ -1,3 +1,5 @@
+import {IntlShape} from "react-intl";
+
 export * from "./animationUtils";
 export * from "./intlUtils";
 export * from "./faktumUtils";
@@ -34,3 +36,7 @@ export const formaterIsoDato = (dato: string): string => {
 	}
 	return ""
 };
+
+export interface IntlProps {
+	intl: IntlShape;
+}

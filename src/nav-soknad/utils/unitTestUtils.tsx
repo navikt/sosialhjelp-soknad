@@ -15,6 +15,7 @@ import sagas from "../../rootSaga";
 import {Provider} from "react-redux";
 import ReactSixteenAdapter from "enzyme-adapter-react-16";
 import {routerMiddleware} from "connected-react-router";
+import { createIntl } from "react-intl";
 
 const prettier = require("prettier");
 
@@ -23,14 +24,12 @@ export const configEnzyme = () => {
 };
 
 export const setupReactIntl = (intlMessages: any) => {
-    const intlProvider = new IntlProvider(
+    const intl = createIntl(
         {
             locale: 'nb-NO',
             messages: intlMessages
-        },
-        {}
+        }
     );
-    const {intl} = intlProvider.getChildContext();
     const nodeWithIntlProp = (node: ReactElement<any>) => React.cloneElement(node, {intl});
     // @ts-ignore
     const mountWithIntl = (node: ReactElement<any>, {context, ...options} = {}) => {
@@ -46,14 +45,12 @@ export const setupReactIntl = (intlMessages: any) => {
 };
 
 export const setupShallowReactIntl = (intlMessages: any) => {
-    const intlProvider = new IntlProvider(
+    const intl = createIntl(
         {
             locale: 'nb-NO',
             messages: intlMessages
-        },
-        {}
+        }
     );
-    const {intl} = intlProvider.getChildContext();
     const nodeWithIntlProp = (node: ReactElement<any>) => React.cloneElement(node, {intl});
     // @ts-ignore
     const shallowWithIntl = (node: ReactElement<any>, {context, ...options} = {}) => {
