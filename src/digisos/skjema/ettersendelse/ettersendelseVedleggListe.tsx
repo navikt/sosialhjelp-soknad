@@ -99,7 +99,6 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                             vedlegg={vedlegg}
                             key={vedlegg.type}
                             restStatus={this.props.opplastingStatus}
-                            // restStatus={REST_STATUS.PENDING}
                             feilKode={this.props.feiletVedleggId === vedlegg.type ? this.props.feilKode : undefined}
                         >
                             {tittelKey && <h3><FormattedMessage id={tittelKey}/></h3>}
@@ -107,15 +106,17 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                         </EttersendelseVedlegg>);
                 })}
 
-                {this.state.advarselManglerVedlegg && (
-                    <AvsnittMedMarger>
-                        <div className="skjema__feilmelding">
-                            <FormattedHTMLMessage id="ettersendelse.feilmelding.ingen_vedlegg"/>
-                        </div>
-                    </AvsnittMedMarger>
-                )}
-
                 <AvsnittMedMarger className="ettersendelse_send_vedlegg_knapp_wrapper" >
+
+                    {this.state.advarselManglerVedlegg && (
+                        <>
+                            <div className="skjema__feilmelding">
+                                <FormattedHTMLMessage id="ettersendelse.feilmelding.ingen_vedlegg"/>
+                            </div>
+                            <br/>
+                        </>
+                    )}
+
                     <br/>
                     {this.props.ettersendelseAktivert && (
                         <Knapp

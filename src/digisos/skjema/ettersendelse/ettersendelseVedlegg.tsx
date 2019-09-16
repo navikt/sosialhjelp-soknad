@@ -147,7 +147,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
 					<Knapp
 						type="standard"
-						spinner={typeof this.state.filnavn != undefined && this.props.restStatus === REST_STATUS.PENDING }
+						spinner={typeof this.state.filnavn != "undefined" && this.props.restStatus === REST_STATUS.PENDING }
 						autoDisableVedSpinner={true}
 						onClick={() =>
 							this.props.ettersendelseAktivert &&
@@ -158,12 +158,6 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 						Velg vedlegg
 					</Knapp>
 				</AvsnittMedMarger>
-
-				{/*{this.state.filnavn && this.props.restStatus === REST_STATUS.PENDING && (*/}
-				{/*	<AvsnittMedMarger hoyreIkon={MargIkoner.SPINNER} key={this.state.filnavn}>*/}
-				{/*		{this.state.filnavn}*/}
-				{/*	</AvsnittMedMarger>*/}
-				{/*)}*/}
 
 			</span>
 		);

@@ -25,19 +25,20 @@ export const initFeiletActions = [
 ];
 
 function* startInit(): IterableIterator<any> {
+	// @ts-ignore
 	yield* hentTilgangSaga();
 	yield* hentMiljovariablerSaga();
 	yield* hentTeksterSaga();
 	yield* getFornavnSaga();
 }
 
-interface FornavnApi {
-	fornavn: string;
-}
+// interface FornavnApi {
+// 	fornavn: string;
+// }
 
 function* getFornavnSaga(): IterableIterator<any> {
 	try {
-		let response: FornavnApi = yield call(fetchToJson, "informasjon/fornavn" );
+		let response: any = yield call(fetchToJson, "informasjon/fornavn" );
 		yield put(lagreFornavnPaStore(response.fornavn));
 	} catch (e) {
 		yield put(loggFeil("Error catchet i getFornavnSaga. Error: " + e.toString()))
