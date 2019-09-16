@@ -22,13 +22,13 @@ export function kjorerJetty(): boolean {
 export function getApiBaseUrl(): string {
     if (erDev()) {
         // Kjør mot lokal sosialhjelp-soknad-api:
-        return `http://localhost:8181/${API_CONTEXT_PATH}/`;
+        return `http://localhost:7000/${API_CONTEXT_PATH}/`;
 
         // Kjør mot lokal mock backend:
         // return "http://localhost:3001/sendsoknad/";
     }
     if (window.location.href.indexOf("localhost:8080") >= 0) {
-        return `http://localhost:8181/${API_CONTEXT_PATH}/`;
+        return `http://localhost:7000/${API_CONTEXT_PATH}/`;
     }
     if (window.location.origin.indexOf("nais.oera") >= 0) {
         return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${API_CONTEXT_PATH}/`;
@@ -36,7 +36,7 @@ export function getApiBaseUrl(): string {
     if (window.location.origin.indexOf("heroku") >= 0) {
         return window.location.origin.replace(`${HEROKU_MASTER_APP_NAME}`, `${HEROKU_API_MASTER_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
     }
-	return kjorerJetty() ? `http://127.0.0.1:8181/${API_CONTEXT_PATH}/` : getAbsoluteApiUrl();
+	return kjorerJetty() ? `http://127.0.0.1:7000/${API_CONTEXT_PATH}/` : getAbsoluteApiUrl();
 }
 
 export function getAbsoluteApiUrl() {
@@ -44,10 +44,11 @@ export function getAbsoluteApiUrl() {
 }
 
 export function getAbsoluteApiUrlRegex(pathname: string){
-    return pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/")
+    return pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "sosialhjelp/login-api/soknad-api/")
 }
 
 function determineCredentialsParameter() {
+    console.log(window.location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin")
     return window.location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin";
 }
 
