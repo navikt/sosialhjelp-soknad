@@ -147,7 +147,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
 					<Knapp
 						type="standard"
-						spinner={typeof this.state.filnavn != "undefined" && this.props.restStatus === REST_STATUS.PENDING }
+						spinner={false}
 						autoDisableVedSpinner={true}
 						onClick={() =>
 							this.props.ettersendelseAktivert &&
