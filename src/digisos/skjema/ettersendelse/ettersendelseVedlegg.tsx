@@ -90,8 +90,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
 		return (
 			<span className={"ettersendelse__vedlegg__wrapper " + (opplastingsFeil ? "ettersendelse__vedlegg__feil" : "")}>
-				<AvsnittMedMarger className="vedleggsliste__detalj"
-				>
+				<AvsnittMedMarger className="vedleggsliste__detalj">
 					{this.props.children}
 					<input
 						ref={c => this.leggTilVedleggKnapp = c}
@@ -102,35 +101,53 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 						accept="image/jpeg,image/png,application/pdf"
 					/>
 					{this.props.vedlegg && this.props.vedlegg.filer.map((fil: Fil) => {
-							const lastNedUrl = `opplastetVedlegg/${fil.uuid}/fil`;
-							return (
-								<div
-									key={fil.uuid}
-									className="vedleggsliste__filnavn_wrapper"
+						const lastNedUrl = `opplastetVedlegg/${fil.uuid}/fil`;
+						return (
+							<div
+								key={fil.uuid}
+								className="vedleggsliste__filnavn_wrapper"
+							>
+								<button
+									className="linkbutton linkbutton--normal vedleggsliste__filnavn"
+									title="Last ned vedlegg"
+									onClick={() => downloadAttachedFile(lastNedUrl)}
 								>
-									<button
-										className="linkbutton linkbutton--normal vedleggsliste__filnavn"
-										title="Last ned vedlegg"
-										onClick={() => downloadAttachedFile(lastNedUrl)}
-									>
-										<PaperclipIcon />
-										{fil.filNavn}
-									</button>
-									<button
-										className="linkbutton linkbutton--normal vedleggsliste__fil_slett"
-										title="Slett vedlegg"
-										onClick={() => this.removeFile(fil.uuid, this.props.vedlegg.type)}
-									>
-										Fjern
-										<MargIkon ikon={MargIkoner.SØPPELBØTTE}/>
-									</button>
-								</div>
-							);
-						}
+									<PaperclipIcon/>
+									{fil.filNavn}
+								</button>
+								<button
+									className="linkbutton linkbutton--normal vedleggsliste__fil_slett"
+									title="Slett vedlegg"
+									onClick={() => this.removeFile(fil.uuid, this.props.vedlegg.type)}
+								>
+									Fjern
+									<MargIkon ikon={MargIkoner.SØPPELBØTTE}/>
+								</button>
+							</div>
+						);
+					})}
+
+					{opplastingsFeil && (
+						<>
+							<span className="skjema__feilmelding">
+								"{this.state.filnavn}" &nbsp;
+								{visFilForStorFeilmelding && (
+									<FormattedMessage id="fil.for.stor"/>
+								)}
+								{visFeilFiltypeFeilmelding && (
+									<FormattedMessage id="fil.feil.format"/>
+								)}
+								{!visFilForStorFeilmelding && !visFeilFiltypeFeilmelding && (
+									<FormattedMessage id="opplysninger.vedlegg.ugyldig"/>
+								)}
+							</span>
+							<br/>
+						</>
 					)}
+
 					<Knapp
 						type="standard"
-						spinner={this.props.restStatus === REST_STATUS.PENDING}
+						spinner={typeof this.state.filnavn != undefined && this.props.restStatus === REST_STATUS.PENDING }
 						autoDisableVedSpinner={true}
 						onClick={() =>
 							this.props.ettersendelseAktivert &&
@@ -142,28 +159,12 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 					</Knapp>
 				</AvsnittMedMarger>
 
-				{this.state.filnavn && this.props.restStatus === REST_STATUS.PENDING && (
-					<AvsnittMedMarger hoyreIkon={MargIkoner.SPINNER} key={this.state.filnavn}>
-						{this.state.filnavn}
-					</AvsnittMedMarger>
-				)}
+				{/*{this.state.filnavn && this.props.restStatus === REST_STATUS.PENDING && (*/}
+				{/*	<AvsnittMedMarger hoyreIkon={MargIkoner.SPINNER} key={this.state.filnavn}>*/}
+				{/*		{this.state.filnavn}*/}
+				{/*	</AvsnittMedMarger>*/}
+				{/*)}*/}
 
-				{opplastingsFeil && (
-					<AvsnittMedMarger key={this.state.filnavn ? this.state.filnavn : undefined}>
-						<span className="skjema__feilmelding">
-							"{this.state.filnavn}" &nbsp;
-							{visFilForStorFeilmelding && (
-								<FormattedMessage id="fil.for.stor"/>
-							)}
-							{visFeilFiltypeFeilmelding && (
-								<FormattedMessage id="fil.feil.format"/>
-							)}
-							{!visFilForStorFeilmelding && !visFeilFiltypeFeilmelding && (
-								<FormattedMessage id="opplysninger.vedlegg.ugyldig"/>
-							)}
-						</span>
-					</AvsnittMedMarger>
-				)}
 			</span>
 		);
 	}
