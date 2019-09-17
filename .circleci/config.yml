@@ -42,17 +42,17 @@ jobs:
             echo $DOCKER_TAG
             docker push $DOCKER_TAG
 
-  release:
+  deploy_heroku:
     docker:
       - image: alpine/git
     steps:
       - checkout
       - run:
-          name: Release on Heroku
+          name: Deploy on Heroku
           command: |
             # HEROKU_USERNAME must be URL encoded, eg. joachim.liepelt%40nav.no
             git remote add heroku https://$HEROKU_USERNAME:$HEROKU_AUTH_TOKEN@git.heroku.com/$CIRCLE_PROJECT_REPONAME.git
-            git push heroku $CIRCLE_BRANCH:master
+            git push heroku $CIRCLE_BRANCH:master --force
 
   browser-test:
     docker:
@@ -104,11 +104,11 @@ workflows:
   build_and_deploy:
     jobs:
       - build
-      - release:
+      - deploy_heroku:
           filters:
             branches:
               only: master
       - browser-test:
           requires:
-            - release
+            - deploy_heroku
 
