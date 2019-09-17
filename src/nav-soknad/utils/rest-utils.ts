@@ -56,7 +56,7 @@ export function getRedirectPath(): string {
     const currentOrigin = window.location.origin;
     const gotoParameter = "?goto=" + window.location.pathname;
     const redirectPath = currentOrigin + getRedirectPathname() + gotoParameter;
-    return '?redirect=' + redirectPath;
+    return 'redirect=' + redirectPath;
 }
 
 function getServletBaseUrl(): string {
@@ -265,16 +265,17 @@ function verifyStatusSuccessOrRedirect(response: Response): number {
     const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
 
     if (response.status === 401){
-        if(window.location.pathname !== getRedirectPathname()){
+        // @ts-ignore
+        if (!window[AUTH_LINK_VISITED]) {
+            response.json().then(r => {
+                if (window.location.search.split("error_id=")[1] !== r.id) {
+                    const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
+                    window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "&error_id=" + r.id;
+                }
+            });
+        } else {
             // @ts-ignore
-            if (!window[AUTH_LINK_VISITED]) {
-                response.json().then(r => {
-                    window.location.href = r.loginUrl + getRedirectPath();
-                });
-            } else {
-                // @ts-ignore
-                window[AUTH_LINK_VISITED] = false;
-            }
+            window[AUTH_LINK_VISITED] = false;
         }
         return 401;
     }
