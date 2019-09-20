@@ -9,48 +9,67 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
+          name: GitHub package registry login
+          command: |
+            echo "$DEPLOYMENT_PASSWORD" | docker login -u "$DEPLOYMENT_USERNAME" --password-stdin docker.pkg.github.com
+      - run:
+          name: Checkout CI scripts
+          command: |
+            git clone https://github.com/navikt/github-apps-support.git
+            git clone https://github.com/navikt/sosialhjelp-ci.git
+            echo "export PATH=\"`pwd`/github-apps-support/bin:`pwd`/sosialhjelp-ci/bin:$PATH\"" >> $BASH_ENV
+      - run:
           name: Generate version number and docker image tags
           command: |
-            export GIT_COMMIT_HASH=$(git log -n 1 --pretty=format:'%h')
-            export GIT_COMMIT_DATE=$(git log -1 --pretty='%ad' --date=format:'%Y%m%d.%H%M')
-            export VERSION=1.0_${GIT_COMMIT_DATE}_${GIT_COMMIT_HASH}
-            echo $VERSION > ./VERSION.txt
-
-            echo "export GIT_TAG=\"$VERSION\"" >> $BASH_ENV
+            VERSION=$(create-artifact-version.sh)
             echo "export DOCKER_TAG=\"docker.pkg.github.com/navikt/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME:$VERSION\"" >> $BASH_ENV
       - run:
           name: Create tag and release
           command: |
-            export GIT_COMMIT_MESSAGE=$(git log --format=%B -n 1 | sed ':a;N;$!ba;s/\n/\\n/g')
             echo $DIGISOS_KEY | tr '_' '\n' > digisos.key
-
-            set -eo pipefail
-            git clone https://github.com/navikt/github-apps-support.git
-            export PATH=`pwd`/github-apps-support/bin:$PATH
-            export GH_TOKEN=$(generate-installation-token.sh `generate-jwt.sh digisos.key $DIGISOS_APPID`)
+            GH_TOKEN=$(generate-installation-token.sh `generate-jwt.sh digisos.key $DIGISOS_APPID`)
             rm digisos.key
 
-            curl -X POST "https://api.github.com/repos/navikt/$CIRCLE_PROJECT_REPONAME/git/tags" \
-                -H "Accept: application/vnd.github.v3.full+json" \
-                -H "Authorization: token $GH_TOKEN" \
-                -H "Content-Type: application/json" \
-                --data '{"tag": "'$GIT_TAG'", "message": "'$GIT_TAG'", "object": "'$CIRCLE_SHA1'", "type": "commit"}'
-
-            curl -X POST "https://api.github.com/repos/navikt/$CIRCLE_PROJECT_REPONAME/releases" \
-                -H "Accept: application/vnd.github.v3.full+json" \
-                -H "Authorization: token $GH_TOKEN" \
-                -H "Content-Type: application/json" \
-                --data '{"tag_name": "'$GIT_TAG'", "target_commitish": "'$CIRCLE_SHA1'", "name": "'$GIT_TAG'", "body": "'"$GIT_COMMIT_MESSAGE"'"}'
+            create-github-release.sh -p $CIRCLE_PROJECT_REPONAME -t $(create-artifact-version.sh) \
+                -c $CIRCLE_SHA1 -m "$(format-commit-message.sh)" -a $GH_TOKEN
       - run:
           name: Bygger Docker image
           command:
-            docker build -t $DOCKER_TAG -f Dockerfile.circle .
+            docker build -t $DOCKER_TAG .
       - run:
           name: Pusher Docker image
           command: |
-            echo "$DEPLOYMENT_PASSWORD" | docker login -u "$DEPLOYMENT_USERNAME" --password-stdin docker.pkg.github.com
             echo $DOCKER_TAG
             docker push $DOCKER_TAG
+
+  deploy_heroku:
+    docker:
+      - image: alpine/git
+    steps:
+      - checkout
+      - run:
+          name: Deploy on Heroku
+          command: |
+            # HEROKU_USERNAME must be URL encoded, eg. joachim.liepelt%40nav.no
+            git remote add heroku https://$HEROKU_USERNAME:$HEROKU_AUTH_TOKEN@git.heroku.com/$CIRCLE_PROJECT_REPONAME.git
+            git push heroku $CIRCLE_BRANCH:master --force
+
+  browser-test:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - run:
+          name: Run browser tests
+          command: |
+            set -eo pipefail
+            git clone https://github.com/navikt/sosialhjelp-tester.git
+            cd sosialhjelp-tester
+
+            npm install
+            npm run saucelabs-soknad
+
+      - store_test_results:
+          path: /tmp/test-results
 
   deploy_miljo:
     docker:
@@ -61,9 +80,8 @@ jobs:
       - run:
           name: Deploy versjon=${VERSION} til miljø=${MILJO} i dev-sbs
           command: |
-            export GIT_COMMIT_HASH=$(git log -n 1 --pretty=format:'%h')
-            export GIT_COMMIT_DATE=$(git log -1 --pretty='%ad' --date=format:'%Y%m%d.%H%M')
-            export VERSION=1.0_${GIT_COMMIT_DATE}_${GIT_COMMIT_HASH}
+            git clone https://github.com/sosialhjelp-ci.git
+            VERSION=$(sosialhjelp-ci/bin/create-artifact-version.sh)
 
             deployment-cli deploy create --cluster=dev-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${VERSION} --vars=nais/dev/${MILJO}.json
 
@@ -76,8 +94,21 @@ jobs:
       - run:
           name: Deploy versjon=${VERSION} til prod
           command: |
-            export GIT_COMMIT_HASH=$(git log -n 1 --pretty=format:'%h')
-            export GIT_COMMIT_DATE=$(git log -1 --pretty='%ad' --date=format:'%Y%m%d.%H%M')
-            export VERSION=1.0_${GIT_COMMIT_DATE}_${GIT_COMMIT_HASH}
+            git clone https://github.com/sosialhjelp-ci.git
+            VERSION=$(sosialhjelp-ci/bin/create-artifact-version.sh)
 
             deployment-cli deploy create --cluster=prod-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${VERSION} --vars=nais/prod/default.json
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy_heroku:
+          filters:
+            branches:
+              only: master
+      - browser-test:
+          requires:
+            - deploy_heroku
+
