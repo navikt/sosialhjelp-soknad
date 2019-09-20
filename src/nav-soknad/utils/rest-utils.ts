@@ -48,7 +48,6 @@ export function getAbsoluteApiUrlRegex(pathname: string){
 }
 
 function determineCredentialsParameter() {
-    console.log(window.location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin")
     return window.location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin";
 }
 
