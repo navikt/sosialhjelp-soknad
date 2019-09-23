@@ -31,6 +31,8 @@ class Link extends React.Component<Props, {}> {
 		const regexp = new RegExp("/" + contextPath);
 		urlPath = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
 
+		console.warn("ie bug fixin..");
+
 		return(
 			<div className="application-spinner">
 				<Redirect to={urlPath}/>
