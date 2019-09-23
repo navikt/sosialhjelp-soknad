@@ -6,6 +6,7 @@ import {LedetekstState} from "../../nav-soknad/redux/ledetekster/ledeteksterType
 import {REST_STATUS} from "../../nav-soknad/types";
 // import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
 import {State} from "../redux/reducers";
+import {tilStart} from "../../nav-soknad/redux/navigasjon/navigasjonActions";
 
 interface IntlProviderProps {
 	children: React.ReactNode;
@@ -20,6 +21,10 @@ interface StateProps {
 type Props = StateProps & DispatchProps & IntlProviderProps;
 
 class Link extends React.Component<Props, {}> {
+
+	componentDidMount(): void {
+		this.props.dispatch(tilStart());
+	}
 
 	render(){
 
