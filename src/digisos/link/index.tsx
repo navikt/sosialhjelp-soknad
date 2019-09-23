@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {connect} from "react-redux";
 import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
-import {Redirect} from "react-router";
 import {LedetekstState} from "../../nav-soknad/redux/ledetekster/ledeteksterTypes";
 import {REST_STATUS} from "../../nav-soknad/types";
-import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
 import {State} from "../redux/reducers";
+import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
+import {Redirect} from "react-router";
 
 interface IntlProviderProps {
 	children: React.ReactNode;
@@ -21,19 +21,22 @@ type Props = StateProps & DispatchProps & IntlProviderProps;
 
 class Link extends React.Component<Props, {}> {
 
+
 	render(){
 
 		this.props.dispatch(setLinkVisited());
-
-		const url = new URL(window.location.href);
-		let urlPath = url.searchParams.get("goto");
-		const contextPath = "sosialhjelp/soknad";
-		const regexp = new RegExp("/" + contextPath);
-		urlPath = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
+		const url = window.location.href;
+		const match: RegExpMatchArray | null = url.match(/goto=\/sosialhjelp\/soknad(.+)$/);
+		let here: string = "/informasjon";
+		if (match && match[1]){
+			here = match[1];
+		}
 
 		return(
-			<div className="application-spinner">
-				<Redirect to={urlPath}/>
+			<div>
+				Du har blitt redirecta tilbake til søknaden etter å ha logget inn.
+				Skal nå redirectes til /sosialhjelp/soknad/informasjon
+				<Redirect to={here}/>
 			</div>
 		)
 	}
