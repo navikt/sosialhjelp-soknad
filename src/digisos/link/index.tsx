@@ -23,20 +23,21 @@ class Link extends React.Component<Props, {}> {
 
 	render(){
 
-		console.warn("Test start: før regex og dispatch.");
 		this.props.dispatch(setLinkVisited());
 
-		const url = new URL(window.location.href);
-		let urlPath = url.searchParams.get("goto");
+		console.warn("Test start: før regex og dispatch.");
+		const url: URL = new URL(window.location.href);
+		let urlPath: string | null = url.searchParams.get("goto");
 		const contextPath = "sosialhjelp/soknad";
 		const regexp = new RegExp("/" + contextPath);
 		urlPath = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
+
 		console.warn("Test start: etter regex og dispatch.");
 
 
 		return(
 			<div className="application-spinner">
-				<Redirect to={urlPath}/>
+				<Redirect to={urlPath ? urlPath : "/informasjon"}/>
 			</div>
 		)
 	}
