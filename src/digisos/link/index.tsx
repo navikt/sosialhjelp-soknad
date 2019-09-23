@@ -6,7 +6,9 @@ import {LedetekstState} from "../../nav-soknad/redux/ledetekster/ledeteksterType
 import {REST_STATUS} from "../../nav-soknad/types";
 // import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
 import {State} from "../redux/reducers";
-import {tilStart} from "../../nav-soknad/redux/navigasjon/navigasjonActions";
+// import {tilStart} from "../../nav-soknad/redux/navigasjon/navigasjonActions";
+import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
+import {push} from "connected-react-router";
 
 interface IntlProviderProps {
 	children: React.ReactNode;
@@ -23,22 +25,24 @@ type Props = StateProps & DispatchProps & IntlProviderProps;
 class Link extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
-		this.props.dispatch(tilStart());
+
+		const url: URL = new URL(window.location.href);
+		let urlPath: string | null = url.searchParams.get("goto");
+		const contextPath = "sosialhjelp/soknad";
+		const regexp = new RegExp("/" + contextPath);
+		urlPath = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
+
+
+		this.props.dispatch(push(urlPath));
+
+		// this.props.dispatch(tilStart());
 	}
 
 	render(){
 
-		// this.props.dispatch(setLinkVisited());
+		this.props.dispatch(setLinkVisited());
 
 		console.warn("Test start: før regex og dispatch.");
-		// const url: URL = new URL(window.location.href);
-		// let urlPath: string | null = url.searchParams.get("goto");
-		// const contextPath = "sosialhjelp/soknad";
-		// const regexp = new RegExp("/" + contextPath);
-		// urlPath = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
-		//
-		// console.warn("Test start: etter regex og dispatch.");
-		//
 
 		return(
 			<div className="application-spinner">
