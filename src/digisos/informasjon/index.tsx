@@ -72,6 +72,7 @@ class Informasjon extends React.Component<Props, {}> {
                                         <FormattedMessage id="informasjon.hilsen.tittel"/>
 									</Snakkeboble>
 									<EllaBlunk size={"175"}/>
+									Day of Judgement.
 								</span>
 
 								<Panel className="informasjon-viktig">
