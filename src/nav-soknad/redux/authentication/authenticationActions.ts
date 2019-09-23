@@ -10,4 +10,4 @@ export const setLinkVisited = (): AuthenticationActionTypes => {
 	return {
 		type: AuthenticationActionTypeKeys.LINK_VISITED
 	};
-}
+};

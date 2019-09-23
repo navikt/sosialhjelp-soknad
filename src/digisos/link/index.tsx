@@ -23,6 +23,7 @@ class Link extends React.Component<Props, {}> {
 
 	render(){
 
+		console.warn("Test start: før regex og dispatch.");
 		this.props.dispatch(setLinkVisited());
 
 		const url = new URL(window.location.href);
@@ -30,8 +31,8 @@ class Link extends React.Component<Props, {}> {
 		const contextPath = "sosialhjelp/soknad";
 		const regexp = new RegExp("/" + contextPath);
 		urlPath = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
+		console.warn("Test start: etter regex og dispatch.");
 
-		console.warn("ie bug fixin..");
 
 		return(
 			<div className="application-spinner">
