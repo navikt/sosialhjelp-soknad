@@ -44,7 +44,7 @@ export function getAbsoluteApiUrl() {
 }
 
 export function getAbsoluteApiUrlRegex(pathname: string){
-    return pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "sosialhjelp/login-api/soknad-api/")
+    return pathname.replace(/^(.+sosialhjelp\/)(.+)$/,  "$1login-api/soknad-api/")
 }
 
 function determineCredentialsParameter() {
