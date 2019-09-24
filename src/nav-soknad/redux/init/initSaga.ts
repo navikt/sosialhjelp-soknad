@@ -3,7 +3,7 @@ import { MiljovariablerActionTypeKeys } from "../miljovariabler/miljovariablerTy
 import { LedeteksterActionTypeKeys } from "../ledetekster/ledeteksterTypes";
 import { TilgangActionTypeKeys } from "../tilgang/tilgangTypes";
 import { InitActionTypeKeys } from "./initTypes";
-import {initFeilet, initFerdig, lagreFornavnPaStore} from "./initActions";
+import {fornavnOk, initFeilet, initFerdig, lagreFornavnPaStore} from "./initActions";
 import {hentMiljovariablerSaga} from "../miljovariabler/miljoVariablerSaga";
 import {hentTilgangSaga} from "../tilgang/tilgangSaga";
 import {hentTeksterSaga} from "../ledetekster/ledeteksterSaga";
@@ -39,6 +39,7 @@ function* getFornavnSaga() {
 	try {
 		let response: FornavnApi = yield call(fetchToJson, "informasjon/fornavn" );
 		yield put(lagreFornavnPaStore(response.fornavn));
+		yield put(fornavnOk());
 	} catch (e) {
 		yield put(loggFeil("Error catchet i getFornavnSaga. Error: " + e.toString()))
 	}

@@ -31,3 +31,29 @@ export function lagreFornavnPaStore(fornavn: string): InitActionTypes {
 		fornavn
 	}
 }
+
+
+export const tilgangOk = (): InitActionTypes => {
+	return {
+		type: InitActionTypeKeys.TILGANG_OK
+	}
+};
+
+export const miljovariablerOk = (): InitActionTypes => {
+	return {
+		type: InitActionTypeKeys.MILJOVARIABLER_OK
+	}
+};
+
+export const ledeteksterOk = (): InitActionTypes => {
+	return {
+		type: InitActionTypeKeys.LEDETEKSTER_OK
+	}
+};
+
+export const fornavnOk = (): InitActionTypes => {
+	return {
+		type: InitActionTypeKeys.FORNAVN_OK
+	}
+};
+

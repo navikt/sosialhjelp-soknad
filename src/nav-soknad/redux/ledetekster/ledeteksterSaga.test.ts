@@ -3,6 +3,7 @@ import { henterTekster, hentetTekster, hentTeksterFeilet } from "./ledeteksterAc
 import { call, put } from "redux-saga/effects";
 import { fetchToJson } from "../../utils/rest-utils";
 import { loggFeil } from "../navlogger/navloggerActions";
+import {ledeteksterOk} from "../init/initActions";
 
 describe("ledeteksterSaga", () => {
 
@@ -42,6 +43,13 @@ describe("ledeteksterSaga", () => {
 			});
 		});
 
+		it("put henteTeksterOk", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(ledeteksterOk())
+			});
+		});
+
 		it("ferdig", () => {
 			expect(saga.next()).toEqual({
 				done: true
@@ -64,6 +72,13 @@ describe("ledeteksterSaga", () => {
 			expect(saga.next(visNokler)).toEqual({
 				done: false,
 				value: put(hentetTekster(leggNoklerPaaLedetekster(response)))
+			});
+		});
+
+		it("put henteTeksterOk", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(ledeteksterOk())
 			});
 		});
 
