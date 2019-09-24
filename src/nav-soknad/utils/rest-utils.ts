@@ -269,7 +269,7 @@ function verifyStatusSuccessOrRedirect(response: Response): number {
             response.json().then(r => {
                 if (window.location.search.split("error_id=")[1] !== r.id) {
                     const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
-                    window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "&error_id=" + r.id;
+                    window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "%26error_id=" + r.id;
                 }
             });
         } else {
