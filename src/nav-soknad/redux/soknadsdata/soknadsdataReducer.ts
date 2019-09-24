@@ -181,7 +181,10 @@ export type SoknadsdataType
 	| Utgifter
 	| Adresser
 	| AdresseValg
-	| NavEnhet[];
+	| NavEnhet[]
+	| Utbetalinger
+	| Barneutgifter
+	| Boutgifter;
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,

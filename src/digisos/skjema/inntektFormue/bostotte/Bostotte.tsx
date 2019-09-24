@@ -1,7 +1,7 @@
 import * as React from "react";
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
-import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage, FormattedNumber, InjectedIntlProps, injectIntl} from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
 	connectSoknadsdataContainer,
@@ -56,6 +56,19 @@ class BostotteView extends React.Component<Props, State> {
 		}
 	}
 
+	private static renderUtbetaling(key: string, belop: number, dato: string, mottaker: string, index: number) {
+		return (
+			<div key={`${key}-${index}`} className="utbetaling">
+				<span><FormattedMessage id={key}/>:</span>
+				<span className="verdi detaljeliste__verdi">
+					<FormattedNumber value={belop} minimumFractionDigits={2} maximumFractionDigits={2}/> kr
+				</span>
+				<span>{dato}</span>
+				<span><FormattedMessage id={"inntekt.bostotte.husbanken.mottaker"} values={{"mottaker":mottaker}} /></span>
+			</div>
+		)
+	}
+
 	render() {
 		const {soknadsdata} = this.props;
 		const bostotte: Bostotte | undefined = soknadsdata.inntekt.bostotte;
@@ -65,22 +78,33 @@ class BostotteView extends React.Component<Props, State> {
 			oppstartsModus = false;
 		}
 		return (
-			<div className="skjema-sporsmal">
-				<JaNeiSporsmal
-					visPlaceholder={oppstartsModus}
-					tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_BOSTOTTE)}
-					faktumKey={FAKTUM_BOSTOTTE}
-					verdi={bostotte ? bostotte.bekreftelse : null}
-					onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
-					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-				/>
-				<Informasjonspanel
-					synlig={bostotte && bostotte.bekreftelse === false}
-					ikon={InformasjonspanelIkon.ELLA}
-					farge={DigisosFarge.VIKTIG}
-				>
-					<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
-				</Informasjonspanel>
+			<div className="blokk-xs">
+				<div className="blokk-xs">
+					<span><FormattedMessage id="inntekt.bostotte.husbanken.tittel"/></span>
+					<span><FormattedMessage id="inntekt.bostotte.husbanken.info"/></span>
+					{
+						bostotte.utbetalinger.map((utbetaling, index) => {
+							return BostotteView.renderUtbetaling("Bostøtte", utbetaling.belop, utbetaling.utbetalingsdato, utbetaling.tittel, index);
+						})
+					}
+				</div>
+				<div className="skjema-sporsmal">
+					<JaNeiSporsmal
+						visPlaceholder={oppstartsModus}
+						tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_BOSTOTTE)}
+						faktumKey={FAKTUM_BOSTOTTE}
+						verdi={bostotte ? bostotte.bekreftelse : null}
+						onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
+						legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+					/>
+					<Informasjonspanel
+						synlig={bostotte && bostotte.bekreftelse === false}
+						ikon={InformasjonspanelIkon.ELLA}
+						farge={DigisosFarge.VIKTIG}
+					>
+						<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
+					</Informasjonspanel>
+				</div>
 			</div>
 		);
 	}
