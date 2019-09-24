@@ -69,6 +69,16 @@ class BostotteView extends React.Component<Props, State> {
 		)
 	}
 
+	private static renderSak(key: string, dato: string, beskrivelse: string, index: number) {
+		return (
+			<div key={`${key}-${index}`} className="sak">
+				<span><FormattedMessage id={key}/>:</span>
+				<span>{dato}</span>
+				<span>{beskrivelse}</span>
+			</div>
+		)
+	}
+
 	render() {
 		const {soknadsdata} = this.props;
 		const bostotte: Bostotte | undefined = soknadsdata.inntekt.bostotte;
@@ -85,6 +95,11 @@ class BostotteView extends React.Component<Props, State> {
 					{
 						bostotte.utbetalinger.map((utbetaling, index) => {
 							return BostotteView.renderUtbetaling("Bostøtte", utbetaling.belop, utbetaling.utbetalingsdato, utbetaling.tittel, index);
+						})
+					}
+					{
+						bostotte.saker.map((sak, index) => {
+							return BostotteView.renderSak("Sak", sak.dato, sak.beskrivelse, index);
 						})
 					}
 				</div>
