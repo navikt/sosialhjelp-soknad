@@ -26,14 +26,14 @@ class Link extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
 
-		const url: URL = new URL(window.location.href);
-		let urlPath: string | null = url.searchParams.get("goto");
-		const contextPath = "sosialhjelp/soknad";
-		const regexp = new RegExp("/" + contextPath);
-		urlPath = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
+		// const url: URL = new URL(window.location.href);
+		// let urlPath: string | null = url.searchParams.get("goto");
+		// const contextPath = "sosialhjelp/soknad";
+		// const regexp = new RegExp("/" + contextPath);
+		// urlPath = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
 
 
-		console.warn("urlPath = " + urlPath);
+		// console.warn("urlPath = " + urlPath);
 
 		this.props.dispatch(tilStart());
 	}
@@ -45,7 +45,7 @@ class Link extends React.Component<Props, {}> {
 		console.warn("Test start: før regex og dispatch.");
 
 		return(
-			<div className="application-spinner">
+			<div>
 				Du har blitt redirecta tilbake til søknaden etter å ha logget inn.
 				Skal nå redirectes til /sosialhjelp/soknad/informasjon
 				{/*<Redirect to={urlPath ? urlPath : "/informasjon"}/>*/}
