@@ -12,7 +12,6 @@ const initialState: InitState = {
 export default (state: InitState = initialState, action: InitActionTypes) => {
 	switch (action.type) {
 		case OK: {
-			console.warn("Inni initReducer");
 			return {...state, restStatus: REST_STATUS.OK };
 		}
 		case START:

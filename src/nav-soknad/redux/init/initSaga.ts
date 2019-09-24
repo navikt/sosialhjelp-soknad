@@ -45,10 +45,8 @@ function* getFornavnSaga() {
 }
 
 function* isAllDataLoaded(action: any) {
-	console.warn("in isAllDataLoaded. action: " + JSON.stringify(action, null, 4));
 	initActions = initActions.filter(el => el !== action.type);
 	if (initActions.length === 0) {
-		console.warn("before put(initFerding)");
 		yield put(initFerdig());
 	}
 }

@@ -25,7 +25,6 @@ type Props = StateProps & IntlProviderProps & DispatchProps;
 
 class IntlProvider extends React.Component<Props, {}> {
 	componentDidMount() {
-		console.warn("Lets fix IE11 the hard way :/");
 		this.props.dispatch(initStart());
 	}
 
