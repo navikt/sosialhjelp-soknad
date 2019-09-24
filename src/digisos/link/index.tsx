@@ -33,9 +33,7 @@ class Link extends React.Component<Props, {}> {
 		}
 
 		return(
-			<div>
-				Du har blitt redirecta tilbake til søknaden etter å ha logget inn.
-				Skal nå redirectes til /sosialhjelp/soknad/informasjon
+			<div className="application-spinner">
 				<Redirect to={here}/>
 			</div>
 		)
