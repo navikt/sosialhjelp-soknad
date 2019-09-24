@@ -10,7 +10,7 @@ import {
 	TilSteg
 } from "./navigasjonTypes";
 import { tilStart, tilSteg } from "./navigasjonActions";
-import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
+// import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 import { lesKommunenrFraUrl } from "../../utils";
 import {goBack, push} from "connected-react-router";
