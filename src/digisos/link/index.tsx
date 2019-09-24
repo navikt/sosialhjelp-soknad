@@ -6,8 +6,9 @@ import {LedetekstState} from "../../nav-soknad/redux/ledetekster/ledeteksterType
 import {REST_STATUS} from "../../nav-soknad/types";
 // import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
 import {State} from "../redux/reducers";
-import {tilStart} from "../../nav-soknad/redux/navigasjon/navigasjonActions";
+// import {tilStart} from "../../nav-soknad/redux/navigasjon/navigasjonActions";
 import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
+import {push} from "connected-react-router";
 // import {push} from "connected-react-router";
 
 interface IntlProviderProps {
@@ -26,16 +27,18 @@ class Link extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
 
-		// const url: URL = new URL(window.location.href);
-		// let urlPath: string | null = url.searchParams.get("goto");
-		// const contextPath = "sosialhjelp/soknad";
-		// const regexp = new RegExp("/" + contextPath);
-		// urlPath = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
+		const url: URL = new URL(window.location.href);
+		let urlPath: string | null = url.searchParams.get("goto");
+		const contextPath = "/sosialhjelp/soknad";
+		const regexp = new RegExp(contextPath);
+		const goto: string = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
+		// https://www-q0.nav.no/sosialhjelp/soknad/link?goto=/sosialhjelp/soknad/informasjon
+
+		this.props.dispatch(push(goto));
 
 
-		// console.warn("urlPath = " + urlPath);
 
-		this.props.dispatch(tilStart());
+		// this.props.dispatch(tilStart());
 	}
 
 	render(){
