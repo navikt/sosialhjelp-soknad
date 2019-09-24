@@ -27,16 +27,16 @@ class Link extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
 
-		const url: URL = new URL(window.location.href);
-		let urlPath: string | null = url.searchParams.get("goto");
-		const contextPath = "/sosialhjelp/soknad";
-		const regexp = new RegExp(contextPath);
-		const goto: string = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
-		// https://www-q0.nav.no/sosialhjelp/soknad/link?goto=/sosialhjelp/soknad/informasjon
-
-		// this.props.dispatch(push(goto));
-
-		console.warn("Hit skal bruker egentlig bli sent: " + goto);
+		// const url: URL = new URL(window.location.href);
+		// let urlPath: string | null = url.searchParams.get("goto");
+		// const contextPath = "/sosialhjelp/soknad";
+		// const regexp = new RegExp(contextPath);
+		// const goto: string = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
+		// // https://www-q0.nav.no/sosialhjelp/soknad/link?goto=/sosialhjelp/soknad/informasjon
+		//
+		// // this.props.dispatch(push(goto));
+		//
+		// console.warn("Hit skal bruker egentlig bli sent: " + goto);
 
 
 
