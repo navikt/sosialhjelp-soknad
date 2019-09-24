@@ -4,7 +4,6 @@ import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
 import {LedetekstState} from "../../nav-soknad/redux/ledetekster/ledeteksterTypes";
 import {REST_STATUS} from "../../nav-soknad/types";
 import {State} from "../redux/reducers";
-import {tilStart} from "../../nav-soknad/redux/navigasjon/navigasjonActions";
 import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
 import {Redirect} from "react-router";
 
@@ -32,7 +31,7 @@ class Link extends React.Component<Props, {}> {
 		if (match && match[1]){
 			here = match[1];
 		}
-		
+
 		return(
 			<div>
 				Du har blitt redirecta tilbake til søknaden etter å ha logget inn.
