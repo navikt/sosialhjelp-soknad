@@ -4,7 +4,7 @@ import {
 	navigateTo,
 	tilbakeEllerForsidenSaga,
 	tilFinnDittNavKontorSaga,
-	// tilServerfeilSaga,
+	tilServerfeilSaga,
 	tilStegSaga
 } from "./navigasjonSaga";
 import { call, put, select } from "redux-saga/effects";
@@ -15,7 +15,7 @@ import {
 import { SagaIterator } from "redux-saga";
 import { tilSteg } from "./navigasjonActions";
 import { selectBrukerBehandlingId } from "../selectors";
-// import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
+import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import {goBack, push} from "connected-react-router";
 
 const ferdig = (saga: SagaIterator) => {
@@ -37,28 +37,28 @@ describe("navigasjonSaga", () => {
 		it("ferdig", () => ferdig(saga));
 	});
 
-	// describe("tilServerfeilSaga", () => {
-	// 	const saga = tilServerfeilSaga();
-	// 	it("sets avbrytDialogSjek to false", () => {
-	// 		expect(saga.next()).toEqual({
-	// 			done: false,
-	// 			value: put(settAvbrytSoknadSjekk(false))
-	// 		});
-	// 	});
-	// 	it("call navigateTo", () => {
-	// 		expect(saga.next()).toEqual({
-	// 			done: false,
-	// 			value: put(push(Sider.SERVERFEIL))
-	// 		});
-	// 	});
-	// 	it("sets avbrytDialogSjek to true", () => {
-	// 		expect(saga.next()).toEqual({
-	// 			done: false,
-	// 			value: put(settAvbrytSoknadSjekk(true))
-	// 		});
-	// 	});
-	// 	it("ferdig", () => ferdig(saga));
-	// });
+	describe("tilServerfeilSaga", () => {
+		const saga = tilServerfeilSaga();
+		it("sets avbrytDialogSjek to false", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(settAvbrytSoknadSjekk(false))
+			});
+		});
+		it("call navigateTo", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(push(Sider.SERVERFEIL))
+			});
+		});
+		it("sets avbrytDialogSjek to true", () => {
+			expect(saga.next()).toEqual({
+				done: false,
+				value: put(settAvbrytSoknadSjekk(true))
+			});
+		});
+		it("ferdig", () => ferdig(saga));
+	});
 
 	describe("tilbakeEllerForsidenSaga - forsiden ", () => {
 		const saga = tilbakeEllerForsidenSaga();

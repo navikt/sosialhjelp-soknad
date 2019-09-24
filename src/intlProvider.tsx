@@ -49,6 +49,12 @@ class IntlProvider extends React.Component<Props, {}> {
 					<NavFrontendSpinner type="XXL" />
 				</div>
 			);
+		} else if (initRestStatus !== REST_STATUS.OK) {
+			children = (
+				<div className="application-spinner">
+					<NavFrontendSpinner type="XXL" />
+				</div>
+			);
 		}
 		return (
 			<Provider messages={ledetekster.data ? ledetekster.data : ""} defaultLocale="nb" locale={locale}>
