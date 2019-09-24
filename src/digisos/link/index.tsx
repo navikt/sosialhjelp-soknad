@@ -32,9 +32,13 @@ class Link extends React.Component<Props, {}> {
 		// const contextPath = "/sosialhjelp/soknad";
 		// const regexp = new RegExp(contextPath);
 		// const goto: string = urlPath ? urlPath.replace(regexp,"") : "/informasjon";
-		// // https://www-q0.nav.no/sosialhjelp/soknad/link?goto=/sosialhjelp/soknad/informasjon
-		//
-		// // this.props.dispatch(push(goto));
+
+		console.warn("window.location.href in componentDidMount på link siden: " + window.location.href);
+
+
+		// https://www-q0.nav.no/sosialhjelp/soknad/link?goto=/sosialhjelp/skjema/98213/2
+
+		// // this.props.dispatch(push("/skjema/123812/2"));
 		//
 		// console.warn("Hit skal bruker egentlig bli sent: " + goto);
 
