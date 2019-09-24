@@ -26,9 +26,9 @@ function* tilServerfeilSaga(): SagaIterator {
 	/** Forhindre at avbryt dialog dukker opp når en redirecter til feilsiden
 	 * Selve sjekken på om dialog skal vises eller implementer i hoved index.tsx
 	 */
-	yield put(settAvbrytSoknadSjekk(false));
-	yield put(push(Sider.SERVERFEIL));
-	yield put(settAvbrytSoknadSjekk(true));
+	// yield put(settAvbrytSoknadSjekk(false));
+	// yield put(push(Sider.SERVERFEIL));
+	// yield put(settAvbrytSoknadSjekk(true));
 }
 
 function* tilStartSaga(): SagaIterator {
