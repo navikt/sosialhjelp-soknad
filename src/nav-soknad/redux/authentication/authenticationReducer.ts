@@ -10,9 +10,9 @@ export default (
 ) => {
 	switch (action.type) {
 		case AuthenticationActionTypeKeys.LINK_VISITED: {
-			// const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
+			const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
 			// @ts-ignore
-			// window[AUTH_LINK_VISITED] = true;
+			window[AUTH_LINK_VISITED] = true;
 			return state;
         }
 		default:
