@@ -89,6 +89,7 @@ window.onerror = (errorMessage, url, line, column, error) => {
 
 ReactDOM.render(
     <Provider store={store}>
+        Dark Steel
         <IntlProvider>
             <ConnectedRouter history={history}>
                 <App />
