@@ -45,7 +45,7 @@ function* opprettSoknadSaga() {
 
         const response: OpprettSoknadResponse = yield call(
             fetchPost,
-            "soknader/opprettSoknad", ""
+            "soknader/opprettSoknad", "", true
         );
         yield put(opprettSoknadOk(response.brukerBehandlingId));
         yield put(startSoknadOk()); // TODO Rename metode navn
@@ -115,7 +115,8 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
         yield call(
             fetchPost,
             `soknader/${action.brukerBehandlingId}/actions/send`,
-            JSON.stringify({behandlingsId: action.brukerBehandlingId})
+            JSON.stringify({behandlingsId: action.brukerBehandlingId}),
+            true
         );
         lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.brukerBehandlingId);
         yield put(sendSoknadOk(action.brukerBehandlingId));
@@ -172,7 +173,7 @@ function* getErSystemdataEndretSaga() {
     try {
         const behandlingsID = yield select(selectBrukerBehandlingId);
         const urlPath = `soknader/${behandlingsID}/erSystemdataEndret`;
-        const response = yield fetchToJson(urlPath);
+        const response = yield fetchToJson(urlPath, true);
         if (response) {
             yield put(loggInfo("Systemdata var endret for brukeren."));
         }

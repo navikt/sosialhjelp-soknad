@@ -2,6 +2,7 @@ import {REST_FEIL} from "../types/restFeilTypes";
 import {erMockMiljoEllerDev} from "./index";
 import {
     API_CONTEXT_PATH,
+    API_CONTEXT_PATH_WITH_ACCESS_TOKEN,
     CONTEXT_PATH,
     getRedirectPathname,
     HEROKU_API_MASTER_APP_NAME,
@@ -11,7 +12,7 @@ import {
 
 export function erDev(): boolean {
     const url = window.location.href;
-    return (url.indexOf("localhost:3000") > 0 || url.indexOf("devillo.no:3000") > 0);
+    return (url.indexOf("localhost:3000") >= 0 || url.indexOf("devillo.no:3000") >= 0 || url.indexOf("localhost:8080") >= 0);
 }
 
 export function kjorerJetty(): boolean {
@@ -19,16 +20,16 @@ export function kjorerJetty(): boolean {
     return url.indexOf(":8189") > 0;
 }
 
-export function getApiBaseUrl(): string {
+export function getApiBaseUrl(withAccessToken?: boolean): string {
+    const apiContextPath = withAccessToken? API_CONTEXT_PATH_WITH_ACCESS_TOKEN : API_CONTEXT_PATH;
+
     if (erDev()) {
         // Kjør mot lokal sosialhjelp-soknad-api:
-        return `http://localhost:7000/${API_CONTEXT_PATH}/`;
+        return `http://localhost:8181/${API_CONTEXT_PATH}/`;
 
-        // Kjør mot lokal mock backend:
-        // return "http://localhost:3001/sendsoknad/";
-    }
-    if (window.location.href.indexOf("localhost:8080") >= 0) {
-        return `http://localhost:7000/${API_CONTEXT_PATH}/`;
+        // Kjør med login-api som proxy om en ønsker access_token fra idporten (uncomment begge linjer under)
+        //const apiPort = withAccessToken ? 7000 : 8181;
+        // return `http://localhost:${apiPort}/${apiContextPath}/`;
     }
     if (window.location.origin.indexOf("nais.oera") >= 0) {
         return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${API_CONTEXT_PATH}/`;
@@ -36,15 +37,20 @@ export function getApiBaseUrl(): string {
     if (window.location.origin.indexOf("heroku") >= 0) {
         return window.location.origin.replace(`${HEROKU_MASTER_APP_NAME}`, `${HEROKU_API_MASTER_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
     }
-	return kjorerJetty() ? `http://127.0.0.1:7000/${API_CONTEXT_PATH}/` : getAbsoluteApiUrl();
+    if (kjorerJetty()) {
+        return `http://127.0.0.1:7000/${API_CONTEXT_PATH}/`
+        //return `http://127.0.0.1:7000/${apiContextPath}/`
+    }
+
+    return withAccessToken? getAbsoluteApiUrlWithLoginApi(): getAbsoluteApiUrl();
 }
 
 export function getAbsoluteApiUrl() {
-    return getAbsoluteApiUrlRegex(window.location.pathname);
+    return window.location.pathname.replace(/^(.+sosialhjelp\/)(.+)$/,  "$1-api/")
 }
 
-export function getAbsoluteApiUrlRegex(pathname: string){
-    return pathname.replace(/^(.+sosialhjelp\/)(.+)$/,  "$1login-api/soknad-api/")
+export function getAbsoluteApiUrlWithLoginApi(){
+    return window.location.pathname.replace(/^(.+sosialhjelp\/)(.+)$/,  "$1login-api/soknad-api/")
 }
 
 function determineCredentialsParameter() {
@@ -92,7 +98,7 @@ export enum HttpStatus {
     UNAUTHORIZED = "unauthorized"
 }
 
-export const serverRequest = (method: string, urlPath: string, body: string, retries = 6) => {
+export const serverRequest = (method: string, urlPath: string, body: string, withAccessToken?: boolean, retries = 6) => {
     const OPTIONS: RequestInit = {
         headers: getHeaders(),
         method,
@@ -101,14 +107,14 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
     };
 
     return new Promise((resolve, reject) => {
-        fetch(getApiBaseUrl() + urlPath, OPTIONS)
+        fetch(getApiBaseUrl(withAccessToken) + urlPath, OPTIONS)
             .then((response: Response) => {
                 if (response.status === 409) {
                     if (retries === 0) {
                         throw new Error(response.statusText);
                     }
                     setTimeout(() => {
-                        serverRequest(method, urlPath, body, retries - 1)
+                        serverRequest(method, urlPath, body, withAccessToken, retries - 1)
                             .then((data: any) => {
                                 resolve(data);
                             })
@@ -129,16 +135,16 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
     });
 };
 
-export function fetchToJson(urlPath: string) {
-    return serverRequest(RequestMethod.GET, urlPath, "");
+export function fetchToJson(urlPath: string, withAccessToken?: boolean) {
+    return serverRequest(RequestMethod.GET, urlPath, "", withAccessToken);
 }
 
-export function fetchPut(urlPath: string, body: string) {
-    return serverRequest(RequestMethod.PUT, urlPath, body);
+export function fetchPut(urlPath: string, body: string, withAccessToken?: boolean) {
+    return serverRequest(RequestMethod.PUT, urlPath, body, withAccessToken);
 }
 
-export function fetchPost(urlPath: string, body: string) {
-    return serverRequest(RequestMethod.POST, urlPath, body);
+export function fetchPost(urlPath: string, body: string, withAccessToken?: boolean) {
+    return serverRequest(RequestMethod.POST, urlPath, body, withAccessToken);
 }
 
 export function fetchDelete(urlPath: string) {
@@ -163,7 +169,7 @@ export function fetchOppsummering(urlPath: string) {
         method: "GET",
         credentials: determineCredentialsParameter()
     };
-    return fetch(getApiBaseUrl() + urlPath, OPTIONS)
+    return fetch(getApiBaseUrl(true) + urlPath, OPTIONS)
         .then((response: Response) => {
             const statusKode: number = verifyStatusSuccessOrRedirect(response);
             if (statusKode >= 200 && statusKode < 300) {
