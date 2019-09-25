@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Route, Switch} from "react-router";
 import {InjectedIntlProps, injectIntl} from "react-intl";
-import SideIkkeFunnet from "../nav-soknad/containers/SideIkkeFunnet";
 import ServerFeil from "../nav-soknad/containers/ServerFeil";
 import Informasjon from "./informasjon";
 import MockBruker from "./mock/mockbruker";
