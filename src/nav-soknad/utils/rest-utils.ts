@@ -38,8 +38,7 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
         return window.location.origin.replace(`${HEROKU_MASTER_APP_NAME}`, `${HEROKU_API_MASTER_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
     }
     if (kjorerJetty()) {
-        return `http://127.0.0.1:7000/${API_CONTEXT_PATH}/`
-        //return `http://127.0.0.1:7000/${apiContextPath}/`
+        return `http://127.0.0.1:7000/${apiContextPath}/`
     }
 
     return getAbsoluteApiUrl(withAccessToken);
@@ -269,21 +268,13 @@ export function toJson<T>(response: Response): Promise<T> {
 }
 
 function verifyStatusSuccessOrRedirect(response: Response): number {
-    const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
-
-    if (response.status === 401){
-        // @ts-ignore
-        if (!window[AUTH_LINK_VISITED]) {
-            response.json().then(r => {
-                if (window.location.search.split("error_id=")[1] !== r.id) {
-                    const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
-                    window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "%26error_id=" + r.id;
-                }
-            });
-        } else {
-            // @ts-ignore
-            window[AUTH_LINK_VISITED] = false;
-        }
+    if (response.status === 401) {
+        response.json().then(r => {
+            if (window.location.search.split("error_id=")[1] !== r.id) {
+                const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
+                window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "%26error_id=" + r.id;
+            }
+        });
         return 401;
     }
     if (response.status >= 200 && response.status < 300) {
