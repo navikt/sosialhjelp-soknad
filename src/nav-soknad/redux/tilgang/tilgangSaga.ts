@@ -7,6 +7,7 @@ import {
 	hentTilgangFeilet
 } from "./tilgangActions";
 import {loggAdvarsel} from "../navlogger/navloggerActions";
+import {tilgangOk} from "../init/initActions";
 
 export function* hentTilgangSaga() {
 	try {
@@ -16,6 +17,7 @@ export function* hentTilgangSaga() {
 			"informasjon/utslagskriterier/sosialhjelp"
 		);
 		yield put(hentetTilgang(response.harTilgang, response.sperrekode));
+		yield put(tilgangOk())
 	} catch (reason) {
 		if (reason.message === HttpStatus.UNAUTHORIZED){
 			yield put(loggAdvarsel("hentTilgangSaga: " + reason));

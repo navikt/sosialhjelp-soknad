@@ -8,6 +8,7 @@ import {
 } from "./ledeteksterActions";
 import { SagaIterator } from "redux-saga";
 import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
+import {ledeteksterOk} from "../init/initActions";
 
 const urlInneholderVistekster = () =>
 	window.location.search.match(/vistekster=true/) !== null;
@@ -33,6 +34,7 @@ function* hentTeksterSaga(): SagaIterator {
 		const visNokler = yield call(urlInneholderVistekster);
 		const tekster = visNokler ? leggNoklerPaaLedetekster(response) : response;
 		yield put(hentetTekster(tekster));
+		yield put(ledeteksterOk());
 	} catch (reason) {
 		if (reason.message === HttpStatus.UNAUTHORIZED){
 			yield put(loggAdvarsel("hentTeksterSaga: " + reason));

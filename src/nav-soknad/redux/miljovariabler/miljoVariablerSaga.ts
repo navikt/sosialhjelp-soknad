@@ -7,12 +7,14 @@ import {
 	mottattMiljovariabler
 } from "./miljovariablerActions";
 import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
+import {miljovariablerOk} from "../init/initActions";
 
 export function* hentMiljovariablerSaga() {
 	try {
 		yield put(henterMiljovariabler());
 		const response = yield call(fetchToJson, "informasjon/miljovariabler");
 		yield put(mottattMiljovariabler(response));
+		yield put(miljovariablerOk())
 	} catch (reason) {
 		if (reason.message === HttpStatus.UNAUTHORIZED){
 			yield put(loggAdvarsel("hentMiljøvariablerSaga: " + reason));
