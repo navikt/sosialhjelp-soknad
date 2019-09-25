@@ -70,7 +70,6 @@ class IntlProvider extends React.Component<Props, {}> {
                 restStatusMiljovariabler === REST_STATUS.OK &&
                 restStatusLedetekster === REST_STATUS.OK &&
                 restStatusFornavn === REST_STATUS.OK
-
             )
         ){
             children = (

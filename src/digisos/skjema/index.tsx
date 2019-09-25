@@ -68,10 +68,7 @@ class SkjemaRouter extends React.Component<Props, {}> {
             const {gyldigUrl} = this.props;
 
             if (!gyldigUrl) {
-                // return <SideIkkeFunnet/>;
-                return (
-                    <div>Black Lotus</div>
-                );
+                return <SideIkkeFunnet/>;
             }
             const path = "/skjema/:brukerBehandlingId";
             return (
