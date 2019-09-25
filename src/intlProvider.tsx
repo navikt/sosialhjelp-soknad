@@ -44,21 +44,7 @@ class IntlProvider extends React.Component<Props, {}> {
         } = this.props;
         const locale = "nb";
 
-        if (
-            !(
-                restStatusTilgang === REST_STATUS.OK &&
-                restStatusMiljovariabler === REST_STATUS.OK &&
-                restStatusLedetekster === REST_STATUS.OK &&
-                restStatusFornavn === REST_STATUS.OK
 
-            )
-        ){
-            children = (
-                <div className="application-spinner">
-                    <NavFrontendSpinner type="XXL"/>
-                </div>
-            );
-        }
 
         if (initRestStatus === REST_STATUS.FEILET) {
             /** I og med tekstressurser ikke er tilgjengelig, må tekster hardkodes */
@@ -71,6 +57,22 @@ class IntlProvider extends React.Component<Props, {}> {
                 </Feilside>
             );
         } else if (initRestStatus !== REST_STATUS.OK) {
+            children = (
+                <div className="application-spinner">
+                    <NavFrontendSpinner type="XXL"/>
+                </div>
+            );
+        }
+
+        if (
+            !(
+                restStatusTilgang === REST_STATUS.OK &&
+                restStatusMiljovariabler === REST_STATUS.OK &&
+                restStatusLedetekster === REST_STATUS.OK &&
+                restStatusFornavn === REST_STATUS.OK
+
+            )
+        ){
             children = (
                 <div className="application-spinner">
                     <NavFrontendSpinner type="XXL"/>
