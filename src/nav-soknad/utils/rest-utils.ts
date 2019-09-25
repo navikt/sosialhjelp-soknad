@@ -28,11 +28,11 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
         return `http://localhost:8181/${API_CONTEXT_PATH}/`;
 
         // Kjør med login-api som proxy om en ønsker access_token fra idporten (uncomment begge linjer under)
-        //const apiPort = withAccessToken ? 7000 : 8181;
+        // const apiPort = withAccessToken ? 7000 : 8181;
         // return `http://localhost:${apiPort}/${apiContextPath}/`;
     }
     if (window.location.origin.indexOf("nais.oera") >= 0) {
-        return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${API_CONTEXT_PATH}/`;
+        return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${apiContextPath}/`;
     }
     if (window.location.origin.indexOf("heroku") >= 0) {
         return window.location.origin.replace(`${HEROKU_MASTER_APP_NAME}`, `${HEROKU_API_MASTER_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
