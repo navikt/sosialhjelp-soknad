@@ -5,14 +5,14 @@ import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import {Bosituasjon} from "./bosituasjonTypes";
-import {SoknadsSti} from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
 import {
     connectSoknadsdataContainer, onEndretValideringsfeil,
     SoknadsdataContainerProps
-} from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {ValideringsFeilKode} from "../../../nav-soknad/redux/valideringActionTypes";
+} from "../../redux/soknadsdata/soknadsdataContainerUtils";
+import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 

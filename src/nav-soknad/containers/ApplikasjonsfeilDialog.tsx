@@ -2,10 +2,10 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
-import { DispatchProps } from "../redux/reduxTypes";
+import { DispatchProps } from "../../digisos/redux/reduxTypes";
 import Dialog from "../components/dialog/Dialog";
-import { clearApplikasjonsfeil } from "../redux/applikasjonsfeil/applikasjonsfeilActions";
-import { Applikasjonsfeil } from "../redux/applikasjonsfeil/applikasjonsfeilTypes";
+import { clearApplikasjonsfeil } from "../../digisos/redux/applikasjonsfeil/applikasjonsfeilActions";
+import { Applikasjonsfeil } from "../../digisos/redux/applikasjonsfeil/applikasjonsfeilTypes";
 import {State} from "../../digisos/redux/reducers";
 
 interface StateProps {

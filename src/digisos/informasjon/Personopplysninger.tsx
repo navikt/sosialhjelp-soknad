@@ -1,8 +1,8 @@
 import * as React from "react";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
-import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
+import { DispatchProps } from "../redux/reduxTypes";
 import { connect } from "react-redux";
-import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
+import { setVisSamtykkeInfo } from "../redux/init/initActions";
 import { State } from "../redux/reducers";
 import BehandlingAvPersonopplysningerModal from "./BehandlingAvPersonopplysningerModal";
 import { Undertittel } from "nav-frontend-typografi";

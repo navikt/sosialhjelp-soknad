@@ -9,12 +9,12 @@ import { maksLengde } from "../../../../nav-soknad/validering/valideringer";
 import {
 	connectSoknadsdataContainer, onEndretValideringsfeil,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { Arbeidsforhold } from "./arbeidTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {REST_STATUS} from "../../../../nav-soknad/types";
-import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
+import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 

@@ -6,27 +6,27 @@ import {
     OpplysningerModel,
     OpplysningRad,
     OpplysningSpc,
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {
     DispatchProps,
     Valideringsfeil,
     ValideringsFeilKode
-} from "../../../nav-soknad/redux/reduxTypes";
+} from "../../redux/reduxTypes";
 import {connect} from "react-redux";
 import {
     getSpcForOpplysning,
     getTomVedleggRad
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
+} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {Column, Row} from "nav-frontend-grid";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {
     lagreOpplysningHvisGyldigAction,
     updateOpplysning,
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerActions";
+} from "../../redux/okonomiskeOpplysninger/opplysningerActions";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
-import {clearValideringsfeil, setValideringsfeil} from "../../../nav-soknad/redux/valideringActions";
+import {clearValideringsfeil, setValideringsfeil} from "../../redux/validering/valideringActions";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
-import {getFeilForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerSaga";
+import {getFeilForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerSaga";
 import {InjectedIntlProps} from "react-intl";
 import {State} from "../../redux/reducers";
 import { injectIntl} from "react-intl";

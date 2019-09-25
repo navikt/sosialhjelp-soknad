@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {connect} from "react-redux";
-import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
-import {LedetekstState} from "../../nav-soknad/redux/ledetekster/ledeteksterTypes";
+import {DispatchProps} from "../redux/reduxTypes";
+import {LedetekstState} from "../redux/ledetekster/ledeteksterTypes";
 import {REST_STATUS} from "../../nav-soknad/types";
 import {State} from "../redux/reducers";
-import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
+import {setLinkVisited} from "../redux/authentication/authenticationActions";
 import {Redirect} from "react-router";
 
 interface IntlProviderProps {

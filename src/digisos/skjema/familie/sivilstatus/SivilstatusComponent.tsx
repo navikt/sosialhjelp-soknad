@@ -10,8 +10,8 @@ import PersonSkjema from "./PersonSkjema";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 

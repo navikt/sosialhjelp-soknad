@@ -1,13 +1,13 @@
 import * as React from "react";
 import {Column, Container, Row} from "nav-frontend-grid";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
-import {setPath} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
+import {setPath} from "../../../redux/soknadsdata/soknadsdataActions";
 import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {InjectedIntlProps, injectIntl} from "react-intl";
-import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {erTall, fdato, maksLengde, minLengde} from "../../../../nav-soknad/validering/valideringer";
 import {konverterFraISODato, konverterTilISODato} from "./datoUtils";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";

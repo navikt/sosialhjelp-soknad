@@ -6,8 +6,8 @@ import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { Bostotte } from "./bostotteTypes";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";

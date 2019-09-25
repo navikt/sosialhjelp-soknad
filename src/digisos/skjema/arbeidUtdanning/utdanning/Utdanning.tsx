@@ -7,8 +7,8 @@ import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 
 const FAKTUM_STUDIER = "dinsituasjon.studerer";
 const FAKTUM_STUDERER = "dinsituasjon.studerer.true.grad";

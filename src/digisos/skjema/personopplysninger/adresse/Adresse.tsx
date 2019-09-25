@@ -1,10 +1,10 @@
 import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import * as React from "react";
-import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
@@ -19,7 +19,7 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import AdresseTypeahead from "./AdresseTypeahead";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
-import {Valideringsfeil} from "../../../../nav-soknad/redux/reduxTypes";
+import {Valideringsfeil} from "../../../redux/reduxTypes";
 
 interface OwnProps {
     disableLoadingAnimation?: boolean;

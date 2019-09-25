@@ -1,5 +1,5 @@
 import { mod11Kontroll, konverterFdatoTilDato } from "./valideringFuncUtils";
-import {ValideringsFeilKode} from "../redux/valideringActionTypes";
+import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
 
 export function pakrevd(value: string): ValideringsFeilKode | undefined {
 	return typeof value === "string" && value.length > 0

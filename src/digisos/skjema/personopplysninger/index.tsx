@@ -1,10 +1,10 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {State} from "../../redux/reducers";
-import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
+import {DispatchProps} from "../../redux/reduxTypes";
 import {FaktumComponentProps} from "../../../nav-soknad/redux/fakta/faktaTypes";
-import { getErSystemdataEndret } from "../../../nav-soknad/redux/soknad/soknadActions";
-import { ErSystemdataEndret } from "../../../nav-soknad/redux/soknad/soknadActionTypes";
+import { getErSystemdataEndret } from "../../redux/soknad/soknadActions";
+import { ErSystemdataEndret } from "../../redux/soknad/soknadActionTypes";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import William from "../../../nav-soknad/components/svg/illustrasjoner/William";
 import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";

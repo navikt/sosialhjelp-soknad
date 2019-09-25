@@ -3,8 +3,8 @@ import NavFrontendModal from "nav-frontend-modal";
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
 import {FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import {connect} from "react-redux";
-import {DispatchProps} from "../../redux/reduxTypes";
-import {visSoknadAlleredeSendtPrompt} from "../../redux/ettersendelse/ettersendelseActions";
+import {DispatchProps} from "../../../digisos/redux/reduxTypes";
+import {visSoknadAlleredeSendtPrompt} from "../../../digisos/redux/ettersendelse/ettersendelseActions";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
 

@@ -10,11 +10,11 @@ import Gruppe from "./Gruppe";
 import {
     OpplysningGruppe,
     OpplysningerModel, Opplysning
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
-import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
-import {hentOpplysninger} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerActions";
+} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
+import {DispatchProps} from "../../redux/reduxTypes";
+import {hentOpplysninger} from "../../redux/okonomiskeOpplysninger/opplysningerActions";
 import {RestStatus} from "../../../nav-soknad/types";
-import {gruppeRekkefolge} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerConfig";
+import {gruppeRekkefolge} from "../../redux/okonomiskeOpplysninger/opplysningerConfig";
 
 interface StoreToProps {
     okonomiskeOpplysninger: OpplysningerModel;

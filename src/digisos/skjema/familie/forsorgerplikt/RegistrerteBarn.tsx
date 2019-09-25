@@ -8,8 +8,8 @@ import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sp
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 
 type Props = SoknadsdataContainerProps  & InjectedIntlProps;

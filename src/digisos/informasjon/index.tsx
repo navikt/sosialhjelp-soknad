@@ -5,13 +5,13 @@ import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl,} 
 import DocumentTitle from "react-document-title";
 import Knapp from "nav-frontend-knapper";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
-import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
+import {DispatchProps} from "../redux/reduxTypes";
 import IkkeTilgang from "./IkkeTilgang";
-import {TilgangSperrekode} from "../../nav-soknad/redux/tilgang/tilgangTypes";
+import {TilgangSperrekode} from "../redux/tilgang/tilgangTypes";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 import Personopplysninger from "./Personopplysninger";
 import {Panel} from "nav-frontend-paneler";
-import {opprettSoknad} from "../../nav-soknad/redux/soknad/soknadActions";
+import {opprettSoknad} from "../redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import {State} from "../redux/reducers";

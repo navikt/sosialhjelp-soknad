@@ -2,9 +2,9 @@ import * as React from 'react';
 import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
-import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";

@@ -19,12 +19,12 @@ import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga"
 import IntlProvider from "./intlProvider";
 import App from "./digisos";
-import {loggException} from "./nav-soknad/redux/navlogger/navloggerActions";
+import {loggException} from "./digisos/redux/navlogger/navloggerActions";
 import {erDev} from "./nav-soknad/utils/rest-utils";
-import {avbrytSoknad} from "./nav-soknad/redux/soknad/soknadActions";
-import {SoknadState} from "./nav-soknad/redux/reduxTypes";
+import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
+import {SoknadState} from "./digisos/redux/reduxTypes";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
-import {visSoknadAlleredeSendtPrompt} from "./nav-soknad/redux/ettersendelse/ettersendelseActions";
+import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
 import {getContextPathBasename} from "./configuration";
 
 

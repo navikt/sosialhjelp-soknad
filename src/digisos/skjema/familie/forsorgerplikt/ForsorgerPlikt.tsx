@@ -1,10 +1,10 @@
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import * as React from "react";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import Barnebidrag from "./Barnebidrag";

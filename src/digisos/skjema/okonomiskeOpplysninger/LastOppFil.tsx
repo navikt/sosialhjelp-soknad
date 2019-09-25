@@ -1,11 +1,11 @@
 import * as React from "react";
 import {Knapp} from "nav-frontend-knapper";
 import {FormattedMessage, InjectedIntlProps} from "react-intl";
-import {Opplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+import {Opplysning} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {connect} from "react-redux";
-import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
-import {lastOppFil} from "../../../nav-soknad/redux/fil/filActions";
-import {FilState} from "../../../nav-soknad/redux/fil/filTypes";
+import {DispatchProps} from "../../redux/reduxTypes";
+import {lastOppFil} from "../../redux/fil/filActions";
+import {FilState} from "../../redux/fil/filTypes";
 import {State} from "../../redux/reducers";
 import {injectIntl} from "react-intl";
 

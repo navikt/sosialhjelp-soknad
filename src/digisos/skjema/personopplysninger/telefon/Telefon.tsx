@@ -8,10 +8,10 @@ import { erTelefonnummer } from "../../../../nav-soknad/validering/valideringer"
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { Telefonnummer } from "./telefonTypes";
-import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
+import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";

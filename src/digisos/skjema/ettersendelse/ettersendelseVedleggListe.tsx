@@ -4,12 +4,12 @@ import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
 import Knapp from "nav-frontend-knapper";
 import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
-import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
+import {DispatchProps} from "../../redux/reduxTypes";
 import {connect} from "react-redux";
 import {State} from "../../redux/reducers";
-import {sendEttersendelse} from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
-import {EttersendelseVedleggBackend} from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
-import {getSpcForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
+import {sendEttersendelse} from "../../redux/ettersendelse/ettersendelseActions";
+import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
+import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 
 interface OwnProps {
     ettersendelseAktivert: boolean;
