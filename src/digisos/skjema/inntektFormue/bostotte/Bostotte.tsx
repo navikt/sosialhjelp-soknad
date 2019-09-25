@@ -88,23 +88,10 @@ class BostotteView extends React.Component<Props, State> {
 		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
 			oppstartsModus = false;
 		}
+		const requestToHusbankenFeilet: boolean = bostotte.stotteFraHusbankenFeilet === true;
 		return (
 			<div className="blokk-xs">
-				<div className="blokk-xs">
-					<span><FormattedMessage id="inntekt.bostotte.husbanken.tittel"/></span>
-					<span><FormattedMessage id="inntekt.bostotte.husbanken.info"/></span>
-					{
-						bostotte.utbetalinger.map((utbetaling, index) => {
-							return BostotteView.renderUtbetaling("Bostøtte", utbetaling.belop, utbetaling.utbetalingsdato, utbetaling.tittel, index);
-						})
-					}
-					{
-						bostotte.saker.map((sak, index) => {
-							return BostotteView.renderSak("Sak", sak.dato, sak.status, sak.beskrivelse, index);
-						})
-					}
-				</div>
-				<div className="skjema-sporsmal">
+				{requestToHusbankenFeilet && (<div className="skjema-sporsmal">
 					<JaNeiSporsmal
 						visPlaceholder={oppstartsModus}
 						tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_BOSTOTTE)}
@@ -120,7 +107,21 @@ class BostotteView extends React.Component<Props, State> {
 					>
 						<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
 					</Informasjonspanel>
-				</div>
+				</div>)}
+				{!requestToHusbankenFeilet && (<div className="blokk-xs">
+					<span><FormattedMessage id="inntekt.bostotte.husbanken.tittel"/></span>
+					<span><FormattedMessage id="inntekt.bostotte.husbanken.info"/></span>
+					{
+						bostotte.utbetalinger.map((utbetaling, index) => {
+							return BostotteView.renderUtbetaling("Bostøtte", utbetaling.belop, utbetaling.utbetalingsdato, utbetaling.tittel, index);
+						})
+					}
+					{
+						bostotte.saker.map((sak, index) => {
+							return BostotteView.renderSak("Sak", sak.dato, sak.status, sak.beskrivelse, index);
+						})
+					}
+				</div>)}
 			</div>
 		);
 	}

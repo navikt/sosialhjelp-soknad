@@ -2,12 +2,14 @@ export interface Bostotte {
 	"bekreftelse": null | boolean;
 	"utbetalinger": Utbetaling[];
 	"saker": Sak[];
+	"stotteFraHusbankenFeilet": null | boolean;
 }
 
 export const initialBostotteState: Bostotte = {
 	"bekreftelse": null,
 	"utbetalinger": [],
-	"saker": []
+	"saker": [],
+	"stotteFraHusbankenFeilet": null
 }
 
 export interface Utbetaling {
