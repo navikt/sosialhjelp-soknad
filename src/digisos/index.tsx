@@ -60,11 +60,18 @@ class App extends React.Component<InjectedIntlProps, {}> {
                         exact={true}
                     />
                     <Route path={`/serverfeil`} component={ServerFeil}/>
-                    <Route component={SideIkkeFunnet}/>
+                    {/*<Route component={SideIkkeFunnet}/>*/}
+                    <Route component={ancestralRecall}/>
 				</Switch>
 			</span>
         );
     }
 }
+
+const ancestralRecall: React.FC = () => {
+    return (
+        <div>Ancestral Recall</div>
+    )
+};
 
 export default injectIntl(App);
