@@ -2,8 +2,8 @@ import * as React from "react";
 import {
 	lastOppEttersendelseVedlegg,
 	slettEttersendtVedlegg
-} from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
-import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
+} from "../../redux/ettersendelse/ettersendelseActions";
+import {DispatchProps} from "../../redux/reduxTypes";
 import { connect } from "react-redux";
 import { downloadAttachedFile } from "../../../nav-soknad/utils/rest-utils";
 import { REST_STATUS } from "../../../nav-soknad/types";
@@ -14,8 +14,8 @@ import { REST_FEIL } from "../../../nav-soknad/types/restFeilTypes";
 import {
     EttersendelseState,
     EttersendelseVedleggBackend
-} from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
-import {Fil, OpplysningType} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+} from "../../redux/ettersendelse/ettersendelseTypes";
+import {Fil, OpplysningType} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {State} from "../../redux/reducers";
 
 interface OwnProps {

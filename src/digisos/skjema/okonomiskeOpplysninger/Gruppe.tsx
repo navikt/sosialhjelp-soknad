@@ -2,12 +2,12 @@ import * as React from "react";
 import Skjemapanel from "../../../nav-soknad/components/skjemapanel";
 import {FormattedHTMLMessage, injectIntl} from "react-intl";
 import {connect} from "react-redux";
-import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
+import {DispatchProps} from "../../redux/reduxTypes";
 import {
     OpplysningerModel,
     Opplysning, OpplysningGruppe,
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
-import {getGruppeTittelKey} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
+} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
+import {getGruppeTittelKey} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import OpplysningView from "./OpplysningView";
 import { InjectedIntlProps} from "react-intl";
 import {State} from "../../redux/reducers";

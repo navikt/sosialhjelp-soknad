@@ -1,12 +1,12 @@
 import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
-import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
+import { DispatchProps } from "../redux/reduxTypes";
 import { connect } from "react-redux";
-import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
+import { setVisSamtykkeInfo } from "../redux/init/initActions";
 import { Knapp } from "nav-frontend-knapper";
 import { finnValgtEnhetsNavn } from "../data/kommuner";
-import {Soknadsdata} from "../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
 import {State} from "../redux/reducers";
 
 interface StateProps {

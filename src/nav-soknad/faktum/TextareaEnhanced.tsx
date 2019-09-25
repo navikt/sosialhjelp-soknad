@@ -4,7 +4,7 @@ import {InjectedIntlProps, injectIntl} from "react-intl";
 import {getInputFaktumTekst, getIntlTextOrKey} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {connect} from "react-redux";
-import {Valideringsfeil} from "../redux/valideringActionTypes";
+import {Valideringsfeil} from "../../digisos/redux/validering/valideringActionTypes";
 import {InjectedIntl} from "react-intl";
 
 interface OwnProps {

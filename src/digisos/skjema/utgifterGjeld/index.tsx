@@ -1,6 +1,6 @@
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
+import { DispatchProps } from "../../redux/reduxTypes";
 import { FaktumComponentProps } from "../../../nav-soknad/redux/fakta/faktaTypes";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import KredittkortIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/KredittkortIllustrasjon";

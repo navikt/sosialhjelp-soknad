@@ -2,10 +2,10 @@ import * as React from "react";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";

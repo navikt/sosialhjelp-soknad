@@ -1,21 +1,21 @@
 import * as React from 'react';
-import {DispatchProps, Valideringsfeil} from "../../../nav-soknad/redux/reduxTypes";
+import {DispatchProps, Valideringsfeil} from "../../redux/reduxTypes";
 import {
     Fil,
     Opplysning, OpplysningSpc,
     VedleggStatus
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {connect} from "react-redux";
 import LastOppFil from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
 import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
-import {startSlettFil} from "../../../nav-soknad/redux/fil/filActions";
+import {startSlettFil} from "../../redux/fil/filActions";
 import {InjectedIntlProps} from "react-intl";
 import {
     lagreOpplysningHvisGyldigAction,
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerActions";
+} from "../../redux/okonomiskeOpplysninger/opplysningerActions";
 import OpplastetVedlegg from "./OpplastetVedlegg";
-import {getSpcForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
+import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {State} from "../../redux/reducers";
 import {injectIntl} from "react-intl";
 

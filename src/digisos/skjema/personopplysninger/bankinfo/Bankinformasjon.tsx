@@ -3,19 +3,19 @@ import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { Checkbox } from "nav-frontend-skjema";
 import { erKontonummer } from "../../../../nav-soknad/validering/valideringer";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import { Kontonummer } from "./KontonummerType";
 import {
 	connectSoknadsdataContainer,
 	onEndretValideringsfeil,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
-import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
+import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 
 interface OwnProps {

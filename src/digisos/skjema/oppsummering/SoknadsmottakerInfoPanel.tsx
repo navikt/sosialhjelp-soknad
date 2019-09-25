@@ -5,7 +5,7 @@ import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../redux/soknadsdata/soknadsdataContainerUtils";
 
 type Props = InjectedIntlProps & SoknadsdataContainerProps;
 

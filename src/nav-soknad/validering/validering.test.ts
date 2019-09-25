@@ -1,6 +1,6 @@
 import * as validering from "./valideringer";
 import forventAt from "./forventAt";
-import {ValideringsFeilKode} from "../redux/valideringActionTypes";
+import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
 
 describe("test av valideringsfunksjoner", () => {
 	it("skal validere påkrevd", () => {

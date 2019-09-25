@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TilgangSperrekode } from "../../nav-soknad/redux/tilgang/tilgangTypes";
+import { TilgangSperrekode } from "../redux/tilgang/tilgangTypes";
 import Infoblokk from "../../nav-soknad/components/infoblokk";
 import {
 	FormattedHTMLMessage,

@@ -2,9 +2,9 @@ import * as React from "react";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { Sivilstatus, Status } from "./FamilieTypes";
 import SivilstatusComponent from "./SivilstatusComponent";
 import EktefelleDetaljer from "./EktefelleDetaljer";

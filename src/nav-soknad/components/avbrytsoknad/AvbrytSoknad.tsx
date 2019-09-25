@@ -2,12 +2,12 @@ import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp, Knapp } from "nav-frontend-knapper";
-import { fortsettSoknad, slettSoknad } from "../../redux/soknad/soknadActions";
+import { fortsettSoknad, slettSoknad } from "../../../digisos/redux/soknad/soknadActions";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
-import {DispatchProps} from "../../redux/reduxTypes";
-import { AVBRYT_DESTINASJON } from "../../redux/soknad/soknadActionTypes";
-import { navigerTilDittNav } from "../../redux/navigasjon/navigasjonActions";
+import {DispatchProps} from "../../../digisos/redux/reduxTypes";
+import { AVBRYT_DESTINASJON } from "../../../digisos/redux/soknad/soknadActionTypes";
+import { navigerTilDittNav } from "../../../digisos/redux/navigasjon/navigasjonActions";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
 

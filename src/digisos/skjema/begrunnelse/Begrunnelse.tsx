@@ -9,9 +9,9 @@ import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
 import {
 	connectSoknadsdataContainer, onEndretValideringsfeil,
 	SoknadsdataContainerProps
-} from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
-import {ValideringsFeilKode} from "../../../nav-soknad/redux/valideringActionTypes";
+} from "../../redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../redux/soknadsdata/soknadsdataReducer";
+import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 import {replaceDotWithUnderscore} from "../../../nav-soknad/utils";
 
 const MAX_CHARS_BEGRUNNELSE = 600;

@@ -3,10 +3,10 @@ import * as React from "react";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 

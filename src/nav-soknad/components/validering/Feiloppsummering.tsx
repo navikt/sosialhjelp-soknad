@@ -2,7 +2,7 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import { Undertittel } from "nav-frontend-typografi";
 import { scrollToElement } from "../../utils";
-import {Valideringsfeil} from "../../redux/valideringActionTypes";
+import {Valideringsfeil} from "../../../digisos/redux/validering/valideringActionTypes";
 
 
 const scrollToFaktum = (
