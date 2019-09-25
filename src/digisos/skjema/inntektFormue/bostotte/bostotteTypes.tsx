@@ -20,5 +20,6 @@ export interface Utbetaling {
 
 export interface Sak {
 	"dato": string,
+	"status": string
 	"beskrivelse": string
 }
