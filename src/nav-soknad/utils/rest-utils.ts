@@ -42,15 +42,17 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
         //return `http://127.0.0.1:7000/${apiContextPath}/`
     }
 
-    return withAccessToken? getAbsoluteApiUrlWithLoginApi(): getAbsoluteApiUrl();
+    return getAbsoluteApiUrl(withAccessToken);
 }
 
-export function getAbsoluteApiUrl() {
-    return window.location.pathname.replace(/^(.+sosialhjelp\/)(.+)$/,  "$1-api/")
+export function getAbsoluteApiUrl(withAccessToken?: boolean) {
+    return getAbsoluteApiUrlRegex(window.location.pathname, withAccessToken);
 }
 
-export function getAbsoluteApiUrlWithLoginApi(){
-    return window.location.pathname.replace(/^(.+sosialhjelp\/)(.+)$/,  "$1login-api/soknad-api/")
+export function getAbsoluteApiUrlRegex(pathname: string, withAccessToken?: boolean){
+    return withAccessToken
+        ? pathname.replace(/^(.+sosialhjelp\/)(.+)$/,  "$1login-api/soknad-api/")
+        : pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/")
 }
 
 function determineCredentialsParameter() {
