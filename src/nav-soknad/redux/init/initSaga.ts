@@ -36,7 +36,7 @@ function* startInit(): IterableIterator<any> {
 // 	fornavn: string;
 // }
 
-function* getFornavnSaga(): IterableIterator<any> {
+function* getFornavnSaga() {
 	try {
 		let response: any = yield call(fetchToJson, "informasjon/fornavn" );
 		yield put(lagreFornavnPaStore(response.fornavn));
@@ -45,14 +45,14 @@ function* getFornavnSaga(): IterableIterator<any> {
 	}
 }
 
-function* isAllDataLoaded(action: any): IterableIterator<any> {
+function* isAllDataLoaded(action: any) {
 	initActions = initActions.filter(el => el !== action.type);
 	if (initActions.length === 0) {
 		yield put(initFerdig());
 	}
 }
 
-function* initActionFeilet(): IterableIterator<any> {
+function* initActionFeilet() {
 	yield put(initFeilet());
 }
 
