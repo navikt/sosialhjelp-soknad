@@ -27,7 +27,7 @@ I stedet for npm er det mulig å bruke yarn.
             // return "http://localhost:8189/sendsoknad/";
             return "http://localhost:3001/";
         }
-        return kjorerJetty() ? "http://127.0.0.1:8181/sendsoknad/" : "/sendsoknad/";
+        return kjorerJetty() ? "http://127.0.0.1:7000/sosialhjelp/login-api/soknad-api/" : "/sendsoknad/";
     }
  ```
 
