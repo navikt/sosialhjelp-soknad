@@ -113,16 +113,20 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 									onClick={() => downloadAttachedFile(lastNedUrl)}
 								>
 									<PaperclipIcon/>
+									<div className="vedleggsliste__filnavn_tekst">
 									{fil.filNavn}
+									</div>
 								</button>
-								<button
-									className="linkbutton linkbutton--normal vedleggsliste__fil_slett"
-									title="Slett vedlegg"
-									onClick={() => this.removeFile(fil.uuid, this.props.vedlegg.type)}
-								>
-									Fjern
-									<MargIkon ikon={MargIkoner.SØPPELBØTTE}/>
-								</button>
+								<div className="vedleggsliste__fil_slett_wrapper">
+									<button
+										className="linkbutton linkbutton--normal vedleggsliste__fil_slett"
+										title="Slett vedlegg"
+										onClick={() => this.removeFile(fil.uuid, this.props.vedlegg.type)}
+									>
+										Fjern
+										<MargIkon ikon={MargIkoner.SØPPELBØTTE}/>
+									</button>
+								</div>
 							</div>
 						);
 					})}
