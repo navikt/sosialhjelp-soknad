@@ -86,7 +86,7 @@ class BostotteView extends React.Component<Props, State> {
 		const bostotte: Bostotte | undefined = soknadsdata.inntekt.bostotte;
 		const restStatus = soknadsdata.restStatus.inntekt.bostotte;
 		let oppstartsModus = this.state.oppstartsModus;
-		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+		if (oppstartsModus && restStatus === REST_STATUS.OK) {
 			oppstartsModus = false;
 		}
 		const requestToHusbankenFeilet: boolean = bostotte.stotteFraHusbankenFeilet === true;
