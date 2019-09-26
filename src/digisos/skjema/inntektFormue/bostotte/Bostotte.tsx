@@ -12,6 +12,7 @@ import { Bostotte } from "./bostotteTypes";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
 import { REST_STATUS } from "../../../../nav-soknad/types";
+import Lesmerpanel from "nav-frontend-lesmerpanel";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte";
 
@@ -108,9 +109,16 @@ class BostotteView extends React.Component<Props, State> {
 						<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
 					</Informasjonspanel>
 				</div>)}
-				{!requestToHusbankenFeilet && (<div className="blokk-xs">
-					<span><FormattedMessage id="inntekt.bostotte.husbanken.tittel"/></span>
-					<span><FormattedMessage id="inntekt.bostotte.husbanken.info"/></span>
+				{!requestToHusbankenFeilet && (<Lesmerpanel
+					apneTekst={"Se detaljer"}
+					lukkTekst={"Lukk"}
+					intro={
+						<div>
+							<h4><FormattedMessage id="inntekt.bostotte.husbanken.tittel"/></h4>
+							<FormattedMessage id="inntekt.bostotte.husbanken.info"/>
+						</div>
+					}
+					border>
 					{
 						bostotte.utbetalinger.map((utbetaling, index) => {
 							return BostotteView.renderUtbetaling("Bostøtte", utbetaling.belop, utbetaling.utbetalingsdato, utbetaling.tittel, index);
@@ -121,7 +129,7 @@ class BostotteView extends React.Component<Props, State> {
 							return BostotteView.renderSak("Sak", sak.dato, sak.status, sak.beskrivelse, index);
 						})
 					}
-				</div>)}
+				</Lesmerpanel>)}
 			</div>
 		);
 	}
