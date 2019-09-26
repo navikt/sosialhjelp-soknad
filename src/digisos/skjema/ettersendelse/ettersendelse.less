@@ -269,10 +269,21 @@
   margin-left: 25px;
   margin-top: -19px;
   background-color: white;
-  max-width: 61vw;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+@media screen and (min-width: 701px){
+  .vedleggsliste__filnavn_tekst {
+    max-width: 400px;
+  }
+}
+
+@media screen and (max-width: 700px){
+  .vedleggsliste__filnavn_tekst {
+    max-width: 61vw;
+  }
 }
 
 .ettersendelse_send_vedlegg_knapp_wrapper {
