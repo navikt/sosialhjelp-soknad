@@ -99,7 +99,7 @@ export class FormueView extends React.Component<Props, State> {
         return feilkode;
     }
 
-    renderCheckBox(navn: FormueId) {
+    renderCheckBox(navn: FormueId, textKey: string) {
         const {soknadsdata} = this.props;
         const formue: Formue = soknadsdata.inntekt.formue;
         let label: React.ReactNode;
@@ -111,7 +111,7 @@ export class FormueView extends React.Component<Props, State> {
         if (oppstartsModus) {
             label = <TextPlaceholder lines={1} style={{marginTop: "0.2rem"}}/>
         } else {
-            label = <FormattedHTMLMessage id={FORMUE + ".true.type." + navn}/>
+            label = <FormattedHTMLMessage id={FORMUE + ".true.type." + textKey}/>
         }
 
         return (
@@ -133,12 +133,12 @@ export class FormueView extends React.Component<Props, State> {
                 tekster={getFaktumSporsmalTekst(this.props.intl, FORMUE + ".true.type")}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
-                {this.renderCheckBox(FormueId.BRUKSKONTO)}
-                {this.renderCheckBox(FormueId.SPAREKONTO )}
-                {this.renderCheckBox(FormueId.BSU)}
-                {this.renderCheckBox(FormueId.LIVSFORSIKRING)}
-                {this.renderCheckBox(FormueId.VERDIPAPIRER)}
-                {this.renderCheckBox(FormueId.ANNET)}
+                {this.renderCheckBox(FormueId.BRUKSKONTO, FormueId.BRUKSKONTO)}
+                {this.renderCheckBox(FormueId.SPAREKONTO, FormueId.SPAREKONTO)}
+                {this.renderCheckBox(FormueId.BSU, FormueId.BSU)}
+                {this.renderCheckBox(FormueId.LIVSFORSIKRING, FormueId.LIVSFORSIKRING)}
+                {this.renderCheckBox(FormueId.VERDIPAPIRER, FormueId.VERDIPAPIRER)}
+                {this.renderCheckBox(FormueId.ANNET, "belop")}
                 <NivaTreSkjema
                     visible={formue !== undefined && formue.annet}
                     size="small"
@@ -149,7 +149,7 @@ export class FormueView extends React.Component<Props, State> {
                         onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}
                         onBlur={() => this.onBlurTekstfeltAnnet()}
                         faktumKey={FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY}
-                        labelId={FORMUE + ".true.type.annet.true.beskrivelse.label"}
+                        labelId={FORMUE + ".true.type.belop.true.beskrivelse.label"}
                         maxLength={MAX_CHARS}
                         value={formue && formue.beskrivelseAvAnnet ? formue.beskrivelseAvAnnet : ""}
                     />
