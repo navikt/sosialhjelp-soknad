@@ -1,6 +1,7 @@
 import * as React from "react";
+import {FormattedDate} from 'react-intl'
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
+import {formaterIsoDato, getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import {FormattedHTMLMessage, FormattedMessage, FormattedNumber, InjectedIntlProps, injectIntl} from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
@@ -57,25 +58,26 @@ class BostotteView extends React.Component<Props, State> {
 		}
 	}
 
-	private static renderUtbetaling(key: string, belop: number, dato: string, mottaker: string, index: number) {
+	private static renderUtbetaling(belop: number, dato: string, mottaker: string, index: number) {
 		return (
-			<div key={`${key}-${index}`} className="utbetaling">
-				<span><FormattedMessage id={key}/>:</span>
+			<div className="utbetalinger blokk-xs">
+				<div><FormattedMessage id={"inntekt.bostotte.husbanken.mottaker"} values={{"mottaker":mottaker}} /></div>
+				<div className="utbetaling">
+				<span><FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/> {formaterIsoDato(dato)}</span>
 				<span className="verdi detaljeliste__verdi">
 					<FormattedNumber value={belop} minimumFractionDigits={2} maximumFractionDigits={2}/> kr
 				</span>
-				<span>{dato}</span>
-				<span><FormattedMessage id={"inntekt.bostotte.husbanken.mottaker"} values={{"mottaker":mottaker}} /></span>
+				</div>
 			</div>
 		)
 	}
 
 	private static renderSak(key: string, dato: string, status: string, vedtaksbeskrivelse: string, index: number) {
 		const beskrivelse = status === "VEDTATT" ? vedtaksbeskrivelse : <FormattedMessage id={"inntekt.bostotte.husbanken.status"} values={{"status":status}} />;
+		let formatertDato = <FormattedDate value={dato} month="long" year="numeric"/>;
 		return (
-			<div key={`${key}-${index}`} className="sak">
-				<span><FormattedMessage id={key}/>:</span>
-				<span>{dato}</span>
+			<div key={`${key}-${index}`} className="sak blokk-xs">
+				<span className="bostotte-dato">{formatertDato}</span>
 				<span>{beskrivelse}</span>
 			</div>
 		)
@@ -90,6 +92,8 @@ class BostotteView extends React.Component<Props, State> {
 			oppstartsModus = false;
 		}
 		const requestToHusbankenFeilet: boolean = bostotte.stotteFraHusbankenFeilet === true;
+		const harBostotterUtbetalinger: boolean = bostotte.utbetalinger.length > 0;
+		const harBostotterSaker: boolean = bostotte.saker.length > 0;
 		return (
 			<div className="blokk-xs">
 				{requestToHusbankenFeilet && (<div className="skjema-sporsmal">
@@ -119,11 +123,15 @@ class BostotteView extends React.Component<Props, State> {
 						</div>
 					}
 					border>
+					<h4 className="blokk-null"><FormattedMessage id="inntekt.bostotte.husbanken.utbetalinger"/></h4>
+					{!harBostotterUtbetalinger && (<FormattedMessage id="inntekt.bostotte.husbanken.ingenutbetalingerfunnet"/>)}
 					{
 						bostotte.utbetalinger.map((utbetaling, index) => {
-							return BostotteView.renderUtbetaling("Bostøtte", utbetaling.belop, utbetaling.utbetalingsdato, utbetaling.tittel, index);
+							return BostotteView.renderUtbetaling(utbetaling.belop, utbetaling.utbetalingsdato, utbetaling.tittel, index);
 						})
 					}
+					<h4 className="blokk-null"><FormattedMessage id="inntekt.bostotte.husbanken.saker"/></h4>
+					{!harBostotterSaker && (<FormattedMessage id="inntekt.bostotte.husbanken.ingensakerfunnet"/>)}
 					{
 						bostotte.saker.map((sak, index) => {
 							return BostotteView.renderSak("Sak", sak.dato, sak.status, sak.beskrivelse, index);

@@ -21,7 +21,6 @@ export function kjorerJetty(): boolean {
 }
 
 export function getApiBaseUrl(withAccessToken?: boolean): string {
-    console.warn(withAccessToken + " " + API_CONTEXT_PATH);
     const apiContextPath = withAccessToken? API_CONTEXT_PATH_WITH_ACCESS_TOKEN : API_CONTEXT_PATH;
 
     if (erDev()) {
@@ -50,7 +49,6 @@ export function getAbsoluteApiUrl(withAccessToken?: boolean) {
 }
 
 export function getAbsoluteApiUrlRegex(pathname: string, withAccessToken?: boolean){
-    console.warn(withAccessToken + " " + pathname.replace(/^(.+sosialhjelp\/)(.+)$/,  "$1login-api/soknad-api/"));
     return withAccessToken
         ? pathname.replace(/^(.+sosialhjelp\/)(.+)$/,  "$1login-api/soknad-api/")
         : pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/")
