@@ -10,12 +10,11 @@ import {
 import {Valideringsfeil, ValideringsFeilKode} from "../validering/valideringActionTypes";
 import {State} from "../reducers";
 import {REST_STATUS, SoknadState} from "../soknad/soknadTypes";
+import {visSamtykkeInfo} from "../soknad/soknadActions";
 
 /*
  * Properties og redux koblinger som er felles for komponenter i søknadsskjemaet.
  */
-
-
 export interface SoknadsdataContainerProps {
     // Egne props
     skjul?: boolean;
@@ -31,7 +30,7 @@ export interface SoknadsdataContainerProps {
     lagreSoknadsdata: (brukerBehandlingId: string, urlPath: string, soknadsdata: any, responseHandler?: (response: any) => void) => void;
     oppdaterSoknadsdataSti: (sti: string, soknadsdata: SoknadsdataType) => void;
     settRestStatus: (sti: string, restStatus: REST_STATUS) => void;
-    // setVisSamtykkeInfo: (vis: boolean) => void;
+    visSamtykkeInfo: (vis: boolean) => void;
     setValideringsfeil: (feilkode: ValideringsFeilKode, faktumKey: string) => void;
     clearValideringsfeil: (faktumKey: string) => void;
 }
@@ -48,6 +47,7 @@ export const connectSoknadsdataContainer = connect(
         lagreSoknadsdata,
         oppdaterSoknadsdataSti,
         settRestStatus,
+        visSamtykkeInfo,
         setValideringsfeil,
         clearValideringsfeil
     }
