@@ -314,8 +314,6 @@ export function detekterInternFeilKode(feilKode: string): string {
 export function lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(brukerbehandlingId: string) {
     if (erMockMiljoEllerDev()) {
         const url = getApiBaseUrl() + "internal/mock/tjeneste/downloadzip/" + brukerbehandlingId;
-        // FIXME: kommenter inn igjen zipfil nedlasting
-        // window.open(url);
-        console.warn("zip fil download: " + url);
+        window.open(url);
     }
 }
