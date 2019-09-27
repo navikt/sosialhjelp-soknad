@@ -63,7 +63,6 @@ function* lesEttersendelserSaga(action: LesEttersendelserAction) {
 
 function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction) {
     try {
-        debugger;
         const url = `ettersendelse/ettersendteVedlegg/${action.brukerbehandlingId}`;
         const response = yield call(fetchToJson, url);
         if (response) {
