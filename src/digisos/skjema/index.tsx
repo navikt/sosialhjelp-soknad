@@ -52,10 +52,7 @@ class SkjemaRouter extends React.Component<Props, {}> {
 
     componentWillMount() {
         const {
-            restStatus,
-            stegFraUrl,
             behandlingsIdFraUrl,
-            gyldigUrl,
             behandlingsId,
             dispatch
         } = this.props;
@@ -105,11 +102,11 @@ class SkjemaRouter extends React.Component<Props, {}> {
                         <Route component={SideIkkeFunnet}/>
                     </Switch>
                     <Prompt
-                        message={loc =>
-                            erSkjemaEllerEttersendelseSide(loc.pathname)
+                        message={loc => {
+                            return erSkjemaEllerEttersendelseSide(loc.pathname)
                                 ? true
                                 : NAVIGASJONSPROMT.SKJEMA
-                        }
+                        }}
                     />
                     <TimeoutBox
                         sessionDurationInMinutes={30}
