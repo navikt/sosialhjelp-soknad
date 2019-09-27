@@ -6,17 +6,16 @@ import {
 import {DispatchProps} from "../../redux/reduxTypes";
 import { connect } from "react-redux";
 import { downloadAttachedFile } from "../../../nav-soknad/utils/rest-utils";
-import { REST_STATUS } from "../../../nav-soknad/types";
 import { MargIkoner } from "./margIkoner";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
-import { REST_FEIL } from "../../../nav-soknad/types/restFeilTypes";
 import {
     EttersendelseState,
     EttersendelseVedleggBackend
 } from "../../redux/ettersendelse/ettersendelseTypes";
 import {Fil, OpplysningType} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {State} from "../../redux/reducers";
+import {REST_FEIL, REST_STATUS} from "../../redux/soknad/soknadTypes";
 
 interface OwnProps {
 	ettersendelseAktivert: boolean;

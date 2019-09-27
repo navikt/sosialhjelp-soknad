@@ -26,7 +26,7 @@ class SoknadsmottakerInfoPanel  extends React.Component<Props, {}> {
 					<button
 						className="linkbutton linkbutton--normal"
 						onClick={() => {
-							this.props.setVisSamtykkeInfo(true);
+							// FIXME: this.props.setVisSamtykkeInfo(true);
 						}}
 					>
 						<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke"/>

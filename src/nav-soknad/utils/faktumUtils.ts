@@ -1,18 +1,11 @@
 import { InjectedIntl } from "react-intl";
-import {
-	CheckboxFaktumTekst,
-	SporsmalFaktumTekst,
-	InputFaktumTekst,
-	Faktum,
-	FaktumValueType
-} from "../types";
 
 import { getIntlTextOrKey, getIntlInfoTekst, getIntlHjelpeTekst, getIntlText } from "./intlUtils";
 
 export function getFaktumSporsmalTekst(
 	intl: InjectedIntl,
 	key: string
-): SporsmalFaktumTekst {
+): any {
 	return {
 		sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
@@ -22,7 +15,7 @@ export function getFaktumSporsmalTekst(
 export function getFaktumCheckboksTekst(
 	intl: InjectedIntl,
 	key: string
-): CheckboxFaktumTekst {
+): any {
 	return {
 		label: getIntlTextOrKey(intl, key),
 		infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
@@ -35,7 +28,7 @@ export function getRadioFaktumTekst(
 	key: string,
 	value: string,
 	property?: string
-): CheckboxFaktumTekst {
+): any {
 	return getFaktumCheckboksTekst(
 		intl,
 		`${key}${getPropertyKey(property)}.${value}`
@@ -46,7 +39,7 @@ export function getInputFaktumTekst(
 	intl: InjectedIntl,
 	key: string,
 	property?: string
-): InputFaktumTekst {
+): any {
 	const propertyKey = getPropertyKey(property);
 	return {
 		label: getIntlTextOrKey(intl, `${key}${propertyKey}.label`),
@@ -61,19 +54,3 @@ function getPropertyKey(property?: string) {
 	return property === undefined ? "" : `.${property}`;
 }
 
-export function oppdaterFaktumMedVerdier(
-	faktum: Faktum,
-	verdi: FaktumValueType,
-	property?: string
-): Faktum {
-	let nyttFaktum = { ...faktum };
-	if (property) {
-		nyttFaktum = {
-			...faktum,
-			properties: { ...faktum.properties, [property]: verdi }
-		};
-	} else {
-		nyttFaktum.value = verdi;
-	}
-	return nyttFaktum;
-}

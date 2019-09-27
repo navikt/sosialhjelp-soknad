@@ -14,12 +14,12 @@ import Underskjema from "../../../../nav-soknad/components/underskjema";
 
 import SoknadsmottakerVelger from "./SoknadsmottakerVelger";
 import {formaterSoknadsadresse, soknadsmottakerStatus} from "./AdresseUtils";
-import {REST_STATUS} from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import AdresseTypeahead from "./AdresseTypeahead";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import {Valideringsfeil} from "../../../redux/reduxTypes";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 interface OwnProps {
     disableLoadingAnimation?: boolean;
@@ -45,11 +45,13 @@ class AdresseView extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        const {soknadsdata} = this.props;
-        const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
-        if (restStatus === REST_STATUS.INITIALISERT) {
-            this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ADRESSER);
-            this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.NAV_ENHETER);
+        const {soknadsdata, behandlingsId} = this.props;
+        if (behandlingsId){
+            const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
+            if (restStatus === REST_STATUS.INITIALISERT) {
+                this.props.hentSoknadsdata(behandlingsId, SoknadsSti.ADRESSER);
+                this.props.hentSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER);
+            }
         }
     }
 
@@ -85,21 +87,23 @@ class AdresseView extends React.Component<Props, State> {
     }
 
     lagreAdresseValg(payload: any) {
-        const {brukerBehandlingId, oppdaterSoknadsdataSti, lagreSoknadsdata} = this.props;
-        this.setState({settAdressePending: true});
-        lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
-            if (Array.isArray(navEnheter)) {
-                navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
-                if (navEnheter.length === 1) {
-                    const valgtNavEnhet: NavEnhet = navEnheter[0];
-                    valgtNavEnhet.valgt = true;
-                    lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
-                    this.slettEventuelleValideringsfeil();
+        const {behandlingsId, oppdaterSoknadsdataSti, lagreSoknadsdata} = this.props;
+        if (behandlingsId){
+            this.setState({settAdressePending: true});
+            lagreSoknadsdata(behandlingsId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
+                if (Array.isArray(navEnheter)) {
+                    navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
+                    if (navEnheter.length === 1) {
+                        const valgtNavEnhet: NavEnhet = navEnheter[0];
+                        valgtNavEnhet.valgt = true;
+                        lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
+                        this.slettEventuelleValideringsfeil();
+                    }
+                    oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
+                    this.setState({settAdressePending: false});
                 }
-                oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
-                this.setState({settAdressePending: false});
-            }
-        });
+            });
+        }
     }
 
     velgAnnenAdresse(adresse: AdressesokTreff) {
@@ -142,21 +146,23 @@ class AdresseView extends React.Component<Props, State> {
     }
 
     onVelgSoknadsmottaker(valgtNavEnhet: NavEnhet) {
-        const {brukerBehandlingId, soknadsdata, lagreSoknadsdata, oppdaterSoknadsdataSti} = this.props;
-        valgtNavEnhet.valgt = true;
-        lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
+        const {behandlingsId, soknadsdata, lagreSoknadsdata, oppdaterSoknadsdataSti} = this.props;
+        if (behandlingsId){
+            valgtNavEnhet.valgt = true;
+            lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
 
-        const navEnheter = soknadsdata.personalia.navEnheter;
-        navEnheter.map((navEnhet: NavEnhet) => {
-            if (navEnhet.orgnr === valgtNavEnhet.orgnr) {
-                navEnhet.valgt = true;
-            } else {
-                navEnhet.valgt = false;
-            }
-            return navEnhet
-        });
-        oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
-        this.slettEventuelleValideringsfeil();
+            const navEnheter = soknadsdata.personalia.navEnheter;
+            navEnheter.map((navEnhet: NavEnhet) => {
+                if (navEnhet.orgnr === valgtNavEnhet.orgnr) {
+                    navEnhet.valgt = true;
+                } else {
+                    navEnhet.valgt = false;
+                }
+                return navEnhet
+            });
+            oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
+            this.slettEventuelleValideringsfeil();
+        }
     }
 
     slettEventuelleValideringsfeil() {

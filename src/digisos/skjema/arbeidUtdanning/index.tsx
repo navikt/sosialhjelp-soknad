@@ -1,12 +1,11 @@
 import * as React from "react";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
-import {FaktumComponentProps} from "../../../nav-soknad/redux/fakta/faktaTypes";
 import Koffert from "../../../nav-soknad/components/svg/illustrasjoner/Koffert";
 import {FormattedHTMLMessage} from "react-intl";
 import Utdanning from "./utdanning/Utdanning";
 import Arbeid from "./arbeid/Arbeid";
 
-const ArbeidOgUtdanning: React.FC<FaktumComponentProps & {}> = () => {
+const ArbeidOgUtdanning: React.FC<{}> = () => {
 	return (
 		<DigisosSkjemaSteg steg={DigisosSteg.arbeidbolk} ikon={<Koffert/>}>
 			<Arbeid/>

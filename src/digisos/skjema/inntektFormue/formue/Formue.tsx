@@ -13,9 +13,9 @@ import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {REST_STATUS} from "../../../../nav-soknad/types";
 import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
@@ -37,7 +37,10 @@ export class FormueView extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.FORMUE);
+        const {behandlingsId} = this.props;
+        if (behandlingsId){
+            this.props.hentSoknadsdata(behandlingsId, SoknadsSti.FORMUE);
+        }
     }
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
@@ -49,9 +52,9 @@ export class FormueView extends React.Component<Props, State> {
     }
 
     handleClickCheckbox(idToToggle: FormueId) {
-        const {brukerBehandlingId, soknadsdata} = this.props;
+        const {behandlingsId, soknadsdata} = this.props;
         const restStatus = soknadsdata.restStatus.inntekt.formue;
-        if (!this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
+        if (!this.state.oppstartsModus && restStatus === REST_STATUS.OK && behandlingsId) {
             const formue: Formue = soknadsdata.inntekt.formue;
 
             let formueElement: boolean | string = formue[idToToggle];
@@ -63,7 +66,7 @@ export class FormueView extends React.Component<Props, State> {
                 formue.beskrivelseAvAnnet = "";
             }
             this.props.oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue);
-            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORMUE, formue);
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue);
         }
     }
 
@@ -78,13 +81,13 @@ export class FormueView extends React.Component<Props, State> {
     }
 
     onBlurTekstfeltAnnet() {
-        const {brukerBehandlingId, soknadsdata} = this.props;
+        const {behandlingsId, soknadsdata} = this.props;
         const formue: Formue | undefined = soknadsdata.inntekt.formue;
-        if (formue){
+        if (formue && behandlingsId){
             const beskrivelseAvAnnet = formue.beskrivelseAvAnnet;
             const feilmeldingAnnet: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(beskrivelseAvAnnet, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY);
             if (!feilmeldingAnnet) {
-                this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORMUE, formue);
+                this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue);
             }
         }
     }

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import StegMedNavigasjon from "../../nav-soknad/containers/StegMedNavigasjon";
-import {SkjemaConfig, SkjemaStegType} from "../../nav-soknad/types";
+import {SkjemaConfig, SkjemaStegType} from "../redux/soknad/soknadTypes";
 
 export enum DigisosSteg {
     kontakt = "kontakt",

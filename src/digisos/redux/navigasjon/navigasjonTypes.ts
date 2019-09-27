@@ -40,6 +40,7 @@ export interface TilServerfeil {
 export interface TilSteg {
 	type: NavigasjonActionTypes.TIL_STEG;
 	stegnummer: number;
+	behandlingsId: string;
 }
 
 export interface TilStart {
@@ -49,11 +50,13 @@ export interface TilStart {
 export interface GaVidere {
 	type: NavigasjonActionTypes.GA_VIDERE;
 	stegnummer: number;
+	behandlingsId: string;
 }
 
 export interface GaTilbake {
 	type: NavigasjonActionTypes.GA_TILBAKE;
 	stegnummer: number;
+	behandlingsId: string;
 }
 
 export interface TilFinnDittNavKontor {

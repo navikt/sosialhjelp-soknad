@@ -9,7 +9,6 @@ import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
 
 interface StateProps {
-    brukerBehandlingId: string;
     visPrompt: boolean;
 }
 
@@ -51,7 +50,6 @@ class SoknadAlleredeSendtPromt extends React.Component<Props, {}> {
 
 export default connect((state: State, props: any): StateProps => {
     return {
-        brukerBehandlingId: state.soknad.data.brukerBehandlingId,
         visPrompt: state.ettersendelse.visSoknadAlleredeSendtPromt
     };
 })(injectIntl(SoknadAlleredeSendtPromt));

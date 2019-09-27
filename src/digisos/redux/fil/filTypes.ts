@@ -1,6 +1,5 @@
 import {Fil, Opplysning, OpplysningType} from "../okonomiskeOpplysninger/opplysningerTypes";
-import {REST_STATUS} from "../../../nav-soknad/types";
-import {REST_FEIL} from "../../../nav-soknad/types/restFeilTypes";
+import {REST_FEIL, REST_STATUS} from "../soknad/soknadTypes";
 
 
 export interface FilState {

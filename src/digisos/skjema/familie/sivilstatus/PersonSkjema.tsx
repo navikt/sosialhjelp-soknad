@@ -53,7 +53,7 @@ class PersonSkjema extends React.Component<Props, {}> {
     }
 
     onBlur() {
-        const {soknadsdata, lagreSoknadsdata, brukerBehandlingId} = this.props;
+        const {soknadsdata, lagreSoknadsdata, behandlingsId} = this.props;
         const sivilstatus = soknadsdata.familie.sivilstatus;
         let feilkodeFodselsdato = null;
         let fodselsdato: string | null = sivilstatus.ektefelle ? sivilstatus.ektefelle.fodselsdato : null;
@@ -94,8 +94,8 @@ class PersonSkjema extends React.Component<Props, {}> {
         } else {
             this.props.clearValideringsfeil(FAKTUM_KEY_PERSONNUMMER);
         }
-        if (!feilkodeFodselsdato && !feilkodePersonnummer) {
-            lagreSoknadsdata(brukerBehandlingId, SoknadsSti.SIVILSTATUS, sivilstatus);
+        if (!feilkodeFodselsdato && !feilkodePersonnummer && behandlingsId) {
+            lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus);
         }
     }
 

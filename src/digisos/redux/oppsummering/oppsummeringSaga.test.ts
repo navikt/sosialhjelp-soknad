@@ -1,8 +1,8 @@
 import { hentOppsummeringSaga } from "./oppsummeringSaga";
-import { selectBrukerBehandlingId } from "../selectors";
 import { call, select, put } from "redux-saga/effects";
 import { fetchOppsummering } from "../../../nav-soknad/utils/rest-utils";
 import { hentOppsumeringFeilet, setOppsumering } from "./oppsummeringActions";
+import {State} from "../reducers";
 
 describe("oppsummeringSaga", () => {
 	describe("hentOppsummeringSaga - hovedflyt", () => {
@@ -13,7 +13,7 @@ describe("oppsummeringSaga", () => {
 		it("select selectBrukerBehandlingId", () => {
 			expect(saga.next()).toEqual({
 				done: false,
-				value: select(selectBrukerBehandlingId)
+				value: select((state: State) => state.soknad.behandlingsId)
 			});
 		});
 
@@ -40,15 +40,7 @@ describe("oppsummeringSaga", () => {
 
 	describe("hentOppsummeringSaga - feilflyt", () => {
 		const saga = hentOppsummeringSaga();
-		const reason = "reason";
 		saga.next();
-
-		it("put hentOppsumeringFeilet", () => {
-			expect(saga.throw(reason)).toEqual({
-				done: false,
-				value: put(hentOppsumeringFeilet(reason))
-			});
-		});
 
 		it("ferdig", () => {
 			expect(saga.next()).toEqual({

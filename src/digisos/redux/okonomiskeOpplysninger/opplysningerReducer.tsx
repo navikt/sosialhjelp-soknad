@@ -4,16 +4,16 @@ import {
     OpplysningerModel, Opplysning,
     VedleggStatus
 } from "./opplysningerTypes";
-import {RestStatus} from "../../../nav-soknad/types";
 import {
     getOpplysningByOpplysningType,
     getSortertListeAvOpplysninger,
     updateSortertOpplysning,
 } from "./opplysningerUtils";
+import {REST_STATUS} from "../soknad/soknadTypes";
 
 
 export const initialOpplysningerModel: OpplysningerModel = {
-    restStatus: RestStatus.NOT_ASKED,
+    restStatus: REST_STATUS.INITIALISERT,
     backendData: null,
     opplysningerSortert: []
 };
@@ -28,7 +28,7 @@ export const opplysningerReducer = (
 
             return {
                 ...state,
-                restStatus: RestStatus.SUCCESS,
+                restStatus: REST_STATUS.OK,
                 backendData: action.backendData,
                 opplysningerSortert: sortert
             };

@@ -24,7 +24,7 @@ interface OwnProps {
 }
 
 interface StoreToProps {
-    behandlingsId: string;
+    behandlingsId: string | undefined;
     feil: Valideringsfeil[];
 }
 
@@ -33,21 +33,25 @@ type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps
 class VedleggView extends React.Component<Props> {
 
     handleAlleredeLastetOpp(event: any) {
-        const {okonomiskOpplysning, behandlingsId, feil} = this.props;
-        const opplysningUpdated = {...okonomiskOpplysning};
+        const {okonomiskOpplysning, behandlingsId, feil, dispatch} = this.props;
+        if (behandlingsId){
+            const opplysningUpdated = {...okonomiskOpplysning};
 
-        if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
-            opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
-        } else {
-            opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
+            if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
+                opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
+            } else {
+                opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
+            }
+
+            dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feil));
         }
-
-        this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feil));
     }
 
     slettVedlegg(fil: Fil) {
-        const {behandlingsId, okonomiskOpplysning} = this.props;
-        this.props.dispatch(startSlettFil(behandlingsId, fil, okonomiskOpplysning, okonomiskOpplysning.type))
+        const {behandlingsId, okonomiskOpplysning, dispatch} = this.props;
+        if (behandlingsId){
+            dispatch(startSlettFil(behandlingsId, fil, okonomiskOpplysning, okonomiskOpplysning.type))
+        }
     }
 
     renderOpplastingAvVedleggSeksjon(opplysning: Opplysning) {
@@ -100,7 +104,7 @@ class VedleggView extends React.Component<Props> {
 export default connect(
     (state: State) => {
         return {
-            behandlingsId: state.soknad.data.brukerBehandlingId,
+            behandlingsId: state.soknad.behandlingsId,
             feil: state.validering.feil
         }
     }

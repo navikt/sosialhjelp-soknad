@@ -1,4 +1,3 @@
-import {REST_STATUS} from "../../../nav-soknad/types/restTypes";
 import {
     EttersendelseActionTypeKeys,
     EttersendelseActionTypes,
@@ -6,6 +5,7 @@ import {
     EttersendelseState, EttersendelseVedleggBackend
 } from "./ettersendelseTypes";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
+import {REST_STATUS} from "../soknad/soknadTypes";
 
 const initialState: EttersendelseState = {
     restStatus: REST_STATUS.INITIALISERT,

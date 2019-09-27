@@ -1,4 +1,3 @@
-import {REST_FEIL} from "../types/restFeilTypes";
 import {erMockMiljoEllerDev} from "./index";
 import {
     API_CONTEXT_PATH,
@@ -7,6 +6,7 @@ import {
     HEROKU_API_MASTER_APP_NAME,
     HEROKU_MASTER_APP_NAME
 } from "../../configuration";
+import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
 
 
 export function erDev(): boolean {
@@ -116,12 +116,12 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
                     }, 100 * (7 - retries));
 
                 } else {
-                    const statusKode = verifyStatusSuccessOrRedirect(response);
+                    const statusKode: number = verifyStatusSuccessOrRedirect(response);
                     if (statusKode >= 200 && statusKode < 300) {
                         const jsonResponse = toJson(response);
                         resolve(jsonResponse);
                     } else {
-                        throw new Error(HttpStatus.UNAUTHORIZED)
+                        throw new Error(HttpStatus.UNAUTHORIZED);
                     }
                 }
             })

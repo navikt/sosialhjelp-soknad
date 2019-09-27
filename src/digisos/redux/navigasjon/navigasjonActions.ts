@@ -18,24 +18,27 @@ export function navigerTilDittNav(): NavigasjonActions {
 	};
 }
 
-export function gaTilbake(stegnummer: number): NavigasjonActions {
+export function gaTilbake(stegnummer: number, behandlingsId: string): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.GA_TILBAKE,
-		stegnummer
+		stegnummer,
+		behandlingsId
 	};
 }
 
-export function gaVidere(stegnummer: number): NavigasjonActions {
+export function gaVidere(stegnummer: number, behandlingsId: string): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.GA_VIDERE,
-		stegnummer
+		stegnummer,
+		behandlingsId
 	};
 }
 
-export function tilSteg(stegnummer: number): NavigasjonActions {
+export function tilSteg(stegnummer: number, behandlingsId: string): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.TIL_STEG,
-		stegnummer
+		stegnummer,
+		behandlingsId
 	};
 }
 

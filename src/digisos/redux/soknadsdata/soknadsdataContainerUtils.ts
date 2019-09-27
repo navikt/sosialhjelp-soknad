@@ -7,11 +7,9 @@ import {
     Soknadsdata,
     SoknadsdataType
 } from "./soknadsdataReducer";
-import {REST_STATUS} from "../../../nav-soknad/types";
-import {setVisSamtykkeInfo} from "../init/initActions";
 import {Valideringsfeil, ValideringsFeilKode} from "../validering/valideringActionTypes";
-import {SoknadState} from "../reduxTypes";
 import {State} from "../reducers";
+import {REST_STATUS, SoknadState} from "../soknad/soknadTypes";
 
 /*
  * Properties og redux koblinger som er felles for komponenter i søknadsskjemaet.
@@ -25,7 +23,7 @@ export interface SoknadsdataContainerProps {
     // PropsMappedFromStore:
     soknad: SoknadState
     soknadsdata: Soknadsdata;
-    brukerBehandlingId: string;
+    behandlingsId: string | undefined;
     feil: Valideringsfeil[];
 
     // Funksjoner:
@@ -33,7 +31,7 @@ export interface SoknadsdataContainerProps {
     lagreSoknadsdata: (brukerBehandlingId: string, urlPath: string, soknadsdata: any, responseHandler?: (response: any) => void) => void;
     oppdaterSoknadsdataSti: (sti: string, soknadsdata: SoknadsdataType) => void;
     settRestStatus: (sti: string, restStatus: REST_STATUS) => void;
-    setVisSamtykkeInfo: (vis: boolean) => void;
+    // setVisSamtykkeInfo: (vis: boolean) => void;
     setValideringsfeil: (feilkode: ValideringsFeilKode, faktumKey: string) => void;
     clearValideringsfeil: (faktumKey: string) => void;
 }
@@ -41,7 +39,7 @@ export interface SoknadsdataContainerProps {
 export const connectSoknadsdataContainer = connect(
     (state: State) => ({
         soknad: state.soknad,
-        brukerBehandlingId: state.soknad.behandlingsId,
+        behandlingsId: state.soknad.behandlingsId,
         soknadsdata: JSON.parse(JSON.stringify(state.soknadsdata)),
         feil: state.validering.feil
     }),
@@ -50,7 +48,6 @@ export const connectSoknadsdataContainer = connect(
         lagreSoknadsdata,
         oppdaterSoknadsdataSti,
         settRestStatus,
-        setVisSamtykkeInfo,
         setValideringsfeil,
         clearValideringsfeil
     }

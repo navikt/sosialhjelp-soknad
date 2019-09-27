@@ -1,41 +1,13 @@
 import {
 	MiljovariablerActionTypeKeys,
-	MiljovariablerActionTypes
+	MiljovariablerAction
 } from "./miljovariablerTypes";
+import {MiljovariablerResponse} from "../soknad/soknadTypes";
 
-const mottattMiljovariabler = (
-	miljovariabler: object
-): MiljovariablerActionTypes => {
+export const lagreMiljovariablerPaStore = (miljovariablerResponse: MiljovariablerResponse): MiljovariablerAction => {
 	return {
-		type: MiljovariablerActionTypeKeys.OK,
-		data: miljovariabler
+		type: MiljovariablerActionTypeKeys.LAGRE_MILJOVARIABLER_PA_STORE,
+		miljovariablerResponse
 	};
 };
 
-const hentMiljovariablerFeilet = (
-	feilmelding: string
-): MiljovariablerActionTypes => {
-	return {
-		type: MiljovariablerActionTypeKeys.FEILET,
-		feilmelding
-	};
-};
-
-const hentMiljovariabler = (): MiljovariablerActionTypes => {
-	return {
-		type: MiljovariablerActionTypeKeys.INIT
-	};
-};
-
-const henterMiljovariabler = (): MiljovariablerActionTypes => {
-	return {
-		type: MiljovariablerActionTypeKeys.PENDING
-	};
-};
-
-export {
-	mottattMiljovariabler,
-	hentMiljovariablerFeilet,
-	hentMiljovariabler,
-	henterMiljovariabler
-};

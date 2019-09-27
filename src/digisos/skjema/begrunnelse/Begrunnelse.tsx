@@ -26,9 +26,12 @@ type Props = SoknadsdataContainerProps & InjectedIntlProps;
 class BegrunnelseSkjema extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
-		this.props.clearValideringsfeil(FAKTUM_KEY_HVA);
-		this.props.clearValideringsfeil(FAKTUM_KEY_HVORFOR);
-		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BEGRUNNELSE);
+	    const {behandlingsId} = this.props;
+	    if (behandlingsId){
+            this.props.clearValideringsfeil(FAKTUM_KEY_HVA);
+            this.props.clearValideringsfeil(FAKTUM_KEY_HVORFOR);
+            this.props.hentSoknadsdata(behandlingsId, SoknadsSti.BEGRUNNELSE);
+        }
 	}
 
 	onChange(value: string, key: string) {
@@ -50,15 +53,17 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 	}
 
 	lagreHvisGyldig() {
-		const { soknadsdata, brukerBehandlingId } = this.props;
-		const { hvaSokesOm, hvorforSoke } = soknadsdata.begrunnelse;
-		const feilmeldingHva: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(hvaSokesOm, FAKTUM_KEY_HVA, MAX_CHARS);
-		const feilmeldingHvorfor: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(hvorforSoke, FAKTUM_KEY_HVORFOR, MAX_CHARS_BEGRUNNELSE);
+		const { soknadsdata, behandlingsId } = this.props;
+		if (behandlingsId){
+            const { hvaSokesOm, hvorforSoke } = soknadsdata.begrunnelse;
+            const feilmeldingHva: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(hvaSokesOm, FAKTUM_KEY_HVA, MAX_CHARS);
+            const feilmeldingHvorfor: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(hvorforSoke, FAKTUM_KEY_HVORFOR, MAX_CHARS_BEGRUNNELSE);
 
-		if (!feilmeldingHva && !feilmeldingHvorfor) {
-			const begrunnelse: BegrunnelseType = {hvaSokesOm, hvorforSoke};
-			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BEGRUNNELSE, begrunnelse);
-		}
+            if (!feilmeldingHva && !feilmeldingHvorfor) {
+                const begrunnelse: BegrunnelseType = {hvaSokesOm, hvorforSoke};
+                this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BEGRUNNELSE, begrunnelse);
+            }
+        }
 	}
 
     validerTekstfeltVerdi(verdi: string, faktumKey: string, max: number): ValideringsFeilKode | undefined {

@@ -1,5 +1,4 @@
 import * as React from "react";
-import {REST_STATUS} from "../../../nav-soknad/types/restTypes";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
 import Knapp from "nav-frontend-knapper";
@@ -10,6 +9,7 @@ import {State} from "../../redux/reducers";
 import {sendEttersendelse} from "../../redux/ettersendelse/ettersendelseActions";
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
+import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 
 interface OwnProps {
     ettersendelseAktivert: boolean;
@@ -19,7 +19,7 @@ interface OwnProps {
 interface StateProps {
     opplastingStatus: REST_STATUS;
     manglendeVedlegg: EttersendelseVedleggBackend[];
-    brukerbehandlingskjedeId: string;
+    brukerbehandlingskjedeId: string | undefined;
     brukerbehandlingId: string | null;
     ettersendStatus: REST_STATUS;
     feilKode: string;
@@ -134,7 +134,7 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
 
 export default connect((state: State) => {
     return {
-        brukerbehandlingskjedeId: state.soknad.data.brukerBehandlingId,
+        brukerbehandlingskjedeId: state.soknad.behandlingsId,
         manglendeVedlegg: state.ettersendelse.data,
         brukerbehandlingId: state.ettersendelse.brukerbehandlingId,
         opplastingStatus: state.ettersendelse.opplastingStatus,

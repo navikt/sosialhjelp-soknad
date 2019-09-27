@@ -1,5 +1,4 @@
-
-import {ErSystemdataEndret, SoknadActionTypeKeys, SoknadActionTypes} from "./soknadActionTypes";
+import {ErSystemdataEndret, SoknadActionType, SoknadActionTypeKeys} from "./soknadActionTypes";
 import {REST_STATUS, SoknadState} from "./soknadTypes";
 
 export const defaultState: SoknadState = {
@@ -7,22 +6,26 @@ export const defaultState: SoknadState = {
 	showLargeSpinner: true,
 	showServerFeil: false,
 	showFeilSide: false,
+	visSamtykkeInfo: false,
 
 	// Authentication state
 	linkVisited: false,
 	harTilgang: false,
 	sperrekode: undefined,
-	status: INIT
 
 	// Rest state
-	restStatus: REST_STATUS.NOT_ASKED,
+	restStatus: REST_STATUS.INITIALISERT,
+
+	// Tilgang og fornavn
+	tilgang: undefined,
+	fornavn: undefined,
 
 	// Opprettelse, innsending og ettersendelse
 	startSoknadPending: false,
 	sendSoknadPending: false,
 
 	// Soknad state
-	behandlingsId: "",
+	behandlingsId: undefined,
 	valgtSoknadsmottaker: undefined,
 
 	// Systemdata
@@ -38,13 +41,39 @@ export const defaultState: SoknadState = {
 	avbrytSoknadSjekkAktiv: true,
 };
 
-export default (state: SoknadState = defaultState, action: SoknadActionTypes) => {
+export default (state: SoknadState = defaultState, action: SoknadActionType) => {
 	switch (action.type) {
-		case SoknadActionTypeKeys.START_SOKNAD:
+		case SoknadActionTypeKeys.OPPRETT_SOKNAD:
 			return {
 				...state,
+				restStatus: REST_STATUS.PENDING,
 				startSoknadPending: true
 			};
+		case SoknadActionTypeKeys.OPPRETT_SOKNAD_OK:
+			return {
+				...state,
+				restStatus: REST_STATUS.OK,
+				erGjenopptattSoknad: false,
+				skalSjekkeOmSystemdataErEndret: false,
+				behandlingsId: action.behandlingsId
+			};
+		case SoknadActionTypeKeys.HENT_SOKNAD:
+			return {
+				...state,
+				restStatus: REST_STATUS.PENDING
+			};
+		case SoknadActionTypeKeys.HENT_SOKNAD_OK:
+			const { xsrfCookieReceived, behandlingsId } = action;
+			return {
+				...state,
+				restStatus: xsrfCookieReceived ? REST_STATUS.OK : REST_STATUS.XSRF,
+				behandlingsId: behandlingsId
+			};
+
+
+
+
+
 		case SoknadActionTypeKeys.START_SOKNAD_OK:
 			return {
 				...state,
@@ -66,43 +95,6 @@ export default (state: SoknadState = defaultState, action: SoknadActionTypes) =>
 					destinasjon: null
 				}
 			};
-
-		case SoknadActionTypeKeys.RESET_SOKNAD:
-			return {
-				...defaultState,
-				startSoknadPending: state.startSoknadPending // Beholder i og med reset kalles også når en starter en ny søknad
-			};
-		case SoknadActionTypeKeys.OPPRETT_SOKNAD:
-			return {
-				...state,
-				restStatus: REST_STATUS.PENDING,
-				startSoknadPending: true
-			};
-		case SoknadActionTypeKeys.OPPRETT_SOKNAD_OK:
-			return {
-				...state,
-				data: {
-					...state.data,
-					brukerBehandlingId: action.brukerBehandlingId
-				},
-				restStatus: REST_STATUS.OK,
-				erGjenopptattSoknad: false,
-				skalSjekkeOmSystemdataErEndret: false,
-				behandlingsId: action.brukerBehandlingId
-			};
-		case SoknadActionTypeKeys.HENT_SOKNAD:
-			return {
-				...state,
-				restStatus: REST_STATUS.PENDING
-			};
-		case SoknadActionTypeKeys.HENT_SOKNAD_OK:
-			const { xsrfCookieReceived, brukerBehandlingId } = action;
-			return {
-				...state,
-				data: { brukerBehandlingId, fakta: []},
-				restStatus: xsrfCookieReceived ? REST_STATUS.OK : REST_STATUS.FEILET,
-				behandlingsId: action.brukerBehandlingId
-			};
 		case SoknadActionTypeKeys.SEND_SOKNAD:
 			return {
 				...state,
@@ -113,28 +105,13 @@ export default (state: SoknadState = defaultState, action: SoknadActionTypes) =>
 				...state,
 				sendSoknadPending: false
 			};
-		case SoknadActionTypeKeys.HENT_KVITTERING:
-			return {
-				...state,
-				restStatus: REST_STATUS.PENDING
-			};
-		case SoknadActionTypeKeys.HENT_KVITTERING_OK:
-			return {
-				...state,
-				kvittering: action.kvittering,
-				restStatus: REST_STATUS.OK
-			};
+
 		case SoknadActionTypeKeys.SET_SERVER_FEIL:
 			return {
 				...state,
-				restStatus: REST_STATUS.FEILET,
-				sendSoknadPending: false
+				restStatus: REST_STATUS.SERVER_ERROR
 			};
-		case SoknadActionTypeKeys.SETT_INFOFAKTUM:
-			return {
-				...state,
-				infofaktum: action.info
-			};
+
 		case SoknadActionTypeKeys.SLETT_SOKNAD_OK:
 			return {
 				...defaultState
@@ -160,6 +137,34 @@ export default (state: SoknadState = defaultState, action: SoknadActionTypes) =>
 				...state,
 				erSystemdataEndret: action.erSystemdataEndret ? ErSystemdataEndret.YES : ErSystemdataEndret.NO,
 				skalSjekkeOmSystemdataErEndret: false
+			}
+		}
+
+		case SoknadActionTypeKeys.SHOW_LARGE_SPINNER: {
+			return {
+				...state,
+				showLargeSpinner: action.show
+			}
+		}
+		case SoknadActionTypeKeys.VIS_SAMTYKKE_INFO: {
+			return {
+				...state,
+				visSamtykkeInfo: action.skalVises
+			}
+		}
+
+		case SoknadActionTypeKeys.LAGRE_TILGANG_OG_FORNAVN_PA_STORE: {
+			const {tilgangResponse, fornavnResponse} = action;
+
+			// FIXME: Dette burde gjøres annerledes.
+			const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
+			// @ts-ignore
+			window[AUTH_LINK_VISITED] = true;
+
+			return {
+				...state,
+				tilgang: tilgangResponse,
+				fornavn: fornavnResponse.fornavn,
 			}
 		}
 		default:

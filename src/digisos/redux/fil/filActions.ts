@@ -1,6 +1,6 @@
 import {Fil, Opplysning, OpplysningType} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {FilActionTypeKeys, FilActionTypes} from "./filTypes";
-import {REST_FEIL} from "../../../nav-soknad/types/restFeilTypes";
+import {REST_FEIL} from "../soknad/soknadTypes";
 
 const lastOppFil = (
     opplysning: Opplysning,

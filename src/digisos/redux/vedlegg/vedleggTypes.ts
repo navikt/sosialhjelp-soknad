@@ -1,5 +1,4 @@
-import { REST_STATUS } from "../../../nav-soknad/types/restTypes";
-import { Faktum } from "../../../nav-soknad/types/navSoknadTypes";
+import {REST_STATUS} from "../soknad/soknadTypes";
 
 export enum VedleggActionTypeKeys {
 	LAST_OPP = "vedlegg/LAST_OPP",
@@ -32,12 +31,9 @@ export type VedleggActionTypes =
 	LastOppVedleggAction
 	| LastOppVedleggOkAction
 	| LastOppVedleggFeiletAction
-	| OppdatertVedleggAction
-	| NyttVedleggAction
 	| StartSlettVedleggAction
 	| SlettVedleggAction
 	| SlettVedleggOkAction
-	| HentVedleggsForventningOk
 	| VedleggAlleredeSendtAction
 	| VedleggAlleredeSendtOkAction
 	| OtherAction;
@@ -58,17 +54,6 @@ interface LastOppVedleggFeiletAction {
 	feilKode: string;
 }
 
-interface OppdatertVedleggAction {
-	type: VedleggActionTypeKeys.OPPDATERT_VEDLEGG;
-	vedlegg: Vedlegg;
-	fakta: Faktum[];
-}
-
-interface NyttVedleggAction {
-	type: VedleggActionTypeKeys.NYTT_VEDLEGG;
-	vedlegg: Vedlegg;
-	fakta: Faktum[];
-}
 
 export interface StartSlettVedleggAction {
 	type: VedleggActionTypeKeys.START_SLETT_VEDLEGG;
@@ -86,11 +71,7 @@ export interface SlettVedleggOkAction {
 	type: VedleggActionTypeKeys.SLETT_VEDLEGG_OK;
 }
 
-interface HentVedleggsForventningOk {
-	type: VedleggActionTypeKeys.HENT_VEDLEGGSFORVENTNING_OK;
-	vedleggsforventninger: Vedlegg[];
-	fakta: Faktum[];
-}
+
 
 export interface VedleggAlleredeSendtAction {
 	type: VedleggActionTypeKeys.VEDLEGG_ALLEREDE_SENDT;

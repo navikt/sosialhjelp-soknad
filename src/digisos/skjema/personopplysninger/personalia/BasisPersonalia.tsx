@@ -6,16 +6,19 @@ import {
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
-import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 class BasisPersonaliaView extends React.Component<Props, {}> {
 
 	componentDidMount() {
-		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BASIS_PERSONALIA);
+		const {behandlingsId} = this.props;
+		if (behandlingsId){
+			this.props.hentSoknadsdata(behandlingsId, SoknadsSti.BASIS_PERSONALIA);
+		}
 	}
 
 	render() {

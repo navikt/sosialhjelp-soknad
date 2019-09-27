@@ -9,7 +9,6 @@ import {
     opprettEttersendelse,
     sendEttersendelse
 } from "../../redux/ettersendelse/ettersendelseActions";
-import {REST_STATUS} from "../../../nav-soknad/types";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
 import {MargIkoner} from "./margIkoner";
@@ -23,10 +22,11 @@ import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import {Prompt} from "react-router";
 import {erEttersendelseSide, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
 import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";
+import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 
 interface OwnProps {
     manglendeVedlegg: EttersendelseVedleggBackend[];
-    brukerbehandlingskjedeId: string;
+    brukerbehandlingskjedeId: string | undefined;
     brukerbehandlingId: string | null;
     restStatus: REST_STATUS;
     originalSoknad: any;
@@ -54,8 +54,10 @@ class Ettersendelse extends React.Component<Props, OwnState> {
     componentDidMount() {
         visToppMeny();
         const brukerbehandlingskjedeId = this.lesBrukerbehandlingskjedeId();
-        this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
-        this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
+        if (brukerbehandlingskjedeId){
+            this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
+            this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
+        }
     }
 
     lesBrukerbehandlingskjedeId() {
@@ -95,8 +97,10 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
     onEttersendelseSendt() {
         const brukerbehandlingskjedeId = this.lesBrukerbehandlingskjedeId();
-        this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
-        this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
+        if (brukerbehandlingskjedeId){
+            this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
+            this.props.dispatch(lesEttersendelser(brukerbehandlingskjedeId));
+        }
     }
 
     manglendeVedleggDato() {
@@ -233,7 +237,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
 export default connect((state: State) => {
     return {
-        brukerbehandlingskjedeId: state.soknad.data.brukerBehandlingId,
+        brukerbehandlingskjedeId: state.soknad.behandlingsId,
         manglendeVedlegg: state.ettersendelse.data,
         brukerbehandlingId: state.ettersendelse.brukerbehandlingId,
         originalSoknad: state.ettersendelse.innsendte.originalSoknad,

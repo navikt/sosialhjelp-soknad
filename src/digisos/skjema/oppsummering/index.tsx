@@ -2,14 +2,12 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
-import {REST_STATUS} from "../../../nav-soknad/types";
-import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
 import {bekreftOppsummering, hentOppsummering,} from "../../redux/oppsummering/oppsummeringActions";
 import {Oppsummering} from "../../redux/oppsummering/oppsummeringTypes";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import {State} from "../../redux/reducers";
 import {DispatchProps} from "../../redux/reduxTypes";
-import {finnOgOppdaterSoknadsmottakerStatus, settInfofaktum} from "../../redux/soknad/soknadActions";
+import {finnOgOppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils/intlUtils";
 import {Link} from "react-router-dom";
 import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
@@ -17,13 +15,14 @@ import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
 import {Soknadsdata} from "../../redux/soknadsdata/soknadsdataReducer";
 import {NavEnhet} from "../personopplysninger/adresse/AdresseTypes";
 import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
+import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 
 interface StateProps {
 	oppsummering: Oppsummering | null;
 	bekreftet: boolean | undefined;
 	visBekreftMangler: boolean | undefined;
 	restStatus: REST_STATUS;
-	brukerbehandlingId: string;
+	brukerbehandlingId: string | undefined;
 	soknadsdata: Soknadsdata;
 	valgtSoknadsmottaker: NavEnhet | undefined;
 }
@@ -37,25 +36,11 @@ class OppsummeringView extends React.Component<Props, {}> {
 	}
 
 	componentDidMount() {
-		this.props.dispatch(finnOgOppdaterSoknadsmottakerStatus(this.props.brukerbehandlingId));
-		this.props.dispatch(hentOppsummering());
-		this.props.dispatch(
-			settInfofaktum({
-				faktumKey: "informasjon.tekster",
-				properties: {
-					"1": getIntlTextOrKey(this.props.intl, "informasjon.start.tittel"),
-					"2": getIntlTextOrKey(this.props.intl, "informasjon.start.tekst"),
-					"3": getIntlTextOrKey(
-						this.props.intl,
-						"informasjon.nodsituasjon.undertittel"
-					),
-					"4": getIntlTextOrKey(
-						this.props.intl,
-						"informasjon.nodsituasjon.tekst"
-					)
-				}
-			})
-		);
+		const {brukerbehandlingId, dispatch} = this.props;
+		if (brukerbehandlingId){
+			dispatch(finnOgOppdaterSoknadsmottakerStatus(brukerbehandlingId));
+			dispatch(hentOppsummering());
+		}
 	}
 
 	getOppsummering() {
@@ -99,45 +84,38 @@ class OppsummeringView extends React.Component<Props, {}> {
 			id: "soknadsosialhjelp.oppsummering.harLestSamtykker"
 		});
 
-		let restStatusUpdated = restStatus;
-		if(!this.props.valgtSoknadsmottaker){
-			restStatusUpdated = REST_STATUS.PENDING
-		}
-
 		return (
-			<LoadContainer restStatus={restStatusUpdated}>
-				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
-					<div>
-						{skjemaOppsummering}
-					</div>
+			<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
+				<div>
+					{skjemaOppsummering}
+				</div>
 
-					<div className="infopanel-oppsummering skjema-sporsmal">
-						<SoknadsmottakerInfoPanel />
-					</div>
+				<div className="infopanel-oppsummering skjema-sporsmal">
+					<SoknadsmottakerInfoPanel />
+				</div>
 
-					<div className="bekreftOpplysningerPanel blokk-xs bolk">
-						<BekreftCheckboksPanel
-							label={bekreftOpplysninger}
-							checked={this.props.bekreftet ? this.props.bekreftet : false}
-							onChange={() => this.props.dispatch(bekreftOppsummering())}
-							feil={
-								this.props.visBekreftMangler
-									? {
-										feilmelding: intl.formatHTMLMessage({
-											id: "oppsummering.feilmelding.bekreftmangler"
-										})
-									}
-									: undefined
-							}
-						>
-							<p style={{marginTop: "0"}}>
-								<FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger"/>
-							</p>
-						</BekreftCheckboksPanel>
-					</div>
-					<BehandlingAvPersonopplysningerModal/>
-				</DigisosSkjemaSteg>
-			</LoadContainer>
+				<div className="bekreftOpplysningerPanel blokk-xs bolk">
+					<BekreftCheckboksPanel
+						label={bekreftOpplysninger}
+						checked={this.props.bekreftet ? this.props.bekreftet : false}
+						onChange={() => this.props.dispatch(bekreftOppsummering())}
+						feil={
+							this.props.visBekreftMangler
+								? {
+									feilmelding: intl.formatHTMLMessage({
+										id: "oppsummering.feilmelding.bekreftmangler"
+									})
+								}
+								: undefined
+						}
+					>
+						<p style={{marginTop: "0"}}>
+							<FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger"/>
+						</p>
+					</BekreftCheckboksPanel>
+				</div>
+				<BehandlingAvPersonopplysningerModal/>
+			</DigisosSkjemaSteg>
 		);
 	}
 }
@@ -148,7 +126,7 @@ export default connect((state: State) => {
 		bekreftet: state.oppsummering.bekreftet,
 		visBekreftMangler: state.oppsummering.visBekreftMangler,
 		restStatus: state.oppsummering.restStatus,
-		brukerbehandlingId: state.soknad.data.brukerBehandlingId,
+		brukerbehandlingId: state.soknad.behandlingsId,
 		valgtSoknadsmottaker: state.soknad.valgtSoknadsmottaker,
 		soknadsdata: state.soknadsdata
 	};

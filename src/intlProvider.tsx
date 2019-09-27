@@ -2,14 +2,14 @@ import * as React from "react";
 import {addLocaleData, IntlProvider as Provider} from "react-intl";
 import * as nb from "react-intl/locale-data/nb";
 import {connect} from "react-redux";
-import {LedetekstState} from "./digisos/redux/ledetekster/ledeteksterTypes";
 import {DispatchProps} from "./digisos/redux/reduxTypes";
 import {State} from "./digisos/redux/reducers";
+import {LedeteksterState} from "./digisos/redux/ledetekster/ledeteksterTypes";
 
 addLocaleData(nb);
 
 interface StateProps {
-    ledetekster: LedetekstState
+    ledetekster: LedeteksterState
 }
 interface IntlProviderProps {
     children: React.ReactNode;

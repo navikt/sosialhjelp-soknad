@@ -1,22 +1,24 @@
-import {REST_STATUS, Soknad} from "../../../nav-soknad/types";
 import {AVBRYT_DESTINASJON, ErSystemdataEndret} from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
-import {TilgangActionTypeKeys, TilgangSperrekode} from "../tilgang/tilgangTypes";
 
 export interface SoknadState {
     // Visning state
     showLargeSpinner: boolean;
     showServerFeil: boolean;
     showFeilSide: boolean;
+    visSamtykkeInfo: boolean;
 
     // Authentication / tilgang state
     linkVisited: boolean;
     harTilgang: boolean;
     sperrekode: TilgangSperrekode | undefined;
-    status: TilgangActionTypeKeys;
 
     // Rest state
     restStatus: REST_STATUS;
+
+    // Tilgang og fornavn
+    tilgang: undefined | TilgangResponse;
+    fornavn: undefined | string;
 
     // Opprettelse, innsending og ettersendelse
     startSoknadPending: boolean;
@@ -30,7 +32,7 @@ export interface SoknadState {
     };
 
     // Soknad state
-    behandlingsId: string;
+    behandlingsId: string | undefined;
     valgtSoknadsmottaker: NavEnhet | undefined;
 
     // Systemdata state
@@ -40,12 +42,15 @@ export interface SoknadState {
 }
 
 export enum REST_STATUS {
-    NOT_ASKED = "NOT_ASKED",
-    LOADING = "LOADING",
-    SUCCESS = "SUCCESS",
+    INITIALISERT = "INITIALISERT",
+    PENDING = "PENDING",
+    OK = "OK",
     REDIRECT = "REDIRECT",
     CLIENT_ERROR = "CLIENT_ERROR",
-    SERVER_ERROR = "SERVER_ERROR"
+    SERVER_ERROR = "SERVER_ERROR",
+    XSRF = "XSRF",
+    LAST_OPP_FIL_FEILET = "LAST_OPP_FIL_FEILET",
+    FEILET = "FEILET"
 }
 
 export enum REST_FEIL {
@@ -72,3 +77,22 @@ export interface SkjemaConfig {
     tittelId: string;
     skjemanavn: string;
 }
+
+export interface OpprettSoknadResponse {
+    brukerBehandlingId: string;
+}
+
+export interface TilgangResponse {
+    harTilgang: boolean;
+    sperrekode: TilgangSperrekode;
+}
+
+export type MiljovariablerResponse = {};
+
+export type LedeteksterResponse = {};
+
+export interface FornavnResponse {
+    fornavn: string;
+}
+
+export type TilgangSperrekode = "pilot" | "bruker";

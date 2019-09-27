@@ -18,23 +18,30 @@ type Props = SoknadsdataContainerProps  & InjectedIntlProps;
 class UtdanningView extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
-		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.UTDANNING);
+	    const {behandlingsId} = this.props;
+	    if (behandlingsId){
+		    this.props.hentSoknadsdata(behandlingsId, SoknadsSti.UTDANNING);
+        }
 	}
 
 	handleClickJaNeiSpsm(verdi: boolean) {
-		const {brukerBehandlingId, soknadsdata} = this.props;
-		const utdanning = soknadsdata.utdanning;
-		utdanning.erStudent = verdi;
-		this.props.oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning);
-		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTDANNING, utdanning);
+		const {behandlingsId, soknadsdata} = this.props;
+		if (behandlingsId){
+            const utdanning = soknadsdata.utdanning;
+            utdanning.erStudent = verdi;
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning);
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, utdanning);
+        }
 	}
 
 	handleClickHeltidDeltid(verdi: boolean) {
-		const {brukerBehandlingId, soknadsdata} = this.props;
-		const utdanning = soknadsdata.utdanning;
-		utdanning.studengradErHeltid = verdi;
-		this.props.oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning);
-		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTDANNING, utdanning);
+		const {behandlingsId, soknadsdata} = this.props;
+		if (behandlingsId){
+            const utdanning = soknadsdata.utdanning;
+            utdanning.studengradErHeltid = verdi;
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning);
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, utdanning);
+        }
 	}
 
 	render() {

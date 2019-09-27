@@ -14,7 +14,7 @@ import {State} from "../../../digisos/redux/reducers";
 interface StateProps {
 	avbrytDialogSynlig: boolean;
 	destinasjon: AVBRYT_DESTINASJON | null | undefined;
-	brukerBehandlingId: string;
+	behandlingsId: string | undefined;
 }
 
 type Props = StateProps & InjectedIntlProps & DispatchProps;
@@ -31,9 +31,13 @@ const TEKSTNOKLER_NAVIGASJON = {
 
 class AvbrytSoknad extends React.Component<Props, {}> {
 	onAvbryt() {
-		this.props.dispatch(
-			slettSoknad(this.props.brukerBehandlingId, this.props.destinasjon ? this.props.destinasjon : "MINSIDE")
-		);
+		const {behandlingsId, destinasjon} = this.props;
+		if (behandlingsId){
+			this.props.dispatch(
+				slettSoknad(behandlingsId, destinasjon ? destinasjon : "MINSIDE")
+			);
+
+		}
 	}
 
 	onFortsett() {
@@ -91,6 +95,6 @@ export default connect((state: State, props: any): StateProps => {
 	return {
 		avbrytDialogSynlig: state.soknad.avbrytDialog.synlig,
 		destinasjon: state.soknad.avbrytDialog.destinasjon,
-		brukerBehandlingId: state.soknad.data.brukerBehandlingId
+		behandlingsId: state.soknad.behandlingsId
 	};
 })(injectIntl(AvbrytSoknad));

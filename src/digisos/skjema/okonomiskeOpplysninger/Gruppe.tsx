@@ -20,7 +20,6 @@ export interface OwnProps {
 
 interface StoreToProps {
     okonomiskeOpplysninger: OpplysningerModel;
-    behandlingsId: string;
 }
 
 
@@ -63,7 +62,6 @@ export default connect(
     (state: State) => {
         return {
             okonomiskeOpplysninger: state.okonomiskeOpplysninger,
-            behandlingsId: state.soknad.data.brukerBehandlingId,
         };
     }
 )(injectIntl(GruppeView));

@@ -13,12 +13,12 @@ import {
 } from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {DispatchProps} from "../../redux/reduxTypes";
 import {hentOpplysninger} from "../../redux/okonomiskeOpplysninger/opplysningerActions";
-import {RestStatus} from "../../../nav-soknad/types";
 import {gruppeRekkefolge} from "../../redux/okonomiskeOpplysninger/opplysningerConfig";
+import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 
 interface StoreToProps {
     okonomiskeOpplysninger: OpplysningerModel;
-    behandlingsId: string;
+    behandlingsId: string | undefined;
 }
 
 type MaybeJsxElement = JSX.Element | null;
@@ -29,7 +29,9 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
 
     componentDidMount() {
         const {behandlingsId} = this.props;
-        this.props.dispatch(hentOpplysninger(behandlingsId))
+        if (behandlingsId){
+            this.props.dispatch(hentOpplysninger(behandlingsId));
+        }
     }
 
     renderGrupper(): MaybeJsxElement[] {
@@ -75,7 +77,7 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
             </div>
         );
 
-        if (restStatus === RestStatus.SUCCESS) {
+        if (restStatus === REST_STATUS.OK) {
             return (
                 <div className="steg-ekstrainformasjon">
                     <DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk} ikon={<SkjemaIllustrasjon/>}>
@@ -99,7 +101,7 @@ export default connect<any, {}, {}>(
     (state: any) => {
         return {
             okonomiskeOpplysninger: state.okonomiskeOpplysninger,
-            behandlingsId: state.soknad.data.brukerBehandlingId,
+            behandlingsId: state.soknad.behandlingsId,
         };
     }
 )(injectIntl(OkonomiskeOpplysningerView));
