@@ -222,11 +222,11 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                 </div>
                 <span>
                     <Prompt
-                        message={loc =>
-                            erEttersendelseSide(loc.pathname)
+                        message={loc => {
+                            return erEttersendelseSide(loc.pathname)
                                 ? true
                                 : NAVIGASJONSPROMT.ETTERSENDELSE
-                        }
+                        }}
                     />
                     <SoknadAlleredeSendtPromt/>
                 </span>

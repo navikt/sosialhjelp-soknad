@@ -22,7 +22,6 @@ class SoknadAlleredeSendtPromt extends React.Component<Props, {}> {
     }
 
     render() {
-
         return (
             <NavFrontendModal
                 isOpen={this.props.visPrompt}

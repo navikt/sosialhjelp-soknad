@@ -31,8 +31,8 @@ function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
         const url = `soknader/opprettSoknad?ettersendTil=${action.brukerbehandlingId}`;
         const response = yield call(fetchPost, url, "");
         if (response) {
-            yield put(lagEttersendelseOk(response.behandingsId));
-            yield put(lesEttersendelsesVedlegg(response.behandingsId));
+            yield put(lagEttersendelseOk(response.brukerBehandlingId));
+            yield put(lesEttersendelsesVedlegg(response.brukerBehandlingId));
         }
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED){
@@ -63,6 +63,7 @@ function* lesEttersendelserSaga(action: LesEttersendelserAction) {
 
 function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction) {
     try {
+        debugger;
         const url = `ettersendelse/ettersendteVedlegg/${action.brukerbehandlingId}`;
         const response = yield call(fetchToJson, url);
         if (response) {
