@@ -3,11 +3,11 @@ import NavFrontendModal from "nav-frontend-modal";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { DispatchProps } from "../redux/reduxTypes";
 import { connect } from "react-redux";
-import { setVisSamtykkeInfo } from "../redux/init/initActions";
 import { Knapp } from "nav-frontend-knapper";
 import { finnValgtEnhetsNavn } from "../data/kommuner";
 import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
 import {State} from "../redux/reducers";
+import {visSamtykkeInfo} from "../redux/soknad/soknadActions";
 
 interface StateProps {
 	modalSynlig: boolean;
@@ -34,7 +34,9 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 				isOpen={this.props.modalSynlig || false}
 				contentLabel={this.props.intl.formatMessage({id: "avbryt.avbryt"})}
 				closeButton={true}
-				onRequestClose={() => this.props.dispatch(setVisSamtykkeInfo(false))}
+				onRequestClose={() => {
+					this.props.dispatch(visSamtykkeInfo(false))
+				}}
 				style={{
 					content: {
 						overflowY: 'auto'
@@ -48,7 +50,9 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 				<div className="behandlingAvPersonopplysningerModal--lukke-knapp">
 					<Knapp
 						htmlType="button"
-						onClick={() => this.props.dispatch(setVisSamtykkeInfo(false))}
+						onClick={() => {
+							this.props.dispatch(visSamtykkeInfo(false))
+						}}
 					>
 						<FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"}/>
 					</Knapp>
@@ -60,7 +64,7 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 
 export default connect((state: State): StateProps => {
 	return {
-		modalSynlig: state.init.visSamtykkeInfo,
+		modalSynlig: state.soknad.visSamtykkeInfo,
 		soknadsdata: state.soknadsdata
 	};
 })(injectIntl(BehandlingAvPersonopplysningerModal));

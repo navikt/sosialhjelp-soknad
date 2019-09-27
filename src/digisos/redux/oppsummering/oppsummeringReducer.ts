@@ -1,10 +1,10 @@
-import { REST_STATUS } from "../../../nav-soknad/types";
 import {
 	OppsummeringActionTypeKeys,
 	Oppsummering,
 	OppsummeringBolk,
 	OppsummeringActionTypes
 } from "./oppsummeringTypes";
+import {REST_STATUS} from "../soknad/soknadTypes";
 
 export interface OppsummeringState {
 	oppsummering: Oppsummering | null;
@@ -76,7 +76,7 @@ export default (state: OppsummeringState = defaultState, action: OppsummeringAct
 			return {
 				...state,
 				oppsummering: null,
-				restStatus: REST_STATUS.FEILET
+				restStatus: REST_STATUS.SERVER_ERROR
 			};
 		case OppsummeringActionTypeKeys.BEKREFT_OPPSUMMERING:
 			return {

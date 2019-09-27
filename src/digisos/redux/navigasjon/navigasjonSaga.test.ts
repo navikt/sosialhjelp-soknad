@@ -14,9 +14,9 @@ import {
 } from "./navigasjonTypes";
 import { SagaIterator } from "redux-saga";
 import { tilSteg } from "./navigasjonActions";
-import { selectBrukerBehandlingId } from "../selectors";
 import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import {goBack, push} from "connected-react-router";
+import {State} from "../reducers";
 
 const ferdig = (saga: SagaIterator) => {
 	expect(saga.next()).toEqual({
@@ -101,7 +101,7 @@ describe("navigasjonSaga", () => {
 		it("select behandlingsId", () => {
 			expect(saga.next()).toEqual({
 				done: false,
-				value: select(selectBrukerBehandlingId)
+				value: select((state: State) => state.soknad.behandlingsId)
 			});
 		});
 

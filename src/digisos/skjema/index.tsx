@@ -35,15 +35,15 @@ interface OwnProps {
 
 interface StateProps {
     restStatus: string;
+    stegFraUrl: string | undefined;
+    behandlingsIdFraUrl: string | undefined;
     gyldigUrl: boolean;
-    steg: string;
-    brukerbehandlingId: string;
-    behandingsIdPaStore: string;
+    behandlingsId: string | undefined;
 }
 
 interface UrlParams {
-    brukerbehandlingId: string;
-    steg: string;
+    behandlingsIdFraUrl: string;
+    stegFraUrl: string;
 }
 
 type Props = OwnProps & StateProps & RouterProps & DispatchProps;
@@ -51,9 +51,28 @@ type Props = OwnProps & StateProps & RouterProps & DispatchProps;
 class SkjemaRouter extends React.Component<Props, {}> {
 
     componentWillMount() {
-        if (this.props.brukerbehandlingId) {
-            this.props.dispatch(hentSoknad(this.props.brukerbehandlingId));
+        const {
+            restStatus,
+            stegFraUrl,
+            behandlingsIdFraUrl,
+            gyldigUrl,
+            behandlingsId,
+            dispatch
+        } = this.props;
+
+        if (behandlingsId !== behandlingsIdFraUrl){
+            // FIXME: MÅ HÅNDTERES.
         }
+
+        if (behandlingsId){
+            dispatch(hentSoknad(behandlingsId));
+        }
+
+        if (!behandlingsId && behandlingsIdFraUrl){
+            dispatch(hentSoknad(behandlingsIdFraUrl));
+        }
+
+        // FIXME: Her mangler det håndtering av andre caser.
     }
 
     componentDidMount() {
@@ -62,15 +81,15 @@ class SkjemaRouter extends React.Component<Props, {}> {
 
     render() {
 
-        const { behandingsIdPaStore } = this.props;
+        const { behandlingsId } = this.props;
 
-        if (behandingsIdPaStore && behandingsIdPaStore !== ""){
+        if (behandlingsId && behandlingsId !== ""){
             const {gyldigUrl} = this.props;
 
             if (!gyldigUrl) {
                 return <SideIkkeFunnet/>;
             }
-            const path = "/skjema/:brukerBehandlingId";
+            const path = "/skjema/:behandingsId";
             return (
                 <>
                     <Switch>
@@ -115,24 +134,24 @@ const mapStateToProps = (
     props: OwnProps & RouterProps
 ): StateProps => {
     const match = matchPath(props.location.pathname, {
-        path: "/skjema/:brukerbehandlingId/:steg"
+        path: "/skjema/:behandlingsIdFraUrl/:stegFraUrl"
     });
     if (match){
-        const {steg, brukerbehandlingId} = match.params as UrlParams;
+        const {stegFraUrl, behandlingsIdFraUrl} = match.params as UrlParams;
         return {
             restStatus: state.soknad.restStatus,
-            steg,
-            brukerbehandlingId,
-            gyldigUrl: brukerbehandlingId !== undefined && steg !== undefined,
-            behandingsIdPaStore: state.soknad.behandlingsId
+            stegFraUrl,
+            behandlingsIdFraUrl,
+            gyldigUrl: behandlingsIdFraUrl !== undefined && stegFraUrl !== undefined,
+            behandlingsId: state.soknad.behandlingsId
         };
     } else {
         return {
             restStatus: state.soknad.restStatus,
-            steg: "1",
-            brukerbehandlingId: "42",
+            stegFraUrl: undefined,
+            behandlingsIdFraUrl: undefined,
             gyldigUrl: false,
-            behandingsIdPaStore: state.soknad.behandlingsId
+            behandlingsId: state.soknad.behandlingsId
         };
     }
 };

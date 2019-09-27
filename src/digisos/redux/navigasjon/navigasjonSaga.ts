@@ -11,9 +11,9 @@ import {
 } from "./navigasjonTypes";
 import { tilStart, tilSteg } from "./navigasjonActions";
 import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
-import { selectBrukerBehandlingId, selectProgresjonFaktum } from "../selectors";
 import { lesKommunenrFraUrl } from "../../../nav-soknad/utils";
 import {goBack, push} from "connected-react-router";
+import {State} from "../reducers";
 
 const getHistoryLength = () => window.history.length;
 const navigateTo = (path: string) => (window.location.href = path);
@@ -49,8 +49,8 @@ function* tilbakeEllerForsidenSaga(): SagaIterator {
 }
 
 function* tilStegSaga(action: TilSteg): SagaIterator {
-	const behandlingsId = yield select(selectBrukerBehandlingId);
-	let url = `/skjema/${behandlingsId}/${action.stegnummer}`;
+	const {behandlingsId, stegnummer} = action;
+	let url = `/skjema/${behandlingsId}/${stegnummer}`;
 	const kommunenr = lesKommunenrFraUrl();
 	if (kommunenr) {
 		url = url + '?kommunenr=' + kommunenr;
@@ -59,14 +59,14 @@ function* tilStegSaga(action: TilSteg): SagaIterator {
 }
 
 function* gaVidereSaga(action: GaVidere): SagaIterator {
-	yield put(tilSteg(action.stegnummer + 1));
+	yield put(tilSteg(action.stegnummer + 1, action.behandlingsId));
 }
 
 function* gaTilbakeSaga(action: GaTilbake): SagaIterator {
 	if (action.stegnummer === 1) {
 		yield put(tilStart());
 	} else {
-		yield put(tilSteg(action.stegnummer - 1));
+		yield put(tilSteg(action.stegnummer - 1, action.behandlingsId));
 	}
 }
 
@@ -103,7 +103,6 @@ export {
 	gaVidereSaga,
 	getHistoryLength,
 	navigateTo,
-	selectProgresjonFaktum,
 	tilbakeEllerForsidenSaga,
 	tilFinnDittNavKontorSaga,
 	tilKvittering,

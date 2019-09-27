@@ -1,32 +1,9 @@
-import {
-	LedeteksterActionTypeKeys,
-	InformasjonActionTypes
-} from "./ledeteksterTypes";
+import {LedeteksterAction, LedeteksterActionTypeKeys} from "./ledeteksterTypes";
+import {LedeteksterResponse} from "../soknad/soknadTypes";
 
-const hentTekster = (): InformasjonActionTypes => {
+export const lagreLedeteksterPaStore = (ledeteksterResponse: LedeteksterResponse): LedeteksterAction => {
 	return {
-		type: LedeteksterActionTypeKeys.INIT
-	};
+		type: LedeteksterActionTypeKeys.LAGRE_LEDETEKSTER_PA_STORE,
+		ledeteksterResponse
+	}
 };
-
-const henterTekster = (): InformasjonActionTypes => {
-	return {
-		type: LedeteksterActionTypeKeys.PENDING
-	};
-};
-
-const hentetTekster = (tekster: object): InformasjonActionTypes => {
-	return {
-		type: LedeteksterActionTypeKeys.OK,
-		data: tekster
-	};
-};
-
-const hentTeksterFeilet = (feilmelding: string): InformasjonActionTypes => {
-	return {
-		type: LedeteksterActionTypeKeys.FEILET,
-		feilmelding
-	};
-};
-
-export { hentTekster, henterTekster, hentetTekster, hentTeksterFeilet };

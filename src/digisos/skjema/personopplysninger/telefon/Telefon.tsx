@@ -22,17 +22,22 @@ type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 class TelefonView extends React.Component<Props, {}> {
 
-	componentDidMount(): void {
-		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.TELEFONNUMMER);
+	componentDidMount() {
+		const {behandlingsId} = this.props;
+		if (behandlingsId){
+			this.props.hentSoknadsdata(behandlingsId, SoknadsSti.TELEFONNUMMER);
+		}
 	}
 
 	setBrukerdefinert(verdi: boolean) {
-		const { soknadsdata, brukerBehandlingId } = this.props;
-		const telefonnummer = soknadsdata.personalia.telefonnummer;
-		telefonnummer.brukerdefinert = verdi;
-		telefonnummer.brukerutfyltVerdi = null;
-		this.forberedOgSendTelefonnummer(telefonnummer, brukerBehandlingId);
-		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
+		const { soknadsdata, behandlingsId } = this.props;
+		if (behandlingsId){
+			const telefonnummer = soknadsdata.personalia.telefonnummer;
+			telefonnummer.brukerdefinert = verdi;
+			telefonnummer.brukerutfyltVerdi = null;
+			this.forberedOgSendTelefonnummer(telefonnummer, behandlingsId);
+			this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
+		}
 	}
 
 	onChange(verdi: any) {
@@ -44,9 +49,11 @@ class TelefonView extends React.Component<Props, {}> {
 	}
 
 	onBlur() {
-		const { soknadsdata, brukerBehandlingId } = this.props;
-		const telefonnummer = {...soknadsdata.personalia.telefonnummer};
-		this.forberedOgSendTelefonnummer(telefonnummer, brukerBehandlingId);
+		const { soknadsdata, behandlingsId } = this.props;
+		if (behandlingsId){
+			const telefonnummer = {...soknadsdata.personalia.telefonnummer};
+			this.forberedOgSendTelefonnummer(telefonnummer, behandlingsId);
+		}
 	}
 
 	forberedOgSendTelefonnummer(telefonnummer: Telefonnummer, brukerBehandlingId: string){

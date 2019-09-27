@@ -10,7 +10,7 @@ import {State} from "../../redux/reducers";
 import {injectIntl} from "react-intl";
 
 interface StoreToProps {
-    behandlingsId: string;
+    behandlingsId: string | undefined;
     filopplasting: FilState
 }
 
@@ -28,13 +28,15 @@ class LastOppFil extends React.Component<Props, {}> {
 
     handleFileUpload(files: FileList) {
         const {behandlingsId, opplysning} = this.props;
-        if (files.length !== 1) {
-            return;
+        if (behandlingsId){
+            if (files.length !== 1) {
+                return;
+            }
+            const formData = new FormData();
+            formData.append("file", files[0], files[0].name);
+            this.props.dispatch(lastOppFil(opplysning, formData, behandlingsId));
+            this.leggTilVedleggKnapp.value = "";
         }
-        const formData = new FormData();
-        formData.append("file", files[0], files[0].name);
-        this.props.dispatch(lastOppFil(opplysning, formData, behandlingsId));
-        this.leggTilVedleggKnapp.value = "";
     }
 
     render() {
@@ -89,7 +91,7 @@ class LastOppFil extends React.Component<Props, {}> {
 export default connect(
     (state: State) => {
         return {
-            behandlingsId: state.soknad.data.brukerBehandlingId,
+            behandlingsId: state.soknad.behandlingsId,
             filopplasting: state.filopplasting
         };
     }

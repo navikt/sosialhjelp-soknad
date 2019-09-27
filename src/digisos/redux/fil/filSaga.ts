@@ -11,7 +11,7 @@ import {
 import {Fil, Opplysning, VedleggStatus} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {lastOppFilFeilet} from "./filActions";
-import {REST_FEIL} from "../../../nav-soknad/types/restFeilTypes";
+import {REST_FEIL} from "../soknad/soknadTypes";
 
 
 function* lastOppFilSaga(action: LastOppFilAction) {

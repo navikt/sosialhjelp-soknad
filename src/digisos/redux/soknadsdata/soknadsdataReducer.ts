@@ -43,7 +43,6 @@ import {
 	BasisPersonalia,
 	initialBasisPersonalia
 } from "../../skjema/personopplysninger/personalia/BasisPersonaliaTypes";
-import { REST_STATUS } from "../../../nav-soknad/types";
 import { Barnebidrag, ForsorgerPlikt } from "../../skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 import {
     initialSkattbarInntektState,
@@ -51,6 +50,7 @@ import {
 } from "../../skjema/inntektFormue/skattbarInntekt/inntektTypes";
 import {Systeminntekter, initialSysteminntekter} from "../../skjema/inntektFormue/navytelser/navYtelserTypes";
 import {Studielan, initialStudielanState} from "../../skjema/inntektFormue/studielan/StudielanTypes";
+import {REST_STATUS} from "../soknad/soknadTypes";
 
 export enum SoknadsdataActionTypeKeys {
 	OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",

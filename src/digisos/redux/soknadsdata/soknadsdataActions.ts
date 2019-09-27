@@ -6,8 +6,8 @@ import {
 	SoknadsdataType
 } from "./soknadsdataReducer";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
-import { REST_STATUS } from "../../../nav-soknad/types";
 import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
+import {REST_STATUS} from "../soknad/soknadTypes";
 
 const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `soknader/${brukerBehandlingId}/${sti}`;
 

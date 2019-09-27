@@ -2,8 +2,6 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {State} from "../../redux/reducers";
 import {DispatchProps} from "../../redux/reduxTypes";
-import {FaktumComponentProps} from "../../../nav-soknad/redux/fakta/faktaTypes";
-import { getErSystemdataEndret } from "../../redux/soknad/soknadActions";
 import { ErSystemdataEndret } from "../../redux/soknad/soknadActionTypes";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import William from "../../../nav-soknad/components/svg/illustrasjoner/William";
@@ -15,21 +13,24 @@ import Bankinformasjon from "./bankinfo/Bankinformasjon";
 import Adresse from "./adresse/Adresse";
 import BasisPersonalia from "./personalia/BasisPersonalia";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import {getErSystemdataEndret} from "../../redux/soknad/soknadActions";
 
 interface OwnProps {
 	hentVedleggsForventning?: (fakta: any) => void;
 	erGjenopptattSoknad: boolean;
 	skalSjekkeOmSystemdataErEndret: boolean;
 	erSystemdataEndret: ErSystemdataEndret;
+	behandlingsId: string | undefined,
 }
 
-export type Props = OwnProps & FaktumComponentProps & DispatchProps;
+export type Props = OwnProps & DispatchProps;
 
 class Personopplysninger extends React.Component<Props, OwnProps> {
 
 	componentDidMount() {
-		if (this.props.skalSjekkeOmSystemdataErEndret) {
-			this.props.dispatch(getErSystemdataEndret());
+		const {skalSjekkeOmSystemdataErEndret, dispatch, behandlingsId} = this.props;
+		if (skalSjekkeOmSystemdataErEndret && behandlingsId) {
+			dispatch(getErSystemdataEndret(behandlingsId));
 		}
 	}
 
@@ -82,7 +83,8 @@ class Personopplysninger extends React.Component<Props, OwnProps> {
 const mapStateToProps = (state: State) => ({
 	erGjenopptattSoknad: state.soknad.erGjenopptattSoknad,
 	skalSjekkeOmSystemdataErEndret: state.soknad.skalSjekkeOmSystemdataErEndret,
-	erSystemdataEndret: state.soknad.erSystemdataEndret
+	erSystemdataEndret: state.soknad.erSystemdataEndret,
+	behandlingsId: state.soknad.behandlingsId
 });
 
 export default connect(

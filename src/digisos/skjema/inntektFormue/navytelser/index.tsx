@@ -14,16 +14,19 @@ import {
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {Systeminntekt} from "./navYtelserTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {REST_STATUS} from "../../../../nav-soknad/types";
 import {Panel} from "nav-frontend-paneler";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
 class NavYtelserView extends React.Component<Props, {}> {
 
     componentDidMount() {
-        this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.INNTEKT_SYSTEMDATA);
+        const {behandlingsId} = this.props;
+        if (behandlingsId){
+            this.props.hentSoknadsdata(behandlingsId, SoknadsSti.INNTEKT_SYSTEMDATA);
+        }
     }
 
     renderUtbetalinger(utbetalinger: Systeminntekt[]) {

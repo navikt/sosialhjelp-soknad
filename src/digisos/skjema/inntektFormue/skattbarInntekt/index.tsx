@@ -7,10 +7,10 @@ import {
 import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {REST_STATUS} from "../../../../nav-soknad/types";
 import {Organisasjon, SkattbarInntekt} from "./inntektTypes";
 import {Panel} from "nav-frontend-paneler";
 import Lesmerpanel from 'nav-frontend-lesmerpanel';
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -27,8 +27,11 @@ class Skatt extends React.Component<Props, {}> {
 		)
 	}
 
-	componentDidMount(): void {
-		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.SKATTBARINNTEKT);
+	componentDidMount() {
+		const {behandlingsId} = this.props;
+		if (behandlingsId){
+			this.props.hentSoknadsdata(behandlingsId, SoknadsSti.SKATTBARINNTEKT);
+		}
 	}
 
 	render() {

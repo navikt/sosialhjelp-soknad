@@ -1,28 +1,38 @@
-import {
-	LedeteksterActionTypeKeys,
-	InformasjonActionTypes,
-	LedetekstState
-} from "./ledeteksterTypes";
+import {LedeteksterAction, LedeteksterActionTypeKeys, LedeteksterState} from "./ledeteksterTypes";
 
-const { OK, PENDING, FEILET, INIT } = LedeteksterActionTypeKeys;
-
-const initialState = {
+const initialState: LedeteksterState = {
 	data: {},
-	status: INIT
 };
 
+const urlInneholderVistekster = () =>
+	window.location.search.match(/vistekster=true/) !== null;
+
+function leggNoklerPaaLedetekster(data: object) {
+	const tekster = {};
+	Object.keys(data).forEach(key => {
+		// @ts-ignore
+		tekster[key] = `${data[key]} [${key}]`;
+	});
+	return tekster;
+}
+
 export default (
-	state: LedetekstState = initialState,
-	action: InformasjonActionTypes
+	state: LedeteksterState = initialState,
+	action: LedeteksterAction
 ) => {
 	switch (action.type) {
-		case OK: {
-			return { ...state, status: OK, data: action.data };
+		case LedeteksterActionTypeKeys.LAGRE_LEDETEKSTER_PA_STORE: {
+
+			let {ledeteksterResponse} = action;
+
+			const ledeteksterResponseUpdated = urlInneholderVistekster() ?
+				leggNoklerPaaLedetekster(ledeteksterResponse) : ledeteksterResponse;
+
+			return {
+				...state,
+				data: ledeteksterResponseUpdated
+			}
 		}
-		case PENDING:
-			return { ...state, status: PENDING };
-		case FEILET:
-			return { ...state, status: FEILET, felmelding: action.feilmelding };
 		default:
 			return state;
 	}

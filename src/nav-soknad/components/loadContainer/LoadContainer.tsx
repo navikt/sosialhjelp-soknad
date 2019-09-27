@@ -1,31 +1,51 @@
-import * as React from "react";
+import React, {useEffect} from 'react'
+import {sjekkAutentiseringOgTilgangOgHentRessurser} from "../../../digisos/redux/soknad/soknadActions";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import ServerFeil from "../../containers/ServerFeil";
-import { REST_STATUS } from "../../types";
+import {State} from "../../../digisos/redux/reducers";
+import {connect} from "react-redux";
+import {DispatchProps} from "../../../digisos/redux/reduxTypes";
 
-interface Props {
-	restStatus: REST_STATUS;
-	contentRenderer?: () => React.ReactNode;
+interface OwnProps {
+    showLargeSpinner: boolean,
+    showServerFeil: boolean,
+    children: React.ReactNode
 }
 
-const LoadContainer: React.StatelessComponent<Props> = ({
-	restStatus,
-	contentRenderer,
-	children
-}) => {
-	if (
-		restStatus === REST_STATUS.INITIALISERT ||
-		restStatus === REST_STATUS.PENDING
-	) {
-		return (
-			<div className="application-spinner">
-				<NavFrontendSpinner type="XXL" />
-			</div>
-		);
-	} else if (restStatus === REST_STATUS.FEILET) {
-		return <ServerFeil />;
-	}
-	return <div>{contentRenderer ? contentRenderer() : children}</div>;
+type Props = OwnProps & DispatchProps
+
+const LoadContainer: React.FC<Props> = (props: Props) => {
+
+    const {dispatch, showLargeSpinner, showServerFeil, children} = props;
+
+    useEffect(() => {
+        dispatch(sjekkAutentiseringOgTilgangOgHentRessurser());
+    });
+
+    if (showLargeSpinner){
+        return (
+            <div className="application-spinner">
+                <NavFrontendSpinner type="XXL"/>
+            </div>
+        )
+    }
+    if (showServerFeil){
+        return (<ServerFeil />)
+    }
+
+    return (
+        <div>
+            {children}
+        </div>
+    )
 };
 
-export default LoadContainer;
+
+const mapStateToProps = (state: State) => {
+    return {
+        showLargeSpinner: state.soknad.showLargeSpinner,
+        showServerFeil: state.soknad.showServerFeil
+    };
+};
+
+export default connect(mapStateToProps)(LoadContainer);

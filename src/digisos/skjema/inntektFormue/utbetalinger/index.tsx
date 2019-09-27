@@ -13,9 +13,9 @@ import {Utbetalinger, UtbetalingerKeys} from "./utbetalingerTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
-import {REST_STATUS} from "../../../../nav-soknad/types";
 import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";
@@ -38,8 +38,10 @@ export class UtbetalingerView extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        const {hentSoknadsdata, brukerBehandlingId} = this.props;
-        hentSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER);
+        const {hentSoknadsdata, behandlingsId} = this.props;
+        if (behandlingsId){
+            hentSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER);
+        }
     }
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
@@ -51,9 +53,9 @@ export class UtbetalingerView extends React.Component<Props, State> {
     }
 
     handleClickJaNeiSpsm(verdi: boolean) {
-        const {brukerBehandlingId, soknadsdata} = this.props;
+        const {behandlingsId, soknadsdata} = this.props;
         const restStatus = soknadsdata.restStatus.inntekt.utbetalinger;
-        if (restStatus === REST_STATUS.OK) {
+        if (restStatus === REST_STATUS.OK && behandlingsId) {
             const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
             utbetalinger.bekreftelse = verdi;
             if (!verdi) {
@@ -64,19 +66,21 @@ export class UtbetalingerView extends React.Component<Props, State> {
                 utbetalinger.beskrivelseAvAnnet = "";
             }
             this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
-            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger);
         }
     }
 
     handleClickRadio(idToToggle: UtbetalingerKeys) {
-        const {brukerBehandlingId, soknadsdata} = this.props;
-        const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-        utbetalinger[idToToggle]= !utbetalinger[idToToggle];
-        if (!utbetalinger.bekreftelse || !utbetalinger.annet) {
-            utbetalinger.beskrivelseAvAnnet = "";
+        const {behandlingsId, soknadsdata} = this.props;
+        if (behandlingsId){
+            const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
+            utbetalinger[idToToggle]= !utbetalinger[idToToggle];
+            if (!utbetalinger.bekreftelse || !utbetalinger.annet) {
+                utbetalinger.beskrivelseAvAnnet = "";
+            }
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger);
         }
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger);
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
     }
 
     onChangeAnnet(value: string) {
@@ -88,13 +92,15 @@ export class UtbetalingerView extends React.Component<Props, State> {
     }
 
     onBlurTekstfeltAnnet() {
-        const {brukerBehandlingId, soknadsdata} = this.props;
-        const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-        const beskrivelseAvAnnet = utbetalinger.beskrivelseAvAnnet;
-        const feilmeldingAnnet: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(beskrivelseAvAnnet, TEXT_AREA_ANNET_FAKTUM_KEY);
+        const {behandlingsId, soknadsdata} = this.props;
+        if (behandlingsId){
+            const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
+            const beskrivelseAvAnnet = utbetalinger.beskrivelseAvAnnet;
+            const feilmeldingAnnet: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(beskrivelseAvAnnet, TEXT_AREA_ANNET_FAKTUM_KEY);
 
-        if (!feilmeldingAnnet) {
-            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTBETALINGER, utbetalinger);
+            if (!feilmeldingAnnet) {
+                this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger);
+            }
         }
     }
 

@@ -1,17 +1,17 @@
 import {SagaIterator} from "redux-saga";
-import {call, put, takeEvery, select} from "redux-saga/effects";
+import {call, put, takeEvery} from "redux-saga/effects";
 import {
     fetchDelete,
-    fetchKvittering,
     fetchPost, fetchToJson, HttpStatus,
     lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
 } from "../../../nav-soknad/utils/rest-utils";
 import {
     FinnOgOppdaterSoknadsmottakerStatus,
-    HentKvitteringAction, HentSoknadAction,
+    GetErSystemdataEndret,
+    HentSoknadAction,
     SendSoknadAction,
     SlettSoknadAction,
-    SoknadActionTypeKeys, StartSoknadAction
+    SoknadActionTypeKeys,
 } from "./soknadActionTypes";
 import {
     navigerTilDittNav,
@@ -22,10 +22,9 @@ import {
 } from "../navigasjon/navigasjonActions";
 
 import {
-    hentKvitteringOk, hentSoknadOk, oppdaterSoknadsmottakerStatus,
+    hentSoknadOk, lagreRessurserPaStore, oppdaterSoknadsmottakerStatus,
     opprettSoknadOk,
-    resetSoknad,
-    sendSoknadOk, setErSystemdataEndret,
+    sendSoknadOk, setErSystemdataEndret, showLargeSpinner,
     slettSoknadOk,
     startSoknadOk
 } from "./soknadActions";
@@ -33,25 +32,58 @@ import {loggAdvarsel, loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
 import {push} from "connected-react-router";
-import {selectBrukerBehandlingId} from "../selectors";
-import {henterTilgang, hentetTilgang, hentTilgangFeilet} from "../tilgang/tilgangActions";
-import {TilgangActionTypeKeys, TilgangApiResponse} from "../tilgang/tilgangTypes";
+import {
+    FornavnResponse,
+    LedeteksterResponse,
+    MiljovariablerResponse,
+    OpprettSoknadResponse,
+    TilgangResponse
+} from "./soknadTypes";
+import {lagreLedeteksterPaStore} from "../ledetekster/ledeteksterActions";
+import {lagreMiljovariablerPaStore} from "../miljovariabler/miljovariablerActions";
 
-export interface OpprettSoknadResponse {
-    brukerBehandlingId: string;
+
+function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
+
+    try {
+        const tilgangResponse: TilgangResponse = yield call(fetchToJson, "informasjon/utslagskriterier/sosialhjelp");
+
+        // Hvis tilgangApiRespone ikke thrower unauthorized error, så er bruker autentisert
+
+        const miljoVariablerResponse: MiljovariablerResponse = yield call(fetchToJson, "informasjon/miljovariabler");
+        const ledeteksterResponse: LedeteksterResponse = yield call(fetchToJson, "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp");
+        const fornavnResponse: FornavnResponse = yield call(fetchToJson, "informasjon/fornavn" );
+
+        yield put(lagreLedeteksterPaStore(ledeteksterResponse));
+        yield put(lagreMiljovariablerPaStore(miljoVariablerResponse));
+        yield put(lagreRessurserPaStore(tilgangResponse, fornavnResponse));
+        yield put(showLargeSpinner(false));
+
+
+    } catch (reason) {
+        if (reason.message === HttpStatus.UNAUTHORIZED){
+            // Ønsker at spinneren står og går helt til redirect er utført.
+            yield put(showLargeSpinner(true))
+        } else {
+            // FIXME: noe uventet feilet. Må håndteres.
+        }
+    }
 }
 
 function* opprettSoknadSaga() {
     try {
-        yield put(resetSoknad());
-
         const response: OpprettSoknadResponse = yield call(
             fetchPost,
             "soknader/opprettSoknad", ""
         );
+
+        if (!response.brukerBehandlingId){
+            // FIXME: throw new Error("Ingen brukerBehandlingId returnert under oppretting av søknad.")
+        }
+
         yield put(opprettSoknadOk(response.brukerBehandlingId));
-        yield put(startSoknadOk()); // TODO Rename metode navn
-        yield put(tilSteg(1));
+        yield put(startSoknadOk());
+        yield put(tilSteg(1, response.brukerBehandlingId));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED){
             yield put(loggAdvarsel("opprettSoknadSaga: " + reason));
@@ -66,9 +98,9 @@ function* hentSoknadSaga(action: HentSoknadAction) {
     try {
         const xsrfCookieIsOk: boolean = yield call(
             fetchToJson,
-            `soknader/${action.brukerBehandlingId}/xsrfCookie`
+            `soknader/${action.behandlingsId}/xsrfCookie`
         );
-        yield put(hentSoknadOk(xsrfCookieIsOk, action.brukerBehandlingId));
+        yield put(hentSoknadOk(xsrfCookieIsOk, action.behandlingsId));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED){
             yield put(loggAdvarsel("hentSoknadsdata: " + reason));
@@ -79,23 +111,9 @@ function* hentSoknadSaga(action: HentSoknadAction) {
     }
 }
 
-function* startSoknadSaga(action: StartSoknadAction): SagaIterator {
-    try {
-        yield put(startSoknadOk());
-        yield put(tilSteg(1));
-    } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED){
-            yield put(loggAdvarsel("startSoknadSaga: " + reason));
-        } else {
-            yield put(loggFeil("start soknad saga feilet: " + reason));
-            yield put(navigerTilServerfeil());
-        }
-    }
-}
-
 function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
     try {
-        yield call(fetchDelete, "soknader/" + action.brukerBehandlingId);
+        yield call(fetchDelete, "soknader/" + action.behandlingsId);
         yield put(slettSoknadOk());
         if (action.destinasjon === "START") {
             yield put(tilStart());
@@ -116,34 +134,17 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
     try {
         yield call(
             fetchPost,
-            `soknader/${action.brukerBehandlingId}/actions/send`,
-            JSON.stringify({behandlingsId: action.brukerBehandlingId})
+            `soknader/${action.behandlingsId}/actions/send`,
+            JSON.stringify({behandlingsId: action.behandlingsId})
         );
-        lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.brukerBehandlingId);
-        yield put(sendSoknadOk(action.brukerBehandlingId));
-        yield put(navigerTilKvittering(action.brukerBehandlingId));
+        lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.behandlingsId);
+        yield put(sendSoknadOk(action.behandlingsId));
+        yield put(navigerTilKvittering(action.behandlingsId));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED){
             yield put(loggAdvarsel("sendSoknadSaga: " + reason));
         } else {
             yield put(loggFeil("send soknad saga feilet: " + reason));
-            yield put(navigerTilServerfeil());
-        }
-    }
-}
-
-function* hentKvitteringSaga(action: HentKvitteringAction) {
-    try {
-        const kvittering = yield call(
-            fetchKvittering,
-            "soknader/" + action.brukerBehandlingId + "?sprak=nb_NO"
-        );
-        yield put(hentKvitteringOk(kvittering));
-    } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED){
-            yield put(loggAdvarsel("hentKvitteringSaga: " + reason));
-        } else {
-            yield put(loggFeil("hent kvittering saga feilet: " + reason));
             yield put(navigerTilServerfeil());
         }
     }
@@ -170,10 +171,9 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
     }
 }
 
-function* getErSystemdataEndretSaga() {
+function* getErSystemdataEndretSaga(action: GetErSystemdataEndret) {
     try {
-        const behandlingsID = yield select(selectBrukerBehandlingId);
-        const urlPath = `soknader/${behandlingsID}/erSystemdataEndret`;
+        const urlPath = `soknader/${action.behandlingsId}/erSystemdataEndret`;
         const response = yield fetchToJson(urlPath);
         if (response) {
             yield put(loggInfo("Systemdata var endret for brukeren."));
@@ -189,40 +189,15 @@ function* getErSystemdataEndretSaga() {
     }
 }
 
-export function* hentTilgangSaga() {
-    try {
-        yield put(henterTilgang());
-        const response: TilgangApiResponse = yield call(
-            fetchToJson,
-            "informasjon/utslagskriterier/sosialhjelp"
-        );
-        yield put(hentetTilgang(response.harTilgang, response.sperrekode));
-    } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED){
-            yield put(loggAdvarsel("hentTilgangSaga: " + reason));
-        } else {
-            yield put(hentTilgangFeilet(reason));
-        }
-    }
-}
 
-
-export {
-    opprettSoknadSaga,
-    startSoknadSaga,
-    sendSoknadSaga,
-    hentKvitteringSaga,
-    slettSoknadSaga
-};
 
 function* soknadSaga(): SagaIterator {
-    yield takeEvery(TilgangActionTypeKeys.INIT, hentTilgangSaga);
-    yield takeEvery(SoknadActionTypeKeys.START_SOKNAD, startSoknadSaga);
+    yield takeEvery(SoknadActionTypeKeys.SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER, sjekkAutentiseringOgTilgangOgHentRessurserSaga);
     yield takeEvery(SoknadActionTypeKeys.OPPRETT_SOKNAD, opprettSoknadSaga);
     yield takeEvery(SoknadActionTypeKeys.HENT_SOKNAD, hentSoknadSaga);
+
     yield takeEvery(SoknadActionTypeKeys.SLETT_SOKNAD, slettSoknadSaga);
     yield takeEvery(SoknadActionTypeKeys.SEND_SOKNAD, sendSoknadSaga);
-    yield takeEvery(SoknadActionTypeKeys.HENT_KVITTERING, hentKvitteringSaga);
     yield takeEvery(SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS, finnOgOppdaterSoknadsmottakerStatusSaga);
     yield takeEvery(SoknadActionTypeKeys.GET_ER_SYSTEMDATA_ENDRET, getErSystemdataEndretSaga);
 }

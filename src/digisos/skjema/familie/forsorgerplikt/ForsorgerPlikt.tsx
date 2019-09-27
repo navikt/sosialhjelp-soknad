@@ -9,8 +9,8 @@ import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/s
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import Barnebidrag from "./Barnebidrag";
 import RegistrerteBarn from "./RegistrerteBarn";
-import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 type Props = SoknadsdataContainerProps & InjectedIntlProps;
 
@@ -28,7 +28,10 @@ class ForsorgerPliktView extends React.Component<Props, State> {
 	}
 
 	componentDidMount() {
-		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.FORSORGERPLIKT);
+		const {behandlingsId} = this.props;
+		if (behandlingsId){
+			this.props.hentSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT);
+		}
 	}
 
 	componentWillUpdate(nextProps: Readonly<Props>, nextState: Readonly<State>, nextContext: any) {

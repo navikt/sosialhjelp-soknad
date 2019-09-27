@@ -12,9 +12,9 @@ import {Verdier, VerdierKeys} from "./VerdierTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
-import {REST_STATUS} from "../../../../nav-soknad/types";
 import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 const MAX_CHARS = 500;
 const VERDIER = "inntekt.eierandeler";
@@ -36,7 +36,10 @@ export class VerdierView extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.VERDIER);
+        const {behandlingsId} = this.props;
+        if (behandlingsId){
+            this.props.hentSoknadsdata(behandlingsId, SoknadsSti.VERDIER);
+        }
     }
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
@@ -48,10 +51,10 @@ export class VerdierView extends React.Component<Props, State> {
     }
 
     handleClickJaNeiSpsm(verdi: boolean) {
-        const {brukerBehandlingId, soknadsdata} = this.props;
+        const {behandlingsId, soknadsdata} = this.props;
         const restStatus = soknadsdata.restStatus.inntekt.verdier;
 
-        if (!this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
+        if (!this.state.oppstartsModus && restStatus === REST_STATUS.OK && behandlingsId) {
             const verdier: Verdier = soknadsdata.inntekt.verdier;
             verdier.bekreftelse = verdi;
             if (!verdi) {
@@ -63,19 +66,21 @@ export class VerdierView extends React.Component<Props, State> {
                 verdier.beskrivelseAvAnnet = "";
             }
             this.props.oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier);
-            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier);
         }
     }
 
     handleClickRadio(idToToggle: VerdierKeys) {
-        const {brukerBehandlingId, soknadsdata} = this.props;
-        const verdier: Verdier = soknadsdata.inntekt.verdier;
-        verdier[idToToggle] = !verdier[idToToggle];
-        if (!verdier.bekreftelse || !verdier.annet) {
-            verdier.beskrivelseAvAnnet = "";
+        const {behandlingsId, soknadsdata} = this.props;
+        if (behandlingsId){
+            const verdier: Verdier = soknadsdata.inntekt.verdier;
+            verdier[idToToggle] = !verdier[idToToggle];
+            if (!verdier.bekreftelse || !verdier.annet) {
+                verdier.beskrivelseAvAnnet = "";
+            }
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier);
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier);
         }
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier);
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
     }
 
     onChangeAnnet(value: string) {
@@ -87,13 +92,13 @@ export class VerdierView extends React.Component<Props, State> {
     }
 
     onBlurTekstfeltAnnet() {
-        const {brukerBehandlingId, soknadsdata} = this.props;
+        const {behandlingsId, soknadsdata} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         const beskrivelseAvAnnet = verdier.beskrivelseAvAnnet;
         const feilmeldingAnnet: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
 
-        if (!feilmeldingAnnet) {
-            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.VERDIER, verdier);
+        if (!feilmeldingAnnet && behandlingsId) {
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier);
         }
     }
 

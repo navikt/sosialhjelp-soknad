@@ -39,7 +39,7 @@ interface OwnProps {
 
 interface StoreToProps {
     okonomiskeOpplysninger: OpplysningerModel;
-    behandlingsId: string;
+    behandlingsId: string | undefined;
     feil: Valideringsfeil[];
 }
 
@@ -69,13 +69,15 @@ class TabellView extends React.Component<Props, {}> {
 
     handleBlur(radIndex: number, inputFelt: InputType, key: string) {
         const {behandlingsId, opplysning, feil} = this.props;
-        const input = opplysning.rader[radIndex][inputFelt];
+        if (behandlingsId){
+            const input = opplysning.rader[radIndex][inputFelt];
 
-        if (inputFelt !== "beskrivelse" && input && input !== "" && !erGyldigTall(input)) {
-            this.props.dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, key));
-            this.props.dispatch(updateOpplysning(opplysning))
-        } else {
-            this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysning, feil));
+            if (inputFelt !== "beskrivelse" && input && input !== "" && !erGyldigTall(input)) {
+                this.props.dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, key));
+                this.props.dispatch(updateOpplysning(opplysning))
+            } else {
+                this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysning, feil));
+            }
         }
     }
 
@@ -90,14 +92,16 @@ class TabellView extends React.Component<Props, {}> {
 
     handleFjernRad(radIndex: number, valideringsKey: string) {
         const {behandlingsId, opplysning, feil} = this.props;
-        const opplysningUpdated: Opplysning = {...opplysning};
-        const raderUpdated: OpplysningRad[] = opplysning.rader.map(e => ({...e}));
-        raderUpdated.splice(radIndex, 1);
-        opplysningUpdated.rader = raderUpdated;
-        this.fjernAlleFeilForOpplysning(feil, valideringsKey);
-        this.validerAlleInputfelterPaOpplysning(opplysningUpdated, opplysning);
-        const feilUpdated = this.getOppdatertListeAvFeil(feil, valideringsKey, radIndex);
-        this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feilUpdated));
+        if (behandlingsId){
+            const opplysningUpdated: Opplysning = {...opplysning};
+            const raderUpdated: OpplysningRad[] = opplysning.rader.map(e => ({...e}));
+            raderUpdated.splice(radIndex, 1);
+            opplysningUpdated.rader = raderUpdated;
+            this.fjernAlleFeilForOpplysning(feil, valideringsKey);
+            this.validerAlleInputfelterPaOpplysning(opplysningUpdated, opplysning);
+            const feilUpdated = this.getOppdatertListeAvFeil(feil, valideringsKey, radIndex);
+            this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feilUpdated));
+        }
     }
 
     getOppdatertListeAvFeil(feil: Valideringsfeil[], valideringsKey: string, radIndex: number) {
@@ -230,7 +234,7 @@ export default connect(
     (state: State) => {
         return {
             okonomiskeOpplysninger: state.okonomiskeOpplysninger,
-            behandlingsId: state.soknad.data.brukerBehandlingId,
+            behandlingsId: state.soknad.behandlingsId,
             feil: state.validering.feil,
         };
     }

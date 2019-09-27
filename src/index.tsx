@@ -22,10 +22,11 @@ import App from "./digisos";
 import {loggException} from "./digisos/redux/navlogger/navloggerActions";
 import {erDev} from "./nav-soknad/utils/rest-utils";
 import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
-import {SoknadState} from "./digisos/redux/reduxTypes";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
 import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
 import {getContextPathBasename} from "./configuration";
+import {SoknadState} from "./digisos/redux/soknad/soknadTypes";
+import LoadContainer from "./nav-soknad/components/loadContainer/LoadContainer";
 
 
 const history = require('history').createBrowserHistory({
@@ -34,7 +35,7 @@ const history = require('history').createBrowserHistory({
         if (msg === NAVIGASJONSPROMT.SKJEMA) {
 
             const soknad: SoknadState = store.getState().soknad;
-            if (soknad.data.brukerBehandlingId && soknad.avbrytSoknadSjekkAktiv) {
+            if (soknad.behandlingsId && soknad.avbrytSoknadSjekkAktiv) {
                 store.dispatch(avbrytSoknad("START"));
                 callback(false);
             } else {
@@ -89,11 +90,13 @@ window.onerror = (errorMessage, url, line, column, error) => {
 
 ReactDOM.render(
     <Provider store={store}>
-        <IntlProvider>
-            <ConnectedRouter history={history}>
-                <App />
-            </ConnectedRouter>
-        </IntlProvider>
+        <LoadContainer>
+            <IntlProvider>
+                <ConnectedRouter history={history}>
+                    <App />
+                </ConnectedRouter>
+            </IntlProvider>
+        </LoadContainer>
     </Provider>,
     document.getElementById("root") as HTMLElement
 );

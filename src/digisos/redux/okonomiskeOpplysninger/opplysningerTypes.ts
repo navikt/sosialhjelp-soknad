@@ -1,8 +1,8 @@
-import {RestStatus} from "../../../nav-soknad/types";
 import {Valideringsfeil} from "../validering/valideringActionTypes";
+import {REST_STATUS} from "../soknad/soknadTypes";
 
 export interface OpplysningerModel {
-    restStatus: RestStatus;
+    restStatus: REST_STATUS;
     backendData: OpplysningerBackend | null;
     opplysningerSortert: Opplysning[]
 }

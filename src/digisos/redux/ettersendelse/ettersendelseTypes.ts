@@ -1,9 +1,9 @@
-import {REST_STATUS} from "../../../nav-soknad/types/restTypes";
 import {
     Fil,
     OpplysningType,
     VedleggStatus
 } from "../okonomiskeOpplysninger/opplysningerTypes";
+import {REST_STATUS} from "../soknad/soknadTypes";
 
 export enum EttersendelseActionTypeKeys {
     NY = "ettersendelse/NY",

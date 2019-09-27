@@ -18,12 +18,14 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 
 
 	handleClickJaNeiSpsm(verdi: boolean, barnIndex: number) {
-		const {soknadsdata, oppdaterSoknadsdataSti, lagreSoknadsdata, brukerBehandlingId} = this.props;
-		const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
-		const barnet = forsorgerplikt.ansvar[barnIndex];
-		barnet.harDeltBosted = verdi;
-		oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+		const {soknadsdata, oppdaterSoknadsdataSti, lagreSoknadsdata, behandlingsId} = this.props;
+		if (behandlingsId){
+			const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
+			const barnet = forsorgerplikt.ansvar[barnIndex];
+			barnet.harDeltBosted = verdi;
+			oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+			lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+		}
 	}
 
 	onChangeSamvaersgrad(verdi: string, barnIndex: number) {
@@ -35,9 +37,11 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 	}
 
 	onBlur() {
-		const {soknadsdata, lagreSoknadsdata, brukerBehandlingId} = this.props;
-		const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
-		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+		const {soknadsdata, lagreSoknadsdata, behandlingsId} = this.props;
+		if (behandlingsId){
+			const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
+			lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+		}
 	}
 
 	render() {

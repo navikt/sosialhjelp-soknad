@@ -11,7 +11,7 @@ import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { Studielan } from "./StudielanTypes";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
-import { REST_STATUS } from "../../../../nav-soknad/types";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 const FAKTUM_STUDIELAN = "inntekt.studielan";
 
@@ -35,8 +35,10 @@ class StudielanView extends React.Component<Props, State> {
 	}
 
 	componentDidMount() {
-		const {hentSoknadsdata, brukerBehandlingId} = this.props;
-		hentSoknadsdata(brukerBehandlingId, SoknadsSti.STUDIELAN);
+		const {hentSoknadsdata, behandlingsId} = this.props;
+		if (behandlingsId){
+			hentSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN);
+		}
 	}
 
 	componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
@@ -48,14 +50,14 @@ class StudielanView extends React.Component<Props, State> {
 	}
 
 	handleClickJaNeiSpsm(verdi: boolean) {
-		const {brukerBehandlingId, soknadsdata} = this.props;
+		const {behandlingsId, soknadsdata} = this.props;
 		const restStatus = soknadsdata.restStatus.inntekt.studielan;
 		if(restStatus === REST_STATUS.OK) {
 			const studielan: Studielan | undefined = soknadsdata.inntekt.studielan;
-			if(studielan){
+			if(studielan && behandlingsId){
 				studielan.bekreftelse = verdi;
 				this.props.oppdaterSoknadsdataSti(SoknadsSti.STUDIELAN, studielan);
-				this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.STUDIELAN, studielan);
+				this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, studielan);
 			}
 		}
 	}
