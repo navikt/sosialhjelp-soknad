@@ -13,7 +13,6 @@ import { tilStart, tilSteg } from "./navigasjonActions";
 import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import { lesKommunenrFraUrl } from "../../../nav-soknad/utils";
 import {goBack, push} from "connected-react-router";
-import {State} from "../reducers";
 
 const getHistoryLength = () => window.history.length;
 const navigateTo = (path: string) => (window.location.href = path);

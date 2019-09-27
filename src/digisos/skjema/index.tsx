@@ -52,10 +52,7 @@ class SkjemaRouter extends React.Component<Props, {}> {
 
     componentWillMount() {
         const {
-            restStatus,
-            stegFraUrl,
             behandlingsIdFraUrl,
-            gyldigUrl,
             behandlingsId,
             dispatch
         } = this.props;

@@ -50,7 +50,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const {oppsummering, brukerbehandlingId, intl, restStatus} = this.props;
+		const {oppsummering, brukerbehandlingId, intl} = this.props;
 
 
 
