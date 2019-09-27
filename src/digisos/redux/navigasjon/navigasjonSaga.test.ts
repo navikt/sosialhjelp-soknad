@@ -94,16 +94,9 @@ describe("navigasjonSaga", () => {
 	});
 
 	describe("tilStegSaga", () => {
-		const action = tilSteg(1);
-		const saga = tilStegSaga(action as TilSteg);
 		const behandlingsId = "id1234";
-
-		it("select behandlingsId", () => {
-			expect(saga.next()).toEqual({
-				done: false,
-				value: select((state: State) => state.soknad.behandlingsId)
-			});
-		});
+		const action = tilSteg(1, behandlingsId);
+		const saga = tilStegSaga(action as TilSteg);
 
 		it("put push", () => {
 			expect(saga.next(behandlingsId)).toEqual({
