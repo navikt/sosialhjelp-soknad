@@ -4,9 +4,12 @@ import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 export interface SoknadState {
     // Visning state
     showLargeSpinner: boolean;
-    showServerFeil: boolean;
     showFeilSide: boolean;
+    showSideIkkeFunnet: boolean;
     visSamtykkeInfo: boolean;
+
+    // Visning state skjema nivå
+    showServerFeil: boolean;
 
     // Authentication / tilgang state
     linkVisited: boolean;

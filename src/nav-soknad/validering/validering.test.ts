@@ -4,15 +4,12 @@ import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActi
 
 describe("test av valideringsfunksjoner", () => {
 	it("skal validere påkrevd", () => {
-		forventAt(validering.pakrevd(undefined)).girFeilmelding(ValideringsFeilKode.PAKREVD);
-		forventAt(validering.pakrevd(null)).girFeilmelding(ValideringsFeilKode.PAKREVD);
 		forventAt(validering.pakrevd("")).girFeilmelding(ValideringsFeilKode.PAKREVD);
 		forventAt(validering.pakrevd(" ")).validerer();
 		forventAt(validering.pakrevd("123")).validerer();
 		forventAt(validering.pakrevd("123")).validerer();
 	});
 	it("skal validere minimumslengde", () => {
-		forventAt(validering.minLengde(null, 2)).girFeilmelding(ValideringsFeilKode.MIN_LENGDE);
 		forventAt(validering.minLengde("2", 2)).girFeilmelding(ValideringsFeilKode.MIN_LENGDE);
 		forventAt(validering.minLengde("22", 2)).validerer();
 		forventAt(validering.minLengde("223", 2)).validerer();
@@ -24,17 +21,12 @@ describe("test av valideringsfunksjoner", () => {
 		forventAt(validering.maksLengde("3", 2)).validerer();
 	});
 	it("skal validere erTall", () => {
-		forventAt(validering.erTall(null)).girFeilmelding(ValideringsFeilKode.ER_TALL);
-		forventAt(validering.erTall(undefined)).girFeilmelding(ValideringsFeilKode.ER_TALL);
 		forventAt(validering.erTall("a1")).girFeilmelding(ValideringsFeilKode.ER_TALL);
 		forventAt(validering.erTall("1")).validerer();
 		forventAt(validering.erTall("121324")).validerer();
 	});
 	describe("kontonummer", () => {
 		it("skal ikke kunne være mindre enn 11 tegn", () => {
-			forventAt(validering.erKontonummer(null)).girFeilmelding(
-				ValideringsFeilKode.ER_KONTONUMMER
-			);
 			forventAt(validering.erKontonummer("null")).girFeilmelding(
 				ValideringsFeilKode.ER_KONTONUMMER
 			);
@@ -58,8 +50,6 @@ describe("test av valideringsfunksjoner", () => {
 	});
 	describe("telefonnummer", () => {
 		it("skal ikke være under 8 tegn", () => {
-			forventAt(validering.erTelefonnummer(null))
-				.girFeilmelding(ValideringsFeilKode.ER_TELEFONNUMMER);
 			forventAt(validering.erTelefonnummer("12345678")).validerer();
 			forventAt(validering.erTelefonnummer("123 45 678"))
 				.girFeilmelding(ValideringsFeilKode.ER_TELEFONNUMMER);

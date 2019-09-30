@@ -212,17 +212,6 @@ export function fetchFeatureToggles() {
         });
 }
 
-// FIXME: KANSKJE JEG KAN BRUKE DENNE SENRE.
-// export const getJsonOrRedirectIfUnauthorizedAndThrowError = (response: Response) => {
-//     const statusKode: number = verifyStatusSuccessOrRedirect(response);
-//     if (statusKode >= 200 && statusKode < 300) {
-//         return response.json();
-//     } else {
-//         throw new Error(HttpStatus.UNAUTHORIZED)
-//     }
-// };
-
-
 let generateUploadOptions = function (formData: FormData) {
     const UPLOAD_OPTIONS: RequestInit = {
         headers: new Headers({

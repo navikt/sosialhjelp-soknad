@@ -30,9 +30,15 @@ export enum SoknadActionTypeKeys {
 	SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER = "soknad/SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER",
 	LAGRE_TILGANG_OG_FORNAVN_PA_STORE = "soknad/LAGRE_RESSURSER_PA_STORE",
 
-	SET_LINK_VISITED = "soknad/SET_LINK_VISITED",
 	SHOW_LARGE_SPINNER = "soknad/SHOW_LARGE_SPINNER",
-	VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO"
+	SHOW_FEIL_SIDE = "soknad/SHOW_FEIL_SIDE",
+
+	SET_LINK_VISITED = "soknad/SET_LINK_VISITED",
+	VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO",
+	UPDATE_BEHANDLINGSID_PA_STORE = "soknad/UPDATE_BEHANDLINGSID_PA_STORE",
+
+	SHOW_SERVER_FEIL = "soknad/SHOW_SERVER_FEIL",
+	SHOW_SIDE_IKKE_FUNNET = "soknad/SHOW_SIDE_IKKE_FUNNET"
 }
 
 export type AVBRYT_DESTINASJON = "START" | "MINSIDE";
@@ -43,6 +49,9 @@ export type SoknadActionType =
 	| SetLinkVisited
 	| ShowLargeSpinner
 	| VisSamtykkeInfo
+	| ShowServerFeil
+	| ShowSideIkkeFunnet
+	| ShowFeilSide
 
 
 	| StartSoknadOkAction
@@ -68,6 +77,7 @@ export type SoknadActionType =
 	| OppdaterSoknadsmottakerStatus
 	| GetErSystemdataEndret
 	| SetErSystemdataEndret
+	| UpdateBehandlingsIdPaStore
 
 
 export interface SjekkAutentiseringOgTilgangOgHentRessurser {
@@ -207,6 +217,24 @@ export enum ErSystemdataEndret {
 }
 
 export interface SetLinkVisited {
-	type: SoknadActionTypeKeys.SET_LINK_VISITED
+	type: SoknadActionTypeKeys.SET_LINK_VISITED;
 }
 
+export interface ShowServerFeil {
+	type: SoknadActionTypeKeys.SHOW_SERVER_FEIL;
+	shouldShow: boolean
+}
+
+export interface UpdateBehandlingsIdPaStore {
+	type: SoknadActionTypeKeys.UPDATE_BEHANDLINGSID_PA_STORE;
+	behandlingsIdFraUrl: string;
+}
+
+export interface ShowSideIkkeFunnet {
+	type: SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET;
+	shouldShow: boolean;
+}
+
+export interface ShowFeilSide {
+	type: SoknadActionTypeKeys.SHOW_FEIL_SIDE;
+}

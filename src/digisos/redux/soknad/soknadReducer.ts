@@ -6,6 +6,7 @@ export const defaultState: SoknadState = {
 	showLargeSpinner: true,
 	showServerFeil: false,
 	showFeilSide: false,
+	showSideIkkeFunnet: false,
 	visSamtykkeInfo: false,
 
 	// Authentication state
@@ -67,11 +68,37 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
 			return {
 				...state,
 				restStatus: xsrfCookieReceived ? REST_STATUS.OK : REST_STATUS.XSRF,
-				behandlingsId: behandlingsId
+				behandlingsId: behandlingsId,
+				showLargeSpinner: false
 			};
+		case SoknadActionTypeKeys.UPDATE_BEHANDLINGSID_PA_STORE: {
+			return {
+				...state,
+				behandlingsId: action.behandlingsIdFraUrl
+			}
+		}
 
-
-
+		case SoknadActionTypeKeys.SHOW_FEIL_SIDE: {
+			return {
+				...state,
+				showFeilSide: true,
+				showLargeSpinner: false
+			}
+		}
+		case SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET: {
+			return {
+				...state,
+				showSideIkkeFunnet: action.shouldShow,
+				showLargeSpinner: false,
+			}
+		}
+		case SoknadActionTypeKeys.SHOW_SERVER_FEIL: {
+			return {
+				...state,
+				showServerFeil: action.shouldShow,
+				showLargeSpinner: false
+			}
+		}
 
 
 		case SoknadActionTypeKeys.START_SOKNAD_OK:

@@ -1,10 +1,5 @@
 import { NavigasjonActionTypes, NavigasjonActions } from "./navigasjonTypes";
 
-export function navigerTilServerfeil(): NavigasjonActions {
-	return {
-		type: NavigasjonActionTypes.TIL_SERVERFEIL
-	};
-}
 
 export function navigerTilFinnDittNavKontor(): NavigasjonActions {
 	return {
@@ -68,3 +63,4 @@ export function tilMock(): NavigasjonActions {
 		type: NavigasjonActionTypes.TIL_MOCK
 	};
 }
+

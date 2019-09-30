@@ -1,5 +1,4 @@
 import {Dispatch, Valideringsfeil} from "../reduxTypes";
-import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {
     OpplysningerAction,
     opplysningerActionTypeKeys,
@@ -10,6 +9,7 @@ import {
 import {getOpplysningerUrl} from "./opplysningerUtils";
 import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
 import {fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
+import {showServerFeil} from "../soknad/soknadActions";
 
 export const gotDataFromBackend = (response: OpplysningerBackend): OpplysningerAction => {
     return {
@@ -50,7 +50,7 @@ export function hentOpplysninger(behandlingsId: string) {
                     dispatch(loggAdvarsel("hentTilgangSaga: " + reason));
                 } else {
                     dispatch(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));
-                    dispatch(navigerTilServerfeil());
+                    dispatch(showServerFeil(true));
                 }
             });
     }
