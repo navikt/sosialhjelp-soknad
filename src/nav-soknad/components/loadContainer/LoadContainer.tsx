@@ -25,7 +25,7 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
 
     useEffect(() => {
         dispatch(sjekkAutentiseringOgTilgangOgHentRessurser());
-    }, []);
+    }, [dispatch]);
 
     if (showLargeSpinner){
         return (

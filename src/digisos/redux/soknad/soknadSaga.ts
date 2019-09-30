@@ -75,11 +75,6 @@ function* opprettSoknadSaga() {
             fetchPost,
             "soknader/opprettSoknad", ""
         );
-
-        if (!response.brukerBehandlingId){
-            // FIXME: throw new Error("Ingen brukerBehandlingId returnert under oppretting av søknad.")
-        }
-
         yield put(opprettSoknadOk(response.brukerBehandlingId));
         yield put(startSoknadOk());
         yield put(tilSteg(1, response.brukerBehandlingId));

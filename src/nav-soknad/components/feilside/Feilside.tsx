@@ -3,7 +3,6 @@ import { Knapp } from "nav-frontend-knapper";
 import { Innholdstittel } from "nav-frontend-typografi";
 import DocumentTitle from "react-document-title";
 import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
-import AppHeader from "../appHeader/AppHeader";
 import Banner from "../banner/Banner";
 
 export interface FeilsideProps {

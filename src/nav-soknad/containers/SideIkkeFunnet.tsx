@@ -4,7 +4,6 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import { NavigasjonActions } from "../../digisos/redux/navigasjon/navigasjonTypes";
 import { tilbakeEllerForsiden } from "../../digisos/redux/navigasjon/navigasjonActions";
-import EllaBlunk from "../components/animasjoner/ellaBlunk";
 
 interface OwnProps {
 	onClick: () => NavigasjonActions;

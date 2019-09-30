@@ -21,7 +21,7 @@ import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
 import {DispatchProps} from "../redux/reduxTypes";
 import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
-import {hentSoknad, showServerFeil} from "../redux/soknad/soknadActions";
+import {hentSoknad, showServerFeil, showSideIkkeFunnet} from "../redux/soknad/soknadActions";
 import {erSkjemaEllerEttersendelseSide, NAVIGASJONSPROMT} from "../../nav-soknad/utils";
 import TimeoutBox from "../../nav-soknad/components/timeoutbox/TimeoutBox";
 import AvbrytSoknad from "../../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
@@ -54,26 +54,21 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
 
     useEffect(() => {
         skjulToppMeny();
-        // const {behandlingsId, restStatus, dispatch} = props;
-
         const match = matchPath(props.location.pathname, {
             path: "/skjema/:behandlingsIdFraUrl/:stegFraUrl"
         });
         if (match) {
-            const {stegFraUrl, behandlingsIdFraUrl} = match.params as UrlParams;
+            const {behandlingsIdFraUrl} = match.params as UrlParams;
             if (behandlingsId && behandlingsId !== behandlingsIdFraUrl) {
-                // FIXME: Dette burde ikke være mulig, men i tilfellet
+                dispatch(showSideIkkeFunnet(true));
             }
-
             if (!behandlingsId) {
                 dispatch(hentSoknad(behandlingsIdFraUrl));
             }
-
         } else {
-            // FIXME: SHOW_FEIL_SIDE ?
+            dispatch(showSideIkkeFunnet(true))
         }
-
-    }, []);
+    }, [behandlingsId, dispatch, props.location.pathname]);
 
     if (visServerFeil) {
         return (

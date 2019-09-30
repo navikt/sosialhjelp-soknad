@@ -4,19 +4,16 @@ import {
 	navigateTo,
 	tilbakeEllerForsidenSaga,
 	tilFinnDittNavKontorSaga,
-	tilServerfeilSaga,
 	tilStegSaga
 } from "./navigasjonSaga";
-import { call, put, select } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import {
 	Sider,
 	TilSteg
 } from "./navigasjonTypes";
 import { SagaIterator } from "redux-saga";
 import { tilSteg } from "./navigasjonActions";
-import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import {goBack, push} from "connected-react-router";
-import {State} from "../reducers";
 
 const ferdig = (saga: SagaIterator) => {
 	expect(saga.next()).toEqual({
@@ -34,29 +31,6 @@ describe("navigasjonSaga", () => {
 			});
 		});
 
-		it("ferdig", () => ferdig(saga));
-	});
-
-	describe("tilServerfeilSaga", () => {
-		const saga = tilServerfeilSaga();
-		it("sets avbrytDialogSjek to false", () => {
-			expect(saga.next()).toEqual({
-				done: false,
-				value: put(settAvbrytSoknadSjekk(false))
-			});
-		});
-		it("call navigateTo", () => {
-			expect(saga.next()).toEqual({
-				done: false,
-				value: put(push(Sider.SERVERFEIL))
-			});
-		});
-		it("sets avbrytDialogSjek to true", () => {
-			expect(saga.next()).toEqual({
-				done: false,
-				value: put(settAvbrytSoknadSjekk(true))
-			});
-		});
 		it("ferdig", () => ferdig(saga));
 	});
 
