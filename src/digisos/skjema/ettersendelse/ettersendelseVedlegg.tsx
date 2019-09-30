@@ -108,7 +108,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 								className="vedleggsliste__filnavn_wrapper"
 							>
 								<button
-									className="linkbutton linkbutton--normal vedleggsliste__filnavn"
+									className="linkbutton linkbutton--normal vedleggsliste__filnavn_button"
 									title="Last ned vedlegg"
 									onClick={() => downloadAttachedFile(lastNedUrl)}
 								>

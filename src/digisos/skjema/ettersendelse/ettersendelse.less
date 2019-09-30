@@ -169,14 +169,6 @@
 
 }
 
-.vedleggsliste__filnavn_wrapper {
-  padding-bottom: 6px;
-  border-bottom: 1px solid darkgrey;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 12px;
-}
 
 .venstremarg {
   flex-direction: row;
@@ -273,7 +265,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   min-height: 1.3rem;
-  border: 1px dotted red;
+  color: #0067c5;
 }
 
 @media screen and (min-width: 701px){
@@ -284,8 +276,15 @@
 
 @media screen and (max-width: 700px){
   .vedleggsliste__filnavn_tekst {
-    max-width: 61vw;
+    max-width: 57vw;
   }
+}
+
+.vedleggsliste__filnavn_wrapper {
+  padding-bottom: 6px;
+  border-bottom: 1px solid darkgrey;
+  display: block;
+  margin-bottom: 12px;
 }
 
 .ettersendelse_send_vedlegg_knapp_wrapper {
@@ -295,13 +294,18 @@
 
 .vedleggsliste__fil_slett_wrapper {
   white-space: nowrap;
+  text-align: right;
+}
+
+.vedleggsliste__fil_slett {
+  color: #0067c5;
 }
 
 .ettersendelse__vedlegg__header {
   margin-left: -1rem;
 }
 
-.vedleggsliste__filnavn {
+.vedleggsliste__filnavn_button {
   min-height: 2rem;
-  border: 1px dotted purple;
+  float: left;
 }
