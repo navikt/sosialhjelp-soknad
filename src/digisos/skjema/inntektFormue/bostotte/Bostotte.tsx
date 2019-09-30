@@ -74,7 +74,7 @@ class BostotteView extends React.Component<Props, State> {
 
 	private static renderSak(key: string, dato: string, status: string, vedtaksbeskrivelse: string, index: number) {
 		const beskrivelse = status === "VEDTATT" ? vedtaksbeskrivelse : <FormattedMessage id={"inntekt.bostotte.husbanken.status"} values={{"status":status}} />;
-		let formatertDato = <FormattedDate value={dato} month="long" year="numeric"/>;
+		let formatertDato = <FormattedDate value={dato} month="long" year="numeric" />;
 		return (
 			<div key={`${key}-${index}`} className="sak blokk-xs">
 				<span className="bostotte-dato">{formatertDato}</span>
