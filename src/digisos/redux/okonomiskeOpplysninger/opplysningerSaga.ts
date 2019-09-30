@@ -9,10 +9,10 @@ import {
     transformToBackendOpplysning,
 } from "./opplysningerUtils";
 import {fetchPut, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
-import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {updateOpplysning} from "./opplysningerActions";
 import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
 import {Valideringsfeil} from "../validering/valideringActionTypes";
+import {showServerFeil} from "../soknad/soknadActions";
 
 
 export function getFeilForOpplysning(feil: Valideringsfeil[], opplysningTextKey: string) {
@@ -44,7 +44,7 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
                     yield put(loggAdvarsel("hentTilgangSaga: " + reason));
                 } else {
                     yield put(loggFeil("Lagring av økonomisk opplysning feilet. Reason: " + reason));
-                    yield put(navigerTilServerfeil());
+                    yield put(showServerFeil(true));
                 }
             }
         }

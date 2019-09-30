@@ -23,8 +23,8 @@ import {
     opprettEttersendelseFeilet, filLastetOpp, slettEttersendtVedleggOk
 } from "./ettersendelseActions";
 import {loggAdvarsel, loggFeil, loggInfo} from "../navlogger/navloggerActions";
-import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
+import {showServerFeil} from "../soknad/soknadActions";
 
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
     try {
@@ -56,7 +56,7 @@ function* lesEttersendelserSaga(action: LesEttersendelserAction) {
             yield put(loggAdvarsel("lesEttersendelserSaga: " + reason));
         } else {
             yield put(loggFeil("Les ettersendelser feilet: " + reason.toString()));
-            yield put(navigerTilServerfeil());
+            yield put(showServerFeil(true));
         }
     }
 }
@@ -73,7 +73,7 @@ function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction) {
             yield put(loggAdvarsel("lesEttersendelsesVedleggSaga: " + reason));
         } else {
             yield put(loggFeil("Lese ettersendte vedlegg feilet: " + reason.toString()));
-            yield put(navigerTilServerfeil());
+            yield put(showServerFeil(true));
         }
     }
 }
@@ -92,7 +92,7 @@ function* slettEttersendelsesVedleggSaga(action: SlettEttersendtVedleggAction): 
             yield put(loggAdvarsel("slettEttersendelsesVedleggSaga: " + reason));
         } else {
             yield put(loggFeil("Slett ettersendt vedlegg feilet: " + reason));
-            yield put(navigerTilServerfeil());
+            yield put(showServerFeil(true));
         }
     }
 }
@@ -141,7 +141,7 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
             yield put(loggAdvarsel("sendEttersendelseSaga: " + reason));
         } else {
             yield put(loggFeil("Send ettersendelse feilet: " + reason.toString()));
-            yield put(navigerTilServerfeil());
+            yield put(showServerFeil(true));
         }
     }
 }

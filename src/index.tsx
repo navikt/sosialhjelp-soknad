@@ -31,6 +31,7 @@ import LoadContainer from "./nav-soknad/components/loadContainer/LoadContainer";
 
 const history = require('history').createBrowserHistory({
     getUserConfirmation: (msg: any, callback: (flag: boolean) => void) => {
+        debugger;
 
         if (msg === NAVIGASJONSPROMT.SKJEMA) {
 
@@ -90,13 +91,13 @@ window.onerror = (errorMessage, url, line, column, error) => {
 
 ReactDOM.render(
     <Provider store={store}>
-        <LoadContainer>
-            <IntlProvider>
+        <IntlProvider>
+            <LoadContainer>
                 <ConnectedRouter history={history}>
                     <App />
                 </ConnectedRouter>
-            </IntlProvider>
-        </LoadContainer>
+            </LoadContainer>
+        </IntlProvider>
     </Provider>,
     document.getElementById("root") as HTMLElement
 );

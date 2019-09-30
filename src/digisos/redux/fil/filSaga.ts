@@ -9,9 +9,9 @@ import {
     updateOpplysning
 } from "../okonomiskeOpplysninger/opplysningerActions";
 import {Fil, Opplysning, VedleggStatus} from "../okonomiskeOpplysninger/opplysningerTypes";
-import {navigerTilServerfeil} from "../navigasjon/navigasjonActions";
 import {lastOppFilFeilet} from "./filActions";
 import {REST_FEIL} from "../soknad/soknadTypes";
+import {showServerFeil} from "../soknad/soknadActions";
 
 
 function* lastOppFilSaga(action: LastOppFilAction) {
@@ -98,7 +98,7 @@ function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
             yield put(loggAdvarsel("slettFilSaga: " + reason));
         } else {
             yield put(loggFeil("Slett vedlegg feilet: " + reason));
-            yield put(navigerTilServerfeil());
+            yield put(showServerFeil(true));
         }
     }
 }

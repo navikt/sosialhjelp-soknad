@@ -10,7 +10,6 @@ import {
 	TilSteg
 } from "./navigasjonTypes";
 import { tilStart, tilSteg } from "./navigasjonActions";
-import { settAvbrytSoknadSjekk } from "../soknad/soknadActions";
 import { lesKommunenrFraUrl } from "../../../nav-soknad/utils";
 import {goBack, push} from "connected-react-router";
 
@@ -19,15 +18,6 @@ const navigateTo = (path: string) => (window.location.href = path);
 
 function* tilFinnDittNavKontorSaga(): SagaIterator {
 	yield call(navigateTo, Sider.FINN_DITT_NAV_KONTOR);
-}
-
-function* tilServerfeilSaga(): SagaIterator {
-	/** Forhindre at avbryt dialog dukker opp når en redirecter til feilsiden
-	 * Selve sjekken på om dialog skal vises eller implementer i hoved index.tsx
-	 */
-	yield put(settAvbrytSoknadSjekk(false));
-	yield put(push(Sider.SERVERFEIL));
-	yield put(settAvbrytSoknadSjekk(true));
 }
 
 function* tilStartSaga(): SagaIterator {
@@ -75,12 +65,11 @@ function* tilDittNav(action: TilDittNav): SagaIterator {
 	yield call(navigateTo, url);
 }
 
-function* tilKvittering(action: TilKvittering): SagaIterator {
+function* tilEttersendelse(action: TilKvittering): SagaIterator {
 	yield put(push(`/skjema/${action.brukerbehandlingId}/ettersendelse`));
 }
 
 function* navigasjonSaga(): SagaIterator {
-	yield takeEvery(NavigasjonActionTypes.TIL_SERVERFEIL, tilServerfeilSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_STEG, tilStegSaga);
 	yield takeEvery(NavigasjonActionTypes.GA_VIDERE, gaVidereSaga);
 	yield takeEvery(NavigasjonActionTypes.GA_TILBAKE, gaTilbakeSaga);
@@ -95,7 +84,7 @@ function* navigasjonSaga(): SagaIterator {
 	yield takeEvery(NavigasjonActionTypes.TIL_START, tilStartSaga);
 	yield takeEvery(NavigasjonActionTypes.TIL_DITT_NAV, tilDittNav);
 	yield takeEvery(NavigasjonActionTypes.TIL_MOCK, tilMockSaga);
-	yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilKvittering);
+	yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilEttersendelse);
 }
 
 export {
@@ -104,8 +93,7 @@ export {
 	navigateTo,
 	tilbakeEllerForsidenSaga,
 	tilFinnDittNavKontorSaga,
-	tilKvittering,
-	tilServerfeilSaga,
+	tilEttersendelse,
 	tilStegSaga
 };
 

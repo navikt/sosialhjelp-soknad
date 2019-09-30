@@ -5,9 +5,9 @@ import {
 	settRestStatus,
 	SoknadsdataType
 } from "./soknadsdataReducer";
-import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
 import {REST_STATUS} from "../soknad/soknadTypes";
+import {showServerFeil} from "../soknad/soknadActions";
 
 const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `soknader/${brukerBehandlingId}/${sti}`;
 
@@ -33,7 +33,7 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 			} else {
 				dispatch(loggFeil("Henting av soknadsdata feilet: " + reason));
 				dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-				dispatch(navigerTilServerfeil());
+				dispatch(showServerFeil(true));
 			}
 		});
 	}
@@ -59,7 +59,7 @@ export function lagreSoknadsdata(brukerBehandlingId: string, sti: string, soknad
 				} else {
 					dispatch(loggFeil("Lagring av soknadsdata feilet: " + reason));
 					dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-					dispatch(navigerTilServerfeil());
+					dispatch(showServerFeil(true))
 				}
 			});
 	}

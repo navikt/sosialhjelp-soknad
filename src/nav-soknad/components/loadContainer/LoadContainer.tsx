@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react'
 import {sjekkAutentiseringOgTilgangOgHentRessurser} from "../../../digisos/redux/soknad/soknadActions";
 import NavFrontendSpinner from "nav-frontend-spinner";
-import ServerFeil from "../../containers/ServerFeil";
 import {State} from "../../../digisos/redux/reducers";
 import {connect} from "react-redux";
 import {DispatchProps} from "../../../digisos/redux/reduxTypes";
+import FeilSide from "../feilside/Feilside";
 
 interface OwnProps {
     showLargeSpinner: boolean,
-    showServerFeil: boolean,
+    showFeilSide: boolean,
     children: React.ReactNode
 }
 
@@ -16,11 +16,16 @@ type Props = OwnProps & DispatchProps
 
 const LoadContainer: React.FC<Props> = (props: Props) => {
 
-    const {dispatch, showLargeSpinner, showServerFeil, children} = props;
+    const {
+        dispatch,
+        showLargeSpinner,
+        showFeilSide,
+        children
+    } = props;
 
     useEffect(() => {
         dispatch(sjekkAutentiseringOgTilgangOgHentRessurser());
-    });
+    }, []);
 
     if (showLargeSpinner){
         return (
@@ -29,8 +34,15 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
             </div>
         )
     }
-    if (showServerFeil){
-        return (<ServerFeil />)
+    if (showFeilSide){
+        return (
+            <FeilSide>
+                <p>
+                    Vi klarer ikke vise skjemaet til deg nå, vennligst prøv igjen
+                    senere.
+                </p>
+            </FeilSide>
+        )
     }
 
     return (
@@ -44,7 +56,7 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: State) => {
     return {
         showLargeSpinner: state.soknad.showLargeSpinner,
-        showServerFeil: state.soknad.showServerFeil
+        showFeilSide: state.soknad.showFeilSide,
     };
 };
 

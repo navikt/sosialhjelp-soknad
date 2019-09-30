@@ -16,7 +16,6 @@ import {
 import {
     navigerTilDittNav,
     navigerTilKvittering,
-    navigerTilServerfeil,
     tilStart,
     tilSteg
 } from "../navigasjon/navigasjonActions";
@@ -24,7 +23,7 @@ import {
 import {
     hentSoknadOk, lagreRessurserPaStore, oppdaterSoknadsmottakerStatus,
     opprettSoknadOk,
-    sendSoknadOk, setErSystemdataEndret, showLargeSpinner,
+    sendSoknadOk, setErSystemdataEndret, showFeilSide, showLargeSpinner, showServerFeil, showSideIkkeFunnet,
     slettSoknadOk,
     startSoknadOk
 } from "./soknadActions";
@@ -63,9 +62,9 @@ function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED){
             // Ønsker at spinneren står og går helt til redirect er utført.
-            yield put(showLargeSpinner(true))
+            yield put(showLargeSpinner(true));
         } else {
-            // FIXME: noe uventet feilet. Må håndteres.
+            yield put(showFeilSide());
         }
     }
 }
@@ -89,7 +88,7 @@ function* opprettSoknadSaga() {
             yield put(loggAdvarsel("opprettSoknadSaga: " + reason));
         } else {
             yield put(loggFeil("opprett soknad saga feilet: " + reason));
-            yield put(navigerTilServerfeil());
+            yield put(showServerFeil(true));
         }
     }
 }
@@ -103,10 +102,10 @@ function* hentSoknadSaga(action: HentSoknadAction) {
         yield put(hentSoknadOk(xsrfCookieIsOk, action.behandlingsId));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED){
-            yield put(loggAdvarsel("hentSoknadsdata: " + reason));
+
         } else {
             yield put(loggFeil("hent soknad saga feilet: " + reason));
-            yield put(navigerTilServerfeil());
+            yield put(showSideIkkeFunnet(true));
         }
     }
 }
@@ -125,7 +124,7 @@ function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
             yield put(loggAdvarsel("slettSoknadSaga: " + reason));
         } else {
             yield put(loggFeil("slett soknad saga feilet: " + reason));
-            yield put(navigerTilServerfeil());
+            yield put(showServerFeil(true));
         }
     }
 }
@@ -145,7 +144,7 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
             yield put(loggAdvarsel("sendSoknadSaga: " + reason));
         } else {
             yield put(loggFeil("send soknad saga feilet: " + reason));
-            yield put(navigerTilServerfeil());
+            yield put(showServerFeil(true));
         }
     }
 }

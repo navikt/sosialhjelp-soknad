@@ -180,3 +180,30 @@ export const visSamtykkeInfo = (skalVises: boolean): SoknadActionType => {
 		skalVises
 	}
 };
+
+export function showServerFeil(shouldShow: boolean): SoknadActionType {
+	return {
+		type: SoknadActionTypeKeys.SHOW_SERVER_FEIL,
+		shouldShow: shouldShow
+	}
+}
+
+export function updateBehandlingsIdPaStore(behandlingsIdFraUrl: string): SoknadActionType {
+	return {
+		type: SoknadActionTypeKeys.UPDATE_BEHANDLINGSID_PA_STORE,
+		behandlingsIdFraUrl
+	}
+}
+
+export function showSideIkkeFunnet(shouldShow: boolean): SoknadActionType {
+	return {
+		type: SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET,
+		shouldShow
+	}
+}
+
+export function showFeilSide(): SoknadActionType {
+	return {
+		type: SoknadActionTypeKeys.SHOW_FEIL_SIDE
+	}
+}
