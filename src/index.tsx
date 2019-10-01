@@ -31,10 +31,7 @@ import LoadContainer from "./nav-soknad/components/loadContainer/LoadContainer";
 
 const history = require('history').createBrowserHistory({
     getUserConfirmation: (msg: any, callback: (flag: boolean) => void) => {
-        debugger;
-
         if (msg === NAVIGASJONSPROMT.SKJEMA) {
-
             const soknad: SoknadState = store.getState().soknad;
             if (soknad.behandlingsId && soknad.avbrytSoknadSjekkAktiv) {
                 store.dispatch(avbrytSoknad("START"));
@@ -42,7 +39,6 @@ const history = require('history').createBrowserHistory({
             } else {
                 callback(true);
             }
-
         } else if (msg === NAVIGASJONSPROMT.ETTERSENDELSE) {
             store.dispatch(visSoknadAlleredeSendtPrompt(true));
             callback(false);
