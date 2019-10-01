@@ -53,12 +53,12 @@ router.get("/informasjon/kommunevalg", (req, res) => {
 	res.json(utils.lesMockDataFil("kommunevalg.json"));
 });
 
-// const behandingsId = "1000CPZ2U";
+// const brukerBehandlingId = "1000CPZ2U";
 const { brukerBehandlingId } = require("./testdata");
 
 // Ekstrainformasjon - økonomiske opplysninger
 const synligsoknadstruktur = utils.lesMockDataFil("synligsoknadstruktur.json");
-router.get("/soknader/:behandingsId/synligsoknadstruktur", (req, res) => {
+router.get("/soknader/:brukerBehandlingId/synligsoknadstruktur", (req, res) => {
 	res.json(synligsoknadstruktur);
 });
 
@@ -82,7 +82,7 @@ router.get("/api/feature", (req, res) => {
 	res.json(mockFeatures);
 });
 
-router.get("/soknader/:behandingsId", (req, res) => {
+router.get("/soknader/:brukerBehandlingId", (req, res) => {
 	console.log("Mock backend: GET soknader");
 	console.log(req.headers.accept);
 	if (req.headers.accept === "application/vnd.oppsummering+html") {
@@ -97,7 +97,7 @@ router.get("/soknader/:behandingsId", (req, res) => {
 		console.log("Mock backend: søknad");
 		if (req.accepts("application/json")) {
 			const soknadData = utils.lesMockDataFil("soknad.json");
-			soknadData.brukerBehandlingId = req.params["behandingsId"] + "";
+			soknadData.brukerBehandlingId = req.params["brukerBehandlingId"] + "";
 			res.json(soknadData);
 		} else {
 			res.status(406);
@@ -106,23 +106,23 @@ router.get("/soknader/:behandingsId", (req, res) => {
 	}
 });
 
-router.get("/soknader/:behandingsId/synligsoknadstruktur", (req, res) => {
+router.get("/soknader/:brukerBehandlingId/synligsoknadstruktur", (req, res) => {
 	console.log("Mock backend: GET synligsoknadstruktur");
 	res.json(utils.lesMockDataFil("synligsoknadstruktur.json"));
 });
 
-router.get("/soknader/:behandingsId/fakta", (req, res) => {
+router.get("/soknader/:brukerBehandlingId/fakta", (req, res) => {
 	console.log("Mock backend: GET fakta");
 	res.json(fakta);
 });
 
-router.delete("/soknader/:behandingsId", (req, res) => {
+router.delete("/soknader/:brukerBehandlingId", (req, res) => {
 	console.log("Mock backend: slett søknad");
 	res.status(204); // 204 = "No content"
 	res.json();
 });
 
-router.post("/soknader/:behandingsId/actions/send", (req, res) => {
+router.post("/soknader/:brukerBehandlingId/actions/send", (req, res) => {
 	console.log("Mock backend: POST søknad");
 	res.status(204); // 204 = "No content"
 

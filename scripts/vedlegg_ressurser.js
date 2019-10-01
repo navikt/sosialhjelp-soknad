@@ -24,17 +24,17 @@ router.get("/sosialhjelpvedlegg/oppdaterVedlegg/:behandlingsId", function(
 });
 
 // Nytt API kall
-router.get("/soknader/:behandingsId/vedlegg", function(
+router.get("/soknader/:brukerBehandlingId/vedlegg", function(
 	req,
 	res
 ) {
-	var brukerBehandlingId = req.params.behandingsId;
+	var brukerBehandlingId = req.params.brukerBehandlingId;
 	console.log("Mock backend: GET /soknader/" + brukerBehandlingId + "/vedlegg\"");
 	res.json(utils.lesMockDataFil("soknadVedlegg.json"));
 });
 
 // Gammelt API kall
-router.get("/soknader/:behandingsId/vedlegg", function(
+router.get("/soknader/:brukerBehandlingId/vedlegg", function(
 	req,
 	res
 ) {
