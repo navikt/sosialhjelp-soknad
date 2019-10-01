@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react'
-import {sjekkAutentiseringOgTilgangOgHentRessurser} from "../../../digisos/redux/soknad/soknadActions";
+import {sjekkAutentiseringOgTilgangOgHentRessurser} from "./digisos/redux/soknad/soknadActions";
 import NavFrontendSpinner from "nav-frontend-spinner";
-import {State} from "../../../digisos/redux/reducers";
+import {State} from "./digisos/redux/reducers";
 import {connect} from "react-redux";
-import {DispatchProps} from "../../../digisos/redux/reduxTypes";
-import FeilSide from "../feilside/Feilside";
+import {DispatchProps} from "./digisos/redux/reduxTypes";
+import FeilSide from "./nav-soknad/components/feilside/Feilside";
 
 interface OwnProps {
     showLargeSpinner: boolean,

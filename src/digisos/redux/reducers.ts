@@ -5,7 +5,6 @@ import OppsummeringReducer, {OppsummeringState} from "./oppsummering/oppsummerin
 import LedeteksterReducer from "./ledetekster/ledeteksterReducer";
 import MiljovariablerReducer from "./miljovariabler/miljovariablerReducer";
 import FeatureTogglesReducer from "./featuretoggles/featureTogglesReducer";
-import {applikasjonsfeilReducer, ApplikasjonsfeilState} from "./applikasjonsfeil/applikasjonsfeilReducer";
 import EttersendelseReducer from "./ettersendelse/ettersendelseReducer";
 import MockReducer, {MockState} from "../mock/mockReducer";
 import SoknadsdataReducer, {Soknadsdata} from "./soknadsdata/soknadsdataReducer";
@@ -29,15 +28,13 @@ export interface State {
 	miljovariabler: MiljovariablerState;
 
 	soknadsdata: Soknadsdata;
-
-	applikasjonsfeil: ApplikasjonsfeilState;
-	validering: ValideringState;
-	featuretoggles: FeatureTogglesApiType;
-
 	okonomiskeOpplysninger: OpplysningerModel;
 	filopplasting: FilState;
 	oppsummering: OppsummeringState;
 	ettersendelse: EttersendelseState;
+
+	validering: ValideringState;
+	featuretoggles: FeatureTogglesApiType;
 
 	mockData: MockState;
 }
@@ -50,15 +47,13 @@ export default (history: any) => combineReducers({
 	miljovariabler: MiljovariablerReducer,
 
 	soknadsdata: SoknadsdataReducer,
-
-	applikasjonsfeil: applikasjonsfeilReducer,
-	validering: valideringsReducer,
-	featuretoggles: FeatureTogglesReducer,
-
 	okonomiskeOpplysninger: opplysningerReducer,
 	filopplasting: filReducer,
 	oppsummering: OppsummeringReducer,
 	ettersendelse: EttersendelseReducer,
 
-	mockData: MockReducer,
+	validering: valideringsReducer,
+	featuretoggles: FeatureTogglesReducer,
+
+	mockData: MockReducer
 });

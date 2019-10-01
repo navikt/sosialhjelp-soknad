@@ -3,9 +3,6 @@ import {AVBRYT_DESTINASJON, SoknadActionType, SoknadActionTypeKeys} from "./sokn
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {FornavnResponse, TilgangResponse} from "./soknadTypes";
 
-// STARTE NY SØKNAD
-
-
 export function startSoknadOk() {
 	return {
 		type: SoknadActionTypeKeys.START_SOKNAD_OK
@@ -25,14 +22,7 @@ export function opprettSoknadOk(behandlingsId: string): SoknadActionType {
 		behandlingsId
 	};
 }
-export function opprettSoknadFeilet(feilmelding: string): SoknadActionType {
-	return {
-		type: SoknadActionTypeKeys.OPPRETT_SOKNAD_FEILET,
-		feilmelding
-	};
-}
 
-// HENTE SØKNAD
 export function hentSoknad(behandlingsId: string): SoknadActionType {
 	return {
 		type: SoknadActionTypeKeys.HENT_SOKNAD,
@@ -46,14 +36,7 @@ export function hentSoknadOk(xsrfCookieReceived: boolean, behandlingsId: string)
 		behandlingsId
 	};
 }
-export function hentSoknadFeilet(feilmelding: string): SoknadActionType {
-	return {
-		type: SoknadActionTypeKeys.HENT_SOKNAD_FEILET,
-		feilmelding
-	};
-}
 
-// SENDE SØKNAD
 export function sendSoknad(behandlingsId: string): SoknadActionType {
 	return {
 		type: SoknadActionTypeKeys.SEND_SOKNAD,
@@ -64,14 +47,6 @@ export function sendSoknadOk(behandlingsId: string): SoknadActionType {
 	return {
 		type: SoknadActionTypeKeys.SEND_SOKNAD_OK,
 		behandlingsId
-	};
-}
-
-//FIXME: Hvorfor brukes ikke denne ?
-export function sendSoknadFeilet(feilmelding: string): SoknadActionType {
-	return {
-		type: SoknadActionTypeKeys.SEND_SOKNAD_FEILET,
-		feilmelding
 	};
 }
 
@@ -89,6 +64,7 @@ export function fortsettSoknad(): SoknadActionType {
 		type: SoknadActionTypeKeys.FORTSETT_SOKNAD
 	};
 }
+
 export function slettSoknad(
 	behandlingsId: string,
 	destinasjon: AVBRYT_DESTINASJON = "MINSIDE"
@@ -103,13 +79,6 @@ export function slettSoknad(
 export function slettSoknadOk(): SoknadActionType {
 	return {
 		type: SoknadActionTypeKeys.SLETT_SOKNAD_OK
-	};
-}
-
-export function settAvbrytSoknadSjekk(aktiv: boolean): SoknadActionType {
-	return {
-		type: SoknadActionTypeKeys.SETT_AVBRYT_SOKNAD_SJEKK,
-		aktiv
 	};
 }
 
@@ -141,13 +110,11 @@ export const setErSystemdataEndret = (erSystemdataEndret: boolean): SoknadAction
 	}
 };
 
-
 export const sjekkAutentiseringOgTilgangOgHentRessurser = (): SoknadActionType => {
 	return {
 		type: SoknadActionTypeKeys.SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER
 	}
 };
-
 
 export const lagreRessurserPaStore = (
 	tilgangResponse: TilgangResponse,
@@ -159,7 +126,6 @@ export const lagreRessurserPaStore = (
 		fornavnResponse
 	}
 };
-
 
 export const setLinkVisited = (): SoknadActionType => {
 	return {
@@ -185,13 +151,6 @@ export function showServerFeil(shouldShow: boolean): SoknadActionType {
 	return {
 		type: SoknadActionTypeKeys.SHOW_SERVER_FEIL,
 		shouldShow: shouldShow
-	}
-}
-
-export function updateBehandlingsIdPaStore(behandlingsIdFraUrl: string): SoknadActionType {
-	return {
-		type: SoknadActionTypeKeys.UPDATE_BEHANDLINGSID_PA_STORE,
-		behandlingsIdFraUrl
 	}
 }
 

@@ -5,7 +5,6 @@ import {Location} from "history";
 import {connect} from "react-redux";
 import DocumentTitle from "react-document-title";
 import {Innholdstittel} from "nav-frontend-typografi";
-import ApplikasjonsfeilDialog from "./ApplikasjonsfeilDialog";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import Knapperad from "../components/knapperad";
 import {SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../../digisos/redux/soknad/soknadTypes";
@@ -175,7 +174,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
         return (
             <div className="app-digisos informasjon-side">
                 <AppBanner/>
-                <ApplikasjonsfeilDialog/>
                 <DocumentTitle title={`${stegTittel} - ${documentTitle}`}/>
 
                 <div className="skjema-steg skjema-content">

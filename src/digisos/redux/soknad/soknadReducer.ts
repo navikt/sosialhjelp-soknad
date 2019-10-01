@@ -133,21 +133,11 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
 				sendSoknadPending: false
 			};
 
-		case SoknadActionTypeKeys.SET_SERVER_FEIL:
-			return {
-				...state,
-				restStatus: REST_STATUS.SERVER_ERROR
-			};
-
 		case SoknadActionTypeKeys.SLETT_SOKNAD_OK:
 			return {
 				...defaultState
 			};
-		case SoknadActionTypeKeys.SETT_AVBRYT_SOKNAD_SJEKK:
-			return {
-				...state,
-				avbrytSoknadSjekkAktiv: action.aktiv
-			};
+
 		case SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS: {
 			return {
 				...state

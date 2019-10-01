@@ -26,7 +26,7 @@ import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
 import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
 import {getContextPathBasename} from "./configuration";
 import {SoknadState} from "./digisos/redux/soknad/soknadTypes";
-import LoadContainer from "./nav-soknad/components/loadContainer/LoadContainer";
+import LoadContainer from "./LoadContainer";
 
 
 const history = require('history').createBrowserHistory({
