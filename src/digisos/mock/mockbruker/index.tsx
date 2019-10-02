@@ -9,7 +9,7 @@ import NyttArbeidsforhold, {
 	ArbeidsforholdType,
 	NyttArbeidsforholdObject
 } from "./mockComponents/nyttArbeidsforhold";
-import * as mocksystemdata from "soknadsosialhjelp-mocksystemdata";
+import * as mocksystemdata from "../mocksystemdata/mocksystemdata";
 import {NyttBarn, NyttBarnObject} from "./mockComponents/nyttBarn";
 import MockDataBolkWrapper from "./mockComponents/mockDataBolkWrapper";
 import MockInput from "./mockComponents/mockInput";
@@ -400,7 +400,8 @@ class MockBruker extends React.Component<Props,OwnState> {
 			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getBrukerprofilPath(), JSON.stringify(mocksystemdata.getBrukerprofilJson())),
 			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getOrganisasjonPath(), JSON.stringify(mocksystemdata.getOrganisasjonJson())),
 			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getArbeidPath(), JSON.stringify(mocksystemdata.getArbeidJson())),
-			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getUtbetalingPath(), JSON.stringify(mocksystemdata.getUtbetalingJson()))
+			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getUtbetalingPath(), JSON.stringify(mocksystemdata.getUtbetalingJson())),
+			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getBostottePath(), JSON.stringify(mocksystemdata.getBostotteJson()))
 		]).then(() => {
 			this.props.dispatch(tilStart());
 		});
