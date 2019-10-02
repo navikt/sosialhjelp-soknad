@@ -68,7 +68,6 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.5",
     "redux-thunk": "^2.3.0",
-    "soknadsosialhjelp-mocksystemdata": "^1.0.13",
     "typescript": "3.4.5",
     "whatwg-fetch": "^3.0.0"
   },
