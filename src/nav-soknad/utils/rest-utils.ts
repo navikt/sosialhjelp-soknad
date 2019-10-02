@@ -96,7 +96,8 @@ const getHeaders = (): Headers => {
 };
 
 export enum HttpStatus {
-    UNAUTHORIZED = "unauthorized"
+    UNAUTHORIZED = "unauthorized",
+    UNAUTHORIZED_LOOP_ERROR = "unauthorized_loop_error"
 }
 
 export const serverRequest = (method: string, urlPath: string, body: string, withAccessToken?: boolean, retries = 6) => {
@@ -123,13 +124,9 @@ export const serverRequest = (method: string, urlPath: string, body: string, wit
                     }, 100 * (7 - retries));
 
                 } else {
-                    const statusKode = verifyStatusSuccessOrRedirect(response);
-                    if (statusKode >= 200 && statusKode < 300) {
-                        const jsonResponse = toJson(response);
-                        resolve(jsonResponse);
-                    } else {
-                        throw new Error(HttpStatus.UNAUTHORIZED)
-                    }
+                    verifyStatusSuccessOrRedirect(response);
+                    const jsonResponse = toJson(response);
+                    resolve(jsonResponse);
                 }
             })
             .catch((reason: any) => reject(reason));
@@ -155,12 +152,8 @@ export function fetchDelete(urlPath: string) {
         credentials: determineCredentialsParameter()
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS).then((response: Response) => {
-        const statusKode: number = verifyStatusSuccessOrRedirect(response);
-        if (statusKode >= 200 && statusKode < 300) {
-            return response.text();
-        } else {
-            throw new Error(HttpStatus.UNAUTHORIZED)
-        }
+        verifyStatusSuccessOrRedirect(response);
+        return response.text();
     });
 }
 
@@ -172,12 +165,8 @@ export function fetchOppsummering(urlPath: string) {
     };
     return fetch(getApiBaseUrl(true) + urlPath, OPTIONS)
         .then((response: Response) => {
-            const statusKode: number = verifyStatusSuccessOrRedirect(response);
-            if (statusKode >= 200 && statusKode < 300) {
-                return response.text();
-            } else {
-                throw new Error(HttpStatus.UNAUTHORIZED)
-            }
+            verifyStatusSuccessOrRedirect(response);
+            return response.text();
         });
 }
 
@@ -193,12 +182,8 @@ export function fetchKvittering(urlPath: string) {
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS)
         .then((response: Response) => {
-            const statusKode: number = verifyStatusSuccessOrRedirect(response);
-            if (statusKode >= 200 && statusKode < 300) {
-                return response.json();
-            } else {
-                throw new Error(HttpStatus.UNAUTHORIZED)
-            }
+            verifyStatusSuccessOrRedirect(response);
+            return response.json();
         });
 }
 
@@ -210,23 +195,15 @@ export function fetchFeatureToggles() {
     };
     return fetch(getServletBaseUrl() + "api/feature", OPTIONS)
         .then((response: Response) => {
-            const statusKode: number = verifyStatusSuccessOrRedirect(response);
-            if (statusKode >= 200 && statusKode < 300) {
-                return response.json();
-            } else {
-                throw new Error(HttpStatus.UNAUTHORIZED)
-            }
+            verifyStatusSuccessOrRedirect(response);
+            return response.json();
         });
 }
 
 // FIXME: KANSKJE JEG KAN BRUKE DENNE SENRE.
 // export const getJsonOrRedirectIfUnauthorizedAndThrowError = (response: Response) => {
-//     const statusKode: number = verifyStatusSuccessOrRedirect(response);
-//     if (statusKode >= 200 && statusKode < 300) {
-//         return response.json();
-//     } else {
-//         throw new Error(HttpStatus.UNAUTHORIZED)
-//     }
+//     verifyStatusSuccessOrRedirect(response);
+//     return response.json();
 // };
 
 
@@ -246,12 +223,8 @@ let generateUploadOptions = function (formData: FormData) {
 export function fetchUpload(urlPath: string, formData: FormData) {
     return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData))
         .then((response) => {
-            const statusKode: number = verifyStatusSuccessOrRedirect(response);
-            if (statusKode >= 200 && statusKode < 300) {
-                return toJson(response)
-            } else {
-                throw new Error(HttpStatus.UNAUTHORIZED)
-            }
+            verifyStatusSuccessOrRedirect(response);
+            return toJson(response)
         });
 }
 
@@ -273,9 +246,11 @@ function verifyStatusSuccessOrRedirect(response: Response): number {
             if (window.location.search.split("error_id=")[1] !== r.id) {
                 const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
                 window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "%26error_id=" + r.id;
+                throw new Error(HttpStatus.UNAUTHORIZED)
+            } else {
+                throw new Error(HttpStatus.UNAUTHORIZED_LOOP_ERROR);
             }
         });
-        return 401;
     }
     if (response.status >= 200 && response.status < 300) {
         return response.status;

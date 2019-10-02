@@ -26,7 +26,7 @@ class Link extends React.Component<Props, {}> {
 
 		this.props.dispatch(setLinkVisited());
 		const url = window.location.href;
-		const match: RegExpMatchArray | null = url.match(/goto=\/sosialhjelp\/soknad(.+)$/);
+		const match: RegExpMatchArray | null = url.match(/goto=\/sosialhjelp\/soknad(.+?)(&error_id.*$|$)/);
 		let here: string = "/informasjon";
 		if (match && match[1]){
 			here = match[1];
