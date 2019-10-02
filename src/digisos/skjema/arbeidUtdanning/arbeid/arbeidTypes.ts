@@ -2,7 +2,6 @@ export interface Arbeidsforhold {
 	"arbeidsgivernavn": string,
 	"fom": string,
 	"tom": string,
-	"stillingstypeErHeltid": boolean,
 	"stillingsprosent": number,
 	"overstyrtAvBruker": boolean
 }

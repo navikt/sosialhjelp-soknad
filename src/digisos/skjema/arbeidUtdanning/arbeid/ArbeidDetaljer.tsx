@@ -4,9 +4,9 @@ import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/compon
 import { Arbeidsforhold } from "./arbeidTypes";
 
 const ArbeidDetaljer: React.FunctionComponent<{ arbeidsforhold: Arbeidsforhold }> = ({ arbeidsforhold }) => {
-	const { arbeidsgivernavn, stillingsprosent, stillingstypeErHeltid, fom, tom } = arbeidsforhold;
+	const { arbeidsgivernavn, stillingsprosent, fom, tom } = arbeidsforhold;
 	let stillingsprosentVisning = stillingsprosent + "%";
-	if (stillingsprosent === 0 && stillingstypeErHeltid === false) {
+	if (stillingsprosent === 0) {
 		stillingsprosentVisning = "Variabel";
 	}
 

@@ -48,7 +48,6 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 			<div>
 				{barn.map((barnet: Barn, index: number) =>
 					<div key={index} className={(index + 1 === barn.length) ? "barn barn_siste_liste_element" : "barn"}>
-						{!barnet.harDiskresjonskode && (
 							<Detaljeliste>
 								<DetaljelisteElement
 									tittel={<span><FormattedMessage id="kontakt.system.personalia.navn"/></span>}
@@ -90,8 +89,7 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 										/>
 									</div>
 								)}
-							</Detaljeliste>
-						)}
+						</Detaljeliste>
 					</div>
 				)}
 			</div>
