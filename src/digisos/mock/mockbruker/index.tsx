@@ -17,6 +17,8 @@ import {fetchPost} from "../../../nav-soknad/utils/rest-utils";
 import NavFrontendSpinner from "nav-frontend-spinner";
 
 import "whatwg-fetch";
+import {NyBostotteUtbetaling, Utbetaling} from "./mockComponents/nyBostotteUtbetaling";
+import {NyBostotteSak, Sak} from "./mockComponents/nyBostotteSak";
 
 
 interface OwnState {
@@ -49,6 +51,9 @@ interface OwnState {
 	utbetaling_utbetalingsdato: string;
 	utbetaling_forfallsdato: string;
 	loading: boolean;
+	bostotteUtbetalinger: boolean;
+	bostotteSaker: boolean;
+	bostotteDto: {utbetalinger:Utbetaling[], saker:Sak[]};
 }
 
 interface StoreProps {
@@ -91,7 +96,10 @@ class MockBruker extends React.Component<Props,OwnState> {
 			utbetaling_posteringsdato: "2019-01-03",
 			utbetaling_utbetalingsdato: "2019-01-04",
 			utbetaling_forfallsdato: "2019-01-04",
-			loading: false
+			loading: false,
+			bostotteUtbetalinger: false,
+			bostotteSaker: false,
+			bostotteDto: {utbetalinger:[], saker:[]},
 		}
 	}
 
@@ -143,6 +151,16 @@ class MockBruker extends React.Component<Props,OwnState> {
 		this.setState({barn_liste})
 	}
 
+	handleLeggTilNyUtbetaling(nyUtbetaling: Utbetaling){
+		this.state.bostotteDto.utbetalinger.push(nyUtbetaling);
+		console.dir(nyUtbetaling);
+		console.dir(this.state.bostotteDto.utbetalinger);
+	}
+
+	handleLeggTilNySak(nySak: Sak){
+		this.state.bostotteDto.saker.push(nySak);
+	}
+
 	settInnListeOverBarn(){
 		const a: any = [];
 		this.state.barn_liste.forEach((barn: NyttBarnObject, key: number) => {
@@ -156,6 +174,14 @@ class MockBruker extends React.Component<Props,OwnState> {
 		return (
 			<div className="mock-listOfThings">{ a }</div>
 		)
+	}
+
+	settInnListeOverUtbetalinger() {
+
+	}
+
+	settInnListeOverSaker() {
+
 	}
 
 	renderBarnRad(barn: NyttBarnObject, key: number){
@@ -407,6 +433,26 @@ class MockBruker extends React.Component<Props,OwnState> {
 							<div className="mock-listOfThings-tittel">Liste over barn som er lagt til: </div>
 							{ this.settInnListeOverBarn()}
 							<NyttBarn onLeggTilNyttBarn={(nyttBarn: NyttBarnObject) => this.handleLeggTilNyttBarn(nyttBarn)}/>
+						</Collapse>
+					</MockDataBolkWrapper>
+
+					<MockDataBolkWrapper tittel="Bostøtte utbetalinger">
+						<Radio onChange={() => this.setState({bostotteUtbetalinger: false})} label='Nei' name='bostotteUtbetaling' value={'nei'} defaultChecked={true} />
+						<Radio onChange={() => this.setState({bostotteUtbetalinger: true})} label='Ja' name='bostotteUtbetaling' value={'ja'} />
+						<Collapse className="mock-block-collapse" isOpened={this.state.bostotteUtbetalinger}>
+							<div className="mock-listOfThings-tittel">Liste over utbetalinger som er lagt til: </div>
+							{ this.settInnListeOverUtbetalinger()}
+							<NyBostotteUtbetaling onLeggTilNyUtbetaling={(nyUtbetaling: Utbetaling) => this.handleLeggTilNyUtbetaling(nyUtbetaling)}/>
+						</Collapse>
+					</MockDataBolkWrapper>
+
+					<MockDataBolkWrapper tittel="Bostøtte saker">
+						<Radio onChange={() => this.setState({bostotteSaker: false})} label='Nei' name='bostotteSaker' value={'nei'} defaultChecked={true} />
+						<Radio onChange={() => this.setState({bostotteSaker: true})} label='Ja' name='bostotteSaker' value={'ja'} />
+						<Collapse className="mock-block-collapse" isOpened={this.state.bostotteSaker}>
+							<div className="mock-listOfThings-tittel">Liste over saker som er lagt til: </div>
+							{ this.settInnListeOverSaker()}
+							<NyBostotteSak onLeggTilNySak={(nySak: Sak) => this.handleLeggTilNySak(nySak)}/>
 						</Collapse>
 					</MockDataBolkWrapper>
 
