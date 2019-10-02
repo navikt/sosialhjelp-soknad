@@ -14,7 +14,7 @@ interface State {
 	saksstatus: string;
 }
 
-export class Sak {
+export class NySakObject {
 	mnd: number = -1;
 	ar: number = -1;
 	status: string = "";
@@ -34,10 +34,11 @@ export class NyBostotteSak extends React.Component<Props, State>{
 	}
 
 	lagreNySak(){
-		var nySak: Sak = new Sak();
-		nySak.ar = this.state.saksar;
-		nySak.mnd = this.state.saksmnd;
-		nySak.status = this.state.saksstatus;
+		const nySak: NySakObject = {
+			ar: this.state.saksar,
+			mnd: this.state.saksmnd,
+			status: this.state.saksstatus,
+		};
 
 		this.props.onLeggTilNySak(nySak);
 		this.setState({isOpened: false})
