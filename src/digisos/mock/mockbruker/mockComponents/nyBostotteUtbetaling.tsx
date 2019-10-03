@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Collapse} from "react-collapse";
 import MockInput from "./mockInput";
+import {Select} from "nav-frontend-skjema";
 
 interface Props {
 	onLeggTilNyUtbetaling: (data: any) => void;
@@ -21,6 +22,16 @@ export class NyUtbetalingObject {
 	rolle: string = "";
 }
 
+enum MottakerType {
+	KOMMUNE = "KOMMUNE",
+	HUSSTAND = "HUSSTAND"
+}
+
+enum RolleType {
+	HOVEDPERSON = "HOVEDPERSON",
+	BIPERSON = "BIPERSON"
+}
+
 export class NyBostotteUtbetaling extends React.Component<Props, State>{
 
 	constructor(props: Props){
@@ -30,8 +41,8 @@ export class NyBostotteUtbetaling extends React.Component<Props, State>{
 			isOpened: false,
 			utbetalingsdato: "2019-09-01",
 			utbetalingsbelop: 6000,
-			utbetalingsmottaker: "Hans Olo",
-			utbetalingsrolle: "HOVEDPERSON",
+			utbetalingsmottaker: MottakerType.HUSSTAND,
+			utbetalingsrolle: RolleType.HOVEDPERSON,
 		}
 	}
 
@@ -61,8 +72,22 @@ export class NyBostotteUtbetaling extends React.Component<Props, State>{
 
 							<MockInput label="Dato:" onChange={(evt: any) => this.setState({utbetalingsdato: evt.target.value})} value={this.state.utbetalingsdato}/>
 							<MockInput label="Beløp:" onChange={(evt: any) => this.setState({utbetalingsbelop: evt.target.value})} value={this.state.utbetalingsbelop.toString()}/>
-							<MockInput label="Mottaker:" onChange={(evt: any) => this.setState({utbetalingsmottaker: evt.target.value})} value={this.state.utbetalingsmottaker}/>
-							<MockInput label="Rolle:" onChange={(evt: any) => this.setState({utbetalingsrolle: evt.target.value})} value={this.state.utbetalingsrolle}/>
+							<Select label='Mottaker:' onChange={(evt: any) => this.setState({utbetalingsmottaker: evt.target.value})}>
+								<option value={MottakerType.HUSSTAND} key={MottakerType.HUSSTAND}>
+									Husstand
+								</option>
+								<option value={MottakerType.KOMMUNE} key={MottakerType.KOMMUNE}>
+									Kommune
+								</option>
+							</Select>
+							<Select label='Rolle:' onChange={(evt: any) => this.setState({utbetalingsrolle: evt.target.value})}>
+								<option value={RolleType.HOVEDPERSON} key={RolleType.HOVEDPERSON}>
+									Hovedperson
+								</option>
+								<option value={RolleType.BIPERSON} key={RolleType.BIPERSON}>
+									Biperson
+								</option>
+							</Select>
 
 							<button onClick={() => this.lagreNyUtbetaling()}>Ok</button>
 							<button onClick={() => this.setState({isOpened: false})}>Avbryt</button>
