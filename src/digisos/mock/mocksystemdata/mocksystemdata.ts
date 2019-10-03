@@ -1,9 +1,10 @@
 import {endpoints} from "./endpoints";
 
+import {midlertidigPostadresseJSON} from "./jsonPartialTemplates/midlertidigPostadresse";
 import {organisasjonJSON} from "./jsonTemplates/organisasjon";
 import {nyOrganisasjonJSON} from './jsonPartialTemplates/organisasjon';
 import {adresserJSON} from "./jsonTemplates/adresser";
-import {ArbeidJSON} from "./jsonTemplates/arbeid";
+import {arbeidJSON} from "./jsonTemplates/arbeid";
 import {brukerprofilJSON} from "./jsonTemplates/brukerprofil";
 import {ektefelleJSON} from "./jsonTemplates/ektefelle";
 import {familieJSON} from "./jsonTemplates/familie";
@@ -14,7 +15,7 @@ import {utbetalingJSON} from "./jsonTemplates/utbetaling";
 
 
 const adresser = adresserJSON;
-let arbeid: ArbeidJSON;
+let arbeid = arbeidJSON;
 const brukerprofil = brukerprofilJSON;
 let familie = familieJSON;
 const norg = norgJSON;
@@ -23,6 +24,7 @@ const telefon = telefonJSON;
 const utbetaling = utbetalingJSON;
 
 const PERSON = "person";
+const MIDLERTIDIGPOSTADRESSE = "midlertidigPostadresse";
 const BANKKONTO = "bankkonto";
 const VERDI = "verdi";
 const ARBEIDSFORHOLD = "arbeidsforhold";
@@ -45,6 +47,11 @@ export function settNavn(fornavn: any, mellomnavn: any, etternavn: any) {
 
 export function settIdent(ident: any) {
     familie[IDENT][IDENT] = ident;
+}
+
+export function settMidlertidigPostadresse(midlertidigPostadresseEgendefinertValue: any) {
+    // @ts-ignore
+    brukerprofil[PERSON][MIDLERTIDIGPOSTADRESSE] = midlertidigPostadresseJSON;
 }
 
 export function settTelefonnummer(telefonnummer: any) {
@@ -91,6 +98,7 @@ export function settArbeidsforholdMedArbeidsgivernummer(id: string, startDato: s
     nyttArbeidsForholdMedArbeidsgivernummer.arbeidsgiver.arbeidsgivernummer = arbeidsgiverNummer;
     nyttArbeidsForholdMedArbeidsgivernummer.arbeidsgiver.navn = arbeidsgiverNavn;
 
+    // @ts-ignore
     arbeid[ARBEIDSFORHOLD].push(nyttArbeidsForholdMedArbeidsgivernummer);
 }
 
@@ -119,6 +127,7 @@ export function settArbeidsforholdMedIdent(id: string, startDato: string, sluttD
     nyttArbeidsForholdMedIdent.arbeidsavtale[0].stillingsprosent = stillingsProsent;
     nyttArbeidsForholdMedIdent.arbeidsgiver.ident.ident = ident;
 
+    // @ts-ignore
     arbeid[ARBEIDSFORHOLD].push(nyttArbeidsForholdMedIdent);
 }
 
@@ -135,9 +144,7 @@ export function settArbeidsforholdMedOrganisasjonsnummer(id: string, startDato: 
             "stillingsprosent": ""
         }],
         "arbeidsgiver": {
-            "orgnummer": "",
-            "arbeidsgivernummer": "",
-            "navn": ""
+            "orgnummer": ""
         }
     };
 
@@ -147,6 +154,7 @@ export function settArbeidsforholdMedOrganisasjonsnummer(id: string, startDato: 
     nyttArbeidsForholdMedOrganisasjon.arbeidsavtale[0].stillingsprosent = stillingsProsent;
     nyttArbeidsForholdMedOrganisasjon.arbeidsgiver.orgnummer = orgnummer;
 
+    // @ts-ignore
     arbeid[ARBEIDSFORHOLD].push(nyttArbeidsForholdMedOrganisasjon);
 }
 
