@@ -1,4 +1,5 @@
-FROM node as node-builder
+# FIXME: Replace with "node" (latest) when https://github.com/nodejs/node/issues/29239 is resolved
+FROM node:12.8.1 as node-builder
 ADD / /source
 WORKDIR /source
 ENV CI=true
