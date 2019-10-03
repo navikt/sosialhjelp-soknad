@@ -8,6 +8,7 @@ import {
     HEROKU_API_MASTER_APP_NAME,
     HEROKU_MASTER_APP_NAME
 } from "../../configuration";
+import {NavLogEntry, NavLogLevel} from "../redux/navlogger/navloggerTypes";
 
 
 export function erDev(): boolean {
@@ -243,14 +244,24 @@ export function toJson<T>(response: Response): Promise<T> {
 function verifyStatusSuccessOrRedirect(response: Response): number {
     if (response.status === 401) {
         response.json().then(r => {
+            const createLogEntry = (message: string, level: NavLogLevel): NavLogEntry => {
+                return {
+                    url: window.location.href,
+                    userAgent: window.navigator.userAgent,
+                    message: message.toString(),
+                    level
+                };
+            };
+
             if (window.location.search.split("error_id=")[1] !== r.id) {
                 const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
                 window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "%26error_id=" + r.id;
-                throw new Error(HttpStatus.UNAUTHORIZED)
             } else {
-                throw new Error(HttpStatus.UNAUTHORIZED_LOOP_ERROR);
+                let loggPayload = createLogEntry("Fetch ga 401-error-id selv om kallet ble sendt fra URL med samme error_id (" + r.id + "). Dette kan komme av en påloggingsloop (UNAUTHORIZED_LOOP_ERROR).", NavLogLevel.ERROR);
+                fetchPost("informasjon/actions/logg",JSON.stringify(loggPayload)).finally();
             }
         });
+        throw new Error(HttpStatus.UNAUTHORIZED)
     }
     if (response.status >= 200 && response.status < 300) {
         return response.status;
