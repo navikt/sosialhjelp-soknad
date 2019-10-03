@@ -434,6 +434,16 @@ export function leggTilUtbetaling(periodeFom: any, periodeTom: any, posteringsda
     utbetaling.forfallsdato = forfallsdato;
 }
 
+export function leggTilBostotteUtbetalinger(utbetalinger: any[]) {
+    // @ts-ignore
+    bostotteJSON.utbetalinger = utbetalinger;
+}
+
+export function leggTilBostotteSaker(saker: any[]) {
+    // @ts-ignore
+    bostotteJSON.saker = saker;
+}
+
 export function getAdresserPath() {
     return endpoints.adresser
 }

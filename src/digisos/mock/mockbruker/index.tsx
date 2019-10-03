@@ -239,9 +239,9 @@ class MockBruker extends React.Component<Props,OwnState> {
 			<div>
 				<div>{ key + 1 }</div>
 				<div>Dato: { utbetaling.utbetalingsdato }</div>
-				<div>Beløp: { utbetaling.utbetalingsbelop }</div>
-				<div>Mottaker: { utbetaling.utbetalingsmottaker }</div>
-				<div>Rolle: { utbetaling.utbetalingsrolle }</div>
+				<div>Beløp: { utbetaling.belop }</div>
+				<div>Mottaker: { utbetaling.mottaker }</div>
+				<div>Rolle: { utbetaling.rolle }</div>
 				<button onClick={() => {
 					const bostotteDto = {...this.state.bostotteDto};
 					bostotteDto.utbetalinger.splice(key, 1);
@@ -258,6 +258,7 @@ class MockBruker extends React.Component<Props,OwnState> {
 				<div>År: { sak.ar }</div>
 				<div>Måned: { sak.mnd }</div>
 				<div>Status: { sak.status }</div>
+				<div>Rolle: { sak.rolle }</div>
 				<button onClick={() => {
 					const bostotteDto = {...this.state.bostotteDto};
 					bostotteDto.saker.splice(key, 1);
@@ -388,6 +389,13 @@ class MockBruker extends React.Component<Props,OwnState> {
 			)
 		}
 
+		if (this.state.bostotteUtbetalinger) {
+			mocksystemdata.leggTilBostotteUtbetalinger(this.state.bostotteDto.utbetalinger);
+		}
+
+		if (this.state.bostotteSaker) {
+			mocksystemdata.leggTilBostotteSaker(this.state.bostotteDto.saker);
+		}
 
 		this.setState({loading: true});
 		Promise.all([

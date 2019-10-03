@@ -8,16 +8,17 @@ interface Props {
 
 interface State {
 	isOpened: boolean;
-
 	saksmnd: number;
 	saksar: number;
 	saksstatus: string;
+	saksrolle: string;
 }
 
 export class NySakObject {
 	mnd: number = -1;
 	ar: number = -1;
 	status: string = "";
+	rolle: string = "";
 }
 
 export class NyBostotteSak extends React.Component<Props, State>{
@@ -30,6 +31,7 @@ export class NyBostotteSak extends React.Component<Props, State>{
 			saksmnd: 9,
 			saksar: 2019,
 			saksstatus: "VEDTATT",
+			saksrolle: "HOVEDPERSON",
 		}
 	}
 
@@ -38,6 +40,7 @@ export class NyBostotteSak extends React.Component<Props, State>{
 			ar: this.state.saksar,
 			mnd: this.state.saksmnd,
 			status: this.state.saksstatus,
+			rolle: this.state.saksrolle,
 		};
 
 		this.props.onLeggTilNySak(nySak);

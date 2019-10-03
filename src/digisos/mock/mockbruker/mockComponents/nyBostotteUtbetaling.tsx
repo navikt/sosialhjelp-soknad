@@ -15,10 +15,10 @@ interface State {
 }
 
 export class NyUtbetalingObject {
-	utbetalingsdato: String = "";
-	utbetalingsbelop: Number = -1;
-	utbetalingsmottaker: String = "";
-	utbetalingsrolle: String = "";
+	utbetalingsdato: string = "";
+	belop: number = -1;
+	mottaker: string = "";
+	rolle: string = "";
 }
 
 export class NyBostotteUtbetaling extends React.Component<Props, State>{
@@ -38,9 +38,9 @@ export class NyBostotteUtbetaling extends React.Component<Props, State>{
 	lagreNyUtbetaling(){
 		const nyUtbetaling: NyUtbetalingObject = {
 			utbetalingsdato: this.state.utbetalingsdato,
-			utbetalingsbelop: this.state.utbetalingsbelop,
-			utbetalingsmottaker: this.state.utbetalingsmottaker,
-			utbetalingsrolle: this.state.utbetalingsrolle,
+			belop: this.state.utbetalingsbelop,
+			mottaker: this.state.utbetalingsmottaker,
+			rolle: this.state.utbetalingsrolle,
 		};
 
 		this.props.onLeggTilNyUtbetaling(nyUtbetaling);
