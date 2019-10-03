@@ -12,6 +12,7 @@ interface State {
 	saksmnd: number;
 	saksar: number;
 	saksstatus: StatusType;
+	saksbeskrivelse: string;
 	saksrolle: RolleType;
 }
 
@@ -19,6 +20,7 @@ export class NySakObject {
 	mnd: number = -1;
 	ar: number = -1;
 	status: string = "";
+	vedtak: {} = {};
 	rolle: string = "";
 }
 
@@ -42,6 +44,7 @@ export class NyBostotteSak extends React.Component<Props, State>{
 			saksmnd: 9,
 			saksar: 2019,
 			saksstatus: StatusType.UNDER_BEHANDLING,
+			saksbeskrivelse: "Vedtaks beskrivelse",
 			saksrolle: RolleType.HOVEDPERSON,
 		}
 	}
@@ -51,6 +54,7 @@ export class NyBostotteSak extends React.Component<Props, State>{
 			ar: this.state.saksar,
 			mnd: this.state.saksmnd,
 			status: this.state.saksstatus,
+			vedtak: { beskrivelse: this.state.saksbeskrivelse },
 			rolle: this.state.saksrolle,
 		};
 
@@ -81,6 +85,7 @@ export class NyBostotteSak extends React.Component<Props, State>{
 									Vedtatt
 								</option>
 							</Select>
+							<MockInput label="Beskrivelse:" onChange={(evt: any) => this.setState({saksbeskrivelse: evt.target.value})} value={this.state.saksbeskrivelse}/>
 							<Select label='Rolle:' onChange={(evt: any) => this.setState({saksrolle: evt.target.value})}>
 								<option value={RolleType.HOVEDPERSON} key={RolleType.HOVEDPERSON}>
 									Hovedperson
