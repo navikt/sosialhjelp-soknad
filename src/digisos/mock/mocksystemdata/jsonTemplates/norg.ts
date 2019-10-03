@@ -311,4 +311,4 @@ export const norgJSON = {
     "sosialeTjenester": null,
     "orgNrTilKommunaltNavKontor": "974778807"
   }
-}
+};
