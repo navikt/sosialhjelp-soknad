@@ -23,4 +23,4 @@ export const midlertidigPostadresseJSON = {
     "husnummer": 666,
     "husbokstav": null
   }
-}
+};

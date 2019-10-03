@@ -30,4 +30,4 @@ export const adresserJSON = {
       "husbokstav": null
     }
   ]
-}
+};
