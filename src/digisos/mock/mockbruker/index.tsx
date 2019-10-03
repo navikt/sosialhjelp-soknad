@@ -53,8 +53,6 @@ interface OwnState {
 	loading: boolean;
 	bostotteUtbetalinger: boolean;
 	bostotteSaker: boolean;
-	bostotteUtbetalingerListe: NyUtbetalingObject[];
-	bostotteSakerListe: NySakObject[];
 	bostotteDto: {
 		utbetalinger: NyUtbetalingObject[],
 		saker: NySakObject[]
@@ -104,8 +102,6 @@ class MockBruker extends React.Component<Props,OwnState> {
 			loading: false,
 			bostotteUtbetalinger: false,
 			bostotteSaker: false,
-			bostotteUtbetalingerListe: [],
-			bostotteSakerListe: [],
 			bostotteDto: {
 				utbetalinger: [],
 				saker: []
@@ -162,15 +158,15 @@ class MockBruker extends React.Component<Props,OwnState> {
 	}
 
 	handleLeggTilNyUtbetaling(nyUtbetaling: NyUtbetalingObject) {
-		const bostotteUtbetalingerListe = this.state.bostotteUtbetalingerListe;
-		bostotteUtbetalingerListe.push(nyUtbetaling);
-		this.setState({bostotteUtbetalingerListe});
+		const bostotteDto = {...this.state.bostotteDto};
+		bostotteDto.utbetalinger.push(nyUtbetaling);
+		this.setState({bostotteDto});
 	}
 
 	handleLeggTilNySak(nySak: NySakObject) {
-		const bostotteSakerListe = this.state.bostotteSakerListe;
-		bostotteSakerListe.push(nySak);
-		this.setState({bostotteSakerListe});
+		const bostotteDto = {...this.state.bostotteDto};
+		bostotteDto.saker.push(nySak);
+		this.setState({bostotteDto});
 	}
 
 	settInnListeOverBarn(){
@@ -190,7 +186,7 @@ class MockBruker extends React.Component<Props,OwnState> {
 
 	settInnListeOverUtbetalinger() {
 		const a: any = [];
-		this.state.bostotteUtbetalingerListe.forEach((utbetaling: NyUtbetalingObject, key: number) => {
+		this.state.bostotteDto.utbetalinger.forEach((utbetaling: NyUtbetalingObject, key: number) => {
 			a.push(<div className="mock-thing" key={key}>{this.renderUtbetalingRad(utbetaling, key)} </div>)
 		});
 
@@ -205,7 +201,7 @@ class MockBruker extends React.Component<Props,OwnState> {
 
 	settInnListeOverSaker() {
 		const a: any = [];
-		this.state.bostotteSakerListe.forEach((sak: NySakObject, key: number) => {
+		this.state.bostotteDto.saker.forEach((sak: NySakObject, key: number) => {
 			a.push(<div className="mock-thing" key={key}>{this.renderSakRad(sak, key)} </div>)
 		});
 
@@ -247,9 +243,9 @@ class MockBruker extends React.Component<Props,OwnState> {
 				<div>Mottaker: { utbetaling.utbetalingsmottaker }</div>
 				<div>Rolle: { utbetaling.utbetalingsrolle }</div>
 				<button onClick={() => {
-					const list: NyUtbetalingObject[] = this.state.bostotteDto.utbetalinger;
-					list.splice(key, 1);
-					this.setState({bostotteUtbetalingerListe: list})
+					const bostotteDto = {...this.state.bostotteDto};
+					bostotteDto.utbetalinger.splice(key, 1);
+					this.setState({bostotteDto})
 				}}>x</button>
 			</div>
 		)
@@ -263,9 +259,9 @@ class MockBruker extends React.Component<Props,OwnState> {
 				<div>Måned: { sak.mnd }</div>
 				<div>Status: { sak.status }</div>
 				<button onClick={() => {
-					const list: NySakObject[] = this.state.bostotteDto.saker;
-					list.splice(key, 1);
-					this.setState({bostotteSakerListe: list})
+					const bostotteDto = {...this.state.bostotteDto};
+					bostotteDto.saker.splice(key, 1);
+					this.setState({bostotteDto})
 				}}>x</button>
 			</div>
 		)
