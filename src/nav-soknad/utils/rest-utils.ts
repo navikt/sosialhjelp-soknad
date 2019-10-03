@@ -246,8 +246,10 @@ function verifyStatusSuccessOrRedirect(response: Response): number {
             if (window.location.search.split("error_id=")[1] !== r.id) {
                 const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
                 window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "%26error_id=" + r.id;
+                console.log("UNAUTHORIZED");
                 throw new Error(HttpStatus.UNAUTHORIZED)
             } else {
+                console.log("UNAUTHORIZED_LOOP_ERROR");
                 throw new Error(HttpStatus.UNAUTHORIZED_LOOP_ERROR);
             }
         });
