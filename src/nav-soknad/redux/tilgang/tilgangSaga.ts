@@ -13,7 +13,8 @@ export function* hentTilgangSaga() {
 		yield put(henterTilgang());
 		const response: TilgangApiResponse = yield call(
 			fetchToJson,
-			"informasjon/utslagskriterier/sosialhjelp"
+			"informasjon/utslagskriterier/sosialhjelp",
+			true
 		);
 		yield put(hentetTilgang(response.harTilgang, response.sperrekode));
 	} catch (reason) {
