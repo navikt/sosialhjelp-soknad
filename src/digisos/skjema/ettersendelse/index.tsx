@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
 import {State} from "../../redux/reducers";
 import * as React from "react";
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
@@ -34,7 +34,7 @@ interface OwnProps {
     feilKode: string;
 }
 
-type Props = OwnProps & DispatchProps & InjectedIntlProps;
+type Props = OwnProps & DispatchProps;
 
 interface OwnState {
     vedleggEkspandert: boolean;
@@ -67,10 +67,6 @@ class Ettersendelse extends React.Component<Props, OwnState> {
             }
         }
         return brukerbehandlingskjedeId;
-    }
-
-    toggleVedlegg() {
-        this.setState({vedleggEkspandert: !this.state.vedleggEkspandert});
     }
 
     sendEttersendelse() {
@@ -158,9 +154,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                                     venstreIkon={MargIkoner.OK}
                                     key={ettersendelse.behandlingsId}
                                 >
-                                    <h3>
-                                        {ettersendelse.innsendteVedlegg.length} &nbsp;
-                                        <FormattedHTMLMessage id="ettersendelse.vedlegg_sendt"/></h3>
+                                    <h3><FormattedHTMLMessage id="ettersendelse.vedlegg_sendt"/></h3>
                                     <p>
                                         <FormattedHTMLMessage
                                             id="ettersendelse.dato_tid"
@@ -177,7 +171,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                     )}
 
                     {opprettNyEttersendelseFeilet && (
-                        <AvsnittMedMarger>
+                        <AvsnittMedMarger className="ettersendelse__vedlegg__header">
                             <Informasjonspanel
                                 ikon={InformasjonspanelIkon.HENSYN}
                                 farge={DigisosFarge.VIKTIG}
@@ -194,8 +188,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                         >
                             {antallManglendeVedlegg > 0 && (
                                 <span>
-                                    <h3>{antallManglendeVedlegg} <FormattedHTMLMessage
-                                        id="ettersendelse.vedlegg.mangler"/></h3>
+                                    <h3>Vedlegg mangler</h3>
                                     <div>{datoManglendeVedlegg}</div>
                                 </span>
                             )}
@@ -241,4 +234,4 @@ export default connect((state: State) => {
         restStatus: state.ettersendelse.restStatus,
         feilKode: state.ettersendelse.feilKode
     };
-})(injectIntl(Ettersendelse));
+})(Ettersendelse);

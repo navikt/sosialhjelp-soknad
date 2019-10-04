@@ -1,4 +1,4 @@
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 import {
 	CheckboxFaktumTekst,
 	SporsmalFaktumTekst,
@@ -10,7 +10,7 @@ import {
 import { getIntlTextOrKey, getIntlInfoTekst, getIntlHjelpeTekst, getIntlText } from "./intlUtils";
 
 export function getFaktumSporsmalTekst(
-	intl: InjectedIntl,
+	intl: IntlShape,
 	key: string
 ): SporsmalFaktumTekst {
 	return {
@@ -20,7 +20,7 @@ export function getFaktumSporsmalTekst(
 	};
 }
 export function getFaktumCheckboksTekst(
-	intl: InjectedIntl,
+	intl: IntlShape,
 	key: string
 ): CheckboxFaktumTekst {
 	return {
@@ -31,7 +31,7 @@ export function getFaktumCheckboksTekst(
 }
 
 export function getRadioFaktumTekst(
-	intl: InjectedIntl,
+	intl: IntlShape,
 	key: string,
 	value: string,
 	property?: string
@@ -43,7 +43,7 @@ export function getRadioFaktumTekst(
 }
 
 export function getInputFaktumTekst(
-	intl: InjectedIntl,
+	intl: IntlShape,
 	key: string,
 	property?: string
 ): InputFaktumTekst {

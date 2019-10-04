@@ -4,10 +4,10 @@ import {
     onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedHTMLMessage, injectIntl} from "react-intl";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Utbetalinger, UtbetalingerKeys} from "./utbetalingerTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
@@ -22,7 +22,7 @@ const UTBETALINGER = "inntekt.inntekter";
 const TEXT_AREA_ANNET_FAKTUM_KEY = UTBETALINGER + "utbetalinger.annet.textarea";
 
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 interface State {
     oppstartsModus: boolean
@@ -71,7 +71,10 @@ export class UtbetalingerView extends React.Component<Props, State> {
     handleClickRadio(idToToggle: UtbetalingerKeys) {
         const {brukerBehandlingId, soknadsdata} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-        utbetalinger[idToToggle]= !utbetalinger[idToToggle];
+        if (typeof utbetalinger[idToToggle] === 'boolean' && typeof !utbetalinger[idToToggle] === 'boolean') {
+            // @ts-ignore
+            utbetalinger[idToToggle] = !utbetalinger[idToToggle];
+        }
         if (!utbetalinger.bekreftelse || !utbetalinger.annet) {
             utbetalinger.beskrivelseAvAnnet = "";
         }
@@ -130,7 +133,7 @@ export class UtbetalingerView extends React.Component<Props, State> {
     }
 
     render() {
-        const {soknadsdata} = this.props;
+        const {soknadsdata, intl} = this.props;
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
         const restStatus = soknadsdata.restStatus.inntekt.utbetalinger;
         let oppstartsModus = this.state.oppstartsModus;
@@ -140,14 +143,14 @@ export class UtbetalingerView extends React.Component<Props, State> {
         return (
             <JaNeiSporsmal
                 visPlaceholder={oppstartsModus}
-                tekster={getFaktumSporsmalTekst(this.props.intl, UTBETALINGER)}
+                tekster={getFaktumSporsmalTekst(intl, UTBETALINGER)}
                 faktumKey={UTBETALINGER}
                 verdi={utbetalinger.bekreftelse}
                 onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, UTBETALINGER + ".true.type")}
+                    tekster={getFaktumSporsmalTekst(intl, UTBETALINGER + ".true.type")}
                 >
                     {this.renderCheckBox(UtbetalingerKeys.UTBYTTE, UtbetalingerKeys.UTBYTTE)}
                     {this.renderCheckBox(UtbetalingerKeys.SALG, UtbetalingerKeys.SALG)}

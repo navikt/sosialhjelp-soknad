@@ -7,6 +7,7 @@ interface Props {
 	hoyreIkon?: MargIkoner;
 	onClickHoyreIkon?: () => void;
 	onClick?: () => void;
+	className?: string;
 }
 
 function ikonTitleText(ikon: string) {
@@ -37,7 +38,7 @@ function ikonTitleText(ikon: string) {
  *
  */
 const AvsnittMedMarger: React.StatelessComponent<Props> = (
-	{ children, venstreIkon, hoyreIkon, onClickHoyreIkon, onClick }) => {
+	{ children, venstreIkon, hoyreIkon, onClickHoyreIkon, onClick, className }) => {
 
 	function handleOnClick() {
 		if (onClick) {
@@ -50,7 +51,7 @@ const AvsnittMedMarger: React.StatelessComponent<Props> = (
 			<div className="venstremarg">
 				{venstreIkon && (<MargIkon ikon={venstreIkon}/>)}
 			</div>
-			<div className="avsnitt">
+			<div className={"avsnitt " + className }>
 				{children}
 			</div>
 			{hoyreIkon && (

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {RouterProps} from "react-router";
-import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl,} from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage, injectIntl, IntlShape} from "react-intl";
 import DocumentTitle from "react-document-title";
 import Knapp from "nav-frontend-knapper";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
@@ -17,17 +17,15 @@ import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import {State} from "../redux/reducers";
 import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 
-
 interface StateProps {
     harTilgang: boolean;
     sperrekode: TilgangSperrekode | undefined;
     startSoknadPending: boolean;
     fornavn: string | undefined;
+    intl: IntlShape;
 }
 
-
-
-type Props = StateProps & InjectedIntlProps & RouterProps & DispatchProps;
+type Props = StateProps & RouterProps & DispatchProps;
 
 class Informasjon extends React.Component<Props, {}> {
 

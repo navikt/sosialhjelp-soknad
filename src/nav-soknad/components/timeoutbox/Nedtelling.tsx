@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp } from "nav-frontend-knapper";
@@ -9,12 +9,11 @@ interface OwnProps {
 	utloggingsUrl: string;
 }
 
-type Props = OwnProps & InjectedIntlProps;
+type Props = OwnProps;
 
 const Nedtelling: React.StatelessComponent<Props> = ({
 	onContinueClick,
-	utloggingsUrl,
-	intl
+	utloggingsUrl
 }) => {
 	return (
 		<div>
@@ -25,7 +24,7 @@ const Nedtelling: React.StatelessComponent<Props> = ({
 				<FormattedMessage id={"timeout.nedtelling"} />
 			</Normaltekst>
 			<div className="timeoutbox__knapperad">
-				<Hovedknapp onClick={onContinueClick}>
+				<Hovedknapp onClick={onContinueClick} type="hoved">
 					<FormattedMessage id={"timeout.fortsett"} />
 				</Hovedknapp>
 				<a
@@ -39,4 +38,4 @@ const Nedtelling: React.StatelessComponent<Props> = ({
 	);
 };
 
-export default injectIntl(Nedtelling);
+export default Nedtelling;

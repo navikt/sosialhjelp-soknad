@@ -3,13 +3,14 @@ import {REST_STATUS} from "../../../nav-soknad/types/restTypes";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
 import Knapp from "nav-frontend-knapper";
-import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage, injectIntl} from "react-intl";
 import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
 import {connect} from "react-redux";
 import {State} from "../../redux/reducers";
 import {sendEttersendelse} from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
 import {EttersendelseVedleggBackend} from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
 import {getSpcForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
+import {IntlProps} from "../../../nav-soknad/utils";
 
 interface OwnProps {
     ettersendelseAktivert: boolean;
@@ -26,7 +27,7 @@ interface StateProps {
     feiletVedleggId: string;
 }
 
-type Props = OwnProps & StateProps & DispatchProps & InjectedIntlProps;
+type Props = OwnProps & StateProps & DispatchProps & IntlProps;
 
 interface OwnState {
     vedleggEkspandert: boolean;
@@ -79,6 +80,7 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                 className={"ettersendelse__vedlegg__innhold " +
                 (this.state.advarselManglerVedlegg ? "ettersendelse__vedlegg__feil " : "")}
             >
+
                 {this.props.manglendeVedlegg && this.props.manglendeVedlegg.map((vedlegg: EttersendelseVedleggBackend) => {
                     const spc = getSpcForOpplysning(vedlegg.type);
                     const tittelKey = spc ? spc.textKey + ".vedlegg.sporsmal.tittel" : "";
@@ -104,15 +106,18 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                         </EttersendelseVedlegg>);
                 })}
 
-                {this.state.advarselManglerVedlegg && (
-                    <AvsnittMedMarger>
-                        <div className="skjema__feilmelding">
-                            <FormattedHTMLMessage id="ettersendelse.feilmelding.ingen_vedlegg"/>
-                        </div>
-                    </AvsnittMedMarger>
-                )}
+                <AvsnittMedMarger className="ettersendelse_send_vedlegg_knapp_wrapper" >
 
-                <AvsnittMedMarger>
+                    {this.state.advarselManglerVedlegg && (
+                        <>
+                            <div className="skjema__feilmelding">
+                                <FormattedHTMLMessage id="ettersendelse.feilmelding.ingen_vedlegg"/>
+                            </div>
+                            <br/>
+                        </>
+                    )}
+
+                    <br/>
                     {this.props.ettersendelseAktivert && (
                         <Knapp
                             spinner={this.props.ettersendStatus === REST_STATUS.PENDING}
@@ -120,9 +125,9 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                             type="hoved"
                             htmlType="submit"
                             onClick={() => this.sendEttersendelse()}
-                            title="Ettersend vedlegg"
+                            title="Send vedlegg"
                         >
-                            <FormattedMessage id="ettersendelse.knapp.tittel"/>
+                            Send vedlegg
                         </Knapp>
                     )}
                 </AvsnittMedMarger>

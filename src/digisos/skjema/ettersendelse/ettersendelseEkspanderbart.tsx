@@ -51,7 +51,7 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 
 	render() {
 		return (
-			<span>
+			<span className="ettersendelse__vedlegg__ekspandert_wrapper">
 
 				{this.props.kunGenerellDokumentasjon && (
 					<AvsnittMedMarger
@@ -81,7 +81,7 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
 				>
 					{ this.state.renderInnhold && (
 						<>
-							<AvsnittMedMarger>
+							<AvsnittMedMarger className="ettersendelse__vedlegg__header">
 								{!this.props.kunGenerellDokumentasjon && this.props.ettersendelseAktivert &&
 								(<FormattedHTMLMessage id="ettersendelse.mangler_info"/>)}
 								{!this.props.ettersendelseAktivert &&

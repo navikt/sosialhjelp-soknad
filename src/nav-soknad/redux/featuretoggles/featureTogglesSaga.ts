@@ -9,7 +9,9 @@ function* hentFeatureTogglesSaga(): SagaIterator {
 	try {
 		yield put(henterFeaturetoggles());
 		const response = yield call(fetchFeatureToggles);
-		yield put(mottattFeatures(response));
+		if (typeof response != "undefined") {
+			yield put(mottattFeatures(response));
+		}
 	} catch (reason) {
 		yield put(
 			loggFeil("Problemer med å hente featuretoggles: " + reason.toString())

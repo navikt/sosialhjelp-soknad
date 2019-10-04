@@ -1,11 +1,10 @@
 import * as React from "react";
 import {Feil, Textarea} from "nav-frontend-skjema";
-import {InjectedIntlProps, injectIntl} from "react-intl";
-import {getInputFaktumTekst, getIntlTextOrKey} from "../utils";
+import {injectIntl, IntlShape} from "react-intl";
+import {getInputFaktumTekst, getIntlTextOrKey, IntlProps} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {connect} from "react-redux";
 import {Valideringsfeil} from "../redux/valideringActionTypes";
-import {InjectedIntl} from "react-intl";
 
 interface OwnProps {
     value: string;
@@ -21,13 +20,13 @@ interface OwnProps {
     property?: string;
     faktumId?: number;
     getName?: () => string;
-    getFeil?: (intl: InjectedIntl) => Feil; // Fjern
+    getFeil?: (intl: IntlShape) => Feil; // Fjern
     onChange?: (event: any) => any;
     onBlur?: () => void;
     feil?: any; // Type??
 }
 
-type Props = OwnProps & InjectedIntlProps;
+type Props = OwnProps & IntlProps;
 
 class TextareaEnhanced extends React.Component<Props, {}> {
     constructor(props: Props) {
@@ -50,18 +49,19 @@ class TextareaEnhanced extends React.Component<Props, {}> {
     }
 
     tellerTekst(antallTegn: number, maxLength: number): string {
+        const intl = this.props.intl;
         const antallTegnIgjen = maxLength - antallTegn;
         if (antallTegnIgjen > 25) {
             return "";
         } else if (antallTegn > maxLength) {
-            return this.props.intl.formatMessage(
+            return intl.formatMessage(
                 {
                     id: "textarea.overmaks"
                 },
                 {antall: antallTegn - maxLength}
             );
         }
-        return this.props.intl.formatMessage(
+        return intl.formatMessage(
             {
                 id: "textarea.undermaks"
             },
@@ -74,9 +74,10 @@ class TextareaEnhanced extends React.Component<Props, {}> {
     }
 
     getFeil(): Feil | null {
-        const {faktumKey} = this.props;
+        const {faktumKey, intl} = this.props;
+
         const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey);
-        return !feilkode ? null : {feilmelding: this.props.intl.formatHTMLMessage({id: feilkode.feilkode})};
+        return !feilkode ? null : {feilmelding: intl.formatHTMLMessage({id: feilkode.feilkode})};
     }
 
     render() {
@@ -85,18 +86,15 @@ class TextareaEnhanced extends React.Component<Props, {}> {
             disabled,
             textareaClass,
             maxLength,
-            intl,
             faktumKey,
             property,
-            value
+            value,
+            intl
         } = this.props;
         const tekster = getInputFaktumTekst(intl, faktumKey, property);
-
         let label = labelId ? getIntlTextOrKey(intl, labelId) : tekster.label;
         label = this.props.hideLabel ? "" : label;
-
         const feil_ = this.getFeil();
-
         return (
             <Textarea
                 id={this.props.id}
@@ -121,6 +119,4 @@ const mapStateToProps = (state: State) => ({
     feil: state.validering.feil,
 });
 
-export default connect(
-    mapStateToProps
-)(injectIntl(TextareaEnhanced));
+export default connect(mapStateToProps)(injectIntl(TextareaEnhanced));

@@ -14,15 +14,20 @@ import {
 } from "./faktaActions";
 import { navigerTilServerfeil } from "../navigasjon/navigasjonActions";
 import { selectBrukerBehandlingId } from "../selectors";
+import {Faktum} from "../../types";
 
 function* lagreFaktumSaga(action: LagreFaktum): SagaIterator {
 	try {
-		const response = yield call(
+		// @ts-ignore
+		const response: Faktum = yield call(
 			fetchPut,
 			`fakta/${action.faktum.faktumId}`,
 			prepFaktumForLagring(action.faktum)
 		);
-		yield put(lagretFaktum(response));
+		if (typeof response != "undefined") {
+			yield put(lagretFaktum(response));
+		}
+
 	} catch (reason) {
 		yield put(lagreFaktumFeilet(reason));
 	}
@@ -36,7 +41,9 @@ function* opprettFaktumSaga(action: OpprettFaktum): SagaIterator {
 			`fakta?behandlingsId=${brukerBehandlingId}`,
 			JSON.stringify(action.faktum)
 		);
-		yield put(opprettetFaktum(response));
+		if (typeof response != "undefined") {
+			yield put(opprettetFaktum(response));
+		}
 	} catch (reason) {
 		yield put(opprettFaktumFeilet(reason));
 	}

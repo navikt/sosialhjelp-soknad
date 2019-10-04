@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
@@ -8,12 +8,11 @@ import BehandlingAvPersonopplysningerModal from "./BehandlingAvPersonopplysninge
 import { Undertittel } from "nav-frontend-typografi";
 import {getContextPathForStaticContent} from "../../configuration";
 
-type Props = InjectedIntlProps & DispatchProps;
+type Props = DispatchProps;
 
 class Personopplysninger extends React.Component<Props, {}> {
 
 	render() {
-
 		return (
 			<div className="blokk-s panel personopplysninger-panel">
 				<div className="personopplysning-infoblokk">
@@ -90,4 +89,4 @@ class Personopplysninger extends React.Component<Props, {}> {
 
 export default connect((state: State) => {
 	return {};
-})(injectIntl(Personopplysninger));
+})(Personopplysninger);

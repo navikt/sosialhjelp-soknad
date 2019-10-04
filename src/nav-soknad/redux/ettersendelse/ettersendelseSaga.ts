@@ -108,7 +108,10 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
 
     try {
         const url = `opplastetVedlegg/${behandlingsId}/${opplysningType}`;
-        response = yield call(fetchUpload, url, formData);
+        const fetchResponse: any = yield call(fetchUpload, url, formData);
+        if(typeof fetchResponse != "undefined"){
+            response = fetchResponse
+        }
         yield put(lastOppEttersendtVedleggOk());
         yield put(loggInfo("GlemmeSendKnappStatistikk. Vedlegg lastet opp. BehandingsId: " + behandlingsId));
         if (response) {

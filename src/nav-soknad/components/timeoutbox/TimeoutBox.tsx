@@ -1,12 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { injectIntl } from "react-intl";
 import NavFrontendModal from "nav-frontend-modal";
 
 import Nedtelling from "./Nedtelling";
 import LoggetUt from "./LoggetUt";
 import { REST_STATUS } from "../../types/restTypes";
-import { now } from "../../utils";
+import {IntlProps, now} from "../../utils";
 
 interface State {
 	utloggingsTidspunkt: number;
@@ -22,7 +22,7 @@ interface OwnProps {
 	restStatus: string;
 }
 
-type Props = OwnProps & InjectedIntlProps;
+type Props = OwnProps & IntlProps;
 
 class TimeoutBox extends React.Component<Props, State> {
 	constructor(props: Props) {
@@ -90,11 +90,12 @@ class TimeoutBox extends React.Component<Props, State> {
 	}
 
 	render() {
+		const intl = this.props.intl;
 		const { visAdvarsel, visLoggetUt } = this.state;
 		return (
 			<NavFrontendModal
 				isOpen={visAdvarsel || visLoggetUt}
-				contentLabel={this.props.intl.formatMessage({ id: "timeout.fortsett" })}
+				contentLabel={intl.formatMessage({ id: "timeout.fortsett" })}
 				closeButton={false}
 				onRequestClose={() => null}
 			>

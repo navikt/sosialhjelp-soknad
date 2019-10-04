@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Route, Switch} from "react-router";
-import {InjectedIntlProps, injectIntl} from "react-intl";
+import { injectIntl} from "react-intl";
 import SideIkkeFunnet from "../nav-soknad/containers/SideIkkeFunnet";
 import ServerFeil from "../nav-soknad/containers/ServerFeil";
 import Informasjon from "./informasjon";
@@ -14,7 +14,7 @@ import Link from "./link";
 /** Setter globalt hvilket appElement react-modal skal bruke når modal dialog vises
  *
  */
-class App extends React.Component<InjectedIntlProps, {}> {
+class App extends React.Component<{}, {}> {
 
     componentDidMount() {
         (NavFrontendModal as any).setAppElement("#root");

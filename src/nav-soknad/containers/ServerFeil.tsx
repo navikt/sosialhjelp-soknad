@@ -1,20 +1,18 @@
 import * as React from "react";
 import Feilside from "../components/feilside/Feilside";
-import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
+import { useIntl, FormattedMessage } from "react-intl";
 import { Undertittel } from "nav-frontend-typografi";
 import { getIntlTextOrKey } from "../utils/intlUtils";
 import { connect } from "react-redux";
 import { navigerTilFinnDittNavKontor } from "../redux/navigasjon/navigasjonActions";
 import { NavigasjonActions } from "../redux/navigasjon/navigasjonTypes";
 
-interface OwnProps {
+interface Props {
 	onClick: () => NavigasjonActions;
 }
 
-const ServerFeil: React.StatelessComponent<InjectedIntlProps & OwnProps> = ({
-	intl,
-	onClick
-}) => {
+const ServerFeil: React.FC<Props> = ({onClick}) => {
+	const intl = useIntl();
 	return (
 		<Feilside
 			visKnapp={true}
@@ -43,4 +41,4 @@ export default connect(
 			onClick: () => dispatch(navigerTilFinnDittNavKontor())
 		};
 	}
-)(injectIntl(ServerFeil));
+)(ServerFeil);

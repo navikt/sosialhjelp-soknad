@@ -1,6 +1,6 @@
 import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
 import { connect } from "react-redux";
 import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
@@ -12,9 +12,14 @@ import {State} from "../redux/reducers";
 interface StateProps {
 	modalSynlig: boolean;
 	soknadsdata: Soknadsdata;
+
 }
 
-type Props = StateProps & InjectedIntlProps & DispatchProps;
+interface IntlProps {
+	intl: IntlShape;
+}
+
+type Props = StateProps & DispatchProps & IntlProps;
 
 class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 
@@ -23,7 +28,7 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 		if (!valgtEnhetsNavn) {
 			valgtEnhetsNavn = "$1";
 		}
-		let text = this.props.intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"];
+		let text = this.props.intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"].toString();
 		text = text.replace(/{navkontor:(.*)}/g, valgtEnhetsNavn);
 		return text;
 	}
@@ -48,6 +53,7 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 				<div className="behandlingAvPersonopplysningerModal--lukke-knapp">
 					<Knapp
 						htmlType="button"
+						type="hoved"
 						onClick={() => this.props.dispatch(setVisSamtykkeInfo(false))}
 					>
 						<FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"}/>
