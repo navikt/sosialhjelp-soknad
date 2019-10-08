@@ -9,6 +9,18 @@ function getLenkeSti(organisasjon: Organisasjon): string {
     return `https://skatt.skatteetaten.no/web/innsynamelding/inntekt${orgnr}?year=${year}&month=${month}`;
 }
 
+function getUtbetalingVerdi(key: string, value: number, index: number) {
+    return (<div key={`${key}-${index}`} className="utbetaling">
+        <span><FormattedMessage id={key}/>:</span>
+        <span className="verdi detaljeliste__verdi">
+            <FormattedNumber
+                value={value}
+                minimumFractionDigits={2}
+                maximumFractionDigits={2}/> kr
+        </span>
+    </div>);
+}
+
 type SkattbartForskuddProps = { skattbarinntektogforskuddstrekk: SkattbarInntekt[] };
 
 const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({ skattbarinntektogforskuddstrekk }) => {
@@ -28,24 +40,14 @@ const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({ skatt
                                 </div>
                                 <div className="blokk-xs">
                                     {organisasjon.utbetalinger.map((utbetaling, index) => {
-                                        let key = "Bruttoinntekt";
-                                        let value = utbetaling.brutto;
-                                        if (utbetaling.forskuddstrekk) {
-                                            key = "Forskuddstrekk";
-                                            value = utbetaling.forskuddstrekk
+                                        let utbetalingVerdier = [];
+                                        if (utbetaling.brutto) {
+                                            utbetalingVerdier.push(getUtbetalingVerdi("Bruttoinntekt", utbetaling.brutto, index));
                                         }
-                                        return (
-                                            <div key={`${key}-${index}`} className="utbetaling">
-                                                <span><FormattedMessage id={key}/>:</span>
-                                                <span className="verdi detaljeliste__verdi">
-												<FormattedNumber
-                                                    value={value}
-                                                    minimumFractionDigits={2}
-                                                    maximumFractionDigits={2}/> kr
-											</span>
-                                            </div>
-
-                                        );
+                                        if (utbetaling.forskuddstrekk) {
+                                            utbetalingVerdier.push(getUtbetalingVerdi("Forskuddstrekk", utbetaling.forskuddstrekk, index));
+                                        }
+                                        return utbetalingVerdier;
                                     })}
                                 </div>
                                 <a className="blokk-s" href={lenkeSti} target={`skatteetaten_${organisasjon.orgnr}`}>Se
