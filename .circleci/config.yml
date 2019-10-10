@@ -24,6 +24,10 @@ jobs:
             VERSION=$(create-artifact-version.sh)
             echo "export DOCKER_TAG=\"docker.pkg.github.com/navikt/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME:$VERSION\"" >> $BASH_ENV
       - run:
+          name: Bygger Docker image
+          command:
+            docker build -t $DOCKER_TAG .
+      - run:
           name: Create tag and release
           command: |
             echo $DIGISOS_KEY | tr '_' '\n' > digisos.key
@@ -31,11 +35,7 @@ jobs:
             rm digisos.key
 
             create-github-release.sh -p $CIRCLE_PROJECT_REPONAME -t $(create-artifact-version.sh) \
-                -c $CIRCLE_SHA1 -m "$(format-commit-message.sh)" -a $GH_TOKEN
-      - run:
-          name: Bygger Docker image
-          command:
-            docker build -t $DOCKER_TAG .
+            -c $CIRCLE_SHA1 -m "$(format-commit-message.sh)" -a $GH_TOKEN
       - run:
           name: Pusher Docker image
           command: |
