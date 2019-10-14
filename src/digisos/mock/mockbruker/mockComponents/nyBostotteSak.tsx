@@ -43,8 +43,7 @@ enum Vedtakskode {
 }
 
 enum RolleType {
-    HOVEDPERSON = "HOVEDPERSON",
-    BIPERSON = "BIPERSON"
+    HOVEDPERSON = "HOVEDPERSON"
 }
 
 export class NyBostotteSak extends React.Component<Props, State> {
@@ -144,16 +143,6 @@ export class NyBostotteSak extends React.Component<Props, State> {
                                 </option>
                                 </Select>
                             )}
-                            <Select label='Rolle:'
-                                    onChange={(evt: any) => this.setState({saksrolle: evt.target.value})}>
-                                <option value={RolleType.HOVEDPERSON} key={RolleType.HOVEDPERSON}>
-                                    Hovedperson
-                                </option>
-                                <option value={RolleType.BIPERSON} key={RolleType.BIPERSON}>
-                                    Biperson
-                                </option>
-                            </Select>
-
                             <button onClick={() => this.lagreNySak()}>Ok</button>
                             <button onClick={() => this.setState({isOpened: false})}>Avbryt</button>
                         </div>

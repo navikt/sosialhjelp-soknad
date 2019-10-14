@@ -59,8 +59,9 @@ class BostotteView extends React.Component<Props, State> {
 	}
 
 	private static renderUtbetaling(belop: number, dato: string, mottaker: string, index: number) {
+		let key = "bostotteUtbetaling_" + index;
 		return (
-			<div className="utbetalinger blokk-xs">
+			<div className="utbetalinger blokk-xs" key={key}>
 				<div><FormattedMessage id={"inntekt.bostotte.husbanken.mottaker"} values={{"mottaker":mottaker}} /></div>
 				<div className="utbetaling">
 				<span><FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/> {formaterIsoDato(dato)}</span>
@@ -94,6 +95,7 @@ class BostotteView extends React.Component<Props, State> {
 		const requestToHusbankenFeilet: boolean = bostotte.stotteFraHusbankenFeilet === true;
 		const harBostotterUtbetalinger: boolean = bostotte.utbetalinger.length > 0;
 		const harBostotterSaker: boolean = bostotte.saker.length > 0;
+		console.dir(bostotte);
 		return (
 			<div className="blokk-xs">
 				{requestToHusbankenFeilet && (<div className="skjema-sporsmal">
@@ -127,14 +129,14 @@ class BostotteView extends React.Component<Props, State> {
 					{!harBostotterUtbetalinger && (<FormattedMessage id="inntekt.bostotte.husbanken.ingenutbetalingerfunnet"/>)}
 					{
 						bostotte.utbetalinger.map((utbetaling, index) => {
-							return BostotteView.renderUtbetaling(utbetaling.belop, utbetaling.utbetalingsdato, utbetaling.tittel, index);
+							return BostotteView.renderUtbetaling(utbetaling.belop, utbetaling.utbetalingsdato, utbetaling.mottaker, index);
 						})
 					}
 					<h4 className="blokk-null"><FormattedMessage id="inntekt.bostotte.husbanken.saker"/></h4>
 					{!harBostotterSaker && (<FormattedMessage id="inntekt.bostotte.husbanken.ingensakerfunnet"/>)}
 					{
 						bostotte.saker.map((sak, index) => {
-							return BostotteView.renderSak("Sak", sak.dato, sak.status, sak.beskrivelse, index);
+							return BostotteView.renderSak("BostotteSak_" + index, sak.dato, sak.status, sak.beskrivelse, index);
 						})
 					}
 				</Lesmerpanel>)}

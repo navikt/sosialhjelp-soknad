@@ -28,8 +28,7 @@ enum MottakerType {
 }
 
 enum RolleType {
-	HOVEDPERSON = "HOVEDPERSON",
-	BIPERSON = "BIPERSON"
+	HOVEDPERSON = "HOVEDPERSON"
 }
 
 export class NyBostotteUtbetaling extends React.Component<Props, State>{
@@ -78,14 +77,6 @@ export class NyBostotteUtbetaling extends React.Component<Props, State>{
 								</option>
 								<option value={MottakerType.KOMMUNE} key={MottakerType.KOMMUNE}>
 									Kommune
-								</option>
-							</Select>
-							<Select label='Rolle:' onChange={(evt: any) => this.setState({utbetalingsrolle: evt.target.value})}>
-								<option value={RolleType.HOVEDPERSON} key={RolleType.HOVEDPERSON}>
-									Hovedperson
-								</option>
-								<option value={RolleType.BIPERSON} key={RolleType.BIPERSON}>
-									Biperson
 								</option>
 							</Select>
 

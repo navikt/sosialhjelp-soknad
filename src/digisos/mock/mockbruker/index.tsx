@@ -241,7 +241,6 @@ class MockBruker extends React.Component<Props,OwnState> {
 				<div>Dato: { utbetaling.utbetalingsdato }</div>
 				<div>Beløp: { utbetaling.belop }</div>
 				<div>Mottaker: { utbetaling.mottaker }</div>
-				<div>Rolle: { utbetaling.rolle }</div>
 				<button onClick={() => {
 					const bostotteDto = {...this.state.bostotteDto};
 					bostotteDto.utbetalinger.splice(key, 1);
@@ -258,7 +257,6 @@ class MockBruker extends React.Component<Props,OwnState> {
 				<div>År: { sak.ar }</div>
 				<div>Måned: { sak.mnd }</div>
 				<div>Status: { sak.status }</div>
-				<div>Rolle: { sak.rolle }</div>
 				<button onClick={() => {
 					const bostotteDto = {...this.state.bostotteDto};
 					bostotteDto.saker.splice(key, 1);

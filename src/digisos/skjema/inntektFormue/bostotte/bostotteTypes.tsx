@@ -16,6 +16,7 @@ export interface Utbetaling {
 	"kilde": string,
 	"type": string,
 	"tittel": string,
+	"mottaker": string,
 	"belop": number,
 	"utbetalingsdato": string
 }
