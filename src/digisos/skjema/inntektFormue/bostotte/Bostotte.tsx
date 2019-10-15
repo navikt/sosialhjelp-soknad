@@ -95,7 +95,6 @@ class BostotteView extends React.Component<Props, State> {
 		const requestToHusbankenFeilet: boolean = bostotte.stotteFraHusbankenFeilet === true;
 		const harBostotterUtbetalinger: boolean = bostotte.utbetalinger.length > 0;
 		const harBostotterSaker: boolean = bostotte.saker.length > 0;
-		console.dir(bostotte);
 		return (
 			<div className="blokk-xs">
 				{requestToHusbankenFeilet && (<div className="skjema-sporsmal">
