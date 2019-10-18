@@ -1,7 +1,7 @@
 import * as React from "react";
-import {InjectedIntlProps, injectIntl} from "react-intl";
+import {injectIntl} from "react-intl";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../nav-soknad/utils";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import {Bosituasjon} from "./bosituasjonTypes";
@@ -33,7 +33,7 @@ enum Annetvalg {
     krisesenter = "annet.botype.krisesenter"
 }
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 class BosituasjonView extends React.Component<Props, {}> {
 

@@ -1,8 +1,8 @@
 import * as React from "react";
 import {FormattedDate} from 'react-intl'
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {formaterIsoDato, getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
-import {FormattedHTMLMessage, FormattedMessage, FormattedNumber, InjectedIntlProps, injectIntl} from "react-intl";
+import {formaterIsoDato, getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
+import { FormattedHTMLMessage, FormattedMessage, FormattedNumber, injectIntl } from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
 	connectSoknadsdataContainer,
@@ -17,7 +17,7 @@ import Lesmerpanel from "nav-frontend-lesmerpanel";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte";
 
-type Props = SoknadsdataContainerProps  & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 interface State {
 	oppstartsModus: boolean

@@ -1,4 +1,3 @@
-import { InjectedIntlProps, injectIntl } from "react-intl";
 import * as React from "react";
 import {
 	AdresseTypeaheadStatus,
@@ -18,7 +17,7 @@ interface OwnProps {
 	onNullstill?: () => void;
 }
 
-type Props = OwnProps & InjectedIntlProps;
+type Props = OwnProps;
 
 interface State {
 	verdi: string;
@@ -183,4 +182,4 @@ class AdresseTypeahead extends React.Component<Props, State> {
 	}
 }
 
-export default injectIntl(AdresseTypeahead);
+export default AdresseTypeahead;

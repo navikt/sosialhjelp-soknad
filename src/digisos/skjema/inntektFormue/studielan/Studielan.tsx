@@ -1,7 +1,7 @@
 import * as React from "react";
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
-import {FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
+import {FormattedHTMLMessage, FormattedMessage, injectIntl} from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
 	connectSoknadsdataContainer,
@@ -19,7 +19,7 @@ const STUDERER_INFO_TITTEL = "informasjon.student.studielan.tittel";
 const STUDERER_INFO_DEL1 = "informasjon.student.studielan.1";
 const STUDERER_INFO_DEL2 = "informasjon.student.studielan.2";
 
-type Props = SoknadsdataContainerProps  & InjectedIntlProps;
+type Props = SoknadsdataContainerProps  & IntlProps;
 
 interface State {
 	oppstartsModus: boolean

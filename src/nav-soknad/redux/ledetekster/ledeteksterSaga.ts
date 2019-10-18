@@ -31,6 +31,7 @@ function* hentTeksterSaga(): SagaIterator {
 		);
 
 		const visNokler = yield call(urlInneholderVistekster);
+		// @ts-ignore
 		const tekster = visNokler ? leggNoklerPaaLedetekster(response) : response;
 		yield put(hentetTekster(tekster));
 	} catch (reason) {

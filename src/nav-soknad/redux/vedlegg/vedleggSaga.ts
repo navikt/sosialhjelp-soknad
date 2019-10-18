@@ -22,6 +22,7 @@ function* hentVedleggsForventningSaga(behandlingsId: string): SagaIterator {
 	const url = `soknader/${behandlingsId}/vedlegg`;
 	const response = yield call(fetchToJson, url);
 	const fakta = yield select(selectFaktaData);
+	// @ts-ignore
 	yield put(hentVedleggsForventningOk(response, fakta));
 }
 
@@ -35,10 +36,14 @@ function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 		if (response.nyForventning) {
 			yield put(opprettetFaktum(response.faktum));
 			const fakta = yield select(selectFaktaData);
-			yield put(nyttVedlegg(response.vedlegg, fakta));
+			if (typeof fakta != "undefined") {
+				yield put(nyttVedlegg(response.vedlegg, fakta));
+			}
 		} else {
 			const fakta = yield select(selectFaktaData);
-			yield put(oppdatertVedlegg(response.vedlegg, fakta));
+			if (typeof fakta != "undefined") {
+				yield put(oppdatertVedlegg(response.vedlegg, fakta));
+			}
 		}
 	} catch (reason) {
 		let feilKode: string = detekterInternFeilKode(reason.toString());
@@ -59,11 +64,14 @@ function* lastOppVedleggSaga(action: LastOppVedleggAction): SagaIterator {
 function* slettVedleggSaga(action: StartSlettVedleggAction): SagaIterator {
 	try {
 		const promise = yield call(fetchDelete, `sosialhjelpvedlegg/${action.vedleggId}`);
+		// @ts-ignore
 		const vedlegg = yield call(toJson, promise);
 
 		if (vedlegg) {
 			const fakta = yield select(selectFaktaData);
-			yield put(oppdatertVedlegg(vedlegg, fakta));
+			if (typeof fakta != "undefined") {
+				yield put(oppdatertVedlegg(vedlegg, fakta));
+			}
 		} else {
 			yield put(slettVedlegg(action.vedleggId));
 			yield put(slettFaktumLokalt(action.vedleggsFaktumId));

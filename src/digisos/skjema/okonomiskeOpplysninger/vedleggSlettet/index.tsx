@@ -4,21 +4,22 @@ import {
     getSpcForOpplysning
 } from "../../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
-import {InjectedIntlProps, injectIntl} from "react-intl";
 import {getContextPathForStaticContent} from "../../../../configuration";
+import {useIntl} from "react-intl";
 
 interface OwnProps {
     opplysning: Opplysning
 }
 
-type Props = OwnProps & InjectedIntlProps;
+type Props = OwnProps;
 
 const VedleggSlettet: React.FC<Props> = (props: Props) => {
 
     const opplysningSpc = getSpcForOpplysning(props.opplysning.type);
     const textKeyBase = opplysningSpc ? opplysningSpc.textKey : "";
     const textKey = textKeyBase + ".slettet";
-    const intlTextOrKey = getIntlTextOrKey(props.intl, textKey);
+    const intl = useIntl();
+    const intlTextOrKey = getIntlTextOrKey(intl, textKey);
 
     return (
         <div className="vedlegg_slettet_wrapper">
@@ -36,4 +37,4 @@ const VedleggSlettet: React.FC<Props> = (props: Props) => {
     );
 };
 
-export default injectIntl(VedleggSlettet);
+export default VedleggSlettet;

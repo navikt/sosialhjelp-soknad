@@ -49,15 +49,18 @@ interface UrlParams {
 type Props = OwnProps & StateProps & RouterProps & DispatchProps;
 
 class SkjemaRouter extends React.Component<Props, {}> {
-
-    componentWillMount() {
-        if (this.props.brukerbehandlingId) {
-            this.props.dispatch(hentSoknad(this.props.brukerbehandlingId));
-        }
-    }
+    //
+    // componentWillMount() {
+    //     if (this.props.brukerbehandlingId) {
+    //         this.props.dispatch(hentSoknad(this.props.brukerbehandlingId));
+    //     }
+    // }
 
     componentDidMount() {
         skjulToppMeny();
+        if (this.props.brukerbehandlingId) {
+            this.props.dispatch(hentSoknad(this.props.brukerbehandlingId));
+        }
     }
 
     render() {

@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Barn } from "./ForsorgerPliktTypes";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage, injectIntl } from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {
 	connectSoknadsdataContainer,
@@ -12,10 +12,9 @@ import {
 import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 
-type Props = SoknadsdataContainerProps  & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 class RegistrerteBarn extends React.Component<Props, {}> {
-
 
 	handleClickJaNeiSpsm(verdi: boolean, barnIndex: number) {
 		const {soknadsdata, oppdaterSoknadsdataSti, lagreSoknadsdata, brukerBehandlingId} = this.props;

@@ -1,19 +1,19 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { InjectedIntlProps, injectIntl } from "react-intl";
-
 import { DispatchProps } from "../redux/reduxTypes";
+import { injectIntl} from "react-intl";
 import Dialog from "../components/dialog/Dialog";
 import { clearApplikasjonsfeil } from "../redux/applikasjonsfeil/applikasjonsfeilActions";
 import { Applikasjonsfeil } from "../redux/applikasjonsfeil/applikasjonsfeilTypes";
 import {State} from "../../digisos/redux/reducers";
+import {IntlProps} from "../utils";
 
 interface StateProps {
 	feil?: Applikasjonsfeil;
 	visDialog?: boolean;
 }
 
-type Props = StateProps & DispatchProps & InjectedIntlProps;
+type Props = StateProps & DispatchProps & IntlProps;
 
 class ApplikasjonsfeilDialog extends React.Component<Props, {}> {
 	render() {
@@ -45,6 +45,4 @@ const mapStateToProps = (state: State): StateProps => {
 	};
 };
 
-export default connect(mapStateToProps)(
-	injectIntl(ApplikasjonsfeilDialog)
-);
+export default connect(mapStateToProps)(injectIntl(ApplikasjonsfeilDialog));
