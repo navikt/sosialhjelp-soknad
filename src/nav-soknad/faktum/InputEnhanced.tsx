@@ -1,7 +1,7 @@
 import * as React from "react";
-import {injectIntl, InjectedIntlProps} from "react-intl";
+import {injectIntl} from "react-intl";
 import {Feil, Input, InputBredde} from "nav-frontend-skjema";
-import {getInputFaktumTekst, replaceDotWithUnderscore} from "../utils";
+import {getInputFaktumTekst, IntlProps, replaceDotWithUnderscore} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {connect} from "react-redux";
 import {getFeil} from "../utils/enhancedComponentUtils";
@@ -11,7 +11,7 @@ export type InputTypes = "text" | "number" | "email" | "tel";
 
 const DEFAULT_MAX_LENGTH = 50;
 
-export interface OwnProps {
+export interface Props {
     verdi: string;
     onChange: (verdi: string) => void;
     onBlur: () => void;
@@ -34,9 +34,7 @@ export interface OwnProps {
     getFeil?: () => Feil;
 }
 
-export type Props = OwnProps & InjectedIntlProps;
-
-class InputEnhanced extends React.Component<Props, {}> {
+class InputEnhanced extends React.Component<Props & IntlProps, {}> {
 
     getName(): string {
         return `${this.props.faktumKey}`.replace(/\./g, "_");
@@ -51,15 +49,13 @@ class InputEnhanced extends React.Component<Props, {}> {
             pattern,
             required,
             step,
-            intl,
             maxLength = DEFAULT_MAX_LENGTH,
             bredde,
             feil
         } = this.props;
+        const intl = this.props.intl;
         const tekster = getInputFaktumTekst(intl, faktumKey);
-
         const feil_: Feil | undefined = getFeil(feil, intl, faktumKey, faktumIndex);
-
         return (
             <Input
                 id={this.props.id ? replaceDotWithUnderscore(this.props.id) : faktumKey}
@@ -91,6 +87,4 @@ const mapStateToProps = (state: State) => ({
     feil: state.validering.feil,
 });
 
-export default connect(
-    mapStateToProps
-)(injectIntl(InputEnhanced));
+export default connect(mapStateToProps)(injectIntl(InputEnhanced));

@@ -3,14 +3,14 @@ import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage} from "react-intl";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps;
 
 class BasisPersonaliaView extends React.Component<Props, {}> {
 
@@ -72,4 +72,4 @@ class BasisPersonaliaView extends React.Component<Props, {}> {
 	}
 }
 
-export default connectSoknadsdataContainer(injectIntl(BasisPersonaliaView));
+export default connectSoknadsdataContainer(BasisPersonaliaView);

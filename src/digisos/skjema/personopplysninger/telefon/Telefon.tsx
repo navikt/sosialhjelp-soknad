@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { injectIntl } from "react-intl";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
@@ -12,13 +12,13 @@ import {
 import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { Telefonnummer } from "./telefonTypes";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
-import {replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
+import {IntlProps, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_SYSTEM_TELEFON = "kontakt.system.telefoninfo";
 const LANDKODE = "+47";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 class TelefonView extends React.Component<Props, {}> {
 

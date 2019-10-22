@@ -1,6 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import {FormattedMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedMessage, injectIntl} from "react-intl";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 import {bekreftOppsummering, hentOppsummering,} from "../../redux/oppsummering/oppsummeringActions";
 import {Oppsummering} from "../../redux/oppsummering/oppsummeringTypes";
@@ -8,7 +8,6 @@ import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import {State} from "../../redux/reducers";
 import {DispatchProps} from "../../redux/reduxTypes";
 import {finnOgOppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
-import {getIntlTextOrKey} from "../../../nav-soknad/utils/intlUtils";
 import {Link} from "react-router-dom";
 import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
 import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
@@ -17,6 +16,7 @@ import {NavEnhet} from "../personopplysninger/adresse/AdresseTypes";
 import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import {getIntlTextOrKey, IntlProps} from "../../../nav-soknad/utils";
 
 interface StateProps {
 	oppsummering: Oppsummering | null;
@@ -28,7 +28,7 @@ interface StateProps {
 	valgtSoknadsmottaker: NavEnhet | undefined;
 }
 
-type Props = DispatchProps & StateProps & InjectedIntlProps;
+type Props = DispatchProps & StateProps & IntlProps;
 
 class OppsummeringView extends React.Component<Props, {}> {
 	constructor(props: Props) {

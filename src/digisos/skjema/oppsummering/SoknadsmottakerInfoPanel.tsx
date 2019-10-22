@@ -1,4 +1,4 @@
-import { FormattedHTMLMessage, FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedHTMLMessage, FormattedMessage } from "react-intl";
 import * as React from "react";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../nav-soknad/components/informasjonspanel";
 import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
@@ -7,7 +7,7 @@ import {
 	SoknadsdataContainerProps
 } from "../../redux/soknadsdata/soknadsdataContainerUtils";
 
-type Props = InjectedIntlProps & SoknadsdataContainerProps;
+type Props = SoknadsdataContainerProps;
 
 class SoknadsmottakerInfoPanel  extends React.Component<Props, {}> {
 
@@ -41,4 +41,4 @@ class SoknadsmottakerInfoPanel  extends React.Component<Props, {}> {
 
 }
 
-export default connectSoknadsdataContainer(injectIntl(SoknadsmottakerInfoPanel));
+export default connectSoknadsdataContainer(SoknadsmottakerInfoPanel);

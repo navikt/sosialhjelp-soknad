@@ -1,6 +1,5 @@
 import * as React from "react";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
-import { InjectedIntlProps, injectIntl } from "react-intl";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
 import {
 	connectSoknadsdataContainer,
@@ -9,7 +8,7 @@ import {
 import {NavEnhet, SoknadsMottakerStatus} from "./AdresseTypes";
 import { soknadsmottakerStatus } from "./AdresseUtils";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps;
 
 class SoknadsmottakerInfo extends React.Component<Props, {}> {
 
@@ -54,4 +53,4 @@ class SoknadsmottakerInfo extends React.Component<Props, {}> {
 	}
 }
 
-export default connectSoknadsdataContainer(injectIntl(SoknadsmottakerInfo));
+export default connectSoknadsdataContainer(SoknadsmottakerInfo);

@@ -1,7 +1,7 @@
 import * as React from "react";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
-import {InjectedIntlProps, injectIntl} from "react-intl";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
+import { injectIntl } from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import {
@@ -13,7 +13,7 @@ import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 const FAKTUM_STUDIER = "dinsituasjon.studerer";
 const FAKTUM_STUDERER = "dinsituasjon.studerer.true.grad";
 
-type Props = SoknadsdataContainerProps  & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 class UtdanningView extends React.Component<Props, {}> {
 

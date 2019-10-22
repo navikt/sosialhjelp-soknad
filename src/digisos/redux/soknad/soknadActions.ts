@@ -1,7 +1,8 @@
-import {InjectedIntl} from "react-intl";
 import {AVBRYT_DESTINASJON, SoknadActionType, SoknadActionTypeKeys} from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {FornavnResponse, TilgangResponse} from "./soknadTypes";
+import {IntlShape} from "react-intl";
+
 
 export function startSoknadOk() {
 	return {
@@ -9,7 +10,7 @@ export function startSoknadOk() {
 	};
 }
 export function opprettSoknad(
-	intl: InjectedIntl
+	intl: IntlShape
 ) {
 	return {
 		type: SoknadActionTypeKeys.OPPRETT_SOKNAD,

@@ -1,13 +1,12 @@
 import * as React from "react";
 import {Knapp} from "nav-frontend-knapper";
-import {FormattedMessage, InjectedIntlProps} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import {Opplysning} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {connect} from "react-redux";
 import {DispatchProps} from "../../redux/reduxTypes";
 import {lastOppFil} from "../../redux/fil/filActions";
 import {FilState} from "../../redux/fil/filTypes";
 import {State} from "../../redux/reducers";
-import {injectIntl} from "react-intl";
 
 interface StoreToProps {
     behandlingsId: string | undefined;
@@ -20,7 +19,7 @@ interface OwnProps {
     visSpinner: boolean;
 }
 
-type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps;
+type Props = OwnProps & StoreToProps & DispatchProps;
 
 
 class LastOppFil extends React.Component<Props, {}> {
@@ -46,6 +45,7 @@ class LastOppFil extends React.Component<Props, {}> {
         return (
             <div>
                 <Knapp
+                    type="hoved"
                     id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
                     htmlType="button"
                     disabled={isDisabled}
@@ -95,4 +95,4 @@ export default connect(
             filopplasting: state.filopplasting
         };
     }
-)(injectIntl(LastOppFil));
+)(LastOppFil);

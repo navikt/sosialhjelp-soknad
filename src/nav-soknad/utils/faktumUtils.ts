@@ -1,9 +1,8 @@
-import { InjectedIntl } from "react-intl";
-
+import { IntlShape } from "react-intl";
 import { getIntlTextOrKey, getIntlInfoTekst, getIntlHjelpeTekst, getIntlText } from "./intlUtils";
 
 export function getFaktumSporsmalTekst(
-	intl: InjectedIntl,
+	intl: IntlShape,
 	key: string
 ): any {
 	return {
@@ -13,7 +12,7 @@ export function getFaktumSporsmalTekst(
 	};
 }
 export function getFaktumCheckboksTekst(
-	intl: InjectedIntl,
+	intl: IntlShape,
 	key: string
 ): any {
 	return {
@@ -24,7 +23,7 @@ export function getFaktumCheckboksTekst(
 }
 
 export function getRadioFaktumTekst(
-	intl: InjectedIntl,
+	intl: IntlShape,
 	key: string,
 	value: string,
 	property?: string
@@ -36,7 +35,7 @@ export function getRadioFaktumTekst(
 }
 
 export function getInputFaktumTekst(
-	intl: InjectedIntl,
+	intl: IntlShape,
 	key: string,
 	property?: string
 ): any {

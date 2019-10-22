@@ -10,14 +10,12 @@ import LastOppFil from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
 import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
 import {startSlettFil} from "../../redux/fil/filActions";
-import {InjectedIntlProps} from "react-intl";
 import {
     lagreOpplysningHvisGyldigAction,
 } from "../../redux/okonomiskeOpplysninger/opplysningerActions";
 import OpplastetVedlegg from "./OpplastetVedlegg";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {State} from "../../redux/reducers";
-import {injectIntl} from "react-intl";
 
 interface OwnProps {
     okonomiskOpplysning: Opplysning;
@@ -28,7 +26,7 @@ interface StoreToProps {
     feil: Valideringsfeil[];
 }
 
-type Props = OwnProps & StoreToProps & DispatchProps & InjectedIntlProps
+type Props = OwnProps & StoreToProps & DispatchProps;
 
 class VedleggView extends React.Component<Props> {
 
@@ -108,4 +106,4 @@ export default connect(
             feil: state.validering.feil
         }
     }
-)(injectIntl(VedleggView));
+)(VedleggView);

@@ -9,7 +9,7 @@ import NyttArbeidsforhold, {
 	ArbeidsforholdType,
 	NyttArbeidsforholdObject
 } from "./mockComponents/nyttArbeidsforhold";
-import * as mocksystemdata from "soknadsosialhjelp-mocksystemdata";
+import * as mocksystemdata from "../mocksystemdata/mocksystemdata";
 import {NyttBarn, NyttBarnObject} from "./mockComponents/nyttBarn";
 import MockDataBolkWrapper from "./mockComponents/mockDataBolkWrapper";
 import MockInput from "./mockComponents/mockInput";

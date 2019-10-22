@@ -3,7 +3,6 @@ import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import { InjectedIntlProps, injectIntl } from "react-intl";
 import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { Sivilstatus, Status } from "./FamilieTypes";
 import SivilstatusComponent from "./SivilstatusComponent";
@@ -12,7 +11,7 @@ import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps;
 
 interface State {
 	oppstartsModus: boolean;
@@ -67,4 +66,4 @@ class DinSivilstatusView extends React.Component<Props, State> {
 	}
 }
 
-export default connectSoknadsdataContainer(injectIntl(DinSivilstatusView));
+export default connectSoknadsdataContainer(DinSivilstatusView);

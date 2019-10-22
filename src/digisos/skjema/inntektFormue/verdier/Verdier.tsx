@@ -3,10 +3,10 @@ import {
     connectSoknadsdataContainer, onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedHTMLMessage, injectIntl} from "react-intl";
 import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Verdier, VerdierKeys} from "./VerdierTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
@@ -20,7 +20,7 @@ const MAX_CHARS = 500;
 const VERDIER = "inntekt.eierandeler";
 const VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY = VERDIER + "verdier.annet.textarea";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 interface State {
     oppstartsModus: boolean
@@ -127,20 +127,20 @@ export class VerdierView extends React.Component<Props, State> {
     }
 
     render() {
-        const {soknadsdata} = this.props;
+        const {soknadsdata, intl} = this.props;
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         const restStatus = soknadsdata.restStatus.inntekt.verdier;
         return (
             <JaNeiSporsmal
                 visPlaceholder={this.state.oppstartsModus && restStatus !== REST_STATUS.OK}
-                tekster={getFaktumSporsmalTekst(this.props.intl, VERDIER)}
+                tekster={getFaktumSporsmalTekst(intl, VERDIER)}
                 faktumKey={VERDIER}
                 verdi={verdier.bekreftelse}
                 onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, VERDIER + ".true.type")}
+                    tekster={getFaktumSporsmalTekst(intl, VERDIER + ".true.type")}
                 >
                     {this.renderCheckBox(VerdierKeys.BOLIG)}
                     {this.renderCheckBox(VerdierKeys.CAMPINGVOGN)}

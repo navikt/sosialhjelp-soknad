@@ -3,17 +3,17 @@ import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedHTMLMessage, injectIntl} from "react-intl";
 import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Barneutgifter, BarneutgifterKeys} from "./BarneutgifterTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 
 const BarneutgifterKey = "utgifter.barn";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 export class BarneutgifterView extends React.Component<Props, {}> {
 
@@ -70,11 +70,11 @@ export class BarneutgifterView extends React.Component<Props, {}> {
     }
 
     render() {
-        const {soknadsdata} = this.props;
+        const {soknadsdata, intl} = this.props;
         const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
         return (
             <JaNeiSporsmal
-                tekster={getFaktumSporsmalTekst(this.props.intl, BarneutgifterKey)}
+                tekster={getFaktumSporsmalTekst(intl, BarneutgifterKey)}
                 visible={barneutgifter.harForsorgerplikt}
                 faktumKey={BarneutgifterKey}
                 verdi={barneutgifter.bekreftelse}
@@ -82,7 +82,7 @@ export class BarneutgifterView extends React.Component<Props, {}> {
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, BarneutgifterKey + ".true.utgifter")}
+                    tekster={getFaktumSporsmalTekst(intl, BarneutgifterKey + ".true.utgifter")}
                 >
                     {this.renderCheckBox(BarneutgifterKeys.FRITIDSAKTIVITETER, BarneutgifterKeys.FRITIDSAKTIVITETER)}
                     {this.renderCheckBox(BarneutgifterKeys.BARNEHAGE, BarneutgifterKeys.BARNEHAGE)}

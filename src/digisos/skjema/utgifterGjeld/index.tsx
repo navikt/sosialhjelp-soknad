@@ -1,5 +1,4 @@
 import * as React from "react";
-import { injectIntl } from "react-intl";
 import DigisosSkjemaSteg, { DigisosSteg } from "../DigisosSkjemaSteg";
 import KredittkortIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/KredittkortIllustrasjon";
 import Boutgifter from "./boutgifter/Boutgifter";
@@ -14,4 +13,4 @@ const UtgifterGjeld: React.FC = () => {
 	);
 };
 
-export default injectIntl(UtgifterGjeld);
+export default UtgifterGjeld;

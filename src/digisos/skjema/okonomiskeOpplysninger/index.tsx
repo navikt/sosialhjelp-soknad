@@ -1,6 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedHTMLMessage} from "react-intl";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import SkjemaIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SkjemaIllustrasjon";
 import NavFrontendSpinner from "nav-frontend-spinner";
@@ -23,7 +23,7 @@ interface StoreToProps {
 
 type MaybeJsxElement = JSX.Element | null;
 
-type Props = StoreToProps & InjectedIntlProps & DispatchProps;
+type Props = StoreToProps & DispatchProps;
 
 class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
 
@@ -104,5 +104,5 @@ export default connect<any, {}, {}>(
             behandlingsId: state.soknad.behandlingsId,
         };
     }
-)(injectIntl(OkonomiskeOpplysningerView));
+)(OkonomiskeOpplysningerView);
 

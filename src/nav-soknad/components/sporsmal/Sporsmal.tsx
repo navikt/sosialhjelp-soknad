@@ -3,8 +3,8 @@ import * as cuid from "cuid";
 import * as classNames from "classnames";
 import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
 import SporsmalHjelpetekst from "./SporsmalHjelpetekst";
-import { InjectedIntlProps, injectIntl } from "react-intl";
-import { getFaktumSporsmalTekst } from "../../utils";
+import { injectIntl } from "react-intl";
+import {getFaktumSporsmalTekst, IntlProps} from "../../utils";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
 
@@ -33,7 +33,7 @@ export interface OwnProps {
 	visLedetekst?: boolean;
 }
 
-type Props = OwnProps & InjectedIntlProps;
+type Props = OwnProps & IntlProps;
 
 class Sporsmal extends React.Component<Props, {}> {
 

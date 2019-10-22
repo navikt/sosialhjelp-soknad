@@ -1,6 +1,6 @@
 import * as React from "react";
 import {RouteComponentProps, RouterProps, withRouter} from "react-router";
-import {InjectedIntlProps, injectIntl} from "react-intl";
+import { injectIntl} from "react-intl";
 import {Location} from "history";
 import {connect} from "react-redux";
 import DocumentTitle from "react-document-title";
@@ -10,7 +10,7 @@ import Knapperad from "../components/knapperad";
 import {SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../../digisos/redux/soknad/soknadTypes";
 import {DispatchProps, ValideringsFeilKode} from "../../digisos/redux/reduxTypes";
 import {setVisBekreftMangler} from "../../digisos/redux/oppsummering/oppsummeringActions";
-import {getIntlTextOrKey, scrollToTop} from "../utils";
+import {getIntlTextOrKey, IntlProps, scrollToTop} from "../utils";
 import {avbrytSoknad, sendSoknad} from "../../digisos/redux/soknad/soknadActions";
 import {gaTilbake, gaVidere, tilSteg} from "../../digisos/redux/navigasjon/navigasjonActions";
 import {loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
@@ -65,7 +65,7 @@ type Props = OwnProps &
     StateProps &
     RouterProps &
     InjectedRouterProps &
-    InjectedIntlProps &
+    IntlProps &
     DispatchProps & RouteComponentProps;
 
 class StegMedNavigasjon extends React.Component<Props, {}> {

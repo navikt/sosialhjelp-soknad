@@ -1,12 +1,12 @@
 import * as React from "react";
 import {Radio} from "nav-frontend-skjema";
-import {injectIntl, InjectedIntlProps} from "react-intl";
-import {getRadioFaktumTekst} from "../utils";
+import {injectIntl} from "react-intl";
+import {getRadioFaktumTekst, IntlProps} from "../utils";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import TextPlaceholder from "../components/animasjoner/placeholder/TextPlaceholder";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
 
-interface OwnProps {
+interface Props {
     value: string;
     checked?: null | boolean;
     faktumKey?: string;
@@ -22,9 +22,7 @@ interface OwnProps {
     visPlaceholder?: boolean;
 }
 
-type RadioFaktumProps = OwnProps & InjectedIntlProps;
-
-class RadioEnhanced extends React.Component<RadioFaktumProps, {}> {
+class RadioEnhanced extends React.Component<Props & IntlProps, {}> {
 
     determineLabel(id: string, faktumKey: string, tekster: any, value: string) {
         if (this.props.visPlaceholder) {

@@ -3,17 +3,17 @@ import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedHTMLMessage, injectIntl} from "react-intl";
 import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Boutgifter, BoutgifterKeys} from "./BoutgifterTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 export class BoutgifterView extends React.Component<Props, {}> {
 
@@ -71,18 +71,18 @@ export class BoutgifterView extends React.Component<Props, {}> {
     }
 
     render() {
-        const {soknadsdata} = this.props;
+        const {soknadsdata, intl} = this.props;
         const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
         return (
             <JaNeiSporsmal
-                tekster={getFaktumSporsmalTekst(this.props.intl, BOUTGIFTER)}
+                tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER)}
                 faktumKey={BOUTGIFTER}
                 verdi={boutgifter.bekreftelse}
                 onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, BOUTGIFTER + ".true.type")}
+                    tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER + ".true.type")}
                 >
                     {this.renderCheckBox(BoutgifterKeys.HUSLEIE, BoutgifterKeys.HUSLEIE)}
                     {this.renderCheckBox(BoutgifterKeys.STROM, BoutgifterKeys.STROM)}

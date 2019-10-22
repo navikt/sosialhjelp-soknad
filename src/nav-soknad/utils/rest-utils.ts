@@ -1,17 +1,19 @@
 import {erMockMiljoEllerDev} from "./index";
 import {
     API_CONTEXT_PATH,
+    API_CONTEXT_PATH_WITH_ACCESS_TOKEN,
     CONTEXT_PATH,
     getRedirectPathname,
     HEROKU_API_MASTER_APP_NAME,
     HEROKU_MASTER_APP_NAME
 } from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
+import {NavLogEntry, NavLogLevel} from "../../digisos/redux/navlogger/navloggerTypes";
 
 
 export function erDev(): boolean {
     const url = window.location.href;
-    return (url.indexOf("localhost:3000") > 0 || url.indexOf("devillo.no:3000") > 0);
+    return (url.indexOf("localhost:3000") >= 0 || url.indexOf("devillo.no:3000") >= 0 || url.indexOf("localhost:8080") >= 0);
 }
 
 export function kjorerJetty(): boolean {
@@ -19,32 +21,38 @@ export function kjorerJetty(): boolean {
     return url.indexOf(":8189") > 0;
 }
 
-export function getApiBaseUrl(): string {
+export function getApiBaseUrl(withAccessToken?: boolean): string {
+    const apiContextPath = withAccessToken? API_CONTEXT_PATH_WITH_ACCESS_TOKEN : API_CONTEXT_PATH;
+
     if (erDev()) {
         // Kjør mot lokal sosialhjelp-soknad-api:
         return `http://localhost:8181/${API_CONTEXT_PATH}/`;
 
-        // Kjør mot lokal mock backend:
-        // return "http://localhost:3001/sendsoknad/";
-    }
-    if (window.location.href.indexOf("localhost:8080") >= 0) {
-        return `http://localhost:8181/${API_CONTEXT_PATH}/`;
+        // Kjør med login-api som proxy om en ønsker access_token fra idporten (uncomment begge linjer under)
+        // const apiPort = withAccessToken ? 7000 : 8181;
+        // return `http://localhost:${apiPort}/${apiContextPath}/`;
     }
     if (window.location.origin.indexOf("nais.oera") >= 0) {
-        return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${API_CONTEXT_PATH}/`;
+        return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${apiContextPath}/`;
     }
     if (window.location.origin.indexOf("heroku") >= 0) {
         return window.location.origin.replace(`${HEROKU_MASTER_APP_NAME}`, `${HEROKU_API_MASTER_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
     }
-	return kjorerJetty() ? `http://127.0.0.1:8181/${API_CONTEXT_PATH}/` : getAbsoluteApiUrl();
+    if (kjorerJetty()) {
+        return `http://127.0.0.1:7000/${apiContextPath}/`
+    }
+
+    return getAbsoluteApiUrl(withAccessToken);
 }
 
-export function getAbsoluteApiUrl() {
-    return getAbsoluteApiUrlRegex(window.location.pathname);
+export function getAbsoluteApiUrl(withAccessToken?: boolean) {
+    return getAbsoluteApiUrlRegex(window.location.pathname, withAccessToken);
 }
 
-export function getAbsoluteApiUrlRegex(pathname: string){
-    return pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/")
+export function getAbsoluteApiUrlRegex(pathname: string, withAccessToken?: boolean){
+    return withAccessToken
+        ? pathname.replace(/^(.+sosialhjelp\/)(.+)$/,  "$1login-api/soknad-api/")
+        : pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/")
 }
 
 function determineCredentialsParameter() {
@@ -89,10 +97,11 @@ const getHeaders = (): Headers => {
 };
 
 export enum HttpStatus {
-    UNAUTHORIZED = "unauthorized"
+    UNAUTHORIZED = "unauthorized",
+    UNAUTHORIZED_LOOP_ERROR = "unauthorized_loop_error"
 }
 
-export const serverRequest = (method: string, urlPath: string, body: string, retries = 6) => {
+export const serverRequest = (method: string, urlPath: string, body: string, withAccessToken?: boolean, retries = 6) => {
     const OPTIONS: RequestInit = {
         headers: getHeaders(),
         method,
@@ -101,14 +110,14 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
     };
 
     return new Promise((resolve, reject) => {
-        fetch(getApiBaseUrl() + urlPath, OPTIONS)
+        fetch(getApiBaseUrl(withAccessToken) + urlPath, OPTIONS)
             .then((response: Response) => {
                 if (response.status === 409) {
                     if (retries === 0) {
                         throw new Error(response.statusText);
                     }
                     setTimeout(() => {
-                        serverRequest(method, urlPath, body, retries - 1)
+                        serverRequest(method, urlPath, body, withAccessToken, retries - 1)
                             .then((data: any) => {
                                 resolve(data);
                             })
@@ -116,29 +125,25 @@ export const serverRequest = (method: string, urlPath: string, body: string, ret
                     }, 100 * (7 - retries));
 
                 } else {
-                    const statusKode: number = verifyStatusSuccessOrRedirect(response);
-                    if (statusKode >= 200 && statusKode < 300) {
-                        const jsonResponse = toJson(response);
-                        resolve(jsonResponse);
-                    } else {
-                        throw new Error(HttpStatus.UNAUTHORIZED);
-                    }
+                    verifyStatusSuccessOrRedirect(response);
+                    const jsonResponse = toJson(response);
+                    resolve(jsonResponse);
                 }
             })
             .catch((reason: any) => reject(reason));
     });
 };
 
-export function fetchToJson(urlPath: string) {
-    return serverRequest(RequestMethod.GET, urlPath, "");
+export function fetchToJson(urlPath: string, withAccessToken?: boolean) {
+    return serverRequest(RequestMethod.GET, urlPath, "", withAccessToken);
 }
 
-export function fetchPut(urlPath: string, body: string) {
-    return serverRequest(RequestMethod.PUT, urlPath, body);
+export function fetchPut(urlPath: string, body: string, withAccessToken?: boolean) {
+    return serverRequest(RequestMethod.PUT, urlPath, body, withAccessToken);
 }
 
-export function fetchPost(urlPath: string, body: string) {
-    return serverRequest(RequestMethod.POST, urlPath, body);
+export function fetchPost(urlPath: string, body: string, withAccessToken?: boolean) {
+    return serverRequest(RequestMethod.POST, urlPath, body, withAccessToken);
 }
 
 export function fetchDelete(urlPath: string) {
@@ -148,12 +153,8 @@ export function fetchDelete(urlPath: string) {
         credentials: determineCredentialsParameter()
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS).then((response: Response) => {
-        const statusKode: number = verifyStatusSuccessOrRedirect(response);
-        if (statusKode >= 200 && statusKode < 300) {
-            return response.text();
-        } else {
-            throw new Error(HttpStatus.UNAUTHORIZED)
-        }
+        verifyStatusSuccessOrRedirect(response);
+        return response.text();
     });
 }
 
@@ -163,14 +164,10 @@ export function fetchOppsummering(urlPath: string) {
         method: "GET",
         credentials: determineCredentialsParameter()
     };
-    return fetch(getApiBaseUrl() + urlPath, OPTIONS)
+    return fetch(getApiBaseUrl(true) + urlPath, OPTIONS)
         .then((response: Response) => {
-            const statusKode: number = verifyStatusSuccessOrRedirect(response);
-            if (statusKode >= 200 && statusKode < 300) {
-                return response.text();
-            } else {
-                throw new Error(HttpStatus.UNAUTHORIZED)
-            }
+            verifyStatusSuccessOrRedirect(response);
+            return response.text();
         });
 }
 
@@ -186,12 +183,8 @@ export function fetchKvittering(urlPath: string) {
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS)
         .then((response: Response) => {
-            const statusKode: number = verifyStatusSuccessOrRedirect(response);
-            if (statusKode >= 200 && statusKode < 300) {
-                return response.json();
-            } else {
-                throw new Error(HttpStatus.UNAUTHORIZED)
-            }
+            verifyStatusSuccessOrRedirect(response);
+            return response.json();
         });
 }
 
@@ -203,14 +196,17 @@ export function fetchFeatureToggles() {
     };
     return fetch(getServletBaseUrl() + "api/feature", OPTIONS)
         .then((response: Response) => {
-            const statusKode: number = verifyStatusSuccessOrRedirect(response);
-            if (statusKode >= 200 && statusKode < 300) {
-                return response.json();
-            } else {
-                throw new Error(HttpStatus.UNAUTHORIZED)
-            }
+            verifyStatusSuccessOrRedirect(response);
+            return response.json();
         });
 }
+
+// FIXME: KANSKJE JEG KAN BRUKE DENNE SENRE.
+// export const getJsonOrRedirectIfUnauthorizedAndThrowError = (response: Response) => {
+//     verifyStatusSuccessOrRedirect(response);
+//     return response.json();
+// };
+
 
 let generateUploadOptions = function (formData: FormData) {
     const UPLOAD_OPTIONS: RequestInit = {
@@ -228,12 +224,8 @@ let generateUploadOptions = function (formData: FormData) {
 export function fetchUpload(urlPath: string, formData: FormData) {
     return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData))
         .then((response) => {
-            const statusKode: number = verifyStatusSuccessOrRedirect(response);
-            if (statusKode >= 200 && statusKode < 300) {
-                return toJson(response)
-            } else {
-                throw new Error(HttpStatus.UNAUTHORIZED)
-            }
+            verifyStatusSuccessOrRedirect(response);
+            return toJson(response)
         });
 }
 
@@ -250,22 +242,26 @@ export function toJson<T>(response: Response): Promise<T> {
 }
 
 function verifyStatusSuccessOrRedirect(response: Response): number {
-    const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
+    if (response.status === 401) {
+        response.json().then(r => {
+            const createLogEntry = (message: string, level: NavLogLevel): NavLogEntry => {
+                return {
+                    url: window.location.href,
+                    userAgent: window.navigator.userAgent,
+                    message: message.toString(),
+                    level
+                };
+            };
 
-    if (response.status === 401){
-        // @ts-ignore
-        if (!window[AUTH_LINK_VISITED]) {
-            response.json().then(r => {
-                if (window.location.search.split("error_id=")[1] !== r.id) {
-                    const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
-                    window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "&error_id=" + r.id;
-                }
-            });
-        } else {
-            // @ts-ignore
-            window[AUTH_LINK_VISITED] = false;
-        }
-        return 401;
+            if (window.location.search.split("error_id=")[1] !== r.id) {
+                const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
+                window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "%26error_id=" + r.id;
+            } else {
+                let loggPayload = createLogEntry("Fetch ga 401-error-id selv om kallet ble sendt fra URL med samme error_id (" + r.id + "). Dette kan komme av en påloggingsloop (UNAUTHORIZED_LOOP_ERROR).", NavLogLevel.ERROR);
+                fetchPost("informasjon/actions/logg",JSON.stringify(loggPayload)).finally();
+            }
+        });
+        throw new Error(HttpStatus.UNAUTHORIZED)
     }
     if (response.status >= 200 && response.status < 300) {
         return response.status;

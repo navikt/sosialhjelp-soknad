@@ -4,10 +4,10 @@ import {
     onEndretValideringsfeil,
     SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, InjectedIntlProps, injectIntl} from "react-intl";
+import {FormattedHTMLMessage, injectIntl} from "react-intl";
 import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import {Formue, FormueId} from "./FormueTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
@@ -21,7 +21,7 @@ const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
 const FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY = FORMUE + "formue.annet.textarea";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 interface State {
     oppstartsModus: boolean
@@ -58,7 +58,8 @@ export class FormueView extends React.Component<Props, State> {
             const formue: Formue = soknadsdata.inntekt.formue;
 
             let formueElement: boolean | string = formue[idToToggle];
-            if (typeof formueElement === 'boolean'){
+            if (typeof formueElement === 'boolean' && typeof formue[idToToggle] === 'boolean'){
+                // @ts-ignore
                 formue[idToToggle] = !formueElement;
             }
 
@@ -129,11 +130,11 @@ export class FormueView extends React.Component<Props, State> {
     }
 
     render() {
-        const {soknadsdata} = this.props;
+        const {soknadsdata, intl} = this.props;
         const formue: Formue | undefined = soknadsdata.inntekt.formue;
         return (
             <Sporsmal
-                tekster={getFaktumSporsmalTekst(this.props.intl, FORMUE + ".true.type")}
+                tekster={getFaktumSporsmalTekst(intl, FORMUE + ".true.type")}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 {this.renderCheckBox(FormueId.BRUKSKONTO)}

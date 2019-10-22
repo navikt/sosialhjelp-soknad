@@ -1,5 +1,5 @@
 import "whatwg-fetch";
-import "babel-polyfill";
+import "core-js";
 import "intl";
 import "intl/locale-data/jsonp/nb-NO.js";
 import './index.less';

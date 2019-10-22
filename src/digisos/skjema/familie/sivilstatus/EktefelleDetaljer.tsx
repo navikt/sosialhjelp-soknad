@@ -1,8 +1,8 @@
 import { Person, Sivilstatus } from "./FamilieTypes";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage, injectIntl } from "react-intl";
 import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { formaterIsoDato, getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
+import {formaterIsoDato, getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
@@ -11,10 +11,9 @@ import {
 	SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 class EktefelleDetaljer extends React.Component<Props, {}> {
-
 
 	renderSivilstatusLabel(ektefelleHarDiskresjonskode: boolean | undefined) {
 		let formattedMessageId: string = "system.familie.sivilstatus.label";

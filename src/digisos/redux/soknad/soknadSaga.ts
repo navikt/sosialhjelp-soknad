@@ -73,7 +73,7 @@ function* opprettSoknadSaga() {
     try {
         const response: OpprettSoknadResponse = yield call(
             fetchPost,
-            "soknader/opprettSoknad", ""
+            "soknader/opprettSoknad", "", true
         );
         yield put(opprettSoknadOk(response.brukerBehandlingId));
         yield put(startSoknadOk());
@@ -129,7 +129,8 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
         yield call(
             fetchPost,
             `soknader/${action.behandlingsId}/actions/send`,
-            JSON.stringify({behandlingsId: action.behandlingsId})
+            JSON.stringify({behandlingsId: action.behandlingsId}),
+            true
         );
         lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.behandlingsId);
         yield put(sendSoknadOk(action.behandlingsId));

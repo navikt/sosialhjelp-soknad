@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Select } from "nav-frontend-skjema";
-import { getIntlTextOrKey } from "../../../../nav-soknad/utils";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import {getIntlTextOrKey, IntlProps} from "../../../../nav-soknad/utils";
+import { injectIntl } from "react-intl";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 import { NavEnhet } from "./AdresseTypes";
 
@@ -13,7 +13,7 @@ interface OwnProps {
 	onVelgSoknadsmottaker: (soknadsmottaker: NavEnhet) => void;
 }
 
-type Props = OwnProps & InjectedIntlProps;
+type Props = OwnProps & IntlProps;
 
 class SoknadsmottakerVelger extends React.Component<Props,{}> {
 
@@ -26,7 +26,7 @@ class SoknadsmottakerVelger extends React.Component<Props,{}> {
 	}
 
 	render() {
-		const {navEnheter, ikkeVisPanel} = this.props;
+		const {navEnheter, ikkeVisPanel, intl} = this.props;
 		let orgnr = "velg";
 		if (navEnheter) {
 			navEnheter.forEach((soknadsmottaker: NavEnhet) => {
@@ -44,7 +44,7 @@ class SoknadsmottakerVelger extends React.Component<Props,{}> {
 				value={orgnr}
 			>
 				<option value="velg" key="velg" disabled={true}>
-					{getIntlTextOrKey(this.props.intl, "kontakt.system.oppholdsadresse.velgMottaker")}
+					{getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.velgMottaker")}
 				</option>
 				{navEnheter.map((soknadsmottaker: NavEnhet, index: number) => {
 					return (

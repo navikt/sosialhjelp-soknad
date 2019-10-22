@@ -3,13 +3,14 @@ import NavFrontendModal from "nav-frontend-modal";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp, Knapp } from "nav-frontend-knapper";
 import { fortsettSoknad, slettSoknad } from "../../../digisos/redux/soknad/soknadActions";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage, injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import {DispatchProps} from "../../../digisos/redux/reduxTypes";
 import { AVBRYT_DESTINASJON } from "../../../digisos/redux/soknad/soknadActionTypes";
 import { navigerTilDittNav } from "../../../digisos/redux/navigasjon/navigasjonActions";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
+import {IntlProps} from "../../utils";
 
 interface StateProps {
 	avbrytDialogSynlig: boolean;
@@ -17,7 +18,7 @@ interface StateProps {
 	behandlingsId: string | undefined;
 }
 
-type Props = StateProps & InjectedIntlProps & DispatchProps;
+type Props = StateProps & DispatchProps & IntlProps;
 
 const TEKSTNOKLER_VANLIG = {
 	overskrift: "avbryt.overskrift",
@@ -54,11 +55,11 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 				? TEKSTNOKLER_VANLIG
 				: TEKSTNOKLER_NAVIGASJON
 		};
-
+		const intl = this.props.intl;
 		return (
 			<NavFrontendModal
 				isOpen={this.props.avbrytDialogSynlig || false}
-				contentLabel={this.props.intl.formatMessage({ id: "avbryt.avbryt" })}
+				contentLabel={intl.formatMessage({ id: "avbryt.avbryt" })}
 				closeButton={false}
 				onRequestClose={() => this.onFortsett()}
 				shouldCloseOnOverlayClick={true}
@@ -77,11 +78,16 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 					</Normaltekst>
 					<div className="timeoutbox__knapperad">
 						<Hovedknapp
+							type="hoved"
 							onClick={() => this.onFortsettSenere()}
 						>
 							<FormattedMessage id={"avbryt.fortsettsenere"} />
 						</Hovedknapp>
-						<Knapp onClick={() => this.onAvbryt()} className="avbrytmodal__slettknapp">
+						<Knapp
+							type="hoved"
+							onClick={() => this.onAvbryt()}
+							className="avbrytmodal__slettknapp"
+						>
 							<FormattedMessage id={"avbryt.slett"} />
 						</Knapp>
 					</div>

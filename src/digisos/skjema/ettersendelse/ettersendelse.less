@@ -56,15 +56,37 @@
 	opacity: 0;
 	transition: opacity 1s;
 	transition-delay: 0.2s;
+    border: 1px solid white;
 
 	&__ekspandert {
 	  opacity: 1;
-	}
+      background-color: @navLysGra;
+      width: 550px;
+      border-radius: 4px;
+      margin-left: 3rem;
+      margin-right: 0.5rem;
+      margin-bottom: 1rem;
+
+      @media screen and (max-width: 700px){
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .avsnitt_med_marger {
+        background-color: @navLysGra;
+
+        .venstremarg {
+          min-width: 0;
+          width: 42px;
+          padding-right: 0;
+        }
+      }
+
+    }
 
 	&__innhold {
-	  padding-bottom: 0.5rem;
-	  padding-right: 0.5rem;
-	  padding-top: 0.5rem;
+	  // padding: 1rem;
+
 	}
 
 	&__feil {
@@ -72,10 +94,49 @@
 	  background: @navRosa;
 	  border-radius: 8px;
 	}
+
+    &__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .avsnitt_med_marger {
+        margin-bottom: 8px;
+        border-radius: 4px;
+
+        .venstremarg {
+          width: 0;
+          min-width: 0;
+          padding-right: 0;
+        }
+
+        .hoyremarg {
+          width: 0;
+        }
+      }
+    }
   }
 
   &_bunntekst {
 	margin-top: 1rem;
+  }
+}
+
+.vedleggsliste__detalj {
+  border-radius: 4px;
+  background-color: white;
+  padding: 0.5rem;
+  text-align: left;
+
+  h3 {
+    padding-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  button.knapp--standard {
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
@@ -98,20 +159,29 @@
 	color: rgb(62, 56, 50);
 	border-radius: 4px;
     padding: 0;
+    border: 1px solid white;
+    margin-bottom: 0.5rem;
+    .hoyremarg__ikon {
+      background-color: transparent;
+    }
   }
 
-  &__klikkbar:hover {
-	box-shadow: @navGra40 0 2px 1px 0;
-  }
 
 }
+
 
 .venstremarg {
   flex-direction: row;
   width: 55px;
   min-width: 35px;
-  padding-left: 4px;
+
   text-align: left;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  @media @mobile {
+    padding-left: 4px;
+  }
 }
 
 .venstremarg svg {
@@ -123,6 +193,12 @@
   flex-direction: row;
   width: 40px;
   display: block;
+  padding-right: 1rem;
+
+  @media @mobile {
+    padding-right: 4px;
+  }
+
 
   &__ikon {
 	height: 36px;
@@ -151,7 +227,7 @@
 
 .avsnitt {
   flex-direction: row;
-  width: 540px;
+  width: 100%;
   margin-top: 8px;
   margin-bottom: 8px;
   text-align: left;
@@ -161,7 +237,7 @@
   }
 
   @media @mobile {
-	margin-bottom: 20px;
+	margin-bottom: 4px;
   }
 
   h3 {
@@ -179,4 +255,63 @@
 
 .trashcan {
   padding-left: 2px;
+}
+
+.vedleggsliste__filnavn_tekst {
+  margin-left: 25px;
+  margin-top: 7px;
+  background-color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-height: 1.3rem;
+  color: #0067c5;
+}
+
+@media screen and (min-width: 701px){
+  .vedleggsliste__filnavn_tekst {
+    max-width: 400px;
+  }
+}
+
+@media screen and (max-width: 700px){
+  .vedleggsliste__filnavn_tekst {
+    max-width: 57vw;
+  }
+}
+
+.vedleggsliste__filnavn_wrapper {
+  padding-bottom: 6px;
+  border-bottom: 1px solid darkgrey;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.ettersendelse_send_vedlegg_knapp_wrapper {
+  margin-top: 0;
+  margin-left: -1rem;
+}
+
+.vedleggsliste__fil_slett_wrapper {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.vedleggsliste__fil_slett {
+  color: #0067c5;
+  min-height: 1.7rem;
+}
+
+.ettersendelse__vedlegg__header {
+  margin-left: -1rem;
+}
+
+.vedleggsliste__filnavn_button {
+  min-height: 2rem;
+  float: left;
+}
+
+.paperclip_icon {
+  float: left;
+  margin-top: 4px;
 }

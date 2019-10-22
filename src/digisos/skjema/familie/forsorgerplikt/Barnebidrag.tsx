@@ -4,13 +4,10 @@ import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import { InjectedIntlProps, injectIntl } from "react-intl";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps;
-
-class Barnebidrag extends React.Component<Props, {}> {
+class Barnebidrag extends React.Component<SoknadsdataContainerProps, {}> {
 
 	FAKTUM_KEY = "familie.barn.true.barnebidrag";
 
@@ -58,4 +55,4 @@ class Barnebidrag extends React.Component<Props, {}> {
 	}
 }
 
-export default connectSoknadsdataContainer(injectIntl(Barnebidrag));
+export default connectSoknadsdataContainer(Barnebidrag);

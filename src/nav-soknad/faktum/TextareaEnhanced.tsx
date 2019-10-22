@@ -1,11 +1,10 @@
 import * as React from "react";
 import {Feil, Textarea} from "nav-frontend-skjema";
-import {InjectedIntlProps, injectIntl} from "react-intl";
-import {getInputFaktumTekst, getIntlTextOrKey} from "../utils";
+import {injectIntl, IntlShape} from "react-intl";
+import {getInputFaktumTekst, getIntlTextOrKey, IntlProps} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {connect} from "react-redux";
 import {Valideringsfeil} from "../../digisos/redux/validering/valideringActionTypes";
-import {InjectedIntl} from "react-intl";
 
 interface OwnProps {
     value: string;
@@ -21,13 +20,13 @@ interface OwnProps {
     property?: string;
     faktumId?: number;
     getName?: () => string;
-    getFeil?: (intl: InjectedIntl) => Feil; // Fjern
+    getFeil?: (intl: IntlShape) => Feil; // Fjern
     onChange?: (event: any) => any;
     onBlur?: () => void;
     feil?: any; // Type??
 }
 
-type Props = OwnProps & InjectedIntlProps;
+type Props = OwnProps & IntlProps;
 
 class TextareaEnhanced extends React.Component<Props, {}> {
     constructor(props: Props) {
@@ -88,7 +87,7 @@ class TextareaEnhanced extends React.Component<Props, {}> {
             intl,
             faktumKey,
             property,
-            value
+            value,
         } = this.props;
         const tekster = getInputFaktumTekst(intl, faktumKey, property);
 
@@ -96,7 +95,6 @@ class TextareaEnhanced extends React.Component<Props, {}> {
         label = this.props.hideLabel ? "" : label;
 
         const feil_ = this.getFeil();
-
         return (
             <Textarea
                 id={this.props.id}

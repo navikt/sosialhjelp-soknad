@@ -29,7 +29,7 @@ import {showServerFeil} from "../soknad/soknadActions";
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
     try {
         const url = `soknader/opprettSoknad?ettersendTil=${action.brukerbehandlingId}`;
-        const response = yield call(fetchPost, url, "");
+        const response = yield call(fetchPost, url, "", true);
         if (response) {
             yield put(lagEttersendelseOk(response.brukerBehandlingId));
             yield put(lesEttersendelsesVedlegg(response.brukerBehandlingId));
@@ -47,7 +47,7 @@ function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
 function* lesEttersendelserSaga(action: LesEttersendelserAction) {
     try {
         const url = `ettersendelse/innsendte/${action.brukerbehandlingId}`;
-        const response = yield call(fetchToJson, url);
+        const response = yield call(fetchToJson, url, true);
         if (response) {
             yield put(settEttersendelser(response));
         }
@@ -108,7 +108,10 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
 
     try {
         const url = `opplastetVedlegg/${behandlingsId}/${opplysningType}`;
-        response = yield call(fetchUpload, url, formData);
+        const fetchResponse: any = yield call(fetchUpload, url, formData);
+        if(typeof fetchResponse != "undefined"){
+            response = fetchResponse
+        }
         yield put(lastOppEttersendtVedleggOk());
         yield put(loggInfo("GlemmeSendKnappStatistikk. Vedlegg lastet opp. BehandingsId: " + behandlingsId));
         if (response) {
@@ -131,7 +134,7 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
     try {
         yield put({type: EttersendelseActionTypeKeys.ETTERSEND_PENDING});
         const url = `soknader/${action.brukerbehandlingId}/actions/send`;
-        yield call(fetchPost, url, JSON.stringify({}));
+        yield call(fetchPost, url, JSON.stringify({}), true);
         lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.brukerbehandlingId);
         yield put(loggInfo("GlemmeSendKnappStatistikk. Ettersendelse sendt. BehandingsId: " + action.brukerbehandlingId));
         yield put({type: EttersendelseActionTypeKeys.ETTERSEND_OK});

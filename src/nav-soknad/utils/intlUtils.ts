@@ -1,13 +1,13 @@
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 
-export function intlHasKey(intl: InjectedIntl, key: string) {
+export function intlHasKey(intl: IntlShape, key: string) {
 	if (!intl.messages) {
 		return false;
 	}
 	return intl.messages[key] !== undefined;
 }
 
-export function getIntlText(intl?: InjectedIntl, key?: string) {
+export function getIntlText(intl?: IntlShape, key?: string) {
 	if (!intl) {
 		return key;
 	}
@@ -20,7 +20,7 @@ export function getIntlText(intl?: InjectedIntl, key?: string) {
 		: undefined;
 }
 
-export function getIntlTextOrKey(intl: InjectedIntl, key: string): string {
+export function getIntlTextOrKey(intl: IntlShape, key: string): string {
 	if(typeof intl === "undefined") {
 		return key;
 	}
@@ -29,7 +29,7 @@ export function getIntlTextOrKey(intl: InjectedIntl, key: string): string {
 }
 
 export function getIntlInfoTekst(
-	intl: InjectedIntl,
+	intl: IntlShape,
 	key: string
 ): any | undefined {
 	const tittel = getIntlText(intl, `${key}.tittel`);
@@ -38,7 +38,7 @@ export function getIntlInfoTekst(
 }
 
 export function getIntlHjelpeTekst(
-	intl: InjectedIntl,
+	intl: IntlShape,
 	key: string
 ): any | undefined {
 	const tittel = getIkkeTomIntlText(intl, `${key}.tittel`);
@@ -46,13 +46,13 @@ export function getIntlHjelpeTekst(
 	return tittel || tekst ? { tittel, tekst } : undefined;
 }
 
-function getIkkeTomIntlText(intl: InjectedIntl, key?: string) {
+function getIkkeTomIntlText(intl: IntlShape, key?: string) {
 	return intlTextIkkeTom(intl, key ? key : "")
 		? intl.formatHTMLMessage({ id: key ? key : "" })
 		: undefined;
 }
 
-function intlTextIkkeTom(intl: InjectedIntl, key: string) {
+function intlTextIkkeTom(intl: IntlShape, key: string) {
 	return intl.messages[key] !== undefined && intl.messages[key] !== "";
 }
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { getFaktumSporsmalTekst } from "../../../../nav-soknad/utils";
-import { FormattedHTMLMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
+import { FormattedHTMLMessage, injectIntl } from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
 	connectSoknadsdataContainer,
@@ -15,7 +15,7 @@ import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte";
 
-type Props = SoknadsdataContainerProps  & InjectedIntlProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 interface State {
 	oppstartsModus: boolean

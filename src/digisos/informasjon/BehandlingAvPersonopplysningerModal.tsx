@@ -1,6 +1,6 @@
 import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage, injectIntl } from "react-intl";
 import { DispatchProps } from "../redux/reduxTypes";
 import { connect } from "react-redux";
 import { Knapp } from "nav-frontend-knapper";
@@ -8,13 +8,14 @@ import { finnValgtEnhetsNavn } from "../data/kommuner";
 import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
 import {State} from "../redux/reducers";
 import {visSamtykkeInfo} from "../redux/soknad/soknadActions";
+import {IntlProps} from "../../nav-soknad/utils";
 
 interface StateProps {
 	modalSynlig: boolean;
 	soknadsdata: Soknadsdata;
 }
 
-type Props = StateProps & InjectedIntlProps & DispatchProps;
+type Props = StateProps & IntlProps & DispatchProps;
 
 class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 
@@ -23,7 +24,7 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 		if (!valgtEnhetsNavn) {
 			valgtEnhetsNavn = "$1";
 		}
-		let text = this.props.intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"];
+		let text = this.props.intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"].toString();
 		text = text.replace(/{navkontor:(.*)}/g, valgtEnhetsNavn);
 		return text;
 	}
@@ -50,6 +51,7 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 				<div className="behandlingAvPersonopplysningerModal--lukke-knapp">
 					<Knapp
 						htmlType="button"
+						type="hoved"
 						onClick={() => {
 							this.props.dispatch(visSamtykkeInfo(false))
 						}}

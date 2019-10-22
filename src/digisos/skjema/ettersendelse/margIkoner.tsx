@@ -4,6 +4,7 @@ import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon"
 import NavFrontendChevron from "nav-frontend-chevron";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import DigisosIkonKonvolutt from "../../../nav-soknad/components/digisosIkon/digisosKonvolutt";
+import PaperclipIcon from "../../../nav-soknad/components/digisosIkon/paperclipIcon";
 
 enum MargIkoner {
 	OK = "OK",
@@ -16,7 +17,8 @@ enum MargIkoner {
 	KONVOLUTT = "KONVOLUTT",
 	SPINNER = "SPINNER",
 	SØPPELBØTTE = "SØPPELBØTTE",
-	LAST_OPP = "LAST_OPP"
+	LAST_OPP = "LAST_OPP",
+	BINDERS = "BINDERS"
 }
 
 const MargIkon: React.FC<{ ikon: MargIkoner }> = ({ ikon }) => {
@@ -52,6 +54,8 @@ const MargIkon: React.FC<{ ikon: MargIkoner }> = ({ ikon }) => {
 				className="ettersendelse__ikon"/>);
 		case MargIkoner.DOKUMENTER:
 			return <DigisosIkon navn="dokumenter" className="ettersendelse__ikon"/>;
+		case MargIkoner.BINDERS:
+			return <PaperclipIcon />;
 		default:
 			return <DigisosIkon navn="advarselSirkel" className="ettersendelse__ikon"/>;
 	}

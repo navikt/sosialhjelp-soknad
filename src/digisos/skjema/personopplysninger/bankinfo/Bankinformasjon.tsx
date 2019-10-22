@@ -2,7 +2,7 @@ import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { Checkbox } from "nav-frontend-skjema";
 import { erKontonummer } from "../../../../nav-soknad/validering/valideringer";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { injectIntl } from "react-intl";
 import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import { Kontonummer } from "./KontonummerType";
@@ -15,7 +15,7 @@ import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
-import {replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
+import {IntlProps, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 interface OwnProps {
@@ -26,7 +26,7 @@ interface State {
 	oppstartsModus: boolean
 }
 
-type Props = SoknadsdataContainerProps & InjectedIntlProps & OwnProps;
+type Props = SoknadsdataContainerProps & OwnProps & IntlProps;
 
 const FAKTUM_KEY_KONTONUMMER = "kontakt.kontonummer";
 
