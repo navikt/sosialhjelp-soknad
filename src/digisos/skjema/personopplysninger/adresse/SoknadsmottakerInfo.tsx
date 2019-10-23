@@ -4,7 +4,7 @@ import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarge
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {NavEnhet, SoknadsMottakerStatus} from "./AdresseTypes";
 import { soknadsmottakerStatus } from "./AdresseUtils";
 

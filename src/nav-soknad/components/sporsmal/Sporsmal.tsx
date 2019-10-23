@@ -2,7 +2,6 @@ import * as React from "react";
 import * as cuid from "cuid";
 import * as classNames from "classnames";
 import { SkjemaGruppe, Feil } from "nav-frontend-skjema";
-import { SporsmalFaktumTekst } from "../../types";
 import SporsmalHjelpetekst from "./SporsmalHjelpetekst";
 import { injectIntl } from "react-intl";
 import {getFaktumSporsmalTekst, IntlProps} from "../../utils";
@@ -25,7 +24,7 @@ export interface OwnProps {
 	handleOnBlur?: (evt: any) => void;
 	feil?: Feil;
 	feilkode?: string;
-	tekster?: SporsmalFaktumTekst;
+	tekster?: any;
 	sprakNokkel?: string;
 	legendTittelStyle?: LegendTittleStyle;
 	faktumKey?: string;
@@ -40,7 +39,7 @@ class Sporsmal extends React.Component<Props, {}> {
 
 	render() {
 		const { id, visible, children, feil, feilkode, tekster, intl, sprakNokkel, visLedetekst } = this.props;
-		const ledeTekster: SporsmalFaktumTekst = tekster ? tekster :
+		const ledeTekster: any = tekster ? tekster :
 			getFaktumSporsmalTekst(intl, sprakNokkel ? sprakNokkel : "" );
 		if (visible === false) {
 			return null;

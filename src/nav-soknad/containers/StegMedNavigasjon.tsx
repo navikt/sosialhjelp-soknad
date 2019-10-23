@@ -5,20 +5,19 @@ import {Location} from "history";
 import {connect} from "react-redux";
 import DocumentTitle from "react-document-title";
 import {Innholdstittel} from "nav-frontend-typografi";
-import ApplikasjonsfeilDialog from "./ApplikasjonsfeilDialog";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import Knapperad from "../components/knapperad";
-import {SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../types";
-import {DispatchProps, ValideringsFeilKode} from "../redux/reduxTypes";
-import {setVisBekreftMangler} from "../redux/oppsummering/oppsummeringActions";
+import {SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../../digisos/redux/soknad/soknadTypes";
+import {DispatchProps, ValideringsFeilKode} from "../../digisos/redux/reduxTypes";
+import {setVisBekreftMangler} from "../../digisos/redux/oppsummering/oppsummeringActions";
 import {getIntlTextOrKey, IntlProps, scrollToTop} from "../utils";
-import {avbrytSoknad, sendSoknad} from "../redux/soknad/soknadActions";
-import {gaTilbake, gaVidere, tilSteg} from "../redux/navigasjon/navigasjonActions";
-import {loggInfo} from "../redux/navlogger/navloggerActions";
+import {avbrytSoknad, sendSoknad} from "../../digisos/redux/soknad/soknadActions";
+import {gaTilbake, gaVidere, tilSteg} from "../../digisos/redux/navigasjon/navigasjonActions";
+import {loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
 import AppBanner from "../components/appHeader/AppHeader";
-import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
-import {clearAllValideringsfeil, setValideringsfeil, visValideringsfeilPanel} from "../redux/valideringActions";
-import {ValideringState} from "../redux/valideringReducer";
+import {Soknadsdata} from "../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {clearAllValideringsfeil, setValideringsfeil, visValideringsfeilPanel} from "../../digisos/redux/validering/valideringActions";
+import {ValideringState} from "../../digisos/redux/validering/valideringReducer";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {State} from "../../digisos/redux/reducers";
 import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
@@ -47,13 +46,14 @@ interface InjectedRouterProps {
     location: Location;
     match: {
         params: {
-            brukerBehandlingId: string;
+            behandlingsId: string;
         };
         url: string;
     };
 }
 
 interface StateProps {
+    behandlingsId: string | undefined;
     validering: ValideringState;
     nextButtonPending?: boolean;
     oppsummeringBekreftet?: boolean;
@@ -74,7 +74,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
     constructor(props: Props) {
         super(props);
         this.handleGaVidere = this.handleGaVidere.bind(this);
-        this.sendSoknad = this.sendSoknad.bind(this);
     }
 
     componentDidMount() {
@@ -91,12 +90,9 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
         }
     }
 
-    sendSoknad(brukerBehandlingId: string) {
-        this.props.dispatch(sendSoknad(brukerBehandlingId));
-    }
-
     handleGaTilSkjemaSteg(aktivtSteg: SkjemaSteg | undefined, steg: number) {
-        if (aktivtSteg) {
+        const {behandlingsId} = this.props;
+        if (aktivtSteg && behandlingsId) {
             const {feil} = this.props.validering;
 
             const valgtNavEnhet = this.finnSoknadsMottaker();
@@ -106,7 +102,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
             } else {
                 if (feil.length === 0) {
                     this.props.dispatch(clearAllValideringsfeil());
-                    this.props.dispatch(tilSteg(steg));
+                    this.props.dispatch(tilSteg(steg, behandlingsId));
                 } else {
                     this.props.dispatch(visValideringsfeilPanel());
                 }
@@ -114,29 +110,32 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
         }
     }
 
-    handleGaVidere(aktivtSteg: SkjemaSteg, brukerBehandlingId: string) {
-        if (aktivtSteg.type === SkjemaStegType.oppsummering) {
-            if (this.props.oppsummeringBekreftet) {
-                this.loggAdresseTypeTilGrafana();
-                this.sendSoknad(brukerBehandlingId);
-            } else {
-                this.props.dispatch(setVisBekreftMangler(true));
+    handleGaVidere(aktivtSteg: SkjemaSteg) {
+        const {behandlingsId} = this.props;
+        if (behandlingsId){
+            if (aktivtSteg.type === SkjemaStegType.oppsummering) {
+                if (this.props.oppsummeringBekreftet) {
+                    this.loggAdresseTypeTilGrafana();
+                    this.props.dispatch(sendSoknad(behandlingsId));
+                } else {
+                    this.props.dispatch(setVisBekreftMangler(true));
+                }
+                return;
             }
-            return;
-        }
 
-        const {feil} = this.props.validering;
+            const {feil} = this.props.validering;
 
-        const valgtNavEnhet = this.finnSoknadsMottaker();
-        if (aktivtSteg.stegnummer === 1 && !valgtNavEnhet) {
-            this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
-            this.props.dispatch(visValideringsfeilPanel());
-        } else {
-            if (feil.length === 0) {
-                this.props.dispatch(clearAllValideringsfeil());
-                this.props.dispatch(gaVidere(aktivtSteg.stegnummer));
-            } else {
+            const valgtNavEnhet = this.finnSoknadsMottaker();
+            if (aktivtSteg.stegnummer === 1 && !valgtNavEnhet) {
+                this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
                 this.props.dispatch(visValideringsfeilPanel());
+            } else {
+                if (feil.length === 0 && behandlingsId) {
+                    this.props.dispatch(clearAllValideringsfeil());
+                    this.props.dispatch(gaVidere(aktivtSteg.stegnummer, behandlingsId));
+                } else {
+                    this.props.dispatch(visValideringsfeilPanel());
+                }
             }
         }
     }
@@ -147,8 +146,11 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
     }
 
     handleGaTilbake(aktivtSteg: number) {
-        this.props.dispatch(clearAllValideringsfeil());
-        this.props.dispatch(gaTilbake(aktivtSteg));
+        const {behandlingsId} = this.props;
+        if (behandlingsId){
+            this.props.dispatch(clearAllValideringsfeil());
+            this.props.dispatch(gaTilbake(aktivtSteg, behandlingsId));
+        }
     }
 
     render() {
@@ -156,7 +158,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
         const aktivtStegConfig: SkjemaSteg | undefined = skjemaConfig.steg.find(
             s => s.key === this.props.stegKey
         );
-        const brukerBehandlingId = this.props.match.params.brukerBehandlingId;
         const erOppsummering: boolean = aktivtStegConfig ? aktivtStegConfig.type === SkjemaStegType.oppsummering : false;
         const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
         const documentTitle = intl.formatMessage({
@@ -173,7 +174,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
         return (
             <div className="app-digisos informasjon-side">
                 <AppBanner/>
-                <ApplikasjonsfeilDialog/>
                 <DocumentTitle title={`${stegTittel} - ${documentTitle}`}/>
 
                 <div className="skjema-steg skjema-content">
@@ -228,7 +228,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                                     : undefined
                             }
                             gaVidere={() =>
-                                this.handleGaVidere(aktivtStegConfig, brukerBehandlingId)}
+                                this.handleGaVidere(aktivtStegConfig)}
                             gaTilbake={
                                 aktivtStegConfig.stegnummer > 1
                                     ? () => this.handleGaTilbake(aktivtStegConfig.stegnummer)
@@ -246,6 +246,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
 export default connect((state: State) => {
     return {
+        behandlingsId: state.soknad.behandlingsId,
         validering: state.validering,
         nextButtonPending: state.soknad.sendSoknadPending,
         oppsummeringBekreftet: state.oppsummering.bekreftet,

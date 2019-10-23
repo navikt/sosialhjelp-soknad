@@ -3,7 +3,6 @@ import ValgMedUnderskjema from "../components/valgMedUnderskjema";
 import Underskjema from "../components/underskjema";
 import Sporsmal, {LegendTittleStyle} from "../components/sporsmal/Sporsmal";
 import {erMobilVisning} from "../utils/domUtils";
-import {SporsmalFaktumTekst} from "../types";
 import RadioEnhanced from "./RadioEnhanced";
 
 
@@ -13,7 +12,7 @@ interface Props {
     visible?: boolean;
     id?: string;
     legendTittelStyle?: LegendTittleStyle;
-    tekster: SporsmalFaktumTekst;
+    tekster: any;
     verdi: null | boolean;
     onChange?: (verdi: boolean) => void;
     visPlaceholder?: boolean;

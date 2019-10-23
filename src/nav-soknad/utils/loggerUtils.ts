@@ -1,5 +1,5 @@
 import {fetchPost} from "./rest-utils";
-import {NavLogEntry} from "../redux/navlogger/navloggerTypes";
+import {NavLogEntry} from "../../digisos/redux/navlogger/navloggerTypes";
 
 export function loggErrorToServer(navLogEntry: NavLogEntry) {
     try {

@@ -8,8 +8,8 @@ import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sp
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 
 type Props = SoknadsdataContainerProps & IntlProps;
@@ -17,12 +17,14 @@ type Props = SoknadsdataContainerProps & IntlProps;
 class RegistrerteBarn extends React.Component<Props, {}> {
 
 	handleClickJaNeiSpsm(verdi: boolean, barnIndex: number) {
-		const {soknadsdata, oppdaterSoknadsdataSti, lagreSoknadsdata, brukerBehandlingId} = this.props;
-		const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
-		const barnet = forsorgerplikt.ansvar[barnIndex];
-		barnet.harDeltBosted = verdi;
-		oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+		const {soknadsdata, oppdaterSoknadsdataSti, lagreSoknadsdata, behandlingsId} = this.props;
+		if (behandlingsId){
+			const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
+			const barnet = forsorgerplikt.ansvar[barnIndex];
+			barnet.harDeltBosted = verdi;
+			oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+			lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+		}
 	}
 
 	onChangeSamvaersgrad(verdi: string, barnIndex: number) {
@@ -34,9 +36,11 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 	}
 
 	onBlur() {
-		const {soknadsdata, lagreSoknadsdata, brukerBehandlingId} = this.props;
-		const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
-		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+		const {soknadsdata, lagreSoknadsdata, behandlingsId} = this.props;
+		if (behandlingsId){
+			const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
+			lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+		}
 	}
 
 	render() {

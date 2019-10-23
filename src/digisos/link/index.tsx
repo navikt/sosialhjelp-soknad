@@ -1,26 +1,18 @@
 import * as React from 'react';
 import {connect} from "react-redux";
-import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
-import {LedetekstState} from "../../nav-soknad/redux/ledetekster/ledeteksterTypes";
-import {REST_STATUS} from "../../nav-soknad/types";
+import {DispatchProps} from "../redux/reduxTypes";
 import {State} from "../redux/reducers";
-import {setLinkVisited} from "../../nav-soknad/redux/authentication/authenticationActions";
 import {Redirect} from "react-router";
+import {setLinkVisited} from "../redux/soknad/soknadActions";
 
-interface IntlProviderProps {
-	children: React.ReactNode;
-}
 
 interface StateProps {
-	ledetekster: LedetekstState;
-	initRestStatus: REST_STATUS;
 	linkVisited: boolean;
 }
 
-type Props = StateProps & DispatchProps & IntlProviderProps;
+type Props = StateProps & DispatchProps;
 
 class Link extends React.Component<Props, {}> {
-
 
 	render(){
 
@@ -42,6 +34,6 @@ class Link extends React.Component<Props, {}> {
 
 export default connect((state: State) => {
 	return {
-		linkVisited: state.authentication.linkVisited,
+		linkVisited: state.soknad.linkVisited,
 	};
 })(Link);

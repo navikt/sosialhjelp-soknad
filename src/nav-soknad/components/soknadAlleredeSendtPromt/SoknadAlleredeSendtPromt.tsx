@@ -3,14 +3,13 @@ import NavFrontendModal from "nav-frontend-modal";
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
 import {FormattedMessage, injectIntl} from "react-intl";
 import {connect} from "react-redux";
-import {DispatchProps} from "../../redux/reduxTypes";
-import {visSoknadAlleredeSendtPrompt} from "../../redux/ettersendelse/ettersendelseActions";
+import {DispatchProps} from "../../../digisos/redux/reduxTypes";
+import {visSoknadAlleredeSendtPrompt} from "../../../digisos/redux/ettersendelse/ettersendelseActions";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
 import {IntlProps} from "../../utils";
 
 interface StateProps {
-    brukerBehandlingId: string;
     visPrompt: boolean;
 }
 
@@ -52,7 +51,6 @@ class SoknadAlleredeSendtPromt extends React.Component<Props, {}> {
 
 export default connect((state: State, props: any): StateProps => {
     return {
-        brukerBehandlingId: state.soknad.data.brukerBehandlingId,
         visPrompt: state.ettersendelse.visSoknadAlleredeSendtPromt
     };
 })(injectIntl(SoknadAlleredeSendtPromt));

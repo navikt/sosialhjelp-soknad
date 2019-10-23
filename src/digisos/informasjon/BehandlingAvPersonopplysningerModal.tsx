@@ -1,25 +1,21 @@
 import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
-import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
-import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
+import { FormattedMessage, injectIntl } from "react-intl";
+import { DispatchProps } from "../redux/reduxTypes";
 import { connect } from "react-redux";
-import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
 import { Knapp } from "nav-frontend-knapper";
 import { finnValgtEnhetsNavn } from "../data/kommuner";
-import {Soknadsdata} from "../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
 import {State} from "../redux/reducers";
+import {visSamtykkeInfo} from "../redux/soknad/soknadActions";
+import {IntlProps} from "../../nav-soknad/utils";
 
 interface StateProps {
 	modalSynlig: boolean;
 	soknadsdata: Soknadsdata;
-
 }
 
-interface IntlProps {
-	intl: IntlShape;
-}
-
-type Props = StateProps & DispatchProps & IntlProps;
+type Props = StateProps & IntlProps & DispatchProps;
 
 class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 
@@ -39,7 +35,9 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 				isOpen={this.props.modalSynlig || false}
 				contentLabel={this.props.intl.formatMessage({id: "avbryt.avbryt"})}
 				closeButton={true}
-				onRequestClose={() => this.props.dispatch(setVisSamtykkeInfo(false))}
+				onRequestClose={() => {
+					this.props.dispatch(visSamtykkeInfo(false))
+				}}
 				style={{
 					content: {
 						overflowY: 'auto'
@@ -54,7 +52,9 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 					<Knapp
 						htmlType="button"
 						type="hoved"
-						onClick={() => this.props.dispatch(setVisSamtykkeInfo(false))}
+						onClick={() => {
+							this.props.dispatch(visSamtykkeInfo(false))
+						}}
 					>
 						<FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"}/>
 					</Knapp>
@@ -66,7 +66,7 @@ class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
 
 export default connect((state: State): StateProps => {
 	return {
-		modalSynlig: state.init.visSamtykkeInfo,
+		modalSynlig: state.soknad.visSamtykkeInfo,
 		soknadsdata: state.soknadsdata
 	};
 })(injectIntl(BehandlingAvPersonopplysningerModal));

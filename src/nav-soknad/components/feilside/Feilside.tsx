@@ -3,7 +3,7 @@ import { Knapp } from "nav-frontend-knapper";
 import { Innholdstittel } from "nav-frontend-typografi";
 import DocumentTitle from "react-document-title";
 import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
-import AppHeader from "../appHeader/AppHeader";
+import Banner from "../banner/Banner";
 
 export interface FeilsideProps {
 	tittel?: string;
@@ -18,7 +18,7 @@ export interface FeilsideProps {
  * Default inneholder denne hardkodete tekster i og
  * med det er ikke sikkert tekstressurser er tilgjengelig
  */
-const FeilSide: React.StatelessComponent<FeilsideProps> = ({
+const FeilSide: React.FC<FeilsideProps> = ({
 	tittel = "OOPS, NOE GIKK GALT",
 	children,
 	feilkode,
@@ -28,7 +28,9 @@ const FeilSide: React.StatelessComponent<FeilsideProps> = ({
 }) => {
 	return (
 		<span>
-			<AppHeader/>
+			<Banner>
+				Søknad om økonomisk sosialhjelp
+			</Banner>
 			<div className="feilside skjema-content">
 
 				<DocumentTitle title={"Feilside - " + document.location.hostname} />

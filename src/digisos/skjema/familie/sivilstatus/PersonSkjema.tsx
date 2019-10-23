@@ -1,12 +1,12 @@
 import * as React from "react";
 import {Column, Container, Row} from "nav-frontend-grid";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
-import {setPath} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
+import {setPath} from "../../../redux/soknadsdata/soknadsdataActions";
 import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {erTall, fdato, maksLengde, minLengde} from "../../../../nav-soknad/validering/valideringer";
 import {konverterFraISODato, konverterTilISODato} from "./datoUtils";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
@@ -52,7 +52,7 @@ class PersonSkjema extends React.Component<Props, {}> {
     }
 
     onBlur() {
-        const {soknadsdata, lagreSoknadsdata, brukerBehandlingId} = this.props;
+        const {soknadsdata, lagreSoknadsdata, behandlingsId} = this.props;
         const sivilstatus = soknadsdata.familie.sivilstatus;
         let feilkodeFodselsdato = null;
         let fodselsdato: string | null = sivilstatus.ektefelle ? sivilstatus.ektefelle.fodselsdato : null;
@@ -93,8 +93,8 @@ class PersonSkjema extends React.Component<Props, {}> {
         } else {
             this.props.clearValideringsfeil(FAKTUM_KEY_PERSONNUMMER);
         }
-        if (!feilkodeFodselsdato && !feilkodePersonnummer) {
-            lagreSoknadsdata(brukerBehandlingId, SoknadsSti.SIVILSTATUS, sivilstatus);
+        if (!feilkodeFodselsdato && !feilkodePersonnummer && behandlingsId) {
+            lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus);
         }
     }
 

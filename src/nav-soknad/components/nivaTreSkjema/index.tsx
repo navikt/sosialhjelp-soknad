@@ -1,5 +1,5 @@
 import * as React from "react";
-import { loggFeil } from "../../redux/navlogger/navloggerActions";
+import { loggFeil } from "../../../digisos/redux/navlogger/navloggerActions";
 import { UnmountClosed } from "react-collapse";
 
 type Sizes = "small" | "large";

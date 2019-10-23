@@ -1,13 +1,18 @@
 import * as React from "react";
 
 import Hjelpetekst from "../hjelpetekst/Hjelpetekst";
-import { Infotekst } from "../../types/faktumTextTypes";
+import Infotekst from "nav-frontend-typografi/lib/infotekst";
+
+interface InfotekstEnhanced {
+	tekst: any,
+	tittel: any
+}
 
 interface Props {
 	id: string;
 	label: React.ReactNode;
 	labelId?: string;
-	hjelpetekst?: Infotekst;
+	hjelpetekst?: Infotekst & InfotekstEnhanced;
 }
 
 const LabelMedHjelpetekst: React.StatelessComponent<Props> = (props: Props) => {

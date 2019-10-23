@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as classNames from "classnames";
 import { UnmountClosed } from "react-collapse";
-import { loggFeil } from "../../redux/navlogger/navloggerActions";
+import { loggFeil } from "../../../digisos/redux/navlogger/navloggerActions";
 
 interface UnderskjemaProps extends React.Props<any> {
 	visible?: boolean;

@@ -1,10 +1,10 @@
 import {connect} from "react-redux";
 import * as React from "react";
-import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
+import {DispatchProps} from "../../redux/reduxTypes";
 import {State} from "../../redux/reducers";
 import {Radio} from "nav-frontend-skjema";
 import {Collapse} from "react-collapse";
-import {tilStart} from "../../../nav-soknad/redux/navigasjon/navigasjonActions";
+import {tilStart} from "../../redux/navigasjon/navigasjonActions";
 import NyttArbeidsforhold, {
 	ArbeidsforholdType,
 	NyttArbeidsforholdObject

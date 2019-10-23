@@ -5,8 +5,7 @@ import * as React from "react";
 import {mount, shallow} from "enzyme";
 import {ReactWrapper} from "enzyme";
 import createHistory from "history/createBrowserHistory";
-import {SoknadState} from "../redux/reduxTypes";
-import {avbrytSoknad} from "../redux/soknad/soknadActions";
+import {avbrytSoknad} from "../../digisos/redux/soknad/soknadActions";
 import createSagaMiddleware from "redux-saga";
 import {applyMiddleware, createStore} from "redux";
 import thunk from "redux-thunk";
@@ -15,6 +14,7 @@ import sagas from "../../rootSaga";
 import {Provider} from "react-redux";
 import ReactSixteenAdapter from "enzyme-adapter-react-16";
 import {routerMiddleware} from "connected-react-router";
+import {SoknadState} from "../../digisos/redux/soknad/soknadTypes";
 import { createIntl } from "react-intl";
 
 const prettier = require("prettier");
@@ -96,7 +96,7 @@ export const TestContext: React.FunctionComponent<{ messages: any, children: Rea
         getUserConfirmation: (msg: any, callback: (flag: boolean) => void) => {
             // @ts-ignore
             const soknad: SoknadState = store.getState().soknad;
-            if (soknad.data.brukerBehandlingId && soknad.avbrytSoknadSjekkAktiv) {
+            if (soknad.behandlingsId && soknad.avbrytSoknadSjekkAktiv) {
                 store.dispatch(avbrytSoknad("START"));
                 callback(false);
             } else {

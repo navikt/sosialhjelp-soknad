@@ -2,9 +2,9 @@ import * as React from 'react';
 import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {FormattedHTMLMessage, injectIntl} from "react-intl";
-import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
@@ -18,30 +18,37 @@ type Props = SoknadsdataContainerProps & IntlProps;
 export class BarneutgifterView extends React.Component<Props, {}> {
 
     componentDidMount(): void {
-        this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BARNEUTGIFTER);
+        const {behandlingsId} = this.props;
+        if (behandlingsId){
+            this.props.hentSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER);
+        }
     }
 
     handleClickJaNeiSpsm(verdi: boolean) {
-        const {brukerBehandlingId, soknadsdata} = this.props;
-        const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
-        barneutgifter.bekreftelse = verdi;
-        if (!verdi) {
-            barneutgifter.fritidsaktiviteter = false;
-            barneutgifter.barnehage = false;
-            barneutgifter.sfo = false;
-            barneutgifter.tannregulering = false;
-            barneutgifter.annet = false;
+        const {behandlingsId, soknadsdata} = this.props;
+        if (behandlingsId){
+            const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
+            barneutgifter.bekreftelse = verdi;
+            if (!verdi) {
+                barneutgifter.fritidsaktiviteter = false;
+                barneutgifter.barnehage = false;
+                barneutgifter.sfo = false;
+                barneutgifter.tannregulering = false;
+                barneutgifter.annet = false;
+            }
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.BARNEUTGIFTER, barneutgifter);
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, barneutgifter);
         }
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.BARNEUTGIFTER, barneutgifter);
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BARNEUTGIFTER, barneutgifter);
     }
 
     handleClickRadio(idToToggle: BarneutgifterKeys) {
-        const {brukerBehandlingId, soknadsdata} = this.props;
-        const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
-        barneutgifter[idToToggle] = !barneutgifter[idToToggle];
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.BARNEUTGIFTER, barneutgifter);
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BARNEUTGIFTER, barneutgifter);
+        const {behandlingsId, soknadsdata} = this.props;
+        if (behandlingsId){
+            const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
+            barneutgifter[idToToggle] = !barneutgifter[idToToggle];
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.BARNEUTGIFTER, barneutgifter);
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, barneutgifter);
+        }
     }
 
     renderCheckBox(navn: BarneutgifterKeys, textKey: string) {

@@ -1,4 +1,3 @@
-import {REST_FEIL} from "../types/restFeilTypes";
 import {erMockMiljoEllerDev} from "./index";
 import {
     API_CONTEXT_PATH,
@@ -8,7 +7,8 @@ import {
     HEROKU_API_MASTER_APP_NAME,
     HEROKU_MASTER_APP_NAME
 } from "../../configuration";
-import {NavLogEntry, NavLogLevel} from "../redux/navlogger/navloggerTypes";
+import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
+import {NavLogEntry, NavLogLevel} from "../../digisos/redux/navlogger/navloggerTypes";
 
 
 export function erDev(): boolean {

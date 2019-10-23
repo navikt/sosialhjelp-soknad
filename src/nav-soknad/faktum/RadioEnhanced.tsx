@@ -2,7 +2,6 @@ import * as React from "react";
 import {Radio} from "nav-frontend-skjema";
 import {injectIntl} from "react-intl";
 import {getRadioFaktumTekst, IntlProps} from "../utils";
-import {CheckboxFaktumTekst} from "../types";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import TextPlaceholder from "../components/animasjoner/placeholder/TextPlaceholder";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
@@ -25,7 +24,7 @@ interface Props {
 
 class RadioEnhanced extends React.Component<Props & IntlProps, {}> {
 
-    determineLabel(id: string, faktumKey: string, tekster: CheckboxFaktumTekst, value: string) {
+    determineLabel(id: string, faktumKey: string, tekster: any, value: string) {
         if (this.props.visPlaceholder) {
             return <TextPlaceholder lines={1} style={{marginTop: "4px", width: "4rem"}}/>
         }

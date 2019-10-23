@@ -1,12 +1,12 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
-import { DispatchProps } from "../../nav-soknad/redux/reduxTypes";
+import { DispatchProps } from "../redux/reduxTypes";
 import { connect } from "react-redux";
-import { setVisSamtykkeInfo } from "../../nav-soknad/redux/init/initActions";
 import { State } from "../redux/reducers";
 import BehandlingAvPersonopplysningerModal from "./BehandlingAvPersonopplysningerModal";
 import { Undertittel } from "nav-frontend-typografi";
 import {getContextPathForStaticContent} from "../../configuration";
+import {visSamtykkeInfo} from "../redux/soknad/soknadActions";
 
 type Props = DispatchProps;
 
@@ -67,7 +67,7 @@ class Personopplysninger extends React.Component<Props, {}> {
 								<button
 									className="linkbutton linkbutton--normal"
 									onClick={() => {
-										this.props.dispatch(setVisSamtykkeInfo(true));
+										this.props.dispatch(visSamtykkeInfo(true));
 									}}
 								>
 									<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke"/>

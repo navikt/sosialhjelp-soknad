@@ -7,8 +7,8 @@ import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 
 const FAKTUM_STUDIER = "dinsituasjon.studerer";
 const FAKTUM_STUDERER = "dinsituasjon.studerer.true.grad";
@@ -18,23 +18,30 @@ type Props = SoknadsdataContainerProps & IntlProps;
 class UtdanningView extends React.Component<Props, {}> {
 
 	componentDidMount(): void {
-		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.UTDANNING);
+	    const {behandlingsId} = this.props;
+	    if (behandlingsId){
+		    this.props.hentSoknadsdata(behandlingsId, SoknadsSti.UTDANNING);
+        }
 	}
 
 	handleClickJaNeiSpsm(verdi: boolean) {
-		const {brukerBehandlingId, soknadsdata} = this.props;
-		const utdanning = soknadsdata.utdanning;
-		utdanning.erStudent = verdi;
-		this.props.oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning);
-		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTDANNING, utdanning);
+		const {behandlingsId, soknadsdata} = this.props;
+		if (behandlingsId){
+            const utdanning = soknadsdata.utdanning;
+            utdanning.erStudent = verdi;
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning);
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, utdanning);
+        }
 	}
 
 	handleClickHeltidDeltid(verdi: boolean) {
-		const {brukerBehandlingId, soknadsdata} = this.props;
-		const utdanning = soknadsdata.utdanning;
-		utdanning.studengradErHeltid = verdi;
-		this.props.oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning);
-		this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.UTDANNING, utdanning);
+		const {behandlingsId, soknadsdata} = this.props;
+		if (behandlingsId){
+            const utdanning = soknadsdata.utdanning;
+            utdanning.studengradErHeltid = verdi;
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning);
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, utdanning);
+        }
 	}
 
 	render() {

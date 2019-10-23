@@ -2,23 +2,22 @@ import * as React from "react";
 import {
 	lastOppEttersendelseVedlegg,
 	slettEttersendtVedlegg
-} from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
-import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
+} from "../../redux/ettersendelse/ettersendelseActions";
+import {DispatchProps} from "../../redux/reduxTypes";
 import { connect } from "react-redux";
 import { downloadAttachedFile } from "../../../nav-soknad/utils/rest-utils";
-import { REST_STATUS } from "../../../nav-soknad/types";
 import {MargIkon, MargIkoner} from "./margIkoner";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import { FormattedMessage } from "react-intl";
-import { REST_FEIL } from "../../../nav-soknad/types/restFeilTypes";
 import {
     EttersendelseState,
     EttersendelseVedleggBackend
-} from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
-import {Fil, OpplysningType} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+} from "../../redux/ettersendelse/ettersendelseTypes";
+import {Fil, OpplysningType} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {State} from "../../redux/reducers";
-import Knapp from "nav-frontend-knapper";
+import {REST_FEIL, REST_STATUS} from "../../redux/soknad/soknadTypes";
 import PaperclipIcon from "../../../nav-soknad/components/digisosIkon/paperclipIcon";
+import {Knapp} from "nav-frontend-knapper";
 
 interface OwnProps {
 	ettersendelseAktivert: boolean;

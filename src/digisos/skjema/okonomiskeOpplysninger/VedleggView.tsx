@@ -1,20 +1,20 @@
 import * as React from 'react';
-import {DispatchProps, Valideringsfeil} from "../../../nav-soknad/redux/reduxTypes";
+import {DispatchProps, Valideringsfeil} from "../../redux/reduxTypes";
 import {
     Fil,
     Opplysning, OpplysningSpc,
     VedleggStatus
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {connect} from "react-redux";
 import LastOppFil from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
 import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
-import {startSlettFil} from "../../../nav-soknad/redux/fil/filActions";
+import {startSlettFil} from "../../redux/fil/filActions";
 import {
     lagreOpplysningHvisGyldigAction,
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerActions";
+} from "../../redux/okonomiskeOpplysninger/opplysningerActions";
 import OpplastetVedlegg from "./OpplastetVedlegg";
-import {getSpcForOpplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
+import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {State} from "../../redux/reducers";
 
 interface OwnProps {
@@ -22,7 +22,7 @@ interface OwnProps {
 }
 
 interface StoreToProps {
-    behandlingsId: string;
+    behandlingsId: string | undefined;
     feil: Valideringsfeil[];
 }
 
@@ -31,21 +31,25 @@ type Props = OwnProps & StoreToProps & DispatchProps;
 class VedleggView extends React.Component<Props> {
 
     handleAlleredeLastetOpp(event: any) {
-        const {okonomiskOpplysning, behandlingsId, feil} = this.props;
-        const opplysningUpdated = {...okonomiskOpplysning};
+        const {okonomiskOpplysning, behandlingsId, feil, dispatch} = this.props;
+        if (behandlingsId){
+            const opplysningUpdated = {...okonomiskOpplysning};
 
-        if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
-            opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
-        } else {
-            opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
+            if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
+                opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
+            } else {
+                opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
+            }
+
+            dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feil));
         }
-
-        this.props.dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feil));
     }
 
     slettVedlegg(fil: Fil) {
-        const {behandlingsId, okonomiskOpplysning} = this.props;
-        this.props.dispatch(startSlettFil(behandlingsId, fil, okonomiskOpplysning, okonomiskOpplysning.type))
+        const {behandlingsId, okonomiskOpplysning, dispatch} = this.props;
+        if (behandlingsId){
+            dispatch(startSlettFil(behandlingsId, fil, okonomiskOpplysning, okonomiskOpplysning.type))
+        }
     }
 
     renderOpplastingAvVedleggSeksjon(opplysning: Opplysning) {
@@ -98,7 +102,7 @@ class VedleggView extends React.Component<Props> {
 export default connect(
     (state: State) => {
         return {
-            behandlingsId: state.soknad.data.brukerBehandlingId,
+            behandlingsId: state.soknad.behandlingsId,
             feil: state.validering.feil
         }
     }

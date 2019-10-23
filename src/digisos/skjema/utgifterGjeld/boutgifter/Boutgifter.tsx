@@ -2,9 +2,9 @@ import * as React from 'react';
 import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {FormattedHTMLMessage, injectIntl} from "react-intl";
-import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
@@ -18,31 +18,38 @@ type Props = SoknadsdataContainerProps & IntlProps;
 export class BoutgifterView extends React.Component<Props, {}> {
 
     componentDidMount(): void {
-        this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BOUTGIFTER);
+        const {behandlingsId} = this.props;
+        if (behandlingsId){
+            this.props.hentSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER);
+        }
     }
 
     handleClickJaNeiSpsm(verdi: boolean) {
-        const {brukerBehandlingId, soknadsdata} = this.props;
-        const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
-        boutgifter.bekreftelse = verdi;
-        if (!verdi) {
-            boutgifter.husleie = false;
-            boutgifter.strom = false;
-            boutgifter.kommunalAvgift = false;
-            boutgifter.oppvarming = false;
-            boutgifter.boliglan = false;
-            boutgifter.annet = false;
+        const {behandlingsId, soknadsdata} = this.props;
+        if (behandlingsId){
+            const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
+            boutgifter.bekreftelse = verdi;
+            if (!verdi) {
+                boutgifter.husleie = false;
+                boutgifter.strom = false;
+                boutgifter.kommunalAvgift = false;
+                boutgifter.oppvarming = false;
+                boutgifter.boliglan = false;
+                boutgifter.annet = false;
+            }
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter);
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter);
         }
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter);
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOUTGIFTER, boutgifter);
     }
 
     handleClickRadio(idToToggle: BoutgifterKeys) {
-        const {brukerBehandlingId, soknadsdata} = this.props;
-        const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
-        boutgifter[idToToggle] = !boutgifter[idToToggle];
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter);
-        this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOUTGIFTER, boutgifter);
+        const {behandlingsId, soknadsdata} = this.props;
+        if (behandlingsId){
+            const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
+            boutgifter[idToToggle] = !boutgifter[idToToggle];
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter);
+            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter);
+        }
     }
 
     renderCheckBox(navn: BoutgifterKeys, textKey: string) {

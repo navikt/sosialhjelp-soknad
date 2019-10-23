@@ -4,8 +4,8 @@ import { useIntl, FormattedMessage } from "react-intl";
 import { Undertittel } from "nav-frontend-typografi";
 import { getIntlTextOrKey } from "../utils/intlUtils";
 import { connect } from "react-redux";
-import { navigerTilFinnDittNavKontor } from "../redux/navigasjon/navigasjonActions";
-import { NavigasjonActions } from "../redux/navigasjon/navigasjonTypes";
+import { navigerTilFinnDittNavKontor } from "../../digisos/redux/navigasjon/navigasjonActions";
+import { NavigasjonActions } from "../../digisos/redux/navigasjon/navigasjonTypes";
 
 interface Props {
 	onClick: () => NavigasjonActions;

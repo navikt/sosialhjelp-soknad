@@ -1,16 +1,16 @@
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import { FormattedHTMLMessage, injectIntl } from "react-intl";
 import * as React from "react";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import Barnebidrag from "./Barnebidrag";
 import RegistrerteBarn from "./RegistrerteBarn";
-import { REST_STATUS } from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {IntlProps} from "../../../../nav-soknad/utils";
 
 type Props = SoknadsdataContainerProps & IntlProps;
@@ -29,7 +29,10 @@ class ForsorgerPliktView extends React.Component<Props, State> {
 	}
 
 	componentDidMount() {
-		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.FORSORGERPLIKT);
+		const {behandlingsId} = this.props;
+		if (behandlingsId){
+			this.props.hentSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT);
+		}
 	}
 
 	componentWillUpdate(nextProps: Readonly<Props>, nextState: Readonly<State>, nextContext: any) {

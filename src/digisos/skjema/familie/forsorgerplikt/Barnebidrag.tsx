@@ -3,23 +3,25 @@ import * as React from "react";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 
 class Barnebidrag extends React.Component<SoknadsdataContainerProps, {}> {
 
 	FAKTUM_KEY = "familie.barn.true.barnebidrag";
 
 	handleClickRadio(verdi: string) {
-		const {soknadsdata, oppdaterSoknadsdataSti, brukerBehandlingId, lagreSoknadsdata} = this.props;
-		const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
-		forsorgerplikt.barnebidrag = verdi;
-		oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-		const payload  = {
-			"barnebidrag": verdi
-		};
-		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, payload);
+		const {soknadsdata, oppdaterSoknadsdataSti, behandlingsId, lagreSoknadsdata} = this.props;
+		if (behandlingsId){
+			const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
+			forsorgerplikt.barnebidrag = verdi;
+			oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+			const payload  = {
+				"barnebidrag": verdi
+			};
+			lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, payload);
+		}
 	}
 
 	renderRadio(verdi: string) {

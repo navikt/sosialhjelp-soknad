@@ -1,5 +1,5 @@
 import {Feil} from "nav-frontend-skjema";
-import {Valideringsfeil} from "../redux/valideringActionTypes";
+import {Valideringsfeil} from "../../digisos/redux/validering/valideringActionTypes";
 
 export function getFeil(feil: Valideringsfeil[] | undefined, intl: any, faktumKey: string, faktumIndex: number | undefined): Feil | undefined {
     if (feil && feil.length > 0) {
