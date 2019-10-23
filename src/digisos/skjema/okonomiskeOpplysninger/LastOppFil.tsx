@@ -72,7 +72,7 @@ class LastOppFil extends React.Component<Props, {}> {
                     type="file"
                     className="visuallyhidden"
                     tabIndex={-1}
-                    accept="image/jpeg,image/png,application/pdf"
+                    accept= { window.navigator.platform === "iPhone" ? "*" : "image/jpeg,image/png,application/pdf"}
                 />
 
                 <div role="alert" aria-live="assertive">
