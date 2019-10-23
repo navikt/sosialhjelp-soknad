@@ -97,7 +97,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 						type="file"
 						className="visuallyhidden"
 						tabIndex={-1}
-						accept= { window.navigator.platform === "iPhone" ? "*" : "image/jpeg,image/png,application/pdf"}
+						accept={window.navigator.platform.match(/iPad|iPhone|iPod/) !== null ? "*" : "image/jpeg,image/png,application/pdf"}
 					/>
 					{this.props.vedlegg && this.props.vedlegg.filer.map((fil: Fil) => {
 						const lastNedUrl = `opplastetVedlegg/${fil.uuid}/fil`;
