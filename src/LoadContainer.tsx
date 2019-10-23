@@ -46,9 +46,9 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
     }
 
     return (
-        <div>
+        <>
             {children}
-        </div>
+        </>
     )
 };
 
