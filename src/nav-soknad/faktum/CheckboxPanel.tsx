@@ -34,6 +34,7 @@ class CheckboxPanel extends React.Component<Props, {checked: boolean}> {
             <div
                 className={classNames}
                 onClick={(evt: any) => this.onChange(evt)}
+                id={id + "_klikkbar_div"}
             >
                 <div className="inputPanel__checkbox_wrapper ">
                     <Checkbox
