@@ -51,7 +51,7 @@ export function getInnsynUrl(): string {
          return `http://localhost:3000/${INNSYN_CONTEXT_PATH}/`; // Endre port så det passer med porten sosialhjelp-innsyn kjører på lokalt hos deg
     }
 
-    return window.location.origin + INNSYN_CONTEXT_PATH;
+    return `${window.location.origin}/${INNSYN_CONTEXT_PATH}/`;
 }
 
 export function getAbsoluteApiUrl(withAccessToken?: boolean) {
