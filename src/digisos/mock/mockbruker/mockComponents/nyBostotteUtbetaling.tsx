@@ -35,10 +35,11 @@ export class NyBostotteUtbetaling extends React.Component<Props, State>{
 
 	constructor(props: Props){
 		super(props);
+		const now = new Date().toISOString();
 
 		this.state = {
 			isOpened: false,
-			utbetalingsdato: "2019-09-01",
+			utbetalingsdato: now.slice(0, now.indexOf("T")),
 			utbetalingsbelop: 6000,
 			utbetalingsmottaker: MottakerType.HUSSTAND,
 			utbetalingsrolle: RolleType.HOVEDPERSON,

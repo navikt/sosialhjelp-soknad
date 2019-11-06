@@ -50,11 +50,12 @@ export class NyBostotteSak extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
+        const now = new Date();
 
         this.state = {
             isOpened: false,
-            saksmnd: 9,
-            saksar: 2019,
+            saksmnd: now.getMonth()+1,
+            saksar: now.getFullYear(),
             saksstatus: StatusType.UNDER_BEHANDLING,
             saksbeskrivelse: "",
             saksrolle: RolleType.HOVEDPERSON,

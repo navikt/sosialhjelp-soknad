@@ -10,14 +10,14 @@ export const initialBostotteState: Bostotte = {
 	"utbetalinger": [],
 	"saker": [],
 	"stotteFraHusbankenFeilet": null
-}
+};
 
 export interface Utbetaling {
 	"kilde": string,
 	"type": string,
 	"tittel": string,
 	"mottaker": string,
-	"belop": number,
+	"netto": number,
 	"utbetalingsdato": string
 }
 

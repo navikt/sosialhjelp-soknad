@@ -58,7 +58,7 @@ class BostotteView extends React.Component<Props, State> {
 		}
 	}
 
-	private static renderUtbetaling(belop: number, dato: string, mottaker: string, index: number) {
+	private static renderUtbetaling(netto: number, dato: string, mottaker: string, index: number) {
 		let key = "bostotteUtbetaling_" + index;
 		return (
 			<div className="utbetalinger blokk-xs" key={key}>
@@ -66,7 +66,7 @@ class BostotteView extends React.Component<Props, State> {
 				<div className="utbetaling">
 				<span><FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/> {formaterIsoDato(dato)}</span>
 				<span className="verdi detaljeliste__verdi">
-					<FormattedNumber value={belop} minimumFractionDigits={2} maximumFractionDigits={2}/> kr
+					<FormattedNumber value={netto} minimumFractionDigits={2} maximumFractionDigits={2}/> kr
 				</span>
 				</div>
 			</div>
@@ -128,7 +128,7 @@ class BostotteView extends React.Component<Props, State> {
 					{!harBostotterUtbetalinger && (<FormattedMessage id="inntekt.bostotte.husbanken.ingenutbetalingerfunnet"/>)}
 					{
 						bostotte.utbetalinger.map((utbetaling, index) => {
-							return BostotteView.renderUtbetaling(utbetaling.belop, utbetaling.utbetalingsdato, utbetaling.mottaker, index);
+							return BostotteView.renderUtbetaling(utbetaling.netto, utbetaling.utbetalingsdato, utbetaling.mottaker, index);
 						})
 					}
 					<h4 className="blokk-null"><FormattedMessage id="inntekt.bostotte.husbanken.saker"/></h4>
