@@ -11,6 +11,8 @@ import {Valideringsfeil, ValideringsFeilKode} from "../validering/valideringActi
 import {State} from "../reducers";
 import {REST_STATUS, SoknadState} from "../soknad/soknadTypes";
 import {visSamtykkeInfo} from "../soknad/soknadActions";
+import {Dispatch} from "redux";
+import {KommuneInfoState} from "../kommuner/kommunerStatusTypes";
 
 /*
  * Properties og redux koblinger som er felles for komponenter i søknadsskjemaet.
@@ -21,6 +23,7 @@ export interface SoknadsdataContainerProps {
 
     // PropsMappedFromStore:
     soknad: SoknadState
+    kommuneInfo: KommuneInfoState
     soknadsdata: Soknadsdata;
     behandlingsId: string | undefined;
     feil: Valideringsfeil[];
@@ -33,23 +36,28 @@ export interface SoknadsdataContainerProps {
     visSamtykkeInfo: (vis: boolean) => void;
     setValideringsfeil: (feilkode: ValideringsFeilKode, faktumKey: string) => void;
     clearValideringsfeil: (faktumKey: string) => void;
+    dispatchAction: (action: any) => void;
 }
 
 export const connectSoknadsdataContainer = connect(
     (state: State) => ({
         soknad: state.soknad,
+        kommuneInfo: state.kommuneInfo,
         behandlingsId: state.soknad.behandlingsId,
         soknadsdata: JSON.parse(JSON.stringify(state.soknadsdata)),
         feil: state.validering.feil
     }),
-    {
-        hentSoknadsdata,
-        lagreSoknadsdata,
-        oppdaterSoknadsdataSti,
-        settRestStatus,
-        visSamtykkeInfo,
-        setValideringsfeil,
-        clearValideringsfeil
+    (dispatch: Dispatch) => {
+        return {
+            hentSoknadsdata: (brukerBehandlingId: string, sti: string) => hentSoknadsdata(brukerBehandlingId, sti)(dispatch),
+            lagreSoknadsdata: (brukerBehandlingId: string, sti: string, soknadsdata: SoknadsdataType, responseHandler?: (response: any) => void) => lagreSoknadsdata(brukerBehandlingId, sti, soknadsdata, responseHandler)(dispatch),
+            oppdaterSoknadsdataSti: (sti: string, verdi: SoknadsdataType | null) => dispatch(oppdaterSoknadsdataSti(sti, verdi)),
+            settRestStatus: (sti: string, restStatus: REST_STATUS) => dispatch(settRestStatus(sti, restStatus)),
+            visSamtykkeInfo: (skalVises: boolean) => dispatch(visSamtykkeInfo(skalVises)),
+            setValideringsfeil: (feilkode: ValideringsFeilKode, faktumKey: string) => dispatch(setValideringsfeil(feilkode, faktumKey)),
+            clearValideringsfeil: (faktumKey: string) => dispatch(clearValideringsfeil(faktumKey)),
+            dispatchAction: (action: any) => {dispatch(action)}
+        }
     }
 );
 
