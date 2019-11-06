@@ -17,6 +17,7 @@ export interface NavEnhet {
 	enhetsnr: string;
 	enhetsnavn: string;
 	kommunenavn: string;
+	kommuneNr: string;
 	valgt: boolean
 }
 
