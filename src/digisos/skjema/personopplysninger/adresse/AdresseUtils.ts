@@ -96,8 +96,11 @@ const ekstraherHusnummerHusbokstav = (inntastetAdresse: string): any => {
 
 const soknadsmottakerStatus = (soknadsdata: Soknadsdata): SoknadsMottakerStatus => {
     const navEnheter = soknadsdata.personalia.navEnheter;
-    const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt);
+    const valgtNavEnhet: NavEnhet | undefined = navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt);
     const adresser = soknadsdata.personalia.adresser;
+    if (valgtNavEnhet && valgtNavEnhet.isMottakMidlertidigDeaktivert) {
+        return SoknadsMottakerStatus.ER_PAKOBLET_MEN_HAR_MIDLERTIDIG_FEIL
+    }
     if (valgtNavEnhet || navEnheter.length === 1) {
         return SoknadsMottakerStatus.GYLDIG;
     }
