@@ -77,7 +77,7 @@ export class NyBostotteSak extends React.Component<Props, State> {
 
     lagreNySak() {
         var vedtak = undefined;
-        if(this.state.saksstatus == "VEDTATT") {
+        if(this.state.saksstatus === "VEDTATT") {
             vedtak = new Vedtak();
             vedtak.beskrivelse = this.state.saksbeskrivelse;
             vedtak.status = VedtaksStatus.AVSLAG;
@@ -132,11 +132,11 @@ export class NyBostotteSak extends React.Component<Props, State> {
                                     onChange={(evt: any) => {
                                         this.setState({saksstatus: evt.target.value});
                                         if (evt.target.value === StatusType.UNDER_BEHANDLING) {
-                                            this.setState({saksbeskrivelse: ""})
-                                            this.setState({vedtaksstatus: undefined})
+                                            this.setState({saksbeskrivelse: ""});
+                                            this.setState({vedtaksstatus: undefined});
                                         } else {
-                                            this.setState({saksbeskrivelse: Vedtakskode.V00})
-                                            this.setState({vedtaksstatus: VedtaksStatus.INNVILGET})
+                                            this.setState({saksbeskrivelse: Vedtakskode.V00});
+                                            this.setState({vedtaksstatus: VedtaksStatus.INNVILGET});
                                         }
                                     }}>
                                 <option value={StatusType.UNDER_BEHANDLING} key={StatusType.UNDER_BEHANDLING}>
