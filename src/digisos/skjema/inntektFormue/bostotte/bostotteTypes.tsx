@@ -25,4 +25,5 @@ export interface Sak {
 	"dato": string,
 	"status": string
 	"beskrivelse": string
+	"vedtaksstatus": string
 }

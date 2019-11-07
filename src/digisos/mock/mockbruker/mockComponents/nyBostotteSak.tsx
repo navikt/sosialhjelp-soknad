@@ -13,20 +13,32 @@ interface State {
     saksar: number;
     saksstatus: StatusType;
     saksbeskrivelse: string;
+    vedtaksstatus?: VedtaksStatus;
     saksrolle: RolleType;
+}
+
+export class Vedtak {
+    beskrivelse: string = "";
+    status: string = "";
 }
 
 export class NySakObject {
     mnd: number = -1;
     ar: number = -1;
     status: string = "";
-    vedtak: {} = {};
+    vedtak?: Vedtak = undefined;
     rolle: string = "";
 }
 
 enum StatusType {
     UNDER_BEHANDLING = "UNDER_BEHANDLING",
     VEDTATT = "VEDTATT"
+}
+
+enum VedtaksStatus {
+    INNVILGET = "INNVILGET",
+    AVSLAG = "AVSLAG",
+    AVVIST = "AVVIST"
 }
 
 enum Vedtakskode {
@@ -58,16 +70,29 @@ export class NyBostotteSak extends React.Component<Props, State> {
             saksar: now.getFullYear(),
             saksstatus: StatusType.UNDER_BEHANDLING,
             saksbeskrivelse: "",
+            vedtaksstatus: undefined,
             saksrolle: RolleType.HOVEDPERSON,
         }
     }
 
     lagreNySak() {
+        var vedtak = undefined;
+        if(this.state.saksstatus == "VEDTATT") {
+            vedtak = new Vedtak();
+            vedtak.beskrivelse = this.state.saksbeskrivelse;
+            vedtak.status = VedtaksStatus.AVSLAG;
+            if (this.state.vedtaksstatus === "INNVILGET") {
+                vedtak.status = VedtaksStatus.INNVILGET;
+            }
+            if (this.state.vedtaksstatus === "AVVIST") {
+                vedtak.status = VedtaksStatus.AVVIST;
+            }
+        }
         const nySak: NySakObject = {
             ar: this.state.saksar,
             mnd: this.state.saksmnd,
             status: this.state.saksstatus,
-            vedtak: {beskrivelse: this.state.saksbeskrivelse},
+            vedtak: vedtak,
             rolle: this.state.saksrolle,
         };
 
@@ -75,6 +100,16 @@ export class NyBostotteSak extends React.Component<Props, State> {
         this.setState({isOpened: false})
     }
 
+    updateVedtak(value: string) {
+        this.setState({saksbeskrivelse: value});
+        if(value === Vedtakskode.V00) {
+            this.setState({vedtaksstatus: VedtaksStatus.INNVILGET})
+        } else if(value === Vedtakskode.V09) {
+            this.setState({vedtaksstatus: VedtaksStatus.AVVIST})
+        } else {
+            this.setState({vedtaksstatus: VedtaksStatus.AVSLAG})
+        }
+    }
 
     render() {
 
@@ -98,8 +133,10 @@ export class NyBostotteSak extends React.Component<Props, State> {
                                         this.setState({saksstatus: evt.target.value});
                                         if (evt.target.value === StatusType.UNDER_BEHANDLING) {
                                             this.setState({saksbeskrivelse: ""})
+                                            this.setState({vedtaksstatus: undefined})
                                         } else {
                                             this.setState({saksbeskrivelse: Vedtakskode.V00})
+                                            this.setState({vedtaksstatus: VedtaksStatus.INNVILGET})
                                         }
                                     }}>
                                 <option value={StatusType.UNDER_BEHANDLING} key={StatusType.UNDER_BEHANDLING}>
@@ -111,7 +148,7 @@ export class NyBostotteSak extends React.Component<Props, State> {
                             </Select>
                             {this.state.saksstatus === StatusType.VEDTATT && (
                                 <Select label='Beskrivelse (når status vedtatt):'
-                                onChange={(evt: any) => this.setState({saksbeskrivelse: evt.target.value})}>
+                                onChange={(evt: any) => this.updateVedtak(evt.target.value)}>
                                 <option value={Vedtakskode.V00} key={Vedtakskode.V00}>
                                   {Vedtakskode.V00}
                                 </option>

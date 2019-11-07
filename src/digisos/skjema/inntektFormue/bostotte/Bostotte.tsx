@@ -73,13 +73,23 @@ class BostotteView extends React.Component<Props, State> {
 		)
 	}
 
-	private static renderSak(key: string, dato: string, status: string, vedtaksbeskrivelse: string, index: number) {
-		const beskrivelse = status === "VEDTATT" ? vedtaksbeskrivelse : <FormattedMessage id={"inntekt.bostotte.husbanken.status"} values={{"status":status}} />;
+	private static renderSak(key: string, dato: string, status: string, vedtaksstatus: string, vedtaksbeskrivelse: string, index: number) {
+		const visningstatus = status === "VEDTATT" ?
+			<FormattedMessage id={"inntekt.bostotte.husbanken.vedtaksstatus"} values={{"status":vedtaksstatus}} /> :
+			<FormattedMessage id={"inntekt.bostotte.husbanken.status"} values={{"status":status}} />;
 		let formatertDato = <FormattedDate value={dato} month="long" year="numeric" />;
 		return (
 			<div key={`${key}-${index}`} className="sak blokk-xs">
 				<span className="bostotte-dato">{formatertDato}</span>
-				<span>{beskrivelse}</span>
+				{status === "VEDTATT" && vedtaksstatus === "INNVILGET" &&
+					<span>{vedtaksbeskrivelse}</span>
+				}
+				{(status !== "VEDTATT" || vedtaksstatus !== "INNVILGET") &&
+					<span>{visningstatus}</span>
+				}
+				{status === "VEDTATT" && vedtaksstatus !== "INNVILGET" &&
+					<div className="bostotte-vedtaksbeskrivelse-innrykk">{vedtaksbeskrivelse}</div>
+				}
 			</div>
 		)
 	}
@@ -135,7 +145,7 @@ class BostotteView extends React.Component<Props, State> {
 					{!harBostotterSaker && (<FormattedMessage id="inntekt.bostotte.husbanken.ingensakerfunnet"/>)}
 					{
 						bostotte.saker.map((sak, index) => {
-							return BostotteView.renderSak("BostotteSak_" + index, sak.dato, sak.status, sak.beskrivelse, index);
+							return BostotteView.renderSak("BostotteSak_" + index, sak.dato, sak.status, sak.vedtaksstatus, sak.beskrivelse, index);
 						})
 					}
 				</Lesmerpanel>)}

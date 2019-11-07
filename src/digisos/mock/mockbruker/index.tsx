@@ -257,6 +257,9 @@ class MockBruker extends React.Component<Props,OwnState> {
 				<div>År: { sak.ar }</div>
 				<div>Måned: { sak.mnd }</div>
 				<div>Status: { sak.status }</div>
+				{sak.status === "VEDTATT" && sak.vedtak &&
+					<div>Vedtak: {sak.vedtak.status} - {sak.vedtak.beskrivelse}</div>
+				}
 				<button onClick={() => {
 					const bostotteDto = {...this.state.bostotteDto};
 					bostotteDto.saker.splice(key, 1);
