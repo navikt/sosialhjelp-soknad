@@ -15,6 +15,7 @@ export interface AdressesokTreff {
 export interface NavEnhet {
 	orgnr: string;
 	enhetsnr: string;
+	isMottakMidlertidigDeaktivert: boolean;
 	enhetsnavn: string;
 	kommunenavn: string;
 	kommuneNr: string;
@@ -100,5 +101,5 @@ export enum SoknadsMottakerStatus {
 	VALGT = "valgt",
 	GYLDIG = "gyldig",
 	UGYLDIG = "ugyldig",
-	MANGLER_NAV_KONTOR = "mangler_nav_kontor"
+	ER_PAKOBLET_MEN_HAR_MIDLERTIDIG_FEIL = "mangler_nav_kontor"
 }

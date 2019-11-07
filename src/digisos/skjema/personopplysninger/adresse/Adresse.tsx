@@ -23,11 +23,6 @@ import {
     fetchKommuneNummerInfo,
     fetchTilgjengeligeKommuner
 } from "../../../redux/kommuner/kommunerUtilities";
-import {
-    KommuneNummerOgDescription,
-    KommunerTilgjengelighetJsonResponse
-} from "../../../redux/kommuner/kommunerStatusTypes";
-import AlertStripe from "nav-frontend-alertstriper";
 
 interface OwnProps {
     disableLoadingAnimation?: boolean;
@@ -103,16 +98,10 @@ class AdresseView extends React.Component<Props, State> {
             this.setState({settAdressePending: true});
             lagreSoknadsdata(behandlingsId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
                 if (Array.isArray(navEnheter)) {
-                    navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
+                    navEnheter = navEnheter.filter(enhet => enhet.enhetsnr !== null);
                     if (navEnheter.length === 1) {
                         const valgtNavEnhet: NavEnhet = navEnheter[0];
                         valgtNavEnhet.valgt = true;
-
-
-
-
-
-
 
                         lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
                         this.slettEventuelleValideringsfeil();
