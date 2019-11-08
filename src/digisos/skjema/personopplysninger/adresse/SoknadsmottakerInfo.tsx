@@ -79,7 +79,7 @@ class SoknadsmottakerInfo extends React.Component<Props, {}> {
 					{ tekstAdvarsel }
 				</AlertStripe>
 			)
-        } else if (mottakerStatus === SoknadsMottakerStatus.ER_PAKOBLET_MEN_HAR_MIDLERTIDIG_FEIL) {
+        } else if (mottakerStatus === SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT) {
 			informasjonspanel = (
 				<AlertStripe type="feil">
 					{ tekstFeil }

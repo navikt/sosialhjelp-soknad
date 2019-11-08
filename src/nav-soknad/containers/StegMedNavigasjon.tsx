@@ -126,9 +126,15 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
             const {feil} = this.props.validering;
 
             const valgtNavEnhet = this.finnSoknadsMottaker();
-            if (aktivtSteg.stegnummer === 1 && !valgtNavEnhet) {
-                this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
-                this.props.dispatch(visValideringsfeilPanel());
+            if (aktivtSteg.stegnummer === 1) {
+                if (!valgtNavEnhet){
+                    this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
+                    this.props.dispatch(visValideringsfeilPanel());
+                }
+                if (valgtNavEnhet && valgtNavEnhet.isMottakMidlertidigDeaktivert){
+                    this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
+                    this.props.dispatch(visValideringsfeilPanel());
+                }
             } else {
                 if (feil.length === 0 && behandlingsId) {
                     this.props.dispatch(clearAllValideringsfeil());
