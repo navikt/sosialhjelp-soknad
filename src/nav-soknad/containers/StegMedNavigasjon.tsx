@@ -8,7 +8,6 @@ import {Innholdstittel} from "nav-frontend-typografi";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import Knapperad from "../components/knapperad";
 import {
-    REST_STATUS,
     SkjemaConfig,
     SkjemaSteg,
     SkjemaStegType,
@@ -27,8 +26,6 @@ import {gaTilbake, gaVidere, tilSteg} from "../../digisos/redux/navigasjon/navig
 import {loggAdvarsel, loggFeil, loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
 import AppBanner from "../components/appHeader/AppHeader";
 import {
-    oppdaterSoknadsdataSti,
-    settRestStatus,
     Soknadsdata,
     SoknadsSti
 } from "../../digisos/redux/soknadsdata/soknadsdataReducer";
@@ -43,7 +40,7 @@ import {State} from "../../digisos/redux/reducers";
 import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
 import {erPaStegEnOgValgtNavEnhetErUgyldig} from "./containerUtils";
 import {fetchToJson, HttpStatus} from "../utils/rest-utils";
-import {hentSoknadsdata, soknadsdataUrl} from "../../digisos/redux/soknadsdata/soknadsdataActions";
+import {soknadsdataUrl} from "../../digisos/redux/soknadsdata/soknadsdataActions";
 import AlertStripe from "nav-frontend-alertstriper";
 import {tekstFeil} from "../../digisos/skjema/personopplysninger/adresse/SoknadsmottakerInfo";
 
