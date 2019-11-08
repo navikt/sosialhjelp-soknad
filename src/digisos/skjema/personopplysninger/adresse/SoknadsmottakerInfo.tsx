@@ -6,30 +6,16 @@ import {
     SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {
-	AdresseElement,
 	AdresseKategori,
-	Adresser, Baseadresse,
-	Gateadresse,
-	Matrikkeladresse,
+	Adresser,
 	NavEnhet,
-	SoknadsMottakerStatus, UstrukturertAdresse
+	SoknadsMottakerStatus
 } from "./AdresseTypes";
 import {soknadsmottakerStatus} from "./AdresseUtils";
 import AlertStripe from "nav-frontend-alertstriper";
 import {FormattedHTMLMessage} from "react-intl";
 import {KommuneNummerOgDescription} from "../../../redux/kommuner/kommunerStatusTypes";
 
-// adresse.alertstripe.suksess=Søknaden vil bli sendt til: {navkontorNavn}, {kommuneNavn} kommune.
-const tekstSuksess = (
-	<FormattedHTMLMessage
-		id="adresse.alertstripe.suksess"
-		values={
-			{
-				navkontorNavn: "NAV Frogner",
-				kommuneNavn: "Frogner"
-			}}
-	/>
-);
 // adresse.alertstripe.advarsel={kommuneNavn} kommune kan ikke ta i mot digitale søknader ennå. Du kan <a href="FIXMEtrenger-riktig-link" target="_blank">søke på papirskjema</a>.
 // adresse.alertstripe.advarsel.fixme={kommuneNavn} kommune kan ikke ta i mot digitale søknader ennå.
 const tekstAdvarsel = (kommuneNavn: string): JSX.Element => (
