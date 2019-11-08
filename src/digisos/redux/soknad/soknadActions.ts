@@ -1,4 +1,9 @@
-import {AVBRYT_DESTINASJON, SoknadActionType, SoknadActionTypeKeys} from "./soknadActionTypes";
+import {
+	AVBRYT_DESTINASJON,
+	SoknadActionType,
+	SoknadActionTypeKeys,
+	VisMidlertidigDeaktivertPanel
+} from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {FornavnResponse, TilgangResponse} from "./soknadTypes";
 import {IntlShape} from "react-intl";
@@ -167,3 +172,10 @@ export function showFeilSide(): SoknadActionType {
 		type: SoknadActionTypeKeys.SHOW_FEIL_SIDE
 	}
 }
+
+export const visMidlertidigDeaktivertPanel = (shouldShow: boolean): VisMidlertidigDeaktivertPanel => {
+	return {
+		type: SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL,
+		shouldShow
+	}
+};

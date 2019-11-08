@@ -1,26 +1,48 @@
 import * as React from "react";
 import {RouteComponentProps, RouterProps, withRouter} from "react-router";
-import { injectIntl} from "react-intl";
+import {injectIntl} from "react-intl";
 import {Location} from "history";
 import {connect} from "react-redux";
 import DocumentTitle from "react-document-title";
 import {Innholdstittel} from "nav-frontend-typografi";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import Knapperad from "../components/knapperad";
-import {SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../../digisos/redux/soknad/soknadTypes";
+import {
+    SkjemaConfig,
+    SkjemaSteg,
+    SkjemaStegType,
+    SoknadState
+} from "../../digisos/redux/soknad/soknadTypes";
 import {DispatchProps, ValideringsFeilKode} from "../../digisos/redux/reduxTypes";
 import {setVisBekreftMangler} from "../../digisos/redux/oppsummering/oppsummeringActions";
 import {getIntlTextOrKey, IntlProps, scrollToTop} from "../utils";
-import {avbrytSoknad, sendSoknad} from "../../digisos/redux/soknad/soknadActions";
+import {
+    avbrytSoknad,
+    sendSoknad,
+    showServerFeil,
+    visMidlertidigDeaktivertPanel
+} from "../../digisos/redux/soknad/soknadActions";
 import {gaTilbake, gaVidere, tilSteg} from "../../digisos/redux/navigasjon/navigasjonActions";
-import {loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
+import {loggAdvarsel, loggFeil, loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
 import AppBanner from "../components/appHeader/AppHeader";
-import {Soknadsdata} from "../../digisos/redux/soknadsdata/soknadsdataReducer";
-import {clearAllValideringsfeil, setValideringsfeil, visValideringsfeilPanel} from "../../digisos/redux/validering/valideringActions";
+import {
+    Soknadsdata,
+    SoknadsSti
+} from "../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {
+    clearAllValideringsfeil,
+    setValideringsfeil,
+    visValideringsfeilPanel
+} from "../../digisos/redux/validering/valideringActions";
 import {ValideringState} from "../../digisos/redux/validering/valideringReducer";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {State} from "../../digisos/redux/reducers";
 import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
+import {erPaStegEnOgValgtNavEnhetErUgyldig} from "./containerUtils";
+import {fetchToJson, HttpStatus} from "../utils/rest-utils";
+import {soknadsdataUrl} from "../../digisos/redux/soknadsdata/soknadsdataActions";
+import AlertStripe from "nav-frontend-alertstriper";
+import {tekstFeil} from "../../digisos/skjema/personopplysninger/adresse/SoknadsmottakerInfo";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -29,7 +51,7 @@ const stopEvent = (evt: React.FormEvent<any>) => {
 
 const stopKeyCodeEvent = (evt: any) => {
     const key = evt.key;
-    if (key === 'Enter'){
+    if (key === 'Enter') {
         evt.stopPropagation();
         evt.preventDefault();
     }
@@ -59,6 +81,7 @@ interface StateProps {
     oppsummeringBekreftet?: boolean;
     fodselsnummer: string;
     soknadsdata: Soknadsdata;
+    soknad: SoknadState
 }
 
 type Props = OwnProps &
@@ -111,34 +134,49 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
     }
 
     handleGaVidere(aktivtSteg: SkjemaSteg) {
-        const {behandlingsId} = this.props;
-        if (behandlingsId){
+        const {behandlingsId, dispatch} = this.props;
+        if (behandlingsId) {
             if (aktivtSteg.type === SkjemaStegType.oppsummering) {
                 if (this.props.oppsummeringBekreftet) {
                     this.loggAdresseTypeTilGrafana();
-                    this.props.dispatch(sendSoknad(behandlingsId));
+                    dispatch(sendSoknad(behandlingsId));
                 } else {
-                    this.props.dispatch(setVisBekreftMangler(true));
+                    dispatch(setVisBekreftMangler(true));
                 }
                 return;
             }
 
             const {feil} = this.props.validering;
 
-            const valgtNavEnhet = this.finnSoknadsMottaker();
-            if (aktivtSteg.stegnummer === 1) {
-                if (!valgtNavEnhet){
-                    this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
-                    this.props.dispatch(visValideringsfeilPanel());
-                }
-                if (valgtNavEnhet && valgtNavEnhet.isMottakMidlertidigDeaktivert){
-                    this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
-                    this.props.dispatch(visValideringsfeilPanel());
-                }
+            const valgtNavEnhet: NavEnhet | undefined = this.finnSoknadsMottaker();
+
+            if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
+                dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
+                dispatch(visValideringsfeilPanel());
             } else {
-                if (feil.length === 0 && behandlingsId) {
-                    this.props.dispatch(clearAllValideringsfeil());
-                    this.props.dispatch(gaVidere(aktivtSteg.stegnummer, behandlingsId));
+                if (feil.length === 0) {
+                    fetchToJson(soknadsdataUrl(behandlingsId, SoknadsSti.NAV_ENHETER)).then((response) => {
+                        if (response && (response as NavEnhet[])[0]) {
+                            const valgtNavKontor: NavEnhet | undefined = (response as NavEnhet[]).find((navEnhet: NavEnhet) => {
+                                return navEnhet.valgt;
+                            });
+
+                            if (valgtNavKontor && !valgtNavKontor.isMottakMidlertidigDeaktivert) {
+                                dispatch(clearAllValideringsfeil());
+                                dispatch(visMidlertidigDeaktivertPanel(false));
+                                dispatch(gaVidere(aktivtSteg.stegnummer, behandlingsId));
+                            } else {
+                                dispatch(visMidlertidigDeaktivertPanel(true));
+                            }
+                        }
+                    }).catch((reason: any) => {
+                        if (reason.message === HttpStatus.UNAUTHORIZED) {
+                            dispatch(loggAdvarsel("hentSoknadsdata: " + reason));
+                        } else {
+                            dispatch(loggFeil("Henting av navEnhet feilet: " + reason));
+                            dispatch(showServerFeil(true));
+                        }
+                    });
                 } else {
                     this.props.dispatch(visValideringsfeilPanel());
                 }
@@ -152,15 +190,15 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
     }
 
     handleGaTilbake(aktivtSteg: number) {
-        const {behandlingsId} = this.props;
-        if (behandlingsId){
+        const {behandlingsId} = this.props;
+        if (behandlingsId) {
             this.props.dispatch(clearAllValideringsfeil());
             this.props.dispatch(gaTilbake(aktivtSteg, behandlingsId));
         }
     }
 
     render() {
-        const {skjemaConfig, intl, children, validering} = this.props;
+        const {skjemaConfig, intl, children, validering, soknad} = this.props;
         const aktivtStegConfig: SkjemaSteg | undefined = skjemaConfig.steg.find(
             s => s.key === this.props.stegKey
         );
@@ -225,24 +263,29 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                             <Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
                         </div>
                         {children}
-                        {aktivtStegConfig &&
-                        <Knapperad
-                            gaViderePending={this.props.nextButtonPending}
-                            gaVidereLabel={
-                                erOppsummering
-                                    ? getIntlTextOrKey(intl, "skjema.knapper.send")
-                                    : undefined
-                            }
-                            gaVidere={() =>
-                                this.handleGaVidere(aktivtStegConfig)}
-                            gaTilbake={
-                                aktivtStegConfig.stegnummer > 1
-                                    ? () => this.handleGaTilbake(aktivtStegConfig.stegnummer)
-                                    : undefined
-                            }
-                            avbryt={() => this.props.dispatch(avbrytSoknad())}
-                        />
-                        }
+                        { soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 0 && (
+                            <AlertStripe type="feil">
+                                { tekstFeil }
+                            </AlertStripe>
+                        )}
+                        {aktivtStegConfig && (
+                            <Knapperad
+                                gaViderePending={this.props.nextButtonPending}
+                                gaVidereLabel={
+                                    erOppsummering
+                                        ? getIntlTextOrKey(intl, "skjema.knapper.send")
+                                        : undefined
+                                }
+                                gaVidere={() =>
+                                    this.handleGaVidere(aktivtStegConfig)}
+                                gaTilbake={
+                                    aktivtStegConfig.stegnummer > 1
+                                        ? () => this.handleGaTilbake(aktivtStegConfig.stegnummer)
+                                        : undefined
+                                }
+                                avbryt={() => this.props.dispatch(avbrytSoknad())}
+                            />
+                        )}
                     </form>
                 </div>
             </div>
@@ -257,6 +300,7 @@ export default connect((state: State) => {
         nextButtonPending: state.soknad.sendSoknadPending,
         oppsummeringBekreftet: state.oppsummering.bekreftet,
         fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer,
-        soknadsdata: state.soknadsdata
+        soknadsdata: state.soknadsdata,
+        soknad: state.soknad
     };
 })(injectIntl(withRouter(StegMedNavigasjon)));

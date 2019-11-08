@@ -25,5 +25,3 @@ export const getContextPathBasename = (): string => getContextPathFromWindowLoca
 export function getRedirectPathname(): string {
     return `/${CONTEXT_PATH}/link`;
 }
-
-
