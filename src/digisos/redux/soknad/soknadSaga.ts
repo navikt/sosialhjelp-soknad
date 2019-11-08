@@ -50,7 +50,7 @@ enum SendtTilSystemEnum {
 function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
 
     try {
-        const tilgangResponse: TilgangResponse = yield call(fetchToJson, "informasjon/utslagskriterier/sosialhjelp");
+        const tilgangResponse: TilgangResponse = yield call(fetchToJson, "informasjon/utslagskriterier/sosialhjelp", true);
 
         // Hvis tilgangApiRespone ikke thrower unauthorized error, så er bruker autentisert
 
