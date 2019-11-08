@@ -3,7 +3,6 @@
 	"soknadtilleggsstonader.url": "http://127.0.0.1:8186/soknadtilleggsstonader/app",
 	"dineutbetalinger.link.url": "http://www.nav.no/dineutbetalinger",
 	"dialogarena.navnolink.url": "http://127.0.0.1:/site/2",
-	"soknad.brukerprofil.url": "https://www.nav.no/person/personopplysninger",
 	"soknad.ettersending.antalldager": "42",
 	"soknad.alderspensjon.url": "https://tjenester.nav.no/pselv/tilleggsfunksjonalitet/innlogging.jsf",
 	"soknad.reelarbeidsoker.url": "https://tjenester.nav.no/sbl/arbeid/registering",
