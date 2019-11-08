@@ -8,6 +8,7 @@ export const defaultState: SoknadState = {
 	showFeilSide: false,
 	showSideIkkeFunnet: false,
 	visSamtykkeInfo: false,
+	visMidlertidigDeaktivertPanel: false,
 
 	// Authentication state
 	linkVisited: false,
@@ -182,6 +183,12 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
 				...state,
 				tilgang: tilgangResponse,
 				fornavn: fornavnResponse.fornavn,
+			}
+		}
+		case SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL: {
+			return {
+				...state,
+				visMidlertidigDeaktivertPanel: action.shouldShow
 			}
 		}
 		default:

@@ -29,7 +29,8 @@ export enum SoknadActionTypeKeys {
 	VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO",
 	UPDATE_BEHANDLINGSID_PA_STORE = "soknad/UPDATE_BEHANDLINGSID_PA_STORE",
 	SHOW_SERVER_FEIL = "soknad/SHOW_SERVER_FEIL",
-	SHOW_SIDE_IKKE_FUNNET = "soknad/SHOW_SIDE_IKKE_FUNNET"
+	SHOW_SIDE_IKKE_FUNNET = "soknad/SHOW_SIDE_IKKE_FUNNET",
+	VIS_MIDLERTIDIG_DEAKTIVERT_PANEL = "soknad/VIS_MIDLERTIDIG_DEAKTIVERT_PANEL"
 }
 
 export type AVBRYT_DESTINASJON = "START" | "MINSIDE";
@@ -63,6 +64,7 @@ export type SoknadActionType =
 	| UpdateBehandlingsIdPaStore
 	| ShowServerFeil
 	| ShowSideIkkeFunnet
+	| VisMidlertidigDeaktivertPanel
 
 
 export interface SjekkAutentiseringOgTilgangOgHentRessurser {
@@ -187,3 +189,9 @@ export interface ShowSideIkkeFunnet {
 export interface ShowFeilSide {
 	type: SoknadActionTypeKeys.SHOW_FEIL_SIDE;
 }
+
+export interface VisMidlertidigDeaktivertPanel {
+	type: SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL;
+	shouldShow: boolean;
+}
+

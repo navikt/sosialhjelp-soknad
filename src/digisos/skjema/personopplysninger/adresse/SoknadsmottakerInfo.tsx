@@ -30,7 +30,7 @@ const tekstAdvarsel = (kommuneNavn: string): JSX.Element => (
 );
 // adresse.alertstripe.feil=Vi kan desverre ikke ta i mot digitale søknader akkuratt nå. <a href="FIXMEtrenger-riktig-link" target="_blank">Søk på papirskjema</a>, eller prøv igjen senere.
 // adresse.alertstripe.feil.fixme=Vi kan desverre ikke ta i mot digitale søknader akkuratt nå.
-const tekstFeil = (
+export const tekstFeil = (
 	<FormattedHTMLMessage id="adresse.alertstripe.feil.fixme"/>
 );
 
