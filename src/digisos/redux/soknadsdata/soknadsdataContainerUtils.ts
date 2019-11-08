@@ -56,7 +56,9 @@ export const connectSoknadsdataContainer = connect(
             visSamtykkeInfo: (skalVises: boolean) => dispatch(visSamtykkeInfo(skalVises)),
             setValideringsfeil: (feilkode: ValideringsFeilKode, faktumKey: string) => dispatch(setValideringsfeil(feilkode, faktumKey)),
             clearValideringsfeil: (faktumKey: string) => dispatch(clearValideringsfeil(faktumKey)),
-            dispatchAction: (action: any) => {dispatch(action)}
+            dispatchAction: (action: any) => {
+                dispatch(action)
+            }
         }
     }
 );
