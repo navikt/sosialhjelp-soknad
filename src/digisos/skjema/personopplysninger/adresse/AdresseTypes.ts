@@ -34,18 +34,20 @@ export enum AdresseType {
 	USTRUKTURERT = "ustrukturert"
 }
 
-export interface Matrikkeladresse {
+export interface Baseadresse {
 	kommunenummer: string;
-	gaardsnummer: string;
+}
+
+export interface Matrikkeladresse extends Baseadresse{
 	bruksnummer: string;
+	gaardsnummer: string;
 	festenummer: string;
 	seksjonsnummer: string;
 	undernummer: string;
 }
 
-export interface Gateadresse {
+export interface Gateadresse extends Baseadresse{
 	landkode: null;
-	kommunenummer: string;
 	adresselinjer: string[];
 	bolignummer: string;
 	postnummer: string;
