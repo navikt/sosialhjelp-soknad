@@ -85,6 +85,11 @@ export interface OpprettSoknadResponse {
     brukerBehandlingId: string;
 }
 
+export interface SendSoknadResponse {
+    sendtTil: string;
+    id: string;
+}
+
 export interface TilgangResponse {
     harTilgang: boolean;
     sperrekode: TilgangSperrekode;

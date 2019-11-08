@@ -2,7 +2,7 @@ import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {
     fetchDelete,
-    fetchPost, fetchToJson, HttpStatus,
+    fetchPost, fetchToJson, getInnsynUrl, HttpStatus,
     lastNedForsendelseSomZipFilHvisMockMiljoEllerDev
 } from "../../../nav-soknad/utils/rest-utils";
 import {
@@ -35,12 +35,17 @@ import {
     FornavnResponse,
     LedeteksterResponse,
     MiljovariablerResponse,
-    OpprettSoknadResponse,
+    OpprettSoknadResponse, SendSoknadResponse,
     TilgangResponse
 } from "./soknadTypes";
 import {lagreLedeteksterPaStore} from "../ledetekster/ledeteksterActions";
 import {lagreMiljovariablerPaStore} from "../miljovariabler/miljovariablerActions";
 
+
+enum SendtTilSystemEnum {
+    SVARUT = "SVARUT",
+    FIKS_DIGISOS_API = "FIKS_DIGISOS_API"
+}
 
 function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
 
@@ -126,7 +131,7 @@ function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
 
 function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
     try {
-        yield call(
+        const response: SendSoknadResponse = yield call(
             fetchPost,
             `soknader/${action.behandlingsId}/actions/send`,
             JSON.stringify({behandlingsId: action.behandlingsId}),
@@ -134,7 +139,15 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
         );
         lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.behandlingsId);
         yield put(sendSoknadOk(action.behandlingsId));
-        yield put(navigerTilKvittering(action.behandlingsId));
+        if (response && response.sendtTil === SendtTilSystemEnum.FIKS_DIGISOS_API) {
+            yield put(loggAdvarsel("Redirecter til innsyn etter innsending av søknad. Ble søknaden sendt til fiks-digisos-api?"));
+            window.location.href = getInnsynUrl() + response.id + '/status'
+        } else if (response && response.id) {
+            yield put(navigerTilKvittering(response.id));
+        } else {
+            yield put(navigerTilKvittering(action.behandlingsId));
+        }
+
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED){
             yield put(loggAdvarsel("sendSoknadSaga: " + reason));
