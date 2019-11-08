@@ -211,7 +211,7 @@ class AdresseView extends React.Component<Props, State> {
             annenAdresseLabel = (<TextPlaceholder lines={3}/>);
         } else {
             folkeregistrertAdresseLabel = (
-                <div className="finnNavKontor__label">
+                <div id="folkeregistrertAdresse_data_loaded" className="finnNavKontor__label">
                     <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
                     { folkeregistrertAdresse && <AdresseDetaljer adresse={folkeregistrertAdresse}/> }
                 </div>

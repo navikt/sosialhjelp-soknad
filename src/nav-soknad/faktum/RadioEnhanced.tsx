@@ -11,7 +11,7 @@ interface Props {
     checked?: null | boolean;
     faktumKey?: string;
     disabled?: boolean;
-    id?: string;
+    id: string;
     label?: any;
     onChange: any;
     className?: string;
@@ -100,6 +100,7 @@ class RadioEnhanced extends React.Component<Props & IntlProps, {}> {
             <div
                 className={classNames}
                 onClick={(event: any) => this.handleOnClick(event)}
+                id={this.props.id + "_klikkbar_div"}
             >
                 {this.renderRadio()}
                 {visSpinner && <div className="inputPanel__spinner"><NavFrontendSpinner type="M"/></div>}

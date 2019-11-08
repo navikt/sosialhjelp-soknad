@@ -139,9 +139,10 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
         );
         lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.behandlingsId);
         yield put(sendSoknadOk(action.behandlingsId));
-        if (response.sendtTil === SendtTilSystemEnum.FIKS_DIGISOS_API) {
+        if (response && response.sendtTil === SendtTilSystemEnum.FIKS_DIGISOS_API) {
+            yield put(loggAdvarsel("Redirecter til innsyn etter innsending av søknad. Ble søknaden sendt til fiks-digisos-api?"));
             window.location.href = getInnsynUrl() + response.id + '/status'
-        } else if (response.id) {
+        } else if (response && response.id) {
             yield put(navigerTilKvittering(response.id));
         } else {
             yield put(navigerTilKvittering(action.behandlingsId));
