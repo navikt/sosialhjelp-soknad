@@ -5,10 +5,19 @@ import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import {NavEnhet, SoknadsMottakerStatus} from "./AdresseTypes";
+import {
+	AdresseElement,
+	AdresseKategori,
+	Adresser, Baseadresse,
+	Gateadresse,
+	Matrikkeladresse,
+	NavEnhet,
+	SoknadsMottakerStatus, UstrukturertAdresse
+} from "./AdresseTypes";
 import {soknadsmottakerStatus} from "./AdresseUtils";
 import AlertStripe from "nav-frontend-alertstriper";
 import {FormattedHTMLMessage} from "react-intl";
+import {KommuneNummerOgDescription} from "../../../redux/kommuner/kommunerStatusTypes";
 
 // adresse.alertstripe.suksess=Søknaden vil bli sendt til: {navkontorNavn}, {kommuneNavn} kommune.
 const tekstSuksess = (
@@ -23,12 +32,12 @@ const tekstSuksess = (
 );
 // adresse.alertstripe.advarsel={kommuneNavn} kommune kan ikke ta i mot digitale søknader ennå. Du kan <a href="FIXMEtrenger-riktig-link" target="_blank">søke på papirskjema</a>.
 // adresse.alertstripe.advarsel.fixme={kommuneNavn} kommune kan ikke ta i mot digitale søknader ennå.
-const tekstAdvarsel = (
+const tekstAdvarsel = (kommuneNavn: string): JSX.Element => (
 	<FormattedHTMLMessage
 		id="adresse.alertstripe.advarsel.fixme"
 		values={
 			{
-				kommuneNavn: "Frogner"
+				kommuneNavn: kommuneNavn
 			}}
 	/>
 
@@ -38,6 +47,48 @@ const tekstAdvarsel = (
 const tekstFeil = (
 	<FormattedHTMLMessage id="adresse.alertstripe.feil.fixme"/>
 );
+
+const getKommuneNavnByBaseAdresse = (kommuneNummer: string, kommuneinfo: KommuneNummerOgDescription[]): string | undefined => {
+	const found: KommuneNummerOgDescription | undefined = kommuneinfo.find((k: KommuneNummerOgDescription) => {
+		return k.nummer === kommuneNummer;
+	});
+	return found ? found.navn : undefined;
+};
+
+const getKommuneNavnFraAdresseData = (adresser: Adresser, kommuneInfo: KommuneNummerOgDescription[]): string | undefined => {
+	switch (adresser.valg) {
+		case AdresseKategori.FOLKEREGISTRERT:{
+			if (adresser.folkeregistrert.gateadresse){
+				return getKommuneNavnByBaseAdresse(adresser.folkeregistrert.gateadresse.kommunenummer, kommuneInfo);
+			}
+			if (adresser.folkeregistrert.matrikkeladresse){
+				return getKommuneNavnByBaseAdresse(adresser.folkeregistrert.matrikkeladresse.kommunenummer, kommuneInfo);
+			}
+			return undefined;
+		}
+		case AdresseKategori.MIDLERTIDIG: {
+			if (adresser.midlertidig && adresser.midlertidig.gateadresse){
+				return getKommuneNavnByBaseAdresse(adresser.midlertidig.gateadresse.kommunenummer, kommuneInfo);
+			}
+			if (adresser.midlertidig && adresser.midlertidig.matrikkeladresse){
+				return getKommuneNavnByBaseAdresse(adresser.midlertidig.matrikkeladresse.kommunenummer, kommuneInfo);
+			}
+			return undefined;
+		}
+		case AdresseKategori.SOKNAD:{
+			if (adresser.soknad && adresser.soknad.gateadresse){
+				return getKommuneNavnByBaseAdresse(adresser.soknad.gateadresse.kommunenummer, kommuneInfo);
+			}
+			if (adresser.soknad && adresser.soknad.matrikkeladresse){
+				return getKommuneNavnByBaseAdresse(adresser.soknad.matrikkeladresse.kommunenummer, kommuneInfo);
+			}
+			return undefined;
+		}
+		default: {
+			return undefined;
+		}
+	}
+};
 
 
 type Props = SoknadsdataContainerProps;
@@ -58,6 +109,8 @@ class SoknadsmottakerInfo extends React.Component<Props, {}> {
         let farge: DigisosFarge = DigisosFarge.SUKSESS;
         let tekst: string = "";
 
+        const kommuneNavnFraAdresseData: string | undefined = getKommuneNavnFraAdresseData(this.props.soknadsdata.personalia.adresser, this.props.kommuneInfo.kommuneNummerInformasjon);
+
         const mottakerStatus: SoknadsMottakerStatus = soknadsmottakerStatus(soknadsdata);
 
         let informasjonspanel: JSX.Element | null = null;
@@ -76,7 +129,7 @@ class SoknadsmottakerInfo extends React.Component<Props, {}> {
         } else if (mottakerStatus === SoknadsMottakerStatus.UGYLDIG) { // ORANSJE
             informasjonspanel = (
 				<AlertStripe type="advarsel">
-					{ tekstAdvarsel }
+					{ kommuneNavnFraAdresseData ? tekstAdvarsel(kommuneNavnFraAdresseData) : "Søknaden er ikke tilgjengelig digitalt i din kommune. Ta kontakt direkte med ditt NAV-kontor." }
 				</AlertStripe>
 			)
         } else if (mottakerStatus === SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT) {
