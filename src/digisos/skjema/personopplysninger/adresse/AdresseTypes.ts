@@ -101,5 +101,5 @@ export enum SoknadsMottakerStatus {
 	VALGT = "valgt",
 	GYLDIG = "gyldig",
 	UGYLDIG = "ugyldig",
-	ER_PAKOBLET_MEN_HAR_MIDLERTIDIG_FEIL = "mangler_nav_kontor"
+	MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT = "mangler_nav_kontor"
 }

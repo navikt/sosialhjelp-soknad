@@ -98,10 +98,12 @@ const soknadsmottakerStatus = (soknadsdata: Soknadsdata): SoknadsMottakerStatus 
     const navEnheter = soknadsdata.personalia.navEnheter;
     const valgtNavEnhet: NavEnhet | undefined = navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt);
     const adresser = soknadsdata.personalia.adresser;
+
+
     if (valgtNavEnhet && valgtNavEnhet.isMottakMidlertidigDeaktivert) {
-        return SoknadsMottakerStatus.ER_PAKOBLET_MEN_HAR_MIDLERTIDIG_FEIL
+        return SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT
     }
-    if (valgtNavEnhet || navEnheter.length === 1) {
+    if (valgtNavEnhet && valgtNavEnhet.valgt && !valgtNavEnhet.isMottakMidlertidigDeaktivert) {
         return SoknadsMottakerStatus.GYLDIG;
     }
     if (adresser.valg) {
