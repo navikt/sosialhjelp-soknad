@@ -57,7 +57,7 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
             backendData.okonomiskeOpplysninger &&
             backendData.okonomiskeOpplysninger.length < 3;
         const infoMelding: JSX.Element = (
-            <div className="steg-ekstrainformasjon__blokk">
+            <div className="steg-ekstrainformasjon__infopanel">
                 <Informasjonspanel
                     ikon={InformasjonspanelIkon.HENSYN}
                     farge={DigisosFarge.VIKTIG}
@@ -67,7 +67,7 @@ class OkonomiskeOpplysningerView extends React.Component<Props, {}> {
             </div>
         );
         const ikkeBesvartMelding: JSX.Element = (
-            <div className="steg-ekstrainformasjon__blokk">
+            <div className="steg-ekstrainformasjon__infopanel">
                 <Informasjonspanel
                     ikon={InformasjonspanelIkon.HENSYN}
                     farge={DigisosFarge.VIKTIG}
