@@ -107,7 +107,8 @@ const getHeaders = (): Headers => {
 
 export enum HttpStatus {
     UNAUTHORIZED = "unauthorized",
-    UNAUTHORIZED_LOOP_ERROR = "unauthorized_loop_error"
+    UNAUTHORIZED_LOOP_ERROR = "unauthorized_loop_error",
+    SERVICE_UNAVAILABLE = "Service Unavailable"
 }
 
 export const serverRequest = (method: string, urlPath: string, body: string, withAccessToken?: boolean, retries = 6) => {

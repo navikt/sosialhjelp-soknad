@@ -5,22 +5,42 @@ import {useIntl} from "react-intl";
 
 interface Props {
 	gaViderePending?: boolean;
+	sendSoknadServiceUnavailable?: boolean;
 	gaVidereLabel?: string;
 	gaVidere?: () => void;
 	gaTilbake?: () => void;
 	avbryt?: () => void;
 }
 
-const SkjemaKnapperad: React.FC<Props> = ({ gaViderePending, gaVidere, gaTilbake, avbryt, gaVidereLabel }) => {
+const SkjemaKnapperad: React.FC<Props> = ({ gaViderePending, sendSoknadServiceUnavailable, gaVidere, gaTilbake, avbryt, gaVidereLabel }) => {
 	const intl = useIntl();
+	const isDisabled = (): boolean => {
+		if (sendSoknadServiceUnavailable){
+			return true
+		}
+		if (gaViderePending){
+			return true
+		}
+		return false;
+	};
+	const shouldShowSpinner = (): boolean => {
+		if (sendSoknadServiceUnavailable){
+			return false;
+		}
+		if (gaViderePending){
+			return true;
+		}
+		return false;
+	};
+
 	return (
 		<div className="skjema-knapperad ikke-juridisk-tekst">
 			<Hovedknapp
 				id="gaa_videre_button"
 				htmlType="button"
 				onClick={gaVidere}
-				spinner={gaViderePending}
-				disabled={gaViderePending}
+				spinner={shouldShowSpinner()}
+				disabled={isDisabled()}
 				type="hoved"
 			>
 				{gaVidereLabel

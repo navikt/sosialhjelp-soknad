@@ -49,6 +49,19 @@ export function sendSoknad(behandlingsId: string): SoknadActionType {
 		behandlingsId
 	};
 }
+
+export function setSendSoknadServiceUnavailable(): SoknadActionType {
+	return {
+		type: SoknadActionTypeKeys.SET_SEND_SOKNAD_SERVICE_UNAVAILABLE
+	}
+}
+
+export function resetSendSoknadServiceUnavailable(): SoknadActionType {
+	return {
+		type: SoknadActionTypeKeys.RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE
+	}
+}
+
 export function sendSoknadOk(behandlingsId: string): SoknadActionType {
 	return {
 		type: SoknadActionTypeKeys.SEND_SOKNAD_OK,

@@ -30,7 +30,9 @@ export enum SoknadActionTypeKeys {
 	UPDATE_BEHANDLINGSID_PA_STORE = "soknad/UPDATE_BEHANDLINGSID_PA_STORE",
 	SHOW_SERVER_FEIL = "soknad/SHOW_SERVER_FEIL",
 	SHOW_SIDE_IKKE_FUNNET = "soknad/SHOW_SIDE_IKKE_FUNNET",
-	VIS_MIDLERTIDIG_DEAKTIVERT_PANEL = "soknad/VIS_MIDLERTIDIG_DEAKTIVERT_PANEL"
+	VIS_MIDLERTIDIG_DEAKTIVERT_PANEL = "soknad/VIS_MIDLERTIDIG_DEAKTIVERT_PANEL",
+	SET_SEND_SOKNAD_SERVICE_UNAVAILABLE = "soknad/SET_SEND_SOKNAD_SERVICE_UNAVAILABLE",
+	RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE = "soknad/RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE"
 }
 
 export type AVBRYT_DESTINASJON = "START" | "MINSIDE";
@@ -65,6 +67,8 @@ export type SoknadActionType =
 	| ShowServerFeil
 	| ShowSideIkkeFunnet
 	| VisMidlertidigDeaktivertPanel
+	| SetSendSoknadServiveUnavailable
+	| ResetSendSoknadServiceUnavailable
 
 
 export interface SjekkAutentiseringOgTilgangOgHentRessurser {
@@ -195,3 +199,10 @@ export interface VisMidlertidigDeaktivertPanel {
 	shouldShow: boolean;
 }
 
+export interface SetSendSoknadServiveUnavailable {
+	type: SoknadActionTypeKeys.SET_SEND_SOKNAD_SERVICE_UNAVAILABLE
+}
+
+export interface ResetSendSoknadServiceUnavailable {
+	type: SoknadActionTypeKeys.RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE
+}

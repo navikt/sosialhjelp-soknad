@@ -17,7 +17,7 @@ import {DispatchProps, ValideringsFeilKode} from "../../digisos/redux/reduxTypes
 import {setVisBekreftMangler} from "../../digisos/redux/oppsummering/oppsummeringActions";
 import {getIntlTextOrKey, IntlProps, scrollToTop} from "../utils";
 import {
-    avbrytSoknad,
+    avbrytSoknad, resetSendSoknadServiceUnavailable,
     sendSoknad,
     showServerFeil,
     visMidlertidigDeaktivertPanel
@@ -193,6 +193,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
         const {behandlingsId} = this.props;
         if (behandlingsId) {
             this.props.dispatch(clearAllValideringsfeil());
+            this.props.dispatch(resetSendSoknadServiceUnavailable());
             this.props.dispatch(gaTilbake(aktivtSteg, behandlingsId));
         }
     }
@@ -284,6 +285,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                                         : undefined
                                 }
                                 avbryt={() => this.props.dispatch(avbrytSoknad())}
+                                sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
                             />
                         )}
                     </form>

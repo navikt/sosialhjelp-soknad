@@ -5,6 +5,7 @@ export const defaultState: SoknadState = {
 	// Visningsstate
 	showLargeSpinner: true,
 	showServerFeil: false,
+	sendSoknadServiceUnavailable: false,
 	showFeilSide: false,
 	showSideIkkeFunnet: false,
 	visSamtykkeInfo: false,
@@ -189,6 +190,19 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
 			return {
 				...state,
 				visMidlertidigDeaktivertPanel: action.shouldShow
+			}
+		}
+		case SoknadActionTypeKeys.SET_SEND_SOKNAD_SERVICE_UNAVAILABLE: {
+			return {
+				...state,
+				sendSoknadServiceUnavailable: true,
+				sendSoknadPending: false
+			}
+		}
+		case SoknadActionTypeKeys.RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE: {
+			return {
+				...state,
+				sendSoknadServiceUnavailable: false
 			}
 		}
 		default:

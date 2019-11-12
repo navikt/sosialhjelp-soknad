@@ -11,6 +11,7 @@ export interface SoknadState {
 
     // Visning state skjema nivå
     showServerFeil: boolean;
+    sendSoknadServiceUnavailable: boolean,
 
     // Authentication / tilgang state
     linkVisited: boolean;
