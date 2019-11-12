@@ -62,17 +62,18 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
 						<div className="mobilvennlig_ikon">
 							<EllaKompakt bakgrundsFarge={this.props.farge}/>
 						</div>
+
 					</div>
 				);
 			}
 			case InformasjonspanelIkon.BREVKONVOLUTT: {
-				return <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+				return <div><Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/></div>
 			}
 			case InformasjonspanelIkon.HENSYN: {
-				return <Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>
+				return <div><Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/></div>
 			}
 			default: {
-				return <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/>;
+				return <div><Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge}/></div>;
 			}
 		}
 	}
