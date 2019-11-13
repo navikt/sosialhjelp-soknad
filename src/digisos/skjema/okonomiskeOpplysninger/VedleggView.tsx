@@ -2,7 +2,7 @@ import * as React from 'react';
 import {DispatchProps, Valideringsfeil} from "../../redux/reduxTypes";
 import {
     Fil,
-    Opplysning, OpplysningSpc,
+    Opplysning, OpplysningerModel, OpplysningSpc,
     VedleggStatus
 } from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {connect} from "react-redux";
@@ -24,11 +24,22 @@ interface OwnProps {
 interface StoreToProps {
     behandlingsId: string | undefined;
     feil: Valideringsfeil[];
+    okonomiskeOpplysninger: OpplysningerModel;
 }
 
 type Props = OwnProps & StoreToProps & DispatchProps;
 
 class VedleggView extends React.Component<Props> {
+
+    etVedleggLastesOpp() {
+        let lastesOpp = false;
+        this.props.okonomiskeOpplysninger.opplysningerSortert.forEach(opplysning => {
+            if (opplysning.pendingLasterOppFil) {
+                lastesOpp = true;
+            }
+        });
+        return lastesOpp;
+    }
 
     handleAlleredeLastetOpp(event: any) {
         const {okonomiskOpplysning, behandlingsId, feil, dispatch} = this.props;
@@ -73,7 +84,7 @@ class VedleggView extends React.Component<Props> {
                 </div>
                 <LastOppFil
                     opplysning={opplysning}
-                    isDisabled={opplysning.pendingLasterOppFil || opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
+                    isDisabled={this.etVedleggLastesOpp() || opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
                     visSpinner={opplysning.pendingLasterOppFil}
                 />
                 <Checkbox
@@ -103,7 +114,8 @@ export default connect(
     (state: State) => {
         return {
             behandlingsId: state.soknad.behandlingsId,
-            feil: state.validering.feil
+            feil: state.validering.feil,
+            okonomiskeOpplysninger: state.okonomiskeOpplysninger
         }
     }
 )(VedleggView);
