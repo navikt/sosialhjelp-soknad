@@ -93,7 +93,12 @@ class Bankinformasjon extends React.Component<Props, State> {
 			kontonummer.brukerutfyltVerdi = "";
 			kontonummer.harIkkeKonto = false;
 			this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
-			this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer);
+			if (!brukerdefinert) {
+				this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer,
+					() => this.props.hentSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON));
+			} else {
+				this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer);
+			}
 			this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
 		}
 	}
