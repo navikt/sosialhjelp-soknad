@@ -24,6 +24,7 @@ interface OwnProps {
 interface StoreToProps {
     behandlingsId: string | undefined;
     feil: Valideringsfeil[];
+    enFilLastesOpp: boolean;
 }
 
 type Props = OwnProps & StoreToProps & DispatchProps;
@@ -73,7 +74,7 @@ class VedleggView extends React.Component<Props> {
                 </div>
                 <LastOppFil
                     opplysning={opplysning}
-                    isDisabled={opplysning.pendingLasterOppFil || opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
+                    isDisabled={this.props.enFilLastesOpp || opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
                     visSpinner={opplysning.pendingLasterOppFil}
                 />
                 <Checkbox
@@ -103,7 +104,8 @@ export default connect(
     (state: State) => {
         return {
             behandlingsId: state.soknad.behandlingsId,
-            feil: state.validering.feil
+            feil: state.validering.feil,
+            enFilLastesOpp: state.okonomiskeOpplysninger.enFilLastesOpp
         }
     }
 )(VedleggView);

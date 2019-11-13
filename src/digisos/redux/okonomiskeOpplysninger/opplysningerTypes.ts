@@ -4,7 +4,8 @@ import {REST_STATUS} from "../soknad/soknadTypes";
 export interface OpplysningerModel {
     restStatus: REST_STATUS;
     backendData: OpplysningerBackend | null;
-    opplysningerSortert: Opplysning[]
+    opplysningerSortert: Opplysning[];
+    enFilLastesOpp: boolean;
 }
 
 export type MaybeOpplysning = Opplysning | null;

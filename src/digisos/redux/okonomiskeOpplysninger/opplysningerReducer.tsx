@@ -15,7 +15,8 @@ import {REST_STATUS} from "../soknad/soknadTypes";
 export const initialOpplysningerModel: OpplysningerModel = {
     restStatus: REST_STATUS.INITIALISERT,
     backendData: null,
-    opplysningerSortert: []
+    opplysningerSortert: [],
+    enFilLastesOpp: false
 };
 
 export const opplysningerReducer = (
@@ -52,7 +53,8 @@ export const opplysningerReducer = (
 
                 return {
                     ...state,
-                    opplysningerSortert: opplysningerSortertUpdated
+                    opplysningerSortert: opplysningerSortertUpdated,
+                    enFilLastesOpp: true
                 };
             } else {
                 return state
@@ -68,7 +70,8 @@ export const opplysningerReducer = (
 
                 return {
                     ...state,
-                    opplysningerSortert: opplysningerSortertUpdated
+                    opplysningerSortert: opplysningerSortertUpdated,
+                    enFilLastesOpp: false
                 };
             } else {
                 return state
