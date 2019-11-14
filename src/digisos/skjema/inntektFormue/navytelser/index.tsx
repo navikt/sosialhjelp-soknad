@@ -3,7 +3,8 @@ import {
     FormattedMessage,
     FormattedHTMLMessage,
     FormattedDate,
-    FormattedNumber
+    FormattedNumber,
+    injectIntl
 } from "react-intl";
 import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import {
@@ -15,8 +16,9 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import {REST_STATUS} from "../../../../nav-soknad/types";
 import {Panel} from "nav-frontend-paneler";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
+import {IntlProps} from "../../../../nav-soknad/utils";
 
-type Props = SoknadsdataContainerProps;
+type Props = SoknadsdataContainerProps & IntlProps;
 
 class NavYtelserView extends React.Component<Props, {}> {
 
@@ -24,32 +26,10 @@ class NavYtelserView extends React.Component<Props, {}> {
         this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.INNTEKT_SYSTEMDATA);
     }
 
-    renderUtbetalinger(utbetalinger: Systeminntekt[]) {
-        if (utbetalinger == null || utbetalinger.length === 0) {
-            return <FormattedMessage id="utbetalinger.ingen.true"/>;
-        }
-        const utbetaltMelding = <span><FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/></span>;
-        const utbetalingerView = utbetalinger.map((utbetaling, index) => {
-            const type: string = utbetaling.inntektType;
-            const utbetalingsdato: string = utbetaling.utbetalingsdato;
-            let formattedDato = null;
-            if (utbetalingsdato && utbetalingsdato.length > 9) {
-                formattedDato = <FormattedDate value={utbetaling.utbetalingsdato}/>
-            }
-            const belop = <FormattedNumber value={utbetaling.belop} minimumFractionDigits={2}/>;
-            return (
-                <div key={index} className="utbetaling blokk-s">
-                    <div>{type}<span className="verdi detaljeliste__verdi">{belop}</span></div>
-                    {formattedDato && (<div>{utbetaltMelding} {formattedDato}</div>)}
-                </div>
-            );
-        });
-        return utbetalingerView;
-    }
-
     render() {
         const {soknadsdata} = this.props;
         const {systeminntekter} = soknadsdata.inntekt.systemdata;
+        const {utbetalingerFraNavFeilet} = soknadsdata.inntekt.systemdata;
         const restStatus = soknadsdata.restStatus.inntekt.systemdata;
         const visAnimerteStreker = restStatus !== REST_STATUS.OK;
 
@@ -78,7 +58,7 @@ class NavYtelserView extends React.Component<Props, {}> {
 
         return (
             <div className={"skatt-wrapper"}>
-                {!visAnimerteStreker && harNavytelser && (
+                {!visAnimerteStreker && !utbetalingerFraNavFeilet && harNavytelser && (
                     <Lesmerpanel
                         apneTekst={"Se detaljer"}
                         lukkTekst={"Lukk"}
@@ -96,7 +76,7 @@ class NavYtelserView extends React.Component<Props, {}> {
                         </div>
                     </Lesmerpanel>)
                 }
-                {!visAnimerteStreker && !harNavytelser && (
+                {!visAnimerteStreker && !utbetalingerFraNavFeilet && !harNavytelser && (
                     <Panel
                         border={true}
                         className={"ytelser_panel"}
@@ -107,6 +87,17 @@ class NavYtelserView extends React.Component<Props, {}> {
                         </div>
                     </Panel>)
                 }
+                {utbetalingerFraNavFeilet && (
+                    <Panel
+                        border={true}
+                        className={"ytelser_panel"}
+                    >
+                        <div>
+                            {tittel}
+                            <FormattedMessage id="utbetalinger.kontaktproblemer"/>
+                        </div>
+                    </Panel>
+                )}
 
                 {visAnimerteStreker &&
                 <TextPlaceholder lines={3}/>
@@ -116,5 +107,5 @@ class NavYtelserView extends React.Component<Props, {}> {
     }
 }
 
-export default connectSoknadsdataContainer(NavYtelserView);
+export default connectSoknadsdataContainer(injectIntl(NavYtelserView));
 

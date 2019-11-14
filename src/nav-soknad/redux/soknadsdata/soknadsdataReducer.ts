@@ -46,8 +46,8 @@ import {
 import { REST_STATUS } from "../../types";
 import { Barnebidrag, ForsorgerPlikt } from "../../../digisos/skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 import {
-    initialSkattbarInntektState,
-    SkattbarInntekt
+	initialSkattbarInntektInfoState,
+	SkattbarInntekt
 } from "../../../digisos/skjema/inntektFormue/skattbarInntekt/inntektTypes";
 import {Systeminntekter, initialSysteminntekter} from "../../../digisos/skjema/inntektFormue/navytelser/navYtelserTypes";
 import {Studielan, initialStudielanState} from "../../../digisos/skjema/inntektFormue/studielan/StudielanTypes";
@@ -89,7 +89,7 @@ export enum SoknadsSti {
 }
 
 export interface Inntekt {
-	skattbarinntektogforskuddstrekk: SkattbarInntekt[];
+	skattbarinntektogforskuddstrekk: SkattbarInntektInfo;
 	bostotte: Bostotte;
 	studielan: Studielan;
 	utbetalinger: Utbetalinger;
@@ -98,8 +98,13 @@ export interface Inntekt {
 	systemdata: Systeminntekter;
 }
 
+export interface SkattbarInntektInfo {
+	inntektFraSkatteetaten: SkattbarInntekt[];
+	inntektFraSkatteetatenFeilet: boolean;
+}
+
 export const initialInntektState: Inntekt = {
-	skattbarinntektogforskuddstrekk: initialSkattbarInntektState,
+	skattbarinntektogforskuddstrekk: initialSkattbarInntektInfoState,
 	bostotte: initialBostotteState,
 	studielan: initialStudielanState,
 	utbetalinger: initialUtbetalingerState,
@@ -184,7 +189,8 @@ export type SoknadsdataType
 	| NavEnhet[]
 	| Utbetalinger
 	| Barneutgifter
-	| Boutgifter;
+	| Boutgifter
+	| SkattbarInntektInfo;
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,

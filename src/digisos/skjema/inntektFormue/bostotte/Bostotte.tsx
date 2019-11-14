@@ -107,23 +107,25 @@ class BostotteView extends React.Component<Props, State> {
 		const harBostotterSaker: boolean = bostotte.saker.length > 0;
 		return (
 			<div className="blokk-xs">
-				{requestToHusbankenFeilet && (<div className="skjema-sporsmal">
-					<JaNeiSporsmal
-						visPlaceholder={oppstartsModus}
-						tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_BOSTOTTE)}
-						faktumKey={FAKTUM_BOSTOTTE}
-						verdi={bostotte ? bostotte.bekreftelse : null}
-						onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
-						legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-					/>
-					<Informasjonspanel
-						synlig={bostotte && bostotte.bekreftelse === false}
-						ikon={InformasjonspanelIkon.ELLA}
-						farge={DigisosFarge.VIKTIG}
-					>
-						<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
-					</Informasjonspanel>
-				</div>)}
+				{requestToHusbankenFeilet && (
+					<div className="skjema-sporsmal">
+						<JaNeiSporsmal
+							visPlaceholder={oppstartsModus}
+							tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_BOSTOTTE)}
+							faktumKey={FAKTUM_BOSTOTTE}
+							verdi={bostotte ? bostotte.bekreftelse : null}
+							onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
+							legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+						/>
+						<Informasjonspanel
+							synlig={bostotte && bostotte.bekreftelse === false}
+							ikon={InformasjonspanelIkon.ELLA}
+							farge={DigisosFarge.VIKTIG}
+						>
+							<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
+						</Informasjonspanel>
+					</div>
+				)}
 				{!requestToHusbankenFeilet && (<Lesmerpanel
 					apneTekst={"Se detaljer"}
 					lukkTekst={"Lukk"}
