@@ -16,12 +16,14 @@ export const DetaljelisteElement: React.FunctionComponent<ElementProps> = ({
 	}
 	return (
 		<li className="detaljeliste__element">
-			<strong className="detaljeliste__tittel" key="tittel">
-				{tittel}:
-			</strong>
-			<span className={"detaljeliste__verdi"} key="verdi">
-				{verdi}
-			</span>
+			<div>
+				<strong className="detaljeliste__tittel" key="tittel">
+					{tittel}:
+				</strong>
+				<span className={"detaljeliste__verdi"} key="verdi">
+					{verdi}
+				</span>
+			</div>
 		</li>
 	);
 };
