@@ -73,7 +73,12 @@ class TelefonView extends React.Component<Props, {}> {
 			if (telefonnummer.brukerutfyltVerdi !== null && telefonnummer.brukerutfyltVerdi !== "") {
 				telefonnummer.brukerutfyltVerdi = LANDKODE + this.fjernLandkode(telefonnummer.brukerutfyltVerdi);
 			}
-			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
+			if (telefonnummer.brukerdefinert != null && !telefonnummer.brukerdefinert) {
+				this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer,
+					() => this.props.hentSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER));
+			} else {
+				this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer);
+			}
 		}
 	}
 

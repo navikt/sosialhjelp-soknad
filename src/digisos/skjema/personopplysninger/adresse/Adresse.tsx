@@ -82,11 +82,11 @@ class AdresseView extends React.Component<Props, State> {
             };
             oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad);
         } else {
-            this.lagreAdresseValg(adresser);
+            this.lagreAdresseValg(adresser, adresseKategori);
         }
     }
 
-    lagreAdresseValg(payload: any) {
+    lagreAdresseValg(payload: any, valg: AdresseKategori) {
         const {behandlingsId, oppdaterSoknadsdataSti, lagreSoknadsdata} = this.props;
         if (behandlingsId){
             this.setState({settAdressePending: true});
@@ -101,6 +101,9 @@ class AdresseView extends React.Component<Props, State> {
                     }
                     oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
                     this.setState({settAdressePending: false});
+                }
+                if (valg === AdresseKategori.MIDLERTIDIG) {
+                    this.props.hentSoknadsdata(behandlingsId, SoknadsSti.ADRESSER);
                 }
             });
         }
@@ -123,7 +126,7 @@ class AdresseView extends React.Component<Props, State> {
                     }
                 }
             };
-            this.lagreAdresseValg(payload);
+            this.lagreAdresseValg(payload, AdresseKategori.SOKNAD);
             const soknad: any = {
                 "type": "gateadresse",
                 "gateadresse": {
