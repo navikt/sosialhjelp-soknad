@@ -19,10 +19,6 @@ import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import {Valideringsfeil} from "../../../redux/reduxTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
-import {
-    fetchKommuneNummerInfo,
-    fetchTilgjengeligeKommuner
-} from "../../../redux/kommuner/kommunerUtilities";
 
 interface OwnProps {
     disableLoadingAnimation?: boolean;
@@ -55,8 +51,6 @@ class AdresseView extends React.Component<Props, State> {
             if (restStatus === REST_STATUS.INITIALISERT) {
                 this.props.hentSoknadsdata(behandlingsId, SoknadsSti.ADRESSER);
                 this.props.hentSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER);
-                fetchTilgjengeligeKommuner(this.props.dispatchAction);
-                fetchKommuneNummerInfo(this.props.dispatchAction);
             }
         }
     }
@@ -146,7 +140,6 @@ class AdresseView extends React.Component<Props, State> {
                 },
                 "matrikkeladresse": null,
                 "ustrukturert": null
-
             };
             oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad);
         }

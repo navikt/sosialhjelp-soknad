@@ -12,7 +12,6 @@ import {State} from "../reducers";
 import {REST_STATUS, SoknadState} from "../soknad/soknadTypes";
 import {visSamtykkeInfo} from "../soknad/soknadActions";
 import {Dispatch} from "redux";
-import {KommuneInfoState} from "../kommuner/kommunerStatusTypes";
 
 /*
  * Properties og redux koblinger som er felles for komponenter i søknadsskjemaet.
@@ -23,7 +22,6 @@ export interface SoknadsdataContainerProps {
 
     // PropsMappedFromStore:
     soknad: SoknadState
-    kommuneInfo: KommuneInfoState
     soknadsdata: Soknadsdata;
     behandlingsId: string | undefined;
     feil: Valideringsfeil[];
@@ -42,7 +40,6 @@ export interface SoknadsdataContainerProps {
 export const connectSoknadsdataContainer = connect(
     (state: State) => ({
         soknad: state.soknad,
-        kommuneInfo: state.kommuneInfo,
         behandlingsId: state.soknad.behandlingsId,
         soknadsdata: JSON.parse(JSON.stringify(state.soknadsdata)),
         feil: state.validering.feil

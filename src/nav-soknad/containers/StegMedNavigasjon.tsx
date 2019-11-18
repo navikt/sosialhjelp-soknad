@@ -1,6 +1,6 @@
 import * as React from "react";
 import {RouteComponentProps, RouterProps, withRouter} from "react-router";
-import {injectIntl} from "react-intl";
+import {FormattedHTMLMessage, injectIntl} from "react-intl";
 import {Location} from "history";
 import {connect} from "react-redux";
 import DocumentTitle from "react-document-title";
@@ -42,7 +42,6 @@ import {erPaStegEnOgValgtNavEnhetErUgyldig} from "./containerUtils";
 import {fetchToJson, HttpStatus} from "../utils/rest-utils";
 import {soknadsdataUrl} from "../../digisos/redux/soknadsdata/soknadsdataActions";
 import AlertStripe from "nav-frontend-alertstriper";
-import {tekstFeil} from "../../digisos/skjema/personopplysninger/adresse/SoknadsmottakerInfo";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -264,11 +263,24 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                             <Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
                         </div>
                         {children}
+
                         { soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 0 && (
                             <AlertStripe type="feil">
-                                { tekstFeil }
+                                <FormattedHTMLMessage id="adresse.alertstripe.feil"/>
                             </AlertStripe>
                         )}
+
+                        <AlertStripe type="advarsel">
+                            <FormattedHTMLMessage
+                                id="adresse.alertstripe.advarsel.fixme"
+                                values={
+                                    {
+                                        kommuneNavn: "FIXME Fix kommunenavn"
+                                    }}
+                            />
+                        </AlertStripe>
+
+
                         {aktivtStegConfig && (
                             <Knapperad
                                 gaViderePending={this.props.nextButtonPending}

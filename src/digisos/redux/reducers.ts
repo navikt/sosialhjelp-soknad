@@ -4,7 +4,6 @@ import SoknadReducer from "./soknad/soknadReducer";
 import OppsummeringReducer, {OppsummeringState} from "./oppsummering/oppsummeringReducer";
 import LedeteksterReducer from "./ledetekster/ledeteksterReducer";
 import MiljovariablerReducer from "./miljovariabler/miljovariablerReducer";
-import KommunerStatusReducer from "./kommuner/kommunerStatusReducer";
 import FeatureTogglesReducer from "./featuretoggles/featureTogglesReducer";
 import EttersendelseReducer from "./ettersendelse/ettersendelseReducer";
 import MockReducer, {MockState} from "../mock/mockReducer";
@@ -19,7 +18,6 @@ import {connectRouter, RouterState} from "connected-react-router";
 import {SoknadState} from "./soknad/soknadTypes";
 import {MiljovariablerState} from "./miljovariabler/miljovariablerTypes";
 import {LedeteksterState} from "./ledetekster/ledeteksterTypes";
-import {KommuneInfoState} from "./kommuner/kommunerStatusTypes";
 
 
 export interface State {
@@ -28,7 +26,6 @@ export interface State {
 
 	ledetekster: LedeteksterState;
 	miljovariabler: MiljovariablerState;
-	kommuneInfo: KommuneInfoState;
 
 	soknadsdata: Soknadsdata;
 	okonomiskeOpplysninger: OpplysningerModel;
@@ -48,7 +45,6 @@ export default (history: any) => combineReducers({
 
 	ledetekster: LedeteksterReducer,
 	miljovariabler: MiljovariablerReducer,
-	kommuneInfo: KommunerStatusReducer,
 
 	soknadsdata: SoknadsdataReducer,
 	okonomiskeOpplysninger: opplysningerReducer,
