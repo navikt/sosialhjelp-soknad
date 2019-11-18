@@ -1,7 +1,7 @@
 import {
 	AVBRYT_DESTINASJON,
 	SoknadActionType,
-	SoknadActionTypeKeys,
+	SoknadActionTypeKeys, VisIkkePakobletPanel,
 	VisMidlertidigDeaktivertPanel
 } from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
@@ -189,6 +189,13 @@ export function showFeilSide(): SoknadActionType {
 export const visMidlertidigDeaktivertPanel = (shouldShow: boolean): VisMidlertidigDeaktivertPanel => {
 	return {
 		type: SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL,
+		shouldShow
+	}
+};
+
+export const visIkkePakobletPanel = (shouldShow: boolean): VisIkkePakobletPanel => {
+	return {
+		type: SoknadActionTypeKeys.VIS_IKKE_PAKOBLET_PANEL,
 		shouldShow
 	}
 };

@@ -18,16 +18,13 @@ import {setVisBekreftMangler} from "../../digisos/redux/oppsummering/oppsummerin
 import {getIntlTextOrKey, IntlProps, scrollToTop} from "../utils";
 import {
     avbrytSoknad, resetSendSoknadServiceUnavailable,
-    sendSoknad,
-    showServerFeil,
-    visMidlertidigDeaktivertPanel
+    sendSoknad
 } from "../../digisos/redux/soknad/soknadActions";
 import {gaTilbake, gaVidere, tilSteg} from "../../digisos/redux/navigasjon/navigasjonActions";
-import {loggAdvarsel, loggFeil, loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
+import {loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
 import AppBanner from "../components/appHeader/AppHeader";
 import {
     Soknadsdata,
-    SoknadsSti
 } from "../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {
     clearAllValideringsfeil,
@@ -38,9 +35,9 @@ import {ValideringState} from "../../digisos/redux/validering/valideringReducer"
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {State} from "../../digisos/redux/reducers";
 import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
-import {erPaStegEnOgValgtNavEnhetErUgyldig} from "./containerUtils";
-import {fetchToJson, HttpStatus} from "../utils/rest-utils";
-import {soknadsdataUrl} from "../../digisos/redux/soknadsdata/soknadsdataActions";
+import {
+    erPaStegEnOgValgtNavEnhetErUgyldig, sjekkOmValgtNavEnhetErGyldig,
+} from "./containerUtils";
 import AlertStripe from "nav-frontend-alertstriper";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
@@ -154,27 +151,8 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                 dispatch(visValideringsfeilPanel());
             } else {
                 if (feil.length === 0) {
-                    fetchToJson(soknadsdataUrl(behandlingsId, SoknadsSti.NAV_ENHETER)).then((response) => {
-                        if (response && (response as NavEnhet[])[0]) {
-                            const valgtNavKontor: NavEnhet | undefined = (response as NavEnhet[]).find((navEnhet: NavEnhet) => {
-                                return navEnhet.valgt;
-                            });
-
-                            if (valgtNavKontor && !valgtNavKontor.isMottakMidlertidigDeaktivert) {
-                                dispatch(clearAllValideringsfeil());
-                                dispatch(visMidlertidigDeaktivertPanel(false));
-                                dispatch(gaVidere(aktivtSteg.stegnummer, behandlingsId));
-                            } else {
-                                dispatch(visMidlertidigDeaktivertPanel(true));
-                            }
-                        }
-                    }).catch((reason: any) => {
-                        if (reason.message === HttpStatus.UNAUTHORIZED) {
-                            dispatch(loggAdvarsel("hentSoknadsdata: " + reason));
-                        } else {
-                            dispatch(loggFeil("Henting av navEnhet feilet: " + reason));
-                            dispatch(showServerFeil(true));
-                        }
+                    sjekkOmValgtNavEnhetErGyldig(behandlingsId, dispatch, aktivtSteg, () => {
+                        dispatch(gaVidere(aktivtSteg.stegnummer, behandlingsId));
                     });
                 } else {
                     this.props.dispatch(visValideringsfeilPanel());
@@ -262,24 +240,19 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                         >
                             <Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
                         </div>
+
                         {children}
 
-                        { soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 0 && (
+                        {soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 0 && (
                             <AlertStripe type="feil">
-                                <FormattedHTMLMessage id="adresse.alertstripe.feil"/>
+                                <FormattedHTMLMessage id="adresse.alertstripe.feil.fixme"/>
                             </AlertStripe>
                         )}
-
-                        <AlertStripe type="advarsel">
-                            <FormattedHTMLMessage
-                                id="adresse.alertstripe.advarsel.fixme"
-                                values={
-                                    {
-                                        kommuneNavn: "FIXME Fix kommunenavn"
-                                    }}
-                            />
-                        </AlertStripe>
-
+                        {soknad.visIkkePakobletPanel && aktivtSteg !== 0 && (
+                            <AlertStripe type="advarsel">
+                                <FormattedHTMLMessage id="adresse.alertstripe.advarsel.fixme"/>
+                            </AlertStripe>
+                        )}
 
                         {aktivtStegConfig && (
                             <Knapperad

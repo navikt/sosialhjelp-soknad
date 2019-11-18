@@ -8,6 +8,7 @@ export interface SoknadState {
     showSideIkkeFunnet: boolean;
     visSamtykkeInfo: boolean;
     visMidlertidigDeaktivertPanel: boolean;
+    visIkkePakobletPanel: boolean;
 
     // Visning state skjema nivå
     showServerFeil: boolean;

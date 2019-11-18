@@ -10,6 +10,7 @@ export const defaultState: SoknadState = {
 	showSideIkkeFunnet: false,
 	visSamtykkeInfo: false,
 	visMidlertidigDeaktivertPanel: false,
+	visIkkePakobletPanel: false,
 
 	// Authentication state
 	linkVisited: false,
@@ -190,6 +191,12 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
 			return {
 				...state,
 				visMidlertidigDeaktivertPanel: action.shouldShow
+			}
+		}
+		case SoknadActionTypeKeys.VIS_IKKE_PAKOBLET_PANEL: {
+			return {
+				...state,
+				visIkkePakobletPanel: action.shouldShow
 			}
 		}
 		case SoknadActionTypeKeys.SET_SEND_SOKNAD_SERVICE_UNAVAILABLE: {
