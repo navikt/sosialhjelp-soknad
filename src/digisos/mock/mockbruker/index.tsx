@@ -303,7 +303,6 @@ class MockBruker extends React.Component<Props,OwnState> {
 
 		this.setState({loading: true});
 		Promise.all([
-			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getAdresserPath(), JSON.stringify(mocksystemdata.getAdresserJson())),
 			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getTelefonPath(), JSON.stringify(mocksystemdata.getTelefonJson())),
 			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getFamiliePath(), JSON.stringify(mocksystemdata.getFamilieJson())),
 			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getBrukerprofilPath(), JSON.stringify(mocksystemdata.getBrukerprofilJson())),

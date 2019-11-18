@@ -7,6 +7,8 @@ export const API_CONTEXT_PATH_WITH_ACCESS_TOKEN = "sosialhjelp/login-api/soknad-
 export const HEROKU_MASTER_APP_NAME = "sosialhjelp-test";
 export const HEROKU_API_MASTER_APP_NAME = "sosialhjelp-api-test";
 
+
+
 export const getContextPathForStaticContent = (): string => {
     const context_path = getContextPathFromWindowLocation(window.location.pathname);
     return erDev() ? "" : context_path

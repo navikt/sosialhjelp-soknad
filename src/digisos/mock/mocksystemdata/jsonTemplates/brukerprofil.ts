@@ -17,10 +17,10 @@ export const brukerprofilJSON = {
           "kodeverksRef": "http://nav.no/kodeverk/Kodeverk/Postnummer"
         },
         "bolignummer": "1234",
-        "kommunenummer": "0105",
+        "kommunenummer": "0701",
         "gatenummer": null,
-        "gatenavn": "SANNERGATA i Sarpsborg fra frontend",
-        "husnummer": 5,
+        "gatenavn": "SANNERGATA",
+        "husnummer": 2,
         "husbokstav": null
       },
       "endringstidspunkt": null,
