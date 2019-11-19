@@ -11,7 +11,6 @@ import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import AdresseDetaljer from "./AdresseDetaljer";
 import {AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet, SoknadsMottakerStatus} from "./AdresseTypes";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
-
 import SoknadsmottakerVelger from "./SoknadsmottakerVelger";
 import {formaterSoknadsadresse, soknadsmottakerStatus} from "./AdresseUtils";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
@@ -39,13 +38,14 @@ class AdresseView extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            oppstartsModus: props.disableLoadingAnimation === true ? false : true,
+            oppstartsModus: props.disableLoadingAnimation !== true,
             settAdressePending: false
         };
     }
 
     componentDidMount() {
         const {soknadsdata, behandlingsId} = this.props;
+
         if (behandlingsId){
             const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
             if (restStatus === REST_STATUS.INITIALISERT) {
@@ -92,10 +92,11 @@ class AdresseView extends React.Component<Props, State> {
             this.setState({settAdressePending: true});
             lagreSoknadsdata(behandlingsId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
                 if (Array.isArray(navEnheter)) {
-                    navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
+                    navEnheter = navEnheter.filter(enhet => enhet.enhetsnr !== null);
                     if (navEnheter.length === 1) {
                         const valgtNavEnhet: NavEnhet = navEnheter[0];
                         valgtNavEnhet.valgt = true;
+
                         lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
                         this.slettEventuelleValideringsfeil();
                     }
@@ -142,7 +143,6 @@ class AdresseView extends React.Component<Props, State> {
                 },
                 "matrikkeladresse": null,
                 "ustrukturert": null
-
             };
             oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad);
         }

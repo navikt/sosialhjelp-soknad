@@ -21,11 +21,20 @@ import {
 } from "../navigasjon/navigasjonActions";
 
 import {
-    hentSoknadOk, lagreRessurserPaStore, oppdaterSoknadsmottakerStatus,
+    hentSoknadOk,
+    lagreRessurserPaStore,
+    oppdaterSoknadsmottakerStatus,
     opprettSoknadOk,
-    sendSoknadOk, setErSystemdataEndret, showFeilSide, showLargeSpinner, showServerFeil, showSideIkkeFunnet,
+    sendSoknadOk,
+    setErSystemdataEndret,
+    setSendSoknadServiceUnavailable,
+    showFeilSide,
+    showLargeSpinner,
+    showServerFeil,
+    showSideIkkeFunnet,
     slettSoknadOk,
-    startSoknadOk
+    startSoknadOk,
+    visMidlertidigDeaktivertPanel
 } from "./soknadActions";
 import {loggAdvarsel, loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
@@ -151,6 +160,9 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED){
             yield put(loggAdvarsel("sendSoknadSaga: " + reason));
+        } else if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
+            yield put(visMidlertidigDeaktivertPanel(true));
+            yield put(setSendSoknadServiceUnavailable());
         } else {
             yield put(loggFeil("send soknad saga feilet: " + reason));
             yield put(showServerFeil(true));
@@ -164,7 +176,7 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
     try {
         const navenheter: NavEnhet[] = yield call(fetchToJson, `soknader/${brukerbehandlingId}/${SoknadsSti.NAV_ENHETER}`);
         const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find((n: NavEnhet) => n.valgt);
-        if (!valgtSoknadsmottaker) {
+        if (!valgtSoknadsmottaker || (valgtSoknadsmottaker && valgtSoknadsmottaker.isMottakMidlertidigDeaktivert)) {
             yield put(push(`/skjema/${brukerbehandlingId}/1`));
         } else {
             yield put(oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker));

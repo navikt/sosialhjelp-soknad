@@ -5,9 +5,12 @@ export const defaultState: SoknadState = {
 	// Visningsstate
 	showLargeSpinner: true,
 	showServerFeil: false,
+	sendSoknadServiceUnavailable: false,
 	showFeilSide: false,
 	showSideIkkeFunnet: false,
 	visSamtykkeInfo: false,
+	visMidlertidigDeaktivertPanel: false,
+	visIkkePakobletPanel: false,
 
 	// Authentication state
 	linkVisited: false,
@@ -182,6 +185,31 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
 				...state,
 				tilgang: tilgangResponse,
 				fornavn: fornavnResponse.fornavn,
+			}
+		}
+		case SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL: {
+			return {
+				...state,
+				visMidlertidigDeaktivertPanel: action.shouldShow
+			}
+		}
+		case SoknadActionTypeKeys.VIS_IKKE_PAKOBLET_PANEL: {
+			return {
+				...state,
+				visIkkePakobletPanel: action.shouldShow
+			}
+		}
+		case SoknadActionTypeKeys.SET_SEND_SOKNAD_SERVICE_UNAVAILABLE: {
+			return {
+				...state,
+				sendSoknadServiceUnavailable: true,
+				sendSoknadPending: false
+			}
+		}
+		case SoknadActionTypeKeys.RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE: {
+			return {
+				...state,
+				sendSoknadServiceUnavailable: false
 			}
 		}
 		default:

@@ -96,9 +96,14 @@ const ekstraherHusnummerHusbokstav = (inntastetAdresse: string): any => {
 
 const soknadsmottakerStatus = (soknadsdata: Soknadsdata): SoknadsMottakerStatus => {
     const navEnheter = soknadsdata.personalia.navEnheter;
-    const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt);
+    const valgtNavEnhet: NavEnhet | undefined = navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt);
     const adresser = soknadsdata.personalia.adresser;
-    if (valgtNavEnhet || navEnheter.length === 1) {
+
+
+    if (valgtNavEnhet && valgtNavEnhet.isMottakMidlertidigDeaktivert) {
+        return SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT
+    }
+    if (valgtNavEnhet && valgtNavEnhet.valgt && !valgtNavEnhet.isMottakMidlertidigDeaktivert) {
         return SoknadsMottakerStatus.GYLDIG;
     }
     if (adresser.valg) {

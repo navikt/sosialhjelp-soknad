@@ -9,7 +9,7 @@ import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
 import {REST_STATUS} from "../soknad/soknadTypes";
 import {showServerFeil} from "../soknad/soknadActions";
 
-const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `soknader/${brukerBehandlingId}/${sti}`;
+export const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `soknader/${brukerBehandlingId}/${sti}`;
 
 export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
 	return (dispatch: Dispatch) => {

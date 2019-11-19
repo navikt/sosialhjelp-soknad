@@ -7,9 +7,12 @@ export interface SoknadState {
     showFeilSide: boolean;
     showSideIkkeFunnet: boolean;
     visSamtykkeInfo: boolean;
+    visMidlertidigDeaktivertPanel: boolean;
+    visIkkePakobletPanel: boolean;
 
     // Visning state skjema nivå
     showServerFeil: boolean;
+    sendSoknadServiceUnavailable: boolean,
 
     // Authentication / tilgang state
     linkVisited: boolean;
