@@ -258,7 +258,7 @@ class MockBruker extends React.Component<Props,OwnState> {
 				<div>Måned: { sak.mnd }</div>
 				<div>Status: { sak.status }</div>
 				{sak.status === "VEDTATT" && sak.vedtak &&
-					<div>Vedtak: {sak.vedtak.status} - {sak.vedtak.beskrivelse}</div>
+					<div>Vedtak: {sak.vedtak.type} - {sak.vedtak.beskrivelse}</div>
 				}
 				<button onClick={() => {
 					const bostotteDto = {...this.state.bostotteDto};

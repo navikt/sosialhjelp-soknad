@@ -111,7 +111,7 @@ export const initialInntektState: Inntekt = {
 	formue: initialFormueState,
 	verdier: initialVerdierState,
 	systemdata: initialSysteminntekter
-}
+};
 
 export interface Personalia {
 	kontonummer: Kontonummer;

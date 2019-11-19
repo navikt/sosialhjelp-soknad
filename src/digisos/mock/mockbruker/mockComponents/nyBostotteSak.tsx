@@ -19,7 +19,7 @@ interface State {
 
 export class Vedtak {
     beskrivelse: string = "";
-    status: string = "";
+    type: string = "";
 }
 
 export class NySakObject {
@@ -42,16 +42,16 @@ enum VedtaksStatus {
 }
 
 enum Vedtakskode {
-    V00 = "Innvilget bostøtte",
-    V02 = "Ingen støtteberettigede",
-    V03 = "For høy inntekt ift boutgift",
-    V04 = "Boligen utenfor ordningen",
-    V05 = "Ikke i folkereg. på sit-dato",
-    V07 = "Innlevert etter søknadsfrist",
-    V09 = "Manglende opplysninger",
+    V00 = "Søknaden din er innvilget.",
+    V02 = "Du har fått avslag på søknaden din om bostøtte fordi du eller andre i husstanden ikke har rett til bostøtte.",
+    V03 = "Du har fått avslag på søknaden din om bostøtte fordi du/dere hadde for høy inntekt.",
+    V04 = "Du har fått avslag på søknaden din om bostøtte fordi boligen din ikke oppfyller kravene.",
+    V05 = "Du har fått avslag på søknaden din om bostøtte fordi du ikke var registrert på søknadsadressen i folkeregisteret.",
+    V07 = "Klagen din ble avvist da den ble sendt inn etter klagefristen.",
+    V09 = " Søknaden din om bostøtte er avvist fordi det mangler opplysninger eller dokumentasjon, eller fordi noen i husstanden er registrert på en annen søknad.",
     V11 = "Hovedperson er død",
-    V12 = "For høy anslått inntekt",
-    V48 = "Biperson ikke bosatt på søknadsadresse",
+    V12 = "For høy anslått inntekt (ikke i bruk lengere)",
+    V48 = "Søknaden din om bostøtte er avvist fordi noen du bor sammen med ikke er registrert på adressen i folkeregisteret.",
 }
 
 enum RolleType {
@@ -80,12 +80,12 @@ export class NyBostotteSak extends React.Component<Props, State> {
         if(this.state.saksstatus === "VEDTATT") {
             vedtak = new Vedtak();
             vedtak.beskrivelse = this.state.saksbeskrivelse;
-            vedtak.status = VedtaksStatus.AVSLAG;
+            vedtak.type = VedtaksStatus.AVSLAG;
             if (this.state.vedtaksstatus === "INNVILGET") {
-                vedtak.status = VedtaksStatus.INNVILGET;
+                vedtak.type = VedtaksStatus.INNVILGET;
             }
             if (this.state.vedtaksstatus === "AVVIST") {
-                vedtak.status = VedtaksStatus.AVVIST;
+                vedtak.type = VedtaksStatus.AVVIST;
             }
         }
         const nySak: NySakObject = {
@@ -104,6 +104,8 @@ export class NyBostotteSak extends React.Component<Props, State> {
         this.setState({saksbeskrivelse: value});
         if(value === Vedtakskode.V00) {
             this.setState({vedtaksstatus: VedtaksStatus.INNVILGET})
+        } else if(value === Vedtakskode.V07) {
+            this.setState({vedtaksstatus: VedtaksStatus.AVVIST})
         } else if(value === Vedtakskode.V09) {
             this.setState({vedtaksstatus: VedtaksStatus.AVVIST})
         } else {
