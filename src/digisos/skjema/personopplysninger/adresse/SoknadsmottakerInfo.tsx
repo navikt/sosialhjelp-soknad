@@ -13,16 +13,9 @@ import {soknadsmottakerStatus} from "./AdresseUtils";
 import AlertStripe from "nav-frontend-alertstriper";
 import {FormattedHTMLMessage} from "react-intl";
 
-// adresse.alertstripe.advarsel={kommuneNavn} kommune kan ikke ta i mot digitale søknader ennå. Du kan <a href="FIXMEtrenger-riktig-link" target="_blank">søke på papirskjema</a>.
-// adresse.alertstripe.advarsel.fixme={kommuneNavn} kommune kan ikke ta i mot digitale søknader ennå.
-
-// adresse.alertstripe.feil=Vi kan desverre ikke ta i mot digitale søknader akkuratt nå. <a href="FIXMEtrenger-riktig-link" target="_blank">Søk på papirskjema</a>, eller prøv igjen senere.
-// adresse.alertstripe.feil.fixme=Vi kan desverre ikke ta i mot digitale søknader akkuratt nå.
-
 type Props = SoknadsdataContainerProps;
 
 class SoknadsmottakerInfo extends React.Component<Props, {}> {
-
 
     render() {
         const {soknadsdata} = this.props;
