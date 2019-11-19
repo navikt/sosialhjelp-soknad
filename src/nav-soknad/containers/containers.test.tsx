@@ -1,4 +1,6 @@
-import {erPaStegEnOgValgtNavEnhetErUgyldig} from "./containerUtils";
+import {
+    erPaStegEnOgValgtNavEnhetErUgyldig, responseIsOfTypeListAndContainsAtleastOneObject,
+} from "./containerUtils";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
 const exmaple1: NavEnhet =
@@ -74,4 +76,22 @@ test("that erPaStegEnOgValgtNavEnhetErUgyldig returnerer riktig", () => {
     expect(erPaStegEnOgValgtNavEnhetErUgyldig(2, undefinedNavEnhet)).toBe(false);
     expect(erPaStegEnOgValgtNavEnhetErUgyldig(2, navEnhetMedManglendeEnhetsnr)).toBe(false);
     expect(erPaStegEnOgValgtNavEnhetErUgyldig(2, navEnhetMidlertidigDeaktivert)).toBe(false);
+});
+
+const ugyldigResponseUndefined: undefined = undefined;
+const ugyldigResponseNull: null = null;
+const ugyldigResponseString: string = "En random string";
+const ugyldigResponseRandomObject = { "bare": "noe", "tull": "og", "tall": 1234556};
+const ugyldigResponseTomListe: any[] = [];
+const ugyldigResponseListeMedFeilTypeObjecter = [ugyldigResponseRandomObject];
+const gyldigResponse = [gyldigNavEnhet]
+
+test("that responseIsOfTypeListOfNavEnhetAndHasAtleastOneElement ikke fører til nullpointer feil", () => {
+    expect(responseIsOfTypeListAndContainsAtleastOneObject(ugyldigResponseUndefined)).toBe(false);
+    expect(responseIsOfTypeListAndContainsAtleastOneObject(ugyldigResponseNull)).toBe(false);
+    expect(responseIsOfTypeListAndContainsAtleastOneObject(ugyldigResponseString)).toBe(false);
+    expect(responseIsOfTypeListAndContainsAtleastOneObject(ugyldigResponseRandomObject)).toBe(false);
+    expect(responseIsOfTypeListAndContainsAtleastOneObject(ugyldigResponseTomListe)).toBe(false);
+    expect(responseIsOfTypeListAndContainsAtleastOneObject(ugyldigResponseListeMedFeilTypeObjecter)).toBe(true);
+    expect(responseIsOfTypeListAndContainsAtleastOneObject(gyldigResponse)).toBe(true)
 });

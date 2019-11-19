@@ -23,9 +23,17 @@ export const valgtNavKontorErGyldigMenMottakErMidlertidigDeaktivert = (valgtNavK
     return valgtNavKontor && valgtNavKontor.isMottakMidlertidigDeaktivert ? true : false
 };
 
+export const responseIsOfTypeListAndContainsAtleastOneObject = (response: any) => {
+    if(response && typeof response !== "string" && (response as NavEnhet[])[0]){
+        return true;
+    } else {
+        return false;
+    }
+};
+
 export const sjekkOmValgtNavEnhetErGyldig = (behandlingsId: string, dispatch: Dispatch, callbackHvisGyldig: () => void) => {
     fetchToJson(soknadsdataUrl(behandlingsId, SoknadsSti.NAV_ENHETER)).then((response) => {
-        if (response && (response as NavEnhet[])[0]) {
+        if (responseIsOfTypeListAndContainsAtleastOneObject(response)) {
             const valgtNavKontor: NavEnhet | undefined = (response as NavEnhet[]).find((navEnhet: NavEnhet) => {
                 return navEnhet.valgt;
             });
