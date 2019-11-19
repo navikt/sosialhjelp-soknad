@@ -143,7 +143,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
             }
 
             const {feil} = this.props.validering;
-
             const valgtNavEnhet: NavEnhet | undefined = this.finnSoknadsMottaker();
 
             if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
@@ -151,7 +150,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                 dispatch(visValideringsfeilPanel());
             } else {
                 if (feil.length === 0) {
-                    sjekkOmValgtNavEnhetErGyldig(behandlingsId, dispatch, aktivtSteg, () => {
+                    sjekkOmValgtNavEnhetErGyldig(behandlingsId, dispatch, () => {
                         dispatch(gaVidere(aktivtSteg.stegnummer, behandlingsId));
                     });
                 } else {
@@ -176,22 +175,32 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
     }
 
     render() {
-        const {skjemaConfig, intl, children, validering, soknad} = this.props;
+        const {
+            skjemaConfig,
+            intl,
+            children,
+            validering,
+            soknad,
+            stegKey,
+            ikon,
+            nextButtonPending
+        } = this.props;
+        const {feil, visValideringsfeil} = validering;
+
         const aktivtStegConfig: SkjemaSteg | undefined = skjemaConfig.steg.find(
-            s => s.key === this.props.stegKey
+            s => s.key === stegKey
         );
+
         const erOppsummering: boolean = aktivtStegConfig ? aktivtStegConfig.type === SkjemaStegType.oppsummering : false;
-        const stegTittel = getIntlTextOrKey(intl, `${this.props.stegKey}.tittel`);
+        const stegTittel = getIntlTextOrKey(intl, `${stegKey}.tittel`);
         const documentTitle = intl.formatMessage({
-            id: this.props.skjemaConfig.tittelId
+            id: skjemaConfig.tittelId
         });
         const synligeSteg = skjemaConfig.steg.filter(
             s => s.type === SkjemaStegType.skjema
         );
 
-        const {feil, visValideringsfeil} = validering;
-
-        const aktivtSteg: number = aktivtStegConfig ? aktivtStegConfig.stegnummer - 1 : 0;
+        const aktivtSteg: number = aktivtStegConfig ? aktivtStegConfig.stegnummer : 1;
 
         return (
             <div className="app-digisos informasjon-side">
@@ -201,7 +210,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                 <div className="skjema-steg skjema-content">
                     <div className="skjema-steg__feiloppsummering">
                         <Feiloppsummering
-                            skjemanavn={this.props.skjemaConfig.skjemanavn}
+                            skjemanavn={skjemaConfig.skjemanavn}
                             valideringsfeil={feil}
                             visFeilliste={visValideringsfeil}
                         />
@@ -215,11 +224,11 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                                 <Stegindikator
                                     autoResponsiv={true}
                                     kompakt={false}
-                                    aktivtSteg={aktivtSteg}
+                                    aktivtSteg={aktivtSteg - 1}
                                     steg={synligeSteg.map((s) => {
                                         return {
                                             label: intl.formatMessage({id: `${s.key}.tittel`}),
-                                            index: s.stegnummer,
+                                            index: s.stegnummer - 1,
                                         }
                                     })}
                                     onChange={(s: number) => this.handleGaTilSkjemaSteg(aktivtStegConfig, s + 1)}
@@ -227,7 +236,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                             </div>
                         ) : null}
                         <div className="skjema-steg__ikon">
-                            {this.props.ikon}
+                            {ikon}
                         </div>
                         <div
                             className="skjema-steg__tittel"
@@ -243,12 +252,12 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
                         {children}
 
-                        {soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 0 && (
+                        {soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 1 && (
                             <AlertStripe type="feil">
                                 <FormattedHTMLMessage id="adresse.alertstripe.feil.fixme"/>
                             </AlertStripe>
                         )}
-                        {soknad.visIkkePakobletPanel && aktivtSteg !== 0 && (
+                        {soknad.visIkkePakobletPanel && aktivtSteg !== 1 && (
                             <AlertStripe type="advarsel">
                                 <FormattedHTMLMessage id="adresse.alertstripe.advarsel.fixme"/>
                             </AlertStripe>
@@ -256,7 +265,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
                         {aktivtStegConfig && (
                             <Knapperad
-                                gaViderePending={this.props.nextButtonPending}
+                                gaViderePending={nextButtonPending}
                                 gaVidereLabel={
                                     erOppsummering
                                         ? getIntlTextOrKey(intl, "skjema.knapper.send")

@@ -1,6 +1,5 @@
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {Dispatch} from "../../digisos/redux/reduxTypes";
-import {SkjemaSteg} from "../../digisos/redux/soknad/soknadTypes";
 import {fetchToJson, HttpStatus} from "../utils/rest-utils";
 import {soknadsdataUrl} from "../../digisos/redux/soknadsdata/soknadsdataActions";
 import {SoknadsSti} from "../../digisos/redux/soknadsdata/soknadsdataReducer";
@@ -24,7 +23,7 @@ export const valgtNavKontorErGyldigMenMottakErMidlertidigDeaktivert = (valgtNavK
     return valgtNavKontor && valgtNavKontor.isMottakMidlertidigDeaktivert ? true : false
 };
 
-export const sjekkOmValgtNavEnhetErGyldig = (behandlingsId: string, dispatch: Dispatch, aktivtSteg: SkjemaSteg, callbackHvisGyldig: () => void) => {
+export const sjekkOmValgtNavEnhetErGyldig = (behandlingsId: string, dispatch: Dispatch, callbackHvisGyldig: () => void) => {
     fetchToJson(soknadsdataUrl(behandlingsId, SoknadsSti.NAV_ENHETER)).then((response) => {
         if (response && (response as NavEnhet[])[0]) {
             const valgtNavKontor: NavEnhet | undefined = (response as NavEnhet[]).find((navEnhet: NavEnhet) => {
