@@ -3,7 +3,7 @@ import {
 } from "./containerUtils";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
-const exmaple1: NavEnhet =
+const enUgyldigNavEnhet: NavEnhet =
     {
         orgnr: "1234",
         enhetsnr: "2345",
@@ -14,7 +14,7 @@ const exmaple1: NavEnhet =
         valgt: true,
     };
 
-const example2: NavEnhet =
+const enGyldigNavEnhet: NavEnhet =
     {
         orgnr: "1234",
         enhetsnr: "2345",
@@ -25,13 +25,25 @@ const example2: NavEnhet =
         valgt: true,
     };
 
-test("that erPaStegEnOgValgtNavEnhetErIkkeGyldig gir riktig svar", () => {
+const ugyldigNavenhetEnhetsnrNull: any =
+    {
+        orgnr: "1234",
+        enhetsnr: null,
+        isMottakMidlertidigDeaktivert: false,
+        enhetsnavn: "asdf",
+        kommunenavn: "fdsa",
+        kommuneNr: "3456",
+        valgt: true,
+    };
+
+test("that erPaStegEnOgValgtNavEnhetErUgyldig gir riktig svar", () => {
     expect(erPaStegEnOgValgtNavEnhetErUgyldig(1, undefined)).toBe(true);
     expect(erPaStegEnOgValgtNavEnhetErUgyldig(2, undefined)).toBe(false);
-    expect(erPaStegEnOgValgtNavEnhetErUgyldig(1, exmaple1)).toBe(true);
-    expect(erPaStegEnOgValgtNavEnhetErUgyldig(2, exmaple1)).toBe(false);
-    expect(erPaStegEnOgValgtNavEnhetErUgyldig(1, example2)).toBe(false);
-    expect(erPaStegEnOgValgtNavEnhetErUgyldig(2, example2)).toBe(false);
+    expect(erPaStegEnOgValgtNavEnhetErUgyldig(1, enUgyldigNavEnhet)).toBe(true);
+    expect(erPaStegEnOgValgtNavEnhetErUgyldig(2, enUgyldigNavEnhet)).toBe(false);
+    expect(erPaStegEnOgValgtNavEnhetErUgyldig(1, enGyldigNavEnhet)).toBe(false);
+    expect(erPaStegEnOgValgtNavEnhetErUgyldig(2, enGyldigNavEnhet)).toBe(false);
+    expect(erPaStegEnOgValgtNavEnhetErUgyldig(1, ugyldigNavenhetEnhetsnrNull)).toBe(true);
 });
 
 const gyldigNavEnhet: NavEnhet = {

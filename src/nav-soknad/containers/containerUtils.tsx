@@ -12,7 +12,7 @@ import {
 import {loggAdvarsel, loggFeil} from "../../digisos/redux/navlogger/navloggerActions";
 
 export const erPaStegEnOgValgtNavEnhetErUgyldig = (stegnummer: number, valgtNavEnhet: NavEnhet | undefined): boolean => {
-    return stegnummer === 1 && (!valgtNavEnhet || (valgtNavEnhet && valgtNavEnhet.isMottakMidlertidigDeaktivert))
+    return stegnummer === 1 && (!valgtNavEnhet || (valgtNavEnhet && valgtNavEnhet.isMottakMidlertidigDeaktivert) || (valgtNavEnhet && !valgtNavEnhet.enhetsnr))
 };
 
 export const valgtNavKontorErGyldig = (valgtNavKontor: NavEnhet | undefined): boolean => {
