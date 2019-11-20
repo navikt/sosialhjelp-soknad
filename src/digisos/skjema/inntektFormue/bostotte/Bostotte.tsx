@@ -15,7 +15,7 @@ import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarge
 import { REST_STATUS } from "../../../../nav-soknad/types";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
 
-const FAKTUM_BOSTOTTE = "inntekt.bostotte";
+const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
 type Props = SoknadsdataContainerProps & IntlProps;
 
