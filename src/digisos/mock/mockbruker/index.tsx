@@ -14,11 +14,8 @@ import {NyttBarn, NyttBarnObject} from "./mockComponents/nyttBarn";
 import MockDataBolkWrapper from "./mockComponents/mockDataBolkWrapper";
 import MockInput from "./mockComponents/mockInput";
 import {fetchPost} from "../../../nav-soknad/utils/rest-utils";
-import NavFrontendSpinner from "nav-frontend-spinner";
-
 import "whatwg-fetch";
 import {Hovedknapp} from "nav-frontend-knapper";
-import {Panel} from "nav-frontend-paneler";
 import {Sidetittel} from "nav-frontend-typografi";
 
 
