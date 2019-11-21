@@ -150,7 +150,8 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
 					<Knapp
 						type="standard"
-						spinner={false}
+						spinner={vedlegg.type === ettersendelse.opplastingVedleggType}
+						disabled={ettersendelse.opplastingStatus === REST_STATUS.PENDING}
 						autoDisableVedSpinner={true}
 						onClick={() =>
 							this.props.ettersendelseAktivert &&

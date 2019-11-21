@@ -134,6 +134,7 @@ export interface LastOppEttersendelseAction {
     type: EttersendelseActionTypeKeys.LAST_OPP;
     vedleggId: number;
     formData: FormData;
+    opplysningType: OpplysningType;
 }
 
 export interface LastOppEttersendelseOkAction {
@@ -164,6 +165,7 @@ export interface EttersendelseState {
     restStatus: REST_STATUS;
     opplastingStatus: REST_STATUS;
     ettersendStatus: REST_STATUS;
+    opplastingVedleggType: OpplysningType | null;
     brukerbehandlingId: string | null;
     feilKode: string;
     feiletVedleggId: string;
