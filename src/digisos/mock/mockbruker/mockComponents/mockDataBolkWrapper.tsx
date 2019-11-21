@@ -1,26 +1,31 @@
 import * as React from "react";
+import {Panel} from "nav-frontend-paneler";
+import {Undertittel} from "nav-frontend-typografi";
 
 interface Props {
-	tittel: string | undefined;
+    tittel: string | undefined;
 }
 
-class MockDataBolkWrapper extends React.Component<Props, {}>{
+class MockDataBolkWrapper extends React.Component<Props, {}> {
 
-	render(){
+    render() {
 
-		const children = this.props.children;
+        const children = this.props.children;
 
-		return (
-			<div className="mock-data-bolk">
-				{ this.props.tittel &&
-					<div className="mock-data-bolk__tittel"> {this.props.tittel} </div>
-				}
-				<div className="mock-data-bolk__body">
-					{ children }
-				</div>
-			</div>
-		)
-	}
+        return (
+            <Panel className="mock-panel">
+                {this.props.tittel && (
+					<div className={"mock-bruker-luft-under"}>
+						<Undertittel> {this.props.tittel} </Undertittel>
+					</div>
+				)
+                }
+                <div className="mock-data-bolk__body">
+                    {children}
+                </div>
+            </Panel>
+        )
+    }
 }
 
 export default MockDataBolkWrapper;
