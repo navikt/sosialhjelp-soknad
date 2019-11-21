@@ -98,7 +98,6 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                             ettersendelseAktivert={this.props.ettersendelseAktivert}
                             vedlegg={vedlegg}
                             key={vedlegg.type}
-                            restStatus={this.props.opplastingStatus}
                             feilKode={this.props.feiletVedleggId === vedlegg.type ? this.props.feilKode : undefined}
                         >
                             {tittelKey && <h3><FormattedMessage id={tittelKey}/></h3>}
