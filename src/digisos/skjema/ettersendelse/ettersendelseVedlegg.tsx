@@ -23,7 +23,6 @@ interface OwnProps {
 	ettersendelseAktivert: boolean;
 	children: React.ReactNode;
 	vedlegg: EttersendelseVedleggBackend;
-	restStatus?: string;
 	feilKode?: string;
 	dispatch?: any;
 }
@@ -79,8 +78,8 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
 	render() {
 		const { ettersendelse, vedlegg} = this.props;
-		const { feiletVedleggId } = ettersendelse;
-		const opplastingsFeil: boolean = this.props.restStatus === REST_STATUS.FEILET &&
+		const { feiletVedleggId, opplastingStatus, ettersendStatus, opplastingVedleggType } = ettersendelse;
+		const opplastingsFeil: boolean = opplastingStatus === REST_STATUS.FEILET &&
 			feiletVedleggId === vedlegg.type;
 		const visFilForStorFeilmelding: boolean = opplastingsFeil &&
 			this.props.feilKode === REST_FEIL.FOR_STOR_FIL;
@@ -150,7 +149,8 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
 					<Knapp
 						type="standard"
-						spinner={false}
+						spinner={vedlegg.type === opplastingVedleggType}
+						disabled={ettersendStatus === REST_STATUS.PENDING || opplastingStatus === REST_STATUS.PENDING}
 						autoDisableVedSpinner={true}
 						onClick={() =>
 							this.props.ettersendelseAktivert &&
