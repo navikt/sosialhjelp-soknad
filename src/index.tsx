@@ -19,28 +19,26 @@ import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga"
 import IntlProvider from "./intlProvider";
 import App from "./digisos";
-import {loggException} from "./nav-soknad/redux/navlogger/navloggerActions";
+import {loggException} from "./digisos/redux/navlogger/navloggerActions";
 import {erDev} from "./nav-soknad/utils/rest-utils";
-import {avbrytSoknad} from "./nav-soknad/redux/soknad/soknadActions";
-import {SoknadState} from "./nav-soknad/redux/reduxTypes";
+import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
-import {visSoknadAlleredeSendtPrompt} from "./nav-soknad/redux/ettersendelse/ettersendelseActions";
+import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
 import {getContextPathBasename} from "./configuration";
+import {SoknadState} from "./digisos/redux/soknad/soknadTypes";
+import LoadContainer from "./LoadContainer";
 
 
 const history = require('history').createBrowserHistory({
     getUserConfirmation: (msg: any, callback: (flag: boolean) => void) => {
-
         if (msg === NAVIGASJONSPROMT.SKJEMA) {
-
             const soknad: SoknadState = store.getState().soknad;
-            if (soknad.data.brukerBehandlingId && soknad.avbrytSoknadSjekkAktiv) {
+            if (soknad.behandlingsId && soknad.avbrytSoknadSjekkAktiv) {
                 store.dispatch(avbrytSoknad("START"));
                 callback(false);
             } else {
                 callback(true);
             }
-
         } else if (msg === NAVIGASJONSPROMT.ETTERSENDELSE) {
             store.dispatch(visSoknadAlleredeSendtPrompt(true));
             callback(false);
@@ -90,9 +88,11 @@ window.onerror = (errorMessage, url, line, column, error) => {
 ReactDOM.render(
     <Provider store={store}>
         <IntlProvider>
-            <ConnectedRouter history={history}>
-                <App />
-            </ConnectedRouter>
+            <LoadContainer>
+                <ConnectedRouter history={history}>
+                    <App />
+                </ConnectedRouter>
+            </LoadContainer>
         </IntlProvider>
     </Provider>,
     document.getElementById("root") as HTMLElement

@@ -2,8 +2,8 @@ import * as React from "react";
 import Feilside from "../components/feilside/Feilside";
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
-import { NavigasjonActions } from "../redux/navigasjon/navigasjonTypes";
-import { tilbakeEllerForsiden } from "../redux/navigasjon/navigasjonActions";
+import { NavigasjonActions } from "../../digisos/redux/navigasjon/navigasjonTypes";
+import { tilbakeEllerForsiden } from "../../digisos/redux/navigasjon/navigasjonActions";
 
 interface Props {
 	onClick: () => NavigasjonActions;

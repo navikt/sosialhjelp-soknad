@@ -1,5 +1,6 @@
 import {AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet, SoknadsMottakerStatus} from "./AdresseTypes";
-import {Soknadsdata} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {Soknadsdata} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 export enum AdresseTypeaheadStatus {
     INITIELL = "INITIELL",
@@ -96,18 +97,24 @@ const ekstraherHusnummerHusbokstav = (inntastetAdresse: string): any => {
 
 const soknadsmottakerStatus = (soknadsdata: Soknadsdata): SoknadsMottakerStatus => {
     const navEnheter = soknadsdata.personalia.navEnheter;
-    const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt);
+    const valgtNavEnhet: NavEnhet | undefined = navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt);
+    const navEnheterRestStatus: REST_STATUS = soknadsdata.restStatus.personalia.navEnheter;
     const adresser = soknadsdata.personalia.adresser;
-    if (valgtNavEnhet || navEnheter.length === 1) {
+
+
+    if (valgtNavEnhet && valgtNavEnhet.isMottakMidlertidigDeaktivert) {
+        return SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT
+    }
+    if (valgtNavEnhet && valgtNavEnhet.valgt && !valgtNavEnhet.isMottakMidlertidigDeaktivert) {
         return SoknadsMottakerStatus.GYLDIG;
     }
     if (adresser.valg) {
         if (adresser.valg === AdresseKategori.MIDLERTIDIG || adresser.valg === AdresseKategori.FOLKEREGISTRERT) {
-            if (navEnheter.length === 0) {
+            if (navEnheter.length === 0 && navEnheterRestStatus === REST_STATUS.OK) {
                 return SoknadsMottakerStatus.UGYLDIG;
             }
         }
-        if (adresser.valg === AdresseKategori.SOKNAD) {
+        if (adresser.valg === AdresseKategori.SOKNAD && navEnheterRestStatus === REST_STATUS.OK) {
             if (adresser.soknad && navEnheter.length === 0 && adresser.soknad.gateadresse !== null) {
                 return SoknadsMottakerStatus.UGYLDIG;
             }

@@ -5,7 +5,7 @@ import { DigisosFarge } from "../../../nav-soknad/components/svg/DigisosFarger";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../redux/soknadsdata/soknadsdataContainerUtils";
 
 type Props = SoknadsdataContainerProps;
 
@@ -26,7 +26,7 @@ class SoknadsmottakerInfoPanel  extends React.Component<Props, {}> {
 					<button
 						className="linkbutton linkbutton--normal"
 						onClick={() => {
-							this.props.setVisSamtykkeInfo(true);
+							this.props.visSamtykkeInfo(true);
 						}}
 					>
 						<FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke"/>

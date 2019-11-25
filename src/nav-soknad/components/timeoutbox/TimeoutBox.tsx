@@ -5,8 +5,8 @@ import NavFrontendModal from "nav-frontend-modal";
 
 import Nedtelling from "./Nedtelling";
 import LoggetUt from "./LoggetUt";
-import { REST_STATUS } from "../../types/restTypes";
 import {IntlProps, now} from "../../utils";
+import {REST_STATUS} from "../../../digisos/redux/soknad/soknadTypes";
 
 interface State {
 	utloggingsTidspunkt: number;

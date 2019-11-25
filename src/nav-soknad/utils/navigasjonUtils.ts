@@ -30,5 +30,6 @@ export const lesKommunenrFraUrl = (): string | null => {
 
 export enum NAVIGASJONSPROMT {
 	SKJEMA = "SKJEMA",
-	ETTERSENDELSE = "ETTERSENDELSE"
+	ETTERSENDELSE = "ETTERSENDELSE",
+	SERVERFEIL = "SERVERFEIL"
 }

@@ -2,12 +2,12 @@ import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp, Knapp } from "nav-frontend-knapper";
-import { fortsettSoknad, slettSoknad } from "../../redux/soknad/soknadActions";
+import { fortsettSoknad, slettSoknad } from "../../../digisos/redux/soknad/soknadActions";
 import { FormattedMessage, injectIntl } from "react-intl";
 import { connect } from "react-redux";
-import {DispatchProps} from "../../redux/reduxTypes";
-import { AVBRYT_DESTINASJON } from "../../redux/soknad/soknadActionTypes";
-import { navigerTilDittNav } from "../../redux/navigasjon/navigasjonActions";
+import {DispatchProps} from "../../../digisos/redux/reduxTypes";
+import { AVBRYT_DESTINASJON } from "../../../digisos/redux/soknad/soknadActionTypes";
+import { navigerTilDittNav } from "../../../digisos/redux/navigasjon/navigasjonActions";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
 import {IntlProps} from "../../utils";
@@ -15,7 +15,7 @@ import {IntlProps} from "../../utils";
 interface StateProps {
 	avbrytDialogSynlig: boolean;
 	destinasjon: AVBRYT_DESTINASJON | null | undefined;
-	brukerBehandlingId: string;
+	behandlingsId: string | undefined;
 }
 
 type Props = StateProps & DispatchProps & IntlProps;
@@ -32,9 +32,13 @@ const TEKSTNOKLER_NAVIGASJON = {
 
 class AvbrytSoknad extends React.Component<Props, {}> {
 	onAvbryt() {
-		this.props.dispatch(
-			slettSoknad(this.props.brukerBehandlingId, this.props.destinasjon ? this.props.destinasjon : "MINSIDE")
-		);
+		const {behandlingsId, destinasjon} = this.props;
+		if (behandlingsId){
+			this.props.dispatch(
+				slettSoknad(behandlingsId, destinasjon ? destinasjon : "MINSIDE")
+			);
+
+		}
 	}
 
 	onFortsett() {
@@ -97,6 +101,6 @@ export default connect((state: State, props: any): StateProps => {
 	return {
 		avbrytDialogSynlig: state.soknad.avbrytDialog.synlig,
 		destinasjon: state.soknad.avbrytDialog.destinasjon,
-		brukerBehandlingId: state.soknad.data.brukerBehandlingId
+		behandlingsId: state.soknad.behandlingsId
 	};
 })(injectIntl(AvbrytSoknad));

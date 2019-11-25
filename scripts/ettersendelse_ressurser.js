@@ -17,9 +17,9 @@ const { nyBehandlingsId, brukerBehandlingId } = require("./testdata");
 router.post("/soknader", function(req, res) {
 	if (req.query.ettersendTil) {
 		console.log(`Mock backend: POST /soknader?ettersendTil=${req.query.ettersendTil}`);
-		res.json({"status": "ok", "brukerBehandlingId": nyBehandlingsId});
+		res.json({"status": "ok", "behandlingsId": nyBehandlingsId});
 	} else {
-		res.json({brukerBehandlingId: brukerBehandlingId});
+		res.json({behandlingsId: brukerBehandlingId});
 	}
 });
 

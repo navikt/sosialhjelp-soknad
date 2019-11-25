@@ -2,10 +2,10 @@ import * as React from 'react';
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {
     Opplysning
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {
     getSpcForOpplysning
-} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerUtils";
+} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import TabellView from "./TabellView";
 import VedleggView from "./VedleggView";
 import VedleggSlettet from "./vedleggSlettet";

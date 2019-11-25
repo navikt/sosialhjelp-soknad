@@ -15,8 +15,10 @@ export interface AdressesokTreff {
 export interface NavEnhet {
 	orgnr: string;
 	enhetsnr: string;
+	isMottakMidlertidigDeaktivert: boolean;
 	enhetsnavn: string;
 	kommunenavn: string;
+	kommuneNr: string;
 	valgt: boolean
 }
 
@@ -32,18 +34,20 @@ export enum AdresseType {
 	USTRUKTURERT = "ustrukturert"
 }
 
-export interface Matrikkeladresse {
+export interface Baseadresse {
 	kommunenummer: string;
-	gaardsnummer: string;
+}
+
+export interface Matrikkeladresse extends Baseadresse{
 	bruksnummer: string;
+	gaardsnummer: string;
 	festenummer: string;
 	seksjonsnummer: string;
 	undernummer: string;
 }
 
-export interface Gateadresse {
+export interface Gateadresse extends Baseadresse{
 	landkode: null;
-	kommunenummer: string;
 	adresselinjer: string[];
 	bolignummer: string;
 	postnummer: string;
@@ -99,5 +103,5 @@ export enum SoknadsMottakerStatus {
 	VALGT = "valgt",
 	GYLDIG = "gyldig",
 	UGYLDIG = "ugyldig",
-	MANGLER_NAV_KONTOR = "mangler_nav_kontor"
+	MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT = "mottak_er_midlertidig_deaktivert"
 }

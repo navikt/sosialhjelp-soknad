@@ -10,8 +10,8 @@ import PersonSkjema from "./PersonSkjema";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 
 type Props = SoknadsdataContainerProps;
 
@@ -39,22 +39,24 @@ const SivilstatusRadioknapp: React.FunctionComponent<RadioProps> = ({verdi, id, 
 class SivilstatusComponent extends React.Component<Props, {}> {
 
 	onClickSivilstatus(verdi: Status) {
-		const {oppdaterSoknadsdataSti, brukerBehandlingId, lagreSoknadsdata} = this.props;
-		let sivilstatus = this.props.soknadsdata.familie.sivilstatus;
-		if (verdi !== Status.GIFT) {
-			sivilstatus = {
-				"kildeErSystem": false,
-				"sivilstatus": verdi
-			};
-		} else {
-			sivilstatus = {
-				"kildeErSystem": false,
-				"sivilstatus": Status.GIFT,
-				"ektefelle": initialPerson
-			};
+		const {oppdaterSoknadsdataSti, behandlingsId, lagreSoknadsdata} = this.props;
+		if (behandlingsId){
+			let sivilstatus = this.props.soknadsdata.familie.sivilstatus;
+			if (verdi !== Status.GIFT) {
+				sivilstatus = {
+					"kildeErSystem": false,
+					"sivilstatus": verdi
+				};
+			} else {
+				sivilstatus = {
+					"kildeErSystem": false,
+					"sivilstatus": Status.GIFT,
+					"ektefelle": initialPerson
+				};
+			}
+			oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus);
+			lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus);
 		}
-		oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus);
-		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.SIVILSTATUS, sivilstatus);
 	}
 
 	render() {

@@ -7,12 +7,12 @@ import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { Bostotte } from "./bostotteTypes";
 import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
 import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
-import { REST_STATUS } from "../../../../nav-soknad/types";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
@@ -33,8 +33,10 @@ class BostotteView extends React.Component<Props, State> {
 	}
 
 	componentDidMount() {
-		const {hentSoknadsdata, brukerBehandlingId} = this.props;
-		hentSoknadsdata(brukerBehandlingId, SoknadsSti.BOSTOTTE);
+		const {hentSoknadsdata, behandlingsId} = this.props;
+		if (behandlingsId){
+			hentSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE);
+		}
 	}
 
 	componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
@@ -46,14 +48,14 @@ class BostotteView extends React.Component<Props, State> {
 	}
 
 	handleClickJaNeiSpsm(verdi: boolean) {
-		const {brukerBehandlingId, soknadsdata} = this.props;
+		const {behandlingsId, soknadsdata} = this.props;
 		const restStatus = soknadsdata.restStatus.inntekt.bostotte;
-		if(restStatus === REST_STATUS.OK) {
+		if(restStatus === REST_STATUS.OK && behandlingsId) {
 			const bostotte: Bostotte | undefined = soknadsdata.inntekt.bostotte;
 			if(bostotte){
 				bostotte.bekreftelse = verdi;
 				this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSTOTTE, bostotte);
-				this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSTOTTE, bostotte);
+				this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, bostotte);
 			}
 		}
 	}

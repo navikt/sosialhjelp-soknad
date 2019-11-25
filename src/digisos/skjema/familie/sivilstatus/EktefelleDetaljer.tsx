@@ -9,7 +9,7 @@ import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 
 type Props = SoknadsdataContainerProps & IntlProps;
 

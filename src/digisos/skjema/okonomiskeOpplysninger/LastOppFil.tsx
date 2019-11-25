@@ -1,15 +1,15 @@
 import * as React from "react";
 import {Knapp} from "nav-frontend-knapper";
-import {FormattedMessage } from "react-intl";
-import {Opplysning} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+import {FormattedMessage} from "react-intl";
+import {Opplysning} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {connect} from "react-redux";
-import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
-import {lastOppFil} from "../../../nav-soknad/redux/fil/filActions";
-import {FilState} from "../../../nav-soknad/redux/fil/filTypes";
+import {DispatchProps} from "../../redux/reduxTypes";
+import {lastOppFil} from "../../redux/fil/filActions";
+import {FilState} from "../../redux/fil/filTypes";
 import {State} from "../../redux/reducers";
 
 interface StoreToProps {
-    behandlingsId: string;
+    behandlingsId: string | undefined;
     filopplasting: FilState
 }
 
@@ -27,13 +27,15 @@ class LastOppFil extends React.Component<Props, {}> {
 
     handleFileUpload(files: FileList) {
         const {behandlingsId, opplysning} = this.props;
-        if (files.length !== 1) {
-            return;
+        if (behandlingsId){
+            if (files.length !== 1) {
+                return;
+            }
+            const formData = new FormData();
+            formData.append("file", files[0], files[0].name);
+            this.props.dispatch(lastOppFil(opplysning, formData, behandlingsId));
+            this.leggTilVedleggKnapp.value = "";
         }
-        const formData = new FormData();
-        formData.append("file", files[0], files[0].name);
-        this.props.dispatch(lastOppFil(opplysning, formData, behandlingsId));
-        this.leggTilVedleggKnapp.value = "";
     }
 
     render() {
@@ -70,7 +72,7 @@ class LastOppFil extends React.Component<Props, {}> {
                     type="file"
                     className="visuallyhidden"
                     tabIndex={-1}
-                    accept="image/jpeg,image/png,application/pdf"
+                    accept={window.navigator.platform.match(/iPad|iPhone|iPod/) !== null ? "*" : "image/jpeg,image/png,application/pdf"}
                 />
 
                 <div role="alert" aria-live="assertive">
@@ -89,7 +91,7 @@ class LastOppFil extends React.Component<Props, {}> {
 export default connect(
     (state: State) => {
         return {
-            behandlingsId: state.soknad.data.brukerBehandlingId,
+            behandlingsId: state.soknad.behandlingsId,
             filopplasting: state.filopplasting
         };
     }

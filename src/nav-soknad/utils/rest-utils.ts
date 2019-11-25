@@ -1,4 +1,3 @@
-import {REST_FEIL} from "../types/restFeilTypes";
 import {erMockMiljoEllerDev} from "./index";
 import {
     API_CONTEXT_PATH,
@@ -6,14 +5,16 @@ import {
     CONTEXT_PATH,
     getRedirectPathname,
     HEROKU_API_MASTER_APP_NAME,
-    HEROKU_MASTER_APP_NAME
+    HEROKU_MASTER_APP_NAME,
+    INNSYN_CONTEXT_PATH
 } from "../../configuration";
-import {NavLogEntry, NavLogLevel} from "../redux/navlogger/navloggerTypes";
+import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
+import {NavLogEntry, NavLogLevel} from "../../digisos/redux/navlogger/navloggerTypes";
 
 
 export function erDev(): boolean {
     const url = window.location.href;
-    return (url.indexOf("localhost:3000") >= 0 || url.indexOf("devillo.no:3000") >= 0 || url.indexOf("localhost:8080") >= 0);
+    return (url.indexOf("localhost") >= 0 || url.indexOf("devillo.no:3000") >= 0 || url.indexOf("localhost:8080") >= 0);
 }
 
 export function kjorerJetty(): boolean {
@@ -43,6 +44,14 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
     }
 
     return getAbsoluteApiUrl(withAccessToken);
+}
+
+export function getInnsynUrl(): string {
+    if (erDev()) {
+         return `http://localhost:3000/${INNSYN_CONTEXT_PATH}/`; // Endre port så det passer med porten sosialhjelp-innsyn kjører på lokalt hos deg
+    }
+
+    return `${window.location.origin}/${INNSYN_CONTEXT_PATH}/`;
 }
 
 export function getAbsoluteApiUrl(withAccessToken?: boolean) {
@@ -98,7 +107,8 @@ const getHeaders = (): Headers => {
 
 export enum HttpStatus {
     UNAUTHORIZED = "unauthorized",
-    UNAUTHORIZED_LOOP_ERROR = "unauthorized_loop_error"
+    UNAUTHORIZED_LOOP_ERROR = "unauthorized_loop_error",
+    SERVICE_UNAVAILABLE = "Service Unavailable"
 }
 
 export const serverRequest = (method: string, urlPath: string, body: string, withAccessToken?: boolean, retries = 6) => {

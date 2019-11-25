@@ -1,97 +1,113 @@
 .skjema-informasjonspanel {
-	position: relative;
-	border-radius: 0.5rem;
-	background-color: @white;
-	padding: 2rem 1.5rem 2rem 3.5rem;
-	transition: opacity 0.5s;
-  	opacity: 0;
+  position: relative;
+  border-radius: 0.5rem;
+  background-color: @white;
 
-	animation-name: fjernInfoPanel;
-	animation-delay: 0.5s;
-	animation-duration: 0.01s;
-	animation-fill-mode: forwards;
-	animation-iteration-count: 1;
-	animation-timing-function: ease;
+  transition: opacity 0.5s;
+  opacity: 0;
 
-  	.skjema-sporsmal__infotekst__tittel {
-	  margin-top: 0;
-	  margin-bottom: 0;
-	}
+  animation-name: fjernInfoPanel;
+  animation-delay: 0.5s;
+  animation-duration: 0.01s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  animation-timing-function: ease;
 
-	&>div {
-		position: absolute;
-		left: 0;
-		top: 50%;
-		transform: translate(-50%, -50%);
+  .skjema-sporsmal__infotekst__tittel {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 
-		&>img {
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			transform: translate(-50%, -40%);
-			height: 4.5rem;
-		}
+  &__synlig {
+    opacity: 1.0;
 
-	}
+    animation-name: visInfoPanel;
+    animation-delay: 0.5s;
+    animation-duration: 0.01s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
 
-  	&__synlig {
-		opacity: 1.0;
-
-		animation-name: visInfoPanel;
-		animation-delay: 0.5s;
-		animation-duration: 0.01s;
-		animation-fill-mode: forwards;
-		animation-iteration-count: 1;
-		animation-timing-function: ease;
-
-	  	&>div {
-		  opacity: 1.0;
-		}
-	}
+    & > div {
+      opacity: 1.0;
+    }
+  }
 }
 
 @keyframes visInfoPanel {
-	100% {
-		height: initial;
-	}
+  100% {
+    height: initial;
+  }
 }
 
 @keyframes fjernInfoPanel {
-	100% {
-		height: 0;
-	}
+  100% {
+    height: 0;
+  }
 }
 
 .react-collapse-konfigurering {
-	overflow: visible !important;
+  overflow: visible !important;
 }
 
-.react-collapse-wrapper {
-	padding-bottom: 1rem;
-}
 
 .skjema-informasjonspanel-wrapper {
   display: block;
 }
 
-@media @mobile {
-  .skjema-informasjonspanel-wrapper {
-	margin-left: 1rem;
-	margin-right: 1rem;
+.react-collapse-wrapper {
+  padding-bottom: 1rem;
+}
+
+@media @desktop {
+  .react-collapse-wrapper {
   }
 
   .skjema-informasjonspanel {
-	padding-top: 1rem;
-	padding-bottom: 1rem;
+    padding: 2rem 1.5rem 2rem 3.5rem;
+
+    & > div {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translate(-50%, -50%);
+
+      & > img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-10%, -40%);
+        height: 4.5rem;
+      }
+
+    }
   }
 }
 
-@media screen and (max-width: 740px ) {
+@media @mobile {
 
-	.skjema-informasjonspanel {
-	  margin-left: 1.0rem;
-	}
+  .react-collapse-wrapper {
+    padding-top: 1.5rem;
+  }
+
+  .skjema-informasjonspanel {
+    padding: 3rem 1.5rem 1.5rem 1.5rem;
+
+    & > div {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, -50%);
+
+      & > svg {
+        position: absolute;
+        left: 50%;
+        top: 0;
+      }
+    }
+  }
 }
+
 
 .mobilvennlig_ikon {
   display: none;
@@ -104,11 +120,11 @@
 @media @mobile {
 
   .mobilvennlig_ikon {
-	display: inline-block;
+    display: inline-block;
   }
 
   .ikke_mobilvennlig_ikon {
-	display: none;
+    display: none;
   }
 
 }

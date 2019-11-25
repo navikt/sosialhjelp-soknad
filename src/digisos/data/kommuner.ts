@@ -1,4 +1,4 @@
-import {Soknadsdata} from "../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
 import {NavEnhet} from "../skjema/personopplysninger/adresse/AdresseTypes";
 
 function finnSoknadsMottaker(soknadsdata: Soknadsdata): NavEnhet | undefined {

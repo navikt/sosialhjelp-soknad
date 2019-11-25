@@ -5,7 +5,7 @@ import {getInputFaktumTekst, IntlProps, replaceDotWithUnderscore} from "../utils
 import {State} from "../../digisos/redux/reducers";
 import {connect} from "react-redux";
 import {getFeil} from "../utils/enhancedComponentUtils";
-import {Valideringsfeil} from "../redux/valideringActionTypes";
+import {Valideringsfeil} from "../../digisos/redux/validering/valideringActionTypes";
 
 export type InputTypes = "text" | "number" | "email" | "tel";
 

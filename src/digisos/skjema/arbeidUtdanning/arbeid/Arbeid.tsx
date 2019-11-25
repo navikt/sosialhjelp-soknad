@@ -9,12 +9,12 @@ import { maksLengde } from "../../../../nav-soknad/validering/valideringer";
 import {
 	connectSoknadsdataContainer, onEndretValideringsfeil,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { Arbeidsforhold } from "./arbeidTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {REST_STATUS} from "../../../../nav-soknad/types";
-import {ValideringsFeilKode} from "../../../../nav-soknad/redux/valideringActionTypes";
+import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 type Props = SoknadsdataContainerProps & IntlProps;
 
@@ -35,8 +35,8 @@ class ArbeidView extends React.Component<Props, State> {
 	}
 
 	componentDidMount() {
-		if (this.props.brukerBehandlingId){
-			this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ARBEID);
+		if (this.props.behandlingsId){
+			this.props.hentSoknadsdata(this.props.behandlingsId, SoknadsSti.ARBEID);
 			this.props.clearValideringsfeil(FAKTUM_KEY_KOMMENTARER);
 		}
 	}
@@ -58,7 +58,7 @@ class ArbeidView extends React.Component<Props, State> {
 	}
 
 	lagreHvisGyldig() {
-		const { soknadsdata, brukerBehandlingId } = this.props;
+		const { soknadsdata, behandlingsId } = this.props;
 		const arbeid = soknadsdata.arbeid;
 		const kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
 		const feilkode: ValideringsFeilKode | undefined =
@@ -66,8 +66,8 @@ class ArbeidView extends React.Component<Props, State> {
 				kommentarTilArbeidsforhold ? kommentarTilArbeidsforhold : "",
 				FAKTUM_KEY_KOMMENTARER
 			);
-		if (!feilkode) {
-			this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ARBEID, arbeid);
+		if (!feilkode && behandlingsId) {
+			this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.ARBEID, arbeid);
 		}
 	}
 

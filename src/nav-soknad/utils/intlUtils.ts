@@ -1,5 +1,4 @@
 import { IntlShape } from "react-intl";
-import { Infotekst } from "../types/faktumTextTypes";
 
 export function intlHasKey(intl: IntlShape, key: string) {
 	if (!intl.messages) {
@@ -32,7 +31,7 @@ export function getIntlTextOrKey(intl: IntlShape, key: string): string {
 export function getIntlInfoTekst(
 	intl: IntlShape,
 	key: string
-): Infotekst | undefined {
+): any | undefined {
 	const tittel = getIntlText(intl, `${key}.tittel`);
 	const tekst = getIntlText(intl, `${key}.tekst`);
 	return tittel || tekst ? { tittel, tekst } : undefined;
@@ -41,7 +40,7 @@ export function getIntlInfoTekst(
 export function getIntlHjelpeTekst(
 	intl: IntlShape,
 	key: string
-): Infotekst | undefined {
+): any | undefined {
 	const tittel = getIkkeTomIntlText(intl, `${key}.tittel`);
 	const tekst = getIkkeTomIntlText(intl, `${key}.tekst`);
 	return tittel || tekst ? { tittel, tekst } : undefined;

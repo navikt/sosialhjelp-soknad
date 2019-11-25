@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Oppsummering } from "../../../nav-soknad/redux/oppsummering/oppsummeringTypes";
+import { Oppsummering } from "../../redux/oppsummering/oppsummeringTypes";
 
 interface Props {
 	oppsummering: Oppsummering;

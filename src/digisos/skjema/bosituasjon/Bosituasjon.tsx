@@ -5,14 +5,14 @@ import {getFaktumSporsmalTekst, IntlProps} from "../../../nav-soknad/utils";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import {Bosituasjon} from "./bosituasjonTypes";
-import {SoknadsSti} from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
 import {
     connectSoknadsdataContainer, onEndretValideringsfeil,
     SoknadsdataContainerProps
-} from "../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {ValideringsFeilKode} from "../../../nav-soknad/redux/valideringActionTypes";
+} from "../../redux/soknadsdata/soknadsdataContainerUtils";
+import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -38,27 +38,32 @@ type Props = SoknadsdataContainerProps & IntlProps;
 class BosituasjonView extends React.Component<Props, {}> {
 
     componentDidMount(): void {
-        this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.BOSITUASJON);
+        const {behandlingsId} = this.props;
+        if (behandlingsId){
+            this.props.hentSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON);
+        }
     }
 
     handleRadioClick(verdi: string): void {
-        const {soknadsdata, brukerBehandlingId} = this.props;
-        const bosituasjon = soknadsdata.bosituasjon;
-        if (verdi && verdi.indexOf("annet.botype.") !== -1) {
-            const botype = verdi.replace("annet.botype.", "");
-            bosituasjon.botype = botype;
-            this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
-            const valideringsfeil = this.validerAntallPersoner(bosituasjon.antallPersoner);
-            if (!valideringsfeil) {
-                this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, bosituasjon);
-            }
-        } else {
-            const botype = verdi;
-            bosituasjon.botype = botype;
-            this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
-            const valideringsfeil = this.validerAntallPersoner(bosituasjon.antallPersoner);
-            if (!valideringsfeil) {
-                this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, bosituasjon);
+        const {soknadsdata, behandlingsId} = this.props;
+        if (behandlingsId){
+            const bosituasjon = soknadsdata.bosituasjon;
+            if (verdi && verdi.indexOf("annet.botype.") !== -1) {
+                const botype = verdi.replace("annet.botype.", "");
+                bosituasjon.botype = botype;
+                this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
+                const valideringsfeil = this.validerAntallPersoner(bosituasjon.antallPersoner);
+                if (!valideringsfeil) {
+                    this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon);
+                }
+            } else {
+                const botype = verdi;
+                bosituasjon.botype = botype;
+                this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
+                const valideringsfeil = this.validerAntallPersoner(bosituasjon.antallPersoner);
+                if (!valideringsfeil) {
+                    this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon);
+                }
             }
         }
     }
@@ -86,14 +91,16 @@ class BosituasjonView extends React.Component<Props, {}> {
     }
 
     onBlurAntall() {
-        const {brukerBehandlingId, soknadsdata} = this.props;
-        const {botype, antallPersoner} = soknadsdata.bosituasjon;
-        const valideringsfeil = this.validerAntallPersoner(antallPersoner);
-        if (!valideringsfeil) {
-            const oppdatertBosituasjon: Bosituasjon = {botype, antallPersoner};
-            this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.BOSITUASJON, oppdatertBosituasjon);
-            this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, oppdatertBosituasjon);
-            this.props.clearValideringsfeil(FAKTUM_KEY_ANTALL);
+        const {behandlingsId, soknadsdata} = this.props;
+        if (behandlingsId){
+            const {botype, antallPersoner} = soknadsdata.bosituasjon;
+            const valideringsfeil = this.validerAntallPersoner(antallPersoner);
+            if (!valideringsfeil) {
+                const oppdatertBosituasjon: Bosituasjon = {botype, antallPersoner};
+                this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, oppdatertBosituasjon);
+                this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, oppdatertBosituasjon);
+                this.props.clearValideringsfeil(FAKTUM_KEY_ANTALL);
+            }
         }
     }
 

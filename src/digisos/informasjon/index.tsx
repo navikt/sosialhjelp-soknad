@@ -5,13 +5,13 @@ import {FormattedHTMLMessage, FormattedMessage, injectIntl, IntlShape} from "rea
 import DocumentTitle from "react-document-title";
 import Knapp from "nav-frontend-knapper";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
-import {DispatchProps} from "../../nav-soknad/redux/reduxTypes";
+import {DispatchProps} from "../redux/reduxTypes";
 import IkkeTilgang from "./IkkeTilgang";
-import {TilgangSperrekode} from "../../nav-soknad/redux/tilgang/tilgangTypes";
+import {TilgangSperrekode} from "../redux/soknad/soknadTypes";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 import Personopplysninger from "./Personopplysninger";
 import {Panel} from "nav-frontend-paneler";
-import {opprettSoknad} from "../../nav-soknad/redux/soknad/soknadActions";
+import {opprettSoknad} from "../redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import {State} from "../redux/reducers";
@@ -41,10 +41,6 @@ class Informasjon extends React.Component<Props, {}> {
                 </h3>);
         }
         return null;
-    }
-
-    startSoknad() {
-        this.props.dispatch(opprettSoknad(this.props.intl));
     }
 
     render() {
@@ -103,7 +99,9 @@ class Informasjon extends React.Component<Props, {}> {
                                         type="hoved"
                                         spinner={startSoknadPending}
                                         disabled={startSoknadPending}
-                                        onClick={() => this.startSoknad()}
+                                        onClick={() => {
+                                            this.props.dispatch(opprettSoknad(intl))
+                                        }}
                                     >
 										{getIntlTextOrKey(intl, "skjema.knapper.start")}
 									</Knapp>
@@ -123,8 +121,8 @@ class Informasjon extends React.Component<Props, {}> {
 }
 
 export default connect((state: State) => ({
-    harTilgang: state.tilgang.harTilgang,
-    sperrekode: state.tilgang.sperrekode,
+    harTilgang: state.soknad.tilgang ? state.soknad.tilgang.harTilgang : false,
+    sperrekode: state.soknad.tilgang ? state.soknad.tilgang.sperrekode : undefined,
     startSoknadPending: state.soknad.startSoknadPending,
-    fornavn: state.init.fornavn
+    fornavn: state.soknad.fornavn ? state.soknad.fornavn : undefined
 }))(injectIntl(Informasjon));

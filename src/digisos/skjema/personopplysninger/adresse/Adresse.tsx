@@ -1,25 +1,24 @@
 import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {FormattedHTMLMessage, FormattedMessage, injectIntl} from "react-intl";
 import * as React from "react";
-import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {getIntlTextOrKey, IntlProps} from "../../../../nav-soknad/utils";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import AdresseDetaljer from "./AdresseDetaljer";
 import {AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet, SoknadsMottakerStatus} from "./AdresseTypes";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
-
 import SoknadsmottakerVelger from "./SoknadsmottakerVelger";
 import {formaterSoknadsadresse, soknadsmottakerStatus} from "./AdresseUtils";
-import {REST_STATUS} from "../../../../nav-soknad/types";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import AdresseTypeahead from "./AdresseTypeahead";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
-import {Valideringsfeil} from "../../../../nav-soknad/redux/reduxTypes";
+import {Valideringsfeil} from "../../../redux/reduxTypes";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 interface OwnProps {
     disableLoadingAnimation?: boolean;
@@ -39,17 +38,20 @@ class AdresseView extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            oppstartsModus: props.disableLoadingAnimation === true ? false : true,
+            oppstartsModus: props.disableLoadingAnimation !== true,
             settAdressePending: false
         };
     }
 
     componentDidMount() {
-        const {soknadsdata} = this.props;
-        const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
-        if (restStatus === REST_STATUS.INITIALISERT) {
-            this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.ADRESSER);
-            this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.NAV_ENHETER);
+        const {soknadsdata, behandlingsId} = this.props;
+
+        if (behandlingsId){
+            const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
+            if (restStatus === REST_STATUS.INITIALISERT) {
+                this.props.hentSoknadsdata(behandlingsId, SoknadsSti.ADRESSER);
+                this.props.hentSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER);
+            }
         }
     }
 
@@ -80,26 +82,32 @@ class AdresseView extends React.Component<Props, State> {
             };
             oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad);
         } else {
-            this.lagreAdresseValg(adresser);
+            this.lagreAdresseValg(adresser, adresseKategori);
         }
     }
 
-    lagreAdresseValg(payload: any) {
-        const {brukerBehandlingId, oppdaterSoknadsdataSti, lagreSoknadsdata} = this.props;
-        this.setState({settAdressePending: true});
-        lagreSoknadsdata(brukerBehandlingId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
-            if (Array.isArray(navEnheter)) {
-                navEnheter = navEnheter.filter(enhet => enhet.orgnr !== null);
-                if (navEnheter.length === 1) {
-                    const valgtNavEnhet: NavEnhet = navEnheter[0];
-                    valgtNavEnhet.valgt = true;
-                    lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
-                    this.slettEventuelleValideringsfeil();
+    lagreAdresseValg(payload: any, valg: AdresseKategori) {
+        const {behandlingsId, oppdaterSoknadsdataSti, lagreSoknadsdata} = this.props;
+        if (behandlingsId){
+            this.setState({settAdressePending: true});
+            lagreSoknadsdata(behandlingsId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
+                if (Array.isArray(navEnheter)) {
+                    navEnheter = navEnheter.filter(enhet => enhet.enhetsnr !== null);
+                    if (navEnheter.length === 1) {
+                        const valgtNavEnhet: NavEnhet = navEnheter[0];
+                        valgtNavEnhet.valgt = true;
+
+                        lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
+                        this.slettEventuelleValideringsfeil();
+                    }
+                    oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
+                    this.setState({settAdressePending: false});
                 }
-                oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
-                this.setState({settAdressePending: false});
-            }
-        });
+                if (valg === AdresseKategori.MIDLERTIDIG) {
+                    this.props.hentSoknadsdata(behandlingsId, SoknadsSti.ADRESSER);
+                }
+            });
+        }
     }
 
     velgAnnenAdresse(adresse: AdressesokTreff) {
@@ -119,7 +127,7 @@ class AdresseView extends React.Component<Props, State> {
                     }
                 }
             };
-            this.lagreAdresseValg(payload);
+            this.lagreAdresseValg(payload, AdresseKategori.SOKNAD);
             const soknad: any = {
                 "type": "gateadresse",
                 "gateadresse": {
@@ -135,28 +143,29 @@ class AdresseView extends React.Component<Props, State> {
                 },
                 "matrikkeladresse": null,
                 "ustrukturert": null
-
             };
             oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad);
         }
     }
 
     onVelgSoknadsmottaker(valgtNavEnhet: NavEnhet) {
-        const {brukerBehandlingId, soknadsdata, lagreSoknadsdata, oppdaterSoknadsdataSti} = this.props;
-        valgtNavEnhet.valgt = true;
-        lagreSoknadsdata(brukerBehandlingId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
+        const {behandlingsId, soknadsdata, lagreSoknadsdata, oppdaterSoknadsdataSti} = this.props;
+        if (behandlingsId){
+            valgtNavEnhet.valgt = true;
+            lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
 
-        const navEnheter = soknadsdata.personalia.navEnheter;
-        navEnheter.map((navEnhet: NavEnhet) => {
-            if (navEnhet.orgnr === valgtNavEnhet.orgnr) {
-                navEnhet.valgt = true;
-            } else {
-                navEnhet.valgt = false;
-            }
-            return navEnhet
-        });
-        oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
-        this.slettEventuelleValideringsfeil();
+            const navEnheter = soknadsdata.personalia.navEnheter;
+            navEnheter.map((navEnhet: NavEnhet) => {
+                if (navEnhet.orgnr === valgtNavEnhet.orgnr) {
+                    navEnhet.valgt = true;
+                } else {
+                    navEnhet.valgt = false;
+                }
+                return navEnhet
+            });
+            oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
+            this.slettEventuelleValideringsfeil();
+        }
     }
 
     slettEventuelleValideringsfeil() {
@@ -205,7 +214,7 @@ class AdresseView extends React.Component<Props, State> {
             annenAdresseLabel = (<TextPlaceholder lines={3}/>);
         } else {
             folkeregistrertAdresseLabel = (
-                <div className="finnNavKontor__label">
+                <div id="folkeregistrertAdresse_data_loaded" className="finnNavKontor__label">
                     <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
                     { folkeregistrertAdresse && <AdresseDetaljer adresse={folkeregistrertAdresse}/> }
                 </div>

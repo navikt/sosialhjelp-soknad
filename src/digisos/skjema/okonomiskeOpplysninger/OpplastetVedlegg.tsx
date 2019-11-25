@@ -2,7 +2,7 @@ import * as React from "react";
 import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
 import AriaText from "../../../nav-soknad/components/aria/AriaText";
-import {Fil} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+import {Fil} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {getContextPathForStaticContent} from "../../../configuration";
 
 interface Props {

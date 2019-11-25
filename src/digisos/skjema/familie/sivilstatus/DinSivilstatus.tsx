@@ -2,14 +2,14 @@ import * as React from "react";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { Sivilstatus, Status } from "./FamilieTypes";
 import SivilstatusComponent from "./SivilstatusComponent";
 import EktefelleDetaljer from "./EktefelleDetaljer";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import { REST_STATUS } from "../../../../nav-soknad/types";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
 type Props = SoknadsdataContainerProps;
 
@@ -27,7 +27,10 @@ class DinSivilstatusView extends React.Component<Props, State> {
 	}
 
 	componentDidMount() {
-		this.props.hentSoknadsdata(this.props.brukerBehandlingId, SoknadsSti.SIVILSTATUS);
+		const {behandlingsId} = this.props;
+		if (behandlingsId){
+			this.props.hentSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS);
+		}
 	}
 
 	componentWillUpdate() {

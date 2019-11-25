@@ -2,29 +2,28 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {FormattedMessage, injectIntl} from "react-intl";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
-import {REST_STATUS} from "../../../nav-soknad/types";
-import LoadContainer from "../../../nav-soknad/components/loadContainer/LoadContainer";
-import {bekreftOppsummering, hentOppsummering,} from "../../../nav-soknad/redux/oppsummering/oppsummeringActions";
-import {Oppsummering} from "../../../nav-soknad/redux/oppsummering/oppsummeringTypes";
+import {bekreftOppsummering, hentOppsummering,} from "../../redux/oppsummering/oppsummeringActions";
+import {Oppsummering} from "../../redux/oppsummering/oppsummeringTypes";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import {State} from "../../redux/reducers";
-import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
-import {finnOgOppdaterSoknadsmottakerStatus, settInfofaktum} from "../../../nav-soknad/redux/soknad/soknadActions";
-import {getIntlTextOrKey} from "../../../nav-soknad/utils/intlUtils";
+import {DispatchProps} from "../../redux/reduxTypes";
+import {finnOgOppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
 import {Link} from "react-router-dom";
 import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
 import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
-import {Soknadsdata} from "../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {Soknadsdata} from "../../redux/soknadsdata/soknadsdataReducer";
 import {NavEnhet} from "../personopplysninger/adresse/AdresseTypes";
 import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
-import {IntlProps} from "../../../nav-soknad/utils";
+import {REST_STATUS} from "../../redux/soknad/soknadTypes";
+import NavFrontendSpinner from "nav-frontend-spinner";
+import {getIntlTextOrKey, IntlProps} from "../../../nav-soknad/utils";
 
 interface StateProps {
 	oppsummering: Oppsummering | null;
 	bekreftet: boolean | undefined;
 	visBekreftMangler: boolean | undefined;
 	restStatus: REST_STATUS;
-	brukerbehandlingId: string;
+	brukerbehandlingId: string | undefined;
 	soknadsdata: Soknadsdata;
 	valgtSoknadsmottaker: NavEnhet | undefined;
 }
@@ -38,26 +37,11 @@ class OppsummeringView extends React.Component<Props, {}> {
 	}
 
 	componentDidMount() {
-		const intl = this.props.intl;
-		this.props.dispatch(finnOgOppdaterSoknadsmottakerStatus(this.props.brukerbehandlingId));
-		this.props.dispatch(hentOppsummering());
-		this.props.dispatch(
-			settInfofaktum({
-				faktumKey: "informasjon.tekster",
-				properties: {
-					"1": getIntlTextOrKey(intl, "informasjon.start.tittel"),
-					"2": getIntlTextOrKey(intl, "informasjon.start.tekst"),
-					"3": getIntlTextOrKey(
-						intl,
-						"informasjon.nodsituasjon.undertittel"
-					),
-					"4": getIntlTextOrKey(
-						intl,
-						"informasjon.nodsituasjon.tekst"
-					)
-				}
-			})
-		);
+		const {brukerbehandlingId, dispatch} = this.props;
+		if (brukerbehandlingId){
+			dispatch(finnOgOppdaterSoknadsmottakerStatus(brukerbehandlingId));
+			dispatch(hentOppsummering());
+		}
 	}
 
 	getOppsummering() {
@@ -67,7 +51,10 @@ class OppsummeringView extends React.Component<Props, {}> {
 	}
 
 	render() {
-		const {oppsummering, brukerbehandlingId, restStatus, intl} = this.props;
+		const {oppsummering, brukerbehandlingId, intl, restStatus} = this.props;
+
+
+
 		const bolker = oppsummering
 			? oppsummering.bolker.map((bolk, idx) => (
 				<div className="blokk-xs bolk" key={idx}>
@@ -78,7 +65,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 									to={`/skjema/${brukerbehandlingId}/${idx + 1}`}
 								>
 									{getIntlTextOrKey(
-										intl,
+										this.props.intl,
 										"oppsummering.gatilbake"
 									)}
 								</Link>
@@ -98,13 +85,8 @@ class OppsummeringView extends React.Component<Props, {}> {
 			id: "soknadsosialhjelp.oppsummering.harLestSamtykker"
 		});
 
-		let restStatusUpdated = restStatus;
-		if(!this.props.valgtSoknadsmottaker){
-			restStatusUpdated = REST_STATUS.PENDING
-		}
-
-		return (
-			<LoadContainer restStatus={restStatusUpdated}>
+		if (restStatus === REST_STATUS.OK){
+			return (
 				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
 					<div>
 						{skjemaOppsummering}
@@ -136,7 +118,13 @@ class OppsummeringView extends React.Component<Props, {}> {
 					</div>
 					<BehandlingAvPersonopplysningerModal/>
 				</DigisosSkjemaSteg>
-			</LoadContainer>
+			);
+		}
+
+		return (
+			<div className="application-spinner">
+				<NavFrontendSpinner type="XXL"/>
+			</div>
 		);
 	}
 }
@@ -147,7 +135,7 @@ export default connect((state: State) => {
 		bekreftet: state.oppsummering.bekreftet,
 		visBekreftMangler: state.oppsummering.visBekreftMangler,
 		restStatus: state.oppsummering.restStatus,
-		brukerbehandlingId: state.soknad.data.brukerBehandlingId,
+		brukerbehandlingId: state.soknad.behandlingsId,
 		valgtSoknadsmottaker: state.soknad.valgtSoknadsmottaker,
 		soknadsdata: state.soknadsdata
 	};

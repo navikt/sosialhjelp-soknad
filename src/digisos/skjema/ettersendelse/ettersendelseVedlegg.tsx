@@ -2,29 +2,27 @@ import * as React from "react";
 import {
 	lastOppEttersendelseVedlegg,
 	slettEttersendtVedlegg
-} from "../../../nav-soknad/redux/ettersendelse/ettersendelseActions";
-import {DispatchProps} from "../../../nav-soknad/redux/reduxTypes";
+} from "../../redux/ettersendelse/ettersendelseActions";
+import {DispatchProps} from "../../redux/reduxTypes";
 import { connect } from "react-redux";
 import { downloadAttachedFile } from "../../../nav-soknad/utils/rest-utils";
-import { REST_STATUS } from "../../../nav-soknad/types";
 import {MargIkon, MargIkoner} from "./margIkoner";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import { FormattedMessage } from "react-intl";
-import { REST_FEIL } from "../../../nav-soknad/types/restFeilTypes";
 import {
     EttersendelseState,
     EttersendelseVedleggBackend
-} from "../../../nav-soknad/redux/ettersendelse/ettersendelseTypes";
-import {Fil, OpplysningType} from "../../../nav-soknad/redux/okonomiskeOpplysninger/opplysningerTypes";
+} from "../../redux/ettersendelse/ettersendelseTypes";
+import {Fil, OpplysningType} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {State} from "../../redux/reducers";
-import Knapp from "nav-frontend-knapper";
+import {REST_FEIL, REST_STATUS} from "../../redux/soknad/soknadTypes";
 import PaperclipIcon from "../../../nav-soknad/components/digisosIkon/paperclipIcon";
+import {Knapp} from "nav-frontend-knapper";
 
 interface OwnProps {
 	ettersendelseAktivert: boolean;
 	children: React.ReactNode;
 	vedlegg: EttersendelseVedleggBackend;
-	restStatus?: string;
 	feilKode?: string;
 	dispatch?: any;
 }
@@ -80,8 +78,8 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
 	render() {
 		const { ettersendelse, vedlegg} = this.props;
-		const { feiletVedleggId } = ettersendelse;
-		const opplastingsFeil: boolean = this.props.restStatus === REST_STATUS.FEILET &&
+		const { feiletVedleggId, opplastingStatus, ettersendStatus, opplastingVedleggType } = ettersendelse;
+		const opplastingsFeil: boolean = opplastingStatus === REST_STATUS.FEILET &&
 			feiletVedleggId === vedlegg.type;
 		const visFilForStorFeilmelding: boolean = opplastingsFeil &&
 			this.props.feilKode === REST_FEIL.FOR_STOR_FIL;
@@ -98,7 +96,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 						type="file"
 						className="visuallyhidden"
 						tabIndex={-1}
-						accept="image/jpeg,image/png,application/pdf"
+						accept={window.navigator.platform.match(/iPad|iPhone|iPod/) !== null ? "*" : "image/jpeg,image/png,application/pdf"}
 					/>
 					{this.props.vedlegg && this.props.vedlegg.filer.map((fil: Fil) => {
 						const lastNedUrl = `opplastetVedlegg/${fil.uuid}/fil`;
@@ -151,7 +149,8 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 
 					<Knapp
 						type="standard"
-						spinner={false}
+						spinner={vedlegg.type === opplastingVedleggType}
+						disabled={ettersendStatus === REST_STATUS.PENDING || opplastingStatus === REST_STATUS.PENDING}
 						autoDisableVedSpinner={true}
 						onClick={() =>
 							this.props.ettersendelseAktivert &&

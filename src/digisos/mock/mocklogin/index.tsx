@@ -1,12 +1,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import {DispatchProps } from "../../../nav-soknad/redux/reduxTypes";
+import {DispatchProps } from "../../redux/reduxTypes";
 import "whatwg-fetch";
-import { tilMock } from "../../../nav-soknad/redux/navigasjon/navigasjonActions";
+import { tilMock } from "../../redux/navigasjon/navigasjonActions";
 import {fetchPost} from "../../../nav-soknad/utils/rest-utils";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import {settMockIdent} from "../mockReducer";
-
+import AlertStripe from 'nav-frontend-alertstriper';
+import {Input} from "nav-frontend-skjema";
+import {Innholdstittel} from "nav-frontend-typografi";
+import {Hovedknapp} from "nav-frontend-knapper";
+import {Panel} from "nav-frontend-paneler";
 
 export interface StateProps {
 	router: any
@@ -53,23 +56,30 @@ class MockLogin extends React.Component<Props, State> {
 		return (
 			<div className="mock-body">
 				<div className="mock-login-wrapper">
-					<div className="advarsel-block">
-						DETTE ER KUN FOR TESTING! Data du legger inn her er tilgjengelig for alle. Ikke legg inn noe sensitiv informasjon!
-					</div>
-					<h2>Mock Login</h2>
-					<div>Velg en tilfeldig ID</div>
-					<input onKeyPress={this.keyPress} value={this.state.uid} onChange={(evt: any) => this.setState({uid: evt.target.value})}  />
-					{ !this.state.loading &&
-					<div>
-						<button id="login-button" onClick={() => this.loginOgGaTilMockSide()} className="mock-egendefinert-GO">Login</button>
-					</div>
-					}
-					{ this.state.loading &&
-					<div>
-						<button className="mock-egendefinert-GO-loading">Login</button>
-						<NavFrontendSpinner type="XS" />
-					</div>
-					}
+					<Panel className={"mock-login-panel"}>
+						<br />
+						<AlertStripe type="advarsel">DETTE ER KUN FOR TESTING! Data du legger inn her er tilgjengelig for alle. Ikke legg inn noe sensitiv informasjon!</AlertStripe>
+
+						<br />
+
+						<Innholdstittel>Mock login</Innholdstittel>
+
+						<br />
+
+
+						<Input label={'Velg en tilfeldig ID'} onKeyPress={this.keyPress} value={this.state.uid} onChange={(evt: any) => this.setState({uid: evt.target.value})}/>
+
+						<div>
+							<Hovedknapp
+								id="login-button"
+								spinner={this.state.loading}
+								disabled={this.state.loading || this.state.uid.length === 0 }
+								onClick={() => this.loginOgGaTilMockSide()}
+							>
+								Login
+							</Hovedknapp>
+						</div>
+					</Panel>
 				</div>
 			</div>
 		);
