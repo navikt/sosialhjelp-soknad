@@ -5,7 +5,7 @@ import {
 	SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {SkattbarInntektInfo, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
-import {getIntlTextOrKey, IntlProps} from "../../../../nav-soknad/utils";
+import {IntlProps} from "../../../../nav-soknad/utils";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {SkattbarInntekt} from "./inntektTypes";
 import {Panel} from "nav-frontend-paneler";

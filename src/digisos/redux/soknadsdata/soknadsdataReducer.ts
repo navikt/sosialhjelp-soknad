@@ -45,8 +45,8 @@ import {
 } from "../../skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import { Barnebidrag, ForsorgerPlikt } from "../../skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 import {
-    initialSkattbarInntektState,
-    SkattbarInntekt
+	initialSkattbarInntektInfoState,
+	SkattbarInntekt
 } from "../../skjema/inntektFormue/skattbarInntekt/inntektTypes";
 import {Systeminntekter, initialSysteminntekter} from "../../skjema/inntektFormue/navytelser/navYtelserTypes";
 import {Studielan, initialStudielanState} from "../../skjema/inntektFormue/studielan/StudielanTypes";

@@ -1,4 +1,4 @@
-import {SkattbarInntektInfo} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
+import {SkattbarInntektInfo} from "../../../redux/soknadsdata/soknadsdataReducer";
 
 export interface SkattbarInntekt {
 	"organisasjoner": Organisasjon[]
