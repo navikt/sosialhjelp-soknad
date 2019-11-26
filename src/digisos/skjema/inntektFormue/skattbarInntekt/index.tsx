@@ -1,11 +1,11 @@
 import * as React from "react";
-import {FormattedMessage, injectIntl } from "react-intl";
+import {FormattedMessage, injectIntl} from "react-intl";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
-import {getIntlTextOrKey, IntlProps} from "../../../../nav-soknad/utils";
+import {SkattbarInntektInfo, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {IntlProps} from "../../../../nav-soknad/utils";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {SkattbarInntekt} from "./inntektTypes";
 import {Panel} from "nav-frontend-paneler";
@@ -26,23 +26,36 @@ class Skatt extends React.Component<Props, {}> {
     }
 
 	render() {
-		const {soknadsdata, intl} = this.props;
+		const {soknadsdata} = this.props;
 		const restStatus = soknadsdata.restStatus.inntekt.skattbarinntektogforskuddstrekk;
+		const skattbarinntektogforskuddstrekk: SkattbarInntektInfo = soknadsdata.inntekt.skattbarinntektogforskuddstrekk;
 		const visAnimerteStreker = restStatus !== REST_STATUS.OK;
 
 		// TODO DIGISOS-1175: Håndter flere måneder med skattbar inntekt
-		const skattbarinntektogforskuddstrekk: SkattbarInntekt[] = soknadsdata.inntekt.skattbarinntektogforskuddstrekk;
-		const tittel = getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.tittel");
+		const inntektFraSkatteetaten: SkattbarInntekt[] = skattbarinntektogforskuddstrekk.inntektFraSkatteetaten;
+		const inntektFraSkatteetatenFeilet: boolean = skattbarinntektogforskuddstrekk.inntektFraSkatteetatenFeilet;
+		const tittel: JSX.Element = <h4><FormattedMessage id="utbetalinger.inntekt.skattbar.tittel"/></h4>;
 
 		return (
 			<div className={"skatt-wrapper"}>
-				{!visAnimerteStreker && skattbarinntektogforskuddstrekk && skattbarinntektogforskuddstrekk.length > 0 && (
+				{inntektFraSkatteetatenFeilet && (
+					<Panel
+						border={true}
+						className={"ytelser_panel"}
+					>
+						<div>
+							{tittel}
+							<FormattedMessage id="utbetalinger.skattbar.kontaktproblemer"/>
+						</div>
+					</Panel>
+				)}
+				{!visAnimerteStreker && inntektFraSkatteetaten && inntektFraSkatteetaten.length > 0 && (
 					<Lesmerpanel
 						apneTekst={"Se detaljer"}
 						lukkTekst={"Lukk"}
 						intro={
 							<div>
-								<h4>{tittel}</h4>
+								{tittel}
 								<FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse"/>
 							</div>
 						}
@@ -50,12 +63,12 @@ class Skatt extends React.Component<Props, {}> {
 					>
 						<div className="utbetalinger">
 							<SkattbarinntektForskuddstrekk
-								skattbarinntektogforskuddstrekk={skattbarinntektogforskuddstrekk}
+								skattbarinntektogforskuddstrekk={inntektFraSkatteetaten}
 							/>
 						</div>
 					</Lesmerpanel>)
 				}
-				{!visAnimerteStreker && skattbarinntektogforskuddstrekk && skattbarinntektogforskuddstrekk.length === 0 && (
+				{!visAnimerteStreker && !inntektFraSkatteetatenFeilet && inntektFraSkatteetaten && inntektFraSkatteetaten.length === 0 && (
 					<Panel
 						border={true}
 						className={"ytelser_panel"}

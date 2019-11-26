@@ -45,8 +45,8 @@ import {
 } from "../../skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import { Barnebidrag, ForsorgerPlikt } from "../../skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 import {
-    initialSkattbarInntektState,
-    SkattbarInntekt
+	initialSkattbarInntektInfoState,
+	SkattbarInntekt
 } from "../../skjema/inntektFormue/skattbarInntekt/inntektTypes";
 import {Systeminntekter, initialSysteminntekter} from "../../skjema/inntektFormue/navytelser/navYtelserTypes";
 import {Studielan, initialStudielanState} from "../../skjema/inntektFormue/studielan/StudielanTypes";
@@ -89,7 +89,7 @@ export enum SoknadsSti {
 }
 
 export interface Inntekt {
-	skattbarinntektogforskuddstrekk: SkattbarInntekt[];
+	skattbarinntektogforskuddstrekk: SkattbarInntektInfo;
 	bostotte: Bostotte;
 	studielan: Studielan;
 	utbetalinger: Utbetalinger;
@@ -98,15 +98,20 @@ export interface Inntekt {
 	systemdata: Systeminntekter;
 }
 
+export interface SkattbarInntektInfo {
+	inntektFraSkatteetaten: SkattbarInntekt[];
+	inntektFraSkatteetatenFeilet: boolean;
+}
+
 export const initialInntektState: Inntekt = {
-	skattbarinntektogforskuddstrekk: initialSkattbarInntektState,
+	skattbarinntektogforskuddstrekk: initialSkattbarInntektInfoState,
 	bostotte: initialBostotteState,
 	studielan: initialStudielanState,
 	utbetalinger: initialUtbetalingerState,
 	formue: initialFormueState,
 	verdier: initialVerdierState,
 	systemdata: initialSysteminntekter
-}
+};
 
 export interface Personalia {
 	kontonummer: Kontonummer;
@@ -181,7 +186,11 @@ export type SoknadsdataType
 	| Utgifter
 	| Adresser
 	| AdresseValg
-	| NavEnhet[];
+	| NavEnhet[]
+	| Utbetalinger
+	| Barneutgifter
+	| Boutgifter
+	| SkattbarInntektInfo;
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,

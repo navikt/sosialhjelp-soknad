@@ -1,5 +1,6 @@
 export interface Systeminntekter {
     systeminntekter: Systeminntekt[];
+    utbetalingerFraNavFeilet: boolean;
 }
 
 export interface Systeminntekt {
@@ -9,5 +10,6 @@ export interface Systeminntekt {
 }
 
 export const initialSysteminntekter: Systeminntekter = {
-    systeminntekter: []
+    systeminntekter: [],
+    utbetalingerFraNavFeilet: false
 };

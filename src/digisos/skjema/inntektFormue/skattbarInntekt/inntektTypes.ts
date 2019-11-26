@@ -1,3 +1,5 @@
+import {SkattbarInntektInfo} from "../../../redux/soknadsdata/soknadsdataReducer";
+
 export interface SkattbarInntekt {
 	"organisasjoner": Organisasjon[]
 }
@@ -16,4 +18,8 @@ export interface Utbetaling {
 	"tittel": string
 }
 
+export const initialSkattbarInntektInfoState: SkattbarInntektInfo = {
+	inntektFraSkatteetaten: [],
+	inntektFraSkatteetatenFeilet: false
+};
 export const initialSkattbarInntektState: SkattbarInntekt[] = [];

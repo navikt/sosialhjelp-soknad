@@ -7,5 +7,6 @@ export const endpoints =
       "arbeid": "arbeid",
       "organisasjon": "organisasjon",
       "familie": "familie",
-      "utbetaling": "utbetaling"
+      "utbetaling": "utbetaling",
+      "bostotte": "bostotte"
     };
