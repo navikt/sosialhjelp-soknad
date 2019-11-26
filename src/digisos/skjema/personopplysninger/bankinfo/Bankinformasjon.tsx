@@ -18,6 +18,16 @@ import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTyp
 import {IntlProps, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
+const verdiInneholderKunTallOgWhitespace = (brukerutfyltVerdi: string) => {
+	return (brukerutfyltVerdi.match(/^[\d* ?]*$/)  as RegExpMatchArray | null) !== null
+};
+const antallTallErMindreEllerLikElleve = (brukerutfyltVerdi: string) => {
+	if (brukerutfyltVerdi === ""){
+		return true;
+	}
+	return !!(brukerutfyltVerdi && brukerutfyltVerdi.replace(/[^0-9]/g, "").length <= 11);
+};
+
 interface OwnProps {
 	disableLoadingAnimation?: boolean;
 }
@@ -104,11 +114,16 @@ class Bankinformasjon extends React.Component<Props, State> {
 	}
 
 	onChangeInput(brukerutfyltVerdi: string) {
-		this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
-		const { soknadsdata } = this.props;
-		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
-		kontonummer.brukerutfyltVerdi = brukerutfyltVerdi;
-		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
+		if (
+			verdiInneholderKunTallOgWhitespace(brukerutfyltVerdi) &&
+			antallTallErMindreEllerLikElleve(brukerutfyltVerdi)
+		){
+			this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
+			const { soknadsdata } = this.props;
+			const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
+			kontonummer.brukerutfyltVerdi = brukerutfyltVerdi;
+			this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
+		}
 	}
 
 	onChangeCheckboks(event: any): void {
@@ -173,7 +188,6 @@ class Bankinformasjon extends React.Component<Props, State> {
 								required={false}
 								onChange={(input: string) => this.onChangeInput(input)}
 								onBlur={() => this.onBlur()}
-								maxLength={13}
 								bredde={"S"}
 							/>
 							<div
@@ -221,7 +235,6 @@ class Bankinformasjon extends React.Component<Props, State> {
 										required={false}
 										onChange={(input: string) => this.onChangeInput(input)}
 										onBlur={() => this.onBlur()}
-										maxLength={13}
 										bredde={"S"}
 									/>
 									<div

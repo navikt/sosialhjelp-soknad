@@ -13,6 +13,7 @@ import {
     SoknadsdataContainerProps
 } from "../../redux/soknadsdata/soknadsdataContainerUtils";
 import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
+import {stringInneholderKunTall} from "../../../nav-soknad/utils/utilityFunctions";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -118,11 +119,13 @@ class BosituasjonView extends React.Component<Props, {}> {
     }
 
     onChangeAntall(verdi: string) {
-        const {soknadsdata} = this.props;
-        const bosituasjon = soknadsdata.bosituasjon;
-        bosituasjon.antallPersoner = verdi;
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
-        this.props.clearValideringsfeil(FAKTUM_KEY_ANTALL);
+        if (stringInneholderKunTall(verdi)){
+            const {soknadsdata} = this.props;
+            const bosituasjon = soknadsdata.bosituasjon;
+            bosituasjon.antallPersoner = verdi;
+            this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
+            this.props.clearValideringsfeil(FAKTUM_KEY_ANTALL);
+        }
     }
 
     render() {

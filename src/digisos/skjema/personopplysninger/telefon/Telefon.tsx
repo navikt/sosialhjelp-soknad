@@ -18,6 +18,22 @@ const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_SYSTEM_TELEFON = "kontakt.system.telefoninfo";
 const LANDKODE = "+47";
 
+const verdiInneholderKunGyldigeTegnOgErIkkeForLangt = (verdi: any): boolean => {
+	return(
+		typeof verdi === 'string' &&
+		verdi.match(/^\+?[0-9]*$/) !== null as RegExpMatchArray | null &&
+		verdiErIkkeForLangt(verdi)
+	)
+};
+
+const verdiErIkkeForLangt = (verdi: string): boolean => {
+	const match: RegExpMatchArray | null = verdi.match(/^\++./);
+	if(match){
+		return verdi.length <= 11;
+	}
+	return verdi.length <= 8;
+};
+
 type Props = SoknadsdataContainerProps & IntlProps;
 
 class TelefonView extends React.Component<Props, {}> {
@@ -41,11 +57,13 @@ class TelefonView extends React.Component<Props, {}> {
 	}
 
 	onChange(verdi: any) {
-		const { soknadsdata } = this.props;
-		const telefonnummer = soknadsdata.personalia.telefonnummer;
-		telefonnummer.brukerutfyltVerdi = verdi;
-		this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
-		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
+		if(verdiInneholderKunGyldigeTegnOgErIkkeForLangt(verdi)){
+			const { soknadsdata } = this.props;
+			const telefonnummer = soknadsdata.personalia.telefonnummer;
+			telefonnummer.brukerutfyltVerdi = verdi;
+			this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
+			this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
+		}
 	}
 
 	onBlur() {

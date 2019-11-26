@@ -86,6 +86,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 				<Sporsmal
 					sprakNokkel={FAKTUM_KEY_HVA}
 					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+					visLedetekst={false}
 				>
 					<TextareaEnhanced
 						id={faktumKeyHvaId}
@@ -103,6 +104,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 				<Sporsmal
 					sprakNokkel={FAKTUM_KEY_HVORFOR}
 					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+					visLedetekst={false}
 				>
 					<TextareaEnhanced
 						id={faktumKeyHvorforId}

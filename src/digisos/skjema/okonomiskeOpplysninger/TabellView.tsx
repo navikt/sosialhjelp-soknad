@@ -7,16 +7,9 @@ import {
     OpplysningRad,
     OpplysningSpc,
 } from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
-import {
-    DispatchProps,
-    Valideringsfeil,
-    ValideringsFeilKode
-} from "../../redux/reduxTypes";
+import {DispatchProps, Valideringsfeil, ValideringsFeilKode} from "../../redux/reduxTypes";
 import {connect} from "react-redux";
-import {
-    getSpcForOpplysning,
-    getTomVedleggRad
-} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
+import {getSpcForOpplysning, getTomVedleggRad} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {Column, Row} from "nav-frontend-grid";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {
@@ -60,6 +53,8 @@ class TabellView extends React.Component<Props, {}> {
         if (inputFelt !== InputType.BESKRIVELSE) {
             if (erGyldigTall(input) || input === "") {
                 this.props.dispatch(clearValideringsfeil(key));
+            } else {
+                this.props.dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, key));
             }
         }
         this.props.dispatch(updateOpplysning(opplysningUpdated));
