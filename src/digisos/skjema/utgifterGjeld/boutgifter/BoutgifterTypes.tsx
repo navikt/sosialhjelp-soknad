@@ -6,6 +6,7 @@ export interface Boutgifter {
     "oppvarming" : boolean;
     "boliglan" : boolean;
     "annet" : boolean;
+    "skalViseInfoVedBekreftelse" : boolean;
 }
 
 export const initialBoutgifterState: Boutgifter = {
@@ -15,7 +16,8 @@ export const initialBoutgifterState: Boutgifter = {
     "kommunalAvgift" : false,
     "oppvarming" : false,
     "boliglan" : false,
-    "annet" : false
+    "annet" : false,
+    "skalViseInfoVedBekreftelse" : false
 };
 
 export enum BoutgifterKeys {
