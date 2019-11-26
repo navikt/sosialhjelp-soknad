@@ -1,5 +1,5 @@
 import {
-    erPaStegEnOgValgtNavEnhetErUgyldig, responseIsOfTypeListAndContainsAtleastOneObject,
+    erPaStegEnOgValgtNavEnhetErUgyldig, responseIsOfTypeNavEnhet,
 } from "./containerUtils";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
@@ -8,6 +8,7 @@ const enUgyldigNavEnhet: NavEnhet =
         orgnr: "1234",
         enhetsnr: "2345",
         isMottakMidlertidigDeaktivert: true,
+        isMottakDeaktivert: false,
         enhetsnavn: "asdf",
         kommunenavn: "fdsa",
         kommuneNr: "3456",
@@ -19,6 +20,7 @@ const enGyldigNavEnhet: NavEnhet =
         orgnr: "1234",
         enhetsnr: "2345",
         isMottakMidlertidigDeaktivert: false,
+        isMottakDeaktivert: false,
         enhetsnavn: "asdf",
         kommunenavn: "fdsa",
         kommuneNr: "3456",
@@ -30,6 +32,7 @@ const ugyldigNavenhetEnhetsnrNull: any =
         orgnr: "1234",
         enhetsnr: null,
         isMottakMidlertidigDeaktivert: false,
+        isMottakDeaktivert: true,
         enhetsnavn: "asdf",
         kommunenavn: "fdsa",
         kommuneNr: "3456",
@@ -37,8 +40,8 @@ const ugyldigNavenhetEnhetsnrNull: any =
     };
 
 test("that erPaStegEnOgValgtNavEnhetErUgyldig gir riktig svar", () => {
-    expect(erPaStegEnOgValgtNavEnhetErUgyldig(1, undefined)).toBe(true);
-    expect(erPaStegEnOgValgtNavEnhetErUgyldig(2, undefined)).toBe(false);
+    expect(erPaStegEnOgValgtNavEnhetErUgyldig(1, null)).toBe(true);
+    expect(erPaStegEnOgValgtNavEnhetErUgyldig(2, null)).toBe(false);
     expect(erPaStegEnOgValgtNavEnhetErUgyldig(1, enUgyldigNavEnhet)).toBe(true);
     expect(erPaStegEnOgValgtNavEnhetErUgyldig(2, enUgyldigNavEnhet)).toBe(false);
     expect(erPaStegEnOgValgtNavEnhetErUgyldig(1, enGyldigNavEnhet)).toBe(false);
@@ -50,18 +53,20 @@ const gyldigNavEnhet: NavEnhet = {
     orgnr: "12345",
     enhetsnr: "4321",
     isMottakMidlertidigDeaktivert: false,
+    isMottakDeaktivert: false,
     enhetsnavn: "Enhetsnavn",
     kommunenavn: "Kommunenavn",
     kommuneNr: "15533",
     valgt: true,
 };
 
-const undefinedNavEnhet: undefined = undefined;
+const undefinedNavEnhet: null = null;
 
 const navEnhetMidlertidigDeaktivert: NavEnhet = {
     orgnr: "12345",
     enhetsnr: "4321",
     isMottakMidlertidigDeaktivert: true,
+    isMottakDeaktivert: false,
     enhetsnavn: "Enhetsnavn",
     kommunenavn: "Kommunenavn",
     kommuneNr: "15533",
@@ -69,9 +74,10 @@ const navEnhetMidlertidigDeaktivert: NavEnhet = {
 };
 
 const navEnhetMedManglendeEnhetsnr: NavEnhet = {
-    orgnr: "12345",
-    enhetsnr: "4321",
+    orgnr: null,
+    enhetsnr: null,
     isMottakMidlertidigDeaktivert: true,
+    isMottakDeaktivert: true,
     enhetsnavn: "Enhetsnavn",
     kommunenavn: "Kommunenavn",
     kommuneNr: "15533",
@@ -95,15 +101,13 @@ const ugyldigResponseNull: null = null;
 const ugyldigResponseString: string = "En random string";
 const ugyldigResponseRandomObject = { "bare": "noe", "tull": "og", "tall": 1234556};
 const ugyldigResponseTomListe: any[] = [];
-const ugyldigResponseListeMedFeilTypeObjecter = [ugyldigResponseRandomObject];
-const gyldigResponse = [gyldigNavEnhet]
+const gyldigResponse = gyldigNavEnhet;
 
 test("that responseIsOfTypeListOfNavEnhetAndHasAtleastOneElement ikke fører til nullpointer feil", () => {
-    expect(responseIsOfTypeListAndContainsAtleastOneObject(ugyldigResponseUndefined)).toBe(false);
-    expect(responseIsOfTypeListAndContainsAtleastOneObject(ugyldigResponseNull)).toBe(false);
-    expect(responseIsOfTypeListAndContainsAtleastOneObject(ugyldigResponseString)).toBe(false);
-    expect(responseIsOfTypeListAndContainsAtleastOneObject(ugyldigResponseRandomObject)).toBe(false);
-    expect(responseIsOfTypeListAndContainsAtleastOneObject(ugyldigResponseTomListe)).toBe(false);
-    expect(responseIsOfTypeListAndContainsAtleastOneObject(ugyldigResponseListeMedFeilTypeObjecter)).toBe(true);
-    expect(responseIsOfTypeListAndContainsAtleastOneObject(gyldigResponse)).toBe(true)
+    expect(responseIsOfTypeNavEnhet(ugyldigResponseUndefined)).toBe(false);
+    expect(responseIsOfTypeNavEnhet(ugyldigResponseNull)).toBe(false);
+    expect(responseIsOfTypeNavEnhet(ugyldigResponseString)).toBe(false);
+    expect(responseIsOfTypeNavEnhet(ugyldigResponseRandomObject)).toBe(false);
+    expect(responseIsOfTypeNavEnhet(ugyldigResponseTomListe)).toBe(false);
+    expect(responseIsOfTypeNavEnhet(gyldigResponse)).toBe(true)
 });

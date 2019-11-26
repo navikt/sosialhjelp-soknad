@@ -1,4 +1,4 @@
-import {AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet, SoknadsMottakerStatus} from "./AdresseTypes";
+import {AdresseKategori, AdressesokTreff, Gateadresse, SoknadsMottakerStatus} from "./AdresseTypes";
 import {Soknadsdata} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
@@ -20,14 +20,14 @@ const formaterAdresseString = (adresse: AdressesokTreff) => {
                 returverdi += " " + adresse.husnummer + husbokstav + ", " + adresse.postnummer + " " + adresse.poststed;
             } else {
                 if (adresse.postnummer !== null && adresse.poststed !== null) {
-                    returverdi += " , " + adresse.postnummer + " " + adresse.poststed;
+                    returverdi += ", " + adresse.postnummer + " " + adresse.poststed;
                 }
             }
         } else if (adresse.kommunenavn != null) {
             if (adresse.husnummer !== "" && adresse.husnummer !== null) {
                 returverdi += " " + adresse.husnummer + husbokstav + ", " + adresse.kommunenavn;
             } else {
-                returverdi += " , " + adresse.kommunenavn;
+                returverdi += ", " + adresse.kommunenavn;
             }
         }
     } catch (error) {
@@ -40,8 +40,8 @@ const formaterSoknadsadresse = (soknadAdresse: Gateadresse | null) => {
     let formatertSoknadAdresse = "";
     if (soknadAdresse) {
         formatertSoknadAdresse =
-            (soknadAdresse.gatenavn ? soknadAdresse.gatenavn : "") + " " +
-            (soknadAdresse.husnummer ? soknadAdresse.husnummer : "") + " " +
+            (soknadAdresse.gatenavn ? soknadAdresse.gatenavn : "") +
+            (soknadAdresse.husnummer ? " " + soknadAdresse.husnummer : "") +
             (soknadAdresse.husbokstav ? soknadAdresse.husbokstav : "") + ", " +
             soknadAdresse.postnummer + " " + soknadAdresse.poststed;
         formatertSoknadAdresse.replace(/ /, " ");
@@ -97,15 +97,17 @@ const ekstraherHusnummerHusbokstav = (inntastetAdresse: string): any => {
 
 const soknadsmottakerStatus = (soknadsdata: Soknadsdata): SoknadsMottakerStatus => {
     const navEnheter = soknadsdata.personalia.navEnheter;
-    const valgtNavEnhet: NavEnhet | undefined = navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt);
+    const valgtNavEnhet = soknadsdata.personalia.navEnhet;
     const navEnheterRestStatus: REST_STATUS = soknadsdata.restStatus.personalia.navEnheter;
     const adresser = soknadsdata.personalia.adresser;
 
-
+    if (valgtNavEnhet && valgtNavEnhet.isMottakDeaktivert) {
+        return SoknadsMottakerStatus.UGYLDIG
+    }
     if (valgtNavEnhet && valgtNavEnhet.isMottakMidlertidigDeaktivert) {
         return SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT
     }
-    if (valgtNavEnhet && valgtNavEnhet.valgt && !valgtNavEnhet.isMottakMidlertidigDeaktivert) {
+    if (valgtNavEnhet && valgtNavEnhet.valgt) {
         return SoknadsMottakerStatus.GYLDIG;
     }
     if (adresser.valg) {

@@ -50,14 +50,14 @@ class AdresseView extends React.Component<Props, State> {
             const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
             if (restStatus === REST_STATUS.INITIALISERT) {
                 this.props.hentSoknadsdata(behandlingsId, SoknadsSti.ADRESSER);
-                this.props.hentSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER);
+                this.props.hentSoknadsdata(behandlingsId, SoknadsSti.VALGT_NAV_ENHET);
             }
         }
     }
 
     componentDidUpdate(prevProps: Readonly<Props>) {
         const restStatus: REST_STATUS = prevProps.soknadsdata.restStatus.personalia.adresser;
-        if (restStatus === REST_STATUS.OK && this.state.oppstartsModus === true) {
+        if (restStatus === REST_STATUS.OK && this.state.oppstartsModus) {
             this.setState({oppstartsModus: false});
         }
     }
@@ -69,10 +69,12 @@ class AdresseView extends React.Component<Props, State> {
             return;
         }
         const adresser = soknadsdata.personalia.adresser;
+        const tidligereValg = adresser.valg;
         adresser.valg = adresseKategori;
         oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
-        if (adresseKategori === AdresseKategori.SOKNAD) {
+        if (adresseKategori !== tidligereValg && adresseKategori === AdresseKategori.SOKNAD) {
             oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, []);
+            oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, null);
             const soknad: any = {
                 "type": "gateadresse",
                 "gateadresse": null,
@@ -92,12 +94,11 @@ class AdresseView extends React.Component<Props, State> {
             this.setState({settAdressePending: true});
             lagreSoknadsdata(behandlingsId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
                 if (Array.isArray(navEnheter)) {
-                    navEnheter = navEnheter.filter(enhet => enhet.enhetsnr !== null);
                     if (navEnheter.length === 1) {
                         const valgtNavEnhet: NavEnhet = navEnheter[0];
                         valgtNavEnhet.valgt = true;
-
                         lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet);
+                        oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, valgtNavEnhet);
                         this.slettEventuelleValideringsfeil();
                     }
                     oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter);
@@ -156,8 +157,9 @@ class AdresseView extends React.Component<Props, State> {
 
             const navEnheter = soknadsdata.personalia.navEnheter;
             navEnheter.map((navEnhet: NavEnhet) => {
-                if (navEnhet.orgnr === valgtNavEnhet.orgnr) {
+                if (navEnhet.enhetsnavn === valgtNavEnhet.enhetsnavn) {
                     navEnhet.valgt = true;
+                    oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, navEnhet);
                 } else {
                     navEnhet.valgt = false;
                 }
@@ -182,6 +184,7 @@ class AdresseView extends React.Component<Props, State> {
             adresser.soknad.gateadresse = null;
         }
         oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, []);
+        oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, null);
         oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser);
     }
 

@@ -81,6 +81,7 @@ export enum SoknadsSti {
 	BARNEUTGIFTER = "utgifter/barneutgifter",
 	ADRESSER = "personalia/adresser",
 	NAV_ENHETER = "personalia/navEnheter",
+	VALGT_NAV_ENHET = "personalia/navEnhet",
 	SIVILSTATUS = "familie/sivilstatus",
 	BASIS_PERSONALIA = "personalia/basisPersonalia",
 	FORSORGERPLIKT = "familie/forsorgerplikt",
@@ -113,6 +114,7 @@ export interface Personalia {
 	telefonnummer: Telefonnummer;
 	adresser: Adresser;
 	navEnheter: NavEnhet[];
+	navEnhet: null | NavEnhet;
 	basisPersonalia: BasisPersonalia;
 }
 
@@ -127,6 +129,7 @@ export const initialPersonaliaState: Personalia = {
 	telefonnummer: initialTelefonnummerState,
 	adresser: initialAdresserState,
 	navEnheter: [],
+	navEnhet: null,
 	basisPersonalia: initialBasisPersonalia
 };
 
@@ -181,7 +184,8 @@ export type SoknadsdataType
 	| Utgifter
 	| Adresser
 	| AdresseValg
-	| NavEnhet[];
+	| NavEnhet[]
+	| NavEnhet;
 
 interface SoknadsdataActionType {
 	type: SoknadsdataActionTypeKeys,
@@ -196,7 +200,8 @@ const initialSoknadsdataRestStatus = {
 		kontonummer: REST_STATUS.INITIALISERT,
 		basisPersonalia: REST_STATUS.INITIALISERT,
 		adresser: REST_STATUS.INITIALISERT,
-		navEnheter: REST_STATUS.INITIALISERT
+		navEnheter: REST_STATUS.INITIALISERT,
+		valgtNavEnhet: REST_STATUS.INITIALISERT
 	},
 	familie: {
 		sivilstatus: REST_STATUS.INITIALISERT,

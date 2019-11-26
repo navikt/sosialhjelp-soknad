@@ -19,7 +19,7 @@ class SoknadsmottakerVelger extends React.Component<Props,{}> {
 
 	velgNavKontor(event: any) {
 		this.props.navEnheter.forEach((soknadsmottaker: NavEnhet) => {
-			if (event.target.value === soknadsmottaker.orgnr) {
+			if (event.target.value === soknadsmottaker.enhetsnavn) {
 				this.props.onVelgSoknadsmottaker(soknadsmottaker)
 			}
 		});
@@ -27,11 +27,11 @@ class SoknadsmottakerVelger extends React.Component<Props,{}> {
 
 	render() {
 		const {navEnheter, ikkeVisPanel, intl} = this.props;
-		let orgnr = "velg";
+		let enhetsnavn = "velg";
 		if (navEnheter) {
 			navEnheter.forEach((soknadsmottaker: NavEnhet) => {
-				if (soknadsmottaker.valgt) {
-					orgnr = soknadsmottaker.orgnr;
+				if (soknadsmottaker.valgt && soknadsmottaker.enhetsnavn) {
+					enhetsnavn = soknadsmottaker.enhetsnavn;
 				}
 			});
 		}
@@ -41,14 +41,14 @@ class SoknadsmottakerVelger extends React.Component<Props,{}> {
 				className="velgNavKontorDropDown"
 				label={this.props.label || ""}
 				onChange={(event: any) => this.velgNavKontor(event)}
-				value={orgnr}
+				value={enhetsnavn}
 			>
 				<option value="velg" key="velg" disabled={true}>
 					{getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.velgMottaker")}
 				</option>
 				{navEnheter.map((soknadsmottaker: NavEnhet, index: number) => {
 					return (
-						<option value={soknadsmottaker.orgnr} key={index}>
+						<option value={soknadsmottaker.enhetsnavn} key={index}>
 							{soknadsmottaker.enhetsnavn}
 						</option>
 					);

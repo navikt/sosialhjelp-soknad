@@ -13,9 +13,10 @@ export interface AdressesokTreff {
 }
 
 export interface NavEnhet {
-	orgnr: string;
-	enhetsnr: string;
+	orgnr: null | string;
+	enhetsnr: null | string;
 	isMottakMidlertidigDeaktivert: boolean;
+	isMottakDeaktivert: boolean;
 	enhetsnavn: string;
 	kommunenavn: string;
 	kommuneNr: string;

@@ -11,13 +11,13 @@ import {
     SkjemaConfig,
     SkjemaSteg,
     SkjemaStegType,
-    SoknadState
-} from "../../digisos/redux/soknad/soknadTypes";
+    SoknadState} from "../../digisos/redux/soknad/soknadTypes";
 import {DispatchProps, ValideringsFeilKode} from "../../digisos/redux/reduxTypes";
 import {setVisBekreftMangler} from "../../digisos/redux/oppsummering/oppsummeringActions";
 import {getIntlTextOrKey, IntlProps, scrollToTop} from "../utils";
 import {
-    avbrytSoknad, resetSendSoknadServiceUnavailable,
+    avbrytSoknad,
+    resetSendSoknadServiceUnavailable,
     sendSoknad
 } from "../../digisos/redux/soknad/soknadActions";
 import {gaTilbake, gaVidere, tilSteg} from "../../digisos/redux/navigasjon/navigasjonActions";
@@ -115,7 +115,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
             const {feil} = this.props.validering;
 
             const valgtNavEnhet = this.finnSoknadsMottaker();
-            if (aktivtSteg.stegnummer === 1 && !valgtNavEnhet) {
+            if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
                 this.props.dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
                 this.props.dispatch(visValideringsfeilPanel());
             } else {
@@ -143,7 +143,7 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
             }
 
             const {feil} = this.props.validering;
-            const valgtNavEnhet: NavEnhet | undefined = this.finnSoknadsMottaker();
+            const valgtNavEnhet = this.finnSoknadsMottaker();
 
             if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
                 dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
@@ -161,8 +161,16 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
     }
 
     finnSoknadsMottaker() {
-        const valgtNavEnhet: NavEnhet | undefined = this.props.soknadsdata.personalia.navEnheter.find((navenhet: NavEnhet) => navenhet.valgt);
-        return valgtNavEnhet;
+        return this.props.soknadsdata.personalia.navEnhet as (NavEnhet | null);
+    }
+
+    finnKommunenavn() {
+        const valgtNavEnhet = this.props.soknadsdata.personalia.navEnhet as (NavEnhet | null);
+        debugger;
+        if (valgtNavEnhet === null) {
+            return "Din";
+        }
+        return valgtNavEnhet.kommunenavn;
     }
 
     handleGaTilbake(aktivtSteg: number) {
@@ -254,12 +262,24 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
                         {soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 1 && (
                             <AlertStripe type="feil">
-                                <FormattedHTMLMessage id="adresse.alertstripe.feil.fixme"/>
+                                <FormattedHTMLMessage
+                                    id="adresse.alertstripe.feil.utenurl"
+                                    values={
+                                        {
+                                            kommuneNavn: this.finnKommunenavn()
+                                        }}
+                                />
                             </AlertStripe>
                         )}
                         {soknad.visIkkePakobletPanel && aktivtSteg !== 1 && (
                             <AlertStripe type="advarsel">
-                                <FormattedHTMLMessage id="adresse.alertstripe.advarsel.fixme"/>
+                                <FormattedHTMLMessage
+                                    id="adresse.alertstripe.advarsel.utenurl"
+                                    values={
+                                        {
+                                            kommuneNavn: this.finnKommunenavn()
+                                        }}
+                                />
                             </AlertStripe>
                         )}
 

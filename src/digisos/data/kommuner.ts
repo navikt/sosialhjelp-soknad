@@ -1,17 +1,17 @@
 import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
 import {NavEnhet} from "../skjema/personopplysninger/adresse/AdresseTypes";
 
-function finnSoknadsMottaker(soknadsdata: Soknadsdata): NavEnhet | undefined {
-	let valgtNavEnhet: NavEnhet | undefined = undefined;
+function finnSoknadsMottaker(soknadsdata: Soknadsdata): NavEnhet | null {
+	let valgtNavEnhet: NavEnhet | null = null;
 	if (soknadsdata.personalia.navEnheter){
-		valgtNavEnhet = soknadsdata.personalia.navEnheter.find((navenhet: NavEnhet) => navenhet.valgt);
+		valgtNavEnhet = soknadsdata.personalia.navEnhet
 	}
 	return valgtNavEnhet;
 }
 
 function finnValgtEnhetsNavn(soknadsdata: Soknadsdata): string {
 	const soknadsmottaker = finnSoknadsMottaker(soknadsdata);
-	if (typeof soknadsmottaker !== 'undefined') {
+	if (soknadsmottaker !== null) {
 		return soknadsmottaker.enhetsnavn + ", " + soknadsmottaker.kommunenavn + " kommune";
 	}
 	return "";
