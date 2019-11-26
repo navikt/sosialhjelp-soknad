@@ -108,7 +108,7 @@ workflows:
           filters:
             branches:
               only: master
-      - browser-test:
-          requires:
-            - deploy_heroku
+#      - browser-test:
+#          requires:
+#            - deploy_heroku
 
