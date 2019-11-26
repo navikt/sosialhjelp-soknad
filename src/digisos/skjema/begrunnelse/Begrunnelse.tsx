@@ -86,6 +86,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 				<Sporsmal
 					sprakNokkel={FAKTUM_KEY_HVA}
 					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+					visLedetekst={false}
 				>
 					<TextareaEnhanced
 						id={faktumKeyHvaId}
@@ -96,6 +97,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 						onBlur={() => this.lagreHvisGyldig()}
 						faktumKey="begrunnelse.hva"
 						labelId="begrunnelse.hva.label"
+						hideLabel={true}
 						maxLength={MAX_CHARS}
 						value={begrunnelse.hvaSokesOm ? begrunnelse.hvaSokesOm : ""}
 					/>
@@ -103,6 +105,7 @@ class BegrunnelseSkjema extends React.Component<Props, {}> {
 				<Sporsmal
 					sprakNokkel={FAKTUM_KEY_HVORFOR}
 					legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+					visLedetekst={false}
 				>
 					<TextareaEnhanced
 						id={faktumKeyHvorforId}
