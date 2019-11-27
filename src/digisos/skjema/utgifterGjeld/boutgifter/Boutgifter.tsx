@@ -10,6 +10,8 @@ import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Boutgifter, BoutgifterKeys} from "./BoutgifterTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
+import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
+import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
@@ -74,24 +76,34 @@ export class BoutgifterView extends React.Component<Props, {}> {
         const {soknadsdata, intl} = this.props;
         const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
         return (
-            <JaNeiSporsmal
-                tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER)}
-                faktumKey={BOUTGIFTER}
-                verdi={boutgifter.bekreftelse}
-                onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
-                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-            >
-                <Sporsmal
-                    tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER + ".true.type")}
+            <div className="skjema-sporsmal">
+                <JaNeiSporsmal
+                    tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER)}
+                    faktumKey={BOUTGIFTER}
+                    verdi={boutgifter.bekreftelse}
+                    onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
+                    legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                 >
-                    {this.renderCheckBox(BoutgifterKeys.HUSLEIE, BoutgifterKeys.HUSLEIE)}
-                    {this.renderCheckBox(BoutgifterKeys.STROM, BoutgifterKeys.STROM)}
-                    {this.renderCheckBox(BoutgifterKeys.KOMMUNALAVGIFT, BoutgifterKeys.KOMMUNALAVGIFT)}
-                    {this.renderCheckBox(BoutgifterKeys.OPPVARMING, BoutgifterKeys.OPPVARMING)}
-                    {this.renderCheckBox(BoutgifterKeys.BOLIGLAN, BoutgifterKeys.BOLIGLAN)}
-                    {this.renderCheckBox(BoutgifterKeys.ANNET, "andreutgifter")}
-                </Sporsmal>
-            </JaNeiSporsmal>
+                    <Sporsmal
+                        tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER + ".true.type")}
+                    >
+                        {this.renderCheckBox(BoutgifterKeys.HUSLEIE, BoutgifterKeys.HUSLEIE)}
+                        {this.renderCheckBox(BoutgifterKeys.STROM, BoutgifterKeys.STROM)}
+                        {this.renderCheckBox(BoutgifterKeys.KOMMUNALAVGIFT, BoutgifterKeys.KOMMUNALAVGIFT)}
+                        {this.renderCheckBox(BoutgifterKeys.OPPVARMING, BoutgifterKeys.OPPVARMING)}
+                        {this.renderCheckBox(BoutgifterKeys.BOLIGLAN, BoutgifterKeys.BOLIGLAN)}
+                        {this.renderCheckBox(BoutgifterKeys.ANNET, "andreutgifter")}
+                    </Sporsmal>
+                </JaNeiSporsmal>
+                <Informasjonspanel
+                    synlig={boutgifter && boutgifter.skalViseInfoVedBekreftelse && boutgifter.bekreftelse === true}
+                    ikon={InformasjonspanelIkon.ELLA}
+                    farge={DigisosFarge.VIKTIG}
+                >
+                    <FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
+                </Informasjonspanel>
+
+            </div>
         )
     }
 }

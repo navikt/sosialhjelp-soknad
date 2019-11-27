@@ -1,8 +1,7 @@
 import * as React from "react";
-import {FormattedDate} from 'react-intl'
+import {FormattedDate, FormattedMessage, FormattedNumber, injectIntl} from 'react-intl'
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {formaterIsoDato, getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
-import { FormattedHTMLMessage, FormattedMessage, FormattedNumber, injectIntl } from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
 	connectSoknadsdataContainer,
@@ -10,8 +9,6 @@ import {
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { Bostotte } from "./bostotteTypes";
-import Informasjonspanel, { InformasjonspanelIkon } from "../../../../nav-soknad/components/informasjonspanel";
-import { DigisosFarge } from "../../../../nav-soknad/components/svg/DigisosFarger";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
 
@@ -121,13 +118,6 @@ class BostotteView extends React.Component<Props, State> {
 							onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
 							legendTittelStyle={LegendTittleStyle.FET_NORMAL}
 						/>
-						<Informasjonspanel
-							synlig={bostotte && bostotte.bekreftelse === false}
-							ikon={InformasjonspanelIkon.ELLA}
-							farge={DigisosFarge.VIKTIG}
-						>
-							<FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
-						</Informasjonspanel>
 					</div>
 				)}
 				{!requestToHusbankenFeilet && (<Lesmerpanel
