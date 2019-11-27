@@ -24,7 +24,7 @@ export const valgtNavKontorErGyldigMenMottakErMidlertidigDeaktivert = (valgtNavK
 };
 
 export const responseIsOfTypeNavEnhet = (response: any) => {
-    if (response == undefined || typeof response === "string") {
+    if (response === null || response === undefined || typeof response === "string") {
         return false
     }
     const navEnhet: NavEnhet = response;
