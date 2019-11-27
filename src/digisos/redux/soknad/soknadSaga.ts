@@ -194,7 +194,7 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
 function* getErSystemdataEndretSaga(action: GetErSystemdataEndret) {
     try {
         const urlPath = `soknader/${action.behandlingsId}/erSystemdataEndret`;
-        const response = yield fetchToJson(urlPath);
+        const response = yield fetchToJson(urlPath, true);
         if (response) {
             yield put(loggInfo("Systemdata var endret for brukeren."));
         }

@@ -118,7 +118,7 @@ class ArbeidView extends React.Component<Props, State> {
 				stil="system"
 			>
 				<SysteminfoMedSkjema>
-					<div className="skjema-sporsmal__tittel">
+					<div>
 						<FormattedMessage id="arbeidsforhold.infotekst"/>
 					</div>
 					{(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (

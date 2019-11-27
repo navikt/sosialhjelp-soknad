@@ -5,6 +5,7 @@ import {organisasjonJSON} from "./jsonTemplates/organisasjon";
 import {nyOrganisasjonJSON} from './jsonPartialTemplates/organisasjon';
 import {adresserJSON} from "./jsonTemplates/adresser";
 import {arbeidJSON} from "./jsonTemplates/arbeid";
+import {bostotteJSON} from "./jsonTemplates/bostotte";
 import {brukerprofilJSON} from "./jsonTemplates/brukerprofil";
 import {ektefelleJSON} from "./jsonTemplates/ektefelle";
 import {familieJSON} from "./jsonTemplates/familie";
@@ -22,6 +23,7 @@ const norg = norgJSON;
 let organisasjon = organisasjonJSON;
 const telefon = telefonJSON;
 const utbetaling = utbetalingJSON;
+const bostotte = bostotteJSON;
 
 const PERSON = "person";
 const MIDLERTIDIGPOSTADRESSE = "midlertidigPostadresse";
@@ -432,6 +434,16 @@ export function leggTilUtbetaling(periodeFom: any, periodeTom: any, posteringsda
     utbetaling.forfallsdato = forfallsdato;
 }
 
+export function leggTilBostotteUtbetalinger(utbetalinger: any[]) {
+    // @ts-ignore
+    bostotteJSON.utbetalinger = utbetalinger;
+}
+
+export function leggTilBostotteSaker(saker: any[]) {
+    // @ts-ignore
+    bostotteJSON.saker = saker;
+}
+
 export function getAdresserPath() {
     return endpoints.adresser
 }
@@ -494,4 +506,12 @@ export function getUtbetalingPath() {
 
 export function getUtbetalingJson() {
     return utbetaling
+}
+
+export function getBostottePath() {
+    return endpoints.bostotte
+}
+
+export function getBostotteJson() {
+    return bostotte
 }

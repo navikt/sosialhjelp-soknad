@@ -11,6 +11,7 @@ const initialState: EttersendelseState = {
     restStatus: REST_STATUS.INITIALISERT,
     opplastingStatus: REST_STATUS.INITIALISERT,
     ettersendStatus: REST_STATUS.INITIALISERT,
+    opplastingVedleggType: null,
     data: [],
     brukerbehandlingId: null,
     innsendte: {
@@ -43,7 +44,8 @@ export default (
         case EttersendelseActionTypeKeys.LAST_OPP: {
             return {
                 ...state,
-                opplastingStatus: REST_STATUS.PENDING
+                opplastingStatus: REST_STATUS.PENDING,
+                opplastingVedleggType: action.opplysningType
             };
         }
         case EttersendelseActionTypeKeys.LAST_OPP_FEILET: {
@@ -51,7 +53,8 @@ export default (
                 ...state,
                 feilKode: action.feilKode,
                 opplastingStatus: REST_STATUS.FEILET,
-                feiletVedleggId: action.vedleggId
+                feiletVedleggId: action.vedleggId,
+                opplastingVedleggType: null
             };
         }
         case EttersendelseActionTypeKeys.LAST_OPP_OK: {
@@ -77,7 +80,8 @@ export default (
 
             return {
                 ...state,
-                data: dataUpdated
+                data: dataUpdated,
+                opplastingVedleggType: null
             };
         }
         case EttersendelseActionTypeKeys.SLETT_VEDLEGG_OK: {

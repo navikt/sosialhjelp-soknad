@@ -20,9 +20,9 @@ const InntektFormue: React.FC = () => {
             <SkjemaGruppe className={"skjema-sporsmal"}>
                 <SkattbarInntekt/>
                 <NavYtelser/>
+                <Bostotte/>
             </SkjemaGruppe>
             <Studielan/>
-            <Bostotte/>
             <Utbetalinger/>
             <h2 className="overskrift">
                 <FormattedHTMLMessage id="opplysninger.formue.undertittel"/>
