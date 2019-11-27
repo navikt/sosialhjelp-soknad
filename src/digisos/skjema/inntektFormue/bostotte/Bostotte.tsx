@@ -92,11 +92,6 @@ class BostotteView extends React.Component<Props, State> {
 				{status === "VEDTATT" && (
 					<>
 						<div className="bostotte-vedtaksbeskrivelse-innrykk">{vedtaksbeskrivelse}</div>
-						<div className="bostotte-vedtaksbeskrivelse-innrykk bostotte-vedtaksbeskrivelse-padding-top">
-							<a href="https://kundeforhold-bostotte.husbanken.no/esoknad-bostotte/">
-								<FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"}/>
-							</a>
-						</div>
 					</>
 				)}
 			</div>
@@ -158,7 +153,7 @@ class BostotteView extends React.Component<Props, State> {
 					}
 					<h4 className="blokk-null saksoverskrift"><FormattedMessage id="inntekt.bostotte.husbanken.saker"/></h4>
 					{!harBostotterSaker && (
-						<div className="sak">
+						<div className="sak blokk-xs">
 							<FormattedMessage id="inntekt.bostotte.husbanken.ingensakerfunnet"/>
 						</div>
 					)}
@@ -166,6 +161,11 @@ class BostotteView extends React.Component<Props, State> {
 						bostotte.saker.map((sak, index) => {
 							return BostotteView.renderSak("BostotteSak_" + index, sak.dato, sak.status, sak.vedtaksstatus, sak.beskrivelse, index);
 						})
+					}
+					{(harBostotterUtbetalinger || harBostotterSaker) &&
+						<a href="https://kundeforhold-bostotte.husbanken.no/esoknad-bostotte/">
+							<FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"}/>
+						</a>
 					}
 				</Lesmerpanel>)}
 			</div>
