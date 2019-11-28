@@ -47,8 +47,9 @@ export const sjekkOmValgtNavEnhetErGyldig = (behandlingsId: string, dispatch: Di
             } else {
                 dispatch(visIkkePakobletPanel(true))
             }
+        } else {
+            callbackHvisGyldigEllerIkkeSatt();
         }
-        callbackHvisGyldigEllerIkkeSatt();
 
     }).catch((reason: any) => {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
