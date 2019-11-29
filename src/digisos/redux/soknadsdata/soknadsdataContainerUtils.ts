@@ -29,7 +29,7 @@ export interface SoknadsdataContainerProps {
     // Funksjoner:
     hentSoknadsdata: (brukerBehandlingId: string, urlPath: string) => void;
     lagreSoknadsdata: (brukerBehandlingId: string, urlPath: string, soknadsdata: any, responseHandler?: (response: any) => void) => void;
-    oppdaterSoknadsdataSti: (sti: string, soknadsdata: SoknadsdataType) => void;
+    oppdaterSoknadsdataSti: (sti: string, soknadsdata: SoknadsdataType | null) => void;
     settRestStatus: (sti: string, restStatus: REST_STATUS) => void;
     visSamtykkeInfo: (vis: boolean) => void;
     setValideringsfeil: (feilkode: ValideringsFeilKode, faktumKey: string) => void;

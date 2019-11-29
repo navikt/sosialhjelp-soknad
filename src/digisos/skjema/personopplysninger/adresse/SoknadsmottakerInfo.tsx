@@ -6,7 +6,6 @@ import {
     SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {
-    NavEnhet,
     SoknadsMottakerStatus
 } from "./AdresseTypes";
 import {soknadsmottakerStatus} from "./AdresseUtils";
@@ -19,8 +18,7 @@ class SoknadsmottakerInfo extends React.Component<Props, {}> {
 
     render() {
         const {soknadsdata} = this.props;
-        const navEnheter = soknadsdata.personalia.navEnheter;
-        const valgtNavEnhet = navEnheter.find((navEnhet: NavEnhet) => navEnhet.valgt);
+        const valgtNavEnhet = soknadsdata.personalia.navEnhet;
         let enhetsnavn = "";
         let kommunenavn = "";
         if (valgtNavEnhet) {
@@ -50,7 +48,7 @@ class SoknadsmottakerInfo extends React.Component<Props, {}> {
             informasjonspanel = (
                 <AlertStripe type="advarsel">
                     <FormattedHTMLMessage
-                        id="adresse.alertstripe.advarsel.fixme"
+                        id="adresse.alertstripe.advarsel.utenurl"
                         values={
                             {
                                 kommuneNavn: kommunenavn
@@ -61,7 +59,13 @@ class SoknadsmottakerInfo extends React.Component<Props, {}> {
         } else if (mottakerStatus === SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT) {
             informasjonspanel = (
                 <AlertStripe type="feil">
-                    <FormattedHTMLMessage id="adresse.alertstripe.feil.fixme"/>
+                    <FormattedHTMLMessage
+                        id="adresse.alertstripe.feil.utenurl"
+                        values={
+                            {
+                                kommuneNavn: kommunenavn
+                            }}
+                    />
                 </AlertStripe>
             )
         } else if (erSynlig) {
