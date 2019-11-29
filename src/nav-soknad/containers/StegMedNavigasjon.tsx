@@ -166,7 +166,6 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
     finnKommunenavn() {
         const valgtNavEnhet = this.props.soknadsdata.personalia.navEnhet as (NavEnhet | null);
-        debugger;
         if (valgtNavEnhet === null) {
             return "Din";
         }
