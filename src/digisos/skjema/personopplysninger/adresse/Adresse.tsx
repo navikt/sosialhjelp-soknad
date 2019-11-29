@@ -83,7 +83,7 @@ class AdresseView extends React.Component<Props, State> {
 
             };
             oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad);
-        } else {
+        } else if (adresseKategori !== tidligereValg) {
             this.lagreAdresseValg(adresser, adresseKategori);
         }
     }
