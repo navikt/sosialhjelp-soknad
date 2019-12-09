@@ -85,6 +85,17 @@ jobs:
 
             deployment-cli deploy create --cluster=dev-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${VERSION} --vars=nais/dev/${MILJO}.json
 
+  deploy_miljo_tag:
+    docker:
+      - image: navikt/deployment-cli:0.4.0
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Deploy versjon=${VERSION} til miljø=${MILJO} i dev-sbs
+          command: |
+            deployment-cli deploy create --cluster=dev-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${TAG} --vars=nais/dev/${MILJO}.json
+
   deploy_prod:
     docker:
       - image: navikt/deployment-cli:0.4.0
@@ -98,6 +109,17 @@ jobs:
             VERSION=$(sosialhjelp-ci/bin/create-artifact-version.sh)
 
             deployment-cli deploy create --cluster=prod-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${VERSION} --vars=nais/prod/default.json
+
+  deploy_prod_tag:
+    docker:
+      - image: navikt/deployment-cli:0.4.0
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Deploy versjon=${VERSION} til prod
+          command: |
+            deployment-cli deploy create --cluster=prod-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${TAG} --vars=nais/prod/default.json
 
 workflows:
   version: 2
