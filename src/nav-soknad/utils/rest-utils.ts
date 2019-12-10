@@ -97,7 +97,7 @@ enum RequestMethod {
 }
 
 const getHeaders = (): Headers => {
-    let path = window.location.toString().split("/");
+    let path = window.location.href.split("/");
     let behandlingsId = path[path.length-2];
     const headersRecord: Record<string, string> = {
         "Content-Type": "application/json",
@@ -184,7 +184,7 @@ export function fetchOppsummering(urlPath: string) {
 }
 
 export function fetchKvittering(urlPath: string) {
-    let path = window.location.toString().split("/");
+    let path = window.location.href.split("/");
     let behandlingsId = path[path.length-2];
     const OPTIONS: RequestInit = {
         headers: new Headers({
@@ -223,7 +223,7 @@ export function fetchFeatureToggles() {
 
 
 let generateUploadOptions = function (formData: FormData) {
-    let path = window.location.toString().split("/");
+    let path = window.location.href.split("/");
     let behandlingsId = path[path.length-2];
     const UPLOAD_OPTIONS: RequestInit = {
         headers: new Headers({
