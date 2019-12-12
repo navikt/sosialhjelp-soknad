@@ -87,7 +87,7 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 						<FormattedMessage id={tekst.tekst} />
 					</Normaltekst>
 					{isPlanlagtNedetid && (
-						<AlertStripe type="advarsel">
+						<AlertStripe type="info">
 							<FormattedHTMLMessage
 								id="nedetid.alertstripe.avbryt"
 								values={
