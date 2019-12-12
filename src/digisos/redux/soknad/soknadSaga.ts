@@ -22,6 +22,7 @@ import {
 
 import {
     hentSoknadOk,
+    lagreNedetidPaStore,
     lagreRessurserPaStore,
     oppdaterSoknadsmottakerStatus,
     opprettSoknadOk,
@@ -34,7 +35,9 @@ import {
     showSideIkkeFunnet,
     slettSoknadOk,
     startSoknadOk,
-    visMidlertidigDeaktivertPanel
+    startSoknadServiceUnavailable,
+    visMidlertidigDeaktivertPanel,
+    visNedetidPanel
 } from "./soknadActions";
 import {loggAdvarsel, loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
@@ -44,7 +47,9 @@ import {
     FornavnResponse,
     LedeteksterResponse,
     MiljovariablerResponse,
-    OpprettSoknadResponse, SendSoknadResponse,
+    NedetidResponse,
+    OpprettSoknadResponse,
+    SendSoknadResponse,
     TilgangResponse
 } from "./soknadTypes";
 import {lagreLedeteksterPaStore} from "../ledetekster/ledeteksterActions";
@@ -66,10 +71,12 @@ function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
         const miljoVariablerResponse: MiljovariablerResponse = yield call(fetchToJson, "informasjon/miljovariabler");
         const ledeteksterResponse: LedeteksterResponse = yield call(fetchToJson, "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp");
         const fornavnResponse: FornavnResponse = yield call(fetchToJson, "informasjon/fornavn" );
+        const nedetidResponse: NedetidResponse = yield call(fetchToJson, "nedetid" );
 
         yield put(lagreLedeteksterPaStore(ledeteksterResponse));
         yield put(lagreMiljovariablerPaStore(miljoVariablerResponse));
         yield put(lagreRessurserPaStore(tilgangResponse, fornavnResponse));
+        yield put(lagreNedetidPaStore(nedetidResponse));
         yield put(showLargeSpinner(false));
 
 
@@ -95,6 +102,11 @@ function* opprettSoknadSaga() {
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED){
             yield put(loggAdvarsel("opprettSoknadSaga: " + reason));
+        }
+        else if (reason.message === HttpStatus.SERVICE_UNAVAILABLE){
+            yield put(loggAdvarsel("opprettSoknadSaga ServiceUnavailable: " + reason));
+            yield put(visNedetidPanel(true));
+            yield put(startSoknadServiceUnavailable());
         } else {
             yield put(loggFeil("opprett soknad saga feilet: " + reason));
             yield put(showServerFeil(true));

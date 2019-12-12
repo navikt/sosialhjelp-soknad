@@ -1,8 +1,9 @@
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
-import {FornavnResponse, TilgangResponse} from "./soknadTypes";
+import {FornavnResponse, NedetidResponse, TilgangResponse} from "./soknadTypes";
 
 export enum SoknadActionTypeKeys {
 	START_SOKNAD_OK = "soknad/START_SOKNAD_OK",
+	START_SOKNAD_SERVICE_UNAVAILABLE = "soknad/START_SOKNAD_SERVICE_UNAVAILABLE",
 	OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
 	OPPRETT_SOKNAD_OK = "soknad/OPPRETT_SOKNAD_OK",
 	HENT_SOKNAD = "soknad/HENT_SOKNAD",
@@ -22,6 +23,7 @@ export enum SoknadActionTypeKeys {
 
 	SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER = "soknad/SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER",
 	LAGRE_TILGANG_OG_FORNAVN_PA_STORE = "soknad/LAGRE_RESSURSER_PA_STORE",
+	LAGRE_NEDETID_PA_STORE = "soknad/LAGRE_NEDETID_PA_STORE",
 
 	SET_LINK_VISITED = "soknad/SET_LINK_VISITED",
 	SHOW_LARGE_SPINNER = "soknad/SHOW_LARGE_SPINNER",
@@ -32,6 +34,7 @@ export enum SoknadActionTypeKeys {
 	SHOW_SIDE_IKKE_FUNNET = "soknad/SHOW_SIDE_IKKE_FUNNET",
 	VIS_MIDLERTIDIG_DEAKTIVERT_PANEL = "soknad/VIS_MIDLERTIDIG_DEAKTIVERT_PANEL",
 	VIS_IKKE_PAKOBLET_PANEL = "soknad/VIS_IKKE_PAKOBLET_PANEL",
+	VIS_NEDETID_PANEL = "soknad/VIS_NEDETID_PANEL",
 	SET_SEND_SOKNAD_SERVICE_UNAVAILABLE = "soknad/SET_SEND_SOKNAD_SERVICE_UNAVAILABLE",
 	RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE = "soknad/RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE"
 }
@@ -40,6 +43,7 @@ export type AVBRYT_DESTINASJON = "START" | "MINSIDE";
 // 24
 export type SoknadActionType =
 	| StartSoknadOkAction
+	| StartSoknadServerUnavailableAction
 	| OpprettSoknadAction
 	| OpprettSoknadOkAction
 	| HentSoknadAction
@@ -59,6 +63,7 @@ export type SoknadActionType =
 
 	| SjekkAutentiseringOgTilgangOgHentRessurser
 	| LagreTilgangOgFornavnPaStore
+	| LagreNedetidPaStore
 
 	| SetLinkVisited
 	| ShowLargeSpinner
@@ -69,6 +74,7 @@ export type SoknadActionType =
 	| ShowSideIkkeFunnet
 	| VisMidlertidigDeaktivertPanel
 	| VisIkkePakobletPanel
+	| VisNedetidPanel
 	| SetSendSoknadServiveUnavailable
 	| ResetSendSoknadServiceUnavailable
 
@@ -81,6 +87,11 @@ export interface LagreTilgangOgFornavnPaStore {
 	type: SoknadActionTypeKeys.LAGRE_TILGANG_OG_FORNAVN_PA_STORE,
 	tilgangResponse: TilgangResponse,
 	fornavnResponse: FornavnResponse
+}
+
+export interface LagreNedetidPaStore {
+	type: SoknadActionTypeKeys.LAGRE_NEDETID_PA_STORE,
+	nedetidResponse: NedetidResponse
 }
 
 export interface ShowLargeSpinner {
@@ -106,6 +117,10 @@ export interface OppdaterSoknadsmottakerStatus {
 
 export interface StartSoknadOkAction {
 	type: SoknadActionTypeKeys.START_SOKNAD_OK;
+}
+
+export interface StartSoknadServerUnavailableAction {
+	type: SoknadActionTypeKeys.START_SOKNAD_SERVICE_UNAVAILABLE;
 }
 
 export interface OpprettSoknadAction {
@@ -203,6 +218,11 @@ export interface VisMidlertidigDeaktivertPanel {
 
 export interface VisIkkePakobletPanel {
 	type: SoknadActionTypeKeys.VIS_IKKE_PAKOBLET_PANEL;
+	shouldShow: boolean;
+}
+
+export interface VisNedetidPanel {
+	type: SoknadActionTypeKeys.VIS_NEDETID_PANEL;
 	shouldShow: boolean;
 }
 

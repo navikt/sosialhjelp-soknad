@@ -3,7 +3,7 @@ import NavFrontendModal from "nav-frontend-modal";
 import { Innholdstittel, Normaltekst } from "nav-frontend-typografi";
 import { Hovedknapp, Knapp } from "nav-frontend-knapper";
 import { fortsettSoknad, slettSoknad } from "../../../digisos/redux/soknad/soknadActions";
-import { FormattedMessage, injectIntl } from "react-intl";
+import {FormattedHTMLMessage, FormattedMessage, injectIntl} from "react-intl";
 import { connect } from "react-redux";
 import {DispatchProps} from "../../../digisos/redux/reduxTypes";
 import { AVBRYT_DESTINASJON } from "../../../digisos/redux/soknad/soknadActionTypes";
@@ -11,11 +11,16 @@ import { navigerTilDittNav } from "../../../digisos/redux/navigasjon/navigasjonA
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
 import {IntlProps} from "../../utils";
+import AlertStripe from "nav-frontend-alertstriper";
 
 interface StateProps {
 	avbrytDialogSynlig: boolean;
 	destinasjon: AVBRYT_DESTINASJON | null | undefined;
 	behandlingsId: string | undefined;
+	nedetidstart: string | undefined;
+	nedetidslutt: string | undefined;
+	isNedetid: boolean;
+	isPlanlagtNedetid: boolean;
 }
 
 type Props = StateProps & DispatchProps & IntlProps;
@@ -50,6 +55,11 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 	}
 
 	render() {
+		const {
+			nedetidstart,
+			nedetidslutt,
+			isPlanlagtNedetid
+		} = this.props;
 		const tekst = {
 			...this.props.destinasjon === "MINSIDE"
 				? TEKSTNOKLER_VANLIG
@@ -76,6 +86,18 @@ class AvbrytSoknad extends React.Component<Props, {}> {
 					<Normaltekst className="blokk-xxs avbrytmodal__tekst">
 						<FormattedMessage id={tekst.tekst} />
 					</Normaltekst>
+					{isPlanlagtNedetid && (
+						<AlertStripe type="advarsel">
+							<FormattedHTMLMessage
+								id="nedetid.alertstripe.avbryt"
+								values={
+									{
+										nedetidstart: nedetidstart,
+										nedetidslutt: nedetidslutt
+									}}
+							/>
+						</AlertStripe>
+					)}
 					<div className="timeoutbox__knapperad">
 						<Hovedknapp
 							type="hoved"
@@ -101,6 +123,10 @@ export default connect((state: State, props: any): StateProps => {
 	return {
 		avbrytDialogSynlig: state.soknad.avbrytDialog.synlig,
 		destinasjon: state.soknad.avbrytDialog.destinasjon,
-		behandlingsId: state.soknad.behandlingsId
+		behandlingsId: state.soknad.behandlingsId,
+		nedetidstart: state.soknad.nedetid ? state.soknad.nedetid.nedetidStartText : "",
+		nedetidslutt: state.soknad.nedetid ? state.soknad.nedetid.nedetidSluttText : "",
+		isNedetid: state.soknad.nedetid ? state.soknad.nedetid.isNedetid : false,
+		isPlanlagtNedetid: state.soknad.nedetid ? state.soknad.nedetid.isPlanlagtNedetid : false,
 	};
 })(injectIntl(AvbrytSoknad));

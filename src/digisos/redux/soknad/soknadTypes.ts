@@ -9,6 +9,7 @@ export interface SoknadState {
     visSamtykkeInfo: boolean;
     visMidlertidigDeaktivertPanel: boolean;
     visIkkePakobletPanel: boolean;
+    visNedetidPanel: boolean;
 
     // Visning state skjema nivå
     showServerFeil: boolean;
@@ -45,6 +46,9 @@ export interface SoknadState {
     erGjenopptattSoknad: boolean;
     skalSjekkeOmSystemdataErEndret: boolean;
     erSystemdataEndret: ErSystemdataEndret;
+
+    // Nedetid state
+    nedetid: undefined | NedetidResponse;
 }
 
 export enum REST_STATUS {
@@ -107,3 +111,12 @@ export interface FornavnResponse {
 }
 
 export type TilgangSperrekode = "pilot" | "bruker";
+
+export interface NedetidResponse {
+    isNedetid: boolean;
+    isPlanlagtNedetid: boolean;
+    nedetidStart: string;
+    nedetidSlutt: string;
+    nedetidStartText: string;
+    nedetidSluttText: string;
+}
