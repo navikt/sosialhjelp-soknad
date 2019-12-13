@@ -70,6 +70,7 @@ export const digisosSkjemaConfig: SkjemaConfig = {
 const DigisosSkjemaSteg = (props: {
     steg: string;
     ikon?: React.ReactNode;
+<<<<<<< HEAD
     children: any;
 }) => (
     <StegMedNavigasjon
@@ -80,5 +81,23 @@ const DigisosSkjemaSteg = (props: {
         {props.children}
     </StegMedNavigasjon>
 );
+=======
+    children?: React.ReactNode;
+}
+
+class DigisosSkjemaSteg extends React.Component<Props, {}> {
+    render() {
+        return (
+            <StegMedNavigasjon
+                skjemaConfig={digisosSkjemaConfig}
+                stegKey={this.props.steg}
+                ikon={this.props.ikon}
+            >
+                {this.props.children}
+            </StegMedNavigasjon>
+        );
+    }
+}
+>>>>>>> 857a214d... Oppgraderer @types
 
 export default DigisosSkjemaSteg;

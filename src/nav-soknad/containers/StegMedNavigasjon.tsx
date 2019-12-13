@@ -58,6 +58,7 @@ interface OwnProps {
     skjemaConfig: SkjemaConfig;
     pending?: boolean;
     ikon?: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 interface InjectedRouterProps {
