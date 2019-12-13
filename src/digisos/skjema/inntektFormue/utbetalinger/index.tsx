@@ -74,7 +74,10 @@ export class UtbetalingerView extends React.Component<Props, State> {
         const {behandlingsId, soknadsdata} = this.props;
         if (behandlingsId){
             const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-            utbetalinger[idToToggle]= !utbetalinger[idToToggle];
+            if (idToToggle !== UtbetalingerKeys.BESKRIVELSEAVANNET) {
+                utbetalinger[idToToggle]= !utbetalinger[idToToggle];
+            }
+            
             if (!utbetalinger.bekreftelse || !utbetalinger.annet) {
                 utbetalinger.beskrivelseAvAnnet = "";
             }

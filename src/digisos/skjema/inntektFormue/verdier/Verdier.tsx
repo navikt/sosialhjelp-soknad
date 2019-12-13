@@ -74,7 +74,9 @@ export class VerdierView extends React.Component<Props, State> {
         const {behandlingsId, soknadsdata} = this.props;
         if (behandlingsId){
             const verdier: Verdier = soknadsdata.inntekt.verdier;
-            verdier[idToToggle] = !verdier[idToToggle];
+            if (idToToggle !== VerdierKeys.BESKRIVELSEAVANNET) {
+                verdier[idToToggle] = !verdier[idToToggle];
+            }
             if (!verdier.bekreftelse || !verdier.annet) {
                 verdier.beskrivelseAvAnnet = "";
             }
