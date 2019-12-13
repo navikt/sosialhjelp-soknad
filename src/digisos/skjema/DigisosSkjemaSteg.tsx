@@ -70,6 +70,7 @@ export const digisosSkjemaConfig: SkjemaConfig = {
 interface Props {
     steg: string;
     ikon?: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 class DigisosSkjemaSteg extends React.Component<Props, {}> {
