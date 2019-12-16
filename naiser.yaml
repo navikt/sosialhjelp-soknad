@@ -6,7 +6,7 @@ metadata:
   labels:
     team: digisos
 spec:
-  image: docker.pkg.github.com/navikt/sosialhjelp-soknad/sosialhjelp-soknad:1.0_20191212.1510_47844042
+  image: docker.pkg.github.com/navikt/sosialhjelp-soknad/sosialhjelp-soknad:{{version}}
   port: 8080
   ingresses:
     - "https://sosialhjelp-soknad.dev-nav.no"
