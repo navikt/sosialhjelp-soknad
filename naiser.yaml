@@ -10,6 +10,12 @@ spec:
   port: 8080
   ingresses:
     - "https://sosialhjelp-soknad.dev-nav.no"
+  accessPolicy:
+    outbound:
+      external:
+        - host: "appres.nav.no"
+        - host: "nav.psplugin.com"
+      rules: []
   liveness:
     path: /sosialhjelp/soknad/internal/isAlive
     initialDelay: 5
