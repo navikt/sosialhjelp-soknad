@@ -87,14 +87,29 @@ jobs:
 
   deploy_miljo_tag:
     docker:
-      - image: navikt/deployment-cli:0.4.0
+      - image: navikt/deployment:v1
     steps:
       - checkout
-      - setup_remote_docker
       - run:
-          name: Deploy versjon=${VERSION} til miljø=${MILJO} i dev-sbs
+          name: Deploy versjon=${VERSION} til miljø=digisos i dev-gcp
           command: |
-            deployment-cli deploy create --cluster=dev-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${TAG} --vars=nais/dev/${MILJO}.json
+            yq w nais/dev/digisos.json version "${TAG}" > deployment.yaml
+            /app/deploy \
+                --apikey="$NAIS_DEPLOY_APIKEY" \
+                --cluster="dev-gcp" \
+                --repository="$CIRCLE_PROJECT_REPONAME" \
+                --resource="naiser.yaml" \
+                --vars="deployment.yaml" \
+                --wait=true
+#    docker:
+#      - image: navikt/deployment-cli:0.4.0
+#    steps:
+#      - checkout
+#      - setup_remote_docker
+#      - run:
+#          name: Deploy versjon=${VERSION} til miljø=${MILJO} i dev-sbs
+#          command: |
+#            deployment-cli deploy create --cluster=dev-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${TAG} --vars=nais/dev/${MILJO}.json
 
   deploy_prod:
     docker:

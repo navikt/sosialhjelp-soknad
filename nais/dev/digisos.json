@@ -1,0 +1,7 @@
+{
+  "namespace": "digisos",
+  "ingresses": [
+    "https://sosialhjelp-soknad.dev-nav.no/sosialhjelp/soknad"
+  ],
+  "appresCmsUrl": "https://appres-q0.nav.no"
+}

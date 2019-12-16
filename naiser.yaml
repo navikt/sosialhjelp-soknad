@@ -1,0 +1,34 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: sosialhjelp-soknad
+  namespace: digisos
+  labels:
+    team: digisos
+spec:
+  image: docker.pkg.github.com/navikt/sosialhjelp-soknad/sosialhjelp-soknad:1.0_20191212.1510_47844042
+  port: 8080
+  ingresses:
+    - "https://sosialhjelp-soknad.dev-nav.no"
+  liveness:
+    path: /sosialhjelp/soknad/internal/isAlive
+    initialDelay: 5
+    timeout: 1
+    periodSeconds: 10
+    failureThreshold: 10
+  readiness:
+    path: /sosialhjelp/soknad/internal/isAlive
+    initialDelay: 5
+    timeout: 1
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 512Mi
+    requests:
+      memory: 512Mi
+  replicas:
+    min: 1
+    max: 2
+  env:
+    - name: APPRES_CMS_URL
+      value: "https://appres.nav.no"
