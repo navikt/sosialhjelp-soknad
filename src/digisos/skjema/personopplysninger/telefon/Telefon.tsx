@@ -4,7 +4,10 @@ import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
-import { erTelefonnummer } from "../../../../nav-soknad/validering/valideringer";
+import {
+	erTelefonnummer,
+	inneholderBareGyldigeTegnForTelefonnummer
+} from "../../../../nav-soknad/validering/valideringer";
 import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
@@ -44,8 +47,15 @@ class TelefonView extends React.Component<Props, {}> {
 		const { soknadsdata } = this.props;
 		const telefonnummer = soknadsdata.personalia.telefonnummer;
 		telefonnummer.brukerutfyltVerdi = verdi;
-		this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
+
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer);
+
+		const valideringsfeil: ValideringsFeilKode | undefined = inneholderBareGyldigeTegnForTelefonnummer(verdi);
+		if (valideringsfeil === undefined) {
+			this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
+		} else {
+			this.props.setValideringsfeil(valideringsfeil, FAKTUM_KEY_TELEFON);
+		}
 	}
 
 	onBlur() {

@@ -39,6 +39,19 @@ export function erTelefonnummer(value: string): ValideringsFeilKode | undefined 
 	return undefined;
 }
 
+export const inneholderBareGyldigeTegnForTelefonnummer = (verdi: any): ValideringsFeilKode | undefined => {
+	if (verdi !== null && verdi !== undefined && typeof verdi === "string") {
+		if (verdi === "") {
+			return undefined
+		}
+		const match: RegExpMatchArray | null = verdi.match(/^\+?(00)?\d*$/);
+		if (match !== null) {
+			return undefined
+		}
+	}
+	return ValideringsFeilKode.ER_TELEFONNUMMER
+};
+
 export function erKontonummer(value: string): ValideringsFeilKode | undefined {
 	if (!value || typeof value !== "string") {
 		return ValideringsFeilKode.ER_KONTONUMMER;
