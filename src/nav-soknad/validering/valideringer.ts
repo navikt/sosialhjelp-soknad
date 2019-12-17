@@ -69,6 +69,19 @@ export function erKontonummer(value: string): ValideringsFeilKode | undefined {
 	return undefined;
 }
 
+export const inneholderBareGyldigeTegnForBankkontonummer = (verdi: any): ValideringsFeilKode | undefined => {
+	if (verdi !== null && verdi !== undefined && typeof verdi === "string") {
+		if (verdi === "") {
+			return undefined
+		}
+		const match: RegExpMatchArray | null = verdi.match(/^(\d*(\.| )?)*$/);
+		if (match !== null) {
+			return undefined
+		}
+	}
+	return ValideringsFeilKode.ER_KONTONUMMER
+};
+
 /** Validerer ddmmåååå - fødselsdato i fødselsnummeret */
 export function fdato(dato: string): ValideringsFeilKode | undefined {
 	if (!dato || typeof dato !== "string" || !dato.match(/[0-9]{8}/)) {

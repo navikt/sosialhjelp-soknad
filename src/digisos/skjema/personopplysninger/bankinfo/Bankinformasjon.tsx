@@ -1,7 +1,10 @@
 import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import { Checkbox } from "nav-frontend-skjema";
-import { erKontonummer } from "../../../../nav-soknad/validering/valideringer";
+import {
+	erKontonummer,
+	inneholderBareGyldigeTegnForBankkontonummer
+} from "../../../../nav-soknad/validering/valideringer";
 import { injectIntl } from "react-intl";
 import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
@@ -109,6 +112,11 @@ class Bankinformasjon extends React.Component<Props, State> {
 		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
 		kontonummer.brukerutfyltVerdi = brukerutfyltVerdi;
 		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
+
+		const valideringsfeil: ValideringsFeilKode | undefined = inneholderBareGyldigeTegnForBankkontonummer(brukerutfyltVerdi);
+		if (valideringsfeil) {
+			this.props.setValideringsfeil(valideringsfeil, FAKTUM_KEY_KONTONUMMER)
+		}
 	}
 
 	onChangeCheckboks(event: any): void {
