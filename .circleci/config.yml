@@ -94,6 +94,9 @@ jobs:
       - run:
           name: Deploy versjon=${VERSION} til miljø=${MILJO} i dev-sbs
           command: |
+            echo "VERSION ${VERSION}"
+            echo "TAG ${TAG}"
+            echo "MILJO ${MILJO}"
             deployment-cli deploy create --cluster=dev-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${TAG} --vars=nais/dev/${MILJO}.json
 
   deploy_prod:
