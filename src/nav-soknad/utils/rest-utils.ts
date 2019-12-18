@@ -184,13 +184,13 @@ export function fetchOppsummering(urlPath: string) {
 }
 
 export function fetchKvittering(urlPath: string) {
-    let path = window.location.href.split("/");
-    let behandlingsId = path[path.length-2];
+    //let path = window.location.href.split("/");
+    //let behandlingsId = path[path.length-2];
     const OPTIONS: RequestInit = {
         headers: new Headers({
             "accept": "application/vnd.kvitteringforinnsendtsoknad+json",
             "Content-Type": "application/json",
-            "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API-"+behandlingsId)
+            "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
         }),
         method: "GET",
         credentials: determineCredentialsParameter()
