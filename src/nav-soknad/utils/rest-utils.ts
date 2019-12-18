@@ -97,11 +97,11 @@ enum RequestMethod {
 }
 
 const getHeaders = (): Headers => {
-    let path = window.location.href.split("/");
-    let behandlingsId = path[path.length-2];
+    //let path = window.location.href.split("/");
+    //let behandlingsId = path[path.length-2];
     const headersRecord: Record<string, string> = {
         "Content-Type": "application/json",
-        "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API-"+ behandlingsId),
+        "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
         "accept": "application/json, text/plain, */*"
     };
     return new Headers(headersRecord)
@@ -190,7 +190,7 @@ export function fetchKvittering(urlPath: string) {
         headers: new Headers({
             "accept": "application/vnd.kvitteringforinnsendtsoknad+json",
             "Content-Type": "application/json",
-            "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
+            "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API")
         }),
         method: "GET",
         credentials: determineCredentialsParameter()
@@ -223,11 +223,11 @@ export function fetchFeatureToggles() {
 
 
 let generateUploadOptions = function (formData: FormData) {
-    let path = window.location.href.split("/");
-    let behandlingsId = path[path.length-2];
+    //let path = window.location.href.split("/");
+    //let behandlingsId = path[path.length-2];
     const UPLOAD_OPTIONS: RequestInit = {
         headers: new Headers({
-            "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API-" + behandlingsId),
+            "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
             "accept": "application/json, text/plain, */*"
         }),
         method: "POST",
