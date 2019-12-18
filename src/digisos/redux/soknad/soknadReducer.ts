@@ -11,11 +11,13 @@ export const defaultState: SoknadState = {
 	visSamtykkeInfo: false,
 	visMidlertidigDeaktivertPanel: false,
 	visIkkePakobletPanel: false,
+	visNedetidPanel: false,
 
 	// Authentication state
 	linkVisited: false,
 	harTilgang: false,
 	sperrekode: undefined,
+	nedetid: undefined,
 
 	// Rest state
 	restStatus: REST_STATUS.INITIALISERT,
@@ -109,6 +111,11 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
 				...state,
 				startSoknadPending: false
 			};
+		case SoknadActionTypeKeys.START_SOKNAD_SERVICE_UNAVAILABLE:
+			return {
+				...state,
+				startSoknadPending: false
+			};
 		case SoknadActionTypeKeys.AVBRYT_SOKNAD:
 			return {
 				...state,
@@ -187,6 +194,14 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
 				fornavn: fornavnResponse.fornavn,
 			}
 		}
+
+		case SoknadActionTypeKeys.LAGRE_NEDETID_PA_STORE: {
+			const {nedetidResponse} = action;
+			return {
+				...state,
+				nedetid: nedetidResponse,
+			}
+		}
 		case SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL: {
 			return {
 				...state,
@@ -199,6 +214,12 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
 				visIkkePakobletPanel: action.shouldShow
 			}
 		}
+		case SoknadActionTypeKeys.VIS_NEDETID_PANEL: {
+			return {
+				...state,
+				visNedetidPanel: action.shouldShow
+			}
+		}
 		case SoknadActionTypeKeys.SET_SEND_SOKNAD_SERVICE_UNAVAILABLE: {
 			return {
 				...state,
@@ -209,7 +230,8 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
 		case SoknadActionTypeKeys.RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE: {
 			return {
 				...state,
-				sendSoknadServiceUnavailable: false
+				sendSoknadServiceUnavailable: false,
+				visMidlertidigDeaktivertPanel: false
 			}
 		}
 		default:
