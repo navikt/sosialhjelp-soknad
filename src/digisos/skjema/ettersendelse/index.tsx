@@ -197,7 +197,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                         }
                     )}
 
-                    {opprettNyEttersendelseFeilet && (
+                    {opprettNyEttersendelseFeilet && !isNedetid &&  (
                         <AvsnittMedMarger className="ettersendelse__vedlegg__header">
                             <Informasjonspanel
                                 ikon={InformasjonspanelIkon.HENSYN}
