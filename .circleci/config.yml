@@ -87,29 +87,14 @@ jobs:
 
   deploy_miljo_tag:
     docker:
-      - image: navikt/deployment:v1
+      - image: navikt/deployment-cli:0.4.0
     steps:
       - checkout
+      - setup_remote_docker
       - run:
-          name: Deploy versjon=${VERSION} til miljø=digisos i dev-gcp
+          name: Deploy versjon=${VERSION} til miljø=${MILJO} i dev-sbs
           command: |
-            yq w nais/dev/digisos.json version "${TAG}" > deployment.yaml
-            /app/deploy \
-                --apikey="$NAIS_DEPLOY_APIKEY" \
-                --cluster="dev-gcp" \
-                --repository="$CIRCLE_PROJECT_REPONAME" \
-                --resource="naiser.yaml" \
-                --vars="deployment.yaml" \
-                --wait=true
-#    docker:
-#      - image: navikt/deployment-cli:0.4.0
-#    steps:
-#      - checkout
-#      - setup_remote_docker
-#      - run:
-#          name: Deploy versjon=${VERSION} til miljø=${MILJO} i dev-sbs
-#          command: |
-#            deployment-cli deploy create --cluster=dev-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${TAG} --vars=nais/dev/${MILJO}.json
+            deployment-cli deploy create --cluster=dev-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${TAG} --vars=nais/dev/${MILJO}.json
 
   deploy_prod:
     docker:
@@ -135,6 +120,23 @@ jobs:
           name: Deploy versjon=${VERSION} til prod
           command: |
             deployment-cli deploy create --cluster=prod-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${TAG} --vars=nais/prod/default.json
+
+  deploy_gcp:
+    docker:
+      - image: navikt/deployment:v1
+    steps:
+      - checkout
+      - run:
+          name: Deploy til miljø i gcp
+          command: |
+            yq w nais/dev/${MILJO}.json version "${TAG}" > deployment.yaml
+            /app/deploy \
+                --apikey="$NAIS_DEPLOY_APIKEY" \
+                --cluster="${MILJO}" \
+                --repository="$CIRCLE_PROJECT_REPONAME" \
+                --resource="nais.yaml" \
+                --vars="deployment.yaml" \
+                --wait=true
 
 workflows:
   version: 2

@@ -13,8 +13,16 @@ spec:
     - "{{this}}"
 {{/each}}
   prometheus:
-    enabled: true
+    enabled: {{prometheusEnabled}}
     path: /prometheus
+{{#if gcpAccessPolicy}}
+  accessPolicy:
+    outbound:
+      external:
+        - host: "appres.nav.no"
+        - host: "nav.psplugin.com"
+      rules: []
+{{/if}}
   liveness:
     path: /sosialhjelp/soknad/internal/isAlive
     initialDelay: 5

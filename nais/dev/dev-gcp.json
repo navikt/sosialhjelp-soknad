@@ -3,5 +3,7 @@
   "ingresses": [
     "https://sosialhjelp-soknad.dev-nav.no/sosialhjelp/soknad"
   ],
-  "appresCmsUrl": "https://appres-q0.nav.no"
+  "prometheusEnabled": false,
+  "gcpAccessPolicy": true,
+  "appresCmsUrl": "https://appres.nav.no"
 }

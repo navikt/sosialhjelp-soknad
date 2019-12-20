@@ -1,0 +1,9 @@
+{
+  "namespace": "digisos",
+  "ingresses": [
+    "https://sosialhjelp-soknad.labs.nais.io/sosialhjelp/soknad"
+  ],
+  "prometheusEnabled": false,
+  "gcpAccessPolicy": true,
+  "appresCmsUrl": "https://appres.nav.no"
+}

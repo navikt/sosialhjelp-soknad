@@ -39,7 +39,7 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
     if (window.location.origin.indexOf("heroku") >= 0) {
         return window.location.origin.replace(`${HEROKU_MASTER_APP_NAME}`, `${HEROKU_API_MASTER_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
     }
-    if (window.location.origin.indexOf("dev-nav.no") >= 0) {
+    if (window.location.origin.indexOf("dev-nav.no") >= 0 || window.location.origin.indexOf("labs.nais.io") >= 0) {
         return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
     }
     if (kjorerJetty()) {
