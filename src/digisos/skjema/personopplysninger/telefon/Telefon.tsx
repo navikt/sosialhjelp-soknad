@@ -142,7 +142,7 @@ class TelefonView extends React.Component<Props, {}> {
 							<InputEnhanced
 								id={faktumKeyTelefonId}
 								type="tel"
-								maxLength={14}
+								maxLength={16}
 								bredde={"S"}
 								className="skjemaelement__enLinje185bredde"
 								verdi={verdi}
@@ -171,7 +171,7 @@ class TelefonView extends React.Component<Props, {}> {
 								<InputEnhanced
 									id={faktumKeyTelefonId}
 									type="tel"
-									maxLength={15}
+									maxLength={16}
 									bredde={"S"}
 									className="skjemaelement__enLinje185bredde"
 									verdi={verdi}
