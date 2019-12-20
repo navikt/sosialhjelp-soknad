@@ -44,7 +44,7 @@ export const inneholderBareGyldigeTegnForTelefonnummer = (verdi: any): Validerin
 		if (verdi === "") {
 			return undefined
 		}
-		const match: RegExpMatchArray | null = verdi.match(/^\+?(00)?\d*$/);
+		const match: RegExpMatchArray | null = verdi.match(/^\+?(00)?(\d| |\.)*$/);
 		if (match !== null) {
 			return undefined
 		}

@@ -73,15 +73,14 @@ class TelefonView extends React.Component<Props, {}> {
 		if(verdi === "" || verdi === null) {
 			this.props.clearValideringsfeil(FAKTUM_KEY_TELEFON);
 		} else {
-			verdi = this.fjernLandkode(verdi);
-			verdi = verdi.replace(/[.]/g,"");
+			verdi = this.fjernLandkodeSpacesOgPunktum(verdi);
 			telefonnummer.brukerutfyltVerdi = verdi;
 			feilkode = this.validerTelefonnummer(verdi);
 		}
 
 		if (!feilkode) {
 			if (telefonnummer.brukerutfyltVerdi !== null && telefonnummer.brukerutfyltVerdi !== "") {
-				telefonnummer.brukerutfyltVerdi = LANDKODE + this.fjernLandkode(telefonnummer.brukerutfyltVerdi);
+				telefonnummer.brukerutfyltVerdi = LANDKODE + this.fjernLandkodeSpacesOgPunktum(telefonnummer.brukerutfyltVerdi);
 			}
 			if (telefonnummer.brukerdefinert != null && !telefonnummer.brukerdefinert) {
 				this.props.lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer,
@@ -104,9 +103,12 @@ class TelefonView extends React.Component<Props, {}> {
 		return feilkode;
 	}
 
-	fjernLandkode(telefonnummer: string) {
+	fjernLandkodeSpacesOgPunktum(telefonnummer: string) {
 		telefonnummer = telefonnummer.replace( /^\+47/, "");
 		telefonnummer = telefonnummer.replace( /^0047/, "");
+		telefonnummer = telefonnummer.replace( / /g, "");
+		telefonnummer = telefonnummer.replace(/\./g,"");
+
 		return telefonnummer;
 	}
 
@@ -169,7 +171,7 @@ class TelefonView extends React.Component<Props, {}> {
 								<InputEnhanced
 									id={faktumKeyTelefonId}
 									type="tel"
-									maxLength={14}
+									maxLength={15}
 									bredde={"S"}
 									className="skjemaelement__enLinje185bredde"
 									verdi={verdi}
