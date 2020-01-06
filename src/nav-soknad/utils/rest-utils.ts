@@ -2,7 +2,7 @@ import {erMockMiljoEllerDev} from "./index";
 import {
     API_CONTEXT_PATH,
     API_CONTEXT_PATH_WITH_ACCESS_TOKEN,
-    CONTEXT_PATH,
+    CONTEXT_PATH, GCP_API_APP_NAME, GCP_APP_NAME,
     getRedirectPathname,
     HEROKU_API_MASTER_APP_NAME,
     HEROKU_MASTER_APP_NAME,
@@ -38,6 +38,9 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
     }
     if (window.location.origin.indexOf("heroku") >= 0) {
         return window.location.origin.replace(`${HEROKU_MASTER_APP_NAME}`, `${HEROKU_API_MASTER_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
+    }
+    if (window.location.origin.indexOf("dev-nav.no") >= 0 || window.location.origin.indexOf("labs.nais.io") >= 0) {
+        return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
     }
     if (kjorerJetty()) {
         return `http://127.0.0.1:7000/${apiContextPath}/`

@@ -5,5 +5,7 @@
     "https://tjenester-q0.nav.no/sosialhjelp-soknad",
     "https://www-q0.nav.no/sosialhjelp/soknad"
   ],
+  "prometheusEnabled": true,
+  "gcpAccessPolicy": false,
   "appresCmsUrl": "https://appres-q0.nav.no"
 }
