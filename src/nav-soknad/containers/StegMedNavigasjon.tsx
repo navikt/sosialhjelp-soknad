@@ -77,7 +77,11 @@ interface StateProps {
     oppsummeringBekreftet?: boolean;
     fodselsnummer: string;
     soknadsdata: Soknadsdata;
-    soknad: SoknadState
+    soknad: SoknadState;
+    nedetidstart: string | undefined;
+    nedetidslutt: string | undefined;
+    isNedetid: boolean;
+    isPlanlagtNedetid: boolean;
 }
 
 type Props = OwnProps &
@@ -190,7 +194,10 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
             soknad,
             stegKey,
             ikon,
-            nextButtonPending
+            nextButtonPending,
+            nedetidstart,
+            nedetidslutt,
+            isNedetid,
         } = this.props;
         const {feil, visValideringsfeil} = validering;
 
@@ -213,6 +220,19 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
             <div className="app-digisos informasjon-side">
                 <AppBanner/>
                 <DocumentTitle title={`${stegTittel} - ${documentTitle}`}/>
+                {isNedetid && (
+                    <AlertStripe type="feil" style={{justifyContent: "center"}}>
+                        <FormattedHTMLMessage
+                            id="nedetid.alertstripe.infoside"
+                            values={
+                                {
+                                    nedetidstart: nedetidstart,
+                                    nedetidslutt: nedetidslutt
+                                }}
+                        />
+                    </AlertStripe>
+                )}
+
 
                 <div className="skjema-steg skjema-content">
                     <div className="skjema-steg__feiloppsummering">
@@ -259,7 +279,8 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
 
                         {children}
 
-                        {soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 1 && (
+                        {soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 1 &&
+                        !(aktivtSteg === 9 && isNedetid) && (
                             <AlertStripe type="feil">
                                 <FormattedHTMLMessage
                                     id="adresse.alertstripe.feil.utenurl"
@@ -270,7 +291,8 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                                 />
                             </AlertStripe>
                         )}
-                        {soknad.visIkkePakobletPanel && aktivtSteg !== 1 && (
+                        {soknad.visIkkePakobletPanel && aktivtSteg !== 1 &&
+                        !(aktivtSteg === 9 && isNedetid) && (
                             <AlertStripe type="advarsel">
                                 <FormattedHTMLMessage
                                     id="adresse.alertstripe.advarsel.utenurl"
@@ -301,6 +323,19 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                                 sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
                             />
                         )}
+
+                        {soknad.visMidlertidigDeaktivertPanel && isNedetid && aktivtSteg === 9 && (
+                            <AlertStripe type="feil" style={{marginTop: "1rem"}}>
+                                <FormattedHTMLMessage
+                                    id="nedetid.alertstripe.send"
+                                    values={
+                                        {
+                                            nedetidstart: nedetidstart,
+                                            nedetidslutt: nedetidslutt
+                                        }}
+                                />
+                            </AlertStripe>
+                        )}
                     </form>
                 </div>
             </div>
@@ -316,6 +351,10 @@ export default connect((state: State) => {
         oppsummeringBekreftet: state.oppsummering.bekreftet,
         fodselsnummer: state.soknadsdata.personalia.basisPersonalia.fodselsnummer,
         soknadsdata: state.soknadsdata,
-        soknad: state.soknad
+        soknad: state.soknad,
+        nedetidstart: state.soknad.nedetid ? state.soknad.nedetid.nedetidStartText : "",
+        nedetidslutt: state.soknad.nedetid ? state.soknad.nedetid.nedetidSluttText : "",
+        isNedetid: state.soknad.nedetid ? state.soknad.nedetid.isNedetid : false,
+        isPlanlagtNedetid: state.soknad.nedetid ? state.soknad.nedetid.isPlanlagtNedetid : false,
     };
 })(injectIntl(withRouter(StegMedNavigasjon)));

@@ -23,6 +23,7 @@ import {Prompt} from "react-router";
 import {erEttersendelseSide, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
 import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
+import AlertStripe from "nav-frontend-alertstriper";
 
 interface OwnProps {
     manglendeVedlegg: EttersendelseVedleggBackend[];
@@ -32,6 +33,10 @@ interface OwnProps {
     originalSoknad: any;
     ettersendelser: any;
     feilKode: string;
+    nedetidstart: string | undefined;
+    nedetidslutt: string | undefined;
+    isNedetid: boolean;
+    isPlanlagtNedetid: boolean;
 }
 
 type Props = OwnProps & DispatchProps;
@@ -122,7 +127,13 @@ class Ettersendelse extends React.Component<Props, OwnState> {
     }
 
     render() {
-        const {originalSoknad, ettersendelser} = this.props;
+        const {
+            originalSoknad,
+            ettersendelser,
+            nedetidstart,
+            nedetidslutt,
+            isNedetid,
+        } = this.props;
         const antallManglendeVedlegg = this.antallManglendeVedlegg();
         const datoManglendeVedlegg = this.manglendeVedleggDato();
         const ettersendelseAktivert = this.isEttersendelseAktivert();
@@ -135,6 +146,18 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                 <BannerEttersendelse>
                     <FormattedMessage id="applikasjon.sidetittel"/>
                 </BannerEttersendelse>
+                {isNedetid && (
+                    <AlertStripe type="feil" style={{justifyContent: "center"}}>
+                        <FormattedHTMLMessage
+                            id="nedetid.alertstripe.ettersendelse"
+                            values={
+                                {
+                                    nedetidstart: nedetidstart,
+                                    nedetidslutt: nedetidslutt
+                                }}
+                        />
+                    </AlertStripe>
+                )}
                 <div className="blokk-center panel ettersendelse__panel">
                     <p className="ettersendelse ingress">
                         <FormattedHTMLMessage id="ettersendelse.ingress"/>
@@ -174,7 +197,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                         }
                     )}
 
-                    {opprettNyEttersendelseFeilet && (
+                    {opprettNyEttersendelseFeilet && !isNedetid &&  (
                         <AvsnittMedMarger className="ettersendelse__vedlegg__header">
                             <Informasjonspanel
                                 ikon={InformasjonspanelIkon.HENSYN}
@@ -236,6 +259,10 @@ export default connect((state: State) => {
         originalSoknad: state.ettersendelse.innsendte.originalSoknad,
         ettersendelser: state.ettersendelse.innsendte.ettersendelser,
         restStatus: state.ettersendelse.restStatus,
-        feilKode: state.ettersendelse.feilKode
+        feilKode: state.ettersendelse.feilKode,
+        nedetidstart: state.soknad.nedetid ? state.soknad.nedetid.nedetidStartText : "",
+        nedetidslutt: state.soknad.nedetid ? state.soknad.nedetid.nedetidSluttText : "",
+        isNedetid: state.soknad.nedetid ? state.soknad.nedetid.isNedetid : false,
+        isPlanlagtNedetid: state.soknad.nedetid ? state.soknad.nedetid.isPlanlagtNedetid : false,
     };
 })(Ettersendelse);

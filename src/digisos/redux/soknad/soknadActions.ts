@@ -3,16 +3,23 @@ import {
     SoknadActionType,
     SoknadActionTypeKeys,
     VisIkkePakobletPanel,
-    VisMidlertidigDeaktivertPanel
+    VisMidlertidigDeaktivertPanel,
+    VisNedetidPanel
 } from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
-import {FornavnResponse, TilgangResponse} from "./soknadTypes";
+import {FornavnResponse, NedetidResponse, TilgangResponse} from "./soknadTypes";
 import {IntlShape} from "react-intl";
 
 
 export function startSoknadOk() {
     return {
         type: SoknadActionTypeKeys.START_SOKNAD_OK
+    };
+}
+
+export function startSoknadServiceUnavailable() {
+    return {
+        type: SoknadActionTypeKeys.START_SOKNAD_SERVICE_UNAVAILABLE
     };
 }
 
@@ -150,6 +157,15 @@ export const lagreRessurserPaStore = (
     }
 };
 
+export const lagreNedetidPaStore = (
+    nedetidResponse: NedetidResponse
+): SoknadActionType => {
+    return {
+        type: SoknadActionTypeKeys.LAGRE_NEDETID_PA_STORE,
+        nedetidResponse
+    }
+};
+
 export const setLinkVisited = (): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.SET_LINK_VISITED
@@ -193,6 +209,13 @@ export function showFeilSide(): SoknadActionType {
 export const visMidlertidigDeaktivertPanel = (shouldShow: boolean): VisMidlertidigDeaktivertPanel => {
     return {
         type: SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL,
+        shouldShow
+    }
+};
+
+export const visNedetidPanel = (shouldShow: boolean): VisNedetidPanel => {
+    return {
+        type: SoknadActionTypeKeys.VIS_NEDETID_PANEL,
         shouldShow
     }
 };

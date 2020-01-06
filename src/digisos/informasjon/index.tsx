@@ -16,6 +16,7 @@ import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import {State} from "../redux/reducers";
 import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
+import AlertStripe from "nav-frontend-alertstriper";
 
 interface StateProps {
     harTilgang: boolean;
@@ -23,6 +24,11 @@ interface StateProps {
     startSoknadPending: boolean;
     fornavn: string | undefined;
     intl: IntlShape;
+    nedetidstart: string | undefined;
+    nedetidslutt: string | undefined;
+    isNedetid: boolean;
+    isPlanlagtNedetid: boolean;
+    visNedetidPanel: boolean;
 }
 
 type Props = StateProps & RouterProps & DispatchProps;
@@ -48,7 +54,12 @@ class Informasjon extends React.Component<Props, {}> {
             intl,
             harTilgang,
             startSoknadPending,
-            sperrekode
+            sperrekode,
+            nedetidstart,
+            nedetidslutt,
+            isNedetid,
+            isPlanlagtNedetid,
+            visNedetidPanel
         } = this.props;
         const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 
@@ -58,6 +69,18 @@ class Informasjon extends React.Component<Props, {}> {
                 <DocumentTitle title={title}/>
                 {harTilgang ? (
                     <span>
+                        {isNedetid && (
+                            <AlertStripe type="feil" style={{justifyContent: "center"}}>
+                                <FormattedHTMLMessage
+                                    id="nedetid.alertstripe.infoside"
+                                    values={
+                                        {
+                                            nedetidstart: nedetidstart,
+                                            nedetidslutt: nedetidslutt
+                                        }}
+                                />
+                            </AlertStripe>
+                        )}
 						<div>
 							<div className="skjema-content informasjon-innhold">
 								<span className="informasjon-fra-ella">
@@ -90,6 +113,18 @@ class Informasjon extends React.Component<Props, {}> {
 						<div className="zebra-stripe graa">
 							<div className="skjema-content">
 								<Personopplysninger/>
+                                {isPlanlagtNedetid && (
+                                    <AlertStripe type="info">
+                                        <FormattedHTMLMessage
+                                            id="nedetid.alertstripe.infoside"
+                                            values={
+                                                {
+                                                    nedetidstart: nedetidstart,
+                                                    nedetidslutt: nedetidslutt
+                                                }}
+                                        />
+                                    </AlertStripe>
+                                )}
 							</div>
 
 							<div className="skjema-content" style={{border: "1px solid transparent"}}>
@@ -98,13 +133,26 @@ class Informasjon extends React.Component<Props, {}> {
                                         id="start_soknad_button"
                                         type="hoved"
                                         spinner={startSoknadPending}
-                                        disabled={startSoknadPending}
+                                        disabled={startSoknadPending || visNedetidPanel}
                                         onClick={() => {
                                             this.props.dispatch(opprettSoknad(intl))
                                         }}
                                     >
 										{getIntlTextOrKey(intl, "skjema.knapper.start")}
 									</Knapp>
+
+                                    {isNedetid && visNedetidPanel && (
+                                        <AlertStripe type="feil" style={{marginTop: "0.4rem"}}>
+                                            <FormattedHTMLMessage
+                                                id="nedetid.alertstripe.infoside"
+                                                values={
+                                                    {
+                                                        nedetidstart: nedetidstart,
+                                                        nedetidslutt: nedetidslutt
+                                                    }}
+                                            />
+                                        </AlertStripe>
+                                    )}
 								</span>
 							</div>
 						</div>
@@ -123,6 +171,11 @@ class Informasjon extends React.Component<Props, {}> {
 export default connect((state: State) => ({
     harTilgang: state.soknad.tilgang ? state.soknad.tilgang.harTilgang : false,
     sperrekode: state.soknad.tilgang ? state.soknad.tilgang.sperrekode : undefined,
+    nedetidstart: state.soknad.nedetid ? state.soknad.nedetid.nedetidStartText : "",
+    nedetidslutt: state.soknad.nedetid ? state.soknad.nedetid.nedetidSluttText : "",
+    isNedetid: state.soknad.nedetid ? state.soknad.nedetid.isNedetid : false,
+    isPlanlagtNedetid: state.soknad.nedetid ? state.soknad.nedetid.isPlanlagtNedetid : false,
+    visNedetidPanel: state.soknad.visNedetidPanel,
     startSoknadPending: state.soknad.startSoknadPending,
     fornavn: state.soknad.fornavn ? state.soknad.fornavn : undefined
 }))(injectIntl(Informasjon));
