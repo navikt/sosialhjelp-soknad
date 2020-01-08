@@ -83,7 +83,7 @@ jobs:
             git clone https://github.com/navikt/sosialhjelp-ci.git
             VERSION=$(sosialhjelp-ci/bin/create-artifact-version.sh)
 
-            deployment-cli deploy create --cluster=dev-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${VERSION} --vars=nais/dev/${MILJO}.json
+            deployment-cli deploy create --cluster=dev-sbs --repository=navikt/sosialhjelp-soknad --team=teamdigisos -r=nais.yaml --var version=${VERSION} --vars=nais/dev/${MILJO}.json
 
   deploy_miljo_tag:
     docker:
@@ -94,7 +94,7 @@ jobs:
       - run:
           name: Deploy versjon=${VERSION} til miljø=${MILJO} i dev-sbs
           command: |
-            deployment-cli deploy create --cluster=dev-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${TAG} --vars=nais/dev/${MILJO}.json
+            deployment-cli deploy create --cluster=dev-sbs --repository=navikt/sosialhjelp-soknad --team=teamdigisos -r=nais.yaml --var version=${TAG} --vars=nais/dev/${MILJO}.json
 
   deploy_prod:
     docker:
@@ -108,7 +108,7 @@ jobs:
             git clone https://github.com/navikt/sosialhjelp-ci.git
             VERSION=$(sosialhjelp-ci/bin/create-artifact-version.sh)
 
-            deployment-cli deploy create --cluster=prod-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${VERSION} --vars=nais/prod/default.json
+            deployment-cli deploy create --cluster=prod-sbs --repository=navikt/sosialhjelp-soknad --team=teamdigisos -r=nais.yaml --var version=${VERSION} --vars=nais/prod/default.json
 
   deploy_prod_tag:
     docker:
@@ -119,7 +119,7 @@ jobs:
       - run:
           name: Deploy versjon=${VERSION} til prod
           command: |
-            deployment-cli deploy create --cluster=prod-sbs --repository=navikt/sosialhjelp-soknad --team=digisos -r=nais.yaml --var version=${TAG} --vars=nais/prod/default.json
+            deployment-cli deploy create --cluster=prod-sbs --repository=navikt/sosialhjelp-soknad --team=teamdigisos -r=nais.yaml --var version=${TAG} --vars=nais/prod/default.json
 
   deploy_gcp:
     docker:
