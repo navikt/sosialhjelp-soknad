@@ -1,0 +1,43 @@
+name: Build
+on:
+    push:
+        branches:
+            - "**" # Build all branches
+        tags-ignore:
+            - "**" # Don't build any tags
+
+# FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
+jobs:
+    build:
+        name: Build and push docker image
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - name: Login to GitHub package registry
+              run: |
+                  echo ${GITHUB_TOKEN} | docker login -u ${GITHUB_REPOSITORY} --password-stdin docker.pkg.github.com
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Create artifact version
+              id: artifact-version
+              uses: navikt/sosialhjelp-ci/actions/create-artifact-version@master
+            - name: Create docker image tags
+              run: |
+                  PROJECT_NAME=$(echo $GITHUB_REPOSITORY | cut -d/ -f2)
+                  echo "docker.pkg.github.com/$GITHUB_REPOSITORY/$PROJECT_NAME:$VERSION" > DOCKER_TAG
+              env:
+                  VERSION: ${{ steps.artifact-version.outputs.version }}
+            - name: Build docker image
+              run: docker build -t $(cat DOCKER_TAG) .
+            - name: Create tag and release
+              # TODO: Bytt ut med upstream når/hvis https://github.com/actions/create-release/pull/32 merges
+              uses: fleskesvor/create-release@feature/support-target-commitish
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  tag_name: ${{ steps.artifact-version.outputs.version }}
+                  release_name: ${{ steps.artifact-version.outputs.version }}
+                  commitish: ${{ github.sha }}
+            - name: Push docker image
+              run: |
+                  docker push $(cat DOCKER_TAG)

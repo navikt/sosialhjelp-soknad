@@ -1,0 +1,28 @@
+name: Deploy Prod
+on:
+    repository_dispatch:
+        types: [deploy_prod_tag]
+
+jobs:
+    deploy:
+        name: Deploy to prod-sbs
+        runs-on: ubuntu-latest
+        if: github.event.action == 'deploy_prod_tag'
+        container: navikt/deployment-cli:0.4.0
+        steps:
+            - uses: actions/checkout@v1
+            - name: Deploy to prod
+              run: |
+                  MASTER_HEAD_COMMIT=$(git rev-parse HEAD)
+                  TAG=$(jq -r '.client_payload.TAG' $GITHUB_EVENT_PATH)
+                  git checkout ${TAG}
+                  TAG_COMMIT=$(git rev-parse HEAD)
+                  MERGE_BASE=$(git merge-base $MASTER_HEAD_COMMIT $TAG_COMMIT)
+                  if [[ $MERGE_BASE != $TAG_COMMIT ]]; then
+                    echo "${TAG} is not on master branch" 1>&2
+                    exit 1
+                  fi
+                  deployment-cli deploy create --cluster=prod-sbs --repository=${GITHUB_REPOSITORY} --team=teamdigisos -r=nais.yaml --var version=${TAG} --vars=nais/prod/default.json
+              env:
+                  DEPLOYMENT_USERNAME: ${{ secrets.DEPLOYMENT_USERNAME }}
+                  DEPLOYMENT_PASSWORD: ${{ secrets.DEPLOYMENT_PASSWORD }}

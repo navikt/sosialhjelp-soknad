@@ -1,0 +1,22 @@
+name: Deploy Dev
+on:
+    repository_dispatch:
+        types: [deploy_miljo_tag]
+
+jobs:
+    deploy:
+        name: Deploy to dev-sbs
+        runs-on: ubuntu-latest
+        if: github.event.action == 'deploy_miljo_tag'
+        container: navikt/deployment-cli:0.4.0
+        steps:
+            - uses: actions/checkout@v1
+            - name: Deploy to dev
+              run: |
+                  MILJO=$(jq -r '.client_payload.MILJO' $GITHUB_EVENT_PATH)
+                  TAG=$(jq -r '.client_payload.TAG' $GITHUB_EVENT_PATH)
+                  git checkout ${TAG}
+                  deployment-cli deploy create --cluster=dev-sbs --repository=${GITHUB_REPOSITORY} --team=teamdigisos -r=nais.yaml --var version=${TAG} --vars=nais/dev/${MILJO}.json
+              env:
+                  DEPLOYMENT_USERNAME: ${{ secrets.DEPLOYMENT_USERNAME }}
+                  DEPLOYMENT_PASSWORD: ${{ secrets.DEPLOYMENT_PASSWORD }}
