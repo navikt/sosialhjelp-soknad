@@ -20,12 +20,12 @@ jobs:
               --actions \
               --cluster="${MILJO}" \
               --apikey="${APIKEY}" \
-              --resource="web/nais.yaml" \
+              --resource="nais.yaml" \
               --team=teamdigisos \
               --owner=navikt \
               --repository="${REPOSITORY_NAME}" \
               --var version=${TAG} \
-              --vars="web/nais/dev/${MILJO}.json" \
+              --vars="nais/dev/${MILJO}.json" \
               --wait
         env:
           MILJO: ${{ github.event.client_payload.MILJO }}
