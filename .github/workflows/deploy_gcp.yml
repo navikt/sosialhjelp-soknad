@@ -1,0 +1,34 @@
+name: Deploy GCP
+on:
+  repository_dispatch:
+    types: [deploy_dev_gcp]
+
+jobs:
+  deploy:
+    name: Deploy to GCP
+    runs-on: ubuntu-latest
+    if: github.event.action == 'deploy_dev_gcp'
+    container: navikt/deployment:v1
+    steps:
+      - uses: actions/checkout@v1
+      - name: Deploy to dev
+        run: |
+          echo "***   Deploying $TAG to $MILJO   ***"
+          git checkout ${TAG}
+          REPOSITORY_NAME=$(echo $GITHUB_REPOSITORY | sed s/navikt\\///g)
+          /app/deploy \
+              --actions \
+              --cluster="${MILJO}" \
+              --apikey="${APIKEY}" \
+              --resource="web/nais.yaml" \
+              --team=teamdigisos \
+              --owner=navikt \
+              --repository="${REPOSITORY_NAME}" \
+              --var version=${TAG} \
+              --vars="web/nais/dev/${MILJO}.json" \
+              --wait
+        env:
+          MILJO: ${{ github.event.client_payload.MILJO }}
+          TAG: ${{ github.event.client_payload.TAG }}
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          PRINT_PAYLOAD: true
