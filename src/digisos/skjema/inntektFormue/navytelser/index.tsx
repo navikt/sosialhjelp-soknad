@@ -45,7 +45,9 @@ class NavYtelserView extends React.Component<Props, {}> {
             const utbetalingsdato: string = utbetaling.utbetalingsdato;
             let formattedDato = null;
             if (utbetalingsdato && utbetalingsdato.length > 9) {
-                formattedDato = <FormattedDate value={utbetaling.utbetalingsdato}/>
+                formattedDato = <span className="dato">
+                    <FormattedDate value={utbetaling.utbetalingsdato} day="numeric" month="long" year="numeric"/>
+                </span>
             }
             const belop = <FormattedNumber value={utbetaling.belop} minimumFractionDigits={2}/>;
             return (

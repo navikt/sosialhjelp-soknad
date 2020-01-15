@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FormattedMessage } from "react-intl";
+import {FormattedDate, FormattedMessage} from "react-intl";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import { Arbeidsforhold } from "./arbeidTypes";
 
@@ -15,12 +15,16 @@ const ArbeidDetaljer: React.FunctionComponent<{ arbeidsforhold: Arbeidsforhold }
 			/>
 			<DetaljelisteElement
 				tittel={<FormattedMessage id="arbeidsforhold.fom.label"/>}
-				verdi={fom}
+				verdi={<span className="dato">
+							&nbsp;<FormattedDate value={fom} day="numeric" month="long" year="numeric" />
+						</span>}
 			/>
 			{tom !== "" && (
 				<DetaljelisteElement
 					tittel={<FormattedMessage id="arbeidsforhold.tom.label"/>}
-					verdi={tom}
+					verdi={<span className="dato">
+							&nbsp;<FormattedDate value={tom} day="numeric" month="long" year="numeric" />
+						</span>}
 				/>
 			)}
 			<DetaljelisteElement

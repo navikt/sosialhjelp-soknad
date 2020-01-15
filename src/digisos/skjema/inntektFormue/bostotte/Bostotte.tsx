@@ -1,7 +1,7 @@
 import * as React from "react";
 import {FormattedDate, FormattedMessage, FormattedNumber, injectIntl} from 'react-intl'
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {formaterIsoDato, getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
 	connectSoknadsdataContainer,
@@ -63,7 +63,12 @@ class BostotteView extends React.Component<Props, State> {
 			<div className="utbetalinger blokk-xs" key={key}>
 				<div><FormattedMessage id={"inntekt.bostotte.husbanken.mottaker"} values={{"mottaker":mottaker}} /></div>
 				<div className="utbetaling">
-				<span><FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/> {formaterIsoDato(dato)}</span>
+					<span>
+						<FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/>
+						<span className="dato">
+							&nbsp;<FormattedDate value={dato} day="numeric" month="long" year="numeric" />
+						</span>
+					</span>
 				<span className="verdi detaljeliste__verdi">
 					<FormattedNumber value={netto} minimumFractionDigits={2} maximumFractionDigits={2}/> kr
 				</span>

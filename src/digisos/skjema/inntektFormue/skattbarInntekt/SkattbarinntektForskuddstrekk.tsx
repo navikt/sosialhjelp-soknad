@@ -29,8 +29,12 @@ const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({ skatt
             {skattbarinntektogforskuddstrekk.map((skattbarInntekt: SkattbarInntekt) => {
                 return (
                     skattbarInntekt.organisasjoner.map((organisasjon: Organisasjon) => {
-                        const fom = <FormattedDate value={organisasjon.fom!}/>;
-                        const tom = <FormattedDate value={organisasjon.tom!}/>;
+                        const fom = <span className="dato">
+                                <FormattedDate value={organisasjon.fom!} day="numeric" month="long" year="numeric"/>
+                            </span>;
+                        const tom = <span className="dato">
+                                <FormattedDate value={organisasjon.tom!} day="numeric" month="long" year="numeric"/>
+                            </span>;
                         const lenkeSti = getLenkeSti(organisasjon);
                         return (
                             <div key={organisasjon.orgnr} className="utbetaling blokk">
