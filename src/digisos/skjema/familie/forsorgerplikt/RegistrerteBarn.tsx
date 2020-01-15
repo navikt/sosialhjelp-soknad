@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Barn } from "./ForsorgerPliktTypes";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
-import { FormattedMessage, injectIntl } from "react-intl";
+import { FormattedMessage, FormattedDate, injectIntl } from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -59,7 +59,9 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 								/>
 								<DetaljelisteElement
 									tittel={<span><FormattedMessage id="familierelasjon.fodselsdato"/></span>}
-									verdi={barnet.barn.fodselsdato}
+									verdi={<span>
+										<FormattedDate value={barnet.barn.fodselsdato} day="numeric" month="long" year="numeric" />
+									</span>}
 								/>
 								<DetaljelisteElement
 									tittel={(
