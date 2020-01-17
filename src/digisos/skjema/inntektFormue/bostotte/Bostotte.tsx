@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormattedDate, FormattedMessage, FormattedNumber, injectIntl} from 'react-intl'
+import { FormattedDate, FormattedMessage, FormattedNumber, injectIntl } from 'react-intl'
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
@@ -11,6 +11,7 @@ import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { Bostotte } from "./bostotteTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
+import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -66,7 +67,7 @@ class BostotteView extends React.Component<Props, State> {
 					<span>
 						<FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/>
 						<span className="dato">
-							&nbsp;<FormattedDate value={dato} day="numeric" month="long" year="numeric" />
+							&nbsp;<Dato tidspunkt={dato}/>
 						</span>
 					</span>
 				<span className="verdi detaljeliste__verdi">

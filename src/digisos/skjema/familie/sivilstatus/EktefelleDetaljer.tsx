@@ -1,5 +1,5 @@
 import { Person, Sivilstatus } from "./FamilieTypes";
-import {FormattedDate, FormattedMessage, injectIntl} from "react-intl";
+import {FormattedMessage, injectIntl} from "react-intl";
 import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
@@ -10,6 +10,7 @@ import {
 	connectSoknadsdataContainer,
 	SoknadsdataContainerProps
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 
 type Props = SoknadsdataContainerProps & IntlProps;
 
@@ -40,7 +41,7 @@ class EktefelleDetaljer extends React.Component<Props, {}> {
 							<DetaljelisteElement
 								tittel={<FormattedMessage id={INTL_ID_EKTEFELLE + ".fodselsdato"}/>}
 								verdi={<span className="dato">
-									<FormattedDate value={ektefelle.fodselsdato} day="numeric" month="long" year="numeric"/>
+									<Dato tidspunkt={ektefelle.fodselsdato}/>
 								</span>}
 							/>
 						}

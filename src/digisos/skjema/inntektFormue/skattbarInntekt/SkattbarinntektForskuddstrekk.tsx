@@ -1,6 +1,7 @@
 import {Organisasjon, SkattbarInntekt} from "./inntektTypes";
 import * as React from "react";
-import {FormattedDate, FormattedMessage, FormattedNumber} from "react-intl";
+import {FormattedMessage, FormattedNumber} from "react-intl";
+import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 
 function getLenkeSti(organisasjon: Organisasjon): string {
     let orgnr = organisasjon.orgnr ? "/" + organisasjon.orgnr : "";
@@ -29,12 +30,8 @@ const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({ skatt
             {skattbarinntektogforskuddstrekk.map((skattbarInntekt: SkattbarInntekt) => {
                 return (
                     skattbarInntekt.organisasjoner.map((organisasjon: Organisasjon) => {
-                        const fom = <span className="dato">
-                                <FormattedDate value={organisasjon.fom!} day="numeric" month="long" year="numeric"/>
-                            </span>;
-                        const tom = <span className="dato">
-                                <FormattedDate value={organisasjon.tom!} day="numeric" month="long" year="numeric"/>
-                            </span>;
+                        const fom = <Dato tidspunkt={organisasjon.fom!}/>;
+                        const tom = <Dato tidspunkt={organisasjon.tom!}/>;
                         const lenkeSti = getLenkeSti(organisasjon);
                         return (
                             <div key={organisasjon.orgnr} className="utbetaling blokk">

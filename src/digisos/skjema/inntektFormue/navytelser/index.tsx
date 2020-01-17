@@ -2,7 +2,6 @@ import * as React from "react";
 import {
     FormattedMessage,
     FormattedHTMLMessage,
-    FormattedDate,
     FormattedNumber,
     injectIntl
 } from "react-intl";
@@ -17,6 +16,7 @@ import {Panel} from "nav-frontend-paneler";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {IntlProps} from "../../../../nav-soknad/utils";
+import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 
 type Props = SoknadsdataContainerProps & IntlProps;
 
@@ -45,9 +45,7 @@ class NavYtelserView extends React.Component<Props, {}> {
             const utbetalingsdato: string = utbetaling.utbetalingsdato;
             let formattedDato = null;
             if (utbetalingsdato && utbetalingsdato.length > 9) {
-                formattedDato = <span className="dato">
-                    <FormattedDate value={utbetaling.utbetalingsdato} day="numeric" month="long" year="numeric"/>
-                </span>
+                formattedDato = <Dato tidspunkt={utbetaling.utbetalingsdato}/>
             }
             const belop = <FormattedNumber value={utbetaling.belop} minimumFractionDigits={2}/>;
             return (

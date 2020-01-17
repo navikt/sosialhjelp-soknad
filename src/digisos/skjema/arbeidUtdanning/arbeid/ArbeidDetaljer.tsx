@@ -1,7 +1,8 @@
 import * as React from "react";
-import {FormattedDate, FormattedMessage} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
 import { Arbeidsforhold } from "./arbeidTypes";
+import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 
 const ArbeidDetaljer: React.FunctionComponent<{ arbeidsforhold: Arbeidsforhold }> = ({ arbeidsforhold }) => {
 	const { arbeidsgivernavn, stillingsprosent, fom, tom } = arbeidsforhold;
@@ -15,16 +16,12 @@ const ArbeidDetaljer: React.FunctionComponent<{ arbeidsforhold: Arbeidsforhold }
 			/>
 			<DetaljelisteElement
 				tittel={<FormattedMessage id="arbeidsforhold.fom.label"/>}
-				verdi={<span className="dato">
-							&nbsp;<FormattedDate value={fom} day="numeric" month="long" year="numeric" />
-						</span>}
+				verdi={<span>&nbsp;<Dato tidspunkt={fom}/></span>}
 			/>
 			{tom !== "" && (
 				<DetaljelisteElement
 					tittel={<FormattedMessage id="arbeidsforhold.tom.label"/>}
-					verdi={<span className="dato">
-							&nbsp;<FormattedDate value={tom} day="numeric" month="long" year="numeric" />
-						</span>}
+					verdi={<span>&nbsp;<Dato tidspunkt={tom}/></span>}
 				/>
 			)}
 			<DetaljelisteElement
