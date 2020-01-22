@@ -9,7 +9,7 @@
     "classnames": "^2.2.6",
     "connected-react-router": "^6.5.2",
     "core-js": "^3.2.1",
-    "craco-less": "^1.12.0",
+    "craco-less": "^1.15.0",
     "cuid": "^2.1.6",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
