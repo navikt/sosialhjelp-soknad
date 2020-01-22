@@ -153,7 +153,7 @@ class BostotteView extends React.Component<Props, State> {
 						})
 					}
 					{(harBostotterUtbetalinger || harBostotterSaker) &&
-						<a href="https://kundeforhold-bostotte.husbanken.no/esoknad-bostotte/">
+						<a href="https://kundeforhold-bostotte.husbanken.no/esoknad-bostotte/" target="_blank" rel="noopener noreferrer">
 							<FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"}/>
 						</a>
 					}
