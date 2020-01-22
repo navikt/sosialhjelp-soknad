@@ -21,12 +21,12 @@ export default class OpplastetVedlegg extends React.Component<AllProps, {}> {
     render() {
         const {fil} = this.props;
         const lastNedUrl = `opplastetVedlegg/${fil.uuid}/fil`;
-        const filnavn = decodeURI(fil.filNavn);
+     
         return (
             <div className="vedleggsliste__vedlegg">
                 <span className="vedleggsliste__filnavn">
                     <Lenkeknapp onClick={() => downloadAttachedFile(lastNedUrl)}>
-                        {filnavn}
+                        {fil.filNavn}
                     </Lenkeknapp>
                 </span>
                 <span className="vedleggsliste__slett_ikon">
