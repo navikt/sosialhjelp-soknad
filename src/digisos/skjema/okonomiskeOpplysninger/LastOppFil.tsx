@@ -32,7 +32,10 @@ class LastOppFil extends React.Component<Props, {}> {
                 return;
             }
             const formData = new FormData();
-            formData.append("file", files[0], files[0].name);
+
+            const fileName = files[0].name;
+            const encoded = encodeURI(fileName);
+            formData.append("file", files[0], encoded);
             this.props.dispatch(lastOppFil(opplysning, formData, behandlingsId));
             this.leggTilVedleggKnapp.value = "";
         }
