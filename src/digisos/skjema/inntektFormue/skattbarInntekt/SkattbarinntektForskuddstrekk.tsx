@@ -50,8 +50,8 @@ const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({ skatt
                                         return utbetalingVerdier;
                                     })}
                                 </div>
-                                <a className="blokk-s" href={lenkeSti} target={`skatteetaten_${organisasjon.orgnr}`}>Se
-                                    detaljer hos Skatteetaten.</a>
+                                <a className="blokk-s" href={lenkeSti} target="_blank" rel="noopener noreferrer">
+                                    Se detaljer hos Skatteetaten.</a>
                             </div>
                         );
                     })
