@@ -21,7 +21,7 @@ export default class OpplastetVedlegg extends React.Component<AllProps, {}> {
     render() {
         const {fil} = this.props;
         const lastNedUrl = `opplastetVedlegg/${fil.uuid}/fil`;
-
+     
         return (
             <div className="vedleggsliste__vedlegg">
                 <span className="vedleggsliste__filnavn">
