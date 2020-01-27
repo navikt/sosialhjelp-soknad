@@ -6,6 +6,7 @@ export const defaultState: SoknadState = {
 	showLargeSpinner: true,
 	showServerFeil: false,
 	sendSoknadServiceUnavailable: false,
+	showSendingFeiletPanel: false,
 	showFeilSide: false,
 	showSideIkkeFunnet: false,
 	visSamtykkeInfo: false,

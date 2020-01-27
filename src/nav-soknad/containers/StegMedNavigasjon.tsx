@@ -18,7 +18,8 @@ import {getIntlTextOrKey, IntlProps, scrollToTop} from "../utils";
 import {
     avbrytSoknad,
     resetSendSoknadServiceUnavailable,
-    sendSoknad
+    sendSoknad,
+    showSendingFeiletPanel
 } from "../../digisos/redux/soknad/soknadActions";
 import {gaTilbake, gaVidere, tilSteg} from "../../digisos/redux/navigasjon/navigasjonActions";
 import {loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
@@ -322,6 +323,13 @@ class StegMedNavigasjon extends React.Component<Props, {}> {
                                 avbryt={() => this.props.dispatch(avbrytSoknad())}
                                 sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
                             />
+                        )}
+
+                        {soknad.showSendingFeiletPanel && aktivtSteg === 9 && (
+                            <AlertStripe type="feil" style={{marginTop: "1rem"}}>
+                                Vi klarte ikke sende søknaden din, grunnet en midlertidig teknsik feil.
+                                Vi ber deg prøve igjen. Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen senere. Kontakt ditt NAV kontor dersom du er i en nødsituasjon.
+                            </AlertStripe>
                         )}
 
                         {soknad.visMidlertidigDeaktivertPanel && isNedetid && aktivtSteg === 9 && (

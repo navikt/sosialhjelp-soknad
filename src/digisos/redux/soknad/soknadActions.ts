@@ -193,6 +193,13 @@ export function showServerFeil(shouldShow: boolean): SoknadActionType {
     }
 }
 
+export function showSendingFeiletPanel(shouldShow: boolean): SoknadActionType {
+    return {
+        type: SoknadActionTypeKeys.SHOW_SENDING_FEILET_PANEL,
+        shouldShow: shouldShow
+    }
+}
+
 export function showSideIkkeFunnet(shouldShow: boolean): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET,

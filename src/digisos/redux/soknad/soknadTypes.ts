@@ -12,6 +12,7 @@ export interface SoknadState {
     visNedetidPanel: boolean;
 
     // Visning state skjema nivå
+    showSendingFeiletPanel: boolean;
     showServerFeil: boolean;
     sendSoknadServiceUnavailable: boolean,
 

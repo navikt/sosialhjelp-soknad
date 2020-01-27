@@ -31,6 +31,7 @@ import {
     setSendSoknadServiceUnavailable,
     showFeilSide,
     showLargeSpinner,
+    showSendingFeiletPanel,
     showServerFeil,
     showSideIkkeFunnet,
     slettSoknadOk,
@@ -177,7 +178,7 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
             yield put(setSendSoknadServiceUnavailable());
         } else {
             yield put(loggFeil("send soknad saga feilet: " + reason));
-            yield put(showServerFeil(true));
+            yield put(showSendingFeiletPanel(true));
         }
     }
 }
