@@ -6,6 +6,7 @@ export const defaultState: SoknadState = {
 	showLargeSpinner: true,
 	showServerFeil: false,
 	sendSoknadServiceUnavailable: false,
+	showSendingFeiletPanel: false,
 	showFeilSide: false,
 	showSideIkkeFunnet: false,
 	visSamtykkeInfo: false,
@@ -135,7 +136,8 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
 		case SoknadActionTypeKeys.SEND_SOKNAD:
 			return {
 				...state,
-				sendSoknadPending: true
+				sendSoknadPending: true,
+				showSendingFeiletPanel: false,
 			};
 		case SoknadActionTypeKeys.SEND_SOKNAD_OK:
 			return {
@@ -232,6 +234,13 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
 				...state,
 				sendSoknadServiceUnavailable: false,
 				visMidlertidigDeaktivertPanel: false
+			}
+		}
+		case SoknadActionTypeKeys.SHOW_SENDING_FEILET_PANEL: {
+			return {
+				...state,
+				showSendingFeiletPanel: action.shouldShow,
+				sendSoknadPending: false,
 			}
 		}
 		default:

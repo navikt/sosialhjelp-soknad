@@ -31,6 +31,7 @@ export enum SoknadActionTypeKeys {
 	VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO",
 	UPDATE_BEHANDLINGSID_PA_STORE = "soknad/UPDATE_BEHANDLINGSID_PA_STORE",
 	SHOW_SERVER_FEIL = "soknad/SHOW_SERVER_FEIL",
+	SHOW_SENDING_FEILET_PANEL = "soknad/SHOW_SENDING_FEILET_PANEL",
 	SHOW_SIDE_IKKE_FUNNET = "soknad/SHOW_SIDE_IKKE_FUNNET",
 	VIS_MIDLERTIDIG_DEAKTIVERT_PANEL = "soknad/VIS_MIDLERTIDIG_DEAKTIVERT_PANEL",
 	VIS_IKKE_PAKOBLET_PANEL = "soknad/VIS_IKKE_PAKOBLET_PANEL",
@@ -71,6 +72,7 @@ export type SoknadActionType =
 	| VisSamtykkeInfo
 	| UpdateBehandlingsIdPaStore
 	| ShowServerFeil
+	| ShowSendingFeiletPanel
 	| ShowSideIkkeFunnet
 	| VisMidlertidigDeaktivertPanel
 	| VisIkkePakobletPanel
@@ -194,6 +196,11 @@ export interface SetLinkVisited {
 
 export interface ShowServerFeil {
 	type: SoknadActionTypeKeys.SHOW_SERVER_FEIL;
+	shouldShow: boolean
+}
+
+export interface ShowSendingFeiletPanel {
+	type: SoknadActionTypeKeys.SHOW_SENDING_FEILET_PANEL;
 	shouldShow: boolean
 }
 
