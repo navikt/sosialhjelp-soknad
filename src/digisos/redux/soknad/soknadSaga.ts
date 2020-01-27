@@ -159,7 +159,9 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
             JSON.stringify({behandlingsId: action.behandlingsId}),
             true
         );
+
         lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.behandlingsId);
+
         yield put(sendSoknadOk(action.behandlingsId));
         if (response && response.sendtTil === SendtTilSystemEnum.FIKS_DIGISOS_API) {
             yield put(loggAdvarsel("Redirecter til innsyn etter innsending av søknad. Ble søknaden sendt til fiks-digisos-api?"));
