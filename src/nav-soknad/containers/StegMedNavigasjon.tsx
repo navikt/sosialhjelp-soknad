@@ -18,8 +18,7 @@ import {getIntlTextOrKey, IntlProps, scrollToTop} from "../utils";
 import {
     avbrytSoknad,
     resetSendSoknadServiceUnavailable,
-    sendSoknad,
-    showSendingFeiletPanel
+    sendSoknad
 } from "../../digisos/redux/soknad/soknadActions";
 import {gaTilbake, gaVidere, tilSteg} from "../../digisos/redux/navigasjon/navigasjonActions";
 import {loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
