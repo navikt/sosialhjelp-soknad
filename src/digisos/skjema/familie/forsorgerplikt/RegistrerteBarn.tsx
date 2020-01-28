@@ -11,6 +11,7 @@ import {
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
+import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 
 type Props = SoknadsdataContainerProps & IntlProps;
 
@@ -59,7 +60,7 @@ class RegistrerteBarn extends React.Component<Props, {}> {
 								/>
 								<DetaljelisteElement
 									tittel={<span><FormattedMessage id="familierelasjon.fodselsdato"/></span>}
-									verdi={barnet.barn.fodselsdato}
+									verdi={<Dato tidspunkt={barnet.barn.fodselsdato}/>}
 								/>
 								<DetaljelisteElement
 									tittel={(

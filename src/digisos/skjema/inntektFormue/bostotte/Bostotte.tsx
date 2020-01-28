@@ -1,7 +1,7 @@
 import * as React from "react";
-import {FormattedDate, FormattedMessage, FormattedNumber, injectIntl} from 'react-intl'
+import { FormattedDate, FormattedMessage, FormattedNumber, injectIntl } from 'react-intl'
 import { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {formaterIsoDato, getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
 	connectSoknadsdataContainer,
@@ -11,6 +11,7 @@ import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
 import { Bostotte } from "./bostotteTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
+import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -63,7 +64,12 @@ class BostotteView extends React.Component<Props, State> {
 			<div className="utbetalinger blokk-xs" key={key}>
 				<div><FormattedMessage id={"inntekt.bostotte.husbanken.mottaker"} values={{"mottaker":mottaker}} /></div>
 				<div className="utbetaling">
-				<span><FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/> {formaterIsoDato(dato)}</span>
+					<span>
+						<FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/>
+						<span className="dato">
+							&nbsp;<Dato tidspunkt={dato}/>
+						</span>
+					</span>
 				<span className="verdi detaljeliste__verdi">
 					<FormattedNumber value={netto} minimumFractionDigits={2} maximumFractionDigits={2}/> kr
 				</span>
