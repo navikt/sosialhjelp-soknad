@@ -12,7 +12,7 @@ export enum DigisosSteg {
     inntektbolk = "inntektbolk",
     utgifterbolk = "utgifterbolk",
     opplysningerbolk = "opplysningerbolk",
-    oppsummering = "oppsummering"
+    oppsummering = "oppsummering",
 }
 
 export const digisosSkjemaConfig: SkjemaConfig = {
@@ -22,68 +22,63 @@ export const digisosSkjemaConfig: SkjemaConfig = {
         {
             key: DigisosSteg.kontakt,
             stegnummer: 1,
-            type: SkjemaStegType.skjema
+            type: SkjemaStegType.skjema,
         },
         {
             key: DigisosSteg.begrunnelsebolk,
             stegnummer: 2,
-            type: SkjemaStegType.skjema
+            type: SkjemaStegType.skjema,
         },
         {
             key: DigisosSteg.arbeidbolk,
             stegnummer: 3,
-            type: SkjemaStegType.skjema
+            type: SkjemaStegType.skjema,
         },
         {
             key: DigisosSteg.familiebolk,
             stegnummer: 4,
-            type: SkjemaStegType.skjema
+            type: SkjemaStegType.skjema,
         },
         {
             key: DigisosSteg.bosituasjonbolk,
             stegnummer: 5,
-            type: SkjemaStegType.skjema
+            type: SkjemaStegType.skjema,
         },
         {
             key: DigisosSteg.inntektbolk,
             stegnummer: 6,
-            type: SkjemaStegType.skjema
+            type: SkjemaStegType.skjema,
         },
         {
             key: DigisosSteg.utgifterbolk,
             stegnummer: 7,
-            type: SkjemaStegType.skjema
+            type: SkjemaStegType.skjema,
         },
         {
             key: DigisosSteg.opplysningerbolk,
             stegnummer: 8,
-            type: SkjemaStegType.skjema
+            type: SkjemaStegType.skjema,
         },
         {
             key: DigisosSteg.oppsummering,
             stegnummer: 9,
-            type: SkjemaStegType.oppsummering
-        }
-    ]
+            type: SkjemaStegType.oppsummering,
+        },
+    ],
 };
 
-interface Props {
+const DigisosSkjemaSteg = (props: {
     steg: string;
     ikon?: React.ReactNode;
-}
-
-class DigisosSkjemaSteg extends React.Component<Props, {}> {
-    render() {
-        return (
-            <StegMedNavigasjon
-                skjemaConfig={digisosSkjemaConfig}
-                stegKey={this.props.steg}
-                ikon={this.props.ikon}
-            >
-                {this.props.children}
-            </StegMedNavigasjon>
-        );
-    }
-}
+    children: any;
+}) => (
+    <StegMedNavigasjon
+        skjemaConfig={digisosSkjemaConfig}
+        stegKey={props.steg}
+        ikon={props.ikon}
+    >
+        {props.children}
+    </StegMedNavigasjon>
+);
 
 export default DigisosSkjemaSteg;

@@ -4,16 +4,14 @@ import FamilieIllustrasjon from "../../../nav-soknad/components/svg/illustrasjon
 import ForsorgerPlikt from "./forsorgerplikt/ForsorgerPlikt";
 import DinSivilstatus from "./sivilstatus/DinSivilstatus";
 
-class Familie extends React.Component<{}> {
-
-    render() {
-        return (
-            <DigisosSkjemaSteg steg={DigisosSteg.familiebolk} ikon={<FamilieIllustrasjon/>}>
-                <DinSivilstatus/>
-                <ForsorgerPlikt/>
-            </DigisosSkjemaSteg>
-        );
-    }
-}
+const Familie = () => (
+    <DigisosSkjemaSteg
+        steg={DigisosSteg.familiebolk}
+        ikon={<FamilieIllustrasjon />}
+    >
+        <DinSivilstatus />
+        <ForsorgerPlikt />
+    </DigisosSkjemaSteg>
+);
 
 export default Familie;

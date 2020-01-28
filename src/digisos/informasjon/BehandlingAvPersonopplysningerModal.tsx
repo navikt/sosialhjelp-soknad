@@ -1,72 +1,75 @@
 import * as React from "react";
 import NavFrontendModal from "nav-frontend-modal";
-import { FormattedMessage, injectIntl } from "react-intl";
-import { DispatchProps } from "../redux/reduxTypes";
-import { connect } from "react-redux";
-import { Knapp } from "nav-frontend-knapper";
-import { finnValgtEnhetsNavn } from "../data/kommuner";
+import {FormattedMessage, useIntl} from "react-intl";
+import {useSelector, useDispatch} from "react-redux";
+import {Knapp} from "nav-frontend-knapper";
+import {finnValgtEnhetsNavn} from "../data/kommuner";
 import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
 import {State} from "../redux/reducers";
 import {visSamtykkeInfo} from "../redux/soknad/soknadActions";
-import {IntlProps} from "../../nav-soknad/utils";
 
-interface StateProps {
-	modalSynlig: boolean;
-	soknadsdata: Soknadsdata;
-}
+const getText = (soknadsdata: Soknadsdata, text: string) => {
+    const valgtEnhetsNavn = finnValgtEnhetsNavn(soknadsdata);
+    return text.replace(
+        /{navkontor:(.*)}/g,
+        valgtEnhetsNavn ? valgtEnhetsNavn : "$1"
+    );
+};
 
-type Props = StateProps & IntlProps & DispatchProps;
+const BehandlingAvPersonopplysningerModal = () => {
+    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const modalSynlig = useSelector(
+        (state: State) => state.soknad.visSamtykkeInfo
+    );
 
-class BehandlingAvPersonopplysningerModal extends React.Component<Props, {}> {
+    const intl = useIntl();
 
-	getText() {
-		let valgtEnhetsNavn = finnValgtEnhetsNavn(this.props.soknadsdata);
-		if (!valgtEnhetsNavn) {
-			valgtEnhetsNavn = "$1";
-		}
-		let text = this.props.intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"].toString();
-		text = text.replace(/{navkontor:(.*)}/g, valgtEnhetsNavn);
-		return text;
-	}
+    const dispatch = useDispatch();
 
-	render() {
-		return (
-			<NavFrontendModal
-				isOpen={this.props.modalSynlig || false}
-				contentLabel={this.props.intl.formatMessage({id: "avbryt.avbryt"})}
-				closeButton={true}
-				onRequestClose={() => {
-					this.props.dispatch(visSamtykkeInfo(false))
-				}}
-				style={{
-					content: {
-						overflowY: 'auto'
-					}
-				}}
-			>
-				<div className="personopplysning_info">
-					<div dangerouslySetInnerHTML={{__html: this.getText()}}/>
-				</div>
+    const text = intl.messages[
+        "soknadsosialhjelp.forstesiden.bekreftInfoModal.body"
+    ].toString();
+    return (
+        <NavFrontendModal
+            isOpen={modalSynlig || false}
+            contentLabel={intl.formatMessage({
+                id: "avbryt.avbryt",
+            })}
+            closeButton={true}
+            onRequestClose={() => {
+                dispatch(visSamtykkeInfo(false));
+            }}
+            style={{
+                content: {
+                    overflowY: "auto",
+                },
+            }}
+        >
+            <div className="personopplysning_info">
+                <div
+                    dangerouslySetInnerHTML={{
+                        __html: getText(soknadsdata, text),
+                    }}
+                />
+            </div>
 
-				<div className="behandlingAvPersonopplysningerModal--lukke-knapp">
-					<Knapp
-						htmlType="button"
-						type="hoved"
-						onClick={() => {
-							this.props.dispatch(visSamtykkeInfo(false))
-						}}
-					>
-						<FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"}/>
-					</Knapp>
-				</div>
-			</NavFrontendModal>
-		);
-	}
-}
+            <div className="behandlingAvPersonopplysningerModal--lukke-knapp">
+                <Knapp
+                    htmlType="button"
+                    type="hoved"
+                    onClick={() => {
+                        dispatch(visSamtykkeInfo(false));
+                    }}
+                >
+                    <FormattedMessage
+                        id={
+                            "soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"
+                        }
+                    />
+                </Knapp>
+            </div>
+        </NavFrontendModal>
+    );
+};
 
-export default connect((state: State): StateProps => {
-	return {
-		modalSynlig: state.soknad.visSamtykkeInfo,
-		soknadsdata: state.soknadsdata
-	};
-})(injectIntl(BehandlingAvPersonopplysningerModal));
+export default BehandlingAvPersonopplysningerModal;
