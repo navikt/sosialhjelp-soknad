@@ -1,266 +1,402 @@
 import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import { Checkbox } from "nav-frontend-skjema";
-import { erKontonummer } from "../../../../nav-soknad/validering/valideringer";
-import { injectIntl } from "react-intl";
-import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
-import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
-import { Kontonummer } from "./KontonummerType";
+import {Checkbox} from "nav-frontend-skjema";
+import {erKontonummer} from "../../../../nav-soknad/validering/valideringer";
+import {useIntl} from "react-intl";
+import {useState, useEffect} from "react";
+import {useSelector, useDispatch} from "react-redux";
+
 import {
-	connectSoknadsdataContainer,
-	onEndretValideringsfeil,
-	SoknadsdataContainerProps
-} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+    SoknadsSti,
+    oppdaterSoknadsdataSti,
+} from "../../../redux/soknadsdata/soknadsdataReducer";
+import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
+import {Kontonummer} from "./KontonummerType";
+import {onEndretValideringsfeil} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import Detaljeliste, { DetaljelisteElement } from "../../../../nav-soknad/components/detaljeliste";
+import Detaljeliste, {
+    DetaljelisteElement,
+} from "../../../../nav-soknad/components/detaljeliste";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
-import {IntlProps, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
+import {replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
-interface OwnProps {
-	disableLoadingAnimation?: boolean;
-}
-
-interface State {
-	oppstartsModus: boolean
-}
-
-type Props = SoknadsdataContainerProps & OwnProps & IntlProps;
+import {State} from "../../../redux/reducers";
+import {
+    clearValideringsfeil,
+    setValideringsfeil,
+} from "../../../redux/validering/valideringActions";
+import {
+    hentSoknadsdata,
+    lagreSoknadsdata,
+} from "../../../redux/soknadsdata/soknadsdataActions";
 
 const FAKTUM_KEY_KONTONUMMER = "kontakt.kontonummer";
 
-class Bankinformasjon extends React.Component<Props, State> {
+const Bankinformasjon = () => {
+    const dispatch = useDispatch();
+    const [oppstartsModus, setOppstartsModus] = useState(true);
 
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-			oppstartsModus: true
-		}
-	}
+    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const behandlingsId = useSelector(
+        (state: State) => state.soknad.behandlingsId
+    );
+    const feil = useSelector((state: State) => state.validering.feil);
 
-	componentWillUpdate(nextProps: Readonly<Props>) {
-		const restStatus = nextProps.soknadsdata.restStatus.personalia.kontonummer;
-		if (this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
-			this.setState({oppstartsModus: false});
-		}
-	}
+    const intl = useIntl();
 
-	componentDidMount() {
-		const {behandlingsId} = this.props;
-		if (behandlingsId){
-			this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
-			this.props.hentSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON)
-		}
-	}
+    useEffect(() => {
+        if (oppstartsModus && soknadsdata.restStatus === REST_STATUS.OK) {
+            setOppstartsModus(false);
+        }
+    }, [oppstartsModus, soknadsdata.restStatus]);
 
-	onBlur() {
-		const { soknadsdata, behandlingsId } = this.props;
-		if (behandlingsId){
-			let kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
-			if (kontonummer.brukerutfyltVerdi !== null && kontonummer.brukerutfyltVerdi !== "") {
-				const feilkode: ValideringsFeilKode | undefined = this.validerKontonummer(kontonummer.brukerutfyltVerdi);
-				if (!feilkode) {
-					kontonummer = this.vaskKontonummerVerdi(kontonummer);
-					this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer);
-					this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
-				}
-			} else {
-				this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
-				this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer);
-			}
-		}
-	}
+    useEffect(() => {
+        if (behandlingsId) {
+            dispatch(clearValideringsfeil(FAKTUM_KEY_KONTONUMMER));
+            dispatch(
+                hentSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON)
+            );
+        }
+    }, [behandlingsId, dispatch]);
 
-	validerKontonummer(brukerutfyltVerdi: string): ValideringsFeilKode | undefined {
-		brukerutfyltVerdi = brukerutfyltVerdi.replace(/[.]/g,"");
-		const feilkode: ValideringsFeilKode | undefined = erKontonummer(brukerutfyltVerdi);
-		if(feilkode !== undefined){
-			onEndretValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER, this.props.feil, () => {
-				this.props.setValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER);
-			});
-		} else {
-			this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
-		}
-		return feilkode;
-	}
+    const onBlur = () => {
+        if (behandlingsId) {
+            let kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
+            if (
+                kontonummer.brukerutfyltVerdi !== null &&
+                kontonummer.brukerutfyltVerdi !== ""
+            ) {
+                const feilkode:
+                    | ValideringsFeilKode
+                    | undefined = validerKontonummer(
+                    kontonummer.brukerutfyltVerdi
+                );
+                if (!feilkode) {
+                    kontonummer = vaskKontonummerVerdi(kontonummer);
+                    dispatch(
+                        lagreSoknadsdata(
+                            behandlingsId,
+                            SoknadsSti.BANKINFORMASJON,
+                            kontonummer
+                        )
+                    );
+                    dispatch(clearValideringsfeil(FAKTUM_KEY_KONTONUMMER));
+                }
+            } else {
+                dispatch(clearValideringsfeil(FAKTUM_KEY_KONTONUMMER));
+                dispatch(
+                    lagreSoknadsdata(
+                        behandlingsId,
+                        SoknadsSti.BANKINFORMASJON,
+                        kontonummer
+                    )
+                );
+            }
+        }
+    };
 
-	endreKontoBrukerdefinert(brukerdefinert: boolean) {
-		const { soknadsdata, behandlingsId } = this.props;
-		if (behandlingsId){
-			const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
-			kontonummer.brukerdefinert = brukerdefinert;
-			kontonummer.brukerutfyltVerdi = "";
-			kontonummer.harIkkeKonto = false;
-			this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
-			if (!brukerdefinert) {
-				this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer,
-					() => this.props.hentSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON));
-			} else {
-				this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer);
-			}
-			this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
-		}
-	}
+    const validerKontonummer = (
+        brukerutfyltVerdi: string
+    ): ValideringsFeilKode | undefined => {
+        brukerutfyltVerdi = brukerutfyltVerdi.replace(/[.]/g, "");
+        const feilkode: ValideringsFeilKode | undefined = erKontonummer(
+            brukerutfyltVerdi
+        );
+        if (feilkode !== undefined) {
+            onEndretValideringsfeil(
+                feilkode,
+                FAKTUM_KEY_KONTONUMMER,
+                feil,
+                () => {
+                    dispatch(
+                        setValideringsfeil(feilkode, FAKTUM_KEY_KONTONUMMER)
+                    );
+                }
+            );
+        } else {
+            dispatch(clearValideringsfeil(FAKTUM_KEY_KONTONUMMER));
+        }
+        return feilkode;
+    };
 
-	onChangeInput(brukerutfyltVerdi: string) {
-		this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
-		const { soknadsdata } = this.props;
-		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
-		kontonummer.brukerutfyltVerdi = brukerutfyltVerdi;
-		this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
-	}
+    const endreKontoBrukerdefinert = (brukerdefinert: boolean) => {
+        if (behandlingsId) {
+            const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
+            kontonummer.brukerdefinert = brukerdefinert;
+            kontonummer.brukerutfyltVerdi = "";
+            kontonummer.harIkkeKonto = false;
+            dispatch(
+                oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer)
+            );
+            if (!brukerdefinert) {
+                dispatch(
+                    lagreSoknadsdata(
+                        behandlingsId,
+                        SoknadsSti.BANKINFORMASJON,
+                        kontonummer,
+                        () =>
+                            dispatch(
+                                hentSoknadsdata(
+                                    behandlingsId,
+                                    SoknadsSti.BANKINFORMASJON
+                                )
+                            )
+                    )
+                );
+            } else {
+                dispatch(
+                    lagreSoknadsdata(
+                        behandlingsId,
+                        SoknadsSti.BANKINFORMASJON,
+                        kontonummer
+                    )
+                );
+            }
+            dispatch(clearValideringsfeil(FAKTUM_KEY_KONTONUMMER));
+        }
+    };
 
-	onChangeCheckboks(event: any): void {
-		const { soknadsdata, behandlingsId } = this.props;
-		if (behandlingsId){
-			const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
-			kontonummer.harIkkeKonto = !kontonummer.harIkkeKonto;
-			if (kontonummer.harIkkeKonto) {
-				this.props.clearValideringsfeil(FAKTUM_KEY_KONTONUMMER);
-				kontonummer.brukerutfyltVerdi = "";
-			}
-			this.props.oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer);
-			this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer);
-			event.preventDefault();
-		}
-	}
+    const vaskKontonummerVerdi = (kontonummer: Kontonummer) => {
+        const kontonummerClone = {...kontonummer};
+        if (
+            kontonummerClone.brukerutfyltVerdi !== null &&
+            kontonummerClone.brukerutfyltVerdi.length > 1
+        ) {
+            kontonummerClone.brukerutfyltVerdi = kontonummerClone.brukerutfyltVerdi.replace(
+                /\D/g,
+                ""
+            );
+        }
+        return kontonummerClone;
+    };
 
-	vaskKontonummerVerdi(kontonummer: Kontonummer) {
-		const kontonummerClone = {...kontonummer};
-		if (kontonummerClone.brukerutfyltVerdi !== null && kontonummerClone.brukerutfyltVerdi.length > 1) {
-			kontonummerClone.brukerutfyltVerdi = kontonummerClone.brukerutfyltVerdi.replace(/\D/g, "");
-		}
-		return kontonummerClone;
-	}
+    const onChangeInput = (brukerutfyltVerdi: string) => {
+        dispatch(clearValideringsfeil(FAKTUM_KEY_KONTONUMMER));
+        const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
+        kontonummer.brukerutfyltVerdi = brukerutfyltVerdi;
+        dispatch(
+            oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer)
+        );
+    };
 
-	render() {
-		const { intl, soknadsdata } = this.props;
-		const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
-		const endreLabel: string = intl.formatMessage({id: "kontakt.system.kontonummer.endreknapp.label"});
-		const avbrytLabel: string = intl.formatMessage({id: "systeminfo.avbrytendringknapp.label"});
-		const inputVerdi: string = kontonummer && kontonummer.brukerutfyltVerdi ? kontonummer.brukerutfyltVerdi : "";
-		const faktumKeyKontonummerId: string = replaceDotWithUnderscore(FAKTUM_KEY_KONTONUMMER);
-		let infotekst: string = intl.formatMessage({ id: "kontakt.system.personalia.infotekst.tekst" });
+    const onChangeCheckboks = (event: any): void => {
+        if (behandlingsId) {
+            const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
+            kontonummer.harIkkeKonto = !kontonummer.harIkkeKonto;
+            if (kontonummer.harIkkeKonto) {
+                dispatch(clearValideringsfeil(FAKTUM_KEY_KONTONUMMER));
+                kontonummer.brukerutfyltVerdi = "";
+            }
+            dispatch(
+                oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer)
+            );
+            dispatch(
+                lagreSoknadsdata(
+                    behandlingsId,
+                    SoknadsSti.BANKINFORMASJON,
+                    kontonummer
+                )
+            );
+            event.preventDefault();
+        }
+    };
 
-		if (kontonummer.brukerdefinert) {
-			infotekst = intl.formatMessage({ id: FAKTUM_KEY_KONTONUMMER + ".infotekst.tekst" });
-		}
-		const restStatus = soknadsdata.restStatus.personalia.kontonummer;
-		let oppstartsModus = this.state.oppstartsModus;
-		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
-			oppstartsModus = false;
-		}
-		if(oppstartsModus && this.props.disableLoadingAnimation !== true) {
-			return (
-				<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: undefined, tekst: undefined } }}>
-					<TextPlaceholder lines={3}/>
-				</Sporsmal>
-			);
-		}
+    const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
+    const endreLabel: string = intl.formatMessage({
+        id: "kontakt.system.kontonummer.endreknapp.label",
+    });
+    const avbrytLabel: string = intl.formatMessage({
+        id: "systeminfo.avbrytendringknapp.label",
+    });
+    const inputVerdi: string =
+        kontonummer && kontonummer.brukerutfyltVerdi
+            ? kontonummer.brukerutfyltVerdi
+            : "";
+    const faktumKeyKontonummerId: string = replaceDotWithUnderscore(
+        FAKTUM_KEY_KONTONUMMER
+    );
+    let infotekst: string = intl.formatMessage({
+        id: "kontakt.system.personalia.infotekst.tekst",
+    });
 
-		switch(kontonummer.systemverdi){
-			case null: {
-				return (
-					<Sporsmal tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: undefined, tekst: infotekst } }}>
-						<div>
-							<InputEnhanced
-								faktumKey={FAKTUM_KEY_KONTONUMMER}
-								id={faktumKeyKontonummerId}
-								className={"input--xxl faktumInput "}
-								disabled={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : undefined}
-								verdi={inputVerdi}
-								required={false}
-								onChange={(input: string) => this.onChangeInput(input)}
-								onBlur={() => this.onBlur()}
-								maxLength={13}
-								bredde={"S"}
-							/>
-							<div
-								className={"inputPanel " + (kontonummer.harIkkeKonto ? " inputPanel__checked" : " ")}
-								onClick={(event: any) => this.onChangeCheckboks(event)}
-							>
-								<Checkbox
-									id="kontakt_kontonummer_har_ikke_checkbox"
-									name="kontakt_kontonummer_har_ikke_checkbox"
-									checked={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : undefined}
-									onChange={(event: any) => this.onChangeCheckboks(event)}
-									label={
-										<div>
-											{intl.formatHTMLMessage({ id: FAKTUM_KEY_KONTONUMMER + ".harikke" })}
-										</div>
-									}
-								/>
-							</div>
-						</div>
-					</Sporsmal>
-				);
-			}
-			default: {
-				const faktumKeyFormatted = FAKTUM_KEY_KONTONUMMER.replace(/\./g, "_");
-				return (
-					<Sporsmal
-						faktumKey={ FAKTUM_KEY_KONTONUMMER }
-						tekster={{ sporsmal: "Kontonummer", infotekst: { tittel: undefined, tekst: infotekst } }}
-					>
-						<SysteminfoMedSkjema
-							skjemaErSynlig={kontonummer.brukerdefinert}
-							onVisSkjema={() => this.endreKontoBrukerdefinert(true)}
-							onSkjulSkjema={() => this.endreKontoBrukerdefinert(false)}
-							endreLabel={endreLabel}
-							avbrytLabel={avbrytLabel}
-							focus={false}
-							skjema={(
-								<div id={faktumKeyFormatted}>
-									<InputEnhanced
-										faktumKey={FAKTUM_KEY_KONTONUMMER}
-										id={faktumKeyKontonummerId}
-										className={"input--xxl faktumInput "}
-										disabled={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : undefined}
-										verdi={inputVerdi}
-										required={false}
-										onChange={(input: string) => this.onChangeInput(input)}
-										onBlur={() => this.onBlur()}
-										maxLength={13}
-										bredde={"S"}
-									/>
-									<div
-										className={"inputPanel " + (kontonummer.harIkkeKonto ? " inputPanel__checked" : " ")}
-										onClick={(event: any) => this.onChangeCheckboks(event)}
-									>
-										<Checkbox
-											id="kontakt_kontonummer_har_ikke_checkbox"
-											name="kontakt_kontonummer_har_ikke_checkbox"
-											checked={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : undefined}
-											onChange={(event: any) => this.onChangeCheckboks(event)}
-											label={
-												<div>
-													{intl.formatHTMLMessage({ id: FAKTUM_KEY_KONTONUMMER + ".harikke" })}
-												</div>
-											}
-										/>
-									</div>
-								</div>
-							)}
-						>
-							{!kontonummer.brukerdefinert && (
-								<Detaljeliste>
-									<DetaljelisteElement
-										tittel={
-											intl.formatHTMLMessage({ id: FAKTUM_KEY_KONTONUMMER + ".label" })
-										}
-										verdi={kontonummer.systemverdi}
-									/>
-								</Detaljeliste>
-							)}
-						</SysteminfoMedSkjema>
-					</Sporsmal>
-				);
-			}
-		}
-	}
-}
+    if (kontonummer.brukerdefinert) {
+        infotekst = intl.formatMessage({
+            id: FAKTUM_KEY_KONTONUMMER + ".infotekst.tekst",
+        });
+    }
+    const restStatus = soknadsdata.restStatus.personalia.kontonummer;
+    if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+        setOppstartsModus(false);
+    }
+    if (oppstartsModus) {
+        return (
+            <Sporsmal
+                tekster={{
+                    sporsmal: "Kontonummer",
+                    infotekst: {tittel: undefined, tekst: undefined},
+                }}
+            >
+                <TextPlaceholder lines={3} />
+            </Sporsmal>
+        );
+    }
+
+    switch (kontonummer.systemverdi) {
+        case null: {
+            return (
+                <Sporsmal
+                    tekster={{
+                        sporsmal: "Kontonummer",
+                        infotekst: {tittel: undefined, tekst: infotekst},
+                    }}
+                >
+                    <div>
+                        <InputEnhanced
+                            faktumKey={FAKTUM_KEY_KONTONUMMER}
+                            id={faktumKeyKontonummerId}
+                            className={"input--xxl faktumInput "}
+                            disabled={
+                                kontonummer.harIkkeKonto
+                                    ? kontonummer.harIkkeKonto
+                                    : undefined
+                            }
+                            verdi={inputVerdi}
+                            required={false}
+                            onChange={(input: string) => onChangeInput(input)}
+                            onBlur={() => onBlur()}
+                            maxLength={13}
+                            bredde={"S"}
+                        />
+                        <div
+                            className={
+                                "inputPanel " +
+                                (kontonummer.harIkkeKonto
+                                    ? " inputPanel__checked"
+                                    : " ")
+                            }
+                            onClick={(event: any) => onChangeCheckboks(event)}
+                        >
+                            <Checkbox
+                                id="kontakt_kontonummer_har_ikke_checkbox"
+                                name="kontakt_kontonummer_har_ikke_checkbox"
+                                checked={
+                                    kontonummer.harIkkeKonto
+                                        ? kontonummer.harIkkeKonto
+                                        : undefined
+                                }
+                                onChange={(event: any) =>
+                                    onChangeCheckboks(event)
+                                }
+                                label={
+                                    <div>
+                                        {intl.formatHTMLMessage({
+                                            id:
+                                                FAKTUM_KEY_KONTONUMMER +
+                                                ".harikke",
+                                        })}
+                                    </div>
+                                }
+                            />
+                        </div>
+                    </div>
+                </Sporsmal>
+            );
+        }
+        default: {
+            const faktumKeyFormatted = FAKTUM_KEY_KONTONUMMER.replace(
+                /\./g,
+                "_"
+            );
+            return (
+                <Sporsmal
+                    faktumKey={FAKTUM_KEY_KONTONUMMER}
+                    tekster={{
+                        sporsmal: "Kontonummer",
+                        infotekst: {tittel: undefined, tekst: infotekst},
+                    }}
+                >
+                    <SysteminfoMedSkjema
+                        skjemaErSynlig={kontonummer.brukerdefinert}
+                        onVisSkjema={() => endreKontoBrukerdefinert(true)}
+                        onSkjulSkjema={() => endreKontoBrukerdefinert(false)}
+                        endreLabel={endreLabel}
+                        avbrytLabel={avbrytLabel}
+                        focus={false}
+                        skjema={
+                            <div id={faktumKeyFormatted}>
+                                <InputEnhanced
+                                    faktumKey={FAKTUM_KEY_KONTONUMMER}
+                                    id={faktumKeyKontonummerId}
+                                    className={"input--xxl faktumInput "}
+                                    disabled={
+                                        kontonummer.harIkkeKonto
+                                            ? kontonummer.harIkkeKonto
+                                            : undefined
+                                    }
+                                    verdi={inputVerdi}
+                                    required={false}
+                                    onChange={(input: string) =>
+                                        onChangeInput(input)
+                                    }
+                                    onBlur={() => onBlur()}
+                                    maxLength={13}
+                                    bredde={"S"}
+                                />
+                                <div
+                                    className={
+                                        "inputPanel " +
+                                        (kontonummer.harIkkeKonto
+                                            ? " inputPanel__checked"
+                                            : " ")
+                                    }
+                                    onClick={(event: any) =>
+                                        onChangeCheckboks(event)
+                                    }
+                                >
+                                    <Checkbox
+                                        id="kontakt_kontonummer_har_ikke_checkbox"
+                                        name="kontakt_kontonummer_har_ikke_checkbox"
+                                        checked={
+                                            kontonummer.harIkkeKonto
+                                                ? kontonummer.harIkkeKonto
+                                                : undefined
+                                        }
+                                        onChange={(event: any) =>
+                                            onChangeCheckboks(event)
+                                        }
+                                        label={
+                                            <div>
+                                                {intl.formatHTMLMessage({
+                                                    id:
+                                                        FAKTUM_KEY_KONTONUMMER +
+                                                        ".harikke",
+                                                })}
+                                            </div>
+                                        }
+                                    />
+                                </div>
+                            </div>
+                        }
+                    >
+                        {!kontonummer.brukerdefinert && (
+                            <Detaljeliste>
+                                <DetaljelisteElement
+                                    tittel={intl.formatHTMLMessage({
+                                        id: FAKTUM_KEY_KONTONUMMER + ".label",
+                                    })}
+                                    verdi={kontonummer.systemverdi}
+                                />
+                            </Detaljeliste>
+                        )}
+                    </SysteminfoMedSkjema>
+                </Sporsmal>
+            );
+        }
+    }
+};
 
 export {Bankinformasjon as BankinformasjonView};
 
-export default connectSoknadsdataContainer(injectIntl(Bankinformasjon));
+export default Bankinformasjon;
