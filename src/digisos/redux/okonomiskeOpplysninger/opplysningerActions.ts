@@ -4,39 +4,47 @@ import {
     opplysningerActionTypeKeys,
     OpplysningerBackend,
     Opplysning,
-    OpplysningType
+    OpplysningType,
 } from "./opplysningerTypes";
 import {getOpplysningerUrl} from "./opplysningerUtils";
-import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
+import {loggFeil} from "../navlogger/navloggerActions";
 import {fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {showServerFeil} from "../soknad/soknadActions";
 
-export const gotDataFromBackend = (response: OpplysningerBackend): OpplysningerAction => {
+export const gotDataFromBackend = (
+    response: OpplysningerBackend
+): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND,
-        backendData: response
-    }
+        backendData: response,
+    };
 };
 
-export const updateOpplysning = (opplysning: Opplysning): OpplysningerAction => {
+export const updateOpplysning = (
+    opplysning: Opplysning
+): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.OPPDATER_OPPLYSNING,
-        opplysning
-    }
+        opplysning,
+    };
 };
 
-export const settFilOpplastingPending = (opplysningType: OpplysningType): OpplysningerAction => {
+export const settFilOpplastingPending = (
+    opplysningType: OpplysningType
+): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_PENDING,
         opplysningType,
-    }
+    };
 };
 
-export const settFilOpplastingFerdig = (opplysningType: OpplysningType): OpplysningerAction => {
+export const settFilOpplastingFerdig = (
+    opplysningType: OpplysningType
+): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_FERDIG,
         opplysningType,
-    }
+    };
 };
 
 export function hentOpplysninger(behandlingsId: string) {
@@ -46,14 +54,17 @@ export function hentOpplysninger(behandlingsId: string) {
                 dispatch(gotDataFromBackend(response));
             })
             .catch((reason: any) => {
-                if (reason.message === HttpStatus.UNAUTHORIZED){
-                    dispatch(loggAdvarsel("hentTilgangSaga: " + reason));
-                } else {
-                    dispatch(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));
-                    dispatch(showServerFeil(true));
+                if (reason.message === HttpStatus.UNAUTHORIZED) {
+                    return;
                 }
+                dispatch(
+                    loggFeil(
+                        "Henting av økonomiske opplysninger feilet: " + reason
+                    )
+                );
+                dispatch(showServerFeil(true));
             });
-    }
+    };
 }
 
 export const lagreOpplysningHvisGyldigAction = (
@@ -65,6 +76,6 @@ export const lagreOpplysningHvisGyldigAction = (
         type: opplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG,
         behandlingsId,
         opplysning,
-        feil
-    }
+        feil,
+    };
 };
