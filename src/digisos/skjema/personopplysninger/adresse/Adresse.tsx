@@ -195,20 +195,20 @@ const AdresseView = () => {
     const onVelgSoknadsmottaker = (valgtNavEnhet: NavEnhet) => {
         if (behandlingsId) {
             valgtNavEnhet.valgt = true;
-            lagreSoknadsdata(
+            dispatch(lagreSoknadsdata(
                 behandlingsId,
                 SoknadsSti.NAV_ENHETER,
                 valgtNavEnhet
-            );
+            ));
 
             const navEnheter = soknadsdata.personalia.navEnheter;
             navEnheter.map((navEnhet: NavEnhet) => {
                 if (navEnhet.enhetsnavn === valgtNavEnhet.enhetsnavn) {
                     navEnhet.valgt = true;
-                    oppdaterSoknadsdataSti(
+                    dispatch(oppdaterSoknadsdataSti(
                         SoknadsSti.VALGT_NAV_ENHET,
                         navEnhet
-                    );
+                    ));
                 } else {
                     navEnhet.valgt = false;
                 }
