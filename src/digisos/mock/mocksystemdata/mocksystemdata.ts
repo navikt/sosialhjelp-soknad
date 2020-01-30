@@ -73,91 +73,62 @@ export function settBankkontonummer(bankkontonummer: string) {
     }
 }
 
-export function settArbeidsforholdMedArbeidsgivernummer(id: string, startDato: string, sluttDato: string, stillingsProsent: string, arbeidsgiverNummer: string, arbeidsgiverNavn: string) {
-    const nyttArbeidsForholdMedArbeidsgivernummer = {
-        "arbeidsforholdIDnav": "",
-        "ansettelsesPeriode": {
+export function settArbeidsforholdArbeidsgiverPerson(id: string, startDato: string, sluttDato: string, stillingsProsent: string, ident: string) {
+    const nyttArbeidsForholdArbeidsgiverPerson = {
+        "navArbeidsforholdId": "",
+        "ansettelsesperiode": {
             "periode": {
                 "fom": "",
                 "tom": ""
             }
         },
-        "arbeidsavtale": [
-            {
-                "stillingsprosent": ""
-            }
-        ],
-        "arbeidsgiver": {
-            "arbeidsgivernummer": "",
-            "navn": ""
-        }
-    };
-
-    nyttArbeidsForholdMedArbeidsgivernummer.arbeidsforholdIDnav = id;
-    nyttArbeidsForholdMedArbeidsgivernummer.ansettelsesPeriode.periode.fom = startDato;
-    nyttArbeidsForholdMedArbeidsgivernummer.ansettelsesPeriode.periode.tom = sluttDato;
-    nyttArbeidsForholdMedArbeidsgivernummer.arbeidsavtale[0].stillingsprosent = stillingsProsent;
-    nyttArbeidsForholdMedArbeidsgivernummer.arbeidsgiver.arbeidsgivernummer = arbeidsgiverNummer;
-    nyttArbeidsForholdMedArbeidsgivernummer.arbeidsgiver.navn = arbeidsgiverNavn;
-
-    // @ts-ignore
-    arbeid[ARBEIDSFORHOLD].push(nyttArbeidsForholdMedArbeidsgivernummer);
-}
-
-export function settArbeidsforholdMedIdent(id: string, startDato: string, sluttDato: string, stillingsProsent: string, ident: string) {
-    const nyttArbeidsForholdMedIdent = {
-        "arbeidsforholdIDnav": "",
-        "ansettelsesPeriode": {
-            "periode": {
-                "fom": "",
-                "tom": ""
-            }
-        },
-        "arbeidsavtale": [{
+        "arbeidsavtaler": [{
             "stillingsprosent": ""
         }],
         "arbeidsgiver": {
-            "ident": {
-                "ident": ""
-            }
+            "type": "",
+            "offentligIdent": ""
         }
     };
 
-    nyttArbeidsForholdMedIdent.arbeidsforholdIDnav = id;
-    nyttArbeidsForholdMedIdent.ansettelsesPeriode.periode.fom = startDato;
-    nyttArbeidsForholdMedIdent.ansettelsesPeriode.periode.tom = sluttDato;
-    nyttArbeidsForholdMedIdent.arbeidsavtale[0].stillingsprosent = stillingsProsent;
-    nyttArbeidsForholdMedIdent.arbeidsgiver.ident.ident = ident;
+    nyttArbeidsForholdArbeidsgiverPerson.navArbeidsforholdId = id;
+    nyttArbeidsForholdArbeidsgiverPerson.ansettelsesperiode.periode.fom = startDato;
+    nyttArbeidsForholdArbeidsgiverPerson.ansettelsesperiode.periode.tom = sluttDato;
+    nyttArbeidsForholdArbeidsgiverPerson.arbeidsavtaler[0].stillingsprosent = stillingsProsent;
+    nyttArbeidsForholdArbeidsgiverPerson.arbeidsgiver.type = "Person";
+    nyttArbeidsForholdArbeidsgiverPerson.arbeidsgiver.offentligIdent = ident;
 
     // @ts-ignore
-    arbeid[ARBEIDSFORHOLD].push(nyttArbeidsForholdMedIdent);
+    arbeid[ARBEIDSFORHOLD].push(nyttArbeidsForholdArbeidsgiverPerson);
 }
 
-export function settArbeidsforholdMedOrganisasjonsnummer(id: string, startDato: string, sluttDato: string, stillingsProsent: string, orgnummer: string) {
-    const nyttArbeidsForholdMedOrganisasjon = {
-        "arbeidsforholdIDnav": "",
-        "ansettelsesPeriode": {
+export function settArbeidsforholdArbeidsgiverOrganisasjon(id: string, startDato: string, sluttDato: string, stillingsProsent: string, orgnummer: string) {
+    const nyttArbeidsForholdArbeidsgiverOrganisasjon = {
+        "navArbeidsforholdId": "",
+        "ansettelsesperiode": {
             "periode": {
                 "fom": "",
                 "tom": ""
             }
         },
-        "arbeidsavtale": [{
+        "arbeidsavtaler": [{
             "stillingsprosent": ""
         }],
         "arbeidsgiver": {
-            "orgnummer": ""
+            "type": "",
+            "organisasjonsnummer": ""
         }
     };
 
-    nyttArbeidsForholdMedOrganisasjon.arbeidsforholdIDnav = id;
-    nyttArbeidsForholdMedOrganisasjon.ansettelsesPeriode.periode.fom = startDato;
-    nyttArbeidsForholdMedOrganisasjon.ansettelsesPeriode.periode.tom = sluttDato;
-    nyttArbeidsForholdMedOrganisasjon.arbeidsavtale[0].stillingsprosent = stillingsProsent;
-    nyttArbeidsForholdMedOrganisasjon.arbeidsgiver.orgnummer = orgnummer;
+    nyttArbeidsForholdArbeidsgiverOrganisasjon.navArbeidsforholdId = id;
+    nyttArbeidsForholdArbeidsgiverOrganisasjon.ansettelsesperiode.periode.fom = startDato;
+    nyttArbeidsForholdArbeidsgiverOrganisasjon.ansettelsesperiode.periode.tom = sluttDato;
+    nyttArbeidsForholdArbeidsgiverOrganisasjon.arbeidsavtaler[0].stillingsprosent = stillingsProsent;
+    nyttArbeidsForholdArbeidsgiverOrganisasjon.arbeidsgiver.type = "Organisasjon";
+    nyttArbeidsForholdArbeidsgiverOrganisasjon.arbeidsgiver.organisasjonsnummer = orgnummer;
 
     // @ts-ignore
-    arbeid[ARBEIDSFORHOLD].push(nyttArbeidsForholdMedOrganisasjon);
+    arbeid[ARBEIDSFORHOLD].push(nyttArbeidsForholdArbeidsgiverOrganisasjon);
 }
 
 export function clearArbeidsforhold() {
@@ -167,9 +138,9 @@ export function clearArbeidsforhold() {
 export function settOrganisasjon(orgnummer: any, navn: any) {
     organisasjon = organisasjonJSON;
     const nyOrganisasjon = nyOrganisasjonJSON;
-    nyOrganisasjon.orgnummer = orgnummer;
+    nyOrganisasjon.organisasjonsnummer = orgnummer;
     // @ts-ignore
-    nyOrganisasjon.navn.navnelinje = [navn];
+    nyOrganisasjon.navn.navnelinje1 = navn;
 
     // @ts-ignore
     organisasjon[ORGANISASJON] = nyOrganisasjon;

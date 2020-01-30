@@ -1,10 +1,10 @@
 export const nyOrganisasjonJSON = {
-    "orgnummer": null,
+    "organisasjonsnummer": "",
     "navn": {
-        "navnelinje": []
-    },
-    "organisasjonDetaljer": null,
-    "bestaarAvOrgledd": [],
-    "inngaarIJuridiskEnhet": [],
-    "virksomhetDetaljer": null
+        "navnelinje1": "",
+        "navnelinje2": "",
+        "navnelinje3": "",
+        "navnelinje4": "",
+        "navnelinje5": "",
+    }
 };

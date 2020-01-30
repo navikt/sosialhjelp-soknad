@@ -22,8 +22,7 @@ interface State {
 
 
 export enum ArbeidsforholdType {
-	NAVN = "navn",
-	IDENT = "ident",
+	PERSON = "person",
 	ORGANISASJON  = "organisasjon"
 }
 
@@ -46,12 +45,12 @@ class NyttArbeidsforhold extends React.Component<Props, State> {
 
 		this.state = {
 			isOpened: false,
-			type: ArbeidsforholdType.NAVN,
+			type: ArbeidsforholdType.PERSON,
 			id: "1",
 			startDato: "2018-01-01",
 			sluttDato: "2018-02-01",
 			stillingsProsent: "100",
-			navn: "Historisk arbeidsgiver",
+			navn: "arbeidsgiver-2018",
 			arbeidsgivernummer: "1337",
 			ident: "12345678901",
 			orgnummer: "123"
@@ -93,10 +92,7 @@ class NyttArbeidsforhold extends React.Component<Props, State> {
 							<MockInput label="Stillingsprosent:" onChange={(evt: any) => this.setState({stillingsProsent: evt.target.value})} value={this.state.stillingsProsent}/>
 
 							<Select label='Velg type arbeidsforhold' onChange={(event: any) => this.setState({type: event.target.value})}>
-								<option value={ArbeidsforholdType.NAVN} key={ArbeidsforholdType.NAVN}>
-									Arbeidsgiver med navn og arbeidsgivernummer
-								</option>
-								<option value={ArbeidsforholdType.IDENT} key={ArbeidsforholdType.IDENT}>
+								<option value={ArbeidsforholdType.PERSON} key={ArbeidsforholdType.PERSON}>
 									Arbeidsgiver med ident
 								</option>
 								<option value={ArbeidsforholdType.ORGANISASJON} key={ArbeidsforholdType.ORGANISASJON}>
@@ -104,14 +100,7 @@ class NyttArbeidsforhold extends React.Component<Props, State> {
 								</option>
 							</Select>
 
-							{ this.state.type === ArbeidsforholdType.NAVN &&
-								<div>
-									<MockInput label="Navn:" onChange={(evt: any) => this.setState({navn: evt.target.value})} value={this.state.navn}/>
-									<MockInput label="Arbeidsgivernummer:" onChange={(evt: any) => this.setState({arbeidsgivernummer: evt.target.value})} value={this.state.arbeidsgivernummer}/>
-								</div>
-							}
-
-							{ this.state.type === ArbeidsforholdType.IDENT &&
+							{ this.state.type === ArbeidsforholdType.PERSON &&
 								<div>
 									<MockInput label="Ident:" onChange={(evt: any) => this.setState({ident: evt.target.value})} value={this.state.ident}/>
 								</div>
