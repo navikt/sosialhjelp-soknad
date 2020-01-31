@@ -1,89 +1,84 @@
-import {
-	connectSoknadsdataContainer,
-	SoknadsdataContainerProps
-} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import { FormattedHTMLMessage, injectIntl } from "react-intl";
+import {FormattedHTMLMessage} from "react-intl";
 import * as React from "react";
-import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, { LegendTittleStyle } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import {useDispatch, useSelector} from "react-redux";
+import {useState, useEffect} from "react";
+
+import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
+import Sporsmal, {
+    LegendTittleStyle,
+} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import Barnebidrag from "./Barnebidrag";
 import RegistrerteBarn from "./RegistrerteBarn";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
-import {IntlProps} from "../../../../nav-soknad/utils";
+import {State} from "../../../redux/reducers";
+import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 
-type Props = SoknadsdataContainerProps & IntlProps;
+const ForsorgerPliktView = () => {
+    const [oppstartsModus, setOppstartsModus] = useState(true);
 
-interface State {
-	oppstartsModus: boolean
-}
+    const dispatch = useDispatch();
 
-class ForsorgerPliktView extends React.Component<Props, State> {
+    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const behandlingsId = useSelector(
+        (state: State) => state.soknad.behandlingsId
+    );
 
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-			oppstartsModus: true
-		}
-	}
+    useEffect(() => {
+        if (behandlingsId) {
+            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT));
+        }
+    }, [behandlingsId, dispatch]);
 
-	componentDidMount() {
-		const {behandlingsId} = this.props;
-		if (behandlingsId){
-			this.props.hentSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT);
-		}
-	}
+    useEffect(() => {
+        const restStatus = soknadsdata.restStatus.familie.forsorgerplikt;
+        if (oppstartsModus && restStatus === REST_STATUS.OK) {
+            setOppstartsModus(false);
+        }
+    }, [oppstartsModus, soknadsdata.restStatus.familie.forsorgerplikt]);
 
-	componentWillUpdate(nextProps: Readonly<Props>, nextState: Readonly<State>, nextContext: any) {
-		const restStatus = this.props.soknadsdata.restStatus.familie.forsorgerplikt;
-		if (this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
-			this.setState({oppstartsModus: false});
-		}
-	}
+    const ansvar = soknadsdata.familie.forsorgerplikt.ansvar;
+    const antallBarn = ansvar.length;
+    const restStatus = soknadsdata.restStatus.familie.forsorgerplikt;
+    if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+        setOppstartsModus(false);
+    }
+    if (oppstartsModus) {
+        return (
+            <Sporsmal sprakNokkel="familierelasjon.faktum">
+                <TextPlaceholder style={{marginTop: "1rem"}} />
+            </Sporsmal>
+        );
+    }
+    if (ansvar && antallBarn === 0) {
+        return (
+            <Sporsmal sprakNokkel="familierelasjon.faktum">
+                <p>
+                    <FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn" />
+                </p>
+            </Sporsmal>
+        );
+    }
+    if (ansvar && antallBarn > 0) {
+        return (
+            <Sporsmal
+                sprakNokkel="familierelasjon.faktum"
+                stil="system"
+                legendTittelStyle={LegendTittleStyle.DEFAULT}
+            >
+                <FormattedHTMLMessage
+                    id="familierelasjon.ingress"
+                    values={{antallBarn}}
+                />
+                <SysteminfoMedSkjema>
+                    <RegistrerteBarn />
+                    <Barnebidrag />
+                </SysteminfoMedSkjema>
+            </Sporsmal>
+        );
+    }
+    return <div />;
+};
 
-	render() {
-		const { soknadsdata } = this.props;
-		const ansvar = soknadsdata.familie.forsorgerplikt.ansvar;
-		const antallBarn = ansvar.length;
-		const restStatus = soknadsdata.restStatus.familie.forsorgerplikt;
-		let oppstartsModus = this.state.oppstartsModus;
-		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
-			oppstartsModus = false;
-		}
-		if (oppstartsModus) {
-			return (
-				<Sporsmal sprakNokkel="familierelasjon.faktum">
-					<TextPlaceholder style={{marginTop: "1rem"}}/>
-				</Sporsmal>
-			)
-		}
-		if (ansvar && antallBarn === 0 ) {
-			return (
-				<Sporsmal sprakNokkel="familierelasjon.faktum">
-					<p><FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn"/></p>
-				</Sporsmal>
-			);
-		}
-		if (ansvar && antallBarn > 0) {
-			return (
-				<Sporsmal
-					sprakNokkel="familierelasjon.faktum"
-					stil="system"
-					legendTittelStyle={LegendTittleStyle.DEFAULT}
-				>
-					<FormattedHTMLMessage id="familierelasjon.ingress" values={{ antallBarn }}/>
-					<SysteminfoMedSkjema>
-						<RegistrerteBarn/>
-						<Barnebidrag/>
-					</SysteminfoMedSkjema>
-				</Sporsmal>
-			);
-		}
-		return (
-			<div/>
-		);
-	}
-}
-
-export default connectSoknadsdataContainer(injectIntl(ForsorgerPliktView));
+export default ForsorgerPliktView;

@@ -1,7 +1,11 @@
 import * as React from "react";
 import {injectIntl} from "react-intl";
 import {Feil, Input, InputBredde} from "nav-frontend-skjema";
-import {getInputFaktumTekst, IntlProps, replaceDotWithUnderscore} from "../utils";
+import {
+    getInputFaktumTekst,
+    IntlProps,
+    replaceDotWithUnderscore,
+} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {connect} from "react-redux";
 import {getFeil} from "../utils/enhancedComponentUtils";
@@ -17,7 +21,7 @@ export interface Props {
     onBlur: () => void;
     faktumKey: string;
     required: boolean;
-    feil: Valideringsfeil[]
+    feil: Valideringsfeil[];
 
     disabled?: boolean;
     pattern?: string;
@@ -32,10 +36,10 @@ export interface Props {
     getName?: () => string;
     faktumIndex?: number;
     getFeil?: () => Feil;
+    autoFocus?: boolean;
 }
 
 class InputEnhanced extends React.Component<Props & IntlProps, {}> {
-
     getName(): string {
         return `${this.props.faktumKey}`.replace(/\./g, "_");
     }
@@ -51,15 +55,28 @@ class InputEnhanced extends React.Component<Props & IntlProps, {}> {
             step,
             maxLength = DEFAULT_MAX_LENGTH,
             bredde,
-            feil
+            feil,
+            autoFocus,
         } = this.props;
         const intl = this.props.intl;
         const tekster = getInputFaktumTekst(intl, faktumKey);
-        const feil_: Feil | undefined = getFeil(feil, intl, faktumKey, faktumIndex);
+        const feil_: Feil | undefined = getFeil(
+            feil,
+            intl,
+            faktumKey,
+            faktumIndex
+        );
         return (
             <Input
-                id={this.props.id ? replaceDotWithUnderscore(this.props.id) : faktumKey}
-                className={"input--xxl faktumInput  " + (this.props.className ? this.props.className : "")}
+                id={
+                    this.props.id
+                        ? replaceDotWithUnderscore(this.props.id)
+                        : faktumKey
+                }
+                className={
+                    "input--xxl faktumInput  " +
+                    (this.props.className ? this.props.className : "")
+                }
                 type={type}
                 autoComplete="off"
                 name={this.getName()}
@@ -78,6 +95,7 @@ class InputEnhanced extends React.Component<Props & IntlProps, {}> {
                 noValidate={
                     true /* Unngå at nettleser validerer og evt. fjerner verdien */
                 }
+                autoFocus={autoFocus}
             />
         );
     }
