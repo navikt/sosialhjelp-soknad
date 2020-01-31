@@ -18,7 +18,7 @@ const ArbeidDetaljer: React.FunctionComponent<{ arbeidsforhold: Arbeidsforhold }
 				tittel={<FormattedMessage id="arbeidsforhold.fom.label"/>}
 				verdi={<span>&nbsp;<Dato tidspunkt={fom}/></span>}
 			/>
-			{tom !== "" && (
+			{(tom !== "" && tom !== null) && (
 				<DetaljelisteElement
 					tittel={<FormattedMessage id="arbeidsforhold.tom.label"/>}
 					verdi={<span>&nbsp;<Dato tidspunkt={tom}/></span>}
