@@ -1,156 +1,182 @@
 import * as React from "react";
-import { FormattedMessage, injectIntl } from "react-intl";
-import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
-import Sporsmal, {SporsmalStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import {FormattedMessage, injectIntl, useIntl} from "react-intl";
+import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import Sporsmal, {
+    SporsmalStyle,
+} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import ArbeidDetaljer from "./ArbeidDetaljer";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
-import { maksLengde } from "../../../../nav-soknad/validering/valideringer";
+import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 import {
-	connectSoknadsdataContainer, onEndretValideringsfeil,
-	SoknadsdataContainerProps
+    connectSoknadsdataContainer,
+    onEndretValideringsfeil,
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import { SoknadsSti } from "../../../redux/soknadsdata/soknadsdataReducer";
-import { Arbeidsforhold } from "./arbeidTypes";
+import {
+    SoknadsSti,
+    oppdaterSoknadsdataSti,
+} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {Arbeidsforhold} from "./arbeidTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
-
-type Props = SoknadsdataContainerProps & IntlProps;
+import {useState, useEffect} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {State} from "../../../redux/reducers";
+import {
+    lagreSoknadsdata,
+    hentSoknadsdata,
+} from "../../../redux/soknadsdata/soknadsdataActions";
+import {
+    setValideringsfeil,
+    clearValideringsfeil,
+} from "../../../redux/validering/valideringActions";
 
 const MAX_CHARS = 500;
 const FAKTUM_KEY_KOMMENTARER = "opplysninger.arbeidsituasjon.kommentarer";
 
-interface State {
-	oppstartsModus: boolean;
-}
+const ArbeidView = () => {
+    const [oppstartsModus, setOppstartsModus] = useState(true);
 
-class ArbeidView extends React.Component<Props, State> {
+    const behandlingsId = useSelector(
+        (state: State) => state.soknad.behandlingsId
+    );
+    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const feil = useSelector((state: State) => state.validering.feil);
 
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-			oppstartsModus: true
-		};
-	}
+    const dispatch = useDispatch();
 
-	componentDidMount() {
-		if (this.props.behandlingsId){
-			this.props.hentSoknadsdata(this.props.behandlingsId, SoknadsSti.ARBEID);
-			this.props.clearValideringsfeil(FAKTUM_KEY_KOMMENTARER);
-		}
-	}
+    const intl = useIntl();
 
-	componentWillUpdate() {
-		const { soknadsdata } = this.props;
-		const restStatus = soknadsdata.restStatus.arbeid;
-		if (this.state.oppstartsModus && restStatus === REST_STATUS.OK) {
-			this.setState({ oppstartsModus: false });
-		}
-	}
+    useEffect(() => {
+        if (behandlingsId) {
+            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.ARBEID));
+            dispatch(clearValideringsfeil(FAKTUM_KEY_KOMMENTARER));
+        }
+    }, [behandlingsId, dispatch]);
 
-	onChange(verdi: string) {
-		const { soknadsdata } = this.props;
-		const arbeid = soknadsdata.arbeid;
-		arbeid.kommentarTilArbeidsforhold = verdi;
-		this.props.oppdaterSoknadsdataSti(SoknadsSti.ARBEID, arbeid);
-		this.validerTekstfeltVerdi(verdi, FAKTUM_KEY_KOMMENTARER);
-	}
+    useEffect(() => {
+        const restStatus = soknadsdata.restStatus.arbeid;
+        if (oppstartsModus && restStatus === REST_STATUS.OK) {
+            setOppstartsModus(false);
+        }
+    }, [oppstartsModus, soknadsdata.restStatus.arbeid]);
 
-	lagreHvisGyldig() {
-		const { soknadsdata, behandlingsId } = this.props;
-		const arbeid = soknadsdata.arbeid;
-		const kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
-		const feilkode: ValideringsFeilKode | undefined =
-			this.validerTekstfeltVerdi(
-				kommentarTilArbeidsforhold ? kommentarTilArbeidsforhold : "",
-				FAKTUM_KEY_KOMMENTARER
-			);
-		if (!feilkode && behandlingsId) {
-			this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.ARBEID, arbeid);
-		}
-	}
+    const onChange = (verdi: string) => {
+        const arbeid = soknadsdata.arbeid;
+        arbeid.kommentarTilArbeidsforhold = verdi;
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.ARBEID, arbeid));
+        validerTekstfeltVerdi(verdi, FAKTUM_KEY_KOMMENTARER);
+    };
 
-	validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode | undefined {
-		const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
-		onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
-			if (feilkode){
-				this.props.setValideringsfeil(feilkode, faktumKey);
-			} else {
-				this.props.clearValideringsfeil(faktumKey);
-			}
-		});
-		return feilkode;
-	}
+    const lagreHvisGyldig = () => {
+        const arbeid = soknadsdata.arbeid;
+        const kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
+        const feilkode: ValideringsFeilKode | undefined = validerTekstfeltVerdi(
+            kommentarTilArbeidsforhold ? kommentarTilArbeidsforhold : "",
+            FAKTUM_KEY_KOMMENTARER
+        );
+        if (!feilkode && behandlingsId) {
+            dispatch(
+                lagreSoknadsdata(behandlingsId, SoknadsSti.ARBEID, arbeid)
+            );
+        }
+    };
 
-	render() {
-		const { soknadsdata, intl } = this.props;
-		const arbeid = soknadsdata.arbeid;
-		let alleArbeidsforhold: Arbeidsforhold[] | null = null;
-		let kommentarTilArbeidsforhold = "";
-		const faktumKommentarerId = FAKTUM_KEY_KOMMENTARER.replace(/\./g, "_");
-		if (arbeid) {
-			if (arbeid.kommentarTilArbeidsforhold) {
-				kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
-			}
-			if (arbeid.arbeidsforhold) {
-				alleArbeidsforhold = arbeid.arbeidsforhold;
-			}
-		}
-		let oppstartsModus = this.state.oppstartsModus;
-		const restStatus = soknadsdata.restStatus.arbeid;
-		if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
-			oppstartsModus = false;
-		}
-		const style: SporsmalStyle = "system";
-		if (oppstartsModus) {
-			return (
-				<div className="skjema-sporsmal">
-					<Sporsmal sprakNokkel="arbeidsforhold" stil={style}>
-						<TextPlaceholder lines={6}/>
-					</Sporsmal>
-				</div>
-			)
-		}
-		return (
-			<Sporsmal
-				tekster={getFaktumSporsmalTekst(intl, "arbeidsforhold")}
-				stil="system"
-			>
-				<SysteminfoMedSkjema>
-					<div>
-						<FormattedMessage id="arbeidsforhold.infotekst"/>
-					</div>
-					{(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (
-						<p>
-							<FormattedMessage id="arbeidsforhold.ingen"/>
-						</p>
-					)}
-					{alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
-						<ul className={"arbeidsgiverliste"}>
-							{alleArbeidsforhold.map((arbeidsforhold: Arbeidsforhold, index: any) =>
-								<li key={index} className="arbeidsgiverliste__arbeidsgiver">
-									<ArbeidDetaljer arbeidsforhold={arbeidsforhold} />
-								</li>
-							)}
-						</ul>
-					)}
-					<TextareaEnhanced
-						id={faktumKommentarerId}
-						placeholder={intl.formatMessage({
-							id: "begrunnelse.hvorfor.placeholder"
-						})}
-						onChange={(evt: any) => this.onChange(evt.target.value)}
-						onBlur={() => this.lagreHvisGyldig()}
-						faktumKey={FAKTUM_KEY_KOMMENTARER}
-						maxLength={MAX_CHARS}
-						value={kommentarTilArbeidsforhold ? kommentarTilArbeidsforhold : ""}
-					/>
-				</SysteminfoMedSkjema>
-			</Sporsmal>
-		);
-	}
-}
+    const validerTekstfeltVerdi = (
+        verdi: string,
+        faktumKey: string
+    ): ValideringsFeilKode | undefined => {
+        const feilkode: ValideringsFeilKode | undefined = maksLengde(
+            verdi,
+            MAX_CHARS
+        );
+        onEndretValideringsfeil(feilkode, faktumKey, feil, () => {
+            if (feilkode) {
+                dispatch(setValideringsfeil(feilkode, faktumKey));
+            } else {
+                dispatch(clearValideringsfeil(faktumKey));
+            }
+        });
+        return feilkode;
+    };
+
+    const arbeid = soknadsdata.arbeid;
+    let alleArbeidsforhold: Arbeidsforhold[] | null = null;
+    let kommentarTilArbeidsforhold = "";
+    const faktumKommentarerId = FAKTUM_KEY_KOMMENTARER.replace(/\./g, "_");
+    if (arbeid) {
+        if (arbeid.kommentarTilArbeidsforhold) {
+            kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
+        }
+        if (arbeid.arbeidsforhold) {
+            alleArbeidsforhold = arbeid.arbeidsforhold;
+        }
+    }
+    const restStatus = soknadsdata.restStatus.arbeid;
+    if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+        setOppstartsModus(false);
+    }
+    const style: SporsmalStyle = "system";
+    if (oppstartsModus) {
+        return (
+            <div className="skjema-sporsmal">
+                <Sporsmal sprakNokkel="arbeidsforhold" stil={style}>
+                    <TextPlaceholder lines={6} />
+                </Sporsmal>
+            </div>
+        );
+    }
+    return (
+        <Sporsmal
+            tekster={getFaktumSporsmalTekst(intl, "arbeidsforhold")}
+            stil="system"
+        >
+            <SysteminfoMedSkjema>
+                <div>
+                    <FormattedMessage id="arbeidsforhold.infotekst" />
+                </div>
+                {(alleArbeidsforhold == null ||
+                    alleArbeidsforhold.length === 0) && (
+                    <p>
+                        <FormattedMessage id="arbeidsforhold.ingen" />
+                    </p>
+                )}
+                {alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
+                    <ul className={"arbeidsgiverliste"}>
+                        {alleArbeidsforhold.map(
+                            (arbeidsforhold: Arbeidsforhold, index: any) => (
+                                <li
+                                    key={index}
+                                    className="arbeidsgiverliste__arbeidsgiver"
+                                >
+                                    <ArbeidDetaljer
+                                        arbeidsforhold={arbeidsforhold}
+                                    />
+                                </li>
+                            )
+                        )}
+                    </ul>
+                )}
+                <TextareaEnhanced
+                    id={faktumKommentarerId}
+                    placeholder={intl.formatMessage({
+                        id: "begrunnelse.hvorfor.placeholder",
+                    })}
+                    onChange={(evt: any) => onChange(evt.target.value)}
+                    onBlur={() => lagreHvisGyldig()}
+                    faktumKey={FAKTUM_KEY_KOMMENTARER}
+                    maxLength={MAX_CHARS}
+                    value={
+                        kommentarTilArbeidsforhold
+                            ? kommentarTilArbeidsforhold
+                            : ""
+                    }
+                />
+            </SysteminfoMedSkjema>
+        </Sporsmal>
+    );
+};
 
 export {ArbeidView};
 
