@@ -1,34 +1,47 @@
-import * as React from 'react';
+import * as React from "react";
+import {FormattedHTMLMessage, useIntl} from "react-intl";
 import {
-    connectSoknadsdataContainer,
-    SoknadsdataContainerProps
-} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, injectIntl} from "react-intl";
-import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, IntlProps} from "../../../../nav-soknad/utils";
+    SoknadsSti,
+    oppdaterSoknadsdataSti,
+} from "../../../redux/soknadsdata/soknadsdataReducer";
+import Sporsmal, {
+    LegendTittleStyle,
+} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Boutgifter, BoutgifterKeys} from "./BoutgifterTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
-import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, {
+    InformasjonspanelIkon,
+} from "../../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
+import {useSelector, useDispatch} from "react-redux";
+import {State} from "../../../redux/reducers";
+import {
+    hentSoknadsdata,
+    lagreSoknadsdata,
+} from "../../../redux/soknadsdata/soknadsdataActions";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
-type Props = SoknadsdataContainerProps & IntlProps;
+export const BoutgifterView = () => {
+    const behandlingsId = useSelector(
+        (state: State) => state.soknad.behandlingsId
+    );
+    const soknadsdata = useSelector((state: State) => state.soknadsdata);
 
-export class BoutgifterView extends React.Component<Props, {}> {
+    const dispatch = useDispatch();
 
-    componentDidMount(): void {
-        const {behandlingsId} = this.props;
-        if (behandlingsId){
-            this.props.hentSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER);
+    const intl = useIntl();
+
+    React.useEffect(() => {
+        if (behandlingsId) {
+            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER));
         }
-    }
+    }, [behandlingsId, dispatch]);
 
-    handleClickJaNeiSpsm(verdi: boolean) {
-        const {behandlingsId, soknadsdata} = this.props;
-        if (behandlingsId){
+    const handleClickJaNeiSpsm = (verdi: boolean) => {
+        if (behandlingsId) {
             const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
             boutgifter.bekreftelse = verdi;
             if (!verdi) {
@@ -39,74 +52,104 @@ export class BoutgifterView extends React.Component<Props, {}> {
                 boutgifter.boliglan = false;
                 boutgifter.annet = false;
             }
-            this.props.oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter);
-            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter);
+            dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
+            dispatch(
+                lagreSoknadsdata(
+                    behandlingsId,
+                    SoknadsSti.BOUTGIFTER,
+                    boutgifter
+                )
+            );
         }
-    }
+    };
 
-    handleClickRadio(idToToggle: BoutgifterKeys) {
-        const {behandlingsId, soknadsdata} = this.props;
-        if (behandlingsId){
+    const handleClickRadio = (idToToggle: BoutgifterKeys) => {
+        if (behandlingsId) {
             const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
             boutgifter[idToToggle] = !boutgifter[idToToggle];
-            this.props.oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter);
-            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter);
+            dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
+            dispatch(
+                lagreSoknadsdata(
+                    behandlingsId,
+                    SoknadsSti.BOUTGIFTER,
+                    boutgifter
+                )
+            );
         }
-    }
+    };
 
-    renderCheckBox(navn: BoutgifterKeys, textKey: string) {
-        const {soknadsdata} = this.props;
+    const renderCheckBox = (navn: BoutgifterKeys, textKey: string) => {
         const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
 
         const boutgifterElement: boolean | null = boutgifter[navn];
-        const isChecked: boolean = boutgifterElement ? boutgifterElement : false;
+        const isChecked: boolean = boutgifterElement
+            ? boutgifterElement
+            : false;
 
         return (
             <CheckboxPanel
                 id={"boutgifter_" + navn + "_checkbox"}
                 name={navn}
                 checked={isChecked}
-                label={<FormattedHTMLMessage id={BOUTGIFTER + ".true.type." + textKey}/>}
-                onClick={() => this.handleClickRadio(navn)}
+                label={
+                    <FormattedHTMLMessage
+                        id={BOUTGIFTER + ".true.type." + textKey}
+                    />
+                }
+                onClick={() => handleClickRadio(navn)}
             />
-        )
-    }
+        );
+    };
 
-    render() {
-        const {soknadsdata, intl} = this.props;
-        const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
-        return (
-            <div className="skjema-sporsmal">
-                <JaNeiSporsmal
-                    tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER)}
-                    faktumKey={BOUTGIFTER}
-                    verdi={boutgifter.bekreftelse}
-                    onChange={(verdi: boolean) => this.handleClickJaNeiSpsm(verdi)}
-                    legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+    const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
+    return (
+        <div className="skjema-sporsmal">
+            <JaNeiSporsmal
+                tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER)}
+                faktumKey={BOUTGIFTER}
+                verdi={boutgifter.bekreftelse}
+                onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+            >
+                <Sporsmal
+                    tekster={getFaktumSporsmalTekst(
+                        intl,
+                        BOUTGIFTER + ".true.type"
+                    )}
                 >
-                    <Sporsmal
-                        tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER + ".true.type")}
-                    >
-                        {this.renderCheckBox(BoutgifterKeys.HUSLEIE, BoutgifterKeys.HUSLEIE)}
-                        {this.renderCheckBox(BoutgifterKeys.STROM, BoutgifterKeys.STROM)}
-                        {this.renderCheckBox(BoutgifterKeys.KOMMUNALAVGIFT, BoutgifterKeys.KOMMUNALAVGIFT)}
-                        {this.renderCheckBox(BoutgifterKeys.OPPVARMING, BoutgifterKeys.OPPVARMING)}
-                        {this.renderCheckBox(BoutgifterKeys.BOLIGLAN, BoutgifterKeys.BOLIGLAN)}
-                        {this.renderCheckBox(BoutgifterKeys.ANNET, "andreutgifter")}
-                    </Sporsmal>
-                </JaNeiSporsmal>
-                <Informasjonspanel
-                    synlig={boutgifter && boutgifter.skalViseInfoVedBekreftelse && boutgifter.bekreftelse === true}
-                    ikon={InformasjonspanelIkon.ELLA}
-                    farge={DigisosFarge.VIKTIG}
-                >
-                    <FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
-                </Informasjonspanel>
+                    {renderCheckBox(
+                        BoutgifterKeys.HUSLEIE,
+                        BoutgifterKeys.HUSLEIE
+                    )}
+                    {renderCheckBox(BoutgifterKeys.STROM, BoutgifterKeys.STROM)}
+                    {renderCheckBox(
+                        BoutgifterKeys.KOMMUNALAVGIFT,
+                        BoutgifterKeys.KOMMUNALAVGIFT
+                    )}
+                    {renderCheckBox(
+                        BoutgifterKeys.OPPVARMING,
+                        BoutgifterKeys.OPPVARMING
+                    )}
+                    {renderCheckBox(
+                        BoutgifterKeys.BOLIGLAN,
+                        BoutgifterKeys.BOLIGLAN
+                    )}
+                    {renderCheckBox(BoutgifterKeys.ANNET, "andreutgifter")}
+                </Sporsmal>
+            </JaNeiSporsmal>
+            <Informasjonspanel
+                synlig={
+                    boutgifter &&
+                    boutgifter.skalViseInfoVedBekreftelse &&
+                    boutgifter.bekreftelse === true
+                }
+                ikon={InformasjonspanelIkon.ELLA}
+                farge={DigisosFarge.VIKTIG}
+            >
+                <FormattedHTMLMessage id="informasjon.husbanken.bostotte" />
+            </Informasjonspanel>
+        </div>
+    );
+};
 
-            </div>
-        )
-    }
-}
-
-
-export default connectSoknadsdataContainer(injectIntl(BoutgifterView));
+export default BoutgifterView;
