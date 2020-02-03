@@ -1,13 +1,20 @@
-import * as React from 'react';
+import * as React from "react";
+import {onEndretValideringsfeil} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import {FormattedHTMLMessage, useIntl} from "react-intl";
+import {useState, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+
 import {
-    connectSoknadsdataContainer,
-    onEndretValideringsfeil,
-    SoknadsdataContainerProps
-} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, injectIntl} from "react-intl";
-import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, IntlProps, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
+    SoknadsSti,
+    oppdaterSoknadsdataSti,
+} from "../../../redux/soknadsdata/soknadsdataReducer";
+import Sporsmal, {
+    LegendTittleStyle,
+} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import {
+    getFaktumSporsmalTekst,
+    replaceDotWithUnderscore,
+} from "../../../../nav-soknad/utils";
 import {Formue, FormueId} from "./FormueTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
@@ -16,49 +23,58 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
+import {
+    hentSoknadsdata,
+    lagreSoknadsdata,
+} from "../../../redux/soknadsdata/soknadsdataActions";
+import {State} from "../../../redux/reducers";
+import {
+    setValideringsfeil,
+    clearValideringsfeil,
+} from "../../../redux/validering/valideringActions";
 
 const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
 const FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY = FORMUE + "formue.annet.textarea";
 
-type Props = SoknadsdataContainerProps & IntlProps;
+export const FormueView = () => {
+    const [oppstartsModus, setOppstartsModus] = useState(true);
 
-interface State {
-    oppstartsModus: boolean
-}
+    const dispatch = useDispatch();
 
-export class FormueView extends React.Component<Props, State> {
+    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const behandlingsId = useSelector(
+        (state: State) => state.soknad.behandlingsId
+    );
+    const feil = useSelector((state: State) => state.validering.feil);
 
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            oppstartsModus: true
+    const intl = useIntl();
+
+    useEffect(() => {
+        if (behandlingsId) {
+            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.FORMUE));
         }
-    }
+    }, [behandlingsId, dispatch]);
 
-    componentDidMount() {
-        const {behandlingsId} = this.props;
-        if (behandlingsId){
-            this.props.hentSoknadsdata(behandlingsId, SoknadsSti.FORMUE);
+    useEffect(() => {
+        if (
+            oppstartsModus &&
+            soknadsdata.restStatus.inntekt.formue === REST_STATUS.OK
+        ) {
+            setOppstartsModus(false);
         }
-    }
+    }, [oppstartsModus, soknadsdata.restStatus.inntekt.formue]);
 
-    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
-        if (this.state.oppstartsModus) {
-            if (this.props.soknadsdata.restStatus.inntekt.formue === REST_STATUS.OK) {
-                this.setState({oppstartsModus: false});
-            }
-        }
-    }
-
-    handleClickCheckbox(idToToggle: FormueId) {
-        const {behandlingsId, soknadsdata} = this.props;
+    const handleClickCheckbox = (idToToggle: FormueId) => {
         const restStatus = soknadsdata.restStatus.inntekt.formue;
-        if (!this.state.oppstartsModus && restStatus === REST_STATUS.OK && behandlingsId) {
+        if (oppstartsModus && restStatus === REST_STATUS.OK && behandlingsId) {
             const formue: Formue = soknadsdata.inntekt.formue;
 
             let formueElement: boolean | string = formue[idToToggle];
-            if (typeof formueElement === 'boolean' && typeof formue[idToToggle] === 'boolean'){
+            if (
+                typeof formueElement === "boolean" &&
+                typeof formue[idToToggle] === "boolean"
+            ) {
                 // @ts-ignore
                 formue[idToToggle] = !formueElement;
             }
@@ -66,102 +82,115 @@ export class FormueView extends React.Component<Props, State> {
             if (formue && !formue.annet) {
                 formue.beskrivelseAvAnnet = "";
             }
-            this.props.oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue);
-            this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue);
+            dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue));
+            dispatch(
+                lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue)
+            );
         }
-    }
+    };
 
-    onChangeAnnet(value: string) {
-        const {soknadsdata} = this.props;
+    const onChangeAnnet = (value: string) => {
         const formue: Formue | undefined = soknadsdata.inntekt.formue;
-        if (formue){
+        if (formue) {
             formue.beskrivelseAvAnnet = value;
-            this.props.oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue);
+            dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue));
         }
-        this.validerTekstfeltVerdi(value, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY)
-    }
+        validerTekstfeltVerdi(value, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY);
+    };
 
-    onBlurTekstfeltAnnet() {
-        const {behandlingsId, soknadsdata} = this.props;
+    const onBlurTekstfeltAnnet = () => {
         const formue: Formue | undefined = soknadsdata.inntekt.formue;
-        if (formue && behandlingsId){
+        if (formue && behandlingsId) {
             const beskrivelseAvAnnet = formue.beskrivelseAvAnnet;
-            const feilmeldingAnnet: ValideringsFeilKode | undefined = this.validerTekstfeltVerdi(beskrivelseAvAnnet, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY);
+            const feilmeldingAnnet:
+                | ValideringsFeilKode
+                | undefined = validerTekstfeltVerdi(
+                beskrivelseAvAnnet,
+                FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY
+            );
             if (!feilmeldingAnnet) {
-                this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue);
+                dispatch(
+                    lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue)
+                );
             }
         }
-    }
+    };
 
-    validerTekstfeltVerdi(verdi: string, faktumKey: string): ValideringsFeilKode | undefined {
-        const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
-        onEndretValideringsfeil(feilkode, faktumKey, this.props.feil, () => {
-            (feilkode) ?
-                this.props.setValideringsfeil(feilkode, faktumKey) :
-                this.props.clearValideringsfeil(faktumKey);
+    const validerTekstfeltVerdi = (
+        verdi: string,
+        faktumKey: string
+    ): ValideringsFeilKode | undefined => {
+        const feilkode: ValideringsFeilKode | undefined = maksLengde(
+            verdi,
+            MAX_CHARS
+        );
+        onEndretValideringsfeil(feilkode, faktumKey, feil, () => {
+            feilkode
+                ? dispatch(setValideringsfeil(feilkode, faktumKey))
+                : dispatch(clearValideringsfeil(faktumKey));
         });
         return feilkode;
-    }
+    };
 
-    renderCheckBox(navn: FormueId) {
-        const {soknadsdata} = this.props;
+    const renderCheckBox = (navn: FormueId) => {
         const formue: Formue = soknadsdata.inntekt.formue;
         let label: React.ReactNode;
-        let oppstartsModus = this.state.oppstartsModus;
         const restStatus = soknadsdata.restStatus.inntekt.formue;
         if (oppstartsModus && restStatus === REST_STATUS.OK) {
-            oppstartsModus = false;
+            setOppstartsModus(false);
         }
         if (oppstartsModus) {
-            label = <TextPlaceholder lines={1} style={{marginTop: "0.2rem"}}/>
+            label = <TextPlaceholder lines={1} style={{marginTop: "0.2rem"}} />;
         } else {
-            label = <FormattedHTMLMessage id={FORMUE + ".true.type." + navn}/>
+            label = <FormattedHTMLMessage id={FORMUE + ".true.type." + navn} />;
         }
 
         return (
             <CheckboxPanel
                 id={"formue_" + navn + "_checkbox"}
                 name={navn}
-                checked={!!(formue[navn])}
+                checked={!!formue[navn]}
                 label={label}
-                onClick={() => this.handleClickCheckbox(navn)}
+                onClick={() => handleClickCheckbox(navn)}
             />
-        )
-    }
+        );
+    };
 
-    render() {
-        const {soknadsdata, intl} = this.props;
-        const formue: Formue | undefined = soknadsdata.inntekt.formue;
-        return (
-            <Sporsmal
-                tekster={getFaktumSporsmalTekst(intl, FORMUE + ".true.type")}
-                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+    const formue: Formue | undefined = soknadsdata.inntekt.formue;
+    return (
+        <Sporsmal
+            tekster={getFaktumSporsmalTekst(intl, FORMUE + ".true.type")}
+            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+        >
+            {renderCheckBox(FormueId.BRUKSKONTO)}
+            {renderCheckBox(FormueId.SPAREKONTO)}
+            {renderCheckBox(FormueId.BSU)}
+            {renderCheckBox(FormueId.LIVSFORSIKRING)}
+            {renderCheckBox(FormueId.VERDIPAPIRER)}
+            {renderCheckBox(FormueId.ANNET)}
+            <NivaTreSkjema
+                visible={formue !== undefined && formue.annet}
+                size="small"
             >
-                {this.renderCheckBox(FormueId.BRUKSKONTO)}
-                {this.renderCheckBox(FormueId.SPAREKONTO )}
-                {this.renderCheckBox(FormueId.BSU)}
-                {this.renderCheckBox(FormueId.LIVSFORSIKRING)}
-                {this.renderCheckBox(FormueId.VERDIPAPIRER)}
-                {this.renderCheckBox(FormueId.ANNET)}
-                <NivaTreSkjema
-                    visible={formue !== undefined && formue.annet}
-                    size="small"
-                >
-                    <TextareaEnhanced
-                        id={replaceDotWithUnderscore(FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY)}
-                        placeholder=""
-                        onChange={(evt: any) => this.onChangeAnnet(evt.target.value)}
-                        onBlur={() => this.onBlurTekstfeltAnnet()}
-                        faktumKey={FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY}
-                        labelId={FORMUE + ".true.type.annet.true.beskrivelse.label"}
-                        maxLength={MAX_CHARS}
-                        value={formue && formue.beskrivelseAvAnnet ? formue.beskrivelseAvAnnet : ""}
-                    />
-                </NivaTreSkjema>
-            </Sporsmal>
-        )
-    }
-}
+                <TextareaEnhanced
+                    id={replaceDotWithUnderscore(
+                        FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY
+                    )}
+                    placeholder=""
+                    onChange={(evt: any) => onChangeAnnet(evt.target.value)}
+                    onBlur={() => onBlurTekstfeltAnnet()}
+                    faktumKey={FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY}
+                    labelId={FORMUE + ".true.type.annet.true.beskrivelse.label"}
+                    maxLength={MAX_CHARS}
+                    value={
+                        formue && formue.beskrivelseAvAnnet
+                            ? formue.beskrivelseAvAnnet
+                            : ""
+                    }
+                />
+            </NivaTreSkjema>
+        </Sporsmal>
+    );
+};
 
-
-export default connectSoknadsdataContainer(injectIntl(FormueView));
+export default FormueView;
