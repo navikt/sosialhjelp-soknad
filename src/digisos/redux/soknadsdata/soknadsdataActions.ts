@@ -9,7 +9,7 @@ import {
     settRestStatus,
     SoknadsdataType,
 } from "./soknadsdataReducer";
-import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
+import {loggFeil} from "../navlogger/navloggerActions";
 import {REST_STATUS} from "../soknad/soknadTypes";
 import {showServerFeil} from "../soknad/soknadActions";
 
@@ -23,28 +23,16 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
         dispatch(settRestStatus(sti, REST_STATUS.PENDING));
         fetchToJson(soknadsdataUrl(brukerBehandlingId, sti))
             .then((response: any) => {
-                // For å simulere ulike typer testdata fra server, kan man her skrive kode som:
-                // if(sti === SoknadsSti.FORSORGERPLIKT){
-                // 	response = {
-                // 		ansvar: [],
-                // 		barnebidrag: null,
-                // 		harForsorgerplikt: false
-                // 	}
-                // }
-
                 dispatch(oppdaterSoknadsdataSti(sti, response));
                 dispatch(settRestStatus(sti, REST_STATUS.OK));
             })
             .catch((reason: any) => {
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
-                    dispatch(loggAdvarsel("hentSoknadsdata: " + reason));
-                } else {
-                    dispatch(
-                        loggFeil("Henting av soknadsdata feilet: " + reason)
-                    );
-                    dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-                    dispatch(showServerFeil(true));
+                    return;
                 }
+                dispatch(loggFeil("Henting av soknadsdata feilet: " + reason));
+                dispatch(settRestStatus(sti, REST_STATUS.FEILET));
+                dispatch(showServerFeil(true));
             });
     };
 }
@@ -64,23 +52,16 @@ export function lagreSoknadsdata(
             .then((response: any) => {
                 dispatch(settRestStatus(sti, REST_STATUS.OK));
                 if (responseHandler) {
-                    // For å simulere response fra adresse, kan man skrive:
-                    // if (sti === SoknadsSti.ADRESSER) {
-                    // 	response = [{"orgnr":null,"enhetsnavn":"NAV Ålesund","kommunenavn":"Ålesund","valgt":false}];
-                    // }
                     responseHandler(response);
                 }
             })
             .catch(reason => {
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
-                    dispatch(loggAdvarsel("lagreSoknadsdata: " + reason));
-                } else {
-                    dispatch(
-                        loggFeil("Lagring av soknadsdata feilet: " + reason)
-                    );
-                    dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-                    dispatch(showServerFeil(true));
+                    return;
                 }
+                dispatch(loggFeil("Lagring av soknadsdata feilet: " + reason));
+                dispatch(settRestStatus(sti, REST_STATUS.FEILET));
+                dispatch(showServerFeil(true));
             });
     };
 }

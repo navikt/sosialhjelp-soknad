@@ -1,32 +1,37 @@
 import {
     LagreOpplysningHvisGyldig,
-    opplysningerActionTypeKeys, OpplysningSpc
+    opplysningerActionTypeKeys,
+    OpplysningSpc,
 } from "./opplysningerTypes";
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {
-    getOpplysningerUrl, getSpcForOpplysning,
+    getOpplysningerUrl,
+    getSpcForOpplysning,
     transformToBackendOpplysning,
 } from "./opplysningerUtils";
 import {fetchPut, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {updateOpplysning} from "./opplysningerActions";
-import {loggAdvarsel, loggFeil} from "../navlogger/navloggerActions";
+import {loggFeil} from "../navlogger/navloggerActions";
 import {Valideringsfeil} from "../validering/valideringActionTypes";
 import {showServerFeil} from "../soknad/soknadActions";
 
-
-export function getFeilForOpplysning(feil: Valideringsfeil[], opplysningTextKey: string) {
+export function getFeilForOpplysning(
+    feil: Valideringsfeil[],
+    opplysningTextKey: string
+) {
     return feil.filter((f: Valideringsfeil) => {
         return f.faktumKey.indexOf(opplysningTextKey) > -1;
     });
 }
 
 function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
-
     const {behandlingsId, opplysning, feil} = action;
-    const opplysningerSpc: OpplysningSpc | undefined = getSpcForOpplysning(opplysning.type);
+    const opplysningerSpc: OpplysningSpc | undefined = getSpcForOpplysning(
+        opplysning.type
+    );
 
-    if (opplysningerSpc){
+    if (opplysningerSpc) {
         const opplysningKey: string = opplysningerSpc.textKey;
         const feilForOpplysning = getFeilForOpplysning(feil, opplysningKey);
 
@@ -40,21 +45,30 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
                     JSON.stringify(transformToBackendOpplysning(opplysning))
                 );
             } catch (reason) {
-                if (reason.message === HttpStatus.UNAUTHORIZED){
-                    yield put(loggAdvarsel("hentTilgangSaga: " + reason));
-                } else {
-                    yield put(loggFeil("Lagring av økonomisk opplysning feilet. Reason: " + reason));
-                    yield put(showServerFeil(true));
+                if (reason.message === HttpStatus.UNAUTHORIZED) {
+                    return;
                 }
+                yield put(
+                    loggFeil(
+                        "Lagring av økonomisk opplysning feilet. Reason: " +
+                            reason
+                    )
+                );
+                yield put(showServerFeil(true));
             }
         }
     } else {
-        yield put(loggFeil("Ukjent opplysningstype mottatt. Type: " + opplysning.type))
+        yield put(
+            loggFeil("Ukjent opplysningstype mottatt. Type: " + opplysning.type)
+        );
     }
 }
 
 function* opplysningerSaga(): SagaIterator {
-    yield takeEvery(opplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG, lagreOpplysningHvisGyldigSaga);
+    yield takeEvery(
+        opplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG,
+        lagreOpplysningHvisGyldigSaga
+    );
 }
 
 export default opplysningerSaga;
