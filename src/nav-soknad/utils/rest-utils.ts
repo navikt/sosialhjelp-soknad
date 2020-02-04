@@ -4,8 +4,6 @@ import {
     API_CONTEXT_PATH_WITH_ACCESS_TOKEN,
     CONTEXT_PATH, GCP_API_APP_NAME, GCP_APP_NAME,
     getRedirectPathname,
-    HEROKU_API_MASTER_APP_NAME,
-    HEROKU_MASTER_APP_NAME,
     INNSYN_CONTEXT_PATH
 } from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
@@ -35,9 +33,6 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
     }
     if (window.location.origin.indexOf("nais.oera") >= 0) {
         return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${apiContextPath}/`;
-    }
-    if (window.location.origin.indexOf("heroku") >= 0) {
-        return window.location.origin.replace(`${HEROKU_MASTER_APP_NAME}`, `${HEROKU_API_MASTER_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
     }
     if (window.location.origin.indexOf("dev-nav.no") >= 0 || window.location.origin.indexOf("labs.nais.io") >= 0) {
         if (window.location.origin.indexOf("digisos.labs.nais.io") >= 0) {
@@ -71,7 +66,7 @@ export function getAbsoluteApiUrlRegex(pathname: string, withAccessToken?: boole
 }
 
 function determineCredentialsParameter() {
-    return window.location.origin.indexOf("nais.oera") || erDev() || "heroku" ? "include" : "same-origin";
+    return window.location.origin.indexOf("nais.oera") || erDev() ? "include" : "same-origin";
 }
 
 export function getRedirectPath(): string {

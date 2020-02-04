@@ -20,7 +20,6 @@ export function erMockMiljoEllerDev(): boolean {
 		url.indexOf("soknadsosialhjelp-t1.nais.oera") > 0 ||
 		url.indexOf(".dev-nav.no") > 0 ||
 		url.indexOf(".labs.nais.io") > 0 || // Fanger også digisos.labs.nais.io
-		url.indexOf("heroku") > 0 ||
 		url.indexOf("digisos-test.com") > 0
 	);
 }
