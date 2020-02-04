@@ -67,7 +67,7 @@ export const FormueView = () => {
 
     const handleClickCheckbox = (idToToggle: FormueId) => {
         const restStatus = soknadsdata.restStatus.inntekt.formue;
-        if (oppstartsModus && restStatus === REST_STATUS.OK && behandlingsId) {
+        if (!oppstartsModus && restStatus === REST_STATUS.OK && behandlingsId) {
             const formue: Formue = soknadsdata.inntekt.formue;
 
             let formueElement: boolean | string = formue[idToToggle];
