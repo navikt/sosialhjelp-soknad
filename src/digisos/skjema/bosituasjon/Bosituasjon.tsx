@@ -1,18 +1,32 @@
 import * as React from "react";
-import {injectIntl} from "react-intl";
-import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, IntlProps} from "../../../nav-soknad/utils";
+import {useIntl} from "react-intl";
+import {useEffect} from "react";
+import {useSelector, useDispatch} from "react-redux";
+
+import Sporsmal, {
+    LegendTittleStyle,
+} from "../../../nav-soknad/components/sporsmal/Sporsmal";
+import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import {Bosituasjon} from "./bosituasjonTypes";
-import {SoknadsSti} from "../../redux/soknadsdata/soknadsdataReducer";
+import {
+    SoknadsSti,
+    oppdaterSoknadsdataSti,
+} from "../../redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
-import {
-    connectSoknadsdataContainer, onEndretValideringsfeil,
-    SoknadsdataContainerProps
-} from "../../redux/soknadsdata/soknadsdataContainerUtils";
+import {onEndretValideringsfeil} from "../../redux/soknadsdata/soknadsdataContainerUtils";
 import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
+import {State} from "../../redux/reducers";
+import {
+    hentSoknadsdata,
+    lagreSoknadsdata,
+} from "../../redux/soknadsdata/soknadsdataActions";
+import {
+    clearValideringsfeil,
+    setValideringsfeil,
+} from "../../redux/validering/valideringActions";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -21,7 +35,7 @@ enum Bosituasjonsvalg {
     leier = "leier",
     kommunal = "kommunal",
     ingen = "ingen",
-    annet = "annet"
+    annet = "annet",
 }
 
 enum Annetvalg {
@@ -30,53 +44,80 @@ enum Annetvalg {
     venner = "annet.botype.venner",
     institusjon = "annet.botype.institusjon",
     fengsel = "annet.botype.fengsel",
-    krisesenter = "annet.botype.krisesenter"
+    krisesenter = "annet.botype.krisesenter",
 }
 
-type Props = SoknadsdataContainerProps & IntlProps;
+const BosituasjonView = () => {
+    const behandlingsId = useSelector(
+        (state: State) => state.soknad.behandlingsId
+    );
+    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const feil = useSelector((state: State) => state.validering.feil);
 
-class BosituasjonView extends React.Component<Props, {}> {
+    const dispatch = useDispatch();
 
-    componentDidMount(): void {
-        const {behandlingsId} = this.props;
-        if (behandlingsId){
-            this.props.hentSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON);
+    const intl = useIntl();
+
+    useEffect(() => {
+        if (behandlingsId) {
+            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON));
         }
-    }
+    }, [behandlingsId, dispatch]);
 
-    handleRadioClick(verdi: string): void {
-        const {soknadsdata, behandlingsId} = this.props;
-        if (behandlingsId){
+    const handleRadioClick = (verdi: string): void => {
+        if (behandlingsId) {
             const bosituasjon = soknadsdata.bosituasjon;
             if (verdi && verdi.indexOf("annet.botype.") !== -1) {
                 const botype = verdi.replace("annet.botype.", "");
                 bosituasjon.botype = botype;
-                this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
-                const valideringsfeil = this.validerAntallPersoner(bosituasjon.antallPersoner);
+                dispatch(
+                    oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon)
+                );
+                const valideringsfeil = validerAntallPersoner(
+                    bosituasjon.antallPersoner
+                );
                 if (!valideringsfeil) {
-                    this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon);
+                    dispatch(
+                        lagreSoknadsdata(
+                            behandlingsId,
+                            SoknadsSti.BOSITUASJON,
+                            bosituasjon
+                        )
+                    );
                 }
             } else {
                 const botype = verdi;
                 bosituasjon.botype = botype;
-                this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
-                const valideringsfeil = this.validerAntallPersoner(bosituasjon.antallPersoner);
+                dispatch(
+                    oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon)
+                );
+                const valideringsfeil = validerAntallPersoner(
+                    bosituasjon.antallPersoner
+                );
                 if (!valideringsfeil) {
-                    this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon);
+                    dispatch(
+                        lagreSoknadsdata(
+                            behandlingsId,
+                            SoknadsSti.BOSITUASJON,
+                            bosituasjon
+                        )
+                    );
                 }
             }
         }
-    }
+    };
 
-    erValgt(verdi: string): boolean {
+    const erValgt = (verdi: string): boolean => {
         verdi = verdi.replace("annet.botype.", "");
-        const {soknadsdata} = this.props;
         const {botype} = soknadsdata.bosituasjon;
         return botype === verdi;
-    }
+    };
 
-    renderRadioknapp(id: string) {
-        if (Object.keys(Annetvalg).find(s => s === id) && !this.erValgt(Bosituasjonsvalg.annet)) {
+    const renderRadioknapp = (id: string) => {
+        if (
+            Object.keys(Annetvalg).find(s => s === id) &&
+            !erValgt(Bosituasjonsvalg.annet)
+        ) {
             return null;
         }
         return (
@@ -84,113 +125,126 @@ class BosituasjonView extends React.Component<Props, {}> {
                 id={"bosituasjon_radio_" + id}
                 faktumKey="bosituasjon"
                 value={id}
-                checked={this.erValgt(id)}
-                onChange={() => this.handleRadioClick(id)}
+                checked={erValgt(id)}
+                onChange={() => handleRadioClick(id)}
             />
         );
-    }
+    };
 
-    onBlurAntall() {
-        const {behandlingsId, soknadsdata} = this.props;
-        if (behandlingsId){
+    const onBlurAntall = () => {
+        if (behandlingsId) {
             const {botype, antallPersoner} = soknadsdata.bosituasjon;
-            const valideringsfeil = this.validerAntallPersoner(antallPersoner);
+            const valideringsfeil = validerAntallPersoner(antallPersoner);
             if (!valideringsfeil) {
-                const oppdatertBosituasjon: Bosituasjon = {botype, antallPersoner};
-                this.props.lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, oppdatertBosituasjon);
-                this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, oppdatertBosituasjon);
-                this.props.clearValideringsfeil(FAKTUM_KEY_ANTALL);
+                const oppdatertBosituasjon: Bosituasjon = {
+                    botype,
+                    antallPersoner,
+                };
+                dispatch(
+                    lagreSoknadsdata(
+                        behandlingsId,
+                        SoknadsSti.BOSITUASJON,
+                        oppdatertBosituasjon
+                    )
+                );
+                dispatch(
+                    oppdaterSoknadsdataSti(
+                        SoknadsSti.BOSITUASJON,
+                        oppdatertBosituasjon
+                    )
+                );
+                dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
             }
         }
-    }
+    };
 
-    validerAntallPersoner(antallPersoner: string | null) {
+    const validerAntallPersoner = (antallPersoner: string | null) => {
         if (!antallPersoner || antallPersoner.length === 0) {
             return null;
         }
-        const feilkode: ValideringsFeilKode | undefined = erTall(antallPersoner, true);
-        onEndretValideringsfeil(feilkode, FAKTUM_KEY_ANTALL, this.props.feil, () => {
-            (feilkode) ?
-                this.props.setValideringsfeil(feilkode, FAKTUM_KEY_ANTALL) :
-                this.props.clearValideringsfeil(FAKTUM_KEY_ANTALL);
+        const feilkode: ValideringsFeilKode | undefined = erTall(
+            antallPersoner,
+            true
+        );
+        onEndretValideringsfeil(feilkode, FAKTUM_KEY_ANTALL, feil, () => {
+            feilkode
+                ? dispatch(setValideringsfeil(feilkode, FAKTUM_KEY_ANTALL))
+                : dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
         });
         return feilkode;
-    }
+    };
 
-    onChangeAntall(verdi: string) {
-        const {soknadsdata} = this.props;
+    const onChangeAntall = (verdi: string) => {
         const bosituasjon = soknadsdata.bosituasjon;
         bosituasjon.antallPersoner = verdi;
-        this.props.oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon);
-        this.props.clearValideringsfeil(FAKTUM_KEY_ANTALL);
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon));
+        dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
+    };
+
+    const bosituasjon: Bosituasjon = soknadsdata.bosituasjon;
+    let synligUnderskjema: boolean = false;
+    if (
+        erValgt(Bosituasjonsvalg.annet) ||
+        Object.keys(Annetvalg).find(v => v === bosituasjon.botype)
+    ) {
+        synligUnderskjema = true;
     }
 
-    render() {
-        const bosituasjon: Bosituasjon = this.props.soknadsdata.bosituasjon;
-        let synligUnderskjema: boolean = false;
-        if (
-            this.erValgt(Bosituasjonsvalg.annet) ||
-            Object.keys(Annetvalg).find(v => v === bosituasjon.botype)
-        ) {
-            synligUnderskjema = true;
-        }
+    const antallPersoner =
+        bosituasjon.antallPersoner != null ? bosituasjon.antallPersoner : "";
 
-        const antallPersoner = bosituasjon.antallPersoner != null ? bosituasjon.antallPersoner : "";
-
-        return (
-            <div>
-                <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, "bosituasjon")}
-                    legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                >
-                    {this.renderRadioknapp(Bosituasjonsvalg.eier)}
-                    {this.renderRadioknapp(Bosituasjonsvalg.leier)}
-                    {this.renderRadioknapp(Bosituasjonsvalg.kommunal)}
-                    {this.renderRadioknapp(Bosituasjonsvalg.ingen)}
-                    {this.renderRadioknapp(Bosituasjonsvalg.annet)}
-                    <div className="skjema-sporsmal--jaNeiSporsmal">
-                        <Underskjema
-                            visible={synligUnderskjema}
-                            arrow={true}
+    return (
+        <div>
+            <Sporsmal
+                tekster={getFaktumSporsmalTekst(intl, "bosituasjon")}
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+            >
+                {renderRadioknapp(Bosituasjonsvalg.eier)}
+                {renderRadioknapp(Bosituasjonsvalg.leier)}
+                {renderRadioknapp(Bosituasjonsvalg.kommunal)}
+                {renderRadioknapp(Bosituasjonsvalg.ingen)}
+                {renderRadioknapp(Bosituasjonsvalg.annet)}
+                <div className="skjema-sporsmal--jaNeiSporsmal">
+                    <Underskjema visible={synligUnderskjema} arrow={true}>
+                        <Sporsmal
+                            tekster={getFaktumSporsmalTekst(
+                                intl,
+                                "bosituasjon"
+                            )}
+                            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+                            stil="system"
                         >
-                            <Sporsmal
-                                tekster={getFaktumSporsmalTekst(this.props.intl, "bosituasjon")}
-                                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                                stil="system"
-                            >
-                                {this.renderRadioknapp(Annetvalg.foreldre)}
-                                {this.renderRadioknapp(Annetvalg.familie)}
-                                {this.renderRadioknapp(Annetvalg.venner)}
-                                {this.renderRadioknapp(Annetvalg.institusjon)}
-                                {this.renderRadioknapp(Annetvalg.fengsel)}
-                                {this.renderRadioknapp(Annetvalg.krisesenter)}
-                            </Sporsmal>
-                        </Underskjema>
-                    </div>
-                </Sporsmal>
-                <Sporsmal
-                    tekster={getFaktumSporsmalTekst(this.props.intl, FAKTUM_KEY_ANTALL)}
-                    legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                >
-                    <InputEnhanced
-                        id={FAKTUM_KEY_ANTALL}
-                        type="tel"
-                        maxLength={2}
-                        pattern="\\d*"
-                        bredde={"XS"}
-                        className="skjemaelement__enLinje185bredde"
-                        verdi={antallPersoner}
-                        onChange={(verdi: string) => this.onChangeAntall(verdi)}
-                        onBlur={() => this.onBlurAntall()}
-                        getName={() => FAKTUM_KEY_ANTALL}
-                        faktumKey={FAKTUM_KEY_ANTALL}
-                        required={false}
-                    />
-                </Sporsmal>
-            </div>
-        );
-    }
+                            {renderRadioknapp(Annetvalg.foreldre)}
+                            {renderRadioknapp(Annetvalg.familie)}
+                            {renderRadioknapp(Annetvalg.venner)}
+                            {renderRadioknapp(Annetvalg.institusjon)}
+                            {renderRadioknapp(Annetvalg.fengsel)}
+                            {renderRadioknapp(Annetvalg.krisesenter)}
+                        </Sporsmal>
+                    </Underskjema>
+                </div>
+            </Sporsmal>
+            <Sporsmal
+                tekster={getFaktumSporsmalTekst(intl, FAKTUM_KEY_ANTALL)}
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+            >
+                <InputEnhanced
+                    id={FAKTUM_KEY_ANTALL}
+                    type="tel"
+                    maxLength={2}
+                    pattern="\\d*"
+                    bredde={"XS"}
+                    className="skjemaelement__enLinje185bredde"
+                    verdi={antallPersoner}
+                    onChange={(verdi: string) => onChangeAntall(verdi)}
+                    onBlur={() => onBlurAntall()}
+                    getName={() => FAKTUM_KEY_ANTALL}
+                    faktumKey={FAKTUM_KEY_ANTALL}
+                    required={false}
+                />
+            </Sporsmal>
+        </div>
+    );
+};
 
-}
-
-export default connectSoknadsdataContainer(injectIntl(BosituasjonView));
+export default BosituasjonView;
