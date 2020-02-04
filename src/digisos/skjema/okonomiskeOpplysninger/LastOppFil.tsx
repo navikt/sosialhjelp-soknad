@@ -2,7 +2,7 @@ import * as React from "react";
 import {Knapp} from "nav-frontend-knapper";
 import {FormattedMessage} from "react-intl";
 import {Opplysning} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
-import {connect} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {DispatchProps} from "../../redux/reduxTypes";
 import {lastOppFil} from "../../redux/fil/filActions";
 import {FilState} from "../../redux/fil/filTypes";
@@ -10,7 +10,7 @@ import {State} from "../../redux/reducers";
 
 interface StoreToProps {
     behandlingsId: string | undefined;
-    filopplasting: FilState
+    filopplasting: FilState;
 }
 
 interface OwnProps {
@@ -21,13 +21,22 @@ interface OwnProps {
 
 type Props = OwnProps & StoreToProps & DispatchProps;
 
+const LastOppFil = (props: {
+    opplysning: Opplysning;
+    isDisabled: boolean;
+    visSpinner: boolean;
+}) => {
+    const behandlingsId = useSelector(
+        (state: State) => state.soknad.behandlingsId
+    );
+    const filopplasting = useSelector((state: State) => state.filopplasting);
 
-class LastOppFil extends React.Component<Props, {}> {
-    leggTilVedleggKnapp!: HTMLInputElement;
+    const dispatch = useDispatch();
 
-    handleFileUpload(files: FileList) {
-        const {behandlingsId, opplysning} = this.props;
-        if (behandlingsId){
+    const vedleggElement = React.useRef<HTMLInputElement>(null);
+
+    const handleFileUpload = (files: FileList) => {
+        if (behandlingsId) {
             if (files.length !== 1) {
                 return;
             }
@@ -36,66 +45,69 @@ class LastOppFil extends React.Component<Props, {}> {
             const fileName = files[0].name;
             const encoded = encodeURI(fileName);
             formData.append("file", files[0], encoded);
-            this.props.dispatch(lastOppFil(opplysning, formData, behandlingsId));
-            this.leggTilVedleggKnapp.value = "";
+            dispatch(lastOppFil(props.opplysning, formData, behandlingsId));
+
+            if (vedleggElement && vedleggElement.current) {
+                vedleggElement.current.value = "";
+            }
         }
-    }
+    };
 
-    render() {
+    const handleOnClick = () => {
+        if (vedleggElement && vedleggElement.current) {
+            vedleggElement.current.click();
+        }
+    };
 
-        const {isDisabled, visSpinner, opplysning, filopplasting} = this.props;
+    return (
+        <div>
+            <Knapp
+                type="hoved"
+                id={
+                    props.opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"
+                }
+                htmlType="button"
+                disabled={props.isDisabled}
+                spinner={props.visSpinner}
+                onClick={() => {
+                    handleOnClick();
+                }}
+                className="last-opp-vedlegg-knapp"
+            >
+                + <FormattedMessage id="opplysninger.vedlegg.knapp.tekst" />
+            </Knapp>
+            <input
+                id={
+                    props.opplysning.type.replace(/\./g, "_") +
+                    "_skjult_upload_input"
+                }
+                ref={vedleggElement}
+                onChange={e => {
+                    if (e.target.files) {
+                        handleFileUpload(e.target.files);
+                    }
+                }}
+                type="file"
+                className="visuallyhidden"
+                tabIndex={-1}
+                accept={
+                    window.navigator.platform.match(/iPad|iPhone|iPod/) !== null
+                        ? "*"
+                        : "image/jpeg,image/png,application/pdf"
+                }
+            />
 
-        return (
-            <div>
-                <Knapp
-                    type="hoved"
-                    id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
-                    htmlType="button"
-                    disabled={isDisabled}
-                    spinner={visSpinner}
-                    onClick={() => {
-                        this.leggTilVedleggKnapp.click();
-                    }}
-                    className="last-opp-vedlegg-knapp"
-                >
-                    + <FormattedMessage id="opplysninger.vedlegg.knapp.tekst"/>
-                </Knapp>
-                <input
-                    id={opplysning.type.replace(/\./g, "_") + "_skjult_upload_input"}
-                    ref={c => {
-                        if (c) {
-                            this.leggTilVedleggKnapp = c
-                        }
-                    }}
-                    onChange={(e) => {
-                        if (e.target.files) {
-                            this.handleFileUpload(e.target.files)
-                        }
-                    }}
-                    type="file"
-                    className="visuallyhidden"
-                    tabIndex={-1}
-                    accept={window.navigator.platform.match(/iPad|iPhone|iPod/) !== null ? "*" : "image/jpeg,image/png,application/pdf"}
-                />
-
-                <div role="alert" aria-live="assertive">
-                    <div className="skjemaelement__feilmelding">
-                        {filopplasting.feilKode && filopplasting.opplysningtype === opplysning.type &&
-                        <FormattedMessage id={filopplasting.feilKode}/>
-                        }
-                    </div>
+            <div role="alert" aria-live="assertive">
+                <div className="skjemaelement__feilmelding">
+                    {filopplasting.feilKode &&
+                        filopplasting.opplysningtype ===
+                            props.opplysning.type && (
+                            <FormattedMessage id={filopplasting.feilKode} />
+                        )}
                 </div>
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
-
-export default connect(
-    (state: State) => {
-        return {
-            behandlingsId: state.soknad.behandlingsId,
-            filopplasting: state.filopplasting
-        };
-    }
-)(LastOppFil);
+export default LastOppFil;
