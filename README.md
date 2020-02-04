@@ -13,6 +13,11 @@ Kjører mot (mock backend)
 * `npm test -- -u` - Oppdatert snapshotfilen som snapshottestene tester mot for lokal utvikling. 
 
 I stedet for npm er det mulig å bruke yarn.
+
+
+### Mock login
+
+Besøk http://localhost:3000/sosialhjelp/soknad/mock-login
  
  ## Kjøring mot sendsoknad backend i stedet for mock backend
  
