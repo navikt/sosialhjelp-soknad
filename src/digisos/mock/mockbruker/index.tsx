@@ -138,8 +138,7 @@ class MockBruker extends React.Component<Props,OwnState> {
 				<div>Slutt dato: { forhold.sluttDato }</div>
 				<div>Stillingsprosent: { forhold.stillingsProsent}</div>
 				<div>
-					{ forhold.type === ArbeidsforholdType.NAVN && <div>Navn: { forhold.navn}, Arbeidsgivernummer: {forhold.arbeidsgivernummer}</div>}
-					{ forhold.type === ArbeidsforholdType.IDENT && <div>Ident: {forhold.ident}</div>}
+					{ forhold.type === ArbeidsforholdType.PERSON && <div>Ident: {forhold.ident}</div>}
 					{ forhold.type === ArbeidsforholdType.ORGANISASJON && <div>Orgnummer: {forhold.orgnummer}</div>}
 				</div>
 				<button onClick={() => {
@@ -305,14 +304,11 @@ class MockBruker extends React.Component<Props,OwnState> {
 		if (this.state.arbeidsforhold){
 			if (this.state.arbeidsforhold_liste.length > 0){
 				this.state.arbeidsforhold_liste.forEach((forhold: NyttArbeidsforholdObject, key: number) => {
-					if (forhold.type === ArbeidsforholdType.NAVN){
-						mocksystemdata.settArbeidsforholdMedArbeidsgivernummer(forhold.id, forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.arbeidsgivernummer, forhold.navn);
-					}
-					if (forhold.type === ArbeidsforholdType.IDENT){
-						mocksystemdata.settArbeidsforholdMedIdent(forhold.id, forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.ident);
+					if (forhold.type === ArbeidsforholdType.PERSON){
+						mocksystemdata.settArbeidsforholdArbeidsgiverPerson(forhold.id, forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.ident);
 					}
 					if (forhold.type === ArbeidsforholdType.ORGANISASJON){
-						mocksystemdata.settArbeidsforholdMedOrganisasjonsnummer(forhold.id, forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.orgnummer);
+						mocksystemdata.settArbeidsforholdArbeidsgiverOrganisasjon(forhold.id, forhold.startDato, forhold.sluttDato, forhold.stillingsProsent, forhold.orgnummer);
 					}
 				})
 			}
