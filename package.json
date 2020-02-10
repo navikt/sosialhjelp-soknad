@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "/sosialhjelp/soknad/",
   "dependencies": {
+    "@sentry/browser": "^5.12.1",
     "@types/react-inlinesvg": "^0.8.1",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
