@@ -18,7 +18,7 @@ export type FilActionTypes = LastOppFilAction | StartSlettFilAction | LastOppFil
 export interface LastOppFilAction {
     type: FilActionTypeKeys.LAST_OPP;
     opplysning: Opplysning;
-    formData: FormData;
+    formData: FormData[];
     behandlingsId: string;
 }
 
