@@ -30,47 +30,53 @@ function* lastOppFilSaga(action: LastOppFilAction) {
     const {behandlingsId, formData, opplysning} = action;
     const url = `opplastetVedlegg/${behandlingsId}/${opplysning.type}`;
 
-    yield put(settFilOpplastingPending(opplysning.type));
+    const opplysningUpdated: Opplysning = {...opplysning};
 
     let response: Fil = {
         filNavn: "",
         uuid: "",
     };
 
-    try {
-        response = yield call(fetchUpload, url, formData);
-        const filerUpdated: Fil[] = opplysning.filer.map((fil: Fil) => ({
-            ...fil,
-        }));
-        filerUpdated.push(response);
-        const opplysningUpdated: Opplysning = {...opplysning};
-        opplysningUpdated.filer = filerUpdated;
-        opplysningUpdated.vedleggStatus = VedleggStatus.LASTET_OPP;
-        yield put(updateOpplysning(opplysningUpdated));
-        yield put(settFilOpplastingFerdig(opplysning.type));
-    } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            return;
+    const filerUpdated: Fil[] = opplysning.filer.map((fil: Fil) => ({
+        ...fil,
+    }));
+
+    for (let i = 0; i < formData.length; i++) {
+        yield put(settFilOpplastingPending(opplysning.type));
+
+        try {
+            response = yield call(fetchUpload, url, formData[i]);
+            filerUpdated.push(response);
+            opplysningUpdated.filer = filerUpdated;
+            opplysningUpdated.vedleggStatus = VedleggStatus.LASTET_OPP;
+
+            yield put(updateOpplysning(opplysningUpdated));
+            yield put(settFilOpplastingFerdig(opplysning.type));
         }
-        let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
-        // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
-        response = yield call(fetchUploadIgnoreErrors, url, formData);
-        const ID = "id";
-        // @ts-ignore
-        if (response && response[ID]) {
+        catch (reason) {
+            if (reason.message === HttpStatus.UNAUTHORIZED) {
+                return;
+            }
+            let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
+            // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
+            response = yield call(fetchUploadIgnoreErrors, url, formData[i]);
+            const ID = "id";
             // @ts-ignore
-            feilKode = response[ID];
+            if (response && response[ID]) {
+                // @ts-ignore
+                feilKode = response[ID];
+            }
+            yield put(lastOppFilFeilet(opplysning.type, feilKode));
+            if (
+                feilKode !== REST_FEIL.KRYPTERT_FIL &&
+                feilKode !== REST_FEIL.SIGNERT_FIL
+            ) {
+                yield put(
+                    loggInfo("Last opp vedlegg feilet: " + reason.toString())
+                );
+            }
+            yield put(settFilOpplastingFerdig(opplysning.type));
         }
-        yield put(lastOppFilFeilet(opplysning.type, feilKode));
-        if (
-            feilKode !== REST_FEIL.KRYPTERT_FIL &&
-            feilKode !== REST_FEIL.SIGNERT_FIL
-        ) {
-            yield put(
-                loggInfo("Last opp vedlegg feilet: " + reason.toString())
-            );
-        }
-        yield put(settFilOpplastingFerdig(opplysning.type));
     }
 }
 

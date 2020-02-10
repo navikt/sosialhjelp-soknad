@@ -4,7 +4,7 @@ import {REST_FEIL} from "../soknad/soknadTypes";
 
 const lastOppFil = (
     opplysning: Opplysning,
-    formData: FormData,
+    formData: FormData[],
     behandlingsId: string,
 ): FilActionTypes => {
     return {

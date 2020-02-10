@@ -22,7 +22,7 @@ export type FilActionTypes
 export interface LastOppFilAction {
     type: FilActionTypeKeys.LAST_OPP;
     opplysning: Opplysning;
-    formData: FormData;
+    formData: FormData[];
     behandlingsId: string;
 }
 

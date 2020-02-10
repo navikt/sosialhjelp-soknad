@@ -37,15 +37,18 @@ const LastOppFil = (props: {
 
     const handleFileUpload = (files: FileList) => {
         if (behandlingsId) {
-            if (files.length !== 1) {
-                return;
-            }
-            const formData = new FormData();
+            let formDataList: FormData[] = [];
 
-            const fileName = files[0].name;
-            const encoded = encodeURI(fileName);
-            formData.append("file", files[0], encoded);
-            dispatch(lastOppFil(props.opplysning, formData, behandlingsId));
+            for (let i = 0; i < files.length; i++) {
+
+                const formData = new FormData();
+
+                const fileName = files[i].name;
+                const encoded = encodeURI(fileName);
+                formData.append("file", files[i], encoded);
+                formDataList[i] = formData;
+            }
+            dispatch(lastOppFil(props.opplysning, formDataList, behandlingsId));
 
             if (vedleggElement && vedleggElement.current) {
                 vedleggElement.current.value = "";
@@ -95,6 +98,7 @@ const LastOppFil = (props: {
                         ? "*"
                         : "image/jpeg,image/png,application/pdf"
                 }
+                multiple
             />
 
             <div role="alert" aria-live="assertive">
