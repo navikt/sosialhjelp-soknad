@@ -34,7 +34,6 @@ const LastOppFil = (props: {opplysning: Opplysning; isDisabled: boolean; visSpin
             let formDataList: FormData[] = [];
 
             for (let i = 0; i < files.length; i++) {
-
                 const formData = new FormData();
 
                 const fileName = files[i].name;
