@@ -1,7 +1,6 @@
 {
 	"soknad.ettersending.antalldager": "42",
 	"modia.url": "",
-	"soknadinnsending.soknad.path": "http://127.0.0.1:8282/soknadinnsending/soknad",
 	"dittnav.link.url": "http://www.nav.no/dittnav",
 	"saksoversikt.link.url": "http://127.0.0.1:8443/saksoversikt"
 }
