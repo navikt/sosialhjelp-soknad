@@ -5,7 +5,6 @@
 	"soknad.ettersending.antalldager": "42",
 	"soknad.alderspensjon.url": "https://tjenester.nav.no/pselv/tilleggsfunksjonalitet/innlogging.jsf",
 	"soknad.reelarbeidsoker.url": "https://tjenester.nav.no/sbl/arbeid/registering",
-	"soknad.skjemaveileder.url": "http://nav.no/skjema/Skjemaer",
 	"modia.url": "",
 	"soknadinnsending.soknad.path": "http://127.0.0.1:8282/soknadinnsending/soknad",
 	"dialogarena.cms.url": "https://appres-q1.nav.no",
