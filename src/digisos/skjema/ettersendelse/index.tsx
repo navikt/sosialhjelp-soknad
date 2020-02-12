@@ -24,6 +24,7 @@ import {erEttersendelseSide, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
 import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import AlertStripe from "nav-frontend-alertstriper";
+import {SoknadEttersendelseFeilerHotjarTrigger} from "../../../nav-soknad/components/hotjarTrigger/HotjarTrigger";
 
 interface OwnProps {
     manglendeVedlegg: EttersendelseVedleggBackend[];
@@ -198,14 +199,16 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                     )}
 
                     {opprettNyEttersendelseFeilet && !isNedetid &&  (
-                        <AvsnittMedMarger className="ettersendelse__vedlegg__header">
-                            <Informasjonspanel
-                                ikon={InformasjonspanelIkon.HENSYN}
-                                farge={DigisosFarge.VIKTIG}
-                            >
-                                <FormattedHTMLMessage id="ettersendelse.ikke.mulig"/>
-                            </Informasjonspanel>
-                        </AvsnittMedMarger>
+                        <SoknadEttersendelseFeilerHotjarTrigger>
+                            <AvsnittMedMarger className="ettersendelse__vedlegg__header">
+                                <Informasjonspanel
+                                    ikon={InformasjonspanelIkon.HENSYN}
+                                    farge={DigisosFarge.VIKTIG}
+                                >
+                                    <FormattedHTMLMessage id="ettersendelse.ikke.mulig"/>
+                                </Informasjonspanel>
+                            </AvsnittMedMarger>
+                        </SoknadEttersendelseFeilerHotjarTrigger>
                     )}
                     {!opprettNyEttersendelseFeilet && (
                         <EttersendelseEkspanderbart
