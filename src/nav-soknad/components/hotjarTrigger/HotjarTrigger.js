@@ -6,7 +6,7 @@ export default class HotjarTrigger extends Component {
     componentDidMount() {
         const {hotjarTrigger} = this.props;
         if (typeof window.hj === 'function'
-            && !erMockMiljoEllerDev()
+            // && !erMockMiljoEllerDev()
         ) {
             window.hj('trigger', hotjarTrigger);
         }
