@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
 import {node, string} from 'prop-types';
-import {erMockMiljoEllerDev} from "../../utils";
 
 export default class HotjarTrigger extends Component {
     componentDidMount() {
         const {hotjarTrigger} = this.props;
-        if (typeof window.hj === 'function'
-            // && !erMockMiljoEllerDev()
-        ) {
+        if (typeof window.hj === 'function') {
             window.hj('trigger', hotjarTrigger);
         }
     }
