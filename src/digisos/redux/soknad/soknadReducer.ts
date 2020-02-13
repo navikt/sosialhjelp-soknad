@@ -36,9 +36,10 @@ export const defaultState: SoknadState = {
 	valgtSoknadsmottaker: undefined,
 
 	// Systemdata
-	erGjenopptattSoknad: true,
-	skalSjekkeOmSystemdataErEndret: true,
 	erSystemdataEndret: ErSystemdataEndret.NOT_ASKED,
+
+	// Samtykker
+	samtykker: undefined,
 
 	// Avbryt
 	avbrytDialog: {
@@ -166,6 +167,26 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
 				...state,
 				erSystemdataEndret: action.erSystemdataEndret ? ErSystemdataEndret.YES : ErSystemdataEndret.NO,
 				skalSjekkeOmSystemdataErEndret: false
+			}
+		}
+
+		case SoknadActionTypeKeys.OPPDATER_SAMTYKKE: {
+			return {
+				...state
+			}
+		}
+
+		case SoknadActionTypeKeys.HENT_SAMTYKKE: {
+			return {
+				...state
+			}
+		}
+
+		case SoknadActionTypeKeys.HENT_SAMTYKKE_OK: {
+			const { samtykker } = action;
+			return {
+				...state,
+				samtykker: samtykker
 			}
 		}
 

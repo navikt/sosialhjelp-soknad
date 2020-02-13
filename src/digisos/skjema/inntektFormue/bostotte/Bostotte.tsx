@@ -9,7 +9,7 @@ import {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
     SoknadsSti,
@@ -23,7 +23,10 @@ import {State} from "../../../redux/reducers";
 import {
     hentSoknadsdata,
     lagreSoknadsdata,
+    settSamtykkeOgOppdaterData,
 } from "../../../redux/soknadsdata/soknadsdataActions";
+import Knapp from "nav-frontend-knapper";
+import {Panel} from "nav-frontend-paneler";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -69,6 +72,17 @@ const BostotteView = () => {
                     )
                 );
             }
+        }
+    };
+
+    const handleSettBostotteSamtykke = (harSamtykke: boolean) => {
+        if (!oppstartsModus && behandlingsId) {
+            dispatch(settSamtykkeOgOppdaterData(
+                behandlingsId,
+                SoknadsSti.BOSTOTTE_SAMTYKKE,
+                harSamtykke,
+                SoknadsSti.BOSTOTTE
+            ))
         }
     };
 
@@ -158,14 +172,16 @@ const BostotteView = () => {
     }
     const requestToHusbankenFeilet: boolean =
         bostotte.stotteFraHusbankenFeilet === true;
+    const harSamtykke: boolean =
+        bostotte.samtykke === true;
     const harBostotterUtbetalinger: boolean =
         bostotte.utbetalinger && bostotte.utbetalinger.length > 0;
     const harBostotterSaker: boolean =
         bostotte.saker && bostotte.saker.length > 0;
     return (
         <div className="blokk-xs">
-            {requestToHusbankenFeilet && (
-                <div className="skjema-sporsmal">
+            {requestToHusbankenFeilet && harSamtykke && (
+                <Panel border={true} className={"ytelser_panel"}>
                     <JaNeiSporsmal
                         visPlaceholder={oppstartsModus}
                         tekster={getFaktumSporsmalTekst(intl, FAKTUM_BOSTOTTE)}
@@ -176,9 +192,44 @@ const BostotteView = () => {
                         }
                         legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                     />
-                </div>
+                    <Knapp
+                        id="ta_bort_bostotte_samtykke"
+                        type="flat"
+                        spinner={oppstartsModus}
+                        mini={true}
+                        onClick={() => {
+                            handleSettBostotteSamtykke(false)
+                        }}
+                    >
+                        {getIntlTextOrKey(intl, "inntekt.bostotte.ta_bort_samtykke")}
+                    </Knapp>
+                </Panel>
             )}
-            {!requestToHusbankenFeilet && (
+            {!requestToHusbankenFeilet && !harSamtykke && (
+                <Panel border={true} className={"ytelser_panel"}>
+                    <JaNeiSporsmal
+                        visPlaceholder={oppstartsModus}
+                        tekster={getFaktumSporsmalTekst(intl, FAKTUM_BOSTOTTE)}
+                        faktumKey={FAKTUM_BOSTOTTE}
+                        verdi={bostotte ? bostotte.bekreftelse : null}
+                        onChange={(verdi: boolean) =>
+                            handleClickJaNeiSpsm(verdi)
+                        }
+                        legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+                    />
+                    <Knapp
+                        id="gi_bostotte_samtykke"
+                        type="standard"
+                        spinner={oppstartsModus}
+                        onClick={() => {
+                            handleSettBostotteSamtykke(true)
+                        }}
+                    >
+                        {getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke")}
+                    </Knapp>
+                </Panel>
+            )}
+            {!requestToHusbankenFeilet && harSamtykke && (
                 <Lesmerpanel
                     apneTekst={"Se detaljer"}
                     lukkTekst={"Lukk"}
@@ -237,6 +288,18 @@ const BostotteView = () => {
                             />
                         </a>
                     )}
+                    <br/>
+                    <Knapp
+                        id="ta_bort_bostotte_samtykke"
+                        type="flat"
+                        spinner={oppstartsModus}
+                        mini={true}
+                        onClick={() => {
+                            handleSettBostotteSamtykke(false)
+                        }}
+                    >
+                        {getIntlTextOrKey(intl, "inntekt.bostotte.ta_bort_samtykke")}
+                    </Knapp>
                 </Lesmerpanel>
             )}
         </div>

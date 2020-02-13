@@ -20,6 +20,7 @@ export interface Utbetaling {
 
 export const initialSkattbarInntektInfoState: SkattbarInntektInfo = {
 	inntektFraSkatteetaten: [],
-	inntektFraSkatteetatenFeilet: false
+	inntektFraSkatteetatenFeilet: false,
+	samtykke: false
 };
 export const initialSkattbarInntektState: SkattbarInntekt[] = [];

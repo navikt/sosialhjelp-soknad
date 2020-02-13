@@ -66,6 +66,8 @@ export enum SoknadsdataActionTypeKeys {
  * og legges på redux state state.soknadsdata.personalia.kontonummer
  */
 export enum SoknadsSti {
+	OPPDATER_SAMTYKKE = "oppdaterSamtykker",
+	HENT_SAMTYKKER = "hentSamtykker",
 	ARBEID = "arbeid",
 	BANKINFORMASJON = "personalia/kontonummer",
 	BEGRUNNELSE = "begrunnelse",
@@ -73,6 +75,7 @@ export enum SoknadsSti {
 	UTDANNING = "utdanning",
 	TELEFONNUMMER = "personalia/telefonnummer",
 	BOSTOTTE = "inntekt/bostotte",
+	BOSTOTTE_SAMTYKKE = "inntekt/bostotte/samtykke",
 	STUDIELAN = "inntekt/studielan",
 	UTBETALINGER = "inntekt/utbetalinger",
 	VERDIER = "inntekt/verdier",
@@ -86,7 +89,8 @@ export enum SoknadsSti {
 	BASIS_PERSONALIA = "personalia/basisPersonalia",
 	FORSORGERPLIKT = "familie/forsorgerplikt",
 	INNTEKT_SYSTEMDATA = "inntekt/systemdata",
-    SKATTBARINNTEKT = "inntekt/skattbarinntektogforskuddstrekk"
+    SKATTBARINNTEKT = "inntekt/skattbarinntektogforskuddstrekk",
+    SKATTBARINNTEKT_SAMTYKKE = "inntekt/skattbarinntektogforskuddstrekk/samtykke"
 }
 
 export interface Inntekt {
@@ -102,6 +106,7 @@ export interface Inntekt {
 export interface SkattbarInntektInfo {
 	inntektFraSkatteetaten: SkattbarInntekt[];
 	inntektFraSkatteetatenFeilet: boolean;
+	samtykke: boolean;
 }
 
 export const initialInntektState: Inntekt = {
@@ -218,6 +223,7 @@ const initialSoknadsdataRestStatus = {
 	},
 	inntekt: {
 		bostotte: REST_STATUS.INITIALISERT,
+		samtykke: REST_STATUS.INITIALISERT,
 		studielan: REST_STATUS.INITIALISERT,
 		utbetalinger: REST_STATUS.INITIALISERT,
 		verdier: REST_STATUS.INITIALISERT

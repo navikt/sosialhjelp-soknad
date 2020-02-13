@@ -1,4 +1,4 @@
-import {AVBRYT_DESTINASJON, ErSystemdataEndret} from "./soknadActionTypes";
+import {AVBRYT_DESTINASJON, ErSystemdataEndret, Samtykke} from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 
 export interface SoknadState {
@@ -44,9 +44,10 @@ export interface SoknadState {
     valgtSoknadsmottaker: NavEnhet | undefined;
 
     // Systemdata state
-    erGjenopptattSoknad: boolean;
-    skalSjekkeOmSystemdataErEndret: boolean;
     erSystemdataEndret: ErSystemdataEndret;
+
+    // Samtykke
+    samtykker: Samtykke[] | undefined;
 
     // Nedetid state
     nedetid: undefined | NedetidResponse;

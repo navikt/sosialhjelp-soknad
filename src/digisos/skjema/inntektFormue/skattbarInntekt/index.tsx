@@ -13,7 +13,8 @@ import {SkattbarInntekt} from "./inntektTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import SkattbarinntektForskuddstrekk from "./SkattbarinntektForskuddstrekk";
 import {State} from "../../../redux/reducers";
-import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {hentSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknadsdata/soknadsdataActions";
+import Knapp from "nav-frontend-knapper";
 
 const Skatt = () => {
     const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const Skatt = () => {
         soknadsdata.restStatus.inntekt.skattbarinntektogforskuddstrekk;
     const skattbarinntektogforskuddstrekk: SkattbarInntektInfo =
         soknadsdata.inntekt.skattbarinntektogforskuddstrekk;
+    const harSamtykke: boolean = soknadsdata.inntekt.skattbarinntektogforskuddstrekk.samtykke;
     const visAnimerteStreker = restStatus !== REST_STATUS.OK;
 
     // TODO DIGISOS-1175: Håndter flere måneder med skattbar inntekt
@@ -47,6 +49,18 @@ const Skatt = () => {
             <FormattedMessage id="utbetalinger.inntekt.skattbar.tittel" />
         </h4>
     );
+
+    function handleSettSkatteetatenSamtykke(harSamtykke: boolean) {
+        if (!visAnimerteStreker && behandlingsId) {
+            dispatch(settSamtykkeOgOppdaterData(
+                behandlingsId,
+                SoknadsSti.SKATTBARINNTEKT_SAMTYKKE,
+                harSamtykke,
+                SoknadsSti.SKATTBARINNTEKT
+            ))
+
+        }
+    }
 
     return (
         <div className={"skatt-wrapper"}>
@@ -79,6 +93,16 @@ const Skatt = () => {
                                 }
                             />
                         </div>
+                        <Knapp
+                            id="ta_bort_bostotte_samtykke"
+                            type="flat"
+                            mini={true}
+                            onClick={() => {
+                                handleSettSkatteetatenSamtykke(false)
+                            }}
+                        >
+                            <FormattedMessage id="utbetalinger.inntekt.skattbar.ta_bort_samtykke" />
+                        </Knapp>
                     </Lesmerpanel>
                 )}
             {!visAnimerteStreker &&
@@ -87,9 +111,33 @@ const Skatt = () => {
                 inntektFraSkatteetaten.length === 0 && (
                     <Panel border={true} className={"ytelser_panel"}>
                         <div>
-                            <h4>{tittel}</h4>
+                            {tittel}
                             <FormattedMessage id="utbetalinger.inntekt.skattbar.ingen" />
                         </div>
+                        {harSamtykke &&
+                            <Knapp
+                                id="ta_bort_bostotte_samtykke"
+                                type="flat"
+                                mini={true}
+                                onClick={() => {
+                                    handleSettSkatteetatenSamtykke(false)
+                                }}
+                            >
+                                <FormattedMessage id="utbetalinger.inntekt.skattbar.ta_bort_samtykke"/>
+                            </Knapp>
+                        }
+                        {!harSamtykke &&
+                            <Knapp
+                                id="gi_bostotte_samtykke"
+                                type="standard"
+                                mini={false}
+                                onClick={() => {
+                                    handleSettSkatteetatenSamtykke(true)
+                                }}
+                            >
+                                <FormattedMessage id="utbetalinger.inntekt.skattbar.gi_samtykke"/>
+                            </Knapp>
+                        }
                     </Panel>
                 )}
             {visAnimerteStreker && <TextPlaceholder lines={3} />}

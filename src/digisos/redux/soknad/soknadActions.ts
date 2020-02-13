@@ -1,5 +1,6 @@
 import {
     AVBRYT_DESTINASJON,
+    Samtykke,
     SoknadActionType,
     SoknadActionTypeKeys,
     VisIkkePakobletPanel,
@@ -139,6 +140,29 @@ export const setErSystemdataEndret = (erSystemdataEndret: boolean): SoknadAction
         erSystemdataEndret
     }
 };
+
+export const oppdaterSamtykke = (behandlingsId: string, harSamtykket: boolean, samtykker: Samtykke[]): SoknadActionType => {
+    return {
+        type: SoknadActionTypeKeys.OPPDATER_SAMTYKKE,
+        behandlingsId: behandlingsId,
+        harSamtykket: harSamtykket,
+        samtykker: samtykker
+    };
+};
+
+export function hentSamtykker(behandlingsId: string): SoknadActionType {
+    return {
+        type: SoknadActionTypeKeys.HENT_SAMTYKKE,
+        behandlingsId
+    };
+}
+
+export function hentSamtykkerOk(samtykker: Samtykke[]): SoknadActionType {
+    return {
+        type: SoknadActionTypeKeys.HENT_SAMTYKKE_OK,
+        samtykker
+    };
+}
 
 export const sjekkAutentiseringOgTilgangOgHentRessurser = (): SoknadActionType => {
     return {
