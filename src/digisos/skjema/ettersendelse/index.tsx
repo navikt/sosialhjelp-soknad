@@ -20,12 +20,11 @@ import {
 import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import {Prompt} from "react-router";
-import {erEttersendelseSide, formatDato, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
+import {erEttersendelseSide, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
 import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import AlertStripe from "nav-frontend-alertstriper";
 import {SoknadEttersendelseFeilerHotjarTrigger} from "../../../nav-soknad/components/hotjarTrigger/HotjarTrigger";
-import Dato from "../../../nav-soknad/components/tidspunkt/Dato";
 
 interface OwnProps {
     manglendeVedlegg: EttersendelseVedleggBackend[];
@@ -173,7 +172,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                         >
                             <h3><FormattedHTMLMessage
                                 id="ettersendelse.soknad_sendt"/> {originalSoknad.navenhet} kommune</h3>
-                            <p>Innsendt <Dato tidspunkt={originalSoknad.innsendtDato}/> kl. {originalSoknad.innsendtTidspunkt}</p>
+                            <p>Innsendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}</p>
                         </AvsnittMedMarger>
                     )}
 
@@ -189,7 +188,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                                             id="ettersendelse.dato_tid"
                                             values={
                                                 {
-                                                    dato: formatDato(ettersendelse.innsendtDato),
+                                                    dato: ettersendelse.innsendtDato,
                                                     tid: ettersendelse.innsendtTidspunkt
                                                 }}
                                         />
@@ -220,7 +219,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                             {antallManglendeVedlegg > 0 && (
                                 <span>
                                     <h3>Vedlegg mangler</h3>
-                                    <div><Dato tidspunkt={datoManglendeVedlegg}/></div>
+                                    <div>{datoManglendeVedlegg}</div>
                                 </span>
                             )}
                             {antallManglendeVedlegg === 0 && (

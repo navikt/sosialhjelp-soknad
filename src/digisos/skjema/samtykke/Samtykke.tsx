@@ -13,6 +13,7 @@ import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/comp
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {ErSystemdataEndret, Samtykke} from "../../redux/soknad/soknadActionTypes";
+import {tilSteg} from "../../redux/navigasjon/navigasjonActions";
 
 const SamtykkeView: React.FC = () => {
     const intl = useIntl();
@@ -44,8 +45,12 @@ const SamtykkeView: React.FC = () => {
             samtykkerTekst += samtykkerTekst===""?text:" og " + text;
         })
     }
-    console.dir(samtykkerTekst);
 
+    if(harLastetinnSamtykker && behandlingsId) {
+        if(erSystemdataEndret === ErSystemdataEndret.NO && !harSamtykker) {
+            dispatch(tilSteg(1, behandlingsId));
+        }
+    }
     useEffect(() => {
         if (behandlingsId) {
             dispatch(getErSystemdataEndret(behandlingsId));
@@ -68,7 +73,7 @@ const SamtykkeView: React.FC = () => {
                     ikon={InformasjonspanelIkon.ELLA}
                     farge={DigisosFarge.VIKTIG}
                 >
-                    {erSystemdataEndret && (
+                    {erSystemdataEndret === ErSystemdataEndret.YES && (
                         <div className="skjemaelement--horisontal">
                             <FormattedMessage id="oppsummering.systemdataendret.true"/>
                         </div>
