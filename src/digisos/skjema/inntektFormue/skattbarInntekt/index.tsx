@@ -44,7 +44,7 @@ const Skatt = () => {
         skattbarinntektogforskuddstrekk.inntektFraSkatteetaten;
     const inntektFraSkatteetatenFeilet: boolean =
         skattbarinntektogforskuddstrekk.inntektFraSkatteetatenFeilet;
-    const tittel: JSX.Element = (
+    const skattbarTittel: JSX.Element = (
         <h4>
             <FormattedMessage id="utbetalinger.inntekt.skattbar.tittel" />
         </h4>
@@ -64,10 +64,10 @@ const Skatt = () => {
 
     return (
         <div className={"skatt-wrapper"}>
-            {inntektFraSkatteetatenFeilet && (
+            {harSamtykke && inntektFraSkatteetatenFeilet && (
                 <Panel border={true} className={"ytelser_panel"}>
                     <div>
-                        {tittel}
+                        {skattbarTittel}
                         <FormattedMessage id="utbetalinger.skattbar.kontaktproblemer" />
                     </div>
                 </Panel>
@@ -80,7 +80,7 @@ const Skatt = () => {
                         lukkTekst={"Lukk"}
                         intro={
                             <div>
-                                {tittel}
+                                {skattbarTittel}
                                 <FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse" />
                             </div>
                         }
@@ -110,34 +110,44 @@ const Skatt = () => {
                 inntektFraSkatteetaten &&
                 inntektFraSkatteetaten.length === 0 && (
                     <Panel border={true} className={"ytelser_panel"}>
-                        <div>
-                            {tittel}
-                            <FormattedMessage id="utbetalinger.inntekt.skattbar.ingen" />
-                        </div>
-                        {harSamtykke &&
-                            <Knapp
-                                id="ta_bort_bostotte_samtykke"
-                                type="flat"
-                                mini={true}
-                                onClick={() => {
-                                    handleSettSkatteetatenSamtykke(false)
-                                }}
-                            >
-                                <FormattedMessage id="utbetalinger.inntekt.skattbar.ta_bort_samtykke"/>
-                            </Knapp>
-                        }
-                        {!harSamtykke &&
-                            <Knapp
-                                id="gi_bostotte_samtykke"
-                                type="standard"
-                                mini={false}
-                                onClick={() => {
-                                    handleSettSkatteetatenSamtykke(true)
-                                }}
-                            >
-                                <FormattedMessage id="utbetalinger.inntekt.skattbar.gi_samtykke"/>
-                            </Knapp>
-                        }
+                        {harSamtykke && (
+                            <>
+                                <div>
+                                    {skattbarTittel}
+                                    <FormattedMessage id="utbetalinger.inntekt.skattbar.ingen" />
+                                </div>
+                                <Knapp
+                                    id="ta_bort_bostotte_samtykke"
+                                    type="flat"
+                                    mini={true}
+                                    onClick={() => {
+                                        handleSettSkatteetatenSamtykke(false)
+                                    }}
+                                >
+                                    <FormattedMessage id="utbetalinger.inntekt.skattbar.ta_bort_samtykke"/>
+                                </Knapp>
+                            </>
+                        )}
+                        {!harSamtykke && (
+                            <>
+                                <div>
+                                    <h4>
+                                        <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_sporsmal" />
+                                    </h4>
+                                    <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_info" />
+                                </div>
+                                <Knapp
+                                    id="gi_bostotte_samtykke"
+                                    type="standard"
+                                    mini={false}
+                                    onClick={() => {
+                                        handleSettSkatteetatenSamtykke(true)
+                                    }}
+                                >
+                                    <FormattedMessage id="utbetalinger.inntekt.skattbar.gi_samtykke"/>
+                                </Knapp>
+                            </>
+                        )}
                     </Panel>
                 )}
             {visAnimerteStreker && <TextPlaceholder lines={3} />}
