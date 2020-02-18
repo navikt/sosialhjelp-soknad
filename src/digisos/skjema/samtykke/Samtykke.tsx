@@ -9,11 +9,11 @@ import {Checkbox} from "nav-frontend-skjema";
 import {useDispatch, useSelector} from "react-redux";
 import {getErSystemdataEndret, hentSamtykker, oppdaterSamtykke} from "../../redux/soknad/soknadActions";
 import {State} from "../../redux/reducers";
-import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
-import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {ErSystemdataEndret, Samtykke} from "../../redux/soknad/soknadActionTypes";
 import {tilSteg} from "../../redux/navigasjon/navigasjonActions";
+import Veilederpanel from "nav-frontend-veilederpanel";
+import EllaKompakt from "../../../nav-soknad/components/svg/EllaKompakt";
 
 const SamtykkeView: React.FC = () => {
     const intl = useIntl();
@@ -69,9 +69,11 @@ const SamtykkeView: React.FC = () => {
             <AppBanner/>
             <Panel className={"skjema-content"}>
 
-                <Informasjonspanel
-                    ikon={InformasjonspanelIkon.ELLA}
-                    farge={DigisosFarge.VIKTIG}
+                <Veilederpanel
+                    svg={<EllaKompakt/>}
+                    fargetema="advarsel"
+                    kompakt={true}
+                    type="plakat"
                 >
                     {erSystemdataEndret === ErSystemdataEndret.YES && (
                         <div className="skjemaelement--horisontal">
@@ -93,13 +95,14 @@ const SamtykkeView: React.FC = () => {
                             />
                         </>
                     )}
-                </Informasjonspanel>
+                </Veilederpanel>
                 <Knapp
                     id="gi_bostotte_samtykke"
                     type="hoved"
                     onClick={() => {
                         setSamtykkeOgGaTilSteg1(harSamtykket)
                     }}
+                    className="samtykke_knapp_padding"
                 >
                     {getIntlTextOrKey(intl, "informasjon.samtykke.knapp")}
                 </Knapp>

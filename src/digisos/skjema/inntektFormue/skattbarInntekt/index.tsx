@@ -1,13 +1,9 @@
 import * as React from "react";
 import {FormattedMessage} from "react-intl";
 import {Panel} from "nav-frontend-paneler";
-import Lesmerpanel from "nav-frontend-lesmerpanel";
 import {useDispatch, useSelector} from "react-redux";
 
-import {
-    SkattbarInntektInfo,
-    SoknadsSti,
-} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {SkattbarInntektInfo, SoknadsSti,} from "../../../redux/soknadsdata/soknadsdataReducer";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {SkattbarInntekt} from "./inntektTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
@@ -75,17 +71,8 @@ const Skatt = () => {
             {!visAnimerteStreker &&
                 inntektFraSkatteetaten &&
                 inntektFraSkatteetaten.length > 0 && (
-                    <Lesmerpanel
-                        apneTekst={"Se detaljer"}
-                        lukkTekst={"Lukk"}
-                        intro={
-                            <div>
-                                {skattbarTittel}
-                                <FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse" />
-                            </div>
-                        }
-                        border={true}
-                    >
+                    <Panel border={true} >
+                        <FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse" />
                         <div className="utbetalinger">
                             <SkattbarinntektForskuddstrekk
                                 skattbarinntektogforskuddstrekk={
@@ -100,10 +87,11 @@ const Skatt = () => {
                             onClick={() => {
                                 handleSettSkatteetatenSamtykke(false)
                             }}
+                            className="samtykke_knapp_padding"
                         >
                             <FormattedMessage id="utbetalinger.inntekt.skattbar.ta_bort_samtykke" />
                         </Knapp>
-                    </Lesmerpanel>
+                    </Panel>
                 )}
             {!visAnimerteStreker &&
                 !inntektFraSkatteetatenFeilet &&
@@ -123,6 +111,7 @@ const Skatt = () => {
                                     onClick={() => {
                                         handleSettSkatteetatenSamtykke(false)
                                     }}
+                                    className="samtykke_knapp_padding"
                                 >
                                     <FormattedMessage id="utbetalinger.inntekt.skattbar.ta_bort_samtykke"/>
                                 </Knapp>
@@ -143,6 +132,7 @@ const Skatt = () => {
                                     onClick={() => {
                                         handleSettSkatteetatenSamtykke(true)
                                     }}
+                                    className="samtykke_knapp_padding"
                                 >
                                     <FormattedMessage id="utbetalinger.inntekt.skattbar.gi_samtykke"/>
                                 </Knapp>
