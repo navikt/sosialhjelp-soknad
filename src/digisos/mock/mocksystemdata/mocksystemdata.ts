@@ -32,6 +32,8 @@ const VERDI = "verdi";
 const ARBEIDSFORHOLD = "arbeidsforhold";
 const ORGANISASJON = "organisasjon";
 const PERSONNAVN = "personnavn";
+const STATSBORGERSKAP = "statsborgerskap";
+const LANDKODE = "land";
 const IDENT = "ident";
 
 export function settNavn(fornavn: any, mellomnavn: any, etternavn: any) {
@@ -47,6 +49,10 @@ export function settNavn(fornavn: any, mellomnavn: any, etternavn: any) {
     };
 }
 
+export function settStatsborgerskap(land: string) {
+    // @ts-ignore
+    familie[STATSBORGERSKAP][LANDKODE]["value"] = land;
+}
 export function settIdent(ident: any) {
     familie[IDENT][IDENT] = ident;
 }

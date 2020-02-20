@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import * as React from "react";
 import {DispatchProps} from "../../redux/reduxTypes";
 import {State} from "../../redux/reducers";
-import {Radio} from "nav-frontend-skjema";
+import {Radio, Select} from "nav-frontend-skjema";
 import {Collapse} from "react-collapse";
 import {tilStart} from "../../redux/navigasjon/navigasjonActions";
 import NyttArbeidsforhold, {
@@ -25,6 +25,7 @@ interface OwnState {
 	fornavn: string;
 	mellomnavn: string;
 	etternavn: string;
+	statsborgerskap: string;
 	telefonnummer: boolean;
 	telefonnummer_value: string;
 	bankkonto: boolean;
@@ -74,6 +75,7 @@ class MockBruker extends React.Component<Props,OwnState> {
 			fornavn: "Han",
 			mellomnavn: "",
 			etternavn: "Solo",
+			statsborgerskap: "NOR",
 			telefonnummer: false,
 			telefonnummer_value: "99887766",
 			bankkonto: false,
@@ -272,6 +274,7 @@ class MockBruker extends React.Component<Props,OwnState> {
 
 		// Sett navn
 		mocksystemdata.settNavn(this.state.fornavn, this.state.mellomnavn, this.state.etternavn);
+		mocksystemdata.settStatsborgerskap(this.state.statsborgerskap);
 
 		// Sett ident
 		mocksystemdata.settIdent(this.props.mock_ident);
@@ -427,6 +430,15 @@ class MockBruker extends React.Component<Props,OwnState> {
 						<MockInput label="Etternavn:"
 								   onChange={(evt: any) => this.setState({etternavn: evt.target.value})}
 								   value={this.state.etternavn}/>
+						<Select label='Statsborgerskap:' onChange={(evt: any) => this.setState({statsborgerskap: evt.target.value})}>
+							<option value="NOR" key="NOR" selected={true}>NOR</option>
+							<option value="SWE" key="SWE">SWE</option>
+							<option value="DEN" key="DEN">DEN</option>
+							<option value="GER" key="GER">GER</option>
+							<option value="USA" key="USA">USA</option>
+							<option value="xxx" key="xxx">xxx (Statsløs)</option>
+							<option value="???" key="???">??? (Mangler opplysninger)</option>
+						</Select>
 					</MockDataBolkWrapper>
 
 					{/*<div className="mock-data-bolk">*/}
