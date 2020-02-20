@@ -58,6 +58,7 @@ interface OwnState {
 		utbetalinger: NyUtbetalingObject[],
 		saker: NySakObject[]
 	};
+	bostotte_feiler: boolean;
 }
 
 interface StoreProps {
@@ -108,6 +109,7 @@ class MockBruker extends React.Component<Props,OwnState> {
 				utbetalinger: [],
 				saker: []
 			},
+			bostotte_feiler: false,
 		}
 	}
 
@@ -393,6 +395,11 @@ class MockBruker extends React.Component<Props,OwnState> {
 			mocksystemdata.leggTilBostotteUtbetalinger(this.state.bostotteDto.utbetalinger);
 		}
 
+		if (this.state.bostotte_feiler) {
+			console.log("settBostooteFeiler: " + this.state.bostotte_feiler);
+			mocksystemdata.settBostooteFeiler(this.state.bostotte_feiler);
+		}
+
 		if (this.state.bostotteSaker) {
 			mocksystemdata.leggTilBostotteSaker(this.state.bostotteDto.saker);
 		}
@@ -405,7 +412,8 @@ class MockBruker extends React.Component<Props,OwnState> {
 			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getOrganisasjonPath(), JSON.stringify(mocksystemdata.getOrganisasjonJson())),
 			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getArbeidPath(), JSON.stringify(mocksystemdata.getArbeidJson())),
 			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getUtbetalingPath(), JSON.stringify(mocksystemdata.getUtbetalingJson())),
-			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getBostottePath(), JSON.stringify(mocksystemdata.getBostotteJson()))
+			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getBostottePath(), JSON.stringify(mocksystemdata.getBostotteJson())),
+			fetchPost("internal/mock/tjeneste/" + mocksystemdata.getBostottePath() + "_feiler", JSON.stringify(mocksystemdata.getFeiler())),
 		]).then(() => {
 			this.props.dispatch(tilStart());
 		});
@@ -573,6 +581,12 @@ class MockBruker extends React.Component<Props,OwnState> {
 							{ this.settInnListeOverSaker()}
 							<NyBostotteSak onLeggTilNySak={(nySak: NySakObject) => this.handleLeggTilNySak(nySak)}/>
 						</Collapse>
+					</MockDataBolkWrapper>
+
+					<MockDataBolkWrapper tittel="Skal bostøtte feile?">
+						<Radio onChange={() => this.setState({bostotte_feiler: false})} label='Nei' name='bostotte_feiler' value={'nei'}
+							   defaultChecked={true}/>
+						<Radio onChange={() => this.setState({bostotte_feiler: true})} label='Ja' name='bostotte_feiler' value={'ja'}/>
 					</MockDataBolkWrapper>
 
 					<MockDataBolkWrapper tittel="Utbetalinger">

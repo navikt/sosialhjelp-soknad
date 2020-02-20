@@ -24,6 +24,7 @@ let organisasjon = organisasjonJSON;
 const telefon = telefonJSON;
 const utbetaling = utbetalingJSON;
 const bostotte = bostotteJSON;
+let bostotte_feiler:boolean = false;
 
 const PERSON = "person";
 const MIDLERTIDIGPOSTADRESSE = "midlertidigPostadresse";
@@ -421,6 +422,10 @@ export function leggTilBostotteSaker(saker: any[]) {
     bostotteJSON.saker = saker;
 }
 
+export function settBostooteFeiler(feiler: boolean) {
+    bostotte_feiler = feiler;
+}
+
 export function getAdresserPath() {
     return endpoints.adresser
 }
@@ -491,4 +496,8 @@ export function getBostottePath() {
 
 export function getBostotteJson() {
     return bostotte
+}
+
+export function getFeiler() {
+    return bostotte_feiler
 }
