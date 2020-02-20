@@ -24,6 +24,7 @@ let organisasjon = organisasjonJSON;
 const telefon = telefonJSON;
 const utbetaling = utbetalingJSON;
 const bostotte = bostotteJSON;
+let bostotte_feiler:boolean = false;
 
 const PERSON = "person";
 const MIDLERTIDIGPOSTADRESSE = "midlertidigPostadresse";
@@ -32,6 +33,8 @@ const VERDI = "verdi";
 const ARBEIDSFORHOLD = "arbeidsforhold";
 const ORGANISASJON = "organisasjon";
 const PERSONNAVN = "personnavn";
+const STATSBORGERSKAP = "statsborgerskap";
+const LANDKODE = "land";
 const IDENT = "ident";
 
 export function settNavn(fornavn: any, mellomnavn: any, etternavn: any) {
@@ -47,6 +50,10 @@ export function settNavn(fornavn: any, mellomnavn: any, etternavn: any) {
     };
 }
 
+export function settStatsborgerskap(land: string) {
+    // @ts-ignore
+    familie[STATSBORGERSKAP][LANDKODE]["value"] = land;
+}
 export function settIdent(ident: any) {
     familie[IDENT][IDENT] = ident;
 }
@@ -415,6 +422,10 @@ export function leggTilBostotteSaker(saker: any[]) {
     bostotteJSON.saker = saker;
 }
 
+export function settBostooteFeiler(feiler: boolean) {
+    bostotte_feiler = feiler;
+}
+
 export function getAdresserPath() {
     return endpoints.adresser
 }
@@ -485,4 +496,8 @@ export function getBostottePath() {
 
 export function getBostotteJson() {
     return bostotte
+}
+
+export function getFeiler() {
+    return bostotte_feiler
 }
