@@ -92,7 +92,7 @@ const StudielanView = () => {
                 onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             />
-            {studielan && (studielan.bekreftelse == false) &&
+            {studielan && (studielan.bekreftelse === false) &&
                 <Informasjonspanel
                     ikon={InformasjonspanelIkon.ELLA}
                     farge={DigisosFarge.VIKTIG}
