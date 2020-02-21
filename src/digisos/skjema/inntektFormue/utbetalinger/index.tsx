@@ -9,7 +9,7 @@ import Sporsmal, {
     LegendTittleStyle,
 } from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {
-    getFaktumSporsmalTekst,
+    getFaktumSporsmalTekst, getIntlTextOrKey,
     replaceDotWithUnderscore,
 } from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
@@ -185,56 +185,59 @@ export const UtbetalingerView = () => {
         setOppstartsModus(false);
     }
     return (
-        <JaNeiSporsmal
-            visPlaceholder={oppstartsModus}
-            tekster={getFaktumSporsmalTekst(intl, UTBETALINGER)}
-            faktumKey={UTBETALINGER}
-            verdi={utbetalinger.bekreftelse}
-            onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
-            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-        >
-            <Sporsmal
-                tekster={getFaktumSporsmalTekst(
-                    intl,
-                    UTBETALINGER + ".true.type"
-                )}
+        <div className="skjema-sporsmal">
+            <h2>{getIntlTextOrKey(intl, "inntekt.inntekter.titel")}</h2>
+            <JaNeiSporsmal
+                visPlaceholder={oppstartsModus}
+                tekster={getFaktumSporsmalTekst(intl, UTBETALINGER)}
+                faktumKey={UTBETALINGER}
+                verdi={utbetalinger.bekreftelse}
+                onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
-                {renderCheckBox(
-                    UtbetalingerKeys.UTBYTTE,
-                    UtbetalingerKeys.UTBYTTE
-                )}
-                {renderCheckBox(UtbetalingerKeys.SALG, UtbetalingerKeys.SALG)}
-                {renderCheckBox(
-                    UtbetalingerKeys.FORSIKRING,
-                    UtbetalingerKeys.FORSIKRING
-                )}
-                {renderCheckBox(UtbetalingerKeys.ANNET, UtbetalingerKeys.ANNET)}
-                <NivaTreSkjema
-                    visible={!!(utbetalinger.bekreftelse && utbetalinger.annet)}
-                    size="small"
+                <Sporsmal
+                    tekster={getFaktumSporsmalTekst(
+                        intl,
+                        UTBETALINGER + ".true.type"
+                    )}
                 >
-                    <TextareaEnhanced
-                        id={replaceDotWithUnderscore(
-                            TEXT_AREA_ANNET_FAKTUM_KEY
-                        )}
-                        placeholder=""
-                        onChange={(evt: any) => onChangeAnnet(evt.target.value)}
-                        onBlur={() => onBlurTekstfeltAnnet()}
-                        faktumKey={TEXT_AREA_ANNET_FAKTUM_KEY}
-                        labelId={
-                            UTBETALINGER +
-                            ".true.type.annet.true.beskrivelse.label"
-                        }
-                        maxLength={MAX_CHARS}
-                        value={
-                            utbetalinger.beskrivelseAvAnnet
-                                ? utbetalinger.beskrivelseAvAnnet
-                                : ""
-                        }
-                    />
-                </NivaTreSkjema>
-            </Sporsmal>
-        </JaNeiSporsmal>
+                    {renderCheckBox(
+                        UtbetalingerKeys.UTBYTTE,
+                        UtbetalingerKeys.UTBYTTE
+                    )}
+                    {renderCheckBox(UtbetalingerKeys.SALG, UtbetalingerKeys.SALG)}
+                    {renderCheckBox(
+                        UtbetalingerKeys.FORSIKRING,
+                        UtbetalingerKeys.FORSIKRING
+                    )}
+                    {renderCheckBox(UtbetalingerKeys.ANNET, UtbetalingerKeys.ANNET)}
+                    <NivaTreSkjema
+                        visible={!!(utbetalinger.bekreftelse && utbetalinger.annet)}
+                        size="small"
+                    >
+                        <TextareaEnhanced
+                            id={replaceDotWithUnderscore(
+                                TEXT_AREA_ANNET_FAKTUM_KEY
+                            )}
+                            placeholder=""
+                            onChange={(evt: any) => onChangeAnnet(evt.target.value)}
+                            onBlur={() => onBlurTekstfeltAnnet()}
+                            faktumKey={TEXT_AREA_ANNET_FAKTUM_KEY}
+                            labelId={
+                                UTBETALINGER +
+                                ".true.type.annet.true.beskrivelse.label"
+                            }
+                            maxLength={MAX_CHARS}
+                            value={
+                                utbetalinger.beskrivelseAvAnnet
+                                    ? utbetalinger.beskrivelseAvAnnet
+                                    : ""
+                            }
+                        />
+                    </NivaTreSkjema>
+                </Sporsmal>
+            </JaNeiSporsmal>
+        </div>
     );
 };
 

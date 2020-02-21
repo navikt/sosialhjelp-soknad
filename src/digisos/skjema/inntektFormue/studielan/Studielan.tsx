@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {FormattedHTMLMessage, FormattedMessage, useIntl} from "react-intl";
 
 import {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {
     SoknadsSti,
@@ -83,6 +83,7 @@ const StudielanView = () => {
 
     const studielanSporsmal = (
         <div className="skjema-sporsmal">
+            <h2>{getIntlTextOrKey(intl, "inntekt.studielan.titel")}</h2>
             <JaNeiSporsmal
                 visPlaceholder={oppstartsModus}
                 tekster={getFaktumSporsmalTekst(intl, FAKTUM_STUDIELAN)}
@@ -91,18 +92,19 @@ const StudielanView = () => {
                 onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             />
-            <Informasjonspanel
-                synlig={studielan && studielan.bekreftelse === false}
-                ikon={InformasjonspanelIkon.ELLA}
-                farge={DigisosFarge.VIKTIG}
-            >
-                <h4 className="skjema-sporsmal__infotekst__tittel">
-                    <FormattedMessage id={STUDERER_INFO_TITTEL} />
-                </h4>
-                <FormattedHTMLMessage id={STUDERER_INFO_DEL1} />
-                <p />
-                <FormattedHTMLMessage id={STUDERER_INFO_DEL2} />
-            </Informasjonspanel>
+            {studielan && (studielan.bekreftelse == false) &&
+                <Informasjonspanel
+                    ikon={InformasjonspanelIkon.ELLA}
+                    farge={DigisosFarge.VIKTIG}
+                >
+                    <h4 className="skjema-sporsmal__infotekst__tittel">
+                        <FormattedMessage id={STUDERER_INFO_TITTEL}/>
+                    </h4>
+                    <FormattedHTMLMessage id={STUDERER_INFO_DEL1}/>
+                    <p/>
+                    <FormattedHTMLMessage id={STUDERER_INFO_DEL2}/>
+                </Informasjonspanel>
+            }
         </div>
     );
     if (typeof studielan !== "undefined" && studielan.skalVises) {

@@ -2,7 +2,7 @@ import * as React from "react";
 import {
     FormattedMessage,
     FormattedHTMLMessage,
-    FormattedNumber,
+    FormattedNumber, useIntl,
 } from "react-intl";
 import {Panel} from "nav-frontend-paneler";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
@@ -16,9 +16,11 @@ import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 
 const NavYtelserView = () => {
     const dispatch = useDispatch();
+    const intl = useIntl();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const behandlingsId = useSelector(
@@ -79,21 +81,15 @@ const NavYtelserView = () => {
         }
     );
 
-    const tittel: JSX.Element = (
-        <h4>
-            <FormattedMessage id="navytelser.sporsmal" />
-        </h4>
-    );
-
     return (
         <div className={"skatt-wrapper"}>
+            <h2>{getIntlTextOrKey(intl, "navytelser.titel")}</h2>
             {!visAnimerteStreker && !utbetalingerFraNavFeilet && harNavytelser && (
                 <Lesmerpanel
                     apneTekst={"Se detaljer"}
                     lukkTekst={"Lukk"}
                     intro={
                         <div>
-                            {tittel}
                             <FormattedHTMLMessage
                                 id={"navytelser.infotekst.tekst"}
                             />
@@ -112,7 +108,6 @@ const NavYtelserView = () => {
                 !harNavytelser && (
                     <Panel border={true} className={"ytelser_panel"}>
                         <div>
-                            {tittel}
                             <FormattedMessage id="utbetalinger.ingen.true" />
                         </div>
                     </Panel>
@@ -120,7 +115,6 @@ const NavYtelserView = () => {
             {utbetalingerFraNavFeilet && (
                 <Panel border={true} className={"ytelser_panel"}>
                     <div>
-                        {tittel}
                         <FormattedMessage id="utbetalinger.kontaktproblemer" />
                     </div>
                 </Panel>

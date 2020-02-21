@@ -178,6 +178,7 @@ const BostotteView = () => {
         bostotte.saker && bostotte.saker.length > 0;
     return (
         <div className="blokk-xs">
+            <h2>{getIntlTextOrKey(intl, "inntekt.bostotte.overskrift")}</h2>
             <JaNeiSporsmal
                 visPlaceholder={oppstartsModus}
                 tekster={getFaktumSporsmalTekst(intl, FAKTUM_BOSTOTTE)}
@@ -279,6 +280,7 @@ const BostotteView = () => {
                                         event.preventDefault();
                                     }}
                                     href="/ta_bort_samtykke"
+                                    className="linje_under"
                                 >
                                     {getIntlTextOrKey(intl, "inntekt.bostotte.ta_bort_samtykke")}
                                 </a>

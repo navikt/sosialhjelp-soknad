@@ -62,6 +62,7 @@ const Skatt = () => {
 
     return (
         <div className={"skatt-wrapper"}>
+            <h2>{getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.tittel")}</h2>
             {harSamtykke && inntektFraSkatteetatenFeilet && (
                 <Panel border={true} className={"ytelser_panel"}>
                     <div>
@@ -89,6 +90,7 @@ const Skatt = () => {
                                 event.preventDefault();
                             }}
                             href="/ta_bort_samtykke"
+                            className="linje_under"
                         >
                             {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
                         </a>
@@ -112,6 +114,7 @@ const Skatt = () => {
                                         event.preventDefault();
                                     }}
                                     href="/ta_bort_samtykke"
+                                    className="linje_under"
                                 >
                                     {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
                                 </a>
