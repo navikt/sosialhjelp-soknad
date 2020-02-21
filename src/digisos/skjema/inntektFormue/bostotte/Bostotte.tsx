@@ -18,7 +18,6 @@ import {
 } from "../../../redux/soknadsdata/soknadsdataActions";
 import Knapp from "nav-frontend-knapper";
 import AlertStripe from "nav-frontend-alertstriper";
-import Lenkeknapp from "../../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -259,26 +258,31 @@ const BostotteView = () => {
                                 );
                             })}
                             {(harBostotterUtbetalinger || harBostotterSaker) && (
-                                <a
-                                    href="https://kundeforhold-bostotte.husbanken.no/esoknad-bostotte/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="linje_under"
-                                >
-                                    <FormattedMessage
-                                        id={"inntekt.bostotte.husbanken.lenkeText"}
-                                    />
-                                </a>
+                                <div>
+                                    <a
+                                        href="https://kundeforhold-bostotte.husbanken.no/esoknad-bostotte/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="linje_under"
+                                    >
+                                        <FormattedMessage
+                                            id={"inntekt.bostotte.husbanken.lenkeText"}
+                                        />
+                                    </a>
+                                </div>
                             )}
-                            <br/>
-                            <Lenkeknapp
-                                id="ta_bort_bostotte_samtykke"
-                                onClick={() => {
-                                    handleSettBostotteSamtykke(false)
-                                }}
-                            >
-                                {getIntlTextOrKey(intl, "inntekt.bostotte.ta_bort_samtykke")}
-                            </Lenkeknapp>
+                            <div className="bostotte-luft-over-ta-bort-knapp-lenke">
+                                <a
+                                    id="ta_bort_bostotte_samtykke"
+                                    onClick={(event: any) => {
+                                        handleSettBostotteSamtykke(false);
+                                        event.preventDefault();
+                                    }}
+                                    href="/ta_bort_samtykke"
+                                >
+                                    {getIntlTextOrKey(intl, "inntekt.bostotte.ta_bort_samtykke")}
+                                </a>
+                            </div>
                         </>
                     )}
                 </Sporsmal>

@@ -11,7 +11,6 @@ import SkattbarinntektForskuddstrekk from "./SkattbarinntektForskuddstrekk";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknadsdata/soknadsdataActions";
 import Knapp from "nav-frontend-knapper";
-import Lenkeknapp from "../../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 
 const Skatt = () => {
@@ -83,14 +82,16 @@ const Skatt = () => {
                                 }
                             />
                         </div>
-                        <Lenkeknapp
+                        <a
                             id="ta_bort_bostotte_samtykke"
-                            onClick={() => {
-                                handleSettSkatteetatenSamtykke(false)
+                            onClick={(event: any) => {
+                                handleSettSkatteetatenSamtykke(false);
+                                event.preventDefault();
                             }}
+                            href="/ta_bort_samtykke"
                         >
                             {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
-                        </Lenkeknapp>
+                        </a>
                     </Panel>
                 )}
             {!visAnimerteStreker &&
@@ -104,14 +105,16 @@ const Skatt = () => {
                                     {skattbarTittel}
                                     <FormattedMessage id="utbetalinger.inntekt.skattbar.ingen" />
                                 </div>
-                                <Lenkeknapp
+                                <a
                                     id="ta_bort_bostotte_samtykke"
-                                    onClick={() => {
-                                        handleSettSkatteetatenSamtykke(false)
+                                    onClick={(event: any) => {
+                                        handleSettSkatteetatenSamtykke(false);
+                                        event.preventDefault();
                                     }}
+                                    href="/ta_bort_samtykke"
                                 >
                                     {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
-                                </Lenkeknapp>
+                                </a>
                             </>
                         )}
                         {!harSamtykke && (
