@@ -29,7 +29,7 @@ const Nedtelling: React.StatelessComponent<Props> = ({
 				</Hovedknapp>
 				<a
 					href={utloggingsUrl}
-					className="lenke knapp-lenke timeoutbox__loggutknapp"
+					className="lenke knapp-lenke timeoutbox__loggutknapp linje_under"
 				>
 					<FormattedMessage id={"timeout.loggut"} />
 				</a>

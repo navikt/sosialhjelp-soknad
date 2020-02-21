@@ -18,6 +18,7 @@ import {
 } from "../../../redux/soknadsdata/soknadsdataActions";
 import Knapp from "nav-frontend-knapper";
 import AlertStripe from "nav-frontend-alertstriper";
+import Lenkeknapp from "../../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -262,6 +263,7 @@ const BostotteView = () => {
                                     href="https://kundeforhold-bostotte.husbanken.no/esoknad-bostotte/"
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    className="linje_under"
                                 >
                                     <FormattedMessage
                                         id={"inntekt.bostotte.husbanken.lenkeText"}
@@ -269,18 +271,14 @@ const BostotteView = () => {
                                 </a>
                             )}
                             <br/>
-                            <Knapp
+                            <Lenkeknapp
                                 id="ta_bort_bostotte_samtykke"
-                                type="flat"
-                                spinner={oppstartsModus}
-                                mini={true}
                                 onClick={() => {
                                     handleSettBostotteSamtykke(false)
                                 }}
-                                className="samtykke_knapp_padding"
                             >
                                 {getIntlTextOrKey(intl, "inntekt.bostotte.ta_bort_samtykke")}
-                            </Knapp>
+                            </Lenkeknapp>
                         </>
                     )}
                 </Sporsmal>

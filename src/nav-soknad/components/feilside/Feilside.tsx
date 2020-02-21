@@ -49,19 +49,19 @@ const FeilSide: React.FC<FeilsideProps> = ({
 				) : null}
 				<ul className="feilside__link-liste">
 					<li className="feilside__link">
-						<a href="http://www.nav.no" className="lenke">
+						<a href="http://www.nav.no" className="lenke linje_under">
 							Gå til forsiden nav.no
 						</a>
 					</li>
 					<li className="feilside__link">
-						<a href="https://www.nav.no/no/Ditt+NAV" className="lenke">
+						<a href="https://www.nav.no/no/Ditt+NAV" className="lenke linje_under">
 							Gå til Ditt NAV
 						</a>
 					</li>
 					<li className="feilside__link">
 						<a
 							href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Klage+ris+og+ros/Feil+og+mangler+paa+navno"
-							className="lenke"
+							className="lenke linje_under"
 						>
 							Meld fra om feil
 						</a>

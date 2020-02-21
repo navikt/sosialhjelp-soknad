@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormattedMessage} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import {Panel} from "nav-frontend-paneler";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -11,9 +11,12 @@ import SkattbarinntektForskuddstrekk from "./SkattbarinntektForskuddstrekk";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknadsdata/soknadsdataActions";
 import Knapp from "nav-frontend-knapper";
+import Lenkeknapp from "../../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
+import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 
 const Skatt = () => {
     const dispatch = useDispatch();
+    const intl = useIntl();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const behandlingsId = useSelector(
@@ -80,17 +83,14 @@ const Skatt = () => {
                                 }
                             />
                         </div>
-                        <Knapp
+                        <Lenkeknapp
                             id="ta_bort_bostotte_samtykke"
-                            type="flat"
-                            mini={true}
                             onClick={() => {
                                 handleSettSkatteetatenSamtykke(false)
                             }}
-                            className="samtykke_knapp_padding"
                         >
-                            <FormattedMessage id="utbetalinger.inntekt.skattbar.ta_bort_samtykke" />
-                        </Knapp>
+                            {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
+                        </Lenkeknapp>
                     </Panel>
                 )}
             {!visAnimerteStreker &&
@@ -104,17 +104,14 @@ const Skatt = () => {
                                     {skattbarTittel}
                                     <FormattedMessage id="utbetalinger.inntekt.skattbar.ingen" />
                                 </div>
-                                <Knapp
+                                <Lenkeknapp
                                     id="ta_bort_bostotte_samtykke"
-                                    type="flat"
-                                    mini={true}
                                     onClick={() => {
                                         handleSettSkatteetatenSamtykke(false)
                                     }}
-                                    className="samtykke_knapp_padding"
                                 >
-                                    <FormattedMessage id="utbetalinger.inntekt.skattbar.ta_bort_samtykke"/>
-                                </Knapp>
+                                    {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
+                                </Lenkeknapp>
                             </>
                         )}
                         {!harSamtykke && (
@@ -134,7 +131,7 @@ const Skatt = () => {
                                     }}
                                     className="samtykke_knapp_padding"
                                 >
-                                    <FormattedMessage id="utbetalinger.inntekt.skattbar.gi_samtykke"/>
+                                    {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.gi_samtykke")}
                                 </Knapp>
                             </>
                         )}
