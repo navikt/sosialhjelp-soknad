@@ -1,6 +1,5 @@
 import * as React from "react";
 import {FormattedMessage, useIntl} from "react-intl";
-import {Panel} from "nav-frontend-paneler";
 import {useDispatch, useSelector} from "react-redux";
 
 import {SkattbarInntektInfo, SoknadsSti,} from "../../../redux/soknadsdata/soknadsdataReducer";
@@ -64,17 +63,17 @@ const Skatt = () => {
         <div className={"skatt-wrapper"}>
             <h2>{getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.tittel")}</h2>
             {harSamtykke && inntektFraSkatteetatenFeilet && (
-                <Panel border={true} className={"ytelser_panel"}>
+                <div className={"ytelser_panel"}>
                     <div>
                         {skattbarTittel}
                         <FormattedMessage id="utbetalinger.skattbar.kontaktproblemer" />
                     </div>
-                </Panel>
+                </div>
             )}
             {!visAnimerteStreker &&
                 inntektFraSkatteetaten &&
                 inntektFraSkatteetaten.length > 0 && (
-                    <Panel border={true} >
+                    <div className={"ytelser_panel"}>
                         <FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse" />
                         <div className="utbetalinger">
                             <SkattbarinntektForskuddstrekk
@@ -94,13 +93,13 @@ const Skatt = () => {
                         >
                             {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
                         </a>
-                    </Panel>
+                    </div>
                 )}
             {!visAnimerteStreker &&
                 !inntektFraSkatteetatenFeilet &&
                 inntektFraSkatteetaten &&
                 inntektFraSkatteetaten.length === 0 && (
-                    <Panel border={true} className={"ytelser_panel"}>
+                    <div className={"ytelser_panel"}>
                         {harSamtykke && (
                             <>
                                 <div>
@@ -141,7 +140,7 @@ const Skatt = () => {
                                 </Knapp>
                             </>
                         )}
-                    </Panel>
+                    </div>
                 )}
             {visAnimerteStreker && <TextPlaceholder lines={3} />}
         </div>
