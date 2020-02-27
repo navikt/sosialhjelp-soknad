@@ -8,5 +8,6 @@ export const endpoints =
       "organisasjon": "organisasjon",
       "familie": "familie",
       "utbetaling": "utbetaling",
-      "bostotte": "bostotte"
+      "skattetaten": "skattetaten",
+      "bostotte": "bostotte",
     };

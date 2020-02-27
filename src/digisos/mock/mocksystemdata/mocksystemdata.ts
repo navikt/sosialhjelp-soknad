@@ -13,6 +13,7 @@ import {norgJSON} from "./jsonTemplates/norg";
 
 import {telefonJSON} from "./jsonTemplates/telefon";
 import {utbetalingJSON} from "./jsonTemplates/utbetaling";
+import {NyPeriodeOgUtbetaler} from "../mockbruker/mockComponents/nySkattetatenUtbetaling";
 
 
 const adresser = adresserJSON;
@@ -23,8 +24,10 @@ const norg = norgJSON;
 let organisasjon = organisasjonJSON;
 const telefon = telefonJSON;
 const utbetaling = utbetalingJSON;
+let skattetaten: NyPeriodeOgUtbetaler[] = [];
 const bostotte = bostotteJSON;
-let bostotte_feiler:boolean = false;
+let skatt_feiler: boolean = false;
+let bostotte_feiler: boolean = false;
 
 const PERSON = "person";
 const MIDLERTIDIGPOSTADRESSE = "midlertidigPostadresse";
@@ -54,6 +57,7 @@ export function settStatsborgerskap(land: string) {
     // @ts-ignore
     familie[STATSBORGERSKAP][LANDKODE]["value"] = land;
 }
+
 export function settIdent(ident: any) {
     familie[IDENT][IDENT] = ident;
 }
@@ -412,6 +416,10 @@ export function leggTilUtbetaling(periodeFom: any, periodeTom: any, posteringsda
     utbetaling.forfallsdato = forfallsdato;
 }
 
+export function leggTilSkattetatenUtbetalinger(periodeOgUtbetaler: NyPeriodeOgUtbetaler[]) {
+    skattetaten = periodeOgUtbetaler;
+}
+
 export function leggTilBostotteUtbetalinger(utbetalinger: any[]) {
     // @ts-ignore
     bostotteJSON.utbetalinger = utbetalinger;
@@ -420,6 +428,10 @@ export function leggTilBostotteUtbetalinger(utbetalinger: any[]) {
 export function leggTilBostotteSaker(saker: any[]) {
     // @ts-ignore
     bostotteJSON.saker = saker;
+}
+
+export function settSkattFeiler(feiler: boolean) {
+    skatt_feiler = feiler;
 }
 
 export function settBostooteFeiler(feiler: boolean) {
@@ -490,6 +502,14 @@ export function getUtbetalingJson() {
     return utbetaling
 }
 
+export function getSkattetatenPath() {
+    return endpoints.skattetaten
+}
+
+export function getSkattetatenJson() {
+    return {oppgaveInntektsmottaker: skattetaten}
+}
+
 export function getBostottePath() {
     return endpoints.bostotte
 }
@@ -498,6 +518,10 @@ export function getBostotteJson() {
     return bostotte
 }
 
-export function getFeiler() {
+export function getSkattFeiler() {
+    return skatt_feiler
+}
+
+export function getBostotteFeiler() {
     return bostotte_feiler
 }
