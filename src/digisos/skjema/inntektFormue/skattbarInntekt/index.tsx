@@ -11,6 +11,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknadsdata/soknadsdataActions";
 import Knapp from "nav-frontend-knapper";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
+import AlertStripe from "nav-frontend-alertstriper";
 
 const Skatt = () => {
     const dispatch = useDispatch();
@@ -41,11 +42,6 @@ const Skatt = () => {
         skattbarinntektogforskuddstrekk.inntektFraSkatteetaten;
     const inntektFraSkatteetatenFeilet: boolean =
         skattbarinntektogforskuddstrekk.inntektFraSkatteetatenFeilet;
-    const skattbarTittel: JSX.Element = (
-        <h4>
-            <FormattedMessage id="utbetalinger.inntekt.skattbar.tittel" />
-        </h4>
-    );
 
     function handleSettSkatteetatenSamtykke(harSamtykke: boolean) {
         if (!visAnimerteStreker && behandlingsId) {
@@ -64,10 +60,20 @@ const Skatt = () => {
             <h2>{getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.tittel")}</h2>
             {harSamtykke && inntektFraSkatteetatenFeilet && (
                 <div className={"ytelser_panel"}>
-                    <div>
-                        {skattbarTittel}
+                    <Knapp
+                        id="gi_bostotte_samtykke"
+                        type="standard"
+                        mini={false}
+                        onClick={() => {
+                            handleSettSkatteetatenSamtykke(true)
+                        }}
+                        className="samtykke_knapp_padding"
+                    >
+                        {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.gi_samtykke")}
+                    </Knapp>
+                    <AlertStripe type={"feil"}>
                         <FormattedMessage id="utbetalinger.skattbar.kontaktproblemer" />
-                    </div>
+                    </AlertStripe>
                 </div>
             )}
             {!visAnimerteStreker &&
@@ -103,7 +109,6 @@ const Skatt = () => {
                         {harSamtykke && (
                             <>
                                 <div>
-                                    {skattbarTittel}
                                     <FormattedMessage id="utbetalinger.inntekt.skattbar.ingen" />
                                 </div>
                                 <a
