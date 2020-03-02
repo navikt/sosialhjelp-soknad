@@ -7,7 +7,7 @@ export const endpoints =
       "arbeid": "arbeid",
       "organisasjon": "organisasjon",
       "familie": "familie",
-      "utbetaling": "utbetaling",
+      "navUtbetaling": "utbetaling",
       "skattetaten": "skattetaten",
       "bostotte": "bostotte",
     };

@@ -12,8 +12,10 @@ import {familieJSON} from "./jsonTemplates/familie";
 import {norgJSON} from "./jsonTemplates/norg";
 
 import {telefonJSON} from "./jsonTemplates/telefon";
-import {utbetalingJSON} from "./jsonTemplates/utbetaling";
+import {enkelNavYtelseJSON} from "./jsonTemplates/enkelNavYtelseJSON";
 import {NyPeriodeOgUtbetaler} from "../mockbruker/mockComponents/nySkattetatenUtbetaling";
+import {enkelNavUtbetalingJSON} from "./jsonTemplates/enkelNavUtbetalingJSON";
+import {NyNavUtbetalingObject, NyNavYtelseObject} from "../mockbruker/mockComponents/nyNavUtbetaling";
 
 
 const adresser = adresserJSON;
@@ -23,11 +25,9 @@ let familie = familieJSON;
 const norg = norgJSON;
 let organisasjon = organisasjonJSON;
 const telefon = telefonJSON;
-const utbetaling = utbetalingJSON;
+const navUtbetalinger:any[] = [];
 let skattetaten: NyPeriodeOgUtbetaler[] = [];
 const bostotte = bostotteJSON;
-let skatt_feiler: boolean = false;
-let bostotte_feiler: boolean = false;
 
 const PERSON = "person";
 const MIDLERTIDIGPOSTADRESSE = "midlertidigPostadresse";
@@ -402,18 +402,31 @@ export function clearFamilieforhold() {
     familie.harFraRolleI = [];
 }
 
-export function leggTilUtbetaling(periodeFom: any, periodeTom: any, posteringsdato: any, utbetalingsdato: any, forfallsdato: any) {
+export function leggTilNavUtbetaling(nyNavUtbetalingsListe: NyNavUtbetalingObject[]) {
+    nyNavUtbetalingsListe.forEach(nyNavUtbetaling => {
+        const utbetaling = JSON.parse(JSON.stringify(enkelNavUtbetalingJSON)); // Vi kan forbedre med å sjekke om denne allerede finnes.
+        utbetaling.utbetaltTil.aktoerId = nyNavUtbetaling.ident;
+        utbetaling.posteringsdato = nyNavUtbetaling.posteringsdato;
+        utbetaling.utbetalingsdato = nyNavUtbetaling.utbetalingsdato;
+        utbetaling.forfallsdato = nyNavUtbetaling.forfallsdato;
 
-    utbetaling.ytelseListe[0].ytelsesperiode.fom = periodeFom;
-    utbetaling.ytelseListe[0].ytelsesperiode.tom = periodeTom;
+        let ytelseSum = 0;
+        nyNavUtbetaling.ytelsesListe.forEach((nyYtelse: NyNavYtelseObject) => {
+           const ytelse = JSON.parse(JSON.stringify(enkelNavYtelseJSON));
+           ytelse.ytelsestype.value = nyYtelse.ytelsestype;
+           ytelse.ytelseskomponentListe[0].ytelseskomponenttype = nyYtelse.ytelseskomponenttype;
+           ytelse.ytelseskomponentListe[0].ytelseskomponentbeloep = nyYtelse.ytelseskomponentbeloep;
+           ytelse.ytelseskomponentersum = nyYtelse.ytelseskomponentbeloep;
+           ytelse.ytelseNettobeloep = nyYtelse.ytelseskomponentbeloep;
+           ytelseSum += nyYtelse.ytelseskomponentbeloep;
+           ytelse.ytelsesperiode.fom = nyYtelse.periodeFom;
+           ytelse.ytelsesperiode.tom = nyYtelse.periodeTom;
+           utbetaling.ytelseListe.push(ytelse);
+        });
+        utbetaling.utbetalingNettobeloep = ytelseSum;
 
-    utbetaling.ytelseListe[1].ytelsesperiode.fom = periodeFom;
-    utbetaling.ytelseListe[1].ytelsesperiode.tom = periodeTom;
-
-
-    utbetaling.posteringsdato = posteringsdato;
-    utbetaling.utbetalingsdato = utbetalingsdato;
-    utbetaling.forfallsdato = forfallsdato;
+        navUtbetalinger.push(utbetaling);
+    });
 }
 
 export function leggTilSkattetatenUtbetalinger(periodeOgUtbetaler: NyPeriodeOgUtbetaler[]) {
@@ -428,14 +441,6 @@ export function leggTilBostotteUtbetalinger(utbetalinger: any[]) {
 export function leggTilBostotteSaker(saker: any[]) {
     // @ts-ignore
     bostotteJSON.saker = saker;
-}
-
-export function settSkattFeiler(feiler: boolean) {
-    skatt_feiler = feiler;
-}
-
-export function settBostooteFeiler(feiler: boolean) {
-    bostotte_feiler = feiler;
 }
 
 export function getAdresserPath() {
@@ -495,11 +500,11 @@ export function getFamilieJson() {
 }
 
 export function getUtbetalingPath() {
-    return endpoints.utbetaling
+    return endpoints.navUtbetaling
 }
 
-export function getUtbetalingJson() {
-    return utbetaling
+export function getNavUtbetalingJson() {
+    return navUtbetalinger
 }
 
 export function getSkattetatenPath() {
@@ -516,12 +521,4 @@ export function getBostottePath() {
 
 export function getBostotteJson() {
     return bostotte
-}
-
-export function getSkattFeiler() {
-    return skatt_feiler
-}
-
-export function getBostotteFeiler() {
-    return bostotte_feiler
 }

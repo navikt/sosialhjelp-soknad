@@ -140,7 +140,7 @@ export class NySkattetatenUtbetaling extends React.Component<Props, State> {
             <div>
                 <Collapse isOpened={this.state.isOpened}>
                     <div className="mock-newThingWrapper">
-                        <div className="mock-newThing-tittel">Legg til bostotte utbetaling:</div>
+                        <div className="mock-newThing-tittel">Legg til Skatteetaten utbetaling:</div>
                         <div className="mock-newThing-body">
                             <MockInput label="Beløp:"
                                        onChange={(evt: any) => this.setState({utbetalingsbelop: evt.target.value})}

@@ -22,6 +22,7 @@ import {
     NyPeriodeOgUtbetaler,
     NySkattetatenUtbetaling
 } from "./mockComponents/nySkattetatenUtbetaling";
+import {NyNavUtbetaling, NyNavUtbetalingObject, NyNavYtelseObject} from "./mockComponents/nyNavUtbetaling";
 
 
 interface OwnState {
@@ -48,15 +49,11 @@ interface OwnState {
     ektefelle_medKode: string;
     barn: boolean;
     barn_liste: NyttBarnObject[];
-    utbetaling: boolean;
-    utbetaling_periodeFom: string;
-    utbetaling_periodeTom: string;
-    utbetaling_posteringsdato: string;
-    utbetaling_utbetalingsdato: string;
-    utbetaling_forfallsdato: string;
+    navUtbetaling: boolean;
     loading: boolean;
     bostotteUtbetalinger: boolean;
     periodeOgUtbetaler: NyPeriodeOgUtbetaler[];
+    navUtbetalingsListe: NyNavUtbetalingObject[];
     harSkattetatenUtbetalinger: boolean;
     bostotteSaker: boolean;
     bostotteDto: {
@@ -65,6 +62,7 @@ interface OwnState {
     };
     skatt_feiler: boolean;
     bostotte_feiler: boolean;
+    navUtbetalinger_feiler: boolean;
 }
 
 interface StoreProps {
@@ -102,15 +100,11 @@ class MockBruker extends React.Component<Props, OwnState> {
             ektefelle_medKode: "",
             barn: false,
             barn_liste: [],
-            utbetaling: false,
-            utbetaling_periodeFom: "2019-01-01",
-            utbetaling_periodeTom: "2019-01-02",
-            utbetaling_posteringsdato: "2019-01-03",
-            utbetaling_utbetalingsdato: "2019-01-04",
-            utbetaling_forfallsdato: "2019-01-04",
             loading: false,
             bostotteUtbetalinger: false,
             periodeOgUtbetaler: [],
+            navUtbetaling: false,
+            navUtbetalingsListe: [],
             harSkattetatenUtbetalinger: false,
             bostotteSaker: false,
             bostotteDto: {
@@ -119,6 +113,7 @@ class MockBruker extends React.Component<Props, OwnState> {
             },
             skatt_feiler: false,
             bostotte_feiler: false,
+            navUtbetalinger_feiler: false,
         }
     }
 
@@ -173,20 +168,20 @@ class MockBruker extends React.Component<Props, OwnState> {
         const skattetatenManeder: NyPeriodeOgUtbetaler[] = this.state.periodeOgUtbetaler;
         let skattetatenManedList = skattetatenManeder.filter(it => it.kalendermaaned === kalendermaaned && it.opplysningspliktigId === orgNummer.toString());
         if (skattetatenManedList.length > 0) {
-            if(nyInntekt.beloep.toString() !== "0") {
+            if (nyInntekt.beloep.toString() !== "0") {
                 skattetatenManedList[0].inntekt.push(nyInntekt);
             }
-            if(nyTrekk) {
+            if (nyTrekk) {
                 skattetatenManedList[0].forskuddstrekk.push(nyTrekk);
             }
         } else {
             const skattetatenManed = new NyPeriodeOgUtbetaler();
             skattetatenManed.kalendermaaned = kalendermaaned;
             skattetatenManed.opplysningspliktigId = orgNummer.toString();
-            if(nyInntekt.beloep.toString() !== "0") {
+            if (nyInntekt.beloep.toString() !== "0") {
                 skattetatenManed.inntekt.push(nyInntekt);
             }
-            if(nyTrekk) {
+            if (nyTrekk) {
                 skattetatenManed.forskuddstrekk.push(nyTrekk);
             }
             skattetatenManeder.push(skattetatenManed);
@@ -204,6 +199,22 @@ class MockBruker extends React.Component<Props, OwnState> {
         const bostotteDto = {...this.state.bostotteDto};
         bostotteDto.saker.push(nySak);
         this.setState({bostotteDto});
+    }
+
+    handleLeggTilNyNavUtbetaling(nyNavUtbetaling: NyNavUtbetalingObject, nyNavYtelse: NyNavYtelseObject) {
+        const nyNavUtbetalingsListe = this.state.navUtbetalingsListe;
+        let treffListe = nyNavUtbetalingsListe.filter(it =>
+            it.forfallsdato === nyNavUtbetaling.forfallsdato
+            && it.posteringsdato === nyNavUtbetaling.posteringsdato
+            && it.utbetalingsdato === nyNavUtbetaling.utbetalingsdato);
+        if (treffListe.length > 0) {
+            const treff = treffListe[0];
+            treff.ytelsesListe.push(nyNavYtelse);
+        } else {
+            nyNavUtbetaling.ytelsesListe.push(nyNavYtelse);
+            nyNavUtbetalingsListe.push(nyNavUtbetaling);
+        }
+        this.setState({navUtbetalingsListe: nyNavUtbetalingsListe});
     }
 
     settInnListeOverBarn() {
@@ -226,6 +237,24 @@ class MockBruker extends React.Component<Props, OwnState> {
         this.state.periodeOgUtbetaler.forEach((periodeOgUtbetaler: NyPeriodeOgUtbetaler, key: number) => {
             a.push(<div className="mock-thing" key={key}>
                 {this.renderPeriodeOgUtbetaler(periodeOgUtbetaler, key)}
+            </div>)
+        });
+
+        if (a.length === 0) {
+            return (<div className="mock-listOfThings">...</div>)
+        }
+
+        return (
+            <div className="mock-listOfThings">{a}</div>
+        )
+    }
+
+
+    settInnListeOverNavUtbetalinger() {
+        const a: any = [];
+        this.state.navUtbetalingsListe.forEach((navUtbetaling: NyNavUtbetalingObject, key: number) => {
+            a.push(<div className="mock-thing" key={key}>
+                {this.renderNavUtbetaling(navUtbetaling, key)}
             </div>)
         });
 
@@ -289,6 +318,35 @@ class MockBruker extends React.Component<Props, OwnState> {
         )
     }
 
+
+    private renderNavUtbetaling(navUtbetaling: NyNavUtbetalingObject, utbetalingsKey: number) {
+        const ytelser: any = [];
+        navUtbetaling.ytelsesListe.forEach((ytelse: NyNavYtelseObject, key: number) => {
+            ytelser.push(<div className="mock-liste-of-things">
+                <div>Beløp: {ytelse.ytelseskomponentbeloep}</div>
+                <div>Type: {ytelse.ytelsestype}</div>
+                <button onClick={() => {
+                    let state = {...this.state};
+                    state.navUtbetalingsListe[utbetalingsKey].ytelsesListe.splice(key, 1);
+                    this.setState(state)
+                }}>x
+                </button>
+            </div>);
+        })
+        return (
+            <div className="mock-liste-of-things">
+                <div>Utbetalingsdato: {navUtbetaling.utbetalingsdato}</div>
+                {ytelser}
+                <button onClick={() => {
+                    let state = {...this.state};
+                    state.navUtbetalingsListe.splice(utbetalingsKey, 1);
+                    this.setState(state)
+                }}>x
+                </button>
+            </div>
+        )
+    }
+
     renderPeriodeOgUtbetaler(periodeOgUtbetaler: NyPeriodeOgUtbetaler, periodeKey: number) {
         const inttekter: any = [];
         const trekk: any = [];
@@ -311,13 +369,13 @@ class MockBruker extends React.Component<Props, OwnState> {
                 <div>Fratrekk:</div>
                 {trekk}
                 <button onClick={() => {
-                    let state= {...this.state};
+                    let state = {...this.state};
                     state.periodeOgUtbetaler.splice(periodeKey, 1);
                     this.setState(state)
                 }}>x
                 </button>
             </div>
-            )
+        )
     }
 
     renderSkattetatenInntektRad(inntekt: NySkattetatenInntektObject, periodeKey: number, key: number) {
@@ -491,15 +549,10 @@ class MockBruker extends React.Component<Props, OwnState> {
             })
         }
 
-        // Sett utbetalinger
-        if (this.state.utbetaling) {
-            mocksystemdata.leggTilUtbetaling(
-                this.state.utbetaling_periodeFom,
-                this.state.utbetaling_periodeTom,
-                this.state.utbetaling_posteringsdato,
-                this.state.utbetaling_utbetalingsdato,
-                this.state.utbetaling_forfallsdato
-            )
+        let navUtbetalingerStreng = "";
+        if (this.state.navUtbetaling) {
+            mocksystemdata.leggTilNavUtbetaling(this.state.navUtbetalingsListe);
+            navUtbetalingerStreng = JSON.stringify(mocksystemdata.getNavUtbetalingJson());
         }
 
         if (this.state.bostotteUtbetalinger) {
@@ -512,9 +565,6 @@ class MockBruker extends React.Component<Props, OwnState> {
             skattetatenStreng = JSON.stringify(mocksystemdata.getSkattetatenJson());
         }
 
-        mocksystemdata.settBostooteFeiler(this.state.bostotte_feiler);
-        mocksystemdata.settSkattFeiler(this.state.skatt_feiler);
-
         if (this.state.bostotteSaker) {
             mocksystemdata.leggTilBostotteSaker(this.state.bostotteDto.saker);
         }
@@ -526,11 +576,12 @@ class MockBruker extends React.Component<Props, OwnState> {
             fetchPost("internal/mock/tjeneste/" + mocksystemdata.getBrukerprofilPath(), JSON.stringify(mocksystemdata.getBrukerprofilJson())),
             fetchPost("internal/mock/tjeneste/" + mocksystemdata.getOrganisasjonPath(), JSON.stringify(mocksystemdata.getOrganisasjonJson())),
             fetchPost("internal/mock/tjeneste/" + mocksystemdata.getArbeidPath(), JSON.stringify(mocksystemdata.getArbeidJson())),
-            fetchPost("internal/mock/tjeneste/" + mocksystemdata.getUtbetalingPath(), JSON.stringify(mocksystemdata.getUtbetalingJson())),
+            fetchPost("internal/mock/tjeneste/" + mocksystemdata.getUtbetalingPath(), navUtbetalingerStreng),
+            fetchPost("internal/mock/tjeneste/" + mocksystemdata.getUtbetalingPath() + "_feiler", JSON.stringify(this.state.navUtbetalinger_feiler)),
             fetchPost("internal/mock/tjeneste/" + mocksystemdata.getSkattetatenPath(), skattetatenStreng),
-            fetchPost("internal/mock/tjeneste/" + mocksystemdata.getSkattetatenPath() + "_feiler", JSON.stringify(mocksystemdata.getSkattFeiler())),
+            fetchPost("internal/mock/tjeneste/" + mocksystemdata.getSkattetatenPath() + "_feiler", JSON.stringify(this.state.skatt_feiler)),
             fetchPost("internal/mock/tjeneste/" + mocksystemdata.getBostottePath(), JSON.stringify(mocksystemdata.getBostotteJson())),
-            fetchPost("internal/mock/tjeneste/" + mocksystemdata.getBostottePath() + "_feiler", JSON.stringify(mocksystemdata.getBostotteFeiler())),
+            fetchPost("internal/mock/tjeneste/" + mocksystemdata.getBostottePath() + "_feiler", JSON.stringify(this.state.bostotte_feiler)),
         ]).then(() => {
             this.props.dispatch(tilStart());
         });
@@ -667,7 +718,8 @@ class MockBruker extends React.Component<Props, OwnState> {
 
                     <MockDataBolkWrapper tittel="Skattetaten utbetalinger" value={this.state.harSkattetatenUtbetalinger}
                                          callback={(value: boolean) => this.setState({harSkattetatenUtbetalinger: value})}
-                                         booleanText_true=" (Nå settes det her.)" booleanText_false="(Nå brukes standard verdier.)"
+                                         booleanText_true=" (Nå settes det her.)"
+                                         booleanText_false="(Nå brukes standard verdier.)"
                     >
                         <Collapse className="mock-block-collapse" isOpened={this.state.harSkattetatenUtbetalinger}>
                             <div className="mock-listOfThings-tittel">Liste over utbetalinger som er lagt til:</div>
@@ -711,25 +763,22 @@ class MockBruker extends React.Component<Props, OwnState> {
                     >
                     </MockDataBolkWrapper>
 
-                    <MockDataBolkWrapper tittel="Utbetalinger" value={this.state.utbetaling}
-                                         callback={(value: boolean) => this.setState({utbetaling: value})}>
-                        <Collapse className="mock-block-collapse" isOpened={this.state.utbetaling}>
-                            <MockInput label="Fom:"
-                                       onChange={(evt: any) => this.setState({utbetaling_periodeFom: evt.target.value})}
-                                       value={this.state.utbetaling_periodeFom}/>
-                            <MockInput label="Tom:"
-                                       onChange={(evt: any) => this.setState({utbetaling_periodeTom: evt.target.value})}
-                                       value={this.state.utbetaling_periodeTom}/>
-                            <MockInput label="Posteringsdato:"
-                                       onChange={(evt: any) => this.setState({utbetaling_posteringsdato: evt.target.value})}
-                                       value={this.state.utbetaling_posteringsdato}/>
-                            <MockInput label="Utbetalingsdato:"
-                                       onChange={(evt: any) => this.setState({utbetaling_utbetalingsdato: evt.target.value})}
-                                       value={this.state.utbetaling_utbetalingsdato}/>
-                            <MockInput label="Forfallsdato:"
-                                       onChange={(evt: any) => this.setState({utbetaling_forfallsdato: evt.target.value})}
-                                       value={this.state.utbetaling_forfallsdato}/>
+                    <MockDataBolkWrapper tittel="Utbetalinger fra NAV" value={this.state.navUtbetaling}
+                                         callback={(value: boolean) => this.setState({navUtbetaling: value})}>
+                        <Collapse className="mock-block-collapse" isOpened={this.state.navUtbetaling}>
+                            <div className="mock-listOfThings-tittel">Liste over utbetalinger som er lagt til:</div>
+                            {this.settInnListeOverNavUtbetalinger()}
+                            <NyNavUtbetaling
+                                onLeggTilNyNavUtbetaling={(nyNavUtbetaling: NyNavUtbetalingObject, nyNavYtelse: NyNavYtelseObject) =>
+                                    (this.handleLeggTilNyNavUtbetaling(nyNavUtbetaling, nyNavYtelse))}/>
                         </Collapse>
+                    </MockDataBolkWrapper>
+
+                    <MockDataBolkWrapper tittel="Skal utbetalinger fra NAV feile?"
+                                         value={this.state.navUtbetalinger_feiler}
+                                         callback={(value: boolean) => this.setState({navUtbetalinger_feiler: value})}
+                                         booleanText_true="Ja!" booleanText_false="Nei."
+                    >
                     </MockDataBolkWrapper>
 
                     <div className={"mock-bruker-go-knapp-wrapper"}>
