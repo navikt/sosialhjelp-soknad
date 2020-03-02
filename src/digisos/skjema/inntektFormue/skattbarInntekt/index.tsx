@@ -60,6 +60,12 @@ const Skatt = () => {
             <h2>{getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.tittel")}</h2>
             {harSamtykke && inntektFraSkatteetatenFeilet && (
                 <div className={"ytelser_panel"}>
+                    <div>
+                        <h4>
+                            <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_sporsmal" />
+                        </h4>
+                        <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_info" />
+                    </div>
                     <Knapp
                         id="gi_bostotte_samtykke"
                         type="standard"
