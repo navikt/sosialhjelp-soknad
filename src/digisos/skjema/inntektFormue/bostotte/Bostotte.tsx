@@ -216,8 +216,8 @@ const BostotteView = () => {
                                     >
                                         {getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke")}
                                     </Knapp>
-                                    {requestToHusbankenFeilet && (
-                                        <AlertStripe type={"feil"}>
+                                    {samtykkeTidspunktStreng === "" && requestToHusbankenFeilet && (
+                                        <AlertStripe type={"feil"} className="feilet_kommunikasjon_margin_under">
                                             {getIntlTextOrKey(intl, "inntekt.bostotte.nedlasting_feilet")}
                                         </AlertStripe>
                                     )}
@@ -225,11 +225,11 @@ const BostotteView = () => {
                             )}
                         </>
                     )}
-                    {!requestToHusbankenFeilet && harSamtykke && (
+                    {samtykkeTidspunktStreng !== "" && harSamtykke && (
                         <>
                             <div>
+                                <h4 className="tidspunkt_uten_luft">{samtykkeTidspunktStreng}</h4>
                                 <FormattedMessage id="inntekt.bostotte.husbanken.info"/>
-                                {" "} Sist oppdatert: {samtykkeTidspunktStreng}
                             </div>
                             <h4 className="blokk-null">
                                 <FormattedMessage id="inntekt.bostotte.husbanken.utbetalinger"/>

@@ -79,17 +79,19 @@ const Skatt = () => {
                     >
                         {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.gi_samtykke")}
                     </Knapp>
-                    <AlertStripe type={"feil"}>
-                        <FormattedMessage id="utbetalinger.skattbar.kontaktproblemer" />
-                    </AlertStripe>
+                    {samtykkeTidspunktStreng === "" &&
+                        <AlertStripe type={"feil"} className="feilet_kommunikasjon_margin_under">
+                            <FormattedMessage id="utbetalinger.skattbar.kontaktproblemer"/>
+                        </AlertStripe>
+                    }
                 </div>
             )}
             {!visAnimerteStreker &&
                 inntektFraSkatteetaten &&
                 inntektFraSkatteetaten.length > 0 && (
                     <div className={"ytelser_panel"}>
-                        <FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse" />
-                        {" "} Sist oppdatert: {samtykkeTidspunktStreng}
+                        <h4 className="tidspunkt_uten_luft">{samtykkeTidspunktStreng}</h4>
+                        <FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse"/>
                         <div className="utbetalinger">
                             <SkattbarinntektForskuddstrekk
                                 skattbarinntektogforskuddstrekk={
