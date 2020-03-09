@@ -107,6 +107,7 @@ export interface SkattbarInntektInfo {
 	inntektFraSkatteetaten: SkattbarInntekt[];
 	inntektFraSkatteetatenFeilet: boolean;
 	samtykke: boolean;
+	samtykkeTidspunkt?: Date;
 }
 
 export const initialInntektState: Inntekt = {

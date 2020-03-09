@@ -66,3 +66,9 @@ export function formatDato(isoDate: string) {
 	const formatter =  new Intl.DateTimeFormat("nb-NO", {day: "numeric", month: "long", year: "numeric"});
 	return formatter.format(dato).replace(/([0-9]) /, "$1. ");
 }
+// Eksempel: "2019-08-01T12:12:12.123123Z" => "01. august 2019 kl. 12:12:12"
+export function formatTidspunkt(isoDate: string) {
+	const dato: Date = new Date(isoDate);
+	const formatter =  new Intl.DateTimeFormat("nb-NO", {hour: "numeric", minute: "numeric", second: "numeric"});
+	return formatDato(isoDate) + " " + formatter.format(dato);
+}

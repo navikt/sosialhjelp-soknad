@@ -10,7 +10,7 @@ import SkattbarinntektForskuddstrekk from "./SkattbarinntektForskuddstrekk";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknadsdata/soknadsdataActions";
 import Knapp from "nav-frontend-knapper";
-import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
+import {formatTidspunkt, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import AlertStripe from "nav-frontend-alertstriper";
 
 const Skatt = () => {
@@ -35,6 +35,8 @@ const Skatt = () => {
     const skattbarinntektogforskuddstrekk: SkattbarInntektInfo =
         soknadsdata.inntekt.skattbarinntektogforskuddstrekk;
     const harSamtykke: boolean = soknadsdata.inntekt.skattbarinntektogforskuddstrekk.samtykke;
+    const samtykkeTidspunkt: Date | undefined = soknadsdata.inntekt.skattbarinntektogforskuddstrekk.samtykkeTidspunkt;
+    const samtykkeTidspunktStreng: String = samtykkeTidspunkt ? formatTidspunkt(samtykkeTidspunkt.toString()) : "";
     const visAnimerteStreker = restStatus !== REST_STATUS.OK;
 
     // TODO DIGISOS-1175: Håndter flere måneder med skattbar inntekt
@@ -87,6 +89,7 @@ const Skatt = () => {
                 inntektFraSkatteetaten.length > 0 && (
                     <div className={"ytelser_panel"}>
                         <FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse" />
+                        {" "} Sist oppdatert: {samtykkeTidspunktStreng}
                         <div className="utbetalinger">
                             <SkattbarinntektForskuddstrekk
                                 skattbarinntektogforskuddstrekk={

@@ -4,7 +4,7 @@ import {FormattedDate, FormattedMessage, FormattedNumber, useIntl,} from "react-
 import {useDispatch, useSelector} from "react-redux";
 
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/utils";
+import {formatTidspunkt, getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {oppdaterSoknadsdataSti, SoknadsSti,} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {Bostotte} from "./bostotteTypes";
@@ -172,6 +172,12 @@ const BostotteView = () => {
         bostotte.stotteFraHusbankenFeilet === true;
     const harSamtykke: boolean =
         bostotte.samtykke === true;
+    const samtykkeTidspunkt: Date | null =
+        bostotte.samtykkeTidspunkt;
+    let samtykkeTidspunktStreng = "";
+    if(samtykkeTidspunkt) {
+        samtykkeTidspunktStreng = formatTidspunkt(samtykkeTidspunkt.toString());
+    }
     const harBostotterUtbetalinger: boolean =
         bostotte.utbetalinger && bostotte.utbetalinger.length > 0;
     const harBostotterSaker: boolean =
@@ -223,6 +229,7 @@ const BostotteView = () => {
                         <>
                             <div>
                                 <FormattedMessage id="inntekt.bostotte.husbanken.info"/>
+                                {" "} Sist oppdatert: {samtykkeTidspunktStreng}
                             </div>
                             <h4 className="blokk-null">
                                 <FormattedMessage id="inntekt.bostotte.husbanken.utbetalinger"/>
