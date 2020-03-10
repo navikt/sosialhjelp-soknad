@@ -6,7 +6,7 @@ metadata:
   labels:
     team: teamdigisos
 spec:
-  image: docker.pkg.github.com/navikt/sosialhjelp-soknad/sosialhjelp-soknad:{{version}}
+  image: {{image}}
   port: 8080
   ingresses:
 {{#each ingresses}}
@@ -36,9 +36,9 @@ spec:
   resources:
     limits:
       cpu: 1000m
-      memory: 512Mi
+      memory: 1Gi
     requests:
-      memory: 512Mi
+      memory: 1Gi
   replicas:
     min: 2
     max: 2
