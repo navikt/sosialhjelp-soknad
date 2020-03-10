@@ -74,16 +74,8 @@ const RegistrerteBarn = () => {
 
     return (
         <div>
-            {barn.map((barnet: Barn, index: number) => (
-                <div
-                    key={index}
-                    className={
-                        index + 1 === barn.length
-                            ? "barn barn_siste_liste_element"
-                            : "barn"
-                    }
-                >
-                    {!barnet.harDiskresjonskode && (
+				{barn.map((barnet: Barn, index: number) =>
+					<div key={index} className={(index + 1 === barn.length) ? "barn barn_siste_liste_element" : "barn"}>
                         <Detaljeliste>
                             <DetaljelisteElement
                                 tittel={
@@ -159,7 +151,6 @@ const RegistrerteBarn = () => {
                                 </div>
                             )}
                         </Detaljeliste>
-                    )}
                 </div>
             ))}
         </div>

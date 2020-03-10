@@ -11,6 +11,7 @@ import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMed
 import Barnebidrag from "./Barnebidrag";
 import RegistrerteBarn from "./RegistrerteBarn";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
+import BrukerregistrerteBarn from "./BrukerregistrerteBarn";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
@@ -39,7 +40,9 @@ const ForsorgerPliktView = () => {
     }, [oppstartsModus, soknadsdata.restStatus.familie.forsorgerplikt]);
 
     const ansvar = soknadsdata.familie.forsorgerplikt.ansvar;
+		const brukerregistrertAnsvar = soknadsdata.familie.forsorgerplikt.brukerregistrertAnsvar;
     const antallBarn = ansvar.length;
+		const antallBrukerregistrerteBarn = brukerregistrertAnsvar.length;
     const restStatus = soknadsdata.restStatus.familie.forsorgerplikt;
     if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
         setOppstartsModus(false);
@@ -54,9 +57,9 @@ const ForsorgerPliktView = () => {
     if (ansvar && antallBarn === 0) {
         return (
             <Sporsmal sprakNokkel="familierelasjon.faktum">
-                <p>
-                    <FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn" />
-                </p>
+					<p><FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn"/></p>
+					<BrukerregistrerteBarn/>
+					{brukerregistrertAnsvar && antallBrukerregistrerteBarn > 0 && <Barnebidrag/>}
             </Sporsmal>
         );
     }
@@ -73,6 +76,7 @@ const ForsorgerPliktView = () => {
                 />
                 <SysteminfoMedSkjema>
                     <RegistrerteBarn />
+						<BrukerregistrerteBarn/>
                     <Barnebidrag />
                 </SysteminfoMedSkjema>
             </Sporsmal>

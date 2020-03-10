@@ -20,6 +20,7 @@ export interface Props {
     onChange: (verdi: string) => void;
     onBlur: () => void;
     faktumKey: string;
+    textKey?: string;
     required: boolean;
     feil: Valideringsfeil[];
 
@@ -47,6 +48,7 @@ class InputEnhanced extends React.Component<Props & IntlProps, {}> {
     render() {
         const {
             faktumKey,
+            textKey,
             faktumIndex,
             type,
             disabled,
@@ -58,14 +60,10 @@ class InputEnhanced extends React.Component<Props & IntlProps, {}> {
             feil,
             autoFocus,
         } = this.props;
-        const intl = this.props.intl;
-        const tekster = getInputFaktumTekst(intl, faktumKey);
-        const feil_: Feil | undefined = getFeil(
-            feil,
-            intl,
-            faktumKey,
-            faktumIndex
-        );
+        const tekster = getInputFaktumTekst(intl, textKey ? textKey : faktumKey);
+
+        const feil_: Feil | undefined = getFeil(feil, intl, faktumKey, faktumIndex);
+
         return (
             <Input
                 id={
