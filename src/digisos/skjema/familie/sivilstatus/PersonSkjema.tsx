@@ -127,6 +127,9 @@ const PersonSkjema = () => {
         const sivilstatus = soknadsdata.familie.sivilstatus;
         sivilstatus.borSammenMed = verdi;
         dispatch(oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus));
+        if(behandlingsId) {
+            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus));
+        }
     };
 
     const ektefelle = soknadsdata.familie.sivilstatus.ektefelle;
