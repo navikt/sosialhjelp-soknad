@@ -1,71 +1,48 @@
 import * as React from "react";
+import {useState} from "react";
 import {Barn} from "./ForsorgerPliktTypes";
 import Detaljeliste from "../../../../nav-soknad/components/detaljeliste";
-import {InjectedIntlProps, injectIntl} from "react-intl";
+import {useIntl} from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {
-    connectSoknadsdataContainer,
-    SoknadsdataContainerProps
-} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataContainerUtils";
-import {SoknadsSti} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import {Column, Container, Row} from "nav-frontend-grid";
-import {setPath} from "../../../../nav-soknad/redux/soknadsdata/soknadsdataActions";
-import {getTomtBarn} from "./ForsorgerPliktUtils";
+import {getTomtAnsvarMedBarn} from "./ForsorgerPliktUtils";
 import Lenkeknapp from "../../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 import {konverterFraISODato, konverterTilISODato} from "../sivilstatus/datoUtils";
 import {fdato} from "../../../../nav-soknad/validering/valideringer";
-
-type Props = SoknadsdataContainerProps  & InjectedIntlProps;
+import {useDispatch, useSelector} from "react-redux";
+import {State} from "../../../redux/reducers";
+import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validering/valideringActions";
+import {lagreSoknadsdata, setPath} from "../../../redux/soknadsdata/soknadsdataActions";
+import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 
 const TEXT_KEY = "familie.barn.true.barn";
 const TEXT_KEY_FNR = TEXT_KEY + ".fnr";
+const TEXT_KEY_FIRST_NAME = TEXT_KEY + ".name.first";
+const TEXT_KEY_LAST_NAME = TEXT_KEY + ".name.last";
 
-class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean[]}> {
+const BrukerregistrerteBarn = () => {
+    const dispatch = useDispatch();
+    const intl = useIntl();
+    const [datoFormatFeilIndex, setDatoFormatFeilIndex] = useState(-1);
+    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const annsvarsListe = useSelector((state: State) => state.soknadsdata.familie.forsorgerplikt.brukerregistrertAnsvar);
+    const behandlingsId = useSelector(
+        (state: State) => state.soknad.behandlingsId
+    );
 
-    navnInput!: HTMLInputElement;
-
-    constructor(props: Props) {
-        super(props);
-        const {soknadsdata} = props;
-        const barn = soknadsdata.familie.forsorgerplikt.brukerregistrertAnsvar;
-        let initialSynligeBarn: boolean[] = [];
-        for (let i = 0; i < barn.length; i++) {
-            initialSynligeBarn.push(true)
-        }
-        this.state = {
-            synligeBarn: initialSynligeBarn
-        };
-    }
-
-    componentDidMount() {
-        if (this.navnInput) {
-            this.focus();
-        }
-    }
-
-    focus() {
-        this.navnInput.focus();
-    }
-
-    handleLeggTilBarn() {
-        const {soknadsdata, oppdaterSoknadsdataSti} = this.props;
+    const handleLeggTilBarn = () => {
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
-        const brukerregistrerteAnsvar = forsorgerplikt.brukerregistrertAnsvar;
-        brukerregistrerteAnsvar.push(getTomtBarn());
-        this.setState({synligeBarn: this.state.synligeBarn.concat(false)});
-        oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+        annsvarsListe.push(getTomtAnsvarMedBarn());
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+        onBlur();
+    };
 
-        setTimeout(() => {
-            this.endreSynligBarnState(this.state.synligeBarn.length - 1, true);
-        }, 100);
-    }
-
-    handleFjernBarn(radIndex: number) {
-        const {soknadsdata, oppdaterSoknadsdataSti} = this.props;
+    const handleFjernBarn = (radIndex: number) => {
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const brukerregistrerteAnsvar = forsorgerplikt.brukerregistrertAnsvar;
         const antallBrukerregistrerteBarn = brukerregistrerteAnsvar.length;
@@ -76,50 +53,21 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
             forsorgerplikt.harForsorgerplikt = false;
         }
         brukerregistrerteAnsvar.splice(radIndex, 1);
-        oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-        this.fjernSisteSynligBarnRadFraState();
-        this.onBlur();
-    }
-
-    endreSynligBarnState(index: number, bool: boolean) {
-        this.setState(state => {
-            const synligeBarn = state.synligeBarn.map((synlig, j) => {
-                if (j === index) {
-                    return bool;
-                } else {
-                    return synlig;
-                }
-            });
-            return {
-                synligeBarn,
-            };
-        });
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+        onBlur();
     };
 
-    fjernSisteSynligBarnRadFraState() {
-        this.setState(state => {
-            const synligeBarn = state.synligeBarn.filter((item, j) => j !== state.synligeBarn.length - 1);
-
-            return {
-                synligeBarn,
-            };
-        });
-    };
-
-    oppdaterTekstfelt(sti: string, verdi: string | null, barnIndex: number) {
-        this.props.clearValideringsfeil(TEXT_KEY_FNR + barnIndex);
+    const oppdaterTekstfelt = (sti: string, verdi: string | null, barnIndex: number) => {
         if (verdi && verdi.length === 0) {
             verdi = null;
         }
-        const {soknadsdata, oppdaterSoknadsdataSti} = this.props;
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barnet = forsorgerplikt.brukerregistrertAnsvar[barnIndex].barn;
         setPath(barnet, sti, verdi);
-        oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-    }
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+    };
 
-    onClickBorSammen(verdi: boolean, barnIndex: number) {
-        const {soknadsdata, oppdaterSoknadsdataSti} = this.props;
+    const onClickBorSammen = (verdi: boolean, barnIndex: number) => {
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barnet = forsorgerplikt.brukerregistrertAnsvar[barnIndex];
         if (verdi !== barnet.borSammenMed) {
@@ -127,49 +75,57 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
             barnet.samvarsgrad = null;
             barnet.borSammenMed = verdi;
 
-            oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-            this.onBlur();
+            dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+            onBlur();
         }
-    }
+    };
 
-    onClickHarDeltBosted(verdi: boolean, barnIndex: number) {
-        const {soknadsdata, oppdaterSoknadsdataSti} = this.props;
+    const onClickHarDeltBosted = (verdi: boolean, barnIndex: number) => {
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barnet = forsorgerplikt.brukerregistrertAnsvar[barnIndex];
         barnet.harDeltBosted = verdi;
-        oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-        this.onBlur();
-    }
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+        onBlur();
+    };
 
-    onChangeSamvaersgrad(verdi: string, barnIndex: number) {
-        const {soknadsdata, oppdaterSoknadsdataSti} = this.props;
+    const onChangeSamvaersgrad = (verdi: string, barnIndex: number) => {
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barnet = forsorgerplikt.brukerregistrertAnsvar[barnIndex];
         barnet.samvarsgrad = parseInt(verdi, 10);
-        oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-        this.onBlur();
-    }
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+        onBlur();
+    };
 
-    onBlur() {
-        const {soknadsdata, lagreSoknadsdata, brukerBehandlingId} = this.props;
+    const onFokus = (barnIndex: number) => {
+        if (barnIndex !== datoFormatFeilIndex) {
+            dispatch(clearValideringsfeil(TEXT_KEY_FNR + barnIndex));
+        }
+        dispatch(clearValideringsfeil(TEXT_KEY_FIRST_NAME + barnIndex));
+        dispatch(clearValideringsfeil(TEXT_KEY_LAST_NAME + barnIndex));
+    };
+
+    const onBlur = () => {
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barn: Barn[] = forsorgerplikt.brukerregistrertAnsvar;
         let feilkodeFodselsdato = null;
         let ingenFeilKoder = true;
         for (let i = 0; i < barn.length; i++) {
             let barnet = barn[i];
-            let fodselsdato: string | null = barnet.barn.fodselsdato;
+            let fodselsdato: string = barnet.barn.fodselsdato ? barnet.barn.fodselsdato : "";
             if (fodselsdato === "") {
                 barnet.barn.fodselsdato = null;
             }
-            if (fodselsdato && fodselsdato !== "") {
+            let harNoeInnhold = harInnhold(barnet);
+            if (fodselsdato !== "") {
                 fodselsdato = konverterFraISODato(fodselsdato);
                 feilkodeFodselsdato = fdato(fodselsdato);
                 if (feilkodeFodselsdato) {
-                    this.props.setValideringsfeil(feilkodeFodselsdato, TEXT_KEY_FNR + i);
+                    dispatch(setValideringsfeil(feilkodeFodselsdato, TEXT_KEY_FNR + i));
+                    setDatoFormatFeilIndex(i);
                     ingenFeilKoder = false;
                 } else {
-                    this.props.clearValideringsfeil(TEXT_KEY_FNR + i);
+                    dispatch(clearValideringsfeil(TEXT_KEY_FNR + i));
+                    setDatoFormatFeilIndex(-1);
                 }
 
                 if (!feilkodeFodselsdato && fodselsdato) {
@@ -177,166 +133,198 @@ class BrukerregistrerteBarn extends React.Component<Props, {synligeBarn: boolean
                     barnet.barn.fodselsdato = fodselsdato;
                 }
             } else {
-                this.props.clearValideringsfeil(TEXT_KEY_FNR + i);
+                dispatch(clearValideringsfeil(TEXT_KEY_FNR + i));
+                setDatoFormatFeilIndex(-1);
+                if (harNoeInnhold) {
+                    dispatch(setValideringsfeil(ValideringsFeilKode.PAKREVD, TEXT_KEY_FNR + i));
+                    ingenFeilKoder = false;
+                }
+            }
+            if (!harNoeInnhold || (barnet.barn.navn && barnet.barn.navn.fornavn && barnet.barn.navn.fornavn !== "")) {
+                dispatch(clearValideringsfeil(TEXT_KEY_FIRST_NAME + i));
+            } else {
+                dispatch(setValideringsfeil(ValideringsFeilKode.PAKREVD, TEXT_KEY_FIRST_NAME + i));
+                ingenFeilKoder = false;
+            }
+            if (!harNoeInnhold || (barnet.barn.navn && barnet.barn.navn.etternavn && barnet.barn.navn.etternavn !== "")) {
+                dispatch(clearValideringsfeil(TEXT_KEY_LAST_NAME + i));
+            } else {
+                dispatch(setValideringsfeil(ValideringsFeilKode.PAKREVD, TEXT_KEY_LAST_NAME + i));
+                ingenFeilKoder = false;
             }
         }
-        if (ingenFeilKoder) {
-            lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+        if (ingenFeilKoder && behandlingsId) {
+            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
         }
+    };
+
+    function harInnhold(barnet: Barn): boolean {
+        const fodselsdato: string = barnet.barn.fodselsdato ? barnet.barn.fodselsdato : "";
+        if (barnet.barn.navn) {
+            const fornavn: string = barnet.barn.navn.fornavn ? barnet.barn.navn.fornavn : "";
+            const mellomnavn: string = barnet.barn.navn.mellomnavn ? barnet.barn.navn.mellomnavn : "";
+            const etternavn: string = barnet.barn.navn.etternavn ? barnet.barn.navn.etternavn : "";
+            return fodselsdato !== "" || fornavn !== "" || mellomnavn !== "" || etternavn !== "";
+        }
+        return fodselsdato !== "";
     }
 
-    render() {
-        const {soknadsdata} = this.props;
-        const barn = soknadsdata.familie.forsorgerplikt.brukerregistrertAnsvar;
+    return (
+        <Sporsmal
+            sprakNokkel="familierelasjon.faktum.leggtil"
+            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+        >
 
-        return (
-            <Sporsmal
-                sprakNokkel="familierelasjon.faktum.leggtil"
-                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-            >
-
-                <div className="skjema-legg-til-barn">
-                    {barn.map((barnet: Barn, index: number) =>
-                        <Underskjema
-                            visible={this.state.synligeBarn[index].valueOf()}
-                            arrow={false}
-                            key={index}
+            <div className="skjema-legg-til-barn">
+                {annsvarsListe.map((barnet: Barn, index: number) =>
+                    <Underskjema
+                        visible={true}
+                        arrow={index === 0}
+                        key={index}
+                    >
+                        <div className="steg-ekstrainformasjon">
+                            <Row className="opplysning__row">
+                                <Lenkeknapp
+                                    onClick={() => {
+                                        handleFjernBarn(index)
+                                    }}
+                                    id={index + "_fjern_brukerregistrert_barn_lenke"}
+                                >
+                                    Slett informasjon
+                                </Lenkeknapp>
+                            </Row>
+                        </div>
+                        <Sporsmal
+                            sprakNokkel={TEXT_KEY}
+                            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                         >
-                            <div className="steg-ekstrainformasjon">
-                                <Row className="opplysning__row">
-                                    <Lenkeknapp
-                                        onClick={() => {
-                                            this.handleFjernBarn(index)
-                                        }}
-                                        id={index + "_fjern_brukerregistrert_barn_lenke"}
-                                    >
-                                        Slett informasjon
-                                    </Lenkeknapp>
-                                </Row>
-                            </div>
-                            <Sporsmal
-                                sprakNokkel={TEXT_KEY}
-                                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                            >
-                                <div className="blokk-s">
-                                    <div key={index} className={(index + 1 === barn.length) ? "barn barn_siste_liste_element" : "barn"}>
-                                        <Container fluid={true} className="container--noPadding">
-                                            <Row>
-                                                <Column xs="12">
-                                                    <InputEnhanced
-                                                        getName={() => TEXT_KEY + "_fornavn_input" + index}
-                                                        id={TEXT_KEY + "_fornavn_input" + index}
-                                                        inputRef={ (c: any) => (this.navnInput = c)}
-                                                        maxLength={100}
-                                                        verdi={barnet.barn.navn.fornavn}
-                                                        onChange={(verdi: string) => this.oppdaterTekstfelt("navn/fornavn", verdi, index)}
-                                                        onBlur={() => this.onBlur()}
-                                                        faktumKey={TEXT_KEY + ".fornavn"}
-                                                        required={true}
-                                                    />
-                                                </Column>
-                                            </Row>
-                                            <Row>
-                                                <Column xs="12">
-                                                    <InputEnhanced
-                                                        getName={() => TEXT_KEY + "_mellomnavn_input" + index}
-                                                        id={TEXT_KEY + "_mellomnavn_input" + index}
-                                                        maxLength={100}
-                                                        verdi={barnet.barn.navn.mellomnavn ? barnet.barn.navn.mellomnavn : ""}
-                                                        onChange={(verdi: string) => this.oppdaterTekstfelt("navn/mellomnavn", verdi, index)}
-                                                        onBlur={() => this.onBlur()}
-                                                        faktumKey={TEXT_KEY + ".mellomnavn"}
-                                                        required={true}
-                                                    />
-                                                </Column>
-                                            </Row>
-                                            <Row className="add-padding-bottom">
-                                                <Column xs="12">
-                                                    <InputEnhanced
-                                                        getName={() => TEXT_KEY + "_etternavn_input" + index}
-                                                        id={TEXT_KEY + "_etternavn_input" + index}
-                                                        maxLength={100}
-                                                        verdi={barnet.barn.navn.etternavn}
-                                                        onChange={(verdi: string) => this.oppdaterTekstfelt("navn/etternavn", verdi, index)}
-                                                        onBlur={() => this.onBlur()}
-                                                        faktumKey={TEXT_KEY + ".etternavn"}
-                                                        required={true}
-                                                    />
-                                                </Column>
-                                            </Row>
-                                            <Row>
-                                                <Column xs="12">
-                                                    <InputEnhanced
-                                                        getName={() => TEXT_KEY_FNR + index}
-                                                        id={TEXT_KEY_FNR + index}
-                                                        maxLength={8}
-                                                        minLength={8}
-                                                        verdi={barnet.barn.fodselsdato ? konverterFraISODato(barnet.barn.fodselsdato) : ""}
-                                                        onChange={(verdi: string) => this.oppdaterTekstfelt("fodselsdato", verdi, index)}
-                                                        bredde="S"
-                                                        onBlur={() => this.onBlur()}
-                                                        faktumKey={TEXT_KEY_FNR + index}
-                                                        textKey={TEXT_KEY_FNR}
-                                                        required={true}
-                                                    />
-                                                </Column>
-                                            </Row>
-                                        </Container>
-                                        <Detaljeliste>
-                                            <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
-                                                <JaNeiSporsmal
-                                                    id={"brukerregistrert_brukerregistrert_barn_radio_" + index}
-                                                    tekster={getFaktumSporsmalTekst(this.props.intl, "familie.barn.true.barn.borsammen")}
-                                                    faktumKey={"familie.barn.true.barn.borsammen"}
-                                                    verdi={barnet.borSammenMed}
-                                                    onChange={(verdi: boolean) => this.onClickBorSammen(verdi, index)}
-                                                    legendTittelStyle={LegendTittleStyle.NORMAL}
+                            <div className="blokk-s">
+                                <div key={index}
+                                     className={(index + 1 === annsvarsListe.length) ? "barn barn_siste_liste_element" : "barn"}>
+                                    <Container fluid={true} className="container--noPadding">
+                                        <Row>
+                                            <Column xs="12">
+                                                <InputEnhanced
+                                                    getName={() => TEXT_KEY_FIRST_NAME + index}
+                                                    id={TEXT_KEY_FIRST_NAME + index}
+                                                    maxLength={100}
+                                                    verdi={barnet.barn.navn.fornavn}
+                                                    onChange={(verdi: string) => oppdaterTekstfelt("navn/fornavn", verdi, index)}
+                                                    onBlur={() => onBlur()}
+                                                    onFocus={() => onFokus(index)}
+                                                    faktumKey={TEXT_KEY_FIRST_NAME + index}
+                                                    textKey={TEXT_KEY + ".fornavn"}
+                                                    required={true}
+                                                />
+                                            </Column>
+                                        </Row>
+                                        <Row>
+                                            <Column xs="12">
+                                                <InputEnhanced
+                                                    getName={() => TEXT_KEY + "_mellomnavn_input" + index}
+                                                    id={TEXT_KEY + "_mellomnavn_input" + index}
+                                                    maxLength={100}
+                                                    verdi={barnet.barn.navn.mellomnavn ? barnet.barn.navn.mellomnavn : ""}
+                                                    onChange={(verdi: string) => oppdaterTekstfelt("navn/mellomnavn", verdi, index)}
+                                                    onBlur={() => onBlur()}
+                                                    onFocus={() => onFokus(index)}
+                                                    faktumKey={TEXT_KEY + ".mellomnavn"}
+                                                    required={false}
+                                                />
+                                            </Column>
+                                        </Row>
+                                        <Row className="add-padding-bottom">
+                                            <Column xs="12">
+                                                <InputEnhanced
+                                                    getName={() => TEXT_KEY_LAST_NAME + index}
+                                                    id={TEXT_KEY_LAST_NAME + index}
+                                                    maxLength={100}
+                                                    verdi={barnet.barn.navn.etternavn}
+                                                    onChange={(verdi: string) => oppdaterTekstfelt("navn/etternavn", verdi, index)}
+                                                    onBlur={() => onBlur()}
+                                                    onFocus={() => onFokus(index)}
+                                                    faktumKey={TEXT_KEY_LAST_NAME + index}
+                                                    textKey={TEXT_KEY + ".etternavn"}
+                                                    required={true}
+                                                />
+                                            </Column>
+                                        </Row>
+                                        <Row>
+                                            <Column xs="12">
+                                                <InputEnhanced
+                                                    getName={() => TEXT_KEY_FNR + index}
+                                                    id={TEXT_KEY_FNR + index}
+                                                    maxLength={8}
+                                                    minLength={8}
+                                                    verdi={barnet.barn.fodselsdato ? konverterFraISODato(barnet.barn.fodselsdato) : ""}
+                                                    onChange={(verdi: string) => oppdaterTekstfelt("fodselsdato", verdi, index)}
+                                                    bredde="S"
+                                                    onBlur={() => onBlur()}
+                                                    onFocus={() => onFokus(index)}
+                                                    faktumKey={TEXT_KEY_FNR + index}
+                                                    textKey={TEXT_KEY_FNR}
+                                                    required={true}
+                                                />
+                                            </Column>
+                                        </Row>
+                                    </Container>
+                                    <Detaljeliste>
+                                        <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
+                                            <JaNeiSporsmal
+                                                id={"brukerregistrert_brukerregistrert_barn_radio_" + index}
+                                                tekster={getFaktumSporsmalTekst(intl, "familie.barn.true.barn.borsammen")}
+                                                faktumKey={"familie.barn.true.barn.borsammen"}
+                                                verdi={barnet.borSammenMed}
+                                                onChange={(verdi: boolean) => onClickBorSammen(verdi, index)}
+                                                legendTittelStyle={LegendTittleStyle.NORMAL}
 
+                                            />
+                                        </div>
+                                        {barnet.borSammenMed === true && (
+                                            <div
+                                                className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
+                                                <JaNeiSporsmal
+                                                    id={"brukerregistrert_barn" + index + "_deltbosted"}
+                                                    tekster={getFaktumSporsmalTekst(intl, "familie.barn.true.barn.deltbosted")}
+                                                    faktumKey={"familie.barn.true.barn.deltbosted"}
+                                                    verdi={barnet.harDeltBosted}
+                                                    onChange={(verdi: boolean) => onClickHarDeltBosted(verdi, index)}
+                                                    legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                                                 />
                                             </div>
-                                            {barnet.borSammenMed === true && (
-                                                <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
-                                                    <JaNeiSporsmal
-                                                        id={"brukerregistrert_barn" + index + "_deltbosted"}
-                                                        tekster={getFaktumSporsmalTekst(this.props.intl, "familie.barn.true.barn.deltbosted")}
-                                                        faktumKey={"familie.barn.true.barn.deltbosted"}
-                                                        verdi={barnet.harDeltBosted}
-                                                        onChange={(verdi: boolean) => this.onClickHarDeltBosted(verdi, index)}
-                                                        legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                                                    />
-                                                </div>
-                                            )}
-                                            {barnet.borSammenMed === false && (
-                                                <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
-                                                    <InputEnhanced
-                                                        getName={() => "brukerregistrert_barn" + index + "_samvaersgrad"}
-                                                        id={"brukerregistrert_barn" + index + "_samvaersgrad"}
-                                                        maxLength={3}
-                                                        verdi={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
-                                                        onChange={(verdi: string) => this.onChangeSamvaersgrad(verdi, index)}
-                                                        onBlur={() => this.onBlur()}
-                                                        faktumKey="system.familie.barn.true.barn.grad"
-                                                        required={false}
-                                                    />
-                                                </div>
-                                            )}
-                                        </Detaljeliste>
-                                    </div>
+                                        )}
+                                        {barnet.borSammenMed === false && (
+                                            <div
+                                                className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
+                                                <InputEnhanced
+                                                    getName={() => "brukerregistrert_barn" + index + "_samvaersgrad"}
+                                                    id={"brukerregistrert_barn" + index + "_samvaersgrad"}
+                                                    maxLength={3}
+                                                    verdi={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
+                                                    onChange={(verdi: string) => onChangeSamvaersgrad(verdi, index)}
+                                                    onBlur={() => onBlur()}
+                                                    onFocus={() => onFokus(index)}
+                                                    faktumKey="system.familie.barn.true.barn.grad"
+                                                    required={false}
+                                                />
+                                            </div>
+                                        )}
+                                    </Detaljeliste>
                                 </div>
-                            </Sporsmal>
-                        </Underskjema>
-                    )}
-                    <div className="legg-til-barn-knapp">
-                        <Lenkeknapp onClick={() => this.handleLeggTilBarn()} stil="add" id={"legg_til_brukerregistrert_barn_link"}>
-                            Legg til barn som ikke er registrert
-                        </Lenkeknapp>
-                    </div>
+                            </div>
+                        </Sporsmal>
+                    </Underskjema>
+                )}
+                <div className="legg-til-barn-knapp">
+                    <Lenkeknapp onClick={() => handleLeggTilBarn()} stil="add"
+                                id={"legg_til_brukerregistrert_barn_link"}>
+                        Legg til barn som ikke er registrert
+                    </Lenkeknapp>
                 </div>
-            </Sporsmal>
-        );
-    }
+            </div>
+        </Sporsmal>
+    );
 
-}
+};
 
-export default connectSoknadsdataContainer(injectIntl(BrukerregistrerteBarn));
-
+export default BrukerregistrerteBarn;

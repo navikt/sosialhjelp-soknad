@@ -1,13 +1,8 @@
-import Sporsmal, {
-    LegendTittleStyle,
-} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle,} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import * as React from "react";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
-import {
-    SoknadsSti,
-    oppdaterSoknadsdataSti,
-} from "../../../redux/soknadsdata/soknadsdataReducer";
-import {useSelector, useDispatch} from "react-redux";
+import {oppdaterSoknadsdataSti, SoknadsSti,} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 
@@ -15,18 +10,17 @@ const FAKTUM_KEY = "familie.barn.true.barnebidrag";
 
 const Barnebidrag = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const dispatch = useDispatch();
     const behandlingsId = useSelector(
         (state: State) => state.soknad.behandlingsId
     );
-
-    const dispatch = useDispatch();
 
     const handleClickRadio = (verdi: string) => {
         if (behandlingsId) {
             const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
             forsorgerplikt.barnebidrag = verdi;
-		oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
-		lagreSoknadsdata(brukerBehandlingId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt);
+            dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
         }
     };
 

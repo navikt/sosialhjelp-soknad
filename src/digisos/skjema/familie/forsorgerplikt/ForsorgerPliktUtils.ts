@@ -1,6 +1,6 @@
 import {Barn} from "./ForsorgerPliktTypes";
 
-export const getTomtBarn: () => Barn = () => {
+export const getTomtAnsvarMedBarn: () => Barn = () => {
     return {
         barn: {
             navn: {

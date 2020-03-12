@@ -92,7 +92,7 @@ const RegistrerteBarn = () => {
                                     </span>
                                 }
                                 verdi={
-                                    <Dato tidspunkt={barnet.barn.fodselsdato} />
+                                    barnet.barn.fodselsdato ? <Dato tidspunkt={barnet.barn.fodselsdato} /> : ""
                                 }
                             />
                             <DetaljelisteElement
@@ -152,7 +152,7 @@ const RegistrerteBarn = () => {
                             )}
                         </Detaljeliste>
                 </div>
-            ))}
+            )}
         </div>
     );
 };

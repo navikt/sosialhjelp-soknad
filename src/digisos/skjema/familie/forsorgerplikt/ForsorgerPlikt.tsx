@@ -40,26 +40,26 @@ const ForsorgerPliktView = () => {
     }, [oppstartsModus, soknadsdata.restStatus.familie.forsorgerplikt]);
 
     const ansvar = soknadsdata.familie.forsorgerplikt.ansvar;
-		const brukerregistrertAnsvar = soknadsdata.familie.forsorgerplikt.brukerregistrertAnsvar;
+    const brukerregistrertAnsvar = soknadsdata.familie.forsorgerplikt.brukerregistrertAnsvar;
     const antallBarn = ansvar.length;
-		const antallBrukerregistrerteBarn = brukerregistrertAnsvar.length;
+    const antallBrukerregistrerteBarn = brukerregistrertAnsvar.length;
     const restStatus = soknadsdata.restStatus.familie.forsorgerplikt;
-    if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+    if (oppstartsModus && restStatus === REST_STATUS.OK) {
         setOppstartsModus(false);
     }
     if (oppstartsModus) {
         return (
             <Sporsmal sprakNokkel="familierelasjon.faktum">
-                <TextPlaceholder style={{marginTop: "1rem"}} />
+                <TextPlaceholder style={{marginTop: "1rem"}}/>
             </Sporsmal>
         );
     }
     if (ansvar && antallBarn === 0) {
         return (
             <Sporsmal sprakNokkel="familierelasjon.faktum">
-					<p><FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn"/></p>
-					<BrukerregistrerteBarn/>
-					{brukerregistrertAnsvar && antallBrukerregistrerteBarn > 0 && <Barnebidrag/>}
+                <p><FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn"/></p>
+                <BrukerregistrerteBarn/>
+                {brukerregistrertAnsvar && antallBrukerregistrerteBarn > 0 && <Barnebidrag/>}
             </Sporsmal>
         );
     }
@@ -75,14 +75,14 @@ const ForsorgerPliktView = () => {
                     values={{antallBarn}}
                 />
                 <SysteminfoMedSkjema>
-                    <RegistrerteBarn />
-						<BrukerregistrerteBarn/>
-                    <Barnebidrag />
+                    <RegistrerteBarn/>
+                    <BrukerregistrerteBarn/>
+                    <Barnebidrag/>
                 </SysteminfoMedSkjema>
             </Sporsmal>
         );
     }
-    return <div />;
+    return <div/>;
 };
 
 export default ForsorgerPliktView;
