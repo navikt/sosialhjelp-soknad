@@ -8,6 +8,7 @@ import {
     fetchUpload,
     lastNedForsendelseSomZipFilHvisMockMiljoEllerDev,
     HttpStatus,
+    fetchUploadIgnoreErrors,
 } from "../../../nav-soknad/utils/rest-utils";
 import {
     EttersendelseActionTypeKeys,
@@ -32,6 +33,9 @@ import {
 import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {showServerFeil} from "../soknad/soknadActions";
+import {REST_FEIL} from "../soknad/soknadTypes";
+import {settFilOpplastingFerdig} from "../okonomiskeOpplysninger/opplysningerActions";
+import {detekterInternFeilKode} from "../fil/filSaga";
 
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
     try {
@@ -109,6 +113,7 @@ function* lastOppEttersendelsesVedleggSaga(
     action: LastOppEttersendtVedleggAction
 ): SagaIterator {
     const {behandlingsId, opplysningType, formData} = action;
+    const url = `opplastetVedlegg/${behandlingsId}/${opplysningType}`;
 
     let response: Fil = {
         filNavn: "",
@@ -116,7 +121,6 @@ function* lastOppEttersendelsesVedleggSaga(
     };
 
     try {
-        const url = `opplastetVedlegg/${behandlingsId}/${opplysningType}`;
         const fetchResponse: any = yield call(fetchUpload, url, formData);
         if (typeof fetchResponse != "undefined") {
             response = fetchResponse;
@@ -135,19 +139,25 @@ function* lastOppEttersendelsesVedleggSaga(
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        const errorMsg = reason.toString();
-        yield put(
-            lastOppEttersendelseFeilet(errorMsg, opplysningType.toString())
-        );
+        let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
+        // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
+        response = yield call(fetchUploadIgnoreErrors, url, formData);
+        const ID = "id";
+        // @ts-ignore
+        if (response && response[ID]) {
+            // @ts-ignore
+            feilKode = response[ID];
+        }
+        yield put(lastOppEttersendelseFeilet(feilKode, opplysningType.toString()));
         if (
-            errorMsg.match(/Unsupported Media Type|Entity Too Large/) === null
+            feilKode !== REST_FEIL.KRYPTERT_FIL &&
+            feilKode !== REST_FEIL.SIGNERT_FIL
         ) {
             yield put(
-                loggInfo(
-                    "Last opp vedlegg for ettersendelse feilet: " + errorMsg
-                )
+                loggInfo("Last opp vedlegg for ettersendelse feilet: " + reason.toString())
             );
         }
+        yield put(settFilOpplastingFerdig(opplysningType));
     }
 }
 

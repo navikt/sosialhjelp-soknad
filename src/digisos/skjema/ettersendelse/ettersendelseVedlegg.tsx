@@ -81,13 +81,11 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 		const { feiletVedleggId, opplastingStatus, ettersendStatus, opplastingVedleggType } = ettersendelse;
 		const opplastingsFeil: boolean = opplastingStatus === REST_STATUS.FEILET &&
 			feiletVedleggId === vedlegg.type;
-		const visFilForStorFeilmelding: boolean = opplastingsFeil &&
-			this.props.feilKode === REST_FEIL.FOR_STOR_FIL;
 		const visFeilFiltypeFeilmelding: boolean = opplastingsFeil &&
 			this.props.feilKode === REST_FEIL.FEIL_FILTPYE;
 
 		return (
-			<span className={"ettersendelse__vedlegg__wrapper " + (opplastingsFeil ? "ettersendelse__vedlegg__feil" : "")}>
+			<span className="ettersendelse__vedlegg__wrapper">
 				<AvsnittMedMarger className="vedleggsliste__detalj">
 					{this.props.children}
 					<input
@@ -133,14 +131,11 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
 						<>
 							<span className="skjema__feilmelding">
 								"{this.state.filnavn}" &nbsp;
-								{visFilForStorFeilmelding && (
-									<FormattedMessage id="fil.for.stor"/>
+								{!visFeilFiltypeFeilmelding && (
+									<FormattedMessage id={this.props.feilKode ? this.props.feilKode : "opplysninger.vedlegg.ugyldig"}/>
 								)}
 								{visFeilFiltypeFeilmelding && (
 									<FormattedMessage id="fil.feil.format"/>
-								)}
-								{!visFilForStorFeilmelding && !visFeilFiltypeFeilmelding && (
-									<FormattedMessage id="opplysninger.vedlegg.ugyldig"/>
 								)}
 							</span>
 							<br/>
