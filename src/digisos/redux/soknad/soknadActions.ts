@@ -24,11 +24,13 @@ export function startSoknadServiceUnavailable() {
 }
 
 export function opprettSoknad(
-    intl: IntlShape
+    intl: IntlShape,
+    selvstendigNaringsdrivende: boolean
 ) {
     return {
         type: SoknadActionTypeKeys.OPPRETT_SOKNAD,
-        intl
+        intl,
+        selvstedigNaringsdrivende: selvstendigNaringsdrivende
     };
 }
 

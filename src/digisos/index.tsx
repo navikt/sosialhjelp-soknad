@@ -2,11 +2,13 @@ import * as React from "react";
 import {Route, Switch} from "react-router";
 import SideIkkeFunnet from "../nav-soknad/containers/SideIkkeFunnet";
 import Informasjon from "./informasjon";
+import SelvstendigNaringsdrivende from "./selvstendignaringsdrivende";
 import MockBruker from "./mock/mockbruker";
 import MockLogin from "./mock/mocklogin";
 import SkjemaRouter from "./skjema";
 import Ettersendelse from "./skjema/ettersendelse";
 import Link from "./link";
+import {StartSide} from "./startside/startside";
 
 const App: React.FC = () => {
 
@@ -21,6 +23,16 @@ const App: React.FC = () => {
                     path={`/informasjon`}
                     exact={true}
                     component={Informasjon}
+                />
+                <Route
+                    path={`/selvstendignaringsdrivende`}
+                    exact={true}
+                    component={SelvstendigNaringsdrivende}
+                />
+                <Route
+                    path={`/startside`}
+                    exact={true}
+                    component={StartSide}
                 />
                 <Route
                     path={`/link`}

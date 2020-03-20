@@ -10,7 +10,6 @@ import IkkeTilgang from "./IkkeTilgang";
 import {TilgangSperrekode} from "../redux/soknad/soknadTypes";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 import Personopplysninger from "./Personopplysninger";
-import {Panel} from "nav-frontend-paneler";
 import {opprettSoknad} from "../redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
@@ -33,7 +32,7 @@ interface StateProps {
 
 type Props = StateProps & RouterProps & DispatchProps;
 
-class Informasjon extends React.Component<Props, {}> {
+class SelvstendigNaringsdrivende extends React.Component<Props, {}> {
 
     componentDidMount() {
         skjulToppMeny();
@@ -81,7 +80,7 @@ class Informasjon extends React.Component<Props, {}> {
                                 />
                             </AlertStripe>
                         )}
-						<div>
+                        <div>
 							<div className="skjema-content informasjon-innhold">
 								<span className="informasjon-fra-ella">
 									<Snakkeboble>
@@ -90,27 +89,11 @@ class Informasjon extends React.Component<Props, {}> {
 									</Snakkeboble>
 									<EllaBlunk size={"175"}/>
 								</span>
-
-								<Panel className="informasjon-viktig">
-									<h2 className="typo-element">
-										<FormattedMessage id="informasjon.start.undertittel"/>
-									</h2>
-
-									<p className="blokk-s">
-										<FormattedHTMLMessage id="informasjon.start.tekst"/>
-									</p>
-
-									<h2 className="typo-element">
-										<FormattedMessage id="informasjon.nodsituasjon.undertittel"/>
-									</h2>
-
-									<p className="blokk-s">
-										<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst"/>
-									</p>
-								</Panel>
 							</div>
 						</div>
-						<div className="zebra-stripe graa">
+                        <br/>
+                        <br/>
+						<div>
 							<div className="skjema-content">
 								<Personopplysninger/>
                                 {isPlanlagtNedetid && (
@@ -135,7 +118,7 @@ class Informasjon extends React.Component<Props, {}> {
                                         spinner={startSoknadPending}
                                         disabled={startSoknadPending || visNedetidPanel}
                                         onClick={() => {
-                                            this.props.dispatch(opprettSoknad(intl, false))
+                                            this.props.dispatch(opprettSoknad(intl, true))
                                         }}
                                     >
 										{getIntlTextOrKey(intl, "skjema.knapper.start")}
@@ -178,4 +161,4 @@ export default connect((state: State) => ({
     visNedetidPanel: state.soknad.visNedetidPanel,
     startSoknadPending: state.soknad.startSoknadPending,
     fornavn: state.soknad.fornavn ? state.soknad.fornavn : undefined
-}))(injectIntl(Informasjon));
+}))(injectIntl(SelvstendigNaringsdrivende));

@@ -127,6 +127,7 @@ export interface StartSoknadServerUnavailableAction {
 
 export interface OpprettSoknadAction {
 	type: SoknadActionTypeKeys.OPPRETT_SOKNAD;
+	selvstedigNaringsdrivende: boolean;
 }
 
 export interface OpprettSoknadOkAction {

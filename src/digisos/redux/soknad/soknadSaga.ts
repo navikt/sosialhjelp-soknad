@@ -11,7 +11,7 @@ import {
 import {
     FinnOgOppdaterSoknadsmottakerStatus,
     GetErSystemdataEndret,
-    HentSoknadAction,
+    HentSoknadAction, OpprettSoknadAction,
     SendSoknadAction,
     SlettSoknadAction,
     SoknadActionTypeKeys,
@@ -106,11 +106,13 @@ function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
     }
 }
 
-function* opprettSoknadSaga() {
+function* opprettSoknadSaga(action: OpprettSoknadAction) {
+    const {selvstedigNaringsdrivende} = action;
+    const queryText = selvstedigNaringsdrivende ? "?selvstendigNaringsdrivende=true" : "";
     try {
         const response: OpprettSoknadResponse = yield call(
             fetchPost,
-            "soknader/opprettSoknad",
+            "soknader/opprettSoknad" + queryText,
             "",
             true
         );
