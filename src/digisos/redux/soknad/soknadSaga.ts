@@ -110,7 +110,7 @@ function* opprettSoknadSaga() {
     try {
         const response: OpprettSoknadResponse = yield call(
             fetchPost,
-            "soknader/opprettSoknad",
+            "soknader/opprettSoknad?selvstendigNaringsdrivende=true",
             "",
             true
         );
