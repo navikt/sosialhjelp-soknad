@@ -1,8 +1,34 @@
 .startside-sporsmal {
   text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
-.startside-sideomside {
-  display: flex;
-  flex-direction: row;
+@media only screen and (min-width: 565px) {
+  .startside-sideomside {
+    display: flex;
+    flex-direction: row;
+
+    > a:nth-child(1) {
+      margin-right: 0.5rem;
+    }
+
+    > a:nth-child(2) {
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 564px) {
+  .startside-sideomside {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 677px) {
+  .startside-innhold, .startside-sporsmal {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
 }
