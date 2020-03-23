@@ -7,6 +7,7 @@ const Begrunnelse: React.FunctionComponent<{}> = () => (
 	<DigisosSkjemaSteg
 		steg={DigisosSteg.begrunnelsebolk}
 		ikon={<SnakkebobleIllustrasjon/>}
+		selvstendigNaringsdrivende={false}
 	>
 		<BegrunnelseSkjema />
 	</DigisosSkjemaSteg>

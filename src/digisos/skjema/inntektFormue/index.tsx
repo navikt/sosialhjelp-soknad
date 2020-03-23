@@ -13,7 +13,7 @@ import Studielan from "./studielan/Studielan";
 
 const InntektFormue: React.FC = () => {
     return (
-        <DigisosSkjemaSteg steg={DigisosSteg.inntektbolk} ikon={<Penger/>}>
+        <DigisosSkjemaSteg steg={DigisosSteg.inntektbolk} ikon={<Penger/>} selvstendigNaringsdrivende={false}>
             <h2 className="overskrift">
                 <FormattedHTMLMessage id="opplysninger.inntekt.undertittel"/>
             </h2>

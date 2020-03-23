@@ -37,6 +37,14 @@ export function tilSteg(stegnummer: number, behandlingsId: string): NavigasjonAc
 	};
 }
 
+export function tilSelvstendigNaringsdrivendeSteg(stegnummer: number, behandlingsId: string): NavigasjonActions {
+	return {
+		type: NavigasjonActionTypes.TIL_SELVSTENDIG_NARINGSDRIVENDE_STEG,
+		stegnummer,
+		behandlingsId
+	};
+}
+
 export function tilStart(): NavigasjonActions {
 	return {
 		type: NavigasjonActionTypes.TIL_START

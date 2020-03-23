@@ -26,6 +26,7 @@ import {
 import {
     gaTilbake,
     gaVidere,
+    tilSelvstendigNaringsdrivendeSteg,
     tilSteg,
 } from "../../digisos/redux/navigasjon/navigasjonActions";
 import {loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
@@ -62,6 +63,7 @@ const StegMedNavigasjon = (
         pending?: boolean;
         ikon?: React.ReactNode;
         children?: any;
+        selvstendigNaringsdrivende: boolean;
     } & RouteComponentProps
 ) => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
@@ -73,7 +75,6 @@ const StegMedNavigasjon = (
     const oppsummeringBekreftet = useSelector(
         (state: State) => state.oppsummering.bekreftet
     );
-
     const dispatch = useDispatch();
 
     const intl = useIntl();
@@ -117,7 +118,11 @@ const StegMedNavigasjon = (
             } else {
                 if (feil.length === 0) {
                     dispatch(clearAllValideringsfeil());
-                    dispatch(tilSteg(steg, behandlingsId));
+                    if(selvstendigNaringsdrivende) {
+                        dispatch(tilSelvstendigNaringsdrivendeSteg(steg, behandlingsId));
+                    } else {
+                        dispatch(tilSteg(steg, behandlingsId));
+                    }
                 } else {
                     dispatch(visValideringsfeilPanel());
                 }
@@ -159,9 +164,11 @@ const StegMedNavigasjon = (
                         behandlingsId,
                         dispatch,
                         () => {
-                            dispatch(
-                                gaVidere(aktivtSteg.stegnummer, behandlingsId)
-                            );
+                            if(selvstendigNaringsdrivende) {
+                                dispatch(tilSelvstendigNaringsdrivendeSteg(aktivtSteg.stegnummer + 1, behandlingsId));
+                            } else {
+                                dispatch(gaVidere(aktivtSteg.stegnummer, behandlingsId));
+                            }
                         }
                     );
                 } else {
@@ -188,12 +195,16 @@ const StegMedNavigasjon = (
         if (behandlingsId) {
             dispatch(clearAllValideringsfeil());
             dispatch(resetSendSoknadServiceUnavailable());
-            dispatch(gaTilbake(aktivtSteg, behandlingsId));
+            if(selvstendigNaringsdrivende) {
+                dispatch(tilSelvstendigNaringsdrivendeSteg(aktivtSteg - 1, behandlingsId));
+            } else {
+                dispatch(gaTilbake(aktivtSteg, behandlingsId));
+            }
         }
     };
 
     const nextButtonPending = soknad.sendSoknadPending;
-    const {skjemaConfig, stegKey, ikon, children} = props;
+    const {skjemaConfig, stegKey, ikon, children, selvstendigNaringsdrivende} = props;
 
     const {feil, visValideringsfeil} = validering;
 

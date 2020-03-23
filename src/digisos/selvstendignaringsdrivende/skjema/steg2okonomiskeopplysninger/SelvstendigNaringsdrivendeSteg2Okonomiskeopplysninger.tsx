@@ -1,22 +1,22 @@
 import * as React from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {FormattedHTMLMessage} from "react-intl";
-import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
-import SkjemaIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SkjemaIllustrasjon";
+import DigisosSkjemaSteg, {DigisosSteg} from "../../../skjema/DigisosSkjemaSteg";
+import SkjemaIllustrasjon from "../../../../nav-soknad/components/svg/illustrasjoner/SkjemaIllustrasjon";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import Informasjonspanel, {
     InformasjonspanelIkon,
-} from "../../../nav-soknad/components/informasjonspanel";
-import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
-import Gruppe from "./Gruppe";
+} from "../../../../nav-soknad/components/informasjonspanel";
+import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
+import Gruppe from "../../../skjema/okonomiskeOpplysninger/Gruppe";
 import {
     OpplysningGruppe,
     Opplysning,
-} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
-import {hentOpplysninger} from "../../redux/okonomiskeOpplysninger/opplysningerActions";
-import {gruppeRekkefolge} from "../../redux/okonomiskeOpplysninger/opplysningerConfig";
-import {REST_STATUS} from "../../redux/soknad/soknadTypes";
-import {State} from "../../redux/reducers";
+} from "../../../redux/okonomiskeOpplysninger/opplysningerTypes";
+import {hentOpplysninger} from "../../../redux/okonomiskeOpplysninger/opplysningerActions";
+import {gruppeRekkefolge} from "../../../redux/okonomiskeOpplysninger/opplysningerConfig";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
+import {State} from "../../../redux/reducers";
 
 type MaybeJsxElement = JSX.Element | null;
 
@@ -91,7 +91,7 @@ const OkonomiskeOpplysningerView = () => {
                 <DigisosSkjemaSteg
                     steg={DigisosSteg.opplysningerbolk}
                     ikon={<SkjemaIllustrasjon />}
-                    selvstendigNaringsdrivende={false}
+                    selvstendigNaringsdrivende={true}
                 >
                     {!ikkeBesvartMeldingSkalVises && infoMelding}
                     {ikkeBesvartMeldingSkalVises && ikkeBesvartMelding}

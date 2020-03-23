@@ -8,6 +8,7 @@ const Familie = () => (
     <DigisosSkjemaSteg
         steg={DigisosSteg.familiebolk}
         ikon={<FamilieIllustrasjon />}
+        selvstendigNaringsdrivende={false}
     >
         <DinSivilstatus />
         <ForsorgerPlikt />

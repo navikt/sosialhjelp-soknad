@@ -6,7 +6,7 @@ import Barneutgifter from "./barneutgifter/Barneutgifter";
 
 const UtgifterGjeld: React.FC = () => {
 	return (
-		<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk} ikon={<KredittkortIllustrasjon/>}>
+		<DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk} ikon={<KredittkortIllustrasjon/>} selvstendigNaringsdrivende={false}>
 			<Boutgifter />
 			<Barneutgifter />
 		</DigisosSkjemaSteg>

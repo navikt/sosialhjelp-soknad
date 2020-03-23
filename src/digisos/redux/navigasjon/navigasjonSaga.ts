@@ -7,7 +7,8 @@ import {
 	Sider,
 	TilDittNav,
 	TilKvittering,
-	TilSteg
+	TilSteg,
+	TilSelvstendigNaringsdrivendeSteg
 } from "./navigasjonTypes";
 import { tilStart, tilSteg } from "./navigasjonActions";
 import { lesKommunenrFraUrl } from "../../../nav-soknad/utils";
@@ -47,6 +48,16 @@ function* tilStegSaga(action: TilSteg): SagaIterator {
 	yield put(push(url));
 }
 
+function* tilSelvstendigNaringsdrivendeStegSaga(action: TilSelvstendigNaringsdrivendeSteg): SagaIterator {
+	const {behandlingsId, stegnummer} = action;
+	let url = `/selvstendignaringsdrivende/skjema/${behandlingsId}/${stegnummer}`;
+	const kommunenr = lesKommunenrFraUrl();
+	if (kommunenr) {
+		url = url + '?kommunenr=' + kommunenr;
+	}
+	yield put(push(url));
+}
+
 function* gaVidereSaga(action: GaVidere): SagaIterator {
 	yield put(tilSteg(action.stegnummer + 1, action.behandlingsId));
 }
@@ -72,6 +83,7 @@ function* tilEttersendelse(action: TilKvittering): SagaIterator {
 
 function* navigasjonSaga(): SagaIterator {
 	yield takeEvery(NavigasjonActionTypes.TIL_STEG, tilStegSaga);
+	yield takeEvery(NavigasjonActionTypes.TIL_SELVSTENDIG_NARINGSDRIVENDE_STEG, tilSelvstendigNaringsdrivendeStegSaga);
 	yield takeEvery(NavigasjonActionTypes.GA_VIDERE, gaVidereSaga);
 	yield takeEvery(NavigasjonActionTypes.GA_TILBAKE, gaTilbakeSaga);
 	yield takeEvery(

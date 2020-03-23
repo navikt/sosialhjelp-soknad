@@ -2,21 +2,21 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {FormattedMessage, injectIntl} from "react-intl";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
-import {bekreftOppsummering, hentOppsummering,} from "../../redux/oppsummering/oppsummeringActions";
-import {Oppsummering} from "../../redux/oppsummering/oppsummeringTypes";
-import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
-import {State} from "../../redux/reducers";
-import {DispatchProps} from "../../redux/reduxTypes";
-import {finnOgOppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
+import {bekreftOppsummering, hentOppsummering,} from "../../../redux/oppsummering/oppsummeringActions";
+import {Oppsummering} from "../../../redux/oppsummering/oppsummeringTypes";
+import DigisosSkjemaSteg, {DigisosSteg} from "../../../skjema/DigisosSkjemaSteg";
+import {State} from "../../../redux/reducers";
+import {DispatchProps} from "../../../redux/reduxTypes";
+import {finnOgOppdaterSoknadsmottakerStatus} from "../../../redux/soknad/soknadActions";
 import {Link} from "react-router-dom";
-import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
-import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
-import {Soknadsdata} from "../../redux/soknadsdata/soknadsdataReducer";
-import {NavEnhet} from "../personopplysninger/adresse/AdresseTypes";
+import BehandlingAvPersonopplysningerModal from "../../../informasjon/BehandlingAvPersonopplysningerModal";
+import SoknadsmottakerInfoPanel from "../../../skjema/oppsummering/SoknadsmottakerInfoPanel";
+import {Soknadsdata} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {NavEnhet} from "../../../skjema/personopplysninger/adresse/AdresseTypes";
 import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
-import {REST_STATUS} from "../../redux/soknad/soknadTypes";
+import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import NavFrontendSpinner from "nav-frontend-spinner";
-import {getIntlTextOrKey, IntlProps} from "../../../nav-soknad/utils";
+import {getIntlTextOrKey, IntlProps} from "../../../../nav-soknad/utils";
 
 interface StateProps {
 	oppsummering: Oppsummering | null;
@@ -56,13 +56,16 @@ class OppsummeringView extends React.Component<Props, {}> {
 
 
 		const bolker = oppsummering
-			? oppsummering.bolker.map((bolk, idx) => (
+			? oppsummering.bolker.filter(bolk =>
+				bolk.tittel === "Personopplysninger"
+				|| bolk.tittel === "Økonomiske opplysninger og vedlegg"
+			).map((bolk, idx) => (
 				<div className="blokk-xs bolk" key={idx}>
 					<EkspanderbartPanel tittel={bolk.tittel} apen={false}>
 						<div>
 							<div className="bolk__rediger">
 								<Link
-									to={`/skjema/${brukerbehandlingId}/${idx + 1}`}
+									to={`/selvstendignaringsdrivende/skjema/${brukerbehandlingId}/${idx + 1}`}
 								>
 									{getIntlTextOrKey(
 										this.props.intl,
@@ -87,7 +90,7 @@ class OppsummeringView extends React.Component<Props, {}> {
 
 		if (restStatus === REST_STATUS.OK){
 			return (
-				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering} selvstendigNaringsdrivende={false}>
+				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering} selvstendigNaringsdrivende={true}>
 					<div>
 						{skjemaOppsummering}
 					</div>

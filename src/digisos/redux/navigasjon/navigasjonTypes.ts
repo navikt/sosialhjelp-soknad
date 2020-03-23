@@ -13,6 +13,7 @@ export enum NavigasjonActionTypes {
 	TIL_FINN_DITT_NAV_KONTOR = "navigasjon/TIL_FINN_DITT_NAV_KONTOR",
 	TIL_DITT_NAV = "navigasjon/TIL_DITT_NAV",
 	TIL_STEG = "navigasjon/TIL_STEG",
+	TIL_SELVSTENDIG_NARINGSDRIVENDE_STEG = "navigasjon/TIL_SELVSTENDIG_NARINGSDRIVENDE_STEG",
 	TIL_START = "navigasjon/TIL_START",
 	GA_VIDERE = "navigasjon/GA_VIDERE",
 	GA_TILBAKE = "navigasjon/GA_TILBAKE",
@@ -26,6 +27,7 @@ export type NavigasjonActions =
 	| GaTilbake
 	| TilServerfeil
 	| TilSteg
+	| TilSelvstendigNaringsdrivendeSteg
 	| TilFinnDittNavKontor
 	| TilbakeEllerForsiden
 	| GaVidere
@@ -39,6 +41,12 @@ export interface TilServerfeil {
 
 export interface TilSteg {
 	type: NavigasjonActionTypes.TIL_STEG;
+	stegnummer: number;
+	behandlingsId: string;
+}
+
+export interface TilSelvstendigNaringsdrivendeSteg {
+	type: NavigasjonActionTypes.TIL_SELVSTENDIG_NARINGSDRIVENDE_STEG;
 	stegnummer: number;
 	behandlingsId: string;
 }

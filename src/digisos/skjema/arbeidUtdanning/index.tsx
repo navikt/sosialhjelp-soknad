@@ -7,7 +7,7 @@ import Arbeid from "./arbeid/Arbeid";
 
 const ArbeidOgUtdanning: React.FC<{}> = () => {
 	return (
-		<DigisosSkjemaSteg steg={DigisosSteg.arbeidbolk} ikon={<Koffert/>}>
+		<DigisosSkjemaSteg steg={DigisosSteg.arbeidbolk} ikon={<Koffert/>} selvstendigNaringsdrivende={false}>
 			<Arbeid/>
 			<h2 className="overskrift">
 				<FormattedHTMLMessage id="arbeid.dinsituasjon.studerer.undertittel"/>
