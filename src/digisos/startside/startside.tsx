@@ -4,8 +4,8 @@ import {FormattedMessage, useIntl} from "react-intl";
 import DocumentTitle from "react-document-title";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
-import {Panel} from "nav-frontend-paneler";
 import Lenkepanel from "nav-frontend-lenkepanel/lib";
+import {Normaltekst} from "nav-frontend-typografi";
 
 export const StartSide = () => {
     const intl = useIntl();
@@ -16,19 +16,28 @@ export const StartSide = () => {
             <AppBanner/>
             <DocumentTitle title={title}/>
             <div className="skjema-content informasjon-innhold">
-                <Panel className="informasjon-viktig">
-                    <h4 className="startside-sporsmal"><FormattedMessage id="informasjon.startside.sporsmal"/></h4>
-                    <div className="startside-sideomside">
+                    <h2 className="startside-sporsmal">
+                        <FormattedMessage id="informasjon.startside.sporsmal"/>
+                    </h2>
+                    <div className="startside-sideomside startside-innhold">
                         <Lenkepanel href="/sosialhjelp/soknad/selvstendignaringsdrivende" tittelProps="normaltekst" border={true}>
-                            <h4><FormattedMessage id="informasjon.startside.naringsdrivende.sporsmal"/></h4>
-                            <FormattedMessage id="informasjon.startside.naringsdrivende.info"/>
+                            <h3>
+                                <FormattedMessage id="informasjon.startside.naringsdrivende.sporsmal"/>
+                            </h3>
+
+                            <Normaltekst>
+                                <FormattedMessage id="informasjon.startside.naringsdrivende.info"/>
+                            </Normaltekst>
                         </Lenkepanel>
                         <Lenkepanel href="/sosialhjelp/soknad/informasjon" tittelProps="normaltekst" border={true}>
-                            <h4><FormattedMessage id="informasjon.startside.klassisk.sporsmal"/></h4>
-                            <FormattedMessage id="informasjon.startside.naringsdrivende.info"/>
+                            <h3>
+                                <FormattedMessage id="informasjon.startside.klassisk.sporsmal"/>
+                            </h3>
+                            <Normaltekst>
+                                <FormattedMessage id="informasjon.startside.naringsdrivende.info"/>
+                            </Normaltekst>
                         </Lenkepanel>
                     </div>
-                </Panel>
             </div>
         </div>
     );
