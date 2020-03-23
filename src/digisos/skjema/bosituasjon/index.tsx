@@ -7,6 +7,7 @@ const Bosituasjon = () => (
     <DigisosSkjemaSteg
         steg={DigisosSteg.bosituasjonbolk}
         ikon={<BoligIllustrasjon />}
+        selvstendigNaringsdrivende={false}
     >
         <BosituasjonView />
     </DigisosSkjemaSteg>

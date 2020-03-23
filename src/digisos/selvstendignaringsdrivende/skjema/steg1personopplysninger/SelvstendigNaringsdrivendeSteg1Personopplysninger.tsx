@@ -1,20 +1,20 @@
 import * as React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {State} from "../../redux/reducers";
-import {ErSystemdataEndret} from "../../redux/soknad/soknadActionTypes";
-import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
-import William from "../../../nav-soknad/components/svg/illustrasjoner/William";
+import {State} from "../../../redux/reducers";
+import {ErSystemdataEndret} from "../../../redux/soknad/soknadActionTypes";
+import DigisosSkjemaSteg, {DigisosSteg} from "../../../skjema/DigisosSkjemaSteg";
+import William from "../../../../nav-soknad/components/svg/illustrasjoner/William";
 import Informasjonspanel, {
     InformasjonspanelIkon,
-} from "../../../nav-soknad/components/informasjonspanel";
-import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
+} from "../../../../nav-soknad/components/informasjonspanel";
+import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
 import {FormattedMessage} from "react-intl";
-import Telefon from "./telefon/Telefon";
-import Bankinformasjon from "./bankinfo/Bankinformasjon";
-import Adresse from "./adresse/Adresse";
-import BasisPersonalia from "./personalia/BasisPersonalia";
+import Telefon from "../../../skjema/personopplysninger/telefon/Telefon";
+import Bankinformasjon from "../../../skjema/personopplysninger/bankinfo/Bankinformasjon";
+import Adresse from "../../../skjema/personopplysninger/adresse/Adresse";
+import BasisPersonalia from "../../../skjema/personopplysninger/personalia/BasisPersonalia";
 import NavFrontendSpinner from "nav-frontend-spinner";
-import {getErSystemdataEndret} from "../../redux/soknad/soknadActions";
+import {getErSystemdataEndret} from "../../../redux/soknad/soknadActions";
 import {useEffect} from "react";
 
 const Personopplysninger = () => {
@@ -64,7 +64,7 @@ const Personopplysninger = () => {
     }
 
     return (
-        <DigisosSkjemaSteg steg={DigisosSteg.kontakt} ikon={<William />} selvstendigNaringsdrivende={false}>
+        <DigisosSkjemaSteg steg={DigisosSteg.kontakt} ikon={<William />} selvstendigNaringsdrivende={true}>
             {!skjulGjenopptattInfoPanel &&
                 erGjenopptattSoknad &&
                 erSystemdataEndret === ErSystemdataEndret.NO &&

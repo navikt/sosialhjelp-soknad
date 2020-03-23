@@ -9,6 +9,7 @@ import SkjemaRouter from "./skjema";
 import Ettersendelse from "./skjema/ettersendelse";
 import Link from "./link";
 import {StartSide} from "./startside/startside";
+import SelvstendigNaringsdrivendeSkjema from "./selvstendignaringsdrivende/skjema/SelvstendigNaringsdrivendeSkjema";
 
 const App: React.FC = () => {
 
@@ -57,6 +58,11 @@ const App: React.FC = () => {
                 <Route
                     path={`/skjema/:brukerBehandlingId/:steg`}
                     component={SkjemaRouter}
+                    exact={true}
+                />
+                <Route
+                    path={`/selvstendignaringsdrivende/skjema/:brukerBehandlingId/:steg`}
+                    component={SelvstendigNaringsdrivendeSkjema}
                     exact={true}
                 />
                 <Route component={SideIkkeFunnet}/>

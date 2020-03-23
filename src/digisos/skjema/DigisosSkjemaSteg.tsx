@@ -67,18 +67,43 @@ export const digisosSkjemaConfig: SkjemaConfig = {
     ],
 };
 
+export const selvstendigNaringsdrivendeSkjemaConfig: SkjemaConfig = {
+    tittelId: "applikasjon.sidetittel",
+    skjemanavn: "digisos",
+    steg: [
+        {
+            key: DigisosSteg.kontakt,
+            stegnummer: 1,
+            type: SkjemaStegType.skjema,
+        },
+        {
+            key: DigisosSteg.opplysningerbolk,
+            stegnummer: 2,
+            type: SkjemaStegType.skjema,
+        },
+        {
+            key: DigisosSteg.oppsummering,
+            stegnummer: 3,
+            type: SkjemaStegType.oppsummering,
+        },
+    ],
+};
+
 const DigisosSkjemaSteg = (props: {
     steg: string;
     ikon?: React.ReactNode;
     children: any;
-}) => (
-    <StegMedNavigasjon
-        skjemaConfig={digisosSkjemaConfig}
+    selvstendigNaringsdrivende: boolean;
+}) => {
+    const skjemaConfig = props.selvstendigNaringsdrivende ? selvstendigNaringsdrivendeSkjemaConfig : digisosSkjemaConfig;
+    return <StegMedNavigasjon
+        skjemaConfig={skjemaConfig}
         stegKey={props.steg}
         ikon={props.ikon}
+        selvstendigNaringsdrivende={props.selvstendigNaringsdrivende}
     >
         {props.children}
     </StegMedNavigasjon>
-);
+};
 
 export default DigisosSkjemaSteg;

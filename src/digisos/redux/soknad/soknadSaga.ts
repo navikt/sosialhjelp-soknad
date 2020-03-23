@@ -18,7 +18,7 @@ import {
 } from "./soknadActionTypes";
 import {
     navigerTilDittNav,
-    navigerTilKvittering,
+    navigerTilKvittering, tilSelvstendigNaringsdrivendeSteg,
     tilStart,
     tilSteg,
 } from "../navigasjon/navigasjonActions";
@@ -118,7 +118,11 @@ function* opprettSoknadSaga(action: OpprettSoknadAction) {
         );
         yield put(opprettSoknadOk(response.brukerBehandlingId));
         yield put(startSoknadOk());
-        yield put(tilSteg(1, response.brukerBehandlingId));
+        if(selvstedigNaringsdrivende) {
+            yield put(tilSelvstendigNaringsdrivendeSteg(1, response.brukerBehandlingId));
+        } else {
+            yield put(tilSteg(1, response.brukerBehandlingId));
+        }
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
