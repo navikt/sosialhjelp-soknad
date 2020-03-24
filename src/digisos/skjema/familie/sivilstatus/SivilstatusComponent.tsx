@@ -1,4 +1,5 @@
-import {Familie, initialPerson, Status} from "./FamilieTypes";
+import {Familie,
+    lagInitialPerson, Status} from "./FamilieTypes";
 import {FormattedMessage} from "react-intl";
 import * as React from "react";
 import {useSelector, useDispatch} from "react-redux";
@@ -66,7 +67,7 @@ const SivilstatusComponent = () => {
                 sivilstatus = {
                     kildeErSystem: false,
                     sivilstatus: Status.GIFT,
-                    ektefelle: initialPerson,
+                    ektefelle: lagInitialPerson(),
                 };
             }
             dispatch(

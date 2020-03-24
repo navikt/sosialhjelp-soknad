@@ -47,13 +47,15 @@ export const initialFamilieStatus: Familie = {
     forsorgerplikt: initialForsorgerPlikt
 };
 
-export const initialPerson: Person = {
-    navn: {
-        fornavn: "",
-        mellomnavn: "",
-        etternavn: "",
-        fulltNavn: ""
-    },
-    fodselsdato: null,
-    personnummer: null
+export const lagInitialPerson = ():Person => {
+    return {
+        navn: {
+            fornavn: "",
+            mellomnavn: "",
+            etternavn: "",
+            fulltNavn: "",
+        },
+        fodselsdato: null,
+        personnummer: null,
+    };
 };
