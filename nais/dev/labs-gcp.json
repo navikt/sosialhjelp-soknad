@@ -1,4 +1,5 @@
 {
+  "applicationName": "sosialhjelp-soknad",
   "namespace": "teamdigisos",
   "ingresses": [
     "https://sosialhjelp-soknad.labs.nais.io/sosialhjelp/soknad"
