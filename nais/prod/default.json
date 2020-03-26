@@ -1,4 +1,5 @@
 {
+  "applicationName": "sosialhjelp-soknad",
   "namespace": "default",
   "ingresses": [
     "https://sosialhjelp-soknad.nais.oera.no/",

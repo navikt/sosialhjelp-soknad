@@ -1,4 +1,5 @@
 {
+  "applicationName": "sosialhjelp-soknad",
   "namespace": "q0",
   "ingresses": [
     "https://sosialhjelp-soknad-q0.nais.oera-q.local/",
