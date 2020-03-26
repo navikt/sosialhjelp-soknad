@@ -1,20 +1,15 @@
-import {
-    LagreOpplysningHvisGyldig,
-    opplysningerActionTypeKeys,
-    OpplysningSpc,
-} from "./opplysningerTypes";
+import {LagreOpplysningHvisGyldig, opplysningerActionTypeKeys, OpplysningSpc,} from "./opplysningerTypes";
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {
-    getOpplysningerUrl,
-    getSpcForOpplysning,
-    transformToBackendOpplysning,
-} from "./opplysningerUtils";
+import {getOpplysningerUrl, getSpcForOpplysning, transformToBackendOpplysning,} from "./opplysningerUtils";
 import {fetchPut, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {updateOpplysning} from "./opplysningerActions";
 import {loggFeil} from "../navlogger/navloggerActions";
-import {Valideringsfeil} from "../validering/valideringActionTypes";
+import {Valideringsfeil, ValideringsFeilKode} from "../validering/valideringActionTypes";
 import {showServerFeil} from "../soknad/soknadActions";
+import {REST_FEIL} from "../soknad/soknadTypes";
+import {detekterInternFeilKode} from "../fil/filSaga";
+import {setValideringsfeil} from "../validering/valideringActions";
 
 export function getFeilForOpplysning(
     feil: Valideringsfeil[],
@@ -48,13 +43,13 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
                     return;
                 }
-                yield put(
-                    loggFeil(
-                        "Lagring av økonomisk opplysning feilet. Reason: " +
-                            reason
-                    )
-                );
-                yield put(showServerFeil(true));
+                let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
+                if(feilKode.toString() === "Error: Not Found") {
+                    yield put(setValideringsfeil(ValideringsFeilKode.EKSISTERER_IKKE, opplysning.type));
+                } else {
+                    yield put(loggFeil("Lagring av økonomisk opplysning feilet. Reason: " + reason));
+                    yield put(showServerFeil(true));
+                }
             }
         }
     } else {

@@ -38,6 +38,7 @@ export type ValideringActionTypes =
 
 export enum ValideringsFeilKode {
 	PAKREVD = "validering.pakrevd",
+	EKSISTERER_IKKE = "validering.eksistererIkke",
 	MIN_LENGDE = "validering.minLengde",
 	MAX_LENGDE = "validering.maksLengde",
 	ER_TALL = "validering.erTall",

@@ -1,15 +1,6 @@
-import {
-    FilActionTypeKeys,
-    LastOppFilAction,
-    StartSlettFilAction,
-} from "./filTypes";
+import {FilActionTypeKeys, LastOppFilAction, StartSlettFilAction,} from "./filTypes";
 import {SagaIterator} from "redux-saga";
-import {
-    fetchDelete,
-    fetchUpload,
-    fetchUploadIgnoreErrors,
-    HttpStatus,
-} from "../../../nav-soknad/utils/rest-utils";
+import {fetchDelete, fetchUpload, fetchUploadIgnoreErrors, HttpStatus,} from "../../../nav-soknad/utils/rest-utils";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {
@@ -17,14 +8,12 @@ import {
     settFilOpplastingPending,
     updateOpplysning,
 } from "../okonomiskeOpplysninger/opplysningerActions";
-import {
-    Fil,
-    Opplysning,
-    VedleggStatus,
-} from "../okonomiskeOpplysninger/opplysningerTypes";
+import {Fil, Opplysning, VedleggStatus,} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {lastOppFilFeilet} from "./filActions";
 import {REST_FEIL} from "../soknad/soknadTypes";
 import {showServerFeil} from "../soknad/soknadActions";
+import {setValideringsfeil} from "../validering/valideringActions";
+import {ValideringsFeilKode} from "../validering/valideringActionTypes";
 
 function* lastOppFilSaga(action: LastOppFilAction) {
     const {behandlingsId, formData, opplysning} = action;
@@ -53,22 +42,24 @@ function* lastOppFilSaga(action: LastOppFilAction) {
             return;
         }
         let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
-        // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
-        response = yield call(fetchUploadIgnoreErrors, url, formData);
-        const ID = "id";
-        // @ts-ignore
-        if (response && response[ID]) {
+        if(feilKode.toString() === "Error: Not Found") {
+            yield put(setValideringsfeil(ValideringsFeilKode.EKSISTERER_IKKE, opplysning.type));
+        } else {
+            // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
+            response = yield call(fetchUploadIgnoreErrors, url, formData, "POST");
+            const ID = "id";
             // @ts-ignore
-            feilKode = response[ID];
-        }
-        yield put(lastOppFilFeilet(opplysning.type, feilKode));
-        if (
-            feilKode !== REST_FEIL.KRYPTERT_FIL &&
-            feilKode !== REST_FEIL.SIGNERT_FIL
-        ) {
-            yield put(
-                loggInfo("Last opp vedlegg feilet: " + reason.toString())
-            );
+            if (response && response[ID]) {
+                // @ts-ignore
+                feilKode = response[ID];
+            }
+            yield put(lastOppFilFeilet(opplysning.type, feilKode));
+            if (
+                feilKode !== REST_FEIL.KRYPTERT_FIL &&
+                feilKode !== REST_FEIL.SIGNERT_FIL
+            ) {
+                yield put(loggInfo("Last opp vedlegg feilet: " + reason.toString()));
+            }
         }
         yield put(settFilOpplastingFerdig(opplysning.type));
     }
