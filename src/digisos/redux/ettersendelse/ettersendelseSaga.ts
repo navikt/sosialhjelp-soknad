@@ -141,6 +141,7 @@ function* lastOppEttersendelsesVedleggSaga(
         }
         let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
         // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
+        //@ts-ignore
         response = yield call(fetchUploadIgnoreErrors, url, formData);
         const ID = "id";
         // @ts-ignore
@@ -148,13 +149,18 @@ function* lastOppEttersendelsesVedleggSaga(
             // @ts-ignore
             feilKode = response[ID];
         }
-        yield put(lastOppEttersendelseFeilet(feilKode, opplysningType.toString()));
+        yield put(
+            lastOppEttersendelseFeilet(feilKode, opplysningType.toString())
+        );
         if (
             feilKode !== REST_FEIL.KRYPTERT_FIL &&
             feilKode !== REST_FEIL.SIGNERT_FIL
         ) {
             yield put(
-                loggInfo("Last opp vedlegg for ettersendelse feilet: " + reason.toString())
+                loggInfo(
+                    "Last opp vedlegg for ettersendelse feilet: " +
+                        reason.toString()
+                )
             );
         }
         yield put(settFilOpplastingFerdig(opplysningType));

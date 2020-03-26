@@ -88,6 +88,7 @@ export const VerdierView = () => {
     const handleClickRadio = (idToToggle: VerdierKeys) => {
         if (behandlingsId) {
             const verdier: Verdier = soknadsdata.inntekt.verdier;
+            //@ts-ignore
             verdier[idToToggle] = !verdier[idToToggle];
             if (!verdier.bekreftelse || !verdier.annet) {
                 verdier.beskrivelseAvAnnet = "";

@@ -70,7 +70,6 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.5",
     "redux-thunk": "^2.3.0",
-    "typescript": "3.4.5",
     "uuid": "^3.4.0",
     "whatwg-fetch": "^3.0.0"
   },
@@ -92,7 +91,8 @@
     "@types/react-scroll": "^1.5.4",
     "@types/redux-logger": "^3.0.7",
     "@types/uuid": "^3.4.7",
-    "replace": "^1.1.1"
+    "replace": "^1.1.1",
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "start": "craco start",
