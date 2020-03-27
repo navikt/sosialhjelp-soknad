@@ -21,7 +21,7 @@ const OpplysningView = (props: {
 
     const intl = useIntl();
     const feilListe = useSelector((state: State) => state.validering.feil);
-    const feil = feilListe.find((feil:Valideringsfeil) => feil.faktumKey == opplysning.type);
+    const feil = feilListe.find((feil:Valideringsfeil) => feil.faktumKey === opplysning.type);
     const sporsmalsFeil = feil ? {tittel:opplysning.type, feilmelding: intl.formatHTMLMessage({id: feil.feilkode})} : undefined;
 
     if (opplysning.slettet) {
