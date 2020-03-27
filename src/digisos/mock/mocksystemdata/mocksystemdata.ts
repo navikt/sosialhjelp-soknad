@@ -31,6 +31,10 @@ const bostotte = bostotteJSON;
 
 const PERSON = "person";
 const MIDLERTIDIGPOSTADRESSE = "midlertidigPostadresse";
+const STRUKTURERTADRESSE = "strukturertAdresse";
+const GNR = "gnr";
+const BNR = "bnr";
+const KOMMUNENUMMER = "kommunenummer";
 const BANKKONTO = "bankkonto";
 const VERDI = "verdi";
 const ARBEIDSFORHOLD = "arbeidsforhold";
@@ -65,6 +69,16 @@ export function settIdent(ident: any) {
 export function settMidlertidigPostadresse(midlertidigPostadresseEgendefinertValue: any) {
     // @ts-ignore
     brukerprofil[PERSON][MIDLERTIDIGPOSTADRESSE] = midlertidigPostadresseJSON;
+}
+
+export function settMidlertidigMatrikkelGnr(gnr: any) {
+    brukerprofil[PERSON][MIDLERTIDIGPOSTADRESSE][STRUKTURERTADRESSE][GNR] = gnr;
+}
+export function settMidlertidigMatrikkelBnr(bnr: any) {
+    brukerprofil[PERSON][MIDLERTIDIGPOSTADRESSE][STRUKTURERTADRESSE][BNR] = bnr;
+}
+export function settMidlertidigMatrikkelKommunenummer(kommunenummer: any) {
+    brukerprofil[PERSON][MIDLERTIDIGPOSTADRESSE][STRUKTURERTADRESSE][KOMMUNENUMMER] = kommunenummer;
 }
 
 export function settTelefonnummer(telefonnummer: any) {
