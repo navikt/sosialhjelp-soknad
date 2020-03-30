@@ -84,22 +84,25 @@ const AdresseView = () => {
         adresser.valg = adresseKategori;
         dispatch(oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser));
         if (
-            adresseKategori !== tidligereValg &&
-            adresseKategori === AdresseKategori.SOKNAD
+            adresseKategori !== tidligereValg
         ) {
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, []));
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, null));
-            const soknad: any = {
-                type: "gateadresse",
-                gateadresse: null,
-                matrikkeladresse: null,
-                ustrukturert: null,
-            };
-            dispatch(
-                oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad)
-            );
-        } else if (adresseKategori !== tidligereValg) {
-            lagreAdresseValg(adresser, adresseKategori);
+            if (
+                adresseKategori === AdresseKategori.SOKNAD
+            ) {
+                const soknad: any = {
+                    type: "gateadresse",
+                    gateadresse: null,
+                    matrikkeladresse: null,
+                    ustrukturert: null,
+                };
+                dispatch(
+                    oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad)
+                );
+            } else {
+                lagreAdresseValg(adresser, adresseKategori);
+            }
         }
     };
 
