@@ -43,7 +43,7 @@ function* lastOppFilSaga(action: LastOppFilAction) {
         }
         let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
         if(feilKode.toString() === "Error: Not Found") {
-            yield put(setValideringsfeil(ValideringsFeilKode.EKSISTERER_IKKE, opplysning.type));
+            yield put(setValideringsfeil(ValideringsFeilKode.FIL_EKSISTERER_IKKE, opplysning.type));
         } else {
             // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
             response = yield call(fetchUploadIgnoreErrors, url, formData, "POST");

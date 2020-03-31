@@ -45,7 +45,11 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
                 }
                 let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
                 if(feilKode.toString() === "Error: Not Found") {
-                    yield put(setValideringsfeil(ValideringsFeilKode.EKSISTERER_IKKE, opplysning.type));
+                    for (let i = 0; i < opplysning.radInnhold.length; i++) { // Setter alle felt til feilet!
+                        const validationKey: string = `${opplysningerSpc.textKey}.${opplysning.radInnhold[i]}.${i}`;
+                        yield put(setValideringsfeil(ValideringsFeilKode.FELT_EKSISTERER_IKKE, validationKey));
+                    }
+                    yield put(setValideringsfeil(ValideringsFeilKode.FELT_EKSISTERER_IKKE, opplysning.type));
                 } else {
                     yield put(loggFeil("Lagring av økonomisk opplysning feilet. Reason: " + reason));
                     yield put(showServerFeil(true));
