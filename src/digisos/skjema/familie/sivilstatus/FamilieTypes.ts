@@ -47,7 +47,7 @@ export const initialFamilieStatus: Familie = {
     forsorgerplikt: initialForsorgerPlikt
 };
 
-export const lagInitialPerson = ():Person => {
+export const lagBlankPerson = ():Person => {
     return {
         navn: {
             fornavn: "",
