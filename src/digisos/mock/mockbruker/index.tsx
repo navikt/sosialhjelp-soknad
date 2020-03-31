@@ -30,6 +30,10 @@ interface OwnState {
     mellomnavn: string;
     etternavn: string;
     statsborgerskap: string;
+    midlertidig_matrikkeladresse: boolean;
+    midlertidig_gnr: string;
+    midlertidig_bnr: string;
+    midlertidig_kommunenummer: string;
     telefonnummer: boolean;
     telefonnummer_value: string;
     bankkonto: boolean;
@@ -81,6 +85,10 @@ class MockBruker extends React.Component<Props, OwnState> {
             mellomnavn: "",
             etternavn: "Solo",
             statsborgerskap: "NOR",
+            midlertidig_matrikkeladresse: false,
+            midlertidig_gnr: "123",
+            midlertidig_bnr: "1",
+            midlertidig_kommunenummer: "0301",
             telefonnummer: false,
             telefonnummer_value: "99887766",
             bankkonto: false,
@@ -450,7 +458,12 @@ class MockBruker extends React.Component<Props, OwnState> {
         // Sett ident
         mocksystemdata.settIdent(this.props.mock_ident);
 
-        // Sett adresse
+        // Sett midlertidig matrikkeladresse
+        if (this.state.midlertidig_matrikkeladresse) {
+            mocksystemdata.settMidlertidigMatrikkelGnr(this.state.midlertidig_gnr);
+            mocksystemdata.settMidlertidigMatrikkelBnr(this.state.midlertidig_bnr);
+            mocksystemdata.settMidlertidigMatrikkelKommunenummer(this.state.midlertidig_kommunenummer);
+        }
 
         // Sett telefonnummer
         if (this.state.telefonnummer) {
@@ -624,6 +637,21 @@ class MockBruker extends React.Component<Props, OwnState> {
                     {/*<Radio onChange={() => this.setState({midlertidigPostadresse: Valg.Nei})} label='Nei' name='midlertidigPostadresse' value={'nei'} defaultChecked={true} />*/}
                     {/*<Radio onChange={() => this.setState({midlertidigPostadresse: Valg.Default})} label='Ja, defaultadresse' name='midlertidigPostadresse' value={'default'} />*/}
                     {/*</div>*/}
+
+                    <MockDataBolkWrapper tittel="Midlertidig adresse (Matrikkel)" value={this.state.midlertidig_matrikkeladresse}
+                                         callback={(value: boolean) => this.setState({midlertidig_matrikkeladresse: value})}>
+                        <Collapse className="mock-block-collapse" isOpened={this.state.midlertidig_matrikkeladresse}>
+                            <MockInput label="Gnr:"
+                                       onChange={(evt: any) => this.setState({midlertidig_gnr: evt.target.value})}
+                                       value={this.state.midlertidig_gnr}/>
+                            <MockInput label="Bnr:"
+                                       onChange={(evt: any) => this.setState({midlertidig_bnr: evt.target.value})}
+                                       value={this.state.midlertidig_bnr}/>
+                            <MockInput label="Kommunenummer:"
+                                       onChange={(evt: any) => this.setState({midlertidig_kommunenummer: evt.target.value})}
+                                       value={this.state.midlertidig_kommunenummer}/>
+                        </Collapse>
+                    </MockDataBolkWrapper>
 
                     <MockDataBolkWrapper tittel="Telefonnummer" value={this.state.telefonnummer}
                                          callback={(value: boolean) => this.setState({telefonnummer: value})}>

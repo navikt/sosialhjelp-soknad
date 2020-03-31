@@ -47,7 +47,7 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
         informasjonspanel = (
             <AlertStripe type="advarsel">
                 <FormattedHTMLMessage
-                    id="adresse.alertstripe.advarsel.utenurl"
+                    id="adresse.alertstripe.advarsel"
                     values={{
                         kommuneNavn: kommunenavn,
                     }}
@@ -61,7 +61,7 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
         informasjonspanel = (
             <AlertStripe type="feil">
                 <FormattedHTMLMessage
-                    id="adresse.alertstripe.feil.utenurl"
+                    id="adresse.alertstripe.feil"
                     values={{
                         kommuneNavn: kommunenavn,
                     }}
