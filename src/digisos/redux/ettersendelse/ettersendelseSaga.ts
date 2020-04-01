@@ -129,7 +129,7 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
         let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
         // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
         //@ts-ignore
-        response = yield call(fetchUploadIgnoreErrors, url, formData);
+        response = yield call(fetchUploadIgnoreErrors, url, formData, "POST");
         const ID = "id";
         // @ts-ignore
         if (response && response[ID]) {
