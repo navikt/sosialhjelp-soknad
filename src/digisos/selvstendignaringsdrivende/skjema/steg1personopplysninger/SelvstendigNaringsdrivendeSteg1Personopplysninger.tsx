@@ -10,7 +10,7 @@ import Informasjonspanel, {
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
 import {FormattedMessage} from "react-intl";
 import Telefon from "../../../skjema/personopplysninger/telefon/Telefon";
-import Bankinformasjon from "../../../skjema/personopplysninger/bankinfo/Bankinformasjon";
+import Bankinformasjon from "./bankinfo/Bankinformasjon";
 import Adresse from "../../../skjema/personopplysninger/adresse/Adresse";
 import BasisPersonalia from "../../../skjema/personopplysninger/personalia/BasisPersonalia";
 import NavFrontendSpinner from "nav-frontend-spinner";

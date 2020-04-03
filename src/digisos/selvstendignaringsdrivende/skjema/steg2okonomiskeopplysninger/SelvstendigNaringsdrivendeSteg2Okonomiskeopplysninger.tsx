@@ -1,13 +1,8 @@
 import * as React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {FormattedHTMLMessage} from "react-intl";
 import DigisosSkjemaSteg, {DigisosSteg} from "../../../skjema/DigisosSkjemaSteg";
 import SkjemaIllustrasjon from "../../../../nav-soknad/components/svg/illustrasjoner/SkjemaIllustrasjon";
 import NavFrontendSpinner from "nav-frontend-spinner";
-import Informasjonspanel, {
-    InformasjonspanelIkon,
-} from "../../../../nav-soknad/components/informasjonspanel";
-import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
 import Gruppe from "../../../skjema/okonomiskeOpplysninger/Gruppe";
 import {
     OpplysningGruppe,
@@ -24,7 +19,7 @@ const OkonomiskeOpplysningerView = () => {
     const behandlingsId = useSelector(
         (state: State) => state.soknad.behandlingsId
     );
-    const {opplysningerSortert, restStatus, backendData} = useSelector(
+    const {opplysningerSortert, restStatus} = useSelector(
         (state: State) => state.okonomiskeOpplysninger
     );
 
@@ -60,31 +55,6 @@ const OkonomiskeOpplysningerView = () => {
         return grupperView;
     };
 
-    const ikkeBesvartMeldingSkalVises: boolean | null =
-        backendData &&
-        backendData.okonomiskeOpplysninger &&
-        backendData.okonomiskeOpplysninger.length < 3;
-    const infoMelding: JSX.Element = (
-        <div className="steg-ekstrainformasjon__infopanel">
-            <Informasjonspanel
-                ikon={InformasjonspanelIkon.HENSYN}
-                farge={DigisosFarge.VIKTIG}
-            >
-                <FormattedHTMLMessage id="opplysninger.informasjon" />
-            </Informasjonspanel>
-        </div>
-    );
-    const ikkeBesvartMelding: JSX.Element = (
-        <div className="steg-ekstrainformasjon__infopanel">
-            <Informasjonspanel
-                ikon={InformasjonspanelIkon.HENSYN}
-                farge={DigisosFarge.VIKTIG}
-            >
-                <FormattedHTMLMessage id="opplysninger.ikkebesvart.melding" />
-            </Informasjonspanel>
-        </div>
-    );
-
     if (restStatus === REST_STATUS.OK) {
         return (
             <div className="steg-ekstrainformasjon">
@@ -93,8 +63,6 @@ const OkonomiskeOpplysningerView = () => {
                     ikon={<SkjemaIllustrasjon />}
                     selvstendigNaringsdrivende={true}
                 >
-                    {!ikkeBesvartMeldingSkalVises && infoMelding}
-                    {ikkeBesvartMeldingSkalVises && ikkeBesvartMelding}
                     {renderGrupper()}
                 </DigisosSkjemaSteg>
             </div>

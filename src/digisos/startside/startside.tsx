@@ -34,7 +34,7 @@ export const StartSide = () => {
                                 <FormattedMessage id="informasjon.startside.klassisk.sporsmal"/>
                             </h3>
                             <Normaltekst>
-                                <FormattedMessage id="informasjon.startside.naringsdrivende.info"/>
+                                <FormattedMessage id="informasjon.startside.klassisk.info"/>
                             </Normaltekst>
                         </Lenkepanel>
                     </div>
