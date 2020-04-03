@@ -1,22 +1,15 @@
-import {Familie, initialPerson, Status} from "./FamilieTypes";
+import {Familie, lagBlankPerson, Status} from "./FamilieTypes";
 import {FormattedMessage} from "react-intl";
 import * as React from "react";
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
-import Sporsmal, {
-    LegendTittleStyle,
-} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle,} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
-import Informasjonspanel, {
-    InformasjonspanelIkon,
-} from "../../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, {InformasjonspanelIkon,} from "../../../../nav-soknad/components/informasjonspanel";
 import PersonSkjema from "./PersonSkjema";
-import {
-    SoknadsSti,
-    oppdaterSoknadsdataSti,
-} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {oppdaterSoknadsdataSti, SoknadsSti,} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {State} from "../../../redux/reducers";
 import {lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 
@@ -57,28 +50,23 @@ const SivilstatusComponent = () => {
     const onClickSivilstatus = (verdi: Status) => {
         if (behandlingsId) {
             let sivilstatus = soknadsdata.familie.sivilstatus;
-            if (verdi !== Status.GIFT) {
-                sivilstatus = {
-                    kildeErSystem: false,
-                    sivilstatus: verdi,
-                };
-            } else {
-                sivilstatus = {
-                    kildeErSystem: false,
-                    sivilstatus: Status.GIFT,
-                    ektefelle: initialPerson,
-                };
+            const oldStatus = sivilstatus.sivilstatus;
+            if(oldStatus !== verdi) {
+                if (verdi === Status.GIFT) {
+                    sivilstatus = {
+                        kildeErSystem: false,
+                        sivilstatus: Status.GIFT,
+                        ektefelle: lagBlankPerson(),
+                    };
+                } else {
+                    sivilstatus = {
+                        kildeErSystem: false,
+                        sivilstatus: verdi,
+                    };
+                }
+                dispatch(oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus));
+                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus));
             }
-            dispatch(
-                oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus)
-            );
-            dispatch(
-                lagreSoknadsdata(
-                    behandlingsId,
-                    SoknadsSti.SIVILSTATUS,
-                    sivilstatus
-                )
-            );
         }
     };
 
