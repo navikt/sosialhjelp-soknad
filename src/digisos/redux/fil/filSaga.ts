@@ -1,6 +1,6 @@
-import {FilActionTypeKeys, LastOppFilAction, StartSlettFilAction,} from "./filTypes";
+import {FilActionTypeKeys, LastOppFilAction, StartSlettFilAction} from "./filTypes";
 import {SagaIterator} from "redux-saga";
-import {fetchDelete, fetchUpload, fetchUploadIgnoreErrors, HttpStatus,} from "../../../nav-soknad/utils/rest-utils";
+import {fetchDelete, fetchUpload, fetchUploadIgnoreErrors, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {
@@ -8,7 +8,7 @@ import {
     settFilOpplastingPending,
     updateOpplysning,
 } from "../okonomiskeOpplysninger/opplysningerActions";
-import {Fil, Opplysning, VedleggStatus,} from "../okonomiskeOpplysninger/opplysningerTypes";
+import {Fil, Opplysning, VedleggStatus} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {lastOppFilFeilet} from "./filActions";
 import {REST_FEIL} from "../soknad/soknadTypes";
 import {showServerFeil} from "../soknad/soknadActions";
@@ -42,7 +42,7 @@ function* lastOppFilSaga(action: LastOppFilAction) {
             return;
         }
         let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
-        if(feilKode.toString() === "Error: Not Found") {
+        if (feilKode.toString() === "Error: Not Found") {
             yield put(setValideringsfeil(ValideringsFeilKode.FIL_EKSISTERER_IKKE, opplysning.type));
         } else {
             // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
@@ -54,10 +54,7 @@ function* lastOppFilSaga(action: LastOppFilAction) {
                 feilKode = response[ID];
             }
             yield put(lastOppFilFeilet(opplysning.type, feilKode));
-            if (
-                feilKode !== REST_FEIL.KRYPTERT_FIL &&
-                feilKode !== REST_FEIL.SIGNERT_FIL
-            ) {
+            if (feilKode !== REST_FEIL.KRYPTERT_FIL && feilKode !== REST_FEIL.SIGNERT_FIL) {
                 yield put(loggInfo("Last opp vedlegg feilet: " + reason.toString()));
             }
         }

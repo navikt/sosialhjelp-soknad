@@ -2,7 +2,7 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {FormattedMessage, injectIntl} from "react-intl";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
-import {bekreftOppsummering, hentOppsummering,} from "../../redux/oppsummering/oppsummeringActions";
+import {bekreftOppsummering, hentOppsummering} from "../../redux/oppsummering/oppsummeringActions";
 import {Oppsummering} from "../../redux/oppsummering/oppsummeringTypes";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import {State} from "../../redux/reducers";
@@ -19,124 +19,113 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import {getIntlTextOrKey, IntlProps} from "../../../nav-soknad/utils";
 
 interface StateProps {
-	oppsummering: Oppsummering | null;
-	bekreftet: boolean | undefined;
-	visBekreftMangler: boolean | undefined;
-	restStatus: REST_STATUS;
-	brukerbehandlingId: string | undefined;
-	soknadsdata: Soknadsdata;
-	valgtSoknadsmottaker: NavEnhet | undefined;
+    oppsummering: Oppsummering | null;
+    bekreftet: boolean | undefined;
+    visBekreftMangler: boolean | undefined;
+    restStatus: REST_STATUS;
+    brukerbehandlingId: string | undefined;
+    soknadsdata: Soknadsdata;
+    valgtSoknadsmottaker: NavEnhet | undefined;
 }
 
 type Props = DispatchProps & StateProps & IntlProps;
 
 class OppsummeringView extends React.Component<Props, {}> {
-	constructor(props: Props) {
-		super(props);
-		this.getOppsummering = this.getOppsummering.bind(this);
-	}
+    constructor(props: Props) {
+        super(props);
+        this.getOppsummering = this.getOppsummering.bind(this);
+    }
 
-	componentDidMount() {
-		const {brukerbehandlingId, dispatch} = this.props;
-		if (brukerbehandlingId){
-			dispatch(finnOgOppdaterSoknadsmottakerStatus(brukerbehandlingId));
-			dispatch(hentOppsummering());
-		}
-	}
+    componentDidMount() {
+        const {brukerbehandlingId, dispatch} = this.props;
+        if (brukerbehandlingId) {
+            dispatch(finnOgOppdaterSoknadsmottakerStatus(brukerbehandlingId));
+            dispatch(hentOppsummering());
+        }
+    }
 
-	getOppsummering() {
-		return {
-			__html: this.props.oppsummering || ""
-		};
-	}
+    getOppsummering() {
+        return {
+            __html: this.props.oppsummering || "",
+        };
+    }
 
-	render() {
-		const {oppsummering, brukerbehandlingId, intl, restStatus} = this.props;
+    render() {
+        const {oppsummering, brukerbehandlingId, intl, restStatus} = this.props;
 
+        const bolker = oppsummering
+            ? oppsummering.bolker.map((bolk, idx) => (
+                  <div className="blokk-xs bolk" key={idx}>
+                      <EkspanderbartPanel tittel={bolk.tittel} apen={false}>
+                          <div>
+                              <div className="bolk__rediger">
+                                  <Link to={`/skjema/${brukerbehandlingId}/${idx + 1}`}>
+                                      {getIntlTextOrKey(this.props.intl, "oppsummering.gatilbake")}
+                                  </Link>
+                              </div>
+                              <div dangerouslySetInnerHTML={{__html: bolk.html}} />
+                          </div>
+                      </EkspanderbartPanel>
+                  </div>
+              ))
+            : null;
 
+        const skjemaOppsummering = oppsummering ? <div className="skjema-oppsummering">{bolker}</div> : null;
 
-		const bolker = oppsummering
-			? oppsummering.bolker.map((bolk, idx) => (
-				<div className="blokk-xs bolk" key={idx}>
-					<EkspanderbartPanel tittel={bolk.tittel} apen={false}>
-						<div>
-							<div className="bolk__rediger">
-								<Link
-									to={`/skjema/${brukerbehandlingId}/${idx + 1}`}
-								>
-									{getIntlTextOrKey(
-										this.props.intl,
-										"oppsummering.gatilbake"
-									)}
-								</Link>
-							</div>
-							<div dangerouslySetInnerHTML={{__html: bolk.html}}/>
-						</div>
-					</EkspanderbartPanel>
-				</div>
-			))
-			: null;
+        const bekreftOpplysninger: string = intl.formatMessage({
+            id: "soknadsosialhjelp.oppsummering.harLestSamtykker",
+        });
 
-		const skjemaOppsummering = oppsummering ? (
-			<div className="skjema-oppsummering">{bolker}</div>
-		) : null;
+        if (restStatus === REST_STATUS.OK) {
+            return (
+                <DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
+                    <div>{skjemaOppsummering}</div>
 
-		const bekreftOpplysninger: string = intl.formatMessage({
-			id: "soknadsosialhjelp.oppsummering.harLestSamtykker"
-		});
+                    <div className="infopanel-oppsummering skjema-sporsmal">
+                        <SoknadsmottakerInfoPanel />
+                    </div>
 
-		if (restStatus === REST_STATUS.OK){
-			return (
-				<DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
-					<div>
-						{skjemaOppsummering}
-					</div>
+                    <div className="bekreftOpplysningerPanel blokk-xs bolk">
+                        <BekreftCheckboksPanel
+                            label={bekreftOpplysninger}
+                            checked={this.props.bekreftet ? this.props.bekreftet : false}
+                            onChange={() => this.props.dispatch(bekreftOppsummering())}
+                            feil={
+                                this.props.visBekreftMangler
+                                    ? {
+                                          feilmelding: intl.formatHTMLMessage({
+                                              id: "oppsummering.feilmelding.bekreftmangler",
+                                          }),
+                                      }
+                                    : undefined
+                            }
+                        >
+                            <p style={{marginTop: "0"}}>
+                                <FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger" />
+                            </p>
+                        </BekreftCheckboksPanel>
+                    </div>
+                    <BehandlingAvPersonopplysningerModal />
+                </DigisosSkjemaSteg>
+            );
+        }
 
-					<div className="infopanel-oppsummering skjema-sporsmal">
-						<SoknadsmottakerInfoPanel />
-					</div>
-
-					<div className="bekreftOpplysningerPanel blokk-xs bolk">
-						<BekreftCheckboksPanel
-							label={bekreftOpplysninger}
-							checked={this.props.bekreftet ? this.props.bekreftet : false}
-							onChange={() => this.props.dispatch(bekreftOppsummering())}
-							feil={
-								this.props.visBekreftMangler
-									? {
-										feilmelding: intl.formatHTMLMessage({
-											id: "oppsummering.feilmelding.bekreftmangler"
-										})
-									}
-									: undefined
-							}
-						>
-							<p style={{marginTop: "0"}}>
-								<FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger"/>
-							</p>
-						</BekreftCheckboksPanel>
-					</div>
-					<BehandlingAvPersonopplysningerModal/>
-				</DigisosSkjemaSteg>
-			);
-		}
-
-		return (
-			<div className="application-spinner">
-				<NavFrontendSpinner type="XXL"/>
-			</div>
-		);
-	}
+        return (
+            <div className="application-spinner">
+                <NavFrontendSpinner type="XXL" />
+            </div>
+        );
+    }
 }
 
 export default connect((state: State) => {
-	return {
-		oppsummering: state.oppsummering.oppsummering,
-		bekreftet: state.oppsummering.bekreftet,
-		visBekreftMangler: state.oppsummering.visBekreftMangler,
-		restStatus: state.oppsummering.restStatus,
-		brukerbehandlingId: state.soknad.behandlingsId,
-		valgtSoknadsmottaker: state.soknad.valgtSoknadsmottaker,
-		soknadsdata: state.soknadsdata
-	};
+    return {
+        oppsummering: state.oppsummering.oppsummering,
+        bekreftet: state.oppsummering.bekreftet,
+        visBekreftMangler: state.oppsummering.visBekreftMangler,
+        restStatus: state.oppsummering.restStatus,
+        brukerbehandlingId: state.soknad.behandlingsId,
+        valgtSoknadsmottaker: state.soknad.valgtSoknadsmottaker,
+        soknadsdata: state.soknadsdata,
+    };
 })(injectIntl(OppsummeringView));

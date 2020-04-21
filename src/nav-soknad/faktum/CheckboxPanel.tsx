@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Checkbox } from "nav-frontend-skjema";
-
+import {Checkbox} from "nav-frontend-skjema";
 
 interface Props {
     id: string;
@@ -13,7 +12,6 @@ interface Props {
 }
 
 class CheckboxPanel extends React.Component<Props, {checked: boolean}> {
-
     onChange(evt: any) {
         const checked = !this.props.checked;
         this.props.onClick(checked);
@@ -25,17 +23,13 @@ class CheckboxPanel extends React.Component<Props, {checked: boolean}> {
     }
 
     render() {
-        const {id, name, checked, disabled, className, label } = this.props;
+        const {id, name, checked, disabled, className, label} = this.props;
         let classNames = "inputPanel " + (className ? className : "");
         if (checked) {
             classNames += " inputPanel__checked";
         }
         return (
-            <div
-                className={classNames}
-                onClick={(evt: any) => this.onChange(evt)}
-                id={id + "_klikkbar_div"}
-            >
+            <div className={classNames} onClick={(evt: any) => this.onChange(evt)} id={id + "_klikkbar_div"}>
                 <div className="inputPanel__checkbox_wrapper ">
                     <Checkbox
                         id={id}
@@ -48,7 +42,6 @@ class CheckboxPanel extends React.Component<Props, {checked: boolean}> {
                 </div>
             </div>
         );
-
     }
 }
 

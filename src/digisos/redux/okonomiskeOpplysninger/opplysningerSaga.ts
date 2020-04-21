@@ -1,7 +1,7 @@
-import {LagreOpplysningHvisGyldig, opplysningerActionTypeKeys, OpplysningSpc,} from "./opplysningerTypes";
+import {LagreOpplysningHvisGyldig, opplysningerActionTypeKeys, OpplysningSpc} from "./opplysningerTypes";
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {getOpplysningerUrl, getSpcForOpplysning, transformToBackendOpplysning,} from "./opplysningerUtils";
+import {getOpplysningerUrl, getSpcForOpplysning, transformToBackendOpplysning} from "./opplysningerUtils";
 import {fetchPut, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {updateOpplysning} from "./opplysningerActions";
 import {loggFeil} from "../navlogger/navloggerActions";
@@ -11,10 +11,7 @@ import {REST_FEIL} from "../soknad/soknadTypes";
 import {detekterInternFeilKode} from "../fil/filSaga";
 import {setValideringsfeil} from "../validering/valideringActions";
 
-export function getFeilForOpplysning(
-    feil: Valideringsfeil[],
-    opplysningTextKey: string
-) {
+export function getFeilForOpplysning(feil: Valideringsfeil[], opplysningTextKey: string) {
     return feil.filter((f: Valideringsfeil) => {
         return f.faktumKey.indexOf(opplysningTextKey) > -1;
     });
@@ -22,9 +19,7 @@ export function getFeilForOpplysning(
 
 function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
     const {behandlingsId, opplysning, feil} = action;
-    const opplysningerSpc: OpplysningSpc | undefined = getSpcForOpplysning(
-        opplysning.type
-    );
+    const opplysningerSpc: OpplysningSpc | undefined = getSpcForOpplysning(opplysning.type);
 
     if (opplysningerSpc) {
         const opplysningKey: string = opplysningerSpc.textKey;
@@ -44,8 +39,9 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
                     return;
                 }
                 let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
-                if(feilKode.toString() === "Error: Not Found") {
-                    for (let i = 0; i < opplysning.radInnhold.length; i++) { // Setter alle felt til feilet!
+                if (feilKode.toString() === "Error: Not Found") {
+                    for (let i = 0; i < opplysning.radInnhold.length; i++) {
+                        // Setter alle felt til feilet!
                         const validationKey: string = `${opplysningerSpc.textKey}.${opplysning.radInnhold[i]}.${i}`;
                         yield put(setValideringsfeil(ValideringsFeilKode.FELT_EKSISTERER_IKKE, validationKey));
                     }
@@ -57,17 +53,12 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
             }
         }
     } else {
-        yield put(
-            loggFeil("Ukjent opplysningstype mottatt. Type: " + opplysning.type)
-        );
+        yield put(loggFeil("Ukjent opplysningstype mottatt. Type: " + opplysning.type));
     }
 }
 
 function* opplysningerSaga(): SagaIterator {
-    yield takeEvery(
-        opplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG,
-        lagreOpplysningHvisGyldigSaga
-    );
+    yield takeEvery(opplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG, lagreOpplysningHvisGyldigSaga);
 }
 
 export default opplysningerSaga;

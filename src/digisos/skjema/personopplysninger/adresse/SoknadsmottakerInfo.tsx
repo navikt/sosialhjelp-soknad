@@ -1,7 +1,5 @@
 import * as React from "react";
-import Informasjonspanel, {
-    InformasjonspanelIkon,
-} from "../../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
 import {SoknadsMottakerStatus} from "./AdresseTypes";
 import {soknadsmottakerStatus} from "./AdresseUtils";
@@ -24,9 +22,7 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
     let farge: DigisosFarge = DigisosFarge.SUKSESS;
     let tekst: string = "";
 
-    const mottakerStatus: SoknadsMottakerStatus = soknadsmottakerStatus(
-        soknadsdata
-    );
+    const mottakerStatus: SoknadsMottakerStatus = soknadsmottakerStatus(soknadsdata);
 
     let informasjonspanel: JSX.Element | null = null;
 
@@ -34,11 +30,7 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
         // GRØNN
         tekst = `Søknaden vil bli sendt til: ${enhetsnavn}, ${kommunenavn} kommune.`;
         informasjonspanel = (
-            <Informasjonspanel
-                ikon={InformasjonspanelIkon.BREVKONVOLUTT}
-                farge={farge}
-                synlig={erSynlig}
-            >
+            <Informasjonspanel ikon={InformasjonspanelIkon.BREVKONVOLUTT} farge={farge} synlig={erSynlig}>
                 {tekst}
             </Informasjonspanel>
         );
@@ -54,10 +46,7 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
                 />
             </AlertStripe>
         );
-    } else if (
-        mottakerStatus ===
-        SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT
-    ) {
+    } else if (mottakerStatus === SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT) {
         informasjonspanel = (
             <AlertStripe type="feil">
                 <FormattedHTMLMessage

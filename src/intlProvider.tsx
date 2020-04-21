@@ -6,12 +6,11 @@ import {State} from "./digisos/redux/reducers";
 import {LedeteksterState} from "./digisos/redux/ledetekster/ledeteksterTypes";
 
 interface StateProps {
-    ledetekster: LedeteksterState
+    ledetekster: LedeteksterState;
 }
 interface IntlProviderProps {
     children: React.ReactNode;
 }
-
 
 type Props = StateProps & IntlProviderProps & DispatchProps;
 

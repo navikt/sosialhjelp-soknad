@@ -21,14 +21,8 @@ interface OwnProps {
 
 type Props = OwnProps & StoreToProps & DispatchProps;
 
-const LastOppFil = (props: {
-    opplysning: Opplysning;
-    isDisabled: boolean;
-    visSpinner: boolean;
-}) => {
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+const LastOppFil = (props: {opplysning: Opplysning; isDisabled: boolean; visSpinner: boolean}) => {
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const filopplasting = useSelector((state: State) => state.filopplasting);
 
     const dispatch = useDispatch();
@@ -63,9 +57,7 @@ const LastOppFil = (props: {
         <div>
             <Knapp
                 type="hoved"
-                id={
-                    props.opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"
-                }
+                id={props.opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
                 htmlType="button"
                 disabled={props.isDisabled}
                 spinner={props.visSpinner}
@@ -77,12 +69,9 @@ const LastOppFil = (props: {
                 + <FormattedMessage id="opplysninger.vedlegg.knapp.tekst" />
             </Knapp>
             <input
-                id={
-                    props.opplysning.type.replace(/\./g, "_") +
-                    "_skjult_upload_input"
-                }
+                id={props.opplysning.type.replace(/\./g, "_") + "_skjult_upload_input"}
                 ref={vedleggElement}
-                onChange={e => {
+                onChange={(e) => {
                     if (e.target.files) {
                         handleFileUpload(e.target.files);
                     }
@@ -99,11 +88,9 @@ const LastOppFil = (props: {
 
             <div role="alert" aria-live="assertive">
                 <div className="skjemaelement__feilmelding">
-                    {filopplasting.feilKode &&
-                        filopplasting.opplysningtype ===
-                            props.opplysning.type && (
-                            <FormattedMessage id={filopplasting.feilKode} />
-                        )}
+                    {filopplasting.feilKode && filopplasting.opplysningtype === props.opplysning.type && (
+                        <FormattedMessage id={filopplasting.feilKode} />
+                    )}
                 </div>
             </div>
         </div>

@@ -1,39 +1,23 @@
 import * as React from "react";
 import {Column, Container, Row} from "nav-frontend-grid";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
-import {
-    setPath,
-    lagreSoknadsdata,
-} from "../../../redux/soknadsdata/soknadsdataActions";
-import {
-    SoknadsSti,
-    oppdaterSoknadsdataSti,
-} from "../../../redux/soknadsdata/soknadsdataReducer";
-import {
-    erTall,
-    fdato,
-    maksLengde,
-    minLengde,
-} from "../../../../nav-soknad/validering/valideringer";
+import {setPath, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {erTall, fdato, maksLengde, minLengde} from "../../../../nav-soknad/validering/valideringer";
 import {konverterFraISODato, konverterTilISODato} from "./datoUtils";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {Familie, Sivilstatus} from "./FamilieTypes";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
-import {
-    clearValideringsfeil,
-    setValideringsfeil,
-} from "../../../redux/validering/valideringActions";
+import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validering/valideringActions";
 
 const FAKTUM_KEY = "familie.sivilstatus.gift.ektefelle";
 const FAKTUM_KEY_FNR = FAKTUM_KEY + ".fnr";
 const FAKTUM_KEY_PERSONNUMMER = FAKTUM_KEY + ".pnr";
 
 const PersonSkjema = () => {
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
 
     const dispatch = useDispatch();
@@ -55,26 +39,18 @@ const PersonSkjema = () => {
         const sivilstatus = soknadsdata.familie.sivilstatus;
         const harFeil = valider(sivilstatus);
         if (!harFeil && behandlingsId) {
-            dispatch(
-                lagreSoknadsdata(
-                    behandlingsId,
-                    SoknadsSti.SIVILSTATUS,
-                    sivilstatus
-                )
-            );
+            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus));
         }
     };
 
-    function valider(sivilstatus:Sivilstatus) {
+    function valider(sivilstatus: Sivilstatus) {
         const feilkodeFodselsdato = validerOgOppdaterFodselsdato(sivilstatus);
         const feilkodePersonnummer = validerOgOppdaterPersonnummer(sivilstatus);
         return feilkodeFodselsdato || feilkodePersonnummer;
     }
 
-    function validerOgOppdaterPersonnummer(sivilstatus:Sivilstatus) {
-        const personnummer: string | null = sivilstatus.ektefelle
-            ? sivilstatus.ektefelle.personnummer
-            : null;
+    function validerOgOppdaterPersonnummer(sivilstatus: Sivilstatus) {
+        const personnummer: string | null = sivilstatus.ektefelle ? sivilstatus.ektefelle.personnummer : null;
         let feilkodePersonnummer = null;
         if (personnummer && personnummer !== "") {
             feilkodePersonnummer = minLengde(personnummer, 5);
@@ -86,12 +62,7 @@ const PersonSkjema = () => {
             }
 
             feilkodePersonnummer
-                ? dispatch(
-                setValideringsfeil(
-                    feilkodePersonnummer,
-                    FAKTUM_KEY_PERSONNUMMER
-                )
-                )
+                ? dispatch(setValideringsfeil(feilkodePersonnummer, FAKTUM_KEY_PERSONNUMMER))
                 : dispatch(clearValideringsfeil(FAKTUM_KEY_PERSONNUMMER));
         } else {
             dispatch(clearValideringsfeil(FAKTUM_KEY_PERSONNUMMER));
@@ -99,45 +70,31 @@ const PersonSkjema = () => {
         return feilkodePersonnummer;
     }
 
-    function validerOgOppdaterFodselsdato(sivilstatus:Sivilstatus) {
+    function validerOgOppdaterFodselsdato(sivilstatus: Sivilstatus) {
         let feilkodeFodselsdato = null;
-        let fodselsdato: string | null = sivilstatus.ektefelle
-            ? sivilstatus.ektefelle.fodselsdato
-            : null;
+        let fodselsdato: string | null = sivilstatus.ektefelle ? sivilstatus.ektefelle.fodselsdato : null;
 
         if (sivilstatus.ektefelle && sivilstatus.ektefelle.fodselsdato === "") {
             sivilstatus.ektefelle.fodselsdato = null;
         }
-        if (
-            sivilstatus.ektefelle &&
-            sivilstatus.ektefelle.personnummer === ""
-        ) {
+        if (sivilstatus.ektefelle && sivilstatus.ektefelle.personnummer === "") {
             sivilstatus.ektefelle.personnummer = null;
         }
         if (fodselsdato && fodselsdato !== "") {
             fodselsdato = konverterFraISODato(fodselsdato);
             feilkodeFodselsdato = fdato(fodselsdato);
             feilkodeFodselsdato
-                ? dispatch(
-                setValideringsfeil(feilkodeFodselsdato, FAKTUM_KEY_FNR)
-                )
+                ? dispatch(setValideringsfeil(feilkodeFodselsdato, FAKTUM_KEY_FNR))
                 : dispatch(clearValideringsfeil(FAKTUM_KEY_FNR));
 
-            if (
-                !feilkodeFodselsdato &&
-                sivilstatus.ektefelle &&
-                sivilstatus.ektefelle.fodselsdato
-            ) {
-                sivilstatus.ektefelle.fodselsdato = konverterTilISODato(
-                    sivilstatus.ektefelle.fodselsdato
-                );
+            if (!feilkodeFodselsdato && sivilstatus.ektefelle && sivilstatus.ektefelle.fodselsdato) {
+                sivilstatus.ektefelle.fodselsdato = konverterTilISODato(sivilstatus.ektefelle.fodselsdato);
             }
         } else {
             dispatch(clearValideringsfeil(FAKTUM_KEY_FNR));
         }
         return feilkodeFodselsdato;
     }
-
 
     const onClickBorSammen = (verdi: boolean) => {
         const sivilstatus = soknadsdata.familie.sivilstatus;
@@ -153,19 +110,14 @@ const PersonSkjema = () => {
     if (!ektefelle) {
         return <div className="personskjema" />;
     }
-    const fodselsdato = ektefelle.fodselsdato
-        ? konverterFraISODato(ektefelle.fodselsdato)
-        : "";
+    const fodselsdato = ektefelle.fodselsdato ? konverterFraISODato(ektefelle.fodselsdato) : "";
     if (!ektefelle.personnummer) {
         ektefelle.personnummer = "";
     }
     const personnummer = ektefelle.personnummer || "";
 
     const familie: Familie = soknadsdata.familie;
-    const borSammenMed =
-        familie && familie.sivilstatus
-            ? familie.sivilstatus.borSammenMed
-            : null;
+    const borSammenMed = familie && familie.sivilstatus ? familie.sivilstatus.borSammenMed : null;
 
     return (
         <div className="personskjema">
@@ -178,9 +130,7 @@ const PersonSkjema = () => {
                             autoFocus={true}
                             maxLength={100}
                             verdi={ektefelle.navn.fornavn}
-                            onChange={(verdi: string) =>
-                                oppdaterTekstfelt("navn/fornavn", verdi)
-                            }
+                            onChange={(verdi: string) => oppdaterTekstfelt("navn/fornavn", verdi)}
                             onBlur={() => onBlur()}
                             faktumKey="familie.sivilstatus.gift.ektefelle.fornavn"
                             required={true}
@@ -193,14 +143,8 @@ const PersonSkjema = () => {
                             getName={() => FAKTUM_KEY + "_mellomnavn_input"}
                             id={FAKTUM_KEY + "_mellomnavn_input"}
                             maxLength={100}
-                            verdi={
-                                ektefelle.navn.mellomnavn
-                                    ? ektefelle.navn.mellomnavn
-                                    : ""
-                            }
-                            onChange={(verdi: string) =>
-                                oppdaterTekstfelt("navn/mellomnavn", verdi)
-                            }
+                            verdi={ektefelle.navn.mellomnavn ? ektefelle.navn.mellomnavn : ""}
+                            onChange={(verdi: string) => oppdaterTekstfelt("navn/mellomnavn", verdi)}
                             onBlur={() => onBlur()}
                             faktumKey="familie.sivilstatus.gift.ektefelle.mellomnavn"
                             required={true}
@@ -214,9 +158,7 @@ const PersonSkjema = () => {
                             id={FAKTUM_KEY + "_etternavn_input"}
                             maxLength={100}
                             verdi={ektefelle.navn.etternavn}
-                            onChange={(verdi: string) =>
-                                oppdaterTekstfelt("navn/etternavn", verdi)
-                            }
+                            onChange={(verdi: string) => oppdaterTekstfelt("navn/etternavn", verdi)}
                             onBlur={() => onBlur()}
                             faktumKey="familie.sivilstatus.gift.ektefelle.etternavn"
                             required={true}
@@ -231,9 +173,7 @@ const PersonSkjema = () => {
                             maxLength={8}
                             minLength={8}
                             verdi={fodselsdato}
-                            onChange={(verdi: string) =>
-                                oppdaterTekstfelt("fodselsdato", verdi)
-                            }
+                            onChange={(verdi: string) => oppdaterTekstfelt("fodselsdato", verdi)}
                             bredde="S"
                             onBlur={() => onBlur()}
                             faktumKey="familie.sivilstatus.gift.ektefelle.fnr"
@@ -249,9 +189,7 @@ const PersonSkjema = () => {
                             maxLength={5}
                             minLength={5}
                             verdi={personnummer}
-                            onChange={(verdi: string) =>
-                                oppdaterTekstfelt("personnummer", verdi)
-                            }
+                            onChange={(verdi: string) => oppdaterTekstfelt("personnummer", verdi)}
                             bredde="S"
                             onBlur={() => onBlur()}
                             faktumKey="familie.sivilstatus.gift.ektefelle.pnr"

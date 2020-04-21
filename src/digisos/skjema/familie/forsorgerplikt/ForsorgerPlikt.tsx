@@ -4,9 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useState, useEffect} from "react";
 
 import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, {
-    LegendTittleStyle,
-} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import Barnebidrag from "./Barnebidrag";
 import RegistrerteBarn from "./RegistrerteBarn";
@@ -21,9 +19,7 @@ const ForsorgerPliktView = () => {
     const dispatch = useDispatch();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
     useEffect(() => {
         if (behandlingsId) {
@@ -62,15 +58,8 @@ const ForsorgerPliktView = () => {
     }
     if (ansvar && antallBarn > 0) {
         return (
-            <Sporsmal
-                sprakNokkel="familierelasjon.faktum"
-                stil="system"
-                legendTittelStyle={LegendTittleStyle.DEFAULT}
-            >
-                <FormattedHTMLMessage
-                    id="familierelasjon.ingress"
-                    values={{antallBarn}}
-                />
+            <Sporsmal sprakNokkel="familierelasjon.faktum" stil="system" legendTittelStyle={LegendTittleStyle.DEFAULT}>
+                <FormattedHTMLMessage id="familierelasjon.ingress" values={{antallBarn}} />
                 <SysteminfoMedSkjema>
                     <RegistrerteBarn />
                     <Barnebidrag />

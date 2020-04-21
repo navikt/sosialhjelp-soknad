@@ -65,9 +65,7 @@ const visReduxLogger = false;
 function configureStore() {
     const w: any = window as any;
 
-    const composeEnhancers = erDev()
-        ? w.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-        : compose;
+    const composeEnhancers = erDev() ? w.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
 
     const saga = createSagaMiddleware();
 
@@ -75,10 +73,7 @@ function configureStore() {
         erDev() && visReduxLogger
             ? applyMiddleware(thunk, saga, logger, routerMiddleware(history))
             : applyMiddleware(thunk, saga, routerMiddleware(history));
-    const createdStore = createStore(
-        reducers(history),
-        composeEnhancers(middleware)
-    );
+    const createdStore = createStore(reducers(history), composeEnhancers(middleware));
     saga.run(sagas);
     return createdStore;
 }
@@ -88,9 +83,7 @@ const store = configureStore();
 window.onerror = (errorMessage, url, line, column, error) => {
     store.dispatch(
         loggException(
-            typeof errorMessage === "string"
-                ? errorMessage
-                : "Why is typeof errorMessage Event?",
+            typeof errorMessage === "string" ? errorMessage : "Why is typeof errorMessage Event?",
             url ? url : "",
             line,
             column,

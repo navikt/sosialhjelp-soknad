@@ -2,7 +2,7 @@ import {endpoints} from "./endpoints";
 
 import {midlertidigPostadresseJSON} from "./jsonPartialTemplates/midlertidigPostadresse";
 import {organisasjonJSON} from "./jsonTemplates/organisasjon";
-import {nyOrganisasjonJSON} from './jsonPartialTemplates/organisasjon';
+import {nyOrganisasjonJSON} from "./jsonPartialTemplates/organisasjon";
 import {adresserJSON} from "./jsonTemplates/adresser";
 import {arbeidJSON} from "./jsonTemplates/arbeid";
 import {bostotteJSON} from "./jsonTemplates/bostotte";
@@ -17,7 +17,6 @@ import {NyPeriodeOgUtbetaler} from "../mockbruker/mockComponents/nySkattetatenUt
 import {enkelNavUtbetalingJSON} from "./jsonTemplates/enkelNavUtbetalingJSON";
 import {NyNavUtbetalingObject, NyNavYtelseObject} from "../mockbruker/mockComponents/nyNavUtbetaling";
 
-
 const adresser = adresserJSON;
 let arbeid = arbeidJSON;
 const brukerprofil = brukerprofilJSON;
@@ -25,7 +24,7 @@ let familie = familieJSON;
 const norg = norgJSON;
 let organisasjon = organisasjonJSON;
 const telefon = telefonJSON;
-const navUtbetalinger:any[] = [];
+const navUtbetalinger: any[] = [];
 let skattetaten: NyPeriodeOgUtbetaler[] = [];
 const bostotte = bostotteJSON;
 
@@ -47,13 +46,13 @@ const IDENT = "ident";
 export function settNavn(fornavn: any, mellomnavn: any, etternavn: any) {
     // @ts-ignore
     familie[PERSONNAVN] = {
-        "etternavn": etternavn,
-        "fornavn": fornavn,
-        "mellomnavn": mellomnavn,
-        "sammensattNavn": null,
-        "endringstidspunkt": null,
-        "endretAv": null,
-        "endringstype": null
+        etternavn: etternavn,
+        fornavn: fornavn,
+        mellomnavn: mellomnavn,
+        sammensattNavn: null,
+        endringstidspunkt: null,
+        endretAv: null,
+        endringstype: null,
     };
 }
 
@@ -83,37 +82,44 @@ export function settMidlertidigMatrikkelKommunenummer(kommunenummer: any) {
 
 export function settTelefonnummer(telefonnummer: any) {
     if (typeof telefonnummer === "undefined") {
-        throw new Error("Mangler telefonnummer (men det er lov å sette eksplisitt til null).")
+        throw new Error("Mangler telefonnummer (men det er lov å sette eksplisitt til null).");
     }
     telefon[VERDI] = telefonnummer;
 }
 
 export function settBankkontonummer(bankkontonummer: string) {
-
     if (bankkontonummer !== null) {
         // @ts-ignore
-        brukerprofil[PERSON][BANKKONTO] = {"bankkonto": {"bankkontonummer": bankkontonummer}}
+        brukerprofil[PERSON][BANKKONTO] = {bankkonto: {bankkontonummer: bankkontonummer}};
     } else {
         brukerprofil[PERSON][BANKKONTO] = null;
     }
 }
 
-export function settArbeidsforholdArbeidsgiverPerson(id: string, startDato: string, sluttDato: string, stillingsProsent: string, ident: string) {
+export function settArbeidsforholdArbeidsgiverPerson(
+    id: string,
+    startDato: string,
+    sluttDato: string,
+    stillingsProsent: string,
+    ident: string
+) {
     const nyttArbeidsForholdArbeidsgiverPerson = {
-        "navArbeidsforholdId": "",
-        "ansettelsesperiode": {
-            "periode": {
-                "fom": "",
-                "tom": ""
-            }
+        navArbeidsforholdId: "",
+        ansettelsesperiode: {
+            periode: {
+                fom: "",
+                tom: "",
+            },
         },
-        "arbeidsavtaler": [{
-            "stillingsprosent": ""
-        }],
-        "arbeidsgiver": {
-            "type": "",
-            "offentligIdent": ""
-        }
+        arbeidsavtaler: [
+            {
+                stillingsprosent: "",
+            },
+        ],
+        arbeidsgiver: {
+            type: "",
+            offentligIdent: "",
+        },
     };
 
     nyttArbeidsForholdArbeidsgiverPerson.navArbeidsforholdId = id;
@@ -127,22 +133,30 @@ export function settArbeidsforholdArbeidsgiverPerson(id: string, startDato: stri
     arbeid[ARBEIDSFORHOLD].push(nyttArbeidsForholdArbeidsgiverPerson);
 }
 
-export function settArbeidsforholdArbeidsgiverOrganisasjon(id: string, startDato: string, sluttDato: string, stillingsProsent: string, orgnummer: string) {
+export function settArbeidsforholdArbeidsgiverOrganisasjon(
+    id: string,
+    startDato: string,
+    sluttDato: string,
+    stillingsProsent: string,
+    orgnummer: string
+) {
     const nyttArbeidsForholdArbeidsgiverOrganisasjon = {
-        "navArbeidsforholdId": "",
-        "ansettelsesperiode": {
-            "periode": {
-                "fom": "",
-                "tom": ""
-            }
+        navArbeidsforholdId: "",
+        ansettelsesperiode: {
+            periode: {
+                fom: "",
+                tom: "",
+            },
         },
-        "arbeidsavtaler": [{
-            "stillingsprosent": ""
-        }],
-        "arbeidsgiver": {
-            "type": "",
-            "organisasjonsnummer": ""
-        }
+        arbeidsavtaler: [
+            {
+                stillingsprosent: "",
+            },
+        ],
+        arbeidsgiver: {
+            type: "",
+            organisasjonsnummer: "",
+        },
     };
 
     nyttArbeidsForholdArbeidsgiverOrganisasjon.navArbeidsforholdId = id;
@@ -176,7 +190,13 @@ export function clearOrganisasjon() {
     organisasjon = null;
 }
 
-export function settEktefelleMedSammeBostedsadresse(ident: string, fornavn: string, mellomnavn: string, etternavn: string, foedselsdato: string) {
+export function settEktefelleMedSammeBostedsadresse(
+    ident: string,
+    fornavn: string,
+    mellomnavn: string,
+    etternavn: string,
+    foedselsdato: string
+) {
     const ektefelle = ektefelleJSON;
 
     ektefelle.harSammeBosted = true;
@@ -192,7 +212,13 @@ export function settEktefelleMedSammeBostedsadresse(ident: string, fornavn: stri
     familie.sivilstand.sivilstand.value = "GIFT";
 }
 
-export function settEktefelleUtenSammeBostedsadresse(ident: string, fornavn: string, mellomnavn: string, etternavn: string, foedselsdato: string) {
+export function settEktefelleUtenSammeBostedsadresse(
+    ident: string,
+    fornavn: string,
+    mellomnavn: string,
+    etternavn: string,
+    foedselsdato: string
+) {
     const ektefelle = ektefelleJSON;
 
     ektefelle.harSammeBosted = false;
@@ -205,7 +231,7 @@ export function settEktefelleUtenSammeBostedsadresse(ident: string, fornavn: str
 
     // @ts-ignore
     familie.harFraRolleI.push(ektefelle);
-    familie.sivilstand.sivilstand.value = "GIFT"
+    familie.sivilstand.sivilstand.value = "GIFT";
 }
 
 export function settEktefelleMedKodeSeks(ident: any, fornavn: any, mellomnavn: any, etternavn: any, foedselsdato: any) {
@@ -219,14 +245,14 @@ export function settEktefelleMedKodeSeks(ident: any, fornavn: any, mellomnavn: a
     ektefelle.tilPerson.personnavn.etternavn = etternavn;
     ektefelle.tilPerson.foedselsdato.foedselsdato = foedselsdato;
     ektefelle.tilPerson.diskresjonskode = {
-        "value": "SPSF",
-        "kodeRef": null,
-        "kodeverksRef": "http://nav.no/kodeverk/Kodeverk/Diskresjonskoder"
+        value: "SPSF",
+        kodeRef: null,
+        kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Diskresjonskoder",
     };
 
     // @ts-ignore
     familie.harFraRolleI.push(ektefelle);
-    familie.sivilstand.sivilstand.value = "GIFT"
+    familie.sivilstand.sivilstand.value = "GIFT";
 }
 
 export function settEktefelleMedKodeSyv(ident: any, fornavn: any, mellomnavn: any, etternavn: any, foedselsdato: any) {
@@ -240,57 +266,57 @@ export function settEktefelleMedKodeSyv(ident: any, fornavn: any, mellomnavn: an
     ektefelle.tilPerson.personnavn.etternavn = etternavn;
     ektefelle.tilPerson.foedselsdato.foedselsdato = foedselsdato;
     ektefelle.tilPerson.diskresjonskode = {
-        "value": "SPFO",
-        "kodeRef": null,
-        "kodeverksRef": "http://nav.no/kodeverk/Kodeverk/Diskresjonskoder"
+        value: "SPFO",
+        kodeRef: null,
+        kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Diskresjonskoder",
     };
 
     // @ts-ignore
     familie.harFraRolleI.push(ektefelle);
-    familie.sivilstand.sivilstand.value = "GIFT"
+    familie.sivilstand.sivilstand.value = "GIFT";
 }
 
 export function settBarnSammeBostedsadresse(ident: string, fornavn: string, mellomnavn: string, etternavn: string) {
     let barnSammeBostedsadresse = {
-        "harSammeBosted": true,
-        "tilRolle": {
-            "value": "BARN",
-            "kodeRef": null,
-            "kodeverksRef": "http://nav.no/kodeverk/Kodeverk/Familierelasjoner"
+        harSammeBosted: true,
+        tilRolle: {
+            value: "BARN",
+            kodeRef: null,
+            kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Familierelasjoner",
         },
-        "tilPerson": {
-            "diskresjonskode": null,
-            "bankkonto": null,
-            "bostedsadresse": null,
-            "sivilstand": null,
-            "statsborgerskap": null,
-            "harFraRolleI": [],
-            "ident": {
-                "ident": "03061793877",
-                "type": {
-                    "value": "FNR",
-                    "kodeRef": null,
-                    "kodeverksRef": "http://nav.no/kodeverk/Kodeverk/Personidenter"
-                }
+        tilPerson: {
+            diskresjonskode: null,
+            bankkonto: null,
+            bostedsadresse: null,
+            sivilstand: null,
+            statsborgerskap: null,
+            harFraRolleI: [],
+            ident: {
+                ident: "03061793877",
+                type: {
+                    value: "FNR",
+                    kodeRef: null,
+                    kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Personidenter",
+                },
             },
-            "kjoenn": null,
-            "personnavn": {
-                "etternavn": "Mockmann",
-                "fornavn": "Hydra",
-                "mellomnavn": "",
-                "sammensattNavn": null,
-                "endringstidspunkt": null,
-                "endretAv": null,
-                "endringstype": null
+            kjoenn: null,
+            personnavn: {
+                etternavn: "Mockmann",
+                fornavn: "Hydra",
+                mellomnavn: "",
+                sammensattNavn: null,
+                endringstidspunkt: null,
+                endretAv: null,
+                endringstype: null,
             },
-            "personstatus": null,
-            "postadresse": null,
-            "doedsdato": null,
-            "foedselsdato": null
+            personstatus: null,
+            postadresse: null,
+            doedsdato: null,
+            foedselsdato: null,
         },
-        "endringstidspunkt": null,
-        "endretAv": null,
-        "endringstype": null
+        endringstidspunkt: null,
+        endretAv: null,
+        endringstype: null,
     };
 
     barnSammeBostedsadresse.tilPerson.ident.ident = ident;
@@ -304,45 +330,45 @@ export function settBarnSammeBostedsadresse(ident: string, fornavn: string, mell
 
 export function settBarnIkkeSammeBostedsadresse(ident: string, fornavn: string, mellomnavn: string, etternavn: string) {
     const barnIkkeSammeBostedsadresse = {
-        "harSammeBosted": false,
-        "tilRolle": {
-            "value": "BARN",
-            "kodeRef": null,
-            "kodeverksRef": "http://nav.no/kodeverk/Kodeverk/Familierelasjoner"
+        harSammeBosted: false,
+        tilRolle: {
+            value: "BARN",
+            kodeRef: null,
+            kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Familierelasjoner",
         },
-        "tilPerson": {
-            "diskresjonskode": null,
-            "bankkonto": null,
-            "bostedsadresse": null,
-            "sivilstand": null,
-            "statsborgerskap": null,
-            "harFraRolleI": [],
-            "ident": {
-                "ident": "03061694075",
-                "type": {
-                    "value": "FNR",
-                    "kodeRef": null,
-                    "kodeverksRef": "http://nav.no/kodeverk/Kodeverk/Personidenter"
-                }
+        tilPerson: {
+            diskresjonskode: null,
+            bankkonto: null,
+            bostedsadresse: null,
+            sivilstand: null,
+            statsborgerskap: null,
+            harFraRolleI: [],
+            ident: {
+                ident: "03061694075",
+                type: {
+                    value: "FNR",
+                    kodeRef: null,
+                    kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Personidenter",
+                },
             },
-            "kjoenn": null,
-            "personnavn": {
-                "etternavn": "Mockmann",
-                "fornavn": "Zergling",
-                "mellomnavn": "",
-                "sammensattNavn": null,
-                "endringstidspunkt": null,
-                "endretAv": null,
-                "endringstype": null
+            kjoenn: null,
+            personnavn: {
+                etternavn: "Mockmann",
+                fornavn: "Zergling",
+                mellomnavn: "",
+                sammensattNavn: null,
+                endringstidspunkt: null,
+                endretAv: null,
+                endringstype: null,
             },
-            "personstatus": null,
-            "postadresse": null,
-            "doedsdato": null,
-            "foedselsdato": null
+            personstatus: null,
+            postadresse: null,
+            doedsdato: null,
+            foedselsdato: null,
         },
-        "endringstidspunkt": null,
-        "endretAv": null,
-        "endringstype": null
+        endringstidspunkt: null,
+        endretAv: null,
+        endringstype: null,
     };
 
     barnIkkeSammeBostedsadresse.tilPerson.ident.ident = ident;
@@ -354,52 +380,58 @@ export function settBarnIkkeSammeBostedsadresse(ident: string, fornavn: string, 
     familie.harFraRolleI.push(barnIkkeSammeBostedsadresse);
 }
 
-export function settBarnMedDoedsdato(ident: string, fornavn: string, mellomnavn: string, etternavn: string, doedsdato: string) {
+export function settBarnMedDoedsdato(
+    ident: string,
+    fornavn: string,
+    mellomnavn: string,
+    etternavn: string,
+    doedsdato: string
+) {
     const barnMedDoedsdato = {
-        "harSammeBosted": null,
-        "tilRolle": {
-            "value": "BARN",
-            "kodeRef": null,
-            "kodeverksRef": "http://nav.no/kodeverk/Kodeverk/Familierelasjoner"
+        harSammeBosted: null,
+        tilRolle: {
+            value: "BARN",
+            kodeRef: null,
+            kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Familierelasjoner",
         },
-        "tilPerson": {
-            "diskresjonskode": null,
-            "bankkonto": null,
-            "bostedsadresse": null,
-            "sivilstand": null,
-            "statsborgerskap": null,
-            "harFraRolleI": [],
-            "ident": {
-                "ident": "01010591736",
-                "type": {
-                    "value": "FNR",
-                    "kodeRef": null,
-                    "kodeverksRef": "http://nav.no/kodeverk/Kodeverk/Personidenter"
-                }
+        tilPerson: {
+            diskresjonskode: null,
+            bankkonto: null,
+            bostedsadresse: null,
+            sivilstand: null,
+            statsborgerskap: null,
+            harFraRolleI: [],
+            ident: {
+                ident: "01010591736",
+                type: {
+                    value: "FNR",
+                    kodeRef: null,
+                    kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Personidenter",
+                },
             },
-            "kjoenn": null,
-            "personnavn": {
-                "etternavn": "Mockmann",
-                "fornavn": "Roach",
-                "mellomnavn": "",
-                "sammensattNavn": null,
-                "endringstidspunkt": null,
-                "endretAv": null,
-                "endringstype": null
+            kjoenn: null,
+            personnavn: {
+                etternavn: "Mockmann",
+                fornavn: "Roach",
+                mellomnavn: "",
+                sammensattNavn: null,
+                endringstidspunkt: null,
+                endretAv: null,
+                endringstype: null,
             },
-            "personstatus": null,
-            "postadresse": null,
-            "doedsdato": {
-                "doedsdato": "",
-                "endringstidspunkt": null,
-                "endretAv": null,
-                "endringstype": null
+            personstatus: null,
+            postadresse: null,
+            doedsdato: {
+                doedsdato: "",
+                endringstidspunkt: null,
+                endretAv: null,
+                endringstype: null,
             },
-            "foedselsdato": null
+            foedselsdato: null,
         },
-        "endringstidspunkt": null,
-        "endretAv": null,
-        "endringstype": null
+        endringstidspunkt: null,
+        endretAv: null,
+        endringstype: null,
     };
 
     barnMedDoedsdato.tilPerson.ident.ident = ident;
@@ -417,7 +449,7 @@ export function clearFamilieforhold() {
 }
 
 export function leggTilNavUtbetaling(nyNavUtbetalingsListe: NyNavUtbetalingObject[]) {
-    nyNavUtbetalingsListe.forEach(nyNavUtbetaling => {
+    nyNavUtbetalingsListe.forEach((nyNavUtbetaling) => {
         const utbetaling = JSON.parse(JSON.stringify(enkelNavUtbetalingJSON)); // Vi kan forbedre med å sjekke om denne allerede finnes.
         utbetaling.utbetaltTil.aktoerId = nyNavUtbetaling.ident;
         utbetaling.posteringsdato = nyNavUtbetaling.posteringsdato;
@@ -426,16 +458,16 @@ export function leggTilNavUtbetaling(nyNavUtbetalingsListe: NyNavUtbetalingObjec
 
         let ytelseSum = 0;
         nyNavUtbetaling.ytelsesListe.forEach((nyYtelse: NyNavYtelseObject) => {
-           const ytelse = JSON.parse(JSON.stringify(enkelNavYtelseJSON));
-           ytelse.ytelsestype.value = nyYtelse.ytelsestype;
-           ytelse.ytelseskomponentListe[0].ytelseskomponenttype = nyYtelse.ytelseskomponenttype;
-           ytelse.ytelseskomponentListe[0].ytelseskomponentbeloep = nyYtelse.ytelseskomponentbeloep;
-           ytelse.ytelseskomponentersum = nyYtelse.ytelseskomponentbeloep;
-           ytelse.ytelseNettobeloep = nyYtelse.ytelseskomponentbeloep;
-           ytelseSum += nyYtelse.ytelseskomponentbeloep;
-           ytelse.ytelsesperiode.fom = nyYtelse.periodeFom;
-           ytelse.ytelsesperiode.tom = nyYtelse.periodeTom;
-           utbetaling.ytelseListe.push(ytelse);
+            const ytelse = JSON.parse(JSON.stringify(enkelNavYtelseJSON));
+            ytelse.ytelsestype.value = nyYtelse.ytelsestype;
+            ytelse.ytelseskomponentListe[0].ytelseskomponenttype = nyYtelse.ytelseskomponenttype;
+            ytelse.ytelseskomponentListe[0].ytelseskomponentbeloep = nyYtelse.ytelseskomponentbeloep;
+            ytelse.ytelseskomponentersum = nyYtelse.ytelseskomponentbeloep;
+            ytelse.ytelseNettobeloep = nyYtelse.ytelseskomponentbeloep;
+            ytelseSum += nyYtelse.ytelseskomponentbeloep;
+            ytelse.ytelsesperiode.fom = nyYtelse.periodeFom;
+            ytelse.ytelsesperiode.tom = nyYtelse.periodeTom;
+            utbetaling.ytelseListe.push(ytelse);
         });
         utbetaling.utbetalingNettobeloep = ytelseSum;
 
@@ -458,81 +490,81 @@ export function leggTilBostotteSaker(saker: any[]) {
 }
 
 export function getAdresserPath() {
-    return endpoints.adresser
+    return endpoints.adresser;
 }
 
 export function getAdresserJson() {
-    return adresser
+    return adresser;
 }
 
 export function getNorgPath() {
-    return endpoints.norg
+    return endpoints.norg;
 }
 
 export function getNorgJson() {
-    return norg
+    return norg;
 }
 
 export function getTelefonPath() {
-    return endpoints.telefon
+    return endpoints.telefon;
 }
 
 export function getTelefonJson() {
-    return telefon
+    return telefon;
 }
 
 export function getBrukerprofilPath() {
-    return endpoints.brukerprofil
+    return endpoints.brukerprofil;
 }
 
 export function getBrukerprofilJson() {
-    return brukerprofil
+    return brukerprofil;
 }
 
 export function getArbeidPath() {
-    return endpoints.arbeid
+    return endpoints.arbeid;
 }
 
 export function getArbeidJson() {
-    return arbeid
+    return arbeid;
 }
 
 export function getOrganisasjonPath() {
-    return endpoints.organisasjon
+    return endpoints.organisasjon;
 }
 
 export function getOrganisasjonJson() {
-    return organisasjon
+    return organisasjon;
 }
 
 export function getFamiliePath() {
-    return endpoints.familie
+    return endpoints.familie;
 }
 
 export function getFamilieJson() {
-    return familie
+    return familie;
 }
 
 export function getUtbetalingPath() {
-    return endpoints.navUtbetaling
+    return endpoints.navUtbetaling;
 }
 
 export function getNavUtbetalingJson() {
-    return navUtbetalinger
+    return navUtbetalinger;
 }
 
 export function getSkattetatenPath() {
-    return endpoints.skattetaten
+    return endpoints.skattetaten;
 }
 
 export function getSkattetatenJson() {
-    return {oppgaveInntektsmottaker: skattetaten}
+    return {oppgaveInntektsmottaker: skattetaten};
 }
 
 export function getBostottePath() {
-    return endpoints.bostotte
+    return endpoints.bostotte;
 }
 
 export function getBostotteJson() {
-    return bostotte
+    return bostotte;
 }

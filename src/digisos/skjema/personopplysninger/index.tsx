@@ -4,9 +4,7 @@ import {State} from "../../redux/reducers";
 import {ErSystemdataEndret} from "../../redux/soknad/soknadActionTypes";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import William from "../../../nav-soknad/components/svg/illustrasjoner/William";
-import Informasjonspanel, {
-    InformasjonspanelIkon,
-} from "../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import {FormattedMessage} from "react-intl";
 import Telefon from "./telefon/Telefon";
@@ -18,12 +16,9 @@ import {getErSystemdataEndret} from "../../redux/soknad/soknadActions";
 import {useEffect} from "react";
 
 const Personopplysninger = () => {
-    const {
-        erGjenopptattSoknad,
-        skalSjekkeOmSystemdataErEndret,
-        erSystemdataEndret,
-        behandlingsId,
-    } = useSelector((state: State) => state.soknad);
+    const {erGjenopptattSoknad, skalSjekkeOmSystemdataErEndret, erSystemdataEndret, behandlingsId} = useSelector(
+        (state: State) => state.soknad
+    );
 
     const dispatch = useDispatch();
 
@@ -36,20 +31,14 @@ const Personopplysninger = () => {
     const skjulGjenopptattInfoPanel = true;
     const gjenopptattSoknadInfoPanel = (
         <div className="skjema-sporsmal">
-            <Informasjonspanel
-                ikon={InformasjonspanelIkon.ELLA}
-                farge={DigisosFarge.VIKTIG}
-            >
+            <Informasjonspanel ikon={InformasjonspanelIkon.ELLA} farge={DigisosFarge.VIKTIG}>
                 <FormattedMessage id="applikasjon.advarsel.gjenopptatt" />
             </Informasjonspanel>
         </div>
     );
     const systemdataEndretInfoPanel = (
         <div className="skjema-sporsmal">
-            <Informasjonspanel
-                ikon={InformasjonspanelIkon.ELLA}
-                farge={DigisosFarge.VIKTIG}
-            >
+            <Informasjonspanel ikon={InformasjonspanelIkon.ELLA} farge={DigisosFarge.VIKTIG}>
                 <FormattedMessage id="oppsummering.systemdataendret.true" />
             </Informasjonspanel>
         </div>
@@ -69,8 +58,7 @@ const Personopplysninger = () => {
                 erGjenopptattSoknad &&
                 erSystemdataEndret === ErSystemdataEndret.NO &&
                 gjenopptattSoknadInfoPanel}
-            {erSystemdataEndret === ErSystemdataEndret.YES &&
-                systemdataEndretInfoPanel}
+            {erSystemdataEndret === ErSystemdataEndret.YES && systemdataEndretInfoPanel}
             <BasisPersonalia />
             <Adresse />
             <Telefon />
