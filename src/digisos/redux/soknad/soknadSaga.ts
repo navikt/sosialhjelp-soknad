@@ -216,6 +216,7 @@ function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
 
 function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
     try {
+        //@ts-ignore
         const response: SendSoknadResponse = yield call(
             fetchPost,
             `soknader/${action.behandlingsId}/actions/send`,

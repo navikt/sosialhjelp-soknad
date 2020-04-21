@@ -1,8 +1,10 @@
 import * as React from "react";
 import {FormattedMessage, useIntl} from "react-intl";
+import Panel from "nav-frontend-paneler";
+import Lesmerpanel from "nav-frontend-lesmerpanel";
 import {useDispatch, useSelector} from "react-redux";
 
-import {SkattbarInntektInfo, SoknadsSti,} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {SkattbarInntektInfo, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {SkattbarInntekt} from "./inntektTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
@@ -18,32 +20,24 @@ const Skatt = () => {
     const intl = useIntl();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
     React.useEffect(() => {
         if (behandlingsId) {
-            dispatch(
-                hentSoknadsdata(behandlingsId, SoknadsSti.SKATTBARINNTEKT)
-            );
+            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.SKATTBARINNTEKT));
         }
     }, [behandlingsId, dispatch]);
 
-    const restStatus =
-        soknadsdata.restStatus.inntekt.skattbarinntektogforskuddstrekk;
-    const skattbarinntektogforskuddstrekk: SkattbarInntektInfo =
-        soknadsdata.inntekt.skattbarinntektogforskuddstrekk;
+    const restStatus = soknadsdata.restStatus.inntekt.skattbarinntektogforskuddstrekk;
+    const skattbarinntektogforskuddstrekk: SkattbarInntektInfo = soknadsdata.inntekt.skattbarinntektogforskuddstrekk;
     const harSamtykke: boolean = soknadsdata.inntekt.skattbarinntektogforskuddstrekk.samtykke;
     const samtykkeTidspunkt: Date | undefined = soknadsdata.inntekt.skattbarinntektogforskuddstrekk.samtykkeTidspunkt;
     const samtykkeTidspunktStreng: String = samtykkeTidspunkt ? formatTidspunkt(samtykkeTidspunkt.toString()) : "";
     const visAnimerteStreker = restStatus !== REST_STATUS.OK;
 
     // TODO DIGISOS-1175: Håndter flere måneder med skattbar inntekt
-    const inntektFraSkatteetaten: SkattbarInntekt[] =
-        skattbarinntektogforskuddstrekk.inntektFraSkatteetaten;
-    const inntektFraSkatteetatenFeilet: boolean =
-        skattbarinntektogforskuddstrekk.inntektFraSkatteetatenFeilet;
+    const inntektFraSkatteetaten: SkattbarInntekt[] = skattbarinntektogforskuddstrekk.inntektFraSkatteetaten;
+    const inntektFraSkatteetatenFeilet: boolean = skattbarinntektogforskuddstrekk.inntektFraSkatteetatenFeilet;
 
     function handleSettSkatteetatenSamtykke(harSamtykke: boolean) {
         if (!visAnimerteStreker && behandlingsId) {
@@ -86,19 +80,13 @@ const Skatt = () => {
                     }
                 </div>
             )}
-            {!visAnimerteStreker &&
-                inntektFraSkatteetaten &&
-                inntektFraSkatteetaten.length > 0 && (
-                    <div className={"ytelser_panel"}>
-                        <h4 className="tidspunkt_uten_luft">{samtykkeTidspunktStreng}</h4>
-                        <FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse"/>
-                        <div className="utbetalinger">
-                            <SkattbarinntektForskuddstrekk
-                                skattbarinntektogforskuddstrekk={
-                                    inntektFraSkatteetaten
-                                }
-                            />
-                        </div>
+            {!visAnimerteStreker && inntektFraSkatteetaten && inntektFraSkatteetaten.length > 0 && (
+                <div className={"ytelser_panel"}>
+                    <h4 className="tidspunkt_uten_luft">{samtykkeTidspunktStreng}</h4>
+                    <FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse"/>
+                    <div className="utbetalinger">
+                        <SkattbarinntektForskuddstrekk skattbarinntektogforskuddstrekk={inntektFraSkatteetaten} />
+                    </div>
                         <a
                             id="ta_bort_bostotte_samtykke"
                             onClick={(event: any) => {
@@ -111,7 +99,7 @@ const Skatt = () => {
                             {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
                         </a>
                     </div>
-                )}
+            )}
             {!visAnimerteStreker &&
                 !inntektFraSkatteetatenFeilet &&
                 inntektFraSkatteetaten &&

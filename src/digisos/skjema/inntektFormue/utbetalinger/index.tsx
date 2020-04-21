@@ -92,6 +92,7 @@ export const UtbetalingerView = () => {
     const handleClickRadio = (idToToggle: UtbetalingerKeys) => {
         if (behandlingsId) {
             const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
+            //@ts-ignore
             utbetalinger[idToToggle] = !utbetalinger[idToToggle];
             if (!utbetalinger.bekreftelse || !utbetalinger.annet) {
                 utbetalinger.beskrivelseAvAnnet = "";

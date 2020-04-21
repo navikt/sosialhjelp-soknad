@@ -282,7 +282,7 @@ const StegMedNavigasjon = (
                         !(aktivtSteg === 9 && isNedetid) && (
                             <AlertStripe type="feil">
                                 <FormattedHTMLMessage
-                                    id="adresse.alertstripe.feil.utenurl"
+                                    id="adresse.alertstripe.feil"
                                     values={{
                                         kommuneNavn: finnKommunenavn(),
                                     }}
@@ -294,7 +294,7 @@ const StegMedNavigasjon = (
                         !(aktivtSteg === 9 && isNedetid) && (
                             <AlertStripe type="advarsel">
                                 <FormattedHTMLMessage
-                                    id="adresse.alertstripe.advarsel.utenurl"
+                                    id="adresse.alertstripe.advarsel"
                                     values={{
                                         kommuneNavn: finnKommunenavn(),
                                     }}

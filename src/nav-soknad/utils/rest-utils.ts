@@ -281,7 +281,7 @@ export function fetchFeatureToggles() {
 //     return response.json();
 // };
 
-let generateUploadOptions = function(formData: FormData) {
+let generateUploadOptions = function(formData: FormData, method: string) {
     //let path = window.location.href.split("/");
     //let behandlingsId = path[path.length-2];
     const UPLOAD_OPTIONS: RequestInit = {
@@ -289,7 +289,7 @@ let generateUploadOptions = function(formData: FormData) {
             "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
             accept: "application/json, text/plain, */*",
         }),
-        method: "POST",
+        method: method,
         credentials: determineCredentialsParameter(),
         body: formData,
     };
@@ -299,17 +299,17 @@ let generateUploadOptions = function(formData: FormData) {
 export function fetchUpload(urlPath: string, formData: FormData) {
     return fetch(
         getApiBaseUrl() + urlPath,
-        generateUploadOptions(formData)
+        generateUploadOptions(formData, "POST")
     ).then(response => {
         verifyStatusSuccessOrRedirect(response);
         return toJson(response);
     });
 }
 
-export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData) {
+export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData, method: string) {
     return fetch(
         getApiBaseUrl() + urlPath,
-        generateUploadOptions(formData)
+        generateUploadOptions(formData, method)
     ).then(toJson);
 }
 

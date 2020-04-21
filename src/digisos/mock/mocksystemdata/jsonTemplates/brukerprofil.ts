@@ -27,6 +27,13 @@ export const brukerprofilJSON = {
       "endretAv": null,
       "endringstype": null
     },
+    "midlertidigPostadresse": {
+      "strukturertAdresse": {
+        "gnr": "111",
+        "bnr": "22",
+        "kommunenummer": "0701"
+      },
+    },
     "ident": {
       "ident": "03076321565",
       "type": null
@@ -56,7 +63,6 @@ export const brukerprofilJSON = {
         "endringstype": null
       }
     ],
-    "midlertidigPostadresse": null,
     "preferanser": null
   }
 };

@@ -8,6 +8,7 @@ import {
     fetchUpload,
     lastNedForsendelseSomZipFilHvisMockMiljoEllerDev,
     HttpStatus,
+    fetchUploadIgnoreErrors,
 } from "../../../nav-soknad/utils/rest-utils";
 import {
     EttersendelseActionTypeKeys,
@@ -32,6 +33,9 @@ import {
 import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {showServerFeil} from "../soknad/soknadActions";
+import {REST_FEIL} from "../soknad/soknadTypes";
+import {settFilOpplastingFerdig} from "../okonomiskeOpplysninger/opplysningerActions";
+import {detekterInternFeilKode} from "../fil/filSaga";
 
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
     try {
@@ -45,9 +49,7 @@ function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(
-            loggInfo("Opprett ettersendelse feilet: " + reason.toString())
-        );
+        yield put(loggInfo("Opprett ettersendelse feilet: " + reason.toString()));
         yield put(opprettEttersendelseFeilet(action.brukerbehandlingId));
     }
 }
@@ -79,16 +81,12 @@ function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(
-            loggFeil("Lese ettersendte vedlegg feilet: " + reason.toString())
-        );
+        yield put(loggFeil("Lese ettersendte vedlegg feilet: " + reason.toString()));
         yield put(showServerFeil(true));
     }
 }
 
-function* slettEttersendelsesVedleggSaga(
-    action: SlettEttersendtVedleggAction
-): SagaIterator {
+function* slettEttersendelsesVedleggSaga(action: SlettEttersendtVedleggAction): SagaIterator {
     const {behandlingsId, filUuid, opplysningType} = action;
 
     try {
@@ -105,10 +103,9 @@ function* slettEttersendelsesVedleggSaga(
     }
 }
 
-function* lastOppEttersendelsesVedleggSaga(
-    action: LastOppEttersendtVedleggAction
-): SagaIterator {
+function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggAction): SagaIterator {
     const {behandlingsId, opplysningType, formData} = action;
+    const url = `opplastetVedlegg/${behandlingsId}/${opplysningType}`;
 
     let response: Fil = {
         filNavn: "",
@@ -116,18 +113,12 @@ function* lastOppEttersendelsesVedleggSaga(
     };
 
     try {
-        const url = `opplastetVedlegg/${behandlingsId}/${opplysningType}`;
         const fetchResponse: any = yield call(fetchUpload, url, formData);
         if (typeof fetchResponse != "undefined") {
             response = fetchResponse;
         }
         yield put(lastOppEttersendtVedleggOk());
-        yield put(
-            loggInfo(
-                "GlemmeSendKnappStatistikk. Vedlegg lastet opp. BehandingsId: " +
-                    behandlingsId
-            )
-        );
+        yield put(loggInfo("GlemmeSendKnappStatistikk. Vedlegg lastet opp. BehandingsId: " + behandlingsId));
         if (response) {
             yield put(filLastetOpp(opplysningType, response));
         }
@@ -135,19 +126,21 @@ function* lastOppEttersendelsesVedleggSaga(
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        const errorMsg = reason.toString();
-        yield put(
-            lastOppEttersendelseFeilet(errorMsg, opplysningType.toString())
-        );
-        if (
-            errorMsg.match(/Unsupported Media Type|Entity Too Large/) === null
-        ) {
-            yield put(
-                loggInfo(
-                    "Last opp vedlegg for ettersendelse feilet: " + errorMsg
-                )
-            );
+        let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
+        // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
+        //@ts-ignore
+        response = yield call(fetchUploadIgnoreErrors, url, formData, "POST");
+        const ID = "id";
+        // @ts-ignore
+        if (response && response[ID]) {
+            // @ts-ignore
+            feilKode = response[ID];
         }
+        yield put(lastOppEttersendelseFeilet(feilKode, opplysningType.toString()));
+        if (feilKode !== REST_FEIL.KRYPTERT_FIL && feilKode !== REST_FEIL.SIGNERT_FIL) {
+            yield put(loggInfo("Last opp vedlegg for ettersendelse feilet: " + reason.toString()));
+        }
+        yield put(settFilOpplastingFerdig(opplysningType));
     }
 }
 
@@ -156,14 +149,9 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
         yield put({type: EttersendelseActionTypeKeys.ETTERSEND_PENDING});
         const url = `soknader/${action.brukerbehandlingId}/actions/send`;
         yield call(fetchPost, url, JSON.stringify({}), true);
-        lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(
-            action.brukerbehandlingId
-        );
+        lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.brukerbehandlingId);
         yield put(
-            loggInfo(
-                "GlemmeSendKnappStatistikk. Ettersendelse sendt. BehandingsId: " +
-                    action.brukerbehandlingId
-            )
+            loggInfo("GlemmeSendKnappStatistikk. Ettersendelse sendt. BehandingsId: " + action.brukerbehandlingId)
         );
         yield put({type: EttersendelseActionTypeKeys.ETTERSEND_OK});
         yield put(lastOppEttersendtVedleggOk());
@@ -178,24 +166,12 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
 
 function* ettersendelseSaga(): SagaIterator {
     yield takeEvery(EttersendelseActionTypeKeys.NY, opprettEttersendelseSaga);
-    yield takeEvery(
-        EttersendelseActionTypeKeys.LAST_OPP,
-        lastOppEttersendelsesVedleggSaga
-    );
-    yield takeEvery(
-        EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG,
-        lesEttersendelsesVedleggSaga
-    );
-    yield takeEvery(
-        EttersendelseActionTypeKeys.SLETT_VEDLEGG,
-        slettEttersendelsesVedleggSaga
-    );
+    yield takeEvery(EttersendelseActionTypeKeys.LAST_OPP, lastOppEttersendelsesVedleggSaga);
+    yield takeEvery(EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG, lesEttersendelsesVedleggSaga);
+    yield takeEvery(EttersendelseActionTypeKeys.SLETT_VEDLEGG, slettEttersendelsesVedleggSaga);
     yield takeEvery(EttersendelseActionTypeKeys.SEND, sendEttersendelseSaga);
 
-    yield takeEvery(
-        EttersendelseActionTypeKeys.LES_ETTERSENDELSER,
-        lesEttersendelserSaga
-    );
+    yield takeEvery(EttersendelseActionTypeKeys.LES_ETTERSENDELSER, lesEttersendelserSaga);
 }
 
 export default ettersendelseSaga;
