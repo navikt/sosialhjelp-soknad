@@ -1,6 +1,5 @@
 import * as React from "react";
 import {FormattedMessage, FormattedHTMLMessage, FormattedNumber, useIntl} from "react-intl";
-import Panel from "nav-frontend-paneler";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";

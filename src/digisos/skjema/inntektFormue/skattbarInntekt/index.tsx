@@ -1,7 +1,5 @@
 import * as React from "react";
 import {FormattedMessage, useIntl} from "react-intl";
-import Panel from "nav-frontend-paneler";
-import Lesmerpanel from "nav-frontend-lesmerpanel";
 import {useDispatch, useSelector} from "react-redux";
 
 import {SkattbarInntektInfo, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
