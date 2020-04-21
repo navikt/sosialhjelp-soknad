@@ -1,10 +1,6 @@
 import * as React from "react";
-import {
-    FormattedMessage,
-    FormattedHTMLMessage,
-    FormattedNumber,
-} from "react-intl";
-import {Panel} from "nav-frontend-paneler";
+import {FormattedMessage, FormattedHTMLMessage, FormattedNumber} from "react-intl";
+import Panel from "nav-frontend-paneler";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
@@ -21,15 +17,11 @@ const NavYtelserView = () => {
     const dispatch = useDispatch();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(
-                hentSoknadsdata(behandlingsId, SoknadsSti.INNTEKT_SYSTEMDATA)
-            );
+            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.INNTEKT_SYSTEMDATA));
         }
     }, [behandlingsId, dispatch]);
 
@@ -38,8 +30,7 @@ const NavYtelserView = () => {
     const restStatus = soknadsdata.restStatus.inntekt.systemdata;
     const visAnimerteStreker = restStatus !== REST_STATUS.OK;
 
-    const harNavytelser: boolean =
-        systeminntekter && systeminntekter.length > 0;
+    const harNavytelser: boolean = systeminntekter && systeminntekter.length > 0;
     const navYtelser: Systeminntekt[] = systeminntekter;
 
     const utbetaltMelding = (
@@ -47,37 +38,28 @@ const NavYtelserView = () => {
             <FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label" />
         </span>
     );
-    const navYtelserJsx: JSX.Element[] = navYtelser.map(
-        (utbetaling: Systeminntekt, index) => {
-            const type: string = utbetaling.inntektType;
-            const utbetalingsdato: string = utbetaling.utbetalingsdato;
-            let formattedDato = null;
-            if (utbetalingsdato && utbetalingsdato.length > 9) {
-                formattedDato = <Dato tidspunkt={utbetaling.utbetalingsdato} />;
-            }
-            const belop = (
-                <FormattedNumber
-                    value={utbetaling.belop}
-                    minimumFractionDigits={2}
-                />
-            );
-            return (
-                <div key={index} className="utbetaling blokk-s">
-                    <div>
-                        <h4 className="blokk-null">{type}</h4>
-                        <span className="verdi detaljeliste__verdi">
-                            {belop}
-                        </span>
-                    </div>
-                    {formattedDato && (
-                        <div>
-                            {utbetaltMelding} {formattedDato}
-                        </div>
-                    )}
-                </div>
-            );
+    const navYtelserJsx: JSX.Element[] = navYtelser.map((utbetaling: Systeminntekt, index) => {
+        const type: string = utbetaling.inntektType;
+        const utbetalingsdato: string = utbetaling.utbetalingsdato;
+        let formattedDato = null;
+        if (utbetalingsdato && utbetalingsdato.length > 9) {
+            formattedDato = <Dato tidspunkt={utbetaling.utbetalingsdato} />;
         }
-    );
+        const belop = <FormattedNumber value={utbetaling.belop} minimumFractionDigits={2} />;
+        return (
+            <div key={index} className="utbetaling blokk-s">
+                <div>
+                    <h4 className="blokk-null">{type}</h4>
+                    <span className="verdi detaljeliste__verdi">{belop}</span>
+                </div>
+                {formattedDato && (
+                    <div>
+                        {utbetaltMelding} {formattedDato}
+                    </div>
+                )}
+            </div>
+        );
+    });
 
     const tittel: JSX.Element = (
         <h4>
@@ -94,9 +76,7 @@ const NavYtelserView = () => {
                     intro={
                         <div>
                             {tittel}
-                            <FormattedHTMLMessage
-                                id={"navytelser.infotekst.tekst"}
-                            />
+                            <FormattedHTMLMessage id={"navytelser.infotekst.tekst"} />
                         </div>
                     }
                     border={true}
@@ -107,16 +87,14 @@ const NavYtelserView = () => {
                     </div>
                 </Lesmerpanel>
             )}
-            {!visAnimerteStreker &&
-                !utbetalingerFraNavFeilet &&
-                !harNavytelser && (
-                    <Panel border={true} className={"ytelser_panel"}>
-                        <div>
-                            {tittel}
-                            <FormattedMessage id="utbetalinger.ingen.true" />
-                        </div>
-                    </Panel>
-                )}
+            {!visAnimerteStreker && !utbetalingerFraNavFeilet && !harNavytelser && (
+                <Panel border={true} className={"ytelser_panel"}>
+                    <div>
+                        {tittel}
+                        <FormattedMessage id="utbetalinger.ingen.true" />
+                    </div>
+                </Panel>
+            )}
             {utbetalingerFraNavFeilet && (
                 <Panel border={true} className={"ytelser_panel"}>
                     <div>

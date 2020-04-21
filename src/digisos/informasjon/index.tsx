@@ -10,7 +10,7 @@ import IkkeTilgang from "./IkkeTilgang";
 import {TilgangSperrekode} from "../redux/soknad/soknadTypes";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 import Personopplysninger from "./Personopplysninger";
-import {Panel} from "nav-frontend-paneler";
+import Panel from "nav-frontend-paneler";
 import {opprettSoknad} from "../redux/soknad/soknadActions";
 import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
@@ -34,7 +34,6 @@ interface StateProps {
 type Props = StateProps & RouterProps & DispatchProps;
 
 class Informasjon extends React.Component<Props, {}> {
-
     componentDidMount() {
         skjulToppMeny();
     }
@@ -43,8 +42,9 @@ class Informasjon extends React.Component<Props, {}> {
         if (this.props.fornavn && this.props.fornavn.length > 0) {
             return (
                 <h3 className="digisos-snakkeboble-tittel">
-                    <FormattedHTMLMessage id="informasjon.hilsen.hei" values={{fornavn: this.props.fornavn}}/>
-                </h3>);
+                    <FormattedHTMLMessage id="informasjon.hilsen.hei" values={{fornavn: this.props.fornavn}} />
+                </h3>
+            );
         }
         return null;
     }
@@ -59,113 +59,109 @@ class Informasjon extends React.Component<Props, {}> {
             nedetidslutt,
             isNedetid,
             isPlanlagtNedetid,
-            visNedetidPanel
+            visNedetidPanel,
         } = this.props;
         const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 
         return (
             <div className="informasjon-side">
-                <AppBanner/>
-                <DocumentTitle title={title}/>
+                <AppBanner />
+                <DocumentTitle title={title} />
                 {harTilgang ? (
                     <span>
                         {isNedetid && (
                             <AlertStripe type="feil" style={{justifyContent: "center"}}>
                                 <FormattedHTMLMessage
                                     id="nedetid.alertstripe.infoside"
-                                    values={
-                                        {
-                                            nedetidstart: nedetidstart,
-                                            nedetidslutt: nedetidslutt
-                                        }}
+                                    values={{
+                                        nedetidstart: nedetidstart,
+                                        nedetidslutt: nedetidslutt,
+                                    }}
                                 />
                             </AlertStripe>
                         )}
-						<div>
-							<div className="skjema-content informasjon-innhold">
-								<span className="informasjon-fra-ella">
-									<Snakkeboble>
-										{this.renderHilsen()}
-                                        <FormattedMessage id="informasjon.hilsen.tittel"/>
-									</Snakkeboble>
-									<EllaBlunk size={"175"}/>
-								</span>
+                        <div>
+                            <div className="skjema-content informasjon-innhold">
+                                <span className="informasjon-fra-ella">
+                                    <Snakkeboble>
+                                        {this.renderHilsen()}
+                                        <FormattedMessage id="informasjon.hilsen.tittel" />
+                                    </Snakkeboble>
+                                    <EllaBlunk size={"175"} />
+                                </span>
 
-								<Panel className="informasjon-viktig">
-									<h2 className="typo-element">
-										<FormattedMessage id="informasjon.start.undertittel"/>
-									</h2>
+                                <Panel className="informasjon-viktig">
+                                    <h2 className="typo-element">
+                                        <FormattedMessage id="informasjon.start.undertittel" />
+                                    </h2>
 
-									<p className="blokk-s">
-										<FormattedHTMLMessage id="informasjon.start.tekst"/>
-									</p>
+                                    <p className="blokk-s">
+                                        <FormattedHTMLMessage id="informasjon.start.tekst" />
+                                    </p>
 
-									<h2 className="typo-element">
-										<FormattedMessage id="informasjon.nodsituasjon.undertittel"/>
-									</h2>
+                                    <h2 className="typo-element">
+                                        <FormattedMessage id="informasjon.nodsituasjon.undertittel" />
+                                    </h2>
 
-									<p className="blokk-s">
-										<FormattedHTMLMessage id="informasjon.nodsituasjon.tekst"/>
-									</p>
-								</Panel>
-							</div>
-						</div>
-						<div className="zebra-stripe graa">
-							<div className="skjema-content">
-								<Personopplysninger/>
+                                    <p className="blokk-s">
+                                        <FormattedHTMLMessage id="informasjon.nodsituasjon.tekst" />
+                                    </p>
+                                </Panel>
+                            </div>
+                        </div>
+                        <div className="zebra-stripe graa">
+                            <div className="skjema-content">
+                                <Personopplysninger />
                                 {isPlanlagtNedetid && (
                                     <AlertStripe type="info">
                                         <FormattedHTMLMessage
                                             id="nedetid.alertstripe.infoside"
-                                            values={
-                                                {
-                                                    nedetidstart: nedetidstart,
-                                                    nedetidslutt: nedetidslutt
-                                                }}
+                                            values={{
+                                                nedetidstart: nedetidstart,
+                                                nedetidslutt: nedetidslutt,
+                                            }}
                                         />
                                     </AlertStripe>
                                 )}
-							</div>
+                            </div>
 
-							<div className="skjema-content" style={{border: "1px solid transparent"}}>
-								<span className="informasjon-start-knapp">
-									<Knapp
+                            <div className="skjema-content" style={{border: "1px solid transparent"}}>
+                                <span className="informasjon-start-knapp">
+                                    <Knapp
                                         id="start_soknad_button"
                                         type="hoved"
                                         spinner={startSoknadPending}
                                         disabled={startSoknadPending || visNedetidPanel}
                                         onClick={() => {
-                                            this.props.dispatch(opprettSoknad(intl))
+                                            this.props.dispatch(opprettSoknad(intl));
                                         }}
                                     >
-										{getIntlTextOrKey(intl, "skjema.knapper.start")}
-									</Knapp>
+                                        {getIntlTextOrKey(intl, "skjema.knapper.start")}
+                                    </Knapp>
 
                                     {isNedetid && visNedetidPanel && (
                                         <AlertStripe type="feil" style={{marginTop: "0.4rem"}}>
                                             <FormattedHTMLMessage
                                                 id="nedetid.alertstripe.infoside"
-                                                values={
-                                                    {
-                                                        nedetidstart: nedetidstart,
-                                                        nedetidslutt: nedetidslutt
-                                                    }}
+                                                values={{
+                                                    nedetidstart: nedetidstart,
+                                                    nedetidslutt: nedetidslutt,
+                                                }}
                                             />
                                         </AlertStripe>
                                     )}
-								</span>
-							</div>
-						</div>
-					</span>
+                                </span>
+                            </div>
+                        </div>
+                    </span>
                 ) : (
                     <div className="skjema-content">
-                        <IkkeTilgang sperrekode={sperrekode ? sperrekode : "pilot"}/>
+                        <IkkeTilgang sperrekode={sperrekode ? sperrekode : "pilot"} />
                     </div>
                 )}
             </div>
         );
     }
-
 }
 
 export default connect((state: State) => ({
@@ -177,5 +173,5 @@ export default connect((state: State) => ({
     isPlanlagtNedetid: state.soknad.nedetid ? state.soknad.nedetid.isPlanlagtNedetid : false,
     visNedetidPanel: state.soknad.visNedetidPanel,
     startSoknadPending: state.soknad.startSoknadPending,
-    fornavn: state.soknad.fornavn ? state.soknad.fornavn : undefined
+    fornavn: state.soknad.fornavn ? state.soknad.fornavn : undefined,
 }))(injectIntl(Informasjon));
