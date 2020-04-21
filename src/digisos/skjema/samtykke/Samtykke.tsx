@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useEffect} from "react";
-import {Panel} from "nav-frontend-paneler";
+import Panel from "nav-frontend-paneler";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import Knapp from "nav-frontend-knapper";
 import {FormattedMessage, useIntl} from "react-intl";
