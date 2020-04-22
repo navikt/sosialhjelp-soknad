@@ -10,24 +10,12 @@ import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
 
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import Knapperad from "../components/knapperad";
-import {
-    SkjemaConfig,
-    SkjemaSteg,
-    SkjemaStegType,
-} from "../../digisos/redux/soknad/soknadTypes";
+import {SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../../digisos/redux/soknad/soknadTypes";
 import {ValideringsFeilKode} from "../../digisos/redux/reduxTypes";
 import {setVisBekreftMangler} from "../../digisos/redux/oppsummering/oppsummeringActions";
 import {getIntlTextOrKey, scrollToTop} from "../utils";
-import {
-    avbrytSoknad,
-    resetSendSoknadServiceUnavailable,
-    sendSoknad,
-} from "../../digisos/redux/soknad/soknadActions";
-import {
-    gaTilbake,
-    gaVidere,
-    tilSteg,
-} from "../../digisos/redux/navigasjon/navigasjonActions";
+import {avbrytSoknad, resetSendSoknadServiceUnavailable, sendSoknad} from "../../digisos/redux/soknad/soknadActions";
+import {gaTilbake, gaVidere, tilSteg} from "../../digisos/redux/navigasjon/navigasjonActions";
 import {loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
 import AppBanner from "../components/appHeader/AppHeader";
 import {
@@ -37,10 +25,7 @@ import {
 } from "../../digisos/redux/validering/valideringActions";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {State} from "../../digisos/redux/reducers";
-import {
-    erPaStegEnOgValgtNavEnhetErUgyldig,
-    sjekkOmValgtNavEnhetErGyldig,
-} from "./containerUtils";
+import {erPaStegEnOgValgtNavEnhetErUgyldig, sjekkOmValgtNavEnhetErGyldig} from "./containerUtils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -65,14 +50,10 @@ const StegMedNavigasjon = (
     } & RouteComponentProps
 ) => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const soknad = useSelector((state: State) => state.soknad);
     const validering = useSelector((state: State) => state.validering);
-    const oppsummeringBekreftet = useSelector(
-        (state: State) => state.oppsummering.bekreftet
-    );
+    const oppsummeringBekreftet = useSelector((state: State) => state.oppsummering.bekreftet);
 
     const dispatch = useDispatch();
 
@@ -93,26 +74,13 @@ const StegMedNavigasjon = (
         }
     };
 
-    const handleGaTilSkjemaSteg = (
-        aktivtSteg: SkjemaSteg | undefined,
-        steg: number
-    ) => {
+    const handleGaTilSkjemaSteg = (aktivtSteg: SkjemaSteg | undefined, steg: number) => {
         if (aktivtSteg && behandlingsId) {
             const {feil} = validering;
 
             const valgtNavEnhet = finnSoknadsMottaker();
-            if (
-                erPaStegEnOgValgtNavEnhetErUgyldig(
-                    aktivtSteg.stegnummer,
-                    valgtNavEnhet
-                )
-            ) {
-                dispatch(
-                    setValideringsfeil(
-                        ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD,
-                        "soknadsmottaker"
-                    )
-                );
+            if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
+                dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
                 dispatch(visValideringsfeilPanel());
             } else {
                 if (feil.length === 0) {
@@ -140,30 +108,14 @@ const StegMedNavigasjon = (
             const {feil} = validering;
             const valgtNavEnhet = finnSoknadsMottaker();
 
-            if (
-                erPaStegEnOgValgtNavEnhetErUgyldig(
-                    aktivtSteg.stegnummer,
-                    valgtNavEnhet
-                )
-            ) {
-                dispatch(
-                    setValideringsfeil(
-                        ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD,
-                        "soknadsmottaker"
-                    )
-                );
+            if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
+                dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
                 dispatch(visValideringsfeilPanel());
             } else {
                 if (feil.length === 0) {
-                    sjekkOmValgtNavEnhetErGyldig(
-                        behandlingsId,
-                        dispatch,
-                        () => {
-                            dispatch(
-                                gaVidere(aktivtSteg.stegnummer, behandlingsId)
-                            );
-                        }
-                    );
+                    sjekkOmValgtNavEnhetErGyldig(behandlingsId, dispatch, () => {
+                        dispatch(gaVidere(aktivtSteg.stegnummer, behandlingsId));
+                    });
                 } else {
                     dispatch(visValideringsfeilPanel());
                 }
@@ -176,8 +128,7 @@ const StegMedNavigasjon = (
     };
 
     const finnKommunenavn = () => {
-        const valgtNavEnhet = soknadsdata.personalia
-            .navEnhet as NavEnhet | null;
+        const valgtNavEnhet = soknadsdata.personalia.navEnhet as NavEnhet | null;
         if (valgtNavEnhet === null) {
             return "Din";
         }
@@ -197,24 +148,16 @@ const StegMedNavigasjon = (
 
     const {feil, visValideringsfeil} = validering;
 
-    const aktivtStegConfig: SkjemaSteg | undefined = skjemaConfig.steg.find(
-        s => s.key === stegKey
-    );
+    const aktivtStegConfig: SkjemaSteg | undefined = skjemaConfig.steg.find((s) => s.key === stegKey);
 
-    const erOppsummering: boolean = aktivtStegConfig
-        ? aktivtStegConfig.type === SkjemaStegType.oppsummering
-        : false;
+    const erOppsummering: boolean = aktivtStegConfig ? aktivtStegConfig.type === SkjemaStegType.oppsummering : false;
     const stegTittel = getIntlTextOrKey(intl, `${stegKey}.tittel`);
     const documentTitle = intl.formatMessage({
         id: skjemaConfig.tittelId,
     });
-    const synligeSteg = skjemaConfig.steg.filter(
-        s => s.type === SkjemaStegType.skjema
-    );
+    const synligeSteg = skjemaConfig.steg.filter((s) => s.type === SkjemaStegType.skjema);
 
-    const aktivtSteg: number = aktivtStegConfig
-        ? aktivtStegConfig.stegnummer
-        : 1;
+    const aktivtSteg: number = aktivtStegConfig ? aktivtStegConfig.stegnummer : 1;
 
     return (
         <div className="app-digisos informasjon-side">
@@ -240,18 +183,14 @@ const StegMedNavigasjon = (
                         visFeilliste={visValideringsfeil}
                     />
                 </div>
-                <form
-                    id="soknadsskjema"
-                    onSubmit={stopEvent}
-                    onKeyPress={stopKeyCodeEvent}
-                >
+                <form id="soknadsskjema" onSubmit={stopEvent} onKeyPress={stopKeyCodeEvent}>
                     {!erOppsummering ? (
                         <div className="skjema__stegindikator">
                             <Stegindikator
                                 autoResponsiv={true}
                                 kompakt={false}
                                 aktivtSteg={aktivtSteg - 1}
-                                steg={synligeSteg.map(s => {
+                                steg={synligeSteg.map((s) => {
                                     return {
                                         label: intl.formatMessage({
                                             id: `${s.key}.tittel`,
@@ -259,108 +198,74 @@ const StegMedNavigasjon = (
                                         index: s.stegnummer - 1,
                                     };
                                 })}
-                                onChange={(s: number) =>
-                                    handleGaTilSkjemaSteg(
-                                        aktivtStegConfig,
-                                        s + 1
-                                    )
-                                }
+                                onChange={(s: number) => handleGaTilSkjemaSteg(aktivtStegConfig, s + 1)}
                             />
                         </div>
                     ) : null}
                     <div className="skjema-steg__ikon">{ikon}</div>
                     <div className="skjema-steg__tittel" tabIndex={-1}>
-                        <Innholdstittel className="sourceSansProBold">
-                            {stegTittel}
-                        </Innholdstittel>
+                        <Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
                     </div>
 
                     {children}
 
-                    {soknad.visMidlertidigDeaktivertPanel &&
-                        aktivtSteg !== 1 &&
-                        !(aktivtSteg === 9 && isNedetid) && (
-                            <AlertStripe type="feil">
-                                <FormattedHTMLMessage
-                                    id="adresse.alertstripe.feil"
-                                    values={{
-                                        kommuneNavn: finnKommunenavn(),
-                                    }}
-                                />
-                            </AlertStripe>
-                        )}
-                    {soknad.visIkkePakobletPanel &&
-                        aktivtSteg !== 1 &&
-                        !(aktivtSteg === 9 && isNedetid) && (
-                            <AlertStripe type="advarsel">
-                                <FormattedHTMLMessage
-                                    id="adresse.alertstripe.advarsel"
-                                    values={{
-                                        kommuneNavn: finnKommunenavn(),
-                                    }}
-                                />
-                            </AlertStripe>
-                        )}
+                    {soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
+                        <AlertStripe type="feil">
+                            <FormattedHTMLMessage
+                                id="adresse.alertstripe.feil"
+                                values={{
+                                    kommuneNavn: finnKommunenavn(),
+                                }}
+                            />
+                        </AlertStripe>
+                    )}
+                    {soknad.visIkkePakobletPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
+                        <AlertStripe type="advarsel">
+                            <FormattedHTMLMessage
+                                id="adresse.alertstripe.advarsel"
+                                values={{
+                                    kommuneNavn: finnKommunenavn(),
+                                }}
+                            />
+                        </AlertStripe>
+                    )}
 
                     {aktivtStegConfig && (
                         <Knapperad
                             gaViderePending={nextButtonPending}
-                            gaVidereLabel={
-                                erOppsummering
-                                    ? getIntlTextOrKey(
-                                          intl,
-                                          "skjema.knapper.send"
-                                      )
-                                    : undefined
-                            }
+                            gaVidereLabel={erOppsummering ? getIntlTextOrKey(intl, "skjema.knapper.send") : undefined}
                             gaVidere={() => handleGaVidere(aktivtStegConfig)}
                             gaTilbake={
                                 aktivtStegConfig.stegnummer > 1
-                                    ? () =>
-                                          handleGaTilbake(
-                                              aktivtStegConfig.stegnummer
-                                          )
+                                    ? () => handleGaTilbake(aktivtStegConfig.stegnummer)
                                     : undefined
                             }
                             avbryt={() => dispatch(avbrytSoknad())}
-                            sendSoknadServiceUnavailable={
-                                soknad.sendSoknadServiceUnavailable
-                            }
+                            sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
                         />
                     )}
 
                     {soknad.showSendingFeiletPanel && aktivtSteg === 9 && (
                         <div role="alert">
-                            <AlertStripe
-                                type="feil"
-                                style={{marginTop: "1rem"}}
-                            >
-                                Vi klarte ikke sende søknaden din, grunnet en
-                                midlertidig teknsik feil. Vi ber deg prøve
-                                igjen. Søknaden din er lagret og dersom
-                                problemet fortsetter kan du forsøke igjen
-                                senere. Kontakt ditt NAV kontor dersom du er i
-                                en nødsituasjon.
+                            <AlertStripe type="feil" style={{marginTop: "1rem"}}>
+                                Vi klarte ikke sende søknaden din, grunnet en midlertidig teknsik feil. Vi ber deg prøve
+                                igjen. Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen
+                                senere. Kontakt ditt NAV kontor dersom du er i en nødsituasjon.
                             </AlertStripe>
                         </div>
                     )}
 
-                    {soknad.visMidlertidigDeaktivertPanel &&
-                        isNedetid &&
-                        aktivtSteg === 9 && (
-                            <AlertStripe
-                                type="feil"
-                                style={{marginTop: "1rem"}}
-                            >
-                                <FormattedHTMLMessage
-                                    id="nedetid.alertstripe.send"
-                                    values={{
-                                        nedetidstart: nedetidstart,
-                                        nedetidslutt: nedetidslutt,
-                                    }}
-                                />
-                            </AlertStripe>
-                        )}
+                    {soknad.visMidlertidigDeaktivertPanel && isNedetid && aktivtSteg === 9 && (
+                        <AlertStripe type="feil" style={{marginTop: "1rem"}}>
+                            <FormattedHTMLMessage
+                                id="nedetid.alertstripe.send"
+                                values={{
+                                    nedetidstart: nedetidstart,
+                                    nedetidslutt: nedetidslutt,
+                                }}
+                            />
+                        </AlertStripe>
+                    )}
                 </form>
             </div>
         </div>

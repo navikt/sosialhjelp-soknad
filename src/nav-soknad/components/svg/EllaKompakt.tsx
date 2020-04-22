@@ -24,19 +24,11 @@ const EllaKompakt = (props: {bakgrundsFarge?: DigisosFarge}) => {
                     d="M22.395 0h-6.722C12.048 0 0 8.22 0 15.703v19.688h45V15.703C45 8.22 32.742 0 29.118 0h-6.723z"
                 />
             </defs>
-            <g
-                fill="none"
-                fillRule="evenodd"
-                className={"ella--" + bakgrundsFarge}
-            >
+            <g fill="none" fillRule="evenodd" className={"ella--" + bakgrundsFarge}>
                 <mask id="ella_kompakt_b" fill="#fff">
                     <use xlinkHref="#ella_kompakt_a" />
                 </mask>
-                <use
-                    fill="#FFD399"
-                    xlinkHref="#ella_kompakt_a"
-                    className="bakgrunnsSirkel"
-                />
+                <use fill="#FFD399" xlinkHref="#ella_kompakt_a" className="bakgrunnsSirkel" />
                 <g mask="url(#ella_kompakt_b)">
                     <g transform="translate(0 .8)">
                         <mask id="ella_kompakt_d" fill="#fff">
@@ -47,10 +39,7 @@ const EllaKompakt = (props: {bakgrundsFarge?: DigisosFarge}) => {
                                 <mask id="ella_kompakt_f" fill="#fff">
                                     <use xlinkHref="#ella_kompakt_e" />
                                 </mask>
-                                <use
-                                    fill="#F5B773"
-                                    xlinkHref="#ella_kompakt_e"
-                                />
+                                <use fill="#F5B773" xlinkHref="#ella_kompakt_e" />
                                 <g fill="#3E3832" mask="url(#ella_kompakt_f)">
                                     <path d="M-8.235-9.9h57v65h-57z" />
                                 </g>
@@ -63,15 +52,9 @@ const EllaKompakt = (props: {bakgrundsFarge?: DigisosFarge}) => {
                                 <mask id="ella_kompakt_h" fill="#fff">
                                     <use xlinkHref="#ella_kompakt_g" />
                                 </mask>
-                                <use
-                                    fill="#D8A25D"
-                                    xlinkHref="#ella_kompakt_g"
-                                />
+                                <use fill="#D8A25D" xlinkHref="#ella_kompakt_g" />
                                 <g mask="url(#ella_kompakt_h)">
-                                    <path
-                                        fill="#0C5472"
-                                        d="M-27.5 58.283h105v-80h-105z"
-                                    />
+                                    <path fill="#0C5472" d="M-27.5 58.283h105v-80h-105z" />
                                 </g>
                             </g>
                             <path
@@ -107,10 +90,7 @@ const EllaKompakt = (props: {bakgrundsFarge?: DigisosFarge}) => {
                                     fill="#5A1F57"
                                     d="M44.498 63.6H43.16c-.1 0-.18-.079-.18-.178v-.224c0-.098.08-.178.18-.178h1.338c.099 0 .179.08.179.178v.224c0 .099-.08.178-.18.178"
                                 />
-                                <path
-                                    fill="#C2B5CF"
-                                    d="M43.441 63.395h.775v-2.083h-.775z"
-                                />
+                                <path fill="#C2B5CF" d="M43.441 63.395h.775v-2.083h-.775z" />
                             </g>
                             <path
                                 fill="#E7E5E2"

@@ -1,11 +1,7 @@
 import * as React from "react";
 import {injectIntl} from "react-intl";
 import {Feil, Input, InputBredde} from "nav-frontend-skjema";
-import {
-    getInputFaktumTekst,
-    IntlProps,
-    replaceDotWithUnderscore,
-} from "../utils";
+import {getInputFaktumTekst, IntlProps, replaceDotWithUnderscore} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {connect} from "react-redux";
 import {getFeil} from "../utils/enhancedComponentUtils";
@@ -60,23 +56,11 @@ class InputEnhanced extends React.Component<Props & IntlProps, {}> {
         } = this.props;
         const intl = this.props.intl;
         const tekster = getInputFaktumTekst(intl, faktumKey);
-        const feil_: Feil | undefined = getFeil(
-            feil,
-            intl,
-            faktumKey,
-            faktumIndex
-        );
+        const feil_: Feil | undefined = getFeil(feil, intl, faktumKey, faktumIndex);
         return (
             <Input
-                id={
-                    this.props.id
-                        ? replaceDotWithUnderscore(this.props.id)
-                        : faktumKey
-                }
-                className={
-                    "input--xxl faktumInput  " +
-                    (this.props.className ? this.props.className : "")
-                }
+                id={this.props.id ? replaceDotWithUnderscore(this.props.id) : faktumKey}
+                className={"input--xxl faktumInput  " + (this.props.className ? this.props.className : "")}
                 type={type}
                 autoComplete="off"
                 name={this.getName()}
@@ -92,9 +76,7 @@ class InputEnhanced extends React.Component<Props & IntlProps, {}> {
                 pattern={pattern}
                 required={required}
                 step={step}
-                noValidate={
-                    true /* Unngå at nettleser validerer og evt. fjerner verdien */
-                }
+                noValidate={true /* Unngå at nettleser validerer og evt. fjerner verdien */}
                 autoFocus={autoFocus}
             />
         );

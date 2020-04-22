@@ -14,7 +14,7 @@ export interface SoknadState {
     // Visning state skjema nivå
     showSendingFeiletPanel: boolean;
     showServerFeil: boolean;
-    sendSoknadServiceUnavailable: boolean,
+    sendSoknadServiceUnavailable: boolean;
 
     // Authentication / tilgang state
     linkVisited: boolean;
@@ -61,7 +61,7 @@ export enum REST_STATUS {
     SERVER_ERROR = "SERVER_ERROR",
     XSRF = "XSRF",
     LAST_OPP_FIL_FEILET = "LAST_OPP_FIL_FEILET",
-    FEILET = "FEILET"
+    FEILET = "FEILET",
 }
 
 export enum REST_FEIL {
@@ -74,7 +74,7 @@ export enum REST_FEIL {
 export enum SkjemaStegType {
     "skjema" = "skjema",
     "ekstrainfo" = "ekstrainfo",
-    "oppsummering" = "oppsummering"
+    "oppsummering" = "oppsummering",
 }
 
 export interface SkjemaSteg {

@@ -3,13 +3,13 @@ import {FormattedMessage} from "react-intl";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 
-import Sporsmal, {LegendTittleStyle,} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
-import Informasjonspanel, {InformasjonspanelIkon,} from "../../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
 import PersonSkjema from "./PersonSkjema";
-import {oppdaterSoknadsdataSti, SoknadsSti,} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {State} from "../../../redux/reducers";
 import {lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 
@@ -20,12 +20,7 @@ interface RadioProps {
     onClick: (verdi: Status) => void;
 }
 
-const SivilstatusRadioknapp: React.FunctionComponent<RadioProps> = ({
-    verdi,
-    id,
-    checked,
-    onClick,
-}) => {
+const SivilstatusRadioknapp: React.FunctionComponent<RadioProps> = ({verdi, id, checked, onClick}) => {
     const componentId = id ? id : "sivilstatus_" + verdi + "_radio";
     return (
         <RadioEnhanced
@@ -40,9 +35,7 @@ const SivilstatusRadioknapp: React.FunctionComponent<RadioProps> = ({
 };
 
 const SivilstatusComponent = () => {
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
 
     const dispatch = useDispatch();
@@ -51,7 +44,7 @@ const SivilstatusComponent = () => {
         if (behandlingsId) {
             let sivilstatus = soknadsdata.familie.sivilstatus;
             const oldStatus = sivilstatus.sivilstatus;
-            if(oldStatus !== verdi) {
+            if (oldStatus !== verdi) {
                 if (verdi === Status.GIFT) {
                     sivilstatus = {
                         kildeErSystem: false,
@@ -71,8 +64,7 @@ const SivilstatusComponent = () => {
     };
 
     const familie: Familie = soknadsdata.familie;
-    const sivilstatus =
-        familie && familie.sivilstatus ? familie.sivilstatus.sivilstatus : null;
+    const sivilstatus = familie && familie.sivilstatus ? familie.sivilstatus.sivilstatus : null;
 
     return (
         <div className="skjema-sporsmal">
@@ -80,13 +72,10 @@ const SivilstatusComponent = () => {
                 <SivilstatusRadioknapp
                     verdi={Status.GIFT}
                     checked={sivilstatus === Status.GIFT}
-                    onClick={verdi => onClickSivilstatus(verdi)}
+                    onClick={(verdi) => onClickSivilstatus(verdi)}
                 />
                 <div className="skjema-sporsmal--jaNeiSporsmal">
-                    <Underskjema
-                        visible={sivilstatus === Status.GIFT}
-                        arrow={true}
-                    >
+                    <Underskjema visible={sivilstatus === Status.GIFT} arrow={true}>
                         <Sporsmal
                             sprakNokkel="familie.sivilstatus.gift.ektefelle"
                             legendTittelStyle={LegendTittleStyle.FET_NORMAL}
@@ -102,27 +91,27 @@ const SivilstatusComponent = () => {
                 <SivilstatusRadioknapp
                     verdi={Status.UGIFT}
                     checked={sivilstatus === Status.UGIFT}
-                    onClick={verdi => onClickSivilstatus(verdi)}
+                    onClick={(verdi) => onClickSivilstatus(verdi)}
                 />
                 <SivilstatusRadioknapp
                     verdi={Status.SAMBOER}
                     checked={sivilstatus === Status.SAMBOER}
-                    onClick={verdi => onClickSivilstatus(verdi)}
+                    onClick={(verdi) => onClickSivilstatus(verdi)}
                 />
                 <SivilstatusRadioknapp
                     verdi={Status.ENKE}
                     checked={sivilstatus === Status.ENKE}
-                    onClick={verdi => onClickSivilstatus(verdi)}
+                    onClick={(verdi) => onClickSivilstatus(verdi)}
                 />
                 <SivilstatusRadioknapp
                     verdi={Status.SKILT}
                     checked={sivilstatus === Status.SKILT}
-                    onClick={verdi => onClickSivilstatus(verdi)}
+                    onClick={(verdi) => onClickSivilstatus(verdi)}
                 />
                 <SivilstatusRadioknapp
                     verdi={Status.SEPARERT}
                     checked={sivilstatus === Status.SEPARERT}
-                    onClick={verdi => onClickSivilstatus(verdi)}
+                    onClick={(verdi) => onClickSivilstatus(verdi)}
                 />
             </Sporsmal>
             <Informasjonspanel

@@ -4,28 +4,17 @@ import {useIntl} from "react-intl";
 import {useSelector, useDispatch} from "react-redux";
 
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import Detaljeliste, {
-    DetaljelisteElement,
-} from "../../../../nav-soknad/components/detaljeliste";
+import Detaljeliste, {DetaljelisteElement} from "../../../../nav-soknad/components/detaljeliste";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import {erTelefonnummer} from "../../../../nav-soknad/validering/valideringer";
-import {
-    SoknadsSti,
-    oppdaterSoknadsdataSti,
-} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {Telefonnummer} from "./telefonTypes";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import {State} from "../../../redux/reducers";
-import {
-    hentSoknadsdata,
-    lagreSoknadsdata,
-} from "../../../redux/soknadsdata/soknadsdataActions";
-import {
-    clearValideringsfeil,
-    setValideringsfeil,
-} from "../../../redux/validering/valideringActions";
+import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validering/valideringActions";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_SYSTEM_TELEFON = "kontakt.system.telefoninfo";
@@ -33,9 +22,7 @@ const LANDKODE = "+47";
 
 const TelefonView = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
     const intl = useIntl();
 
@@ -54,9 +41,7 @@ const TelefonView = () => {
             telefonnummer.brukerutfyltVerdi = null;
             forberedOgSendTelefonnummer(telefonnummer, behandlingsId);
 
-            dispatch(
-                oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer)
-            );
+            dispatch(oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer));
         }
     };
 
@@ -64,9 +49,7 @@ const TelefonView = () => {
         const telefonnummer = soknadsdata.personalia.telefonnummer;
         telefonnummer.brukerutfyltVerdi = verdi;
         dispatch(clearValideringsfeil(FAKTUM_KEY_TELEFON));
-        dispatch(
-            oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer)
-        );
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.TELEFONNUMMER, telefonnummer));
     };
 
     const onBlur = () => {
@@ -76,10 +59,7 @@ const TelefonView = () => {
         }
     };
 
-    const forberedOgSendTelefonnummer = (
-        telefonnummer: Telefonnummer,
-        brukerBehandlingId: string
-    ) => {
+    const forberedOgSendTelefonnummer = (telefonnummer: Telefonnummer, brukerBehandlingId: string) => {
         let verdi = telefonnummer.brukerutfyltVerdi;
         let feilkode: ValideringsFeilKode | undefined = undefined;
 
@@ -93,49 +73,23 @@ const TelefonView = () => {
         }
 
         if (!feilkode) {
-            if (
-                telefonnummer.brukerutfyltVerdi !== null &&
-                telefonnummer.brukerutfyltVerdi !== ""
-            ) {
-                telefonnummer.brukerutfyltVerdi =
-                    LANDKODE + fjernLandkode(telefonnummer.brukerutfyltVerdi);
+            if (telefonnummer.brukerutfyltVerdi !== null && telefonnummer.brukerutfyltVerdi !== "") {
+                telefonnummer.brukerutfyltVerdi = LANDKODE + fjernLandkode(telefonnummer.brukerutfyltVerdi);
             }
-            if (
-                telefonnummer.brukerdefinert != null &&
-                !telefonnummer.brukerdefinert
-            ) {
+            if (telefonnummer.brukerdefinert != null && !telefonnummer.brukerdefinert) {
                 dispatch(
-                    lagreSoknadsdata(
-                        brukerBehandlingId,
-                        SoknadsSti.TELEFONNUMMER,
-                        telefonnummer,
-                        () =>
-                            dispatch(
-                                hentSoknadsdata(
-                                    brukerBehandlingId,
-                                    SoknadsSti.TELEFONNUMMER
-                                )
-                            )
+                    lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer, () =>
+                        dispatch(hentSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER))
                     )
                 );
             } else {
-                dispatch(
-                    lagreSoknadsdata(
-                        brukerBehandlingId,
-                        SoknadsSti.TELEFONNUMMER,
-                        telefonnummer
-                    )
-                );
+                dispatch(lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer));
             }
         }
     };
 
-    const validerTelefonnummer = (
-        verdi: string
-    ): ValideringsFeilKode | undefined => {
-        const feilkode: ValideringsFeilKode | undefined = erTelefonnummer(
-            verdi
-        );
+    const validerTelefonnummer = (verdi: string): ValideringsFeilKode | undefined => {
+        const feilkode: ValideringsFeilKode | undefined = erTelefonnummer(verdi);
         if (verdi !== "" && feilkode) {
             // onEndretValideringsfeil(feilkode, FAKTUM_KEY_TELEFON, this.props.feil, () => {
             dispatch(setValideringsfeil(feilkode, FAKTUM_KEY_TELEFON));
@@ -159,15 +113,10 @@ const TelefonView = () => {
     const telefonnummer = soknadsdata.personalia.telefonnummer;
 
     const brukerdefinert = telefonnummer ? telefonnummer.brukerdefinert : false;
-    const verdi =
-        telefonnummer && telefonnummer.brukerutfyltVerdi
-            ? telefonnummer.brukerutfyltVerdi
-            : "";
+    const verdi = telefonnummer && telefonnummer.brukerutfyltVerdi ? telefonnummer.brukerutfyltVerdi : "";
     const systemverdi = telefonnummer ? telefonnummer.systemverdi : "";
 
-    const faktumKey = telefonnummer.brukerdefinert
-        ? FAKTUM_KEY_TELEFON
-        : FAKTUM_KEY_SYSTEM_TELEFON;
+    const faktumKey = telefonnummer.brukerdefinert ? FAKTUM_KEY_TELEFON : FAKTUM_KEY_SYSTEM_TELEFON;
     const endreLabel = formatMessage("kontakt.system.telefon.endreknapp.label");
     const avbrytLabel = formatMessage("systeminfo.avbrytendringknapp.label");
     const infotekst = formatMessage(faktumKey + ".infotekst.tekst");

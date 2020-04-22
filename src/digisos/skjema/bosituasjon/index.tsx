@@ -4,10 +4,7 @@ import BoligIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner
 import BosituasjonView from "./Bosituasjon";
 
 const Bosituasjon = () => (
-    <DigisosSkjemaSteg
-        steg={DigisosSteg.bosituasjonbolk}
-        ikon={<BoligIllustrasjon />}
-    >
+    <DigisosSkjemaSteg steg={DigisosSteg.bosituasjonbolk} ikon={<BoligIllustrasjon />}>
         <BosituasjonView />
     </DigisosSkjemaSteg>
 );

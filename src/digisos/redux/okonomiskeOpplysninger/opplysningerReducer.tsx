@@ -1,8 +1,9 @@
 import {
     OpplysningerAction,
     opplysningerActionTypeKeys,
-    OpplysningerModel, Opplysning,
-    VedleggStatus
+    OpplysningerModel,
+    Opplysning,
+    VedleggStatus,
 } from "./opplysningerTypes";
 import {
     getOpplysningByOpplysningType,
@@ -11,12 +12,11 @@ import {
 } from "./opplysningerUtils";
 import {REST_STATUS} from "../soknad/soknadTypes";
 
-
 export const initialOpplysningerModel: OpplysningerModel = {
     restStatus: REST_STATUS.INITIALISERT,
     backendData: null,
     opplysningerSortert: [],
-    enFilLastesOpp: false
+    enFilLastesOpp: false,
 };
 
 export const opplysningerReducer = (
@@ -31,7 +31,7 @@ export const opplysningerReducer = (
                 ...state,
                 restStatus: REST_STATUS.OK,
                 backendData: action.backendData,
-                opplysningerSortert: sortert
+                opplysningerSortert: sortert,
             };
         }
         case opplysningerActionTypeKeys.OPPDATER_OPPLYSNING: {
@@ -40,61 +40,79 @@ export const opplysningerReducer = (
             return {
                 ...state,
                 restStatus: state.restStatus,
-                opplysningerSortert: opplysningerSortertUpdated
+                opplysningerSortert: opplysningerSortertUpdated,
             };
         }
         case opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_PENDING: {
             const {opplysningType} = action;
-            const opplysning: Opplysning | undefined = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
-            if (opplysning){
+            const opplysning: Opplysning | undefined = getOpplysningByOpplysningType(
+                state.opplysningerSortert,
+                opplysningType
+            );
+            if (opplysning) {
                 const opplysningUpdated: Opplysning = {...opplysning};
                 opplysningUpdated.pendingLasterOppFil = true;
-                const opplysningerSortertUpdated: Opplysning[] = updateSortertOpplysning(state.opplysningerSortert, opplysningUpdated);
+                const opplysningerSortertUpdated: Opplysning[] = updateSortertOpplysning(
+                    state.opplysningerSortert,
+                    opplysningUpdated
+                );
 
                 return {
                     ...state,
                     opplysningerSortert: opplysningerSortertUpdated,
-                    enFilLastesOpp: true
+                    enFilLastesOpp: true,
                 };
             } else {
-                return state
+                return state;
             }
         }
         case opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_FERDIG: {
             const {opplysningType} = action;
-            const opplysning: Opplysning | undefined = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
-            if (opplysning){
+            const opplysning: Opplysning | undefined = getOpplysningByOpplysningType(
+                state.opplysningerSortert,
+                opplysningType
+            );
+            if (opplysning) {
                 const opplysningUpdated = {...opplysning};
                 opplysningUpdated.pendingLasterOppFil = false;
-                const opplysningerSortertUpdated: Opplysning[] = updateSortertOpplysning(state.opplysningerSortert, opplysningUpdated);
+                const opplysningerSortertUpdated: Opplysning[] = updateSortertOpplysning(
+                    state.opplysningerSortert,
+                    opplysningUpdated
+                );
 
                 return {
                     ...state,
                     opplysningerSortert: opplysningerSortertUpdated,
-                    enFilLastesOpp: false
+                    enFilLastesOpp: false,
                 };
             } else {
-                return state
+                return state;
             }
         }
         case opplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP: {
             const {opplysningType} = action;
-            const opplysning: Opplysning | undefined = getOpplysningByOpplysningType(state.opplysningerSortert, opplysningType);
-            if (opplysning){
+            const opplysning: Opplysning | undefined = getOpplysningByOpplysningType(
+                state.opplysningerSortert,
+                opplysningType
+            );
+            if (opplysning) {
                 const opplysningUpdated = {...opplysning};
                 if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
                     opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
                 } else {
                     opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
                 }
-                const opplysningerSortertUpdated: Opplysning[] = updateSortertOpplysning(state.opplysningerSortert, opplysningUpdated);
+                const opplysningerSortertUpdated: Opplysning[] = updateSortertOpplysning(
+                    state.opplysningerSortert,
+                    opplysningUpdated
+                );
 
                 return {
                     ...state,
-                    opplysningerSortert: opplysningerSortertUpdated
+                    opplysningerSortert: opplysningerSortertUpdated,
                 };
             } else {
-                return state
+                return state;
             }
         }
         default:

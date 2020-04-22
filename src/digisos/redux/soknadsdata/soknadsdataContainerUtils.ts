@@ -1,12 +1,7 @@
 import {connect} from "react-redux";
 import {hentSoknadsdata, lagreSoknadsdata} from "./soknadsdataActions";
 import {clearValideringsfeil, setValideringsfeil} from "../validering/valideringActions";
-import {
-    oppdaterSoknadsdataSti,
-    settRestStatus,
-    Soknadsdata,
-    SoknadsdataType
-} from "./soknadsdataReducer";
+import {oppdaterSoknadsdataSti, settRestStatus, Soknadsdata, SoknadsdataType} from "./soknadsdataReducer";
 import {Valideringsfeil, ValideringsFeilKode} from "../validering/valideringActionTypes";
 import {State} from "../reducers";
 import {REST_STATUS, SoknadState} from "../soknad/soknadTypes";
@@ -21,14 +16,19 @@ export interface SoknadsdataContainerProps {
     skjul?: boolean;
 
     // PropsMappedFromStore:
-    soknad: SoknadState
+    soknad: SoknadState;
     soknadsdata: Soknadsdata;
     behandlingsId: string | undefined;
     feil: Valideringsfeil[];
 
     // Funksjoner:
     hentSoknadsdata: (brukerBehandlingId: string, urlPath: string) => void;
-    lagreSoknadsdata: (brukerBehandlingId: string, urlPath: string, soknadsdata: any, responseHandler?: (response: any) => void) => void;
+    lagreSoknadsdata: (
+        brukerBehandlingId: string,
+        urlPath: string,
+        soknadsdata: any,
+        responseHandler?: (response: any) => void
+    ) => void;
     oppdaterSoknadsdataSti: (sti: string, soknadsdata: SoknadsdataType | null) => void;
     settRestStatus: (sti: string, restStatus: REST_STATUS) => void;
     visSamtykkeInfo: (vis: boolean) => void;
@@ -42,21 +42,29 @@ export const connectSoknadsdataContainer = connect(
         soknad: state.soknad,
         behandlingsId: state.soknad.behandlingsId,
         soknadsdata: JSON.parse(JSON.stringify(state.soknadsdata)),
-        feil: state.validering.feil
+        feil: state.validering.feil,
     }),
     (dispatch: Dispatch) => {
         return {
-            hentSoknadsdata: (brukerBehandlingId: string, sti: string) => hentSoknadsdata(brukerBehandlingId, sti)(dispatch),
-            lagreSoknadsdata: (brukerBehandlingId: string, sti: string, soknadsdata: SoknadsdataType, responseHandler?: (response: any) => void) => lagreSoknadsdata(brukerBehandlingId, sti, soknadsdata, responseHandler)(dispatch),
-            oppdaterSoknadsdataSti: (sti: string, verdi: SoknadsdataType | null) => dispatch(oppdaterSoknadsdataSti(sti, verdi)),
+            hentSoknadsdata: (brukerBehandlingId: string, sti: string) =>
+                hentSoknadsdata(brukerBehandlingId, sti)(dispatch),
+            lagreSoknadsdata: (
+                brukerBehandlingId: string,
+                sti: string,
+                soknadsdata: SoknadsdataType,
+                responseHandler?: (response: any) => void
+            ) => lagreSoknadsdata(brukerBehandlingId, sti, soknadsdata, responseHandler)(dispatch),
+            oppdaterSoknadsdataSti: (sti: string, verdi: SoknadsdataType | null) =>
+                dispatch(oppdaterSoknadsdataSti(sti, verdi)),
             settRestStatus: (sti: string, restStatus: REST_STATUS) => dispatch(settRestStatus(sti, restStatus)),
             visSamtykkeInfo: (skalVises: boolean) => dispatch(visSamtykkeInfo(skalVises)),
-            setValideringsfeil: (feilkode: ValideringsFeilKode, faktumKey: string) => dispatch(setValideringsfeil(feilkode, faktumKey)),
+            setValideringsfeil: (feilkode: ValideringsFeilKode, faktumKey: string) =>
+                dispatch(setValideringsfeil(feilkode, faktumKey)),
             clearValideringsfeil: (faktumKey: string) => dispatch(clearValideringsfeil(faktumKey)),
             dispatchAction: (action: any) => {
-                dispatch(action)
-            }
-        }
+                dispatch(action);
+            },
+        };
     }
 );
 
@@ -69,14 +77,14 @@ export const onEndretValideringsfeil = (
     nyFeilkode: ValideringsFeilKode | undefined,
     faktumKey: string,
     feil: Valideringsfeil[],
-    callback: () => void) => {
+    callback: () => void
+) => {
     let eksisterendeFeil: Valideringsfeil | undefined;
     if (feil) {
-        eksisterendeFeil = feil.find((valideringsfeil: Valideringsfeil) =>
-            valideringsfeil.faktumKey === faktumKey);
+        eksisterendeFeil = feil.find((valideringsfeil: Valideringsfeil) => valideringsfeil.faktumKey === faktumKey);
     }
-    const eksisterendeFeilkode: string | undefined = (eksisterendeFeil && eksisterendeFeil.feilkode) ?
-        eksisterendeFeil.feilkode : undefined;
+    const eksisterendeFeilkode: string | undefined =
+        eksisterendeFeil && eksisterendeFeil.feilkode ? eksisterendeFeil.feilkode : undefined;
     if (eksisterendeFeilkode !== nyFeilkode) {
         callback();
     }

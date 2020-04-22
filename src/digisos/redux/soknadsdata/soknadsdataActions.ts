@@ -1,22 +1,12 @@
 import {Dispatch} from "../reduxTypes";
-import {
-    fetchPut,
-    fetchToJson,
-    HttpStatus,
-} from "../../../nav-soknad/utils/rest-utils";
-import {
-    oppdaterSoknadsdataSti,
-    settRestStatus,
-    SoknadsdataType,
-} from "./soknadsdataReducer";
+import {fetchPut, fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
+import {oppdaterSoknadsdataSti, settRestStatus, SoknadsdataType} from "./soknadsdataReducer";
 import {loggFeil} from "../navlogger/navloggerActions";
 import {REST_STATUS} from "../soknad/soknadTypes";
 import {showServerFeil} from "../soknad/soknadActions";
 
-export const soknadsdataUrl = (
-    brukerBehandlingId: string,
-    sti: string
-): string => `soknader/${brukerBehandlingId}/${sti}`;
+export const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string =>
+    `soknader/${brukerBehandlingId}/${sti}`;
 
 export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
     return (dispatch: Dispatch) => {
@@ -45,17 +35,14 @@ export function lagreSoknadsdata(
 ) {
     return (dispatch: Dispatch) => {
         dispatch(settRestStatus(sti, REST_STATUS.PENDING));
-        fetchPut(
-            soknadsdataUrl(brukerBehandlingId, sti),
-            JSON.stringify(soknadsdata)
-        )
+        fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata))
             .then((response: any) => {
                 dispatch(settRestStatus(sti, REST_STATUS.OK));
                 if (responseHandler) {
                     responseHandler(response);
                 }
             })
-            .catch(reason => {
+            .catch((reason) => {
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
                     return;
                 }
@@ -85,10 +72,7 @@ export const setPath = (obj: any, path: string, value: any): any => {
     let curStep = obj;
     for (let i = 0; i < keys.length - 1; i++) {
         const key = keys[i];
-        if (
-            !curStep[key] &&
-            !Object.prototype.hasOwnProperty.call(curStep, key)
-        ) {
+        if (!curStep[key] && !Object.prototype.hasOwnProperty.call(curStep, key)) {
             const nextKey = keys[i + 1];
             const useArray = /^\+?(0|[1-9]\d*)$/.test(nextKey);
             curStep[key] = useArray ? [] : {};

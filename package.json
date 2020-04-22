@@ -91,6 +91,9 @@
     "@types/react-scroll": "^1.5.4",
     "@types/redux-logger": "^3.0.7",
     "@types/uuid": "^3.4.7",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.1.6",
+    "prettier": "^2.0.4",
     "replace": "^1.1.1",
     "typescript": "^3.8.3"
   },
@@ -114,5 +117,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,less,css,md}": "prettier --write"
   }
 }

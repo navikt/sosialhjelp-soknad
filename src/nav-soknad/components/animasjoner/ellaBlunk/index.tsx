@@ -4,7 +4,7 @@ interface EllaProps {
     size: string;
 }
 
-const EllaBlunk:React.FC<EllaProps> = (props: EllaProps) => {
+const EllaBlunk: React.FC<EllaProps> = (props: EllaProps) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175 175" width={props.size}>
             <defs>
@@ -80,6 +80,6 @@ const EllaBlunk:React.FC<EllaProps> = (props: EllaProps) => {
             </g>
         </svg>
     );
-}
+};
 
 export default EllaBlunk;

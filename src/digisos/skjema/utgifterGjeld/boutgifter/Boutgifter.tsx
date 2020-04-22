@@ -1,33 +1,21 @@
 import * as React from "react";
 import {FormattedHTMLMessage, useIntl} from "react-intl";
-import {
-    SoknadsSti,
-    oppdaterSoknadsdataSti,
-} from "../../../redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, {
-    LegendTittleStyle,
-} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Boutgifter, BoutgifterKeys} from "./BoutgifterTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
-import Informasjonspanel, {
-    InformasjonspanelIkon,
-} from "../../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
-import {
-    hentSoknadsdata,
-    lagreSoknadsdata,
-} from "../../../redux/soknadsdata/soknadsdataActions";
+import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
 export const BoutgifterView = () => {
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
 
     const dispatch = useDispatch();
@@ -53,13 +41,7 @@ export const BoutgifterView = () => {
                 boutgifter.annet = false;
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
-            dispatch(
-                lagreSoknadsdata(
-                    behandlingsId,
-                    SoknadsSti.BOUTGIFTER,
-                    boutgifter
-                )
-            );
+            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter));
         }
     };
 
@@ -68,13 +50,7 @@ export const BoutgifterView = () => {
             const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
             boutgifter[idToToggle] = !boutgifter[idToToggle];
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
-            dispatch(
-                lagreSoknadsdata(
-                    behandlingsId,
-                    SoknadsSti.BOUTGIFTER,
-                    boutgifter
-                )
-            );
+            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter));
         }
     };
 
@@ -82,20 +58,14 @@ export const BoutgifterView = () => {
         const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
 
         const boutgifterElement: boolean | null = boutgifter[navn];
-        const isChecked: boolean = boutgifterElement
-            ? boutgifterElement
-            : false;
+        const isChecked: boolean = boutgifterElement ? boutgifterElement : false;
 
         return (
             <CheckboxPanel
                 id={"boutgifter_" + navn + "_checkbox"}
                 name={navn}
                 checked={isChecked}
-                label={
-                    <FormattedHTMLMessage
-                        id={BOUTGIFTER + ".true.type." + textKey}
-                    />
-                }
+                label={<FormattedHTMLMessage id={BOUTGIFTER + ".true.type." + textKey} />}
                 onClick={() => handleClickRadio(navn)}
             />
         );
@@ -111,38 +81,17 @@ export const BoutgifterView = () => {
                 onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
-                <Sporsmal
-                    tekster={getFaktumSporsmalTekst(
-                        intl,
-                        BOUTGIFTER + ".true.type"
-                    )}
-                >
-                    {renderCheckBox(
-                        BoutgifterKeys.HUSLEIE,
-                        BoutgifterKeys.HUSLEIE
-                    )}
+                <Sporsmal tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER + ".true.type")}>
+                    {renderCheckBox(BoutgifterKeys.HUSLEIE, BoutgifterKeys.HUSLEIE)}
                     {renderCheckBox(BoutgifterKeys.STROM, BoutgifterKeys.STROM)}
-                    {renderCheckBox(
-                        BoutgifterKeys.KOMMUNALAVGIFT,
-                        BoutgifterKeys.KOMMUNALAVGIFT
-                    )}
-                    {renderCheckBox(
-                        BoutgifterKeys.OPPVARMING,
-                        BoutgifterKeys.OPPVARMING
-                    )}
-                    {renderCheckBox(
-                        BoutgifterKeys.BOLIGLAN,
-                        BoutgifterKeys.BOLIGLAN
-                    )}
+                    {renderCheckBox(BoutgifterKeys.KOMMUNALAVGIFT, BoutgifterKeys.KOMMUNALAVGIFT)}
+                    {renderCheckBox(BoutgifterKeys.OPPVARMING, BoutgifterKeys.OPPVARMING)}
+                    {renderCheckBox(BoutgifterKeys.BOLIGLAN, BoutgifterKeys.BOLIGLAN)}
                     {renderCheckBox(BoutgifterKeys.ANNET, "andreutgifter")}
                 </Sporsmal>
             </JaNeiSporsmal>
             <Informasjonspanel
-                synlig={
-                    boutgifter &&
-                    boutgifter.skalViseInfoVedBekreftelse &&
-                    boutgifter.bekreftelse === true
-                }
+                synlig={boutgifter && boutgifter.skalViseInfoVedBekreftelse && boutgifter.bekreftelse === true}
                 ikon={InformasjonspanelIkon.ELLA}
                 farge={DigisosFarge.VIKTIG}
             >

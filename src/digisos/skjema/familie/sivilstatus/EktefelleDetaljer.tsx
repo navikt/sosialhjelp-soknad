@@ -4,34 +4,23 @@ import {useSelector} from "react-redux";
 
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
-import Detaljeliste, {
-    DetaljelisteElement,
-} from "../../../../nav-soknad/components/detaljeliste";
+import Detaljeliste, {DetaljelisteElement} from "../../../../nav-soknad/components/detaljeliste";
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
-import Informasjonspanel, {
-    InformasjonspanelIkon,
-} from "../../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
 import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 
 import {State} from "../../../redux/reducers";
 
 const EktefelleDetaljer = () => {
-    const {
-        ektefelle,
-        harDiskresjonskode,
-        erFolkeregistrertSammen,
-    } = useSelector((state: State) => state.soknadsdata.familie.sivilstatus);
+    const {ektefelle, harDiskresjonskode, erFolkeregistrertSammen} = useSelector(
+        (state: State) => state.soknadsdata.familie.sivilstatus
+    );
 
     const intl = useIntl();
 
-    const renderSivilstatusLabel = (
-        ektefelleHarDiskresjonskode: boolean | undefined
-    ) => {
+    const renderSivilstatusLabel = (ektefelleHarDiskresjonskode: boolean | undefined) => {
         let formattedMessageId: string = "system.familie.sivilstatus.label";
-        if (
-            ektefelleHarDiskresjonskode &&
-            ektefelleHarDiskresjonskode === true
-        ) {
+        if (ektefelleHarDiskresjonskode && ektefelleHarDiskresjonskode === true) {
             formattedMessageId = "system.familie.sivilstatus.ikkeTilgang.label";
         }
         return <FormattedMessage id={formattedMessageId} />;
@@ -44,50 +33,26 @@ const EktefelleDetaljer = () => {
                 {ektefelle && ektefelle.navn && ektefelle.navn.fulltNavn && (
                     <Detaljeliste>
                         <DetaljelisteElement
-                            tittel={
-                                <FormattedMessage
-                                    id={INTL_ID_EKTEFELLE + ".navn"}
-                                />
-                            }
+                            tittel={<FormattedMessage id={INTL_ID_EKTEFELLE + ".navn"} />}
                             verdi={ektefelle.navn.fulltNavn}
                         />
                         {ektefelle.fodselsdato && (
                             <DetaljelisteElement
-                                tittel={
-                                    <FormattedMessage
-                                        id={INTL_ID_EKTEFELLE + ".fodselsdato"}
-                                    />
-                                }
+                                tittel={<FormattedMessage id={INTL_ID_EKTEFELLE + ".fodselsdato"} />}
                                 verdi={
                                     <span className="dato">
-                                        <Dato
-                                            tidspunkt={ektefelle.fodselsdato}
-                                        />
+                                        <Dato tidspunkt={ektefelle.fodselsdato} />
                                     </span>
                                 }
                             />
                         )}
                         <DetaljelisteElement
-                            tittel={
-                                <FormattedMessage
-                                    id={INTL_ID_EKTEFELLE + ".folkereg"}
-                                />
-                            }
+                            tittel={<FormattedMessage id={INTL_ID_EKTEFELLE + ".folkereg"} />}
                             verdi={
                                 erFolkeregistrertSammen === true ? (
-                                    <FormattedMessage
-                                        id={
-                                            INTL_ID_EKTEFELLE +
-                                            ".folkeregistrertsammen.true"
-                                        }
-                                    />
+                                    <FormattedMessage id={INTL_ID_EKTEFELLE + ".folkeregistrertsammen.true"} />
                                 ) : (
-                                    <FormattedMessage
-                                        id={
-                                            INTL_ID_EKTEFELLE +
-                                            ".folkeregistrertsammen.false"
-                                        }
-                                    />
+                                    <FormattedMessage id={INTL_ID_EKTEFELLE + ".folkeregistrertsammen.false"} />
                                 )
                             }
                         />
@@ -99,13 +64,7 @@ const EktefelleDetaljer = () => {
 
     return (
         <div className="sivilstatus skjema-sporsmal">
-            <Sporsmal
-                tekster={getFaktumSporsmalTekst(
-                    intl,
-                    "system.familie.sivilstatus"
-                )}
-                stil="system"
-            >
+            <Sporsmal tekster={getFaktumSporsmalTekst(intl, "system.familie.sivilstatus")} stil="system">
                 <div className="sivilstatus__infotekst">
                     <FormattedMessage id="system.familie.sivilstatus" />
                 </div>
@@ -115,10 +74,7 @@ const EktefelleDetaljer = () => {
                 </div>
             </Sporsmal>
             {harDiskresjonskode !== true && (
-                <Informasjonspanel
-                    farge={DigisosFarge.VIKTIG}
-                    ikon={InformasjonspanelIkon.ELLA}
-                >
+                <Informasjonspanel farge={DigisosFarge.VIKTIG} ikon={InformasjonspanelIkon.ELLA}>
                     <h4 className="skjema-sporsmal__infotekst__tittel">
                         <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel" />
                     </h4>

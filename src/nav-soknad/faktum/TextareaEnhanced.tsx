@@ -37,13 +37,13 @@ class TextareaEnhanced extends React.Component<Props, {}> {
     }
 
     handleOnChange(evt: any) {
-        if(this.props.onChange){
+        if (this.props.onChange) {
             this.props.onChange(evt);
         }
     }
 
     handleOnBlur() {
-        if(this.props.onBlur){
+        if (this.props.onBlur) {
             this.props.onBlur();
         }
     }
@@ -55,14 +55,14 @@ class TextareaEnhanced extends React.Component<Props, {}> {
         } else if (antallTegn > maxLength) {
             return this.props.intl.formatMessage(
                 {
-                    id: "textarea.overmaks"
+                    id: "textarea.overmaks",
                 },
                 {antall: antallTegn - maxLength}
             );
         }
         return this.props.intl.formatMessage(
             {
-                id: "textarea.undermaks"
+                id: "textarea.undermaks",
             },
             {antall: maxLength - antallTegn}
         );
@@ -79,16 +79,7 @@ class TextareaEnhanced extends React.Component<Props, {}> {
     }
 
     render() {
-        const {
-            labelId,
-            disabled,
-            textareaClass,
-            maxLength,
-            intl,
-            faktumKey,
-            property,
-            value,
-        } = this.props;
+        const {labelId, disabled, textareaClass, maxLength, intl, faktumKey, property, value} = this.props;
         const tekster = getInputFaktumTekst(intl, faktumKey, property);
 
         let label = labelId ? getIntlTextOrKey(intl, labelId) : tekster.label;
@@ -119,6 +110,4 @@ const mapStateToProps = (state: State) => ({
     feil: state.validering.feil,
 });
 
-export default connect(
-    mapStateToProps
-)(injectIntl(TextareaEnhanced));
+export default connect(mapStateToProps)(injectIntl(TextareaEnhanced));
