@@ -50,7 +50,7 @@ function* lastOppFilSaga(action: LastOppFilAction) {
                 yield put(setValideringsfeil(ValideringsFeilKode.FIL_EKSISTERER_IKKE, opplysning.type));
             } else {
                 // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
-                response = yield call(fetchUploadIgnoreErrors, url, formData[i]);
+                response = yield call(fetchUploadIgnoreErrors, url, formData[i], "POST");
                 const ID = "id";
                 // @ts-ignore
                 if (response && response[ID]) {
