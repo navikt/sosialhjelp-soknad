@@ -80,6 +80,8 @@ export class NyttBarn extends React.Component<Props, State>{
 
 							<MockInput label="Etternavn:" onChange={(evt: any) => this.setState({etternavn: evt.target.value})} value={this.state.etternavn}/>
 
+							<MockInput label="Fødselsnummer:" onChange={(evt: any) => this.setState({ident: evt.target.value})} value={this.state.ident}/>
+
 							<div>
 								<label>Har samme bostedsadresse</label>
 								<Radio label={'Ja'} name={'bostedsadresse'} value={'ja'} onChange={() => this.setState({sammeBostedsadresse: true})} defaultChecked={true}/>
