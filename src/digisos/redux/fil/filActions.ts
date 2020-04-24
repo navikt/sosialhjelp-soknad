@@ -2,7 +2,7 @@ import {Fil, Opplysning, OpplysningType} from "../okonomiskeOpplysninger/opplysn
 import {FilActionTypeKeys, FilActionTypes} from "./filTypes";
 import {REST_FEIL} from "../soknad/soknadTypes";
 
-const lastOppFil = (opplysning: Opplysning, formData: FormData, behandlingsId: string): FilActionTypes => {
+const lastOppFil = (opplysning: Opplysning, formData: FormData[], behandlingsId: string): FilActionTypes => {
     return {
         type: FilActionTypeKeys.LAST_OPP,
         opplysning,
