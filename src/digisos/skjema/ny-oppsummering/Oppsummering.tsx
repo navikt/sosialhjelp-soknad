@@ -11,13 +11,33 @@ import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-pan
 import {FormattedMessage, useIntl} from "react-intl";
 import SoknadsmottakerInfoPanel from "../oppsummering/SoknadsmottakerInfoPanel";
 import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
+import {REST_STATUS} from "../../redux/soknad/soknadTypes";
+import NavFrontendSpinner from "nav-frontend-spinner";
+import {Link} from "react-router-dom";
+import {getIntlTextOrKey} from "../../../nav-soknad/utils";
+import {UbesvarteSporsmalPanel} from "./UbesvarteSporsmalPanel";
+
+interface Bolk {
+    steg: number;
+    tittel: string;
+}
+
+const bolker: Bolk[] = [
+    {steg: 1, tittel: "Personopplysninger"},
+    {steg: 2, tittel: "Hva søker du om?"},
+    {steg: 3, tittel: "Arbeid og utdanning"},
+    {steg: 4, tittel: "Familiesituasjon"},
+    {steg: 5, tittel: "Bosituasjon"},
+    {steg: 6, tittel: "Inntekt og formue"},
+    {steg: 7, tittel: "Utgifter og gjeld"},
+    {steg: 8, tittel: "Økonomiske opplysninger og vedlegg"},
+];
 
 export const Oppsummering = () => {
     const dispatch = useDispatch();
 
-    const {oppsummering, bekreftet, visBekreftMangler, restStatus} = useSelector((state: State) => state.oppsummering);
-    const {behandlingsId, valgtSoknadsmottaker} = useSelector((state: State) => state.soknad);
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const {bekreftet, visBekreftMangler, restStatus} = useSelector((state: State) => state.oppsummering);
+    const {behandlingsId} = useSelector((state: State) => state.soknad);
 
     const intl = useIntl();
 
@@ -32,9 +52,21 @@ export const Oppsummering = () => {
         id: "soknadsosialhjelp.oppsummering.harLestSamtykker",
     });
 
+    if (restStatus !== REST_STATUS.OK) {
+        return (
+            <div className="application-spinner">
+                <NavFrontendSpinner type="XXL" />
+            </div>
+        );
+    }
+
     return (
         <DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
-            <OppsummeringBolk tittel="Viktig tittel">Noe innhold her</OppsummeringBolk>
+            <UbesvarteSporsmalPanel />
+
+            {bolker.map((bolk: Bolk) => {
+                return <OppsummeringBolk bolk={bolk}>Noe innhold her</OppsummeringBolk>;
+            })}
 
             <SoknadsmottakerInfoPanel />
 
@@ -62,11 +94,19 @@ export const Oppsummering = () => {
     );
 };
 
-const OppsummeringBolk = (props: {tittel: string; children: React.ReactNode}) => {
+const OppsummeringBolk = (props: {bolk: Bolk; children: React.ReactNode}) => {
+    const {behandlingsId} = useSelector((state: State) => state.soknad);
+    const intl = useIntl();
+
     return (
-        <Ekspanderbartpanel tittel={<BolkTittel tittel={props.tittel} ferdig={false} />}>
-            {props.children}
-        </Ekspanderbartpanel>
+        <div className="oppsummering-bolk">
+            <Ekspanderbartpanel tittel={<BolkTittel tittel={props.bolk.tittel} ferdig={false} />}>
+                <Link to={`/skjema/${behandlingsId}/${props.bolk.steg}`}>
+                    {getIntlTextOrKey(intl, "oppsummering.gatilbake")}
+                </Link>
+                {props.children}
+            </Ekspanderbartpanel>
+        </div>
     );
 };
 
