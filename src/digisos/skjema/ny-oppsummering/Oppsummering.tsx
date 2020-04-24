@@ -100,7 +100,10 @@ const OppsummeringBolk = (props: {bolk: Bolk; children: React.ReactNode}) => {
 
     return (
         <div className="oppsummering-bolk">
-            <Ekspanderbartpanel tittel={<BolkTittel tittel={props.bolk.tittel} ferdig={false} />}>
+            <Ekspanderbartpanel
+                className="oppsummering-ekspanderbart-panel"
+                tittel={<BolkTittel tittel={props.bolk.tittel} ferdig={false} />}
+            >
                 <Link to={`/skjema/${behandlingsId}/${props.bolk.steg}`}>
                     {getIntlTextOrKey(intl, "oppsummering.gatilbake")}
                 </Link>
