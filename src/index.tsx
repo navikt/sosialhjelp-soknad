@@ -64,10 +64,7 @@ function configureStore() {
 
     const saga = createSagaMiddleware();
 
-    const middleware =
-        erDev() && visReduxLogger
-            ? applyMiddleware(thunk, saga, routerMiddleware(history))
-            : applyMiddleware(thunk, saga, routerMiddleware(history));
+    const middleware = applyMiddleware(thunk, saga, routerMiddleware(history));
     const createdStore = createStore(reducers(history), composeEnhancers(middleware));
     saga.run(sagas);
     return createdStore;
