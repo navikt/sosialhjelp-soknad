@@ -55,8 +55,6 @@ if (erDev() || erQ()) {
     Sentry.setUser({ip_address: "", id: uuid()});
 }
 
-const visReduxLogger = false;
-
 function configureStore() {
     const w: any = window as any;
 
