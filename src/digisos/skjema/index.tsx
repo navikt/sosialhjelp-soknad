@@ -11,6 +11,7 @@ import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
 import Steg8 from "./okonomiskeOpplysninger";
 import Oppsummering from "./oppsummering";
+import NyOppsummering from "./ny-oppsummering/Oppsummering";
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
 import {DispatchProps} from "../redux/reduxTypes";
 import {State} from "../redux/reducers";
@@ -95,6 +96,7 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
                     <Route path={`${path}/7`} component={Steg7} />
                     <Route path={`${path}/8`} component={Steg8} />
                     <Route path={`${path}/9`} component={Oppsummering} />
+                    <Route path={`${path}/ny-oppsummering`} component={NyOppsummering} />
                     <Route component={SideIkkeFunnet} />
                 </Switch>
                 <Prompt
