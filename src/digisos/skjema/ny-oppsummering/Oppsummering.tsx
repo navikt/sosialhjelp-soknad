@@ -9,7 +9,7 @@ import {hentOppsummering, bekreftOppsummering} from "../../redux/oppsummering/op
 import {Undertittel} from "nav-frontend-typografi";
 import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
 import {FormattedMessage, useIntl} from "react-intl";
-import SoknadsmottakerInfoPanel from "../oppsummering/SoknadsmottakerInfoPanel";
+import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import NavFrontendSpinner from "nav-frontend-spinner";
@@ -65,7 +65,11 @@ export const Oppsummering = () => {
             <UbesvarteSporsmalPanel />
 
             {bolker.map((bolk: Bolk) => {
-                return <OppsummeringBolk bolk={bolk}>Noe innhold her</OppsummeringBolk>;
+                return (
+                    <OppsummeringBolk bolk={bolk} key={bolk.steg}>
+                        Noe innhold her
+                    </OppsummeringBolk>
+                );
             })}
 
             <SoknadsmottakerInfoPanel />
