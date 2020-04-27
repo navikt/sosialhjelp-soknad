@@ -10,7 +10,6 @@ import * as ReactDOM from "react-dom";
 import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
-import {createLogger} from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import {ConnectedRouter, routerMiddleware} from "connected-react-router";
 import * as Sentry from "@sentry/browser";
@@ -49,18 +48,12 @@ const history = require("history").createBrowserHistory({
     basename: getContextPathBasename(),
 });
 
-const logger = createLogger({
-    collapsed: true,
-});
-
 if (erDev() || erQ()) {
     Sentry.init({
         dsn: "https://f3482eab7c994893bf44bcb26a0c8e68@sentry.gc.nav.no/14",
     });
     Sentry.setUser({ip_address: "", id: uuid()});
 }
-
-const visReduxLogger = false;
 
 function configureStore() {
     const w: any = window as any;
@@ -69,10 +62,7 @@ function configureStore() {
 
     const saga = createSagaMiddleware();
 
-    const middleware =
-        erDev() && visReduxLogger
-            ? applyMiddleware(thunk, saga, logger, routerMiddleware(history))
-            : applyMiddleware(thunk, saga, routerMiddleware(history));
+    const middleware = applyMiddleware(thunk, saga, routerMiddleware(history));
     const createdStore = createStore(reducers(history), composeEnhancers(middleware));
     saga.run(sagas);
     return createdStore;
