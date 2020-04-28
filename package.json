@@ -15,7 +15,6 @@
     "install": "^0.13.0",
     "intl": "^1.2.5",
     "less-plugin-npm-import": "^2.1.0",
-    "lodash.throttle": "^4.1.1",
     "nav-frontend-alertstriper": "^3.0.16",
     "nav-frontend-alertstriper-style": "^2.0.14",
     "nav-frontend-chevron": "^1.0.10",
