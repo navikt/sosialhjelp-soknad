@@ -176,6 +176,13 @@ export const visSamtykkeInfo = (skalVises: boolean): SoknadActionType => {
     };
 };
 
+export const visLasteOppVedleggModal = (skalVises: boolean): SoknadActionType => {
+    return {
+        type: SoknadActionTypeKeys.VIS_LASTE_OPP_VEDLEGG_MODAL,
+        skalVises,
+    };
+};
+
 export function showServerFeil(shouldShow: boolean): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SHOW_SERVER_FEIL,

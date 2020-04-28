@@ -12,6 +12,7 @@ import {hentOpplysninger} from "../../redux/okonomiskeOpplysninger/opplysningerA
 import {gruppeRekkefolge} from "../../redux/okonomiskeOpplysninger/opplysningerConfig";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {State} from "../../redux/reducers";
+import {OpplysningerInformasjonspanel} from "./OpplysningerInformasjonspanel";
 
 type MaybeJsxElement = JSX.Element | null;
 
@@ -43,13 +44,7 @@ const OkonomiskeOpplysningerView = () => {
 
     const ikkeBesvartMeldingSkalVises: boolean | null =
         backendData && backendData.okonomiskeOpplysninger && backendData.okonomiskeOpplysninger.length < 3;
-    const infoMelding: JSX.Element = (
-        <div className="steg-ekstrainformasjon__infopanel">
-            <Informasjonspanel ikon={InformasjonspanelIkon.HENSYN} farge={DigisosFarge.VIKTIG}>
-                <FormattedHTMLMessage id="opplysninger.informasjon" />
-            </Informasjonspanel>
-        </div>
-    );
+
     const ikkeBesvartMelding: JSX.Element = (
         <div className="steg-ekstrainformasjon__infopanel">
             <Informasjonspanel ikon={InformasjonspanelIkon.HENSYN} farge={DigisosFarge.VIKTIG}>
@@ -62,7 +57,7 @@ const OkonomiskeOpplysningerView = () => {
         return (
             <div className="steg-ekstrainformasjon">
                 <DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk} ikon={<SkjemaIllustrasjon />}>
-                    {!ikkeBesvartMeldingSkalVises && infoMelding}
+                    {!ikkeBesvartMeldingSkalVises && <OpplysningerInformasjonspanel />}
                     {ikkeBesvartMeldingSkalVises && ikkeBesvartMelding}
                     {renderGrupper()}
                 </DigisosSkjemaSteg>
