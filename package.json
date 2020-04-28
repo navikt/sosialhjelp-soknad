@@ -16,7 +16,6 @@
     "history": "^4.10.1",
     "intl": "^1.2.5",
     "less-plugin-npm-import": "^2.1.0",
-    "lodash.throttle": "^4.1.1",
     "nav-frontend-alertstriper": "^3.0.14",
     "nav-frontend-alertstriper-style": "^2.0.12",
     "nav-frontend-chevron": "^1.0.10",
