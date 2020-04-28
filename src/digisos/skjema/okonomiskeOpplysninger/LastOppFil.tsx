@@ -99,7 +99,6 @@ const LastOppFil = (props: {opplysning: Opplysning; isDisabled: boolean; visSpin
                     {filopplasting.feilKode && filopplasting.opplysningtype === props.opplysning.type && filopplasting.feilKode !== REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR && (
                         <FormattedMessage id={filopplasting.feilKode} />
                     )}
-
                     {filopplasting.feilKode && filopplasting.opplysningtype === props.opplysning.type && filopplasting.feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR && (
                         <FormattedMessage id={filopplasting.feilKode}
                         values={{antall: antallFiler}}/>
