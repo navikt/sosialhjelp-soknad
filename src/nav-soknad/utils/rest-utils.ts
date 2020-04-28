@@ -319,6 +319,10 @@ export function detekterInternFeilKode(feilKode: string): string {
     if (feilKode.match(/Request Entity Too Large/i)) {
         internFeilKode = REST_FEIL.FOR_STOR_FIL;
     }
+    //TODO?
+    if (feilKode.match(/Request Entity Too Large/i)) {
+        internFeilKode = REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR;
+    }
     if (feilKode.match(/Unsupp?orted Media Type/i)) {
         internFeilKode = REST_FEIL.FEIL_FILTPYE;
     }

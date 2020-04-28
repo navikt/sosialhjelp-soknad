@@ -2,11 +2,12 @@ import * as React from "react";
 import {Knapp} from "nav-frontend-knapper";
 import {FormattedMessage} from "react-intl";
 import {Opplysning} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {DispatchProps} from "../../redux/reduxTypes";
 import {lastOppFil} from "../../redux/fil/filActions";
 import {FilState} from "../../redux/fil/filTypes";
 import {State} from "../../redux/reducers";
+import {REST_FEIL} from "../../redux/soknad/soknadTypes";
 
 interface StoreToProps {
     behandlingsId: string | undefined;
@@ -24,6 +25,10 @@ type Props = OwnProps & StoreToProps & DispatchProps;
 const LastOppFil = (props: {opplysning: Opplysning; isDisabled: boolean; visSpinner: boolean}) => {
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const filopplasting = useSelector((state: State) => state.filopplasting);
+
+    const antallFiler = useSelector((state: State) => state.okonomiskeOpplysninger.opplysningerSortert
+        .map((opplysning: Opplysning) => opplysning.filer.length)
+        .reduce((a: number, b: number) => a + b));
 
     const dispatch = useDispatch();
 
@@ -91,8 +96,13 @@ const LastOppFil = (props: {opplysning: Opplysning; isDisabled: boolean; visSpin
 
             <div role="alert" aria-live="assertive">
                 <div className="skjemaelement__feilmelding">
-                    {filopplasting.feilKode && filopplasting.opplysningtype === props.opplysning.type && (
+                    {filopplasting.feilKode && filopplasting.opplysningtype === props.opplysning.type && filopplasting.feilKode !== REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR && (
                         <FormattedMessage id={filopplasting.feilKode} />
+                    )}
+
+                    {filopplasting.feilKode && filopplasting.opplysningtype === props.opplysning.type && filopplasting.feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR && (
+                        <FormattedMessage id={filopplasting.feilKode}
+                        values={{antall: antallFiler}}/>
                     )}
                 </div>
             </div>
