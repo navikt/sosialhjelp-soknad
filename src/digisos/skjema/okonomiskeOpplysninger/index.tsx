@@ -45,8 +45,6 @@ const OkonomiskeOpplysningerView = () => {
     const ikkeBesvartMeldingSkalVises: boolean | null =
         backendData && backendData.okonomiskeOpplysninger && backendData.okonomiskeOpplysninger.length < 3;
 
-    console.log("backendData.okonomiskeOpplysninger", backendData?.okonomiskeOpplysninger);
-
     const ikkeBesvartMelding: JSX.Element = (
         <div className="steg-ekstrainformasjon__infopanel">
             <Informasjonspanel ikon={InformasjonspanelIkon.HENSYN} farge={DigisosFarge.VIKTIG}>
