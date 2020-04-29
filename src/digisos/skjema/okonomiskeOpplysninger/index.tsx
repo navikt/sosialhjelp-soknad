@@ -44,6 +44,7 @@ const OkonomiskeOpplysningerView = () => {
 
     const ikkeBesvartMeldingSkalVises: boolean | null =
         backendData && backendData.okonomiskeOpplysninger && backendData.okonomiskeOpplysninger.length < 3;
+
     console.log("backendData.okonomiskeOpplysninger", backendData?.okonomiskeOpplysninger);
 
     const ikkeBesvartMelding: JSX.Element = (
