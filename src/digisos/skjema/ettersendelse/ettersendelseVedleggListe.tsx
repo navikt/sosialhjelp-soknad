@@ -97,6 +97,7 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                                 vedlegg={vedlegg}
                                 key={vedlegg.type}
                                 feilKode={this.props.feiletVedleggId === vedlegg.type ? this.props.feilKode : undefined}
+                                antallFiler={this.antallOpplastedeFiler()}
                             >
                                 {tittelKey && (
                                     <h3>

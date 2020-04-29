@@ -19,6 +19,7 @@ interface OwnProps {
     vedlegg: EttersendelseVedleggBackend;
     feilKode?: string;
     dispatch?: any;
+    antallFiler: number;
 }
 
 interface StoreToProps {
@@ -122,11 +123,23 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
                         <>
                             <span className="skjema__feilmelding">
                                 "{this.state.filnavn}" &nbsp;
-                                {!visFeilFiltypeFeilmelding && (
-                                    <FormattedMessage
-                                        id={this.props.feilKode ? this.props.feilKode : "opplysninger.vedlegg.ugyldig"}
-                                    />
-                                )}
+                                {!visFeilFiltypeFeilmelding &&
+                                    this.props.feilKode !== REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR && (
+                                        <FormattedMessage
+                                            id={
+                                                this.props.feilKode
+                                                    ? this.props.feilKode
+                                                    : "opplysninger.vedlegg.ugyldig"
+                                            }
+                                        />
+                                    )}
+                                {!visFeilFiltypeFeilmelding &&
+                                    this.props.feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR && (
+                                        <FormattedMessage
+                                            id={this.props.feilKode}
+                                            values={{antall: this.props.antallFiler}}
+                                        />
+                                    )}
                                 {visFeilFiltypeFeilmelding && <FormattedMessage id="fil.feil.format" />}
                             </span>
                             <br />
