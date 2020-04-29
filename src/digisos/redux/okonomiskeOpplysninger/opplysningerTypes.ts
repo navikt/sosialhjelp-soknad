@@ -117,7 +117,7 @@ export enum OpplysningType {
     SAMVARSAVTALE_BARN = "samvarsavtale|barn", // NOTHING
     HUSLEIEKONTRAKT_HUSLEIEKONTRAKT = "husleiekontrakt|husleiekontrakt", // NOTHING
     HUSLEIEKONTRAKT_KOMMUNAL = "husleiekontrakt|kommunal", // NOTHING
-    BOSTOTTE_VEDTAK = "bostotte|vedtak", // RAD_MED_BELOP
+    BOSTOTTE_VEDTAK = "husbanken|vedtak", // RAD_MED_BELOP
     KONTOOVERSIKT_BRUKSKONTO = "kontooversikt|brukskonto", // RADER_MED_BELOP
     KONTOOVERSIKT_BSU = "kontooversikt|bsu", // RADER_MED_BELOP
     KONTOOVERSIKT_SPAREKONTO = "kontooversikt|sparekonto", // RADER_MED_BELOP
