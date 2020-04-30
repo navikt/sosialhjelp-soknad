@@ -10,6 +10,7 @@ export const defaultState: SoknadState = {
     showFeilSide: false,
     showSideIkkeFunnet: false,
     visSamtykkeInfo: false,
+    visLasteOppVedleggModal: false,
     visMidlertidigDeaktivertPanel: false,
     visIkkePakobletPanel: false,
     visNedetidPanel: false,
@@ -178,6 +179,13 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
             return {
                 ...state,
                 visSamtykkeInfo: action.skalVises,
+            };
+        }
+
+        case SoknadActionTypeKeys.VIS_LASTE_OPP_VEDLEGG_MODAL: {
+            return {
+                ...state,
+                visLasteOppVedleggModal: action.skalVises,
             };
         }
 

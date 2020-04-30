@@ -29,6 +29,7 @@ export enum SoknadActionTypeKeys {
     SHOW_LARGE_SPINNER = "soknad/SHOW_LARGE_SPINNER",
     SHOW_FEIL_SIDE = "soknad/SHOW_FEIL_SIDE",
     VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO",
+    VIS_LASTE_OPP_VEDLEGG_MODAL = "soknad/VIS_LASTE_OPP_VEDLEGG_MODAL",
     UPDATE_BEHANDLINGSID_PA_STORE = "soknad/UPDATE_BEHANDLINGSID_PA_STORE",
     SHOW_SERVER_FEIL = "soknad/SHOW_SERVER_FEIL",
     SHOW_SENDING_FEILET_PANEL = "soknad/SHOW_SENDING_FEILET_PANEL",
@@ -66,6 +67,7 @@ export type SoknadActionType =
     | ShowLargeSpinner
     | ShowFeilSide
     | VisSamtykkeInfo
+    | VisLasteOppVedleggModal
     | UpdateBehandlingsIdPaStore
     | ShowServerFeil
     | ShowSendingFeiletPanel
@@ -98,6 +100,11 @@ export interface ShowLargeSpinner {
 
 export interface VisSamtykkeInfo {
     type: SoknadActionTypeKeys.VIS_SAMTYKKE_INFO;
+    skalVises: boolean;
+}
+
+export interface VisLasteOppVedleggModal {
+    type: SoknadActionTypeKeys.VIS_LASTE_OPP_VEDLEGG_MODAL;
     skalVises: boolean;
 }
 
