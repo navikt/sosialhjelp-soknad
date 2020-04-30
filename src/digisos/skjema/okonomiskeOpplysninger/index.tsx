@@ -42,8 +42,7 @@ const OkonomiskeOpplysningerView = () => {
         return grupperView;
     };
 
-    const ikkeBesvartMeldingSkalVises: boolean | null =
-        backendData && backendData.okonomiskeOpplysninger && backendData.okonomiskeOpplysninger.length < 3;
+    const ikkeBesvartMeldingSkalVises: boolean | null = backendData && !backendData.isOkonomiskeOpplysningerBekreftet;
 
     const ikkeBesvartMelding: JSX.Element = (
         <div className="steg-ekstrainformasjon__infopanel">
