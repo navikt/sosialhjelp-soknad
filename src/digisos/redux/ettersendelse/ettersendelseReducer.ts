@@ -6,7 +6,7 @@ import {
     EttersendelseVedleggBackend,
 } from "./ettersendelseTypes";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
-import {REST_STATUS} from "../soknad/soknadTypes";
+import {REST_FEIL, REST_STATUS} from "../soknad/soknadTypes";
 
 const initialState: EttersendelseState = {
     restStatus: REST_STATUS.INITIALISERT,
@@ -96,9 +96,23 @@ export default (state: EttersendelseState = initialState, action: EttersendelseA
                 }
             });
 
+            const samletVedleggStorrelseForStor: boolean =
+                state.feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE;
+
+            const opplastingStatusUpdated: REST_STATUS = samletVedleggStorrelseForStor
+                ? (state.opplastingStatus = REST_STATUS.OK)
+                : state.opplastingStatus;
+            const feiletVedleggIdUpdated: string = samletVedleggStorrelseForStor
+                ? (state.feiletVedleggId = "")
+                : state.feiletVedleggId;
+            const feilKodeUpdated: string = samletVedleggStorrelseForStor ? (state.feilKode = "") : state.feilKode;
+
             return {
                 ...state,
                 data: dataUpdated,
+                feilKode: feilKodeUpdated,
+                opplastingStatus: opplastingStatusUpdated,
+                feiletVedleggId: feiletVedleggIdUpdated,
             };
         }
         case EttersendelseActionTypeKeys.ETTERSEND_PENDING: {
