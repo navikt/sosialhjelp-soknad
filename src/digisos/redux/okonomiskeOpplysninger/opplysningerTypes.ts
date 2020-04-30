@@ -13,6 +13,7 @@ export type MaybeOpplysning = Opplysning | null;
 export interface OpplysningerBackend {
     okonomiskeOpplysninger: OpplysningBackend[];
     slettedeVedlegg: OpplysningBackend[];
+    isOkonomiskeOpplysningerBekreftet: boolean;
 }
 
 export interface OpplysningBackend {
