@@ -118,20 +118,35 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
                             );
                         })}
 
-                    {opplastingsFeil && (
-                        <>
-                            <span className="skjema__feilmelding">
-                                "{this.state.filnavn}" &nbsp;
-                                {!visFeilFiltypeFeilmelding && (
-                                    <FormattedMessage
-                                        id={this.props.feilKode ? this.props.feilKode : "opplysninger.vedlegg.ugyldig"}
-                                    />
-                                )}
-                                {visFeilFiltypeFeilmelding && <FormattedMessage id="fil.feil.format" />}
-                            </span>
-                            <br />
-                        </>
-                    )}
+                    {opplastingsFeil &&
+                        this.props.feilKode !== REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE && (
+                            <>
+                                <span className="skjema__feilmelding">
+                                    "{this.state.filnavn}" &nbsp;
+                                    {!visFeilFiltypeFeilmelding && (
+                                        <FormattedMessage
+                                            id={
+                                                this.props.feilKode
+                                                    ? this.props.feilKode
+                                                    : "opplysninger.vedlegg.ugyldig"
+                                            }
+                                        />
+                                    )}
+                                    {visFeilFiltypeFeilmelding && <FormattedMessage id="fil.feil.format" />}
+                                </span>
+                                <br />
+                            </>
+                        )}
+
+                    {opplastingsFeil &&
+                        this.props.feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE && (
+                            <>
+                                <span className="skjema__feilmelding">
+                                    {<FormattedMessage id={this.props.feilKode} />}
+                                </span>
+                                <br />
+                            </>
+                        )}
 
                     <Knapp
                         type="standard"
