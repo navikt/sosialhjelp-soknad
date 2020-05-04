@@ -317,10 +317,13 @@ export function getCookie(name: string) {
 export function detekterInternFeilKode(feilKode: string): string {
     let internFeilKode = feilKode;
     if (feilKode.match(/Request Entity Too Large/i)) {
-        internFeilKode = REST_FEIL.FOR_STOR_FIL;
-    }
-    if (feilKode.match(/Bad Request/i)) {
-        internFeilKode = REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE;
+        if (feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR) {
+            internFeilKode = REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR;
+        } else if (feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE) {
+            internFeilKode = REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE;
+        } else {
+            internFeilKode = REST_FEIL.FOR_STOR_FIL;
+        }
     }
     if (feilKode.match(/Unsupp?orted Media Type/i)) {
         internFeilKode = REST_FEIL.FEIL_FILTPYE;
