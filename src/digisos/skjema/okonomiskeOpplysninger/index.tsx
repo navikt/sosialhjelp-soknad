@@ -1,11 +1,8 @@
 import * as React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {FormattedHTMLMessage} from "react-intl";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import SkjemaIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SkjemaIllustrasjon";
 import NavFrontendSpinner from "nav-frontend-spinner";
-import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
-import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import Gruppe from "./Gruppe";
 import {OpplysningGruppe, Opplysning} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {hentOpplysninger} from "../../redux/okonomiskeOpplysninger/opplysningerActions";
@@ -13,6 +10,7 @@ import {gruppeRekkefolge} from "../../redux/okonomiskeOpplysninger/opplysningerC
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {State} from "../../redux/reducers";
 import {OpplysningerInformasjonspanel} from "./OpplysningerInformasjonspanel";
+import {OpplysningerIkkeBesvartPanel} from "./OpplysningerIkkeBesvartPanel";
 
 type MaybeJsxElement = JSX.Element | null;
 
@@ -44,20 +42,12 @@ const OkonomiskeOpplysningerView = () => {
 
     const ikkeBesvartMeldingSkalVises: boolean | null = backendData && !backendData.isOkonomiskeOpplysningerBekreftet;
 
-    const ikkeBesvartMelding: JSX.Element = (
-        <div className="steg-ekstrainformasjon__infopanel">
-            <Informasjonspanel ikon={InformasjonspanelIkon.HENSYN} farge={DigisosFarge.VIKTIG}>
-                <FormattedHTMLMessage id="opplysninger.ikkebesvart.melding" />
-            </Informasjonspanel>
-        </div>
-    );
-
     if (restStatus === REST_STATUS.OK) {
         return (
             <div className="steg-ekstrainformasjon">
                 <DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk} ikon={<SkjemaIllustrasjon />}>
                     {!ikkeBesvartMeldingSkalVises && <OpplysningerInformasjonspanel />}
-                    {ikkeBesvartMeldingSkalVises && ikkeBesvartMelding}
+                    {ikkeBesvartMeldingSkalVises && <OpplysningerIkkeBesvartPanel />}
                     {renderGrupper()}
                 </DigisosSkjemaSteg>
             </div>
