@@ -57,7 +57,6 @@
     "nav-frontend-veileder-style": "^2.0.13",
     "nav-frontend-veilederpanel": "^0.1.22",
     "nav-frontend-veilederpanel-style": "0.0.25",
-    "npm": "^6.14.4",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-autocomplete": "^1.8.1",
@@ -100,7 +99,7 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.1.6",
     "prettier": "^2.0.4",
-    "replace": "^1.1.1",
+    "replace": "^1.2.0",
     "typescript": "^3.8.3"
   },
   "scripts": {
