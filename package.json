@@ -99,7 +99,6 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.1.6",
     "prettier": "^2.0.4",
-    "replace": "^1.2.0",
     "typescript": "^3.8.3"
   },
   "scripts": {
