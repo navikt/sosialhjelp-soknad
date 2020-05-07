@@ -104,9 +104,25 @@ function determineCredentialsParameter() {
 
 export function getRedirectPath(): string {
     const currentOrigin = window.location.origin;
-    const gotoParameter = "?goto=" + window.location.pathname;
+    const gotoParameter = "?goto=" + getGotoPathname();
     const redirectPath = currentOrigin + getRedirectPathname() + gotoParameter;
     return "redirect=" + redirectPath;
+}
+
+export function getGotoPathname(): string {
+    const gotoFromLink = getGotoParameterIfPathAlreadyIsLink();
+    return gotoFromLink ? gotoFromLink : window.location.pathname
+}
+
+function getGotoParameterIfPathAlreadyIsLink(): string | undefined {
+    if (window.location.pathname === getRedirectPathname()) {
+        return parseGotoValueFromSearchParameters(window.location.search)
+    }
+    return undefined;
+}
+export function parseGotoValueFromSearchParameters(searchParameters : string): string {
+    const afterGoto = searchParameters.split("goto=")[1]
+    return afterGoto ? afterGoto.split("&login_id")[0] : afterGoto // Fjerne login_id dersom strengen bak goto= er definert.
 }
 
 function getServletBaseUrl(): string {
@@ -335,17 +351,17 @@ function verifyStatusSuccessOrRedirect(response: Response): number {
                 };
             };
 
-            if (window.location.search.split("error_id=")[1] !== r.id) {
+            if (window.location.search.split("login_id=")[1] !== r.id) {
                 const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
                 window.location.href =
                     r.loginUrl +
                     queryDivider +
                     getRedirectPath() +
-                    "%26error_id=" +
+                    "%26login_id=" +
                     r.id;
             } else {
                 let loggPayload = createLogEntry(
-                    "Fetch ga 401-error-id selv om kallet ble sendt fra URL med samme error_id (" +
+                    "Fetch ga 401-error-id selv om kallet ble sendt fra URL med samme login_id (" +
                         r.id +
                         "). Dette kan komme av en påloggingsloop (UNAUTHORIZED_LOOP_ERROR).",
                     NavLogLevel.ERROR
