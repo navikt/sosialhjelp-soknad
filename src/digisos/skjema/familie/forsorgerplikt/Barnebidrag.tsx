@@ -1,12 +1,7 @@
-import Sporsmal, {
-    LegendTittleStyle,
-} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import * as React from "react";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
-import {
-    SoknadsSti,
-    oppdaterSoknadsdataSti,
-} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
@@ -15,9 +10,7 @@ const FAKTUM_KEY = "familie.barn.true.barnebidrag";
 
 const Barnebidrag = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
     const dispatch = useDispatch();
 
@@ -25,22 +18,11 @@ const Barnebidrag = () => {
         if (behandlingsId) {
             const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
             forsorgerplikt.barnebidrag = verdi;
-            dispatch(
-                oppdaterSoknadsdataSti(
-                    SoknadsSti.FORSORGERPLIKT,
-                    forsorgerplikt
-                )
-            );
+            dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
             const payload = {
                 barnebidrag: verdi,
             };
-            dispatch(
-                lagreSoknadsdata(
-                    behandlingsId,
-                    SoknadsSti.FORSORGERPLIKT,
-                    payload
-                )
-            );
+            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, payload));
         }
     };
 
@@ -60,10 +42,7 @@ const Barnebidrag = () => {
 
     return (
         <div className="blokk barnebidrag">
-            <Sporsmal
-                sprakNokkel="familie.barn.true.barnebidrag"
-                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-            >
+            <Sporsmal sprakNokkel="familie.barn.true.barnebidrag" legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
                 {renderRadio("betaler")}
                 {renderRadio("mottar")}
                 {renderRadio("begge")}

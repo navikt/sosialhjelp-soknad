@@ -10,7 +10,6 @@ import * as ReactDOM from "react-dom";
 import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
-import {createLogger} from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import {ConnectedRouter, routerMiddleware} from "connected-react-router";
 import * as Sentry from "@sentry/browser";
@@ -49,10 +48,6 @@ const history = require("history").createBrowserHistory({
     basename: getContextPathBasename(),
 });
 
-const logger = createLogger({
-    collapsed: true,
-});
-
 if (erDev() || erQ()) {
     Sentry.init({
         dsn: "https://f3482eab7c994893bf44bcb26a0c8e68@sentry.gc.nav.no/14",
@@ -60,25 +55,15 @@ if (erDev() || erQ()) {
     Sentry.setUser({ip_address: "", id: uuid()});
 }
 
-const visReduxLogger = false;
-
 function configureStore() {
     const w: any = window as any;
 
-    const composeEnhancers = erDev()
-        ? w.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-        : compose;
+    const composeEnhancers = erDev() ? w.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
 
     const saga = createSagaMiddleware();
 
-    const middleware =
-        erDev() && visReduxLogger
-            ? applyMiddleware(thunk, saga, logger, routerMiddleware(history))
-            : applyMiddleware(thunk, saga, routerMiddleware(history));
-    const createdStore = createStore(
-        reducers(history),
-        composeEnhancers(middleware)
-    );
+    const middleware = applyMiddleware(thunk, saga, routerMiddleware(history));
+    const createdStore = createStore(reducers(history), composeEnhancers(middleware));
     saga.run(sagas);
     return createdStore;
 }
@@ -88,9 +73,7 @@ const store = configureStore();
 window.onerror = (errorMessage, url, line, column, error) => {
     store.dispatch(
         loggException(
-            typeof errorMessage === "string"
-                ? errorMessage
-                : "Why is typeof errorMessage Event?",
+            typeof errorMessage === "string" ? errorMessage : "Why is typeof errorMessage Event?",
             url ? url : "",
             line,
             column,

@@ -34,14 +34,14 @@ class SoknadAlleredeSendtPromt extends React.Component<Props, {}> {
             >
                 <div className="avbrytmodal">
                     <div className="avbrytmodal__infoikon_wrapper">
-                        <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""}/>
+                        <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""} />
                     </div>
 
                     <Innholdstittel className="blokk-s avbrytmodal__overskrift">
-                        <FormattedMessage id={KEY + ".overskrift"}/>
+                        <FormattedMessage id={KEY + ".overskrift"} />
                     </Innholdstittel>
                     <Normaltekst className="blokk-xxs avbrytmodal__tekst">
-                        <FormattedMessage id={KEY + ".tekst"}/>
+                        <FormattedMessage id={KEY + ".tekst"} />
                     </Normaltekst>
                 </div>
             </NavFrontendModal>
@@ -49,8 +49,10 @@ class SoknadAlleredeSendtPromt extends React.Component<Props, {}> {
     }
 }
 
-export default connect((state: State, props: any): StateProps => {
-    return {
-        visPrompt: state.ettersendelse.visSoknadAlleredeSendtPromt
-    };
-})(injectIntl(SoknadAlleredeSendtPromt));
+export default connect(
+    (state: State, props: any): StateProps => {
+        return {
+            visPrompt: state.ettersendelse.visSoknadAlleredeSendtPromt,
+        };
+    }
+)(injectIntl(SoknadAlleredeSendtPromt));

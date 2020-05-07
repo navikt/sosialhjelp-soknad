@@ -19,12 +19,12 @@ export const valideringsReducer = (
         case ValideringActionTypeKeys.VIS_VALIDERINGSFEIL_PANEL:
             return {
                 ...state,
-                visValideringsfeil: true
+                visValideringsfeil: true,
             };
         case ValideringActionTypeKeys.SKJUL_VALIDERINGSFEIL_PANEL:
             return {
                 ...state,
-                visValideringsfeil: false
+                visValideringsfeil: false,
             };
         case ValideringActionTypeKeys.SET_VALIDERINGSFEIL: {
             const previousFeil: Valideringsfeil[] = state.feil;
@@ -36,9 +36,10 @@ export const valideringsReducer = (
                 nyFeilSomSkalRegistreres.faktumKey !== "" &&
                 nyFeilSomSkalRegistreres.feilkode
             ) {
-                const feilAlledeRegistrert: Valideringsfeil | undefined = previousFeil.find((f) =>
-                    f.faktumKey === nyFeilSomSkalRegistreres.faktumKey &&
-                    f.feilkode === nyFeilSomSkalRegistreres.feilkode
+                const feilAlledeRegistrert: Valideringsfeil | undefined = previousFeil.find(
+                    (f) =>
+                        f.faktumKey === nyFeilSomSkalRegistreres.faktumKey &&
+                        f.feilkode === nyFeilSomSkalRegistreres.feilkode
                 );
                 if (feilAlledeRegistrert === undefined) {
                     feilUpdated.push(nyFeilSomSkalRegistreres);
@@ -57,14 +58,14 @@ export const valideringsReducer = (
             return {
                 ...state,
                 feil: feilUpdated,
-                visValideringsfeil: feilUpdated.length === 0 ? false : state.visValideringsfeil
+                visValideringsfeil: feilUpdated.length === 0 ? false : state.visValideringsfeil,
             };
         }
         case ValideringActionTypeKeys.CLEAR_ALL_VALIDERINGSFEIL: {
             return {
                 ...state,
                 feil: [],
-            }
+            };
         }
         default:
             return state;

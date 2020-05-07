@@ -1,4 +1,4 @@
-import * as Enzyme from 'enzyme';
+import * as Enzyme from "enzyme";
 import {IntlProvider} from "react-intl";
 import {ReactElement} from "react";
 import * as React from "react";
@@ -15,7 +15,7 @@ import {Provider} from "react-redux";
 import ReactSixteenAdapter from "enzyme-adapter-react-16";
 import {routerMiddleware} from "connected-react-router";
 import {SoknadState} from "../../digisos/redux/soknad/soknadTypes";
-import { createIntl } from "react-intl";
+import {createIntl} from "react-intl";
 
 const prettier = require("prettier");
 
@@ -24,12 +24,10 @@ export const configEnzyme = () => {
 };
 
 export const setupReactIntl = (intlMessages: any) => {
-    const intl = createIntl(
-        {
-            locale: 'nb-NO',
-            messages: intlMessages
-        }
-    );
+    const intl = createIntl({
+        locale: "nb-NO",
+        messages: intlMessages,
+    });
     const nodeWithIntlProp = (node: ReactElement<any>) => React.cloneElement(node, {intl});
     // @ts-ignore
     const mountWithIntl = (node: ReactElement<any>, {context, ...options} = {}) => {
@@ -37,20 +35,18 @@ export const setupReactIntl = (intlMessages: any) => {
             ...options,
             context: {
                 ...context,
-                intl
-            }
+                intl,
+            },
         });
     };
     return mountWithIntl;
 };
 
 export const setupShallowReactIntl = (intlMessages: any) => {
-    const intl = createIntl(
-        {
-            locale: 'nb-NO',
-            messages: intlMessages
-        }
-    );
+    const intl = createIntl({
+        locale: "nb-NO",
+        messages: intlMessages,
+    });
     const nodeWithIntlProp = (node: ReactElement<any>) => React.cloneElement(node, {intl});
     // @ts-ignore
     const shallowWithIntl = (node: ReactElement<any>, {context, ...options} = {}) => {
@@ -58,8 +54,8 @@ export const setupShallowReactIntl = (intlMessages: any) => {
             ...options,
             context: {
                 ...context,
-                intl
-            }
+                intl,
+            },
         });
     };
     return shallowWithIntl;
@@ -90,8 +86,10 @@ export const createMockIntl = (messages: any) => {
     return intl;
 };
 
-export const TestContext: React.FunctionComponent<{ messages: any, children: React.ReactChild }> = ({messages, children}) => {
-
+export const TestContext: React.FunctionComponent<{messages: any; children: React.ReactChild}> = ({
+    messages,
+    children,
+}) => {
     const history = createHistory({
         getUserConfirmation: (msg: any, callback: (flag: boolean) => void) => {
             // @ts-ignore
@@ -103,7 +101,7 @@ export const TestContext: React.FunctionComponent<{ messages: any, children: Rea
                 callback(true);
             }
         },
-        basename: "/"
+        basename: "/",
     });
 
     const devtools: any = (f: any) => f;

@@ -9,18 +9,11 @@ import {
     INNSYN_CONTEXT_PATH,
 } from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
-import {
-    NavLogEntry,
-    NavLogLevel,
-} from "../../digisos/redux/navlogger/navloggerTypes";
+import {NavLogEntry, NavLogLevel} from "../../digisos/redux/navlogger/navloggerTypes";
 
 export function erDev(): boolean {
     const url = window.location.href;
-    return (
-        url.indexOf("localhost") >= 0 ||
-        url.indexOf("devillo.no:3000") >= 0 ||
-        url.indexOf("localhost:8080") >= 0
-    );
+    return url.indexOf("localhost") >= 0 || url.indexOf("devillo.no:3000") >= 0 || url.indexOf("localhost:8080") >= 0;
 }
 
 export function erQ(): boolean {
@@ -34,9 +27,7 @@ export function kjorerJetty(): boolean {
 }
 
 export function getApiBaseUrl(withAccessToken?: boolean): string {
-    const apiContextPath = withAccessToken
-        ? API_CONTEXT_PATH_WITH_ACCESS_TOKEN
-        : API_CONTEXT_PATH;
+    const apiContextPath = withAccessToken ? API_CONTEXT_PATH_WITH_ACCESS_TOKEN : API_CONTEXT_PATH;
 
     if (erDev()) {
         // Kjør mot lokal sosialhjelp-soknad-api:
@@ -47,26 +38,13 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
         // return `http://localhost:${apiPort}/${apiContextPath}/`;
     }
     if (window.location.origin.indexOf("nais.oera") >= 0) {
-        return (
-            window.location.origin.replace(
-                `${CONTEXT_PATH}`,
-                `${API_CONTEXT_PATH}`
-            ) + `/${apiContextPath}/`
-        );
+        return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${apiContextPath}/`;
     }
-    if (
-        window.location.origin.indexOf("dev-nav.no") >= 0 ||
-        window.location.origin.indexOf("labs.nais.io") >= 0
-    ) {
+    if (window.location.origin.indexOf("dev-nav.no") >= 0 || window.location.origin.indexOf("labs.nais.io") >= 0) {
         if (window.location.origin.indexOf("digisos.labs.nais.io") >= 0) {
             return getAbsoluteApiUrl(withAccessToken);
         }
-        return (
-            window.location.origin.replace(
-                `${GCP_APP_NAME}`,
-                `${GCP_API_APP_NAME}`
-            ) + `/${API_CONTEXT_PATH}/`
-        );
+        return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
     }
     if (kjorerJetty()) {
         return `http://127.0.0.1:7000/${apiContextPath}/`;
@@ -87,19 +65,14 @@ export function getAbsoluteApiUrl(withAccessToken?: boolean) {
     return getAbsoluteApiUrlRegex(window.location.pathname, withAccessToken);
 }
 
-export function getAbsoluteApiUrlRegex(
-    pathname: string,
-    withAccessToken?: boolean
-) {
+export function getAbsoluteApiUrlRegex(pathname: string, withAccessToken?: boolean) {
     return withAccessToken
         ? pathname.replace(/^(.+sosialhjelp\/)(.+)$/, "$1login-api/soknad-api/")
         : pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/");
 }
 
 function determineCredentialsParameter() {
-    return window.location.origin.indexOf("nais.oera") || erDev()
-        ? "include"
-        : "same-origin";
+    return window.location.origin.indexOf("nais.oera") || erDev() ? "include" : "same-origin";
 }
 
 export function getRedirectPath(): string {
@@ -187,13 +160,7 @@ export const serverRequest = (
                         throw new Error(response.statusText);
                     }
                     setTimeout(() => {
-                        serverRequest(
-                            method,
-                            urlPath,
-                            body,
-                            withAccessToken,
-                            retries - 1
-                        )
+                        serverRequest(method, urlPath, body, withAccessToken, retries - 1)
                             .then((data: any) => {
                                 resolve(data);
                             })
@@ -213,19 +180,11 @@ export function fetchToJson(urlPath: string, withAccessToken?: boolean) {
     return serverRequest(RequestMethod.GET, urlPath, "", withAccessToken);
 }
 
-export function fetchPut(
-    urlPath: string,
-    body: string,
-    withAccessToken?: boolean
-) {
+export function fetchPut(urlPath: string, body: string, withAccessToken?: boolean) {
     return serverRequest(RequestMethod.PUT, urlPath, body, withAccessToken);
 }
 
-export function fetchPost(
-    urlPath: string,
-    body: string,
-    withAccessToken?: boolean
-) {
+export function fetchPost(urlPath: string, body: string, withAccessToken?: boolean) {
     return serverRequest(RequestMethod.POST, urlPath, body, withAccessToken);
 }
 
@@ -235,12 +194,10 @@ export function fetchDelete(urlPath: string) {
         method: RequestMethod.DELETE,
         credentials: determineCredentialsParameter(),
     };
-    return fetch(getApiBaseUrl() + urlPath, OPTIONS).then(
-        (response: Response) => {
-            verifyStatusSuccessOrRedirect(response);
-            return response.text();
-        }
-    );
+    return fetch(getApiBaseUrl() + urlPath, OPTIONS).then((response: Response) => {
+        verifyStatusSuccessOrRedirect(response);
+        return response.text();
+    });
 }
 
 export function fetchOppsummering(urlPath: string) {
@@ -249,12 +206,10 @@ export function fetchOppsummering(urlPath: string) {
         method: "GET",
         credentials: determineCredentialsParameter(),
     };
-    return fetch(getApiBaseUrl(true) + urlPath, OPTIONS).then(
-        (response: Response) => {
-            verifyStatusSuccessOrRedirect(response);
-            return response.text();
-        }
-    );
+    return fetch(getApiBaseUrl(true) + urlPath, OPTIONS).then((response: Response) => {
+        verifyStatusSuccessOrRedirect(response);
+        return response.text();
+    });
 }
 
 export function fetchKvittering(urlPath: string) {
@@ -269,12 +224,10 @@ export function fetchKvittering(urlPath: string) {
         method: "GET",
         credentials: determineCredentialsParameter(),
     };
-    return fetch(getApiBaseUrl() + urlPath, OPTIONS).then(
-        (response: Response) => {
-            verifyStatusSuccessOrRedirect(response);
-            return response.json();
-        }
-    );
+    return fetch(getApiBaseUrl() + urlPath, OPTIONS).then((response: Response) => {
+        verifyStatusSuccessOrRedirect(response);
+        return response.json();
+    });
 }
 
 export function fetchFeatureToggles() {
@@ -283,12 +236,10 @@ export function fetchFeatureToggles() {
         method: "GET",
         credentials: determineCredentialsParameter(),
     };
-    return fetch(getServletBaseUrl() + "api/feature", OPTIONS).then(
-        (response: Response) => {
-            verifyStatusSuccessOrRedirect(response);
-            return response.json();
-        }
-    );
+    return fetch(getServletBaseUrl() + "api/feature", OPTIONS).then((response: Response) => {
+        verifyStatusSuccessOrRedirect(response);
+        return response.json();
+    });
 }
 
 // FIXME: KANSKJE JEG KAN BRUKE DENNE SENRE.
@@ -297,7 +248,7 @@ export function fetchFeatureToggles() {
 //     return response.json();
 // };
 
-let generateUploadOptions = function(formData: FormData) {
+let generateUploadOptions = function (formData: FormData, method: string) {
     //let path = window.location.href.split("/");
     //let behandlingsId = path[path.length-2];
     const UPLOAD_OPTIONS: RequestInit = {
@@ -305,7 +256,7 @@ let generateUploadOptions = function(formData: FormData) {
             "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
             accept: "application/json, text/plain, */*",
         }),
-        method: "POST",
+        method: method,
         credentials: determineCredentialsParameter(),
         body: formData,
     };
@@ -313,20 +264,14 @@ let generateUploadOptions = function(formData: FormData) {
 };
 
 export function fetchUpload(urlPath: string, formData: FormData) {
-    return fetch(
-        getApiBaseUrl() + urlPath,
-        generateUploadOptions(formData)
-    ).then(response => {
+    return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData, "POST")).then((response) => {
         verifyStatusSuccessOrRedirect(response);
         return toJson(response);
     });
 }
 
-export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData) {
-    return fetch(
-        getApiBaseUrl() + urlPath,
-        generateUploadOptions(formData)
-    ).then(toJson);
+export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData, method: string) {
+    return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData, method)).then(toJson);
 }
 
 export function toJson<T>(response: Response): Promise<T> {
@@ -338,11 +283,8 @@ export function toJson<T>(response: Response): Promise<T> {
 
 function verifyStatusSuccessOrRedirect(response: Response): number {
     if (response.status === 401) {
-        response.json().then(r => {
-            const createLogEntry = (
-                message: string,
-                level: NavLogLevel
-            ): NavLogEntry => {
+        response.json().then((r) => {
+            const createLogEntry = (message: string, level: NavLogLevel): NavLogEntry => {
                 return {
                     url: window.location.href,
                     userAgent: window.navigator.userAgent,
@@ -353,12 +295,7 @@ function verifyStatusSuccessOrRedirect(response: Response): number {
 
             if (window.location.search.split("login_id=")[1] !== r.id) {
                 const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
-                window.location.href =
-                    r.loginUrl +
-                    queryDivider +
-                    getRedirectPath() +
-                    "%26login_id=" +
-                    r.id;
+                window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "%26login_id=" + r.id;
             } else {
                 let loggPayload = createLogEntry(
                     "Fetch ga 401-error-id selv om kallet ble sendt fra URL med samme login_id (" +
@@ -366,10 +303,7 @@ function verifyStatusSuccessOrRedirect(response: Response): number {
                         "). Dette kan komme av en påloggingsloop (UNAUTHORIZED_LOOP_ERROR).",
                     NavLogLevel.ERROR
                 );
-                fetchPost(
-                    "informasjon/actions/logg",
-                    JSON.stringify(loggPayload)
-                ).finally();
+                fetchPost("informasjon/actions/logg", JSON.stringify(loggPayload)).finally();
             }
         });
         throw new Error(HttpStatus.UNAUTHORIZED);
@@ -399,7 +333,13 @@ export function getCookie(name: string) {
 export function detekterInternFeilKode(feilKode: string): string {
     let internFeilKode = feilKode;
     if (feilKode.match(/Request Entity Too Large/i)) {
-        internFeilKode = REST_FEIL.FOR_STOR_FIL;
+        if (feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR) {
+            internFeilKode = REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR;
+        } else if (feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE) {
+            internFeilKode = REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE;
+        } else {
+            internFeilKode = REST_FEIL.FOR_STOR_FIL;
+        }
     }
     if (feilKode.match(/Unsupp?orted Media Type/i)) {
         internFeilKode = REST_FEIL.FEIL_FILTPYE;
@@ -407,14 +347,9 @@ export function detekterInternFeilKode(feilKode: string): string {
     return internFeilKode;
 }
 
-export function lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(
-    brukerbehandlingId: string
-) {
+export function lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(brukerbehandlingId: string) {
     if (erMockMiljoEllerDev()) {
-        const url =
-            getApiBaseUrl() +
-            "internal/mock/tjeneste/downloadzip/" +
-            brukerbehandlingId;
+        const url = getApiBaseUrl() + "internal/mock/tjeneste/downloadzip/" + brukerbehandlingId;
         window.open(url);
     }
 }

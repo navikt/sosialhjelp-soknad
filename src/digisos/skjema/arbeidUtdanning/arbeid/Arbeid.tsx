@@ -1,9 +1,7 @@
 import * as React from "react";
 import {FormattedMessage, injectIntl, useIntl} from "react-intl";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
-import Sporsmal, {
-    SporsmalStyle,
-} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {SporsmalStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import ArbeidDetaljer from "./ArbeidDetaljer";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
@@ -12,10 +10,7 @@ import {
     connectSoknadsdataContainer,
     onEndretValideringsfeil,
 } from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import {
-    SoknadsSti,
-    oppdaterSoknadsdataSti,
-} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {Arbeidsforhold} from "./arbeidTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
@@ -23,14 +18,8 @@ import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
-import {
-    lagreSoknadsdata,
-    hentSoknadsdata,
-} from "../../../redux/soknadsdata/soknadsdataActions";
-import {
-    setValideringsfeil,
-    clearValideringsfeil,
-} from "../../../redux/validering/valideringActions";
+import {lagreSoknadsdata, hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {setValideringsfeil, clearValideringsfeil} from "../../../redux/validering/valideringActions";
 
 const MAX_CHARS = 500;
 const FAKTUM_KEY_KOMMENTARER = "opplysninger.arbeidsituasjon.kommentarer";
@@ -38,9 +27,7 @@ const FAKTUM_KEY_KOMMENTARER = "opplysninger.arbeidsituasjon.kommentarer";
 const ArbeidView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
 
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const feil = useSelector((state: State) => state.validering.feil);
 
@@ -77,20 +64,12 @@ const ArbeidView = () => {
             FAKTUM_KEY_KOMMENTARER
         );
         if (!feilkode && behandlingsId) {
-            dispatch(
-                lagreSoknadsdata(behandlingsId, SoknadsSti.ARBEID, arbeid)
-            );
+            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.ARBEID, arbeid));
         }
     };
 
-    const validerTekstfeltVerdi = (
-        verdi: string,
-        faktumKey: string
-    ): ValideringsFeilKode | undefined => {
-        const feilkode: ValideringsFeilKode | undefined = maksLengde(
-            verdi,
-            MAX_CHARS
-        );
+    const validerTekstfeltVerdi = (verdi: string, faktumKey: string): ValideringsFeilKode | undefined => {
+        const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
         onEndretValideringsfeil(feilkode, faktumKey, feil, () => {
             if (feilkode) {
                 dispatch(setValideringsfeil(feilkode, faktumKey));
@@ -128,34 +107,23 @@ const ArbeidView = () => {
         );
     }
     return (
-        <Sporsmal
-            tekster={getFaktumSporsmalTekst(intl, "arbeidsforhold")}
-            stil="system"
-        >
+        <Sporsmal tekster={getFaktumSporsmalTekst(intl, "arbeidsforhold")} stil="system">
             <SysteminfoMedSkjema>
                 <div>
                     <FormattedMessage id="arbeidsforhold.infotekst" />
                 </div>
-                {(alleArbeidsforhold == null ||
-                    alleArbeidsforhold.length === 0) && (
+                {(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (
                     <p>
                         <FormattedMessage id="arbeidsforhold.ingen" />
                     </p>
                 )}
                 {alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
                     <ul className={"arbeidsgiverliste"}>
-                        {alleArbeidsforhold.map(
-                            (arbeidsforhold: Arbeidsforhold, index: any) => (
-                                <li
-                                    key={index}
-                                    className="arbeidsgiverliste__arbeidsgiver"
-                                >
-                                    <ArbeidDetaljer
-                                        arbeidsforhold={arbeidsforhold}
-                                    />
-                                </li>
-                            )
-                        )}
+                        {alleArbeidsforhold.map((arbeidsforhold: Arbeidsforhold, index: any) => (
+                            <li key={index} className="arbeidsgiverliste__arbeidsgiver">
+                                <ArbeidDetaljer arbeidsforhold={arbeidsforhold} />
+                            </li>
+                        ))}
                     </ul>
                 )}
                 <TextareaEnhanced
@@ -167,11 +135,7 @@ const ArbeidView = () => {
                     onBlur={() => lagreHvisGyldig()}
                     faktumKey={FAKTUM_KEY_KOMMENTARER}
                     maxLength={MAX_CHARS}
-                    value={
-                        kommentarTilArbeidsforhold
-                            ? kommentarTilArbeidsforhold
-                            : ""
-                    }
+                    value={kommentarTilArbeidsforhold ? kommentarTilArbeidsforhold : ""}
                 />
             </SysteminfoMedSkjema>
         </Sporsmal>

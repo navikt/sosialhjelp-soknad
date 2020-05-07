@@ -11,36 +11,28 @@ import {loggFeil} from "../navlogger/navloggerActions";
 import {fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {showServerFeil} from "../soknad/soknadActions";
 
-export const gotDataFromBackend = (
-    response: OpplysningerBackend
-): OpplysningerAction => {
+export const gotDataFromBackend = (response: OpplysningerBackend): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND,
         backendData: response,
     };
 };
 
-export const updateOpplysning = (
-    opplysning: Opplysning
-): OpplysningerAction => {
+export const updateOpplysning = (opplysning: Opplysning): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.OPPDATER_OPPLYSNING,
         opplysning,
     };
 };
 
-export const settFilOpplastingPending = (
-    opplysningType: OpplysningType
-): OpplysningerAction => {
+export const settFilOpplastingPending = (opplysningType: OpplysningType): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_PENDING,
         opplysningType,
     };
 };
 
-export const settFilOpplastingFerdig = (
-    opplysningType: OpplysningType
-): OpplysningerAction => {
+export const settFilOpplastingFerdig = (opplysningType: OpplysningType): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_FERDIG,
         opplysningType,
@@ -57,11 +49,7 @@ export function hentOpplysninger(behandlingsId: string) {
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
                     return;
                 }
-                dispatch(
-                    loggFeil(
-                        "Henting av økonomiske opplysninger feilet: " + reason
-                    )
-                );
+                dispatch(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));
                 dispatch(showServerFeil(true));
             });
     };

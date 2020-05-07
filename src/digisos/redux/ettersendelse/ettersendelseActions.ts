@@ -1,17 +1,24 @@
 import {
     EttersendelseActionTypeKeys,
-    EttersendelseActionTypes, EttersendelseVedleggBackend,
-    LastOppEttersendtVedleggAction, SlettEttersendtVedleggAction, SlettEttersendtVedleggOkAction
+    EttersendelseActionTypes,
+    EttersendelseVedleggBackend,
+    LastOppEttersendtVedleggAction,
+    SlettEttersendtVedleggAction,
+    SlettEttersendtVedleggOkAction,
 } from "./ettersendelseTypes";
 import {detekterInternFeilKode} from "../../../nav-soknad/utils/rest-utils";
 import {Fil, OpplysningType} from "../okonomiskeOpplysninger/opplysningerTypes";
 
-const slettEttersendtVedlegg = (behandlingsId: string, filUuid: string, opplysningType: OpplysningType): SlettEttersendtVedleggAction => {
+const slettEttersendtVedlegg = (
+    behandlingsId: string,
+    filUuid: string,
+    opplysningType: OpplysningType
+): SlettEttersendtVedleggAction => {
     return {
         type: EttersendelseActionTypeKeys.SLETT_VEDLEGG,
         behandlingsId,
         filUuid,
-        opplysningType
+        opplysningType,
     };
 };
 
@@ -19,21 +26,21 @@ const slettEttersendtVedleggOk = (filUuid: string, opplysningType: OpplysningTyp
     return {
         type: EttersendelseActionTypeKeys.SLETT_VEDLEGG_OK,
         filUuid,
-        opplysningType
+        opplysningType,
     };
 };
 
 const opprettEttersendelse = (brukerbehandlingId: string): EttersendelseActionTypes => {
     return {
         type: EttersendelseActionTypeKeys.NY,
-        brukerbehandlingId
+        brukerbehandlingId,
     };
 };
 
 const opprettEttersendelseFeilet = (brukerbehandlingId: string): EttersendelseActionTypes => {
     return {
         type: EttersendelseActionTypeKeys.NY_FEILET,
-        brukerbehandlingId
+        brukerbehandlingId,
     };
 };
 
@@ -46,20 +53,20 @@ const lastOppEttersendelseVedlegg = (
         type: EttersendelseActionTypeKeys.LAST_OPP,
         behandlingsId,
         opplysningType,
-        formData
+        formData,
     };
 };
 
 const lagEttersendelseOk = (brukerbehandlingId: string): EttersendelseActionTypes => {
     return {
         type: EttersendelseActionTypeKeys.NY_OK,
-        brukerbehandlingId
+        brukerbehandlingId,
     };
 };
 
 const lastOppEttersendtVedleggOk = (): EttersendelseActionTypes => {
     return {
-        type: EttersendelseActionTypeKeys.LAST_OPP_OK
+        type: EttersendelseActionTypeKeys.LAST_OPP_OK,
     };
 };
 
@@ -68,14 +75,14 @@ const lastOppEttersendelseFeilet = (feilKode: string, vedleggId: string): Etters
     return {
         type: EttersendelseActionTypeKeys.LAST_OPP_FEILET,
         feilKode: internFeilKode,
-        vedleggId
+        vedleggId,
     };
 };
 
 const lesEttersendteVedlegg = (manglendeVedleggsListe: EttersendelseVedleggBackend[]) => {
     return {
         type: EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG_OK,
-        manglendeVedleggsListe
+        manglendeVedleggsListe,
     };
 };
 
@@ -83,43 +90,43 @@ const filLastetOpp = (opplysningType: OpplysningType, fil: Fil) => {
     return {
         type: EttersendelseActionTypeKeys.FIL_OPPLASTING_OK,
         opplysningType,
-        fil
+        fil,
     };
 };
 
 const lesEttersendelsesVedlegg = (brukerbehandlingId: string): EttersendelseActionTypes => {
     return {
         type: EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG,
-        brukerbehandlingId
+        brukerbehandlingId,
     };
 };
 
 const sendEttersendelse = (brukerbehandlingId: string): EttersendelseActionTypes => {
     return {
         type: EttersendelseActionTypeKeys.SEND,
-        brukerbehandlingId
+        brukerbehandlingId,
     };
 };
 
 const lesEttersendelser = (brukerbehandlingId: string): EttersendelseActionTypes => {
     return {
         type: EttersendelseActionTypeKeys.LES_ETTERSENDELSER,
-        brukerbehandlingId
+        brukerbehandlingId,
     };
 };
 
 const settEttersendelser = (ettersendelser: any) => {
     return {
         type: EttersendelseActionTypeKeys.LES_ETTERSENDELSER_OK,
-        ettersendelser
+        ettersendelser,
     };
 };
 
 const visSoknadAlleredeSendtPrompt = (visPrompt: boolean): EttersendelseActionTypes => {
     return {
         type: EttersendelseActionTypeKeys.VIS_SOKNAD_ALLEREDE_SENDT_PROMPT,
-        visPrompt
-    }
+        visPrompt,
+    };
 };
 
 export {
@@ -137,5 +144,5 @@ export {
     settEttersendelser,
     filLastetOpp,
     slettEttersendtVedleggOk,
-    visSoknadAlleredeSendtPrompt
+    visSoknadAlleredeSendtPrompt,
 };

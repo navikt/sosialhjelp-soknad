@@ -16,9 +16,7 @@ const DinSivilstatusView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
     const dispatch = useDispatch();
 
@@ -49,11 +47,7 @@ const DinSivilstatusView = () => {
             </div>
         );
     }
-    if (
-        sivilstatus &&
-        sivilstatus.sivilstatus === Status.GIFT &&
-        sivilstatus.kildeErSystem === true
-    ) {
+    if (sivilstatus && sivilstatus.sivilstatus === Status.GIFT && sivilstatus.kildeErSystem === true) {
         return <EktefelleDetaljer />;
     } else {
         return <SivilstatusComponent />;

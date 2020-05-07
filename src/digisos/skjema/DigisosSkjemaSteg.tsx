@@ -67,16 +67,8 @@ export const digisosSkjemaConfig: SkjemaConfig = {
     ],
 };
 
-const DigisosSkjemaSteg = (props: {
-    steg: string;
-    ikon?: React.ReactNode;
-    children: any;
-}) => (
-    <StegMedNavigasjon
-        skjemaConfig={digisosSkjemaConfig}
-        stegKey={props.steg}
-        ikon={props.ikon}
-    >
+const DigisosSkjemaSteg = (props: {steg: string; ikon?: React.ReactNode; children: any}) => (
+    <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} stegKey={props.steg} ikon={props.ikon}>
         {props.children}
     </StegMedNavigasjon>
 );

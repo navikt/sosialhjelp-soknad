@@ -5,10 +5,7 @@ import ForsorgerPlikt from "./forsorgerplikt/ForsorgerPlikt";
 import DinSivilstatus from "./sivilstatus/DinSivilstatus";
 
 const Familie = () => (
-    <DigisosSkjemaSteg
-        steg={DigisosSteg.familiebolk}
-        ikon={<FamilieIllustrasjon />}
-    >
+    <DigisosSkjemaSteg steg={DigisosSteg.familiebolk} ikon={<FamilieIllustrasjon />}>
         <DinSivilstatus />
         <ForsorgerPlikt />
     </DigisosSkjemaSteg>

@@ -3,28 +3,18 @@ import {useSelector, useDispatch} from "react-redux";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import {useIntl} from "react-intl";
 
-import Sporsmal, {
-    LegendTittleStyle,
-} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
-import {
-    SoknadsSti,
-    oppdaterSoknadsdataSti,
-} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {State} from "../../../redux/reducers";
-import {
-    hentSoknadsdata,
-    lagreSoknadsdata,
-} from "../../../redux/soknadsdata/soknadsdataActions";
+import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 
 const FAKTUM_STUDIER = "dinsituasjon.studerer";
 const FAKTUM_STUDERER = "dinsituasjon.studerer.true.grad";
 
 const UtdanningView = () => {
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
 
     const dispatch = useDispatch();
@@ -42,9 +32,7 @@ const UtdanningView = () => {
             const utdanning = soknadsdata.utdanning;
             utdanning.erStudent = verdi;
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning));
-            dispatch(
-                lagreSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, utdanning)
-            );
+            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, utdanning));
         }
     };
 
@@ -53,9 +41,7 @@ const UtdanningView = () => {
             const utdanning = soknadsdata.utdanning;
             utdanning.studengradErHeltid = verdi;
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning));
-            dispatch(
-                lagreSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, utdanning)
-            );
+            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, utdanning));
         }
     };
 
@@ -75,10 +61,7 @@ const UtdanningView = () => {
                     id="studerer_radio_heltid"
                     faktumKey={FAKTUM_STUDERER}
                     value="heltid"
-                    checked={
-                        studengradErHeltid !== null &&
-                        studengradErHeltid === true
-                    }
+                    checked={studengradErHeltid !== null && studengradErHeltid === true}
                     onChange={() => handleClickHeltidDeltid(true)}
                 />
                 <RadioEnhanced
@@ -86,10 +69,7 @@ const UtdanningView = () => {
                     id="studerer_radio_deltid"
                     faktumKey={FAKTUM_STUDERER}
                     value="deltid"
-                    checked={
-                        studengradErHeltid !== null &&
-                        studengradErHeltid === false
-                    }
+                    checked={studengradErHeltid !== null && studengradErHeltid === false}
                     onChange={() => handleClickHeltidDeltid(false)}
                 />
             </Sporsmal>

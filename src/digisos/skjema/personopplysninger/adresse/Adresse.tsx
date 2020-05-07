@@ -1,39 +1,24 @@
 import {FormattedHTMLMessage, FormattedMessage, useIntl} from "react-intl";
 import * as React from "react";
-import {
-    SoknadsSti,
-    oppdaterSoknadsdataSti,
-} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
-import Sporsmal, {
-    LegendTittleStyle,
-} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import AdresseDetaljer from "./AdresseDetaljer";
-import {
-    AdresseKategori,
-    AdressesokTreff,
-    Gateadresse,
-    NavEnhet,
-} from "./AdresseTypes";
+import {AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet} from "./AdresseTypes";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 import SoknadsmottakerVelger from "./SoknadsmottakerVelger";
 import {formaterSoknadsadresse} from "./AdresseUtils";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import AdresseTypeahead from "./AdresseTypeahead";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
-import Detaljeliste, {
-    DetaljelisteElement,
-} from "../../../../nav-soknad/components/detaljeliste";
+import Detaljeliste, {DetaljelisteElement} from "../../../../nav-soknad/components/detaljeliste";
 import {Valideringsfeil} from "../../../redux/reduxTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
-import {
-    hentSoknadsdata,
-    lagreSoknadsdata,
-} from "../../../redux/soknadsdata/soknadsdataActions";
+import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
 
 const FAKTUM_KEY = "soknadsmottaker";
@@ -45,9 +30,7 @@ const AdresseView = () => {
     const dispatch = useDispatch();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const feil = useSelector((state: State) => state.validering.feil);
 
     const intl = useIntl();
@@ -57,9 +40,7 @@ const AdresseView = () => {
             const restStatus: REST_STATUS = adresserStatus;
             if (restStatus === REST_STATUS.INITIALISERT) {
                 dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.ADRESSER));
-                dispatch(
-                    hentSoknadsdata(behandlingsId, SoknadsSti.VALGT_NAV_ENHET)
-                );
+                dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.VALGT_NAV_ENHET));
             }
         }
     }, [behandlingsId, dispatch, adresserStatus]);
@@ -71,35 +52,25 @@ const AdresseView = () => {
     }, [adresserStatus, oppstartsModus]);
 
     const onClickRadio = (adresseKategori: AdresseKategori) => {
-        const restStatus: REST_STATUS =
-            soknadsdata.restStatus.personalia.adresser;
-        if (
-            restStatus === REST_STATUS.INITIALISERT ||
-            restStatus === REST_STATUS.PENDING
-        ) {
+        const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
+        if (restStatus === REST_STATUS.INITIALISERT || restStatus === REST_STATUS.PENDING) {
             return;
         }
         const adresser = soknadsdata.personalia.adresser;
         const tidligereValg = adresser.valg;
         adresser.valg = adresseKategori;
         dispatch(oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser));
-        if (
-            adresseKategori !== tidligereValg
-        ) {
+        if (adresseKategori !== tidligereValg) {
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, []));
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, null));
-            if (
-                adresseKategori === AdresseKategori.SOKNAD
-            ) {
+            if (adresseKategori === AdresseKategori.SOKNAD) {
                 const soknad: any = {
                     type: "gateadresse",
                     gateadresse: null,
                     matrikkeladresse: null,
                     ustrukturert: null,
                 };
-                dispatch(
-                    oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad)
-                );
+                dispatch(oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad));
             } else {
                 lagreAdresseValg(adresser, adresseKategori);
             }
@@ -110,48 +81,22 @@ const AdresseView = () => {
         if (behandlingsId) {
             setAdressePending(true);
             dispatch(
-                lagreSoknadsdata(
-                    behandlingsId,
-                    SoknadsSti.ADRESSER,
-                    payload,
-                    (navEnheter: NavEnhet[]) => {
-                        if (Array.isArray(navEnheter)) {
-                            if (navEnheter.length === 1) {
-                                const valgtNavEnhet: NavEnhet = navEnheter[0];
-                                valgtNavEnhet.valgt = true;
-                                dispatch(
-                                    lagreSoknadsdata(
-                                        behandlingsId,
-                                        SoknadsSti.NAV_ENHETER,
-                                        valgtNavEnhet
-                                    )
-                                );
-                                dispatch(
-                                    oppdaterSoknadsdataSti(
-                                        SoknadsSti.VALGT_NAV_ENHET,
-                                        valgtNavEnhet
-                                    )
-                                );
-                                slettEventuelleValideringsfeil();
-                            }
-                            dispatch(
-                                oppdaterSoknadsdataSti(
-                                    SoknadsSti.NAV_ENHETER,
-                                    navEnheter
-                                )
-                            );
-                            setAdressePending(false);
+                lagreSoknadsdata(behandlingsId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
+                    if (Array.isArray(navEnheter)) {
+                        if (navEnheter.length === 1) {
+                            const valgtNavEnhet: NavEnhet = navEnheter[0];
+                            valgtNavEnhet.valgt = true;
+                            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet));
+                            dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, valgtNavEnhet));
+                            slettEventuelleValideringsfeil();
                         }
-                        if (valg === AdresseKategori.MIDLERTIDIG) {
-                            dispatch(
-                                hentSoknadsdata(
-                                    behandlingsId,
-                                    SoknadsSti.ADRESSER
-                                )
-                            );
-                        }
+                        dispatch(oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter));
+                        setAdressePending(false);
                     }
-                )
+                    if (valg === AdresseKategori.MIDLERTIDIG) {
+                        dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.ADRESSER));
+                    }
+                })
             );
         }
     };
@@ -189,45 +134,32 @@ const AdresseView = () => {
                 matrikkeladresse: null,
                 ustrukturert: null,
             };
-            dispatch(
-                oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad)
-            );
+            dispatch(oppdaterSoknadsdataSti(SoknadsSti.ADRESSER + "/soknad", soknad));
         }
     };
 
     const onVelgSoknadsmottaker = (valgtNavEnhet: NavEnhet) => {
         if (behandlingsId) {
             valgtNavEnhet.valgt = true;
-            dispatch(lagreSoknadsdata(
-                behandlingsId,
-                SoknadsSti.NAV_ENHETER,
-                valgtNavEnhet
-            ));
+            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet));
 
             const navEnheter = soknadsdata.personalia.navEnheter;
             navEnheter.map((navEnhet: NavEnhet) => {
                 if (navEnhet.enhetsnavn === valgtNavEnhet.enhetsnavn) {
                     navEnhet.valgt = true;
-                    dispatch(oppdaterSoknadsdataSti(
-                        SoknadsSti.VALGT_NAV_ENHET,
-                        navEnhet
-                    ));
+                    dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, navEnhet));
                 } else {
                     navEnhet.valgt = false;
                 }
                 return navEnhet;
             });
-            dispatch(
-                oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter)
-            );
+            dispatch(oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter));
             slettEventuelleValideringsfeil();
         }
     };
 
     const slettEventuelleValideringsfeil = () => {
-        const feilkode = feil.find(
-            (f: Valideringsfeil) => f.faktumKey === FAKTUM_KEY
-        );
+        const feilkode = feil.find((f: Valideringsfeil) => f.faktumKey === FAKTUM_KEY);
         if (feilkode) {
             dispatch(clearValideringsfeil(FAKTUM_KEY));
         }
@@ -246,36 +178,18 @@ const AdresseView = () => {
     const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
     const adresser = soknadsdata.personalia.adresser;
     const navEnheter = soknadsdata.personalia.navEnheter;
-    const folkeregistrertAdresse =
-        adresser &&
-        adresser.folkeregistrert &&
-        adresser.folkeregistrert.gateadresse;
-    const midlertidigAdresse =
-        adresser &&
-        adresser.midlertidig &&
-        adresser.midlertidig.gateadresse;
-    const soknadAdresse: Gateadresse | null =
-        adresser && adresser.soknad && adresser.soknad.gateadresse;
+    const folkeregistrertAdresse = adresser && adresser.folkeregistrert && adresser.folkeregistrert.gateadresse;
+    const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
+    const soknadAdresse: Gateadresse | null = adresser && adresser.soknad && adresser.soknad.gateadresse;
     const formatertSoknadAdresse = formaterSoknadsadresse(soknadAdresse);
 
-    const matrikkelAdresse =
-        adresser &&
-        adresser.folkeregistrert &&
-        adresser.folkeregistrert.matrikkeladresse;
+    const matrikkelAdresse = adresser && adresser.folkeregistrert && adresser.folkeregistrert.matrikkeladresse;
     const gnrBnr: string =
-        (matrikkelAdresse && matrikkelAdresse.gaardsnummer
-            ? matrikkelAdresse.gaardsnummer
-            : "") +
-        (matrikkelAdresse && matrikkelAdresse.bruksnummer
-            ? " / " + matrikkelAdresse.bruksnummer
-            : "");
-    const matrikkelKommune: string | null =
-        matrikkelAdresse && matrikkelAdresse.kommunenummer;
+        (matrikkelAdresse && matrikkelAdresse.gaardsnummer ? matrikkelAdresse.gaardsnummer : "") +
+        (matrikkelAdresse && matrikkelAdresse.bruksnummer ? " / " + matrikkelAdresse.bruksnummer : "");
+    const matrikkelKommune: string | null = matrikkelAdresse && matrikkelAdresse.kommunenummer;
 
-    const midlertidigMatrikkelAdresse =
-        adresser &&
-        adresser.midlertidig &&
-        adresser.midlertidig.matrikkeladresse;
+    const midlertidigMatrikkelAdresse = adresser && adresser.midlertidig && adresser.midlertidig.matrikkeladresse;
     const midlertidigGnrBnr: string =
         (midlertidigMatrikkelAdresse && midlertidigMatrikkelAdresse.gaardsnummer
             ? midlertidigMatrikkelAdresse.gaardsnummer
@@ -292,23 +206,18 @@ const AdresseView = () => {
         setOppstartsModus(false);
     }
     if (oppstartsModus) {
-        folkeregistrertAdresseLabel = <TextPlaceholder lines={3}/>;
-        annenAdresseLabel = <TextPlaceholder lines={3}/>;
+        folkeregistrertAdresseLabel = <TextPlaceholder lines={3} />;
+        annenAdresseLabel = <TextPlaceholder lines={3} />;
     } else {
         folkeregistrertAdresseLabel = (
-            <div
-                id="folkeregistrertAdresse_data_loaded"
-                className="finnNavKontor__label"
-            >
-                <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
-                {folkeregistrertAdresse && (
-                    <AdresseDetaljer adresse={folkeregistrertAdresse}/>
-                )}
+            <div id="folkeregistrertAdresse_data_loaded" className="finnNavKontor__label">
+                <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse" />
+                {folkeregistrertAdresse && <AdresseDetaljer adresse={folkeregistrertAdresse} />}
             </div>
         );
         annenAdresseLabel = (
             <div className="finnNavKontor__label">
-                <FormattedMessage id="kontakt.system.oppholdsadresse.valg.soknad"/>
+                <FormattedMessage id="kontakt.system.oppholdsadresse.valg.soknad" />
             </div>
         );
     }
@@ -317,14 +226,11 @@ const AdresseView = () => {
     if (matrikkelAdresse) {
         matrikkelAdresseLabel = (
             <div className="finnNavKontor__label">
-                <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse"/>
+                <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse" />
                 <Detaljeliste>
+                    <DetaljelisteElement tittel={<FormattedMessage id="matrikkel.gnrbnr" />} verdi={gnrBnr} />
                     <DetaljelisteElement
-                        tittel={<FormattedMessage id="matrikkel.gnrbnr"/>}
-                        verdi={gnrBnr}
-                    />
-                    <DetaljelisteElement
-                        tittel={<FormattedMessage id="matrikkel.kommunenr"/>}
+                        tittel={<FormattedMessage id="matrikkel.kommunenr" />}
                         verdi={matrikkelKommune}
                     />
                 </Detaljeliste>
@@ -336,26 +242,24 @@ const AdresseView = () => {
     if (midlertidigAdresse) {
         midlertidigAdresseLabel = (
             <div className="finnNavKontor__label">
-                <FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse"/>
-                <AdresseDetaljer
-                    adresse={midlertidigAdresse}
-                />
+                <FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
+                <AdresseDetaljer adresse={midlertidigAdresse} />
             </div>
-        )
+        );
     }
 
     let midlertidigMatrikkelAdresseLabel = null;
     if (midlertidigMatrikkelAdresse) {
         midlertidigMatrikkelAdresseLabel = (
             <div className="finnNavKontor__label">
-                <FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse"/>
+                <FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
                 <Detaljeliste>
                     <DetaljelisteElement
-                        tittel={<FormattedMessage id="matrikkel.gnrbnr"/>}
+                        tittel={<FormattedMessage id="matrikkel.gnrbnr" />}
                         verdi={midlertidigGnrBnr}
                     />
                     <DetaljelisteElement
-                        tittel={<FormattedMessage id="matrikkel.kommunenr"/>}
+                        tittel={<FormattedMessage id="matrikkel.kommunenr" />}
                         verdi={midlertidigMatrikkelKommune}
                     />
                 </Detaljeliste>
@@ -363,36 +267,22 @@ const AdresseView = () => {
         );
     }
 
-    let soknadsmottakerVelger = (adresseKategori: AdresseKategori) =>
-        (
-            <SoknadsmottakerVelger
-                label={getIntlTextOrKey(
-                    intl,
-                    "kontakt.system.oppholdsadresse.velgKontor"
-                )}
-                navEnheter={navEnheter}
-                visible={
-                    adresser.valg === adresseKategori &&
-                    navEnheter.length > 1
-                }
-                onVelgSoknadsmottaker={(navEnhet: NavEnhet) =>
-                    onVelgSoknadsmottaker(navEnhet)
-                }
-            />
-        );
-
-    const feilkode: Valideringsfeil | undefined = feil.find(
-        (f: Valideringsfeil) => f.faktumKey === FAKTUM_KEY
+    let soknadsmottakerVelger = (adresseKategori: AdresseKategori) => (
+        <SoknadsmottakerVelger
+            label={getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.velgKontor")}
+            navEnheter={navEnheter}
+            visible={adresser.valg === adresseKategori && navEnheter.length > 1}
+            onVelgSoknadsmottaker={(navEnhet: NavEnhet) => onVelgSoknadsmottaker(navEnhet)}
+        />
     );
+
+    const feilkode: Valideringsfeil | undefined = feil.find((f: Valideringsfeil) => f.faktumKey === FAKTUM_KEY);
     const feilmelding = intl.formatMessage({
         id: "soknadsmottaker.feilmelding",
     });
 
     return (
-        <div
-            className="sosialhjelp-oppholdsadresse skjema-sporsmal"
-            id="soknadsmottaker"
-        >
+        <div className="sosialhjelp-oppholdsadresse skjema-sporsmal" id="soknadsmottaker">
             <Sporsmal
                 id="soknadsmottaker"
                 faktumKey={FAKTUM_KEY}
@@ -400,36 +290,29 @@ const AdresseView = () => {
                 sprakNokkel="soknadsmottaker"
                 feil={feilkode ? {feilmelding} : undefined}
             >
-
-                    <span>
-                        {(folkeregistrertAdresse || matrikkelAdresse) && (
-                            <RadioEnhanced
-                                id="oppholdsadresse_folkeregistrert"
-                                value="folkeregistrert"
-                                onChange={() =>
-                                    onClickRadio(AdresseKategori.FOLKEREGISTRERT)
-                                }
-                                checked={
-                                    adresser.valg === AdresseKategori.FOLKEREGISTRERT
-                                }
-                                label={folkeregistrertAdresse ? folkeregistrertAdresseLabel : matrikkelAdresseLabel}
-                            />
-                        )}
-                        {soknadsmottakerVelger(AdresseKategori.FOLKEREGISTRERT)}
-                    </span>
+                <span>
+                    {(folkeregistrertAdresse || matrikkelAdresse) && (
+                        <RadioEnhanced
+                            id="oppholdsadresse_folkeregistrert"
+                            value="folkeregistrert"
+                            onChange={() => onClickRadio(AdresseKategori.FOLKEREGISTRERT)}
+                            checked={adresser.valg === AdresseKategori.FOLKEREGISTRERT}
+                            label={folkeregistrertAdresse ? folkeregistrertAdresseLabel : matrikkelAdresseLabel}
+                        />
+                    )}
+                    {soknadsmottakerVelger(AdresseKategori.FOLKEREGISTRERT)}
+                </span>
 
                 {(midlertidigAdresse || midlertidigMatrikkelAdresse) && (
                     <span>
                         <RadioEnhanced
                             id="oppholdsadresse_midlertidig"
                             value="midlertidig"
-                            onChange={() =>
-                                onClickRadio(AdresseKategori.MIDLERTIDIG)
+                            onChange={() => onClickRadio(AdresseKategori.MIDLERTIDIG)}
+                            checked={adresser.valg === AdresseKategori.MIDLERTIDIG}
+                            label={
+                                midlertidigAdresse != null ? midlertidigAdresseLabel : midlertidigMatrikkelAdresseLabel
                             }
-                            checked={
-                                adresser.valg === AdresseKategori.MIDLERTIDIG
-                            }
-                            label={midlertidigAdresse != null ? midlertidigAdresseLabel : midlertidigMatrikkelAdresseLabel}
                         />
                         {soknadsmottakerVelger(AdresseKategori.MIDLERTIDIG)}
                     </span>
@@ -442,54 +325,38 @@ const AdresseView = () => {
                     label={annenAdresseLabel}
                 />
                 <div className="skjema-sporsmal--jaNeiSporsmal">
-                    <Underskjema
-                        visible={adresser.valg === AdresseKategori.SOKNAD}
-                    >
+                    <Underskjema visible={adresser.valg === AdresseKategori.SOKNAD}>
                         <div className="utvidetAddresseSok">
                             <Sporsmal
                                 tittelRenderer={() =>
-                                    getIntlTextOrKey(
-                                        intl,
-                                        "kontakt.system.oppholdsadresse.hvorOppholder"
-                                    )
+                                    getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.hvorOppholder")
                                 }
                                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                             >
                                 <div style={{marginBottom: "1rem"}}>
-                                    <FormattedHTMLMessage id="kontakt.system.kontaktinfo.infotekst.tekst"/>
+                                    <FormattedHTMLMessage id="kontakt.system.kontaktinfo.infotekst.tekst" />
                                 </div>
-                                <FormattedHTMLMessage id="kontakt.system.kontaktinfo.infotekst.ekstratekst"/>
+                                <FormattedHTMLMessage id="kontakt.system.kontaktinfo.infotekst.ekstratekst" />
                                 <AdresseTypeahead
-                                    onNullstill={() =>
-                                        nullstillAdresseTypeahead()
-                                    }
+                                    onNullstill={() => nullstillAdresseTypeahead()}
                                     valgtAdresse={formatertSoknadAdresse}
-                                    onVelgAnnenAdresse={(
-                                        adresse: AdressesokTreff
-                                    ) => velgAnnenAdresse(adresse)}
+                                    onVelgAnnenAdresse={(adresse: AdressesokTreff) => velgAnnenAdresse(adresse)}
                                 />
                             </Sporsmal>
                             {navEnheter.length > 1 && (
                                 <SoknadsmottakerVelger
-                                    label={getIntlTextOrKey(
-                                        intl,
-                                        "kontakt.system.oppholdsadresse.velgKontor"
-                                    )}
+                                    label={getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.velgKontor")}
                                     ikkeVisPanel={true}
                                     navEnheter={navEnheter}
-                                    visible={
-                                        adresser.valg === AdresseKategori.SOKNAD
-                                    }
-                                    onVelgSoknadsmottaker={(
-                                        navEnhet: NavEnhet
-                                    ) => onVelgSoknadsmottaker(navEnhet)}
+                                    visible={adresser.valg === AdresseKategori.SOKNAD}
+                                    onVelgSoknadsmottaker={(navEnhet: NavEnhet) => onVelgSoknadsmottaker(navEnhet)}
                                 />
                             )}
                         </div>
                     </Underskjema>
                 </div>
             </Sporsmal>
-            <SoknadsmottakerInfo skjul={adressePending}/>
+            <SoknadsmottakerInfo skjul={adressePending} />
         </div>
     );
 };

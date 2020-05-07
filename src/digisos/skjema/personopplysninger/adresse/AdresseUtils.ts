@@ -1,9 +1,4 @@
-import {
-    AdresseKategori,
-    AdressesokTreff,
-    Gateadresse,
-    SoknadsMottakerStatus,
-} from "./AdresseTypes";
+import {AdresseKategori, AdressesokTreff, Gateadresse, SoknadsMottakerStatus} from "./AdresseTypes";
 import {Soknadsdata} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 
@@ -18,33 +13,19 @@ export enum AdresseTypeaheadStatus {
 
 const formaterAdresseString = (adresse: AdressesokTreff) => {
     let returverdi = adresse.adresse;
-    const husbokstav: string =
-        adresse.husbokstav != null ? adresse.husbokstav : "";
+    const husbokstav: string = adresse.husbokstav != null ? adresse.husbokstav : "";
     try {
         if (adresse.postnummer != null && adresse.poststed != null) {
             if (adresse.husnummer !== "" && adresse.husnummer !== null) {
-                returverdi +=
-                    " " +
-                    adresse.husnummer +
-                    husbokstav +
-                    ", " +
-                    adresse.postnummer +
-                    " " +
-                    adresse.poststed;
+                returverdi += " " + adresse.husnummer + husbokstav + ", " + adresse.postnummer + " " + adresse.poststed;
             } else {
                 if (adresse.postnummer !== null && adresse.poststed !== null) {
-                    returverdi +=
-                        ", " + adresse.postnummer + " " + adresse.poststed;
+                    returverdi += ", " + adresse.postnummer + " " + adresse.poststed;
                 }
             }
         } else if (adresse.kommunenavn != null) {
             if (adresse.husnummer !== "" && adresse.husnummer !== null) {
-                returverdi +=
-                    " " +
-                    adresse.husnummer +
-                    husbokstav +
-                    ", " +
-                    adresse.kommunenavn;
+                returverdi += " " + adresse.husnummer + husbokstav + ", " + adresse.kommunenavn;
             } else {
                 returverdi += ", " + adresse.kommunenavn;
             }
@@ -71,11 +52,8 @@ const formaterSoknadsadresse = (soknadAdresse: Gateadresse | null) => {
     return formatertSoknadAdresse;
 };
 
-const removeDuplicatesAfterTransform = (
-    myArray: any[],
-    transform: (item: any) => any
-) => {
-    const propArray = myArray.map(elem => transform(elem));
+const removeDuplicatesAfterTransform = (myArray: any[], transform: (item: any) => any) => {
+    const propArray = myArray.map((elem) => transform(elem));
     return myArray.filter((obj, pos) => {
         return propArray.indexOf(propArray[pos]) === pos;
     });
@@ -100,10 +78,7 @@ const beregnTekstfeltMarkorPosisjon = (adresse: AdressesokTreff): number => {
     const husbokstav = adresse.husbokstav ? adresse.husbokstav : "";
     if (adresse.adresse) {
         return adresse.husnummer
-            ? adresse.adresse.length +
-                  adresse.husnummer.length +
-                  husbokstav.length +
-                  1
+            ? adresse.adresse.length + adresse.husnummer.length + husbokstav.length + 1
             : adresse.adresse.length + 1;
     }
     return 0;
@@ -123,13 +98,10 @@ const ekstraherHusnummerHusbokstav = (inntastetAdresse: string): any => {
     };
 };
 
-const soknadsmottakerStatus = (
-    soknadsdata: Soknadsdata
-): SoknadsMottakerStatus => {
+const soknadsmottakerStatus = (soknadsdata: Soknadsdata): SoknadsMottakerStatus => {
     const navEnheter = soknadsdata.personalia.navEnheter;
     const valgtNavEnhet = soknadsdata.personalia.navEnhet;
-    const navEnheterRestStatus: REST_STATUS =
-        soknadsdata.restStatus.personalia.navEnheter;
+    const navEnheterRestStatus: REST_STATUS = soknadsdata.restStatus.personalia.navEnheter;
     const adresser = soknadsdata.personalia.adresser;
 
     if (valgtNavEnhet && valgtNavEnhet.isMottakDeaktivert) {
@@ -142,26 +114,13 @@ const soknadsmottakerStatus = (
         return SoknadsMottakerStatus.GYLDIG;
     }
     if (adresser.valg) {
-        if (
-            adresser.valg === AdresseKategori.MIDLERTIDIG ||
-            adresser.valg === AdresseKategori.FOLKEREGISTRERT
-        ) {
-            if (
-                navEnheter.length === 0 &&
-                navEnheterRestStatus === REST_STATUS.OK
-            ) {
+        if (adresser.valg === AdresseKategori.MIDLERTIDIG || adresser.valg === AdresseKategori.FOLKEREGISTRERT) {
+            if (navEnheter.length === 0 && navEnheterRestStatus === REST_STATUS.OK) {
                 return SoknadsMottakerStatus.UGYLDIG;
             }
         }
-        if (
-            adresser.valg === AdresseKategori.SOKNAD &&
-            navEnheterRestStatus === REST_STATUS.OK
-        ) {
-            if (
-                adresser.soknad &&
-                navEnheter.length === 0 &&
-                adresser.soknad.gateadresse !== null
-            ) {
+        if (adresser.valg === AdresseKategori.SOKNAD && navEnheterRestStatus === REST_STATUS.OK) {
+            if (adresser.soknad && navEnheter.length === 0 && adresser.soknad.gateadresse !== null) {
                 return SoknadsMottakerStatus.UGYLDIG;
             }
         }

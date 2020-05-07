@@ -2,10 +2,7 @@ import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseT
 import {Dispatch} from "../../digisos/redux/reduxTypes";
 import {fetchToJson, HttpStatus} from "../utils/rest-utils";
 import {soknadsdataUrl} from "../../digisos/redux/soknadsdata/soknadsdataActions";
-import {
-    oppdaterSoknadsdataSti,
-    SoknadsSti,
-} from "../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {oppdaterSoknadsdataSti, SoknadsSti} from "../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {clearAllValideringsfeil} from "../../digisos/redux/validering/valideringActions";
 import {
     showServerFeil,
@@ -14,21 +11,14 @@ import {
 } from "../../digisos/redux/soknad/soknadActions";
 import {loggFeil} from "../../digisos/redux/navlogger/navloggerActions";
 
-export const erPaStegEnOgValgtNavEnhetErUgyldig = (
-    stegnummer: number,
-    valgtNavEnhet: NavEnhet | null
-): boolean => {
+export const erPaStegEnOgValgtNavEnhetErUgyldig = (stegnummer: number, valgtNavEnhet: NavEnhet | null): boolean => {
     return (
         stegnummer === 1 &&
-        (!valgtNavEnhet ||
-            valgtNavEnhet.isMottakDeaktivert ||
-            valgtNavEnhet.isMottakMidlertidigDeaktivert)
+        (!valgtNavEnhet || valgtNavEnhet.isMottakDeaktivert || valgtNavEnhet.isMottakMidlertidigDeaktivert)
     );
 };
 
-export const valgtNavKontorErGyldig = (
-    valgtNavKontor: NavEnhet | undefined
-): boolean => {
+export const valgtNavKontorErGyldig = (valgtNavKontor: NavEnhet | undefined): boolean => {
     return (
         valgtNavKontor !== undefined &&
         !valgtNavKontor.isMottakDeaktivert &&
@@ -47,11 +37,7 @@ export const valgtNavKontorErGyldigMenMottakErMidlertidigDeaktivert = (
 };
 
 export const responseIsOfTypeNavEnhet = (response: any) => {
-    if (
-        response === null ||
-        response === undefined ||
-        typeof response === "string"
-    ) {
+    if (response === null || response === undefined || typeof response === "string") {
         return false;
     }
     const navEnhet: NavEnhet = response;
@@ -64,28 +50,17 @@ export const sjekkOmValgtNavEnhetErGyldig = (
     callbackHvisGyldigEllerIkkeSatt: () => void
 ) => {
     fetchToJson(soknadsdataUrl(behandlingsId, SoknadsSti.VALGT_NAV_ENHET))
-        .then(response => {
+        .then((response) => {
             if (responseIsOfTypeNavEnhet(response)) {
-                const valgtNavKontor:
-                    | NavEnhet
-                    | undefined = response as NavEnhet;
-                dispatch(
-                    oppdaterSoknadsdataSti(
-                        SoknadsSti.VALGT_NAV_ENHET,
-                        valgtNavKontor
-                    )
-                );
+                const valgtNavKontor: NavEnhet | undefined = response as NavEnhet;
+                dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, valgtNavKontor));
 
                 if (valgtNavKontorErGyldig(valgtNavKontor)) {
                     dispatch(clearAllValideringsfeil());
                     dispatch(visMidlertidigDeaktivertPanel(false));
                     dispatch(visIkkePakobletPanel(false));
                     callbackHvisGyldigEllerIkkeSatt();
-                } else if (
-                    valgtNavKontorErGyldigMenMottakErMidlertidigDeaktivert(
-                        valgtNavKontor
-                    )
-                ) {
+                } else if (valgtNavKontorErGyldigMenMottakErMidlertidigDeaktivert(valgtNavKontor)) {
                     dispatch(visMidlertidigDeaktivertPanel(true));
                 } else {
                     dispatch(visIkkePakobletPanel(true));

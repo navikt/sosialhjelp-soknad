@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-    Route,
-    RouterProps,
-    Switch,
-    withRouter,
-    matchPath, Prompt
-} from "react-router";
+import {Route, RouterProps, Switch, withRouter, matchPath, Prompt} from "react-router";
 import {Location} from "history";
 import {connect} from "react-redux";
 import Steg1 from "./personopplysninger";
@@ -17,6 +11,7 @@ import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
 import Steg8 from "./okonomiskeOpplysninger";
 import Oppsummering from "./oppsummering";
+import NyOppsummering from "./ny-oppsummering/Oppsummering";
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
 import {DispatchProps} from "../redux/reduxTypes";
 import {State} from "../redux/reducers";
@@ -49,13 +44,12 @@ interface UrlParams {
 type Props = OwnProps & StateProps & RouterProps & DispatchProps;
 
 const SkjemaRouter: React.FC<Props> = (props: Props) => {
-
     const {behandlingsId, visSideIkkeFunnet, dispatch, visServerFeil} = props;
 
     useEffect(() => {
         skjulToppMeny();
         const match = matchPath(props.location.pathname, {
-            path: "/skjema/:behandlingsIdFraUrl/:stegFraUrl"
+            path: "/skjema/:behandlingsIdFraUrl/:stegFraUrl",
         });
         if (match) {
             const {behandlingsIdFraUrl} = match.params as UrlParams;
@@ -66,20 +60,18 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
                 dispatch(hentSoknad(behandlingsIdFraUrl));
             }
         } else {
-            dispatch(showSideIkkeFunnet(true))
+            dispatch(showSideIkkeFunnet(true));
         }
     }, [behandlingsId, dispatch, props.location.pathname]);
 
     if (visServerFeil) {
         return (
             <div>
-                <ServerFeil/>
+                <ServerFeil />
                 <Prompt
-                    message={loc => {
+                    message={(loc) => {
                         dispatch(showServerFeil(false));
-                        return erSkjemaEllerEttersendelseSide(loc.pathname)
-                            ? true
-                            : NAVIGASJONSPROMT.SKJEMA
+                        return erSkjemaEllerEttersendelseSide(loc.pathname) ? true : NAVIGASJONSPROMT.SKJEMA;
                     }}
                 />
             </div>
@@ -87,7 +79,7 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
     }
 
     if (visSideIkkeFunnet) {
-        return <SideIkkeFunnet/>;
+        return <SideIkkeFunnet />;
     }
 
     if (behandlingsId) {
@@ -95,49 +87,43 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
         return (
             <>
                 <Switch>
-                    <Route path={`${path}/1`} component={Steg1}/>
-                    <Route path={`${path}/2`} component={Steg2}/>
-                    <Route path={`${path}/3`} component={Steg3}/>
-                    <Route path={`${path}/4`} component={Steg4}/>
-                    <Route path={`${path}/5`} component={Steg5}/>
-                    <Route path={`${path}/6`} component={Steg6}/>
-                    <Route path={`${path}/7`} component={Steg7}/>
-                    <Route path={`${path}/8`} component={Steg8}/>
-                    <Route path={`${path}/9`} component={Oppsummering}/>
-                    <Route component={SideIkkeFunnet}/>
+                    <Route path={`${path}/1`} component={Steg1} />
+                    <Route path={`${path}/2`} component={Steg2} />
+                    <Route path={`${path}/3`} component={Steg3} />
+                    <Route path={`${path}/4`} component={Steg4} />
+                    <Route path={`${path}/5`} component={Steg5} />
+                    <Route path={`${path}/6`} component={Steg6} />
+                    <Route path={`${path}/7`} component={Steg7} />
+                    <Route path={`${path}/8`} component={Steg8} />
+                    <Route path={`${path}/9`} component={Oppsummering} />
+                    <Route path={`${path}/ny-oppsummering`} component={NyOppsummering} />
+                    <Route component={SideIkkeFunnet} />
                 </Switch>
                 <Prompt
-                    message={loc => {
-                        return erSkjemaEllerEttersendelseSide(loc.pathname)
-                            ? true
-                            : NAVIGASJONSPROMT.SKJEMA
+                    message={(loc) => {
+                        return erSkjemaEllerEttersendelseSide(loc.pathname) ? true : NAVIGASJONSPROMT.SKJEMA;
                     }}
                 />
-                <TimeoutBox
-                    sessionDurationInMinutes={30}
-                    showWarningerAfterMinutes={25}
-                />
-                <AvbrytSoknad/>
+                <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
+                <AvbrytSoknad />
             </>
         );
     }
 
     return (
         <div className="application-spinner">
-            <NavFrontendSpinner type="XXL"/>
+            <NavFrontendSpinner type="XXL" />
         </div>
-    )
+    );
 };
 
-const mapStateToProps = (
-    state: State,
-): StateProps => {
+const mapStateToProps = (state: State): StateProps => {
     return {
         restStatus: state.soknad.restStatus,
         behandlingsId: state.soknad.behandlingsId,
         visSideIkkeFunnet: state.soknad.showSideIkkeFunnet,
-        visServerFeil: state.soknad.showServerFeil
-    }
+        visServerFeil: state.soknad.showServerFeil,
+    };
 };
 
 export default connect(mapStateToProps)(withRouter(SkjemaRouter) as any);

@@ -1,17 +1,16 @@
 import {LedeteksterResponse} from "../soknad/soknadTypes";
 
 export interface LedeteksterState {
-	data: {}
+    data: {};
 }
 
 export enum LedeteksterActionTypeKeys {
-	LAGRE_LEDETEKSTER_PA_STORE = "ledetekster/LAGRE_LEDETEKSTER_PA_STORE",
+    LAGRE_LEDETEKSTER_PA_STORE = "ledetekster/LAGRE_LEDETEKSTER_PA_STORE",
 }
 
-export type LedeteksterAction =
-	| LagreLedeteksterPaStore
+export type LedeteksterAction = LagreLedeteksterPaStore;
 
 interface LagreLedeteksterPaStore {
-	type: LedeteksterActionTypeKeys.LAGRE_LEDETEKSTER_PA_STORE;
-	ledeteksterResponse: LedeteksterResponse;
+    type: LedeteksterActionTypeKeys.LAGRE_LEDETEKSTER_PA_STORE;
+    ledeteksterResponse: LedeteksterResponse;
 }

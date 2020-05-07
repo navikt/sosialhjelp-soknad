@@ -1,5 +1,5 @@
 export enum DigisosFarge {
-	SUKSESS = 'suksess-farge',
-	VIKTIG = 'viktig-farge',
-	FEIL = 'feil-farge'
+    SUKSESS = "suksess-farge",
+    VIKTIG = "viktig-farge",
+    FEIL = "feil-farge",
 }

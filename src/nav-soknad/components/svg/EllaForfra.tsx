@@ -3,12 +3,7 @@ import * as React from "react";
 /* tslint:disable */
 const EllaForfra = (props: {className?: string}) => {
     return (
-        <svg
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            width={68}
-            height={97}
-            className={props.className}
-        >
+        <svg xmlnsXlink="http://www.w3.org/1999/xlink" width={68} height={97} className={props.className}>
             <defs>
                 <path
                     id="a"

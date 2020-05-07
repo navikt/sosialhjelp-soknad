@@ -10,25 +10,18 @@ import {visSamtykkeInfo} from "../redux/soknad/soknadActions";
 
 const getText = (soknadsdata: Soknadsdata, text: string) => {
     const valgtEnhetsNavn = finnValgtEnhetsNavn(soknadsdata);
-    return text.replace(
-        /{navkontor:(.*)}/g,
-        valgtEnhetsNavn ? valgtEnhetsNavn : "$1"
-    );
+    return text.replace(/{navkontor:(.*)}/g, valgtEnhetsNavn ? valgtEnhetsNavn : "$1");
 };
 
 const BehandlingAvPersonopplysningerModal = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const modalSynlig = useSelector(
-        (state: State) => state.soknad.visSamtykkeInfo
-    );
+    const modalSynlig = useSelector((state: State) => state.soknad.visSamtykkeInfo);
 
     const intl = useIntl();
 
     const dispatch = useDispatch();
 
-    const text = intl.messages[
-        "soknadsosialhjelp.forstesiden.bekreftInfoModal.body"
-    ].toString();
+    const text = intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"].toString();
     return (
         <NavFrontendModal
             isOpen={modalSynlig || false}
@@ -61,11 +54,7 @@ const BehandlingAvPersonopplysningerModal = () => {
                         dispatch(visSamtykkeInfo(false));
                     }}
                 >
-                    <FormattedMessage
-                        id={
-                            "soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"
-                        }
-                    />
+                    <FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"} />
                 </Knapp>
             </div>
         </NavFrontendModal>
