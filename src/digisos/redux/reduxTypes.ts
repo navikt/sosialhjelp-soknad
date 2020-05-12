@@ -8,4 +8,3 @@ export interface DispatchProps {
 }
 
 export type DispatchAction = (action: any) => void;
-

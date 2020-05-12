@@ -13,6 +13,7 @@ export type MaybeOpplysning = Opplysning | null;
 export interface OpplysningerBackend {
     okonomiskeOpplysninger: OpplysningBackend[];
     slettedeVedlegg: OpplysningBackend[];
+    isOkonomiskeOpplysningerBekreftet: boolean;
 }
 
 export interface OpplysningBackend {
@@ -20,7 +21,7 @@ export interface OpplysningBackend {
     gruppe: OpplysningGruppe;
     rader: OpplysningRad[];
     vedleggStatus: VedleggStatus;
-    filer: Fil[]
+    filer: Fil[];
 }
 
 export interface Opplysning {
@@ -44,16 +45,16 @@ export interface OpplysningSpc {
 export enum AntallRader {
     INGEN = "ingen",
     EN = "en",
-    FLERE = "flere"
+    FLERE = "flere",
 }
 
-export type OpplysningerAction
-    = GotDataFromBackend
+export type OpplysningerAction =
+    | GotDataFromBackend
     | UpdateOpplysning
     | SettPendingPaFilOpplasting
     | SettFerdigPaFilOpplasting
     | SettOpplysningsFilAlleredeLastetOpp
-    | LagreOpplysningHvisGyldig
+    | LagreOpplysningHvisGyldig;
 
 export enum opplysningerActionTypeKeys {
     GOT_DATA_FROM_BACKEND = "okonomiskeOpplysninger/GOT_DATA_FROM_BACKEND",
@@ -61,7 +62,7 @@ export enum opplysningerActionTypeKeys {
     SETT_FIL_OPPLASTING_PENDING = "okonomiskeOpplysninger/SETT_FIL_OPPLASTING_PENDING",
     SETT_FIL_OPPLASTING_FERDIG = "okonomiskeOpplysninger/SETT_FIL_OPPLASTING_FERDIG",
     SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP = "okonomiskeOpplysninger/SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP",
-    LAGRE_OPPLYSNING_HVIS_GYLDIG = "okonomiskeOpplysninger/LAGRE_OPPLYSNING_HVIS_GYLDIG"
+    LAGRE_OPPLYSNING_HVIS_GYLDIG = "okonomiskeOpplysninger/LAGRE_OPPLYSNING_HVIS_GYLDIG",
 }
 
 export interface UpdateOpplysning {
@@ -105,7 +106,7 @@ export enum OpplysningGruppe {
     UTGIFTER = "utgifter",
     GENERELLE_VEDLEGG = "generelle vedlegg",
     ANDRE_UTGIFTER = "andre utgifter",
-    UKJENT = "ukjent"
+    UKJENT = "ukjent",
 }
 
 export enum OpplysningType {
@@ -140,14 +141,14 @@ export enum OpplysningType {
     FAKTURA_TANNBEHANDLING = "faktura|tannbehandling", // RADER_MED_BELOP
     FAKTURA_ANNETBARNUTGIFT = "faktura|annetbarnutgift", // RADER_MED_BESKRIVELSE_OG_BELOP
     SKATTEMELDING_SKATTEMELDING = "skattemelding|skattemelding", // NOTHING
-    OPPHOLDSTILLATEL_OPPHOLDSTILLATEL= "oppholdstillatel|oppholdstillatel",
+    OPPHOLDSTILLATEL_OPPHOLDSTILLATEL = "oppholdstillatel|oppholdstillatel",
     ANNET_ANNET = "annet|annet", // RADER_MED_BESKRIVELSE_OG_BELOP
 }
 
 export enum VedleggStatus {
     VEDLEGGALLEREDESEND = "VedleggAlleredeSendt",
     VEDLEGG_KREVES = "VedleggKreves",
-    LASTET_OPP = "LastetOpp"
+    LASTET_OPP = "LastetOpp",
 }
 
 export enum InputType {
@@ -156,19 +157,19 @@ export enum InputType {
     BRUTTO = "brutto",
     NETTO = "netto",
     AVDRAG = "avdrag",
-    RENTER = "renter"
+    RENTER = "renter",
 }
 
 export interface OpplysningRad {
-    "beskrivelse": string;
-    "belop": string;
-    "brutto": string;
-    "netto": string;
-    "avdrag": string;
-    "renter": string;
+    beskrivelse: string;
+    belop: string;
+    brutto: string;
+    netto: string;
+    avdrag: string;
+    renter: string;
 }
 
 export interface Fil {
-    "filNavn": string;
-    "uuid": string;
+    filNavn: string;
+    uuid: string;
 }

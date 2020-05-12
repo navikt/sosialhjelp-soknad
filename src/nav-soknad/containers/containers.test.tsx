@@ -1,43 +1,38 @@
-import {
-    erPaStegEnOgValgtNavEnhetErUgyldig, responseIsOfTypeNavEnhet,
-} from "./containerUtils";
+import {erPaStegEnOgValgtNavEnhetErUgyldig, responseIsOfTypeNavEnhet} from "./containerUtils";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 
-const enUgyldigNavEnhet: NavEnhet =
-    {
-        orgnr: "1234",
-        enhetsnr: "2345",
-        isMottakMidlertidigDeaktivert: true,
-        isMottakDeaktivert: false,
-        enhetsnavn: "asdf",
-        kommunenavn: "fdsa",
-        kommuneNr: "3456",
-        valgt: true,
-    };
+const enUgyldigNavEnhet: NavEnhet = {
+    orgnr: "1234",
+    enhetsnr: "2345",
+    isMottakMidlertidigDeaktivert: true,
+    isMottakDeaktivert: false,
+    enhetsnavn: "asdf",
+    kommunenavn: "fdsa",
+    kommuneNr: "3456",
+    valgt: true,
+};
 
-const enGyldigNavEnhet: NavEnhet =
-    {
-        orgnr: "1234",
-        enhetsnr: "2345",
-        isMottakMidlertidigDeaktivert: false,
-        isMottakDeaktivert: false,
-        enhetsnavn: "asdf",
-        kommunenavn: "fdsa",
-        kommuneNr: "3456",
-        valgt: true,
-    };
+const enGyldigNavEnhet: NavEnhet = {
+    orgnr: "1234",
+    enhetsnr: "2345",
+    isMottakMidlertidigDeaktivert: false,
+    isMottakDeaktivert: false,
+    enhetsnavn: "asdf",
+    kommunenavn: "fdsa",
+    kommuneNr: "3456",
+    valgt: true,
+};
 
-const ugyldigNavenhetEnhetsnrNull: any =
-    {
-        orgnr: "1234",
-        enhetsnr: null,
-        isMottakMidlertidigDeaktivert: false,
-        isMottakDeaktivert: true,
-        enhetsnavn: "asdf",
-        kommunenavn: "fdsa",
-        kommuneNr: "3456",
-        valgt: true,
-    };
+const ugyldigNavenhetEnhetsnrNull: any = {
+    orgnr: "1234",
+    enhetsnr: null,
+    isMottakMidlertidigDeaktivert: false,
+    isMottakDeaktivert: true,
+    enhetsnavn: "asdf",
+    kommunenavn: "fdsa",
+    kommuneNr: "3456",
+    valgt: true,
+};
 
 test("that erPaStegEnOgValgtNavEnhetErUgyldig gir riktig svar", () => {
     expect(erPaStegEnOgValgtNavEnhetErUgyldig(1, null)).toBe(true);
@@ -99,7 +94,7 @@ test("that erPaStegEnOgValgtNavEnhetErUgyldig returnerer riktig", () => {
 const ugyldigResponseUndefined: undefined = undefined;
 const ugyldigResponseNull: null = null;
 const ugyldigResponseString: string = "En random string";
-const ugyldigResponseRandomObject = { "bare": "noe", "tull": "og", "tall": 1234556};
+const ugyldigResponseRandomObject = {bare: "noe", tull: "og", tall: 1234556};
 const ugyldigResponseTomListe: any[] = [];
 const gyldigResponse = gyldigNavEnhet;
 
@@ -109,5 +104,5 @@ test("that responseIsOfTypeListOfNavEnhetAndHasAtleastOneElement ikke fører til
     expect(responseIsOfTypeNavEnhet(ugyldigResponseString)).toBe(false);
     expect(responseIsOfTypeNavEnhet(ugyldigResponseRandomObject)).toBe(false);
     expect(responseIsOfTypeNavEnhet(ugyldigResponseTomListe)).toBe(false);
-    expect(responseIsOfTypeNavEnhet(gyldigResponse)).toBe(true)
+    expect(responseIsOfTypeNavEnhet(gyldigResponse)).toBe(true);
 });

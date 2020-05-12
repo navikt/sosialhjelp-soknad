@@ -5,45 +5,42 @@ import {
     SoknadActionTypeKeys,
     VisIkkePakobletPanel,
     VisMidlertidigDeaktivertPanel,
-    VisNedetidPanel
+    VisNedetidPanel,
 } from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {FornavnResponse, NedetidResponse, TilgangResponse} from "./soknadTypes";
 import {IntlShape} from "react-intl";
 
-
 export function startSoknadOk() {
     return {
-        type: SoknadActionTypeKeys.START_SOKNAD_OK
+        type: SoknadActionTypeKeys.START_SOKNAD_OK,
     };
 }
 
 export function startSoknadServiceUnavailable() {
     return {
-        type: SoknadActionTypeKeys.START_SOKNAD_SERVICE_UNAVAILABLE
+        type: SoknadActionTypeKeys.START_SOKNAD_SERVICE_UNAVAILABLE,
     };
 }
 
-export function opprettSoknad(
-    intl: IntlShape
-) {
+export function opprettSoknad(intl: IntlShape) {
     return {
         type: SoknadActionTypeKeys.OPPRETT_SOKNAD,
-        intl
+        intl,
     };
 }
 
 export function opprettSoknadOk(behandlingsId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.OPPRETT_SOKNAD_OK,
-        behandlingsId
+        behandlingsId,
     };
 }
 
 export function hentSoknad(behandlingsId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.HENT_SOKNAD,
-        behandlingsId
+        behandlingsId,
     };
 }
 
@@ -51,94 +48,89 @@ export function hentSoknadOk(xsrfCookieReceived: boolean, behandlingsId: string)
     return {
         type: SoknadActionTypeKeys.HENT_SOKNAD_OK,
         xsrfCookieReceived,
-        behandlingsId
+        behandlingsId,
     };
 }
 
 export function sendSoknad(behandlingsId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SEND_SOKNAD,
-        behandlingsId
+        behandlingsId,
     };
 }
 
 export function setSendSoknadServiceUnavailable(): SoknadActionType {
     return {
-        type: SoknadActionTypeKeys.SET_SEND_SOKNAD_SERVICE_UNAVAILABLE
-    }
+        type: SoknadActionTypeKeys.SET_SEND_SOKNAD_SERVICE_UNAVAILABLE,
+    };
 }
 
 export function resetSendSoknadServiceUnavailable(): SoknadActionType {
     return {
-        type: SoknadActionTypeKeys.RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE
-    }
+        type: SoknadActionTypeKeys.RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE,
+    };
 }
 
 export function sendSoknadOk(behandlingsId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SEND_SOKNAD_OK,
-        behandlingsId
+        behandlingsId,
     };
 }
 
-export function avbrytSoknad(
-    destinasjon: AVBRYT_DESTINASJON = "MINSIDE"
-): SoknadActionType {
+export function avbrytSoknad(destinasjon: AVBRYT_DESTINASJON = "MINSIDE"): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.AVBRYT_SOKNAD,
-        destinasjon
+        destinasjon,
     };
 }
 
 export function fortsettSoknad(): SoknadActionType {
     return {
-        type: SoknadActionTypeKeys.FORTSETT_SOKNAD
+        type: SoknadActionTypeKeys.FORTSETT_SOKNAD,
     };
 }
 
-export function slettSoknad(
-    behandlingsId: string,
-    destinasjon: AVBRYT_DESTINASJON = "MINSIDE"
-): SoknadActionType {
+export function slettSoknad(behandlingsId: string, destinasjon: AVBRYT_DESTINASJON = "MINSIDE"): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SLETT_SOKNAD,
         behandlingsId,
-        destinasjon
+        destinasjon,
     };
 }
 
 export function slettSoknadOk(): SoknadActionType {
     return {
-        type: SoknadActionTypeKeys.SLETT_SOKNAD_OK
+        type: SoknadActionTypeKeys.SLETT_SOKNAD_OK,
     };
 }
 
 export function finnOgOppdaterSoknadsmottakerStatus(brukerbehandlingId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS,
-        brukerbehandlingId
-    }
+        brukerbehandlingId,
+    };
 }
 
 export function oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker: NavEnhet): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.OPPDATER_SOKNADSMOTTAKER_STATUS,
-        valgtSoknadsmottaker
-    }
+        valgtSoknadsmottaker,
+    };
 }
 
 export const getErSystemdataEndret = (behandlingsId: string): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.GET_ER_SYSTEMDATA_ENDRET,
-        behandlingsId
+        behandlingsId,
     };
 };
 
 export const setErSystemdataEndret = (erSystemdataEndret: boolean): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.SET_ER_SYSTEMDATA_ENDRET,
-        erSystemdataEndret
-    }
+        erSystemdataEndret,
+    };
 };
 
 export const oppdaterSamtykke = (behandlingsId: string, harSamtykket: boolean, samtykker: Samtykke[]): SoknadActionType => {
@@ -166,8 +158,8 @@ export function hentSamtykkerOk(samtykker: Samtykke[]): SoknadActionType {
 
 export const sjekkAutentiseringOgTilgangOgHentRessurser = (): SoknadActionType => {
     return {
-        type: SoknadActionTypeKeys.SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER
-    }
+        type: SoknadActionTypeKeys.SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER,
+    };
 };
 
 export const lagreRessurserPaStore = (
@@ -177,83 +169,88 @@ export const lagreRessurserPaStore = (
     return {
         type: SoknadActionTypeKeys.LAGRE_TILGANG_OG_FORNAVN_PA_STORE,
         tilgangResponse,
-        fornavnResponse
-    }
+        fornavnResponse,
+    };
 };
 
-export const lagreNedetidPaStore = (
-    nedetidResponse: NedetidResponse
-): SoknadActionType => {
+export const lagreNedetidPaStore = (nedetidResponse: NedetidResponse): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.LAGRE_NEDETID_PA_STORE,
-        nedetidResponse
-    }
+        nedetidResponse,
+    };
 };
 
 export const setLinkVisited = (): SoknadActionType => {
     return {
-        type: SoknadActionTypeKeys.SET_LINK_VISITED
+        type: SoknadActionTypeKeys.SET_LINK_VISITED,
     };
 };
 
 export const showLargeSpinner = (show: boolean): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.SHOW_LARGE_SPINNER,
-        show
-    }
+        show,
+    };
 };
 
 export const visSamtykkeInfo = (skalVises: boolean): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.VIS_SAMTYKKE_INFO,
-        skalVises
-    }
+        skalVises,
+    };
+};
+
+export const visLasteOppVedleggModal = (skalVises: boolean): SoknadActionType => {
+    return {
+        type: SoknadActionTypeKeys.VIS_LASTE_OPP_VEDLEGG_MODAL,
+        skalVises,
+    };
 };
 
 export function showServerFeil(shouldShow: boolean): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SHOW_SERVER_FEIL,
-        shouldShow: shouldShow
-    }
+        shouldShow: shouldShow,
+    };
 }
 
 export function showSendingFeiletPanel(shouldShow: boolean): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SHOW_SENDING_FEILET_PANEL,
-        shouldShow: shouldShow
-    }
+        shouldShow: shouldShow,
+    };
 }
 
 export function showSideIkkeFunnet(shouldShow: boolean): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET,
-        shouldShow
-    }
+        shouldShow,
+    };
 }
 
 export function showFeilSide(): SoknadActionType {
     return {
-        type: SoknadActionTypeKeys.SHOW_FEIL_SIDE
-    }
+        type: SoknadActionTypeKeys.SHOW_FEIL_SIDE,
+    };
 }
 
 export const visMidlertidigDeaktivertPanel = (shouldShow: boolean): VisMidlertidigDeaktivertPanel => {
     return {
         type: SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL,
-        shouldShow
-    }
+        shouldShow,
+    };
 };
 
 export const visNedetidPanel = (shouldShow: boolean): VisNedetidPanel => {
     return {
         type: SoknadActionTypeKeys.VIS_NEDETID_PANEL,
-        shouldShow
-    }
+        shouldShow,
+    };
 };
 
 export const visIkkePakobletPanel = (shouldShow: boolean): VisIkkePakobletPanel => {
     return {
         type: SoknadActionTypeKeys.VIS_IKKE_PAKOBLET_PANEL,
-        shouldShow
-    }
+        shouldShow,
+    };
 };

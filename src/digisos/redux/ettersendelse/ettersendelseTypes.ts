@@ -1,8 +1,4 @@
-import {
-    Fil,
-    OpplysningType,
-    VedleggStatus
-} from "../okonomiskeOpplysninger/opplysningerTypes";
+import {Fil, OpplysningType, VedleggStatus} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {REST_STATUS} from "../soknad/soknadTypes";
 
 export enum EttersendelseActionTypeKeys {
@@ -31,11 +27,11 @@ export enum EttersendelseActionTypeKeys {
     INIT = "ettersendelse/INIT",
     OTHER_ACTION = "__any_other_action_type__",
     FIL_OPPLASTING_OK = "ettersendelse/FIL_OPPLASTING_OK",
-    VIS_SOKNAD_ALLEREDE_SENDT_PROMPT = "ettersendelse/VIS_SOKNAD_ALLEREDE_SENDT_PROMPT"
+    VIS_SOKNAD_ALLEREDE_SENDT_PROMPT = "ettersendelse/VIS_SOKNAD_ALLEREDE_SENDT_PROMPT",
 }
 
-export type EttersendelseActionTypes
-    = OpprettEttersendelseAction
+export type EttersendelseActionTypes =
+    | OpprettEttersendelseAction
     | OpprettEttersendelseFeiletAction
     | LagEttersendelseOkAction
     | LastOppEttersendelseAction
@@ -52,12 +48,11 @@ export type EttersendelseActionTypes
     | LesEttersendelserOkAction
     | OtherAction
     | FilOpplastingOk
-    | VisSoknadAlleredeSendtPrompt
+    | VisSoknadAlleredeSendtPrompt;
 
 export enum EttersendelseFeilkode {
-    NY_ETTERSENDELSE_FEILET = "NY_ETTERSENDELSE_FEILET"
+    NY_ETTERSENDELSE_FEILET = "NY_ETTERSENDELSE_FEILET",
 }
-
 
 export interface OpprettEttersendelseAction {
     type: EttersendelseActionTypeKeys.NY;
@@ -118,14 +113,13 @@ export interface LesEttersendelserOkAction {
     ettersendelser: any;
 }
 
-
 export interface LesEttersendteVedleggAction {
     type: EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG_OK;
     manglendeVedleggsListe: EttersendelseVedleggBackend[];
 }
 
 export interface FilOpplastingOk {
-    type: EttersendelseActionTypeKeys.FIL_OPPLASTING_OK,
+    type: EttersendelseActionTypeKeys.FIL_OPPLASTING_OK;
     opplysningType: OpplysningType;
     fil: Fil;
 }
@@ -175,14 +169,14 @@ export interface EttersendelseState {
 export interface EttersendelseVedleggBackend {
     type: OpplysningType;
     vedleggStatus: VedleggStatus;
-    filer: Fil[]
+    filer: Fil[];
 }
 
 export interface OrginalSoknad {
     behandlingsId: string;
     innsendtDato: string;
     innsendtTidspunkt: string;
-    innsendteVedlegg: any [];
+    innsendteVedlegg: any[];
     ikkeInnsendteVedlegg: any[];
     navenhet: string;
     orgnummer: string;

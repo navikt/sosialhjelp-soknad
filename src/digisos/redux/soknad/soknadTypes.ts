@@ -7,6 +7,7 @@ export interface SoknadState {
     showFeilSide: boolean;
     showSideIkkeFunnet: boolean;
     visSamtykkeInfo: boolean;
+    visLasteOppVedleggModal: boolean;
     visMidlertidigDeaktivertPanel: boolean;
     visIkkePakobletPanel: boolean;
     visNedetidPanel: boolean;
@@ -14,7 +15,7 @@ export interface SoknadState {
     // Visning state skjema nivå
     showSendingFeiletPanel: boolean;
     showServerFeil: boolean;
-    sendSoknadServiceUnavailable: boolean,
+    sendSoknadServiceUnavailable: boolean;
 
     // Authentication / tilgang state
     linkVisited: boolean;
@@ -62,11 +63,13 @@ export enum REST_STATUS {
     SERVER_ERROR = "SERVER_ERROR",
     XSRF = "XSRF",
     LAST_OPP_FIL_FEILET = "LAST_OPP_FIL_FEILET",
-    FEILET = "FEILET"
+    FEILET = "FEILET",
 }
 
 export enum REST_FEIL {
     FOR_STOR_FIL = "vedlegg.opplasting.feil.forStor",
+    SAMLET_VEDLEGG_STORRELSE_FOR_STOR = "vedlegg.opplasting.feil.samletStorrelseForStor",
+    SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE = "ettersending.vedlegg.feil.samletStorrelseForStor",
     FEIL_FILTPYE = "vedlegg.opplasting.feil.filType",
     KRYPTERT_FIL = "opplasting.feilmelding.pdf.kryptert",
     SIGNERT_FIL = "opplasting.feilmelding.pdf.signert",
@@ -75,7 +78,7 @@ export enum REST_FEIL {
 export enum SkjemaStegType {
     "skjema" = "skjema",
     "ekstrainfo" = "ekstrainfo",
-    "oppsummering" = "oppsummering"
+    "oppsummering" = "oppsummering",
 }
 
 export interface SkjemaSteg {

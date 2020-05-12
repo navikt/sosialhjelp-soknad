@@ -1,96 +1,98 @@
 @import "../../../nav-soknad/styles/variables.less";
 
 .utbetalinger {
-  padding-top: 1rem;
+    padding-top: 1rem;
 
-  .utbetaling {
-    position: relative;
+    .utbetaling {
+        position: relative;
 
-    .verdi {
-      position: absolute;
-      top: 0;
-      right: 0;
+        .verdi {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
     }
-  }
 }
 
 .tidspunkt_uten_luft {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
 }
 
 .feilet_kommunikasjon_margin_under {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 /** Veldig spesifikk overrid enn så lenge */
 .ekspanderbartPanel--skattbarInntekt {
-  margin-bottom: @skjemaMargXL;
-  .ekspanderbartPanel {
-    &__heading, .typo-undertittel h4 {
-      font-size: 1rem;
-      font-weight: bold;
-      padding-bottom: 0;
+    margin-bottom: @skjemaMargXL;
+    .ekspanderbartPanel {
+        &__heading,
+        .typo-undertittel h4 {
+            font-size: 1rem;
+            font-weight: bold;
+            padding-bottom: 0;
+        }
+        &__hode,
+        &__innhold {
+            padding-left: @skjemaMarg;
+            padding-right: @skjemaMarg;
+            @media @mobile {
+                padding-left: @skjemaMarg / 2;
+                padding-right: @skjemaMarg / 2;
+            }
+        }
     }
-    &__hode, &__innhold {
-      padding-left: @skjemaMarg;
-      padding-right: @skjemaMarg;
-      @media @mobile {
-        padding-left: @skjemaMarg/2;
-        padding-right: @skjemaMarg/2;
-      }
-    }
-  }
 }
 
 div.panel.ytelser_panel {
-  //border-color: @navMorkGra;
+    //border-color: @navMorkGra;
 }
 
 .skatt-wrapper {
-  margin-bottom: 1rem;
-  padding-bottom: 5em;
+    margin-bottom: 1rem;
+    padding-bottom: 5em;
 }
 
 .dato {
-  //text-transform: capitalize;
+    //text-transform: capitalize;
 }
 
 .bostotte-dato {
-  text-transform: capitalize;
-  width: 8rem;
-  display: inline-block;
+    text-transform: capitalize;
+    width: 8rem;
+    display: inline-block;
 }
 
 .bostotte-visningstatus {
-  text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 .bostotte-vedtaksbeskrivelse-padding-top {
-  padding-top: 0.5rem;
+    padding-top: 0.5rem;
 }
 
 .panel.bostotte_hent_ned_data_panel {
-  background-color: #eeeeee;
+    background-color: #eeeeee;
 }
 
 .samtykke_knapp_padding {
-  margin-top: 1em;
-  margin-bottom: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 .saksoverskrift {
-  padding-top: 1rem;
+    padding-top: 1rem;
 }
 
 .sak {
-  padding-top: 1rem;
+    padding-top: 1rem;
 }
 
 .bostotte-vedtaksbeskrivelse-innrykk {
-  margin-left: 8rem;
+    margin-left: 8rem;
 }
 
 .bostotte-luft-over-ta-bort-knapp-lenke {
-  padding-top: 2em;
+    padding-top: 2em;
 }

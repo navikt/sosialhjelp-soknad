@@ -6,20 +6,18 @@ import {
     OpplysningGruppe,
     OpplysningRad,
     OpplysningSpc,
-    OpplysningType
+    OpplysningType,
 } from "./opplysningerTypes";
 import {opplysningsRekkefolgeOgSpc} from "./opplysningerConfig";
 import {loggErrorToServer} from "../../../nav-soknad/utils/loggerUtils";
 import {NavLogEntry, NavLogLevel} from "../navlogger/navloggerTypes";
 
 export function getOpplysningerUrl(behandlingsId: string) {
-    return (
-        `soknader/${behandlingsId}/okonomiskeOpplysninger`
-    )
+    return `soknader/${behandlingsId}/okonomiskeOpplysninger`;
 }
 
 export const updateSortertOpplysning = (opplysninger: Opplysning[], opplysningUpdated: Opplysning) => {
-    const index = opplysninger.findIndex(o => o.type === opplysningUpdated.type);
+    const index = opplysninger.findIndex((o) => o.type === opplysningUpdated.type);
     opplysninger[index] = opplysningUpdated;
     return opplysninger;
 };
@@ -30,41 +28,43 @@ export const transformToBackendOpplysning = (opplysning: Opplysning): Opplysning
         gruppe: opplysning.gruppe ? opplysning.gruppe : OpplysningGruppe.UKJENT,
         rader: opplysning.rader,
         vedleggStatus: opplysning.vedleggStatus,
-        filer: opplysning.filer
+        filer: opplysning.filer,
     };
 };
 
-export const getGruppeTittelKey: (opplysningGruppe: OpplysningGruppe) => string = (opplysningGruppe: OpplysningGruppe) => {
+export const getGruppeTittelKey: (opplysningGruppe: OpplysningGruppe) => string = (
+    opplysningGruppe: OpplysningGruppe
+) => {
     switch (opplysningGruppe) {
         case OpplysningGruppe.STATSBORGERSKAP: {
-            return "opplysninger.statsborgerskap"
+            return "opplysninger.statsborgerskap";
         }
         case OpplysningGruppe.ARBEID: {
-            return "opplysninger.arbeid"
+            return "opplysninger.arbeid";
         }
         case OpplysningGruppe.FAMILIE: {
-            return "opplysninger.familiesituasjon"
+            return "opplysninger.familiesituasjon";
         }
         case OpplysningGruppe.BOSITUASJON: {
-            return "opplysninger.bosituasjon"
+            return "opplysninger.bosituasjon";
         }
         case OpplysningGruppe.INNTEKT: {
-            return "opplysninger.inntekt"
+            return "opplysninger.inntekt";
         }
         case OpplysningGruppe.UTGIFTER: {
-            return "opplysninger.utgifter"
+            return "opplysninger.utgifter";
         }
         case OpplysningGruppe.GENERELLE_VEDLEGG: {
-            return "opplysninger.generell"
+            return "opplysninger.generell";
         }
         case OpplysningGruppe.ANDRE_UTGIFTER: {
-            return "opplysninger.ekstrainfo"
+            return "opplysninger.ekstrainfo";
         }
         case OpplysningGruppe.UKJENT: {
-            return "opplysninger.ukjent"
+            return "opplysninger.ukjent";
         }
         default: {
-            return "unknown group tittle"
+            return "unknown group tittle";
         }
     }
 };
@@ -76,8 +76,8 @@ export const getTomVedleggRad: () => OpplysningRad = () => {
         brutto: "",
         netto: "",
         avdrag: "",
-        renter: ""
-    }
+        renter: "",
+    };
 };
 
 export const getOpplysningByOpplysningType = (opplysningerSortert: Opplysning[], opplysningType: OpplysningType) => {
@@ -87,14 +87,13 @@ export const getOpplysningByOpplysningType = (opplysningerSortert: Opplysning[],
 };
 
 export const getSortertListeAvOpplysninger = (backendData: OpplysningerBackend): Opplysning[] => {
-
     const {okonomiskeOpplysninger, slettedeVedlegg} = backendData;
     const opplysningerAktive: Opplysning[] = okonomiskeOpplysninger.map((opplysningBackend: OpplysningBackend) => {
-        return backendOpplysningToOpplysning(opplysningBackend, false)
+        return backendOpplysningToOpplysning(opplysningBackend, false);
     });
 
     const opplysningerSlettede: Opplysning[] = slettedeVedlegg.map((opplysningBackend: OpplysningBackend) => {
-        return backendOpplysningToOpplysning(opplysningBackend, true)
+        return backendOpplysningToOpplysning(opplysningBackend, true);
     });
     const alleOpplysninger: Opplysning[] = opplysningerAktive.concat(opplysningerSlettede);
     const opplysningerSortert: MaybeOpplysning[] = sorterOpplysninger(alleOpplysninger, opplysningsRekkefolgeOgSpc);
@@ -106,20 +105,20 @@ const filterOutNullValuesFromList = (list: MaybeOpplysning[]): Opplysning[] => {
     const listUtenNulls: Opplysning[] = [];
 
     list.forEach((maybeOpplysning: MaybeOpplysning) => {
-        if (maybeOpplysning){
+        if (maybeOpplysning) {
             listUtenNulls.push(maybeOpplysning);
         }
     });
 
     return listUtenNulls;
-}
+};
 
 export const getSpcForOpplysning = (opplysningType: OpplysningType): OpplysningSpc | undefined => {
     const opplysningSpcs = opplysningsRekkefolgeOgSpc.filter((oSpc: OpplysningSpc) => {
         return oSpc.type === opplysningType;
     });
 
-    if (opplysningSpcs && opplysningSpcs.length === 0){
+    if (opplysningSpcs && opplysningSpcs.length === 0) {
         const navLogEntry: NavLogEntry = {
             level: NavLogLevel.ERROR,
             message: `Spc ikke funnet for opplysning med type: "${opplysningType}"`,
@@ -132,11 +131,10 @@ export const getSpcForOpplysning = (opplysningType: OpplysningType): OpplysningS
 };
 
 const backendOpplysningToOpplysning = (opplysningBackend: OpplysningBackend, erSlettet: boolean): Opplysning => {
-
     const spc: OpplysningSpc | undefined = getSpcForOpplysning(opplysningBackend.type);
 
     let radInnhold_: InputType[] = [];
-    if (spc){
+    if (spc) {
         radInnhold_ = spc.radInnhold;
     }
 
@@ -148,14 +146,13 @@ const backendOpplysningToOpplysning = (opplysningBackend: OpplysningBackend, erS
         filer: opplysningBackend.filer,
         slettet: erSlettet,
         radInnhold: radInnhold_,
-        pendingLasterOppFil: false
-    }
+        pendingLasterOppFil: false,
+    };
 };
 
 type MaybeOpplysning = Opplysning | null;
 
 function sorterOpplysninger(usortertListe: Opplysning[], rekkefolge: OpplysningSpc[]): MaybeOpplysning[] {
-
     const sortert: MaybeOpplysning[] = [];
     sortert.fill(null, 0, rekkefolge.length - 1);
 

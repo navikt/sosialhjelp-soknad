@@ -1,3 +1,3 @@
 export const organisasjonJSON = {
-  "organisasjon": null
+    organisasjon: null,
 };

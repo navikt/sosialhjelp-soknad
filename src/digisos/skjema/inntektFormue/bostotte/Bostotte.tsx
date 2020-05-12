@@ -1,21 +1,17 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {FormattedDate, FormattedMessage, FormattedNumber, useIntl,} from "react-intl";
+import {FormattedDate, FormattedMessage, FormattedNumber, useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {formatTidspunkt, getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
-import {oppdaterSoknadsdataSti, SoknadsSti,} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {Bostotte} from "./bostotteTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 import {State} from "../../../redux/reducers";
-import {
-    hentSoknadsdata,
-    lagreSoknadsdata,
-    settSamtykkeOgOppdaterData,
-} from "../../../redux/soknadsdata/soknadsdataActions";
+import {hentSoknadsdata, lagreSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknadsdata/soknadsdataActions";
 import Knapp from "nav-frontend-knapper";
 import AlertStripe from "nav-frontend-alertstriper";
 
@@ -27,9 +23,7 @@ const BostotteView = () => {
     const dispatch = useDispatch();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
     const intl = useIntl();
 
@@ -40,10 +34,7 @@ const BostotteView = () => {
     }, [behandlingsId, dispatch]);
 
     useEffect(() => {
-        if (
-            oppstartsModus &&
-            soknadsdata.restStatus.inntekt.bostotte === REST_STATUS.OK
-        ) {
+        if (oppstartsModus && soknadsdata.restStatus.inntekt.bostotte === REST_STATUS.OK) {
             setOppstartsModus(false);
         }
     }, [oppstartsModus, soknadsdata.restStatus.inntekt.bostotte]);
@@ -61,14 +52,7 @@ const BostotteView = () => {
                         handleSettBostotteSamtykke(false)
                     };
                 }
-                dispatch(
-                    lagreSoknadsdata(
-                        behandlingsId,
-                        SoknadsSti.BOSTOTTE,
-                        bostotte,
-                        responseHandler,
-                    )
-                );
+                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, bostotte, responseHandler));
             }
         }
     };
@@ -84,20 +68,12 @@ const BostotteView = () => {
         }
     };
 
-    const renderUtbetaling = (
-        netto: number,
-        dato: string,
-        mottaker: string,
-        index: number
-    ) => {
+    const renderUtbetaling = (netto: number, dato: string, mottaker: string, index: number) => {
         let key = "bostotteUtbetaling_" + index;
         return (
             <div className="utbetalinger blokk-xs" key={key}>
                 <div>
-                    <FormattedMessage
-                        id={"inntekt.bostotte.husbanken.mottaker"}
-                        values={{mottaker: mottaker}}
-                    />
+                    <FormattedMessage id={"inntekt.bostotte.husbanken.mottaker"} values={{mottaker: mottaker}} />
                 </div>
                 <div className="utbetaling">
                     <span>
@@ -108,12 +84,7 @@ const BostotteView = () => {
                         </span>
                     </span>
                     <span className="verdi detaljeliste__verdi">
-                        <FormattedNumber
-                            value={netto}
-                            minimumFractionDigits={2}
-                            maximumFractionDigits={2}
-                        />{" "}
-                        kr
+                        <FormattedNumber value={netto} minimumFractionDigits={2} maximumFractionDigits={2} /> kr
                     </span>
                 </div>
             </div>
@@ -130,33 +101,19 @@ const BostotteView = () => {
     ) => {
         const visningstatus =
             status === "VEDTATT" ? (
-                <FormattedMessage
-                    id={"inntekt.bostotte.husbanken.vedtaksstatus"}
-                    values={{status: vedtaksstatus}}
-                />
+                <FormattedMessage id={"inntekt.bostotte.husbanken.vedtaksstatus"} values={{status: vedtaksstatus}} />
             ) : (
-                <FormattedMessage
-                    id={"inntekt.bostotte.husbanken.status"}
-                    values={{status: status}}
-                />
+                <FormattedMessage id={"inntekt.bostotte.husbanken.status"} values={{status: status}} />
             );
-        let formatertDato = (
-            <FormattedDate value={dato} month="long" year="numeric"/>
-        );
+        let formatertDato = <FormattedDate value={dato} month="long" year="numeric" />;
         return (
             <div key={`${key}-${index}`} className="sak blokk-xs">
                 <span className="bostotte-dato">{formatertDato}</span>
                 {status !== "VEDTATT" && <span>{visningstatus}</span>}
-                {status === "VEDTATT" && (
-                    <span className="bostotte-visningstatus">
-                        {visningstatus}
-                    </span>
-                )}
+                {status === "VEDTATT" && <span className="bostotte-visningstatus">{visningstatus}</span>}
                 {status === "VEDTATT" && (
                     <>
-                        <div className="bostotte-vedtaksbeskrivelse-innrykk">
-                            {vedtaksbeskrivelse}
-                        </div>
+                        <div className="bostotte-vedtaksbeskrivelse-innrykk">{vedtaksbeskrivelse}</div>
                     </>
                 )}
             </div>
@@ -168,20 +125,15 @@ const BostotteView = () => {
     if (oppstartsModus && restStatus === REST_STATUS.OK) {
         setOppstartsModus(false);
     }
-    const requestToHusbankenFeilet: boolean =
-        bostotte.stotteFraHusbankenFeilet === true;
-    const harSamtykke: boolean =
-        bostotte.samtykke === true;
-    const samtykkeTidspunkt: Date | null =
-        bostotte.samtykkeTidspunkt;
+    const requestToHusbankenFeilet: boolean = bostotte.stotteFraHusbankenFeilet === true;
+    const harSamtykke: boolean = bostotte.samtykke === true;
+    const samtykkeTidspunkt: Date | null = bostotte.samtykkeTidspunkt;
     let samtykkeTidspunktStreng = "";
     if(samtykkeTidspunkt) {
         samtykkeTidspunktStreng = formatTidspunkt(samtykkeTidspunkt.toString());
     }
-    const harBostotterUtbetalinger: boolean =
-        bostotte.utbetalinger && bostotte.utbetalinger.length > 0;
-    const harBostotterSaker: boolean =
-        bostotte.saker && bostotte.saker.length > 0;
+    const harBostotterUtbetalinger: boolean = bostotte.utbetalinger && bostotte.utbetalinger.length > 0;
+    const harBostotterSaker: boolean = bostotte.saker && bostotte.saker.length > 0;
     return (
         <div className="blokk-xs">
             <h2>{getIntlTextOrKey(intl, "inntekt.bostotte.overskrift")}</h2>
@@ -190,9 +142,7 @@ const BostotteView = () => {
                 tekster={getFaktumSporsmalTekst(intl, FAKTUM_BOSTOTTE)}
                 faktumKey={FAKTUM_BOSTOTTE}
                 verdi={bostotte ? bostotte.bekreftelse : null}
-                onChange={(verdi: boolean) =>
-                    handleClickJaNeiSpsm(verdi)
-                }
+                        onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <Sporsmal
@@ -273,9 +223,7 @@ const BostotteView = () => {
                                         rel="noopener noreferrer"
                                         className="linje_under"
                                     >
-                                        <FormattedMessage
-                                            id={"inntekt.bostotte.husbanken.lenkeText"}
-                                        />
+                            <FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"} />
                                     </a>
                                 </div>
                             )}

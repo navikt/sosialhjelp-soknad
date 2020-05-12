@@ -5,21 +5,13 @@ import {FormattedHTMLMessage, FormattedMessage, useIntl} from "react-intl";
 import {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
-import {
-    SoknadsSti,
-    oppdaterSoknadsdataSti,
-} from "../../../redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {Studielan} from "./StudielanTypes";
-import Informasjonspanel, {
-    InformasjonspanelIkon,
-} from "../../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
-import {
-    hentSoknadsdata,
-    lagreSoknadsdata,
-} from "../../../redux/soknadsdata/soknadsdataActions";
+import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 
 const FAKTUM_STUDIELAN = "inntekt.studielan";
 
@@ -33,9 +25,7 @@ const StudielanView = () => {
     const dispatch = useDispatch();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
     const intl = useIntl();
 
@@ -46,10 +36,7 @@ const StudielanView = () => {
     }, [behandlingsId, dispatch]);
 
     React.useEffect(() => {
-        if (
-            oppstartsModus &&
-            soknadsdata.restStatus.inntekt.studielan === REST_STATUS.OK
-        ) {
+        if (oppstartsModus && soknadsdata.restStatus.inntekt.studielan === REST_STATUS.OK) {
             setOppstartsModus(false);
         }
     }, [oppstartsModus, soknadsdata.restStatus.inntekt.studielan]);
@@ -57,20 +44,11 @@ const StudielanView = () => {
     const handleClickJaNeiSpsm = (verdi: boolean) => {
         const restStatus = soknadsdata.restStatus.inntekt.studielan;
         if (restStatus === REST_STATUS.OK) {
-            const studielan: Studielan | undefined =
-                soknadsdata.inntekt.studielan;
+            const studielan: Studielan | undefined = soknadsdata.inntekt.studielan;
             if (studielan && behandlingsId) {
                 studielan.bekreftelse = verdi;
-                dispatch(
-                    oppdaterSoknadsdataSti(SoknadsSti.STUDIELAN, studielan)
-                );
-                dispatch(
-                    lagreSoknadsdata(
-                        behandlingsId,
-                        SoknadsSti.STUDIELAN,
-                        studielan
-                    )
-                );
+                dispatch(oppdaterSoknadsdataSti(SoknadsSti.STUDIELAN, studielan));
+                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, studielan));
             }
         }
     };

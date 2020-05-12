@@ -13,20 +13,20 @@ import Studielan from "./studielan/Studielan";
 
 const InntektFormue: React.FC = () => {
     return (
-        <DigisosSkjemaSteg steg={DigisosSteg.inntektbolk} ikon={<Penger/>}>
+        <DigisosSkjemaSteg steg={DigisosSteg.inntektbolk} ikon={<Penger />}>
             <SkjemaGruppe className={"skjema-sporsmal"}>
-                <SkattbarInntekt/>
-                <NavYtelser/>
-                <Bostotte/>
+                <SkattbarInntekt />
+                <NavYtelser />
+                <Bostotte />
             </SkjemaGruppe>
-            <Studielan/>
-            <Utbetalinger/>
+            <Studielan />
+            <Utbetalinger />
             <h2 className="overskrift"><FormattedHTMLMessage id="opplysninger.formue.bank.undertittel"/></h2>
-            <Formue/>
+            <Formue />
             <h2 className="overskrift"><FormattedHTMLMessage id="opplysninger.formue.annen.undertittel"/></h2>
-            <Verdier/>
+            <Verdier />
         </DigisosSkjemaSteg>
     );
-}
+};
 
 export default InntektFormue;

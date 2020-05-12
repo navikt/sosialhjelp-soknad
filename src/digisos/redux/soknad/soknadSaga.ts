@@ -18,12 +18,7 @@ import {
     SlettSoknadAction,
     SoknadActionTypeKeys,
 } from "./soknadActionTypes";
-import {
-    navigerTilDittNav,
-    navigerTilKvittering,
-    tilStart,
-    tilSteg,
-} from "../navigasjon/navigasjonActions";
+import {navigerTilDittNav, navigerTilKvittering, tilStart, tilSteg} from "../navigasjon/navigasjonActions";
 
 import {
     hentSamtykkerOk,
@@ -78,22 +73,13 @@ function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
 
         // Hvis tilgangApiRespone ikke thrower unauthorized error, så er bruker autentisert
 
-        const miljoVariablerResponse: MiljovariablerResponse = yield call(
-            fetchToJson,
-            "informasjon/miljovariabler"
-        );
+        const miljoVariablerResponse: MiljovariablerResponse = yield call(fetchToJson, "informasjon/miljovariabler");
         const ledeteksterResponse: LedeteksterResponse = yield call(
             fetchToJson,
             "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp"
         );
-        const fornavnResponse: FornavnResponse = yield call(
-            fetchToJson,
-            "informasjon/fornavn"
-        );
-        const nedetidResponse: NedetidResponse = yield call(
-            fetchToJson,
-            "nedetid"
-        );
+        const fornavnResponse: FornavnResponse = yield call(fetchToJson, "informasjon/fornavn");
+        const nedetidResponse: NedetidResponse = yield call(fetchToJson, "nedetid");
 
         yield put(lagreLedeteksterPaStore(ledeteksterResponse));
         yield put(lagreMiljovariablerPaStore(miljoVariablerResponse));
@@ -112,12 +98,7 @@ function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
 
 function* opprettSoknadSaga(action: {type:string}) {
     try {
-        const response: OpprettSoknadResponse = yield call(
-            fetchPost,
-            "soknader/opprettSoknad",
-            "",
-            true
-        );
+        const response: OpprettSoknadResponse = yield call(fetchPost, "soknader/opprettSoknad", "", true);
         yield put(opprettSoknadOk(response.brukerBehandlingId));
         yield put(startSoknadOk());
         yield put(tilSteg(1, response.brukerBehandlingId));
@@ -125,9 +106,7 @@ function* opprettSoknadSaga(action: {type:string}) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         } else if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
-            yield put(
-                loggAdvarsel("opprettSoknadSaga ServiceUnavailable: " + reason)
-            );
+            yield put(loggAdvarsel("opprettSoknadSaga ServiceUnavailable: " + reason));
             yield put(visNedetidPanel(true));
             yield put(startSoknadServiceUnavailable());
         } else {
@@ -182,10 +161,7 @@ function* oppdaterSamtykke(action: {type:string, behandlingsId:string, harSamtyk
 
 function* hentSoknadSaga(action: HentSoknadAction) {
     try {
-        const xsrfCookieIsOk: boolean = yield call(
-            fetchToJson,
-            `soknader/${action.behandlingsId}/xsrfCookie`
-        );
+        const xsrfCookieIsOk: boolean = yield call(fetchToJson, `soknader/${action.behandlingsId}/xsrfCookie`);
         yield put(hentSoknadOk(xsrfCookieIsOk, action.behandlingsId));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
@@ -227,10 +203,7 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
         lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.behandlingsId);
 
         yield put(sendSoknadOk(action.behandlingsId));
-        if (
-            response &&
-            response.sendtTil === SendtTilSystemEnum.FIKS_DIGISOS_API
-        ) {
+        if (response && response.sendtTil === SendtTilSystemEnum.FIKS_DIGISOS_API) {
             yield put(
                 loggAdvarsel(
                     "Redirecter til innsyn etter innsending av søknad. Ble søknaden sendt til fiks-digisos-api?"
@@ -255,9 +228,7 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
     }
 }
 
-function* finnOgOppdaterSoknadsmottakerStatusSaga(
-    action: FinnOgOppdaterSoknadsmottakerStatus
-) {
+function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsmottakerStatus) {
     const {brukerbehandlingId} = action;
 
     try {
@@ -265,14 +236,8 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(
             fetchToJson,
             `soknader/${brukerbehandlingId}/${SoknadsSti.NAV_ENHETER}`
         );
-        const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find(
-            (n: NavEnhet) => n.valgt
-        );
-        if (
-            !valgtSoknadsmottaker ||
-            (valgtSoknadsmottaker &&
-                valgtSoknadsmottaker.isMottakMidlertidigDeaktivert)
-        ) {
+        const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find((n: NavEnhet) => n.valgt);
+        if (!valgtSoknadsmottaker || (valgtSoknadsmottaker && valgtSoknadsmottaker.isMottakMidlertidigDeaktivert)) {
             yield put(push(`/skjema/${brukerbehandlingId}/1`));
         } else {
             yield put(oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker));
@@ -323,10 +288,7 @@ function* soknadSaga(): SagaIterator {
         SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS,
         finnOgOppdaterSoknadsmottakerStatusSaga
     );
-    yield takeEvery(
-        SoknadActionTypeKeys.GET_ER_SYSTEMDATA_ENDRET,
-        getErSystemdataEndretSaga
-    );
+    yield takeEvery(SoknadActionTypeKeys.GET_ER_SYSTEMDATA_ENDRET, getErSystemdataEndretSaga);
 }
 
 export default soknadSaga;

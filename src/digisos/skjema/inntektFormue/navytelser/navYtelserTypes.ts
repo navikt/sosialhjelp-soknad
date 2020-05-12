@@ -11,5 +11,5 @@ export interface Systeminntekt {
 
 export const initialSysteminntekter: Systeminntekter = {
     systeminntekter: [],
-    utbetalingerFraNavFeilet: false
+    utbetalingerFraNavFeilet: false,
 };

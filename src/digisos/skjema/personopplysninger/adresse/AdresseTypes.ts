@@ -1,108 +1,108 @@
 export interface AdressesokTreff {
-	"adresse": null | string;
-	"husnummer": null | string;
-	"husbokstav": null | string;
-	"kommunenummer": null | string;
-	"kommunenavn": null | string;
-	"postnummer": null | string;
-	"poststed": null | string;
-	"geografiskTilknytning": null | string;
-	"gatekode": null | string;
-	"bydel": null | string;
-	"type": null | string;
+    adresse: null | string;
+    husnummer: null | string;
+    husbokstav: null | string;
+    kommunenummer: null | string;
+    kommunenavn: null | string;
+    postnummer: null | string;
+    poststed: null | string;
+    geografiskTilknytning: null | string;
+    gatekode: null | string;
+    bydel: null | string;
+    type: null | string;
 }
 
 export interface NavEnhet {
-	orgnr: null | string;
-	enhetsnr: null | string;
-	isMottakMidlertidigDeaktivert: boolean;
-	isMottakDeaktivert: boolean;
-	enhetsnavn: string;
-	kommunenavn: string;
-	kommuneNr: string;
-	valgt: boolean
+    orgnr: null | string;
+    enhetsnr: null | string;
+    isMottakMidlertidigDeaktivert: boolean;
+    isMottakDeaktivert: boolean;
+    enhetsnavn: string;
+    kommunenavn: string;
+    kommuneNr: string;
+    valgt: boolean;
 }
 
 export enum AdresseKategori {
-	FOLKEREGISTRERT = "folkeregistrert",
-	MIDLERTIDIG = "midlertidig",
-	SOKNAD = "soknad"
+    FOLKEREGISTRERT = "folkeregistrert",
+    MIDLERTIDIG = "midlertidig",
+    SOKNAD = "soknad",
 }
 
 export enum AdresseType {
-	GATEADRESSE = "gateadresse",
-	MATRIKKELADRESSE = "matrikkeladresse",
-	USTRUKTURERT = "ustrukturert"
+    GATEADRESSE = "gateadresse",
+    MATRIKKELADRESSE = "matrikkeladresse",
+    USTRUKTURERT = "ustrukturert",
 }
 
 export interface Baseadresse {
-	kommunenummer: string;
+    kommunenummer: string;
 }
 
-export interface Matrikkeladresse extends Baseadresse{
-	bruksnummer: string;
-	gaardsnummer: string;
-	festenummer: string;
-	seksjonsnummer: string;
-	undernummer: string;
+export interface Matrikkeladresse extends Baseadresse {
+    bruksnummer: string;
+    gaardsnummer: string;
+    festenummer: string;
+    seksjonsnummer: string;
+    undernummer: string;
 }
 
-export interface Gateadresse extends Baseadresse{
-	landkode: null;
-	adresselinjer: string[];
-	bolignummer: string;
-	postnummer: string;
-	poststed: string;
-	gatenavn: string;
-	husnummer: string;
-	husbokstav: string;
+export interface Gateadresse extends Baseadresse {
+    landkode: null;
+    adresselinjer: string[];
+    bolignummer: string;
+    postnummer: string;
+    poststed: string;
+    gatenavn: string;
+    husnummer: string;
+    husbokstav: string;
 }
 
 export interface UstrukturertAdresse {
-	type: AdresseType.USTRUKTURERT;
-	adresse: string[];
+    type: AdresseType.USTRUKTURERT;
+    adresse: string[];
 }
 
 export interface AdresseElement {
-	type: AdresseType;
-	gateadresse: null | Gateadresse;
-	matrikkeladresse: null | Matrikkeladresse;
-	ustrukturert: null | UstrukturertAdresse;
+    type: AdresseType;
+    gateadresse: null | Gateadresse;
+    matrikkeladresse: null | Matrikkeladresse;
+    ustrukturert: null | UstrukturertAdresse;
 }
 
 export interface Adresser {
-	valg: AdresseKategori | null;
-	folkeregistrert: AdresseElement;
-	midlertidig: AdresseElement | null;
-	soknad: null | AdresseElement;
+    valg: AdresseKategori | null;
+    folkeregistrert: AdresseElement;
+    midlertidig: AdresseElement | null;
+    soknad: null | AdresseElement;
 }
 
 export const initialAdresserState: Adresser = {
-	valg: null,
-	folkeregistrert: {
-		type: AdresseType.GATEADRESSE,
-		gateadresse: {
-			landkode: null,
-			kommunenummer: "",
-			adresselinjer: [],
-			bolignummer: "",
-			postnummer: "",
-			poststed: "",
-			gatenavn: "",
-			husnummer: "",
-			husbokstav: ""
-		},
-		matrikkeladresse: null,
-		ustrukturert: null
-	},
-	midlertidig: null,
-	soknad: null
+    valg: null,
+    folkeregistrert: {
+        type: AdresseType.GATEADRESSE,
+        gateadresse: {
+            landkode: null,
+            kommunenummer: "",
+            adresselinjer: [],
+            bolignummer: "",
+            postnummer: "",
+            poststed: "",
+            gatenavn: "",
+            husnummer: "",
+            husbokstav: "",
+        },
+        matrikkeladresse: null,
+        ustrukturert: null,
+    },
+    midlertidig: null,
+    soknad: null,
 };
 
 export enum SoknadsMottakerStatus {
-	IKKE_VALGT = "ikke_valgt",
-	VALGT = "valgt",
-	GYLDIG = "gyldig",
-	UGYLDIG = "ugyldig",
-	MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT = "mottak_er_midlertidig_deaktivert"
+    IKKE_VALGT = "ikke_valgt",
+    VALGT = "valgt",
+    GYLDIG = "gyldig",
+    UGYLDIG = "ugyldig",
+    MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT = "mottak_er_midlertidig_deaktivert",
 }

@@ -1,3 +1,3 @@
 export const telefonJSON = {
-  "verdi" : "13371337"
+    verdi: "13371337",
 };

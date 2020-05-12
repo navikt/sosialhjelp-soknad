@@ -6,7 +6,7 @@ export enum Status {
     SAMBOER = "samboer",
     ENKE = "enke",
     SKILT = "skilt",
-    SEPARERT = "separert"
+    SEPARERT = "separert",
 }
 
 export interface Navn {
@@ -20,7 +20,6 @@ export interface Person {
     navn: Navn;
     fodselsdato: null | string;
     personnummer: string | null;
-
 }
 
 export interface Sivilstatus {
@@ -39,15 +38,15 @@ export interface Familie {
 
 const initialSivilstatusState: Sivilstatus = {
     kildeErSystem: false,
-    sivilstatus: Status.UGIFT
+    sivilstatus: Status.UGIFT,
 };
 
 export const initialFamilieStatus: Familie = {
     sivilstatus: initialSivilstatusState,
-    forsorgerplikt: initialForsorgerPlikt
+    forsorgerplikt: initialForsorgerPlikt,
 };
 
-export const lagBlankPerson = ():Person => {
+export const lagBlankPerson = (): Person => {
     return {
         navn: {
             fornavn: "",

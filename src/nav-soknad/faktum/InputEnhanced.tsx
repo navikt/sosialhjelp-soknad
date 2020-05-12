@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useIntl} from "react-intl";
 import {Feil, Input, InputBredde} from "nav-frontend-skjema";
-import {getInputFaktumTekst, replaceDotWithUnderscore,} from "../utils";
+import {getInputFaktumTekst, replaceDotWithUnderscore} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {connect} from "react-redux";
 import {getFeil} from "../utils/enhancedComponentUtils";
@@ -63,15 +63,8 @@ const InputEnhanced = (props: Props) => {
 
     return (
         <Input
-            id={
-                props.id
-                    ? replaceDotWithUnderscore(props.id)
-                    : faktumKey
-            }
-            className={
-                "input--xxl faktumInput  " +
-                (props.className ? props.className : "")
-            }
+            id={this.props.id ? replaceDotWithUnderscore(this.props.id) : faktumKey}
+            className={"input--xxl faktumInput  " + (this.props.className ? this.props.className : "")}
             type={type}
             autoComplete="off"
             name={getName()}
@@ -90,9 +83,7 @@ const InputEnhanced = (props: Props) => {
             pattern={pattern}
             required={required}
             step={step}
-            noValidate={
-                true /* Unngå at nettleser validerer og evt. fjerner verdien */
-            }
+                noValidate={true /* Unngå at nettleser validerer og evt. fjerner verdien */}
             autoFocus={autoFocus}
         />
     );

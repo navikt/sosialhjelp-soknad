@@ -5,7 +5,6 @@ import Sporsmal, {LegendTittleStyle} from "../components/sporsmal/Sporsmal";
 import {erMobilVisning} from "../utils/domUtils";
 import RadioEnhanced from "./RadioEnhanced";
 
-
 interface Props {
     faktumKey: string;
     skjemaTilhorerValg?: "ja" | "nei";
@@ -19,7 +18,6 @@ interface Props {
 }
 
 class JaNeiSporsmal extends React.Component<Props, {}> {
-
     handleOnChange(verdi: any): void {
         if (this.props.onChange) {
             this.props.onChange(verdi);
@@ -27,11 +25,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
     }
 
     render() {
-        const {
-            faktumKey,
-            children,
-            verdi
-        } = this.props;
+        const {faktumKey, children, verdi} = this.props;
 
         const harUnderSkjema = children !== undefined;
         const visUnderSkjema = harUnderSkjema && verdi === true;
@@ -60,9 +54,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
                 legendTittelStyle={this.props.legendTittelStyle || LegendTittleStyle.DEFAULT}
             >
                 <ValgMedUnderskjema
-                    underskjema={children ?
-                        <Underskjema visible={visUnderSkjema}>{children}</Underskjema> : <span/>
-                    }
+                    underskjema={children ? <Underskjema visible={visUnderSkjema}>{children}</Underskjema> : <span />}
                 >
                     <RadioEnhanced
                         getName={() => idRadioJa}
@@ -97,15 +89,16 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
                         getName={() => idRadioNei}
                         onChange={() => this.handleOnChange(false)}
                         className={
-                            "inputPanel__smal inputPanel__mobil--nei " +
-                            visUnderSkjema ? "inputPanel__mobil--uten-underSkjema" : ""}
+                            "inputPanel__smal inputPanel__mobil--nei " + visUnderSkjema
+                                ? "inputPanel__mobil--uten-underSkjema"
+                                : ""
+                        }
                         visPlaceholder={this.props.visPlaceholder}
                     />
                 )}
             </Sporsmal>
         );
     }
-
 }
 
 export default JaNeiSporsmal;

@@ -15,6 +15,7 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "history": "^4.10.1",
+    "install": "^0.13.0",
     "intl": "^1.2.5",
     "less-plugin-npm-import": "^2.1.0",
     "lodash.throttle": "^4.1.1",
@@ -25,6 +26,8 @@
     "nav-frontend-core": "^4.0.12",
     "nav-frontend-ekspanderbartpanel": "^3.0.12",
     "nav-frontend-ekspanderbartpanel-style": "^1.0.12",
+    "nav-frontend-etiketter": "^1.0.31",
+    "nav-frontend-etiketter-style": "^0.3.20",
     "nav-frontend-grid": "^1.0.27",
     "nav-frontend-grid-style": "^0.2.20",
     "nav-frontend-hjelpetekst": "^1.0.44",
@@ -50,10 +53,10 @@
     "nav-frontend-stegindikator-style": "^1.0.28",
     "nav-frontend-typografi": "^2.0.18",
     "nav-frontend-typografi-style": "^1.0.19",
-    "nav-frontend-veileder": "^2.0.15",
-    "nav-frontend-veileder-style": "^2.0.12",
-    "nav-frontend-veilederpanel": "^0.1.21",
-    "nav-frontend-veilederpanel-style": "0.0.24",
+    "nav-frontend-veileder": "^2.0.16",
+    "nav-frontend-veileder-style": "^2.0.13",
+    "nav-frontend-veilederpanel": "^0.1.22",
+    "nav-frontend-veilederpanel-style": "0.0.25",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-autocomplete": "^1.8.1",
@@ -71,7 +74,6 @@
     "react-scroll": "^1.7.14",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
-    "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.5",
     "redux-thunk": "^2.3.0",
     "uuid": "^3.4.0",
@@ -93,9 +95,10 @@
     "@types/react-router": "^5.0.3",
     "@types/react-router-dom": "^4.3.5",
     "@types/react-scroll": "^1.5.4",
-    "@types/redux-logger": "^3.0.7",
     "@types/uuid": "^3.4.7",
-    "replace": "^1.1.1",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.1.6",
+    "prettier": "^2.0.4",
     "typescript": "^3.8.3"
   },
   "scripts": {
@@ -118,5 +121,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,less,css,md}": "prettier --write"
   }
 }

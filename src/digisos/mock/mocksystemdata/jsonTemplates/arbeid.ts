@@ -1,3 +1,3 @@
 export const arbeidJSON = {
-  "arbeidsforhold" : []
+    arbeidsforhold: [],
 };

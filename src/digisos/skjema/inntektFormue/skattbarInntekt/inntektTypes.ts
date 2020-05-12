@@ -1,27 +1,27 @@
 import {SkattbarInntektInfo} from "../../../redux/soknadsdata/soknadsdataReducer";
 
 export interface SkattbarInntekt {
-	"organisasjoner": Organisasjon[]
+    organisasjoner: Organisasjon[];
 }
 
 export interface Organisasjon {
-	"utbetalinger": Utbetaling[],
-	"organisasjonsnavn": string,
-	"orgnr": string,
-	"fom": null | string,
-	"tom": null | string
+    utbetalinger: Utbetaling[];
+    organisasjonsnavn: string;
+    orgnr: string;
+    fom: null | string;
+    tom: null | string;
 }
 
 export interface Utbetaling {
-	"brutto": number,
-	"forskuddstrekk": number,
-	"tittel": string
+    brutto: number;
+    forskuddstrekk: number;
+    tittel: string;
 }
 
 export const initialSkattbarInntektInfoState: SkattbarInntektInfo = {
-	inntektFraSkatteetaten: [],
+    inntektFraSkatteetaten: [],
 	inntektFraSkatteetatenFeilet: false,
 	samtykke: false,
-	samtykkeTidspunkt: undefined
+	samtykkeTidspunkt: undefined,
 };
 export const initialSkattbarInntektState: SkattbarInntekt[] = [];

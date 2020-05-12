@@ -4,17 +4,9 @@ import {FormattedHTMLMessage, useIntl} from "react-intl";
 import {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
-import {
-    SoknadsSti,
-    oppdaterSoknadsdataSti,
-} from "../../../redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, {
-    LegendTittleStyle,
-} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {
-    getFaktumSporsmalTekst,
-    replaceDotWithUnderscore,
-} from "../../../../nav-soknad/utils";
+import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import {Formue, FormueId} from "./FormueTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
@@ -23,15 +15,9 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
-import {
-    hentSoknadsdata,
-    lagreSoknadsdata,
-} from "../../../redux/soknadsdata/soknadsdataActions";
+import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {State} from "../../../redux/reducers";
-import {
-    setValideringsfeil,
-    clearValideringsfeil,
-} from "../../../redux/validering/valideringActions";
+import {setValideringsfeil, clearValideringsfeil} from "../../../redux/validering/valideringActions";
 
 const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
@@ -43,9 +29,7 @@ export const FormueView = () => {
     const dispatch = useDispatch();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const feil = useSelector((state: State) => state.validering.feil);
 
     const intl = useIntl();
@@ -57,10 +41,7 @@ export const FormueView = () => {
     }, [behandlingsId, dispatch]);
 
     useEffect(() => {
-        if (
-            oppstartsModus &&
-            soknadsdata.restStatus.inntekt.formue === REST_STATUS.OK
-        ) {
+        if (oppstartsModus && soknadsdata.restStatus.inntekt.formue === REST_STATUS.OK) {
             setOppstartsModus(false);
         }
     }, [oppstartsModus, soknadsdata.restStatus.inntekt.formue]);
@@ -71,10 +52,7 @@ export const FormueView = () => {
             const formue: Formue = soknadsdata.inntekt.formue;
 
             let formueElement: boolean | string = formue[idToToggle];
-            if (
-                typeof formueElement === "boolean" &&
-                typeof formue[idToToggle] === "boolean"
-            ) {
+            if (typeof formueElement === "boolean" && typeof formue[idToToggle] === "boolean") {
                 // @ts-ignore
                 formue[idToToggle] = !formueElement;
             }
@@ -83,9 +61,7 @@ export const FormueView = () => {
                 formue.beskrivelseAvAnnet = "";
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue));
-            dispatch(
-                lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue)
-            );
+            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue));
         }
     };
 
@@ -102,32 +78,20 @@ export const FormueView = () => {
         const formue: Formue | undefined = soknadsdata.inntekt.formue;
         if (formue && behandlingsId) {
             const beskrivelseAvAnnet = formue.beskrivelseAvAnnet;
-            const feilmeldingAnnet:
-                | ValideringsFeilKode
-                | undefined = validerTekstfeltVerdi(
+            const feilmeldingAnnet: ValideringsFeilKode | undefined = validerTekstfeltVerdi(
                 beskrivelseAvAnnet,
                 FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY
             );
             if (!feilmeldingAnnet) {
-                dispatch(
-                    lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue)
-                );
+                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue));
             }
         }
     };
 
-    const validerTekstfeltVerdi = (
-        verdi: string,
-        faktumKey: string
-    ): ValideringsFeilKode | undefined => {
-        const feilkode: ValideringsFeilKode | undefined = maksLengde(
-            verdi,
-            MAX_CHARS
-        );
+    const validerTekstfeltVerdi = (verdi: string, faktumKey: string): ValideringsFeilKode | undefined => {
+        const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
         onEndretValideringsfeil(feilkode, faktumKey, feil, () => {
-            feilkode
-                ? dispatch(setValideringsfeil(feilkode, faktumKey))
-                : dispatch(clearValideringsfeil(faktumKey));
+            feilkode ? dispatch(setValideringsfeil(feilkode, faktumKey)) : dispatch(clearValideringsfeil(faktumKey));
         });
         return feilkode;
     };
@@ -168,25 +132,16 @@ export const FormueView = () => {
             {renderCheckBox(FormueId.LIVSFORSIKRING)}
             {renderCheckBox(FormueId.VERDIPAPIRER)}
             {renderCheckBox(FormueId.ANNET)}
-            <NivaTreSkjema
-                visible={formue !== undefined && formue.annet}
-                size="small"
-            >
+            <NivaTreSkjema visible={formue !== undefined && formue.annet} size="small">
                 <TextareaEnhanced
-                    id={replaceDotWithUnderscore(
-                        FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY
-                    )}
+                    id={replaceDotWithUnderscore(FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY)}
                     placeholder=""
                     onChange={(evt: any) => onChangeAnnet(evt.target.value)}
                     onBlur={() => onBlurTekstfeltAnnet()}
                     faktumKey={FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY}
                     labelId={FORMUE + ".true.type.annet.true.beskrivelse.label"}
                     maxLength={MAX_CHARS}
-                    value={
-                        formue && formue.beskrivelseAvAnnet
-                            ? formue.beskrivelseAvAnnet
-                            : ""
-                    }
+                    value={formue && formue.beskrivelseAvAnnet ? formue.beskrivelseAvAnnet : ""}
                 />
             </NivaTreSkjema>
         </Sporsmal>

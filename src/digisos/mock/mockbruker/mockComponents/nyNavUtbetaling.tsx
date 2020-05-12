@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {Collapse} from "react-collapse";
 import MockInput from "./mockInput";
 
@@ -12,11 +12,11 @@ interface State {
     posteringsdato: string;
     utbetalingsdato: string;
     forfallsdato: string;
-    ytelsestype: string,
-    ytelseskomponenttype: string,
-    ytelseskomponentbeloep: number,
-    periodeFom: string,
-    periodeTom: string,
+    ytelsestype: string;
+    ytelseskomponenttype: string;
+    ytelseskomponentbeloep: number;
+    periodeFom: string;
+    periodeTom: string;
 }
 
 export class NyNavYtelseObject {
@@ -46,16 +46,51 @@ export class NyNavUtbetaling extends React.Component<Props, State> {
         tomDato.setDate(-1);
         this.state = {
             isOpened: false,
-            posteringsdato: dato.getFullYear() + "-" + (dato.getMonth() < 9 ? "0" : "") + (dato.getMonth() + 1) + "-" + (dato.getDate() < 9 ? "0" : "") + (dato.getDate() + 1),
-            utbetalingsdato: dato.getFullYear() + "-" + (dato.getMonth() < 9 ? "0" : "") + (dato.getMonth() + 1) + "-" + (dato.getDate() < 9 ? "0" : "") + (dato.getDate() + 1),
-            forfallsdato: dato.getFullYear() + "-" + (dato.getMonth() < 9 ? "0" : "") + (dato.getMonth() + 1) + "-" + (dato.getDate() < 9 ? "0" : "") + (dato.getDate() + 1),
+            posteringsdato:
+                dato.getFullYear() +
+                "-" +
+                (dato.getMonth() < 9 ? "0" : "") +
+                (dato.getMonth() + 1) +
+                "-" +
+                (dato.getDate() < 9 ? "0" : "") +
+                (dato.getDate() + 1),
+            utbetalingsdato:
+                dato.getFullYear() +
+                "-" +
+                (dato.getMonth() < 9 ? "0" : "") +
+                (dato.getMonth() + 1) +
+                "-" +
+                (dato.getDate() < 9 ? "0" : "") +
+                (dato.getDate() + 1),
+            forfallsdato:
+                dato.getFullYear() +
+                "-" +
+                (dato.getMonth() < 9 ? "0" : "") +
+                (dato.getMonth() + 1) +
+                "-" +
+                (dato.getDate() < 9 ? "0" : "") +
+                (dato.getDate() + 1),
             ident: 12345678901,
             ytelsestype: "Dagpenger",
             ytelseskomponenttype: "Ordinær og utvidet",
             ytelseskomponentbeloep: 10101,
-            periodeFom: fomDato.getFullYear() + "-" + (fomDato.getMonth() < 9 ? "0" : "") + (fomDato.getMonth() + 1) + "-" + (fomDato.getDate() < 9 ? "0" : "") + (fomDato.getDate() + 1),
-            periodeTom: tomDato.getFullYear() + "-" + (tomDato.getMonth() < 9 ? "0" : "") + (tomDato.getMonth() + 1) + "-" + (tomDato.getDate() < 9 ? "0" : "") + (tomDato.getDate() + 1),
-        }
+            periodeFom:
+                fomDato.getFullYear() +
+                "-" +
+                (fomDato.getMonth() < 9 ? "0" : "") +
+                (fomDato.getMonth() + 1) +
+                "-" +
+                (fomDato.getDate() < 9 ? "0" : "") +
+                (fomDato.getDate() + 1),
+            periodeTom:
+                tomDato.getFullYear() +
+                "-" +
+                (tomDato.getMonth() < 9 ? "0" : "") +
+                (tomDato.getMonth() + 1) +
+                "-" +
+                (tomDato.getDate() < 9 ? "0" : "") +
+                (tomDato.getDate() + 1),
+        };
     }
 
     lagreNyUtbetaling() {
@@ -75,9 +110,8 @@ export class NyNavUtbetaling extends React.Component<Props, State> {
         };
 
         this.props.onLeggTilNyNavUtbetaling(nyNavUtbetaling, nyNavYtelse);
-        this.setState({isOpened: false})
+        this.setState({isOpened: false});
     }
-
 
     render() {
         const buttonClassName = this.state.isOpened ? "mock-hide" : "mock-show";
@@ -86,7 +120,8 @@ export class NyNavUtbetaling extends React.Component<Props, State> {
         let sistKalendermaaned = "";
         while (manederList.length < 4) {
             dato.setMonth(dato.getMonth() - 1);
-            const kalendermaaned: string = dato.getFullYear() + "-" + (dato.getMonth() < 9 ? "0" : "") + (dato.getMonth() + 1);
+            const kalendermaaned: string =
+                dato.getFullYear() + "-" + (dato.getMonth() < 9 ? "0" : "") + (dato.getMonth() + 1);
             if (kalendermaaned !== sistKalendermaaned) {
                 manederList.push(kalendermaaned);
                 sistKalendermaaned = kalendermaaned;
@@ -99,23 +134,31 @@ export class NyNavUtbetaling extends React.Component<Props, State> {
                     <div className="mock-newThingWrapper">
                         <div className="mock-newThing-tittel">Legg til NAV utbetaling:</div>
                         <div className="mock-newThing-body">
-                            <MockInput label="Beløp:"
-                                       onChange={(evt: any) => this.setState({ytelseskomponentbeloep: evt.target.value})}
-                                       value={this.state.ytelseskomponentbeloep.toString()}/>
-                            <MockInput label="Utbetalingsdato:"
-                                       onChange={(evt: any) => this.setState({utbetalingsdato: evt.target.value})}
-                                       value={this.state.utbetalingsdato}/>
-                            <MockInput label="Ytelsestype:"
-                                       onChange={(evt: any) => this.setState({ytelsestype: evt.target.value})}
-                                       value={this.state.ytelsestype}/>
+                            <MockInput
+                                label="Beløp:"
+                                onChange={(evt: any) => this.setState({ytelseskomponentbeloep: evt.target.value})}
+                                value={this.state.ytelseskomponentbeloep.toString()}
+                            />
+                            <MockInput
+                                label="Utbetalingsdato:"
+                                onChange={(evt: any) => this.setState({utbetalingsdato: evt.target.value})}
+                                value={this.state.utbetalingsdato}
+                            />
+                            <MockInput
+                                label="Ytelsestype:"
+                                onChange={(evt: any) => this.setState({ytelsestype: evt.target.value})}
+                                value={this.state.ytelsestype}
+                            />
                             <button onClick={() => this.lagreNyUtbetaling()}>Ok</button>
                             <button onClick={() => this.setState({isOpened: false})}>Avbryt</button>
                         </div>
                     </div>
                 </Collapse>
 
-                <button className={buttonClassName} onClick={() => this.setState({isOpened: true})}>+</button>
+                <button className={buttonClassName} onClick={() => this.setState({isOpened: true})}>
+                    +
+                </button>
             </div>
-        )
+        );
     }
 }

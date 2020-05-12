@@ -2,12 +2,7 @@ import * as React from "react";
 
 const William = () => (
     <div>
-        <svg
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            width={80}
-            height={80}
-            className="kun_mobil"
-        >
+        <svg xmlnsXlink="http://www.w3.org/1999/xlink" width={80} height={80} className="kun_mobil">
             <defs>
                 <circle id="william_mobil_a" cx={40} cy={40} r={40} />
                 <path
@@ -35,10 +30,7 @@ const William = () => (
                         </mask>
                         <use fill="#D8A25D" xlinkHref="#william_mobil_c" />
                         <g mask="url(#william_mobil_d)">
-                            <path
-                                fill="#117938"
-                                d="M-26.278 59.891h100v-80h-100z"
-                            />
+                            <path fill="#117938" d="M-26.278 59.891h100v-80h-100z" />
                         </g>
                     </g>
                     <path
@@ -75,12 +67,7 @@ const William = () => (
             </g>
         </svg>
 
-        <svg
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            width={100}
-            height={100}
-            className="kun_desktop"
-        >
+        <svg xmlnsXlink="http://www.w3.org/1999/xlink" width={100} height={100} className="kun_desktop">
             <defs>
                 <circle id="william_desktop_a" cx={50} cy={50} r={50} />
                 <path
@@ -135,10 +122,7 @@ const William = () => (
                             <mask id="william_desktop_f" fill="#fff">
                                 <use xlinkHref="#william_desktop_e" />
                             </mask>
-                            <use
-                                fill="#F6B873"
-                                xlinkHref="#william_desktop_e"
-                            />
+                            <use fill="#F6B873" xlinkHref="#william_desktop_e" />
                             <g fill="#8B5F26" mask="url(#william_desktop_f)">
                                 <path d="M-11.727-26h67v79h-67z" />
                             </g>

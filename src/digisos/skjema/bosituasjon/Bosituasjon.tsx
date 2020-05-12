@@ -3,30 +3,19 @@ import {useIntl} from "react-intl";
 import {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
-import Sporsmal, {
-    LegendTittleStyle,
-} from "../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import {Bosituasjon} from "./bosituasjonTypes";
-import {
-    SoknadsSti,
-    oppdaterSoknadsdataSti,
-} from "../../redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti, oppdaterSoknadsdataSti} from "../../redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
 import {onEndretValideringsfeil} from "../../redux/soknadsdata/soknadsdataContainerUtils";
 import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 import {State} from "../../redux/reducers";
-import {
-    hentSoknadsdata,
-    lagreSoknadsdata,
-} from "../../redux/soknadsdata/soknadsdataActions";
-import {
-    clearValideringsfeil,
-    setValideringsfeil,
-} from "../../redux/validering/valideringActions";
+import {hentSoknadsdata, lagreSoknadsdata} from "../../redux/soknadsdata/soknadsdataActions";
+import {clearValideringsfeil, setValideringsfeil} from "../../redux/validering/valideringActions";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -48,9 +37,7 @@ enum Annetvalg {
 }
 
 const BosituasjonView = () => {
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const feil = useSelector((state: State) => state.validering.feil);
 
@@ -70,38 +57,18 @@ const BosituasjonView = () => {
             if (verdi && verdi.indexOf("annet.botype.") !== -1) {
                 const botype = verdi.replace("annet.botype.", "");
                 bosituasjon.botype = botype;
-                dispatch(
-                    oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon)
-                );
-                const valideringsfeil = validerAntallPersoner(
-                    bosituasjon.antallPersoner
-                );
+                dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon));
+                const valideringsfeil = validerAntallPersoner(bosituasjon.antallPersoner);
                 if (!valideringsfeil) {
-                    dispatch(
-                        lagreSoknadsdata(
-                            behandlingsId,
-                            SoknadsSti.BOSITUASJON,
-                            bosituasjon
-                        )
-                    );
+                    dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon));
                 }
             } else {
                 const botype = verdi;
                 bosituasjon.botype = botype;
-                dispatch(
-                    oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon)
-                );
-                const valideringsfeil = validerAntallPersoner(
-                    bosituasjon.antallPersoner
-                );
+                dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon));
+                const valideringsfeil = validerAntallPersoner(bosituasjon.antallPersoner);
                 if (!valideringsfeil) {
-                    dispatch(
-                        lagreSoknadsdata(
-                            behandlingsId,
-                            SoknadsSti.BOSITUASJON,
-                            bosituasjon
-                        )
-                    );
+                    dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon));
                 }
             }
         }
@@ -114,10 +81,7 @@ const BosituasjonView = () => {
     };
 
     const renderRadioknapp = (id: string) => {
-        if (
-            Object.keys(Annetvalg).find(s => s === id) &&
-            !erValgt(Bosituasjonsvalg.annet)
-        ) {
+        if (Object.keys(Annetvalg).find((s) => s === id) && !erValgt(Bosituasjonsvalg.annet)) {
             return null;
         }
         return (
@@ -140,19 +104,8 @@ const BosituasjonView = () => {
                     botype,
                     antallPersoner,
                 };
-                dispatch(
-                    lagreSoknadsdata(
-                        behandlingsId,
-                        SoknadsSti.BOSITUASJON,
-                        oppdatertBosituasjon
-                    )
-                );
-                dispatch(
-                    oppdaterSoknadsdataSti(
-                        SoknadsSti.BOSITUASJON,
-                        oppdatertBosituasjon
-                    )
-                );
+                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, oppdatertBosituasjon));
+                dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, oppdatertBosituasjon));
                 dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
             }
         }
@@ -162,10 +115,7 @@ const BosituasjonView = () => {
         if (!antallPersoner || antallPersoner.length === 0) {
             return null;
         }
-        const feilkode: ValideringsFeilKode | undefined = erTall(
-            antallPersoner,
-            true
-        );
+        const feilkode: ValideringsFeilKode | undefined = erTall(antallPersoner, true);
         onEndretValideringsfeil(feilkode, FAKTUM_KEY_ANTALL, feil, () => {
             feilkode
                 ? dispatch(setValideringsfeil(feilkode, FAKTUM_KEY_ANTALL))
@@ -183,15 +133,11 @@ const BosituasjonView = () => {
 
     const bosituasjon: Bosituasjon = soknadsdata.bosituasjon;
     let synligUnderskjema: boolean = false;
-    if (
-        erValgt(Bosituasjonsvalg.annet) ||
-        Object.keys(Annetvalg).find(v => v === bosituasjon.botype)
-    ) {
+    if (erValgt(Bosituasjonsvalg.annet) || Object.keys(Annetvalg).find((v) => v === bosituasjon.botype)) {
         synligUnderskjema = true;
     }
 
-    const antallPersoner =
-        bosituasjon.antallPersoner != null ? bosituasjon.antallPersoner : "";
+    const antallPersoner = bosituasjon.antallPersoner != null ? bosituasjon.antallPersoner : "";
 
     return (
         <div>
@@ -207,10 +153,7 @@ const BosituasjonView = () => {
                 <div className="skjema-sporsmal--jaNeiSporsmal">
                     <Underskjema visible={synligUnderskjema} arrow={true}>
                         <Sporsmal
-                            tekster={getFaktumSporsmalTekst(
-                                intl,
-                                "bosituasjon"
-                            )}
+                            tekster={getFaktumSporsmalTekst(intl, "bosituasjon")}
                             legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                             stil="system"
                         >

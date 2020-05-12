@@ -55,11 +55,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
                 return (
                     <div>
                         <div className="ikke_mobilvennlig_ikon">
-                            <Ella
-                                size={iconSize}
-                                visBakgrundsSirkel={true}
-                                bakgrundsFarge={this.props.farge}
-                            />
+                            <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge} />
                         </div>
 
                         <div className="mobilvennlig_ikon">
@@ -71,33 +67,21 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
             case InformasjonspanelIkon.BREVKONVOLUTT: {
                 return (
                     <div>
-                        <Brevkonvolutt
-                            size={iconSize}
-                            visBakgrundsSirkel={true}
-                            bakgrundsFarge={this.props.farge}
-                        />
+                        <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge} />
                     </div>
                 );
             }
             case InformasjonspanelIkon.HENSYN: {
                 return (
                     <div>
-                        <Hensyn
-                            size={iconSize}
-                            visBakgrundsSirkel={true}
-                            bakgrundsFarge={this.props.farge}
-                        />
+                        <Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge} />
                     </div>
                 );
             }
             default: {
                 return (
                     <div>
-                        <Ella
-                            size={iconSize}
-                            visBakgrundsSirkel={true}
-                            bakgrundsFarge={this.props.farge}
-                        />
+                        <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge} />
                     </div>
                 );
             }
@@ -108,18 +92,12 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
         const styleClassName = "skjema-informasjonspanel--" + this.props.farge;
 
         return (
-            <div
-                className={
-                    "skjema-informasjonspanel-wrapper " + this.props.className
-                }
-            >
+            <div className={"skjema-informasjonspanel-wrapper " + this.props.className}>
                 <div
                     className={
                         "skjema-informasjonspanel " +
                         styleClassName +
-                        (this.props.synlig || fadeIn === false
-                            ? " skjema-informasjonspanel__synlig"
-                            : "")
+                        (this.props.synlig || fadeIn === false ? " skjema-informasjonspanel__synlig" : "")
                     }
                 >
                     <div>{this.renderIkon()}</div>
@@ -134,11 +112,7 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
         if (typeof isOpened === "undefined") {
             return this.renderContent(false);
         } else {
-            return (
-                <div className={"react-collapse-wrapper"}>
-                    {this.renderContent(true)}
-                </div>
-            );
+            return <div className={"react-collapse-wrapper"}>{this.renderContent(true)}</div>;
         }
     }
 }

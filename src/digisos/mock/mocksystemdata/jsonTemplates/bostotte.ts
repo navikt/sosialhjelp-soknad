@@ -1,4 +1,4 @@
 export const bostotteJSON = {
-    "utbetalinger" : [],
-    "saker" : []
+    utbetalinger: [],
+    saker: [],
 };

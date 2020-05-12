@@ -1,9 +1,9 @@
 export interface Begrunnelse {
-	hvaSokesOm: string;
-	hvorforSoke: string;
+    hvaSokesOm: string;
+    hvorforSoke: string;
 }
 
 export const initialBegrunnelseState: Begrunnelse = {
-	hvaSokesOm: "",
-	hvorforSoke: ""
+    hvaSokesOm: "",
+    hvorforSoke: "",
 };

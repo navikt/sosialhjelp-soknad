@@ -8,7 +8,7 @@ import FeatureTogglesReducer from "./featuretoggles/featureTogglesReducer";
 import EttersendelseReducer from "./ettersendelse/ettersendelseReducer";
 import MockReducer, {MockState} from "../mock/mockReducer";
 import SoknadsdataReducer, {Soknadsdata} from "./soknadsdata/soknadsdataReducer";
-import { opplysningerReducer } from "./okonomiskeOpplysninger/opplysningerReducer";
+import {opplysningerReducer} from "./okonomiskeOpplysninger/opplysningerReducer";
 import {filReducer} from "./fil/filReducer";
 import {FeatureTogglesApiType} from "./featuretoggles/featureTogglesTypes";
 import {EttersendelseState} from "./ettersendelse/ettersendelseTypes";
@@ -19,41 +19,41 @@ import {SoknadState} from "./soknad/soknadTypes";
 import {MiljovariablerState} from "./miljovariabler/miljovariablerTypes";
 import {LedeteksterState} from "./ledetekster/ledeteksterTypes";
 
-
 export interface State {
-	router: RouterState;
-	soknad: SoknadState;
+    router: RouterState;
+    soknad: SoknadState;
 
-	ledetekster: LedeteksterState;
-	miljovariabler: MiljovariablerState;
+    ledetekster: LedeteksterState;
+    miljovariabler: MiljovariablerState;
 
-	soknadsdata: Soknadsdata;
-	okonomiskeOpplysninger: OpplysningerModel;
-	filopplasting: FilState;
-	oppsummering: OppsummeringState;
-	ettersendelse: EttersendelseState;
+    soknadsdata: Soknadsdata;
+    okonomiskeOpplysninger: OpplysningerModel;
+    filopplasting: FilState;
+    oppsummering: OppsummeringState;
+    ettersendelse: EttersendelseState;
 
-	validering: ValideringState;
-	featuretoggles: FeatureTogglesApiType;
+    validering: ValideringState;
+    featuretoggles: FeatureTogglesApiType;
 
-	mockData: MockState;
+    mockData: MockState;
 }
 
-export default (history: any) => combineReducers({
-	router: connectRouter(history),
-	soknad: SoknadReducer,
+export default (history: any) =>
+    combineReducers({
+        router: connectRouter(history),
+        soknad: SoknadReducer,
 
-	ledetekster: LedeteksterReducer,
-	miljovariabler: MiljovariablerReducer,
+        ledetekster: LedeteksterReducer,
+        miljovariabler: MiljovariablerReducer,
 
-	soknadsdata: SoknadsdataReducer,
-	okonomiskeOpplysninger: opplysningerReducer,
-	filopplasting: filReducer,
-	oppsummering: OppsummeringReducer,
-	ettersendelse: EttersendelseReducer,
+        soknadsdata: SoknadsdataReducer,
+        okonomiskeOpplysninger: opplysningerReducer,
+        filopplasting: filReducer,
+        oppsummering: OppsummeringReducer,
+        ettersendelse: EttersendelseReducer,
 
-	validering: valideringsReducer,
-	featuretoggles: FeatureTogglesReducer,
+        validering: valideringsReducer,
+        featuretoggles: FeatureTogglesReducer,
 
-	mockData: MockReducer
-});
+        mockData: MockReducer,
+    });

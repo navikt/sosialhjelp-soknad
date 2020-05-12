@@ -28,155 +28,153 @@
 @import "../components/animasjoner/ellaBlunk/EllaBlunk.less";
 
 // Nav farger
-@navSuksessFarge: #9BD0B0;
-@navViktigFarge: #FFD399;
-@navFeilFarge: #E3B0A8;
+@navSuksessFarge: #9bd0b0;
+@navViktigFarge: #ffd399;
+@navFeilFarge: #e3b0a8;
 
 body {
-	overflow-y: scroll;
-	font-family: "Source Sans Pro", Arial, sans-serif; // Todo - finne riktig måte å få inn denne
+    overflow-y: scroll;
+    font-family: "Source Sans Pro", Arial, sans-serif; // Todo - finne riktig måte å få inn denne
 }
 
 fieldset {
-	/* Retter problem med for bred størrelse på mobil: */
-	min-width: 0px;
+    /* Retter problem med for bred størrelse på mobil: */
+    min-width: 0px;
 }
 
 .kunSkjermleser {
-	position: absolute !important;
-	height: 1px !important;
-	width: 1px !important;
-	overflow: hidden !important;
-	clip: rect(1px, 1px, 1px, 1px);
+    position: absolute !important;
+    height: 1px !important;
+    width: 1px !important;
+    overflow: hidden !important;
+    clip: rect(1px, 1px, 1px, 1px);
 }
 
 .container--noPadding {
-	padding-left: 0 !important;
-	padding-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 .tekst-capitalize {
-	text-transform: capitalize;
+    text-transform: capitalize;
 }
 .skjema-texarea--normal {
-	min-height: 6em;
+    min-height: 6em;
 }
 
 .skjema-textarea--large {
-	min-height: 12em;
+    min-height: 12em;
 }
 
 .application-spinner {
-	width: 100%;
-	text-align: center;
-	padding-top: 100px;
+    width: 100%;
+    text-align: center;
+    padding-top: 100px;
 }
 
 .skjema__stegindikator {
-	margin-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 
 .detaljeliste {
-
-	margin-top: 0;
+    margin-top: 0;
     display: flex;
     flex-wrap: wrap;
-	list-style: none;
-	padding-left: 0;
-  	-webkit-padding-start: 0;
-	&__element {
-		padding: 0;
-		margin: 0 0 0 0;
-	  	display: flex;
-	  	width: 100%;
-		&--spaced {
-			margin-top: 1rem;
-		}
-	}
-	&__tittel {
-		font-weight: bold;
-	  	font-size: 16px;
-		padding-right: 0.5rem;
-	}
-	&__verdi {
-
-	}
+    list-style: none;
+    padding-left: 0;
+    -webkit-padding-start: 0;
+    &__element {
+        padding: 0;
+        margin: 0 0 0 0;
+        display: flex;
+        width: 100%;
+        &--spaced {
+            margin-top: 1rem;
+        }
+    }
+    &__tittel {
+        font-weight: bold;
+        font-size: 16px;
+        padding-right: 0.5rem;
+    }
+    &__verdi {
+    }
 }
 
 .arbeidsgiverliste {
-  list-style-type: none;
-  padding-left: 0;
-  -webkit-padding-start: 0;
-  margin-top: 1rem;
+    list-style-type: none;
+    padding-left: 0;
+    -webkit-padding-start: 0;
+    margin-top: 1rem;
 
-  &__arbeidsgiver {
-	margin-bottom: 2rem;
-  }
+    &__arbeidsgiver {
+        margin-bottom: 2rem;
+    }
 }
 
 .blokk-m-top  {
-	margin-top: 1.5rem;
+    margin-top: 1.5rem;
 }
 .blokk-s-top  {
-	margin-top: 1rem;
+    margin-top: 1rem;
 }
 
 @media @mobile {
-	.skjema__stegindikator {
-		margin-bottom: 2rem;
-	}
-	.stegindikator {
-		&__steg {
-			&:not(&--aktiv) {
-				zoom: 0.8;
-				vertical-align: middle;
-				transform: translateY(0.35em);
-			}
-			&--inaktiv {
-				box-shadow: rgb(120, 112, 106) 0px 0px 0px 1.5px inset;
-			}
-			&--aktiv {
-				line-height: 2em;
-				margin-right: 13px;
-				zoom: 1.05;
-				&:after {
-					width: 11px;
-					right: -12px;
-				}
-			}
-		}
-	}
+    .skjema__stegindikator {
+        margin-bottom: 2rem;
+    }
+    .stegindikator {
+        &__steg {
+            &:not(&--aktiv) {
+                zoom: 0.8;
+                vertical-align: middle;
+                transform: translateY(0.35em);
+            }
+            &--inaktiv {
+                box-shadow: rgb(120, 112, 106) 0px 0px 0px 1.5px inset;
+            }
+            &--aktiv {
+                line-height: 2em;
+                margin-right: 13px;
+                zoom: 1.05;
+                &:after {
+                    width: 11px;
+                    right: -12px;
+                }
+            }
+        }
+    }
 }
 
 .ikon-sirkel-gul {
-	display: inline-block;
-	position: relative;
-	@iconSize: 32px;
-	@bkgSize: 24px;
-	&:before {
-		content: "";
-		width: @bkgSize;
-		height: @bkgSize;
-		border-radius: 50%;
-		background-color: black;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		margin-top: -1 * (@bkgSize / 2) - 2;
-		margin-left: -1 * (@bkgSize / 2) - 1;
-		z-index: 1;
-	}
-	svg {
-		width: @iconSize;
-		height: @iconSize;
-		position: relative;
-		z-index: 2;
-	}
-	svg .sirkel {
-		fill: @orangeFocus;
-	}
+    display: inline-block;
+    position: relative;
+    @iconSize: 32px;
+    @bkgSize: 24px;
+    &:before {
+        content: "";
+        width: @bkgSize;
+        height: @bkgSize;
+        border-radius: 50%;
+        background-color: black;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -1 * (@bkgSize / 2) - 2;
+        margin-left: -1 * (@bkgSize / 2) - 1;
+        z-index: 1;
+    }
+    svg {
+        width: @iconSize;
+        height: @iconSize;
+        position: relative;
+        z-index: 2;
+    }
+    svg .sirkel {
+        fill: @orangeFocus;
+    }
 }
 
 .add-padding-bottom {
-	padding-bottom: 1rem;
+    padding-bottom: 1rem;
 }

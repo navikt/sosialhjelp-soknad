@@ -1,69 +1,64 @@
 .ReactModal__Content.ReactModal__Content--after-open.modal {
-  border-radius: 8px;
-  border: solid 2px @navOransjeLighten40;
-  overflow: visible;
+    border-radius: 8px;
+    border: solid 2px @navOransjeLighten40;
+    overflow: visible;
 }
 
 .avbrytmodal {
-  max-width: 34rem;
+    max-width: 34rem;
 
-  &__infoikon_wrapper {
-	position: absolute;
-	left: 50%;
-	top: 0;
-	z-index: 1;
-	transform: translate(-50%, -50%);
-	background: @navOransjeLighten40;
-	border-radius: 100%;
-	height: 5rem;
-	width: 5rem;
+    &__infoikon_wrapper {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        z-index: 1;
+        transform: translate(-50%, -50%);
+        background: @navOransjeLighten40;
+        border-radius: 100%;
+        height: 5rem;
+        width: 5rem;
 
-	&>img {
-	  z-index: 2;
-	  display: block;
-	  position: absolute;
-	  height: 3.125rem;
-	  left: 50%;
-	  top: 50%;
-	  transform: translate(-50%, -50%);
-	}
-  }
+        & > img {
+            z-index: 2;
+            display: block;
+            position: absolute;
+            height: 3.125rem;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
 
-  &__overskrift {
-	text-align: center;
-  }
+    &__overskrift {
+        text-align: center;
+    }
 
-  &__tekst {
-	text-align: center;
-  }
-
+    &__tekst {
+        text-align: center;
+    }
 }
 
 @media @desktop {
+    .avbrytmodal {
+        padding: 2rem;
 
-  .avbrytmodal {
-	padding: 2rem;
-
-	&__slettknapp {
-	  margin-left: 2rem;
-	}
-
-  }
-
+        &__slettknapp {
+            margin-left: 2rem;
+        }
+    }
 }
 
 @media @mobile {
+    .avbrytmodal {
+        padding: 0;
 
-  .avbrytmodal {
-	padding: 0;
+        &__slettknapp {
+            margin-left: 0rem;
+            margin-top: 1rem;
+        }
 
-	&__slettknapp {
-	  margin-left: 0rem;
-	  margin-top: 1rem;
-	}
-
-	&__infoikon_wrapper {
-	  display: none;
-	}
-  }
+        &__infoikon_wrapper {
+            display: none;
+        }
+    }
 }

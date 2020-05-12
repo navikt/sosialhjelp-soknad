@@ -1,11 +1,7 @@
 import * as React from "react";
 import {DigisosFarge} from "./DigisosFarger";
 
-const Hensyn = (props: {
-    size?: number;
-    visBakgrundsSirkel: boolean;
-    bakgrundsFarge?: DigisosFarge;
-}) => {
+const Hensyn = (props: {size?: number; visBakgrundsSirkel: boolean; bakgrundsFarge?: DigisosFarge}) => {
     const height = props.size || 60;
     const width = props.size || 60;
     const bakgrundsFarge = props.bakgrundsFarge || DigisosFarge.SUKSESS;
@@ -27,10 +23,7 @@ const Hensyn = (props: {
             <g fill="none" fillRule="evenodd">
                 <circle cx="40" cy="40" r="40" fill="#FFD399" />
                 <use fill="#FFF" transform="translate(18 12)" xlinkHref="#a" />
-                <path
-                    fill="#C9C9C9"
-                    d="M27.813 12v6.5a2.826 2.826 0 0 1-2.82 2.832H18L27.813 12z"
-                />
+                <path fill="#C9C9C9" d="M27.813 12v6.5a2.826 2.826 0 0 1-2.82 2.832H18L27.813 12z" />
                 <g fill="#515658">
                     <path d="M43.686 52.332V37.888H33.193v2.836h2.321v11.608h-2.321v2.836h12.814v-2.836zM39.6 35.47a4.936 4.936 0 1 0 0-9.872 4.936 4.936 0 0 0 0 9.872" />
                 </g>
