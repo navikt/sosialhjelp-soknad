@@ -7,14 +7,16 @@ export const getTomtAnsvarMedBarn: () => Barn = () => {
                 fornavn: "",
                 mellomnavn: "",
                 etternavn: "",
-                fulltNavn: ""},
+                fulltNavn: "",
+            },
             fodselsdato: null,
             personnummer: null,
             fodselsnummer: null,
         },
+        harDiskresjonskode: false,
         borSammenMed: null,
         erFolkeregistrertSammen: false,
         harDeltBosted: null,
-        samvarsgrad: null
-    }
+        samvarsgrad: null,
+    };
 };

@@ -63,8 +63,8 @@ const InputEnhanced = (props: Props) => {
 
     return (
         <Input
-            id={this.props.id ? replaceDotWithUnderscore(this.props.id) : faktumKey}
-            className={"input--xxl faktumInput  " + (this.props.className ? this.props.className : "")}
+            id={props.id ? replaceDotWithUnderscore(props.id) : faktumKey}
+            className={"input--xxl faktumInput  " + (props.className ? props.className : "")}
             type={type}
             autoComplete="off"
             name={getName()}
@@ -83,7 +83,7 @@ const InputEnhanced = (props: Props) => {
             pattern={pattern}
             required={required}
             step={step}
-                noValidate={true /* Unngå at nettleser validerer og evt. fjerner verdien */}
+            noValidate={true /* Unngå at nettleser validerer og evt. fjerner verdien */}
             autoFocus={autoFocus}
         />
     );

@@ -26,7 +26,7 @@ class MockLogin extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            uid: "",
+            uid: Math.round(Math.random() * 9999999999999).toString(),
             loading: false,
         };
     }
@@ -69,10 +69,11 @@ class MockLogin extends React.Component<Props, State> {
                         <br />
 
                         <Input
-                            label={"Velg en tilfeldig ID"}
+                            label={"Skriv en tilfeldig ID"}
                             onKeyPress={this.keyPress}
                             value={this.state.uid}
                             onChange={(evt: any) => this.setState({uid: evt.target.value})}
+                            autoFocus={true}
                         />
 
                         <div>
