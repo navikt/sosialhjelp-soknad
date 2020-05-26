@@ -18,6 +18,7 @@ import {connectRouter, RouterState} from "connected-react-router";
 import {SoknadState} from "./soknad/soknadTypes";
 import {MiljovariablerState} from "./miljovariabler/miljovariablerTypes";
 import {LedeteksterState} from "./ledetekster/ledeteksterTypes";
+import {navloggerReducer} from "./navlogger/navloggerReducer";
 
 export interface State {
     router: RouterState;
@@ -56,4 +57,5 @@ export default (history: any) =>
         featuretoggles: FeatureTogglesReducer,
 
         mockData: MockReducer,
+        navlogger: navloggerReducer,
     });
