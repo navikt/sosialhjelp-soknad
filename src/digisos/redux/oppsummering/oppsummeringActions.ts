@@ -1,4 +1,4 @@
-import {OppsummeringActionTypeKeys, OppsummeringActionTypes} from "./oppsummeringTypes";
+import {OppsummeringActionTypeKeys, OppsummeringActionTypes, NyOppsummeringResponse} from "./oppsummeringTypes";
 
 export function bekreftOppsummering(): OppsummeringActionTypes {
     return {
@@ -30,5 +30,18 @@ export function hentOppsumeringFeilet(feilmelding: string): OppsummeringActionTy
     return {
         type: OppsummeringActionTypeKeys.FEILET,
         feilmelding,
+    };
+}
+
+export function hentNyOppsummering(): OppsummeringActionTypes {
+    return {
+        type: OppsummeringActionTypeKeys.HENT_NY_OPPSUMMERING,
+    };
+}
+
+export function setNyOppsummering(response: NyOppsummeringResponse): OppsummeringActionTypes {
+    return {
+        type: OppsummeringActionTypeKeys.SET_NY_OPPSUMMERING,
+        response,
     };
 }

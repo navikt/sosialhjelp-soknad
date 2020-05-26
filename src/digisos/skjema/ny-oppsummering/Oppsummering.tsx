@@ -5,7 +5,7 @@ import {EtikettSuksess, EtikettFokus} from "nav-frontend-etiketter";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../redux/reducers";
 import {finnOgOppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
-import {hentOppsummering, bekreftOppsummering} from "../../redux/oppsummering/oppsummeringActions";
+import {bekreftOppsummering, hentNyOppsummering} from "../../redux/oppsummering/oppsummeringActions";
 import {Undertittel} from "nav-frontend-typografi";
 import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
 import {FormattedMessage, useIntl} from "react-intl";
@@ -16,35 +16,25 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import {Link} from "react-router-dom";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {UbesvarteSporsmalPanel} from "./UbesvarteSporsmalPanel";
-
-interface Bolk {
-    steg: number;
-    tittel: string;
-}
-
-const bolker: Bolk[] = [
-    {steg: 1, tittel: "Personopplysninger"},
-    {steg: 2, tittel: "Hva søker du om?"},
-    {steg: 3, tittel: "Arbeid og utdanning"},
-    {steg: 4, tittel: "Familiesituasjon"},
-    {steg: 5, tittel: "Bosituasjon"},
-    {steg: 6, tittel: "Inntekt og formue"},
-    {steg: 7, tittel: "Utgifter og gjeld"},
-    {steg: 8, tittel: "Økonomiske opplysninger og vedlegg"},
-];
+import {NyOppsummeringBolk} from "../../redux/oppsummering/oppsummeringTypes";
 
 export const Oppsummering = () => {
     const dispatch = useDispatch();
 
-    const {bekreftet, visBekreftMangler, restStatus} = useSelector((state: State) => state.oppsummering);
+    const {bekreftet, visBekreftMangler, restStatus, nyOppsummering} = useSelector(
+        (state: State) => state.oppsummering
+    );
     const {behandlingsId} = useSelector((state: State) => state.soknad);
+
+    const harUbesvarteSporsmal =
+        nyOppsummering.filter((bolk: NyOppsummeringBolk) => bolk.erUtfylt === false).length > 0;
 
     const intl = useIntl();
 
     useEffect(() => {
         if (behandlingsId) {
             dispatch(finnOgOppdaterSoknadsmottakerStatus(behandlingsId));
-            dispatch(hentOppsummering()); // Kanskje denne kan fjernes hvis vi ikke skal bruke handlebarkode?
+            dispatch(hentNyOppsummering());
         }
     }, [behandlingsId, dispatch]);
 
@@ -60,11 +50,13 @@ export const Oppsummering = () => {
         );
     }
 
+    console.log("nyOppsummering", nyOppsummering);
+
     return (
         <DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
-            <UbesvarteSporsmalPanel />
+            {harUbesvarteSporsmal && <UbesvarteSporsmalPanel />}
 
-            {bolker.map((bolk: Bolk) => {
+            {nyOppsummering.map((bolk: NyOppsummeringBolk) => {
                 return (
                     <OppsummeringBolk bolk={bolk} key={bolk.steg}>
                         Noe innhold her
@@ -98,7 +90,7 @@ export const Oppsummering = () => {
     );
 };
 
-const OppsummeringBolk = (props: {bolk: Bolk; children: React.ReactNode}) => {
+const OppsummeringBolk = (props: {bolk: NyOppsummeringBolk; children: React.ReactNode}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
     const intl = useIntl();
 
@@ -106,7 +98,7 @@ const OppsummeringBolk = (props: {bolk: Bolk; children: React.ReactNode}) => {
         <div className="oppsummering-bolk">
             <Ekspanderbartpanel
                 className="oppsummering-ekspanderbart-panel"
-                tittel={<BolkTittel tittel={props.bolk.tittel} ferdig={false} />}
+                tittel={<BolkTittel tittel={props.bolk.tittel} ferdig={props.bolk.erUtfylt} />}
             >
                 <Link to={`/skjema/${behandlingsId}/${props.bolk.steg}`}>
                     {getIntlTextOrKey(intl, "oppsummering.gatilbake")}
