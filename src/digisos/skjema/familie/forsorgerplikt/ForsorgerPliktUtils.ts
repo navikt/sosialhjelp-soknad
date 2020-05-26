@@ -13,7 +13,6 @@ export const getTomtAnsvarMedBarn: () => Barn = () => {
             personnummer: null,
             fodselsnummer: null,
         },
-        harDiskresjonskode: false,
         borSammenMed: null,
         erFolkeregistrertSammen: false,
         harDeltBosted: null,
