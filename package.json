@@ -10,7 +10,7 @@
     "connected-react-router": "^6.8.0",
     "core-js": "^3.6.5",
     "craco-less": "^1.16.0",
-    "cuid": "^2.1.6",
+    "cuid": "^2.1.8",
     "history": "^4.10.1",
     "install": "^0.13.0",
     "intl": "^1.2.5",
