@@ -1,4 +1,4 @@
-import {mod11Kontroll, konverterFdatoTilDato} from "./valideringFuncUtils";
+import {konverterFdatoTilDato, mod11Kontroll} from "./valideringFuncUtils";
 import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
 
 export function pakrevd(value: string): ValideringsFeilKode | undefined {
@@ -43,6 +43,19 @@ export function erKontonummer(value: string): ValideringsFeilKode | undefined {
         !(parseInt(kontonummer.charAt(kontonummer.length - 1), 10) === mod11Kontroll(kontonummer))
     ) {
         return ValideringsFeilKode.ER_KONTONUMMER;
+    }
+    return undefined;
+}
+
+export function erSamvaersgrad(value: number | null): ValideringsFeilKode | undefined {
+    if (!value) {
+        return undefined;
+    }
+    if (isNaN(value)) {
+        return ValideringsFeilKode.ER_SAMVAERSGRAD;
+    }
+    if (value < 0 || value > 100) {
+        return ValideringsFeilKode.ER_SAMVAERSGRAD;
     }
     return undefined;
 }
