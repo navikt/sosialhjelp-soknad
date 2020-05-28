@@ -61,8 +61,6 @@ const AdresseView = () => {
         adresser.valg = adresseKategori;
         dispatch(oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, adresser));
         if (adresseKategori !== tidligereValg) {
-            console.log("DEBUG here 1:");
-            console.dir(adresser);
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, []));
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, null));
             if (adresseKategori === AdresseKategori.SOKNAD) {
@@ -82,18 +80,12 @@ const AdresseView = () => {
     const lagreAdresseValg = (payload: any, valg: AdresseKategori) => {
         if (behandlingsId) {
             setAdressePending(true);
-            console.log("DEBUG here pre lagreSoknadsdata:");
             dispatch(
                 lagreSoknadsdata(behandlingsId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
-                    console.log("DEBUG here response:");
-                    console.dir(navEnheter);
                     if (Array.isArray(navEnheter)) {
-                        console.log("DEBUG here isArray:");
                         if (navEnheter.length === 1) {
                             const valgtNavEnhet: NavEnhet = navEnheter[0];
                             valgtNavEnhet.valgt = true;
-                            console.log("DEBUG here OK:");
-                            console.dir(valgtNavEnhet);
                             dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet));
                             dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, valgtNavEnhet));
                             slettEventuelleValideringsfeil();
