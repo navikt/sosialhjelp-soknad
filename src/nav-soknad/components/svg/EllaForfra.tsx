@@ -19,7 +19,7 @@ const EllaForfra = (props: {className?: string}) => {
                     <mask id="ella-forfra-b" fill="#fff">
                         <use xlinkHref="#ella-forfra-a" />
                     </mask>
-                    <g fill="#3e3832" mask="url(#b)">
+                    <g fill="#3e3832" mask="url(#ella-forfra-b)">
                         <path d="M-8.47-.938h65v74h-65z" />
                     </g>
                 </g>
@@ -32,7 +32,7 @@ const EllaForfra = (props: {className?: string}) => {
                         <use xlinkHref="#ella-forfra-c" />
                     </mask>
                     <use fill="#D8A25D" xlinkHref="#ella-forfra-c" />
-                    <g mask="url(#d)">
+                    <g mask="url(#ella-forfra-d)">
                         <path fill="#085273" d="M-31.167 67.76h119v-93h-119z" />
                     </g>
                 </g>
