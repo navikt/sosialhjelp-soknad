@@ -75,3 +75,5 @@ Dersom du i tillegg ønsker å sette opp formatering av kode i IntelliJ slik at 
 -   Installer Prettier plugin i IntelliJ
 -   Trykk ⌥⇧⌘P for å formatere kode
 -   Optional: Sette opp filewatcher og automatisk formatering. Se her `https://prettier.io/docs/en/webstorm.html#running-prettier-on-save-using-file-watcher`
+
+test
