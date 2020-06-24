@@ -47,6 +47,7 @@ export enum ValideringsFeilKode {
     ER_FDATO = "validering.erFdato",
     ER_FDATO_ETTER_IDAG = "validering.erFdatoEtterIdag",
     SOKNADSMOTTAKER_PAKREVD = "soknadsmottaker.feilmelding",
+    ER_SAMVAERSGRAD = "validering.erSamvaersgrad",
 }
 
 export interface Valideringsfeil {

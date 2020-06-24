@@ -6,20 +6,20 @@ const EllaForfra = (props: {className?: string}) => {
         <svg xmlnsXlink="http://www.w3.org/1999/xlink" width={68} height={97} className={props.className}>
             <defs>
                 <path
-                    id="a"
+                    id="ella-forfra-a"
                     d="M.106 27.186A6.274 6.274 0 0 1 0 26.032C0 11.655 10.613 0 23.707 0 36.8 0 47.412 11.655 47.412 26.032c0 .095-.002.19-.006.285l.062-.001s.027 27.71-23.768 27.71C-.092 54.025 0 63.561 0 63.561V27.188l.106-.002z"
                 />
                 <path
-                    id="c"
+                    id="ella-forfra-c"
                     d="M25.38 0h-7.618C13.654 0 0 9.553 0 18.25v22.88h51V18.25C51 9.553 37.108 0 33 0h-7.62z"
                 />
             </defs>
             <g fill="none" fillRule="evenodd">
                 <g transform="translate(10.47 7)">
-                    <mask id="b" fill="#fff">
-                        <use xlinkHref="#a" />
+                    <mask id="ella-forfra-b" fill="#fff">
+                        <use xlinkHref="#ella-forfra-a" />
                     </mask>
-                    <g fill="#3e3832" mask="url(#b)">
+                    <g fill="#3e3832" mask="url(#ella-forfra-b)">
                         <path d="M-8.47-.938h65v74h-65z" />
                     </g>
                 </g>
@@ -28,11 +28,11 @@ const EllaForfra = (props: {className?: string}) => {
                     d="M21.688 57.318c.957 1.531 3.646 28.432 11.718 28.432 8.074 0 11.719-27.4 11.719-28.827-12.361-7.081-23.438.395-23.438.395z"
                 />
                 <g transform="translate(8.563 55.745)">
-                    <mask id="d" fill="#fff">
-                        <use xlinkHref="#c" />
+                    <mask id="ella-forfra-d" fill="#fff">
+                        <use xlinkHref="#ella-forfra-c" />
                     </mask>
-                    <use fill="#D8A25D" xlinkHref="#c" />
-                    <g mask="url(#d)">
+                    <use fill="#D8A25D" xlinkHref="#ella-forfra-c" />
+                    <g mask="url(#ella-forfra-d)">
                         <path fill="#085273" d="M-31.167 67.76h119v-93h-119z" />
                     </g>
                 </g>

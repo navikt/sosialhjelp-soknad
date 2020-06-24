@@ -1,0 +1,29 @@
+name: npm audit
+on:
+    push:
+        branches:
+            - "**" # Build all branches
+        tags-ignore:
+            - "**" # Don't build any tags
+
+env:
+    CI: true
+
+jobs:
+    build:
+        name: Run npm audit
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: "12.8.1"
+            - uses: actions/checkout@v1
+            - uses: actions/cache@v1.1.2
+              with:
+                  path: ~/.npm
+                  key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+                  restore-keys: ${{ runner.os }}-node-
+            - name: Install dependencies
+              run: npm ci
+            - name: Run npm audit
+              run: npm audit --audit-level=moderate # Denne kan justeres hvis vi ønsker at bygg brekker på sårbarheter lavere enn moderate. Mulige verdier er low|moderate|high|critical

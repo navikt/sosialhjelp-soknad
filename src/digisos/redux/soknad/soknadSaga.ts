@@ -96,7 +96,7 @@ function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
     }
 }
 
-function* opprettSoknadSaga(action: {type:string}) {
+function* opprettSoknadSaga(action: {type: string}) {
     try {
         const response: OpprettSoknadResponse = yield call(fetchPost, "soknader/opprettSoknad", "", true);
         yield put(opprettSoknadOk(response.brukerBehandlingId));
@@ -118,10 +118,7 @@ function* opprettSoknadSaga(action: {type:string}) {
 
 function* hentSamtykker(action: HentSamtykker) {
     try {
-        const response: Samtykke[] = yield call(
-            fetchToJson,
-            `soknader/${action.behandlingsId}/hentSamtykker`
-        );
+        const response: Samtykke[] = yield call(fetchToJson, `soknader/${action.behandlingsId}/hentSamtykker`);
         yield put(hentSamtykkerOk(response));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
@@ -132,9 +129,14 @@ function* hentSamtykker(action: HentSamtykker) {
     }
 }
 
-function* oppdaterSamtykke(action: {type:string, behandlingsId:string, harSamtykket:boolean, samtykker: Samtykke[]}) {
+function* oppdaterSamtykke(action: {
+    type: string;
+    behandlingsId: string;
+    harSamtykket: boolean;
+    samtykker: Samtykke[];
+}) {
     try {
-        if(action.behandlingsId && action.harSamtykket) {
+        if (action.behandlingsId && action.harSamtykket) {
             yield call(
                 fetchPost,
                 soknadsdataUrl(action.behandlingsId, SoknadsSti.OPPDATER_SAMTYKKE),
@@ -147,9 +149,7 @@ function* oppdaterSamtykke(action: {type:string, behandlingsId:string, harSamtyk
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         } else if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
-            yield put(
-                loggAdvarsel("oppdater samtykke saga ServiceUnavailable: " + reason)
-            );
+            yield put(loggAdvarsel("oppdater samtykke saga ServiceUnavailable: " + reason));
             yield put(visNedetidPanel(true));
             yield put(startSoknadServiceUnavailable());
         } else {
@@ -204,11 +204,6 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
 
         yield put(sendSoknadOk(action.behandlingsId));
         if (response && response.sendtTil === SendtTilSystemEnum.FIKS_DIGISOS_API) {
-            yield put(
-                loggAdvarsel(
-                    "Redirecter til innsyn etter innsending av søknad. Ble søknaden sendt til fiks-digisos-api?"
-                )
-            );
             window.location.href = getInnsynUrl() + response.id + "/status";
         } else if (response && response.id) {
             yield put(navigerTilKvittering(response.id));

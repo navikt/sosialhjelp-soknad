@@ -25,6 +25,14 @@ export const SoknadEttersendelseFeilerHotjarTrigger = ({children}) => (
     <HotjarTrigger hotjarTrigger="soknad_ettersendelse_feiler">{children}</HotjarTrigger>
 );
 
+export const DigisosGammelEttersendelseHotjarTrigger = ({children}) => (
+    <HotjarTrigger hotjarTrigger="digisos_gammel_ettersendelse">{children}</HotjarTrigger>
+);
+
 SoknadEttersendelseFeilerHotjarTrigger.propTypes = {
+    children: node,
+};
+
+DigisosGammelEttersendelseHotjarTrigger.propTypes = {
     children: node,
 };
