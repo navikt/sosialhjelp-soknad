@@ -9,7 +9,6 @@ import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMed
 import Barnebidrag from "./Barnebidrag";
 import RegistrerteBarn from "./RegistrerteBarn";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import BrukerregistrerteBarn from "./BrukerregistrerteBarn";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
@@ -46,16 +45,18 @@ const ForsorgerPliktView = () => {
     if (oppstartsModus) {
         return (
             <Sporsmal sprakNokkel="familierelasjon.faktum">
-                <TextPlaceholder style={{marginTop: "1rem"}}/>
+                <TextPlaceholder style={{marginTop: "1rem"}} />
             </Sporsmal>
         );
     }
     if (ansvar && antallBarn === 0) {
         return (
             <Sporsmal sprakNokkel="familierelasjon.faktum">
-                <p><FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn"/></p>
-                <BrukerregistrerteBarn/>
-                {brukerregistrertAnsvar && antallBrukerregistrerteBarn > 0 && <Barnebidrag/>}
+                <p>
+                    <FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn" />
+                </p>
+                {/*<BrukerregistrerteBarn/>*/}
+                {brukerregistrertAnsvar && antallBrukerregistrerteBarn > 0 && <Barnebidrag />}
             </Sporsmal>
         );
     }
@@ -64,14 +65,14 @@ const ForsorgerPliktView = () => {
             <Sporsmal sprakNokkel="familierelasjon.faktum" stil="system" legendTittelStyle={LegendTittleStyle.DEFAULT}>
                 <FormattedHTMLMessage id="familierelasjon.ingress" values={{antallBarn}} />
                 <SysteminfoMedSkjema>
-                    <RegistrerteBarn/>
-                    <BrukerregistrerteBarn/>
-                    <Barnebidrag/>
+                    <RegistrerteBarn />
+                    {/*<BrukerregistrerteBarn/>*/}
+                    <Barnebidrag />
                 </SysteminfoMedSkjema>
             </Sporsmal>
         );
     }
-    return <div/>;
+    return <div />;
 };
 
 export default ForsorgerPliktView;
