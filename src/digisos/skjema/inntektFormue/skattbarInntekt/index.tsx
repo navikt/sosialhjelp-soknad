@@ -39,13 +39,14 @@ const Skatt = () => {
 
     function handleSettSkatteetatenSamtykke(harSamtykke: boolean) {
         if (!visAnimerteStreker && behandlingsId) {
-            dispatch(settSamtykkeOgOppdaterData(
-                behandlingsId,
-                SoknadsSti.SKATTBARINNTEKT_SAMTYKKE,
-                harSamtykke,
-                SoknadsSti.SKATTBARINNTEKT
-            ))
-
+            dispatch(
+                settSamtykkeOgOppdaterData(
+                    behandlingsId,
+                    SoknadsSti.SKATTBARINNTEKT_SAMTYKKE,
+                    harSamtykke,
+                    SoknadsSti.SKATTBARINNTEKT
+                )
+            );
         }
     }
 
@@ -65,85 +66,82 @@ const Skatt = () => {
                         type="standard"
                         mini={false}
                         onClick={() => {
-                            handleSettSkatteetatenSamtykke(true)
+                            handleSettSkatteetatenSamtykke(true);
                         }}
                         className="samtykke_knapp_padding"
                     >
                         {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.gi_samtykke")}
                     </Knapp>
-                    {samtykkeTidspunktStreng === "" &&
+                    {samtykkeTidspunktStreng === "" && (
                         <AlertStripe type={"feil"} className="feilet_kommunikasjon_margin_under">
-                            <FormattedMessage id="utbetalinger.skattbar.kontaktproblemer"/>
+                            <FormattedMessage id="utbetalinger.skattbar.kontaktproblemer" />
                         </AlertStripe>
-                    }
+                    )}
                 </div>
             )}
             {!visAnimerteStreker && inntektFraSkatteetaten && inntektFraSkatteetaten.length > 0 && (
                 <div className={"ytelser_panel"}>
                     <h4 className="tidspunkt_uten_luft">{samtykkeTidspunktStreng}</h4>
-                    <FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse"/>
+                    <FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse" />
                     <div className="utbetalinger">
                         <SkattbarinntektForskuddstrekk skattbarinntektogforskuddstrekk={inntektFraSkatteetaten} />
                     </div>
-                        <a
-                            id="ta_bort_bostotte_samtykke"
-                            onClick={(event: any) => {
-                                handleSettSkatteetatenSamtykke(false);
-                                event.preventDefault();
-                            }}
-                            href="/ta_bort_samtykke"
-                            className="linje_under"
-                        >
-                            {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
-                        </a>
-                    </div>
+                    <a
+                        id="ta_bort_bostotte_samtykke"
+                        onClick={(event: any) => {
+                            handleSettSkatteetatenSamtykke(false);
+                            event.preventDefault();
+                        }}
+                        href="/ta_bort_samtykke"
+                        className="linje_under"
+                    >
+                        {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
+                    </a>
+                </div>
             )}
-            {!visAnimerteStreker &&
-                !inntektFraSkatteetatenFeilet &&
-                inntektFraSkatteetaten &&
-                inntektFraSkatteetaten.length === 0 && (
-                    <div className={"ytelser_panel"}>
-                        {harSamtykke && (
-                            <>
-                                <div>
-                                    <FormattedMessage id="utbetalinger.inntekt.skattbar.ingen" />
-                                </div>
-                                <a
-                                    id="ta_bort_bostotte_samtykke"
-                                    onClick={(event: any) => {
-                                        handleSettSkatteetatenSamtykke(false);
-                                        event.preventDefault();
-                                    }}
-                                    href="/ta_bort_samtykke"
-                                    className="linje_under"
-                                >
-                                    {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
-                                </a>
-                            </>
-                        )}
-                        {!harSamtykke && (
-                            <>
-                                <div>
-                                    <h4>
-                                        <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_sporsmal" />
-                                    </h4>
-                                    <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_info" />
-                                </div>
-                                <Knapp
-                                    id="gi_bostotte_samtykke"
-                                    type="standard"
-                                    mini={false}
-                                    onClick={() => {
-                                        handleSettSkatteetatenSamtykke(true)
-                                    }}
-                                    className="samtykke_knapp_padding"
-                                >
-                                    {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.gi_samtykke")}
-                                </Knapp>
-                            </>
-                        )}
-                    </div>
-                )}
+            {!visAnimerteStreker && inntektFraSkatteetaten && inntektFraSkatteetaten.length === 0 && (
+                <div className={"ytelser_panel"}>
+                    {harSamtykke && (
+                        <>
+                            <div>
+                                <FormattedMessage id="utbetalinger.inntekt.skattbar.ingen" />
+                            </div>
+                            <a
+                                id="ta_bort_bostotte_samtykke"
+                                onClick={(event: any) => {
+                                    handleSettSkatteetatenSamtykke(false);
+                                    event.preventDefault();
+                                }}
+                                href="/ta_bort_samtykke"
+                                className="linje_under"
+                            >
+                                {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
+                            </a>
+                        </>
+                    )}
+                    {!harSamtykke && (
+                        <>
+                            <div>
+                                <h4>
+                                    <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_sporsmal" />
+                                </h4>
+                                <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_info" />
+                            </div>
+                            <Knapp
+                                id="gi_bostotte_samtykke"
+                                type="standard"
+                                mini={false}
+                                onClick={() => {
+                                    handleSettSkatteetatenSamtykke(true);
+                                }}
+                                className="samtykke_knapp_padding"
+                            >
+                                {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.gi_samtykke")}
+                            </Knapp>
+                        </>
+                    )}
+                </div>
+            )}
             {visAnimerteStreker && <TextPlaceholder lines={3} />}
         </div>
     );
