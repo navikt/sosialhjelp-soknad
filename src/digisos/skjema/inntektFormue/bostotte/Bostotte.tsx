@@ -1,18 +1,19 @@
 import * as React from "react";
+import {useEffect, useState} from "react";
 import {FormattedDate, FormattedMessage, FormattedNumber, useIntl} from "react-intl";
-import {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
-import {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import {formatTidspunkt, getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {Bostotte} from "./bostotteTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
-import Lesmerpanel from "nav-frontend-lesmerpanel";
 import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 import {State} from "../../../redux/reducers";
-import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {hentSoknadsdata, lagreSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknadsdata/soknadsdataActions";
+import Knapp from "nav-frontend-knapper";
+import AlertStripe from "nav-frontend-alertstriper";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -45,8 +46,25 @@ const BostotteView = () => {
             if (bostotte) {
                 bostotte.bekreftelse = verdi;
                 dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSTOTTE, bostotte));
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, bostotte));
+                let responseHandler = undefined;
+                if (!verdi) { // Fjern samtykke når bruker svarer nei.
+                    responseHandler = () => {
+                        handleSettBostotteSamtykke(false)
+                    };
+                }
+                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, bostotte, responseHandler));
             }
+        }
+    };
+
+    const handleSettBostotteSamtykke = (harSamtykke: boolean) => {
+        if (!oppstartsModus && behandlingsId) {
+            dispatch(settSamtykkeOgOppdaterData(
+                behandlingsId,
+                SoknadsSti.BOSTOTTE_SAMTYKKE,
+                harSamtykke,
+                SoknadsSti.BOSTOTTE
+            ))
         }
     };
 
@@ -59,10 +77,10 @@ const BostotteView = () => {
                 </div>
                 <div className="utbetaling">
                     <span>
-                        <FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label" />
+                        <FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/>
                         <span className="dato">
                             &nbsp;
-                            <Dato tidspunkt={dato} />
+                            <Dato tidspunkt={dato}/>
                         </span>
                     </span>
                     <span className="verdi detaljeliste__verdi">
@@ -108,81 +126,124 @@ const BostotteView = () => {
         setOppstartsModus(false);
     }
     const requestToHusbankenFeilet: boolean = bostotte.stotteFraHusbankenFeilet === true;
+    const harSamtykke: boolean = bostotte.samtykke === true;
+    const samtykkeTidspunkt: Date | null = bostotte.samtykkeTidspunkt;
+    let samtykkeTidspunktStreng = "";
+    if(samtykkeTidspunkt) {
+        samtykkeTidspunktStreng = formatTidspunkt(samtykkeTidspunkt.toString());
+    }
     const harBostotterUtbetalinger: boolean = bostotte.utbetalinger && bostotte.utbetalinger.length > 0;
     const harBostotterSaker: boolean = bostotte.saker && bostotte.saker.length > 0;
     return (
         <div className="blokk-xs">
-            {requestToHusbankenFeilet && (
-                <div className="skjema-sporsmal">
-                    <JaNeiSporsmal
-                        visPlaceholder={oppstartsModus}
-                        tekster={getFaktumSporsmalTekst(intl, FAKTUM_BOSTOTTE)}
-                        faktumKey={FAKTUM_BOSTOTTE}
-                        verdi={bostotte ? bostotte.bekreftelse : null}
+            <h2>{getIntlTextOrKey(intl, "inntekt.bostotte.overskrift")}</h2>
+            <JaNeiSporsmal
+                visPlaceholder={oppstartsModus}
+                tekster={getFaktumSporsmalTekst(intl, FAKTUM_BOSTOTTE)}
+                faktumKey={FAKTUM_BOSTOTTE}
+                verdi={bostotte ? bostotte.bekreftelse : null}
                         onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
-                        legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                    />
-                </div>
-            )}
-            {!requestToHusbankenFeilet && (
-                <Lesmerpanel
-                    apneTekst={"Se detaljer"}
-                    lukkTekst={"Lukk"}
-                    intro={
-                        <div>
-                            <h4>
-                                <FormattedMessage id="inntekt.bostotte.husbanken.tittel" />
-                            </h4>
-                            <FormattedMessage id="inntekt.bostotte.husbanken.info" />
-                        </div>
-                    }
-                    border
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+            >
+                <Sporsmal
+                    tekster={{
+                        sporsmal: requestToHusbankenFeilet || !harSamtykke?getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke.overskrift"):""
+                    }}
                 >
-                    <h4 className="blokk-null">
-                        <FormattedMessage id="inntekt.bostotte.husbanken.utbetalinger" />
-                    </h4>
-                    {!harBostotterUtbetalinger && (
-                        <div className="utbetalinger">
-                            <FormattedMessage id="inntekt.bostotte.husbanken.ingenutbetalingerfunnet" />
-                        </div>
+                    {(requestToHusbankenFeilet || !harSamtykke) && (
+                        <>
+                            {bostotte && bostotte.bekreftelse && (
+                                <>
+                                    {getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke.tekst")}
+                                    <Knapp
+                                        id="gi_bostotte_samtykke"
+                                        type="standard"
+                                        spinner={oppstartsModus}
+                                        onClick={() => {
+                                            handleSettBostotteSamtykke(true)
+                                        }}
+                                        className="samtykke_knapp_padding"
+                                    >
+                                        {getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke")}
+                                    </Knapp>
+                                    {samtykkeTidspunktStreng === "" && requestToHusbankenFeilet && (
+                                        <AlertStripe type={"feil"} className="feilet_kommunikasjon_margin_under">
+                                            {getIntlTextOrKey(intl, "inntekt.bostotte.nedlasting_feilet")}
+                                        </AlertStripe>
+                                    )}
+                                </>
+                            )}
+                        </>
                     )}
-                    {bostotte.utbetalinger.map((utbetaling, index) => {
-                        return renderUtbetaling(
-                            utbetaling.netto,
-                            utbetaling.utbetalingsdato,
-                            utbetaling.mottaker,
-                            index
-                        );
-                    })}
-                    <h4 className="blokk-null saksoverskrift">
-                        <FormattedMessage id="inntekt.bostotte.husbanken.saker" />
-                    </h4>
-                    {!harBostotterSaker && (
-                        <div className="sak blokk-xs">
-                            <FormattedMessage id="inntekt.bostotte.husbanken.ingensakerfunnet" />
-                        </div>
-                    )}
-                    {bostotte.saker.map((sak, index) => {
-                        return renderSak(
-                            "BostotteSak_" + index,
-                            sak.dato,
-                            sak.status,
-                            sak.vedtaksstatus,
-                            sak.beskrivelse,
-                            index
-                        );
-                    })}
-                    {(harBostotterUtbetalinger || harBostotterSaker) && (
-                        <a
-                            href="https://kundeforhold-bostotte.husbanken.no/esoknad-bostotte/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
+                    {samtykkeTidspunktStreng !== "" && harSamtykke && (
+                        <>
+                            <div>
+                                <h4 className="tidspunkt_uten_luft">{samtykkeTidspunktStreng}</h4>
+                                <FormattedMessage id="inntekt.bostotte.husbanken.info"/>
+                            </div>
+                            <h4 className="blokk-null">
+                                <FormattedMessage id="inntekt.bostotte.husbanken.utbetalinger"/>
+                            </h4>
+                            {!harBostotterUtbetalinger && (
+                                <div className="utbetalinger">
+                                    <FormattedMessage id="inntekt.bostotte.husbanken.ingenutbetalingerfunnet"/>
+                                </div>
+                            )}
+                            {bostotte.utbetalinger.map((utbetaling, index) => {
+                                return renderUtbetaling(
+                                    utbetaling.netto,
+                                    utbetaling.utbetalingsdato,
+                                    utbetaling.mottaker,
+                                    index
+                                );
+                            })}
+                            <h4 className="blokk-null saksoverskrift">
+                                <FormattedMessage id="inntekt.bostotte.husbanken.saker"/>
+                            </h4>
+                            {!harBostotterSaker && (
+                                <div className="sak blokk-xs">
+                                    <FormattedMessage id="inntekt.bostotte.husbanken.ingensakerfunnet"/>
+                                </div>
+                            )}
+                            {bostotte.saker.map((sak, index) => {
+                                return renderSak(
+                                    "BostotteSak_" + index,
+                                    sak.dato,
+                                    sak.status,
+                                    sak.vedtaksstatus,
+                                    sak.beskrivelse,
+                                    index
+                                );
+                            })}
+                            {(harBostotterUtbetalinger || harBostotterSaker) && (
+                                <div>
+                                    <a
+                                        href="https://kundeforhold-bostotte.husbanken.no/esoknad-bostotte/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="linje_under"
+                                    >
                             <FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"} />
-                        </a>
+                                    </a>
+                                </div>
+                            )}
+                            <div className="bostotte-luft-over-ta-bort-knapp-lenke">
+                                <a
+                                    id="ta_bort_bostotte_samtykke"
+                                    onClick={(event: any) => {
+                                        handleSettBostotteSamtykke(false);
+                                        event.preventDefault();
+                                    }}
+                                    href="/ta_bort_samtykke"
+                                    className="linje_under"
+                                >
+                                    {getIntlTextOrKey(intl, "inntekt.bostotte.ta_bort_samtykke")}
+                                </a>
+                            </div>
+                        </>
                     )}
-                </Lesmerpanel>
-            )}
+                </Sporsmal>
+            </JaNeiSporsmal>
         </div>
     );
 };

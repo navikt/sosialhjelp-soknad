@@ -14,9 +14,6 @@ import Studielan from "./studielan/Studielan";
 const InntektFormue: React.FC = () => {
     return (
         <DigisosSkjemaSteg steg={DigisosSteg.inntektbolk} ikon={<Penger />}>
-            <h2 className="overskrift">
-                <FormattedHTMLMessage id="opplysninger.inntekt.undertittel" />
-            </h2>
             <SkjemaGruppe className={"skjema-sporsmal"}>
                 <SkattbarInntekt />
                 <NavYtelser />
@@ -24,10 +21,9 @@ const InntektFormue: React.FC = () => {
             </SkjemaGruppe>
             <Studielan />
             <Utbetalinger />
-            <h2 className="overskrift">
-                <FormattedHTMLMessage id="opplysninger.formue.undertittel" />
-            </h2>
+            <h2 className="overskrift"><FormattedHTMLMessage id="opplysninger.formue.bank.undertittel"/></h2>
             <Formue />
+            <h2 className="overskrift"><FormattedHTMLMessage id="opplysninger.formue.annen.undertittel"/></h2>
             <Verdier />
         </DigisosSkjemaSteg>
     );

@@ -1,6 +1,5 @@
 import * as React from "react";
-import {FormattedMessage, FormattedHTMLMessage, FormattedNumber} from "react-intl";
-import Panel from "nav-frontend-paneler";
+import {FormattedMessage, FormattedHTMLMessage, FormattedNumber, useIntl} from "react-intl";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
@@ -12,9 +11,11 @@ import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 
 const NavYtelserView = () => {
     const dispatch = useDispatch();
+    const intl = useIntl();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
@@ -61,21 +62,15 @@ const NavYtelserView = () => {
         );
     });
 
-    const tittel: JSX.Element = (
-        <h4>
-            <FormattedMessage id="navytelser.sporsmal" />
-        </h4>
-    );
-
     return (
         <div className={"skatt-wrapper"}>
+            <h2>{getIntlTextOrKey(intl, "navytelser.sporsmal")}</h2>
             {!visAnimerteStreker && !utbetalingerFraNavFeilet && harNavytelser && (
                 <Lesmerpanel
                     apneTekst={"Se detaljer"}
                     lukkTekst={"Lukk"}
                     intro={
                         <div>
-                            {tittel}
                             <FormattedHTMLMessage id={"navytelser.infotekst.tekst"} />
                         </div>
                     }
@@ -88,20 +83,18 @@ const NavYtelserView = () => {
                 </Lesmerpanel>
             )}
             {!visAnimerteStreker && !utbetalingerFraNavFeilet && !harNavytelser && (
-                <Panel border={true} className={"ytelser_panel"}>
+                <div className={"ytelser_panel"}>
                     <div>
-                        {tittel}
                         <FormattedMessage id="utbetalinger.ingen.true" />
                     </div>
-                </Panel>
+                    </div>
             )}
             {utbetalingerFraNavFeilet && (
-                <Panel border={true} className={"ytelser_panel"}>
+                <div className={"ytelser_panel"}>
                     <div>
-                        {tittel}
                         <FormattedMessage id="utbetalinger.kontaktproblemer" />
                     </div>
-                </Panel>
+                </div>
             )}
 
             {visAnimerteStreker && <TextPlaceholder lines={3} />}

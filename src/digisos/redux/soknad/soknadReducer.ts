@@ -37,9 +37,10 @@ export const defaultState: SoknadState = {
     valgtSoknadsmottaker: undefined,
 
     // Systemdata
-    erGjenopptattSoknad: true,
-    skalSjekkeOmSystemdataErEndret: true,
     erSystemdataEndret: ErSystemdataEndret.NOT_ASKED,
+
+	// Samtykker
+	samtykker: undefined,
 
     // Avbryt
     avbrytDialog: {
@@ -168,6 +169,26 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
                 skalSjekkeOmSystemdataErEndret: false,
             };
         }
+
+		case SoknadActionTypeKeys.OPPDATER_SAMTYKKE: {
+			return {
+				...state
+			}
+		}
+
+		case SoknadActionTypeKeys.HENT_SAMTYKKE: {
+			return {
+				...state
+			}
+		}
+
+		case SoknadActionTypeKeys.HENT_SAMTYKKE_OK: {
+			const { samtykker } = action;
+			return {
+				...state,
+				samtykker: samtykker
+			}
+		}
 
         case SoknadActionTypeKeys.SHOW_LARGE_SPINNER: {
             return {

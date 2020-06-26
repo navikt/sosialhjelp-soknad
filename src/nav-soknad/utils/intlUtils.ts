@@ -49,3 +49,16 @@ function intlTextIkkeTom(intl: IntlShape, key: string) {
 export const replaceDotWithUnderscore = (verdi: string): string => {
     return verdi.replace(/\./g, "_");
 };
+
+// Eksempel: "2019-08-01" => "01. august 2019"
+export function formatDato(isoDate: string) {
+	const dato: Date = new Date(isoDate);
+	const formatter =  new Intl.DateTimeFormat("nb-NO", {day: "numeric", month: "long", year: "numeric"});
+	return formatter.format(dato).replace(/([0-9]) /, "$1. ");
+}
+// Eksempel: "2019-08-01T12:12:12.123123Z" => "01. august 2019 kl. 12:12:12"
+export function formatTidspunkt(isoDate: string) {
+	const dato: Date = new Date(isoDate);
+	const formatter =  new Intl.DateTimeFormat("nb-NO", {hour: "numeric", minute: "numeric"});
+	return formatDato(isoDate) + " klokken " + formatter.format(dato);
+}

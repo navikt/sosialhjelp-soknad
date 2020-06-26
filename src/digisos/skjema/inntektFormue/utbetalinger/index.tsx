@@ -2,8 +2,9 @@ import * as React from "react";
 import {onEndretValideringsfeil} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {FormattedHTMLMessage, useIntl} from "react-intl";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
+import Sporsmal, {LegendTittleStyle
+} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import {getFaktumSporsmalTekst, getIntlTextOrKey, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Utbetalinger, UtbetalingerKeys} from "./utbetalingerTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
@@ -14,8 +15,14 @@ import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTyp
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../redux/reducers";
-import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
-import {setValideringsfeil, clearValideringsfeil} from "../../../redux/validering/valideringActions";
+import {
+    hentSoknadsdata,
+    lagreSoknadsdata,
+} from "../../../redux/soknadsdata/soknadsdataActions";
+import {
+    setValideringsfeil,
+    clearValideringsfeil,
+} from "../../../redux/validering/valideringActions";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";
@@ -129,33 +136,36 @@ export const UtbetalingerView = () => {
         setOppstartsModus(false);
     }
     return (
-        <JaNeiSporsmal
-            visPlaceholder={oppstartsModus}
-            tekster={getFaktumSporsmalTekst(intl, UTBETALINGER)}
-            faktumKey={UTBETALINGER}
-            verdi={utbetalinger.bekreftelse}
-            onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
-            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-        >
+        <div className="skjema-sporsmal">
+            <h2>{getIntlTextOrKey(intl, "inntekt.inntekter.titel")}</h2>
+            <JaNeiSporsmal
+                visPlaceholder={oppstartsModus}
+                tekster={getFaktumSporsmalTekst(intl, UTBETALINGER)}
+                faktumKey={UTBETALINGER}
+                verdi={utbetalinger.bekreftelse}
+                onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+            >
             <Sporsmal tekster={getFaktumSporsmalTekst(intl, UTBETALINGER + ".true.type")}>
                 {renderCheckBox(UtbetalingerKeys.UTBYTTE, UtbetalingerKeys.UTBYTTE)}
-                {renderCheckBox(UtbetalingerKeys.SALG, UtbetalingerKeys.SALG)}
+                    {renderCheckBox(UtbetalingerKeys.SALG, UtbetalingerKeys.SALG)}
                 {renderCheckBox(UtbetalingerKeys.FORSIKRING, UtbetalingerKeys.FORSIKRING)}
-                {renderCheckBox(UtbetalingerKeys.ANNET, UtbetalingerKeys.ANNET)}
+                    {renderCheckBox(UtbetalingerKeys.ANNET, UtbetalingerKeys.ANNET)}
                 <NivaTreSkjema visible={!!(utbetalinger.bekreftelse && utbetalinger.annet)} size="small">
-                    <TextareaEnhanced
+                        <TextareaEnhanced
                         id={replaceDotWithUnderscore(TEXT_AREA_ANNET_FAKTUM_KEY)}
-                        placeholder=""
-                        onChange={(evt: any) => onChangeAnnet(evt.target.value)}
-                        onBlur={() => onBlurTekstfeltAnnet()}
-                        faktumKey={TEXT_AREA_ANNET_FAKTUM_KEY}
+                            placeholder=""
+                            onChange={(evt: any) => onChangeAnnet(evt.target.value)}
+                            onBlur={() => onBlurTekstfeltAnnet()}
+                            faktumKey={TEXT_AREA_ANNET_FAKTUM_KEY}
                         labelId={UTBETALINGER + ".true.type.annet.true.beskrivelse.label"}
-                        maxLength={MAX_CHARS}
+                            maxLength={MAX_CHARS}
                         value={utbetalinger.beskrivelseAvAnnet ? utbetalinger.beskrivelseAvAnnet : ""}
-                    />
-                </NivaTreSkjema>
-            </Sporsmal>
-        </JaNeiSporsmal>
+                        />
+                    </NivaTreSkjema>
+                </Sporsmal>
+            </JaNeiSporsmal>
+        </div>
     );
 };
 

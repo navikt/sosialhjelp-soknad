@@ -9,8 +9,10 @@ import {
     lastNedForsendelseSomZipFilHvisMockMiljoEllerDev,
 } from "../../../nav-soknad/utils/rest-utils";
 import {
+    Samtykke,
     FinnOgOppdaterSoknadsmottakerStatus,
     GetErSystemdataEndret,
+    HentSamtykker,
     HentSoknadAction,
     SendSoknadAction,
     SlettSoknadAction,
@@ -19,6 +21,7 @@ import {
 import {navigerTilDittNav, navigerTilKvittering, tilStart, tilSteg} from "../navigasjon/navigasjonActions";
 
 import {
+    hentSamtykkerOk,
     hentSoknadOk,
     lagreNedetidPaStore,
     lagreRessurserPaStore,
@@ -53,6 +56,7 @@ import {
 } from "./soknadTypes";
 import {lagreLedeteksterPaStore} from "../ledetekster/ledeteksterActions";
 import {lagreMiljovariablerPaStore} from "../miljovariabler/miljovariablerActions";
+import {soknadsdataUrl} from "../soknadsdata/soknadsdataActions";
 
 enum SendtTilSystemEnum {
     SVARUT = "SVARUT",
@@ -92,7 +96,7 @@ function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
     }
 }
 
-function* opprettSoknadSaga() {
+function* opprettSoknadSaga(action: {type: string}) {
     try {
         const response: OpprettSoknadResponse = yield call(fetchPost, "soknader/opprettSoknad", "", true);
         yield put(opprettSoknadOk(response.brukerBehandlingId));
@@ -107,6 +111,49 @@ function* opprettSoknadSaga() {
             yield put(startSoknadServiceUnavailable());
         } else {
             yield put(loggFeil("opprett soknad saga feilet: " + reason));
+            yield put(showServerFeil(true));
+        }
+    }
+}
+
+function* hentSamtykker(action: HentSamtykker) {
+    try {
+        const response: Samtykke[] = yield call(fetchToJson, `soknader/${action.behandlingsId}/hentSamtykker`);
+        yield put(hentSamtykkerOk(response));
+    } catch (reason) {
+        if (reason.message === HttpStatus.UNAUTHORIZED) {
+            return;
+        }
+        yield put(loggFeil("hent samtykker saga feilet: " + reason));
+        yield put(showSideIkkeFunnet(true));
+    }
+}
+
+function* oppdaterSamtykke(action: {
+    type: string;
+    behandlingsId: string;
+    harSamtykket: boolean;
+    samtykker: Samtykke[];
+}) {
+    try {
+        if (action.behandlingsId && action.harSamtykket) {
+            yield call(
+                fetchPost,
+                soknadsdataUrl(action.behandlingsId, SoknadsSti.OPPDATER_SAMTYKKE),
+                JSON.stringify(action.samtykker),
+                true
+            );
+        }
+        yield put(tilSteg(1, action.behandlingsId));
+    } catch (reason) {
+        if (reason.message === HttpStatus.UNAUTHORIZED) {
+            return;
+        } else if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
+            yield put(loggAdvarsel("oppdater samtykke saga ServiceUnavailable: " + reason));
+            yield put(visNedetidPanel(true));
+            yield put(startSoknadServiceUnavailable());
+        } else {
+            yield put(loggFeil("oppdater samtykke saga feilet: " + reason));
             yield put(showServerFeil(true));
         }
     }
@@ -227,6 +274,8 @@ function* soknadSaga(): SagaIterator {
     );
     yield takeEvery(SoknadActionTypeKeys.OPPRETT_SOKNAD, opprettSoknadSaga);
     yield takeEvery(SoknadActionTypeKeys.HENT_SOKNAD, hentSoknadSaga);
+    yield takeEvery(SoknadActionTypeKeys.HENT_SAMTYKKE, hentSamtykker);
+    yield takeEvery(SoknadActionTypeKeys.OPPDATER_SAMTYKKE, oppdaterSamtykke);
 
     yield takeEvery(SoknadActionTypeKeys.SLETT_SOKNAD, slettSoknadSaga);
     yield takeEvery(SoknadActionTypeKeys.SEND_SOKNAD, sendSoknadSaga);

@@ -10,19 +10,15 @@ const FAKTUM_KEY = "familie.barn.true.barnebidrag";
 
 const Barnebidrag = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
-
     const dispatch = useDispatch();
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
     const handleClickRadio = (verdi: string) => {
         if (behandlingsId) {
             const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
             forsorgerplikt.barnebidrag = verdi;
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
-            const payload = {
-                barnebidrag: verdi,
-            };
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, payload));
+            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
         }
     };
 

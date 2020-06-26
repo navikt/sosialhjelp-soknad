@@ -1,7 +1,7 @@
 import * as React from "react";
-import {injectIntl} from "react-intl";
+import {useIntl} from "react-intl";
 import {Feil, Input, InputBredde} from "nav-frontend-skjema";
-import {getInputFaktumTekst, IntlProps, replaceDotWithUnderscore} from "../utils";
+import {getInputFaktumTekst, replaceDotWithUnderscore} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {connect} from "react-redux";
 import {getFeil} from "../utils/enhancedComponentUtils";
@@ -15,7 +15,9 @@ export interface Props {
     verdi: string;
     onChange: (verdi: string) => void;
     onBlur: () => void;
+    onFocus?: () => void;
     faktumKey: string;
+    textKey?: string;
     required: boolean;
     feil: Valideringsfeil[];
 
@@ -35,56 +37,60 @@ export interface Props {
     autoFocus?: boolean;
 }
 
-class InputEnhanced extends React.Component<Props & IntlProps, {}> {
-    getName(): string {
-        return `${this.props.faktumKey}`.replace(/\./g, "_");
-    }
+const InputEnhanced = (props: Props) => {
+    const intl = useIntl();
+    const getName = (): string => {
+        return `${props.faktumKey}`.replace(/\./g, "_");
+    };
 
-    render() {
-        const {
-            faktumKey,
-            faktumIndex,
-            type,
-            disabled,
-            pattern,
-            required,
-            step,
-            maxLength = DEFAULT_MAX_LENGTH,
-            bredde,
-            feil,
-            autoFocus,
-        } = this.props;
-        const intl = this.props.intl;
-        const tekster = getInputFaktumTekst(intl, faktumKey);
-        const feil_: Feil | undefined = getFeil(feil, intl, faktumKey, faktumIndex);
-        return (
-            <Input
-                id={this.props.id ? replaceDotWithUnderscore(this.props.id) : faktumKey}
-                className={"input--xxl faktumInput  " + (this.props.className ? this.props.className : "")}
-                type={type}
-                autoComplete="off"
-                name={this.getName()}
-                disabled={disabled}
-                value={this.props.verdi}
-                onChange={(evt: any) => this.props.onChange(evt.target.value)}
-                onBlur={() => this.props.onBlur()}
-                label={tekster.label}
-                placeholder={tekster.pattern}
-                feil={feil_}
-                maxLength={maxLength}
-                bredde={bredde}
-                pattern={pattern}
-                required={required}
-                step={step}
-                noValidate={true /* Unngå at nettleser validerer og evt. fjerner verdien */}
-                autoFocus={autoFocus}
-            />
-        );
-    }
-}
+    const {
+        faktumKey,
+        textKey,
+        faktumIndex,
+        type,
+        disabled,
+        pattern,
+        required,
+        step,
+        maxLength = DEFAULT_MAX_LENGTH,
+        bredde,
+        feil,
+        autoFocus,
+    } = props;
+    const tekster = getInputFaktumTekst(intl, textKey ? textKey : faktumKey);
+
+    const feil_: Feil | undefined = getFeil(feil, intl, faktumKey, faktumIndex);
+
+    return (
+        <Input
+            id={props.id ? replaceDotWithUnderscore(props.id) : faktumKey}
+            className={"input--xxl faktumInput  " + (props.className ? props.className : "")}
+            type={type}
+            autoComplete="off"
+            name={getName()}
+            disabled={disabled}
+            value={props.verdi}
+            onChange={(evt: any) => props.onChange(evt.target.value)}
+            onBlur={() => props.onBlur()}
+            onFocus={() => {
+                return props.onFocus ? props.onFocus() : null;
+            }}
+            label={tekster.label}
+            placeholder={tekster.pattern}
+            feil={feil_}
+            maxLength={maxLength}
+            bredde={bredde}
+            pattern={pattern}
+            required={required}
+            step={step}
+            noValidate={true /* Unngå at nettleser validerer og evt. fjerner verdien */}
+            autoFocus={autoFocus}
+        />
+    );
+};
 
 const mapStateToProps = (state: State) => ({
     feil: state.validering.feil,
 });
 
-export default connect(mapStateToProps)(injectIntl(InputEnhanced));
+export default connect(mapStateToProps)(InputEnhanced);

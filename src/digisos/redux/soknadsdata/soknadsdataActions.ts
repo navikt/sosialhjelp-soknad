@@ -1,5 +1,5 @@
 import {Dispatch} from "../reduxTypes";
-import {fetchPut, fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
+import {fetchPost, fetchPut, fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {oppdaterSoknadsdataSti, settRestStatus, SoknadsdataType} from "./soknadsdataReducer";
 import {loggFeil} from "../navlogger/navloggerActions";
 import {REST_STATUS} from "../soknad/soknadTypes";
@@ -48,6 +48,34 @@ export function lagreSoknadsdata(
                 }
                 dispatch(loggFeil("Lagring av soknadsdata feilet: " + reason));
                 dispatch(settRestStatus(sti, REST_STATUS.FEILET));
+                dispatch(showServerFeil(true));
+            });
+    };
+}
+
+export function settSamtykkeOgOppdaterData(
+    brukerBehandlingId: string,
+    sti: string,
+    harSamtykke: boolean,
+    dataSti: null | string
+) {
+    return (dispatch: Dispatch) => {
+        const restStatusSti = "inntekt/samtykke";
+        dispatch(settRestStatus(restStatusSti, REST_STATUS.PENDING));
+        fetchPost(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(harSamtykke), true)
+            .then((response: any) => {
+                dispatch(settRestStatus(restStatusSti, REST_STATUS.OK));
+                if (dataSti && dataSti.length > 1) {
+                    dispatch(settRestStatus(dataSti, REST_STATUS.PENDING));
+                    dispatch(hentSoknadsdata(brukerBehandlingId, dataSti));
+                }
+            })
+            .catch((reason) => {
+                if (reason.message === HttpStatus.UNAUTHORIZED) {
+                    return;
+                }
+                dispatch(loggFeil("Oppdatering av bostotte samtykke feilet: " + reason));
+                dispatch(settRestStatus(restStatusSti, REST_STATUS.FEILET));
                 dispatch(showServerFeil(true));
             });
     };

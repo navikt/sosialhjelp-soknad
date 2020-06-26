@@ -82,69 +82,67 @@ const RegistrerteBarn = () => {
                 const feil_: Feil | undefined = getFeil(feil, intl, samvaersgradBarnKeyMedIndex, undefined);
                 return (
                     <div key={index} className={index + 1 === barn.length ? "barn barn_siste_liste_element" : "barn"}>
-                        {!barnet.harDiskresjonskode && (
-                            <Detaljeliste>
-                                <DetaljelisteElement
-                                    tittel={
-                                        <span>
-                                            <FormattedMessage id="kontakt.system.personalia.navn" />
-                                        </span>
-                                    }
-                                    verdi={barnet.barn.navn.fulltNavn}
-                                />
-                                <DetaljelisteElement
-                                    tittel={
-                                        <span>
-                                            <FormattedMessage id="familierelasjon.fodselsdato" />
-                                        </span>
-                                    }
-                                    verdi={<Dato tidspunkt={barnet.barn.fodselsdato} />}
-                                />
-                                <DetaljelisteElement
-                                    tittel={
-                                        <span>
-                                            <FormattedMessage id="familierelasjon.samme_folkeregistrerte_adresse" />
-                                        </span>
-                                    }
-                                    verdi={barnet.erFolkeregistrertSammen ? "Ja" : "Nei"}
-                                />
-                                {barnet.erFolkeregistrertSammen && (
-                                    <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
-                                        <JaNeiSporsmal
-                                            id={"barn_radio_" + index}
-                                            tekster={getFaktumSporsmalTekst(
-                                                intl,
-                                                "system.familie.barn.true.barn.deltbosted"
-                                            )}
-                                            faktumKey={"system.familie.barn.true.barn.deltbosted"}
-                                            verdi={barnet.harDeltBosted}
-                                            onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi, index)}
-                                            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                                        />
-                                    </div>
-                                )}
-                                {!barnet.erFolkeregistrertSammen && (
-                                    <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
-                                        <Input
-                                            id={replaceDotWithUnderscore(samvaersgradBarnKeyMedIndex)}
-                                            className={"input--xxl faktumInput"}
-                                            type="number"
-                                            autoComplete="off"
-                                            name={"barn" + index + "_samvaersgrad"}
-                                            value={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
-                                            onChange={(event: any) => onChangeSamvaersgrad(event.target.value, index)}
-                                            onBlur={() => onBlur(index, samvaersgradBarnKeyMedIndex)}
-                                            label={tekster.label}
-                                            placeholder={tekster.pattern}
-                                            feil={feil_}
-                                            maxLength={3}
-                                            required={false}
-                                            noValidate={true /* Unngå at nettleser validerer og evt. fjerner verdien */}
-                                        />
-                                    </div>
-                                )}
-                            </Detaljeliste>
-                        )}
+                        <Detaljeliste>
+                            <DetaljelisteElement
+                                tittel={
+                                    <span>
+                                        <FormattedMessage id="kontakt.system.personalia.navn" />
+                                    </span>
+                                }
+                                verdi={barnet.barn.navn.fulltNavn}
+                            />
+                            <DetaljelisteElement
+                                tittel={
+                                    <span>
+                                        <FormattedMessage id="familierelasjon.fodselsdato" />
+                                    </span>
+                                }
+                                verdi={barnet.barn.fodselsdato ? <Dato tidspunkt={barnet.barn.fodselsdato} /> : ""}
+                            />
+                            <DetaljelisteElement
+                                tittel={
+                                    <span>
+                                        <FormattedMessage id="familierelasjon.samme_folkeregistrerte_adresse" />
+                                    </span>
+                                }
+                                verdi={barnet.erFolkeregistrertSammen ? "Ja" : "Nei"}
+                            />
+                            {barnet.erFolkeregistrertSammen && (
+                                <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
+                                    <JaNeiSporsmal
+                                        id={"barn_radio_" + index}
+                                        tekster={getFaktumSporsmalTekst(
+                                            intl,
+                                            "system.familie.barn.true.barn.deltbosted"
+                                        )}
+                                        faktumKey={"system.familie.barn.true.barn.deltbosted"}
+                                        verdi={barnet.harDeltBosted}
+                                        onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi, index)}
+                                        legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+                                    />
+                                </div>
+                            )}
+                            {!barnet.erFolkeregistrertSammen && (
+                                <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
+                                    <Input
+                                        id={replaceDotWithUnderscore(samvaersgradBarnKeyMedIndex)}
+                                        className={"input--xxl faktumInput"}
+                                        type="number"
+                                        autoComplete="off"
+                                        name={"barn" + index + "_samvaersgrad"}
+                                        value={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
+                                        onChange={(event: any) => onChangeSamvaersgrad(event.target.value, index)}
+                                        onBlur={() => onBlur(index, samvaersgradBarnKeyMedIndex)}
+                                        label={tekster.label}
+                                        placeholder={tekster.pattern}
+                                        feil={feil_}
+                                        maxLength={3}
+                                        required={false}
+                                        noValidate={true /* Unngå at nettleser validerer og evt. fjerner verdien */}
+                                    />
+                                </div>
+                            )}
+                        </Detaljeliste>
                     </div>
                 );
             })}

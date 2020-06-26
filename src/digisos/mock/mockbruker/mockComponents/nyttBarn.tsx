@@ -86,6 +86,12 @@ export class NyttBarn extends React.Component<Props, State> {
                                 value={this.state.etternavn}
                             />
 
+							<MockInput
+                                label="Fødselsnummer:"
+                                onChange={(evt: any) => this.setState({ident: evt.target.value})}
+                                value={this.state.ident}
+                            />
+
                             <div>
                                 <label>Har samme bostedsadresse</label>
                                 <Radio

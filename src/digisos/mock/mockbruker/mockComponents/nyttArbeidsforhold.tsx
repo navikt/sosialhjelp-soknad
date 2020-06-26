@@ -41,12 +41,15 @@ class NyttArbeidsforhold extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
+		let dato = new Date();
+		dato.setMonth(dato.getMonth() - 1);
+
         this.state = {
             isOpened: false,
             type: ArbeidsforholdType.PERSON,
             id: "1",
             startDato: "2018-01-01",
-            sluttDato: "2018-02-01",
+			sluttDato: dato.getFullYear() + "-" + (dato.getMonth() < 9 ? "0" : "") + (dato.getMonth() + 1) + "-" + (dato.getDate() < 9 ? "0" : "") + (dato.getDate() + 1),
             stillingsProsent: "100",
             navn: "arbeidsgiver-2018",
             arbeidsgivernummer: "1337",

@@ -35,9 +35,11 @@ const ForsorgerPliktView = () => {
     }, [oppstartsModus, soknadsdata.restStatus.familie.forsorgerplikt]);
 
     const ansvar = soknadsdata.familie.forsorgerplikt.ansvar;
+    const brukerregistrertAnsvar = soknadsdata.familie.forsorgerplikt.brukerregistrertAnsvar;
     const antallBarn = ansvar.length;
+    const antallBrukerregistrerteBarn = brukerregistrertAnsvar.length;
     const restStatus = soknadsdata.restStatus.familie.forsorgerplikt;
-    if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+    if (oppstartsModus && restStatus === REST_STATUS.OK) {
         setOppstartsModus(false);
     }
     if (oppstartsModus) {
@@ -53,6 +55,8 @@ const ForsorgerPliktView = () => {
                 <p>
                     <FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn" />
                 </p>
+                {/*<BrukerregistrerteBarn/>*/}
+                {brukerregistrertAnsvar && antallBrukerregistrerteBarn > 0 && <Barnebidrag />}
             </Sporsmal>
         );
     }
@@ -62,6 +66,7 @@ const ForsorgerPliktView = () => {
                 <FormattedHTMLMessage id="familierelasjon.ingress" values={{antallBarn}} />
                 <SysteminfoMedSkjema>
                     <RegistrerteBarn />
+                    {/*<BrukerregistrerteBarn/>*/}
                     <Barnebidrag />
                 </SysteminfoMedSkjema>
             </Sporsmal>
