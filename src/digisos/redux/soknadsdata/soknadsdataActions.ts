@@ -62,18 +62,15 @@ export function settSamtykkeOgOppdaterData(
     return (dispatch: Dispatch) => {
         const restStatusSti = "inntekt/samtykke";
         dispatch(settRestStatus(restStatusSti, REST_STATUS.PENDING));
-        fetchPost(
-            soknadsdataUrl(brukerBehandlingId, sti),
-            JSON.stringify(harSamtykke)
-        )
+        fetchPost(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(harSamtykke), true)
             .then((response: any) => {
                 dispatch(settRestStatus(restStatusSti, REST_STATUS.OK));
-                if(dataSti && dataSti.length > 1) {
+                if (dataSti && dataSti.length > 1) {
                     dispatch(settRestStatus(dataSti, REST_STATUS.PENDING));
-                    dispatch(hentSoknadsdata(brukerBehandlingId, dataSti))
+                    dispatch(hentSoknadsdata(brukerBehandlingId, dataSti));
                 }
             })
-            .catch(reason => {
+            .catch((reason) => {
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
                     return;
                 }
