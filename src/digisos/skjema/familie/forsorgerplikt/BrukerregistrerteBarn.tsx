@@ -30,10 +30,10 @@ const BrukerregistrerteBarn = () => {
     const intl = useIntl();
     const [datoFormatFeilIndex, setDatoFormatFeilIndex] = useState(-1);
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const annsvarsListe = useSelector((state: State) => state.soknadsdata.familie.forsorgerplikt.brukerregistrertAnsvar);
-    const behandlingsId = useSelector(
-        (state: State) => state.soknad.behandlingsId
+    const annsvarsListe = useSelector(
+        (state: State) => state.soknadsdata.familie.forsorgerplikt.brukerregistrertAnsvar
     );
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
     const handleLeggTilBarn = () => {
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
@@ -146,7 +146,10 @@ const BrukerregistrerteBarn = () => {
                 dispatch(setValideringsfeil(ValideringsFeilKode.PAKREVD, TEXT_KEY_FIRST_NAME + i));
                 ingenFeilKoder = false;
             }
-            if (!harNoeInnhold || (barnet.barn.navn && barnet.barn.navn.etternavn && barnet.barn.navn.etternavn !== "")) {
+            if (
+                !harNoeInnhold ||
+                (barnet.barn.navn && barnet.barn.navn.etternavn && barnet.barn.navn.etternavn !== "")
+            ) {
                 dispatch(clearValideringsfeil(TEXT_KEY_LAST_NAME + i));
             } else {
                 dispatch(setValideringsfeil(ValideringsFeilKode.PAKREVD, TEXT_KEY_LAST_NAME + i));
@@ -161,32 +164,24 @@ const BrukerregistrerteBarn = () => {
     function harInnhold(barnet: Barn): boolean {
         const fodselsdato: string = barnet.barn.fodselsdato ? barnet.barn.fodselsdato : "";
         if (barnet.barn.navn) {
-            const fornavn: string = barnet.barn.navn.fornavn ? barnet.barn.navn.fornavn : "";
-            const mellomnavn: string = barnet.barn.navn.mellomnavn ? barnet.barn.navn.mellomnavn : "";
-            const etternavn: string = barnet.barn.navn.etternavn ? barnet.barn.navn.etternavn : "";
+            const fornavn: string = barnet.barn.navn.fornavn ?? "";
+            const mellomnavn: string = barnet.barn.navn.mellomnavn ?? "";
+            const etternavn: string = barnet.barn.navn.etternavn ?? "";
             return fodselsdato !== "" || fornavn !== "" || mellomnavn !== "" || etternavn !== "";
         }
         return fodselsdato !== "";
     }
 
     return (
-        <Sporsmal
-            sprakNokkel="familierelasjon.faktum.leggtil"
-            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-        >
-
+        <Sporsmal sprakNokkel="familierelasjon.faktum.leggtil" legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
             <div className="skjema-legg-til-barn">
-                {annsvarsListe.map((barnet: Barn, index: number) =>
-                    <Underskjema
-                        visible={true}
-                        arrow={index === 0}
-                        key={index}
-                    >
+                {annsvarsListe.map((barnet: Barn, index: number) => (
+                    <Underskjema visible={true} arrow={index === 0} key={index}>
                         <div className="steg-ekstrainformasjon">
                             <Row className="opplysning__row">
                                 <Lenkeknapp
                                     onClick={() => {
-                                        handleFjernBarn(index)
+                                        handleFjernBarn(index);
                                     }}
                                     id={index + "_fjern_brukerregistrert_barn_lenke"}
                                 >
@@ -194,13 +189,14 @@ const BrukerregistrerteBarn = () => {
                                 </Lenkeknapp>
                             </Row>
                         </div>
-                        <Sporsmal
-                            sprakNokkel={TEXT_KEY}
-                            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                        >
+                        <Sporsmal sprakNokkel={TEXT_KEY} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
                             <div className="blokk-s">
-                                <div key={index}
-                                     className={(index + 1 === annsvarsListe.length) ? "barn barn_siste_liste_element" : "barn"}>
+                                <div
+                                    key={index}
+                                    className={
+                                        index + 1 === annsvarsListe.length ? "barn barn_siste_liste_element" : "barn"
+                                    }
+                                >
                                     <Container fluid={true} className="container--noPadding">
                                         <Row>
                                             <Column xs="12">
@@ -209,7 +205,9 @@ const BrukerregistrerteBarn = () => {
                                                     id={TEXT_KEY_FIRST_NAME + index}
                                                     maxLength={100}
                                                     verdi={barnet.barn.navn.fornavn}
-                                                    onChange={(verdi: string) => oppdaterTekstfelt("navn/fornavn", verdi, index)}
+                                                    onChange={(verdi: string) =>
+                                                        oppdaterTekstfelt("navn/fornavn", verdi, index)
+                                                    }
                                                     onBlur={() => onBlur()}
                                                     onFocus={() => onFokus(index)}
                                                     faktumKey={TEXT_KEY_FIRST_NAME + index}
@@ -224,8 +222,12 @@ const BrukerregistrerteBarn = () => {
                                                     getName={() => TEXT_KEY + "_mellomnavn_input" + index}
                                                     id={TEXT_KEY + "_mellomnavn_input" + index}
                                                     maxLength={100}
-                                                    verdi={barnet.barn.navn.mellomnavn ? barnet.barn.navn.mellomnavn : ""}
-                                                    onChange={(verdi: string) => oppdaterTekstfelt("navn/mellomnavn", verdi, index)}
+                                                    verdi={
+                                                        barnet.barn.navn.mellomnavn ? barnet.barn.navn.mellomnavn : ""
+                                                    }
+                                                    onChange={(verdi: string) =>
+                                                        oppdaterTekstfelt("navn/mellomnavn", verdi, index)
+                                                    }
                                                     onBlur={() => onBlur()}
                                                     onFocus={() => onFokus(index)}
                                                     faktumKey={TEXT_KEY + ".mellomnavn"}
@@ -240,7 +242,9 @@ const BrukerregistrerteBarn = () => {
                                                     id={TEXT_KEY_LAST_NAME + index}
                                                     maxLength={100}
                                                     verdi={barnet.barn.navn.etternavn}
-                                                    onChange={(verdi: string) => oppdaterTekstfelt("navn/etternavn", verdi, index)}
+                                                    onChange={(verdi: string) =>
+                                                        oppdaterTekstfelt("navn/etternavn", verdi, index)
+                                                    }
                                                     onBlur={() => onBlur()}
                                                     onFocus={() => onFokus(index)}
                                                     faktumKey={TEXT_KEY_LAST_NAME + index}
@@ -256,8 +260,14 @@ const BrukerregistrerteBarn = () => {
                                                     id={TEXT_KEY_FNR + index}
                                                     maxLength={8}
                                                     minLength={8}
-                                                    verdi={barnet.barn.fodselsdato ? konverterFraISODato(barnet.barn.fodselsdato) : ""}
-                                                    onChange={(verdi: string) => oppdaterTekstfelt("fodselsdato", verdi, index)}
+                                                    verdi={
+                                                        barnet.barn.fodselsdato
+                                                            ? konverterFraISODato(barnet.barn.fodselsdato)
+                                                            : ""
+                                                    }
+                                                    onChange={(verdi: string) =>
+                                                        oppdaterTekstfelt("fodselsdato", verdi, index)
+                                                    }
                                                     bredde="S"
                                                     onBlur={() => onBlur()}
                                                     onFocus={() => onFokus(index)}
@@ -272,20 +282,24 @@ const BrukerregistrerteBarn = () => {
                                         <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
                                             <JaNeiSporsmal
                                                 id={"brukerregistrert_brukerregistrert_barn_radio_" + index}
-                                                tekster={getFaktumSporsmalTekst(intl, "familie.barn.true.barn.borsammen")}
+                                                tekster={getFaktumSporsmalTekst(
+                                                    intl,
+                                                    "familie.barn.true.barn.borsammen"
+                                                )}
                                                 faktumKey={"familie.barn.true.barn.borsammen"}
                                                 verdi={barnet.borSammenMed}
                                                 onChange={(verdi: boolean) => onClickBorSammen(verdi, index)}
                                                 legendTittelStyle={LegendTittleStyle.NORMAL}
-
                                             />
                                         </div>
                                         {barnet.borSammenMed === true && (
-                                            <div
-                                                className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
+                                            <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
                                                 <JaNeiSporsmal
                                                     id={"brukerregistrert_barn" + index + "_deltbosted"}
-                                                    tekster={getFaktumSporsmalTekst(intl, "familie.barn.true.barn.deltbosted")}
+                                                    tekster={getFaktumSporsmalTekst(
+                                                        intl,
+                                                        "familie.barn.true.barn.deltbosted"
+                                                    )}
                                                     faktumKey={"familie.barn.true.barn.deltbosted"}
                                                     verdi={barnet.harDeltBosted}
                                                     onChange={(verdi: boolean) => onClickHarDeltBosted(verdi, index)}
@@ -294,13 +308,14 @@ const BrukerregistrerteBarn = () => {
                                             </div>
                                         )}
                                         {barnet.borSammenMed === false && (
-                                            <div
-                                                className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
+                                            <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
                                                 <InputEnhanced
                                                     getName={() => "brukerregistrert_barn" + index + "_samvaersgrad"}
                                                     id={"brukerregistrert_barn" + index + "_samvaersgrad"}
                                                     maxLength={3}
-                                                    verdi={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
+                                                    verdi={
+                                                        barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""
+                                                    }
                                                     onChange={(verdi: string) => onChangeSamvaersgrad(verdi, index)}
                                                     onBlur={() => onBlur()}
                                                     onFocus={() => onFokus(index)}
@@ -314,17 +329,19 @@ const BrukerregistrerteBarn = () => {
                             </div>
                         </Sporsmal>
                     </Underskjema>
-                )}
+                ))}
                 <div className="legg-til-barn-knapp">
-                    <Lenkeknapp onClick={() => handleLeggTilBarn()} stil="add"
-                                id={"legg_til_brukerregistrert_barn_link"}>
+                    <Lenkeknapp
+                        onClick={() => handleLeggTilBarn()}
+                        stil="add"
+                        id={"legg_til_brukerregistrert_barn_link"}
+                    >
                         Legg til barn som ikke er registrert
                     </Lenkeknapp>
                 </div>
             </div>
         </Sporsmal>
     );
-
 };
 
 export default BrukerregistrerteBarn;

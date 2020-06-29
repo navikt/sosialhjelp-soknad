@@ -21,9 +21,9 @@ export enum SoknadActionTypeKeys {
     FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS = "soknad/FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS",
     OPPDATER_SOKNADSMOTTAKER_STATUS = "soknad/OPPDATER_SOKNADSMOTTAKER_STATUS",
 
-	HENT_SAMTYKKE = "soknad/HENT_SAMTYKKE",
-	HENT_SAMTYKKE_OK = "soknad/HENT_SAMTYKKE_OK",
-	OPPDATER_SAMTYKKE = "soknad/OPPDATER_SAMTYKKE",
+    HENT_SAMTYKKE = "soknad/HENT_SAMTYKKE",
+    HENT_SAMTYKKE_OK = "soknad/HENT_SAMTYKKE_OK",
+    OPPDATER_SAMTYKKE = "soknad/OPPDATER_SAMTYKKE",
 
     SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER = "soknad/SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER",
     LAGRE_TILGANG_OG_FORNAVN_PA_STORE = "soknad/LAGRE_RESSURSER_PA_STORE",
@@ -64,11 +64,9 @@ export type SoknadActionType =
     | SetErSystemdataEndret
     | FinnOgOppdaterSoknadsmottakerStatus
     | OppdaterSoknadsmottakerStatus
-
-	| HentSamtykker
-	| HentSamtykkerOk
-	| OppdaterSamtykke
-
+    | HentSamtykker
+    | HentSamtykkerOk
+    | OppdaterSamtykke
     | SjekkAutentiseringOgTilgangOgHentRessurser
     | LagreTilgangOgFornavnPaStore
     | LagreNedetidPaStore
@@ -92,25 +90,25 @@ export interface SjekkAutentiseringOgTilgangOgHentRessurser {
 }
 
 export interface HentSamtykker {
-	type: SoknadActionTypeKeys.HENT_SAMTYKKE,
-	behandlingsId: string
+    type: SoknadActionTypeKeys.HENT_SAMTYKKE;
+    behandlingsId: string;
 }
 
 export interface HentSamtykkerOk {
-	type: SoknadActionTypeKeys.HENT_SAMTYKKE_OK,
-	samtykker: Samtykke[]
+    type: SoknadActionTypeKeys.HENT_SAMTYKKE_OK;
+    samtykker: Samtykke[];
 }
 
 export interface OppdaterSamtykke {
-	type: SoknadActionTypeKeys.OPPDATER_SAMTYKKE,
-	behandlingsId: string,
-	harSamtykket: boolean,
-	samtykker: Samtykke[]
+    type: SoknadActionTypeKeys.OPPDATER_SAMTYKKE;
+    behandlingsId: string;
+    harSamtykket: boolean;
+    samtykker: Samtykke[];
 }
 
 export interface Samtykke {
-	type: String,
-	verdi: boolean
+    type: string;
+    verdi: boolean;
 }
 
 export interface LagreTilgangOgFornavnPaStore {

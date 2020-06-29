@@ -30,20 +30,20 @@ const Skatt = () => {
     const skattbarinntektogforskuddstrekk: SkattbarInntektInfo = soknadsdata.inntekt.skattbarinntektogforskuddstrekk;
     const harSamtykke: boolean = soknadsdata.inntekt.skattbarinntektogforskuddstrekk.samtykke;
     const samtykkeTidspunkt: Date | undefined = soknadsdata.inntekt.skattbarinntektogforskuddstrekk.samtykkeTidspunkt;
-    const samtykkeTidspunktStreng: String = samtykkeTidspunkt ? formatTidspunkt(samtykkeTidspunkt.toString()) : "";
+    const samtykkeTidspunktStreng: string = samtykkeTidspunkt ? formatTidspunkt(samtykkeTidspunkt.toString()) : "";
     const visAnimerteStreker = restStatus !== REST_STATUS.OK;
 
     // TODO DIGISOS-1175: Håndter flere måneder med skattbar inntekt
     const inntektFraSkatteetaten: SkattbarInntekt[] = skattbarinntektogforskuddstrekk.inntektFraSkatteetaten;
     const inntektFraSkatteetatenFeilet: boolean = skattbarinntektogforskuddstrekk.inntektFraSkatteetatenFeilet;
 
-    function handleSettSkatteetatenSamtykke(harSamtykke: boolean) {
+    function handleSettSkatteetatenSamtykke(nyttHarSamtykke: boolean) {
         if (!visAnimerteStreker && behandlingsId) {
             dispatch(
                 settSamtykkeOgOppdaterData(
                     behandlingsId,
                     SoknadsSti.SKATTBARINNTEKT_SAMTYKKE,
-                    harSamtykke,
+                    nyttHarSamtykke,
                     SoknadsSti.SKATTBARINNTEKT
                 )
             );

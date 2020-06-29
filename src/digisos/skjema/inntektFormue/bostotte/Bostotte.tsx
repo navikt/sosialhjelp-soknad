@@ -11,7 +11,11 @@ import {Bostotte} from "./bostotteTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 import {State} from "../../../redux/reducers";
-import {hentSoknadsdata, lagreSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknadsdata/soknadsdataActions";
+import {
+    hentSoknadsdata,
+    lagreSoknadsdata,
+    settSamtykkeOgOppdaterData,
+} from "../../../redux/soknadsdata/soknadsdataActions";
 import Knapp from "nav-frontend-knapper";
 import AlertStripe from "nav-frontend-alertstriper";
 
@@ -47,9 +51,10 @@ const BostotteView = () => {
                 bostotte.bekreftelse = verdi;
                 dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSTOTTE, bostotte));
                 let responseHandler = undefined;
-                if (!verdi) { // Fjern samtykke når bruker svarer nei.
+                if (!verdi) {
+                    // Fjern samtykke når bruker svarer nei.
                     responseHandler = () => {
-                        handleSettBostotteSamtykke(false)
+                        handleSettBostotteSamtykke(false);
                     };
                 }
                 dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, bostotte, responseHandler));
@@ -57,14 +62,16 @@ const BostotteView = () => {
         }
     };
 
-    const handleSettBostotteSamtykke = (harSamtykke: boolean) => {
+    const handleSettBostotteSamtykke = (nyttHarSamtykke: boolean) => {
         if (!oppstartsModus && behandlingsId) {
-            dispatch(settSamtykkeOgOppdaterData(
-                behandlingsId,
-                SoknadsSti.BOSTOTTE_SAMTYKKE,
-                harSamtykke,
-                SoknadsSti.BOSTOTTE
-            ))
+            dispatch(
+                settSamtykkeOgOppdaterData(
+                    behandlingsId,
+                    SoknadsSti.BOSTOTTE_SAMTYKKE,
+                    nyttHarSamtykke,
+                    SoknadsSti.BOSTOTTE
+                )
+            );
         }
     };
 
@@ -77,10 +84,10 @@ const BostotteView = () => {
                 </div>
                 <div className="utbetaling">
                     <span>
-                        <FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label"/>
+                        <FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label" />
                         <span className="dato">
                             &nbsp;
-                            <Dato tidspunkt={dato}/>
+                            <Dato tidspunkt={dato} />
                         </span>
                     </span>
                     <span className="verdi detaljeliste__verdi">
@@ -129,7 +136,7 @@ const BostotteView = () => {
     const harSamtykke: boolean = bostotte.samtykke === true;
     const samtykkeTidspunkt: Date | null = bostotte.samtykkeTidspunkt;
     let samtykkeTidspunktStreng = "";
-    if(samtykkeTidspunkt) {
+    if (samtykkeTidspunkt) {
         samtykkeTidspunktStreng = formatTidspunkt(samtykkeTidspunkt.toString());
     }
     const harBostotterUtbetalinger: boolean = bostotte.utbetalinger && bostotte.utbetalinger.length > 0;
@@ -142,12 +149,15 @@ const BostotteView = () => {
                 tekster={getFaktumSporsmalTekst(intl, FAKTUM_BOSTOTTE)}
                 faktumKey={FAKTUM_BOSTOTTE}
                 verdi={bostotte ? bostotte.bekreftelse : null}
-                        onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
+                onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <Sporsmal
                     tekster={{
-                        sporsmal: requestToHusbankenFeilet || !harSamtykke?getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke.overskrift"):""
+                        sporsmal:
+                            requestToHusbankenFeilet || !harSamtykke
+                                ? getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke.overskrift")
+                                : "",
                     }}
                 >
                     {(requestToHusbankenFeilet || !harSamtykke) && (
@@ -160,7 +170,7 @@ const BostotteView = () => {
                                         type="standard"
                                         spinner={oppstartsModus}
                                         onClick={() => {
-                                            handleSettBostotteSamtykke(true)
+                                            handleSettBostotteSamtykke(true);
                                         }}
                                         className="samtykke_knapp_padding"
                                     >
@@ -179,14 +189,14 @@ const BostotteView = () => {
                         <>
                             <div>
                                 <h4 className="tidspunkt_uten_luft">{samtykkeTidspunktStreng}</h4>
-                                <FormattedMessage id="inntekt.bostotte.husbanken.info"/>
+                                <FormattedMessage id="inntekt.bostotte.husbanken.info" />
                             </div>
                             <h4 className="blokk-null">
-                                <FormattedMessage id="inntekt.bostotte.husbanken.utbetalinger"/>
+                                <FormattedMessage id="inntekt.bostotte.husbanken.utbetalinger" />
                             </h4>
                             {!harBostotterUtbetalinger && (
                                 <div className="utbetalinger">
-                                    <FormattedMessage id="inntekt.bostotte.husbanken.ingenutbetalingerfunnet"/>
+                                    <FormattedMessage id="inntekt.bostotte.husbanken.ingenutbetalingerfunnet" />
                                 </div>
                             )}
                             {bostotte.utbetalinger.map((utbetaling, index) => {
@@ -198,11 +208,11 @@ const BostotteView = () => {
                                 );
                             })}
                             <h4 className="blokk-null saksoverskrift">
-                                <FormattedMessage id="inntekt.bostotte.husbanken.saker"/>
+                                <FormattedMessage id="inntekt.bostotte.husbanken.saker" />
                             </h4>
                             {!harBostotterSaker && (
                                 <div className="sak blokk-xs">
-                                    <FormattedMessage id="inntekt.bostotte.husbanken.ingensakerfunnet"/>
+                                    <FormattedMessage id="inntekt.bostotte.husbanken.ingensakerfunnet" />
                                 </div>
                             )}
                             {bostotte.saker.map((sak, index) => {
@@ -223,7 +233,7 @@ const BostotteView = () => {
                                         rel="noopener noreferrer"
                                         className="linje_under"
                                     >
-                            <FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"} />
+                                        <FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"} />
                                     </a>
                                 </div>
                             )}
