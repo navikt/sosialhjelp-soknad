@@ -55,7 +55,7 @@ const ForsorgerPliktView = () => {
                 <p>
                     <FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn" />
                 </p>
-                {/*<BrukerregistrerteBarn/>*/}
+                {/*<BrukerregistrerteBarn/> TODO: Kommentert ut intil alle FSLer er klare. */}
                 {brukerregistrertAnsvar && antallBrukerregistrerteBarn > 0 && <Barnebidrag />}
             </Sporsmal>
         );
@@ -66,7 +66,7 @@ const ForsorgerPliktView = () => {
                 <FormattedHTMLMessage id="familierelasjon.ingress" values={{antallBarn}} />
                 <SysteminfoMedSkjema>
                     <RegistrerteBarn />
-                    {/*<BrukerregistrerteBarn/>*/}
+                    {/*<BrukerregistrerteBarn/> TODO: Kommentert ut intil alle FSLer er klare. */}
                     <Barnebidrag />
                 </SysteminfoMedSkjema>
             </Sporsmal>

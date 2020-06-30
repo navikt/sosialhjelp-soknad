@@ -21,77 +21,63 @@ const SamtykkeView: React.FC = () => {
 
     const dispatch = useDispatch();
 
-    const erSystemdataEndret: ErSystemdataEndret = useSelector(
-        (state: State) => state.soknad.erSystemdataEndret
-    );
-    const behandlingsId: string | undefined = useSelector(
-        (state: State) => state.soknad.behandlingsId
-    );
-    const samtykker: Samtykke[] | undefined = useSelector(
-        (state: State) => state.soknad.samtykker
-    );
-    const samtykkeRestStatus: REST_STATUS = useSelector(
-        (state: State) => state.soknad.restStatus
-    );
+    const erSystemdataEndret: ErSystemdataEndret = useSelector((state: State) => state.soknad.erSystemdataEndret);
+    const behandlingsId: string | undefined = useSelector((state: State) => state.soknad.behandlingsId);
+    const samtykker: Samtykke[] | undefined = useSelector((state: State) => state.soknad.samtykker);
+    const samtykkeRestStatus: REST_STATUS = useSelector((state: State) => state.soknad.restStatus);
 
     const harLastetinnSamtykker = samtykkeRestStatus === REST_STATUS.OK;
     let harSamtykker: boolean = false;
     let samtykkerTekst: string = "";
     if (harLastetinnSamtykker && samtykker) {
-        const faktiskeSamtykker = samtykker.filter(samtykke => samtykke.verdi? samtykke.verdi : false);
+        const faktiskeSamtykker = samtykker.filter((samtykke) => (samtykke.verdi ? samtykke.verdi : false));
         harSamtykker = faktiskeSamtykker.length > 0;
         faktiskeSamtykker.forEach(function (item) {
             const text = getIntlTextOrKey(intl, "informasjon.samtykke." + item.type);
-            samtykkerTekst += samtykkerTekst===""?text:" og " + text;
-        })
+            samtykkerTekst += samtykkerTekst === "" ? text : " og " + text;
+        });
     }
 
-    if(harLastetinnSamtykker && behandlingsId) {
-        if(erSystemdataEndret === ErSystemdataEndret.NO && !harSamtykker) {
+    if (harLastetinnSamtykker && behandlingsId) {
+        if (erSystemdataEndret === ErSystemdataEndret.NO && !harSamtykker) {
             dispatch(tilSteg(1, behandlingsId));
         }
     }
     useEffect(() => {
         if (behandlingsId) {
             dispatch(getErSystemdataEndret(behandlingsId));
-            dispatch(hentSamtykker(behandlingsId))
+            dispatch(hentSamtykker(behandlingsId));
         }
     }, [behandlingsId, dispatch]);
 
-    function setSamtykkeOgGaTilSteg1(harSamtykket: boolean) {
+    function setSamtykkeOgGaTilSteg1(nyttHarSamtykket: boolean) {
         if (behandlingsId && samtykker) {
-            dispatch(oppdaterSamtykke(behandlingsId, harSamtykket, samtykker));
+            dispatch(oppdaterSamtykke(behandlingsId, nyttHarSamtykket, samtykker));
         }
     }
 
     return (
         <div className="app-digisos informasjon-side">
-            <AppBanner/>
+            <AppBanner />
             <Panel className={"skjema-content"}>
-
-                <Veilederpanel
-                    svg={<EllaKompakt/>}
-                    fargetema="advarsel"
-                    kompakt={true}
-                    type="plakat"
-                >
+                <Veilederpanel svg={<EllaKompakt />} fargetema="advarsel" kompakt={true} type="plakat">
                     {erSystemdataEndret === ErSystemdataEndret.YES && (
                         <div className="skjemaelement--horisontal">
-                            <FormattedMessage id="oppsummering.systemdataendret.true"/>
+                            <FormattedMessage id="oppsummering.systemdataendret.true" />
                         </div>
                     )}
                     {harSamtykker && (
                         <>
                             <div className="skjemaelement--horisontal">
-                                <FormattedMessage id="informasjon.samtykke.info_del1"/>
+                                <FormattedMessage id="informasjon.samtykke.info_del1" />
                                 {" " + samtykkerTekst + ". "}
-                                <FormattedMessage id="informasjon.samtykke.info_del2"/>
+                                <FormattedMessage id="informasjon.samtykke.info_del2" />
                             </div>
                             <Checkbox
-                                label={getIntlTextOrKey(intl, "informasjon.samtykke.sporsmal") + " " + samtykkerTekst + "."}
-                                onChange={(event: any) =>
-                                    harSamtykket = event.target.checked
+                                label={
+                                    getIntlTextOrKey(intl, "informasjon.samtykke.sporsmal") + " " + samtykkerTekst + "."
                                 }
+                                onChange={(event: any) => (harSamtykket = event.target.checked)}
                             />
                         </>
                     )}
@@ -100,7 +86,7 @@ const SamtykkeView: React.FC = () => {
                     id="gi_bostotte_samtykke"
                     type="hoved"
                     onClick={() => {
-                        setSamtykkeOgGaTilSteg1(harSamtykket)
+                        setSamtykkeOgGaTilSteg1(harSamtykket);
                     }}
                     className="samtykke_knapp_padding"
                 >

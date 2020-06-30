@@ -2,7 +2,7 @@ import * as React from "react";
 import {Route, RouterProps, Switch, withRouter, matchPath, Prompt} from "react-router";
 import {Location} from "history";
 import {connect} from "react-redux";
-import Samtykke from "./samtykke/Samtykke";
+import Samtykke from "./samtykke/SamtykkeView";
 import Steg1 from "./personopplysninger";
 import Steg2 from "./begrunnelse";
 import Steg3 from "./arbeidUtdanning";
@@ -88,7 +88,7 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
         return (
             <>
                 <Switch>
-                    <Route path={`${path}/0`} component={Samtykke}/>
+                    <Route path={`${path}/0`} component={Samtykke} />
                     <Route path={`${path}/1`} component={Steg1} />
                     <Route path={`${path}/2`} component={Steg2} />
                     <Route path={`${path}/3`} component={Steg3} />
