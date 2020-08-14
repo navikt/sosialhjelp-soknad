@@ -40,7 +40,7 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
     if (window.location.origin.indexOf("nais.oera") >= 0) {
         return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${apiContextPath}/`;
     }
-    if (window.location.origin.indexOf("dev-nav.no") >= 0 || window.location.origin.indexOf("labs.nais.io") >= 0) {
+    if (window.location.origin.indexOf("dev.nav.no") >= 0 || window.location.origin.indexOf("labs.nais.io") >= 0) {
         if (window.location.origin.indexOf("digisos.labs.nais.io") >= 0) {
             return getAbsoluteApiUrl(withAccessToken);
         }
@@ -84,18 +84,18 @@ export function getRedirectPath(): string {
 
 export function getGotoPathname(): string {
     const gotoFromLink = getGotoParameterIfPathAlreadyIsLink();
-    return gotoFromLink ? gotoFromLink : window.location.pathname
+    return gotoFromLink ? gotoFromLink : window.location.pathname;
 }
 
 function getGotoParameterIfPathAlreadyIsLink(): string | undefined {
     if (window.location.pathname === getRedirectPathname()) {
-        return parseGotoValueFromSearchParameters(window.location.search)
+        return parseGotoValueFromSearchParameters(window.location.search);
     }
     return undefined;
 }
-export function parseGotoValueFromSearchParameters(searchParameters : string): string {
-    const afterGoto = searchParameters.split("goto=")[1]
-    return afterGoto ? afterGoto.split("&login_id")[0] : afterGoto // Fjerne login_id dersom strengen bak goto= er definert.
+export function parseGotoValueFromSearchParameters(searchParameters: string): string {
+    const afterGoto = searchParameters.split("goto=")[1];
+    return afterGoto ? afterGoto.split("&login_id")[0] : afterGoto; // Fjerne login_id dersom strengen bak goto= er definert.
 }
 
 function getServletBaseUrl(): string {
