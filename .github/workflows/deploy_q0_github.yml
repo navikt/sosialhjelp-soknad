@@ -1,0 +1,26 @@
+name: Deploy q0
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    name: Deploy to q0
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
+      - name: Sett env variabler
+        run: |
+          PROJECT_NAME=$(echo ${{ github.repository }} | cut -d/ -f2)
+          echo ::set-env name=IMAGE::$(echo "docker.pkg.github.com/${{ github.repository }}/$PROJECT_NAME":${{ steps.get-latest-tag.outputs.tag }})
+
+      - name: Deploy til q0
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          RESOURCE: nais.yaml
+          CLUSTER: dev-sbs
+          VARS: nais/dev/q0.json
+          REF: ${{ steps.get-latest-tag.outputs.tag }}
+          PRINT_PAYLOAD: true
+          IMAGE: ${{ env.IMAGE }}
