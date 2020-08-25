@@ -13,7 +13,7 @@ function* tilFinnDittNavKontorSaga(): SagaIterator {
 }
 
 function* tilStartSaga(): SagaIterator {
-    yield put(push(Sider.START));
+    yield call(navigateTo, Sider.START);
 }
 
 function* tilMockSaga(): SagaIterator {

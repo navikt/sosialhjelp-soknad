@@ -3,7 +3,7 @@ export enum Sider {
     /* tslint:disable-next-line */
     FINN_DITT_NAV_KONTOR = "https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Relatert+informasjon/finn-ditt-nav-kontor--353421",
     SERVERFEIL = "/serverfeil",
-    START = "/informasjon",
+    START = "/sosialhjelp/soknad/informasjon",
     BOSTED = "/bosted",
     MOCK = "/mock",
 }
