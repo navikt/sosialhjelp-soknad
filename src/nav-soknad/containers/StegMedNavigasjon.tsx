@@ -10,7 +10,7 @@ import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
 
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import Knapperad from "../components/knapperad";
-import {SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../../digisos/redux/soknad/soknadTypes";
+import {REST_STATUS, SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../../digisos/redux/soknad/soknadTypes";
 import {ValideringsFeilKode} from "../../digisos/redux/reduxTypes";
 import {setVisBekreftMangler} from "../../digisos/redux/oppsummering/oppsummeringActions";
 import {getIntlTextOrKey, scrollToTop} from "../utils";
@@ -66,6 +66,9 @@ const StegMedNavigasjon = (
     const nedetidstart = soknad.nedetid ? soknad.nedetid.nedetidStartText : "";
     const nedetidslutt = soknad.nedetid ? soknad.nedetid.nedetidSluttText : "";
     const isNedetid = soknad.nedetid ? soknad.nedetid.isNedetid : false;
+    const adresseValgRestStatus = soknadsdata.restStatus.personalia.adresser;
+    const isAdresseValgRestPending =
+        adresseValgRestStatus === REST_STATUS.INITIALISERT || adresseValgRestStatus === REST_STATUS.PENDING;
 
     const loggAdresseTypeTilGrafana = () => {
         const adresseTypeValg = soknadsdata.personalia.adresser.valg;
@@ -143,7 +146,7 @@ const StegMedNavigasjon = (
         }
     };
 
-    const nextButtonPending = soknad.sendSoknadPending;
+    const nextButtonPending = soknad.sendSoknadPending || isAdresseValgRestPending;
     const {skjemaConfig, stegKey, ikon, children} = props;
 
     const {feil, visValideringsfeil} = validering;
