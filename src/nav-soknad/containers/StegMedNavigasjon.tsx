@@ -81,6 +81,11 @@ const StegMedNavigasjon = (
             const valgtNavEnhet = finnSoknadsMottaker();
             if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
                 dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
+                if (valgtNavEnhet == null) {
+                    dispatch(loggInfo("Ingen navenhet valgt"));
+                } else {
+                    dispatch(loggInfo(`Ugyldig navenhet valgt: ${valgtNavEnhet.enhetsnr} ${valgtNavEnhet.enhetsnavn}`));
+                }
                 dispatch(visValideringsfeilPanel());
             } else {
                 if (feil.length === 0) {
@@ -110,6 +115,11 @@ const StegMedNavigasjon = (
 
             if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
                 dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
+                if (valgtNavEnhet == null) {
+                    dispatch(loggInfo("Ingen navenhet valgt"));
+                } else {
+                    dispatch(loggInfo(`Ugyldig navenhet valgt: ${valgtNavEnhet.enhetsnr} ${valgtNavEnhet.enhetsnavn}`));
+                }
                 dispatch(visValideringsfeilPanel());
             } else {
                 if (feil.length === 0) {
