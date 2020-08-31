@@ -33,7 +33,7 @@ const history = require("history").createBrowserHistory({
         if (msg === NAVIGASJONSPROMT.SKJEMA) {
             const soknad: SoknadState = store.getState().soknad;
             if (soknad.behandlingsId && soknad.avbrytSoknadSjekkAktiv) {
-                store.dispatch(avbrytSoknad("START"));
+                store.dispatch(avbrytSoknad("MINSIDE"));
                 callback(false);
             } else {
                 callback(true);
