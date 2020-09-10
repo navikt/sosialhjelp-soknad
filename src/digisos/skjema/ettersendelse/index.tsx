@@ -193,16 +193,19 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                             );
                         })}
 
-                    {opprettNyEttersendelseFeilet && !isNedetid && (
-                        <SoknadEttersendelseFeilerHotjarTrigger>
-                            <AvsnittMedMarger className="ettersendelse__vedlegg__header">
-                                <Informasjonspanel ikon={InformasjonspanelIkon.HENSYN} farge={DigisosFarge.VIKTIG}>
-                                    <FormattedHTMLMessage id="ettersendelse.ikke.mulig" />
-                                </Informasjonspanel>
-                            </AvsnittMedMarger>
-                        </SoknadEttersendelseFeilerHotjarTrigger>
-                    )}
-                    {!opprettNyEttersendelseFeilet && (
+                    {opprettNyEttersendelseFeilet &&
+                        originalSoknad &&
+                        originalSoknad.soknadsalderIMinutter > 60 &&
+                        !isNedetid && (
+                            <SoknadEttersendelseFeilerHotjarTrigger>
+                                <AvsnittMedMarger className="ettersendelse__vedlegg__header">
+                                    <Informasjonspanel ikon={InformasjonspanelIkon.HENSYN} farge={DigisosFarge.VIKTIG}>
+                                        <FormattedHTMLMessage id="ettersendelse.ikke.mulig" />
+                                    </Informasjonspanel>
+                                </AvsnittMedMarger>
+                            </SoknadEttersendelseFeilerHotjarTrigger>
+                        )}
+                    {!opprettNyEttersendelseFeilet && originalSoknad && originalSoknad.soknadsalderIMinutter > 60 && (
                         <DigisosGammelEttersendelseHotjarTrigger>
                             <EttersendelseEkspanderbart
                                 kunGenerellDokumentasjon={antallManglendeVedlegg === 0}
