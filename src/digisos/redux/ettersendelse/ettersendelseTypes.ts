@@ -176,6 +176,7 @@ export interface OrginalSoknad {
     behandlingsId: string;
     innsendtDato: string;
     innsendtTidspunkt: string;
+    soknadsalderIMinutter: number;
     innsendteVedlegg: any[];
     ikkeInnsendteVedlegg: any[];
     navenhet: string;
