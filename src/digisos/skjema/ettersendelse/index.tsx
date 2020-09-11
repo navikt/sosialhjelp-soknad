@@ -21,10 +21,7 @@ import {erEttersendelseSide, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
 import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import AlertStripe from "nav-frontend-alertstriper";
-import {
-    DigisosGammelEttersendelseHotjarTrigger,
-    SoknadEttersendelseFeilerHotjarTrigger,
-} from "../../../nav-soknad/components/hotjarTrigger/HotjarTrigger";
+import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
 
 interface OwnProps {
     manglendeVedlegg: EttersendelseVedleggBackend[];
@@ -193,38 +190,36 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                             );
                         })}
 
-                    {opprettNyEttersendelseFeilet &&
-                        originalSoknad &&
-                        originalSoknad.soknadsalderIMinutter > 60 &&
-                        !isNedetid && (
-                            <SoknadEttersendelseFeilerHotjarTrigger>
-                                <AvsnittMedMarger className="ettersendelse__vedlegg__header">
-                                    <Informasjonspanel ikon={InformasjonspanelIkon.HENSYN} farge={DigisosFarge.VIKTIG}>
-                                        <FormattedHTMLMessage id="ettersendelse.ikke.mulig" />
-                                    </Informasjonspanel>
-                                </AvsnittMedMarger>
-                            </SoknadEttersendelseFeilerHotjarTrigger>
-                        )}
-                    {!opprettNyEttersendelseFeilet && originalSoknad && originalSoknad.soknadsalderIMinutter > 60 && (
-                        <DigisosGammelEttersendelseHotjarTrigger>
-                            <EttersendelseEkspanderbart
-                                kunGenerellDokumentasjon={antallManglendeVedlegg === 0}
-                                ettersendelseAktivert={ettersendelseAktivert}
-                                onEttersendelse={() => this.onEttersendelseSendt()}
-                            >
-                                {antallManglendeVedlegg > 0 && (
-                                    <span>
-                                        <h3>Vedlegg mangler</h3>
-                                        <div>{datoManglendeVedlegg}</div>
-                                    </span>
-                                )}
-                                {antallManglendeVedlegg === 0 && (
-                                    <h3>
-                                        <FormattedHTMLMessage id="ettersendelse.generell.dokumentasjon" />
-                                    </h3>
-                                )}
-                            </EttersendelseEkspanderbart>
-                        </DigisosGammelEttersendelseHotjarTrigger>
+                    <HotjarTriggerEttersendelse
+                        opprettNyEttersendelseFeilet={opprettNyEttersendelseFeilet}
+                        originalSoknad={originalSoknad}
+                    />
+
+                    {opprettNyEttersendelseFeilet && !isNedetid && (
+                        <AvsnittMedMarger className="ettersendelse__vedlegg__header">
+                            <Informasjonspanel ikon={InformasjonspanelIkon.HENSYN} farge={DigisosFarge.VIKTIG}>
+                                <FormattedHTMLMessage id="ettersendelse.ikke.mulig" />
+                            </Informasjonspanel>
+                        </AvsnittMedMarger>
+                    )}
+                    {!opprettNyEttersendelseFeilet && (
+                        <EttersendelseEkspanderbart
+                            kunGenerellDokumentasjon={antallManglendeVedlegg === 0}
+                            ettersendelseAktivert={ettersendelseAktivert}
+                            onEttersendelse={() => this.onEttersendelseSendt()}
+                        >
+                            {antallManglendeVedlegg > 0 && (
+                                <span>
+                                    <h3>Vedlegg mangler</h3>
+                                    <div>{datoManglendeVedlegg}</div>
+                                </span>
+                            )}
+                            {antallManglendeVedlegg === 0 && (
+                                <h3>
+                                    <FormattedHTMLMessage id="ettersendelse.generell.dokumentasjon" />
+                                </h3>
+                            )}
+                        </EttersendelseEkspanderbart>
                     )}
 
                     <AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>
