@@ -20,6 +20,7 @@ export interface NavEnhet {
     enhetsnavn: string;
     kommunenavn: string;
     kommuneNr: string;
+    behandlingsansvarlig: null | string;
     valgt: boolean;
 }
 

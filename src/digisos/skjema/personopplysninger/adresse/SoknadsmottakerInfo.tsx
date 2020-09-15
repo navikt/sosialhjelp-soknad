@@ -7,6 +7,7 @@ import AlertStripe from "nav-frontend-alertstriper";
 import {FormattedHTMLMessage} from "react-intl";
 import {useSelector} from "react-redux";
 import {State} from "../../../redux/reducers";
+import {finnBehandlendeKommunenavn} from "../../../data/kommuner";
 
 const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
@@ -16,7 +17,7 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
     let kommunenavn = "";
     if (valgtNavEnhet) {
         enhetsnavn = valgtNavEnhet.enhetsnavn;
-        kommunenavn = valgtNavEnhet.kommunenavn;
+        kommunenavn = finnBehandlendeKommunenavn(valgtNavEnhet);
     }
     let erSynlig: boolean = true;
     let farge: DigisosFarge = DigisosFarge.SUKSESS;
@@ -28,7 +29,7 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
 
     if (mottakerStatus === SoknadsMottakerStatus.GYLDIG) {
         // GRØNN
-        tekst = `Søknaden vil bli sendt til: ${enhetsnavn}, ${kommunenavn} kommune.`;
+        tekst = `Søknaden vil bli sendt til: ${enhetsnavn}, ${kommunenavn}.`;
         informasjonspanel = (
             <Informasjonspanel ikon={InformasjonspanelIkon.BREVKONVOLUTT} farge={farge} synlig={erSynlig}>
                 {tekst}

@@ -2,6 +2,7 @@ import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
 import * as React from "react";
 import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
+import {finnBehandlendeKommunenavn} from "../../data/kommuner";
 import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps,
@@ -14,7 +15,9 @@ class SoknadsmottakerInfoPanel extends React.Component<Props, {}> {
         const {valgtSoknadsmottaker} = this.props.soknad;
 
         if (valgtSoknadsmottaker) {
-            const valgtEnhetsNavn = `${valgtSoknadsmottaker.enhetsnavn}, ${valgtSoknadsmottaker.kommunenavn} kommune`;
+            const valgtEnhetsNavn = `${valgtSoknadsmottaker.enhetsnavn}, ${finnBehandlendeKommunenavn(
+                valgtSoknadsmottaker
+            )}`;
             return (
                 <Informasjonspanel farge={DigisosFarge.VIKTIG} ikon={InformasjonspanelIkon.BREVKONVOLUTT}>
                     <FormattedHTMLMessage

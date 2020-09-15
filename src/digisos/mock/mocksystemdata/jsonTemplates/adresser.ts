@@ -14,9 +14,10 @@ export const adresserJSON = {
             bydel: "030102",
             husnummer: null,
             husbokstav: null,
+            behandlingsansvarlig: null,
         },
         {
-            kommunenummer: "1201",
+            kommunenummer: "0701",
             kommunenavn: "Bergen",
             adressenavn: "SANNERGATA",
             husnummerFra: "0011",
@@ -28,6 +29,7 @@ export const adresserJSON = {
             bydel: "120107",
             husnummer: null,
             husbokstav: null,
+            behandlingsansvarlig: "Annen kommune",
         },
     ],
 };

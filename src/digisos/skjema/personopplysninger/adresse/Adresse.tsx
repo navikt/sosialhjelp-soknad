@@ -145,7 +145,10 @@ const AdresseView = () => {
 
             const navEnheter = soknadsdata.personalia.navEnheter;
             navEnheter.map((navEnhet: NavEnhet) => {
-                if (navEnhet.enhetsnavn === valgtNavEnhet.enhetsnavn) {
+                if (
+                    navEnhet.enhetsnavn === valgtNavEnhet.behandlingsansvarlig ||
+                    navEnhet.enhetsnavn === valgtNavEnhet.enhetsnavn
+                ) {
                     navEnhet.valgt = true;
                     dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, navEnhet));
                 } else {
