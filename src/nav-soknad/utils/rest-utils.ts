@@ -21,6 +21,13 @@ export function erQ(): boolean {
     return url.indexOf("www-q0") >= 0 || url.indexOf("www-q1") >= 0;
 }
 
+export function erQGammelVersjon(): boolean {
+    /* Vi endrer url til www-q*.dev.nav.no. Denne funksjonen returnerer true når den gamle URL-en blir benyttet.
+     * Den gamle URL-en vil bli benyttet en stund av kommuner. */
+    const url = window.location.href;
+    return url.indexOf("www-q0.nav.no") >= 0 || url.indexOf("www-q1.nav.no") >= 0;
+}
+
 export function kjorerJetty(): boolean {
     const url = window.location.href;
     return url.indexOf(":8189") > 0;
@@ -281,6 +288,17 @@ export function toJson<T>(response: Response): Promise<T> {
     return response.json();
 }
 
+function loginUrlForGammeltMiljoEllerFraRespons(loginUrlFraRespons: string) {
+    /* Vi endrer url til www-q*.dev.nav.no (pga naisdevice). Men den gamle URL-en vil bli benyttet en stund av kommuner.
+     * For at loginservice skal fungere må appen kjøre på samme domene som loginsevice.
+     * Overskriver derfor loginUrl i dev dersom gammel URL blir benyttet */
+
+    if (erQGammelVersjon()) {
+        return "https://loginservice-q.nav.no/login";
+    }
+    return loginUrlFraRespons;
+}
+
 function verifyStatusSuccessOrRedirect(response: Response): number {
     if (response.status === 401) {
         response.json().then((r) => {
@@ -294,8 +312,9 @@ function verifyStatusSuccessOrRedirect(response: Response): number {
             };
 
             if (window.location.search.split("login_id=")[1] !== r.id) {
-                const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
-                window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "%26login_id=" + r.id;
+                const loginUrl = loginUrlForGammeltMiljoEllerFraRespons(r.loginUrl);
+                const queryDivider = loginUrl.includes("?") ? "&" : "?";
+                window.location.href = loginUrl + queryDivider + getRedirectPath() + "%26login_id=" + r.id;
             } else {
                 let loggPayload = createLogEntry(
                     "Fetch ga 401-error-id selv om kallet ble sendt fra URL med samme login_id (" +
