@@ -82,8 +82,21 @@ function determineCredentialsParameter() {
     return window.location.origin.indexOf("nais.oera") || erDev() ? "include" : "same-origin";
 }
 
-export function getRedirectPath(): string {
+function getRedirectOrigin() {
+    /* Vi endrer preprod-url til www-q*.dev.nav.no (pga naisdevice).
+     * Men den gamle URL-en (www-q*.nav.no) vil bli benyttet en stund av kommuner.
+     * Loginservice kan kun sette cookies på apper som kjører på samme domene.
+     * Vi lar derfor loginservice redirecte til den nye ingressen. */
+
     const currentOrigin = window.location.origin;
+    if (erQGammelVersjon()) {
+        return currentOrigin.replace("nav.no", "dev.nav.no");
+    }
+    return window.location.origin;
+}
+
+export function getRedirectPath(): string {
+    const currentOrigin = getRedirectOrigin();
     const gotoParameter = "?goto=" + getGotoPathname();
     const redirectPath = currentOrigin + getRedirectPathname() + gotoParameter;
     return "redirect=" + redirectPath;
@@ -288,17 +301,6 @@ export function toJson<T>(response: Response): Promise<T> {
     return response.json();
 }
 
-function loginUrlForGammeltMiljoEllerFraRespons(loginUrlFraRespons: string) {
-    /* Vi endrer url til www-q*.dev.nav.no (pga naisdevice). Men den gamle URL-en vil bli benyttet en stund av kommuner.
-     * For at loginservice skal fungere må appen kjøre på samme domene som loginsevice.
-     * Overskriver derfor loginUrl i dev dersom gammel URL blir benyttet */
-
-    if (erQGammelVersjon()) {
-        return "https://loginservice-q.nav.no/login";
-    }
-    return loginUrlFraRespons;
-}
-
 function verifyStatusSuccessOrRedirect(response: Response): number {
     if (response.status === 401) {
         response.json().then((r) => {
@@ -312,9 +314,8 @@ function verifyStatusSuccessOrRedirect(response: Response): number {
             };
 
             if (window.location.search.split("login_id=")[1] !== r.id) {
-                const loginUrl = loginUrlForGammeltMiljoEllerFraRespons(r.loginUrl);
-                const queryDivider = loginUrl.includes("?") ? "&" : "?";
-                window.location.href = loginUrl + queryDivider + getRedirectPath() + "%26login_id=" + r.id;
+                const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
+                window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "%26login_id=" + r.id;
             } else {
                 let loggPayload = createLogEntry(
                     "Fetch ga 401-error-id selv om kallet ble sendt fra URL med samme login_id (" +
