@@ -47,7 +47,10 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
     if (window.location.origin.indexOf("nais.oera") >= 0) {
         return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${apiContextPath}/`;
     }
-    if (window.location.origin.indexOf("dev.nav.no") >= 0 || window.location.origin.indexOf("labs.nais.io") >= 0) {
+    if (
+        window.location.origin.indexOf("sosialhjelp-soknad.dev.nav.no") >= 0 ||
+        window.location.origin.indexOf("labs.nais.io") >= 0
+    ) {
         if (window.location.origin.indexOf("digisos.labs.nais.io") >= 0) {
             return getAbsoluteApiUrl(withAccessToken);
         }
