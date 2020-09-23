@@ -96,9 +96,9 @@ function getRedirectOrigin() {
 }
 
 export function getRedirectPath(): string {
-    const currentOrigin = getRedirectOrigin();
+    const redirectOrigin = getRedirectOrigin();
     const gotoParameter = "?goto=" + getGotoPathname();
-    const redirectPath = currentOrigin + getRedirectPathname() + gotoParameter;
+    const redirectPath = redirectOrigin + getRedirectPathname() + gotoParameter;
     return "redirect=" + redirectPath;
 }
 
