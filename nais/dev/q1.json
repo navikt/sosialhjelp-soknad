@@ -2,9 +2,8 @@
   "applicationName": "sosialhjelp-soknad",
   "namespace": "q1",
   "ingresses": [
-    "https://sosialhjelp-soknad-q1.nais.oera-q.local/",
     "https://sosialhjelp-soknad-q1.dev-sbs.nais.io/",
-    "https://tjenester-q1.nav.no/sosialhjelp-soknad",
+    "https://www-q1.dev.nav.no/sosialhjelp/soknad",
     "https://www-q1.nav.no/sosialhjelp/soknad"
   ],
   "prometheusEnabled": true,

@@ -18,7 +18,7 @@ export function erMockMiljoEllerDev(): boolean {
     return (
         url.indexOf("sosialhjelp-test.dev-sbs.nais.io") > 0 ||
         url.indexOf("soknadsosialhjelp-t1.nais.oera") > 0 ||
-        url.indexOf(".dev.nav.no") > 0 ||
+        url.indexOf("sosialhjelp-soknad.dev.nav.no") > 0 || // Fanger ikke opp www-q*.dev.nav.no
         url.indexOf(".labs.nais.io") > 0 || // Fanger også digisos.labs.nais.io
         url.indexOf("digisos-test.com") > 0
     );
