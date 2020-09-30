@@ -21,6 +21,13 @@ export function erQ(): boolean {
     return url.indexOf("www-q0") >= 0 || url.indexOf("www-q1") >= 0;
 }
 
+export function erQGammelVersjon(): boolean {
+    /* Vi endrer url til www-q*.dev.nav.no. Denne funksjonen returnerer true når den gamle URL-en blir benyttet.
+     * Den gamle URL-en vil bli benyttet en stund av kommuner. */
+    const url = window.location.href;
+    return url.indexOf("www-q0.nav.no") >= 0 || url.indexOf("www-q1.nav.no") >= 0;
+}
+
 export function kjorerJetty(): boolean {
     const url = window.location.href;
     return url.indexOf(":8189") > 0;
@@ -40,7 +47,10 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
     if (window.location.origin.indexOf("nais.oera") >= 0) {
         return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${apiContextPath}/`;
     }
-    if (window.location.origin.indexOf("dev-nav.no") >= 0 || window.location.origin.indexOf("labs.nais.io") >= 0) {
+    if (
+        window.location.origin.indexOf("sosialhjelp-soknad.dev.nav.no") >= 0 ||
+        window.location.origin.indexOf("labs.nais.io") >= 0
+    ) {
         if (window.location.origin.indexOf("digisos.labs.nais.io") >= 0) {
             return getAbsoluteApiUrl(withAccessToken);
         }
@@ -75,27 +85,40 @@ function determineCredentialsParameter() {
     return window.location.origin.indexOf("nais.oera") || erDev() ? "include" : "same-origin";
 }
 
-export function getRedirectPath(): string {
+function getRedirectOrigin() {
+    /* Vi endrer preprod-url til www-q*.dev.nav.no (pga naisdevice).
+     * Men den gamle URL-en (www-q*.nav.no) vil bli benyttet en stund av kommuner.
+     * Loginservice kan kun sette cookies på apper som kjører på samme domene.
+     * Vi lar derfor loginservice redirecte til den nye ingressen. */
+
     const currentOrigin = window.location.origin;
+    if (erQGammelVersjon()) {
+        return currentOrigin.replace("nav.no", "dev.nav.no");
+    }
+    return window.location.origin;
+}
+
+export function getRedirectPath(): string {
+    const redirectOrigin = getRedirectOrigin();
     const gotoParameter = "?goto=" + getGotoPathname();
-    const redirectPath = currentOrigin + getRedirectPathname() + gotoParameter;
+    const redirectPath = redirectOrigin + getRedirectPathname() + gotoParameter;
     return "redirect=" + redirectPath;
 }
 
 export function getGotoPathname(): string {
     const gotoFromLink = getGotoParameterIfPathAlreadyIsLink();
-    return gotoFromLink ? gotoFromLink : window.location.pathname
+    return gotoFromLink ? gotoFromLink : window.location.pathname;
 }
 
 function getGotoParameterIfPathAlreadyIsLink(): string | undefined {
     if (window.location.pathname === getRedirectPathname()) {
-        return parseGotoValueFromSearchParameters(window.location.search)
+        return parseGotoValueFromSearchParameters(window.location.search);
     }
     return undefined;
 }
-export function parseGotoValueFromSearchParameters(searchParameters : string): string {
-    const afterGoto = searchParameters.split("goto=")[1]
-    return afterGoto ? afterGoto.split("&login_id")[0] : afterGoto // Fjerne login_id dersom strengen bak goto= er definert.
+export function parseGotoValueFromSearchParameters(searchParameters: string): string {
+    const afterGoto = searchParameters.split("goto=")[1];
+    return afterGoto ? afterGoto.split("&login_id")[0] : afterGoto; // Fjerne login_id dersom strengen bak goto= er definert.
 }
 
 function getServletBaseUrl(): string {
