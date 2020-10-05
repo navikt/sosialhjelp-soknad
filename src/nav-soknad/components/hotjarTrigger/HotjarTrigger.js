@@ -22,11 +22,11 @@ HotjarTrigger.propTypes = {
 };
 
 export const SoknadEttersendelseFeilerHotjarTrigger = ({children}) => (
-    <HotjarTrigger hotjarTrigger="soknad_ettersendelse_feiler">{children}</HotjarTrigger>
+    <HotjarTrigger hotjarTrigger="digisos_ettersende_gammel_soknad_feiler">{children}</HotjarTrigger>
 );
 
 export const DigisosGammelEttersendelseHotjarTrigger = ({children}) => (
-    <HotjarTrigger hotjarTrigger="digisos_gammel_ettersendelse">{children}</HotjarTrigger>
+    <HotjarTrigger hotjarTrigger="digisos_ettersende_gammel_soknad">{children}</HotjarTrigger>
 );
 
 SoknadEttersendelseFeilerHotjarTrigger.propTypes = {
