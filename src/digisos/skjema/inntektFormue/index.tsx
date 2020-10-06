@@ -19,11 +19,16 @@ const InntektFormue: React.FC = () => {
                 <NavYtelser />
                 <Bostotte />
             </SkjemaGruppe>
+
             <Studielan />
             <Utbetalinger />
-            <h2 className="overskrift"><FormattedHTMLMessage id="opplysninger.formue.bank.undertittel"/></h2>
+            <h2 className="overskrift">
+                <FormattedHTMLMessage id="opplysninger.formue.bank.undertittel" />
+            </h2>
             <Formue />
-            <h2 className="overskrift"><FormattedHTMLMessage id="opplysninger.formue.annen.undertittel"/></h2>
+            <h2 className="overskrift">
+                <FormattedHTMLMessage id="opplysninger.formue.annen.undertittel" />
+            </h2>
             <Verdier />
         </DigisosSkjemaSteg>
     );

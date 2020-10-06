@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as cuid from "cuid";
 import * as classNames from "classnames";
-import {SkjemaGruppe, Feil} from "nav-frontend-skjema";
+import {SkjemaGruppe} from "nav-frontend-skjema";
 import SporsmalHjelpetekst from "./SporsmalHjelpetekst";
 import {injectIntl} from "react-intl";
 import {getFaktumSporsmalTekst, IntlProps} from "../../utils";
@@ -22,7 +22,7 @@ export interface OwnProps {
     stil?: SporsmalStyle;
     tittelRenderer?: (title: string) => React.ReactNode;
     handleOnBlur?: (evt: any) => void;
-    feil?: Feil;
+    feil?: string;
     feilkode?: string;
     tekster?: any;
     sprakNokkel?: string;

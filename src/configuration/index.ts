@@ -9,7 +9,7 @@ export const GCP_API_APP_NAME = "sosialhjelp-soknad-api";
 
 export const getContextPathForStaticContent = (): string => {
     const context_path = getContextPathFromWindowLocation(window.location.pathname);
-    return erDev() ? "" : context_path;
+    return erDev() ? context_path : context_path;
 };
 
 export const getContextPathFromWindowLocation = (pathname: string): string => {

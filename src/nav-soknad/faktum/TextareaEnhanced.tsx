@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Feil, Textarea} from "nav-frontend-skjema";
+import {Textarea} from "nav-frontend-skjema";
 import {injectIntl, IntlShape} from "react-intl";
 import {getInputFaktumTekst, getIntlTextOrKey, IntlProps} from "../utils";
 import {State} from "../../digisos/redux/reducers";
@@ -20,7 +20,7 @@ interface OwnProps {
     property?: string;
     faktumId?: number;
     getName?: () => string;
-    getFeil?: (intl: IntlShape) => Feil; // Fjern
+    getFeil?: (intl: IntlShape) => string; // Fjern
     onChange?: (event: any) => any;
     onBlur?: () => void;
     feil?: any; // Type??
@@ -72,10 +72,10 @@ class TextareaEnhanced extends React.Component<Props, {}> {
         return `${this.props.faktumKey}`.replace(/\./g, "_");
     }
 
-    getFeil(): Feil | null {
+    getFeil(): string | null {
         const {faktumKey} = this.props;
         const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey);
-        return !feilkode ? null : {feilmelding: this.props.intl.formatHTMLMessage({id: feilkode.feilkode})};
+        return !feilkode ? null : this.props.intl.formatHTMLMessage({id: feilkode.feilkode});
     }
 
     render() {

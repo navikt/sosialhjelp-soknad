@@ -1,6 +1,6 @@
 import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {Checkbox} from "nav-frontend-skjema";
+import {CheckboksPanel} from "nav-frontend-skjema";
 import {erKontonummer} from "../../../../nav-soknad/validering/valideringer";
 import {useIntl} from "react-intl";
 import {useState, useEffect} from "react";
@@ -182,24 +182,19 @@ const Bankinformasjon = () => {
                             maxLength={13}
                             bredde={"S"}
                         />
-                        <div
-                            className={"inputPanel " + (kontonummer.harIkkeKonto ? " inputPanel__checked" : " ")}
-                            onClick={(event: any) => onChangeCheckboks(event)}
-                        >
-                            <Checkbox
-                                id="kontakt_kontonummer_har_ikke_checkbox"
-                                name="kontakt_kontonummer_har_ikke_checkbox"
-                                checked={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : undefined}
-                                onChange={(event: any) => onChangeCheckboks(event)}
-                                label={
-                                    <div>
-                                        {intl.formatHTMLMessage({
-                                            id: FAKTUM_KEY_KONTONUMMER + ".harikke",
-                                        })}
-                                    </div>
-                                }
-                            />
-                        </div>
+                        <CheckboksPanel
+                            id="kontakt_kontonummer_har_ikke_checkbox"
+                            name="kontakt_kontonummer_har_ikke_checkbox"
+                            checked={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : undefined}
+                            onChange={(event: any) => onChangeCheckboks(event)}
+                            label={
+                                <div>
+                                    {intl.formatHTMLMessage({
+                                        id: FAKTUM_KEY_KONTONUMMER + ".harikke",
+                                    })}
+                                </div>
+                            }
+                        />
                     </div>
                 </Sporsmal>
             );
@@ -227,7 +222,7 @@ const Bankinformasjon = () => {
                                     faktumKey={FAKTUM_KEY_KONTONUMMER}
                                     id={faktumKeyKontonummerId}
                                     className={"input--xxl faktumInput "}
-                                    disabled={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : undefined}
+                                    disabled={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : false}
                                     verdi={inputVerdi}
                                     required={false}
                                     onChange={(input: string) => onChangeInput(input)}
@@ -235,26 +230,20 @@ const Bankinformasjon = () => {
                                     maxLength={13}
                                     bredde={"S"}
                                 />
-                                <div
-                                    className={
-                                        "inputPanel " + (kontonummer.harIkkeKonto ? " inputPanel__checked" : " ")
+
+                                <CheckboksPanel
+                                    id="kontakt_kontonummer_har_ikke_checkbox"
+                                    name="kontakt_kontonummer_har_ikke_checkbox"
+                                    checked={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : false}
+                                    onChange={(event: any) => onChangeCheckboks(event)}
+                                    label={
+                                        <div>
+                                            {intl.formatHTMLMessage({
+                                                id: FAKTUM_KEY_KONTONUMMER + ".harikke",
+                                            })}
+                                        </div>
                                     }
-                                    onClick={(event: any) => onChangeCheckboks(event)}
-                                >
-                                    <Checkbox
-                                        id="kontakt_kontonummer_har_ikke_checkbox"
-                                        name="kontakt_kontonummer_har_ikke_checkbox"
-                                        checked={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : undefined}
-                                        onChange={(event: any) => onChangeCheckboks(event)}
-                                        label={
-                                            <div>
-                                                {intl.formatHTMLMessage({
-                                                    id: FAKTUM_KEY_KONTONUMMER + ".harikke",
-                                                })}
-                                            </div>
-                                        }
-                                    />
-                                </div>
+                                />
                             </div>
                         }
                     >

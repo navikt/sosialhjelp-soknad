@@ -1,4 +1,3 @@
-import {Feil} from "nav-frontend-skjema";
 import {Valideringsfeil} from "../../digisos/redux/validering/valideringActionTypes";
 
 export function getFeil(
@@ -6,16 +5,16 @@ export function getFeil(
     intl: any,
     faktumKey: string,
     faktumIndex: number | undefined
-): Feil | undefined {
+): string | undefined {
     if (feil && feil.length > 0) {
         if (faktumIndex != null) {
             const feilkode = feil.find(
                 (f: Valideringsfeil) => f.faktumKey === faktumKey + "." + faktumIndex.toString()
             );
-            return !feilkode ? undefined : {feilmelding: intl.formatHTMLMessage({id: feilkode.feilkode})};
+            return !feilkode ? undefined : intl.formatHTMLMessage({id: feilkode.feilkode});
         } else {
             const feilkode = feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey);
-            return !feilkode ? undefined : {feilmelding: intl.formatHTMLMessage({id: feilkode.feilkode})};
+            return !feilkode ? undefined : intl.formatHTMLMessage({id: feilkode.feilkode});
         }
     }
     return undefined;

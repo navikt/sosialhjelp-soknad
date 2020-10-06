@@ -210,13 +210,13 @@ const AdresseView = () => {
         annenAdresseLabel = <TextPlaceholder lines={3} />;
     } else {
         folkeregistrertAdresseLabel = (
-            <div id="folkeregistrertAdresse_data_loaded" className="finnNavKontor__label">
+            <div id="folkeregistrertAdresse_data_loaded" className="">
                 <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse" />
                 {folkeregistrertAdresse && <AdresseDetaljer adresse={folkeregistrertAdresse} />}
             </div>
         );
         annenAdresseLabel = (
-            <div className="finnNavKontor__label">
+            <div className="">
                 <FormattedMessage id="kontakt.system.oppholdsadresse.valg.soknad" />
             </div>
         );
@@ -225,7 +225,7 @@ const AdresseView = () => {
     let matrikkelAdresseLabel = null;
     if (matrikkelAdresse) {
         matrikkelAdresseLabel = (
-            <div className="finnNavKontor__label">
+            <div className="">
                 <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse" />
                 <Detaljeliste>
                     <DetaljelisteElement tittel={<FormattedMessage id="matrikkel.gnrbnr" />} verdi={gnrBnr} />
@@ -241,7 +241,7 @@ const AdresseView = () => {
     let midlertidigAdresseLabel = null;
     if (midlertidigAdresse) {
         midlertidigAdresseLabel = (
-            <div className="finnNavKontor__label">
+            <div className="">
                 <FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
                 <AdresseDetaljer adresse={midlertidigAdresse} />
             </div>
@@ -251,7 +251,7 @@ const AdresseView = () => {
     let midlertidigMatrikkelAdresseLabel = null;
     if (midlertidigMatrikkelAdresse) {
         midlertidigMatrikkelAdresseLabel = (
-            <div className="finnNavKontor__label">
+            <div className="">
                 <FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
                 <Detaljeliste>
                     <DetaljelisteElement
@@ -288,7 +288,7 @@ const AdresseView = () => {
                 faktumKey={FAKTUM_KEY}
                 noValidateOnBlur={true}
                 sprakNokkel="soknadsmottaker"
-                feil={feilkode ? {feilmelding} : undefined}
+                feil={feilkode ? feilmelding : undefined}
             >
                 <span>
                     {(folkeregistrertAdresse || matrikkelAdresse) && (
