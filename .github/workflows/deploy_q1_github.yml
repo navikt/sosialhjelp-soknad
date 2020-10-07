@@ -12,7 +12,7 @@ jobs:
       - name: Sett env variabler
         run: |
           PROJECT_NAME=$(echo ${{ github.repository }} | cut -d/ -f2)
-          echo ::set-env name=IMAGE::$(echo "docker.pkg.github.com/${{ github.repository }}/$PROJECT_NAME":${{ steps.get-latest-tag.outputs.tag }})
+          echo "IMAGE=docker.pkg.github.com/${{ github.repository }}/$PROJECT_NAME:${{ steps.get-latest-tag.outputs.tag }}" >> $GITHUB_ENV
 
       - name: Deploy til q1
         uses: nais/deploy/actions/deploy@v1
