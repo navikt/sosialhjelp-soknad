@@ -41,9 +41,7 @@ jobs:
       - name: Create docker image tags
         run: |
           PROJECT_NAME=$(echo $GITHUB_REPOSITORY | cut -d/ -f2)
-          echo "docker.pkg.github.com/$GITHUB_REPOSITORY/$PROJECT_NAME:$VERSION" > DOCKER_TAG
-        env:
-          VERSION: ${{ steps.artifact-version.outputs.version }}
+          echo "docker.pkg.github.com/$GITHUB_REPOSITORY/$PROJECT_NAME:${{ steps.artifact-version.outputs.version }}" > DOCKER_TAG
       - name: Build docker image
         run: docker build -t $(cat DOCKER_TAG) .
       - name: Create tag and release
