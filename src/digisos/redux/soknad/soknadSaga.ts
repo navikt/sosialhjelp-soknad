@@ -232,8 +232,13 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
             `soknader/${brukerbehandlingId}/${SoknadsSti.NAV_ENHETER}`
         );
         const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find((n: NavEnhet) => n.valgt);
-        if (!valgtSoknadsmottaker || (valgtSoknadsmottaker && valgtSoknadsmottaker.isMottakMidlertidigDeaktivert)) {
+        if (!valgtSoknadsmottaker || valgtSoknadsmottaker.isMottakMidlertidigDeaktivert) {
             yield put(push(`/skjema/${brukerbehandlingId}/1`));
+            yield call(
+                loggAdvarsel,
+                "Søknadsmottaker ikke gyldig på side 9, redirecter tilbake til side 1. Søknadsmottaker var " +
+                    valgtSoknadsmottaker
+            );
         } else {
             yield put(oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker));
         }
