@@ -12,7 +12,7 @@ jobs:
       - name: Sett env variabler
         run: |
           PROJECT_NAME=$(echo ${{ github.repository }} | cut -d/ -f2)
-          echo ::set-env name=IMAGE::$(echo "docker.pkg.github.com/${{ github.repository }}/$PROJECT_NAME":${{ github.event.client_payload.TAG }})
+          echo "IMAGE=docker.pkg.github.com/${{ github.repository }}/$PROJECT_NAME:${{ github.event.client_payload.TAG }}" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
         with:
