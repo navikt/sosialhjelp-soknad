@@ -233,12 +233,13 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
         );
         const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find((n: NavEnhet) => n.valgt);
         if (!valgtSoknadsmottaker || valgtSoknadsmottaker.isMottakMidlertidigDeaktivert) {
-            yield put(push(`/skjema/${brukerbehandlingId}/1`));
-            yield call(
-                loggAdvarsel,
-                "Søknadsmottaker ikke gyldig på side 9, redirecter tilbake til side 1. Søknadsmottaker var " +
-                    valgtSoknadsmottaker
+            yield put(
+                loggAdvarsel(
+                    "Søknadsmottaker ikke gyldig på side 9, redirecter tilbake til side 1. Søknadsmottaker var " +
+                        valgtSoknadsmottaker
+                )
             );
+            yield put(push(`/skjema/${brukerbehandlingId}/1`));
         } else {
             yield put(oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker));
         }
@@ -246,12 +247,13 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield call(
-            loggFeil,
-            "feil i finnOgOppdaterSoknadsmottakerStatusSaga på side 9. Sender brukeren tilbake til steg 1 og håper dette i blir en infinite loop. Error message: " +
-                reason
+        yield put(
+            loggFeil(
+                "feil i finnOgOppdaterSoknadsmottakerStatusSaga på side 9. Sender brukeren tilbake til steg 1 og håper dette ikke blir en infinite loop. Error message: " +
+                    reason
+            )
         );
-        yield put(push(`/skjema/${brukerbehandlingId}/2`));
+        yield put(push(`/skjema/${brukerbehandlingId}/1`));
     }
 }
 
