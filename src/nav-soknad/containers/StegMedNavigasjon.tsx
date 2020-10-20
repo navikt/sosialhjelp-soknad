@@ -169,6 +169,9 @@ const StegMedNavigasjon = (
     const nextButtonPending =
         soknad.sendSoknadPending || aktivtStegConfig?.key === "kontakt" ? isAdresseValgRestPending : false;
 
+    console.log("sendSoknadPending", soknad.sendSoknadPending);
+    console.log("nextButtonPending", nextButtonPending);
+
     const erOppsummering: boolean = aktivtStegConfig ? aktivtStegConfig.type === SkjemaStegType.oppsummering : false;
     const stegTittel = getIntlTextOrKey(intl, `${stegKey}.tittel`);
     const documentTitle = intl.formatMessage({
