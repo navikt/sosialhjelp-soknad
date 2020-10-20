@@ -167,7 +167,7 @@ const StegMedNavigasjon = (
     const aktivtStegConfig: SkjemaSteg | undefined = skjemaConfig.steg.find((s) => s.key === stegKey);
 
     const nextButtonPending =
-        soknad.sendSoknadPending || aktivtStegConfig?.key === "kontakt" ? isAdresseValgRestPending : false;
+        soknad.sendSoknadPending || (aktivtStegConfig?.key === "kontakt" ? isAdresseValgRestPending : false);
 
     console.log("sendSoknadPending", soknad.sendSoknadPending);
     console.log("nextButtonPending", nextButtonPending);
