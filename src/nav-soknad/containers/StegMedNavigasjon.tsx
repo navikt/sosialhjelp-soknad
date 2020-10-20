@@ -14,7 +14,12 @@ import {REST_STATUS, SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../../digis
 import {ValideringsFeilKode} from "../../digisos/redux/reduxTypes";
 import {setVisBekreftMangler} from "../../digisos/redux/oppsummering/oppsummeringActions";
 import {getIntlTextOrKey, scrollToTop} from "../utils";
-import {avbrytSoknad, resetSendSoknadServiceUnavailable, sendSoknad} from "../../digisos/redux/soknad/soknadActions";
+import {
+    avbrytSoknad,
+    resetSendSoknadServiceUnavailable,
+    sendSoknad,
+    sendSoknadPending,
+} from "../../digisos/redux/soknad/soknadActions";
 import {gaTilbake, gaVidere, tilSteg} from "../../digisos/redux/navigasjon/navigasjonActions";
 import {loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
 import AppBanner from "../components/appHeader/AppHeader";
@@ -100,6 +105,7 @@ const StegMedNavigasjon = (
             if (aktivtSteg.type === SkjemaStegType.oppsummering) {
                 if (oppsummeringBekreftet) {
                     loggAdresseTypeTilGrafana();
+                    dispatch(sendSoknadPending());
                     dispatch(sendSoknad(behandlingsId));
                 } else {
                     dispatch(setVisBekreftMangler(true));

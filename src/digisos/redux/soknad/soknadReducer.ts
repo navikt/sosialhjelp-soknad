@@ -140,6 +140,11 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
                 sendSoknadPending: true,
                 showSendingFeiletPanel: false,
             };
+        case SoknadActionTypeKeys.SEND_SOKNAD_KNAPP_PENDING:
+            return {
+                ...state,
+                sendSoknadPending: true,
+            };
         case SoknadActionTypeKeys.SEND_SOKNAD_OK:
             return {
                 ...state,
