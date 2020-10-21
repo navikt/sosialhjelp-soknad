@@ -52,6 +52,12 @@ export function hentSoknadOk(xsrfCookieReceived: boolean, behandlingsId: string)
     };
 }
 
+export function sendSoknadPending(): SoknadActionType {
+    return {
+        type: SoknadActionTypeKeys.SEND_SOKNAD_KNAPP_PENDING,
+    };
+}
+
 export function sendSoknad(behandlingsId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SEND_SOKNAD,
@@ -133,26 +139,30 @@ export const setErSystemdataEndret = (erSystemdataEndret: boolean): SoknadAction
     };
 };
 
-export const oppdaterSamtykke = (behandlingsId: string, harSamtykket: boolean, samtykker: Samtykke[]): SoknadActionType => {
+export const oppdaterSamtykke = (
+    behandlingsId: string,
+    harSamtykket: boolean,
+    samtykker: Samtykke[]
+): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.OPPDATER_SAMTYKKE,
         behandlingsId: behandlingsId,
         harSamtykket: harSamtykket,
-        samtykker: samtykker
+        samtykker: samtykker,
     };
 };
 
 export function hentSamtykker(behandlingsId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.HENT_SAMTYKKE,
-        behandlingsId
+        behandlingsId,
     };
 }
 
 export function hentSamtykkerOk(samtykker: Samtykke[]): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.HENT_SAMTYKKE_OK,
-        samtykker
+        samtykker,
     };
 }
 
