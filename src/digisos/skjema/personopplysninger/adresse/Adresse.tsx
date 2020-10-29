@@ -210,13 +210,13 @@ const AdresseView = () => {
         annenAdresseLabel = <TextPlaceholder lines={3} />;
     } else {
         folkeregistrertAdresseLabel = (
-            <div id="folkeregistrertAdresse_data_loaded" className="">
+            <div id="folkeregistrertAdresse_data_loaded">
                 <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse" />
                 {folkeregistrertAdresse && <AdresseDetaljer adresse={folkeregistrertAdresse} />}
             </div>
         );
         annenAdresseLabel = (
-            <div className="">
+            <div>
                 <FormattedMessage id="kontakt.system.oppholdsadresse.valg.soknad" />
             </div>
         );
@@ -225,7 +225,7 @@ const AdresseView = () => {
     let matrikkelAdresseLabel = null;
     if (matrikkelAdresse) {
         matrikkelAdresseLabel = (
-            <div className="">
+            <div>
                 <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse" />
                 <Detaljeliste>
                     <DetaljelisteElement tittel={<FormattedMessage id="matrikkel.gnrbnr" />} verdi={gnrBnr} />
@@ -241,7 +241,7 @@ const AdresseView = () => {
     let midlertidigAdresseLabel = null;
     if (midlertidigAdresse) {
         midlertidigAdresseLabel = (
-            <div className="">
+            <div>
                 <FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
                 <AdresseDetaljer adresse={midlertidigAdresse} />
             </div>
@@ -251,7 +251,7 @@ const AdresseView = () => {
     let midlertidigMatrikkelAdresseLabel = null;
     if (midlertidigMatrikkelAdresse) {
         midlertidigMatrikkelAdresseLabel = (
-            <div className="">
+            <div>
                 <FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
                 <Detaljeliste>
                     <DetaljelisteElement
