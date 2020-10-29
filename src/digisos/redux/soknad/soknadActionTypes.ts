@@ -13,6 +13,7 @@ export enum SoknadActionTypeKeys {
     FORTSETT_SOKNAD = "soknad/FORTSETT_SOKNAD",
     SLETT_SOKNAD = "soknad/SLETT_SOKNAD",
     SLETT_SOKNAD_OK = "soknad/SLETT_SOKNAD_OK",
+    SEND_SOKNAD_KNAPP_PENDING = "soknad/SEND_SOKNAD_KNAPP_PENDING",
     SEND_SOKNAD = "soknad/SEND_SOKNAD",
     SEND_SOKNAD_OK = "soknad/SEND_SOKNAD_OK",
 
@@ -58,6 +59,7 @@ export type SoknadActionType =
     | FortsettSoknadAction
     | SlettSoknadAction
     | SlettSoknadOkAction
+    | SendSoknadPendingAction
     | SendSoknadAction
     | SendSoknadOkAction
     | GetErSystemdataEndret
@@ -173,6 +175,10 @@ export interface HentSoknaOkAction {
     type: SoknadActionTypeKeys.HENT_SOKNAD_OK;
     xsrfCookieReceived: boolean;
     behandlingsId: string;
+}
+
+export interface SendSoknadPendingAction {
+    type: SoknadActionTypeKeys.SEND_SOKNAD_KNAPP_PENDING;
 }
 
 export interface SendSoknadAction {
