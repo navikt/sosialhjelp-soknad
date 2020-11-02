@@ -91,11 +91,7 @@ const BegrunnelseSkjema = () => {
     const faktumKeyHvorforId = replaceDotWithUnderscore(FAKTUM_KEY_HVORFOR);
     return (
         <div>
-            <Sporsmal
-                sprakNokkel={FAKTUM_KEY_HVA}
-                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                visLedetekst={false}
-            >
+            <Sporsmal sprakNokkel={FAKTUM_KEY_HVA} legendTittelStyle={LegendTittleStyle.FET_NORMAL} visLedetekst={true}>
                 <TextareaEnhanced
                     id={faktumKeyHvaId}
                     placeholder={intl.formatMessage({
@@ -113,7 +109,7 @@ const BegrunnelseSkjema = () => {
             <Sporsmal
                 sprakNokkel={FAKTUM_KEY_HVORFOR}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                visLedetekst={false}
+                visLedetekst={true}
             >
                 <TextareaEnhanced
                     id={faktumKeyHvorforId}
