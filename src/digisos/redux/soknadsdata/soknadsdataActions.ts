@@ -1,7 +1,7 @@
 import {Dispatch} from "../reduxTypes";
 import {fetchPost, fetchPut, fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {oppdaterSoknadsdataSti, settRestStatus, SoknadsdataType} from "./soknadsdataReducer";
-import {loggFeil} from "../navlogger/navloggerActions";
+import {loggAdvarsel} from "../navlogger/navloggerActions";
 import {REST_STATUS} from "../soknad/soknadTypes";
 import {showServerFeil} from "../soknad/soknadActions";
 
@@ -20,7 +20,7 @@ export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
                     return;
                 }
-                dispatch(loggFeil("Henting av soknadsdata feilet: " + reason));
+                dispatch(loggAdvarsel("Henting av soknadsdata feilet: " + reason));
                 dispatch(settRestStatus(sti, REST_STATUS.FEILET));
                 dispatch(showServerFeil(true));
             });
@@ -46,7 +46,7 @@ export function lagreSoknadsdata(
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
                     return;
                 }
-                dispatch(loggFeil("Lagring av soknadsdata feilet: " + reason));
+                dispatch(loggAdvarsel("Lagring av soknadsdata feilet: " + reason));
                 dispatch(settRestStatus(sti, REST_STATUS.FEILET));
                 dispatch(showServerFeil(true));
             });
@@ -74,7 +74,7 @@ export function settSamtykkeOgOppdaterData(
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
                     return;
                 }
-                dispatch(loggFeil("Oppdatering av bostotte samtykke feilet: " + reason));
+                dispatch(loggAdvarsel("Oppdatering av bostotte samtykke feilet: " + reason));
                 dispatch(settRestStatus(restStatusSti, REST_STATUS.FEILET));
                 dispatch(showServerFeil(true));
             });

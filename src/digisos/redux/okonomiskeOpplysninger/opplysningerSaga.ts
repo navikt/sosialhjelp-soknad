@@ -4,7 +4,7 @@ import {call, put, takeEvery} from "redux-saga/effects";
 import {getOpplysningerUrl, getSpcForOpplysning, transformToBackendOpplysning} from "./opplysningerUtils";
 import {fetchPut, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {updateOpplysning} from "./opplysningerActions";
-import {loggFeil} from "../navlogger/navloggerActions";
+import {loggAdvarsel} from "../navlogger/navloggerActions";
 import {Valideringsfeil, ValideringsFeilKode} from "../validering/valideringActionTypes";
 import {showServerFeil} from "../soknad/soknadActions";
 import {REST_FEIL} from "../soknad/soknadTypes";
@@ -47,13 +47,13 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
                     }
                     yield put(setValideringsfeil(ValideringsFeilKode.FELT_EKSISTERER_IKKE, opplysning.type));
                 } else {
-                    yield put(loggFeil("Lagring av økonomisk opplysning feilet. Reason: " + reason));
+                    yield put(loggAdvarsel("Lagring av økonomisk opplysning feilet. Reason: " + reason));
                     yield put(showServerFeil(true));
                 }
             }
         }
     } else {
-        yield put(loggFeil("Ukjent opplysningstype mottatt. Type: " + opplysning.type));
+        yield put(loggAdvarsel("Ukjent opplysningstype mottatt. Type: " + opplysning.type));
     }
 }
 

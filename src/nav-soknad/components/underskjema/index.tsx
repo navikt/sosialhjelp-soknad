@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as classNames from "classnames";
 import {UnmountClosed} from "react-collapse";
-import {loggFeil} from "../../../digisos/redux/navlogger/navloggerActions";
+import {loggAdvarsel} from "../../../digisos/redux/navlogger/navloggerActions";
 
 interface UnderskjemaProps extends React.Props<any> {
     visible?: boolean;
@@ -40,7 +40,7 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
     try {
         content = renderContent();
     } catch (e) {
-        loggFeil("Feil ved rendering av underskjema: " + e.toString());
+        loggAdvarsel("Feil ved rendering av underskjema: " + e.toString());
     }
     if (collapsable) {
         return (

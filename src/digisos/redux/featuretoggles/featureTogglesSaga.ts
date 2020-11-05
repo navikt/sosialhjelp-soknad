@@ -3,7 +3,7 @@ import {SagaIterator} from "redux-saga";
 import {fetchFeatureToggles} from "../../../nav-soknad/utils/rest-utils";
 import {FeatureTogglesActionTypeKeys} from "./featureTogglesTypes";
 import {henterFeaturetoggles, hentFeatureTogglesFeilet, mottattFeatures} from "./featureTogglesActions";
-import {loggFeil} from "../navlogger/navloggerActions";
+import {loggAdvarsel} from "../navlogger/navloggerActions";
 
 function* hentFeatureTogglesSaga(): SagaIterator {
     try {
@@ -13,7 +13,7 @@ function* hentFeatureTogglesSaga(): SagaIterator {
             yield put(mottattFeatures(response));
         }
     } catch (reason) {
-        yield put(loggFeil("Problemer med å hente featuretoggles: " + reason.toString()));
+        yield put(loggAdvarsel("Problemer med å hente featuretoggles: " + reason.toString()));
         yield put(hentFeatureTogglesFeilet(reason));
     }
 }
