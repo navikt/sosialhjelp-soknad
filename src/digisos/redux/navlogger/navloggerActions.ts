@@ -1,6 +1,6 @@
 import {ActionTypeKeys, NavLogEntry, NavloggerActionTypes, NavLogLevel} from "./navloggerTypes";
 
-const loggFeil = (message: string): NavloggerActionTypes => {
+const loggAlvorligFeil = (message: string): NavloggerActionTypes => {
     return {
         type: ActionTypeKeys.INIT,
         logEntry: createLogEntry(message, NavLogLevel.ERROR),
@@ -62,4 +62,4 @@ const loggException = (
     };
 };
 
-export {loggFeil, loggInfo, loggAdvarsel, loggException, loggingTilServerFeilet};
+export {loggAlvorligFeil, loggInfo, loggAdvarsel, loggException, loggingTilServerFeilet};

@@ -2,7 +2,7 @@ import {FilActionTypeKeys, LastOppFilAction, StartSlettFilAction} from "./filTyp
 import {SagaIterator} from "redux-saga";
 import {fetchDelete, fetchUpload, fetchUploadIgnoreErrors, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggInfo} from "../navlogger/navloggerActions";
 import {
     settFilOpplastingFerdig,
     settFilOpplastingPending,
@@ -110,7 +110,7 @@ function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(loggFeil("Slett vedlegg feilet: " + reason));
+        yield put(loggAdvarsel("Slett vedlegg feilet: " + reason));
         yield put(showServerFeil(true));
     }
 }
