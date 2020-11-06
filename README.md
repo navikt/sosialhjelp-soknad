@@ -25,7 +25,7 @@ Besøk http://localhost:3000/sosialhjelp/soknad/mock-login
 
 ```javascript
 export function getApiBaseUrl(): string {
-    if (erDev()) {
+    if (erLocalhost()) {
         // Kjør mot lokal sendsoknad
         // return "http://localhost:8189/sendsoknad/";
         return "http://localhost:3001/";
