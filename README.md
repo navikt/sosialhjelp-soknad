@@ -44,6 +44,16 @@ export function getApiBaseUrl(): string {
 
 -   Åpne `http://localhost:3000/sosialhjelp/soknad/informasjon` i nettleseren.
 
+## Manuell deploy:
+
+Ved bruk av [cli](https://github.com/navikt/sosialhjelp-ci):
+
+-   `deploy labs-gcp` (`labs-gcp2`, `labs-gcp3`)
+-   `deploy dev-gcp`
+-   `deploy q0`
+-   `deploy dev-sbs-intern`
+-   `deploy prod`
+
 ## Tekster
 
 Tekstene ligger i repoet `sosialhjelp-soknad-server` med felles byggejobb på `cisbl.devillo.no`. Tekstendringer blir automatisk
