@@ -20,7 +20,7 @@ import sagas from "./rootSaga";
 import IntlProvider from "./intlProvider";
 import App from "./digisos";
 import {loggException} from "./digisos/redux/navlogger/navloggerActions";
-import {erDev, erQ} from "./nav-soknad/utils/rest-utils";
+import {erLocalhost, erDevSbs} from "./nav-soknad/utils/rest-utils";
 import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
 import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
@@ -48,7 +48,7 @@ const history = require("history").createBrowserHistory({
     basename: getContextPathBasename(),
 });
 
-if (erDev() || erQ()) {
+if (erLocalhost() || erDevSbs()) {
     Sentry.init({
         dsn: "https://f3482eab7c994893bf44bcb26a0c8e68@sentry.gc.nav.no/14",
     });
@@ -58,7 +58,7 @@ if (erDev() || erQ()) {
 function configureStore() {
     const w: any = window as any;
 
-    const composeEnhancers = erDev() ? w.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
+    const composeEnhancers = erLocalhost() ? w.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
 
     const saga = createSagaMiddleware();
 

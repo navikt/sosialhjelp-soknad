@@ -11,12 +11,12 @@ import {
 import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
 import {NavLogEntry, NavLogLevel} from "../../digisos/redux/navlogger/navloggerTypes";
 
-export function erDev(): boolean {
+export function erLocalhost(): boolean {
     const url = window.location.href;
     return url.indexOf("localhost") >= 0 || url.indexOf("devillo.no:3000") >= 0 || url.indexOf("localhost:8080") >= 0;
 }
 
-export function erQ(): boolean {
+export function erDevSbs(): boolean {
     const url = window.location.href;
     return url.indexOf("www-q0") >= 0 || url.indexOf("www-q1") >= 0;
 }
@@ -36,7 +36,7 @@ export function kjorerJetty(): boolean {
 export function getApiBaseUrl(withAccessToken?: boolean): string {
     const apiContextPath = withAccessToken ? API_CONTEXT_PATH_WITH_ACCESS_TOKEN : API_CONTEXT_PATH;
 
-    if (erDev()) {
+    if (erLocalhost()) {
         // Kjør mot lokal sosialhjelp-soknad-api:
         return `http://localhost:8181/${API_CONTEXT_PATH}/`;
 
@@ -64,7 +64,7 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
 }
 
 export function getInnsynUrl(): string {
-    if (erDev()) {
+    if (erLocalhost()) {
         return `http://localhost:3000/${INNSYN_CONTEXT_PATH}/`; // Endre port så det passer med porten sosialhjelp-innsyn kjører på lokalt hos deg
     }
 
@@ -82,7 +82,7 @@ export function getAbsoluteApiUrlRegex(pathname: string, withAccessToken?: boole
 }
 
 function determineCredentialsParameter() {
-    return window.location.origin.indexOf("nais.oera") || erDev() ? "include" : "same-origin";
+    return window.location.origin.indexOf("nais.oera") || erLocalhost() ? "include" : "same-origin";
 }
 
 function getRedirectOrigin() {
@@ -122,7 +122,7 @@ export function parseGotoValueFromSearchParameters(searchParameters: string): st
 }
 
 function getServletBaseUrl(): string {
-    if (erDev()) {
+    if (erLocalhost()) {
         return "http://localhost:3001/sendsoknad/";
     }
     return `/${CONTEXT_PATH}/`;
