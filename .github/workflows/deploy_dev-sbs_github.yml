@@ -1,9 +1,9 @@
-name: Deploy q0
+name: Deploy dev-sbs
 on: workflow_dispatch
 
 jobs:
   deploy:
-    name: Deploy to q0
+    name: Deploy to dev-sbs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,13 +14,13 @@ jobs:
           PROJECT_NAME=$(echo ${{ github.repository }} | cut -d/ -f2)
           echo "IMAGE=docker.pkg.github.com/${{ github.repository }}/$PROJECT_NAME:${{ steps.get-latest-tag.outputs.tag }}" >> $GITHUB_ENV
 
-      - name: Deploy til q0
+      - name: Deploy
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: nais.yaml
           CLUSTER: dev-sbs
-          VARS: nais/dev/q0.json
+          VARS: nais/dev/dev-sbs.json
           REF: ${{ steps.get-latest-tag.outputs.tag }}
           PRINT_PAYLOAD: true
           IMAGE: ${{ env.IMAGE }}
