@@ -26,6 +26,7 @@ import {
     lagreNedetidPaStore,
     lagreRessurserPaStore,
     oppdaterSoknadsmottakerStatus,
+    opprettSoknadFeilet,
     opprettSoknadOk,
     sendSoknadOk,
     setErSystemdataEndret,
@@ -112,6 +113,7 @@ function* opprettSoknadSaga(action: {type: string}) {
         } else {
             yield put(loggAdvarsel("opprett soknad saga feilet: " + reason));
             yield put(showServerFeil(true));
+            yield put(opprettSoknadFeilet());
         }
     }
 }
