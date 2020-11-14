@@ -30,6 +30,7 @@ export const defaultState: SoknadState = {
 
     // Opprettelse, innsending og ettersendelse
     startSoknadPending: false,
+    startSoknadFeilet: false,
     sendSoknadPending: false,
 
     // Soknad state
@@ -57,6 +58,13 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
                 ...state,
                 restStatus: REST_STATUS.PENDING,
                 startSoknadPending: true,
+            };
+        case SoknadActionTypeKeys.OPPRETT_SOKNAD_FEILET:
+            return {
+                ...state,
+                restStatus: REST_STATUS.FEILET,
+                startSoknadPending: false,
+                startSoknadFeilet: true,
             };
         case SoknadActionTypeKeys.OPPRETT_SOKNAD_OK:
             return {
