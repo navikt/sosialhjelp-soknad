@@ -111,10 +111,10 @@ const Bankinformasjon = () => {
         dispatch(oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer));
     };
 
-    const onChangeCheckboks = (event: any): void => {
+    const onChangeCheckboks = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (behandlingsId) {
             const kontonummer: Kontonummer = soknadsdata.personalia.kontonummer;
-            kontonummer.harIkkeKonto = !kontonummer.harIkkeKonto;
+            kontonummer.harIkkeKonto = event.target.checked;
             if (kontonummer.harIkkeKonto) {
                 dispatch(clearValideringsfeil(FAKTUM_KEY_KONTONUMMER));
                 kontonummer.brukerutfyltVerdi = "";
