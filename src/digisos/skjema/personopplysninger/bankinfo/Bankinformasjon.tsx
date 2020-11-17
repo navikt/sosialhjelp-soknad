@@ -121,7 +121,6 @@ const Bankinformasjon = () => {
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer));
             dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer));
-            event.preventDefault();
         }
     };
 
