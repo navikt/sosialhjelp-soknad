@@ -30,7 +30,7 @@ import {
     filLastetOpp,
     slettEttersendtVedleggOk,
 } from "./ettersendelseActions";
-import {loggFeil, loggInfo} from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggInfo} from "../navlogger/navloggerActions";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {showServerFeil} from "../soknad/soknadActions";
 import {REST_FEIL} from "../soknad/soknadTypes";
@@ -65,7 +65,7 @@ function* lesEttersendelserSaga(action: LesEttersendelserAction) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(loggFeil("Les ettersendelser feilet: " + reason.toString()));
+        yield put(loggAdvarsel("Les ettersendelser feilet: " + reason.toString()));
         yield put(showServerFeil(true));
     }
 }
@@ -81,7 +81,7 @@ function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(loggFeil("Lese ettersendte vedlegg feilet: " + reason.toString()));
+        yield put(loggAdvarsel("Lese ettersendte vedlegg feilet: " + reason.toString()));
         yield put(showServerFeil(true));
     }
 }
@@ -98,7 +98,7 @@ function* slettEttersendelsesVedleggSaga(action: SlettEttersendtVedleggAction): 
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(loggFeil("Slett ettersendt vedlegg feilet: " + reason));
+        yield put(loggAdvarsel("Slett ettersendt vedlegg feilet: " + reason));
         yield put(showServerFeil(true));
     }
 }
@@ -159,7 +159,7 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(loggFeil("Send ettersendelse feilet: " + reason.toString()));
+        yield put(loggAdvarsel("Send ettersendelse feilet: " + reason.toString()));
         yield put(showServerFeil(true));
     }
 }

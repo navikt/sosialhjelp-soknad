@@ -1,8 +1,8 @@
 {
-  "applicationName": "sosialhjelp-soknad",
-  "namespace": "q1",
+  "applicationName": "sosialhjelp-soknad-intern",
+  "namespace": "teamdigisos",
   "ingresses": [
-    "https://sosialhjelp-soknad-q1.dev-sbs.nais.io/",
+    "https://sosialhjelp-soknad-intern.dev.nav.no/",
     "https://www-q1.dev.nav.no/sosialhjelp/soknad",
     "https://www-q1.nav.no/sosialhjelp/soknad"
   ],

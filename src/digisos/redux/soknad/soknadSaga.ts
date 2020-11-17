@@ -26,6 +26,7 @@ import {
     lagreNedetidPaStore,
     lagreRessurserPaStore,
     oppdaterSoknadsmottakerStatus,
+    opprettSoknadFeilet,
     opprettSoknadOk,
     sendSoknadOk,
     setErSystemdataEndret,
@@ -41,7 +42,7 @@ import {
     visMidlertidigDeaktivertPanel,
     visNedetidPanel,
 } from "./soknadActions";
-import {loggAdvarsel, loggFeil, loggInfo} from "../navlogger/navloggerActions";
+import {loggAdvarsel, loggInfo} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
 import {push} from "connected-react-router";
@@ -110,8 +111,9 @@ function* opprettSoknadSaga(action: {type: string}) {
             yield put(visNedetidPanel(true));
             yield put(startSoknadServiceUnavailable());
         } else {
-            yield put(loggFeil("opprett soknad saga feilet: " + reason));
+            yield put(loggAdvarsel("opprett soknad saga feilet: " + reason));
             yield put(showServerFeil(true));
+            yield put(opprettSoknadFeilet());
         }
     }
 }
@@ -124,7 +126,7 @@ function* hentSamtykker(action: HentSamtykker) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(loggFeil("hent samtykker saga feilet: " + reason));
+        yield put(loggAdvarsel("hent samtykker saga feilet: " + reason));
         yield put(showSideIkkeFunnet(true));
     }
 }
@@ -153,7 +155,7 @@ function* oppdaterSamtykke(action: {
             yield put(visNedetidPanel(true));
             yield put(startSoknadServiceUnavailable());
         } else {
-            yield put(loggFeil("oppdater samtykke saga feilet: " + reason));
+            yield put(loggAdvarsel("oppdater samtykke saga feilet: " + reason));
             yield put(showServerFeil(true));
         }
     }
@@ -167,7 +169,7 @@ function* hentSoknadSaga(action: HentSoknadAction) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(loggFeil("hent soknad saga feilet: " + reason));
+        yield put(loggAdvarsel("hent soknad saga feilet: " + reason));
         yield put(showSideIkkeFunnet(true));
     }
 }
@@ -185,7 +187,7 @@ function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(loggFeil("slett soknad saga feilet: " + reason));
+        yield put(loggAdvarsel("slett soknad saga feilet: " + reason));
         yield put(showServerFeil(true));
     }
 }
@@ -217,7 +219,7 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
             yield put(visMidlertidigDeaktivertPanel(true));
             yield put(setSendSoknadServiceUnavailable());
         } else {
-            yield put(loggFeil("send soknad saga feilet: " + reason));
+            yield put(loggAdvarsel("send soknad saga feilet: " + reason));
             yield put(showSendingFeiletPanel(true));
         }
     }
@@ -248,7 +250,7 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
             return;
         }
         yield put(
-            loggFeil(
+            loggAdvarsel(
                 "feil i finnOgOppdaterSoknadsmottakerStatusSaga på side 9. Sender brukeren tilbake til steg 1 og håper dette ikke blir en infinite loop. Error message: " +
                     reason
             )
@@ -270,7 +272,7 @@ function* getErSystemdataEndretSaga(action: GetErSystemdataEndret) {
             return;
         }
         yield put(setErSystemdataEndret(false));
-        yield put(loggFeil("getErSystemdataEndretSaga feilet: " + reason));
+        yield put(loggAdvarsel("getErSystemdataEndretSaga feilet: " + reason));
     }
 }
 

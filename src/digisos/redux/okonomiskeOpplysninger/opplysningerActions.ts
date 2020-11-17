@@ -7,7 +7,7 @@ import {
     OpplysningType,
 } from "./opplysningerTypes";
 import {getOpplysningerUrl} from "./opplysningerUtils";
-import {loggFeil} from "../navlogger/navloggerActions";
+import {loggAdvarsel} from "../navlogger/navloggerActions";
 import {fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {showServerFeil} from "../soknad/soknadActions";
 
@@ -49,7 +49,7 @@ export function hentOpplysninger(behandlingsId: string) {
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
                     return;
                 }
-                dispatch(loggFeil("Henting av økonomiske opplysninger feilet: " + reason));
+                dispatch(loggAdvarsel("Henting av økonomiske opplysninger feilet: " + reason));
                 dispatch(showServerFeil(true));
             });
     };

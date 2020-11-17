@@ -30,6 +30,12 @@ export function opprettSoknad(intl: IntlShape) {
     };
 }
 
+export function opprettSoknadFeilet() {
+    return {
+        type: SoknadActionTypeKeys.OPPRETT_SOKNAD_FEILET,
+    };
+}
+
 export function opprettSoknadOk(behandlingsId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.OPPRETT_SOKNAD_OK,

@@ -26,7 +26,7 @@ class MockLogin extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            uid: Math.round(Math.random() * 999999999999).toString(),
+            uid: Math.round(Math.random() * 99999999999).toString(),
             loading: false,
         };
     }

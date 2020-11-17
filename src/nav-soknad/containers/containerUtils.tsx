@@ -9,7 +9,7 @@ import {
     visIkkePakobletPanel,
     visMidlertidigDeaktivertPanel,
 } from "../../digisos/redux/soknad/soknadActions";
-import {loggFeil} from "../../digisos/redux/navlogger/navloggerActions";
+import {loggAdvarsel} from "../../digisos/redux/navlogger/navloggerActions";
 
 export const erPaStegEnOgValgtNavEnhetErUgyldig = (stegnummer: number, valgtNavEnhet: NavEnhet | null): boolean => {
     return (
@@ -73,7 +73,7 @@ export const sjekkOmValgtNavEnhetErGyldig = (
             if (reason.message === HttpStatus.UNAUTHORIZED) {
                 return;
             }
-            dispatch(loggFeil("Henting av navEnhet feilet: " + reason));
+            dispatch(loggAdvarsel("Henting av navEnhet feilet: " + reason));
             dispatch(showServerFeil(true));
         });
 };

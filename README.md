@@ -25,7 +25,7 @@ Besøk http://localhost:3000/sosialhjelp/soknad/mock-login
 
 ```javascript
 export function getApiBaseUrl(): string {
-    if (erDev()) {
+    if (erLocalhost()) {
         // Kjør mot lokal sendsoknad
         // return "http://localhost:8189/sendsoknad/";
         return "http://localhost:3001/";
@@ -43,6 +43,16 @@ export function getApiBaseUrl(): string {
 -   `cd soknadsosialhjelp/web/src/frontend && npm start`
 
 -   Åpne `http://localhost:3000/sosialhjelp/soknad/informasjon` i nettleseren.
+
+## Manuell deploy:
+
+Ved bruk av [cli](https://github.com/navikt/sosialhjelp-ci):
+
+-   `deploy labs-gcp` (`labs-gcp2`, `labs-gcp3`)
+-   `deploy dev-gcp`
+-   `deploy q0`
+-   `deploy dev-sbs-intern`
+-   `deploy prod`
 
 ## Tekster
 

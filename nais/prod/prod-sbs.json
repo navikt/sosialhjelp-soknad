@@ -1,6 +1,6 @@
 {
   "applicationName": "sosialhjelp-soknad",
-  "namespace": "default",
+  "namespace": "teamdigisos",
   "ingresses": [
     "https://sosialhjelp-soknad.nais.oera.no/",
     "https://sosialhjelp-soknad.prod-sbs.nais.io/",
