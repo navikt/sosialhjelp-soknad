@@ -41,6 +41,7 @@
     display: block;
     border-radius: 4px;
     background-color: @white;
+    padding: 0rem 2rem;
 
     &:focus {
         .focus-outline();
@@ -58,9 +59,17 @@
         }
     }
 
+    .jaNeiSpormal {
+        width: 10rem;
+    }
+
     @media @mobile {
         padding-left: @skjemaMargMobil;
         padding-right: @skjemaMargMobil;
+
+        .jaNeiSpormal {
+            width: 100%;
+        }
     }
 
     .skjema__feilomrade--harFeil {
@@ -111,6 +120,8 @@
 
 .overskrift {
     margin-bottom: 1rem;
+
+    padding: 0 @skjemaMarg;
 
     @media @mobile {
         padding-left: @skjemaMargMobil;

@@ -58,16 +58,18 @@ class RadioEnhanced extends React.Component<Props & IntlProps, {}> {
         const id = this.props.id ? this.props.id : faktumKey ? faktumKey.replace(/\./g, "_") : "";
         const name = this.props.getName ? this.props.getName() : this.props.faktumKey + "-" + this.props.value;
         return (
-            <RadioPanel
-                id={id}
-                name={name}
-                checked={this.checked()}
-                disabled={disabled}
-                value={value}
-                required={required}
-                onClick={(event: any) => this.handleOnClick(event)}
-                label={this.determineLabel(id, faktumKey ? faktumKey : "", tekster, value)}
-            />
+            <div className={this.props.className}>
+                <RadioPanel
+                    id={id}
+                    name={name}
+                    checked={this.checked()}
+                    disabled={disabled}
+                    value={value}
+                    required={required}
+                    onClick={(event: any) => this.handleOnClick(event)}
+                    label={this.determineLabel(id, faktumKey ? faktumKey : "", tekster, value)}
+                />
+            </div>
         );
     }
 

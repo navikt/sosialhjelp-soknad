@@ -8,17 +8,16 @@ import Verdier from "./verdier/Verdier";
 import Formue from "./formue/Formue";
 import NavYtelser from "./navytelser";
 import SkattbarInntekt from "./skattbarInntekt";
-import {SkjemaGruppe} from "nav-frontend-skjema";
 import Studielan from "./studielan/Studielan";
 
 const InntektFormue: React.FC = () => {
     return (
         <DigisosSkjemaSteg steg={DigisosSteg.inntektbolk} ikon={<Penger />}>
-            <SkjemaGruppe className={"skjema-sporsmal"}>
+            <div className={"skjema-sporsmal"}>
                 <SkattbarInntekt />
                 <NavYtelser />
                 <Bostotte />
-            </SkjemaGruppe>
+            </div>
 
             <Studielan />
             <Utbetalinger />
