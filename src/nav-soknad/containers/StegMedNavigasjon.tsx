@@ -59,6 +59,7 @@ const StegMedNavigasjon = (
     const soknad = useSelector((state: State) => state.soknad);
     const validering = useSelector((state: State) => state.validering);
     const oppsummeringBekreftet = useSelector((state: State) => state.oppsummering.bekreftet);
+    const lastOppVedleggPending = useSelector((state: State) => state.okonomiskeOpplysninger.enFilLastesOpp);
 
     const dispatch = useDispatch();
 
@@ -261,6 +262,7 @@ const StegMedNavigasjon = (
                             }
                             avbryt={() => dispatch(avbrytSoknad())}
                             sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
+                            lastOppVedleggPending={lastOppVedleggPending}
                         />
                     )}
 
