@@ -16,6 +16,11 @@ export function erLocalhost(): boolean {
     return url.indexOf("localhost") >= 0 || url.indexOf("devillo.no:3000") >= 0 || url.indexOf("localhost:8080") >= 0;
 }
 
+export function erProd(): boolean {
+    const url = window.location.href;
+    return url.indexOf("www.nav.no") >= 0;
+}
+
 export function erDevSbs(): boolean {
     const url = window.location.href;
     return url.indexOf("www-q0") >= 0 || url.indexOf("www-q1") >= 0;

@@ -10,6 +10,7 @@ interface Props {
     gaVidere?: () => void;
     gaTilbake?: () => void;
     avbryt?: () => void;
+    lastOppVedleggPending?: boolean;
 }
 
 const SkjemaKnapperad: React.FC<Props> = ({
@@ -19,6 +20,7 @@ const SkjemaKnapperad: React.FC<Props> = ({
     gaTilbake,
     avbryt,
     gaVidereLabel,
+    lastOppVedleggPending,
 }) => {
     const intl = useIntl();
     const isDisabled = (): boolean => {
@@ -28,6 +30,9 @@ const SkjemaKnapperad: React.FC<Props> = ({
         if (gaViderePending) {
             return true;
         }
+        if (lastOppVedleggPending) {
+            return true;
+        }
         return false;
     };
     const shouldShowSpinner = (): boolean => {
@@ -35,6 +40,9 @@ const SkjemaKnapperad: React.FC<Props> = ({
             return false;
         }
         if (gaViderePending) {
+            return true;
+        }
+        if (lastOppVedleggPending) {
             return true;
         }
         return false;
@@ -56,7 +64,8 @@ const SkjemaKnapperad: React.FC<Props> = ({
                 id="gaa_tilbake_button"
                 htmlType="button"
                 onClick={gaTilbake}
-                disabled={gaViderePending || !gaTilbake}
+                spinner={lastOppVedleggPending}
+                disabled={gaViderePending || lastOppVedleggPending || !gaTilbake}
                 type="hoved"
             >
                 {getIntlTextOrKey(intl, "skjema.knapper.tilbake")}

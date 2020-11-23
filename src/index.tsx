@@ -20,7 +20,7 @@ import sagas from "./rootSaga";
 import IntlProvider from "./intlProvider";
 import App from "./digisos";
 import {loggException} from "./digisos/redux/navlogger/navloggerActions";
-import {erLocalhost, erDevSbs} from "./nav-soknad/utils/rest-utils";
+import {erDevSbs, erLocalhost, erProd} from "./nav-soknad/utils/rest-utils";
 import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
 import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
@@ -48,12 +48,14 @@ const history = require("history").createBrowserHistory({
     basename: getContextPathBasename(),
 });
 
-if (erLocalhost() || erDevSbs()) {
+if (erProd()) {
+    Sentry.init({dsn: "https://9414e5a7f3e641c6b223f34289d373ff@sentry.gc.nav.no/50"});
+} else if (erDevSbs()) {
     Sentry.init({
         dsn: "https://f3482eab7c994893bf44bcb26a0c8e68@sentry.gc.nav.no/14",
     });
-    Sentry.setUser({ip_address: "", id: uuid()});
 }
+Sentry.setUser({ip_address: "", id: uuid()});
 
 function configureStore() {
     const w: any = window as any;
