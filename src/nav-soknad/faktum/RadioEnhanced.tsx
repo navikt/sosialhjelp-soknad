@@ -45,7 +45,7 @@ class RadioEnhanced extends React.Component<Props & IntlProps, {}> {
         return !!checked;
     }
 
-    handleOnClick(event: any) {
+    handleOnChange(event: any) {
         if (this.props.onChange != null) {
             this.props.onChange();
         }
@@ -66,7 +66,7 @@ class RadioEnhanced extends React.Component<Props & IntlProps, {}> {
                     disabled={disabled}
                     value={value}
                     required={required}
-                    onClick={(event: any) => this.handleOnClick(event)}
+                    onChange={(event: any) => this.handleOnChange(event)}
                     label={this.determineLabel(id, faktumKey ? faktumKey : "", tekster, value)}
                 />
             </div>
