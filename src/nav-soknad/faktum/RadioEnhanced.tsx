@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Radio} from "nav-frontend-skjema";
+import {RadioPanel} from "nav-frontend-skjema";
 import {injectIntl} from "react-intl";
 import {getRadioFaktumTekst, IntlProps} from "../utils";
 import NavFrontendSpinner from "nav-frontend-spinner";
@@ -58,55 +58,33 @@ class RadioEnhanced extends React.Component<Props & IntlProps, {}> {
         const id = this.props.id ? this.props.id : faktumKey ? faktumKey.replace(/\./g, "_") : "";
         const name = this.props.getName ? this.props.getName() : this.props.faktumKey + "-" + this.props.value;
         return (
-            <Radio
-                className="soknadsosialhjelp"
-                id={id}
-                name={name}
-                checked={this.checked()}
-                disabled={disabled}
-                value={value}
-                required={required}
-                label={this.determineLabel(id, faktumKey ? faktumKey : "", tekster, value)}
-                readOnly={true}
-            />
-        );
-    }
-
-    renderMockRadio() {
-        const {faktumKey, value, property, intl} = this.props;
-        const tekster = getRadioFaktumTekst(intl, faktumKey ? faktumKey : "", value, property);
-        const id = this.props.id ? this.props.id : faktumKey ? faktumKey.replace(/\./g, "_") : "";
-        return (
-            <div className="radio-button-wrapper">
-                {this.determineLabel(id, faktumKey ? faktumKey : "", tekster, value)}
+            <div className={this.props.className}>
+                <RadioPanel
+                    id={id}
+                    name={name}
+                    checked={this.checked()}
+                    disabled={disabled}
+                    value={value}
+                    required={required}
+                    onClick={(event: any) => this.handleOnClick(event)}
+                    label={this.determineLabel(id, faktumKey ? faktumKey : "", tekster, value)}
+                />
             </div>
         );
     }
 
     render() {
-        const {className, visSpinner} = this.props;
-        let classNames = "inputPanel " + className;
-
-        if (this.checked()) {
-            classNames += " inputPanel__checked";
-        }
-        if (visSpinner) {
-            classNames += " inputPanel--disabled";
-        }
+        const {visSpinner} = this.props;
 
         return (
-            <div
-                className={classNames}
-                onClick={(event: any) => this.handleOnClick(event)}
-                id={this.props.id + "_klikkbar_div"}
-            >
+            <>
                 {this.renderRadio()}
                 {visSpinner && (
                     <div className="inputPanel__spinner">
                         <NavFrontendSpinner type="M" />
                     </div>
                 )}
-            </div>
+            </>
         );
     }
 }

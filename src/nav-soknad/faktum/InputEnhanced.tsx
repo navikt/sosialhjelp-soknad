@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useIntl} from "react-intl";
-import {Feil, Input, InputBredde} from "nav-frontend-skjema";
+import {Input} from "nav-frontend-skjema";
 import {getInputFaktumTekst, replaceDotWithUnderscore} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {connect} from "react-redux";
@@ -25,7 +25,7 @@ export interface Props {
     pattern?: string;
     maxLength?: number;
     minLength?: number;
-    bredde?: InputBredde;
+    bredde?: "fullbredde" | "XXL" | "XL" | "L" | "M" | "S" | "XS" | "XXS";
     step?: string;
     type?: InputTypes;
     inputRef?: (c: any) => HTMLInputElement;
@@ -33,7 +33,7 @@ export interface Props {
     className?: string;
     getName?: () => string;
     faktumIndex?: number;
-    getFeil?: () => Feil;
+    getFeil?: () => string;
     autoFocus?: boolean;
 }
 
@@ -59,7 +59,7 @@ const InputEnhanced = (props: Props) => {
     } = props;
     const tekster = getInputFaktumTekst(intl, textKey ? textKey : faktumKey);
 
-    const feil_: Feil | undefined = getFeil(feil, intl, faktumKey, faktumIndex);
+    const feil_: string | undefined = getFeil(feil, intl, faktumKey, faktumIndex);
 
     return (
         <Input
@@ -83,7 +83,6 @@ const InputEnhanced = (props: Props) => {
             pattern={pattern}
             required={required}
             step={step}
-            noValidate={true /* Unngå at nettleser validerer og evt. fjerner verdien */}
             autoFocus={autoFocus}
         />
     );
