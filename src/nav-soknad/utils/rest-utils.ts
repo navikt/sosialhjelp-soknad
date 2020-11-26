@@ -52,7 +52,10 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
         window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0 ||
         window.location.origin.indexOf("labs.nais.io") >= 0
     ) {
-        if (window.location.origin.indexOf("digisos.labs.nais.io") >= 0) {
+        if (
+            window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0 ||
+            window.location.origin.indexOf("digisos.labs.nais.io") >= 0
+        ) {
             return getAbsoluteApiUrl(withAccessToken);
         }
         return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
