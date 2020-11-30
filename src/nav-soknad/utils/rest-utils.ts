@@ -13,7 +13,7 @@ import {NavLogEntry, NavLogLevel} from "../../digisos/redux/navlogger/navloggerT
 
 export function erLocalhost(): boolean {
     const url = window.location.href;
-    return url.indexOf("localhost") >= 0 || url.indexOf("devillo.no:3000") >= 0 || url.indexOf("localhost:8080") >= 0;
+    return url.indexOf("localhost") >= 0;
 }
 
 export function erProd(): boolean {
@@ -31,11 +31,6 @@ export function erQGammelVersjon(): boolean {
      * Den gamle URL-en vil bli benyttet en stund av kommuner. */
     const url = window.location.href;
     return url.indexOf("www-q0.nav.no") >= 0 || url.indexOf("www-q1.nav.no") >= 0;
-}
-
-export function kjorerJetty(): boolean {
-    const url = window.location.href;
-    return url.indexOf(":8189") > 0;
 }
 
 export function getApiBaseUrl(withAccessToken?: boolean): string {
@@ -60,9 +55,6 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
             return getAbsoluteApiUrl(withAccessToken);
         }
         return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
-    }
-    if (kjorerJetty()) {
-        return `http://127.0.0.1:7000/${apiContextPath}/`;
     }
 
     return getAbsoluteApiUrl(withAccessToken);
