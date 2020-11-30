@@ -5,6 +5,7 @@ export enum SoknadActionTypeKeys {
     START_SOKNAD_OK = "soknad/START_SOKNAD_OK",
     START_SOKNAD_SERVICE_UNAVAILABLE = "soknad/START_SOKNAD_SERVICE_UNAVAILABLE",
     OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
+    OPPRETT_SOKNAD_FEILET = "soknad/OPPRETT_SOKNAD_FEILET",
     OPPRETT_SOKNAD_OK = "soknad/OPPRETT_SOKNAD_OK",
     HENT_SOKNAD = "soknad/HENT_SOKNAD",
     HENT_SOKNAD_OK = "soknad/HENT_SOKNAD_OK",
@@ -52,6 +53,7 @@ export type SoknadActionType =
     | StartSoknadOkAction
     | StartSoknadServerUnavailableAction
     | OpprettSoknadAction
+    | OpprettSoknadFeiletAction
     | OpprettSoknadOkAction
     | HentSoknadAction
     | HentSoknaOkAction
@@ -159,6 +161,10 @@ export interface StartSoknadServerUnavailableAction {
 
 export interface OpprettSoknadAction {
     type: SoknadActionTypeKeys.OPPRETT_SOKNAD;
+}
+
+export interface OpprettSoknadFeiletAction {
+    type: SoknadActionTypeKeys.OPPRETT_SOKNAD_FEILET;
 }
 
 export interface OpprettSoknadOkAction {

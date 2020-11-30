@@ -22,6 +22,7 @@ interface StateProps {
     harTilgang: boolean;
     sperrekode: TilgangSperrekode | undefined;
     startSoknadPending: boolean;
+    startSoknadFeilet: boolean;
     fornavn: string | undefined;
     intl: IntlShape;
     nedetidstart: string | undefined;
@@ -54,6 +55,7 @@ class Informasjon extends React.Component<Props, {}> {
             intl,
             harTilgang,
             startSoknadPending,
+            startSoknadFeilet,
             sperrekode,
             nedetidstart,
             nedetidslutt,
@@ -126,6 +128,12 @@ class Informasjon extends React.Component<Props, {}> {
                             </div>
 
                             <div className="skjema-content" style={{border: "1px solid transparent"}}>
+                                {startSoknadFeilet && (
+                                    <AlertStripe type="feil">
+                                        <FormattedHTMLMessage id="applikasjon.opprettsoknadfeilet" />
+                                    </AlertStripe>
+                                )}
+
                                 <span className="informasjon-start-knapp">
                                     <Knapp
                                         id="start_soknad_button"
@@ -173,5 +181,6 @@ export default connect((state: State) => ({
     isPlanlagtNedetid: state.soknad.nedetid ? state.soknad.nedetid.isPlanlagtNedetid : false,
     visNedetidPanel: state.soknad.visNedetidPanel,
     startSoknadPending: state.soknad.startSoknadPending,
+    startSoknadFeilet: state.soknad.startSoknadFeilet,
     fornavn: state.soknad.fornavn ? state.soknad.fornavn : undefined,
 }))(injectIntl(Informasjon));

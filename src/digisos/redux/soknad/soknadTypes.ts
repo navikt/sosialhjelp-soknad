@@ -31,6 +31,7 @@ export interface SoknadState {
 
     // Opprettelse, innsending og ettersendelse
     startSoknadPending: boolean;
+    startSoknadFeilet: boolean;
     sendSoknadPending: boolean;
 
     // Avbryt state

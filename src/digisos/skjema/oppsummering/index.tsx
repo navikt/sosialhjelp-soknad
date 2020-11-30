@@ -92,12 +92,10 @@ class OppsummeringView extends React.Component<Props, {}> {
                             onChange={() => this.props.dispatch(bekreftOppsummering())}
                             feil={
                                 this.props.visBekreftMangler
-                                    ? {
-                                          feilmelding: intl.formatHTMLMessage({
-                                              id: "oppsummering.feilmelding.bekreftmangler",
-                                          }),
-                                      }
-                                    : undefined
+                                    ? intl.formatHTMLMessage({
+                                          id: "oppsummering.feilmelding.bekreftmangler",
+                                      })
+                                    : ""
                             }
                         >
                             <p style={{marginTop: "0"}}>

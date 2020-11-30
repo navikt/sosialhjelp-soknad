@@ -18,6 +18,7 @@ import {
 } from "../../../redux/soknadsdata/soknadsdataActions";
 import Knapp from "nav-frontend-knapper";
 import AlertStripe from "nav-frontend-alertstriper";
+import {Normaltekst} from "nav-frontend-typografi";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -164,7 +165,9 @@ const BostotteView = () => {
                         <>
                             {bostotte && bostotte.bekreftelse && (
                                 <>
-                                    {getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke.tekst")}
+                                    <Normaltekst>
+                                        {getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke.tekst")}
+                                    </Normaltekst>
                                     <Knapp
                                         id="gi_bostotte_samtykke"
                                         type="standard"

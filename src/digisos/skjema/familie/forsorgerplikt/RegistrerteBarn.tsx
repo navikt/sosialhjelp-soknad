@@ -13,7 +13,7 @@ import {lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {erSamvaersgrad} from "../../../../nav-soknad/validering/valideringer";
 import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validering/valideringActions";
-import {Feil, Input} from "nav-frontend-skjema";
+import {Input} from "nav-frontend-skjema";
 import {getFeil} from "../../../../nav-soknad/utils/enhancedComponentUtils";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
@@ -79,7 +79,7 @@ const RegistrerteBarn = () => {
         <div>
             {barn.map((barnet: Barn, index: number) => {
                 const samvaersgradBarnKeyMedIndex = SAMVAERSGRAD_KEY + index;
-                const feil_: Feil | undefined = getFeil(feil, intl, samvaersgradBarnKeyMedIndex, undefined);
+                const feil_: string | undefined = getFeil(feil, intl, samvaersgradBarnKeyMedIndex, undefined);
                 return (
                     <div key={index} className={index + 1 === barn.length ? "barn barn_siste_liste_element" : "barn"}>
                         <Detaljeliste>
@@ -138,7 +138,6 @@ const RegistrerteBarn = () => {
                                         feil={feil_}
                                         maxLength={3}
                                         required={false}
-                                        noValidate={true /* Unngå at nettleser validerer og evt. fjerner verdien */}
                                     />
                                 </div>
                             )}

@@ -59,6 +59,7 @@ const StegMedNavigasjon = (
     const soknad = useSelector((state: State) => state.soknad);
     const validering = useSelector((state: State) => state.validering);
     const oppsummeringBekreftet = useSelector((state: State) => state.oppsummering.bekreftet);
+    const lastOppVedleggPending = useSelector((state: State) => state.okonomiskeOpplysninger.enFilLastesOpp);
 
     const dispatch = useDispatch();
 
@@ -261,13 +262,14 @@ const StegMedNavigasjon = (
                             }
                             avbryt={() => dispatch(avbrytSoknad())}
                             sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
+                            lastOppVedleggPending={lastOppVedleggPending}
                         />
                     )}
 
                     {soknad.showSendingFeiletPanel && aktivtSteg === 9 && (
                         <div role="alert">
                             <AlertStripe type="feil" style={{marginTop: "1rem"}}>
-                                Vi klarte ikke sende søknaden din, grunnet en midlertidig teknsik feil. Vi ber deg prøve
+                                Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg prøve
                                 igjen. Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen
                                 senere. Kontakt ditt NAV kontor dersom du er i en nødsituasjon.
                             </AlertStripe>

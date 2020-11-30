@@ -62,11 +62,10 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
                         id={idRadioJa}
                         value={"true"}
                         checked={verdi && verdi === true}
-                        className="inputPanel__smal"
+                        className="jaNeiSpormal"
                         onChange={() => this.handleOnChange(true)}
                         visPlaceholder={this.props.visPlaceholder}
                     />
-
                     {!mobilVisning && (
                         <RadioEnhanced
                             faktumKey={this.props.faktumKey}
@@ -75,7 +74,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
                             checked={verdi !== null && verdi === false}
                             getName={() => idRadioNei}
                             onChange={() => this.handleOnChange(false)}
-                            className="inputPanel__smal"
+                            className="jaNeiSpormal"
                             visPlaceholder={this.props.visPlaceholder}
                         />
                     )}
@@ -89,7 +88,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
                         getName={() => idRadioNei}
                         onChange={() => this.handleOnChange(false)}
                         className={
-                            "inputPanel__smal inputPanel__mobil--nei " + visUnderSkjema
+                            "jaNeiSpormal inputPanel__mobil--nei " + visUnderSkjema
                                 ? "inputPanel__mobil--uten-underSkjema"
                                 : ""
                         }
