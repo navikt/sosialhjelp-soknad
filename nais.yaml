@@ -45,3 +45,5 @@ spec:
   env:
     - name: APPRES_CMS_URL
       value: {{appresCmsUrl}}
+    - name: UNLEASH_API_URL
+      value: https://unleash.nais.io/api/
