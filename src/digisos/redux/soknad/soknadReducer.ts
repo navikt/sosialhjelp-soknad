@@ -51,7 +51,7 @@ export const defaultState: SoknadState = {
     avbrytSoknadSjekkAktiv: true,
 };
 
-export default (state: SoknadState = defaultState, action: SoknadActionType) => {
+const reducer = (state: SoknadState = defaultState, action: SoknadActionType) => {
     switch (action.type) {
         case SoknadActionTypeKeys.OPPRETT_SOKNAD:
             return {
@@ -271,3 +271,5 @@ export default (state: SoknadState = defaultState, action: SoknadActionType) => 
             return state;
     }
 };
+
+export default reducer;

@@ -73,12 +73,3 @@ export function fdato(dato: string): ValideringsFeilKode | undefined {
     }
     return undefined;
 }
-
-export default {
-    pakrevd,
-    minLengde,
-    maksLengde,
-    erTall,
-    erTelefonnummer,
-    erKontonummer,
-};

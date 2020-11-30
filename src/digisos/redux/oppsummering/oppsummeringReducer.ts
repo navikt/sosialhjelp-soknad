@@ -62,7 +62,7 @@ const hentUtOppsummering = (html: string): Oppsummering => {
     };
 };
 
-export default (state: OppsummeringState = defaultState, action: OppsummeringActionTypes): OppsummeringState => {
+const reducer = (state: OppsummeringState = defaultState, action: OppsummeringActionTypes): OppsummeringState => {
     switch (action.type) {
         case OppsummeringActionTypeKeys.HENT_OPPSUMMERING:
             return {
@@ -107,3 +107,5 @@ export default (state: OppsummeringState = defaultState, action: OppsummeringAct
             return state;
     }
 };
+
+export default reducer;

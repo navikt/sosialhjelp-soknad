@@ -4,7 +4,7 @@ const initialState: MiljovariablerState = {
     data: {},
 };
 
-export default (state: MiljovariablerState = initialState, action: MiljovariablerAction) => {
+const reducer = (state: MiljovariablerState = initialState, action: MiljovariablerAction) => {
     switch (action.type) {
         case MiljovariablerActionTypeKeys.LAGRE_MILJOVARIABLER_PA_STORE: {
             return {...state, data: action.miljovariablerResponse};
@@ -13,3 +13,5 @@ export default (state: MiljovariablerState = initialState, action: Miljovariable
             return state;
     }
 };
+
+export default reducer;
