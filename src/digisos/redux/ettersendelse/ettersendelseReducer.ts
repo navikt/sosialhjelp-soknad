@@ -24,7 +24,7 @@ const initialState: EttersendelseState = {
     visSoknadAlleredeSendtPromt: false,
 };
 
-export default (state: EttersendelseState = initialState, action: EttersendelseActionTypes): EttersendelseState => {
+const reducer = (state: EttersendelseState = initialState, action: EttersendelseActionTypes): EttersendelseState => {
     switch (action.type) {
         case EttersendelseActionTypeKeys.NY_OK: {
             return {
@@ -150,3 +150,5 @@ export default (state: EttersendelseState = initialState, action: EttersendelseA
             return state;
     }
 };
+
+export default reducer;

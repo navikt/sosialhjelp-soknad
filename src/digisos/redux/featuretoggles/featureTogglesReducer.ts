@@ -7,7 +7,7 @@ const initialState = {
     status: INIT,
 };
 
-export default (state: FeatureTogglesApiType = initialState, action: FeatureTogglesActionTypes) => {
+const reducer = (state: FeatureTogglesApiType = initialState, action: FeatureTogglesActionTypes) => {
     switch (action.type) {
         case OK: {
             return {...state, status: OK, data: action.data};
@@ -20,3 +20,5 @@ export default (state: FeatureTogglesApiType = initialState, action: FeatureTogg
             return state;
     }
 };
+
+export default reducer;

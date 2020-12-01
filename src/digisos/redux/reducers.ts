@@ -39,7 +39,7 @@ export interface State {
     mockData: MockState;
 }
 
-export default (history: any) =>
+const reducers = (history: any) =>
     combineReducers({
         router: connectRouter(history),
         soknad: SoknadReducer,
@@ -59,3 +59,5 @@ export default (history: any) =>
         mockData: MockReducer,
         navlogger: navloggerReducer,
     });
+
+export default reducers;

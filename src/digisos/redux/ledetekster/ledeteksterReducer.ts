@@ -15,7 +15,7 @@ function leggNoklerPaaLedetekster(data: object) {
     return tekster;
 }
 
-export default (state: LedeteksterState = initialState, action: LedeteksterAction) => {
+const reducer = (state: LedeteksterState = initialState, action: LedeteksterAction) => {
     switch (action.type) {
         case LedeteksterActionTypeKeys.LAGRE_LEDETEKSTER_PA_STORE: {
             let {ledeteksterResponse} = action;
@@ -33,3 +33,5 @@ export default (state: LedeteksterState = initialState, action: LedeteksterActio
             return state;
     }
 };
+
+export default reducer;

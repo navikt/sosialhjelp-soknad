@@ -24,7 +24,7 @@ export const defaultState: MockState = {
     ident: "007",
 };
 
-export default (state: MockState = defaultState, action: MockActionTypes) => {
+const reducer = (state: MockState = defaultState, action: MockActionTypes) => {
     switch (action.type) {
         case MockActionTypeKeys.SETT_IDENT:
             return {
@@ -35,3 +35,5 @@ export default (state: MockState = defaultState, action: MockActionTypes) => {
             return state;
     }
 };
+
+export default reducer;
