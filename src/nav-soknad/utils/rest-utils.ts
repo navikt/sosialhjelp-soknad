@@ -1,4 +1,4 @@
-import {erMockMiljoEllerDev} from "./index";
+import {erMockAltMiljo, erMockMiljoEllerDev} from "./index";
 import {
     API_CONTEXT_PATH,
     API_CONTEXT_PATH_WITH_ACCESS_TOKEN,
@@ -54,9 +54,13 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
     }
     if (
         window.location.origin.indexOf("sosialhjelp-soknad-gcp.dev.nav.no") >= 0 ||
+        window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0 ||
         window.location.origin.indexOf("labs.nais.io") >= 0
     ) {
-        if (window.location.origin.indexOf("digisos.labs.nais.io") >= 0) {
+        if (
+            window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0 ||
+            window.location.origin.indexOf("digisos.labs.nais.io") >= 0
+        ) {
             return getAbsoluteApiUrl(withAccessToken);
         }
         return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
@@ -376,7 +380,7 @@ export function detekterInternFeilKode(feilKode: string): string {
 }
 
 export function lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(brukerbehandlingId: string) {
-    if (erMockMiljoEllerDev()) {
+    if (erMockMiljoEllerDev() && !erMockAltMiljo()) {
         const url = getApiBaseUrl() + "internal/mock/tjeneste/downloadzip/" + brukerbehandlingId;
         window.open(url);
     }
