@@ -42,8 +42,8 @@ export enum SoknadsdataActionTypeKeys {
  * og legges på redux state state.soknadsdata.personalia.kontonummer
  */
 export enum SoknadsSti {
-	OPPDATER_SAMTYKKE = "oppdaterSamtykker",
-	HENT_SAMTYKKER = "hentSamtykker",
+    OPPDATER_SAMTYKKE = "oppdaterSamtykker",
+    HENT_SAMTYKKER = "hentSamtykker",
     ARBEID = "arbeid",
     BANKINFORMASJON = "personalia/kontonummer",
     BEGRUNNELSE = "begrunnelse",
@@ -51,7 +51,7 @@ export enum SoknadsSti {
     UTDANNING = "utdanning",
     TELEFONNUMMER = "personalia/telefonnummer",
     BOSTOTTE = "inntekt/bostotte",
-	BOSTOTTE_SAMTYKKE = "inntekt/bostotte/samtykke",
+    BOSTOTTE_SAMTYKKE = "inntekt/bostotte/samtykke",
     STUDIELAN = "inntekt/studielan",
     UTBETALINGER = "inntekt/utbetalinger",
     VERDIER = "inntekt/verdier",
@@ -82,8 +82,8 @@ export interface Inntekt {
 export interface SkattbarInntektInfo {
     inntektFraSkatteetaten: SkattbarInntekt[];
     inntektFraSkatteetatenFeilet: boolean;
-	samtykke: boolean;
-	samtykkeTidspunkt?: Date;
+    samtykke: boolean;
+    samtykkeTidspunkt?: Date;
 }
 
 export const initialInntektState: Inntekt = {
@@ -199,7 +199,7 @@ const initialSoknadsdataRestStatus = {
     },
     inntekt: {
         bostotte: REST_STATUS.INITIALISERT,
-		samtykke: REST_STATUS.INITIALISERT,
+        samtykke: REST_STATUS.INITIALISERT,
         studielan: REST_STATUS.INITIALISERT,
         utbetalinger: REST_STATUS.INITIALISERT,
         verdier: REST_STATUS.INITIALISERT,
@@ -218,7 +218,7 @@ export const initialSoknadsdataState: Soknadsdata = {
     restStatus: initialSoknadsdataRestStatus,
 };
 
-export default (state: Soknadsdata = initialSoknadsdataState, action: SoknadsdataActionType): any => {
+const reducer = (state: Soknadsdata = initialSoknadsdataState, action: SoknadsdataActionType): any => {
     switch (action.type) {
         case SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI: {
             return {
@@ -250,3 +250,5 @@ export const oppdaterSoknadsdataSti = (sti: string, verdi: SoknadsdataType | nul
         verdi,
     };
 };
+
+export default reducer;
