@@ -1,5 +1,4 @@
 import React from "react";
-import "./paperclipIcon.less";
 
 const PaperclipIcon: React.FC = () => {
     return (
