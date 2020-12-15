@@ -21,8 +21,7 @@ class SoknadsmottakerInfoPanel extends React.Component<Props, {}> {
                         id="soknasosialhjelp.oppsummering.hvorsendes"
                         values={{navkontor: valgtEnhetsNavn}}
                     />
-                    <br />
-                    <br />
+
                     <button
                         className="linkbutton linkbutton--normal"
                         onClick={() => {
