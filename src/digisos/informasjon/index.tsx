@@ -42,9 +42,9 @@ class Informasjon extends React.Component<Props, {}> {
     renderHilsen(): React.ReactNode {
         if (this.props.fornavn && this.props.fornavn.length > 0) {
             return (
-                <h3 className="digisos-snakkeboble-tittel">
+                <h2 className="digisos-snakkeboble-tittel typo-element">
                     <FormattedHTMLMessage id="informasjon.hilsen.hei" values={{fornavn: this.props.fornavn}} />
-                </h3>
+                </h2>
             );
         }
         return null;

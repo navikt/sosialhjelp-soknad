@@ -18,7 +18,7 @@ import {
 } from "../../../redux/soknadsdata/soknadsdataActions";
 import Knapp from "nav-frontend-knapper";
 import AlertStripe from "nav-frontend-alertstriper";
-import {Normaltekst} from "nav-frontend-typografi";
+import {Normaltekst, UndertekstBold} from "nav-frontend-typografi";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -191,12 +191,14 @@ const BostotteView = () => {
                     {samtykkeTidspunktStreng !== "" && harSamtykke && (
                         <>
                             <div>
-                                <h4 className="tidspunkt_uten_luft">{samtykkeTidspunktStreng}</h4>
-                                <FormattedMessage id="inntekt.bostotte.husbanken.info" />
+                                <UndertekstBold>{samtykkeTidspunktStreng}</UndertekstBold>
+                                <p>
+                                    <FormattedMessage id="inntekt.bostotte.husbanken.info" />
+                                </p>
                             </div>
-                            <h4 className="blokk-null">
+                            <UndertekstBold className="blokk-null">
                                 <FormattedMessage id="inntekt.bostotte.husbanken.utbetalinger" />
-                            </h4>
+                            </UndertekstBold>
                             {!harBostotterUtbetalinger && (
                                 <div className="utbetalinger">
                                     <FormattedMessage id="inntekt.bostotte.husbanken.ingenutbetalingerfunnet" />
@@ -210,9 +212,9 @@ const BostotteView = () => {
                                     index
                                 );
                             })}
-                            <h4 className="blokk-null saksoverskrift">
+                            <UndertekstBold className="blokk-null saksoverskrift">
                                 <FormattedMessage id="inntekt.bostotte.husbanken.saker" />
-                            </h4>
+                            </UndertekstBold>
                             {!harBostotterSaker && (
                                 <div className="sak blokk-xs">
                                     <FormattedMessage id="inntekt.bostotte.husbanken.ingensakerfunnet" />

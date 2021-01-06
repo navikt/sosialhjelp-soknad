@@ -12,6 +12,7 @@ import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
+import {UndertekstBold} from "nav-frontend-typografi";
 
 const NavYtelserView = () => {
     const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const NavYtelserView = () => {
         return (
             <div key={index} className="utbetaling blokk-s">
                 <div>
-                    <h4 className="blokk-null">{type}</h4>
+                    <UndertekstBold className="blokk-null">{type}</UndertekstBold>
                     <span className="verdi detaljeliste__verdi">{belop}</span>
                 </div>
                 {formattedDato && (
@@ -87,7 +88,7 @@ const NavYtelserView = () => {
                     <div>
                         <FormattedMessage id="utbetalinger.ingen.true" />
                     </div>
-                    </div>
+                </div>
             )}
             {utbetalingerFraNavFeilet && (
                 <div className={"ytelser_panel"}>

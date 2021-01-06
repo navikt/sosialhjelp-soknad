@@ -12,6 +12,7 @@ import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger"
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {UndertekstBold} from "nav-frontend-typografi";
 
 const FAKTUM_STUDIELAN = "inntekt.studielan";
 
@@ -70,19 +71,19 @@ const StudielanView = () => {
                 onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             />
-            {studielan && (studielan.bekreftelse === false) &&
-                <Informasjonspanel
-                    ikon={InformasjonspanelIkon.ELLA}
-                    farge={DigisosFarge.VIKTIG}
-                >
-                    <h4 className="skjema-sporsmal__infotekst__tittel">
-                        <FormattedMessage id={STUDERER_INFO_TITTEL}/>
-                    </h4>
-                    <FormattedHTMLMessage id={STUDERER_INFO_DEL1}/>
-                    <p/>
-                    <FormattedHTMLMessage id={STUDERER_INFO_DEL2}/>
+            {studielan && studielan.bekreftelse === false && (
+                <Informasjonspanel ikon={InformasjonspanelIkon.ELLA} farge={DigisosFarge.VIKTIG}>
+                    <UndertekstBold className="skjema-sporsmal__infotekst__tittel">
+                        <FormattedMessage id={STUDERER_INFO_TITTEL} />
+                    </UndertekstBold>
+                    <p>
+                        <FormattedHTMLMessage id={STUDERER_INFO_DEL1} />
+                    </p>
+                    <p>
+                        <FormattedHTMLMessage id={STUDERER_INFO_DEL2} />
+                    </p>
                 </Informasjonspanel>
-            }
+            )}
         </div>
     );
     if (typeof studielan !== "undefined" && studielan.skalVises) {
