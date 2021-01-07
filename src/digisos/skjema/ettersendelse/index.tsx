@@ -22,6 +22,7 @@ import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAller
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import AlertStripe from "nav-frontend-alertstriper";
 import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
+import DocumentTitle from "react-document-title";
 
 interface OwnProps {
     manglendeVedlegg: EttersendelseVedleggBackend[];
@@ -134,6 +135,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
         return (
             <div className="ettersendelse">
+                <DocumentTitle title={`Søknadsstatus - Økonomisk sosialhjelp`} />
                 <BannerEttersendelse>
                     <FormattedMessage id="applikasjon.sidetittel" />
                 </BannerEttersendelse>
