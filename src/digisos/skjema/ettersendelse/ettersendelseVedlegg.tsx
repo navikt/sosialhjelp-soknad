@@ -76,7 +76,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
         const visFeilFiltypeFeilmelding: boolean = opplastingsFeil && this.props.feilKode === REST_FEIL.FEIL_FILTPYE;
 
         return (
-            <span className="ettersendelse__vedlegg__wrapper">
+            <span className="">
                 <AvsnittMedMarger className="vedleggsliste__detalj">
                     {this.props.children}
                     <input
