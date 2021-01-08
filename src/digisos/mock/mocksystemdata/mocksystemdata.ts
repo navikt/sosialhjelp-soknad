@@ -38,31 +38,19 @@ const BANKKONTO = "bankkonto";
 const VERDI = "verdi";
 const ARBEIDSFORHOLD = "arbeidsforhold";
 const ORGANISASJON = "organisasjon";
-const PERSONNAVN = "personnavn";
-const STATSBORGERSKAP = "statsborgerskap";
-const LANDKODE = "land";
-const IDENT = "ident";
 
 export function settNavn(fornavn: any, mellomnavn: any, etternavn: any) {
-    // @ts-ignore
-    familie[PERSONNAVN] = {
-        etternavn: etternavn,
-        fornavn: fornavn,
-        mellomnavn: mellomnavn,
-        sammensattNavn: null,
-        endringstidspunkt: null,
-        endretAv: null,
-        endringstype: null,
-    };
+    familie.person.fornavn = fornavn;
+    familie.person.mellomnavn = mellomnavn;
+    familie.person.etternavn = etternavn;
 }
 
 export function settStatsborgerskap(land: string) {
-    // @ts-ignore
-    familie[STATSBORGERSKAP][LANDKODE]["value"] = land;
+    familie.person.statsborgerskap = land;
 }
 
 export function settIdent(ident: any) {
-    familie[IDENT][IDENT] = ident;
+    familie.person.ident = ident;
 }
 
 export function settMidlertidigPostadresse(midlertidigPostadresseEgendefinertValue: any) {
@@ -73,9 +61,11 @@ export function settMidlertidigPostadresse(midlertidigPostadresseEgendefinertVal
 export function settMidlertidigMatrikkelGnr(gnr: any) {
     brukerprofil[PERSON][MIDLERTIDIGPOSTADRESSE][STRUKTURERTADRESSE][GNR] = gnr;
 }
+
 export function settMidlertidigMatrikkelBnr(bnr: any) {
     brukerprofil[PERSON][MIDLERTIDIGPOSTADRESSE][STRUKTURERTADRESSE][BNR] = bnr;
 }
+
 export function settMidlertidigMatrikkelKommunenummer(kommunenummer: any) {
     brukerprofil[PERSON][MIDLERTIDIGPOSTADRESSE][STRUKTURERTADRESSE][KOMMUNENUMMER] = kommunenummer;
 }
@@ -199,17 +189,15 @@ export function settEktefelleMedSammeBostedsadresse(
 ) {
     const ektefelle = ektefelleJSON;
 
-    ektefelle.harSammeBosted = true;
+    ektefelle.ident = ident;
+    ektefelle.fornavn = fornavn;
+    ektefelle.mellomnavn = mellomnavn;
+    ektefelle.etternavn = etternavn;
+    ektefelle.harSammeBostedsadresse = true;
+    ektefelle.adressebeskyttelse = "UGRADERT";
 
-    ektefelle.tilPerson.ident.ident = ident;
-    ektefelle.tilPerson.personnavn.fornavn = fornavn;
-    ektefelle.tilPerson.personnavn.mellomnavn = mellomnavn;
-    ektefelle.tilPerson.personnavn.etternavn = etternavn;
-    ektefelle.tilPerson.foedselsdato.foedselsdato = foedselsdato;
-
-    // @ts-ignore
-    familie.harFraRolleI.push(ektefelle);
-    familie.sivilstand.sivilstand.value = "GIFT";
+    familie.ektefelle = ektefelle;
+    familie.person.sivilstand = "GIFT";
 }
 
 export function settEktefelleUtenSammeBostedsadresse(
@@ -221,163 +209,85 @@ export function settEktefelleUtenSammeBostedsadresse(
 ) {
     const ektefelle = ektefelleJSON;
 
-    ektefelle.harSammeBosted = false;
+    ektefelle.ident = ident;
+    ektefelle.fornavn = fornavn;
+    ektefelle.mellomnavn = mellomnavn;
+    ektefelle.etternavn = etternavn;
+    ektefelle.harSammeBostedsadresse = false;
+    ektefelle.adressebeskyttelse = "UGRADERT";
 
-    ektefelle.tilPerson.ident.ident = ident;
-    ektefelle.tilPerson.personnavn.fornavn = fornavn;
-    ektefelle.tilPerson.personnavn.mellomnavn = mellomnavn;
-    ektefelle.tilPerson.personnavn.etternavn = etternavn;
-    ektefelle.tilPerson.foedselsdato.foedselsdato = foedselsdato;
-
-    // @ts-ignore
-    familie.harFraRolleI.push(ektefelle);
-    familie.sivilstand.sivilstand.value = "GIFT";
+    familie.ektefelle = ektefelle;
+    familie.person.sivilstand = "GIFT";
 }
 
 export function settEktefelleMedKodeSeks(ident: any, fornavn: any, mellomnavn: any, etternavn: any, foedselsdato: any) {
     const ektefelle = ektefelleJSON;
 
-    ektefelle.harSammeBosted = false;
+    ektefelle.ident = ident;
+    ektefelle.fornavn = fornavn;
+    ektefelle.mellomnavn = mellomnavn;
+    ektefelle.etternavn = etternavn;
+    ektefelle.harSammeBostedsadresse = false;
+    ektefelle.adressebeskyttelse = "STRENGT_FORTROLIG";
 
-    ektefelle.tilPerson.ident.ident = ident;
-    ektefelle.tilPerson.personnavn.fornavn = fornavn;
-    ektefelle.tilPerson.personnavn.mellomnavn = mellomnavn;
-    ektefelle.tilPerson.personnavn.etternavn = etternavn;
-    ektefelle.tilPerson.foedselsdato.foedselsdato = foedselsdato;
-    ektefelle.tilPerson.diskresjonskode = {
-        value: "SPSF",
-        kodeRef: null,
-        kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Diskresjonskoder",
-    };
-
-    // @ts-ignore
-    familie.harFraRolleI.push(ektefelle);
-    familie.sivilstand.sivilstand.value = "GIFT";
+    familie.ektefelle = ektefelle;
+    familie.person.sivilstand = "GIFT";
 }
 
 export function settEktefelleMedKodeSyv(ident: any, fornavn: any, mellomnavn: any, etternavn: any, foedselsdato: any) {
     const ektefelle = ektefelleJSON;
 
-    ektefelle.harSammeBosted = false;
+    ektefelle.ident = ident;
+    ektefelle.fornavn = fornavn;
+    ektefelle.mellomnavn = mellomnavn;
+    ektefelle.etternavn = etternavn;
+    ektefelle.harSammeBostedsadresse = false;
+    ektefelle.adressebeskyttelse = "FORTROLIG";
 
-    ektefelle.tilPerson.ident.ident = ident;
-    ektefelle.tilPerson.personnavn.fornavn = fornavn;
-    ektefelle.tilPerson.personnavn.mellomnavn = mellomnavn;
-    ektefelle.tilPerson.personnavn.etternavn = etternavn;
-    ektefelle.tilPerson.foedselsdato.foedselsdato = foedselsdato;
-    ektefelle.tilPerson.diskresjonskode = {
-        value: "SPFO",
-        kodeRef: null,
-        kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Diskresjonskoder",
-    };
-
-    // @ts-ignore
-    familie.harFraRolleI.push(ektefelle);
-    familie.sivilstand.sivilstand.value = "GIFT";
+    familie.ektefelle = ektefelle;
+    familie.person.sivilstand = "GIFT";
 }
 
 export function settBarnSammeBostedsadresse(ident: string, fornavn: string, mellomnavn: string, etternavn: string) {
-    let barnSammeBostedsadresse = {
-        harSammeBosted: true,
-        tilRolle: {
-            value: "BARN",
-            kodeRef: null,
-            kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Familierelasjoner",
-        },
-        tilPerson: {
-            diskresjonskode: null,
-            bankkonto: null,
-            bostedsadresse: null,
-            sivilstand: null,
-            statsborgerskap: null,
-            harFraRolleI: [],
-            ident: {
-                ident: "03061793877",
-                type: {
-                    value: "FNR",
-                    kodeRef: null,
-                    kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Personidenter",
-                },
-            },
-            kjoenn: null,
-            personnavn: {
-                etternavn: "Mockmann",
-                fornavn: "Hydra",
-                mellomnavn: "",
-                sammensattNavn: null,
-                endringstidspunkt: null,
-                endretAv: null,
-                endringstype: null,
-            },
-            personstatus: null,
-            postadresse: null,
-            doedsdato: null,
-            foedselsdato: null,
-        },
-        endringstidspunkt: null,
-        endretAv: null,
-        endringstype: null,
+    let barn = {
+        ident: "",
+        fornavn: "Kid",
+        mellomnavn: "",
+        etternavn: "McKid",
+        harSammeBostedsadresse: true,
+        erDoed: false,
     };
 
-    barnSammeBostedsadresse.tilPerson.ident.ident = ident;
-    barnSammeBostedsadresse.tilPerson.personnavn.fornavn = fornavn;
-    barnSammeBostedsadresse.tilPerson.personnavn.mellomnavn = mellomnavn;
-    barnSammeBostedsadresse.tilPerson.personnavn.etternavn = etternavn;
+    barn.ident = ident;
+    barn.fornavn = fornavn;
+    barn.mellomnavn = mellomnavn;
+    barn.etternavn = etternavn;
+    barn.harSammeBostedsadresse = true;
+    barn.erDoed = false;
 
     // @ts-ignore
-    familie.harFraRolleI.push(barnSammeBostedsadresse);
+    familie.barn.push(barn);
 }
 
 export function settBarnIkkeSammeBostedsadresse(ident: string, fornavn: string, mellomnavn: string, etternavn: string) {
-    const barnIkkeSammeBostedsadresse = {
-        harSammeBosted: false,
-        tilRolle: {
-            value: "BARN",
-            kodeRef: null,
-            kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Familierelasjoner",
-        },
-        tilPerson: {
-            diskresjonskode: null,
-            bankkonto: null,
-            bostedsadresse: null,
-            sivilstand: null,
-            statsborgerskap: null,
-            harFraRolleI: [],
-            ident: {
-                ident: "03061694075",
-                type: {
-                    value: "FNR",
-                    kodeRef: null,
-                    kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Personidenter",
-                },
-            },
-            kjoenn: null,
-            personnavn: {
-                etternavn: "Mockmann",
-                fornavn: "Zergling",
-                mellomnavn: "",
-                sammensattNavn: null,
-                endringstidspunkt: null,
-                endretAv: null,
-                endringstype: null,
-            },
-            personstatus: null,
-            postadresse: null,
-            doedsdato: null,
-            foedselsdato: null,
-        },
-        endringstidspunkt: null,
-        endretAv: null,
-        endringstype: null,
+    let barn = {
+        ident: "",
+        fornavn: "Kid",
+        mellomnavn: "",
+        etternavn: "McKid",
+        harSammeBostedsadresse: true,
+        erDoed: false,
     };
 
-    barnIkkeSammeBostedsadresse.tilPerson.ident.ident = ident;
-    barnIkkeSammeBostedsadresse.tilPerson.personnavn.fornavn = fornavn;
-    barnIkkeSammeBostedsadresse.tilPerson.personnavn.mellomnavn = mellomnavn;
-    barnIkkeSammeBostedsadresse.tilPerson.personnavn.etternavn = etternavn;
+    barn.ident = ident;
+    barn.fornavn = fornavn;
+    barn.mellomnavn = mellomnavn;
+    barn.etternavn = etternavn;
+    barn.harSammeBostedsadresse = false;
+    barn.erDoed = false;
 
     // @ts-ignore
-    familie.harFraRolleI.push(barnIkkeSammeBostedsadresse);
+    familie.barn.push(barn);
 }
 
 export function settBarnMedDoedsdato(
@@ -387,65 +297,29 @@ export function settBarnMedDoedsdato(
     etternavn: string,
     doedsdato: string
 ) {
-    const barnMedDoedsdato = {
-        harSammeBosted: null,
-        tilRolle: {
-            value: "BARN",
-            kodeRef: null,
-            kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Familierelasjoner",
-        },
-        tilPerson: {
-            diskresjonskode: null,
-            bankkonto: null,
-            bostedsadresse: null,
-            sivilstand: null,
-            statsborgerskap: null,
-            harFraRolleI: [],
-            ident: {
-                ident: "01010591736",
-                type: {
-                    value: "FNR",
-                    kodeRef: null,
-                    kodeverksRef: "http://nav.no/kodeverk/Kodeverk/Personidenter",
-                },
-            },
-            kjoenn: null,
-            personnavn: {
-                etternavn: "Mockmann",
-                fornavn: "Roach",
-                mellomnavn: "",
-                sammensattNavn: null,
-                endringstidspunkt: null,
-                endretAv: null,
-                endringstype: null,
-            },
-            personstatus: null,
-            postadresse: null,
-            doedsdato: {
-                doedsdato: "",
-                endringstidspunkt: null,
-                endretAv: null,
-                endringstype: null,
-            },
-            foedselsdato: null,
-        },
-        endringstidspunkt: null,
-        endretAv: null,
-        endringstype: null,
+    let barn = {
+        ident: "",
+        fornavn: "Kid",
+        mellomnavn: "",
+        etternavn: "McKid",
+        harSammeBostedsadresse: true,
+        erDoed: false,
     };
 
-    barnMedDoedsdato.tilPerson.ident.ident = ident;
-    barnMedDoedsdato.tilPerson.personnavn.fornavn = fornavn;
-    barnMedDoedsdato.tilPerson.personnavn.mellomnavn = mellomnavn;
-    barnMedDoedsdato.tilPerson.personnavn.etternavn = etternavn;
-    barnMedDoedsdato.tilPerson.doedsdato.doedsdato = doedsdato;
+    barn.ident = ident;
+    barn.fornavn = fornavn;
+    barn.mellomnavn = mellomnavn;
+    barn.etternavn = etternavn;
+    barn.harSammeBostedsadresse = false;
+    barn.erDoed = true;
 
     // @ts-ignore
-    familie.harFraRolleI.push(barnMedDoedsdato);
+    familie.barn.push(barn);
 }
 
 export function clearFamilieforhold() {
-    familie.harFraRolleI = [];
+    familie.ektefelle = {};
+    familie.barn = [];
 }
 
 export function leggTilNavUtbetaling(nyNavUtbetalingsListe: NyNavUtbetalingObject[]) {
