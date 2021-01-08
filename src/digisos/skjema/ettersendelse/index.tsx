@@ -135,7 +135,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
         return (
             <div className="ettersendelse">
-                <DocumentTitle title={`Søknadsstatus - Økonomisk sosialhjelp`} />
+                <DocumentTitle title={`Ettersendelse - Søknad om økonomisk sosialhjelp`} />
                 <BannerEttersendelse>
                     <FormattedMessage id="applikasjon.sidetittel" />
                 </BannerEttersendelse>
