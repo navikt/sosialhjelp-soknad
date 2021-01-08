@@ -27,6 +27,9 @@ import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/etters
 import {getContextPathBasename} from "./configuration";
 import {SoknadState} from "./digisos/redux/soknad/soknadTypes";
 import LoadContainer from "./LoadContainer";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 const history = require("history").createBrowserHistory({
     getUserConfirmation: (msg: any, callback: (flag: boolean) => void) => {
