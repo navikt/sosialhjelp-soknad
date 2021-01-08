@@ -29,7 +29,7 @@ const BasisPersonaliaView = () => {
     if (statsborgerskap === "XXX" || statsborgerskap === "xxx") {
         statsborgerskap = "Statsløs";
         statsborgerskapVisning = <span>{statsborgerskap}</span>;
-    } else if (statsborgerskap === "???" || statsborgerskap === null) {
+    } else if (statsborgerskap === "XUK" || statsborgerskap === null) {
         statsborgerskap = "Vi har ikke opplysninger om ditt statsborgerskap";
         statsborgerskapVisning = <span>{statsborgerskap}</span>;
     }
