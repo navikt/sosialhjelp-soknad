@@ -25,3 +25,7 @@ yarn-error.log*
 
 debug.log
 chromedriver.log
+
+src/index.css
+
+.eslintcache
