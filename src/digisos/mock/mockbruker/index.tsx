@@ -743,11 +743,11 @@ class MockBruker extends React.Component<Props, OwnState> {
                             <option value="USA" key="USA">
                                 USA
                             </option>
-                            <option value="xxx" key="xxx">
-                                xxx (Statsløs)
+                            <option value="XXX" key="XXX">
+                                XXX (Statsløs)
                             </option>
-                            <option value="???" key="???">
-                                ??? (Mangler opplysninger)
+                            <option value="XUK" key="XUK">
+                                XUK (Ukjent)
                             </option>
                         </Select>
                     </MockDataBolkWrapper>
