@@ -2,6 +2,7 @@ import {Organisasjon, SkattbarInntekt} from "./inntektTypes";
 import * as React from "react";
 import {FormattedMessage, FormattedNumber} from "react-intl";
 import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
+import {UndertekstBold} from "nav-frontend-typografi";
 
 function getLenkeSti(organisasjon: Organisasjon): string {
     let orgnr = organisasjon.orgnr ? "/" + organisasjon.orgnr : "";
@@ -36,7 +37,7 @@ const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({skattb
                     return (
                         <div key={organisasjon.orgnr} className="utbetaling blokk">
                             <div className="blokk-s">
-                                <h4 className="blokk-null">{organisasjon.organisasjonsnavn}</h4>
+                                <UndertekstBold className="blokk-null">{organisasjon.organisasjonsnavn}</UndertekstBold>
                                 <div>
                                     Fra {fom} til {tom}
                                 </div>
@@ -57,7 +58,12 @@ const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({skattb
                                     return utbetalingVerdier;
                                 })}
                             </div>
-                            <a className="blokk-s linje_under" href={lenkeSti} target="_blank" rel="noopener noreferrer">
+                            <a
+                                className="blokk-s linje_under"
+                                href={lenkeSti}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 Se detaljer hos Skatteetaten.
                             </a>
                         </div>

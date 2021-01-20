@@ -17,6 +17,7 @@ import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-pan
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import {getIntlTextOrKey, IntlProps} from "../../../nav-soknad/utils";
+import {Undertittel} from "nav-frontend-typografi";
 
 interface StateProps {
     oppsummering: Oppsummering | null;
@@ -56,7 +57,7 @@ class OppsummeringView extends React.Component<Props, {}> {
         const bolker = oppsummering
             ? oppsummering.bolker.map((bolk, idx) => (
                   <div className="blokk-xs bolk" key={idx}>
-                      <EkspanderbartPanel tittel={bolk.tittel} apen={false}>
+                      <EkspanderbartPanel tittel={<Undertittel>{bolk.tittel}</Undertittel>} apen={false}>
                           <div>
                               <div className="bolk__rediger">
                                   <Link to={`/skjema/${brukerbehandlingId}/${idx + 1}`}>
