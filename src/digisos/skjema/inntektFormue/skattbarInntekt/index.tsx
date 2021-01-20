@@ -12,6 +12,7 @@ import {hentSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknad
 import Knapp from "nav-frontend-knapper";
 import {formatTidspunkt, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import AlertStripe from "nav-frontend-alertstriper";
+import {UndertekstBold} from "nav-frontend-typografi";
 
 const Skatt = () => {
     const dispatch = useDispatch();
@@ -56,9 +57,9 @@ const Skatt = () => {
             {harSamtykke && inntektFraSkatteetatenFeilet && (
                 <div className={"ytelser_panel"}>
                     <div>
-                        <h4>
+                        <UndertekstBold>
                             <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_sporsmal" />
-                        </h4>
+                        </UndertekstBold>
                         <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_info" />
                     </div>
                     <Knapp
@@ -81,7 +82,7 @@ const Skatt = () => {
             )}
             {!visAnimerteStreker && inntektFraSkatteetaten && inntektFraSkatteetaten.length > 0 && (
                 <div className={"ytelser_panel"}>
-                    <h4 className="tidspunkt_uten_luft">{samtykkeTidspunktStreng}</h4>
+                    <UndertekstBold>{samtykkeTidspunktStreng}</UndertekstBold>
                     <FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse" />
                     <div className="utbetalinger">
                         <SkattbarinntektForskuddstrekk skattbarinntektogforskuddstrekk={inntektFraSkatteetaten} />
@@ -122,9 +123,9 @@ const Skatt = () => {
                     {!harSamtykke && (
                         <>
                             <div>
-                                <h4>
+                                <UndertekstBold>
                                     <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_sporsmal" />
-                                </h4>
+                                </UndertekstBold>
                                 <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_info" />
                             </div>
                             <Knapp
