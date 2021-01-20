@@ -22,6 +22,7 @@ import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAller
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import AlertStripe from "nav-frontend-alertstriper";
 import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
+import {Undertittel} from "nav-frontend-typografi";
 import DocumentTitle from "react-document-title";
 
 interface OwnProps {
@@ -161,10 +162,10 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                             hoyreIkon={MargIkoner.PRINTER}
                             onClickHoyreIkon={() => this.skrivUt()}
                         >
-                            <h3>
+                            <Undertittel>
                                 <FormattedHTMLMessage id="ettersendelse.soknad_sendt" /> {originalSoknad.navenhet}{" "}
                                 kommune
-                            </h3>
+                            </Undertittel>
                             <p>
                                 Innsendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}
                             </p>
@@ -176,9 +177,9 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                         ettersendelser.map((ettersendelse: any) => {
                             return (
                                 <AvsnittMedMarger venstreIkon={MargIkoner.OK} key={ettersendelse.behandlingsId}>
-                                    <h3>
+                                    <Undertittel>
                                         <FormattedHTMLMessage id="ettersendelse.vedlegg_sendt" />
-                                    </h3>
+                                    </Undertittel>
                                     <p>
                                         <FormattedHTMLMessage
                                             id="ettersendelse.dato_tid"
@@ -212,31 +213,31 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                         >
                             {antallManglendeVedlegg > 0 && (
                                 <span>
-                                    <h3>Vedlegg mangler</h3>
+                                    <Undertittel>Vedlegg mangler</Undertittel>
                                     <div>{datoManglendeVedlegg}</div>
                                 </span>
                             )}
                             {antallManglendeVedlegg === 0 && (
-                                <h3>
+                                <Undertittel>
                                     <FormattedHTMLMessage id="ettersendelse.generell.dokumentasjon" />
-                                </h3>
+                                </Undertittel>
                             )}
                         </EttersendelseEkspanderbart>
                     )}
 
                     <AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>
-                        <h3>
+                        <Undertittel>
                             <FormattedHTMLMessage id="ettersendelse.samtale.tittel" />
-                        </h3>
+                        </Undertittel>
                         <p>
                             <FormattedHTMLMessage id="ettersendelse.samtale.info" />
                         </p>
                     </AvsnittMedMarger>
 
                     <AvsnittMedMarger venstreIkon={MargIkoner.KONVOLUTT}>
-                        <h3>
+                        <Undertittel>
                             <FormattedHTMLMessage id="ettersendelse.vedtak.tittel" />
-                        </h3>
+                        </Undertittel>
                         <p>
                             <FormattedHTMLMessage id="ettersendelse.vedtak.info" />
                         </p>

@@ -82,35 +82,10 @@
             }
         }
 
-        &__innhold {
-            // padding: 1rem;
-        }
-
         &__feil {
             display: block;
             background: @navRosa;
             border-radius: 8px;
-        }
-
-        &__wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            .avsnitt_med_marger {
-                margin-bottom: 8px;
-                border-radius: 4px;
-
-                .venstremarg {
-                    width: 0;
-                    min-width: 0;
-                    padding-right: 0;
-                }
-
-                .hoyremarg {
-                    width: 0;
-                }
-            }
         }
     }
 
@@ -149,6 +124,8 @@
     display: flex;
     width: 100%;
     background-color: @white;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 
     &__klikkbar {
         text-decoration: none;
@@ -220,8 +197,6 @@
 .avsnitt {
     flex-direction: row;
     width: 100%;
-    margin-top: 8px;
-    margin-bottom: 8px;
     text-align: left;
 
     &_knapp {
@@ -279,7 +254,6 @@
 
 .ettersendelse_send_vedlegg_knapp_wrapper {
     margin-top: 0;
-    margin-left: -1rem;
 }
 
 .vedleggsliste__fil_slett_wrapper {
@@ -290,10 +264,6 @@
 .vedleggsliste__fil_slett {
     color: #0067c5;
     min-height: 1.7rem;
-}
-
-.ettersendelse__vedlegg__header {
-    margin-left: -1rem;
 }
 
 .vedleggsliste__filnavn_button {
