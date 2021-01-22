@@ -1,36 +1,28 @@
-name: Deploy Prod
+name: Deploy til prod-sbs
 on:
+  workflow_run:
+    workflows: ["Build image"]    # Venter på at bygg av image er ferdig
+    branches: [master]
+    types:
+      - completed
   repository_dispatch:
     types: [deploy_prod_tag]
 
 jobs:
   deploy:
     name: Deploy to prod-sbs
+    if: ${{ github.event_name == 'repository_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    if: github.event.action == 'deploy_prod_tag'
+    env:
+      DOCKER_IMAGE: docker.pkg.github.com/${{ github.repository }}/${{ github.event.repository.name }}
     steps:
-      - name: Sett env variabler
+      - uses: actions/checkout@v2
+      - name: Create artifact version
+        id: artifact-version
+        uses: navikt/sosialhjelp-ci/actions/create-artifact-version@master
+      - name: Create docker image tags
         run: |
-          PROJECT_NAME=$(echo ${{ github.repository }} | cut -d/ -f2)
-          echo "IMAGE=docker.pkg.github.com/${{ github.repository }}/$PROJECT_NAME:${{ github.event.client_payload.TAG }}" >> $GITHUB_ENV
-
-      - uses: actions/checkout@v1
-
-      - name: sjekk om $TAG finnes på master-branch
-        run: |
-          MASTER_HEAD_COMMIT=$(git rev-parse HEAD)
-          TAG=${{ github.event.client_payload.TAG }}
-
-          git checkout ${TAG}
-
-          TAG_COMMIT=$(git rev-parse HEAD)
-          MERGE_BASE=$(git merge-base $MASTER_HEAD_COMMIT $TAG_COMMIT)
-
-          if [[ $MERGE_BASE != $TAG_COMMIT ]]; then
-            echo Tag $TAG is not on master branch
-            exit 1
-          fi
-
+          echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
       - name: deploy til prod-sbs
         uses: nais/deploy/actions/deploy@v1
         env:
@@ -38,6 +30,6 @@ jobs:
           RESOURCE: nais.yaml
           CLUSTER: prod-sbs
           VARS: nais/prod/prod-sbs.json
-          REF: ${{ github.event.client_payload.TAG }}
+          REF: ${{ github.sha }}
           PRINT_PAYLOAD: true
-          IMAGE: ${{ env.IMAGE }}
+          IMAGE: ${{ env.DOCKER_TAG }}
