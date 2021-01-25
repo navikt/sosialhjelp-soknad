@@ -1,24 +1,24 @@
-name: Build
+name: Build image
 on:
   push:
     branches:
       - "**" # Build all branches
     tags-ignore:
       - "**" # Don't build any tags
-
-env:
-  CI: true
+  workflow_dispatch:
 
 # FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
   build:
     name: Build and push docker image
     runs-on: ubuntu-latest
+    env:
+      DOCKER_IMAGE: docker.pkg.github.com/${{ github.repository }}/${{ github.event.repository.name }}
     steps:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.8.1'
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/cache@v1.1.2
         with:
           path: ~/.npm
@@ -40,19 +40,17 @@ jobs:
         uses: navikt/sosialhjelp-ci/actions/create-artifact-version@master
       - name: Create docker image tags
         run: |
-          PROJECT_NAME=$(echo $GITHUB_REPOSITORY | cut -d/ -f2)
-          echo "docker.pkg.github.com/$GITHUB_REPOSITORY/$PROJECT_NAME:${{ steps.artifact-version.outputs.version }}" > DOCKER_TAG
+          echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
       - name: Build docker image
-        run: docker build -t $(cat DOCKER_TAG) .
+        run: docker build -t ${{ env.DOCKER_TAG }} .
+      - name: Push docker image
+        run: |
+          docker push ${{ env.DOCKER_TAG }}
       - name: Create tag and release
-        # TODO: Bytt ut med upstream når/hvis https://github.com/actions/create-release/pull/32 merges
-        uses: fleskesvor/create-release@feature/support-target-commitish
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.artifact-version.outputs.version }}
           release_name: ${{ steps.artifact-version.outputs.version }}
           commitish: ${{ github.sha }}
-      - name: Push docker image
-        run: |
-          docker push $(cat DOCKER_TAG)
