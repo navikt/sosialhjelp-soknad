@@ -4,19 +4,15 @@ import {
     setAdvarselManglerVedlegg,
     slettEttersendtVedlegg,
 } from "../../redux/ettersendelse/ettersendelseActions";
-import {DispatchProps} from "../../redux/reduxTypes";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
 import {MargIkon, MargIkoner} from "./margIkoner";
-import AvsnittMedMarger from "./avsnittMedMarger";
 import {FormattedMessage} from "react-intl";
-import {EttersendelseState, EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
+import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {Fil, OpplysningType} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {State} from "../../redux/reducers";
 import {REST_FEIL, REST_STATUS} from "../../redux/soknad/soknadTypes";
 import PaperclipIcon from "../../../nav-soknad/components/digisosIkon/paperclipIcon";
-import {Knapp} from "nav-frontend-knapper";
-import {SkjemaGruppe} from "nav-frontend-skjema";
 import FileUpload from "../../../nav-soknad/components/fileUpload/FileUpload";
 
 export interface Props {
