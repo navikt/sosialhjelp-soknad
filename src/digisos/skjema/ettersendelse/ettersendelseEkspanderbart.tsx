@@ -88,7 +88,6 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
                                     <FormattedHTMLMessage id="ettersendelse.mangler_info_manuell" />
                                 )}
                             </AvsnittMedMarger>
-
                             <EttersendelseVedleggListe
                                 ettersendelseAktivert={this.props.ettersendelseAktivert}
                                 onEttersendelse={() => this.onEttersendelse()}

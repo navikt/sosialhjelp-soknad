@@ -28,6 +28,7 @@ export enum EttersendelseActionTypeKeys {
     OTHER_ACTION = "__any_other_action_type__",
     FIL_OPPLASTING_OK = "ettersendelse/FIL_OPPLASTING_OK",
     VIS_SOKNAD_ALLEREDE_SENDT_PROMPT = "ettersendelse/VIS_SOKNAD_ALLEREDE_SENDT_PROMPT",
+    ADVARSEL_MANGLER_VEDLEGG = "ettersendelse/ADVARSEl_MANGLER_VEDLEGG",
 }
 
 export type EttersendelseActionTypes =
@@ -48,7 +49,8 @@ export type EttersendelseActionTypes =
     | LesEttersendelserOkAction
     | OtherAction
     | FilOpplastingOk
-    | VisSoknadAlleredeSendtPrompt;
+    | VisSoknadAlleredeSendtPrompt
+    | SetAdvarselManglerVedleggAction;
 
 export enum EttersendelseFeilkode {
     NY_ETTERSENDELSE_FEILET = "NY_ETTERSENDELSE_FEILET",
@@ -164,6 +166,7 @@ export interface EttersendelseState {
     feilKode: string;
     feiletVedleggId: string;
     visSoknadAlleredeSendtPromt: boolean;
+    advarselManglerVedlegg: boolean;
 }
 
 export interface EttersendelseVedleggBackend {
@@ -186,4 +189,9 @@ export interface OrginalSoknad {
 export interface VisSoknadAlleredeSendtPrompt {
     type: EttersendelseActionTypeKeys.VIS_SOKNAD_ALLEREDE_SENDT_PROMPT;
     visPrompt: boolean;
+}
+
+export interface SetAdvarselManglerVedleggAction {
+    type: EttersendelseActionTypeKeys.ADVARSEL_MANGLER_VEDLEGG;
+    advarselManglerVedlegg: boolean;
 }
