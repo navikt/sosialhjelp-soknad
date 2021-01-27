@@ -129,6 +129,13 @@ const visSoknadAlleredeSendtPrompt = (visPrompt: boolean): EttersendelseActionTy
     };
 };
 
+const setAdvarselManglerVedlegg = (advarselManglerVedlegg: boolean): EttersendelseActionTypes => {
+    return {
+        type: EttersendelseActionTypeKeys.ADVARSEL_MANGLER_VEDLEGG,
+        advarselManglerVedlegg,
+    };
+};
+
 export {
     opprettEttersendelse,
     opprettEttersendelseFeilet,
@@ -145,4 +152,5 @@ export {
     filLastetOpp,
     slettEttersendtVedleggOk,
     visSoknadAlleredeSendtPrompt,
+    setAdvarselManglerVedlegg,
 };

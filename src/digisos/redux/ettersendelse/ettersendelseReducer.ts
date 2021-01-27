@@ -22,6 +22,7 @@ const initialState: EttersendelseState = {
     feilKode: "",
     feiletVedleggId: "",
     visSoknadAlleredeSendtPromt: false,
+    advarselManglerVedlegg: false,
 };
 
 const reducer = (state: EttersendelseState = initialState, action: EttersendelseActionTypes): EttersendelseState => {
@@ -144,6 +145,12 @@ const reducer = (state: EttersendelseState = initialState, action: Ettersendelse
             return {
                 ...state,
                 visSoknadAlleredeSendtPromt: action.visPrompt,
+            };
+        }
+        case EttersendelseActionTypeKeys.ADVARSEL_MANGLER_VEDLEGG: {
+            return {
+                ...state,
+                advarselManglerVedlegg: action.advarselManglerVedlegg,
             };
         }
         default:

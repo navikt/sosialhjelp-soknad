@@ -6,11 +6,12 @@ import {FormattedHTMLMessage, FormattedMessage, injectIntl} from "react-intl";
 import {DispatchProps} from "../../redux/reduxTypes";
 import {connect} from "react-redux";
 import {State} from "../../redux/reducers";
-import {sendEttersendelse} from "../../redux/ettersendelse/ettersendelseActions";
+import {sendEttersendelse, setAdvarselManglerVedlegg} from "../../redux/ettersendelse/ettersendelseActions";
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {IntlProps} from "../../../nav-soknad/utils";
+import {SkjemaGruppe} from "nav-frontend-skjema";
 
 interface OwnProps {
     ettersendelseAktivert: boolean;
@@ -25,13 +26,13 @@ interface StateProps {
     ettersendStatus: REST_STATUS;
     feilKode: string;
     feiletVedleggId: string;
+    advarselManglerVedlegg: boolean;
 }
 
 type Props = OwnProps & StateProps & DispatchProps & IntlProps;
 
 interface OwnState {
     vedleggEkspandert: boolean;
-    advarselManglerVedlegg: boolean;
 }
 
 class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
@@ -39,13 +40,12 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
         super(props);
         this.state = {
             vedleggEkspandert: false,
-            advarselManglerVedlegg: false,
         };
     }
 
     sendEttersendelse() {
         const antallOpplastedeFiler = this.antallOpplastedeFiler();
-        this.setState({advarselManglerVedlegg: antallOpplastedeFiler === 0});
+        this.props.dispatch(setAdvarselManglerVedlegg(antallOpplastedeFiler === 0));
         if (antallOpplastedeFiler > 0) {
             const brukerbehandlingId = this.props.brukerbehandlingId;
             if (brukerbehandlingId) {
@@ -66,59 +66,53 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                 this.props.onEttersendelse();
             }
         }
-        if (this.state.advarselManglerVedlegg && this.props.manglendeVedlegg && this.antallOpplastedeFiler() > 0) {
-            this.setState({advarselManglerVedlegg: false});
+        if (this.props.advarselManglerVedlegg && this.props.manglendeVedlegg && this.antallOpplastedeFiler() > 0) {
+            this.props.dispatch(setAdvarselManglerVedlegg(false));
         }
     }
 
     render() {
         return (
-            <div
-                className={
-                    "ettersendelse__vedlegg__innhold " +
-                    (this.state.advarselManglerVedlegg ? "ettersendelse__vedlegg__feil " : "")
-                }
-            >
-                {this.props.manglendeVedlegg &&
-                    this.props.manglendeVedlegg.map((vedlegg: EttersendelseVedleggBackend) => {
-                        const spc = getSpcForOpplysning(vedlegg.type);
-                        const tittelKey = spc ? spc.textKey + ".vedlegg.sporsmal.tittel" : "";
-                        const infoKey = spc ? spc.textKey + ".vedlegg.sporsmal.info" : "";
-                        let info;
-                        if (infoKey && !!this.props.intl.messages[infoKey]) {
-                            info = this.props.intl.formatMessage({id: infoKey});
-                        }
-                        if (!this.props.ettersendelseAktivert && vedlegg.type === "annet|annet") {
-                            return null;
-                        }
-                        return (
-                            <EttersendelseVedlegg
-                                ettersendelseAktivert={this.props.ettersendelseAktivert}
-                                vedlegg={vedlegg}
-                                key={vedlegg.type}
-                                feilKode={this.props.feiletVedleggId === vedlegg.type ? this.props.feilKode : undefined}
-                            >
-                                {tittelKey && (
-                                    <h3>
-                                        <FormattedMessage id={tittelKey} />
-                                    </h3>
-                                )}
-                                {info && <p>{info}</p>}
-                            </EttersendelseVedlegg>
-                        );
-                    })}
-
-                <AvsnittMedMarger className="ettersendelse_send_vedlegg_knapp_wrapper">
-                    {this.state.advarselManglerVedlegg && (
-                        <>
-                            <div className="skjema__feilmelding">
+            <div className={"ettersendelse__vedlegg__innhold "}>
+                <AvsnittMedMarger>
+                    <SkjemaGruppe
+                        feil={
+                            this.props.advarselManglerVedlegg && (
                                 <FormattedHTMLMessage id="ettersendelse.feilmelding.ingen_vedlegg" />
-                            </div>
-                            <br />
-                        </>
-                    )}
-
-                    <br />
+                            )
+                        }
+                    >
+                        {this.props.manglendeVedlegg &&
+                            this.props.manglendeVedlegg.map((vedlegg: EttersendelseVedleggBackend) => {
+                                const spc = getSpcForOpplysning(vedlegg.type);
+                                const tittelKey = spc ? spc.textKey + ".vedlegg.sporsmal.tittel" : "";
+                                const infoKey = spc ? spc.textKey + ".vedlegg.sporsmal.info" : "";
+                                let info;
+                                if (infoKey && !!this.props.intl.messages[infoKey]) {
+                                    info = this.props.intl.formatMessage({id: infoKey});
+                                }
+                                if (!this.props.ettersendelseAktivert && vedlegg.type === "annet|annet") {
+                                    return null;
+                                }
+                                return (
+                                    <EttersendelseVedlegg
+                                        ettersendelseAktivert={this.props.ettersendelseAktivert}
+                                        vedlegg={vedlegg}
+                                        title={<FormattedMessage id={tittelKey} />}
+                                        key={vedlegg.type}
+                                        feilKode={
+                                            this.props.feiletVedleggId === vedlegg.type
+                                                ? this.props.feilKode
+                                                : undefined
+                                        }
+                                    >
+                                        {info && <p>{info}</p>}
+                                    </EttersendelseVedlegg>
+                                );
+                            })}
+                    </SkjemaGruppe>
+                </AvsnittMedMarger>
+                <AvsnittMedMarger className="ettersendelse_send_vedlegg_knapp_wrapper">
                     {this.props.ettersendelseAktivert && (
                         <Knapp
                             spinner={this.props.ettersendStatus === REST_STATUS.PENDING}
@@ -149,5 +143,6 @@ export default connect((state: State) => {
         ettersendStatus: state.ettersendelse.ettersendStatus,
         feilKode: state.ettersendelse.feilKode,
         feiletVedleggId: state.ettersendelse.feiletVedleggId,
+        advarselManglerVedlegg: state.ettersendelse.advarselManglerVedlegg,
     };
 })(injectIntl(EttersendelseVedleggListe));
