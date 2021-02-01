@@ -1,8 +1,9 @@
 import * as React from "react";
 
 const William = () => (
-    <div>
-        <svg xmlnsXlink="http://www.w3.org/1999/xlink" width={80} height={80} className="kun_mobil">
+    <>
+        <svg aria-hidden="true" xmlnsXlink="http://www.w3.org/1999/xlink" width={80} height={80} className="kun_mobil">
+            <title>Veileder</title>
             <defs>
                 <circle id="william_mobil_a" cx={40} cy={40} r={40} />
                 <path
@@ -67,7 +68,14 @@ const William = () => (
             </g>
         </svg>
 
-        <svg xmlnsXlink="http://www.w3.org/1999/xlink" width={100} height={100} className="kun_desktop">
+        <svg
+            aria-hidden="true"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            width={100}
+            height={100}
+            className="kun_desktop"
+        >
+            <title>Veileder</title>
             <defs>
                 <circle id="william_desktop_a" cx={50} cy={50} r={50} />
                 <path
@@ -131,7 +139,7 @@ const William = () => (
                 </g>
             </g>
         </svg>
-    </div>
+    </>
 );
 
 export default William;

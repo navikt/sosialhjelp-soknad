@@ -4,7 +4,7 @@ const Snakkeboble = (props: {children: any}) => (
     <div className="digisos-snakkeboble-wrapper">
         <div className="digisos-snakkeboble">
             <div className="digisos-snakkeboble-innhold">{props.children}</div>
-            <i className="digisos-snakkeboble-pil" />
+            <span className="digisos-snakkeboble-pil" aria-hidden="true" />
         </div>
     </div>
 );

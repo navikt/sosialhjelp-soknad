@@ -19,14 +19,16 @@ interface Props {
     className?: string;
     navn: ikoner;
     style?: any;
+    ariaHidden?: boolean;
 }
 
-const DigisosIkon: React.StatelessComponent<Props & {}> = ({className, navn, style}) => {
+const DigisosIkon: React.FC<Props & {}> = ({className, navn, style, ariaHidden}) => {
     if (navn === "searchAddresse") {
         return <SearchAddress />;
     } else {
         return (
             <SVG
+                aria-hidden={!!ariaHidden}
                 style={style}
                 className={className || ""}
                 src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_${navn}.svg`}

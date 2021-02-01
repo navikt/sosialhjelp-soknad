@@ -2,8 +2,9 @@ import * as React from "react";
 
 const SnakkebobleIllustrasjon: React.FC = () => {
     return (
-        <div>
-            <svg width={100} height={100} className="kun_desktop">
+        <>
+            <svg aria-hidden="true" width={100} height={100} className="kun_desktop">
+                <title>Snakkeboble</title>
                 <g fill="none" fillRule="evenodd">
                     <circle cx={50} cy={50} r={50} fill="#CDE7D8" />
                     <path
@@ -13,7 +14,8 @@ const SnakkebobleIllustrasjon: React.FC = () => {
                     <path fill="#B7B1A9" d="M33 37h34v3H33v-3zm0 6h34v3H33v-3zm0 6h22v3H33v-3z" />
                 </g>
             </svg>
-            <svg width={80} height={80} className="kun_mobil">
+            <svg aria-hidden="true" width={80} height={80} className="kun_mobil">
+                <title>Snakkeboble</title>
                 <g fill="none" fillRule="evenodd">
                     <circle cx={40} cy={40} r={40} fill="#CDE7D8" />
                     <path
@@ -23,7 +25,7 @@ const SnakkebobleIllustrasjon: React.FC = () => {
                     <path fill="#B7B1A9" d="M27 30h26v2H27v-2zm0 5h26v2H27v-2zm0 5h17v2H27v-2z" />
                 </g>
             </svg>
-        </div>
+        </>
     );
 };
 

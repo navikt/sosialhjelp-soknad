@@ -21,7 +21,9 @@ class Brevkonvolutt extends React.Component<OwnProps, {}> {
                 height={height}
                 viewBox="0 0 100 100"
                 className={"brevkonvolutt--" + bakgrundsFarge}
+                aria-hidden="true"
             >
+                <title>Brevkonvolutt</title>
                 <g>
                     <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1" />
                 </g>

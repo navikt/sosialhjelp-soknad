@@ -2,8 +2,15 @@ import * as React from "react";
 
 const FamilieIllustrasjon: React.FC = () => {
     return (
-        <div>
-            <svg xmlnsXlink="http://www.w3.org/1999/xlink" width={100} height={100} className="kun_desktop">
+        <>
+            <svg
+                aria-hidden="true"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                width={100}
+                height={100}
+                className="kun_desktop"
+            >
+                <title>Familie</title>
                 <defs>
                     <circle id="familie_desktop_a" cx={50} cy={50} r={50} />
                     <path
@@ -158,7 +165,14 @@ const FamilieIllustrasjon: React.FC = () => {
                     </g>
                 </g>
             </svg>
-            <svg xmlnsXlink="http://www.w3.org/1999/xlink" width={80} height={80} className="kun_mobil">
+            <svg
+                aria-hidden="true"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                width={80}
+                height={80}
+                className="kun_mobil"
+            >
+                <title>Familie</title>
                 <defs>
                     <circle id="familie_mobil_a" cx={40} cy={40} r={40} />
                     <path
@@ -353,7 +367,7 @@ const FamilieIllustrasjon: React.FC = () => {
                     </g>
                 </g>
             </svg>
-        </div>
+        </>
     );
 };
 

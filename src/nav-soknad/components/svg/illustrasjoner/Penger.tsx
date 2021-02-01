@@ -2,8 +2,9 @@ import * as React from "react";
 
 const Penger: React.FC = () => {
     return (
-        <div>
-            <svg width={100} height={100} className="kun_desktop">
+        <>
+            <svg aria-hidden="true" width={100} height={100} className="kun_desktop">
+                <title>Penger</title>
                 <g fill="none" fillRule="evenodd">
                     <circle cx={50} cy={50} r={50} fill="#CDE7D8" />
                     <path fill="#C86151" d="M25 35h50v29H25z" />
@@ -14,7 +15,8 @@ const Penger: React.FC = () => {
                     </g>
                 </g>
             </svg>
-            <svg width={80} height={80} className="kun_mobil">
+            <svg aria-hidden="true" width={80} height={80} className="kun_mobil">
+                <title>Penger</title>
                 <g fill="none" fillRule="evenodd">
                     <circle cx={40} cy={40} r={40} fill="#CDE7D8" />
                     <path fill="#C86151" d="M20 28h40v23H20z" />
@@ -28,7 +30,7 @@ const Penger: React.FC = () => {
                     </g>
                 </g>
             </svg>
-        </div>
+        </>
     );
 };
 

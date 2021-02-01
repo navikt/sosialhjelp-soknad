@@ -107,7 +107,7 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
                                     <div className="vedleggsliste__fil_slett_wrapper">
                                         <button
                                             className="linkbutton linkbutton--normal vedleggsliste__fil_slett"
-                                            title="Slett vedlegg"
+                                            title="Fjern vedlegg"
                                             onClick={() => this.removeFile(fil.uuid, this.props.vedlegg.type)}
                                         >
                                             Fjern
