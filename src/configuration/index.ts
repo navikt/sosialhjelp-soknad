@@ -1,5 +1,3 @@
-import {erLocalhost} from "../nav-soknad/utils/rest-utils";
-
 export const CONTEXT_PATH = "sosialhjelp/soknad";
 export const API_CONTEXT_PATH = "sosialhjelp/soknad-api";
 export const INNSYN_CONTEXT_PATH = "sosialhjelp/innsyn";
