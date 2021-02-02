@@ -7,6 +7,7 @@ import MockLogin from "./mock/mocklogin";
 import SkjemaRouter from "./skjema";
 import Ettersendelse from "./skjema/ettersendelse";
 import Link from "./link";
+import {erProd} from "../nav-soknad/utils/rest-utils";
 
 const App: React.FC = () => {
     return (
@@ -16,7 +17,7 @@ const App: React.FC = () => {
                 <Route path={`/informasjon`} exact={true} component={Informasjon} />
                 <Route path={`/link`} exact={true} component={Link} />
                 <Route path={`/mock`} exact={true} component={MockBruker} />
-                <Route path={`/mock-login`} exact={true} component={MockLogin} />
+                {!erProd() && <Route path={`/mock-login`} exact={true} component={MockLogin} />}
                 <Route path={`/undersokelse`} exact={true} component={() => <div style={{height: "67vh"}} />} />
                 <Route path={`/skjema/:brukerBehandlingId/:steg`} component={SkjemaRouter} exact={true} />
                 <Route component={SideIkkeFunnet} />
