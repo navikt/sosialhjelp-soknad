@@ -57,7 +57,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
                     underskjema={children ? <Underskjema visible={visUnderSkjema}>{children}</Underskjema> : <span />}
                 >
                     <RadioEnhanced
-                        getName={() => idRadioJa}
+                        getName={() => "erStudent"}
                         faktumKey={this.props.faktumKey}
                         id={idRadioJa}
                         value={"true"}
@@ -72,7 +72,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
                             id={idRadioNei}
                             value={"false"}
                             checked={verdi !== null && verdi === false}
-                            getName={() => idRadioNei}
+                            getName={() => "erStudent"}
                             onChange={() => this.handleOnChange(false)}
                             className="jaNeiSpormal"
                             visPlaceholder={this.props.visPlaceholder}

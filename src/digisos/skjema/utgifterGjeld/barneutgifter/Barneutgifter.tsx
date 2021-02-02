@@ -78,7 +78,10 @@ export const BarneutgifterView = () => {
             onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
             legendTittelStyle={LegendTittleStyle.FET_NORMAL}
         >
-            <Sporsmal tekster={getFaktumSporsmalTekst(intl, BarneutgifterKey + ".true.utgifter")}>
+            <Sporsmal
+                tekster={getFaktumSporsmalTekst(intl, BarneutgifterKey + ".true.utgifter")}
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+            >
                 {renderCheckBox(BarneutgifterKeys.FRITIDSAKTIVITETER, BarneutgifterKeys.FRITIDSAKTIVITETER)}
                 {renderCheckBox(BarneutgifterKeys.BARNEHAGE, BarneutgifterKeys.BARNEHAGE)}
                 {renderCheckBox(BarneutgifterKeys.SFO, BarneutgifterKeys.SFO)}
