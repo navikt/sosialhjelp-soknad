@@ -22,7 +22,7 @@ interface Props {
     ariaHidden?: boolean;
 }
 
-const DigisosIkon: React.FC<Props & {}> = ({className, navn, style, ariaHidden}) => {
+const DigisosIkon: React.FC<Props> = ({className, navn, style, ariaHidden}) => {
     if (navn === "searchAddresse") {
         return <SearchAddress />;
     } else {
