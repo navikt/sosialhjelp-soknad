@@ -7,7 +7,7 @@ export * from "./navigasjonUtils";
 
 export function erDev(): boolean {
     const url = window.location.href;
-    return url.indexOf("localhost:") > 0 || url.indexOf("devillo.no:3000") > 0;
+    return url.indexOf("localhost:") > 0;
 }
 
 export function erMockMiljoEllerDev(): boolean {
@@ -16,17 +16,14 @@ export function erMockMiljoEllerDev(): boolean {
         return true;
     }
     return (
-        url.indexOf("sosialhjelp-test.dev-sbs.nais.io") > 0 ||
-        url.indexOf("soknadsosialhjelp-t1.nais.oera") > 0 ||
-        erMockAltMiljo() ||
-        url.indexOf(".labs.nais.io") > 0 // Fanger også digisos.labs.nais.io
+        url.indexOf("sosialhjelp-test.dev-sbs.nais.io") > 0 || erMockAltMiljo() || url.indexOf(".labs.nais.io") > 0 // Fanger også digisos.labs.nais.io
     );
 }
 
 export function erMockAltMiljo(): boolean {
     const url = window.location.href;
     return (
-        url.indexOf("sosialhjelp-soknad-gcp.dev.nav.no") > 0 || url.indexOf("digisos-gcp.dev.nav.no") > 0 // Fanger ikke opp www-q*.dev.nav.no // Fanger ikke opp www-q*.dev.nav.no
+        url.indexOf("sosialhjelp-soknad-gcp.dev.nav.no") > 0 || url.indexOf("digisos-gcp.dev.nav.no") > 0 // Fanger ikke opp www-q*.dev.nav.no
     );
 }
 
