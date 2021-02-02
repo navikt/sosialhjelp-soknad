@@ -16,10 +16,7 @@ export function erMockMiljoEllerDev(): boolean {
         return true;
     }
     return (
-        url.indexOf("sosialhjelp-test.dev-sbs.nais.io") > 0 ||
-        url.indexOf("soknadsosialhjelp-t1.nais.oera") > 0 ||
-        erMockAltMiljo() ||
-        url.indexOf(".labs.nais.io") > 0 // Fanger også digisos.labs.nais.io
+        url.indexOf("sosialhjelp-test.dev-sbs.nais.io") > 0 || erMockAltMiljo() || url.indexOf(".labs.nais.io") > 0 // Fanger også digisos.labs.nais.io
     );
 }
 
