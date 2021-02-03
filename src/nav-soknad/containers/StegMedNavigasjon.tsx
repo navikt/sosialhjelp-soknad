@@ -31,6 +31,7 @@ import {
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {State} from "../../digisos/redux/reducers";
 import {erPaStegEnOgValgtNavEnhetErUgyldig, sjekkOmValgtNavEnhetErGyldig} from "./containerUtils";
+import {createSkjemaEventData, logAmplitudeEvent} from "../utils/amplitude";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -105,6 +106,7 @@ const StegMedNavigasjon = (
         if (behandlingsId) {
             if (aktivtSteg.type === SkjemaStegType.oppsummering) {
                 if (oppsummeringBekreftet) {
+                    logAmplitudeEvent("skjema fullført", createSkjemaEventData());
                     loggAdresseTypeTilGrafana();
                     dispatch(sendSoknadPending());
                     dispatch(sendSoknad(behandlingsId));
@@ -122,6 +124,10 @@ const StegMedNavigasjon = (
             } else {
                 if (feil.length === 0) {
                     sjekkOmValgtNavEnhetErGyldig(behandlingsId, dispatch, () => {
+                        logAmplitudeEvent("skjemasteg fullført", {
+                            ...createSkjemaEventData(),
+                            steg: aktivtSteg.stegnummer,
+                        });
                         dispatch(gaVidere(aktivtSteg.stegnummer, behandlingsId));
                     });
                 } else {

@@ -17,6 +17,7 @@ import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import {State} from "../redux/reducers";
 import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 import AlertStripe from "nav-frontend-alertstriper";
+import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 
 interface StateProps {
     harTilgang: boolean;
@@ -141,6 +142,7 @@ class Informasjon extends React.Component<Props, {}> {
                                         spinner={startSoknadPending}
                                         disabled={startSoknadPending || visNedetidPanel}
                                         onClick={() => {
+                                            logAmplitudeEvent("skjema startet", createSkjemaEventData());
                                             this.props.dispatch(opprettSoknad(intl));
                                         }}
                                     >
