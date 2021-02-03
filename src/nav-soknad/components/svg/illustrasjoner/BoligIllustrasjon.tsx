@@ -2,8 +2,15 @@ import * as React from "react";
 
 const BoligIllustrasjon: React.FC = () => {
     return (
-        <div>
-            <svg xmlnsXlink="http://www.w3.org/1999/xlink" width={100} height={100} className="kun_desktop">
+        <>
+            <svg
+                aria-hidden="true"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                width={100}
+                height={100}
+                className="kun_desktop"
+            >
+                <title>Bolig</title>
                 <defs>
                     <path id="bolig_desktop_a" d="M9 20L34 4l25 16v34H9z" />
                 </defs>
@@ -21,7 +28,14 @@ const BoligIllustrasjon: React.FC = () => {
                     <path fill="#3E3821" d="M23.81 45h-7.334L50 23l33.524 22H76.19L50 28.238z" />
                 </g>
             </svg>
-            <svg xmlnsXlink="http://www.w3.org/1999/xlink" width={80} height={80} className="kun_mobil">
+            <svg
+                aria-hidden="true"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                width={80}
+                height={80}
+                className="kun_mobil"
+            >
+                <title>Bolig</title>
                 <defs>
                     <path id="bolig_mobil_a" d="M7 16L27 3l20 13v27H7z" />
                 </defs>
@@ -40,7 +54,7 @@ const BoligIllustrasjon: React.FC = () => {
                     <path fill="#3E3821" d="M19 36h-6l27-18 27 18h-6L40 23z" />
                 </g>
             </svg>
-        </div>
+        </>
     );
 };
 

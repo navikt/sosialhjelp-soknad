@@ -11,7 +11,9 @@ const DigisosIkonKonvolutt: React.FC<Props> = (props: Props) => {
             xmlnsXlink="http://www.w3.org/1999/xlink"
             width={props.size}
             viewBox="0 0 23 16"
+            aria-hidden="true"
         >
+            <title>Konvolutt</title>
             <defs>
                 <path
                     id="a_konvolutt"

@@ -16,7 +16,9 @@ const Ella = (props: {size?: number; visBakgrundsSirkel: boolean; bakgrundsFarge
             height={height}
             viewBox="0 0 175 175"
             className={"ella--" + bakgrundsFarge}
+            aria-hidden="true"
         >
+            <title>Veileder</title>
             <defs>
                 {showBackgroundCircle && (
                     <path
