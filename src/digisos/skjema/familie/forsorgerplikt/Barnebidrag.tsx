@@ -26,7 +26,7 @@ const Barnebidrag = () => {
         const barnebidrag = soknadsdata.familie.forsorgerplikt.barnebidrag;
         return (
             <RadioEnhanced
-                getName={() => "familie_barnebidrag_radio_" + verdi}
+                name="familie_barnebidrag_radio"
                 id={"familie_barnebidrag_radio_" + verdi}
                 faktumKey={FAKTUM_KEY}
                 value={verdi}

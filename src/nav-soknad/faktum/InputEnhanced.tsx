@@ -65,7 +65,7 @@ const InputEnhanced = (props: Props) => {
         <Input
             id={props.id ? replaceDotWithUnderscore(props.id) : faktumKey}
             className={"input--xxl faktumInput  " + (props.className ? props.className : "")}
-            type={type}
+            type={type ? type : "text"}
             autoComplete="off"
             name={getName()}
             disabled={disabled}

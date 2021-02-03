@@ -24,7 +24,7 @@ const SivilstatusRadioknapp: React.FunctionComponent<RadioProps> = ({verdi, id, 
     const componentId = id ? id : "sivilstatus_" + verdi + "_radio";
     return (
         <RadioEnhanced
-            getName={() => "sivilstatus"}
+            name="sivilstatus"
             id={componentId}
             faktumKey="familie.sivilstatus"
             value={verdi}

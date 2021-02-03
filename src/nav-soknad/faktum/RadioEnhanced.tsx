@@ -18,7 +18,7 @@ interface Props {
     visSpinner?: boolean;
     property?: any; // TODO: Slette?
     required?: boolean;
-    getName?: () => string;
+    name: string;
     visPlaceholder?: boolean;
 }
 
@@ -56,12 +56,11 @@ class RadioEnhanced extends React.Component<Props & IntlProps, {}> {
         const {faktumKey, value, disabled, property, required, intl} = this.props;
         const tekster = getRadioFaktumTekst(intl, faktumKey ? faktumKey : "", value, property);
         const id = this.props.id ? this.props.id : faktumKey ? faktumKey.replace(/\./g, "_") : "";
-        const name = this.props.getName ? this.props.getName() : this.props.faktumKey + "-" + this.props.value;
         return (
             <div className={this.props.className}>
                 <RadioPanel
                     id={id}
-                    name={name}
+                    name={this.props.name}
                     checked={this.checked()}
                     disabled={disabled}
                     value={value}

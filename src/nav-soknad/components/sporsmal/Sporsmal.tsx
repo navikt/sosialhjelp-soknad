@@ -1,10 +1,8 @@
 import * as React from "react";
-import * as cuid from "cuid";
 import * as classNames from "classnames";
 import {SkjemaGruppe} from "nav-frontend-skjema";
 import {injectIntl} from "react-intl";
 import {getFaktumSporsmalTekst, IntlProps} from "../../utils";
-import Hjelpetekst from "nav-frontend-hjelpetekst";
 import {SporsmalHjelpetekst, SporsmalInfotekst} from "./SporsmalHjelpetekst";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";

@@ -60,7 +60,7 @@ const UtdanningView = () => {
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <RadioEnhanced
-                    getName={() => "studerer_radio"}
+                    name="studerer_radio"
                     id="studerer_radio_heltid"
                     faktumKey={FAKTUM_STUDERER}
                     value="heltid"
@@ -68,7 +68,7 @@ const UtdanningView = () => {
                     onChange={() => handleClickHeltidDeltid(true)}
                 />
                 <RadioEnhanced
-                    getName={() => "studerer_radio"}
+                    name="studerer_radio"
                     id="studerer_radio_deltid"
                     faktumKey={FAKTUM_STUDERER}
                     value="deltid"

@@ -208,7 +208,7 @@ const PersonSkjema = () => {
                     value="true"
                     checked={borSammenMed === true}
                     onChange={() => onClickBorSammen(true)}
-                    getName={() => "borsammen"}
+                    name="borsammen"
                 />
                 <RadioEnhanced
                     id={"sivilstatus_gift_bor_sammen_radio_nei"}
@@ -216,7 +216,7 @@ const PersonSkjema = () => {
                     value="false"
                     checked={borSammenMed === false}
                     onChange={() => onClickBorSammen(false)}
-                    getName={() => "borsammen"}
+                    name="borsammen"
                 />
             </Sporsmal>
         </div>

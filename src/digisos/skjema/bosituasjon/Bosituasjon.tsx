@@ -80,7 +80,7 @@ const BosituasjonView = () => {
         return botype === verdi;
     };
 
-    const renderRadioknapp = (id: string) => {
+    const renderRadioknapp = (id: string, name: string) => {
         if (Object.keys(Annetvalg).find((s) => s === id) && !erValgt(Bosituasjonsvalg.annet)) {
             return null;
         }
@@ -91,6 +91,7 @@ const BosituasjonView = () => {
                 value={id}
                 checked={erValgt(id)}
                 onChange={() => handleRadioClick(id)}
+                name={name}
             />
         );
     };
@@ -145,11 +146,11 @@ const BosituasjonView = () => {
                 tekster={getFaktumSporsmalTekst(intl, "bosituasjon")}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
-                {renderRadioknapp(Bosituasjonsvalg.eier)}
-                {renderRadioknapp(Bosituasjonsvalg.leier)}
-                {renderRadioknapp(Bosituasjonsvalg.kommunal)}
-                {renderRadioknapp(Bosituasjonsvalg.ingen)}
-                {renderRadioknapp(Bosituasjonsvalg.annet)}
+                {renderRadioknapp(Bosituasjonsvalg.eier, "bosituasjon_radio")}
+                {renderRadioknapp(Bosituasjonsvalg.leier, "bosituasjon_radio")}
+                {renderRadioknapp(Bosituasjonsvalg.kommunal, "bosituasjon_radio")}
+                {renderRadioknapp(Bosituasjonsvalg.ingen, "bosituasjon_radio")}
+                {renderRadioknapp(Bosituasjonsvalg.annet, "bosituasjon_radio")}
                 <div className="skjema-sporsmal--jaNeiSporsmal">
                     <Underskjema visible={synligUnderskjema} arrow={true}>
                         <Sporsmal
@@ -157,12 +158,12 @@ const BosituasjonView = () => {
                             legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                             stil="system"
                         >
-                            {renderRadioknapp(Annetvalg.foreldre)}
-                            {renderRadioknapp(Annetvalg.familie)}
-                            {renderRadioknapp(Annetvalg.venner)}
-                            {renderRadioknapp(Annetvalg.institusjon)}
-                            {renderRadioknapp(Annetvalg.fengsel)}
-                            {renderRadioknapp(Annetvalg.krisesenter)}
+                            {renderRadioknapp(Annetvalg.foreldre, "bosituasjon_annetValg")}
+                            {renderRadioknapp(Annetvalg.familie, "bosituasjon_annetValg")}
+                            {renderRadioknapp(Annetvalg.venner, "bosituasjon_annetValg")}
+                            {renderRadioknapp(Annetvalg.institusjon, "bosituasjon_annetValg")}
+                            {renderRadioknapp(Annetvalg.fengsel, "bosituasjon_annetValg")}
+                            {renderRadioknapp(Annetvalg.krisesenter, "bosituasjon_annetValg")}
                         </Sporsmal>
                     </Underskjema>
                 </div>
