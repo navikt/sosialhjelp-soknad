@@ -43,7 +43,8 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
 
     if (erLocalhost()) {
         // Kjør mot lokal sosialhjelp-soknad-api:
-        return `http://localhost:8181/${API_CONTEXT_PATH}/`;
+        if (withAccessToken) return `http://localhost:8989/sosialhjelp/mock-alt-api/login-api/${API_CONTEXT_PATH}/`;
+        else return `http://localhost:8181/${API_CONTEXT_PATH}/`;
 
         // Kjør med login-api som proxy om en ønsker access_token fra idporten (uncomment begge linjer under)
         // const apiPort = withAccessToken ? 7000 : 8181;
@@ -61,7 +62,7 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
             window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0 ||
             window.location.origin.indexOf("digisos.labs.nais.io") >= 0
         ) {
-            return getAbsoluteApiUrl(withAccessToken);
+            return getAbsoluteApiUrlForMockAlt(withAccessToken);
         }
         return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
     }
@@ -87,6 +88,16 @@ export function getAbsoluteApiUrl(withAccessToken?: boolean) {
 export function getAbsoluteApiUrlRegex(pathname: string, withAccessToken?: boolean) {
     return withAccessToken
         ? pathname.replace(/^(.+sosialhjelp\/)(.+)$/, "$1login-api/soknad-api/")
+        : pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/");
+}
+
+export function getAbsoluteApiUrlForMockAlt(withAccessToken?: boolean) {
+    return getAbsoluteApiUrlRegexForMockAlt(window.location.pathname, withAccessToken);
+}
+
+export function getAbsoluteApiUrlRegexForMockAlt(pathname: string, withAccessToken?: boolean) {
+    return withAccessToken
+        ? pathname.replace(/^(.+sosialhjelp\/)(.+)$/, "$1mock-alt/login-api/sosialhjelp/soknad-api/")
         : pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/");
 }
 
