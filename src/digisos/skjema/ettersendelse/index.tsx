@@ -64,6 +64,23 @@ class Ettersendelse extends React.Component<Props, OwnState> {
         }
     }
 
+    componentDidUpdate() {
+        if (this.hasUndeliveredFiles()) {
+            window.addEventListener("beforeunload", this.alertUser);
+        } else {
+            window.removeEventListener("beforeunload", this.alertUser);
+        }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("beforeunload", this.alertUser);
+    }
+
+    alertUser(event: any) {
+        event.preventDefault();
+        event.returnValue = "";
+    }
+
     lesBrukerbehandlingskjedeId() {
         let brukerbehandlingskjedeId = this.props.brukerbehandlingskjedeId;
         if (!brukerbehandlingskjedeId) {
@@ -123,6 +140,10 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
     isEttersendelseAktivert() {
         return this.props.originalSoknad != null && this.props.originalSoknad.orgnummer != null;
+    }
+
+    hasUndeliveredFiles() {
+        return this.props.manglendeVedlegg.filter((vedlegg) => vedlegg.filer.length > 0).length > 0;
     }
 
     render() {
