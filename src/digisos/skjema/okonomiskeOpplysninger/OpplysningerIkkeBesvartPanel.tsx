@@ -19,6 +19,7 @@ export const OpplysningerIkkeBesvartPanel = () => {
                     <FormattedMessage id="opplysninger.ikkebesvart.avsnitt2" />
                 </p>
                 <button
+                    type="button"
                     className="linkbutton linkbutton--normal"
                     onClick={() => {
                         dispatch(visLasteOppVedleggModal(true));

@@ -26,6 +26,7 @@ export const SoknadsmottakerInfoPanel = () => {
                 </Normaltekst>
 
                 <button
+                    type="button"
                     className="linkbutton linkbutton--normal"
                     onClick={() => {
                         dispatch(visSamtykkeInfo(true));

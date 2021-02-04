@@ -61,7 +61,6 @@ class AvbrytSoknad extends React.Component<Props, {}> {
             <NavFrontendModal
                 isOpen={this.props.avbrytDialogSynlig || false}
                 contentLabel={intl.formatMessage({id: "avbryt.avbryt"})}
-                closeButton={false}
                 onRequestClose={() => this.onFortsett()}
                 shouldCloseOnOverlayClick={true}
                 style={{overflow: "visible"}}

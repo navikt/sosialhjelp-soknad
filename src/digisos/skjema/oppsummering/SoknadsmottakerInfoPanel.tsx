@@ -23,6 +23,7 @@ class SoknadsmottakerInfoPanel extends React.Component<Props, {}> {
                     />
 
                     <button
+                        type="button"
                         className="linkbutton linkbutton--normal"
                         onClick={() => {
                             this.props.visSamtykkeInfo(true);

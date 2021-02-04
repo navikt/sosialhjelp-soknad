@@ -65,6 +65,7 @@ const Skatt = () => {
                     <Knapp
                         id="gi_bostotte_samtykke"
                         type="standard"
+                        htmlType="button"
                         mini={false}
                         onClick={() => {
                             handleSettSkatteetatenSamtykke(true);
@@ -131,6 +132,7 @@ const Skatt = () => {
                             <Knapp
                                 id="gi_bostotte_samtykke"
                                 type="standard"
+                                htmlType="button"
                                 mini={false}
                                 onClick={() => {
                                     handleSettSkatteetatenSamtykke(true);
