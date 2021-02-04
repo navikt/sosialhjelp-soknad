@@ -102,6 +102,17 @@ const StegMedNavigasjon = (
         }
     };
 
+    const kanGaTilSkjemasteg = (aktivtSteg: SkjemaSteg | undefined): boolean => {
+        if (aktivtSteg && behandlingsId) {
+            const valgtNavEnhet = finnSoknadsMottaker();
+            if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
+                handleNavEnhetErUgyldigFeil(valgtNavEnhet);
+                return false;
+            }
+        }
+        return true;
+    };
+
     const handleGaVidere = (aktivtSteg: SkjemaSteg) => {
         if (behandlingsId) {
             if (aktivtSteg.type === SkjemaStegType.oppsummering) {
@@ -224,6 +235,7 @@ const StegMedNavigasjon = (
                                         index: s.stegnummer - 1,
                                     };
                                 })}
+                                onBeforeChange={() => kanGaTilSkjemasteg(aktivtStegConfig)}
                                 onChange={(s: number) => handleGaTilSkjemaSteg(aktivtStegConfig, s + 1)}
                             />
                         </div>
