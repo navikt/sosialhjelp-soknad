@@ -37,14 +37,6 @@ const stopEvent = (evt: React.FormEvent<any>) => {
     evt.preventDefault();
 };
 
-const stopKeyCodeEvent = (evt: any) => {
-    const key = evt.key;
-    if (key === "Enter") {
-        evt.stopPropagation();
-        evt.preventDefault();
-    }
-};
-
 const StegMedNavigasjon = (
     props: {
         stegKey: string;
@@ -203,25 +195,25 @@ const StegMedNavigasjon = (
                         visFeilliste={visValideringsfeil}
                     />
                 </div>
-                <form id="soknadsskjema" onSubmit={stopEvent} onKeyPress={stopKeyCodeEvent}>
-                    {!erOppsummering ? (
-                        <div className="skjema__stegindikator">
-                            <Stegindikator
-                                autoResponsiv={true}
-                                kompakt={false}
-                                aktivtSteg={aktivtSteg - 1}
-                                steg={synligeSteg.map((s) => {
-                                    return {
-                                        label: intl.formatMessage({
-                                            id: `${s.key}.tittel`,
-                                        }),
-                                        index: s.stegnummer - 1,
-                                    };
-                                })}
-                                onChange={(s: number) => handleGaTilSkjemaSteg(aktivtStegConfig, s + 1)}
-                            />
-                        </div>
-                    ) : null}
+                {!erOppsummering && (
+                    <div className="skjema__stegindikator">
+                        <Stegindikator
+                            autoResponsiv={true}
+                            kompakt={false}
+                            aktivtSteg={aktivtSteg - 1}
+                            steg={synligeSteg.map((s) => {
+                                return {
+                                    label: intl.formatMessage({
+                                        id: `${s.key}.tittel`,
+                                    }),
+                                    index: s.stegnummer - 1,
+                                };
+                            })}
+                            onChange={(s: number) => handleGaTilSkjemaSteg(aktivtStegConfig, s + 1)}
+                        />
+                    </div>
+                )}
+                <form id="soknadsskjema" onSubmit={stopEvent}>
                     <div className="skjema-steg__ikon">{ikon}</div>
                     <div className="skjema-steg__tittel" tabIndex={-1}>
                         <Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
