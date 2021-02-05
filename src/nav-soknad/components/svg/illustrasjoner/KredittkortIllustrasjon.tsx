@@ -2,8 +2,9 @@ import * as React from "react";
 
 const KredittkortIllustrasjon: React.FC = () => {
     return (
-        <div>
-            <svg width={100} height={100} className="kun_desktop">
+        <>
+            <svg aria-hidden="true" width={100} height={100} className="kun_desktop">
+                <title>Kredittkort</title>
                 <g fill="none" fillRule="evenodd">
                     <circle cx={50} cy={50} r={50} fill="#CDE7D8" />
                     <g transform="translate(20 32)">
@@ -19,7 +20,8 @@ const KredittkortIllustrasjon: React.FC = () => {
                     </g>
                 </g>
             </svg>
-            <svg width={80} height={80} className="kun_mobil">
+            <svg aria-hidden="true" width={80} height={80} className="kun_mobil">
+                <title>Kredittkort</title>
                 <g fill="none" fillRule="evenodd">
                     <circle cx={40} cy={40} r={40} fill="#CDE7D8" />
                     <g transform="translate(13 24)">
@@ -46,7 +48,7 @@ const KredittkortIllustrasjon: React.FC = () => {
                     </g>
                 </g>
             </svg>
-        </div>
+        </>
     );
 };
 

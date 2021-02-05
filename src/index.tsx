@@ -28,6 +28,7 @@ import {getContextPathBasename} from "./configuration";
 import {SoknadState} from "./digisos/redux/soknad/soknadTypes";
 import LoadContainer from "./LoadContainer";
 import Modal from "react-modal";
+import {initAmplitude} from "./nav-soknad/utils/amplitude";
 
 Modal.setAppElement("#root");
 
@@ -86,6 +87,8 @@ window.onerror = (errorMessage, url, line, column, error) => {
         )
     );
 };
+
+initAmplitude();
 
 ReactDOM.render(
     <Provider store={store}>

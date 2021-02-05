@@ -10,7 +10,7 @@ interface Props {
     className?: string;
 }
 
-function ikonTitleText(ikon: string) {
+function ikonButtonAriaLabel(ikon: string) {
     switch (ikon) {
         case MargIkoner.ADVARSEL:
             return "Advarsel";
@@ -61,7 +61,7 @@ const AvsnittMedMarger: React.StatelessComponent<Props> = ({
                         <button
                             className="hoyremarg hoyremarg__ikon hoyremarg__ikon__klikkbart hoyremarg__ikon__hover"
                             onClick={() => onClickHoyreIkon()}
-                            title={ikonTitleText(hoyreIkon)}
+                            aria-label={ikonButtonAriaLabel(hoyreIkon)}
                         >
                             <MargIkon ikon={hoyreIkon} />
                         </button>

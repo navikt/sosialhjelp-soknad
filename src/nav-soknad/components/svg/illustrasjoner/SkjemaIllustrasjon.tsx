@@ -2,8 +2,9 @@ import * as React from "react";
 
 const SkjemaIllustrasjon: React.FC = () => {
     return (
-        <div>
-            <svg width={100} height={100} className="kun_desktop">
+        <>
+            <svg aria-hidden="true" width={100} height={100} className="kun_desktop">
+                <title>Skjema</title>
                 <defs>
                     <path
                         id="skjema_desktop_a"
@@ -25,7 +26,8 @@ const SkjemaIllustrasjon: React.FC = () => {
                     />
                 </g>
             </svg>
-            <svg width={80} height={80} className="kun_mobil">
+            <svg aria-hidden="true" width={80} height={80} className="kun_mobil">
+                <title>Skjema</title>
                 <defs>
                     <path
                         id="skjema_mobil_a"
@@ -47,7 +49,7 @@ const SkjemaIllustrasjon: React.FC = () => {
                     />
                 </g>
             </svg>{" "}
-        </div>
+        </>
     );
 };
 

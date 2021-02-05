@@ -13,7 +13,7 @@ import {NavLogEntry, NavLogLevel} from "../../digisos/redux/navlogger/navloggerT
 
 export function erLocalhost(): boolean {
     const url = window.location.href;
-    return url.indexOf("localhost") >= 0 || url.indexOf("devillo.no:3000") >= 0 || url.indexOf("localhost:8080") >= 0;
+    return url.indexOf("localhost") >= 0;
 }
 
 export function erProd(): boolean {
