@@ -101,11 +101,11 @@ export function getAbsoluteApiUrlRegexForMockAlt(pathname: string, withAccessTok
         console.log("DEBUG: Med access token!");
         console.log(
             "DEBUG: Ny url: " +
-                pathname.replace(/^(.+sosialhjelp\/)(.+)$/, "$1mock-alt/login-api/sosialhjelp/soknad-api/")
+                pathname.replace(/^(.+sosialhjelp\/)(.+)$/, "$1mock-alt-api/login-api/sosialhjelp/soknad-api/")
         );
     }
     return withAccessToken
-        ? pathname.replace(/^(.+sosialhjelp\/)(.+)$/, "$1mock-alt/login-api/sosialhjelp/soknad-api/")
+        ? pathname.replace(/^(.+sosialhjelp\/)(.+)$/, "$1mock-alt-api/login-api/sosialhjelp/soknad-api/")
         : pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/");
 }
 
