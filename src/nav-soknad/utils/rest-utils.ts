@@ -62,6 +62,7 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
             window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0 ||
             window.location.origin.indexOf("digisos.labs.nais.io") >= 0
         ) {
+            console.log("DEBUG: Vi er på GCP med proxy!");
             return getAbsoluteApiUrlForMockAlt(withAccessToken);
         }
         return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
@@ -96,6 +97,13 @@ export function getAbsoluteApiUrlForMockAlt(withAccessToken?: boolean) {
 }
 
 export function getAbsoluteApiUrlRegexForMockAlt(pathname: string, withAccessToken?: boolean) {
+    if (withAccessToken) {
+        console.log("DEBUG: Med access token!");
+        console.log(
+            "DEBUG: Ny url: " +
+                pathname.replace(/^(.+sosialhjelp\/)(.+)$/, "$1mock-alt/login-api/sosialhjelp/soknad-api/")
+        );
+    }
     return withAccessToken
         ? pathname.replace(/^(.+sosialhjelp\/)(.+)$/, "$1mock-alt/login-api/sosialhjelp/soknad-api/")
         : pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/");
