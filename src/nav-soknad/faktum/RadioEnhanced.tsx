@@ -45,13 +45,6 @@ class RadioEnhanced extends React.Component<Props & IntlProps, {}> {
         return !!checked;
     }
 
-    handleOnChange(event: any) {
-        if (this.props.onChange != null) {
-            this.props.onChange();
-        }
-        event.preventDefault();
-    }
-
     renderRadio() {
         const {faktumKey, value, disabled, property, required, intl} = this.props;
         const tekster = getRadioFaktumTekst(intl, faktumKey ? faktumKey : "", value, property);
@@ -65,7 +58,7 @@ class RadioEnhanced extends React.Component<Props & IntlProps, {}> {
                     disabled={disabled}
                     value={value}
                     required={required}
-                    onChange={(event: any) => this.handleOnChange(event)}
+                    onChange={this.props.onChange}
                     label={this.determineLabel(id, faktumKey ? faktumKey : "", tekster, value)}
                 />
             </div>
