@@ -35,6 +35,7 @@ export interface Props {
     faktumIndex?: number;
     getFeil?: () => string;
     autoFocus?: boolean;
+    inputMode?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
 }
 
 const InputEnhanced = (props: Props) => {
@@ -84,6 +85,7 @@ const InputEnhanced = (props: Props) => {
             required={required}
             step={step}
             autoFocus={autoFocus}
+            inputMode={props.inputMode}
         />
     );
 };

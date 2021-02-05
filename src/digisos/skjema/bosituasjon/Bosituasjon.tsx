@@ -174,9 +174,9 @@ const BosituasjonView = () => {
             >
                 <InputEnhanced
                     id={FAKTUM_KEY_ANTALL}
-                    type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     maxLength={2}
-                    pattern="\\d*"
                     bredde={"XS"}
                     className="skjemaelement__enLinje185bredde"
                     verdi={antallPersoner}
