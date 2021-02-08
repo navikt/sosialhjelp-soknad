@@ -99,7 +99,7 @@ function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
 
 function* opprettSoknadSaga(action: {type: string}) {
     try {
-        const response: OpprettSoknadResponse = yield call(fetchPost, "soknader/opprettSoknad", "", true);
+        const response: OpprettSoknadResponse = yield call(fetchPost, "soknader/opprettSoknad", "");
         yield put(opprettSoknadOk(response.brukerBehandlingId));
         yield put(startSoknadOk());
         yield put(tilSteg(1, response.brukerBehandlingId));
@@ -231,7 +231,8 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
     try {
         const navenheter: NavEnhet[] = yield call(
             fetchToJson,
-            `soknader/${brukerbehandlingId}/${SoknadsSti.NAV_ENHETER}`
+            `soknader/${brukerbehandlingId}/${SoknadsSti.NAV_ENHETER}`,
+            true
         );
         const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find((n: NavEnhet) => n.valgt);
         if (!valgtSoknadsmottaker || valgtSoknadsmottaker.isMottakMidlertidigDeaktivert) {
