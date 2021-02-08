@@ -108,9 +108,8 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
     }
 
     render() {
-        if (!this.props.synlig) {
-            return null;
-        } else if (typeof this.state.vises === "undefined") {
+        const isOpened = this.state.vises && this.props.synlig;
+        if (typeof isOpened === "undefined") {
             return this.renderContent(false);
         } else {
             return <div className={"react-collapse-wrapper"}>{this.renderContent(true)}</div>;
