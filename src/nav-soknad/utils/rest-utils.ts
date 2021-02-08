@@ -257,7 +257,7 @@ export function fetchOppsummering(urlPath: string) {
         method: "GET",
         credentials: determineCredentialsParameter(),
     };
-    return fetch(getApiBaseUrl(true) + urlPath, OPTIONS).then((response: Response) => {
+    return fetch(getApiBaseUrl(false) + urlPath, OPTIONS).then((response: Response) => {
         verifyStatusSuccessOrRedirect(response);
         return response.text();
     });
