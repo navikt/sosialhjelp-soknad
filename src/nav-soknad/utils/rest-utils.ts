@@ -41,6 +41,7 @@ export function kjorerJetty(): boolean {
 export function getApiBaseUrl(withAccessToken?: boolean): string {
     const apiContextPath = withAccessToken ? API_CONTEXT_PATH_WITH_ACCESS_TOKEN : API_CONTEXT_PATH;
 
+    console.log("DEBUG: getApiBaseUrl origin: " + window.location.origin);
     if (erLocalhost()) {
         // Kjør mot lokal sosialhjelp-soknad-api:
         if (withAccessToken) return `http://localhost:8989/sosialhjelp/mock-alt-api/login-api/${API_CONTEXT_PATH}/`;
