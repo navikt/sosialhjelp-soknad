@@ -231,8 +231,7 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
     try {
         const navenheter: NavEnhet[] = yield call(
             fetchToJson,
-            `soknader/${brukerbehandlingId}/${SoknadsSti.NAV_ENHETER}`,
-            true
+            `soknader/${brukerbehandlingId}/${SoknadsSti.NAV_ENHETER}`
         );
         const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find((n: NavEnhet) => n.valgt);
         if (!valgtSoknadsmottaker || valgtSoknadsmottaker.isMottakMidlertidigDeaktivert) {
