@@ -1,13 +1,5 @@
 import {erMockAltMiljo, erMockMiljoEllerDev} from "./index";
-import {
-    API_CONTEXT_PATH,
-    API_CONTEXT_PATH_WITH_ACCESS_TOKEN,
-    CONTEXT_PATH,
-    GCP_API_APP_NAME,
-    GCP_APP_NAME,
-    getRedirectPathname,
-    INNSYN_CONTEXT_PATH,
-} from "../../configuration";
+import {CONTEXT_PATH, getRedirectPathname, INNSYN_CONTEXT_PATH} from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
 import {NavLogEntry, NavLogLevel} from "../../digisos/redux/navlogger/navloggerTypes";
 
