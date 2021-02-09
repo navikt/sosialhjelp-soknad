@@ -298,6 +298,7 @@ const AdresseView = () => {
                             onChange={() => onClickRadio(AdresseKategori.FOLKEREGISTRERT)}
                             checked={adresser.valg === AdresseKategori.FOLKEREGISTRERT}
                             label={folkeregistrertAdresse ? folkeregistrertAdresseLabel : matrikkelAdresseLabel}
+                            name="oppholdsadresse"
                         />
                     )}
                     {soknadsmottakerVelger(AdresseKategori.FOLKEREGISTRERT)}
@@ -313,6 +314,7 @@ const AdresseView = () => {
                             label={
                                 midlertidigAdresse != null ? midlertidigAdresseLabel : midlertidigMatrikkelAdresseLabel
                             }
+                            name="oppholdsadresse"
                         />
                         {soknadsmottakerVelger(AdresseKategori.MIDLERTIDIG)}
                     </span>
@@ -323,6 +325,7 @@ const AdresseView = () => {
                     onChange={() => onClickRadio(AdresseKategori.SOKNAD)}
                     checked={adresser.valg === AdresseKategori.SOKNAD}
                     label={annenAdresseLabel}
+                    name="oppholdsadresse"
                 />
                 <div className="skjema-sporsmal--jaNeiSporsmal">
                     <Underskjema visible={adresser.valg === AdresseKategori.SOKNAD}>

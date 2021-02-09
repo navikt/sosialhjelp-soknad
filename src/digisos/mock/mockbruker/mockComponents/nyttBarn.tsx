@@ -86,7 +86,7 @@ export class NyttBarn extends React.Component<Props, State> {
                                 value={this.state.etternavn}
                             />
 
-							<MockInput
+                            <MockInput
                                 label="Fødselsnummer:"
                                 onChange={(evt: any) => this.setState({ident: evt.target.value})}
                                 value={this.state.ident}
@@ -96,14 +96,14 @@ export class NyttBarn extends React.Component<Props, State> {
                                 <label>Har samme bostedsadresse</label>
                                 <Radio
                                     label={"Ja"}
-                                    name={"bostedsadresse"}
+                                    name="bostedsadresse"
                                     value={"ja"}
                                     onChange={() => this.setState({sammeBostedsadresse: true})}
                                     defaultChecked={true}
                                 />
                                 <Radio
                                     label={"Nei"}
-                                    name={"bostedsadresse"}
+                                    name="bostedsadresse"
                                     value={"nei"}
                                     onChange={() => this.setState({sammeBostedsadresse: false})}
                                 />
@@ -112,7 +112,7 @@ export class NyttBarn extends React.Component<Props, State> {
                                 <label>Har dødsdato</label>
                                 <Radio
                                     label={"Nei"}
-                                    name={"doedsdato"}
+                                    name="doedsdato"
                                     value={"nei"}
                                     onChange={() => this.setState({doedsdato: false})}
                                     defaultChecked={true}

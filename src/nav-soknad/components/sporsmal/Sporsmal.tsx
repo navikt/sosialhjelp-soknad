@@ -1,10 +1,9 @@
 import * as React from "react";
-import * as cuid from "cuid";
 import * as classNames from "classnames";
 import {SkjemaGruppe} from "nav-frontend-skjema";
-import SporsmalHjelpetekst from "./SporsmalHjelpetekst";
 import {injectIntl} from "react-intl";
 import {getFaktumSporsmalTekst, IntlProps} from "../../utils";
+import {SporsmalHjelpetekst, SporsmalInfotekst} from "./SporsmalHjelpetekst";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
 
@@ -54,23 +53,27 @@ class Sporsmal extends React.Component<Props, {}> {
         });
 
         const legendCls = this.props.legendTittelStyle ? this.props.legendTittelStyle : LegendTittleStyle.DEFAULT;
-        // @ts-ignore
-        const legendId = cuid();
         const sporsmal = this.props.tittelRenderer
             ? this.props.tittelRenderer(ledeTekster.sporsmal)
             : ledeTekster.sporsmal;
         return (
-            <div id={id} className={sporsmalCls} aria-labelledby={legendId}>
-                <SkjemaGruppe feil={feil}>
-                    <fieldset className={cls + " " + legendCls}>
-                        <legend id={legendId}>
+            <div id={id} className={sporsmalCls}>
+                <SkjemaGruppe
+                    feil={feil}
+                    className={cls}
+                    legend={
+                        <div className={legendCls}>
                             {sporsmal}
-                            {visLedetekst !== false && (
-                                <SporsmalHjelpetekst tekster={ledeTekster} legendId={legendId} />
+                            {visLedetekst !== false && ledeTekster.hjelpetekst && (
+                                <SporsmalHjelpetekst tekster={ledeTekster} />
                             )}
-                        </legend>
-                        <div className="skjema-sporsmal__innhold">{children}</div>
-                    </fieldset>
+                        </div>
+                    }
+                    description={
+                        visLedetekst !== false && ledeTekster.infotekst && <SporsmalInfotekst tekster={ledeTekster} />
+                    }
+                >
+                    <div className="skjema-sporsmal__innhold">{children}</div>
                 </SkjemaGruppe>
             </div>
         );

@@ -129,7 +129,10 @@ export const VerdierView = () => {
             onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
             legendTittelStyle={LegendTittleStyle.FET_NORMAL}
         >
-            <Sporsmal tekster={getFaktumSporsmalTekst(intl, VERDIER + ".true.type")}>
+            <Sporsmal
+                tekster={getFaktumSporsmalTekst(intl, VERDIER + ".true.type")}
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+            >
                 {renderCheckBox(VerdierKeys.BOLIG)}
                 {renderCheckBox(VerdierKeys.CAMPINGVOGN)}
                 {renderCheckBox(VerdierKeys.KJORETOY)}

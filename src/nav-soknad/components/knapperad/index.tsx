@@ -70,7 +70,7 @@ const SkjemaKnapperad: React.FC<Props> = ({
             >
                 {getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
             </Knapp>
-            <Flatknapp onClick={gaViderePending ? undefined : avbryt} type="flat">
+            <Flatknapp onClick={gaViderePending ? undefined : avbryt} type="flat" htmlType="button">
                 {getIntlTextOrKey(intl, "skjema.knapper.avbryt")}
             </Flatknapp>
         </div>

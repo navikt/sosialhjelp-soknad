@@ -175,6 +175,7 @@ const BostotteView = () => {
                                         onClick={() => {
                                             handleSettBostotteSamtykke(true);
                                         }}
+                                        htmlType="button"
                                         className="samtykke_knapp_padding"
                                     >
                                         {getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke")}

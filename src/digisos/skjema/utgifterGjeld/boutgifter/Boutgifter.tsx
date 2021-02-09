@@ -81,7 +81,10 @@ export const BoutgifterView = () => {
                 onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
-                <Sporsmal tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER + ".true.type")}>
+                <Sporsmal
+                    tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER + ".true.type")}
+                    legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+                >
                     {renderCheckBox(BoutgifterKeys.HUSLEIE, BoutgifterKeys.HUSLEIE)}
                     {renderCheckBox(BoutgifterKeys.STROM, BoutgifterKeys.STROM)}
                     {renderCheckBox(BoutgifterKeys.KOMMUNALAVGIFT, BoutgifterKeys.KOMMUNALAVGIFT)}

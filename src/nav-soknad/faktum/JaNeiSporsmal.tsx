@@ -41,6 +41,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
             idRadioNei = faktumKey.replace(/\./g, "_") + "_radio_nei";
             idRadioNei = idRadioNei.replace(/__/g, "_");
         }
+        const radioName = faktumKey.replace(/\./g, "_") + "_radio";
 
         const mobilVisning = erMobilVisning();
 
@@ -57,7 +58,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
                     underskjema={children ? <Underskjema visible={visUnderSkjema}>{children}</Underskjema> : <span />}
                 >
                     <RadioEnhanced
-                        getName={() => idRadioJa}
+                        name={radioName}
                         faktumKey={this.props.faktumKey}
                         id={idRadioJa}
                         value={"true"}
@@ -72,7 +73,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
                             id={idRadioNei}
                             value={"false"}
                             checked={verdi !== null && verdi === false}
-                            getName={() => idRadioNei}
+                            name={radioName}
                             onChange={() => this.handleOnChange(false)}
                             className="jaNeiSpormal"
                             visPlaceholder={this.props.visPlaceholder}
@@ -85,7 +86,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
                         id={idRadioNei}
                         value={"false"}
                         checked={verdi !== null && verdi === false}
-                        getName={() => idRadioNei}
+                        name={radioName}
                         onChange={() => this.handleOnChange(false)}
                         className={
                             "jaNeiSpormal inputPanel__mobil--nei " + visUnderSkjema

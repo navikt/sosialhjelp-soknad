@@ -6,7 +6,7 @@ import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/sok
 import {erTall, fdato, maksLengde, minLengde} from "../../../../nav-soknad/validering/valideringer";
 import {konverterFraISODato, konverterTilISODato} from "./datoUtils";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
-import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {Familie, Sivilstatus} from "./FamilieTypes";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
@@ -127,7 +127,6 @@ const PersonSkjema = () => {
                         <InputEnhanced
                             getName={() => FAKTUM_KEY + "_fornavn_input"}
                             id={FAKTUM_KEY + "_fornavn_input"}
-                            autoFocus={true}
                             maxLength={100}
                             verdi={ektefelle.navn.fornavn}
                             onChange={(verdi: string) => oppdaterTekstfelt("navn/fornavn", verdi)}
@@ -199,13 +198,17 @@ const PersonSkjema = () => {
                 </Row>
             </Container>
 
-            <Sporsmal sprakNokkel="familie.sivilstatus.gift.ektefelle.borsammen">
+            <Sporsmal
+                sprakNokkel="familie.sivilstatus.gift.ektefelle.borsammen"
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+            >
                 <RadioEnhanced
                     id={"sivilstatus_gift_bor_sammen_radio_ja"}
                     faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
                     value="true"
                     checked={borSammenMed === true}
                     onChange={() => onClickBorSammen(true)}
+                    name="borsammen"
                 />
                 <RadioEnhanced
                     id={"sivilstatus_gift_bor_sammen_radio_nei"}
@@ -213,6 +216,7 @@ const PersonSkjema = () => {
                     value="false"
                     checked={borSammenMed === false}
                     onChange={() => onClickBorSammen(false)}
+                    name="borsammen"
                 />
             </Sporsmal>
         </div>

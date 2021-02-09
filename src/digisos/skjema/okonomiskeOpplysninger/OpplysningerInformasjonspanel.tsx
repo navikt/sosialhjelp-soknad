@@ -19,6 +19,7 @@ export const OpplysningerInformasjonspanel = () => {
                     <FormattedMessage id="opplysninger.informasjon.avsnitt2" />
                 </p>
                 <button
+                    type="button"
                     className="linkbutton linkbutton--normal"
                     onClick={() => {
                         dispatch(visLasteOppVedleggModal(true));

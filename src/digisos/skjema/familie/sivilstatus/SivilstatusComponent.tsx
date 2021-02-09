@@ -24,7 +24,7 @@ const SivilstatusRadioknapp: React.FunctionComponent<RadioProps> = ({verdi, id, 
     const componentId = id ? id : "sivilstatus_" + verdi + "_radio";
     return (
         <RadioEnhanced
-            getName={() => componentId}
+            name="sivilstatus"
             id={componentId}
             faktumKey="familie.sivilstatus"
             value={verdi}
@@ -74,20 +74,20 @@ const SivilstatusComponent = () => {
                     checked={sivilstatus === Status.GIFT}
                     onClick={(verdi) => onClickSivilstatus(verdi)}
                 />
-                <div className="skjema-sporsmal--jaNeiSporsmal">
-                    <Underskjema visible={sivilstatus === Status.GIFT} arrow={true}>
-                        <Sporsmal
-                            sprakNokkel="familie.sivilstatus.gift.ektefelle"
-                            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                        >
-                            <div>
+                {sivilstatus === Status.GIFT && (
+                    <div className="skjema-sporsmal--jaNeiSporsmal">
+                        <Underskjema visible={sivilstatus === Status.GIFT} arrow={true}>
+                            <Sporsmal
+                                sprakNokkel="familie.sivilstatus.gift.ektefelle"
+                                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+                            >
                                 <div className="blokk-s">
                                     <PersonSkjema />
                                 </div>
-                            </div>
-                        </Sporsmal>
-                    </Underskjema>
-                </div>
+                            </Sporsmal>
+                        </Underskjema>
+                    </div>
+                )}
                 <SivilstatusRadioknapp
                     verdi={Status.UGIFT}
                     checked={sivilstatus === Status.UGIFT}

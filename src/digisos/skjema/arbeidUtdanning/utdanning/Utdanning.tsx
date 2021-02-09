@@ -55,9 +55,12 @@ const UtdanningView = () => {
             onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
             legendTittelStyle={LegendTittleStyle.FET_NORMAL}
         >
-            <Sporsmal tekster={getFaktumSporsmalTekst(intl, FAKTUM_STUDERER)}>
+            <Sporsmal
+                tekster={getFaktumSporsmalTekst(intl, FAKTUM_STUDERER)}
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+            >
                 <RadioEnhanced
-                    getName={() => "studerer_radio_heltid"}
+                    name="studerer_radio"
                     id="studerer_radio_heltid"
                     faktumKey={FAKTUM_STUDERER}
                     value="heltid"
@@ -65,7 +68,7 @@ const UtdanningView = () => {
                     onChange={() => handleClickHeltidDeltid(true)}
                 />
                 <RadioEnhanced
-                    getName={() => "studerer_radio_deltid"}
+                    name="studerer_radio"
                     id="studerer_radio_deltid"
                     faktumKey={FAKTUM_STUDERER}
                     value="deltid"
