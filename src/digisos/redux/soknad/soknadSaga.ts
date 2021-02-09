@@ -99,7 +99,7 @@ function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
 
 function* opprettSoknadSaga(action: {type: string}) {
     try {
-        const response: OpprettSoknadResponse = yield call(fetchPost, "soknader/opprettSoknad", "");
+        const response: OpprettSoknadResponse = yield call(fetchPost, "soknader/opprettSoknad", "", true);
         yield put(opprettSoknadOk(response.brukerBehandlingId));
         yield put(startSoknadOk());
         yield put(tilSteg(1, response.brukerBehandlingId));
