@@ -120,18 +120,6 @@ class Ettersendelse extends React.Component<Props, OwnState> {
         }
     }
 
-    manglendeVedleggDato() {
-        const {originalSoknad, ettersendelser} = this.props;
-        let datoManglendeVedlegg: string = "";
-        if (originalSoknad) {
-            datoManglendeVedlegg = originalSoknad.innsendtDato;
-        }
-        if (ettersendelser && ettersendelser.length > 0) {
-            datoManglendeVedlegg = ettersendelser[ettersendelser.length - 1].innsendtDato;
-        }
-        return datoManglendeVedlegg;
-    }
-
     antallManglendeVedlegg() {
         return this.props.manglendeVedlegg.filter((item: any) => {
             return !(item.type === "annet|annet");
@@ -149,7 +137,6 @@ class Ettersendelse extends React.Component<Props, OwnState> {
     render() {
         const {originalSoknad, ettersendelser, nedetidstart, nedetidslutt, isNedetid} = this.props;
         const antallManglendeVedlegg = this.antallManglendeVedlegg();
-        const datoManglendeVedlegg = this.manglendeVedleggDato();
         const ettersendelseAktivert = this.isEttersendelseAktivert();
 
         const opprettNyEttersendelseFeilet: boolean =
@@ -235,7 +222,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                             {antallManglendeVedlegg > 0 && (
                                 <span>
                                     <Undertittel>Vedlegg mangler</Undertittel>
-                                    <div>Sist oppdatert {datoManglendeVedlegg}</div>
+                                    <p>Det gjenstår {antallManglendeVedlegg} vedlegg</p>
                                 </span>
                             )}
                             {antallManglendeVedlegg === 0 && (
