@@ -1,5 +1,13 @@
 import {erMockAltMiljo, erMockMiljoEllerDev} from "./index";
-import {CONTEXT_PATH, getRedirectPathname, INNSYN_CONTEXT_PATH} from "../../configuration";
+import {
+    API_CONTEXT_PATH,
+    API_CONTEXT_PATH_WITH_ACCESS_TOKEN,
+    CONTEXT_PATH,
+    GCP_API_APP_NAME,
+    GCP_APP_NAME,
+    getRedirectPathname,
+    INNSYN_CONTEXT_PATH,
+} from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
 import {NavLogEntry, NavLogLevel} from "../../digisos/redux/navlogger/navloggerTypes";
 
@@ -31,41 +39,40 @@ export function kjorerJetty(): boolean {
 }
 
 export function getApiBaseUrl(withAccessToken?: boolean): string {
-    return getAbsoluteApiUrlForMockAlt(withAccessToken);
-    // const apiContextPath = withAccessToken ? API_CONTEXT_PATH_WITH_ACCESS_TOKEN : API_CONTEXT_PATH;
-    //
-    // console.log("DEBUG: getApiBaseUrl origin: " + window.location.origin);
-    // if (erLocalhost()) {
-    //     // Kjør mot lokal sosialhjelp-soknad-api:
-    //     if (withAccessToken) return `http://localhost:8989/sosialhjelp/mock-alt-api/login-api/${API_CONTEXT_PATH}/`;
-    //     else return `http://localhost:8181/${API_CONTEXT_PATH}/`;
-    //
-    //     // Kjør med login-api som proxy om en ønsker access_token fra idporten (uncomment begge linjer under)
-    //     // const apiPort = withAccessToken ? 7000 : 8181;
-    //     // return `http://localhost:${apiPort}/${apiContextPath}/`;
-    // }
-    // if (window.location.origin.indexOf("nais.oera") >= 0) {
-    //     return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${apiContextPath}/`;
-    // }
-    // if (
-    //     window.location.origin.indexOf("sosialhjelp-soknad-gcp.dev.nav.no") >= 0 ||
-    //     window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0 ||
-    //     window.location.origin.indexOf("labs.nais.io") >= 0
-    // ) {
-    //     if (
-    //         window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0 ||
-    //         window.location.origin.indexOf("digisos.labs.nais.io") >= 0
-    //     ) {
-    //         console.log("DEBUG: Vi er på GCP med proxy!");
-    //         return getAbsoluteApiUrlForMockAlt(withAccessToken);
-    //     }
-    //     return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
-    // }
-    // if (kjorerJetty()) {
-    //     return `http://127.0.0.1:7000/${apiContextPath}/`;
-    // }
-    //
-    // return getAbsoluteApiUrl(withAccessToken);
+    const apiContextPath = withAccessToken ? API_CONTEXT_PATH_WITH_ACCESS_TOKEN : API_CONTEXT_PATH;
+
+    console.log("DEBUG: getApiBaseUrl origin: " + window.location.origin);
+    if (erLocalhost()) {
+        // Kjør mot lokal sosialhjelp-soknad-api:
+        if (withAccessToken) return `http://localhost:8989/sosialhjelp/mock-alt-api/login-api/${API_CONTEXT_PATH}/`;
+        else return `http://localhost:8181/${API_CONTEXT_PATH}/`;
+
+        // Kjør med login-api som proxy om en ønsker access_token fra idporten (uncomment begge linjer under)
+        // const apiPort = withAccessToken ? 7000 : 8181;
+        // return `http://localhost:${apiPort}/${apiContextPath}/`;
+    }
+    if (window.location.origin.indexOf("nais.oera") >= 0) {
+        return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${apiContextPath}/`;
+    }
+    if (
+        window.location.origin.indexOf("sosialhjelp-soknad-gcp.dev.nav.no") >= 0 ||
+        window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0 ||
+        window.location.origin.indexOf("labs.nais.io") >= 0
+    ) {
+        if (
+            window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0 ||
+            window.location.origin.indexOf("digisos.labs.nais.io") >= 0
+        ) {
+            console.log("DEBUG: Vi er på GCP med proxy!");
+            return getAbsoluteApiUrlForMockAlt(withAccessToken);
+        }
+        return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
+    }
+    if (kjorerJetty()) {
+        return `http://127.0.0.1:7000/${apiContextPath}/`;
+    }
+
+    return getAbsoluteApiUrl(withAccessToken);
 }
 
 export function getInnsynUrl(): string {
@@ -99,7 +106,7 @@ export function getAbsoluteApiUrlRegexForMockAlt(pathname: string, withAccessTok
         );
     }
     return withAccessToken
-        ? pathname.replace(/^(.+sosialhjelp\/)(.+)$/, "$1mock-alt-api/login-api/sosialhjelp/soknad-api/")
+        ? pathname.replace(/^(.+sosialhjelp\/)(.+)$/, "$1mock-alt-api/llogin-api/sosialhjelp/soknad-api/")
         : pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/");
 }
 
