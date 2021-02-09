@@ -11,7 +11,10 @@ const EllaKompakt = (props: {bakgrundsFarge?: DigisosFarge}) => {
             width="64"
             height="64"
             viewBox="0 0 64 64"
+            aria-hidden="true"
+            pointerEvents="none"
         >
+            <title>Veileder</title>
             <defs>
                 <circle id="ella_kompakt_a" cx="32" cy="32" r="32" />
                 <circle id="ella_kompakt_c" cx="32" cy="32" r="32" />

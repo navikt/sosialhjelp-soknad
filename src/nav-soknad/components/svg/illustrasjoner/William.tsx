@@ -2,7 +2,14 @@ import * as React from "react";
 
 const William = () => (
     <>
-        <svg aria-hidden="true" xmlnsXlink="http://www.w3.org/1999/xlink" width={80} height={80} className="kun_mobil">
+        <svg
+            aria-hidden="true"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            width={80}
+            height={80}
+            className="kun_mobil"
+            pointerEvents="none"
+        >
             <title>Veileder</title>
             <defs>
                 <circle id="william_mobil_a" cx={40} cy={40} r={40} />
@@ -74,6 +81,7 @@ const William = () => (
             width={100}
             height={100}
             className="kun_desktop"
+            pointerEvents="none"
         >
             <title>Veileder</title>
             <defs>
