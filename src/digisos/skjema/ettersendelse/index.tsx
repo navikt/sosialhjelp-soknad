@@ -235,7 +235,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                             {antallManglendeVedlegg > 0 && (
                                 <span>
                                     <Undertittel>Vedlegg mangler</Undertittel>
-                                    <div>{datoManglendeVedlegg}</div>
+                                    <div>Sist oppdatert {datoManglendeVedlegg}</div>
                                 </span>
                             )}
                             {antallManglendeVedlegg === 0 && (
