@@ -12,6 +12,7 @@ const DigisosIkonKonvolutt: React.FC<Props> = (props: Props) => {
             width={props.size}
             viewBox="0 0 23 16"
             aria-hidden="true"
+            pointerEvents="none"
         >
             <title>Konvolutt</title>
             <defs>

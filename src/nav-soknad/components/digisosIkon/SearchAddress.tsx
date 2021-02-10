@@ -8,7 +8,9 @@ const SearchAddress: React.FC = () => {
             width="24"
             height="24"
             viewBox="0 0 24 24"
+            aria-labelledby="søke-ikon"
         >
+            <title id="søke-ikon">Søk</title>
             <defs>
                 <path
                     id="search_address_a"

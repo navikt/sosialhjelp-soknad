@@ -3,7 +3,7 @@ import * as React from "react";
 const SkjemaIllustrasjon: React.FC = () => {
     return (
         <>
-            <svg aria-hidden="true" width={100} height={100} className="kun_desktop">
+            <svg aria-hidden="true" width={100} height={100} className="kun_desktop" pointerEvents="none">
                 <title>Skjema</title>
                 <defs>
                     <path
@@ -26,7 +26,7 @@ const SkjemaIllustrasjon: React.FC = () => {
                     />
                 </g>
             </svg>
-            <svg aria-hidden="true" width={80} height={80} className="kun_mobil">
+            <svg aria-hidden="true" width={80} height={80} className="kun_mobil" pointerEvents="none">
                 <title>Skjema</title>
                 <defs>
                     <path

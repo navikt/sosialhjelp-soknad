@@ -6,7 +6,13 @@ interface EllaProps {
 
 const EllaBlunk: React.FC<EllaProps> = (props: EllaProps) => {
     return (
-        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175 175" width={props.size}>
+        <svg
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 175 175"
+            width={props.size}
+            pointerEvents="none"
+        >
             <title>Veileder</title>
             <defs>
                 <circle id="ella-blunk-a" cx="87.5" cy="87.5" r="87.5" />

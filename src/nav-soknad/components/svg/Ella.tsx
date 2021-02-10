@@ -17,6 +17,7 @@ const Ella = (props: {size?: number; visBakgrundsSirkel: boolean; bakgrundsFarge
             viewBox="0 0 175 175"
             className={"ella--" + bakgrundsFarge}
             aria-hidden="true"
+            pointerEvents="none"
         >
             <title>Veileder</title>
             <defs>

@@ -9,6 +9,7 @@ const EllaForfra = (props: {className?: string}) => {
             width={68}
             height={97}
             className={props.className}
+            pointerEvents="none"
         >
             <title>Veileder</title>
             <defs>

@@ -13,7 +13,10 @@ const Hensyn = (props: {size?: number; visBakgrundsSirkel: boolean; bakgrundsFar
             height={height}
             viewBox="0 0 80 80"
             className={"brevkonvolutt__" + bakgrundsFarge}
+            aria-hidden="true"
+            pointerEvents="none"
         >
+            <title>Informasjonsark</title>
             <defs>
                 <path
                     id="hensyn-a"

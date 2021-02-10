@@ -22,6 +22,7 @@ class Brevkonvolutt extends React.Component<OwnProps, {}> {
                 viewBox="0 0 100 100"
                 className={"brevkonvolutt--" + bakgrundsFarge}
                 aria-hidden="true"
+                pointerEvents="none"
             >
                 <title>Brevkonvolutt</title>
                 <g>

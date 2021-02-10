@@ -9,6 +9,7 @@ const FamilieIllustrasjon: React.FC = () => {
                 width={100}
                 height={100}
                 className="kun_desktop"
+                pointerEvents="none"
             >
                 <title>Familie</title>
                 <defs>
@@ -171,6 +172,7 @@ const FamilieIllustrasjon: React.FC = () => {
                 width={80}
                 height={80}
                 className="kun_mobil"
+                pointerEvents="none"
             >
                 <title>Familie</title>
                 <defs>

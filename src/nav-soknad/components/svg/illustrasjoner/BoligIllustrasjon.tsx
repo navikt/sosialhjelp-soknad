@@ -9,6 +9,7 @@ const BoligIllustrasjon: React.FC = () => {
                 width={100}
                 height={100}
                 className="kun_desktop"
+                pointerEvents="none"
             >
                 <title>Bolig</title>
                 <defs>
@@ -34,6 +35,7 @@ const BoligIllustrasjon: React.FC = () => {
                 width={80}
                 height={80}
                 className="kun_mobil"
+                pointerEvents="none"
             >
                 <title>Bolig</title>
                 <defs>
