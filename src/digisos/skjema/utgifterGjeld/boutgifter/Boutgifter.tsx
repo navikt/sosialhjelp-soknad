@@ -98,7 +98,6 @@ export const BoutgifterView = () => {
                 ikon={InformasjonspanelIkon.ELLA}
                 farge={DigisosFarge.VIKTIG}
             >
-                // TODO: test
                 <FormattedMessage
                     id="informasjon.husbanken.bostotte.v2"
                     values={{
