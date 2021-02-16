@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import {State} from "../../redux/reducers";
 import * as React from "react";
 import {DispatchProps} from "../../redux/reduxTypes";
@@ -150,7 +150,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                 </BannerEttersendelse>
                 {isNedetid && (
                     <AlertStripe type="feil" style={{justifyContent: "center"}}>
-                        <FormattedHTMLMessage
+                        <FormattedMessage
                             id="nedetid.alertstripe.ettersendelse"
                             values={{
                                 nedetidstart: nedetidstart,
@@ -161,7 +161,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                 )}
                 <div className="blokk-center panel ettersendelse__panel">
                     <p className="ettersendelse ingress">
-                        <FormattedHTMLMessage id="ettersendelse.ingress" />
+                        <FormattedMessage id="ettersendelse.ingress" />
                     </p>
 
                     {originalSoknad && (
@@ -171,8 +171,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                             onClickHoyreIkon={() => this.skrivUt()}
                         >
                             <Undertittel>
-                                <FormattedHTMLMessage id="ettersendelse.soknad_sendt" /> {originalSoknad.navenhet}{" "}
-                                kommune
+                                <FormattedMessage id="ettersendelse.soknad_sendt" /> {originalSoknad.navenhet} kommune
                             </Undertittel>
                             <p>
                                 Innsendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}
@@ -186,10 +185,10 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                             return (
                                 <AvsnittMedMarger venstreIkon={MargIkoner.OK} key={ettersendelse.behandlingsId}>
                                     <Undertittel>
-                                        <FormattedHTMLMessage id="ettersendelse.vedlegg_sendt" />
+                                        <FormattedMessage id="ettersendelse.vedlegg_sendt" />
                                     </Undertittel>
                                     <p>
-                                        <FormattedHTMLMessage
+                                        <FormattedMessage
                                             id="ettersendelse.dato_tid"
                                             values={{
                                                 dato: ettersendelse.innsendtDato,
@@ -209,7 +208,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                     {opprettNyEttersendelseFeilet && !isNedetid && (
                         <AvsnittMedMarger className="ettersendelse__vedlegg__header">
                             <Informasjonspanel ikon={InformasjonspanelIkon.HENSYN} farge={DigisosFarge.VIKTIG}>
-                                <FormattedHTMLMessage id="ettersendelse.ikke.mulig" />
+                                <FormattedMessage id="ettersendelse.ikke.mulig" />
                             </Informasjonspanel>
                         </AvsnittMedMarger>
                     )}
@@ -227,7 +226,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                             )}
                             {antallManglendeVedlegg === 0 && (
                                 <Undertittel>
-                                    <FormattedHTMLMessage id="ettersendelse.generell.dokumentasjon" />
+                                    <FormattedMessage id="ettersendelse.generell.dokumentasjon" />
                                 </Undertittel>
                             )}
                         </EttersendelseEkspanderbart>
@@ -235,19 +234,26 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
                     <AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>
                         <Undertittel>
-                            <FormattedHTMLMessage id="ettersendelse.samtale.tittel" />
+                            <FormattedMessage id="ettersendelse.samtale.tittel" />
                         </Undertittel>
                         <p>
-                            <FormattedHTMLMessage id="ettersendelse.samtale.info" />
+                            <FormattedMessage
+                                id="ettersendelse.samtale.info.v2"
+                                values={{
+                                    a: (msg: string) => (
+                                        <a href="https://www.nav.no/sosialhjelp/artikkel/514876">{msg}</a>
+                                    ),
+                                }}
+                            />
                         </p>
                     </AvsnittMedMarger>
 
                     <AvsnittMedMarger venstreIkon={MargIkoner.KONVOLUTT}>
                         <Undertittel>
-                            <FormattedHTMLMessage id="ettersendelse.vedtak.tittel" />
+                            <FormattedMessage id="ettersendelse.vedtak.tittel" />
                         </Undertittel>
                         <p>
-                            <FormattedHTMLMessage id="ettersendelse.vedtak.info" />
+                            <FormattedMessage id="ettersendelse.vedtak.info" />
                         </p>
                     </AvsnittMedMarger>
                 </div>

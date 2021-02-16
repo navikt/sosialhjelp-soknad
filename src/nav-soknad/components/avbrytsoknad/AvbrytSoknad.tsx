@@ -3,7 +3,7 @@ import NavFrontendModal from "nav-frontend-modal";
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
 import {Hovedknapp, Knapp} from "nav-frontend-knapper";
 import {fortsettSoknad, slettSoknad} from "../../../digisos/redux/soknad/soknadActions";
-import {FormattedHTMLMessage, FormattedMessage, injectIntl} from "react-intl";
+import {FormattedMessage, injectIntl} from "react-intl";
 import {connect} from "react-redux";
 import {DispatchProps} from "../../../digisos/redux/reduxTypes";
 import {AVBRYT_DESTINASJON} from "../../../digisos/redux/soknad/soknadActionTypes";
@@ -78,7 +78,7 @@ class AvbrytSoknad extends React.Component<Props, {}> {
                     </Normaltekst>
                     {isPlanlagtNedetid && (
                         <AlertStripe type="info">
-                            <FormattedHTMLMessage
+                            <FormattedMessage
                                 id="nedetid.alertstripe.avbryt"
                                 values={{
                                     nedetidstart: nedetidstart,

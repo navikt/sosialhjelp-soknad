@@ -1,7 +1,7 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {RouterProps} from "react-router";
-import {FormattedHTMLMessage, FormattedMessage, injectIntl, IntlShape} from "react-intl";
+import {FormattedMessage, injectIntl, IntlShape} from "react-intl";
 import DocumentTitle from "react-document-title";
 import Knapp from "nav-frontend-knapper";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
@@ -44,7 +44,7 @@ class Informasjon extends React.Component<Props, {}> {
         if (this.props.fornavn && this.props.fornavn.length > 0) {
             return (
                 <h2 className="digisos-snakkeboble-tittel typo-element">
-                    <FormattedHTMLMessage id="informasjon.hilsen.hei" values={{fornavn: this.props.fornavn}} />
+                    <FormattedMessage id="informasjon.hilsen.hei" values={{fornavn: this.props.fornavn}} />
                 </h2>
             );
         }
@@ -70,11 +70,12 @@ class Informasjon extends React.Component<Props, {}> {
             <div className="informasjon-side">
                 <AppBanner />
                 <DocumentTitle title={title} />
+
                 {harTilgang ? (
                     <span>
                         {isNedetid && (
                             <AlertStripe type="feil" style={{justifyContent: "center"}}>
-                                <FormattedHTMLMessage
+                                <FormattedMessage
                                     id="nedetid.alertstripe.infoside"
                                     values={{
                                         nedetidstart: nedetidstart,
@@ -97,17 +98,42 @@ class Informasjon extends React.Component<Props, {}> {
                                     <h2 className="typo-element">
                                         <FormattedMessage id="informasjon.start.undertittel" />
                                     </h2>
-
-                                    <p className="blokk-s">
-                                        <FormattedHTMLMessage id="informasjon.start.tekst" />
+                                    <p>
+                                        <FormattedMessage
+                                            id="informasjon.start.tekst_del1"
+                                            values={{
+                                                a: (msg: string) => (
+                                                    <a href="https://www.nav.no/sosialhjelp/" target="_blank">
+                                                        {msg}
+                                                    </a>
+                                                ),
+                                            }}
+                                        />
                                     </p>
-
+                                    <p>
+                                        <FormattedMessage id="informasjon.start.tekst_del2" />
+                                    </p>
+                                    <p>
+                                        <FormattedMessage
+                                            id="informasjon.start.tekst_del3"
+                                            values={{
+                                                a: (msg: string) => (
+                                                    <a
+                                                        href="https://www.nav.no/person/personopplysninger/nb/#ditt-nav-kontor"
+                                                        target="_blank"
+                                                    >
+                                                        {msg}
+                                                    </a>
+                                                ),
+                                            }}
+                                        />
+                                    </p>
                                     <h2 className="typo-element">
                                         <FormattedMessage id="informasjon.nodsituasjon.undertittel" />
                                     </h2>
 
                                     <p className="blokk-s">
-                                        <FormattedHTMLMessage id="informasjon.nodsituasjon.tekst" />
+                                        <FormattedMessage id="informasjon.nodsituasjon.tekst" />
                                     </p>
                                 </Panel>
                             </div>
@@ -117,7 +143,7 @@ class Informasjon extends React.Component<Props, {}> {
                                 <Personopplysninger />
                                 {isPlanlagtNedetid && (
                                     <AlertStripe type="info">
-                                        <FormattedHTMLMessage
+                                        <FormattedMessage
                                             id="nedetid.alertstripe.infoside"
                                             values={{
                                                 nedetidstart: nedetidstart,
@@ -131,7 +157,7 @@ class Informasjon extends React.Component<Props, {}> {
                             <div className="skjema-content" style={{border: "1px solid transparent"}}>
                                 {startSoknadFeilet && (
                                     <AlertStripe type="feil">
-                                        <FormattedHTMLMessage id="applikasjon.opprettsoknadfeilet" />
+                                        <FormattedMessage id="applikasjon.opprettsoknadfeilet" />
                                     </AlertStripe>
                                 )}
 
@@ -151,7 +177,7 @@ class Informasjon extends React.Component<Props, {}> {
 
                                     {isNedetid && visNedetidPanel && (
                                         <AlertStripe type="feil" style={{marginTop: "0.4rem"}}>
-                                            <FormattedHTMLMessage
+                                            <FormattedMessage
                                                 id="nedetid.alertstripe.infoside"
                                                 values={{
                                                     nedetidstart: nedetidstart,

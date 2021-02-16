@@ -232,16 +232,14 @@ const BostotteView = () => {
                                 );
                             })}
                             {(harBostotterUtbetalinger || harBostotterSaker) && (
-                                <div>
-                                    <a
-                                        href="https://kundeforhold-bostotte.husbanken.no/esoknad-bostotte/"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="linje_under"
-                                    >
-                                        <FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"} />
-                                    </a>
-                                </div>
+                                <a
+                                    href={intl.formatMessage({id: "inntekt.bostotte.husbanken.url"})}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="linje_under"
+                                >
+                                    <FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"} />
+                                </a>
                             )}
                             <div className="bostotte-luft-over-ta-bort-knapp-lenke">
                                 <a

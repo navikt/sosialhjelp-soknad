@@ -1,6 +1,6 @@
 import * as React from "react";
 import {RouteComponentProps, withRouter} from "react-router";
-import {FormattedHTMLMessage, useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import {useSelector, useDispatch} from "react-redux";
 import DocumentTitle from "react-document-title";
 import {Innholdstittel} from "nav-frontend-typografi";
@@ -194,7 +194,7 @@ const StegMedNavigasjon = (
             <DocumentTitle title={`${stegTittel} - ${documentTitle}`} />
             {isNedetid && (
                 <AlertStripe type="feil" style={{justifyContent: "center"}}>
-                    <FormattedHTMLMessage
+                    <FormattedMessage
                         id="nedetid.alertstripe.infoside"
                         values={{
                             nedetidstart: nedetidstart,
@@ -241,20 +241,34 @@ const StegMedNavigasjon = (
 
                     {soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
                         <AlertStripe type="feil">
-                            <FormattedHTMLMessage
-                                id="adresse.alertstripe.feil"
+                            <FormattedMessage
+                                id="adresse.alertstripe.feil.v2"
                                 values={{
                                     kommuneNavn: finnKommunenavn(),
+                                    a: (msg: string) => (
+                                        <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                                            {msg}
+                                        </a>
+                                    ),
                                 }}
                             />
                         </AlertStripe>
                     )}
                     {soknad.visIkkePakobletPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
                         <AlertStripe type="advarsel">
-                            <FormattedHTMLMessage
-                                id="adresse.alertstripe.advarsel"
+                            <FormattedMessage
+                                id="adresse.alertstripe.advarsel.v2"
                                 values={{
                                     kommuneNavn: finnKommunenavn(),
+                                    a: (msg: string) => (
+                                        <a
+                                            href="https://husbanken.no/bostotte"
+                                            target="_blank"
+                                            rel="noreferrer noopener"
+                                        >
+                                            {msg}
+                                        </a>
+                                    ),
                                 }}
                             />
                         </AlertStripe>
@@ -288,7 +302,7 @@ const StegMedNavigasjon = (
 
                     {soknad.visMidlertidigDeaktivertPanel && isNedetid && aktivtSteg === 9 && (
                         <AlertStripe type="feil" style={{marginTop: "1rem"}}>
-                            <FormattedHTMLMessage
+                            <FormattedMessage
                                 id="nedetid.alertstripe.send"
                                 values={{
                                     nedetidstart: nedetidstart,

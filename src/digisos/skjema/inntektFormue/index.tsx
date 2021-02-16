@@ -1,7 +1,7 @@
 import * as React from "react";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import Penger from "../../../nav-soknad/components/svg/illustrasjoner/Penger";
-import {FormattedHTMLMessage} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import Bostotte from "./bostotte/Bostotte";
 import Utbetalinger from "./utbetalinger";
 import Verdier from "./verdier/Verdier";
@@ -22,11 +22,11 @@ const InntektFormue: React.FC = () => {
             <Studielan />
             <Utbetalinger />
             <h2 className="overskrift">
-                <FormattedHTMLMessage id="opplysninger.formue.bank.undertittel" />
+                <FormattedMessage id="opplysninger.formue.bank.undertittel" />
             </h2>
             <Formue />
             <h2 className="overskrift">
-                <FormattedHTMLMessage id="opplysninger.formue.annen.undertittel" />
+                <FormattedMessage id="opplysninger.formue.annen.undertittel" />
             </h2>
             <Verdier />
         </DigisosSkjemaSteg>

@@ -3,7 +3,7 @@ import {Fil, Opplysning, OpplysningSpc, VedleggStatus} from "../../redux/okonomi
 import {useDispatch, useSelector} from "react-redux";
 import LastOppFil from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
-import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import {startSlettFil} from "../../redux/fil/filActions";
 import {lagreOpplysningHvisGyldigAction} from "../../redux/okonomiskeOpplysninger/opplysningerActions";
 import OpplastetVedlegg from "./OpplastetVedlegg";
@@ -60,7 +60,7 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
                     visSpinner={opplysning.pendingLasterOppFil}
                 />
                 <Checkbox
-                    label={<FormattedHTMLMessage id={"opplysninger.vedlegg.alleredelastetopp"} />}
+                    label={<FormattedMessage id={"opplysninger.vedlegg.alleredelastetopp"} />}
                     id={opplysning.type + "_allerede_lastet_opp_checkbox"}
                     className={"vedleggLastetOppCheckbox " + textDisabledClassName}
                     onChange={(event: any) => handleAlleredeLastetOpp(event)}

@@ -73,7 +73,7 @@ export const Oppsummering = () => {
                 feil={
                     visBekreftMangler
                         ? {
-                              feilmelding: intl.formatHTMLMessage({
+                              feilmelding: intl.formatMessage({
                                   id: "oppsummering.feilmelding.bekreftmangler",
                               }),
                           }

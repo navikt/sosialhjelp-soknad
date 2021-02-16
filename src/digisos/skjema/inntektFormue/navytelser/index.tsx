@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormattedMessage, FormattedHTMLMessage, FormattedNumber, useIntl} from "react-intl";
+import {FormattedMessage, FormattedNumber, useIntl} from "react-intl";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
@@ -72,14 +72,26 @@ const NavYtelserView = () => {
                     lukkTekst={"Lukk"}
                     intro={
                         <div>
-                            <FormattedHTMLMessage id={"navytelser.infotekst.tekst"} />
+                            <FormattedMessage id={"navytelser.infotekst.tekst"} />
                         </div>
                     }
                     border={true}
                 >
                     <div className="utbetalinger">
                         {navYtelserJsx}
-                        <FormattedHTMLMessage id="utbetalinger.infotekst.tekst" />
+                        <FormattedMessage
+                            id={"utbetalinger.infotekst.tekst.v2"}
+                            values={{
+                                a: (msg: string) => (
+                                    <a
+                                        href={intl.formatMessage({id: "utbetalinger.infotekst.tekst.url"})}
+                                        target="_blank"
+                                    >
+                                        {msg}
+                                    </a>
+                                ),
+                            }}
+                        />
                     </div>
                 </Lesmerpanel>
             )}

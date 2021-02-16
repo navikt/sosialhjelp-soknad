@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormattedHTMLMessage, useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
@@ -62,7 +62,7 @@ export const BarneutgifterView = () => {
                 id={"barneutgifter_" + navn + "_checkbox"}
                 name={navn}
                 checked={isChecked}
-                label={<FormattedHTMLMessage id={BarneutgifterKey + ".true.utgifter." + textKey} />}
+                label={<FormattedMessage id={BarneutgifterKey + ".true.utgifter." + textKey} />}
                 onClick={() => handleClickRadio(navn)}
             />
         );

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {TilgangSperrekode} from "../redux/soknad/soknadTypes";
 import Infoblokk from "../../nav-soknad/components/infoblokk";
-import {FormattedHTMLMessage, useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 
 interface Props {
     sperrekode: TilgangSperrekode;
@@ -18,7 +18,16 @@ const IkkeTilgangInformasjon: React.FC<Props> = ({sperrekode}) => {
                 })}
             >
                 <p className="blokk-s">
-                    <FormattedHTMLMessage id="informasjon.ikketilgang.bruker.tekst" />
+                    <FormattedMessage
+                        id="informasjon.ikketilgang.bruker.tekst.v2"
+                        values={{
+                            a: (msg: string) => (
+                                <a href="https://www.nav.no/person/personopplysninger/#ditt-nav-kontor" target="_blank">
+                                    {msg}
+                                </a>
+                            ),
+                        }}
+                    />
                 </p>
             </Infoblokk>
         );
@@ -26,7 +35,19 @@ const IkkeTilgangInformasjon: React.FC<Props> = ({sperrekode}) => {
         return (
             <Infoblokk className="blokk-s" tittel={intl.formatMessage({id: "informasjon.ikketilgang.tittel"})}>
                 <p className="blokk-s">
-                    <FormattedHTMLMessage id="informasjon.ikketilgang.tekst" />
+                    <FormattedMessage
+                        id="informasjon.ikketilgang.tekst.v2"
+                        values={{
+                            a: (msg: string) => (
+                                <a
+                                    href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Relatert+informasjon/finn-ditt-nav-kontor--353421"
+                                    target="_blank"
+                                >
+                                    {msg}
+                                </a>
+                            ),
+                        }}
+                    />
                 </p>
             </Infoblokk>
         );

@@ -75,7 +75,7 @@ class TextareaEnhanced extends React.Component<Props, {}> {
     getFeil(): string | null {
         const {faktumKey} = this.props;
         const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey);
-        return !feilkode ? null : this.props.intl.formatHTMLMessage({id: feilkode.feilkode});
+        return !feilkode ? null : this.props.intl.formatMessage({id: feilkode.feilkode});
     }
 
     render() {

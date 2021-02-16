@@ -1,9 +1,8 @@
 import * as React from "react";
 import {onEndretValideringsfeil} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, {LegendTittleStyle
-} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, getIntlTextOrKey, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Utbetalinger, UtbetalingerKeys} from "./utbetalingerTypes";
@@ -15,14 +14,8 @@ import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTyp
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../redux/reducers";
-import {
-    hentSoknadsdata,
-    lagreSoknadsdata,
-} from "../../../redux/soknadsdata/soknadsdataActions";
-import {
-    setValideringsfeil,
-    clearValideringsfeil,
-} from "../../../redux/validering/valideringActions";
+import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {setValideringsfeil, clearValideringsfeil} from "../../../redux/validering/valideringActions";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";
@@ -123,7 +116,7 @@ export const UtbetalingerView = () => {
                     id={"boutgifter_" + navn + "_checkbox"}
                     name={navn}
                     checked={isChecked}
-                    label={<FormattedHTMLMessage id={UTBETALINGER + ".true.type." + textKey} />}
+                    label={<FormattedMessage id={UTBETALINGER + ".true.type." + textKey} />}
                     onClick={() => handleClickRadio(navn)}
                 />
             );
@@ -146,21 +139,21 @@ export const UtbetalingerView = () => {
                 onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
-            <Sporsmal tekster={getFaktumSporsmalTekst(intl, UTBETALINGER + ".true.type")}>
-                {renderCheckBox(UtbetalingerKeys.UTBYTTE, UtbetalingerKeys.UTBYTTE)}
+                <Sporsmal tekster={getFaktumSporsmalTekst(intl, UTBETALINGER + ".true.type")}>
+                    {renderCheckBox(UtbetalingerKeys.UTBYTTE, UtbetalingerKeys.UTBYTTE)}
                     {renderCheckBox(UtbetalingerKeys.SALG, UtbetalingerKeys.SALG)}
-                {renderCheckBox(UtbetalingerKeys.FORSIKRING, UtbetalingerKeys.FORSIKRING)}
+                    {renderCheckBox(UtbetalingerKeys.FORSIKRING, UtbetalingerKeys.FORSIKRING)}
                     {renderCheckBox(UtbetalingerKeys.ANNET, UtbetalingerKeys.ANNET)}
-                <NivaTreSkjema visible={!!(utbetalinger.bekreftelse && utbetalinger.annet)} size="small">
+                    <NivaTreSkjema visible={!!(utbetalinger.bekreftelse && utbetalinger.annet)} size="small">
                         <TextareaEnhanced
-                        id={replaceDotWithUnderscore(TEXT_AREA_ANNET_FAKTUM_KEY)}
+                            id={replaceDotWithUnderscore(TEXT_AREA_ANNET_FAKTUM_KEY)}
                             placeholder=""
                             onChange={(evt: any) => onChangeAnnet(evt.target.value)}
                             onBlur={() => onBlurTekstfeltAnnet()}
                             faktumKey={TEXT_AREA_ANNET_FAKTUM_KEY}
-                        labelId={UTBETALINGER + ".true.type.annet.true.beskrivelse.label"}
+                            labelId={UTBETALINGER + ".true.type.annet.true.beskrivelse.label"}
                             maxLength={MAX_CHARS}
-                        value={utbetalinger.beskrivelseAvAnnet ? utbetalinger.beskrivelseAvAnnet : ""}
+                            value={utbetalinger.beskrivelseAvAnnet ? utbetalinger.beskrivelseAvAnnet : ""}
                         />
                     </NivaTreSkjema>
                 </Sporsmal>

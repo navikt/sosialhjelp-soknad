@@ -24,7 +24,7 @@ open={mottarBostotte === "false"}
         farge={DigisosFarge.NAV_ORANSJE_LIGHTEN_40}
         ikon={InformasjonspanelIkon.ELLA}
     >
-        <FormattedHTMLMessage id="informasjon.husbanken.bostotte"/>
+        <FormattedMessage id="informasjon.husbanken.bostotte"/>
     </InformasjonspanelTo>
 
 </FadeCollapse>

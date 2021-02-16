@@ -1,6 +1,6 @@
 import * as React from "react";
 import {onEndretValideringsfeil} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -106,7 +106,7 @@ export const FormueView = () => {
         if (oppstartsModus) {
             label = <TextPlaceholder lines={1} style={{marginTop: "0.2rem"}} />;
         } else {
-            label = <FormattedHTMLMessage id={FORMUE + ".true.type." + navn} />;
+            label = <FormattedMessage id={FORMUE + ".true.type." + navn} />;
         }
 
         return (
