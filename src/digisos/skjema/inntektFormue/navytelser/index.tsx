@@ -83,12 +83,15 @@ const NavYtelserView = () => {
                             id={"utbetalinger.infotekst.tekst.v2"}
                             values={{
                                 a: (msg: string) => (
+                                    // Disable target-blank-rule on internal urls
+                                    /* eslint-disable react/jsx-no-target-blank */
                                     <a
                                         href={intl.formatMessage({id: "utbetalinger.infotekst.tekst.url"})}
                                         target="_blank"
                                     >
                                         {msg}
                                     </a>
+                                    /* eslint-enable react/jsx-no-target-blank */
                                 ),
                             }}
                         />

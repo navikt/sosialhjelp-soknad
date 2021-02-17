@@ -22,6 +22,8 @@ const IkkeTilgangInformasjon: React.FC<Props> = ({sperrekode}) => {
                         id="informasjon.ikketilgang.bruker.tekst.v2"
                         values={{
                             a: (msg: string) => (
+                                // Disable target-blank-rule on internal urls
+                                /* eslint-disable-next-line react/jsx-no-target-blank */
                                 <a href="https://www.nav.no/person/personopplysninger/#ditt-nav-kontor" target="_blank">
                                     {msg}
                                 </a>
@@ -39,12 +41,15 @@ const IkkeTilgangInformasjon: React.FC<Props> = ({sperrekode}) => {
                         id="informasjon.ikketilgang.tekst.v2"
                         values={{
                             a: (msg: string) => (
+                                // Disable target-blank-rule on internal urls
+                                /* eslint-disable react/jsx-no-target-blank */
                                 <a
                                     href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Relatert+informasjon/finn-ditt-nav-kontor--353421"
                                     target="_blank"
                                 >
                                     {msg}
                                 </a>
+                                /* eslint-enable react/jsx-no-target-blank */
                             ),
                         }}
                     />

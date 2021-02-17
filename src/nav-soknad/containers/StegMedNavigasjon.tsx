@@ -246,6 +246,8 @@ const StegMedNavigasjon = (
                                 values={{
                                     kommuneNavn: finnKommunenavn(),
                                     a: (msg: string) => (
+                                        // Disable target-blank-rule on internal urls
+                                        /* eslint-disable-next-line react/jsx-no-target-blank */
                                         <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
                                             {msg}
                                         </a>

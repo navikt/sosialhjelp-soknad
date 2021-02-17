@@ -103,6 +103,8 @@ class Informasjon extends React.Component<Props, {}> {
                                             id="informasjon.start.tekst_del1"
                                             values={{
                                                 a: (msg: string) => (
+                                                    // Disable target-blank-rule on internal urls
+                                                    /* eslint-disable-next-line react/jsx-no-target-blank */
                                                     <a href="https://www.nav.no/sosialhjelp/" target="_blank">
                                                         {msg}
                                                     </a>
@@ -118,12 +120,15 @@ class Informasjon extends React.Component<Props, {}> {
                                             id="informasjon.start.tekst_del3"
                                             values={{
                                                 a: (msg: string) => (
+                                                    // Disable target-blank-rule on internal urls
+                                                    /* eslint-disable react/jsx-no-target-blank */
                                                     <a
                                                         href="https://www.nav.no/person/personopplysninger/nb/#ditt-nav-kontor"
                                                         target="_blank"
                                                     >
                                                         {msg}
                                                     </a>
+                                                    /* eslint-enable react/jsx-no-target-blank */
                                                 ),
                                             }}
                                         />
