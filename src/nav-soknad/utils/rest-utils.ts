@@ -47,18 +47,18 @@ enum LocalHostMode {
 export function getLocalhostApiBaseUrl(withAccessToken: boolean | undefined, apiContextPath: string): string {
     const mode = LocalHostMode.LOCALHOST_MOCK_PROFIL; // Velg modus her!
 
-    if (mode == LocalHostMode.LOCALHOST_MOCK_PROFIL) {
+    if (mode === LocalHostMode.LOCALHOST_MOCK_PROFIL) {
         // Kjør mot lokal sosialhjelp-soknad-api:
         return `http://localhost:8181/${API_CONTEXT_PATH}/`;
     }
 
-    if (mode == LocalHostMode.LOCALHOST_MOCK_ALT_PROFIL) {
+    if (mode === LocalHostMode.LOCALHOST_MOCK_ALT_PROFIL) {
         // Kjør mot lokal sosialhjelp-soknad-api og mock-alt-api (som login-api):
         if (withAccessToken) return `http://localhost:8989/sosialhjelp/mock-alt-api/login-api/${API_CONTEXT_PATH}/`;
         else return `http://localhost:8181/${API_CONTEXT_PATH}/`;
     }
 
-    if (mode == LocalHostMode.LOCALHOST_LOKAL_LOGIN_API) {
+    if (mode === LocalHostMode.LOCALHOST_LOKAL_LOGIN_API) {
         // Kjør med login-api som proxy om en ønsker access_token fra idporten
         const apiPort = withAccessToken ? 7000 : 8181;
         return `http://localhost:${apiPort}/${apiContextPath}/`;
