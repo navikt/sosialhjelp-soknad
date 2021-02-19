@@ -1,6 +1,6 @@
 import * as React from "react";
 import Skjemapanel from "../../../nav-soknad/components/skjemapanel";
-import {FormattedHTMLMessage} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import {Opplysning, OpplysningGruppe} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {getGruppeTittelKey} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import OpplysningView from "./OpplysningView";
@@ -23,7 +23,7 @@ const GruppeView = (props: {key: OpplysningGruppe; gruppeKey: OpplysningGruppe; 
         <Skjemapanel className="skjema-progresjonsblokk">
             <div className="skjema-progresjonsblokk__head">
                 <h3>
-                    <FormattedHTMLMessage id={gruppeTittelKey + ".sporsmal"} />
+                    <FormattedMessage id={gruppeTittelKey + ".sporsmal"} />
                 </h3>
             </div>
             {renderGruppeInnhold(gruppe)}

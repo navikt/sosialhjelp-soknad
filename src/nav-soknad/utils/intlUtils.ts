@@ -15,7 +15,7 @@ export function getIntlText(intl?: IntlShape, key?: string) {
     if (!key) {
         return undefined;
     }
-    return intlHasKey(intl, key) ? intl.formatHTMLMessage({id: key}) : undefined;
+    return intlHasKey(intl, key) ? intl.formatMessage({id: key}) : undefined;
 }
 
 export function getIntlTextOrKey(intl: IntlShape, key: string): string {
@@ -39,7 +39,7 @@ export function getIntlHjelpeTekst(intl: IntlShape, key: string): any | undefine
 }
 
 function getIkkeTomIntlText(intl: IntlShape, key?: string) {
-    return intlTextIkkeTom(intl, key ? key : "") ? intl.formatHTMLMessage({id: key ? key : ""}) : undefined;
+    return intlTextIkkeTom(intl, key ? key : "") ? intl.formatMessage({id: key ? key : ""}) : undefined;
 }
 
 function intlTextIkkeTom(intl: IntlShape, key: string) {

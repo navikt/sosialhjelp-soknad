@@ -181,7 +181,7 @@ const TelefonView = () => {
                         {!brukerdefinert && (
                             <Detaljeliste>
                                 <DetaljelisteElement
-                                    tittel={intl.formatHTMLMessage({
+                                    tittel={intl.formatMessage({
                                         id: "kontakt.system.telefon.label",
                                     })}
                                     verdi={systemverdi}

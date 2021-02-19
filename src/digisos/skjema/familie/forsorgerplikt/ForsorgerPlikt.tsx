@@ -1,4 +1,4 @@
-import {FormattedHTMLMessage} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useState, useEffect} from "react";
@@ -53,7 +53,12 @@ const ForsorgerPliktView = () => {
         return (
             <Sporsmal sprakNokkel="familierelasjon.faktum">
                 <p>
-                    <FormattedHTMLMessage id="familierelasjon.ingen_registrerte_barn" />
+                    <FormattedMessage id="familierelasjon.ingen_registrerte_barn_tittel" />
+                </p>
+                <p>
+                    <b>
+                        <FormattedMessage id="familierelasjon.ingen_registrerte_barn_tekst" />
+                    </b>
                 </p>
                 {/*<BrukerregistrerteBarn/> TODO: Kommentert ut intil alle FSLer er klare. */}
                 {brukerregistrertAnsvar && antallBrukerregistrerteBarn > 0 && <Barnebidrag />}
@@ -63,7 +68,16 @@ const ForsorgerPliktView = () => {
     if (ansvar && antallBarn > 0) {
         return (
             <Sporsmal sprakNokkel="familierelasjon.faktum" stil="system" legendTittelStyle={LegendTittleStyle.DEFAULT}>
-                <FormattedHTMLMessage id="familierelasjon.ingress" values={{antallBarn}} />
+                <p>
+                    <FormattedMessage id="familierelasjon.ingress_folkeregisteret" />
+                </p>
+                <p>
+                    <b>
+                        <FormattedMessage id="familierelasjon.ingress_forsorger" />
+                    </b>
+                    <FormattedMessage id="familierelasjon.ingress_antallBarn" values={{antallBarn}} />
+                </p>
+
                 <SysteminfoMedSkjema>
                     <RegistrerteBarn />
                     {/*<BrukerregistrerteBarn/> TODO: Kommentert ut intil alle FSLer er klare. */}

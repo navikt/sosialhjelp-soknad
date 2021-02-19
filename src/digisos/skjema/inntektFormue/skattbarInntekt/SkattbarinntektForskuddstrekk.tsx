@@ -15,7 +15,7 @@ function getUtbetalingVerdi(key: string, value: number, index: number) {
     return (
         <div key={`${key}-${index}`} className="utbetaling">
             <span>
-                <FormattedMessage id={key} />:
+                <FormattedMessage id={key} defaultMessage={key} />:
             </span>
             <span className="verdi detaljeliste__verdi">
                 <FormattedNumber value={value} minimumFractionDigits={2} maximumFractionDigits={2} /> kr

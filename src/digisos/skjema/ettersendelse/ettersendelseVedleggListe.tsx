@@ -2,7 +2,7 @@ import * as React from "react";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
 import Knapp from "nav-frontend-knapper";
-import {FormattedHTMLMessage, FormattedMessage, injectIntl} from "react-intl";
+import {FormattedMessage, injectIntl} from "react-intl";
 import {DispatchProps} from "../../redux/reduxTypes";
 import {connect} from "react-redux";
 import {State} from "../../redux/reducers";
@@ -112,7 +112,7 @@ class EttersendelseVedleggListe extends React.Component<Props, OwnState> {
                     {this.state.advarselManglerVedlegg && (
                         <>
                             <div className="skjema__feilmelding">
-                                <FormattedHTMLMessage id="ettersendelse.feilmelding.ingen_vedlegg" />
+                                <FormattedMessage id="ettersendelse.feilmelding.ingen_vedlegg" />
                             </div>
                             <br />
                         </>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import {UnmountClosed} from "react-collapse";
-import {FormattedHTMLMessage} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import {MargIkoner} from "./margIkoner";
 import EttersendelseVedleggListe from "./ettersendelseVedleggListe";
@@ -82,10 +82,10 @@ class EttersendelseEkspanderbart extends React.Component<Props, State> {
                         <>
                             <AvsnittMedMarger className="ettersendelse__vedlegg__header">
                                 {!this.props.kunGenerellDokumentasjon && this.props.ettersendelseAktivert && (
-                                    <FormattedHTMLMessage id="ettersendelse.mangler_info" />
+                                    <FormattedMessage id="ettersendelse.mangler_info" />
                                 )}
                                 {!this.props.ettersendelseAktivert && (
-                                    <FormattedHTMLMessage id="ettersendelse.mangler_info_manuell" />
+                                    <FormattedMessage id="ettersendelse.mangler_info_manuell" />
                                 )}
                             </AvsnittMedMarger>
 

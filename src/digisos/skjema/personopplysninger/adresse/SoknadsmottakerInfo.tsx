@@ -4,7 +4,7 @@ import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger"
 import {SoknadsMottakerStatus} from "./AdresseTypes";
 import {soknadsmottakerStatus} from "./AdresseUtils";
 import AlertStripe from "nav-frontend-alertstriper";
-import {FormattedHTMLMessage} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import {useSelector} from "react-redux";
 import {State} from "../../../redux/reducers";
 
@@ -38,10 +38,15 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
         // ORANSJE
         informasjonspanel = (
             <AlertStripe type="advarsel">
-                <FormattedHTMLMessage
-                    id="adresse.alertstripe.advarsel"
+                <FormattedMessage
+                    id="adresse.alertstripe.advarsel.v2"
                     values={{
                         kommuneNavn: kommunenavn,
+                        a: (msg: string) => (
+                            <a href="https://husbanken.no/bostotte" target="_blank" rel="noreferrer noopener">
+                                {msg}
+                            </a>
+                        ),
                     }}
                 />
             </AlertStripe>
@@ -49,10 +54,17 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
     } else if (mottakerStatus === SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT) {
         informasjonspanel = (
             <AlertStripe type="feil">
-                <FormattedHTMLMessage
-                    id="adresse.alertstripe.feil"
+                <FormattedMessage
+                    id="adresse.alertstripe.feil.v2"
                     values={{
                         kommuneNavn: kommunenavn,
+                        a: (msg: string) => (
+                            // Disable target-blank-rule on internal urls
+                            /* eslint-disable-next-line react/jsx-no-target-blank */
+                            <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                                {msg}
+                            </a>
+                        ),
                     }}
                 />
             </AlertStripe>
