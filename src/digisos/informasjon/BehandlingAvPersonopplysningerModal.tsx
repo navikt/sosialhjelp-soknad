@@ -11,7 +11,7 @@ import {visSamtykkeInfo} from "../redux/soknad/soknadActions";
 export const replaceNavkontor = (text: string, valgtEnhetsNavn?: string) => {
     // Hvis ikke valgtEnhetsNavn finnes, erstattes søkestrengen med capture-gruppa ([\w\s-]*)
     // som er 1 eller fler bokstaver, whitespace eller '-', feks "NAV-kontoret ditt" fra søknads-api-tekstene
-    return text.replaceAll(/{navkontor:([\w\s-]*)}/g, valgtEnhetsNavn ? valgtEnhetsNavn : "$1");
+    return text.replace(/{navkontor:([\w\s-]*)}/g, valgtEnhetsNavn ? valgtEnhetsNavn : "$1");
 };
 const getText = (soknadsdata: Soknadsdata, text: string) => {
     const valgtEnhetsNavn = finnValgtEnhetsNavn(soknadsdata);
