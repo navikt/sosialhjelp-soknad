@@ -14,6 +14,7 @@ import {ErSystemdataEndret, Samtykke} from "../../redux/soknad/soknadActionTypes
 import {tilSteg} from "../../redux/navigasjon/navigasjonActions";
 import Veilederpanel from "nav-frontend-veilederpanel";
 import EllaKompakt from "../../../nav-soknad/components/svg/EllaKompakt";
+import NavFrontendSpinner from "nav-frontend-spinner";
 
 const SamtykkeView: React.FC = () => {
     const intl = useIntl();
@@ -59,14 +60,19 @@ const SamtykkeView: React.FC = () => {
     return (
         <div className="app-digisos informasjon-side">
             <AppBanner />
-            <Panel className={"skjema-content"}>
-                <Veilederpanel svg={<EllaKompakt />} fargetema="advarsel" kompakt={true} type="plakat">
-                    {erSystemdataEndret === ErSystemdataEndret.YES && (
-                        <div className="skjemaelement--horisontal">
-                            <FormattedMessage id="oppsummering.systemdataendret.true" />
-                        </div>
-                    )}
-                    {harSamtykker && (
+            {!harSamtykker && (
+                <div className="application-spinner">
+                    <NavFrontendSpinner type="XXL" />
+                </div>
+            )}
+            {harSamtykker && (
+                <Panel className={"skjema-content"}>
+                    <Veilederpanel svg={<EllaKompakt />} fargetema="advarsel" kompakt={true} type="plakat">
+                        {erSystemdataEndret === ErSystemdataEndret.YES && (
+                            <div className="skjemaelement--horisontal">
+                                <FormattedMessage id="oppsummering.systemdataendret.true" />
+                            </div>
+                        )}
                         <>
                             <div className="skjemaelement--horisontal">
                                 <FormattedMessage id="informasjon.samtykke.info_del1" />
@@ -80,19 +86,19 @@ const SamtykkeView: React.FC = () => {
                                 onChange={(event: any) => (harSamtykket = event.target.checked)}
                             />
                         </>
-                    )}
-                </Veilederpanel>
-                <Knapp
-                    id="gi_bostotte_samtykke"
-                    type="hoved"
-                    onClick={() => {
-                        setSamtykkeOgGaTilSteg1(harSamtykket);
-                    }}
-                    className="samtykke_knapp_padding"
-                >
-                    {getIntlTextOrKey(intl, "informasjon.samtykke.knapp")}
-                </Knapp>
-            </Panel>
+                    </Veilederpanel>
+                    <Knapp
+                        id="gi_bostotte_samtykke"
+                        type="hoved"
+                        onClick={() => {
+                            setSamtykkeOgGaTilSteg1(harSamtykket);
+                        }}
+                        className="samtykke_knapp_padding"
+                    >
+                        {getIntlTextOrKey(intl, "informasjon.samtykke.knapp")}
+                    </Knapp>
+                </Panel>
+            )}
         </div>
     );
 };
