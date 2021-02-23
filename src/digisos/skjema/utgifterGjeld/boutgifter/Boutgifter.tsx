@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormattedHTMLMessage, useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
@@ -65,7 +65,7 @@ export const BoutgifterView = () => {
                 id={"boutgifter_" + navn + "_checkbox"}
                 name={navn}
                 checked={isChecked}
-                label={<FormattedHTMLMessage id={BOUTGIFTER + ".true.type." + textKey} />}
+                label={<FormattedMessage id={BOUTGIFTER + ".true.type." + textKey} />}
                 onClick={() => handleClickRadio(navn)}
             />
         );
@@ -98,7 +98,20 @@ export const BoutgifterView = () => {
                 ikon={InformasjonspanelIkon.ELLA}
                 farge={DigisosFarge.VIKTIG}
             >
-                <FormattedHTMLMessage id="informasjon.husbanken.bostotte" />
+                <FormattedMessage
+                    id="informasjon.husbanken.bostotte.v2"
+                    values={{
+                        a: (msg: string) => (
+                            <a
+                                href={intl.formatMessage({id: "informasjon.husbanken.bostotte.url"})}
+                                target="_blank"
+                                rel="noreferrer noopener"
+                            >
+                                {msg}
+                            </a>
+                        ),
+                    }}
+                />
             </Informasjonspanel>
         </div>
     );

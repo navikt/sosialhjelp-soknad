@@ -1,4 +1,4 @@
-import {FormattedHTMLMessage, FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import * as React from "react";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
@@ -337,9 +337,9 @@ const AdresseView = () => {
                                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                             >
                                 <div style={{marginBottom: "1rem"}}>
-                                    <FormattedHTMLMessage id="kontakt.system.kontaktinfo.infotekst.tekst" />
+                                    <FormattedMessage id="kontakt.system.kontaktinfo.infotekst.tekst" />
                                 </div>
-                                <FormattedHTMLMessage id="kontakt.system.kontaktinfo.infotekst.ekstratekst" />
+                                <FormattedMessage id="kontakt.system.kontaktinfo.infotekst.ekstratekst" />
                                 <AdresseTypeahead
                                     onNullstill={() => nullstillAdresseTypeahead()}
                                     valgtAdresse={formatertSoknadAdresse}

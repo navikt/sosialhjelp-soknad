@@ -188,7 +188,7 @@ const Bankinformasjon = () => {
                             onChange={(event: any) => onChangeCheckboks(event)}
                             label={
                                 <div>
-                                    {intl.formatHTMLMessage({
+                                    {intl.formatMessage({
                                         id: FAKTUM_KEY_KONTONUMMER + ".harikke",
                                     })}
                                 </div>
@@ -237,7 +237,7 @@ const Bankinformasjon = () => {
                                     onChange={(event: any) => onChangeCheckboks(event)}
                                     label={
                                         <div>
-                                            {intl.formatHTMLMessage({
+                                            {intl.formatMessage({
                                                 id: FAKTUM_KEY_KONTONUMMER + ".harikke",
                                             })}
                                         </div>
@@ -249,7 +249,7 @@ const Bankinformasjon = () => {
                         {!kontonummer.brukerdefinert && (
                             <Detaljeliste>
                                 <DetaljelisteElement
-                                    tittel={intl.formatHTMLMessage({
+                                    tittel={intl.formatMessage({
                                         id: FAKTUM_KEY_KONTONUMMER + ".label",
                                     })}
                                     verdi={kontonummer.systemverdi}

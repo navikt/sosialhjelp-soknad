@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {FormattedHTMLMessage, FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 
 import {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/utils";
@@ -17,7 +17,7 @@ import {UndertekstBold} from "nav-frontend-typografi";
 const FAKTUM_STUDIELAN = "inntekt.studielan";
 
 const STUDERER_INFO_TITTEL = "informasjon.student.studielan.tittel";
-const STUDERER_INFO_DEL1 = "informasjon.student.studielan.1";
+const STUDERER_INFO_DEL1 = "informasjon.student.studielan.1.v2";
 const STUDERER_INFO_DEL2 = "informasjon.student.studielan.2";
 
 const StudielanView = () => {
@@ -77,10 +77,23 @@ const StudielanView = () => {
                         <FormattedMessage id={STUDERER_INFO_TITTEL} />
                     </UndertekstBold>
                     <p>
-                        <FormattedHTMLMessage id={STUDERER_INFO_DEL1} />
+                        <FormattedMessage
+                            id={STUDERER_INFO_DEL1}
+                            values={{
+                                a: (msg: string) => (
+                                    <a
+                                        href={intl.formatMessage({id: "informasjon.student.studielan.url"})}
+                                        target="_blank"
+                                        rel="noreferrer noopener"
+                                    >
+                                        {msg}
+                                    </a>
+                                ),
+                            }}
+                        />
                     </p>
                     <p>
-                        <FormattedHTMLMessage id={STUDERER_INFO_DEL2} />
+                        <FormattedMessage id={STUDERER_INFO_DEL2} />
                     </p>
                 </Informasjonspanel>
             )}

@@ -1,6 +1,6 @@
 import * as React from "react";
 import {onEndretValideringsfeil} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
-import {FormattedHTMLMessage, useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
@@ -112,7 +112,7 @@ export const VerdierView = () => {
                 id={"verdier_" + navn + "_checkbox"}
                 name={navn}
                 checked={!!verdier[navn]}
-                label={<FormattedHTMLMessage id={VERDIER + ".true.type." + navn} />}
+                label={<FormattedMessage id={VERDIER + ".true.type." + navn} />}
                 onClick={() => handleClickRadio(navn)}
             />
         );

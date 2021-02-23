@@ -1,7 +1,7 @@
 import * as React from "react";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import Koffert from "../../../nav-soknad/components/svg/illustrasjoner/Koffert";
-import {FormattedHTMLMessage} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import Utdanning from "./utdanning/Utdanning";
 import Arbeid from "./arbeid/Arbeid";
 
@@ -10,7 +10,7 @@ const ArbeidOgUtdanning: React.FC<{}> = () => {
         <DigisosSkjemaSteg steg={DigisosSteg.arbeidbolk} ikon={<Koffert />}>
             <Arbeid />
             <h2 className="overskrift">
-                <FormattedHTMLMessage id="arbeid.dinsituasjon.studerer.undertittel" />
+                <FormattedMessage id="arbeid.dinsituasjon.studerer.undertittel" />
             </h2>
             <Utdanning />
         </DigisosSkjemaSteg>

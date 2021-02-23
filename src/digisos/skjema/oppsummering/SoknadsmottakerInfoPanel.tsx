@@ -1,4 +1,4 @@
-import {FormattedHTMLMessage, FormattedMessage} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import * as React from "react";
 import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
@@ -17,11 +17,20 @@ class SoknadsmottakerInfoPanel extends React.Component<Props, {}> {
             const valgtEnhetsNavn = `${valgtSoknadsmottaker.enhetsnavn}, ${valgtSoknadsmottaker.kommunenavn} kommune`;
             return (
                 <Informasjonspanel farge={DigisosFarge.VIKTIG} ikon={InformasjonspanelIkon.BREVKONVOLUTT}>
-                    <FormattedHTMLMessage
-                        id="soknasosialhjelp.oppsummering.hvorsendes"
-                        values={{navkontor: valgtEnhetsNavn}}
-                    />
-
+                    <p>
+                        <strong>
+                            <FormattedMessage
+                                id="soknasosialhjelp.oppsummering.hvorsendes_del1"
+                                values={{navkontor: valgtEnhetsNavn}}
+                            />
+                        </strong>
+                    </p>
+                    <p>
+                        <FormattedMessage
+                            id="soknasosialhjelp.oppsummering.hvorsendes_del2"
+                            values={{navkontor: valgtEnhetsNavn}}
+                        />
+                    </p>
                     <button
                         type="button"
                         className="linkbutton linkbutton--normal"
