@@ -18,18 +18,25 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 
 const SamtykkeView: React.FC = () => {
     const intl = useIntl();
-    let harSamtykket: boolean = false;
-
     const dispatch = useDispatch();
 
-    const erSystemdataEndret: ErSystemdataEndret = useSelector((state: State) => state.soknad.erSystemdataEndret);
     const behandlingsId: string | undefined = useSelector((state: State) => state.soknad.behandlingsId);
+    const erSystemdataEndret: ErSystemdataEndret = useSelector((state: State) => state.soknad.erSystemdataEndret);
     const samtykker: Samtykke[] | undefined = useSelector((state: State) => state.soknad.samtykker);
-    const samtykkeRestStatus: REST_STATUS = useSelector((state: State) => state.soknad.restStatus);
+    const samtykkeRestStatus: REST_STATUS = useSelector((state: State) => state.soknad.samtykkeRestStatus);
+    let samtykkerTekst: string = "";
+
+    useEffect(() => {
+        if (behandlingsId) {
+            dispatch(getErSystemdataEndret(behandlingsId));
+            dispatch(hentSamtykker(behandlingsId));
+        }
+    }, [behandlingsId, dispatch]);
 
     const harLastetinnSamtykker = samtykkeRestStatus === REST_STATUS.OK;
+    let harAvsjekketSamtykkeBoksen: boolean = false;
     let harSamtykker: boolean = false;
-    let samtykkerTekst: string = "";
+
     if (harLastetinnSamtykker && samtykker) {
         const faktiskeSamtykker = samtykker.filter((samtykke) => (samtykke.verdi ? samtykke.verdi : false));
         harSamtykker = faktiskeSamtykker.length > 0;
@@ -39,21 +46,13 @@ const SamtykkeView: React.FC = () => {
         });
     }
 
-    if (harLastetinnSamtykker && behandlingsId) {
-        if (erSystemdataEndret === ErSystemdataEndret.NO && !harSamtykker) {
-            dispatch(tilSteg(1, behandlingsId));
-        }
+    if (harLastetinnSamtykker && behandlingsId && !harSamtykker) {
+        dispatch(tilSteg(1, behandlingsId));
     }
-    useEffect(() => {
-        if (behandlingsId) {
-            dispatch(getErSystemdataEndret(behandlingsId));
-            dispatch(hentSamtykker(behandlingsId));
-        }
-    }, [behandlingsId, dispatch]);
 
-    function setSamtykkeOgGaTilSteg1(nyttHarSamtykket: boolean) {
+    function knappOppdaterSamtykkeOgGaTilSteg1() {
         if (behandlingsId && samtykker) {
-            dispatch(oppdaterSamtykke(behandlingsId, nyttHarSamtykket, samtykker));
+            dispatch(oppdaterSamtykke(behandlingsId, harAvsjekketSamtykkeBoksen, samtykker));
         }
     }
 
@@ -83,7 +82,7 @@ const SamtykkeView: React.FC = () => {
                                 label={
                                     getIntlTextOrKey(intl, "informasjon.samtykke.sporsmal") + " " + samtykkerTekst + "."
                                 }
-                                onChange={(event: any) => (harSamtykket = event.target.checked)}
+                                onChange={(event: any) => (harAvsjekketSamtykkeBoksen = event.target.checked)}
                             />
                         </>
                     </Veilederpanel>
@@ -91,7 +90,7 @@ const SamtykkeView: React.FC = () => {
                         id="gi_bostotte_samtykke"
                         type="hoved"
                         onClick={() => {
-                            setSamtykkeOgGaTilSteg1(harSamtykket);
+                            knappOppdaterSamtykkeOgGaTilSteg1();
                         }}
                         className="samtykke_knapp_padding"
                     >
