@@ -1,7 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {DispatchProps} from "../../redux/reduxTypes";
-import "whatwg-fetch";
 import {tilMock} from "../../redux/navigasjon/navigasjonActions";
 import {fetchPost} from "../../../nav-soknad/utils/rest-utils";
 import {settMockIdent} from "../mockReducer";
