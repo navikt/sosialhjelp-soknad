@@ -1,4 +1,3 @@
-import * as Enzyme from "enzyme";
 import {IntlProvider} from "react-intl";
 import {ReactElement} from "react";
 import * as React from "react";
@@ -12,16 +11,9 @@ import thunk from "redux-thunk";
 import reducers from "../../digisos/redux/reducers";
 import sagas from "../../rootSaga";
 import {Provider} from "react-redux";
-import ReactSixteenAdapter from "enzyme-adapter-react-16";
 import {routerMiddleware} from "connected-react-router";
 import {SoknadState} from "../../digisos/redux/soknad/soknadTypes";
 import {createIntl} from "react-intl";
-
-const prettier = require("prettier");
-
-export const configEnzyme = () => {
-    Enzyme.configure({adapter: new ReactSixteenAdapter()});
-};
 
 export const setupReactIntl = (intlMessages: any) => {
     const intl = createIntl({
