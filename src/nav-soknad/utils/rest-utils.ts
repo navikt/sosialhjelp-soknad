@@ -47,6 +47,7 @@ enum LocalHostMode {
 export function getLocalhostApiBaseUrl(withAccessToken: boolean | undefined, apiContextPath: string): string {
     const mode = LocalHostMode.LOCALHOST_MOCK_PROFIL; // Velg modus her!
 
+    // @ts-ignore
     if (mode === LocalHostMode.LOCALHOST_MOCK_PROFIL) {
         // Kjør mot lokal sosialhjelp-soknad-api:
         return `http://localhost:8181/${API_CONTEXT_PATH}/`;
@@ -81,11 +82,11 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
         window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0 ||
         window.location.origin.indexOf("labs.nais.io") >= 0
     ) {
-        if (
-            window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0 ||
-            window.location.origin.indexOf("digisos.labs.nais.io") >= 0
-        ) {
+        if (window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0) {
             return getAbsoluteApiUrlForMockAlt(withAccessToken);
+        }
+        if (window.location.origin.indexOf("digisos.labs.nais.io") >= 0) {
+            return getAbsoluteApiUrl(withAccessToken);
         }
         return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
     }
@@ -159,6 +160,7 @@ function getGotoParameterIfPathAlreadyIsLink(): string | undefined {
     }
     return undefined;
 }
+
 export function parseGotoValueFromSearchParameters(searchParameters: string): string {
     const afterGoto = searchParameters.split("goto=")[1];
     return afterGoto ? afterGoto.split("&login_id")[0] : afterGoto; // Fjerne login_id dersom strengen bak goto= er definert.
