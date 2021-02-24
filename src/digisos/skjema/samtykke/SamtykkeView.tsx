@@ -46,7 +46,7 @@ const SamtykkeView: React.FC = () => {
         });
     }
 
-    if (harLastetinnSamtykker && behandlingsId && !harSamtykker) {
+    if (harLastetinnSamtykker && behandlingsId && !harSamtykker && erSystemdataEndret === ErSystemdataEndret.NO) {
         dispatch(tilSteg(1, behandlingsId));
     }
 
@@ -59,32 +59,37 @@ const SamtykkeView: React.FC = () => {
     return (
         <div className="app-digisos informasjon-side">
             <AppBanner />
-            {!harSamtykker && (
+            {(!harLastetinnSamtykker || erSystemdataEndret === ErSystemdataEndret.NOT_ASKED) && (
                 <div className="application-spinner">
                     <NavFrontendSpinner type="XXL" />
                 </div>
             )}
-            {harSamtykker && (
+            {(harSamtykker || erSystemdataEndret === ErSystemdataEndret.YES) && (
                 <Panel className={"skjema-content"}>
                     <Veilederpanel svg={<EllaKompakt />} fargetema="advarsel" kompakt={true} type="plakat">
                         {erSystemdataEndret === ErSystemdataEndret.YES && (
-                            <div className="skjemaelement--horisontal">
+                            <div className="skjemaelement--horisontal" style={{marginBottom: "8px"}}>
                                 <FormattedMessage id="oppsummering.systemdataendret.true" />
                             </div>
                         )}
-                        <>
-                            <div className="skjemaelement--horisontal">
-                                <FormattedMessage id="informasjon.samtykke.info_del1" />
-                                {" " + samtykkerTekst + ". "}
-                                <FormattedMessage id="informasjon.samtykke.info_del2" />
-                            </div>
-                            <Checkbox
-                                label={
-                                    getIntlTextOrKey(intl, "informasjon.samtykke.sporsmal") + " " + samtykkerTekst + "."
-                                }
-                                onChange={(event: any) => (harAvsjekketSamtykkeBoksen = event.target.checked)}
-                            />
-                        </>
+                        {harSamtykker && (
+                            <>
+                                <div className="skjemaelement--horisontal" style={{marginBottom: "8px"}}>
+                                    <FormattedMessage id="informasjon.samtykke.info_del1" />
+                                    {" " + samtykkerTekst + ". "}
+                                    <FormattedMessage id="informasjon.samtykke.info_del2" />
+                                </div>
+                                <Checkbox
+                                    label={
+                                        getIntlTextOrKey(intl, "informasjon.samtykke.sporsmal") +
+                                        " " +
+                                        samtykkerTekst +
+                                        "."
+                                    }
+                                    onChange={(event: any) => (harAvsjekketSamtykkeBoksen = event.target.checked)}
+                                />
+                            </>
+                        )}
                     </Veilederpanel>
                     <Knapp
                         id="gi_bostotte_samtykke"
