@@ -1,5 +1,6 @@
-import "whatwg-fetch";
-import "core-js";
+import "react-app-polyfill/ie11";
+import "react-app-polyfill/stable";
+
 import "intl";
 import "intl/locale-data/jsonp/nb-NO.js";
 import "./index.less";

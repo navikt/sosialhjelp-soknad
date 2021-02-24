@@ -11,7 +11,6 @@ import {NyttBarn, NyttBarnObject} from "./mockComponents/nyttBarn";
 import MockDataBolkWrapper from "./mockComponents/mockDataBolkWrapper";
 import MockInput from "./mockComponents/mockInput";
 import {fetchPost} from "../../../nav-soknad/utils/rest-utils";
-import "whatwg-fetch";
 import {NyBostotteUtbetaling, NyUtbetalingObject} from "./mockComponents/nyBostotteUtbetaling";
 import {NyBostotteSak, NySakObject} from "./mockComponents/nyBostotteSak";
 import {Hovedknapp} from "nav-frontend-knapper";
