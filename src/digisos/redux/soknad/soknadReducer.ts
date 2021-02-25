@@ -42,6 +42,7 @@ export const defaultState: SoknadState = {
 
     // Samtykker
     samtykker: [],
+    samtykkeRestStatus: REST_STATUS.INITIALISERT,
 
     // Avbryt
     avbrytDialog: {
@@ -178,11 +179,17 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             };
         }
 
+        case SoknadActionTypeKeys.HENT_SAMTYKKE:
+            return {
+                ...state,
+                samtykkeRestStatus: REST_STATUS.PENDING,
+            };
         case SoknadActionTypeKeys.HENT_SAMTYKKE_OK: {
             const {samtykker} = action;
             return {
                 ...state,
                 samtykker: samtykker,
+                samtykkeRestStatus: REST_STATUS.OK,
             };
         }
 
