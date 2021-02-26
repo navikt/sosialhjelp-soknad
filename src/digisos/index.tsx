@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Route, Switch} from "react-router";
+import {Redirect, Route, Switch} from "react-router";
 import SideIkkeFunnet from "../nav-soknad/containers/SideIkkeFunnet";
 import Informasjon from "./informasjon";
 import MockBruker from "./mock/mockbruker";
@@ -13,6 +13,9 @@ const App: React.FC = () => {
     return (
         <span>
             <Switch>
+                <Route exact path="/">
+                    <Redirect to="/informasjon" />
+                </Route>
                 <Route path={`/skjema/:brukerBehandlingId/ettersendelse`} component={Ettersendelse} />
                 <Route path={`/informasjon`} exact={true} component={Informasjon} />
                 <Route path={`/link`} exact={true} component={Link} />
