@@ -8,7 +8,7 @@
     "@sentry/browser": "^5.30.0",
     "amplitude-js": "^7.4.3",
     "classnames": "^2.2.6",
-    "connected-react-router": "^6.8.0",
+    "connected-react-router": "^6.9.1",
     "craco-less": "^1.17.1",
     "cuid": "^2.1.8",
     "history": "^4.10.1",
