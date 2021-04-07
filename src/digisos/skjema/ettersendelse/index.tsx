@@ -240,9 +240,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                             <FormattedMessage
                                 id="ettersendelse.samtale.info.v2"
                                 values={{
-                                    a: (msg: string) => (
-                                        <a href="https://www.nav.no/sosialhjelp/artikkel/514876">{msg}</a>
-                                    ),
+                                    a: (msg: string) => <a href="https://www.nav.no/sosialhjelp/krav-til-deg">{msg}</a>,
                                 }}
                             />
                         </p>
