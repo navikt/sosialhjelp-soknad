@@ -6,7 +6,6 @@ import {
     fetchToJson,
     fetchPost,
     fetchUpload,
-    lastNedForsendelseSomZipFilHvisMockMiljoEllerDev,
     HttpStatus,
     fetchUploadIgnoreErrors,
 } from "../../../nav-soknad/utils/rest-utils";
@@ -149,7 +148,6 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
         yield put({type: EttersendelseActionTypeKeys.ETTERSEND_PENDING});
         const url = `soknader/${action.brukerbehandlingId}/actions/send`;
         yield call(fetchPost, url, JSON.stringify({}), true);
-        lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.brukerbehandlingId);
         yield put(
             loggInfo("GlemmeSendKnappStatistikk. Ettersendelse sendt. BehandingsId: " + action.brukerbehandlingId)
         );

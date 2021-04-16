@@ -1,4 +1,3 @@
-import {erMockAltMiljo, erMockMiljoEllerDev} from "./index";
 import {
     API_CONTEXT_PATH,
     API_CONTEXT_PATH_WITH_ACCESS_TOKEN,
@@ -413,11 +412,4 @@ export function detekterInternFeilKode(feilKode: string): string {
         internFeilKode = REST_FEIL.FEIL_FILTPYE;
     }
     return internFeilKode;
-}
-
-export function lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(brukerbehandlingId: string) {
-    if (erMockMiljoEllerDev() && !erMockAltMiljo()) {
-        const url = getApiBaseUrl() + "internal/mock/tjeneste/downloadzip/" + brukerbehandlingId;
-        window.open(url);
-    }
 }

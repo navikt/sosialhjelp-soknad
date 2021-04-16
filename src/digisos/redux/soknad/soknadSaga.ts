@@ -1,13 +1,6 @@
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {
-    fetchDelete,
-    fetchPost,
-    fetchToJson,
-    getInnsynUrl,
-    HttpStatus,
-    lastNedForsendelseSomZipFilHvisMockMiljoEllerDev,
-} from "../../../nav-soknad/utils/rest-utils";
+import {fetchDelete, fetchPost, fetchToJson, getInnsynUrl, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {
     Samtykke,
     FinnOgOppdaterSoknadsmottakerStatus,
@@ -201,9 +194,6 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
             JSON.stringify({behandlingsId: action.behandlingsId}),
             true
         );
-
-        lastNedForsendelseSomZipFilHvisMockMiljoEllerDev(action.behandlingsId);
-
         yield put(sendSoknadOk(action.behandlingsId));
         if (response && response.sendtTil === SendtTilSystemEnum.FIKS_DIGISOS_API) {
             window.location.href = getInnsynUrl() + response.id + "/status";
