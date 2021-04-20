@@ -44,7 +44,7 @@ const Informasjon = () => {
 
     const onSokSosialhjelpButtonClick = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        const shouldShowModal = false; // Todo: Logikk fra backend må implementeres
+        const shouldShowModal = true; // Todo: Logikk fra backend må implementeres
         if (shouldShowModal) {
             setEksisterendeSoknaderModalOpen(true);
         } else {
