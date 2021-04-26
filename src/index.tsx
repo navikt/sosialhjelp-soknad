@@ -21,7 +21,7 @@ import sagas from "./rootSaga";
 import IntlProvider from "./intlProvider";
 import App from "./digisos";
 import {loggException} from "./digisos/redux/navlogger/navloggerActions";
-import {detectDeploydEnvironment, erDevSbs, erLocalhost, erProd} from "./nav-soknad/utils/rest-utils";
+import {getDecoratorEnvForDeploydEnvironment, erDevSbs, erLocalhost, erProd} from "./nav-soknad/utils/rest-utils";
 import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
 import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
@@ -92,13 +92,12 @@ window.onerror = (errorMessage, url, line, column, error) => {
 
 initAmplitude();
 
-if (!erProd()) {
-    injectDecoratorClientSide({
-        env: detectDeploydEnvironment(),
-        simple: true,
-        chatbot: false,
-    });
-}
+injectDecoratorClientSide({
+    env: getDecoratorEnvForDeploydEnvironment(),
+    simple: true,
+    feedback: false,
+    chatbot: false,
+});
 
 ReactDOM.render(
     <Provider store={store}>

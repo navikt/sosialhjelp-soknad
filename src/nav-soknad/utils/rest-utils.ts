@@ -11,7 +11,7 @@ import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
 import {NavLogEntry, NavLogLevel} from "../../digisos/redux/navlogger/navloggerTypes";
 import {ENV} from "@navikt/nav-dekoratoren-moduler/csr/functions/csr";
 
-export function detectDeploydEnvironment(): Exclude<ENV, "localhost"> {
+export function getDecoratorEnvForDeploydEnvironment(): Exclude<ENV, "localhost"> {
     const url = window.location.href;
     if (url.indexOf("localhost") >= 0) {
         return "dev";
