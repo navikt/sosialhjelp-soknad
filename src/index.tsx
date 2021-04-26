@@ -21,7 +21,7 @@ import sagas from "./rootSaga";
 import IntlProvider from "./intlProvider";
 import App from "./digisos";
 import {loggException} from "./digisos/redux/navlogger/navloggerActions";
-import {erDevSbs, erLocalhost, erProd} from "./nav-soknad/utils/rest-utils";
+import {detectDeploydEnvironment, erDevSbs, erLocalhost, erProd} from "./nav-soknad/utils/rest-utils";
 import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
 import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
@@ -30,6 +30,7 @@ import {SoknadState} from "./digisos/redux/soknad/soknadTypes";
 import LoadContainer from "./LoadContainer";
 import Modal from "react-modal";
 import {initAmplitude} from "./nav-soknad/utils/amplitude";
+import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 
 Modal.setAppElement("#root");
 
@@ -90,6 +91,14 @@ window.onerror = (errorMessage, url, line, column, error) => {
 };
 
 initAmplitude();
+
+if (!erProd()) {
+    injectDecoratorClientSide({
+        env: detectDeploydEnvironment(),
+        simple: true,
+        chatbot: false,
+    });
+}
 
 ReactDOM.render(
     <Provider store={store}>
