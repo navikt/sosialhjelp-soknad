@@ -54,9 +54,3 @@ export function navigerTilKvittering(brukerbehandlingId: string): NavigasjonActi
         brukerbehandlingId,
     };
 }
-
-export function tilMock(): NavigasjonActions {
-    return {
-        type: NavigasjonActionTypes.TIL_MOCK,
-    };
-}
