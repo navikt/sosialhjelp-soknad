@@ -27,6 +27,8 @@ const Greeting = (props: {name: string}) => (
 const Informasjon = () => {
     const harTilgang: boolean = useSelector((state: State) => state.soknad.tilgang?.harTilgang) ?? false;
     const sperrekode = useSelector((state: State) => state.soknad.tilgang?.sperrekode);
+    const antallNyligInnsendteSoknader: number =
+        useSelector((state: State) => state.soknad.harNyligInnsendteSoknader?.antallNyligInnsendte) ?? 0;
     const {startSoknadPending, startSoknadFeilet, nedetid, fornavn, visNedetidPanel} = useSelector(
         (state: State) => state.soknad
     );
@@ -44,7 +46,7 @@ const Informasjon = () => {
 
     const onSokSosialhjelpButtonClick = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        const shouldShowModal = true; // Todo: Logikk fra backend må implementeres
+        const shouldShowModal = antallNyligInnsendteSoknader > 0; // Todo: Logikk fra backend må implementeres
         if (shouldShowModal) {
             setEksisterendeSoknaderModalOpen(true);
         } else {

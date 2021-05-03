@@ -2,11 +2,11 @@ import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {fetchDelete, fetchPost, fetchToJson, getInnsynUrl, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {
-    Samtykke,
     FinnOgOppdaterSoknadsmottakerStatus,
     GetErSystemdataEndret,
     HentSamtykker,
     HentSoknadAction,
+    Samtykke,
     SendSoknadAction,
     SlettSoknadAction,
     SoknadActionTypeKeys,
@@ -16,6 +16,7 @@ import {navigerTilDittNav, navigerTilKvittering, tilStart, tilSteg} from "../nav
 import {
     hentSamtykkerOk,
     hentSoknadOk,
+    lagreHarNyligInnsendteSoknaderPaStore,
     lagreNedetidPaStore,
     lagreRessurserPaStore,
     oppdaterSoknadsmottakerStatus,
@@ -41,6 +42,7 @@ import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
 import {push} from "connected-react-router";
 import {
     FornavnResponse,
+    HarNyligInnsendteSoknaderResponse,
     LedeteksterResponse,
     MiljovariablerResponse,
     NedetidResponse,
@@ -74,11 +76,16 @@ function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
         );
         const fornavnResponse: FornavnResponse = yield call(fetchToJson, "informasjon/fornavn");
         const nedetidResponse: NedetidResponse = yield call(fetchToJson, "nedetid");
+        const harNyligInnsendteSoknaderResponse: HarNyligInnsendteSoknaderResponse = yield call(
+            fetchToJson,
+            "soknader/harNyligInnsendteSoknader"
+        );
 
         yield put(lagreLedeteksterPaStore(ledeteksterResponse));
         yield put(lagreMiljovariablerPaStore(miljoVariablerResponse));
         yield put(lagreRessurserPaStore(tilgangResponse, fornavnResponse));
         yield put(lagreNedetidPaStore(nedetidResponse));
+        yield put(lagreHarNyligInnsendteSoknaderPaStore(harNyligInnsendteSoknaderResponse));
         yield put(showLargeSpinner(false));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
