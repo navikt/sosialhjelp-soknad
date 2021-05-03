@@ -78,7 +78,7 @@ function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
         const nedetidResponse: NedetidResponse = yield call(fetchToJson, "nedetid");
         const harNyligInnsendteSoknaderResponse: HarNyligInnsendteSoknaderResponse = yield call(
             fetchToJson,
-            "soknader/harNyligInnsendteSoknader"
+            "informasjon/harNyligInnsendteSoknader"
         );
 
         yield put(lagreLedeteksterPaStore(ledeteksterResponse));
