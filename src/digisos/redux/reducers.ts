@@ -6,7 +6,6 @@ import LedeteksterReducer from "./ledetekster/ledeteksterReducer";
 import MiljovariablerReducer from "./miljovariabler/miljovariablerReducer";
 import FeatureTogglesReducer from "./featuretoggles/featureTogglesReducer";
 import EttersendelseReducer from "./ettersendelse/ettersendelseReducer";
-import MockReducer, {MockState} from "../mock/mockReducer";
 import SoknadsdataReducer, {Soknadsdata} from "./soknadsdata/soknadsdataReducer";
 import {opplysningerReducer} from "./okonomiskeOpplysninger/opplysningerReducer";
 import {filReducer} from "./fil/filReducer";
@@ -35,8 +34,6 @@ export interface State {
 
     validering: ValideringState;
     featuretoggles: FeatureTogglesApiType;
-
-    mockData: MockState;
 }
 
 const reducers = (history: any) =>
@@ -56,7 +53,6 @@ const reducers = (history: any) =>
         validering: valideringsReducer,
         featuretoggles: FeatureTogglesReducer,
 
-        mockData: MockReducer,
         navlogger: navloggerReducer,
     });
 

@@ -5,7 +5,6 @@ export enum Sider {
     SERVERFEIL = "/serverfeil",
     START = "/informasjon",
     BOSTED = "/bosted",
-    MOCK = "/mock",
 }
 
 export enum NavigasjonActionTypes {
@@ -18,7 +17,6 @@ export enum NavigasjonActionTypes {
     GA_TILBAKE = "navigasjon/GA_TILBAKE",
     TIL_SERVERFEIL = "navigasjon/TIL_SERVERFEIL",
     TIL_KVITTERING = "navigasjon/TIL_KVITTERING",
-    TIL_MOCK = "navigasjon/TIL_MOCK",
 }
 
 export type NavigasjonActions =
@@ -30,8 +28,7 @@ export type NavigasjonActions =
     | TilbakeEllerForsiden
     | GaVidere
     | TilDittNav
-    | TilKvittering
-    | TilMock;
+    | TilKvittering;
 
 export interface TilServerfeil {
     type: NavigasjonActionTypes.TIL_SERVERFEIL;
@@ -74,8 +71,4 @@ export interface TilDittNav {
 export interface TilKvittering {
     type: NavigasjonActionTypes.TIL_KVITTERING;
     brukerbehandlingId: string;
-}
-
-export interface TilMock {
-    type: NavigasjonActionTypes.TIL_MOCK;
 }
