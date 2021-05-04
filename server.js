@@ -34,7 +34,6 @@ app.use(basePath, (req, res, next) => {
             console.error(error);
             res.status(500).send(error);
         });
-    //res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 // start express server on port 8080
