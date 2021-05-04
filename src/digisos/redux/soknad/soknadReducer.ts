@@ -20,6 +20,7 @@ export const defaultState: SoknadState = {
     harTilgang: false,
     sperrekode: undefined,
     nedetid: undefined,
+    harNyligInnsendteSoknader: undefined,
 
     // Rest state
     restStatus: REST_STATUS.INITIALISERT,
@@ -233,6 +234,13 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             return {
                 ...state,
                 nedetid: nedetidResponse,
+            };
+        }
+        case SoknadActionTypeKeys.LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE: {
+            const {harNyligInnsendteSoknaderResponse} = action;
+            return {
+                ...state,
+                harNyligInnsendteSoknader: harNyligInnsendteSoknaderResponse,
             };
         }
         case SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL: {
