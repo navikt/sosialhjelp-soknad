@@ -59,21 +59,23 @@ export const SoknadUnderBehandlingModal = (props: {
     return (
         <NavFrontendModal contentLabel="" isOpen={props.isOpen} onRequestClose={() => props.onRequestClose(false)}>
             <ModalContent>
-                <StyledSystemtittel>Du har allerede søknader under behandling</StyledSystemtittel>
+                <StyledSystemtittel>Du har nylig sendt inn en søknad</StyledSystemtittel>
                 <Paragraph>
-                    Ønsker du å starte en ny søknad, eller legge ved ny informasjon på eksisterende søknad?
+                    Vi ser at du nylig har sendt inn en søknad. Ønsker du å sende en ny søknad, eller legge ved
+                    opplysninger til en eksisterende søknad?
                 </Paragraph>
                 <Paragraph>
-                    Hvis du ikke skal sende en helt ny søknad, får du raskere svar ved å ettersende eller sende en
-                    beskjed til veilederen din på telefon
+                    Hvis du ikke ønsker å sende en ny søknad, får du raskere svar ved å sende opplysninger digitalt
+                    eller gi opplysninger til veilederen din på telefon.
                 </Paragraph>
-                <Element>Ettersende vedlegg</Element>
+                <Element>Sende opplysninger</Element>
                 <Paragraph>
-                    Du kan ettersende vedlegg ved å velge en søknad under <Lenke href={innsynUrl}>dine søknader</Lenke>{" "}
-                    og laste opp dokumentasjon
+                    Du kan sende opplysninger ved å velge en søknad under <Lenke href={innsynUrl}>dine søknader</Lenke>{" "}
+                    og laste opp dokumentasjon som veileder ber om, eller annet du tenker er viktig for
+                    saksbehandlingen.
                 </Paragraph>
-                <Element>Send beskjed til veileder på telefon</Element>
-                <Paragraph>Du kan gi en beskjed til veilederen din på tlf 5555 ...</Paragraph>
+                <Element>Gi opplysninger til veileder på telefon</Element>
+                <Paragraph>Du kan gi en beskjed til veilederen din på tlf 55 55 33 33</Paragraph>
 
                 <ButtonRow>
                     <Hovedknapp onClick={() => props.onPrimaryButtonClick()}>Ny søknad</Hovedknapp>
