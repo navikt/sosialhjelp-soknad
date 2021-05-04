@@ -9,27 +9,6 @@ import {
 } from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
 import {NavLogEntry, NavLogLevel} from "../../digisos/redux/navlogger/navloggerTypes";
-import {ENV} from "@navikt/nav-dekoratoren-moduler/csr/functions/csr";
-
-export function getDecoratorEnvForDeploydEnvironment(): Exclude<ENV, "localhost"> {
-    const url = window.location.href;
-    if (url.indexOf("localhost") >= 0) {
-        return "dev";
-    }
-    if (url.indexOf("www-q0") >= 0) {
-        return "q0";
-    }
-    if (url.indexOf("www-q1") >= 0) {
-        return "q1";
-    }
-    if (url.indexOf("sosialhjelp-soknad-gcp.dev.nav.no") >= 0) {
-        return "dev";
-    }
-    if (url.indexOf("digisos.labs.nais.io") >= 0) {
-        return "prod";
-    }
-    return "prod";
-}
 
 export function erLocalhost(): boolean {
     const url = window.location.href;
