@@ -10,7 +10,7 @@ import {erMockMiljoEllerDev} from "../nav-soknad/utils";
 
 const App: React.FC = () => {
     return (
-        <div id="app" className="app">
+        <span>
             <Switch>
                 <Route exact path="/">
                     <Redirect to="/informasjon" />
@@ -28,7 +28,7 @@ const App: React.FC = () => {
                 <Route path={`/skjema/:brukerBehandlingId/:steg`} component={SkjemaRouter} exact={true} />
                 <Route component={SideIkkeFunnet} />
             </Switch>
-        </div>
+        </span>
     );
 };
 
