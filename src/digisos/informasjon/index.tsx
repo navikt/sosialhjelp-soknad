@@ -15,7 +15,6 @@ import {State} from "../redux/reducers";
 import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 import AlertStripe from "nav-frontend-alertstriper";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
-import {useState} from "react";
 import {SoknadUnderBehandlingModal} from "./SoknadUnderBehandlingModal";
 
 const Greeting = (props: {name: string}) => (
@@ -33,7 +32,7 @@ const Informasjon = () => {
         (state: State) => state.soknad
     );
 
-    const [eksisterendeSoknaderModalOpen, setEksisterendeSoknaderModalOpen] = useState(false);
+    const [eksisterendeSoknaderModalOpen, setEksisterendeSoknaderModalOpen] = React.useState(false);
 
     const dispatch = useDispatch();
 
@@ -46,7 +45,7 @@ const Informasjon = () => {
 
     const onSokSosialhjelpButtonClick = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        const shouldShowModal = antallNyligInnsendteSoknader > 0; // Todo: Logikk fra backend må implementeres
+        const shouldShowModal = antallNyligInnsendteSoknader > 0;
         if (shouldShowModal) {
             setEksisterendeSoknaderModalOpen(true);
         } else {
