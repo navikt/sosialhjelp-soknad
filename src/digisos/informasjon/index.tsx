@@ -50,13 +50,17 @@ const Informasjon = () => {
         if (shouldShowModal) {
             setEksisterendeSoknaderModalOpen(true);
         } else {
-            startSoknad();
+            startSoknad({startetFraModal: false});
         }
     };
 
-    const startSoknad = () => {
+    const startSoknad = (options: {startetFraModal: boolean}) => {
         setEksisterendeSoknaderModalOpen(false);
-        logAmplitudeEvent("skjema startet", createSkjemaEventData());
+        logAmplitudeEvent("skjema startet", {
+            antallNyligInnsendteSoknader,
+            startetFraModal: options.startetFraModal,
+            ...createSkjemaEventData(),
+        });
         dispatch(opprettSoknad(intl));
     };
 
@@ -189,7 +193,7 @@ const Informasjon = () => {
                     <SoknadUnderBehandlingModal
                         isOpen={eksisterendeSoknaderModalOpen}
                         onRequestClose={setEksisterendeSoknaderModalOpen}
-                        onPrimaryButtonClick={() => startSoknad()}
+                        onPrimaryButtonClick={() => startSoknad({startetFraModal: true})}
                     />
                 </span>
             ) : (
