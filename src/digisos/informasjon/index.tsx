@@ -2,7 +2,7 @@ import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {FormattedMessage, useIntl} from "react-intl";
 import DocumentTitle from "react-document-title";
-import Knapp from "nav-frontend-knapper";
+import {Hovedknapp} from "nav-frontend-knapper";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
 import IkkeTilgang from "./IkkeTilgang";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
@@ -15,6 +15,7 @@ import {State} from "../redux/reducers";
 import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 import AlertStripe from "nav-frontend-alertstriper";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
+import {SoknadUnderBehandlingModal} from "./SoknadUnderBehandlingModal";
 
 const Greeting = (props: {name: string}) => (
     <h2 className="digisos-snakkeboble-tittel typo-element">
@@ -25,9 +26,13 @@ const Greeting = (props: {name: string}) => (
 const Informasjon = () => {
     const harTilgang: boolean = useSelector((state: State) => state.soknad.tilgang?.harTilgang) ?? false;
     const sperrekode = useSelector((state: State) => state.soknad.tilgang?.sperrekode);
+    const antallNyligInnsendteSoknader: number =
+        useSelector((state: State) => state.soknad.harNyligInnsendteSoknader?.antallNyligInnsendte) ?? 0;
     const {startSoknadPending, startSoknadFeilet, nedetid, fornavn, visNedetidPanel} = useSelector(
         (state: State) => state.soknad
     );
+
+    const [eksisterendeSoknaderModalOpen, setEksisterendeSoknaderModalOpen] = React.useState(false);
 
     const dispatch = useDispatch();
 
@@ -37,6 +42,26 @@ const Informasjon = () => {
     React.useEffect(() => {
         skjulToppMeny();
     }, []);
+
+    const onSokSosialhjelpButtonClick = (event: React.SyntheticEvent) => {
+        event.preventDefault();
+        const shouldShowModal = antallNyligInnsendteSoknader > 0;
+        if (shouldShowModal) {
+            setEksisterendeSoknaderModalOpen(true);
+        } else {
+            startSoknad({startetFraModal: false});
+        }
+    };
+
+    const startSoknad = (options: {startetFraModal: boolean}) => {
+        setEksisterendeSoknaderModalOpen(false);
+        logAmplitudeEvent("skjema startet", {
+            antallNyligInnsendteSoknader,
+            startetFraModal: options.startetFraModal,
+            ...createSkjemaEventData(),
+        });
+        dispatch(opprettSoknad(intl));
+    };
 
     return (
         <div className="informasjon-side">
@@ -139,18 +164,16 @@ const Informasjon = () => {
                             )}
 
                             <span className="informasjon-start-knapp">
-                                <Knapp
+                                <Hovedknapp
                                     id="start_soknad_button"
-                                    type="hoved"
                                     spinner={startSoknadPending}
                                     disabled={startSoknadPending || visNedetidPanel}
-                                    onClick={() => {
-                                        logAmplitudeEvent("skjema startet", createSkjemaEventData());
-                                        dispatch(opprettSoknad(intl));
+                                    onClick={(event) => {
+                                        onSokSosialhjelpButtonClick(event);
                                     }}
                                 >
                                     {getIntlTextOrKey(intl, "skjema.knapper.start")}
-                                </Knapp>
+                                </Hovedknapp>
 
                                 {nedetid?.isNedetid && visNedetidPanel && (
                                     <AlertStripe type="feil" style={{marginTop: "0.4rem"}}>
@@ -166,6 +189,11 @@ const Informasjon = () => {
                             </span>
                         </div>
                     </div>
+                    <SoknadUnderBehandlingModal
+                        isOpen={eksisterendeSoknaderModalOpen}
+                        onRequestClose={setEksisterendeSoknaderModalOpen}
+                        onPrimaryButtonClick={() => startSoknad({startetFraModal: true})}
+                    />
                 </span>
             ) : (
                 <div className="skjema-content">

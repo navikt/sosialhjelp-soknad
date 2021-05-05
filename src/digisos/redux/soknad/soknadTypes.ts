@@ -54,6 +54,9 @@ export interface SoknadState {
 
     // Nedetid state
     nedetid: undefined | NedetidResponse;
+
+    // HarNyligInnsendteSoknader state
+    harNyligInnsendteSoknader: undefined | HarNyligInnsendteSoknaderResponse;
 }
 
 export enum REST_STATUS {
@@ -126,4 +129,8 @@ export interface NedetidResponse {
     nedetidSlutt: string;
     nedetidStartText: string;
     nedetidSluttText: string;
+}
+
+export interface HarNyligInnsendteSoknaderResponse {
+    antallNyligInnsendte: number;
 }

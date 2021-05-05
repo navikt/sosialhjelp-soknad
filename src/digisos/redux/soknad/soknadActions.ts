@@ -8,7 +8,7 @@ import {
     VisNedetidPanel,
 } from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
-import {FornavnResponse, NedetidResponse, TilgangResponse} from "./soknadTypes";
+import {FornavnResponse, HarNyligInnsendteSoknaderResponse, NedetidResponse, TilgangResponse} from "./soknadTypes";
 import {IntlShape} from "react-intl";
 
 export function startSoknadOk() {
@@ -193,6 +193,15 @@ export const lagreNedetidPaStore = (nedetidResponse: NedetidResponse): SoknadAct
     return {
         type: SoknadActionTypeKeys.LAGRE_NEDETID_PA_STORE,
         nedetidResponse,
+    };
+};
+
+export const lagreHarNyligInnsendteSoknaderPaStore = (
+    harNyligInnsendteSoknaderResponse: HarNyligInnsendteSoknaderResponse
+): SoknadActionType => {
+    return {
+        type: SoknadActionTypeKeys.LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE,
+        harNyligInnsendteSoknaderResponse,
     };
 };
 
