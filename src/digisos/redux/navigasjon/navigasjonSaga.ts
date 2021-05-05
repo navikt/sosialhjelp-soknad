@@ -16,10 +16,6 @@ function* tilStartSaga(): SagaIterator {
     yield put(push(Sider.START));
 }
 
-function* tilMockSaga(): SagaIterator {
-    yield put(push(Sider.MOCK));
-}
-
 function* tilbakeEllerForsidenSaga(): SagaIterator {
     const historyLength = yield call(getHistoryLength);
     if (historyLength === 1) {
@@ -70,7 +66,6 @@ function* navigasjonSaga(): SagaIterator {
     yield takeEvery(NavigasjonActionTypes.TILBAKE_ELLER_FORSIDEN, tilbakeEllerForsidenSaga);
     yield takeEvery(NavigasjonActionTypes.TIL_START, tilStartSaga);
     yield takeEvery(NavigasjonActionTypes.TIL_DITT_NAV, tilDittNav);
-    yield takeEvery(NavigasjonActionTypes.TIL_MOCK, tilMockSaga);
     yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilEttersendelse);
 }
 
