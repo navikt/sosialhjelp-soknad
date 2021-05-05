@@ -57,7 +57,11 @@ export const SoknadUnderBehandlingModal = (props: {
     };
 
     return (
-        <NavFrontendModal contentLabel="" isOpen={props.isOpen} onRequestClose={() => props.onRequestClose(false)}>
+        <NavFrontendModal
+            contentLabel="Du har nylig sendt inn en søknad"
+            isOpen={props.isOpen}
+            onRequestClose={() => props.onRequestClose(false)}
+        >
             <ModalContent>
                 <StyledSystemtittel>Du har nylig sendt inn en søknad</StyledSystemtittel>
                 <Paragraph>
