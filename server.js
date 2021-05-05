@@ -30,9 +30,8 @@ app.use(basePath, (req, res, next) => {
             res.send(html);
         })
         .catch((e) => {
-            const error = `Failed to get decorator: ${e}`;
-            console.error(error);
-            res.status(500).send(error);
+            console.error(`Failed to get decorator: ${e}`);
+            res.status(500).send("Det har oppstått en feil. Venligst prøv igjen senere.");
         });
 });
 
