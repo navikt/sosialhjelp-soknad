@@ -45,7 +45,7 @@ const Informasjon = () => {
 
     const onSokSosialhjelpButtonClick = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        const shouldShowModal = antallNyligInnsendteSoknader > 0;
+        const shouldShowModal = false;
         if (shouldShowModal) {
             setEksisterendeSoknaderModalOpen(true);
         } else {
