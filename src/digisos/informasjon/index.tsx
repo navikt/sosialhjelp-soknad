@@ -15,7 +15,6 @@ import {State} from "../redux/reducers";
 import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 import AlertStripe from "nav-frontend-alertstriper";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
-import {SoknadUnderBehandlingModal} from "./SoknadUnderBehandlingModal";
 
 const Greeting = (props: {name: string}) => (
     <h2 className="digisos-snakkeboble-tittel typo-element">
@@ -32,8 +31,6 @@ const Informasjon = () => {
         (state: State) => state.soknad
     );
 
-    const [eksisterendeSoknaderModalOpen, setEksisterendeSoknaderModalOpen] = React.useState(false);
-
     const dispatch = useDispatch();
 
     const intl = useIntl();
@@ -45,19 +42,12 @@ const Informasjon = () => {
 
     const onSokSosialhjelpButtonClick = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        const shouldShowModal = false;
-        if (shouldShowModal) {
-            setEksisterendeSoknaderModalOpen(true);
-        } else {
-            startSoknad({startetFraModal: false});
-        }
+        startSoknad();
     };
 
-    const startSoknad = (options: {startetFraModal: boolean}) => {
-        setEksisterendeSoknaderModalOpen(false);
+    const startSoknad = () => {
         logAmplitudeEvent("skjema startet", {
             antallNyligInnsendteSoknader,
-            startetFraModal: options.startetFraModal,
             ...createSkjemaEventData(),
         });
         dispatch(opprettSoknad(intl));
@@ -189,11 +179,6 @@ const Informasjon = () => {
                             </span>
                         </div>
                     </div>
-                    <SoknadUnderBehandlingModal
-                        isOpen={eksisterendeSoknaderModalOpen}
-                        onRequestClose={setEksisterendeSoknaderModalOpen}
-                        onPrimaryButtonClick={() => startSoknad({startetFraModal: true})}
-                    />
                 </span>
             ) : (
                 <div className="skjema-content">
