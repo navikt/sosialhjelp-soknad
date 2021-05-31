@@ -52,6 +52,10 @@ export function getApiBaseUrl(): string {
 
 Gjøres via Github Actions, se: https://github.com/navikt/sosialhjelp-soknad/actions/workflows/deploy_dev.yml
 
+## Logge inn i dev-gcp med mock-alt
+
+Da må appen gå via proxy. Url er https://digisos-gcp.dev.nav.no/sosialhjelp/soknad
+
 ## Tekster
 
 Tekstene ligger i repoet `sosialhjelp-soknad-server` med felles byggejobb på `cisbl.devillo.no`. Tekstendringer blir automatisk
