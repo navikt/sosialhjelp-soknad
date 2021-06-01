@@ -6,5 +6,6 @@
   ],
   "prometheusEnabled": false,
   "gcpAccessPolicy": true,
-  "appresCmsUrl": "https://appres.nav.no"
+  "appresCmsUrl": "https://appres.nav.no",
+  "dekoratorMiljo": "prod"
 }

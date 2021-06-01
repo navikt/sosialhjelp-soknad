@@ -43,6 +43,8 @@ spec:
     min: 2
     max: 2
   env:
+    - name: DEKORATOR_MILJO
+      value: {{dekoratorMiljo}}
     - name: APPRES_CMS_URL
       value: {{appresCmsUrl}}
     - name: UNLEASH_API_URL
