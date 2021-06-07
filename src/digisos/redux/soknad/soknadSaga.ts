@@ -18,6 +18,7 @@ import {
     hentSoknadOk,
     lagreHarNyligInnsendteSoknaderPaStore,
     lagreNedetidPaStore,
+    lagrePabegynteSoknaderPaStore,
     lagreRessurserPaStore,
     oppdaterSoknadsmottakerStatus,
     opprettSoknadFeilet,
@@ -47,6 +48,7 @@ import {
     MiljovariablerResponse,
     NedetidResponse,
     OpprettSoknadResponse,
+    PabegynteSoknaderResponse,
     SendSoknadResponse,
     TilgangResponse,
 } from "./soknadTypes";
@@ -80,12 +82,14 @@ function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
             fetchToJson,
             "informasjon/harNyligInnsendteSoknader"
         );
+        const pabegynteSoknader: PabegynteSoknaderResponse[] = yield call(fetchToJson, "informasjon/pabegynteSoknader");
 
         yield put(lagreLedeteksterPaStore(ledeteksterResponse));
         yield put(lagreMiljovariablerPaStore(miljoVariablerResponse));
         yield put(lagreRessurserPaStore(tilgangResponse, fornavnResponse));
         yield put(lagreNedetidPaStore(nedetidResponse));
         yield put(lagreHarNyligInnsendteSoknaderPaStore(harNyligInnsendteSoknaderResponse));
+        yield put(lagrePabegynteSoknaderPaStore(pabegynteSoknader));
         yield put(showLargeSpinner(false));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {

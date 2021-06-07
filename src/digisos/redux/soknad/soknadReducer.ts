@@ -51,6 +51,8 @@ export const defaultState: SoknadState = {
         destinasjon: null,
     },
     avbrytSoknadSjekkAktiv: true,
+
+    pabegynteSoknader: [],
 };
 
 const reducer = (state: SoknadState = defaultState, action: SoknadActionType) => {
@@ -280,6 +282,12 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 ...state,
                 showSendingFeiletPanel: action.shouldShow,
                 sendSoknadPending: false,
+            };
+        }
+        case SoknadActionTypeKeys.LAGRE_PABEGYNTE_SOKNADER_PA_STORE: {
+            return {
+                ...state,
+                pabegynteSoknader: action.pabegynteSoknader,
             };
         }
         default:

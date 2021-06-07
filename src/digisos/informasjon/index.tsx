@@ -15,6 +15,7 @@ import {State} from "../redux/reducers";
 import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 import AlertStripe from "nav-frontend-alertstriper";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
+import {Soknadsoversikt} from "./Soknadsoversikt";
 
 const Greeting = (props: {name: string}) => (
     <h2 className="digisos-snakkeboble-tittel typo-element">
@@ -30,6 +31,8 @@ const Informasjon = () => {
     const {startSoknadPending, startSoknadFeilet, nedetid, fornavn, visNedetidPanel} = useSelector(
         (state: State) => state.soknad
     );
+
+    const [shouldShowSoknadsoversikt, setShouldShowSoknadsoversikt] = React.useState(true);
 
     const dispatch = useDispatch();
 
@@ -53,6 +56,11 @@ const Informasjon = () => {
         dispatch(opprettSoknad(intl));
     };
 
+    const onSoknadClick = (event: React.SyntheticEvent) => {
+        event.preventDefault();
+        setShouldShowSoknadsoversikt(false);
+    };
+
     return (
         <div className="informasjon-side">
             <AppBanner />
@@ -71,114 +79,120 @@ const Informasjon = () => {
                             />
                         </AlertStripe>
                     )}
-                    <div>
-                        <div className="skjema-content informasjon-innhold">
-                            <span className="informasjon-fra-ella">
-                                <Snakkeboble>
-                                    {fornavn && fornavn.length > 0 && <Greeting name={fornavn} />}
-                                    <FormattedMessage id="informasjon.hilsen.tittel" />
-                                </Snakkeboble>
-                                <EllaBlunk size={"175"} />
-                            </span>
+                    {shouldShowSoknadsoversikt ? (
+                        <Soknadsoversikt onSoknadClick={onSoknadClick} />
+                    ) : (
+                        <>
+                            <div>
+                                <div className="skjema-content informasjon-innhold">
+                                    <span className="informasjon-fra-ella">
+                                        <Snakkeboble>
+                                            {fornavn && fornavn.length > 0 && <Greeting name={fornavn} />}
+                                            <FormattedMessage id="informasjon.hilsen.tittel" />
+                                        </Snakkeboble>
+                                        <EllaBlunk size={"175"} />
+                                    </span>
 
-                            <Panel className="informasjon-viktig">
-                                <h2 className="typo-element">
-                                    <FormattedMessage id="informasjon.start.undertittel" />
-                                </h2>
-                                <p>
-                                    <FormattedMessage
-                                        id="informasjon.start.tekst_del1"
-                                        values={{
-                                            a: (msg: string) => (
-                                                // Disable target-blank-rule on internal urls
-                                                /* eslint-disable-next-line react/jsx-no-target-blank */
-                                                <a href="https://www.nav.no/sosialhjelp/" target="_blank">
-                                                    {msg}
-                                                </a>
-                                            ),
-                                        }}
-                                    />
-                                </p>
-                                <p>
-                                    <FormattedMessage id="informasjon.start.tekst_del2" />
-                                </p>
-                                <p>
-                                    <FormattedMessage
-                                        id="informasjon.start.tekst_del3"
-                                        values={{
-                                            a: (msg: string) => (
-                                                // Disable target-blank-rule on internal urls
-                                                /* eslint-disable react/jsx-no-target-blank */
-                                                <a
-                                                    href="https://www.nav.no/person/personopplysninger/nb/#ditt-nav-kontor"
-                                                    target="_blank"
-                                                >
-                                                    {msg}
-                                                </a>
-                                                /* eslint-enable react/jsx-no-target-blank */
-                                            ),
-                                        }}
-                                    />
-                                </p>
-                                <h2 className="typo-element">
-                                    <FormattedMessage id="informasjon.nodsituasjon.undertittel" />
-                                </h2>
+                                    <Panel className="informasjon-viktig">
+                                        <h2 className="typo-element">
+                                            <FormattedMessage id="informasjon.start.undertittel" />
+                                        </h2>
+                                        <p>
+                                            <FormattedMessage
+                                                id="informasjon.start.tekst_del1"
+                                                values={{
+                                                    a: (msg: string) => (
+                                                        // Disable target-blank-rule on internal urls
+                                                        /* eslint-disable-next-line react/jsx-no-target-blank */
+                                                        <a href="https://www.nav.no/sosialhjelp/" target="_blank">
+                                                            {msg}
+                                                        </a>
+                                                    ),
+                                                }}
+                                            />
+                                        </p>
+                                        <p>
+                                            <FormattedMessage id="informasjon.start.tekst_del2" />
+                                        </p>
+                                        <p>
+                                            <FormattedMessage
+                                                id="informasjon.start.tekst_del3"
+                                                values={{
+                                                    a: (msg: string) => (
+                                                        // Disable target-blank-rule on internal urls
+                                                        /* eslint-disable react/jsx-no-target-blank */
+                                                        <a
+                                                            href="https://www.nav.no/person/personopplysninger/nb/#ditt-nav-kontor"
+                                                            target="_blank"
+                                                        >
+                                                            {msg}
+                                                        </a>
+                                                        /* eslint-enable react/jsx-no-target-blank */
+                                                    ),
+                                                }}
+                                            />
+                                        </p>
+                                        <h2 className="typo-element">
+                                            <FormattedMessage id="informasjon.nodsituasjon.undertittel" />
+                                        </h2>
 
-                                <p className="blokk-s">
-                                    <FormattedMessage id="informasjon.nodsituasjon.tekst" />
-                                </p>
-                            </Panel>
-                        </div>
-                    </div>
-                    <div className="zebra-stripe graa">
-                        <div className="skjema-content">
-                            <Personopplysninger />
-                            {nedetid?.isPlanlagtNedetid && (
-                                <AlertStripe type="info">
-                                    <FormattedMessage
-                                        id="nedetid.alertstripe.infoside"
-                                        values={{
-                                            nedetidstart: nedetid.nedetidStart,
-                                            nedetidslutt: nedetid.nedetidSlutt,
-                                        }}
-                                    />
-                                </AlertStripe>
-                            )}
-                        </div>
+                                        <p className="blokk-s">
+                                            <FormattedMessage id="informasjon.nodsituasjon.tekst" />
+                                        </p>
+                                    </Panel>
+                                </div>
+                            </div>
+                            <div className="zebra-stripe graa">
+                                <div className="skjema-content">
+                                    <Personopplysninger />
+                                    {nedetid?.isPlanlagtNedetid && (
+                                        <AlertStripe type="info">
+                                            <FormattedMessage
+                                                id="nedetid.alertstripe.infoside"
+                                                values={{
+                                                    nedetidstart: nedetid.nedetidStart,
+                                                    nedetidslutt: nedetid.nedetidSlutt,
+                                                }}
+                                            />
+                                        </AlertStripe>
+                                    )}
+                                </div>
 
-                        <div className="skjema-content" style={{border: "1px solid transparent"}}>
-                            {startSoknadFeilet && (
-                                <AlertStripe type="feil">
-                                    <FormattedMessage id="applikasjon.opprettsoknadfeilet" />
-                                </AlertStripe>
-                            )}
+                                <div className="skjema-content" style={{border: "1px solid transparent"}}>
+                                    {startSoknadFeilet && (
+                                        <AlertStripe type="feil">
+                                            <FormattedMessage id="applikasjon.opprettsoknadfeilet" />
+                                        </AlertStripe>
+                                    )}
 
-                            <span className="informasjon-start-knapp">
-                                <Hovedknapp
-                                    id="start_soknad_button"
-                                    spinner={startSoknadPending}
-                                    disabled={startSoknadPending || visNedetidPanel}
-                                    onClick={(event) => {
-                                        onSokSosialhjelpButtonClick(event);
-                                    }}
-                                >
-                                    {getIntlTextOrKey(intl, "skjema.knapper.start")}
-                                </Hovedknapp>
-
-                                {nedetid?.isNedetid && visNedetidPanel && (
-                                    <AlertStripe type="feil" style={{marginTop: "0.4rem"}}>
-                                        <FormattedMessage
-                                            id="nedetid.alertstripe.infoside"
-                                            values={{
-                                                nedetidstart: nedetid.nedetidStart,
-                                                nedetidslutt: nedetid.nedetidSlutt,
+                                    <span className="informasjon-start-knapp">
+                                        <Hovedknapp
+                                            id="start_soknad_button"
+                                            spinner={startSoknadPending}
+                                            disabled={startSoknadPending || visNedetidPanel}
+                                            onClick={(event) => {
+                                                onSokSosialhjelpButtonClick(event);
                                             }}
-                                        />
-                                    </AlertStripe>
-                                )}
-                            </span>
-                        </div>
-                    </div>
+                                        >
+                                            {getIntlTextOrKey(intl, "skjema.knapper.start")}
+                                        </Hovedknapp>
+
+                                        {nedetid?.isNedetid && visNedetidPanel && (
+                                            <AlertStripe type="feil" style={{marginTop: "0.4rem"}}>
+                                                <FormattedMessage
+                                                    id="nedetid.alertstripe.infoside"
+                                                    values={{
+                                                        nedetidstart: nedetid.nedetidStart,
+                                                        nedetidslutt: nedetid.nedetidSlutt,
+                                                    }}
+                                                />
+                                            </AlertStripe>
+                                        )}
+                                    </span>
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </span>
             ) : (
                 <div className="skjema-content">
