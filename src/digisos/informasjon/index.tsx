@@ -44,9 +44,13 @@ const Informasjon = () => {
     }, []);
 
     React.useEffect(() => {
-        fetchToJson("feature-toggle", true).then((result: any) => {
-            setEnableModalV2(result["modalV2"] ?? false);
-        });
+        fetchToJson("feature-toggle", true)
+            .then((result: any) => {
+                setEnableModalV2(result["modalV2"] ?? false);
+            })
+            .catch((e) => {
+                setEnableModalV2(false);
+            });
     }, [setEnableModalV2]);
 
     const onSokSosialhjelpButtonClick = (event: React.SyntheticEvent) => {
