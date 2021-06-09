@@ -133,8 +133,8 @@ export const Soknadsoversikt = (props: {onSoknadClick: (event: React.SyntheticEv
                                             <FlexContainer>
                                                 <Element style={{marginRight: "1rem"}}>Påbegynt søknad</Element>
                                                 <Normaltekst>
-                                                    Slettes om {formatDistance(deleteDate, sistOppdatert, {locale: nb})}{" "}
-                                                    - Sist oppdatert {format(sistOppdatert, "d MMM yyyy", {locale: nb})}
+                                                    Slettes om {formatDistance(deleteDate, new Date(), {locale: nb})} -
+                                                    Sist oppdatert {format(sistOppdatert, "d MMM yyyy", {locale: nb})}
                                                 </Normaltekst>
                                             </FlexContainer>
                                         </Lenkepanel>
