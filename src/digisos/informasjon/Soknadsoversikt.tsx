@@ -1,7 +1,7 @@
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import Lenke from "nav-frontend-lenker";
 import Panel from "nav-frontend-paneler";
-import {Normaltekst, Undertittel} from "nav-frontend-typografi";
+import {Element, Normaltekst, Undertittel} from "nav-frontend-typografi";
 import React from "react";
 import {useSelector} from "react-redux";
 import styled from "styled-components";
@@ -12,10 +12,7 @@ import {SkjemaContent} from "../../nav-soknad/components/SkjemaContent";
 import {digisosColors} from "../../nav-soknad/utils/colors";
 import {State} from "../redux/reducers";
 import Lenkepanel from "nav-frontend-lenkepanel";
-
-const StartSoknadPanel = styled.button`
-    width: 100%;
-`;
+import {InformasjonSide} from ".";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -23,6 +20,11 @@ const FlexContainer = styled.div`
 
     align-items: center;
     width: 100%;
+
+    @media screen and (max-width: 520px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 `;
 
 const PanelImageContainer = styled.div`
@@ -47,6 +49,8 @@ const PanelImageContainer = styled.div`
 const StyledSoknadsoversikt = styled(SkjemaContent)`
     margin-top: 2rem;
 
+    max-width: 792px !important;
+
     .lenkepanel,
     .ekspanderbartPanel,
     .panel {
@@ -56,6 +60,15 @@ const StyledSoknadsoversikt = styled(SkjemaContent)`
     .lenkepanel,
     .panel {
         padding: 2rem;
+    }
+`;
+
+const StartNySoknadPanel = styled(Ekspanderbartpanel)`
+    .ekspanderbartPanel__flex-wrapper {
+        padding: 1rem;
+    }
+    .ekspanderbartPanel__innhold {
+        padding: 0rem;
     }
 `;
 
@@ -77,15 +90,23 @@ const DokumentasjonsPanel = styled(Panel)`
     border-color: #6a6a6a;
 `;
 
+const StyledUnorderedList = styled.ul`
+    margin: 0rem;
+    padding: 0rem;
+
+    li {
+        list-style: none;
+    }
+`;
+
 export const Soknadsoversikt = (props: {onSoknadClick: (event: React.SyntheticEvent) => void}) => {
     const pabegynteSoknader = useSelector((state: State) => state.soknad.pabegynteSoknader);
 
     return (
         <StyledSoknadsoversikt>
-            <StartSoknadPanel className="lenkepanel lenkepanel--border" onClick={(event) => props.onSoknadClick(event)}>
-                <Undertittel>Start en ny søknad</Undertittel>
-                <span className="lenkepanel__indikator" />
-            </StartSoknadPanel>
+            <StartNySoknadPanel tittel="Start en ny søknad">
+                <InformasjonSide />
+            </StartNySoknadPanel>
             {pabegynteSoknader.length > 0 && (
                 <PabegynteSoknaderPanel
                     tittel={
@@ -99,21 +120,28 @@ export const Soknadsoversikt = (props: {onSoknadClick: (event: React.SyntheticEv
                     }
                 >
                     <PabegynteSoknaderPanelContent>
-                        {pabegynteSoknader.map((pabegyntSoknad) => {
-                            const sistOppdatert = new Date(pabegyntSoknad.sistOppdatert);
-                            const deleteDate = add(sistOppdatert, {days: 14});
-                            return (
-                                <Lenkepanel
-                                    tittelProps="normaltekst"
-                                    key={pabegyntSoknad.behandlingsId}
-                                    href={`/sosialhjelp/soknad/skjema/${pabegyntSoknad.behandlingsId}/1`}
-                                >
-                                    {pabegyntSoknad.behandlingsId} - Slettes om{" "}
-                                    {formatDistance(deleteDate, sistOppdatert, {locale: nb})} - Sist oppdatert{" "}
-                                    {format(sistOppdatert, "d MMM yyyy", {locale: nb})}
-                                </Lenkepanel>
-                            );
-                        })}
+                        <StyledUnorderedList>
+                            {pabegynteSoknader.map((pabegyntSoknad) => {
+                                const sistOppdatert = new Date(pabegyntSoknad.sistOppdatert);
+                                const deleteDate = add(sistOppdatert, {days: 14});
+                                return (
+                                    <li key={pabegyntSoknad.behandlingsId}>
+                                        <Lenkepanel
+                                            tittelProps="normaltekst"
+                                            href={`/sosialhjelp/soknad/skjema/${pabegyntSoknad.behandlingsId}/1`}
+                                        >
+                                            <FlexContainer>
+                                                <Element style={{marginRight: "1rem"}}>Påbegynt søknad</Element>
+                                                <Normaltekst>
+                                                    Slettes om {formatDistance(deleteDate, sistOppdatert, {locale: nb})}{" "}
+                                                    - Sist oppdatert {format(sistOppdatert, "d MMM yyyy", {locale: nb})}
+                                                </Normaltekst>
+                                            </FlexContainer>
+                                        </Lenkepanel>
+                                    </li>
+                                );
+                            })}
+                        </StyledUnorderedList>
                     </PabegynteSoknaderPanelContent>
                 </PabegynteSoknaderPanel>
             )}
