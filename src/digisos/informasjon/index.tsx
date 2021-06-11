@@ -167,7 +167,7 @@ const Informasjon = () => {
 
     const {nedetid} = useSelector((state: State) => state.soknad);
 
-    const [shouldShowSoknadsoversikt, setShouldShowSoknadsoversikt] = React.useState(true);
+    const shouldShowSoknadsoversikt = true;
 
     const intl = useIntl();
     const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
@@ -175,11 +175,6 @@ const Informasjon = () => {
     React.useEffect(() => {
         skjulToppMeny();
     }, []);
-
-    const onSoknadClick = (event: React.SyntheticEvent) => {
-        event.preventDefault();
-        setShouldShowSoknadsoversikt(false);
-    };
 
     return (
         <div className="informasjon-side">
@@ -199,11 +194,7 @@ const Informasjon = () => {
                             />
                         </AlertStripe>
                     )}
-                    {shouldShowSoknadsoversikt ? (
-                        <Soknadsoversikt onSoknadClick={onSoknadClick} />
-                    ) : (
-                        <InformasjonSide />
-                    )}
+                    {shouldShowSoknadsoversikt ? <Soknadsoversikt /> : <InformasjonSide />}
                 </span>
             ) : (
                 <div className="skjema-content">

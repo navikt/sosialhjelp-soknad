@@ -5,7 +5,7 @@ import {Element, Normaltekst, Undertittel} from "nav-frontend-typografi";
 import React from "react";
 import {useSelector} from "react-redux";
 import styled from "styled-components";
-import {add, format, formatDistance} from "date-fns";
+import {add, format, formatDistance, isAfter} from "date-fns";
 import {nb} from "date-fns/locale";
 import {PaperClipIcon} from "../../nav-soknad/components/digisosIkon/PaperClipNoStyle";
 import {SkjemaContent} from "../../nav-soknad/components/SkjemaContent";
@@ -38,6 +38,10 @@ const PanelImageContainer = styled.div`
 
     margin-right: 2rem;
 
+    @media screen and (max-width: 520px) {
+        display: none;
+    }
+
     svg {
         min-width: 4rem;
         width: 4rem;
@@ -48,6 +52,7 @@ const PanelImageContainer = styled.div`
 
 const StyledSoknadsoversikt = styled(SkjemaContent)`
     margin-top: 2rem;
+    padding: 0 0.5rem;
 
     max-width: 792px !important;
 
@@ -99,8 +104,13 @@ const StyledUnorderedList = styled.ul`
     }
 `;
 
-export const Soknadsoversikt = (props: {onSoknadClick: (event: React.SyntheticEvent) => void}) => {
-    const pabegynteSoknader = useSelector((state: State) => state.soknad.pabegynteSoknader);
+const DAYS_BEOFRE_DELETION = 14;
+
+export const Soknadsoversikt = () => {
+    const currentDate = new Date();
+    const pabegynteSoknader = useSelector((state: State) => state.soknad.pabegynteSoknader).filter((pabegyntSoknad) =>
+        isAfter(add(new Date(pabegyntSoknad.sistOppdatert), {days: DAYS_BEOFRE_DELETION}), currentDate)
+    );
 
     return (
         <StyledSoknadsoversikt>
@@ -123,18 +133,21 @@ export const Soknadsoversikt = (props: {onSoknadClick: (event: React.SyntheticEv
                         <StyledUnorderedList>
                             {pabegynteSoknader.map((pabegyntSoknad) => {
                                 const sistOppdatert = new Date(pabegyntSoknad.sistOppdatert);
-                                const deleteDate = add(sistOppdatert, {days: 14});
+                                const deleteDate = add(sistOppdatert, {days: DAYS_BEOFRE_DELETION});
+                                const currentDate = new Date();
                                 return (
                                     <li key={pabegyntSoknad.behandlingsId}>
                                         <Lenkepanel
                                             tittelProps="normaltekst"
                                             href={`/sosialhjelp/soknad/skjema/${pabegyntSoknad.behandlingsId}/1`}
+                                            border
                                         >
                                             <FlexContainer>
-                                                <Element style={{marginRight: "1rem"}}>Påbegynt søknad</Element>
-                                                <Normaltekst>
-                                                    Slettes om {formatDistance(deleteDate, new Date(), {locale: nb})} -
+                                                <Element style={{marginRight: "1rem"}}>
                                                     Sist oppdatert {format(sistOppdatert, "d MMM yyyy", {locale: nb})}
+                                                </Element>
+                                                <Normaltekst>
+                                                    Slettes om {formatDistance(deleteDate, currentDate, {locale: nb})}
                                                 </Normaltekst>
                                             </FlexContainer>
                                         </Lenkepanel>
