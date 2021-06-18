@@ -1,13 +1,13 @@
 import {call, put, select, takeEvery} from "redux-saga/effects";
-import {OppsummeringActionTypeKeys} from "./oppsummeringTypes";
+import {NyOppsummeringResponse, OppsummeringActionTypeKeys} from "./oppsummeringTypes";
 import {fetchOppsummering, HttpStatus, fetchToJson} from "../../../nav-soknad/utils/rest-utils";
 import {hentOppsumeringFeilet, setOppsumering, setNyOppsummering} from "./oppsummeringActions";
 import {State} from "../reducers";
 
 function* hentOppsummeringSaga() {
     try {
-        const behandlingsID = yield select((state: State) => state.soknad.behandlingsId);
-        const response = yield call(fetchOppsummering, `soknader/${behandlingsID}/`);
+        const behandlingsID: string | undefined = yield select((state: State) => state.soknad.behandlingsId);
+        const response: string = yield call(fetchOppsummering, `soknader/${behandlingsID}/`);
         yield put(setOppsumering(response));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
@@ -19,8 +19,8 @@ function* hentOppsummeringSaga() {
 
 function* hentNyOppsummeringSaga() {
     try {
-        const behandlingsId = yield select((state: State) => state.soknad.behandlingsId);
-        const response = yield call(fetchToJson, `soknader/${behandlingsId}/oppsummering`);
+        const behandlingsId: string | undefined = yield select((state: State) => state.soknad.behandlingsId);
+        const response: NyOppsummeringResponse = yield call(fetchToJson, `soknader/${behandlingsId}/oppsummering`);
         yield put(setNyOppsummering(response));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
