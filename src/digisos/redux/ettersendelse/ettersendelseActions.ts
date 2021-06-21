@@ -1,4 +1,5 @@
 import {
+    Behandlingskjede,
     EttersendelseActionTypeKeys,
     EttersendelseActionTypes,
     EttersendelseVedleggBackend,
@@ -115,7 +116,7 @@ const lesEttersendelser = (brukerbehandlingId: string): EttersendelseActionTypes
     };
 };
 
-const settEttersendelser = (ettersendelser: any) => {
+const settEttersendelser = (ettersendelser: Behandlingskjede) => {
     return {
         type: EttersendelseActionTypeKeys.LES_ETTERSENDELSER_OK,
         ettersendelser,
