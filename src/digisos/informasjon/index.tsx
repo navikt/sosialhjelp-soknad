@@ -16,6 +16,7 @@ import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 import AlertStripe from "nav-frontend-alertstriper";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {Soknadsoversikt} from "./Soknadsoversikt";
+import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
 
 const Greeting = (props: {name: string}) => (
     <h2 className="digisos-snakkeboble-tittel typo-element">
@@ -162,12 +163,12 @@ export const InformasjonSide = () => {
 };
 
 const Informasjon = () => {
+    const [enableModalV2, setEnableModalV2] = React.useState(false);
+
     const harTilgang: boolean = useSelector((state: State) => state.soknad.tilgang?.harTilgang) ?? false;
     const sperrekode = useSelector((state: State) => state.soknad.tilgang?.sperrekode);
 
     const {nedetid} = useSelector((state: State) => state.soknad);
-
-    const shouldShowSoknadsoversikt = true;
 
     const intl = useIntl();
     const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
@@ -175,6 +176,16 @@ const Informasjon = () => {
     React.useEffect(() => {
         skjulToppMeny();
     }, []);
+
+    React.useEffect(() => {
+        fetchToJson("feature-toggle", true)
+            .then((result: any) => {
+                setEnableModalV2(result["modalV2"] ?? false);
+            })
+            .catch((e) => {
+                setEnableModalV2(false);
+            });
+    }, [setEnableModalV2]);
 
     return (
         <div className="informasjon-side">
@@ -194,7 +205,7 @@ const Informasjon = () => {
                             />
                         </AlertStripe>
                     )}
-                    {shouldShowSoknadsoversikt ? <Soknadsoversikt /> : <InformasjonSide />}
+                    {enableModalV2 ? <Soknadsoversikt /> : <InformasjonSide />}
                 </span>
             ) : (
                 <div className="skjema-content">
