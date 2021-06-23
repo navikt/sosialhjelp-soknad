@@ -17,6 +17,7 @@ import AlertStripe from "nav-frontend-alertstriper";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {Soknadsoversikt} from "./Soknadsoversikt";
 import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
+import NavFrontendSpinner from "nav-frontend-spinner";
 
 const Greeting = (props: {name: string}) => (
     <h2 className="digisos-snakkeboble-tittel typo-element">
@@ -163,12 +164,15 @@ export const InformasjonSide = () => {
 };
 
 const Informasjon = () => {
+    const [isLoadingFeatureToggles, setIsLoadingFeatureToggles] = React.useState(false);
     const [enableModalV2, setEnableModalV2] = React.useState(false);
 
     const harTilgang: boolean = useSelector((state: State) => state.soknad.tilgang?.harTilgang) ?? false;
     const sperrekode = useSelector((state: State) => state.soknad.tilgang?.sperrekode);
 
     const {nedetid} = useSelector((state: State) => state.soknad);
+
+    const dispatch = useDispatch();
 
     const intl = useIntl();
     const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
@@ -178,14 +182,16 @@ const Informasjon = () => {
     }, []);
 
     React.useEffect(() => {
+        setIsLoadingFeatureToggles(true);
         fetchToJson("feature-toggle", true)
             .then((result: any) => {
                 setEnableModalV2(result["modalV2"] ?? false);
             })
             .catch((e) => {
                 setEnableModalV2(false);
-            });
-    }, [setEnableModalV2]);
+            })
+            .finally(() => setIsLoadingFeatureToggles(false));
+    }, [setEnableModalV2, dispatch]);
 
     return (
         <div className="informasjon-side">
@@ -205,7 +211,13 @@ const Informasjon = () => {
                             />
                         </AlertStripe>
                     )}
-                    {enableModalV2 ? <Soknadsoversikt /> : <InformasjonSide />}
+                    {isLoadingFeatureToggles ? (
+                        <div className="application-spinner">
+                            <NavFrontendSpinner type="XXL" />
+                        </div>
+                    ) : (
+                        <>{enableModalV2 ? <Soknadsoversikt /> : <InformasjonSide />}</>
+                    )}
                 </span>
             ) : (
                 <div className="skjema-content">

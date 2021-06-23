@@ -108,9 +108,14 @@ const DAYS_BEOFRE_DELETION = 14;
 
 export const Soknadsoversikt = () => {
     const currentDate = new Date();
-    const pabegynteSoknader = useSelector((state: State) => state.soknad.pabegynteSoknader).filter((pabegyntSoknad) =>
-        isAfter(add(new Date(pabegyntSoknad.sistOppdatert), {days: DAYS_BEOFRE_DELETION}), currentDate)
-    );
+
+    const pabegynteSoknader = useSelector((state: State) => state.soknad.pabegynteSoknader)
+        .map((soknad) => ({
+            behandlingsId: soknad.behandlingsId,
+            lastUpdatedDate: new Date(soknad.sistOppdatert),
+            deleteDate: add(new Date(soknad.sistOppdatert), {days: DAYS_BEOFRE_DELETION}),
+        }))
+        .filter((soknad) => isAfter(add(soknad.lastUpdatedDate, {days: DAYS_BEOFRE_DELETION}), currentDate));
 
     return (
         <StyledSoknadsoversikt>
@@ -124,7 +129,7 @@ export const Soknadsoversikt = () => {
                             <Undertittel>Fortsett på en påbegynt søknad</Undertittel>
                             <Normaltekst>
                                 Du har {pabegynteSoknader.length} påbegynte søknader. Vær oppmerksom på at disse slettes
-                                etter 14 dager.
+                                etter {DAYS_BEOFRE_DELETION} dager.
                             </Normaltekst>
                         </div>
                     }
@@ -132,8 +137,8 @@ export const Soknadsoversikt = () => {
                     <PabegynteSoknaderPanelContent>
                         <StyledUnorderedList>
                             {pabegynteSoknader.map((pabegyntSoknad) => {
-                                const sistOppdatert = new Date(pabegyntSoknad.sistOppdatert);
-                                const deleteDate = add(sistOppdatert, {days: DAYS_BEOFRE_DELETION});
+                                const sistOppdatert = pabegyntSoknad.lastUpdatedDate;
+                                const deleteDate = pabegyntSoknad.deleteDate;
                                 const currentDate = new Date();
                                 return (
                                     <li key={pabegyntSoknad.behandlingsId}>
