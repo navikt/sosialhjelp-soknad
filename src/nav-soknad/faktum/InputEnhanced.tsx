@@ -3,9 +3,8 @@ import {useIntl} from "react-intl";
 import {Input} from "nav-frontend-skjema";
 import {getInputFaktumTekst, replaceDotWithUnderscore} from "../utils";
 import {State} from "../../digisos/redux/reducers";
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 import {getFeil} from "../utils/enhancedComponentUtils";
-import {Valideringsfeil} from "../../digisos/redux/validering/valideringActionTypes";
 
 export type InputTypes = "text" | "number" | "email" | "tel";
 
@@ -19,7 +18,6 @@ export interface Props {
     faktumKey: string;
     textKey?: string;
     required: boolean;
-    feil: Valideringsfeil[];
 
     disabled?: boolean;
     pattern?: string;
@@ -44,6 +42,8 @@ const InputEnhanced = (props: Props) => {
         return `${props.faktumKey}`.replace(/\./g, "_");
     };
 
+    const feil = useSelector((state: State) => state.validering.feil);
+
     const {
         faktumKey,
         textKey,
@@ -55,7 +55,6 @@ const InputEnhanced = (props: Props) => {
         step,
         maxLength = DEFAULT_MAX_LENGTH,
         bredde,
-        feil,
         autoFocus,
     } = props;
     const tekster = getInputFaktumTekst(intl, textKey ? textKey : faktumKey);
@@ -90,8 +89,4 @@ const InputEnhanced = (props: Props) => {
     );
 };
 
-const mapStateToProps = (state: State) => ({
-    feil: state.validering.feil,
-});
-
-export default connect(mapStateToProps)(InputEnhanced);
+export default InputEnhanced;
