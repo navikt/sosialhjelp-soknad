@@ -5,7 +5,7 @@ import {useState, useEffect} from "react";
 
 import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
+import {SysteminfoMedSkjema} from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import Barnebidrag from "./Barnebidrag";
 import RegistrerteBarn from "./RegistrerteBarn";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";

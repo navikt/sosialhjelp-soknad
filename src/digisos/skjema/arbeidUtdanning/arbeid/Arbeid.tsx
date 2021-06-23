@@ -2,7 +2,7 @@ import * as React from "react";
 import {FormattedMessage, injectIntl, useIntl} from "react-intl";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import Sporsmal, {SporsmalStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
+import {SysteminfoMedSkjema} from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import ArbeidDetaljer from "./ArbeidDetaljer";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
