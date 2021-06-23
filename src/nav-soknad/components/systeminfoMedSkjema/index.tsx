@@ -5,19 +5,19 @@ import styled from "styled-components";
 
 interface Props {
     /** Kalles når bruker velger å vise skjema */
-    onVisSkjema?: () => void;
+    onVisSkjema: () => void;
     /** Kalles når bruker velger å avbryte endring */
-    onSkjulSkjema?: () => void;
+    onSkjulSkjema: () => void;
     /** Skjema som viser når bruker ønsker å endre verdier */
-    skjema?: React.ReactNode;
+    skjema: React.ReactNode;
     /** Informasjonen som er hentet opp fra system */
-    children?: React.ReactNode;
+    children: React.ReactNode;
     /** Label - endre knapp */
-    endreLabel?: string;
+    endreLabel: string;
     /** Label - avbryt endring knapp */
-    avbrytLabel?: string;
+    avbrytLabel: string;
     /** Om skjema skal vises eller ikke */
-    skjemaErSynlig?: boolean;
+    skjemaErSynlig: boolean;
 }
 
 const labelToId = (str: string) => str.replace(/\s+/g, "_").toLowerCase();
@@ -33,29 +33,22 @@ export const SysteminfoMedSkjema = (props: Props) => {
         <StyledSysteminfoMedSkjema>
             <Underskjema arrow={false} visible={true} collapsable={false} stil="system">
                 <Info>{props.children}</Info>
-                {props.skjema && (
-                    <div>
-                        {props.skjemaErSynlig && props.skjema}
-                        {!props.skjemaErSynlig && props.endreLabel && (
-                            <Lenkeknapp
-                                onClick={props.onVisSkjema ? props.onVisSkjema : () => {}}
-                                id={labelToId(props.endreLabel) + "_lenke"}
-                            >
-                                {props.endreLabel}
+
+                <div>
+                    {props.skjemaErSynlig && props.skjema}
+                    {!props.skjemaErSynlig && (
+                        <Lenkeknapp onClick={props.onVisSkjema} id={labelToId(props.endreLabel) + "_lenke"}>
+                            {props.endreLabel}
+                        </Lenkeknapp>
+                    )}
+                    {props.skjemaErSynlig && (
+                        <div>
+                            <Lenkeknapp onClick={props.onSkjulSkjema} id={labelToId(props.avbrytLabel) + "_lenke"}>
+                                {props.avbrytLabel}
                             </Lenkeknapp>
-                        )}
-                        {props.skjemaErSynlig && props.avbrytLabel && (
-                            <div>
-                                <Lenkeknapp
-                                    onClick={props.onSkjulSkjema ? props.onSkjulSkjema : () => {}}
-                                    id={labelToId(props.avbrytLabel) + "_lenke"}
-                                >
-                                    {props.avbrytLabel}
-                                </Lenkeknapp>
-                            </div>
-                        )}
-                    </div>
-                )}
+                        </div>
+                    )}
+                </div>
             </Underskjema>
         </StyledSysteminfoMedSkjema>
     );

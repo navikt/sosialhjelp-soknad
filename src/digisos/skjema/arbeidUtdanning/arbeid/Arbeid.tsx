@@ -2,7 +2,6 @@ import * as React from "react";
 import {FormattedMessage, injectIntl, useIntl} from "react-intl";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import Sporsmal, {SporsmalStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {SysteminfoMedSkjema} from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import ArbeidDetaljer from "./ArbeidDetaljer";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
@@ -108,36 +107,34 @@ const ArbeidView = () => {
     }
     return (
         <Sporsmal tekster={getFaktumSporsmalTekst(intl, "arbeidsforhold")} stil="system">
-            <SysteminfoMedSkjema>
-                <div>
-                    <FormattedMessage id="arbeidsforhold.infotekst" />
-                </div>
-                {(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (
-                    <p>
-                        <FormattedMessage id="arbeidsforhold.ingen" />
-                    </p>
-                )}
-                {alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
-                    <ul className={"arbeidsgiverliste"}>
-                        {alleArbeidsforhold.map((arbeidsforhold: Arbeidsforhold, index: any) => (
-                            <li key={index} className="arbeidsgiverliste__arbeidsgiver">
-                                <ArbeidDetaljer arbeidsforhold={arbeidsforhold} />
-                            </li>
-                        ))}
-                    </ul>
-                )}
-                <TextareaEnhanced
-                    id={faktumKommentarerId}
-                    placeholder={intl.formatMessage({
-                        id: "begrunnelse.hvorfor.placeholder",
-                    })}
-                    onChange={(evt: any) => onChange(evt.target.value)}
-                    onBlur={() => lagreHvisGyldig()}
-                    faktumKey={FAKTUM_KEY_KOMMENTARER}
-                    maxLength={MAX_CHARS}
-                    value={kommentarTilArbeidsforhold ? kommentarTilArbeidsforhold : ""}
-                />
-            </SysteminfoMedSkjema>
+            <div>
+                <FormattedMessage id="arbeidsforhold.infotekst" />
+            </div>
+            {(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (
+                <p>
+                    <FormattedMessage id="arbeidsforhold.ingen" />
+                </p>
+            )}
+            {alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
+                <ul className={"arbeidsgiverliste"}>
+                    {alleArbeidsforhold.map((arbeidsforhold: Arbeidsforhold, index: any) => (
+                        <li key={index} className="arbeidsgiverliste__arbeidsgiver">
+                            <ArbeidDetaljer arbeidsforhold={arbeidsforhold} />
+                        </li>
+                    ))}
+                </ul>
+            )}
+            <TextareaEnhanced
+                id={faktumKommentarerId}
+                placeholder={intl.formatMessage({
+                    id: "begrunnelse.hvorfor.placeholder",
+                })}
+                onChange={(evt: any) => onChange(evt.target.value)}
+                onBlur={() => lagreHvisGyldig()}
+                faktumKey={FAKTUM_KEY_KOMMENTARER}
+                maxLength={MAX_CHARS}
+                value={kommentarTilArbeidsforhold ? kommentarTilArbeidsforhold : ""}
+            />
         </Sporsmal>
     );
 };
