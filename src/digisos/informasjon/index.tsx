@@ -15,6 +15,7 @@ import {State} from "../redux/reducers";
 import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 import AlertStripe from "nav-frontend-alertstriper";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
+import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
 
 const Greeting = (props: {name: string}) => (
     <h2 className="digisos-snakkeboble-tittel typo-element">
@@ -31,6 +32,10 @@ const Informasjon = () => {
         (state: State) => state.soknad
     );
 
+    // TODO: Bruke featuretoggle for ny informasjonsside
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [enableModalV2, setEnableModalV2] = React.useState(false);
+
     const dispatch = useDispatch();
 
     const intl = useIntl();
@@ -39,6 +44,16 @@ const Informasjon = () => {
     React.useEffect(() => {
         skjulToppMeny();
     }, []);
+
+    React.useEffect(() => {
+        fetchToJson("feature-toggle", true)
+            .then((result: any) => {
+                setEnableModalV2(result["modalV2"] ?? false);
+            })
+            .catch((e) => {
+                setEnableModalV2(false);
+            });
+    }, [setEnableModalV2]);
 
     const onSokSosialhjelpButtonClick = (event: React.SyntheticEvent) => {
         event.preventDefault();
