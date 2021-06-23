@@ -2,20 +2,16 @@ import React, {useEffect} from "react";
 import {sjekkAutentiseringOgTilgangOgHentRessurser} from "./digisos/redux/soknad/soknadActions";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import {State} from "./digisos/redux/reducers";
-import {connect} from "react-redux";
-import {DispatchProps} from "./digisos/redux/reduxTypes";
+import {useDispatch, useSelector} from "react-redux";
 import FeilSide from "./nav-soknad/components/feilside/Feilside";
 
-interface OwnProps {
-    showLargeSpinner: boolean;
-    showFeilSide: boolean;
+interface Props {
     children: React.ReactNode;
 }
 
-type Props = OwnProps & DispatchProps;
-
 const LoadContainer: React.FC<Props> = (props: Props) => {
-    const {dispatch, showLargeSpinner, showFeilSide, children} = props;
+    const {showLargeSpinner, showFeilSide} = useSelector((state: State) => state.soknad);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(sjekkAutentiseringOgTilgangOgHentRessurser());
@@ -36,14 +32,7 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
         );
     }
 
-    return <>{children}</>;
+    return <>{props.children}</>;
 };
 
-const mapStateToProps = (state: State) => {
-    return {
-        showLargeSpinner: state.soknad.showLargeSpinner,
-        showFeilSide: state.soknad.showFeilSide,
-    };
-};
-
-export default connect(mapStateToProps)(LoadContainer);
+export default LoadContainer;
