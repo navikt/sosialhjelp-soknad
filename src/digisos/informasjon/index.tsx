@@ -32,6 +32,8 @@ const Informasjon = () => {
         (state: State) => state.soknad
     );
 
+    // TODO: Bruke featuretoggle for ny informasjonsside
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [enableModalV2, setEnableModalV2] = React.useState(false);
 
     const dispatch = useDispatch();
