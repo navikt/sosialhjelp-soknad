@@ -17,6 +17,8 @@ import {
     SlettEttersendtVedleggAction,
     SendEttersendelseAction,
     LesEttersendelserAction,
+    EttersendelseVedleggBackend,
+    Behandlingskjede,
 } from "./ettersendelseTypes";
 import {
     lesEttersendelsesVedlegg,
@@ -39,7 +41,7 @@ import {detekterInternFeilKode} from "../fil/filSaga";
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
     try {
         const url = `soknader/opprettSoknad?ettersendTil=${action.brukerbehandlingId}`;
-        const response = yield call(fetchPost, url, "", true);
+        const response: {brukerBehandlingId: string} = yield call(fetchPost, url, "", true);
         if (response) {
             yield put(lagEttersendelseOk(response.brukerBehandlingId));
             yield put(lesEttersendelsesVedlegg(response.brukerBehandlingId));
@@ -56,7 +58,7 @@ function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
 function* lesEttersendelserSaga(action: LesEttersendelserAction) {
     try {
         const url = `ettersendelse/innsendte/${action.brukerbehandlingId}`;
-        const response = yield call(fetchToJson, url, true);
+        const response: Behandlingskjede = yield call(fetchToJson, url, true);
         if (response) {
             yield put(settEttersendelser(response));
         }
@@ -72,7 +74,7 @@ function* lesEttersendelserSaga(action: LesEttersendelserAction) {
 function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction) {
     try {
         const url = `ettersendelse/ettersendteVedlegg/${action.brukerbehandlingId}`;
-        const response = yield call(fetchToJson, url);
+        const response: EttersendelseVedleggBackend[] = yield call(fetchToJson, url);
         if (response) {
             yield put(lesEttersendteVedlegg(response));
         }

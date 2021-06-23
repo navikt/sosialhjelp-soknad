@@ -152,10 +152,7 @@ export interface OtherAction {
 
 export interface EttersendelseState {
     data: EttersendelseVedleggBackend[];
-    innsendte: {
-        originalSoknad: OrginalSoknad | null;
-        ettersendelser: any[] | null;
-    };
+    innsendte: Behandlingskjede;
     restStatus: REST_STATUS;
     opplastingStatus: REST_STATUS;
     ettersendStatus: REST_STATUS;
@@ -170,6 +167,11 @@ export interface EttersendelseVedleggBackend {
     type: OpplysningType;
     vedleggStatus: VedleggStatus;
     filer: Fil[];
+}
+
+export interface Behandlingskjede {
+    originalSoknad: OrginalSoknad | null;
+    ettersendelser: OrginalSoknad[] | null;
 }
 
 export interface OrginalSoknad {
