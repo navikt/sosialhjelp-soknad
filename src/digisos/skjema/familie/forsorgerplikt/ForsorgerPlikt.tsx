@@ -5,7 +5,6 @@ import {useState, useEffect} from "react";
 
 import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import Barnebidrag from "./Barnebidrag";
 import RegistrerteBarn from "./RegistrerteBarn";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
@@ -78,11 +77,9 @@ const ForsorgerPliktView = () => {
                     <FormattedMessage id="familierelasjon.ingress_antallBarn" values={{antallBarn}} />
                 </p>
 
-                <SysteminfoMedSkjema>
-                    <RegistrerteBarn />
-                    {/*<BrukerregistrerteBarn/> TODO: Kommentert ut intil alle FSLer er klare. */}
-                    <Barnebidrag />
-                </SysteminfoMedSkjema>
+                <RegistrerteBarn />
+                {/*<BrukerregistrerteBarn/> TODO: Kommentert ut intil alle FSLer er klare. */}
+                <Barnebidrag />
             </Sporsmal>
         );
     }
