@@ -6,6 +6,7 @@ import {
     connectSoknadsdataContainer,
     SoknadsdataContainerProps,
 } from "../../redux/soknadsdata/soknadsdataContainerUtils";
+import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 
 type Props = SoknadsdataContainerProps;
 
@@ -31,15 +32,14 @@ class SoknadsmottakerInfoPanel extends React.Component<Props, {}> {
                             values={{navkontor: valgtEnhetsNavn}}
                         />
                     </p>
-                    <button
+                    <LinkButton
                         type="button"
-                        className="linkbutton linkbutton--normal"
                         onClick={() => {
                             this.props.visSamtykkeInfo(true);
                         }}
                     >
                         <FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke" />
-                    </button>
+                    </LinkButton>
                 </Informasjonspanel>
             );
         } else {

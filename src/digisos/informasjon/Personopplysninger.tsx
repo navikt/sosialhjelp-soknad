@@ -5,6 +5,7 @@ import BehandlingAvPersonopplysningerModal from "./BehandlingAvPersonopplysninge
 import {Undertittel} from "nav-frontend-typografi";
 import {getContextPathForStaticContent} from "../../configuration";
 import {visSamtykkeInfo} from "../redux/soknad/soknadActions";
+import {LinkButton} from "../../nav-soknad/components/linkButton/LinkButton";
 
 const Personopplysninger = () => {
     const dispatch = useDispatch();
@@ -63,14 +64,13 @@ const Personopplysninger = () => {
                         </h3>
                         <FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.tekst" />
                         &nbsp;
-                        <button
-                            className="linkbutton linkbutton--normal"
+                        <LinkButton
                             onClick={() => {
                                 dispatch(visSamtykkeInfo(true));
                             }}
                         >
                             <FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke" />
-                        </button>
+                        </LinkButton>
                     </div>
                 </div>
 

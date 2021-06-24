@@ -5,6 +5,7 @@ import {useDispatch} from "react-redux";
 import {visLasteOppVedleggModal} from "../../redux/soknad/soknadActions";
 import {OpplastingAvVedleggModal} from "./OpplastingAvVedleggModal";
 import {FormattedMessage} from "react-intl";
+import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 
 export const OpplysningerInformasjonspanel = () => {
     const dispatch = useDispatch();
@@ -18,15 +19,14 @@ export const OpplysningerInformasjonspanel = () => {
                 <p>
                     <FormattedMessage id="opplysninger.informasjon.avsnitt2" />
                 </p>
-                <button
+                <LinkButton
                     type="button"
-                    className="linkbutton linkbutton--normal"
                     onClick={() => {
                         dispatch(visLasteOppVedleggModal(true));
                     }}
                 >
                     <FormattedMessage id="opplysninger.informasjon.lenke" />
-                </button>
+                </LinkButton>
                 <OpplastingAvVedleggModal />
             </Informasjonspanel>
         </div>
