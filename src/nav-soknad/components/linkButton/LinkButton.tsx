@@ -6,12 +6,7 @@ const StyledLinkButton = styled.button`
     border-style: none;
     cursor: pointer;
     padding: 0;
-    text-decoration: underline;
     background-color: inherit;
-
-    &:hover {
-        text-decoration: none;
-    }
 `;
 
 export const LinkButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
