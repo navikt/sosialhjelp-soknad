@@ -12,6 +12,7 @@ import {State} from "../../redux/reducers";
 import {REST_FEIL, REST_STATUS} from "../../redux/soknad/soknadTypes";
 import PaperclipIcon from "../../../nav-soknad/components/digisosIkon/paperclipIcon";
 import {Knapp} from "nav-frontend-knapper";
+import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 
 interface OwnProps {
     ettersendelseAktivert: boolean;
@@ -96,23 +97,23 @@ class EttersendelseVedlegg extends React.Component<Props, OwnState> {
                             const lastNedUrl = `opplastetVedlegg/${fil.uuid}/fil`;
                             return (
                                 <div key={fil.uuid} className="vedleggsliste__filnavn_wrapper">
-                                    <button
-                                        className="linkbutton linkbutton--normal vedleggsliste__filnavn_button"
+                                    <LinkButton
+                                        className="vedleggsliste__filnavn_button"
                                         title="Last ned vedlegg"
                                         onClick={() => downloadAttachedFile(lastNedUrl)}
                                     >
                                         <PaperclipIcon />
                                         <div className="vedleggsliste__filnavn_tekst">{fil.filNavn}</div>
-                                    </button>
+                                    </LinkButton>
                                     <div className="vedleggsliste__fil_slett_wrapper">
-                                        <button
-                                            className="linkbutton linkbutton--normal vedleggsliste__fil_slett"
+                                        <LinkButton
+                                            className="vedleggsliste__fil_slett"
                                             title="Fjern vedlegg"
                                             onClick={() => this.removeFile(fil.uuid, this.props.vedlegg.type)}
                                         >
                                             Fjern
                                             <MargIkon ikon={MargIkoner.SØPPELBØTTE} />
-                                        </button>
+                                        </LinkButton>
                                     </div>
                                 </div>
                             );

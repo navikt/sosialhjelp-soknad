@@ -9,7 +9,7 @@ import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/spo
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import {Column, Container, Row} from "nav-frontend-grid";
 import {getTomtAnsvarMedBarn} from "./ForsorgerPliktUtils";
-import Lenkeknapp from "../../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
+import {LinkButton} from "../../../../nav-soknad/components/linkButton/LinkButton";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 import {konverterFraISODato, konverterTilISODato} from "../sivilstatus/datoUtils";
 import {fdato} from "../../../../nav-soknad/validering/valideringer";
@@ -179,14 +179,14 @@ const BrukerregistrerteBarn = () => {
                     <Underskjema visible={true} arrow={index === 0} key={index}>
                         <div className="steg-ekstrainformasjon">
                             <Row className="opplysning__row">
-                                <Lenkeknapp
+                                <LinkButton
                                     onClick={() => {
                                         handleFjernBarn(index);
                                     }}
                                     id={index + "_fjern_brukerregistrert_barn_lenke"}
                                 >
                                     Slett informasjon
-                                </Lenkeknapp>
+                                </LinkButton>
                             </Row>
                         </div>
                         <Sporsmal sprakNokkel={TEXT_KEY} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
@@ -331,13 +331,9 @@ const BrukerregistrerteBarn = () => {
                     </Underskjema>
                 ))}
                 <div className="legg-til-barn-knapp">
-                    <Lenkeknapp
-                        onClick={() => handleLeggTilBarn()}
-                        stil="add"
-                        id={"legg_til_brukerregistrert_barn_link"}
-                    >
-                        Legg til barn som ikke er registrert
-                    </Lenkeknapp>
+                    <LinkButton onClick={() => handleLeggTilBarn()} id={"legg_til_brukerregistrert_barn_link"}>
+                        <span aria-hidden={true}>+ </span>Legg til barn som ikke er registrert
+                    </LinkButton>
                 </div>
             </div>
         </Sporsmal>

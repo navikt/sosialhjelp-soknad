@@ -1,5 +1,5 @@
 import * as React from "react";
-import Lenkeknapp from "../lenkeknapp/Lenkeknapp";
+import {LinkButton} from "../linkButton/LinkButton";
 import Underskjema from "../underskjema";
 import styled from "styled-components";
 
@@ -37,15 +37,15 @@ export const SysteminfoMedSkjema = (props: Props) => {
                 <div>
                     {props.skjemaErSynlig && props.skjema}
                     {!props.skjemaErSynlig && (
-                        <Lenkeknapp onClick={props.onVisSkjema} id={labelToId(props.endreLabel) + "_lenke"}>
+                        <LinkButton onClick={props.onVisSkjema} id={labelToId(props.endreLabel) + "_lenke"}>
                             {props.endreLabel}
-                        </Lenkeknapp>
+                        </LinkButton>
                     )}
                     {props.skjemaErSynlig && (
                         <div>
-                            <Lenkeknapp onClick={props.onSkjulSkjema} id={labelToId(props.avbrytLabel) + "_lenke"}>
+                            <LinkButton onClick={props.onSkjulSkjema} id={labelToId(props.avbrytLabel) + "_lenke"}>
                                 {props.avbrytLabel}
-                            </Lenkeknapp>
+                            </LinkButton>
                         </div>
                     )}
                 </div>

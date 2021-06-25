@@ -15,7 +15,7 @@ import {
     lagreOpplysningHvisGyldigAction,
     updateOpplysning,
 } from "../../redux/okonomiskeOpplysninger/opplysningerActions";
-import Lenkeknapp from "../../../nav-soknad/components/lenkeknapp/Lenkeknapp";
+import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {clearValideringsfeil, setValideringsfeil} from "../../redux/validering/valideringActions";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
 import {getFeilForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerSaga";
@@ -185,14 +185,14 @@ const TabellView = (props: {opplysning: Opplysning; gruppeIndex: number}) => {
                 {inputs}
 
                 {skalViseFjerneRadKnapp && (
-                    <Lenkeknapp
+                    <LinkButton
                         onClick={() => {
                             handleFjernRad(radIndex, textKey);
                         }}
                         id={radIndex + "_fjern_lenke"}
                     >
                         Fjern
-                    </Lenkeknapp>
+                    </LinkButton>
                 )}
             </Row>
         );
@@ -203,9 +203,9 @@ const TabellView = (props: {opplysning: Opplysning; gruppeIndex: number}) => {
             <div className="container--noPadding container-fluid">
                 {innhold}
                 {opplysningSpc && opplysningSpc.antallRader === AntallRader.FLERE && (
-                    <Lenkeknapp onClick={() => handleLeggTilRad()} stil="add" id={props.gruppeIndex + "_link"}>
-                        Legg til
-                    </Lenkeknapp>
+                    <LinkButton onClick={() => handleLeggTilRad()} id={props.gruppeIndex + "_link"}>
+                        <span aria-hidden={true}>+ </span>Legg til
+                    </LinkButton>
                 )}
             </div>
         );

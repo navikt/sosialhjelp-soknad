@@ -6,6 +6,7 @@ import Brevkonvolutt from "../../../nav-soknad/components/svg/Brevkonvolutt";
 import {FormattedMessage} from "react-intl";
 import {visSamtykkeInfo} from "../../redux/soknad/soknadActions";
 import {Undertittel, Normaltekst} from "nav-frontend-typografi";
+import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 
 export const SoknadsmottakerInfoPanel = () => {
     const valgtSoknadsmottaker = useSelector((state: State) => state.soknad.valgtSoknadsmottaker);
@@ -25,15 +26,14 @@ export const SoknadsmottakerInfoPanel = () => {
                     søknaden.
                 </Normaltekst>
 
-                <button
+                <LinkButton
                     type="button"
-                    className="linkbutton linkbutton--normal"
                     onClick={() => {
                         dispatch(visSamtykkeInfo(true));
                     }}
                 >
                     <FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke" />
-                </button>
+                </LinkButton>
             </Veilederpanel>
         );
     } else {
