@@ -115,7 +115,13 @@ export const Soknadsoversikt = () => {
             lastUpdatedDate: new Date(soknad.sistOppdatert),
             deleteDate: add(new Date(soknad.sistOppdatert), {days: DAYS_BEOFRE_DELETION}),
         }))
-        .filter((soknad) => isAfter(add(soknad.lastUpdatedDate, {days: DAYS_BEOFRE_DELETION}), currentDate));
+        .filter((soknad) => isAfter(add(soknad.lastUpdatedDate, {days: DAYS_BEOFRE_DELETION}), currentDate))
+        .sort((firstItem, secondItem) => {
+            if (isAfter(firstItem.lastUpdatedDate, secondItem.lastUpdatedDate)) {
+                return -1;
+            }
+            return 1;
+        });
 
     return (
         <StyledSoknadsoversikt>
