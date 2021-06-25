@@ -3,6 +3,7 @@ import {FormattedMessage} from "react-intl";
 import {Undertittel} from "nav-frontend-typografi";
 import {scrollToElement} from "../../utils";
 import {Valideringsfeil} from "../../../digisos/redux/validering/valideringActionTypes";
+import {LinkButtonValidation} from "../linkButton/LinkButton";
 
 const scrollToFaktum = (evt: React.MouseEvent<any>, faktumKey: string) => {
     evt.stopPropagation();
@@ -18,9 +19,9 @@ const scrollToFaktum = (evt: React.MouseEvent<any>, faktumKey: string) => {
 const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({faktumKey, feilkode}) => {
     return (
         <li className="feiloppsummering__feil">
-            <button className={"linkbutton linkbutton--validering"} onClick={(evt) => scrollToFaktum(evt, faktumKey)}>
+            <LinkButtonValidation onClick={(evt) => scrollToFaktum(evt, faktumKey)}>
                 <FormattedMessage id={feilkode} />
-            </button>
+            </LinkButtonValidation>
         </li>
     );
 };

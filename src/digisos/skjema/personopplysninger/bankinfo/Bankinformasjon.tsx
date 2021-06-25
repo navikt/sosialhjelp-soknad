@@ -7,7 +7,7 @@ import {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
-import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
+import {SysteminfoMedSkjema} from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import {Kontonummer} from "./KontonummerType";
 import {onEndretValideringsfeil} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
@@ -214,7 +214,6 @@ const Bankinformasjon = () => {
                         onSkjulSkjema={() => endreKontoBrukerdefinert(false)}
                         endreLabel={endreLabel}
                         avbrytLabel={avbrytLabel}
-                        focus={false}
                         skjema={
                             <div id={faktumKeyFormatted}>
                                 <InputEnhanced

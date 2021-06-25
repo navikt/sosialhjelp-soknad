@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from "react-redux";
 
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import Detaljeliste, {DetaljelisteElement} from "../../../../nav-soknad/components/detaljeliste";
-import SysteminfoMedSkjema from "../../../../nav-soknad/components/systeminfoMedSkjema";
+import {SysteminfoMedSkjema} from "../../../../nav-soknad/components/systeminfoMedSkjema";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import {erTelefonnummer} from "../../../../nav-soknad/validering/valideringer";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
@@ -175,6 +175,7 @@ const TelefonView = () => {
                                 getName={() => FAKTUM_KEY_TELEFON}
                                 faktumKey={FAKTUM_KEY_TELEFON}
                                 required={false}
+                                autoFocus
                             />
                         }
                     >
