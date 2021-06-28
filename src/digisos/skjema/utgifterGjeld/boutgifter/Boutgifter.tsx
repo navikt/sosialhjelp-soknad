@@ -11,6 +11,7 @@ import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger"
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import Lenke from "nav-frontend-lenker";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
@@ -102,13 +103,13 @@ export const BoutgifterView = () => {
                     id="informasjon.husbanken.bostotte.v2"
                     values={{
                         a: (msg: string) => (
-                            <a
+                            <Lenke
                                 href={intl.formatMessage({id: "informasjon.husbanken.bostotte.url"})}
                                 target="_blank"
                                 rel="noreferrer noopener"
                             >
                                 {msg}
-                            </a>
+                            </Lenke>
                         ),
                     }}
                 />

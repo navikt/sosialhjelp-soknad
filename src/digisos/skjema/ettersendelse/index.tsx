@@ -24,6 +24,7 @@ import AlertStripe from "nav-frontend-alertstriper";
 import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
 import {Undertittel} from "nav-frontend-typografi";
 import DocumentTitle from "react-document-title";
+import Lenke from "nav-frontend-lenker";
 
 interface OwnProps {
     manglendeVedlegg: EttersendelseVedleggBackend[];
@@ -241,7 +242,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
                                 id="ettersendelse.samtale.info.v2"
                                 values={{
                                     a: (msg: string) => (
-                                        <a href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote">{msg}</a>
+                                        <Lenke href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote">{msg}</Lenke>
                                     ),
                                 }}
                             />

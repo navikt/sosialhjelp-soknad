@@ -3,6 +3,7 @@ import * as React from "react";
 import {FormattedMessage, FormattedNumber} from "react-intl";
 import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 import {UndertekstBold} from "nav-frontend-typografi";
+import Lenke from "nav-frontend-lenker";
 
 function getLenkeSti(organisasjon: Organisasjon): string {
     let orgnr = organisasjon.orgnr ? "/" + organisasjon.orgnr : "";
@@ -58,14 +59,9 @@ const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({skattb
                                     return utbetalingVerdier;
                                 })}
                             </div>
-                            <a
-                                className="blokk-s linje_under"
-                                href={lenkeSti}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
+                            <Lenke href={lenkeSti} target="_blank" rel="noopener noreferrer">
                                 Se detaljer hos Skatteetaten.
-                            </a>
+                            </Lenke>
                         </div>
                     );
                 });

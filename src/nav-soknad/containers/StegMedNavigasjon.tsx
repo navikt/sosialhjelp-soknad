@@ -32,6 +32,7 @@ import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseT
 import {State} from "../../digisos/redux/reducers";
 import {erPaStegEnOgValgtNavEnhetErUgyldig, sjekkOmValgtNavEnhetErGyldig} from "./containerUtils";
 import {createSkjemaEventData, logAmplitudeEvent} from "../utils/amplitude";
+import Lenke from "nav-frontend-lenker";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -246,11 +247,9 @@ const StegMedNavigasjon = (
                                 values={{
                                     kommuneNavn: finnKommunenavn(),
                                     a: (msg: string) => (
-                                        // Disable target-blank-rule on internal urls
-                                        /* eslint-disable-next-line react/jsx-no-target-blank */
-                                        <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                                        <Lenke href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
                                             {msg}
-                                        </a>
+                                        </Lenke>
                                     ),
                                 }}
                             />
@@ -263,13 +262,13 @@ const StegMedNavigasjon = (
                                 values={{
                                     kommuneNavn: finnKommunenavn(),
                                     a: (msg: string) => (
-                                        <a
+                                        <Lenke
                                             href="https://husbanken.no/bostotte"
                                             target="_blank"
                                             rel="noreferrer noopener"
                                         >
                                             {msg}
-                                        </a>
+                                        </Lenke>
                                     ),
                                 }}
                             />

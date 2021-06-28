@@ -37,7 +37,6 @@ const TimeoutBox = (props: Props) => {
     useInterval(() => {
         const tidIgjenAvSesjon = logoutTime - now();
         const tidIgjenForAdvarsel = showWarningTime - now();
-        console.log("tidIgjenAvSesjon", tidIgjenAvSesjon);
         setShowWarning(tidIgjenForAdvarsel < 0 && tidIgjenAvSesjon > 0);
         setShowLoggedOut(tidIgjenAvSesjon < 0);
     }, ONE_MINUTE_IN_MS);
