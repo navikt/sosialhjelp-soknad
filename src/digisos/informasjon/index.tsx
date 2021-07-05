@@ -63,6 +63,7 @@ const Informasjon = () => {
     const startSoknad = () => {
         logAmplitudeEvent("skjema startet", {
             antallNyligInnsendteSoknader,
+            enableModalV2,
             ...createSkjemaEventData(),
         });
         dispatch(opprettSoknad(intl));
