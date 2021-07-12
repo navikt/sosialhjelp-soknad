@@ -165,13 +165,6 @@ export function parseGotoValueFromSearchParameters(searchParameters: string): st
     return afterGoto ? afterGoto.split("&login_id")[0] : afterGoto; // Fjerne login_id dersom strengen bak goto= er definert.
 }
 
-function getServletBaseUrl(): string {
-    if (erLocalhost()) {
-        return "http://localhost:3001/sendsoknad/";
-    }
-    return `/${CONTEXT_PATH}/`;
-}
-
 export function downloadAttachedFile(urlPath: string): void {
     const filUrl = `${getApiBaseUrl()}${urlPath}`;
     window.open(filUrl);
@@ -292,18 +285,6 @@ export function fetchKvittering(urlPath: string) {
         credentials: determineCredentialsParameter(),
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS).then((response: Response) => {
-        verifyStatusSuccessOrRedirect(response);
-        return response.json();
-    });
-}
-
-export function fetchFeatureToggles() {
-    const OPTIONS: RequestInit = {
-        headers: getHeaders(),
-        method: "GET",
-        credentials: determineCredentialsParameter(),
-    };
-    return fetch(getServletBaseUrl() + "api/feature", OPTIONS).then((response: Response) => {
         verifyStatusSuccessOrRedirect(response);
         return response.json();
     });
