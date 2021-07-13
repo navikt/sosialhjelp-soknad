@@ -45,7 +45,7 @@ const FeilSide: React.FC<FeilsideProps> = ({
                 ) : null}
                 <ul className="feilside__link-liste">
                     <li className="feilside__link">
-                        <Lenke href="http://www.nav.no">Gå til forsiden nav.no</Lenke>
+                        <Lenke href="https://www.nav.no">Gå til forsiden nav.no</Lenke>
                     </li>
                     <li className="feilside__link">
                         <Lenke href="https://www.nav.no/no/Ditt+NAV">Gå til Ditt NAV</Lenke>
