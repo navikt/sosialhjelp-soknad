@@ -63,7 +63,6 @@ class AvbrytSoknad extends React.Component<Props, {}> {
                 contentLabel={intl.formatMessage({id: "avbryt.avbryt"})}
                 onRequestClose={() => this.onFortsett()}
                 shouldCloseOnOverlayClick={true}
-                style={{overflow: "visible"}}
             >
                 <div className="avbrytmodal">
                     <div className="avbrytmodal__infoikon_wrapper">
@@ -101,16 +100,14 @@ class AvbrytSoknad extends React.Component<Props, {}> {
     }
 }
 
-export default connect(
-    (state: State, props: any): StateProps => {
-        return {
-            avbrytDialogSynlig: state.soknad.avbrytDialog.synlig,
-            destinasjon: state.soknad.avbrytDialog.destinasjon,
-            behandlingsId: state.soknad.behandlingsId,
-            nedetidstart: state.soknad.nedetid ? state.soknad.nedetid.nedetidStartText : "",
-            nedetidslutt: state.soknad.nedetid ? state.soknad.nedetid.nedetidSluttText : "",
-            isNedetid: state.soknad.nedetid ? state.soknad.nedetid.isNedetid : false,
-            isPlanlagtNedetid: state.soknad.nedetid ? state.soknad.nedetid.isPlanlagtNedetid : false,
-        };
-    }
-)(injectIntl(AvbrytSoknad));
+export default connect((state: State, props: any): StateProps => {
+    return {
+        avbrytDialogSynlig: state.soknad.avbrytDialog.synlig,
+        destinasjon: state.soknad.avbrytDialog.destinasjon,
+        behandlingsId: state.soknad.behandlingsId,
+        nedetidstart: state.soknad.nedetid ? state.soknad.nedetid.nedetidStartText : "",
+        nedetidslutt: state.soknad.nedetid ? state.soknad.nedetid.nedetidSluttText : "",
+        isNedetid: state.soknad.nedetid ? state.soknad.nedetid.isNedetid : false,
+        isPlanlagtNedetid: state.soknad.nedetid ? state.soknad.nedetid.isPlanlagtNedetid : false,
+    };
+})(injectIntl(AvbrytSoknad));
