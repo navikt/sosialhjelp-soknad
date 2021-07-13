@@ -4,12 +4,10 @@ import SoknadReducer from "./soknad/soknadReducer";
 import OppsummeringReducer, {OppsummeringState} from "./oppsummering/oppsummeringReducer";
 import LedeteksterReducer from "./ledetekster/ledeteksterReducer";
 import MiljovariablerReducer from "./miljovariabler/miljovariablerReducer";
-import FeatureTogglesReducer from "./featuretoggles/featureTogglesReducer";
 import EttersendelseReducer from "./ettersendelse/ettersendelseReducer";
 import SoknadsdataReducer, {Soknadsdata} from "./soknadsdata/soknadsdataReducer";
 import {opplysningerReducer} from "./okonomiskeOpplysninger/opplysningerReducer";
 import {filReducer} from "./fil/filReducer";
-import {FeatureTogglesApiType} from "./featuretoggles/featureTogglesTypes";
 import {EttersendelseState} from "./ettersendelse/ettersendelseTypes";
 import {OpplysningerModel} from "./okonomiskeOpplysninger/opplysningerTypes";
 import {FilState} from "./fil/filTypes";
@@ -33,7 +31,6 @@ export interface State {
     ettersendelse: EttersendelseState;
 
     validering: ValideringState;
-    featuretoggles: FeatureTogglesApiType;
 }
 
 const reducers = (history: any) =>
@@ -51,7 +48,6 @@ const reducers = (history: any) =>
         ettersendelse: EttersendelseReducer,
 
         validering: valideringsReducer,
-        featuretoggles: FeatureTogglesReducer,
 
         navlogger: navloggerReducer,
     });
