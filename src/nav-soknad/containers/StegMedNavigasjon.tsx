@@ -2,7 +2,6 @@ import * as React from "react";
 import {RouteComponentProps, withRouter} from "react-router";
 import {FormattedMessage, useIntl} from "react-intl";
 import {useSelector, useDispatch} from "react-redux";
-import DocumentTitle from "react-document-title";
 import {Innholdstittel} from "nav-frontend-typografi";
 import AlertStripe from "nav-frontend-alertstriper";
 import {useEffect} from "react";
@@ -32,6 +31,7 @@ import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseT
 import {State} from "../../digisos/redux/reducers";
 import {erPaStegEnOgValgtNavEnhetErUgyldig, sjekkOmValgtNavEnhetErGyldig} from "./containerUtils";
 import {createSkjemaEventData, logAmplitudeEvent} from "../utils/amplitude";
+import {useTitle} from "../hooks/useTitle";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -188,10 +188,11 @@ const StegMedNavigasjon = (
 
     const aktivtSteg: number = aktivtStegConfig ? aktivtStegConfig.stegnummer : 1;
 
+    useTitle(`${stegTittel} - ${documentTitle}`);
+
     return (
         <div className="app-digisos informasjon-side">
             <AppBanner />
-            <DocumentTitle title={`${stegTittel} - ${documentTitle}`} />
             {isNedetid && (
                 <AlertStripe type="feil" style={{justifyContent: "center"}}>
                     <FormattedMessage
