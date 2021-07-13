@@ -27,7 +27,6 @@ export enum SoknadActionTypeKeys {
     HENT_SAMTYKKE_OK = "soknad/HENT_SAMTYKKE_OK",
     OPPDATER_SAMTYKKE = "soknad/OPPDATER_SAMTYKKE",
 
-    SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER = "soknad/SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER",
     LAGRE_TILGANG_OG_FORNAVN_PA_STORE = "soknad/LAGRE_RESSURSER_PA_STORE",
     LAGRE_NEDETID_PA_STORE = "soknad/LAGRE_NEDETID_PA_STORE",
     LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE = "soknad/LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE",
@@ -72,12 +71,9 @@ export type SoknadActionType =
     | HentSamtykker
     | HentSamtykkerOk
     | OppdaterSamtykke
-    | SjekkAutentiseringOgTilgangOgHentRessurser
     | LagreTilgangOgFornavnPaStore
     | LagreNedetidPaStore
     | SetLinkVisited
-    | ShowLargeSpinner
-    | ShowFeilSide
     | VisSamtykkeInfo
     | VisLasteOppVedleggModal
     | UpdateBehandlingsIdPaStore
@@ -90,10 +86,6 @@ export type SoknadActionType =
     | SetSendSoknadServiveUnavailable
     | ResetSendSoknadServiceUnavailable
     | LagreHarNyligInnsendteSoknaderPaStore;
-
-export interface SjekkAutentiseringOgTilgangOgHentRessurser {
-    type: SoknadActionTypeKeys.SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER;
-}
 
 export interface HentSamtykker {
     type: SoknadActionTypeKeys.HENT_SAMTYKKE;
@@ -131,11 +123,6 @@ export interface LagreNedetidPaStore {
 export interface LagreHarNyligInnsendteSoknaderPaStore {
     type: SoknadActionTypeKeys.LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE;
     harNyligInnsendteSoknaderResponse: HarNyligInnsendteSoknaderResponse;
-}
-
-export interface ShowLargeSpinner {
-    type: SoknadActionTypeKeys.SHOW_LARGE_SPINNER;
-    show: boolean;
 }
 
 export interface VisSamtykkeInfo {
@@ -261,10 +248,6 @@ export interface UpdateBehandlingsIdPaStore {
 export interface ShowSideIkkeFunnet {
     type: SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET;
     shouldShow: boolean;
-}
-
-export interface ShowFeilSide {
-    type: SoknadActionTypeKeys.SHOW_FEIL_SIDE;
 }
 
 export interface VisMidlertidigDeaktivertPanel {

@@ -3,11 +3,9 @@ import {REST_STATUS, SoknadState} from "./soknadTypes";
 
 export const defaultState: SoknadState = {
     // Visningsstate
-    showLargeSpinner: true,
     showServerFeil: false,
     sendSoknadServiceUnavailable: false,
     showSendingFeiletPanel: false,
-    showFeilSide: false,
     showSideIkkeFunnet: false,
     visSamtykkeInfo: false,
     visLasteOppVedleggModal: false,
@@ -96,13 +94,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             };
         }
 
-        case SoknadActionTypeKeys.SHOW_FEIL_SIDE: {
-            return {
-                ...state,
-                showFeilSide: true,
-                showLargeSpinner: false,
-            };
-        }
         case SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET: {
             return {
                 ...state,
@@ -194,12 +185,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             };
         }
 
-        case SoknadActionTypeKeys.SHOW_LARGE_SPINNER: {
-            return {
-                ...state,
-                showLargeSpinner: action.show,
-            };
-        }
         case SoknadActionTypeKeys.VIS_SAMTYKKE_INFO: {
             return {
                 ...state,

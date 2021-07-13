@@ -198,13 +198,13 @@ export enum HttpStatus {
     SERVICE_UNAVAILABLE = "Service Unavailable",
 }
 
-export const serverRequest = (
+export const serverRequest = <T>(
     method: string,
     urlPath: string,
     body: string,
     withAccessToken?: boolean,
     retries = 6
-) => {
+): Promise<T> => {
     const OPTIONS: RequestInit = {
         headers: getHeaders(),
         method,
@@ -228,7 +228,7 @@ export const serverRequest = (
                     }, 100 * (7 - retries));
                 } else {
                     verifyStatusSuccessOrRedirect(response);
-                    const jsonResponse = toJson(response);
+                    const jsonResponse = toJson<T>(response);
                     resolve(jsonResponse);
                 }
             })
@@ -236,8 +236,8 @@ export const serverRequest = (
     });
 };
 
-export function fetchToJson(urlPath: string, withAccessToken?: boolean) {
-    return serverRequest(RequestMethod.GET, urlPath, "", withAccessToken);
+export function fetchToJson<T>(urlPath: string, withAccessToken?: boolean) {
+    return serverRequest<T>(RequestMethod.GET, urlPath, "", withAccessToken);
 }
 
 export function fetchPut(urlPath: string, body: string, withAccessToken?: boolean) {
