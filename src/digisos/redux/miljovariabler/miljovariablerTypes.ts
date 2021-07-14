@@ -1,7 +1,10 @@
 import {MiljovariablerResponse} from "../soknad/soknadTypes";
 
 export interface MiljovariablerState {
-    data: {};
+    data: {
+        "dittnav.link.url"?: string;
+        "soknad.ettersending.antalldager"?: string;
+    };
 }
 
 export enum MiljovariablerActionTypeKeys {

@@ -3,111 +3,72 @@ import NavFrontendModal from "nav-frontend-modal";
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
 import {Hovedknapp, Knapp} from "nav-frontend-knapper";
 import {fortsettSoknad, slettSoknad} from "../../../digisos/redux/soknad/soknadActions";
-import {FormattedMessage, injectIntl} from "react-intl";
-import {connect} from "react-redux";
-import {DispatchProps} from "../../../digisos/redux/reduxTypes";
-import {AVBRYT_DESTINASJON} from "../../../digisos/redux/soknad/soknadActionTypes";
+import {FormattedMessage, useIntl} from "react-intl";
+import {useDispatch, useSelector} from "react-redux";
 import {navigerTilDittNav} from "../../../digisos/redux/navigasjon/navigasjonActions";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
-import {IntlProps} from "../../utils";
 import AlertStripe from "nav-frontend-alertstriper";
 
-interface StateProps {
-    avbrytDialogSynlig: boolean;
-    destinasjon: AVBRYT_DESTINASJON | null | undefined;
-    behandlingsId: string | undefined;
-    nedetidstart: string | undefined;
-    nedetidslutt: string | undefined;
-    isNedetid: boolean;
-    isPlanlagtNedetid: boolean;
-}
+export const AvbrytSoknad = () => {
+    const {behandlingsId, avbrytDialog, nedetid} = useSelector((state: State) => state.soknad);
 
-type Props = StateProps & DispatchProps & IntlProps;
+    const dispatch = useDispatch();
 
-const TEKSTNOKLER_VANLIG = {
-    overskrift: "avbryt.overskrift",
-    tekst: "avbryt.forklaring",
-};
+    const intl = useIntl();
 
-const TEKSTNOKLER_NAVIGASJON = {
-    overskrift: "avbryt.navigasjon.overskrift",
-    tekst: "avbryt.navigasjon.forklaring",
-};
-
-class AvbrytSoknad extends React.Component<Props, {}> {
-    onAvbryt() {
-        const {behandlingsId, destinasjon} = this.props;
+    const onAvbryt = () => {
         if (behandlingsId) {
-            this.props.dispatch(slettSoknad(behandlingsId, destinasjon ? destinasjon : "MINSIDE"));
+            dispatch(slettSoknad(behandlingsId));
         }
-    }
-
-    onFortsett() {
-        this.props.dispatch(fortsettSoknad());
-    }
-
-    onFortsettSenere() {
-        this.props.dispatch(navigerTilDittNav());
-    }
-
-    render() {
-        const {nedetidstart, nedetidslutt, isPlanlagtNedetid} = this.props;
-        const tekst = {
-            ...(this.props.destinasjon === "MINSIDE" ? TEKSTNOKLER_VANLIG : TEKSTNOKLER_NAVIGASJON),
-        };
-        const intl = this.props.intl;
-        return (
-            <NavFrontendModal
-                isOpen={this.props.avbrytDialogSynlig || false}
-                contentLabel={intl.formatMessage({id: "avbryt.avbryt"})}
-                onRequestClose={() => this.onFortsett()}
-                shouldCloseOnOverlayClick={true}
-            >
-                <div className="avbrytmodal">
-                    <div className="avbrytmodal__infoikon_wrapper">
-                        <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""} />
-                    </div>
-
-                    <Innholdstittel className="blokk-s avbrytmodal__overskrift">
-                        <FormattedMessage id={tekst.overskrift} />
-                    </Innholdstittel>
-                    <Normaltekst className="blokk-xxs avbrytmodal__tekst">
-                        <FormattedMessage id={tekst.tekst} />
-                    </Normaltekst>
-                    {isPlanlagtNedetid && (
-                        <AlertStripe type="info">
-                            <FormattedMessage
-                                id="nedetid.alertstripe.avbryt"
-                                values={{
-                                    nedetidstart: nedetidstart,
-                                    nedetidslutt: nedetidslutt,
-                                }}
-                            />
-                        </AlertStripe>
-                    )}
-                    <div className="timeoutbox__knapperad">
-                        <Hovedknapp type="hoved" onClick={() => this.onFortsettSenere()}>
-                            <FormattedMessage id={"avbryt.fortsettsenere"} />
-                        </Hovedknapp>
-                        <Knapp type="hoved" onClick={() => this.onAvbryt()} className="avbrytmodal__slettknapp">
-                            <FormattedMessage id={"avbryt.slett"} />
-                        </Knapp>
-                    </div>
-                </div>
-            </NavFrontendModal>
-        );
-    }
-}
-
-export default connect((state: State, props: any): StateProps => {
-    return {
-        avbrytDialogSynlig: state.soknad.avbrytDialog.synlig,
-        destinasjon: state.soknad.avbrytDialog.destinasjon,
-        behandlingsId: state.soknad.behandlingsId,
-        nedetidstart: state.soknad.nedetid ? state.soknad.nedetid.nedetidStartText : "",
-        nedetidslutt: state.soknad.nedetid ? state.soknad.nedetid.nedetidSluttText : "",
-        isNedetid: state.soknad.nedetid ? state.soknad.nedetid.isNedetid : false,
-        isPlanlagtNedetid: state.soknad.nedetid ? state.soknad.nedetid.isPlanlagtNedetid : false,
     };
-})(injectIntl(AvbrytSoknad));
+
+    const onFortsett = () => {
+        dispatch(fortsettSoknad());
+    };
+
+    const onFortsettSenere = () => {
+        dispatch(navigerTilDittNav());
+    };
+
+    return (
+        <NavFrontendModal
+            isOpen={avbrytDialog.synlig || false}
+            contentLabel={intl.formatMessage({id: "avbryt.avbryt"})}
+            onRequestClose={() => onFortsett()}
+            shouldCloseOnOverlayClick={true}
+        >
+            <div className="avbrytmodal">
+                <div className="avbrytmodal__infoikon_wrapper">
+                    <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""} />
+                </div>
+
+                <Innholdstittel className="blokk-s avbrytmodal__overskrift">
+                    <FormattedMessage id={"avbryt.overskrift"} />
+                </Innholdstittel>
+                <Normaltekst className="blokk-xxs avbrytmodal__tekst">
+                    <FormattedMessage id={"avbryt.forklaring"} />
+                </Normaltekst>
+                {nedetid?.isPlanlagtNedetid && (
+                    <AlertStripe type="info">
+                        <FormattedMessage
+                            id="nedetid.alertstripe.avbryt"
+                            values={{
+                                nedetidstart: nedetid?.nedetidStart,
+                                nedetidslutt: nedetid?.nedetidSlutt,
+                            }}
+                        />
+                    </AlertStripe>
+                )}
+                <div className="timeoutbox__knapperad">
+                    <Hovedknapp type="hoved" onClick={() => onFortsettSenere()}>
+                        <FormattedMessage id={"avbryt.fortsettsenere"} />
+                    </Hovedknapp>
+                    <Knapp type="hoved" onClick={() => onAvbryt()} className="avbrytmodal__slettknapp">
+                        <FormattedMessage id={"avbryt.slett"} />
+                    </Knapp>
+                </div>
+            </div>
+        </NavFrontendModal>
+    );
+};

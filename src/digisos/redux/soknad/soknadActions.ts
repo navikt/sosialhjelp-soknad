@@ -1,5 +1,4 @@
 import {
-    AVBRYT_DESTINASJON,
     Samtykke,
     SoknadActionType,
     SoknadActionTypeKeys,
@@ -90,10 +89,9 @@ export function sendSoknadOk(behandlingsId: string): SoknadActionType {
     };
 }
 
-export function avbrytSoknad(destinasjon: AVBRYT_DESTINASJON = "MINSIDE"): SoknadActionType {
+export function avbrytSoknad(): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.AVBRYT_SOKNAD,
-        destinasjon,
     };
 }
 
@@ -103,11 +101,10 @@ export function fortsettSoknad(): SoknadActionType {
     };
 }
 
-export function slettSoknad(behandlingsId: string, destinasjon: AVBRYT_DESTINASJON = "MINSIDE"): SoknadActionType {
+export function slettSoknad(behandlingsId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SLETT_SOKNAD,
         behandlingsId,
-        destinasjon,
     };
 }
 

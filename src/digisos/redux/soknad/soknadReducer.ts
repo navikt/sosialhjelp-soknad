@@ -46,7 +46,6 @@ export const defaultState: SoknadState = {
     // Avbryt
     avbrytDialog: {
         synlig: false,
-        destinasjon: null,
     },
     avbrytSoknadSjekkAktiv: true,
 };
@@ -124,7 +123,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 ...state,
                 avbrytDialog: {
                     synlig: true,
-                    destinasjon: action.destinasjon,
                 },
             };
         case SoknadActionTypeKeys.FORTSETT_SOKNAD:
