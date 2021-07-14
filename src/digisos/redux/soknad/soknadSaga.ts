@@ -5,7 +5,6 @@ import {
     FinnOgOppdaterSoknadsmottakerStatus,
     GetErSystemdataEndret,
     HentSamtykker,
-    HentSoknadAction,
     Samtykke,
     SendSoknadAction,
     SoknadActionTypeKeys,
@@ -14,7 +13,6 @@ import {navigerTilKvittering, tilSteg} from "../navigasjon/navigasjonActions";
 
 import {
     hentSamtykkerOk,
-    hentSoknadOk,
     oppdaterSoknadsmottakerStatus,
     opprettSoknadFeilet,
     opprettSoknadOk,
@@ -105,19 +103,6 @@ function* oppdaterSamtykke(action: {
     }
 }
 
-function* hentSoknadSaga(action: HentSoknadAction) {
-    try {
-        const xsrfCookieIsOk: boolean = yield call(fetchToJson, `soknader/${action.behandlingsId}/xsrfCookie`);
-        yield put(hentSoknadOk(xsrfCookieIsOk, action.behandlingsId));
-    } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            return;
-        }
-        yield put(loggAdvarsel("hent soknad saga feilet: " + reason));
-        yield put(showSideIkkeFunnet(true));
-    }
-}
-
 function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
     try {
         //@ts-ignore
@@ -201,7 +186,6 @@ function* getErSystemdataEndretSaga(action: GetErSystemdataEndret) {
 
 function* soknadSaga(): SagaIterator {
     yield takeEvery(SoknadActionTypeKeys.OPPRETT_SOKNAD, opprettSoknadSaga);
-    yield takeEvery(SoknadActionTypeKeys.HENT_SOKNAD, hentSoknadSaga);
     yield takeEvery(SoknadActionTypeKeys.HENT_SAMTYKKE, hentSamtykker);
     yield takeEvery(SoknadActionTypeKeys.OPPDATER_SAMTYKKE, oppdaterSamtykke);
 
