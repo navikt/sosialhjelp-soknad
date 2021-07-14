@@ -111,12 +111,6 @@ export function slettSoknad(behandlingsId: string, destinasjon: AVBRYT_DESTINASJ
     };
 }
 
-export function slettSoknadOk(): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.SLETT_SOKNAD_OK,
-    };
-}
-
 export function finnOgOppdaterSoknadsmottakerStatus(brukerbehandlingId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS,

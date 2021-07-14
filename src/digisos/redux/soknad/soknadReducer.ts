@@ -152,11 +152,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 sendSoknadPending: false,
             };
 
-        case SoknadActionTypeKeys.SLETT_SOKNAD_OK:
-            return {
-                ...defaultState,
-            };
-
         case SoknadActionTypeKeys.OPPDATER_SOKNADSMOTTAKER_STATUS:
             const {valgtSoknadsmottaker} = action;
             return {

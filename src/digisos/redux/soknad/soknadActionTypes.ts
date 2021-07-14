@@ -13,7 +13,6 @@ export enum SoknadActionTypeKeys {
     AVBRYT_SOKNAD = "soknad/AVBRYT_SOKNAD",
     FORTSETT_SOKNAD = "soknad/FORTSETT_SOKNAD",
     SLETT_SOKNAD = "soknad/SLETT_SOKNAD",
-    SLETT_SOKNAD_OK = "soknad/SLETT_SOKNAD_OK",
     SEND_SOKNAD_KNAPP_PENDING = "soknad/SEND_SOKNAD_KNAPP_PENDING",
     SEND_SOKNAD = "soknad/SEND_SOKNAD",
     SEND_SOKNAD_OK = "soknad/SEND_SOKNAD_OK",
@@ -32,8 +31,6 @@ export enum SoknadActionTypeKeys {
     LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE = "soknad/LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE",
 
     SET_LINK_VISITED = "soknad/SET_LINK_VISITED",
-    SHOW_LARGE_SPINNER = "soknad/SHOW_LARGE_SPINNER",
-    SHOW_FEIL_SIDE = "soknad/SHOW_FEIL_SIDE",
     VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO",
     VIS_LASTE_OPP_VEDLEGG_MODAL = "soknad/VIS_LASTE_OPP_VEDLEGG_MODAL",
     UPDATE_BEHANDLINGSID_PA_STORE = "soknad/UPDATE_BEHANDLINGSID_PA_STORE",
@@ -60,7 +57,6 @@ export type SoknadActionType =
     | AvbrytSoknadAction
     | FortsettSoknadAction
     | SlettSoknadAction
-    | SlettSoknadOkAction
     | SendSoknadPendingAction
     | SendSoknadAction
     | SendSoknadOkAction
@@ -204,10 +200,6 @@ export interface SlettSoknadAction {
     type: SoknadActionTypeKeys.SLETT_SOKNAD;
     behandlingsId: string;
     destinasjon?: AVBRYT_DESTINASJON;
-}
-
-export interface SlettSoknadOkAction {
-    type: SoknadActionTypeKeys.SLETT_SOKNAD_OK;
 }
 
 export interface GetErSystemdataEndret {

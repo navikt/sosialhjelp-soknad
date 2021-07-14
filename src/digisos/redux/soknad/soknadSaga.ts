@@ -25,7 +25,6 @@ import {
     showSendingFeiletPanel,
     showServerFeil,
     showSideIkkeFunnet,
-    slettSoknadOk,
     startSoknadOk,
     startSoknadServiceUnavailable,
     visMidlertidigDeaktivertPanel,
@@ -123,7 +122,6 @@ function* hentSoknadSaga(action: HentSoknadAction) {
 function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
     try {
         yield call(fetchDelete, "soknader/" + action.behandlingsId);
-        yield put(slettSoknadOk());
         if (action.destinasjon === "START") {
             yield put(tilStart());
         } else {
