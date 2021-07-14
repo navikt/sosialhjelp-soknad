@@ -7,6 +7,7 @@ import AlertStripe from "nav-frontend-alertstriper";
 import {FormattedMessage} from "react-intl";
 import {useSelector} from "react-redux";
 import {State} from "../../../redux/reducers";
+import Lenke from "nav-frontend-lenker";
 
 const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
@@ -43,9 +44,9 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
                     values={{
                         kommuneNavn: kommunenavn,
                         a: (msg: string) => (
-                            <a href="https://husbanken.no/bostotte" target="_blank" rel="noreferrer noopener">
+                            <Lenke href="https://husbanken.no/bostotte" target="_blank" rel="noreferrer noopener">
                                 {msg}
-                            </a>
+                            </Lenke>
                         ),
                     }}
                 />
@@ -59,11 +60,9 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
                     values={{
                         kommuneNavn: kommunenavn,
                         a: (msg: string) => (
-                            // Disable target-blank-rule on internal urls
-                            /* eslint-disable-next-line react/jsx-no-target-blank */
-                            <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                            <Lenke href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
                                 {msg}
-                            </a>
+                            </Lenke>
                         ),
                     }}
                 />

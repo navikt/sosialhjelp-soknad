@@ -19,6 +19,7 @@ import {
 import Knapp from "nav-frontend-knapper";
 import AlertStripe from "nav-frontend-alertstriper";
 import {Normaltekst, UndertekstBold} from "nav-frontend-typografi";
+import Lenke from "nav-frontend-lenker";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -232,27 +233,25 @@ const BostotteView = () => {
                                 );
                             })}
                             {(harBostotterUtbetalinger || harBostotterSaker) && (
-                                <a
+                                <Lenke
                                     href={intl.formatMessage({id: "inntekt.bostotte.husbanken.url"})}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="linje_under"
                                 >
                                     <FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"} />
-                                </a>
+                                </Lenke>
                             )}
                             <div className="bostotte-luft-over-ta-bort-knapp-lenke">
-                                <a
+                                <Lenke
                                     id="ta_bort_bostotte_samtykke"
                                     onClick={(event: any) => {
                                         handleSettBostotteSamtykke(false);
                                         event.preventDefault();
                                     }}
                                     href="/ta_bort_samtykke"
-                                    className="linje_under"
                                 >
                                     {getIntlTextOrKey(intl, "inntekt.bostotte.ta_bort_samtykke")}
-                                </a>
+                                </Lenke>
                             </div>
                         </>
                     )}

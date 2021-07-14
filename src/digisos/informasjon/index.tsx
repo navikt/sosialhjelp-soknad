@@ -15,6 +15,7 @@ import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 import AlertStripe from "nav-frontend-alertstriper";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
+import Lenke from "nav-frontend-lenker";
 import {useTitle} from "../../nav-soknad/hooks/useTitle";
 
 const Greeting = (props: {name: string}) => (
@@ -107,11 +108,9 @@ const Informasjon = () => {
                                         id="informasjon.start.tekst_del1"
                                         values={{
                                             a: (msg: string) => (
-                                                // Disable target-blank-rule on internal urls
-                                                /* eslint-disable-next-line react/jsx-no-target-blank */
-                                                <a href="https://www.nav.no/sosialhjelp/" target="_blank">
+                                                <Lenke href="https://www.nav.no/sosialhjelp/" target="_blank">
                                                     {msg}
-                                                </a>
+                                                </Lenke>
                                             ),
                                         }}
                                     />
@@ -124,15 +123,12 @@ const Informasjon = () => {
                                         id="informasjon.start.tekst_del3"
                                         values={{
                                             a: (msg: string) => (
-                                                // Disable target-blank-rule on internal urls
-                                                /* eslint-disable react/jsx-no-target-blank */
-                                                <a
+                                                <Lenke
                                                     href="https://www.nav.no/person/personopplysninger/nb/#ditt-nav-kontor"
                                                     target="_blank"
                                                 >
                                                     {msg}
-                                                </a>
-                                                /* eslint-enable react/jsx-no-target-blank */
+                                                </Lenke>
                                             ),
                                         }}
                                     />
