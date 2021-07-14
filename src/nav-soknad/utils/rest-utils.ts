@@ -165,13 +165,6 @@ export function parseGotoValueFromSearchParameters(searchParameters: string): st
     return afterGoto ? afterGoto.split("&login_id")[0] : afterGoto; // Fjerne login_id dersom strengen bak goto= er definert.
 }
 
-function getServletBaseUrl(): string {
-    if (erLocalhost()) {
-        return "http://localhost:3001/sendsoknad/";
-    }
-    return `/${CONTEXT_PATH}/`;
-}
-
 export function downloadAttachedFile(urlPath: string): void {
     const filUrl = `${getApiBaseUrl()}${urlPath}`;
     window.open(filUrl);
@@ -205,13 +198,13 @@ export enum HttpStatus {
     SERVICE_UNAVAILABLE = "Service Unavailable",
 }
 
-export const serverRequest = (
+export const serverRequest = <T>(
     method: string,
     urlPath: string,
     body: string,
     withAccessToken?: boolean,
     retries = 6
-) => {
+): Promise<T> => {
     const OPTIONS: RequestInit = {
         headers: getHeaders(),
         method,
@@ -235,7 +228,7 @@ export const serverRequest = (
                     }, 100 * (7 - retries));
                 } else {
                     verifyStatusSuccessOrRedirect(response);
-                    const jsonResponse = toJson(response);
+                    const jsonResponse = toJson<T>(response);
                     resolve(jsonResponse);
                 }
             })
@@ -243,8 +236,8 @@ export const serverRequest = (
     });
 };
 
-export function fetchToJson(urlPath: string, withAccessToken?: boolean) {
-    return serverRequest(RequestMethod.GET, urlPath, "", withAccessToken);
+export function fetchToJson<T>(urlPath: string, withAccessToken?: boolean) {
+    return serverRequest<T>(RequestMethod.GET, urlPath, "", withAccessToken);
 }
 
 export function fetchPut(urlPath: string, body: string, withAccessToken?: boolean) {
@@ -292,18 +285,6 @@ export function fetchKvittering(urlPath: string) {
         credentials: determineCredentialsParameter(),
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS).then((response: Response) => {
-        verifyStatusSuccessOrRedirect(response);
-        return response.json();
-    });
-}
-
-export function fetchFeatureToggles() {
-    const OPTIONS: RequestInit = {
-        headers: getHeaders(),
-        method: "GET",
-        credentials: determineCredentialsParameter(),
-    };
-    return fetch(getServletBaseUrl() + "api/feature", OPTIONS).then((response: Response) => {
         verifyStatusSuccessOrRedirect(response);
         return response.json();
     });

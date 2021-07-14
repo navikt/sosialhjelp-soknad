@@ -1,7 +1,6 @@
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {FormattedMessage, useIntl} from "react-intl";
-import DocumentTitle from "react-document-title";
 import {Hovedknapp} from "nav-frontend-knapper";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
 import IkkeTilgang from "./IkkeTilgang";
@@ -17,6 +16,7 @@ import AlertStripe from "nav-frontend-alertstriper";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
 import Lenke from "nav-frontend-lenker";
+import {useTitle} from "../../nav-soknad/hooks/useTitle";
 
 const Greeting = (props: {name: string}) => (
     <h2 className="digisos-snakkeboble-tittel typo-element">
@@ -42,6 +42,8 @@ const Informasjon = () => {
     const intl = useIntl();
     const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
 
+    useTitle(title);
+
     React.useEffect(() => {
         skjulToppMeny();
     }, []);
@@ -64,6 +66,7 @@ const Informasjon = () => {
     const startSoknad = () => {
         logAmplitudeEvent("skjema startet", {
             antallNyligInnsendteSoknader,
+            enableModalV2,
             ...createSkjemaEventData(),
         });
         dispatch(opprettSoknad(intl));
@@ -72,7 +75,6 @@ const Informasjon = () => {
     return (
         <div className="informasjon-side">
             <AppBanner />
-            <DocumentTitle title={title} />
 
             {harTilgang ? (
                 <span>

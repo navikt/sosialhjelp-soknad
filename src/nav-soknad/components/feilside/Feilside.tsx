@@ -1,10 +1,10 @@
 import * as React from "react";
 import {Knapp} from "nav-frontend-knapper";
 import {Innholdstittel} from "nav-frontend-typografi";
-import DocumentTitle from "react-document-title";
 import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
 import Banner from "../banner/Banner";
 import Lenke from "nav-frontend-lenker";
+import {useTitle} from "../../hooks/useTitle";
 
 export interface FeilsideProps {
     tittel?: string;
@@ -27,11 +27,11 @@ const FeilSide: React.FC<FeilsideProps> = ({
     knappTekst = "Gå tilbake",
     onClick,
 }) => {
+    useTitle(`Feilside - ${document.location.hostname}`);
     return (
         <span>
             <Banner>Søknad om økonomisk sosialhjelp</Banner>
             <div className="feilside skjema-content">
-                <DocumentTitle title={"Feilside - " + document.location.hostname} />
                 <div className="feilside__ikon">
                     <UtropstegnSirkelGraIkon />
                 </div>

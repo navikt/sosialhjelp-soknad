@@ -111,12 +111,6 @@ export function slettSoknad(behandlingsId: string, destinasjon: AVBRYT_DESTINASJ
     };
 }
 
-export function slettSoknadOk(): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.SLETT_SOKNAD_OK,
-    };
-}
-
 export function finnOgOppdaterSoknadsmottakerStatus(brukerbehandlingId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS,
@@ -172,12 +166,6 @@ export function hentSamtykkerOk(samtykker: Samtykke[]): SoknadActionType {
     };
 }
 
-export const sjekkAutentiseringOgTilgangOgHentRessurser = (): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER,
-    };
-};
-
 export const lagreRessurserPaStore = (
     tilgangResponse: TilgangResponse,
     fornavnResponse: FornavnResponse
@@ -208,13 +196,6 @@ export const lagreHarNyligInnsendteSoknaderPaStore = (
 export const setLinkVisited = (): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.SET_LINK_VISITED,
-    };
-};
-
-export const showLargeSpinner = (show: boolean): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.SHOW_LARGE_SPINNER,
-        show,
     };
 };
 
@@ -250,12 +231,6 @@ export function showSideIkkeFunnet(shouldShow: boolean): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET,
         shouldShow,
-    };
-}
-
-export function showFeilSide(): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.SHOW_FEIL_SIDE,
     };
 }
 

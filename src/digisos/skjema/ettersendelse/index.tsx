@@ -23,7 +23,6 @@ import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import AlertStripe from "nav-frontend-alertstriper";
 import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
 import {Undertittel} from "nav-frontend-typografi";
-import DocumentTitle from "react-document-title";
 import Lenke from "nav-frontend-lenker";
 
 interface OwnProps {
@@ -58,6 +57,7 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
     componentDidMount() {
         visToppMeny();
+        document.title = `Ettersendelse - Søknad om økonomisk sosialhjelp`;
         const brukerbehandlingskjedeId = this.lesBrukerbehandlingskjedeId();
         if (brukerbehandlingskjedeId) {
             this.props.dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
@@ -145,7 +145,6 @@ class Ettersendelse extends React.Component<Props, OwnState> {
 
         return (
             <div className="ettersendelse">
-                <DocumentTitle title={`Ettersendelse - Søknad om økonomisk sosialhjelp`} />
                 <BannerEttersendelse>
                     <FormattedMessage id="applikasjon.sidetittel" />
                 </BannerEttersendelse>

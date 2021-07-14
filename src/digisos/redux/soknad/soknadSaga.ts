@@ -16,21 +16,15 @@ import {navigerTilDittNav, navigerTilKvittering, tilStart, tilSteg} from "../nav
 import {
     hentSamtykkerOk,
     hentSoknadOk,
-    lagreHarNyligInnsendteSoknaderPaStore,
-    lagreNedetidPaStore,
-    lagreRessurserPaStore,
     oppdaterSoknadsmottakerStatus,
     opprettSoknadFeilet,
     opprettSoknadOk,
     sendSoknadOk,
     setErSystemdataEndret,
     setSendSoknadServiceUnavailable,
-    showFeilSide,
-    showLargeSpinner,
     showSendingFeiletPanel,
     showServerFeil,
     showSideIkkeFunnet,
-    slettSoknadOk,
     startSoknadOk,
     startSoknadServiceUnavailable,
     visMidlertidigDeaktivertPanel,
@@ -40,61 +34,12 @@ import {loggAdvarsel, loggInfo} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
 import {push} from "connected-react-router";
-import {
-    FornavnResponse,
-    HarNyligInnsendteSoknaderResponse,
-    LedeteksterResponse,
-    MiljovariablerResponse,
-    NedetidResponse,
-    OpprettSoknadResponse,
-    SendSoknadResponse,
-    TilgangResponse,
-} from "./soknadTypes";
-import {lagreLedeteksterPaStore} from "../ledetekster/ledeteksterActions";
-import {lagreMiljovariablerPaStore} from "../miljovariabler/miljovariablerActions";
+import {OpprettSoknadResponse, SendSoknadResponse} from "./soknadTypes";
 import {soknadsdataUrl} from "../soknadsdata/soknadsdataActions";
 
 enum SendtTilSystemEnum {
     SVARUT = "SVARUT",
     FIKS_DIGISOS_API = "FIKS_DIGISOS_API",
-}
-
-function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
-    try {
-        const tilgangResponse: TilgangResponse = yield call(
-            fetchToJson,
-            "informasjon/utslagskriterier/sosialhjelp",
-            true
-        );
-
-        // Hvis tilgangApiRespone ikke thrower unauthorized error, så er bruker autentisert
-
-        const miljoVariablerResponse: MiljovariablerResponse = yield call(fetchToJson, "informasjon/miljovariabler");
-        const ledeteksterResponse: LedeteksterResponse = yield call(
-            fetchToJson,
-            "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp"
-        );
-        const fornavnResponse: FornavnResponse = yield call(fetchToJson, "informasjon/fornavn");
-        const nedetidResponse: NedetidResponse = yield call(fetchToJson, "nedetid");
-        const harNyligInnsendteSoknaderResponse: HarNyligInnsendteSoknaderResponse = yield call(
-            fetchToJson,
-            "informasjon/harNyligInnsendteSoknader"
-        );
-
-        yield put(lagreLedeteksterPaStore(ledeteksterResponse));
-        yield put(lagreMiljovariablerPaStore(miljoVariablerResponse));
-        yield put(lagreRessurserPaStore(tilgangResponse, fornavnResponse));
-        yield put(lagreNedetidPaStore(nedetidResponse));
-        yield put(lagreHarNyligInnsendteSoknaderPaStore(harNyligInnsendteSoknaderResponse));
-        yield put(showLargeSpinner(false));
-    } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            // Ønsker at spinneren står og går helt til redirect er utført.
-            yield put(showLargeSpinner(true));
-        } else {
-            yield put(showFeilSide());
-        }
-    }
 }
 
 function* opprettSoknadSaga(action: {type: string}) {
@@ -177,7 +122,6 @@ function* hentSoknadSaga(action: HentSoknadAction) {
 function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
     try {
         yield call(fetchDelete, "soknader/" + action.behandlingsId);
-        yield put(slettSoknadOk());
         if (action.destinasjon === "START") {
             yield put(tilStart());
         } else {
@@ -274,10 +218,6 @@ function* getErSystemdataEndretSaga(action: GetErSystemdataEndret) {
 }
 
 function* soknadSaga(): SagaIterator {
-    yield takeEvery(
-        SoknadActionTypeKeys.SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER,
-        sjekkAutentiseringOgTilgangOgHentRessurserSaga
-    );
     yield takeEvery(SoknadActionTypeKeys.OPPRETT_SOKNAD, opprettSoknadSaga);
     yield takeEvery(SoknadActionTypeKeys.HENT_SOKNAD, hentSoknadSaga);
     yield takeEvery(SoknadActionTypeKeys.HENT_SAMTYKKE, hentSamtykker);

@@ -3,8 +3,6 @@ import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 
 export interface SoknadState {
     // Visning state
-    showLargeSpinner: boolean;
-    showFeilSide: boolean;
     showSideIkkeFunnet: boolean;
     visSamtykkeInfo: boolean;
     visLasteOppVedleggModal: boolean;
