@@ -1,6 +1,6 @@
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {fetchDelete, fetchPost, fetchToJson, getInnsynUrl, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
+import {fetchPost, fetchToJson, getInnsynUrl, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {
     FinnOgOppdaterSoknadsmottakerStatus,
     GetErSystemdataEndret,
@@ -8,10 +8,9 @@ import {
     HentSoknadAction,
     Samtykke,
     SendSoknadAction,
-    SlettSoknadAction,
     SoknadActionTypeKeys,
 } from "./soknadActionTypes";
-import {navigerTilDittNav, navigerTilKvittering, tilSteg} from "../navigasjon/navigasjonActions";
+import {navigerTilKvittering, tilSteg} from "../navigasjon/navigasjonActions";
 
 import {
     hentSamtykkerOk,
@@ -119,19 +118,6 @@ function* hentSoknadSaga(action: HentSoknadAction) {
     }
 }
 
-function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
-    try {
-        yield call(fetchDelete, "soknader/" + action.behandlingsId);
-        yield put(navigerTilDittNav());
-    } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            return;
-        }
-        yield put(loggAdvarsel("slett soknad saga feilet: " + reason));
-        yield put(showServerFeil(true));
-    }
-}
-
 function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
     try {
         //@ts-ignore
@@ -219,7 +205,6 @@ function* soknadSaga(): SagaIterator {
     yield takeEvery(SoknadActionTypeKeys.HENT_SAMTYKKE, hentSamtykker);
     yield takeEvery(SoknadActionTypeKeys.OPPDATER_SAMTYKKE, oppdaterSamtykke);
 
-    yield takeEvery(SoknadActionTypeKeys.SLETT_SOKNAD, slettSoknadSaga);
     yield takeEvery(SoknadActionTypeKeys.SEND_SOKNAD, sendSoknadSaga);
     yield takeEvery(
         SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS,

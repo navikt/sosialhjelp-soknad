@@ -101,13 +101,6 @@ export function fortsettSoknad(): SoknadActionType {
     };
 }
 
-export function slettSoknad(behandlingsId: string): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.SLETT_SOKNAD,
-        behandlingsId,
-    };
-}
-
 export function finnOgOppdaterSoknadsmottakerStatus(brukerbehandlingId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS,
