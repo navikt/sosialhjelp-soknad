@@ -11,7 +11,7 @@ import {
     SlettSoknadAction,
     SoknadActionTypeKeys,
 } from "./soknadActionTypes";
-import {navigerTilDittNav, navigerTilKvittering, tilStart, tilSteg} from "../navigasjon/navigasjonActions";
+import {navigerTilDittNav, navigerTilKvittering, tilSteg} from "../navigasjon/navigasjonActions";
 
 import {
     hentSamtykkerOk,
@@ -122,11 +122,7 @@ function* hentSoknadSaga(action: HentSoknadAction) {
 function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
     try {
         yield call(fetchDelete, "soknader/" + action.behandlingsId);
-        if (action.destinasjon === "START") {
-            yield put(tilStart());
-        } else {
-            yield put(navigerTilDittNav());
-        }
+        yield put(navigerTilDittNav());
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;

@@ -20,7 +20,7 @@ import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 import {hentSoknad, showServerFeil, showSideIkkeFunnet} from "../redux/soknad/soknadActions";
 import {erSkjemaEllerEttersendelseSide, NAVIGASJONSPROMT} from "../../nav-soknad/utils";
 import TimeoutBox from "../../nav-soknad/components/timeoutbox/TimeoutBox";
-import AvbrytSoknad from "../../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
+import {AvbrytSoknad} from "../../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import {useEffect} from "react";
 import ServerFeil from "../../nav-soknad/containers/ServerFeil";

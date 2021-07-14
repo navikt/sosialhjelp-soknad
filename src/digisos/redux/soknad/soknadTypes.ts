@@ -1,4 +1,4 @@
-import {AVBRYT_DESTINASJON, ErSystemdataEndret, Samtykke} from "./soknadActionTypes";
+import {ErSystemdataEndret, Samtykke} from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 
 export interface SoknadState {
@@ -36,7 +36,6 @@ export interface SoknadState {
     avbrytSoknadSjekkAktiv: boolean;
     avbrytDialog: {
         synlig: boolean;
-        destinasjon: AVBRYT_DESTINASJON | null | undefined;
     };
 
     // Soknad state

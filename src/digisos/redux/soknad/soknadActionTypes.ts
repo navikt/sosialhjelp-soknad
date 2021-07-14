@@ -44,7 +44,6 @@ export enum SoknadActionTypeKeys {
     RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE = "soknad/RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE",
 }
 
-export type AVBRYT_DESTINASJON = "START" | "MINSIDE";
 // 24
 export type SoknadActionType =
     | StartSoknadOkAction
@@ -189,7 +188,6 @@ export interface SendSoknadOkAction {
 
 export interface AvbrytSoknadAction {
     type: SoknadActionTypeKeys.AVBRYT_SOKNAD;
-    destinasjon?: AVBRYT_DESTINASJON;
 }
 
 export interface FortsettSoknadAction {
@@ -199,7 +197,6 @@ export interface FortsettSoknadAction {
 export interface SlettSoknadAction {
     type: SoknadActionTypeKeys.SLETT_SOKNAD;
     behandlingsId: string;
-    destinasjon?: AVBRYT_DESTINASJON;
 }
 
 export interface GetErSystemdataEndret {

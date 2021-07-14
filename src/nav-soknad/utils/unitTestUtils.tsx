@@ -87,7 +87,7 @@ export const TestContext: React.FunctionComponent<{messages: any; children: Reac
             // @ts-ignore
             const soknad: SoknadState = store.getState().soknad;
             if (soknad.behandlingsId && soknad.avbrytSoknadSjekkAktiv) {
-                store.dispatch(avbrytSoknad("START"));
+                store.dispatch(avbrytSoknad());
                 callback(false);
             } else {
                 callback(true);
