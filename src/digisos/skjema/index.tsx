@@ -25,8 +25,7 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import {useEffect} from "react";
 import ServerFeil from "../../nav-soknad/containers/ServerFeil";
 import {fetchToJson, HttpStatus} from "../../nav-soknad/utils/rest-utils";
-import {loggAdvarsel} from "../redux/navlogger/navloggerActions";
-
+import {logWarning} from "../../nav-soknad/utils/loggerUtils";
 interface OwnProps {
     match: any;
     location: Location;
@@ -55,7 +54,7 @@ const getSoknad = async (behandlingsId: string, dispatch: Dispatch) => {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        dispatch(loggAdvarsel("hent soknad saga feilet: " + reason));
+        logWarning("hent soknad feilet: " + reason);
         dispatch(showSideIkkeFunnet(true));
     }
 };

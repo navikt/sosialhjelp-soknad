@@ -10,7 +10,7 @@ import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
 import AlertStripe from "nav-frontend-alertstriper";
 import {fetchDelete, HttpStatus} from "../../utils/rest-utils";
-import {loggAdvarsel} from "../../../digisos/redux/navlogger/navloggerActions";
+import {logWarning} from "../../utils/loggerUtils";
 
 export const AvbrytSoknad = () => {
     const {behandlingsId, avbrytDialog, nedetid} = useSelector((state: State) => state.soknad);
@@ -27,7 +27,7 @@ export const AvbrytSoknad = () => {
                     if (reason.message === HttpStatus.UNAUTHORIZED) {
                         return;
                     }
-                    dispatch(loggAdvarsel("slett soknad saga feilet: " + reason));
+                    logWarning("slett soknad saga feilet: " + reason);
                     dispatch(showServerFeil(true));
                 });
         }
