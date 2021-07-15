@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {FormattedMessage, useIntl} from "react-intl";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
@@ -19,7 +19,6 @@ import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {Undertittel} from "nav-frontend-typografi";
-import {useEffect} from "react";
 import {Oppsummering} from "../../redux/oppsummering/oppsummeringTypes";
 import {fetchOppsummering, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 
