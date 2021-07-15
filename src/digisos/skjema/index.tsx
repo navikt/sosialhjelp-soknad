@@ -14,16 +14,18 @@ import Steg8 from "./okonomiskeOpplysninger";
 import Oppsummering from "./oppsummering";
 import NyOppsummering from "./ny-oppsummering/Oppsummering";
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
-import {DispatchProps} from "../redux/reduxTypes";
+import {Dispatch, DispatchProps} from "../redux/reduxTypes";
 import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
-import {hentSoknad, showServerFeil, showSideIkkeFunnet} from "../redux/soknad/soknadActions";
+import {hentSoknad, hentSoknadOk, showServerFeil, showSideIkkeFunnet} from "../redux/soknad/soknadActions";
 import {erSkjemaEllerEttersendelseSide, NAVIGASJONSPROMT} from "../../nav-soknad/utils";
 import TimeoutBox from "../../nav-soknad/components/timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import {useEffect} from "react";
 import ServerFeil from "../../nav-soknad/containers/ServerFeil";
+import {fetchToJson, HttpStatus} from "../../nav-soknad/utils/rest-utils";
+import {loggAdvarsel} from "../redux/navlogger/navloggerActions";
 
 interface OwnProps {
     match: any;
@@ -44,6 +46,20 @@ interface UrlParams {
 
 type Props = OwnProps & StateProps & RouterProps & DispatchProps;
 
+const getSoknad = async (behandlingsId: string, dispatch: Dispatch) => {
+    try {
+        dispatch(hentSoknad(behandlingsId));
+        const xsrfCookieIsOk: boolean = await fetchToJson(`soknader/${behandlingsId}/xsrfCookie`);
+        dispatch(hentSoknadOk(xsrfCookieIsOk, behandlingsId ?? ""));
+    } catch (reason) {
+        if (reason.message === HttpStatus.UNAUTHORIZED) {
+            return;
+        }
+        dispatch(loggAdvarsel("hent soknad saga feilet: " + reason));
+        dispatch(showSideIkkeFunnet(true));
+    }
+};
+
 const SkjemaRouter: React.FC<Props> = (props: Props) => {
     const {behandlingsId, visSideIkkeFunnet, dispatch, visServerFeil} = props;
 
@@ -58,7 +74,7 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
                 dispatch(showSideIkkeFunnet(true));
             }
             if (!behandlingsId) {
-                dispatch(hentSoknad(behandlingsIdFraUrl));
+                getSoknad(behandlingsIdFraUrl, dispatch);
             }
         } else {
             dispatch(showSideIkkeFunnet(true));
