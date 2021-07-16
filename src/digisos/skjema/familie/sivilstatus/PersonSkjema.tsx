@@ -53,8 +53,10 @@ const PersonSkjema = () => {
     function validerOgOppdaterPersonnummer(sivilstatus: Sivilstatus) {
         const personnummer: string | null = sivilstatus.ektefelle ? sivilstatus.ektefelle.personnummer : null;
         let feilkodePersonnummer = null;
-        if (personnummer && personnummer !== "" && !minLengde(personnummer, 5)) {
-            feilkodePersonnummer = ValideringsFeilKode.MIN_LENGDE;
+        if (personnummer && personnummer !== "") {
+            if (!minLengde(personnummer, 5)) {
+                feilkodePersonnummer = ValideringsFeilKode.MIN_LENGDE;
+            }
             if (!feilkodePersonnummer && !maksLengde(personnummer, 5)) {
                 feilkodePersonnummer = ValideringsFeilKode.MAX_LENGDE;
             }
