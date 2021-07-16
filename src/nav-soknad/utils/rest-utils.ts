@@ -8,7 +8,7 @@ import {
     INNSYN_CONTEXT_PATH,
 } from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
-import {NavLogEntry, NavLogLevel} from "../../digisos/redux/navlogger/navloggerTypes";
+import {logError} from "./loggerUtils";
 
 export function erLocalhost(): boolean {
     const url = window.location.href;
@@ -332,26 +332,15 @@ export function toJson<T>(response: Response): Promise<T> {
 function verifyStatusSuccessOrRedirect(response: Response): number {
     if (response.status === 401) {
         response.json().then((r) => {
-            const createLogEntry = (message: string, level: NavLogLevel): NavLogEntry => {
-                return {
-                    url: window.location.href,
-                    userAgent: window.navigator.userAgent,
-                    message: message.toString(),
-                    level,
-                };
-            };
-
             if (window.location.search.split("login_id=")[1] !== r.id) {
                 const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
                 window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "%26login_id=" + r.id;
             } else {
-                let loggPayload = createLogEntry(
+                logError(
                     "Fetch ga 401-error-id selv om kallet ble sendt fra URL med samme login_id (" +
                         r.id +
-                        "). Dette kan komme av en påloggingsloop (UNAUTHORIZED_LOOP_ERROR).",
-                    NavLogLevel.ERROR
+                        "). Dette kan komme av en påloggingsloop (UNAUTHORIZED_LOOP_ERROR)."
                 );
-                fetchPost("informasjon/actions/logg", JSON.stringify(loggPayload)).finally();
             }
         });
         throw new Error(HttpStatus.UNAUTHORIZED);

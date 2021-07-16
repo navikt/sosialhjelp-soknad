@@ -7,9 +7,9 @@ import {
     OpplysningType,
 } from "./opplysningerTypes";
 import {getOpplysningerUrl} from "./opplysningerUtils";
-import {loggAdvarsel} from "../navlogger/navloggerActions";
 import {fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {showServerFeil} from "../soknad/soknadActions";
+import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 
 export const gotDataFromBackend = (response: OpplysningerBackend): OpplysningerAction => {
     return {
@@ -49,7 +49,7 @@ export function hentOpplysninger(behandlingsId: string) {
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
                     return;
                 }
-                dispatch(loggAdvarsel("Henting av økonomiske opplysninger feilet: " + reason));
+                logWarning("Henting av økonomiske opplysninger feilet: " + reason);
                 dispatch(showServerFeil(true));
             });
     };

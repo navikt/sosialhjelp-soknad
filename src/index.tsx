@@ -20,7 +20,6 @@ import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga";
 import IntlProvider from "./intlProvider";
 import App from "./digisos";
-import {loggException} from "./digisos/redux/navlogger/navloggerActions";
 import {erDevSbs, erLocalhost, erProd} from "./nav-soknad/utils/rest-utils";
 import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
@@ -30,6 +29,7 @@ import {SoknadState} from "./digisos/redux/soknad/soknadTypes";
 import LoadContainer from "./LoadContainer";
 import Modal from "react-modal";
 import {initAmplitude} from "./nav-soknad/utils/amplitude";
+import {logException, NavLogEntry, NavLogLevel} from "./nav-soknad/utils/loggerUtils";
 
 Modal.setAppElement("#root");
 
@@ -78,15 +78,20 @@ function configureStore() {
 const store = configureStore();
 
 window.onerror = (errorMessage, url, line, column, error) => {
-    store.dispatch(
-        loggException(
-            typeof errorMessage === "string" ? errorMessage : "Why is typeof errorMessage Event?",
-            url ? url : "",
-            line,
-            column,
-            error
-        )
-    );
+    const stacktrace = error?.hasOwnProperty("stack") ? "\nStacktrace" + error.stack : "";
+    const logEntry: NavLogEntry = {
+        level: NavLogLevel.ERROR,
+        userAgent: window.navigator.userAgent,
+        url: document.location.href,
+        message: errorMessage.toString(),
+        jsFileUrl: url,
+        lineNumber: line,
+        error: stacktrace,
+    };
+    if (column) {
+        logEntry.columnNumber = column;
+    }
+    logException(logEntry);
 };
 
 initAmplitude();

@@ -20,7 +20,6 @@ import {
     sendSoknadPending,
 } from "../../digisos/redux/soknad/soknadActions";
 import {gaTilbake, gaVidere, tilSteg} from "../../digisos/redux/navigasjon/navigasjonActions";
-import {loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
 import AppBanner from "../components/appHeader/AppHeader";
 import {
     clearAllValideringsfeil,
@@ -33,6 +32,7 @@ import {erPaStegEnOgValgtNavEnhetErUgyldig, sjekkOmValgtNavEnhetErGyldig} from "
 import {createSkjemaEventData, logAmplitudeEvent} from "../utils/amplitude";
 import Lenke from "nav-frontend-lenker";
 import {useTitle} from "../hooks/useTitle";
+import {logInfo} from "../utils/loggerUtils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -73,7 +73,7 @@ const StegMedNavigasjon = (
     const loggAdresseTypeTilGrafana = () => {
         const adresseTypeValg = soknadsdata.personalia.adresser.valg;
         if (adresseTypeValg) {
-            dispatch(loggInfo("klikk--" + adresseTypeValg));
+            logInfo("klikk--" + adresseTypeValg);
         }
     };
 
@@ -144,9 +144,9 @@ const StegMedNavigasjon = (
     const handleNavEnhetErUgyldigFeil = (valgtNavEnhet: NavEnhet | null) => {
         dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
         if (!valgtNavEnhet || (!valgtNavEnhet.enhetsnavn && !valgtNavEnhet.enhetsnr)) {
-            dispatch(loggInfo("Ingen navenhet valgt"));
+            logInfo("Ingen navenhet valgt");
         } else {
-            dispatch(loggInfo(`Ugyldig navenhet valgt: ${valgtNavEnhet.enhetsnr} ${valgtNavEnhet.enhetsnavn}`));
+            logInfo(`Ugyldig navenhet valgt: ${valgtNavEnhet.enhetsnr} ${valgtNavEnhet.enhetsnavn}`);
         }
         dispatch(visValideringsfeilPanel());
     };

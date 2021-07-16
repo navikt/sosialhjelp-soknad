@@ -9,8 +9,7 @@ import {
     OpplysningType,
 } from "./opplysningerTypes";
 import {opplysningsRekkefolgeOgSpc} from "./opplysningerConfig";
-import {loggErrorToServer} from "../../../nav-soknad/utils/loggerUtils";
-import {NavLogEntry, NavLogLevel} from "../navlogger/navloggerTypes";
+import {logError} from "../../../nav-soknad/utils/loggerUtils";
 
 export function getOpplysningerUrl(behandlingsId: string) {
     return `soknader/${behandlingsId}/okonomiskeOpplysninger`;
@@ -119,12 +118,7 @@ export const getSpcForOpplysning = (opplysningType: OpplysningType): OpplysningS
     });
 
     if (opplysningSpcs && opplysningSpcs.length === 0) {
-        const navLogEntry: NavLogEntry = {
-            level: NavLogLevel.ERROR,
-            message: `Spc ikke funnet for opplysning med type: "${opplysningType}"`,
-            jsFileUrl: "opplysningerUtils.js",
-        };
-        loggErrorToServer(navLogEntry);
+        logError(`Spc ikke funnet for opplysning med type: "${opplysningType}"`, "opplysningerUtils.ts");
     }
 
     return opplysningSpcs[0];
@@ -162,13 +156,10 @@ function sorterOpplysninger(usortertListe: Opplysning[], rekkefolge: OpplysningS
         while (erPlassertISortertListe === false) {
             if (n > rekkefolge.length - 1) {
                 erPlassertISortertListe = true;
-
-                const navLogEntry: NavLogEntry = {
-                    level: NavLogLevel.ERROR,
-                    message: `Ukjent okonomisk opplysning oppdaget. Okonomisk opplysning med type "${opplysning.type}" mottatt fra backend`,
-                    jsFileUrl: "opplysningerUtils.js",
-                };
-                loggErrorToServer(navLogEntry);
+                logError(
+                    `Ukjent okonomisk opplysning oppdaget. Okonomisk opplysning med type "${opplysning.type}" mottatt fra backend`,
+                    "opplysningerUtils.ts"
+                );
             } else if (opplysning.type === rekkefolge[n].type) {
                 sortert[n] = opplysning;
                 erPlassertISortertListe = true;
