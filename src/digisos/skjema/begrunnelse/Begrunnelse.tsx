@@ -64,7 +64,7 @@ const BegrunnelseSkjema = () => {
                 feil,
                 dispatch
             );
-            const hvorforSokeHyldigLengde = validateAndDispatchTextFieldMaxLength(
+            const hvorforSokeGyldigLengde = validateAndDispatchTextFieldMaxLength(
                 hvorforSoke,
                 FAKTUM_KEY_HVORFOR,
                 MAX_CHARS_BEGRUNNELSE,
@@ -72,7 +72,7 @@ const BegrunnelseSkjema = () => {
                 dispatch
             );
 
-            if (hvaSokesOmGyldigLengde && hvorforSokeHyldigLengde) {
+            if (hvaSokesOmGyldigLengde && hvorforSokeGyldigLengde) {
                 const begrunnelse: BegrunnelseType = {hvaSokesOm, hvorforSoke};
                 dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BEGRUNNELSE, begrunnelse));
             }
