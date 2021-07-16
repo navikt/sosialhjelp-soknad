@@ -27,12 +27,12 @@ import {
     visMidlertidigDeaktivertPanel,
     visNedetidPanel,
 } from "./soknadActions";
-import {loggAdvarsel, loggInfo} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
 import {push} from "connected-react-router";
 import {OpprettSoknadResponse, SendSoknadResponse} from "./soknadTypes";
 import {soknadsdataUrl} from "../soknadsdata/soknadsdataActions";
+import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
 
 enum SendtTilSystemEnum {
     SVARUT = "SVARUT",
@@ -49,11 +49,11 @@ function* opprettSoknadSaga(action: {type: string}) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         } else if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
-            yield put(loggAdvarsel("opprettSoknadSaga ServiceUnavailable: " + reason));
+            yield call(logWarning, "opprettSoknadSaga ServiceUnavailable: " + reason);
             yield put(visNedetidPanel(true));
             yield put(startSoknadServiceUnavailable());
         } else {
-            yield put(loggAdvarsel("opprett soknad saga feilet: " + reason));
+            yield call(logWarning, "opprett soknad saga feilet: " + reason);
             yield put(showServerFeil(true));
             yield put(opprettSoknadFeilet());
         }
@@ -68,7 +68,7 @@ function* hentSamtykker(action: HentSamtykker) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(loggAdvarsel("hent samtykker saga feilet: " + reason));
+        yield call(logWarning, "hent samtykker saga feilet: " + reason);
         yield put(showSideIkkeFunnet(true));
     }
 }
@@ -93,11 +93,11 @@ function* oppdaterSamtykke(action: {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         } else if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
-            yield put(loggAdvarsel("oppdater samtykke saga ServiceUnavailable: " + reason));
+            yield call(logWarning, "oppdater samtykke saga ServiceUnavailable: " + reason);
             yield put(visNedetidPanel(true));
             yield put(startSoknadServiceUnavailable());
         } else {
-            yield put(loggAdvarsel("oppdater samtykke saga feilet: " + reason));
+            yield call(logWarning, "oppdater samtykke saga feilet: " + reason);
             yield put(showServerFeil(true));
         }
     }
@@ -127,7 +127,7 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
             yield put(visMidlertidigDeaktivertPanel(true));
             yield put(setSendSoknadServiceUnavailable());
         } else {
-            yield put(loggAdvarsel("send soknad saga feilet: " + reason));
+            yield call(logWarning, "send soknad saga feilet: " + reason);
             yield put(showSendingFeiletPanel(true));
         }
     }
@@ -143,11 +143,10 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
         );
         const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find((n: NavEnhet) => n.valgt);
         if (!valgtSoknadsmottaker || valgtSoknadsmottaker.isMottakMidlertidigDeaktivert) {
-            yield put(
-                loggAdvarsel(
-                    "Søknadsmottaker ikke gyldig på side 9, redirecter tilbake til side 1. Søknadsmottaker var " +
-                        valgtSoknadsmottaker
-                )
+            yield call(
+                logWarning,
+                "Søknadsmottaker ikke gyldig på side 9, redirecter tilbake til side 1. Søknadsmottaker var " +
+                    valgtSoknadsmottaker
             );
             yield put(push(`/skjema/${brukerbehandlingId}/1`));
         } else {
@@ -157,11 +156,10 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(
-            loggAdvarsel(
-                "feil i finnOgOppdaterSoknadsmottakerStatusSaga på side 9. Sender brukeren tilbake til steg 1 og håper dette ikke blir en infinite loop. Error message: " +
-                    reason
-            )
+        yield call(
+            logWarning,
+            "feil i finnOgOppdaterSoknadsmottakerStatusSaga på side 9. Sender brukeren tilbake til steg 1 og håper dette ikke blir en infinite loop. Error message: " +
+                reason
         );
         yield put(push(`/skjema/${brukerbehandlingId}/1`));
     }
@@ -172,7 +170,7 @@ function* getErSystemdataEndretSaga(action: GetErSystemdataEndret) {
         const urlPath = `soknader/${action.behandlingsId}/erSystemdataEndret`;
         const response: boolean = yield fetchToJson(urlPath, true);
         if (response) {
-            yield put(loggInfo("Systemdata var endret for brukeren."));
+            yield call(logInfo, "Systemdata var endret for brukeren.");
         }
         yield put(setErSystemdataEndret(response));
     } catch (reason) {
@@ -180,7 +178,7 @@ function* getErSystemdataEndretSaga(action: GetErSystemdataEndret) {
             return;
         }
         yield put(setErSystemdataEndret(false));
-        yield put(loggAdvarsel("getErSystemdataEndretSaga feilet: " + reason));
+        yield call(logWarning, "getErSystemdataEndretSaga feilet: " + reason);
     }
 }
 

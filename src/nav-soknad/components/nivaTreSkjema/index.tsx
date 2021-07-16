@@ -1,6 +1,6 @@
 import * as React from "react";
-import {loggAdvarsel} from "../../../digisos/redux/navlogger/navloggerActions";
 import {UnmountClosed} from "react-collapse";
+import {logWarning} from "../../utils/loggerUtils";
 
 type Sizes = "small" | "large";
 
@@ -59,7 +59,7 @@ class NivaTreSkjema extends React.Component<Props, State> {
         try {
             content = renderContent();
         } catch (e) {
-            loggAdvarsel("Feil ved rendering av nivå tre skjema: " + e.toString());
+            logWarning("Feil ved rendering av nivå tre skjema: " + e.toString());
         }
         if (this.state.animate === true) {
             return (
