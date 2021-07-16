@@ -5,7 +5,12 @@ import {EtikettSuksess, EtikettFokus} from "nav-frontend-etiketter";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../redux/reducers";
 import {finnOgOppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
-import {bekreftOppsummering, hentNyOppsummering} from "../../redux/oppsummering/oppsummeringActions";
+import {
+    bekreftOppsummering,
+    hentNyOppsummering,
+    hentOppsumeringFeilet,
+    setNyOppsummering,
+} from "../../redux/oppsummering/oppsummeringActions";
 import {Undertittel} from "nav-frontend-typografi";
 import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
 import {FormattedMessage, useIntl} from "react-intl";
@@ -16,7 +21,8 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import {Link} from "react-router-dom";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {UbesvarteSporsmalPanel} from "./UbesvarteSporsmalPanel";
-import {NyOppsummeringBolk} from "../../redux/oppsummering/oppsummeringTypes";
+import {NyOppsummeringBolk, NyOppsummeringResponse} from "../../redux/oppsummering/oppsummeringTypes";
+import {fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 
 export const Oppsummering = () => {
     const dispatch = useDispatch();
@@ -35,6 +41,16 @@ export const Oppsummering = () => {
         if (behandlingsId) {
             dispatch(finnOgOppdaterSoknadsmottakerStatus(behandlingsId));
             dispatch(hentNyOppsummering());
+            fetchToJson<NyOppsummeringResponse>(`soknader/${behandlingsId}/oppsummering`)
+                .then((response) => {
+                    dispatch(setNyOppsummering(response));
+                })
+                .catch((reason) => {
+                    if (reason.message === HttpStatus.UNAUTHORIZED) {
+                        return;
+                    }
+                    dispatch(hentOppsumeringFeilet(reason));
+                });
         }
     }, [behandlingsId, dispatch]);
 
@@ -49,8 +65,6 @@ export const Oppsummering = () => {
             </div>
         );
     }
-
-    console.log("nyOppsummering", nyOppsummering);
 
     return (
         <DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
