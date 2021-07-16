@@ -61,7 +61,7 @@ const TelefonView = () => {
 
     const forberedOgSendTelefonnummer = (telefonnummer: Telefonnummer, brukerBehandlingId: string) => {
         let verdi = telefonnummer.brukerutfyltVerdi;
-        let feilkode: ValideringsFeilKode | undefined = undefined;
+        let erGyldigTelefonnummer: boolean = true;
 
         if (verdi === "" || verdi === null) {
             dispatch(clearValideringsfeil(FAKTUM_KEY_TELEFON));
@@ -69,10 +69,10 @@ const TelefonView = () => {
             verdi = fjernLandkode(verdi);
             verdi = verdi.replace(/[.]/g, "");
             telefonnummer.brukerutfyltVerdi = verdi;
-            feilkode = validerTelefonnummer(verdi);
+            erGyldigTelefonnummer = validerTelefonnummer(verdi);
         }
 
-        if (!feilkode) {
+        if (erGyldigTelefonnummer) {
             if (telefonnummer.brukerutfyltVerdi !== null && telefonnummer.brukerutfyltVerdi !== "") {
                 telefonnummer.brukerutfyltVerdi = LANDKODE + fjernLandkode(telefonnummer.brukerutfyltVerdi);
             }
@@ -88,16 +88,16 @@ const TelefonView = () => {
         }
     };
 
-    const validerTelefonnummer = (verdi: string): ValideringsFeilKode | undefined => {
-        const feilkode: ValideringsFeilKode | undefined = erTelefonnummer(verdi);
-        if (verdi !== "" && feilkode) {
+    const validerTelefonnummer = (verdi: string): boolean => {
+        const erGyldigTelefonnummer = erTelefonnummer(verdi);
+        if (verdi !== "" && !erGyldigTelefonnummer) {
             // onEndretValideringsfeil(feilkode, FAKTUM_KEY_TELEFON, this.props.feil, () => {
-            dispatch(setValideringsfeil(feilkode, FAKTUM_KEY_TELEFON));
+            dispatch(setValideringsfeil(ValideringsFeilKode.ER_TELEFONNUMMER, FAKTUM_KEY_TELEFON));
             // });
         } else {
             dispatch(clearValideringsfeil(FAKTUM_KEY_TELEFON));
         }
-        return feilkode;
+        return erGyldigTelefonnummer;
     };
 
     const fjernLandkode = (telefonnummer: string) => {

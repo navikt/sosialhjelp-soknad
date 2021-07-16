@@ -22,7 +22,7 @@ import {getFeilForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysnin
 import {State} from "../../redux/reducers";
 
 export const erGyldigTall = (input: string): boolean => {
-    return !erTall(input, true) && parseInt(input, 10) < 2147483648;
+    return erTall(input, true) && parseInt(input, 10) < 2147483648;
 };
 
 const TabellView = (props: {opplysning: Opplysning; gruppeIndex: number}) => {

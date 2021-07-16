@@ -99,8 +99,7 @@ const BosituasjonView = () => {
     const onBlurAntall = () => {
         if (behandlingsId) {
             const {botype, antallPersoner} = soknadsdata.bosituasjon;
-            const valideringsfeil = validerAntallPersoner(antallPersoner);
-            if (!valideringsfeil) {
+            if (validerAntallPersoner(antallPersoner)) {
                 const oppdatertBosituasjon: Bosituasjon = {
                     botype,
                     antallPersoner,
@@ -112,17 +111,18 @@ const BosituasjonView = () => {
         }
     };
 
-    const validerAntallPersoner = (antallPersoner: string | null) => {
+    const validerAntallPersoner = (antallPersoner: string | null): boolean => {
         if (!antallPersoner || antallPersoner.length === 0) {
-            return null;
+            return true;
         }
-        const feilkode: ValideringsFeilKode | undefined = erTall(antallPersoner, true);
-        onEndretValideringsfeil(feilkode, FAKTUM_KEY_ANTALL, feil, () => {
-            feilkode
-                ? dispatch(setValideringsfeil(feilkode, FAKTUM_KEY_ANTALL))
-                : dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
+        const erGyldigTall = erTall(antallPersoner, true);
+        onEndretValideringsfeil(erGyldigTall ? undefined : ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL, feil, () => {
+            erGyldigTall
+                ? dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))
+                : dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL));
         });
-        return feilkode;
+
+        return erGyldigTall;
     };
 
     const onChangeAntall = (verdi: string) => {
