@@ -87,22 +87,26 @@ export const VerdierView = () => {
     const onBlurTekstfeltAnnet = () => {
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         const beskrivelseAvAnnet = verdier.beskrivelseAvAnnet;
-        const feilmeldingAnnet: ValideringsFeilKode | undefined = validerTekstfeltVerdi(
-            beskrivelseAvAnnet,
-            VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY
-        );
+        const erGyldigLengde = validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
 
-        if (!feilmeldingAnnet && behandlingsId) {
+        if (erGyldigLengde && behandlingsId) {
             dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier));
         }
     };
 
-    const validerTekstfeltVerdi = (verdi: string, faktumKey: string): ValideringsFeilKode | undefined => {
-        const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
-        onEndretValideringsfeil(feilkode, faktumKey, feil, () => {
-            feilkode ? dispatch(setValideringsfeil(feilkode, faktumKey)) : dispatch(clearValideringsfeil(faktumKey));
-        });
-        return feilkode;
+    const validerTekstfeltVerdi = (verdi: string, faktumKey: string): boolean => {
+        const erInnenforMaksLengde = maksLengde(verdi, MAX_CHARS);
+        onEndretValideringsfeil(
+            erInnenforMaksLengde ? undefined : ValideringsFeilKode.MAX_LENGDE,
+            faktumKey,
+            feil,
+            () => {
+                erInnenforMaksLengde
+                    ? dispatch(clearValideringsfeil(faktumKey))
+                    : dispatch(setValideringsfeil(ValideringsFeilKode.MAX_LENGDE, faktumKey));
+            }
+        );
+        return erInnenforMaksLengde;
     };
 
     const renderCheckBox = (navn: VerdierKeys) => {

@@ -11,6 +11,7 @@ import {Familie, Sivilstatus} from "./FamilieTypes";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validering/valideringActions";
+import {ValideringsFeilKode} from "../../../redux/reduxTypes";
 
 const FAKTUM_KEY = "familie.sivilstatus.gift.ektefelle";
 const FAKTUM_KEY_FNR = FAKTUM_KEY + ".fnr";
@@ -53,12 +54,14 @@ const PersonSkjema = () => {
         const personnummer: string | null = sivilstatus.ektefelle ? sivilstatus.ektefelle.personnummer : null;
         let feilkodePersonnummer = null;
         if (personnummer && personnummer !== "") {
-            feilkodePersonnummer = minLengde(personnummer, 5);
-            if (!feilkodePersonnummer) {
-                feilkodePersonnummer = maksLengde(personnummer, 5);
+            if (!minLengde(personnummer, 5)) {
+                feilkodePersonnummer = ValideringsFeilKode.MIN_LENGDE;
             }
-            if (!feilkodePersonnummer) {
-                feilkodePersonnummer = erTall(personnummer, true);
+            if (!feilkodePersonnummer && !maksLengde(personnummer, 5)) {
+                feilkodePersonnummer = ValideringsFeilKode.MAX_LENGDE;
+            }
+            if (!feilkodePersonnummer && !erTall(personnummer, true)) {
+                feilkodePersonnummer = ValideringsFeilKode.ER_TALL;
             }
 
             feilkodePersonnummer

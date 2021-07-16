@@ -4,21 +4,17 @@ import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import Sporsmal, {SporsmalStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import ArbeidDetaljer from "./ArbeidDetaljer";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
-import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
-import {
-    connectSoknadsdataContainer,
-    onEndretValideringsfeil,
-} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import {connectSoknadsdataContainer} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {Arbeidsforhold} from "./arbeidTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {lagreSoknadsdata, hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
-import {setValideringsfeil, clearValideringsfeil} from "../../../redux/validering/valideringActions";
+import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
+import {validateAndDispatchTextFieldMaxLength} from "../../../../nav-soknad/validering/validateAndDispatch";
 
 const MAX_CHARS = 500;
 const FAKTUM_KEY_KOMMENTARER = "opplysninger.arbeidsituasjon.kommentarer";
@@ -52,31 +48,28 @@ const ArbeidView = () => {
         const arbeid = soknadsdata.arbeid;
         arbeid.kommentarTilArbeidsforhold = verdi;
         dispatch(oppdaterSoknadsdataSti(SoknadsSti.ARBEID, arbeid));
-        validerTekstfeltVerdi(verdi, FAKTUM_KEY_KOMMENTARER);
+        validateAndDispatchTextFieldMaxLength(
+            kommentarTilArbeidsforhold ? kommentarTilArbeidsforhold : "",
+            FAKTUM_KEY_KOMMENTARER,
+            MAX_CHARS,
+            feil,
+            dispatch
+        );
     };
 
     const lagreHvisGyldig = () => {
         const arbeid = soknadsdata.arbeid;
         const kommentarTilArbeidsforhold = arbeid.kommentarTilArbeidsforhold;
-        const feilkode: ValideringsFeilKode | undefined = validerTekstfeltVerdi(
+        const erInnenforMaksLengde = validateAndDispatchTextFieldMaxLength(
             kommentarTilArbeidsforhold ? kommentarTilArbeidsforhold : "",
-            FAKTUM_KEY_KOMMENTARER
+            FAKTUM_KEY_KOMMENTARER,
+            MAX_CHARS,
+            feil,
+            dispatch
         );
-        if (!feilkode && behandlingsId) {
+        if (erInnenforMaksLengde && behandlingsId) {
             dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.ARBEID, arbeid));
         }
-    };
-
-    const validerTekstfeltVerdi = (verdi: string, faktumKey: string): ValideringsFeilKode | undefined => {
-        const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
-        onEndretValideringsfeil(feilkode, faktumKey, feil, () => {
-            if (feilkode) {
-                dispatch(setValideringsfeil(feilkode, faktumKey));
-            } else {
-                dispatch(clearValideringsfeil(faktumKey));
-            }
-        });
-        return feilkode;
     };
 
     const arbeid = soknadsdata.arbeid;

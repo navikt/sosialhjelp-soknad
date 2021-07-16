@@ -1,20 +1,17 @@
-import * as React from "react";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import {Begrunnelse as BegrunnelseType} from "./begrunnelseTypes";
 import {useIntl} from "react-intl";
-import {maksLengde} from "../../../nav-soknad/validering/valideringer";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
-import {onEndretValideringsfeil} from "../../redux/soknadsdata/soknadsdataContainerUtils";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../redux/soknadsdata/soknadsdataReducer";
-import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 import {replaceDotWithUnderscore} from "../../../nav-soknad/utils";
 
 import {State} from "../../redux/reducers";
-import {clearValideringsfeil, setValideringsfeil} from "../../redux/validering/valideringActions";
+import {clearValideringsfeil} from "../../redux/validering/valideringActions";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../redux/soknadsdata/soknadsdataActions";
+import {validateAndDispatchTextFieldMaxLength} from "../../../nav-soknad/validering/validateAndDispatch";
 
 const MAX_CHARS_BEGRUNNELSE = 600;
 const MAX_CHARS = 500;
@@ -50,40 +47,36 @@ const BegrunnelseSkjema = () => {
         dispatch(oppdaterSoknadsdataSti(SoknadsSti.BEGRUNNELSE, soknadsdata.begrunnelse));
 
         if (key === HVA_SOKES_OM) {
-            validerTekstfeltVerdi(value, FAKTUM_KEY_HVA, MAX_CHARS);
+            validateAndDispatchTextFieldMaxLength(value, FAKTUM_KEY_HVA, MAX_CHARS, feil, dispatch);
         }
         if (key === HVORFOR_SOKE) {
-            validerTekstfeltVerdi(value, FAKTUM_KEY_HVORFOR, MAX_CHARS_BEGRUNNELSE);
+            validateAndDispatchTextFieldMaxLength(value, FAKTUM_KEY_HVORFOR, MAX_CHARS_BEGRUNNELSE, feil, dispatch);
         }
     };
 
     const lagreHvisGyldig = () => {
         if (behandlingsId) {
             const {hvaSokesOm, hvorforSoke} = soknadsdata.begrunnelse;
-            const feilmeldingHva: ValideringsFeilKode | undefined = validerTekstfeltVerdi(
+            const hvaSokesOmGyldigLengde = validateAndDispatchTextFieldMaxLength(
                 hvaSokesOm,
                 FAKTUM_KEY_HVA,
-                MAX_CHARS
+                MAX_CHARS,
+                feil,
+                dispatch
             );
-            const feilmeldingHvorfor: ValideringsFeilKode | undefined = validerTekstfeltVerdi(
+            const hvorforSokeGyldigLengde = validateAndDispatchTextFieldMaxLength(
                 hvorforSoke,
                 FAKTUM_KEY_HVORFOR,
-                MAX_CHARS_BEGRUNNELSE
+                MAX_CHARS_BEGRUNNELSE,
+                feil,
+                dispatch
             );
 
-            if (!feilmeldingHva && !feilmeldingHvorfor) {
+            if (hvaSokesOmGyldigLengde && hvorforSokeGyldigLengde) {
                 const begrunnelse: BegrunnelseType = {hvaSokesOm, hvorforSoke};
                 dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BEGRUNNELSE, begrunnelse));
             }
         }
-    };
-
-    const validerTekstfeltVerdi = (verdi: string, faktumKey: string, max: number): ValideringsFeilKode | undefined => {
-        const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, max);
-        onEndretValideringsfeil(feilkode, faktumKey, feil, () => {
-            feilkode ? dispatch(setValideringsfeil(feilkode, faktumKey)) : dispatch(clearValideringsfeil(faktumKey));
-        });
-        return feilkode;
     };
 
     const begrunnelse = soknadsdata.begrunnelse;
