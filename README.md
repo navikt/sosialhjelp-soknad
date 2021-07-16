@@ -13,13 +13,6 @@ Kjører mot (mock backend)
 -   `npm install`
 -   `npm start` - Starter webpack server og mock backend utviklet i node express.
 -   `npm test` - Kjør enhetstestene
--   `npm test -- -u` - Oppdatert snapshotfilen som snapshottestene tester mot for lokal utvikling.
-
-I stedet for npm er det mulig å bruke yarn.
-
-### Mock login
-
-Besøk http://localhost:3000/sosialhjelp/soknad/mock-login
 
 ## Manuell deploy til dev
 
@@ -29,22 +22,11 @@ Gjøres via Github Actions, se: https://github.com/navikt/sosialhjelp-soknad/act
 
 Da må appen gå via proxy. Url er https://digisos-gcp.dev.nav.no/sosialhjelp/soknad
 
-## Tekster
-
-Tekstene ligger i repoet `sosialhjelp-soknad-server` med felles byggejobb på `cisbl.devillo.no`. Tekstendringer blir automatisk
-deployet til miljø som er konfigurert opp i byggejobben. I tillegg har man en mocket tekstfil for lokal utvikling, men endringer
-gjort i denne må synces til teksterrepoet for å bli brukt i miljøene.
-
 # Henvendelser
 
 Spørsmål knyttet til koden eller prosjektet kan rettes mot:
 
 -   https://github.com/orgs/navikt/teams/digisos
-
-## For Kommunalt ansatte og leverandører av soisalsystemer
-
--   Be om tilgang til https://digisos-nav-it.slack.com/
--   Slack kanal #general
 
 ## For NAV-ansatte
 
