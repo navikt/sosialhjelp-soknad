@@ -32,11 +32,6 @@ export function erQGammelVersjon(): boolean {
     return url.indexOf("www-q0.nav.no") >= 0 || url.indexOf("www-q1.nav.no") >= 0;
 }
 
-export function kjorerJetty(): boolean {
-    const url = window.location.href;
-    return url.indexOf(":8189") > 0;
-}
-
 enum LocalHostMode {
     LOCALHOST_MOCK_PROFIL,
     LOCALHOST_MOCK_ALT_PROFIL,
@@ -88,9 +83,6 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
             return getAbsoluteApiUrl(withAccessToken);
         }
         return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
-    }
-    if (kjorerJetty()) {
-        return `http://127.0.0.1:7000/${apiContextPath}/`;
     }
 
     return getAbsoluteApiUrl(withAccessToken);

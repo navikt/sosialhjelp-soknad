@@ -21,33 +21,6 @@ I stedet for npm er det mulig å bruke yarn.
 
 Besøk http://localhost:3000/sosialhjelp/soknad/mock-login
 
-## Kjøring mot sendsoknad backend i stedet for mock backend
-
--   `cd soknadsosialhjelp-tekster && mvn clean install -Ddev` - bygger tekstfilene.
--   Start no.nav.sbl.dialogarena.StartSoknadJetty fra IntelliJ - Starter reel backend
--   Legg inn url til sendsokand i nav-soknad/utils/rest-utils.ts:
-
-```javascript
-export function getApiBaseUrl(): string {
-    if (erLocalhost()) {
-        // Kjør mot lokal sendsoknad
-        // return "http://localhost:8189/sendsoknad/";
-        return "http://localhost:3001/";
-    }
-    return kjorerJetty() ? "http://127.0.0.1:7000/sosialhjelp/login-api/soknad-api/" : "/sendsoknad/";
-}
-```
-
--   Endre linjen environment-test.properties fra true til false for å laste ned kodeverk på xml format:
-
-```
-   start.kodeverk.withmock=true
-```
-
--   `cd soknadsosialhjelp/web/src/frontend && npm start`
-
--   Åpne `http://localhost:3000/sosialhjelp/soknad/informasjon` i nettleseren.
-
 ## Manuell deploy til dev
 
 Gjøres via Github Actions, se: https://github.com/navikt/sosialhjelp-soknad/actions/workflows/deploy_dev.yml
