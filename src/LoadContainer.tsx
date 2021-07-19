@@ -43,15 +43,12 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
                 );
                 const fornavnResponse = await fetchToJson<FornavnResponse>("informasjon/fornavn");
                 const nedetidResponse = await fetchToJson<NedetidResponse>("nedetid");
-                const harNyligInnsendteSoknaderResponse = await fetchToJson<HarNyligInnsendteSoknaderResponse>(
-                    "informasjon/harNyligInnsendteSoknader"
-                );
 
                 dispatch(lagreLedeteksterPaStore(ledeteksterResponse));
                 dispatch(lagreMiljovariablerPaStore(miljoVariablerResponse));
                 dispatch(lagreRessurserPaStore(tilgangResponse, fornavnResponse));
                 dispatch(lagreNedetidPaStore(nedetidResponse));
-                dispatch(lagreHarNyligInnsendteSoknaderPaStore(harNyligInnsendteSoknaderResponse));
+
                 setShowSpinner(false);
             } catch (reason) {
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
@@ -65,6 +62,20 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
         }
         fetchData();
     }, [dispatch, setShowSpinner, setShowErrorPage]);
+
+    useEffect(() => {
+        async function fetchDataWithoutErrorHandling() {
+            try {
+                const harNyligInnsendteSoknaderResponse = await fetchToJson<HarNyligInnsendteSoknaderResponse>(
+                    "informasjon/harNyligInnsendteSoknader"
+                );
+                dispatch(lagreHarNyligInnsendteSoknaderPaStore(harNyligInnsendteSoknaderResponse));
+            } catch (err) {
+                // Trenger ikke feilhåndtering for dette kallet. Det skal fortsatt være mulig for bruker å starte søknad selv om disse requestene ikke går gjennom
+            }
+        }
+        fetchDataWithoutErrorHandling();
+    }, [dispatch]);
 
     if (showSpinner) {
         return (
