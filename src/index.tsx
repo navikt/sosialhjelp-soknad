@@ -4,6 +4,7 @@ import "react-app-polyfill/stable";
 import "intl";
 import "intl/locale-data/jsonp/nb-NO.js";
 import "./index.less";
+import "@navikt/ds-css";
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
