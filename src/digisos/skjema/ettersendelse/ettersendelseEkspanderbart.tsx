@@ -1,10 +1,9 @@
-import * as React from "react";
+import React, {useState} from "react";
 import {UnmountClosed} from "react-collapse";
 import {FormattedMessage} from "react-intl";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import {MargIkoner} from "./margIkoner";
 import EttersendelseVedleggListe from "./ettersendelseVedleggListe";
-import {useState} from "react";
 
 interface Props {
     children: React.ReactNode;

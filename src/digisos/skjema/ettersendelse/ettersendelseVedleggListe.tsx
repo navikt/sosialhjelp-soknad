@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState, useEffect} from "react";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
 import Knapp from "nav-frontend-knapper";
@@ -9,8 +9,6 @@ import {sendEttersendelse} from "../../redux/ettersendelse/ettersendelseActions"
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
-import {useState} from "react";
-import {useEffect} from "react";
 
 const getAntallOpplastedeFiler = (data: EttersendelseVedleggBackend[]) => {
     return data.map((vedlegg: any) => vedlegg.filer.length).reduce((a: number, b: number) => a + b);
