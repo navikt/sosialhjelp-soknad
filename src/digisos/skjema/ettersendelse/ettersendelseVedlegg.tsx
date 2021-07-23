@@ -31,8 +31,6 @@ const EttersendelseVedlegg = (props: Props) => {
 
     const leggTilVedleggKnapp = useRef<HTMLInputElement>(null);
 
-    //leggTilVedleggKnapp!: HTMLInputElement | null;
-
     const removeFile = (filId: string, opplysningType: OpplysningType) => {
         if (brukerbehandlingId) {
             dispatch(slettEttersendtVedlegg(brukerbehandlingId, filId, opplysningType));

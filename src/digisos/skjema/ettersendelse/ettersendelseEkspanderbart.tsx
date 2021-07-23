@@ -9,7 +9,7 @@ import {useState} from "react";
 interface Props {
     children: React.ReactNode;
     ettersendelseAktivert: boolean;
-    onEttersendelse?: () => void;
+    onEttersendelse: () => void;
     kunGenerellDokumentasjon?: boolean;
 }
 
@@ -23,7 +23,7 @@ const EttersendelseEkspanderbart = (props: Props) => {
     };
 
     const onAnimasjonFerdig = () => {
-        if (vedleggSendt === true && ekspandert === false && props.onEttersendelse) {
+        if (vedleggSendt === true && ekspandert === false) {
             setVedleggSendt(false);
             props.onEttersendelse();
         }
@@ -35,7 +35,7 @@ const EttersendelseEkspanderbart = (props: Props) => {
 
     const onEttersendelseSetState = () => {
         setEkspandert(false);
-        setVedleggSendt(false);
+        setVedleggSendt(true);
     };
 
     return (
