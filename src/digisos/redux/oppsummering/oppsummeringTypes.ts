@@ -26,12 +26,23 @@ export interface NyOppsummeringResponse {
     steg: NyOppsummeringBolk[];
 }
 
-export interface NyOppsummeringBolk {
-    steg: number;
-    tittel: string;
-    erUtfylt: boolean;
+export interface Category {
+    title: string;
+    questions: Question[];
 }
-
+export interface Question {
+    title: string;
+    questionType: "SYSTEM" | "FREETEXT" | "RADIO_CHECKBOX" | "DOCUMENTATION";
+    systemValues?: {key: string; value: string}[];
+    freeText?: string;
+    values?: string[];
+    files?: {filename: string; url: string}[];
+}
+export interface NyOppsummeringBolk {
+    steg: string;
+    tittel: string;
+    categories: Category[];
+}
 export interface Oppsummering {
     signatur: string;
     bolker: OppsummeringBolk[];
