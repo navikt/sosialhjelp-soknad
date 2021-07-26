@@ -23,7 +23,7 @@ const UtdanningView = () => {
 
     React.useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.UTDANNING));
+            hentSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -32,7 +32,7 @@ const UtdanningView = () => {
             const utdanning = soknadsdata.utdanning;
             utdanning.erStudent = verdi;
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, utdanning));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, utdanning, dispatch);
         }
     };
 
@@ -41,7 +41,7 @@ const UtdanningView = () => {
             const utdanning = soknadsdata.utdanning;
             utdanning.studengradErHeltid = verdi;
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.UTDANNING, utdanning));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, utdanning));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, utdanning, dispatch);
         }
     };
 

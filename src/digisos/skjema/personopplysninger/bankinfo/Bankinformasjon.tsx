@@ -42,7 +42,7 @@ const Bankinformasjon = () => {
     useEffect(() => {
         if (behandlingsId) {
             dispatch(clearValideringsfeil(FAKTUM_KEY_KONTONUMMER));
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON));
+            hentSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -52,12 +52,12 @@ const Bankinformasjon = () => {
             if (kontonummer.brukerutfyltVerdi !== null && kontonummer.brukerutfyltVerdi !== "") {
                 if (validerKontonummer(kontonummer.brukerutfyltVerdi)) {
                     kontonummer = vaskKontonummerVerdi(kontonummer);
-                    dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer));
+                    lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer, dispatch);
                     dispatch(clearValideringsfeil(FAKTUM_KEY_KONTONUMMER));
                 }
             } else {
                 dispatch(clearValideringsfeil(FAKTUM_KEY_KONTONUMMER));
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer));
+                lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer, dispatch);
             }
         }
     };
@@ -83,13 +83,11 @@ const Bankinformasjon = () => {
             kontonummer.harIkkeKonto = false;
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer));
             if (!brukerdefinert) {
-                dispatch(
-                    lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer, () =>
-                        dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON))
-                    )
+                lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer, dispatch, () =>
+                    hentSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, dispatch)
                 );
             } else {
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer));
+                lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer, dispatch);
             }
             dispatch(clearValideringsfeil(FAKTUM_KEY_KONTONUMMER));
         }
@@ -119,7 +117,7 @@ const Bankinformasjon = () => {
                 kontonummer.brukerutfyltVerdi = "";
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.BANKINFORMASJON, kontonummer));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.BANKINFORMASJON, kontonummer, dispatch);
         }
     };
 

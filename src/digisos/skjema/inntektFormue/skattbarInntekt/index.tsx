@@ -24,7 +24,7 @@ const Skatt = () => {
 
     React.useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.SKATTBARINNTEKT));
+            hentSoknadsdata(behandlingsId, SoknadsSti.SKATTBARINNTEKT, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -41,13 +41,12 @@ const Skatt = () => {
 
     function handleSettSkatteetatenSamtykke(nyttHarSamtykke: boolean) {
         if (!visAnimerteStreker && behandlingsId) {
-            dispatch(
-                settSamtykkeOgOppdaterData(
-                    behandlingsId,
-                    SoknadsSti.SKATTBARINNTEKT_SAMTYKKE,
-                    nyttHarSamtykke,
-                    SoknadsSti.SKATTBARINNTEKT
-                )
+            settSamtykkeOgOppdaterData(
+                behandlingsId,
+                SoknadsSti.SKATTBARINNTEKT_SAMTYKKE,
+                nyttHarSamtykke,
+                SoknadsSti.SKATTBARINNTEKT,
+                dispatch
             );
         }
     }

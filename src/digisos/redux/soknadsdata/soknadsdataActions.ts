@@ -1,84 +1,80 @@
-import {Dispatch} from "../reduxTypes";
 import {fetchPost, fetchPut, fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {oppdaterSoknadsdataSti, settRestStatus, SoknadsdataType} from "./soknadsdataReducer";
 import {REST_STATUS} from "../soknad/soknadTypes";
 import {showServerFeil} from "../soknad/soknadActions";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {Dispatch} from "redux";
 
 export const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string =>
     `soknader/${brukerBehandlingId}/${sti}`;
 
-export function hentSoknadsdata(brukerBehandlingId: string, sti: string) {
-    return (dispatch: Dispatch) => {
-        dispatch(settRestStatus(sti, REST_STATUS.PENDING));
-        fetchToJson(soknadsdataUrl(brukerBehandlingId, sti))
-            .then((response: any) => {
-                dispatch(oppdaterSoknadsdataSti(sti, response));
-                dispatch(settRestStatus(sti, REST_STATUS.OK));
-            })
-            .catch((reason: any) => {
-                if (reason.message === HttpStatus.UNAUTHORIZED) {
-                    return;
-                }
-                logWarning("Henting av soknadsdata feilet: " + reason);
-                dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-                dispatch(showServerFeil(true));
-            });
-    };
+export function hentSoknadsdata(brukerBehandlingId: string, sti: string, dispatch: Dispatch) {
+    dispatch(settRestStatus(sti, REST_STATUS.PENDING));
+    fetchToJson(soknadsdataUrl(brukerBehandlingId, sti))
+        .then((response: any) => {
+            dispatch(oppdaterSoknadsdataSti(sti, response));
+            dispatch(settRestStatus(sti, REST_STATUS.OK));
+        })
+        .catch((reason: any) => {
+            if (reason.message === HttpStatus.UNAUTHORIZED) {
+                return;
+            }
+            logWarning("Henting av soknadsdata feilet: " + reason);
+            dispatch(settRestStatus(sti, REST_STATUS.FEILET));
+            dispatch(showServerFeil(true));
+        });
 }
 
 export function lagreSoknadsdata(
     brukerBehandlingId: string,
     sti: string,
     soknadsdata: SoknadsdataType,
+    dispatch: Dispatch,
     responseHandler?: (response: any) => void
 ) {
-    return (dispatch: Dispatch) => {
-        dispatch(settRestStatus(sti, REST_STATUS.PENDING));
-        fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata))
-            .then((response: any) => {
-                dispatch(settRestStatus(sti, REST_STATUS.OK));
-                if (responseHandler) {
-                    responseHandler(response);
-                }
-            })
-            .catch((reason) => {
-                if (reason.message === HttpStatus.UNAUTHORIZED) {
-                    return;
-                }
-                logWarning("Lagring av soknadsdata feilet: " + reason);
-                dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-                dispatch(showServerFeil(true));
-            });
-    };
+    dispatch(settRestStatus(sti, REST_STATUS.PENDING));
+    fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata))
+        .then((response: any) => {
+            dispatch(settRestStatus(sti, REST_STATUS.OK));
+            if (responseHandler) {
+                responseHandler(response);
+            }
+        })
+        .catch((reason) => {
+            if (reason.message === HttpStatus.UNAUTHORIZED) {
+                return;
+            }
+            logWarning("Lagring av soknadsdata feilet: " + reason);
+            dispatch(settRestStatus(sti, REST_STATUS.FEILET));
+            dispatch(showServerFeil(true));
+        });
 }
 
 export function settSamtykkeOgOppdaterData(
     brukerBehandlingId: string,
     sti: string,
     harSamtykke: boolean,
-    dataSti: null | string
+    dataSti: null | string,
+    dispatch: Dispatch
 ) {
-    return (dispatch: Dispatch) => {
-        const restStatusSti = "inntekt/samtykke";
-        dispatch(settRestStatus(restStatusSti, REST_STATUS.PENDING));
-        fetchPost(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(harSamtykke), true)
-            .then((response: any) => {
-                dispatch(settRestStatus(restStatusSti, REST_STATUS.OK));
-                if (dataSti && dataSti.length > 1) {
-                    dispatch(settRestStatus(dataSti, REST_STATUS.PENDING));
-                    dispatch(hentSoknadsdata(brukerBehandlingId, dataSti));
-                }
-            })
-            .catch((reason) => {
-                if (reason.message === HttpStatus.UNAUTHORIZED) {
-                    return;
-                }
-                logWarning("Oppdatering av bostotte samtykke feilet: " + reason);
-                dispatch(settRestStatus(restStatusSti, REST_STATUS.FEILET));
-                dispatch(showServerFeil(true));
-            });
-    };
+    const restStatusSti = "inntekt/samtykke";
+    dispatch(settRestStatus(restStatusSti, REST_STATUS.PENDING));
+    fetchPost(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(harSamtykke), true)
+        .then((response: any) => {
+            dispatch(settRestStatus(restStatusSti, REST_STATUS.OK));
+            if (dataSti && dataSti.length > 1) {
+                dispatch(settRestStatus(dataSti, REST_STATUS.PENDING));
+                hentSoknadsdata(brukerBehandlingId, dataSti, dispatch);
+            }
+        })
+        .catch((reason) => {
+            if (reason.message === HttpStatus.UNAUTHORIZED) {
+                return;
+            }
+            logWarning("Oppdatering av bostotte samtykke feilet: " + reason);
+            dispatch(settRestStatus(restStatusSti, REST_STATUS.FEILET));
+            dispatch(showServerFeil(true));
+        });
 }
 
 /*

@@ -35,7 +35,7 @@ export const VerdierView = () => {
 
     React.useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.VERDIER));
+            hentSoknadsdata(behandlingsId, SoknadsSti.VERDIER, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -60,7 +60,7 @@ export const VerdierView = () => {
                 verdier.beskrivelseAvAnnet = "";
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier, dispatch);
         }
     };
 
@@ -73,7 +73,7 @@ export const VerdierView = () => {
                 verdier.beskrivelseAvAnnet = "";
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier, dispatch);
         }
     };
 
@@ -90,7 +90,7 @@ export const VerdierView = () => {
         const erGyldigLengde = validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
 
         if (erGyldigLengde && behandlingsId) {
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier, dispatch);
         }
     };
 

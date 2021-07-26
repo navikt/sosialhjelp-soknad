@@ -33,7 +33,7 @@ const RegistrerteBarn = () => {
             const barnet = forsorgerplikt.ansvar[barnIndex];
             barnet.harDeltBosted = verdi;
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
         }
     };
 
@@ -49,7 +49,7 @@ const RegistrerteBarn = () => {
             const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
             const samvaersgrad = forsorgerplikt.ansvar[barnIndex].samvarsgrad;
             if (validerSamvaersgrad(samvaersgrad, samvaersgradBarnKeyMedIndex)) {
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+                lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
             }
         }
     };

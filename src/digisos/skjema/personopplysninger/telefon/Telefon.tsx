@@ -30,7 +30,7 @@ const TelefonView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.TELEFONNUMMER));
+            hentSoknadsdata(behandlingsId, SoknadsSti.TELEFONNUMMER, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -77,13 +77,11 @@ const TelefonView = () => {
                 telefonnummer.brukerutfyltVerdi = LANDKODE + fjernLandkode(telefonnummer.brukerutfyltVerdi);
             }
             if (telefonnummer.brukerdefinert != null && !telefonnummer.brukerdefinert) {
-                dispatch(
-                    lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer, () =>
-                        dispatch(hentSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER))
-                    )
+                lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer, dispatch, () =>
+                    hentSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, dispatch)
                 );
             } else {
-                dispatch(lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer));
+                lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer, dispatch);
             }
         }
     };

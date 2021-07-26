@@ -33,7 +33,7 @@ const StudielanView = () => {
 
     React.useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN));
+            hentSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -50,7 +50,7 @@ const StudielanView = () => {
             if (studielan && behandlingsId) {
                 studielan.bekreftelse = verdi;
                 dispatch(oppdaterSoknadsdataSti(SoknadsSti.STUDIELAN, studielan));
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, studielan));
+                lagreSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, studielan, dispatch);
             }
         }
     };

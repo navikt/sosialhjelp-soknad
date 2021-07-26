@@ -11,7 +11,6 @@ import * as ReactDOM from "react-dom";
 
 import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
-import thunk from "redux-thunk";
 import createSagaMiddleware from "redux-saga";
 import {ConnectedRouter, routerMiddleware} from "connected-react-router";
 import * as Sentry from "@sentry/browser";
@@ -70,7 +69,7 @@ function configureStore() {
 
     const saga = createSagaMiddleware();
 
-    const middleware = applyMiddleware(thunk, saga, routerMiddleware(history));
+    const middleware = applyMiddleware(saga, routerMiddleware(history));
     const createdStore = createStore(reducers(history), composeEnhancers(middleware));
     saga.run(sagas);
     return createdStore;

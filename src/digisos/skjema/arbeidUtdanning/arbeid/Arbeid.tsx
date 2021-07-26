@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import {FormattedMessage, injectIntl, useIntl} from "react-intl";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import Sporsmal, {SporsmalStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -32,7 +32,7 @@ const ArbeidView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.ARBEID));
+            hentSoknadsdata(behandlingsId, SoknadsSti.ARBEID, dispatch);
             dispatch(clearValideringsfeil(FAKTUM_KEY_KOMMENTARER));
         }
     }, [behandlingsId, dispatch]);
@@ -68,7 +68,7 @@ const ArbeidView = () => {
             dispatch
         );
         if (erInnenforMaksLengde && behandlingsId) {
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.ARBEID, arbeid));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.ARBEID, arbeid, dispatch);
         }
     };
 

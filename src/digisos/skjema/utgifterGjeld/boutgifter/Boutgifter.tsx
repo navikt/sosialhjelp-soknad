@@ -25,7 +25,7 @@ export const BoutgifterView = () => {
 
     React.useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER));
+            hentSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -42,7 +42,7 @@ export const BoutgifterView = () => {
                 boutgifter.annet = false;
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter, dispatch);
         }
     };
 
@@ -51,7 +51,7 @@ export const BoutgifterView = () => {
             const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
             boutgifter[idToToggle] = !boutgifter[idToToggle];
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter, dispatch);
         }
     };
 

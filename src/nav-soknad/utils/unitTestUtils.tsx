@@ -1,13 +1,11 @@
 import {IntlProvider} from "react-intl";
 import {ReactElement} from "react";
 import * as React from "react";
-import {mount, shallow} from "enzyme";
-import {ReactWrapper} from "enzyme";
+import {mount, shallow, ReactWrapper} from "enzyme";
 import createHistory from "history/createBrowserHistory";
 import {avbrytSoknad} from "../../digisos/redux/soknad/soknadActions";
 import createSagaMiddleware from "redux-saga";
 import {applyMiddleware, createStore} from "redux";
-import thunk from "redux-thunk";
 import reducers from "../../digisos/redux/reducers";
 import sagas from "../../rootSaga";
 import {Provider} from "react-redux";
@@ -98,7 +96,7 @@ export const TestContext: React.FunctionComponent<{messages: any; children: Reac
 
     const devtools: any = (f: any) => f;
     const saga = createSagaMiddleware();
-    const middleware = applyMiddleware(thunk, saga, routerMiddleware(history));
+    const middleware = applyMiddleware(saga, routerMiddleware(history));
     const store = createStore(reducers, devtools, middleware);
     saga.run(sagas);
 

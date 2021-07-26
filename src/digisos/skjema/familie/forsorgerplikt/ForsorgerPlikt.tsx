@@ -22,7 +22,7 @@ const ForsorgerPliktView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT));
+            hentSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
