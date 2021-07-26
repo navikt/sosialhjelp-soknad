@@ -47,7 +47,7 @@ const BosituasjonView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON));
+            hentSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -60,7 +60,7 @@ const BosituasjonView = () => {
                 dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon));
                 const valideringsfeil = validerAntallPersoner(bosituasjon.antallPersoner);
                 if (!valideringsfeil) {
-                    dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon));
+                    lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon, dispatch);
                 }
             } else {
                 const botype = verdi;
@@ -68,7 +68,7 @@ const BosituasjonView = () => {
                 dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon));
                 const valideringsfeil = validerAntallPersoner(bosituasjon.antallPersoner);
                 if (!valideringsfeil) {
-                    dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon));
+                    lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon, dispatch);
                 }
             }
         }
@@ -104,7 +104,7 @@ const BosituasjonView = () => {
                     botype,
                     antallPersoner,
                 };
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, oppdatertBosituasjon));
+                lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, oppdatertBosituasjon, dispatch);
                 dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, oppdatertBosituasjon));
                 dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
             }

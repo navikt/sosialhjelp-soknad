@@ -40,7 +40,7 @@ const PersonSkjema = () => {
         const sivilstatus = soknadsdata.familie.sivilstatus;
         const harFeil = valider(sivilstatus);
         if (!harFeil && behandlingsId) {
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus, dispatch);
         }
     };
 
@@ -105,7 +105,7 @@ const PersonSkjema = () => {
         dispatch(oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus));
         const harFeil = valider(sivilstatus);
         if (!harFeil && behandlingsId) {
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus, dispatch);
         }
     };
 

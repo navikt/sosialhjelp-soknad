@@ -33,7 +33,7 @@ const BegrunnelseSkjema = () => {
         if (behandlingsId) {
             dispatch(clearValideringsfeil(FAKTUM_KEY_HVA));
             dispatch(clearValideringsfeil(FAKTUM_KEY_HVORFOR));
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.BEGRUNNELSE));
+            hentSoknadsdata(behandlingsId, SoknadsSti.BEGRUNNELSE, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -74,7 +74,7 @@ const BegrunnelseSkjema = () => {
 
             if (hvaSokesOmGyldigLengde && hvorforSokeGyldigLengde) {
                 const begrunnelse: BegrunnelseType = {hvaSokesOm, hvorforSoke};
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BEGRUNNELSE, begrunnelse));
+                lagreSoknadsdata(behandlingsId, SoknadsSti.BEGRUNNELSE, begrunnelse, dispatch);
             }
         }
     };

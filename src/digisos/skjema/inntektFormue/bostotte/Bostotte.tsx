@@ -35,7 +35,7 @@ const BostotteView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE));
+            hentSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -59,20 +59,19 @@ const BostotteView = () => {
                         handleSettBostotteSamtykke(false);
                     };
                 }
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, bostotte, responseHandler));
+                lagreSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, bostotte, dispatch, responseHandler);
             }
         }
     };
 
     const handleSettBostotteSamtykke = (nyttHarSamtykke: boolean) => {
         if (!oppstartsModus && behandlingsId) {
-            dispatch(
-                settSamtykkeOgOppdaterData(
-                    behandlingsId,
-                    SoknadsSti.BOSTOTTE_SAMTYKKE,
-                    nyttHarSamtykke,
-                    SoknadsSti.BOSTOTTE
-                )
+            settSamtykkeOgOppdaterData(
+                behandlingsId,
+                SoknadsSti.BOSTOTTE_SAMTYKKE,
+                nyttHarSamtykke,
+                SoknadsSti.BOSTOTTE,
+                dispatch
             );
         }
     };

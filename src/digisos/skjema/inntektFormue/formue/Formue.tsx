@@ -32,7 +32,7 @@ export const FormueView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.FORMUE));
+            hentSoknadsdata(behandlingsId, SoknadsSti.FORMUE, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -57,7 +57,7 @@ export const FormueView = () => {
                 formue.beskrivelseAvAnnet = "";
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue, dispatch);
         }
     };
 
@@ -82,7 +82,7 @@ export const FormueView = () => {
                 dispatch
             );
             if (erInnenforMaksLengde) {
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue));
+                lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue, dispatch);
             }
         }
     };

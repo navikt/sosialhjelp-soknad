@@ -39,8 +39,8 @@ const AdresseView = () => {
         if (behandlingsId) {
             const restStatus: REST_STATUS = adresserStatus;
             if (restStatus === REST_STATUS.INITIALISERT) {
-                dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.ADRESSER));
-                dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.VALGT_NAV_ENHET));
+                hentSoknadsdata(behandlingsId, SoknadsSti.ADRESSER, dispatch);
+                hentSoknadsdata(behandlingsId, SoknadsSti.VALGT_NAV_ENHET, dispatch);
             }
         }
     }, [behandlingsId, dispatch, adresserStatus]);
@@ -80,24 +80,22 @@ const AdresseView = () => {
     const lagreAdresseValg = (payload: any, valg: AdresseKategori) => {
         if (behandlingsId) {
             setAdressePending(true);
-            dispatch(
-                lagreSoknadsdata(behandlingsId, SoknadsSti.ADRESSER, payload, (navEnheter: NavEnhet[]) => {
-                    if (Array.isArray(navEnheter)) {
-                        if (navEnheter.length === 1) {
-                            const valgtNavEnhet: NavEnhet = navEnheter[0];
-                            valgtNavEnhet.valgt = true;
-                            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet));
-                            dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, valgtNavEnhet));
-                            slettEventuelleValideringsfeil();
-                        }
-                        dispatch(oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter));
-                        setAdressePending(false);
+            lagreSoknadsdata(behandlingsId, SoknadsSti.ADRESSER, payload, dispatch, (navEnheter: NavEnhet[]) => {
+                if (Array.isArray(navEnheter)) {
+                    if (navEnheter.length === 1) {
+                        const valgtNavEnhet: NavEnhet = navEnheter[0];
+                        valgtNavEnhet.valgt = true;
+                        lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet, dispatch);
+                        dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, valgtNavEnhet));
+                        slettEventuelleValideringsfeil();
                     }
-                    if (valg === AdresseKategori.MIDLERTIDIG) {
-                        dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.ADRESSER));
-                    }
-                })
-            );
+                    dispatch(oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter));
+                    setAdressePending(false);
+                }
+                if (valg === AdresseKategori.MIDLERTIDIG) {
+                    hentSoknadsdata(behandlingsId, SoknadsSti.ADRESSER, dispatch);
+                }
+            });
         }
     };
 
@@ -141,7 +139,7 @@ const AdresseView = () => {
     const onVelgSoknadsmottaker = (valgtNavEnhet: NavEnhet) => {
         if (behandlingsId) {
             valgtNavEnhet.valgt = true;
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet, dispatch);
 
             const navEnheter = soknadsdata.personalia.navEnheter;
             navEnheter.map((navEnhet: NavEnhet) => {

@@ -32,7 +32,7 @@ export const UtbetalingerView = () => {
 
     React.useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER));
+            hentSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -55,7 +55,7 @@ export const UtbetalingerView = () => {
                 utbetalinger.beskrivelseAvAnnet = "";
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger, dispatch);
         }
     };
 
@@ -68,7 +68,7 @@ export const UtbetalingerView = () => {
                 utbetalinger.beskrivelseAvAnnet = "";
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger, dispatch);
         }
     };
 
@@ -92,7 +92,7 @@ export const UtbetalingerView = () => {
             );
 
             if (erInnenforMaksLengde) {
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger));
+                lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger, dispatch);
             }
         }
     };

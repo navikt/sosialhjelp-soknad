@@ -24,7 +24,7 @@ const NavYtelserView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.INNTEKT_SYSTEMDATA));
+            hentSoknadsdata(behandlingsId, SoknadsSti.INNTEKT_SYSTEMDATA, dispatch);
         }
     }, [behandlingsId, dispatch]);
 

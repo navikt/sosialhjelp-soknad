@@ -22,11 +22,12 @@ export interface SoknadsdataContainerProps {
     feil: Valideringsfeil[];
 
     // Funksjoner:
-    hentSoknadsdata: (brukerBehandlingId: string, urlPath: string) => void;
+    hentSoknadsdata: (brukerBehandlingId: string, urlPath: string, dispatch: Dispatch) => void;
     lagreSoknadsdata: (
         brukerBehandlingId: string,
         urlPath: string,
         soknadsdata: any,
+        dispatch: Dispatch,
         responseHandler?: (response: any) => void
     ) => void;
     oppdaterSoknadsdataSti: (sti: string, soknadsdata: SoknadsdataType | null) => void;
@@ -47,13 +48,14 @@ export const connectSoknadsdataContainer = connect(
     (dispatch: Dispatch) => {
         return {
             hentSoknadsdata: (brukerBehandlingId: string, sti: string) =>
-                hentSoknadsdata(brukerBehandlingId, sti)(dispatch),
+                hentSoknadsdata(brukerBehandlingId, sti, dispatch),
             lagreSoknadsdata: (
                 brukerBehandlingId: string,
                 sti: string,
                 soknadsdata: SoknadsdataType,
+                dispatch: Dispatch,
                 responseHandler?: (response: any) => void
-            ) => lagreSoknadsdata(brukerBehandlingId, sti, soknadsdata, responseHandler)(dispatch),
+            ) => lagreSoknadsdata(brukerBehandlingId, sti, soknadsdata, dispatch, responseHandler),
             oppdaterSoknadsdataSti: (sti: string, verdi: SoknadsdataType | null) =>
                 dispatch(oppdaterSoknadsdataSti(sti, verdi)),
             settRestStatus: (sti: string, restStatus: REST_STATUS) => dispatch(settRestStatus(sti, restStatus)),
