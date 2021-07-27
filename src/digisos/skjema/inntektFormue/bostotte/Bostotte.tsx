@@ -81,7 +81,7 @@ const BostotteView = () => {
         return (
             <div className="utbetalinger blokk-xs" key={key}>
                 <div>
-                    <FormattedMessage id={"inntekt.bostotte.husbanken.mottaker"} values={{mottaker: mottaker}} />
+                    <FormattedMessage id={`inntekt.bostotte.husbanken.mottaker.${mottaker.toLowerCase()}`} />
                 </div>
                 <div className="utbetaling">
                     <span>
@@ -109,9 +109,12 @@ const BostotteView = () => {
     ) => {
         const visningstatus =
             status === "VEDTATT" ? (
-                <FormattedMessage id={"inntekt.bostotte.husbanken.vedtaksstatus"} values={{status: vedtaksstatus}} />
+                <FormattedMessage id={`inntekt.bostotte.husbanken.vedtaksstatus.${vedtaksstatus.toLowerCase()}`} />
             ) : (
-                <FormattedMessage id={"inntekt.bostotte.husbanken.status"} values={{status: status}} />
+                <FormattedMessage
+                    id={`inntekt.bostotte.husbanken.status.${status.toLowerCase()}`}
+                    values={{status: status}}
+                />
             );
         let formatertDato = <FormattedDate value={dato} month="long" year="numeric" />;
         return (
