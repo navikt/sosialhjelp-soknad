@@ -8,16 +8,9 @@ export function getFaktumSporsmalTekst(intl: IntlShape, key: string): any {
         hjelpetekst: getIntlHjelpeTekst(intl, `${key}.hjelpetekst`),
     };
 }
-export function getFaktumCheckboksTekst(intl: IntlShape, key: string): any {
-    return {
-        label: getIntlTextOrKey(intl, key),
-        infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
-        hjelpetekst: getIntlHjelpeTekst(intl, `${key}.hjelpetekst`),
-    };
-}
 
-export function getRadioFaktumTekst(intl: IntlShape, key: string, value: string, property?: string): any {
-    return getFaktumCheckboksTekst(intl, `${key}${getPropertyKey(property)}.${value}`);
+export function getRadioFaktumTekst(intl: IntlShape, key: string, value: string): string {
+    return getIntlTextOrKey(intl, `${key}.${value}`);
 }
 
 export function getInputFaktumTekst(intl: IntlShape, key: string, property?: string): any {
