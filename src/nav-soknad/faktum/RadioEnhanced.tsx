@@ -1,10 +1,10 @@
-import * as React from "react";
+import React from "react";
 import {RadioPanel} from "nav-frontend-skjema";
-import {injectIntl} from "react-intl";
-import {getRadioFaktumTekst, IntlProps} from "../utils";
+import {getRadioFaktumTekst} from "../utils";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import TextPlaceholder from "../components/animasjoner/placeholder/TextPlaceholder";
 import LabelMedHjelpetekst from "../components/labelMedHjelpetekst";
+import {useIntl} from "react-intl";
 
 interface Props {
     value: string;
@@ -22,13 +22,15 @@ interface Props {
     visPlaceholder?: boolean;
 }
 
-class RadioEnhanced extends React.Component<Props & IntlProps, {}> {
-    determineLabel(id: string, faktumKey: string, tekster: any, value: string) {
-        if (this.props.visPlaceholder) {
+const RadioEnhanced = (props: Props) => {
+    const intl = useIntl();
+
+    const determineLabel = (id: string, faktumKey: string, tekster: any, value: string) => {
+        if (props.visPlaceholder) {
             return <TextPlaceholder lines={1} style={{marginTop: "4px", width: "4rem"}} />;
         }
-        if (this.props.label != null) {
-            return this.props.label;
+        if (props.label != null) {
+            return props.label;
         }
         return (
             <LabelMedHjelpetekst
@@ -38,47 +40,37 @@ class RadioEnhanced extends React.Component<Props & IntlProps, {}> {
                 hjelpetekst={tekster.hjelpetekst}
             />
         );
-    }
+    };
 
-    checked(): boolean {
-        const {checked} = this.props;
-        return !!checked;
-    }
+    const checked = (): boolean => {
+        return !!props.checked;
+    };
 
-    renderRadio() {
-        const {faktumKey, value, disabled, property, required, intl} = this.props;
-        const tekster = getRadioFaktumTekst(intl, faktumKey ? faktumKey : "", value, property);
-        const id = this.props.id ? this.props.id : faktumKey ? faktumKey.replace(/\./g, "_") : "";
+    if (props.visSpinner) {
         return (
-            <div className={this.props.className}>
-                <RadioPanel
-                    id={id}
-                    name={this.props.name}
-                    checked={this.checked()}
-                    disabled={disabled}
-                    value={value}
-                    required={required}
-                    onChange={this.props.onChange}
-                    label={this.determineLabel(id, faktumKey ? faktumKey : "", tekster, value)}
-                />
+            <div className="inputPanel__spinner">
+                <NavFrontendSpinner type="M" />
             </div>
         );
     }
 
-    render() {
-        const {visSpinner} = this.props;
+    const tekster = getRadioFaktumTekst(intl, props.faktumKey ? props.faktumKey : "", props.value, props.property);
+    const id = props.id ? props.id : props.faktumKey ? props.faktumKey.replace(/\./g, "_") : "";
 
-        return (
-            <>
-                {this.renderRadio()}
-                {visSpinner && (
-                    <div className="inputPanel__spinner">
-                        <NavFrontendSpinner type="M" />
-                    </div>
-                )}
-            </>
-        );
-    }
-}
+    return (
+        <div className={props.className}>
+            <RadioPanel
+                id={id}
+                name={props.name}
+                checked={checked()}
+                disabled={props.disabled}
+                value={props.value}
+                required={props.required}
+                onChange={props.onChange}
+                label={determineLabel(id, props.faktumKey ? props.faktumKey : "", tekster, props.value)}
+            />
+        </div>
+    );
+};
 
-export default injectIntl(RadioEnhanced);
+export default RadioEnhanced;
