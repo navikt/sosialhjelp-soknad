@@ -15,6 +15,7 @@ const getAntallOpplastedeFiler = (data: EttersendelseVedleggBackend[]) => {
 };
 
 const EttersendelseVedleggListe = (props: {ettersendelseAktivert: boolean; onEttersendelse?: () => void}) => {
+    const {onEttersendelse} = props;
     const [advarselManglerVedlegg, setAdvarselManglerVedlegg] = useState(false);
 
     const {brukerbehandlingId, data, ettersendStatus, opplastingStatus, feiletVedleggId, feilKode} = useSelector(
@@ -42,10 +43,10 @@ const EttersendelseVedleggListe = (props: {ettersendelseAktivert: boolean; onEtt
     }, [advarselManglerVedlegg, data]);
 
     useEffect(() => {
-        if (ettersendStatus === REST_STATUS.OK && props.onEttersendelse) {
-            props.onEttersendelse();
+        if (ettersendStatus === REST_STATUS.OK && onEttersendelse) {
+            onEttersendelse();
         }
-    }, [ettersendStatus, props]);
+    }, [ettersendStatus, onEttersendelse]);
 
     return (
         <div
