@@ -13,14 +13,10 @@ class HotjarTriggerEttersendelse extends React.Component<Props> {
         return (
             <div>
                 {opprettNyEttersendelseFeilet && originalSoknad && originalSoknad.soknadsalderIMinutter > 60 && (
-                    <SoknadEttersendelseFeilerHotjarTrigger>
-                        <div />
-                    </SoknadEttersendelseFeilerHotjarTrigger>
+                    <SoknadEttersendelseFeilerHotjarTrigger />
                 )}
                 {!opprettNyEttersendelseFeilet && originalSoknad && originalSoknad.soknadsalderIMinutter > 60 && (
-                    <DigisosGammelEttersendelseHotjarTrigger>
-                        <div />
-                    </DigisosGammelEttersendelseHotjarTrigger>
+                    <DigisosGammelEttersendelseHotjarTrigger />
                 )}
             </div>
         );
