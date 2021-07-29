@@ -16,6 +16,7 @@
     "connected-react-router": "^6.9.1",
     "craco-less": "^1.17.1",
     "cuid": "^2.1.8",
+    "downshift": "^6.1.3",
     "express": "^4.17.1",
     "history": "^4.10.1",
     "immutable": "^3.8.2",
