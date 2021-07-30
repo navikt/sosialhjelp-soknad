@@ -9,6 +9,7 @@ import {
 import {AdressesokTreff} from "./AdresseTypes";
 import AdressesokIkon from "./AdressesokIkon";
 import {fetchToJson} from "../../../../nav-soknad/utils/rest-utils";
+import {mockFetch} from "./AdresseTypeahead";
 
 const Autocomplete = require("react-autocomplete");
 
@@ -68,7 +69,8 @@ class AdresseTypeaheadDeprecated extends React.Component<Props, State> {
 
     searchOnServer(value: string) {
         this.setState({status: AdresseTypeaheadStatus.SOKER});
-        fetchToJson("informasjon/adressesok?sokestreng=" + encodeURI(value))
+        mockFetch(value)
+            //fetchToJson("informasjon/adressesok?sokestreng=" + encodeURI(value))
             .then((response: any) => {
                 const adresser = removeDuplicatesAfterTransform(response, formaterAdresseString).slice(0, 8);
                 this.setState({

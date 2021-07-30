@@ -2,7 +2,7 @@ import {FormattedMessage, useIntl} from "react-intl";
 import * as React from "react";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
-import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import AdresseDetaljer from "./AdresseDetaljer";
 import {AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet} from "./AdresseTypes";
@@ -19,7 +19,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
-import {AddresseTypeahead} from "./AddresseTypeahead";
+import {AdresseTypeahead} from "./AdresseTypeahead";
 
 const FAKTUM_KEY = "soknadsmottaker";
 
@@ -35,6 +35,7 @@ const AdresseView = () => {
 
     const intl = useIntl();
     const adresserStatus = soknadsdata.restStatus.personalia.adresser;
+
     useEffect(() => {
         if (behandlingsId) {
             const restStatus: REST_STATUS = adresserStatus;
@@ -328,12 +329,22 @@ const AdresseView = () => {
                 <div className="skjema-sporsmal--jaNeiSporsmal">
                     <Underskjema visible={adresser.valg === AdresseKategori.SOKNAD}>
                         <div className="utvidetAddresseSok">
-                            <AddresseTypeahead
-                                valgtAdresse={formatertSoknadAdresse}
-                                onNullstill={nullstillAdresseTypeahead}
-                                onVelgAnnenAdresse={(adresse: AdressesokTreff) => velgAnnenAdresse(adresse)}
-                            />
-
+                            <Sporsmal
+                                tittelRenderer={() =>
+                                    getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.hvorOppholder")
+                                }
+                                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+                            >
+                                <div style={{marginBottom: "1rem"}}>
+                                    <FormattedMessage id="kontakt.system.kontaktinfo.infotekst.tekst" />
+                                </div>
+                                <FormattedMessage id="kontakt.system.kontaktinfo.infotekst.ekstratekst" />
+                                <AdresseTypeahead
+                                    valgtAdresse={formatertSoknadAdresse}
+                                    onVelgAnnenAdresse={(adresse: AdressesokTreff) => velgAnnenAdresse(adresse)}
+                                    onNullstill={nullstillAdresseTypeahead}
+                                />
+                            </Sporsmal>
                             {navEnheter.length > 1 && (
                                 <SoknadsmottakerVelger
                                     label={getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.velgKontor")}
