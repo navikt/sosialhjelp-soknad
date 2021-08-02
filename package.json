@@ -19,7 +19,6 @@
     "express": "^4.17.1",
     "history": "^4.10.1",
     "immutable": "^3.8.2",
-    "intl": "^1.2.5",
     "less-plugin-npm-import": "^2.1.0",
     "nav-frontend-alertstriper": "^4.0.1",
     "nav-frontend-alertstriper-style": "^3.0.1",
