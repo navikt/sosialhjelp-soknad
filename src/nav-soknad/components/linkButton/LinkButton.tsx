@@ -13,7 +13,7 @@ export const LinkButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>)
     // @ts-ignore
     const className = classNames("lenke", props.className);
     return (
-        <StyledLinkButton className={className} {...props}>
+        <StyledLinkButton type="button" className={className} {...props}>
             {props.children}
         </StyledLinkButton>
     );
