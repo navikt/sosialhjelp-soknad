@@ -1,5 +1,5 @@
 import * as React from "react";
-import {onEndretValideringsfeil} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import {onEndretValideringsfeil} from "../../../redux/validering/valideringUtils";
 import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";

@@ -1,10 +1,9 @@
 import React from "react";
-import {FormattedMessage, injectIntl, useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import Sporsmal, {SporsmalStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import ArbeidDetaljer from "./ArbeidDetaljer";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
-import {connectSoknadsdataContainer} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {Arbeidsforhold} from "./arbeidTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
@@ -132,6 +131,4 @@ const ArbeidView = () => {
     );
 };
 
-export {ArbeidView};
-
-export default connectSoknadsdataContainer(injectIntl(ArbeidView));
+export default ArbeidView;
