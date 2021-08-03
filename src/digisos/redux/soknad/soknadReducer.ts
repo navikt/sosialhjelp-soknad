@@ -14,7 +14,6 @@ export const defaultState: SoknadState = {
     visNedetidPanel: false,
 
     // Authentication state
-    linkVisited: false,
     harTilgang: false,
     sperrekode: undefined,
     nedetid: undefined,
@@ -194,12 +193,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
 
         case SoknadActionTypeKeys.LAGRE_TILGANG_OG_FORNAVN_PA_STORE: {
             const {tilgangResponse, fornavnResponse} = action;
-
-            // FIXME: Dette burde gjøres annerledes.
-            const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
-            // @ts-ignore
-            window[AUTH_LINK_VISITED] = true;
-
             return {
                 ...state,
                 tilgang: tilgangResponse,
