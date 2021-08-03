@@ -31,13 +31,6 @@ interface OwnProps {
     location: Location;
 }
 
-interface StateProps {
-    restStatus: string;
-    behandlingsId: string | undefined;
-    visSideIkkeFunnet: boolean;
-    visServerFeil: boolean;
-}
-
 interface UrlParams {
     behandlingsIdFraUrl: string;
     stegFraUrl: string;
