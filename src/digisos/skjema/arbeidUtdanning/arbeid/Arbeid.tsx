@@ -18,7 +18,7 @@ import {validateAndDispatchTextFieldMaxLength} from "../../../../nav-soknad/vali
 const MAX_CHARS = 500;
 const FAKTUM_KEY_KOMMENTARER = "opplysninger.arbeidsituasjon.kommentarer";
 
-const ArbeidView = () => {
+const Arbeid = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
 
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
@@ -131,4 +131,4 @@ const ArbeidView = () => {
     );
 };
 
-export default ArbeidView;
+export default Arbeid;
