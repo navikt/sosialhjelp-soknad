@@ -16,7 +16,6 @@ export interface SoknadState {
     sendSoknadServiceUnavailable: boolean;
 
     // Authentication / tilgang state
-    linkVisited: boolean;
     harTilgang: boolean;
     sperrekode: TilgangSperrekode | undefined;
 

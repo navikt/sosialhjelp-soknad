@@ -183,12 +183,6 @@ export const lagreHarNyligInnsendteSoknaderPaStore = (
     };
 };
 
-export const setLinkVisited = (): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.SET_LINK_VISITED,
-    };
-};
-
 export const visSamtykkeInfo = (skalVises: boolean): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.VIS_SAMTYKKE_INFO,

@@ -66,7 +66,6 @@ export type SoknadActionType =
     | OppdaterSamtykke
     | LagreTilgangOgFornavnPaStore
     | LagreNedetidPaStore
-    | SetLinkVisited
     | VisSamtykkeInfo
     | VisLasteOppVedleggModal
     | UpdateBehandlingsIdPaStore
@@ -206,10 +205,6 @@ export enum ErSystemdataEndret {
     YES = "YES",
     NO = "NO",
     NOT_ASKED = "NOT_ASKED",
-}
-
-export interface SetLinkVisited {
-    type: SoknadActionTypeKeys.SET_LINK_VISITED;
 }
 
 export interface ShowServerFeil {
