@@ -11,7 +11,7 @@ import {Bosituasjon} from "./bosituasjonTypes";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
-import {onEndretValideringsfeil} from "../../redux/soknadsdata/soknadsdataContainerUtils";
+import {onEndretValideringsfeil} from "../../redux/validering/valideringUtils";
 import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 import {State} from "../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../redux/soknadsdata/soknadsdataActions";
