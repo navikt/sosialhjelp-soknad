@@ -126,7 +126,7 @@ export const Soknadsoversikt = () => {
     return (
         <StyledSoknadsoversikt>
             <StartNySoknadPanel tittel="Start en ny søknad">
-                <InformasjonSide />
+                <InformasjonSide enableModalV2={true} />
             </StartNySoknadPanel>
             {pabegynteSoknader.length > 0 && (
                 <PabegynteSoknaderPanel

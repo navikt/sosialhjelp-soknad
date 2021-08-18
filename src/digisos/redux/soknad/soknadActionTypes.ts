@@ -18,8 +18,6 @@ export enum SoknadActionTypeKeys {
 
     AVBRYT_SOKNAD = "soknad/AVBRYT_SOKNAD",
     FORTSETT_SOKNAD = "soknad/FORTSETT_SOKNAD",
-    SLETT_SOKNAD = "soknad/SLETT_SOKNAD",
-    SLETT_SOKNAD_OK = "soknad/SLETT_SOKNAD_OK",
     SEND_SOKNAD_KNAPP_PENDING = "soknad/SEND_SOKNAD_KNAPP_PENDING",
     SEND_SOKNAD = "soknad/SEND_SOKNAD",
     SEND_SOKNAD_OK = "soknad/SEND_SOKNAD_OK",
@@ -33,15 +31,12 @@ export enum SoknadActionTypeKeys {
     HENT_SAMTYKKE_OK = "soknad/HENT_SAMTYKKE_OK",
     OPPDATER_SAMTYKKE = "soknad/OPPDATER_SAMTYKKE",
 
-    SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER = "soknad/SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER",
     LAGRE_TILGANG_OG_FORNAVN_PA_STORE = "soknad/LAGRE_RESSURSER_PA_STORE",
     LAGRE_NEDETID_PA_STORE = "soknad/LAGRE_NEDETID_PA_STORE",
     LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE = "soknad/LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE",
     LAGRE_PABEGYNTE_SOKNADER_PA_STORE = "soknad/LAGRE_PABEGYNTE_SOKNADER_PA_STORE",
 
     SET_LINK_VISITED = "soknad/SET_LINK_VISITED",
-    SHOW_LARGE_SPINNER = "soknad/SHOW_LARGE_SPINNER",
-    SHOW_FEIL_SIDE = "soknad/SHOW_FEIL_SIDE",
     VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO",
     VIS_LASTE_OPP_VEDLEGG_MODAL = "soknad/VIS_LASTE_OPP_VEDLEGG_MODAL",
     UPDATE_BEHANDLINGSID_PA_STORE = "soknad/UPDATE_BEHANDLINGSID_PA_STORE",
@@ -55,7 +50,6 @@ export enum SoknadActionTypeKeys {
     RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE = "soknad/RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE",
 }
 
-export type AVBRYT_DESTINASJON = "START" | "MINSIDE";
 // 24
 export type SoknadActionType =
     | StartSoknadOkAction
@@ -67,8 +61,6 @@ export type SoknadActionType =
     | HentSoknaOkAction
     | AvbrytSoknadAction
     | FortsettSoknadAction
-    | SlettSoknadAction
-    | SlettSoknadOkAction
     | SendSoknadPendingAction
     | SendSoknadAction
     | SendSoknadOkAction
@@ -79,12 +71,8 @@ export type SoknadActionType =
     | HentSamtykker
     | HentSamtykkerOk
     | OppdaterSamtykke
-    | SjekkAutentiseringOgTilgangOgHentRessurser
     | LagreTilgangOgFornavnPaStore
     | LagreNedetidPaStore
-    | SetLinkVisited
-    | ShowLargeSpinner
-    | ShowFeilSide
     | VisSamtykkeInfo
     | VisLasteOppVedleggModal
     | UpdateBehandlingsIdPaStore
@@ -98,10 +86,6 @@ export type SoknadActionType =
     | ResetSendSoknadServiceUnavailable
     | LagreHarNyligInnsendteSoknaderPaStore
     | LagrePabegynteSoknaderPaStore;
-
-export interface SjekkAutentiseringOgTilgangOgHentRessurser {
-    type: SoknadActionTypeKeys.SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER;
-}
 
 export interface HentSamtykker {
     type: SoknadActionTypeKeys.HENT_SAMTYKKE;
@@ -139,11 +123,6 @@ export interface LagreNedetidPaStore {
 export interface LagreHarNyligInnsendteSoknaderPaStore {
     type: SoknadActionTypeKeys.LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE;
     harNyligInnsendteSoknaderResponse: HarNyligInnsendteSoknaderResponse;
-}
-
-export interface ShowLargeSpinner {
-    type: SoknadActionTypeKeys.SHOW_LARGE_SPINNER;
-    show: boolean;
 }
 
 export interface VisSamtykkeInfo {
@@ -214,21 +193,10 @@ export interface SendSoknadOkAction {
 
 export interface AvbrytSoknadAction {
     type: SoknadActionTypeKeys.AVBRYT_SOKNAD;
-    destinasjon?: AVBRYT_DESTINASJON;
 }
 
 export interface FortsettSoknadAction {
     type: SoknadActionTypeKeys.FORTSETT_SOKNAD;
-}
-
-export interface SlettSoknadAction {
-    type: SoknadActionTypeKeys.SLETT_SOKNAD;
-    behandlingsId: string;
-    destinasjon?: AVBRYT_DESTINASJON;
-}
-
-export interface SlettSoknadOkAction {
-    type: SoknadActionTypeKeys.SLETT_SOKNAD_OK;
 }
 
 export interface GetErSystemdataEndret {
@@ -245,10 +213,6 @@ export enum ErSystemdataEndret {
     YES = "YES",
     NO = "NO",
     NOT_ASKED = "NOT_ASKED",
-}
-
-export interface SetLinkVisited {
-    type: SoknadActionTypeKeys.SET_LINK_VISITED;
 }
 
 export interface ShowServerFeil {
@@ -269,10 +233,6 @@ export interface UpdateBehandlingsIdPaStore {
 export interface ShowSideIkkeFunnet {
     type: SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET;
     shouldShow: boolean;
-}
-
-export interface ShowFeilSide {
-    type: SoknadActionTypeKeys.SHOW_FEIL_SIDE;
 }
 
 export interface VisMidlertidigDeaktivertPanel {

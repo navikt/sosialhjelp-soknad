@@ -2,7 +2,6 @@ import * as React from "react";
 import {RouteComponentProps, withRouter} from "react-router";
 import {FormattedMessage, useIntl} from "react-intl";
 import {useSelector, useDispatch} from "react-redux";
-import DocumentTitle from "react-document-title";
 import {Innholdstittel} from "nav-frontend-typografi";
 import AlertStripe from "nav-frontend-alertstriper";
 import {useEffect} from "react";
@@ -21,7 +20,6 @@ import {
     sendSoknadPending,
 } from "../../digisos/redux/soknad/soknadActions";
 import {gaTilbake, gaVidere, tilSteg} from "../../digisos/redux/navigasjon/navigasjonActions";
-import {loggInfo} from "../../digisos/redux/navlogger/navloggerActions";
 import AppBanner from "../components/appHeader/AppHeader";
 import {
     clearAllValideringsfeil,
@@ -32,6 +30,9 @@ import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseT
 import {State} from "../../digisos/redux/reducers";
 import {erPaStegEnOgValgtNavEnhetErUgyldig, sjekkOmValgtNavEnhetErGyldig} from "./containerUtils";
 import {createSkjemaEventData, logAmplitudeEvent} from "../utils/amplitude";
+import Lenke from "nav-frontend-lenker";
+import {useTitle} from "../hooks/useTitle";
+import {logInfo} from "../utils/loggerUtils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -72,7 +73,7 @@ const StegMedNavigasjon = (
     const loggAdresseTypeTilGrafana = () => {
         const adresseTypeValg = soknadsdata.personalia.adresser.valg;
         if (adresseTypeValg) {
-            dispatch(loggInfo("klikk--" + adresseTypeValg));
+            logInfo("klikk--" + adresseTypeValg);
         }
     };
 
@@ -143,9 +144,9 @@ const StegMedNavigasjon = (
     const handleNavEnhetErUgyldigFeil = (valgtNavEnhet: NavEnhet | null) => {
         dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
         if (!valgtNavEnhet || (!valgtNavEnhet.enhetsnavn && !valgtNavEnhet.enhetsnr)) {
-            dispatch(loggInfo("Ingen navenhet valgt"));
+            logInfo("Ingen navenhet valgt");
         } else {
-            dispatch(loggInfo(`Ugyldig navenhet valgt: ${valgtNavEnhet.enhetsnr} ${valgtNavEnhet.enhetsnavn}`));
+            logInfo(`Ugyldig navenhet valgt: ${valgtNavEnhet.enhetsnr} ${valgtNavEnhet.enhetsnavn}`);
         }
         dispatch(visValideringsfeilPanel());
     };
@@ -188,10 +189,11 @@ const StegMedNavigasjon = (
 
     const aktivtSteg: number = aktivtStegConfig ? aktivtStegConfig.stegnummer : 1;
 
+    useTitle(`${stegTittel} - ${documentTitle}`);
+
     return (
         <div className="app-digisos informasjon-side">
             <AppBanner />
-            <DocumentTitle title={`${stegTittel} - ${documentTitle}`} />
             {isNedetid && (
                 <AlertStripe type="feil" style={{justifyContent: "center"}}>
                     <FormattedMessage
@@ -246,11 +248,9 @@ const StegMedNavigasjon = (
                                 values={{
                                     kommuneNavn: finnKommunenavn(),
                                     a: (msg: string) => (
-                                        // Disable target-blank-rule on internal urls
-                                        /* eslint-disable-next-line react/jsx-no-target-blank */
-                                        <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                                        <Lenke href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
                                             {msg}
-                                        </a>
+                                        </Lenke>
                                     ),
                                 }}
                             />
@@ -263,13 +263,13 @@ const StegMedNavigasjon = (
                                 values={{
                                     kommuneNavn: finnKommunenavn(),
                                     a: (msg: string) => (
-                                        <a
+                                        <Lenke
                                             href="https://husbanken.no/bostotte"
                                             target="_blank"
                                             rel="noreferrer noopener"
                                         >
                                             {msg}
-                                        </a>
+                                        </Lenke>
                                     ),
                                 }}
                             />

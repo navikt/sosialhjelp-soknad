@@ -30,7 +30,7 @@ const TelefonView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.TELEFONNUMMER));
+            hentSoknadsdata(behandlingsId, SoknadsSti.TELEFONNUMMER, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -61,7 +61,7 @@ const TelefonView = () => {
 
     const forberedOgSendTelefonnummer = (telefonnummer: Telefonnummer, brukerBehandlingId: string) => {
         let verdi = telefonnummer.brukerutfyltVerdi;
-        let feilkode: ValideringsFeilKode | undefined = undefined;
+        let erGyldigTelefonnummer: boolean = true;
 
         if (verdi === "" || verdi === null) {
             dispatch(clearValideringsfeil(FAKTUM_KEY_TELEFON));
@@ -69,35 +69,33 @@ const TelefonView = () => {
             verdi = fjernLandkode(verdi);
             verdi = verdi.replace(/[.]/g, "");
             telefonnummer.brukerutfyltVerdi = verdi;
-            feilkode = validerTelefonnummer(verdi);
+            erGyldigTelefonnummer = validerTelefonnummer(verdi);
         }
 
-        if (!feilkode) {
+        if (erGyldigTelefonnummer) {
             if (telefonnummer.brukerutfyltVerdi !== null && telefonnummer.brukerutfyltVerdi !== "") {
                 telefonnummer.brukerutfyltVerdi = LANDKODE + fjernLandkode(telefonnummer.brukerutfyltVerdi);
             }
             if (telefonnummer.brukerdefinert != null && !telefonnummer.brukerdefinert) {
-                dispatch(
-                    lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer, () =>
-                        dispatch(hentSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER))
-                    )
+                lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer, dispatch, () =>
+                    hentSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, dispatch)
                 );
             } else {
-                dispatch(lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer));
+                lagreSoknadsdata(brukerBehandlingId, SoknadsSti.TELEFONNUMMER, telefonnummer, dispatch);
             }
         }
     };
 
-    const validerTelefonnummer = (verdi: string): ValideringsFeilKode | undefined => {
-        const feilkode: ValideringsFeilKode | undefined = erTelefonnummer(verdi);
-        if (verdi !== "" && feilkode) {
+    const validerTelefonnummer = (verdi: string): boolean => {
+        const erGyldigTelefonnummer = erTelefonnummer(verdi);
+        if (verdi !== "" && !erGyldigTelefonnummer) {
             // onEndretValideringsfeil(feilkode, FAKTUM_KEY_TELEFON, this.props.feil, () => {
-            dispatch(setValideringsfeil(feilkode, FAKTUM_KEY_TELEFON));
+            dispatch(setValideringsfeil(ValideringsFeilKode.ER_TELEFONNUMMER, FAKTUM_KEY_TELEFON));
             // });
         } else {
             dispatch(clearValideringsfeil(FAKTUM_KEY_TELEFON));
         }
-        return feilkode;
+        return erGyldigTelefonnummer;
     };
 
     const fjernLandkode = (telefonnummer: string) => {

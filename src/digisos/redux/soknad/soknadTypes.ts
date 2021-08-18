@@ -1,10 +1,8 @@
-import {AVBRYT_DESTINASJON, ErSystemdataEndret, Samtykke} from "./soknadActionTypes";
+import {ErSystemdataEndret, Samtykke} from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 
 export interface SoknadState {
     // Visning state
-    showLargeSpinner: boolean;
-    showFeilSide: boolean;
     showSideIkkeFunnet: boolean;
     visSamtykkeInfo: boolean;
     visLasteOppVedleggModal: boolean;
@@ -18,7 +16,6 @@ export interface SoknadState {
     sendSoknadServiceUnavailable: boolean;
 
     // Authentication / tilgang state
-    linkVisited: boolean;
     harTilgang: boolean;
     sperrekode: TilgangSperrekode | undefined;
 
@@ -38,7 +35,6 @@ export interface SoknadState {
     avbrytSoknadSjekkAktiv: boolean;
     avbrytDialog: {
         synlig: boolean;
-        destinasjon: AVBRYT_DESTINASJON | null | undefined;
     };
 
     // Soknad state

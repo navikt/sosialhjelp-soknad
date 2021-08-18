@@ -22,7 +22,7 @@ const DinSivilstatusView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS));
+            hentSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, dispatch);
         }
     }, [behandlingsId, dispatch]);
 

@@ -1,7 +1,5 @@
-import * as React from "react";
-import {onEndretValideringsfeil} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {FormattedMessage, useIntl} from "react-intl";
-import {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
@@ -12,12 +10,10 @@ import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
-import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {State} from "../../../redux/reducers";
-import {setValideringsfeil, clearValideringsfeil} from "../../../redux/validering/valideringActions";
+import {validateAndDispatchTextFieldMaxLength} from "../../../../nav-soknad/validering/validateAndDispatch";
 
 const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
@@ -36,7 +32,7 @@ export const FormueView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.FORMUE));
+            hentSoknadsdata(behandlingsId, SoknadsSti.FORMUE, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -61,7 +57,7 @@ export const FormueView = () => {
                 formue.beskrivelseAvAnnet = "";
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue, dispatch);
         }
     };
 
@@ -71,29 +67,24 @@ export const FormueView = () => {
             formue.beskrivelseAvAnnet = value;
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue));
         }
-        validerTekstfeltVerdi(value, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY);
+        validateAndDispatchTextFieldMaxLength(value, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY, MAX_CHARS, feil, dispatch);
     };
 
     const onBlurTekstfeltAnnet = () => {
         const formue: Formue | undefined = soknadsdata.inntekt.formue;
         if (formue && behandlingsId) {
             const beskrivelseAvAnnet = formue.beskrivelseAvAnnet;
-            const feilmeldingAnnet: ValideringsFeilKode | undefined = validerTekstfeltVerdi(
+            const erInnenforMaksLengde = validateAndDispatchTextFieldMaxLength(
                 beskrivelseAvAnnet,
-                FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY
+                FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY,
+                MAX_CHARS,
+                feil,
+                dispatch
             );
-            if (!feilmeldingAnnet) {
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue));
+            if (erInnenforMaksLengde) {
+                lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue, dispatch);
             }
         }
-    };
-
-    const validerTekstfeltVerdi = (verdi: string, faktumKey: string): ValideringsFeilKode | undefined => {
-        const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
-        onEndretValideringsfeil(feilkode, faktumKey, feil, () => {
-            feilkode ? dispatch(setValideringsfeil(feilkode, faktumKey)) : dispatch(clearValideringsfeil(faktumKey));
-        });
-        return feilkode;
     };
 
     const renderCheckBox = (navn: FormueId) => {

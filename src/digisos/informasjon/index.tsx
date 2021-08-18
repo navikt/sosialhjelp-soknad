@@ -1,7 +1,6 @@
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {FormattedMessage, useIntl} from "react-intl";
-import DocumentTitle from "react-document-title";
 import {Hovedknapp} from "nav-frontend-knapper";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
 import IkkeTilgang from "./IkkeTilgang";
@@ -18,6 +17,7 @@ import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/a
 import {Soknadsoversikt} from "./Soknadsoversikt";
 import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import {useTitle} from "../../nav-soknad/hooks/useTitle";
 
 const Greeting = (props: {name: string}) => (
     <h2 className="digisos-snakkeboble-tittel typo-element">
@@ -25,7 +25,7 @@ const Greeting = (props: {name: string}) => (
     </h2>
 );
 
-export const InformasjonSide = () => {
+export const InformasjonSide = (props: {enableModalV2: boolean}) => {
     const antallNyligInnsendteSoknader: number =
         useSelector((state: State) => state.soknad.harNyligInnsendteSoknader?.antallNyligInnsendte) ?? 0;
     const {startSoknadPending, startSoknadFeilet, nedetid, fornavn, visNedetidPanel} = useSelector(
@@ -44,6 +44,7 @@ export const InformasjonSide = () => {
     const startSoknad = () => {
         logAmplitudeEvent("skjema startet", {
             antallNyligInnsendteSoknader,
+            enableModalV2: props.enableModalV2,
             ...createSkjemaEventData(),
         });
         dispatch(opprettSoknad(intl));
@@ -172,10 +173,10 @@ const Informasjon = () => {
 
     const {nedetid} = useSelector((state: State) => state.soknad);
 
-    const dispatch = useDispatch();
-
     const intl = useIntl();
     const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
+
+    useTitle(title);
 
     React.useEffect(() => {
         skjulToppMeny();
@@ -191,12 +192,11 @@ const Informasjon = () => {
                 setEnableModalV2(false);
             })
             .finally(() => setIsLoadingFeatureToggles(false));
-    }, [setEnableModalV2, dispatch]);
+    }, [setEnableModalV2]);
 
     return (
         <div className="informasjon-side">
             <AppBanner />
-            <DocumentTitle title={title} />
 
             {harTilgang ? (
                 <span>
@@ -216,7 +216,7 @@ const Informasjon = () => {
                             <NavFrontendSpinner type="XXL" />
                         </div>
                     ) : (
-                        <>{enableModalV2 ? <Soknadsoversikt /> : <InformasjonSide />}</>
+                        <>{enableModalV2 ? <Soknadsoversikt /> : <InformasjonSide enableModalV2={false} />}</>
                     )}
                 </span>
             ) : (

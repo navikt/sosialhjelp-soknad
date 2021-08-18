@@ -1,5 +1,4 @@
 import * as React from "react";
-import {onEndretValideringsfeil} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
 import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -9,13 +8,11 @@ import {Utbetalinger, UtbetalingerKeys} from "./utbetalingerTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
-import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
-import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
-import {setValideringsfeil, clearValideringsfeil} from "../../../redux/validering/valideringActions";
+import {validateAndDispatchTextFieldMaxLength} from "../../../../nav-soknad/validering/validateAndDispatch";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";
@@ -35,7 +32,7 @@ export const UtbetalingerView = () => {
 
     React.useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER));
+            hentSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -58,7 +55,7 @@ export const UtbetalingerView = () => {
                 utbetalinger.beskrivelseAvAnnet = "";
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger, dispatch);
         }
     };
 
@@ -71,7 +68,7 @@ export const UtbetalingerView = () => {
                 utbetalinger.beskrivelseAvAnnet = "";
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger, dispatch);
         }
     };
 
@@ -79,30 +76,25 @@ export const UtbetalingerView = () => {
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
         utbetalinger.beskrivelseAvAnnet = value;
         dispatch(oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger));
-        validerTekstfeltVerdi(value, TEXT_AREA_ANNET_FAKTUM_KEY);
+        validateAndDispatchTextFieldMaxLength(value, TEXT_AREA_ANNET_FAKTUM_KEY, MAX_CHARS, feil, dispatch);
     };
 
     const onBlurTekstfeltAnnet = () => {
         if (behandlingsId) {
             const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
             const beskrivelseAvAnnet = utbetalinger.beskrivelseAvAnnet;
-            const feilmeldingAnnet: ValideringsFeilKode | undefined = validerTekstfeltVerdi(
+            const erInnenforMaksLengde = validateAndDispatchTextFieldMaxLength(
                 beskrivelseAvAnnet,
-                TEXT_AREA_ANNET_FAKTUM_KEY
+                TEXT_AREA_ANNET_FAKTUM_KEY,
+                MAX_CHARS,
+                feil,
+                dispatch
             );
 
-            if (!feilmeldingAnnet) {
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger));
+            if (erInnenforMaksLengde) {
+                lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger, dispatch);
             }
         }
-    };
-
-    const validerTekstfeltVerdi = (verdi: string, faktumKey: string): ValideringsFeilKode | undefined => {
-        const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
-        onEndretValideringsfeil(feilkode, faktumKey, feil, () => {
-            feilkode ? dispatch(setValideringsfeil(feilkode, faktumKey)) : dispatch(clearValideringsfeil(faktumKey));
-        });
-        return feilkode;
     };
 
     const renderCheckBox = (navn: UtbetalingerKeys, textKey: string) => {

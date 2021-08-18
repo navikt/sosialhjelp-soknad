@@ -33,7 +33,7 @@ const RegistrerteBarn = () => {
             const barnet = forsorgerplikt.ansvar[barnIndex];
             barnet.harDeltBosted = verdi;
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
         }
     };
 
@@ -48,28 +48,20 @@ const RegistrerteBarn = () => {
         if (behandlingsId) {
             const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
             const samvaersgrad = forsorgerplikt.ansvar[barnIndex].samvarsgrad;
-            const feilkode: ValideringsFeilKode | undefined = validerSamvaersgrad(
-                samvaersgrad,
-                samvaersgradBarnKeyMedIndex
-            );
-            if (!feilkode) {
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+            if (validerSamvaersgrad(samvaersgrad, samvaersgradBarnKeyMedIndex)) {
+                lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
             }
         }
     };
 
-    const validerSamvaersgrad = (
-        verdi: number | null,
-        samvaersgradBarnKeyMedIndex: string
-    ): ValideringsFeilKode | undefined => {
-        const feilkode: ValideringsFeilKode | undefined = erSamvaersgrad(verdi);
-
-        if (feilkode) {
-            dispatch(setValideringsfeil(feilkode, samvaersgradBarnKeyMedIndex));
-        } else {
-            dispatch(clearValideringsfeil(samvaersgradBarnKeyMedIndex));
+    const validerSamvaersgrad = (verdi: number | null, samvaersgradBarnKeyMedIndex: string): boolean => {
+        if (!erSamvaersgrad(verdi)) {
+            dispatch(setValideringsfeil(ValideringsFeilKode.ER_SAMVAERSGRAD, samvaersgradBarnKeyMedIndex));
+            return false;
         }
-        return feilkode;
+        dispatch(clearValideringsfeil(samvaersgradBarnKeyMedIndex));
+
+        return true;
     };
 
     const barn = soknadsdata.familie.forsorgerplikt.ansvar;

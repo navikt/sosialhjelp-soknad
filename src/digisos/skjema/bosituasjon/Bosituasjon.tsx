@@ -11,7 +11,7 @@ import {Bosituasjon} from "./bosituasjonTypes";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../redux/soknadsdata/soknadsdataReducer";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
-import {onEndretValideringsfeil} from "../../redux/soknadsdata/soknadsdataContainerUtils";
+import {onEndretValideringsfeil} from "../../redux/validering/valideringUtils";
 import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 import {State} from "../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../redux/soknadsdata/soknadsdataActions";
@@ -47,7 +47,7 @@ const BosituasjonView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON));
+            hentSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -60,7 +60,7 @@ const BosituasjonView = () => {
                 dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon));
                 const valideringsfeil = validerAntallPersoner(bosituasjon.antallPersoner);
                 if (!valideringsfeil) {
-                    dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon));
+                    lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon, dispatch);
                 }
             } else {
                 const botype = verdi;
@@ -68,7 +68,7 @@ const BosituasjonView = () => {
                 dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon));
                 const valideringsfeil = validerAntallPersoner(bosituasjon.antallPersoner);
                 if (!valideringsfeil) {
-                    dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon));
+                    lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon, dispatch);
                 }
             }
         }
@@ -99,30 +99,30 @@ const BosituasjonView = () => {
     const onBlurAntall = () => {
         if (behandlingsId) {
             const {botype, antallPersoner} = soknadsdata.bosituasjon;
-            const valideringsfeil = validerAntallPersoner(antallPersoner);
-            if (!valideringsfeil) {
+            if (validerAntallPersoner(antallPersoner)) {
                 const oppdatertBosituasjon: Bosituasjon = {
                     botype,
                     antallPersoner,
                 };
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, oppdatertBosituasjon));
+                lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, oppdatertBosituasjon, dispatch);
                 dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, oppdatertBosituasjon));
                 dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
             }
         }
     };
 
-    const validerAntallPersoner = (antallPersoner: string | null) => {
+    const validerAntallPersoner = (antallPersoner: string | null): boolean => {
         if (!antallPersoner || antallPersoner.length === 0) {
-            return null;
+            return true;
         }
-        const feilkode: ValideringsFeilKode | undefined = erTall(antallPersoner, true);
-        onEndretValideringsfeil(feilkode, FAKTUM_KEY_ANTALL, feil, () => {
-            feilkode
-                ? dispatch(setValideringsfeil(feilkode, FAKTUM_KEY_ANTALL))
-                : dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
+        const erGyldigTall = erTall(antallPersoner, true);
+        onEndretValideringsfeil(erGyldigTall ? undefined : ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL, feil, () => {
+            erGyldigTall
+                ? dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))
+                : dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL));
         });
-        return feilkode;
+
+        return erGyldigTall;
     };
 
     const onChangeAntall = (verdi: string) => {

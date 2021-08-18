@@ -13,6 +13,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
+import Lenke from "nav-frontend-lenker";
 
 const NavYtelserView = () => {
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const NavYtelserView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.INNTEKT_SYSTEMDATA));
+            hentSoknadsdata(behandlingsId, SoknadsSti.INNTEKT_SYSTEMDATA, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -83,15 +84,12 @@ const NavYtelserView = () => {
                             id={"utbetalinger.infotekst.tekst.v2"}
                             values={{
                                 a: (msg: string) => (
-                                    // Disable target-blank-rule on internal urls
-                                    /* eslint-disable react/jsx-no-target-blank */
-                                    <a
+                                    <Lenke
                                         href={intl.formatMessage({id: "utbetalinger.infotekst.tekst.url"})}
                                         target="_blank"
                                     >
                                         {msg}
-                                    </a>
-                                    /* eslint-enable react/jsx-no-target-blank */
+                                    </Lenke>
                                 ),
                             }}
                         />

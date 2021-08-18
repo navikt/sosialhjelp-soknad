@@ -1,104 +1,42 @@
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {fetchDelete, fetchPost, fetchToJson, getInnsynUrl, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
+import {fetchPost, fetchToJson, getInnsynUrl, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {
     FinnOgOppdaterSoknadsmottakerStatus,
     GetErSystemdataEndret,
     HentSamtykker,
-    HentSoknadAction,
     Samtykke,
     SendSoknadAction,
-    SlettSoknadAction,
     SoknadActionTypeKeys,
 } from "./soknadActionTypes";
-import {navigerTilDittNav, navigerTilKvittering, tilStart, tilSteg} from "../navigasjon/navigasjonActions";
+import {navigerTilKvittering, tilSteg} from "../navigasjon/navigasjonActions";
 
 import {
     hentSamtykkerOk,
-    hentSoknadOk,
-    lagreHarNyligInnsendteSoknaderPaStore,
-    lagreNedetidPaStore,
-    lagrePabegynteSoknaderPaStore,
-    lagreRessurserPaStore,
     oppdaterSoknadsmottakerStatus,
     opprettSoknadFeilet,
     opprettSoknadOk,
     sendSoknadOk,
     setErSystemdataEndret,
     setSendSoknadServiceUnavailable,
-    showFeilSide,
-    showLargeSpinner,
     showSendingFeiletPanel,
     showServerFeil,
     showSideIkkeFunnet,
-    slettSoknadOk,
     startSoknadOk,
     startSoknadServiceUnavailable,
     visMidlertidigDeaktivertPanel,
     visNedetidPanel,
 } from "./soknadActions";
-import {loggAdvarsel, loggInfo} from "../navlogger/navloggerActions";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
 import {push} from "connected-react-router";
-import {
-    FornavnResponse,
-    HarNyligInnsendteSoknaderResponse,
-    LedeteksterResponse,
-    MiljovariablerResponse,
-    NedetidResponse,
-    OpprettSoknadResponse,
-    PabegynteSoknaderResponse,
-    SendSoknadResponse,
-    TilgangResponse,
-} from "./soknadTypes";
-import {lagreLedeteksterPaStore} from "../ledetekster/ledeteksterActions";
-import {lagreMiljovariablerPaStore} from "../miljovariabler/miljovariablerActions";
+import {OpprettSoknadResponse, SendSoknadResponse} from "./soknadTypes";
 import {soknadsdataUrl} from "../soknadsdata/soknadsdataActions";
+import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
 
 enum SendtTilSystemEnum {
     SVARUT = "SVARUT",
     FIKS_DIGISOS_API = "FIKS_DIGISOS_API",
-}
-
-function* sjekkAutentiseringOgTilgangOgHentRessurserSaga() {
-    try {
-        const tilgangResponse: TilgangResponse = yield call(
-            fetchToJson,
-            "informasjon/utslagskriterier/sosialhjelp",
-            true
-        );
-
-        // Hvis tilgangApiRespone ikke thrower unauthorized error, så er bruker autentisert
-
-        const miljoVariablerResponse: MiljovariablerResponse = yield call(fetchToJson, "informasjon/miljovariabler");
-        const ledeteksterResponse: LedeteksterResponse = yield call(
-            fetchToJson,
-            "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp"
-        );
-        const fornavnResponse: FornavnResponse = yield call(fetchToJson, "informasjon/fornavn");
-        const nedetidResponse: NedetidResponse = yield call(fetchToJson, "nedetid");
-        const harNyligInnsendteSoknaderResponse: HarNyligInnsendteSoknaderResponse = yield call(
-            fetchToJson,
-            "informasjon/harNyligInnsendteSoknader"
-        );
-        const pabegynteSoknader: PabegynteSoknaderResponse[] = yield call(fetchToJson, "informasjon/pabegynteSoknader");
-
-        yield put(lagreLedeteksterPaStore(ledeteksterResponse));
-        yield put(lagreMiljovariablerPaStore(miljoVariablerResponse));
-        yield put(lagreRessurserPaStore(tilgangResponse, fornavnResponse));
-        yield put(lagreNedetidPaStore(nedetidResponse));
-        yield put(lagreHarNyligInnsendteSoknaderPaStore(harNyligInnsendteSoknaderResponse));
-        yield put(lagrePabegynteSoknaderPaStore(pabegynteSoknader));
-        yield put(showLargeSpinner(false));
-    } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            // Ønsker at spinneren står og går helt til redirect er utført.
-            yield put(showLargeSpinner(true));
-        } else {
-            yield put(showFeilSide());
-        }
-    }
 }
 
 function* opprettSoknadSaga(action: {type: string}) {
@@ -111,11 +49,11 @@ function* opprettSoknadSaga(action: {type: string}) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         } else if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
-            yield put(loggAdvarsel("opprettSoknadSaga ServiceUnavailable: " + reason));
+            yield call(logWarning, "opprettSoknadSaga ServiceUnavailable: " + reason);
             yield put(visNedetidPanel(true));
             yield put(startSoknadServiceUnavailable());
         } else {
-            yield put(loggAdvarsel("opprett soknad saga feilet: " + reason));
+            yield call(logWarning, "opprett soknad saga feilet: " + reason);
             yield put(showServerFeil(true));
             yield put(opprettSoknadFeilet());
         }
@@ -130,7 +68,7 @@ function* hentSamtykker(action: HentSamtykker) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(loggAdvarsel("hent samtykker saga feilet: " + reason));
+        yield call(logWarning, "hent samtykker saga feilet: " + reason);
         yield put(showSideIkkeFunnet(true));
     }
 }
@@ -155,44 +93,13 @@ function* oppdaterSamtykke(action: {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         } else if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
-            yield put(loggAdvarsel("oppdater samtykke saga ServiceUnavailable: " + reason));
+            yield call(logWarning, "oppdater samtykke saga ServiceUnavailable: " + reason);
             yield put(visNedetidPanel(true));
             yield put(startSoknadServiceUnavailable());
         } else {
-            yield put(loggAdvarsel("oppdater samtykke saga feilet: " + reason));
+            yield call(logWarning, "oppdater samtykke saga feilet: " + reason);
             yield put(showServerFeil(true));
         }
-    }
-}
-
-function* hentSoknadSaga(action: HentSoknadAction) {
-    try {
-        const xsrfCookieIsOk: boolean = yield call(fetchToJson, `soknader/${action.behandlingsId}/xsrfCookie`);
-        yield put(hentSoknadOk(xsrfCookieIsOk, action.behandlingsId));
-    } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            return;
-        }
-        yield put(loggAdvarsel("hent soknad saga feilet: " + reason));
-        yield put(showSideIkkeFunnet(true));
-    }
-}
-
-function* slettSoknadSaga(action: SlettSoknadAction): SagaIterator {
-    try {
-        yield call(fetchDelete, "soknader/" + action.behandlingsId);
-        yield put(slettSoknadOk());
-        if (action.destinasjon === "START") {
-            yield put(tilStart());
-        } else {
-            yield put(navigerTilDittNav());
-        }
-    } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            return;
-        }
-        yield put(loggAdvarsel("slett soknad saga feilet: " + reason));
-        yield put(showServerFeil(true));
     }
 }
 
@@ -220,7 +127,7 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
             yield put(visMidlertidigDeaktivertPanel(true));
             yield put(setSendSoknadServiceUnavailable());
         } else {
-            yield put(loggAdvarsel("send soknad saga feilet: " + reason));
+            yield call(logWarning, "send soknad saga feilet: " + reason);
             yield put(showSendingFeiletPanel(true));
         }
     }
@@ -236,11 +143,10 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
         );
         const valgtSoknadsmottaker: NavEnhet | undefined = navenheter.find((n: NavEnhet) => n.valgt);
         if (!valgtSoknadsmottaker || valgtSoknadsmottaker.isMottakMidlertidigDeaktivert) {
-            yield put(
-                loggAdvarsel(
-                    "Søknadsmottaker ikke gyldig på side 9, redirecter tilbake til side 1. Søknadsmottaker var " +
-                        valgtSoknadsmottaker
-                )
+            yield call(
+                logWarning,
+                "Søknadsmottaker ikke gyldig på side 9, redirecter tilbake til side 1. Søknadsmottaker var " +
+                    valgtSoknadsmottaker
             );
             yield put(push(`/skjema/${brukerbehandlingId}/1`));
         } else {
@@ -250,11 +156,10 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(
-            loggAdvarsel(
-                "feil i finnOgOppdaterSoknadsmottakerStatusSaga på side 9. Sender brukeren tilbake til steg 1 og håper dette ikke blir en infinite loop. Error message: " +
-                    reason
-            )
+        yield call(
+            logWarning,
+            "feil i finnOgOppdaterSoknadsmottakerStatusSaga på side 9. Sender brukeren tilbake til steg 1 og håper dette ikke blir en infinite loop. Error message: " +
+                reason
         );
         yield put(push(`/skjema/${brukerbehandlingId}/1`));
     }
@@ -265,7 +170,7 @@ function* getErSystemdataEndretSaga(action: GetErSystemdataEndret) {
         const urlPath = `soknader/${action.behandlingsId}/erSystemdataEndret`;
         const response: boolean = yield fetchToJson(urlPath, true);
         if (response) {
-            yield put(loggInfo("Systemdata var endret for brukeren."));
+            yield call(logInfo, "Systemdata var endret for brukeren.");
         }
         yield put(setErSystemdataEndret(response));
     } catch (reason) {
@@ -273,21 +178,15 @@ function* getErSystemdataEndretSaga(action: GetErSystemdataEndret) {
             return;
         }
         yield put(setErSystemdataEndret(false));
-        yield put(loggAdvarsel("getErSystemdataEndretSaga feilet: " + reason));
+        yield call(logWarning, "getErSystemdataEndretSaga feilet: " + reason);
     }
 }
 
 function* soknadSaga(): SagaIterator {
-    yield takeEvery(
-        SoknadActionTypeKeys.SJEKK_AUTENTISERING_OG_TILGANG_OG_HENT_RESSURSER,
-        sjekkAutentiseringOgTilgangOgHentRessurserSaga
-    );
     yield takeEvery(SoknadActionTypeKeys.OPPRETT_SOKNAD, opprettSoknadSaga);
-    yield takeEvery(SoknadActionTypeKeys.HENT_SOKNAD, hentSoknadSaga);
     yield takeEvery(SoknadActionTypeKeys.HENT_SAMTYKKE, hentSamtykker);
     yield takeEvery(SoknadActionTypeKeys.OPPDATER_SAMTYKKE, oppdaterSamtykke);
 
-    yield takeEvery(SoknadActionTypeKeys.SLETT_SOKNAD, slettSoknadSaga);
     yield takeEvery(SoknadActionTypeKeys.SEND_SOKNAD, sendSoknadSaga);
     yield takeEvery(
         SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS,

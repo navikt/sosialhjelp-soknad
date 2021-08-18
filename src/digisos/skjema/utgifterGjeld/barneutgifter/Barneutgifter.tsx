@@ -22,7 +22,7 @@ export const BarneutgifterView = () => {
 
     React.useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER));
+            hentSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -38,7 +38,7 @@ export const BarneutgifterView = () => {
                 barneutgifter.annet = false;
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.BARNEUTGIFTER, barneutgifter));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, barneutgifter));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, barneutgifter, dispatch);
         }
     };
 
@@ -47,7 +47,7 @@ export const BarneutgifterView = () => {
             const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
             barneutgifter[idToToggle] = !barneutgifter[idToToggle];
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.BARNEUTGIFTER, barneutgifter));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, barneutgifter));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, barneutgifter, dispatch);
         }
     };
 

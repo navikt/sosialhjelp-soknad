@@ -1,4 +1,4 @@
-import {Dispatch, Valideringsfeil} from "../reduxTypes";
+import {Valideringsfeil} from "../reduxTypes";
 import {
     OpplysningerAction,
     opplysningerActionTypeKeys,
@@ -7,9 +7,10 @@ import {
     OpplysningType,
 } from "./opplysningerTypes";
 import {getOpplysningerUrl} from "./opplysningerUtils";
-import {loggAdvarsel} from "../navlogger/navloggerActions";
 import {fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {showServerFeil} from "../soknad/soknadActions";
+import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {Dispatch} from "redux";
 
 export const gotDataFromBackend = (response: OpplysningerBackend): OpplysningerAction => {
     return {
@@ -39,20 +40,18 @@ export const settFilOpplastingFerdig = (opplysningType: OpplysningType): Opplysn
     };
 };
 
-export function hentOpplysninger(behandlingsId: string) {
-    return (dispatch: Dispatch) => {
-        fetchToJson(getOpplysningerUrl(behandlingsId))
-            .then((response: any) => {
-                dispatch(gotDataFromBackend(response));
-            })
-            .catch((reason: any) => {
-                if (reason.message === HttpStatus.UNAUTHORIZED) {
-                    return;
-                }
-                dispatch(loggAdvarsel("Henting av økonomiske opplysninger feilet: " + reason));
-                dispatch(showServerFeil(true));
-            });
-    };
+export function hentOpplysninger(behandlingsId: string, dispatch: Dispatch) {
+    fetchToJson(getOpplysningerUrl(behandlingsId))
+        .then((response: any) => {
+            dispatch(gotDataFromBackend(response));
+        })
+        .catch((reason: any) => {
+            if (reason.message === HttpStatus.UNAUTHORIZED) {
+                return;
+            }
+            logWarning("Henting av økonomiske opplysninger feilet: " + reason);
+            dispatch(showServerFeil(true));
+        });
 }
 
 export const lagreOpplysningHvisGyldigAction = (

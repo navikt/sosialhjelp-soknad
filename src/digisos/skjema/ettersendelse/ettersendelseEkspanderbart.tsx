@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState} from "react";
 import {UnmountClosed} from "react-collapse";
 import {FormattedMessage} from "react-intl";
 import AvsnittMedMarger from "./avsnittMedMarger";
@@ -8,97 +8,82 @@ import EttersendelseVedleggListe from "./ettersendelseVedleggListe";
 interface Props {
     children: React.ReactNode;
     ettersendelseAktivert: boolean;
-    onEttersendelse?: () => void;
+    onEttersendelse: () => void;
     kunGenerellDokumentasjon?: boolean;
 }
 
-interface State {
-    ekspandert: boolean;
-    vedleggSendt: boolean;
-    renderInnhold: boolean;
-}
+const EttersendelseEkspanderbart = (props: Props) => {
+    const [ekspandert, setEkspandert] = useState(false);
+    const [vedleggSendt, setVedleggSendt] = useState(false);
+    const [renderInnhold, setRenderInnhold] = useState(false);
 
-class EttersendelseEkspanderbart extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            ekspandert: false,
-            vedleggSendt: false,
-            renderInnhold: false,
-        };
-    }
+    const toggleEkspandering = () => {
+        setEkspandert(!ekspandert);
+    };
 
-    toggleEkspandering() {
-        this.setState({ekspandert: !this.state.ekspandert});
-    }
-
-    onAnimasjonFerdig() {
-        if (this.state.vedleggSendt === true && this.state.ekspandert === false && this.props.onEttersendelse) {
-            this.setState({vedleggSendt: false});
-            this.props.onEttersendelse();
+    const onAnimasjonFerdig = () => {
+        if (vedleggSendt === true && ekspandert === false) {
+            setVedleggSendt(false);
+            props.onEttersendelse();
         }
 
-        if (this.state.renderInnhold !== this.state.ekspandert) {
-            this.setState({renderInnhold: this.state.ekspandert});
+        if (renderInnhold !== ekspandert) {
+            setRenderInnhold(ekspandert);
         }
-    }
+    };
 
-    onEttersendelse() {
-        this.setState({ekspandert: false, vedleggSendt: true});
-    }
+    const onEttersendelseSetState = () => {
+        setEkspandert(false);
+        setVedleggSendt(true);
+    };
 
-    render() {
-        return (
-            <span className="ettersendelse__vedlegg__ekspandert_wrapper">
-                {this.props.kunGenerellDokumentasjon && (
-                    <AvsnittMedMarger
-                        venstreIkon={MargIkoner.DOKUMENTER}
-                        hoyreIkon={this.state.ekspandert ? MargIkoner.CHEVRON_OPP : MargIkoner.CHEVRON_NED}
-                        onClick={() => this.toggleEkspandering()}
-                    >
-                        {this.props.children}
-                    </AvsnittMedMarger>
-                )}
-
-                {!this.props.kunGenerellDokumentasjon && (
-                    <AvsnittMedMarger
-                        venstreIkon={MargIkoner.ADVARSEL}
-                        hoyreIkon={this.state.ekspandert ? MargIkoner.CHEVRON_OPP : MargIkoner.CHEVRON_NED}
-                        onClick={() => this.toggleEkspandering()}
-                    >
-                        {this.props.children}
-                    </AvsnittMedMarger>
-                )}
-
-                <UnmountClosed
-                    isOpened={this.state.ekspandert}
-                    onRest={() => this.onAnimasjonFerdig()}
-                    className={
-                        "ettersendelse__vedlegg " +
-                        (this.state.ekspandert ? "ettersendelse__vedlegg__ekspandert " : " ")
-                    }
+    return (
+        <span className="ettersendelse__vedlegg__ekspandert_wrapper">
+            {props.kunGenerellDokumentasjon && (
+                <AvsnittMedMarger
+                    venstreIkon={MargIkoner.DOKUMENTER}
+                    hoyreIkon={ekspandert ? MargIkoner.CHEVRON_OPP : MargIkoner.CHEVRON_NED}
+                    onClick={() => toggleEkspandering()}
                 >
-                    {this.state.renderInnhold && (
-                        <>
-                            <AvsnittMedMarger className="ettersendelse__vedlegg__header">
-                                {!this.props.kunGenerellDokumentasjon && this.props.ettersendelseAktivert && (
-                                    <FormattedMessage id="ettersendelse.mangler_info" />
-                                )}
-                                {!this.props.ettersendelseAktivert && (
-                                    <FormattedMessage id="ettersendelse.mangler_info_manuell" />
-                                )}
-                            </AvsnittMedMarger>
+                    {props.children}
+                </AvsnittMedMarger>
+            )}
 
-                            <EttersendelseVedleggListe
-                                ettersendelseAktivert={this.props.ettersendelseAktivert}
-                                onEttersendelse={() => this.onEttersendelse()}
-                            />
-                        </>
-                    )}
-                </UnmountClosed>
-            </span>
-        );
-    }
-}
+            {!props.kunGenerellDokumentasjon && (
+                <AvsnittMedMarger
+                    venstreIkon={MargIkoner.ADVARSEL}
+                    hoyreIkon={ekspandert ? MargIkoner.CHEVRON_OPP : MargIkoner.CHEVRON_NED}
+                    onClick={() => toggleEkspandering()}
+                >
+                    {props.children}
+                </AvsnittMedMarger>
+            )}
+
+            <UnmountClosed
+                isOpened={ekspandert}
+                onRest={() => onAnimasjonFerdig()}
+                className={"ettersendelse__vedlegg " + (ekspandert ? "ettersendelse__vedlegg__ekspandert " : " ")}
+            >
+                {renderInnhold && (
+                    <>
+                        <AvsnittMedMarger className="ettersendelse__vedlegg__header">
+                            {!props.kunGenerellDokumentasjon && props.ettersendelseAktivert && (
+                                <FormattedMessage id="ettersendelse.mangler_info" />
+                            )}
+                            {!props.ettersendelseAktivert && (
+                                <FormattedMessage id="ettersendelse.mangler_info_manuell" />
+                            )}
+                        </AvsnittMedMarger>
+
+                        <EttersendelseVedleggListe
+                            ettersendelseAktivert={props.ettersendelseAktivert}
+                            onEttersendelse={() => onEttersendelseSetState()}
+                        />
+                    </>
+                )}
+            </UnmountClosed>
+        </span>
+    );
+};
 
 export default EttersendelseEkspanderbart;

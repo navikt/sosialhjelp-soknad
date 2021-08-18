@@ -11,6 +11,7 @@ import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger"
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import Lenke from "nav-frontend-lenker";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
@@ -24,7 +25,7 @@ export const BoutgifterView = () => {
 
     React.useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER));
+            hentSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -41,7 +42,7 @@ export const BoutgifterView = () => {
                 boutgifter.annet = false;
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter, dispatch);
         }
     };
 
@@ -50,7 +51,7 @@ export const BoutgifterView = () => {
             const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
             boutgifter[idToToggle] = !boutgifter[idToToggle];
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter, dispatch);
         }
     };
 
@@ -102,13 +103,13 @@ export const BoutgifterView = () => {
                     id="informasjon.husbanken.bostotte.v2"
                     values={{
                         a: (msg: string) => (
-                            <a
+                            <Lenke
                                 href={intl.formatMessage({id: "informasjon.husbanken.bostotte.url"})}
                                 target="_blank"
                                 rel="noreferrer noopener"
                             >
                                 {msg}
-                            </a>
+                            </Lenke>
                         ),
                     }}
                 />

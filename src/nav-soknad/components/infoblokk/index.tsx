@@ -1,35 +1,45 @@
 import * as React from "react";
 import Panel from "nav-frontend-paneler";
-import Icon from "nav-frontend-ikoner-assets";
-import {Innholdstittel, Systemtittel} from "nav-frontend-typografi";
-import ProblemSirkel from "../svg/ProblemSirkel";
+import {Innholdstittel} from "nav-frontend-typografi";
+import {Information} from "@navikt/ds-icons";
+import styled from "styled-components";
 
+const PanelTitle = styled.div`
+    text-align: center;
+`;
+
+const StyledIcon = styled.div`
+    margin-top: 1rem;
+
+    svg {
+        height: 2.5rem;
+        width: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+`;
+
+const Dash = styled.div`
+    width: 2.7rem;
+    margin: 0 auto 1.5rem auto;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #6a6a6a;
+`;
 interface Props {
-    tittel?: string;
-    brukSystemtittel?: boolean;
+    tittel: string;
     className?: string;
-    ikon?: "standard" | "advarsel";
 }
 
-const Infoblokk: React.StatelessComponent<Props> = ({className, children, tittel, ikon, brukSystemtittel}) => {
+const Infoblokk: React.FC<Props> = ({className, children, tittel}) => {
     return (
-        <Panel className={`skjema-infoblokk ${className}`}>
-            <div className="skjema-infoblokk__content">
-                <div className="skjema-infoblokk__icon">
-                    {ikon === "advarsel" ? <ProblemSirkel /> : <Icon kind="info-sirkel" />}
-                </div>
-                {tittel && (
-                    <div>
-                        {brukSystemtittel ? (
-                            <Systemtittel className="skjema-infoblokk__title">{tittel}</Systemtittel>
-                        ) : (
-                            <Innholdstittel className="skjema-infoblokk__title">{tittel}</Innholdstittel>
-                        )}
-                        <div className="skjema-infoblokk__dash" />
-                    </div>
-                )}
-                <div className="skjema-infoblokk__tekst">{children}</div>
-            </div>
+        <Panel className={`${className}`}>
+            <PanelTitle>
+                <StyledIcon>
+                    <Information />
+                    <Innholdstittel>{tittel}</Innholdstittel>
+                    <Dash />
+                </StyledIcon>
+            </PanelTitle>
+            <div>{children}</div>
         </Panel>
     );
 };

@@ -3,11 +3,9 @@ import {REST_STATUS, SoknadState} from "./soknadTypes";
 
 export const defaultState: SoknadState = {
     // Visningsstate
-    showLargeSpinner: true,
     showServerFeil: false,
     sendSoknadServiceUnavailable: false,
     showSendingFeiletPanel: false,
-    showFeilSide: false,
     showSideIkkeFunnet: false,
     visSamtykkeInfo: false,
     visLasteOppVedleggModal: false,
@@ -16,7 +14,6 @@ export const defaultState: SoknadState = {
     visNedetidPanel: false,
 
     // Authentication state
-    linkVisited: false,
     harTilgang: false,
     sperrekode: undefined,
     nedetid: undefined,
@@ -48,7 +45,6 @@ export const defaultState: SoknadState = {
     // Avbryt
     avbrytDialog: {
         synlig: false,
-        destinasjon: null,
     },
     avbrytSoknadSjekkAktiv: true,
 
@@ -98,13 +94,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             };
         }
 
-        case SoknadActionTypeKeys.SHOW_FEIL_SIDE: {
-            return {
-                ...state,
-                showFeilSide: true,
-                showLargeSpinner: false,
-            };
-        }
         case SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET: {
             return {
                 ...state,
@@ -135,7 +124,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 ...state,
                 avbrytDialog: {
                     synlig: true,
-                    destinasjon: action.destinasjon,
                 },
             };
         case SoknadActionTypeKeys.FORTSETT_SOKNAD:
@@ -161,11 +149,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             return {
                 ...state,
                 sendSoknadPending: false,
-            };
-
-        case SoknadActionTypeKeys.SLETT_SOKNAD_OK:
-            return {
-                ...defaultState,
             };
 
         case SoknadActionTypeKeys.OPPDATER_SOKNADSMOTTAKER_STATUS:
@@ -196,12 +179,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             };
         }
 
-        case SoknadActionTypeKeys.SHOW_LARGE_SPINNER: {
-            return {
-                ...state,
-                showLargeSpinner: action.show,
-            };
-        }
         case SoknadActionTypeKeys.VIS_SAMTYKKE_INFO: {
             return {
                 ...state,
@@ -218,12 +195,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
 
         case SoknadActionTypeKeys.LAGRE_TILGANG_OG_FORNAVN_PA_STORE: {
             const {tilgangResponse, fornavnResponse} = action;
-
-            // FIXME: Dette burde gjøres annerledes.
-            const AUTH_LINK_VISITED = "sosialhjelpSoknadAuthLinkVisited";
-            // @ts-ignore
-            window[AUTH_LINK_VISITED] = true;
-
             return {
                 ...state,
                 tilgang: tilgangResponse,

@@ -1,7 +1,6 @@
-import * as React from "react";
+import React from "react";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
-import AriaText from "../../../nav-soknad/components/aria/AriaText";
 import {Fil} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {getContextPathForStaticContent} from "../../../configuration";
 
@@ -18,8 +17,7 @@ export const OpplastetVedlegg = (props: {fil: Fil; onSlett: (fil: Fil) => void})
                 <LinkButton onClick={() => downloadAttachedFile(lastNedUrl)}>{props.fil.filNavn}</LinkButton>
             </span>
             <span className="vedleggsliste__slett_ikon">
-                <LinkButton onClick={() => handleSlett(props.fil)}>
-                    <AriaText>Slett {props.fil.filNavn}</AriaText>
+                <LinkButton onClick={() => handleSlett(props.fil)} aria-label={`Slett ${props.fil.filNavn}`}>
                     <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_trashcan.svg`} alt={""} />
                 </LinkButton>
             </span>

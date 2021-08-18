@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Route, RouterProps, Switch, withRouter, matchPath, Prompt} from "react-router";
 import {Location} from "history";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Samtykke from "./samtykke/SamtykkeView";
 import Steg1 from "./personopplysninger";
 import Steg2 from "./begrunnelse";
@@ -14,27 +14,21 @@ import Steg8 from "./okonomiskeOpplysninger";
 import Oppsummering from "./oppsummering";
 import NyOppsummering from "./ny-oppsummering/Oppsummering";
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
-import {DispatchProps} from "../redux/reduxTypes";
 import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
-import {hentSoknad, showServerFeil, showSideIkkeFunnet} from "../redux/soknad/soknadActions";
+import {hentSoknad, hentSoknadOk, showServerFeil, showSideIkkeFunnet} from "../redux/soknad/soknadActions";
 import {erSkjemaEllerEttersendelseSide, NAVIGASJONSPROMT} from "../../nav-soknad/utils";
 import TimeoutBox from "../../nav-soknad/components/timeoutbox/TimeoutBox";
-import AvbrytSoknad from "../../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
+import {AvbrytSoknad} from "../../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import {useEffect} from "react";
 import ServerFeil from "../../nav-soknad/containers/ServerFeil";
-
+import {fetchToJson, HttpStatus} from "../../nav-soknad/utils/rest-utils";
+import {logWarning} from "../../nav-soknad/utils/loggerUtils";
+import {Dispatch} from "redux";
 interface OwnProps {
     match: any;
     location: Location;
-}
-
-interface StateProps {
-    restStatus: string;
-    behandlingsId: string | undefined;
-    visSideIkkeFunnet: boolean;
-    visServerFeil: boolean;
 }
 
 interface UrlParams {
@@ -42,10 +36,28 @@ interface UrlParams {
     stegFraUrl: string;
 }
 
-type Props = OwnProps & StateProps & RouterProps & DispatchProps;
+type Props = OwnProps & RouterProps;
+
+const getSoknad = async (behandlingsId: string, dispatch: Dispatch) => {
+    try {
+        dispatch(hentSoknad(behandlingsId));
+        const xsrfCookieIsOk: boolean = await fetchToJson(`soknader/${behandlingsId}/xsrfCookie`);
+        dispatch(hentSoknadOk(xsrfCookieIsOk, behandlingsId ?? ""));
+    } catch (reason) {
+        if (reason.message === HttpStatus.UNAUTHORIZED) {
+            return;
+        }
+        logWarning("hent soknad feilet: " + reason);
+        dispatch(showSideIkkeFunnet(true));
+    }
+};
 
 const SkjemaRouter: React.FC<Props> = (props: Props) => {
-    const {behandlingsId, visSideIkkeFunnet, dispatch, visServerFeil} = props;
+    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
+    const visSideIkkeFunnet = useSelector((state: State) => state.soknad.showSideIkkeFunnet);
+    const visServerFeil = useSelector((state: State) => state.soknad.showServerFeil);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         skjulToppMeny();
@@ -58,7 +70,7 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
                 dispatch(showSideIkkeFunnet(true));
             }
             if (!behandlingsId) {
-                dispatch(hentSoknad(behandlingsIdFraUrl));
+                getSoknad(behandlingsIdFraUrl, dispatch);
             }
         } else {
             dispatch(showSideIkkeFunnet(true));
@@ -119,13 +131,4 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
     );
 };
 
-const mapStateToProps = (state: State): StateProps => {
-    return {
-        restStatus: state.soknad.restStatus,
-        behandlingsId: state.soknad.behandlingsId,
-        visSideIkkeFunnet: state.soknad.showSideIkkeFunnet,
-        visServerFeil: state.soknad.showServerFeil,
-    };
-};
-
-export default connect(mapStateToProps)(withRouter(SkjemaRouter) as any);
+export default withRouter(SkjemaRouter);

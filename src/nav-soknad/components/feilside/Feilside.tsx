@@ -1,9 +1,10 @@
 import * as React from "react";
 import {Knapp} from "nav-frontend-knapper";
 import {Innholdstittel} from "nav-frontend-typografi";
-import DocumentTitle from "react-document-title";
 import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
 import Banner from "../banner/Banner";
+import Lenke from "nav-frontend-lenker";
+import {useTitle} from "../../hooks/useTitle";
 
 export interface FeilsideProps {
     tittel?: string;
@@ -26,11 +27,11 @@ const FeilSide: React.FC<FeilsideProps> = ({
     knappTekst = "Gå tilbake",
     onClick,
 }) => {
+    useTitle(`Feilside - ${document.location.hostname}`);
     return (
         <span>
             <Banner>Søknad om økonomisk sosialhjelp</Banner>
             <div className="feilside skjema-content">
-                <DocumentTitle title={"Feilside - " + document.location.hostname} />
                 <div className="feilside__ikon">
                     <UtropstegnSirkelGraIkon />
                 </div>
@@ -44,22 +45,15 @@ const FeilSide: React.FC<FeilsideProps> = ({
                 ) : null}
                 <ul className="feilside__link-liste">
                     <li className="feilside__link">
-						<a href="http://www.nav.no" className="lenke linje_under">
-                            Gå til forsiden nav.no
-                        </a>
+                        <Lenke href="https://www.nav.no">Gå til forsiden nav.no</Lenke>
                     </li>
                     <li className="feilside__link">
-						<a href="https://www.nav.no/no/Ditt+NAV" className="lenke linje_under">
-                            Gå til Ditt NAV
-                        </a>
+                        <Lenke href="https://www.nav.no/no/Ditt+NAV">Gå til Ditt NAV</Lenke>
                     </li>
                     <li className="feilside__link">
-                        <a
-                            href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Klage+ris+og+ros/Feil+og+mangler+paa+navno"
-							className="lenke linje_under"
-                        >
+                        <Lenke href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Klage+ris+og+ros/Feil+og+mangler+paa+navno">
                             Meld fra om feil
-                        </a>
+                        </Lenke>
                     </li>
                 </ul>
             </div>

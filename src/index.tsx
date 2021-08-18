@@ -1,16 +1,14 @@
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 
-import "intl";
-import "intl/locale-data/jsonp/nb-NO.js";
 import "./index.less";
+import "@navikt/ds-css";
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
-import thunk from "redux-thunk";
 import createSagaMiddleware from "redux-saga";
 import {ConnectedRouter, routerMiddleware} from "connected-react-router";
 import * as Sentry from "@sentry/browser";
@@ -20,7 +18,6 @@ import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga";
 import IntlProvider from "./intlProvider";
 import App from "./digisos";
-import {loggException} from "./digisos/redux/navlogger/navloggerActions";
 import {erDevSbs, erLocalhost, erProd} from "./nav-soknad/utils/rest-utils";
 import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
@@ -30,6 +27,7 @@ import {SoknadState} from "./digisos/redux/soknad/soknadTypes";
 import LoadContainer from "./LoadContainer";
 import Modal from "react-modal";
 import {initAmplitude} from "./nav-soknad/utils/amplitude";
+import {logException, NavLogEntry, NavLogLevel} from "./nav-soknad/utils/loggerUtils";
 
 Modal.setAppElement("#root");
 
@@ -38,7 +36,7 @@ const history = require("history").createBrowserHistory({
         if (msg === NAVIGASJONSPROMT.SKJEMA) {
             const soknad: SoknadState = store.getState().soknad;
             if (soknad.behandlingsId && soknad.avbrytSoknadSjekkAktiv) {
-                store.dispatch(avbrytSoknad("MINSIDE"));
+                store.dispatch(avbrytSoknad());
                 callback(false);
             } else {
                 callback(true);
@@ -69,7 +67,7 @@ function configureStore() {
 
     const saga = createSagaMiddleware();
 
-    const middleware = applyMiddleware(thunk, saga, routerMiddleware(history));
+    const middleware = applyMiddleware(saga, routerMiddleware(history));
     const createdStore = createStore(reducers(history), composeEnhancers(middleware));
     saga.run(sagas);
     return createdStore;
@@ -78,15 +76,20 @@ function configureStore() {
 const store = configureStore();
 
 window.onerror = (errorMessage, url, line, column, error) => {
-    store.dispatch(
-        loggException(
-            typeof errorMessage === "string" ? errorMessage : "Why is typeof errorMessage Event?",
-            url ? url : "",
-            line,
-            column,
-            error
-        )
-    );
+    const stacktrace = error?.hasOwnProperty("stack") ? "\nStacktrace" + error.stack : "";
+    const logEntry: NavLogEntry = {
+        level: NavLogLevel.ERROR,
+        userAgent: window.navigator.userAgent,
+        url: document.location.href,
+        message: errorMessage.toString(),
+        jsFileUrl: url,
+        lineNumber: line,
+        error: stacktrace,
+    };
+    if (column) {
+        logEntry.columnNumber = column;
+    }
+    logException(logEntry);
 };
 
 initAmplitude();

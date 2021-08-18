@@ -1,60 +1,55 @@
 import * as validering from "./valideringer";
-import forventAt from "./forventAt";
-import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
 
 describe("test av valideringsfunksjoner", () => {
-    it("skal validere påkrevd", () => {
-        forventAt(validering.pakrevd("")).girFeilmelding(ValideringsFeilKode.PAKREVD);
-        forventAt(validering.pakrevd(" ")).validerer();
-        forventAt(validering.pakrevd("123")).validerer();
-        forventAt(validering.pakrevd("123")).validerer();
-    });
     it("skal validere minimumslengde", () => {
-        forventAt(validering.minLengde("2", 2)).girFeilmelding(ValideringsFeilKode.MIN_LENGDE);
-        forventAt(validering.minLengde("22", 2)).validerer();
-        forventAt(validering.minLengde("223", 2)).validerer();
+        expect(validering.minLengde("2", 2)).toBe(false);
+        expect(validering.minLengde("22", 2)).toBe(true);
+        expect(validering.minLengde("223", 2)).toBe(true);
     });
     it("skal validere maksLengde", () => {
-        // forventAt(validering.maksLengde(null, 2)).girFeilmelding(ValideringKey.MAX_LENGDE);
-        forventAt(validering.maksLengde("223", 2)).girFeilmelding(ValideringsFeilKode.MAX_LENGDE);
-        forventAt(validering.maksLengde("22", 2)).validerer();
-        forventAt(validering.maksLengde("3", 2)).validerer();
+        expect(validering.maksLengde("223", 2)).toBe(false);
+        expect(validering.maksLengde("22", 2)).toBe(true);
+        expect(validering.maksLengde("3", 2)).toBe(true);
     });
     it("skal validere erTall", () => {
-        forventAt(validering.erTall("a1")).girFeilmelding(ValideringsFeilKode.ER_TALL);
-        forventAt(validering.erTall("1")).validerer();
-        forventAt(validering.erTall("121324")).validerer();
+        expect(validering.erTall("a1")).toBe(false);
+        expect(validering.erTall("1")).toBe(true);
+        expect(validering.erTall("121324")).toBe(true);
     });
     describe("kontonummer", () => {
         it("skal ikke kunne være mindre enn 11 tegn", () => {
-            forventAt(validering.erKontonummer("null")).girFeilmelding(ValideringsFeilKode.ER_KONTONUMMER);
-            forventAt(validering.erKontonummer("1234567890")).girFeilmelding(ValideringsFeilKode.ER_KONTONUMMER);
+            expect(validering.erKontonummer("null")).toBe(false);
+            expect(validering.erKontonummer("1234567890")).toBe(false);
         });
         it("Skal ikke være over 13 tegn", () => {
-            forventAt(validering.erKontonummer("12331212340")).validerer();
-            forventAt(validering.erKontonummer("123312123455")).girFeilmelding(ValideringsFeilKode.ER_KONTONUMMER);
+            expect(validering.erKontonummer("12331212340")).toBe(true);
+            expect(validering.erKontonummer("123312123455")).toBe(false);
         });
         it("skal kun inneholde gyldige tegn", () => {
-            forventAt(validering.erKontonummer("1233.12.12340")).validerer();
-            forventAt(validering.erKontonummer("1233 12 12340")).validerer();
-            forventAt(validering.erKontonummer("1234 12,12345")).girFeilmelding(ValideringsFeilKode.ER_KONTONUMMER);
+            expect(validering.erKontonummer("1233.12.12340")).toBe(true);
+            expect(validering.erKontonummer("1233 12 12340")).toBe(true);
+            expect(validering.erKontonummer("1234 12,12345")).toBe(false);
         });
     });
     describe("telefonnummer", () => {
         it("skal ikke være under 8 tegn", () => {
-            forventAt(validering.erTelefonnummer("12345678")).validerer();
-            forventAt(validering.erTelefonnummer("123 45 678")).girFeilmelding(ValideringsFeilKode.ER_TELEFONNUMMER);
-            forventAt(validering.erTelefonnummer("+47 123 45 678")).girFeilmelding(
-                ValideringsFeilKode.ER_TELEFONNUMMER
-            );
-            forventAt(validering.erTelefonnummer("+47 123 45 678")).girFeilmelding(
-                ValideringsFeilKode.ER_TELEFONNUMMER
-            );
-            forventAt(validering.erTelefonnummer("91852967")).validerer();
-            forventAt(validering.erTelefonnummer("91852967")).validerer();
-            forventAt(validering.erTelefonnummer("+47 123 45 678")).girFeilmelding(
-                ValideringsFeilKode.ER_TELEFONNUMMER
-            );
+            expect(validering.erTelefonnummer("12345678")).toBe(true);
+            expect(validering.erTelefonnummer("123 45 678")).toBe(false);
+            expect(validering.erTelefonnummer("+47 123 45 678")).toBe(false);
+            expect(validering.erTelefonnummer("+47 123 45 678")).toBe(false);
+            expect(validering.erTelefonnummer("+47 123 45 678")).toBe(false);
+        });
+    });
+    describe("samværsgrad", () => {
+        it("skal være mellom 0 og 100", () => {
+            expect(validering.erSamvaersgrad(0)).toBe(true);
+            expect(validering.erSamvaersgrad(100)).toBe(true);
+            expect(validering.erSamvaersgrad(50)).toBe(true);
+            expect(validering.erSamvaersgrad(-10)).toBe(false);
+            expect(validering.erSamvaersgrad(110)).toBe(false);
+        });
+        it("ikke valgt samværgrad er gyldig", () => {
+            expect(validering.erSamvaersgrad(null)).toBe(true);
         });
     });
 });

@@ -19,6 +19,7 @@ import {
 import Knapp from "nav-frontend-knapper";
 import AlertStripe from "nav-frontend-alertstriper";
 import {Normaltekst, UndertekstBold} from "nav-frontend-typografi";
+import Lenke from "nav-frontend-lenker";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -34,7 +35,7 @@ const BostotteView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE));
+            hentSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -58,20 +59,19 @@ const BostotteView = () => {
                         handleSettBostotteSamtykke(false);
                     };
                 }
-                dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, bostotte, responseHandler));
+                lagreSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, bostotte, dispatch, responseHandler);
             }
         }
     };
 
     const handleSettBostotteSamtykke = (nyttHarSamtykke: boolean) => {
         if (!oppstartsModus && behandlingsId) {
-            dispatch(
-                settSamtykkeOgOppdaterData(
-                    behandlingsId,
-                    SoknadsSti.BOSTOTTE_SAMTYKKE,
-                    nyttHarSamtykke,
-                    SoknadsSti.BOSTOTTE
-                )
+            settSamtykkeOgOppdaterData(
+                behandlingsId,
+                SoknadsSti.BOSTOTTE_SAMTYKKE,
+                nyttHarSamtykke,
+                SoknadsSti.BOSTOTTE,
+                dispatch
             );
         }
     };
@@ -81,7 +81,7 @@ const BostotteView = () => {
         return (
             <div className="utbetalinger blokk-xs" key={key}>
                 <div>
-                    <FormattedMessage id={"inntekt.bostotte.husbanken.mottaker"} values={{mottaker: mottaker}} />
+                    <FormattedMessage id={`inntekt.bostotte.husbanken.mottaker.${mottaker.toLowerCase()}`} />
                 </div>
                 <div className="utbetaling">
                     <span>
@@ -109,9 +109,12 @@ const BostotteView = () => {
     ) => {
         const visningstatus =
             status === "VEDTATT" ? (
-                <FormattedMessage id={"inntekt.bostotte.husbanken.vedtaksstatus"} values={{status: vedtaksstatus}} />
+                <FormattedMessage id={`inntekt.bostotte.husbanken.vedtaksstatus.${vedtaksstatus.toLowerCase()}`} />
             ) : (
-                <FormattedMessage id={"inntekt.bostotte.husbanken.status"} values={{status: status}} />
+                <FormattedMessage
+                    id={`inntekt.bostotte.husbanken.status.${status.toLowerCase()}`}
+                    values={{status: status}}
+                />
             );
         let formatertDato = <FormattedDate value={dato} month="long" year="numeric" />;
         return (
@@ -232,27 +235,25 @@ const BostotteView = () => {
                                 );
                             })}
                             {(harBostotterUtbetalinger || harBostotterSaker) && (
-                                <a
+                                <Lenke
                                     href={intl.formatMessage({id: "inntekt.bostotte.husbanken.url"})}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="linje_under"
                                 >
                                     <FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"} />
-                                </a>
+                                </Lenke>
                             )}
                             <div className="bostotte-luft-over-ta-bort-knapp-lenke">
-                                <a
+                                <Lenke
                                     id="ta_bort_bostotte_samtykke"
                                     onClick={(event: any) => {
                                         handleSettBostotteSamtykke(false);
                                         event.preventDefault();
                                     }}
                                     href="/ta_bort_samtykke"
-                                    className="linje_under"
                                 >
                                     {getIntlTextOrKey(intl, "inntekt.bostotte.ta_bort_samtykke")}
-                                </a>
+                                </Lenke>
                             </div>
                         </>
                     )}

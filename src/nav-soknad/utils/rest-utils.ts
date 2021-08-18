@@ -8,7 +8,7 @@ import {
     INNSYN_CONTEXT_PATH,
 } from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
-import {NavLogEntry, NavLogLevel} from "../../digisos/redux/navlogger/navloggerTypes";
+import {logError} from "./loggerUtils";
 
 export function erLocalhost(): boolean {
     const url = window.location.href;
@@ -30,11 +30,6 @@ export function erQGammelVersjon(): boolean {
      * Den gamle URL-en vil bli benyttet en stund av kommuner. */
     const url = window.location.href;
     return url.indexOf("www-q0.nav.no") >= 0 || url.indexOf("www-q1.nav.no") >= 0;
-}
-
-export function kjorerJetty(): boolean {
-    const url = window.location.href;
-    return url.indexOf(":8189") > 0;
 }
 
 enum LocalHostMode {
@@ -88,9 +83,6 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
             return getAbsoluteApiUrl(withAccessToken);
         }
         return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
-    }
-    if (kjorerJetty()) {
-        return `http://127.0.0.1:7000/${apiContextPath}/`;
     }
 
     return getAbsoluteApiUrl(withAccessToken);
@@ -165,13 +157,6 @@ export function parseGotoValueFromSearchParameters(searchParameters: string): st
     return afterGoto ? afterGoto.split("&login_id")[0] : afterGoto; // Fjerne login_id dersom strengen bak goto= er definert.
 }
 
-function getServletBaseUrl(): string {
-    if (erLocalhost()) {
-        return "http://localhost:3001/sendsoknad/";
-    }
-    return `/${CONTEXT_PATH}/`;
-}
-
 export function downloadAttachedFile(urlPath: string): void {
     const filUrl = `${getApiBaseUrl()}${urlPath}`;
     window.open(filUrl);
@@ -205,13 +190,13 @@ export enum HttpStatus {
     SERVICE_UNAVAILABLE = "Service Unavailable",
 }
 
-export const serverRequest = (
+export const serverRequest = <T>(
     method: string,
     urlPath: string,
     body: string,
     withAccessToken?: boolean,
     retries = 6
-) => {
+): Promise<T> => {
     const OPTIONS: RequestInit = {
         headers: getHeaders(),
         method,
@@ -235,7 +220,7 @@ export const serverRequest = (
                     }, 100 * (7 - retries));
                 } else {
                     verifyStatusSuccessOrRedirect(response);
-                    const jsonResponse = toJson(response);
+                    const jsonResponse = toJson<T>(response);
                     resolve(jsonResponse);
                 }
             })
@@ -243,8 +228,8 @@ export const serverRequest = (
     });
 };
 
-export function fetchToJson(urlPath: string, withAccessToken?: boolean) {
-    return serverRequest(RequestMethod.GET, urlPath, "", withAccessToken);
+export function fetchToJson<T>(urlPath: string, withAccessToken?: boolean) {
+    return serverRequest<T>(RequestMethod.GET, urlPath, "", withAccessToken);
 }
 
 export function fetchPut(urlPath: string, body: string, withAccessToken?: boolean) {
@@ -297,18 +282,6 @@ export function fetchKvittering(urlPath: string) {
     });
 }
 
-export function fetchFeatureToggles() {
-    const OPTIONS: RequestInit = {
-        headers: getHeaders(),
-        method: "GET",
-        credentials: determineCredentialsParameter(),
-    };
-    return fetch(getServletBaseUrl() + "api/feature", OPTIONS).then((response: Response) => {
-        verifyStatusSuccessOrRedirect(response);
-        return response.json();
-    });
-}
-
 // FIXME: KANSKJE JEG KAN BRUKE DENNE SENRE.
 // export const getJsonOrRedirectIfUnauthorizedAndThrowError = (response: Response) => {
 //     verifyStatusSuccessOrRedirect(response);
@@ -351,26 +324,15 @@ export function toJson<T>(response: Response): Promise<T> {
 function verifyStatusSuccessOrRedirect(response: Response): number {
     if (response.status === 401) {
         response.json().then((r) => {
-            const createLogEntry = (message: string, level: NavLogLevel): NavLogEntry => {
-                return {
-                    url: window.location.href,
-                    userAgent: window.navigator.userAgent,
-                    message: message.toString(),
-                    level,
-                };
-            };
-
             if (window.location.search.split("login_id=")[1] !== r.id) {
                 const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
                 window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "%26login_id=" + r.id;
             } else {
-                let loggPayload = createLogEntry(
+                logError(
                     "Fetch ga 401-error-id selv om kallet ble sendt fra URL med samme login_id (" +
                         r.id +
-                        "). Dette kan komme av en påloggingsloop (UNAUTHORIZED_LOOP_ERROR).",
-                    NavLogLevel.ERROR
+                        "). Dette kan komme av en påloggingsloop (UNAUTHORIZED_LOOP_ERROR)."
                 );
-                fetchPost("informasjon/actions/logg", JSON.stringify(loggPayload)).finally();
             }
         });
         throw new Error(HttpStatus.UNAUTHORIZED);

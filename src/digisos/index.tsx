@@ -22,7 +22,6 @@ const App: React.FC = () => {
                         <Redirect to="/informasjon" />
                     </Route>
                 )}
-                <Route path={`/undersokelse`} exact={true} component={() => <div style={{height: "67vh"}} />} />
                 <Route path={`/skjema/:brukerBehandlingId/:steg`} component={SkjemaRouter} exact={true} />
                 <Route component={SideIkkeFunnet} />
             </Switch>

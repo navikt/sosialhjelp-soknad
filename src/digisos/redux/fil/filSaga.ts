@@ -2,7 +2,6 @@ import {FilActionTypeKeys, LastOppFilAction, StartSlettFilAction} from "./filTyp
 import {SagaIterator} from "redux-saga";
 import {fetchDelete, fetchUpload, fetchUploadIgnoreErrors, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {loggAdvarsel, loggInfo} from "../navlogger/navloggerActions";
 import {
     settFilOpplastingFerdig,
     settFilOpplastingPending,
@@ -14,6 +13,7 @@ import {REST_FEIL} from "../soknad/soknadTypes";
 import {showServerFeil} from "../soknad/soknadActions";
 import {setValideringsfeil} from "../validering/valideringActions";
 import {ValideringsFeilKode} from "../validering/valideringActionTypes";
+import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
 
 function* lastOppFilSaga(action: LastOppFilAction) {
     const {behandlingsId, formData, opplysning} = action;
@@ -59,7 +59,7 @@ function* lastOppFilSaga(action: LastOppFilAction) {
                 }
                 yield put(lastOppFilFeilet(opplysning.type, feilKode));
                 if (feilKode !== REST_FEIL.KRYPTERT_FIL && feilKode !== REST_FEIL.SIGNERT_FIL) {
-                    yield put(loggInfo("Last opp vedlegg feilet: " + reason.toString()));
+                    yield call(logInfo, "Last opp vedlegg feilet: " + reason.toString());
                 }
             }
             yield put(settFilOpplastingFerdig(opplysning.type));
@@ -110,7 +110,7 @@ function* slettFilSaga(action: StartSlettFilAction): SagaIterator {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        yield put(loggAdvarsel("Slett vedlegg feilet: " + reason));
+        yield call(logWarning, "Slett vedlegg feilet: " + reason);
         yield put(showServerFeil(true));
     }
 }

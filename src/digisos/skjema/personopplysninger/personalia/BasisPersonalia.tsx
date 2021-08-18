@@ -19,7 +19,7 @@ const BasisPersonaliaView = () => {
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.BASIS_PERSONALIA));
+            hentSoknadsdata(behandlingsId, SoknadsSti.BASIS_PERSONALIA, dispatch);
         }
     }, [behandlingsId, dispatch]);
 

@@ -18,7 +18,7 @@ const Barnebidrag = () => {
             const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
             forsorgerplikt.barnebidrag = verdi;
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
         }
     };
 

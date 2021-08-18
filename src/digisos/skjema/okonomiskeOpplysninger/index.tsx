@@ -22,7 +22,7 @@ const OkonomiskeOpplysningerView = () => {
 
     React.useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentOpplysninger(behandlingsId));
+            hentOpplysninger(behandlingsId, dispatch);
         }
     }, [behandlingsId, dispatch]);
 

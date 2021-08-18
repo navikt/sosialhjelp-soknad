@@ -1,5 +1,5 @@
 import * as React from "react";
-import {onEndretValideringsfeil} from "../../../redux/soknadsdata/soknadsdataContainerUtils";
+import {onEndretValideringsfeil} from "../../../redux/validering/valideringUtils";
 import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -35,7 +35,7 @@ export const VerdierView = () => {
 
     React.useEffect(() => {
         if (behandlingsId) {
-            dispatch(hentSoknadsdata(behandlingsId, SoknadsSti.VERDIER));
+            hentSoknadsdata(behandlingsId, SoknadsSti.VERDIER, dispatch);
         }
     }, [behandlingsId, dispatch]);
 
@@ -60,7 +60,7 @@ export const VerdierView = () => {
                 verdier.beskrivelseAvAnnet = "";
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier, dispatch);
         }
     };
 
@@ -73,7 +73,7 @@ export const VerdierView = () => {
                 verdier.beskrivelseAvAnnet = "";
             }
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier));
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier, dispatch);
         }
     };
 
@@ -87,22 +87,26 @@ export const VerdierView = () => {
     const onBlurTekstfeltAnnet = () => {
         const verdier: Verdier = soknadsdata.inntekt.verdier;
         const beskrivelseAvAnnet = verdier.beskrivelseAvAnnet;
-        const feilmeldingAnnet: ValideringsFeilKode | undefined = validerTekstfeltVerdi(
-            beskrivelseAvAnnet,
-            VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY
-        );
+        const erGyldigLengde = validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
 
-        if (!feilmeldingAnnet && behandlingsId) {
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier));
+        if (erGyldigLengde && behandlingsId) {
+            lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier, dispatch);
         }
     };
 
-    const validerTekstfeltVerdi = (verdi: string, faktumKey: string): ValideringsFeilKode | undefined => {
-        const feilkode: ValideringsFeilKode | undefined = maksLengde(verdi, MAX_CHARS);
-        onEndretValideringsfeil(feilkode, faktumKey, feil, () => {
-            feilkode ? dispatch(setValideringsfeil(feilkode, faktumKey)) : dispatch(clearValideringsfeil(faktumKey));
-        });
-        return feilkode;
+    const validerTekstfeltVerdi = (verdi: string, faktumKey: string): boolean => {
+        const erInnenforMaksLengde = maksLengde(verdi, MAX_CHARS);
+        onEndretValideringsfeil(
+            erInnenforMaksLengde ? undefined : ValideringsFeilKode.MAX_LENGDE,
+            faktumKey,
+            feil,
+            () => {
+                erInnenforMaksLengde
+                    ? dispatch(clearValideringsfeil(faktumKey))
+                    : dispatch(setValideringsfeil(ValideringsFeilKode.MAX_LENGDE, faktumKey));
+            }
+        );
+        return erInnenforMaksLengde;
     };
 
     const renderCheckBox = (navn: VerdierKeys) => {

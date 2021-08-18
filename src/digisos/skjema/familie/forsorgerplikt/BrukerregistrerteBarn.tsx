@@ -157,7 +157,7 @@ const BrukerregistrerteBarn = () => {
             }
         }
         if (ingenFeilKoder && behandlingsId) {
-            dispatch(lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
         }
     };
 
