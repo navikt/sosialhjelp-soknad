@@ -5,7 +5,7 @@ import {Element, Normaltekst, Undertittel} from "nav-frontend-typografi";
 import React from "react";
 import {useSelector} from "react-redux";
 import styled from "styled-components";
-import {add, format, formatDistance, isAfter} from "date-fns";
+import {format, formatDistance} from "date-fns";
 import {nb} from "date-fns/locale";
 import {PaperClipIcon} from "../../nav-soknad/components/digisosIkon/PaperClipNoStyle";
 import {SkjemaContent} from "../../nav-soknad/components/SkjemaContent";
@@ -13,6 +13,7 @@ import {digisosColors} from "../../nav-soknad/utils/colors";
 import {State} from "../redux/reducers";
 import Lenkepanel from "nav-frontend-lenkepanel";
 import {InformasjonSide} from ".";
+import {DAYS_BEOFRE_DELETION, filterAndSortPabegynteSoknader} from "./pabegynteSoknaderUtils";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -104,24 +105,13 @@ const StyledUnorderedList = styled.ul`
     }
 `;
 
-const DAYS_BEOFRE_DELETION = 14;
-
 export const Soknadsoversikt = () => {
     const currentDate = new Date();
 
-    const pabegynteSoknader = useSelector((state: State) => state.soknad.pabegynteSoknader)
-        .map((soknad) => ({
-            behandlingsId: soknad.behandlingsId,
-            lastUpdatedDate: new Date(soknad.sistOppdatert),
-            deleteDate: add(new Date(soknad.sistOppdatert), {days: DAYS_BEOFRE_DELETION}),
-        }))
-        .filter((soknad) => isAfter(add(soknad.lastUpdatedDate, {days: DAYS_BEOFRE_DELETION}), currentDate))
-        .sort((firstItem, secondItem) => {
-            if (isAfter(firstItem.lastUpdatedDate, secondItem.lastUpdatedDate)) {
-                return -1;
-            }
-            return 1;
-        });
+    const pabegynteSoknader = filterAndSortPabegynteSoknader(
+        useSelector((state: State) => state.soknad.pabegynteSoknader),
+        currentDate
+    );
 
     return (
         <StyledSoknadsoversikt>
