@@ -17,11 +17,12 @@ import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/a
 import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
 import Lenke from "nav-frontend-lenker";
 import {useTitle} from "../../nav-soknad/hooks/useTitle";
+import {BodyShort, Label} from "@navikt/ds-react";
 
 const Greeting = (props: {name: string}) => (
-    <h2 className="digisos-snakkeboble-tittel typo-element">
+    <Label size="s">
         <FormattedMessage id="informasjon.hilsen.hei" values={{fornavn: props.name}} />
-    </h2>
+    </Label>
 );
 
 const Informasjon = () => {
@@ -94,7 +95,9 @@ const Informasjon = () => {
                             <span className="informasjon-fra-ella">
                                 <Snakkeboble>
                                     {fornavn && fornavn.length > 0 && <Greeting name={fornavn} />}
-                                    <FormattedMessage id="informasjon.hilsen.tittel" />
+                                    <BodyShort size="s">
+                                        <FormattedMessage id="informasjon.hilsen.tittel" />
+                                    </BodyShort>
                                 </Snakkeboble>
                                 <EllaBlunk size={"175"} />
                             </span>
