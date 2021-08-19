@@ -10,6 +10,7 @@ import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {Systeminfo} from "../../../../nav-soknad/components/systeminfo/Systeminfo";
 
 const BasisPersonaliaView = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
@@ -37,33 +38,42 @@ const BasisPersonaliaView = () => {
     const visAnimerteStreker = restStatus !== REST_STATUS.OK;
 
     return (
-        <Sporsmal
-            faktumKey="kontakt.system.personalia"
-            stil={"system"}
-            visLedetekst={visAnimerteStreker !== true}
-            sprakNokkel="kontakt.system.personalia"
-        >
-            {visAnimerteStreker !== true && basisPersonalia && (
-                <Detaljeliste>
-                    <DetaljelisteElement
-                        tittel={<FormattedMessage id="kontakt.system.personalia.navn" />}
-                        verdi={basisPersonalia.navn.fulltNavn}
-                    />
-                    <DetaljelisteElement
-                        skjulDersomTomVerdi={true}
-                        tittel={<FormattedMessage id="kontakt.system.personalia.fnr" />}
-                        verdi={basisPersonalia.fodselsnummer}
-                    />
-                    {statsborgerskap && (
+        <>
+            <Systeminfo
+                systeminfoMap={[
+                    {key: "kontakt.system.personalia.navn", verdi: basisPersonalia.navn.fulltNavn},
+                    {key: "kontakt.system.personalia.fnr", verdi: basisPersonalia.fodselsnummer},
+                    {key: "kontakt.system.personalia.statsborgerskap", verdi: statsborgerskap},
+                ]}
+            />
+            <Sporsmal
+                faktumKey="kontakt.system.personalia"
+                stil={"system"}
+                visLedetekst={visAnimerteStreker !== true}
+                sprakNokkel="kontakt.system.personalia"
+            >
+                {visAnimerteStreker !== true && basisPersonalia && (
+                    <Detaljeliste>
                         <DetaljelisteElement
-                            tittel={<FormattedMessage id="kontakt.system.personalia.statsborgerskap" />}
-                            verdi={statsborgerskapVisning}
+                            tittel={<FormattedMessage id="kontakt.system.personalia.navn" />}
+                            verdi={basisPersonalia.navn.fulltNavn}
                         />
-                    )}
-                </Detaljeliste>
-            )}
-            {visAnimerteStreker && <TextPlaceholder lines={3} />}
-        </Sporsmal>
+                        <DetaljelisteElement
+                            skjulDersomTomVerdi={true}
+                            tittel={<FormattedMessage id="kontakt.system.personalia.fnr" />}
+                            verdi={basisPersonalia.fodselsnummer}
+                        />
+                        {statsborgerskap && (
+                            <DetaljelisteElement
+                                tittel={<FormattedMessage id="kontakt.system.personalia.statsborgerskap" />}
+                                verdi={statsborgerskapVisning}
+                            />
+                        )}
+                    </Detaljeliste>
+                )}
+                {visAnimerteStreker && <TextPlaceholder lines={3} />}
+            </Sporsmal>
+        </>
     );
 };
 
