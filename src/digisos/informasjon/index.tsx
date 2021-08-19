@@ -194,36 +194,47 @@ const Informasjon = () => {
             .finally(() => setIsLoadingFeatureToggles(false));
     }, [setEnableModalV2]);
 
+    if (!harTilgang) {
+        return (
+            <div className="informasjon-side">
+                <AppBanner />
+                <div className="skjema-content">
+                    <IkkeTilgang sperrekode={sperrekode ? sperrekode : "pilot"} />
+                </div>
+            </div>
+        );
+    }
+
+    if (isLoadingFeatureToggles) {
+        return (
+            <div className="informasjon-side">
+                <AppBanner />
+                <div className="application-spinner">
+                    <NavFrontendSpinner type="XXL" />
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="informasjon-side">
             <AppBanner />
 
-            {harTilgang ? (
-                <span>
-                    {nedetid?.isNedetid && (
-                        <AlertStripe type="feil" style={{justifyContent: "center"}}>
-                            <FormattedMessage
-                                id="nedetid.alertstripe.infoside"
-                                values={{
-                                    nedetidstart: nedetid.nedetidStart,
-                                    nedetidslutt: nedetid.nedetidSlutt,
-                                }}
-                            />
-                        </AlertStripe>
-                    )}
-                    {isLoadingFeatureToggles ? (
-                        <div className="application-spinner">
-                            <NavFrontendSpinner type="XXL" />
-                        </div>
-                    ) : (
-                        <>{enableModalV2 ? <Soknadsoversikt /> : <InformasjonSide enableModalV2={false} />}</>
-                    )}
-                </span>
-            ) : (
-                <div className="skjema-content">
-                    <IkkeTilgang sperrekode={sperrekode ? sperrekode : "pilot"} />
-                </div>
-            )}
+            <span>
+                {nedetid?.isNedetid && (
+                    <AlertStripe type="feil" style={{justifyContent: "center"}}>
+                        <FormattedMessage
+                            id="nedetid.alertstripe.infoside"
+                            values={{
+                                nedetidstart: nedetid.nedetidStart,
+                                nedetidslutt: nedetid.nedetidSlutt,
+                            }}
+                        />
+                    </AlertStripe>
+                )}
+
+                {enableModalV2 ? <Soknadsoversikt /> : <InformasjonSide enableModalV2={false} />}
+            </span>
         </div>
     );
 };

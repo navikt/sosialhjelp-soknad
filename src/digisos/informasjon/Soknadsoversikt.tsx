@@ -135,7 +135,6 @@ export const Soknadsoversikt = () => {
                             {pabegynteSoknader.map((pabegyntSoknad) => {
                                 const sistOppdatert = pabegyntSoknad.lastUpdatedDate;
                                 const deleteDate = pabegyntSoknad.deleteDate;
-                                const currentDate = new Date();
                                 return (
                                     <li key={pabegyntSoknad.behandlingsId}>
                                         <Lenkepanel
