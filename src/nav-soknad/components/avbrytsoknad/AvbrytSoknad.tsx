@@ -1,23 +1,75 @@
 import * as React from "react";
-import NavFrontendModal from "nav-frontend-modal";
-import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
-import {Hovedknapp, Knapp} from "nav-frontend-knapper";
 import {fortsettSoknad, showServerFeil} from "../../../digisos/redux/soknad/soknadActions";
-import {FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {navigerTilDittNav} from "../../../digisos/redux/navigasjon/navigasjonActions";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
-import AlertStripe from "nav-frontend-alertstriper";
 import {fetchDelete, HttpStatus} from "../../utils/rest-utils";
 import {logWarning} from "../../utils/loggerUtils";
+import {Alert, BodyShort, Button, Modal, Title} from "@navikt/ds-react";
+import {useEffect} from "react";
+import ReactModal from "react-modal";
+import styled from "styled-components";
+
+const StyledModal = styled(Modal)`
+    max-width: 40rem;
+    margin: 0 auto;
+    overflow: visible;
+`;
+
+const ModalContent = styled.div`
+    padding: 2rem;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media only screen and (max-width: 480px) {
+        padding: 0;
+    }
+`;
+
+const InfoIkon = styled.div`
+    position: absolute;
+    left: 50%;
+    top: 0;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    background: var(--navds-color-orange-40);
+    border-radius: 100%;
+    height: 5rem;
+    width: 5rem;
+
+    @media only screen and (max-width: 480px) {
+        display: none;
+    }
+
+    img {
+        z-index: 2;
+        display: block;
+        position: absolute;
+        height: 3.125rem;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+`;
+
+const ButtonRow = styled.div`
+    margin-top: var(--navds-spacing-3);
+    display: flex;
+    gap: 1rem;
+`;
 
 export const AvbrytSoknad = () => {
     const {behandlingsId, avbrytDialog, nedetid} = useSelector((state: State) => state.soknad);
 
     const dispatch = useDispatch();
 
-    const intl = useIntl();
+    useEffect(() => {
+        ReactModal.setAppElement("#root");
+    }, []);
 
     const onAvbryt = () => {
         if (behandlingsId) {
@@ -42,25 +94,19 @@ export const AvbrytSoknad = () => {
     };
 
     return (
-        <NavFrontendModal
-            isOpen={avbrytDialog.synlig || false}
-            contentLabel={intl.formatMessage({id: "avbryt.avbryt"})}
-            onRequestClose={() => onFortsett()}
-            shouldCloseOnOverlayClick={true}
-        >
-            <div className="avbrytmodal">
-                <div className="avbrytmodal__infoikon_wrapper">
+        <StyledModal open={avbrytDialog.synlig || false} onClose={() => onFortsett()}>
+            <ModalContent>
+                <InfoIkon>
                     <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""} />
-                </div>
-
-                <Innholdstittel className="blokk-s avbrytmodal__overskrift">
+                </InfoIkon>
+                <Title level={1} size="l" spacing>
                     <FormattedMessage id={"avbryt.overskrift"} />
-                </Innholdstittel>
-                <Normaltekst className="blokk-xxs avbrytmodal__tekst">
+                </Title>
+                <BodyShort spacing>
                     <FormattedMessage id={"avbryt.forklaring"} />
-                </Normaltekst>
+                </BodyShort>
                 {nedetid?.isPlanlagtNedetid && (
-                    <AlertStripe type="info">
+                    <Alert variant="info">
                         <FormattedMessage
                             id="nedetid.alertstripe.avbryt"
                             values={{
@@ -68,17 +114,18 @@ export const AvbrytSoknad = () => {
                                 nedetidslutt: nedetid?.nedetidSlutt,
                             }}
                         />
-                    </AlertStripe>
+                    </Alert>
                 )}
-                <div className="timeoutbox__knapperad">
-                    <Hovedknapp type="hoved" onClick={() => onFortsettSenere()}>
+
+                <ButtonRow>
+                    <Button variant="action" onClick={() => onFortsettSenere()}>
                         <FormattedMessage id={"avbryt.fortsettsenere"} />
-                    </Hovedknapp>
-                    <Knapp type="hoved" onClick={() => onAvbryt()} className="avbrytmodal__slettknapp">
+                    </Button>
+                    <Button variant="action" onClick={() => onAvbryt()} className="avbrytmodal__slettknapp">
                         <FormattedMessage id={"avbryt.slett"} />
-                    </Knapp>
-                </div>
-            </div>
-        </NavFrontendModal>
+                    </Button>
+                </ButtonRow>
+            </ModalContent>
+        </StyledModal>
     );
 };
