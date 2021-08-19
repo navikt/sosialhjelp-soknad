@@ -71,7 +71,7 @@ const TextareaEnhanced = (props: Props) => {
         return !feilkode ? null : intl.formatMessage({id: feilkode.feilkode});
     };
 
-    const {labelId, disabled, textareaClass, maxLength, faktumKey, property, value} = props;
+    const {labelId, disabled, textareaClass, faktumKey, property, value} = props;
     const tekster = getInputFaktumTekst(intl, faktumKey, property);
 
     let label = labelId ? getIntlTextOrKey(intl, labelId) : tekster.label;
@@ -89,7 +89,7 @@ const TextareaEnhanced = (props: Props) => {
             onChange={handleOnChange}
             onBlur={handleOnBlur}
             feil={feil_ ? feil_ : undefined}
-            maxLength={maxLength || 400}
+            maxLength={props.maxLength || 400}
             textareaClass={textareaClass || "skjema-texarea--normal"}
             tellerTekst={tellerTekst}
             required={props.required}
