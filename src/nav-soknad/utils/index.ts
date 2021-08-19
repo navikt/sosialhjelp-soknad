@@ -1,5 +1,3 @@
-import {IntlShape} from "react-intl";
-
 export * from "./animationUtils";
 export * from "./intlUtils";
 export * from "./faktumUtils";
@@ -30,7 +28,3 @@ export function erMockAltMiljo(): boolean {
 export const now = (): number => {
     return new Date().getTime();
 };
-
-export interface IntlProps {
-    intl: IntlShape;
-}

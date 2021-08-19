@@ -1,12 +1,12 @@
 import * as React from "react";
 import {Textarea} from "nav-frontend-skjema";
-import {injectIntl, IntlShape} from "react-intl";
-import {getInputFaktumTekst, getIntlTextOrKey, IntlProps} from "../utils";
+import {IntlShape, useIntl} from "react-intl";
+import {getInputFaktumTekst, getIntlTextOrKey} from "../utils";
 import {State} from "../../digisos/redux/reducers";
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 import {Valideringsfeil} from "../../digisos/redux/validering/valideringActionTypes";
 
-interface OwnProps {
+interface Props {
     value: string;
     labelId?: string;
     disabled?: boolean;
@@ -23,91 +23,78 @@ interface OwnProps {
     getFeil?: (intl: IntlShape) => string; // Fjern
     onChange?: (event: any) => any;
     onBlur?: () => void;
-    feil?: any; // Type??
 }
 
-type Props = OwnProps & IntlProps;
+const TextareaEnhanced = (props: Props) => {
+    const intl = useIntl();
 
-class TextareaEnhanced extends React.Component<Props, {}> {
-    constructor(props: Props) {
-        super(props);
-        this.handleOnBlur = this.handleOnBlur.bind(this);
-        this.handleOnChange = this.handleOnChange.bind(this);
-        this.tellerTekst = this.tellerTekst.bind(this);
-    }
+    const feil = useSelector((state: State) => state.validering.feil);
 
-    handleOnChange(evt: any) {
-        if (this.props.onChange) {
-            this.props.onChange(evt);
+    const handleOnChange = (evt: any) => {
+        if (props.onChange) {
+            props.onChange(evt);
         }
-    }
+    };
 
-    handleOnBlur() {
-        if (this.props.onBlur) {
-            this.props.onBlur();
+    const handleOnBlur = () => {
+        if (props.onBlur) {
+            props.onBlur();
         }
-    }
+    };
 
-    tellerTekst(antallTegn: number, maxLength: number): string {
+    const tellerTekst = (antallTegn: number, maxLength: number) => {
         const antallTegnIgjen = maxLength - antallTegn;
         if (antallTegnIgjen > 25) {
             return "";
         } else if (antallTegn > maxLength) {
-            return this.props.intl.formatMessage(
+            return intl.formatMessage(
                 {
                     id: "textarea.overmaks",
                 },
                 {antall: antallTegn - maxLength}
             );
         }
-        return this.props.intl.formatMessage(
+        return intl.formatMessage(
             {
                 id: "textarea.undermaks",
             },
             {antall: maxLength - antallTegn}
         );
-    }
+    };
 
-    getName(): string {
-        return `${this.props.faktumKey}`.replace(/\./g, "_");
-    }
+    const getName = () => {
+        return `${props.faktumKey}`.replace(/\./g, "_");
+    };
 
-    getFeil(): string | null {
-        const {faktumKey} = this.props;
-        const feilkode = this.props.feil.find((f: Valideringsfeil) => f.faktumKey === faktumKey);
-        return !feilkode ? null : this.props.intl.formatMessage({id: feilkode.feilkode});
-    }
+    const getFeil = (): string | null => {
+        const feilkode = feil.find((f: Valideringsfeil) => f.faktumKey === props.faktumKey);
+        return !feilkode ? null : intl.formatMessage({id: feilkode.feilkode});
+    };
 
-    render() {
-        const {labelId, disabled, textareaClass, maxLength, intl, faktumKey, property, value} = this.props;
-        const tekster = getInputFaktumTekst(intl, faktumKey, property);
+    const {labelId, disabled, textareaClass, maxLength, faktumKey, property, value} = props;
+    const tekster = getInputFaktumTekst(intl, faktumKey, property);
 
-        let label = labelId ? getIntlTextOrKey(intl, labelId) : tekster.label;
-        label = this.props.hideLabel ? "" : label;
+    let label = labelId ? getIntlTextOrKey(intl, labelId) : tekster.label;
+    label = props.hideLabel ? "" : label;
 
-        const feil_ = this.getFeil();
-        return (
-            <Textarea
-                id={this.props.id}
-                label={label}
-                placeholder={this.props.placeholder}
-                value={value}
-                name={this.getName()}
-                disabled={disabled}
-                onChange={this.handleOnChange}
-                onBlur={this.handleOnBlur}
-                feil={feil_ ? feil_ : undefined}
-                maxLength={maxLength || 400}
-                textareaClass={textareaClass || "skjema-texarea--normal"}
-                tellerTekst={this.tellerTekst}
-                required={this.props.required}
-            />
-        );
-    }
-}
+    const feil_ = getFeil();
+    return (
+        <Textarea
+            id={props.id}
+            label={label}
+            placeholder={props.placeholder}
+            value={value}
+            name={getName()}
+            disabled={disabled}
+            onChange={handleOnChange}
+            onBlur={handleOnBlur}
+            feil={feil_ ? feil_ : undefined}
+            maxLength={maxLength || 400}
+            textareaClass={textareaClass || "skjema-texarea--normal"}
+            tellerTekst={tellerTekst}
+            required={props.required}
+        />
+    );
+};
 
-const mapStateToProps = (state: State) => ({
-    feil: state.validering.feil,
-});
-
-export default connect(mapStateToProps)(injectIntl(TextareaEnhanced));
+export default TextareaEnhanced;
