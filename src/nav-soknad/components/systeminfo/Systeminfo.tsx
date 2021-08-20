@@ -1,5 +1,6 @@
 import {BodyShort, Label} from "@navikt/ds-react";
-import {FormattedMessage} from "react-intl";
+import React from "react";
+import {FormattedDate, FormattedMessage} from "react-intl";
 import styled from "styled-components";
 
 const List = styled.ul`
@@ -10,25 +11,34 @@ const List = styled.ul`
     padding: 0.5rem 0 0.5rem 1rem;
 `;
 
-const ListItem = styled.li`
+const ListItem = styled.li<{multiline?: boolean}>`
     p {
-        display: inline;
+        display: ${(props) => (props.multiline ? "block" : "inline")};
     }
 `;
 
-export const Systeminfo = (props: {systeminfoMap: {key: string; verdi?: string}[]}) => {
+export const SingleLineElement = (props: {value?: string}) => <BodyShort size="s">: {props.value}</BodyShort>;
+
+export const SingleLineDateElement = (props: {value?: string}) => (
+    <BodyShort size="s">
+        : <FormattedDate value={new Date(props.value ?? "")} month="long" day="numeric" year="numeric" />
+    </BodyShort>
+);
+
+export const Systeminfo = (props: {systeminfoMap: {key: string; value: React.ReactNode}[]; multiline?: boolean}) => {
+    if (props.systeminfoMap.length === 0) {
+        return null;
+    }
     return (
         <List>
-            {props.systeminfoMap
-                .filter((elem) => elem.verdi)
-                .map((elem) => (
-                    <ListItem key={elem.key}>
-                        <Label size="s">
-                            <FormattedMessage id={elem.key} />
-                        </Label>
-                        <BodyShort size="s">: {elem.verdi}</BodyShort>
-                    </ListItem>
-                ))}
+            {props.systeminfoMap.map((elem) => (
+                <ListItem key={elem.key} multiline={props.multiline}>
+                    <Label size="s">
+                        <FormattedMessage id={elem.key} />
+                    </Label>
+                    {elem.value}
+                </ListItem>
+            ))}
         </List>
     );
 };
