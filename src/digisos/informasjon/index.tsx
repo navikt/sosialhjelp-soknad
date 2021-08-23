@@ -18,11 +18,12 @@ import {Soknadsoversikt} from "./Soknadsoversikt";
 import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import {useTitle} from "../../nav-soknad/hooks/useTitle";
+import {BodyShort, Label} from "@navikt/ds-react";
 
 const Greeting = (props: {name: string}) => (
-    <h2 className="digisos-snakkeboble-tittel typo-element">
+    <Label size="s">
         <FormattedMessage id="informasjon.hilsen.hei" values={{fornavn: props.name}} />
-    </h2>
+    </Label>
 );
 
 export const InformasjonSide = (props: {enableModalV2: boolean}) => {
@@ -57,7 +58,9 @@ export const InformasjonSide = (props: {enableModalV2: boolean}) => {
                     <span className="informasjon-fra-ella">
                         <Snakkeboble>
                             {fornavn && fornavn.length > 0 && <Greeting name={fornavn} />}
-                            <FormattedMessage id="informasjon.hilsen.tittel" />
+                            <BodyShort size="s">
+                                <FormattedMessage id="informasjon.hilsen.tittel" />
+                            </BodyShort>
                         </Snakkeboble>
                         <EllaBlunk size={"175"} />
                     </span>
