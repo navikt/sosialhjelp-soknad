@@ -8,6 +8,7 @@ import {
     fetchUpload,
     HttpStatus,
     fetchUploadIgnoreErrors,
+    detekterInternFeilKode,
 } from "../../../nav-soknad/utils/rest-utils";
 import {
     EttersendelseActionTypeKeys,
@@ -35,7 +36,6 @@ import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {showServerFeil} from "../soknad/soknadActions";
 import {REST_FEIL} from "../soknad/soknadTypes";
 import {settFilOpplastingFerdig} from "../okonomiskeOpplysninger/opplysningerActions";
-import {detekterInternFeilKode} from "../fil/filSaga";
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
 
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
@@ -127,7 +127,7 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
-        let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
+        let feilKode = detekterInternFeilKode(reason.toString());
         // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
         //@ts-ignore
         response = yield call(fetchUploadIgnoreErrors, url, formData, "POST");

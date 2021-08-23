@@ -2,12 +2,10 @@ import {LagreOpplysningHvisGyldig, opplysningerActionTypeKeys, OpplysningSpc} fr
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {getOpplysningerUrl, getSpcForOpplysning, transformToBackendOpplysning} from "./opplysningerUtils";
-import {fetchPut, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
+import {detekterInternFeilKode, fetchPut, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {updateOpplysning} from "./opplysningerActions";
 import {Valideringsfeil, ValideringsFeilKode} from "../validering/valideringActionTypes";
 import {showServerFeil} from "../soknad/soknadActions";
-import {REST_FEIL} from "../soknad/soknadTypes";
-import {detekterInternFeilKode} from "../fil/filSaga";
 import {setValideringsfeil} from "../validering/valideringActions";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 
@@ -38,7 +36,7 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
                     return;
                 }
-                let feilKode: REST_FEIL = detekterInternFeilKode(reason.toString());
+                let feilKode = detekterInternFeilKode(reason.toString());
                 if (feilKode.toString() === "Error: Not Found") {
                     for (let i = 0; i < opplysning.radInnhold.length; i++) {
                         // Setter alle felt til feilet!

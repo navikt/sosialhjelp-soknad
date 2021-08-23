@@ -7,10 +7,8 @@ import MiljovariablerReducer from "./miljovariabler/miljovariablerReducer";
 import EttersendelseReducer from "./ettersendelse/ettersendelseReducer";
 import SoknadsdataReducer, {Soknadsdata} from "./soknadsdata/soknadsdataReducer";
 import {opplysningerReducer} from "./okonomiskeOpplysninger/opplysningerReducer";
-import {filReducer} from "./fil/filReducer";
 import {EttersendelseState} from "./ettersendelse/ettersendelseTypes";
 import {OpplysningerModel} from "./okonomiskeOpplysninger/opplysningerTypes";
-import {FilState} from "./fil/filTypes";
 import {connectRouter, RouterState} from "connected-react-router";
 import {SoknadState} from "./soknad/soknadTypes";
 import {MiljovariablerState} from "./miljovariabler/miljovariablerTypes";
@@ -25,7 +23,6 @@ export interface State {
 
     soknadsdata: Soknadsdata;
     okonomiskeOpplysninger: OpplysningerModel;
-    filopplasting: FilState;
     oppsummering: OppsummeringState;
     ettersendelse: EttersendelseState;
 
@@ -42,7 +39,6 @@ const reducers = (history: any) =>
 
         soknadsdata: SoknadsdataReducer,
         okonomiskeOpplysninger: opplysningerReducer,
-        filopplasting: filReducer,
         oppsummering: OppsummeringReducer,
         ettersendelse: EttersendelseReducer,
 
