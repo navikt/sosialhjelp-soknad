@@ -23,7 +23,7 @@ import {logInfo} from "../../../nav-soknad/utils/loggerUtils";
 
 const lastOppFil = (
     opplysning: Opplysning,
-    formData: FormData[],
+    formDataList: FormData[],
     behandlingsId: string,
     dispatch: Dispatch,
     setFeilkode: (value: string | null) => void
@@ -37,11 +37,11 @@ const lastOppFil = (
         ...fil,
     }));
     (async () => {
-        for (let i = 0; i < formData.length; i++) {
+        for (const formData of formDataList) {
             dispatch(settFilOpplastingPending(opplysning.type));
 
             try {
-                const response = await fetchUpload<Fil>(url, formData[i]);
+                const response = await fetchUpload<Fil>(url, formData);
                 filerUpdated.push(response);
                 opplysningUpdated.filer = filerUpdated;
                 opplysningUpdated.vedleggStatus = VedleggStatus.LASTET_OPP;
@@ -57,7 +57,7 @@ const lastOppFil = (
                     dispatch(setValideringsfeil(ValideringsFeilKode.FIL_EKSISTERER_IKKE, opplysning.type));
                 } else {
                     // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
-                    const response = await fetchUploadIgnoreErrors(url, formData[i], "POST");
+                    const response = await fetchUploadIgnoreErrors(url, formData, "POST");
                     const ID = "id";
                     // @ts-ignore
                     if (response && response[ID]) {
