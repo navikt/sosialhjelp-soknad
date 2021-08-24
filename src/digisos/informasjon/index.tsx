@@ -46,6 +46,7 @@ export const InformasjonSide = (props: {enableModalV2: boolean}) => {
         logAmplitudeEvent("skjema startet", {
             antallNyligInnsendteSoknader,
             enableModalV2: props.enableModalV2,
+            erProdsatt: true,
             ...createSkjemaEventData(),
         });
         dispatch(opprettSoknad(intl));
