@@ -7,7 +7,13 @@ import {
     VisNedetidPanel,
 } from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
-import {FornavnResponse, HarNyligInnsendteSoknaderResponse, NedetidResponse, TilgangResponse} from "./soknadTypes";
+import {
+    FornavnResponse,
+    HarNyligInnsendteSoknaderResponse,
+    NedetidResponse,
+    PabegynteSoknaderResponse,
+    TilgangResponse,
+} from "./soknadTypes";
 import {IntlShape} from "react-intl";
 
 export function startSoknadOk() {
@@ -180,6 +186,13 @@ export const lagreHarNyligInnsendteSoknaderPaStore = (
     return {
         type: SoknadActionTypeKeys.LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE,
         harNyligInnsendteSoknaderResponse,
+    };
+};
+
+export const lagrePabegynteSoknaderPaStore = (pabegynteSoknader: PabegynteSoknaderResponse[]): SoknadActionType => {
+    return {
+        type: SoknadActionTypeKeys.LAGRE_PABEGYNTE_SOKNADER_PA_STORE,
+        pabegynteSoknader,
     };
 };
 
