@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {
     lagreHarNyligInnsendteSoknaderPaStore,
     lagreNedetidPaStore,
+    lagrePabegynteSoknaderPaStore,
     lagreRessurserPaStore,
 } from "./digisos/redux/soknad/soknadActions";
 import NavFrontendSpinner from "nav-frontend-spinner";
@@ -14,6 +15,7 @@ import {
     LedeteksterResponse,
     MiljovariablerResponse,
     NedetidResponse,
+    PabegynteSoknaderResponse,
     TilgangResponse,
 } from "./digisos/redux/soknad/soknadTypes";
 import {lagreLedeteksterPaStore} from "./digisos/redux/ledetekster/ledeteksterActions";
@@ -44,10 +46,19 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
                 const fornavnResponse = await fetchToJson<FornavnResponse>("informasjon/fornavn");
                 const nedetidResponse = await fetchToJson<NedetidResponse>("nedetid");
 
+                const harNyligInnsendteSoknaderResponse = await fetchToJson<HarNyligInnsendteSoknaderResponse>(
+                    "informasjon/harNyligInnsendteSoknader"
+                );
+                const pabegynteSoknader = await fetchToJson<PabegynteSoknaderResponse[]>(
+                    "informasjon/pabegynteSoknader"
+                );
+
                 dispatch(lagreLedeteksterPaStore(ledeteksterResponse));
                 dispatch(lagreMiljovariablerPaStore(miljoVariablerResponse));
                 dispatch(lagreRessurserPaStore(tilgangResponse, fornavnResponse));
                 dispatch(lagreNedetidPaStore(nedetidResponse));
+                dispatch(lagreHarNyligInnsendteSoknaderPaStore(harNyligInnsendteSoknaderResponse));
+                dispatch(lagrePabegynteSoknaderPaStore(pabegynteSoknader));
 
                 setShowSpinner(false);
             } catch (reason) {
