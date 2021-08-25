@@ -10,7 +10,6 @@ import Underskjema from "../../../../nav-soknad/components/underskjema";
 import SoknadsmottakerVelger from "./SoknadsmottakerVelger";
 import {formaterSoknadsadresse} from "./AdresseUtils";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import AdresseTypeahead from "./AdresseTypeahead";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import Detaljeliste, {DetaljelisteElement} from "../../../../nav-soknad/components/detaljeliste";
 import {Valideringsfeil} from "../../../redux/reduxTypes";
@@ -20,6 +19,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
+import {AdresseTypeahead} from "./AdresseTypeaheadDownshift";
 
 const FAKTUM_KEY = "soknadsmottaker";
 
@@ -35,6 +35,7 @@ const AdresseView = () => {
 
     const intl = useIntl();
     const adresserStatus = soknadsdata.restStatus.personalia.adresser;
+
     useEffect(() => {
         if (behandlingsId) {
             const restStatus: REST_STATUS = adresserStatus;
@@ -339,9 +340,9 @@ const AdresseView = () => {
                                 </div>
                                 <FormattedMessage id="kontakt.system.kontaktinfo.infotekst.ekstratekst" />
                                 <AdresseTypeahead
-                                    onNullstill={() => nullstillAdresseTypeahead()}
                                     valgtAdresse={formatertSoknadAdresse}
                                     onVelgAnnenAdresse={(adresse: AdressesokTreff) => velgAnnenAdresse(adresse)}
+                                    onNullstill={nullstillAdresseTypeahead}
                                 />
                             </Sporsmal>
                             {navEnheter.length > 1 && (
