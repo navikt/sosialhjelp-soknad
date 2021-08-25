@@ -13,7 +13,6 @@ const searchForAddress = async (value: string): Promise<AdressesokTreff[]> => {
         const adresser = await fetchToJson<AdressesokTreff[]>("informasjon/adressesok?sokestreng=" + encodeURI(value));
         return Promise.resolve(removeDuplicatesAfterTransform(adresser, formaterAdresseString).slice(0, 8));
     } catch (err) {
-        // TODO: Bedre feilhåndtering her. Hvilke feilmeldinger trenger vi, og hvordan skal de vises?
         return Promise.resolve([]);
     }
 };

@@ -28,7 +28,7 @@ interface State {
     cursorPosisjon: number;
 }
 
-class AdresseTypeaheadDeprecated extends React.Component<Props, State> {
+class AdresseTypeahead extends React.Component<Props, State> {
     mouseClick!: boolean;
 
     constructor(props: Props) {
@@ -180,4 +180,4 @@ class AdresseTypeaheadDeprecated extends React.Component<Props, State> {
     }
 }
 
-export default AdresseTypeaheadDeprecated;
+export default AdresseTypeahead;
