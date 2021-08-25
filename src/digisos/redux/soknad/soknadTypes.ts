@@ -53,6 +53,8 @@ export interface SoknadState {
 
     // HarNyligInnsendteSoknader state
     harNyligInnsendteSoknader: undefined | HarNyligInnsendteSoknaderResponse;
+
+    pabegynteSoknader: PabegynteSoknaderResponse[];
 }
 
 export enum REST_STATUS {
@@ -129,4 +131,9 @@ export interface NedetidResponse {
 
 export interface HarNyligInnsendteSoknaderResponse {
     antallNyligInnsendte: number;
+}
+
+export interface PabegynteSoknaderResponse {
+    behandlingsId: string;
+    sistOppdatert: string;
 }
