@@ -1,0 +1,152 @@
+import Downshift from "downshift";
+import {Input} from "nav-frontend-skjema";
+import NavFrontendSpinner from "nav-frontend-spinner";
+import {useState} from "react";
+import {useDebounce} from "react-use";
+import styled from "styled-components";
+import {fetchToJson} from "../../../../nav-soknad/utils/rest-utils";
+import {AdressesokTreff} from "./AdresseTypes";
+import {formaterAdresseString, removeDuplicatesAfterTransform} from "./AdresseUtils";
+
+const searchForAddress = async (value: string): Promise<AdressesokTreff[]> => {
+    try {
+        const adresser = await fetchToJson<AdressesokTreff[]>("informasjon/adressesok?sokestreng=" + encodeURI(value));
+        return Promise.resolve(removeDuplicatesAfterTransform(adresser, formaterAdresseString).slice(0, 8));
+    } catch (err) {
+        // TODO: Bedre feilhåndtering her. Hvilke feilmeldinger trenger vi, og hvordan skal de vises?
+        return Promise.resolve([]);
+    }
+};
+
+interface FetchAddressProps {
+    searchvalue: string | null;
+    children(state: {isLoading: boolean; isError: boolean; result: AdressesokTreff[]}): JSX.Element;
+}
+
+const DEBOUNCE_TIMEOUT_MS = 400;
+
+const FetchAddress = (props: FetchAddressProps) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [result, setResult] = useState<AdressesokTreff[]>([]);
+
+    useDebounce(
+        () => {
+            setIsLoading(true);
+            setIsError(false);
+            setResult([]);
+            searchForAddress(props.searchvalue ?? "")
+                .then((res) => {
+                    setResult(res);
+                    setIsLoading(false);
+                })
+                .catch((err) => {
+                    setIsLoading(false);
+                    setIsError(true);
+                    setResult([]);
+                });
+        },
+        DEBOUNCE_TIMEOUT_MS,
+        [props.searchvalue]
+    );
+
+    return props.children({isLoading, isError, result});
+};
+
+const SelectMenu = styled.ul`
+    position: absolute;
+    z-index: 3;
+
+    margin-top: 0rem;
+
+    box-sizing: border-box;
+    width: 25rem;
+    border: 1px solid var(--navds-color-gray-40);
+    border-radius: var(--navds-spacing-2);
+    background-color: var(--navds-color-white);
+
+    list-style: none;
+    padding: 0.5rem 0;
+
+    @media only screen and (max-width: 565px) {
+        width: 100%;
+    }
+`;
+
+const Item = styled.li<{isHighlighted: boolean}>`
+    padding: 0.25rem 0.5rem;
+
+    color: ${(props) => (props.isHighlighted ? "var(--navds-color-white)" : "inherit")};
+    background-color: ${(props) => (props.isHighlighted ? "var(--navds-color-blue-40)" : "inherit")};
+`;
+
+const StyledInput = styled(Input)`
+    margin-top: 1rem;
+    margin-bottom: 0rem !important;
+    width: 25rem;
+
+    @media only screen and (max-width: 565px) {
+        width: 100%;
+    }
+`;
+
+export const AdresseTypeahead = (props: {
+    valgtAdresse?: string;
+    onNullstill: () => void;
+    onVelgAnnenAdresse: (adresse: AdressesokTreff) => void;
+}) => {
+    const onSelect = (adresse?: AdressesokTreff) => {
+        if (adresse === undefined) {
+            props.onNullstill();
+        } else {
+            props.onVelgAnnenAdresse(adresse);
+        }
+    };
+    return (
+        <Downshift
+            onSelect={(adresse) => {
+                onSelect(adresse);
+            }}
+            itemToString={(adresse) => formaterAdresseString(adresse ?? "") ?? ""}
+            initialInputValue={props.valgtAdresse}
+        >
+            {({getLabelProps, getInputProps, getItemProps, getMenuProps, highlightedIndex, inputValue, isOpen}) => (
+                <div>
+                    <label {...getLabelProps()} />
+                    <StyledInput {...getInputProps()} />
+                    {isOpen && (
+                        <FetchAddress searchvalue={inputValue}>
+                            {({isLoading, isError, result}) => (
+                                <>
+                                    {isLoading && (
+                                        <SelectMenu>
+                                            <Item isHighlighted={false}>
+                                                <NavFrontendSpinner />
+                                            </Item>
+                                        </SelectMenu>
+                                    )}
+                                    {isError && <p>Det har oppstått en feil :(</p>}
+                                    {result.length > 0 && (
+                                        <SelectMenu {...getMenuProps()}>
+                                            {result.map((adresse: AdressesokTreff, index: number) => {
+                                                return (
+                                                    <Item
+                                                        isHighlighted={index === highlightedIndex}
+                                                        key={formaterAdresseString(adresse)}
+                                                        {...getItemProps({item: adresse, index})}
+                                                    >
+                                                        {formaterAdresseString(adresse)}
+                                                    </Item>
+                                                );
+                                            })}
+                                        </SelectMenu>
+                                    )}
+                                </>
+                            )}
+                        </FetchAddress>
+                    )}
+                </div>
+            )}
+        </Downshift>
+    );
+};

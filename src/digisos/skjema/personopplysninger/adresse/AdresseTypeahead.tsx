@@ -1,166 +1,183 @@
-import Downshift from "downshift";
-import {Input} from "nav-frontend-skjema";
-import NavFrontendSpinner from "nav-frontend-spinner";
-import {useState} from "react";
-import {useDebounce} from "react-use";
-import styled from "styled-components";
-import {erLocalhost, fetchToJson} from "../../../../nav-soknad/utils/rest-utils";
+import * as React from "react";
+import {
+    AdresseTypeaheadStatus,
+    beregnTekstfeltMarkorPosisjon,
+    formaterAdresseString,
+    removeDuplicatesAfterTransform,
+    setCaretPosition,
+} from "./AdresseUtils";
 import {AdressesokTreff} from "./AdresseTypes";
-import {formaterAdresseString, removeDuplicatesAfterTransform} from "./AdresseUtils";
+import AdressesokIkon from "./AdressesokIkon";
+import {fetchToJson} from "../../../../nav-soknad/utils/rest-utils";
 
-const json = `[{"adresse":"Trondheimsveien","husnummer":"1","husbokstav":null,"kommunenummer":"5055","kommunenavn":"Heim","postnummer":"7200","poststed":"KYRKSÆTERØRA","geografiskTilknytning":"5055","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen","husnummer":"1","husbokstav":null,"kommunenummer":"3035","kommunenavn":"Eidsvoll","postnummer":"2072","poststed":"DAL","geografiskTilknytning":"3035","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen","husnummer":"1","husbokstav":null,"kommunenummer":"3420","kommunenavn":"Elverum","postnummer":"2406","poststed":"ELVERUM","geografiskTilknytning":"3420","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen","husnummer":"1","husbokstav":null,"kommunenummer":"3431","kommunenavn":"Dovre","postnummer":"2660","poststed":"DOMBÅS","geografiskTilknytning":"3431","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen - Kløfta","husnummer":"1","husbokstav":null,"kommunenummer":"3033","kommunenavn":"Ullensaker","postnummer":"2040","poststed":"KLØFTA","geografiskTilknytning":"3033","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsveien","husnummer":"1","husbokstav":null,"kommunenummer":"3031","kommunenavn":"Nittedal","postnummer":"1481","poststed":"HAGAN","geografiskTilknytning":"3031","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsveien","husnummer":"10","husbokstav":"B","kommunenummer":"0301","kommunenavn":"Oslo","postnummer":"0560","poststed":"OSLO","geografiskTilknytning":"030102","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen","husnummer":"10","husbokstav":null,"kommunenummer":"3431","kommunenavn":"Dovre","postnummer":"2660","poststed":"DOMBÅS","geografiskTilknytning":"3431","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen - Kløfta","husnummer":"10","husbokstav":null,"kommunenummer":"3033","kommunenavn":"Ullensaker","postnummer":"2040","poststed":"KLØFTA","geografiskTilknytning":"3033","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsveien","husnummer":"10","husbokstav":"A","kommunenummer":"3030","kommunenavn":"Lillestrøm","postnummer":"2013","poststed":"SKJETTEN","geografiskTilknytning":"3030","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsveien","husnummer":"10","husbokstav":"C","kommunenummer":"0301","kommunenavn":"Oslo","postnummer":"0560","poststed":"OSLO","geografiskTilknytning":"030102","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsveien","husnummer":"10","husbokstav":"B","kommunenummer":"3030","kommunenavn":"Lillestrøm","postnummer":"2013","poststed":"SKJETTEN","geografiskTilknytning":"3030","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsveien","husnummer":"10","husbokstav":"A","kommunenummer":"0301","kommunenavn":"Oslo","postnummer":"0560","poststed":"OSLO","geografiskTilknytning":"030102","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsveien","husnummer":"10","husbokstav":"D","kommunenummer":"0301","kommunenavn":"Oslo","postnummer":"0560","poststed":"OSLO","geografiskTilknytning":"030102","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen - Kløfta","husnummer":"100","husbokstav":null,"kommunenummer":"3033","kommunenavn":"Ullensaker","postnummer":"2040","poststed":"KLØFTA","geografiskTilknytning":"3033","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen - Jessheim","husnummer":"100","husbokstav":"A","kommunenummer":"3033","kommunenavn":"Ullensaker","postnummer":"2050","poststed":"JESSHEIM","geografiskTilknytning":"3033","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsveien","husnummer":"100","husbokstav":null,"kommunenummer":"0301","kommunenavn":"Oslo","postnummer":"0565","poststed":"OSLO","geografiskTilknytning":"030102","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen - Jessheim","husnummer":"100","husbokstav":"B","kommunenummer":"3033","kommunenavn":"Ullensaker","postnummer":"2050","poststed":"JESSHEIM","geografiskTilknytning":"3033","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen - Jessheim","husnummer":"100","husbokstav":"C","kommunenummer":"3033","kommunenavn":"Ullensaker","postnummer":"2050","poststed":"JESSHEIM","geografiskTilknytning":"3033","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsveien","husnummer":"101","husbokstav":null,"kommunenummer":"0301","kommunenavn":"Oslo","postnummer":"0565","poststed":"OSLO","geografiskTilknytning":"030102","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen","husnummer":"101","husbokstav":null,"kommunenummer":"3035","kommunenavn":"Eidsvoll","postnummer":"2072","poststed":"DAL","geografiskTilknytning":"3035","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen - Jessheim","husnummer":"1010","husbokstav":null,"kommunenummer":"3033","kommunenavn":"Ullensaker","postnummer":"2054","poststed":"MOGREINA","geografiskTilknytning":"3033","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen","husnummer":"1013","husbokstav":null,"kommunenummer":"3420","kommunenavn":"Elverum","postnummer":"2406","poststed":"ELVERUM","geografiskTilknytning":"3420","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen","husnummer":"1015","husbokstav":null,"kommunenummer":"3420","kommunenavn":"Elverum","postnummer":"2406","poststed":"ELVERUM","geografiskTilknytning":"3420","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen","husnummer":"1019","husbokstav":null,"kommunenummer":"3420","kommunenavn":"Elverum","postnummer":"2406","poststed":"ELVERUM","geografiskTilknytning":"3420","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen - Jessheim","husnummer":"102","husbokstav":"B","kommunenummer":"3033","kommunenavn":"Ullensaker","postnummer":"2050","poststed":"JESSHEIM","geografiskTilknytning":"3033","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsveien","husnummer":"102","husbokstav":"B","kommunenummer":"0301","kommunenavn":"Oslo","postnummer":"0565","poststed":"OSLO","geografiskTilknytning":"030102","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsveien","husnummer":"102","husbokstav":"A","kommunenummer":"0301","kommunenavn":"Oslo","postnummer":"0565","poststed":"OSLO","geografiskTilknytning":"030102","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsvegen - Jessheim","husnummer":"102","husbokstav":"A","kommunenummer":"3033","kommunenavn":"Ullensaker","postnummer":"2050","poststed":"JESSHEIM","geografiskTilknytning":"3033","gatekode":null,"bydel":null,"type":"gateadresse"},{"adresse":"Trondheimsveien","husnummer":"102","husbokstav":"C","kommunenummer":"0301","kommunenavn":"Oslo","postnummer":"0565","poststed":"OSLO","geografiskTilknytning":"030102","gatekode":null,"bydel":null,"type":"gateadresse"}]`;
+const Autocomplete = require("react-autocomplete");
 
-export const mockFetch = async (input: string): Promise<AdressesokTreff[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    return Promise.resolve(
-        JSON.parse(json).filter((data: AdressesokTreff) =>
-            formaterAdresseString(data)?.toLocaleLowerCase().includes(input.toLowerCase())
-        )
-    );
-};
-
-const searchForAddress = async (value: string): Promise<AdressesokTreff[]> => {
-    try {
-        const adresser = erLocalhost()
-            ? await mockFetch(value)
-            : await fetchToJson<AdressesokTreff[]>("informasjon/adressesok?sokestreng=" + encodeURI(value));
-        return Promise.resolve(removeDuplicatesAfterTransform(adresser, formaterAdresseString).slice(0, 8));
-    } catch (err) {
-        // TODO: Bedre feilhåndtering her. Hvilke feilmeldinger trenger vi, og hvordan skal de vises?
-        return Promise.resolve([]);
-    }
-};
-
-interface FetchAddressProps {
-    searchvalue: string | null;
-    children(state: {isLoading: boolean; isError: boolean; result: AdressesokTreff[]}): JSX.Element;
+interface OwnProps {
+    onVelgAnnenAdresse: (adresse: AdressesokTreff) => void;
+    valgtAdresse?: string;
+    onNullstill?: () => void;
 }
 
-const DEBOUNCE_TIMEOUT_MS = 400;
+type Props = OwnProps;
 
-const FetchAddress = (props: FetchAddressProps) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [result, setResult] = useState<AdressesokTreff[]>([]);
+interface State {
+    verdi: string;
+    adresser: AdressesokTreff[];
+    timeout: any;
+    status: string;
+    cursorPosisjon: number;
+}
 
-    useDebounce(
-        () => {
-            setIsLoading(true);
-            setIsError(false);
-            setResult([]);
-            searchForAddress(props.searchvalue ?? "")
-                .then((res) => {
-                    setResult(res);
-                    setIsLoading(false);
-                })
-                .catch((err) => {
-                    setIsLoading(false);
-                    setIsError(true);
-                    setResult([]);
-                });
-        },
-        DEBOUNCE_TIMEOUT_MS,
-        [props.searchvalue]
-    );
+class AdresseTypeaheadDeprecated extends React.Component<Props, State> {
+    mouseClick!: boolean;
 
-    return props.children({isLoading, isError, result});
-};
-
-const SelectMenu = styled.ul`
-    position: absolute;
-    z-index: 3;
-
-    margin-top: 0rem;
-
-    box-sizing: border-box;
-    width: 25rem;
-    border: 1px solid var(--navds-color-gray-40);
-    border-radius: var(--navds-spacing-2);
-    background-color: var(--navds-color-white);
-
-    list-style: none;
-    padding: 0.5rem 0;
-
-    @media only screen and (max-width: 565px) {
-        width: 100%;
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            verdi: this.props.valgtAdresse ? this.props.valgtAdresse : "",
+            adresser: [],
+            timeout: null,
+            status: AdresseTypeaheadStatus.INITIELL,
+            cursorPosisjon: 0,
+        };
     }
-`;
 
-const Item = styled.li<{isHighlighted: boolean}>`
-    padding: 0.25rem 0.5rem;
-
-    color: ${(props) => (props.isHighlighted ? "var(--navds-color-white)" : "inherit")};
-    background-color: ${(props) => (props.isHighlighted ? "var(--navds-color-blue-40)" : "inherit")};
-`;
-
-const StyledInput = styled(Input)`
-    margin-top: 1rem;
-    margin-bottom: 0rem !important;
-    width: 25rem;
-
-    @media only screen and (max-width: 565px) {
-        width: 100%;
-    }
-`;
-
-export const AdresseTypeahead = (props: {
-    valgtAdresse?: string;
-    onNullstill: () => void;
-    onVelgAnnenAdresse: (adresse: AdressesokTreff) => void;
-}) => {
-    const onSelect = (adresse?: AdressesokTreff) => {
-        if (adresse === undefined) {
-            props.onNullstill();
-        } else {
-            props.onVelgAnnenAdresse(adresse);
+    componentDidUpdate(prevProps: Props, prevState: State) {
+        if (this.state.cursorPosisjon > 0) {
+            const input = document.getElementById("states-autocomplete");
+            setCaretPosition(input, this.state.cursorPosisjon);
+            this.setState({cursorPosisjon: 0});
         }
-    };
-    return (
-        <Downshift
-            onSelect={(adresse) => {
-                onSelect(adresse);
-            }}
-            itemToString={(adresse) => formaterAdresseString(adresse ?? "") ?? ""}
-            initialInputValue={props.valgtAdresse}
-        >
-            {({getLabelProps, getInputProps, getItemProps, getMenuProps, highlightedIndex, inputValue, isOpen}) => (
-                <div>
-                    <label {...getLabelProps()} />
-                    <StyledInput {...getInputProps()} />
-                    {isOpen && (
-                        <FetchAddress searchvalue={inputValue}>
-                            {({isLoading, isError, result}) => (
-                                <>
-                                    {isLoading && (
-                                        <SelectMenu>
-                                            <Item isHighlighted={false}>
-                                                <NavFrontendSpinner />
-                                            </Item>
-                                        </SelectMenu>
-                                    )}
-                                    {isError && <p>Det har oppstått en feil :(</p>}
-                                    {result.length > 0 && (
-                                        <SelectMenu {...getMenuProps()}>
-                                            {result.map((adresse: AdressesokTreff, index: number) => {
-                                                return (
-                                                    <Item
-                                                        isHighlighted={index === highlightedIndex}
-                                                        key={formaterAdresseString(adresse)}
-                                                        {...getItemProps({item: adresse, index})}
-                                                    >
-                                                        {formaterAdresseString(adresse)}
-                                                    </Item>
-                                                );
-                                            })}
-                                        </SelectMenu>
-                                    )}
-                                </>
-                            )}
-                        </FetchAddress>
-                    )}
+    }
+
+    onChange(event: any, verdi: string) {
+        this.setState({verdi});
+        // Vent til bruker er ferdig med å taste før det gjøres søk:
+        clearTimeout(this.state.timeout);
+        const timeout = setTimeout(() => {
+            if (verdi.length !== 0) {
+                this.searchOnServer(verdi);
+            } else {
+                if (this.props.onNullstill) {
+                    this.props.onNullstill();
+                }
+            }
+        }, 500);
+        this.setState({timeout});
+    }
+
+    searchOnServer(value: string) {
+        this.setState({status: AdresseTypeaheadStatus.SOKER});
+        fetchToJson("informasjon/adressesok?sokestreng=" + encodeURI(value))
+            .then((response: any) => {
+                const adresser = removeDuplicatesAfterTransform(response, formaterAdresseString).slice(0, 8);
+                this.setState({
+                    adresser,
+                    status: AdresseTypeaheadStatus.ADRESSE_OK,
+                });
+            })
+            .catch((error: any) => {
+                console.error(error);
+                this.setState({status: AdresseTypeaheadStatus.ADRESSE_UGYLDIG});
+            });
+    }
+
+    onSelect(verdi: string, adresse: AdressesokTreff, mouseClick: boolean) {
+        if (mouseClick === true) {
+            this.mouseClick = true;
+        }
+        if (this.mouseClick === true && mouseClick === false) {
+            // console.warn("Warning: both click and select events detected.");
+        } else {
+            const status = adresse.husnummer
+                ? AdresseTypeaheadStatus.ADRESSE_OK
+                : AdresseTypeaheadStatus.HUSNUMMER_IKKE_SATT;
+            this.setState({status, verdi});
+            this.props.onVelgAnnenAdresse(adresse);
+            if (!adresse.husnummer) {
+                this.setState({
+                    cursorPosisjon: beregnTekstfeltMarkorPosisjon(adresse),
+                    adresser: [],
+                });
+            } else {
+                this.setState({
+                    adresser: [],
+                });
+            }
+        }
+    }
+
+    handleItemClickInMicrosoftEdgeBrowser(event: any) {
+        const items: HTMLCollection = document.getElementsByClassName("item-highlighted");
+        if (items && items[0]) {
+            const INNER_TEXT = "innerText";
+            let item_: any = items[0];
+            const valgtTekststreng = item_[INNER_TEXT] ? item_[INNER_TEXT] : "";
+            const valgtAdresse = this.state.adresser.find((adresse: AdressesokTreff) => {
+                return formaterAdresseString(adresse) === valgtTekststreng;
+            });
+            if (valgtAdresse) {
+                this.onSelect(valgtTekststreng, valgtAdresse, true);
+            }
+            event.preventDefault();
+        }
+    }
+
+    renderMenu(children: any): React.ReactNode {
+        return (
+            <div
+                className="menu"
+                role="listbox"
+                id="owned_listbox"
+                onClick={(event: any) => this.handleItemClickInMicrosoftEdgeBrowser(event)}
+            >
+                {children}
+            </div>
+        );
+    }
+
+    renderItem(item: any, isHighlighted: any) {
+        const {status} = this.state;
+        if (status === AdresseTypeaheadStatus.ADRESSE_OK) {
+            return (
+                <div className={`item ${isHighlighted ? "item-highlighted" : ""}`} key={Math.random()}>
+                    {formaterAdresseString(item)}
                 </div>
-            )}
-        </Downshift>
-    );
-};
+            );
+        } else {
+            return (
+                <div className={`item ${isHighlighted ? "item-highlighted" : ""}`} key={Math.random()}>
+                    {formaterAdresseString(item)}
+                </div>
+            );
+        }
+    }
+
+    render() {
+        const {verdi, adresser, status} = this.state;
+        return (
+            <div className="navAutcomplete" id="digisosTypeahead">
+                <Autocomplete
+                    value={verdi}
+                    inputProps={{
+                        id: "states-autocomplete",
+                        placeholder: "",
+                        "aria-owns": "owned_listbox",
+                    }}
+                    wrapperStyle={{position: "relative", display: "inline-block"}}
+                    items={adresser}
+                    getItemValue={(item: any) => formaterAdresseString(item)}
+                    onChange={(event: any, value: string) => this.onChange(event, value)}
+                    onSelect={(value: any, item: any) => this.onSelect(value, item, false)}
+                    renderMenu={(children: any) => this.renderMenu(children)}
+                    renderItem={(item: any, isHighlighted: any) => this.renderItem(item, isHighlighted)}
+                    autoHighlight={true}
+                    selectOnBlur={false}
+                />
+                <AdressesokIkon visSpinner={status === AdresseTypeaheadStatus.SOKER} />
+            </div>
+        );
+    }
+}
+
+export default AdresseTypeaheadDeprecated;

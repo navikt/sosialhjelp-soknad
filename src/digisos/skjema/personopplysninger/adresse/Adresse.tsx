@@ -19,7 +19,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
-import {AdresseTypeahead} from "./AdresseTypeahead";
+import {AdresseTypeahead} from "./AdresseTypeaheadDownshift";
 
 const FAKTUM_KEY = "soknadsmottaker";
 
