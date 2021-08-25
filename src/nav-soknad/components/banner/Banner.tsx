@@ -1,12 +1,24 @@
+import {Title} from "@navikt/ds-react";
 import * as React from "react";
+import styled from "styled-components";
 
-const Banner: React.StatelessComponent<{children: React.ReactNode} & {}> = ({children}) => {
+const StyledBanner = styled.div`
+    background-color: #9bd0b0;
+    width: 100%;
+    height: 3.75rem;
+    display: flex;
+    align-items: center;
+`;
+
+const Banner = (props: {children: React.ReactNode}) => {
     return (
-        <div className="banner">
+        <StyledBanner>
             <div className="blokk-center">
-                <h1 className="banner__tittel">{children}</h1>
+                <Title level={1} size="s">
+                    {props.children}
+                </Title>
             </div>
-        </div>
+        </StyledBanner>
     );
 };
 

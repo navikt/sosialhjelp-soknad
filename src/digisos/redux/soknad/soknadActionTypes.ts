@@ -1,5 +1,11 @@
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
-import {FornavnResponse, HarNyligInnsendteSoknaderResponse, NedetidResponse, TilgangResponse} from "./soknadTypes";
+import {
+    FornavnResponse,
+    HarNyligInnsendteSoknaderResponse,
+    NedetidResponse,
+    PabegynteSoknaderResponse,
+    TilgangResponse,
+} from "./soknadTypes";
 
 export enum SoknadActionTypeKeys {
     START_SOKNAD_OK = "soknad/START_SOKNAD_OK",
@@ -28,6 +34,7 @@ export enum SoknadActionTypeKeys {
     LAGRE_TILGANG_OG_FORNAVN_PA_STORE = "soknad/LAGRE_RESSURSER_PA_STORE",
     LAGRE_NEDETID_PA_STORE = "soknad/LAGRE_NEDETID_PA_STORE",
     LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE = "soknad/LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE",
+    LAGRE_PABEGYNTE_SOKNADER_PA_STORE = "soknad/LAGRE_PABEGYNTE_SOKNADER_PA_STORE",
 
     SET_LINK_VISITED = "soknad/SET_LINK_VISITED",
     VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO",
@@ -66,7 +73,6 @@ export type SoknadActionType =
     | OppdaterSamtykke
     | LagreTilgangOgFornavnPaStore
     | LagreNedetidPaStore
-    | SetLinkVisited
     | VisSamtykkeInfo
     | VisLasteOppVedleggModal
     | UpdateBehandlingsIdPaStore
@@ -78,7 +84,8 @@ export type SoknadActionType =
     | VisNedetidPanel
     | SetSendSoknadServiveUnavailable
     | ResetSendSoknadServiceUnavailable
-    | LagreHarNyligInnsendteSoknaderPaStore;
+    | LagreHarNyligInnsendteSoknaderPaStore
+    | LagrePabegynteSoknaderPaStore;
 
 export interface HentSamtykker {
     type: SoknadActionTypeKeys.HENT_SAMTYKKE;
@@ -208,10 +215,6 @@ export enum ErSystemdataEndret {
     NOT_ASKED = "NOT_ASKED",
 }
 
-export interface SetLinkVisited {
-    type: SoknadActionTypeKeys.SET_LINK_VISITED;
-}
-
 export interface ShowServerFeil {
     type: SoknadActionTypeKeys.SHOW_SERVER_FEIL;
     shouldShow: boolean;
@@ -253,4 +256,9 @@ export interface SetSendSoknadServiveUnavailable {
 
 export interface ResetSendSoknadServiceUnavailable {
     type: SoknadActionTypeKeys.RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE;
+}
+
+export interface LagrePabegynteSoknaderPaStore {
+    type: SoknadActionTypeKeys.LAGRE_PABEGYNTE_SOKNADER_PA_STORE;
+    pabegynteSoknader: PabegynteSoknaderResponse[];
 }
