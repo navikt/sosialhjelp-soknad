@@ -10,7 +10,7 @@ import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
 import Feiloppsummering from "../components/validering/Feiloppsummering";
 import Knapperad from "../components/knapperad";
 import {REST_STATUS, SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../../digisos/redux/soknad/soknadTypes";
-import {ValideringsFeilKode} from "../../digisos/redux/reduxTypes";
+import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
 import {setVisBekreftMangler} from "../../digisos/redux/oppsummering/oppsummeringActions";
 import {getIntlTextOrKey, scrollToTop} from "../utils";
 import {

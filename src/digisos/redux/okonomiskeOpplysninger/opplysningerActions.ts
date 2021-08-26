@@ -1,4 +1,4 @@
-import {Valideringsfeil} from "../reduxTypes";
+import {Valideringsfeil} from "../validering/valideringActionTypes";
 import {
     OpplysningerAction,
     opplysningerActionTypeKeys,

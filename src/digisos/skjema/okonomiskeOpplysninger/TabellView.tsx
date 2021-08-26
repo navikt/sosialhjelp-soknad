@@ -6,7 +6,7 @@ import {
     OpplysningRad,
     OpplysningSpc,
 } from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
-import {Valideringsfeil, ValideringsFeilKode} from "../../redux/reduxTypes";
+import {Valideringsfeil, ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 import {useDispatch, useSelector} from "react-redux";
 import {getSpcForOpplysning, getTomVedleggRad} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {Column, Row} from "nav-frontend-grid";

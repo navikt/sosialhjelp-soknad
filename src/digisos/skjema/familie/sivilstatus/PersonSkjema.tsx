@@ -11,7 +11,7 @@ import {Familie, Sivilstatus} from "./FamilieTypes";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validering/valideringActions";
-import {ValideringsFeilKode} from "../../../redux/reduxTypes";
+import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 
 const FAKTUM_KEY = "familie.sivilstatus.gift.ektefelle";
 const FAKTUM_KEY_FNR = FAKTUM_KEY + ".fnr";
