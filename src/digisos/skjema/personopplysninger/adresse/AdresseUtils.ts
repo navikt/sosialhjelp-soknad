@@ -59,45 +59,6 @@ const removeDuplicatesAfterTransform = (myArray: any[], transform: (item: any) =
     });
 };
 
-const setCaretPosition = (ctrl: any, pos: number) => {
-    if (ctrl.setSelectionRange) {
-        // Modern browsers
-        ctrl.focus();
-        ctrl.setSelectionRange(pos, pos);
-    } else if (ctrl.createTextRange) {
-        // IE8 and below
-        const range = ctrl.createTextRange();
-        range.collapse(true);
-        range.moveEnd("character", pos);
-        range.moveStart("character", pos);
-        range.select();
-    }
-};
-
-const beregnTekstfeltMarkorPosisjon = (adresse: AdressesokTreff): number => {
-    const husbokstav = adresse.husbokstav ? adresse.husbokstav : "";
-    if (adresse.adresse) {
-        return adresse.husnummer
-            ? adresse.adresse.length + adresse.husnummer.length + husbokstav.length + 1
-            : adresse.adresse.length + 1;
-    }
-    return 0;
-};
-
-const ekstraherHusnummerHusbokstav = (inntastetAdresse: string): any => {
-    const matches = inntastetAdresse.match(/ *(\d+) *([^0-9 ]*) *,/);
-    if (matches) {
-        return {
-            husnummer: matches[1],
-            husbokstav: matches[2],
-        };
-    }
-    return {
-        husnummer: "",
-        husbokstav: "",
-    };
-};
-
 const soknadsmottakerStatus = (soknadsdata: Soknadsdata): SoknadsMottakerStatus => {
     const navEnheter = soknadsdata.personalia.navEnheter;
     const valgtNavEnhet = soknadsdata.personalia.navEnhet;
@@ -128,12 +89,4 @@ const soknadsmottakerStatus = (soknadsdata: Soknadsdata): SoknadsMottakerStatus 
     return SoknadsMottakerStatus.IKKE_VALGT;
 };
 
-export {
-    formaterAdresseString,
-    removeDuplicatesAfterTransform,
-    setCaretPosition,
-    ekstraherHusnummerHusbokstav,
-    formaterSoknadsadresse,
-    beregnTekstfeltMarkorPosisjon,
-    soknadsmottakerStatus,
-};
+export {formaterAdresseString, removeDuplicatesAfterTransform, formaterSoknadsadresse, soknadsmottakerStatus};
