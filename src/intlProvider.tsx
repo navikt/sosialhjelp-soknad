@@ -1,32 +1,21 @@
 import * as React from "react";
 import {IntlProvider as Provider} from "react-intl";
-import {connect} from "react-redux";
-import {DispatchProps} from "./digisos/redux/reduxTypes";
+import {useSelector} from "react-redux";
 import {State} from "./digisos/redux/reducers";
-import {LedeteksterState} from "./digisos/redux/ledetekster/ledeteksterTypes";
 
-interface StateProps {
-    ledetekster: LedeteksterState;
-}
-interface IntlProviderProps {
+interface Props {
     children: React.ReactNode;
 }
 
-type Props = StateProps & IntlProviderProps & DispatchProps;
-
-const IntlProvider: React.FC<Props> = (props: Props) => {
-    let {children, ledetekster} = props;
+const IntlProvider = (props: Props) => {
+    const ledetekster = useSelector((state: State) => state.ledetekster);
     const locale = "nb";
 
     return (
         <Provider messages={ledetekster.data ? ledetekster.data : ""} defaultLocale="nb" locale={locale}>
-            {children}
+            {props.children}
         </Provider>
     );
 };
 
-export default connect((state: State) => {
-    return {
-        ledetekster: state.ledetekster,
-    };
-})(IntlProvider);
+export default IntlProvider;
