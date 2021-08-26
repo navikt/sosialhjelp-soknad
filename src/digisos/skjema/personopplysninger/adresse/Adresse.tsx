@@ -12,7 +12,7 @@ import {formaterSoknadsadresse} from "./AdresseUtils";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import Detaljeliste, {DetaljelisteElement} from "../../../../nav-soknad/components/detaljeliste";
-import {Valideringsfeil} from "../../../redux/reduxTypes";
+import {Valideringsfeil} from "../../../redux/validering/valideringActionTypes";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";

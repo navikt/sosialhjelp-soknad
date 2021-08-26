@@ -1,5 +1,4 @@
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
-import {Dispatch} from "../../digisos/redux/reduxTypes";
 import {fetchToJson, HttpStatus} from "../utils/rest-utils";
 import {soknadsdataUrl} from "../../digisos/redux/soknadsdata/soknadsdataActions";
 import {oppdaterSoknadsdataSti, SoknadsSti} from "../../digisos/redux/soknadsdata/soknadsdataReducer";
@@ -10,6 +9,7 @@ import {
     visMidlertidigDeaktivertPanel,
 } from "../../digisos/redux/soknad/soknadActions";
 import {logWarning} from "../utils/loggerUtils";
+import {Dispatch} from "redux";
 
 export const erPaStegEnOgValgtNavEnhetErUgyldig = (stegnummer: number, valgtNavEnhet: NavEnhet | null): boolean => {
     return (

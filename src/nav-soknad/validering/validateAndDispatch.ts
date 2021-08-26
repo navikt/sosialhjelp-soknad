@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {Valideringsfeil, ValideringsFeilKode} from "../../digisos/redux/reduxTypes";
+import {Valideringsfeil, ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
 import {onEndretValideringsfeil} from "../../digisos/redux/validering/valideringUtils";
 import {clearValideringsfeil, setValideringsfeil} from "../../digisos/redux/validering/valideringActions";
 import {maksLengde} from "./valideringer";

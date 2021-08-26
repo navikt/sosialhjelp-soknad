@@ -1,4 +1,4 @@
-import {ValideringActionTypeKeys, Valideringsfeil} from "../reduxTypes";
+import {ValideringActionTypeKeys, Valideringsfeil} from "../validering/valideringActionTypes";
 import {ValideringActionTypes} from "./valideringActionTypes";
 
 export interface ValideringState {
