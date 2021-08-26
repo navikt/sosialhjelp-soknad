@@ -60,6 +60,23 @@ export const OpplastingAvVedleggModal = () => {
                 <p>
                     <FormattedMessage id="opplysninger.informasjon.modal.bolk3.avsnitt1" />
                 </p>
+                <Undertittel>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk4.tittel" />
+                </Undertittel>
+                <p>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt1" />
+                </p>
+                <ul>
+                    <li>
+                        <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt2" />
+                    </li>
+                    <li>
+                        <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt3" />
+                    </li>
+                    <li>
+                        <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt4" />
+                    </li>
+                </ul>
             </div>
         </NavFrontendModal>
     );
