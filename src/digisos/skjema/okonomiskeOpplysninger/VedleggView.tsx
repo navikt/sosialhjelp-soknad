@@ -1,19 +1,29 @@
-import * as React from "react";
+import {useState} from "react";
 import {Fil, Opplysning, OpplysningSpc, VedleggStatus} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {useDispatch, useSelector} from "react-redux";
 import LastOppFil from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
 import {FormattedMessage} from "react-intl";
-import {startSlettFil} from "../../redux/fil/filActions";
-import {lagreOpplysningHvisGyldigAction} from "../../redux/okonomiskeOpplysninger/opplysningerActions";
+import {
+    lagreOpplysningHvisGyldigAction,
+    settFilOpplastingFerdig,
+    settFilOpplastingPending,
+    updateOpplysning,
+} from "../../redux/okonomiskeOpplysninger/opplysningerActions";
 import OpplastetVedlegg from "./OpplastetVedlegg";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {State} from "../../redux/reducers";
+import {fetchDelete, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
+import {showServerFeil} from "../../redux/soknad/soknadActions";
+import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {REST_FEIL} from "../../redux/soknad/soknadTypes";
 
 const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const feil = useSelector((state: State) => state.validering.feil);
     const enFilLastesOpp = useSelector((state: State) => state.okonomiskeOpplysninger.enFilLastesOpp);
+
+    const [feilkode, setFeilkode] = useState<string | null>(null);
 
     const dispatch = useDispatch();
 
@@ -33,7 +43,34 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
 
     const slettVedlegg = (fil: Fil) => {
         if (behandlingsId) {
-            dispatch(startSlettFil(behandlingsId, fil, props.okonomiskOpplysning, props.okonomiskOpplysning.type));
+            dispatch(settFilOpplastingPending(props.okonomiskOpplysning.type));
+
+            setFeilkode(feilkode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR ? null : feilkode);
+
+            const url = `opplastetVedlegg/${behandlingsId}/${fil.uuid}`;
+            fetchDelete(url)
+                .then(() => {
+                    const filerUpdated = props.okonomiskOpplysning.filer.filter((f: Fil) => {
+                        return f.uuid !== fil.uuid;
+                    });
+
+                    const opplysningUpdated: Opplysning = {...props.okonomiskOpplysning};
+                    opplysningUpdated.filer = filerUpdated;
+
+                    if (opplysningUpdated.filer.length === 0) {
+                        opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
+                    }
+
+                    dispatch(updateOpplysning(opplysningUpdated));
+                    dispatch(settFilOpplastingFerdig(props.okonomiskOpplysning.type));
+                })
+                .catch((reason) => {
+                    if (reason.message === HttpStatus.UNAUTHORIZED) {
+                        return;
+                    }
+                    logWarning("Slett vedlegg feilet: " + reason);
+                    dispatch(showServerFeil(true));
+                });
         }
     };
 
@@ -58,6 +95,8 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
                     opplysning={opplysning}
                     isDisabled={enFilLastesOpp || opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
                     visSpinner={opplysning.pendingLasterOppFil}
+                    feilkode={feilkode}
+                    setFeilkode={setFeilkode}
                 />
                 <Checkbox
                     label={<FormattedMessage id={"opplysninger.vedlegg.alleredelastetopp"} />}
