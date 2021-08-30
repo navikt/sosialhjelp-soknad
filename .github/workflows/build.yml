@@ -15,15 +15,11 @@ jobs:
     env:
       DOCKER_IMAGE: docker.pkg.github.com/${{ github.repository }}/${{ github.event.repository.name }}
     steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.8.1'
       - uses: actions/checkout@v2
-      - uses: actions/cache@v1.1.2
+      - uses: actions/setup-node@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: ${{ runner.os }}-node-
+          node-version: '12'
+          cache: 'npm'
       - name: Install dependencies
         run: npm ci
       - name: Run tests
