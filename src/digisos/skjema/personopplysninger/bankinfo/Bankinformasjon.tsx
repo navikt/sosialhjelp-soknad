@@ -12,7 +12,6 @@ import {Kontonummer} from "./KontonummerType";
 import {onEndretValideringsfeil} from "../../../redux/validering/valideringUtils";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import Detaljeliste, {DetaljelisteElement} from "../../../../nav-soknad/components/detaljeliste";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
@@ -20,6 +19,7 @@ import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validering/valideringActions";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {SingleLineElement, Systeminfo} from "../../../../nav-soknad/components/systeminfo/Systeminfo";
 
 const FAKTUM_KEY_KONTONUMMER = "kontakt.kontonummer";
 
@@ -243,14 +243,14 @@ const Bankinformasjon = () => {
                         }
                     >
                         {!kontonummer.brukerdefinert && (
-                            <Detaljeliste>
-                                <DetaljelisteElement
-                                    tittel={intl.formatMessage({
-                                        id: FAKTUM_KEY_KONTONUMMER + ".label",
-                                    })}
-                                    verdi={kontonummer.systemverdi}
-                                />
-                            </Detaljeliste>
+                            <Systeminfo
+                                systeminfoMap={[
+                                    {
+                                        key: FAKTUM_KEY_KONTONUMMER + ".label",
+                                        value: <SingleLineElement value={kontonummer.systemverdi} />,
+                                    },
+                                ]}
+                            />
                         )}
                     </SysteminfoMedSkjema>
                 </Sporsmal>

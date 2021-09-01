@@ -303,10 +303,10 @@ let generateUploadOptions = function (formData: FormData, method: string) {
     return UPLOAD_OPTIONS;
 };
 
-export function fetchUpload(urlPath: string, formData: FormData) {
+export function fetchUpload<T>(urlPath: string, formData: FormData) {
     return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData, "POST")).then((response) => {
         verifyStatusSuccessOrRedirect(response);
-        return toJson(response);
+        return toJson<T>(response);
     });
 }
 
