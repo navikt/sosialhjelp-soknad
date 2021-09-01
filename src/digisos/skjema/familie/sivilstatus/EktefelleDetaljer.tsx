@@ -4,63 +4,56 @@ import {useSelector} from "react-redux";
 
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
-import Detaljeliste, {DetaljelisteElement} from "../../../../nav-soknad/components/detaljeliste";
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
 import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
-import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 
 import {State} from "../../../redux/reducers";
+import {
+    SingleLineDateElement,
+    SingleLineElement,
+    Systeminfo,
+} from "../../../../nav-soknad/components/systeminfo/Systeminfo";
+
+const INTL_ID_EKTEFELLE = "system.familie.sivilstatus.gift.ektefelle";
+
+const SivilstatusLabel = (props: {ektefelleHarDiskresjonskode: boolean | undefined}) => {
+    if (props.ektefelleHarDiskresjonskode && props.ektefelleHarDiskresjonskode === true) {
+        return <FormattedMessage id="system.familie.sivilstatus.ikkeTilgang.label" />;
+    }
+    return <FormattedMessage id="system.familie.sivilstatus.label" />;
+};
+
+const EktefelleInformasjon = () => {
+    const {ektefelle, erFolkeregistrertSammen} = useSelector((state: State) => state.soknadsdata.familie.sivilstatus);
+    const systeminfo = [];
+
+    if (ektefelle?.navn?.fulltNavn) {
+        systeminfo.push({
+            key: INTL_ID_EKTEFELLE + ".navn",
+            value: <SingleLineElement value={ektefelle.navn.fulltNavn} />,
+        });
+        if (ektefelle?.fodselsdato) {
+            systeminfo.push({
+                key: INTL_ID_EKTEFELLE + ".fodselsdato",
+                value: <SingleLineDateElement value={ektefelle.fodselsdato} />,
+            });
+        }
+        systeminfo.push({
+            key: INTL_ID_EKTEFELLE + ".folkereg",
+            value: <SingleLineElement value={erFolkeregistrertSammen ? "Ja" : "Nei"} />,
+        });
+    }
+    return (
+        <div className="sivilstatus__ektefelleinfo">
+            <Systeminfo systeminfoMap={systeminfo} />
+        </div>
+    );
+};
 
 const EktefelleDetaljer = () => {
-    const {ektefelle, harDiskresjonskode, erFolkeregistrertSammen} = useSelector(
-        (state: State) => state.soknadsdata.familie.sivilstatus
-    );
+    const {harDiskresjonskode} = useSelector((state: State) => state.soknadsdata.familie.sivilstatus);
 
     const intl = useIntl();
-
-    const renderSivilstatusLabel = (ektefelleHarDiskresjonskode: boolean | undefined) => {
-        let formattedMessageId: string = "system.familie.sivilstatus.label";
-        if (ektefelleHarDiskresjonskode && ektefelleHarDiskresjonskode === true) {
-            formattedMessageId = "system.familie.sivilstatus.ikkeTilgang.label";
-        }
-        return <FormattedMessage id={formattedMessageId} />;
-    };
-
-    const renderEktefelleInformasjon = () => {
-        const INTL_ID_EKTEFELLE = "system.familie.sivilstatus.gift.ektefelle";
-        return (
-            <div className="sivilstatus__ektefelleinfo">
-                {ektefelle && ektefelle.navn && ektefelle.navn.fulltNavn && (
-                    <Detaljeliste>
-                        <DetaljelisteElement
-                            tittel={<FormattedMessage id={INTL_ID_EKTEFELLE + ".navn"} />}
-                            verdi={ektefelle.navn.fulltNavn}
-                        />
-                        {ektefelle.fodselsdato && (
-                            <DetaljelisteElement
-                                tittel={<FormattedMessage id={INTL_ID_EKTEFELLE + ".fodselsdato"} />}
-                                verdi={
-                                    <span className="dato">
-                                        <Dato tidspunkt={ektefelle.fodselsdato} />
-                                    </span>
-                                }
-                            />
-                        )}
-                        <DetaljelisteElement
-                            tittel={<FormattedMessage id={INTL_ID_EKTEFELLE + ".folkereg"} />}
-                            verdi={
-                                erFolkeregistrertSammen === true ? (
-                                    <FormattedMessage id={INTL_ID_EKTEFELLE + ".folkeregistrertsammen.true"} />
-                                ) : (
-                                    <FormattedMessage id={INTL_ID_EKTEFELLE + ".folkeregistrertsammen.false"} />
-                                )
-                            }
-                        />
-                    </Detaljeliste>
-                )}
-            </div>
-        );
-    };
 
     return (
         <div className="sivilstatus skjema-sporsmal">
@@ -69,8 +62,8 @@ const EktefelleDetaljer = () => {
                     <FormattedMessage id="system.familie.sivilstatus" />
                 </div>
                 <div className="sivilstatus__giftlabel">
-                    {renderSivilstatusLabel(harDiskresjonskode)}
-                    {renderEktefelleInformasjon()}
+                    <SivilstatusLabel ektefelleHarDiskresjonskode={harDiskresjonskode} />
+                    <EktefelleInformasjon />
                 </div>
             </Sporsmal>
             {harDiskresjonskode !== true && (
