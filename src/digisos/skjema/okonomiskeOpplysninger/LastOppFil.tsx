@@ -17,7 +17,7 @@ import {
     HttpStatus,
 } from "../../../nav-soknad/utils/rest-utils";
 import {setValideringsfeil} from "../../redux/validering/valideringActions";
-import {ValideringsFeilKode} from "../../redux/reduxTypes";
+import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 import {Dispatch} from "redux";
 import {logInfo} from "../../../nav-soknad/utils/loggerUtils";
 
