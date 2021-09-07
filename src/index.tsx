@@ -28,6 +28,7 @@ import LoadContainer from "./LoadContainer";
 import Modal from "react-modal";
 import {initAmplitude} from "./nav-soknad/utils/amplitude";
 import {logException, NavLogEntry, NavLogLevel} from "./nav-soknad/utils/loggerUtils";
+import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 
 Modal.setAppElement("#root");
 
@@ -93,6 +94,15 @@ window.onerror = (errorMessage, url, line, column, error) => {
 };
 
 initAmplitude();
+
+// Dersom appen bygges og deployes med docker-image vil dekoratøren bli lagt på serverside med express i Docker (eks ved deploy til miljø)
+if (process.env.NODE_ENV !== "production") {
+    injectDecoratorClientSide({
+        env: "dev",
+        simple: true,
+        chatbot: true,
+    });
+}
 
 ReactDOM.render(
     <Provider store={store}>

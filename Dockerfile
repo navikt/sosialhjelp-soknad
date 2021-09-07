@@ -1,10 +1,11 @@
-FROM navikt/node-express:12.2.0-alpine
+FROM node:14-alpine
 
 ENV NODE_ENV production
 
 WORKDIR /app
 COPY package.json .
-RUN npm i node-fetch node-cache @navikt/nav-dekoratoren-moduler jsdom
+COPY package-lock.json .
+RUN npm ci
 COPY server.js server.js
 COPY build build/
 
