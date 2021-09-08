@@ -100,7 +100,9 @@ if (process.env.NODE_ENV !== "production") {
     injectDecoratorClientSide({
         env: "dev",
         simple: true,
-        chatbot: true,
+        feedback: false,
+        chatbot: false,
+        shareScreen: false,
     });
 }
 
