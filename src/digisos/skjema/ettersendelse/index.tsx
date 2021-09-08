@@ -14,11 +14,11 @@ import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import {Prompt} from "react-router";
 import {erEttersendelseSide, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
 import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";
-import AlertStripe from "nav-frontend-alertstriper";
 import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
 import {Undertittel} from "nav-frontend-typografi";
 import Lenke from "nav-frontend-lenker";
 import {useTitle} from "../../../nav-soknad/hooks/useTitle";
+import {Alert} from "@navikt/ds-react";
 
 const lesBrukerbehandlingskjedeId = (behandlingsId?: string) => {
     if (!behandlingsId) {
@@ -92,7 +92,7 @@ const Ettersendelse = () => {
                 <FormattedMessage id="applikasjon.sidetittel" />
             </BannerEttersendelse>
             {nedetid?.isNedetid && (
-                <AlertStripe type="feil" style={{justifyContent: "center"}}>
+                <Alert variant="error" style={{justifyContent: "center"}}>
                     <FormattedMessage
                         id="nedetid.alertstripe.ettersendelse"
                         values={{
@@ -100,7 +100,7 @@ const Ettersendelse = () => {
                             nedetidslutt: nedetid?.nedetidSluttText,
                         }}
                     />
-                </AlertStripe>
+                </Alert>
             )}
             <div className="blokk-center panel ettersendelse__panel">
                 <p className="ettersendelse ingress">

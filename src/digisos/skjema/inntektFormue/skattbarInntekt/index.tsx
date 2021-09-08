@@ -11,9 +11,9 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknadsdata/soknadsdataActions";
 import Knapp from "nav-frontend-knapper";
 import {formatTidspunkt, getIntlTextOrKey} from "../../../../nav-soknad/utils";
-import AlertStripe from "nav-frontend-alertstriper";
 import {UndertekstBold} from "nav-frontend-typografi";
 import Lenke from "nav-frontend-lenker";
+import {Alert} from "@navikt/ds-react";
 
 const Skatt = () => {
     const dispatch = useDispatch();
@@ -75,9 +75,9 @@ const Skatt = () => {
                         {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.gi_samtykke")}
                     </Knapp>
                     {samtykkeTidspunktStreng === "" && (
-                        <AlertStripe type={"feil"} className="feilet_kommunikasjon_margin_under">
+                        <Alert variant="error">
                             <FormattedMessage id="utbetalinger.skattbar.kontaktproblemer" />
-                        </AlertStripe>
+                        </Alert>
                     )}
                 </div>
             )}

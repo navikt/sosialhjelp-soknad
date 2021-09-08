@@ -12,13 +12,12 @@ import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import {State} from "../redux/reducers";
 import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
-import AlertStripe from "nav-frontend-alertstriper";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {Soknadsoversikt} from "./Soknadsoversikt";
 import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import {useTitle} from "../../nav-soknad/hooks/useTitle";
-import {BodyShort, Label} from "@navikt/ds-react";
+import {Alert, BodyShort, Label} from "@navikt/ds-react";
 
 const Greeting = (props: {name: string}) => (
     <Label size="s">
@@ -119,7 +118,7 @@ export const InformasjonSide = (props: {enableModalV2: boolean}) => {
                 <div className="skjema-content">
                     <Personopplysninger />
                     {nedetid?.isPlanlagtNedetid && (
-                        <AlertStripe type="info">
+                        <Alert variant="info">
                             <FormattedMessage
                                 id="nedetid.alertstripe.infoside"
                                 values={{
@@ -127,15 +126,15 @@ export const InformasjonSide = (props: {enableModalV2: boolean}) => {
                                     nedetidslutt: nedetid.nedetidSlutt,
                                 }}
                             />
-                        </AlertStripe>
+                        </Alert>
                     )}
                 </div>
 
                 <div className="skjema-content" style={{border: "1px solid transparent"}}>
                     {startSoknadFeilet && (
-                        <AlertStripe type="feil">
+                        <Alert variant="error">
                             <FormattedMessage id="applikasjon.opprettsoknadfeilet" />
-                        </AlertStripe>
+                        </Alert>
                     )}
 
                     <span className="informasjon-start-knapp">
@@ -151,7 +150,7 @@ export const InformasjonSide = (props: {enableModalV2: boolean}) => {
                         </Hovedknapp>
 
                         {nedetid?.isNedetid && visNedetidPanel && (
-                            <AlertStripe type="feil" style={{marginTop: "0.4rem"}}>
+                            <Alert variant="error" style={{marginTop: "0.4rem"}}>
                                 <FormattedMessage
                                     id="nedetid.alertstripe.infoside"
                                     values={{
@@ -159,7 +158,7 @@ export const InformasjonSide = (props: {enableModalV2: boolean}) => {
                                         nedetidslutt: nedetid.nedetidSlutt,
                                     }}
                                 />
-                            </AlertStripe>
+                            </Alert>
                         )}
                     </span>
                 </div>
@@ -226,7 +225,7 @@ const Informasjon = () => {
 
             <span>
                 {nedetid?.isNedetid && (
-                    <AlertStripe type="feil" style={{justifyContent: "center"}}>
+                    <Alert variant="error" style={{justifyContent: "center"}}>
                         <FormattedMessage
                             id="nedetid.alertstripe.infoside"
                             values={{
@@ -234,7 +233,7 @@ const Informasjon = () => {
                                 nedetidslutt: nedetid.nedetidSlutt,
                             }}
                         />
-                    </AlertStripe>
+                    </Alert>
                 )}
 
                 {enableModalV2 ? <Soknadsoversikt /> : <InformasjonSide enableModalV2={false} />}

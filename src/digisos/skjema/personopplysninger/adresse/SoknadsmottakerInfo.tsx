@@ -3,11 +3,11 @@ import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/c
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
 import {SoknadsMottakerStatus} from "./AdresseTypes";
 import {soknadsmottakerStatus} from "./AdresseUtils";
-import AlertStripe from "nav-frontend-alertstriper";
 import {FormattedMessage} from "react-intl";
 import {useSelector} from "react-redux";
 import {State} from "../../../redux/reducers";
 import Lenke from "nav-frontend-lenker";
+import {Alert} from "@navikt/ds-react";
 
 const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
@@ -38,7 +38,7 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
     } else if (mottakerStatus === SoknadsMottakerStatus.UGYLDIG) {
         // ORANSJE
         informasjonspanel = (
-            <AlertStripe type="advarsel">
+            <Alert variant="warning">
                 <FormattedMessage
                     id="adresse.alertstripe.advarsel.v2"
                     values={{
@@ -50,11 +50,11 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
                         ),
                     }}
                 />
-            </AlertStripe>
+            </Alert>
         );
     } else if (mottakerStatus === SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT) {
         informasjonspanel = (
-            <AlertStripe type="feil">
+            <Alert variant="error">
                 <FormattedMessage
                     id="adresse.alertstripe.feil.v2"
                     values={{
@@ -66,7 +66,7 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
                         ),
                     }}
                 />
-            </AlertStripe>
+            </Alert>
         );
     } else if (erSynlig) {
         erSynlig = false;
