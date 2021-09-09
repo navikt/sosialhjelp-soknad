@@ -13,31 +13,26 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
 
     const valgtNavEnhet = soknadsdata.personalia.navEnhet;
-    let enhetsnavn = "";
-    let kommunenavn = "";
-    if (valgtNavEnhet) {
-        enhetsnavn = valgtNavEnhet.enhetsnavn;
-        kommunenavn = valgtNavEnhet.kommunenavn;
-    }
-    let erSynlig: boolean = true;
-    let farge: DigisosFarge = DigisosFarge.SUKSESS;
-    let tekst: string = "";
+    const enhetsnavn = valgtNavEnhet?.enhetsnavn ?? "";
+    const kommunenavn = valgtNavEnhet?.kommunenavn ?? "";
 
     const mottakerStatus: SoknadsMottakerStatus = soknadsmottakerStatus(soknadsdata);
 
-    let informasjonspanel: JSX.Element | null = null;
-
+    if (props.skjul) {
+        return null;
+    }
     if (mottakerStatus === SoknadsMottakerStatus.GYLDIG) {
         // GRØNN
-        tekst = `Søknaden vil bli sendt til: ${enhetsnavn}, ${kommunenavn} kommune.`;
-        informasjonspanel = (
-            <Informasjonspanel ikon={InformasjonspanelIkon.BREVKONVOLUTT} farge={farge} synlig={erSynlig}>
+        const tekst = `Søknaden vil bli sendt til: ${enhetsnavn}, ${kommunenavn} kommune.`;
+        return (
+            <Informasjonspanel ikon={InformasjonspanelIkon.BREVKONVOLUTT} farge={DigisosFarge.SUKSESS} synlig={true}>
                 {tekst}
             </Informasjonspanel>
         );
-    } else if (mottakerStatus === SoknadsMottakerStatus.UGYLDIG) {
+    }
+    if (mottakerStatus === SoknadsMottakerStatus.UGYLDIG) {
         // ORANSJE
-        informasjonspanel = (
+        return (
             <Alert variant="warning">
                 <FormattedMessage
                     id="adresse.alertstripe.advarsel.v2"
@@ -52,8 +47,9 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
                 />
             </Alert>
         );
-    } else if (mottakerStatus === SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT) {
-        informasjonspanel = (
+    }
+    if (mottakerStatus === SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT) {
+        return (
             <Alert variant="error">
                 <FormattedMessage
                     id="adresse.alertstripe.feil.v2"
@@ -68,15 +64,6 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
                 />
             </Alert>
         );
-    } else if (erSynlig) {
-        erSynlig = false;
-    }
-    if (props.skjul === true) {
-        erSynlig = false;
-    }
-
-    if (erSynlig) {
-        return informasjonspanel;
     }
     return null;
 };
