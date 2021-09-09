@@ -3,7 +3,6 @@ import {RouteComponentProps, withRouter} from "react-router";
 import {FormattedMessage, useIntl} from "react-intl";
 import {useSelector, useDispatch} from "react-redux";
 import {Innholdstittel} from "nav-frontend-typografi";
-import AlertStripe from "nav-frontend-alertstriper";
 import {useEffect} from "react";
 import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
 
@@ -33,6 +32,7 @@ import {createSkjemaEventData, logAmplitudeEvent} from "../utils/amplitude";
 import Lenke from "nav-frontend-lenker";
 import {useTitle} from "../hooks/useTitle";
 import {logInfo} from "../utils/loggerUtils";
+import {Alert} from "@navikt/ds-react";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -195,7 +195,7 @@ const StegMedNavigasjon = (
         <div className="app-digisos informasjon-side">
             <AppBanner />
             {isNedetid && (
-                <AlertStripe type="feil" style={{justifyContent: "center"}}>
+                <Alert variant="error" style={{justifyContent: "center"}}>
                     <FormattedMessage
                         id="nedetid.alertstripe.infoside"
                         values={{
@@ -203,7 +203,7 @@ const StegMedNavigasjon = (
                             nedetidslutt: nedetidslutt,
                         }}
                     />
-                </AlertStripe>
+                </Alert>
             )}
 
             <div className="skjema-steg skjema-content">
@@ -242,7 +242,7 @@ const StegMedNavigasjon = (
                     {children}
 
                     {soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
-                        <AlertStripe type="feil">
+                        <Alert variant="error">
                             <FormattedMessage
                                 id="adresse.alertstripe.feil.v2"
                                 values={{
@@ -254,10 +254,10 @@ const StegMedNavigasjon = (
                                     ),
                                 }}
                             />
-                        </AlertStripe>
+                        </Alert>
                     )}
                     {soknad.visIkkePakobletPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
-                        <AlertStripe type="advarsel">
+                        <Alert variant="warning">
                             <FormattedMessage
                                 id="adresse.alertstripe.advarsel.v2"
                                 values={{
@@ -273,7 +273,7 @@ const StegMedNavigasjon = (
                                     ),
                                 }}
                             />
-                        </AlertStripe>
+                        </Alert>
                     )}
 
                     {aktivtStegConfig && (
@@ -294,16 +294,16 @@ const StegMedNavigasjon = (
 
                     {soknad.showSendingFeiletPanel && aktivtSteg === 9 && (
                         <div role="alert">
-                            <AlertStripe type="feil" style={{marginTop: "1rem"}}>
+                            <Alert variant="error" style={{marginTop: "1rem"}}>
                                 Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg prøve
                                 igjen. Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen
                                 senere. Kontakt ditt NAV kontor dersom du er i en nødsituasjon.
-                            </AlertStripe>
+                            </Alert>
                         </div>
                     )}
 
                     {soknad.visMidlertidigDeaktivertPanel && isNedetid && aktivtSteg === 9 && (
-                        <AlertStripe type="feil" style={{marginTop: "1rem"}}>
+                        <Alert variant="error" style={{marginTop: "1rem"}}>
                             <FormattedMessage
                                 id="nedetid.alertstripe.send"
                                 values={{
@@ -311,7 +311,7 @@ const StegMedNavigasjon = (
                                     nedetidslutt: nedetidslutt,
                                 }}
                             />
-                        </AlertStripe>
+                        </Alert>
                     )}
                 </form>
             </div>

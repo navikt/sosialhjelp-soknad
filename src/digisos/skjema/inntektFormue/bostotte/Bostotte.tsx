@@ -17,9 +17,9 @@ import {
     settSamtykkeOgOppdaterData,
 } from "../../../redux/soknadsdata/soknadsdataActions";
 import Knapp from "nav-frontend-knapper";
-import AlertStripe from "nav-frontend-alertstriper";
 import {Normaltekst, UndertekstBold} from "nav-frontend-typografi";
 import Lenke from "nav-frontend-lenker";
+import {Alert} from "@navikt/ds-react";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -184,9 +184,9 @@ const BostotteView = () => {
                                         {getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke")}
                                     </Knapp>
                                     {samtykkeTidspunktStreng === "" && requestToHusbankenFeilet && (
-                                        <AlertStripe type={"feil"} className="feilet_kommunikasjon_margin_under">
+                                        <Alert variant="error">
                                             {getIntlTextOrKey(intl, "inntekt.bostotte.nedlasting_feilet")}
-                                        </AlertStripe>
+                                        </Alert>
                                     )}
                                 </>
                             )}
