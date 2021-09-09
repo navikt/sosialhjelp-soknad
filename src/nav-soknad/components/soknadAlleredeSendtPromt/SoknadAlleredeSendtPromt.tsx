@@ -1,17 +1,16 @@
 import * as React from "react";
-import NavFrontendModal from "nav-frontend-modal";
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
-import {FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {visSoknadAlleredeSendtPrompt} from "../../../digisos/redux/ettersendelse/ettersendelseActions";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
+import {Modal} from "@navikt/ds-react";
 
 const KEY = "visSoknadAlleredeSendtPrompt";
 
 const SoknadAlleredeSendtPromt = () => {
     const dispatch = useDispatch();
-    const intl = useIntl();
 
     const visPrompt = useSelector((state: State) => state.ettersendelse.visSoknadAlleredeSendtPromt);
 
@@ -20,13 +19,7 @@ const SoknadAlleredeSendtPromt = () => {
     };
 
     return (
-        <NavFrontendModal
-            isOpen={visPrompt}
-            contentLabel={intl.formatMessage({id: "avbryt.avbryt"})}
-            closeButton={true}
-            onRequestClose={() => onClose()}
-            shouldCloseOnOverlayClick={true}
-        >
+        <Modal open={visPrompt} onClose={() => onClose()}>
             <div className="avbrytmodal">
                 <div className="avbrytmodal__infoikon_wrapper">
                     <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""} />
@@ -39,7 +32,7 @@ const SoknadAlleredeSendtPromt = () => {
                     <FormattedMessage id={KEY + ".tekst"} />
                 </Normaltekst>
             </div>
-        </NavFrontendModal>
+        </Modal>
     );
 };
 
