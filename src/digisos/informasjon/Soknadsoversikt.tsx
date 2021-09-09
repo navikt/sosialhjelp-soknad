@@ -1,7 +1,4 @@
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
-import Lenke from "nav-frontend-lenker";
-import Panel from "nav-frontend-paneler";
-import {Element, Normaltekst, Undertittel} from "nav-frontend-typografi";
 import React from "react";
 import {useSelector} from "react-redux";
 import styled from "styled-components";
@@ -11,9 +8,9 @@ import {PaperClipIcon} from "../../nav-soknad/components/digisosIkon/PaperClipNo
 import {SkjemaContent} from "../../nav-soknad/components/SkjemaContent";
 import {digisosColors} from "../../nav-soknad/utils/colors";
 import {State} from "../redux/reducers";
-import Lenkepanel from "nav-frontend-lenkepanel";
 import {InformasjonSide} from ".";
 import {DAYS_BEOFRE_DELETION, filterAndSortPabegynteSoknader} from "./pabegynteSoknaderUtils";
+import {BodyShort, Label, Link, LinkPanel, Panel, Title} from "@navikt/ds-react";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -57,14 +54,14 @@ const StyledSoknadsoversikt = styled(SkjemaContent)`
 
     max-width: 792px !important;
 
-    .lenkepanel,
+    .navds-link-panel,
     .ekspanderbartPanel,
-    .panel {
+    .navds-panel {
         margin-bottom: 1rem;
     }
 
-    .lenkepanel,
-    .panel {
+    .navds-link-panel,
+    .navds-panel {
         padding: 2rem;
     }
 `;
@@ -82,12 +79,16 @@ const PabegynteSoknaderPanel = styled(Ekspanderbartpanel)`
     .ekspanderbartPanel__flex-wrapper {
         padding: 1rem;
     }
+
+    .navds-body-short {
+        font-weight: 400;
+    }
 `;
 
 const PabegynteSoknaderPanelContent = styled.div`
     padding: 0 1rem 1rem 1rem;
 
-    .lenkepanel {
+    .navds-link-panel {
         padding: 1rem;
     }
 `;
@@ -115,18 +116,26 @@ export const Soknadsoversikt = () => {
 
     return (
         <StyledSoknadsoversikt>
-            <StartNySoknadPanel tittel="Start en ny søknad">
+            <StartNySoknadPanel
+                tittel={
+                    <Title level="2" size="s">
+                        Start en ny søknad
+                    </Title>
+                }
+            >
                 <InformasjonSide enableModalV2={true} />
             </StartNySoknadPanel>
             {pabegynteSoknader.length > 0 && (
                 <PabegynteSoknaderPanel
                     tittel={
                         <div>
-                            <Undertittel>Fortsett på en påbegynt søknad</Undertittel>
-                            <Normaltekst>
+                            <Title level="2" size="s">
+                                Fortsett på en påbegynt søknad
+                            </Title>
+                            <BodyShort>
                                 Du har {pabegynteSoknader.length} påbegynte søknader. Vær oppmerksom på at disse slettes
                                 etter {DAYS_BEOFRE_DELETION} dager.
-                            </Normaltekst>
+                            </BodyShort>
                         </div>
                     }
                 >
@@ -137,20 +146,19 @@ export const Soknadsoversikt = () => {
                                 const deleteDate = pabegyntSoknad.deleteDate;
                                 return (
                                     <li key={pabegyntSoknad.behandlingsId}>
-                                        <Lenkepanel
-                                            tittelProps="normaltekst"
+                                        <LinkPanel
                                             href={`/sosialhjelp/soknad/skjema/${pabegyntSoknad.behandlingsId}/1`}
                                             border
                                         >
                                             <FlexContainer>
-                                                <Element style={{marginRight: "1rem"}}>
+                                                <Label style={{marginRight: "1rem"}}>
                                                     Sist oppdatert {format(sistOppdatert, "d MMM yyyy", {locale: nb})}
-                                                </Element>
-                                                <Normaltekst>
+                                                </Label>
+                                                <BodyShort>
                                                     Slettes om {formatDistance(deleteDate, currentDate, {locale: nb})}
-                                                </Normaltekst>
+                                                </BodyShort>
                                             </FlexContainer>
-                                        </Lenkepanel>
+                                        </LinkPanel>
                                     </li>
                                 );
                             })}
@@ -165,12 +173,14 @@ export const Soknadsoversikt = () => {
                         <PaperClipIcon />
                     </PanelImageContainer>
                     <div>
-                        <Undertittel>Send dokumentasjon til en innsendt søknad</Undertittel>
-                        <Normaltekst>Dokumentasjon kan sendes til søknader du har sendt inn tidligere.</Normaltekst>
+                        <Title level="2" size="s">
+                            Send dokumentasjon til en innsendt søknad
+                        </Title>
+                        <BodyShort>Dokumentasjon kan sendes til søknader du har sendt inn tidligere.</BodyShort>
                         <ul>
                             <li>
                                 Gå til listen over{" "}
-                                <Lenke href="https://www.nav.no/sosialhjelp/innsyn">dine sosialhjelpssøknader</Lenke>
+                                <Link href="https://www.nav.no/sosialhjelp/innsyn">dine sosialhjelpssøknader</Link>
                             </li>
                             <li>Åpne søknaden du ønsker å ettersende dokumenter til</li>
                             <li>Last opp dokumentene du skal ettersende under “dine vedlegg”</li>
