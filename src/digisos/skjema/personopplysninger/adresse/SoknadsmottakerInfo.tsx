@@ -44,7 +44,7 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
                     values={{
                         kommuneNavn: kommunenavn,
                         a: (msg: string) => (
-                            <Lenke href="https://husbanken.no/bostotte" target="_blank" rel="noreferrer noopener">
+                            <Lenke href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
                                 {msg}
                             </Lenke>
                         ),
