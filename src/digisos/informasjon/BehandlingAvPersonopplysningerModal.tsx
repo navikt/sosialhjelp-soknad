@@ -1,12 +1,11 @@
 import * as React from "react";
-import NavFrontendModal from "nav-frontend-modal";
 import {FormattedMessage, useIntl} from "react-intl";
 import {useSelector, useDispatch} from "react-redux";
-import {Knapp} from "nav-frontend-knapper";
 import {finnValgtEnhetsNavn} from "../data/kommuner";
 import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
 import {State} from "../redux/reducers";
 import {visSamtykkeInfo} from "../redux/soknad/soknadActions";
+import {Button, Modal} from "@navikt/ds-react";
 
 export const replaceNavkontor = (text: string, valgtEnhetsNavn?: string) => {
     // Hvis ikke valgtEnhetsNavn finnes, erstattes søkestrengen med capture-gruppa ([\w\s-]*)
@@ -28,19 +27,10 @@ const BehandlingAvPersonopplysningerModal = () => {
 
     const text = intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"].toString();
     return (
-        <NavFrontendModal
-            isOpen={modalSynlig || false}
-            contentLabel={intl.formatMessage({
-                id: "avbryt.avbryt",
-            })}
-            closeButton={true}
-            onRequestClose={() => {
+        <Modal
+            open={modalSynlig || false}
+            onClose={() => {
                 dispatch(visSamtykkeInfo(false));
-            }}
-            style={{
-                content: {
-                    overflowY: "auto",
-                },
             }}
         >
             <div className="personopplysning_info">
@@ -52,17 +42,16 @@ const BehandlingAvPersonopplysningerModal = () => {
             </div>
 
             <div className="behandlingAvPersonopplysningerModal--lukke-knapp">
-                <Knapp
-                    htmlType="button"
-                    type="hoved"
+                <Button
+                    variant="action"
                     onClick={() => {
                         dispatch(visSamtykkeInfo(false));
                     }}
                 >
                     <FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"} />
-                </Knapp>
+                </Button>
             </div>
-        </NavFrontendModal>
+        </Modal>
     );
 };
 

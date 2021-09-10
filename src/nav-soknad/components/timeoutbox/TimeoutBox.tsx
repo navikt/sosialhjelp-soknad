@@ -1,11 +1,10 @@
 import * as React from "react";
-import {useIntl} from "react-intl";
-import NavFrontendModal from "nav-frontend-modal";
-
 import Nedtelling from "./Nedtelling";
 import LoggetUt from "./LoggetUt";
 import {now} from "../../utils";
 import useInterval from "../../hooks/useInterval";
+import {Modal} from "@navikt/ds-react";
+import styled from "styled-components";
 
 const ONE_MINUTE_IN_MS = 60 * 1000;
 
@@ -24,6 +23,12 @@ const beregnVisAdvarseTidspunkt = (showWarningerAfterMinutes: number): number =>
     return now() + millisekunderTilAdvarsel;
 };
 
+const ModalWithoutCloseButton = styled(Modal)`
+    .navds-modal__button {
+        display: none;
+    }
+`;
+
 const TimeoutBox = (props: Props) => {
     const [showWarning, setShowWarning] = React.useState(false);
     const [showLoggedOut, setShowLoggedOut] = React.useState(false);
@@ -31,8 +36,6 @@ const TimeoutBox = (props: Props) => {
     const [showWarningTime, setShowWarningTime] = React.useState(
         beregnVisAdvarseTidspunkt(props.showWarningerAfterMinutes)
     );
-
-    const intl = useIntl();
 
     useInterval(() => {
         const tidIgjenAvSesjon = logoutTime - now();
@@ -53,11 +56,10 @@ const TimeoutBox = (props: Props) => {
     };
 
     return (
-        <NavFrontendModal
-            isOpen={showWarning || showLoggedOut}
-            contentLabel={intl.formatMessage({id: "timeout.fortsett"})}
-            closeButton={false}
-            onRequestClose={() => null}
+        <ModalWithoutCloseButton
+            open={showWarning || showLoggedOut}
+            onClose={() => null}
+            shouldCloseOnOverlayClick={false}
         >
             <div className="timeoutbox">
                 {showWarning && (
@@ -76,7 +78,7 @@ const TimeoutBox = (props: Props) => {
                     />
                 )}
             </div>
-        </NavFrontendModal>
+        </ModalWithoutCloseButton>
     );
 };
 

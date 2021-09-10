@@ -121,7 +121,7 @@ export const AvbrytSoknad = () => {
                     <Button variant="action" onClick={() => onFortsettSenere()}>
                         <FormattedMessage id={"avbryt.fortsettsenere"} />
                     </Button>
-                    <Button variant="action" onClick={() => onAvbryt()} className="avbrytmodal__slettknapp">
+                    <Button variant="action" onClick={() => onAvbryt()}>
                         <FormattedMessage id={"avbryt.slett"} />
                     </Button>
                 </ButtonRow>

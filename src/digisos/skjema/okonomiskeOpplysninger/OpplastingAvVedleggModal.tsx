@@ -1,83 +1,79 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../redux/reducers";
-import NavFrontendModal from "nav-frontend-modal";
 import {visLasteOppVedleggModal} from "../../redux/soknad/soknadActions";
-import {useIntl, FormattedMessage} from "react-intl";
-import {Undertittel, Systemtittel} from "nav-frontend-typografi";
+import {FormattedMessage} from "react-intl";
+import {BodyLong, Modal, Title} from "@navikt/ds-react";
+import styled from "styled-components";
+
+const StyledModal = styled(Modal)`
+    padding: 3rem 2rem;
+    max-width: 600px;
+
+    @media only screen and (max-width: 480px) {
+        padding: 3rem 1rem 1rem 1rem;
+    }
+`;
 
 export const OpplastingAvVedleggModal = () => {
     const modalSynlig = useSelector((state: State) => state.soknad.visLasteOppVedleggModal);
 
     const dispatch = useDispatch();
 
-    const intl = useIntl();
-
     return (
-        <NavFrontendModal
-            isOpen={modalSynlig}
-            contentLabel={intl.formatMessage({
-                id: "avbryt.avbryt",
-            })}
-            closeButton={true}
-            onRequestClose={() => {
+        <StyledModal
+            open={modalSynlig}
+            onClose={() => {
                 dispatch(visLasteOppVedleggModal(false));
             }}
-            style={{
-                content: {
-                    overflowY: "auto",
-                },
-            }}
         >
-            <div className="modal-innhold">
-                <Systemtittel>
-                    <FormattedMessage id="opplysninger.informasjon.modal.overskrift" />
-                </Systemtittel>
+            <Title level="1" size="m" spacing>
+                <FormattedMessage id="opplysninger.informasjon.modal.overskrift" />
+            </Title>
 
-                <Undertittel>
-                    <FormattedMessage id="opplysninger.informasjon.modal.bolk1.tittel" />
-                </Undertittel>
-                <p>
-                    <FormattedMessage id="opplysninger.informasjon.modal.bolk1.avsnitt1" />
-                </p>
-                <p>
-                    <FormattedMessage id="opplysninger.informasjon.modal.bolk1.avsnitt2" />
-                </p>
-                <p>
-                    <FormattedMessage id="opplysninger.informasjon.modal.bolk1.avsnitt3" />
-                </p>
+            <Title level="2" size="s" spacing>
+                <FormattedMessage id="opplysninger.informasjon.modal.bolk1.tittel" />
+            </Title>
+            <BodyLong spacing>
+                <FormattedMessage id="opplysninger.informasjon.modal.bolk1.avsnitt1" />
+            </BodyLong>
+            <BodyLong spacing>
+                <FormattedMessage id="opplysninger.informasjon.modal.bolk1.avsnitt2" />
+            </BodyLong>
+            <BodyLong spacing>
+                <FormattedMessage id="opplysninger.informasjon.modal.bolk1.avsnitt3" />
+            </BodyLong>
 
-                <Undertittel>
-                    <FormattedMessage id="opplysninger.informasjon.modal.bolk2.tittel" />
-                </Undertittel>
-                <p>
-                    <FormattedMessage id="opplysninger.informasjon.modal.bolk2.avsnitt1" />
-                </p>
+            <Title level="2" size="s" spacing>
+                <FormattedMessage id="opplysninger.informasjon.modal.bolk2.tittel" />
+            </Title>
+            <BodyLong spacing>
+                <FormattedMessage id="opplysninger.informasjon.modal.bolk2.avsnitt1" />
+            </BodyLong>
 
-                <Undertittel>
-                    <FormattedMessage id="opplysninger.informasjon.modal.bolk3.tittel" />
-                </Undertittel>
-                <p>
-                    <FormattedMessage id="opplysninger.informasjon.modal.bolk3.avsnitt1" />
-                </p>
-                <Undertittel>
-                    <FormattedMessage id="opplysninger.informasjon.modal.bolk4.tittel" />
-                </Undertittel>
-                <p>
-                    <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt1" />
-                </p>
-                <ul>
-                    <li>
-                        <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt2" />
-                    </li>
-                    <li>
-                        <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt3" />
-                    </li>
-                    <li>
-                        <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt4" />
-                    </li>
-                </ul>
-            </div>
-        </NavFrontendModal>
+            <Title level="2" size="s" spacing>
+                <FormattedMessage id="opplysninger.informasjon.modal.bolk3.tittel" />
+            </Title>
+            <BodyLong spacing>
+                <FormattedMessage id="opplysninger.informasjon.modal.bolk3.avsnitt1" />
+            </BodyLong>
+            <Title level="2" size="s" spacing>
+                <FormattedMessage id="opplysninger.informasjon.modal.bolk4.tittel" />
+            </Title>
+            <BodyLong spacing>
+                <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt1" />
+            </BodyLong>
+            <ul>
+                <li>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt2" />
+                </li>
+                <li>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt3" />
+                </li>
+                <li>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt4" />
+                </li>
+            </ul>
+        </StyledModal>
     );
 };
