@@ -6,7 +6,7 @@ import {format, formatDistance} from "date-fns";
 import {nb} from "date-fns/locale";
 import {PaperClipIcon} from "../../nav-soknad/components/digisosIkon/PaperClipNoStyle";
 import {SkjemaContent} from "../../nav-soknad/components/SkjemaContent";
-import {digisosColors} from "../../nav-soknad/utils/colors";
+import {digisosColors} from "../../nav-soknad/styles/variables";
 import {State} from "../redux/reducers";
 import {InformasjonSide} from ".";
 import {DAYS_BEOFRE_DELETION, filterAndSortPabegynteSoknader} from "./pabegynteSoknaderUtils";

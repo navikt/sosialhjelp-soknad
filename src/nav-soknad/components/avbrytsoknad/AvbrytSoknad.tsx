@@ -11,6 +11,7 @@ import {Alert, BodyShort, Button, Modal, Title} from "@navikt/ds-react";
 import {useEffect} from "react";
 import ReactModal from "react-modal";
 import styled from "styled-components";
+import {mobile} from "../../styles/variables";
 
 const StyledModal = styled(Modal)`
     max-width: 40rem;
@@ -25,7 +26,7 @@ const ModalContent = styled.div`
     flex-direction: column;
     align-items: center;
 
-    @media only screen and (max-width: 480px) {
+    @media ${mobile} {
         padding: 0;
     }
 `;
@@ -41,7 +42,7 @@ const InfoIkon = styled.div`
     height: 5rem;
     width: 5rem;
 
-    @media only screen and (max-width: 480px) {
+    @media ${mobile} {
         display: none;
     }
 
