@@ -5,12 +5,13 @@ import {visLasteOppVedleggModal} from "../../redux/soknad/soknadActions";
 import {FormattedMessage} from "react-intl";
 import {BodyLong, Modal, Title} from "@navikt/ds-react";
 import styled from "styled-components";
+import {mobile} from "../../../nav-soknad/styles/variables";
 
 const StyledModal = styled(Modal)`
     padding: 3rem 2rem;
     max-width: 600px;
 
-    @media only screen and (max-width: 480px) {
+    @media ${mobile} {
         padding: 3rem 1rem 1rem 1rem;
     }
 `;

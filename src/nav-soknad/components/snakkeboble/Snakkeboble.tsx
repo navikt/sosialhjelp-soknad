@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {mobile} from "../../styles/variables";
 
 const Wrapper = styled.div`
     display: flex;
@@ -9,7 +10,7 @@ const Wrapper = styled.div`
 const StyledSnakkeboble = styled.div`
     position: relative;
 
-    @media only screen and (max-width: 480px) {
+    @media ${mobile} {
         margin-left: 1rem;
         margin-right: 1rem;
     }
