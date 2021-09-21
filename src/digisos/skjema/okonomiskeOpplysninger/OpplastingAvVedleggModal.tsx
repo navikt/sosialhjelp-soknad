@@ -3,15 +3,15 @@ import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../redux/reducers";
 import {visLasteOppVedleggModal} from "../../redux/soknad/soknadActions";
 import {FormattedMessage} from "react-intl";
-import {BodyLong, Modal, Title} from "@navikt/ds-react";
+import {BodyLong, Modal, Heading} from "@navikt/ds-react";
 import styled from "styled-components";
 
 const StyledModal = styled(Modal)`
-    padding: 3rem 2rem;
+    padding: 2rem 1rem;
     max-width: 600px;
 
     @media only screen and (max-width: 480px) {
-        padding: 3rem 1rem 1rem 1rem;
+        padding: 2rem 0rem 0rem 0rem;
     }
 `;
 
@@ -27,53 +27,55 @@ export const OpplastingAvVedleggModal = () => {
                 dispatch(visLasteOppVedleggModal(false));
             }}
         >
-            <Title level="1" size="m" spacing>
-                <FormattedMessage id="opplysninger.informasjon.modal.overskrift" />
-            </Title>
+            <Modal.Content>
+                <Heading level="1" size="medium" spacing>
+                    <FormattedMessage id="opplysninger.informasjon.modal.overskrift" />
+                </Heading>
 
-            <Title level="2" size="s" spacing>
-                <FormattedMessage id="opplysninger.informasjon.modal.bolk1.tittel" />
-            </Title>
-            <BodyLong spacing>
-                <FormattedMessage id="opplysninger.informasjon.modal.bolk1.avsnitt1" />
-            </BodyLong>
-            <BodyLong spacing>
-                <FormattedMessage id="opplysninger.informasjon.modal.bolk1.avsnitt2" />
-            </BodyLong>
-            <BodyLong spacing>
-                <FormattedMessage id="opplysninger.informasjon.modal.bolk1.avsnitt3" />
-            </BodyLong>
+                <Heading level="2" size="small" spacing>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk1.tittel" />
+                </Heading>
+                <BodyLong spacing>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk1.avsnitt1" />
+                </BodyLong>
+                <BodyLong spacing>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk1.avsnitt2" />
+                </BodyLong>
+                <BodyLong spacing>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk1.avsnitt3" />
+                </BodyLong>
 
-            <Title level="2" size="s" spacing>
-                <FormattedMessage id="opplysninger.informasjon.modal.bolk2.tittel" />
-            </Title>
-            <BodyLong spacing>
-                <FormattedMessage id="opplysninger.informasjon.modal.bolk2.avsnitt1" />
-            </BodyLong>
+                <Heading level="2" size="small" spacing>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk2.tittel" />
+                </Heading>
+                <BodyLong spacing>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk2.avsnitt1" />
+                </BodyLong>
 
-            <Title level="2" size="s" spacing>
-                <FormattedMessage id="opplysninger.informasjon.modal.bolk3.tittel" />
-            </Title>
-            <BodyLong spacing>
-                <FormattedMessage id="opplysninger.informasjon.modal.bolk3.avsnitt1" />
-            </BodyLong>
-            <Title level="2" size="s" spacing>
-                <FormattedMessage id="opplysninger.informasjon.modal.bolk4.tittel" />
-            </Title>
-            <BodyLong spacing>
-                <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt1" />
-            </BodyLong>
-            <ul>
-                <li>
-                    <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt2" />
-                </li>
-                <li>
-                    <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt3" />
-                </li>
-                <li>
-                    <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt4" />
-                </li>
-            </ul>
+                <Heading level="2" size="small" spacing>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk3.tittel" />
+                </Heading>
+                <BodyLong spacing>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk3.avsnitt1" />
+                </BodyLong>
+                <Heading level="2" size="small" spacing>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk4.tittel" />
+                </Heading>
+                <BodyLong spacing>
+                    <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt1" />
+                </BodyLong>
+                <ul>
+                    <li>
+                        <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt2" />
+                    </li>
+                    <li>
+                        <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt3" />
+                    </li>
+                    <li>
+                        <FormattedMessage id="opplysninger.informasjon.modal.bolk4.avsnitt4" />
+                    </li>
+                </ul>
+            </Modal.Content>
         </StyledModal>
     );
 };

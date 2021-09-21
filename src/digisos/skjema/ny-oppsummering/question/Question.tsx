@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {Title} from "@navikt/ds-react";
+import {Heading} from "@navikt/ds-react";
 import {EditAnswerLink} from "../Oppsummering";
 
 const StyledQuestion = styled.div`
@@ -17,9 +17,9 @@ export const Question = (props: {title: string; children: any}) => {
     return (
         <StyledQuestion>
             <HeadingWithEditLink>
-                <Title level="3" size="s" spacing>
+                <Heading level="3" size="small" spacing>
                     {props.title}
-                </Title>
+                </Heading>
                 <EditAnswerLink steg={1} questionId="" />
             </HeadingWithEditLink>
             {props.children}

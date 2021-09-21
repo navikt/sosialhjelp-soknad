@@ -1,4 +1,4 @@
-import {Title} from "@navikt/ds-react";
+import {Heading} from "@navikt/ds-react";
 import * as React from "react";
 import styled from "styled-components";
 
@@ -14,9 +14,9 @@ const Banner = (props: {children: React.ReactNode}) => {
     return (
         <StyledBanner>
             <div className="blokk-center">
-                <Title level={1} size="s">
+                <Heading level="1" size="small">
                     {props.children}
-                </Title>
+                </Heading>
             </div>
         </StyledBanner>
     );

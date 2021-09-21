@@ -7,7 +7,7 @@ import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
 import {fetchDelete, HttpStatus} from "../../utils/rest-utils";
 import {logWarning} from "../../utils/loggerUtils";
-import {Alert, BodyShort, Button, Modal, Title} from "@navikt/ds-react";
+import {Alert, BodyShort, Button, Modal, Heading} from "@navikt/ds-react";
 import {useEffect} from "react";
 import ReactModal from "react-modal";
 import styled from "styled-components";
@@ -18,7 +18,7 @@ const StyledModal = styled(Modal)`
     overflow: visible;
 `;
 
-const ModalContent = styled.div`
+const ModalContent = styled(Modal.Content)`
     padding: 2rem;
     margin-top: 1rem;
     display: flex;
@@ -99,9 +99,9 @@ export const AvbrytSoknad = () => {
                 <InfoIkon>
                     <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""} />
                 </InfoIkon>
-                <Title level={1} size="l" spacing>
+                <Heading level="1" size="large" spacing>
                     <FormattedMessage id={"avbryt.overskrift"} />
-                </Title>
+                </Heading>
                 <BodyShort spacing>
                     <FormattedMessage id={"avbryt.forklaring"} />
                 </BodyShort>
@@ -118,10 +118,10 @@ export const AvbrytSoknad = () => {
                 )}
 
                 <ButtonRow>
-                    <Button variant="action" onClick={() => onFortsettSenere()}>
+                    <Button variant="primary" onClick={() => onFortsettSenere()}>
                         <FormattedMessage id={"avbryt.fortsettsenere"} />
                     </Button>
-                    <Button variant="action" onClick={() => onAvbryt()}>
+                    <Button variant="primary" onClick={() => onAvbryt()}>
                         <FormattedMessage id={"avbryt.slett"} />
                     </Button>
                 </ButtonRow>

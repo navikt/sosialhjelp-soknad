@@ -61,23 +61,25 @@ const TimeoutBox = (props: Props) => {
             onClose={() => null}
             shouldCloseOnOverlayClick={false}
         >
-            <div className="timeoutbox">
-                {showWarning && (
-                    <Nedtelling
-                        onContinueClick={() => {
-                            onContinueClick();
-                        }}
-                        utloggingsUrl="/esso/logout"
-                    />
-                )}
-                {showLoggedOut && (
-                    <LoggetUt
-                        onLoginAgainClick={() => {
-                            onLoginAgainClick();
-                        }}
-                    />
-                )}
-            </div>
+            <Modal.Content>
+                <div className="timeoutbox">
+                    {showWarning && (
+                        <Nedtelling
+                            onContinueClick={() => {
+                                onContinueClick();
+                            }}
+                            utloggingsUrl="/esso/logout"
+                        />
+                    )}
+                    {showLoggedOut && (
+                        <LoggetUt
+                            onLoginAgainClick={() => {
+                                onLoginAgainClick();
+                            }}
+                        />
+                    )}
+                </div>
+            </Modal.Content>
         </ModalWithoutCloseButton>
     );
 };
