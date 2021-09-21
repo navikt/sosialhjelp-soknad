@@ -114,16 +114,14 @@ const SivilstatusComponent = () => {
                     onClick={(verdi) => onClickSivilstatus(verdi)}
                 />
             </Sporsmal>
-            <Informasjonspanel
-                synlig={sivilstatus === Status.GIFT}
-                farge={DigisosFarge.VIKTIG}
-                ikon={InformasjonspanelIkon.ELLA}
-            >
-                <h4 className="skjema-sporsmal__infotekst__tittel">
-                    <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel" />
-                </h4>
-                <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tekst" />
-            </Informasjonspanel>
+            {sivilstatus === Status.GIFT && (
+                <Informasjonspanel farge={DigisosFarge.VIKTIG} ikon={InformasjonspanelIkon.ELLA}>
+                    <h4 className="skjema-sporsmal__infotekst__tittel">
+                        <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel" />
+                    </h4>
+                    <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tekst" />
+                </Informasjonspanel>
+            )}
         </div>
     );
 };

@@ -3,46 +3,9 @@
     border-radius: 0.5rem;
     background-color: @white;
 
-    transition: opacity 0.5s;
-    opacity: 0;
-
-    animation-name: fjernInfoPanel;
-    animation-delay: 0.5s;
-    animation-duration: 0.01s;
-    animation-fill-mode: forwards;
-    animation-iteration-count: 1;
-    animation-timing-function: ease;
-
     .skjema-sporsmal__infotekst__tittel {
         margin-top: 0;
         margin-bottom: 0;
-    }
-
-    &__synlig {
-        opacity: 1;
-
-        animation-name: visInfoPanel;
-        animation-delay: 0.5s;
-        animation-duration: 0.01s;
-        animation-fill-mode: forwards;
-        animation-iteration-count: 1;
-        animation-timing-function: ease;
-
-        & > div {
-            opacity: 1;
-        }
-    }
-}
-
-@keyframes visInfoPanel {
-    100% {
-        height: initial;
-    }
-}
-
-@keyframes fjernInfoPanel {
-    100% {
-        height: 0;
     }
 }
 
@@ -54,14 +17,7 @@
     display: block;
 }
 
-.react-collapse-wrapper {
-    padding-bottom: 1rem;
-}
-
 @media @desktop {
-    .react-collapse-wrapper {
-    }
-
     .skjema-informasjonspanel {
         padding: 2rem 1.5rem 2rem 3.5rem;
 

@@ -94,26 +94,24 @@ export const BoutgifterView = () => {
                     {renderCheckBox(BoutgifterKeys.ANNET, "andreutgifter")}
                 </Sporsmal>
             </JaNeiSporsmal>
-            <Informasjonspanel
-                synlig={boutgifter && boutgifter.skalViseInfoVedBekreftelse && boutgifter.bekreftelse === true}
-                ikon={InformasjonspanelIkon.ELLA}
-                farge={DigisosFarge.VIKTIG}
-            >
-                <FormattedMessage
-                    id="informasjon.husbanken.bostotte.v2"
-                    values={{
-                        a: (msg: string) => (
-                            <Lenke
-                                href={intl.formatMessage({id: "informasjon.husbanken.bostotte.url"})}
-                                target="_blank"
-                                rel="noreferrer noopener"
-                            >
-                                {msg}
-                            </Lenke>
-                        ),
-                    }}
-                />
-            </Informasjonspanel>
+            {boutgifter && boutgifter.skalViseInfoVedBekreftelse && boutgifter.bekreftelse === true && (
+                <Informasjonspanel ikon={InformasjonspanelIkon.ELLA} farge={DigisosFarge.VIKTIG}>
+                    <FormattedMessage
+                        id="informasjon.husbanken.bostotte.v2"
+                        values={{
+                            a: (msg: string) => (
+                                <Lenke
+                                    href={intl.formatMessage({id: "informasjon.husbanken.bostotte.url"})}
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                >
+                                    {msg}
+                                </Lenke>
+                            ),
+                        }}
+                    />
+                </Informasjonspanel>
+            )}
         </div>
     );
 };

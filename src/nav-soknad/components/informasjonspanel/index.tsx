@@ -9,14 +9,9 @@ import EllaKompakt from "../svg/EllaKompakt";
 interface OwnProps {
     farge: DigisosFarge;
     children?: any;
-    synlig?: boolean;
     ikon: InformasjonspanelIkon;
     className?: string;
     wrapperClassName?: string;
-}
-
-interface State {
-    vises: boolean;
 }
 
 export enum InformasjonspanelIkon {
@@ -25,41 +20,19 @@ export enum InformasjonspanelIkon {
     HENSYN = "hensyn",
 }
 
-class Informasjonspanel extends React.Component<OwnProps, State> {
-    panelIsMounted: boolean = false;
-
-    constructor(props: OwnProps) {
-        super(props);
-        this.state = {
-            vises: false,
-        };
-    }
-
-    componentDidMount() {
-        this.panelIsMounted = true;
-        setTimeout(() => {
-            if (this.panelIsMounted) {
-                this.setState({vises: true});
-            }
-        }, 200);
-    }
-
-    componentWillUnmount(): void {
-        this.panelIsMounted = false;
-    }
-
-    renderIkon() {
+const Informasjonspanel = (props: OwnProps) => {
+    const renderIkon = () => {
         const iconSize = erMobilVisning() ? 64 : 80;
-        switch (this.props.ikon) {
+        switch (props.ikon) {
             case InformasjonspanelIkon.ELLA: {
                 return (
                     <div>
                         <div className="ikke_mobilvennlig_ikon">
-                            <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge} />
+                            <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={props.farge} />
                         </div>
 
                         <div className="mobilvennlig_ikon">
-                            <EllaKompakt bakgrundsFarge={this.props.farge} />
+                            <EllaKompakt bakgrundsFarge={props.farge} />
                         </div>
                     </div>
                 );
@@ -67,54 +40,39 @@ class Informasjonspanel extends React.Component<OwnProps, State> {
             case InformasjonspanelIkon.BREVKONVOLUTT: {
                 return (
                     <div>
-                        <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge} />
+                        <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={props.farge} />
                     </div>
                 );
             }
             case InformasjonspanelIkon.HENSYN: {
                 return (
                     <div>
-                        <Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge} />
+                        <Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={props.farge} />
                     </div>
                 );
             }
             default: {
                 return (
                     <div>
-                        <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={this.props.farge} />
+                        <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={props.farge} />
                     </div>
                 );
             }
         }
-    }
+    };
 
-    renderContent(fadeIn: boolean) {
-        const styleClassName = "skjema-informasjonspanel--" + this.props.farge;
+    const styleClassName = "skjema-informasjonspanel--" + props.farge;
 
-        return (
-            <div className={"skjema-informasjonspanel-wrapper " + this.props.className}>
-                <div
-                    className={
-                        "skjema-informasjonspanel " +
-                        styleClassName +
-                        (this.props.synlig || fadeIn === false ? " skjema-informasjonspanel__synlig" : "")
-                    }
-                >
-                    <div>{this.renderIkon()}</div>
-                    <span>{this.props.children}</span>
+    return (
+        <div className={"react-collapse-wrapper"}>
+            <div className={"skjema-informasjonspanel-wrapper " + props.className}>
+                <div className={"skjema-informasjonspanel " + styleClassName}>
+                    <div>{renderIkon()}</div>
+                    <span>{props.children}</span>
                 </div>
             </div>
-        );
-    }
-
-    render() {
-        const isOpened = this.state.vises && this.props.synlig;
-        if (typeof isOpened === "undefined") {
-            return this.renderContent(false);
-        } else {
-            return <div className={"react-collapse-wrapper"}>{this.renderContent(true)}</div>;
-        }
-    }
-}
+        </div>
+    );
+};
 
 export default Informasjonspanel;

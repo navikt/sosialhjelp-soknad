@@ -25,7 +25,7 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
         // GRØNN
         const tekst = `Søknaden vil bli sendt til: ${enhetsnavn}, ${kommunenavn} kommune.`;
         return (
-            <Informasjonspanel ikon={InformasjonspanelIkon.BREVKONVOLUTT} farge={DigisosFarge.SUKSESS} synlig={true}>
+            <Informasjonspanel ikon={InformasjonspanelIkon.BREVKONVOLUTT} farge={DigisosFarge.SUKSESS}>
                 {tekst}
             </Informasjonspanel>
         );
