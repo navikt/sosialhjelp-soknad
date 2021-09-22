@@ -20,18 +20,20 @@ const SoknadAlleredeSendtPromt = () => {
 
     return (
         <Modal open={visPrompt} onClose={() => onClose()}>
-            <div className="avbrytmodal">
-                <div className="avbrytmodal__infoikon_wrapper">
-                    <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""} />
-                </div>
+            <Modal.Content>
+                <div className="avbrytmodal">
+                    <div className="avbrytmodal__infoikon_wrapper">
+                        <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""} />
+                    </div>
 
-                <Innholdstittel className="blokk-s avbrytmodal__overskrift">
-                    <FormattedMessage id={KEY + ".overskrift"} />
-                </Innholdstittel>
-                <Normaltekst className="blokk-xxs avbrytmodal__tekst">
-                    <FormattedMessage id={KEY + ".tekst"} />
-                </Normaltekst>
-            </div>
+                    <Innholdstittel className="blokk-s avbrytmodal__overskrift">
+                        <FormattedMessage id={KEY + ".overskrift"} />
+                    </Innholdstittel>
+                    <Normaltekst className="blokk-xxs avbrytmodal__tekst">
+                        <FormattedMessage id={KEY + ".tekst"} />
+                    </Normaltekst>
+                </div>
+            </Modal.Content>
         </Modal>
     );
 };

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
-import {Accordion, BodyShort, Link, Title} from "@navikt/ds-react";
+import {Accordion, BodyShort, Link, Heading} from "@navikt/ds-react";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../redux/reducers";
 import {finnOgOppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
@@ -300,14 +300,23 @@ export const Oppsummering = () => {
 };
 
 const OppsummeringBolk = (props: {bolk: NyOppsummeringBolk; children: React.ReactNode}) => {
-    return <Accordion heading={<BolkTittel tittel={props.bolk.tittel} />}>{props.children}</Accordion>;
+    return (
+        <Accordion>
+            <Accordion.Item>
+                <Accordion.Header>
+                    <BolkTittel tittel={props.bolk.tittel} />
+                </Accordion.Header>
+                <Accordion.Content>{props.children}</Accordion.Content>
+            </Accordion.Item>
+        </Accordion>
+    );
 };
 
 const BolkTittel = (props: {tittel: string}) => {
     return (
-        <Title level="2" size="m">
+        <Heading level="2" size="medium">
             {props.tittel}
-        </Title>
+        </Heading>
     );
 };
 

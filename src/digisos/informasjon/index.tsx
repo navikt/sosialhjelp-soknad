@@ -20,7 +20,7 @@ import {useTitle} from "../../nav-soknad/hooks/useTitle";
 import {Alert, BodyShort, Label} from "@navikt/ds-react";
 
 const Greeting = (props: {name: string}) => (
-    <Label size="s">
+    <Label size="small">
         <FormattedMessage id="informasjon.hilsen.hei" values={{fornavn: props.name}} />
     </Label>
 );
@@ -58,7 +58,7 @@ export const InformasjonSide = (props: {enableModalV2: boolean}) => {
                     <span className="informasjon-fra-ella">
                         <Snakkeboble>
                             {fornavn && fornavn.length > 0 && <Greeting name={fornavn} />}
-                            <BodyShort size="s">
+                            <BodyShort size="small">
                                 <FormattedMessage id="informasjon.hilsen.tittel" />
                             </BodyShort>
                         </Snakkeboble>

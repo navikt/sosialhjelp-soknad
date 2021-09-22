@@ -33,24 +33,26 @@ const BehandlingAvPersonopplysningerModal = () => {
                 dispatch(visSamtykkeInfo(false));
             }}
         >
-            <div className="personopplysning_info">
-                <div
-                    dangerouslySetInnerHTML={{
-                        __html: getText(soknadsdata, text),
-                    }}
-                />
-            </div>
+            <Modal.Content>
+                <div className="personopplysning_info">
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: getText(soknadsdata, text),
+                        }}
+                    />
+                </div>
 
-            <div className="behandlingAvPersonopplysningerModal--lukke-knapp">
-                <Button
-                    variant="action"
-                    onClick={() => {
-                        dispatch(visSamtykkeInfo(false));
-                    }}
-                >
-                    <FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"} />
-                </Button>
-            </div>
+                <div className="behandlingAvPersonopplysningerModal--lukke-knapp">
+                    <Button
+                        variant="primary"
+                        onClick={() => {
+                            dispatch(visSamtykkeInfo(false));
+                        }}
+                    >
+                        <FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"} />
+                    </Button>
+                </div>
+            </Modal.Content>
         </Modal>
     );
 };

@@ -10,7 +10,7 @@ import {digisosColors} from "../../nav-soknad/styles/variables";
 import {State} from "../redux/reducers";
 import {InformasjonSide} from ".";
 import {DAYS_BEOFRE_DELETION, filterAndSortPabegynteSoknader} from "./pabegynteSoknaderUtils";
-import {BodyShort, Label, Link, LinkPanel, Panel, Title} from "@navikt/ds-react";
+import {BodyShort, Label, Link, LinkPanel, Panel, Heading} from "@navikt/ds-react";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -118,9 +118,9 @@ export const Soknadsoversikt = () => {
         <StyledSoknadsoversikt>
             <StartNySoknadPanel
                 tittel={
-                    <Title level="2" size="s">
+                    <Heading level="2" size="small">
                         Start en ny søknad
-                    </Title>
+                    </Heading>
                 }
             >
                 <InformasjonSide enableModalV2={true} />
@@ -129,9 +129,9 @@ export const Soknadsoversikt = () => {
                 <PabegynteSoknaderPanel
                     tittel={
                         <div>
-                            <Title level="2" size="s">
+                            <Heading level="2" size="small">
                                 Fortsett på en påbegynt søknad
-                            </Title>
+                            </Heading>
                             <BodyShort>
                                 Du har {pabegynteSoknader.length} påbegynte søknader. Vær oppmerksom på at disse slettes
                                 etter {DAYS_BEOFRE_DELETION} dager.
@@ -150,14 +150,18 @@ export const Soknadsoversikt = () => {
                                             href={`/sosialhjelp/soknad/skjema/${pabegyntSoknad.behandlingsId}/1`}
                                             border
                                         >
-                                            <FlexContainer>
-                                                <Label style={{marginRight: "1rem"}}>
-                                                    Sist oppdatert {format(sistOppdatert, "d MMM yyyy", {locale: nb})}
-                                                </Label>
-                                                <BodyShort>
-                                                    Slettes om {formatDistance(deleteDate, currentDate, {locale: nb})}
-                                                </BodyShort>
-                                            </FlexContainer>
+                                            <LinkPanel.Title>
+                                                <FlexContainer>
+                                                    <Label style={{marginRight: "1rem"}}>
+                                                        Sist oppdatert{" "}
+                                                        {format(sistOppdatert, "d MMM yyyy", {locale: nb})}
+                                                    </Label>
+                                                    <BodyShort>
+                                                        Slettes om{" "}
+                                                        {formatDistance(deleteDate, currentDate, {locale: nb})}
+                                                    </BodyShort>
+                                                </FlexContainer>
+                                            </LinkPanel.Title>
                                         </LinkPanel>
                                     </li>
                                 );
@@ -173,9 +177,9 @@ export const Soknadsoversikt = () => {
                         <PaperClipIcon />
                     </PanelImageContainer>
                     <div>
-                        <Title level="2" size="s">
+                        <Heading level="2" size="small">
                             Send dokumentasjon til en innsendt søknad
-                        </Title>
+                        </Heading>
                         <BodyShort>Dokumentasjon kan sendes til søknader du har sendt inn tidligere.</BodyShort>
                         <ul>
                             <li>

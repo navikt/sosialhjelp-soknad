@@ -17,10 +17,10 @@ const ListItem = styled.li<{multiline?: boolean}>`
     }
 `;
 
-export const SingleLineElement = (props: {value?: string}) => <BodyShort size="s">: {props.value}</BodyShort>;
+export const SingleLineElement = (props: {value?: string}) => <BodyShort size="small">: {props.value}</BodyShort>;
 
 export const SingleLineDateElement = (props: {value?: string}) => (
-    <BodyShort size="s">
+    <BodyShort size="small">
         : <FormattedDate value={new Date(props.value ?? "")} month="long" day="numeric" year="numeric" />
     </BodyShort>
 );
@@ -33,7 +33,7 @@ export const Systeminfo = (props: {systeminfoMap: {key: string; value: React.Rea
         <List>
             {props.systeminfoMap.map((elem) => (
                 <ListItem key={elem.key} multiline={props.multiline}>
-                    <Label size="s">
+                    <Label size="small">
                         <FormattedMessage id={elem.key} />
                     </Label>
                     {elem.value}
