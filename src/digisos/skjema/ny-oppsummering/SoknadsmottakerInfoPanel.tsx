@@ -5,8 +5,8 @@ import Veilederpanel from "nav-frontend-veilederpanel";
 import Brevkonvolutt from "../../../nav-soknad/components/svg/Brevkonvolutt";
 import {FormattedMessage} from "react-intl";
 import {visSamtykkeInfo} from "../../redux/soknad/soknadActions";
-import {Undertittel, Normaltekst} from "nav-frontend-typografi";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
+import {BodyShort, Heading} from "@navikt/ds-react";
 
 export const SoknadsmottakerInfoPanel = () => {
     const valgtSoknadsmottaker = useSelector((state: State) => state.soknad.valgtSoknadsmottaker);
@@ -20,11 +20,13 @@ export const SoknadsmottakerInfoPanel = () => {
                 svg={<Brevkonvolutt visBakgrundsSirkel={false} />}
                 kompakt
             >
-                <Undertittel>Søknaden din blir sendt til {valgtEnhetsNavn}</Undertittel>
-                <Normaltekst>
+                <Heading level="2" size="medium" spacing>
+                    Søknaden din blir sendt til {valgtEnhetsNavn}
+                </Heading>
+                <BodyShort spacing>
                     Dette kontoret har ansvar for å behandle søknaden din, og {valgtEnhetsNavn} lagrer opplysningene fra
                     søknaden.
-                </Normaltekst>
+                </BodyShort>
 
                 <LinkButton
                     type="button"
@@ -32,7 +34,9 @@ export const SoknadsmottakerInfoPanel = () => {
                         dispatch(visSamtykkeInfo(true));
                     }}
                 >
-                    <FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke" />
+                    <BodyShort spacing>
+                        <FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke" />
+                    </BodyShort>
                 </LinkButton>
             </Veilederpanel>
         );

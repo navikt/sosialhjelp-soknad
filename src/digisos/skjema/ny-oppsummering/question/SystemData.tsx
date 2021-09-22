@@ -1,4 +1,5 @@
-import {BodyShort, Label} from "@navikt/ds-react";
+import {BodyShort} from "@navikt/ds-react";
+import {useIntl} from "react-intl";
 import styled from "styled-components";
 
 const StyledSystemList = styled.ul`
@@ -8,20 +9,22 @@ const StyledSystemList = styled.ul`
     border-left: 1px solid var(--navds-color-gray-40);
 `;
 
-export const SystemData = (props: {title: string; values?: {key: string; value: string}[]}) => {
-    return (
-        <div>
-            <Label spacing>{props.title}</Label>
+export const SystemData = (props: {felter?: {label: string; svar: string}[]}) => {
+    const intl = useIntl();
 
-            <StyledSystemList>
-                {props.values?.map((val) => (
-                    <li key={val.key}>
+    if (!props.felter || props.felter.length === 0) return null;
+
+    return (
+        <StyledSystemList>
+            {props.felter.map((felt) => {
+                return (
+                    <li key={felt.label}>
                         <BodyShort>
-                            {val.key}: {val.value}
+                            {intl.formatMessage({id: felt.label})}: {felt.svar}
                         </BodyShort>
                     </li>
-                ))}
-            </StyledSystemList>
-        </div>
+                );
+            })}
+        </StyledSystemList>
     );
 };

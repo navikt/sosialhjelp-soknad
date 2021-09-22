@@ -1,12 +1,13 @@
-import {BodyLong, Label} from "@navikt/ds-react";
-import {Warning} from "./Warning";
+import {BodyLong} from "@navikt/ds-react";
 
-export const FreeText = (props: {title: string; value?: string}) => {
+export const FreeText = (props: {felter?: {svar: string}[]}) => {
+    if (!props.felter || props.felter.length === 0) return null;
+
     return (
         <div>
-            <Label spacing>{props.title}</Label>
-
-            {props.value ? <BodyLong spacing>{props.value}</BodyLong> : <Warning />}
+            {props.felter.map((felt) => (
+                <BodyLong spacing>{felt.svar}</BodyLong>
+            ))}
         </div>
     );
 };

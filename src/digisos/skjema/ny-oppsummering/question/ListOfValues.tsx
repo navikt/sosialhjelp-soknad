@@ -1,34 +1,23 @@
-import {BodyShort, Label} from "@navikt/ds-react";
+import {BodyShort} from "@navikt/ds-react";
+import {useIntl} from "react-intl";
 import styled from "styled-components";
-import {Warning} from "./Warning";
 
 const StyledList = styled.ul`
     padding-left: 1rem;
 `;
 
-export const ListOfValues = (props: {title: string; values?: string[]; freeText?: string}) => {
-    return (
-        <div>
-            <Label spacing>{props.title}</Label>
+export const ListOfValues = (props: {felter?: {label: string; svar: string}[]}) => {
+    const intl = useIntl();
 
-            {props.values ? (
-                <StyledList>
-                    {props.values.map((value) => (
-                        <li key={value}>
-                            <BodyShort>{value}</BodyShort>
-                        </li>
-                    ))}
-                    {props.freeText && (
-                        <ul>
-                            <li>
-                                <BodyShort>{props.freeText}</BodyShort>
-                            </li>
-                        </ul>
-                    )}
-                </StyledList>
-            ) : (
-                <Warning />
-            )}
-        </div>
+    if (!props.felter || props.felter.length === 0) return null;
+
+    return (
+        <StyledList>
+            {props.felter.map((felt) => (
+                <li key={felt.svar}>
+                    <BodyShort>{intl.formatMessage({id: felt.svar})}</BodyShort>
+                </li>
+            ))}
+        </StyledList>
     );
 };

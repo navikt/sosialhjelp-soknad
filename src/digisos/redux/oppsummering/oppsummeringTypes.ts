@@ -26,10 +26,6 @@ export interface NyOppsummeringResponse {
     steg: NyOppsummeringBolk[];
 }
 
-export interface Category {
-    title: string;
-    questions: Question[];
-}
 export interface Question {
     title: string;
     questionType: "SYSTEM" | "FREETEXT" | "RADIO_CHECKBOX" | "DOCUMENTATION";
@@ -39,9 +35,21 @@ export interface Question {
     files?: {filename: string; url: string}[];
 }
 export interface NyOppsummeringBolk {
-    steg: string;
+    stegNr: string;
     tittel: string;
-    categories: Category[];
+    avsnitt: {
+        tittel: string;
+        sporsmal: {
+            tittel: string;
+            erUtfylt: boolean;
+            felt?: {
+                label: string;
+                labelSvarMap?: any;
+                svar: string;
+                type: "SYSTEMDATA" | "TEKST" | "CHECKBOX";
+            }[];
+        }[];
+    }[];
 }
 export interface Oppsummering {
     signatur: string;
