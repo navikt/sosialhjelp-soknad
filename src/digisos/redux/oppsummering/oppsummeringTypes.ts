@@ -46,7 +46,11 @@ export interface NyOppsummeringBolk {
                 label: string;
                 labelSvarMap?: any;
                 svar: string;
-                type: "SYSTEMDATA" | "TEKST" | "CHECKBOX";
+                type: "SYSTEMDATA" | "TEKST" | "CHECKBOX" | "SYSTEMDATA_MAP" | "VEDLEGG";
+                vedlegg?: {
+                    filnavn: string;
+                    lenke?: string;
+                }[];
             }[];
         }[];
     }[];
