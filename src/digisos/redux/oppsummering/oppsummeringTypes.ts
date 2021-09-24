@@ -49,7 +49,7 @@ export interface NyOppsummeringBolk {
                 type: "SYSTEMDATA" | "TEKST" | "CHECKBOX" | "SYSTEMDATA_MAP" | "VEDLEGG";
                 vedlegg?: {
                     filnavn: string;
-                    lenke?: string;
+                    uuid?: string;
                 }[];
             }[];
         }[];
