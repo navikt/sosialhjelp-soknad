@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 const StyledList = styled.ul`
     padding-left: 1rem;
+    margin-bottom: 1rem;
 `;
 
 export const ListOfValues = (props: {felter?: {label: string; svar: string}[]}) => {

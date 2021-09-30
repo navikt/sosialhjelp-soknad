@@ -10,7 +10,7 @@ const StyledSystemList = styled.ul`
     margin-bottom: 1rem;
 `;
 
-export const SystemData = (props: {felter?: {label: string; svar: string}[]}) => {
+export const SystemDataMap = (props: {felter?: {labelSvarMap?: Record<string, string>}[]}) => {
     const intl = useIntl();
 
     if (!props.felter || props.felter.length === 0) return null;
@@ -18,13 +18,15 @@ export const SystemData = (props: {felter?: {label: string; svar: string}[]}) =>
     return (
         <StyledSystemList>
             {props.felter.map((felt) => {
-                return (
-                    <li key={felt.label}>
-                        <BodyShort>
-                            {intl.formatMessage({id: felt.label})}: {felt.svar}
-                        </BodyShort>
-                    </li>
-                );
+                return Object.entries(felt.labelSvarMap ?? {}).map((entry) => {
+                    return (
+                        <li key={entry[0]}>
+                            <BodyShort>
+                                {intl.formatMessage({id: entry[0]})}: {entry[1]}
+                            </BodyShort>
+                        </li>
+                    );
+                });
             })}
         </StyledSystemList>
     );

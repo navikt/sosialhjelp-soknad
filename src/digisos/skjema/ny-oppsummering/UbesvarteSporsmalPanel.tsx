@@ -1,11 +1,17 @@
 import React from "react";
-import Veilederpanel from "nav-frontend-veilederpanel";
+import styled from "styled-components";
 import Ella from "../../../nav-soknad/components/svg/Ella";
-import {BodyShort, Heading} from "@navikt/ds-react";
+import {BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
+
+const StyledGuidePanel = styled(GuidePanel)`
+    --navds-guide-panel-color-border: var(--navds-color-orange-20);
+    --navds-guide-panel-color-illustration-background: var(--navds-color-orange-20);
+    margin-bottom: 2rem;
+`;
 
 export const UbesvarteSporsmalPanel = () => {
     return (
-        <Veilederpanel type="plakat" fargetema="advarsel" svg={<Ella visBakgrundsSirkel={false} />} kompakt>
+        <StyledGuidePanel illustration={<Ella visBakgrundsSirkel={false} />} poster>
             <Heading level="2" size="medium" spacing>
                 Du har ikke besvart alle spørsmålene i søknaden
             </Heading>
@@ -13,6 +19,6 @@ export const UbesvarteSporsmalPanel = () => {
                 For å gjøre det enklere for veilederen å behandle søknaden din anbefaler jeg at du svarer på alle
                 spørsmålene.
             </BodyShort>
-        </Veilederpanel>
+        </StyledGuidePanel>
     );
 };

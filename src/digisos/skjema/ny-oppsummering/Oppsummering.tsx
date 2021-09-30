@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
-import {Accordion, BodyShort, Link, Label, Loader} from "@navikt/ds-react";
+import {Accordion, ConfirmationPanel, Link, Label, Loader} from "@navikt/ds-react";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../redux/reducers";
 import {finnOgOppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
@@ -10,7 +10,6 @@ import {
     hentOppsumeringFeilet,
     setNyOppsummering,
 } from "../../redux/oppsummering/oppsummeringActions";
-import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
 import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
@@ -23,6 +22,7 @@ import {Question as QuestionEl} from "./question/Question";
 import {SystemData} from "./question/SystemData";
 import {FreeText} from "./question/FreeText";
 import {Warning} from "./question/Warning";
+import {SystemDataMap} from "./question/SystemDataMap";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
@@ -87,12 +87,15 @@ export const Oppsummering = () => {
                                 {avsnitt.sporsmal?.map((sporsmal) => {
                                     return (
                                         <div key={sporsmal.tittel}>
-                                            <Label>
+                                            <Label spacing>
                                                 <FormattedMessage id={sporsmal.tittel} />
                                             </Label>
                                             {!sporsmal.erUtfylt && <Warning />}
                                             <SystemData
                                                 felter={sporsmal.felt?.filter((felt) => felt.type === "SYSTEMDATA")}
+                                            />
+                                            <SystemDataMap
+                                                felter={sporsmal.felt?.filter((felt) => felt.type === "SYSTEMDATA_MAP")}
                                             />
                                             <ListOfValues
                                                 felter={sporsmal.felt?.filter((felt) => felt.type === "CHECKBOX")}
@@ -109,11 +112,11 @@ export const Oppsummering = () => {
 
             <SoknadsmottakerInfoPanel />
 
-            <BekreftCheckboksPanel
+            <ConfirmationPanel
                 label={bekreftOpplysninger}
                 checked={bekreftet ? bekreftet : false}
                 onChange={() => dispatch(bekreftOppsummering())}
-                feil={
+                error={
                     visBekreftMangler
                         ? intl.formatMessage({
                               id: "oppsummering.feilmelding.bekreftmangler",
@@ -121,10 +124,8 @@ export const Oppsummering = () => {
                         : ""
                 }
             >
-                <BodyShort>
-                    <FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger" />
-                </BodyShort>
-            </BekreftCheckboksPanel>
+                <FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger" />
+            </ConfirmationPanel>
 
             <BehandlingAvPersonopplysningerModal />
         </DigisosSkjemaSteg>

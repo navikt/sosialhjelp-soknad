@@ -6,7 +6,9 @@ export const FreeText = (props: {felter?: {svar: string}[]}) => {
     return (
         <div>
             {props.felter.map((felt) => (
-                <BodyLong spacing>{felt.svar}</BodyLong>
+                <BodyLong key={felt.svar} spacing>
+                    {felt.svar}
+                </BodyLong>
             ))}
         </div>
     );
