@@ -20,7 +20,8 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {Undertittel} from "nav-frontend-typografi";
 import {Oppsummering} from "../../redux/oppsummering/oppsummeringTypes";
-import {fetchOppsummering, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
+import {erProd, fetchOppsummering, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
+import {Oppsummering as NyOppsummering} from "../ny-oppsummering/Oppsummering";
 
 const Bolker = (props: {oppsummering: Oppsummering}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
@@ -71,6 +72,10 @@ const OppsummeringView = () => {
                 });
         }
     }, [behandlingsId, dispatch]);
+
+    if (!erProd()) {
+        return <NyOppsummering />;
+    }
 
     if (restStatus === REST_STATUS.OK) {
         return (
