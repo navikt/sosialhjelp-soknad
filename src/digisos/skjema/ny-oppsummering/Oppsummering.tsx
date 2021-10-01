@@ -23,6 +23,7 @@ import {SystemData} from "./question/SystemData";
 import {FreeText} from "./question/FreeText";
 import {Warning} from "./question/Warning";
 import {SystemDataMap} from "./question/SystemDataMap";
+import {Attachment} from "./question/Attachment";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
@@ -99,6 +100,9 @@ export const Oppsummering = () => {
                                             />
                                             <ListOfValues
                                                 felter={sporsmal.felt?.filter((felt) => felt.type === "CHECKBOX")}
+                                            />
+                                            <Attachment
+                                                felter={sporsmal.felt?.filter((felt) => felt.type === "VEDLEGG")}
                                             />
                                             <FreeText felter={sporsmal.felt?.filter((felt) => felt.type === "TEKST")} />
                                         </div>

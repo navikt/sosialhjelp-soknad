@@ -1,6 +1,6 @@
-import {BodyShort} from "@navikt/ds-react";
-import {useIntl} from "react-intl";
 import styled from "styled-components";
+import {Felt} from "../../../redux/oppsummering/oppsummeringTypes";
+import {FormattedText} from "./FormattedText";
 
 const StyledSystemList = styled.ul`
     list-style: none;
@@ -10,9 +10,7 @@ const StyledSystemList = styled.ul`
     margin-bottom: 1rem;
 `;
 
-export const SystemDataMap = (props: {felter?: {labelSvarMap?: Record<string, string>}[]}) => {
-    const intl = useIntl();
-
+export const SystemDataMap = (props: {felter?: Felt[]}) => {
     if (!props.felter || props.felter.length === 0) return null;
 
     return (
@@ -21,9 +19,11 @@ export const SystemDataMap = (props: {felter?: {labelSvarMap?: Record<string, st
                 return Object.entries(felt.labelSvarMap ?? {}).map((entry) => {
                     return (
                         <li key={entry[0]}>
-                            <BodyShort>
-                                {intl.formatMessage({id: entry[0]})}: {entry[1]}
-                            </BodyShort>
+                            <FormattedText
+                                value={entry[1]?.value ?? ""}
+                                type={entry[1]?.type ?? "TEKST"}
+                                label={entry[0]}
+                            />
                         </li>
                     );
                 });
