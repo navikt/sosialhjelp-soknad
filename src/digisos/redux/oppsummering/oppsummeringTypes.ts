@@ -34,6 +34,22 @@ export interface Question {
     values?: string[];
     files?: {filename: string; url: string}[];
 }
+
+export interface Svar {
+    value: string;
+    type: "TEKST" | "LOCALE_TEKST" | "DATO";
+}
+
+export interface Felt {
+    label: string;
+    labelSvarMap?: Record<string, Svar | undefined>;
+    svar: Svar;
+    type: "SYSTEMDATA" | "TEKST" | "CHECKBOX" | "SYSTEMDATA_MAP" | "VEDLEGG";
+    vedlegg?: {
+        filnavn: string;
+        uuid?: string;
+    }[];
+}
 export interface NyOppsummeringBolk {
     stegNr: string;
     tittel: string;
@@ -42,16 +58,7 @@ export interface NyOppsummeringBolk {
         sporsmal: {
             tittel: string;
             erUtfylt: boolean;
-            felt?: {
-                label: string;
-                labelSvarMap?: any;
-                svar: string;
-                type: "SYSTEMDATA" | "TEKST" | "CHECKBOX" | "SYSTEMDATA_MAP" | "VEDLEGG";
-                vedlegg?: {
-                    filnavn: string;
-                    uuid?: string;
-                }[];
-            }[];
+            felt?: Felt[];
         }[];
     }[];
 }

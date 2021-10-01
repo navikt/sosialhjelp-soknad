@@ -10,17 +10,23 @@ const StyledSystemList = styled.ul`
     margin-bottom: 1rem;
 `;
 
-export const SystemData = (props: {felter?: Felt[]}) => {
+export const SystemDataMap = (props: {felter?: Felt[]}) => {
     if (!props.felter || props.felter.length === 0) return null;
 
     return (
         <StyledSystemList>
             {props.felter.map((felt) => {
-                return (
-                    <li key={felt.label}>
-                        <FormattedText value={felt.svar.value} type={felt.svar.type} label={felt.label} />
-                    </li>
-                );
+                return Object.entries(felt.labelSvarMap ?? {}).map((entry) => {
+                    return (
+                        <li key={entry[0]}>
+                            <FormattedText
+                                value={entry[1]?.value ?? ""}
+                                type={entry[1]?.type ?? "TEKST"}
+                                label={entry[0]}
+                            />
+                        </li>
+                    );
+                });
             })}
         </StyledSystemList>
     );

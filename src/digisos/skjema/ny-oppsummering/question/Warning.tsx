@@ -7,6 +7,7 @@ const StyledWarning = styled.div`
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    margin-bottom: 1rem;
 
     svg {
         height: 1.5rem;
@@ -17,7 +18,7 @@ const StyledWarning = styled.div`
 export const Warning = () => {
     return (
         <StyledWarning>
-            <WarningIcon />
+            <WarningIcon focusable={false} aria-label="Advarsel" role="img" />
             <BodyShort>Ikke besvart</BodyShort>
         </StyledWarning>
     );

@@ -13,14 +13,14 @@ const HeadingWithEditLink = styled.div`
     gap: 0.75rem;
 `;
 
-export const Question = (props: {title: string; children: any}) => {
+export const Question = (props: {title: string; questionId?: string; children: any}) => {
     return (
         <StyledQuestion>
             <HeadingWithEditLink>
                 <Heading level="3" size="small" spacing>
                     {props.title}
                 </Heading>
-                <EditAnswerLink steg={1} questionId="" />
+                {props.questionId && <EditAnswerLink steg={1} questionId={props.questionId} />}
             </HeadingWithEditLink>
             {props.children}
         </StyledQuestion>
