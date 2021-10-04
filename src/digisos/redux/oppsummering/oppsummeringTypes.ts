@@ -56,7 +56,7 @@ export interface NyOppsummeringBolk {
     avsnitt: {
         tittel: string;
         sporsmal: {
-            tittel: string;
+            tittel?: string;
             erUtfylt: boolean;
             felt?: Felt[];
         }[];

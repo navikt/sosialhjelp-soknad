@@ -51,7 +51,6 @@ export const Oppsummering = () => {
             dispatch(hentNyOppsummering());
             fetchToJson<NyOppsummeringResponse>(`soknader/${behandlingsId}/oppsummering`)
                 .then((response) => {
-                    console.log("response", response);
                     dispatch(setNyOppsummering(response));
                 })
                 .catch((reason) => {
@@ -88,9 +87,11 @@ export const Oppsummering = () => {
                                 {avsnitt.sporsmal?.map((sporsmal) => {
                                     return (
                                         <div key={sporsmal.tittel}>
-                                            <Label spacing>
-                                                <FormattedMessage id={sporsmal.tittel} />
-                                            </Label>
+                                            {sporsmal.tittel && (
+                                                <Label spacing>
+                                                    <FormattedMessage id={sporsmal.tittel} />
+                                                </Label>
+                                            )}
                                             {!sporsmal.erUtfylt && <Warning />}
                                             <SystemData
                                                 felter={sporsmal.felt?.filter((felt) => felt.type === "SYSTEMDATA")}
