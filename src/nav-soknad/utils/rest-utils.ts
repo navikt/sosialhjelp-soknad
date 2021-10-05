@@ -80,7 +80,7 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
             return getAbsoluteApiUrlForMockAlt(withAccessToken);
         }
         if (window.location.origin.indexOf("digisos.labs.nais.io") >= 0) {
-            return getAbsoluteApiUrl(withAccessToken);
+            return getAbsoluteApiUrlForMockAlt(withAccessToken);
         }
         return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
     }
