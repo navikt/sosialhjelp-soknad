@@ -71,6 +71,7 @@ const BostotteView = () => {
                 SoknadsSti.BOSTOTTE_SAMTYKKE,
                 nyttHarSamtykke,
                 SoknadsSti.BOSTOTTE,
+                true,
                 dispatch
             );
         }

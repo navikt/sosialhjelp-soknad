@@ -55,11 +55,12 @@ export function settSamtykkeOgOppdaterData(
     sti: string,
     harSamtykke: boolean,
     dataSti: null | string,
+    withAccessToken: boolean,
     dispatch: Dispatch
 ) {
     const restStatusSti = "inntekt/samtykke";
     dispatch(settRestStatus(restStatusSti, REST_STATUS.PENDING));
-    fetchPost(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(harSamtykke), true)
+    fetchPost(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(harSamtykke), withAccessToken)
         .then((response: any) => {
             dispatch(settRestStatus(restStatusSti, REST_STATUS.OK));
             if (dataSti && dataSti.length > 1) {
