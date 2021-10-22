@@ -46,6 +46,7 @@ const Skatt = () => {
                 SoknadsSti.SKATTBARINNTEKT_SAMTYKKE,
                 nyttHarSamtykke,
                 SoknadsSti.SKATTBARINNTEKT,
+                false,
                 dispatch
             );
         }
