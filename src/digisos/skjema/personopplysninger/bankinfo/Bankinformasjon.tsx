@@ -169,7 +169,7 @@ const Bankinformasjon = () => {
                         <InputEnhanced
                             faktumKey={FAKTUM_KEY_KONTONUMMER}
                             id={faktumKeyKontonummerId}
-                            type="number"
+                            inputMode="numeric"
                             className={"input--xxl faktumInput "}
                             disabled={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : undefined}
                             verdi={inputVerdi}
@@ -217,7 +217,7 @@ const Bankinformasjon = () => {
                                 <InputEnhanced
                                     faktumKey={FAKTUM_KEY_KONTONUMMER}
                                     id={faktumKeyKontonummerId}
-                                    type="number"
+                                    inputMode="numeric"
                                     className={"input--xxl faktumInput "}
                                     disabled={kontonummer.harIkkeKonto ? kontonummer.harIkkeKonto : false}
                                     verdi={inputVerdi}
