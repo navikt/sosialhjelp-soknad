@@ -29,6 +29,7 @@ import Modal from "react-modal";
 import {initAmplitude} from "./nav-soknad/utils/amplitude";
 import {logException, NavLogEntry, NavLogLevel} from "./nav-soknad/utils/loggerUtils";
 import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
+import {Integrations} from "@sentry/tracing";
 
 Modal.setAppElement("#root");
 
@@ -52,13 +53,13 @@ const history = require("history").createBrowserHistory({
     basename: getContextPathBasename(),
 });
 
-if (erProd()) {
-    Sentry.init({dsn: "https://9414e5a7f3e641c6b223f34289d373ff@sentry.gc.nav.no/50"});
-} else if (erDevSbs()) {
-    Sentry.init({
-        dsn: "https://f3482eab7c994893bf44bcb26a0c8e68@sentry.gc.nav.no/14",
-    });
-}
+Sentry.init({
+    dsn: "https://e81d69cb0fb645068f8b9329fd3a138a@sentry.gc.nav.no/99",
+    integrations: [new Integrations.BrowserTracing()],
+    environment: erProd() ? "prod-sbs" : "development",
+    tracesSampleRate: 1.0,
+});
+
 Sentry.setUser({ip_address: "", id: uuid()});
 
 function configureStore() {
