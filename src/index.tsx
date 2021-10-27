@@ -11,14 +11,13 @@ import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import createSagaMiddleware from "redux-saga";
 import {ConnectedRouter, routerMiddleware} from "connected-react-router";
-import * as Sentry from "@sentry/browser";
-import {v4 as uuid} from "uuid";
+import * as Sentry from "@sentry/react";
 
 import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga";
 import IntlProvider from "./intlProvider";
 import App from "./digisos";
-import {erDevSbs, erLocalhost, erProd} from "./nav-soknad/utils/rest-utils";
+import {erLocalhost, erProd} from "./nav-soknad/utils/rest-utils";
 import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
 import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
@@ -55,12 +54,14 @@ const history = require("history").createBrowserHistory({
 
 Sentry.init({
     dsn: "https://e81d69cb0fb645068f8b9329fd3a138a@sentry.gc.nav.no/99",
-    integrations: [new Integrations.BrowserTracing()],
+    integrations: [
+        new Integrations.BrowserTracing({
+            routingInstrumentation: Sentry.reactRouterV5Instrumentation(history),
+        }),
+    ],
     environment: erProd() ? "prod-sbs" : "development",
     tracesSampleRate: 1.0,
 });
-
-Sentry.setUser({ip_address: "", id: uuid()});
 
 function configureStore() {
     const w: any = window as any;

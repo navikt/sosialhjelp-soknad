@@ -26,6 +26,10 @@ import ServerFeil from "../../nav-soknad/containers/ServerFeil";
 import {fetchToJson, HttpStatus} from "../../nav-soknad/utils/rest-utils";
 import {logWarning} from "../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
+import * as Sentry from "@sentry/react";
+
+const SentryRoute = Sentry.withSentryRouting(Route);
+
 interface OwnProps {
     match: any;
     location: Location;
@@ -100,18 +104,18 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
         return (
             <>
                 <Switch>
-                    <Route path={`${path}/0`} component={Samtykke} />
-                    <Route path={`${path}/1`} component={Steg1} />
-                    <Route path={`${path}/2`} component={Steg2} />
-                    <Route path={`${path}/3`} component={Steg3} />
-                    <Route path={`${path}/4`} component={Steg4} />
-                    <Route path={`${path}/5`} component={Steg5} />
-                    <Route path={`${path}/6`} component={Steg6} />
-                    <Route path={`${path}/7`} component={Steg7} />
-                    <Route path={`${path}/8`} component={Steg8} />
-                    <Route path={`${path}/9`} component={Oppsummering} />
-                    <Route path={`${path}/ny-oppsummering`} component={NyOppsummering} />
-                    <Route component={SideIkkeFunnet} />
+                    <SentryRoute path={`${path}/0`} component={Samtykke} />
+                    <SentryRoute path={`${path}/1`} component={Steg1} />
+                    <SentryRoute path={`${path}/2`} component={Steg2} />
+                    <SentryRoute path={`${path}/3`} component={Steg3} />
+                    <SentryRoute path={`${path}/4`} component={Steg4} />
+                    <SentryRoute path={`${path}/5`} component={Steg5} />
+                    <SentryRoute path={`${path}/6`} component={Steg6} />
+                    <SentryRoute path={`${path}/7`} component={Steg7} />
+                    <SentryRoute path={`${path}/8`} component={Steg8} />
+                    <SentryRoute path={`${path}/9`} component={Oppsummering} />
+                    <SentryRoute path={`${path}/ny-oppsummering`} component={NyOppsummering} />
+                    <SentryRoute component={SideIkkeFunnet} />
                 </Switch>
                 <Prompt
                     message={(loc) => {
