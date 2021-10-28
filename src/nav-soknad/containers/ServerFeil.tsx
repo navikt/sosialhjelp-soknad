@@ -3,16 +3,15 @@ import Feilside from "../components/feilside/Feilside";
 import {useIntl, FormattedMessage} from "react-intl";
 import {Undertittel} from "nav-frontend-typografi";
 import {getIntlTextOrKey} from "../utils/intlUtils";
-import {connect} from "react-redux";
-import {navigerTilFinnDittNavKontor} from "../../digisos/redux/navigasjon/navigasjonActions";
-import {NavigasjonActions} from "../../digisos/redux/navigasjon/navigasjonTypes";
+import {Sider} from "../../digisos/redux/navigasjon/navigasjonTypes";
 
-interface Props {
-    onClick: () => NavigasjonActions;
-}
-
-const ServerFeil: React.FC<Props> = ({onClick}) => {
+const ServerFeil: React.FC = () => {
     const intl = useIntl();
+
+    const onClick = () => {
+        window.location.href = Sider.FINN_DITT_NAV_KONTOR;
+    };
+
     return (
         <Feilside visKnapp={true} onClick={onClick} knappTekst={intl.formatMessage({id: "feilside.serverfeil.knapp"})}>
             <div className="blokk-m">
@@ -28,11 +27,4 @@ const ServerFeil: React.FC<Props> = ({onClick}) => {
     );
 };
 
-export default connect(
-    () => ({}),
-    (dispatch) => {
-        return {
-            onClick: () => dispatch(navigerTilFinnDittNavKontor()),
-        };
-    }
-)(ServerFeil);
+export default ServerFeil;

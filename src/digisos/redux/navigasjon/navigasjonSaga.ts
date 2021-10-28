@@ -7,10 +7,6 @@ import {push} from "connected-react-router";
 
 const navigateTo = (path: string) => (window.location.href = path);
 
-function* tilFinnDittNavKontorSaga(): SagaIterator {
-    yield call(navigateTo, Sider.FINN_DITT_NAV_KONTOR);
-}
-
 function* tilStartSaga(): SagaIterator {
     yield call(navigateTo, Sider.START);
 }
@@ -45,11 +41,10 @@ function* navigasjonSaga(): SagaIterator {
     yield takeEvery(NavigasjonActionTypes.TIL_STEG, tilStegSaga);
     yield takeEvery(NavigasjonActionTypes.GA_VIDERE, gaVidereSaga);
     yield takeEvery(NavigasjonActionTypes.GA_TILBAKE, gaTilbakeSaga);
-    yield takeEvery(NavigasjonActionTypes.TIL_FINN_DITT_NAV_KONTOR, tilFinnDittNavKontorSaga);
     yield takeEvery(NavigasjonActionTypes.TIL_START, tilStartSaga);
     yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilEttersendelse);
 }
 
-export {gaVidereSaga, navigateTo, tilFinnDittNavKontorSaga, tilEttersendelse, tilStegSaga};
+export {gaVidereSaga, navigateTo, tilEttersendelse, tilStegSaga};
 
 export default navigasjonSaga;

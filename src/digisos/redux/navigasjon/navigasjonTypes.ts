@@ -1,14 +1,12 @@
 export enum Sider {
     FORSIDEN = "https://www.nav.no",
-    /* tslint:disable-next-line */
-    FINN_DITT_NAV_KONTOR = "https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Relatert+informasjon/finn-ditt-nav-kontor--353421",
+    FINN_DITT_NAV_KONTOR = "https://www.nav.no/finnkontor",
     SERVERFEIL = "/serverfeil",
     START = "/informasjon",
     BOSTED = "/bosted",
 }
 
 export enum NavigasjonActionTypes {
-    TIL_FINN_DITT_NAV_KONTOR = "navigasjon/TIL_FINN_DITT_NAV_KONTOR",
     TIL_STEG = "navigasjon/TIL_STEG",
     TIL_START = "navigasjon/TIL_START",
     GA_VIDERE = "navigasjon/GA_VIDERE",
@@ -17,14 +15,7 @@ export enum NavigasjonActionTypes {
     TIL_KVITTERING = "navigasjon/TIL_KVITTERING",
 }
 
-export type NavigasjonActions =
-    | TilStart
-    | GaTilbake
-    | TilServerfeil
-    | TilSteg
-    | TilFinnDittNavKontor
-    | GaVidere
-    | TilKvittering;
+export type NavigasjonActions = TilStart | GaTilbake | TilServerfeil | TilSteg | GaVidere | TilKvittering;
 
 export interface TilServerfeil {
     type: NavigasjonActionTypes.TIL_SERVERFEIL;
@@ -50,10 +41,6 @@ export interface GaTilbake {
     type: NavigasjonActionTypes.GA_TILBAKE;
     stegnummer: number;
     behandlingsId: string;
-}
-
-export interface TilFinnDittNavKontor {
-    type: NavigasjonActionTypes.TIL_FINN_DITT_NAV_KONTOR;
 }
 
 export interface TilKvittering {

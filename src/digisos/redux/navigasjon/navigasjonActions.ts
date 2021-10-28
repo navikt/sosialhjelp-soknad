@@ -1,11 +1,5 @@
 import {NavigasjonActionTypes, NavigasjonActions} from "./navigasjonTypes";
 
-export function navigerTilFinnDittNavKontor(): NavigasjonActions {
-    return {
-        type: NavigasjonActionTypes.TIL_FINN_DITT_NAV_KONTOR,
-    };
-}
-
 export function gaTilbake(stegnummer: number, behandlingsId: string): NavigasjonActions {
     return {
         type: NavigasjonActionTypes.GA_TILBAKE,
