@@ -6,24 +6,27 @@ import SkjemaRouter from "./skjema";
 import Ettersendelse from "./skjema/ettersendelse";
 import Link from "./link";
 import {erMockMiljoEllerDev} from "../nav-soknad/utils";
+import * as Sentry from "@sentry/react";
+
+const SentryRoute = Sentry.withSentryRouting(Route);
 
 const App: React.FC = () => {
     return (
         <span>
             <Switch>
-                <Route exact path="/">
+                <SentryRoute exact path="/">
                     <Redirect to="/informasjon" />
-                </Route>
-                <Route path={`/skjema/:brukerBehandlingId/ettersendelse`} component={Ettersendelse} />
-                <Route path={`/informasjon`} exact={true} component={Informasjon} />
-                <Route path={`/link`} exact={true} component={Link} />
+                </SentryRoute>
+                <SentryRoute path={`/skjema/:brukerBehandlingId/ettersendelse`} component={Ettersendelse} />
+                <SentryRoute path={`/informasjon`} exact={true} component={Informasjon} />
+                <SentryRoute path={`/link`} exact={true} component={Link} />
                 {erMockMiljoEllerDev() && (
-                    <Route path={`/mock-login`} exact={true}>
+                    <SentryRoute path={`/mock-login`} exact={true}>
                         <Redirect to="/informasjon" />
-                    </Route>
+                    </SentryRoute>
                 )}
-                <Route path={`/skjema/:brukerBehandlingId/:steg`} component={SkjemaRouter} exact={true} />
-                <Route component={SideIkkeFunnet} />
+                <SentryRoute path={`/skjema/:brukerBehandlingId/:steg`} component={SkjemaRouter} exact={true} />
+                <SentryRoute component={SideIkkeFunnet} />
             </Switch>
         </span>
     );
