@@ -1,16 +1,22 @@
 import * as React from "react";
 import Feilside from "../components/feilside/Feilside";
 import {useIntl} from "react-intl";
-import {connect} from "react-redux";
-import {NavigasjonActions} from "../../digisos/redux/navigasjon/navigasjonTypes";
-import {tilbakeEllerForsiden} from "../../digisos/redux/navigasjon/navigasjonActions";
+import {Sider} from "../../digisos/redux/navigasjon/navigasjonTypes";
+import {useHistory} from "react-router";
 
-interface Props {
-    onClick: () => NavigasjonActions;
-}
-
-const IkkeFunnet: React.FC<Props> = ({onClick}) => {
+const IkkeFunnet: React.FC = () => {
     const intl = useIntl();
+
+    const history = useHistory();
+
+    const onClick = () => {
+        if (history.length === 1) {
+            window.location.href = Sider.FORSIDEN;
+        } else {
+            history.goBack();
+        }
+    };
+
     return (
         <Feilside onClick={onClick} visKnapp={true}>
             <p>{intl.formatMessage({id: "feilside.ikkefunnet.feilmelding"})}</p>
@@ -18,11 +24,4 @@ const IkkeFunnet: React.FC<Props> = ({onClick}) => {
     );
 };
 
-export default connect(
-    () => ({}),
-    (dispatch) => {
-        return {
-            onClick: () => dispatch(tilbakeEllerForsiden()),
-        };
-    }
-)(IkkeFunnet);
+export default IkkeFunnet;

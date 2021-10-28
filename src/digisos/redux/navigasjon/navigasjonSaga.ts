@@ -3,10 +3,9 @@ import {SagaIterator} from "redux-saga";
 import {GaTilbake, GaVidere, NavigasjonActionTypes, Sider, TilDittNav, TilKvittering, TilSteg} from "./navigasjonTypes";
 import {tilStart, tilSteg} from "./navigasjonActions";
 import {lesKommunenrFraUrl} from "../../../nav-soknad/utils";
-import {goBack, push} from "connected-react-router";
+import {push} from "connected-react-router";
 import {State} from "../reducers";
 
-const getHistoryLength = () => window.history.length;
 const navigateTo = (path: string) => (window.location.href = path);
 
 function* tilFinnDittNavKontorSaga(): SagaIterator {
@@ -15,15 +14,6 @@ function* tilFinnDittNavKontorSaga(): SagaIterator {
 
 function* tilStartSaga(): SagaIterator {
     yield call(navigateTo, Sider.START);
-}
-
-function* tilbakeEllerForsidenSaga(): SagaIterator {
-    const historyLength = yield call(getHistoryLength);
-    if (historyLength === 1) {
-        yield call(navigateTo, Sider.FORSIDEN);
-    } else {
-        yield put(goBack());
-    }
 }
 
 function* tilStegSaga(action: TilSteg): SagaIterator {
@@ -62,20 +52,11 @@ function* navigasjonSaga(): SagaIterator {
     yield takeEvery(NavigasjonActionTypes.GA_VIDERE, gaVidereSaga);
     yield takeEvery(NavigasjonActionTypes.GA_TILBAKE, gaTilbakeSaga);
     yield takeEvery(NavigasjonActionTypes.TIL_FINN_DITT_NAV_KONTOR, tilFinnDittNavKontorSaga);
-    yield takeEvery(NavigasjonActionTypes.TILBAKE_ELLER_FORSIDEN, tilbakeEllerForsidenSaga);
     yield takeEvery(NavigasjonActionTypes.TIL_START, tilStartSaga);
     yield takeEvery(NavigasjonActionTypes.TIL_DITT_NAV, tilDittNav);
     yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilEttersendelse);
 }
 
-export {
-    gaVidereSaga,
-    getHistoryLength,
-    navigateTo,
-    tilbakeEllerForsidenSaga,
-    tilFinnDittNavKontorSaga,
-    tilEttersendelse,
-    tilStegSaga,
-};
+export {gaVidereSaga, navigateTo, tilFinnDittNavKontorSaga, tilEttersendelse, tilStegSaga};
 
 export default navigasjonSaga;

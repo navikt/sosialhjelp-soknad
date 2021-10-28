@@ -42,12 +42,6 @@ export function tilStart(): NavigasjonActions {
     };
 }
 
-export function tilbakeEllerForsiden(): NavigasjonActions {
-    return {
-        type: NavigasjonActionTypes.TILBAKE_ELLER_FORSIDEN,
-    };
-}
-
 export function navigerTilKvittering(brukerbehandlingId: string): NavigasjonActions {
     return {
         type: NavigasjonActionTypes.TIL_KVITTERING,
