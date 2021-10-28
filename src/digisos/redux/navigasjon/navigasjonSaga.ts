@@ -1,9 +1,7 @@
 import {call, put, takeEvery} from "redux-saga/effects";
 import {SagaIterator} from "redux-saga";
-import {GaTilbake, NavigasjonActionTypes, Sider, TilKvittering} from "./navigasjonTypes";
-import {tilStart} from "./navigasjonActions";
+import {NavigasjonActionTypes, Sider, TilKvittering} from "./navigasjonTypes";
 import {push} from "connected-react-router";
-import {getStegUrl} from "../../../nav-soknad/utils";
 
 const navigateTo = (path: string) => (window.location.href = path);
 
@@ -11,20 +9,11 @@ function* tilStartSaga(): SagaIterator {
     yield call(navigateTo, Sider.START);
 }
 
-function* gaTilbakeSaga(action: GaTilbake): SagaIterator {
-    if (action.stegnummer === 1) {
-        yield put(tilStart());
-    } else {
-        yield put(push(getStegUrl(action.behandlingsId, action.stegnummer - 1)));
-    }
-}
-
 function* tilEttersendelse(action: TilKvittering): SagaIterator {
     yield put(push(`/skjema/${action.brukerbehandlingId}/ettersendelse`));
 }
 
 function* navigasjonSaga(): SagaIterator {
-    yield takeEvery(NavigasjonActionTypes.GA_TILBAKE, gaTilbakeSaga);
     yield takeEvery(NavigasjonActionTypes.TIL_START, tilStartSaga);
     yield takeEvery(NavigasjonActionTypes.TIL_KVITTERING, tilEttersendelse);
 }

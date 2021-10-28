@@ -18,7 +18,6 @@ import {
     sendSoknad,
     sendSoknadPending,
 } from "../../digisos/redux/soknad/soknadActions";
-import {gaTilbake} from "../../digisos/redux/navigasjon/navigasjonActions";
 import AppBanner from "../components/appHeader/AppHeader";
 import {
     clearAllValideringsfeil,
@@ -169,7 +168,7 @@ const StegMedNavigasjon = (
         if (behandlingsId) {
             dispatch(clearAllValideringsfeil());
             dispatch(resetSendSoknadServiceUnavailable());
-            dispatch(gaTilbake(aktivtSteg, behandlingsId));
+            history.push(getStegUrl(behandlingsId, aktivtSteg - 1));
         }
     };
 
