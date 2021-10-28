@@ -5,10 +5,3 @@ export function tilStart(): NavigasjonActions {
         type: NavigasjonActionTypes.TIL_START,
     };
 }
-
-export function navigerTilKvittering(brukerbehandlingId: string): NavigasjonActions {
-    return {
-        type: NavigasjonActionTypes.TIL_KVITTERING,
-        brukerbehandlingId,
-    };
-}

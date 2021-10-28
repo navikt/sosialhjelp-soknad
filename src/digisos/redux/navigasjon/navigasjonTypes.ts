@@ -9,10 +9,9 @@ export enum Sider {
 export enum NavigasjonActionTypes {
     TIL_START = "navigasjon/TIL_START",
     TIL_SERVERFEIL = "navigasjon/TIL_SERVERFEIL",
-    TIL_KVITTERING = "navigasjon/TIL_KVITTERING",
 }
 
-export type NavigasjonActions = TilStart | TilServerfeil | TilKvittering;
+export type NavigasjonActions = TilStart | TilServerfeil;
 
 export interface TilServerfeil {
     type: NavigasjonActionTypes.TIL_SERVERFEIL;
@@ -20,9 +19,4 @@ export interface TilServerfeil {
 
 export interface TilStart {
     type: NavigasjonActionTypes.TIL_START;
-}
-
-export interface TilKvittering {
-    type: NavigasjonActionTypes.TIL_KVITTERING;
-    brukerbehandlingId: string;
 }

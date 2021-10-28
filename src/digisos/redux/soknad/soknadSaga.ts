@@ -9,7 +9,6 @@ import {
     SendSoknadAction,
     SoknadActionTypeKeys,
 } from "./soknadActionTypes";
-import {navigerTilKvittering} from "../navigasjon/navigasjonActions";
 
 import {
     hentSamtykkerOk,
@@ -117,9 +116,9 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
         if (response && response.sendtTil === SendtTilSystemEnum.FIKS_DIGISOS_API) {
             window.location.href = getInnsynUrl() + response.id + "/status";
         } else if (response && response.id) {
-            yield put(navigerTilKvittering(response.id));
+            yield put(push(`/skjema/${response.id}/ettersendelse`));
         } else {
-            yield put(navigerTilKvittering(action.behandlingsId));
+            yield put(push(`/skjema/${action.behandlingsId}/ettersendelse`));
         }
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
