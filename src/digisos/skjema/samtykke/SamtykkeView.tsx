@@ -54,7 +54,7 @@ const SamtykkeView: React.FC = () => {
 
     function knappOppdaterSamtykkeOgGaTilSteg1() {
         if (behandlingsId && samtykker) {
-            dispatch(oppdaterSamtykke(behandlingsId, harAvsjekketSamtykkeBoksen, samtykker));
+            dispatch(oppdaterSamtykke(behandlingsId, harAvsjekketSamtykkeBoksen, samtykker, history));
         }
     }
 

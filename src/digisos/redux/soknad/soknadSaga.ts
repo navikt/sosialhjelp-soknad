@@ -28,23 +28,23 @@ import {
 } from "./soknadActions";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
-import {push} from "connected-react-router";
 import {OpprettSoknadResponse, SendSoknadResponse} from "./soknadTypes";
 import {soknadsdataUrl} from "../soknadsdata/soknadsdataActions";
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {getStegUrl} from "../../../nav-soknad/utils";
+import {History} from "history";
 
 enum SendtTilSystemEnum {
     SVARUT = "SVARUT",
     FIKS_DIGISOS_API = "FIKS_DIGISOS_API",
 }
 
-function* opprettSoknadSaga(action: {type: string}) {
+function* opprettSoknadSaga(action: {type: string; history: History}) {
     try {
         const response: OpprettSoknadResponse = yield call(fetchPost, "soknader/opprettSoknad", "", true);
         yield put(opprettSoknadOk(response.brukerBehandlingId));
         yield put(startSoknadOk());
-        yield put(push(getStegUrl(response.brukerBehandlingId, 1)));
+        action.history.push(getStegUrl(response.brukerBehandlingId, 1));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
@@ -78,6 +78,7 @@ function* oppdaterSamtykke(action: {
     behandlingsId: string;
     harSamtykket: boolean;
     samtykker: Samtykke[];
+    history: History;
 }) {
     try {
         if (action.behandlingsId && action.harSamtykket) {
@@ -88,7 +89,7 @@ function* oppdaterSamtykke(action: {
                 true
             );
         }
-        yield put(push(getStegUrl(action.behandlingsId, 1)));
+        action.history.push(getStegUrl(action.behandlingsId, 1));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
@@ -116,9 +117,9 @@ function* sendSoknadSaga(action: SendSoknadAction): SagaIterator {
         if (response && response.sendtTil === SendtTilSystemEnum.FIKS_DIGISOS_API) {
             window.location.href = getInnsynUrl() + response.id + "/status";
         } else if (response && response.id) {
-            yield put(push(`/skjema/${response.id}/ettersendelse`));
+            action.history.push(`/skjema/${response.id}/ettersendelse`);
         } else {
-            yield put(push(`/skjema/${action.behandlingsId}/ettersendelse`));
+            action.history.push(`/skjema/${action.behandlingsId}/ettersendelse`);
         }
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
@@ -148,7 +149,7 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
                 "Søknadsmottaker ikke gyldig på side 9, redirecter tilbake til side 1. Søknadsmottaker var " +
                     valgtSoknadsmottaker
             );
-            yield put(push(`/skjema/${brukerbehandlingId}/1`));
+            action.history.push(`/skjema/${brukerbehandlingId}/1`);
         } else {
             yield put(oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker));
         }
@@ -161,7 +162,7 @@ function* finnOgOppdaterSoknadsmottakerStatusSaga(action: FinnOgOppdaterSoknadsm
             "feil i finnOgOppdaterSoknadsmottakerStatusSaga på side 9. Sender brukeren tilbake til steg 1 og håper dette ikke blir en infinite loop. Error message: " +
                 reason
         );
-        yield put(push(`/skjema/${brukerbehandlingId}/1`));
+        action.history.push(`/skjema/${brukerbehandlingId}/1`);
     }
 }
 

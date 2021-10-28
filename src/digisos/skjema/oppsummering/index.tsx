@@ -11,7 +11,7 @@ import {
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import {State} from "../../redux/reducers";
 import {finnOgOppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
 import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
 import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
@@ -53,11 +53,13 @@ const OppsummeringView = () => {
 
     const intl = useIntl();
 
+    const history = useHistory();
+
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(finnOgOppdaterSoknadsmottakerStatus(behandlingsId));
+            dispatch(finnOgOppdaterSoknadsmottakerStatus(behandlingsId, history));
             dispatch(hentOppsummering());
             fetchOppsummering(`soknader/${behandlingsId}/`)
                 .then((response) => {
@@ -70,7 +72,7 @@ const OppsummeringView = () => {
                     dispatch(hentOppsumeringFeilet(reason));
                 });
         }
-    }, [behandlingsId, dispatch]);
+    }, [behandlingsId, history, dispatch]);
 
     if (restStatus === REST_STATUS.OK) {
         return (

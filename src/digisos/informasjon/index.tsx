@@ -18,6 +18,7 @@ import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import {useTitle} from "../../nav-soknad/hooks/useTitle";
 import {Alert, BodyShort, Label} from "@navikt/ds-react";
+import {useHistory} from "react-router";
 
 const Greeting = (props: {name: string}) => (
     <Label size="small">
@@ -34,6 +35,8 @@ export const InformasjonSide = (props: {enableModalV2: boolean}) => {
 
     const dispatch = useDispatch();
 
+    const history = useHistory();
+
     const intl = useIntl();
 
     const onSokSosialhjelpButtonClick = (event: React.SyntheticEvent) => {
@@ -48,7 +51,7 @@ export const InformasjonSide = (props: {enableModalV2: boolean}) => {
             erProdsatt: true,
             ...createSkjemaEventData(),
         });
-        dispatch(opprettSoknad(intl));
+        dispatch(opprettSoknad(intl, history));
     };
 
     return (

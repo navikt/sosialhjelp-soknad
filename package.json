@@ -15,7 +15,6 @@
     "@sentry/tracing": "^6.13.3",
     "amplitude-js": "^7.4.3",
     "classnames": "^2.3.1",
-    "connected-react-router": "^6.9.1",
     "craco-less": "^1.19.0",
     "cuid": "^2.1.8",
     "date-fns": "^2.22.1",

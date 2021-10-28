@@ -114,7 +114,7 @@ const StegMedNavigasjon = (
                     logAmplitudeEvent("skjema fullført", createSkjemaEventData());
                     loggAdresseTypeTilGrafana();
                     dispatch(sendSoknadPending());
-                    dispatch(sendSoknad(behandlingsId));
+                    dispatch(sendSoknad(behandlingsId, history));
                 } else {
                     dispatch(setVisBekreftMangler(true));
                 }

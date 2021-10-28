@@ -9,7 +9,6 @@ import {applyMiddleware, createStore} from "redux";
 import reducers from "../../digisos/redux/reducers";
 import sagas from "../../rootSaga";
 import {Provider} from "react-redux";
-import {routerMiddleware} from "connected-react-router";
 import {SoknadState} from "../../digisos/redux/soknad/soknadTypes";
 import {createIntl} from "react-intl";
 
@@ -96,7 +95,7 @@ export const TestContext: React.FunctionComponent<{messages: any; children: Reac
 
     const devtools: any = (f: any) => f;
     const saga = createSagaMiddleware();
-    const middleware = applyMiddleware(saga, routerMiddleware(history));
+    const middleware = applyMiddleware(saga);
     const store = createStore(reducers, devtools, middleware);
     saga.run(sagas);
 
