@@ -9,7 +9,6 @@ export enum Sider {
 
 export enum NavigasjonActionTypes {
     TIL_FINN_DITT_NAV_KONTOR = "navigasjon/TIL_FINN_DITT_NAV_KONTOR",
-    TIL_DITT_NAV = "navigasjon/TIL_DITT_NAV",
     TIL_STEG = "navigasjon/TIL_STEG",
     TIL_START = "navigasjon/TIL_START",
     GA_VIDERE = "navigasjon/GA_VIDERE",
@@ -25,7 +24,6 @@ export type NavigasjonActions =
     | TilSteg
     | TilFinnDittNavKontor
     | GaVidere
-    | TilDittNav
     | TilKvittering;
 
 export interface TilServerfeil {
@@ -56,10 +54,6 @@ export interface GaTilbake {
 
 export interface TilFinnDittNavKontor {
     type: NavigasjonActionTypes.TIL_FINN_DITT_NAV_KONTOR;
-}
-
-export interface TilDittNav {
-    type: NavigasjonActionTypes.TIL_DITT_NAV;
 }
 
 export interface TilKvittering {

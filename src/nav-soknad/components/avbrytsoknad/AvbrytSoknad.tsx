@@ -2,7 +2,6 @@ import * as React from "react";
 import {fortsettSoknad, showServerFeil} from "../../../digisos/redux/soknad/soknadActions";
 import {FormattedMessage} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
-import {navigerTilDittNav} from "../../../digisos/redux/navigasjon/navigasjonActions";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
 import {fetchDelete, HttpStatus} from "../../utils/rest-utils";
@@ -66,6 +65,8 @@ const ButtonRow = styled.div`
 export const AvbrytSoknad = () => {
     const {behandlingsId, avbrytDialog, nedetid} = useSelector((state: State) => state.soknad);
 
+    const dittNavUrl = useSelector((state: State) => state.miljovariabler.data["dittnav.link.url"]) ?? "";
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -75,7 +76,7 @@ export const AvbrytSoknad = () => {
     const onAvbryt = () => {
         if (behandlingsId) {
             fetchDelete(`soknader/${behandlingsId}`)
-                .then(() => dispatch(navigerTilDittNav()))
+                .then(() => (window.location.href = dittNavUrl))
                 .catch((reason) => {
                     if (reason.message === HttpStatus.UNAUTHORIZED) {
                         return;
@@ -91,7 +92,7 @@ export const AvbrytSoknad = () => {
     };
 
     const onFortsettSenere = () => {
-        dispatch(navigerTilDittNav());
+        window.location.href = dittNavUrl;
     };
 
     return (

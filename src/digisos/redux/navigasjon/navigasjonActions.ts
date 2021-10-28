@@ -6,12 +6,6 @@ export function navigerTilFinnDittNavKontor(): NavigasjonActions {
     };
 }
 
-export function navigerTilDittNav(): NavigasjonActions {
-    return {
-        type: NavigasjonActionTypes.TIL_DITT_NAV,
-    };
-}
-
 export function gaTilbake(stegnummer: number, behandlingsId: string): NavigasjonActions {
     return {
         type: NavigasjonActionTypes.GA_TILBAKE,
