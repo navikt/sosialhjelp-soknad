@@ -8,13 +8,12 @@ export enum Sider {
 
 export enum NavigasjonActionTypes {
     TIL_START = "navigasjon/TIL_START",
-    GA_VIDERE = "navigasjon/GA_VIDERE",
     GA_TILBAKE = "navigasjon/GA_TILBAKE",
     TIL_SERVERFEIL = "navigasjon/TIL_SERVERFEIL",
     TIL_KVITTERING = "navigasjon/TIL_KVITTERING",
 }
 
-export type NavigasjonActions = TilStart | GaTilbake | TilServerfeil | GaVidere | TilKvittering;
+export type NavigasjonActions = TilStart | GaTilbake | TilServerfeil | TilKvittering;
 
 export interface TilServerfeil {
     type: NavigasjonActionTypes.TIL_SERVERFEIL;
@@ -22,12 +21,6 @@ export interface TilServerfeil {
 
 export interface TilStart {
     type: NavigasjonActionTypes.TIL_START;
-}
-
-export interface GaVidere {
-    type: NavigasjonActionTypes.GA_VIDERE;
-    stegnummer: number;
-    behandlingsId: string;
 }
 
 export interface GaTilbake {

@@ -8,14 +8,6 @@ export function gaTilbake(stegnummer: number, behandlingsId: string): Navigasjon
     };
 }
 
-export function gaVidere(stegnummer: number, behandlingsId: string): NavigasjonActions {
-    return {
-        type: NavigasjonActionTypes.GA_VIDERE,
-        stegnummer,
-        behandlingsId,
-    };
-}
-
 export function tilStart(): NavigasjonActions {
     return {
         type: NavigasjonActionTypes.TIL_START,

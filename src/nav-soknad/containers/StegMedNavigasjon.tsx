@@ -18,7 +18,7 @@ import {
     sendSoknad,
     sendSoknadPending,
 } from "../../digisos/redux/soknad/soknadActions";
-import {gaTilbake, gaVidere} from "../../digisos/redux/navigasjon/navigasjonActions";
+import {gaTilbake} from "../../digisos/redux/navigasjon/navigasjonActions";
 import AppBanner from "../components/appHeader/AppHeader";
 import {
     clearAllValideringsfeil,
@@ -134,7 +134,7 @@ const StegMedNavigasjon = (
                             ...createSkjemaEventData(),
                             steg: aktivtSteg.stegnummer,
                         });
-                        dispatch(gaVidere(aktivtSteg.stegnummer, behandlingsId));
+                        history.push(getStegUrl(behandlingsId, aktivtSteg.stegnummer + 1));
                     });
                 } else {
                     dispatch(visValideringsfeilPanel());
