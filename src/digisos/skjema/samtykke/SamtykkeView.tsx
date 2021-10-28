@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useEffect} from "react";
 import Panel from "nav-frontend-paneler";
-import {getIntlTextOrKey} from "../../../nav-soknad/utils";
+import {getIntlTextOrKey, getStegUrl} from "../../../nav-soknad/utils";
 import Knapp from "nav-frontend-knapper";
 import {FormattedMessage, useIntl} from "react-intl";
 import AppBanner from "../../../nav-soknad/components/appHeader/AppHeader";
@@ -11,10 +11,10 @@ import {getErSystemdataEndret, hentSamtykker, oppdaterSamtykke} from "../../redu
 import {State} from "../../redux/reducers";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {ErSystemdataEndret, Samtykke} from "../../redux/soknad/soknadActionTypes";
-import {tilSteg} from "../../redux/navigasjon/navigasjonActions";
 import Veilederpanel from "nav-frontend-veilederpanel";
 import EllaKompakt from "../../../nav-soknad/components/svg/EllaKompakt";
 import NavFrontendSpinner from "nav-frontend-spinner";
+import {useHistory} from "react-router";
 
 const SamtykkeView: React.FC = () => {
     const intl = useIntl();
@@ -25,6 +25,8 @@ const SamtykkeView: React.FC = () => {
     const samtykker: Samtykke[] | undefined = useSelector((state: State) => state.soknad.samtykker);
     const samtykkeRestStatus: REST_STATUS = useSelector((state: State) => state.soknad.samtykkeRestStatus);
     let samtykkerTekst: string = "";
+
+    const history = useHistory();
 
     useEffect(() => {
         if (behandlingsId) {
@@ -47,7 +49,7 @@ const SamtykkeView: React.FC = () => {
     }
 
     if (harLastetinnSamtykker && behandlingsId && !harSamtykker && erSystemdataEndret === ErSystemdataEndret.NO) {
-        dispatch(tilSteg(1, behandlingsId));
+        history.push(getStegUrl(behandlingsId, 1));
     }
 
     function knappOppdaterSamtykkeOgGaTilSteg1() {

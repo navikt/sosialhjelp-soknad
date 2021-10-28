@@ -16,14 +16,6 @@ export function gaVidere(stegnummer: number, behandlingsId: string): NavigasjonA
     };
 }
 
-export function tilSteg(stegnummer: number, behandlingsId: string): NavigasjonActions {
-    return {
-        type: NavigasjonActionTypes.TIL_STEG,
-        stegnummer,
-        behandlingsId,
-    };
-}
-
 export function tilStart(): NavigasjonActions {
     return {
         type: NavigasjonActionTypes.TIL_START,

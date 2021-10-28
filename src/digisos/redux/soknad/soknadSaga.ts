@@ -9,7 +9,7 @@ import {
     SendSoknadAction,
     SoknadActionTypeKeys,
 } from "./soknadActionTypes";
-import {navigerTilKvittering, tilSteg} from "../navigasjon/navigasjonActions";
+import {navigerTilKvittering} from "../navigasjon/navigasjonActions";
 
 import {
     hentSamtykkerOk,
@@ -33,6 +33,7 @@ import {push} from "connected-react-router";
 import {OpprettSoknadResponse, SendSoknadResponse} from "./soknadTypes";
 import {soknadsdataUrl} from "../soknadsdata/soknadsdataActions";
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {getStegUrl} from "../../../nav-soknad/utils";
 
 enum SendtTilSystemEnum {
     SVARUT = "SVARUT",
@@ -44,7 +45,7 @@ function* opprettSoknadSaga(action: {type: string}) {
         const response: OpprettSoknadResponse = yield call(fetchPost, "soknader/opprettSoknad", "", true);
         yield put(opprettSoknadOk(response.brukerBehandlingId));
         yield put(startSoknadOk());
-        yield put(tilSteg(1, response.brukerBehandlingId));
+        yield put(push(getStegUrl(response.brukerBehandlingId, 1)));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
@@ -88,7 +89,7 @@ function* oppdaterSamtykke(action: {
                 true
             );
         }
-        yield put(tilSteg(1, action.behandlingsId));
+        yield put(push(getStegUrl(action.behandlingsId, 1)));
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
