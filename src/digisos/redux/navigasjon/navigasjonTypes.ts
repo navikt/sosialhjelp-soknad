@@ -7,16 +7,11 @@ export enum Sider {
 }
 
 export enum NavigasjonActionTypes {
-    TIL_START = "navigasjon/TIL_START",
     TIL_SERVERFEIL = "navigasjon/TIL_SERVERFEIL",
 }
 
-export type NavigasjonActions = TilStart | TilServerfeil;
+export type NavigasjonActions = TilServerfeil;
 
 export interface TilServerfeil {
     type: NavigasjonActionTypes.TIL_SERVERFEIL;
-}
-
-export interface TilStart {
-    type: NavigasjonActionTypes.TIL_START;
 }
