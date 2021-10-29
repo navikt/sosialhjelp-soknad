@@ -9,11 +9,7 @@ const Link = () => {
         here = match[1];
     }
 
-    return (
-        <div className="application-spinner">
-            <Redirect to={here} />
-        </div>
-    );
+    return <Redirect to={here} />;
 };
 
 export default Link;

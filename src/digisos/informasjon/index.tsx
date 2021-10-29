@@ -15,10 +15,10 @@ import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {Soknadsoversikt} from "./Soknadsoversikt";
 import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import {useTitle} from "../../nav-soknad/hooks/useTitle";
 import {Alert, BodyShort, Label} from "@navikt/ds-react";
 import {useHistory} from "react-router";
+import {ApplicationSpinner} from "../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
 const Greeting = (props: {name: string}) => (
     <Label size="small">
@@ -215,9 +215,7 @@ const Informasjon = () => {
         return (
             <div className="informasjon-side">
                 <AppBanner />
-                <div className="application-spinner">
-                    <NavFrontendSpinner type="XXL" />
-                </div>
+                <ApplicationSpinner />
             </div>
         );
     }

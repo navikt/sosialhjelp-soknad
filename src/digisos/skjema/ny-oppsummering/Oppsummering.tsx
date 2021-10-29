@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
-import {Accordion, ConfirmationPanel, Link, Label, Loader} from "@navikt/ds-react";
+import {Accordion, ConfirmationPanel, Link, Label} from "@navikt/ds-react";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../redux/reducers";
 import {finnOgOppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
@@ -25,6 +25,7 @@ import {Warning} from "./question/Warning";
 import {SystemDataMap} from "./question/SystemDataMap";
 import {Attachment} from "./question/Attachment";
 import {useHistory} from "react-router";
+import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
@@ -71,11 +72,7 @@ export const Oppsummering = () => {
     });
 
     if (loading) {
-        return (
-            <div className="application-spinner">
-                <Loader size="2xlarge" />
-            </div>
-        );
+        return <ApplicationSpinner />;
     }
 
     return (

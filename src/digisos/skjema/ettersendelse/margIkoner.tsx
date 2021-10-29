@@ -2,7 +2,6 @@ import * as React from "react";
 import Icon from "nav-frontend-ikoner-assets";
 import DigisosIkon from "../../../nav-soknad/components/digisosIkon/digisosIkon";
 import NavFrontendChevron from "nav-frontend-chevron";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import DigisosIkonKonvolutt from "../../../nav-soknad/components/digisosIkon/digisosKonvolutt";
 import PaperclipIcon from "../../../nav-soknad/components/digisosIkon/paperclipIcon";
 
@@ -15,7 +14,6 @@ enum MargIkoner {
     CHEVRON_NED = "CHEVRON_NED",
     SNAKKEBOBLER = "SNAKKEBOBLER",
     KONVOLUTT = "KONVOLUTT",
-    SPINNER = "SPINNER",
     SØPPELBØTTE = "SØPPELBØTTE",
     LAST_OPP = "LAST_OPP",
     BINDERS = "BINDERS",
@@ -41,8 +39,6 @@ const MargIkon: React.FC<{ikon: MargIkoner}> = ({ikon}) => {
             return <NavFrontendChevron className="ettersendelse__chevron" type="ned" />;
         case MargIkoner.SNAKKEBOBLER:
             return <DigisosIkon navn="snakkebobler" className="ettersendelse__ikon" ariaHidden={true} />;
-        case MargIkoner.SPINNER:
-            return <NavFrontendSpinner type="XS" />;
         case MargIkoner.KONVOLUTT:
             return <DigisosIkonKonvolutt size={"23"} />;
         case MargIkoner.SØPPELBØTTE:

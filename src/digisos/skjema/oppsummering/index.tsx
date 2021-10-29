@@ -16,11 +16,11 @@ import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvP
 import SoknadsmottakerInfoPanel from "./SoknadsmottakerInfoPanel";
 import BekreftCheckboksPanel from "nav-frontend-skjema/lib/bekreft-checkboks-panel";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {Undertittel} from "nav-frontend-typografi";
 import {Oppsummering} from "../../redux/oppsummering/oppsummeringTypes";
 import {fetchOppsummering, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
+import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
 const Bolker = (props: {oppsummering: Oppsummering}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
@@ -108,11 +108,7 @@ const OppsummeringView = () => {
         );
     }
 
-    return (
-        <div className="application-spinner">
-            <NavFrontendSpinner type="XXL" />
-        </div>
-    );
+    return <ApplicationSpinner />;
 };
 
 export default OppsummeringView;
