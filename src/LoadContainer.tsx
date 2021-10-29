@@ -5,7 +5,6 @@ import {
     lagrePabegynteSoknaderPaStore,
     lagreRessurserPaStore,
 } from "./digisos/redux/soknad/soknadActions";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import {useDispatch} from "react-redux";
 import FeilSide from "./nav-soknad/components/feilside/Feilside";
 import {fetchToJson, HttpStatus} from "./nav-soknad/utils/rest-utils";
@@ -20,6 +19,7 @@ import {
 } from "./digisos/redux/soknad/soknadTypes";
 import {lagreLedeteksterPaStore} from "./digisos/redux/ledetekster/ledeteksterActions";
 import {lagreMiljovariablerPaStore} from "./digisos/redux/miljovariabler/miljovariablerActions";
+import {ApplicationSpinner} from "./nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
 interface Props {
     children: React.ReactNode;
@@ -89,11 +89,7 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
     }, [dispatch]);
 
     if (showSpinner) {
-        return (
-            <div className="application-spinner">
-                <NavFrontendSpinner type="XXL" />
-            </div>
-        );
+        return <ApplicationSpinner />;
     }
     if (showErrorPage) {
         return (

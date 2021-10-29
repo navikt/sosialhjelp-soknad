@@ -1,6 +1,6 @@
+import {Loader} from "@navikt/ds-react";
 import Downshift from "downshift";
 import {Input} from "nav-frontend-skjema";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import {useState} from "react";
 import {useDebounce} from "react-use";
 import styled from "styled-components";
@@ -120,7 +120,7 @@ export const AdresseTypeahead = (props: {
                                     {isLoading && (
                                         <SelectMenu>
                                             <Item isHighlighted={false}>
-                                                <NavFrontendSpinner />
+                                                <Loader />
                                             </Item>
                                         </SelectMenu>
                                     )}

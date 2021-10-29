@@ -1,7 +1,6 @@
 import React from "react";
 import {RadioPanel} from "nav-frontend-skjema";
 import {getRadioFaktumTekst} from "../utils";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import TextPlaceholder from "../components/animasjoner/placeholder/TextPlaceholder";
 import {useIntl} from "react-intl";
 
@@ -14,7 +13,6 @@ interface Props {
     label?: any;
     onChange: any;
     className?: string;
-    visSpinner?: boolean;
     required?: boolean;
     name: string;
     visPlaceholder?: boolean;
@@ -36,14 +34,6 @@ const RadioEnhanced = (props: Props) => {
     const checked = (): boolean => {
         return !!props.checked;
     };
-
-    if (props.visSpinner) {
-        return (
-            <div className="inputPanel__spinner">
-                <NavFrontendSpinner type="M" />
-            </div>
-        );
-    }
 
     const label = getRadioFaktumTekst(intl, props.faktumKey ? props.faktumKey : "", props.value);
     const faktumKey = props.faktumKey ? props.faktumKey.replace(/\./g, "_") : "";

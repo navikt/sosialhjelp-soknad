@@ -20,13 +20,13 @@ import {hentSoknad, hentSoknadOk, showServerFeil, showSideIkkeFunnet} from "../r
 import {erSkjemaEllerEttersendelseSide, NAVIGASJONSPROMT} from "../../nav-soknad/utils";
 import TimeoutBox from "../../nav-soknad/components/timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import {useEffect} from "react";
 import ServerFeil from "../../nav-soknad/containers/ServerFeil";
 import {fetchToJson, HttpStatus} from "../../nav-soknad/utils/rest-utils";
 import {logWarning} from "../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
 import * as Sentry from "@sentry/react";
+import {ApplicationSpinner} from "../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
 const SentryRoute = Sentry.withSentryRouting(Route);
 
@@ -128,11 +128,7 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
         );
     }
 
-    return (
-        <div className="application-spinner">
-            <NavFrontendSpinner type="XXL" />
-        </div>
-    );
+    return <ApplicationSpinner />;
 };
 
 export default withRouter(SkjemaRouter);

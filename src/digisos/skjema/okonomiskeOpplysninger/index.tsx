@@ -2,7 +2,6 @@ import * as React from "react";
 import {useSelector, useDispatch} from "react-redux";
 import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import SkjemaIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SkjemaIllustrasjon";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import Gruppe from "./Gruppe";
 import {OpplysningGruppe, Opplysning} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {hentOpplysninger} from "../../redux/okonomiskeOpplysninger/opplysningerActions";
@@ -11,6 +10,7 @@ import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {State} from "../../redux/reducers";
 import {OpplysningerInformasjonspanel} from "./OpplysningerInformasjonspanel";
 import {OpplysningerIkkeBesvartPanel} from "./OpplysningerIkkeBesvartPanel";
+import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
 type MaybeJsxElement = JSX.Element | null;
 
@@ -54,11 +54,7 @@ const OkonomiskeOpplysningerView = () => {
         );
     }
 
-    return (
-        <div className="application-spinner">
-            <NavFrontendSpinner type="XXL" />
-        </div>
-    );
+    return <ApplicationSpinner />;
 };
 
 export default OkonomiskeOpplysningerView;

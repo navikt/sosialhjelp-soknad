@@ -13,8 +13,8 @@ import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {ErSystemdataEndret, Samtykke} from "../../redux/soknad/soknadActionTypes";
 import Veilederpanel from "nav-frontend-veilederpanel";
 import EllaKompakt from "../../../nav-soknad/components/svg/EllaKompakt";
-import NavFrontendSpinner from "nav-frontend-spinner";
 import {useHistory} from "react-router";
+import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
 const SamtykkeView: React.FC = () => {
     const intl = useIntl();
@@ -61,11 +61,7 @@ const SamtykkeView: React.FC = () => {
     return (
         <div className="app-digisos informasjon-side">
             <AppBanner />
-            {(!harLastetinnSamtykker || erSystemdataEndret === ErSystemdataEndret.NOT_ASKED) && (
-                <div className="application-spinner">
-                    <NavFrontendSpinner type="XXL" />
-                </div>
-            )}
+            {(!harLastetinnSamtykker || erSystemdataEndret === ErSystemdataEndret.NOT_ASKED) && <ApplicationSpinner />}
             {(harSamtykker || erSystemdataEndret === ErSystemdataEndret.YES) && (
                 <Panel className={"skjema-content"}>
                     <Veilederpanel svg={<EllaKompakt />} fargetema="advarsel" kompakt={true} type="plakat">
