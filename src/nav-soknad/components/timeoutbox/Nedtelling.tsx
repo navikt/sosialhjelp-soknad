@@ -2,7 +2,7 @@ import * as React from "react";
 import {FormattedMessage} from "react-intl";
 
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
-import {Hovedknapp} from "nav-frontend-knapper";
+import {Button} from "@navikt/ds-react";
 
 interface OwnProps {
     onContinueClick: () => void;
@@ -21,12 +21,12 @@ const Nedtelling: React.StatelessComponent<Props> = ({onContinueClick, utlogging
                 <FormattedMessage id={"timeout.nedtelling"} />
             </Normaltekst>
             <div className="timeoutbox__knapperad">
-                <Hovedknapp onClick={onContinueClick} type="hoved">
+                <Button variant="primary" onClick={onContinueClick}>
                     <FormattedMessage id={"timeout.fortsett"} />
-                </Hovedknapp>
-                <a href={utloggingsUrl} className="knapp knapp--flat timeoutbox__loggutknapp">
+                </Button>
+                <Button variant="tertiary" as="a" href={utloggingsUrl} className="timeoutbox__loggutknapp">
                     <FormattedMessage id={"timeout.loggut"} />
-                </a>
+                </Button>
             </div>
         </div>
     );

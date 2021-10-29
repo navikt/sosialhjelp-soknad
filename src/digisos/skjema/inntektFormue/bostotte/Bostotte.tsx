@@ -16,10 +16,9 @@ import {
     lagreSoknadsdata,
     settSamtykkeOgOppdaterData,
 } from "../../../redux/soknadsdata/soknadsdataActions";
-import Knapp from "nav-frontend-knapper";
-import {Normaltekst, UndertekstBold} from "nav-frontend-typografi";
+import {UndertekstBold} from "nav-frontend-typografi";
 import Lenke from "nav-frontend-lenker";
-import {Alert} from "@navikt/ds-react";
+import {Alert, BodyShort, Button, Loader} from "@navikt/ds-react";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -169,21 +168,19 @@ const BostotteView = () => {
                         <>
                             {bostotte && bostotte.bekreftelse && (
                                 <>
-                                    <Normaltekst>
+                                    <BodyShort spacing>
                                         {getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke.tekst")}
-                                    </Normaltekst>
-                                    <Knapp
+                                    </BodyShort>
+                                    <Button
+                                        variant="secondary"
                                         id="gi_bostotte_samtykke"
-                                        type="standard"
-                                        spinner={oppstartsModus}
                                         onClick={() => {
                                             handleSettBostotteSamtykke(true);
                                         }}
-                                        htmlType="button"
-                                        className="samtykke_knapp_padding"
                                     >
                                         {getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke")}
-                                    </Knapp>
+                                        {oppstartsModus && <Loader />}
+                                    </Button>
                                     {samtykkeTidspunktStreng === "" && requestToHusbankenFeilet && (
                                         <Alert variant="error">
                                             {getIntlTextOrKey(intl, "inntekt.bostotte.nedlasting_feilet")}

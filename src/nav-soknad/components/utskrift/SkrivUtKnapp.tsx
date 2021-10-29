@@ -1,5 +1,5 @@
+import {Button} from "@navikt/ds-react";
 import * as React from "react";
-import {Knapp} from "nav-frontend-knapper";
 import DOMPortal from "./DOMPortal";
 import Utskrift from "./Utskrift";
 
@@ -65,17 +65,16 @@ class SkrivUtKnapp extends React.Component<SkrivUtKnappProps, State> {
     render() {
         return (
             <div>
-                <Knapp
-                    htmlType="button"
+                <Button
+                    variant="secondary"
                     onClick={() =>
                         this.setState({
                             active: !this.state.active,
                         })
                     }
-                    type="standard"
                 >
                     {this.props.children}
-                </Knapp>
+                </Button>
 
                 {this.props.prerenderInnhold || this.state.active ? (
                     <DOMPortal>

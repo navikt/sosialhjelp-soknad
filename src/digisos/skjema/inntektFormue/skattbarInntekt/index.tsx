@@ -9,11 +9,10 @@ import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import SkattbarinntektForskuddstrekk from "./SkattbarinntektForskuddstrekk";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknadsdata/soknadsdataActions";
-import Knapp from "nav-frontend-knapper";
 import {formatTidspunkt, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
 import Lenke from "nav-frontend-lenker";
-import {Alert} from "@navikt/ds-react";
+import {Alert, BodyShort, Button, Label} from "@navikt/ds-react";
 
 const Skatt = () => {
     const dispatch = useDispatch();
@@ -58,23 +57,22 @@ const Skatt = () => {
             {harSamtykke && inntektFraSkatteetatenFeilet && (
                 <div className={"ytelser_panel"}>
                     <div>
-                        <UndertekstBold>
+                        <Label spacing>
                             <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_sporsmal" />
-                        </UndertekstBold>
-                        <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_info" />
+                        </Label>
+                        <BodyShort spacing>
+                            <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_info" />
+                        </BodyShort>
                     </div>
-                    <Knapp
+                    <Button
+                        variant="secondary"
                         id="gi_bostotte_samtykke"
-                        type="standard"
-                        htmlType="button"
-                        mini={false}
                         onClick={() => {
                             handleSettSkatteetatenSamtykke(true);
                         }}
-                        className="samtykke_knapp_padding"
                     >
                         {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.gi_samtykke")}
-                    </Knapp>
+                    </Button>
                     {samtykkeTidspunktStreng === "" && (
                         <Alert variant="error">
                             <FormattedMessage id="utbetalinger.skattbar.kontaktproblemer" />
@@ -123,23 +121,22 @@ const Skatt = () => {
                     {!harSamtykke && (
                         <>
                             <div>
-                                <UndertekstBold>
+                                <Label spacing>
                                     <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_sporsmal" />
-                                </UndertekstBold>
-                                <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_info" />
+                                </Label>
+                                <BodyShort spacing>
+                                    <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_info" />
+                                </BodyShort>
                             </div>
-                            <Knapp
+                            <Button
+                                variant="secondary"
                                 id="gi_bostotte_samtykke"
-                                type="standard"
-                                htmlType="button"
-                                mini={false}
                                 onClick={() => {
                                     handleSettSkatteetatenSamtykke(true);
                                 }}
-                                className="samtykke_knapp_padding"
                             >
                                 {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.gi_samtykke")}
-                            </Knapp>
+                            </Button>
                         </>
                     )}
                 </div>

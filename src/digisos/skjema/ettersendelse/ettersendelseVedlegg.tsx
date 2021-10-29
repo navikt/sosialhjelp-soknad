@@ -10,8 +10,8 @@ import {Fil, OpplysningType} from "../../redux/okonomiskeOpplysninger/opplysning
 import {State} from "../../redux/reducers";
 import {REST_FEIL, REST_STATUS} from "../../redux/soknad/soknadTypes";
 import PaperclipIcon from "../../../nav-soknad/components/digisosIkon/paperclipIcon";
-import {Knapp} from "nav-frontend-knapper";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
+import {Button, Loader} from "@navikt/ds-react";
 
 interface Props {
     ettersendelseAktivert: boolean;
@@ -122,15 +122,18 @@ const EttersendelseVedlegg = (props: Props) => {
                     </>
                 )}
 
-                <Knapp
-                    type="standard"
-                    spinner={props.vedlegg.type === opplastingVedleggType}
-                    disabled={ettersendStatus === REST_STATUS.PENDING || opplastingStatus === REST_STATUS.PENDING}
-                    autoDisableVedSpinner={true}
+                <Button
+                    variant="secondary"
+                    disabled={
+                        ettersendStatus === REST_STATUS.PENDING ||
+                        opplastingStatus === REST_STATUS.PENDING ||
+                        props.vedlegg.type === opplastingVedleggType
+                    }
                     onClick={() => props.ettersendelseAktivert && leggTilVedleggKnapp.current?.click()}
                 >
                     Velg vedlegg
-                </Knapp>
+                    {props.vedlegg.type === opplastingVedleggType && <Loader />}
+                </Button>
             </AvsnittMedMarger>
         </span>
     );
