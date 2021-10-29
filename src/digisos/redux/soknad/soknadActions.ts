@@ -15,6 +15,7 @@ import {
     TilgangResponse,
 } from "./soknadTypes";
 import {IntlShape} from "react-intl";
+import {History} from "history";
 
 export function startSoknadOk() {
     return {
@@ -28,10 +29,11 @@ export function startSoknadServiceUnavailable() {
     };
 }
 
-export function opprettSoknad(intl: IntlShape) {
+export function opprettSoknad(intl: IntlShape, history: History) {
     return {
         type: SoknadActionTypeKeys.OPPRETT_SOKNAD,
         intl,
+        history,
     };
 }
 
@@ -69,10 +71,11 @@ export function sendSoknadPending(): SoknadActionType {
     };
 }
 
-export function sendSoknad(behandlingsId: string): SoknadActionType {
+export function sendSoknad(behandlingsId: string, history: History): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SEND_SOKNAD,
         behandlingsId,
+        history,
     };
 }
 
@@ -107,10 +110,11 @@ export function fortsettSoknad(): SoknadActionType {
     };
 }
 
-export function finnOgOppdaterSoknadsmottakerStatus(brukerbehandlingId: string): SoknadActionType {
+export function finnOgOppdaterSoknadsmottakerStatus(brukerbehandlingId: string, history: History): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS,
         brukerbehandlingId,
+        history,
     };
 }
 
@@ -138,13 +142,15 @@ export const setErSystemdataEndret = (erSystemdataEndret: boolean): SoknadAction
 export const oppdaterSamtykke = (
     behandlingsId: string,
     harSamtykket: boolean,
-    samtykker: Samtykke[]
+    samtykker: Samtykke[],
+    history: History
 ): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.OPPDATER_SAMTYKKE,
         behandlingsId: behandlingsId,
         harSamtykket: harSamtykket,
         samtykker: samtykker,
+        history,
     };
 };
 

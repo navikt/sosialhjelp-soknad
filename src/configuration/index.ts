@@ -7,12 +7,6 @@ export const GCP_API_APP_NAME = "sosialhjelp-soknad-api-gcp";
 
 export const getContextPathForStaticContent = (): string => "/sosialhjelp/soknad";
 
-export const getContextPathFromWindowLocation = (pathname: string): string => {
-    return pathname.replace(/^(.+?sosialhjelp\/soknad)(.+)$/, "$1");
-};
-
-export const getContextPathBasename = (): string => getContextPathFromWindowLocation(window.location.pathname);
-
 export function getRedirectPathname(): string {
     return `/${CONTEXT_PATH}/link`;
 }

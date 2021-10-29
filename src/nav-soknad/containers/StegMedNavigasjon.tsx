@@ -1,5 +1,5 @@
 import * as React from "react";
-import {RouteComponentProps, withRouter} from "react-router";
+import {RouteComponentProps, useHistory, withRouter} from "react-router";
 import {FormattedMessage, useIntl} from "react-intl";
 import {useSelector, useDispatch} from "react-redux";
 import {Innholdstittel} from "nav-frontend-typografi";
@@ -11,14 +11,13 @@ import Knapperad from "../components/knapperad";
 import {REST_STATUS, SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../../digisos/redux/soknad/soknadTypes";
 import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
 import {setVisBekreftMangler} from "../../digisos/redux/oppsummering/oppsummeringActions";
-import {getIntlTextOrKey, scrollToTop} from "../utils";
+import {getIntlTextOrKey, getStegUrl, scrollToTop} from "../utils";
 import {
     avbrytSoknad,
     resetSendSoknadServiceUnavailable,
     sendSoknad,
     sendSoknadPending,
 } from "../../digisos/redux/soknad/soknadActions";
-import {gaTilbake, gaVidere, tilSteg} from "../../digisos/redux/navigasjon/navigasjonActions";
 import AppBanner from "../components/appHeader/AppHeader";
 import {
     clearAllValideringsfeil,
@@ -57,6 +56,8 @@ const StegMedNavigasjon = (
 
     const dispatch = useDispatch();
 
+    const history = useHistory();
+
     const intl = useIntl();
 
     useEffect(() => {
@@ -87,7 +88,7 @@ const StegMedNavigasjon = (
             } else {
                 if (feil.length === 0) {
                     dispatch(clearAllValideringsfeil());
-                    dispatch(tilSteg(steg, behandlingsId));
+                    history.push(getStegUrl(behandlingsId, steg));
                 } else {
                     dispatch(visValideringsfeilPanel());
                 }
@@ -113,7 +114,7 @@ const StegMedNavigasjon = (
                     logAmplitudeEvent("skjema fullført", createSkjemaEventData());
                     loggAdresseTypeTilGrafana();
                     dispatch(sendSoknadPending());
-                    dispatch(sendSoknad(behandlingsId));
+                    dispatch(sendSoknad(behandlingsId, history));
                 } else {
                     dispatch(setVisBekreftMangler(true));
                 }
@@ -132,7 +133,7 @@ const StegMedNavigasjon = (
                             ...createSkjemaEventData(),
                             steg: aktivtSteg.stegnummer,
                         });
-                        dispatch(gaVidere(aktivtSteg.stegnummer, behandlingsId));
+                        history.push(getStegUrl(behandlingsId, aktivtSteg.stegnummer + 1));
                     });
                 } else {
                     dispatch(visValideringsfeilPanel());
@@ -167,7 +168,7 @@ const StegMedNavigasjon = (
         if (behandlingsId) {
             dispatch(clearAllValideringsfeil());
             dispatch(resetSendSoknadServiceUnavailable());
-            dispatch(gaTilbake(aktivtSteg, behandlingsId));
+            history.push(getStegUrl(behandlingsId, aktivtSteg - 1));
         }
     };
 

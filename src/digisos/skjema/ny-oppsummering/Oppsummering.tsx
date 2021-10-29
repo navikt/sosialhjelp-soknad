@@ -24,6 +24,7 @@ import {FreeText} from "./question/FreeText";
 import {Warning} from "./question/Warning";
 import {SystemDataMap} from "./question/SystemDataMap";
 import {Attachment} from "./question/Attachment";
+import {useHistory} from "react-router";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
@@ -43,11 +44,13 @@ export const Oppsummering = () => {
     const {bekreftet, visBekreftMangler, nyOppsummering} = useSelector((state: State) => state.oppsummering);
     const {behandlingsId} = useSelector((state: State) => state.soknad);
 
+    const history = useHistory();
+
     const intl = useIntl();
 
     useEffect(() => {
         if (behandlingsId) {
-            dispatch(finnOgOppdaterSoknadsmottakerStatus(behandlingsId));
+            dispatch(finnOgOppdaterSoknadsmottakerStatus(behandlingsId, history));
             dispatch(hentNyOppsummering());
             fetchToJson<NyOppsummeringResponse>(`soknader/${behandlingsId}/oppsummering`)
                 .then((response) => {
@@ -61,7 +64,7 @@ export const Oppsummering = () => {
                 });
             setLoading(false);
         }
-    }, [behandlingsId, dispatch]);
+    }, [behandlingsId, history, dispatch]);
 
     const bekreftOpplysninger: string = intl.formatMessage({
         id: "soknadsosialhjelp.oppsummering.harLestSamtykker",

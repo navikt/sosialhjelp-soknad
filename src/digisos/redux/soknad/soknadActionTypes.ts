@@ -1,3 +1,4 @@
+import {History} from "history";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {
     FornavnResponse,
@@ -102,6 +103,7 @@ export interface OppdaterSamtykke {
     behandlingsId: string;
     harSamtykket: boolean;
     samtykker: Samtykke[];
+    history: History;
 }
 
 export interface Samtykke {
@@ -138,6 +140,7 @@ export interface VisLasteOppVedleggModal {
 export interface FinnOgOppdaterSoknadsmottakerStatus {
     type: SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS;
     brukerbehandlingId: string;
+    history: History;
 }
 
 export interface OppdaterSoknadsmottakerStatus {
@@ -184,6 +187,7 @@ export interface SendSoknadPendingAction {
 export interface SendSoknadAction {
     type: SoknadActionTypeKeys.SEND_SOKNAD;
     behandlingsId: string;
+    history: History;
 }
 
 export interface SendSoknadOkAction {

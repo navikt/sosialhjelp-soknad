@@ -10,7 +10,6 @@ import * as ReactDOM from "react-dom";
 import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import createSagaMiddleware from "redux-saga";
-import {ConnectedRouter, routerMiddleware} from "connected-react-router";
 import * as Sentry from "@sentry/react";
 
 import reducers from "./digisos/redux/reducers";
@@ -21,7 +20,6 @@ import {erLocalhost, erProd} from "./nav-soknad/utils/rest-utils";
 import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
 import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
-import {getContextPathBasename} from "./configuration";
 import {SoknadState} from "./digisos/redux/soknad/soknadTypes";
 import LoadContainer from "./LoadContainer";
 import Modal from "react-modal";
@@ -29,28 +27,30 @@ import {initAmplitude} from "./nav-soknad/utils/amplitude";
 import {logException, NavLogEntry, NavLogLevel} from "./nav-soknad/utils/loggerUtils";
 import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 import {Integrations} from "@sentry/tracing";
+import {BrowserRouter} from "react-router-dom";
+import {createBrowserHistory} from "history";
+import {getContextPathForStaticContent} from "./configuration";
 
 Modal.setAppElement("#root");
 
-const history = require("history").createBrowserHistory({
-    getUserConfirmation: (msg: any, callback: (flag: boolean) => void) => {
-        if (msg === NAVIGASJONSPROMT.SKJEMA) {
-            const soknad: SoknadState = store.getState().soknad;
-            if (soknad.behandlingsId && soknad.avbrytSoknadSjekkAktiv) {
-                store.dispatch(avbrytSoknad());
-                callback(false);
-            } else {
-                callback(true);
-            }
-        } else if (msg === NAVIGASJONSPROMT.ETTERSENDELSE) {
-            store.dispatch(visSoknadAlleredeSendtPrompt(true));
+const history = createBrowserHistory();
+
+const getUserConfirmation = (msg: any, callback: (flag: boolean) => void) => {
+    if (msg === NAVIGASJONSPROMT.SKJEMA) {
+        const soknad: SoknadState = store.getState().soknad;
+        if (soknad.behandlingsId && soknad.avbrytSoknadSjekkAktiv) {
+            store.dispatch(avbrytSoknad());
             callback(false);
         } else {
             callback(true);
         }
-    },
-    basename: getContextPathBasename(),
-});
+    } else if (msg === NAVIGASJONSPROMT.ETTERSENDELSE) {
+        store.dispatch(visSoknadAlleredeSendtPrompt(true));
+        callback(false);
+    } else {
+        callback(true);
+    }
+};
 
 Sentry.init({
     dsn: "https://e81d69cb0fb645068f8b9329fd3a138a@sentry.gc.nav.no/99",
@@ -70,8 +70,8 @@ function configureStore() {
 
     const saga = createSagaMiddleware();
 
-    const middleware = applyMiddleware(saga, routerMiddleware(history));
-    const createdStore = createStore(reducers(history), composeEnhancers(middleware));
+    const middleware = applyMiddleware(saga);
+    const createdStore = createStore(reducers(), composeEnhancers(middleware));
     saga.run(sagas);
     return createdStore;
 }
@@ -112,9 +112,9 @@ ReactDOM.render(
     <Provider store={store}>
         <IntlProvider>
             <LoadContainer>
-                <ConnectedRouter history={history}>
+                <BrowserRouter basename={getContextPathForStaticContent()} getUserConfirmation={getUserConfirmation}>
                     <App />
-                </ConnectedRouter>
+                </BrowserRouter>
             </LoadContainer>
         </IntlProvider>
     </Provider>,
