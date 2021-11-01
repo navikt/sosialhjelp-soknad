@@ -2,7 +2,6 @@ import * as React from "react";
 import {useEffect} from "react";
 import Panel from "nav-frontend-paneler";
 import {getIntlTextOrKey, getStegUrl} from "../../../nav-soknad/utils";
-import Knapp from "nav-frontend-knapper";
 import {FormattedMessage, useIntl} from "react-intl";
 import AppBanner from "../../../nav-soknad/components/appHeader/AppHeader";
 import {Checkbox} from "nav-frontend-skjema";
@@ -15,6 +14,7 @@ import Veilederpanel from "nav-frontend-veilederpanel";
 import EllaKompakt from "../../../nav-soknad/components/svg/EllaKompakt";
 import {useHistory} from "react-router";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
+import {Button} from "@navikt/ds-react";
 
 const SamtykkeView: React.FC = () => {
     const intl = useIntl();
@@ -89,16 +89,16 @@ const SamtykkeView: React.FC = () => {
                             </>
                         )}
                     </Veilederpanel>
-                    <Knapp
+                    <Button
+                        variant="primary"
                         id="gi_bostotte_samtykke"
-                        type="hoved"
                         onClick={() => {
                             knappOppdaterSamtykkeOgGaTilSteg1();
                         }}
                         className="samtykke_knapp_padding"
                     >
                         {getIntlTextOrKey(intl, "informasjon.samtykke.knapp")}
-                    </Knapp>
+                    </Button>
                 </Panel>
             )}
         </div>

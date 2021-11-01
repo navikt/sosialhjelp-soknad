@@ -1,5 +1,4 @@
 import * as React from "react";
-import {Knapp} from "nav-frontend-knapper";
 import {FormattedMessage} from "react-intl";
 import {Fil, Opplysning, VedleggStatus} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {useDispatch, useSelector} from "react-redux";
@@ -20,6 +19,7 @@ import {setValideringsfeil} from "../../redux/validering/valideringActions";
 import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 import {Dispatch} from "redux";
 import {logInfo} from "../../../nav-soknad/utils/loggerUtils";
+import {Button, Loader} from "@navikt/ds-react";
 
 const lastOppFil = (
     opplysning: Opplysning,
@@ -122,19 +122,18 @@ const LastOppFil = (props: {
 
     return (
         <div>
-            <Knapp
-                type="hoved"
+            <Button
+                variant="primary"
                 id={props.opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
-                htmlType="button"
                 disabled={props.isDisabled}
-                spinner={props.visSpinner}
                 onClick={() => {
                     handleOnClick();
                 }}
                 className="last-opp-vedlegg-knapp"
             >
                 + <FormattedMessage id="opplysninger.vedlegg.knapp.tekst" />
-            </Knapp>
+                {props.visSpinner && <Loader />}
+            </Button>
             <input
                 id={props.opplysning.type.replace(/\./g, "_") + "_skjult_upload_input"}
                 ref={vedleggElement}

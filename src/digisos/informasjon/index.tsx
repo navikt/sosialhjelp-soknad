@@ -1,7 +1,6 @@
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {FormattedMessage, useIntl} from "react-intl";
-import {Hovedknapp} from "nav-frontend-knapper";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
 import IkkeTilgang from "./IkkeTilgang";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
@@ -16,7 +15,7 @@ import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/a
 import {Soknadsoversikt} from "./Soknadsoversikt";
 import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
 import {useTitle} from "../../nav-soknad/hooks/useTitle";
-import {Alert, BodyShort, Label} from "@navikt/ds-react";
+import {Alert, BodyShort, Button, Label, Loader} from "@navikt/ds-react";
 import {useHistory} from "react-router";
 import {ApplicationSpinner} from "../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
@@ -141,16 +140,17 @@ export const InformasjonSide = (props: {enableModalV2: boolean}) => {
                     )}
 
                     <span className="informasjon-start-knapp">
-                        <Hovedknapp
+                        <Button
+                            variant="primary"
                             id="start_soknad_button"
-                            spinner={startSoknadPending}
                             disabled={startSoknadPending || visNedetidPanel}
                             onClick={(event) => {
                                 onSokSosialhjelpButtonClick(event);
                             }}
                         >
                             {getIntlTextOrKey(intl, "skjema.knapper.start")}
-                        </Hovedknapp>
+                            {startSoknadPending && <Loader />}
+                        </Button>
 
                         {nedetid?.isNedetid && visNedetidPanel && (
                             <Alert variant="error" style={{marginTop: "0.4rem"}}>

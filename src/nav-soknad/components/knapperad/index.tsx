@@ -1,7 +1,7 @@
 import * as React from "react";
 import {getIntlTextOrKey} from "../../utils/intlUtils";
-import {Flatknapp, Hovedknapp, Knapp} from "nav-frontend-knapper";
 import {useIntl} from "react-intl";
+import {Button, Loader} from "@navikt/ds-react";
 
 interface Props {
     gaViderePending?: boolean;
@@ -50,29 +50,22 @@ const SkjemaKnapperad: React.FC<Props> = ({
 
     return (
         <div className="skjema-knapperad ikke-juridisk-tekst">
-            <Hovedknapp
-                id="gaa_videre_button"
-                htmlType="button"
-                onClick={gaVidere}
-                spinner={shouldShowSpinner()}
-                disabled={isDisabled()}
-                type="hoved"
-            >
+            <Button variant="primary" id="gaa_videre_button" onClick={gaVidere} disabled={isDisabled()}>
                 {gaVidereLabel ? gaVidereLabel : getIntlTextOrKey(intl, "skjema.knapper.gaavidere")}
-            </Hovedknapp>
-            <Knapp
+                {shouldShowSpinner() && <Loader />}
+            </Button>
+            <Button
+                variant="primary"
                 id="gaa_tilbake_button"
-                htmlType="button"
                 onClick={gaTilbake}
-                spinner={lastOppVedleggPending}
                 disabled={gaViderePending || lastOppVedleggPending || !gaTilbake}
-                type="hoved"
             >
                 {getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
-            </Knapp>
-            <Flatknapp onClick={gaViderePending ? undefined : avbryt} type="flat" htmlType="button">
+                {lastOppVedleggPending && <Loader />}
+            </Button>
+            <Button onClick={gaViderePending ? undefined : avbryt} variant="tertiary">
                 {getIntlTextOrKey(intl, "skjema.knapper.avbryt")}
-            </Flatknapp>
+            </Button>
         </div>
     );
 };

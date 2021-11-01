@@ -1,10 +1,10 @@
 import * as React from "react";
-import {Knapp} from "nav-frontend-knapper";
 import {Innholdstittel} from "nav-frontend-typografi";
 import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
 import Banner from "../banner/Banner";
 import Lenke from "nav-frontend-lenker";
 import {useTitle} from "../../hooks/useTitle";
+import {Button} from "@navikt/ds-react";
 
 export interface FeilsideProps {
     tittel?: string;
@@ -39,9 +39,9 @@ const FeilSide: React.FC<FeilsideProps> = ({
                 <div className="feilside__innhold">{children}</div>
                 {feilkode ? <div className="feilside__feilkode">Feilkode {feilkode}</div> : null}
                 {visKnapp ? (
-                    <Knapp type="hoved" htmlType="button" onClick={onClick}>
+                    <Button variant="primary" onClick={onClick}>
                         {knappTekst}
-                    </Knapp>
+                    </Button>
                 ) : null}
                 <ul className="feilside__link-liste">
                     <li className="feilside__link">

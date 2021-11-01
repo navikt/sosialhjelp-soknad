@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
-import Knapp from "nav-frontend-knapper";
 import {FormattedMessage, useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
@@ -9,6 +8,7 @@ import {sendEttersendelse} from "../../redux/ettersendelse/ettersendelseActions"
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
+import {Button, Loader} from "@navikt/ds-react";
 
 const getAntallOpplastedeFiler = (data: EttersendelseVedleggBackend[]) => {
     return data.map((vedlegg: any) => vedlegg.filer.length).reduce((a: number, b: number) => a + b);
@@ -95,16 +95,14 @@ const EttersendelseVedleggListe = (props: {ettersendelseAktivert: boolean; onEtt
 
                 <br />
                 {props.ettersendelseAktivert && (
-                    <Knapp
-                        spinner={ettersendStatus === REST_STATUS.PENDING}
+                    <Button
+                        variant="primary"
+                        type="submit"
                         disabled={ettersendStatus === REST_STATUS.PENDING || opplastingStatus === REST_STATUS.PENDING}
-                        type="hoved"
-                        htmlType="submit"
                         onClick={() => onSendEttersendelse()}
-                        title="Send vedlegg"
                     >
-                        Send vedlegg
-                    </Knapp>
+                        Send vedlegg {ettersendStatus === REST_STATUS.PENDING && <Loader />}
+                    </Button>
                 )}
             </AvsnittMedMarger>
         </div>
