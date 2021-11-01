@@ -13,7 +13,6 @@ import {
 import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
-import {UbesvarteSporsmalPanel} from "./UbesvarteSporsmalPanel";
 import {NyOppsummeringBolk, NyOppsummeringResponse} from "../../redux/oppsummering/oppsummeringTypes";
 import {fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {ListOfValues} from "./question/ListOfValues";
@@ -43,7 +42,7 @@ export const Oppsummering = () => {
     const [loading, setLoading] = useState(true);
 
     const {bekreftet, visBekreftMangler, nyOppsummering} = useSelector((state: State) => state.oppsummering);
-    const {behandlingsId} = useSelector((state: State) => state.soknad);
+    const {behandlingsId, valgtSoknadsmottaker} = useSelector((state: State) => state.soknad);
 
     const history = useHistory();
 
@@ -77,8 +76,6 @@ export const Oppsummering = () => {
 
     return (
         <DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
-            <UbesvarteSporsmalPanel />
-
             {nyOppsummering.map((bolk: NyOppsummeringBolk) => {
                 return (
                     <OppsummeringBolk bolk={bolk} key={bolk.stegNr}>
@@ -115,7 +112,7 @@ export const Oppsummering = () => {
                 );
             })}
 
-            <SoknadsmottakerInfoPanel />
+            {valgtSoknadsmottaker && <SoknadsmottakerInfoPanel valgtSoknadsmottaker={valgtSoknadsmottaker} />}
 
             <ConfirmationPanel
                 label={bekreftOpplysninger}
