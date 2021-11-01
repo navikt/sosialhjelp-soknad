@@ -10,11 +10,17 @@ import {getErSystemdataEndret, hentSamtykker, oppdaterSamtykke} from "../../redu
 import {State} from "../../redux/reducers";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {ErSystemdataEndret, Samtykke} from "../../redux/soknad/soknadActionTypes";
-import Veilederpanel from "nav-frontend-veilederpanel";
 import EllaKompakt from "../../../nav-soknad/components/svg/EllaKompakt";
 import {useHistory} from "react-router";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
-import {Button} from "@navikt/ds-react";
+import {Button, GuidePanel} from "@navikt/ds-react";
+import styled from "styled-components";
+
+const StyledGuidePanel = styled(GuidePanel)`
+    --navds-guide-panel-color-border: var(--navds-color-orange-20);
+    --navds-guide-panel-color-illustration-background: var(--navds-color-orange-20);
+    margin-bottom: 2rem;
+`;
 
 const SamtykkeView: React.FC = () => {
     const intl = useIntl();
@@ -64,7 +70,7 @@ const SamtykkeView: React.FC = () => {
             {(!harLastetinnSamtykker || erSystemdataEndret === ErSystemdataEndret.NOT_ASKED) && <ApplicationSpinner />}
             {(harSamtykker || erSystemdataEndret === ErSystemdataEndret.YES) && (
                 <Panel className={"skjema-content"}>
-                    <Veilederpanel svg={<EllaKompakt />} fargetema="advarsel" kompakt={true} type="plakat">
+                    <StyledGuidePanel illustration={<EllaKompakt />} poster>
                         {erSystemdataEndret === ErSystemdataEndret.YES && (
                             <div className="skjemaelement--horisontal" style={{marginBottom: "8px"}}>
                                 <FormattedMessage id="oppsummering.systemdataendret.true" />
@@ -88,7 +94,7 @@ const SamtykkeView: React.FC = () => {
                                 />
                             </>
                         )}
-                    </Veilederpanel>
+                    </StyledGuidePanel>
                     <Button
                         variant="primary"
                         id="gi_bostotte_samtykke"
