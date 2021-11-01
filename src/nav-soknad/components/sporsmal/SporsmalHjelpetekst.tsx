@@ -1,8 +1,24 @@
 import * as React from "react";
-import Hjelpetekst from "nav-frontend-hjelpetekst";
+import {HelpText} from "@navikt/ds-react";
+import styled from "styled-components";
+
+const StyledHelpText = styled.div`
+    margin-left: 0.5rem;
+    font-weight: 400;
+    font-size: 1.125rem;
+    display: inline-block;
+
+    .navds-popover__content {
+        max-width: 390px;
+    }
+`;
 
 export const SporsmalHjelpetekst: React.FC<{tekster: any}> = ({tekster}) => {
-    return <Hjelpetekst tittel={tekster.hjelpetekst.tittel}>{tekster.hjelpetekst.tekst}</Hjelpetekst>;
+    return (
+        <StyledHelpText>
+            <HelpText title={tekster.hjelpetekst.tittel}>{tekster.hjelpetekst.tekst}</HelpText>
+        </StyledHelpText>
+    );
 };
 
 export const SporsmalInfotekst: React.FC<{tekster: any}> = ({tekster}) => {
