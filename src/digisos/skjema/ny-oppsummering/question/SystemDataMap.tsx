@@ -14,20 +14,22 @@ export const SystemDataMap = (props: {felter?: Felt[]}) => {
     if (!props.felter || props.felter.length === 0) return null;
 
     return (
-        <StyledSystemList>
-            {props.felter.map((felt) => {
-                return Object.entries(felt.labelSvarMap ?? {}).map((entry) => {
-                    return (
-                        <li key={entry[0]}>
-                            <FormattedText
-                                value={entry[1]?.value ?? ""}
-                                type={entry[1]?.type ?? "TEKST"}
-                                label={entry[0]}
-                            />
-                        </li>
-                    );
-                });
-            })}
-        </StyledSystemList>
+        <>
+            {props.felter.map((felt) => (
+                <StyledSystemList>
+                    {Object.entries(felt.labelSvarMap ?? {}).map((entry) => {
+                        return (
+                            <li key={entry[0]}>
+                                <FormattedText
+                                    value={entry[1]?.value ?? ""}
+                                    type={entry[1]?.type ?? "TEKST"}
+                                    label={entry[0]}
+                                />
+                            </li>
+                        );
+                    })}
+                </StyledSystemList>
+            ))}
+        </>
     );
 };
