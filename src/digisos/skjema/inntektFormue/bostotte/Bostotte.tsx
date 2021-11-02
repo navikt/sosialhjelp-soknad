@@ -17,8 +17,7 @@ import {
     settSamtykkeOgOppdaterData,
 } from "../../../redux/soknadsdata/soknadsdataActions";
 import {UndertekstBold} from "nav-frontend-typografi";
-import Lenke from "nav-frontend-lenker";
-import {Alert, BodyShort, Button, Loader} from "@navikt/ds-react";
+import {Alert, BodyShort, Button, Link, Loader} from "@navikt/ds-react";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -233,16 +232,16 @@ const BostotteView = () => {
                                 );
                             })}
                             {(harBostotterUtbetalinger || harBostotterSaker) && (
-                                <Lenke
+                                <Link
                                     href={intl.formatMessage({id: "inntekt.bostotte.husbanken.url"})}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
                                     <FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"} />
-                                </Lenke>
+                                </Link>
                             )}
                             <div className="bostotte-luft-over-ta-bort-knapp-lenke">
-                                <Lenke
+                                <Link
                                     id="ta_bort_bostotte_samtykke"
                                     onClick={(event: any) => {
                                         handleSettBostotteSamtykke(false);
@@ -251,7 +250,7 @@ const BostotteView = () => {
                                     href="/ta_bort_samtykke"
                                 >
                                     {getIntlTextOrKey(intl, "inntekt.bostotte.ta_bort_samtykke")}
-                                </Lenke>
+                                </Link>
                             </div>
                         </>
                     )}

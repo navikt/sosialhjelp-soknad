@@ -13,7 +13,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
-import Lenke from "nav-frontend-lenker";
+import {Link} from "@navikt/ds-react";
 
 const NavYtelserView = () => {
     const dispatch = useDispatch();
@@ -84,12 +84,12 @@ const NavYtelserView = () => {
                             id={"utbetalinger.infotekst.tekst.v2"}
                             values={{
                                 a: (msg: string) => (
-                                    <Lenke
+                                    <Link
                                         href={intl.formatMessage({id: "utbetalinger.infotekst.tekst.url"})}
                                         target="_blank"
                                     >
                                         {msg}
-                                    </Lenke>
+                                    </Link>
                                 ),
                             }}
                         />

@@ -34,7 +34,7 @@ const Bolker = (props: {oppsummering: Oppsummering}) => {
                     <EkspanderbartPanel tittel={<Undertittel>{bolk.tittel}</Undertittel>} apen={false}>
                         <div>
                             <div className="bolk__rediger">
-                                <Link className="lenke" to={`/skjema/${behandlingsId}/${idx + 1}`}>
+                                <Link className="navds-link" to={`/skjema/${behandlingsId}/${idx + 1}`}>
                                     {getIntlTextOrKey(intl, "oppsummering.gatilbake")}
                                 </Link>
                             </div>

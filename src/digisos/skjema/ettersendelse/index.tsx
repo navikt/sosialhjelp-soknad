@@ -16,9 +16,8 @@ import {erEttersendelseSide, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
 import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";
 import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
 import {Undertittel} from "nav-frontend-typografi";
-import Lenke from "nav-frontend-lenker";
 import {useTitle} from "../../../nav-soknad/hooks/useTitle";
-import {Alert} from "@navikt/ds-react";
+import {Alert, Link} from "@navikt/ds-react";
 
 const lesBrukerbehandlingskjedeId = (behandlingsId?: string) => {
     if (!behandlingsId) {
@@ -184,7 +183,7 @@ const Ettersendelse = () => {
                             id="ettersendelse.samtale.info.v2"
                             values={{
                                 a: (msg: string) => (
-                                    <Lenke href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote">{msg}</Lenke>
+                                    <Link href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote">{msg}</Link>
                                 ),
                             }}
                         />

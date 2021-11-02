@@ -2,9 +2,8 @@ import * as React from "react";
 import {Innholdstittel} from "nav-frontend-typografi";
 import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
 import Banner from "../banner/Banner";
-import Lenke from "nav-frontend-lenker";
 import {useTitle} from "../../hooks/useTitle";
-import {Button} from "@navikt/ds-react";
+import {Button, Link} from "@navikt/ds-react";
 
 export interface FeilsideProps {
     tittel?: string;
@@ -45,15 +44,15 @@ const FeilSide: React.FC<FeilsideProps> = ({
                 ) : null}
                 <ul className="feilside__link-liste">
                     <li className="feilside__link">
-                        <Lenke href="https://www.nav.no">Gå til forsiden nav.no</Lenke>
+                        <Link href="https://www.nav.no">Gå til forsiden nav.no</Link>
                     </li>
                     <li className="feilside__link">
-                        <Lenke href="https://www.nav.no/no/Ditt+NAV">Gå til Ditt NAV</Lenke>
+                        <Link href="https://www.nav.no/no/Ditt+NAV">Gå til Ditt NAV</Link>
                     </li>
                     <li className="feilside__link">
-                        <Lenke href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Klage+ris+og+ros/Feil+og+mangler+paa+navno">
+                        <Link href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Klage+ris+og+ros/Feil+og+mangler+paa+navno">
                             Meld fra om feil
-                        </Lenke>
+                        </Link>
                     </li>
                 </ul>
             </div>

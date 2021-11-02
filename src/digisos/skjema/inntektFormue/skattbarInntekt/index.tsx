@@ -11,8 +11,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknadsdata/soknadsdataActions";
 import {formatTidspunkt, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
-import Lenke from "nav-frontend-lenker";
-import {Alert, BodyShort, Button, Label} from "@navikt/ds-react";
+import {Alert, BodyShort, Button, Label, Link} from "@navikt/ds-react";
 
 const Skatt = () => {
     const dispatch = useDispatch();
@@ -87,7 +86,7 @@ const Skatt = () => {
                     <div className="utbetalinger">
                         <SkattbarinntektForskuddstrekk skattbarinntektogforskuddstrekk={inntektFraSkatteetaten} />
                     </div>
-                    <Lenke
+                    <Link
                         id="ta_bort_bostotte_samtykke"
                         onClick={(event: any) => {
                             handleSettSkatteetatenSamtykke(false);
@@ -96,7 +95,7 @@ const Skatt = () => {
                         href="/ta_bort_samtykke"
                     >
                         {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
-                    </Lenke>
+                    </Link>
                 </div>
             )}
             {!visAnimerteStreker && inntektFraSkatteetaten && inntektFraSkatteetaten.length === 0 && (
@@ -106,7 +105,7 @@ const Skatt = () => {
                             <div>
                                 <FormattedMessage id="utbetalinger.inntekt.skattbar.ingen" />
                             </div>
-                            <Lenke
+                            <Link
                                 id="ta_bort_bostotte_samtykke"
                                 onClick={(event: any) => {
                                     handleSettSkatteetatenSamtykke(false);
@@ -115,7 +114,7 @@ const Skatt = () => {
                                 href="/ta_bort_samtykke"
                             >
                                 {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
-                            </Lenke>
+                            </Link>
                         </>
                     )}
                     {!harSamtykke && (
