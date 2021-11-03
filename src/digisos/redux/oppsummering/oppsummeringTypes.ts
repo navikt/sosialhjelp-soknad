@@ -37,7 +37,7 @@ export interface Question {
 
 export interface Svar {
     value: string;
-    type: "TEKST" | "LOCALE_TEKST" | "DATO";
+    type: "TEKST" | "LOCALE_TEKST" | "DATO" | "TIDSPUNKT";
 }
 
 export interface Felt {
