@@ -2,7 +2,7 @@ import * as React from "react";
 import {TilgangSperrekode} from "../redux/soknad/soknadTypes";
 import Infoblokk from "../../nav-soknad/components/infoblokk";
 import {FormattedMessage, useIntl} from "react-intl";
-import Lenke from "nav-frontend-lenker";
+import {Link} from "@navikt/ds-react";
 
 interface Props {
     sperrekode: TilgangSperrekode;
@@ -23,12 +23,12 @@ const IkkeTilgangInformasjon: React.FC<Props> = ({sperrekode}) => {
                         id="informasjon.ikketilgang.bruker.tekst.v2"
                         values={{
                             a: (msg: string) => (
-                                <Lenke
+                                <Link
                                     href="https://www.nav.no/person/personopplysninger/#ditt-nav-kontor"
                                     target="_blank"
                                 >
                                     {msg}
-                                </Lenke>
+                                </Link>
                             ),
                         }}
                     />
@@ -43,12 +43,12 @@ const IkkeTilgangInformasjon: React.FC<Props> = ({sperrekode}) => {
                         id="informasjon.ikketilgang.tekst.v2"
                         values={{
                             a: (msg: string) => (
-                                <Lenke
+                                <Link
                                     href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Relatert+informasjon/finn-ditt-nav-kontor--353421"
                                     target="_blank"
                                 >
                                     {msg}
-                                </Lenke>
+                                </Link>
                             ),
                         }}
                     />

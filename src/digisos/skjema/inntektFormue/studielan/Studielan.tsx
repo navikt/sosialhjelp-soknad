@@ -13,7 +13,7 @@ import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {UndertekstBold} from "nav-frontend-typografi";
-import Lenke from "nav-frontend-lenker";
+import {Link} from "@navikt/ds-react";
 
 const FAKTUM_STUDIELAN = "inntekt.studielan";
 
@@ -82,13 +82,13 @@ const StudielanView = () => {
                             id={STUDERER_INFO_DEL1}
                             values={{
                                 a: (msg: string) => (
-                                    <Lenke
+                                    <Link
                                         href={intl.formatMessage({id: "informasjon.student.studielan.url"})}
                                         target="_blank"
                                         rel="noreferrer noopener"
                                     >
                                         {msg}
-                                    </Lenke>
+                                    </Link>
                                 ),
                             }}
                         />

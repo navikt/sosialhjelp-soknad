@@ -28,10 +28,9 @@ import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseT
 import {State} from "../../digisos/redux/reducers";
 import {erPaStegEnOgValgtNavEnhetErUgyldig, sjekkOmValgtNavEnhetErGyldig} from "./containerUtils";
 import {createSkjemaEventData, logAmplitudeEvent} from "../utils/amplitude";
-import Lenke from "nav-frontend-lenker";
 import {useTitle} from "../hooks/useTitle";
 import {logInfo} from "../utils/loggerUtils";
-import {Alert} from "@navikt/ds-react";
+import {Alert, Link} from "@navikt/ds-react";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -249,9 +248,9 @@ const StegMedNavigasjon = (
                                 values={{
                                     kommuneNavn: finnKommunenavn(),
                                     a: (msg: string) => (
-                                        <Lenke href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                                        <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
                                             {msg}
-                                        </Lenke>
+                                        </Link>
                                     ),
                                 }}
                             />
@@ -264,13 +263,13 @@ const StegMedNavigasjon = (
                                 values={{
                                     kommuneNavn: finnKommunenavn(),
                                     a: (msg: string) => (
-                                        <Lenke
+                                        <Link
                                             href="https://husbanken.no/bostotte"
                                             target="_blank"
                                             rel="noreferrer noopener"
                                         >
                                             {msg}
-                                        </Lenke>
+                                        </Link>
                                     ),
                                 }}
                             />

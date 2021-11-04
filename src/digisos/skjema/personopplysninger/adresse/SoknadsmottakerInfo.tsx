@@ -6,8 +6,7 @@ import {soknadsmottakerStatus} from "./AdresseUtils";
 import {FormattedMessage} from "react-intl";
 import {useSelector} from "react-redux";
 import {State} from "../../../redux/reducers";
-import Lenke from "nav-frontend-lenker";
-import {Alert} from "@navikt/ds-react";
+import {Alert, Link} from "@navikt/ds-react";
 
 const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
@@ -39,9 +38,9 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
                     values={{
                         kommuneNavn: kommunenavn,
                         a: (msg: string) => (
-                            <Lenke href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                            <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
                                 {msg}
-                            </Lenke>
+                            </Link>
                         ),
                     }}
                 />
@@ -56,9 +55,9 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
                     values={{
                         kommuneNavn: kommunenavn,
                         a: (msg: string) => (
-                            <Lenke href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                            <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
                                 {msg}
-                            </Lenke>
+                            </Link>
                         ),
                     }}
                 />
