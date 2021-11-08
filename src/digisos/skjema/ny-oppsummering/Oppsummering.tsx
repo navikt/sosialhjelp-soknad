@@ -25,6 +25,8 @@ import {SystemDataMap} from "./question/SystemDataMap";
 import {Attachment} from "./question/Attachment";
 import {useHistory} from "react-router";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
+import {Link as ReactRouterLink} from "react-router-dom";
+import styled from "styled-components";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
@@ -134,14 +136,27 @@ export const Oppsummering = () => {
     );
 };
 
+const EditAnswer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
+
 const OppsummeringBolk = (props: {bolk: NyOppsummeringBolk; children: React.ReactNode}) => {
+    const {behandlingsId} = useSelector((state: State) => state.soknad);
     return (
         <Accordion>
             <Accordion.Item>
                 <Accordion.Header>
                     <FormattedMessage id={props.bolk.tittel} />
                 </Accordion.Header>
-                <Accordion.Content>{props.children}</Accordion.Content>
+                <Accordion.Content>
+                    <EditAnswer>
+                        <ReactRouterLink className="navds-link" to={`/skjema/${behandlingsId}/${props.bolk.stegNr}`}>
+                            Gå tilbake for å endre
+                        </ReactRouterLink>
+                    </EditAnswer>
+                    {props.children}
+                </Accordion.Content>
             </Accordion.Item>
         </Accordion>
     );
