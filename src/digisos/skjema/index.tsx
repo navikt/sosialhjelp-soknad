@@ -113,8 +113,7 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
                     <SentryRoute path={`${path}/6`} component={Steg6} />
                     <SentryRoute path={`${path}/7`} component={Steg7} />
                     <SentryRoute path={`${path}/8`} component={Steg8} />
-                    <SentryRoute path={`${path}/9`} component={Oppsummering} />
-                    <SentryRoute path={`${path}/ny-oppsummering`} component={NyOppsummering} />
+                    <SentryRoute path={`${path}/9`} component={NyOppsummering} />
                     <SentryRoute component={SideIkkeFunnet} />
                 </Switch>
                 <Prompt
