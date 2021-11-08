@@ -11,7 +11,6 @@ import Steg5 from "./bosituasjon";
 import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
 import Steg8 from "./okonomiskeOpplysninger";
-import Oppsummering from "./oppsummering";
 import NyOppsummering from "./ny-oppsummering/Oppsummering";
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
 import {State} from "../redux/reducers";
@@ -113,8 +112,7 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
                     <SentryRoute path={`${path}/6`} component={Steg6} />
                     <SentryRoute path={`${path}/7`} component={Steg7} />
                     <SentryRoute path={`${path}/8`} component={Steg8} />
-                    <SentryRoute path={`${path}/9`} component={Oppsummering} />
-                    <SentryRoute path={`${path}/ny-oppsummering`} component={NyOppsummering} />
+                    <SentryRoute path={`${path}/9`} component={NyOppsummering} />
                     <SentryRoute component={SideIkkeFunnet} />
                 </Switch>
                 <Prompt
