@@ -11,7 +11,6 @@ import Steg5 from "./bosituasjon";
 import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
 import Steg8 from "./okonomiskeOpplysninger";
-import Oppsummering from "./oppsummering";
 import NyOppsummering from "./ny-oppsummering/Oppsummering";
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
 import {State} from "../redux/reducers";
