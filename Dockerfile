@@ -5,7 +5,7 @@ ENV NODE_ENV production
 WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
-RUN node_modules/ node_modules
+RUN node_modules/ node_modules/
 COPY server.js server.js
 COPY build build/
 
