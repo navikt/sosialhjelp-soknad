@@ -252,18 +252,6 @@ export function fetchDelete(urlPath: string) {
     });
 }
 
-export function fetchOppsummering(urlPath: string) {
-    const OPTIONS: RequestInit = {
-        headers: new Headers({accept: "application/vnd.oppsummering+html"}),
-        method: "GET",
-        credentials: determineCredentialsParameter(),
-    };
-    return fetch(getApiBaseUrl(false) + urlPath, OPTIONS).then((response: Response) => {
-        verifyStatusSuccessOrRedirect(response);
-        return response.text();
-    });
-}
-
 export function fetchKvittering(urlPath: string) {
     //let path = window.location.href.split("/");
     //let behandlingsId = path[path.length-2];
