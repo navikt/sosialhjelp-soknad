@@ -1,12 +1,32 @@
 import React from "react";
+import styled from "styled-components";
 
+const StyledEllaBlunk = styled.svg`
+    .oyne {
+        animation-name: oyne;
+        animation-duration: 2400ms;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-out;
+        transform-origin: 50% 42%;
+    }
+
+    @keyframes oyne {
+        0%,
+        16% {
+            transform: scaleY(1);
+        }
+        8% {
+            transform: scaleY(0);
+        }
+    }
+`;
 interface EllaProps {
     size: string;
 }
 
 const EllaBlunk: React.FC<EllaProps> = (props: EllaProps) => {
     return (
-        <svg
+        <StyledEllaBlunk
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 175 175"
@@ -85,7 +105,7 @@ const EllaBlunk: React.FC<EllaProps> = (props: EllaProps) => {
                     <path fill="#C2B5CF" d="M108.476 136.958h1.447V133h-1.447z" />
                 </g>
             </g>
-        </svg>
+        </StyledEllaBlunk>
     );
 };
 
