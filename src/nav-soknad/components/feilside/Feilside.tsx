@@ -1,14 +1,34 @@
 import * as React from "react";
-import {Innholdstittel} from "nav-frontend-typografi";
 import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
 import Banner from "../banner/Banner";
 import {useTitle} from "../../hooks/useTitle";
-import {Button, Link} from "@navikt/ds-react";
+import {BodyShort, Button, Heading, Link} from "@navikt/ds-react";
+import styled from "styled-components";
+
+const StyledFeilside = styled.div`
+    text-align: center;
+`;
+
+const Ikon = styled.div`
+    margin-top: 40px;
+`;
+
+const LinkList = styled.ul`
+    margin-top: 20px;
+    padding-left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2.5rem;
+
+    li {
+        display: inline-block;
+    }
+`;
 
 export interface FeilsideProps {
     tittel?: string;
     children: React.ReactNode;
-    feilkode?: string;
     visKnapp?: boolean;
     knappTekst?: string;
     onClick?: (event: React.MouseEvent<any>) => void;
@@ -18,46 +38,52 @@ export interface FeilsideProps {
  * Default inneholder denne hardkodete tekster i og
  * med det er ikke sikkert tekstressurser er tilgjengelig
  */
-const FeilSide: React.FC<FeilsideProps> = ({
+const Feilside: React.FC<FeilsideProps> = ({
     tittel = "OOPS, NOE GIKK GALT",
     children,
-    feilkode,
     visKnapp,
     knappTekst = "Gå tilbake",
     onClick,
 }) => {
     useTitle(`Feilside - ${document.location.hostname}`);
     return (
-        <span>
+        <>
             <Banner>Søknad om økonomisk sosialhjelp</Banner>
-            <div className="feilside skjema-content">
-                <div className="feilside__ikon">
+            <StyledFeilside>
+                <Ikon>
                     <UtropstegnSirkelGraIkon />
-                </div>
-                <Innholdstittel className="feilside__tittel">{tittel}</Innholdstittel>
-                <div className="feilside__innhold">{children}</div>
-                {feilkode ? <div className="feilside__feilkode">Feilkode {feilkode}</div> : null}
+                </Ikon>
+                <Heading level="1" size="large" spacing>
+                    {tittel}
+                </Heading>
+                <BodyShort spacing>{children}</BodyShort>
                 {visKnapp ? (
                     <Button variant="primary" onClick={onClick}>
                         {knappTekst}
                     </Button>
                 ) : null}
-                <ul className="feilside__link-liste">
-                    <li className="feilside__link">
-                        <Link href="https://www.nav.no">Gå til forsiden nav.no</Link>
+                <LinkList>
+                    <li>
+                        <BodyShort>
+                            <Link href="https://www.nav.no">Gå til forsiden nav.no</Link>
+                        </BodyShort>
                     </li>
-                    <li className="feilside__link">
-                        <Link href="https://www.nav.no/no/Ditt+NAV">Gå til Ditt NAV</Link>
+                    <li>
+                        <BodyShort>
+                            <Link href="https://www.nav.no/no/Ditt+NAV">Gå til Ditt NAV</Link>
+                        </BodyShort>
                     </li>
-                    <li className="feilside__link">
-                        <Link href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Klage+ris+og+ros/Feil+og+mangler+paa+navno">
-                            Meld fra om feil
-                        </Link>
+                    <li>
+                        <BodyShort>
+                            <Link href="https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler">
+                                Meld fra om feil
+                            </Link>
+                        </BodyShort>
                     </li>
-                </ul>
-            </div>
-        </span>
+                </LinkList>
+            </StyledFeilside>
+        </>
     );
 };
 
-export default FeilSide;
+export default Feilside;

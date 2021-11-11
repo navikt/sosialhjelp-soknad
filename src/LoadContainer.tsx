@@ -6,7 +6,7 @@ import {
     lagreRessurserPaStore,
 } from "./digisos/redux/soknad/soknadActions";
 import {useDispatch} from "react-redux";
-import FeilSide from "./nav-soknad/components/feilside/Feilside";
+import Feilside from "./nav-soknad/components/feilside/Feilside";
 import {fetchToJson, HttpStatus} from "./nav-soknad/utils/rest-utils";
 import {
     FornavnResponse,
@@ -93,9 +93,9 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
     }
     if (showErrorPage) {
         return (
-            <FeilSide>
+            <Feilside>
                 <p>Vi klarer ikke vise skjemaet til deg nå, vennligst prøv igjen senere.</p>
-            </FeilSide>
+            </Feilside>
         );
     }
 

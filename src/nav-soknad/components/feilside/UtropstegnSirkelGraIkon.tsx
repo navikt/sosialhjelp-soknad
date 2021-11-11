@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const UtropstegnSirkelGraIkon: React.StatelessComponent = () => {
+const UtropstegnSirkelGraIkon = () => {
     return (
         <svg
             width="100px"
