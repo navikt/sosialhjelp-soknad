@@ -7,17 +7,16 @@ const StyledBanner = styled.div`
     width: 100%;
     height: 3.75rem;
     display: flex;
+    justify-content: center;
     align-items: center;
 `;
 
 const Banner = (props: {children: React.ReactNode}) => {
     return (
         <StyledBanner>
-            <div className="blokk-center">
-                <Heading level="1" size="small">
-                    {props.children}
-                </Heading>
-            </div>
+            <Heading level="1" size="small">
+                {props.children}
+            </Heading>
         </StyledBanner>
     );
 };
