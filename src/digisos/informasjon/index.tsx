@@ -13,11 +13,9 @@ import {State} from "../redux/reducers";
 import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {Soknadsoversikt} from "./Soknadsoversikt";
-import {fetchToJson} from "../../nav-soknad/utils/rest-utils";
 import {useTitle} from "../../nav-soknad/hooks/useTitle";
 import {Alert, BodyShort, Button, Label, Loader} from "@navikt/ds-react";
 import {useHistory} from "react-router";
-import {ApplicationSpinner} from "../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
 const Greeting = (props: {name: string}) => (
     <Label size="small">
@@ -25,7 +23,7 @@ const Greeting = (props: {name: string}) => (
     </Label>
 );
 
-export const InformasjonSide = (props: {enableModalV2: boolean}) => {
+export const InformasjonSide = (props: {antallPabegynteSoknader: number}) => {
     const antallNyligInnsendteSoknader: number =
         useSelector((state: State) => state.soknad.harNyligInnsendteSoknader?.antallNyligInnsendte) ?? 0;
     const {startSoknadPending, startSoknadFeilet, nedetid, fornavn, visNedetidPanel} = useSelector(
@@ -46,7 +44,8 @@ export const InformasjonSide = (props: {enableModalV2: boolean}) => {
     const startSoknad = () => {
         logAmplitudeEvent("skjema startet", {
             antallNyligInnsendteSoknader,
-            enableModalV2: props.enableModalV2,
+            antallPabegynteSoknader: props.antallPabegynteSoknader,
+            enableModalV2: true,
             erProdsatt: true,
             ...createSkjemaEventData(),
         });
@@ -171,9 +170,6 @@ export const InformasjonSide = (props: {enableModalV2: boolean}) => {
 };
 
 const Informasjon = () => {
-    const [isLoadingFeatureToggles, setIsLoadingFeatureToggles] = React.useState(false);
-    const [enableModalV2, setEnableModalV2] = React.useState(false);
-
     const harTilgang: boolean = useSelector((state: State) => state.soknad.tilgang?.harTilgang) ?? false;
     const sperrekode = useSelector((state: State) => state.soknad.tilgang?.sperrekode);
 
@@ -188,18 +184,6 @@ const Informasjon = () => {
         skjulToppMeny();
     }, []);
 
-    React.useEffect(() => {
-        setIsLoadingFeatureToggles(true);
-        fetchToJson("feature-toggle", true)
-            .then((result: any) => {
-                setEnableModalV2(result["modalV2"] ?? false);
-            })
-            .catch((e) => {
-                setEnableModalV2(false);
-            })
-            .finally(() => setIsLoadingFeatureToggles(false));
-    }, [setEnableModalV2]);
-
     if (!harTilgang) {
         return (
             <div className="informasjon-side">
@@ -207,15 +191,6 @@ const Informasjon = () => {
                 <div className="skjema-content">
                     <IkkeTilgang sperrekode={sperrekode ? sperrekode : "pilot"} />
                 </div>
-            </div>
-        );
-    }
-
-    if (isLoadingFeatureToggles) {
-        return (
-            <div className="informasjon-side">
-                <AppBanner />
-                <ApplicationSpinner />
             </div>
         );
     }
@@ -237,7 +212,7 @@ const Informasjon = () => {
                     </Alert>
                 )}
 
-                {enableModalV2 ? <Soknadsoversikt /> : <InformasjonSide enableModalV2={false} />}
+                <Soknadsoversikt />
             </span>
         </div>
     );

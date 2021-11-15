@@ -11,6 +11,8 @@ import {State} from "../redux/reducers";
 import {InformasjonSide} from ".";
 import {DAYS_BEOFRE_DELETION, filterAndSortPabegynteSoknader} from "./pabegynteSoknaderUtils";
 import {BodyShort, Label, Link, LinkPanel, Panel, Heading} from "@navikt/ds-react";
+import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
+import {useHistory} from "react-router";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -114,6 +116,16 @@ export const Soknadsoversikt = () => {
         currentDate
     );
 
+    const history = useHistory();
+
+    const onPabegyntSoknadClick = (event: React.SyntheticEvent, href: string) => {
+        event.preventDefault();
+        logAmplitudeEvent("Klikk på påbegynt søknad", {
+            antallPabegynteSoknader: pabegynteSoknader.length,
+        });
+        history.push(href);
+    };
+
     return (
         <StyledSoknadsoversikt>
             <StartNySoknadPanel
@@ -123,7 +135,7 @@ export const Soknadsoversikt = () => {
                     </Heading>
                 }
             >
-                <InformasjonSide enableModalV2={true} />
+                <InformasjonSide antallPabegynteSoknader={pabegynteSoknader.length} />
             </StartNySoknadPanel>
             {pabegynteSoknader.length > 0 && (
                 <PabegynteSoknaderPanel
@@ -147,7 +159,10 @@ export const Soknadsoversikt = () => {
                                 return (
                                     <li key={pabegyntSoknad.behandlingsId}>
                                         <LinkPanel
-                                            href={`/sosialhjelp/soknad/skjema/${pabegyntSoknad.behandlingsId}/1`}
+                                            href={`skjema/${pabegyntSoknad.behandlingsId}/1`}
+                                            onClick={(event) =>
+                                                onPabegyntSoknadClick(event, `skjema/${pabegyntSoknad.behandlingsId}/1`)
+                                            }
                                             border
                                         >
                                             <LinkPanel.Title>
