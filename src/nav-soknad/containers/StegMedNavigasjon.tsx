@@ -31,7 +31,7 @@ import {createSkjemaEventData, logAmplitudeEvent} from "../utils/amplitude";
 import {useTitle} from "../hooks/useTitle";
 import {logInfo} from "../utils/loggerUtils";
 import {Alert, Link} from "@navikt/ds-react";
-import {WhiteBakground} from "../components/WhiteBackground";
+import {WhiteBackground} from "../components/WhiteBackground";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -193,7 +193,7 @@ const StegMedNavigasjon = (
     useTitle(`${stegTittel} - ${documentTitle}`);
 
     return (
-        <WhiteBakground className="app-digisos">
+        <WhiteBackground className="app-digisos">
             <AppBanner />
             {isNedetid && (
                 <Alert variant="error" style={{justifyContent: "center"}}>
@@ -316,7 +316,7 @@ const StegMedNavigasjon = (
                     )}
                 </form>
             </div>
-        </WhiteBakground>
+        </WhiteBackground>
     );
 };
 

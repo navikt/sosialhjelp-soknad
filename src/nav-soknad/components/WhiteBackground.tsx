@@ -1,5 +1,5 @@
 import styled from "styled-components";
 
-export const WhiteBakground = styled.div`
+export const WhiteBackground = styled.div`
     background-color: white;
 `;

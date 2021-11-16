@@ -15,7 +15,7 @@ import {useHistory} from "react-router";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 import {Button, GuidePanel} from "@navikt/ds-react";
 import styled from "styled-components";
-import {WhiteBakground} from "../../../nav-soknad/components/WhiteBackground";
+import {WhiteBackground} from "../../../nav-soknad/components/WhiteBackground";
 
 const StyledGuidePanel = styled(GuidePanel)`
     --navds-guide-panel-color-border: var(--navds-color-orange-20);
@@ -66,7 +66,7 @@ const SamtykkeView: React.FC = () => {
     }
 
     return (
-        <WhiteBakground className="app-digisos">
+        <WhiteBackground className="app-digisos">
             <AppBanner />
             {(!harLastetinnSamtykker || erSystemdataEndret === ErSystemdataEndret.NOT_ASKED) && <ApplicationSpinner />}
             {(harSamtykker || erSystemdataEndret === ErSystemdataEndret.YES) && (
@@ -108,7 +108,7 @@ const SamtykkeView: React.FC = () => {
                     </Button>
                 </Panel>
             )}
-        </WhiteBakground>
+        </WhiteBackground>
     );
 };
 

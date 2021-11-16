@@ -17,7 +17,7 @@ import {Alert, BodyLong, BodyShort, Button, Heading, Label, Loader, Panel} from 
 import {useHistory} from "react-router";
 import styled from "styled-components";
 import {SkjemaContent} from "../../nav-soknad/components/SkjemaContent";
-import {WhiteBakground} from "../../nav-soknad/components/WhiteBackground";
+import {WhiteBackground} from "../../nav-soknad/components/WhiteBackground";
 
 const Greeting = (props: {name: string}) => (
     <Label spacing>
@@ -201,17 +201,17 @@ const Informasjon = () => {
 
     if (!harTilgang) {
         return (
-            <WhiteBakground>
+            <WhiteBackground>
                 <AppBanner />
                 <div className="skjema-content">
                     <IkkeTilgang sperrekode={sperrekode ? sperrekode : "pilot"} />
                 </div>
-            </WhiteBakground>
+            </WhiteBackground>
         );
     }
 
     return (
-        <WhiteBakground>
+        <WhiteBackground>
             <AppBanner />
 
             <span>
@@ -229,7 +229,7 @@ const Informasjon = () => {
 
                 <Soknadsoversikt />
             </span>
-        </WhiteBakground>
+        </WhiteBackground>
     );
 };
 
