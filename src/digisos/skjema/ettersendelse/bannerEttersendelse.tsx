@@ -55,7 +55,7 @@ const StyledEllaForfra = styled.div`
     }
 `;
 
-const BannerEttersendelse: React.FC<{children: React.ReactNode} & {}> = ({children}) => {
+const BannerEttersendelse: React.FC<{children: React.ReactNode}> = ({children}) => {
     return (
         <StyledBannerEttersendelse>
             <div className="blokk-center">
@@ -79,7 +79,7 @@ const Laptop = () => (
         <defs>
             <path id="a" d="M1.416 2.569V.041H.036v2.528h1.38z" />
         </defs>
-        <g fill="none" fill-rule="evenodd">
+        <g fill="none" fillRule="evenodd">
             <path fill="#78706A" d="M1.111 28.6h47.778v1.1H1.111z" />
             <path
                 fill="#ACB3BB"
