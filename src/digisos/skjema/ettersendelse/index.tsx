@@ -148,7 +148,7 @@ const Ettersendelse = () => {
                 />
 
                 {opprettNyEttersendelseFeilet && !nedetid?.isNedetid && (
-                    <AvsnittMedMarger className="ettersendelse__vedlegg__header">
+                    <AvsnittMedMarger>
                         <Informasjonspanel ikon={InformasjonspanelIkon.HENSYN} farge={DigisosFarge.VIKTIG}>
                             <FormattedMessage id="ettersendelse.ikke.mulig" />
                         </Informasjonspanel>

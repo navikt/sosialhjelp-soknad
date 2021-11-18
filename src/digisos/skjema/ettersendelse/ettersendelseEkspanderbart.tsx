@@ -1,10 +1,15 @@
 import React, {useState} from "react";
-import {UnmountClosed} from "react-collapse";
 import {FormattedMessage} from "react-intl";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import {MargIkoner} from "./margIkoner";
 import EttersendelseVedleggListe from "./ettersendelseVedleggListe";
+import {Accordion} from "@navikt/ds-react";
+import styled from "styled-components";
 
+const StyledAccordionHeader = styled(Accordion.Header)`
+    padding: 0 1rem 0 0;
+    border-bottom: none;
+`;
 interface Props {
     children: React.ReactNode;
     ettersendelseAktivert: boolean;
@@ -14,75 +19,43 @@ interface Props {
 
 const EttersendelseEkspanderbart = (props: Props) => {
     const [ekspandert, setEkspandert] = useState(false);
-    const [vedleggSendt, setVedleggSendt] = useState(false);
-    const [renderInnhold, setRenderInnhold] = useState(false);
 
     const toggleEkspandering = () => {
         setEkspandert(!ekspandert);
     };
 
-    const onAnimasjonFerdig = () => {
-        if (vedleggSendt === true && ekspandert === false) {
-            setVedleggSendt(false);
-            props.onEttersendelse();
-        }
-
-        if (renderInnhold !== ekspandert) {
-            setRenderInnhold(ekspandert);
-        }
-    };
-
     const onEttersendelseSetState = () => {
         setEkspandert(false);
-        setVedleggSendt(true);
+        props.onEttersendelse();
     };
 
     return (
-        <span className="ettersendelse__vedlegg__ekspandert_wrapper">
-            {props.kunGenerellDokumentasjon && (
-                <AvsnittMedMarger
-                    venstreIkon={MargIkoner.DOKUMENTER}
-                    hoyreIkon={ekspandert ? MargIkoner.CHEVRON_OPP : MargIkoner.CHEVRON_NED}
-                    onClick={() => toggleEkspandering()}
-                >
-                    {props.children}
-                </AvsnittMedMarger>
-            )}
+        <Accordion>
+            <Accordion.Item open={ekspandert}>
+                <StyledAccordionHeader onClick={toggleEkspandering}>
+                    {props.kunGenerellDokumentasjon && (
+                        <AvsnittMedMarger venstreIkon={MargIkoner.DOKUMENTER}>{props.children}</AvsnittMedMarger>
+                    )}
 
-            {!props.kunGenerellDokumentasjon && (
-                <AvsnittMedMarger
-                    venstreIkon={MargIkoner.ADVARSEL}
-                    hoyreIkon={ekspandert ? MargIkoner.CHEVRON_OPP : MargIkoner.CHEVRON_NED}
-                    onClick={() => toggleEkspandering()}
-                >
-                    {props.children}
-                </AvsnittMedMarger>
-            )}
+                    {!props.kunGenerellDokumentasjon && (
+                        <AvsnittMedMarger venstreIkon={MargIkoner.ADVARSEL}>{props.children}</AvsnittMedMarger>
+                    )}
+                </StyledAccordionHeader>
+                <Accordion.Content>
+                    <AvsnittMedMarger>
+                        {!props.kunGenerellDokumentasjon && props.ettersendelseAktivert && (
+                            <FormattedMessage id="ettersendelse.mangler_info" />
+                        )}
+                        {!props.ettersendelseAktivert && <FormattedMessage id="ettersendelse.mangler_info_manuell" />}
+                    </AvsnittMedMarger>
 
-            <UnmountClosed
-                isOpened={ekspandert}
-                onRest={() => onAnimasjonFerdig()}
-                className={"ettersendelse__vedlegg " + (ekspandert ? "ettersendelse__vedlegg__ekspandert " : " ")}
-            >
-                {renderInnhold && (
-                    <>
-                        <AvsnittMedMarger className="ettersendelse__vedlegg__header">
-                            {!props.kunGenerellDokumentasjon && props.ettersendelseAktivert && (
-                                <FormattedMessage id="ettersendelse.mangler_info" />
-                            )}
-                            {!props.ettersendelseAktivert && (
-                                <FormattedMessage id="ettersendelse.mangler_info_manuell" />
-                            )}
-                        </AvsnittMedMarger>
-
-                        <EttersendelseVedleggListe
-                            ettersendelseAktivert={props.ettersendelseAktivert}
-                            onEttersendelse={() => onEttersendelseSetState()}
-                        />
-                    </>
-                )}
-            </UnmountClosed>
-        </span>
+                    <EttersendelseVedleggListe
+                        ettersendelseAktivert={props.ettersendelseAktivert}
+                        onEttersendelse={() => onEttersendelseSetState()}
+                    />
+                </Accordion.Content>
+            </Accordion.Item>
+        </Accordion>
     );
 };
 
