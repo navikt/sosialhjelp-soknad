@@ -10,6 +10,10 @@ const StyledAccordionHeader = styled(Accordion.Header)`
     padding: 0 1rem 0 0;
     border-bottom: none;
 `;
+
+const StyledAccordionContent = styled(Accordion.Content)`
+    padding: 0rem;
+`;
 interface Props {
     children: React.ReactNode;
     ettersendelseAktivert: boolean;
@@ -41,7 +45,7 @@ const EttersendelseEkspanderbart = (props: Props) => {
                         <AvsnittMedMarger venstreIkon={MargIkoner.ADVARSEL}>{props.children}</AvsnittMedMarger>
                     )}
                 </StyledAccordionHeader>
-                <Accordion.Content>
+                <StyledAccordionContent>
                     <AvsnittMedMarger>
                         {!props.kunGenerellDokumentasjon && props.ettersendelseAktivert && (
                             <FormattedMessage id="ettersendelse.mangler_info" />
@@ -53,7 +57,7 @@ const EttersendelseEkspanderbart = (props: Props) => {
                         ettersendelseAktivert={props.ettersendelseAktivert}
                         onEttersendelse={() => onEttersendelseSetState()}
                     />
-                </Accordion.Content>
+                </StyledAccordionContent>
             </Accordion.Item>
         </Accordion>
     );
