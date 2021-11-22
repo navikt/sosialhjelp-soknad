@@ -57,31 +57,6 @@
         transition-delay: 0.2s;
         border: 1px solid white;
 
-        &__ekspandert {
-            opacity: 1;
-            background-color: @navLysGra;
-            width: 550px;
-            border-radius: 4px;
-            margin-left: 3rem;
-            margin-right: 0.5rem;
-            margin-bottom: 1rem;
-
-            @media screen and (max-width: 700px) {
-                margin-left: 0;
-                width: 100%;
-            }
-
-            .avsnitt_med_marger {
-                background-color: @navLysGra;
-
-                .venstremarg {
-                    min-width: 0;
-                    width: 42px;
-                    padding-right: 0;
-                }
-            }
-        }
-
         &__feil {
             display: block;
             background: @navRosa;
@@ -126,19 +101,6 @@
     background-color: @white;
     margin-top: 1rem;
     margin-bottom: 1rem;
-
-    &__klikkbar {
-        text-decoration: none;
-        cursor: pointer;
-        color: rgb(62, 56, 50);
-        border-radius: 4px;
-        padding: 0;
-        border: 1px solid white;
-        margin-bottom: 0.5rem;
-        .hoyremarg__ikon {
-            background-color: transparent;
-        }
-    }
 }
 
 .venstremarg {
@@ -169,34 +131,12 @@
     @media @mobile {
         padding-right: 4px;
     }
-
-    &__ikon {
-        height: 36px;
-        text-align: center;
-        color: @navBla;
-        background-color: @white;
-        padding-top: 3px;
-        padding-left: 4px;
-        border-radius: 4px;
-
-        &__klikkbart {
-            cursor: pointer;
-            border: none;
-        }
-    }
-
-    &__ikon__hover:hover {
-        box-shadow: @navGra40 0 2px 1px 0;
-    }
 }
 
 .avsnitt {
     flex-direction: row;
     width: 100%;
     text-align: left;
-
-    &_knapp {
-    }
 
     @media @mobile {
         margin-bottom: 4px;
