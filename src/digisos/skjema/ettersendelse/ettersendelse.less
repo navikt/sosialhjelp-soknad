@@ -1,19 +1,3 @@
-.vedlegg_mangler_avsnitt:focus {
-    box-shadow: 0 0 0px 3px @orangeFocus;
-    outline: none;
-    border-radius: 4px;
-}
-
-.vedlegg_mangler_avsnitt:hover {
-    color: @navDypBla;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.vedlegg_mangler_avsnitt__kollaps:hover {
-    box-shadow: @navGra40 0 2px 1px 0;
-}
-
 .ettersendelse {
     &.maincontent {
         display: block;
@@ -35,11 +19,6 @@
         transform: translate(-40px);
     }
 
-    &__chevron {
-        cursor: pointer;
-        margin-right: 7px;
-    }
-
     &__panel {
         margin-top: 1rem;
         padding-top: 0.1rem;
@@ -51,39 +30,8 @@
         }
     }
 
-    &__vedlegg {
-        opacity: 0;
-        transition: opacity 1s;
-        transition-delay: 0.2s;
-        border: 1px solid white;
-
-        &__feil {
-            display: block;
-            background: @navRosa;
-            border-radius: 8px;
-        }
-    }
-
     &_bunntekst {
         margin-top: 1rem;
-    }
-}
-
-.vedleggsliste__detalj {
-    border-radius: 4px;
-    background-color: white;
-    padding: 0.5rem;
-    text-align: left;
-
-    h3 {
-        padding-bottom: 0.5rem;
-        font-weight: 600;
-    }
-
-    button.knapp--standard {
-        margin-top: 0.5rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
     }
 }
 
@@ -156,55 +104,6 @@
 
 .trashcan {
     padding-left: 2px;
-}
-
-.vedleggsliste__filnavn_tekst {
-    margin-left: 25px;
-    margin-top: 7px;
-    background-color: white;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    min-height: 1.3rem;
-    color: #0067c5;
-}
-
-@media screen and (min-width: 701px) {
-    .vedleggsliste__filnavn_tekst {
-        max-width: 400px;
-    }
-}
-
-@media screen and (max-width: 700px) {
-    .vedleggsliste__filnavn_tekst {
-        max-width: 57vw;
-    }
-}
-
-.vedleggsliste__filnavn_wrapper {
-    padding-bottom: 6px;
-    border-bottom: 1px solid darkgrey;
-    display: block;
-    margin-bottom: 12px;
-}
-
-.ettersendelse_send_vedlegg_knapp_wrapper {
-    margin-top: 0;
-}
-
-.vedleggsliste__fil_slett_wrapper {
-    white-space: nowrap;
-    text-align: right;
-}
-
-.vedleggsliste__fil_slett {
-    color: #0067c5;
-    min-height: 1.7rem;
-}
-
-.vedleggsliste__filnavn_button {
-    min-height: 2rem;
-    float: left;
 }
 
 .paperclip_icon {

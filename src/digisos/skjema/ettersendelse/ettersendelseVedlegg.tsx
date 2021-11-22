@@ -3,7 +3,6 @@ import {lastOppEttersendelseVedlegg, slettEttersendtVedlegg} from "../../redux/e
 import {useDispatch, useSelector} from "react-redux";
 import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
 import {MargIkon, MargIkoner} from "./margIkoner";
-import AvsnittMedMarger from "./avsnittMedMarger";
 import {FormattedMessage} from "react-intl";
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {Fil, OpplysningType} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
@@ -12,6 +11,52 @@ import {REST_FEIL, REST_STATUS} from "../../redux/soknad/soknadTypes";
 import PaperclipIcon from "../../../nav-soknad/components/digisosIkon/paperclipIcon";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {Button, Loader} from "@navikt/ds-react";
+import styled from "styled-components";
+
+const VedleggsListe = styled.div`
+    border-radius: 4px;
+    background-color: white;
+    padding: 0.5rem;
+    text-align: left;
+
+    h3 {
+        padding-bottom: 0.5rem;
+        font-weight: 600;
+    }
+`;
+
+const FilenameWrapper = styled.div`
+    padding-bottom: 6px;
+    border-bottom: 1px solid darkgrey;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+`;
+
+const Filnavn = styled.div`
+    margin-left: 25px;
+    margin-top: 7px;
+    background-color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-height: 1.3rem;
+    color: #0067c5;
+
+    @media screen and (min-width: 701px) {
+        max-width: 400px;
+    }
+
+    @media screen and (max-width: 700px) {
+        margin-left: 0rem;
+        max-width: 50vw;
+    }
+`;
+
+const SlettFil = styled(LinkButton)`
+    color: #0067c5;
+    min-height: 1.7rem;
+`;
 
 interface Props {
     ettersendelseAktivert: boolean;
@@ -59,83 +104,69 @@ const EttersendelseVedlegg = (props: Props) => {
     const visFeilFiltypeFeilmelding: boolean = opplastingsFeil && props.feilKode === REST_FEIL.FEIL_FILTPYE;
 
     return (
-        <span className="">
-            <AvsnittMedMarger className="vedleggsliste__detalj">
-                {props.children}
-                <input
-                    ref={leggTilVedleggKnapp}
-                    onChange={(e) => handleFileUpload(e.target.files)}
-                    type="file"
-                    className="visuallyhidden"
-                    tabIndex={-1}
-                    accept={
-                        window.navigator.platform.match(/iPad|iPhone|iPod/) !== null
-                            ? "*"
-                            : "image/jpeg,image/png,application/pdf"
-                    }
-                />
-                {props.vedlegg?.filer.map((fil: Fil) => {
-                    const lastNedUrl = `opplastetVedlegg/${fil.uuid}/fil`;
-                    return (
-                        <div key={fil.uuid} className="vedleggsliste__filnavn_wrapper">
-                            <LinkButton
-                                className="vedleggsliste__filnavn_button"
-                                title="Last ned vedlegg"
-                                onClick={() => downloadAttachedFile(lastNedUrl)}
-                            >
-                                <PaperclipIcon />
-                                <div className="vedleggsliste__filnavn_tekst">{fil.filNavn}</div>
-                            </LinkButton>
-                            <div className="vedleggsliste__fil_slett_wrapper">
-                                <LinkButton
-                                    className="vedleggsliste__fil_slett"
-                                    title="Fjern vedlegg"
-                                    onClick={() => removeFile(fil.uuid, props.vedlegg.type)}
-                                >
-                                    Fjern
-                                    <MargIkon ikon={MargIkoner.SØPPELBØTTE} />
-                                </LinkButton>
-                            </div>
-                        </div>
-                    );
-                })}
+        <VedleggsListe>
+            {props.children}
+            <input
+                ref={leggTilVedleggKnapp}
+                onChange={(e) => handleFileUpload(e.target.files)}
+                type="file"
+                className="visuallyhidden"
+                tabIndex={-1}
+                accept={
+                    window.navigator.platform.match(/iPad|iPhone|iPod/) !== null
+                        ? "*"
+                        : "image/jpeg,image/png,application/pdf"
+                }
+            />
+            {props.vedlegg?.filer.map((fil: Fil) => {
+                const lastNedUrl = `opplastetVedlegg/${fil.uuid}/fil`;
+                return (
+                    <FilenameWrapper key={fil.uuid}>
+                        <LinkButton title="Last ned vedlegg" onClick={() => downloadAttachedFile(lastNedUrl)}>
+                            <PaperclipIcon />
+                            <Filnavn>{fil.filNavn}</Filnavn>
+                        </LinkButton>
+                        <SlettFil title="Fjern vedlegg" onClick={() => removeFile(fil.uuid, props.vedlegg.type)}>
+                            Fjern
+                            <MargIkon ikon={MargIkoner.SØPPELBØTTE} />
+                        </SlettFil>
+                    </FilenameWrapper>
+                );
+            })}
 
-                {opplastingsFeil && props.feilKode !== REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE && (
-                    <>
-                        <span className="skjema__feilmelding">
-                            "{filnavn}" &nbsp;
-                            {!visFeilFiltypeFeilmelding && (
-                                <FormattedMessage
-                                    id={props.feilKode ? props.feilKode : "opplysninger.vedlegg.ugyldig"}
-                                />
-                            )}
-                            {visFeilFiltypeFeilmelding && <FormattedMessage id="fil.feil.format" />}
-                        </span>
-                        <br />
-                    </>
-                )}
+            {opplastingsFeil && props.feilKode !== REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE && (
+                <>
+                    <span className="skjema__feilmelding">
+                        "{filnavn}" &nbsp;
+                        {!visFeilFiltypeFeilmelding && (
+                            <FormattedMessage id={props.feilKode ? props.feilKode : "opplysninger.vedlegg.ugyldig"} />
+                        )}
+                        {visFeilFiltypeFeilmelding && <FormattedMessage id="fil.feil.format" />}
+                    </span>
+                    <br />
+                </>
+            )}
 
-                {opplastingsFeil && props.feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE && (
-                    <>
-                        <span className="skjema__feilmelding">{<FormattedMessage id={props.feilKode} />}</span>
-                        <br />
-                    </>
-                )}
+            {opplastingsFeil && props.feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE && (
+                <>
+                    <span className="skjema__feilmelding">{<FormattedMessage id={props.feilKode} />}</span>
+                    <br />
+                </>
+            )}
 
-                <Button
-                    variant="secondary"
-                    disabled={
-                        ettersendStatus === REST_STATUS.PENDING ||
-                        opplastingStatus === REST_STATUS.PENDING ||
-                        props.vedlegg.type === opplastingVedleggType
-                    }
-                    onClick={() => props.ettersendelseAktivert && leggTilVedleggKnapp.current?.click()}
-                >
-                    Velg vedlegg
-                    {props.vedlegg.type === opplastingVedleggType && <Loader />}
-                </Button>
-            </AvsnittMedMarger>
-        </span>
+            <Button
+                variant="secondary"
+                disabled={
+                    ettersendStatus === REST_STATUS.PENDING ||
+                    opplastingStatus === REST_STATUS.PENDING ||
+                    props.vedlegg.type === opplastingVedleggType
+                }
+                onClick={() => props.ettersendelseAktivert && leggTilVedleggKnapp.current?.click()}
+            >
+                Velg vedlegg
+                {props.vedlegg.type === opplastingVedleggType && <Loader />}
+            </Button>
+        </VedleggsListe>
     );
 };
 

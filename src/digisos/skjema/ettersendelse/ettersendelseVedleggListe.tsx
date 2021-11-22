@@ -49,51 +49,45 @@ const EttersendelseVedleggListe = (props: {ettersendelseAktivert: boolean; onEtt
     }, [ettersendStatus, onEttersendelse]);
 
     return (
-        <div
-            className={
-                "ettersendelse__vedlegg__innhold " + (advarselManglerVedlegg ? "ettersendelse__vedlegg__feil " : "")
-            }
-        >
-            {data &&
-                data.map((vedlegg: EttersendelseVedleggBackend) => {
-                    const spc = getSpcForOpplysning(vedlegg.type);
-                    const tittelKey = spc ? spc.textKey + ".vedlegg.sporsmal.tittel" : "";
-                    const infoKey = spc ? spc.textKey + ".vedlegg.sporsmal.info" : "";
-                    let info;
-                    if (infoKey && !!intl.messages[infoKey]) {
-                        info = intl.formatMessage({id: infoKey});
-                    }
-                    if (!props.ettersendelseAktivert && vedlegg.type === "annet|annet") {
-                        return null;
-                    }
-                    return (
-                        <EttersendelseVedlegg
-                            ettersendelseAktivert={props.ettersendelseAktivert}
-                            vedlegg={vedlegg}
-                            key={vedlegg.type}
-                            feilKode={feiletVedleggId === vedlegg.type ? feilKode : undefined}
-                        >
-                            {tittelKey && (
-                                <h3>
-                                    <FormattedMessage id={tittelKey} />
-                                </h3>
-                            )}
-                            {info && <p>{info}</p>}
-                        </EttersendelseVedlegg>
-                    );
-                })}
-
-            <AvsnittMedMarger className="ettersendelse_send_vedlegg_knapp_wrapper">
+        <div>
+            <AvsnittMedMarger>
+                {data &&
+                    data.map((vedlegg: EttersendelseVedleggBackend) => {
+                        const spc = getSpcForOpplysning(vedlegg.type);
+                        const tittelKey = spc ? spc.textKey + ".vedlegg.sporsmal.tittel" : "";
+                        const infoKey = spc ? spc.textKey + ".vedlegg.sporsmal.info" : "";
+                        let info;
+                        if (infoKey && !!intl.messages[infoKey]) {
+                            info = intl.formatMessage({id: infoKey});
+                        }
+                        if (!props.ettersendelseAktivert && vedlegg.type === "annet|annet") {
+                            return null;
+                        }
+                        return (
+                            <EttersendelseVedlegg
+                                ettersendelseAktivert={props.ettersendelseAktivert}
+                                vedlegg={vedlegg}
+                                key={vedlegg.type}
+                                feilKode={feiletVedleggId === vedlegg.type ? feilKode : undefined}
+                            >
+                                {tittelKey && (
+                                    <h3>
+                                        <FormattedMessage id={tittelKey} />
+                                    </h3>
+                                )}
+                                {info && <p>{info}</p>}
+                            </EttersendelseVedlegg>
+                        );
+                    })}
+            </AvsnittMedMarger>
+            <AvsnittMedMarger>
                 {advarselManglerVedlegg && (
                     <>
                         <div className="skjema__feilmelding">
                             <FormattedMessage id="ettersendelse.feilmelding.ingen_vedlegg" />
                         </div>
-                        <br />
                     </>
                 )}
-
-                <br />
                 {props.ettersendelseAktivert && (
                     <Button
                         variant="primary"
