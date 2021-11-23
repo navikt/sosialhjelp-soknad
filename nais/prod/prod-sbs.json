@@ -3,7 +3,6 @@
   "namespace": "teamdigisos",
   "ingresses": [
     "https://sosialhjelp-soknad.nais.oera.no/",
-    "https://sosialhjelp-soknad.prod-sbs.nais.io/",
     "https://tjenester.nav.no/sosialhjelp-soknad",
     "https://www.nav.no/sosialhjelp/soknad"
   ],
