@@ -1,6 +1,67 @@
 import {Button} from "@navikt/ds-react";
 import * as React from "react";
+import styled from "styled-components";
+import {mobile} from "../../../nav-soknad/styles/variables";
 import {MargIkon, MargIkoner} from "./margIkoner";
+
+const StyledAvsnittMedMarger = styled.div`
+    display: flex;
+    width: 100%;
+    background-color: var(--navds-color-white);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+`;
+
+const Venstremarg = styled.div`
+    flex-direction: row;
+    width: 55px;
+    min-width: 35px;
+
+    text-align: left;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    @media ${mobile} {
+        padding-left: 4px;
+    }
+
+    svg {
+        margin-top: 7px;
+        margin-left: 1px;
+    }
+`;
+
+const Hoyremarg = styled.div`
+    flex-direction: row;
+    width: 40px;
+    display: block;
+    padding-right: 1rem;
+
+    @media ${mobile} {
+        padding-right: 4px;
+    }
+`;
+
+const Avsnitt = styled.div`
+    flex-direction: row;
+    width: 100%;
+    text-align: left;
+
+    @media ${mobile} {
+        margin-bottom: 4px;
+    }
+
+    h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 1rem;
+    }
+
+    p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+`;
 
 interface Props {
     children: React.ReactNode;
@@ -32,19 +93,13 @@ function ikonButtonAriaLabel(ikon: string) {
  * Vis et avsnitt med marger. Vis eventuelt ikoner i margene.
  * Hvis callback onClickHoyreIkon er satt, vis peker og hovereffekt på mouseover på ikonet.
  */
-const AvsnittMedMarger: React.StatelessComponent<Props> = ({
-    children,
-    venstreIkon,
-    hoyreIkon,
-    onClickHoyreIkon,
-    className,
-}) => {
-    const content = (
-        <>
-            <div className="venstremarg">{venstreIkon && <MargIkon ikon={venstreIkon} />}</div>
-            <div className={"avsnitt " + className}>{children}</div>
+const AvsnittMedMarger: React.FC<Props> = ({children, venstreIkon, hoyreIkon, onClickHoyreIkon, className}) => {
+    return (
+        <StyledAvsnittMedMarger>
+            <Venstremarg>{venstreIkon && <MargIkon ikon={venstreIkon} />}</Venstremarg>
+            <Avsnitt className={className}>{children}</Avsnitt>
 
-            <div className="hoyremarg">
+            <Hoyremarg>
                 {hoyreIkon && (
                     <>
                         {onClickHoyreIkon ? (
@@ -60,11 +115,9 @@ const AvsnittMedMarger: React.StatelessComponent<Props> = ({
                         )}
                     </>
                 )}
-            </div>
-        </>
+            </Hoyremarg>
+        </StyledAvsnittMedMarger>
     );
-
-    return <div className="avsnitt_med_marger ">{content}</div>;
 };
 
 export default AvsnittMedMarger;
