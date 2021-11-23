@@ -2,16 +2,15 @@ import React, {useState, useRef} from "react";
 import {lastOppEttersendelseVedlegg, slettEttersendtVedlegg} from "../../redux/ettersendelse/ettersendelseActions";
 import {useDispatch, useSelector} from "react-redux";
 import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
-import {MargIkon, MargIkoner} from "./margIkoner";
 import {FormattedMessage} from "react-intl";
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {Fil, OpplysningType} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {State} from "../../redux/reducers";
 import {REST_FEIL, REST_STATUS} from "../../redux/soknad/soknadTypes";
-import PaperclipIcon from "../../../nav-soknad/components/digisosIkon/paperclipIcon";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {BodyShort, Button, Loader} from "@navikt/ds-react";
 import styled from "styled-components";
+import {Attachment, Delete} from "@navikt/ds-icons";
 
 const VedleggsListe = styled.div`
     border-radius: 4px;
@@ -46,11 +45,6 @@ const Filnavn = styled.div`
         margin-left: 0rem;
         max-width: 50vw;
     }
-`;
-
-const SlettFil = styled(LinkButton)`
-    color: #0067c5;
-    min-height: 1.7rem;
 `;
 
 interface Props {
@@ -118,13 +112,18 @@ const EttersendelseVedlegg = (props: Props) => {
                 return (
                     <FilenameWrapper key={fil.uuid}>
                         <LinkButton title="Last ned vedlegg" onClick={() => downloadAttachedFile(lastNedUrl)}>
-                            <PaperclipIcon />
+                            <Attachment />
                             <Filnavn>{fil.filNavn}</Filnavn>
                         </LinkButton>
-                        <SlettFil title="Fjern vedlegg" onClick={() => removeFile(fil.uuid, props.vedlegg.type)}>
+                        <Button
+                            variant="tertiary"
+                            size="small"
+                            title="Fjern vedlegg"
+                            onClick={() => removeFile(fil.uuid, props.vedlegg.type)}
+                        >
                             Fjern
-                            <MargIkon ikon={MargIkoner.SØPPELBØTTE} />
-                        </SlettFil>
+                            <Delete />
+                        </Button>
                     </FilenameWrapper>
                 );
             })}

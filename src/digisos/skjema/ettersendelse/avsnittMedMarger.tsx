@@ -26,8 +26,8 @@ const Venstremarg = styled.div`
     }
 
     svg {
-        margin-top: 7px;
-        margin-left: 1px;
+        height: 26px;
+        width: 26px;
     }
 `;
 
@@ -69,10 +69,6 @@ function ikonButtonAriaLabel(ikon: string) {
             return "Ok";
         case MargIkoner.PRINTER:
             return "Skriv ut";
-        case MargIkoner.SØPPELBØTTE:
-            return "Slett vedlegg";
-        case MargIkoner.LAST_OPP:
-            return "Last opp vedlegg";
         default:
             return "";
     }

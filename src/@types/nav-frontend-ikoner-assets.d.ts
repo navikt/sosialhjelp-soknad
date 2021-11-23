@@ -25,7 +25,6 @@ declare module "nav-frontend-ikoner-assets" {
         | "stegindikator__hake"
         | "stonad"
         | "tilsette"
-        | "trashcan"
         | "vedlegg";
 
     export interface IconProps {
