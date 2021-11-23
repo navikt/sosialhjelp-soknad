@@ -8,7 +8,7 @@ import {sendEttersendelse} from "../../redux/ettersendelse/ettersendelseActions"
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
-import {Button, Loader} from "@navikt/ds-react";
+import {BodyShort, Button, Heading, Loader} from "@navikt/ds-react";
 
 const getAntallOpplastedeFiler = (data: EttersendelseVedleggBackend[]) => {
     return data.map((vedlegg: any) => vedlegg.filer.length).reduce((a: number, b: number) => a + b);
@@ -71,22 +71,20 @@ const EttersendelseVedleggListe = (props: {ettersendelseAktivert: boolean; onEtt
                                 feilKode={feiletVedleggId === vedlegg.type ? feilKode : undefined}
                             >
                                 {tittelKey && (
-                                    <h3>
+                                    <Heading level="3" size="xsmall" spacing>
                                         <FormattedMessage id={tittelKey} />
-                                    </h3>
+                                    </Heading>
                                 )}
-                                {info && <p>{info}</p>}
+                                {info && <BodyShort spacing>{info}</BodyShort>}
                             </EttersendelseVedlegg>
                         );
                     })}
             </AvsnittMedMarger>
             <AvsnittMedMarger>
                 {advarselManglerVedlegg && (
-                    <>
-                        <div className="skjema__feilmelding">
-                            <FormattedMessage id="ettersendelse.feilmelding.ingen_vedlegg" />
-                        </div>
-                    </>
+                    <BodyShort spacing className="skjema__feilmelding">
+                        <FormattedMessage id="ettersendelse.feilmelding.ingen_vedlegg" />
+                    </BodyShort>
                 )}
                 {props.ettersendelseAktivert && (
                     <Button

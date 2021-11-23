@@ -10,7 +10,7 @@ import {State} from "../../redux/reducers";
 import {REST_FEIL, REST_STATUS} from "../../redux/soknad/soknadTypes";
 import PaperclipIcon from "../../../nav-soknad/components/digisosIkon/paperclipIcon";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
-import {Button, Loader} from "@navikt/ds-react";
+import {BodyShort, Button, Loader} from "@navikt/ds-react";
 import styled from "styled-components";
 
 const VedleggsListe = styled.div`
@@ -18,11 +18,6 @@ const VedleggsListe = styled.div`
     background-color: white;
     padding: 0.5rem;
     text-align: left;
-
-    h3 {
-        padding-bottom: 0.5rem;
-        font-weight: 600;
-    }
 `;
 
 const FilenameWrapper = styled.div`
@@ -135,23 +130,19 @@ const EttersendelseVedlegg = (props: Props) => {
             })}
 
             {opplastingsFeil && props.feilKode !== REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE && (
-                <>
-                    <span className="skjema__feilmelding">
-                        "{filnavn}" &nbsp;
-                        {!visFeilFiltypeFeilmelding && (
-                            <FormattedMessage id={props.feilKode ? props.feilKode : "opplysninger.vedlegg.ugyldig"} />
-                        )}
-                        {visFeilFiltypeFeilmelding && <FormattedMessage id="fil.feil.format" />}
-                    </span>
-                    <br />
-                </>
+                <BodyShort spacing className="skjema__feilmelding">
+                    "{filnavn}" &nbsp;
+                    {!visFeilFiltypeFeilmelding && (
+                        <FormattedMessage id={props.feilKode ? props.feilKode : "opplysninger.vedlegg.ugyldig"} />
+                    )}
+                    {visFeilFiltypeFeilmelding && <FormattedMessage id="fil.feil.format" />}
+                </BodyShort>
             )}
 
             {opplastingsFeil && props.feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE && (
-                <>
-                    <span className="skjema__feilmelding">{<FormattedMessage id={props.feilKode} />}</span>
-                    <br />
-                </>
+                <BodyShort spacing className="skjema__feilmelding">
+                    {<FormattedMessage id={props.feilKode} />}
+                </BodyShort>
             )}
 
             <Button

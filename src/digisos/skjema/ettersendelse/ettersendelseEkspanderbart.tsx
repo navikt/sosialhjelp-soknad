@@ -3,7 +3,7 @@ import {FormattedMessage} from "react-intl";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import {MargIkoner} from "./margIkoner";
 import EttersendelseVedleggListe from "./ettersendelseVedleggListe";
-import {Accordion} from "@navikt/ds-react";
+import {Accordion, BodyShort} from "@navikt/ds-react";
 import styled from "styled-components";
 
 const StyledAccordionHeader = styled(Accordion.Header)`
@@ -48,9 +48,15 @@ const EttersendelseEkspanderbart = (props: Props) => {
                 <StyledAccordionContent>
                     <AvsnittMedMarger>
                         {!props.kunGenerellDokumentasjon && props.ettersendelseAktivert && (
-                            <FormattedMessage id="ettersendelse.mangler_info" />
+                            <BodyShort spacing>
+                                <FormattedMessage id="ettersendelse.mangler_info" />
+                            </BodyShort>
                         )}
-                        {!props.ettersendelseAktivert && <FormattedMessage id="ettersendelse.mangler_info_manuell" />}
+                        {!props.ettersendelseAktivert && (
+                            <BodyShort spacing>
+                                <FormattedMessage id="ettersendelse.mangler_info_manuell" />
+                            </BodyShort>
+                        )}
                     </AvsnittMedMarger>
 
                     <EttersendelseVedleggListe
