@@ -50,17 +50,6 @@ const Avsnitt = styled.div`
     @media ${mobile} {
         margin-bottom: 4px;
     }
-
-    h3 {
-        margin-top: 0;
-        margin-bottom: 0;
-        font-size: 1rem;
-    }
-
-    p {
-        margin-top: 0;
-        margin-bottom: 0;
-    }
 `;
 
 interface Props {

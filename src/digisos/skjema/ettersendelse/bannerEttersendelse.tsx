@@ -2,6 +2,7 @@ import * as React from "react";
 import EllaForfra from "../../../nav-soknad/components/svg/EllaForfra";
 import styled from "styled-components";
 import {Heading} from "@navikt/ds-react";
+import {BlokkCenter} from "./BlokkCenter";
 
 const StyledBannerEttersendelse = styled.div`
     background-color: #9bd0b0;
@@ -9,6 +10,7 @@ const StyledBannerEttersendelse = styled.div`
     color: #3e3832;
     width: 100%;
     margin: 0;
+    margin-bottom: 1rem;
     padding-right: 1rem;
     padding-bottom: 0;
 
@@ -58,7 +60,7 @@ const StyledEllaForfra = styled.div`
 const BannerEttersendelse: React.FC<{children: React.ReactNode}> = ({children}) => {
     return (
         <StyledBannerEttersendelse>
-            <div className="blokk-center">
+            <BlokkCenter>
                 <Content>
                     <Heading level="1" size="2xlarge" spacing>
                         {children}
@@ -69,7 +71,7 @@ const BannerEttersendelse: React.FC<{children: React.ReactNode}> = ({children}) 
                         <Laptop />
                     </StyledEllaForfra>
                 </Content>
-            </div>
+            </BlokkCenter>
         </StyledBannerEttersendelse>
     );
 };

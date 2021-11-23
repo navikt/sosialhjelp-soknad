@@ -15,9 +15,9 @@ import {Prompt} from "react-router";
 import {erEttersendelseSide, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
 import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";
 import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
-import {Undertittel} from "nav-frontend-typografi";
 import {useTitle} from "../../../nav-soknad/hooks/useTitle";
-import {Alert, Link} from "@navikt/ds-react";
+import {Alert, BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
+import {BlokkCenter} from "./BlokkCenter";
 
 const lesBrukerbehandlingskjedeId = (behandlingsId?: string) => {
     if (!behandlingsId) {
@@ -101,10 +101,10 @@ const Ettersendelse = () => {
                     />
                 </Alert>
             )}
-            <div className="blokk-center panel ettersendelse__panel">
-                <p className="ettersendelse ingress">
+            <BlokkCenter>
+                <Ingress spacing>
                     <FormattedMessage id="ettersendelse.ingress" />
-                </p>
+                </Ingress>
 
                 {originalSoknad && (
                     <AvsnittMedMarger
@@ -112,12 +112,12 @@ const Ettersendelse = () => {
                         hoyreIkon={MargIkoner.PRINTER}
                         onClickHoyreIkon={() => skrivUt()}
                     >
-                        <Undertittel>
+                        <Heading level="2" size="small">
                             <FormattedMessage id="ettersendelse.soknad_sendt" /> {originalSoknad.navenhet} kommune
-                        </Undertittel>
-                        <p>
+                        </Heading>
+                        <BodyShort>
                             Innsendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}
-                        </p>
+                        </BodyShort>
                     </AvsnittMedMarger>
                 )}
 
@@ -126,10 +126,10 @@ const Ettersendelse = () => {
                     ettersendelser.map((ettersendelse: any) => {
                         return (
                             <AvsnittMedMarger venstreIkon={MargIkoner.OK} key={ettersendelse.behandlingsId}>
-                                <Undertittel>
+                                <Heading level="2" size="small">
                                     <FormattedMessage id="ettersendelse.vedlegg_sendt" />
-                                </Undertittel>
-                                <p>
+                                </Heading>
+                                <BodyShort>
                                     <FormattedMessage
                                         id="ettersendelse.dato_tid"
                                         values={{
@@ -137,7 +137,7 @@ const Ettersendelse = () => {
                                             tid: ettersendelse.innsendtTidspunkt,
                                         }}
                                     />
-                                </p>
+                                </BodyShort>
                             </AvsnittMedMarger>
                         );
                     })}
@@ -162,23 +162,25 @@ const Ettersendelse = () => {
                     >
                         {antallManglendeVedlegg() > 0 && (
                             <span>
-                                <Undertittel>Vedlegg mangler</Undertittel>
-                                <p>Det gjenstår {antallManglendeVedlegg} vedlegg</p>
+                                <Heading level="2" size="small">
+                                    Vedlegg mangler
+                                </Heading>
+                                <BodyShort>Det gjenstår {antallManglendeVedlegg} vedlegg</BodyShort>
                             </span>
                         )}
                         {antallManglendeVedlegg() === 0 && (
-                            <Undertittel>
+                            <Heading level="2" size="small">
                                 <FormattedMessage id="ettersendelse.generell.dokumentasjon" />
-                            </Undertittel>
+                            </Heading>
                         )}
                     </EttersendelseEkspanderbart>
                 )}
 
                 <AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>
-                    <Undertittel>
+                    <Heading level="2" size="small" spacing>
                         <FormattedMessage id="ettersendelse.samtale.tittel" />
-                    </Undertittel>
-                    <p>
+                    </Heading>
+                    <BodyShort>
                         <FormattedMessage
                             id="ettersendelse.samtale.info.v2"
                             values={{
@@ -187,18 +189,18 @@ const Ettersendelse = () => {
                                 ),
                             }}
                         />
-                    </p>
+                    </BodyShort>
                 </AvsnittMedMarger>
 
                 <AvsnittMedMarger venstreIkon={MargIkoner.KONVOLUTT}>
-                    <Undertittel>
+                    <Heading level="2" size="small" spacing>
                         <FormattedMessage id="ettersendelse.vedtak.tittel" />
-                    </Undertittel>
-                    <p>
+                    </Heading>
+                    <BodyShort>
                         <FormattedMessage id="ettersendelse.vedtak.info" />
-                    </p>
+                    </BodyShort>
                 </AvsnittMedMarger>
-            </div>
+            </BlokkCenter>
             <span>
                 <Prompt
                     message={(loc) => {
