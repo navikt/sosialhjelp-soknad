@@ -4,7 +4,7 @@ import {FormattedMessage} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
-import {fetchDelete, HttpStatus} from "../../utils/rest-utils";
+import {erDevSbs, erProd, fetchDelete, HttpStatus} from "../../utils/rest-utils";
 import {logWarning} from "../../utils/loggerUtils";
 import {Alert, BodyShort, Button, Modal, Heading} from "@navikt/ds-react";
 import {useEffect} from "react";
@@ -62,10 +62,27 @@ const ButtonRow = styled.div`
     gap: 1rem;
 `;
 
+const getDittNavUrl = () => {
+    if (erProd()) {
+        return "https://www.nav.no/person/dittnav/";
+    }
+    if (erDevSbs()) {
+        return "https://www.dev.nav.no/person/dittnav";
+    }
+    if (window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0) {
+        return "https://digisos.labs.nais.io/sosialhjelp/mock-alt/";
+    }
+    if (window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0) {
+        return "https://digisos.labs.nais.io/sosialhjelp/mock-alt/";
+    }
+
+    return "https://www.nav.no/person/dittnav/";
+};
+
 export const AvbrytSoknad = () => {
     const {behandlingsId, avbrytDialog, nedetid} = useSelector((state: State) => state.soknad);
 
-    const dittNavUrl = useSelector((state: State) => state.miljovariabler.data["dittnav.link.url"]) ?? "";
+    const dittNavUrl = getDittNavUrl();
 
     const dispatch = useDispatch();
 
