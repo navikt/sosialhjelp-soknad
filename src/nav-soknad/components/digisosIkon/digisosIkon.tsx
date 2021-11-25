@@ -8,7 +8,6 @@ export type ikoner =
     | "printer"
     | "konvolutt"
     | "advarselSirkel"
-    | "trashcan"
     | "snakkebobler"
     | "dokumenter"
     | "searchAddresse"

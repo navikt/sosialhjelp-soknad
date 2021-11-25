@@ -4,7 +4,6 @@ import {useSelector} from "react-redux";
 import styled from "styled-components";
 import {format, formatDistance} from "date-fns";
 import {nb} from "date-fns/locale";
-import {PaperClipIcon} from "../../nav-soknad/components/digisosIkon/PaperClipNoStyle";
 import {SkjemaContent} from "../../nav-soknad/components/SkjemaContent";
 import {digisosColors} from "../../nav-soknad/styles/variables";
 import {State} from "../redux/reducers";
@@ -13,6 +12,7 @@ import {DAYS_BEOFRE_DELETION, filterAndSortPabegynteSoknader} from "./pabegynteS
 import {BodyShort, Label, Link, LinkPanel, Panel, Heading} from "@navikt/ds-react";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {useHistory} from "react-router";
+import {Attachment} from "@navikt/ds-icons";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -43,10 +43,12 @@ const PanelImageContainer = styled.div`
     }
 
     svg {
-        min-width: 4rem;
-        width: 4rem;
-        height: 4rem;
-        align-self: center;
+        min-width: 3rem;
+        width: 3rem;
+        height: 3rem;
+
+        margin-left: 0.5rem;
+        margin-top: 0.5rem;
     }
 `;
 
@@ -189,7 +191,7 @@ export const Soknadsoversikt = () => {
             <DokumentasjonsPanel border>
                 <FlexContainer>
                     <PanelImageContainer>
-                        <PaperClipIcon />
+                        <Attachment />
                     </PanelImageContainer>
                     <div>
                         <Heading level="2" size="small">
