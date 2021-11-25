@@ -110,8 +110,6 @@ export interface TilgangResponse {
     sperrekode: TilgangSperrekode;
 }
 
-export type MiljovariablerResponse = {};
-
 export type LedeteksterResponse = {};
 
 export interface FornavnResponse {
