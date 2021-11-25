@@ -20,6 +20,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
 import {AdresseTypeahead} from "./AdresseTypeaheadDownshift";
+import {logAmplitudeEvent} from "../../../../nav-soknad/utils/amplitude";
 
 const FAKTUM_KEY = "soknadsmottaker";
 
@@ -154,6 +155,7 @@ const AdresseView = () => {
             });
             dispatch(oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter));
             slettEventuelleValideringsfeil();
+            logAmplitudeEvent("velger søknadsmottaker", {antallNavEnheter: navEnheter.length});
         }
     };
 
