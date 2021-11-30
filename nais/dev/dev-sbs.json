@@ -3,8 +3,7 @@
   "namespace": "teamdigisos",
   "ingresses": [
     "https://sosialhjelp-soknad.dev.nav.no/",
-    "https://www-q0.dev.nav.no/sosialhjelp/soknad",
-    "https://www-q0.nav.no/sosialhjelp/soknad"
+    "https://www-q0.dev.nav.no/sosialhjelp/soknad"
   ],
   "prometheusEnabled": true,
   "gcpAccessPolicy": false,

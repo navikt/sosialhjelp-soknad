@@ -2,64 +2,22 @@ import {getRedirectPathname} from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
 import {logError} from "./loggerUtils";
 
-export function erQGammelVersjon(): boolean {
-    /* Vi endrer url til www-q*.dev.nav.no. Denne funksjonen returnerer true når den gamle URL-en blir benyttet.
-     * Den gamle URL-en vil bli benyttet en stund av kommuner. */
-    const url = window.location.href;
-    return url.indexOf("www-q0.nav.no") >= 0 || url.indexOf("www-q1.nav.no") >= 0;
-}
-
 export function getApiBaseUrl(withAccessToken?: boolean): string {
-    if (
-        process.env.REACT_APP_ENVIRONMENT === "localhost" ||
-        process.env.REACT_APP_ENVIRONMENT === "dev-sbs" ||
-        process.env.REACT_APP_ENVIRONMENT === "dev-sbs-intern" ||
-        process.env.REACT_APP_ENVIRONMENT === "dev-gcp" ||
-        process.env.REACT_APP_ENVIRONMENT === "labs-gcp"
-    ) {
-        return withAccessToken
-            ? `${process.env.REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN}`
-            : `${process.env.REACT_APP_API_BASE_URL}`;
-    }
-
-    return getAbsoluteApiUrl(withAccessToken);
+    return withAccessToken
+        ? `${process.env.REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN}`
+        : `${process.env.REACT_APP_API_BASE_URL}`;
 }
 
 export function getInnsynUrl(): string {
     return `${process.env.REACT_APP_INNSYN_URL}`;
 }
 
-export function getAbsoluteApiUrl(withAccessToken?: boolean) {
-    return getAbsoluteApiUrlRegex(window.location.pathname, withAccessToken);
-}
-
-export function getAbsoluteApiUrlRegex(pathname: string, withAccessToken?: boolean) {
-    return withAccessToken
-        ? pathname.replace(/^(.+sosialhjelp\/)(.+)$/, "$1login-api/soknad-api/")
-        : pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/");
-}
-
 function determineCredentialsParameter() {
-    return window.location.origin.indexOf("nais.oera") || process.env.REACT_APP_ENVIRONMENT === "localhost"
-        ? "include"
-        : "same-origin";
-}
-
-function getRedirectOrigin() {
-    /* Vi endrer preprod-url til www-q*.dev.nav.no (pga naisdevice).
-     * Men den gamle URL-en (www-q*.nav.no) vil bli benyttet en stund av kommuner.
-     * Loginservice kan kun sette cookies på apper som kjører på samme domene.
-     * Vi lar derfor loginservice redirecte til den nye ingressen. */
-
-    const currentOrigin = window.location.origin;
-    if (erQGammelVersjon()) {
-        return currentOrigin.replace("nav.no", "dev.nav.no");
-    }
-    return window.location.origin;
+    return process.env.REACT_APP_ENVIRONMENT === "localhost" ? "include" : "same-origin";
 }
 
 export function getRedirectPath(): string {
-    const redirectOrigin = getRedirectOrigin();
+    const redirectOrigin = window.location.origin;
     const gotoParameter = "?goto=" + getGotoPathname();
     const redirectPath = redirectOrigin + getRedirectPathname() + gotoParameter;
     return "redirect=" + redirectPath;
