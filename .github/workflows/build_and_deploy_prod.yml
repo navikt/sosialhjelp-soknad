@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
-      - name: Copy env-file for dev
+      - name: Copy env-file for prod
         run: cp nais/prod/prod-sbs.env .env.local
       - name: Install dependencies
         run: npm ci
