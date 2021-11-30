@@ -1,16 +1,6 @@
-import {getRedirectPathname, INNSYN_CONTEXT_PATH} from "../../configuration";
+import {getRedirectPathname} from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
 import {logError} from "./loggerUtils";
-
-export function erProd(): boolean {
-    const url = window.location.href;
-    return url.indexOf("www.nav.no") >= 0;
-}
-
-export function erDevSbs(): boolean {
-    const url = window.location.href;
-    return url.indexOf("www-q0") >= 0 || url.indexOf("www-q1") >= 0;
-}
 
 export function erQGammelVersjon(): boolean {
     /* Vi endrer url til www-q*.dev.nav.no. Denne funksjonen returnerer true når den gamle URL-en blir benyttet.
@@ -22,6 +12,8 @@ export function erQGammelVersjon(): boolean {
 export function getApiBaseUrl(withAccessToken?: boolean): string {
     if (
         process.env.REACT_APP_ENVIRONMENT === "localhost" ||
+        process.env.REACT_APP_ENVIRONMENT === "dev-sbs" ||
+        process.env.REACT_APP_ENVIRONMENT === "dev-sbs-intern" ||
         process.env.REACT_APP_ENVIRONMENT === "dev-gcp" ||
         process.env.REACT_APP_ENVIRONMENT === "labs-gcp"
     ) {
@@ -34,11 +26,7 @@ export function getApiBaseUrl(withAccessToken?: boolean): string {
 }
 
 export function getInnsynUrl(): string {
-    if (process.env.REACT_APP_ENVIRONMENT === "localhost") {
-        return `${process.env.REACT_APP_INNSYN_URL}`;
-    }
-
-    return `${window.location.origin}/${INNSYN_CONTEXT_PATH}/`;
+    return `${process.env.REACT_APP_INNSYN_URL}`;
 }
 
 export function getAbsoluteApiUrl(withAccessToken?: boolean) {

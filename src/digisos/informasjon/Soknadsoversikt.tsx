@@ -13,6 +13,7 @@ import {BodyShort, Label, Link, LinkPanel, Panel, Heading} from "@navikt/ds-reac
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {useHistory} from "react-router";
 import {Attachment} from "@navikt/ds-icons";
+import {getInnsynUrl} from "../../nav-soknad/utils/rest-utils";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -200,8 +201,7 @@ export const Soknadsoversikt = () => {
                         <BodyShort>Dokumentasjon kan sendes til søknader du har sendt inn tidligere.</BodyShort>
                         <ul>
                             <li>
-                                Gå til listen over{" "}
-                                <Link href="https://www.nav.no/sosialhjelp/innsyn">dine sosialhjelpssøknader</Link>
+                                Gå til listen over <Link href={getInnsynUrl()}>dine sosialhjelpssøknader</Link>
                             </li>
                             <li>Åpne søknaden du ønsker å ettersende dokumenter til</li>
                             <li>Last opp dokumentene du skal ettersende under “dine vedlegg”</li>
