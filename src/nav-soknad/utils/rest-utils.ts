@@ -1,19 +1,6 @@
-import {
-    API_CONTEXT_PATH,
-    API_CONTEXT_PATH_WITH_ACCESS_TOKEN,
-    CONTEXT_PATH,
-    GCP_API_APP_NAME,
-    GCP_APP_NAME,
-    getRedirectPathname,
-    INNSYN_CONTEXT_PATH,
-} from "../../configuration";
+import {getRedirectPathname, INNSYN_CONTEXT_PATH} from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
 import {logError} from "./loggerUtils";
-
-export function erLocalhost(): boolean {
-    const url = window.location.href;
-    return url.indexOf("localhost") >= 0;
-}
 
 export function erProd(): boolean {
     const url = window.location.href;
@@ -32,65 +19,23 @@ export function erQGammelVersjon(): boolean {
     return url.indexOf("www-q0.nav.no") >= 0 || url.indexOf("www-q1.nav.no") >= 0;
 }
 
-enum LocalHostMode {
-    LOCALHOST_MOCK_PROFIL,
-    LOCALHOST_MOCK_ALT_PROFIL,
-    LOCALHOST_LOKAL_LOGIN_API,
-}
-
-export function getLocalhostApiBaseUrl(withAccessToken: boolean | undefined, apiContextPath: string): string {
-    const mode = LocalHostMode.LOCALHOST_MOCK_PROFIL; // Velg modus her!
-
-    // @ts-ignore
-    if (mode === LocalHostMode.LOCALHOST_MOCK_PROFIL) {
-        // Kjør mot lokal sosialhjelp-soknad-api:
-        return `http://localhost:8181/${API_CONTEXT_PATH}/`;
-    }
-
-    if (mode === LocalHostMode.LOCALHOST_MOCK_ALT_PROFIL) {
-        // Kjør mot lokal sosialhjelp-soknad-api og mock-alt-api (som login-api):
-        if (withAccessToken) return `http://localhost:8989/sosialhjelp/mock-alt-api/login-api/${API_CONTEXT_PATH}/`;
-        else return `http://localhost:8181/${API_CONTEXT_PATH}/`;
-    }
-
-    if (mode === LocalHostMode.LOCALHOST_LOKAL_LOGIN_API) {
-        // Kjør med login-api som proxy om en ønsker access_token fra idporten
-        const apiPort = withAccessToken ? 7000 : 8181;
-        return `http://localhost:${apiPort}/${apiContextPath}/`;
-    }
-
-    return `http://localhost:8181/${API_CONTEXT_PATH}/`;
-}
-
 export function getApiBaseUrl(withAccessToken?: boolean): string {
-    const apiContextPath = withAccessToken ? API_CONTEXT_PATH_WITH_ACCESS_TOKEN : API_CONTEXT_PATH;
-
-    if (erLocalhost()) {
-        return getLocalhostApiBaseUrl(withAccessToken, apiContextPath);
-    }
-    if (window.location.origin.indexOf("nais.oera") >= 0) {
-        return window.location.origin.replace(`${CONTEXT_PATH}`, `${API_CONTEXT_PATH}`) + `/${apiContextPath}/`;
-    }
     if (
-        window.location.origin.indexOf("sosialhjelp-soknad-gcp.dev.nav.no") >= 0 ||
-        window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0 ||
-        window.location.origin.indexOf("labs.nais.io") >= 0
+        process.env.REACT_APP_ENVIRONMENT === "localhost" ||
+        process.env.REACT_APP_ENVIRONMENT === "dev-gcp" ||
+        process.env.REACT_APP_ENVIRONMENT === "labs-gcp"
     ) {
-        if (window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0) {
-            return getAbsoluteApiUrlForMockAlt(withAccessToken);
-        }
-        if (window.location.origin.indexOf("digisos.labs.nais.io") >= 0) {
-            return getAbsoluteApiUrlForMockAlt(withAccessToken);
-        }
-        return window.location.origin.replace(`${GCP_APP_NAME}`, `${GCP_API_APP_NAME}`) + `/${API_CONTEXT_PATH}/`;
+        return withAccessToken
+            ? `${process.env.REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN}`
+            : `${process.env.REACT_APP_API_BASE_URL}`;
     }
 
     return getAbsoluteApiUrl(withAccessToken);
 }
 
 export function getInnsynUrl(): string {
-    if (erLocalhost()) {
-        return `http://localhost:3000/${INNSYN_CONTEXT_PATH}/`; // Endre port så det passer med porten sosialhjelp-innsyn kjører på lokalt hos deg
+    if (process.env.REACT_APP_ENVIRONMENT === "localhost") {
+        return `${process.env.REACT_APP_INNSYN_URL}`;
     }
 
     return `${window.location.origin}/${INNSYN_CONTEXT_PATH}/`;
@@ -106,18 +51,10 @@ export function getAbsoluteApiUrlRegex(pathname: string, withAccessToken?: boole
         : pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/");
 }
 
-export function getAbsoluteApiUrlForMockAlt(withAccessToken?: boolean) {
-    return getAbsoluteApiUrlRegexForMockAlt(window.location.pathname, withAccessToken);
-}
-
-export function getAbsoluteApiUrlRegexForMockAlt(pathname: string, withAccessToken?: boolean) {
-    return withAccessToken
-        ? pathname.replace(/^(.+sosialhjelp\/)(.+)$/, "$1mock-alt-api/login-api/sosialhjelp/soknad-api/")
-        : pathname.replace(/^(.+sosialhjelp\/soknad)(.+)$/, "$1-api/");
-}
-
 function determineCredentialsParameter() {
-    return window.location.origin.indexOf("nais.oera") || erLocalhost() ? "include" : "same-origin";
+    return window.location.origin.indexOf("nais.oera") || process.env.REACT_APP_ENVIRONMENT === "localhost"
+        ? "include"
+        : "same-origin";
 }
 
 function getRedirectOrigin() {
