@@ -1,16 +1,12 @@
-name: Build image
+name: Build and deploy to prod
 on:
   push:
-    branches:
-      - "**" # Build all branches
-    tags-ignore:
-      - "**" # Don't build any tags
-  workflow_dispatch:
+    branches: [master]
 
 # FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
   build:
-    name: Build and push docker image
+    name: Build and deploy to prod
     runs-on: ubuntu-latest
     env:
       DOCKER_IMAGE: docker.pkg.github.com/${{ github.repository }}/${{ github.event.repository.name }}
@@ -20,6 +16,8 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
+      - name: Copy env-file for dev
+        run: cp nais/prod/prod-sbs.env .env.local
       - name: Install dependencies
         run: npm ci
       - name: Run tests
@@ -34,9 +32,12 @@ jobs:
       - name: Create artifact version
         id: artifact-version
         uses: navikt/sosialhjelp-ci/actions/create-artifact-version@master
+      - name: Get complete tag
+        run: |
+          echo "COMPLETE_TAG=prod-sbs-$( date +%s )-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
       - name: Create docker image tags
         run: |
-          echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
+          echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:${{ env.COMPLETE_TAG }}" >> $GITHUB_ENV
       - name: Build docker image
         run: docker build -t ${{ env.DOCKER_TAG }} .
       - name: Push docker image
@@ -47,6 +48,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.artifact-version.outputs.version }}
-          release_name: ${{ steps.artifact-version.outputs.version }}
+          tag_name: ${{ env.COMPLETE_TAG }}
+          release_name: ${{ env.COMPLETE_TAG }}
           commitish: ${{ github.sha }}
+      - name: Deploy til dev
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          RESOURCE: nais.yaml
+          CLUSTER: prod-sbs
+          VARS: nais/prod/prod-sbs.json
+          REF: ${{ github.sha }}
+          PRINT_PAYLOAD: true
+          IMAGE: ${{ env.DOCKER_TAG }}
