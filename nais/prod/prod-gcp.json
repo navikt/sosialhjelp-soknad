@@ -1,0 +1,10 @@
+{
+  "applicationName": "sosialhjelp-soknad",
+  "namespace": "teamdigisos",
+  "ingresses": [
+    "https://sosialhhelp-soknad.prod-gcp.nais.io/sosialhjelp/soknad"
+  ],
+  "prometheusEnabled": false,
+  "gcpAccessPolicy": true,
+  "dekoratorMiljo": "prod"
+}
