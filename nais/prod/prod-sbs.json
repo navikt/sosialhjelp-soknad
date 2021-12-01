@@ -6,7 +6,5 @@
     "https://tjenester.nav.no/sosialhjelp-soknad",
     "https://www.nav.no/sosialhjelp/soknad"
   ],
-  "prometheusEnabled": true,
-  "gcpAccessPolicy": false,
   "dekoratorMiljo": "prod"
 }

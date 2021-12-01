@@ -4,7 +4,5 @@
   "ingresses": [
     "https://sosialhhelp-soknad.prod-gcp.nais.io/sosialhjelp/soknad"
   ],
-  "prometheusEnabled": false,
-  "gcpAccessPolicy": true,
   "dekoratorMiljo": "prod"
 }

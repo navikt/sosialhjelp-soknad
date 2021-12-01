@@ -4,7 +4,5 @@
   "ingresses": [
     "https://sosialhjelp-soknad-gcp.dev.nav.no/sosialhjelp/soknad"
   ],
-  "prometheusEnabled": false,
-  "gcpAccessPolicy": true,
   "dekoratorMiljo": "dev"
 }
