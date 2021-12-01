@@ -4,7 +4,7 @@ import {FormattedMessage} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {getContextPathForStaticContent} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
-import {erDevSbs, erProd, fetchDelete, HttpStatus} from "../../utils/rest-utils";
+import {fetchDelete, HttpStatus} from "../../utils/rest-utils";
 import {logWarning} from "../../utils/loggerUtils";
 import {Alert, BodyShort, Button, Modal, Heading} from "@navikt/ds-react";
 import {useEffect} from "react";
@@ -63,20 +63,7 @@ const ButtonRow = styled.div`
 `;
 
 const getDittNavUrl = () => {
-    if (erProd()) {
-        return "https://www.nav.no/person/dittnav/";
-    }
-    if (erDevSbs()) {
-        return "https://www.dev.nav.no/person/dittnav";
-    }
-    if (window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0) {
-        return "https://digisos.labs.nais.io/sosialhjelp/mock-alt/";
-    }
-    if (window.location.origin.indexOf("digisos-gcp.dev.nav.no") >= 0) {
-        return "https://digisos.labs.nais.io/sosialhjelp/mock-alt/";
-    }
-
-    return "https://www.nav.no/person/dittnav/";
+    return `${process.env.REACT_APP_DITT_NAV_URL}`;
 };
 
 export const AvbrytSoknad = () => {

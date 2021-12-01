@@ -16,7 +16,6 @@ import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga";
 import IntlProvider from "./intlProvider";
 import App from "./digisos";
-import {erLocalhost, erProd} from "./nav-soknad/utils/rest-utils";
 import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
 import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
 import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
@@ -59,19 +58,15 @@ Sentry.init({
             routingInstrumentation: Sentry.reactRouterV5Instrumentation(history),
         }),
     ],
-    environment: erProd() ? "prod-sbs" : "development",
+    environment: process.env.REACT_APP_ENVIRONMENT,
     tracesSampleRate: 1.0,
 });
 
 function configureStore() {
-    const w: any = window as any;
-
-    const composeEnhancers = erLocalhost() ? w.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
-
     const saga = createSagaMiddleware();
 
     const middleware = applyMiddleware(saga);
-    const createdStore = createStore(reducers(), composeEnhancers(middleware));
+    const createdStore = createStore(reducers(), compose(middleware));
     saga.run(sagas);
     return createdStore;
 }
