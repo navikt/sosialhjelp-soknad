@@ -2,7 +2,7 @@
   "applicationName": "sosialhjelp-soknad",
   "namespace": "teamdigisos",
   "ingresses": [
-    "https://sosialhjelp-soknad.labs.nais.io/sosialhjelp/soknad"
+    "https://sosialhhelp-soknad.prod-gcp.nais.io/sosialhjelp/soknad"
   ],
   "prometheusEnabled": false,
   "gcpAccessPolicy": true,

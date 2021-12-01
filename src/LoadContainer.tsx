@@ -12,13 +12,11 @@ import {
     FornavnResponse,
     HarNyligInnsendteSoknaderResponse,
     LedeteksterResponse,
-    MiljovariablerResponse,
     NedetidResponse,
     PabegynteSoknaderResponse,
     TilgangResponse,
 } from "./digisos/redux/soknad/soknadTypes";
 import {lagreLedeteksterPaStore} from "./digisos/redux/ledetekster/ledeteksterActions";
-import {lagreMiljovariablerPaStore} from "./digisos/redux/miljovariabler/miljovariablerActions";
 import {ApplicationSpinner} from "./nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
 interface Props {
@@ -39,7 +37,6 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
                 );
 
                 // Hvis tilgangApiRespone ikke thrower unauthorized error, så er bruker autentisert
-                const miljoVariablerResponse = await fetchToJson<MiljovariablerResponse>("informasjon/miljovariabler");
                 const ledeteksterResponse = await fetchToJson<LedeteksterResponse>(
                     "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp"
                 );
@@ -54,7 +51,6 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
                 );
 
                 dispatch(lagreLedeteksterPaStore(ledeteksterResponse));
-                dispatch(lagreMiljovariablerPaStore(miljoVariablerResponse));
                 dispatch(lagreRessurserPaStore(tilgangResponse, fornavnResponse));
                 dispatch(lagreNedetidPaStore(nedetidResponse));
                 dispatch(lagreHarNyligInnsendteSoknaderPaStore(harNyligInnsendteSoknaderResponse));
