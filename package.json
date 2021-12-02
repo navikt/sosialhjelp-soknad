@@ -12,7 +12,7 @@
     "@navikt/nav-dekoratoren-moduler": "^1.6.4",
     "@sentry/react": "^6.13.3",
     "@sentry/tracing": "^6.13.3",
-    "amplitude-js": "^7.4.3",
+    "amplitude-js": "^8.13.0",
     "classnames": "^2.3.1",
     "craco-less": "^1.19.0",
     "cuid": "^2.1.8",
