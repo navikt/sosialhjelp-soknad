@@ -9,6 +9,7 @@ rebel.xml
 target
 *.idea
 .eslintcache
+.env.local
 
 *.project
 *.settings

@@ -14,6 +14,18 @@ Kjører mot (mock backend)
 -   `npm start` - Starter webpack server og mock backend utviklet i node express.
 -   `npm test` - Kjør enhetstestene
 
+### Env-variabler ved kjøring lokalt
+
+Vi bruker env-variabler for å styre en del URLer i appen, disse kan overstyres med å legge følgende inn i en `.env.local`.
+
+```
+REACT_APP_ENVIRONMENT="localhost"
+REACT_APP_API_BASE_URL="http://localhost:8181/sosialhjelp/soknad-api/"
+REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN="http://localhost:8181/sosialhjelp/soknad-api/"
+REACT_APP_INNSYN_URL="http://localhost:3000/sosialhjelp/innsyn/"
+REACT_APP_DITT_NAV_URL="https://www.nav.no/person/dittnav/"
+```
+
 ## Manuell deploy til dev
 
 Gjøres via Github Actions, se: https://github.com/navikt/sosialhjelp-soknad/actions/workflows/deploy_dev.yml
