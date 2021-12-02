@@ -7,7 +7,6 @@ import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import AdresseDetaljer from "./AdresseDetaljer";
 import {AdresseKategori, AdressesokTreff, Gateadresse, NavEnhet} from "./AdresseTypes";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
-import SoknadsmottakerVelger from "./SoknadsmottakerVelger";
 import {formaterSoknadsadresse} from "./AdresseUtils";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
@@ -20,7 +19,6 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
 import {AdresseTypeahead} from "./AdresseTypeaheadDownshift";
-import {logAmplitudeEvent} from "../../../../nav-soknad/utils/amplitude";
 
 const FAKTUM_KEY = "soknadsmottaker";
 
@@ -138,27 +136,6 @@ const AdresseView = () => {
         }
     };
 
-    const onVelgSoknadsmottaker = (valgtNavEnhet: NavEnhet) => {
-        if (behandlingsId) {
-            valgtNavEnhet.valgt = true;
-            lagreSoknadsdata(behandlingsId, SoknadsSti.NAV_ENHETER, valgtNavEnhet, dispatch);
-
-            const navEnheter = soknadsdata.personalia.navEnheter;
-            navEnheter.map((navEnhet: NavEnhet) => {
-                if (navEnhet.enhetsnavn === valgtNavEnhet.enhetsnavn) {
-                    navEnhet.valgt = true;
-                    dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, navEnhet));
-                } else {
-                    navEnhet.valgt = false;
-                }
-                return navEnhet;
-            });
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter));
-            slettEventuelleValideringsfeil();
-            logAmplitudeEvent("velger søknadsmottaker", {antallNavEnheter: navEnheter.length});
-        }
-    };
-
     const slettEventuelleValideringsfeil = () => {
         const feilkode = feil.find((f: Valideringsfeil) => f.faktumKey === FAKTUM_KEY);
         if (feilkode) {
@@ -178,7 +155,6 @@ const AdresseView = () => {
 
     const restStatus: REST_STATUS = soknadsdata.restStatus.personalia.adresser;
     const adresser = soknadsdata.personalia.adresser;
-    const navEnheter = soknadsdata.personalia.navEnheter;
     const folkeregistrertAdresse = adresser && adresser.folkeregistrert && adresser.folkeregistrert.gateadresse;
     const midlertidigAdresse = adresser && adresser.midlertidig && adresser.midlertidig.gateadresse;
     const soknadAdresse: Gateadresse | null = adresser && adresser.soknad && adresser.soknad.gateadresse;
@@ -268,15 +244,6 @@ const AdresseView = () => {
         );
     }
 
-    let soknadsmottakerVelger = (adresseKategori: AdresseKategori) => (
-        <SoknadsmottakerVelger
-            label={getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.velgKontor")}
-            navEnheter={navEnheter}
-            visible={adresser.valg === adresseKategori && navEnheter.length > 1}
-            onVelgSoknadsmottaker={(navEnhet: NavEnhet) => onVelgSoknadsmottaker(navEnhet)}
-        />
-    );
-
     const feilkode: Valideringsfeil | undefined = feil.find((f: Valideringsfeil) => f.faktumKey === FAKTUM_KEY);
     const feilmelding = intl.formatMessage({
         id: "soknadsmottaker.feilmelding",
@@ -302,7 +269,6 @@ const AdresseView = () => {
                             name="oppholdsadresse"
                         />
                     )}
-                    {soknadsmottakerVelger(AdresseKategori.FOLKEREGISTRERT)}
                 </span>
 
                 {(midlertidigAdresse || midlertidigMatrikkelAdresse) && (
@@ -317,7 +283,6 @@ const AdresseView = () => {
                             }
                             name="oppholdsadresse"
                         />
-                        {soknadsmottakerVelger(AdresseKategori.MIDLERTIDIG)}
                     </span>
                 )}
                 <RadioEnhanced
@@ -347,15 +312,6 @@ const AdresseView = () => {
                                     onNullstill={nullstillAdresseTypeahead}
                                 />
                             </Sporsmal>
-                            {navEnheter.length > 1 && (
-                                <SoknadsmottakerVelger
-                                    label={getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.velgKontor")}
-                                    ikkeVisPanel={true}
-                                    navEnheter={navEnheter}
-                                    visible={adresser.valg === AdresseKategori.SOKNAD}
-                                    onVelgSoknadsmottaker={(navEnhet: NavEnhet) => onVelgSoknadsmottaker(navEnhet)}
-                                />
-                            )}
                         </div>
                     </Underskjema>
                 </div>
