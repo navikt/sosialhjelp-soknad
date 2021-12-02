@@ -5,7 +5,5 @@
     "https://sosialhjelp-soknad.dev.nav.no/",
     "https://www-q0.dev.nav.no/sosialhjelp/soknad"
   ],
-  "prometheusEnabled": true,
-  "gcpAccessPolicy": false,
   "dekoratorMiljo": "q0"
 }
