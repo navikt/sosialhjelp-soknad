@@ -1,4 +1,4 @@
-const amplitude = typeof window !== "undefined" ? require("amplitude-js") : () => null;
+import amplitude from "amplitude-js";
 
 export const initAmplitude = () => {
     if (amplitude) {
