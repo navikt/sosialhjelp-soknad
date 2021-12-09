@@ -47,7 +47,7 @@ export function erSamvaersgrad(value: number | null): boolean {
     if (!value) {
         return true;
     }
-    if (isNaN(value)) {
+    if (Number.isNaN(value)) {
         return false;
     }
     if (value < 0 || value > 100) {
