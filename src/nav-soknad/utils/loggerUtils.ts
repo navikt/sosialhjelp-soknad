@@ -28,19 +28,19 @@ const createLogEntry = (message: string, level: NavLogLevel, jsFileUrl?: string)
 };
 
 export const logInfo = (message: string) => {
-    return logToServer(createLogEntry(message, NavLogLevel.INFO));
+    logToServer(createLogEntry(message, NavLogLevel.INFO));
 };
 
 export const logWarning = (message: string) => {
-    return logToServer(createLogEntry(message, NavLogLevel.WARN));
+    logToServer(createLogEntry(message, NavLogLevel.WARN));
 };
 
 export const logError = (message: string, jsFileUrl?: string) => {
-    return logToServer(createLogEntry(message, NavLogLevel.ERROR, jsFileUrl));
+    logToServer(createLogEntry(message, NavLogLevel.ERROR, jsFileUrl));
 };
 
 export const logException = (logEntry: NavLogEntry) => {
-    return logToServer(logEntry);
+    logToServer(logEntry);
 };
 
 function logToServer(navLogEntry: NavLogEntry) {

@@ -110,10 +110,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
         }
 
         case SoknadActionTypeKeys.START_SOKNAD_OK:
-            return {
-                ...state,
-                startSoknadPending: false,
-            };
         case SoknadActionTypeKeys.START_SOKNAD_SERVICE_UNAVAILABLE:
             return {
                 ...state,

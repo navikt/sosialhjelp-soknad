@@ -68,10 +68,6 @@ export const createMockIntl = (messages: any) => {
         return messages[verdi.id];
     };
 
-    intl.formatMessage = (verdi: IntlFormat): string => {
-        return messages[verdi.id];
-    };
-
     return intl;
 };
 
