@@ -120,13 +120,7 @@ export const Oppsummering = () => {
                 label={bekreftOpplysninger}
                 checked={bekreftet ? bekreftet : false}
                 onChange={() => dispatch(bekreftOppsummering())}
-                error={
-                    visBekreftMangler
-                        ? intl.formatMessage({
-                              id: "oppsummering.feilmelding.bekreftmangler",
-                          })
-                        : ""
-                }
+                error={visBekreftMangler}
             >
                 <FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger" />
             </ConfirmationPanel>

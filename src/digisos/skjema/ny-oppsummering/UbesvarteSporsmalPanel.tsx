@@ -4,8 +4,9 @@ import Ella from "../../../nav-soknad/components/svg/Ella";
 import {BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
 
 const StyledGuidePanel = styled(GuidePanel)`
-    --navds-guide-panel-color-border: var(--navds-color-orange-20);
-    --navds-guide-panel-color-illustration-background: var(--navds-color-orange-20);
+    /* TODO: Bytte ut --navds-global-color-orange-200 med eks --navds-semantic-color-feedback-warning-background ? */
+    --navds-guide-panel-color-border: var(--navds-global-color-orange-200);
+    --navds-guide-panel-color-illustration-background: var(--navds-global-color-orange-200);
     margin-bottom: 2rem;
 `;
 
