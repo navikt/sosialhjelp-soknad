@@ -34,7 +34,7 @@ const InformasjonFraElla = styled.div`
 const GrayContainer = styled(Panel)`
     padding-bottom: 2rem;
     margin-bottom: 0rem !important;
-    background-color: var(--navds-color-gray-10);
+    background-color: var(--navds-semantic-color-canvas-background);
 `;
 
 const CenteredContent = styled.div`

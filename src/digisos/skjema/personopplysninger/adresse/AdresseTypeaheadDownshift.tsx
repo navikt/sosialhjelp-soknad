@@ -60,9 +60,9 @@ const SelectMenu = styled.ul`
 
     box-sizing: border-box;
     width: 25rem;
-    border: 1px solid var(--navds-color-gray-40);
+    border: 1px solid var(--navds-semantic-color-border-muted);
     border-radius: var(--navds-spacing-2);
-    background-color: var(--navds-color-white);
+    background-color: var(--navds-semantic-color-component-background-light);
 
     list-style: none;
     padding: 0.5rem 0;
@@ -75,8 +75,8 @@ const SelectMenu = styled.ul`
 const Item = styled.li<{isHighlighted: boolean}>`
     padding: 0.25rem 0.5rem;
 
-    color: ${(props) => (props.isHighlighted ? "var(--navds-color-white)" : "inherit")};
-    background-color: ${(props) => (props.isHighlighted ? "var(--navds-color-blue-40)" : "inherit")};
+    color: ${(props) => (props.isHighlighted ? "var(--navds-semantic-color-component-background-light)" : "inherit")};
+    background-color: ${(props) => (props.isHighlighted ? "var(--navds-global-color-blue-400)" : "inherit")};
 `;
 
 const StyledInput = styled(Input)`

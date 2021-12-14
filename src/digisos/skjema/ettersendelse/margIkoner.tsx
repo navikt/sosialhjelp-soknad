@@ -12,11 +12,11 @@ enum MargIkoner {
 }
 
 const GreenSuccess = styled(SuccessFilled)`
-    color: var(--navds-alert-color-success-icon);
+    color: var(--navds-semantic-color-feedback-success-icon);
 `;
 
 const OrangeWarning = styled(WarningFilled)`
-    color: var(--navds-alert-color-warning-icon);
+    color: var(--navds-semantic-color-feedback-warning-icon);
 `;
 
 const MargIkon: React.FC<{ikon: MargIkoner}> = ({ikon}) => {

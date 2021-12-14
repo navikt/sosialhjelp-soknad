@@ -36,7 +36,7 @@ const InfoIkon = styled.div`
     top: 0;
     z-index: 1;
     transform: translate(-50%, -50%);
-    background: var(--navds-color-orange-40);
+    background: var(--navds-semantic-color-feedback-warning-icon);
     border-radius: 100%;
     height: 5rem;
     width: 5rem;
