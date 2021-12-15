@@ -1,52 +1,26 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
 import {FormattedMessage, useIntl} from "react-intl";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
-import {sendEttersendelse} from "../../redux/ettersendelse/ettersendelseActions";
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {BodyShort, Button, Heading, Loader} from "@navikt/ds-react";
 
-const getAntallOpplastedeFiler = (data: EttersendelseVedleggBackend[]) => {
-    return data.map((vedlegg: any) => vedlegg.filer.length).reduce((a: number, b: number) => a + b);
-};
+const EttersendelseVedleggListe = (props: {
+    ettersendelseAktivert: boolean;
+    advarselManglerVedlegg: boolean;
+    onSendEttersendelse: () => void;
+}) => {
+    const {advarselManglerVedlegg} = props;
 
-const EttersendelseVedleggListe = (props: {ettersendelseAktivert: boolean; onEttersendelse?: () => void}) => {
-    const {onEttersendelse} = props;
-    const [advarselManglerVedlegg, setAdvarselManglerVedlegg] = useState(false);
-
-    const {brukerbehandlingId, data, ettersendStatus, opplastingStatus, feiletVedleggId, feilKode} = useSelector(
+    const {data, ettersendStatus, opplastingStatus, feiletVedleggId, feilKode} = useSelector(
         (state: State) => state.ettersendelse
     );
 
-    const dispatch = useDispatch();
-
     const intl = useIntl();
-
-    const onSendEttersendelse = () => {
-        const antallOpplastedeFiler = getAntallOpplastedeFiler(data);
-        setAdvarselManglerVedlegg(antallOpplastedeFiler === 0);
-        if (antallOpplastedeFiler > 0) {
-            if (brukerbehandlingId) {
-                dispatch(sendEttersendelse(brukerbehandlingId));
-            }
-        }
-    };
-
-    useEffect(() => {
-        if (advarselManglerVedlegg && data && getAntallOpplastedeFiler(data) > 0) {
-            setAdvarselManglerVedlegg(false);
-        }
-    }, [advarselManglerVedlegg, data]);
-
-    useEffect(() => {
-        if (ettersendStatus === REST_STATUS.OK && onEttersendelse) {
-            onEttersendelse();
-        }
-    }, [ettersendStatus, onEttersendelse]);
 
     return (
         <div>
@@ -91,7 +65,7 @@ const EttersendelseVedleggListe = (props: {ettersendelseAktivert: boolean; onEtt
                         variant="primary"
                         type="submit"
                         disabled={ettersendStatus === REST_STATUS.PENDING || opplastingStatus === REST_STATUS.PENDING}
-                        onClick={() => onSendEttersendelse()}
+                        onClick={() => props.onSendEttersendelse()}
                     >
                         Send vedlegg {ettersendStatus === REST_STATUS.PENDING && <Loader />}
                     </Button>
