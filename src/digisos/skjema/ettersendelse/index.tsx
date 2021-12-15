@@ -19,7 +19,7 @@ import {useTitle} from "../../../nav-soknad/hooks/useTitle";
 import {Alert, BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
 import {BlokkCenter} from "./BlokkCenter";
 
-const lesBrukerbehandlingskjedeId = (behandlingsId?: string) => {
+export const lesBrukerbehandlingskjedeId = (behandlingsId?: string) => {
     if (!behandlingsId) {
         const match = window.location.pathname.match(/\/skjema\/(.*)\/ettersendelse/);
         if (match) {
@@ -63,14 +63,6 @@ const Ettersendelse = () => {
 
     const skrivUt = () => {
         window.print();
-    };
-
-    const onEttersendelseSendt = () => {
-        const brukerbehandlingskjedeId = lesBrukerbehandlingskjedeId(behandlingsId);
-        if (brukerbehandlingskjedeId) {
-            dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
-            dispatch(lesEttersendelser(brukerbehandlingskjedeId));
-        }
     };
 
     const antallManglendeVedlegg = () => {
@@ -158,7 +150,6 @@ const Ettersendelse = () => {
                     <EttersendelseEkspanderbart
                         kunGenerellDokumentasjon={antallManglendeVedlegg() === 0}
                         ettersendelseAktivert={isEttersendelseAktivert()}
-                        onEttersendelse={() => onEttersendelseSendt()}
                     >
                         {antallManglendeVedlegg() > 0 && (
                             <span>

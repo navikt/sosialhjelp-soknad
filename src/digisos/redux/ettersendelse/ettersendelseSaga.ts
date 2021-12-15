@@ -1,5 +1,5 @@
 import {SagaIterator} from "redux-saga";
-import {call, put, takeEvery} from "redux-saga/effects";
+import {call, put, select, takeEvery} from "redux-saga/effects";
 
 import {
     fetchDelete,
@@ -31,12 +31,16 @@ import {
     opprettEttersendelseFeilet,
     filLastetOpp,
     slettEttersendtVedleggOk,
+    lesEttersendelser,
+    opprettEttersendelse,
 } from "./ettersendelseActions";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {showServerFeil} from "../soknad/soknadActions";
 import {REST_FEIL} from "../soknad/soknadTypes";
 import {settFilOpplastingFerdig} from "../okonomiskeOpplysninger/opplysningerActions";
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {State} from "../reducers";
+import {lesBrukerbehandlingskjedeId} from "../../skjema/ettersendelse";
 
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
     try {
@@ -156,6 +160,13 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
         );
         yield put({type: EttersendelseActionTypeKeys.ETTERSEND_OK});
         yield put(lastOppEttersendtVedleggOk());
+
+        const behandlingsId = yield select((state: State) => state.soknad.behandlingsId);
+        const brukerbehandlingskjedeId = lesBrukerbehandlingskjedeId(behandlingsId);
+        if (brukerbehandlingskjedeId) {
+            yield put(opprettEttersendelse(brukerbehandlingskjedeId));
+            yield put(lesEttersendelser(brukerbehandlingskjedeId));
+        }
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
