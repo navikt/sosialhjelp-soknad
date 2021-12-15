@@ -1,7 +1,7 @@
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 
-import "./index.less";
+import "./index.css";
 import "@navikt/ds-css";
 
 import * as React from "react";

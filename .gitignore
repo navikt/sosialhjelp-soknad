@@ -11,6 +11,8 @@ target
 .eslintcache
 .env.local
 
+src/index.css
+
 *.project
 *.settings
 *.classpath
