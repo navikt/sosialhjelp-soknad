@@ -8,6 +8,9 @@ on:
       cluster:
         required: true
         type: string
+    secrets:
+      api_deploy_token:
+        required: true
   workflow_dispatch:
     inputs:
       config-file-name:
@@ -76,7 +79,7 @@ jobs:
       - name: Deploy til dev
         uses: nais/deploy/actions/deploy@v1
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY != '' && secrets.NAIS_DEPLOY_APIKEY || secrets.api_deploy_token }}
           RESOURCE: nais.yaml
           CLUSTER: ${{ env.CLUSTER_NAME }}
           VARS: nais/dev/${{ env.CONFIG_FILE }}.json
