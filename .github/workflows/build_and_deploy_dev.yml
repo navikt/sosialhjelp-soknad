@@ -1,5 +1,13 @@
 name: Build and deploy to dev
 on:
+  workflow_call:
+    inputs:
+      config-file-name:
+        required: true
+        type: string
+      cluster:
+        required: true
+        type: string
   workflow_dispatch:
     inputs:
       config-file-name:
@@ -24,8 +32,18 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
+      - name: Sett cluster og config fra workflow_call
+        if: github.event_name == 'workflow_call'
+        run: |
+          echo "CLUSTER_NAME=${{ inputs.cluster }}" >> $GITHUB_ENV
+          echo "CONFIG_FILE=${{ inputs.config-file-name }}" >> $GITHUB_ENV
+      - name: Sett cluster og config fra workflow_dispatch
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "CLUSTER_NAME=${{ github.event.inputs.cluster }}" >> $GITHUB_ENV
+          echo "CONFIG_FILE=${{ github.event.inputs.config-file-name }}" >> $GITHUB_ENV
       - name: Copy env-file for dev
-        run: cp nais/dev/${{ github.event.inputs.config-file-name }}.env .env.local
+        run: cp nais/dev/${{ env.CONFIG_FILE }}.env .env.local
       - name: Install dependencies
         run: npm ci
       - name: Run tests
@@ -44,7 +62,7 @@ jobs:
         uses: navikt/sosialhjelp-ci/actions/create-artifact-version@master
       - name: Get complete tag
         run: |
-          echo "COMPLETE_TAG=${{ github.event.inputs.config-file-name }}-$( date +%s )-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
+          echo "COMPLETE_TAG=${{ env.CONFIG_FILE }}-$( date +%s )-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
       - name: Create docker image tags
         run: |
           echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:${{ env.COMPLETE_TAG }}" >> $GITHUB_ENV
@@ -66,8 +84,8 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: nais.yaml
-          CLUSTER: ${{ github.event.inputs.cluster }}
-          VARS: nais/dev/${{ github.event.inputs.config-file-name }}.json
+          CLUSTER: ${{ env.CLUSTER_NAME }}
+          VARS: nais/dev/${{ env.CONFIG_FILE }}.json
           REF: ${{ github.sha }}
           PRINT_PAYLOAD: true
           IMAGE: ${{ env.DOCKER_TAG }}
