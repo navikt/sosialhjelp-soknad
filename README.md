@@ -11,7 +11,7 @@ Frontend for søknad om sosialhjelp.
 Kjører mot (mock backend)
 
 -   `npm install`
--   `npm start` - Starter webpack server og mock backend utviklet i node express.
+-   `npm run dev` - Bygger less og starter dev-server
 -   `npm test` - Kjør enhetstestene
 
 ### Env-variabler ved kjøring lokalt
