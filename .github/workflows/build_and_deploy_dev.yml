@@ -34,8 +34,8 @@ jobs:
           cache: 'npm'
       - name: Sett cluster og config to env variables
         run: |
-          echo "CLUSTER_NAME=${{ inputs.cluster != "" && inputs.cluster || github.event.inputs.cluster }}" >> $GITHUB_ENV
-          echo "CONFIG_FILE=${{ inputs.config-file-name  != "" && inputs.config-file-name  || github.event.inputs.config-file-name }}" >> $GITHUB_ENV
+          echo "CLUSTER_NAME=${{ inputs.cluster != '' && inputs.cluster || github.event.inputs.cluster }}" >> $GITHUB_ENV
+          echo "CONFIG_FILE=${{ inputs.config-file-name  != '' && inputs.config-file-name  || github.event.inputs.config-file-name }}" >> $GITHUB_ENV
       - name: Copy env-file for dev
         run: cp nais/dev/${{ env.CONFIG_FILE }}.env .env.local
       - name: Install dependencies
