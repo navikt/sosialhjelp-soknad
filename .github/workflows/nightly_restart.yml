@@ -10,18 +10,26 @@ jobs:
     with:
       config-file-name: dev-sbs
       cluster: dev-sbs
+    secrets:
+      api_deploy_token: ${{ secrets.NAIS_DEPLOY_APIKEY }}
   deploy_dev-sbs-intern:
     uses: navikt/sosialhjelp-soknad/.github/workflows/build_and_deploy_dev.yml@master
     with:
       config-file-name: dev-sbs-intern
       cluster: dev-sbs
+    secrets:
+      api_deploy_token: ${{ secrets.NAIS_DEPLOY_APIKEY }}
   deploy_dev-gcp:
     uses: navikt/sosialhjelp-soknad/.github/workflows/build_and_deploy_dev.yml@master
     with:
       config-file-name: dev-gcp
       cluster: dev-gcp
+    secrets:
+      api_deploy_token: ${{ secrets.NAIS_DEPLOY_APIKEY }}
   deploy_labs-gcp:
     uses: navikt/sosialhjelp-soknad/.github/workflows/build_and_deploy_dev.yml@master
     with:
       config-file-name: labs-gcp
       cluster: labs-gcp
+    secrets:
+      api_deploy_token: ${{ secrets.NAIS_DEPLOY_APIKEY }}
