@@ -28,7 +28,7 @@ jobs:
     name: Build and deploy to dev
     runs-on: ubuntu-latest
     env:
-      DOCKER_IMAGE: docker.pkg.github.com/${{ github.repository }}/${{ github.event.repository.name }}
+      DOCKER_IMAGE: docker.pkg.github.com/${{ github.repository }}/sosialhjelp-soknad
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -76,7 +76,7 @@ jobs:
           tag_name: ${{ env.COMPLETE_TAG }}
           release_name: ${{ env.COMPLETE_TAG }}
           commitish: ${{ github.sha }}
-      - name: Deploy til dev
+      - name: Deploy til dev - ${{ github.event.inputs.config-file-name }}
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY != '' && secrets.NAIS_DEPLOY_APIKEY || secrets.api_deploy_token }}
