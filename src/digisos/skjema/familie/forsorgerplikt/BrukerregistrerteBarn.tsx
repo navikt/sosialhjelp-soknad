@@ -134,8 +134,9 @@ const BrukerregistrerteBarn = () => {
             let fodselsdato: string = barnet.barn.fodselsdato ? barnet.barn.fodselsdato : "";
             if (fodselsdato === "") {
                 barnet.barn.fodselsdato = null;
+                dispatch(clearValideringsfeil(TEXT_KEY_FNR + i));
+                setDatoFormatFeilIndex(-1);
             }
-            let harNoeInnhold = harInnhold(barnet);
             if (fodselsdato !== "") {
                 fodselsdato = konverterFraISODato(fodselsdato);
                 feilkodeFodselsdato = fdato(fodselsdato);
@@ -152,45 +153,12 @@ const BrukerregistrerteBarn = () => {
                     fodselsdato = konverterTilISODato(fodselsdato);
                     barnet.barn.fodselsdato = fodselsdato;
                 }
-            } else {
-                dispatch(clearValideringsfeil(TEXT_KEY_FNR + i));
-                setDatoFormatFeilIndex(-1);
-                if (harNoeInnhold) {
-                    dispatch(setValideringsfeil(ValideringsFeilKode.PAKREVD, TEXT_KEY_FNR + i));
-                    ingenFeilKoder = false;
-                }
-            }
-            if (!harNoeInnhold || (barnet.barn.navn && barnet.barn.navn.fornavn && barnet.barn.navn.fornavn !== "")) {
-                dispatch(clearValideringsfeil(TEXT_KEY_FIRST_NAME + i));
-            } else {
-                dispatch(setValideringsfeil(ValideringsFeilKode.PAKREVD, TEXT_KEY_FIRST_NAME + i));
-                ingenFeilKoder = false;
-            }
-            if (
-                !harNoeInnhold ||
-                (barnet.barn.navn && barnet.barn.navn.etternavn && barnet.barn.navn.etternavn !== "")
-            ) {
-                dispatch(clearValideringsfeil(TEXT_KEY_LAST_NAME + i));
-            } else {
-                dispatch(setValideringsfeil(ValideringsFeilKode.PAKREVD, TEXT_KEY_LAST_NAME + i));
-                ingenFeilKoder = false;
             }
         }
         if (ingenFeilKoder && behandlingsId) {
             lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
         }
     };
-
-    function harInnhold(barnet: Barn): boolean {
-        const fodselsdato: string = barnet.barn.fodselsdato ? barnet.barn.fodselsdato : "";
-        if (barnet.barn.navn) {
-            const fornavn: string = barnet.barn.navn.fornavn ?? "";
-            const mellomnavn: string = barnet.barn.navn.mellomnavn ?? "";
-            const etternavn: string = barnet.barn.navn.etternavn ?? "";
-            return fodselsdato !== "" || fornavn !== "" || mellomnavn !== "" || etternavn !== "";
-        }
-        return fodselsdato !== "";
-    }
 
     return (
         <Sporsmal sprakNokkel="familierelasjon.faktum.leggtil" legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
@@ -217,7 +185,7 @@ const BrukerregistrerteBarn = () => {
                                 onFocus={() => onFokus(index)}
                                 faktumKey={TEXT_KEY_FIRST_NAME + index}
                                 textKey={TEXT_KEY + ".fornavn"}
-                                required={true}
+                                required={false}
                             />
 
                             <InputEnhanced
@@ -242,7 +210,7 @@ const BrukerregistrerteBarn = () => {
                                 onFocus={() => onFokus(index)}
                                 faktumKey={TEXT_KEY_LAST_NAME + index}
                                 textKey={TEXT_KEY + ".etternavn"}
-                                required={true}
+                                required={false}
                             />
 
                             <InputEnhanced
@@ -257,7 +225,7 @@ const BrukerregistrerteBarn = () => {
                                 onFocus={() => onFokus(index)}
                                 faktumKey={TEXT_KEY_FNR + index}
                                 textKey={TEXT_KEY_FNR}
-                                required={true}
+                                required={false}
                             />
 
                             <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">

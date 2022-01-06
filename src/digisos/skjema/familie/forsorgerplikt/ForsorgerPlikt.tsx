@@ -11,6 +11,7 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import BrukerregistrerteBarn from "./BrukerregistrerteBarn";
 
 const ForsorgerPliktView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
@@ -59,7 +60,7 @@ const ForsorgerPliktView = () => {
                         <FormattedMessage id="familierelasjon.ingen_registrerte_barn_tekst" />
                     </b>
                 </p>
-                {/*<BrukerregistrerteBarn/> TODO: Kommentert ut intil alle FSLer er klare. */}
+                <BrukerregistrerteBarn />
                 {brukerregistrertAnsvar && antallBrukerregistrerteBarn > 0 && <Barnebidrag />}
             </Sporsmal>
         );
@@ -78,7 +79,7 @@ const ForsorgerPliktView = () => {
                 </p>
 
                 <RegistrerteBarn />
-                {/*<BrukerregistrerteBarn/> TODO: Kommentert ut intil alle FSLer er klare. */}
+                <BrukerregistrerteBarn />
                 <Barnebidrag />
             </Sporsmal>
         );
