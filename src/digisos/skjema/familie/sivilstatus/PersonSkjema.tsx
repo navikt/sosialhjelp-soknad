@@ -1,5 +1,4 @@
 import * as React from "react";
-import {Column, Container, Row} from "nav-frontend-grid";
 import InputEnhanced from "../../../../nav-soknad/faktum/InputEnhanced";
 import {setPath, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
@@ -124,82 +123,65 @@ const PersonSkjema = () => {
 
     return (
         <div className="personskjema">
-            <Container fluid={true} className="container--noPadding">
-                <Row>
-                    <Column xs="12">
-                        <InputEnhanced
-                            getName={() => FAKTUM_KEY + "_fornavn_input"}
-                            id={FAKTUM_KEY + "_fornavn_input"}
-                            maxLength={100}
-                            verdi={ektefelle.navn.fornavn}
-                            onChange={(verdi: string) => oppdaterTekstfelt("navn/fornavn", verdi)}
-                            onBlur={() => onBlur()}
-                            faktumKey="familie.sivilstatus.gift.ektefelle.fornavn"
-                            required={true}
-                        />
-                    </Column>
-                </Row>
-                <Row>
-                    <Column xs="12">
-                        <InputEnhanced
-                            getName={() => FAKTUM_KEY + "_mellomnavn_input"}
-                            id={FAKTUM_KEY + "_mellomnavn_input"}
-                            maxLength={100}
-                            verdi={ektefelle.navn.mellomnavn ? ektefelle.navn.mellomnavn : ""}
-                            onChange={(verdi: string) => oppdaterTekstfelt("navn/mellomnavn", verdi)}
-                            onBlur={() => onBlur()}
-                            faktumKey="familie.sivilstatus.gift.ektefelle.mellomnavn"
-                            required={true}
-                        />
-                    </Column>
-                </Row>
-                <Row className="add-padding-bottom">
-                    <Column xs="12">
-                        <InputEnhanced
-                            getName={() => FAKTUM_KEY + "_etternavn_input"}
-                            id={FAKTUM_KEY + "_etternavn_input"}
-                            maxLength={100}
-                            verdi={ektefelle.navn.etternavn}
-                            onChange={(verdi: string) => oppdaterTekstfelt("navn/etternavn", verdi)}
-                            onBlur={() => onBlur()}
-                            faktumKey="familie.sivilstatus.gift.ektefelle.etternavn"
-                            required={true}
-                        />
-                    </Column>
-                </Row>
-                <Row>
-                    <Column xs="12">
-                        <InputEnhanced
-                            getName={() => FAKTUM_KEY_FNR}
-                            id={FAKTUM_KEY_FNR}
-                            maxLength={8}
-                            minLength={8}
-                            verdi={fodselsdato}
-                            onChange={(verdi: string) => oppdaterTekstfelt("fodselsdato", verdi)}
-                            bredde="S"
-                            onBlur={() => onBlur()}
-                            faktumKey="familie.sivilstatus.gift.ektefelle.fnr"
-                            required={true}
-                        />
-                    </Column>
-                </Row>
-                <Row>
-                    <Column xs="12">
-                        <InputEnhanced
-                            getName={() => FAKTUM_KEY_PERSONNUMMER}
-                            id={FAKTUM_KEY_PERSONNUMMER}
-                            maxLength={5}
-                            minLength={5}
-                            verdi={personnummer}
-                            onChange={(verdi: string) => oppdaterTekstfelt("personnummer", verdi)}
-                            bredde="S"
-                            onBlur={() => onBlur()}
-                            faktumKey="familie.sivilstatus.gift.ektefelle.pnr"
-                            required={true}
-                        />
-                    </Column>
-                </Row>
-            </Container>
+            <InputEnhanced
+                getName={() => FAKTUM_KEY + "_fornavn_input"}
+                id={FAKTUM_KEY + "_fornavn_input"}
+                maxLength={100}
+                verdi={ektefelle.navn.fornavn}
+                onChange={(verdi: string) => oppdaterTekstfelt("navn/fornavn", verdi)}
+                onBlur={() => onBlur()}
+                faktumKey="familie.sivilstatus.gift.ektefelle.fornavn"
+                required={true}
+            />
+
+            <InputEnhanced
+                getName={() => FAKTUM_KEY + "_mellomnavn_input"}
+                id={FAKTUM_KEY + "_mellomnavn_input"}
+                maxLength={100}
+                verdi={ektefelle.navn.mellomnavn ? ektefelle.navn.mellomnavn : ""}
+                onChange={(verdi: string) => oppdaterTekstfelt("navn/mellomnavn", verdi)}
+                onBlur={() => onBlur()}
+                faktumKey="familie.sivilstatus.gift.ektefelle.mellomnavn"
+                required={true}
+            />
+
+            <InputEnhanced
+                className="add-padding-bottom"
+                getName={() => FAKTUM_KEY + "_etternavn_input"}
+                id={FAKTUM_KEY + "_etternavn_input"}
+                maxLength={100}
+                verdi={ektefelle.navn.etternavn}
+                onChange={(verdi: string) => oppdaterTekstfelt("navn/etternavn", verdi)}
+                onBlur={() => onBlur()}
+                faktumKey="familie.sivilstatus.gift.ektefelle.etternavn"
+                required={true}
+            />
+
+            <InputEnhanced
+                getName={() => FAKTUM_KEY_FNR}
+                id={FAKTUM_KEY_FNR}
+                maxLength={8}
+                minLength={8}
+                verdi={fodselsdato}
+                onChange={(verdi: string) => oppdaterTekstfelt("fodselsdato", verdi)}
+                bredde="S"
+                onBlur={() => onBlur()}
+                faktumKey="familie.sivilstatus.gift.ektefelle.fnr"
+                required={true}
+            />
+
+            <InputEnhanced
+                getName={() => FAKTUM_KEY_PERSONNUMMER}
+                id={FAKTUM_KEY_PERSONNUMMER}
+                maxLength={5}
+                minLength={5}
+                verdi={personnummer}
+                onChange={(verdi: string) => oppdaterTekstfelt("personnummer", verdi)}
+                bredde="S"
+                onBlur={() => onBlur()}
+                faktumKey="familie.sivilstatus.gift.ektefelle.pnr"
+                required={true}
+            />
 
             <Sporsmal
                 sprakNokkel="familie.sivilstatus.gift.ektefelle.borsammen"
