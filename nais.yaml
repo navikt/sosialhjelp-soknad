@@ -24,14 +24,14 @@ spec:
     timeout: 1
   resources:
     limits:
-      cpu: 300m
-      memory: 256Mi
+      cpu: {{cpuLimit}}
+      memory: {{memoryLimit}}
     requests:
-      cpu: 40m
-      memory: 128Mi
+      cpu: {{cpuRequest}
+      memory: {{memoryRequest}}
   replicas:
-    min: 2
-    max: 2
+    min: {{minReplicas}}
+    max: {{maxReplicas}}
   env:
     - name: DEKORATOR_MILJO
       value: {{dekoratorMiljo}}
