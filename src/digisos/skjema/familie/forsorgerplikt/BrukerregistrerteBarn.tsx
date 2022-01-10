@@ -16,7 +16,6 @@ import {State} from "../../../redux/reducers";
 import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validering/valideringActions";
 import {lagreSoknadsdata, setPath} from "../../../redux/soknadsdata/soknadsdataActions";
-import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import styled from "styled-components";
 import {Button} from "@navikt/ds-react";
 
