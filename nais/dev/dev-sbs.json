@@ -5,5 +5,11 @@
     "https://sosialhjelp-soknad.dev.nav.no/",
     "https://www-q0.dev.nav.no/sosialhjelp/soknad"
   ],
-  "dekoratorMiljo": "q0"
+  "dekoratorMiljo": "q0",
+  "minReplicas": "1",
+  "maxReplicas": "2",
+  "cpuLimit": "300m",
+  "memoryLimit": "256Mi",
+  "cpuRequest": "1m",
+  "memoryRequest": "50Mi"
 }

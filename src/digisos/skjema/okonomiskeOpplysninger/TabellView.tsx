@@ -9,7 +9,6 @@ import {
 import {Valideringsfeil, ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 import {useDispatch, useSelector} from "react-redux";
 import {getSpcForOpplysning, getTomVedleggRad} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
-import {Column, Row} from "nav-frontend-grid";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {
     lagreOpplysningHvisGyldigAction,
@@ -163,25 +162,23 @@ const TabellView = (props: {opplysning: Opplysning; gruppeIndex: number}) => {
                   const id: string = key.replace(/\./gi, "_");
 
                   return (
-                      <Column xs={"12"} md={"6"} key={key}>
-                          <InputEnhanced
-                              id={id}
-                              onChange={(input: string) => handleChange(input, radIndex, inputType, key)}
-                              onBlur={() => handleBlur(radIndex, inputType, key)}
-                              verdi={vedleggRad[inputType] ? vedleggRad[inputType] : ""}
-                              required={false}
-                              bredde={inputType === InputType.BESKRIVELSE ? "L" : "S"}
-                              faktumKey={text}
-                              faktumIndex={radIndex}
-                              maxLength={inputType === InputType.BESKRIVELSE ? 100 : 8}
-                          />
-                      </Column>
+                      <InputEnhanced
+                          id={id}
+                          onChange={(input: string) => handleChange(input, radIndex, inputType, key)}
+                          onBlur={() => handleBlur(radIndex, inputType, key)}
+                          verdi={vedleggRad[inputType] ? vedleggRad[inputType] : ""}
+                          required={false}
+                          bredde={inputType === InputType.BESKRIVELSE ? "L" : "S"}
+                          faktumKey={text}
+                          faktumIndex={radIndex}
+                          maxLength={inputType === InputType.BESKRIVELSE ? 100 : 8}
+                      />
                   );
               })
             : null;
 
         return (
-            <Row key={radIndex} className="opplysning__row">
+            <div key={radIndex}>
                 {inputs}
 
                 {skalViseFjerneRadKnapp && (
@@ -194,20 +191,20 @@ const TabellView = (props: {opplysning: Opplysning; gruppeIndex: number}) => {
                         Fjern
                     </LinkButton>
                 )}
-            </Row>
+            </div>
         );
     });
 
     if (innhold) {
         return (
-            <div className="container--noPadding container-fluid">
+            <>
                 {innhold}
                 {opplysningSpc && opplysningSpc.antallRader === AntallRader.FLERE && (
                     <LinkButton onClick={() => handleLeggTilRad()} id={props.gruppeIndex + "_link"}>
                         <span aria-hidden={true}>+ </span>Legg til
                     </LinkButton>
                 )}
-            </div>
+            </>
         );
     }
     return null;

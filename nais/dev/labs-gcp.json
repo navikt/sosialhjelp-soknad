@@ -4,5 +4,11 @@
   "ingresses": [
     "https://sosialhjelp-soknad.labs.nais.io/sosialhjelp/soknad"
   ],
-  "dekoratorMiljo": "prod"
+  "dekoratorMiljo": "prod",
+  "minReplicas": "1",
+  "maxReplicas": "2",
+  "cpuLimit": "300m",
+  "memoryLimit": "256Mi",
+  "cpuRequest": "1m",
+  "memoryRequest": "50Mi"
 }
