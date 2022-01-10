@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {createContext, useEffect, useState} from "react";
 import {
     lagreHarNyligInnsendteSoknaderPaStore,
     lagreNedetidPaStore,
@@ -19,6 +19,16 @@ import {
 import {lagreLedeteksterPaStore} from "./digisos/redux/ledetekster/ledeteksterActions";
 import {ApplicationSpinner} from "./nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
+interface FeatureToggles {
+    leggeTilBarn: boolean;
+}
+
+const featureToggleContextInitialState = {
+    leggeTilBarn: false,
+};
+
+export const FeatureToggleContext = createContext<FeatureToggles>(featureToggleContextInitialState);
+
 interface Props {
     children: React.ReactNode;
 }
@@ -26,6 +36,7 @@ interface Props {
 const LoadContainer: React.FC<Props> = (props: Props) => {
     const [showSpinner, setShowSpinner] = useState(true);
     const [showErrorPage, setShowErrorPage] = useState(false);
+    const [featureToggles, setFeatureToggles] = useState<FeatureToggles>(featureToggleContextInitialState);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -49,6 +60,8 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
                 const pabegynteSoknader = await fetchToJson<PabegynteSoknaderResponse[]>(
                     "informasjon/pabegynteSoknader"
                 );
+                const featureToggleResponse = await fetchToJson<FeatureToggles>("feature-toggle");
+                setFeatureToggles(featureToggleResponse);
 
                 dispatch(lagreLedeteksterPaStore(ledeteksterResponse));
                 dispatch(lagreRessurserPaStore(tilgangResponse, fornavnResponse));
@@ -68,7 +81,7 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
             }
         }
         fetchData();
-    }, [dispatch, setShowSpinner, setShowErrorPage]);
+    }, [dispatch, setShowSpinner, setShowErrorPage, setFeatureToggles]);
 
     useEffect(() => {
         async function fetchDataWithoutErrorHandling() {
@@ -95,7 +108,7 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
         );
     }
 
-    return <>{props.children}</>;
+    return <FeatureToggleContext.Provider value={featureToggles}>{props.children}</FeatureToggleContext.Provider>;
 };
 
 export default LoadContainer;
