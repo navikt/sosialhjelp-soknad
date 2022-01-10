@@ -6,5 +6,11 @@
     "https://tjenester.nav.no/sosialhjelp-soknad",
     "https://www.nav.no/sosialhjelp/soknad"
   ],
-  "dekoratorMiljo": "prod"
+  "dekoratorMiljo": "prod",
+  "minReplicas": "2",
+  "maxReplicas": "4",
+  "cpuLimit": "300m",
+  "memoryLimit": "256Mi",
+  "cpuRequest": "4m",
+  "memoryRequest": "64Mi"
 }
