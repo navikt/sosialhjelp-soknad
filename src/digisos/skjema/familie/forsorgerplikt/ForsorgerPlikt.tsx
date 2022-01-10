@@ -1,7 +1,7 @@
 import {FormattedMessage} from "react-intl";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 
 import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -11,10 +11,13 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {FeatureToggleContext} from "../../../../LoadContainer";
 import BrukerregistrerteBarn from "./BrukerregistrerteBarn";
 
 const ForsorgerPliktView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
+
+    const {leggeTilBarn} = useContext(FeatureToggleContext);
 
     const dispatch = useDispatch();
 
@@ -60,7 +63,7 @@ const ForsorgerPliktView = () => {
                         <FormattedMessage id="familierelasjon.ingen_registrerte_barn_tekst" />
                     </b>
                 </p>
-                <BrukerregistrerteBarn />
+                {leggeTilBarn && <BrukerregistrerteBarn />}
                 {brukerregistrertAnsvar && antallBrukerregistrerteBarn > 0 && <Barnebidrag />}
             </Sporsmal>
         );
@@ -79,7 +82,7 @@ const ForsorgerPliktView = () => {
                 </p>
 
                 <RegistrerteBarn />
-                <BrukerregistrerteBarn />
+                {leggeTilBarn && <BrukerregistrerteBarn />}
                 <Barnebidrag />
             </Sporsmal>
         );
