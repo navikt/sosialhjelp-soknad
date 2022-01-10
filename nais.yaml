@@ -27,7 +27,7 @@ spec:
       cpu: {{cpuLimit}}
       memory: {{memoryLimit}}
     requests:
-      cpu: {{cpuRequest}
+      cpu: {{cpuRequest}}
       memory: {{memoryRequest}}
   replicas:
     min: {{minReplicas}}
