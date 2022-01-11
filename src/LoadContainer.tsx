@@ -101,11 +101,7 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
         return <ApplicationSpinner />;
     }
     if (showErrorPage) {
-        return (
-            <Feilside>
-                <p>Vi klarer ikke vise skjemaet til deg nå, vennligst prøv igjen senere.</p>
-            </Feilside>
-        );
+        return <Feilside>Vi klarer ikke vise skjemaet til deg nå, vennligst prøv igjen senere.</Feilside>;
     }
 
     return <FeatureToggleContext.Provider value={featureToggles}>{props.children}</FeatureToggleContext.Provider>;

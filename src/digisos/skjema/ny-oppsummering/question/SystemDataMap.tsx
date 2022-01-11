@@ -15,8 +15,8 @@ export const SystemDataMap = (props: {felter?: Felt[]}) => {
 
     return (
         <>
-            {props.felter.map((felt) => (
-                <StyledSystemList>
+            {props.felter.map((felt, index) => (
+                <StyledSystemList key={index}>
                     {Object.entries(felt.labelSvarMap ?? {}).map((entry) => {
                         return (
                             <li key={entry[0]}>
