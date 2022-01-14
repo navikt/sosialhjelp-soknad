@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as classNames from "classnames";
+import classNames from "classnames";
 import {SkjemaGruppe} from "nav-frontend-skjema";
 import {useIntl} from "react-intl";
 import {getFaktumSporsmalTekst} from "../../utils";
@@ -40,13 +40,13 @@ const Sporsmal = (props: Props) => {
     if (visible === false) {
         return null;
     }
-    // @ts-ignore
+
     const sporsmalCls = classNames("skjema-sporsmal", {
         "skjema-sporsmal--noBottomPadding": props.stil === "system" || props.stil === "jaNeiSporsmal",
         "skjema-sporsmal--systeminfo": props.stil === "system",
         "skjema-sporsmal--jaNeiSporsmal": props.stil === "jaNeiSporsmal",
     });
-    // @ts-ignore
+
     const cls = classNames("skjema-fieldset", {
         "skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined,
     });
