@@ -10,7 +10,7 @@
     "@navikt/ds-tokens": "^0.7.1",
     "@navikt/fnrvalidator": "^1.1.4",
     "@navikt/nav-dekoratoren-moduler": "^1.6.4",
-    "@sentry/react": "^6.13.3",
+    "@sentry/react": "^6.16.1",
     "@sentry/tracing": "^6.13.3",
     "amplitude-js": "^8.13.0",
     "classnames": "^2.3.1",
