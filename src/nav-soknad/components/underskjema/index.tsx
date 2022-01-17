@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as classNames from "classnames";
+import classNames from "classnames";
 import {UnmountClosed} from "react-collapse";
 import {logWarning} from "../../utils/loggerUtils";
 
@@ -18,7 +18,6 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
     collapsable = true,
     children,
 }) => {
-    // @ts-ignore
     const cls = classNames(
         "underskjema",
         `underskjema--${stil}`,
