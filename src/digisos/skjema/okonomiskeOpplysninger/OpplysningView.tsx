@@ -9,6 +9,20 @@ import VedleggSlettet from "./vedleggSlettet";
 import {useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
 import {Valideringsfeil} from "../../redux/validering/valideringActionTypes";
+import styled from "styled-components";
+
+const OkonomiskeOpplysningerSporsmal = styled.div`
+    margin-bottom: 2px;
+    background-color: var(--navds-semantic-color-canvas-background);
+    border: 1px solid var(--navds-semantic-color-border-muted);
+    padding: 2rem;
+
+    .skjema-sporsmal {
+        padding: 0;
+        background: transparent;
+        margin-bottom: 0;
+    }
+`;
 
 const OpplysningView = (props: {opplysning: Opplysning; gruppeIndex: number}) => {
     const {opplysning, gruppeIndex} = props;
@@ -24,7 +38,7 @@ const OpplysningView = (props: {opplysning: Opplysning; gruppeIndex: number}) =>
     }
 
     return (
-        <div className="skjema-progresjonsblokk__sporsmal">
+        <OkonomiskeOpplysningerSporsmal>
             <Sporsmal
                 sprakNokkel={opplysningSpc && opplysningSpc.textKey ? opplysningSpc.textKey : ""}
                 feil={sporsmalsFeil}
@@ -33,7 +47,7 @@ const OpplysningView = (props: {opplysning: Opplysning; gruppeIndex: number}) =>
                 <TabellView opplysning={opplysning} gruppeIndex={gruppeIndex} />
                 <VedleggView okonomiskOpplysning={opplysning} />
             </Sporsmal>
-        </div>
+        </OkonomiskeOpplysningerSporsmal>
     );
 };
 

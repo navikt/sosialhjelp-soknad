@@ -11,8 +11,16 @@ import {State} from "../../redux/reducers";
 import {OpplysningerInformasjonspanel} from "./OpplysningerInformasjonspanel";
 import {OpplysningerIkkeBesvartPanel} from "./OpplysningerIkkeBesvartPanel";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
+import styled from "styled-components";
+import {mobile} from "../../../nav-soknad/styles/variables";
 
-type MaybeJsxElement = JSX.Element | null;
+const OkonomiskeOpplysningerContainer = styled.div`
+    padding: 0 2rem;
+
+    @media ${mobile} {
+        padding: 1rem;
+    }
+`;
 
 const OkonomiskeOpplysningerView = () => {
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
@@ -26,31 +34,27 @@ const OkonomiskeOpplysningerView = () => {
         }
     }, [behandlingsId, dispatch]);
 
-    const renderGrupper = (): MaybeJsxElement[] => {
-        const grupperView = gruppeRekkefolge.map((opplysningGruppe: OpplysningGruppe) => {
-            const opplysningerIGruppe: Opplysning[] = opplysningerSortert.filter((o: Opplysning) => {
-                return o.gruppe === opplysningGruppe;
-            });
-            if (opplysningerIGruppe.length === 0) {
-                return null;
-            }
-            return <Gruppe key={opplysningGruppe} gruppeKey={opplysningGruppe} gruppe={opplysningerIGruppe} />;
-        });
-
-        return grupperView;
-    };
-
     const ikkeBesvartMeldingSkalVises: boolean | null = backendData && !backendData.isOkonomiskeOpplysningerBekreftet;
 
     if (restStatus === REST_STATUS.OK) {
         return (
-            <div className="steg-ekstrainformasjon">
-                <DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk} ikon={<SkjemaIllustrasjon />}>
+            <DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk} ikon={<SkjemaIllustrasjon />}>
+                <OkonomiskeOpplysningerContainer>
                     {!ikkeBesvartMeldingSkalVises && <OpplysningerInformasjonspanel />}
                     {ikkeBesvartMeldingSkalVises && <OpplysningerIkkeBesvartPanel />}
-                    {renderGrupper()}
-                </DigisosSkjemaSteg>
-            </div>
+                    {gruppeRekkefolge.map((opplysningGruppe: OpplysningGruppe) => {
+                        const opplysningerIGruppe: Opplysning[] = opplysningerSortert.filter((o: Opplysning) => {
+                            return o.gruppe === opplysningGruppe;
+                        });
+                        if (opplysningerIGruppe.length === 0) {
+                            return null;
+                        }
+                        return (
+                            <Gruppe key={opplysningGruppe} gruppeKey={opplysningGruppe} gruppe={opplysningerIGruppe} />
+                        );
+                    })}
+                </OkonomiskeOpplysningerContainer>
+            </DigisosSkjemaSteg>
         );
     }
 

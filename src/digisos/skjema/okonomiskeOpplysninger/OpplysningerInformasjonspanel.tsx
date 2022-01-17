@@ -11,24 +11,22 @@ export const OpplysningerInformasjonspanel = () => {
     const dispatch = useDispatch();
 
     return (
-        <div className="steg-ekstrainformasjon__infopanel">
-            <Informasjonspanel ikon={InformasjonspanelIkon.HENSYN} farge={DigisosFarge.VIKTIG}>
-                <p>
-                    <FormattedMessage id="opplysninger.informasjon.avsnitt1" />
-                </p>
-                <p>
-                    <FormattedMessage id="opplysninger.informasjon.avsnitt2" />
-                </p>
-                <LinkButton
-                    type="button"
-                    onClick={() => {
-                        dispatch(visLasteOppVedleggModal(true));
-                    }}
-                >
-                    <FormattedMessage id="opplysninger.informasjon.lenke" />
-                </LinkButton>
-                <OpplastingAvVedleggModal />
-            </Informasjonspanel>
-        </div>
+        <Informasjonspanel ikon={InformasjonspanelIkon.HENSYN} farge={DigisosFarge.VIKTIG}>
+            <p>
+                <FormattedMessage id="opplysninger.informasjon.avsnitt1" />
+            </p>
+            <p>
+                <FormattedMessage id="opplysninger.informasjon.avsnitt2" />
+            </p>
+            <LinkButton
+                type="button"
+                onClick={() => {
+                    dispatch(visLasteOppVedleggModal(true));
+                }}
+            >
+                <FormattedMessage id="opplysninger.informasjon.lenke" />
+            </LinkButton>
+            <OpplastingAvVedleggModal />
+        </Informasjonspanel>
     );
 };
