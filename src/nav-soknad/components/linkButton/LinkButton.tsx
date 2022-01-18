@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as classNames from "classnames";
+import classNames from "classnames";
 import styled from "styled-components";
 
 const StyledLinkButton = styled.button`
@@ -10,7 +10,6 @@ const StyledLinkButton = styled.button`
 `;
 
 export const LinkButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
-    // @ts-ignore
     const className = classNames("navds-link", props.className);
     return (
         <StyledLinkButton type="button" className={className} {...props}>

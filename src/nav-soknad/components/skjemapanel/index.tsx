@@ -1,13 +1,9 @@
 import * as React from "react";
 import Panel, {PanelProps} from "nav-frontend-paneler";
-import * as classNames from "classnames";
+import classNames from "classnames";
 
 const Skjemapanel: React.FC<PanelProps> = (props: PanelProps) => (
-    <Panel
-        {...props}
-        // @ts-ignore
-        className={classNames("skjema-skjemapanel", props.className)}
-    />
+    <Panel {...props} className={classNames("skjema-skjemapanel", props.className)} />
 );
 
 export default Skjemapanel;
