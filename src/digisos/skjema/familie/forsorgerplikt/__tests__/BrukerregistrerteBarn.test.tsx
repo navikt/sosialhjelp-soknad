@@ -1,5 +1,5 @@
 import React from "react";
-import {render, fireEvent, waitFor, screen} from "../../../../../test/test-utils";
+import {render, fireEvent, screen} from "../../../../../test/test-utils";
 import "@testing-library/jest-dom";
 import BrukerregistrerteBarn from "../BrukerregistrerteBarn";
 
