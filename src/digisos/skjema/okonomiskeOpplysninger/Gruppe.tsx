@@ -20,12 +20,11 @@ const GruppeView = (props: {key: OpplysningGruppe; gruppeKey: OpplysningGruppe; 
     }
 
     return (
-        <Skjemapanel className="skjema-progresjonsblokk">
-            <div className="skjema-progresjonsblokk__head">
-                <h3>
-                    <FormattedMessage id={gruppeTittelKey + ".sporsmal"} />
-                </h3>
-            </div>
+        <Skjemapanel>
+            <h3>
+                <FormattedMessage id={gruppeTittelKey + ".sporsmal"} />
+            </h3>
+
             {renderGruppeInnhold(gruppe)}
         </Skjemapanel>
     );
