@@ -18,6 +18,7 @@ import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validerin
 import {lagreSoknadsdata, setPath} from "../../../redux/soknadsdata/soknadsdataActions";
 import styled from "styled-components";
 import {Button} from "@navikt/ds-react";
+import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 
 const TEXT_KEY = "familie.barn.true.barn";
 const TEXT_KEY_FNR = TEXT_KEY + ".fnr";
@@ -110,7 +111,8 @@ const BrukerregistrerteBarn = () => {
     const onChangeSamvaersgrad = (verdi: string, barnIndex: number) => {
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barnet = forsorgerplikt.brukerregistrertAnsvar[barnIndex];
-        barnet.samvarsgrad = parseInt(verdi, 10);
+        const samvarsgrad = Number.parseInt(verdi, 10);
+        barnet.samvarsgrad = Number.isNaN(samvarsgrad) ? null : samvarsgrad;
         dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
         onBlur();
     };
@@ -153,6 +155,19 @@ const BrukerregistrerteBarn = () => {
                     barnet.barn.fodselsdato = fodselsdato;
                 }
             }
+            if (barnet.samvarsgrad) {
+                if (barnet.samvarsgrad < 0 || barnet.samvarsgrad > 100) {
+                    dispatch(
+                        setValideringsfeil(
+                            ValideringsFeilKode.ER_SAMVAERSGRAD,
+                            "system.familie.barn.true.barn.grad" + i
+                        )
+                    );
+                    ingenFeilKoder = false;
+                } else {
+                    dispatch(clearValideringsfeil("system.familie.barn.true.barn.grad" + i));
+                }
+            }
         }
         if (ingenFeilKoder && behandlingsId) {
             lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
@@ -185,6 +200,7 @@ const BrukerregistrerteBarn = () => {
                                 faktumKey={TEXT_KEY_FIRST_NAME + index}
                                 textKey={TEXT_KEY + ".fornavn"}
                                 required={false}
+                                autoFocus
                             />
 
                             <InputEnhanced
@@ -254,12 +270,15 @@ const BrukerregistrerteBarn = () => {
                                     <InputEnhanced
                                         getName={() => "brukerregistrert_barn" + index + "_samvaersgrad"}
                                         id={"brukerregistrert_barn" + index + "_samvaersgrad"}
+                                        inputMode="numeric"
+                                        pattern="[0-9]*"
                                         maxLength={3}
                                         verdi={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
                                         onChange={(verdi: string) => onChangeSamvaersgrad(verdi, index)}
                                         onBlur={() => onBlur()}
                                         onFocus={() => onFokus(index)}
-                                        faktumKey="system.familie.barn.true.barn.grad"
+                                        faktumKey={"system.familie.barn.true.barn.grad" + index}
+                                        textKey="system.familie.barn.true.barn.grad"
                                         required={false}
                                     />
                                 </div>
