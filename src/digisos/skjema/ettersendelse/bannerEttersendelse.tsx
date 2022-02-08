@@ -62,7 +62,7 @@ const BannerEttersendelse: React.FC<{children: React.ReactNode}> = ({children}) 
         <StyledBannerEttersendelse>
             <BlokkCenter>
                 <Content>
-                    <Heading level="1" size="2xlarge" spacing>
+                    <Heading level="1" size="xlarge" spacing>
                         {children}
                     </Heading>
 
