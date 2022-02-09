@@ -24,7 +24,8 @@ export function logAmplitudeEvent(eventName: string, eventData?: Record<string, 
     });
 }
 
-export const createSkjemaEventData = () => ({
+export const createSkjemaEventData = (eventData?: Record<string, unknown>) => ({
     skjemaId: "sosialhjelpsoknad",
     skjemanavn: "Soknad om økonomisk sosialhjelp",
+    ...eventData,
 });

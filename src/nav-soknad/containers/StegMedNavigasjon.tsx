@@ -51,6 +51,7 @@ const StegMedNavigasjon = (
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const soknad = useSelector((state: State) => state.soknad);
     const validering = useSelector((state: State) => state.validering);
+    const oppsummering = useSelector((state: State) => state.oppsummering.nyOppsummering);
     const oppsummeringBekreftet = useSelector((state: State) => state.oppsummering.bekreftet);
     const lastOppVedleggPending = useSelector((state: State) => state.okonomiskeOpplysninger.enFilLastesOpp);
 
@@ -76,6 +77,32 @@ const StegMedNavigasjon = (
         if (adresseTypeValg) {
             logInfo("klikk--" + adresseTypeValg);
         }
+    };
+
+    const getAttributesForSkjemaFullfortEvent = () => {
+        const attributes: Record<string, any> = {};
+        oppsummering.forEach((steg) => {
+            return steg.avsnitt.forEach((avsnitt) => {
+                return avsnitt.sporsmal.forEach((sporsmal) => {
+                    if (sporsmal.tittel === "soknadsmottaker.infotekst.tekst") {
+                        attributes["addresse"] = sporsmal.felt ? sporsmal.felt[0]?.type : undefined;
+                    }
+                    if (sporsmal.tittel === "kontakt.system.telefoninfo.infotekst.tekst") {
+                        attributes["telefon"] = sporsmal.felt ? sporsmal.felt[0]?.type : undefined;
+                    }
+                    if (sporsmal.tittel === "kontakt.system.kontonummer.label") {
+                        attributes["kontonummer"] = sporsmal.felt ? sporsmal.felt[0]?.type : undefined;
+                    }
+                    if (sporsmal.tittel === "utbetalinger.inntekt.skattbar.har_gitt_samtykke") {
+                        attributes["skattSamtykke"] = true;
+                    }
+                    if (sporsmal.tittel === "utbetalinger.inntekt.skattbar.mangler_samtykke") {
+                        attributes["skattSamtykke"] = false;
+                    }
+                });
+            });
+        });
+        return attributes;
     };
 
     const handleGaTilSkjemaSteg = (aktivtSteg: SkjemaSteg | undefined, steg: number) => {
@@ -111,7 +138,7 @@ const StegMedNavigasjon = (
         if (behandlingsId) {
             if (aktivtSteg.type === SkjemaStegType.oppsummering) {
                 if (oppsummeringBekreftet) {
-                    logAmplitudeEvent("skjema fullført", createSkjemaEventData());
+                    logAmplitudeEvent("skjema fullført", createSkjemaEventData(getAttributesForSkjemaFullfortEvent()));
                     loggAdresseTypeTilGrafana();
                     dispatch(sendSoknadPending());
                     dispatch(sendSoknad(behandlingsId, history));
