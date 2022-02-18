@@ -131,7 +131,7 @@ const PersonSkjema = () => {
                 onChange={(verdi: string) => oppdaterTekstfelt("navn/fornavn", verdi)}
                 onBlur={() => onBlur()}
                 faktumKey="familie.sivilstatus.gift.ektefelle.fornavn"
-                required={true}
+                required={false}
             />
 
             <InputEnhanced
@@ -142,7 +142,7 @@ const PersonSkjema = () => {
                 onChange={(verdi: string) => oppdaterTekstfelt("navn/mellomnavn", verdi)}
                 onBlur={() => onBlur()}
                 faktumKey="familie.sivilstatus.gift.ektefelle.mellomnavn"
-                required={true}
+                required={false}
             />
 
             <InputEnhanced
@@ -154,7 +154,7 @@ const PersonSkjema = () => {
                 onChange={(verdi: string) => oppdaterTekstfelt("navn/etternavn", verdi)}
                 onBlur={() => onBlur()}
                 faktumKey="familie.sivilstatus.gift.ektefelle.etternavn"
-                required={true}
+                required={false}
             />
 
             <InputEnhanced
@@ -167,7 +167,7 @@ const PersonSkjema = () => {
                 bredde="S"
                 onBlur={() => onBlur()}
                 faktumKey="familie.sivilstatus.gift.ektefelle.fnr"
-                required={true}
+                required={false}
             />
 
             <InputEnhanced
@@ -180,7 +180,7 @@ const PersonSkjema = () => {
                 bredde="S"
                 onBlur={() => onBlur()}
                 faktumKey="familie.sivilstatus.gift.ektefelle.pnr"
-                required={true}
+                required={false}
             />
 
             <Sporsmal
