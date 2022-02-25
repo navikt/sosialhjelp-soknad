@@ -1,7 +1,7 @@
 import {FormattedMessage} from "react-intl";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {useState, useEffect, useContext} from "react";
+import {useState, useEffect} from "react";
 
 import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -11,13 +11,9 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
-import {FeatureToggleContext} from "../../../../LoadContainer";
-import BrukerregistrerteBarn from "./BrukerregistrerteBarn";
 
 const ForsorgerPliktView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
-
-    const {leggeTilBarn} = useContext(FeatureToggleContext);
 
     const dispatch = useDispatch();
 
@@ -38,9 +34,7 @@ const ForsorgerPliktView = () => {
     }, [oppstartsModus, soknadsdata.restStatus.familie.forsorgerplikt]);
 
     const ansvar = soknadsdata.familie.forsorgerplikt.ansvar;
-    const brukerregistrertAnsvar = soknadsdata.familie.forsorgerplikt.brukerregistrertAnsvar;
     const antallBarn = ansvar.length;
-    const antallBrukerregistrerteBarn = brukerregistrertAnsvar.length;
     const restStatus = soknadsdata.restStatus.familie.forsorgerplikt;
     if (oppstartsModus && restStatus === REST_STATUS.OK) {
         setOppstartsModus(false);
@@ -63,8 +57,6 @@ const ForsorgerPliktView = () => {
                         <FormattedMessage id="familierelasjon.ingen_registrerte_barn_tekst" />
                     </b>
                 </p>
-                {leggeTilBarn && <BrukerregistrerteBarn />}
-                {brukerregistrertAnsvar && antallBrukerregistrerteBarn > 0 && <Barnebidrag />}
             </Sporsmal>
         );
     }
@@ -82,7 +74,6 @@ const ForsorgerPliktView = () => {
                 </p>
 
                 <RegistrerteBarn />
-                {leggeTilBarn && <BrukerregistrerteBarn />}
                 <Barnebidrag />
             </Sporsmal>
         );
