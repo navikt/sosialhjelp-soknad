@@ -19,13 +19,9 @@ import {
 import {lagreLedeteksterPaStore} from "./digisos/redux/ledetekster/ledeteksterActions";
 import {ApplicationSpinner} from "./nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
-interface FeatureToggles {
-    leggeTilBarn: boolean;
-}
+interface FeatureToggles {}
 
-const featureToggleContextInitialState = {
-    leggeTilBarn: false,
-};
+const featureToggleContextInitialState = {};
 
 export const FeatureToggleContext = createContext<FeatureToggles>(featureToggleContextInitialState);
 
