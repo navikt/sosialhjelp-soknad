@@ -46,6 +46,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
+          registry-url: 'https://npm.pkg.github.com'
           cache: 'npm'
       - name: Sett cluster og config to env variables
         run: |
@@ -55,6 +56,8 @@ jobs:
         run: cp nais/dev/${{ env.CONFIG_FILE }}.env .env.local
       - name: Install dependencies
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Run tests
         run: npm run test
       - name: Build less
