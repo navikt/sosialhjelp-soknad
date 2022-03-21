@@ -66,8 +66,8 @@ const BosituasjonView = () => {
                 const botype = verdi;
                 bosituasjon.botype = botype;
                 dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon));
-                const valideringsfeil = validerAntallPersoner(bosituasjon.antallPersoner);
-                if (!valideringsfeil) {
+                const erGyldig = validerAntallPersoner(bosituasjon.antallPersoner);
+                if (erGyldig) {
                     lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon, dispatch);
                 }
             }
@@ -116,6 +116,7 @@ const BosituasjonView = () => {
             return true;
         }
         const erGyldigTall = erTall(antallPersoner, true);
+        console.log("erGyldigTall", erGyldigTall);
         onEndretValideringsfeil(erGyldigTall ? undefined : ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL, feil, () => {
             erGyldigTall
                 ? dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))
