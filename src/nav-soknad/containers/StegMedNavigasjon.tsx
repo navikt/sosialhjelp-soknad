@@ -84,14 +84,11 @@ const StegMedNavigasjon = (
         oppsummering.forEach((steg) => {
             return steg.avsnitt.forEach((avsnitt) => {
                 return avsnitt.sporsmal.forEach((sporsmal) => {
-                    if (sporsmal.tittel === "soknadsmottaker.infotekst.tekst") {
-                        attributes["addresse"] = sporsmal.felt ? sporsmal.felt[0]?.type : undefined;
+                    if (sporsmal.tittel === "bosituasjon.sporsmal") {
+                        attributes["valgtBosted"] = !!sporsmal.felt && sporsmal.felt.length > 0;
                     }
-                    if (sporsmal.tittel === "kontakt.system.telefoninfo.infotekst.tekst") {
-                        attributes["telefon"] = sporsmal.felt ? sporsmal.felt[0]?.type : undefined;
-                    }
-                    if (sporsmal.tittel === "kontakt.system.kontonummer.label") {
-                        attributes["kontonummer"] = sporsmal.felt ? sporsmal.felt[0]?.type : undefined;
+                    if (sporsmal.tittel === "arbeidsforhold.infotekst") {
+                        attributes["harArbeidsforhold"] = !!sporsmal.felt && sporsmal.felt.length > 0;
                     }
                     if (sporsmal.tittel === "utbetalinger.inntekt.skattbar.har_gitt_samtykke") {
                         attributes["skattSamtykke"] = true;
