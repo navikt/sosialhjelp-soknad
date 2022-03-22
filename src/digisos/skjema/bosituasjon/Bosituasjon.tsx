@@ -12,10 +12,11 @@ import {SoknadsSti, oppdaterSoknadsdataSti} from "../../redux/soknadsdata/soknad
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {erTall} from "../../../nav-soknad/validering/valideringer";
 import {onEndretValideringsfeil} from "../../redux/validering/valideringUtils";
-import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
+import {Valideringsfeil, ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 import {State} from "../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../redux/soknadsdata/soknadsdataActions";
 import {clearValideringsfeil, setValideringsfeil} from "../../redux/validering/valideringActions";
+import {Dispatch} from "redux";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -35,6 +36,24 @@ enum Annetvalg {
     fengsel = "annet.botype.fengsel",
     krisesenter = "annet.botype.krisesenter",
 }
+
+export const validerAntallPersoner = (
+    antallPersoner: string | null,
+    feil: Valideringsfeil[],
+    dispatch: Dispatch
+): boolean => {
+    if (!antallPersoner || antallPersoner.length === 0) {
+        return true;
+    }
+    const erGyldigTall = erTall(antallPersoner, true);
+    onEndretValideringsfeil(erGyldigTall ? undefined : ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL, feil, () => {
+        erGyldigTall
+            ? dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))
+            : dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL));
+    });
+
+    return erGyldigTall;
+};
 
 const BosituasjonView = () => {
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
@@ -58,7 +77,7 @@ const BosituasjonView = () => {
                 const botype = verdi.replace("annet.botype.", "");
                 bosituasjon.botype = botype;
                 dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon));
-                const valideringsfeil = validerAntallPersoner(bosituasjon.antallPersoner);
+                const valideringsfeil = validerAntallPersoner(bosituasjon.antallPersoner, feil, dispatch);
                 if (!valideringsfeil) {
                     lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon, dispatch);
                 }
@@ -66,7 +85,7 @@ const BosituasjonView = () => {
                 const botype = verdi;
                 bosituasjon.botype = botype;
                 dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSITUASJON, bosituasjon));
-                const erGyldig = validerAntallPersoner(bosituasjon.antallPersoner);
+                const erGyldig = validerAntallPersoner(bosituasjon.antallPersoner, feil, dispatch);
                 if (erGyldig) {
                     lagreSoknadsdata(behandlingsId, SoknadsSti.BOSITUASJON, bosituasjon, dispatch);
                 }
@@ -99,7 +118,7 @@ const BosituasjonView = () => {
     const onBlurAntall = () => {
         if (behandlingsId) {
             const {botype, antallPersoner} = soknadsdata.bosituasjon;
-            if (validerAntallPersoner(antallPersoner)) {
+            if (validerAntallPersoner(antallPersoner, feil, dispatch)) {
                 const oppdatertBosituasjon: Bosituasjon = {
                     botype,
                     antallPersoner,
@@ -109,21 +128,6 @@ const BosituasjonView = () => {
                 dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
             }
         }
-    };
-
-    const validerAntallPersoner = (antallPersoner: string | null): boolean => {
-        if (!antallPersoner || antallPersoner.length === 0) {
-            return true;
-        }
-        const erGyldigTall = erTall(antallPersoner, true);
-        console.log("erGyldigTall", erGyldigTall);
-        onEndretValideringsfeil(erGyldigTall ? undefined : ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL, feil, () => {
-            erGyldigTall
-                ? dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))
-                : dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL));
-        });
-
-        return erGyldigTall;
     };
 
     const onChangeAntall = (verdi: string) => {
