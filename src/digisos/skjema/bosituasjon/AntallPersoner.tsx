@@ -28,7 +28,7 @@ export const AntallPersoner = ({antallPersoner, setAntallPersoner}: AntallPerson
     };
 
     const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
-        if (antallPersoner?.length && !Number.isInteger(Number.parseInt(antallPersoner))) {
+        if (e.target.value?.length && !Number.isInteger(Number.parseInt(e.target.value))) {
             dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL));
         } else {
             dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
@@ -49,7 +49,10 @@ export const AntallPersoner = ({antallPersoner, setAntallPersoner}: AntallPerson
                 onChange={onChange}
                 required={false}
                 feil={errorMessage}
+                defaultValue={antallPersoner}
             />
         </Sporsmal>
     );
 };
+
+export default AntallPersoner;
