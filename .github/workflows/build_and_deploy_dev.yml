@@ -19,8 +19,8 @@ on:
         default: 'dev-sbs-intern'
         type: choice
         options:
-          - 'dev-gcp'
-          - 'dev-gcp-mock'
+          - 'dev'
+          - 'mock'
           - 'dev-sbs'
           - 'dev-sbs-intern'
           - 'labs-gcp'
