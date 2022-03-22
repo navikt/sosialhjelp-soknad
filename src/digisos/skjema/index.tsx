@@ -108,7 +108,7 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
                     <SentryRoute path={`${path}/2`} component={Steg2} />
                     <SentryRoute path={`${path}/3`} component={Steg3} />
                     <SentryRoute path={`${path}/4`} component={Steg4} />
-                    <SentryRoute path={`${path}/5`} component={Steg5} />
+                    <SentryRoute path={`${path}/5`} render={() => <Steg5 behandlingsId={behandlingsId} />} />
                     <SentryRoute path={`${path}/6`} component={Steg6} />
                     <SentryRoute path={`${path}/7`} component={Steg7} />
                     <SentryRoute path={`${path}/8`} component={Steg8} />

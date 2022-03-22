@@ -1,7 +1,7 @@
 import {initialKontonummerState, Kontonummer} from "../../skjema/personopplysninger/bankinfo/KontonummerType";
 import {Begrunnelse, initialBegrunnelseState} from "../../skjema/begrunnelse/begrunnelseTypes";
 import {initialTelefonnummerState, Telefonnummer} from "../../skjema/personopplysninger/telefon/telefonTypes";
-import {Bosituasjon, initialBosituasjonState} from "../../skjema/bosituasjon/bosituasjonTypes";
+import {BosituasjonData, initialBosituasjonState} from "../../skjema/bosituasjon/bosituasjonTypes";
 import {Familie, initialFamilieStatus, Sivilstatus} from "../../skjema/familie/sivilstatus/FamilieTypes";
 import {initialUtdanningState, Utdanning} from "../../skjema/arbeidUtdanning/utdanning/utdanningTypes";
 import {Arbeid, initialArbeidState} from "../../skjema/arbeidUtdanning/arbeid/arbeidTypes";
@@ -127,7 +127,7 @@ export const initialUtgifterState: Utgifter = {
 export interface Soknadsdata {
     arbeid: Arbeid;
     begrunnelse: Begrunnelse;
-    bosituasjon: Bosituasjon;
+    bosituasjon: BosituasjonData;
     familie: Familie;
     utdanning: Utdanning;
     personalia: Personalia;
@@ -138,7 +138,7 @@ export interface Soknadsdata {
 
 export interface SoknadsdataActionVerdi {
     arbeid: Arbeid;
-    bosituasjon: Bosituasjon;
+    bosituasjon: BosituasjonData;
     begrunnelse: Begrunnelse;
     familie: Familie;
     utdanning: Utdanning;
@@ -154,7 +154,7 @@ export interface AdresseValg {
 export type SoknadsdataType =
     | Arbeid
     | Begrunnelse
-    | Bosituasjon
+    | BosituasjonData
     | Familie
     | Utdanning
     | Kontonummer
