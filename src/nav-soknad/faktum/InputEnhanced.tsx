@@ -5,12 +5,13 @@ import {getInputFaktumTekst, replaceDotWithUnderscore} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {useSelector} from "react-redux";
 import {getFeil} from "../utils/enhancedComponentUtils";
+import {ChangeEvent} from "react";
 
 export type InputTypes = "text" | "number" | "email" | "tel";
 
 const DEFAULT_MAX_LENGTH = 50;
 
-export interface Props {
+export interface InputEnhancedProps {
     verdi: string;
     onChange: (verdi: string) => void;
     onBlur: () => void;
@@ -36,45 +37,43 @@ export interface Props {
     inputMode?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
 }
 
-const InputEnhanced = (props: Props) => {
+const InputEnhanced = ({
+    id,
+    verdi,
+    faktumKey,
+    textKey,
+    faktumIndex,
+    type,
+    disabled,
+    pattern,
+    required,
+    step,
+    maxLength = DEFAULT_MAX_LENGTH,
+    bredde,
+    autoFocus,
+    className,
+    onBlur,
+    onFocus,
+    onChange,
+    inputMode,
+}: InputEnhancedProps) => {
     const intl = useIntl();
-    const getName = (): string => {
-        return `${props.faktumKey}`.replace(/\./g, "_");
-    };
-
     const feil = useSelector((state: State) => state.validering.feil);
-
-    const {
-        faktumKey,
-        textKey,
-        faktumIndex,
-        type,
-        disabled,
-        pattern,
-        required,
-        step,
-        maxLength = DEFAULT_MAX_LENGTH,
-        bredde,
-        autoFocus,
-    } = props;
-    const tekster = getInputFaktumTekst(intl, textKey ? textKey : faktumKey);
-
-    const feil_: string | undefined = getFeil(feil, intl, faktumKey, faktumIndex);
+    const tekster = getInputFaktumTekst(intl, textKey || faktumKey);
+    const feil_ = getFeil(feil, intl, faktumKey, faktumIndex);
 
     return (
         <Input
-            id={props.id ? replaceDotWithUnderscore(props.id) : faktumKey}
-            className={"input--xxl faktumInput  " + (props.className ? props.className : "")}
-            type={type ? type : "text"}
+            id={id ? replaceDotWithUnderscore(id) : faktumKey}
+            className={"input--xxl faktumInput  " + (className || "")}
+            type={type || "text"}
             autoComplete="off"
-            name={getName()}
+            name={replaceDotWithUnderscore(faktumKey)}
             disabled={disabled}
-            value={props.verdi}
-            onChange={(evt: any) => props.onChange(evt.target.value)}
-            onBlur={() => props.onBlur()}
-            onFocus={() => {
-                return props.onFocus ? props.onFocus() : null;
-            }}
+            value={verdi}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
+            onBlur={onBlur}
+            onFocus={onFocus}
             label={tekster.label}
             placeholder={tekster.pattern}
             feil={feil_}
@@ -84,7 +83,7 @@ const InputEnhanced = (props: Props) => {
             required={required}
             step={step}
             autoFocus={autoFocus}
-            inputMode={props.inputMode}
+            inputMode={inputMode}
         />
     );
 };
