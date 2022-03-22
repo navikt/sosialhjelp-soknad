@@ -11,12 +11,14 @@ import {Input} from "nav-frontend-skjema";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
+type AntallPersoner = string | null;
+
 interface AntallPersonerProps {
-    antallPersoner?: string;
-    setAntallPersoner: React.Dispatch<SetStateAction<string | undefined>>;
+    defaultValue: AntallPersoner;
+    onValidated: React.Dispatch<SetStateAction<AntallPersoner>>;
 }
 
-export const AntallPersoner = ({antallPersoner, setAntallPersoner}: AntallPersonerProps) => {
+export const AntallPersoner = ({defaultValue, onValidated}: AntallPersonerProps) => {
     const intl = useIntl();
     const dispatch = useDispatch();
 
@@ -28,11 +30,17 @@ export const AntallPersoner = ({antallPersoner, setAntallPersoner}: AntallPerson
     };
 
     const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value?.length && !Number.isInteger(Number.parseInt(e.target.value))) {
-            dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL));
-        } else {
+        // The value is optional, so if it's empty, we just store "null"
+        if (!e.target.value?.length) {
             dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
-            setAntallPersoner(e.target.value);
+            onValidated(null);
+        } else {
+            if (!Number.isInteger(Number.parseInt(e.target.value))) {
+                dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL));
+            } else {
+                dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
+                onValidated(e.target.value);
+            }
         }
     };
 
@@ -49,7 +57,7 @@ export const AntallPersoner = ({antallPersoner, setAntallPersoner}: AntallPerson
                 onChange={onChange}
                 required={false}
                 feil={errorMessage}
-                defaultValue={antallPersoner}
+                defaultValue={defaultValue || ""}
             />
         </Sporsmal>
     );

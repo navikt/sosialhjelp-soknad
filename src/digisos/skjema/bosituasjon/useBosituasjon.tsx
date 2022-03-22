@@ -22,7 +22,7 @@ const fetcher = async (url: string) => {
 };
 
 export const useBosituasjon = (behandlingsId: string) => {
-    const {data, error} = useSWR<BosituasjonData>(soknadsdataUrl(behandlingsId!, SoknadsSti.BOSITUASJON), fetcher);
+    const {data, error} = useSWR<BosituasjonData>(soknadsdataUrl(behandlingsId, SoknadsSti.BOSITUASJON), fetcher);
 
     return {
         bosituasjon: data,

@@ -1,10 +1,16 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import Botype from "./Botype";
-import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
 import BoligIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/BoligIllustrasjon";
-import {AntallPersoner} from "./AntallPersoner";
+
+import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
+
+import AntallPersoner from "./AntallPersoner";
+import Botype from "./Botype";
+
 import {useBosituasjon} from "./useBosituasjon";
+import {fetchPut} from "../../../nav-soknad/utils/rest-utils";
+import {soknadsdataUrl} from "../../redux/soknadsdata/soknadsdataActions";
+import {SoknadsSti} from "../../redux/soknadsdata/soknadsdataReducer";
 
 interface BosituasjonViewProps {
     behandlingsId: string;
@@ -13,16 +19,25 @@ interface BosituasjonViewProps {
 export const Bosituasjon = ({behandlingsId}: BosituasjonViewProps) => {
     const {bosituasjon} = useBosituasjon(behandlingsId);
 
-    const [botype, setBotype] = useState<string | undefined>(bosituasjon?.botype || undefined);
-    const [antallPersoner, setAntallPersoner] = useState<string | undefined>(bosituasjon?.antallPersoner || undefined);
+    const [botype, setBotype] = useState<string | null>(bosituasjon?.botype || null);
+    const [antallPersoner, setAntallPersoner] = useState<string | null>(bosituasjon?.antallPersoner || null);
 
     // Send endringer til backend
-    useEffect(() => {}, [botype, antallPersoner]);
+    useEffect(() => {
+        fetchPut(
+            soknadsdataUrl(behandlingsId, SoknadsSti.BOSITUASJON),
+            JSON.stringify({
+                botype,
+                antallPersoner,
+            }),
+            true
+        ).then((data) => console.log(data));
+    }, [botype, antallPersoner]);
 
     return (
         <DigisosSkjemaSteg steg={DigisosSteg.bosituasjonbolk} ikon={<BoligIllustrasjon />}>
             <Botype botype={botype} setBotype={setBotype} />
-            <AntallPersoner antallPersoner={antallPersoner} setAntallPersoner={setAntallPersoner} />
+            <AntallPersoner defaultValue={antallPersoner} onValidated={setAntallPersoner} />
         </DigisosSkjemaSteg>
     );
 };

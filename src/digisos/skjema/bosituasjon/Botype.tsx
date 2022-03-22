@@ -23,9 +23,11 @@ const BosituasjonRadioknapp = ({id, name, value, setValue}: BosituasjonRadioknap
     />
 );
 
+type Botype = string | null;
+
 interface BotypeProps {
-    botype?: string;
-    setBotype: React.Dispatch<SetStateAction<string | undefined>>;
+    botype: Botype;
+    setBotype: React.Dispatch<SetStateAction<Botype>>;
 }
 
 export const Botype = ({botype, setBotype}: BotypeProps) => {
