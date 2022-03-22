@@ -12,7 +12,7 @@ Frontend for søknad om sosialhjelp.
 
 Vi bruker env-variabler for å styre en del URLer i appen, disse kan overstyres med å legge følgende inn i en `.env.local`.
 
-```
+```dotenv
 REACT_APP_ENVIRONMENT="localhost"
 REACT_APP_API_BASE_URL="http://localhost:8181/sosialhjelp/soknad-api/"
 REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN="http://localhost:8181/sosialhjelp/soknad-api/"
@@ -26,11 +26,20 @@ Eksempel ihht [«Oppsett av lokalt utviklingsmiljø»](https://github.com/navikt
 
 ```shell
 cd ../digisos-docker-compose
-docker-compose --env-file ../digisos-sosialhjelp-soknad/.env.local \
+docker-compose up \
                   sosialhjelp-mock-alt \
                   sosialhjelp-mock-alt-api \
                   sosialhjelp-soknad-api
 ```
+
+### Github package registry
+
+Vi bruker Github sitt package registry for npm pakker, siden flere av Nav sine pakker kun blir publisert her.
+
+For å kunne kjøre `npm install` lokalt må du logge inn mot Github package registry:
+
+-   Lag/forny access token med repo og read:packages rettigheter i github ( under developer settings). husk enable sso
+-   Login på npm med `npm login --scope=@navikt --registry=https://npm.pkg.github.com` og benytt github brukernavn, epost og tokenet du nettopp genererte
 
 ### Frontend
 
