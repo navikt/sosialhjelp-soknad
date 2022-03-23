@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ChangeEvent, SetStateAction} from "react";
+import {ChangeEvent} from "react";
 import {useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
@@ -8,40 +8,55 @@ import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes"
 import {getFeil} from "../../../nav-soknad/utils/enhancedComponentUtils";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {Input} from "nav-frontend-skjema";
+import {useBosituasjon} from "./useBosituasjon";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
-type AntallPersoner = string | null;
-
 interface AntallPersonerProps {
-    defaultValue: AntallPersoner;
-    onValidated: React.Dispatch<SetStateAction<AntallPersoner>>;
+    behandlingsId: string;
 }
 
-export const AntallPersoner = ({defaultValue, onValidated}: AntallPersonerProps) => {
+// Parse og validér antall personer. Returnerer null ved tom streng,
+// en tallstreng ved et gyldig heltall, ellers en exception.
+export const validerAntallPersoner = (formValue: string) => {
+    if (!formValue.length) {
+        return null;
+    } else {
+        if (!Number.isInteger(Number.parseInt(formValue))) {
+            throw new Error("Må være heltall");
+        } else {
+            return formValue;
+        }
+    }
+};
+ee;
+
+export const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
+    const {bosituasjon, setBosituasjon} = useBosituasjon(behandlingsId);
+
     const intl = useIntl();
     const dispatch = useDispatch();
 
     const validationErrors = useSelector((state: State) => state.validering.feil);
     const errorMessage = getFeil(validationErrors, intl, FAKTUM_KEY_ANTALL, undefined);
 
+    if (!bosituasjon) return null;
+
     const onChange = () => {
         dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
     };
 
-    const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
-        // The value is optional, so if it's empty, we just store "null"
-        if (!e.target.value?.length) {
-            dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
-            onValidated(null);
-        } else {
-            if (!Number.isInteger(Number.parseInt(e.target.value))) {
-                dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL));
-            } else {
-                dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
-                onValidated(e.target.value);
-            }
+    const onBlur = async (e: ChangeEvent<HTMLInputElement>) => {
+        // The value is optional, so if it's empty, we just store null
+        var antallPersoner: string | null;
+        try {
+            antallPersoner = validerAntallPersoner(e.target.value);
+        } catch (e) {
+            dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL));
+            return;
         }
+        dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
+        await setBosituasjon({antallPersoner});
     };
 
     return (
@@ -57,7 +72,7 @@ export const AntallPersoner = ({defaultValue, onValidated}: AntallPersonerProps)
                 onChange={onChange}
                 required={false}
                 feil={errorMessage}
-                defaultValue={defaultValue || ""}
+                defaultValue={bosituasjon.antallPersoner || ""}
             />
         </Sporsmal>
     );

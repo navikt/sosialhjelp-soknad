@@ -1,31 +1,24 @@
-import {determineCredentialsParameter, getApiBaseUrl, getCookie} from "../../../nav-soknad/utils/rest-utils";
+import {fetchPut, fetchToJson} from "../../../nav-soknad/utils/rest-utils";
 import useSWR from "swr";
 import {SoknadsSti} from "../../redux/soknadsdata/soknadsdataReducer";
 import {BosituasjonData} from "./bosituasjonTypes";
-
-const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string => `soknader/${brukerBehandlingId}/${sti}`;
-
-const getHeaders = (): Headers => {
-    return new Headers({
-        "Content-Type": "application/json",
-        "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
-        accept: "application/json, text/plain, */*",
-    });
-};
-
-const fetcher = async (url: string) => {
-    const res = await fetch(getApiBaseUrl(true) + url, {
-        headers: getHeaders(),
-        credentials: determineCredentialsParameter(),
-    });
-    return await res.json();
-};
+import {soknadsdataUrl} from "../../redux/soknadsdata/soknadsdataActions";
 
 export const useBosituasjon = (behandlingsId: string) => {
-    const {data, error} = useSWR<BosituasjonData>(soknadsdataUrl(behandlingsId, SoknadsSti.BOSITUASJON), fetcher);
+    const {data, error, mutate} = useSWR<BosituasjonData>(
+        [soknadsdataUrl(behandlingsId, SoknadsSti.BOSITUASJON), true],
+        fetchToJson
+    );
+
+    const setBosituasjon = async (nySituasjon: Partial<BosituasjonData>) => {
+        Object.assign(data, nySituasjon);
+        await fetchPut(soknadsdataUrl(behandlingsId, SoknadsSti.BOSITUASJON), JSON.stringify(data), true);
+        mutate(data);
+    };
 
     return {
         bosituasjon: data,
+        setBosituasjon,
         isLoading: !error && !data,
         isError: error,
     };
