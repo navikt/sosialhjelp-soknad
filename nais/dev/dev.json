@@ -1,5 +1,5 @@
 {
-    "applicationName": "sosialhjelp-soknad",
+    "applicationName": "sosialhjelp-soknad-dev",
     "namespace": "teamdigisos",
     "ingresses": ["https://sosialhjelp-soknad-dev.dev.nav.no/sosialhjelp/soknad"],
     "dekoratorMiljo": "dev",
