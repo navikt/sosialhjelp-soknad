@@ -29,7 +29,6 @@ export const validerAntallPersoner = (formValue: string) => {
         }
     }
 };
-ee;
 
 export const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
     const {bosituasjon, setBosituasjon} = useBosituasjon(behandlingsId);
