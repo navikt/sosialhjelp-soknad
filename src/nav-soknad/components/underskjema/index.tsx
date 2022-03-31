@@ -5,9 +5,13 @@ import {logWarning} from "../../utils/loggerUtils";
 
 interface UnderskjemaProps extends React.Props<any> {
     visible?: boolean;
+    // Show an arrow in the top-left corner, indicating relevance to element above.
     arrow?: boolean;
     stil?: "default" | "system";
     collapsable?: boolean;
+    // FIXME: Temporary kludge to add grey background.
+    // Given the somewhat terrible name jaNeiSporsmal because I don't know what other side effects the CSS class has.
+    jaNeiSporsmal?: boolean;
     children: React.ReactNode;
 }
 
@@ -17,6 +21,7 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
     stil = "default",
     collapsable = true,
     children,
+    jaNeiSporsmal,
 }) => {
     const cls = classNames(
         "underskjema",
@@ -24,6 +29,7 @@ const Underskjema: React.StatelessComponent<UnderskjemaProps> = ({
         {
             "underskjema--arrow": arrow,
             "underskjema--noPadding": !collapsable,
+            "skjema-sporsmal--jaNeiSporsmal": jaNeiSporsmal,
         },
         stil
     );
