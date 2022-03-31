@@ -1,37 +1,22 @@
 import * as React from "react";
-import {SetStateAction} from "react";
-import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
-import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import {Bosituasjonsvalg, BosituasjonAnnetvalg} from "./bosituasjonTypes";
 import {useBosituasjon} from "./useBosituasjon";
-
-interface BosituasjonRadioknappProps {
-    id: string;
-    name: string;
-    value: any;
-    setValue: SetStateAction<any>;
-}
-
-const BosituasjonRadioknapp = ({id, name, value, setValue}: BosituasjonRadioknappProps) => (
-    <RadioEnhanced
-        id={`${name}_radio_` + id}
-        faktumKey={name}
-        value={id}
-        checked={value === id}
-        onChange={(event: any) => setValue(event.target.value)}
-        name={name}
-    />
-);
+import {RadioPanelGruppe, SkjemaGruppe} from "nav-frontend-skjema";
+import {FormattedMessage, useIntl} from "react-intl";
+import styled from "styled-components";
 
 interface BotypeProps {
     behandlingsId: string;
 }
 
-export const Botype = ({behandlingsId}: BotypeProps) => {
-    const {bosituasjon, setBosituasjon} = useBosituasjon(behandlingsId);
+const StyledSkjemaGruppe = styled(SkjemaGruppe)`
+    padding: 0rem 2rem;
+`;
 
-    if (!bosituasjon) return null;
+const Botype = ({behandlingsId}: BotypeProps) => {
+    const intl = useIntl();
+    const {bosituasjon, setBosituasjon} = useBosituasjon(behandlingsId);
 
     // Hjelpefunksjon: Vis kun undermenyen dersom ikke "eier", "leier", "kommunal" eller "ingen" er valgt
     const showBosituasjonSubmenu = () =>
@@ -40,33 +25,37 @@ export const Botype = ({behandlingsId}: BotypeProps) => {
         );
 
     return (
-        <Sporsmal sprakNokkel={"bosituasjon"} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
-            {Object.keys(Bosituasjonsvalg).map((id) => (
-                <BosituasjonRadioknapp
-                    id={id}
-                    key={id}
-                    name={"bosituasjon"}
-                    value={bosituasjon.botype}
-                    setValue={async (botype: string) => await setBosituasjon({botype})}
-                />
-            ))}
+        <StyledSkjemaGruppe>
+            <RadioPanelGruppe
+                legend={<FormattedMessage id={"bosituasjon.sporsmal"} defaultMessage={"Hvordan bor du?"} />}
+                radios={Object.keys(Bosituasjonsvalg).map((id) => ({
+                    label: intl.formatMessage({id: `bosituasjon.${id}`}),
+                    id: id,
+                    value: id,
+                    checked: bosituasjon.botype === id,
+                }))}
+                name={"bosituasjon"}
+                onChange={async (e, value) => {
+                    await setBosituasjon({botype: value as Bosituasjonsvalg});
+                }}
+            />
 
-            <div className="skjema-sporsmal--jaNeiSporsmal">
-                <Underskjema visible={showBosituasjonSubmenu()} arrow={true}>
-                    <Sporsmal sprakNokkel={"bosituasjon"} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
-                        {Object.keys(BosituasjonAnnetvalg).map((id) => (
-                            <BosituasjonRadioknapp
-                                id={id}
-                                key={id}
-                                name={"bosituasjon.annet.botype"}
-                                value={bosituasjon?.botype}
-                                setValue={async (botype: string) => await setBosituasjon({botype})}
-                            />
-                        ))}
-                    </Sporsmal>
-                </Underskjema>
-            </div>
-        </Sporsmal>
+            <Underskjema visible={showBosituasjonSubmenu()} arrow jaNeiSporsmal>
+                <RadioPanelGruppe
+                    legend={<FormattedMessage id={"bosituasjon.sporsmal"} defaultMessage={"Hvordan bor du?"} />}
+                    radios={Object.keys(BosituasjonAnnetvalg).map((id) => ({
+                        label: intl.formatMessage({id: `bosituasjon.annet.botype.${id}`}),
+                        id: id,
+                        value: id,
+                        checked: bosituasjon.botype === id,
+                    }))}
+                    name={"bosituasjon.annet.botype"}
+                    onChange={async (e, value) => {
+                        await setBosituasjon({botype: value as BosituasjonAnnetvalg});
+                    }}
+                />
+            </Underskjema>
+        </StyledSkjemaGruppe>
     );
 };
 

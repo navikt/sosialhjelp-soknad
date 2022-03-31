@@ -1,14 +1,17 @@
 import * as React from "react";
 import {ChangeEvent} from "react";
-import {useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
 import {clearValideringsfeil, setValideringsfeil} from "../../redux/validering/valideringActions";
 import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 import {getFeil} from "../../../nav-soknad/utils/enhancedComponentUtils";
-import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {Input} from "nav-frontend-skjema";
 import {useBosituasjon} from "./useBosituasjon";
+import styled from "styled-components";
+const StyledInput = styled(Input)`
+    padding: 0rem 2rem;
+`;
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -30,7 +33,7 @@ export const validerAntallPersoner = (formValue: string) => {
     }
 };
 
-export const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
+const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
     const {bosituasjon, setBosituasjon} = useBosituasjon(behandlingsId);
 
     const intl = useIntl();
@@ -41,11 +44,7 @@ export const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
 
     if (!bosituasjon) return null;
 
-    const onChange = () => {
-        dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
-    };
-
-    const onBlur = async (e: ChangeEvent<HTMLInputElement>) => {
+    const validateAndStore = async (e: ChangeEvent<HTMLInputElement>) => {
         // The value is optional, so if it's empty, we just store null
         var antallPersoner: string | null;
         try {
@@ -59,21 +58,24 @@ export const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
     };
 
     return (
-        <Sporsmal sprakNokkel={FAKTUM_KEY_ANTALL} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
-            <Input
-                id={FAKTUM_KEY_ANTALL}
-                inputMode="numeric"
-                pattern="[0-9]*"
-                maxLength={2}
-                bredde={"XS"}
-                className="skjemaelement__enLinje185bredde"
-                onBlur={onBlur}
-                onChange={onChange}
-                required={false}
-                feil={errorMessage}
-                defaultValue={bosituasjon.antallPersoner || ""}
-            />
-        </Sporsmal>
+        <StyledInput
+            label={
+                <FormattedMessage
+                    id={"bosituasjon.antallpersoner.sporsmal"}
+                    defaultMessage={"Hvor mange personer bor sammen med deg?"}
+                />
+            }
+            id={FAKTUM_KEY_ANTALL}
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={2}
+            bredde={"XS"}
+            onBlur={validateAndStore}
+            onChange={() => dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))}
+            required={false}
+            feil={errorMessage}
+            defaultValue={bosituasjon.antallPersoner || ""}
+        />
     );
 };
 
