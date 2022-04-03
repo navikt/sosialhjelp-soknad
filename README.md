@@ -6,13 +6,6 @@
 
 Frontend for søknad om sosialhjelp.
 
-## Todo for refaktorering
-
--   Flytte inn enhetstestene igjen
--   Skrive ny Sporsmal som bruker underklasser, men ikke CSS-klassenavn, faktum-i18n el
--   Innarbeide/teste ny Sporsmal i Bosituasjon
--   Utvide useSWR-hooks for å skrive tilbake til backend
-
 ## Kjøring lokalt mot lokal utviklingsbackend
 
 ### Miljøvariabler
