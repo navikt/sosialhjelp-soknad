@@ -30,7 +30,7 @@ const Botype = ({behandlingsId}: BotypeProps) => {
             <RadioPanelGruppe
                 radios={radiosFromBotyper(BotypePrimaerValg)}
                 name={"bosituasjon"}
-                onChange={async (e, botype) => {
+                onChange={async (_e, botype) => {
                     await setBosituasjon({botype});
                 }}
             />
@@ -40,7 +40,7 @@ const Botype = ({behandlingsId}: BotypeProps) => {
                     legend={<FormattedMessage id={"bosituasjon.sporsmal"} defaultMessage={"Hvordan bor du?"} />}
                     radios={radiosFromBotyper(BotypeSekundaerValg)}
                     name={"bosituasjon.annet.botype"}
-                    onChange={async (e, botype) => {
+                    onChange={async (_e, botype) => {
                         await setBosituasjon({botype});
                     }}
                 />

@@ -37,12 +37,12 @@ const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
     const validationErrors = useSelector((state: State) => state.validering.feil);
     const errorMessage = getFeil(validationErrors, intl, FAKTUM_KEY_ANTALL, undefined);
 
-    const validateAndStore = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const validateAndStore = async (event: React.ChangeEvent<HTMLInputElement>) => {
         // The value is optional, so if it's empty, we just store null
         var antallPersoner: string | null;
         try {
-            antallPersoner = validerAntallPersoner(e.target.value);
-        } catch (e) {
+            antallPersoner = validerAntallPersoner(event.target.value);
+        } catch (error) {
             dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL));
             return;
         }
