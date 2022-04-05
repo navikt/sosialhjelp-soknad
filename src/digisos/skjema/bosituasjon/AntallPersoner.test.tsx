@@ -9,9 +9,9 @@ test("validerAntallPersoner er heltall hvis antallPersoner er et heltall", () =>
 });
 
 test("validerAntallPersoner thrower hvis antallPersoner er et desimaltall", () => {
-    expect(validerAntallPersoner("1.0")).toThrowError();
+    expect(() => validerAntallPersoner("1.1")).toThrowError();
 });
 
 test("validerAntallPersoner thrower hvis antallPersoner er en bokstav", () => {
-    expect(validerAntallPersoner("e")).toThrowError();
+    expect(() => validerAntallPersoner("e")).toThrowError();
 });

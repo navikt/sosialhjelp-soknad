@@ -14,18 +14,12 @@ interface AntallPersonerProps {
     behandlingsId: string;
 }
 
-// Parse og validér antall personer. Returnerer null ved tom streng,
-// en tallstreng ved et gyldig heltall, ellers en exception.
+// Parse og validér antall personer.
+// Returnerer en tallstreng ved et gyldig heltall, null ved tom streng, ellers exception.
 export const validerAntallPersoner = (formValue: string) => {
-    if (!formValue.length) {
-        return null;
-    } else {
-        if (!Number.isInteger(Number.parseInt(formValue))) {
-            throw new Error("Må være heltall");
-        } else {
-            return formValue;
-        }
-    }
+    if (!formValue.length) return null;
+    if (Number.isInteger(Number.parseFloat(formValue))) return formValue;
+    throw new Error("Må være et heltall!");
 };
 
 const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
@@ -38,14 +32,15 @@ const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
     const errorMessage = getFeil(validationErrors, intl, FAKTUM_KEY_ANTALL, undefined);
 
     const validateAndStore = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        // The value is optional, so if it's empty, we just store null
-        var antallPersoner: string | null;
+        var antallPersoner: string | null = null;
+
         try {
             antallPersoner = validerAntallPersoner(event.target.value);
-        } catch (error) {
+        } catch (_e) {
             dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL));
             return;
         }
+
         dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
         await setBosituasjon({antallPersoner});
     };
