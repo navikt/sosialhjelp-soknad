@@ -4,16 +4,10 @@ import {BotypeListe, BotypePrimaerValg, BotypeSekundaerValg} from "./bosituasjon
 import {useBosituasjon} from "./useBosituasjon";
 import {RadioPanelGruppe, RadioPanelProps, SkjemaGruppe} from "nav-frontend-skjema";
 import {FormattedMessage, useIntl} from "react-intl";
-import styled from "styled-components";
 
 interface BotypeProps {
     behandlingsId: string;
 }
-
-const StyledSkjemaGruppe = styled(SkjemaGruppe)`
-    padding: 0rem 2rem;
-    margin-bottom: 5rem;
-`;
 
 const Botype = ({behandlingsId}: BotypeProps) => {
     const intl = useIntl();
@@ -32,9 +26,8 @@ const Botype = ({behandlingsId}: BotypeProps) => {
         }));
 
     return (
-        <StyledSkjemaGruppe>
+        <SkjemaGruppe legend={<FormattedMessage id={"bosituasjon.sporsmal"} defaultMessage={"Hvordan bor du?"} />}>
             <RadioPanelGruppe
-                legend={<FormattedMessage id={"bosituasjon.sporsmal"} defaultMessage={"Hvordan bor du?"} />}
                 radios={radiosFromBotyper(BotypePrimaerValg)}
                 name={"bosituasjon"}
                 onChange={async (e, botype) => {
@@ -52,7 +45,7 @@ const Botype = ({behandlingsId}: BotypeProps) => {
                     }}
                 />
             </Underskjema>
-        </StyledSkjemaGruppe>
+        </SkjemaGruppe>
     );
 };
 

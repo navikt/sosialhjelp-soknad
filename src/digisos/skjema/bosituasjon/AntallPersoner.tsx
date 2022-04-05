@@ -1,17 +1,12 @@
 import * as React from "react";
-import {ChangeEvent} from "react";
 import {FormattedMessage, useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
 import {clearValideringsfeil, setValideringsfeil} from "../../redux/validering/valideringActions";
 import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
 import {getFeil} from "../../../nav-soknad/utils/enhancedComponentUtils";
-import {Input} from "nav-frontend-skjema";
+import {Input, SkjemaGruppe} from "nav-frontend-skjema";
 import {useBosituasjon} from "./useBosituasjon";
-import styled from "styled-components";
-const StyledInput = styled(Input)`
-    padding: 0rem 2rem;
-`;
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -42,9 +37,7 @@ const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
     const validationErrors = useSelector((state: State) => state.validering.feil);
     const errorMessage = getFeil(validationErrors, intl, FAKTUM_KEY_ANTALL, undefined);
 
-    if (!bosituasjon) return null;
-
-    const validateAndStore = async (e: ChangeEvent<HTMLInputElement>) => {
+    const validateAndStore = async (e: React.ChangeEvent<HTMLInputElement>) => {
         // The value is optional, so if it's empty, we just store null
         var antallPersoner: string | null;
         try {
@@ -58,24 +51,27 @@ const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
     };
 
     return (
-        <StyledInput
-            label={
+        <SkjemaGruppe
+            legend={
                 <FormattedMessage
                     id={"bosituasjon.antallpersoner.sporsmal"}
                     defaultMessage={"Hvor mange personer bor sammen med deg?"}
                 />
             }
-            id={FAKTUM_KEY_ANTALL}
-            inputMode="numeric"
-            pattern="[0-9]*"
-            maxLength={2}
-            bredde={"XS"}
-            onBlur={validateAndStore}
-            onChange={() => dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))}
-            required={false}
-            feil={errorMessage}
-            defaultValue={bosituasjon.antallPersoner || ""}
-        />
+        >
+            <Input
+                description={<FormattedMessage id={"bosituasjon.antallpersoner.label"} defaultMessage={"Antall"} />}
+                id={FAKTUM_KEY_ANTALL}
+                inputMode="numeric"
+                pattern="[0-9]*"
+                maxLength={2}
+                bredde={"XS"}
+                defaultValue={bosituasjon.antallPersoner || ""}
+                onBlur={validateAndStore}
+                onChange={() => dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))}
+                feil={errorMessage}
+            />
+        </SkjemaGruppe>
     );
 };
 
