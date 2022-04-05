@@ -20,7 +20,9 @@ const store = configureStore();
 
 const Wrapper: React.FC = ({children}) => (
     <Provider store={store}>
-        <IntlProvider locale="en">{children}</IntlProvider>
+        <IntlProvider defaultLocale="nb" locale="nb">
+            {children}
+        </IntlProvider>
     </Provider>
 );
 
