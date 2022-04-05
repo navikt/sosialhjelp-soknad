@@ -30,7 +30,7 @@ const Botype = ({behandlingsId}: BotypeProps) => {
             <RadioPanelGruppe
                 radios={radiosFromBotyper(BotypePrimaerValg)}
                 name={"bosituasjon"}
-                onChange={async (_e, botype) => await setBosituasjon({botype})}
+                onChange={async (_e, botype) => setBosituasjon({botype})}
             />
 
             <Underskjema visible={showBosituasjonSubmenu()} arrow jaNeiSporsmal>
@@ -38,7 +38,7 @@ const Botype = ({behandlingsId}: BotypeProps) => {
                     legend={<FormattedMessage id={"bosituasjon.sporsmal"} defaultMessage={"Hvordan bor du?"} />}
                     radios={radiosFromBotyper(BotypeSekundaerValg)}
                     name={"bosituasjon.annet.botype"}
-                    onChange={async (_e, botype) => await setBosituasjon({botype})}
+                    onChange={async (_e, botype) => setBosituasjon({botype})}
                 />
             </Underskjema>
         </SkjemaGruppe>
