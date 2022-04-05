@@ -14,19 +14,20 @@ export const useBosituasjon = (behandlingsId: string) => {
         fallbackData: initialBosituasjonState,
     });
 
-    const putBosituasjon = async (newData: BosituasjonData) => {
-        await fetchPut(soknadUrl, JSON.stringify(newData), true);
-        return newData;
-    };
-
     // Updates local bosituasjon state first, then stores it to server.
     const setBosituasjon = async (nyBosituasjon: Partial<BosituasjonData>) => {
         const newData = {...data!, ...nyBosituasjon};
-        await mutate(putBosituasjon(newData), {optimisticData: newData});
+        await mutate(
+            async (newData) => {
+                await fetchPut(soknadUrl, JSON.stringify(newData), true);
+                return newData;
+            },
+            {optimisticData: newData}
+        );
     };
 
     return {
-        bosituasjon: data!,
+        bosituasjon: data as BosituasjonData,
         setBosituasjon,
         isLoading: !error && !data,
         isError: error,
