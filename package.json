@@ -5,7 +5,7 @@
   "homepage": "/sosialhjelp/soknad/",
   "dependencies": {
     "@navikt/ds-css": "^0.16.4",
-    "@navikt/ds-icons": "^0.8.4",
+    "@navikt/ds-icons": "^0.8.5",
     "@navikt/ds-react": "^0.17.4",
     "@navikt/fnrvalidator": "^1.1.4",
     "@navikt/nav-dekoratoren-moduler": "^1.6.14",
