@@ -1,4 +1,4 @@
-import {getByRole, waitFor} from "@testing-library/react";
+import {waitFor} from "@testing-library/react";
 import Botype from "./Botype";
 import {setupServer} from "msw/node";
 import {rest} from "msw";
