@@ -1,4 +1,4 @@
-import {waitFor} from "@testing-library/react";
+import {getByRole, waitFor} from "@testing-library/react";
 import Botype from "./Botype";
 import {setupServer} from "msw/node";
 import {rest} from "msw";
@@ -13,14 +13,18 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-const endpoint = (behandlingsID: string, mockData: Partial<BosituasjonData>) =>
-    rest.get(getApiBaseUrl(true) + soknadsdataUrl(behandlingsID, SoknadsSti.BOSITUASJON), (_req, res, ctx) =>
-        res(ctx.json(mockData))
-    );
+const bosituasjonUrl = (behandlingsID: string) =>
+    getApiBaseUrl(true) + soknadsdataUrl(behandlingsID, SoknadsSti.BOSITUASJON);
+
+const mockGET = <T,>(url: string, mockData: Partial<T>) => {
+    return rest.get(url, (_req, res, ctx) => res(ctx.json(mockData)));
+};
 
 const server = setupServer(
-    endpoint("botypeEier", {botype: "eier", antallPersoner: null}),
-    endpoint("botypeLeier", {botype: "leier", antallPersoner: null})
+    mockGET<BosituasjonData>(bosituasjonUrl("botypeEier"), {botype: "eier", antallPersoner: null}),
+    mockGET<BosituasjonData>(bosituasjonUrl("botypeLeier"), {botype: "leier", antallPersoner: null}),
+    mockGET<BosituasjonData>(bosituasjonUrl("botypeAnnet"), {botype: "annet", antallPersoner: null}),
+    mockGET<BosituasjonData>(bosituasjonUrl("ingenBotype"), {botype: null, antallPersoner: null})
 );
 
 test("Eier is checked if botype = 'eier'", async () => {
@@ -35,4 +39,22 @@ test("Eier is not checked if botype = 'leier'", async () => {
 
     await waitFor(() => expect(getByRole("radio", {name: "Jeg bor i bolig jeg eier selv"})).not.toBeChecked());
     await waitFor(() => expect(getByRole("radio", {name: "Jeg leier privat bolig"})).toBeChecked());
+});
+
+test("None checked if botype = null", async () => {
+    const {queryByRole} = render(<Botype behandlingsId={"ingenBotype"} />);
+
+    await waitFor(() => expect(queryByRole("radio", {checked: true})).toBeNull());
+});
+
+test("Annet submenu not in document if botype = leier", async () => {
+    const {queryByText} = render(<Botype behandlingsId={"botypeLeier"} />);
+
+    await waitFor(() => expect(queryByText("Vil du utdype?", {selector: "legend"})).not.toBeInTheDocument());
+});
+
+test("Annet submenu in document if botype = annet", async () => {
+    const {getByText} = render(<Botype behandlingsId={"botypeAnnet"} />);
+
+    await waitFor(() => expect(getByText("Vil du utdype?", {selector: "legend"})).toBeInTheDocument());
 });

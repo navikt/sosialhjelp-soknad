@@ -61,7 +61,7 @@ const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
                 pattern="[0-9]*"
                 maxLength={2}
                 bredde={"XS"}
-                defaultValue={bosituasjon.antallPersoner || ""}
+                defaultValue={bosituasjon?.antallPersoner || ""}
                 onBlur={validateAndStore}
                 onChange={() => dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))}
                 feil={errorMessage}

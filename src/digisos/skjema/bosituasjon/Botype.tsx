@@ -1,9 +1,9 @@
 import * as React from "react";
-import Underskjema from "../../../nav-soknad/components/underskjema";
 import {BotypeListe, BotypePrimaerValg, BotypeSekundaerValg} from "./bosituasjonTypes";
 import {useBosituasjon} from "./useBosituasjon";
 import {RadioPanelGruppe, RadioPanelProps, SkjemaGruppe} from "nav-frontend-skjema";
 import {FormattedMessage, useIntl} from "react-intl";
+import {NyttUnderskjema} from "./NyttUnderskjema";
 
 interface BotypeProps {
     behandlingsId: string;
@@ -14,7 +14,8 @@ const Botype = ({behandlingsId}: BotypeProps) => {
     const {bosituasjon, setBosituasjon} = useBosituasjon(behandlingsId);
 
     // Hjelpefunksjon: Vis kun undermenyen dersom ikke "eier", "leier", "kommunal" eller "ingen" er valgt
-    const showBosituasjonSubmenu = () => !["eier", "leier", "kommunal", "ingen", null].includes(bosituasjon.botype);
+    const showBosituasjonSubmenu = () =>
+        !["eier", "leier", "kommunal", "ingen", null].includes(bosituasjon?.botype || null);
 
     // Hjelpefunksjon: Generer RadioPanelProps fra BotypeListe
     const radiosFromBotyper = (botypeListe: BotypeListe): RadioPanelProps[] =>
@@ -22,7 +23,7 @@ const Botype = ({behandlingsId}: BotypeProps) => {
             label: intl.formatMessage(descriptor.messageDescriptor),
             id: name,
             value: name,
-            checked: bosituasjon.botype === name,
+            checked: bosituasjon?.botype === name,
         }));
 
     return (
@@ -33,14 +34,16 @@ const Botype = ({behandlingsId}: BotypeProps) => {
                 onChange={async (_e, botype) => setBosituasjon({botype})}
             />
 
-            <Underskjema visible={showBosituasjonSubmenu()} arrow jaNeiSporsmal>
+            <NyttUnderskjema hidden={!showBosituasjonSubmenu()}>
                 <RadioPanelGruppe
-                    legend={<FormattedMessage id={"bosituasjon.sporsmal"} defaultMessage={"Hvordan bor du?"} />}
+                    legend={
+                        <FormattedMessage id={"bosituasjon.annet.botype.sporsmal"} defaultMessage={"Vil du utdype?"} />
+                    }
                     radios={radiosFromBotyper(BotypeSekundaerValg)}
                     name={"bosituasjon.annet.botype"}
                     onChange={async (_e, botype) => setBosituasjon({botype})}
                 />
-            </Underskjema>
+            </NyttUnderskjema>
         </SkjemaGruppe>
     );
 };
