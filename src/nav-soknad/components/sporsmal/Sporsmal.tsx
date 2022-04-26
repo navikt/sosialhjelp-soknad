@@ -32,27 +32,36 @@ export interface Props {
     visLedetekst?: boolean;
 }
 
-const Sporsmal = (props: Props) => {
+const Sporsmal = ({
+    id,
+    visible,
+    children,
+    feil,
+    feilkode,
+    tekster,
+    sprakNokkel,
+    visLedetekst,
+    stil,
+    legendTittelStyle,
+    tittelRenderer,
+}: Props) => {
     const intl = useIntl();
+    if (visible === false) return null;
 
-    const {id, visible, children, feil, feilkode, tekster, sprakNokkel, visLedetekst} = props;
-    const ledeTekster: any = tekster ? tekster : getFaktumSporsmalTekst(intl, sprakNokkel ? sprakNokkel : "");
-    if (visible === false) {
-        return null;
-    }
+    const ledeTekster: any = tekster || getFaktumSporsmalTekst(intl, sprakNokkel || "");
 
     const sporsmalCls = classNames("skjema-sporsmal", {
-        "skjema-sporsmal--noBottomPadding": props.stil === "system" || props.stil === "jaNeiSporsmal",
-        "skjema-sporsmal--systeminfo": props.stil === "system",
-        "skjema-sporsmal--jaNeiSporsmal": props.stil === "jaNeiSporsmal",
+        "skjema-sporsmal--noBottomPadding": stil === "system" || stil === "jaNeiSporsmal",
+        "skjema-sporsmal--systeminfo": stil === "system",
+        "skjema-sporsmal--jaNeiSporsmal": stil === "jaNeiSporsmal",
     });
 
     const cls = classNames("skjema-fieldset", {
         "skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined,
     });
 
-    const legendCls = props.legendTittelStyle ? props.legendTittelStyle : LegendTittleStyle.DEFAULT;
-    const sporsmal = props.tittelRenderer ? props.tittelRenderer(ledeTekster.sporsmal) : ledeTekster.sporsmal;
+    const legendCls = legendTittelStyle ? legendTittelStyle : LegendTittleStyle.DEFAULT;
+    const sporsmal = tittelRenderer ? tittelRenderer(ledeTekster.sporsmal) : ledeTekster.sporsmal;
     return (
         <div id={id} className={sporsmalCls}>
             <SkjemaGruppe

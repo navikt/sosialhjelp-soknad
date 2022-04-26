@@ -12,9 +12,8 @@ export function getInnsynUrl(): string {
     return `${process.env.REACT_APP_INNSYN_URL}`;
 }
 
-function determineCredentialsParameter() {
-    return process.env.REACT_APP_ENVIRONMENT === "localhost" ? "include" : "same-origin";
-}
+export const determineCredentialsParameter = () =>
+    process.env.REACT_APP_ENVIRONMENT === "localhost" ? "include" : "same-origin";
 
 export function getRedirectPath(): string {
     const redirectOrigin = window.location.origin;
