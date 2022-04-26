@@ -16,13 +16,12 @@ on:
       config-file-name:
         description: 'Config-fil som skal deployes'
         required: true
-        default: 'dev-sbs-intern'
+        default: 'dev-sbs'
         type: choice
         options:
           - 'dev'
           - 'mock'
           - 'dev-sbs'
-          - 'dev-sbs-intern'
           - 'labs-gcp'
       cluster:
         description: 'Cluster å deploye til'
