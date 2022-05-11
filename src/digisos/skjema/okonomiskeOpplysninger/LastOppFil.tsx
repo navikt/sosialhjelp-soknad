@@ -41,7 +41,7 @@ const lastOppFil = (
             dispatch(settFilOpplastingPending(opplysning.type));
 
             try {
-                const response = await fetchUpload<Fil>(url, formData);
+                const response = await fetchUpload<Fil>(url, formData, true);
                 filerUpdated.push(response);
                 opplysningUpdated.filer = filerUpdated;
                 opplysningUpdated.vedleggStatus = VedleggStatus.LASTET_OPP;

@@ -39,8 +39,8 @@ export function parseGotoValueFromSearchParameters(searchParameters: string): st
     return afterGoto ? afterGoto.split("&login_id")[0] : afterGoto; // Fjerne login_id dersom strengen bak goto= er definert.
 }
 
-export function downloadAttachedFile(urlPath: string): void {
-    const filUrl = `${getApiBaseUrl()}${urlPath}`;
+export function downloadAttachedFile(urlPath: string, withAccessToken?: boolean): void {
+    const filUrl = `${getApiBaseUrl(withAccessToken)}${urlPath}`;
     window.open(filUrl);
 }
 
@@ -173,15 +173,20 @@ let generateUploadOptions = function (formData: FormData, method: string) {
     return UPLOAD_OPTIONS;
 };
 
-export function fetchUpload<T>(urlPath: string, formData: FormData) {
-    return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData, "POST")).then((response) => {
+export function fetchUpload<T>(urlPath: string, formData: FormData, withAccessToken?: boolean) {
+    return fetch(getApiBaseUrl(withAccessToken) + urlPath, generateUploadOptions(formData, "POST")).then((response) => {
         verifyStatusSuccessOrRedirect(response);
         return toJson<T>(response);
     });
 }
 
-export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData, method: string) {
-    return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData, method)).then(toJson);
+export function fetchUploadIgnoreErrors(
+    urlPath: string,
+    formData: FormData,
+    method: string,
+    withAccessToken?: boolean
+) {
+    return fetch(getApiBaseUrl(withAccessToken) + urlPath, generateUploadOptions(formData, method)).then(toJson);
 }
 
 export function toJson<T>(response: Response): Promise<T> {

@@ -16,7 +16,9 @@ export const Attachment = (props: {felter?: Felt[]}) => {
             {props.felter.map((felt) => {
                 return felt.vedlegg?.map((vedlegg) => (
                     <li key={vedlegg.uuid}>
-                        <Link href={`${getApiBaseUrl()}opplastetVedlegg/${vedlegg.uuid}/fil`}>{vedlegg.filnavn}</Link>
+                        <Link href={`${getApiBaseUrl(true)}opplastetVedlegg/${vedlegg.uuid}/fil`}>
+                            {vedlegg.filnavn}
+                        </Link>
                     </li>
                 ));
             })}

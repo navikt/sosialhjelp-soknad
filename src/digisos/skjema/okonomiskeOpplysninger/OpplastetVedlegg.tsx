@@ -14,7 +14,7 @@ export const OpplastetVedlegg = (props: {fil: Fil; onSlett: (fil: Fil) => void})
     return (
         <div className="vedleggsliste__vedlegg">
             <span className="vedleggsliste__filnavn">
-                <LinkButton onClick={() => downloadAttachedFile(lastNedUrl)}>{props.fil.filNavn}</LinkButton>
+                <LinkButton onClick={() => downloadAttachedFile(lastNedUrl, true)}>{props.fil.filNavn}</LinkButton>
             </span>
             <span className="vedleggsliste__slett_ikon">
                 <LinkButton onClick={() => handleSlett(props.fil)} aria-label={`Slett ${props.fil.filNavn}`}>
