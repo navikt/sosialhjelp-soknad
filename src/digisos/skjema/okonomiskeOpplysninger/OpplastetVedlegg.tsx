@@ -4,12 +4,12 @@ import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
 import {Fil} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {getContextPathForStaticContent} from "../../../configuration";
 
-export const OpplastetVedlegg = (props: {fil: Fil; onSlett: (fil: Fil) => void}) => {
+export const OpplastetVedlegg = (props: {behandlingsId: string | undefined; fil: Fil; onSlett: (fil: Fil) => void}) => {
     const handleSlett = (fil: Fil) => {
         props.onSlett(fil);
     };
 
-    const lastNedUrl = `opplastetVedlegg/${props.fil.uuid}/fil`;
+    const lastNedUrl = `opplastetVedlegg/${props.behandlingsId}/${props.fil.uuid}/fil`;
 
     return (
         <div className="vedleggsliste__vedlegg">

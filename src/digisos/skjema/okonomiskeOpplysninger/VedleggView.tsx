@@ -80,7 +80,14 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
             opplysningSpc && opplysningSpc.textKey ? opplysningSpc.textKey + ".vedlegg.sporsmal.tittel" : "";
 
         const vedleggListe = opplysning.filer.map((fil) => {
-            return <OpplastetVedlegg key={fil.uuid} fil={fil} onSlett={() => slettVedlegg(fil)} />;
+            return (
+                <OpplastetVedlegg
+                    key={fil.uuid}
+                    behandlingsId={behandlingsId}
+                    fil={fil}
+                    onSlett={() => slettVedlegg(fil)}
+                />
+            );
         });
 
         const textDisabledClassName = opplysning.filer.length > 0 ? " checkboks--disabled" : "";
