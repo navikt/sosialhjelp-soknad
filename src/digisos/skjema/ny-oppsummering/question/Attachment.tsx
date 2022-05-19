@@ -8,7 +8,7 @@ const StyledList = styled.ul`
     margin-bottom: 1rem;
 `;
 
-export const Attachment = (props: {felter?: Felt[]}) => {
+export const Attachment = (props: {behandlingsId: string | undefined; felter?: Felt[]}) => {
     if (!props.felter || props.felter.length === 0) return null;
 
     return (
@@ -16,7 +16,9 @@ export const Attachment = (props: {felter?: Felt[]}) => {
             {props.felter.map((felt) => {
                 return felt.vedlegg?.map((vedlegg) => (
                     <li key={vedlegg.uuid}>
-                        <Link href={`${getApiBaseUrl()}opplastetVedlegg/${vedlegg.uuid}/fil`}>{vedlegg.filnavn}</Link>
+                        <Link href={`${getApiBaseUrl()}opplastetVedlegg/${props.behandlingsId}/${vedlegg.uuid}/fil`}>
+                            {vedlegg.filnavn}
+                        </Link>
                     </li>
                 ));
             })}
