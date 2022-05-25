@@ -38,10 +38,7 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const tilgangResponse = await fetchToJson<TilgangResponse>(
-                    "informasjon/utslagskriterier/sosialhjelp",
-                    true
-                );
+                const tilgangResponse = await fetchToJson<TilgangResponse>("informasjon/utslagskriterier/sosialhjelp");
 
                 // Hvis tilgangApiRespone ikke thrower unauthorized error, så er bruker autentisert
                 const ledeteksterResponse = await fetchToJson<LedeteksterResponse>(
