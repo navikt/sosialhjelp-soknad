@@ -49,7 +49,7 @@ export const sjekkOmValgtNavEnhetErGyldig = (
     dispatch: Dispatch,
     callbackHvisGyldigEllerIkkeSatt: () => void
 ) => {
-    fetchToJson(soknadsdataUrl(behandlingsId, SoknadsSti.VALGT_NAV_ENHET), true)
+    fetchToJson(soknadsdataUrl(behandlingsId, SoknadsSti.VALGT_NAV_ENHET))
         .then((response) => {
             if (responseIsOfTypeNavEnhet(response)) {
                 const valgtNavKontor: NavEnhet | undefined = response as NavEnhet;
