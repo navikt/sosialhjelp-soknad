@@ -14,7 +14,7 @@ const mockGET = <T,>(url: string, mockData: Partial<T>) => {
 };
 
 const bosituasjonUrl = (behandlingsID: string) =>
-    getApiBaseUrl(true) + soknadsdataUrl(behandlingsID, SoknadsSti.BOSITUASJON);
+    getApiBaseUrl() + soknadsdataUrl(behandlingsID, SoknadsSti.BOSITUASJON);
 
 const server = setupServer(
     mockGET<BosituasjonData>(bosituasjonUrl("botypeEier"), {botype: "eier", antallPersoner: null}),
