@@ -3,9 +3,7 @@ import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
 import {logError} from "./loggerUtils";
 
 export function getApiBaseUrl(withAccessToken?: boolean): string {
-    return withAccessToken
-        ? `${process.env.REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN}`
-        : `${process.env.REACT_APP_API_BASE_URL}`;
+    return `${process.env.REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN}`;
 }
 
 export function getInnsynUrl(): string {
