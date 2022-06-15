@@ -94,7 +94,7 @@ export const InformasjonSide = (props: {antallPabegynteSoknader: number}) => {
                                 a: (msg: string) => (
                                     // Disable target-blank-rule on internal urls
                                     /* eslint-disable-next-line react/jsx-no-target-blank */
-                                    <a href="https://www.nav.no/sosialhjelp/" target="_blank">
+                                    <a href="https://www.nav.no/sosialhjelp/andre-muligheter" target="_blank">
                                         {msg}
                                     </a>
                                 ),
