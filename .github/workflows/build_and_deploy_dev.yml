@@ -5,9 +5,6 @@ on:
       config-file-name:
         required: true
         type: string
-      cluster:
-        required: true
-        type: string
     secrets:
       api_deploy_token:
         required: true
@@ -21,15 +18,6 @@ on:
         options:
           - 'dev'
           - 'mock'
-          - 'dev-sbs'
-          - 'labs-gcp'
-      cluster:
-        description: 'Cluster å deploye til'
-        required: true
-        default: 'dev-sbs'
-        type: choice
-        options:
-          - 'dev-gcp'
           - 'dev-sbs'
           - 'labs-gcp'
 
@@ -47,10 +35,18 @@ jobs:
           node-version: '16'
           registry-url: 'https://npm.pkg.github.com'
           cache: 'npm'
-      - name: Sett cluster og config to env variables
+      - name: Sett env variabler og sett cluster basert på config-file
         run: |
-          echo "CLUSTER_NAME=${{ inputs.cluster != '' && inputs.cluster || github.event.inputs.cluster }}" >> $GITHUB_ENV
-          echo "CONFIG_FILE=${{ inputs.config-file-name  != '' && inputs.config-file-name  || github.event.inputs.config-file-name }}" >> $GITHUB_ENV
+          echo "CONFIG_FILE=${{ inputs.config-file-name }}" >> $GITHUB_ENV
+
+          if [[ ${{ inputs.config-file-name }} = 'dev-sbs' ]]; then
+            echo "CLUSTER_NAME=dev-sbs" >> $GITHUB_ENV
+          elif [[ ${{ inputs.config-file-name }} = 'labs-gcp' ]]; then
+            echo "CLUSTER_NAME=labs-gcp" >> $GITHUB_ENV
+          else
+            echo "CLUSTER_NAME=dev-gcp" >> $GITHUB_ENV
+          fi
+          echo "Deployer til ${{ env.CLUSTER_NAME }}"
       - name: Copy env-file for dev
         run: cp nais/dev/${{ env.CONFIG_FILE }}.env .env.local
       - name: Install dependencies
