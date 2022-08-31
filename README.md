@@ -17,7 +17,7 @@ REACT_APP_ENVIRONMENT="localhost"
 REACT_APP_API_BASE_URL="http://localhost:8181/sosialhjelp/soknad-api/"
 REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN="http://localhost:8181/sosialhjelp/soknad-api/"
 REACT_APP_INNSYN_URL="http://localhost:3000/sosialhjelp/innsyn/"
-REACT_APP_DITT_NAV_URL="https://www.nav.no/person/dittnav/"
+REACT_APP_MIN_SIDE_URL="https://www.nav.no/minside/"
 ```
 
 ### Backend
