@@ -70,7 +70,7 @@ const Feilside: React.FC<FeilsideProps> = ({
                     </li>
                     <li>
                         <BodyShort>
-                            <Link href="https://www.nav.no/no/Ditt+NAV">Gå til Ditt NAV</Link>
+                            <Link href="https://www.nav.no/minside">Gå til Min side</Link>
                         </BodyShort>
                     </li>
                     <li>
