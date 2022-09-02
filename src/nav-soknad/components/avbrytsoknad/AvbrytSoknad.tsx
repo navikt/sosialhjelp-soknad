@@ -62,14 +62,14 @@ const ButtonRow = styled.div`
     gap: 1rem;
 `;
 
-const getDittNavUrl = () => {
-    return `${process.env.REACT_APP_DITT_NAV_URL}`;
+const getMinSideUrl = () => {
+    return `${process.env.REACT_APP_MIN_SIDE_URL}`;
 };
 
 export const AvbrytSoknad = () => {
     const {behandlingsId, avbrytDialog, nedetid} = useSelector((state: State) => state.soknad);
 
-    const dittNavUrl = getDittNavUrl();
+    const minSideUrl = getMinSideUrl();
 
     const dispatch = useDispatch();
 
@@ -80,7 +80,7 @@ export const AvbrytSoknad = () => {
     const onAvbryt = () => {
         if (behandlingsId) {
             fetchDelete(`soknader/${behandlingsId}`)
-                .then(() => (window.location.href = dittNavUrl))
+                .then(() => (window.location.href = minSideUrl))
                 .catch((reason) => {
                     if (reason.message === HttpStatus.UNAUTHORIZED) {
                         return;
@@ -96,7 +96,7 @@ export const AvbrytSoknad = () => {
     };
 
     const onFortsettSenere = () => {
-        window.location.href = dittNavUrl;
+        window.location.href = minSideUrl;
     };
 
     return (
