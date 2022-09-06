@@ -8,20 +8,17 @@ jobs:
     uses: navikt/sosialhjelp-soknad/.github/workflows/build_and_deploy_dev.yml@master
     with:
       config-file-name: dev-sbs
-      cluster: dev-sbs
     secrets:
       api_deploy_token: ${{ secrets.NAIS_DEPLOY_APIKEY }}
   deploy_dev-gcp:
     uses: navikt/sosialhjelp-soknad/.github/workflows/build_and_deploy_dev.yml@master
     with:
       config-file-name: dev
-      cluster: dev-gcp
     secrets:
       api_deploy_token: ${{ secrets.NAIS_DEPLOY_APIKEY }}
   deploy_dev-gcp-mock:
     uses: navikt/sosialhjelp-soknad/.github/workflows/build_and_deploy_dev.yml@master
     with:
       config-file-name: mock
-      cluster: dev-gcp
     secrets:
       api_deploy_token: ${{ secrets.NAIS_DEPLOY_APIKEY }}
