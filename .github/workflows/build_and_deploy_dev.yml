@@ -19,7 +19,6 @@ on:
           - 'dev'
           - 'mock'
           - 'dev-sbs'
-          - 'labs-gcp'
 
 # FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
@@ -41,8 +40,6 @@ jobs:
 
           if [[ ${{ inputs.config-file-name }} = 'dev-sbs' ]]; then
             echo "CLUSTER_NAME=dev-sbs" >> $GITHUB_ENV
-          elif [[ ${{ inputs.config-file-name }} = 'labs-gcp' ]]; then
-            echo "CLUSTER_NAME=labs-gcp" >> $GITHUB_ENV
           else
             echo "CLUSTER_NAME=dev-gcp" >> $GITHUB_ENV
           fi
