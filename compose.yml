@@ -1,0 +1,8 @@
+services:
+  sosialhjelp-soknad:
+    container_name: sosialhjelp-soknad
+    image: ghcr.io/navikt/sosialhjelp-sokand/sosialhjelp-soknad:{{TAG}}
+    ports:
+      - "8080:8080"
+    env_file:
+      - dev-sbs.env
