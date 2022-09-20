@@ -13,12 +13,11 @@ on:
       config-file-name:
         description: 'Config-fil som skal deployes'
         required: true
-        default: 'dev-sbs'
+        default: 'mock'
         type: choice
         options:
           - 'dev'
           - 'mock'
-          - 'dev-sbs'
 
 # FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
@@ -34,16 +33,9 @@ jobs:
           node-version: '16'
           registry-url: 'https://npm.pkg.github.com'
           cache: 'npm'
-      - name: Sett env variabler og sett cluster basert på config-file
+      - name: Sett env variabler
         run: |
           echo "CONFIG_FILE=${{ inputs.config-file-name }}" >> $GITHUB_ENV
-
-          if [[ ${{ inputs.config-file-name }} = 'dev-sbs' ]]; then
-            echo "CLUSTER_NAME=dev-sbs" >> $GITHUB_ENV
-          else
-            echo "CLUSTER_NAME=dev-gcp" >> $GITHUB_ENV
-          fi
-          echo "Deployer til ${{ env.CLUSTER_NAME }}"
       - name: Copy env-file for dev
         run: cp nais/dev/${{ env.CONFIG_FILE }}.env .env.local
       - name: Install dependencies
@@ -89,7 +81,7 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY != '' && secrets.NAIS_DEPLOY_APIKEY || secrets.api_deploy_token }}
           RESOURCE: nais.yaml
-          CLUSTER: ${{ env.CLUSTER_NAME }}
+          CLUSTER: dev-gcp
           VARS: nais/dev/${{ env.CONFIG_FILE }}.json
           REF: ${{ github.sha }}
           PRINT_PAYLOAD: true
