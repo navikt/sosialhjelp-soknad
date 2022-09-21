@@ -2,7 +2,6 @@
   "applicationName": "sosialhjelp-soknad",
   "namespace": "teamdigisos",
   "ingresses": [
-    "https://sosialhjelp-soknad.dev.nav.no/",
     "https://www-q0.dev.nav.no/sosialhjelp/soknad"
   ],
   "dekoratorMiljo": "dev",
