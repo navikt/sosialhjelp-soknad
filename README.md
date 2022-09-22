@@ -55,7 +55,7 @@ Gjøres via Github Actions, se: https://github.com/navikt/sosialhjelp-soknad/act
 
 ## Logge inn i dev-gcp med mock-alt
 
-Da må appen gå via proxy. Url er https://digisos-gcp.dev.nav.no/sosialhjelp/soknad
+Da må appen gå via proxy. Url er https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad
 
 ## Henvendelser
 
