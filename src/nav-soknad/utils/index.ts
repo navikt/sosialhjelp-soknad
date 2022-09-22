@@ -18,10 +18,7 @@ export function erMockMiljoEllerDev(): boolean {
 export function erMockAltMiljo(): boolean {
     const url = window.location.href;
     return (
-        url.indexOf("sosialhjelp-soknad-gcp.dev.nav.no") > 0 ||
-        url.indexOf("digisos-gcp.dev.nav.no") > 0 ||
-        url.indexOf("sosialhjelp-soknad-mock.dev.nav.no") > 0 ||
-        url.indexOf("digisos.ekstern.dev.nav.no") > 0 // Fanger ikke opp www-q*.dev.nav.no
+        url.indexOf("sosialhjelp-soknad-mock.dev.nav.no") > 0 || url.indexOf("digisos.ekstern.dev.nav.no") > 0 // Fanger ikke opp www-q*.dev.nav.no
     );
 }
 
