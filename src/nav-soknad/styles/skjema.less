@@ -12,6 +12,16 @@
     .skjemagruppe__legend {
         padding-right: @skjemaMarg + 10px; // pga.hjelpetekst
         padding-left: 0;
+        margin: 0;
+    }
+
+    .skjema-sporsmal__innhold {
+        margin-top: 0.75rem;
+    }
+
+    .skjemagruppe__description {
+        margin: 0;
+        margin-top: 0.25rem;
     }
 
     &--legend-title-default {
@@ -34,7 +44,7 @@
     display: block;
     border-radius: 4px;
     background-color: @white;
-    padding: 0rem 2rem;
+    padding: 0 2rem;
 
     &:focus {
         .focus-outline();
@@ -136,10 +146,8 @@
         margin-top: 0;
         margin-bottom: 2.5rem;
         padding: 0 @skjemaMarg 0 @skjemaMarg;
-        padding: 0 @skjemaMarg 0 @skjemaMarg;
 
         @media @mobile {
-            padding: 0 @skjemaMargMobil 0 @skjemaMargMobil;
             padding: 0 @skjemaMargMobil 0 @skjemaMargMobil;
         }
 

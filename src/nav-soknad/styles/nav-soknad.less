@@ -24,7 +24,7 @@ body {
 
 fieldset {
     /* Retter problem med for bred størrelse på mobil: */
-    min-width: 0px;
+    min-width: 0;
 }
 
 .tekst-capitalize {
@@ -96,7 +96,7 @@ textarea.skjema-textarea--large {
                 transform: translateY(0.35em);
             }
             &--inaktiv {
-                box-shadow: rgb(120, 112, 106) 0px 0px 0px 1.5px inset;
+                box-shadow: rgb(120, 112, 106) 0 0 0 1.5px inset;
             }
             &--aktiv {
                 line-height: 2em;
@@ -142,4 +142,12 @@ textarea.skjema-textarea--large {
 
 .add-padding-bottom {
     padding-bottom: 1rem;
+}
+
+.skjema-steg__tittel {
+    margin-bottom: 5rem;
+}
+
+.skjemagruppe__legend {
+    font-size: 16px;
 }

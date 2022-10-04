@@ -9,10 +9,10 @@ import {digisosColors} from "../../nav-soknad/styles/variables";
 import {State} from "../redux/reducers";
 import {InformasjonSide} from ".";
 import {DAYS_BEOFRE_DELETION, filterAndSortPabegynteSoknader} from "./pabegynteSoknaderUtils";
-import {BodyShort, Label, Link, LinkPanel, Panel, Heading} from "@navikt/ds-react";
+import {BodyShort, Label, Link, LinkPanel, Heading} from "@navikt/ds-react";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {useHistory} from "react-router";
-import {Attachment} from "@navikt/ds-icons";
+import {Attachment, FileProgress, Notes} from "@navikt/ds-icons";
 import {getInnsynUrl} from "../../nav-soknad/utils/rest-utils";
 
 const FlexContainer = styled.div`
@@ -91,15 +91,17 @@ const PabegynteSoknaderPanel = styled(Ekspanderbartpanel)`
 `;
 
 const PabegynteSoknaderPanelContent = styled.div`
-    padding: 0 1rem 1rem 1rem;
+    padding: 0 1rem 0 1rem;
 
     .navds-link-panel {
         padding: 1rem;
     }
 `;
 
-const DokumentasjonsPanel = styled(Panel)`
-    border-color: #6a6a6a;
+const DokumentasjonsPanel = styled(Ekspanderbartpanel)`
+    .ekspanderbartPanel__flex-wrapper {
+        padding: 1rem;
+    }
 `;
 
 const StyledUnorderedList = styled.ul`
@@ -133,9 +135,14 @@ export const Soknadsoversikt = () => {
         <StyledSoknadsoversikt>
             <StartNySoknadPanel
                 tittel={
-                    <Heading level="2" size="small">
-                        Start en ny søknad
-                    </Heading>
+                    <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                        <PanelImageContainer>
+                            <Notes />
+                        </PanelImageContainer>
+                        <Heading level="2" size="small">
+                            Start en ny søknad
+                        </Heading>
+                    </div>
                 }
             >
                 <InformasjonSide antallPabegynteSoknader={pabegynteSoknader.length} />
@@ -143,14 +150,19 @@ export const Soknadsoversikt = () => {
             {pabegynteSoknader.length > 0 && (
                 <PabegynteSoknaderPanel
                     tittel={
-                        <div>
-                            <Heading level="2" size="small">
-                                Fortsett på en påbegynt søknad
-                            </Heading>
-                            <BodyShort>
-                                Du har {pabegynteSoknader.length} påbegynte søknader. Vær oppmerksom på at disse slettes
-                                etter {DAYS_BEOFRE_DELETION} dager.
-                            </BodyShort>
+                        <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                            <PanelImageContainer>
+                                <FileProgress />
+                            </PanelImageContainer>
+                            <div>
+                                <Heading level="2" size="small">
+                                    Fortsett på en påbegynt søknad
+                                </Heading>
+                                <BodyShort>
+                                    Du har {pabegynteSoknader.length} påbegynte søknader. <br />
+                                    Vær oppmerksom på at disse slettes etter {DAYS_BEOFRE_DELETION} dager.
+                                </BodyShort>
+                            </div>
                         </div>
                     }
                 >
@@ -189,25 +201,30 @@ export const Soknadsoversikt = () => {
                 </PabegynteSoknaderPanel>
             )}
 
-            <DokumentasjonsPanel border>
-                <FlexContainer>
-                    <PanelImageContainer>
-                        <Attachment />
-                    </PanelImageContainer>
-                    <div>
-                        <Heading level="2" size="small">
-                            Send dokumentasjon til en innsendt søknad
-                        </Heading>
-                        <BodyShort>Dokumentasjon kan sendes til søknader du har sendt inn tidligere.</BodyShort>
-                        <ul>
-                            <li>
-                                Gå til listen over <Link href={getInnsynUrl()}>dine sosialhjelpssøknader</Link>
-                            </li>
-                            <li>Åpne søknaden du ønsker å ettersende dokumenter til</li>
-                            <li>Last opp dokumentene du skal ettersende under “dine vedlegg”</li>
-                        </ul>
+            <DokumentasjonsPanel
+                tittel={
+                    <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                        <PanelImageContainer>
+                            <Attachment />
+                        </PanelImageContainer>
+                        <div>
+                            <Heading level="2" size="small">
+                                Send dokumentasjon til en innsendt søknad
+                            </Heading>
+                            <BodyShort>Dokumentasjon kan sendes til søknader du har sendt inn tidligere.</BodyShort>
+                        </div>
                     </div>
-                </FlexContainer>
+                }
+            >
+                <div>
+                    <ul>
+                        <li>
+                            Gå til listen over <Link href={getInnsynUrl()}>dine sosialhjelpssøknader</Link>
+                        </li>
+                        <li>Åpne søknaden du ønsker å ettersende dokumenter til</li>
+                        <li>Last opp dokumentene du skal ettersende under “dine vedlegg”</li>
+                    </ul>
+                </div>
             </DokumentasjonsPanel>
         </StyledSoknadsoversikt>
     );
