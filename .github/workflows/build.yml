@@ -1,4 +1,4 @@
-name: Build and deploy to dev
+name: Build image
 on:
   workflow_call:
     inputs:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       config-file-name:
-        description: 'Config-fil som skal deployes'
+        description: 'Config-fil'
         required: true
         default: 'dev-sbs'
         type: choice
