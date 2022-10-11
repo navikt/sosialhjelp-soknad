@@ -8,7 +8,7 @@ import {SkjemaContent} from "../../nav-soknad/components/SkjemaContent";
 import {digisosColors} from "../../nav-soknad/styles/variables";
 import {State} from "../redux/reducers";
 import {InformasjonSide} from ".";
-import {DAYS_BEOFRE_DELETION, filterAndSortPabegynteSoknader} from "./pabegynteSoknaderUtils";
+import {DAYS_BEFORE_DELETION, filterAndSortPabegynteSoknader} from "./pabegynteSoknaderUtils";
 import {BodyShort, Label, Link, LinkPanel, Heading} from "@navikt/ds-react";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {useHistory} from "react-router";
@@ -160,7 +160,7 @@ export const Soknadsoversikt = () => {
                                 </Heading>
                                 <BodyShort>
                                     Du har {pabegynteSoknader.length} påbegynte søknader. <br />
-                                    Vær oppmerksom på at disse slettes etter {DAYS_BEOFRE_DELETION} dager.
+                                    Vær oppmerksom på at disse slettes etter {DAYS_BEFORE_DELETION} dager.
                                 </BodyShort>
                             </div>
                         </div>
