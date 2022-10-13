@@ -3,7 +3,6 @@ import {useEffect} from "react";
 import Panel from "nav-frontend-paneler";
 import {getIntlTextOrKey, getStegUrl} from "../../../nav-soknad/utils";
 import {FormattedMessage, useIntl} from "react-intl";
-import AppBanner from "../../../nav-soknad/components/appHeader/AppHeader";
 import {Checkbox} from "nav-frontend-skjema";
 import {useDispatch, useSelector} from "react-redux";
 import {getErSystemdataEndret, hentSamtykker, oppdaterSamtykke} from "../../redux/soknad/soknadActions";
@@ -68,7 +67,6 @@ const SamtykkeView: React.FC = () => {
 
     return (
         <WhiteBackground className="app-digisos">
-            <AppBanner />
             {(!harLastetinnSamtykker || erSystemdataEndret === ErSystemdataEndret.NOT_ASKED) && <ApplicationSpinner />}
             {(harSamtykker || erSystemdataEndret === ErSystemdataEndret.YES) && (
                 <Panel className={"skjema-content"}>

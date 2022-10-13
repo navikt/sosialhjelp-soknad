@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {FormattedMessage} from "react-intl";
 import {State} from "../../redux/reducers";
 import React, {useEffect} from "react";
-import BannerEttersendelse from "./bannerEttersendelse";
+import AppBanner from "./appBanner";
 import {lesEttersendelser, opprettEttersendelse} from "../../redux/ettersendelse/ettersendelseActions";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
@@ -79,9 +79,7 @@ const Ettersendelse = () => {
 
     return (
         <div className="ettersendelse">
-            <BannerEttersendelse>
-                <FormattedMessage id="applikasjon.sidetittel" />
-            </BannerEttersendelse>
+            <AppBanner />
             {nedetid?.isNedetid && (
                 <Alert variant="error" style={{justifyContent: "center"}}>
                     <FormattedMessage

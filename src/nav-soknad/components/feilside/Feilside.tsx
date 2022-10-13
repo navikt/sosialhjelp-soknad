@@ -1,6 +1,5 @@
 import * as React from "react";
 import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
-import Banner from "../banner/Banner";
 import {useTitle} from "../../hooks/useTitle";
 import {BodyShort, Button, Heading, Link} from "@navikt/ds-react";
 import styled from "styled-components";
@@ -48,7 +47,6 @@ const Feilside: React.FC<FeilsideProps> = ({
     useTitle(`Feilside - ${document.location.hostname}`);
     return (
         <>
-            <Banner>Søknad om økonomisk sosialhjelp</Banner>
             <StyledFeilside>
                 <Ikon>
                     <UtropstegnSirkelGraIkon />

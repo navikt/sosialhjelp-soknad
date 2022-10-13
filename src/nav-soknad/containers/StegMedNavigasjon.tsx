@@ -18,7 +18,6 @@ import {
     sendSoknad,
     sendSoknadPending,
 } from "../../digisos/redux/soknad/soknadActions";
-import AppBanner from "../components/appHeader/AppHeader";
 import {
     clearAllValideringsfeil,
     setValideringsfeil,
@@ -218,7 +217,6 @@ const StegMedNavigasjon = (
 
     return (
         <WhiteBackground className="app-digisos">
-            <AppBanner />
             {isNedetid && (
                 <Alert variant="error" style={{justifyContent: "center"}}>
                     <FormattedMessage

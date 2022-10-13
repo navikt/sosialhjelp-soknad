@@ -29,6 +29,7 @@ import {Integrations} from "@sentry/tracing";
 import {BrowserRouter} from "react-router-dom";
 import {createBrowserHistory} from "history";
 import {getContextPathForStaticContent} from "./configuration";
+import AppBanner from "./digisos/skjema/ettersendelse/appBanner";
 
 Modal.setAppElement("#root");
 
@@ -108,6 +109,7 @@ ReactDOM.render(
         <IntlProvider>
             <LoadContainer>
                 <BrowserRouter basename={getContextPathForStaticContent()} getUserConfirmation={getUserConfirmation}>
+                    <AppBanner />
                     <App />
                 </BrowserRouter>
             </LoadContainer>

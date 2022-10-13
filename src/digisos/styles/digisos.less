@@ -13,8 +13,20 @@
 
 @navRosa: #f3e3e3;
 
+html,
+body {
+    min-height: 100vh;
+    height: 100%;
+}
+
 body {
     background-color: @white;
+    display: flex;
+    flex-direction: column;
+}
+
+#root {
+    flex-grow: 1;
 }
 
 .app-digisos {
@@ -110,4 +122,13 @@ body {
         padding-right: 1rem;
         padding-bottom: 1rem;
     }
+}
+
+.skjema-skjemapanel {
+    h3 {
+        font-size: 32px;
+    }
+}
+.skjemagruppe__legend {
+    font-size: 20px;
 }
