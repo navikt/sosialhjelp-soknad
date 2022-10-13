@@ -202,12 +202,10 @@ export const lagrePabegynteSoknaderPaStore = (pabegynteSoknader: PabegynteSoknad
     };
 };
 
-export const visSamtykkeInfo = (skalVises: boolean): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.VIS_SAMTYKKE_INFO,
-        skalVises,
-    };
-};
+export const setVisPersondataModal = (skalVises: boolean): SoknadActionType => ({
+    type: SoknadActionTypeKeys.VIS_PERSONDATA_MODAL,
+    skalVises,
+});
 
 export const visLasteOppVedleggModal = (skalVises: boolean): SoknadActionType => {
     return {

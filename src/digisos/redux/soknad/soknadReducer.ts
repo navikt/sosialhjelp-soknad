@@ -7,7 +7,7 @@ export const defaultState: SoknadState = {
     sendSoknadServiceUnavailable: false,
     showSendingFeiletPanel: false,
     showSideIkkeFunnet: false,
-    visSamtykkeInfo: false,
+    visPersondataModal: false,
     visLasteOppVedleggModal: false,
     visMidlertidigDeaktivertPanel: false,
     visIkkePakobletPanel: false,
@@ -174,10 +174,10 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             };
         }
 
-        case SoknadActionTypeKeys.VIS_SAMTYKKE_INFO: {
+        case SoknadActionTypeKeys.VIS_PERSONDATA_MODAL: {
             return {
                 ...state,
-                visSamtykkeInfo: action.skalVises,
+                visPersondataModal: action.skalVises,
             };
         }
 

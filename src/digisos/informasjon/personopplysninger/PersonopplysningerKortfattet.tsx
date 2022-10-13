@@ -3,7 +3,7 @@ import {FormattedMessage} from "react-intl";
 import {useDispatch} from "react-redux";
 import PersonopplysningerUtfyllendeModal from "./PersonopplysningerUtfyllendeModal";
 import {getContextPathForStaticContent} from "../../../configuration";
-import {visSamtykkeInfo} from "../../redux/soknad/soknadActions";
+import {setVisPersondataModal} from "../../redux/soknad/soknadActions";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {BodyLong, Heading} from "@navikt/ds-react";
 import styled from "styled-components";
@@ -120,7 +120,7 @@ const PersonopplysningerKortfattet = () => {
                     <LeftAlignedButton
                         className="navds-link"
                         onClick={() => {
-                            dispatch(visSamtykkeInfo(true));
+                            dispatch(setVisPersondataModal(true));
                         }}
                     >
                         <FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke" />

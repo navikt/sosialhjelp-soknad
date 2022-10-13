@@ -38,7 +38,7 @@ export enum SoknadActionTypeKeys {
     LAGRE_PABEGYNTE_SOKNADER_PA_STORE = "soknad/LAGRE_PABEGYNTE_SOKNADER_PA_STORE",
 
     SET_LINK_VISITED = "soknad/SET_LINK_VISITED",
-    VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO",
+    VIS_PERSONDATA_MODAL = "soknad/VIS_PERSONDATA_MODAL",
     VIS_LASTE_OPP_VEDLEGG_MODAL = "soknad/VIS_LASTE_OPP_VEDLEGG_MODAL",
     UPDATE_BEHANDLINGSID_PA_STORE = "soknad/UPDATE_BEHANDLINGSID_PA_STORE",
     SHOW_SERVER_FEIL = "soknad/SHOW_SERVER_FEIL",
@@ -74,7 +74,7 @@ export type SoknadActionType =
     | OppdaterSamtykke
     | LagreTilgangOgFornavnPaStore
     | LagreNedetidPaStore
-    | VisSamtykkeInfo
+    | VisPersondataModal
     | VisLasteOppVedleggModal
     | UpdateBehandlingsIdPaStore
     | ShowServerFeil
@@ -127,8 +127,8 @@ export interface LagreHarNyligInnsendteSoknaderPaStore {
     harNyligInnsendteSoknaderResponse: HarNyligInnsendteSoknaderResponse;
 }
 
-export interface VisSamtykkeInfo {
-    type: SoknadActionTypeKeys.VIS_SAMTYKKE_INFO;
+export interface VisPersondataModal {
+    type: SoknadActionTypeKeys.VIS_PERSONDATA_MODAL;
     skalVises: boolean;
 }
 

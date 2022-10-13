@@ -4,7 +4,7 @@ import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 export interface SoknadState {
     // Visning state
     showSideIkkeFunnet: boolean;
-    visSamtykkeInfo: boolean;
+    visPersondataModal: boolean;
     visLasteOppVedleggModal: boolean;
     visMidlertidigDeaktivertPanel: boolean;
     visIkkePakobletPanel: boolean;

@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux";
 import styled from "styled-components";
 import Brevkonvolutt from "../../../nav-soknad/components/svg/Brevkonvolutt";
 import {FormattedMessage} from "react-intl";
-import {visSamtykkeInfo} from "../../redux/soknad/soknadActions";
+import {setVisPersondataModal} from "../../redux/soknad/soknadActions";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
 import {NavEnhet} from "../personopplysninger/adresse/AdresseTypes";
@@ -33,7 +33,7 @@ export const SoknadsmottakerInfoPanel = (props: {valgtSoknadsmottaker: NavEnhet}
             <LinkButton
                 type="button"
                 onClick={() => {
-                    dispatch(visSamtykkeInfo(true));
+                    dispatch(setVisPersondataModal(true));
                 }}
             >
                 <BodyShort spacing>
