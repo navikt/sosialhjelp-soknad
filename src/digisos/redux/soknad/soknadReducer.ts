@@ -15,7 +15,6 @@ export const defaultState: SoknadState = {
 
     // Authentication state
     harTilgang: false,
-    sperrekode: undefined,
     nedetid: undefined,
     harNyligInnsendteSoknader: undefined,
 
