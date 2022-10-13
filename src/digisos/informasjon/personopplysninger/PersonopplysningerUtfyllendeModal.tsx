@@ -1,12 +1,12 @@
 import * as React from "react";
 import {FormattedMessage, useIntl} from "react-intl";
-import {useSelector, useDispatch} from "react-redux";
-import {State} from "../../redux/reducers";
+import {useDispatch} from "react-redux";
 import {setVisPersondataModal} from "../../redux/soknad/soknadActions";
 import {Button, Modal} from "@navikt/ds-react";
+import {useSoknad} from "../../redux/useSoknad";
 
 const PersonopplysningerUtfyllendeModal = () => {
-    const {visPersondataModal} = useSelector((state: State) => state.soknad);
+    const {visPersondataModal} = useSoknad();
 
     const intl = useIntl();
 
