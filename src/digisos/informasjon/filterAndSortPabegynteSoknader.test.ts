@@ -1,6 +1,6 @@
 import {addDays, subDays} from "date-fns";
 import {PabegynteSoknaderResponse} from "../redux/soknad/soknadTypes";
-import {filterAndSortPabegynteSoknader} from "./pabegynteSoknaderUtils";
+import {filterAndSortPabegynteSoknader} from "./filterAndSortPabegynteSoknader";
 
 describe("Util funksjoner for påbegynte søknader", () => {
     it("skal ikke kræsje på tomt array", () => {
@@ -19,7 +19,7 @@ describe("Util funksjoner for påbegynte søknader", () => {
         expect(filtrerteSoknader.length).toBe(1);
         expect(filtrerteSoknader[0]).toEqual({
             behandlingsId: "123",
-            lastUpdatedDate: sistOppdatert,
+            sistOppdatert: sistOppdatert,
             deleteDate: addDays(sistOppdatert, 14),
         });
     });

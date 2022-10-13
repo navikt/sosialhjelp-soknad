@@ -1,5 +1,5 @@
 import * as React from "react";
-import Infoblokk from "../../nav-soknad/components/infoblokk";
+import Infoblokk from "../../../nav-soknad/components/infoblokk";
 import {FormattedMessage, useIntl} from "react-intl";
 import {ContentContainer, Link} from "@navikt/ds-react";
 

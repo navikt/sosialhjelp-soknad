@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux";
-import {State} from "../redux/reducers";
+import {State} from "../../redux/reducers";
 import {Alert} from "@navikt/ds-react";
 import {FormattedMessage} from "react-intl";
 import * as React from "react";

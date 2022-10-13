@@ -12,7 +12,7 @@ import {
 } from "../../redux/oppsummering/oppsummeringActions";
 import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
-import BehandlingAvPersonopplysningerModal from "../../informasjon/BehandlingAvPersonopplysningerModal";
+import PersonopplysningerUtfyllendeModal from "../../informasjon/personopplysninger/PersonopplysningerUtfyllendeModal";
 import {NyOppsummeringBolk, NyOppsummeringResponse} from "../../redux/oppsummering/oppsummeringTypes";
 import {fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {ListOfValues} from "./question/ListOfValues";
@@ -126,7 +126,7 @@ export const Oppsummering = () => {
                 <FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger" />
             </ConfirmationPanel>
 
-            <BehandlingAvPersonopplysningerModal />
+            <PersonopplysningerUtfyllendeModal />
         </DigisosSkjemaSteg>
     );
 };

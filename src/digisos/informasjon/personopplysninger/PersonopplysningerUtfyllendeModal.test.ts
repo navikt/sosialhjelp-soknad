@@ -1,4 +1,4 @@
-import {replaceNavkontor} from "./BehandlingAvPersonopplysningerModal";
+import {replaceNavkontor} from "./PersonopplysningerUtfyllendeModal";
 
 describe("regex for modal", () => {
     it("skal rendre 'NAV-kontoret ditt'", () => {

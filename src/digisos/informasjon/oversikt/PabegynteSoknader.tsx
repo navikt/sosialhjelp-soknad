@@ -1,4 +1,4 @@
-import {DAYS_BEFORE_DELETION, filterAndSortPabegynteSoknader} from "../pabegynteSoknaderUtils";
+import {DAYS_BEFORE_DELETION, filterAndSortPabegynteSoknader} from "../filterAndSortPabegynteSoknader";
 import {useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
 import {useHistory} from "react-router";
@@ -13,11 +13,11 @@ import {nb} from "date-fns/locale";
 import {AccordionHeaderOversikt} from "./AccordionHeaderOversikt";
 
 interface PabegyntSoknadProps {
-    soknad: {behandlingsId: string; lastUpdatedDate: Date; deleteDate: Date};
+    soknad: {behandlingsId: string; sistOppdatert: Date; deleteDate: Date};
     onClick: (event: React.SyntheticEvent, href: string) => any;
 }
 
-const PabegyntSoknad = ({soknad: {lastUpdatedDate, deleteDate, behandlingsId}, onClick}: PabegyntSoknadProps) => (
+const PabegyntSoknad = ({soknad: {sistOppdatert, deleteDate, behandlingsId}, onClick}: PabegyntSoknadProps) => (
     <LinkPanel
         href={`skjema/${behandlingsId}/1`}
         onClick={(event) => onClick(event, `skjema/${behandlingsId}/1`)}
@@ -25,7 +25,7 @@ const PabegyntSoknad = ({soknad: {lastUpdatedDate, deleteDate, behandlingsId}, o
     >
         <LinkPanel.Title>
             <Label style={{display: "inline", marginRight: "1rem"}}>
-                Sist oppdatert {format(lastUpdatedDate, "d MMM yyyy", {locale: nb})}
+                Sist oppdatert {format(sistOppdatert, "d MMM yyyy", {locale: nb})}
             </Label>
             <BodyShort style={{display: "inline"}}>
                 Slettes om {formatDistance(deleteDate, new Date(), {locale: nb})}

@@ -1,10 +1,10 @@
 import * as React from "react";
 import {FormattedMessage, useIntl} from "react-intl";
 import {useSelector, useDispatch} from "react-redux";
-import {finnValgtEnhetsNavn} from "../data/kommuner";
-import {Soknadsdata} from "../redux/soknadsdata/soknadsdataReducer";
-import {State} from "../redux/reducers";
-import {visSamtykkeInfo} from "../redux/soknad/soknadActions";
+import {finnValgtEnhetsNavn} from "../../data/kommuner";
+import {Soknadsdata} from "../../redux/soknadsdata/soknadsdataReducer";
+import {State} from "../../redux/reducers";
+import {visSamtykkeInfo} from "../../redux/soknad/soknadActions";
 import {Button, Modal} from "@navikt/ds-react";
 import styled from "styled-components";
 
@@ -22,7 +22,7 @@ const CenteredContent = styled.div`
     text-align: center;
 `;
 
-const BehandlingAvPersonopplysningerModal = () => {
+const PersonopplysningerUtfyllendeModal = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const modalSynlig = useSelector((state: State) => state.soknad.visSamtykkeInfo);
 
@@ -62,4 +62,4 @@ const BehandlingAvPersonopplysningerModal = () => {
     );
 };
 
-export default BehandlingAvPersonopplysningerModal;
+export default PersonopplysningerUtfyllendeModal;
