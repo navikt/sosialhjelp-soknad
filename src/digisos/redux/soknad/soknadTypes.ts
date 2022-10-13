@@ -17,7 +17,6 @@ export interface SoknadState {
 
     // Authentication / tilgang state
     harTilgang: boolean;
-    sperrekode: TilgangSperrekode | undefined;
 
     // Rest state
     restStatus: REST_STATUS;
@@ -107,7 +106,6 @@ export interface SendSoknadResponse {
 
 export interface TilgangResponse {
     harTilgang: boolean;
-    sperrekode: TilgangSperrekode;
 }
 
 export type LedeteksterResponse = {};
@@ -115,8 +113,6 @@ export type LedeteksterResponse = {};
 export interface FornavnResponse {
     fornavn: string;
 }
-
-export type TilgangSperrekode = "pilot" | "bruker";
 
 export interface NedetidResponse {
     isNedetid: boolean;
