@@ -56,7 +56,7 @@ jobs:
         with:
           tag: ${{ env.COMPLETE_TAG }}
           commit: ${{ github.sha }}
-      - name: Deploy til dev
+      - name: Deploy til prod
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
