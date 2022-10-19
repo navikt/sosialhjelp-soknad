@@ -3,7 +3,7 @@ import {FormattedMessage, useIntl} from "react-intl";
 import {useDispatch} from "react-redux";
 import {setVisPersondataModal} from "../../redux/soknad/soknadActions";
 import {Button, Modal} from "@navikt/ds-react";
-import {useSoknad} from "../../redux/useSoknad";
+import {useSoknad} from "../../redux/soknad/useSoknad";
 
 const PersonopplysningerUtfyllendeModal = () => {
     const {visPersondataModal} = useSoknad();
