@@ -1,4 +1,4 @@
-name: Build and deploy to prod
+name: Build prod-sbs image
 on:
   push:
     branches: [master]
@@ -6,7 +6,7 @@ on:
 # FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
   build:
-    name: Build prod-image #and deploy to prod
+    name: Build prod-sbs image
     runs-on: ubuntu-latest
     env:
       DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
@@ -56,13 +56,3 @@ jobs:
         with:
           tag: ${{ env.COMPLETE_TAG }}
           commit: ${{ github.sha }}
-#      - name: Deploy til prod
-#        uses: nais/deploy/actions/deploy@v1
-#        env:
-#          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-#          RESOURCE: nais.yaml
-#          CLUSTER: prod-sbs
-#          VARS: nais/prod/prod-sbs.json
-#          REF: ${{ github.sha }}
-#          PRINT_PAYLOAD: true
-#          IMAGE: ${{ env.DOCKER_TAG }}
