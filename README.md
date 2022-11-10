@@ -49,9 +49,18 @@ npm run dev # Bygger less og starter dev-server
 npm test # Kjør enhetstestene
 ```
 
-## Manuell deploy til dev
+## Bygg og deploy
 
-Gjøres via Github Actions, se: https://github.com/navikt/sosialhjelp-soknad/actions/workflows/deploy_dev.yml
+Image bygges vha Github Actions,
+
+-   dev: https://github.com/navikt/sosialhjelp-soknad/actions/workflows/build.yml
+-   prod: https://github.com/navikt/sosialhjelp-soknad/actions/workflows/build_prod_image.yml
+
+Siden appen ikke kjører på nais lengre, se [ikke-nais deploy](https://teamdigisos.intern.nav.no/docs/utviklerdokumentasjon/ikke-nais%20deploy) for informasjon om deploy.
+
+### Manuell deploy til dev (NB: gjelder kun dev-gcp)
+
+Deploy til dev-gcp gjøres via Github Actions, se: https://github.com/navikt/sosialhjelp-soknad/actions/workflows/deploy_dev.yml
 
 ## Logge inn i dev-gcp med mock-alt
 
@@ -67,7 +76,11 @@ Spørsmål knyttet til koden eller prosjektet kan rettes mot:
 
 Interne henvendelser kan sendes via Slack i kanalen #digisos.
 
-## Kodestil
+## Hvordan komme i gang
+
+[Felles dokumentasjon for våre frontend apper](https://teamdigisos.intern.nav.no/docs/utviklerdokumentasjon/kom%20igang%20med%20utvikling#frontend)
+
+### Kodestil
 
 Dette prosjektet bruker formatering av kode med prettier.
 Det er lagt inn automatisk formatering av kode med en pre-commit hook.
