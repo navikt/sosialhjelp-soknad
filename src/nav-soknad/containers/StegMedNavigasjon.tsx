@@ -268,27 +268,17 @@ const StegMedNavigasjon = (
 
                     {soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
                         <Alert variant="error">
-                            {finnKommunenavn() === "Bærum" ? (
-                                <>
-                                    Bærum kommune kan desverre ikke ta i mot digitale søknader fra 04.11 kl. 08.00 til
-                                    08.11 kl 15.00. I mellomtiden er det mulig å{" "}
-                                    <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
-                                        søke på papirskjema.
-                                    </Link>
-                                </>
-                            ) : (
-                                <FormattedMessage
-                                    id="adresse.alertstripe.feil.v2"
-                                    values={{
-                                        kommuneNavn: finnKommunenavn(),
-                                        a: (msg: string) => (
-                                            <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
-                                                {msg}
-                                            </Link>
-                                        ),
-                                    }}
-                                />
-                            )}
+                            <FormattedMessage
+                                id="adresse.alertstripe.feil.v2"
+                                values={{
+                                    kommuneNavn: finnKommunenavn(),
+                                    a: (msg: string) => (
+                                        <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                                            {msg}
+                                        </Link>
+                                    ),
+                                }}
+                            />
                         </Alert>
                     )}
                     {soknad.visIkkePakobletPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
