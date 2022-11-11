@@ -13,7 +13,7 @@ import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {Soknadsoversikt} from "./Soknadsoversikt";
 import {useTitle} from "../../nav-soknad/hooks/useTitle";
-import {Alert, BodyLong, BodyShort, Button, Heading, Label, Link, Loader, Panel} from "@navikt/ds-react";
+import {Alert, BodyLong, BodyShort, Button, Heading, Label, Loader, Panel} from "@navikt/ds-react";
 import {useHistory} from "react-router";
 import styled from "styled-components";
 import {SkjemaContent} from "../../nav-soknad/components/SkjemaContent";
@@ -88,18 +88,7 @@ export const InformasjonSide = (props: {antallPabegynteSoknader: number}) => {
                         <FormattedMessage id="informasjon.start.undertittel" />
                     </Heading>
                     <BodyLong spacing>
-                        <FormattedMessage
-                            id="informasjon.start.tekst_del1"
-                            values={{
-                                a: (msg: string) => (
-                                    // Disable target-blank-rule on internal urls
-                                    /* eslint-disable-next-line react/jsx-no-target-blank */
-                                    <a href="https://www.nav.no/sosialhjelp/andre-muligheter" target="_blank">
-                                        {msg}
-                                    </a>
-                                ),
-                            }}
-                        />
+                        <FormattedMessage id="informasjon.start.tekst_del1" />
                     </BodyLong>
                     <BodyLong spacing>
                         <FormattedMessage id="informasjon.start.tekst_del2" />
@@ -111,16 +100,19 @@ export const InformasjonSide = (props: {antallPabegynteSoknader: number}) => {
                                 a: (msg: string) => (
                                     // Disable target-blank-rule on internal urls
                                     /* eslint-disable react/jsx-no-target-blank */
-                                    <a
-                                        href="https://www.nav.no/person/personopplysninger/nb/#ditt-nav-kontor"
-                                        target="_blank"
-                                    >
+                                    <a href="https://www.nav.no/okonomisk-sosialhjelp#soknad" target="_blank">
                                         {msg}
                                     </a>
                                     /* eslint-enable react/jsx-no-target-blank */
                                 ),
                             }}
                         />
+                    </BodyLong>
+                    <Heading level="2" size="small" spacing>
+                        <FormattedMessage id="informasjon.svarpasoknad.undertittel" />
+                    </Heading>
+                    <BodyLong spacing>
+                        <FormattedMessage id="informasjon.svarpasoknad.tekst" />
                     </BodyLong>
                     <Heading level="2" size="small" spacing>
                         <FormattedMessage id="informasjon.nodsituasjon.undertittel" />
@@ -130,12 +122,12 @@ export const InformasjonSide = (props: {antallPabegynteSoknader: number}) => {
                             id="informasjon.nodsituasjon.tekst"
                             values={{
                                 a: (msg: string) => (
-                                    <Link
-                                        href="https://www.nav.no/person/personopplysninger/nb/#ditt-nav-kontor"
-                                        target="_blank"
-                                    >
+                                    // Disable target-blank-rule on internal urls
+                                    /* eslint-disable react/jsx-no-target-blank */
+                                    <a href="https://www.nav.no/sok-nav-kontor" target="_blank">
                                         {msg}
-                                    </Link>
+                                    </a>
+                                    /* eslint-enable react/jsx-no-target-blank */
                                 ),
                             }}
                         />
