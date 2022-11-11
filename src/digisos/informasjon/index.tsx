@@ -88,18 +88,7 @@ export const InformasjonSide = (props: {antallPabegynteSoknader: number}) => {
                         <FormattedMessage id="informasjon.start.undertittel" />
                     </Heading>
                     <BodyLong spacing>
-                        <FormattedMessage
-                            id="informasjon.start.tekst_del1"
-                            values={{
-                                a: (msg: string) => (
-                                    // Disable target-blank-rule on internal urls
-                                    /* eslint-disable-next-line react/jsx-no-target-blank */
-                                    <a href="https://www.nav.no/sosialhjelp/andre-muligheter" target="_blank">
-                                        {msg}
-                                    </a>
-                                ),
-                            }}
-                        />
+                        <FormattedMessage id="informasjon.start.tekst_del1" />
                     </BodyLong>
                     <BodyLong spacing>
                         <FormattedMessage id="informasjon.start.tekst_del2" />
@@ -111,10 +100,7 @@ export const InformasjonSide = (props: {antallPabegynteSoknader: number}) => {
                                 a: (msg: string) => (
                                     // Disable target-blank-rule on internal urls
                                     /* eslint-disable react/jsx-no-target-blank */
-                                    <a
-                                        href="https://www.nav.no/person/personopplysninger/nb/#ditt-nav-kontor"
-                                        target="_blank"
-                                    >
+                                    <a href="https://www.nav.no/okonomisk-sosialhjelp#soknad" target="_blank">
                                         {msg}
                                     </a>
                                     /* eslint-enable react/jsx-no-target-blank */
@@ -123,22 +109,16 @@ export const InformasjonSide = (props: {antallPabegynteSoknader: number}) => {
                         />
                     </BodyLong>
                     <Heading level="2" size="small" spacing>
+                        <FormattedMessage id="informasjon.svarpasoknad.undertittel" />
+                    </Heading>
+                    <BodyLong spacing>
+                        <FormattedMessage id="informasjon.svarpasoknad.tekst" />
+                    </BodyLong>
+                    <Heading level="2" size="small" spacing>
                         <FormattedMessage id="informasjon.nodsituasjon.undertittel" />
                     </Heading>
                     <BodyLong spacing>
-                        <FormattedMessage
-                            id="informasjon.nodsituasjon.tekst"
-                            values={{
-                                a: (msg: string) => (
-                                    <Link
-                                        href="https://www.nav.no/person/personopplysninger/nb/#ditt-nav-kontor"
-                                        target="_blank"
-                                    >
-                                        {msg}
-                                    </Link>
-                                ),
-                            }}
-                        />
+                        <FormattedMessage id="informasjon.nodsituasjon.tekst" />
                     </BodyLong>
                 </Panel>
             </SkjemaContent>
