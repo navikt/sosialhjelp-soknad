@@ -118,7 +118,16 @@ export const InformasjonSide = (props: {antallPabegynteSoknader: number}) => {
                         <FormattedMessage id="informasjon.nodsituasjon.undertittel" />
                     </Heading>
                     <BodyLong spacing>
-                        <FormattedMessage id="informasjon.nodsituasjon.tekst" />
+                        <FormattedMessage
+                            id="informasjon.nodsituasjon.tekst"
+                            values={{
+                                a: (msg: string) => (
+                                    <a href="https://www.nav.no/sok-nav-kontor" target="_blank">
+                                        {msg}
+                                    </a>
+                                ),
+                            }}
+                        />
                     </BodyLong>
                 </Panel>
             </SkjemaContent>
