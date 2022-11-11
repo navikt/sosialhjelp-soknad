@@ -13,7 +13,7 @@ import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {Soknadsoversikt} from "./Soknadsoversikt";
 import {useTitle} from "../../nav-soknad/hooks/useTitle";
-import {Alert, BodyLong, BodyShort, Button, Heading, Label, Link, Loader, Panel} from "@navikt/ds-react";
+import {Alert, BodyLong, BodyShort, Button, Heading, Label, Loader, Panel} from "@navikt/ds-react";
 import {useHistory} from "react-router";
 import styled from "styled-components";
 import {SkjemaContent} from "../../nav-soknad/components/SkjemaContent";
@@ -122,9 +122,12 @@ export const InformasjonSide = (props: {antallPabegynteSoknader: number}) => {
                             id="informasjon.nodsituasjon.tekst"
                             values={{
                                 a: (msg: string) => (
-                                    <Link href="https://www.nav.no/sok-nav-kontor" target="_blank">
+                                    // Disable target-blank-rule on internal urls
+                                    /* eslint-disable react/jsx-no-target-blank */
+                                    <a href="https://www.nav.no/sok-nav-kontor" target="_blank">
                                         {msg}
-                                    </Link>
+                                    </a>
+                                    /* eslint-enable react/jsx-no-target-blank */
                                 ),
                             }}
                         />
