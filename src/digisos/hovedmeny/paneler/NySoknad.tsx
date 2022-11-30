@@ -20,11 +20,7 @@ const Greeting = (props: {name: string}) => (
         <FormattedMessage id="informasjon.hilsen.hei" values={{fornavn: props.name}} />
     </Label>
 );
-const InformasjonFraElla = styled.div`
-    margin: 1rem 0;
-    display: block;
-    text-align: center;
-`;
+
 const GrayContainer = styled(Panel)`
     padding-bottom: 2rem;
     margin-bottom: 0rem !important;
@@ -66,15 +62,16 @@ export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
     return (
         <>
             <SkjemaContent>
-                <InformasjonFraElla>
+                <div className={"mx-4 flex items-center flex-col"}>
                     <Snakkeboble>
                         {fornavn?.length && <Greeting name={fornavn} />}
                         <BodyShort>
                             <FormattedMessage id="informasjon.hilsen.tittel" />
                         </BodyShort>
                     </Snakkeboble>
+
                     <EllaBlunk size={"175"} />
-                </InformasjonFraElla>
+                </div>
                 <Panel>
                     <Heading level="2" size="small" spacing>
                         <FormattedMessage id="informasjon.start.undertittel" />
